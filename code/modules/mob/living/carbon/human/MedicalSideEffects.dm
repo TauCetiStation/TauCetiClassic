@@ -10,10 +10,10 @@
 
 /datum/medical_effect/proc/manifest(mob/living/carbon/human/H)
 	for(var/R in cures)
-		if(H.reagents.has_reagent(R))
+		if(H.reagents.has_reagent(R, force_real = FALSE))
 			return 0
 	for(var/R in triggers)
-		if(H.reagents.get_reagent_amount(R) >= triggers[R])
+		if(H.reagents.get_reagent_amount(R, force_real = FALSE) >= triggers[R])
 			return 1
 	return 0
 
@@ -22,7 +22,7 @@
 
 /datum/medical_effect/proc/cure(mob/living/carbon/human/H)
 	for(var/R in cures)
-		if(H.reagents.has_reagent(R))
+		if(H.reagents.has_reagent(R, force_real = FALSE))
 			if (cure_message)
 				to_chat(H, "<span class='notice'>[cure_message]</span>")
 			return 1

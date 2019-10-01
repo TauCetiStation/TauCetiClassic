@@ -341,28 +341,28 @@
 	//If they're injured, we're using a beaker, and don't have one of our WONDERCHEMS.
 	if((reagent_glass) && (use_beaker) && ((C.getBruteLoss(force_real = FALSE) >= heal_threshold) || (C.getFireLoss(force_real = FALSE) >= heal_threshold) || (C.getToxLoss(force_real = FALSE) >= heal_threshold) || (C.getOxyLoss() >= (heal_threshold + 15))))
 		for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
-			if(!C.reagents.has_reagent(R))
+			if(!C.reagents.has_reagent(R, force_real = FALSE))
 				return 1
 			continue
 
 	//They're injured enough for it!
-	if((C.getBruteLoss(force_real = FALSE) >= heal_threshold) && (!C.reagents.has_reagent(treatment_brute)))
+	if((C.getBruteLoss(force_real = FALSE) >= heal_threshold) && (!C.reagents.has_reagent(treatment_brute, force_real = FALSE)))
 		return 1 //If they're already medicated don't bother!
 
-	if((C.getOxyLoss(force_real = FALSE) >= (15 + heal_threshold)) && (!C.reagents.has_reagent(treatment_oxy)))
+	if((C.getOxyLoss(force_real = FALSE) >= (15 + heal_threshold)) && (!C.reagents.has_reagent(treatment_oxy, force_real = FALSE)))
 		return 1
 
-	if((C.getFireLoss(force_real = FALSE) >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
+	if((C.getFireLoss(force_real = FALSE) >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire, force_real = FALSE)))
 		return 1
 
-	if((C.getToxLoss(force_real = FALSE) >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
+	if((C.getToxLoss(force_real = FALSE) >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox, force_real = FALSE)))
 		return 1
 
 
 	for(var/datum/disease/D in C.viruses)
 		if((D.stage > 1) || (D.spread_type == AIRBORNE))
 
-			if (!C.reagents.has_reagent(treatment_virus))
+			if (!C.reagents.has_reagent(treatment_virus, force_real = FALSE))
 				return 1 //STOP DISEASE FOREVER
 
 	return 0
@@ -403,23 +403,23 @@
 		virus = 1
 
 	if (!reagent_id && (virus))
-		if(!C.reagents.has_reagent(treatment_virus))
+		if(!C.reagents.has_reagent(treatment_virus, force_real = FALSE))
 			reagent_id = treatment_virus
 
 	if (!reagent_id && (C.getBruteLoss(force_real = FALSE) >= heal_threshold))
-		if(!C.reagents.has_reagent(treatment_brute))
+		if(!C.reagents.has_reagent(treatment_brute, force_real = FALSE))
 			reagent_id = treatment_brute
 
 	if (!reagent_id && (C.getOxyLoss(force_real = FALSE) >= (15 + heal_threshold)))
-		if(!C.reagents.has_reagent(treatment_oxy))
+		if(!C.reagents.has_reagent(treatment_oxy, force_real = FALSE))
 			reagent_id = treatment_oxy
 
 	if (!reagent_id && (C.getFireLoss(force_real = FALSE) >= heal_threshold))
-		if(!C.reagents.has_reagent(treatment_fire))
+		if(!C.reagents.has_reagent(treatment_fire, force_real = FALSE))
 			reagent_id = treatment_fire
 
 	if (!reagent_id && (C.getToxLoss(force_real = FALSE) >= heal_threshold))
-		if(!C.reagents.has_reagent(treatment_tox))
+		if(!C.reagents.has_reagent(treatment_tox, force_real = FALSE))
 			reagent_id = treatment_tox
 
 	if(!reagent_id) //If they don't need any of that they're probably cured!

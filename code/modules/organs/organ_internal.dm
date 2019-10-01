@@ -40,13 +40,13 @@
 
 /obj/item/organ/internal/proc/is_bruised()
 	// If not robotic, and owner has stabyzol in bloodstream, we are considered not bruised.
-	if(!robotic && owner.reagents.has_reagent("stabyzol"))
+	if(!robotic && owner.reagents.has_reagent("stabyzol", force_real = FALSE))
 		return FALSE
 	return damage >= min_bruised_damage
 
 /obj/item/organ/internal/proc/is_broken()
 	// If not robotic, and owner has stabyzol in bloodstream, we are considered not bruised.
-	if(!robotic && owner.reagents.has_reagent("stabyzol"))
+	if(!robotic && owner.reagents.has_reagent("stabyzol", force_real = FALSE))
 		return FALSE
 	return damage >= min_broken_damage
 
@@ -63,7 +63,7 @@
 		handle_antibiotics()
 
 		//** Handle the effects of infections
-		var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
+		var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin", force_real = FALSE)
 
 		if (germ_level > 0 && germ_level < INFECTION_LEVEL_ONE/2 && prob(30))
 			germ_level--
@@ -186,7 +186,7 @@
 		if(damage < 0)
 			damage = 0
 
-		if(owner.getToxLoss(force_real = FALSE) >= 60 && !owner.reagents.has_reagent("anti_toxin"))
+		if(owner.getToxLoss(force_real = FALSE) >= 60 && !owner.reagents.has_reagent("anti_toxin", force_real = FALSE))
 			if(damage < min_broken_damage)
 				damage += 0.2 * process_accuracy
 			else
@@ -231,7 +231,7 @@
 			src.damage = 0
 
 		//High toxins levels are dangerous
-		if(owner.getToxLoss(force_real = FALSE) >= 60 && !owner.reagents.has_reagent("anti_toxin"))
+		if(owner.getToxLoss(force_real = FALSE) >= 60 && !owner.reagents.has_reagent("anti_toxin", force_real = FALSE))
 			//Healthy liver suffers on its own
 			if (src.damage < min_broken_damage)
 				src.damage += 0.2 * process_accuracy
@@ -242,7 +242,7 @@
 					IO.damage += 0.2  * process_accuracy
 
 		//Detox can heal small amounts of damage
-		if (src.damage && src.damage < src.min_bruised_damage && owner.reagents.has_reagent("anti_toxin"))
+		if (src.damage && src.damage < src.min_bruised_damage && owner.reagents.has_reagent("anti_toxin", force_real = FALSE))
 			src.damage -= 0.2 * process_accuracy
 
 		// Damaged liver means some chemicals are very dangerous

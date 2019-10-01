@@ -130,7 +130,7 @@
 	return ..(tally = 3.5)
 
 /mob/living/carbon/monkey/movement_delay(tally = 0)
-	if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
+	if(reagents && reagents.has_reagent("hyperzine", force_real = FALSE) || reagents.has_reagent("nuka_cola", force_real = FALSE))
 		return -1
 
 	var/health_deficiency = (100 - health)

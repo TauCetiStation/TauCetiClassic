@@ -72,7 +72,7 @@
 
 		if(!stat && !host.stat)
 
-			if(host.reagents.has_reagent("sugar"))
+			if(host.reagents.has_reagent("sugar", force_real = FALSE))
 				if(!docile)
 					if(controlling)
 						to_chat(host, "<span class='notice'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>")

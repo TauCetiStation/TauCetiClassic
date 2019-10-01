@@ -11,17 +11,17 @@
 	1.7	* src.getCloneLoss(force_real = FALSE) + 		\
 	2	* src.halloss
 
-	if(reagents.has_reagent("alkysine"))
+	if(reagents.has_reagent("alkysine", force_real = FALSE))
 		src.traumatic_shock -= 10
-	if(reagents.has_reagent("inaprovaline"))
+	if(reagents.has_reagent("inaprovaline", force_real = FALSE))
 		src.traumatic_shock -= 25
-	if(reagents.has_reagent("synaptizine"))
+	if(reagents.has_reagent("synaptizine", force_real = FALSE))
 		src.traumatic_shock -= 40
-	if(reagents.has_reagent("paracetamol"))
+	if(reagents.has_reagent("paracetamol", force_real = FALSE))
 		src.traumatic_shock -= 50
-	if(reagents.has_reagent("tramadol"))
+	if(reagents.has_reagent("tramadol", force_real = FALSE))
 		src.traumatic_shock -= 80
-	if(reagents.has_reagent("oxycodone"))
+	if(reagents.has_reagent("oxycodone", force_real = FALSE))
 		src.traumatic_shock -= 200
 	if(src.slurring)
 		src.traumatic_shock -= 20

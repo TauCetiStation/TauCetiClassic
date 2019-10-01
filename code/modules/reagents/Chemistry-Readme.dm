@@ -92,15 +92,19 @@ About the Holder:
 			The exact opposite of the add_reagent proc.
 			- Modified from original to return the reagent's data, in order to preserve reagent data across reactions (originally for xenoarchaeology)
 
-		has_reagent(reagent, amount)
+		has_reagent(reagent, amount, force_real = FALSE)
 			Returns 1 if the holder contains this reagent.
 			Or 0 if not.
 			If you pass it an amount it will additionally check
 			if the amount is matched. This is optional.
+			force_real is an argument that determines whether we want extra checks
+			to be passed, such as the presence of aclometasone.
 
 		get_reagent_amount(reagent)
 			Returns the amount of the matching reagent inside the
 			holder. Returns 0 if the reagent is missing.
+			force_real is an argument that determines whether we want extra checks
+			to be passed, such as the presence of aclometasone.
 
 		Important variables:
 

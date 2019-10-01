@@ -50,10 +50,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 						break
 
 			B.volume += 0.1 // regenerate blood VERY slowly
-			if (reagents.has_reagent("nutriment"))	//Getting food speeds it up
+			if (reagents.has_reagent("nutriment", force_real = FALSE))	//Getting food speeds it up
 				B.volume += 0.4
 				reagents.remove_reagent("nutriment", 0.1)
-			if (reagents.has_reagent("iron"))	//Hematogen candy anyone?
+			if (reagents.has_reagent("iron", force_real = FALSE))	//Hematogen candy anyone?
 				B.volume += 0.8
 				reagents.remove_reagent("iron", 0.1)
 
@@ -61,7 +61,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	// being pumped properly anymore.
 	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
 
-	if(!reagents.has_reagent("stabyzol") || IO.robotic)
+	if(!reagents.has_reagent("stabyzol", force_real = FALSE) || IO.robotic)
 		if(IO.damage > 1 && IO.damage < IO.min_bruised_damage)
 			blood_volume *= 0.8
 		else if(IO.damage >= IO.min_bruised_damage && IO.damage < IO.min_broken_damage)
@@ -120,7 +120,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			nutrition -= 3
 
 	// We don't bleed out at all if metatrombine is injected.
-	if(reagents.has_reagent("metatrombine"))
+	if(reagents.has_reagent("metatrombine", force_real = FALSE))
 		return
 
 	//Bleeding out
@@ -175,7 +175,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		if(PULSE_THREADY)
 			blood_max *= 1.8
 
-	if(reagents.has_reagent("inaprovaline"))
+	if(reagents.has_reagent("inaprovaline", force_real = FALSE))
 		blood_max *= 0.8
 
 	if(world.time >= next_blood_squirt && isturf(loc) && do_spray.len) // It becomes very spammy otherwise. Arterial bleeding will still happen outside of this block, just not the squirt effect.
@@ -193,7 +193,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 //Makes a blood drop, leaking certain amount of blood from the mob
 /mob/living/carbon/human/proc/drip(amt, tar = src, ddir)
-	if(reagents.has_reagent("metatrombine"))
+	if(reagents.has_reagent("metatrombine", force_real = FALSE))
 		return 0
 
 	if(remove_blood(amt))

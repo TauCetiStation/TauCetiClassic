@@ -9,11 +9,11 @@
 // amount is a num from 1 to 100
 /mob/living/carbon/proc/pain(partname, amount, force, burning = 0)
 	if(stat >= 2) return
-	if(reagents.has_reagent("paracetamol"))
+	if(reagents.has_reagent("paracetamol", force_real = FALSE))
 		return
-	if(reagents.has_reagent("tramadol"))
+	if(reagents.has_reagent("tramadol", force_real = FALSE))
 		return
-	if(reagents.has_reagent("oxycodone"))
+	if(reagents.has_reagent("oxycodone", force_real = FALSE))
 		return
 	if(analgesic)
 		return
@@ -60,9 +60,9 @@
 	if(species && species.flags[NO_PAIN])
 		return
 
-	if(reagents.has_reagent("tramadol"))
+	if(reagents.has_reagent("tramadol", force_real = FALSE))
 		return
-	if(reagents.has_reagent("oxycodone"))
+	if(reagents.has_reagent("oxycodone", force_real = FALSE))
 		return
 	if(analgesic)
 		return
@@ -84,9 +84,9 @@
 
 	if(stat >= 2)
 		return
-	if(reagents.has_reagent("tramadol"))
+	if(reagents.has_reagent("tramadol", force_real = FALSE))
 		return
-	if(reagents.has_reagent("oxycodone"))
+	if(reagents.has_reagent("oxycodone", force_real = FALSE))
 		return
 	if(analgesic)
 		return

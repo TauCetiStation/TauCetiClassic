@@ -430,7 +430,7 @@
 	if(M.species.flags[NO_BLOOD_TRAILS])
 		return 0
 
-	if(M.reagents.has_reagent("metatrombine"))
+	if(M.reagents.has_reagent("metatrombine", force_real = FALSE))
 		return FALSE
 
 	if (!istype(M.dna, /datum/dna))

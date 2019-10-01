@@ -242,11 +242,11 @@ var/const/INGEST = 2
 				var/list/multipliers = new/list()
 
 				for(var/B in C.required_reagents)
-					if(!has_reagent(B, C.required_reagents[B]))	break
+					if(!has_reagent(B, C.required_reagents[B], force_real = FALSE))	break
 					total_matching_reagents++
-					multipliers += round(get_reagent_amount(B) / C.required_reagents[B])
+					multipliers += round(get_reagent_amount(B, force_real = FALSE) / C.required_reagents[B])
 				for(var/B in C.required_catalysts)
-					if(!has_reagent(B, C.required_catalysts[B]))	break
+					if(!has_reagent(B, C.required_catalysts[B], force_real = FALSE))	break
 					total_matching_catalysts++
 
 				if(!C.required_container)
@@ -491,13 +491,13 @@ var/const/INGEST = 2
 
 	return FALSE
 
-/datum/reagents/proc/has_reagent(reagent, amount = 0)
+/datum/reagents/proc/has_reagent(reagent, amount = 0, force_real = TRUE)
 	/*
 	Aclometasone prevents: reactions, metabolism, reagent effects, so we make this special snowflake code
 	to prevent all of the above.
 	*/
 	var/datum/reagent/aclometasone/ACLO = locate(/datum/reagent/aclometasone) in reagent_list
-	if(ismob(my_atom) && ACLO)
+	if(ismob(my_atom) && ACLO && !force_real)
 		if(reagent == "aclometasone")
 			return ACLO.volume
 		return 0
@@ -510,13 +510,13 @@ var/const/INGEST = 2
 				return R
 	return 0
 
-/datum/reagents/proc/get_reagent_amount(reagent)
+/datum/reagents/proc/get_reagent_amount(reagent, force_real = TRUE)
 	/*
 	Aclometasone prevents: reactions, metabolism, reagent effects, so we make this special snowflake code
 	to prevent all of the above.
 	*/
 	var/datum/reagent/aclometasone/ACLO = locate(/datum/reagent/aclometasone) in reagent_list
-	if(ismob(my_atom) && ACLO)
+	if(ismob(my_atom) && ACLO && !force_real)
 		if(reagent == "aclometasone")
 			return ACLO.volume
 		return 0

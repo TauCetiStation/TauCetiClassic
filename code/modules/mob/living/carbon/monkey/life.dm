@@ -200,7 +200,7 @@
 /mob/living/carbon/monkey/proc/breathe()
 	if(reagents)
 
-		if(reagents.has_reagent("lexorin")) return
+		if(reagents.has_reagent("lexorin", force_real = FALSE)) return
 
 	if(!loc) return //probably ought to make a proper fix for this, but :effort: --NeoFite
 	if(istype(loc, /obj/item/weapon/holder)) return // типа быстрофикс на обезьянок что берут на руки, хотя бы не будут умирать.. но нужно нормальное решение.
@@ -482,7 +482,7 @@
 			if( health <= 20 && prob(1) )
 				spawn(0)
 					emote("gasp")
-			if(!reagents.has_reagent("inaprovaline"))
+			if(!reagents.has_reagent("inaprovaline", force_real = FALSE))
 				adjustOxyLoss(1)
 			Paralyse(3)
 		if(halloss > 100)

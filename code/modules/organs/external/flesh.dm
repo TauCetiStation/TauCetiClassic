@@ -377,7 +377,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		handle_germ_effects()
 
 /datum/bodypart_controller/proc/handle_germ_sync()
-	var/antibiotics = BP.owner.reagents.get_reagent_amount("spaceacillin")
+	var/antibiotics = BP.owner.reagents.get_reagent_amount("spaceacillin", force_real = FALSE)
 	for(var/datum/wound/W in BP.wounds)
 		//Open wounds can become infected
 		if (BP.owner.germ_level > W.germ_level && W.infection_check())
@@ -390,7 +390,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 				BP.germ_level = min(W.amount + BP.germ_level, W.germ_level) //faster infections from dirty wounds, but not faster than natural wound germification.
 
 /datum/bodypart_controller/proc/handle_germ_effects()
-	var/antibiotics = BP.owner.reagents.get_reagent_amount("spaceacillin")
+	var/antibiotics = BP.owner.reagents.get_reagent_amount("spaceacillin", force_real = FALSE)
 
 	if (BP.germ_level > 0 && BP.germ_level < INFECTION_LEVEL_ONE && prob(60))	//this could be an else clause, but it looks cleaner this way
 		BP.germ_level--	//since germ_level increases at a rate of 1 per second with dirty wounds, prob(60) should give us about 5 minutes before level one.

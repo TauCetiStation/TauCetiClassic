@@ -94,7 +94,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 			to_chat(src, "<span class='warning'><b>Something on your host's skin makes you unstable.. you fade away..</b></span>")
 			src.death()
 			return
-	else if(host.reagents.has_reagent(meme_death))
+	else if(host.reagents.has_reagent(meme_death, force_real = FALSE))
 		to_chat(src, "<span class='warning'><b>Something in your host's blood makes you lose consciousness.. you fade away..</b></span>")
 		src.death()
 		return

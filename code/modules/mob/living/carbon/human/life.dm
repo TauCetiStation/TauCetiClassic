@@ -356,7 +356,7 @@
 /mob/living/carbon/human/proc/breathe()
 	if(NO_BREATH in src.mutations)
 		return //#Z2 We need no breath with this mutation
-	if(reagents.has_reagent("lexorin"))
+	if(reagents.has_reagent("lexorin", force_real = FALSE))
 		return
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
@@ -371,7 +371,7 @@
 	var/datum/gas_mixture/breath
 
 	//First, check if we can breathe at all
-	if(handle_drowning() || health < config.health_threshold_crit && !reagents.has_reagent("inaprovaline"))
+	if(handle_drowning() || health < config.health_threshold_crit && !reagents.has_reagent("inaprovaline", force_real = FALSE))
 		losebreath = max(2, losebreath + 1)
 
 	if(losebreath>0) //Suffocating so do not take a breath

@@ -49,7 +49,7 @@
 
 //Germs
 /obj/item/organ/proc/handle_antibiotics()
-	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
+	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin", force_real = FALSE)
 
 	if (!germ_level || antibiotics < 5)
 		return

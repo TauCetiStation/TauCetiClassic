@@ -186,7 +186,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					var/mob/living/carbon/human/H = loc
 					if(H.species.flags[NO_BREATHE])
 						return
-				if(C.reagents.has_reagent("nicotine"))
+				if(C.reagents.has_reagent("nicotine", force_real = FALSE))
 					C.reagents.add_reagent("nicotine", nicotine_per_smoketime)
 				else
 					C.reagents.add_reagent("nicotine", 0.2)

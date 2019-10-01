@@ -83,9 +83,9 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	if(cure_list == list(cure_id))
 		if(istype(cure_id, /list))
 			for(var/C_id in cure_id)
-				if(!affected_mob.reagents.has_reagent(C_id))
+				if(!affected_mob.reagents.has_reagent(C_id, force_real = FALSE))
 					result = 0
-		else if(!affected_mob.reagents.has_reagent(cure_id))
+		else if(!affected_mob.reagents.has_reagent(cure_id, force_real = FALSE))
 			result = 0
 	else
 		for(var/C_list in cure_list)
@@ -93,10 +93,10 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 				for(var/C_id in cure_id)
 					if(affected_mob.reagents != null)
 						result = 0
-					else if(!affected_mob.reagents.has_reagent(C_id))
+					else if(!affected_mob.reagents.has_reagent(C_id, force_real = FALSE))
 						result = 0
 			else if(affected_mob.reagents != null)
-				if(!affected_mob.reagents.has_reagent(C_list))
+				if(!affected_mob.reagents.has_reagent(C_list, force_real = FALSE))
 					result = 0
 
 	return result
@@ -129,7 +129,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 	if(affected_mob.reagents != null)
 		if(affected_mob)
-			if(affected_mob.reagents.has_reagent("spaceacillin"))
+			if(affected_mob.reagents.has_reagent("spaceacillin", force_real = FALSE))
 				return // Don't spread if we have spaceacillin in our system.
 
 	var/check_range = airborne_range//defaults to airborne - range 2

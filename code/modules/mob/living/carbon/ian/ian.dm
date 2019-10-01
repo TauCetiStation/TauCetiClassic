@@ -286,7 +286,7 @@
 /mob/living/carbon/ian/movement_delay(tally = 0)
 	if(crawling)
 		tally += 5
-	else if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
+	else if(reagents && reagents.has_reagent("hyperzine", force_real = FALSE) || reagents.has_reagent("nuka_cola", force_real = FALSE))
 		return -1
 	else if(m_intent == "run" && a_intent == "hurt" && stamina >= 10)
 		stamina = max(0, stamina - 10)

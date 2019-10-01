@@ -82,7 +82,7 @@
 	// if one of the antibodies in the mob's body matches one of the disease's antigens, don't infect
 	if((M.antibodies & disease.antigen) != 0)
 		return
-	if(M.reagents.has_reagent("spaceacillin") && !ignore_antibiotics)
+	if(M.reagents.has_reagent("spaceacillin", force_real = FALSE) && !ignore_antibiotics)
 		return
 
 	if(istype(M,/mob/living/carbon/monkey))

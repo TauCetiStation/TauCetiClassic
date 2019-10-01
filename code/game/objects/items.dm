@@ -154,8 +154,8 @@
 	for(var/datum/disease/D in M.viruses)
 		if(!D.hidden[SCANNER])
 			message += "<span class = 'warning bold'>Warning: [D.form] Detected</span>\n<span class = 'warning'>Name: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span><br>"
-	if(M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
-		message += "<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span><br>"
+	if(M.reagents && M.reagents.get_reagent_amount("inaprovaline", force_real = FALSE))
+		message += "<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline", force_real = FALSE)] units of rejuvenation chemicals.</span><br>"
 	if(M.has_brain_worms())
 		message += "<span class='warning'>Subject suffering from aberrant brain activity. Recommend further scanning.</span><br>"
 	else if(M.getBrainLoss() >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)

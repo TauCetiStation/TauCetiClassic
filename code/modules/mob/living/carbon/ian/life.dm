@@ -185,7 +185,7 @@
 		return
 
 	// This is Ian, he knows that every space helmet has infinite breathable air inside!
-	if(!loc || istype(head, /obj/item/clothing/head/helmet/space) || reagents && reagents.has_reagent("lexorin"))
+	if(!loc || istype(head, /obj/item/clothing/head/helmet/space) || reagents && reagents.has_reagent("lexorin", force_real = FALSE))
 		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
@@ -533,7 +533,7 @@
 		if( (getOxyLoss() > 25) || (config.health_threshold_crit > health) )
 			if( health <= 20 && prob(1) )
 				emote("gasp")
-			if(!reagents.has_reagent("inaprovaline"))
+			if(!reagents.has_reagent("inaprovaline", force_real = FALSE))
 				adjustOxyLoss(1)
 			Paralyse(3)
 		if(halloss > 100)
