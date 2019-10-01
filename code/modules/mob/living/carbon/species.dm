@@ -1063,5 +1063,5 @@
 	,VIRUS_IMMUNE = TRUE
 	)
 
-/datum/species/golem/call_digest_proc(mob/living/M, datum/reagent/R)
+/datum/species/slime/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_slime_digest(M)

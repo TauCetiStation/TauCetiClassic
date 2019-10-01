@@ -1,6 +1,6 @@
 /obj/effect/effect/aqueous_foam
 	name = "aqueous film forming foam"
-	icon = 'icons/obj/smooth_objects/afff_foam.dmi'
+	icon = 'icons/obj/smooth_objects/afff_foam1.dmi'
 	icon_state = "box"
 
 	opacity = FALSE
@@ -22,9 +22,21 @@
 
 /obj/effect/effect/aqueous_foam/atom_init()
 	. = ..()
+
+	switch(rand(1, 4))
+		if(1)
+			icon = 'icons/obj/smooth_objects/afff_foam1.dmi'
+		if(2)
+			icon = 'icons/obj/smooth_objects/afff_foam2.dmi'
+		if(3)
+			icon = 'icons/obj/smooth_objects/afff_foam3.dmi'
+		if(4)
+			icon = 'icons/obj/smooth_objects/afff_foam4.dmi'
+
 	if(smooth)
 		queue_smooth(src)
 		queue_smooth_neighbors(src)
+
 	pixel_x = -6
 	pixel_y = -6 //so the sprites line up right in the map editor
 	playsound(src, 'sound/effects/bubbles2.ogg', VOL_EFFECTS_MASTER, null, null, -3)
@@ -71,7 +83,7 @@
 	var/prev_smooth = smooth
 	var/prev_appearance_flags = appearance_flags
 	smooth = SMOOTH_FALSE
-	appearance_flags |= PIXEL_SCALE|KEEP_TOGETHER
+	appearance_flags |= PIXEL_SCALE
 
 	var/pix_shift_x = rand(0, max_shift)
 	var/pix_shift_y = rand(0, max_shift)
