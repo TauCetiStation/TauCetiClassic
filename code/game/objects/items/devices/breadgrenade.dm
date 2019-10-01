@@ -7,6 +7,7 @@
 	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/device/breadgrenade/throw_impact(atom/hit_atom)
+	..()
 	new /obj/item/weapon/shard(loc)
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	new /mob/living/simple_animal/hostile/bread(get_turf(hit_atom))
