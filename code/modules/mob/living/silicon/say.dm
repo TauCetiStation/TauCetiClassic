@@ -212,6 +212,8 @@
 			if(istype(S , /mob/living/silicon/ai))
 				var/renderedAI = "<i><span class='binarysay'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
 				S.show_message(renderedAI, 2)
+			if(istype(S, /mob/living/carbon/brain))
+				S.show_message(rendered, 2)
 			else
 				var/mob/living/silicon/robot/borg = S
 				//if(istype(borg) && borg.is_component_functioning("comms"))

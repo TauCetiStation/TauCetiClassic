@@ -49,12 +49,13 @@
 
 
 /obj/item/device/mmi/posibrain/transfer_identity(mob/living/carbon/H)
-	name = "positronic brain ([H])"
-	brainmob.name = H.real_name
-	brainmob.real_name = H.real_name
+	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","CHRI","CDB","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","JRD","CHOC","ANCL","JLLO","JNLG","KOS","TKRG","XAL","STLP","CBOS","DUNC","FXMC","DRSD","XHS","BOB","EXAD","JMAD"))]-[rand(100, 999)]"
+	brainmob.real_name = brainmob.name
 	brainmob.dna = H.dna
 	brainmob.timeofhostdeath = H.timeofdeath
 	brainmob.stat = CONSCIOUS
+	brainmob.robot_talk_understand = 1
+	name = "positronic brain ([brainmob.name])"
 	if(brainmob.mind)
 		brainmob.mind.assigned_role = "Positronic Brain"
 	if(H.mind)
