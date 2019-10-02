@@ -62,6 +62,12 @@
 			return TRUE
 	return FALSE
 
+/proc/isloyalsyndi(A)
+	for(var/obj/item/weapon/implant/syndi_loyalty/L in A)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
 /proc/check_zone(zone)
 	if(!zone)
 		return BP_CHEST

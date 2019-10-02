@@ -11,11 +11,27 @@
 	//Save ref for mobs
 	implant_master_mob = usr
 	implant_target_mob = M
-	syndi_implanted_people += "<b>[implant_master_mob]</b> implanted <b>[implant_target_mob]</b> with syndicate loyalty implant" //For print in scroreboard.
+
+	syndi_implanted_people += "<b>[implant_master_mob]</b> implanted <b>[implant_target_mob]</b> Syndicate Loyalty implant" //For print in scroreboard.
+
+	START_PROCESSING(SSobj, src)
 	return 1
 
 /obj/item/weapon/implant/syndi_loyalty/inject(mob/living/carbon/C, def_zone)
 	. = ..()
+
+	if(ismonkey(C)) //ROFL
+		C.visible_message("<b>[C.name]</b> says, \"<span class ='userdanger'>THIS IS A BAD TARGET! SELF DESTRUCTION ACTIVATED</span>\"")
+		C.visible_message("<b>[C.name]</b> says, \"<span class ='userdanger'>3 SECONDS TO SELF-DESTRUCT</span>\"")
+		C.adjustBrainLoss(100)
+		return
+
+	if(isloyal(C)) //reaction to loyalty implant
+		to_chat(C, "<span class='notice'>The loyalty implant suppresses the action of the syndicate</span>")
+		to_chat(C, "<span class='notice'>Syndicate loyalty implant deactivated</span>")
+		if(prob(80))
+			C.adjustBrainLoss(80)
+		return
 
 	var/mob/living/carbon/human/imptraitor = C
 	implant_master = usr.mind
@@ -47,30 +63,28 @@
 	ticker.mode.update_all_synd_icons()
 
 	apply_brain_damage()
-
+	
 	return TRUE
 
-/obj/item/weapon/implant/syndi_loyalty/Destroy()
-	forget()
-	..()
-
 /obj/item/weapon/implant/syndi_loyalty/process()
-	if (!implanted || !imp_in)
+	if(!implanted || !imp_in)
 		STOP_PROCESSING(SSobj, src)
 		return
 	if(imp_in.stat == DEAD)
 		return
 
-	//1/400
 	if(malfunction != MALFUNCTION_PERMANENT)
 		if(prob(1) && prob(25))
 			switch(rand(1, 3))
 				if(1)
-					to_chat(imp_in, "\italic You [pick("are sure", "think")] that Syndicate - is the best corporation in the whole Universe!")
+					to_chat(imp_in, "<span class='warning'> You [pick("are sure", "think")] that Syndicate - is the best corporation in the whole Universe!</span>")
 				if(2)
-					to_chat(imp_in, "\italic You [pick("are sure", "think")] that [implant_master.current.real_name] is the greatest man who ever lived!")
+					to_chat(imp_in, "<span class='warning'> You [pick("are sure", "think")] that [implant_master_mob] is the greatest man who ever lived!</span>")
 				if(3)
-					to_chat(imp_in, "\italic You want to give your life away in the name of Syndicate!")
+					to_chat(imp_in, "<span class='warning'> You want to give your life away in the name of Syndicate!</span>")
+		if(prob(1) && prob(5))
+			//Big, red, ugly messeage
+			to_chat(imp_in, "<span class='warning'>You [pick("are sure", "think")] that</span> <span class ='userdanger'>SYNDICATE</span> <span class='warning'>is much [pick("better", "cooler", "stronger")] than NanoTrasen </span>")
 	else
 		if(istype(imp_in, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = imp_in
@@ -78,16 +92,16 @@
 		if(prob(5))
 			switch(rand(1, 3))
 				if(1)
-					to_chat(imp_in, "\italic <span class='warning'>You wanna cut off [implant_master.current.real_name]'s head!</span>")
+					to_chat(imp_in, "\italic <span class ='userdanger'>You wanna cut off [implant_master_mob]'s head!</span>")
 				if(2)
-					to_chat(imp_in, "\italic <span class='warning'>You [pick("are sure", "think")] that [implant_master.current.real_name] is worthy of death!</span>")
+					to_chat(imp_in, "\italic <span class ='userdanger'>You [pick("are sure", "think")] that [implant_master_mob] is worthy of death!</span>")
 				if(3)
-					to_chat(imp_in, "\italic <span class='warning'>ERROR... [implant_master.current.real_name]... DIE, MOTHEFUCKER, DIE!!!</span>")
+					to_chat(imp_in, "\italic <span class ='userdanger'>ERROR... [implant_master_mob]... DIE, MOTHEFUCKER, DIE!!!</span>")
 
 /obj/item/weapon/implant/syndi_loyalty/meltdown()
 	. = ..()
 	forget()
-	fake_attack(imp_in, implant_master.current)
+	fake_attack(implant_target_mob, implant_master_mob) //Hallucination
 
 /obj/item/weapon/implant/syndi_loyalty/islegal()
 	return 0
@@ -101,10 +115,15 @@
 		forgotten = TRUE
 
 /obj/item/weapon/implant/syndi_loyalty/emp_act(severity)
-	if (malfunction)
+	if(malfunction)
 		return
-	if(severity == 1 && prob(75))
+	malfunction = MALFUNCTION_PERMANENT
+	if(severity == 1 && prob(80))
 		meltdown()
+
+/obj/item/weapon/implant/syndi_loyalty/Destroy()
+	forget()
+	..()
 
 /obj/item/weapon/implant/syndi_loyalty/get_data()
 	var/dat = {"
