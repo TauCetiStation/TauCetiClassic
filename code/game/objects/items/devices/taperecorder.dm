@@ -22,8 +22,11 @@
 
 	action_button_name = "Toggle Recorder"
 
-/obj/item/device/taperecorder/hear_talk(mob/living/M, msg, verb="says")
+/obj/item/device/taperecorder/hear_talk(mob/living/M, msg, scrambled_text = "", verb="says")
 	if(recording)
+		if(scrambled_text != "")
+			msg = scrambled_text
+
 		timestamp+= timerecorded
 		if(isanimal(M)) // Taken from say(). Temporary fix before refactor. Needs to actually pass languages or something like that here and when we see paper or hear audioplayback it depends whenever we can actually understand that language.
 			var/mob/living/simple_animal/S = M

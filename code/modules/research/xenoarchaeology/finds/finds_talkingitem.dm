@@ -26,9 +26,12 @@
 	else if(heard_words.len >= 1 && world.time > last_talk_time + talk_interval && prob(talk_chance))
 		SaySomething()
 
-/datum/talking_atom/proc/catchMessage(msg, mob/source)
+/datum/talking_atom/proc/catchMessage(msg, scrambled_text, mob/source)
 	if(!holder_atom)
 		return
+
+	if(scrambled_text != "")
+		msg = scrambled_text
 
 	var/list/seperate = list()
 	if(findtext(msg,"(("))

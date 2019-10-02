@@ -814,22 +814,29 @@
 	if(message_mode)
 		if(message_mode in radiochannels)
 			if(ears && istype(ears,/obj/item/device/radio))
-				ears.talk_into(src,message, message_mode, verb, null)
+				ears.talk_into(src, message, "", message_mode, verb, null)
 
 
 	..(message)
 
 
-/mob/living/simple_animal/parrot/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null)
+/mob/living/simple_animal/parrot/hear_say(message, scrambled_message = "", verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null)
 	if(speaker != src)
-		parrot_hear(message)
-	..(message,verb,language,alt_name,italics,speaker)
+		if(say_understands(speaker, language))
+			parrot_hear(message)
+		else
+			parrot_hear(scrambled_message)
+	..(message, scrambled_message, verb, language, alt_name, italics, speaker)
 
 
 
-/mob/living/simple_animal/parrot/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
+/mob/living/simple_animal/parrot/hear_radio(message, scrambled_message = "", verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
 	if(speaker != src)
-		parrot_hear("[pick(available_channels)] [message]")
+		var/hear_mes = message
+		if(!say_understands(speaker, language))
+			hear_mes = scrambled_message
+
+		parrot_hear("[pick(available_channels)] [hear_mes]")
 	..()
 
 

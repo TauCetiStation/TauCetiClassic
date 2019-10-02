@@ -176,9 +176,9 @@
 /obj/proc/hides_under_flooring()
 	return level == 1
 
-/obj/proc/hear_talk(mob/M, text, verb, datum/language/speaking)
+/obj/proc/hear_talk(mob/M, text, scrambled_text, verb, datum/language/speaking)
 	if(talking_atom)
-		talking_atom.catchMessage(text, M)
+		talking_atom.catchMessage(text, scrambled_text, M)
 /*
 	var/mob/mo = locate(/mob) in src
 	if(mo)

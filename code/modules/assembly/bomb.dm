@@ -73,9 +73,9 @@
 	if(bombassembly)
 		bombassembly.HasProximity(AM)
 
-/obj/item/device/onetankbomb/hear_talk(mob/living/M, msg)
+/obj/item/device/onetankbomb/hear_talk(mob/living/M, msg, scrambled_text)
 	if(bombassembly)
-		bombassembly.hear_talk(M, msg)
+		bombassembly.hear_talk(M, msg, scrambled_text)
 
 // ---------- Procs below are for tanks that are used exclusively in 1-tank bombs ----------
 

@@ -80,9 +80,12 @@
 
 	//parse language key and consume it
 	var/datum/language/speaking = parse_language(message)
+	var/scrambled_message = ""
 	if (speaking)
 		verb = speaking.speech_verb
 		message = trim(copytext(message,2+length(speaking.key)))
+		scrambled_message = speaking.scramble(message)
+
 
 	var/area/A = get_area(src)
 
@@ -90,13 +93,13 @@
 		if("department")
 			switch(bot_type)
 				if(IS_AI)
-					return AI.holopad_talk(message, verb, speaking)
+					return AI.holopad_talk(message, scrambled_message, verb, speaking)
 				if(IS_ROBOT)
 					log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
-					R.radio.talk_into(src,message,message_mode,verb,speaking)
+					R.radio.talk_into(src, message, scrambled_message, message_mode, verb, speaking)
 				if(IS_PAI)
 					log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
-					P.radio.talk_into(src,message,message_mode,verb,speaking)
+					P.radio.talk_into(src, message, scrambled_message,  message_mode, verb, speaking)
 			return 1
 
 		if("binary")
@@ -123,13 +126,13 @@
 						return
 					else
 						log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
-						AI.aiRadio.talk_into(src,message,null,verb,speaking)
+						AI.aiRadio.talk_into(src, message, scrambled_message, null, verb, speaking)
 				if(IS_ROBOT)
 					log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
-					R.radio.talk_into(src,message,null,verb,speaking)
+					R.radio.talk_into(src, message, scrambled_message, null, verb, speaking)
 				if(IS_PAI)
 					log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
-					P.radio.talk_into(src,message,null,verb,speaking)
+					P.radio.talk_into(src, message, scrambled_message, null, verb, speaking)
 			return 1
 
 		else
@@ -141,21 +144,24 @@
 							return
 						else
 							log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
-							AI.aiRadio.talk_into(src,message,message_mode,verb,speaking)
+							AI.aiRadio.talk_into(src, message, scrambled_message, message_mode, verb, speaking)
 					if(IS_ROBOT)
 						log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
-						R.radio.talk_into(src,message,message_mode,verb,speaking)
+						R.radio.talk_into(src, message, scrambled_message, message_mode, verb, speaking)
 					if(IS_PAI)
 						log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
-						P.radio.talk_into(src,message,message_mode,verb,speaking)
+						P.radio.talk_into(src, scrambled_message, message, message_mode, verb, speaking)
 				return 1
 
 	return ..(html_decode(message),speaking,verb)
 
 //For holopads only. Usable by AI.
-/mob/living/silicon/ai/proc/holopad_talk(message, verb, datum/language/speaking)
+/mob/living/silicon/ai/proc/holopad_talk(message, scrambled_message, verb, datum/language/speaking)
 
 	log_say("[key_name(src)] : [message]")
+
+	// This is some funky-junky code where AI can format languages as they see fit
+	// but they don't actually scramble the message, so scrambled_message is unused.
 
 	message = trim(message)
 

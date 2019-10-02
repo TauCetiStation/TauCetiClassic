@@ -183,9 +183,9 @@
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
 
-/obj/mecha/hear_talk(mob/M, text)
+/obj/mecha/hear_talk(mob/M, text, scrambled_text)
 	if(M==occupant && radio.broadcasting)
-		radio.talk_into(M, text)
+		radio.talk_into(M, text, scrambled_text)
 	return
 
 ////////////////////////////

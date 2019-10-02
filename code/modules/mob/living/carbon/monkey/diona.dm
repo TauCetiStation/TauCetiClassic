@@ -322,11 +322,13 @@
 		return say_dead(message)
 
 	var/datum/language/speaking = parse_language(message)
+	var/scrambled_message = ""
 	if(speaking)
 		verb = speaking.speech_verb
 		message = trim(copytext(message,2+length(speaking.key)))
+		scrambled_message = speaking.scramble(message)
 
 	if(!message || stat)
 		return
 
-	..(message, speaking, verb, null, null, message_range, null)
+	..(message, scrambled_message, speaking, verb, null, null, message_range, null)

@@ -35,8 +35,8 @@
 	hold.emp_act(severity)
 	..()
 
-/obj/item/clothing/accessory/storage/hear_talk(mob/M, msg, verb, datum/language/speaking)
-	hold.hear_talk(M, msg, verb, speaking)
+/obj/item/clothing/accessory/storage/hear_talk(mob/M, msg, scrambled_text, verb, datum/language/speaking)
+	hold.hear_talk(M, msg, scrambled_text, verb, speaking)
 	..()
 
 /obj/item/clothing/accessory/storage/attack_self(mob/user)

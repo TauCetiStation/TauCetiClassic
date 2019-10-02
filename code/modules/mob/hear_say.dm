@@ -1,6 +1,6 @@
 // At minimum every mob has a hear_say proc.
 
-/mob/proc/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
+/mob/proc/hear_say(message, scrambled_message = "", verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
 	if(!client)
 		return
 
@@ -22,8 +22,8 @@
 			var/mob/living/carbon/ian/IAN = speaker
 			message = pick(IAN.speak)
 		else
-			if(language)
-				message = language.scramble(message)
+			if(language && scrambled_message != "")
+				message = scrambled_message
 			else
 				message = stars(message)
 
@@ -71,7 +71,7 @@
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
 
-/mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
+/mob/proc/hear_radio(message, scrambled_message = "", verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
 
 	if(!client)
 		return
@@ -97,8 +97,8 @@
 			var/mob/living/carbon/ian/IAN = speaker
 			message = pick(IAN.speak)
 		else
-			if(language)
-				message = language.scramble(message)
+			if(language) // && scrambled_message != "") This check would obscure the fact that for some reason language was passed but there was no message.
+				message = scrambled_message
 			else
 				message = stars(message)
 

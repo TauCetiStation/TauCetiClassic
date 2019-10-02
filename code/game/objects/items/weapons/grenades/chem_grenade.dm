@@ -168,9 +168,9 @@
 	if (detonator)
 		detonator.Crossed(AM)
 
-/obj/item/weapon/grenade/chem_grenade/hear_talk(mob/living/M, msg)
+/obj/item/weapon/grenade/chem_grenade/hear_talk(mob/living/M, msg, scrambled_text)
 	if (detonator)
-		detonator.hear_talk(M,msg)
+		detonator.hear_talk(M, msg, scrambled_text)
 
 /obj/item/weapon/grenade/chem_grenade/on_found(mob/finder)
 	if(detonator)

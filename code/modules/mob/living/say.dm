@@ -106,7 +106,7 @@ var/list/department_radio_keys = list(
 		if(dongle.translate_binary)
 			return 1
 
-/mob/living/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=FALSE, message_range = world.view, list/used_radios = list(), sound/speech_sound, sound_vol, sanitize = TRUE, message_mode = FALSE)
+/mob/living/say(message, scrambled_message = "", datum/language/speaking = null, verb="says", alt_name="", italics=FALSE, message_range = world.view, list/used_radios = list(), sound/speech_sound, sound_vol, sanitize = TRUE, message_mode = FALSE)
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
@@ -128,6 +128,9 @@ var/list/department_radio_keys = list(
 		if (speaking.flags & SIGNLANG)
 			say_signlang(message, pick(speaking.signlang_verb), speaking)
 			return 1
+
+		if(scrambled_message == "")
+			scrambled_message = speaking.scramble(message)
 
 	//speaking into radios
 	if(used_radios.len)
@@ -191,12 +194,12 @@ var/list/department_radio_keys = list(
 	spawn(0)
 		flick_overlay(I, speech_bubble_recipients, 30)
 	for(var/mob/M in listening)
-		M.hear_say(message, verb, speaking, alt_name, italics, src, used_radios.len, speech_sound, sound_vol)
+		M.hear_say(message, scrambled_message, verb, speaking, alt_name, italics, src, used_radios.len, speech_sound, sound_vol)
 
 	for(var/obj/O in listening_obj)
 		spawn(0)
 			if(O) //It's possible that it could be deleted in the meantime.
-				O.hear_talk(src, message, verb, speaking)
+				O.hear_talk(src, message, scrambled_message, verb, speaking)
 
 	var/area/A = get_area(src)
 	log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")

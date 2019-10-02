@@ -1,4 +1,4 @@
-/mob/living/carbon/human/say(message, ignore_appearance)
+/mob/living/carbon/human/say(message, ignore_appearance, scrambled_message = "")
 	var/verb = "says"
 	var/message_range = world.view
 	var/italics = 0
@@ -103,15 +103,18 @@
 
 	var/list/obj/item/used_radios = new
 
+	if(speaking && scrambled_message == "")
+		scrambled_message = speaking.scramble(message)
+
 	switch (message_mode)
 		if("headset")
 			if(l_ear && istype(l_ear,/obj/item/device/radio))
 				var/obj/item/device/radio/R = l_ear
-				R.talk_into(src,message,null,verb,speaking)
+				R.talk_into(src,message, scrambled_message, null, verb, speaking)
 				used_radios += l_ear
 			else if(r_ear && istype(r_ear,/obj/item/device/radio))
 				var/obj/item/device/radio/R = r_ear
-				R.talk_into(src,message,null,verb,speaking)
+				R.talk_into(src, message, scrambled_message, null, verb, speaking)
 				used_radios += r_ear
 
 		if("right ear")
@@ -124,7 +127,7 @@
 				R = r_hand
 				has_radio = 1
 			if(has_radio)
-				R.talk_into(src,message,null,verb,speaking)
+				R.talk_into(src, message, scrambled_message, null, verb, speaking)
 				used_radios += R
 
 
@@ -138,12 +141,12 @@
 				R = l_hand
 				has_radio = 1
 			if(has_radio)
-				R.talk_into(src,message,null,verb,speaking)
+				R.talk_into(src, message, scrambled_message, null,verb,speaking)
 				used_radios += R
 
 		if("intercom")
 			for(var/obj/item/device/radio/intercom/I in view(1, null))
-				I.talk_into(src, message, verb, speaking)
+				I.talk_into(src, message, scrambled_message, verb, speaking)
 				used_radios += I
 		if("whisper")
 			whisper_say(message, speaking, alt_name)
@@ -184,17 +187,17 @@
 			if(message_mode)
 				if(message_mode in (radiochannels | "department"))
 					if(l_ear && istype(l_ear,/obj/item/device/radio))
-						l_ear.talk_into(src,message, message_mode, verb, speaking)
+						l_ear.talk_into(src, message, scrambled_message, message_mode, verb, speaking)
 						used_radios += l_ear
 					else if(r_ear && istype(r_ear,/obj/item/device/radio))
-						r_ear.talk_into(src,message, message_mode, verb, speaking)
+						r_ear.talk_into(src, message, scrambled_message, message_mode, verb, speaking)
 						used_radios += r_ear
 
 	if((species.name == VOX || species.name == VOX_ARMALIS) && prob(20))
 		speech_sound = sound('sound/voice/shriek1.ogg')
 		sound_vol = 50
 
-	..(message, speaking, verb, alt_name, italics, message_range, used_radios, speech_sound, sound_vol, sanitize = FALSE, message_mode = message_mode)	//ohgod we should really be passing a datum here.
+	..(message, scrambled_message, speaking, verb, alt_name, italics, message_range, used_radios, speech_sound, sound_vol, sanitize = FALSE, message_mode = message_mode)	//ohgod we should really be passing a datum here.
 
 /mob/living/carbon/human/say_understands(mob/other,datum/language/speaking = null)
 

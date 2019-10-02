@@ -1,4 +1,5 @@
 //Lallander was here
+// why don't we put this into /mob/living/carbon... ? ~Luduk
 /mob/living/carbon/human/whisper(message as text)
 	var/alt_name = ""
 
@@ -42,7 +43,11 @@
 	else if(species.force_racial_language)
 		speaking = all_languages[species.language]
 
-	whisper_say(message, speaking, alt_name)
+	var/scrambled_message = ""
+	if(speaking)
+		scrambled_message = speaking.scramble(message)
+
+	whisper_say(message, scrambled_message, speaking, alt_name)
 
 
 //This is used by both the whisper verb and human/say() to handle whispering
@@ -52,8 +57,10 @@
 	var/watching_range = 5
 	var/italics = 1
 
+	var/scrambled_message = ""
 	if (speaking)
 		verb = speaking.speech_verb + pick(" quietly", " softly")
+		scrambled_message = speaking.scramble(message)
 
 	message = capitalize(trim(message))
 
@@ -95,7 +102,7 @@
 	for(var/obj/O in view(message_range, src))
 		spawn (0)
 			if (O)
-				O.hear_talk(src, message, verb, speaking)
+				O.hear_talk(src, message, scrambled_message, verb, speaking)
 
 	var/list/eavesdropping = hearers(eavesdropping_range, src)
 	eavesdropping -= src
@@ -122,12 +129,13 @@
 		flick_overlay(I, speech_bubble_recipients, 30)
 
 	for(var/mob/M in listening)
-		M.hear_say(message, verb, speaking, alt_name, italics, src)
+		M.hear_say(message, scrambled_message, verb, speaking, alt_name, italics, src)
 
 	if(eavesdropping.len)
 		var/new_message = stars(message)	//hopefully passing the message twice through stars() won't hurt... I guess if you already don't understand the language, when they speak it too quietly to hear normally you would be able to catch even less.
+		var/new_scrambled_message = stars(scrambled_message)
 		for(var/mob/M in eavesdropping)
-			M.hear_say(new_message, verb, speaking, alt_name, italics, src)
+			M.hear_say(new_message, new_scrambled_message, verb, speaking, alt_name, italics, src)
 
 	if(watching.len)
 		var/rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers something.</span>"

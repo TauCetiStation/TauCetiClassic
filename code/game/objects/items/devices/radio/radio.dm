@@ -205,7 +205,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	qdel(A)
 	return
 
-/obj/item/device/radio/talk_into(mob/living/M, message, channel, verb = "says", datum/language/speaking = null)
+/obj/item/device/radio/talk_into(mob/living/M, message, scrambled_text, channel, verb = "says", datum/language/speaking = null)
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
@@ -413,7 +413,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		if(!connection)	return	//~Carn
 
 		Broadcast_Message(connection, M, voicemask, pick(M.speak_emote),
-						  src, message, displayname, jobname, real_name, M.voice_name,
+						  src, message, scrambled_text, displayname, jobname, real_name, M.voice_name,
 		                  filter_type, signal.data["compression"], list(position.z), connection.frequency,verb,speaking)
 
 
@@ -590,11 +590,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					else
 						R.show_message(rendered, 2)
 
-/obj/item/device/radio/hear_talk(mob/M, msg, verb = "says", datum/language/speaking = null)
+/obj/item/device/radio/hear_talk(mob/M, msg, scrambled_text, verb = "says", datum/language/speaking = null)
 
 	if (broadcasting)
 		if(get_dist(src, M) <= canhear_range)
-			talk_into(M, msg,null,verb,speaking)
+			talk_into(M, msg, scrambled_text, null, verb, speaking)
 
 
 /*

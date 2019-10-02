@@ -425,7 +425,7 @@
 	if (callback) //call the original callback
 		. = callback.Invoke()
 
-/obj/item/proc/talk_into(mob/M, text)
+/obj/item/proc/talk_into(mob/M, text, scrambled_text)
 	return
 
 /obj/item/proc/moved(mob/user, old_loc)
