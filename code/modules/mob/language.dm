@@ -191,6 +191,15 @@
 	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
 	syllables = list ("gra","ba","ba","breh","bra","rah","dur","ra","ro","gro","go","ber","bar","geh","heh", "gra")
 
+/datum/language/turret
+	name = "Turret"
+	desc = "You can find a common language with your friends"
+	speech_verb = "twists"
+	colour = "swear"
+	key = list("v","м")
+	allowed_species = list(HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
+	syllables = list ("блять","нахуй","сука","пиздец","ебать","ебаный","ХТЬФУ","пизда","ЕБ","блядина","блядство")
+
 // Language handling.
 /mob/proc/add_language(language)
 
