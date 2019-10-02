@@ -595,8 +595,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"yellow teammate",
 		"green teammate",
 		"blue teammate",
-		"tournament standard red",
-		"tournament standard green",
+		"thunderdome standard red",
+		"thunderdome standard green",
 		"tournament gangster",
 		"tournament chef",
 		"tournament janitor",
@@ -677,8 +677,20 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	switch(dresscode)
 		if ("strip")
 			//do nothing
+		if ("standard space gear")
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), SLOT_SHOES)
+
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/globose(M), SLOT_WEAR_SUIT)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/globose(M), SLOT_HEAD)
+			var/obj/item/weapon/tank/jetpack/J = new /obj/item/weapon/tank/jetpack/oxygen(M)
+			M.equip_to_slot_or_del(J, SLOT_BACK)
+			J.toggle()
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), SLOT_WEAR_MASK)
+			J.Topic(null, list("stat" = 1))
 		if("red teammate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), SLOT_WEAR_MASK)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud/tactical(M), SLOT_GLASSES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/ert/scrapheap/red(M), SLOT_HEAD)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/red(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/ert/scrapheap/red(M), SLOT_WEAR_SUIT)
@@ -698,6 +710,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if("yellow teammate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), SLOT_WEAR_MASK)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud/tactical(M), SLOT_GLASSES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/ert/scrapheap/yellow(M), SLOT_HEAD)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/yellow(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/ert/scrapheap/yellow(M), SLOT_WEAR_SUIT)
@@ -717,6 +730,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if("green teammate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), SLOT_WEAR_MASK)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud/tactical(M), SLOT_GLASSES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/ert/scrapheap/green(M), SLOT_HEAD)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/green(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/ert/scrapheap/green(M), SLOT_WEAR_SUIT)
@@ -736,6 +750,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if("blue teammate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), SLOT_WEAR_MASK)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud/tactical(M), SLOT_GLASSES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/ert/scrapheap/blue(M), SLOT_HEAD)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/lightblue(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/ert/scrapheap/blue(M), SLOT_WEAR_SUIT)
@@ -753,19 +768,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = list(access_maint_tunnels, access_external_airlocks, access_construction)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
-		if ("standard space gear")
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), SLOT_SHOES)
-
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), SLOT_W_UNIFORM)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/globose(M), SLOT_WEAR_SUIT)
-			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/globose(M), SLOT_HEAD)
-			var/obj/item/weapon/tank/jetpack/J = new /obj/item/weapon/tank/jetpack/oxygen(M)
-			M.equip_to_slot_or_del(J, SLOT_BACK)
-			J.toggle()
-			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), SLOT_WEAR_MASK)
-			J.Topic(null, list("stat" = 1))
-		if ("tournament standard red","tournament standard green") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
-			if (dresscode=="tournament standard red")
+		if ("thunderdome standard red","thunderdome standard green") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
+			if (dresscode=="thunderdome standard red")
 				M.equip_to_slot_or_del(new /obj/item/clothing/under/color/red(M), SLOT_W_UNIFORM)
 			else
 				M.equip_to_slot_or_del(new /obj/item/clothing/under/color/green(M), SLOT_W_UNIFORM)
