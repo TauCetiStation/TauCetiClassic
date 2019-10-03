@@ -25,7 +25,7 @@
 		if (I.implanted)
 			I.trigger(act, src)
 
-	if(stat && (act != "deathgasp"))
+	if(stat == DEAD && (act != "deathgasp"))
 		return
 
 	var/his_macro = "its" // maybe put it in a separate file and expand the variables in such cases? I don't know how to make it through the BYOND macro
