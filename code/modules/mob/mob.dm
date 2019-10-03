@@ -93,11 +93,8 @@
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/mob/audible_message(message, deaf_message, hearing_distance, self_message)
-	var/range = world.view
-	if(hearing_distance)
-		range = hearing_distance
-	for(var/mob/M in get_hearers_in_view(range, src))
+/mob/audible_message(message, deaf_message, hearing_distance = world.view, self_message)
+	for(var/mob/M in get_hearers_in_view(hearing_distance, src))
 		var/msg = message
 		if(self_message && M == src)
 			msg = self_message

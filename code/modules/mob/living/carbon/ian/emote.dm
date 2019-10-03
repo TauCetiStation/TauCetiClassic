@@ -1,9 +1,4 @@
 /mob/living/carbon/ian/emote(act, m_type = 1, message = null)
-	var/param = null
-	if(findtext(act, "-", 1, null))
-		var/t1 = findtext(act, "-", 1, null)
-		param = copytext(act, t1 + 1, length(act) + 1)
-		act = copytext(act, 1, t1)
 
 	if(findtext(act, "s", -1) && !findtext(act, "_", -2))//Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act, 1, length(act))
@@ -26,7 +21,7 @@
 			return custom_emote(m_type, message)
 
 		if ("blink")
-			message = "<B>[src]</B> blinks."
+			message = "<B>[src]</B> [pick("blinks", "blinks rapidly")]."
 			m_type = 1
 
 		if ("blink_r")
@@ -84,10 +79,7 @@
 			message = "<B>[src]</B> sulks down sadly."
 			m_type = 1
 		if("twitch")
-			message = "<B>[src]</B> twitches violently."
-			m_type = 1
-		if ("twitch_s")
-			message = "<B>[src]</B> twitches."
+			message = "<B>[src]</B> [pick("twitches violently", "twitches")]."
 			m_type = 1
 		if ("faint")
 			message = "<B>[src]</B> faints."
@@ -111,19 +103,6 @@
 			m_type = 2
 		if("jump")
 			message = "<B>[src]</B> jumps!"
-			m_type = 1
-		if ("point")
-			if (!restrained())
-				var/atom/target = null
-				if (param)
-					for (var/atom/A as mob|obj|turf in oview())
-						if (param == A.name)
-							target = A
-							break
-				if (!target)
-					message = "<span class='notice'><b>[src]</b> points.</span>"
-				else
-					pointed(target)
 			m_type = 1
 		if("collapse")
 			Paralyse(2)

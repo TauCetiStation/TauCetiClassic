@@ -42,6 +42,7 @@
 				else
 					message = "<B>[src]</b> salutes."
 			m_type = 1
+
 		if ("bow")
 			if (!src.buckled)
 				var/M = null
@@ -63,22 +64,9 @@
 			if (!src.restrained())
 				message = "<B>[src]</B> claps."
 				m_type = 2
-		if ("flap")
-			if (!src.restrained())
-				message = "<B>[src]</B> flaps his wings."
-				m_type = 2
-
-		if ("aflap")
-			if (!src.restrained())
-				message = "<B>[src]</B> flaps his wings ANGRILY!"
-				m_type = 2
 
 		if ("twitch")
-			message = "<B>[src]</B> twitches violently."
-			m_type = 1
-
-		if ("twitch_s")
-			message = "<B>[src]</B> twitches."
+			message = "<B>[src]</B> [pick("twitches violently", "twitches")]."
 			m_type = 1
 
 		if ("nod")
