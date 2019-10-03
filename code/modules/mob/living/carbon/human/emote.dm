@@ -5,36 +5,45 @@
 
 // auto = FALSE means that the sound is called by a human manually; auto = TRUE - automatically, in the code
 /mob/living/carbon/human/emote(act = "", message_type = MESSAGE_VISIBLE, message = "", auto = FALSE)
-	var/param = null
 	var/cloud_emote = ""
 	var/sound_priority = LOW
 	var/hidden_for_ghosts = auto // hide unimportant messages that can be spammed for ghosts? Default depends on auto but can be changed as needed
 	var/emote_sound
 	var/initial_message = message // useful in voiced emotions
 
-	var/MUTED_message = "" // high priority. usuially VISIBLE
+	var/mute_message = "" // high priority. usuially VISIBLE
 	var/muzzled_message = "" // medium priority. usually HEARABLE
 	var/miming_message = "" // low priority. usually VISIBLE
 
+// Constants. Even if they do not have a constant modifier, they are implied as constants
 	var/MUTED = has_trait(TRAIT_MUTE)
 	var/MUZZLED = istype(wear_mask, /obj/item/clothing/mask/muzzle)
 	var/SILENT = silent
 	var/CAN_MAKE_A_SOUND = !(MUTED || MUZZLED || SILENT)
 
-	if (findtext(act, "-", 1, null))
-		var/t1 = findtext(act, "-", 1, null)
-		param = copytext(act, t1 + 1, length(act) + 1)
-		act = copytext(act, 1, t1)
-
-	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act,1,length(act))
-
 	for (var/obj/item/weapon/implant/I in src)
 		if (I.implanted)
 			I.trigger(act, src)
 
-	if(stat == DEAD && (act != "deathgasp"))
+	if(stat && (act != "deathgasp"))
 		return
+
+	var/his_macro = "its" // maybe put it in a separate file and expand the variables in such cases? I don't know how to make it through the BYOND macro
+	switch(gender)
+		if(FEMALE)
+			his_macro = "her"
+		if(MALE)
+			his_macro = "his"
+		if(PLURAL)
+			his_macro = "their"
+	var/he_macro = "it" // this too
+	switch(gender)
+		if(FEMALE)
+			he_macro = "she"
+		if(MALE)
+			he_macro = "he"
+		if(PLURAL)
+			he_macro = "they"
 
 	switch(act)
 
@@ -44,99 +53,99 @@
 			message_type = MESSAGE_AUDIBLE
 			cloud_emote = "cloud-pain"
 			message = pick("grunts slightly.", "groans.")
-			MUTED_message = "writhes and sighs sligtly."
+			mute_message = "writhes and sighs sligtly."
 			muzzled_message = "groans silently!"
 			miming_message = "appears to groan!"
 			if(auto)
 				sound_priority = MEDIUM
-				// message = pick("grunts in pain!", "grunts!", "wrinkles \his face and grunts!") TODO \his
-				emote_sound = (gender == FEMALE) ? SOUNDIN_FEMALE_LIGHT_PAIN : SOUNDIN_MALE_LIGHT_PAIN
+				message = pick("grunts in pain!", "grunts!", "wrinkles [his_macro] face and grunts!")
+				emote_sound = (gender == FEMALE) ? pick(SOUNDIN_FEMALE_LIGHT_PAIN) : pick(SOUNDIN_MALE_LIGHT_PAIN)
 
-		if("groan") // "pain"
+		if("groan")
 			message_type = MESSAGE_AUDIBLE
-			cloud_emote = "cloud-pain"
 			message = "groans."
-			MUTED_message = "writhes and sighs sligtly."
+			mute_message = "writhes and sighs sligtly."
 			muzzled_message = "makes a weak noise."
 			miming_message = pick("slightly moans feigning pain.", "appears to be in pain!")
 			if(auto)
+				cloud_emote = "cloud-pain"
 				sound_priority = MEDIUM
-				//message = pick("groans in pain.", "slightly winces in pain and groans.", "presses \his lips together in pain and groans.", "twists in pain.") TODO \his
+				message = pick("groans in pain.", "slightly winces in pain and groans.", "presses [his_macro] lips together in pain and groans.", "twists in pain.")
 				if((species.name != SKRELL) && has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(50)) // skrells don't have much emotions to cry in pain, but they can still groan
-					emote_sound = pick(gender == FEMALE ? SOUNDIN_FEMALE_WHINER_PAIN : SOUNDIN_MALE_WHINER_PAIN)
+					emote_sound = pick((gender == FEMALE) ? SOUNDIN_FEMALE_WHINER_PAIN : SOUNDIN_MALE_WHINER_PAIN)
 				else
-					emote_sound = pick(gender == FEMALE ? SOUNDIN_FEMALE_PASSIVE_PAIN : SOUNDIN_MALE_PASSIVE_PAIN)
+					emote_sound = pick((gender == FEMALE) ? SOUNDIN_FEMALE_PASSIVE_PAIN : SOUNDIN_MALE_PASSIVE_PAIN)
 
 		if ("scream")
 			message_type = MESSAGE_AUDIBLE
 			cloud_emote = "cloud-scream"
 			message = pick("screams loudly!", "screams!")
-			MUTED_message = pick("opens their mouth like a fish gasping for air!", "twists their face into an agonised expression!", "makes a very hurt expression!")
+			mute_message = pick("opens their mouth like a fish gasping for air!", "twists their face into an agonised expression!", "makes a very hurt expression!")
 			muzzled_message = pick("makes a loud noise!", "groans soundly!", "screams silently!")
 			miming_message = "acts out a scream!"
 			if(auto)
 				sound_priority = HIGH
-				message = pick("screams in agony!", "writhes in heavy pain and screams!", "screams in pain as much as [gender == FEMALE ? "she" : "he"] can!", "screams in pain loudly!")
-				emote_sound = (gender == FEMALE) ? pick(SOUNDIN_FEMALE_HEAVY_PAIN) : pick(SOUNDIN_MALE_HEAVY_PAIN)
+				message = pick("screams in agony!", "writhes in heavy pain and screams!", "screams in pain as much as [he_macro] can!", "screams in pain loudly!")
+				emote_sound = pick((gender == FEMALE) ? SOUNDIN_FEMALE_HEAVY_PAIN : SOUNDIN_MALE_HEAVY_PAIN)
 
 		if ("cough")
 			message_type = MESSAGE_AUDIBLE
 			message = (get_species() == DIONA) ? "creaks." : "coughs."
-			MUTED_message = (get_species() == DIONA) ? "creaks." : "coughs."
+			mute_message = (get_species() == DIONA) ? "creaks." : "coughs."
 			muzzled_message = "appears to [(get_species() == DIONA) ? "creak" : "cough"]."
 			miming_message = (get_species() == DIONA) ? "creaks." : "coughs."
 			if(auto)
 				sound_priority = MEDIUM
-				emote_sound = (gender == FEMALE) ? pick(SOUNDIN_FBCOUGH) : pick(SOUNDIN_MBCOUGH)
+				emote_sound = pick((gender == FEMALE) ? SOUNDIN_FBCOUGH : SOUNDIN_MBCOUGH)
 
 // ========== AUDIBLE ==========
 
 		if ("choke")
 			message_type = MUTED ? MESSAGE_VISIBLE : MESSAGE_AUDIBLE
 			message = "chokes."
-			MUTED_message = "clutches their throat desperately!"
+			mute_message = "clutches their throat desperately!"
 			muzzled_message = "makes a weak noise."
 			miming_message = message
 
 		if ("snore")
 			message_type = MESSAGE_AUDIBLE
 			message = pick("snores.", "sleeps soundly.")
-			MUTED_message = message
+			mute_message = message
 			muzzled_message = pick("snores.", "makes a noise.")
 			miming_message = "snores."
 
 		if ("whimper")
 			message_type = MESSAGE_AUDIBLE
 			message = "whimpers."
-			MUTED_message = "whimpers"
+			mute_message = "whimpers"
 			muzzled_message = pick("whimpers.", "makes a weak noise.", "whines.")
 			miming_message = "whimpers."
 
 		if ("sniff")
 			message_type = MESSAGE_AUDIBLE
 			message = "sniffs."
-			MUTED_message = "sniffs."
+			mute_message = "sniffs."
 			muzzled_message = "sniffs."
 			miming_message = "sniffs."
 
 		if ("sneeze")
 			message_type = MESSAGE_AUDIBLE
 			message = "sneezes."
-			MUTED_message = "sneezes."
+			mute_message = "sneezes."
 			muzzled_message = "makes a strange noise"
 			miming_message = "sneezes"
 
 		if ("gasp")
 			message_type = MESSAGE_AUDIBLE
 			cloud_emote = "cloud-gasp"
-			MUTED_message = "sucks in air violently!"
+			mute_message = "sucks in air violently!"
 			miming_message = "appears to be gasping!"
 			muzzled_message = "makes a weak noise."
 			message = "gasps!"
 
 		if ("moan")
 			message_type = MESSAGE_AUDIBLE
-			MUTED_message = "moans silently."
+			mute_message = "moans silently."
 			miming_message = "appears to moan!"
 			muzzled_message = "moans silently!"
 			message = "moans!"
@@ -144,21 +153,21 @@
 		if ("sigh")
 			message_type = MESSAGE_AUDIBLE
 			message = "sighs."
-			MUTED_message = message
+			mute_message = message
 			muzzled_message = "makes a weak noise."
 			miming_message = "sighs."
 
 		if ("mumble")
 			message_type = MESSAGE_VISIBLE
 			message = pick("grumbles.", "mumbles.")
-			MUTED_message = "makes an annoyed face!"
+			mute_message = "makes an annoyed face!"
 			muzzled_message = "makes a weak noise"
 			miming_message = message
 
 		if ("groan")
 			message_type = MESSAGE_AUDIBLE
 			message = "groans"
-			MUTED_message = "makes a very annoyed face."
+			mute_message = "makes a very annoyed face."
 			muzzled_message = "makes a noise."
 			miming_message = message
 
@@ -167,21 +176,21 @@
 		if ("laugh")
 			message_type = MESSAGE_AUDIBLE | MESSAGE_VISIBLE
 			message = "laughs"
-			MUTED_message = "laughs silently."
+			mute_message = "laughs silently."
 			muzzled_message = pick("makes a weak noise.", "giggles sligthly.")
 			miming_message = "acts out a laugh"
 
 		if ("cry")
 			message_type = MESSAGE_AUDIBLE | MESSAGE_VISIBLE
 			message = "cries"
-			MUTED_message = message
+			mute_message = message
 			muzzled_message = "makes a [pick("sad face", "weak noise")] and frowns."
 			miming_message = "cries."
 
 		if ("giggle")
 			message_type = MESSAGE_AUDIBLE | MESSAGE_VISIBLE
 			message = pick("chuckles.", "giggles.")
-			MUTED_message = "smiles slightly and [pick("chuckles", "giggles")] silently"
+			mute_message = "smiles slightly and [pick("chuckles", "giggles")] silently"
 			muzzled_message = "[pick("chuckles", "giggles")] slightly."
 			miming_message = "appears to [pick("chuckle", "giggle")]."
 
@@ -192,6 +201,12 @@
 				return
 
 // ========== VISIBLE ==========
+
+		if ("raisehand")
+			message_type = MESSAGE_VISIBLE
+			message = "raises a hand."
+			if(restrained())
+				return
 
 		if ("blink")
 			message_type = MESSAGE_VISIBLE
@@ -227,31 +242,15 @@
 
 		if ("deathgasp")
 			message_type = MESSAGE_VISIBLE
-			message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..." // TODO \his
+			message = "seizes up and falls limp, [his_macro] eyes dead and lifeless..."
 
 		if ("grin")
 			message_type = MESSAGE_VISIBLE
-			message = "<B>[src]</B> grins."
-
-		if ("raisehand")
-			message_type = MESSAGE_VISIBLE
-			message = "raises a hand."
-			if(restrained())
-				return
+			message = "grins."
 
 		if ("shrug")
 			message_type = MESSAGE_VISIBLE
 			message = "shrugs."
-
-		if ("signal")
-			message_type = MESSAGE_VISIBLE
-			if (!src.restrained())
-				var/t1 = round(text2num(param))
-				if (isnum(t1))
-					if (t1 <= 5 && (!src.r_hand || !src.l_hand))
-						message = "raises [t1] finger\s."
-					else if (t1 <= 10 && (!src.r_hand && !src.l_hand))
-						message = "raises [t1] finger\s."
 
 		if ("smile")
 			message_type = MESSAGE_VISIBLE
@@ -314,7 +313,7 @@
 			return custom_emote(message_type, message)
 
 		if ("help")
-			to_chat(src, "<span class='notice'>Voiced in <B>BOLD<B>: grunt, groan, scream, choke, snore, whimper, sniff, sneeze, gasp, moan, sigh, mumble, groan, \
+			to_chat(src, "<span class='notice'>Voiced in <B>BOLD</B>: grunt, groan, scream, choke, snore, whimper, sniff, sneeze, gasp, moan, sigh, mumble, groan, \
 			                                                         laugh, cry, giggle, clap, blink, drool, eyebrow, twitch, frown, nod, blush, wave, deathgasp, \
 			                                                         grin, raisehand, shrug, signal, smile, shiver, wink, yawn, collapse, bow, salute.</span>")
 
@@ -327,7 +326,7 @@
 		message = initial_message
 	if((message_type & MESSAGE_AUDIBLE) && !(message_type & MESSAGE_VISIBLE)) // if(the human's mouth makes a sound, not something else). A bit crutchy but what to do
 		if(MUTED)
-			message = MUTED_message
+			message = mute_message
 		else if(MUZZLED || SILENT)
 			message = muzzled_message
 		else if(miming)
@@ -339,21 +338,29 @@
 	log_emote("[name]/[key] : [message]")
 
 	if(message_type & MESSAGE_VISIBLE)
-		visible_message(message)
+		for(var/mob/M in viewers(src))
+			M.show_message("<B>[src]</B> [message]", MESSAGE_VISIBLE, (message_type & MESSAGE_AUDIBLE) ? "You can hear that someone [message]" : null, MESSAGE_AUDIBLE)
 	else if (message_type & MESSAGE_AUDIBLE)
-		audible_message(message)
 		if(emote_sound && CAN_MAKE_A_SOUND)
 			if(sound_priority == HIGH && next_high_priority_sound < world.time)
 				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE)
-				next_high_priority_sound = auto ? next_high_priority_sound : (world.time + 4 SECONDS)
+				next_high_priority_sound = world.time + 4 SECONDS
+				next_medium_priority_sound = next_high_priority_sound
+				next_low_priority_sound = next_high_priority_sound
 			else if(sound_priority == MEDIUM && next_medium_priority_sound < world.time)
 				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE)
-				next_medium_priority_sound = auto ? next_medium_priority_sound : (world.time + 4 SECONDS)
+				next_medium_priority_sound = world.time + 4 SECONDS
+				next_low_priority_sound = next_medium_priority_sound
 			else if(sound_priority == LOW && next_low_priority_sound < world.time)
 				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE)
-				next_low_priority_sound = auto ? next_low_priority_sound : (world.time + 4 SECONDS)
+				next_low_priority_sound = world.time + 4 SECONDS
 			else if(!auto)
 				to_chat(src, "<span class='warning'>You can't make sounds that often, you have to wait a bit.</span>")
+				return
+			else
+				return
+		for(var/mob/M in get_hearers_in_view(world.view, src))
+			M.show_message(((sdisabilities & BLIND) || blinded) ? "You can hear that someone [message]" : "<B>[src]</B> [message]", MESSAGE_AUDIBLE, (message_type & MESSAGE_VISIBLE) ? "You can see that <B>[src]</B> [message]" : null, MESSAGE_VISIBLE)
 
 	if(!hidden_for_ghosts)
 		for(var/mob/M in observer_list)

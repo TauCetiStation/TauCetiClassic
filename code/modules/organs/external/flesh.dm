@@ -97,46 +97,46 @@
 		switch(total_weapon_damage)
 			if(1 to 4)
 				if(BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(total_weapon_damage * 15))
-					previous_pain_emote_name = "moan"
+					previous_pain_emote_name = "grunt"
 			if(5 to 19)
 				if(BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(total_weapon_damage * 5))
 					pain_emote_name = "scream"
 				else if(BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && prob(total_weapon_damage * 5))
-					previous_pain_emote_name = "moan"
+					previous_pain_emote_name = "grunt"
 				else
-					previous_pain_emote_name = "moan"
+					previous_pain_emote_name = "grunt"
 			if(20 to INFINITY)
 				if(BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && !prob(total_weapon_damage))
-					pain_emote_name = "moan"
+					pain_emote_name = "grunt"
 				else if(BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) || prob(total_weapon_damage * 3))
 					previous_pain_emote_name = "scream"
 				else
-					previous_pain_emote_name = "moan"
+					previous_pain_emote_name = "grunt"
 		switch(current_bp_damage)
 			if(1 to 15)
 				if((!BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && prob(current_bp_damage * 4)) || (BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(current_bp_damage * 6)))
-					pain_emote_name = "moan"
+					pain_emote_name = "grunt"
 			if(15 to 29)
 				if(total_weapon_damage < 20)
 					if(BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(current_bp_damage * 3))
 						pain_emote_name = "scream"
 					else if(BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && prob(current_bp_damage * 3))
-						pain_emote_name = "moan"
+						pain_emote_name = "grunt"
 					else
-						pain_emote_name = "moan"
+						pain_emote_name = "grunt"
 			if(30 to INFINITY)
 				if(BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && !prob(current_bp_damage))
-					pain_emote_name = "moan"
-				else if(prob(current_bp_damage) || BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD))
+					pain_emote_name = "grunt"
+				else if(prob(current_bp_damage + total_weapon_damage * 4) || BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD))
 					pain_emote_name = "scream"
 				else
-					pain_emote_name = "moan"
+					pain_emote_name = "grunt"
 		if(pain_emote_name)
 			BP.owner.time_of_last_damage = world.time // don't cry from the pain that just came
 			if(previous_pain_emote_name == "scream" || pain_emote_name == "scream") // "scream" sounds have priority
 				BP.owner.emote("scream", auto = TRUE)
 			else
-				BP.owner.emote("moan", auto = TRUE)
+				BP.owner.emote("grunt", auto = TRUE)
 
 	//If limb took enough damage, try to cut or tear it off
 	if(BP.owner && !(BP.is_stump))

@@ -34,31 +34,32 @@
 
 	usr.show_message(t, 1)
 
-/mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+// TODO: refactor show_message() due to obsolescence and a large number of defects
+/mob/proc/show_message(message, message_type = MESSAGE_VISIBLE, alternative_message, alternative_message_type)
 
 	if(!client)
 		return FALSE
 
-	if(type)
-		if((type & 1) && ((sdisabilities & BLIND) || blinded || paralysis) )//Vision related
-			if(!alt)
+	if(message_type)
+		if((message_type & MESSAGE_VISIBLE) && ((sdisabilities & BLIND) || blinded || paralysis) )//Vision related
+			if(!alternative_message)
 				return FALSE
 			else
-				msg = alt
-				type = alt_type
-		if((type & 2) && ((sdisabilities & DEAF) || ear_deaf))//Hearing related
-			if (!alt)
+				message = alternative_message
+				message_type = alternative_message_type
+		if((message_type & MESSAGE_AUDIBLE) && ((sdisabilities & DEAF) || ear_deaf))//Hearing related
+			if (!alternative_message)
 				return FALSE
 			else
-				msg = alt
-				type = alt_type
-				if (((type & 1) && (sdisabilities & BLIND)))
+				message = alternative_message
+				message_type = alternative_message_type
+				if (((message_type & MESSAGE_VISIBLE) && (sdisabilities & BLIND)))
 					return FALSE
 	// Added voice muffling for Issue 41.
-	if(stat == UNCONSCIOUS || sleeping > 0)
-		msg = "<I>... You can almost hear someone talking ...</I>"
-	to_chat(src, msg)
-	return msg
+	if(stat)
+		message = "<I>... You can almost hear someone talking ...</I>" // TODO: Add a division for emotions, speech, etc. Anything can get in here, not just talk
+	to_chat(src, message)
+	return message
 
 /mob/living/carbon/show_message(msg, type, alt, alt_type)
 	. = ..()
@@ -76,7 +77,7 @@
 		var/msg = message
 		if(self_message && M == src)
 			msg = self_message
-		M.show_message(msg, 1, blind_message, 2)
+		M.show_message(msg, MESSAGE_VISIBLE, blind_message, MESSAGE_AUDIBLE)
 
 // Show a message to all mobs in sight of this atom
 // Use for objects performing visible actions
@@ -84,7 +85,7 @@
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 /atom/proc/visible_message(message, blind_message)
 	for(var/mob/M in viewers(src))
-		M.show_message(message, 1, blind_message, 2)
+		M.show_message(message, MESSAGE_VISIBLE, blind_message, MESSAGE_AUDIBLE)
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
@@ -98,7 +99,7 @@
 		var/msg = message
 		if(self_message && M == src)
 			msg = self_message
-		M.show_message(msg, 2, deaf_message, 1)
+		M.show_message(msg, MESSAGE_AUDIBLE, deaf_message, MESSAGE_VISIBLE)
 
 // Show a message to all mobs in earshot of this atom
 // Use for objects performing audible actions
@@ -111,7 +112,7 @@
 	if(hearing_distance)
 		range = hearing_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
-		M.show_message(message, 2, deaf_message, 1)
+		M.show_message(message, MESSAGE_AUDIBLE, deaf_message, MESSAGE_VISIBLE)
 
 /mob/proc/findname(msg)
 	for(var/mob/M in mob_list)
