@@ -592,7 +592,7 @@
 		return
 	if(next_leap > world.time)
 		return
-	if(H.head?.flags & HEADCOVERSMOUTH)
+	if(H.head && H.head.flags & HEADCOVERSMOUTH)
 		return
 	if(H.equip_to_slot_if_possible(src, SLOT_WEAR_MASK, disable_warning = TRUE))
 		H.visible_message("<span class='danger'>[src] leaps at [H]'s face!</span>")
