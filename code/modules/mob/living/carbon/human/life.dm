@@ -1124,6 +1124,7 @@
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
 		blinded = 1
 		silent = 0
+		clear_stat_indicator()
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()	//TODO
 		if(!in_stasis)
