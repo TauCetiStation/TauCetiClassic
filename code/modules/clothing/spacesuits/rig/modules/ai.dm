@@ -245,6 +245,58 @@
 		"The suit power is almost dead, can't help you much",
 		)
 
+/datum/rig_aivoice/MK_2
+	name = "Mk II"
+	welcome_message = "Hello. It's nice to meet you"
+	damage_message = "Ouch. I am not used to feeling pain"
+	destroyed_message = "Hello... anyone......"
+
+	health_warnings = list(
+		"I've found some scrathes",
+		"Caution, you're not looking good",
+		"It would be nice for you, to leave the area you are in",
+		"Please seek help, I don't want you to die",
+		"Please, don't die on me...."
+		)
+
+	breach_warnings = list(
+		"I'm taking hits",
+		"I'm almost breached",
+		"Integrity is neutralized"
+		)
+
+	energy_warnings = list(
+		"Power is at 50%",
+		"It would be nice if you recharged me",
+		"Hurry up, the battery is almost dead"
+		)
+
+/datum/rig_aivoice/shodan
+	name = "S.H.O.D.A.N."
+	welcome_message = "Don't challenge my eminence, insect. For you are my avatar, and i shall shepherd you from the darkness"
+	damage_message = "Pathetic creatures. How can they challenge a perfect, immortal machine ?"
+	destroyed_message = "I don't understand, how could this be happening...."
+
+	health_warnings = list(
+		"I am not to be disturbed with your pathetic wounds, irritant",
+		"Steel yourself for a struggle, insect, i still have need of you",
+		"Do not neglect your health for nothing, mortal, your survival bothers me more, then you can imagine",
+		"Your wrongdoings will be the end of us both, irritant. Seek medical help immediatly",
+		"Looks like i was wrong about you after all"
+		)
+
+	breach_warnings = list(
+		"My form is taking damage, insect",
+		"This suit is almost breached, irritant",
+		"I assume you are content with your irranity, insect, this suit is breached"
+		)
+
+	energy_warnings = list(
+		"Suit's power is at 50%",
+		"Be on alert, insect, suit power is running out",
+		"The suit power is almost dead,find a recharger, irritant"
+		)
+
 /obj/item/rig_module/simple_ai/advanced
 	name = "hardsuit advanced diagnostic system"
 	origin_tech = "programming=4"
