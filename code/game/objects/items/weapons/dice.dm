@@ -179,16 +179,16 @@
 	if(result == 1)
 		poof()
 
-/obj/item/weapon/dice/ghost/d20/throw_at(mob/living/target, range, speed, mob/living/thrower)
+/obj/item/weapon/dice/ghost/d20/throw_at(mob/living/target, range, speed, mob/user)
 	diceroll()
 	..()
 	if(result == 20)
-		if(thrower.a_intent == "help")
-			to_chat(target, "<span class='notice'>You suddenly feel sligly better because of [thrower]'s luck.</span>")
+		if(user.a_intent == "help")
+			to_chat(target, "<span class='notice'>You suddenly feel sligly better because of [user]'s luck.</span>")
 			target.adjustBruteLoss(-1)
 			target.adjustFireLoss(-1)
 		else
-			to_chat(target, "<span class='warning'>You suddenly feel bamboozled because of [thrower]'s luck!</span>")
+			to_chat(target, "<span class='warning'>You suddenly feel bamboozled because of [user]'s luck!</span>")
 			target.confused += SLIGHTLY_CONFUSED
 	if(result == 1)
 		poof()

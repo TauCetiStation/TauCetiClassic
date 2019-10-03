@@ -384,7 +384,7 @@
 	if ( emagged ) // Warning, hungry humans detected: throw fertilizer at them
 		spawn(0)
 			fert.loc = src.loc
-			fert.throw_at(target, 16, 3, src)
+			fert.throw_at(target, 16, 3)
 		src.visible_message("<span class='warning'><b>[src] launches [fert.name] at [target.name]!</b></span>")
 		flick("farmbot_broke", src)
 		spawn (FARMBOT_EMAG_DELAY)

@@ -342,7 +342,7 @@
 		break
 	if(!throw_item)
 		return 0
-	throw_item.throw_at(target,16,3,src)
+	throw_item.throw_at(target,16,3)
 	src.visible_message("<span class='warning'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
 	return 1
 

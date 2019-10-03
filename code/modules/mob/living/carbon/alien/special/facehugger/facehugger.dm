@@ -183,7 +183,7 @@
 		var/mob/living/carbon/alien/facehugger/FH = current_hugger
 		FH.show_message(message,m_type)
 
-/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin)
+/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/user, spin)
 	if(!..())
 		return
 	if(stat == CONSCIOUS)

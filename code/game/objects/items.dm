@@ -417,9 +417,9 @@
 				S.handle_item_insertion(src)
 	return FALSE
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
+/obj/item/throw_at(atom/target, range, speed, mob/user, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	callback = CALLBACK(src, .proc/after_throw, callback) // Replace their callback with our own.
-	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
+	. = ..(target, range, speed, user, spin, diagonals_first, callback)
 
 /obj/item/proc/after_throw(datum/callback/callback)
 	if (callback) //call the original callback
