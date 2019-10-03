@@ -1211,6 +1211,14 @@
 		if(!sleeping) //No refactor - no life!
 			clear_alert("asleep")
 
+		if(stat == UNCONSCIOUS)
+			if(client)
+				throw_stat_indicator(IND_STAT)
+			else
+				throw_stat_indicator(IND_STAT_NOCLIENT)
+		else
+			clear_stat_indicator()
+
 		if(embedded_flag && !(life_tick % 10))
 			var/list/E
 			E = get_visible_implants(0)
