@@ -57,14 +57,6 @@
 	if(istype(M, /mob/living/carbon))
 		M.playsound_local(null, melody, VOL_EFFECTS_MASTER, 20, FALSE, channel = lchannel, wait = TRUE, ignore_environment = TRUE)
 
-//2558 Space Olympics by Uboaaaaaa
-
-/obj/structure/sign/velocity_overlay/reklama/retro //If you are cleaning up the code, add it to general poster collection under var/global/list/legitposters
-	name = "- 2558 Space Olympics"
-	desc = "A poster glorifying forgotten Olympic champion - a golden medalist of 2558 in Robusting. Signed for a faithful fan, a champion's signature reads 'Katie'."
-	icon = 'code/modules/teamchallenge/challenge.dmi'
-	icon_state = "poster58_legit"
-
 //Glowing arrow direction affects decal color: Red - north. Yellow - east. Green - south. Blue - west.
 
 /obj/effect/decal/cleanable/glowingarrow
@@ -77,34 +69,13 @@
 	icon = 'code/modules/teamchallenge/challenge.dmi'
 	icon_state = "arrow"
 
-//Colorful lights
+//2558 Space Olympics by Uboaaaaaa
 
-/obj/machinery/light/small/green
-	name = "green light fixture"
-	desc = "A small green lighting fixture."
-	brightness_range = 4
-	brightness_power = 2
-	brightness_color = "#00cc00"
-	light_color = "#00cc00"
-	nightshift_light_color = "#00cc00"
-
-/obj/machinery/light/small/ultramarine
-	name = "ultramarine light fixture"
-	desc = "A small ultramarine lighting fixture... For the Emprah!"
-	brightness_range = 4
-	brightness_power = 2
-	brightness_color = "#0000ff"
-	light_color = "#0000ff"
-	nightshift_light_color = "#0000ff"
-
-/obj/machinery/light/small/purple
-	name = "purple light fixture"
-	desc = "A small purple lighting fixture."
-	brightness_range = 4
-	brightness_power = 2
-	brightness_color = "#ff00ff"
-	light_color = "#ff00ff"
-	nightshift_light_color = "#ff00ff"
+/obj/structure/sign/velocity_overlay/reklama/retro //If you are cleaning up the code, add it to general poster collection under var/global/list/legitposters
+	name = "- 2558 Space Olympics"
+	desc = "A poster glorifying forgotten Olympic champion - a golden medalist of 2558 in Robusting. Signed for a faithful fan, a champion's signature reads 'Katie'."
+	icon = 'code/modules/teamchallenge/challenge.dmi'
+	icon_state = "poster58_legit"
 
 //Team warheads - robust explosive fuel tanks, they don't beep and can't be detected unless seen directly. C4 primer adds random factor and fun calculations to it.
 
@@ -275,34 +246,7 @@
 	reagents.add_reagent("nutriment", 10)
 	update_icon()
 
-//iVend-o-mat / iVent / Event-o-mat - Softheart wuz here.
-
-/obj/machinery/vending/ivend
-	name = "iVend-o-mat"
-	desc = "A specialized Scrapheap Challenge construction materials and equipment vendor."
-	icon = 'code/modules/teamchallenge/challenge.dmi'
-	icon_state = "ivend"
-	products = list(/obj/item/stack/sheet/metal/fifty = 4, /obj/item/stack/sheet/glass/fifty = 4, /obj/item/stack/sheet/wood/fifty = 4,
-					/obj/item/weapon/airlock_electronics = 15 , /obj/item/weapon/stock_parts/cell/high = 15, /obj/item/weapon/module/power_control = 10,
-					/obj/item/stack/cable_coil/random = 10, /obj/item/device/assembly/signaler = 10, /obj/item/device/assembly/infra = 10,
-					/obj/item/device/assembly/prox_sensor = 10, /obj/item/weapon/weldpack = 5, /obj/item/weapon/storage/box/lights/mixed = 4,
-					/obj/item/weapon/soap/nanotrasen = 2, /obj/item/weapon/reagent_containers/hypospray/autoinjector/junkfood = 70)
-	contraband = list(/obj/random/randomfigure = 1, /obj/random/plushie = 1)
-	product_ads = "It's iVend time!;iVend-o-mat - for all your iVend needs!;uBuild while iVend.;Hurry up, the time is running out!;Every iVend-o-mat unit is valuable - don't let anyone steal yours!;This iVend is sponsored by Tau Ceti branch of NanoTrasen Corporation!;iVend - a good way to get away from routine!;A new life awaits you in the Off-world colonies. The chance to begin again in a golden land of opportunity and adventure."
-
-//Agent F
-
-/mob/living/simple_animal/pug/frank
-	name = "Frank"
-	real_name = "Frank"
-	desc = "It's a pug. Not at all suspicious, pug."
-	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "Who let the dogs out?! Woof, woof, woof, woof, woof!", "Grrrrr... Bark! Bark! Bark!", "You humans! When will you learn size doesn't matter? Just because something's important, doesn't mean it's not very small.", "How about we do the good cop, bad cop routine? You can interrogate the witness, and I'll just growl. Grrrrr...", "Listen, partner. I may look like a dog, but I'm only play one here.")
-	speak_emote = list("says", "barks", "woofs")
-	emote_hear = list("barks", "woofs", "yaps", "pants", "looks around", "adjusts the skin")
-	emote_see = list("shakes its head", "chases its tail", "shivers", "laughs", "pretends to be a dog", "hums a pop song")
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/xenomeat = 3)
-
-//Team toolboxes - these look a bit different from those found on the Station.
+//Team toolboxes with all the essentials.
 
 /obj/item/weapon/storage/toolbox/scrapheap
 	name = "challenge toolbox"
@@ -361,6 +305,8 @@
 	light_range = 7
 	light_power = 2
 
+//"Let's have some fun!" - BartNixon
+
 //The crate that held the Ark of the Covenant following its discovery by Indiana Jones in 1936.
 
 /obj/structure/closet/crate/secure/woodseccrate/ark
@@ -381,140 +327,14 @@
 	max_water = 777
 	spray_range = 7
 
-//Bomb spawner
+//Agent F
 
-var/list/bomb_spawners = list()
-
-/obj/structure/bomb_telepad
-	name = "warhead transporter"
-	desc = "A bluespace telepad used for teleporting objects to and from a location."
-	icon = 'icons/obj/telescience.dmi'
-	icon_state = "pad-idle-o"
-	anchored = 0
-
-	var/spawntype = /obj/structure/reagent_dispensers/fueltank/warhead/red
-
-/obj/structure/bomb_telepad/red
-	name = "red warhead transporter"
-	spawntype = /obj/structure/reagent_dispensers/fueltank/warhead/red
-
-/obj/structure/bomb_telepad/yellow
-	name = "yellow warhead transporter"
-	spawntype = /obj/structure/reagent_dispensers/fueltank/warhead/yellow
-
-/obj/structure/bomb_telepad/blue
-	name = "blue warhead transporter"
-	spawntype = /obj/structure/reagent_dispensers/fueltank/warhead/blue
-
-/obj/structure/bomb_telepad/green
-	name = "green warhead transporter"
-	spawntype = /obj/structure/reagent_dispensers/fueltank/warhead/green
-
-/obj/structure/bomb_telepad/atom_init()
-	bomb_spawners += src
-
-/obj/structure/bomb_telepad/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W))
-		to_chat(user, "<span class='notice'>You [anchored ? "unattached" : "attached"] the [src].</span>")
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		anchored = !anchored
-		icon_state = anchored ? "pad-idle" : "pad-idle-o"
-
-/obj/structure/bomb_telepad/proc/do_spawn()
-	new spawntype(loc)
-
-//Fake shield barrier preventing teams from attacking each other during construction and bombardment phases.
-
-var/event_field_stage = 1 //1 - nothing, 2 - objects, 3 - all
-
-var/list/team_shields = list()
-
-/proc/set_event_field_stage(value)
-	event_field_stage = value
-
-	for(var/obj/effect/decal/teamchallenge/shield in team_shields)
-		shield.update_icon()
-
-/obj/effect/decal/teamchallenge
-	name = "force field"
-	desc = "It prevents teams from attacking each other too early. Nothing can pass through the field."
-	density = 0
-	anchored = 1
-	layer = 2
-	light_range = 3
-	icon = 'code/modules/teamchallenge/challenge.dmi'
-	icon_state = "energyshield"
-	color = "#66ccff"
-
-/obj/effect/decal/teamchallenge/atom_init()
-	. = ..()
-	team_shields += src
-	update_icon()
-
-/obj/effect/decal/teamchallenge/Destroy()
-	team_shields -= src
-	return ..()
-
-/obj/effect/decal/teamchallenge/ex_act()
-	return
-
-/obj/effect/decal/teamchallenge/CanPass(atom/movable/mover)
-	if(event_field_stage==3)
-		return 1
-	else if(isobj(mover) && event_field_stage==2)
-		return 1
-	else
-		return 0
-
-/obj/effect/decal/teamchallenge/update_icon()
-	switch(event_field_stage)
-		if(1)
-			desc = "It prevents teams from attacking each other too early. Nothing can pass through the field."
-			icon_state = "energyshield"
-			color = "#66ccff"
-		if(2)
-			desc = "Looks like this field is less dense than usual. Only inanimate objects can pass through the field."
-			icon_state = "energyshield"
-			color = "#ffcc66"
-		if(3)
-			desc = "Robust at last! Anything can pass through the field when it's green."
-			icon_state = "energyshield"
-			color = "#00ff00"
-
-//Admin verb toggles
-
-var/list/event_verbs = list(/client/proc/toggle_fields, /client/proc/spawn_bomb)
-
-//1 - nothing, 2 - objects, 3 - all
-
-/client/proc/toggle_fields()
-	set category = "Event"
-	set name = "Toggle Event Fields"
-
-	var/msg
-	if(event_field_stage==1)
-		event_field_stage=2
-		msg = "OBJECTS may pass"
-	else if(event_field_stage==2)
-		event_field_stage=3
-		msg = "OBJECTS and MOBS may pass"
-	else if(event_field_stage==3)
-		event_field_stage=1
-		msg = "NOTHING may pass"
-
-	log_admin("[usr.key] has toggled event force field, now [msg].")
-	message_admins("[key_name_admin(usr)] has toggled event force field, now [msg].")
-
-	for(var/obj/effect/decal/teamchallenge/shield in team_shields)
-		shield.update_icon()
-
-/client/proc/spawn_bomb()
-	set category = "Event"
-	set name = "Spawn Bomb"
-
-	log_admin("[usr.key] has spawned event bombs.")
-	message_admins("[key_name_admin(usr)] has spawned event bombs.")
-
-	for(var/obj/structure/bomb_telepad/T in bomb_spawners)
-		if(T.anchored)
-			T.do_spawn()
+/mob/living/simple_animal/pug/frank
+	name = "Frank"
+	real_name = "Frank"
+	desc = "It's a pug. Not at all suspicious, pug."
+	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "Who let the dogs out?! Woof, woof, woof, woof, woof!", "Grrrrr... Bark! Bark! Bark!", "You humans! When will you learn size doesn't matter? Just because something's important, doesn't mean it's not very small.", "How about we do the good cop, bad cop routine? You can interrogate the witness, and I'll just growl. Grrrrr...", "Listen, partner. I may look like a dog, but I'm only play one here.")
+	speak_emote = list("says", "barks", "woofs")
+	emote_hear = list("barks", "woofs", "yaps", "pants", "looks around", "adjusts the skin")
+	emote_see = list("shakes its head", "chases its tail", "shivers", "laughs", "pretends to be a dog", "hums a pop song")
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/xenomeat = 3)

@@ -283,7 +283,7 @@
 "fw" = (/obj/effect/decal/teamchallenge,/turf/space,/area/space)
 "fx" = (/turf/simulated/floor/plating/airless,/area/space)
 "fy" = (/obj/effect/decal/cleanable/glowingarrow{dir = 1},/turf/simulated/floor/plating/airless,/area/space)
-"fz" = (/obj/machinery/pipedispenser/disposal,/turf/simulated/floor/plating/airless,/area/space)
+"fz" = (/obj/machinery/pipedispenser/disposal/teamchallenge,/turf/simulated/floor/plating/airless,/area/space)
 "fA" = (/obj/item/blueprints,/turf/simulated/floor/plating/airless,/area/space)
 "fB" = (/obj/item/stack/sheet/metal/fifty,/turf/simulated/floor/plating/airless,/area/space)
 "fC" = (/obj/machinery/vending/ivend,/turf/simulated/floor/plating/airless,/area/space)
