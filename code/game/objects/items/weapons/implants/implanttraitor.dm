@@ -15,7 +15,7 @@
 	syndi_implanted_people += "<b>[implant_master_mob]</b> implanted <b>[implant_target_mob]</b> Syndicate Loyalty implant" //For print in scroreboard.
 
 	START_PROCESSING(SSobj, src)
-	return 1
+	return TRUE
 
 /obj/item/weapon/implant/syndi_loyalty/inject(mob/living/carbon/C, def_zone)
 	. = ..()
@@ -26,7 +26,7 @@
 		C.adjustBrainLoss(100)
 		return
 
-	if(isloyal(C)) //reaction to loyalty implant
+	if(isloyal(C)) //reaction to loyalty implant.
 		to_chat(C, "<span class='notice'>The loyalty implant suppresses the action of the syndicate</span>")
 		to_chat(C, "<span class='notice'>Syndicate loyalty implant deactivated</span>")
 		if(prob(80))
@@ -39,12 +39,12 @@
 	if(!istype(imptraitor) || !istype(implant_master))
 		return
 
-	ticker.mode.traitors += imptraitor.mind
+	ticker.mode.traitors += imptraitor.mind //add in list with traitors
 
 	to_chat(imptraitor, "<span class='userdanger'> <B>ATTENTION:</B>You were implanted with Syndicate loyalty implant...</span>")
 	to_chat(imptraitor, "<B>You are now a special traitor.</B>")
 
-	imptraitor.mind.special_role = "traitor"
+	imptraitor.mind.special_role = "traitor" //give traitors
 
 	var/datum/objective/protect/protect_objective = new("Protect [implant_master.current.real_name], the [implant_master.assigned_role].")
 	protect_objective.target = implant_master
@@ -52,17 +52,17 @@
 	var/datum/objective/obey_objective = new("Follow [implant_master.current.real_name]'s orders, even at the cost of living.")
 	obey_objective.completed = 1
 
-	imptraitor.mind.objectives += protect_objective
+	imptraitor.mind.objectives += protect_objective //give objectives
 	imptraitor.mind.objectives += obey_objective
 
-	to_chat(imptraitor, "<span class='notice'> Your current objectives:</span>")
+	to_chat(imptraitor, "<span class='notice'> Your current objectives:</span>") //print objectives in chat
 	var/obj_count = 1
 	for(var/datum/objective/objective in imptraitor.mind.objectives)
 		to_chat(imptraitor, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 	ticker.mode.update_all_synd_icons()
 
-	apply_brain_damage()
+	apply_brain_damage() //give 80 brain damage
 	
 	return TRUE
 
@@ -108,7 +108,7 @@
 
 /obj/item/weapon/implant/syndi_loyalty/proc/forget()
 	if(!forgotten)
-		ticker.mode.remove_traitor(imp_in.mind)
+		ticker.mode.remove_traitor(implant_target_mob) //remove traitors
 		imp_in.mind.remove_objectives()
 		apply_brain_damage()
 		to_chat(imp_in, "<span class='warning'>You forgot everything after installing the implant.</span>")
