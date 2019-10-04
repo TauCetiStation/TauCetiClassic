@@ -13,7 +13,7 @@ todo:
 	supervisors = "the team captain"
 	selection_color = "#ff9933"
 	idtype = /obj/item/weapon/card/id/noteam
-	access = list(access_maint_tunnels, access_external_airlocks, access_construction)
+	access = list(access_engine_equip, access_maint_tunnels, access_external_airlocks, access_construction)
 	alt_titles = list("Red Teammate","Yellow Teammate","Green Teammate","Blue Teammate")
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 540
