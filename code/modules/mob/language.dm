@@ -195,7 +195,7 @@
 	name = "Turret"
 	desc = "You can find a common language with your friends"
 	speech_verb = "twists"
-	colour = "swear"
+	colour = "rough"
 	key = list("v","м")
 	allowed_species = list(HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
 	syllables = list ("блять","нахуй","сука","пиздец","ебать","ебаный","ХТЬФУ","пизда","ЕБ","блядина","блядство")

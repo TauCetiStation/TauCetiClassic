@@ -76,7 +76,6 @@
 	return pressure
 
 /mob/living/carbon/monkey/proc/handle_disabilities()
-
 	if (disabilities & EPILEPSY || has_trait(TRAIT_EPILEPSY))
 		if ((prob(1) && paralysis < 10))
 			to_chat(src, "<span class='warning'>You have a seizure!</span>")

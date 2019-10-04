@@ -22,7 +22,6 @@
 /mob/living/carbon/human
 	var/prev_gender = null // Debug for plural genders
 	var/in_stasis = 0
-	var T=0
 
 
 /mob/living/carbon/human/Life()
@@ -176,11 +175,6 @@
 				return
 	if (disabilities & TOURETTES || has_trait(TRAIT_TOURETTE))
 		speech_problem_flag = 1
-		if(T==0)
-			src.add_language("Turret")
-			to_chat(src, "<span class='warning'>You know swear-language!</span>")
-			to_chat(src, "<span class='warning'>Use :v</span>")
-			T=1
 		if ((prob(10) && paralysis <= 1))
 			Stun(10)
 			spawn( 0 )

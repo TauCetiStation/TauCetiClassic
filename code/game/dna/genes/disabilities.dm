@@ -39,6 +39,11 @@
 	//else
 		//testing("[name] has no activation message.")
 
+/datum/dna/gene/disability/tourettes/activate(mob/M, connected, flags)
+		M.add_language("Turret")
+		to_chat(M, "<span class='warning'>You know swear-language!</span>")
+		to_chat(M, "<span class='warning'>Use :v</span>")
+
 /datum/dna/gene/disability/deactivate(mob/M, connected, flags)
 	if(mutation && (mutation in M.mutations))
 		M.mutations.Remove(mutation)
