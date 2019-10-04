@@ -112,6 +112,9 @@ var/const/MAX_SAVE_SLOTS = 10
 	// will probably not be able to do this for head and torso ;)
 	var/list/organ_data = list()
 
+	// maps each organ's robotic type if any.
+	var/list/organ_prost_data = list()
+
 	var/list/player_alt_titles = new()		// the default name of a job like "Medical Doctor"
 
 	var/flavor_text = ""
@@ -283,7 +286,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = TRUE)
 	if(be_random_name)
 		real_name = random_name(gender)
 
@@ -346,16 +349,27 @@ var/const/MAX_SAVE_SLOTS = 10
 		if(status == "amputated")
 			qdel(BP) // Destroy will handle everything
 		if(status == "cyborg")
+			var/company = organ_prost_data[name]
+			var/R_cont_type = global.robotic_controllers_by_company[company]
+			if(!R_cont_type)
+				R_cont_type = global.robotic_controllers_by_company["Unbranded"]
+			var/bz = BP.body_zone
 			qdel(BP)
-			switch(BP.body_zone)
+			switch(bz)
+				if(BP_HEAD)
+					new /obj/item/organ/external/head/robot(null, character, null, R_cont_type)
+				if(BP_CHEST)
+					new /obj/item/organ/external/chest/robot(null, character, null, R_cont_type)
+				if(BP_GROIN)
+					new /obj/item/organ/external/groin/robot(null, character, null, R_cont_type)
 				if(BP_L_ARM)
-					new /obj/item/organ/external/l_arm/robot(null, character)
+					new /obj/item/organ/external/l_arm/robot(null, character, null, R_cont_type)
 				if(BP_R_ARM)
-					new /obj/item/organ/external/r_arm/robot(null, character)
+					new /obj/item/organ/external/r_arm/robot(null, character, null, R_cont_type)
 				if(BP_L_LEG)
-					new /obj/item/organ/external/l_leg/robot(null, character)
+					new /obj/item/organ/external/l_leg/robot(null, character, null, R_cont_type)
 				if(BP_R_LEG)
-					new /obj/item/organ/external/r_leg/robot(null, character)
+					new /obj/item/organ/external/r_leg/robot(null, character, null, R_cont_type)
 		if(status == "assisted")
 			IO.mechassist()
 		else if(status == "mechanical")

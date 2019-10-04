@@ -86,6 +86,11 @@
 			global.chemical_reactions_list[id] += D
 			break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
+	// Robotic limb types.
+	for(var/cont_type in typesof(/datum/bodypart_controller/robot))
+		var/datum/bodypart_controller/robot/R = new cont_type
+		global.robotic_controllers_by_company[R.company] = R.type
+
 	populate_gear_list()
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs

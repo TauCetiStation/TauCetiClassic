@@ -191,6 +191,10 @@
 					dat += text("<font color='[]'>\tRadiation Level %: []</font><BR>", (occupant.radiation < 10 ?"blue" : "red"), occupant.radiation)
 					dat += text("<font color='[]'>\tGenetic Tissue Damage %: []</font><BR>", (occupant.getCloneLoss() < 1 ?"blue" : "red"), occupant.getCloneLoss())
 					dat += text("<font color='[]'>\tApprox. Brain Damage %: []</font><BR>", (occupant.getBrainLoss() < 1 ?"blue" : "red"), occupant.getBrainLoss())
+					var/mental_perc = "<font color ='red'>inf</font>"
+					if(occupant.species.mental_capability > 0)
+						mental_perc = "[(occupant.mental_load / occupant.species.mental_capability) * 100]%"
+					dat += "<font color='[occupant.mental_load > occupant.species.mental_capability ? "red" : "blue"]'>Absolute mental load: [mental_perc].</font><br>"
 					dat += text("Paralysis Summary %: [] ([] seconds left!)<BR>", occupant.paralysis, round(occupant.paralysis / 4))
 					dat += text("Body Temperature: [occupant.bodytemperature-T0C]&deg;C ([occupant.bodytemperature*1.8-459.67]&deg;F)<BR><HR>")
 

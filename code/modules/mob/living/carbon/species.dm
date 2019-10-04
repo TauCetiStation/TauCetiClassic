@@ -124,6 +124,9 @@
 
 	var/list/prevent_survival_kit_items = list()
 
+	var/mental_capability = 100 // Currently used to determine how good does this specimen handle control of multiple complex prosthetic limbs.
+	var/carry_weight = 4 * ITEM_SIZE_NORMAL // Currently used to determine how many prosthetics of some weight can be fit on the chest of the specimen.
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
@@ -258,6 +261,8 @@
 	flesh_color = "#34af10"
 	base_color = "#066000"
 
+	carry_weight = 6 * ITEM_SIZE_NORMAL
+
 /datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
@@ -310,6 +315,8 @@
 	flesh_color = "#afa59e"
 	base_color = "#333333"
 
+	mental_capability = 80
+
 /datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
@@ -350,6 +357,8 @@
 	blood_datum_path = /datum/dirt_cover/purple_blood
 	flesh_color = "#8cd7a3"
 
+	mental_capability = 150
+
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
 
@@ -388,6 +397,9 @@
 		"feet" = 'icons/mob/species/vox/shoes.dmi',
 		"gloves" = 'icons/mob/species/vox/gloves.dmi'
 		)
+
+	carry_weight = 6 * ITEM_SIZE_NORMAL
+	mental_capability = 200
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
@@ -478,6 +490,8 @@
 		"held" = 'icons/mob/species/armalis/held.dmi'
 		)
 
+	carry_weight = 8 * ITEM_SIZE_NORMAL
+
 /datum/species/diona
 	name = DIONA
 	icobase = 'icons/mob/human_races/r_diona.dmi'
@@ -550,6 +564,8 @@
 
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
 
+	mental_capability = 150
+
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
@@ -617,8 +633,6 @@
 
 	synth_temp_gain = 10 //this should cause IPCs to stabilize at ~80 C in a 20 C environment.
 
-	brute_mod = 1.5
-	burn_mod = 1
 	siemens_coefficient = 1.3 // ROBUTT.
 
 	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
@@ -664,6 +678,11 @@
 	                          )
 
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
+
+	carry_weight = 8 * ITEM_SIZE_NORMAL
+	mental_capability = 150
+
+	has_gendered_icons = FALSE // It's a freaking machine, come on!
 
 /datum/species/abductor
 	name = ABDUCTOR
@@ -733,6 +752,9 @@
 		 O_BRAIN   = /obj/item/organ/internal/brain
 		,O_EYES    = /obj/item/organ/internal/eyes
 		)
+
+	carry_weight = 1 * ITEM_SIZE_NORMAL // Brittle and weak asf.
+	mental_capability = 0               // Literally boney-boy.
 
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -832,6 +854,8 @@
 
 	has_gendered_icons = FALSE
 
+	carry_weight = 8 * ITEM_SIZE_NORMAL
+	mental_capability = 0               // Literally weird shadow person.
 
 /datum/species/shadowling/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -878,6 +902,9 @@
 		)
 
 	has_gendered_icons = FALSE
+
+	carry_weight = 8 * ITEM_SIZE_NORMAL
+	mental_capability = 0                         // Literally mentally handicapped.
 
 /datum/species/golem/on_gain(mob/living/carbon/human/H)
 	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
@@ -947,6 +974,8 @@
 	speed_mod = -0.2
 
 	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
+
+	mental_capability = 0                         // Literally mentally handicapped.
 
 /datum/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
 	return ..()
@@ -1062,3 +1091,5 @@
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
 	)
+
+	carry_weight = 2 * ITEM_SIZE_NORMAL

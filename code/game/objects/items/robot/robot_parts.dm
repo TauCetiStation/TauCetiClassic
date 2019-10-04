@@ -6,8 +6,44 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	var/part = null
+	var/protected = 0
 	var/sabotaged = 0 //Emagging limbs can have repercussions when installed as prosthetics.
+	var/has_grid = FALSE              // Used for checking, whether limb has a grid inbuilt.
+	var/hatch_opened = FALSE
 	var/bodypart_type
+	var/datum/bodypart_controller/robot/model
+
+/obj/item/robot_parts/atom_init(mapload, new_model_type = /datum/bodypart_controller/robot)
+	. = ..()
+	model = new new_model_type
+	update_brand()
+
+/obj/item/robot_parts/Destroy()
+	model = null
+	return ..()
+
+/obj/item/robot_parts/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/screwdriver))
+		hatch_opened = !hatch_opened
+		user.visible_message("<span class='notice'>[user] [hatch_opened ? "opened" : "closed"] the hatch on [src].</span>",
+		"<span class='notice'>You [hatch_opened ? "open" : "close"] the hatch on [src].</span>")
+		return
+	if(istype(W, /obj/item/device/multitool) && hatch_opened)
+		if(sabotaged)
+			sabotaged = FALSE
+		return
+	if(istype(W, /obj/item/device/radio_grid) && hatch_opened && !has_grid)
+		protected += 1
+		has_grid = TRUE
+		return
+	..()
+
+/obj/item/robot_parts/proc/update_brand()
+	name = "[model.company] [initial(name)]"
+	desc += " This model seems to be [model.company]."
+	protected = model.protected
+	if(model.low_quality && prob(50)) // 50% chance for a low quality prosthetic to be sabotaged.
+		sabotaged = model.low_quality
 
 /obj/item/robot_parts/l_arm
 	name = "robot left arm"
@@ -43,6 +79,7 @@
 	icon_state = "chest"
 	var/wires = 0.0
 	var/obj/item/weapon/stock_parts/cell/cell = null
+	part = BP_CHEST
 
 /obj/item/robot_parts/head
 	name = "robot head"
@@ -51,6 +88,12 @@
 	part = BP_HEAD
 	var/obj/item/device/flash/flash1 = null
 	var/obj/item/device/flash/flash2 = null
+
+/obj/item/robot_parts/groin
+	name = "robot groin"
+	desc = "A standard chasis for holding leg-pseudomuscles together. Wrapped in wires and other not relatable stuff."
+	icon_state = "chest" // Placeholder.
+	part = BP_GROIN
 
 /obj/item/robot_parts/robot_suit
 	name = "robot endoskeleton"
@@ -366,5 +409,6 @@
 		return FALSE
 	else
 		to_chat(user, "<span class='warning'>You slide card into the dataport on [src] and short out the safeties.</span>")
-		sabotaged = 1
+		sabotaged = TRUE
+		model.processing_language = "Gutter" // "Sy-Code"
 		return TRUE

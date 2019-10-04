@@ -227,6 +227,14 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(!BP || (BP.is_stump))
 		return
 
+	if(istype(BP.controller, /datum/bodypart_controller/robot))
+		var/datum/bodypart_controller/robot/R_cont = BP.controller
+		if(get_species() == IPC)
+			if(!R_cont.monitor)
+				return
+		else
+			return
+
 	//masks and helmets can obscure our hair.
 	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) || (wear_suit && (wear_suit.flags & BLOCKHAIR)))
 		return

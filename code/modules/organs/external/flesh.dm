@@ -3,6 +3,7 @@
 	var/name = "Flesh bodypart controller"
 	var/obj/item/organ/external/BP
 	var/bodypart_type = BODYPART_ORGANIC
+	var/size = ITEM_SIZE_NORMAL
 
 /datum/bodypart_controller/New(obj/item/organ/external/B)
 	BP = B
@@ -10,12 +11,55 @@
 /datum/bodypart_controller/Destroy()
 	BP = null
 
+/datum/bodypart_controller/proc/update_sprite()
+	var/gender = BP.owner ? BP.owner.gender : MALE
+	var/mutations = BP.owner ? BP.owner.mutations : list()
+	var/fat
+	var/g
+	if(BP.body_zone == BP_CHEST)
+		fat = (FAT in mutations) ? "fat" : null
+	if(BP.body_zone in list(BP_CHEST, BP_GROIN, BP_HEAD))
+		g = (gender == FEMALE ? "f" : "m")
+
+	if(!BP.species.has_gendered_icons)
+		g = null
+
+	if(HUSK in mutations)
+		BP.icon = 'icons/mob/human_races/husk.dmi'
+		BP.icon_state = BP.body_zone
+	else if(BP.status & ORGAN_MUTATED)
+		BP.icon = BP.species.deform
+		BP.icon_state = "[BP.body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""]"
+	else
+		BP.icon = BP.species.icobase
+		BP.icon_state = "[BP.body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""]"
+
+	if(BP.status & ORGAN_DEAD)
+		BP.color = NECROSIS_COLOR_MOD
+	else if(HULK in mutations)
+		BP.color = HULK_SKIN_COLOR
+	else
+		BP.color = BP.original_color
+
 /datum/bodypart_controller/proc/is_damageable(additional_damage = 0)
 	//Continued damage to vital organs can kill you
 	return (BP.vital || BP.brute_dam + BP.burn_dam + additional_damage < BP.max_damage)
 
 /datum/bodypart_controller/proc/emp_act(severity)
 	return // meatbags do not care about EMP
+
+/datum/bodypart_controller/proc/get_carry_weight()
+	return BP.species.carry_weight
+
+/*
+	TODO:
+		make so Tajaran legs make you got fastah.
+*/
+/datum/bodypart_controller/proc/get_speed_mod()
+	return 0
+
+/datum/bodypart_controller/proc/get_carry_speed_mod()
+	return 0
 
 /datum/bodypart_controller/proc/get_brute_mod()
 	return BP.species.brute_mod

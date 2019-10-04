@@ -21,6 +21,10 @@
 #define BODYPART_ROBOTIC   2
 #define BODYPART_SKELETON  3
 
+#define LOW_TECH_PROSTHETIC 1
+#define MEDIUM_TECH_PROSTHETIC 2
+#define HIGH_TECH_PROSTHETIC 3
+
 // Bodypart defines
 #define BP_CHEST  "chest"
 #define BP_GROIN  "groin"
@@ -29,6 +33,8 @@
 #define BP_R_ARM  "r_arm"
 #define BP_L_LEG  "l_leg"
 #define BP_R_LEG  "r_leg"
+
+#define BP_ALL list(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG)
 
 // Organ defines.
 #define O_MOUTH    "mouth"

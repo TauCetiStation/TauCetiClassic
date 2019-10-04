@@ -438,8 +438,16 @@ By design, d1 is the smallest direction and d2 is the highest
 				return
 
 		if(BP.burn_dam > 0)
-			if(use(1))
-				BP.heal_damage(0, 15, 0, 1)
+			if(use(1) && istype(BP.controller, /datum/bodypart_controller/robot))
+				var/datum/bodypart_controller/robot/R_cont = BP.controller
+				switch(R_cont.tech_tier)
+					if(LOW_TECH_PROSTHETIC)
+						BP.heal_damage(15, 0, FALSE, TRUE)
+					if(MEDIUM_TECH_PROSTHETIC)
+						BP.heal_damage(5, 0, FALSE, TRUE)
+					if(HIGH_TECH_PROSTHETIC)
+						to_chat(user, "<span class='info'>This prosthetic is too advanced to be fixed like this!</span>")
+						return
 				user.visible_message("<span class='alert'>\The [user] repairs some burn damage on \the [H]'s [BP.name] with \the [src].</span>")
 				return
 			else

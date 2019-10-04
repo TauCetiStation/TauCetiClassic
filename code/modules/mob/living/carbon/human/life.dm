@@ -96,6 +96,8 @@
 
 		handle_heart_beat()
 
+		handle_mental_load()
+
 	handle_stasis_bag()
 
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
@@ -1267,6 +1269,38 @@
 			gloves.germ_level += 1
 
 	return 1
+
+/mob/living/carbon/human/proc/handle_mental_load()
+	mental_load = bodyparts_mental_load + getBrainLoss() * 2 + getHalLoss() * 0.1
+
+	switch(mental_load)
+		/*
+		if(0 to species.mental_capability / 4)
+			break
+		if(species.mental_capacity / 4 to species.mental_capability / 2)
+			break
+		*/
+		if(species.mental_capability / 2 to species.mental_capability * 3 / 4)
+			to_chat(src, "<span class='warning'>Your head hurts a little...</span>")
+		if(species.mental_capability to species.mental_capability * 1.5)
+			to_chat(src, "<span class='warning'>Your head is in immense fail, you feel your prosthetics failing.</span>")
+		if(species.mental_capability * 1.5 to species.mental_capability * 2)
+			to_chat(src, "<span class='warning'>Your head feels as if it is quite literally about to explode!</span>")
+
+	if(mental_load > species.mental_capability * 2)
+		to_chat(src, "<span class='warning'>Your head explodes!</span>")
+		var/obj/item/organ/external/head/head = get_bodypart(BP_HEAD)
+		if(head && head.is_head && !head.is_stump)
+			adjustBrainLoss(200)
+			head.take_damage(brute = 200, burn = 0, damage_flags = DAM_EDGE, used_weapon = "mental overload")
+
+	if(mental_load > species.mental_capability)
+		for(var/obj/item/organ/external/BP in bodyparts)
+			if(istype(BP, /datum/bodypart_controller/robot))
+				if(prob(30))
+					var/fail_msg = pick("IS ASSUMING DIRECT CONTROL!", "HURTS IMMENSELY!", "IS NO MORE!")
+					to_chat(src, "[bicon(BP)] <span class='warning'>[uppertext(BP.name)] [fail_msg]</span>")
+				BP.emp_act(1)
 
 /mob/living/carbon/human/handle_regular_hud_updates()
 	if(hud_updateflag)//? Below ?

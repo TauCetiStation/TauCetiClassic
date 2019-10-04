@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 25
+#define SAVEFILE_VERSION_MAX 26
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -65,6 +65,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(organ_name in list("r_hand", "l_hand", "r_foot", "l_foot"))
 				organ_data -= organ_name
 				S["organ_data"] -= organ_name
+
 	if(current_version < 18)
 		ResetJobs()
 
@@ -98,6 +99,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			player_alt_titles[J.title] in list("Technical Assistant", "Medical Intern", "Research Assistant", "Security Cadet"))
 
 			player_alt_titles -= J.title
+
+	if(current_version < 26)
+		for(var/organ_name in organ_data)
+			if(organ_data[organ_name] == "cyborg")
+				organ_data -= organ_name
+				S["organ_data"] -= organ_name // It's much easier to just remove incompatible prosthetics, so players notice it and pick the brand they want.
+				organ_prost_data[organ_name] = "Unbranded"
+				S["organ_prost_data"][organ_name] = "Unbranded"
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
@@ -297,6 +306,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["be_role"]			>> be_role
 	S["player_alt_titles"]	>> player_alt_titles
 	S["organ_data"]			>> organ_data
+	S["organ_prost_data"] 	>> organ_prost_data
 	S["gear"]				>> gear
 	S["custom_items"]		>> custom_items
 
@@ -365,6 +375,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!player_alt_titles) player_alt_titles = new()
 	if(!organ_data) src.organ_data = list()
 	if(!be_role) src.be_role = list()
+	if(!organ_prost_data)
+		organ_prost_data = list()
 
 	if(!home_system) home_system = "None"
 	if(!citizenship) citizenship = "None"
@@ -480,6 +492,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["be_role"]			<< be_role
 	S["player_alt_titles"]		<< player_alt_titles
 	S["organ_data"]			<< organ_data
+	S["organ_prost_data"] 	<< organ_prost_data
 	S["gear"]				<< gear
 	S["custom_items"]		<< custom_items
 

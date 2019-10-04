@@ -152,7 +152,7 @@
 	if(istype(tool, /obj/item/robot_parts))
 		var/obj/item/robot_parts/L = tool
 		var/bodypart_type = L.bodypart_type
-		BP = new bodypart_type()
+		BP = new bodypart_type(null, null, L.model)
 		target.remove_from_mob(tool)
 		qdel(tool)
 

@@ -56,23 +56,28 @@
 
 	var/regen_bodypart_penalty = 0 // This variable determines how much time it would take to regenerate a bodypart, and the cost of it's regeneration.
 
+	var/is_head = FALSE
+	var/is_leg = FALSE
+	var/is_arm = FALSE
+
 // limb argument is used for stumps to become stumps.
 // new_controller_type is used in robot limbs as to not create a million obj/item/organ/external subtypes
 // and just use what controller_type says.
-/obj/item/organ/external/atom_init/atom_init(mapload, mob/living/carbon/human/H, obj/item/organ/external/limb, new_controller_type)
-	. = ..()
-	recolor()
-
+/obj/item/organ/external/atom_init(mapload, mob/living/carbon/human/H, obj/item/organ/external/limb, new_controller_type)
 	if(new_controller_type)
 		controller_type = new_controller_type
 
 	controller = new controller_type(src)
+
 	if(H)
-		species = owner.species
-		b_type = owner.dna.b_type
+		species = H.species
+		b_type = H.dna.b_type
 	else // Bodypart was spawned outside of the body so we need to update its sprite
 		species = all_species[HUMAN]
-		update_sprite()
+
+	. = ..()
+	recolor()
+	update_sprite()
 
 /obj/item/organ/external/Destroy()
 	if(parent)
@@ -84,13 +89,59 @@
 		if(owner.bodyparts_by_name[body_zone] == src)
 			owner.bodyparts_by_name -= body_zone
 		owner.bad_bodyparts -= src
+
+	owner.update_weight()
+	owner.update_mental_load()
+
 	return ..()
+
+/mob/living/carbon/human/proc/update_weight()
+	var/weight_penalty = 0
+	var/speed_mod = 0
+	var/carry_speed_mod = 0
+
+	for(var/obj/item/organ/external/BP in bodyparts)
+		var/BP_max_weight = BP.controller.get_carry_weight()
+		var/BP_cur_weight = BP.controller.size
+		for(var/obj/item/organ/external/BP_child in BP.children)
+			BP_cur_weight += BP_child.controller.size
+		if(BP_cur_weight > BP_max_weight)
+			weight_penalty += (BP_cur_weight - BP_max_weight) * 3
+
+		if(BP.is_leg)
+			speed_mod += BP.controller.get_speed_mod()
+			if(istype(BP.controller, /datum/bodypart_controller/robot))
+				var/datum/bodypart_controller/robot/R_cont = BP.controller
+				carry_speed_mod += R_cont.carry_speed_mod
+
+	bodyparts_speed_mod = speed_mod + weight_penalty
+	bodyparts_carry_speed_mod = carry_speed_mod
+
+/mob/living/carbon/human/proc/update_mental_load()
+	var/list/processing_langs = list()
+
+	var/BP_mental_load = 0
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(istype(BP.controller, /datum/bodypart_controller/robot))
+			var/datum/bodypart_controller/robot/R_cont = BP.controller
+			if(!(R_cont.processing_language in processing_langs))
+				processing_langs += R_cont.processing_language
+			BP_mental_load += R_cont.mental_load
+
+	for(var/lang_name in processing_langs)
+		if(!say_understands(src, all_languages[lang_name]))
+			mental_load += 20
+
+	bodyparts_mental_load = (processing_langs.len) * 10 + BP_mental_load
 
 /obj/item/organ/external/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
 	..()
 
 	owner.bodyparts += src
 	owner.bodyparts_by_name[body_zone] = src
+
+	H.update_weight()
+	H.update_mental_load()
 
 	if(parent)
 		parent.children += src
@@ -108,36 +159,7 @@
 
 // Keep in mind that this proc should work even if owner = null
 /obj/item/organ/external/proc/update_sprite()
-	var/gender = owner ? owner.gender : MALE
-	var/mutations = owner ? owner.mutations : list()
-	var/fat
-	var/g
-	if(body_zone == BP_CHEST)
-		fat = (FAT in mutations) ? "fat" : null
-	if(body_zone in list(BP_CHEST, BP_GROIN, BP_HEAD))
-		g = (gender == FEMALE ? "f" : "m")
-
-	if (!species.has_gendered_icons)
-		g = null
-
-	if (HUSK in mutations)
-		icon = 'icons/mob/human_races/husk.dmi'
-		icon_state = body_zone
-	else if (status & ORGAN_MUTATED)
-		icon = species.deform
-		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""]"
-	else
-		icon = species.icobase
-		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""]"
-
-	if(status & ORGAN_DEAD)
-		color = NECROSIS_COLOR_MOD
-	else if (HUSK in mutations)
-		color = null
-	else if(HULK in mutations)
-		color = HULK_SKIN_COLOR
-	else
-		color = original_color
+	controller.update_sprite()
 
 /****************************************************
 			   DAMAGE PROCS
@@ -291,9 +313,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	status &= ~(ORGAN_BROKEN | ORGAN_BLEEDING | ORGAN_SPLINTED | ORGAN_ARTERY_CUT)
 
 	// If any bodyparts are attached to this, destroy them
-	for(var/obj/item/organ/external/BP in owner.bodyparts)
-		if(BP.parent == src)
-			BP.droplimb(null, clean, disintegrate)
+	for(var/obj/item/organ/external/BP in children)
+		BP.droplimb(null, clean, disintegrate)
 
 	if(parent && !(parent.is_stump) && disintegrate != DROPLIMB_BURN)
 		if(clean)
@@ -314,13 +335,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(bodypart)
 				//Robotic limbs explode if sabotaged.
 				if(is_robotic() && !no_explode && sabotaged)
-					explosion(get_turf(owner), -1, -1, 2, 3)
-					var/datum/effect/effect/system/spark_spread/spark_system = new
-					spark_system.set_up(5, 0, owner)
-					spark_system.attach(owner)
-					spark_system.start()
-					spawn(10)
-						qdel(spark_system)
+					var/datum/bodypart_controller/robot/R_cont = controller
+					if(R_cont.tech_tier < HIGH_TECH_PROSTHETIC)
+						explosion(get_turf(owner), -1, -1, 2, 3)
+						var/datum/effect/effect/system/spark_spread/spark_system = new
+						spark_system.set_up(5, 0, owner)
+						spark_system.attach(owner)
+						spark_system.start()
+						QDEL_IN(spark_system, 1 SECOND)
 
 				var/matrix/M = matrix()
 				M.Turn(rand(180))
@@ -689,6 +711,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/g_hair
 	var/b_hair
 
+	is_head = TRUE
+
 /obj/item/organ/external/head/atom_init(mapload, mob/living/carbon/human/H, obj/item/organ/external/limb, new_controller_type)
 	. = ..()
 	organ_head_list += src
@@ -816,6 +840,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
 
+	is_arm = TRUE
+
 /obj/item/organ/external/l_arm/process()
 	..()
 	if(owner)
@@ -837,6 +863,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
 
+	is_arm = TRUE
+
 /obj/item/organ/external/r_arm/process()
 	..()
 	if(owner)
@@ -857,6 +885,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
 
+	is_leg = TRUE
 
 /obj/item/organ/external/r_leg
 	name = "right leg"
@@ -872,6 +901,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
+
+	is_leg = TRUE
 
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
 	if(!disfigured)

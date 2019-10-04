@@ -62,15 +62,19 @@
 	if(!species.flags[NO_BLOOD] && (reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")))
 		chem_nullify_debuff = TRUE
 
+	var/item_slowdown = 0
 	for(var/obj/item/I in list(wear_suit, back, shoes))
 		if(!(I.slowdown > 0 && chem_nullify_debuff))
-			tally += I.slowdown
+			item_slowdown += I.slowdown
 
 	if(!chem_nullify_debuff)
 		for(var/x in list(l_hand, r_hand))
 			var/obj/item/I = x
 			if(I && !(I.flags & ABSTRACT) && I.w_class >= ITEM_SIZE_NORMAL)
-				tally += 0.5 * (I.w_class - 2) // (3 = 0.5) || (4 = 1) || (5 = 1.5)
+				item_slowdown += 0.5 * (I.w_class - 2) // (3 = 0.5) || (4 = 1) || (5 = 1.5)
+
+	item_slowdown = max(0, item_slowdown - bodyparts_carry_speed_mod)
+	tally += item_slowdown
 
 	if(shock_stage >= 10)
 		tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and (starts at ~1.83)
@@ -85,6 +89,8 @@
 		tally -= min((bodytemperature - species.body_temperature) / 10, 1) //will be on the border of heat_level_1
 
 	tally += max(2 * stance_damage, 0) //damaged/missing feet or legs is slow
+
+	tally += bodyparts_speed_mod
 
 	return (tally + config.human_delay)
 

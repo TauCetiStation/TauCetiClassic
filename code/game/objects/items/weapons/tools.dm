@@ -586,8 +586,16 @@
 				to_chat(user, "<span class='rose'>You can't repair damage to your own body - it's against OH&S.</span>")
 				return
 
-		if(BP.brute_dam)
-			BP.heal_damage(15,0,0,1)
+		if(BP.brute_dam && istype(BP.controller, /datum/bodypart_controller/robot))
+			var/datum/bodypart_controller/robot/R_cont = BP.controller
+			switch(R_cont.tech_tier)
+				if(LOW_TECH_PROSTHETIC)
+					BP.heal_damage(15, 0, FALSE, TRUE)
+				if(MEDIUM_TECH_PROSTHETIC)
+					BP.heal_damage(5, 0, FALSE, TRUE)
+				if(HIGH_TECH_PROSTHETIC)
+					to_chat(user, "<span class='info'>This prosthetic is too advanced to be fixed like this!</span>")
+					return
 			user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [BP.name] with \the [src].</span>")
 		else
 			to_chat(user, "<span class='info'>Nothing to fix!</span>")

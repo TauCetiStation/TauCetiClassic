@@ -187,6 +187,10 @@
 		if(found_broken)
 			message += "<span class='warning'>Bone fractures detected. Advanced scanner required for location.</span><br>"
 
+		var/mental_perc = "<span class='warning bold'>inf</span>"
+		if(H.species.mental_capability > 0)
+			mental_perc = "[round((H.mental_load / H.species.mental_capability) * 100, 5)]%"
+		message += "<span class='[H.mental_load > H.species.mental_capability ? "warning" : "notice"]'>Estimated mental load: [mental_perc].</span><br>"
 		if(H.vessel)
 			var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
 			var/blood_percent =  blood_volume / 560

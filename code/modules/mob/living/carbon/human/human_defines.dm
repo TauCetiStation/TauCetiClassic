@@ -109,3 +109,10 @@
 
 	var/busy_left_hand = FALSE // See ambidextrous quirk and is_busy() override.
 	var/busy_right_hand = FALSE
+
+	// Prosthetic related.
+	var/mental_load = 0
+
+	var/bodyparts_speed_mod = 0
+	var/bodyparts_carry_speed_mod = 0
+	var/bodyparts_mental_load = 0
