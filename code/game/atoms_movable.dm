@@ -186,7 +186,7 @@
 	if(isturf(hit_atom) && hit_atom.density)
 		Move(get_step(src, turn(dir, 180)))
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/user, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, datum/callback/early_callback)
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, datum/callback/early_callback)
 	if (!target || speed <= 0)
 		return
 
@@ -194,16 +194,16 @@
 		pulledby.stop_pulling()
 
 	//They are moving! Wouldn't it be cool if we calculated their momentum and added it to the throw?
-	if (user && user.last_move && user.client && user.client.move_delay >= world.time + world.tick_lag*2)
-		var/user_momentum = user.movement_delay()
+	if (thrower && thrower.last_move && thrower.client && thrower.client.move_delay >= world.time + world.tick_lag*2)
+		var/user_momentum = thrower.movement_delay()
 		if (!user_momentum) //no movement_delay, this means they move once per byond tick, lets calculate from that instead.
 			user_momentum = world.tick_lag
 
 		user_momentum = 1 / user_momentum // convert from ds to the tiles per ds that throw_at uses.
 
-		if (get_dir(user, target) & last_move)
+		if (get_dir(thrower, target) & last_move)
 			user_momentum = user_momentum //basically a noop, but needed
-		else if (get_dir(target, user) & last_move)
+		else if (get_dir(target, thrower) & last_move)
 			user_momentum = -user_momentum //we are moving away from the target, lets slowdown the throw accordingly
 		else
 			user_momentum = 0
@@ -224,11 +224,10 @@
 	TT.init_dir = get_dir(src, target)
 	TT.maxrange = range
 	TT.speed = speed
+	TT.thrower = thrower
 	TT.diagonals_first = diagonals_first
 	TT.callback = callback
 	TT.early_callback = early_callback
-	if(user)
-		TT.thrower = user
 
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
