@@ -47,6 +47,7 @@
 			reagents.trans_to_ingest(M, gulp_size)
 
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
+		update_icon()
 		return 1
 	else
 		if(istype(M, /mob/living/carbon/human))
@@ -75,6 +76,7 @@
 			addtimer(CALLBACK(R, /datum/reagents.proc/add_reagent, refill, fillevel), 600)
 
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
+		update_icon()
 		return 1
 
 	return 0
@@ -122,7 +124,7 @@
 			bro.cell.use(chargeAmount)
 			to_chat(user, "Now synthesizing [trans] units of [refillName]...")
 			addtimer(CALLBACK(src, .proc/refill_by_borg, user, refill, trans), 300)
-	return
+	update_icon()
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/refill_by_borg(user, refill, trans)
 	reagents.add_reagent(refill, trans)
@@ -254,16 +256,55 @@
 	pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
-	name = "Cup Ramen"
-	desc = "Just add 10ml water, self heats! A taste that reminds you of your school years."
+	name = "Dosi Ramen"
+	desc = "Just add 10ml water, self heats! Most cheapest and popular noodle in space. Classic ramen with chicken flavor." // Now this is a reference not to original ramen.
 	icon_state = "ramen"
+
+	var/ramen_reagent = "dry_ramen"
+	var/opened = FALSE
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/atom_init()
 	. = ..()
-	reagents.add_reagent("dry_ramen", 30)
+	reagents.add_reagent(ramen_reagent, 30)
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
 
+	if(!opened)
+		flags &= ~OPENCONTAINER
+
+/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/update_icon()
+	if(!opened)
+		icon_state = initial(icon_state)
+	else if(!reagents.total_volume)
+		icon_state = "ramen_empty"
+	else
+		icon_state = "ramen_open"
+
+/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/attack_self(mob/user)
+	if (!opened)
+		flags |= OPENCONTAINER
+		opened = TRUE
+		playsound(src, 'sound/items/crumple.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
+		to_chat(user, "<span class='notice'>You open the [src].</span>")
+		update_icon()
+
+/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/attack(mob/M, mob/user, def_zone)
+	if(!opened)
+		to_chat(user, "<span class='notice'>You need to open [src] first!</span>")
+		return TRUE // stops afterattack() call.
+	return ..()
+
+/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/on_reagent_change()
+	if(!reagents.total_volume) // actually its because we only have sprite, which won't look good with any other reagent than ramen.
+		flags &= ~OPENCONTAINER // and also there is no proper way to put the message about this, as it will require to edit all transfer procs in items.
+		return
+	..()
+
+/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen
+	name = "Dosi Ramen (Spicy)"
+	desc = "Just add 10ml water, self heats! Unathi's favorite noodle with spicy flavor. DANGER: VERY SPICY! NOT TAJARAN FRIENDLY!"
+	icon_state = "ramen_spicy"
+	ramen_reagent = "hell_ramen"
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup
 	name = "Paper Cup"
