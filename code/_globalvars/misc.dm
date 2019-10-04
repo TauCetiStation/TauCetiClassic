@@ -77,6 +77,9 @@ var/global/list/antagonists_completion = list()
 var/global/list/end_icons = list()
 var/endgame_info_logged = 0
 
+// Xenomorphs
+var/facehuggers_control_type = FACEHUGGERS_STATIC_AI
+
 // Unsorted stuff
 var/global_message_cooldown = 1
 var/list/stealth_keys = list()
@@ -89,5 +92,6 @@ var/list/ignore_vision_inside = list(
 	/obj/machinery/dna_scannernew,
 	/obj/machinery/sleeper,
 	/obj/effect/dummy,
-	/obj/structure/droppod
+	/obj/structure/droppod,
+	/obj/item/organ/external/head/skeleton,
 	)

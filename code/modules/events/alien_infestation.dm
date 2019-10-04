@@ -34,7 +34,7 @@
 		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
 		return
 
-	var/list/candidates = get_alien_candidates()
+	var/list/candidates = get_larva_candidates()
 
 	while(spawncount > 0 && candidates.len)
 		var/obj/vent = pick(vents)

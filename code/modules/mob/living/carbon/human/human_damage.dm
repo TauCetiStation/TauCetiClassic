@@ -8,7 +8,7 @@
 	var/total_burn = 0
 	var/total_brute = 0
 	for(var/obj/item/organ/external/BP in bodyparts) // hardcoded to streamline things a bit
-		if((BP.status & ORGAN_ROBOT) && !BP.vital)
+		if(BP.is_robotic() && !BP.vital)
 			continue // *non-vital* robot limbs don't count towards shock and crit
 		total_brute += BP.brute_dam
 		total_burn += BP.burn_dam
@@ -67,7 +67,7 @@
 /mob/living/carbon/human/getBruteLoss()
 	var/amount = 0
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if((BP.status & ORGAN_ROBOT) && !BP.vital)
+		if(BP.is_robotic() && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
 		amount += BP.brute_dam
 	return amount
@@ -83,7 +83,7 @@
 /mob/living/carbon/human/getFireLoss()
 	var/amount = 0
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if((BP.status & ORGAN_ROBOT) && !BP.vital)
+		if(BP.is_robotic() && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
 		amount += BP.burn_dam
 	return amount
@@ -145,10 +145,17 @@
 // =============================================
 
 /mob/living/carbon/human/adjustCloneLoss(amount)
-	..()
+	if(species.clone_mod == 0)
+		cloneloss = 0
+		return
+	else
+		amount = amount * species.clone_mod
+		..(amount)
 
 	if(species.flags[IS_SYNTHETIC])
 		return
+
+	time_of_last_damage = world.time
 
 	var/heal_prob = max(0, 80 - getCloneLoss())
 	var/mut_prob = min(80, getCloneLoss()+10)
@@ -305,6 +312,10 @@ This function restores all bodyparts.
 /mob/living/carbon/human/restore_all_bodyparts()
 	for(var/obj/item/organ/external/BP in bodyparts)
 		BP.rejuvenate()
+	for(var/BP_ZONE in species.has_bodypart)
+		if(!bodyparts_by_name[BP_ZONE])
+			var/path = species.has_bodypart[BP_ZONE]
+			new path(null, src)
 
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
 	var/obj/item/organ/external/BP = get_bodypart(zone)

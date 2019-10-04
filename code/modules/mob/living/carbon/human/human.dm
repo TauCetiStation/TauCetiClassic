@@ -84,6 +84,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/slime/atom_init(mapload)
 	. = ..(mapload, SLIME)
 
+/mob/living/carbon/human/skeleton/atom_init(mapload)
+	. = ..(mapload, SKELETON)
+
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
@@ -372,7 +375,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/human/proc/wield(/obj/item/I, name, wieldsound = null)
+/mob/living/carbon/human/proc/wield(obj/item/I, name, wieldsound = null)
 	if(!can_use_two_hands())
 		to_chat(src, "<span class='warning'>You need both of your hands to be intact to do this.</span>")
 		return FALSE
@@ -414,8 +417,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/proc/find_damaged_bodypart()
 	for(var/obj/item/organ/external/BP in bodyparts) // find a broken/destroyed limb
-		if(BP.status & (ORGAN_DESTROYED | ORGAN_BROKEN | ORGAN_SPLINTED))
-			if(BP.parent && (BP.parent.status & ORGAN_DESTROYED))
+		if(BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED) || BP.is_stump)
+			if(BP.parent && (BP.parent.is_stump))
 				continue
 			else
 				return BP
@@ -427,7 +430,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			for(var/datum/reagent/blood/B in vessel.reagent_list)
 				B.volume -= remove_blood_amount
 		var/regenerating_capacity_penalty = 0 // Used as time till organ regeneration.
-		if(regenerating_bodypart.status & ORGAN_DESTROYED)
+		if(regenerating_bodypart.is_stump)
 			regenerating_capacity_penalty = regenerating_bodypart.regen_bodypart_penalty
 		else
 			regenerating_capacity_penalty = regenerating_bodypart.regen_bodypart_penalty/2
@@ -443,11 +446,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				if(regenerating_capacity_penalty == regenerating_bodypart.regen_bodypart_penalty/2)
 					visible_message("<span class='notice'>[src] stirs his [regenerating_bodypart.name]...</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] freedom in moving your [regenerating_bodypart.name]</span>")
 				else
-					visible_message("<span class='notice'>From [src]'s [regenerating_bodypart.parent.name] grows a small meaty sprout...</span>")
+					visible_message("<span class='notice'>From [src]'s [parse_zone(regenerating_bodypart.body_zone)] grows a small meaty sprout...</span>")
 			if(50)
-				visible_message("<span class='notice'>You see something resembling [regenerating_bodypart.name] at [src]'s [regenerating_bodypart.parent.name]...</span>")
+				visible_message("<span class='notice'>You see something resembling [parse_zone(regenerating_bodypart.body_zone)] at [src]'s [regenerating_bodypart.parent.name]...</span>")
 			if(65)
-				visible_message("<span class='userdanger'>A new [regenerating_bodypart.name] has grown from [src]'s [regenerating_bodypart.parent.name]!</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] your [regenerating_bodypart.name] again!</span>")
+				visible_message("<span class='userdanger'>A new [parse_zone(regenerating_bodypart.body_zone)] has grown from [src]'s [regenerating_bodypart.parent.name]!</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] your [parse_zone(regenerating_bodypart.body_zone)] again!</span>")
 		if(prob(50))
 			emote("scream",1,null,1)
 		if(regenerating_organ_time >= regenerating_capacity_penalty) // recover organ
@@ -653,10 +656,16 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
-	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
-	if( !BP || BP.disfigured || (BP.status & ORGAN_DESTROYED) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
+	if(!bodyparts_by_name[BP_HEAD])
 		return "Unknown"
-	return real_name
+
+	if(istype(bodyparts_by_name[BP_HEAD], /obj/item/organ/external/head))
+		var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
+		if( !BP || BP.disfigured || (BP.is_stump) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
+			return "Unknown"
+		return real_name
+
+	return "Unknown"
 
 //gets name from ID or PDA itself, ID inside PDA doesn't matter
 //Useful when player is being seen by other mobs
@@ -1548,7 +1557,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				to_chat(src, msg)
 
 				BP.take_damage(rand(1,3), 0, 0)
-				if(!(BP.status & ORGAN_ROBOT)) //There is no blood in protheses.
+				if(!BP.is_robotic()) //There is no blood in protheses.
 					BP.status |= ORGAN_BLEEDING
 					src.adjustToxLoss(rand(1,3))
 
@@ -1584,7 +1593,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	else
 		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].</span>")
 
-/mob/living/carbon/human/proc/set_species(new_species, force_organs, default_colour)
+/mob/living/carbon/human/proc/set_species(new_species, force_organs = TRUE, default_colour = null)
 
 	if(!new_species)
 		if(dna.species)
@@ -1606,16 +1615,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	species = all_species[new_species]
 	maxHealth = species.total_health
 
-	if(force_organs || !bodyparts.len)
-		species.create_organs(src)
-
-	if(species.language)
-		add_language(species.language)
-
-	if(species.additional_languages)
-		for(var/A in species.additional_languages)
-			add_language(A)
-
 	if(species.base_color && default_colour)
 		//Apply colour.
 		r_skin = hex2num(copytext(species.base_color,2,4))
@@ -1625,6 +1624,18 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		r_skin = 0
 		g_skin = 0
 		b_skin = 0
+
+	if(force_organs || !bodyparts.len)
+		species.create_organs(src, deleteOld = TRUE)
+	else
+		apply_recolor()
+
+	if(species.language)
+		add_language(species.language)
+
+	if(species.additional_languages)
+		for(var/A in species.additional_languages)
+			add_language(A)
 
 	species.handle_post_spawn(src)
 	species.on_gain(src)
@@ -1918,6 +1929,45 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(M.stat == DEAD)
 			M.gib()
 
+/mob/living/carbon/human/proc/air_sample()
+	set category = "IC"
+	set name = "Air sample"
+	set desc = "pull out the tongue and understand the approximate state of the air"
+
+	if(stat)
+		return
+	if(wear_mask && wear_mask.flags & HEADCOVERSMOUTH || head && head.flags & MASKCOVERSMOUTH)
+		to_chat(usr,"<span class='notice'>I can't get my tongue out.</span>")
+		return
+
+	visible_message("<span class='notice'>[src] quickly pulled out and put the tongue back</span>")
+	to_chat(src,"<span class='notice'>Ressults air sample:</span>")
+	var/datum/gas_mixture/mixture = return_air()
+	var/pressure = mixture.return_pressure()
+	var/total_moles = mixture.total_moles
+
+	if(total_moles > 0)
+		if(pressure - ONE_ATMOSPHERE * 2 <= 10)
+			to_chat(src,"<span class='notice'>The pressure of about: [round(pressure, 20)] kPa.</span>")
+		else
+			to_chat(src,"<span class='warning'>The pressure extremely high.</span>")
+
+		for(var/mix in mixture.gas)
+			if(mix == "sleeping_agent" && mixture.gas[mix] > 1)
+				to_chat(src,"<span class='warning'>Sssleepy.</span>")
+			else if(mix == "phoron" && mixture.gas[mix] > 1)
+				to_chat(src,"<span class='warning'>Deadly.</span>")
+			else if(mix == "oxygen")
+				if(mixture.gas[mix] > 22)
+					to_chat(src,"<span class='notice'>Airfull.</span>")
+				else if(mixture.gas[mix] < 19)
+					to_chat(src,"<span class='notice'>Airless.</span>")
+
+		to_chat(src,"<span class='notice'>Temperature around [round(mixture.temperature-T0C, 5)]&deg;C.</span>")
+		return
+	to_chat(src,"<span class='warning'>Well... I need my mask back.</span>")
+
+
 /mob/living/carbon/human/has_eyes()
 	if(organs_by_name[O_EYES])
 		var/obj/item/organ/internal/IO = organs_by_name[O_EYES]
@@ -1960,7 +2010,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	else if(organ_check in list(O_LIVER, O_KIDNEYS))
 		BP = bodyparts_by_name[BP_GROIN]
 
-	if(BP && (BP.status & ORGAN_ROBOT))
+	if(BP && BP.is_robotic())
 		return FALSE
 	return species.has_organ[organ_check]
 

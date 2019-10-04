@@ -249,9 +249,7 @@
 /area/awaymission/wwmines)
 "aR" = (
 /obj/structure/ore_box,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "aS" = (
 /obj/item/weapon/paper{
@@ -260,9 +258,7 @@
 /turf/simulated/floor/engine/cult,
 /area/awaymission/wwvault)
 "aT" = (
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "aU" = (
 /obj/effect/landmark/corpse/syndicatecommando,
@@ -286,22 +282,16 @@
 /obj/effect/decal/cleanable/blood/gibs/body{
 	icon_state = "gibup1"
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "aZ" = (
 /obj/effect/mine/dnascramble,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "ba" = (
 /obj/effect/mine/dnascramble,
 /obj/item/ammo_box/a12mm,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "bb" = (
 /obj/effect/decal/cleanable/cobweb,
@@ -316,15 +306,11 @@
 /area/awaymission/wwrefine)
 "be" = (
 /obj/item/ammo_box/a12mm,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "bf" = (
 /mob/living/simple_animal/hostile/syndicate/ranged,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "bg" = (
 /turf/simulated/wall/mineral/sandstone,
@@ -336,9 +322,7 @@
 "bi" = (
 /obj/effect/landmark/corpse/miner/rig,
 /obj/effect/mine/dnascramble,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "bj" = (
 /turf/simulated/floor/wood,
@@ -453,7 +437,7 @@
 /area/awaymission/wwmines)
 "bG" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/barman_recipes,
+/obj/item/weapon/book/manual/wiki/barman_recipes,
 /turf/simulated/floor/wood,
 /area/awaymission/wwmines)
 "bH" = (
@@ -466,9 +450,9 @@
 /area/awaymission/wwmines)
 "bJ" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/obj/item/weapon/reagent_containers/food/snacks/flour,
-/obj/item/weapon/reagent_containers/food/snacks/flour,
-/obj/item/weapon/reagent_containers/food/snacks/flour,
+/obj/item/weapon/reagent_containers/food/condiment/flour,
+/obj/item/weapon/reagent_containers/food/condiment/flour,
+/obj/item/weapon/reagent_containers/food/condiment/flour,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -476,7 +460,7 @@
 /area/awaymission/wwmines)
 "bK" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/chef_recipes,
+/obj/item/weapon/book/manual/wiki/chefs_recipes,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -532,9 +516,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "bR" = (
 /obj/structure/window/reinforced{
@@ -545,9 +527,7 @@
 	icon_state = "fwindow"
 	},
 /obj/structure/grille,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "bS" = (
 /obj/structure/window/reinforced{
@@ -562,9 +542,7 @@
 	dir = 4;
 	icon_state = "fwindow"
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "bT" = (
 /obj/structure/window/reinforced{
@@ -612,14 +590,10 @@
 	dir = 1;
 	icon_state = "fwindow"
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "bY" = (
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "bZ" = (
 /turf/simulated/floor/plating/ironsand{
@@ -639,9 +613,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "cb" = (
 /obj/machinery/door/window,
@@ -671,9 +643,7 @@
 	icon_state = "fwindow"
 	},
 /obj/structure/grille,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "cf" = (
 /obj/structure/window/reinforced{
@@ -685,9 +655,7 @@
 	icon_state = "fwindow"
 	},
 /obj/structure/grille,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "cg" = (
 /obj/structure/table/woodentable,
@@ -804,9 +772,7 @@
 "cB" = (
 /obj/effect/mine/phoron,
 /obj/item/ammo_box/a12mm,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "cC" = (
 /obj/structure/table/woodentable,
@@ -895,9 +861,7 @@
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "cR" = (
 /obj/structure/stool/bed/chair/wood/wings{
@@ -918,9 +882,7 @@
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "cT" = (
 /obj/effect/decal/remains/human,
@@ -994,9 +956,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "dd" = (
 /obj/structure/table/woodentable,
@@ -1033,9 +993,7 @@
 	dir = 1;
 	icon_state = "fwindow"
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "dh" = (
 /obj/effect/landmark/corpse/syndicatecommando{
@@ -1058,26 +1016,18 @@
 /obj/structure/shuttle/engine/propulsion/burst/left,
 /turf/simulated/wall/mineral/sandstone,
 /area/awaymission/wwmines)
-"dl" = (
-/obj/structure/sign/double/maltesefalcon/right,
-/turf/simulated/wall/mineral/sandstone,
-/area/awaymission/wwmines)
 "dm" = (
 /obj/structure/mineral_door/wood{
 	icon_state = "woodopening"
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "dn" = (
 /obj/structure/mineral_door/wood{
 	icon_state = "woodopening"
 	},
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "do" = (
 /obj/structure/window/reinforced{
@@ -1116,9 +1066,7 @@
 /area/awaymission/wwgov)
 "dt" = (
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "du" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -1131,9 +1079,7 @@
 /area/awaymission/wwmines)
 "dw" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "dx" = (
 /turf/simulated/floor/plating/ironsand{
@@ -1170,9 +1116,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "woodopening"
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "dE" = (
 /obj/structure/largecrate,
@@ -1255,9 +1199,7 @@
 	dir = 8;
 	icon_state = "fwindow"
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "dS" = (
 /obj/structure/window/reinforced{
@@ -1268,9 +1210,7 @@
 	icon_state = "fwindow"
 	},
 /obj/structure/grille,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "dT" = (
 /obj/structure/window/reinforced{
@@ -1285,20 +1225,15 @@
 	dir = 4;
 	icon_state = "fwindow"
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "dU" = (
 /obj/machinery/door/airlock/sandstone,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "dV" = (
 /obj/machinery/shower{
-	dir = 4;
-	icon_state = "shower"
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -1307,8 +1242,7 @@
 /area/awaymission/wwmines)
 "dW" = (
 /obj/machinery/shower{
-	dir = 8;
-	icon_state = "shower"
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -1377,17 +1311,13 @@
 	dir = 8;
 	icon_state = "fwindow"
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "eh" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwgov)
 "ei" = (
 /obj/structure/window/reinforced{
@@ -1402,9 +1332,7 @@
 /area)
 "ej" = (
 /obj/effect/decal/cleanable/blood,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "ek" = (
 /obj/effect/mine/phoron,
@@ -1560,16 +1488,14 @@
 	},
 /area/awaymission/wwgov)
 "eJ" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/simulated/wall/r_wall,
 /area/awaymission/wwrefine)
 "eK" = (
 /obj/effect/decal/mecha_wreckage/gygax{
 	anchored = 1
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "eL" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -1763,9 +1689,7 @@
 /obj/effect/decal/mecha_wreckage/seraph{
 	anchored = 1
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "fl" = (
 /obj/effect/decal/mecha_wreckage/ripley/deathripley{
@@ -1815,9 +1739,7 @@
 /obj/effect/decal/mecha_wreckage/ripley/deathripley{
 	anchored = 1
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "fs" = (
 /obj/effect/decal/cleanable/blood,
@@ -1894,25 +1816,19 @@
 /area/awaymission/wwrefine)
 "fB" = (
 /obj/effect/mine/phoron,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "fC" = (
 /obj/effect/decal/cleanable/blood/gibs/body{
 	icon_state = "gibdown1"
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "fD" = (
 /obj/effect/decal/mecha_wreckage/mauler{
 	anchored = 1
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "fE" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -1995,15 +1911,11 @@
 	anchored = 1
 	},
 /obj/effect/decal/cleanable/blood,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "fQ" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "fR" = (
 /obj/effect/mine/dnascramble,
@@ -2197,9 +2109,7 @@
 /area/awaymission/wwmines)
 "gx" = (
 /obj/item/weapon/gun/projectile/shotgun,
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "gy" = (
 /obj/effect/landmark/corpse/syndicatecommando{
@@ -2370,9 +2280,7 @@
 /obj/effect/landmark{
 	name = "awaystart"
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 "gW" = (
 /obj/structure/table/reinforced,
@@ -2407,9 +2315,7 @@
 	info = "The syndicate have invaded.  Their ships appeared out of nowhere and now they likely intend to kill us all and take everything.  On the off-chance that the Vault may grant us sanctuary, many of us have decided to force our way inside and bolt the door, taking as many provisions with us as we can carry.  In case you find this, send for help immediately and open the Vault. Find us inside.";
 	name = "Planer Saul's Journal: Page 8"
 	},
-/turf/simulated/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
+/turf/simulated/floor/plating/ironsand,
 /area/awaymission/wwmines)
 
 (1,1,1) = {"
@@ -33977,7 +33883,7 @@ bj
 bj
 bj
 bj
-dl
+bu
 aT
 bj
 bj

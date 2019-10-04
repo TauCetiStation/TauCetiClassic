@@ -3,6 +3,7 @@
 	var/author_ckey
 
 /proc/custom_item_premoderation_add(player_ckey, itemname)
+	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/"
 	var/list/moderation_items = null
 	customItemsCache["premoderation"] >> moderation_items
@@ -21,6 +22,7 @@
 	customItemsCache["premoderation"] << moderation_items
 
 /proc/custom_item_premoderation_list()
+	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/"
 	var/list/moderation_items = null
 	customItemsCache["premoderation"] >> moderation_items
@@ -30,6 +32,7 @@
 
 /proc/custom_item_premoderation_accept(player_ckey, itemname)
 	itemname = ckey(itemname)
+	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/"
 	var/list/moderation_items = null
 	customItemsCache["premoderation"] >> moderation_items
@@ -47,6 +50,7 @@
 
 /proc/custom_item_premoderation_reject(player_ckey, itemname, reason)
 	itemname = ckey(itemname)
+	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/"
 	var/list/moderation_items = null
 	customItemsCache["premoderation"] >> moderation_items

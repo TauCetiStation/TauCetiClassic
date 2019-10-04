@@ -21,7 +21,7 @@
 	density = FALSE
 	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
 	unacidable = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/datum/wires/syndicatebomb/wires = null
 	var/timer = 60
@@ -124,7 +124,7 @@
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/newtime = input(user, "Please set the timer.", "Timer", "[timer]") as num
-	newtime = Clamp(newtime, 60, 60000)
+	newtime = CLAMP(newtime, 60, 60000)
 	if(in_range(src, user) && isliving(user) || isobserver(user)) //No running off and setting bombs from across the station
 		timer = newtime
 		src.loc.visible_message("<span class='notice'>[bicon(src)] timer set for [timer] seconds.</span>")
@@ -147,7 +147,7 @@
 
 			var/turf/bombturf = get_turf(src)
 			var/area/A = get_area(bombturf)
-			message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+			message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has primed a [name] for detonation at ([bombturf.x], [bombturf.y], [bombturf.z] - [A.name]) [ADMIN_JMP(bombturf)].")
 			log_game("[key_name(user)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 			START_PROCESSING(SSobj, src) //Ticking down
 

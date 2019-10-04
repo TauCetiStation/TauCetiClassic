@@ -25,7 +25,7 @@
 	var/time_since_fail = 100
 	var/energy_conversion_rate = 0.01	//how many renwicks per watt?
 	//
-	use_power = 1			//0 use nothing
+	use_power = IDLE_POWER_USE			//0 use nothing
 							//1 use idle power
 							//2 use active power
 	idle_power_usage = 20
@@ -213,8 +213,10 @@
 			spawn(rand(0, 15))
 				src.icon_state = "generator0"
 				stat |= NOPOWER
+				update_power_use()
 			if (src.active)
 				toggle()
+	update_power_use()
 
 /obj/machinery/shield_gen/ex_act(var/severity)
 

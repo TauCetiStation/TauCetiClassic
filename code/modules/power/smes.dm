@@ -7,7 +7,7 @@
 	icon_state = "smes"
 	density = 1
 	anchored = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/output = 50000
 	var/lastout = 0
@@ -77,7 +77,7 @@
 	smes_list -= src
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
 		var/area/area = get_area(src)
-		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
+		message_admins("SMES deleted at [area.name] [ADMIN_JMP(src)]")
 		log_game("SMES deleted at ([area.name])")
 		investigate_log("<font color='red'>deleted</font> at ([area.name])","singulo")
 	if(terminal)

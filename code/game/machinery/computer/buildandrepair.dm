@@ -413,12 +413,12 @@
 					src.state = 1
 			if(iswelder(P))
 				var/obj/item/weapon/weldingtool/WT = P
-				if(user.is_busy(src))
-					return
-				if(WT.use_tool(src, user, 20, volume = 50))
-					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
-					new /obj/item/stack/sheet/metal( src.loc, 5 )
-					qdel(src)
+				if(WT.use(0, user))
+					to_chat(user, "<span class='notice'>You start deconstruct the frame.</span>")
+					if(WT.use_tool(src, user, 20, volume = 50))
+						to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
+						new /obj/item/stack/sheet/metal( src.loc, 5 )
+						qdel(src)
 		if(1)
 			if(iswrench(P))
 				if(user.is_busy(src))

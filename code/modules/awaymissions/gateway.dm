@@ -37,7 +37,7 @@
 	density = TRUE
 	icon_state = "offcenter"
 
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 5000
 
@@ -105,7 +105,7 @@
 	active = TRUE
 	update_icon()
 
-	use_power = 2
+	set_power_use(ACTIVE_POWER_USE)
 	START_PROCESSING(SSmachine, src)
 
 /obj/machinery/gateway/center/proc/toggleoff()
@@ -116,7 +116,7 @@
 	active = FALSE
 	update_icon()
 
-	use_power = 1
+	set_power_use(IDLE_POWER_USE)
 	STOP_PROCESSING(SSmachine, src)
 
 /obj/machinery/gateway/center/proc/calibrate(user)

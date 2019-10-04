@@ -6,7 +6,7 @@
 
 	density = TRUE
 	flags = CONDUCT
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/valve_open = FALSE
 	var/release_log = ""
@@ -205,7 +205,7 @@ update_flag
 	if((stat & BROKEN) || (flags & NODECONSTRUCT))
 		return
 
-	health = Clamp(health - amount, 0, initial(health))
+	health = CLAMP(health - amount, 0, initial(health))
 
 	if(health <= 10)
 		canister_break()
@@ -423,7 +423,7 @@ update_flag
 
 	if (href_list["pressure_adj"])
 		var/diff = text2num(href_list["pressure_adj"])
-		release_pressure = Clamp(release_pressure + diff, can_min_release_pressure, can_max_release_pressure)
+		release_pressure = CLAMP(release_pressure + diff, can_min_release_pressure, can_max_release_pressure)
 		investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 
 	if (href_list["relabel"])

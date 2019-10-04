@@ -17,7 +17,7 @@
 /datum/surgery_step/glue_bone/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))	return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	return BP.open >= 2 && BP.stage == 0
+	return BP && BP.open >= 2 && BP.stage == 0
 
 /datum/surgery_step/glue_bone/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -50,7 +50,7 @@
 /datum/surgery_step/set_bone/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))	return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	return BP.body_zone != BP_HEAD && BP.open >= 2 && BP.stage == 1
+	return BP && BP.body_zone != BP_HEAD && BP.open >= 2 && BP.stage == 1
 
 /datum/surgery_step/set_bone/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -88,7 +88,7 @@
 /datum/surgery_step/mend_skull/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))	return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	return BP.body_zone == BP_HEAD && BP.open >= 2 && BP.stage == 1
+	return BP && BP.body_zone == BP_HEAD && BP.open >= 2 && BP.stage == 1
 
 /datum/surgery_step/mend_skull/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] is beginning to piece together [target]'s skull with \the [tool]."  , \
@@ -123,7 +123,7 @@
 /datum/surgery_step/finish_bone/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))	return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	return BP.open >= 2 && BP.stage == 2
+	return BP && BP.open >= 2 && BP.stage == 2
 
 /datum/surgery_step/finish_bone/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)

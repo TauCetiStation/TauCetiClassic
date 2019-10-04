@@ -195,10 +195,10 @@
 	desc = "A lighting fixture."
 	anchored = 1
 	layer = 5  					// They were appearing under mobs which is a little weird - Ostaf
-	use_power = 2
-	idle_power_usage = 2
+	use_power = ACTIVE_POWER_USE
+	idle_power_usage = 0
 	active_power_usage = 20
-	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
+	power_channel = STATIC_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	interact_offline = TRUE
 	var/on = 0					// 1 if on, 0 if off
 	var/on_gs = 0
@@ -324,12 +324,12 @@
 
 		if(light_range != BR || light_power != PO || light_color != CO)
 			switchcount++
-			playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
 
 					log_admin("LOG: Rigged light explosion, last touched by [fingerprintslast]")
-					message_admins("LOG: Rigged light explosion, last touched by [fingerprintslast]")
+					message_admins("LOG: Rigged light explosion, last touched by [fingerprintslast] [ADMIN_JMP(src)]")
 
 					explode()
 			else if( prob( min(60, switchcount*switchcount*0.01) ) )
@@ -339,21 +339,18 @@
 					on = 0
 					set_light(0)
 			else
-				use_power = 2
 				set_light(BR, PO, CO)
 	else
-		use_power = 1
 		set_light(0)
 
-	active_power_usage = ((light_range + light_power) * 10)
+	active_power_usage = ((light_range + light_power) * 20) //20W per unit luminosity
 	if(on != on_gs)
 		on_gs = on
 
 		if(on)
-			static_power_used = ((light_range + light_power) * 20) //20W per unit luminosity
-			addStaticPower(static_power_used, STATIC_LIGHT)
+			set_power_use(ACTIVE_POWER_USE)
 		else
-			removeStaticPower(static_power_used, STATIC_LIGHT)
+			set_power_use(IDLE_POWER_USE)
 
 
 // attempt to set the light's on/off status
@@ -415,7 +412,7 @@
 				if(on && rigged)
 
 					log_admin("LOG: Rigged light explosion, last touched by [fingerprintslast]")
-					message_admins("LOG: Rigged light explosion, last touched by [fingerprintslast]")
+					message_admins("LOG: Rigged light explosion, last touched by [fingerprintslast] [ADMIN_JMP(src)]")
 
 					explode()
 			else
@@ -780,7 +777,7 @@
 		if(S.reagents.has_reagent("phoron", 5))
 
 			log_admin("LOG: [user.name] ([user.ckey]) injected a light with phoron, rigging it to explode.")
-			message_admins("LOG: [user.name] ([user.ckey]) injected a light with phoron, rigging it to explode. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			message_admins("LOG: [user.name] ([user.ckey]) injected a light with phoron, rigging it to explode. [ADMIN_JMP(user)]")
 
 			rigged = 1
 

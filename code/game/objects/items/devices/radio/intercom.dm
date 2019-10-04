@@ -9,15 +9,6 @@
 	var/number = 0
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()
-	var/last_tick //used to delay the powercheck
-
-/obj/item/device/radio/intercom/atom_init()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/device/radio/intercom/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
 
 /obj/item/device/radio/intercom/attack_ai(mob/user)
 	src.add_fingerprint(user)
@@ -55,20 +46,14 @@
 		return
 	..()
 
-/obj/item/device/radio/intercom/process()
-	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < 0))
-		last_tick = world.timeofday
+/obj/item/device/radio/intercom/proc/power_change()
+	var/area/A = get_area(src)
+	if(!A)
+		on = 0
+	else
+		on = A.powered(STATIC_EQUIP) // set "on" to the power status
 
-		if(!src.loc)
-			on = 0
-		else
-			var/area/A = get_area(src)
-			if(!A)
-				on = 0
-			else
-				on = A.powered(EQUIP) // set "on" to the power status
-
-		if(!on)
-			icon_state = "intercom-p"
-		else
-			icon_state = "intercom"
+	if(!on)
+		icon_state = "intercom-p"
+	else
+		icon_state = "intercom"

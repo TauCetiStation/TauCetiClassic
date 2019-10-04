@@ -25,6 +25,7 @@
 	screens[category] = screen
 	if(client)
 		client.screen += screen
+		screen.add_screen_part(client)
 	return screen
 
 /mob/proc/clear_fullscreen(category, animate = 10)
@@ -40,6 +41,7 @@
 	screens -= category
 	if(client)
 		client.screen -= screen
+		screen.remove_screen_part(client)
 	qdel(screen)
 
 /mob/proc/clear_fullscreens()
@@ -49,7 +51,10 @@
 /datum/hud/proc/reload_fullscreen()
 	var/list/screens = mymob.screens
 	for(var/category in screens)
-		mymob.client.screen |= screens[category]
+		var/obj/screen/fullscreen/screen = screens[category]
+		mymob.client.screen |= screen
+		screen.add_screen_part(mymob.client, TRUE)
+
 
 /obj/screen/fullscreen
 	icon = 'icons/mob/screen1_full.dmi'
@@ -59,10 +64,18 @@
 	plane = FULLSCREEN_PLANE
 	mouse_opacity = 0
 	var/severity = 0
+	var/obj/screen/fullscreen/screen_part
 
 /obj/screen/fullscreen/Destroy()
+	QDEL_NULL(screen_part)
 	severity = 0
 	return ..()
+
+/obj/screen/fullscreen/proc/add_screen_part(client/C, reload)
+	return
+
+/obj/screen/fullscreen/proc/remove_screen_part(client/C)
+	return
 
 /obj/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"
@@ -83,6 +96,26 @@
 	icon_state = "blackimageoverlay"
 	layer = BLIND_LAYER
 	plane = FULLSCREEN_PLANE
+	mouse_opacity = MOUSE_OPACITY_ICON
+
+/obj/screen/fullscreen/blind/add_screen_part(client/C, reload)
+	if(!screen_part)
+		screen_part = new /obj/screen/fullscreen/blind/ring
+	if(!reload)
+		C.screen += screen_part
+	else
+		C.screen |= screen_part
+
+/obj/screen/fullscreen/blind/remove_screen_part(client/C)
+	C.screen -= screen_part
+
+/obj/screen/fullscreen/blind/ring
+	icon_state = "blackimageoverlay_ring"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/screen/fullscreen/blind/Click(location, control, params)
+	if(usr.client.void)
+		usr.client.void.Click(location, control, params)
 
 /obj/screen/fullscreen/impaired
 	icon_state = "impairedoverlay"

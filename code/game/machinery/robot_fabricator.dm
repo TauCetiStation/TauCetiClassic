@@ -7,7 +7,7 @@
 	var/metal_amount = 0
 	var/operating = 0
 	var/obj/item/robot_parts/being_built = null
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
 	allowed_checks = ALLOWED_CHECK_TOPIC
@@ -30,12 +30,6 @@
 				updateDialog()
 		else
 			to_chat(user, "The robot part maker is full. Please remove metal from the robot part maker in order to insert more.")
-
-/obj/machinery/robotic_fabricator/power_change()
-	if (powered())
-		stat &= ~NOPOWER
-	else
-		stat |= NOPOWER
 
 /obj/machinery/robotic_fabricator/ui_interact(user)
 	var/dat
@@ -115,7 +109,7 @@
 			if (!isnull(building))
 				if (src.metal_amount >= build_cost)
 					src.operating = 1
-					src.use_power = 2
+					set_power_use(ACTIVE_POWER_USE)
 
 					src.metal_amount = max(0, src.metal_amount - build_cost)
 
@@ -127,7 +121,7 @@
 						if (!isnull(src.being_built))
 							src.being_built.loc = get_turf(src)
 							src.being_built = null
-						src.use_power = 1
+						set_power_use(IDLE_POWER_USE)
 						src.operating = 0
 						src.overlays -= "fab-active"
 

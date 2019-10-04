@@ -89,9 +89,11 @@
 	return
 
 /obj/item/weapon/gun/energy/laser/selfcharging/captain
+	name = "antique laser gun"
 	icon_state = "caplaser"
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	force = 10
+	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = null
 	can_be_holstered = TRUE
 	chargespeed = 1
@@ -152,74 +154,53 @@
 
 ////////Laser Tag////////////////////
 
-/obj/item/weapon/gun/energy/laser/bluetag
+/obj/item/weapon/gun/energy/laser/lasertag
 	name = "laser tag gun"
+	icon_state = "retro"
+	desc = "Standard issue weapon of the Imperial Guard."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/omnitag)
+	origin_tech = "combat=1;magnets=2"
+	clumsy_check = 0
+	can_be_holstered = TRUE
+	var/charge_tick = 0
+
+	var/lasertag_color = "none"
+
+/obj/item/weapon/gun/energy/laser/lasertag/special_check(mob/living/carbon/human/M)
+	if(ishuman(M))
+		if(istype(M.wear_suit, /obj/item/clothing/suit/lasertag))
+			var/obj/item/clothing/suit/lasertag/L = M.wear_suit
+			if(L.lasertag_color == lasertag_color)
+				return ..()
+		to_chat(M, "<span class='warning'>You need to be wearing your appropriate color laser tag vest!</span>")
+	return 0
+
+/obj/item/weapon/gun/energy/laser/lasertag/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/gun/energy/laser/lasertag/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/weapon/gun/energy/laser/lasertag/process()
+	charge_tick++
+	if(charge_tick < 4)
+		return FALSE
+	charge_tick = 0
+	if(!power_supply)
+		return FALSE
+	power_supply.give(100)
+	update_icon()
+	return TRUE
+
+/obj/item/weapon/gun/energy/laser/lasertag/bluetag
 	icon_state = "bluetag"
-	desc = "Standard issue weapon of the Imperial Guard."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
-	origin_tech = "combat=1;magnets=2"
-	clumsy_check = 0
-	can_be_holstered = TRUE
-	var/charge_tick = 0
+	lasertag_color = "blue"
 
-/obj/item/weapon/gun/energy/laser/bluetag/special_check(mob/living/carbon/human/M)
-	if(ishuman(M))
-		if(istype(M.wear_suit, /obj/item/clothing/suit/bluetag))
-			return ..()
-		to_chat(M, "<span class='warning'>You need to be wearing your laser tag vest!</span>")
-	return 0
-
-/obj/item/weapon/gun/energy/laser/bluetag/atom_init()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-
-/obj/item/weapon/gun/energy/laser/bluetag/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-
-/obj/item/weapon/gun/energy/laser/bluetag/process()
-	charge_tick++
-	if(charge_tick < 4) return 0
-	charge_tick = 0
-	if(!power_supply) return 0
-	power_supply.give(100)
-	update_icon()
-	return 1
-
-/obj/item/weapon/gun/energy/laser/redtag
-	name = "laser tag gun"
+/obj/item/weapon/gun/energy/laser/lasertag/redtag
 	icon_state = "redtag"
-	desc = "Standard issue weapon of the Imperial Guard."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
-	origin_tech = "combat=1;magnets=2"
-	clumsy_check = 0
-	can_be_holstered = TRUE
-	var/charge_tick = 0
+	lasertag_color = "red"
 
-/obj/item/weapon/gun/energy/laser/redtag/special_check(mob/living/carbon/human/M)
-	if(ishuman(M))
-		if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
-			return ..()
-		to_chat(M, "<span class='warning'>You need to be wearing your laser tag vest!</span>")
-	return 0
-
-/obj/item/weapon/gun/energy/laser/redtag/atom_init()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-
-/obj/item/weapon/gun/energy/laser/redtag/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-
-/obj/item/weapon/gun/energy/laser/redtag/process()
-	charge_tick++
-	if(charge_tick < 4) return 0
-	charge_tick = 0
-	if(!power_supply) return 0
-	power_supply.give(100)
-	update_icon()
-	return 1

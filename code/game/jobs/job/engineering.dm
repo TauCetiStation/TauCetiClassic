@@ -19,6 +19,10 @@
 	minimal_player_ingame_minutes = 2400
 	restricted_species = list(UNATHI, TAJARAN, DIONA, IPC)
 
+	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
+
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
+
 /datum/job/chief_engineer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
@@ -56,6 +60,10 @@
 	minimal_player_ingame_minutes = 540
 	restricted_species = list(IPC)
 
+	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
+
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
+
 /datum/job/engineer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
@@ -92,6 +100,10 @@
 	access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction, access_external_airlocks, access_engineering_lobby)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 600
+
+	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
+
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
 
 /datum/job/atmos/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

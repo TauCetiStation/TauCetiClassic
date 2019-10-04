@@ -659,8 +659,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/holodeck/source_basketball
 	name = "Holodeck - Basketball Court"
 
+/area/holodeck/source_boxingcourt
+	name = "Holodeck - Boxing Court"
+
 /area/holodeck/source_thunderdomecourt
 	name = "Holodeck - Thunderdome Court"
+
+/area/holodeck/source_burntest
+	name = "Holodeck - Burn test"
 
 /area/holodeck/source_courtroom
 	name = "Holodeck - Courtroom"
@@ -1349,6 +1355,40 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	always_unpowered = 1
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
+/area/delivery_shuttle
+	name = "Delivery Shuttle"
+	icon_state = "shuttle"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/cloning_lab
+	name = "Cloning Facility"
+	icon_state = "purple"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/listening_post
+	name = "Listening Post"
+	icon_state = "syndie-elite"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/syndicate_fighter
+	name = "Shiv Fighter"
+	icon_state = "syndie-elite"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = 0
+
+/area/iss
+	name = "Ancient Space Station"
+	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = 0
+
+/area/nasa_satellite
+	name = "NASA_satellite"
+	icon_state = "yellow"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	looped_ambience = 'sound/music/space_oddity.ogg'
+
 /////////////////////////////////////////////////////////////////////
 /*
  Lists of areas to be used with is_type_in_list.
@@ -1418,3 +1458,7 @@ var/list/the_station_areas = list (
 /area/derelict/lab
 	name = "Abandoned Lab"
 	icon_state = "yellow"
+
+/area/tophat
+	name = "Tophat"
+	icon_state = "tophat-room"

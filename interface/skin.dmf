@@ -83,6 +83,10 @@ macro "macro"
 		name = "CTRL+A+REP"
 		command = ".west"
 		is-disabled = false
+	elem "MACRO-CTRL+B"
+		name = "CTRL+B"
+		command = "Click-On-Self"
+		is-disabled = false
 	elem "MACRO-CTRL+D+REP"
 		name = "CTRL+D+REP"
 		command = ".east"
@@ -98,6 +102,10 @@ macro "macro"
 	elem "MACRO-CTRL+G"
 		name = "CTRL+G"
 		command = "a-intent right"
+		is-disabled = false
+	elem "MACRO-CTRL+H"
+		name = "CTRL+H"
+		command = "holster"
 		is-disabled = false
 	elem "MACRO-CTRL+Q"
 		name = "CTRL+Q"
@@ -121,11 +129,11 @@ macro "macro"
 		is-disabled = false
 	elem "MACRO-CTRL+Y"
 		name = "CTRL+Y"
-		command = "Activate-Held-Object"
+		command = "Click-On-Held-Object"
 		is-disabled = false
 	elem "MACRO-CTRL+Z"
 		name = "CTRL+Z"
-		command = "Activate-Held-Object"
+		command = "Click-On-Held-Object"
 		is-disabled = false
 	elem "MACRO-F1"
 		name = "F1"
@@ -285,6 +293,14 @@ macro "hotkeymode"
 		name = "CTRL+A+REP"
 		command = ".west"
 		is-disabled = false
+	elem "HKMODE-B"
+		name = "B"
+		command = "Click-On-Self"
+		is-disabled = false
+	elem "HKMODE-CTRL+B"
+		name = "CTRL+B"
+		command = "Click-On-Self"
+		is-disabled = false
 	elem "HKMODE-D+REP"
 		name = "D+REP"
 		command = ".east"
@@ -371,19 +387,19 @@ macro "hotkeymode"
 		is-disabled = false
 	elem "HKMODE-Y"
 		name = "Y"
-		command = "Activate-Held-Object"
+		command = "Click-On-Held-Object"
 		is-disabled = false
 	elem "HKMODE-CTRL+Y"
 		name = "CTRL+Y"
-		command = "Activate-Held-Object"
+		command = "Click-On-Held-Object"
 		is-disabled = false
 	elem "HKMODE-Z"
 		name = "Z"
-		command = "Activate-Held-Object"
+		command = "Click-On-Held-Object"
 		is-disabled = false
 	elem "HKMODE-CTRL+Z"
 		name = "CTRL+Z"
-		command = "Activate-Held-Object"
+		command = "Click-On-Held-Object"
 		is-disabled = false
 	elem "HKMODE-F1"
 		name = "F1"

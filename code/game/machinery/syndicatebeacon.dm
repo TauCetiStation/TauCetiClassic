@@ -14,7 +14,7 @@
 
 	anchored = 1
 	density = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/temptext = ""
 	var/selfdestructing = 0
@@ -96,7 +96,7 @@
 
 			to_chat(M, "<B>You have joined the ranks of the Syndicate and become a traitor to the station!</B>")
 
-			message_admins("[N.name] ([N.ckey]) has accepted a traitor objective from a syndicate beacon. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[N.x];Y=[N.y];Z=[N.z]'>JMP</a>)")
+			message_admins("[N.name] ([N.ckey]) has accepted a traitor objective from a syndicate beacon. [ADMIN_JMP(N)]")
 
 			var/obj_count = 1
 			for(var/datum/objective/OBJ in M.mind.objectives)
@@ -123,7 +123,7 @@
 	density = TRUE
 	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
 	stat = 0
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/active = 0 //It doesn't use up power, so use_power wouldn't really suit it
 	var/icontype = "beacon"

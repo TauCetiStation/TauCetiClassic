@@ -34,16 +34,9 @@
 					beakers -= B
 					user.put_in_hands(B)
 		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
-	if(stage > 1 && !active && clown_check(user))
-		to_chat(user, "<span class='warning'>You prime \the [name]!</span>")
 
-		msg_admin_attack("[user.name] ([user.ckey]) primed \a [src]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-
-		activate()
-		add_fingerprint(user)
-		if(iscarbon(user))
-			var/mob/living/carbon/C = user
-			C.throw_mode_on()
+	if(stage > 1)
+		..()
 
 /obj/item/weapon/grenade/chem_grenade/attackby(obj/item/weapon/W, mob/user)
 
@@ -121,10 +114,11 @@
 			detonator.a_right.activate()
 			active = 1
 	if(active)
+		playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, null, -3)
 		icon_state = initial(icon_state) + "_active"
 
 		if(user)
-			msg_admin_attack("[user.name] ([user.ckey]) primed \a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			msg_admin_attack("[user.name] ([user.ckey]) primed \a [src]", user)
 
 	return
 

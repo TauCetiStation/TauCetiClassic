@@ -139,7 +139,7 @@
 	var/obj/effect/fluid/F = locate() in T
 	if(F)
 		attack_log += "\[[time_stamp()]\]<font color='red'> [src] was shocked by the [source] and started chain-reaction with water!</font>"
-		msg_admin_attack("[key_name(src)] was shocked by the [source] and started chain-reaction with water! [ADMIN_JMP(src)]")
+		msg_admin_attack("[key_name(src)] was shocked by the [source] and started chain-reaction with water!", src)
 		F.electrocute_act(shock_damage)
 
 	shock_damage *= siemens_coeff
@@ -178,6 +178,10 @@
 			if(item_in_hand:wielded)
 				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
 				return
+		if(istype(item_in_hand, /obj/item/weapon/gun/energy/sniperrifle))
+			var/obj/item/weapon/gun/energy/sniperrifle/s = item_in_hand
+			if(s.zoom)
+				s.toggle_zoom()
 	src.hand = !( src.hand )
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
 		if(hand)	//This being 1 means the left hand is in use
@@ -216,6 +220,7 @@
 
 			for(var/obj/item/organ/external/BP in H.bodyparts)
 				var/status = ""
+				var/BPname = BP.name
 				var/brutedamage = BP.brute_dam
 				var/burndamage = BP.burn_dam
 				if(halloss > 0)
@@ -241,13 +246,14 @@
 				else if(burndamage > 0)
 					status += "numb"
 
-				if(BP.status & ORGAN_DESTROYED)
+				if(BP.is_stump)
 					status = "MISSING!"
+					BPname = parse_zone(BP.body_zone)
 				if(BP.status & ORGAN_MUTATED)
 					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
-				src.show_message(text("\t <span class='[status == "OK" ? "notice " : "warning"]'>My [] is [].</span>", BP.name,status), 1)
+				src.show_message(text("\t <span class='[status == "OK" ? "notice " : "warning"]'>My [] is [].</span>", BPname, status), 1)
 
 			if(roundstart_quirks.len)
 				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
@@ -437,7 +443,7 @@
 
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been thrown by [usr.name] ([usr.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
 				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
-				msg_admin_attack("[usr.name] ([usr.ckey]) has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+				msg_admin_attack("[usr.name] ([usr.ckey]) has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]", usr)
 
 	if(!item) return //Grab processing has a chance of returning null
 

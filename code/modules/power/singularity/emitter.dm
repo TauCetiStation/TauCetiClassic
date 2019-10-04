@@ -9,7 +9,7 @@
 	density = TRUE
 	req_access = list(access_engine_equip)
 
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 300
 	allowed_checks = ALLOWED_CHECK_NONE
@@ -65,7 +65,7 @@
 	return 1
 
 /obj/machinery/power/emitter/Destroy()
-	message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+	message_admins("Emitter deleted at ([x],[y],[z] - [ADMIN_JMP(src)]",0,1)
 	log_game("Emitter deleted at ([x],[y],[z])")
 	investigate_log("<font color='red'>deleted</font> at ([x],[y],[z])","singulo")
 	return ..()
@@ -94,7 +94,7 @@
 			if(active)
 				active = 0
 				to_chat(user, "You turn off the [src].")
-				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - src)]",0,1)
 				log_game("Emitter turned off by [user.ckey]([user]) in ([x],[y],[z])")
 				investigate_log("turned <font color='red'>off</font> by [user.key]","singulo")
 			else
@@ -105,7 +105,7 @@
 				to_chat(user, "You turn on the [src].")
 				shot_number = 0
 				fire_delay = maximum_fire_delay
-				message_admins("Emitter turned on by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+				message_admins("Emitter turned on by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - [ADMIN_JMP(src)]",0,1)
 				log_game("Emitter turned on by [user.ckey]([user]) in ([x],[y],[z])")
 				investigate_log("turned <font color='green'>on</font> by [user.key]","singulo")
 			update_icon()
@@ -121,7 +121,7 @@
 /*	if((severity == 1)&&prob(1)&&prob(1))
 		if(src.active)
 			src.active = 0
-			src.use_power = 1	*/
+			set_power_use(IDLE_POWER_USE)	*/
 	return 1
 
 /obj/machinery/containment_field/meteorhit()

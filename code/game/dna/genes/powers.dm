@@ -240,7 +240,7 @@
 		M.mind.hulkizing = 0   //We don't want to waste user's try, so user can mutate once later.
 		return
 
-	message_admins("[M.name] ([M.ckey]) is a <span class='warning'>Monster</span> (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
+	message_admins("[M.name] ([M.ckey]) is a <span class='warning'>Monster</span> [ADMIN_JMP(M)]")
 	if(istype(M.loc, /obj/machinery/dna_scannernew))
 		var/obj/machinery/dna_scannernew/DSN = M.loc
 		DSN.occupant = null

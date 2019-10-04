@@ -81,7 +81,7 @@
 
 			chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
 			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
-			msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]")
+			msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]", chassis.occupant)
 		else
 			step_away(M,chassis)
 			occupant_message("You push [target] out of the way.")
@@ -144,7 +144,7 @@
 					var/mob/living/M = target
 					chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
 					M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
-					msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]")
+					msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]", chassis.occupant)
 
 				log_message("Drilled through [target]")
 				target.ex_act(2)
@@ -209,8 +209,7 @@
 					var/mob/living/M = target
 					chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
 					M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
-					msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]")
-
+					msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]", chassis.occupant)
 				log_message("Drilled through [target]")
 				target.ex_act(2)
 	return 1
@@ -314,7 +313,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/tool/rcd/action(atom/target)
-	if(istype(target,/area/shuttle)||istype(target, /turf/space/transit))//>implying these are ever made -Sieve
+	if(istype(target,/area/shuttle))//>implying these are ever made -Sieve
 		disabled = 1
 	else
 		disabled = 0
@@ -772,7 +771,7 @@
 	range = 0
 	var/datum/global_iterator/pr_energy_relay
 	var/coeff = 100
-	var/list/use_channels = list(EQUIP,ENVIRON,LIGHT)
+	var/list/use_channels = list(STATIC_EQUIP,STATIC_ENVIRON,STATIC_LIGHT)
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/atom_init()
 	. = ..()
@@ -849,7 +848,7 @@
 		var/area/A = get_area(ER.chassis)
 		if(A)
 			var/pow_chan
-			for(var/c in list(EQUIP,ENVIRON,LIGHT))
+			for(var/c in list(STATIC_EQUIP,STATIC_ENVIRON,STATIC_LIGHT))
 				if(A.powered(c))
 					pow_chan = c
 					break

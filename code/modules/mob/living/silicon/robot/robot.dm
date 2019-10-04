@@ -586,6 +586,7 @@
 		if(opened)
 			if(cell)
 				to_chat(user, "You close the cover.")
+				playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)
 				opened = 0
 				updateicon()
 			else if(wiresexposed && wires.is_all_cut())
@@ -637,6 +638,7 @@
 				to_chat(user, "The cover is locked and cannot be opened.")
 			else
 				to_chat(user, "You open the cover.")
+				playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
 				opened = 1
 				updateicon()
 
@@ -651,6 +653,7 @@
 			W.loc = src
 			cell = W
 			to_chat(user, "You insert the power cell.")
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 35)
 
 			C.installed = 1
 			C.wrapped = W
@@ -666,6 +669,7 @@
 	else if(isscrewdriver(W) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
 		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		updateicon()
 
 	else if(isscrewdriver(W) && opened && cell)	// radio
@@ -690,6 +694,7 @@
 			if(allowed(usr))
 				locked = !locked
 				to_chat(user, "You [ locked ? "lock" : "unlock"] [src]'s interface.")
+				playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
 				updateicon()
 			else
 				to_chat(user, "<span class='warning'>Access denied.</span>")
@@ -742,7 +747,7 @@
 				lawupdate = 0
 				connected_ai = null
 				to_chat(user, "You emag [src]'s interface.")
-				message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
+				message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden. [ADMIN_JMP(user)]")
 				log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
 				clear_supplied_laws()
 				clear_inherent_laws()
@@ -1225,17 +1230,6 @@
 		R.UnlinkSelf()
 		to_chat(R, "Buffers flushed and reset. Camera system shutdown.  All systems operational.")
 		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
-
-/mob/living/silicon/robot/mode()
-	set name = "Activate Held Object"
-	set category = "IC"
-	set src = usr
-
-	var/obj/item/W = get_active_hand()
-	if (W)
-		W.attack_self(src)
-
-	return
 
 /mob/living/silicon/robot/verb/pose()
 	set name = "Set Pose"

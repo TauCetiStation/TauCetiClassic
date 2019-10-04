@@ -323,7 +323,7 @@ var/list/cult_runes = list()
 	if(prob(drain * 1.5) && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/organ/external/BP in H.bodyparts)
-			if(BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED | ORGAN_DESTROYED | ORGAN_DEAD | ORGAN_ARTERY_CUT))
+			if(BP.is_stump || BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED | ORGAN_DEAD | ORGAN_ARTERY_CUT))
 				BP.rejuvenate()
 				to_chat(user, "<span class='cult'>You were honored by Nar-Sie. You can feel his power in your [BP]</span>")
 				break
@@ -912,7 +912,7 @@ var/list/cult_runes = list()
 	var/list/affected = nearest_heretics()
 	if(length(affected) < 1)
 		return fizzle(user)
-	var/blindless_modifier = Clamp(holder_reaction(user) / length(affected), 5, 30)
+	var/blindless_modifier = CLAMP(holder_reaction(user) / length(affected), 5, 30)
 	for(var/mob/living/carbon/C in affected)
 		C.eye_blurry += blindless_modifier
 		C.eye_blind += blindless_modifier / 2

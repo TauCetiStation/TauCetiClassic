@@ -9,7 +9,7 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 40
 	var/ui_title = "Chem Dispenser 5000"
 	var/energy = 100
@@ -39,7 +39,9 @@
 	else
 		spawn(rand(0, 15))
 			stat |= NOPOWER
+			update_power_use()
 	nanomanager.update_uis(src) // update all UIs attached to src
+	update_power_use()
 
 /obj/machinery/chem_dispenser/process()
 
@@ -133,7 +135,7 @@
 
 	if(href_list["amount"])
 		amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
-		amount = Clamp(amount, 0, 100) // Since the user can actually type the commands himself, some sanity checking
+		amount = CLAMP(amount, 0, 100) // Since the user can actually type the commands himself, some sanity checking
 
 	if(href_list["dispense"])
 		if (dispensable_reagents.Find(href_list["dispense"]) && beaker != null)
@@ -295,10 +297,7 @@
 			return
 
 	else if(iswrench(B))
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		anchored = !anchored
-		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-	return
+		default_unfasten_wrench(user, B)
 
 /obj/machinery/chem_dispenser/beer
 	icon_state = "booze_dispenser"
@@ -327,10 +326,7 @@
 			return
 
 	else if(iswrench(B))
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		anchored = !anchored
-		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-	return
+		default_unfasten_wrench(user, B)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -340,7 +336,7 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/obj/item/weapon/storage/pill_bottle/loaded_pill_bottle = null
@@ -384,6 +380,8 @@
 	else
 		spawn(rand(0, 15))
 			stat |= NOPOWER
+			update_power_use()
+	update_power_use()
 
 /obj/machinery/chem_master/attackby(obj/item/B, mob/user)
 
@@ -549,7 +547,7 @@
 				return FALSE
 			useramount = amt_temp
 			if(useramount < 0)
-				message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [useramount]</a> ! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+				message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [useramount]</a>! [ADMIN_JMP(src)]")
 				log_admin("EXPLOIT : [key_name(usr)] tried to exploit a chemistry by entering a negative value: [useramount] !")
 				return FALSE
 			if(useramount > 300)
@@ -573,7 +571,7 @@
 				return FALSE
 			useramount = amt_temp
 			if(useramount < 0)
-				message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [useramount]</a> ! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+				message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [useramount]</a>! [ADMIN_JMP(src)]")
 				log_admin("EXPLOIT : [key_name(usr)] tried to exploit a chemistry by entering a negative value: [useramount] !")
 				return FALSE
 			if(useramount > 300)
@@ -700,7 +698,7 @@
 
 /obj/machinery/chem_master/proc/isgoodnumber(num)
 	if(isnum(num))
-		return Clamp(round(num), 0, 200)
+		return CLAMP(round(num), 0, 200)
 	else
 		return 0
 
@@ -780,7 +778,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	circuit = /obj/item/weapon/circuitboard/pandemic
-	//use_power = 1
+	//use_power = IDLE_POWER_USE
 	//idle_power_usage = 20		//defaults make more sense.
 	var/temphtml = ""
 	var/wait = null
@@ -805,6 +803,8 @@
 		spawn(rand(0, 15))
 			src.icon_state = (src.beaker?"mixer1_nopower":"mixer0_nopower")
 			stat |= NOPOWER
+			update_power_use()
+	update_power_use()
 
 
 /obj/machinery/computer/pandemic/Topic(href, href_list)
@@ -1021,7 +1021,7 @@
 	layer = 2.9
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
 	pass_flags = PASSTABLE
@@ -1093,10 +1093,7 @@
 		return
 
 	if(iswrench(O))
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		anchored = !anchored
-		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-		return
+		default_unfasten_wrench(user, O)
 
 	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
 		istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass) || \

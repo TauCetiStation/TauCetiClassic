@@ -6,10 +6,10 @@
 	density = 0
 	anchored = 1
 	var/obj/item/weapon/twohanded/spear/spear = null
-	var/obj/item/weapon/organ/head/head = null
+	var/obj/item/organ/external/head/head = null
 	var/image/display_head = null
 
-/obj/structure/headpole/atom_init(mapload, var/obj/item/weapon/organ/head/H, var/obj/item/weapon/twohanded/spear/S)
+/obj/structure/headpole/atom_init(mapload, obj/item/organ/external/head/H, obj/item/weapon/twohanded/spear/S)
 	. = ..()
 	if(istype(H))
 		head = H

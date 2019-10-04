@@ -960,6 +960,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			spawned_card.registered_name = M.real_name
 			M.equip_to_slot_or_del(spawned_card, SLOT_WEAR_ID)
 
+			if(M.mind)
+				M.mind.assigned_role = "Velocity Officer"
+
+			M.universal_speak = TRUE
+			M.universal_understand = TRUE
+
 		if("velocity chief")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security/corp(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), SLOT_SHOES)
@@ -1007,6 +1013,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			spawned_card.registered_name = M.real_name
 			M.equip_to_slot_or_del(spawned_card, SLOT_WEAR_ID)
 
+			var/obj/item/weapon/implant/mindshield/IMP = new(M)
+			IMP.inject(M)
+
+			if(M.mind)
+				M.mind.assigned_role = "Velocity Chief"
+
+			M.universal_speak = TRUE
+			M.universal_understand = TRUE
+
 		if("velocity doctor")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/det/fluff/retpoluniform(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), SLOT_SHOES)
@@ -1032,6 +1047,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			spawned_card.rank = "Velocity Medical Doctor"
 			spawned_card.registered_name = M.real_name
 			M.equip_to_slot_or_del(spawned_card, SLOT_WEAR_ID)
+
+			if(M.mind)
+				M.mind.assigned_role = "Velocity Medical Doctor"
+
+			M.universal_speak = TRUE
+			M.universal_understand = TRUE
 
 		if("emergency response team")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), SLOT_W_UNIFORM)
@@ -1774,7 +1795,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/mime(M), SLOT_WEAR_MASK)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/red(M), SLOT_HEAD)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/suspenders(M), SLOT_WEAR_SUIT)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(M.back), SLOT_IN_BACKPACK)
 			M.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(M), SLOT_IN_BACKPACK)
 			M.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(M), SLOT_IN_BACKPACK)
 
@@ -1794,7 +1814,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if("clown")
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/clown(M), SLOT_BACK)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(M.back), SLOT_IN_BACKPACK)
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/device/pda/clown(M), SLOT_BELT)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(M), SLOT_WEAR_MASK)

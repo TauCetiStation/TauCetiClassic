@@ -6,7 +6,6 @@
 /obj/item/clothing/head/plaguedoctorhat,
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
 /area/holodeck/source_theatre)
@@ -18,7 +17,6 @@
 /obj/item/clothing/under/owl,
 /obj/item/clothing/mask/gas/owl_mask,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
 /area/holodeck/source_theatre)
@@ -31,7 +29,6 @@
 /obj/item/clothing/mask/gas/sexyclown,
 /obj/item/clothing/mask/gas/sexymime,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
 /area/holodeck/source_theatre)
@@ -44,7 +41,6 @@
 /obj/item/clothing/mask/cigarette/cigar/havana,
 /obj/item/clothing/shoes/jackboots,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
 /area/holodeck/source_theatre)
@@ -58,7 +54,6 @@
 /obj/item/clothing/head/rabbitears,
 /obj/item/clothing/glasses/sunglasses/blindfold,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
 /area/holodeck/source_theatre)
@@ -74,7 +69,6 @@
 /obj/item/clothing/under/sl_suit,
 /obj/item/clothing/mask/fakemoustache,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
 /area/holodeck/source_theatre)
@@ -85,7 +79,6 @@
 /obj/item/clothing/suit/imperium_monk,
 /obj/item/clothing/mask/gas/cyborg,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
 /area/holodeck/source_theatre)
@@ -100,7 +93,6 @@
 /obj/item/clothing/suit/wizrobe/fake,
 /obj/item/clothing/head/wizard/fake,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
 /area/holodeck/source_theatre)
@@ -112,7 +104,6 @@
 /obj/item/clothing/head/cueball,
 /obj/item/clothing/suit/holidaypriest,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
 /area/holodeck/source_theatre)
@@ -125,13 +116,11 @@
 /obj/item/clothing/glasses/eyepatch,
 /obj/item/clothing/head/beret/red,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
 /area/holodeck/source_theatre)
 "k" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
 /area/holodeck/source_theatre)
@@ -141,13 +130,11 @@
 	icon_state = "wood"
 	},
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "siding1"
 	},
 /area/holodeck/source_theatre)
 "m" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "quiltystair"
 	},
 /area/holodeck/source_theatre)

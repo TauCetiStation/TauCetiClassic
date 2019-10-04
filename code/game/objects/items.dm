@@ -862,7 +862,7 @@
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)") //BS12 EDIT ALG
+	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])", user) //BS12 EDIT ALG
 
 	src.add_fingerprint(user)
 	//if((CLUMSY in user.mutations) && prob(50))
@@ -970,3 +970,24 @@ var/global/list/items_blood_overlay_by_type = list()
 		return
 	var/mob/M = loc
 	M.update_inv_item(src)
+
+// Whether or not the given item counts as sharp in terms of dealing damage
+/obj/item/proc/is_sharp()
+	return sharp || edge
+
+// Whether or not the given item counts as cutting with an edge in terms of removing limbs
+/obj/item/proc/has_edge()
+	return edge
+
+/obj/item/damage_flags()
+	. = FALSE
+	if(has_edge())
+		. |= DAM_EDGE
+	if(is_sharp())
+		. |= DAM_SHARP
+		if(damtype == BURN)
+			. |= DAM_LASER
+
+// Is called when somebody is stripping us using the panel. Return TRUE to allow the strip, FALSE to disallow.
+/obj/item/proc/onStripPanelUnEquip(mob/living/who, strip_gloves = FALSE)
+	return TRUE

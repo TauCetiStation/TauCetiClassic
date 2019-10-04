@@ -164,6 +164,7 @@
 		if((0 < beard) && (beard <= facial_hair_styles_list.len))
 			H.f_style = facial_hair_styles_list[beard]
 
+		H.apply_recolor()
 		H.update_body()
 		H.update_hair()
 
