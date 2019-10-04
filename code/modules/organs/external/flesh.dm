@@ -17,12 +17,18 @@
 /datum/bodypart_controller/proc/emp_act(severity)
 	return // meatbags do not care about EMP
 
+/datum/bodypart_controller/proc/get_brute_mod()
+	return BP.species.brute_mod
+
+/datum/bodypart_controller/proc/get_burn_mod()
+	return BP.species.burn_mod
+
 // Paincrit knocks someone down once they hit 60 shock_stage, so by default make it so that close to 100 additional damage needs to be dealt,
 // so that it's similar to PAIN. Lowered it a bit since hitting paincrit takes much longer to wear off than a halloss stun.
 // These control the damage thresholds for the various ways of removing limbs
 /datum/bodypart_controller/proc/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
-	brute = round(brute * BP.owner.species.brute_mod, 0.1)
-	burn = round(burn * BP.owner.species.burn_mod, 0.1)
+	brute = round(brute * get_brute_mod(), 0.1)
+	burn = round(burn * get_burn_mod(), 0.1)
 
 	if((brute <= 0) && (burn <= 0))
 		return 0

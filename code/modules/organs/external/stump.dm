@@ -4,7 +4,7 @@
 	icon_state = ""
 	is_stump = TRUE
 
-/obj/item/organ/external/stump/atom_init(mapload, mob/living/carbon/human/H, obj/item/organ/external/limb)
+/obj/item/organ/external/stump/atom_init(mapload, mob/living/carbon/human/H, obj/item/organ/external/limb, new_controller_type)
 	if(istype(limb))
 		name = "[limb.is_robotic()?"mechanical ":""]stump of \a [limb.name]"
 		limb_layer = limb.limb_layer

@@ -1584,6 +1584,7 @@
 #include "code\modules\organs\external\robotic.dm"
 #include "code\modules\organs\external\skeleton.dm"
 #include "code\modules\organs\external\stump.dm"
+#include "code\modules\organs\external\robotic\xion.dm"
 #include "code\modules\paperwork\carbonpaper.dm"
 #include "code\modules\paperwork\clipboard.dm"
 #include "code\modules\paperwork\filingcabinet.dm"

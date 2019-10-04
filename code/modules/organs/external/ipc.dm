@@ -26,7 +26,7 @@
 	vital = FALSE
 
 /obj/item/organ/external/head/robot/ipc/is_compatible(mob/living/carbon/human/H)
-	if(H.species.name == IPC)
+	if(H.get_species() == IPC)
 		return TRUE
 
 	return FALSE

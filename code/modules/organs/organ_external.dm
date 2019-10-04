@@ -56,9 +56,16 @@
 
 	var/regen_bodypart_penalty = 0 // This variable determines how much time it would take to regenerate a bodypart, and the cost of it's regeneration.
 
-/obj/item/organ/external/atom_init(mapload, mob/living/carbon/human/H)
+// limb argument is used for stumps to become stumps.
+// new_controller_type is used in robot limbs as to not create a million obj/item/organ/external subtypes
+// and just use what controller_type says.
+/obj/item/organ/external/atom_init/atom_init(mapload, mob/living/carbon/human/H, obj/item/organ/external/limb, new_controller_type)
 	. = ..()
 	recolor()
+
+	if(new_controller_type)
+		controller_type = new_controller_type
+
 	controller = new controller_type(src)
 	if(H)
 		species = owner.species
@@ -682,7 +689,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/g_hair
 	var/b_hair
 
-/obj/item/organ/external/head/atom_init()
+/obj/item/organ/external/head/atom_init(mapload, mob/living/carbon/human/H, obj/item/organ/external/limb, new_controller_type)
 	. = ..()
 	organ_head_list += src
 
