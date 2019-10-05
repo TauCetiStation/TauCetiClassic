@@ -136,11 +136,11 @@
 
 //////////////////////////MOLOTOV ///////////////////////
 /obj/item/weapon/grenade/molotov
-	name = "Ñocktail Molotov"
+	name = "Cocktail Molotov"
 	desc = "Make it bun dem!"
 	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/makeshift.dmi'
-	icon_state = "bottle"
+	icon_state = "molotov_preview"
 	throw_speed = 5
 	throw_range = 20
 	active = 0
@@ -149,6 +149,18 @@
 	var/bottle_icon
 	var/bottle_icon_state
 
+/obj/item/weapon/grenade/molotov/atom_init()
+	. = ..()
+	reagents.add_reagent("fuel", 100)
+
+/obj/item/weapon/grenade/molotov
+	icon_state = "molotov_preview"
+
+
+/obj/item/weapon/grenade/molotov/update_icon()
+	if(bottle_icon && bottle_icon_state)
+		icon = bottle_icon
+		icon_state = bottle_icon_state
 
 /obj/item/weapon/grenade/molotov/CheckParts(list/parts_list)
 	..()
@@ -162,20 +174,13 @@
 	overlays_list += image('icons/obj/makeshift.dmi', "molotov_rag")
 
 
-
-/obj/item/weapon/grenade/molotov/atom_init()
-	. = ..()
-	reagents.add_reagent(/obj/effect/decal/cleanable/liquid_fuel,100)
-
-	var/list/overlays_list = list()
+	var/list/overlays_list1 = list()
 	if(active)
 		overlays_list += image('icons/obj/makeshift.dmi', "molotov_active")
-	overlays = overlays_list
-
+	overlays = overlays_list1
 	active = 1
 	update_icon()
 	playsound(src, activate_sound, VOL_EFFECTS_MASTER)
-	addtimer(CALLBACK(src, .proc/prime), det_time)
 
 /obj/item/weapon/grenade/molotov/examine(mob/user)
 	..()
@@ -215,9 +220,14 @@
 
 obj/item/weapon/grenade/molotov/after_throw(datum/callback/callback)
 	..()
-	playsound (src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
-	new /obj/item/weapon/shard(loc)
-	if(reagents && reagents.total_volume)
+	if(active==TRUE)
+		playsound (src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
+		new /obj/item/weapon/shard(loc)
 		src.reagents.reaction(loc, TOUCH)
-	qdel(src)
-	new /obj/fire (loc)
+		qdel(src)
+		new /obj/fire(loc)
+	else
+		playsound (src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
+		new /obj/item/weapon/shard(loc)
+		src.reagents.reaction(loc, TOUCH)
+		qdel(src)
