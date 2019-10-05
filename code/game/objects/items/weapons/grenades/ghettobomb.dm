@@ -146,6 +146,9 @@
 	active = 0
 	activate_sound = 'sound/items/matchstick_light.ogg'
 
+	var/bottle_icon
+	var/bottle_icon_state
+
 /obj/item/weapon/grenade/molotov/CheckParts(list/parts_list)
 	..()
 	for(var/obj/item/I in contents)
@@ -209,7 +212,6 @@
 
 obj/item/weapon/grenade/molotov/after_throw(datum/callback/callback)
 	..()
-	if(is_glass)
 		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 		new /obj/item/weapon/shard(loc)
 		if(reagents && reagents.total_volume)
