@@ -35,7 +35,6 @@
 				I.action.name = I.action_button_name
 				I.action.target = I
 			I.action.Grant(src)
-	return
 
 /mob/living/proc/handle_regular_hud_updates()
 	if(!client)

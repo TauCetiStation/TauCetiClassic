@@ -13,8 +13,11 @@ var/global/list/robotic_controllers_by_company = list()
 	var/brute_mod = 1.0
 	var/burn_mod = 1.0
 	var/carry_weight = 5 * ITEM_SIZE_NORMAL             // Can be a chasis for slightly bigger amount of stuff.
-
 	var/carry_speed_mod = 0                             // This is by how much this prosthetic lowers movement delay of heavy clothing, if such is present.
+
+	var/list/built_in_tools = null // A list of format list("tool_name" = tool_type), after roundstart becomes list("tool_name" = tool_obj). Do "hand" = null to still allow unarmed attacks.
+	var/selected_tool = null
+	var/default_selected_tool = "hand"
 
 	var/list/restrict_species = list("exclude")         // Species that CAN wear the limb.
 
@@ -42,13 +45,34 @@ var/global/list/robotic_controllers_by_company = list()
 	if(!B) // Roundstart initiation or something.
 		return
 
+	if(B.is_arm && built_in_tools)
+		B.action_button_name = "Switch arm-tool."
+		B.action = new /datum/action/prosthetic_tool_switch(B)
+		B.action.name = B.action_button_name
+
 	..()
+
+	if(built_in_tools)
+		var/list/new_built_in_tools = list()
+		for(var/tool_name in built_in_tools)
+			var/tool_type = built_in_tools[tool_name]
+			var/obj/item/I = new tool_type(BP)
+			I.flags |= ABSTRACT
+			new_built_in_tools[tool_name] = I
+		built_in_tools = new_built_in_tools
+		selected_tool = default_selected_tool
+
 	start_rejecting_after = world.time + rejection_time
 	BP.name = "[company] [BP.name]"
 	BP.desc = "This model seems to be made by [company]"
 
 	if(passive_cell_use > 0 || action_cell_use > 0 && default_cell_type)
 		BP.add_cell(new default_cell_type)
+
+/datum/bodypart_controller/robot/get_inspect_string(mob/living/inspector)
+	if(inspector == BP.owner && BP.cell)
+		return "<span class='notice'> Charge is at <span class='[BP.cell.percent() > 50 ? "notice" : "warning"]'>[round(BP.cell.percent(), 5)]%</span></span>"
+	return ""
 
 /datum/bodypart_controller/robot/update_sprite()
 	var/gender = BP.owner ? BP.owner.gender : MALE

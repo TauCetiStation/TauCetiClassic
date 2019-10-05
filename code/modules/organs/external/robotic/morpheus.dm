@@ -10,4 +10,3 @@
 	carry_weight = 10 * ITEM_SIZE_NORMAL
 	mental_load = 15
 	processing_language = "Trinary"
-

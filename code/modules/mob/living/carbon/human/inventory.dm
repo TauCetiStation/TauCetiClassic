@@ -367,3 +367,21 @@
 	if(!has_bodypart(BP_R_ARM))
 		return FALSE
 	return ..()
+
+/mob/living/carbon/human/get_active_hand()
+	. = ..()
+	if(!.)
+		var/obj/item/organ/external/BP = get_bodypart(hand ? BP_L_ARM : BP_R_ARM)
+		if(istype(BP.controller, /datum/bodypart_controller/robot))
+			var/datum/bodypart_controller/robot/R_cont = BP.controller
+			if(R_cont.built_in_tools)
+				return R_cont.built_in_tools[R_cont.selected_tool]
+
+/mob/living/carbon/human/get_inactive_hand()
+	. = ..()
+	if(!.)
+		var/obj/item/organ/external/BP = get_bodypart(hand ? BP_L_ARM : BP_R_ARM)
+		if(istype(BP.controller, /datum/bodypart_controller/robot))
+			var/datum/bodypart_controller/robot/R_cont = BP.controller
+			if(R_cont.built_in_tools)
+				return R_cont.built_in_tools[R_cont.selected_tool]

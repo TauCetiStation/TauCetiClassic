@@ -244,11 +244,22 @@
 
 				if(R_cont.protected)
 					dat += "\t<font color='dodgerblue'>* Is EMP protected.</font><br>"
-				if(R_cont.monitor)
+				if(R_cont.monitor && bodypart == BP_HEAD)
 					dat += "\t<font color='dodgerblue'>* Has an in-built display-screen.</font><br>"
 				if(R_cont.default_cell_type)
 					var/obj/item/weapon/stock_parts/cell/C = new R_cont.default_cell_type
 					dat += "\t<font color='dodgerblue'>* Comes pre-loaded with a [C.name].</font><br>"
+				if(R_cont.built_in_tools && bodypart in list(BP_L_ARM, BP_R_ARM))
+					var/items_str = ""
+					var/first = TRUE
+					for(var/tool_name in R_cont.built_in_tools)
+						if(first)
+							items_str = "\a [tool_name]"
+							first = FALSE
+						else
+							items_str += ", \a [tool_name]"
+					if(!first)
+						dat += "\t<font color='dodgerblue'>* Comes pre-loaded with [items_str].</font><br>"
 				if(R_cont.arr_consume_amount != 0.0)
 					dat += "\t<font color='red'>* Requires a dose of [R_cont.arr_consume_amount] ARR each [R_cont.rejection_time / (1 MINUTE)] minutes.</font><br>"
 				if(R_cont.passive_cell_use > 0)
@@ -375,9 +386,13 @@
 						var/list/to_check = list() + organ_data
 						for(var/organ_name in to_check)
 							var/company = organ_prost_data[organ_name]
+							if(!company)
+								continue
+
 							var/company_type = global.robotic_controllers_by_company[company]
-							var/datum/bodypart_controller/robot/R_cont = new company_type()
-							if(("exclude" in R_cont.restrict_species) == (species in R_cont.restrict_species))
+
+							var/datum/bodypart_controller/robot/R_cont = new company_type
+							if(("exclude" in R_cont.restrict_species) == (species in R_cont.restrict_species) || !(organ_name in R_cont.get_pos_parts(species)))
 								organ_data -= organ_name
 								organ_prost_data -= organ_name
 

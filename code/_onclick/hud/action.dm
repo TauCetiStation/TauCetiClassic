@@ -1,13 +1,14 @@
 #define AB_ITEM 1
 #define AB_SPELL 2
 #define AB_INNATE 3
-//#define AB_GENERIC 4
+#define AB_GENERIC 4
 
 #define AB_CHECK_RESTRAINED 1
 #define AB_CHECK_STUNNED 2
 #define AB_CHECK_LYING 4
 #define AB_CHECK_ALIVE 8
 #define AB_CHECK_INSIDE 16
+#define AB_CHECK_ALL 31
 
 
 /datum/action
@@ -69,6 +70,8 @@
 				Activate()
 			else
 				Deactivate()
+		if(AB_GENERIC)
+			Activate()
 	return
 
 /datum/action/proc/Activate()
@@ -247,6 +250,22 @@
 		if(target in owner.mind.spell_list)
 			return 0
 	return !(target in owner.spell_list)
+
+
+
+/datum/action/prosthetic_tool_switch
+	action_type = AB_GENERIC
+	check_flags = AB_CHECK_ALL
+	background_icon_state = "bg_spell"
+
+/datum/action/prosthetic_tool_switch/Activate()
+	var/obj/item/organ/external/BP = target
+	var/datum/bodypart_controller/robot/R_cont = BP.controller
+
+	var/choices = list() + R_cont.built_in_tools
+	var/choice = input(owner, "What tool do you wish [BP.name] to become?") as null|anything in choices
+	if(choice)
+		R_cont.selected_tool = choice
 
 #undef AB_WEST_OFFSET
 #undef AB_NORTH_OFFSET

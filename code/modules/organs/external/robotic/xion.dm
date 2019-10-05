@@ -4,7 +4,14 @@
 	iconbase = 'icons/mob/human_races/cyberlimbs/xion/xion_main.dmi'
 	tech_tier = MEDIUM_TECH_PROSTHETIC
 	low_quality = TRUE
-	// built_in instruments
+
+	built_in_tools = list("hand" = null,
+	                      "wrench" = /obj/item/weapon/wrench,
+	                      "screwdriver" = /obj/item/weapon/screwdriver,
+	                      "wirecutters" = /obj/item/weapon/wirecutters,
+	                      "welding tool" = /obj/item/weapon/weldingtool,
+	                      "crowbar" = /obj/item/weapon/crowbar)
+	default_selected_tool = "hand"
 
 	default_cell_type = /obj/item/weapon/stock_parts/cell/high
 	passive_cell_use = 1
@@ -22,6 +29,14 @@
 	carry_weight = 10 * ITEM_SIZE_NORMAL
 	mental_load = 15
 	processing_language = "Trinary"
+
+	built_in_tools = list("hand" = null,
+	                      "wrench" = /obj/item/weapon/wrench,
+	                      "screwdriver" = /obj/item/weapon/screwdriver,
+	                      "wirecutters" = /obj/item/weapon/wirecutters,
+	                      "welding tool" = /obj/item/weapon/weldingtool,
+	                      "crowbar" = /obj/item/weapon/crowbar)
+	default_selected_tool = "hand"
 
 	default_cell_type = /obj/item/weapon/stock_parts/cell/high
 	passive_cell_use = 1
@@ -41,6 +56,14 @@
 	carry_weight = 10 * ITEM_SIZE_NORMAL
 	mental_load = 15
 	processing_language = "Trinary"
+
+	built_in_tools = list("hand" = null,
+	                      "wrench" = /obj/item/weapon/wrench,
+	                      "screwdriver" = /obj/item/weapon/screwdriver,
+	                      "wirecutters" = /obj/item/weapon/wirecutters,
+	                      "welding tool" = /obj/item/weapon/weldingtool,
+	                      "crowbar" = /obj/item/weapon/crowbar)
+	default_selected_tool = "hand"
 
 	default_cell_type = /obj/item/weapon/stock_parts/cell/high
 	passive_cell_use = 1

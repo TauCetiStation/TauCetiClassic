@@ -107,6 +107,9 @@
 		else
 			msg += "[t_He] [t_has] [bicon(back)] \a [back] on [t_his] back.\n"
 
+	var/obj/item/l_hand_actual = hand ? get_active_hand() : get_inactive_hand()
+	var/obj/item/r_hand_actual = hand ? get_inactive_hand() : get_active_hand()
+
 	var/static/list/changeling_weapons = list(/obj/item/weapon/changeling_whip, /obj/item/weapon/shield/changeling, /obj/item/weapon/melee/arm_blade, /obj/item/weapon/changeling_hammer)
 	//left hand
 	if(l_hand && !(l_hand.flags&ABSTRACT))
@@ -117,7 +120,9 @@
 		else
 			msg += "[t_He] [t_is] holding [bicon(l_hand)] \a [l_hand] in [t_his] left hand.\n"
 	else if(l_hand && (l_hand.type in changeling_weapons))
-		msg += "<span class='warning'>[t_He] [t_has] [bicon(l_hand)] \a [l_hand] instead of his left arm!</span>\n"
+		msg += "<span class='warning'>[t_He] [t_has] [bicon(l_hand)] \a [l_hand] instead of [t_his] left arm!</span>\n"
+	else if(!l_hand && l_hand_actual)
+		msg += "[t_He] [t_has] [bicon(l_hand_actual)] \a [l_hand_actual] instead of [t_his] left arm.\n"
 
 	//right hand
 	if(r_hand && !(r_hand.flags&ABSTRACT))
@@ -128,7 +133,10 @@
 		else
 			msg += "[t_He] [t_is] holding [bicon(r_hand)] \a [r_hand] in [t_his] right hand.\n"
 	else if(r_hand && (r_hand.type in changeling_weapons))
-		msg += "<span class='warning'>[t_He] [t_has] [bicon(r_hand)] \a [r_hand] instead of his right arm!</span>\n"
+		msg += "<span class='warning'>[t_He] [t_has] [bicon(r_hand)] \a [r_hand] instead of [t_his] right arm!</span>\n"
+	else if(!r_hand && r_hand_actual)
+		msg += "[t_He] [t_has] [bicon(r_hand_actual)] \a [r_hand_actual] instead of [t_his] right arm.\n"
+
 
 	//gloves
 	if(gloves && !skipgloves)

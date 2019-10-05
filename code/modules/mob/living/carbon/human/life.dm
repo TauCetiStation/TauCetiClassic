@@ -1999,6 +1999,14 @@
 			hud_list[SPECIALROLE_HUD] = holder
 	hud_updateflag = 0
 
+/mob/living/carbon/human/handle_actions()
+	..()
+	/*
+		Handles prosthetics cool wanky stuff.
+	*/
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.action_button_name)
+			BP.action.Grant(src)
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS
