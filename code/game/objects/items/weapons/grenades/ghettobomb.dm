@@ -133,3 +133,86 @@
 	if(iscarbon(user) && istype(user.get_inactive_hand(), src))
 		var/mob/living/carbon/C = user
 		C.throw_mode_on()
+
+//////////////////////////MOLOTOV ///////////////////////
+/obj/item/weapon/grenade/molotov
+	name = "Ñocktail Molotov"
+	desc = "Make it bun dem!"
+	w_class = ITEM_SIZE_SMALL
+	icon = 'icons/obj/makeshift.dmi'
+	icon_state = "bottle"
+	throw_speed = 5
+	throw_range = 20
+	active = 0
+	activate_sound = 'sound/items/matchstick_light.ogg'
+
+/obj/item/weapon/grenade/molotov/CheckParts(list/parts_list)
+	..()
+	for(var/obj/item/I in contents)
+		if(istype(I, /obj/item/weapon/reagent_containers/food/drinks/bottle))
+			bottle_icon = I.icon
+			bottle_icon_state = I.icon_state
+	update_icon()
+
+	var/mutable_appearance/I = mutable_appearance('icons/obj/makeshift.dmi', "molotov_rag")
+	overlays_list += I
+
+/obj/item/weapon/grenade/molotov/atom_init()
+	. = ..()
+	reagents.add_reagent(/obj/effect/decal/cleanable/liquid_fuel,100)
+
+	if(active)
+		overlays_list += image('icons/obj/makeshift.dmi', "molotov_active")
+
+	overlays = overlays_list
+
+	active = 1
+	update_icon()
+	playsound(src, activate_sound, VOL_EFFECTS_MASTER)
+	addtimer(CALLBACK(src, .proc/prime), det_time)
+
+/obj/item/weapon/grenade/molotov/examine(mob/user)
+	..()
+	to_chat(user, "Make it bun dem!")
+
+/obj/item/weapon/grenade/molotov/attack_self(mob/user)
+	return
+
+/obj/item/weapon/grenade/molotov/attackby(obj/item/weapon/W, mob/living/user)
+	. = ..()
+	if(active)
+		return
+	var/is_W_lit = FALSE
+	if(istype(W, /obj/item/weapon/match))
+		var/obj/item/weapon/match/O = W
+		if(O.lit)
+			is_W_lit = TRUE
+	else if(istype(W, /obj/item/weapon/lighter))
+		var/obj/item/weapon/lighter/O = W
+		if(O.lit)
+			is_W_lit = TRUE
+	else if(iswelder(W))
+		var/obj/item/weapon/weldingtool/O = W
+		if(O.welding)
+			is_W_lit = TRUE
+	if(!is_W_lit)
+		return
+	if(!clown_check(user))
+		return
+
+	user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
+	activate(user)
+	add_fingerprint(user)
+	if(iscarbon(user) && istype(user.get_inactive_hand(), src))
+		var/mob/living/carbon/C = user
+		C.throw_mode_on()
+
+obj/item/weapon/grenade/molotov/after_throw(datum/callback/callback)
+	..()
+	if(is_glass)
+		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+		new /obj/item/weapon/shard(loc)
+		if(reagents && reagents.total_volume)
+			src.reagents.reaction(loc, TOUCH)
+		qdel(src)
+		new /turf/var/obj/fire (loc)

@@ -450,3 +450,7 @@
 	pixel_y = rand(-10.0, 10)
 
 
+//////////////////////////MOLOTOV ///////////////////////
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov
+	name = "cocktail molotov"
+	desc = "Make it bun dem!"
