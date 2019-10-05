@@ -157,7 +157,7 @@
 				if(locate(/obj/item/weapon/gun/energy/sniperrifle, mob.contents))		// If mob moves while zoomed in with sniper rifle, unzoom them.
 					var/obj/item/weapon/gun/energy/sniperrifle/s = locate() in mob
 					if(s.zoom)
-						s.zoom()
+						s.toggle_zoom()
 
 	Process_Grab()
 
@@ -416,7 +416,7 @@
 
 /mob/living/carbon/human/slip(weaken_duration, obj/slipped_on, lube)
 	if(!(lube & GALOSHES_DONT_HELP))
-		if(shoes && (shoes.flags & NOSLIP))
+		if((shoes && (shoes.flags & NOSLIP)) || (wear_suit && (wear_suit.flags & NOSLIP)))
 			return FALSE
 	return ..()
 

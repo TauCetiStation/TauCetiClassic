@@ -1,8 +1,8 @@
 /obj/effect/projectile
 	icon = 'icons/effects/projectiles.dmi'
 	icon_state = "bolt"
-	layer = ABOVE_HUD_LAYER
-	plane = ABOVE_HUD_PLANE
+	layer = LIGHTING_LAYER + 1
+	plane = LIGHTING_PLANE + 1
 	var/time_to_live = 3
 
 /obj/effect/projectile/atom_init()

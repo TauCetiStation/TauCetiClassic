@@ -202,10 +202,12 @@ var/list/blacklisted_builds = list(
 	spawn() // Goonchat does some non-instant checks in start()
 		chatOutput.start()
 
+	if(config.allow_donators && (ckey in donators) || config.allow_byond_membership && IsByondMember())
+		supporter = 1
 
 	spawn(50)//should wait for goonchat initialization
 		if(config.client_limit_panic_bunker_count != null)
-			if(!(ckey in admin_datums) && !(src in mentors) && (clients.len > config.client_limit_panic_bunker_count) && !(ckey in joined_player_list))
+			if(!(ckey in admin_datums) && !(src in mentors) && !supporter && (clients.len > config.client_limit_panic_bunker_count) && !(ckey in joined_player_list))
 				if (config.client_limit_panic_bunker_link)
 					to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
 					SEND_LINK(src, config.client_limit_panic_bunker_link)
@@ -257,8 +259,7 @@ var/list/blacklisted_builds = list(
 		add_admin_verbs()
 		admin_memo_show()
 
-	if (config.allow_donators && (ckey in donators) || config.allow_byond_membership && IsByondMember())
-		supporter = 1
+	if (supporter)
 		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")
 
 	log_client_to_db(tdata)

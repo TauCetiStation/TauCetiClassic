@@ -7,7 +7,7 @@
 /mob/living/carbon/human/UnarmedAttack(atom/A)
 	var/obj/item/organ/external/BP = bodyparts_by_name[hand ? BP_L_ARM : BP_R_ARM]
 	if(!BP || !BP.is_usable())
-		to_chat(src, "<span class='notice'>You try to move your [BP.name], but cannot!</span>")
+		to_chat(src, "<span class='notice'>You try to move your [BP ? BP.name : "hand"], but cannot!</span>")
 		return
 	..()
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
