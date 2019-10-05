@@ -149,6 +149,7 @@
 	var/bottle_icon
 	var/bottle_icon_state
 
+
 /obj/item/weapon/grenade/molotov/CheckParts(list/parts_list)
 	..()
 	for(var/obj/item/I in contents)
@@ -157,16 +158,18 @@
 			bottle_icon_state = I.icon_state
 	update_icon()
 
-	var/mutable_appearance/I = mutable_appearance('icons/obj/makeshift.dmi', "molotov_rag")
-	overlays_list += I
+	var/list/overlays_list = list()
+	overlays_list += image('icons/obj/makeshift.dmi', "molotov_rag")
+
+
 
 /obj/item/weapon/grenade/molotov/atom_init()
 	. = ..()
 	reagents.add_reagent(/obj/effect/decal/cleanable/liquid_fuel,100)
 
+	var/list/overlays_list = list()
 	if(active)
 		overlays_list += image('icons/obj/makeshift.dmi', "molotov_active")
-
 	overlays = overlays_list
 
 	active = 1
@@ -212,9 +215,9 @@
 
 obj/item/weapon/grenade/molotov/after_throw(datum/callback/callback)
 	..()
-		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-		new /obj/item/weapon/shard(loc)
-		if(reagents && reagents.total_volume)
-			src.reagents.reaction(loc, TOUCH)
-		qdel(src)
-		new /turf/var/obj/fire (loc)
+	playsound (src, sound/effects/bamf.ogg, VOL_EFFECTS_MASTER)
+	new /obj/item/weapon/shard(loc)
+	if(reagents && reagents.total_volume)
+		src.reagents.reaction(loc, TOUCH)
+	qdel(src)
+	new /turf/fire (loc)
