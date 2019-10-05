@@ -121,7 +121,7 @@
 	return
 
 /datum/game_mode/proc/add_one_objective(datum/mind/traitor)
-	switch(rand(1,120))
+	switch(rand(1,140))
 		if(1 to 20)
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = traitor
@@ -132,11 +132,16 @@
 			harm_objective.owner = traitor
 			harm_objective.find_target()
 			traitor.objectives += harm_objective
-		if(51 to 115)
+		if(51 to 120)
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = traitor
 			steal_objective.find_target()
 			traitor.objectives += steal_objective
+		if(121 to 135)
+			var/datum/objective/implanted/implant_objective = new
+			implant_objective.owner = traitor
+			implant_objective.find_target()
+			traitor.objectives += implant_objective
 		else
 			var/datum/objective/dehead/dehead_objective = new
 			dehead_objective.owner = traitor
