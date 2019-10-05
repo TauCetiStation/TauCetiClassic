@@ -102,11 +102,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(current_version < 26)
 		for(var/organ_name in organ_data)
-			if(organ_data[organ_name] == "cyborg")
+			if(organ_data[organ_name] in list("cyborg", "assisted", "mechanical"))
+				// It's much easier to just remove incompatible prosthetics, so players notice it and pick the brand they want.
+				if(organ_data[organ_name] == "cyborg")
+					organ_prost_data -= organ_name
+					S["organ_prost_data"] -= organ_name
 				organ_data -= organ_name
-				S["organ_data"] -= organ_name // It's much easier to just remove incompatible prosthetics, so players notice it and pick the brand they want.
-				organ_prost_data[organ_name] = "Unbranded"
-				S["organ_prost_data"][organ_name] = "Unbranded"
+				S["organ_data"] -= organ_name
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
@@ -377,6 +379,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!be_role) src.be_role = list()
 	if(!organ_prost_data)
 		organ_prost_data = list()
+
+	var/list/to_check = list() + organ_prost_data
+	for(var/organ_name in to_check)
+		if(organ_data[organ_name] == "Prothesis" && !(organ_prost_data[organ_name] in global.robotic_controllers_by_company))
+			organ_prost_data[organ_name] = "Unbranded"
 
 	if(!home_system) home_system = "None"
 	if(!citizenship) citizenship = "None"

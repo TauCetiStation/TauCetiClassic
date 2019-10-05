@@ -7,6 +7,8 @@ var/global/list/robotic_controllers_by_company = list()
 	var/iconbase = 'icons/mob/human_races/cyberlimbs/robotic.dmi'
 	bodypart_type = BODYPART_ROBOTIC
 
+	var/allowed_states = list("Prothesis")
+
 	var/speed_mod = 0                                   // If it modifies owner's speed.
 	var/brute_mod = 1.0
 	var/burn_mod = 1.0
