@@ -5,6 +5,7 @@
 	brute_mod = 0.9
 	burn_mod = 0.9
 	speed_mod = 0.35 // Two hands would slow you down to Unathi levels.
+	tech_tier = HIGH_TECH_PROSTHETIC
 
 	size = 2 * ITEM_SIZE_NORMAL
 	mental_load = 20
@@ -19,6 +20,7 @@
 	brute_mod = 0.9
 	burn_mod = 0.9
 	speed_mod = 0.35
+	tech_tier = HIGH_TECH_PROSTHETIC
 
 	size = 2 * ITEM_SIZE_NORMAL
 	carry_weight = 18 * ITEM_SIZE_NORMAL
@@ -35,6 +37,7 @@
 	brute_mod = 0.9
 	burn_mod = 0.9
 	speed_mod = 0.35
+	tech_tier = HIGH_TECH_PROSTHETIC
 
 	size = 2 * ITEM_SIZE_NORMAL
 	carry_weight = 18 * ITEM_SIZE_NORMAL

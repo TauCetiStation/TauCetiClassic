@@ -48,6 +48,14 @@ var/global/list/robotic_controllers_by_company = list()
 	BP.icon = iconbase
 	BP.icon_state = "[BP.body_zone][g ? "_[g]" : ""]"
 
+/datum/bodypart_controller/proc/get_pos_parts(species)
+	return list()
+
+/datum/bodypart_controller/robot/proc/get_pos_parts(species)
+	if(species == IPC)
+		return BP_ALL
+	return parts
+
 /datum/bodypart_controller/robot/is_damageable(additional_damage = 0)
 	return TRUE // Robot organs don't count towards total damage so no need to cap them.
 

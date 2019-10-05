@@ -172,20 +172,43 @@
 	var/tot_mental_load = 0
 	var/list/langs_processing = list()
 
-	for(var/organ_name in organ_data)
-		if(organ_data[organ_name] == "Prothesis")
-			var/company_name = organ_prost_data[organ_name]
-			var/company_type = global.robotic_controllers_by_company[company_name]
-			var/datum/bodypart_controller/robot/R_cont = new company_type()
-			tot_mental_load += R_cont.mental_load
-			if(!(R_cont.processing_language in langs_processing))
-				langs_processing += R_cont.processing_language
-			if(R_cont.processing_language != language && R_cont.processing_language != species_obj.language && !(R_cont.processing_language in species_obj.additional_languages))
-				tot_mental_load += 20
-	tot_mental_load += langs_processing.len * 10
+	if(species != IPC)
+		for(var/organ_name in organ_data)
+			if(organ_data[organ_name] == "Prothesis")
+				var/company_name = organ_prost_data[organ_name]
+				var/company_type = global.robotic_controllers_by_company[company_name]
+				var/datum/bodypart_controller/robot/R_cont = new company_type()
+				tot_mental_load += R_cont.mental_load
+				if(!(R_cont.processing_language in langs_processing))
+					langs_processing += R_cont.processing_language
+				if(R_cont.processing_language != language && R_cont.processing_language != species_obj.language && !(R_cont.processing_language in species_obj.additional_languages))
+					tot_mental_load += 20
+		tot_mental_load += langs_processing.len * 10
 
 	var/dat = "<center><b>Possible Limb Modifications.</b></center>"
 	dat += "<p style='text-align:right'>ML: [tot_mental_load]/[species_obj.mental_capability]</p>"
+	var/bodypart_name = ""
+	switch(bodypart)
+		if(O_HEART)
+			bodypart_name = "Heart"
+		if(O_EYES)
+			bodypart_name = "Eyes"
+		if(BP_HEAD)
+			bodypart_name = "Head"
+		if(BP_CHEST)
+			bodypart_name = "Chest"
+		if(BP_GROIN)
+			bodypart_name = "Groin"
+		if(BP_L_ARM)
+			bodypart_name = "Left arm"
+		if(BP_R_ARM)
+			bodypart_name = "Right arm"
+		if(BP_L_LEG)
+			bodypart_name = "Left leg"
+		if(BP_R_LEG)
+			bodypart_name = "Right leg"
+	dat += "<A href='?_src_=prefs;preference=bp_change;task=change_bp_sel;bodypart=[bodypart];organ_type=[chosen_state]'>\[[bodypart_name]\]</A>"
+	dat += "<A href='?_src_=prefs;preference=bp_change;task=change_bp_state;bodypart=[bodypart];organ_type=[chosen_state]'>\[[chosen_state]\]</A>"
 
 	switch(chosen_state)
 		if("Prothesis", "Assisted", "Mechanical")
@@ -194,7 +217,7 @@
 				var/datum/bodypart_controller/robot/R_cont = new company_type()
 				if(("exclude" in R_cont.restrict_species) == (species in R_cont.restrict_species))
 					continue
-				if(!(bodypart in R_cont.parts))
+				if(!(bodypart in R_cont.get_pos_parts(species)))
 					continue
 				if(!(chosen_state in R_cont.allowed_states))
 					continue
@@ -212,7 +235,7 @@
 					if(LOW_TECH_PROSTHETIC)
 						tier_txt = "<font color='red'>Low</font>"
 					if(MEDIUM_TECH_PROSTHETIC)
-						tier_txt = "<font color='yellow>Medium</font>"
+						tier_txt = "<font color='yellow'>Medium</font>"
 					if(HIGH_TECH_PROSTHETIC)
 						tier_txt = "<font color='dodgerblue'>High</font>"
 
@@ -225,20 +248,20 @@
 					dat += "\t<font color='dodgerblue'>* Is EMP protected.</font><br>"
 
 				var/bp_status = organ_data[bodypart] ? organ_data[bodypart] : "Normal"
-				dat += "<A href='?src=\ref[src];task=save_bp;bodypart=[bodypart];organ_type=[chosen_state];add_data=[R_cont.company]'>\[Change from [bp_status] to [chosen_state].\]</A>"
+				dat += "<A href='?_src_=prefs;preference=bp_change;task=save_bp;bodypart=[bodypart];organ_type=[chosen_state];add_data=[R_cont.company]'>\[Change from [bp_status] to [chosen_state].\]</A>"
 				dat += "</p></hr>"
 
 		if("Amputated")
 			dat += "<hr><p>"
 			dat += "<b>Desc:</b> An amputated limb, what an eyesore.<br>"
 			var/bp_status = organ_data[bodypart] ? organ_data[bodypart] : "Normal"
-			dat += "<A href='?src=\ref[src];task=save_bp;bodypart=[bodypart];organ_type=[chosen_state]'>\[Change from [bp_status] to [chosen_state].\]</A>"
+			dat += "<A href='?_src_=prefs;preference=bp_change;task=save_bp;bodypart=[bodypart];organ_type=[chosen_state]'>\[Change from [bp_status] to [chosen_state].\]</A>"
 			dat += "</p></hr>"
 		if("Normal")
 			dat += "<hr><p>"
 			dat += "<b>Desc:</b> A normal limb, what a bore.<br>"
 			var/bp_status = organ_data[bodypart] ? organ_data[bodypart] : "Normal"
-			dat += "<A href='?src=\ref[src];task=save_bp;bodypart=[bodypart];organ_type=[chosen_state]'>\[Change from [bp_status] to [chosen_state].\]</A>"
+			dat += "<A href='?_src_=prefs;preference=bp_change;task=save_bp;bodypart=[bodypart];organ_type=[chosen_state]'>\[Change from [bp_status] to [chosen_state].\]</A>"
 			dat += "</p></hr>"
 
 	var/datum/browser/popup = new /datum/browser(user, "bodypart_state_pick", "Allowed Bodypart States", 500, 350)
@@ -533,54 +556,7 @@
 						flavor_text = msg
 
 				if("organs")
-					var/menu_type = input(user, "Menu") as null|anything in list("Limbs", "Organs")
-					if(!menu_type)
-						return
-
-					var/list/pos_bodyparts = list()
-					switch(menu_type)
-						if("Limbs")
-							pos_bodyparts = list("Head", "Chest", "Groin", "Left Leg", "Right Leg", "Left Arm", "Right Arm")
-						if("Organs")
-							pos_bodyparts = list("Heart", "Eyes")
-
-					var/bodypart_name = input(user, "Which limb do you want to change?") as null|anything in pos_bodyparts
-					if(!bodypart_name)
-						return
-
-					var/bodypart = ""
-					var/allowed_states = list("Normal", "Amputated", "Prothesis")
-
-					switch(bodypart_name)
-						if("Heart")
-							bodypart = O_HEART
-							allowed_states = list("Normal", "Assisted", "Mechanical")
-						if("Eyes")
-							bodypart = O_EYES
-							allowed_states = list("Normal", "Assisted", "Mechanical")
-						if("Head")
-							bodypart = BP_HEAD
-							allowed_states = list("Normal", "Prothesis")
-						if("Chest")
-							bodypart = BP_CHEST
-							allowed_states = list("Normal", "Prothesis")
-						if("Groin")
-							bodypart = BP_GROIN
-							allowed_states = list("Normal", "Prothesis")
-						if("Left Leg")
-							bodypart = BP_L_LEG
-						if("Right Leg")
-							bodypart = BP_R_LEG
-						if("Left Arm")
-							bodypart = BP_L_ARM
-						if("Right Arm")
-							bodypart = BP_R_ARM
-
-					var/chosen_state = input(user, "What state do you wish \the [bodypart_name] to be in?") as null|anything in allowed_states
-					if(!chosen_state)
-						return
-
-					update_bodypart_selection(user, bodypart, chosen_state)
+					update_bodypart_selection(user, BP_CHEST, "Normal")
 
 				if("skin_style")
 					var/skin_style_name = input(user, "Select a new skin style") as null|anything in list("default1", "default2", "default3")
@@ -602,6 +578,7 @@
 					allowed_states = list("Normal", "Prothesis")
 
 			if(!(href_list["organ_type"] in allowed_states))
+				update_bodypart_selection(usr, BP_CHEST, "Normal")
 				return
 
 			if(href_list["add_data"])
@@ -609,11 +586,14 @@
 				var/company_type = global.robotic_controllers_by_company[company_name]
 				var/datum/bodypart_controller/robot/R_cont = new company_type()
 
-				if(!(href_list["bodypart"] in R_cont.parts))
+				if(!(href_list["bodypart"] in R_cont.get_pos_parts(species)))
+					update_bodypart_selection(usr, BP_CHEST, "Normal")
 					return
 				if(!(href_list["organ_type"] in R_cont.allowed_states))
+					update_bodypart_selection(usr, BP_CHEST, "Normal")
 					return
 				if(("exclude" in R_cont.restrict_species) == (species in R_cont.restrict_species))
+					update_bodypart_selection(usr, BP_CHEST, "Normal")
 					return
 
 			var/bodypart = href_list["bodypart"]
@@ -639,6 +619,85 @@
 					organ_prost_data[bodypart] = href_list["add_data"]
 
 			update_bodypart_selection(usr, bodypart, organ_type)
+
+		if("change_bp_sel")
+			var/prev_bodypart = href_list["bodypart"]
+			var/organ_type = href_list["organ_type"]
+
+			var/menu_type = input(user, "Menu") as null|anything in list("Limbs", "Organs")
+			if(!menu_type)
+				return
+
+			var/list/pos_bodyparts = list()
+			switch(menu_type)
+				if("Limbs")
+					pos_bodyparts = list("Head", "Chest", "Groin", "Left Leg", "Right Leg", "Left Arm", "Right Arm")
+				if("Organs")
+					pos_bodyparts = list("Heart", "Eyes")
+
+			var/bodypart_name = input(user, "Which limb do you want to change?") as null|anything in pos_bodyparts
+			if(!bodypart_name)
+				return
+
+			var/bodypart = ""
+			var/allowed_states = list("Normal", "Amputated", "Prothesis")
+
+			switch(bodypart_name)
+				if("Heart")
+					bodypart = O_HEART
+					allowed_states = list("Normal", "Assisted", "Mechanical")
+				if("Eyes")
+					bodypart = O_EYES
+					allowed_states = list("Normal", "Assisted", "Mechanical")
+				if("Head")
+					bodypart = BP_HEAD
+					allowed_states = list("Normal", "Prothesis")
+				if("Chest")
+					bodypart = BP_CHEST
+					allowed_states = list("Normal", "Prothesis")
+				if("Groin")
+					bodypart = BP_GROIN
+					allowed_states = list("Normal", "Prothesis")
+				if("Left Leg")
+					bodypart = BP_L_LEG
+				if("Right Leg")
+					bodypart = BP_R_LEG
+				if("Left Arm")
+					bodypart = BP_L_ARM
+				if("Right Arm")
+					bodypart = BP_R_ARM
+
+			var/chosen_state = organ_type
+			if(!(chosen_state in allowed_states))
+				chosen_state = allowed_states[1]
+
+			if(prev_bodypart != bodypart)
+				update_bodypart_selection(user, bodypart, chosen_state)
+
+		if("change_bp_state")
+			var/bodypart = href_list["bodypart"]
+			var/organ_type = href_list["organ_type"]
+
+			var/allowed_states = list("Normal", "Amputated", "Prothesis")
+
+			switch(bodypart)
+				if(O_HEART)
+					allowed_states = list("Normal", "Assisted", "Mechanical")
+				if(O_EYES)
+					allowed_states = list("Normal", "Assisted", "Mechanical")
+				if(BP_HEAD)
+					allowed_states = list("Normal", "Prothesis")
+				if(BP_CHEST)
+					allowed_states = list("Normal", "Prothesis")
+				if(BP_GROIN)
+					allowed_states = list("Normal", "Prothesis")
+
+			var/chosen_state = input(user, "What state do you wish the bodypart to be in?") as null|anything in allowed_states
+			if(!chosen_state)
+				return
+
+			if(chosen_state != organ_type)
+				update_bodypart_selection(user, bodypart, chosen_state)
 
 		else
 			switch(href_list["preference"])

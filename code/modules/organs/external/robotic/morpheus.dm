@@ -5,6 +5,7 @@
 	restrict_species = list(IPC)
 	parts = BP_ALL
 	monitor = TRUE
+	tech_tier = MEDIUM_TECH_PROSTHETIC
 
 	carry_weight = 10 * ITEM_SIZE_NORMAL
 	mental_load = 15

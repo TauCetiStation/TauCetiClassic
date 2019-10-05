@@ -118,6 +118,10 @@
 	bodyparts_carry_speed_mod = carry_speed_mod
 
 /mob/living/carbon/human/proc/update_mental_load()
+	if(get_species() == IPC)
+		bodyparts_mental_load = 0
+		return
+
 	var/list/processing_langs = list()
 
 	var/BP_mental_load = 0
