@@ -215,9 +215,9 @@
 
 obj/item/weapon/grenade/molotov/after_throw(datum/callback/callback)
 	..()
-	playsound (src, sound/effects/bamf.ogg, VOL_EFFECTS_MASTER)
+	playsound (src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 	new /obj/item/weapon/shard(loc)
 	if(reagents && reagents.total_volume)
 		src.reagents.reaction(loc, TOUCH)
 	qdel(src)
-	new /turf/fire (loc)
+	new /obj/fire (loc)
