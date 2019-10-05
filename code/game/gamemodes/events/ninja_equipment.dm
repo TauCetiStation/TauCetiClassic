@@ -37,8 +37,8 @@ ________________________________________________________________________________
 	reagents.my_atom = src
 	for(var/reagent_id in reagent_list)
 		reagent_id == "radium" ? reagents.add_reagent(reagent_id, r_maxamount+(a_boost*a_transfer)) : reagents.add_reagent(reagent_id, r_maxamount)//It will take into account radium used for adrenaline boosting.
-	cell = new/obj/item/weapon/stock_parts/cell/high//The suit should *always* have a battery because so many things rely on it.
-	cell.charge = 9000//Starting charge should not be higher than maximum charge. It leads to problems with recharging.
+	add_cell(new /obj/item/weapon/stock_parts/cell/high) //The suit should *always* have a battery because so many things rely on it.
+	cell_set_charge(9000)//Starting charge should not be higher than maximum charge. It leads to problems with recharging.
 
 /obj/item/clothing/suit/space/space_ninja/Destroy()
 	if(affecting)//To make sure the window is closed.
@@ -142,14 +142,13 @@ ________________________________________________________________________________
 			if(prob(s_delay))//Suit delay is used as probability. May change later.
 				U.adjustBruteLoss(k_damage)//Default damage done, usually 1.
 			A = k_cost//kamikaze cost.
-		cell.charge-=A
+		cell_use_power(A)
 		if(cell.charge<=0)
 			if(kamikaze)
 				U.say("I DIE TO LIVE AGAIN!")
 				U << browse(null, "window=spideros")//Just in case.
 				U.death()
 				return
-			cell.charge=0
 			cancel_stealth()
 		sleep(10)//Checks every second.
 
@@ -527,9 +526,9 @@ ________________________________________________________________________________
 				spark_system.start()//SPARKS THERE SHALL BE SPARKS
 				U.electrocute_act(damage, src, 0.1)
 				if(cell.charge < damage)
-					cell.use(cell.charge)
+					cell_use_power(cell.charge)
 				else
-					cell.use(damage)
+					cell_use_power(damage)
 			else
 				to_chat(A, "<span class='warning'><b>ERROR</b>:</span> Not enough energy remaining.")
 
@@ -864,21 +863,22 @@ ________________________________________________________________________________
 			to_chat(U, "Replenished a total of [total_reagent_transfer ? total_reagent_transfer : "zero"] chemical units.")//Let the player know how much total volume was added.
 			return
 		else if(istype(I, /obj/item/weapon/stock_parts/cell))
-			if(I:maxcharge > cell.maxcharge && n_gloves && n_gloves.candrain)
+			var/obj/item/weapon/stock_parts/cell/n_cell = I
+			if(n_cell.maxcharge > cell.maxcharge && n_gloves && n_gloves.candrain)
 				if(U.is_busy(src))
 					return
 				to_chat(U, "<span class='notice'>Higher maximum capacity detected.\nUpgrading...</span>")
 				if (n_gloves && n_gloves.candrain && do_after(U,s_delay, target = U))
 					U.drop_item()
-					I.loc = src
-					I:charge = min(I:charge+cell.charge, I:maxcharge)
 					var/obj/item/weapon/stock_parts/cell/old_cell = cell
+					remove_cell(loc)
+					add_cell(n_cell)
+					cell_set_charge(min(n_cell.charge + old_cell.charge, n_cell.maxcharge))
 					old_cell.charge = 0
 					U.put_in_hands(old_cell)
 					old_cell.add_fingerprint(U)
 					old_cell.corrupt()
 					old_cell.updateicon()
-					cell = I
 					to_chat(U, "<span class='notice'>Upgrade complete. Maximum capacity: <b>[round(cell.maxcharge/100)]</b>%</span>")
 				else
 					to_chat(U, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")

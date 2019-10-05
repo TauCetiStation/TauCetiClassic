@@ -181,3 +181,12 @@
 			return min(rand(10,20),rand(10,20))
 		else
 			return 0
+
+/obj/item/weapon/stock_parts/cell/get_passive_cell_use()
+	return 0
+
+/obj/item/weapon/stock_parts/cell/cell_use_power(value)
+	return use(value)
+
+/obj/item/weapon/stock_parts/cell/on_charge_out()
+	charge = 0

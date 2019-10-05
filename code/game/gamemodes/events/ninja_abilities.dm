@@ -73,7 +73,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 				playsound(U, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 				anim(mobloc,src,'icons/mob/mob.dmi',,"phaseout",,U.dir)
 
-			cell.use(C*10)
+			cell_use_power(C*10)
 			handle_teleport_grab(T, U)
 			U.forceMove(T)
 
@@ -100,7 +100,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 		playsound(U, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER)
 		empulse(U, 2, 3) //Procs sure are nice. Slightly weaker than wizard's disable tch.
 		s_coold = 2
-		cell.use(C*10)
+		cell_use_power(C*10)
 	return
 
 //=======//ENERGY BLADE//=======//
@@ -121,7 +121,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 				spark_system.start()
 				playsound(U, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 				U.put_in_hands(W)
-				cell.use(C*10)
+				cell_use_power(C*10)
 			else
 				to_chat(U, "<span class='warning'>You can only summon one blade. Try dropping an item first.</span>")
 		else//Else you can run around with TWO energy blades. I don't know why you'd want to but cool factor remains.
@@ -168,7 +168,7 @@ This could be a lot better but I'm too tired atm.*/
 			A.original = targloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
-			cell.use(C*10)
+			cell_use_power(C*10)
 			A.process()
 		else
 			to_chat(U, "<span class='warning'>There are no targets in view.</span>")
@@ -206,7 +206,7 @@ Must right click on a mob to activate.*/
 				E.master = U
 				spawn(0)//Parallel processing.
 					E.process(M)
-				cell.use(C*10) // Nets now cost what should be most of a standard battery, since your taking someone out of the round
+				cell_use_power(C*10) // Nets now cost what should be most of a standard battery, since your taking someone out of the round
 			else
 				to_chat(U, "They are already trapped inside an energy net.")
 		else

@@ -78,7 +78,6 @@
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
 	icon_state = "chest"
 	var/wires = 0.0
-	var/obj/item/weapon/stock_parts/cell/cell = null
 	part = BP_CHEST
 
 /obj/item/robot_parts/head
@@ -327,8 +326,7 @@
 			return
 
 		user.drop_item()
-		W.loc = src
-		cell = W
+		add_cell(W)
 		to_chat(user, "<span class='info'>You insert the cell!</span>")
 
 	else if(iscoil(W))
@@ -349,8 +347,7 @@
 			return
 
 		to_chat(user, "<span class='info'>You took out a cell!</span>")
-		cell.loc = get_turf(src)
-		cell = null
+		remove_cell(get_turf(src))
 
 	else if(iswirecutter(W))
 		if(!wires)

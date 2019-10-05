@@ -654,5 +654,5 @@
 	reagent_state = LIQUID
 	color = "#40e0d0"
 	custom_metabolism = 0.0 // The prosthetics themselves handle usage of this liquid.
-	overdose = REAGENTS_OVERDOSE
+	overdose = 2
 	restrict_species = list(IPC, DIONA)

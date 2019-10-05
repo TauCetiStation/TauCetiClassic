@@ -17,7 +17,6 @@
 
 	var/on = 0				//is it turned on?
 	var/cover_open = 0		//is the cover open?
-	var/obj/item/weapon/stock_parts/cell/cell
 	var/max_cooling = 12				//in degrees per second - probably don't need to mess with heat capacity here
 	var/charge_consumption = 16.6		//charge per second at max_cooling
 	var/thermostat = T20C
@@ -28,8 +27,7 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-	cell = new/obj/item/weapon/stock_parts/cell()	//comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
-	cell.loc = src
+	add_cell(new /obj/item/weapon/stock_parts/cell)	//comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
 
 /obj/item/device/suit_cooling_unit/process()
 	if (!on || !cell)
@@ -54,7 +52,7 @@
 
 	H.bodytemperature -= temp_adj*efficiency
 
-	cell.use(charge_usage)
+	cell_use_power(charge_usage)
 
 	if(cell.charge <= 0)
 		turn_off()
@@ -109,16 +107,16 @@
 
 /obj/item/device/suit_cooling_unit/attack_self(mob/user)
 	if(cover_open && cell)
+		var/obj/item/weapon/stock_parts/cell/old_cell = cell
+		remove_cell(get_turf(loc))
+
 		if(ishuman(user))
-			user.put_in_hands(cell)
-		else
-			cell.loc = get_turf(loc)
+			user.put_in_hands(old_cell)
 
-		cell.add_fingerprint(user)
-		cell.updateicon()
+		old_cell.add_fingerprint(user)
+		old_cell.updateicon()
 
-		to_chat(user, "You remove the [src.cell].")
-		src.cell = null
+		to_chat(user, "You remove the [old_cell].")
 		updateicon()
 		return
 
@@ -147,8 +145,7 @@
 				to_chat(user, "There is a [cell] already installed here.")
 			else
 				user.drop_item()
-				W.loc = src
-				cell = W
+				add_cell(W)
 				to_chat(user, "You insert the [cell].")
 		updateicon()
 		return

@@ -80,8 +80,7 @@
 		if(!user.unEquip(W))
 			return
 		to_chat(user, "You jack \the [W] into \the [src]'s battery mount.")
-		W.forceMove(src)
-		cell = W
+		add_cell(W)
 		return
 
 	else if(isscrewdriver(W))
@@ -109,11 +108,12 @@
 			if("cell")
 				if(cell)
 					to_chat(user, "You detach \the [cell] from \the [src]'s battery mount.")
+					var/obj/item/weapon/stock_parts/cell/old_cell = cell
+					remove_cell(user.loc)
 					for(var/obj/item/rig_module/module in installed_modules)
 						module.deactivate()
-					cell.updateicon()
-					user.put_in_hands(cell)
-					cell = null
+					old_cell.updateicon()
+					user.put_in_hands(old_cell)
 				else
 					to_chat(user, "There is nothing loaded in that mount.")
 

@@ -31,8 +31,7 @@
 			to_chat(user, "<span class='notice'>The [src] need to be wired first.</span>")
 		else if(!cell)
 			user.drop_item()
-			W.loc = src
-			cell = W
+			add_cell(W)
 			to_chat(user, "<span class='notice'>You attach the [cell] to the [src].</span>")
 			update_icon()
 		else
@@ -45,8 +44,7 @@
 		if(cell)
 			cell.updateicon()
 			to_chat(user, "<span class='notice'>You cut the [cell] away from the [src].</span>")
-			cell.loc = get_turf(src.loc)
-			cell = null
+			remove_cell(get_turf(loc))
 			update_icon()
 			return
 		if(wired) //wires disappear into the void because fuck that shit

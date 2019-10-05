@@ -96,7 +96,6 @@
 	var/list/initial_modules
 	var/list/installed_modules = list() // Power consumption/use bookkeeping.
 	var/cell_type = /obj/item/weapon/stock_parts/cell/high
-	var/obj/item/weapon/stock_parts/cell/cell // Power supply, if any.
 
 /obj/item/clothing/suit/space/rig/atom_init()
 	. = ..()
@@ -106,7 +105,7 @@
 			module.installed(src)
 
 	if(cell_type)
-		cell = new cell_type(src)
+		add_cell(new cell_type)
 
 /obj/item/clothing/suit/space/rig/Destroy()
 	if(wearer) // remove overlays if rig gets deleted while wearing
@@ -116,7 +115,6 @@
 		remove_actions(old_wearer)
 
 	selected_module = null
-	QDEL_NULL(cell)
 	QDEL_LIST(installed_modules)
 	. = ..()
 
@@ -128,7 +126,7 @@
 	if(!istype(rig))
 		return
 	if(!rig.offline)
-		rig.cell.use(rig.move_energy_use)
+		rig.cell_use_power(rig.move_energy_use)
 
 /obj/item/clothing/suit/space/rig/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
 	if(reaction_type == REACTION_ITEM_TAKE || reaction_type == REACTION_ITEM_TAKEOFF)
@@ -162,7 +160,7 @@
 		return FALSE
 
 	if(cost > 0)
-		return cell.use(cost)
+		return cell_use_power(cost)
 	return TRUE
 
 /obj/item/clothing/suit/space/rig/Topic(href,href_list)
@@ -285,13 +283,12 @@
 			slowdown = offline_slowdown
 
 	if(!offline)
-		cell.use(passive_energy_use)
+		cell_use_power(passive_energy_use)
 
 		for(var/obj/item/rig_module/module in installed_modules)
-			cell.use(module.process_module())
+			cell_use_power(module.process_module())
 			if(!wearer) // module might unequip us
 				break
-		cell.charge = min(cell.maxcharge, cell.charge)
 
 /obj/item/clothing/suit/space/rig/proc/give_actions(mob/living/carbon/human/H)
 	for(var/obj/item/rig_module/module in installed_modules)
@@ -457,8 +454,7 @@
 
 /obj/item/clothing/suit/space/rig/emp_act(severity)
 	//drain some charge
-	if(cell)
-		cell.emp_act(severity + 1)
+	..()
 
 	//possibly damage some modules
 	take_hit((100/severity), "electrical pulse", is_emp = TRUE)

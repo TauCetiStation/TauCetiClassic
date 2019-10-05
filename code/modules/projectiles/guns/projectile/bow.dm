@@ -53,7 +53,6 @@
 	var/release_speed = 5                 // Speed per unit of tension.
 	var/mob/living/current_user = null    // Used to see if the person drawing the bow started drawing it.
 	var/obj/item/weapon/arrow = null      // Nocked arrow.
-	var/obj/item/weapon/stock_parts/cell/cell = null  // Used for firing special projectiles like rods.
 
 /obj/item/weapon/crossbow/attackby(obj/item/W, mob/user)
 	if(!arrow)
@@ -73,35 +72,26 @@
 			arrow.loc = src
 			icon_state = "crossbow-nocked"
 			user.visible_message("[user] haphazardly jams [arrow] into [src].","You jam [arrow] into [src].")
-			if(cell)
-				if(cell.charge >= 500)
-					to_chat(user, "<span class='notice'>[arrow] plinks and crackles as it begins to glow red-hot.</span>")
-					arrow.throwforce = 15
-					arrow.icon_state = "metal-rod-superheated"
-					cell.use(500)
-			return
+			if(cell_use_power(500))
+				to_chat(user, "<span class='notice'>[arrow] plinks and crackles as it begins to glow red-hot.</span>")
+				arrow.throwforce = 15
+				arrow.icon_state = "metal-rod-superheated"
 
-	if(istype(W, /obj/item/weapon/stock_parts/cell))
-		if(!cell)
-			user.drop_item()
-			W.loc = src
-			cell = W
-			to_chat(user, "<span class='notice'>You jam [cell] into [src] and wire it to the firing coil.</span>")
-			if(arrow)
-				if(istype(arrow,/obj/item/weapon/arrow/rod) && arrow.throwforce < 15 && cell.charge >= 500)
-					to_chat(user, "<span class='notice'>[arrow] plinks and crackles as it begins to glow red-hot.</span>")
-					arrow.throwforce = 15
-					arrow.icon_state = "metal-rod-superheated"
-					cell.use(500)
+	if(istype(W, /obj/item/weapon/stock_parts/cell) && add_cell(W))
+		user.drop_item()
+		to_chat(user, "<span class='notice'>You jam [cell] into [src] and wire it to the firing coil.</span>")
+		if(arrow)
+			if(istype(arrow,/obj/item/weapon/arrow/rod) && arrow.throwforce < 15 && cell_use_power(500))
+				to_chat(user, "<span class='notice'>[arrow] plinks and crackles as it begins to glow red-hot.</span>")
+				arrow.throwforce = 15
+				arrow.icon_state = "metal-rod-superheated"
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell installed.</span>")
 
 	else if(isscrewdriver(W))
 		if(cell)
-			var/obj/item/C = cell
-			C.loc = get_turf(user)
-			cell = null
 			to_chat(user, "<span class='notice'>You jimmy [cell] out of [src] with [W].</span>")
+			remove_cell(get_turf(user))
 		else
 			to_chat(user, "<span class='notice'>[src] doesn't have a cell installed.</span>")
 

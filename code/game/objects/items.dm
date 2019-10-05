@@ -77,6 +77,12 @@
 	*/
 	var/list/sprite_sheets_obj = null
 
+	// A little framework for cells in items.
+	var/obj/item/weapon/stock_parts/cell/cell
+	var/cell_timer_id
+	var/passive_cell_use = 1
+	var/cell_active = FALSE
+
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0
@@ -210,6 +216,7 @@
 
 /obj/item/Destroy()
 	QDEL_NULL(action)
+	QDEL_NULL(cell)
 	flags &= ~DROPDEL // prevent recursive dels
 	if(ismob(loc))
 		var/mob/m = loc
@@ -995,3 +1002,85 @@ var/global/list/items_blood_overlay_by_type = list()
 // Is called when somebody is stripping us using the panel. Return TRUE to allow the strip, FALSE to disallow.
 /obj/item/proc/onStripPanelUnEquip(mob/living/who, strip_gloves = FALSE)
 	return TRUE
+
+/*
+	A little framework for items with cells.
+*/
+/obj/item/emp_act(severity)
+	cell_use_power(1000 / severity)
+	if(cell && cell.charge > 0 && cell.reliability != 100 && prob(50 / severity))
+		cell.reliability -= 10 / severity
+	..()
+
+/obj/item/proc/add_cell(obj/item/weapon/stock_parts/cell/new_cell)
+	if(cell)
+		return FALSE
+	if(!istype(new_cell))
+		return FALSE
+	cell = new_cell
+	cell.forceMove(src)
+	return TRUE
+
+/obj/item/proc/remove_cell(atom/target)
+	if(!cell)
+		return FALSE
+	if(!target)
+		target = loc
+	charge_out()
+	cell.forceMove(target)
+	cell = null
+	return TRUE
+
+/obj/item/proc/get_passive_cell_use()
+	return passive_cell_use
+
+/obj/item/proc/cell_set_charge(value)
+	if(value < 0)
+		value = 0
+
+	cell.charge = value
+	deltimer(cell_timer_id)
+	if(cell.charge == 0)
+		charge_out()
+	else
+		cell_timer_id = addtimer(CALLBACK(src, .proc/charge_out), cell.charge / get_passive_cell_use(), TIMER_STOPPABLE)
+
+// Returns TRUE on succesful use.
+/obj/item/proc/cell_use_power(value)
+	if(!cell)
+		return FALSE
+	if(cell.charge < value)
+		return FALSE
+
+	cell.use(value)
+	deltimer(cell_timer_id)
+	cell_timer_id = null
+	if(cell.charge == 0)
+		charge_out()
+	else
+		cell_timer_id = addtimer(CALLBACK(src, .proc/charge_out), cell.charge / get_passive_cell_use(), TIMER_STOPPABLE)
+	return TRUE
+
+/obj/item/proc/cell_activate()
+	cell_timer_id = addtimer(CALLBACK(src, .proc/charge_out), cell.charge / get_passive_cell_use(), TIMER_STOPPABLE)
+	cell_active = TRUE
+	on_activate()
+
+/obj/item/proc/cell_deactivate()
+	deltimer(cell_timer_id)
+	cell_timer_id = null
+	cell_active = FALSE
+	on_deactivate()
+
+/obj/item/proc/charge_out()
+	cell_deactivate()
+	on_charge_out()
+
+/obj/item/proc/on_charge_out()
+	return
+
+/obj/item/proc/on_activate()
+	return
+
+/obj/item/proc/on_deactivate()
+	return

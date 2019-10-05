@@ -185,7 +185,6 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.9
 	var/wired = FALSE
-	var/obj/item/weapon/stock_parts/cell/cell = 0
 	var/clipped = FALSE
 	var/protect_fingers = TRUE // Are we gonna get hurt when searching in the trash piles
 	body_parts_covered = ARMS
@@ -193,16 +192,6 @@ BLIND     // can't see anything
 	attack_verb = list("challenged")
 	species_restricted = list("exclude" , UNATHI , TAJARAN)
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/gloves.dmi')
-
-/obj/item/clothing/gloves/emp_act(severity)
-	if(cell)
-		//why is this not part of the powercell code?
-		cell.charge -= 1000 / severity
-		if (cell.charge < 0)
-			cell.charge = 0
-		if(cell.reliability != 100 && prob(50/severity))
-			cell.reliability -= 10 / severity
-	..()
 
 // Called just before an attack_hand(), in mob/UnarmedAttack()
 /obj/item/clothing/gloves/proc/Touch(atom/A, proximity)
