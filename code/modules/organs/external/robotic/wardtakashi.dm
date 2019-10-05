@@ -22,7 +22,7 @@
 	tech_tier = HIGH_TECH_PROSTHETIC
 	parts = BP_ALL
 
-	carry_speed_mod = -0.5
+	carry_speed_mod = -1.0
 
 	size = 2 * ITEM_SIZE_NORMAL
 	carry_weight = 18 * ITEM_SIZE_NORMAL
@@ -42,7 +42,7 @@
 	parts = list(BP_HEAD)
 	ipc_parts = list(BP_HEAD)
 
-	carry_speed_mod = -0.5
+	carry_speed_mod = -1.0
 
 	size = 2 * ITEM_SIZE_NORMAL
 	carry_weight = 18 * ITEM_SIZE_NORMAL

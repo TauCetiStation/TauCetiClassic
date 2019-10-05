@@ -380,7 +380,7 @@
 /mob/living/carbon/human/get_inactive_hand()
 	. = ..()
 	if(!.)
-		var/obj/item/organ/external/BP = get_bodypart(hand ? BP_L_ARM : BP_R_ARM)
+		var/obj/item/organ/external/BP = get_bodypart(hand ? BP_R_ARM : BP_L_ARM)
 		if(istype(BP.controller, /datum/bodypart_controller/robot))
 			var/datum/bodypart_controller/robot/R_cont = BP.controller
 			if(R_cont.built_in_tools)

@@ -83,15 +83,20 @@
 	if(parent)
 		parent.children -= src
 		parent = null
-	QDEL_NULL(controller)
+	for(var/obj/item/organ/external/child in children)
+		child.parent = null
+	children = null
 	if(owner)
-		owner.bodyparts -= src
 		if(owner.bodyparts_by_name[body_zone] == src)
 			owner.bodyparts_by_name -= body_zone
+		owner.bodyparts -= src
 		owner.bad_bodyparts -= src
+		owner.update_weight()
+		owner.update_mental_load()
 
-	owner.update_weight()
-	owner.update_mental_load()
+	owner = null
+
+	QDEL_NULL(controller)
 
 	return ..()
 

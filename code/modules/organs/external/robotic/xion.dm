@@ -5,6 +5,9 @@
 	tech_tier = MEDIUM_TECH_PROSTHETIC
 	low_quality = TRUE
 
+	mental_load = 15
+	processing_language = "Gutter"
+
 	built_in_tools = list("hand" = null,
 	                      "wrench" = /obj/item/weapon/wrench,
 	                      "screwdriver" = /obj/item/weapon/screwdriver,
@@ -27,7 +30,7 @@
 	parts = BP_ALL
 
 	carry_weight = 10 * ITEM_SIZE_NORMAL
-	mental_load = 15
+	mental_load = 22
 	processing_language = "Trinary"
 
 	built_in_tools = list("hand" = null,
@@ -54,7 +57,7 @@
 	ipc_parts = list(BP_HEAD)
 
 	carry_weight = 10 * ITEM_SIZE_NORMAL
-	mental_load = 15
+	mental_load = 22
 	processing_language = "Trinary"
 
 	built_in_tools = list("hand" = null,

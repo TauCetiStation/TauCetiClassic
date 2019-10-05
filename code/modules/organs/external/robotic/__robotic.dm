@@ -56,8 +56,10 @@ var/global/list/robotic_controllers_by_company = list()
 		var/list/new_built_in_tools = list()
 		for(var/tool_name in built_in_tools)
 			var/tool_type = built_in_tools[tool_name]
-			var/obj/item/I = new tool_type(BP)
-			I.flags |= ABSTRACT
+			var/obj/item/I
+			if(tool_type)
+				I = new tool_type(BP)
+				I.flags |= ABSTRACT|NODROP
 			new_built_in_tools[tool_name] = I
 		built_in_tools = new_built_in_tools
 		selected_tool = default_selected_tool
@@ -68,6 +70,13 @@ var/global/list/robotic_controllers_by_company = list()
 
 	if(passive_cell_use > 0 || action_cell_use > 0 && default_cell_type)
 		BP.add_cell(new default_cell_type)
+		BP.cell_activate()
+
+/datum/bodypart_controller/robot/Destroy()
+	for(var/tool_name in built_in_tools)
+		qdel(built_in_tools[tool_name])
+	built_in_tools = null
+	return ..()
 
 /datum/bodypart_controller/robot/get_inspect_string(mob/living/inspector)
 	if(inspector == BP.owner && BP.cell)
@@ -85,14 +94,56 @@ var/global/list/robotic_controllers_by_company = list()
 	BP.icon_state = "[BP.body_zone][g ? "_[g]" : ""]"
 
 /datum/bodypart_controller/robot/is_usable()
-	if(passive_cell_use > 0 || action_cell_use > 0 && BP.cell.charge <= 0)
-		return FALSE
+	if(passive_cell_use > 0 || action_cell_use > 0)
+		if(!BP.cell)
+			return FALSE
+		if(BP.cell.charge <= 0)
+			return FALSE
+		if(!BP.cell_active)
+			return FALSE
 	return !(BP.status & (ORGAN_MUTATED|ORGAN_DEAD))
 
 /datum/bodypart_controller/robot/handleUnarmedAttack(atom/target)
 	if(action_cell_use > 0 && !BP.cell_use_power(action_cell_use))
 		BP.owner.visible_message("<span class='warning'>[BP] screeches as it tries to move.</span>")
 		return TRUE
+	if((passive_cell_use > 0 || action_cell_use > 0) && BP.owner.a_intent == I_GRAB && target != BP.owner)
+		var/obj/item/weapon/stock_parts/cell/C
+		if(istype(target, /obj/item/weapon/stock_parts/cell))
+			C = target
+		else if(istype(target, /obj/machinery/power/apc))
+			var/obj/machinery/power/apc/A = target
+			C = A.cell
+		else if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			for(var/obj/item/organ/external/pos_char in H.bodyparts)
+				if(pos_char.cell)
+					C = pos_char.cell
+					break
+		else if(istype(target, /obj/item))
+			var/obj/item/I = target
+			if(I.cell)
+				C = I.cell
+
+		if(C)
+			BP.owner.visible_message("<span class='notice'>[BP.owner] inserts their [BP] into [C].</span>", "<span class='notice'>You start charging from [C].</span>")
+			charge_tries:
+				for(var/i in 1 to 50)
+					if(BP.owner.is_busy() || !do_after(BP.owner, 5, target = target))
+						break charge_tries
+					bodypart_loop:
+						for(var/obj/item/organ/external/to_char in BP.owner.bodyparts)
+							if(istype(to_char.controller, /datum/bodypart_controller/robot))
+								var/datum/bodypart_controller/robot/R_cont = to_char.controller
+								if(R_cont.passive_cell_use <= 0 || R_cont.action_cell_use <= 0)
+									continue bodypart_loop
+								if(to_char.cell.charge < to_char.cell.maxcharge)
+									if(C.cell_use_power(10))
+										to_char.cell_set_charge(to_char.cell.charge + 10)
+										continue charge_tries
+									else
+										break charge_tries
+			return TRUE
 	return FALSE
 
 /*

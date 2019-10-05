@@ -27,6 +27,19 @@
 /datum/action/New(var/Target)
 	target = Target
 
+/datum/action/proc/get_overlays_images()
+	var/image/img
+	if(action_type == AB_ITEM && target)
+		var/obj/item/I = target
+		img = image(I.icon, button, I.icon_state)
+	else if(button_icon && button_icon_state)
+		img = image(button_icon, button, button_icon_state)
+
+	img.pixel_x = 0
+	img.pixel_y = 0
+
+	return list(img)
+
 /datum/action/Destroy()
 	if(owner)
 		Remove(owner)
@@ -139,15 +152,7 @@
 	icon_state = owner.background_icon_state
 
 	overlays.Cut()
-	var/image/img
-	if(owner.action_type == AB_ITEM && owner.target)
-		var/obj/item/I = owner.target
-		img = image(I.icon, src , I.icon_state)
-	else if(owner.button_icon && owner.button_icon_state)
-		img = image(owner.button_icon,src,owner.button_icon_state)
-	img.pixel_x = 0
-	img.pixel_y = 0
-	overlays += img
+	overlays += owner.get_overlays_images()
 
 	if(!owner.IsAvailable())
 		color = rgb(128,0,0,128)
@@ -255,8 +260,21 @@
 
 /datum/action/prosthetic_tool_switch
 	action_type = AB_GENERIC
-	check_flags = AB_CHECK_ALL
-	background_icon_state = "bg_spell"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_ALIVE
+	button_icon_state = ""
+
+/datum/action/prosthetic_tool_switch/UpdateName()
+	return "Switch [target.name]'s tool."
+
+/datum/action/prosthetic_tool_switch/get_overlays_images()
+	var/image/img = image(icon_state = target.icon_state, icon = target.icon, loc = button)
+	img.appearance = target
+	img.layer = ABOVE_HUD_LAYER + 0.1
+	img.plane = ABOVE_HUD_PLANE + 0.1
+	img.appearance_flags = APPEARANCE_UI
+	img.dir = NORTH
+
+	return list(img)
 
 /datum/action/prosthetic_tool_switch/Activate()
 	var/obj/item/organ/external/BP = target
@@ -266,6 +284,7 @@
 	var/choice = input(owner, "What tool do you wish [BP.name] to become?") as null|anything in choices
 	if(choice)
 		R_cont.selected_tool = choice
+		to_chat(owner, "<span class='notice'>Changed [BP.name] into \a [choice].</span>")
 
 #undef AB_WEST_OFFSET
 #undef AB_NORTH_OFFSET

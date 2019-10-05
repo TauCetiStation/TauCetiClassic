@@ -188,5 +188,11 @@
 /obj/item/weapon/stock_parts/cell/cell_use_power(value)
 	return use(value)
 
+/obj/item/weapon/stock_parts/cell/cell_set_charge(value)
+	if(value < 0)
+		value = 0
+
+	charge = value
+
 /obj/item/weapon/stock_parts/cell/on_charge_out()
 	charge = 0

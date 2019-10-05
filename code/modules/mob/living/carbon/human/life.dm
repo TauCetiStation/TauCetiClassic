@@ -1271,6 +1271,9 @@
 	return 1
 
 /mob/living/carbon/human/proc/handle_mental_load()
+	if(get_species() == IPC)
+		return
+
 	mental_load = bodyparts_mental_load + getBrainLoss() * 2 + getHalLoss() * 0.1
 
 	switch(mental_load)
