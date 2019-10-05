@@ -78,5 +78,5 @@
 	reqs = list(/datum/reagent/fuel = 100,
 				/obj/item/stack/medical/bruise_pack/rags = 1,
 				/obj/item/weapon/reagent_containers/food/drinks/bottle = 1)
-	parts = list(/obj/item/weapon/reagent_containers/food/drinks/bottle = 1,
+	parts = list(/obj/item/weapon/reagent_containers/food/drinks/bottle = 1)
 	time = 50
