@@ -2,8 +2,8 @@
 	company = "Hephaestus"
 	desc = "This limb has a militaristic black and green casing with gold stripes."
 	iconbase = 'icons/mob/human_races/cyberlimbs/hephaestus/hephaestus_main.dmi'
-	brute_mod = 0.9
-	burn_mod = 0.9
+	brute_mod = 0.8
+	burn_mod = 0.8
 	speed_mod = 0.35 // Two hands would slow you down to Unathi levels.
 	tech_tier = HIGH_TECH_PROSTHETIC
 
@@ -40,6 +40,7 @@
 	monitor = TRUE
 	restrict_species = list(IPC)
 	parts = list(BP_HEAD)
+	ipc_parts = list(BP_HEAD)
 	brute_mod = 0.9
 	burn_mod = 0.9
 	speed_mod = 0.35

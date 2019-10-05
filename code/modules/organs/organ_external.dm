@@ -585,7 +585,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return controller.bodypart_type == BODYPART_ROBOTIC
 
 /obj/item/organ/external/proc/is_usable()
-	return !(status & (ORGAN_MUTATED|ORGAN_DEAD)) && !is_rejecting
+	return controller.is_usable()
 
 /obj/item/organ/external/proc/is_broken()
 	return ((status & ORGAN_BROKEN) && !(status & ORGAN_SPLINTED))

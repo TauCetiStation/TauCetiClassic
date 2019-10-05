@@ -50,12 +50,16 @@
 
 	for(var/bodypart_name in hands_or_legs)
 		var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
-		if(!BP || (BP.is_stump))
+		if(!BP || (BP.is_stump) || !BP.is_usable())
 			tally += 6
 		else if(BP.status & ORGAN_SPLINTED)
 			tally += 0.8
 		else if(BP.status & ORGAN_BROKEN)
 			tally += 3
+		else if(istype(BP.controller, /datum/bodypart_controller/robot))
+			var/datum/bodypart_controller/robot/R_cont = BP.controller
+			if(R_cont.action_cell_use > 0 && !BP.cell_use_power(R_cont.action_cell_use))
+				tally += 3
 
 	// hyperzine removes equipment slowdowns (no blood = no chemical effects).
 	var/chem_nullify_debuff = FALSE

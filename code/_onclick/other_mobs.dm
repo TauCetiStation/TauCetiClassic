@@ -9,6 +9,8 @@
 	if(!BP || !BP.is_usable())
 		to_chat(src, "<span class='notice'>You try to move your [BP ? BP.name : "hand"], but cannot!</span>")
 		return
+	if(BP.controller.handleUnarmedAttack(A))
+		return
 	..()
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
 

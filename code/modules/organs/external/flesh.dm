@@ -11,6 +11,9 @@
 /datum/bodypart_controller/Destroy()
 	BP = null
 
+/datum/bodypart_controller/proc/is_usable()
+	return !(BP.status & (ORGAN_MUTATED|ORGAN_DEAD)) && !BP.is_rejecting
+
 // Return TRUE to prevent default logic.
 /datum/bodypart_controller/proc/handleUnarmedAttack(atom/target)
 	return FALSE

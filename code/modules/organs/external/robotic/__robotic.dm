@@ -29,6 +29,10 @@ var/global/list/robotic_controllers_by_company = list()
 
 	var/monitor = FALSE                                 // Whether the limb can display IPC screens.
 
+	var/default_cell_type
+	var/passive_cell_use = 0
+	var/action_cell_use = 0
+
 	var/tech_tier = LOW_TECH_PROSTHETIC
 	var/start_rejecting_after = 0
 	var/rejection_time = 10 MINUTES
@@ -43,6 +47,9 @@ var/global/list/robotic_controllers_by_company = list()
 	BP.name = "[company] [BP.name]"
 	BP.desc = "This model seems to be made by [company]"
 
+	if(passive_cell_use > 0 || action_cell_use > 0 && default_cell_type)
+		BP.add_cell(new default_cell_type)
+
 /datum/bodypart_controller/robot/update_sprite()
 	var/gender = BP.owner ? BP.owner.gender : MALE
 	var/g
@@ -52,6 +59,22 @@ var/global/list/robotic_controllers_by_company = list()
 		g = null
 	BP.icon = iconbase
 	BP.icon_state = "[BP.body_zone][g ? "_[g]" : ""]"
+
+/datum/bodypart_controller/robot/is_usable()
+	if(passive_cell_use > 0 || action_cell_use > 0 && BP.cell.charge <= 0)
+		return FALSE
+	return !(BP.status & (ORGAN_MUTATED|ORGAN_DEAD))
+
+/datum/bodypart_controller/robot/handleUnarmedAttack(atom/target)
+	if(action_cell_use > 0 && !BP.cell_use_power(action_cell_use))
+		BP.owner.visible_message("<span class='warning'>[BP] screeches as it tries to move.</span>")
+		return TRUE
+	return FALSE
+
+/*
+/datum/bodypart_controller/robot/handleRangedAttack(atom/target)
+	return FALSE
+*/
 
 /datum/bodypart_controller/proc/get_pos_parts(species)
 	return list()

@@ -4,7 +4,7 @@
 	iconbase = 'icons/mob/human_races/cyberlimbs/wardtakahashi/wardtakahashi_main.dmi'
 	tech_tier = HIGH_TECH_PROSTHETIC
 
-	carry_speed_mod = -0.5
+	carry_speed_mod = -1.0
 
 	size = 2 * ITEM_SIZE_NORMAL
 	carry_weight = 18 * ITEM_SIZE_NORMAL
@@ -40,6 +40,7 @@
 	monitor = TRUE
 	restrict_species = list(IPC)
 	parts = list(BP_HEAD)
+	ipc_parts = list(BP_HEAD)
 
 	carry_speed_mod = -0.5
 

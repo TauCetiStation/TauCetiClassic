@@ -246,8 +246,15 @@
 					dat += "\t<font color='dodgerblue'>* Is EMP protected.</font><br>"
 				if(R_cont.monitor)
 					dat += "\t<font color='dodgerblue'>* Has an in-built display-screen.</font><br>"
-				if(R_cont.tech_tier == HIGH_TECH_PROSTHETIC)
-					dat += "\t<font color='red'>* Requires a dose of [R_cont.arr_consume_amount] ARR each [R_cont.rejection_time / (1 MINUTE)] minutes.</font>"
+				if(R_cont.default_cell_type)
+					var/obj/item/weapon/stock_parts/cell/C = new R_cont.default_cell_type
+					dat += "\t<font color='dodgerblue'>* Comes pre-loaded with a [C.name].</font><br>"
+				if(R_cont.arr_consume_amount != 0.0)
+					dat += "\t<font color='red'>* Requires a dose of [R_cont.arr_consume_amount] ARR each [R_cont.rejection_time / (1 MINUTE)] minutes.</font><br>"
+				if(R_cont.passive_cell_use > 0)
+					dat += "\t<font color='red'>* Requires [R_cont.passive_cell_use] charge per worktime unit.</font><br>"
+				if(R_cont.action_cell_use > 0)
+					dat += "\t<font color='red'>* Requires [R_cont.action_cell_use] charge per action.</font><br>"
 				if(R_cont.low_quality)
 					dat += "\t<font color='red'>* Can arrive with defects.</font><br>"
 
