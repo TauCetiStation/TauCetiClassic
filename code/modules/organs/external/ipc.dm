@@ -7,12 +7,6 @@
 	controller_type = /datum/bodypart_controller/robot/morpheus
 	vital = FALSE
 
-/obj/item/organ/external/head/robot/ipc/is_compatible(mob/living/carbon/human/H)
-	if(H.get_species() == IPC)
-		return TRUE
-
-	return FALSE
-
 /obj/item/organ/external/groin/robot/ipc
 	name = "ipc groin"
 	controller_type = /datum/bodypart_controller/robot/morpheus

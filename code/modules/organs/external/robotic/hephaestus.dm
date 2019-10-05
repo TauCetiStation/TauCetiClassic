@@ -11,6 +11,9 @@
 	mental_load = 20
 	processing_language = "Gutter"
 
+	rejection_time = 3 MINUTES
+	arr_consume_amount = 0.1
+
 /datum/bodypart_controller/robot/hephaestus_ipc
 	company = "Hephaestus - Athena"
 	desc = "This rather thick limb has a militaristic green plating."
@@ -26,6 +29,9 @@
 	carry_weight = 18 * ITEM_SIZE_NORMAL
 	mental_load = 30
 	processing_language = "Trinary"
+
+	rejection_time = 3 MINUTES
+	arr_consume_amount = 0.1
 
 /datum/bodypart_controller/robot/hephaestus_monitor
 	company = "Hephaestus Monitor"
@@ -43,3 +49,6 @@
 	carry_weight = 18 * ITEM_SIZE_NORMAL
 	mental_load = 30
 	processing_language = "Trinary"
+
+	rejection_time = 3 MINUTES
+	arr_consume_amount = 0.1

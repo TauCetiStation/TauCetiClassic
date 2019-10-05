@@ -11,6 +11,14 @@
 /datum/bodypart_controller/Destroy()
 	BP = null
 
+// Return TRUE to prevent default logic.
+/datum/bodypart_controller/proc/handleUnarmedAttack(atom/target)
+	return FALSE
+
+// Return TRUE to prevent default logic.
+/datum/bodypart_controller/proc/handleRangedAttack(atom/target)
+	return FALSE
+
 /datum/bodypart_controller/proc/update_sprite()
 	var/gender = BP.owner ? BP.owner.gender : MALE
 	var/mutations = BP.owner ? BP.owner.mutations : list()
@@ -363,7 +371,7 @@ This function completely restores a damaged organ to perfect condition.
 /datum/bodypart_controller/process()
 	if(!BP.is_attached()) // rot if we are not inside a body
 		process_outside()
-		return
+		return FALSE
 
 	// Process wounds, doing healing etc. Only do this every few ticks to save processing power
 	if(BP.owner.life_tick % BP.wound_update_accuracy == 0)
@@ -387,6 +395,7 @@ This function completely restores a damaged organ to perfect condition.
 
 	//Infections
 	BP.update_germs()
+	return TRUE
 
 
 //Updating germ levels. Handles organ germ levels and necrosis.

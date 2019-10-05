@@ -24,17 +24,22 @@ var/global/list/robotic_controllers_by_company = list()
 	var/protected = 0                                   // How protected from EMP the limb is.
 	var/low_quality = FALSE                             // If TRUE, limb may spawn in being sabotaged.
 
-	var/parts = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG) // Defines what parts said brand can replace on a body.
+	var/list/parts = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG) // Defines what parts said brand can replace on a body.
+	var/list/ipc_parts = BP_ALL
 
 	var/monitor = FALSE                                 // Whether the limb can display IPC screens.
 
 	var/tech_tier = LOW_TECH_PROSTHETIC
+	var/start_rejecting_after = 0
+	var/rejection_time = 10 MINUTES
+	var/arr_consume_amount = 0.0 // Anti rejection reagent consume amount.
 
 /datum/bodypart_controller/robot/New(obj/item/organ/external/B)
 	if(!B) // Roundstart initiation or something.
 		return
 
 	..()
+	start_rejecting_after = world.time + rejection_time
 	BP.name = "[company] [BP.name]"
 	BP.desc = "This model seems to be made by [company]"
 
@@ -51,9 +56,9 @@ var/global/list/robotic_controllers_by_company = list()
 /datum/bodypart_controller/proc/get_pos_parts(species)
 	return list()
 
-/datum/bodypart_controller/robot/proc/get_pos_parts(species)
+/datum/bodypart_controller/robot/get_pos_parts(species)
 	if(species == IPC)
-		return BP_ALL
+		return ipc_parts
 	return parts
 
 /datum/bodypart_controller/robot/is_damageable(additional_damage = 0)
@@ -141,10 +146,56 @@ var/global/list/robotic_controllers_by_company = list()
 	return
 
 /datum/bodypart_controller/robot/check_rejection()
-	return
+	BP.is_rejecting = TRUE
+	var/chances = 100
+
+	if(BP.species.name != IPC && !BP.owner.reagents.get_reagent_amount("neuropozyne"))
+		switch(tech_tier)
+			if(LOW_TECH_PROSTHETIC)
+				chances *= 0.75
+			if(MEDIUM_TECH_PROSTHETIC)
+				chances *= 0.95
+			if(HIGH_TECH_PROSTHETIC)
+				chances *= 1.0
+
+		if(BP.sabotaged)
+			chances *= 0.5
+		if(low_quality)
+			chances *= 0.5
+
+	if(prob(chances))
+		BP.is_rejecting = FALSE
 
 /datum/bodypart_controller/robot/handle_rejection()
-	return
+	if(start_rejecting_after < world.time && arr_consume_amount > 0)
+		BP.is_rejecting = TRUE
+		return
+
+	if(!BP.is_rejecting)
+		return
+
+	var/list/pos_arr_regs = list("neuropozyne" = 1.0, "stabyzol" = 0.5, "inaprovaline" = 0.1)
+	for(var/pos_arr_reg in pos_arr_regs)
+		var/arr = BP.owner.reagents.get_reagent_amount(pos_arr_reg)
+		if(arr > arr_consume_amount)
+			BP.owner.reagents.remove_reagent("anti_prosthetic_rejection", arr_consume_amount)
+			start_rejecting_after = world.time + rejection_time * pos_arr_regs[pos_arr_reg]
+			BP.is_rejecting = FALSE
+			return
+
+	if(prob(2))
+		var/fail_msg = pick("IS ASSUMING DIRECT CONTROL!", "HURTS IMMENSELY!", "IS NO MORE!")
+		to_chat(src, "[bicon(BP)] <span class='warning'>[uppertext(BP.name)] [fail_msg]</span>")
+		emp_act(1)
+
+	if(prob(2))
+		var/fail_msg = pick("HURTS LIKE HECK!", "HURTS A LOT!", "HURTS!")
+		to_chat(src, "[bicon(BP)] <span class='warning'>[uppertext(BP.name)] [fail_msg]</span>")
+		BP.owner.adjustHalLoss(10)
+
+	if(prob(2))
+		to_chat(src, "[bicon(BP)] <span class='warning'>[uppertext(BP.name)] feels as if burning!</span>")
+		BP.owner.adjustBrainLoss(5)
 
 /obj/item/organ/external/chest/robot
 	name = "robotic chest"

@@ -242,10 +242,14 @@
 				if(tier_txt)
 					dat += "<b>Tech tier:</b> [tier_txt]<br>"
 
-				if(R_cont.low_quality)
-					dat += "\t<font color='red'>* Can arrive with defects.</font><br>"
 				if(R_cont.protected)
 					dat += "\t<font color='dodgerblue'>* Is EMP protected.</font><br>"
+				if(R_cont.monitor)
+					dat += "\t<font color='dodgerblue'>* Has an in-built display-screen.</font><br>"
+				if(R_cont.tech_tier == HIGH_TECH_PROSTHETIC)
+					dat += "\t<font color='red'>* Requires a dose of [R_cont.arr_consume_amount] ARR each [R_cont.rejection_time / (1 MINUTE)] minutes.</font>"
+				if(R_cont.low_quality)
+					dat += "\t<font color='red'>* Can arrive with defects.</font><br>"
 
 				var/bp_status = organ_data[bodypart] ? organ_data[bodypart] : "Normal"
 				dat += "<A href='?_src_=prefs;preference=bp_change;task=save_bp;bodypart=[bodypart];organ_type=[chosen_state];add_data=[R_cont.company]'>\[Change from [bp_status] to [chosen_state].\]</A>"

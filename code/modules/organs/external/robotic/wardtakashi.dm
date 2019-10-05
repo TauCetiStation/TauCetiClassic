@@ -11,6 +11,9 @@
 	mental_load = 20
 	processing_language = "Tradeband"
 
+	rejection_time = 3 MINUTES
+	arr_consume_amount = 0.1
+
 /datum/bodypart_controller/robot/wardtakahashi_ipc
 	company = "Ward-Takahashi - Spirit"
 	desc = "This limb has white and purple features, with a heavier casing."
@@ -25,6 +28,9 @@
 	carry_weight = 18 * ITEM_SIZE_NORMAL
 	mental_load = 30
 	processing_language = "Trinary"
+
+	rejection_time = 3 MINUTES
+	arr_consume_amount = 0.1
 
 /datum/bodypart_controller/robot/wardtakahashi_monitor
 	company = "Ward-Takahashi Monitor"
@@ -41,3 +47,6 @@
 	carry_weight = 18 * ITEM_SIZE_NORMAL
 	mental_load = 30
 	processing_language = "Trinary"
+
+	rejection_time = 3 MINUTES
+	arr_consume_amount = 0.1

@@ -646,3 +646,13 @@
 	var/mob/living/carbon/human/H = M
 	H.adjustHalLoss(-30)
 	H.shock_stage -= 20
+
+/datum/reagent/neuropozyne
+	name = "Neuropozyne"
+	id = "neuropozyne"
+	description = "A substance that does not allow high tech prosthetics to interfere with the mind of carrier too much."
+	reagent_state = LIQUID
+	color = "#40e0d0"
+	custom_metabolism = 0.0 // The prosthetics themselves handle usage of this liquid.
+	overdose = REAGENTS_OVERDOSE
+	restrict_species = list(IPC, DIONA)
