@@ -1,6 +1,6 @@
 /obj/item/weapon/melee/powerfist
 	name = "power-fist"
-	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch."
+	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch. Definitely stolen from Unathi."
 	icon_state = "powerfist_1"
 	item_state = "powerfist"
 	flags = CONDUCT
