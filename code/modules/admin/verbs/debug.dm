@@ -705,7 +705,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/card/id/redteam/W = new(M)
 			W.assignment = "Red Teammate"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.access = list(access_maint_tunnels, access_external_airlocks, access_construction)
+			W.access = list(access_engine_equip, access_maint_tunnels, access_external_airlocks, access_construction)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if("yellow teammate")
@@ -725,7 +725,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/card/id/yellowteam/W = new(M)
 			W.assignment = "Yellow Teammate"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.access = list(access_maint_tunnels, access_external_airlocks, access_construction)
+			W.access = list(access_engine_equip, access_maint_tunnels, access_external_airlocks, access_construction)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if("green teammate")
@@ -745,7 +745,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/card/id/greenteam/W = new(M)
 			W.assignment = "Green Teammate"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.access = list(access_maint_tunnels, access_external_airlocks, access_construction)
+			W.access = list(access_engine_equip, access_maint_tunnels, access_external_airlocks, access_construction)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if("blue teammate")
@@ -765,7 +765,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/card/id/blueteam/W = new(M)
 			W.assignment = "Blue Teammate"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.access = list(access_maint_tunnels, access_external_airlocks, access_construction)
+			W.access = list(access_engine_equip, access_maint_tunnels, access_external_airlocks, access_construction)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if ("thunderdome standard red","thunderdome standard green") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
