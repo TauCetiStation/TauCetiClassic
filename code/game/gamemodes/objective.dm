@@ -39,7 +39,31 @@ var/global/list/all_objectives = list()
 			target = possible_target
 			break
 
+/datum/objective/implanted/find_target()
+	..()
+	if(target && target.current)
+		explanation_text = "Implanted syndicate loyalti implant and protect [target.current.real_name], the [target.assigned_role]."
+	else
+		explanation_text = "Free Objective"
+	return target
 
+/datum/objective/implanted/find_target_by_role(role, role_type=0)
+	..(role, role_type)
+	if(target && target.current)
+		explanation_text = "Implanted syndicate loyalti implant and protect [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."
+	else
+		explanation_text = "Free Objective"
+	return target
+
+/datum/objective/implanted/check_completion()
+	if(!target) //If it's a free objective.
+		return 1
+	if(target.current)
+		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current))
+			return 0
+		if(isloyalsyndi(target.current))
+			return 1
+	return 0
 
 /datum/objective/assassinate/find_target()
 	..()

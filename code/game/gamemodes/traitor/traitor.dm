@@ -121,7 +121,7 @@
 	return
 
 /datum/game_mode/proc/add_one_objective(datum/mind/traitor)
-	switch(rand(1,120))
+	switch(rand(1,140))
 		if(1 to 20)
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = traitor
@@ -132,11 +132,16 @@
 			harm_objective.owner = traitor
 			harm_objective.find_target()
 			traitor.objectives += harm_objective
-		if(51 to 115)
+		if(51 to 120)
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = traitor
 			steal_objective.find_target()
 			traitor.objectives += steal_objective
+		if(121 to 135)
+			var/datum/objective/implanted/implant_objective = new
+			implant_objective.owner = traitor
+			implant_objective.find_target()
+			traitor.objectives += implant_objective
 		else
 			var/datum/objective/dehead/dehead_objective = new
 			dehead_objective.owner = traitor
@@ -340,6 +345,7 @@
 			to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
 			traitor_mob.mind.total_TC += R.hidden_uplink.uses
+
 	for(var/datum/objective/dehead/D in traitor_mob.mind.objectives)
 		var/obj/item/device/biocan/B = new (traitor_mob.loc)
 		var/list/slots = list (
@@ -353,6 +359,21 @@
 			to_chat(traitor_mob, "The Syndicate were unfortunately unable to provide you with the brand new can for storing heads.")
 		else
 			to_chat(traitor_mob, "The biogel-filled can in your [where] will help you to steal you target's head alive and undamaged.")
+
+	for(var/datum/objective/implanted/I in traitor_mob.mind.objectives) //give box with implant in slot traitors. At the beginning of the round
+		var/obj/item/weapon/storage/box/syndie_kit/imp_loyalty/box = new (traitor_mob.loc)
+		var/list/slots = list (
+		"backpack" = SLOT_IN_BACKPACK,
+		"left hand" = SLOT_L_HAND,
+		"right hand" = SLOT_R_HAND,
+		)
+		var/where = traitor_mob.equip_in_one_of_slots(box, slots)
+		traitor_mob.update_icons()
+		if (!where)
+			to_chat(traitor_mob, "The Syndicate were unfortunately unable to provide you with the brand new box with syndicate implant loyality.")
+		else
+			to_chat(traitor_mob, "Our box with our implant lying in your [where], this will help you complete the task.")
+
 	//Begin code phrase.
 	if(!safety)//If they are not a rev. Can be added on to.
 		to_chat(traitor_mob, "The Syndicate provided you with the following information on how to identify other agents:")
