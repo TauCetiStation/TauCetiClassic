@@ -93,10 +93,4 @@
 	return
 
 /obj/item/weapon/melee/powerfist/update_icon()
-	if(fisto_setting == 1)
-		icon_state = "powerfist_1"
-	if(fisto_setting == 2)
-		icon_state = "powerfist_2"
-	if(fisto_setting == 3)
-		icon_state = "powerfist_3"
-
+	icon_state = "powerfist_[fisto_setting]"
