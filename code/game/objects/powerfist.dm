@@ -1,7 +1,7 @@
 /obj/item/weapon/melee/powerfist
 	name = "power-fist"
 	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch."
-	icon_state = "powerfist"
+	icon_state = "powerfist_1"
 	item_state = "powerfist"
 	flags = CONDUCT
 	attack_verb = list("whacked", "fisted", "power-punched")
@@ -44,6 +44,7 @@
 				fisto_setting = 1
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user,"<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>")
+		update_icon()
 	else if(isscrewdriver(W))
 		updateTank(tank, 1, user)
 
@@ -90,3 +91,12 @@
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>powerfisted [target.name]'s ([target.ckey])</font>")
 	msg_admin_attack("[user] ([user.ckey]) powerfisted [target.name] ([target.ckey])", user)
 	return
+
+/obj/item/weapon/melee/powerfist/update_icon()
+	if(fisto_setting == 1)
+		icon_state = "powerfist_1"
+	if(fisto_setting == 2)
+		icon_state = "powerfist_2"
+	if(fisto_setting == 3)
+		icon_state = "powerfist_3"
+
