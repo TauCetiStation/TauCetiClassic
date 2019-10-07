@@ -87,7 +87,6 @@
 		P.info += "<br>"
 		P.info += "[bicon(scanned_object)] [results]"
 		P.update_icon()
-					P.artifact_second_effect = A.secondary_effect.effect_type
 
 		var/obj/item/weapon/stamp/S = new
 		S.stamp_paper(P)
