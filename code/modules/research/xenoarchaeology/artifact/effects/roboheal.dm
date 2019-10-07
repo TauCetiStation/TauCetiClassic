@@ -1,10 +1,10 @@
 
 /datum/artifact_effect/roboheal
-	effecttype = "roboheal"
+	effect_name = "Robo-heal"
 
 /datum/artifact_effect/roboheal/New()
 	..()
-	effect_type = pick(3,4)
+	effect_type = pick(ARTIFACT_EFFECT_ELECTRO, ARTIFACT_EFFECT_PARTICLE)
 
 /datum/artifact_effect/roboheal/DoEffectTouch(mob/user)
 	if(user)

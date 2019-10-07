@@ -1,7 +1,7 @@
 
 /datum/artifact_effect/hurt
-	effecttype = "hurt"
-	effect_type = 5
+	effect_name = "Hurt"
+	effect_type = ARTIFACT_EFFECT_ORGANIC
 
 /datum/artifact_effect/hurt/DoEffectTouch(mob/toucher)
 	if(toucher)

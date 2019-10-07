@@ -1,11 +1,11 @@
 
 /datum/artifact_effect/emp
-	effecttype = "emp"
-	effect_type = 3
+	effect_name = "EMP"
+	effect_type = ARTIFACT_EFFECT_ELECTRO
 
 /datum/artifact_effect/emp/New()
 	..()
-	effect = EFFECT_PULSE
+	effect = ARTIFACT_EFFECT_PULSE
 
 /datum/artifact_effect/emp/DoEffectPulse()
 	if(holder)

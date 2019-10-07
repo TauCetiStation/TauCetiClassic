@@ -1,13 +1,13 @@
 
 //todo
 /datum/artifact_effect/dnaswitch
-	effecttype = "dnaswitch"
-	effect_type = 5
+	effect_name = "Dna Switch"
+	effect_type = ARTIFACT_EFFECT_ORGANIC
 	var/severity
 
 /datum/artifact_effect/dnaswitch/New()
 	..()
-	if(effect == EFFECT_AURA)
+	if(effect == ARTIFACT_EFFECT_AURA)
 		severity = rand(5,30)
 	else
 		severity = rand(25,95)
