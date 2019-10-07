@@ -148,19 +148,7 @@
 
 	var/bottle_icon
 	var/bottle_icon_state
-
-/obj/item/weapon/grenade/molotov/atom_init()
-	. = ..()
-	reagents.add_reagent("fuel", 100)
-
-/obj/item/weapon/grenade/molotov
-	icon_state = "molotov_preview"
-
-
-/obj/item/weapon/grenade/molotov/update_icon()
-	if(bottle_icon && bottle_icon_state)
-		icon = bottle_icon
-		icon_state = bottle_icon_state
+	var/list/overlays_list = list()
 
 /obj/item/weapon/grenade/molotov/CheckParts(list/parts_list)
 	..()
@@ -170,14 +158,24 @@
 			bottle_icon_state = I.icon_state
 	update_icon()
 
-	var/list/overlays_list = list()
-	overlays_list += image('icons/obj/makeshift.dmi', "molotov_rag")
+/obj/item/weapon/grenade/molotov/update_icon()
+	if(bottle_icon && bottle_icon_state)
+		icon = bottle_icon
+		icon_state = bottle_icon_state
+		overlays_list += image('icons/obj/makeshift.dmi', "molotov_rag")
+		overlays = overlays_list
 
-
-	var/list/overlays_list1 = list()
 	if(active)
 		overlays_list += image('icons/obj/makeshift.dmi', "molotov_active")
-	overlays = overlays_list1
+	overlays = overlays_list
+
+/obj/item/weapon/grenade/molotov/activate(mob/user)
+	if(user)
+		msg_admin_attack("[user.name] ([user.ckey]) primed \a [src]", user)
+		var/turf/T = get_turf(src)
+		if(T)
+			log_game("[key_name(usr)] has primed a [name] for detonation at [T.loc] [COORD(T)].")
+
 	active = 1
 	update_icon()
 	playsound(src, activate_sound, VOL_EFFECTS_MASTER)
@@ -220,14 +218,13 @@
 
 obj/item/weapon/grenade/molotov/after_throw(datum/callback/callback)
 	..()
-	if(active==TRUE)
+	if(active == 1)
 		playsound (src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
-		new /obj/item/weapon/shard(loc)
-		src.reagents.reaction(loc, TOUCH)
+		new /obj/effect/decal/cleanable/liquid_fuel(src.loc, 100)
+		new /obj/fire(src.loc)
 		qdel(src)
-		new /obj/fire(loc)
 	else
 		playsound (src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
-		new /obj/item/weapon/shard(loc)
-		src.reagents.reaction(loc, TOUCH)
+		playsound (src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER)
+		new /obj/effect/decal/cleanable/liquid_fuel(src.loc, 100)
 		qdel(src)
