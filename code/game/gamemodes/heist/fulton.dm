@@ -84,7 +84,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			if(istype(A, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = A
 				H.say(pick(extraction_appends))
-				playsound(H, pick(SOUNDIN_MSCREAM), VOL_EFFECTS_MASTER, null, FALSE)
+				playsound(H, pick(SOUNDIN_MALE_HEAVY_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 				H.SetParalysis(0) // wakey wakey
 				H.drowsyness = 0
 				H.sleeping = 0

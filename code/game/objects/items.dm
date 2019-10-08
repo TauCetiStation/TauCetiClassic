@@ -987,3 +987,7 @@ var/global/list/items_blood_overlay_by_type = list()
 		. |= DAM_SHARP
 		if(damtype == BURN)
 			. |= DAM_LASER
+
+// Is called when somebody is stripping us using the panel. Return TRUE to allow the strip, FALSE to disallow.
+/obj/item/proc/onStripPanelUnEquip(mob/living/who, strip_gloves = FALSE)
+	return TRUE

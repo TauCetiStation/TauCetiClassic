@@ -140,6 +140,10 @@ Implants;
 ///process()
 ///Called by the gameticker
 /datum/game_mode/process()
+	// For objectives such as "Make an example of...", which require mid-game checks for completion
+	for(var/datum/mind/traitor_mind in traitors)
+		for(var/datum/objective/objective in traitor_mind.objectives)
+			objective.check_completion()
 	return 0
 
 
