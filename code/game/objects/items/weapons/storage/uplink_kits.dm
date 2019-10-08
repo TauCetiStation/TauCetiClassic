@@ -43,7 +43,8 @@
 			var/obj/item/weapon/implanter/U = new /obj/item/weapon/implanter(src)
 			U.imp = new /obj/item/weapon/implant/uplink(U)
 			new /obj/item/weapon/implanter/explosive(src)
-			new /obj/item/weapon/implanter/adrenalin(src)
+			new /obj/item/weapon/implanter/adrenaline(src)
+			new /obj/item/weapon/implanter/emp(src)
 			new /obj/item/weapon/implanter/storage(src)
 
 		if("hacker")
@@ -127,6 +128,24 @@
 /obj/item/weapon/storage/box/syndie_kit/imp_explosive/atom_init()
 	new /obj/item/weapon/implanter/explosive(src)
 	. = ..()
+
+/obj/item/weapon/storage/box/syndie_kit/imp_adrenaline/atom_init()
+	. = ..()
+	var/obj/item/weapon/implanter/O = new(src)
+	O.imp = new /obj/item/weapon/implant/adrenaline(O)
+	O.update()
+
+/obj/item/weapon/storage/box/syndie_kit/imp_adrenaline
+	name = "box (A)"
+
+/obj/item/weapon/storage/box/syndie_kit/imp_emp/atom_init()
+	. = ..()
+	var/obj/item/weapon/implanter/O = new(src)
+	O.imp = new /obj/item/weapon/implant/emp(O)
+	O.update()
+
+/obj/item/weapon/storage/box/syndie_kit/imp_emp
+	name = "box (M)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	name = "boxed uplink implant (with injector)"

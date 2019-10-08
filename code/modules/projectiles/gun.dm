@@ -148,7 +148,11 @@
 		if(point_blank)
 			user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
 			chambered.BB.damage *= 1.3
-		if(!chambered.fire(target, user, params, , silenced))
+		var/additional_dispersion = 0
+		if(CHECK_ROBUST_DIR(user, target))
+			additional_dispersion = 2
+
+		if(!chambered.fire(target, user, params, , silenced, additional_dispersion))
 			shoot_with_empty_chamber(user)
 		else
 			shoot_live_shot(user)
@@ -210,12 +214,12 @@
 				return
 
 			chambered.BB.on_hit(M)
-			if (chambered.BB.damage_type != HALLOSS)
-				user.apply_damage(chambered.BB.damage * 2.5, chambered.BB.damage_type, BP_HEAD, null, chambered.BB.damage_flags(), "Point blank shot in the mouth with \a [chambered.BB]")
-				user.death()
-			else
+			if(chambered.BB.damage_type == HALLOSS)
 				to_chat(user, "<span class = 'notice'>Ow...</span>")
 				user.apply_effect(110,AGONY,0)
+			else if(!chambered.BB.nodamage)
+				user.apply_damage(chambered.BB.damage * 2.5, chambered.BB.damage_type, BP_HEAD, null, chambered.BB.damage_flags(), "Point blank shot in the mouth with \a [chambered.BB]")
+				user.death()
 			chambered.BB = null
 			chambered.update_icon()
 			update_icon()

@@ -892,7 +892,7 @@
 	dir = 10
 	},
 /turf/simulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "warnwhitecorner"
 	},
 /area/research_outpost/spectro)
@@ -3216,10 +3216,6 @@
 /obj/structure/lattice,
 /turf/space,
 /area/space)
-"gJ" = (
-/obj/structure/lattice,
-/turf/space,
-/area/shuttle/research)
 "gK" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
@@ -8068,14 +8064,13 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
 /obj/item/stack/rods,
+/obj/structure/grille{
+	destroyed = 1
+	},
 /turf/simulated/floor/plating,
 /area/mine/abandoned)
 "qU" = (
@@ -8263,12 +8258,11 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/item/stack/rods,
 /obj/item/weapon/shard,
+/obj/structure/grille{
+	destroyed = 1
+	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
@@ -12573,7 +12567,7 @@
 	dir = 5
 	},
 /turf/simulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "warnwhitecorner"
 	},
 /area/mine/living_quarters)
@@ -49342,7 +49336,7 @@ ar
 fv
 aJ
 ge
-aa
+ar
 mo
 mo
 mo
@@ -49599,7 +49593,7 @@ af
 aJ
 ge
 aa
-aa
+ar
 mo
 mo
 mo
@@ -49856,7 +49850,7 @@ gd
 ge
 aa
 aa
-aa
+ar
 mo
 mo
 mo
@@ -50113,7 +50107,7 @@ at
 aa
 aa
 aa
-aa
+ar
 mo
 mo
 mo
@@ -50370,7 +50364,7 @@ ar
 aa
 aa
 aa
-aa
+ar
 mo
 mo
 mo
@@ -50627,7 +50621,7 @@ ar
 aa
 aa
 aa
-aa
+ar
 mo
 mo
 mo
@@ -50884,7 +50878,7 @@ ar
 aa
 aa
 aa
-aa
+ar
 mo
 mo
 mo
@@ -51141,12 +51135,12 @@ ar
 ar
 aa
 aa
-aa
-aa
+ar
 mo
 mo
 mo
-aa
+mo
+mo
 hp
 An
 Bb
@@ -51399,11 +51393,11 @@ ar
 ar
 ar
 ar
-ar
-gJ
-gJ
-gJ
-ar
+mo
+mo
+mo
+mo
+mo
 hp
 gT
 hJ
@@ -51655,7 +51649,7 @@ ac
 ac
 aa
 aa
-aa
+ar
 ar
 ar
 ar
@@ -53071,15 +53065,15 @@ xv
 zU
 wA
 ar
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
 Be
 ar
 lA
@@ -53327,16 +53321,16 @@ aa
 xw
 zi
 wB
-ar
-ar
-ar
-ar
-ar
-ar
-ar
-ar
-ar
-ar
+zA
+zA
+zA
+zA
+zA
+aa
+aa
+aa
+aa
+aa
 Be
 ar
 aa
@@ -54103,11 +54097,11 @@ zA
 zA
 zA
 zA
-aa
-aa
-aa
-aa
-aa
+kc
+kc
+kc
+kc
+kc
 Be
 ar
 aa
@@ -54360,10 +54354,10 @@ zA
 zA
 zA
 zA
-kc
-kc
-kc
-kc
+At
+We
+Gf
+Nf
 kc
 Be
 ar
@@ -54617,9 +54611,9 @@ zA
 zA
 zA
 zA
-At
-We
-Gf
+Lc
+Xe
+wN
 Nf
 kc
 Be
@@ -54874,8 +54868,8 @@ zA
 zA
 zA
 zA
-Lc
-Xe
+kc
+wN
 wN
 Nf
 kc
@@ -55383,11 +55377,11 @@ lA
 kc
 zl
 kc
-aa
 zA
 zA
 zA
-aa
+zA
+zA
 kc
 wN
 Bu
@@ -55641,9 +55635,9 @@ kc
 zk
 kc
 kc
-zA
-zA
-zA
+aa
+aa
+aa
 kc
 Mc
 AU

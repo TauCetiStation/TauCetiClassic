@@ -446,6 +446,10 @@
 		src.slowdown += boots.slowdown_off
 		magpulse = 1
 		to_chat(H, "You enable the mag-pulse traction system.")
+	H.update_gravity(H.mob_has_gravity())
+
+/obj/item/clothing/suit/space/rig/negates_gravity()
+	return flags & NOSLIP
 
 /obj/item/clothing/suit/space/rig/examine(mob/user)
 	..()
@@ -621,6 +625,7 @@
 	item_state = "syndie_helm"
 	armor = list(melee = 60, bullet = 55, laser = 30,energy = 30, bomb = 50, bio = 100, rad = 60)
 	var/obj/machinery/camera/camera
+	action_button_name = "Toggle Helmet Mode"
 	var/combat_mode = FALSE
 	species_restricted = list("exclude" , SKRELL , DIONA, VOX)
 	var/image/lamp = null
@@ -659,7 +664,11 @@
 			user.overlays += lamp
 		user.update_inv_head()
 
-/obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
+/obj/item/clothing/head/helmet/space/rig/syndi/verb/toggle_light(mob/user)
+	set category = "Object"
+	set name = "Toggle helmet light"
+	set src in usr
+
 	if(camera)
 		on = !on
 	else
@@ -671,7 +680,10 @@
 	checklight()
 	update_icon(user)
 
-/obj/item/clothing/head/helmet/space/rig/syndi/verb/toggle()
+/obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
+	toggle_light(user)
+
+/obj/item/clothing/head/helmet/space/rig/syndi/verb/toggle_mode()
 	set category = "Object"
 	set name = "Adjust helmet"
 	set src in usr
@@ -707,6 +719,9 @@
 		P.reagents.trans_to_ingest(user, W.reagents.total_volume)
 		to_chat(user, "<span class='notice'>[src] consumes [W] and injected reagents to you!</span>")
 		qdel(W)
+
+/obj/item/clothing/head/helmet/space/rig/syndi/ui_action_click()
+	toggle_mode()
 
 
 /obj/item/clothing/suit/space/rig/syndi
@@ -809,14 +824,14 @@
 	name = "advanced medical hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has minor radiation shielding."
 	icon_state = "rig0-cmo"
-	item_state = "medical_helm"
+	item_state = "cmo_helm"
 	item_color = "cmo"
 
 /obj/item/clothing/suit/space/rig/medical/cmo
 	icon_state = "rig-cmo"
 	name = "advanced medical hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has minor radiation shielding."
-	item_state = "medical_hardsuit"
+	item_state = "cmo_hardsuit"
 	slowdown = 0.5
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/med_teleport, /obj/item/rig_module/chem_dispenser/medical, /obj/item/rig_module/device/healthscanner)
@@ -842,22 +857,45 @@
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash)
 
+	action_button_name = "Toggle Hardsuit Light"
+	var/brightness_on = 2 //luminosity when on
+	var/on = 0
+
+	light_color = "#ff00ff"
+
+/obj/item/clothing/suit/space/rig/security/attack_self(mob/user)
+	if(!isturf(user.loc))
+		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
+		return
+	on = !on
+	icon_state = "rig-sec[on ? "-light" : ""]"
+	usr.update_inv_wear_suit()
+
+	if(on)	set_light(brightness_on)
+	else	set_light(0)
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_wear_suit()
+
 //HoS Rig
 /obj/item/clothing/head/helmet/space/rig/security/hos
 	name = "advanced security hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
 	icon_state = "rig0-hos"
-	item_state = "sec_helm"
+	item_state = "hos_helm"
 	item_color = "hos"
 
 /obj/item/clothing/suit/space/rig/security/hos
 	icon_state = "rig-hos"
 	name = "advanced security hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
-	item_state = "sec_hardsuit"
+	item_state = "hos_hardsuit"
 	slowdown = 0.7
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/med_teleport, /obj/item/rig_module/chem_dispenser/combat, /obj/item/rig_module/grenade_launcher/flashbang)
+
+	action_button_name = FALSE
 
 //Atmospherics Rig (BS12)
 /obj/item/clothing/head/helmet/space/rig/atmos

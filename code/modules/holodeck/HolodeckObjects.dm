@@ -52,8 +52,6 @@
 /obj/structure/table/holotable
 	name = "table"
 	desc = "A square piece of metal standing on four metal legs. It can not move."
-	icon = 'icons/obj/tables.dmi'
-	icon_state = "table"
 	density = 1
 	anchored = 1.0
 	layer = 2.8
@@ -76,8 +74,7 @@
 /obj/structure/table/holotable/wooden
 	name = "table"
 	desc = "A square piece of wood standing on four wooden legs. It can not move."
-	icon = 'icons/obj/tables.dmi'
-	icon_state = "woodtable"
+	icon = 'icons/obj/smooth_structures/wooden_table.dmi'
 
 /obj/structure/holostool
 	name = "stool"
