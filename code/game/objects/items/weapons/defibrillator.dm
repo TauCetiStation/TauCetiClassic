@@ -234,7 +234,7 @@
 		update_icon()
 
 		make_announcement("beeps, \"Unit is re-energized.\"")
-		playsound(src, 'sound/items/defib_ready.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		playsound(src, 'sound/items/surgery/defib_ready.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/item/weapon/twohanded/shockpaddles/update_icon()
 	icon_state = "defibpaddles[wielded]"
@@ -327,22 +327,22 @@
 	if(!do_after(user, 30, H))
 		return
 	user.visible_message("<span class='notice'>\The [user] places [src] on [H]'s chest.</span>", "<span class='warning'>You place [src] on [H]'s chest.</span>")
-	playsound(src, 'sound/items/defib_charge.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	playsound(src, 'sound/items/surgery/defib_charge.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	var/error = can_defib(H)
 	if(error)
 		make_announcement(error)
-		playsound(src, 'sound/items/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
 	if(check_blood_level(H))
 		make_announcement("buzzes, \"Warning - Patient is in hypovolemic shock and require a blood transfusion. Operation aborted.\"") //also includes heart damage
-		playsound(src, 'sound/items/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
 	if(check_brain(H))
 		make_announcement("buzzes, \"Error - Patient's brain is missing or is too damaged to be functional. Operation aborted.\"") //also includes heart damage
-		playsound(src, 'sound/items/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
 	//placed on chest and short delay to shock for dramatic effect, revive time is ~5sec total
@@ -352,7 +352,7 @@
 	//deduct charge here, in case the base unit was EMPed or something during the delay time
 	if(!checked_use(charge_cost))
 		make_announcement("buzzes, \"Insufficient charge.\"")
-		playsound(src, 'sound/items/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
 	user.visible_message("<span class='warning'>[user] shocks [H] with [src].</span>", "<span class='warning'>You shock [H] with [src].</span>", "<span class='warning'>You hear electricity zaps flesh.</span>")
@@ -369,12 +369,12 @@
 	s.set_up(3, 1, H)
 	s.start()
 	playsound(src, pick(SOUNDIN_BODYFALL), VOL_EFFECTS_MASTER)
-	playsound(src, 'sound/items/defib_zap.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/items/surgery/defib_zap.ogg', VOL_EFFECTS_MASTER)
 	set_cooldown(cooldown_time)
 
 	if(H.stat == DEAD && (world.time - H.timeofdeath) >= DEFIB_TIME_LIMIT)
 		make_announcement("buzzes, \"Resuscitation failed - Severe neurological decay makes recovery of patient impossible. Further attempts futile.\"")
-		playsound(src, 'sound/items/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
 	if(H.health <= config.health_threshold_crit || prob(10))
@@ -386,7 +386,7 @@
 
 	if(H.health < config.health_threshold_dead)
 		make_announcement("buzzes, \"Resuscitation failed - Patinent's body is too wounded to sustain life.\"")
-		playsound(src, 'sound/items/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
 	if(H.stat == DEAD)
@@ -404,7 +404,7 @@
 			user.Weaken(6)
 
 	make_announcement("pings, \"Resuscitation successful.\"")
-	playsound(src, 'sound/items/defib_success.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	playsound(src, 'sound/items/surgery/defib_success.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/item/weapon/twohanded/shockpaddles/proc/return_to_body_dialog(mob/living/carbon/human/returnable)
 	if (returnable.key) //in body?
@@ -444,7 +444,7 @@
 		to_chat(user, "<span class='warning'>You can't do that while the safety is enabled.</span>")
 		return
 
-	playsound(src, 'sound/items/defib_charge.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	playsound(src, 'sound/items/surgery/defib_charge.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	audible_message("<span class='warning'>\The [src] lets out a steadily rising hum...</span>")
 
 	if(!do_after(user, charge_time, H))
@@ -453,11 +453,11 @@
 	//deduct charge here, in case the base unit was EMPed or something during the delay time
 	if(!checked_use(charge_cost))
 		make_announcement("buzzes, \"Insufficient charge.\"")
-		playsound(src, 'sound/items/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
 	user.visible_message("<span class='danger'><i>\The [user] shocks [H] with \the [src]!</i></span>", "<span class='warning'>You shock [H] with \the [src]!</span>")
-	playsound(src, 'sound/items/defib_zap.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/items/surgery/defib_zap.ogg', VOL_EFFECTS_MASTER)
 	playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 	set_cooldown(cooldown_time)
 
@@ -505,10 +505,10 @@
 		safety = new_safety
 		if(safety)
 			make_announcement("beeps, \"Safety protocols enabled!\"")
-			playsound(src, 'sound/items/defib_safetyOn.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			playsound(src, 'sound/items/surgery/defib_safetyOn.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else
 			make_announcement("beeps, \"Safety protocols disabled!\"")
-			playsound(src, 'sound/items/defib_safetyOff.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			playsound(src, 'sound/items/surgery/defib_safetyOff.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		update_icon()
 	..()
 
