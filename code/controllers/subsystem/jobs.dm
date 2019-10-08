@@ -350,6 +350,7 @@ var/datum/subsystem/job/SSjob
 			Debug("Alternate return to lobby, Player: [player]")
 			player.ready = 0
 			unassigned -= player
+			ticker.mode.antag_candidates -= player.mind
 	return 1
 
 //Gives the player the stuff he should have with his rank
