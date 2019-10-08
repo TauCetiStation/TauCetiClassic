@@ -1194,11 +1194,6 @@
 			else
 				if((locate(/obj/structure/table) in src.loc))
 					healing -= 0.1
-			for(var/obj/item/bedsheet in range(src.loc))
-				if(bedsheet.loc != src.loc)
-					continue
-				healing -= 0.1
-				break
 			if((locate(/obj/item/weapon/bedsheet) in src.loc))
 				healing -= 0.1
 			throw_alert("asleep")
