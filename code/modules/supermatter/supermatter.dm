@@ -90,7 +90,7 @@
 
 /obj/machinery/power/supermatter/process()
 
-	var/turf/L = loc
+	var/turf/L = get_turf(src)
 
 	if(isnull(L))		// We have a null turf...something is wrong, stop processing this entity.
 		return PROCESS_KILL
@@ -203,7 +203,7 @@
 
 
 /obj/machinery/power/supermatter/bullet_act(obj/item/projectile/Proj)
-	var/turf/L = loc
+	var/turf/L = get_turf(src)
 	if(!istype(L))		// We don't run process() when we are in space
 		return 0	// This stops people from being able to really power up the supermatter
 				// Then bring it inside to explode instantly upon landing on a valid turf.
