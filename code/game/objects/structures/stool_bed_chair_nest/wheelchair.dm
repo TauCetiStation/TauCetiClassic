@@ -17,7 +17,7 @@
 	var/image/O = image(icon = 'icons/obj/objects.dmi', icon_state = "w_overlay", layer = FLY_LAYER, dir = src.dir)
 	overlays += O
 	if(buckled_mob)
-		buckled_mob.dir = dir
+		buckled_mob.set_dir(dir)
 
 /obj/structure/stool/bed/chair/wheelchair/post_buckle_mob(mob/living/M)
 	. = ..()

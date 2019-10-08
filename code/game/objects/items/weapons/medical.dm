@@ -95,3 +95,19 @@
 	new /obj/item/weapon/reagent_containers/pill/dexalin(src)
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
 	new /obj/item/device/healthanalyzer(src)
+
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment
+	name = "Emergency nutriment kit"
+	icon_state = "emergency_nutriment_kit"
+	desc = "A small kit to satisfy hunger."
+	max_w_class = ITEM_SIZE_SMALL
+	w_class = ITEM_SIZE_SMALL
+
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment/atom_init()
+	. = ..()
+
+	if (empty)
+		return
+
+	for (var/i in 1 to 7)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/nutriment(src)
