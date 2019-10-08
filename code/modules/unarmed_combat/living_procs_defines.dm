@@ -196,6 +196,10 @@ var/global/combos_cheat_sheet = ""
 			return helpReaction(attacker)
 
 		if(I_DISARM)
+			if(CHECK_ROBUST_DIR(attacker, src))
+				to_chat(attacker, MSG_DISARM_DIR_FAIL)
+				return
+
 			var/combo_value = 2
 			if(!anchored && !is_bigger_than(attacker) && src != attacker)
 				var/turf/to_move = get_step(src, get_dir(attacker, src))

@@ -124,6 +124,9 @@
 
 	var/list/prevent_survival_kit_items = list()
 
+	var/min_age = 25 // The default, for Humans.
+	var/max_age = 85
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
@@ -223,6 +226,9 @@
 	//If you wanted to add a species-level ability:
 	/*abilities = list(/client/proc/test_ability)*/
 
+	min_age = 25
+	max_age = 85
+
 /datum/species/unathi
 	name = UNATHI
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
@@ -257,6 +263,9 @@
 
 	flesh_color = "#34af10"
 	base_color = "#066000"
+
+	min_age = 25
+	max_age = 85
 
 /datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	..()
@@ -310,6 +319,9 @@
 	flesh_color = "#afa59e"
 	base_color = "#333333"
 
+	min_age = 25
+	max_age = 85
+
 /datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
@@ -350,6 +362,9 @@
 	blood_datum_path = /datum/dirt_cover/purple_blood
 	flesh_color = "#8cd7a3"
 
+	min_age = 25
+	max_age = 150
+
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
 
@@ -388,6 +403,9 @@
 		"feet" = 'icons/mob/species/vox/shoes.dmi',
 		"gloves" = 'icons/mob/species/vox/gloves.dmi'
 		)
+
+	min_age = 12
+	max_age = 20
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
@@ -550,6 +568,9 @@
 
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
 
+	min_age = 1
+	max_age = 1000
+
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
@@ -665,6 +686,9 @@
 
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
 
+	min_age = 1
+	max_age = 125
+
 /datum/species/abductor
 	name = ABDUCTOR
 	darksight = 3
@@ -682,6 +706,9 @@
 	)
 
 	blood_datum_path = /datum/dirt_cover/gray_blood
+
+	min_age = 100
+	max_age = 500
 
 /datum/species/abductor/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -733,6 +760,9 @@
 		 O_BRAIN   = /obj/item/organ/internal/brain
 		,O_EYES    = /obj/item/organ/internal/eyes
 		)
+
+	min_age = 1
+	max_age = 1000
 
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -835,6 +865,8 @@
 
 	has_gendered_icons = FALSE
 
+	min_age = 1
+	max_age = 10000
 
 /datum/species/shadowling/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -881,6 +913,9 @@
 		)
 
 	has_gendered_icons = FALSE
+
+	min_age = 1
+	max_age = 1000
 
 /datum/species/golem/on_gain(mob/living/carbon/human/H)
 	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
@@ -951,6 +986,9 @@
 
 	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
 
+	min_age = 25
+	max_age = 85
+
 /datum/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
 	return ..()
 
@@ -1006,6 +1044,9 @@
 	,HAS_TAIL = TRUE
 	)
 
+	min_age = 25
+	max_age = 85
+
 /datum/species/zombie/skrell
 	name = ZOMBIE_SKRELL
 
@@ -1016,6 +1057,9 @@
 	blood_datum_path = /datum/dirt_cover/purple_blood
 	flesh_color = "#8cd7a3"
 	base_color = "#000000"
+
+	min_age = 25
+	max_age = 150
 
 /datum/species/zombie/unathi
 	name = ZOMBIE_UNATHI
@@ -1042,6 +1086,9 @@
 	,HAS_TAIL = TRUE
 	)
 
+	min_age = 25
+	max_age = 85
+
 /datum/species/slime
 	name = SLIME
 	icobase = 'icons/mob/human_races/r_slime.dmi'
@@ -1065,3 +1112,6 @@
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
 	)
+
+	min_age = 1
+	max_age = 85

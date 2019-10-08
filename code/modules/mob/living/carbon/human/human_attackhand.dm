@@ -1,12 +1,3 @@
-/*
-	We want to ensure that a mob may only apply pressure to one bodypart of one mob at any given time. Currently this is done mostly implicitly through
-	the behaviour of do_after() and the fact that applying pressure to someone else requires a grab:
-
-	If you are applying pressure to yourself and attempt to grab someone else, you'll change what you are holding in your active hand which will stop do_mob()
-	If you are applying pressure to another and attempt to apply pressure to yourself, you'll have to switch to an empty hand which will also stop do_mob()
-	Changing targeted zones should also stop do_mob(), preventing you from applying pressure to more than one body part at once.
-*/
-
 /mob/living/carbon/human/get_unarmed_attack()
 	var/obj/item/organ/external/BPHand = get_bodypart(hand ? BP_L_ARM : BP_R_ARM)
 	var/datum/unarmed_attack/attack = BPHand.species.unarmed
@@ -65,6 +56,14 @@
 		w_uniform.add_fingerprint(attacker)
 	return ..()
 
+/*
+	We want to ensure that a mob may only apply pressure to one bodypart of one mob at any given time. Currently this is done mostly implicitly through
+	the behaviour of do_after() and the fact that applying pressure to someone else requires a grab:
+
+	If you are applying pressure to yourself and attempt to grab someone else, you'll change what you are holding in your active hand which will stop do_mob()
+	If you are applying pressure to another and attempt to apply pressure to yourself, you'll have to switch to an empty hand which will also stop do_mob()
+	Changing targeted zones should also stop do_mob(), preventing you from applying pressure to more than one body part at once.
+*/
 /mob/living/carbon/human/proc/apply_pressure(mob/living/user, target_zone)
 	var/obj/item/organ/external/BP = get_bodypart(target_zone)
 	if(!BP || !(BP.status & ORGAN_BLEEDING) || BP.is_robotic())
