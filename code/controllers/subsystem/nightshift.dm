@@ -53,8 +53,6 @@ var/datum/subsystem/nightshift/SSnightshift
 var/list/lighting_presets = list(
 	"soft" = list("color" = "#ffe4c9", "power" = 0.8, "range" = 8),
 	"hard" = list("color" = "#e8e9ff", "power" = 0.8, "range" = 8),
-	"1000K" = list("color" = "#ff3800", "power" = 0.8, "range" = 8),
-	"2000K" = list("color" = "#ff8a12", "power" = 0.8, "range" = 8),
 	"3000K" = list("color" = "#ffb46b", "power" = 0.8, "range" = 8),
 	"4000K" = list("color" = "#ffd1a3", "power" = 0.8, "range" = 8),
 	"5000K" = list("color" = "#ffe4ce", "power" = 0.8, "range" = 8),

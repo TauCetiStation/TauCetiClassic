@@ -428,7 +428,7 @@
 	else
 		new_character.real_name = "[pick(first_names_female)] [pick(last_names)]"
 	new_character.name = new_character.real_name
-	new_character.age = rand(17,45)
+	new_character.age = rand(new_character.species.min_age, new_character.species.min_age * 1.5)
 
 	new_character.dna.ready_dna(new_character)
 	new_character.key = G_found.key
@@ -448,7 +448,7 @@
 
 	new_syndicate_commando.real_name = "[!syndicate_leader_selected ? syndicate_commando_rank : syndicate_commando_leader_rank] [syndicate_commando_name]"
 	new_syndicate_commando.name = new_syndicate_commando.real_name
-	new_syndicate_commando.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
+	new_syndicate_commando.age = !syndicate_leader_selected ? rand(new_syndicate_commando.species.min_age, new_syndicate_commando.species.min_age * 1.5) : rand(new_syndicate_commando.species.min_age * 1.25, new_syndicate_commando.species.min_age * 1.75)
 
 	new_syndicate_commando.dna.ready_dna(new_syndicate_commando)//Creates DNA.
 
@@ -539,7 +539,7 @@
 
 	new_vox.real_name = capitalize(newname)
 	new_vox.name = new_vox.real_name
-	new_vox.age = rand(12,20)
+	new_vox.age = rand(new_vox.species.min_age, new_vox.species.max_age)
 
 	new_vox.dna.ready_dna(new_vox) // Creates DNA.
 	new_vox.dna.mutantrace = "vox"

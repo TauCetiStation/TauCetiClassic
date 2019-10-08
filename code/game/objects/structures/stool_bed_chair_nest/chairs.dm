@@ -123,7 +123,7 @@
 		layer = OBJ_LAYER
 
 	if(buckled_mob)
-		buckled_mob.dir = dir
+		buckled_mob.set_dir(dir)
 		buckled_mob.update_canmove()
 
 /obj/structure/stool/bed/chair/verb/rotate()
