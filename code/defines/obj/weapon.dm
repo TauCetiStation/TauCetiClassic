@@ -244,7 +244,6 @@
 	origin_tech = "magnets=2;syndicate=3"*/
 
 /obj/item/weapon/shard/shrapnel
-
 	name = "shrapnel"
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "shrapnellarge"
