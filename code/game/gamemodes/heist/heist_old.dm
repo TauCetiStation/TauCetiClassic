@@ -91,10 +91,11 @@ VOX HEIST ROUNDTYPE
 			newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
 
 		var/mob/living/carbon/human/vox = raider.current
+
 		vox.real_name = capitalize(newname)
 		vox.name = vox.real_name
 		raider.name = vox.name
-		vox.age = rand(12,20)
+		vox.age = rand(vox.species.min_age, vox.species.max_age)
 		vox.dna.mutantrace = "vox"
 		vox.set_species(VOX)
 		vox.languages = list() // Removing language from chargen.

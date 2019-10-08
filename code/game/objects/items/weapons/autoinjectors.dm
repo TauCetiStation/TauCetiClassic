@@ -138,3 +138,15 @@
 	. = ..()
 	reagents.clear_reagents()
 	reagents.add_reagent("leporazine", 15)
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/nutriment
+	name = "Nutriment autoinjector"
+	desc = "To satisfy hunger."
+	icon_state = "auto_nutriment"
+	volume = 10
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/nutriment/atom_init()
+	. = ..()
+	reagents.clear_reagents()
+	reagents.add_reagent("nutriment", 10)
+	update_icon()
