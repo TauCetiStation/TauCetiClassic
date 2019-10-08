@@ -1188,10 +1188,24 @@
 			if(halloss > 0)
 				adjustHalLoss(-3)
 		else if(sleeping)
+			var/healing = -0.2
+			if((locate(/obj/structure/stool/bed) in src.loc))
+				healing -= 0.3
+			else
+				if((locate(/obj/structure/table) in src.loc))
+					healing -= 0.1
+			for(var/obj/item/bedsheet in range(src.loc))
+				if(bedsheet.loc != src.loc)
+					continue
+				healing -= 0.1
+				break
 			throw_alert("asleep")
 			speech_problem_flag = 1
 			handle_dreams()
 			adjustHalLoss(-3)
+			adjustToxLoss(healing * 0.5)
+			adjustBruteLoss(healing)
+			adjustFireLoss(healing)
 			if (mind)
 				if((mind.active && client != null) || immune_to_ssd) //This also checks whether a client is connected, if not, sleep is not reduced.
 					sleeping = max(sleeping-1, 0)
