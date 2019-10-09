@@ -468,9 +468,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(H.sleeping)
 				if(istype(H.buckled, /obj/structure/stool/bed))
 					heal_amt += 0.2
-				else
-					if((locate(/obj/structure/table) in H.loc))
-						heal_amt += 0.1
+				else if((locate(/obj/structure/table) in H.loc))
+					heal_amt += 0.1
 				if((locate(/obj/item/weapon/bedsheet) in H.loc))
 					heal_amt += 0.1
 
