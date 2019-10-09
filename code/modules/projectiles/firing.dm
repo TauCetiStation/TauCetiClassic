@@ -1,4 +1,4 @@
-/obj/item/ammo_casing/proc/fire(atom/target, mob/living/user, params, distro, quiet, add_dispersion)
+/obj/item/ammo_casing/proc/fire(atom/target, mob/living/user, params, distro, quiet)
 	var/projectiles_num = max(1, pellets)
 	distro += variance
 
@@ -8,7 +8,7 @@
 		ready_proj(target, user, quiet)
 		if(distro)
 			targloc = spread(targloc, curloc, distro)
-		if(!throw_proj(target, targloc, user, params, add_dispersion, i))
+		if(!throw_proj(target, targloc, user, params, i))
 			return 0
 		if(projectiles_num > 1)
 			newshot()
@@ -27,7 +27,7 @@
 	BB.silenced = quiet
 	return
 
-/obj/item/ammo_casing/proc/throw_proj(atom/target, turf/targloc, mob/living/user, params, add_dispersion, boolet_number)
+/obj/item/ammo_casing/proc/throw_proj(atom/target, turf/targloc, mob/living/user, params, boolet_number)
 	var/turf/curloc = user.loc
 	if (!istype(targloc) || !istype(curloc) || !BB)
 		return 0
@@ -49,9 +49,6 @@
 			BB.p_x = text2num(mouse_control["icon-x"])
 		if(mouse_control["icon-y"])
 			BB.p_y = text2num(mouse_control["icon-y"])
-
-	if(add_dispersion)
-		BB.dispersion += add_dispersion
 
 	//randomize clickpoint a bit based on dispersion
 	if(BB.dispersion)

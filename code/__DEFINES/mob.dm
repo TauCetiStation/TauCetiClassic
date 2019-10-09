@@ -134,6 +134,3 @@
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
-
-#define CHECK_ROBUST_DIR(user, target) ( user != target && get_dist(user, target) > 0 && (get_dir(user, target) in list(turn(user.dir, 180), turn(user.dir, 225), turn(user.dir, -225))) )
-#define MSG_DISARM_DIR_FAIL "<span class='warning'>You can't disarm your target while facing away from it.</span>" // strings.dm?
