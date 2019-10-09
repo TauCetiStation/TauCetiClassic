@@ -32,6 +32,11 @@
 
 	return formatted
 
+/obj/machinery/computer/card/AltClick(mob/user)
+	if(!istype(user) || !CanUseTopic(user))
+		return
+	eject_id()
+
 /obj/machinery/computer/card/verb/eject_id()
 	set category = "Object"
 	set name = "Eject ID Card"
@@ -39,18 +44,18 @@
 
 	if(!usr || usr.stat || usr.lying)	return
 
-	if(scan)
-		to_chat(usr, "You remove \the [scan] from \the [src].")
-		scan.loc = get_turf(src)
-		if(!usr.get_active_hand())
-			usr.put_in_hands(scan)
-		scan = null
-	else if(modify)
+	if(modify)
 		to_chat(usr, "You remove \the [modify] from \the [src].")
 		modify.loc = get_turf(src)
 		if(!usr.get_active_hand())
 			usr.put_in_hands(modify)
 		modify = null
+	else if(scan)
+		to_chat(usr, "You remove \the [scan] from \the [src].")
+		scan.loc = get_turf(src)
+		if(!usr.get_active_hand())
+			usr.put_in_hands(scan)
+		scan = null
 	else
 		to_chat(usr, "There is nothing to remove from the console.")
 	return

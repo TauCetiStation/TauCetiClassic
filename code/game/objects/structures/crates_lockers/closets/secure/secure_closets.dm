@@ -28,6 +28,11 @@
 	else
 		return 0
 
+/obj/structure/closet/secure_closet/AltClick(mob/user)
+	if(!istype(user) || !CanUseTopic(user))
+		return
+	verb_togglelock()
+
 /obj/structure/closet/secure_closet/emp_act(severity)
 	for(var/obj/O in src)
 		O.emp_act(severity)

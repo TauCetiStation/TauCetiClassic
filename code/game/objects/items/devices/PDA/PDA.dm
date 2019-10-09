@@ -75,6 +75,11 @@
 		else
 			to_chat(user, "The time [worldtime2text()] is displayed in the corner of the screen.")
 
+/obj/item/device/pda/AltClick(mob/user)
+	if (can_use(user))
+		if(id)
+			remove_id()
+			update_icon()
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
