@@ -62186,11 +62186,19 @@
 	dir = 8;
 	name = "Weapons locker"
 	},
-/obj/item/weapon/gun/projectile/automatic/l10c{
+/obj/item/weapon/gun/plasma/p104sass{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/projectile/automatic/l10c{
+/obj/item/weapon/gun/plasma/p104sass{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/weapon/gun/plasma{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/weapon/gun/plasma{
 	pixel_x = -3;
 	pixel_y = 3
 	},

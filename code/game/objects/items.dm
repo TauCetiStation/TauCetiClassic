@@ -256,7 +256,7 @@
 	src.loc = T
 
 /obj/item/examine(mob/user)
-	..()
+	. = ..()
 	var/size
 	switch(src.w_class)
 		if(1.0)
