@@ -73,6 +73,7 @@
 		id_card.loc = src
 		modify = id_card
 
+	playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	nanomanager.update_uis(src)
 	attack_hand(user)
 
