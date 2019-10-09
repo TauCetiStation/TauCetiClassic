@@ -1004,9 +1004,13 @@
 	name = "Weapons locker";
 	req_access = list(3)
 	},
-/obj/item/weapon/gun/projectile/wjpp,
-/obj/item/weapon/gun/projectile/wjpp,
-/obj/item/weapon/gun/projectile/wjpp,
+/obj/item/weapon/storage/box/teargas{
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/box/teargas,
+/obj/item/weapon/storage/box/flashbangs{
+	pixel_y = -3
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -2415,13 +2419,6 @@
 /area/security/warden)
 "adZ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/teargas{
-	pixel_y = 3
-	},
-/obj/item/weapon/storage/box/teargas,
-/obj/item/weapon/storage/box/flashbangs{
-	pixel_y = -3
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -22258,7 +22255,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/meter,
 /turf/simulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "warnwhitecorner"
 	},
 /area/rnd/mixing)

@@ -69,6 +69,10 @@ This is what happens, when we attack aliens.
 						O.show_message(text("<span class='warning'><B>[] has attempted to punch []!</B></span>", M, src), 1)
 
 		if ("disarm")
+			if(CHECK_ROBUST_DIR(M, src))
+				to_chat(M, MSG_DISARM_DIR_FAIL)
+				return
+
 			if (!lying)
 				if (prob(5))//Very small chance to push an alien down.
 					Weaken(2)
