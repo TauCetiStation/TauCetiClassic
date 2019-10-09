@@ -667,12 +667,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 // facing verbs
 /mob/proc/canface()
-	return !incapacitated()
-
-/mob/living/canface()
-	if(stat)
-		return FALSE
-	return ..()
+	if(!canmove)						return 0
+	if(client.moving)					return 0
+	if(world.time < client.move_delay)	return 0
+	if(stat==2)							return 0
+	if(anchored)						return 0
+	if(monkeyizing)						return 0
+	if(restrained())					return 0
+	return 1
 
 // Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 // We need speed out of this proc, thats why using incapacitated() helper here is a bad idea.
@@ -729,14 +731,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 
 /mob/proc/facedir(ndir)
-	if(!canface() || moving || (buckled && !buckled.buckle_movable))
-		return FALSE
-	set_dir(ndir)
+	if(!canface())
+		return 0
+	dir = ndir
 	if(buckled && buckled.buckle_movable)
-		buckled.set_dir(ndir)
+		buckled.dir = ndir
 		buckled.handle_rotation()
 	client.move_delay += movement_delay()
-	return TRUE
+	return 1
 
 
 /mob/verb/eastface()
@@ -773,7 +775,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		return
 
 	if(status_flags & CANSTUN || ignore_canstun)
-		facing_dir = null
 		stunned = max(max(stunned, amount), 0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
 		if(updating)
 			update_canmove()
@@ -815,7 +816,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 // ========== WEAKEN ==========
 /mob/proc/Weaken(amount)
 	if(status_flags & CANWEAKEN)
-		facing_dir = null
 		weakened = max(max(weakened, amount), 0)
 		update_canmove() // updates lying, canmove and icons
 	else
@@ -838,7 +838,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 // ========== PARALYSE ==========
 /mob/proc/Paralyse(amount)
 	if(status_flags & CANPARALYSE)
-		facing_dir = null
 		paralysis = max(max(paralysis, amount), 0)
 	else
 		paralysis = 0
@@ -858,7 +857,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 // ========== SLEEPING ==========
 /mob/proc/Sleeping(amount)
 	if(status_flags & CANPARALYSE) // because sleeping and paralysis are very similar statuses and i see no point in separate flags at this time (anyway, golems mostly).
-		facing_dir = null
 		sleeping = max(max(sleeping, amount), 0)
 	else
 		sleeping = 0
@@ -877,7 +875,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 // ========== RESTING ==========
 /mob/proc/Resting(amount)
-	facing_dir = null
 	resting = max(max(resting, amount), 0)
 	return
 
@@ -1077,42 +1074,3 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/get_targetzone()
 	return null
-
-/mob/verb/face_direction()
-	set name = "Face Direction"
-	set category = "IC"
-	set src = usr
-
-	set_face_dir()
-
-	if(!facing_dir)
-		to_chat(usr, "You are now not facing anything.")
-	else
-		to_chat(usr, "You are now facing [dir2text(facing_dir)].")
-
-/mob/proc/set_face_dir(newdir)
-	if(!isnull(facing_dir) && newdir == facing_dir)
-		facing_dir = null
-	else if(newdir)
-		set_dir(newdir)
-		facing_dir = newdir
-	else if(facing_dir)
-		facing_dir = null
-	else
-		set_dir(dir)
-		facing_dir = dir
-
-/mob/set_dir()
-	if(facing_dir)
-		if(!canface() || lying || restrained())
-			facing_dir = null
-		else if(buckled)
-			if(buckled.buckle_movable)
-				buckled.set_dir(facing_dir)
-				return ..(facing_dir)
-			else
-				facing_dir = null
-		else if(dir != facing_dir)
-			return ..(facing_dir)
-	else
-		return ..()

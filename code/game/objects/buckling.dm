@@ -26,7 +26,6 @@
 		for (var/obj/item/weapon/grab/G in M.grabbed_by)
 			qdel(G)
 	M.buckled = src
-	M.facing_dir = null
 	M.set_dir(dir)
 	buckled_mob = M
 	post_buckle_mob(M)

@@ -42,9 +42,6 @@
 
 #define TARGET_ZONE_ALL list(BP_CHEST, BP_GROIN, BP_HEAD, BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG, O_EYES, O_MOUTH)
 
-#define AGE_MIN 25			//youngest a character can be
-#define AGE_MAX 85			//oldest a character can be
-
 #define LEFT  1
 #define RIGHT 2
 
@@ -139,6 +136,3 @@
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
-
-#define CHECK_ROBUST_DIR(user, target) ( user != target && get_dist(user, target) > 0 && (get_dir(user, target) in list(turn(user.dir, 180), turn(user.dir, 225), turn(user.dir, -225))) )
-#define MSG_DISARM_DIR_FAIL "<span class='warning'>You can't disarm your target while facing away from it.</span>" // strings.dm?
