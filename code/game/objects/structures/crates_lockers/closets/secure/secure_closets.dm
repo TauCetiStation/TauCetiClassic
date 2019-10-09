@@ -32,6 +32,7 @@
 	if(!istype(user) || !CanUseTopic(user))
 		return
 	verb_togglelock()
+	..()
 
 /obj/structure/closet/secure_closet/emp_act(severity)
 	for(var/obj/O in src)

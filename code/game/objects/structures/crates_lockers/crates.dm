@@ -151,6 +151,7 @@
 	if(!istype(user) || !CanUseTopic(user))
 		return
 	verb_togglelock()
+	..()
 
 /obj/structure/closet/crate/secure/proc/togglelock(mob/user)
 	if(src.opened)
