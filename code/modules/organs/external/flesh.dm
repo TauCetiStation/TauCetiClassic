@@ -63,6 +63,10 @@
 
 	var/datum/wound/created_wound
 	if(brute)
+		if(BP.owner && ishuman(BP.owner))
+			var/mob/living/carbon/human/HU = BP.owner
+			if(HU.w_uniform && istype(HU.w_uniform, /obj/item/clothing/under/rank/clown))
+				playsound(HU, 'sound/effects/squeak.ogg', VOL_EFFECTS_MISC, vol = 65)
 		if(can_cut)
 			//need to check sharp again here so that blunt damage that was strong enough to break skin doesn't give puncture wounds
 			if(sharp && !edge)
