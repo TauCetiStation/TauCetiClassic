@@ -466,7 +466,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			heal_amt += 0.5
 			var/mob/living/carbon/H = BP.owner
 			if(H.sleeping)
-				if((locate(/obj/structure/stool/bed) in H.loc))
+				if(istype(H.buckled, /obj/structure/stool/bed))
 					heal_amt += 0.2
 				else
 					if((locate(/obj/structure/table) in H.loc))
