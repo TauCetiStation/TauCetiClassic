@@ -22,7 +22,7 @@
 
 	if(ismonkey(C)) //ROFL
 		C.visible_message("<b>[C.name]</b> says, \"<span class ='userdanger'>THIS IS A BAD TARGET! SELF DESTRUCTION ACTIVATED</span>\"")
-		C.visible_message("<b>[C.name]</b> says, \"<span class ='userdanger'>3 SECONDS TO SELF-DESTRUCT</span>\"")
+		C.visible_message("<b>[C.name]</b> says, \"<span class ='userdanger'>3 SECONDS TO SELF-DESTRUCTION</span>\"")
 		C.adjustBrainLoss(100)
 		return
 
@@ -104,7 +104,7 @@
 	fake_attack(implant_target_mob, implant_master_mob) //Hallucination
 
 /obj/item/weapon/implant/syndi_loyalty/islegal()
-	return 0
+	return FALSE
 
 /obj/item/weapon/implant/syndi_loyalty/proc/forget()
 	if(!forgotten)
