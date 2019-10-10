@@ -207,6 +207,6 @@
 			var/mob/living/MM = teleatom
 			to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
 	if(istype(teleatom, /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread))
-		new /mob/living/simple_animal/hostile/bread(get_turf(destination))
+		new /mob/living/simple_animal/hostile/bread(destination.loc)
 		qdel(teleatom)
 	return 1
