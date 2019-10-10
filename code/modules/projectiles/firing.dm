@@ -1,16 +1,17 @@
 /obj/item/ammo_casing/proc/fire(atom/target, mob/living/user, params, distro, quiet)
-	var/projectiles_num = max(1, pellets)
+	var/boolet_number = 0
 	distro += variance
 
-	for (var/i in 1 to projectiles_num)
+	for(var/i = max(1, pellets), i > 0, i--)
+		boolet_number++
 		var/curloc = user.loc
 		var/targloc = get_turf(target)
 		ready_proj(target, user, quiet)
 		if(distro)
 			targloc = spread(targloc, curloc, distro)
-		if(!throw_proj(target, targloc, user, params, i))
+		if(!throw_proj(target, targloc, user, params, boolet_number))
 			return 0
-		if(projectiles_num > 1)
+		if(i > 1)
 			newshot()
 			BB.pixel_x += rand(-8, 8) // so they will look more spreaded and not all in one (good for shotguns).
 			BB.pixel_y += rand(-8, 8)
