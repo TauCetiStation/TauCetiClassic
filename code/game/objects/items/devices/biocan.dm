@@ -105,7 +105,7 @@
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	qdel(src)
 
-/obj/item/device/biocan/Crossed(AM as mob|obj)
+/obj/item/device/biocan/Crossed(AM)
 	if(headobj || brainmob)
 		return
 	if (istype(AM,/mob/living/simple_animal/hostile/bread))
