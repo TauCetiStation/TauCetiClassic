@@ -57,13 +57,13 @@ var/global/list/all_objectives = list()
 
 /datum/objective/implanted/check_completion()
 	if(!target) //If it's a free objective.
-		return 1
+		return TRUE
 	if(target.current)
 		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current))
-			return 0
+			return FALSE
 		if(isloyalsyndi(target.current))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/objective/assassinate/find_target()
 	..()
