@@ -55,8 +55,6 @@
 
 #define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
 
-#define isbread(A) (istype(A,/mob/living/simple_animal/hostile/bread))
-
 #define isclown(A) (istype(A, mob/living/simple_animal/hostile/retaliate/clown))
 
 #define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))

@@ -108,7 +108,7 @@
 /obj/item/device/biocan/Crossed(AM as mob|obj)
 	if(headobj || brainmob)
 		return
-	if (isbread(AM))
+	if (istype(AM,/mob/living/simple_animal/hostile/bread))
 		new /obj/item/device/breadgrenade(get_turf(AM))
 		qdel(AM)
 		qdel(src)
