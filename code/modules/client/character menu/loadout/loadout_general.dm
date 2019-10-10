@@ -1,3 +1,8 @@
+/datum/gear/flashlight
+	display_name = "Falshlight"
+	path = /obj/item/device/flashlight
+	cost = 1
+
 /datum/gear/tabletop
 	display_name = "Tabletop Assistant"
 	path = /obj/item/device/tabletop_assistant
