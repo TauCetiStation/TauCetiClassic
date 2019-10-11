@@ -90,9 +90,6 @@
 	origin_tech = "combat=3"
 	mag_type = /obj/item/ammo_box/magazine/m75
 
-/obj/item/weapon/gun/projectile/automatic/gyropistol/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
-	..()
-
 /obj/item/weapon/gun/projectile/automatic/gyropistol/afterattack(atom/target, mob/living/user, flag)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)

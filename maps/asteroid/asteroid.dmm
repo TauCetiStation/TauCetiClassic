@@ -892,7 +892,7 @@
 	dir = 10
 	},
 /turf/simulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "warnwhitecorner"
 	},
 /area/research_outpost/spectro)
@@ -8064,14 +8064,13 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
 /obj/item/stack/rods,
+/obj/structure/grille{
+	destroyed = 1
+	},
 /turf/simulated/floor/plating,
 /area/mine/abandoned)
 "qU" = (
@@ -8259,12 +8258,11 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/item/stack/rods,
 /obj/item/weapon/shard,
+/obj/structure/grille{
+	destroyed = 1
+	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
@@ -12569,7 +12567,7 @@
 	dir = 5
 	},
 /turf/simulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "warnwhitecorner"
 	},
 /area/mine/living_quarters)

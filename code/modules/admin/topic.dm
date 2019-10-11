@@ -608,6 +608,11 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Internal Affairs Agent;jobban4=\ref[M]'>Internal Affairs Agent</a></td>"
 
+		if(jobban_isbanned(M, ROLE_SURVIVOR))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_SURVIVOR];jobban4=\ref[M]'><font color=red>[ROLE_SURVIVOR]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_SURVIVOR];jobban4=\ref[M]'>[ROLE_SURVIVOR]</a></td>"
+
 		jobs += "</tr></table>"
 
 	//Non-Human (Green)

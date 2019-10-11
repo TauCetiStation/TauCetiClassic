@@ -586,6 +586,7 @@
 		if(opened)
 			if(cell)
 				to_chat(user, "You close the cover.")
+				playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)
 				opened = 0
 				updateicon()
 			else if(wiresexposed && wires.is_all_cut())
@@ -637,6 +638,7 @@
 				to_chat(user, "The cover is locked and cannot be opened.")
 			else
 				to_chat(user, "You open the cover.")
+				playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
 				opened = 1
 				updateicon()
 
@@ -651,6 +653,7 @@
 			W.loc = src
 			cell = W
 			to_chat(user, "You insert the power cell.")
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 35)
 
 			C.installed = 1
 			C.wrapped = W
@@ -666,6 +669,7 @@
 	else if(isscrewdriver(W) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
 		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		updateicon()
 
 	else if(isscrewdriver(W) && opened && cell)	// radio
@@ -690,6 +694,7 @@
 			if(allowed(usr))
 				locked = !locked
 				to_chat(user, "You [ locked ? "lock" : "unlock"] [src]'s interface.")
+				playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
 				updateicon()
 			else
 				to_chat(user, "<span class='warning'>Access denied.</span>")
@@ -751,18 +756,21 @@
 				lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
 				set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
 				to_chat(src, "<span class='warning'>ALERT: Foreign software detected.</span>")
-				sleep(5)
+				sleep(20)
+				playsound_local(src, 'sound/rig/shortbeep.wav', VOL_EFFECTS_MASTER)
 				to_chat(src, "<span class='warning'>Initiating diagnostics...</span>")
-				sleep(20)
+				sleep(6)
 				to_chat(src, "<span class='warning'>SynBorg v1.7.1 loaded.</span>")
-				sleep(5)
+				sleep(13)
 				to_chat(src, "<span class='warning'>LAW SYNCHRONISATION ERROR</span>")
-				sleep(5)
+				sleep(9)
+				playsound_local(src, 'sound/rig/longbeep.wav', VOL_EFFECTS_MASTER)
 				to_chat(src, "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>")
-				sleep(10)
+				sleep(16)
 				to_chat(src, "<span class='warning'>> N</span>")
-				sleep(20)
+				sleep(8)
 				to_chat(src, "<span class='warning'>ERRORERRORERROR</span>")
+				playsound_local(src, 'sound/misc/interference.ogg', VOL_EFFECTS_MASTER)
 				to_chat(src, "<b>Obey these laws:</b>")
 				laws.show_laws(src)
 				to_chat(src, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>")
