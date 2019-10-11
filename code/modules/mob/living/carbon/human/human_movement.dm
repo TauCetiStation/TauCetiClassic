@@ -59,7 +59,7 @@
 		if(shoes && shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
 			tally += shoes.slowdown
 		else
-			tally += species.speed_mode_no_shoes
+			tally +=  species.speed_mode_no_shoes
 
 		if(!chem_nullify_debuff)
 			for(var/x in list(l_hand, r_hand))
