@@ -17,7 +17,6 @@
 /mob/living/carbon/human/emote(act = "", message_type = MESSAGE_VISIBLE, message = "", auto = TRUE)
 	var/cloud_emote = ""
 	var/sound_priority = LOW
-	var/hidden_for_ghosts = auto // hide unimportant messages that can be spammed for ghosts? Default depends on auto but can be changed as needed
 	var/emote_sound
 	var/initial_message = message // useful in voiced emotions
 	var/conditions_for_emote = TRUE // special check in special emotions. For example, does a mob have the feeling of pain to scream from the pain?
@@ -411,12 +410,17 @@
 		for(var/mob/M in message_output_area)
 			M.show_message(output_message, output_message_type, alternative_output_message, alternative_output_message_type)
 
-	if(!hidden_for_ghosts)
-		for(var/mob/M in observer_list)
-			if(!M.client)
-				continue // skip leavers
-			if((M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src, null)))
-				M.show_message(message)
+	for(var/mob/M in observer_list)
+		if(!M.client)
+			continue // skip leavers
+		if(M in viewers(src, null))
+			continue
+		switch(M.client.prefs.chat_ghostsight)
+			if(CHAT_GHOSTSIGHT_ALL)
+				to_chat(M, "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> <B>[src]</B> [message]") // ghosts don't need cheking for deafness, the type of message, etc. So to_chat() is better here
+			if(CHAT_GHOSTSIGHT_ALLMANUAL)
+				if(!auto)
+					to_chat(M, "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> <B>[src]</B> [message]")
 
 	if(cloud_emote)
 		var/image/emote_bubble = image('icons/mob/emote.dmi', src, cloud_emote, MOB_LAYER + 1)
