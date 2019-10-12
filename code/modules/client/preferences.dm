@@ -346,8 +346,9 @@ var/const/MAX_SAVE_SLOTS = 10
 		if(status == "amputated")
 			qdel(BP) // Destroy will handle everything
 		if(status == "cyborg")
+			var/zone = BP.body_zone
 			qdel(BP)
-			switch(BP.body_zone)
+			switch(zone)
 				if(BP_L_ARM)
 					new /obj/item/organ/external/l_arm/robot(null, character)
 				if(BP_R_ARM)
