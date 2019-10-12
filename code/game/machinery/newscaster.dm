@@ -74,8 +74,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		to_chat(usr, "<span class='alert'>There is another newscaster here.</span>")
 		return
 	var/obj/machinery/newscaster/N = new(loc)
-	N.pixel_y -= (loc.y - on_wall.y) * 32
-	N.pixel_x -= (loc.x - on_wall.x) * 32
+	N.pixel_y -= (loc.y - on_wall.y) * WORLD_ICON_SIZE
+	N.pixel_x -= (loc.x - on_wall.x) * WORLD_ICON_SIZE
 	qdel(src)
 
 

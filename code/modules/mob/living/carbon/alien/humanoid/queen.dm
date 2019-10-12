@@ -5,7 +5,7 @@
 	health = 300
 	icon = 'icons/mob/alienqueen.dmi'
 	icon_state = "queen_s"
-	pixel_x = -16
+	pixel_x = -32
 	status_flags = CANPARALYSE
 	heal_rate = 5
 	plasma_rate = 20
@@ -93,7 +93,7 @@
 /mob/living/carbon/alien/humanoid/queen/large
 	icon = 'icons/mob/alienqueen.dmi'
 	icon_state = "queen_s-old"
-	pixel_x = -16
+	pixel_x = -32
 
 /mob/living/carbon/alien/humanoid/queen/large/update_icons()
 	update_hud()		//TODO: remove the need for this to be here

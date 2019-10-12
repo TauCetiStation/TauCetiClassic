@@ -204,8 +204,8 @@
 				icon = 'icons/obj/smooth_structures/alien/weeds2.dmi'
 			if(3)
 				icon = 'icons/obj/smooth_structures/alien/weeds3.dmi'
-	pixel_x = -4
-	pixel_y = -4 //so the sprites line up right in the map editor
+	pixel_x = -8
+	pixel_y = -8 //so the sprites line up right in the map editor
 
 	..()
 

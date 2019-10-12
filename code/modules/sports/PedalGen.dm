@@ -130,16 +130,16 @@
 		switch(dir)
 			if(SOUTH)
 				new_pixel_x = 0
-				new_pixel_y = 7
+				new_pixel_y = 14
 			if(WEST)
-				new_pixel_x = 13
-				new_pixel_y = 7
+				new_pixel_x = 26
+				new_pixel_y = 14
 			if(NORTH)
 				new_pixel_x = 0
-				new_pixel_y = 4
+				new_pixel_y = 8
 			if(EAST)
-				new_pixel_x = -13
-				new_pixel_y = 7
+				new_pixel_x = -26
+				new_pixel_y = 14
 		if(buckling)
 			animate(M, pixel_x = new_pixel_x, pixel_y = new_pixel_y, 2, 1, LINEAR_EASING)
 		else

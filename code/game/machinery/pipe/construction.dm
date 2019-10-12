@@ -150,8 +150,8 @@ Buildable meters
 			connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_SUPPLY|CONNECT_TYPE_SCRUBBER
 
 	update()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 
 //update the name and icon of the pipe item depending on the type
 

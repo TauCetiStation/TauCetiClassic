@@ -85,8 +85,8 @@
 "at" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
-	pixel_x = 3;
-	pixel_y = -7
+	pixel_x = 6;
+	pixel_y = -14
 	},
 /obj/item/stack/cable_coil,
 /obj/item/weapon/airlock_electronics,
@@ -97,8 +97,8 @@
 /obj/structure/table,
 /obj/item/weapon/folder/yellow,
 /obj/item/clothing/ears/earmuffs{
-	pixel_x = -3;
-	pixel_y = -2
+	pixel_x = -6;
+	pixel_y = -4
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
@@ -151,8 +151,8 @@
 /obj/item/weapon/wrench,
 /obj/item/weapon/weldingtool,
 /obj/item/clothing/head/welding{
-	pixel_x = -3;
-	pixel_y = 5
+	pixel_x = -6;
+	pixel_y = 10
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
@@ -183,11 +183,11 @@
 "aJ" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
-	pixel_x = -1;
-	pixel_y = 7
+	pixel_x = -2;
+	pixel_y = 14
 	},
 /obj/item/stack/cable_coil{
-	pixel_y = 3
+	pixel_y = 6
 	},
 /obj/item/stack/cable_coil,
 /turf/simulated/floor/plating,
@@ -345,8 +345,8 @@
 "bk" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
-	pixel_x = -1;
-	pixel_y = 7
+	pixel_x = -2;
+	pixel_y = 14
 	},
 /obj/item/weapon/circuitboard/autolathe,
 /turf/simulated/floor{
@@ -551,7 +551,7 @@
 "bS" = (
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = 11
+	pixel_x = 22
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8
@@ -573,8 +573,8 @@
 /area/awaymission/labs/cave)
 "bV" = (
 /obj/item/weapon/storage/box/lights/mixed{
-	pixel_x = 21;
-	pixel_y = 14
+	pixel_x = 42;
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -636,7 +636,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -736,7 +736,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /turf/simulated/floor/plating{
 	icon_state = "solarpanel";
@@ -1363,12 +1363,12 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1531,7 +1531,7 @@
 /area/awaymission/labs/gateway)
 "eg" = (
 /obj/machinery/camera{
-	pixel_x = 13
+	pixel_x = 26
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
@@ -1546,7 +1546,7 @@
 /area/awaymission/labs/gateway)
 "ej" = (
 /obj/structure/noticeboard{
-	pixel_y = -3
+	pixel_y = -6
 	},
 /turf/simulated/wall/r_wall,
 /area/awaymission/labs/researchdivision)
@@ -1624,7 +1624,7 @@
 "es" = (
 /obj/structure/dispenser/oxygen,
 /obj/machinery/camera{
-	pixel_x = 13
+	pixel_x = 26
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -1725,7 +1725,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -1758,8 +1758,8 @@
 "eH" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/gun/syringe{
-	pixel_x = 1;
-	pixel_y = 4
+	pixel_x = 2;
+	pixel_y = 8
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1790,8 +1790,8 @@
 "eL" = (
 /obj/structure/sink{
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /obj/machinery/light{
 	dir = 1
@@ -1848,7 +1848,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/desert{
@@ -1924,7 +1924,7 @@
 "fb" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger{
-	pixel_y = 2
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -2056,7 +2056,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/closet/crate/secure/weapon,
 /obj/structure/cable{
@@ -2073,7 +2073,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -2178,7 +2178,7 @@
 "fF" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger{
-	pixel_y = 2
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -2189,7 +2189,7 @@
 /obj/machinery/door_control{
 	id = "miningdorm2";
 	name = "Gateway Door Control";
-	pixel_x = 25;
+	pixel_x = 50;
 	req_access = list(0);
 	specialfunctions = 4
 	},
@@ -2296,8 +2296,8 @@
 /obj/structure/table/reinforced,
 /obj/random/science/slimecore,
 /obj/item/weapon/camera_assembly{
-	pixel_x = 2;
-	pixel_y = 8
+	pixel_x = 4;
+	pixel_y = 16
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
@@ -2343,7 +2343,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -2375,15 +2375,15 @@
 "fZ" = (
 /obj/machinery/turretid{
 	name = "Gateway Turret Control";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "ga" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	pixel_x = -2;
-	pixel_y = 7
+	pixel_x = -4;
+	pixel_y = 14
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
@@ -2434,8 +2434,8 @@
 /area/awaymission/labs/militarydivision)
 "gg" = (
 /obj/item/roller{
-	pixel_x = 31;
-	pixel_y = 8
+	pixel_x = 62;
+	pixel_y = 16
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -2450,8 +2450,8 @@
 "gi" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/firstaid/adv{
-	pixel_x = 3;
-	pixel_y = 4
+	pixel_x = 6;
+	pixel_y = 8
 	},
 /obj/item/weapon/storage/firstaid/adv,
 /turf/simulated/floor{
@@ -2466,12 +2466,12 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -2626,7 +2626,7 @@
 /area/awaymission/labs/researchdivision)
 "gC" = (
 /obj/machinery/camera{
-	pixel_x = 23
+	pixel_x = 46
 	},
 /obj/machinery/vending/cola,
 /turf/simulated/floor,
@@ -2649,7 +2649,7 @@
 "gF" = (
 /obj/structure/closet/secure_closet/scientist,
 /obj/machinery/camera{
-	pixel_x = 11
+	pixel_x = 22
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -2723,7 +2723,7 @@
 /area/awaymission/labs/militarydivision)
 "gP" = (
 /obj/machinery/camera{
-	pixel_x = 13
+	pixel_x = 26
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
@@ -2764,8 +2764,8 @@
 "gW" = (
 /obj/structure/sink{
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4
@@ -3046,7 +3046,7 @@
 /area/awaymission/labs/solars)
 "hC" = (
 /obj/structure/noticeboard{
-	pixel_y = -3
+	pixel_y = -6
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3082,8 +3082,8 @@
 "hG" = (
 /obj/structure/sink{
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8
@@ -3139,8 +3139,8 @@
 "hM" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger{
-	pixel_x = -1;
-	pixel_y = 5
+	pixel_x = -2;
+	pixel_y = 10
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -3266,7 +3266,7 @@
 "hZ" = (
 /obj/structure/table/reinforced,
 /obj/item/bluespace_crystal/artificial{
-	pixel_y = 9
+	pixel_y = 18
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -3364,7 +3364,7 @@
 /obj/machinery/power/apc{
 	dir = 0;
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -3398,12 +3398,12 @@
 "ip" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper_bin{
-	pixel_x = -2;
-	pixel_y = 7
+	pixel_x = -4;
+	pixel_y = 14
 	},
 /obj/item/weapon/stamp{
-	pixel_x = 8;
-	pixel_y = -2
+	pixel_x = 16;
+	pixel_y = -4
 	},
 /turf/simulated/floor{
 	icon_state = "wood"
@@ -3442,7 +3442,7 @@
 /area/awaymission/labs/militarydivision)
 "iu" = (
 /obj/item/ammo_casing/c9mm{
-	pixel_x = 25;
+	pixel_x = 50;
 	pixel_y = -60
 	},
 /turf/simulated/floor,
@@ -3611,7 +3611,7 @@
 "iQ" = (
 /obj/structure/table/woodentable,
 /obj/item/ashtray/glass{
-	pixel_y = 2
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	icon_state = "carpet"
@@ -3637,8 +3637,8 @@
 /area/awaymission/labs/militarydivision)
 "iU" = (
 /obj/item/ammo_casing/c9mm{
-	pixel_x = 3;
-	pixel_y = -22
+	pixel_x = 6;
+	pixel_y = -44
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
@@ -3706,8 +3706,8 @@
 "jc" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/book/manual/wiki/research_and_development{
-	pixel_x = -1;
-	pixel_y = 4
+	pixel_x = -2;
+	pixel_y = 8
 	},
 /obj/machinery/light{
 	dir = 8
@@ -3725,13 +3725,13 @@
 "je" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/cable_coil{
-	pixel_y = 3
+	pixel_y = 6
 	},
 /obj/item/stack/cable_coil{
-	pixel_y = 3
+	pixel_y = 6
 	},
 /obj/item/stack/cable_coil{
-	pixel_y = 3
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -3769,7 +3769,7 @@
 /obj/machinery/camera{
 	c_tag = "Fore Port Solar Control Entrance";
 	dir = 1;
-	pixel_x = 10
+	pixel_x = 20
 	},
 /turf/simulated/floor{
 	icon_state = "wood"
@@ -3793,7 +3793,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -3892,14 +3892,14 @@
 /area/awaymission/labs/militarydivision)
 "ju" = (
 /obj/item/ammo_casing/c9mm{
-	pixel_y = -8
+	pixel_y = -16
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
 "jv" = (
 /obj/item/ammo_casing/c9mm{
-	pixel_x = -28;
-	pixel_y = -4
+	pixel_x = -56;
+	pixel_y = -8
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
@@ -3994,12 +3994,12 @@
 "jG" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
-	pixel_x = -2;
-	pixel_y = 7
+	pixel_x = -4;
+	pixel_y = 14
 	},
 /obj/item/weapon/pen{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -4016,7 +4016,7 @@
 "jI" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/backpack/holding{
-	pixel_y = 4
+	pixel_y = 8
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -4053,11 +4053,11 @@
 "jO" = (
 /obj/structure/table,
 /obj/item/weapon/butch{
-	pixel_y = 3
+	pixel_y = 6
 	},
 /obj/item/weapon/kitchenknife{
-	pixel_x = -4;
-	pixel_y = 4
+	pixel_x = -8;
+	pixel_y = 8
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -4108,7 +4108,7 @@
 /area/awaymission/labs/researchdivision)
 "jV" = (
 /obj/structure/sign/warning/securearea{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -4141,8 +4141,8 @@
 "ka" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave{
-	pixel_x = -2;
-	pixel_y = 8
+	pixel_x = -4;
+	pixel_y = 16
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -4285,7 +4285,7 @@
 "kr" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger{
-	pixel_y = 2
+	pixel_y = 4
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -4409,8 +4409,8 @@
 "kC" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
-	pixel_x = -2;
-	pixel_y = 7
+	pixel_x = -4;
+	pixel_y = 14
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -4492,12 +4492,12 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -4778,7 +4778,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/labs/solars)
@@ -5107,7 +5107,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable,
 /obj/machinery/power/terminal{
@@ -5286,10 +5286,10 @@
 "lW" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
-	pixel_y = -3
+	pixel_y = -6
 	},
 /obj/item/stack/cable_coil{
-	pixel_y = 3
+	pixel_y = 6
 	},
 /obj/item/stack/cable_coil,
 /turf/simulated/floor/plating,
@@ -5387,8 +5387,8 @@
 "mo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs/robot/down{
-	pixel_x = -10;
-	pixel_y = 8
+	pixel_x = -20;
+	pixel_y = 16
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
@@ -5527,7 +5527,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Virology APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -5565,8 +5565,8 @@
 "mM" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
@@ -5575,8 +5575,8 @@
 "mN" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /obj/machinery/light{
 	dir = 1
@@ -5614,7 +5614,7 @@
 /area/awaymission/labs/civilian)
 "mR" = (
 /obj/structure/sink/kitchen{
-	pixel_y = 23
+	pixel_y = 46
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -5729,8 +5729,8 @@
 	dir = 8
 	},
 /obj/item/weapon/storage/box/PDAs{
-	pixel_x = 4;
-	pixel_y = 4
+	pixel_x = 8;
+	pixel_y = 8
 	},
 /obj/item/weapon/storage/box/ids,
 /turf/simulated/floor{
@@ -5832,7 +5832,7 @@
 	dir = 8
 	},
 /obj/machinery/recharger{
-	pixel_y = 2
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -6125,7 +6125,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -6151,8 +6151,8 @@
 "of" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
-	pixel_x = -1;
-	pixel_y = 7
+	pixel_x = -2;
+	pixel_y = 14
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -6322,7 +6322,7 @@
 "oB" = (
 /obj/structure/table,
 /obj/item/weapon/butch{
-	pixel_y = 3
+	pixel_y = 6
 	},
 /obj/machinery/light{
 	dir = 4
@@ -6484,7 +6484,7 @@
 /obj/machinery/power/apc{
 	dir = 0;
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -6503,7 +6503,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -6678,7 +6678,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -6733,7 +6733,7 @@
 /area/awaymission/labs/civilian)
 "pv" = (
 /obj/structure/noticeboard{
-	pixel_y = 27
+	pixel_y = 54
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -6812,7 +6812,7 @@
 "pH" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/tray{
-	pixel_y = 6
+	pixel_y = 12
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -6924,8 +6924,8 @@
 "pT" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
+	pixel_x = 2;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/box/matches,
 /turf/simulated/floor{
@@ -7078,7 +7078,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -7097,7 +7097,7 @@
 /area/awaymission/labs/command)
 "qo" = (
 /obj/machinery/light_switch{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -7193,7 +7193,7 @@
 "qA" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/ammo_casing/c9mm{
-	pixel_y = -4
+	pixel_y = -8
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -7265,7 +7265,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -7278,7 +7278,7 @@
 /area/awaymission/labs/command)
 "qK" = (
 /obj/item/ammo_casing/c9mm{
-	pixel_x = 1
+	pixel_x = 2
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -7339,15 +7339,15 @@
 	name = "Gold Crate"
 	},
 /obj/item/stack/sheet/mineral/gold{
-	pixel_x = -1;
-	pixel_y = 5
+	pixel_x = -2;
+	pixel_y = 10
 	},
 /obj/item/stack/sheet/mineral/gold{
-	pixel_y = 2
+	pixel_y = 4
 	},
 /obj/item/stack/sheet/mineral/gold{
-	pixel_x = 1;
-	pixel_y = -2
+	pixel_x = 2;
+	pixel_y = -4
 	},
 /obj/item/weapon/storage/belt/champion,
 /obj/item/weapon/stock_parts/cell/infinite,
@@ -7367,24 +7367,24 @@
 /area/awaymission/labs/command)
 "qU" = (
 /obj/item/weapon/coin/silver{
-	pixel_x = 7;
-	pixel_y = 12
+	pixel_x = 14;
+	pixel_y = 24
 	},
 /obj/item/weapon/coin/silver{
-	pixel_x = 12;
-	pixel_y = 7
+	pixel_x = 24;
+	pixel_y = 14
 	},
 /obj/item/weapon/coin/silver{
-	pixel_x = 4;
-	pixel_y = 8
+	pixel_x = 8;
+	pixel_y = 16
 	},
 /obj/item/weapon/coin/silver{
-	pixel_x = -6;
-	pixel_y = 5
+	pixel_x = -12;
+	pixel_y = 10
 	},
 /obj/item/weapon/coin/silver{
-	pixel_x = 5;
-	pixel_y = -8
+	pixel_x = 10;
+	pixel_y = -16
 	},
 /obj/structure/closet/crate{
 	name = "Silver Crate"
@@ -7429,8 +7429,8 @@
 /area/awaymission/labs/command)
 "qZ" = (
 /obj/item/weapon/coin/silver{
-	pixel_x = 12;
-	pixel_y = 11
+	pixel_x = 24;
+	pixel_y = 22
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -7509,7 +7509,7 @@
 /obj/machinery/power/apc{
 	dir = 0;
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -7634,8 +7634,8 @@
 "rz" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin{
-	pixel_x = -2;
-	pixel_y = 1
+	pixel_x = -4;
+	pixel_y = 2
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -7650,7 +7650,7 @@
 "rA" = (
 /obj/structure/table,
 /obj/item/clothing/suit/storage/labcoat{
-	pixel_y = 3
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -7797,10 +7797,10 @@
 "rV" = (
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = 11
+	pixel_x = 22
 	},
 /obj/structure/mirror{
-	pixel_x = 26
+	pixel_x = 52
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -7940,7 +7940,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -8054,8 +8054,8 @@
 "sG" = (
 /obj/structure/table,
 /obj/machinery/computer/med_data/laptop{
-	pixel_x = 1;
-	pixel_y = 3
+	pixel_x = 2;
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -8336,7 +8336,7 @@
 /area/awaymission/labs/medical)
 "tp" = (
 /obj/machinery/vending/wallmed1{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
@@ -8658,7 +8658,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Virology APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable,
 /turf/simulated/floor{
@@ -8724,7 +8724,7 @@
 /obj/machinery/power/apc{
 	dir = 0;
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable,
 /turf/simulated/floor{
@@ -8842,8 +8842,8 @@
 /obj/structure/table,
 /obj/item/weapon/folder/red,
 /obj/item/weapon/book/manual/wiki/security_space_law{
-	pixel_x = -3;
-	pixel_y = 5
+	pixel_x = -6;
+	pixel_y = 10
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -8874,7 +8874,7 @@
 /obj/structure/table,
 /obj/machinery/recharger,
 /obj/item/weapon/gun/energy/taser/stunrevolver{
-	pixel_y = 6
+	pixel_y = 12
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -8894,7 +8894,7 @@
 "uQ" = (
 /obj/machinery/recharger,
 /obj/structure/reagent_dispensers/peppertank{
-	pixel_y = -30
+	pixel_y = -60
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/light,

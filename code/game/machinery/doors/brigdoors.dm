@@ -43,8 +43,8 @@
 
 /obj/machinery/door_timer/atom_init()
 	..()
-	pixel_x = ((dir & 3)? (0) : (dir == 4 ? 32 : -32))
-	pixel_y = ((dir & 3)? (dir == 1 ? 24 : -32) : (0))
+	pixel_x = ((dir & 3)? (0) : (dir == 4 ? 64 : -64))
+	pixel_y = ((dir & 3)? (dir == 1 ? 24 : -64) : (0))
 	cell_open()
 	radio = new (src)  // for /s announce
 	return INITIALIZE_HINT_LATELOAD
@@ -369,7 +369,7 @@
 		if(char == " ")
 			continue
 		var/image/ID = image('icons/obj/status_display.dmi', icon_state=char)
-		ID.pixel_x = -(d-1)*5 + px
+		ID.pixel_x = -(d-1)*10 + px
 		ID.pixel_y = py
 		I.overlays += ID
 	return I
@@ -378,42 +378,42 @@
 	name = "Cell 1"
 	id = "Cell 1"
 	dir = 2
-	pixel_y = -32
+	pixel_y = -64
 
 
 /obj/machinery/door_timer/cell_2
 	name = "Cell 2"
 	id = "Cell 2"
 	dir = 2
-	pixel_y = -32
+	pixel_y = -64
 
 
 /obj/machinery/door_timer/cell_3
 	name = "Cell 3"
 	id = "Cell 3"
 	dir = 2
-	pixel_y = -32
+	pixel_y = -64
 
 
 /obj/machinery/door_timer/cell_4
 	name = "Cell 4"
 	id = "Cell 4"
 	dir = 2
-	pixel_y = -32
+	pixel_y = -64
 
 
 /obj/machinery/door_timer/cell_5
 	name = "Cell 5"
 	id = "Cell 5"
 	dir = 2
-	pixel_y = -32
+	pixel_y = -64
 
 
 /obj/machinery/door_timer/cell_6
 	name = "Cell 6"
 	id = "Cell 6"
 	dir = 4
-	pixel_x = 32
+	pixel_x = 64
 
 #undef FONT_SIZE
 #undef FONT_COLOR

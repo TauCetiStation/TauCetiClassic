@@ -28,7 +28,7 @@ var/global/list/scrap_base_cache = list()
 	var/parts_icon = 'icons/obj/structures/scrap/trash.dmi'
 	var/base_min = 5	//min and max number of random pieces of base icon
 	var/base_max = 8
-	var/base_spread = 12 //limits on pixel offsets of base pieces
+	var/base_spread = 24 //limits on pixel offsets of base pieces
 	var/big_item_chance = 0
 	var/obj/big_item
 	var/list/ways = list("pokes around", "digs through", "rummages through", "goes through","picks through")

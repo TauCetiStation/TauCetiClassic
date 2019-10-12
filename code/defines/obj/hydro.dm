@@ -1292,8 +1292,8 @@
 
 /obj/item/pestkiller/atom_init()
 	. = ..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 
 /obj/item/pestkiller/carbaryl
 	name = "bottle of carbaryl"
@@ -1418,8 +1418,8 @@
 
 /obj/item/nutrient/atom_init()
 	. = ..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 
 /obj/item/nutrient/ez
 	name = "bottle of E-Z-Nutrient"

@@ -37,7 +37,7 @@
 /obj/machinery/door_control{
 	id = "pizza";
 	name = "Cargo Compartment Control";
-	pixel_x = 25
+	pixel_x = 50
 	},
 /obj/machinery/light/small{
 	dir = 8

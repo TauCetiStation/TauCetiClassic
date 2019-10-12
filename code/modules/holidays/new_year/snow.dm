@@ -51,13 +51,13 @@
 			snow_side.layer = LOW_OBJ_LAYER
 			switch(direction_to_check)
 				if(NORTH)
-					snow_side.pixel_y += 32
+					snow_side.pixel_y += WORLD_ICON_SIZE
 				if(SOUTH)
-					snow_side.pixel_y += -32
+					snow_side.pixel_y += -WORLD_ICON_SIZE
 				if(EAST)
-					snow_side.pixel_x += 32
+					snow_side.pixel_x += WORLD_ICON_SIZE
 				if(WEST)
-					snow_side.pixel_x += -32
+					snow_side.pixel_x += -WORLD_ICON_SIZE
 			overlays += snow_side
 
 /obj/item/snowball

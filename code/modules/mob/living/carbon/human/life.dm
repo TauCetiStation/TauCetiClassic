@@ -188,8 +188,8 @@
 							say(pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS"))
 				var/old_x = pixel_x
 				var/old_y = pixel_y
-				pixel_x += rand(-2,2)
-				pixel_y += rand(-1,1)
+				pixel_x += rand(-4,4)
+				pixel_y += rand(-2,2)
 				sleep(2)
 				pixel_x = old_x
 				pixel_y = old_y

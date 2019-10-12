@@ -184,7 +184,7 @@
 	visible_message("<span class='danger'>You hear a loud squelchy grinding sound.</span>")
 	src.operating = 1
 	update_icon()
-	var/offset = prob(50) ? -2 : 2
+	var/offset = prob(50) ? -4 : 4
 	animate(src, pixel_x = pixel_x + offset, time = gibtime / 100, loop = gibtime) //start shaking
 	playsound(src, 'sound/effects/gibber.ogg', VOL_EFFECTS_MASTER)
 

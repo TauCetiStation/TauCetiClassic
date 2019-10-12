@@ -16,8 +16,8 @@
 
 /obj/item/weapon/a_gift/atom_init()
 	. = ..()
-	pixel_x = rand(-10,10)
-	pixel_y = rand(-10,10)
+	pixel_x = rand(-20,20)
+	pixel_y = rand(-20,20)
 	if(w_class < ITEM_SIZE_LARGE)
 		icon_state = "gift[w_class]"
 	else

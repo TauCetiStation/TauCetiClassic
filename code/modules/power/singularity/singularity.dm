@@ -138,8 +138,8 @@
 			current_size = STAGE_TWO
 			icon = 'icons/effects/96x96.dmi'
 			icon_state = "singularity_s3"
-			pixel_x = -32
-			pixel_y = -32
+			pixel_x = -WORLD_ICON_SIZE
+			pixel_y = -WORLD_ICON_SIZE
 			grav_pull = 6
 			consume_range = 1
 			dissipate_delay = 5
@@ -150,8 +150,8 @@
 				current_size = STAGE_THREE
 				icon = 'icons/effects/160x160.dmi'
 				icon_state = "singularity_s5"
-				pixel_x = -64
-				pixel_y = -64
+				pixel_x = -128
+				pixel_y = -128
 				grav_pull = 8
 				consume_range = 2
 				dissipate_delay = 4
@@ -162,8 +162,8 @@
 				current_size = STAGE_FOUR
 				icon = 'icons/effects/224x224.dmi'
 				icon_state = "singularity_s7"
-				pixel_x = -96
-				pixel_y = -96
+				pixel_x = -192
+				pixel_y = -192
 				grav_pull = 10
 				consume_range = 3
 				dissipate_delay = 10
@@ -173,8 +173,8 @@
 			current_size = STAGE_FIVE
 			icon = 'icons/effects/288x288.dmi'
 			icon_state = "singularity_s9"
-			pixel_x = -128
-			pixel_y = -128
+			pixel_x = -256
+			pixel_y = -256
 			grav_pull = 10
 			consume_range = 4
 			dissipate = 0 //It cant go smaller due to e loss

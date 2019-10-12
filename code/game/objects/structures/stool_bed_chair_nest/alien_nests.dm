@@ -48,7 +48,7 @@
 			"<span class='warning'>[user.name] drenches you in a foul-smelling resin, trapping you in the [src]!</span>",\
 			"<span class='notice'>You hear squelching...</span>")
 		buckle_mob(M)
-		M.pixel_y = 2
+		M.pixel_y = 4
 	return
 
 /obj/structure/stool/bed/nest/attackby(obj/item/weapon/W, mob/user)

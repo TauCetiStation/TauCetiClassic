@@ -9,8 +9,8 @@
 
 /obj/item/ashtray/atom_init()
 	. = ..()
-	pixel_y = rand(-5, 5)
-	pixel_x = rand(-6, 6)
+	pixel_y = rand(-10, 10)
+	pixel_x = rand(-12, 12)
 
 /obj/item/ashtray/attackby(obj/item/weapon/W, mob/user)
 	if (health < 1)

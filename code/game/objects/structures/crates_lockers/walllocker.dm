@@ -37,17 +37,17 @@
 	return
 
 /obj/structure/closet/walllocker/emerglocker/north
-	pixel_y = 32
+	pixel_y = 64
 	dir = SOUTH
 
 /obj/structure/closet/walllocker/emerglocker/south
-	pixel_y = -32
+	pixel_y = -64
 	dir = NORTH
 
 /obj/structure/closet/walllocker/emerglocker/west
-	pixel_x = -32
+	pixel_x = -64
 	dir = WEST
 
 /obj/structure/closet/walllocker/emerglocker/east
-	pixel_x = 32
+	pixel_x = 64
 	dir = EAST

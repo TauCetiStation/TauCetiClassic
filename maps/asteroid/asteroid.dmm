@@ -61,7 +61,7 @@
 "al" = (
 /obj/structure/closet/crate,
 /obj/structure/sign/warning/smoking{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -98,7 +98,7 @@
 /area/research_outpost/hallway)
 "aq" = (
 /obj/machinery/hologram/holopad{
-	pixel_x = -16
+	pixel_x = -32
 	},
 /turf/simulated/floor/wood,
 /turf/simulated/floor{
@@ -163,7 +163,7 @@
 	desc = "A warning sign which reads 'WARNING'.";
 	icon_state = "xenoarch_4";
 	name = "\improper ISOLATION ROOM FOUR";
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/machinery/light{
 	dir = 4
@@ -244,7 +244,7 @@
 /area/research_outpost/maintstore1)
 "aL" = (
 /obj/structure/closet/hydrant{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -259,7 +259,7 @@
 	desc = "A warning sign which reads 'ANOMALOUS MATERIALS'";
 	icon_state = "science1_purple";
 	name = "\improper ANOMALOUS MATERIALS";
-	pixel_x = -32
+	pixel_x = -64
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -285,7 +285,7 @@
 "aP" = (
 /obj/structure/sign/warning/deathsposal{
 	icon_state = "deathsposal_purple";
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/machinery/disposal/deliveryChute{
 	dir = 8;
@@ -339,8 +339,8 @@
 /obj/structure/table,
 /obj/item/weapon/stock_parts/cell,
 /obj/item/stack/sheet/metal{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/stack/sheet/glass,
 /obj/item/stack/cable_coil/random,
@@ -354,8 +354,8 @@
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/belt/utility{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost/maintstore1)
@@ -382,7 +382,7 @@
 /obj/machinery/door_control{
 	id = "rdorm1";
 	name = "Door Bolt Control";
-	pixel_x = 25;
+	pixel_x = 50;
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -423,7 +423,7 @@
 /obj/machinery/door_control{
 	id = "rdorm2";
 	name = "Door Bolt Control";
-	pixel_x = -25;
+	pixel_x = -50;
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -445,11 +445,11 @@
 	},
 /obj/structure/closet/walllocker/emerglocker/north{
 	dir = 1;
-	pixel_y = -32
+	pixel_y = -64
 	},
 /obj/structure/table,
 /obj/machinery/cell_charger{
-	pixel_y = 5
+	pixel_y = 10
 	},
 /obj/item/weapon/stock_parts/cell,
 /turf/simulated/floor/plating,
@@ -477,7 +477,7 @@
 	},
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = 12
+	pixel_x = 24
 	},
 /mob/living/simple_animal/mouse,
 /turf/simulated/floor/plating,
@@ -531,15 +531,15 @@
 /obj/item/weapon/reagent_containers/glass/bucket,
 /obj/item/weapon/minihoe,
 /obj/item/weapon/reagent_containers/spray/plantbgone{
-	pixel_x = 13;
-	pixel_y = 5
+	pixel_x = 26;
+	pixel_y = 10
 	},
 /obj/item/weedkiller/triclopyr,
 /obj/item/nutrient/ez,
 /obj/item/device/plant_analyzer,
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -617,7 +617,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Auxiliary Storage APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -734,7 +734,7 @@
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
 /obj/structure/sign/warning/nosmoking{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -841,15 +841,15 @@
 /area/research_outpost/maintstore1)
 "ca" = (
 /obj/structure/sink{
-	pixel_y = 30
+	pixel_y = 60
 	},
 /obj/structure/mirror{
 	dir = 4;
-	pixel_x = -32
+	pixel_x = -64
 	},
 /obj/structure/dryer{
 	dir = 4;
-	pixel_x = -6
+	pixel_x = -12
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -866,7 +866,7 @@
 "cc" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -899,7 +899,7 @@
 "cf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/light_switch{
-	pixel_x = 22
+	pixel_x = 44
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -943,7 +943,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Mass Spectrometry APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -1009,8 +1009,8 @@
 "cs" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/beakers{
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -1028,7 +1028,7 @@
 "cu" = (
 /obj/structure/table,
 /obj/machinery/bunsen_burner{
-	pixel_y = 2
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1064,7 +1064,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Outpost Atmospherics APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -1106,7 +1106,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 26
+	pixel_x = 52
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -1144,7 +1144,7 @@
 /obj/machinery/door_control{
 	id = "rbath";
 	name = "Door Bolt Control";
-	pixel_y = -25;
+	pixel_y = -50;
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -1258,7 +1258,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Sample Preparation APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -1412,7 +1412,7 @@
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/beaker/large,
 /obj/item/weapon/reagent_containers/dropper{
-	pixel_y = -4
+	pixel_y = -8
 	},
 /obj/machinery/light,
 /turf/simulated/floor{
@@ -1512,7 +1512,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Anomalous Materials APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -1576,7 +1576,7 @@
 "dx" = (
 /obj/machinery/alarm{
 	locked = 0;
-	pixel_y = 25
+	pixel_y = 50
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -1768,8 +1768,8 @@
 "dR" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	pixel_x = -2;
-	pixel_y = 5
+	pixel_x = -4;
+	pixel_y = 10
 	},
 /obj/item/weapon/pen,
 /turf/simulated/floor{
@@ -1778,7 +1778,7 @@
 /area/research_outpost/anomaly)
 "dS" = (
 /obj/machinery/artifact_analyser{
-	pixel_x = 3
+	pixel_x = 6
 	},
 /obj/structure/table,
 /turf/simulated/floor{
@@ -1829,7 +1829,7 @@
 "dX" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -1842,7 +1842,7 @@
 "dY" = (
 /obj/machinery/alarm{
 	dir = 1;
-	pixel_y = -22
+	pixel_y = -44
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -1943,19 +1943,19 @@
 /area/mine/explored)
 "ek" = (
 /obj/machinery/firealarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/machinery/requests_console{
 	department = "Science";
 	departmentType = 2;
 	name = "Science Requests Console";
-	pixel_x = -30
+	pixel_x = -60
 	},
 /turf/simulated/floor,
 /area/research_outpost/hallway)
 "el" = (
 /obj/structure/noticeboard/anomaly{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/simulated/floor,
 /area/research_outpost/hallway)
@@ -1963,7 +1963,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Outpost Lobby APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -2006,8 +2006,8 @@
 "eq" = (
 /obj/structure/table,
 /obj/item/weapon/xenoarch_utilizer{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/xenoarch_utilizer,
 /turf/simulated/floor{
@@ -2017,7 +2017,7 @@
 /area/research_outpost/harvesting)
 "er" = (
 /obj/machinery/firealarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -2025,7 +2025,7 @@
 /area/research_outpost/hallway)
 "es" = (
 /obj/machinery/alarm{
-	pixel_y = 25
+	pixel_y = 50
 	},
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor{
@@ -2534,12 +2534,12 @@
 "fi" = (
 /obj/structure/table,
 /obj/item/weapon/particles_battery{
-	pixel_x = -3;
-	pixel_y = 3
+	pixel_x = -6;
+	pixel_y = 6
 	},
 /obj/item/weapon/particles_battery{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/particles_battery,
 /obj/item/weapon/particles_battery,
@@ -2550,7 +2550,7 @@
 /area/research_outpost/harvesting)
 "fj" = (
 /obj/item/device/radio/intercom{
-	pixel_y = 25
+	pixel_y = 50
 	},
 /obj/machinery/computer/reconstitutor/animal,
 /turf/simulated/floor/engine,
@@ -2579,7 +2579,7 @@
 /obj/machinery/alarm{
 	dir = 1;
 	locked = 0;
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/item/weapon/crowbar/red,
 /obj/item/weapon/wrench,
@@ -2787,7 +2787,7 @@
 "fI" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -2830,7 +2830,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Outpost Power APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -3008,7 +3008,7 @@
 "gf" = (
 /obj/machinery/newscaster{
 	layer = 3.3;
-	pixel_y = -27
+	pixel_y = -54
 	},
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -3057,7 +3057,7 @@
 	},
 /obj/machinery/alarm{
 	dir = 8;
-	pixel_x = 25
+	pixel_x = 50
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -3219,8 +3219,8 @@
 "gK" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	pixel_x = -2;
-	pixel_y = 5
+	pixel_x = -4;
+	pixel_y = 10
 	},
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen,
@@ -3265,7 +3265,7 @@
 /obj/machinery/portable_atmospherics/canister/phoron,
 /obj/machinery/alarm{
 	dir = 4;
-	pixel_x = -23
+	pixel_x = -46
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -3369,13 +3369,13 @@
 "hb" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/o2{
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/weapon/storage/firstaid/fire,
 /obj/machinery/alarm{
 	dir = 8;
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
@@ -3619,7 +3619,7 @@
 "hG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/alarm/isolation{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/stool/bed/chair/metal{
 	dir = 4
@@ -3706,8 +3706,8 @@
 "hM" = (
 /obj/machinery/driver_button{
 	id = "research";
-	pixel_x = 6;
-	pixel_y = -26
+	pixel_x = 12;
+	pixel_y = -52
 	},
 /obj/machinery/conveyor{
 	dir = 4;
@@ -3819,8 +3819,8 @@
 "ib" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/glasses/science{
-	pixel_x = 2;
-	pixel_y = 6
+	pixel_x = 4;
+	pixel_y = 12
 	},
 /obj/item/device/taperecorder,
 /turf/simulated/floor/engine,
@@ -3836,7 +3836,7 @@
 	desc = "A warning sign which reads 'WARNING'.";
 	icon_state = "xenoarch_1";
 	name = "\improper ISOLATION ROOM ONE";
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurple"
@@ -3896,7 +3896,7 @@
 "ih" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -4062,7 +4062,7 @@
 	desc = "A warning sign which reads 'WARNING'.";
 	icon_state = "xenoarch_2";
 	name = "\improper ISOLATION ROOM TWO";
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurple"
@@ -4103,7 +4103,7 @@
 	layer = 4;
 	name = "Isolation Room Telescreen";
 	network = list("Anomaly Isolation");
-	pixel_x = -32
+	pixel_x = -64
 	},
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
@@ -4440,7 +4440,7 @@
 /obj/machinery/camera{
 	c_tag = "Research Outpost Hallway Starboard";
 	network = list("Research","SS13");
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -4476,7 +4476,7 @@
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'MOVING PARTS'.";
 	name = "\improper MOVING PARTS";
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost/maint)
@@ -4500,7 +4500,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Misc Research APC";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -4531,14 +4531,14 @@
 /obj/structure/table/reinforced,
 /obj/machinery/ignition_switch{
 	id = "outpost_misc";
-	pixel_x = -6;
-	pixel_y = 2
+	pixel_x = -12;
+	pixel_y = 4
 	},
 /obj/machinery/door_control{
 	id = "out_misclab";
 	name = "Test Chamber Blast Doors";
-	pixel_x = 6;
-	pixel_y = -4;
+	pixel_x = 12;
+	pixel_y = -8;
 	req_access = list(47)
 	},
 /turf/simulated/floor{
@@ -4845,7 +4845,7 @@
 /area/research_outpost/outpost_misc_lab)
 "jX" = (
 /obj/machinery/hologram/holopad{
-	pixel_y = -16
+	pixel_y = -32
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -4905,7 +4905,7 @@
 	},
 /obj/machinery/alarm{
 	dir = 1;
-	pixel_y = -25
+	pixel_y = -50
 	},
 /turf/simulated/floor{
 	icon_state = "blue"
@@ -4924,7 +4924,7 @@
 /obj/structure/table,
 /obj/machinery/power/apc{
 	name = "Outpost Shuttle Dock APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/item/weapon/newspaper,
 /turf/simulated/floor{
@@ -4936,7 +4936,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Outpost Medbay APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable,
 /turf/simulated/floor{
@@ -4979,7 +4979,7 @@
 /obj/structure/closet/emcloset,
 /obj/machinery/alarm{
 	dir = 1;
-	pixel_y = -25
+	pixel_y = -50
 	},
 /turf/simulated/floor,
 /area/research_outpost/entry)
@@ -5076,7 +5076,7 @@
 "kq" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/stool/bed/chair/metal{
 	dir = 4
@@ -5088,7 +5088,7 @@
 /area/research_outpost/outpost_misc_lab)
 "kr" = (
 /obj/machinery/light_switch{
-	pixel_x = -27
+	pixel_x = -54
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -5134,7 +5134,7 @@
 /obj/machinery/door_control{
 	id = "riso1";
 	name = "Door Bolt Control";
-	pixel_x = -25;
+	pixel_x = -50;
 	specialfunctions = 4
 	},
 /turf/simulated/floor,
@@ -5142,11 +5142,11 @@
 "kw" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/machinery/alarm/isolation{
 	locked = 0;
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -5184,10 +5184,10 @@
 "kz" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/machinery/alarm/isolation{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -5216,7 +5216,7 @@
 	desc = "A warning sign which reads 'WARNING'.";
 	icon_state = "xenoarch_3";
 	name = "\improper ISOLATION ROOM THREE";
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurple"
@@ -5228,11 +5228,11 @@
 	},
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/sign/warning/fire{
-	pixel_x = -32;
-	pixel_y = -32
+	pixel_x = -64;
+	pixel_y = -64
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -5249,7 +5249,7 @@
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'WARNING'.";
 	name = "\improper ARTIFACT STORAGE";
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurplecorner"
@@ -5395,7 +5395,7 @@
 /area/research_outpost/outpost_misc_lab)
 "kX" = (
 /obj/machinery/alarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5453,8 +5453,8 @@
 /area/research_outpost/tempstorage)
 "la" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
+	pixel_x = -10;
+	pixel_y = 60
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5515,7 +5515,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Temporary Storage APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -5566,7 +5566,7 @@
 	layer = 4;
 	name = "Isolation Room Telescreen";
 	network = list("Anomaly Isolation");
-	pixel_x = -32
+	pixel_x = -64
 	},
 /obj/item/weapon/folder/purple,
 /turf/simulated/floor,
@@ -5594,7 +5594,7 @@
 /obj/machinery/door_control{
 	id = "riso3";
 	name = "Door Bolt Control";
-	pixel_x = -25;
+	pixel_x = -50;
 	specialfunctions = 4
 	},
 /obj/item/weapon/folder/purple,
@@ -5649,7 +5649,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Long Term Storage APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -5759,7 +5759,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Expedition Area APC";
-	pixel_x = 26
+	pixel_x = 52
 	},
 /obj/machinery/camera{
 	c_tag = "Research Outpost Expedition Prep";
@@ -5796,7 +5796,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Maintenance APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -5854,7 +5854,7 @@
 	layer = 4;
 	name = "Isolation Room Telescreen";
 	network = list("Anomaly Isolation");
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/simulated/floor,
 /area/research_outpost/iso2)
@@ -5888,11 +5888,11 @@
 "lX" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/machinery/alarm/isolation{
 	locked = 0;
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector,
 /turf/simulated/floor{
@@ -5901,7 +5901,7 @@
 /area/research_outpost/iso2)
 "lY" = (
 /obj/structure/closet/hydrant{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -6117,7 +6117,7 @@
 "mB" = (
 /obj/machinery/sparker{
 	id = "outpost_misc";
-	pixel_y = -28
+	pixel_y = -56
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/outpost_misc_lab)
@@ -6175,7 +6175,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Isolation Room One APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -6202,7 +6202,7 @@
 /obj/machinery/mineral/input,
 /obj/machinery/conveyor_switch/oneway{
 	id = "anominerals";
-	pixel_y = 16
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	icon_state = "loadingarea"
@@ -6212,7 +6212,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Isolation Room Two APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -6221,7 +6221,7 @@
 /obj/machinery/door_control{
 	id = "riso2";
 	name = "Door Bolt Control";
-	pixel_y = -25;
+	pixel_y = -50;
 	specialfunctions = 4
 	},
 /turf/simulated/floor,
@@ -6262,7 +6262,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Isolation Room Three APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -6307,7 +6307,7 @@
 	},
 /obj/machinery/alarm/isolation{
 	locked = 0;
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/machinery/power/grounding_rod,
 /turf/simulated/floor{
@@ -6388,7 +6388,7 @@
 	dir = 4
 	},
 /obj/machinery/light_switch{
-	pixel_x = 22
+	pixel_x = 44
 	},
 /turf/simulated/floor{
 	icon_state = "warning"
@@ -6412,7 +6412,7 @@
 "nk" = (
 /obj/machinery/alarm/isolation{
 	locked = 0;
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
 	dir = 10
@@ -6431,7 +6431,7 @@
 	network = list("Anomaly Isolation")
 	},
 /obj/machinery/light_switch{
-	pixel_x = 22
+	pixel_x = 44
 	},
 /turf/simulated/floor{
 	icon_state = "warning"
@@ -6458,7 +6458,7 @@
 	layer = 4;
 	name = "Isolation Room Telescreen";
 	network = list("Anomaly Isolation");
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8
@@ -6521,8 +6521,8 @@
 	frequency = 1379;
 	master_tag = "research_airlock";
 	name = "interior access button";
-	pixel_x = -25;
-	pixel_y = -25
+	pixel_x = -50;
+	pixel_y = -50
 	},
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
@@ -6560,7 +6560,7 @@
 "nz" = (
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "research_airlock";
-	pixel_x = -25;
+	pixel_x = -50;
 	tag_airpump = "research_pump";
 	tag_chamber_sensor = "research_sensor";
 	tag_exterior_door = "research_outer";
@@ -6639,7 +6639,7 @@
 "nL" = (
 /obj/machinery/airlock_sensor{
 	id_tag = "research_sensor";
-	pixel_x = -25
+	pixel_x = -50
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 4;
@@ -6658,7 +6658,7 @@
 "nN" = (
 /obj/machinery/door_control{
 	id = "dwarf_blast";
-	pixel_y = 20
+	pixel_y = 40
 	},
 /obj/machinery/light_construct/small{
 	dir = 4
@@ -6800,8 +6800,8 @@
 	frequency = 1379;
 	master_tag = "dwarf_airlock";
 	name = "interior access button";
-	pixel_x = -25;
-	pixel_y = -25
+	pixel_x = -50;
+	pixel_y = -50
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
@@ -6834,8 +6834,8 @@
 /obj/machinery/atmospherics/components/binary/pump,
 /obj/machinery/ignition_switch{
 	id = "isolationsparker";
-	pixel_x = 22;
-	pixel_y = 2
+	pixel_x = 44;
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	icon_state = "warning"
@@ -6867,11 +6867,11 @@
 "ol" = (
 /obj/machinery/status_display{
 	layer = 4;
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/item/weapon/pickaxe/drill,
 /obj/item/weapon/gun/energy/kinetic_accelerator{
-	pixel_x = 3
+	pixel_x = 6
 	},
 /obj/machinery/door/window/westleft{
 	name = "Locker room";
@@ -6879,7 +6879,7 @@
 	},
 /obj/structure/rack,
 /obj/item/weapon/wrench{
-	pixel_x = 3
+	pixel_x = 6
 	},
 /turf/simulated/floor,
 /area/research_outpost/gearstore)
@@ -6907,8 +6907,8 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
-	pixel_x = -2;
-	pixel_y = 5
+	pixel_x = -4;
+	pixel_y = 10
 	},
 /obj/item/weapon/pen,
 /obj/item/device/camera,
@@ -7016,7 +7016,7 @@
 /obj/machinery/alarm/isolation{
 	dir = 4;
 	locked = 0;
-	pixel_x = -24
+	pixel_x = -48
 	},
 /turf/simulated/floor{
 	icon_state = "warning"
@@ -7089,7 +7089,7 @@
 "oJ" = (
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "dwarf_airlock";
-	pixel_x = 26;
+	pixel_x = 52;
 	tag_airpump = "dwarf_pump";
 	tag_chamber_sensor = "dwarf_sensor";
 	tag_exterior_door = "dwarf_outer";
@@ -7124,7 +7124,7 @@
 /area/mine/dwarf)
 "oN" = (
 /obj/machinery/alarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
@@ -7133,7 +7133,7 @@
 /area/mine/maintenance)
 "oO" = (
 /obj/machinery/artifact_analyser{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
@@ -7144,7 +7144,7 @@
 	layer = 4;
 	name = "Isolation Room Telescreen";
 	network = list("Anomaly Isolation");
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/simulated/floor{
 	icon_state = "warning"
@@ -7152,7 +7152,7 @@
 /area/research_outpost/iso2)
 "oP" = (
 /obj/machinery/light_switch{
-	pixel_y = -25
+	pixel_y = -50
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -7162,7 +7162,7 @@
 "oQ" = (
 /obj/item/weapon/pickaxe/drill,
 /obj/item/weapon/gun/energy/kinetic_accelerator{
-	pixel_x = 3
+	pixel_x = 6
 	},
 /obj/machinery/door/window/westleft{
 	name = "Locker room";
@@ -7170,7 +7170,7 @@
 	},
 /obj/structure/rack,
 /obj/item/weapon/wrench{
-	pixel_x = 3
+	pixel_x = 6
 	},
 /turf/simulated/floor{
 	icon_state = "warning"
@@ -7195,25 +7195,25 @@
 "oT" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/box/gloves{
-	pixel_x = 4;
-	pixel_y = 5
+	pixel_x = 8;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/box/samplebags{
-	pixel_x = 3;
-	pixel_y = -3
+	pixel_x = 6;
+	pixel_y = -6
 	},
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Maintenance Storage APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/item/weapon/storage/toolbox/emergency{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/floor/plating,
@@ -7298,7 +7298,7 @@
 /obj/machinery/door_control{
 	id = "miningdorm1";
 	name = "Door Bolt Control";
-	pixel_x = 25;
+	pixel_x = 50;
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -7364,7 +7364,7 @@
 /obj/machinery/door_control{
 	id = "miningdorm3";
 	name = "Door Bolt Control";
-	pixel_x = 25;
+	pixel_x = 50;
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -7421,7 +7421,7 @@
 "pq" = (
 /obj/machinery/status_display{
 	layer = 4;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/structure/flora/pottedplant{
 	icon_state = "plant-20"
@@ -7434,7 +7434,7 @@
 /obj/machinery/door_control{
 	id = "miningdorm2";
 	name = "Door Bolt Control";
-	pixel_x = 25;
+	pixel_x = 50;
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -7464,7 +7464,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/alarm{
 	dir = 8;
-	pixel_x = 25
+	pixel_x = 50
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -7474,12 +7474,12 @@
 "pu" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/box/lights/bulbs{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/box/lights/tubes{
-	pixel_x = -5;
-	pixel_y = 5
+	pixel_x = -10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/box/lights/mixed,
 /turf/simulated/floor/plating,
@@ -7487,7 +7487,7 @@
 "pv" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 48
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -7846,7 +7846,7 @@
 /area/mine/explored)
 "qp" = (
 /obj/structure/sign/xeno_warning_mining{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -8076,7 +8076,7 @@
 "qU" = (
 /obj/machinery/alarm{
 	dir = 4;
-	pixel_x = -24
+	pixel_x = -48
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -8113,8 +8113,8 @@
 	frequency = 1379;
 	master_tag = "research_airlock";
 	name = "exterior access button";
-	pixel_x = 25;
-	pixel_y = 25
+	pixel_x = 50;
+	pixel_y = 50
 	},
 /turf/simulated/floor/airless{
 	dir = 5;
@@ -8131,8 +8131,8 @@
 /obj/machinery/door_control{
 	id = "Mecha Shutters";
 	name = "Mecha Shutters Control";
-	pixel_x = 24;
-	pixel_y = -8
+	pixel_x = 48;
+	pixel_y = -16
 	},
 /turf/simulated/floor/airless{
 	dir = 8;
@@ -8276,7 +8276,7 @@
 /area/mine/unexplored)
 "rv" = (
 /obj/item/weapon/reagent_containers/dropper{
-	pixel_y = -4
+	pixel_y = -8
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mine/abandoned)
@@ -8325,7 +8325,7 @@
 "rC" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/dropper{
-	pixel_y = -4
+	pixel_y = -8
 	},
 /turf/simulated/floor/airless{
 	dir = 5;
@@ -8707,7 +8707,7 @@
 "sN" = (
 /obj/machinery/status_display{
 	layer = 4;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	frequency = 1379;
@@ -8732,7 +8732,7 @@
 /area/mine/dwarf)
 "sQ" = (
 /obj/structure/sign/xeno_warning_mining{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -8812,7 +8812,7 @@
 "ta" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -8978,7 +8978,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/recharger/wallcharger{
-	pixel_x = -24
+	pixel_x = -48
 	},
 /turf/simulated/floor/plating,
 /area/mine/dwarf)
@@ -9070,8 +9070,8 @@
 "tF" = (
 /obj/machinery/airlock_sensor{
 	id_tag = "dwarf_sensor";
-	pixel_x = 25;
-	pixel_y = -5
+	pixel_x = 50;
+	pixel_y = -10
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -9118,8 +9118,8 @@
 	frequency = 1379;
 	master_tag = "dwarf_airlock";
 	name = "exterior access button";
-	pixel_x = 25;
-	pixel_y = 25
+	pixel_x = 50;
+	pixel_y = 50
 	},
 /turf/simulated/floor/airless{
 	icon_state = "asteroidwarning"
@@ -9237,13 +9237,13 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Mining Communications APC";
-	pixel_x = 1;
-	pixel_y = 25
+	pixel_x = 2;
+	pixel_y = 50
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -9260,8 +9260,8 @@
 /area/mine/explored)
 "ue" = (
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = -1
+	pixel_x = -4;
+	pixel_y = -2
 	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
@@ -9410,10 +9410,10 @@
 /area/mine/living_quarters)
 "uv" = (
 /obj/structure/sink{
-	pixel_y = 30
+	pixel_y = 60
 	},
 /obj/structure/mirror{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor{
@@ -9431,7 +9431,7 @@
 /area/mine/explored)
 "ux" = (
 /obj/structure/sign/warning/smoking{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -9514,7 +9514,7 @@
 /area/mine/living_quarters)
 "uI" = (
 /obj/structure/sign/warning/vacuum{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -9720,8 +9720,8 @@
 "vk" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -9745,7 +9745,7 @@
 /obj/machinery/recharge_station,
 /obj/machinery/status_display{
 	layer = 4;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -9771,8 +9771,8 @@
 	frequency = 1379;
 	master_tag = "mining_east_airlock";
 	name = "interior access button";
-	pixel_x = 25;
-	pixel_y = 25
+	pixel_x = 50;
+	pixel_y = 50
 	},
 /obj/machinery/atmospherics/components/binary/valve/open{
 	dir = 4
@@ -9824,8 +9824,8 @@
 "vu" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -9850,8 +9850,8 @@
 /obj/machinery/door_control{
 	id = "Mecha Shutters";
 	name = "Mecha Shutters Control";
-	pixel_x = -24;
-	pixel_y = 8
+	pixel_x = -48;
+	pixel_y = 16
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -9934,8 +9934,8 @@
 	frequency = 1379;
 	master_tag = "mining_west_outpost_airlock";
 	name = "interior access button";
-	pixel_x = 25;
-	pixel_y = 25
+	pixel_x = 50;
+	pixel_y = 50
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -9964,7 +9964,7 @@
 /obj/item/weapon/shovel,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -48
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -10041,8 +10041,8 @@
 	frequency = 1379;
 	master_tag = "mining_west_outpost_airlock";
 	name = "exterior access button";
-	pixel_x = -25;
-	pixel_y = -25
+	pixel_x = -50;
+	pixel_y = -50
 	},
 /turf/simulated/floor/airless{
 	dir = 4;
@@ -10118,7 +10118,7 @@
 "wa" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 48
 	},
 /turf/simulated/floor/mech_bay_recharge_floor,
 /area/mine/eva)
@@ -10164,8 +10164,8 @@
 "wf" = (
 /obj/machinery/power/apc{
 	name = "Mining West Outpost APC";
-	pixel_x = 1;
-	pixel_y = -23
+	pixel_x = 2;
+	pixel_y = -46
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -10191,7 +10191,7 @@
 /obj/structure/ore_box,
 /obj/machinery/airlock_sensor{
 	id_tag = "mining_west_outpost_sensor";
-	pixel_y = -25
+	pixel_y = -50
 	},
 /turf/simulated/floor/plating{
 	dir = 4;
@@ -10309,8 +10309,8 @@
 /area/mine/living_quarters)
 "wx" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
+	pixel_x = -10;
+	pixel_y = 60
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -10430,7 +10430,7 @@
 "wL" = (
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "mining_west_outpost_airlock";
-	pixel_y = -25;
+	pixel_y = -50;
 	tag_airpump = "mining_west_outpost_pump";
 	tag_chamber_sensor = "mining_west_outpost_sensor";
 	tag_exterior_door = "mining_west_outpost_outer";
@@ -10474,7 +10474,7 @@
 	},
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 48
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -10538,7 +10538,7 @@
 /area/mine/living_quarters)
 "wW" = (
 /obj/machinery/light_switch{
-	pixel_x = 27
+	pixel_x = 54
 	},
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 8
@@ -10566,7 +10566,7 @@
 /area/mine/living_quarters)
 "wZ" = (
 /obj/machinery/alarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/closet/emcloset,
@@ -10611,7 +10611,7 @@
 "xd" = (
 /obj/machinery/alarm{
 	dir = 1;
-	pixel_y = -22
+	pixel_y = -44
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -10663,7 +10663,7 @@
 	dir = 4
 	},
 /obj/structure/dryer{
-	pixel_y = 20
+	pixel_y = 40
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -10702,8 +10702,8 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Mining Station Port Wing APC";
-	pixel_x = 1;
-	pixel_y = 25
+	pixel_x = 2;
+	pixel_y = 50
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -10723,7 +10723,7 @@
 "xq" = (
 /obj/machinery/status_display{
 	layer = 4;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -10814,7 +10814,7 @@
 "xD" = (
 /obj/machinery/status_display{
 	layer = 4;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -10844,8 +10844,8 @@
 	frequency = 1379;
 	master_tag = "mining_east_airlock";
 	name = "exterior access button";
-	pixel_x = -25;
-	pixel_y = -25
+	pixel_x = -50;
+	pixel_y = -50
 	},
 /turf/simulated/floor/airless{
 	dir = 4;
@@ -10863,7 +10863,7 @@
 /area/mine/west_outpost)
 "xZ" = (
 /obj/structure/sign/xeno_warning_mining{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -10876,7 +10876,7 @@
 	},
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -10884,7 +10884,7 @@
 /area/research_outpost/anomaly)
 "yc" = (
 /obj/structure/sign/warning/nosmoking{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -10971,8 +10971,8 @@
 	icon_state = "2-8"
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
+	pixel_x = -10;
+	pixel_y = 60
 	},
 /obj/item/weapon/storage/box/lights/bulbs,
 /turf/simulated/floor/plating,
@@ -10992,7 +10992,7 @@
 /area/mine/explored)
 "ys" = (
 /obj/structure/sign/xeno_warning_mining{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mine/explored)
@@ -11102,7 +11102,7 @@
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'MOVING PARTS'.";
 	name = "\improper MOVING PARTS";
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/simulated/floor/plating{
 	dir = 4;
@@ -11249,8 +11249,8 @@
 "zo" = (
 /obj/machinery/power/apc{
 	name = "Mining EVA APC";
-	pixel_x = 1;
-	pixel_y = -23
+	pixel_x = 2;
+	pixel_y = -46
 	},
 /obj/structure/cable,
 /obj/machinery/recharge_station,
@@ -11276,7 +11276,7 @@
 /obj/machinery/alarm{
 	dir = 1;
 	locked = 0;
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -11295,7 +11295,7 @@
 "zt" = (
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "mining_east_airlock";
-	pixel_y = -25;
+	pixel_y = -50;
 	tag_airpump = "mining_east_pump";
 	tag_chamber_sensor = "mining_east_sensor";
 	tag_exterior_door = "mining_east_outer";
@@ -11323,7 +11323,7 @@
 /obj/structure/ore_box,
 /obj/machinery/airlock_sensor{
 	id_tag = "mining_east_sensor";
-	pixel_y = -25
+	pixel_y = -50
 	},
 /turf/simulated/floor/plating{
 	dir = 4;
@@ -11523,7 +11523,7 @@
 	},
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurple"
@@ -11592,8 +11592,8 @@
 	frequency = 1379;
 	master_tag = "mining_west_airlock";
 	name = "exterior access button";
-	pixel_x = 25;
-	pixel_y = 25
+	pixel_x = 50;
+	pixel_y = 50
 	},
 /turf/simulated/floor/airless{
 	dir = 5;
@@ -11693,8 +11693,8 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Mining Station External APC";
-	pixel_x = 1;
-	pixel_y = 25
+	pixel_x = 2;
+	pixel_y = 50
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -11721,7 +11721,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/sign/xeno_warning_mining{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/simulated/floor/airless{
 	icon_state = "asteroidwarning"
@@ -11862,7 +11862,7 @@
 /area/research_outpost/entry)
 "Bc" = (
 /obj/machinery/hologram/holopad{
-	pixel_y = -16
+	pixel_y = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -12013,7 +12013,7 @@
 "BB" = (
 /obj/machinery/alarm{
 	dir = 4;
-	pixel_x = -25
+	pixel_x = -50
 	},
 /mob/living/carbon/monkey,
 /turf/simulated/floor{
@@ -12034,7 +12034,7 @@
 	icon_state = "space";
 	layer = 4;
 	name = "VACUUM";
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -12060,7 +12060,7 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 8;
@@ -12119,7 +12119,7 @@
 	icon_state = "space";
 	layer = 4;
 	name = "VACUUM";
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -12142,8 +12142,8 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Mining Station Starboard Wing APC";
-	pixel_x = -27;
-	pixel_y = 2
+	pixel_x = -54;
+	pixel_y = 4
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -12184,7 +12184,7 @@
 	icon_state = "space";
 	layer = 4;
 	name = "VACUUM";
-	pixel_y = -32
+	pixel_y = -64
 	},
 /obj/machinery/door/window/westleft,
 /turf/simulated/floor/plating/airless{
@@ -12244,8 +12244,8 @@
 	icon_state = "space";
 	layer = 4;
 	name = "VACUUM";
-	pixel_x = -32;
-	pixel_y = -32
+	pixel_x = -64;
+	pixel_y = -64
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mine/unexplored)
@@ -12382,7 +12382,7 @@
 /area/research_outpost/iso2)
 "Ib" = (
 /obj/structure/sign/warning/nosmoking/circle{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 4
@@ -12440,7 +12440,7 @@
 /area/research_outpost/iso2)
 "Jb" = (
 /obj/structure/sign/warning/nosmoking{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/machinery/light{
 	dir = 1
@@ -12494,7 +12494,7 @@
 /area/research_outpost/iso2)
 "Kb" = (
 /obj/structure/sign/warning/fire{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 8
@@ -12538,7 +12538,7 @@
 /area/research_outpost/longtermstorage)
 "Lb" = (
 /obj/structure/sign/departments/botany{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -12573,7 +12573,7 @@
 /area/mine/living_quarters)
 "Le" = (
 /obj/structure/noticeboard{
-	pixel_y = 27
+	pixel_y = 54
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -12594,7 +12594,7 @@
 /obj/structure/sign/departments/chemistry{
 	desc = "A warning sign which reads 'SAMPLE PREPARATION'";
 	name = "\improper SAMPLE PREPARATION";
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -12626,13 +12626,13 @@
 "Md" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/o2{
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/weapon/storage/firstaid/fire,
 /obj/machinery/alarm{
 	dir = 8;
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -12644,8 +12644,8 @@
 /area/mine/living_quarters)
 "Me" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
+	pixel_x = -10;
+	pixel_y = 60
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -12665,7 +12665,7 @@
 "Mg" = (
 /obj/machinery/sparker{
 	id = "isolationsparker";
-	pixel_x = -23
+	pixel_x = -46
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/iso2)
@@ -12682,7 +12682,7 @@
 	icon_state = "0-4"
 	},
 /obj/structure/sign/warning/nosmoking/circle{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost/power)
@@ -12704,7 +12704,7 @@
 	dir = 8
 	},
 /obj/machinery/alarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/closet/crate,
 /turf/simulated/floor{
@@ -12731,7 +12731,7 @@
 	icon_state = "0-2"
 	},
 /obj/structure/sign/warning/electricshock{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -12742,7 +12742,7 @@
 "Oc" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -12794,13 +12794,13 @@
 "Pd" = (
 /obj/machinery/airlock_sensor{
 	id_tag = "mining_west_sensor";
-	pixel_x = 25;
-	pixel_y = -5
+	pixel_x = 50;
+	pixel_y = -10
 	},
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "mining_west_airlock";
-	pixel_x = 25;
-	pixel_y = 5;
+	pixel_x = 50;
+	pixel_y = 10;
 	tag_airpump = "mining_west_pump";
 	tag_chamber_sensor = "mining_west_sensor";
 	tag_exterior_door = "mining_west_outer";
@@ -12817,7 +12817,7 @@
 "Pe" = (
 /obj/machinery/status_display{
 	layer = 4;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -12847,7 +12847,7 @@
 "Qd" = (
 /obj/machinery/status_display{
 	layer = 4;
-	pixel_x = -32
+	pixel_x = -64
 	},
 /obj/machinery/light{
 	dir = 8
@@ -12891,7 +12891,7 @@
 "Rd" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 48
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -12929,7 +12929,7 @@
 /obj/machinery/alarm{
 	dir = 1;
 	locked = 0;
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -12969,8 +12969,8 @@
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'INTERNALS REQUIRED'.";
 	name = "INTERNALS REQUIRED";
-	pixel_x = 32;
-	pixel_y = 32
+	pixel_x = 64;
+	pixel_y = 64
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -13030,8 +13030,8 @@
 	frequency = 1379;
 	master_tag = "mining_west_airlock";
 	name = "interior access button";
-	pixel_x = -25;
-	pixel_y = -25
+	pixel_x = -50;
+	pixel_y = -50
 	},
 /obj/machinery/atmospherics/components/binary/valve/open,
 /turf/simulated/floor{
@@ -13107,7 +13107,7 @@
 /area/mine/production)
 "Wb" = (
 /obj/structure/sign/warning/nosmoking{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/machinery/camera{
 	c_tag = "Research Outpost Mass Spectrometry";
@@ -13138,7 +13138,7 @@
 /obj/structure/stool/bed/roller,
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -13162,7 +13162,7 @@
 "Xb" = (
 /obj/structure/sign/departments/science{
 	icon_state = "science2";
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -13216,7 +13216,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/light_switch{
-	pixel_x = -22
+	pixel_x = -44
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -13260,7 +13260,7 @@
 	desc = "A warning sign which reads 'ANOMALOUS MATERIALS'";
 	icon_state = "science1_purple";
 	name = "\improper ANOMALOUS MATERIALS";
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -13284,7 +13284,7 @@
 "Zd" = (
 /obj/structure/ore_box,
 /obj/structure/sign/xeno_warning_mining{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"

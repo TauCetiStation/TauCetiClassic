@@ -97,8 +97,8 @@
 
 /obj/item/weapon/ore/atom_init()
 	. = ..()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	pixel_x = rand(0,32)-16
+	pixel_y = rand(0,16)-16
 	if(is_mining_level(z))
 		score["oremined"]++ //When ore spawns, increment score.  Only include ore spawned on mining asteroid.
 

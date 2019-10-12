@@ -712,8 +712,8 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /obj/effect/bgstar/New()
 	..()
-	pixel_x += rand(-2,30)
-	pixel_y += rand(-2,30)
+	pixel_x += rand(-4,60)
+	pixel_y += rand(-4,60)
 	var/starnum = pick("1", "1", "1", "2", "3", "4")
 
 	icon_state = "star"+starnum

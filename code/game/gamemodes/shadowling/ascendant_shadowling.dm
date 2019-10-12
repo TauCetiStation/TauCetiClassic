@@ -49,7 +49,7 @@
 	if(pixel_y)
 		pixel_y = 0
 	else
-		pixel_y = 1
+		pixel_y = 2
 
 //mob/living/simple_animal/ascendant_shadowling/Process_Spacemove(movement_dir = 0)//TG
 /mob/living/simple_animal/ascendant_shadowling/Process_Spacemove(movement_dir = 0)

@@ -660,13 +660,13 @@
 /mob/living/carbon/get_standard_pixel_y_offset(lying_current = 0)
 	if(lying)
 		if(buckled && istype(buckled, /obj/structure/stool/bed/roller))
-			return 1
+			return 2
 		else if(locate(/obj/structure/stool/bed/roller, src.loc))
-			return -5
+			return -10
 		else if(locate(/obj/machinery/optable, src.loc)||locate(/obj/structure/stool/bed, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
-			return -4
+			return -8
 		else
-			return -6
+			return -12
 	else
 		return initial(pixel_y)
 
@@ -674,8 +674,8 @@
 	if(lying)
 		if(locate(/obj/machinery/optable, src.loc)||locate(/obj/structure/stool/bed, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
 			switch(src.lying_current)
-				if(90)	return 2
-				if(270)	return -2
+				if(90)	return 4
+				if(270)	return -4
 	else
 		return initial(pixel_x)
 

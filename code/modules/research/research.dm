@@ -217,8 +217,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 /obj/item/weapon/disk/tech_disk/atom_init()
 	. = ..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 
 /datum/tech	//Datum of individual technologies.
 	var/name = "name"          //Name of the technology.

@@ -11,8 +11,8 @@
 
 /obj/item/bluespace_crystal/atom_init()
 	. = ..()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 
 /obj/item/bluespace_crystal/attack_self(mob/user)
 	if(blink_mob(user))

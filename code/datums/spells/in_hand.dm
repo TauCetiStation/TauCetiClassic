@@ -256,7 +256,7 @@
 	var/atom/movable/overlay/animation = new( L.loc )
 	animation.icon = icon
 	animation.icon_state = icon_state
-	animation.pixel_y = 32
+	animation.pixel_y = WORLD_ICON_SIZE
 	animation.alpha = 0
 	animation.layer = LIGHTING_LAYER + 1
 	animation.plane = LIGHTING_PLANE + 1
@@ -265,7 +265,7 @@
 	sleep(10)
 
 	playsound(animation, 'sound/magic/resurrection_cast.ogg', VOL_EFFECTS_MASTER)
-	animate(animation, pixel_y = -5, time = 25, easing = SINE_EASING)
+	animate(animation, pixel_y = -10, time = 25, easing = SINE_EASING)
 	sleep(25)
 
 	playsound(animation, 'sound/magic/resurrection_end.ogg', VOL_EFFECTS_MASTER)

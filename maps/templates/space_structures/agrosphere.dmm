@@ -19,19 +19,19 @@
 "ae" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/pill_bottle/zoom{
-	pixel_x = -4
+	pixel_x = -8
 	},
 /obj/item/weapon/storage/pill_bottle/paroxetine{
-	pixel_x = 3;
-	pixel_y = 8
+	pixel_x = 6;
+	pixel_y = 16
 	},
 /obj/item/weapon/storage/pill_bottle/citalopram{
-	pixel_x = 8;
-	pixel_y = -3
+	pixel_x = 16;
+	pixel_y = -6
 	},
 /obj/item/weapon/reagent_containers/pill/LSD{
-	pixel_x = -7;
-	pixel_y = 10
+	pixel_x = -14;
+	pixel_y = 20
 	},
 /obj/item/weapon/reagent_containers/pill/methylphenidate,
 /turf/simulated/floor{
@@ -52,24 +52,24 @@
 /area/agrospheregarden)
 "ah" = (
 /obj/item/weapon/reagent_containers/pill/paracetamol{
-	pixel_x = 12;
-	pixel_y = 6
+	pixel_x = 24;
+	pixel_y = 12
 	},
 /obj/item/weapon/spacecash/c500{
-	pixel_x = -2;
-	pixel_y = -7
+	pixel_x = -4;
+	pixel_y = -14
 	},
 /obj/item/weapon/spacecash/c1000{
-	pixel_x = 11;
-	pixel_y = 5
+	pixel_x = 22;
+	pixel_y = 10
 	},
 /obj/item/weapon/spacecash/c1000,
 /obj/item/weapon/spacecash/c200{
-	pixel_y = 9
+	pixel_y = 18
 	},
 /obj/item/weapon/spacecash/c500{
-	pixel_x = -12;
-	pixel_y = 6
+	pixel_x = -24;
+	pixel_y = 12
 	},
 /obj/effect/decal/cleanable/vomit{
 	icon_state = "vomittox_2"
@@ -83,15 +83,15 @@
 /area/agrospheregarden)
 "ai" = (
 /obj/item/weapon/reagent_containers/pill/LSD{
-	pixel_x = 7;
-	pixel_y = 9
+	pixel_x = 14;
+	pixel_y = 18
 	},
 /obj/item/weapon/reagent_containers/pill/LSD{
-	pixel_y = 5
+	pixel_y = 10
 	},
 /obj/item/weapon/reagent_containers/pill/LSD{
-	pixel_x = 4;
-	pixel_y = -3
+	pixel_x = 8;
+	pixel_y = -6
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -183,13 +183,13 @@
 "at" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/pill/happy{
-	pixel_x = 7;
-	pixel_y = 5
+	pixel_x = 14;
+	pixel_y = 10
 	},
 /obj/item/weapon/reagent_containers/pill/happy,
 /obj/item/weapon/storage/pill_bottle/happy{
-	pixel_x = -6;
-	pixel_y = 8
+	pixel_x = -12;
+	pixel_y = 16
 	},
 /obj/item/weapon/storage/pill_bottle/citalopram,
 /obj/item/weapon/reagent_containers/syringe/antitoxin,
@@ -267,8 +267,8 @@
 /area/agrospheregarden)
 "aF" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom{
-	pixel_x = 6;
-	pixel_y = -5
+	pixel_x = 12;
+	pixel_y = -10
 	},
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
@@ -367,8 +367,8 @@
 /area/agrospheregarden)
 "aW" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle{
-	pixel_x = -15;
-	pixel_y = 15
+	pixel_x = -30;
+	pixel_y = 30
 	},
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
@@ -401,8 +401,8 @@
 /area/agrospheregarden)
 "bc" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap{
-	pixel_x = -20;
-	pixel_y = 10
+	pixel_x = -40;
+	pixel_y = 20
 	},
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
@@ -413,8 +413,8 @@
 /area/agrospheregarden)
 "fK" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell{
-	pixel_x = 6;
-	pixel_y = 7
+	pixel_x = 12;
+	pixel_y = 14
 	},
 /turf/simulated/floor/grass,
 /area/agrospheregarden)

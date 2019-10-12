@@ -18,8 +18,8 @@
 	var/initial_x = dropped.pixel_x
 	var/initial_y = dropped.pixel_y
 	dropped.plane = 1
-	dropped.pixel_x = rand(-150, 150)
-	dropped.pixel_y = 500 //when you think that pixel_z is height but you are wrong
+	dropped.pixel_x = rand(-300, 300)
+	dropped.pixel_y = 1000 //when you think that pixel_z is height but you are wrong
 	dropped.density = 0
 	dropped.opacity = 0
 	animate(dropped, pixel_y = initial_y, pixel_x = initial_x , time = 7)

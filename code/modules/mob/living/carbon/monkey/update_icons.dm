@@ -41,7 +41,7 @@
 /mob/living/carbon/monkey/update_inv_head(update_icons=TRUE)
 	if(head)
 		overlays_standing[M_HEAD_LAYER] = image("icon"= 'icons/mob/head.dmi', "icon_state" = "[head.icon_state]")
-		overlays_standing[M_HEAD_LAYER].pixel_y = -2
+		overlays_standing[M_HEAD_LAYER].pixel_y = -4
 	if(update_icons)
 		update_icons()
 

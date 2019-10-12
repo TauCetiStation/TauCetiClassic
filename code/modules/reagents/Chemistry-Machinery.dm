@@ -437,8 +437,8 @@
 			var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			P.name = "[name] bottle"
 			P.icon_state = "bottle[bottlesprite]"
-			P.pixel_x = rand(-7, 7) //random position
-			P.pixel_y = rand(-7, 7)
+			P.pixel_x = rand(-14, 14) //random position
+			P.pixel_y = rand(-14, 14)
 			reagents.trans_to(P, 30)
 		else
 			var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
@@ -608,8 +608,8 @@
 						P = new/obj/item/weapon/reagent_containers/pill(src.loc)
 					P.name = "[name] pill"
 					P.icon_state = "pill[pillsprite]"
-					P.pixel_x = rand(-7, 7) //random position
-					P.pixel_y = rand(-7, 7)
+					P.pixel_x = rand(-14, 14) //random position
+					P.pixel_y = rand(-14, 14)
 					reagents.trans_to(P,vol_each)
 
 	src.updateUsrDialog()
@@ -1277,7 +1277,7 @@
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
 	playsound(src, 'sound/machines/juicer.ogg', VOL_EFFECTS_MASTER, 20)
-	var/offset = prob(50) ? -2 : 2
+	var/offset = prob(50) ? -4 : 4
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	inuse = 1
 	spawn(50)
@@ -1313,7 +1313,7 @@
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
 	playsound(src, 'sound/machines/blender.ogg', VOL_EFFECTS_MASTER, 35)
-	var/offset = prob(50) ? -2 : 2
+	var/offset = prob(50) ? -4 : 4
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	inuse = 1
 	spawn(60)

@@ -52,15 +52,15 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			holder_obj.appearance = A.appearance
 			A.forceMove(holder_obj)
 			balloon = image(icon,"extraction_balloon")
-			balloon.pixel_y = 10
+			balloon.pixel_y = 20
 			balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.overlays += balloon
 			playsound(holder_obj, 'sound/effects/fulext_deploy.ogg', VOL_EFFECTS_MASTER, null, null, -3)
-			animate(holder_obj, pixel_z = 10, time = 20)
+			animate(holder_obj, pixel_z = 20, time = 20)
 			sleep(20)
-			animate(holder_obj, pixel_z = 15, time = 10)
+			animate(holder_obj, pixel_z = 30, time = 10)
 			sleep(10)
-			animate(holder_obj, pixel_z = 10, time = 10)
+			animate(holder_obj, pixel_z = 20, time = 10)
 			var/obj/effect/BPs = new /obj/effect(get_turf(A))
 			BPs.icon = 'code/modules/anomaly/anomalies.dmi'
 			BPs.icon_state = "bluespace"
@@ -70,9 +70,9 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			BPe.icon_state = "bluespace"
 			BPe.mouse_opacity = 0
 			sleep(10)
-			animate(holder_obj, pixel_z = 15, time = 10)
+			animate(holder_obj, pixel_z = 30, time = 10)
 			sleep(10)
-			animate(holder_obj, pixel_z = 10, time = 10)
+			animate(holder_obj, pixel_z = 20, time = 10)
 			sleep(10)
 			if(!A)
 				return
@@ -93,11 +93,11 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, holder_obj.loc)
 			s.start()
-			animate(holder_obj, pixel_z = 10, time = 50)
+			animate(holder_obj, pixel_z = 20, time = 50)
 			sleep(50)
-			animate(holder_obj, pixel_z = 15, time = 10)
+			animate(holder_obj, pixel_z = 30, time = 10)
 			sleep(10)
-			animate(holder_obj, pixel_z = 10, time = 10)
+			animate(holder_obj, pixel_z = 20, time = 10)
 			sleep(10)
 			holder_obj.overlays -= balloon
 			if(!A)

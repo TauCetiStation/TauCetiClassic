@@ -631,17 +631,17 @@
 		//correction position of victim
 		switch(fastened.lying_current)
 			if(90)
-				if(fastened.pixel_x != 2)
-					fastened.pixel_x = 2
+				if(fastened.pixel_x != 4)
+					fastened.pixel_x = 4
 				animation.dir = 2
 				src.dir = 2
 			else
-				if(fastened.pixel_x != -2)
-					fastened.pixel_x = -2
+				if(fastened.pixel_x != -4)
+					fastened.pixel_x = -4
 				animation.dir = 1
 				src.dir = 1
-		if(fastened.pixel_y != -4)
-			fastened.pixel_y = -4
+		if(fastened.pixel_y != -8)
+			fastened.pixel_y = -8
 		if(fastened.dir & (EAST|WEST|NORTH))
 			fastened.dir = SOUTH
 

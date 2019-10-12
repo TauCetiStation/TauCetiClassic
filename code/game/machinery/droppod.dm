@@ -13,7 +13,7 @@
 	anchored = 1
 	density = 1
 	opacity = 1
-	bound_height = 64
+	bound_height = 128
 	icon = 'icons/obj/structures/droppod.dmi'
 	icon_state = "dropod_opened"
 	var/item_state = null
@@ -170,8 +170,8 @@
 		usr.forceMove(src)
 		mob_overlay = image(usr.icon, usr.icon_state)
 		mob_overlay.overlays = usr.overlays
-		mob_overlay.pixel_x = 1
-		mob_overlay.pixel_y = 25
+		mob_overlay.pixel_x = 2
+		mob_overlay.pixel_y = 50
 		overlays += mob_overlay
 		intruder = usr
 		verbs -= /obj/structure/droppod/verb/move_inside
@@ -362,7 +362,7 @@
 	icon_state = "dropod_flying[item_state]"
 	var/initial_x = pixel_x
 	var/initial_y = pixel_y
-	animate(src, pixel_y = 500, pixel_x = rand(-150, 150), time = 20, easing = SINE_EASING)
+	animate(src, pixel_y = 1000, pixel_x = rand(-300, 300), time = 20, easing = SINE_EASING)
 	sleep(25)
 	loc = AimTarget
 	sleep(10)
@@ -756,8 +756,8 @@
 		return
 	playsound(src, 'sound/effects/drop_start.ogg', VOL_EFFECTS_MASTER)
 	var/obj/spawn_drop = new drop_type(get_turf(user))
-	spawn_drop.pixel_x = rand(-150, 150)
-	spawn_drop.pixel_y = 500
+	spawn_drop.pixel_x = rand(-300, 300)
+	spawn_drop.pixel_y = 1000
 	animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
 	qdel(src)
@@ -783,8 +783,8 @@
 		chosen_place.pods_spawned += 6
 		var/obj/spawn_drop = new drop_type(chosen_place.loc)
 		playsound(src, 'sound/effects/drop_start.ogg', VOL_EFFECTS_MASTER)
-		spawn_drop.pixel_x = rand(-150, 150)
-		spawn_drop.pixel_y = 500
+		spawn_drop.pixel_x = rand(-300, 300)
+		spawn_drop.pixel_y = 1000
 		animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
 		qdel(src)

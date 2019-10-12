@@ -46,7 +46,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /obj/machinery/power/apc{
 	dir = 1;
@@ -479,7 +479,7 @@
 "bB" = (
 /obj/machinery/door_control{
 	id = "AcademyAuto";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/simulated/floor,
 /area/awaymission/academy/classrooms)
@@ -607,7 +607,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /turf/simulated/floor,
 /area/awaymission/academy/classrooms)
@@ -1032,7 +1032,7 @@
 /area/awaymission/academy/classrooms)
 "dg" = (
 /obj/structure/sink/kitchen{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -1061,7 +1061,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/classrooms)
@@ -1073,7 +1073,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /turf/simulated/floor/greengrid,
 /area/awaymission/academy/classrooms)
@@ -1367,7 +1367,7 @@
 /area/awaymission/academy/classrooms)
 "ec" = (
 /obj/structure/noticeboard{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/item/weapon/paper{
 	name = "Automotive Repair 101"
@@ -1386,7 +1386,7 @@
 /area/awaymission/academy/classrooms)
 "ee" = (
 /obj/structure/noticeboard{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/item/weapon/paper{
 	name = "Pyromancy 250"
@@ -1920,7 +1920,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/noticeboard{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /obj/item/weapon/paper{
 	name = "Biology Lab"
@@ -2104,7 +2104,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "vault"
@@ -2621,7 +2621,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/academyaft)
@@ -2666,16 +2666,6 @@
 	},
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
-"hm" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	icon_state = "hydrofloor"
-	},
-/area/awaymission/academy/academyaft)
 "hn" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2683,14 +2673,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/academy/academyaft)
-"ho" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
 /area/awaymission/academy/academyaft)
 "hp" = (
 /obj/structure/cable{
@@ -2795,14 +2777,6 @@
 	dir = 8;
 	icon_state = "green"
 	},
-/area/awaymission/academy/academyaft)
-"hy" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
 /area/awaymission/academy/academyaft)
 "hz" = (
 /obj/structure/cable{
@@ -3047,7 +3021,7 @@
 /area/awaymission/academy/academyaft)
 "id" = (
 /obj/structure/mirror{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
@@ -3107,8 +3081,8 @@
 "im" = (
 /obj/structure/sink{
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
@@ -3145,7 +3119,7 @@
 "ir" = (
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = 11
+	pixel_x = 22
 	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
@@ -3784,7 +3758,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/academygate)
@@ -3874,7 +3848,7 @@
 "kj" = (
 /obj/machinery/door_control{
 	id = "AcademyGate";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "carpetsymbol"
@@ -10078,7 +10052,7 @@ bz
 bz
 gE
 gU
-ho
+gZ
 hr
 gX
 hr
@@ -10208,12 +10182,12 @@ gl
 fW
 fy
 gU
-ho
-ho
+gZ
+gZ
 gX
-ho
+gZ
 gX
-ho
+gZ
 gX
 hk
 hk
@@ -10468,7 +10442,7 @@ bx
 bx
 gS
 gU
-hm
+hb
 hg
 hk
 hk
@@ -11379,7 +11353,7 @@ do
 cY
 fB
 hg
-hy
+hn
 hK
 fB
 ic
@@ -11509,7 +11483,7 @@ cY
 cY
 fB
 hg
-hy
+hn
 hL
 fB
 ic
@@ -11639,7 +11613,7 @@ cY
 cY
 fB
 hh
-hy
+hn
 hM
 fB
 id
@@ -11769,7 +11743,7 @@ cY
 cY
 fB
 hg
-hy
+hn
 hN
 fB
 ic
@@ -11899,7 +11873,7 @@ cY
 cY
 fB
 hg
-hy
+hn
 hO
 fB
 ie
@@ -13329,7 +13303,7 @@ gN
 gf
 fB
 hg
-hy
+hn
 hQ
 fB
 ic
@@ -13459,7 +13433,7 @@ gO
 gf
 fB
 hg
-hy
+hn
 hR
 fB
 ic
@@ -13589,7 +13563,7 @@ gC
 gH
 fB
 hh
-hy
+hn
 hS
 fB
 id
@@ -13719,7 +13693,7 @@ gC
 gH
 fB
 hg
-hy
+hn
 hT
 fB
 ic
@@ -13849,7 +13823,7 @@ gP
 gH
 fB
 hg
-hy
+hn
 hU
 fB
 ic
@@ -14499,7 +14473,7 @@ aN
 aa
 gU
 hk
-hm
+hb
 hV
 ia
 if
@@ -14758,7 +14732,7 @@ aa
 aa
 aa
 gU
-hm
+hb
 hk
 hk
 hk
@@ -14888,7 +14862,7 @@ aa
 aa
 aa
 gU
-hy
+hn
 hg
 hk
 hk
@@ -15018,7 +14992,7 @@ aa
 aa
 aa
 gU
-ho
+gZ
 gX
 gX
 gX

@@ -93,6 +93,9 @@ commented cause polls are kinda broken now, needs refactoring */
 		return 0
 
 	if(href_list["show_preferences"])
+		if(!SSatoms.initialized)
+			to_chat(src, "<span class='warning'>Subsystems is in startup, please wait until it has finished.</span>")
+			return 0
 		client << browse_rsc('html/prefs/dossier_empty.png')
 		client << browse_rsc('html/prefs/opacity7.png')
 		client.prefs.ShowChoices(src)

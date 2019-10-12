@@ -57,8 +57,8 @@
 	if(!start || !end) return 0
 	var/dy
 	var/dx
-	dy=(32*end.y+end.pixel_y)-(32*start.y+start.pixel_y)
-	dx=(32*end.x+end.pixel_x)-(32*start.x+start.pixel_x)
+	dy=(64*end.y+end.pixel_y)-(64*start.y+start.pixel_y)
+	dx=(64*end.x+end.pixel_x)-(64*start.x+start.pixel_x)
 	if(!dy)
 		return (dx>=0)?90:270
 	.=arctan(dx/dy)
@@ -1267,16 +1267,16 @@ var/list/WALLITEMS = typecacheof(list(
 			//Some stuff doesn't use dir properly, so we need to check pixel instead
 			switch(dir)
 				if(SOUTH)
-					if(O.pixel_y > 10)
+					if(O.pixel_y > 20)
 						return 1
 				if(NORTH)
-					if(O.pixel_y < -10)
+					if(O.pixel_y < -20)
 						return 1
 				if(WEST)
-					if(O.pixel_x > 10)
+					if(O.pixel_x > 20)
 						return 1
 				if(EAST)
-					if(O.pixel_x < -10)
+					if(O.pixel_x < -20)
 						return 1
 
 

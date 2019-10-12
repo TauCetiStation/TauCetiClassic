@@ -134,54 +134,54 @@
 	var/old_selecting = selecting //We're only going to update_icon() if there's been a change
 
 	switch(icon_y)
-		if(1 to 3) //Feet
+		if(1 to 7) //Feet
 			switch(icon_x)
-				if(10 to 15)
+				if(20 to 30)
 					selecting = BP_R_LEG
-				if(17 to 22)
+				if(34 to 44)
 					selecting = BP_L_LEG
 				else
 					return 1
-		if(4 to 9) //Legs
+		if(8 to 19) //Legs
 			switch(icon_x)
-				if(10 to 15)
+				if(20 to 30)
 					selecting = BP_R_LEG
-				if(17 to 22)
+				if(34 to 44)
 					selecting = BP_L_LEG
 				else
 					return 1
-		if(10 to 13) //Arms and groin
+		if(20 to 27) //Arms and groin
 			switch(icon_x)
-				if(8 to 11)
+				if(16 to 23)
 					selecting = BP_R_ARM
-				if(12 to 20)
+				if(24 to 41)
 					selecting = BP_GROIN
-				if(21 to 24)
+				if(42 to 48)
 					selecting = BP_L_ARM
 				else
 					return 1
-		if(14 to 22) //Chest and arms to shoulders
+		if(28 to 45) //Chest and arms to shoulders
 			switch(icon_x)
-				if(8 to 11)
+				if(16 to 23)
 					selecting = BP_R_ARM
-				if(12 to 20)
+				if(24 to 41)
 					selecting = BP_CHEST
-				if(21 to 24)
+				if(42 to 48)
 					selecting = BP_L_ARM
 				else
 					return 1
-		if(23 to 30) //Head, but we need to check for eye or mouth
-			if(icon_x in 12 to 20)
+		if(46 to 60) //Head, but we need to check for eye or mouth
+			if(icon_x in 24 to 40)
 				selecting = BP_HEAD
 				switch(icon_y)
-					if(23 to 24)
-						if(icon_x in 15 to 17)
+					if(46 to 48)
+						if(icon_x in 30 to 34)
 							selecting = O_MOUTH
-					if(26) //Eyeline, eyes are on 15 and 17
-						if(icon_x in 14 to 18)
+					if(51 to 52) //Eyeline, eyes are on 30 and 34
+						if(icon_x in 28 to 36)
 							selecting = O_EYES
-					if(25 to 27)
-						if(icon_x in 15 to 17)
+					if(50 to 54)
+						if(icon_x in 30 to 34)
 							selecting = O_EYES
 
 	if(old_selecting != selecting)

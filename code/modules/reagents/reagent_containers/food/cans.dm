@@ -123,8 +123,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans/cola/atom_init()
 	. = ..()
 	reagents.add_reagent("cola", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle
 	name = "Bottled Water"
@@ -134,8 +134,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle/atom_init()
 	. = ..()
 	reagents.add_reagent("water", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/space_mountain_wind
 	name = "Space Mountain Wind"
@@ -145,8 +145,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans/space_mountain_wind/atom_init()
 	. = ..()
 	reagents.add_reagent("spacemountainwind", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/thirteenloko
 	name = "Thirteen Loko"
@@ -156,8 +156,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans/thirteenloko/atom_init()
 	. = ..()
 	reagents.add_reagent("thirteenloko", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb
 	name = "Dr. Gibb"
@@ -167,8 +167,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb/atom_init()
 	. = ..()
 	reagents.add_reagent("dr_gibb", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/starkist
 	name = "Star-kist"
@@ -179,8 +179,8 @@
 	. = ..()
 	reagents.add_reagent("cola", 15)
 	reagents.add_reagent("orangejuice", 15)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/space_up
 	name = "Space-Up"
@@ -190,8 +190,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans/space_up/atom_init()
 	. = ..()
 	reagents.add_reagent("space_up", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/lemon_lime
 	name = "Lemon-Lime"
@@ -201,8 +201,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans/lemon_lime/atom_init()
 	. = ..()
 	reagents.add_reagent("lemon_lime", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/iced_tea
 	name = "Vrisk Serket Iced Tea"
@@ -212,8 +212,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans/iced_tea/atom_init()
 	. = ..()
 	reagents.add_reagent("icetea", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice
 	name = "Grapel Juice"
@@ -223,8 +223,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice/atom_init()
 	. = ..()
 	reagents.add_reagent("grapejuice", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/tonic
 	name = "T-Borg's Tonic Water"

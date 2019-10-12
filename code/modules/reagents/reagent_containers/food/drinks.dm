@@ -177,8 +177,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/milk/atom_init()
 	. = ..()
 	reagents.add_reagent("milk", 50)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 /* Flour is no longer a reagent
 /obj/item/weapon/reagent_containers/food/drinks/flour
@@ -204,8 +204,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/soymilk/atom_init()
 	. = ..()
 	reagents.add_reagent("soymilk", 50)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 /obj/item/weapon/reagent_containers/food/drinks/coffee
 	name = "Robust Coffee"
@@ -215,8 +215,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/coffee/atom_init()
 	. = ..()
 	reagents.add_reagent("coffee", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 /obj/item/weapon/reagent_containers/food/drinks/tea
 	name = "Duke Purple Tea"
@@ -227,8 +227,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/tea/atom_init()
 	. = ..()
 	reagents.add_reagent("tea", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(0, 20)       // the teacup is very low on the 32x32 grid so if it's -y then it clips into the tile below it.
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(0, 40)       // the teacup is very low on the 32x32 grid so if it's -y then it clips into the tile below it.
 
 /obj/item/weapon/reagent_containers/food/drinks/ice
 	name = "Ice Cup"
@@ -238,8 +238,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/ice/atom_init()
 	. = ..()
 	reagents.add_reagent("ice", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 /obj/item/weapon/reagent_containers/food/drinks/h_chocolate
 	name = "Dutch Hot Coco"
@@ -250,8 +250,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/h_chocolate/atom_init()
 	. = ..()
 	reagents.add_reagent("hot_coco", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 	name = "Cup Ramen"
@@ -261,8 +261,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/atom_init()
 	. = ..()
 	reagents.add_reagent("dry_ramen", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup
@@ -274,8 +274,8 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup/atom_init()
 	. = ..()
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup/on_reagent_change()
 	if(reagents.total_volume)

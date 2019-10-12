@@ -35,7 +35,7 @@
 /obj/machinery/door_control{
 	id = "syndishiv";
 	name = "Airlock Bolt Control";
-	pixel_x = -25;
+	pixel_x = -50;
 	pixel_y = 0
 	},
 /obj/item/weapon/shard{
@@ -100,14 +100,14 @@
 	dir = 4;
 	name = "military-grade camera";
 	network = list("shiv");
-	pixel_y = -10
+	pixel_y = -20
 	},
 /turf/space,
 /area/syndicate_fighter)
 "l" = (
 /obj/structure/rack,
 /obj/structure/closet/walllocker{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /obj/item/weapon/tank/emergency_oxygen/engi,
 /obj/item/clothing/mask/gas/syndicate,

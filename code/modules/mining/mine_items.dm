@@ -712,7 +712,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon = 'icons/obj/survival_pod_computer.dmi'
 	anchored = 1
 	density = 1
-	pixel_y = -32
+	pixel_y = -64
 
 /obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
 	if(iswrench(W) && !(flags&NODECONSTRUCT))
@@ -744,7 +744,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_panel = "donkvendor-panel"
 	light_range = 5
 	max_n_of_items = 10
-	pixel_y = -4
+	pixel_y = -8
 	active_power_usage = 0
 	idle_power_usage = 0
 	var/forbidden_tools = list()

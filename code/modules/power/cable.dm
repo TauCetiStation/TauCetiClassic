@@ -412,8 +412,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(param_color)
 		color = param_color
 
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
+	pixel_x = rand(-4,4)
+	pixel_y = rand(-4,4)
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='warning'><b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b></span>")

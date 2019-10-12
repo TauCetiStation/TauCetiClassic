@@ -50,7 +50,7 @@
 "aj" = (
 /obj/structure/table/glass,
 /obj/structure/reagent_dispensers/virusfood{
-	pixel_y = 30
+	pixel_y = 60
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -402,7 +402,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -512,10 +512,10 @@
 "bE" = (
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = 12
+	pixel_x = 24
 	},
 /obj/structure/dryer{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -667,7 +667,7 @@
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/beaker,
 /obj/structure/reagent_dispensers/virusfood{
-	pixel_y = 30
+	pixel_y = 60
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -844,8 +844,8 @@
 /area/derelict/lab)
 "cD" = (
 /obj/item/stack/cable_coil/red{
-	pixel_x = 3;
-	pixel_y = -7
+	pixel_x = 6;
+	pixel_y = -14
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/derelict/lab)
@@ -853,7 +853,7 @@
 /obj/structure/table/glass,
 /obj/item/device/antibody_scanner,
 /obj/item/device/healthanalyzer{
-	pixel_y = 2
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -869,8 +869,8 @@
 /area/derelict/lab)
 "cH" = (
 /obj/item/stack/cable_coil/red{
-	pixel_x = -3;
-	pixel_y = 3
+	pixel_x = -6;
+	pixel_y = 6
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/derelict/lab)

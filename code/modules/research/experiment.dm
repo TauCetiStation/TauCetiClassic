@@ -312,8 +312,8 @@
 
 /obj/item/weapon/disk/research_points/atom_init()
 	. = ..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 
 	stored_points = rand(1,10)*1000
 

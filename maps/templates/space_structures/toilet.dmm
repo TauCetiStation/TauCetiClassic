@@ -14,7 +14,7 @@
 /area/space)
 "d" = (
 /obj/structure/toilet{
-	pixel_y = 8
+	pixel_y = 16
 	},
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,

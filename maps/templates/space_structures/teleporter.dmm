@@ -87,8 +87,8 @@
 /area/AIsattele)
 "s" = (
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = 1;
-	pixel_y = -1
+	pixel_x = 2;
+	pixel_y = -2
 	},
 /turf/simulated/floor/plating/airless,
 /area/AIsattele)

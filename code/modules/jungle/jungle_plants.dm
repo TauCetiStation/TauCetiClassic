@@ -45,8 +45,8 @@
 						desc = "There used to be dense undergrowth here."
 						density = 0
 						stump = 1
-						pixel_x = rand(-6,6)
-						pixel_y = rand(-6,6)
+						pixel_x = rand(-12,12)
+						pixel_y = rand(-12,12)
 					else
 						qdel(src)
 	else

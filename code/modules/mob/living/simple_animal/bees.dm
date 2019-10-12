@@ -166,8 +166,8 @@
 					else
 						my_hydrotray = null
 
-		pixel_x = rand(-12,12)
-		pixel_y = rand(-12,12)
+		pixel_x = rand(-24,24)
+		pixel_y = rand(-24,24)
 
 	if(!parent && prob(10))
 		strength -= 1

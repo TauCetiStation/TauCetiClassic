@@ -228,7 +228,7 @@
 	name = "tree"
 	anchored = 1
 	density = 1
-	pixel_x = -16
+	pixel_x = -32
 	layer = 9
 	health_flora = 150
 	damage_threshhold = 15
@@ -273,8 +273,8 @@
 	icon_state = "tree"
 	desc = "It's seriously hampering your view of the jungle."
 	icon = 'icons/obj/flora/jungletrees.dmi'
-	pixel_x = -48
-	pixel_y = -20
+	pixel_x = -96
+	pixel_y = -40
 
 /obj/structure/flora/tree/jungle/atom_init()
 	. = ..()
@@ -282,7 +282,7 @@
 
 /obj/structure/flora/tree/jungle/small
 	pixel_y = 0
-	pixel_x = -32
+	pixel_x = -64
 	icon = 'icons/obj/flora/jungletreesmall.dmi'
 
 // grass
@@ -488,8 +488,8 @@
 /obj/structure/flora/junglebush/large
 	icon_state = "bush"
 	icon = 'icons/obj/flora/largejungleflora.dmi'
-	pixel_x = -16
-	pixel_y = -12
+	pixel_x = -32
+	pixel_y = -24
 	layer = 9
 
 /obj/structure/flora/rock/pile/largejungle
@@ -497,8 +497,8 @@
 	icon_state = "rocks"
 	icon = 'icons/obj/flora/largejungleflora.dmi'
 	density = 1
-	pixel_x = -16
-	pixel_y = -16
+	pixel_x = -32
+	pixel_y = -32
 
 /obj/structure/flora/rock/pile/largejungle/atom_init()
 	. = ..()

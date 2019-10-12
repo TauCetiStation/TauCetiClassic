@@ -38,10 +38,10 @@
 	},
 /obj/machinery/newscaster{
 	layer = 3.3;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/item/device/radio/intercom{
-	pixel_x = -30
+	pixel_x = -60
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -92,7 +92,7 @@
 /obj/structure/curtain/open/shower/security,
 /obj/machinery/light/small,
 /obj/machinery/shower{
-	pixel_y = 20
+	pixel_y = 40
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -141,14 +141,14 @@
 /area/listening_post)
 "at" = (
 /obj/structure/toilet{
-	pixel_y = 15
+	pixel_y = 30
 	},
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = 12
+	pixel_x = 24
 	},
 /obj/structure/mirror{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -243,7 +243,7 @@
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -30
+	pixel_x = -60
 	},
 /turf/simulated/floor,
 /area/listening_post)
@@ -252,14 +252,14 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate{
-	pixel_x = -5;
-	pixel_y = -3
+	pixel_x = -10;
+	pixel_y = -6
 	},
 /obj/item/weapon/lighter/zippo{
-	pixel_x = 3
+	pixel_x = 6
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = -30
+	pixel_x = -60
 	},
 /turf/simulated/floor,
 /area/listening_post)
@@ -349,7 +349,7 @@
 /area/listening_post)
 "aW" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -30
+	pixel_y = -60
 	},
 /turf/simulated/floor,
 /area/listening_post)
@@ -377,7 +377,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Listening Post APC";
-	pixel_y = 26
+	pixel_y = 52
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -469,7 +469,7 @@
 /area/listening_post)
 "bj" = (
 /obj/structure/sign/poster{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/simulated/floor,
 /area/listening_post)
@@ -496,7 +496,7 @@
 /obj/machinery/iv_drip,
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = 12
+	pixel_x = 24
 	},
 /turf/simulated/floor{
 	dir = 1;

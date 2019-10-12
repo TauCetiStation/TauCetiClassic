@@ -18,8 +18,8 @@
 	. = ..()
 	if(projectile_type)
 		BB = new projectile_type(src)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 	dir = pick(alldirs)
 	update_icon()
 

@@ -30,7 +30,7 @@
 /obj/item/weapon/kitchen/utensil/atom_init()
 	. = ..()
 	if (prob(60))
-		pixel_y = rand(0, 4)
+		pixel_y = rand(0, 8)
 
 /obj/item/weapon/kitchen/utensil/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))

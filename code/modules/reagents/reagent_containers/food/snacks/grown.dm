@@ -25,8 +25,8 @@
 	if (!isnull(newpotency))
 		potency = newpotency
 	. = ..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(obj/item/O, mob/user)
 	..()
@@ -570,8 +570,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/atom_init()
 	. = ..()
 	reagents.add_reagent("banana", 1+round((potency / 10), 1))
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	seed = "/obj/item/seeds/chiliseed"

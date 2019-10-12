@@ -22,8 +22,8 @@
 	stamp_text = (stamp_text=="" ? "<HR>" : "<BR>") + "<i>This paper has been stamped with the NanoTrasen Synthetic Intelligence Division rubber stamp.</i>"
 
 	var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-	stampoverlay.pixel_x = rand(-2, 2)
-	stampoverlay.pixel_y = rand(-3, 2)
+	stampoverlay.pixel_x = rand(-4, 4)
+	stampoverlay.pixel_y = rand(-6, 4)
 	stampoverlay.icon_state = "paper_stamp-rd"
 	overlays += stampoverlay
 

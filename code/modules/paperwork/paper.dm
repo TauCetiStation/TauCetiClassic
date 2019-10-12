@@ -38,8 +38,8 @@
 
 /obj/item/weapon/paper/atom_init()
 	. = ..()
-	pixel_y = rand(-8, 8)
-	pixel_x = rand(-9, 9)
+	pixel_y = rand(-16, 16)
+	pixel_x = rand(-18, 18)
 	stamp_text = ""
 
 	update_icon()

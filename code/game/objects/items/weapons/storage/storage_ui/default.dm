@@ -210,11 +210,11 @@
 /datum/storage_ui/default/proc/arrange_item_slots(var/rows, var/cols, list/obj/item/display_contents)
 	var/cx = 4
 	var/cy = 2+rows
-	boxes.screen_loc = "4:16,2:16 to [4+cols]:16,[2+rows]:16"
+	boxes.screen_loc = "4:32,2:32 to [4+cols]:32,[2+rows]:32"
 
 	if(storage.display_contents_with_number)
 		for(var/datum/numbered_display/ND in display_contents)
-			ND.sample_object.screen_loc = "[cx]:16,[cy]:16"
+			ND.sample_object.screen_loc = "[cx]:32,[cy]:32"
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
 			ND.sample_object.layer = ABOVE_HUD_LAYER
 			ND.sample_object.plane = ABOVE_HUD_PLANE
@@ -224,7 +224,7 @@
 				cy--
 	else
 		for(var/obj/O in storage.contents)
-			O.screen_loc = "[cx]:16,[cy]:16"
+			O.screen_loc = "[cx]:32,[cy]:32"
 			O.maptext = ""
 			O.layer = ABOVE_HUD_LAYER
 			O.plane = ABOVE_HUD_PLANE
@@ -233,7 +233,7 @@
 				cx = 4
 				cy--
 
-	closer.screen_loc = "[4+cols+1]:16,2:16"
+	closer.screen_loc = "[4+cols+1]:32,2:32"
 
 /datum/numbered_display
 	var/obj/item/sample_object
@@ -248,21 +248,21 @@
 /datum/storage_ui/default/proc/space_orient_objs()
 
 	var/baseline_max_storage_space = DEFAULT_BOX_STORAGE //storage size corresponding to 224 pixels
-	var/storage_cap_width = 2 //length of sprite for start and end of the box representing total storage space
-	var/stored_cap_width = 4 //length of sprite for start and end of the box representing the stored item
-	var/storage_width = min( round( 224 * storage.max_storage_space/baseline_max_storage_space ,1) ,284) //length of sprite for the box representing total storage space
+	var/storage_cap_width = 4 //length of sprite for start and end of the box representing total storage space
+	var/stored_cap_width = 8 //length of sprite for start and end of the box representing the stored item
+	var/storage_width = min( round( 424 * storage.max_storage_space/baseline_max_storage_space ,1) ,484) //length of sprite for the box representing total storage space
 
 	click_border_start.Cut()
 	click_border_end.Cut()
 	storage_start.overlays.Cut()
 
 	var/matrix/M = matrix()
-	M.Scale((storage_width-storage_cap_width*2+3)/32,1)
+	M.Scale((storage_width-storage_cap_width*2+6)/64,1)
 	storage_continue.transform = M
 
-	storage_start.screen_loc = "4:16,2:16"
-	storage_continue.screen_loc = "4:[round(storage_cap_width+(storage_width-storage_cap_width*2)/2+2)],2:16"
-	storage_end.screen_loc = "4:[19+storage_width-storage_cap_width],2:16"
+	storage_start.screen_loc = "4:32,2:32"
+	storage_continue.screen_loc = "4:[round(storage_cap_width+(storage_width-storage_cap_width*2)/2+4)],2:32"
+	storage_end.screen_loc = "4:[38+storage_width-storage_cap_width],2:32"
 
 	var/startpoint = 0
 	var/endpoint = 1
@@ -278,8 +278,8 @@
 		var/matrix/M_continue = matrix()
 		var/matrix/M_end = matrix()
 		M_start.Translate(startpoint,0)
-		M_continue.Scale(CEIL(endpoint-startpoint-stored_cap_width*2)/32,1)
-		M_continue.Translate(startpoint+stored_cap_width+(endpoint-startpoint-stored_cap_width*2)/2 - 16,0)
+		M_continue.Scale(CEIL(endpoint-startpoint-stored_cap_width*2)/64,1)
+		M_continue.Translate(startpoint+stored_cap_width+(endpoint-startpoint-stored_cap_width*2)/2 - 32,0)
 		M_end.Translate(endpoint-stored_cap_width,0)
 		stored_start.transform = M_start
 		stored_continue.transform = M_continue
@@ -288,9 +288,9 @@
 		storage_start.overlays += stored_continue
 		storage_start.overlays += stored_end
 
-		O.screen_loc = "4:[round((startpoint+endpoint)/2)],2:16"
+		O.screen_loc = "4:[round((startpoint+endpoint)/2)],2:32"
 		O.maptext = ""
 		O.layer = ABOVE_HUD_LAYER
 		O.plane = HUD_PLANE
 
-	closer.screen_loc = "4:[storage_width+19],2:16"
+	closer.screen_loc = "4:[storage_width+38],2:32"

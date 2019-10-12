@@ -81,8 +81,8 @@
 	hp = 2350 // alium onest too kinda
 
 /obj/item/target/bullet_act(obj/item/projectile/Proj)
-	var/p_x = Proj.p_x + pick(0,0,0,0,0,-1,1) // really ugly way of coding "sometimes offset Proj.p_x!"
-	var/p_y = Proj.p_y + pick(0,0,0,0,0,-1,1)
+	var/p_x = Proj.p_x + pick(0,0,0,0,0,-2,2) // really ugly way of coding "sometimes offset Proj.p_x!"
+	var/p_y = Proj.p_y + pick(0,0,0,0,0,-2,2)
 	var/decaltype = 1 // 1 - scorch, 2 - bullet
 
 	if(istype(/obj/item/projectile/bullet, Proj))
@@ -166,17 +166,17 @@
 	if(!Target) return
 
 	// Randomize the first box
-	b1x1 = pixel_x - pick(1,1,1,1,2,2,3,3,4)
-	b1x2 = pixel_x + pick(1,1,1,1,2,2,3,3,4)
+	b1x1 = pixel_x - pick(2,2,2,2,4,4,6,6,8)
+	b1x2 = pixel_x + pick(2,2,2,2,4,4,6,6,8)
 	b1y = pixel_y
 	if(prob(35))
-		b1y += rand(-4,4)
+		b1y += rand(-8,8)
 
 	// Randomize the second box
 	b2x = pixel_x
 	if(prob(35))
-		b2x += rand(-4,4)
-	b2y1 = pixel_y + pick(1,1,1,1,2,2,3,3,4)
-	b2y2 = pixel_y - pick(1,1,1,1,2,2,3,3,4)
+		b2x += rand(-8,8)
+	b2y1 = pixel_y + pick(2,2,2,2,4,4,6,6,8)
+	b2y2 = pixel_y - pick(2,2,2,2,4,4,6,6,8)
 
 	Target.bulletholes.Add(src)

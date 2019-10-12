@@ -19,7 +19,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Cloning Facility APC";
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/simulated/floor/plating,
 /area/cloning_lab)

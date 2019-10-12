@@ -168,21 +168,21 @@ var/normal_next
 	var/pixel_x = 0
 	var/pixel_y = 0
 	for(var/i in 1 to increments)
-		pixel_x += sin(angle)+16*sin(angle)*2
-		pixel_y += cos(angle)+16*cos(angle)*2
+		pixel_x += sin(angle)+32*sin(angle)*2
+		pixel_y += cos(angle)+32*cos(angle)*2
 	var/new_x = starting.x
 	var/new_y = starting.y
-	while(pixel_x > 16)
-		pixel_x -= 32
+	while(pixel_x > 32)
+		pixel_x -= 64
 		new_x++
-	while(pixel_x < -16)
-		pixel_x += 32
+	while(pixel_x < -32)
+		pixel_x += 64
 		new_x--
-	while(pixel_y > 16)
-		pixel_y -= 32
+	while(pixel_y > 32)
+		pixel_y -= 64
 		new_y++
-	while(pixel_y < -16)
-		pixel_y += 32
+	while(pixel_y < -32)
+		pixel_y += 64
 		new_y--
 	new_x = CLAMP(new_x, 0, world.maxx)
 	new_y = CLAMP(new_y, 0, world.maxy)

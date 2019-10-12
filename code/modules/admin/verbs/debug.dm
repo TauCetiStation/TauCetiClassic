@@ -1885,8 +1885,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				S.current_size = STAGE_FOUR
 				S.icon = 'icons/effects/224x224.dmi'
 				S.icon_state = "singularity_s7"
-				S.pixel_x = -96
-				S.pixel_y = -96
+				S.pixel_x = -192
+				S.pixel_y = -192
 				S.grav_pull = 0
 				//S.consume_range = 3
 				S.dissipate = 0

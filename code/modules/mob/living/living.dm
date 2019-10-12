@@ -992,25 +992,25 @@
 	var/direction = get_dir(src, A)
 	switch(direction)
 		if(NORTH)
-			pixel_y_diff = 8
+			pixel_y_diff = 16
 		if(SOUTH)
-			pixel_y_diff = -8
+			pixel_y_diff = -16
 		if(EAST)
-			pixel_x_diff = 8
+			pixel_x_diff = 16
 		if(WEST)
-			pixel_x_diff = -8
+			pixel_x_diff = -16
 		if(NORTHEAST)
-			pixel_x_diff = 8
-			pixel_y_diff = 8
+			pixel_x_diff = 16
+			pixel_y_diff = 16
 		if(NORTHWEST)
-			pixel_x_diff = -8
-			pixel_y_diff = 8
+			pixel_x_diff = -16
+			pixel_y_diff = 16
 		if(SOUTHEAST)
-			pixel_x_diff = 8
-			pixel_y_diff = -8
+			pixel_x_diff = 16
+			pixel_y_diff = -16
 		if(SOUTHWEST)
-			pixel_x_diff = -8
-			pixel_y_diff = -8
+			pixel_x_diff = -16
+			pixel_y_diff = -16
 
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
 	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
@@ -1035,7 +1035,7 @@
 			if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
 				viewing |= M.client
 		flick_overlay(I,viewing,5)
-		I.pixel_z = 16 //lift it up...
+		I.pixel_z = 32 //lift it up...
 		animate(I, pixel_z = 0, alpha = 125, time = 3) //smash it down into them!
 
 /mob/living/Stat()
@@ -1063,7 +1063,7 @@
 
 	floating = 1
 
-	var/amplitude = 2 //maximum displacement from original position
+	var/amplitude = 4 //maximum displacement from original position
 	var/period = 36 //time taken for the mob to go up >> down >> original position, in deciseconds. Should be multiple of 4
 
 	var/top = old_y + amplitude

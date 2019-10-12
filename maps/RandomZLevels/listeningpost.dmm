@@ -33,7 +33,7 @@
 	freerange = 1;
 	frequency = 1213;
 	name = "Syndicate Intercom";
-	pixel_x = 32;
+	pixel_x = 64;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -82,7 +82,7 @@
 	freerange = 1;
 	frequency = 1213;
 	name = "Syndicate Intercom";
-	pixel_x = 32;
+	pixel_x = 64;
 	subspace_transmission = 1;
 	syndie = 1
 	},

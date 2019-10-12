@@ -81,8 +81,8 @@
 
 /obj/effect/spider/eggcluster/atom_init()
 	. = ..()
-	pixel_x = rand(3,-3)
-	pixel_y = rand(3,-3)
+	pixel_x = rand(6,-6)
+	pixel_y = rand(6,-6)
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/spider/eggcluster/process()
@@ -106,8 +106,8 @@
 
 /obj/effect/spider/spiderling/atom_init()
 	. = ..()
-	pixel_x = rand(6,-6)
-	pixel_y = rand(6,-6)
+	pixel_x = rand(12,-12)
+	pixel_y = rand(12,-12)
 	START_PROCESSING(SSobj, src)
 	//50% chance to grow up
 	if(prob(50))

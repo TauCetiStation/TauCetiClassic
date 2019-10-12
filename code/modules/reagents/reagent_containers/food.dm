@@ -9,5 +9,5 @@
 
 /obj/item/weapon/reagent_containers/food/atom_init()
 	. = ..()
-	pixel_x = rand(-10.0, 10) //Randomizes postion
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20) //Randomizes postion
+	pixel_y = rand(-20, 20)

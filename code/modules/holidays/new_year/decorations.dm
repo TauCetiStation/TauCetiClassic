@@ -118,10 +118,10 @@
 			decals += W
 			var/list/click_params = params2list(params)
 			// Center the icon where the user clicked.
-			W.pixel_x = (text2num(click_params["icon-x"]) - 16)
-			W.pixel_y = (text2num(click_params["icon-y"]) - 16)
+			W.pixel_x = (text2num(click_params["icon-x"]) - 32)
+			W.pixel_y = (text2num(click_params["icon-y"]) - 32)
 			if(istype(W, /obj/item/organ/external/head))
-				W.pixel_y -= 10 // Head always has 10 pixels shift
+				W.pixel_y -= 20 // Head always has 20 pixels shift
 				W.dir = 2 // Rotate head face to us
 				W.transform = turn(null, null)	//Turn it to initial angle
 	return

@@ -400,7 +400,7 @@
 			return
 	else
 		AM.loc = src
-		AM.pixel_y += 9
+		AM.pixel_y += 18
 		if(AM.layer < layer)
 			AM.layer = layer + 0.1
 		overlays += AM
@@ -424,7 +424,7 @@
 
 /obj/machinery/bot/mulebot/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob) //post buckling
-		M.pixel_y = initial(M.pixel_y) + 9
+		M.pixel_y = initial(M.pixel_y) + 18
 		if(M.layer < layer)
 			M.layer = layer + 0.1
 

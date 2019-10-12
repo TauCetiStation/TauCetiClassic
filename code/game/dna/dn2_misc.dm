@@ -62,8 +62,8 @@
 			if(o == 4)
 				o = 0
 				step(usr, cur_dir)
-			if(i < 7) usr.pixel_y += 8
-			else usr.pixel_y -= 8
+			if(i < 7) usr.pixel_y += 16
+			else usr.pixel_y -= 16
 			sleep(1)
 		playsound(src, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER)
 		for(tile in range(1, usr))
@@ -98,8 +98,8 @@
 					M.Weaken(2)
 					for(var/i=0, i<6, i++)
 						spawn(i)
-							if(i < 3) M.pixel_y += 8
-							else M.pixel_y -= 8
+							if(i < 3) M.pixel_y += 16
+							else M.pixel_y -= 16
 
 		if ((FAT in usr.mutations) && prob(66))
 			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
@@ -124,8 +124,8 @@
 		var/wiggle = 6
 		while(wiggle > 0)
 			wiggle--
-			container.pixel_x = rand(-3,3)
-			container.pixel_y = rand(-3,3)
+			container.pixel_x = rand(-6,6)
+			container.pixel_y = rand(-6,6)
 			sleep(1)
 		container.pixel_x = 0
 		container.pixel_y = 0
@@ -306,8 +306,8 @@
 		var/wiggle = 6
 		while(wiggle > 0)
 			wiggle--
-			container.pixel_x = rand(-3,3)
-			container.pixel_y = rand(-3,3)
+			container.pixel_x = rand(-6,6)
+			container.pixel_y = rand(-6,6)
 			sleep(1)
 		container.pixel_x = 0
 		container.pixel_y = 0
@@ -421,8 +421,8 @@
 		var/wiggle = 6
 		while(wiggle > 0)
 			wiggle--
-			container.pixel_x = rand(-3,3)
-			container.pixel_y = rand(-3,3)
+			container.pixel_x = rand(-6,6)
+			container.pixel_y = rand(-6,6)
 			sleep(1)
 		container.pixel_x = 0
 		container.pixel_y = 0

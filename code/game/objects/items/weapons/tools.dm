@@ -94,8 +94,8 @@
 		icon_state = "screwdriver_[param_color]"
 		item_state = "screwdriver_[param_color]"
 
-	pixel_y = rand(-6, 6)
-	pixel_x = rand(-4, 4)
+	pixel_y = rand(-12, 12)
+	pixel_x = rand(-8, 8)
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(!istype(M) || user.a_intent == "help")

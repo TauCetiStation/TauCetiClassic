@@ -26,13 +26,13 @@
 					I = image('icons/obj/flora/ausflora.dmi',"fernybush_[rand(1,3)]")
 				else
 					I = image('icons/obj/flora/ausflora.dmi',"stalkybush_[rand(1,3)]")
-			I.pixel_x = rand(-6,6)
-			I.pixel_y = rand(-6,6)
+			I.pixel_x = rand(-12,12)
+			I.pixel_y = rand(-12,12)
 			overlays += I
 		else
 			var/obj/structure/jungle_plant/J = new(src)
-			J.pixel_x = rand(-6,6)
-			J.pixel_y = rand(-6,6)
+			J.pixel_x = rand(-12,12)
+			J.pixel_y = rand(-12,12)
 	if(bushes_spawn && prob(90))
 		new /obj/structure/bush(src)
 

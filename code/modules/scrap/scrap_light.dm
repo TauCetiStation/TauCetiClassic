@@ -98,7 +98,7 @@
 		buckle_require_restraints = TRUE
 		to_chat(user, "<i>You add a rod to \the [src].</i>")
 		var/image/stake = image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_rod")
-		stake.pixel_y = 16
+		stake.pixel_y = 32
 		stake.layer = 5
 		dir = 2
 		underlays += stake
@@ -216,9 +216,9 @@
 
 /obj/structure/bonfire/post_buckle_mob(mob/living/M)
 	if(buckled_mob == M)
-		M.pixel_y = 13
+		M.pixel_y = 26
 		M.layer = 5.1
 	else
-		if(M.pixel_y == 13)
+		if(M.pixel_y == 26)
 			M.pixel_y = 0
 		M.layer = initial(M.layer)

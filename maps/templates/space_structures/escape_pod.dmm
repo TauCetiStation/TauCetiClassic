@@ -40,7 +40,7 @@
 /obj/item/device/radio/intercom/pod{
 	dir = 4;
 	layer = 4;
-	pixel_x = 10
+	pixel_x = 20
 	},
 /obj/effect/decal/remains/human,
 /turf/simulated/shuttle/floor/erokez{

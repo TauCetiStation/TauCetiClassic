@@ -193,8 +193,8 @@
 				if(contents.len < max_items_inside)
 					I.loc = src
 	if(building)
-		pixel_x = (ndir & 3)? 0 : (ndir == EAST ? 32 : -32)
-		pixel_y = (ndir & 3)? (ndir == NORTH ? 32 : -32) : 0
+		pixel_x = (ndir & 3)? 0 : (ndir == EAST ? WORLD_ICON_SIZE : -WORLD_ICON_SIZE)
+		pixel_y = (ndir & 3)? (ndir == NORTH ? WORLD_ICON_SIZE : -WORLD_ICON_SIZE) : 0
 	update_icon()
 
 /obj/structure/condiment_shelf/attackby(obj/O, mob/user)

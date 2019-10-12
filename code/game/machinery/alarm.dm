@@ -107,8 +107,8 @@
 
 		buildstage = 0
 		wiresexposed = 1
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -48 : 48)
+		pixel_y = (dir & 3)? (dir ==1 ? -48 : 48) : 0
 		update_icon()
 		return // not sure about this, is constructing initializing it same as first_run()?
 
@@ -1175,8 +1175,8 @@ FIRE ALARM
 	if(building)
 		buildstage = 0
 		wiresexposed = 1
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -48 : 48)
+		pixel_y = (dir & 3)? (dir ==1 ? -48 : 48) : 0
 
 	if(is_station_level(z) || is_mining_level(z))
 		if(security_level)

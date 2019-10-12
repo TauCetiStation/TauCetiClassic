@@ -40,7 +40,7 @@
 /area/awaymission/challenge/start)
 "ai" = (
 /obj/machinery/firealarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/simulated/floor/airless,
 /area/awaymission/challenge/start)
@@ -579,7 +579,7 @@
 	dir = 1
 	},
 /obj/machinery/recharger{
-	pixel_y = 4
+	pixel_y = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "carpet1-0"
@@ -589,7 +589,7 @@
 /obj/machinery/door_control{
 	id = "velocity_hall";
 	name = "Blast Door Control";
-	pixel_x = 24;
+	pixel_x = 48;
 	req_access = list(101)
 	},
 /obj/structure/table/reinforced,
@@ -608,8 +608,8 @@
 /obj/machinery/door_control{
 	id = "ck_warehouse";
 	name = "Warehouse Door Control";
-	pixel_x = -1;
-	pixel_y = -24;
+	pixel_x = -2;
+	pixel_y = -48;
 	req_access = list(101)
 	},
 /turf/space,
@@ -632,7 +632,7 @@
 /obj/machinery/door_control{
 	id = "velocity_hall";
 	name = "Blast Door Control";
-	pixel_x = 24;
+	pixel_x = 48;
 	req_access = list(101)
 	},
 /turf/simulated/floor/carpet,
@@ -652,7 +652,7 @@
 	freerange = 1;
 	frequency = 1213;
 	name = "Syndicate Intercom";
-	pixel_x = -32;
+	pixel_x = -64;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -709,7 +709,7 @@
 /obj/item/device/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
-	pixel_x = -27
+	pixel_x = -54
 	},
 /turf/simulated/floor/carpet,
 /area/awaymission/challenge/end)
@@ -718,7 +718,7 @@
 /obj/machinery/door_control{
 	id = "velocity_room02";
 	name = "Blast Door Control";
-	pixel_x = -25;
+	pixel_x = -50;
 	req_access = list(101)
 	},
 /turf/simulated/floor/carpet,
@@ -726,7 +726,7 @@
 "cc" = (
 /obj/structure/table/woodentable,
 /obj/machinery/recharger{
-	pixel_y = 4
+	pixel_y = 8
 	},
 /turf/simulated/floor/carpet,
 /area/awaymission/challenge/end)
@@ -787,8 +787,8 @@
 "cm" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
+	pixel_x = 2;
+	pixel_y = 10
 	},
 /turf/simulated/floor/carpet,
 /area/awaymission/challenge/end)
@@ -1060,7 +1060,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -1092,7 +1092,7 @@
 "cW" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = -30
+	pixel_x = -60
 	},
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
@@ -1136,7 +1136,7 @@
 "db" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = -30
+	pixel_x = -60
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1145,7 +1145,7 @@
 "dc" = (
 /obj/structure/table,
 /obj/machinery/recharger{
-	pixel_y = 4
+	pixel_y = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1201,7 +1201,7 @@
 "dh" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = -30
+	pixel_x = -60
 	},
 /obj/structure/object_wall/wagon{
 	icon_state = "3,3"

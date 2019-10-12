@@ -637,13 +637,13 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		var/image/I = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = layer+0.8)//So it's above other stuff but below weapons and the like.
 		switch(i)//Now to determine offset so the result is somewhat blurred.
 			if(1)
-				I.pixel_x -= 1
+				I.pixel_x -= 2
 			if(2)
-				I.pixel_x += 1
+				I.pixel_x += 2
 			if(3)
-				I.pixel_y -= 1
+				I.pixel_y -= 2
 			if(4)
-				I.pixel_y += 1
+				I.pixel_y += 2
 
 		overlays += I//And finally add the overlay.
 	overlays += image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9)

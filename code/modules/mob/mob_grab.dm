@@ -270,14 +270,14 @@
 	affecting.layer = 4
 	switch(state)
 		if(GRAB_PASSIVE)
-			shift = 8
+			shift = 16
 			if(dancing) //look at partner
-				shift = 10
+				shift = 20
 				assailant.set_dir(get_dir(assailant, affecting))
 		if(GRAB_AGGRESSIVE)
-			shift = 12
+			shift = 24
 		if(GRAB_NECK)
-			shift = -10
+			shift = -20
 			adir = assailant.dir
 			affecting.set_dir(assailant.dir)
 			affecting.loc = assailant.loc

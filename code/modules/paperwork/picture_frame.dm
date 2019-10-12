@@ -158,8 +158,8 @@
 /obj/structure/picture_frame/atom_init(mapload, ndir, building = 0)
 	. = ..()
 	if(building)
-		pixel_x = (ndir & 3)? 0 : (ndir == 4 ? 28 : -28)
-		pixel_y = (ndir & 3)? (ndir == 1 ? 28 : -30) : 0
+		pixel_x = (ndir & 3)? 0 : (ndir == 4 ? 56 : -56)
+		pixel_y = (ndir & 3)? (ndir == 1 ? 56 : -60) : 0
 	update_icon()
 
 /obj/structure/picture_frame/Destroy()

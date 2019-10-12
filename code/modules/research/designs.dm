@@ -2158,8 +2158,8 @@ other types of metals and chemistry for reagents).
 
 /obj/item/weapon/disk/design_disk/atom_init()
 	. = ..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 
 
 /////////////////////////////////////////

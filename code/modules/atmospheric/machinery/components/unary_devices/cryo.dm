@@ -314,7 +314,7 @@
 
 		I = image(icon, "pod-o_top")
 		I.layer = 5 // this needs to be fairly high so it displays over most things, but it needs to be under lighting (at 10)
-		I.pixel_z = 32
+		I.pixel_z = WORLD_ICON_SIZE
 		overlays += I
 
 	else if(state_open)
@@ -322,20 +322,20 @@
 
 		I = image(icon, "pod-open_top")
 		I.layer = 5
-		I.pixel_z = 32
+		I.pixel_z = WORLD_ICON_SIZE
 		overlays += I
 	else
 		icon_state = "pod-[on]"
 
 		I = image(icon, "pod-[on]_top")
 		I.layer = 5
-		I.pixel_z = 32
+		I.pixel_z = WORLD_ICON_SIZE
 		overlays += I
 
 		if(occupant)
 			var/image/pickle = image(occupant.icon, occupant.icon_state)
 			pickle.overlays = occupant.overlays
-			pickle.pixel_z = 20
+			pickle.pixel_z = 40
 			pickle.layer = 5
 			overlays += pickle
 
@@ -345,7 +345,7 @@
 
 		I = image(icon, "lid-[on]_top")
 		I.layer = 5
-		I.pixel_z = 32
+		I.pixel_z = WORLD_ICON_SIZE
 		overlays += I
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_crawl_through()

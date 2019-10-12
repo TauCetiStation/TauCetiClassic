@@ -8,8 +8,8 @@
 	current_size = STAGE_TWO
 //	layer = LIGHTING_LAYER + 1
 //	plane = LIGHTING_PLANE + 1
-	pixel_x = -64
-	pixel_y = -64
+	pixel_x = -128
+	pixel_y = -128
 	move_self = 1
 	grav_pull = 6
 	contained = 0

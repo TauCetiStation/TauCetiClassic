@@ -15,8 +15,8 @@
 
 /obj/item/weapon/coin/atom_init()
 	. = ..()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	pixel_x = rand(0,32)-16
+	pixel_y = rand(0,16)-16
 	if(reagent)
 		create_reagents(4)
 		reagents.add_reagent(reagent, 4)

@@ -130,7 +130,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Starboard Solar APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/simulated/floor,
 /area/derelict/solar_control)
@@ -660,8 +660,8 @@
 "bO" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil/red{
-	pixel_x = 3;
-	pixel_y = -7
+	pixel_x = 6;
+	pixel_y = -14
 	},
 /turf/simulated/floor,
 /area/derelict/bridge)
@@ -675,8 +675,8 @@
 "bQ" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
+	pixel_x = -6;
+	pixel_y = 14
 	},
 /turf/simulated/floor,
 /area/derelict/bridge)
@@ -1045,7 +1045,7 @@
 /obj/structure/table,
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable,
 /turf/simulated/floor,
@@ -1166,8 +1166,8 @@
 "dq" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil/red{
-	pixel_x = 3;
-	pixel_y = -7
+	pixel_x = 6;
+	pixel_y = -14
 	},
 /turf/simulated/floor/airless,
 /area/derelict/bridge/access)
@@ -1204,8 +1204,8 @@
 /area/derelict/singularity_engine)
 "dw" = (
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = 1;
-	pixel_y = -1
+	pixel_x = 2;
+	pixel_y = -2
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -1341,7 +1341,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/simulated/floor/airless,
 /area/derelict/bridge/access)
@@ -2264,7 +2264,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /turf/simulated/floor/airless,
 /area/derelict/medical/chapel)
@@ -2279,7 +2279,7 @@
 "gJ" = (
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable,
 /turf/simulated/floor/airless{
@@ -2631,8 +2631,8 @@
 /area/derelict/hallway/primary)
 "hA" = (
 /obj/item/device/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
+	pixel_x = -16;
+	pixel_y = 8
 	},
 /turf/simulated/floor/airless,
 /area/derelict/hallway/primary)
@@ -2665,7 +2665,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/simulated/floor,
 /area/derelict/arrival)
@@ -2678,7 +2678,7 @@
 /obj/machinery/computer/pod/old{
 	id = "derelict_gun";
 	name = "ProComp IIe";
-	pixel_y = 7
+	pixel_y = 14
 	},
 /turf/simulated/floor{
 	icon_state = "chapel"
@@ -2857,7 +2857,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/simulated/floor/airless,
 /area/derelict/hallway/primary)
@@ -3166,7 +3166,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Worn-out APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /turf/simulated/floor/airless,
 /area/derelict/hallway/secondary)
@@ -3487,7 +3487,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /turf/simulated/floor/plating/airless,
 /area/derelict/bridge/ai_upload)

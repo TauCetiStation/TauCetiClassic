@@ -15,8 +15,8 @@
 
 /obj/item/stack/tile/plasteel/atom_init()
 	. = ..()
-	pixel_x = rand(1, 14)
-	pixel_y = rand(1, 14)
+	pixel_x = rand(2, 28)
+	pixel_y = rand(2, 28)
 
 /*
 /obj/item/stack/tile/plasteel/attack_self(mob/user)

@@ -21,7 +21,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /turf/simulated/floor,
 /area/awaymission/example)
@@ -32,19 +32,19 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /turf/simulated/floor,
 /area/awaymission/example)
 "ag" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /turf/simulated/floor,
 /area/awaymission/example)
@@ -115,7 +115,7 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
-	pixel_y = 1
+	pixel_y = 2
 	},
 /obj/machinery/gateway/center,
 /turf/simulated/floor,
@@ -367,7 +367,7 @@
 /obj/machinery/door_control{
 	id = "example";
 	name = "Privacy Shutters";
-	pixel_y = 25
+	pixel_y = 50
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -504,7 +504,7 @@
 /area/awaymission/example)
 "br" = (
 /obj/structure/toilet{
-	pixel_y = 12
+	pixel_y = 24
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -579,8 +579,8 @@
 "bB" = (
 /obj/structure/sink{
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -609,7 +609,7 @@
 "bF" = (
 /obj/machinery/vending/boozeomat{
 	density = 0;
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -618,7 +618,7 @@
 "bG" = (
 /obj/structure/bookcase{
 	density = 0;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/item/weapon/book/manual/wiki/barman_recipes,
 /obj/item/weapon/book/manual/wiki/chefs_recipes,
@@ -652,7 +652,7 @@
 "bK" = (
 /obj/structure/bookcase{
 	density = 0;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/item/weapon/book/manual/wiki/security_space_law,
@@ -809,7 +809,7 @@
 /area/awaymission/example)
 "ck" = (
 /obj/structure/noticeboard{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/item/weapon/paper{
 	info = "Remember, friday is David Bowie night! You guys had better fucking <i>be there!</i>";

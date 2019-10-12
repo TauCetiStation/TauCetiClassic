@@ -435,8 +435,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/ale/atom_init()
 	. = ..()
 	reagents.add_reagent("ale", 100)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer
 	name = "Space Beer"
@@ -446,7 +446,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer/atom_init()
 	. = ..()
 	reagents.add_reagent("beer", 100)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-20, 20)
+	pixel_y = rand(-20, 20)
 
 

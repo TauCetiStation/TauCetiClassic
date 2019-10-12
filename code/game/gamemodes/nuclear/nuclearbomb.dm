@@ -413,7 +413,7 @@ var/bomb_set
 /obj/machinery/nuclearbomb/post_buckle_mob(mob/living/M)
 	..()
 	if(M == buckled_mob)
-		M.pixel_y = 10
+		M.pixel_y = 20
 	else
 		M.pixel_y = 0
 

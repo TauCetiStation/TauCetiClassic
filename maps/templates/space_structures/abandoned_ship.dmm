@@ -95,8 +95,8 @@
 "aq" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 6;
-	pixel_y = -5
+	pixel_x = 12;
+	pixel_y = -10
 	},
 /obj/item/roller,
 /obj/item/weapon/FixOVein,
@@ -134,14 +134,6 @@
 	dir = 4
 	},
 /turf/space,
-/area/derelict/ship)
-"av" = (
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_f10"
-	},
 /area/derelict/ship)
 "aw" = (
 /obj/machinery/bodyscanner,
@@ -594,7 +586,7 @@
 /area/space)
 "bJ" = (
 /obj/machinery/light_switch{
-	pixel_x = 27
+	pixel_x = 54
 	},
 /obj/machinery/vending/sovietsoda,
 /turf/simulated/floor{
@@ -700,7 +692,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable{
 	d2 = 2;

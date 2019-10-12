@@ -220,9 +220,9 @@
 	playsound(src, 'sound/effects/bubble_spawn.ogg', VOL_EFFECTS_MASTER)
 	switch(M.dir)
 		if(WEST)
-			pixel_x = -20
+			pixel_x = -40
 		if(EAST)
-			pixel_x = 20
+			pixel_x = 40
 
 	var/atom/movable/AM = pick(subtypesof(/obj/item))
 	var/image/I = image("icon" = initial(AM.icon), "icon_state" = initial(AM.icon_state))
@@ -234,7 +234,7 @@
 	transform = Mx
 
 	var/end_in = rand(26,43)
-	animate(src, pixel_y = rand(28,66) , time = end_in, easing = SINE_EASING)
+	animate(src, pixel_y = rand(56,132) , time = end_in, easing = SINE_EASING)
 	addtimer(CALLBACK(src, .proc/pop), end_in + 3)
 
 /obj/effect/bubble_ian/proc/pop()

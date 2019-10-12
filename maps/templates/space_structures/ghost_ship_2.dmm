@@ -684,10 +684,10 @@
 "ce" = (
 /obj/structure/sink{
 	dir = 8;
-	pixel_x = -12
+	pixel_x = -24
 	},
 /obj/structure/dryer{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
@@ -711,10 +711,10 @@
 "ch" = (
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = 12
+	pixel_x = 24
 	},
 /obj/structure/dryer{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"

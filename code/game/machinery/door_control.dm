@@ -42,11 +42,11 @@
 		panel_locked = FALSE
 		req_one_access = list()
 		if(build_on == ON_WALL)
-			pixel_x = (dir & 3) ? 0 : (dir == 4 ? -24 : 24)
-			pixel_y = (dir & 3) ? (dir == 1 ? -24 : 24) : 0
+			pixel_x = (dir & 3) ? 0 : (dir == 4 ? -48 : 48)
+			pixel_y = (dir & 3) ? (dir == 1 ? -48 : 48) : 0
 		else if(build_on == ON_TABLE)
-			pixel_x = (dir & 3) ? 0 : (dir == 4 ? 7 : -7)
-			pixel_y = (dir & 3) ? (dir == 1 ? 9 : -3) : (dir == 4 ? 3 : 3)
+			pixel_x = (dir & 3) ? 0 : (dir == 4 ? 14 : -14)
+			pixel_y = (dir & 3) ? (dir == 1 ? 18 : -6) : (dir == 4 ? 6 : 6)
 		icon_state = "doorctrl_assembly0"
 		return
 	else
@@ -460,7 +460,7 @@
 				to_chat(usr, "<span class='warning'>There's already an object on this table!</span>")
 				return
 			else if(istype(machine, /obj/machinery/door_control))
-				if((ndir == NORTH && machine.pixel_y > 3) || (ndir == SOUTH && machine.pixel_y < 3) || (ndir == EAST && machine.pixel_x > 0) || (ndir == WEST && machine.pixel_x < 0))
+				if((ndir == NORTH && machine.pixel_y > 6) || (ndir == SOUTH && machine.pixel_y < 6) || (ndir == EAST && machine.pixel_x > 0) || (ndir == WEST && machine.pixel_x < 0))
 					to_chat(usr, "<span class='warning'>There's already a button on this side of table!</span>")
 					return
 

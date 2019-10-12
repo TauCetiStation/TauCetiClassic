@@ -23,8 +23,8 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	icon_state = "energy_ball"
 	layer = LIGHTING_LAYER + 1
 	plane = LIGHTING_PLANE + 1
-	pixel_x = -32
-	pixel_y = -32
+	pixel_x = -64
+	pixel_y = -64
 	current_size = STAGE_TWO
 	move_self = 1
 	grav_pull = 0
@@ -62,8 +62,8 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 
 		dir = tesla_zap(src, 7, TESLA_DEFAULT_POWER)
 
-		pixel_x = -32
-		pixel_y = -32
+		pixel_x = -WORLD_ICON_SIZE
+		pixel_y = -WORLD_ICON_SIZE
 		for(var/ball in orbiting_balls)
 			tesla_zap(ball, rand(1, CLAMP(orbiting_balls.len, 3, 7)), TESLA_MINI_POWER)
 	else

@@ -71,12 +71,12 @@
 	rot_matrix.Turn(Angle)
 
 	//Translation vector for origin and target
-	var/DX = (32*target.x+target.pixel_x)-(32*origin.x+origin.pixel_x)
-	var/DY = (32*target.y+target.pixel_y)-(32*origin.y+origin.pixel_y)
+	var/DX = (WORLD_ICON_SIZE*target.x+target.pixel_x)-(WORLD_ICON_SIZE*origin.x+origin.pixel_x)
+	var/DY = (WORLD_ICON_SIZE*target.y+target.pixel_y)-(WORLD_ICON_SIZE*origin.y+origin.pixel_y)
 	var/N = 0
 	var/length = round(sqrt((DX)**2+(DY)**2)) //hypotenuse of the triangle formed by target and origin's displacement
 
-	for(N in 0 to length-1 step 32)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
+	for(N in 0 to length-1 step WORLD_ICON_SIZE)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
 		var/obj/effect/ebeam/X = new beam_type(origin_oldloc)
 		X.owner = src
 		if(layer)
@@ -85,9 +85,9 @@
 
 		//Assign icon, for main segments it's base_icon, for the end, it's icon+icon_state
 		//cropped by a transparent box of length-N pixel size
-		if(N+32>length)
+		if(N+WORLD_ICON_SIZE>length)
 			var/icon/II = new(icon, icon_state)
-			II.DrawBox(null,1,(length-N),32,32)
+			II.DrawBox(null,1,(length-N),WORLD_ICON_SIZE,WORLD_ICON_SIZE)
 			X.icon = II
 		else
 			X.icon = base_icon
@@ -99,22 +99,22 @@
 		if(DX == 0)
 			Pixel_x = 0
 		else
-			Pixel_x = round(sin(Angle)+32*sin(Angle)*(N+16)/32)
+			Pixel_x = round(sin(Angle)+WORLD_ICON_SIZE*sin(Angle)*(N+32)/WORLD_ICON_SIZE)
 		if(DY == 0)
 			Pixel_y = 0
 		else
-			Pixel_y = round(cos(Angle)+32*cos(Angle)*(N+16)/32)
+			Pixel_y = round(cos(Angle)+WORLD_ICON_SIZE*cos(Angle)*(N+32)/WORLD_ICON_SIZE)
 
 		//Position the effect so the beam is one continous line
 		var/a
-		if(abs(Pixel_x)>32)
-			a = Pixel_x > 0 ? round(Pixel_x / 32) : CEIL(Pixel_x / 32)
+		if(abs(Pixel_x)>WORLD_ICON_SIZE)
+			a = Pixel_x > 0 ? round(Pixel_x / WORLD_ICON_SIZE) : CEIL(Pixel_x / WORLD_ICON_SIZE)
 			X.x += a
-			Pixel_x %= 32
-		if(abs(Pixel_y)>32)
-			a = Pixel_y > 0 ? round(Pixel_y / 32) : CEIL(Pixel_y / 32)
+			Pixel_x %= WORLD_ICON_SIZE
+		if(abs(Pixel_y)>WORLD_ICON_SIZE)
+			a = Pixel_y > 0 ? round(Pixel_y / WORLD_ICON_SIZE) : CEIL(Pixel_y / WORLD_ICON_SIZE)
 			X.y += a
-			Pixel_y %= 32
+			Pixel_y %= WORLD_ICON_SIZE
 
 		X.pixel_x = Pixel_x
 		X.pixel_y = Pixel_y

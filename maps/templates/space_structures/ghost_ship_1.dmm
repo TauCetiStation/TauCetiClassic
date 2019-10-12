@@ -307,8 +307,8 @@
 "aW" = (
 /obj/item/ammo_casing/a12mm,
 /obj/item/ammo_casing/a12mm{
-	pixel_x = -4;
-	pixel_y = 5
+	pixel_x = -8;
+	pixel_y = 10
 	},
 /turf/simulated/floor/airless,
 /turf/space,
@@ -326,8 +326,8 @@
 /obj/item/ammo_casing/a12mm,
 /obj/item/ammo_casing/a12mm,
 /obj/item/ammo_casing/a12mm{
-	pixel_x = -4;
-	pixel_y = 5
+	pixel_x = -8;
+	pixel_y = 10
 	},
 /turf/simulated/floor{
 	icon_state = "damaged2"
@@ -461,11 +461,11 @@
 /area/ghostship)
 "bu" = (
 /obj/item/ammo_casing/a12mm{
-	pixel_x = 4
+	pixel_x = 8
 	},
 /obj/item/ammo_casing/a12mm{
-	pixel_x = -4;
-	pixel_y = 5
+	pixel_x = -8;
+	pixel_y = 10
 	},
 /turf/simulated/floor/airless,
 /area/ghostship)
@@ -540,8 +540,8 @@
 /area/ghostship)
 "bG" = (
 /obj/item/ammo_casing/a12mm{
-	pixel_x = -4;
-	pixel_y = 5
+	pixel_x = -8;
+	pixel_y = 10
 	},
 /turf/simulated/floor/airless,
 /area/ghostship)
@@ -665,18 +665,18 @@
 /area/ghostship)
 "cc" = (
 /obj/item/ammo_casing/a12mm{
-	pixel_x = 4
+	pixel_x = 8
 	},
 /turf/simulated/floor/airless,
 /area/ghostship)
 "cd" = (
 /obj/item/ammo_casing/a12mm{
-	pixel_x = -4;
-	pixel_y = 5
+	pixel_x = -8;
+	pixel_y = 10
 	},
 /obj/item/ammo_casing/a12mm,
 /obj/item/ammo_casing/a12mm{
-	pixel_x = 4
+	pixel_x = 8
 	},
 /turf/simulated/floor/airless,
 /area/ghostship)
@@ -779,15 +779,15 @@
 /area/ghostship)
 "cA" = (
 /obj/item/ammo_casing/a12mm{
-	pixel_x = 4
+	pixel_x = 8
 	},
 /obj/item/ammo_casing/a12mm{
-	pixel_x = -4;
-	pixel_y = 5
+	pixel_x = -8;
+	pixel_y = 10
 	},
 /obj/item/ammo_casing/a12mm{
-	pixel_x = 2;
-	pixel_y = -7
+	pixel_x = 4;
+	pixel_y = -14
 	},
 /turf/simulated/floor/airless/ceiling,
 /area/ghostship)

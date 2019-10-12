@@ -44,7 +44,7 @@
 "aag" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/machinery/optable,
 /obj/item/clothing/head/surgery,
@@ -56,12 +56,12 @@
 "aah" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/masks{
-	pixel_x = -5;
-	pixel_y = -5
+	pixel_x = -10;
+	pixel_y = -10
 	},
 /obj/item/weapon/storage/box/gloves{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/belt/medical/surg/full,
 /turf/unsimulated/floor/velocity{
@@ -78,7 +78,7 @@
 /area/centcom)
 "aaj" = (
 /obj/machinery/firealarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/machinery/light{
 	dir = 1
@@ -145,27 +145,27 @@
 	desc = "A remote control switch for port-side blast doors.";
 	id = "velocity05";
 	name = "Security Doors Right";
-	pixel_x = 7;
-	pixel_y = -32;
+	pixel_x = 14;
+	pixel_y = -64;
 	req_access = list(101)
 	},
 /obj/machinery/door_control{
 	desc = "A remote control switch for port-side blast doors.";
 	id = "velocity06";
 	name = "Security Doors Left";
-	pixel_x = -4;
-	pixel_y = -32;
+	pixel_x = -8;
+	pixel_y = -64;
 	req_access = list(101)
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/photocopier{
 	density = 0;
 	layer = 2;
-	pixel_x = 5
+	pixel_x = 10
 	},
 /obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
+	pixel_x = -6;
+	pixel_y = 14
 	},
 /obj/item/weapon/stamp/denied,
 /obj/item/weapon/stamp/centcomm{
@@ -182,27 +182,27 @@
 	desc = "A remote control switch for port-side blast doors.";
 	id = "velocity03";
 	name = "Security Doors Right";
-	pixel_x = 7;
-	pixel_y = 32;
+	pixel_x = 14;
+	pixel_y = 64;
 	req_access = list(101)
 	},
 /obj/machinery/door_control{
 	desc = "A remote control switch for port-side blast doors.";
 	id = "velocity04";
 	name = "Security Doors Left";
-	pixel_x = -4;
-	pixel_y = 32;
+	pixel_x = -8;
+	pixel_y = 64;
 	req_access = list(101)
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/photocopier{
 	density = 0;
 	layer = 2;
-	pixel_x = 5
+	pixel_x = 10
 	},
 /obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
+	pixel_x = -6;
+	pixel_y = 14
 	},
 /obj/item/weapon/stamp/denied,
 /obj/item/weapon/stamp/centcomm{
@@ -272,7 +272,7 @@
 /area/centcom/arrival)
 "aay" = (
 /obj/structure/sign/barber{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/machinery/vending/barbervend{
 	req_access = list(101)
@@ -287,7 +287,7 @@
 	},
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/machinery/light{
 	dir = 8
@@ -303,7 +303,7 @@
 "aaA" = (
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = 11
+	pixel_x = 22
 	},
 /turf/unsimulated/floor{
 	icon_state = "purplechecker"
@@ -312,8 +312,8 @@
 "aaB" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/storage/box/donkpockets,
 /turf/unsimulated/floor{
@@ -326,19 +326,19 @@
 	desc = "A remote control switch for port-side blast doors.";
 	id = "monorail_01";
 	name = "Security Doors Monorail 01";
-	pixel_x = 32;
-	pixel_y = 8;
+	pixel_x = 64;
+	pixel_y = 16;
 	req_access = list(101)
 	},
 /obj/machinery/door_control{
 	desc = "A remote control switch for port-side blast doors.";
 	id = "monorail_02";
 	name = "Security Doors Monorail 02";
-	pixel_x = 32;
+	pixel_x = 64;
 	req_access = list(101)
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/machinery/computer/card{
 	req_access = list(101)
@@ -381,7 +381,7 @@
 "aaI" = (
 /obj/structure/centcom_barrier,
 /obj/structure/mirror/magic{
-	pixel_x = 30
+	pixel_x = 60
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -389,7 +389,7 @@
 /area/centcom/arrival)
 "aaJ" = (
 /obj/machinery/atm{
-	pixel_x = -30
+	pixel_x = -60
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -471,7 +471,7 @@
 /obj/machinery/computer/arcade,
 /obj/structure/sign/velocity_overlay/reklama{
 	name = "\improper It's in the Hat!";
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/unsimulated/floor{
 	icon_state = "wooden-2"
@@ -484,7 +484,7 @@
 /area/tophat)
 "abf" = (
 /obj/effect/overlay/tophat_portal{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/unsimulated/floor{
 	icon_state = "wooden-2"
@@ -1059,7 +1059,7 @@
 "aei" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "CentComConv02";
-	pixel_y = 7
+	pixel_y = 14
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
@@ -1099,7 +1099,7 @@
 "afa" = (
 /obj/machinery/flasher{
 	id = "shutflash";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /obj/structure/stool/bed/chair/schair/wagon,
 /turf/simulated/shuttle/floor4,
@@ -1153,7 +1153,7 @@
 "afy" = (
 /obj/machinery/flasher{
 	id = "shutflash";
-	pixel_y = -28
+	pixel_y = -56
 	},
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 1
@@ -1212,7 +1212,7 @@
 "afQ" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_y = -32;
+	pixel_y = -64;
 	req_access = list(0)
 	},
 /turf/simulated/shuttle/floor{
@@ -1222,7 +1222,7 @@
 "aga" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_x = 30;
+	pixel_x = 60;
 	req_access = list(0)
 	},
 /turf/simulated/shuttle/floor{
@@ -1792,7 +1792,7 @@
 /obj/machinery/door_control{
 	id = "syndieshutters";
 	name = "remote shutter control";
-	pixel_x = -28;
+	pixel_x = -56;
 	req_access = list(150)
 	},
 /turf/simulated/shuttle/floor{
@@ -1925,8 +1925,8 @@
 "aiC" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/machinery/light{
 	dir = 8
@@ -1973,7 +1973,7 @@
 	frequency = 1213;
 	listening = 0;
 	name = "Syndicate Ops Intercom";
-	pixel_y = 28;
+	pixel_y = 56;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -2245,7 +2245,7 @@
 /area/syndicate_mothership)
 "ajI" = (
 /obj/structure/sink/kitchen{
-	pixel_y = 30
+	pixel_y = 60
 	},
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -2282,8 +2282,8 @@
 "ajO" = (
 /obj/structure/table/reinforced,
 /obj/machinery/kitchen_machine/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -2300,8 +2300,8 @@
 "ajU" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -2439,7 +2439,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
-	pixel_x = -4
+	pixel_x = -8
 	},
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -2624,7 +2624,7 @@
 	freerange = 1;
 	frequency = 1213;
 	name = "Syndicate Intercom";
-	pixel_x = -32;
+	pixel_x = -64;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -2639,7 +2639,7 @@
 /area/syndicate_mothership)
 "akR" = (
 /obj/structure/urinal{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -2647,7 +2647,7 @@
 /area/syndicate_mothership)
 "akS" = (
 /obj/machinery/shower{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/window/basic{
 	dir = 8
@@ -2658,7 +2658,7 @@
 /area/syndicate_mothership)
 "akT" = (
 /obj/machinery/shower{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/item/weapon/soap/syndie,
 /obj/machinery/light/small{
@@ -2779,7 +2779,7 @@
 	freerange = 1;
 	frequency = 1213;
 	name = "Syndicate Intercom";
-	pixel_y = -32;
+	pixel_y = -64;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -2790,8 +2790,8 @@
 "alm" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
+	pixel_x = -6;
+	pixel_y = 14
 	},
 /obj/item/weapon/pen,
 /turf/simulated/shuttle/floor{
@@ -2800,12 +2800,12 @@
 /area/syndicate_station/start)
 "aln" = (
 /obj/structure/mirror{
-	pixel_x = -30
+	pixel_x = -60
 	},
 /obj/structure/sink{
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -2815,7 +2815,7 @@
 /obj/machinery/light/small,
 /obj/structure/dryer{
 	dir = 8;
-	pixel_x = 6
+	pixel_x = 12
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -2875,13 +2875,13 @@
 /area/start)
 "alB" = (
 /obj/item/stack/cable_coil{
-	pixel_x = 3;
-	pixel_y = -7
+	pixel_x = 6;
+	pixel_y = -14
 	},
 /obj/machinery/cell_charger,
 /obj/item/device/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
+	pixel_x = -16;
+	pixel_y = 8
 	},
 /obj/item/weapon/stock_parts/cell/high,
 /obj/item/weapon/stock_parts/cell/high,
@@ -2914,7 +2914,7 @@
 /area/syndicate_mothership)
 "alG" = (
 /obj/structure/closet/walllocker{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /obj/item/weapon/reagent_containers/glass/bucket/full,
 /obj/item/weapon/reagent_containers/spray/cleaner,
@@ -2943,8 +2943,8 @@
 "alK" = (
 /obj/structure/sink{
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
@@ -2978,7 +2978,7 @@
 	frequency = 1331;
 	master_tag = "synd_airlock";
 	name = "interior access button";
-	pixel_y = -25
+	pixel_y = -50
 	},
 /obj/machinery/light,
 /turf/simulated/shuttle/floor{
@@ -3034,7 +3034,7 @@
 /area/syndicate_station/start)
 "alV" = (
 /obj/structure/closet/medical_wall{
-	pixel_x = 28
+	pixel_x = 56
 	},
 /obj/item/weapon/surgicaldrill,
 /obj/item/clothing/gloves/latex,
@@ -3081,8 +3081,8 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	frequency = 1331;
 	id_tag = "synd_airlock";
-	pixel_x = -5;
-	pixel_y = 32;
+	pixel_x = -10;
+	pixel_y = 64;
 	tag_airpump = "synd_pump";
 	tag_chamber_sensor = "synd_sensor";
 	tag_exterior_door = "synd_outer";
@@ -3091,8 +3091,8 @@
 /obj/machinery/airlock_sensor{
 	frequency = 1331;
 	id_tag = "synd_sensor";
-	pixel_x = 10;
-	pixel_y = 25
+	pixel_x = 20;
+	pixel_y = 50
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 4;
@@ -3145,12 +3145,12 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/o2,
 /obj/item/weapon/storage/firstaid/fire{
-	pixel_x = 6;
-	pixel_y = 6
+	pixel_x = 12;
+	pixel_y = 12
 	},
 /obj/item/weapon/storage/box/bodybags{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
 /obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
@@ -3285,8 +3285,8 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/adv,
 /obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = 6;
-	pixel_y = 6
+	pixel_x = 12;
+	pixel_y = 12
 	},
 /obj/item/roller,
 /obj/item/weapon/reagent_containers/syringe/antiviral,
@@ -3297,7 +3297,7 @@
 	freerange = 1;
 	frequency = 1213;
 	name = "Syndicate Intercom";
-	pixel_x = 32;
+	pixel_x = 64;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -3316,8 +3316,8 @@
 /obj/item/weapon/retractor,
 /obj/item/stack/medical/advanced/bruise_pack,
 /obj/item/weapon/FixOVein{
-	pixel_x = -6;
-	pixel_y = 1
+	pixel_x = -12;
+	pixel_y = 2
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
@@ -3359,8 +3359,8 @@
 "amD" = (
 /obj/structure/table,
 /obj/item/device/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
+	pixel_x = -16;
+	pixel_y = 8
 	},
 /obj/item/device/assembly/signaler,
 /obj/item/device/assembly/infra,
@@ -3389,8 +3389,8 @@
 	frequency = 1331;
 	master_tag = "synd_airlock";
 	name = "exterior access button";
-	pixel_x = 8;
-	pixel_y = 28
+	pixel_x = 16;
+	pixel_y = 56
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -3469,7 +3469,7 @@
 "anc" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = -30
+	pixel_x = -60
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
@@ -3568,7 +3568,7 @@
 "anx" = (
 /obj/item/weapon/scalpel,
 /obj/item/weapon/circular_saw{
-	pixel_y = 10
+	pixel_y = 20
 	},
 /obj/structure/table,
 /turf/simulated/shuttle/floor{
@@ -3606,7 +3606,7 @@
 /obj/machinery/airlock_sensor{
 	frequency = 1331;
 	id_tag = "vox_west_sensor";
-	pixel_x = 25
+	pixel_x = 50
 	},
 /obj/machinery/light/spot{
 	dir = 4
@@ -3647,7 +3647,7 @@
 /obj/machinery/airlock_sensor{
 	frequency = 1331;
 	id_tag = "vox_east_sensor";
-	pixel_x = -25
+	pixel_x = -50
 	},
 /obj/machinery/light/spot{
 	dir = 8
@@ -3836,14 +3836,14 @@
 "aoK" = (
 /obj/machinery/ignition_switch{
 	id = "Incinerator_v";
-	pixel_x = 24;
-	pixel_y = -6
+	pixel_x = 48;
+	pixel_y = -12
 	},
 /obj/machinery/door_control{
 	id = "velocity_firedoor";
 	name = "Fire Protect Shutters";
-	pixel_x = 24;
-	pixel_y = 5
+	pixel_x = 48;
+	pixel_y = 10
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor5"
@@ -3863,7 +3863,7 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	frequency = 1331;
 	id_tag = "vox_west_control";
-	pixel_x = 24;
+	pixel_x = 48;
 	req_access = list(150);
 	tag_airpump = "vox_west_vent";
 	tag_chamber_sensor = "vox_west_sensor";
@@ -3901,7 +3901,7 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	frequency = 1331;
 	id_tag = "vox_east_control";
-	pixel_x = -24;
+	pixel_x = -48;
 	req_access = list(150);
 	tag_airpump = "vox_east_vent";
 	tag_chamber_sensor = "vox_east_sensor";
@@ -3968,8 +3968,8 @@
 /obj/machinery/door_control{
 	id = "velocity_main2";
 	name = "Maintenance Door Control";
-	pixel_x = -1;
-	pixel_y = -24;
+	pixel_x = -2;
+	pixel_y = -48;
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
@@ -3983,8 +3983,8 @@
 /obj/machinery/door_control{
 	id = "velocity_drop";
 	name = "Drop Protect Shutters";
-	pixel_x = 5;
-	pixel_y = -24
+	pixel_x = 10;
+	pixel_y = -48
 	},
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -4151,7 +4151,7 @@
 "apE" = (
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable,
 /turf/unsimulated/floor{
@@ -4221,7 +4221,7 @@
 /area/alien)
 "apT" = (
 /obj/structure/toilet{
-	pixel_y = 8
+	pixel_y = 16
 	},
 /obj/machinery/door/window/southleft{
 	name = "toilet door"
@@ -4232,7 +4232,7 @@
 /area/centcom/arrival)
 "apU" = (
 /obj/machinery/shower{
-	pixel_y = 20
+	pixel_y = 40
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -4246,7 +4246,7 @@
 /area/centcom/arrival)
 "apV" = (
 /obj/machinery/shower{
-	pixel_y = 20
+	pixel_y = 40
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -4260,11 +4260,11 @@
 /area/centcom/arrival)
 "apW" = (
 /obj/structure/mirror{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = 11
+	pixel_x = 22
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -4292,8 +4292,8 @@
 /obj/machinery/door_control{
 	id = "velocity_room01";
 	name = "Blast Door Control";
-	pixel_x = -1;
-	pixel_y = 24;
+	pixel_x = -2;
+	pixel_y = 48;
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
@@ -4415,7 +4415,7 @@
 "aqq" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/machinery/computer/security{
 	dir = 4
@@ -4454,7 +4454,7 @@
 /area/centcom/arrival)
 "aqw" = (
 /obj/machinery/firealarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/machinery/light{
 	dir = 1
@@ -4578,8 +4578,8 @@
 /area/centcom/arrival)
 "aqW" = (
 /obj/item/weapon/storage/box/bodybags{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/unsimulated/floor{
 	icon_state = "engine"
@@ -4730,7 +4730,7 @@
 "ars" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "CKLoad";
-	pixel_y = 7
+	pixel_y = 14
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -4747,15 +4747,15 @@
 	desc = "A remote control switch for port-side blast doors.";
 	id = "monorail_01";
 	name = "Security Doors Monorail 01";
-	pixel_x = 32;
-	pixel_y = 8;
+	pixel_x = 64;
+	pixel_y = 16;
 	req_access = list(101)
 	},
 /obj/machinery/door_control{
 	desc = "A remote control switch for port-side blast doors.";
 	id = "monorail_02";
 	name = "Security Doors Monorail 02";
-	pixel_x = 32;
+	pixel_x = 64;
 	req_access = list(101)
 	},
 /obj/structure/centcom_barrier,
@@ -4826,20 +4826,20 @@
 "arO" = (
 /obj/structure/table/reinforced,
 /obj/machinery/status_display{
-	pixel_x = 32;
+	pixel_x = 64;
 	supply_display = 1
 	},
 /obj/machinery/door_control{
 	id = "QMLoaddoor";
 	layer = 4;
 	name = "Loading Doors";
-	pixel_y = -8
+	pixel_y = -16
 	},
 /obj/machinery/door_control{
 	id = "QMLoaddoor2";
 	layer = 4;
 	name = "Loading Doors";
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -4913,8 +4913,8 @@
 "asc" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
+	pixel_x = -6;
+	pixel_y = 14
 	},
 /obj/item/weapon/pen,
 /turf/unsimulated/floor{
@@ -5151,8 +5151,8 @@
 "asP" = (
 /obj/structure/table/reinforced,
 /obj/machinery/kitchen_machine/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -5220,7 +5220,7 @@
 /area/centcom/arrival)
 "atf" = (
 /obj/structure/toilet{
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/unsimulated/floor{
 	dir = 1;
@@ -5252,7 +5252,7 @@
 /area/centcom/arrival)
 "ath" = (
 /obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 30
+	pixel_x = 60
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -5334,7 +5334,7 @@
 "atv" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/machinery/light{
 	dir = 8
@@ -5348,28 +5348,28 @@
 	id = "velocity_cell2";
 	name = "Cell 2 flasher button";
 	pixel_x = 36;
-	pixel_y = -4
+	pixel_y = -8
 	},
 /obj/machinery/flasher_button{
 	id = "velocity_cell1";
 	name = "Cell 1 flasher button";
 	pixel_x = 36;
-	pixel_y = 4
+	pixel_y = 8
 	},
 /obj/machinery/door_control{
 	desc = "A remote control switch for port-side blast doors.";
 	id = "velocity_cell02";
 	name = "Security Doors Cell 2";
-	pixel_x = 26;
-	pixel_y = -7;
+	pixel_x = 52;
+	pixel_y = -14;
 	req_access = list(101)
 	},
 /obj/machinery/door_control{
 	desc = "A remote control switch for port-side blast doors.";
 	id = "velocity_cell01";
 	name = "Security Doors Cell 1";
-	pixel_x = 26;
-	pixel_y = 4;
+	pixel_x = 52;
+	pixel_y = 8;
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
@@ -5406,7 +5406,7 @@
 /area/space)
 "atH" = (
 /obj/structure/urinal{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -5414,7 +5414,7 @@
 /area/centcom/arrival)
 "atI" = (
 /obj/structure/urinal{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/machinery/light{
 	dir = 8
@@ -5426,10 +5426,10 @@
 "atJ" = (
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = 11
+	pixel_x = 22
 	},
 /obj/structure/mirror{
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -5450,7 +5450,7 @@
 "atL" = (
 /obj/structure/table/glass,
 /obj/structure/mirror/magic{
-	pixel_y = 30
+	pixel_y = 60
 	},
 /obj/item/weapon/haircomb,
 /obj/item/weapon/razor,
@@ -5503,7 +5503,7 @@
 "atU" = (
 /obj/structure/centcom_barrier,
 /obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -30
+	pixel_x = -60
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -5527,7 +5527,7 @@
 /area/centcom/arrival)
 "atX" = (
 /obj/machinery/recharger/wallcharger{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/machinery/computer/arrival_shuttle{
 	dir = 8
@@ -5584,7 +5584,7 @@
 /area/shuttle/transport1/centcom)
 "aum" = (
 /obj/structure/sign/velocity_overlay/reklama/pda_x{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -5592,7 +5592,7 @@
 /area/centcom/arrival)
 "aun" = (
 /obj/structure/closet/emcloset{
-	pixel_x = -7
+	pixel_x = -14
 	},
 /obj/machinery/light{
 	dir = 8
@@ -5604,8 +5604,8 @@
 /area/centcom/arrival)
 "aup" = (
 /obj/structure/sign/velocity_overlay/reklama/soda_ad{
-	pixel_x = -28;
-	pixel_y = -20
+	pixel_x = -56;
+	pixel_y = -40
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -5620,7 +5620,7 @@
 /area/centcom/arrival)
 "aur" = (
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/machinery/light{
 	dir = 1
@@ -5713,7 +5713,7 @@
 	desc = "A remote control switch for port-side shutters.";
 	id = "velocity_01";
 	name = "Security Shutters";
-	pixel_y = -32;
+	pixel_y = -64;
 	req_access = list(101)
 	},
 /obj/structure/filingcabinet/chestdrawer,
@@ -5739,29 +5739,29 @@
 	desc = "A remote control switch for port-side blast doors.";
 	id = "velocity_cell03";
 	name = "Security Doors Cell 3";
-	pixel_x = 26;
-	pixel_y = 4;
+	pixel_x = 52;
+	pixel_y = 8;
 	req_access = list(101)
 	},
 /obj/machinery/door_control{
 	desc = "A remote control switch for port-side blast doors.";
 	id = "velocity_cell04";
 	name = "Security Doors Cell 4";
-	pixel_x = 26;
-	pixel_y = -7;
+	pixel_x = 52;
+	pixel_y = -14;
 	req_access = list(101)
 	},
 /obj/machinery/flasher_button{
 	id = "velocity_cell3";
 	name = "Cell 3 flasher button";
 	pixel_x = 36;
-	pixel_y = 4
+	pixel_y = 8
 	},
 /obj/machinery/flasher_button{
 	id = "velocity_cell4";
 	name = "Cell 4 flasher button";
 	pixel_x = 36;
-	pixel_y = -4
+	pixel_y = -8
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -6003,7 +6003,7 @@
 "avT" = (
 /obj/structure/sign/velocity_tablo{
 	icon_state = "velocity_tablo";
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -6013,8 +6013,8 @@
 /obj/structure/rack,
 /obj/item/weapon/storage/briefcase,
 /obj/item/weapon/storage/briefcase{
-	pixel_x = -2;
-	pixel_y = -5
+	pixel_x = -4;
+	pixel_y = -10
 	},
 /obj/structure/window/reinforced{
 	dir = 1
@@ -6101,7 +6101,7 @@
 "awr" = (
 /obj/structure/sign/directions/velocity{
 	dir = 4;
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
@@ -6139,12 +6139,12 @@
 /obj/structure/sign/mark{
 	icon_state = "1";
 	layer = 3.5;
-	pixel_x = -26
+	pixel_x = -52
 	},
 /obj/structure/sign/mark{
 	icon_state = "4";
 	layer = 3.5;
-	pixel_x = -20
+	pixel_x = -40
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -6365,7 +6365,7 @@
 "axk" = (
 /obj/machinery/information_display{
 	icon_state = "screen_amin_velocity_90";
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -6420,12 +6420,12 @@
 /obj/structure/sign/mark{
 	icon_state = "1";
 	layer = 3.5;
-	pixel_x = -26
+	pixel_x = -52
 	},
 /obj/structure/sign/mark{
 	icon_state = "2";
 	layer = 3.5;
-	pixel_x = -20
+	pixel_x = -40
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -6508,12 +6508,12 @@
 /obj/structure/sign/mark{
 	icon_state = "1";
 	layer = 3.5;
-	pixel_x = -26
+	pixel_x = -52
 	},
 /obj/structure/sign/mark{
 	icon_state = "0";
 	layer = 3.5;
-	pixel_x = -20
+	pixel_x = -40
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -6617,13 +6617,13 @@
 	desc = "A remote control switch for port-side shutters.";
 	id = "velocity_02";
 	name = "Security Shutters";
-	pixel_y = 32;
+	pixel_y = 64;
 	req_access = list(101)
 	},
 /obj/structure/filingcabinet/chestdrawer,
 /obj/item/weapon/folder/red,
 /obj/machinery/computer/guestpass/dark{
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -6631,7 +6631,7 @@
 /area/centcom/arrival)
 "ayk" = (
 /obj/structure/closet/emcloset{
-	pixel_x = -7
+	pixel_x = -14
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -6645,7 +6645,7 @@
 /area/centcom/arrival)
 "aym" = (
 /obj/machinery/newscaster{
-	pixel_y = -28
+	pixel_y = -56
 	},
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -6684,7 +6684,7 @@
 /obj/structure/sign/mark{
 	icon_state = "8";
 	layer = 3.5;
-	pixel_x = -26
+	pixel_x = -52
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -6759,7 +6759,7 @@
 /area/centcom/arrival)
 "ayz" = (
 /obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -30
+	pixel_x = -60
 	},
 /obj/machinery/light{
 	dir = 8
@@ -6795,7 +6795,7 @@
 /obj/structure/sign/mark{
 	icon_state = "6";
 	layer = 3.5;
-	pixel_x = -26
+	pixel_x = -52
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -6806,7 +6806,7 @@
 "ayI" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -6875,7 +6875,7 @@
 /obj/item/device/radio/intercom{
 	frequency = 1443;
 	name = "Spec Ops Intercom";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
@@ -6923,7 +6923,7 @@
 /area/shuttle/officer/velocity)
 "azf" = (
 /obj/structure/closet/emcloset{
-	pixel_x = -7
+	pixel_x = -14
 	},
 /obj/machinery/light{
 	dir = 1
@@ -6934,7 +6934,7 @@
 /area/centcom/arrival)
 "azg" = (
 /obj/structure/closet/emcloset{
-	pixel_x = 7
+	pixel_x = 14
 	},
 /obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
@@ -6956,7 +6956,7 @@
 /obj/machinery/computer/security/telescreen{
 	name = "Spec. Ops. Monitor";
 	network = list("CREED");
-	pixel_y = 30
+	pixel_y = 60
 	},
 /obj/structure/stool/bed/chair/metal{
 	dir = 4
@@ -6992,7 +6992,7 @@
 /obj/structure/sign/mark{
 	icon_state = "4";
 	layer = 3.5;
-	pixel_x = -26
+	pixel_x = -52
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -7021,7 +7021,7 @@
 /area/shuttle/officer/velocity)
 "azu" = (
 /obj/structure/closet/walllocker/emerglocker/north{
-	pixel_x = -32;
+	pixel_x = -64;
 	pixel_y = 0
 	},
 /obj/structure/stool/bed/chair/schair/monorail_chair{
@@ -7066,8 +7066,8 @@
 /obj/machinery/door_control{
 	id = "velocity_main";
 	name = "Maintenance Door Control";
-	pixel_x = -1;
-	pixel_y = -24;
+	pixel_x = -2;
+	pixel_y = -48;
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
@@ -7133,8 +7133,8 @@
 	anchored = 1;
 	invisibility = 61;
 	name = "invisibly light";
-	pixel_x = 1;
-	pixel_y = 5
+	pixel_x = 2;
+	pixel_y = 10
 	},
 /turf/unsimulated/floor{
 	icon_state = "circuit"
@@ -7181,7 +7181,7 @@
 /obj/item/device/radio/intercom{
 	freerange = 1;
 	name = "Station Intercom (General)";
-	pixel_x = -30
+	pixel_x = -60
 	},
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 1;
@@ -7286,8 +7286,8 @@
 /obj/machinery/door_control{
 	id = "velocity_main";
 	name = "Maintenance Door Control";
-	pixel_x = -1;
-	pixel_y = 24;
+	pixel_x = -2;
+	pixel_y = 48;
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
@@ -7328,7 +7328,7 @@
 /obj/structure/sign/mark{
 	icon_state = "2";
 	layer = 3.5;
-	pixel_x = -26
+	pixel_x = -52
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -7479,7 +7479,7 @@
 	frequency = 1441;
 	listening = 0;
 	name = "Spec Ops Intercom";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -7586,7 +7586,7 @@
 	frequency = 1441;
 	listening = 0;
 	name = "Spec Ops Intercom";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /obj/machinery/light{
 	dir = 1
@@ -7649,7 +7649,7 @@
 	frequency = 1441;
 	listening = 0;
 	name = "Spec Ops Intercom";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /obj/machinery/light{
 	dir = 1
@@ -7782,7 +7782,7 @@
 	frequency = 1441;
 	listening = 0;
 	name = "Spec Ops Intercom";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/unsimulated/floor{
 	dir = 1;
@@ -7839,13 +7839,13 @@
 	},
 /obj/item/stack/sheet/metal{
 	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/stack/sheet/metal{
 	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/stack/sheet/plasteel{
 	amount = 50
@@ -7926,7 +7926,7 @@
 "aBQ" = (
 /obj/structure/table,
 /obj/machinery/recharger{
-	pixel_y = 4
+	pixel_y = 8
 	},
 /obj/item/weapon/handcuffs,
 /turf/unsimulated/floor{
@@ -8506,7 +8506,7 @@
 	frequency = 1441;
 	listening = 0;
 	name = "Spec Ops Intercom";
-	pixel_x = -32
+	pixel_x = -64
 	},
 /obj/machinery/light{
 	dir = 8
@@ -8905,7 +8905,7 @@
 	dir = 8;
 	listening = 0;
 	name = "Station Intercom (General)";
-	pixel_x = -28
+	pixel_x = -56
 	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
@@ -9086,7 +9086,7 @@
 /area/centcom/specops)
 "aFB" = (
 /obj/structure/closet/secure_closet/medical3{
-	pixel_x = 5
+	pixel_x = 10
 	},
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -9094,7 +9094,7 @@
 /area/centcom/specops)
 "aFC" = (
 /obj/machinery/vending/medical{
-	pixel_x = -2
+	pixel_x = -4
 	},
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -9481,8 +9481,8 @@
 "aHg" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = -2;
-	pixel_y = 4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /obj/item/weapon/storage/firstaid/toxin,
 /turf/simulated/shuttle/floor,
@@ -9491,19 +9491,19 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/fire{
-	pixel_x = -2;
-	pixel_y = 4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aHi" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 2
+	pixel_x = 4
 	},
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = -2;
-	pixel_y = 4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
@@ -9559,7 +9559,7 @@
 "aHr" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_x = -30;
+	pixel_x = -60;
 	req_access = list(0)
 	},
 /turf/simulated/shuttle/floor,
@@ -9574,7 +9574,7 @@
 "aHu" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_x = 30;
+	pixel_x = 60;
 	req_access = list(0)
 	},
 /turf/simulated/shuttle/floor,
@@ -9596,7 +9596,7 @@
 /area/centcom/specops)
 "aHy" = (
 /obj/structure/closet/secure_closet/medical1{
-	pixel_x = 5
+	pixel_x = 10
 	},
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -9605,7 +9605,7 @@
 /area/centcom/specops)
 "aHz" = (
 /obj/structure/closet/secure_closet/medical2{
-	pixel_x = 5
+	pixel_x = 10
 	},
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -9614,35 +9614,35 @@
 "aHA" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/blood/AMinus{
-	pixel_x = -7;
-	pixel_y = -3
+	pixel_x = -14;
+	pixel_y = -6
 	},
 /obj/item/weapon/reagent_containers/blood/APlus{
-	pixel_x = -5;
-	pixel_y = 4
+	pixel_x = -10;
+	pixel_y = 8
 	},
 /obj/item/weapon/reagent_containers/blood/empty{
-	pixel_x = 1;
-	pixel_y = -4
+	pixel_x = 2;
+	pixel_y = -8
 	},
 /obj/item/weapon/reagent_containers/blood/empty{
-	pixel_x = 1;
-	pixel_y = -4
+	pixel_x = 2;
+	pixel_y = -8
 	},
 /obj/item/weapon/reagent_containers/blood/BMinus{
-	pixel_y = 4
+	pixel_y = 8
 	},
 /obj/item/weapon/reagent_containers/blood/BPlus{
-	pixel_x = 5;
-	pixel_y = 3
+	pixel_x = 10;
+	pixel_y = 6
 	},
 /obj/item/weapon/reagent_containers/blood/OMinus{
-	pixel_x = -5;
-	pixel_y = -1
+	pixel_x = -10;
+	pixel_y = -2
 	},
 /obj/item/weapon/reagent_containers/blood/OPlus{
-	pixel_x = 4;
-	pixel_y = 2
+	pixel_x = 8;
+	pixel_y = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -9704,7 +9704,7 @@
 /area/centcom/living)
 "aHO" = (
 /obj/structure/toilet{
-	pixel_y = 7
+	pixel_y = 14
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -9878,7 +9878,7 @@
 /area/centcom/evac)
 "aIB" = (
 /obj/structure/closet/emcloset{
-	pixel_x = 7
+	pixel_x = 14
 	},
 /obj/machinery/light{
 	dir = 4
@@ -9889,7 +9889,7 @@
 /area/centcom/evac)
 "aIC" = (
 /obj/structure/closet/emcloset{
-	pixel_x = -7
+	pixel_x = -14
 	},
 /obj/machinery/light{
 	dir = 8
@@ -9904,10 +9904,10 @@
 "aIE" = (
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = 11
+	pixel_x = 22
 	},
 /obj/structure/mirror{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -10069,7 +10069,7 @@
 /area/centcom/living)
 "aJp" = (
 /obj/structure/mirror{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/unsimulated/floor{
 	dir = 1;
@@ -10115,7 +10115,7 @@
 "aJy" = (
 /obj/structure/sign/directions/medical,
 /obj/structure/sign/directions/security{
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/unsimulated/wall,
 /area/centcom/control)
@@ -10141,12 +10141,12 @@
 /area/centcom/evac)
 "aJB" = (
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 6
+	pixel_x = 4;
+	pixel_y = 12
 	},
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = -2;
-	pixel_y = 4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
@@ -10177,7 +10177,7 @@
 /area/centcom/evac)
 "aJF" = (
 /obj/machinery/vending/coffee{
-	pixel_x = -5
+	pixel_x = -10
 	},
 /obj/machinery/light{
 	dir = 8
@@ -10188,7 +10188,7 @@
 /area/centcom/evac)
 "aJG" = (
 /obj/machinery/vending/cigarette{
-	pixel_x = 5
+	pixel_x = 10
 	},
 /obj/machinery/light{
 	dir = 4
@@ -10233,7 +10233,7 @@
 /area/centcom/living)
 "aJN" = (
 /obj/structure/mirror{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -10419,7 +10419,7 @@
 "aKt" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_x = -30;
+	pixel_x = -60;
 	req_access = list(0)
 	},
 /turf/simulated/shuttle/floor{
@@ -10441,7 +10441,7 @@
 /area/centcom/evac)
 "aKx" = (
 /obj/machinery/newscaster/security_unit{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -10551,7 +10551,7 @@
 /area/centcom/control)
 "aKO" = (
 /obj/machinery/computer/guestpass/dark{
-	pixel_y = 26
+	pixel_y = 52
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -10576,7 +10576,7 @@
 	frequency = 1441;
 	listening = 0;
 	name = "Spec Ops Intercom";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -10624,7 +10624,7 @@
 /area/centcom/control)
 "aLb" = (
 /obj/structure/sign/map/left{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -10757,7 +10757,7 @@
 "aLA" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atm{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -10766,7 +10766,7 @@
 "aLB" = (
 /obj/structure/table/reinforced,
 /obj/machinery/newscaster/security_unit{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /obj/machinery/faxmachine{
 	department = "Central Command";
@@ -11105,7 +11105,7 @@
 /area/centcom/living)
 "aNy" = (
 /obj/structure/mirror{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -11134,7 +11134,7 @@
 /obj/machinery/door_control{
 	id = "ck_comf_blast";
 	name = "Security Shutters";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -11143,7 +11143,7 @@
 /area/centcom/living)
 "aNC" = (
 /obj/machinery/newscaster/security_unit{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -11157,7 +11157,7 @@
 	frequency = 1441;
 	listening = 0;
 	name = "Spec Ops Intercom";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -11232,7 +11232,7 @@
 /area/centcom/living)
 "aOb" = (
 /obj/structure/sign/map/right{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -11327,7 +11327,7 @@
 /area/centcom/living)
 "aOt" = (
 /obj/structure/urinal{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -11385,7 +11385,7 @@
 	desc = "A remote control switch for port-side blast doors.";
 	id = "CentComPort04";
 	name = "Security Doors";
-	pixel_y = 32;
+	pixel_y = 64;
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
@@ -11420,7 +11420,7 @@
 /area/centcom/holding)
 "aOJ" = (
 /obj/structure/closet/emcloset{
-	pixel_x = 7
+	pixel_x = 14
 	},
 /obj/machinery/light{
 	dir = 4
@@ -11431,7 +11431,7 @@
 /area/centcom/holding)
 "aOK" = (
 /obj/structure/closet/emcloset{
-	pixel_x = -7
+	pixel_x = -14
 	},
 /obj/machinery/light{
 	dir = 1
@@ -11451,8 +11451,8 @@
 "aOO" = (
 /obj/structure/table,
 /obj/item/ashtray/bronze{
-	pixel_x = -1;
-	pixel_y = 1
+	pixel_x = -2;
+	pixel_y = 2
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -11468,7 +11468,7 @@
 /area/centcom/holding)
 "aOT" = (
 /obj/structure/closet/emcloset{
-	pixel_x = 7
+	pixel_x = 14
 	},
 /obj/machinery/light{
 	dir = 1
@@ -11664,8 +11664,8 @@
 	dir = 10
 	},
 /obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
+	pixel_x = -6;
+	pixel_y = 14
 	},
 /obj/item/weapon/pen,
 /turf/unsimulated/floor{
@@ -11721,7 +11721,7 @@
 	c_tag = "Court";
 	invisibility = 1;
 	network = list("thunder");
-	pixel_x = 10
+	pixel_x = 20
 	},
 /turf/unsimulated/floor{
 	icon_state = "carpet"
@@ -11900,10 +11900,10 @@
 "aQz" = (
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = 11
+	pixel_x = 22
 	},
 /obj/structure/mirror{
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -11917,7 +11917,7 @@
 /area/centcom/holding)
 "aQH" = (
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/unsimulated/floor{
 	dir = 4;
@@ -12056,7 +12056,7 @@
 /area/centcom/holding)
 "aRs" = (
 /obj/structure/closet/emcloset{
-	pixel_x = -7
+	pixel_x = -14
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -12065,7 +12065,7 @@
 "aRt" = (
 /obj/machinery/status_display{
 	layer = 4;
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/unsimulated/wall,
 /area/centcom/evac)
@@ -12074,7 +12074,7 @@
 	desc = "A remote control switch for port-side blast doors.";
 	id = "CentComPort03";
 	name = "Security Doors";
-	pixel_y = -32;
+	pixel_y = -64;
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
@@ -12106,7 +12106,7 @@
 /area/centcom/holding)
 "aRA" = (
 /obj/structure/closet/emcloset{
-	pixel_x = -7
+	pixel_x = -14
 	},
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -12115,7 +12115,7 @@
 /area/centcom/holding)
 "aRE" = (
 /obj/structure/closet/emcloset{
-	pixel_x = 7
+	pixel_x = 14
 	},
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -12438,7 +12438,7 @@
 /obj/machinery/camera{
 	c_tag = "Jury Room";
 	network = list("thunder");
-	pixel_x = 10
+	pixel_x = 20
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -12558,7 +12558,7 @@
 /obj/structure/sign/mark{
 	icon_state = "2";
 	layer = 3.5;
-	pixel_x = -26
+	pixel_x = -52
 	},
 /obj/structure/stool/bed/chair/metal{
 	dir = 4
@@ -12594,7 +12594,7 @@
 /obj/machinery/door_control{
 	id = "ck_office_blast";
 	name = "Security Shutters";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /turf/unsimulated/floor{
 	dir = 5;
@@ -12650,7 +12650,7 @@
 "aTb" = (
 /obj/structure/table,
 /obj/machinery/processor{
-	pixel_y = 10
+	pixel_y = 20
 	},
 /obj/machinery/light{
 	dir = 4
@@ -12837,8 +12837,8 @@
 "aTC" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/unsimulated/floor{
 	icon_state = "cafeteria"
@@ -12998,15 +12998,15 @@
 "aUe" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/spray/plantbgone{
-	pixel_x = 13;
-	pixel_y = 5
+	pixel_x = 26;
+	pixel_y = 10
 	},
 /obj/item/weapon/reagent_containers/spray/plantbgone{
-	pixel_x = 10;
-	pixel_y = 4
+	pixel_x = 20;
+	pixel_y = 8
 	},
 /obj/item/weapon/reagent_containers/spray/plantbgone{
-	pixel_y = 7
+	pixel_y = 14
 	},
 /obj/machinery/light{
 	dir = 8
@@ -13064,7 +13064,7 @@
 /obj/structure/sign/mark{
 	icon_state = "4";
 	layer = 3.5;
-	pixel_x = -26
+	pixel_x = -52
 	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
@@ -13300,8 +13300,8 @@
 	dir = 10
 	},
 /obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
+	pixel_x = -6;
+	pixel_y = 14
 	},
 /obj/item/weapon/pen,
 /turf/unsimulated/floor{
@@ -13341,7 +13341,7 @@
 /area/centcom/living)
 "aVm" = (
 /obj/machinery/vending/medical{
-	pixel_x = -2
+	pixel_x = -4
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -13501,8 +13501,8 @@
 "aVQ" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -13627,20 +13627,20 @@
 	icon_state = "tabledir"
 	},
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -13650,7 +13650,7 @@
 /obj/machinery/door_control{
 	id = "nukeop_war";
 	name = "War door-control";
-	pixel_x = -30;
+	pixel_x = -60;
 	req_access = list(151)
 	},
 /obj/structure/table,
@@ -13865,7 +13865,7 @@
 "aXd" = (
 /obj/machinery/door_control{
 	id = "skipjack";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/table,
 /turf/simulated/shuttle/floor4{
@@ -13934,12 +13934,12 @@
 "aXl" = (
 /obj/structure/table,
 /obj/item/device/radio/off{
-	pixel_x = -2;
-	pixel_y = 6
+	pixel_x = -4;
+	pixel_y = 12
 	},
 /obj/item/device/radio/off{
-	pixel_x = 6;
-	pixel_y = 1
+	pixel_x = 12;
+	pixel_y = 2
 	},
 /turf/simulated/shuttle/floor4{
 	name = "red floor";
@@ -14017,7 +14017,7 @@
 /obj/item/clothing/under/rainbow,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/clothing/head/collectable/petehat{
-	pixel_y = 5
+	pixel_y = 10
 	},
 /turf/unsimulated/beach/sand,
 /area/beach)
@@ -14416,8 +14416,8 @@
 /obj/machinery/camera{
 	c_tag = "Red Team";
 	network = list("thunder");
-	pixel_x = 11;
-	pixel_y = -9
+	pixel_x = 22;
+	pixel_y = -18
 	},
 /obj/effect/landmark{
 	name = "tdome2"
@@ -14437,8 +14437,8 @@
 /obj/machinery/camera{
 	c_tag = "Green Team";
 	network = list("thunder");
-	pixel_x = 12;
-	pixel_y = -10
+	pixel_x = 24;
+	pixel_y = -20
 	},
 /obj/effect/landmark{
 	name = "tdome1"
@@ -14521,7 +14521,7 @@
 /obj/machinery/camera{
 	c_tag = "Arena";
 	network = list("thunder");
-	pixel_x = 10
+	pixel_x = 20
 	},
 /turf/unsimulated/floor,
 /area/tdome)
@@ -15035,7 +15035,7 @@
 /area/wizard_station)
 "baC" = (
 /obj/structure/toilet{
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/unsimulated/floor{
 	icon_state = "engine"
@@ -15048,7 +15048,7 @@
 /area/wizard_station)
 "baE" = (
 /obj/structure/mirror{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -15121,7 +15121,7 @@
 	freerange = 1;
 	frequency = 1213;
 	name = "Syndicate Intercom";
-	pixel_x = 32;
+	pixel_x = 64;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -15148,15 +15148,15 @@
 	freerange = 1;
 	frequency = 1213;
 	name = "Syndicate Intercom";
-	pixel_x = 32;
+	pixel_x = 64;
 	subspace_transmission = 1;
 	syndie = 1
 	},
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp/green{
 	on = 0;
-	pixel_x = -3;
-	pixel_y = 8
+	pixel_x = -6;
+	pixel_y = 16
 	},
 /obj/item/weapon/reagent_containers/food/drinks/flask/barflask,
 /turf/unsimulated/floor{
@@ -15262,7 +15262,7 @@
 	freerange = 1;
 	frequency = 1213;
 	name = "Syndicate Intercom";
-	pixel_x = 32;
+	pixel_x = 64;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -15629,7 +15629,7 @@
 /area/abductor_ship)
 "bcJ" = (
 /obj/machinery/recharger/wallcharger/alien{
-	pixel_x = -26
+	pixel_x = -52
 	},
 /turf/unsimulated/floor/abductor,
 /area/abductor_ship)
@@ -16273,8 +16273,8 @@
 "bnb" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
+	pixel_x = -6;
+	pixel_y = 14
 	},
 /obj/item/weapon/pen,
 /turf/unsimulated/floor{
@@ -16488,7 +16488,7 @@
 	desc = "A remote control switch to block view of the singularity.";
 	id = "CREED";
 	name = "Spec Ops Ready Room";
-	pixel_w = 10;
+	pixel_w = 20;
 	req_access = list(11)
 	},
 /obj/machinery/door_control{
@@ -16500,13 +16500,13 @@
 /obj/machinery/door_control{
 	id = "MechaModule";
 	name = "Mech Module Storage";
-	pixel_z = 10
+	pixel_z = 20
 	},
 /obj/machinery/door_control{
 	id = "DropPodGarage";
 	name = "Drop Pod Garage";
-	pixel_w = 10;
-	pixel_z = 10
+	pixel_w = 20;
+	pixel_z = 20
 	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
@@ -16527,7 +16527,7 @@
 	dir = 1;
 	frequency = 1441;
 	name = "Spec Ops Intercom";
-	pixel_y = -20
+	pixel_y = -40
 	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
@@ -16535,7 +16535,7 @@
 /area/centcom/creed)
 "bMb" = (
 /obj/structure/mirror/magic{
-	pixel_w = 30
+	pixel_w = 60
 	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
@@ -16630,7 +16630,7 @@
 /area/centcom/arrival)
 "bZb" = (
 /obj/machinery/status_display{
-	pixel_x = 32;
+	pixel_x = 64;
 	supply_display = 1
 	},
 /obj/machinery/light{
@@ -16676,7 +16676,7 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -16686,8 +16686,8 @@
 /obj/machinery/door_control{
 	id = "ck_warehouse";
 	name = "Warehouse Door Control";
-	pixel_x = -1;
-	pixel_y = -24;
+	pixel_x = -2;
+	pixel_y = -48;
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
@@ -16719,8 +16719,8 @@
 /obj/machinery/door_control{
 	id = "ck_warehouse";
 	name = "Warehouse Door Control";
-	pixel_x = -1;
-	pixel_y = 24;
+	pixel_x = -2;
+	pixel_y = 48;
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
@@ -16748,8 +16748,8 @@
 /obj/machinery/door_control{
 	id = "velocity_main2";
 	name = "Maintenance Door Control";
-	pixel_x = -1;
-	pixel_y = 24;
+	pixel_x = -2;
+	pixel_y = 48;
 	req_access = list(101)
 	},
 /obj/structure/centcom_barrier,
@@ -16768,7 +16768,7 @@
 /obj/structure/sign/directions/velocity{
 	dir = 4;
 	icon_state = "tablo04";
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/unsimulated/floor{
 	dir = 5;
@@ -16800,7 +16800,7 @@
 "csb" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/machinery/light{
 	dir = 8
@@ -16815,7 +16815,7 @@
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
 	icon_state = "shock";
 	name = "HIGH VOLTAGE";
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/machinery/light{
 	dir = 4
@@ -16854,7 +16854,7 @@
 /obj/machinery/door_control{
 	id = "velocity_hall";
 	name = "Blast Door Control";
-	pixel_x = 24;
+	pixel_x = 48;
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
@@ -16866,7 +16866,7 @@
 /obj/machinery/door_control{
 	id = "velocity_room02";
 	name = "Blast Door Control";
-	pixel_x = -25;
+	pixel_x = -50;
 	req_access = list(101)
 	},
 /obj/structure/disposalpipe/segment,
@@ -16936,7 +16936,7 @@
 /area/centcom/arrival)
 "cIb" = (
 /obj/machinery/firealarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
@@ -17000,7 +17000,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
@@ -17009,8 +17009,8 @@
 "cOb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
+	pixel_x = -6;
+	pixel_y = 14
 	},
 /obj/item/weapon/pen,
 /obj/item/weapon/stamp/velocity,
@@ -17021,7 +17021,7 @@
 "cPb" = (
 /obj/structure/dryer{
 	dir = 8;
-	pixel_x = 6
+	pixel_x = 12
 	},
 /turf/unsimulated/floor{
 	icon_state = "purplechecker"
@@ -17080,7 +17080,7 @@
 /obj/machinery/door_control{
 	id = "velocity_hall";
 	name = "Blast Door Control";
-	pixel_y = -24;
+	pixel_y = -48;
 	req_access = list(101)
 	},
 /obj/machinery/light,
@@ -17098,7 +17098,7 @@
 /obj/machinery/door_control{
 	id = "velocity_room02";
 	name = "Blast Door Control";
-	pixel_x = -25;
+	pixel_x = -50;
 	req_access = list(101)
 	},
 /obj/structure/disposalpipe/segment,
@@ -17124,7 +17124,7 @@
 /obj/structure/sign/directions/velocity{
 	dir = 4;
 	icon_state = "tablo03_1";
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
@@ -17142,7 +17142,7 @@
 /obj/structure/sign/directions/velocity{
 	dir = 4;
 	icon_state = "tablo03_0";
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
@@ -17215,7 +17215,7 @@
 "djb" = (
 /obj/machinery/flasher{
 	id = "velocity_cell1";
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/unsimulated/floor{
 	icon_state = "floorgrime"
@@ -17233,7 +17233,7 @@
 "dlb" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/unsimulated/floor{
 	icon_state = "bcircuitoff"
@@ -17250,8 +17250,8 @@
 "dnb" = (
 /obj/structure/sink{
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /turf/unsimulated/floor{
 	dir = 4;
@@ -17302,7 +17302,7 @@
 "dsb" = (
 /obj/machinery/flasher{
 	id = "velocity_cell2";
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/unsimulated/floor{
 	icon_state = "floorgrime"
@@ -17310,7 +17310,7 @@
 /area/centcom/arrival)
 "dtb" = (
 /obj/structure/sign/warning/securearea{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /obj/machinery/shower{
 	dir = 4
@@ -17323,7 +17323,7 @@
 "dub" = (
 /obj/structure/closet/l3closet/security,
 /obj/structure/sign/warning/biohazard{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/machinery/light{
 	dir = 4
@@ -17348,8 +17348,8 @@
 "dxb" = (
 /obj/structure/sink{
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
@@ -17411,7 +17411,7 @@
 "dEb" = (
 /obj/machinery/flasher{
 	id = "velocity_cell3";
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/unsimulated/floor{
 	icon_state = "floorgrime"
@@ -17451,8 +17451,8 @@
 	anchored = 1;
 	invisibility = 61;
 	name = "invisibly light";
-	pixel_x = 1;
-	pixel_y = 5
+	pixel_x = 2;
+	pixel_y = 10
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "vwall12"
@@ -17490,7 +17490,7 @@
 /area/centcom/arrival)
 "dOb" = (
 /obj/structure/sign/warning/nosmoking{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
@@ -17529,7 +17529,7 @@
 "dRb" = (
 /obj/machinery/flasher{
 	id = "velocity_cell4";
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/unsimulated/floor{
 	icon_state = "floorgrime"
@@ -17714,7 +17714,7 @@
 /obj/structure/sign/mark{
 	icon_state = "1";
 	layer = 3.5;
-	pixel_x = -6
+	pixel_x = -12
 	},
 /obj/structure/sign/mark{
 	icon_state = "3";
@@ -17839,7 +17839,7 @@
 /obj/structure/sign/mark{
 	icon_state = "1";
 	layer = 3.5;
-	pixel_x = -6
+	pixel_x = -12
 	},
 /obj/structure/sign/mark{
 	icon_state = "1";
@@ -18305,8 +18305,8 @@
 	anchored = 1;
 	invisibility = 61;
 	name = "invisibly light";
-	pixel_x = 1;
-	pixel_y = 5
+	pixel_x = 2;
+	pixel_y = 10
 	},
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -18419,7 +18419,7 @@
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'LETHAL TURRETS'. Enter at your own risk!";
 	name = "LETHAL TURRETS";
-	pixel_x = -32
+	pixel_x = -64
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -18445,13 +18445,13 @@
 	desc = "A firewall prevents AIs from interacting with this device.";
 	icon_state = "motion3";
 	name = "CentCom brig turret control";
-	pixel_y = 29;
+	pixel_y = 58;
 	req_access = 109
 	},
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'LETHAL TURRETS'. Enter at your own risk!";
 	name = "LETHAL TURRETS";
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -18477,7 +18477,7 @@
 /area/centcom/arrival)
 "fRb" = (
 /obj/structure/sign/warning/nosmoking/circle{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -18541,7 +18541,7 @@
 "gab" = (
 /obj/structure/sign/warning/securearea{
 	name = "ENGINEERING ACCESS";
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -18762,7 +18762,7 @@
 	},
 /obj/structure/sign/velocity_overlay/car_impala{
 	dir = 8;
-	pixel_x = 16
+	pixel_x = 32
 	},
 /obj/effect/forcefield{
 	desc = "You can't get in. Heh.";
@@ -18794,7 +18794,7 @@
 	dir = 4;
 	icon_state = "line05";
 	name = "\improper parking mark";
-	pixel_y = 10
+	pixel_y = 20
 	},
 /turf/unsimulated/floor/velocity{
 	dir = 4;
@@ -18807,7 +18807,7 @@
 	dir = 8;
 	icon_state = "line05";
 	name = "\improper parking mark";
-	pixel_y = 10
+	pixel_y = 20
 	},
 /turf/unsimulated/floor/velocity{
 	dir = 4;
@@ -18829,7 +18829,7 @@
 "gAb" = (
 /obj/structure/sign/warning/securearea{
 	name = "\improper ARMORY";
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -18939,7 +18939,7 @@
 	dir = 4;
 	icon_state = "line05";
 	name = "\improper parking mark";
-	pixel_y = -10
+	pixel_y = -20
 	},
 /obj/effect/forcefield{
 	desc = "You can't get in. Heh.";
@@ -18957,12 +18957,12 @@
 	dir = 8;
 	icon_state = "line05";
 	name = "\improper parking mark";
-	pixel_y = 10
+	pixel_y = 20
 	},
 /obj/structure/sign/velocity_overlay/car_ferrari{
 	dir = 1;
-	pixel_x = 16;
-	pixel_y = -16
+	pixel_x = 32;
+	pixel_y = -32
 	},
 /turf/unsimulated/floor/velocity{
 	dir = 4;
@@ -18997,7 +18997,7 @@
 	},
 /obj/structure/sign/velocity_overlay/car_carmageddon{
 	dir = 8;
-	pixel_x = 16
+	pixel_x = 32
 	},
 /turf/unsimulated/floor/velocity{
 	dir = 4;
@@ -19135,7 +19135,7 @@
 	dir = 8;
 	icon_state = "line05";
 	name = "\improper parking mark";
-	pixel_y = -10
+	pixel_y = -20
 	},
 /turf/unsimulated/floor/velocity{
 	dir = 4;
@@ -19166,7 +19166,7 @@
 	frequency = 1441;
 	listening = 0;
 	name = "Spec Ops Intercom";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -19202,11 +19202,11 @@
 	dir = 8;
 	icon_state = "line05";
 	name = "\improper parking mark";
-	pixel_y = -10
+	pixel_y = -20
 	},
 /obj/structure/sign/velocity_overlay/car_M105{
-	pixel_x = 16;
-	pixel_y = 32
+	pixel_x = 32;
+	pixel_y = 64
 	},
 /turf/unsimulated/floor/velocity{
 	dir = 4;
@@ -19222,7 +19222,7 @@
 "hhb" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_x = 30;
+	pixel_x = 60;
 	req_access = list(0)
 	},
 /turf/unsimulated/floor{
@@ -19851,8 +19851,8 @@
 "iUb" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/unsimulated/floor{
 	icon_state = "cafeteria"
@@ -19864,8 +19864,8 @@
 	dir = 4
 	},
 /obj/machinery/kitchen_machine/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/unsimulated/floor{
 	icon_state = "cafeteria"
@@ -19903,7 +19903,7 @@
 "jab" = (
 /obj/structure/window/reinforced{
 	dir = 1;
-	pixel_y = -7
+	pixel_y = -14
 	},
 /obj/structure/window/reinforced{
 	dir = 1
@@ -20093,7 +20093,7 @@
 	desc = "A remote control switch for port-side blast doors.";
 	id = "CentComPort06";
 	name = "Security Doors";
-	pixel_y = 4;
+	pixel_y = 8;
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
@@ -20110,7 +20110,7 @@
 	desc = "A remote control switch for port-side blast doors.";
 	id = "CentComPort05";
 	name = "Security Doors";
-	pixel_y = 4;
+	pixel_y = 8;
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
@@ -20257,8 +20257,8 @@
 "jTb" = (
 /obj/structure/table,
 /obj/item/clothing/head/that{
-	pixel_x = 4;
-	pixel_y = 6
+	pixel_x = 8;
+	pixel_y = 12
 	},
 /obj/item/clothing/suit/wcoat,
 /obj/item/clothing/under/suit_jacket,
@@ -20269,8 +20269,8 @@
 "jUb" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
@@ -20279,20 +20279,20 @@
 "jVb" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
@@ -20334,7 +20334,7 @@
 /area/centcom/holding)
 "kbb" = (
 /obj/machinery/atm{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/unsimulated/floor{
 	dir = 1;
@@ -20411,7 +20411,7 @@
 /area/centcom/living)
 "kjb" = (
 /obj/structure/closet/emcloset{
-	pixel_x = -7
+	pixel_x = -14
 	},
 /turf/unsimulated/floor{
 	dir = 9;
@@ -20513,7 +20513,7 @@
 /area/centcom/holding)
 "kxb" = (
 /obj/machinery/atm{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/unsimulated/floor{
 	icon_state = "neutralcorner"
@@ -20656,7 +20656,7 @@
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/cans/cola,
 /obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/unsimulated/floor{
 	dir = 5;
@@ -20695,7 +20695,7 @@
 /area/centcom/holding)
 "kWb" = (
 /obj/structure/stool{
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/unsimulated/floor{
 	icon_state = "neutralfull"
@@ -20731,7 +20731,7 @@
 /area/centcom/holding)
 "lbb" = (
 /obj/machinery/atm{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/unsimulated/floor{
 	dir = 4;
@@ -20940,7 +20940,7 @@
 /area/centcom/holding)
 "lEb" = (
 /obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/unsimulated/floor{
 	icon_state = "brown"
@@ -21101,7 +21101,7 @@
 	desc = "A remote control switch for port-side blast doors.";
 	id = "CentComPort02";
 	name = "Security Doors";
-	pixel_y = -4;
+	pixel_y = -8;
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
@@ -21118,7 +21118,7 @@
 	desc = "A remote control switch for port-side blast doors.";
 	id = "CentComPort";
 	name = "Security Doors";
-	pixel_y = -4;
+	pixel_y = -8;
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
@@ -21205,11 +21205,11 @@
 "mfb" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	pixel_y = 7
+	pixel_y = 14
 	},
 /obj/machinery/conveyor_switch/oneway{
 	id = "CentComConv01";
-	pixel_y = 7
+	pixel_y = 14
 	},
 /turf/unsimulated/floor{
 	icon_state = "warnwhite"
@@ -21218,7 +21218,7 @@
 "mgb" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	pixel_y = 7
+	pixel_y = 14
 	},
 /turf/unsimulated/floor{
 	icon_state = "warnwhite"
@@ -21496,7 +21496,7 @@
 /area/centcom/evac)
 "mQb" = (
 /obj/structure/closet/emcloset{
-	pixel_x = -7
+	pixel_x = -14
 	},
 /obj/machinery/light{
 	dir = 8
@@ -21508,7 +21508,7 @@
 /area/centcom/evac)
 "mRb" = (
 /obj/structure/closet/emcloset{
-	pixel_x = -7
+	pixel_x = -14
 	},
 /turf/unsimulated/floor{
 	dir = 1;
@@ -21912,7 +21912,7 @@
 	freerange = 1;
 	frequency = 1213;
 	name = "Syndicate Intercom";
-	pixel_x = 32;
+	pixel_x = 64;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -22086,7 +22086,7 @@
 /obj/structure/table,
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_y = 32;
+	pixel_y = 64;
 	req_access = list(0)
 	},
 /obj/item/weapon/storage/firstaid,
@@ -22107,7 +22107,7 @@
 /obj/item/device/radio/intercom{
 	freerange = 1;
 	name = "Station Intercom (General)";
-	pixel_y = 30
+	pixel_y = 60
 	},
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
@@ -22125,8 +22125,8 @@
 "otb" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire{
-	pixel_x = -2;
-	pixel_y = 4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /obj/item/weapon/storage/firstaid/adv,
 /turf/simulated/shuttle/plating{
@@ -22136,8 +22136,8 @@
 "oub" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = -2;
-	pixel_y = 4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /obj/item/weapon/storage/firstaid/o2,
 /obj/item/bodybag/cryobag,
@@ -22286,7 +22286,7 @@
 /area/shuttle/escape/centcom)
 "oNb" = (
 /obj/structure/closet/hydrant{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
@@ -22344,8 +22344,8 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/emergency{
-	pixel_x = -4;
-	pixel_y = 4
+	pixel_x = -8;
+	pixel_y = 8
 	},
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/electrical,
@@ -22402,7 +22402,7 @@
 /obj/structure/stool/bed/chair/schair/wagon,
 /obj/machinery/flasher_button{
 	id = "shutflash";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/simulated/shuttle/floor4,
 /area/shuttle/escape/centcom)
@@ -22691,7 +22691,7 @@
 /obj/structure/table,
 /obj/item/weapon/phone,
 /obj/item/device/radio{
-	pixel_x = 4
+	pixel_x = 8
 	},
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
@@ -22768,7 +22768,7 @@
 "pYb" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = -30
+	pixel_x = -60
 	},
 /obj/machinery/light{
 	dir = 8
@@ -22789,7 +22789,7 @@
 /area/shuttle/escape/centcom)
 "qab" = (
 /obj/structure/closet/medical_wall{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/item/weapon/storage/firstaid,
 /obj/item/weapon/storage/firstaid/adv,
@@ -22805,7 +22805,7 @@
 /obj/structure/flora/plant/random,
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_y = -32;
+	pixel_y = -64;
 	req_access = list(0)
 	},
 /turf/simulated/shuttle/floor,

@@ -68,8 +68,8 @@
 
 /obj/item/beezeez/atom_init()
 	. = ..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/honeycomb
 	name = "honeycomb"

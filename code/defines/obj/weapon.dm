@@ -256,14 +256,14 @@
 	icon_state = pick("shrapnellarge", "shrapnelmedium", "shrapnelsmall")
 	switch(icon_state)
 		if("shrapnelsmall")
-			pixel_x = rand(-12, 12)
-			pixel_y = rand(-12, 12)
+			pixel_x = rand(-24, 24)
+			pixel_y = rand(-24, 24)
 		if("shrapnelmedium")
-			pixel_x = rand(-8, 8)
-			pixel_y = rand(-8, 8)
+			pixel_x = rand(-16, 16)
+			pixel_y = rand(-16, 16)
 		if("shrapnellarge")
-			pixel_x = rand(-5, 5)
-			pixel_y = rand(-5, 5)
+			pixel_x = rand(-10, 10)
+			pixel_y = rand(-10, 10)
 
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"
@@ -576,8 +576,8 @@
 
 /obj/item/weapon/stock_parts/atom_init()
 	. = ..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 
 //Rank 1
 

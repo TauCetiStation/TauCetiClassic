@@ -88,8 +88,8 @@
 /area/djstation)
 "ao" = (
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = -1
+	pixel_x = -4;
+	pixel_y = -2
 	},
 /turf/simulated/floor/plating,
 /area/djstation)
@@ -123,7 +123,7 @@
 	},
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/simulated/floor/plating,
 /area/djstation)
@@ -138,7 +138,7 @@
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
 	icon_state = "shock";
 	name = "HIGH VOLTAGE";
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/simulated/floor/plating,
 /area/djstation)
@@ -185,7 +185,7 @@
 /area/djstation)
 "aA" = (
 /obj/machinery/light_switch{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -194,7 +194,7 @@
 /area/djstation)
 "aB" = (
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -258,7 +258,7 @@
 /area/djstation)
 "aI" = (
 /obj/machinery/light_switch{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -304,8 +304,8 @@
 "aN" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -476,7 +476,7 @@
 "bh" = (
 /obj/machinery/status_display{
 	layer = 4;
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -531,8 +531,8 @@
 "bn" = (
 /obj/structure/sink{
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor{
@@ -541,7 +541,7 @@
 /area/djstation)
 "bo" = (
 /obj/structure/toilet{
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -550,8 +550,8 @@
 "bp" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
+	pixel_x = 2;
+	pixel_y = 18
 	},
 /obj/item/weapon/pen,
 /turf/simulated/floor{
@@ -565,7 +565,7 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/simulated/floor{
 	dir = 5;

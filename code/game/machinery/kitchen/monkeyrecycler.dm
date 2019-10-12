@@ -26,7 +26,7 @@
 	qdel(M)
 	to_chat(user, "<span class='notice'>You stuff the monkey in the machine.</span>")
 	playsound(src, 'sound/machines/juicer.ogg', VOL_EFFECTS_MASTER)
-	var/offset = prob(50) ? -2 : 2
+	var/offset = prob(50) ? -4 : 4
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	use_power(500)
 	src.grinded++

@@ -94,8 +94,8 @@
 /obj/item/weapon/present/atom_init()
 	. = ..()
 	icon_state = "gift[rand(1,9)]"
-	pixel_x = rand(-6,6)
-	pixel_y = rand(-6,6)
+	pixel_x = rand(-12,12)
+	pixel_y = rand(-12,12)
 
 /obj/item/weapon/present/attack_self(mob/user, key)
 	var/giftselect = pickweight(gifts)	// almost random pick from gift list

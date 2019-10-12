@@ -239,8 +239,8 @@
 		if(istype(A, /mob/living) && A:lying)
 			img.Turn(A:lying_current)
 
-		var/offX = 1 + (photo_size-1)*16 + (A.x - center.x) * 32 + A.pixel_x
-		var/offY = 1 + (photo_size-1)*16 + (A.y - center.y) * 32 + A.pixel_y
+		var/offX = 1 + (photo_size-1)*32 + (A.x - center.x) * WORLD_ICON_SIZE + A.pixel_x
+		var/offY = 1 + (photo_size-1)*32 + (A.y - center.y) * WORLD_ICON_SIZE + A.pixel_y
 		if(istype(A, /atom/movable))
 			offX += A:step_x
 			offY += A:step_y
@@ -248,7 +248,7 @@
 		res.Blend(img, blendMode2iconMode(A.blend_mode), offX, offY)
 
 	for(var/turf/T in turfs)
-		res.Blend(getFlatIcon(T.loc), blendMode2iconMode(T.blend_mode), 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
+		res.Blend(getFlatIcon(T.loc), blendMode2iconMode(T.blend_mode), WORLD_ICON_SIZE * (T.x - center.x) + 66, WORLD_ICON_SIZE * (T.y - center.y) + 66)
 
 	return res
 
@@ -362,8 +362,8 @@
 	P.fields["img"] = temp
 	P.fields["desc"] = mobs
 	P.fields["mob_names"] = mob_names // A list inside a list.
-	P.fields["pixel_x"] = rand(-10, 10)
-	P.fields["pixel_y"] = rand(-10, 10)
+	P.fields["pixel_x"] = rand(-20, 20)
+	P.fields["pixel_y"] = rand(-20, 20)
 
 	return P
 

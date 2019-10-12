@@ -301,7 +301,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/shake_camera(mob/M, duration, strength=1)
 	if(!M || !M.client || !strength) return
 	spawn()
-		strength *= 32
+		strength *= 64
 		for(var/i=0; i<duration, i++)
 			animate(M.client, pixel_x = rand(-strength,strength), pixel_y = rand(-strength,strength), time = 2)
 			sleep(2)

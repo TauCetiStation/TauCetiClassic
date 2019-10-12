@@ -1174,8 +1174,8 @@
 	var/initial_x = chassis.pixel_x
 	var/initial_y = chassis.pixel_y
 	playsound(src, 'sound/effects/drop_start.ogg', VOL_EFFECTS_MASTER)
-	chassis.pixel_x = rand(-150, 150)
-	chassis.pixel_y = 500
+	chassis.pixel_x = rand(-300, 300)
+	chassis.pixel_y = 1000
 	animate(chassis, pixel_y = initial_y, pixel_x = initial_x, time = 20)
 	addtimer(CALLBACK(src, .proc/perform_drop), 20)
 
