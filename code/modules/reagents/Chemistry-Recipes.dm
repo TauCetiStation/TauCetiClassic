@@ -2316,6 +2316,13 @@
 	if(istype(T))
 		new /obj/item/stack/sheet/mineral/deuterium(T, created_volume)
 
+/datum/chemical_reaction/aqueous_foam
+	name = "Aqueous Film Forming Foam"
+	id = "aqueous_foam"
+	result = "aqueous_foam"
+	required_reagents = list("fluorosurfactant" = 1, "silicon" = 1)
+	result_amount = 10
+
 /datum/chemical_reaction/hair_dye
 	name = "Hair Dye"
 	id = "whitehairdye"
