@@ -1335,6 +1335,7 @@
 #include "code\modules\mob\emote.dm"
 #include "code\modules\mob\hear_say.dm"
 #include "code\modules\mob\holder.dm"
+#include "code\modules\mob\indicators.dm"
 #include "code\modules\mob\inventory.dm"
 #include "code\modules\mob\language.dm"
 #include "code\modules\mob\login.dm"

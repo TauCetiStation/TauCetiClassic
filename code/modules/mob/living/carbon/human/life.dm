@@ -1121,6 +1121,7 @@
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
 		blinded = 1
 		silent = 0
+		clear_stat_indicator()
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()	//TODO
 		if(!in_stasis)
@@ -1207,6 +1208,14 @@
 					adjustHalLoss(-1)
 		if(!sleeping) //No refactor - no life!
 			clear_alert("asleep")
+
+		if(stat == UNCONSCIOUS)
+			if(client)
+				throw_stat_indicator(IND_STAT)
+			else
+				throw_stat_indicator(IND_STAT_NOCLIENT)
+		else
+			clear_stat_indicator()
 
 		if(embedded_flag && !(life_tick % 10))
 			var/list/E
