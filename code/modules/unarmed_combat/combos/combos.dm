@@ -15,8 +15,7 @@
 	for(var/obj/item/weapon/gun/G in pos_guns)
 		if(G)
 			victim.visible_message("<span class='danger'>[victim]'s [G] goes off during struggle!</span>")
-			var/list/dir_to_shoot = pick(list(NORTH, SOUTH, WEST, EAST, NORTHWEST, NORTHEAST,
-									   SOUTHWEST, SOUTHEAST))
+			var/list/dir_to_shoot = pick(alldirs)
 			G.afterattack(get_step(attacker, dir_to_shoot), victim, FALSE) // So we shoot in their general direction.
 
 	victim.drop_item()
