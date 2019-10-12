@@ -1600,6 +1600,12 @@
 	required_reagents = list("capsaicin" = 1, "hot_ramen" = 6)
 	result_amount = 6
 
+/datum/chemical_reaction/hot_hell_ramen
+	name = "Hot Spicy Ramen"
+	id = "hot_hell_ramen"
+	result = "hot_hell_ramen"
+	required_reagents = list("water" = 1, "hell_ramen" = 3)
+	result_amount = 3
 
 ////////////////////////////////////////// COCKTAILS //////////////////////////////////////
 
