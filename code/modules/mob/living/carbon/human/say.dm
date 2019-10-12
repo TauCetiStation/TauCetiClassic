@@ -28,7 +28,7 @@
 		return
 
 	if(copytext(message,1,2) == "*")
-		return emote(copytext(message,2))
+		return emote(copytext(message, 2), auto = FALSE)
 
 	if((miming || has_trait(TRAIT_MUTE)) && !(message_mode == "changeling" || message_mode == "alientalk"))
 		to_chat(usr, "<span class='userdanger'>You are mute.</span>")

@@ -134,9 +134,9 @@
 		if(pain_emote_name)
 			BP.owner.time_of_last_damage = world.time // don't cry from the pain that just came
 			if(previous_pain_emote_name == "scream" || pain_emote_name == "scream") // "scream" sounds have priority
-				BP.owner.emote("scream", auto = TRUE)
+				BP.owner.emote("scream")
 			else
-				BP.owner.emote("grunt", auto = TRUE)
+				BP.owner.emote("grunt")
 
 	//If limb took enough damage, try to cut or tear it off
 	if(BP.owner && !(BP.is_stump))
@@ -542,7 +542,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		"You hear a sickening crack.")
 
 	if(BP.owner.species && !BP.owner.species.flags[NO_PAIN])
-		BP.owner.emote("scream",,, 1)
+		BP.owner.emote("scream")
 
 	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, null, -2)
 	BP.status |= ORGAN_BROKEN

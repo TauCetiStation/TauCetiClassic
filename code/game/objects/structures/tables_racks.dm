@@ -497,7 +497,7 @@
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 		BP.createwound(CUT, 15)
 		BP.embed(new /obj/item/weapon/shard)
-		H.emote("scream",,, 1)
+		H.emote("scream")
 	else
 		M.apply_damage(15,def_zone = BP_HEAD)
 	shatter()

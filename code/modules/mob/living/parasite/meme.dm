@@ -290,7 +290,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 
 	if(!src.host)
 		return
-	if(!host.use_me)
+	if(!host.emotions_allowed)
 		to_chat(usr, "<span class='warning'>Your host already can't use body language..</span>")
 		return
 	if(!use_points(250))
@@ -303,11 +303,11 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 		to_chat(host, "<span class='warning'>Your body feels numb.. You lose your ability to use body language.</span>")
 		to_chat(usr, "<span class='warning'>Your host can't use body language anymore.</span>")
 
-		host.use_me = 0
+		host.emotions_allowed = FALSE
 
-		sleep(1200)
+		sleep(1200) // maybe it is better to use addtimer()? 120 seconds is too much
 
-		host.use_me = 1
+		host.emotions_allowed = TRUE
 		to_chat(host, "<span class='warning'>Your body has feeling again..</span>")
 		to_chat(usr, "<span class='warning'>[host] can use body language again.</span>")
 
@@ -335,7 +335,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 
 		to_chat(usr, "<b>You send a jolt of agonizing pain through [host], they should be unable to concentrate on anything else for half a minute.</b>")
 
-		host.emote("scream",,, 1)
+		host.emote("scream")
 
 		for(var/i=0, i<10, i++)
 			host.stuttering = 2
@@ -347,7 +347,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 			if(prob(15))
 				host.emote("twitch")
 			else if(prob(15))
-				host.emote("scream",,, 1)
+				host.emote("scream")
 			else if(prob(10))
 				host.emote("collapse")
 

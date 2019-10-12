@@ -235,7 +235,7 @@ This is chestburster mechanic for damaging
 			H.apply_damage(rand(7, 14), BRUTE, BP_CHEST)
 			H.shock_stage = 20
 			H.Weaken(1)
-			H.emote("scream",,, 1)
+			H.emote("scream")
 	else if(ismonkey(affecting))
 		var/mob/living/carbon/monkey/M = affecting
 		if(M.stat == DEAD)

@@ -41,7 +41,7 @@
 	var/obj/screen/alien_plasma_display = null
 	var/obj/screen/nightvisionicon = null
 
-	var/use_me = 1 //Allows all mobs to use the me verb by default, will have to manually specify they cannot
+	var/emotions_allowed = TRUE //Allows all mobs to use the emote proc by default, will have to manually specify they cannot
 	var/speech_allowed = 1 //Meme Stuff
 	var/damageoverlaytemp = 0
 	var/computer_id = null

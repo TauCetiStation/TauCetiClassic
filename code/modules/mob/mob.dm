@@ -34,30 +34,22 @@
 
 	usr.show_message(t, 1)
 
-// TODO: refactor show_message() due to obsolescence and a large number of defects
 /mob/proc/show_message(message, message_type = MESSAGE_VISIBLE, alternative_message, alternative_message_type)
 
-	if(!client)
+	if(!client || !message_type || !message)
 		return FALSE
 
-	if(message_type)
-		if((message_type & MESSAGE_VISIBLE) && ((sdisabilities & BLIND) || blinded || paralysis) )//Vision related
-			if(!alternative_message)
-				return FALSE
-			else
-				message = alternative_message
-				message_type = alternative_message_type
-		if((message_type & MESSAGE_AUDIBLE) && ((sdisabilities & DEAF) || ear_deaf))//Hearing related
-			if (!alternative_message)
-				return FALSE
-			else
-				message = alternative_message
-				message_type = alternative_message_type
-				if (((message_type & MESSAGE_VISIBLE) && (sdisabilities & BLIND)))
-					return FALSE
-	// Added voice muffling for Issue 41.
-	if(stat)
-		message = "<I>... You can almost hear someone talking ...</I>" // TODO: Add a division for emotions, speech, etc. Anything can get in here, not just talk
+	var/blind = (sdisabilities & BLIND) || blinded || paralysis
+	var/deaf = (sdisabilities & DEAF) || ear_deaf
+
+	if(blind || deaf)
+		if(blind && (alternative_message_type & MESSAGE_AUDIBLE) && !deaf)
+			message = alternative_message
+		else if(deaf && (alternative_message_type & MESSAGE_VISIBLE) && !blind)
+			message = alternative_message
+		else
+			return FALSE
+
 	to_chat(src, message)
 	return message
 

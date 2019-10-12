@@ -123,7 +123,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							if(ishuman(src))
 								var/mob/living/carbon/human/H = src
 								if(!H.stat)
-									H.emote(pick("scream", "cry", "laugh"), auto = TRUE)
+									H.emote(pick("scream", "cry", "laugh"))
 						if(client)
 							client.images += halimage
 						spawn(rand(10,50)) //Only seen for a brief moment.
@@ -168,7 +168,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						if(ishuman(src))
 							var/mob/living/carbon/human/H = src
 							if(!H.stat)
-								H.emote(pick("scream", "cry", "laugh"), auto = TRUE)
+								H.emote(pick("scream", "cry", "laugh"))
 					if(7) // GUNSHOTS
 						var/list/gunsound_list = list('sound/weapons/guns/gunshot_heavy.ogg',
 						                              'sound/weapons/guns/gunshot_ak74.ogg',
@@ -225,7 +225,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							H.Weaken(5)
 							H.Stun(8)
 							to_chat(src, "<span class='userdanger'>[pick("", "Voices in my head...", "WHY?!")] [pick("They're coming back!", "Not again...", "WHAT YOU NEED?!", "I CAN'T TAKE IT ANYMORE!", "GAAAAAAAAAAAAAH!")]</span>")
-							H.emote("scream", auto = TRUE)
+							H.emote("scream")
 					if(13) // MISC
 						var/list/hallsound = list('sound/effects/Heart Beat.ogg',
 						                          'sound/hallucinations/liar.ogg',
