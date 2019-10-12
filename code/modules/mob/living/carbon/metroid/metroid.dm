@@ -750,6 +750,9 @@
 /mob/living/carbon/slime/has_leg(targetzone = null)
 	return FALSE
 
+/mob/living/carbon/slime/get_species()
+	return SLIME
+
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*

@@ -247,3 +247,6 @@
 
 /mob/living/carbon/monkey/has_leg(targetzone = null)
 	return TRUE
+
+/mob/living/carbon/monkey/get_species()
+	return race

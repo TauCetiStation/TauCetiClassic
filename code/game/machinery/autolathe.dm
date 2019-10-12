@@ -5,7 +5,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/reagent_containers/glass/bucket(), \
 		new /obj/item/weapon/crowbar(), \
 		new /obj/item/device/flashlight(), \
-		new /obj/item/weapon/extinguisher(), \
+		new /obj/item/weapon/reagent_containers/spray/extinguisher(), \
 		new /obj/item/device/multitool(), \
 		new /obj/item/device/t_scanner(), \
 		new /obj/item/device/analyzer(), \
