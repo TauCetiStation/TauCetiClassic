@@ -261,7 +261,7 @@
 	new /obj/item/weapon/module/power_control(src)
 	new /obj/item/device/multitool(src)
 	new /obj/item/stack/cable_coil/random(src)
-	new /obj/item/weapon/extinguisher/mini(src)
+	/*new /obj/item/weapon/extinguisher/mini(src)*/
 	new /obj/item/weapon/airlock_painter(src)
 	new /obj/item/toy/crayon/spraycan(src)
 
@@ -315,7 +315,7 @@
 
 //Symbolic prize - Space Station equivalent of trophy cup. Very useful if you want to combat large fire or travel in space without wasting jetpack oxygen.
 
-/obj/item/weapon/extinguisher/golden
+/*/obj/item/weapon/extinguisher/golden
 	name = "golden fire extinguisher"
 	desc = "A revered relic of the Founding Fathers. According to the legends - it possesses divine firefighting powers, as well as its healing touch is capable of curing minor brute damage."
 	icon = 'code/modules/teamchallenge/challenge.dmi'
@@ -325,7 +325,7 @@
 	force = -777
 	attack_verb = list("blessed", "consecrated")
 	max_water = 777
-	spray_range = 7
+	spray_range = 7*/
 
 //Agent F
 
