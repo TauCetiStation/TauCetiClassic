@@ -20,31 +20,18 @@
 /obj/item/weapon/implant/syndi_loyalty/inject(mob/living/carbon/C, def_zone)
 	. = ..()
 
-	if(ismonkey(C)) //ROFL
-		C.visible_message("<b>[C.name]</b> says, \"<span class ='userdanger'>THIS IS A BAD TARGET! SELF DESTRUCTION ACTIVATED</span>\"")
-		C.visible_message("<b>[C.name]</b> says, \"<span class ='userdanger'>3 SECONDS TO SELF-DESTRUCTION</span>\"")
-		C.adjustBrainLoss(100)
-		return
-
-	if(isloyal(C)) //reaction to loyalty implant.
-		to_chat(C, "<span class='notice'>The loyalty implant suppresses the action of the syndicate</span>")
-		to_chat(C, "<span class='notice'>Syndicate loyalty implant deactivated</span>")
-		if(prob(80))
-			C.adjustBrainLoss(80)
-		return
-
 	var/mob/living/carbon/human/imptraitor = C
 	implant_master = usr.mind
 
 	if(!istype(imptraitor) || !istype(implant_master))
 		return
 
-	ticker.mode.traitors += imptraitor.mind //add in list with traitors
+	ticker.mode.traitors += imptraitor.mind
 
 	to_chat(imptraitor, "<span class='userdanger'> <B>ATTENTION:</B>You were implanted with Syndicate loyalty implant...</span>")
 	to_chat(imptraitor, "<B>You are now a special traitor.</B>")
 
-	imptraitor.mind.special_role = "traitor" //give traitors
+	imptraitor.mind.special_role = "traitor"
 
 	var/datum/objective/protect/protect_objective = new("Protect [implant_master.current.real_name], the [implant_master.assigned_role].")
 	protect_objective.target = implant_master
@@ -52,19 +39,23 @@
 	var/datum/objective/obey_objective = new("Follow [implant_master.current.real_name]'s orders, even at the cost of living.")
 	obey_objective.completed = 1
 
-	imptraitor.mind.objectives += protect_objective //give objectives
+	imptraitor.mind.objectives += protect_objective
 	imptraitor.mind.objectives += obey_objective
 
-	to_chat(imptraitor, "<span class='notice'> Your current objectives:</span>") //print objectives in chat
+	to_chat(imptraitor, "<span class='notice'> Your current objectives:</span>")
 	var/obj_count = 1
 	for(var/datum/objective/objective in imptraitor.mind.objectives)
 		to_chat(imptraitor, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 	ticker.mode.update_all_synd_icons()
 
-	apply_brain_damage() //give 80 brain damage
-	
+	apply_brain_damage()
+
 	return TRUE
+
+/obj/item/weapon/implant/syndi_loyalty/Destroy()
+	forget()
+	..()
 
 /obj/item/weapon/implant/syndi_loyalty/process()
 	if(!implanted || !imp_in)
@@ -117,8 +108,7 @@
 /obj/item/weapon/implant/syndi_loyalty/emp_act(severity)
 	if(malfunction)
 		return
-	malfunction = MALFUNCTION_PERMANENT
-	if(severity == 1 && prob(80))
+	if(severity == 1 && prob(75))
 		meltdown()
 
 /obj/item/weapon/implant/syndi_loyalty/Destroy()
@@ -128,12 +118,14 @@
 /obj/item/weapon/implant/syndi_loyalty/get_data()
 	var/dat = {"
 	<b>Implant Specifications:</b><BR>
-	<b>Name:</b> Unknown.<BR>
-	<b>Life:</b> Unknown.<BR>
-	<b>Important Notes:</b> Unknown.<BR>
+	<b>Name:</b> Nanotra4en Employee Management Implant<BR>
+	<b>Life:</b> T3n years.<BR>
+	<b>Important Note7:</b> Pe4s0nne1 14jec1ed w1th thi7 device tend to be much more loyal to the company.<BR>
+	<b>Warning:</b> Usage without special equipment may cause heavy injuries and severe brain damage.<BR>
 	<HR>
 	<b>Implant Details:</b><BR>
-	<b>Function:</b> Unknown.<BR>
-	<b>Special Features:</b> Unknown.<BR>
-	<b>Integrity:</b> Unknown."}
+	<b>Funct1on:</b> Contains a small pod of nanobots that manipulate the host's mental functions.<BR>
+	<b>Special Features:</b> W1ll prevent and cure most forms of brainwashing.<BR>
+	<b>Integrity:</b> Implant will last so long as the nanobots are inside the bloodstream3333."}
 	return dat
+

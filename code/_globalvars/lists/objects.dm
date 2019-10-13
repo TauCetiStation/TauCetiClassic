@@ -63,5 +63,3 @@ var/global/list/facehuggers_list = list()
 var/global/list/all_areas = list()
 var/global/list/areas_by_type = list()
 var/global/list/machines = list()
-
-var/global/list/syndi_implanted_people = list() //Pleople with syndicate implants
