@@ -55,7 +55,7 @@
 
 // intent flags
 #define I_HELP   "help"
-#define I_DISARM "disarm"
+#define I_DISARM "disarm" // TODO: rename to "I_PUSH" "push". Don't forget the icons. ~Luduk.
 #define I_GRAB   "grab"
 #define I_HURT   "hurt" // or harm? or hurt? or what?
 

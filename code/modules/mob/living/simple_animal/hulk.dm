@@ -22,7 +22,7 @@
 	environment_smash = 2
 
 	speed = 1
-	a_intent = "harm"
+	a_intent = I_HURT
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	universal_speak = 1

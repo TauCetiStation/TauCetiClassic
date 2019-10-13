@@ -108,7 +108,7 @@
 	icon_state = "shepherd"
 	maxHealth = 9001
 	health = 9001
-	a_intent = "harm"
+	a_intent = I_HURT
 
 	turns_per_move = 5
 	speed = -15

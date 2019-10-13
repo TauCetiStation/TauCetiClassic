@@ -609,7 +609,7 @@
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
 	mouse_opacity = 1
 	faction = "neutral"
-	a_intent = "harm"
+	a_intent = I_HURT
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
