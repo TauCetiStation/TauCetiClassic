@@ -138,7 +138,7 @@
 			steal_objective.find_target()
 			traitor.objectives += steal_objective
 		if(121 to 135)
-			var/datum/objective/implanted/implant_objective = new
+			var/datum/objective/implant/implant_objective = new
 			implant_objective.owner = traitor
 			implant_objective.find_target()
 			traitor.objectives += implant_objective
@@ -253,8 +253,13 @@
 					text += "<br><b>The tools used by the traitor were:</b>"
 					for(var/entry in traitor.uplink_items_bought)
 						text += "<br>[entry]"
+
 				else
 					text += "<br>The traitor was a smooth operator this round (did not purchase any uplink items)."
+			if(traitor.syndicate_implanted_minds)
+				text += "<br><b>Implanted by the traitor:</b>"
+				for(var/datum/mind/M in traitor.syndicate_implanted_minds)
+					text += "<br>[M.current.real_name], the [M.assigned_role]"
 
 	if(ticker.reconverted_antags.len)
 		text += "<br><hr>"
@@ -360,7 +365,7 @@
 		else
 			to_chat(traitor_mob, "The biogel-filled can in your [where] will help you to steal you target's head alive and undamaged.")
 
-	for(var/datum/objective/implanted/I in traitor_mob.mind.objectives) //give box with implant in slot traitors. At the beginning of the round
+	for(var/datum/objective/implant/I in traitor_mob.mind.objectives) //give box with implant in slot traitors. At the beginning of the round
 		var/obj/item/weapon/storage/box/syndie_kit/imp_loyalty/box = new (traitor_mob.loc)
 		var/list/slots = list (
 		"backpack" = SLOT_IN_BACKPACK,

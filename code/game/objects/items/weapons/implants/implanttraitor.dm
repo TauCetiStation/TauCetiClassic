@@ -3,35 +3,34 @@
 	desc = "Makes you loyal or such.."
 
 	var/datum/mind/implant_master
-	var/mob/implant_master_mob  //The man who injected the implant
 	var/forgotten = FALSE
-	var/mob/implant_target_mob //Victim with implant
 
 /obj/item/weapon/implant/syndi_loyalty/implanted(mob/M)
-	//Save ref for mobs
-	implant_master_mob = usr
-	implant_target_mob = M
-
-	syndi_implanted_people += "<b>[implant_master_mob]</b> implanted <b>[implant_target_mob]</b> Syndicate Loyalty implant" //For print in scroreboard.
-
 	START_PROCESSING(SSobj, src)
 	return TRUE
 
 /obj/item/weapon/implant/syndi_loyalty/inject(mob/living/carbon/C, def_zone)
 	. = ..()
 
-	var/mob/living/carbon/human/imptraitor = C
+	var/mob/living/carbon/human/imp_in = C
 	implant_master = usr.mind
 
-	if(!istype(imptraitor) || !istype(implant_master))
-		return
+	if(!istype(imp_in) || !istype(implant_master) || isloyalsyndi(imp_in))
+		return FALSE
 
-	ticker.mode.traitors += imptraitor.mind
+	for(var/obj/item/weapon/implant/mindshield/I in imp_in.contents)
+		if(I.implanted)
+			qdel(I)
+	for(var/obj/item/weapon/implant/mindshield/loyalty/I in imp_in.contents)
+		if(I.implanted)
+			qdel(I)
 
-	to_chat(imptraitor, "<span class='userdanger'> <B>ATTENTION:</B>You were implanted with Syndicate loyalty implant...</span>")
-	to_chat(imptraitor, "<B>You are now a special traitor.</B>")
+	ticker.mode.traitors += imp_in.mind
 
-	imptraitor.mind.special_role = "traitor"
+	to_chat(imp_in, "<span class='userdanger'> <B>ATTENTION:</B> You were implanted with Syndicate loyalty implant...</span>")
+	to_chat(imp_in, "<B>You are now a special traitor.</B>")
+
+	imp_in.mind.special_role = "traitor"
 
 	var/datum/objective/protect/protect_objective = new("Protect [implant_master.current.real_name], the [implant_master.assigned_role].")
 	protect_objective.target = implant_master
@@ -39,13 +38,13 @@
 	var/datum/objective/obey_objective = new("Follow [implant_master.current.real_name]'s orders, even at the cost of living.")
 	obey_objective.completed = 1
 
-	imptraitor.mind.objectives += protect_objective
-	imptraitor.mind.objectives += obey_objective
+	imp_in.mind.objectives += protect_objective
+	imp_in.mind.objectives += obey_objective
 
-	to_chat(imptraitor, "<span class='notice'> Your current objectives:</span>")
+	to_chat(imp_in, "<span class='notice'> Your current objectives:</span>")
 	var/obj_count = 1
-	for(var/datum/objective/objective in imptraitor.mind.objectives)
-		to_chat(imptraitor, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+	for(var/datum/objective/objective in imp_in.mind.objectives)
+		to_chat(imp_in, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 	ticker.mode.update_all_synd_icons()
 
@@ -70,7 +69,7 @@
 				if(1)
 					to_chat(imp_in, "<span class='warning'> You [pick("are sure", "think")] that Syndicate - is the best corporation in the whole Universe!</span>")
 				if(2)
-					to_chat(imp_in, "<span class='warning'> You [pick("are sure", "think")] that [implant_master_mob] is the greatest man who ever lived!</span>")
+					to_chat(imp_in, "<span class='warning'> You [pick("are sure", "think")] that [implant_master.current.real_name] is the greatest man who ever lived!</span>")
 				if(3)
 					to_chat(imp_in, "<span class='warning'> You want to give your life away in the name of Syndicate!</span>")
 		if(prob(1) && prob(5))
@@ -83,23 +82,23 @@
 		if(prob(5))
 			switch(rand(1, 3))
 				if(1)
-					to_chat(imp_in, "\italic <span class ='userdanger'>You wanna cut off [implant_master_mob]'s head!</span>")
+					to_chat(imp_in, "\italic <span class ='userdanger'>You wanna cut off [implant_master.current.real_name]'s head!</span>")
 				if(2)
-					to_chat(imp_in, "\italic <span class ='userdanger'>You [pick("are sure", "think")] that [implant_master_mob] is worthy of death!</span>")
+					to_chat(imp_in, "\italic <span class ='userdanger'>You [pick("are sure", "think")] that [implant_master.current.real_name] is worthy of death!</span>")
 				if(3)
-					to_chat(imp_in, "\italic <span class ='userdanger'>ERROR... [implant_master_mob]... DIE, MOTHEFUCKER, DIE!!!</span>")
+					to_chat(imp_in, "\italic <span class ='userdanger'>ERROR... [implant_master.current.real_name]... DIE, MOTHEFUCKER, DIE!!!</span>")
 
 /obj/item/weapon/implant/syndi_loyalty/meltdown()
 	. = ..()
 	forget()
-	fake_attack(implant_target_mob, implant_master_mob) //Hallucination
+	fake_attack(imp_in, implant_master.current) //Hallucination
 
 /obj/item/weapon/implant/syndi_loyalty/islegal()
-	return FALSE
+	return 0
 
 /obj/item/weapon/implant/syndi_loyalty/proc/forget()
 	if(!forgotten)
-		ticker.mode.remove_traitor(implant_target_mob) //remove traitors
+		ticker.mode.remove_traitor(implant_master) //remove traitors
 		imp_in.mind.remove_objectives()
 		apply_brain_damage()
 		to_chat(imp_in, "<span class='warning'>You forgot everything after installing the implant.</span>")

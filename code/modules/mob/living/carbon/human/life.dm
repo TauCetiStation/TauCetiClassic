@@ -1886,11 +1886,11 @@
 						break
 		hud_list[WANTED_HUD] = holder
 
-	if(hud_updateflag & 1 << IMPLOYAL_HUD || hud_updateflag & 1 << IMPCHEM_HUD || hud_updateflag & 1 << IMPTRACK_HUD || hud_updateflag & 1 << SYNDI_LOYAL_HUD)
+	if(hud_updateflag & 1 << IMPLOYAL_HUD || hud_updateflag & 1 << IMPCHEM_HUD || hud_updateflag & 1 << IMPTRACK_HUD || hud_updateflag & 1 << SYNDI_LOYALTY_HUD)
 		var/image/holder1 = hud_list[IMPTRACK_HUD]
 		var/image/holder2 = hud_list[IMPLOYAL_HUD]
 		var/image/holder3 = hud_list[IMPCHEM_HUD]
-		var/image/holder4 = hud_list[SYNDI_LOYAL_HUD]
+		var/image/holder4 = hud_list[SYNDI_LOYALTY_HUD]
 
 		holder1.icon_state = "hudblank"
 		holder2.icon_state = "hudblank"
@@ -1916,7 +1916,7 @@
 		hud_list[IMPTRACK_HUD] = holder1
 		hud_list[IMPLOYAL_HUD] = holder2
 		hud_list[IMPCHEM_HUD] = holder3
-		hud_list[SYNDI_LOYAL_HUD] = holder4
+		hud_list[SYNDI_LOYALTY_HUD] = holder4
 
 	if(hud_updateflag & 1 << SPECIALROLE_HUD)
 		var/image/holder = hud_list[SPECIALROLE_HUD]
