@@ -149,7 +149,7 @@
 
 /obj/structure/closet/crate/secure/AltClick(mob/user)
 	if(get_dist(user,src) <= 1)
-		togglelock()
+		src.togglelock(user)
 	..()
 
 /obj/structure/closet/crate/secure/proc/togglelock(mob/user)

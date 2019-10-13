@@ -41,7 +41,7 @@
 	set name = "Eject ID Card"
 	set src in oview(1)
 
-	if(!usr || usr.stat || usr.lying|| usr.restrained())	return
+	if(!usr || usr.stat || usr.lying || usr.restrained() || issilicon(usr))	return
 
 	if(modify)
 		to_chat(usr, "You remove \the [modify] from \the [src].")
@@ -147,6 +147,7 @@
 				modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 				if(ishuman(usr))
 					modify.loc = usr.loc
+					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 					if(!usr.get_active_hand())
 						usr.put_in_hands(modify)
 					modify = null
@@ -159,11 +160,13 @@
 					usr.drop_item()
 					I.loc = src
 					modify = I
+					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 		if ("scan")
 			if (scan)
 				if(ishuman(usr))
 					scan.loc = usr.loc
+					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 					if(!usr.get_active_hand())
 						usr.put_in_hands(scan)
 					scan = null
@@ -176,6 +179,7 @@
 					usr.drop_item()
 					I.loc = src
 					scan = I
+					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 		if("access")
 			if(href_list["allowed"])

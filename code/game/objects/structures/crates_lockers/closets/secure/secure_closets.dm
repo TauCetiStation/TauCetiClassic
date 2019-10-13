@@ -30,7 +30,7 @@
 
 /obj/structure/closet/secure_closet/AltClick(mob/user)
 	if(get_dist(user,src) <= 1)
-		togglelock()
+		src.togglelock(user)
 	..()
 
 /obj/structure/closet/secure_closet/emp_act(severity)

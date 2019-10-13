@@ -235,12 +235,13 @@
 		return
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
-	if(!user.restrained() && get_dist(user,src) <= 1 && !state_open)
-		on = !on
-		update_icon()
+	if(!user.restrained() && get_dist(user,src) <= 1 || issilicon(user))
+		if(!state_open)
+			on = !on
+			update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
-	if(!user.restrained() && get_dist(user,src) <= 1)
+	if(!user.restrained() && get_dist(user,src) <= 1 || issilicon(user))
 		if(state_open)
 			close_machine()
 		else
