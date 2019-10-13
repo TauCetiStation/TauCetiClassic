@@ -295,6 +295,10 @@ var/global/combos_cheat_sheet = ""
 	for(var/datum/combo_saved/CS in combos_saved)
 		CS.fullness += value
 
+/mob/living/proc/add_my_combo_value(value)
+	for(var/datum/combo_saved/CS in combos_performed)
+		CS.fullness += value
+
 // Returns TRUE if a combo was executed.
 /mob/living/proc/try_combo(mob/living/target)
 	for(var/datum/combo_saved/CS in combos_performed)

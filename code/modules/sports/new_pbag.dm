@@ -7,7 +7,6 @@
 	var/my_icon_state = "pbag" // Used so after a swing we fall correctly in async calls.
 
 	density = FALSE
-	anchored = TRUE
 
 	maxHealth = 100
 
@@ -22,17 +21,26 @@
 	alive_mob_list -= src
 
 /mob/living/pbag/incapacitated()
-	return !anchored
+	return !resting
 
 /mob/living/pbag/restrained()
 	return FALSE
+
+/mob/living/pbag/disarmReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	attacker.do_attack_animation(src)
+
+	INVOKE_ASYNC(src, /mob/living/pbag.proc/swing, 0.2 SECONDS)
+
+	playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
+	if(show_message)
+		visible_message("<span class='warning'><B>[attacker] pushed [src]!</B></span>")
 
 /mob/living/pbag/attack_ghost(mob/dead/observer/attacker)
 	if(ckey)
 		to_chat(attacker, "<span class='notice'>[src] is already possesed.</span>")
 		return
 
-	if(ckey in ghosts_were_here)
+	if(attacker.ckey in ghosts_were_here)
 		to_chat(attacker, "<span class='notice'>You were already exiled from [src].</span>")
 		return
 
@@ -80,10 +88,8 @@
 		handle_combat()
 
 /mob/living/pbag/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, used_weapon = null)
-	if(incapacitated())
-		return
-
-	hit(damage, damagetype)
+	if(!incapacitated())
+		hit(damage, damagetype)
 
 	var/flags_mes = ""
 	if(damage_flags & (DAM_SHARP|DAM_EDGE))
@@ -114,10 +120,7 @@
 	visible_message("<span class='notice'>[mes]</span>")
 
 /mob/living/pbag/apply_effect(effect = 0, effecttype = STUN, blocked = 0)
-	if(incapacitated())
-		return
-
-	if(effecttype == WEAKEN || effecttype == PARALYZE)
+	if(incapacitated() && (effecttype == WEAKEN || effecttype == PARALYZE))
 		drop_down()
 	visible_message("<span class='notice'>[bicon(src)] [src] was [effecttype]ed for [effect] seconds.</span>")
 
@@ -145,7 +148,7 @@
 				T = get_step(T, dir_throw)
 			ghost.throw_at(T, 7, 5, src) // It will say that the bad "thrown" the ghost out. Sounds fun.
 
-	anchored = FALSE
+	resting = TRUE
 	icon_state = "pbagdown"
 	my_icon_state = "pbagdown"
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
@@ -207,7 +210,7 @@
 	icon_state = "pbag"
 	my_icon_state = "pbag"
 	pixel_y = 0
-	anchored = TRUE
+	resting = FALSE
 
 /mob/living/pbag/verb/user_hang()
 	set name = "Hang Bag"

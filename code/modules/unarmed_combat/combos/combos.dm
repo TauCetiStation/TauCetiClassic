@@ -18,6 +18,7 @@
 			var/list/dir_to_shoot = pick(alldirs)
 			G.afterattack(get_step(attacker, dir_to_shoot), victim, FALSE) // So we shoot in their general direction.
 
+	victim.add_my_combo_value(-20)
 	victim.drop_item()
 	victim.visible_message("<span class='warning'><B>[attacker] has disarmed [victim]!</B></span>")
 
@@ -135,7 +136,7 @@
 							end_string += "!"
 				L.visible_message("<span class='danger'>[attacker] slide-kicks [L][end_string]</span>")
 
-		if(!do_after(attacker, attacker.movement_delay() * 0.5, can_move = TRUE, target = victim, progress = FALSE))
+		if(!do_after(attacker, attacker.movement_delay() * 0.4, can_move = TRUE, target = victim, progress = FALSE))
 			break
 
 	attacker.crawling = prev_crawling
@@ -595,7 +596,7 @@
 			for(var/mob/living/L in cur_movers)
 				INVOKE_ASYNC(GLOBAL_PROC, .proc/_step, L, dropkick_dir)
 
-			sleep(attacker.movement_delay() * 0.75) // Since they were the one to push.
+			sleep(attacker.movement_delay() * 0.5) // Since they were the one to push.
 
 	for(var/j in 1 to i)
 		var/mob/living/L = movers["[j]"]
@@ -686,7 +687,7 @@
 						L.apply_damage(40, BRUTE, blocked = armor_check)
 					break try_steps_loop
 
-				if(!do_after(attacker, attacker.movement_delay() * 0.75, can_move = TRUE, target = victim, progress = FALSE))
+				if(!do_after(attacker, attacker.movement_delay() * 0.5, can_move = TRUE, target = victim, progress = FALSE))
 					break try_steps_loop
 
 	for(var/obj/item/weapon/grab/G in attacker.GetGrabs())

@@ -53,11 +53,11 @@
 					IAN.lay_down()
 
 
-/datum/hud/proc/ian_hud()
+/datum/hud/proc/ian_hud(ui_style='icons/mob/screen1_White.dmi', ui_color = "#ffffff", ui_alpha = 255)
 	if(!(is_alien_whitelisted(mymob, "ian") || (mymob.client.supporter && !is_alien_whitelisted_banned(mymob, "ian"))))
 		return
 
-	var/ui_style = 'icons/mob/screen_corgi.dmi'
+	ui_style = 'icons/mob/screen_corgi.dmi'
 	src.adding = list()
 	src.other = list()
 
@@ -73,6 +73,57 @@
 	using.screen_loc = ui_acti
 	src.adding += using
 	action_intent = using
+
+//intent small hud objects
+	var/icon/ico
+
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
+	using = new /obj/screen( src )
+	using.name = "help"
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	src.adding += using
+	help_intent = using
+
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
+	using = new /obj/screen( src )
+	using.name = "disarm"
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	src.adding += using
+	disarm_intent = using
+
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
+	using = new /obj/screen( src )
+	using.name = "grab"
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	src.adding += using
+	grab_intent = using
+
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
+	using = new /obj/screen( src )
+	using.name = "harm"
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	src.adding += using
+	hurt_intent = using
 
 	using = new
 	using.name = "resist"
