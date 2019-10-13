@@ -365,7 +365,7 @@
 /datum/reagent/consumable/dry_ramen
 	name = "Dry Ramen"
 	id = "dry_ramen"
-	description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
+	description = "Space age food, since August 25, 1958. Contains dried noodles, couple tiny vegetables, and chicken flavored chemicals that boil in contact with water."
 	reagent_state = SOLID
 	nutriment_factor = 2
 	color = "#302000" // rgb: 48, 32, 0
@@ -386,17 +386,32 @@
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
 /datum/reagent/consumable/hell_ramen
-	name = "Hell Ramen"
+	name = "Spicy Ramen"
 	id = "hell_ramen"
+	description = "Space age food, since August 25, 1958. Contains dried noodles, couple tiny vegetables, and spicy flavored chemicals that boil in contact with water."
+	reagent_state = LIQUID
+	nutriment_factor = 4
+	color = "#302000" // rgb: 48, 32, 0
+	taste_message = "dry ramen with SPICY flavor"
+
+/datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M)
+	..()
+	if(M.bodytemperature < BODYTEMP_NORMAL + 40) // Not Tajaran friendly food (by the time of writing this, Tajaran has 330 heat limit, while this is 350 and human 360.
+		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT))
+
+/datum/reagent/consumable/hot_hell_ramen
+	name = "Hot Spicy Ramen"
+	id = "hot_hell_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
 	nutriment_factor = 4
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "SPICY ramen"
 
-/datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M)
+/datum/reagent/consumable/hot_hell_ramen/on_general_digest(mob/living/M)
 	..()
-	M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+	if(M.bodytemperature < BODYTEMP_NORMAL + 40)
+		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
 /datum/reagent/consumable/rice
 	name = "Rice"

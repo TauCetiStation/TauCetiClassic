@@ -423,7 +423,7 @@
 					to_chat(M, "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> <B>[src]</B> [message]")
 
 	if(cloud_emote)
-		var/image/emote_bubble = image('icons/mob/emote.dmi', src, cloud_emote, MOB_LAYER + 1)
+		var/image/emote_bubble = image('icons/mob/emote.dmi', src, cloud_emote, EMOTE_LAYER)
 		flick_overlay(emote_bubble, clients, 30)
 		QDEL_IN(emote_bubble, 3 SECONDS)
 

@@ -37,3 +37,8 @@
 #define CHAT_GHOSTSIGHT_ALL        1
 #define CHAT_GHOSTSIGHT_ALLMANUAL  2
 #define CHAT_GHOSTSIGHT_NEARBYMOBS 3
+
+//used for alternate_option
+#define GET_RANDOM_JOB 0
+#define BE_ASSISTANT 1
+#define RETURN_TO_LOBBY 2

@@ -529,7 +529,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -2841,36 +2841,13 @@
 	},
 /area/security/brig)
 "aeC" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/reagent_dispensers/watertank,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/floor{
-	icon_state = "whitepurplefull"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "warningline"
-	},
-/area/rnd/xenobiology)
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor,
+/area/storage/tools)
 "aeD" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor{
-	icon_state = "whitepurplefull"
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "warningline"
-	},
-/area/rnd/xenobiology)
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor,
+/area/atmos)
 "aeE" = (
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
@@ -3256,6 +3233,41 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
+"afi" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor{
+	icon_state = "whitepurplefull"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warningline"
+	},
+/area/rnd/xenobiology)
+"afj" = (
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor/plating,
+/area/maintenance/bridge)
+"afk" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor{
+	icon_state = "whitepurplefull"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warningline"
+	},
+/area/rnd/xenobiology)
 "afm" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -5152,7 +5164,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
@@ -5896,12 +5908,12 @@
 /turf/simulated/wall/r_wall,
 /area/aisat)
 "aYr" = (
-/obj/item/weapon/legcuffs/beartrap,
-/obj/item/weapon/legcuffs/beartrap,
-/obj/item/weapon/storage/box/mousetraps,
-/obj/item/weapon/storage/box/mousetraps,
+/obj/machinery/alarm{
+	pixel_y = 23
+	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor,
-/area/janitor)
+/area/storage/primary)
 "aYs" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -13544,7 +13556,6 @@
 	},
 /area/crew_quarters/heads)
 "dvy" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Engineering Equip Storage APC";
@@ -13555,6 +13566,7 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "yellow"
@@ -15219,7 +15231,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
 "dZA" = (
@@ -23876,11 +23888,11 @@
 	},
 /area/engine/engineering)
 "gNN" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -30
 	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -27413,14 +27425,11 @@
 	},
 /area/storage/tech)
 "hYI" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	pixel_y = 28
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "bot"
-	},
+/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/weapon/storage/box/mousetraps,
+/obj/item/weapon/storage/box/mousetraps,
+/obj/item/weapon/legcuffs/beartrap,
+/turf/simulated/floor,
 /area/janitor)
 "hYJ" = (
 /obj/item/weapon/storage/secure/safe{
@@ -28932,7 +28941,7 @@
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
 "ixY" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor/plating,
 /area/engine/engineering)
 "iyf" = (
@@ -37030,9 +37039,12 @@
 /turf/simulated/floor,
 /area/janitor)
 "leM" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor,
-/area/storage/tools)
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
+	},
+/area/janitor)
 "leQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -39110,7 +39122,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
@@ -45054,7 +45066,7 @@
 "nHz" = (
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/structure/rack,
 /obj/effect/decal/cleanable/liquid_fuel,
 /turf/simulated/floor/plating,
@@ -45281,7 +45293,7 @@
 /area/maintenance/cargo)
 "nLK" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "nMj" = (
@@ -49763,7 +49775,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/flashlight,
@@ -51787,7 +51799,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
@@ -52345,11 +52357,12 @@
 /area/chapel/office)
 "qgu" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/machinery/alarm{
-	pixel_y = 23
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
 	},
-/turf/simulated/floor,
-/area/storage/primary)
+/area/janitor)
 "qgH" = (
 /obj/structure/closet/lawcloset,
 /turf/simulated/floor{
@@ -53035,7 +53048,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/flashlight,
@@ -56137,7 +56150,7 @@
 /area/engine/equip)
 "rtL" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/weapon/storage/belt/utility,
 /obj/item/clothing/mask/gas/coloured,
 /turf/simulated/floor/plating,
@@ -57778,7 +57791,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
 "rXe" = (
@@ -65574,7 +65587,7 @@
 /obj/structure/sign/warning/fire{
 	pixel_y = 32
 	},
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
 "utp" = (
@@ -72816,7 +72829,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
@@ -74916,9 +74929,9 @@
 	},
 /area/rnd/mixing)
 "xvW" = (
-/obj/item/weapon/reagent_containers/glass/bucket,
-/turf/simulated/floor,
-/area/janitor)
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor/plating,
+/area/maintenance/eva)
 "xwu" = (
 /obj/structure/flora/tree/jungle/small{
 	icon_state = "tree5"
@@ -96639,7 +96652,7 @@ ear
 fKz
 sBB
 gLD
-leM
+aeC
 dvz
 eZN
 eZN
@@ -96887,7 +96900,7 @@ dSp
 wqP
 czH
 ear
-qgu
+aYr
 hkV
 cUF
 cUF
@@ -97132,7 +97145,7 @@ chJ
 khF
 sZH
 trO
-pme
+qgu
 wRi
 aet
 hqa
@@ -97386,10 +97399,10 @@ xLH
 mRW
 eJg
 chJ
-hYI
+pme
 abe
 eyG
-mFj
+leM
 wRi
 jOl
 lmA
@@ -97644,9 +97657,9 @@ gpL
 eJg
 chJ
 dlP
-xvW
+hYI
 tKH
-aYr
+mFj
 wRi
 nxc
 mOK
@@ -108177,7 +108190,7 @@ gul
 uNm
 yaE
 wze
-jJd
+xvW
 gul
 emo
 wze
@@ -119558,7 +119571,7 @@ vNi
 aes
 aex
 aez
-aeC
+afi
 aeG
 aex
 aeN
@@ -120282,7 +120295,7 @@ ada
 jIl
 vXB
 knA
-mUQ
+afj
 jIl
 sWU
 grK
@@ -121100,7 +121113,7 @@ vNi
 aeu
 aey
 aeA
-aeD
+afk
 aeH
 aey
 aeO
@@ -121528,7 +121541,7 @@ iir
 iir
 oiB
 mKz
-rom
+aeD
 rtz
 uVU
 qqY

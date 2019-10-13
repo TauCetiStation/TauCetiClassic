@@ -36,7 +36,8 @@
 	return
 
 /obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
-	return
+	if(user.a_intent == I_HURT) // Since we usually splash mobs or whatever, now we will also hit them.
+		..()
 
 // this prevented pills, food, and other things from being picked up by bags.
 // possibly intentional, but removing it allows us to not duplicate functionality.
