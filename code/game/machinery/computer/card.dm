@@ -33,16 +33,15 @@
 	return formatted
 
 /obj/machinery/computer/card/AltClick(mob/user)
-	if(!istype(user) || !CanUseTopic(user))
-		return
-	eject_id()
+	if(get_dist(user,src) <= 1)
+		eject_id()
 
 /obj/machinery/computer/card/verb/eject_id()
 	set category = "Object"
 	set name = "Eject ID Card"
 	set src in oview(1)
 
-	if(!usr || usr.stat || usr.lying)	return
+	if(!usr || usr.stat || usr.lying|| usr.restrained())	return
 
 	if(modify)
 		to_chat(usr, "You remove \the [modify] from \the [src].")
@@ -50,12 +49,14 @@
 		if(!usr.get_active_hand())
 			usr.put_in_hands(modify)
 		modify = null
+		playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else if(scan)
 		to_chat(usr, "You remove \the [scan] from \the [src].")
 		scan.loc = get_turf(src)
 		if(!usr.get_active_hand())
 			usr.put_in_hands(scan)
 		scan = null
+		playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else
 		to_chat(usr, "There is nothing to remove from the console.")
 	return

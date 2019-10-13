@@ -29,9 +29,8 @@
 		return 0
 
 /obj/structure/closet/secure_closet/AltClick(mob/user)
-	if(!istype(user) || !CanUseTopic(user))
-		return
-	verb_togglelock()
+	if(get_dist(user,src) <= 1)
+		togglelock()
 	..()
 
 /obj/structure/closet/secure_closet/emp_act(severity)

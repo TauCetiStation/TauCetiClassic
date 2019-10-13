@@ -148,9 +148,8 @@
 	return !locked
 
 /obj/structure/closet/crate/secure/AltClick(mob/user)
-	if(!istype(user) || !CanUseTopic(user))
-		return
-	verb_togglelock()
+	if(get_dist(user,src) <= 1)
+		togglelock()
 	..()
 
 /obj/structure/closet/crate/secure/proc/togglelock(mob/user)
