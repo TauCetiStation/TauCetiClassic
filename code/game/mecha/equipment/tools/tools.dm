@@ -222,6 +222,13 @@
 
 
 /********Extinguisher********/
+/obj/item/weapon/reagent_containers/spray/extinguisher/mecha
+	volume = 1200
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/mecha/atom_init()
+	. = ..()
+	flags |= OPENCONTAINER
+
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
 	name = "extinguisher"
 	desc = "Exosuit-mounted extinguisher (Can be attached to: Engineering exosuits)"
@@ -230,57 +237,28 @@
 	energy_drain = 0
 	range = MELEE|RANGED
 
+	var/obj/item/weapon/reagent_containers/spray/extinguisher/ext
+
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher/atom_init()
-	reagents = new/datum/reagents(200)
-	reagents.my_atom = src
-	reagents.add_reagent("water", 200)
+	ext = new/obj/item/weapon/reagent_containers/spray/extinguisher/mecha(src)
 	. = ..()
 
-/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/action(atom/target) //copypasted from extinguisher. TODO: Rewrite from scratch.
-	if(!action_checks(target) || get_dist(chassis, target)>3) return
-	if(get_dist(chassis, target)>2) return
-	set_ready_state(0)
-	if(do_after_cooldown(target))
-		if(istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(chassis,target) <= 1)
-			var/obj/o = target
-			o.reagents.trans_to(src, 200)
-			occupant_message("<span class='notice'>Extinguisher refilled</span>")
-			playsound(chassis, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
-		else
-			if(src.reagents.total_volume > 0)
-				playsound(chassis, 'sound/effects/extinguish.ogg', VOL_EFFECTS_MASTER, null, null, -3)
-				var/direction = get_dir(chassis,target)
-				var/turf/T = get_turf(target)
-				var/turf/T1 = get_step(T,turn(direction, 90))
-				var/turf/T2 = get_step(T,turn(direction, -90))
+/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/Destroy()
+	QDEL_NULL(ext)
+	return ..()
 
-				var/list/the_targets = list(T,T1,T2)
-				spawn(0)
-					for(var/a in 1 to 5)
-						var/obj/effect/effect/water/W = new /obj/effect/effect/water(get_turf(chassis))
-						if(!W)	return
-						var/turf/my_target = pick(the_targets)
-						var/datum/reagents/R = new/datum/reagents(5)
-						W.reagents = R
-						R.my_atom = W
-						src.reagents.trans_to(W,1)
-						for(var/b in 1 to 4)
-							if(!W)	return
-							if(!W.reagents) break
-							step_towards(W,my_target)
-							W.reagents.reaction(get_turf(W))
-							for(var/atom/atm in get_turf(W))
-								W.reagents.reaction(atm)
-								if(isliving(atm)) //For extinguishing mobs on fire
-									var/mob/living/M = atm
-									M.ExtinguishMob()
-							if(W.loc == my_target)	break
-							sleep(2)
-						qdel(W)
+/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/action(atom/target)
+	if(!action_checks(target))
+		return
+
+	set_ready_state(0)
+
+	if(do_after_cooldown(target) && chassis.occupant)
+		ext.afterattack(target, chassis.occupant)
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher/get_equip_info()
-	return "[..()] \[[src.reagents.total_volume]\]"
+	return "[..()] \[[ext.reagents.total_volume]\]"
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher/on_reagent_change()
 	return
@@ -313,7 +291,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/tool/rcd/action(atom/target)
-	if(istype(target,/area/shuttle)||istype(target, /turf/space/transit))//>implying these are ever made -Sieve
+	if(istype(target,/area/shuttle))//>implying these are ever made -Sieve
 		disabled = 1
 	else
 		disabled = 0

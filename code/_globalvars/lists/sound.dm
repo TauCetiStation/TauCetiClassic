@@ -26,8 +26,15 @@ var/global/list/SOUNDIN_MRIGVOMIT   = list('sound/voice/mob/mrigvomit_1.ogg', 's
 // Human's emotes
 var/global/list/SOUNDIN_FBCOUGH = list('sound/voice/mob/fbcough_1.ogg', 'sound/voice/mob/fbcough_2.ogg', 'sound/voice/mob/fbcough_3.ogg')
 var/global/list/SOUNDIN_MBCOUGH = list('sound/voice/mob/mbcough_1.ogg', 'sound/voice/mob/mbcough_2.ogg', 'sound/voice/mob/mbcough_3.ogg')
-var/global/list/SOUNDIN_FSCREAM = list('sound/voice/mob/femalescream_1.ogg', 'sound/voice/mob/femalescream_2.ogg', 'sound/voice/mob/femalescream_3.ogg', 'sound/voice/mob/femalescream_4.ogg', 'sound/voice/mob/femalescream_5.ogg')
-var/global/list/SOUNDIN_MSCREAM = list('sound/voice/mob/malescream_1.ogg', 'sound/voice/mob/malescream_2.ogg', 'sound/voice/mob/malescream_3.ogg', 'sound/voice/mob/malescream_4.ogg', 'sound/voice/mob/malescream_5.ogg', 'sound/voice/mob/malescream_6.ogg', 'sound/voice/mob/malescream_7.ogg')
+// Human's pain
+var/global/list/SOUNDIN_FEMALE_LIGHT_PAIN   = list('sound/voice/mob/pain/female/light_1.ogg', 'sound/voice/mob/pain/female/light_2.ogg', 'sound/voice/mob/pain/female/light_3.ogg', 'sound/voice/mob/pain/female/light_4.ogg', 'sound/voice/mob/pain/female/light_5.ogg', 'sound/voice/mob/pain/female/light_6.ogg', 'sound/voice/mob/pain/female/light_7.ogg', 'sound/voice/mob/pain/female/light_8.ogg')
+var/global/list/SOUNDIN_FEMALE_HEAVY_PAIN   = list('sound/voice/mob/pain/female/heavy_1.ogg', 'sound/voice/mob/pain/female/heavy_2.ogg', 'sound/voice/mob/pain/female/heavy_3.ogg', 'sound/voice/mob/pain/female/heavy_4.ogg', 'sound/voice/mob/pain/female/heavy_5.ogg', 'sound/voice/mob/pain/female/heavy_6.ogg')
+var/global/list/SOUNDIN_FEMALE_PASSIVE_PAIN = list('sound/voice/mob/pain/female/passive_1.ogg', 'sound/voice/mob/pain/female/passive_2.ogg', 'sound/voice/mob/pain/female/passive_3.ogg', 'sound/voice/mob/pain/female/passive_4.ogg', 'sound/voice/mob/pain/female/passive_5.ogg', 'sound/voice/mob/pain/female/passive_6.ogg')
+var/global/list/SOUNDIN_FEMALE_WHINER_PAIN  = list('sound/voice/mob/pain/female/passive_whiner_1.ogg', 'sound/voice/mob/pain/female/passive_whiner_2.ogg', 'sound/voice/mob/pain/female/passive_whiner_3.ogg', 'sound/voice/mob/pain/female/passive_whiner_4.ogg', 'sound/voice/mob/pain/female/passive_whiner_5.ogg', 'sound/voice/mob/pain/female/passive_whiner_6.ogg')
+var/global/list/SOUNDIN_MALE_LIGHT_PAIN     = list('sound/voice/mob/pain/male/light_1.ogg', 'sound/voice/mob/pain/male/light_2.ogg', 'sound/voice/mob/pain/male/light_3.ogg', 'sound/voice/mob/pain/male/light_4.ogg', 'sound/voice/mob/pain/male/light_5.ogg', 'sound/voice/mob/pain/male/light_6.ogg', 'sound/voice/mob/pain/male/light_7.ogg', 'sound/voice/mob/pain/male/light_8.ogg')
+var/global/list/SOUNDIN_MALE_HEAVY_PAIN     = list('sound/voice/mob/pain/male/heavy_1.ogg', 'sound/voice/mob/pain/male/heavy_2.ogg', 'sound/voice/mob/pain/male/heavy_3.ogg', 'sound/voice/mob/pain/male/heavy_4.ogg', 'sound/voice/mob/pain/male/heavy_5.ogg', 'sound/voice/mob/pain/male/heavy_6.ogg', 'sound/voice/mob/pain/male/heavy_7.ogg', 'sound/voice/mob/pain/male/heavy_8.ogg')
+var/global/list/SOUNDIN_MALE_PASSIVE_PAIN   = list('sound/voice/mob/pain/male/passive_1.ogg', 'sound/voice/mob/pain/male/passive_2.ogg', 'sound/voice/mob/pain/male/passive_3.ogg', 'sound/voice/mob/pain/male/passive_4.ogg', 'sound/voice/mob/pain/male/passive_5.ogg')
+var/global/list/SOUNDIN_MALE_WHINER_PAIN    = list('sound/voice/mob/pain/male/passive_whiner_1.ogg', 'sound/voice/mob/pain/male/passive_whiner_2.ogg', 'sound/voice/mob/pain/male/passive_whiner_3.ogg', 'sound/voice/mob/pain/male/passive_whiner_4.ogg')
 // Xenomorph's emotes
 var/global/list/SOUNDIN_XENOMORPH_TALK  = list('sound/voice/xenomorph/talk_1.ogg', 'sound/voice/xenomorph/talk_2.ogg', 'sound/voice/xenomorph/talk_3.ogg', 'sound/voice/xenomorph/talk_4.ogg')
 var/global/list/SOUNDIN_XENOMORPH_ROAR  = list('sound/voice/xenomorph/roar_1.ogg', 'sound/voice/xenomorph/roar_2.ogg')
@@ -37,6 +44,7 @@ var/global/list/SOUNDIN_XENOMORPH_GROWL = list('sound/voice/xenomorph/growl_1.og
 var/global/list/SOUNDIN_BEEPSKY = list('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
 
 // ----- Misc -----
+var/global/list/SOUNDIN_SCARYSOUNDS = list('sound/weapons/thudswoosh.ogg', 'sound/weapons/guns/gunpulse_Taser.ogg', 'sound/weapons/armbomb.ogg', 'sound/voice/xenomorph/hiss_1.ogg', 'sound/voice/xenomorph/hiss_2.ogg', 'sound/voice/xenomorph/hiss_3.ogg', 'sound/voice/xenomorph/growl_1.ogg', 'sound/voice/xenomorph/growl_2.ogg', 'sound/effects/Glassbr1.ogg', 'sound/effects/Glassbr2.ogg', 'sound/effects/Glassbr3.ogg', 'sound/items/Welder.ogg', 'sound/items/Welder2.ogg','sound/machines/airlock/toggle.ogg', 'sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg')
 // Breath
 var/global/list/SOUNDIN_RIGBREATH   = list('sound/misc/rigbreath1.ogg', 'sound/misc/rigbreath2.ogg', 'sound/misc/rigbreath3.ogg')
 var/global/list/SOUNDIN_BREATHMASK  = list('sound/misc/breathmask1.ogg', 'sound/misc/breathmask2.ogg')

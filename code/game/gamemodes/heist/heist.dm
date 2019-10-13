@@ -118,7 +118,7 @@
 		vox.real_name = newname
 		vox.name = vox.real_name
 		raider.name = vox.name
-		vox.age = rand(17,85)
+		vox.age = rand(vox.species.min_age, vox.species.max_age)
 		//vox.dna.mutantrace = "vox"
 		//vox.set_species(VOX)
 		vox.languages = list() // Removing language from chargen.
@@ -305,7 +305,7 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "heist", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text
 
 /datum/game_mode/heist/check_finished()
