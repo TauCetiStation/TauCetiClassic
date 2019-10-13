@@ -5,6 +5,7 @@ maps/RandomZLevels/beach.dmm
 maps/RandomZLevels/blackmarketpackers.dmm
 maps/RandomZLevels/challenge.dmm
 maps/RandomZLevels/example.dmm
+maps/RandomZLevels/gammaExternal.dmm
 maps/RandomZLevels/jungle.dmm
 maps/RandomZLevels/listeningpost.dmm
 maps/RandomZLevels/spacebattle.dmm

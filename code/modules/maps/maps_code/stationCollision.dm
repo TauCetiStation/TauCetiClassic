@@ -20,24 +20,38 @@
  */
 //Gateroom gets its own APC specifically for the gate
 /area/awaymission/gateroom
-
-//Library, medbay, storage room
-/area/awaymission/southblock
+	name = "Away Mission Gateway"
+	icon_state = "exit"
 
 //Arrivals, security, hydroponics, shuttles (since they dont move, they dont need specific areas)
 /area/awaymission/arrivalblock
-
-//Crew quarters, cafeteria, chapel
-/area/awaymission/midblock
+	name = "Arrival Block"
+	icon_state = "away"
 
 //engineering, bridge (not really north but it doesnt really need its own APC)
 /area/awaymission/northblock
+	name = "North Block"
+	icon_state = "away1"
+
+//Crew quarters, cafeteria, chapel
+/area/awaymission/midblock
+	name = "Middle Block"
+	icon_state = "away2"
+
+//Library, medbay, storage room
+/area/awaymission/southblock
+	name = "South Block"
+	icon_state = "away3"
 
 //That massive research room
 /area/awaymission/research
+	name = "Research Block"
+	icon_state = "away4"
 
 //Syndicate shuttle
 /area/awaymission/syndishuttle
+	name = "Syndicate Crash Site"
+	icon_state = "red2"
 
 
 /*
