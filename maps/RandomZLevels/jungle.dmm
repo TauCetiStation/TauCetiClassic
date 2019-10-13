@@ -734,7 +734,7 @@
 /area/jungle)
 "cJ" = (
 /obj/structure/closet/crate/secure/gear,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/weapon/minihoe,
 /turf/unsimulated/jungle/clear,
 /area/jungle)
@@ -945,8 +945,7 @@
 /area/jungle/crash_ship_source)
 "dD" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/unsimulated/floor,
 /area/jungle/crash_ship_source)
@@ -1000,8 +999,7 @@
 /area/jungle/crash_ship_source)
 "dO" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/unsimulated/jungle/path,
 /area/jungle/crash_ship_source)

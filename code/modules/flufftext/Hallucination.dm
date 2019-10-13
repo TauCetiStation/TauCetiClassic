@@ -181,7 +181,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						spawn(rand(10,30))
 							playsound_local(target, gunsound, VOL_EFFECTS_MASTER)
 							if(prob(60))
-								playsound_local(target, pick(SOUNDIN_MSCREAM + SOUNDIN_FSCREAM), VOL_EFFECTS_MASTER, null, FALSE)
+								playsound_local(target, pick(SOUNDIN_FEMALE_HEAVY_PAIN + SOUNDIN_MALE_HEAVY_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 					if(8) // MELEE
 						var/list/hallsound = list('sound/weapons/smash.ogg',
 						                          'sound/weapons/polkan_atk.ogg',
@@ -262,9 +262,13 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							if(client) client.images -= halbody
 							halbody = null
 
+			if(71 to 73)
+				if(!has_trait(TRAIT_STRONGMIND))
+					fake_attack(src)
+
         // FAKE DEATH
 
-			if(71 to 72)
+			if(74 to 75)
 				src.sleeping = 20
 				hal_crit = 1
 				hal_screwyhud = 1

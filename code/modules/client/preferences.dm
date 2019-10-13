@@ -4,11 +4,6 @@ var/list/preferences_datums = list()
 
 var/const/MAX_SAVE_SLOTS = 10
 
-//used for alternate_option
-#define GET_RANDOM_JOB 0
-#define BE_ASSISTANT 1
-#define RETURN_TO_LOBBY 2
-
 #define MAX_GEAR_COST 5
 #define MAX_GEAR_COST_SUPPORTER MAX_GEAR_COST+3
 /datum/preferences
@@ -346,8 +341,9 @@ var/const/MAX_SAVE_SLOTS = 10
 		if(status == "amputated")
 			qdel(BP) // Destroy will handle everything
 		if(status == "cyborg")
+			var/zone = BP.body_zone
 			qdel(BP)
-			switch(BP.body_zone)
+			switch(zone)
 				if(BP_L_ARM)
 					new /obj/item/organ/external/l_arm/robot(null, character)
 				if(BP_R_ARM)

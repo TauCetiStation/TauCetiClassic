@@ -444,7 +444,7 @@
 /mob/living/carbon/monkey/proc/handle_chemicals_in_body()
 
 	if(reagents && reagents.reagent_list.len)
-		reagents.metabolize(src,race)
+		reagents.metabolize(src)
 
 	if (drowsyness)
 		drowsyness--

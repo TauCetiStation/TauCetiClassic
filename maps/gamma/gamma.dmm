@@ -486,7 +486,7 @@
 	},
 /area/ai_monitored/storage/eva)
 "aaK" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_x = 32
@@ -529,7 +529,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -2841,36 +2841,13 @@
 	},
 /area/security/brig)
 "aeC" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/reagent_dispensers/watertank,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/floor{
-	icon_state = "whitepurplefull"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "warningline"
-	},
-/area/rnd/xenobiology)
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor,
+/area/storage/tools)
 "aeD" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor{
-	icon_state = "whitepurplefull"
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "warningline"
-	},
-/area/rnd/xenobiology)
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor,
+/area/atmos)
 "aeE" = (
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
@@ -3256,6 +3233,41 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
+"afi" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor{
+	icon_state = "whitepurplefull"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warningline"
+	},
+/area/rnd/xenobiology)
+"afj" = (
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor/plating,
+/area/maintenance/bridge)
+"afk" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor{
+	icon_state = "whitepurplefull"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warningline"
+	},
+/area/rnd/xenobiology)
 "afm" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -3686,7 +3698,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -4053,8 +4065,7 @@
 /area/medical/chemistry)
 "arF" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/structure/lattice,
 /turf/space,
@@ -5153,7 +5164,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
@@ -5897,12 +5908,12 @@
 /turf/simulated/wall/r_wall,
 /area/aisat)
 "aYr" = (
-/obj/item/weapon/legcuffs/beartrap,
-/obj/item/weapon/legcuffs/beartrap,
-/obj/item/weapon/storage/box/mousetraps,
-/obj/item/weapon/storage/box/mousetraps,
+/obj/machinery/alarm{
+	pixel_y = 23
+	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor,
-/area/janitor)
+/area/storage/primary)
 "aYs" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -7021,8 +7032,7 @@
 	dir = 8
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
@@ -7835,7 +7845,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
 "bDP" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -10497,8 +10507,7 @@
 	dir = 4
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -10533,7 +10542,7 @@
 	},
 /area/rnd/telesci)
 "cxi" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -12538,8 +12547,7 @@
 /area/maintenance/science)
 "dcz" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
@@ -13548,7 +13556,6 @@
 	},
 /area/crew_quarters/heads)
 "dvy" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Engineering Equip Storage APC";
@@ -13559,6 +13566,7 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "yellow"
@@ -14907,8 +14915,7 @@
 /area/atmos)
 "dSZ" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -15224,7 +15231,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
 "dZA" = (
@@ -15722,7 +15729,6 @@
 "ego" = (
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/structure/window/reinforced{
@@ -15757,7 +15763,6 @@
 /obj/structure/closet/secure_closet/security,
 /obj/machinery/light,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
@@ -19997,7 +20002,7 @@
 	},
 /area/crew_quarters/bar)
 "fzm" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -20915,7 +20920,7 @@
 /turf/simulated/floor,
 /area/storage/tools)
 "fOG" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -23850,7 +23855,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating{
-	dir = 8;
+	dir = 4;
 	icon_state = "warnplatecorner"
 	},
 /area/maintenance/cargo)
@@ -23883,11 +23888,11 @@
 	},
 /area/engine/engineering)
 "gNN" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -30
 	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -25142,8 +25147,7 @@
 /area/hallway/secondary/entry)
 "hhJ" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/structure/lattice,
 /turf/space,
@@ -27421,14 +27425,11 @@
 	},
 /area/storage/tech)
 "hYI" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	pixel_y = 28
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "bot"
-	},
+/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/weapon/storage/box/mousetraps,
+/obj/item/weapon/storage/box/mousetraps,
+/obj/item/weapon/legcuffs/beartrap,
+/turf/simulated/floor,
 /area/janitor)
 "hYJ" = (
 /obj/item/weapon/storage/secure/safe{
@@ -28451,8 +28452,7 @@
 /area/rnd/hallway)
 "iqQ" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -28941,7 +28941,7 @@
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
 "ixY" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor/plating,
 /area/engine/engineering)
 "iyf" = (
@@ -30719,8 +30719,7 @@
 /area/crew_quarters/security)
 "jfx" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -37040,9 +37039,12 @@
 /turf/simulated/floor,
 /area/janitor)
 "leM" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor,
-/area/storage/tools)
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
+	},
+/area/janitor)
 "leQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -37837,7 +37839,7 @@
 /obj/machinery/camera{
 	c_tag = "Dorm West"
 	},
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -38627,7 +38629,6 @@
 	name = "Head of Security RC";
 	pixel_y = 30
 	},
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/clothing/mask/gas/sechailer,
 /turf/simulated/floor{
@@ -38723,8 +38724,7 @@
 /area/turret_protected/aisat_interior)
 "lIT" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
@@ -38845,7 +38845,7 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "escape"
 	},
@@ -39122,7 +39122,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
@@ -40172,8 +40172,7 @@
 	dir = 8
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
@@ -40301,8 +40300,7 @@
 /area/toxins/brainstorm_center)
 "mgu" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/caution/cone,
 /turf/simulated/floor/plating/airless{
@@ -43109,7 +43107,6 @@
 	},
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
@@ -43870,7 +43867,6 @@
 	dir = 1
 	},
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/device/radio/intercom{
@@ -44195,8 +44191,7 @@
 /area/security/vacantoffice)
 "nth" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/scrap_lump,
 /turf/simulated/floor{
@@ -44863,7 +44858,6 @@
 	},
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
@@ -45072,7 +45066,7 @@
 "nHz" = (
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/structure/rack,
 /obj/effect/decal/cleanable/liquid_fuel,
 /turf/simulated/floor/plating,
@@ -45299,7 +45293,7 @@
 /area/maintenance/cargo)
 "nLK" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "nMj" = (
@@ -46308,8 +46302,7 @@
 	dir = 4
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -47528,8 +47521,7 @@
 /area/maintenance/chapel)
 "oBS" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard,
 /obj/item/weapon/shard{
@@ -49257,7 +49249,7 @@
 	},
 /area/toxins/server)
 "pfH" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor/wood,
 /area/bridge/meeting_room)
 "pfQ" = (
@@ -49783,7 +49775,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/flashlight,
@@ -50238,8 +50230,7 @@
 	dir = 8
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -50794,7 +50785,6 @@
 "pHQ" = (
 /obj/structure/closet/secure_closet/warden,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
@@ -51809,7 +51799,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
@@ -52219,8 +52209,7 @@
 "qdp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -52368,11 +52357,12 @@
 /area/chapel/office)
 "qgu" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/machinery/alarm{
-	pixel_y = 23
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
 	},
-/turf/simulated/floor,
-/area/storage/primary)
+/area/janitor)
 "qgH" = (
 /obj/structure/closet/lawcloset,
 /turf/simulated/floor{
@@ -52537,7 +52527,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "qjw" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitegreenfull"
@@ -52974,8 +52964,7 @@
 	pixel_x = -12
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -53059,7 +53048,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/flashlight,
@@ -53437,8 +53426,7 @@
 /area/maintenance/chapel)
 "qwM" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard,
 /turf/simulated/floor/plating,
@@ -54809,7 +54797,7 @@
 	},
 /area/chapel/office)
 "qUo" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -55858,8 +55846,7 @@
 	dir = 4
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -56163,7 +56150,7 @@
 /area/engine/equip)
 "rtL" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/weapon/storage/belt/utility,
 /obj/item/clothing/mask/gas/coloured,
 /turf/simulated/floor/plating,
@@ -57612,8 +57599,7 @@
 	dir = 1
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -57805,7 +57791,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
 "rXe" = (
@@ -57862,8 +57848,7 @@
 "rXq" = (
 /obj/structure/lattice,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/stack/rods,
 /turf/space,
@@ -57886,7 +57871,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "rYL" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -61000,8 +60985,7 @@
 /area/crew_quarters)
 "sYC" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken4"
@@ -61563,8 +61547,7 @@
 /area/medical/hallway/outbranch)
 "tgW" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/wood,
 /area/maintenance/eva)
@@ -65269,8 +65252,7 @@
 /area/toxins/brainstorm_center)
 "upf" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/stack/rods,
 /obj/structure/lattice,
@@ -65605,7 +65587,7 @@
 /obj/structure/sign/warning/fire{
 	pixel_y = 32
 	},
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
 "utp" = (
@@ -67883,8 +67865,7 @@
 /area/engine/engineering)
 "vhw" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /mob/living/simple_animal/mouse,
 /turf/simulated/floor/plating,
@@ -68680,8 +68661,7 @@
 /area/atmos)
 "vvC" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
@@ -68946,8 +68926,7 @@
 "vzw" = (
 /obj/structure/window/reinforced,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -69723,7 +69702,7 @@
 	dir = 6
 	},
 /turf/simulated/floor{
-	dir = 4;
+	dir = 1;
 	icon_state = "warnwhitecorner"
 	},
 /area/rnd/lab)
@@ -69930,8 +69909,7 @@
 "vKB" = (
 /obj/structure/lattice,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/space,
 /area/space)
@@ -71026,8 +71004,7 @@
 /area/crew_quarters/gym)
 "waO" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken3"
@@ -71763,8 +71740,7 @@
 /area/crew_quarters/captain)
 "wnr" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
@@ -72853,7 +72829,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
@@ -73372,8 +73348,7 @@
 "wVH" = (
 /obj/item/weapon/scrap_lump,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/stack/rods,
 /obj/structure/window/reinforced{
@@ -73891,8 +73866,7 @@
 /area/rnd/mixing)
 "xcX" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/science)
@@ -73916,8 +73890,7 @@
 	dir = 1
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -73990,7 +73963,7 @@
 	},
 /area/maintenance/science)
 "xeL" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -74956,9 +74929,9 @@
 	},
 /area/rnd/mixing)
 "xvW" = (
-/obj/item/weapon/reagent_containers/glass/bucket,
-/turf/simulated/floor,
-/area/janitor)
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor/plating,
+/area/maintenance/eva)
 "xwu" = (
 /obj/structure/flora/tree/jungle/small{
 	icon_state = "tree5"
@@ -96679,7 +96652,7 @@ ear
 fKz
 sBB
 gLD
-leM
+aeC
 dvz
 eZN
 eZN
@@ -96927,7 +96900,7 @@ dSp
 wqP
 czH
 ear
-qgu
+aYr
 hkV
 cUF
 cUF
@@ -97172,7 +97145,7 @@ chJ
 khF
 sZH
 trO
-pme
+qgu
 wRi
 aet
 hqa
@@ -97426,10 +97399,10 @@ xLH
 mRW
 eJg
 chJ
-hYI
+pme
 abe
 eyG
-mFj
+leM
 wRi
 jOl
 lmA
@@ -97684,9 +97657,9 @@ gpL
 eJg
 chJ
 dlP
-xvW
+hYI
 tKH
-aYr
+mFj
 wRi
 nxc
 mOK
@@ -108217,7 +108190,7 @@ gul
 uNm
 yaE
 wze
-jJd
+xvW
 gul
 emo
 wze
@@ -119598,7 +119571,7 @@ vNi
 aes
 aex
 aez
-aeC
+afi
 aeG
 aex
 aeN
@@ -120322,7 +120295,7 @@ ada
 jIl
 vXB
 knA
-mUQ
+afj
 jIl
 sWU
 grK
@@ -121140,7 +121113,7 @@ vNi
 aeu
 aey
 aeA
-aeD
+afk
 aeH
 aey
 aeO
@@ -121568,7 +121541,7 @@ iir
 iir
 oiB
 mKz
-rom
+aeD
 rtz
 uVU
 qqY

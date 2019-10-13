@@ -6,7 +6,13 @@
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 5
 	volume = 25
-
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/after_throw(datum/callback/callback)
+	..()
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+	new /obj/item/weapon/shard(loc)
+	if(reagents && reagents.total_volume)
+		src.reagents.reaction(loc, TOUCH)
+	qdel(src)
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
 	/*if(reagents.reagent_list.len > 1 )
 		icon_state = "glass_brown"

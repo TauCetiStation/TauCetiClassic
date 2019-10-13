@@ -510,8 +510,9 @@
 /datum/reagent/consumable/atomicbomb/on_general_digest(mob/living/M)
 	..()
 	M.druggy = max(M.druggy, 50)
-	M.confused = max(M.confused + 2,0)
-	M.make_dizzy(10)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.confused = max(M.confused + 2,0)
+		M.make_dizzy(10)
 	if(!M.stuttering)
 		M.stuttering = 1
 	M.stuttering += 3
@@ -657,7 +658,7 @@
 	taste_message = "liquid fire"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/consumable/ethanol/on_mob_life(mob/living/M, alien) // There's a multiplier for Skrells, which can't be inbuilt in any other reasonable way.
+/datum/reagent/consumable/ethanol/on_mob_life(mob/living/M)
 	if(!..())
 		return
 
@@ -677,8 +678,14 @@
 		if(isnum(A.data))
 			d += A.data
 
-	if(alien == SKRELL) //Skrell get very drunk very quickly.
+	if(M.get_species() == SKRELL) //Skrell get very drunk very quickly.
 		d *= 5
+
+	if(M.has_trait(TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
+		d *= 0.7
+
+	if(M.has_trait(TRAIT_LIGHT_DRINKER))
+		d *= 2
 
 	M.dizziness += dizzy_adj
 	if(d >= slur_start && d < pass_out)
@@ -786,7 +793,8 @@
 	M.drowsyness = max(0, M.drowsyness - 7)
 	if(M.bodytemperature > BODYTEMP_NORMAL)
 		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-	M.make_jittery(5)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.make_jittery(5)
 
 /datum/reagent/consumable/ethanol/vodka
 	name = "Vodka"
@@ -992,7 +1000,8 @@
 
 /datum/reagent/consumable/ethanol/deadrum/on_general_digest(mob/living/M)
 	..()
-	M.dizziness += 5
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.dizziness += 5
 
 /datum/reagent/consumable/ethanol/sake
 	name = "Sake"
@@ -1135,7 +1144,8 @@
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_general_digest(mob/living/M)
 	..()
-	M.Stun(10)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.Stun(10)
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"
