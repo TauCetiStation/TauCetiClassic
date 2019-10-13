@@ -256,7 +256,7 @@
 
 				else
 					text += "<br>The traitor was a smooth operator this round (did not purchase any uplink items)."
-			if(traitor.syndicate_implanted_minds)
+			if(traitor.syndicate_implanted_minds.len > 0)
 				text += "<br><b>Implanted by the traitor:</b>"
 				for(var/datum/mind/M in traitor.syndicate_implanted_minds)
 					text += "<br>[M.current.real_name], the [M.assigned_role]"

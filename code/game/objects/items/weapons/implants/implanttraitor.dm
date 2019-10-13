@@ -10,13 +10,14 @@
 	return TRUE
 
 /obj/item/weapon/implant/syndi_loyalty/inject(mob/living/carbon/C, def_zone)
-	. = ..()
+	if((usr.mind.special_role != "traitor" && usr.mind.special_role != "Syndicate") || isloyalsyndi(C))
+		loc = get_turf(usr)
+		return
 
-	var/mob/living/carbon/human/imp_in = C
+	. = ..(C, def_zone)
+
 	implant_master = usr.mind
 
-	if(!istype(imp_in) || !istype(implant_master) || isloyalsyndi(imp_in))
-		return FALSE
 
 	for(var/obj/item/weapon/implant/mindshield/I in imp_in.contents)
 		if(I.implanted)
@@ -49,6 +50,8 @@
 	ticker.mode.update_all_synd_icons()
 
 	apply_brain_damage()
+
+	implant_master.syndicate_implanted_minds  += imp_in.mind
 
 	return TRUE
 
