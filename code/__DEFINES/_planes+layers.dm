@@ -108,6 +108,8 @@ What is the naming convention for planes or layers?
 //efine MOB_LAYER                       4     // For easy recordkeeping; this is a byond define
 #define INFRONT_MOB_LAYER               4.25
 //efine FLY_LAYER                       5     // For easy recordkeeping; this is a byond define
+#define INDICATOR_LAYER                 5.01  // Emotes should be above this as they are shown only temporary.
+#define EMOTE_LAYER                     5.02
 
 
 //modifiers for /obj/machinery/door (and subtypes) layers

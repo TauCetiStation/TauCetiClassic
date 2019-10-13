@@ -1112,3 +1112,6 @@
 
 	min_age = 1
 	max_age = 85
+
+/datum/species/slime/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_slime_digest(M)

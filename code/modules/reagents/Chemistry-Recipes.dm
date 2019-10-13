@@ -1600,6 +1600,12 @@
 	required_reagents = list("capsaicin" = 1, "hot_ramen" = 6)
 	result_amount = 6
 
+/datum/chemical_reaction/hot_hell_ramen
+	name = "Hot Spicy Ramen"
+	id = "hot_hell_ramen"
+	result = "hot_hell_ramen"
+	required_reagents = list("water" = 1, "hell_ramen" = 3)
+	result_amount = 3
 
 ////////////////////////////////////////// COCKTAILS //////////////////////////////////////
 
@@ -2315,6 +2321,13 @@
 	var/turf/T = get_turf(holder.my_atom)
 	if(istype(T))
 		new /obj/item/stack/sheet/mineral/deuterium(T, created_volume)
+
+/datum/chemical_reaction/aqueous_foam
+	name = "Aqueous Film Forming Foam"
+	id = "aqueous_foam"
+	result = "aqueous_foam"
+	required_reagents = list("fluorosurfactant" = 1, "silicon" = 1)
+	result_amount = 10
 
 /datum/chemical_reaction/hair_dye
 	name = "Hair Dye"

@@ -1377,10 +1377,10 @@
 	},
 /area/security/main)
 "acs" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
@@ -10453,10 +10453,10 @@
 /turf/simulated/floor,
 /area/hallway/primary/fore)
 "arm" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurplecorner"
@@ -10479,10 +10479,10 @@
 /turf/simulated/floor,
 /area/hallway/primary/fore)
 "arr" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -12365,7 +12365,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
@@ -13549,10 +13549,10 @@
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
 "axv" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/firealarm{
 	pixel_y = 48
 	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurplecorner"
@@ -14070,7 +14070,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/flashlight,
@@ -14494,7 +14494,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -54
 	},
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whitepurple"
@@ -14640,8 +14640,8 @@
 "azv" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
 "azw" = (
@@ -18563,7 +18563,7 @@
 /area/maintenance/science)
 "aGv" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/science)
 "aGw" = (
@@ -18882,7 +18882,7 @@
 /area/quartermaster/storage)
 "aHd" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/mask/gas/coloured,
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
@@ -21705,12 +21705,12 @@
 	},
 /area/rnd/storage)
 "aMw" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -23441,7 +23441,7 @@
 	},
 /area/storage/tools)
 "aPM" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -27163,7 +27163,7 @@
 	},
 /area/storage/primary)
 "aWQ" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "neutral"
@@ -30698,11 +30698,9 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
 /turf/simulated/floor/plating,
 /area/maintenance/engineering)
 "bdE" = (
@@ -34180,6 +34178,14 @@
 	icon_state = "neutralcorner"
 	},
 /area/hallway/secondary/entry)
+"bko" = (
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor/plating,
+/area/engine/engineering)
+"bkp" = (
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor,
+/area/atmos)
 "bkq" = (
 /obj/structure/filingcabinet,
 /obj/machinery/alarm{
@@ -34219,6 +34225,15 @@
 	icon_state = "vault"
 	},
 /area/crew_quarters/locker)
+"bkt" = (
+/obj/structure/rack,
+/obj/item/weapon/reagent_containers/spray/extinguisher{
+	pixel_y = 12
+	},
+/obj/item/weapon/reagent_containers/spray/extinguisher,
+/obj/machinery/light/small,
+/turf/simulated/floor/plating,
+/area/storage/emergency3)
 "bku" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -34354,6 +34369,18 @@
 "bkE" = (
 /turf/simulated/wall/r_wall,
 /area/medical/chemistry)
+"bkF" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/fire/firefighter,
+/obj/item/weapon/tank/oxygen,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
+/obj/item/clothing/head/hardhat/red,
+/obj/item/clothing/glasses/meson,
+/obj/item/device/flashlight,
+/obj/item/device/flashlight,
+/turf/simulated/floor/plating,
+/area/maintenance/engineering)
 "bkH" = (
 /turf/simulated/floor{
 	icon_state = "white"
@@ -35727,7 +35754,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
 "bnQ" = (
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
 "bnR" = (
@@ -37512,7 +37539,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/storage/emergency)
 "bsi" = (
@@ -41103,6 +41130,8 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/mopbucket,
+/obj/item/weapon/mop,
 /turf/simulated/floor,
 /area/janitor)
 "bAL" = (
@@ -41644,11 +41673,6 @@
 	},
 /area/medical/sleeper)
 "bBY" = (
-/obj/structure/mopbucket,
-/obj/item/weapon/mop,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -45372,6 +45396,7 @@
 	name = "Janitoral Delivery";
 	req_access = list(26)
 	},
+/obj/structure/window/reinforced,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -48389,14 +48414,10 @@
 /area/maintenance/engineering)
 "bRw" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/fire/firefighter,
-/obj/item/weapon/tank/oxygen,
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
-/obj/item/clothing/head/hardhat/red,
-/obj/item/clothing/glasses/meson,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
+/obj/item/device/flashlight,
 /turf/simulated/floor/plating,
-/area/maintenance/engineering)
+/area/maintenance/medbay)
 "bRx" = (
 /obj/structure/kitchenspike,
 /obj/machinery/camera{
@@ -52921,7 +52942,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
@@ -54225,9 +54246,15 @@
 	},
 /area/rnd/xenobiology)
 "cgr" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor/plating,
-/area/storage/emergency3)
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
+	},
+/area/janitor)
 "cgs" = (
 /obj/machinery/optable,
 /turf/simulated/floor{
@@ -54946,15 +54973,6 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/maintenance/engineering)
-"chY" = (
-/obj/structure/rack,
-/obj/item/weapon/extinguisher{
-	pixel_y = 12
-	},
-/obj/item/weapon/extinguisher,
-/obj/machinery/light/small,
-/turf/simulated/floor/plating,
-/area/storage/emergency3)
 "chZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -55063,14 +55081,9 @@
 /turf/simulated/floor,
 /area/atmos)
 "cil" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor,
-/area/atmos)
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor/plating,
+/area/storage/emergency3)
 "cim" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -60651,13 +60664,13 @@
 /area/maintenance/starboardsolar)
 "cuR" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor,
-/area/engine/break_room)
+/area/atmos)
 "cuS" = (
 /obj/machinery/power/smes,
 /obj/structure/cable{
@@ -63221,9 +63234,14 @@
 /turf/simulated/floor,
 /area/assembly/assembly_line)
 "cBt" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor/plating,
-/area/engine/engineering)
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor,
+/area/engine/break_room)
 "cBv" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -68923,12 +68941,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/grass,
 /area/garden)
-"eOb" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/weapon/tank/oxygen,
-/obj/item/clothing/mask/breath,
-/turf/simulated/floor/plating,
-/area/hallway/secondary/entry)
 "ePb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -69531,9 +69543,10 @@
 /turf/simulated/floor/plating,
 /area/medical/reception)
 "fQb" = (
-/obj/structure/rack,
-/obj/item/weapon/extinguisher,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath,
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/item/weapon/tank/oxygen,
+/obj/item/clothing/mask/breath,
 /turf/simulated/floor/plating,
 /area/hallway/secondary/entry)
 "fRb" = (
@@ -69627,7 +69640,7 @@
 /obj/item/device/flashlight,
 /obj/item/device/flashlight,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/machinery/power/apc{
 	name = "Port Emergency Storage APC";
 	pixel_y = -48
@@ -71324,11 +71337,10 @@
 /area/hallway/secondary/entry)
 "jkb" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher,
-/obj/item/weapon/storage/belt/utility,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/mask/gas/coloured,
 /turf/simulated/floor/plating,
-/area/maintenance/medbay)
+/area/hallway/secondary/entry)
 "jlb" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 1
@@ -72273,7 +72285,9 @@
 /area/medical/genetics)
 "lob" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
+/obj/item/weapon/storage/belt/utility,
+/obj/item/clothing/mask/gas/coloured,
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "lpb" = (
@@ -72611,8 +72625,7 @@
 /area/medical/cmo)
 "mcb" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher,
-/obj/item/device/flashlight,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "mdb" = (
@@ -90049,7 +90062,7 @@ cIT
 cKw
 aNi
 dKb
-eOb
+fQb
 aEb
 aaa
 aaa
@@ -90563,7 +90576,7 @@ aZs
 eXb
 aNi
 dKb
-fQb
+jkb
 apT
 aaa
 aaa
@@ -101140,7 +101153,7 @@ bIZ
 bIZ
 bRu
 bRv
-bdD
+bkF
 bWz
 cif
 cja
@@ -104707,7 +104720,7 @@ bBG
 bCG
 bIZ
 bQl
-bRw
+bdD
 bIZ
 bHj
 bHN
@@ -110626,7 +110639,7 @@ bWH
 bUd
 bZK
 bLP
-bVD
+bkp
 bQM
 avv
 bSV
@@ -110910,7 +110923,7 @@ chw
 chO
 civ
 cAN
-cBt
+bko
 crH
 dAb
 cDT
@@ -111385,7 +111398,7 @@ bxX
 ccT
 aMR
 bKB
-bJe
+cgr
 mLb
 bJe
 bEY
@@ -111672,7 +111685,7 @@ crR
 cAY
 cut
 bUd
-cuR
+cBt
 cBZ
 cCi
 cCm
@@ -112438,7 +112451,7 @@ bYD
 bYT
 bUk
 bUk
-cil
+cuR
 cbh
 ccg
 clH
@@ -124248,7 +124261,7 @@ cbz
 cbz
 cEy
 cfB
-cgr
+cil
 cbz
 aaa
 aaa
@@ -124505,7 +124518,7 @@ cbz
 cKi
 cer
 cfC
-chY
+bkt
 cbz
 aah
 aah
@@ -126548,7 +126561,7 @@ auV
 avs
 avX
 bFo
-lob
+mcb
 lBb
 bFo
 cFs
@@ -127830,7 +127843,7 @@ cdb
 bZp
 bFo
 iwb
-jkb
+lob
 cFs
 bFo
 cak
@@ -129376,7 +129389,7 @@ bFo
 aaa
 aaa
 bFo
-mcb
+bRw
 cak
 cak
 nOb

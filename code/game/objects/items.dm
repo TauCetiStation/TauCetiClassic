@@ -971,6 +971,18 @@ var/global/list/items_blood_overlay_by_type = list()
 	var/mob/M = loc
 	M.update_inv_item(src)
 
+/obj/item/proc/get_current_temperature()
+	/*
+	It actually returns a rise in temperature from the enviroment since I don't know why.
+	Before it was called "is_hot". And it returned 0 if something is not any hotter than it should be.
+
+	Slap me on the wrist if you ever will need this to return a meaningful value. ~Luduk
+	*/
+	return 0
+
+/obj/item/proc/extinguish()
+	return
+
 // Whether or not the given item counts as sharp in terms of dealing damage
 /obj/item/proc/is_sharp()
 	return sharp || edge
