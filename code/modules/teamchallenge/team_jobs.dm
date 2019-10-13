@@ -14,7 +14,7 @@ todo:
 	selection_color = "#ff9933"
 	idtype = /obj/item/weapon/card/id/noteam
 	access = list(access_engine_equip, access_maint_tunnels, access_external_airlocks, access_construction)
-	alt_titles = list("Red Teammate","Yellow Teammate","Green Teammate","Blue Teammate")
+//	alt_titles = list("Red Teammate","Yellow Teammate","Green Teammate","Blue Teammate")
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 540
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, IPC)
@@ -34,6 +34,7 @@ todo:
 	if(visualsOnly)
 		return
 
+/*
 	if (H.mind.role_alt_title)
 		switch(H.mind.role_alt_title)
 			if("Red Teammate")
@@ -88,5 +89,5 @@ todo:
 				H.equip_to_slot_or_del(new /obj/item/weapon/storage/toolbox/scrapheap/blue(H), SLOT_L_HAND)
 				H.equip_to_slot_or_del(new /obj/item/toy/crayon/blue(H), SLOT_R_STORE)
 				H.equip_to_slot_or_del(new /obj/item/device/radio(H), SLOT_L_STORE)
-
+*/
 	return TRUE
