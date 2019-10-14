@@ -35,6 +35,6 @@
 #define PARALLAX_DELAY_LOW     2
 
 //used for alternate_option
-#define GET_RANDOM_JOB 0
+#define RETURN_TO_LOBBY 0
 #define BE_ASSISTANT 1
-#define RETURN_TO_LOBBY 2
+#define GET_RANDOM_JOB 2
