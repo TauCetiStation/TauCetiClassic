@@ -105,9 +105,9 @@
 			if("reset")
 				ResetJobs()
 			if("random")
-				if(alternate_option == RETURN_TO_LOBBY || alternate_option == BE_ASSISTANT)
+				if(alternate_option == GET_RANDOM_JOB || alternate_option == BE_ASSISTANT)
 					alternate_option += 1
-				else if(alternate_option == GET_RANDOM_JOB)
+				else if(alternate_option == RETURN_TO_LOBBY)
 					alternate_option = 0
 				else
 					return 0
