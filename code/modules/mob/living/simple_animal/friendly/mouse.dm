@@ -13,7 +13,7 @@
 	pass_flags = PASSTABLE | PASSMOB
 	small = TRUE
 	speak_chance = 1
-	melee_damage = 1
+	melee_damage = 0
 	turns_per_move = 8
 	see_in_dark = 6
 	maxHealth = 15
