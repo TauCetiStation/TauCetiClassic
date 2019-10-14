@@ -198,26 +198,6 @@
 		speech_problem_flag = 1
 		if (prob(10))
 			stuttering = max(10, stuttering)
-	// No. -- cib
-	//Oh, really?
-	if (getBrainLoss() >= 60 && stat != DEAD)
-		if(prob(3))
-			if(config.rus_language)//TODO:CYRILLIC dictionary?
-				switch(pick(1,2,3))
-					if(1)
-						say(pick(CYRILLIC_BRAINDAMAGE_1))
-					if(2)
-						say(pick(CYRILLIC_BRAINDAMAGE_2))
-					if(3)
-						emote("drool")
-			else
-				switch(pick(1,2,3))
-					if(1)
-						say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
-					if(2)
-						say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom", "PACKETS!!!"))
-					if(3)
-						emote("drool")
 
 	if(stat != DEAD)
 		if(gnomed) // if he's dead he's gnomed foreva-a-ah
@@ -244,22 +224,44 @@
 					dna.SetSEState(SMALLSIZEBLOCK, 0)
 					domutcheck(src, null)
 
-		var/rn = rand(0, 200)
-		if(getBrainLoss() >= 5)
-			if(0 <= rn && rn <= 3)
-				custom_pain("Your head feels numb and painful.")
-		if(getBrainLoss() >= 15)
-			if(4 <= rn && rn <= 6) if(eye_blurry <= 0)
-				to_chat(src, "<span class='warning'>It becomes hard to see for some reason.</span>")
-				eye_blurry = 10
-		if(getBrainLoss() >= 35)
-			if(7 <= rn && rn <= 9) if(get_active_hand())
-				to_chat(src, "<span class='warning'>Your hand won't respond properly, you drop what you're holding.</span>")
-				drop_item()
-		if(getBrainLoss() >= 50)
-			if(10 <= rn && rn <= 12) if(!lying)
-				to_chat(src, "<span class='warning'>Your legs won't respond properly, you fall down.</span>")
-				resting = 1
+		switch(rand(0, 200))
+			if(0 to 3)
+				if(getBrainLoss() >= 5)
+					custom_pain("Your head feels numb and painful.")
+
+			if(4 to 6)
+				if(getBrainLoss() >= 15 && eye_blurry <= 0)
+					to_chat(src, "<span class='warning'>It becomes hard to see for some reason.</span>")
+					eye_blurry = 10
+
+			if(7 to 9)
+				if(getBrainLoss() >= 35 && get_active_hand())
+					to_chat(src, "<span class='warning'>Your hand won't respond properly, you drop what you're holding.</span>")
+					drop_item()
+
+			if(10 to 12)
+				if(getBrainLoss() >= 50 && !lying)
+					to_chat(src, "<span class='warning'>Your legs won't respond properly, you fall down.</span>")
+					resting = 1
+
+			if(13 to 18)
+				if(getBrainLoss() >= 60 && !has_trait(TRAIT_STRONGMIND))
+					if(config.rus_language)//TODO:CYRILLIC dictionary?
+						switch(rand(1, 3))
+							if(1)
+								say(pick(CYRILLIC_BRAINDAMAGE_1))
+							if(2)
+								say(pick(CYRILLIC_BRAINDAMAGE_2))
+							if(3)
+								emote("drool")
+					else
+						switch(rand(1, 3))
+							if(1)
+								say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
+							if(2)
+								say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom", "PACKETS!!!"))
+							if(3)
+								emote("drool")
 
 /mob/living/carbon/human/proc/handle_stasis_bag()
 	// Handle side effects from stasis bag
@@ -729,6 +731,14 @@
 	else
 		clear_alert("temp")
 
+	if(bodytemperature < species.cold_level_1 && get_species() == UNATHI)
+		if(bodytemperature < species.cold_level_3)
+			drowsyness  = max(drowsyness, 20)
+		else if(prob(50) && bodytemperature < species.cold_level_2)
+			drowsyness = max(drowsyness, 10)
+		else if(prob(10))
+			drowsyness = max(drowsyness, 2)
+
 	// Account for massive pressure differences.  Done by Polymorph
 	// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
 
@@ -984,10 +994,7 @@
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
 
 	if(reagents && !species.flags[IS_SYNTHETIC]) //Synths don't process reagents.
-		var/alien = null
-		if(species)
-			alien = species.name
-		reagents.metabolize(src,alien)
+		reagents.metabolize(src)
 
 		var/total_phoronloss = 0
 		for(var/obj/item/I in src)
@@ -1089,7 +1096,8 @@
 	if (drowsyness)
 		drowsyness--
 		eye_blurry = max(2, eye_blurry)
-		if (prob(5))
+		if(prob(5))
+			emote("yawn")
 			sleeping += 1
 			Paralyse(5)
 
@@ -1113,6 +1121,7 @@
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
 		blinded = 1
 		silent = 0
+		clear_stat_indicator()
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()	//TODO
 		if(!in_stasis)
@@ -1145,8 +1154,6 @@
 
 		if(hallucination)
 			if(hallucination >= 20)
-				if(prob(3))
-					fake_attack(src)
 				if(hallucination > 1000)
 					hallucination = 1000
 				if(!handling_hal)
@@ -1201,6 +1208,14 @@
 					adjustHalLoss(-1)
 		if(!sleeping) //No refactor - no life!
 			clear_alert("asleep")
+
+		if(stat == UNCONSCIOUS)
+			if(client)
+				throw_stat_indicator(IND_STAT)
+			else
+				throw_stat_indicator(IND_STAT_NOCLIENT)
+		else
+			clear_stat_indicator()
 
 		if(embedded_flag && !(life_tick % 10))
 			var/list/E
@@ -1331,7 +1346,7 @@
 				if(locate(/obj/item/weapon/gun/energy/sniperrifle, contents))
 					var/obj/item/weapon/gun/energy/sniperrifle/s = locate() in src
 					if(s.zoom)
-						s.zoom()
+						s.toggle_zoom()
 
 	else
 		sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
@@ -1560,6 +1575,8 @@
 					to_chat(src, "Too hard to concentrate...")
 					remoteview_target = null
 					reset_view(null)//##Z2
+			if(force_remote_viewing)
+				isRemoteObserve = TRUE
 			if(!isRemoteObserve && client && !client.adminobs)
 				remoteview_target = null
 				reset_view(null)
@@ -1616,7 +1633,7 @@
 	if(isturf(loc) && rand(1,1000) == 1)
 		var/turf/T = loc
 		if(T.get_lumcount() < 0.1)
-			playsound_local(src, pick(scarySounds), VOL_EFFECTS_MASTER)
+			playsound_local(src, pick(SOUNDIN_SCARYSOUNDS), VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/human/proc/handle_virus_updates()
 	if(status_flags & GODMODE)	return 0	//godmode

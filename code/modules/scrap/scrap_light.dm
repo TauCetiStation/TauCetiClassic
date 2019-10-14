@@ -12,8 +12,17 @@
 /obj/item/device/flashlight/flare/torch/attackby(obj/item/W, mob/user, params) // ravioli ravioli here comes stupid copypastoli
 	..()
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(is_hot(W))
+	if(W.get_current_temperature())
 		light(user)
+
+/obj/item/device/flashlight/flare/torch/get_current_temperature()
+	if(on)
+		return 1500
+	else
+		return 0
+
+/obj/item/device/flashlight/flare/torch/extinguish()
+	turn_off()
 
 /obj/item/device/flashlight/flare/torch/proc/light(mob/user)
 	// Usual checks
@@ -109,7 +118,7 @@
 			//	overlays += image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_grill")
 			//else
 			//	return ..()
-	if(is_hot(W))
+	if(W.get_current_temperature())
 		StartBurning()
 /*	if(grill)
 		if(user.a_intent != "hurt" && !(W.flags_1 & ABSTRACT_1))

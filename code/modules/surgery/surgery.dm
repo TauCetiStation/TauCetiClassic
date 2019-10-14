@@ -1,18 +1,17 @@
 /* SURGERY STEPS */
-
 /datum/surgery_step
 	var/priority = 0	//steps with higher priority would be attempted first
 
-	// type path referencing tools that can be used for this step, and how well are they suited for it
+	//type path referencing tools that can be used for this step, and how well are they suited for it
 	var/list/allowed_tools = null
 	// type paths referencing mutantraces that this step applies to.
 	var/list/allowed_species = list("exclude", IPC)
 
-	// duration of the step
+	//duration of the step
 	var/min_duration = 0
 	var/max_duration = 0
 
-	// evil infection stuff that will make everyone hate me
+	//evil infection stuff that will make everyone hate me
 	var/can_infect = 0
 	//How much blood this step can get on surgeon. 1 - hands, 2 - full body.
 	var/blood_level = 0
@@ -22,41 +21,33 @@
 
 // returns how well tool is suited for this step
 /datum/surgery_step/proc/tool_quality(obj/item/tool)
-	for (var/T in allowed_tools)
-		if (istype(tool,T))
+	for(var/T in allowed_tools)
+		if(istype(tool, T))
 			return allowed_tools[T]
-	return 0
+	return FALSE
 
 // Checks if this step applies to the mutantrace of the user.
 /datum/surgery_step/proc/is_valid_mutantrace(mob/living/carbon/human/target)
-
-	if(!ishuman(target)) // Juuuuust making sure.
-		return TRUE
-
-	if(allowed_species)
-		var/exclusive = ("exclude" in allowed_species)
-		var/in_list = (target.get_species() in allowed_species)
-		if((exclusive || in_list) && !(exclusive && in_list))
-			return TRUE
-		return FALSE
-
+	if(ishuman(target) && allowed_species)
+		if(("exclude" in allowed_species) == (target.get_species() in allowed_species))
+			return FALSE
 	return TRUE
 
 // checks whether this step can be applied with the given user and target
 /datum/surgery_step/proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return 0
+	return FALSE
 
 // does stuff to begin the step, usually just printing messages. Moved germs transfering and bloodying here too
 /datum/surgery_step/proc/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (can_infect && BP)
+	if(can_infect && BP)
 		spread_germs_to_organ(BP, user)
-	if (ishuman(user) && prob(60))
+	if(ishuman(user) && prob(60))
 		var/mob/living/carbon/human/H = user
-		if (blood_level)
-			H.bloody_hands(target,0)
-		if (blood_level > 1)
-			H.bloody_body(target,0)
+		if(blood_level)
+			H.bloody_hands(target, 0)
+		if(blood_level > 1)
+			H.bloody_body(target, 0)
 	return
 
 // does stuff to end the step, which is normally print a message + do whatever this step changes
@@ -81,49 +72,66 @@
 
 /proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 	if(!istype(M))
-		return 0
-	if (user.a_intent == "hurt")	//check for Hippocratic Oath
-		return 0
-	var/target_zone = user.zone_sel.selecting
-
+		return FALSE
+	if(user.a_intent == I_HURT)	//check for Hippocratic Oath
+		return FALSE
 	if(user.is_busy(null)) // No target so we allow multiple players to do surgeries on one pawn.
 		return FALSE
 
+	var/target_zone = user.zone_sel.selecting
 	for(var/datum/surgery_step/S in surgery_steps)
 		//check, if target undressed for clothless operations
-		if(ishuman(M))
+		if(S.clothless && ishuman(M))
 			var/mob/living/carbon/human/T = M
-			if(S.clothless)
-				switch(target_zone)
-					if(BP_CHEST , BP_GROIN , BP_L_LEG , BP_R_LEG , BP_R_ARM , BP_L_ARM)
-						if(T.wear_suit || (T.w_uniform && !istype(T.w_uniform, /obj/item/clothing/under/patient_gown)))
-							return 0
-					if(BP_R_LEG , BP_L_LEG)
-						if(T.shoes)
-							return 0
-					if(O_EYES)
-						if(T.glasses)
-							return 0
-					if(BP_R_ARM , BP_L_ARM)
-						if(T.gloves)
-							return 0
+			var/covered
+			for(var/obj/item/I in list(T.wear_suit, T.w_uniform, T.gloves, T.glasses, T.head, T.wear_mask, T.shoes))
+				if(I && I.body_parts_covered)
+					covered |= I.body_parts_covered
+			switch(target_zone)
+				if(BP_CHEST)
+					if(covered & UPPER_TORSO)
+						return FALSE
+				if(BP_GROIN)
+					if(covered & LOWER_TORSO)
+						return FALSE
+				if(BP_L_LEG)
+					if(covered & LEG_LEFT)
+						return FALSE
+				if(BP_R_LEG)
+					if(covered & LEG_RIGHT)
+						return FALSE
+				if(BP_L_ARM)
+					if(covered & ARM_LEFT)
+						return FALSE
+				if(BP_R_ARM)
+					if(covered & ARM_RIGHT)
+						return FALSE
+				if(BP_HEAD)
+					if(covered & HEAD)
+						return FALSE
+				if(O_MOUTH)
+					if(covered & FACE)
+						return FALSE
+				if(O_EYES)
+					if(covered & EYES)
+						return FALSE
 
 		//check if tool is right or close enough and if this step is possible
-		if( S.tool_quality(tool) && S.can_use(user, M, target_zone, tool) && S.is_valid_mutantrace(M))
+		if(S.tool_quality(tool) && S.can_use(user, M, target_zone, tool) && S.is_valid_mutantrace(M))
 			S.begin_step(user, M, target_zone, tool)		//...start on it
 			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
-			if(prob(S.tool_quality(tool)) &&  do_mob(user, M, rand(S.min_duration, S.max_duration)) && user.zone_sel.selecting && target_zone == user.zone_sel.selecting)
+			if(prob(S.tool_quality(tool)) && tool.use_tool(M,user, rand(S.min_duration, S.max_duration), volume=100) && user.zone_sel.selecting && target_zone == user.zone_sel.selecting)
 				S.end_step(user, M, target_zone, tool)		//finish successfully
 			else if((tool in user.contents) && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
 				S.fail_step(user, M, target_zone, tool)		//malpractice~
 			else	// this failing silently was a pain.
 				to_chat(user, "<span class='warning'>You must remain close to your patient to conduct surgery.</span>")
 
-			if (ishuman(M))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.update_surgery()										//shows surgery results
-			return	1	  												//don't want to do weapony things after surgery
-	return 0
+			return	TRUE	  												//don't want to do weapony things after surgery
+	return FALSE
 
 /proc/sort_surgeries()
 	var/gap = surgery_steps.len

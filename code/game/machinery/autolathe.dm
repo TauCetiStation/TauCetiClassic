@@ -5,7 +5,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/reagent_containers/glass/bucket(), \
 		new /obj/item/weapon/crowbar(), \
 		new /obj/item/device/flashlight(), \
-		new /obj/item/weapon/extinguisher(), \
+		new /obj/item/weapon/reagent_containers/spray/extinguisher(), \
 		new /obj/item/device/multitool(), \
 		new /obj/item/device/t_scanner(), \
 		new /obj/item/device/analyzer(), \
@@ -202,6 +202,8 @@ var/global/list/autolathe_recipes_hidden = list( \
 	..()
 
 /obj/machinery/autolathe/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/pai_cable))
+		return 
 	if (busy)
 		to_chat(user, "<span class='warning'>The autolathe is busy. Please wait for completion of previous operation.</span>")
 		return 1
@@ -267,18 +269,21 @@ var/global/list/autolathe_recipes_hidden = list( \
 	src.updateUsrDialog()
 
 /obj/machinery/autolathe/Topic(href, href_list)
-	. = ..()
-	if(!.)
-		return
-
+	if(!istype(usr, /mob/living/silicon/pai))
+		. = ..()
+		if(!.)
+			return
+	else
+		var/mob/living/silicon/pai/TempUsr = usr
+		if(TempUsr.hackobj != src)
+			return
 	if(busy)
 		to_chat(usr, "<span class='warning'>The autolathe is busy. Please wait for completion of previous operation.</span>")
 		return FALSE
 
 	if(href_list["make"])
 		var/coeff = 2 ** prod_coeff
-		var/turf/T = get_step(src.loc, get_dir(src,usr))
-
+		var/turf/T = get_turf(src)
 		// critical exploit fix start -walter0o
 		var/obj/item/template = null
 		var/attempting_to_build = locate(href_list["make"])

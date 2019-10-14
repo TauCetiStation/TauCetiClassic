@@ -335,8 +335,8 @@
 /obj/item/weapon/shard/Crossed(atom/movable/AM)
 	if(ismob(AM))
 		var/mob/M = AM
-		to_chat(M, "<span class='warning'><B>You step in the broken glass!</B></span>")
-		playsound(src, 'sound/effects/glass_step.ogg', VOL_EFFECTS_MASTER)
+		to_chat(M, "<span class='warning'><B>You step on the [src]!</B></span>")
+		playsound(src, on_step_sound, VOL_EFFECTS_MASTER)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 
@@ -361,9 +361,6 @@
 					H.Weaken(3)
 				H.updatehealth()
 	..()
-
-
-
 
 /*
  * Phoron Glass sheets

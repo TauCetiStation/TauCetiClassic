@@ -7,6 +7,7 @@
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	invisibility = INVISIBILITY_OBSERVER
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 
 	pass_flags = PASSBLOB
 	faction = "blob"
