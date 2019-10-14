@@ -21,7 +21,7 @@
 	alive_mob_list -= src
 
 /mob/living/pbag/incapacitated()
-	return !resting
+	return resting
 
 /mob/living/pbag/restrained()
 	return FALSE
@@ -61,7 +61,6 @@
 
 /mob/living/pbag/on_lay_down()
 	drop_down()
-	resting = FALSE
 
 /mob/living/pbag/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if(ckey)
@@ -102,25 +101,25 @@
 	var/def_zone_txt = ""
 	switch(def_zone)
 		if(BP_HEAD, O_EYES, O_MOUTH)
-			def_zone_txt = "the upper part"
+			def_zone_txt = " in the upper part"
 		if(BP_CHEST)
-			def_zone_txt = "the middle part"
+			def_zone_txt = " in the middle part"
 		if(BP_GROIN)
-			def_zone_txt = "the lower part"
+			def_zone_txt = " in the lower part"
 		if(BP_L_ARM)
-			def_zone_txt = "slightly to the left of the middle part"
+			def_zone_txt = " in slightly to the left of the middle part"
 		if(BP_R_ARM)
-			def_zone_txt = "slightly to the right of the middle part"
+			def_zone_txt = " in slightly to the right of the middle part"
 		if(BP_L_LEG)
-			def_zone_txt = "slightly to the left of the lower part"
+			def_zone_txt = " in slightly to the left of the lower part"
 		if(BP_R_LEG)
-			def_zone_txt = "slightly to the right of the lower part"
+			def_zone_txt = " in slightly to the right of the lower part"
 
-	var/mes = "[bicon(src)] [src] has been hit [wep_mes]for [damage] [damagetype] damage in [def_zone_txt][flags_mes]."
+	var/mes = "[bicon(src)] [src] has been hit [wep_mes]for [damage] [damagetype] damage[def_zone_txt][flags_mes]."
 	visible_message("<span class='notice'>[mes]</span>")
 
 /mob/living/pbag/apply_effect(effect = 0, effecttype = STUN, blocked = 0)
-	if(incapacitated() && (effecttype == WEAKEN || effecttype == PARALYZE))
+	if(!incapacitated() && (effecttype == WEAKEN || effecttype == PARALYZE))
 		drop_down()
 	visible_message("<span class='notice'>[bicon(src)] [src] was [effecttype]ed for [effect] seconds.</span>")
 
