@@ -17,7 +17,6 @@
 	response_disarm = "shoves"
 	response_harm = "strikes"
 	status_flags = 0
-	a_intent = I_HURT
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	weather_immunities = list("ash", "acid")
@@ -75,7 +74,6 @@
 	harm_intent_damage = 5
 	melee_damage = 12
 	attacktext = "gnaw"
-	a_intent = I_HURT
 	attack_sound = list('sound/weapons/bladeslice.ogg')
 	ranged_cooldown_cap = 4
 	aggro_vision_range = 9
