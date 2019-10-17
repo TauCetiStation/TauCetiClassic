@@ -10,6 +10,9 @@
 
 /obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user)
 	if(buckled_mob)
+		if(user.is_busy())
+			return
+
 		if(buckled_mob.buckled == src)
 			if(buckled_mob != user)
 				buckled_mob.visible_message(\
@@ -33,6 +36,9 @@
 
 /obj/structure/stool/bed/nest/user_buckle_mob(mob/M, mob/user)
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || usr.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
+		return
+
+	if(user.is_busy())
 		return
 
 	if(istype(M,/mob/living/carbon/alien))

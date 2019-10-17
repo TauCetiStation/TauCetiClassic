@@ -2,7 +2,15 @@
 	. = ..()
 	living_list += src
 
+	default_transform = transform
+	default_pixel_x = pixel_x
+	default_pixel_y = pixel_y
+	default_layer = layer
+
+
 /mob/living/Destroy()
+	QDEL_LIST(combos_performed)
+	QDEL_LIST(combos_saved)
 	living_list -= src
 	..()
 	return QDEL_HINT_HARDDEL_NOW
@@ -322,11 +330,15 @@
 /mob/living/proc/adjustHalLoss(amount)
 	if(status_flags & GODMODE)
 		return
+	if(amount > 0)
+		add_combo_value_all(amount)
 	halloss = CLAMP(halloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setHalLoss(amount)
 	if(status_flags & GODMODE)
 		return
+	if(amount - halloss > 0)
+		add_combo_value_all(amount - halloss)
 	halloss = CLAMP(amount, 0, maxHealth * 2)
 
 // ============================================================
@@ -779,12 +791,13 @@
 			resisting++
 			switch(G.state)
 				if(GRAB_PASSIVE)
-					if(G.assailant.shoving_fingers)
-						if(iscarbon(src))
+					if(ishuman(G.assailant))
+						var/mob/living/carbon/human/H = G.assailant
+						if(H.shoving_fingers && iscarbon(src))
 							var/mob/living/carbon/C_ = src
 							if(!istype(C_.wear_mask, /obj/item/clothing/mask/muzzle))
-								G.assailant.adjustBruteLoss(5) // We bit them.
-								G.assailant.shoving_fingers = FALSE
+								H.adjustBruteLoss(5) // We bit them.
+								H.shoving_fingers = FALSE
 					qdel(G)
 				if(GRAB_AGGRESSIVE)
 					if(prob(50 - (L.lying ? 35 : 0)))
@@ -932,6 +945,9 @@
 								"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
 						CM.drop_from_inventory(CM.legcuffed)
 
+/mob/living/proc/on_lay_down()
+	return
+
 /mob/living/verb/lay_down()
 	set name = "Rest"
 	set category = "IC"
@@ -959,6 +975,7 @@
 		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
 
 	else
+		on_lay_down()
 		resting = !resting
 		to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 
@@ -972,14 +989,11 @@
 				clear_fullscreen("flash", 25)
 		return 1
 
-/mob/living/proc/has_eyes()
-	return 1
-
 //-TG Port for smooth standing/lying animations
-/mob/living/proc/get_standard_pixel_x_offset(lying_current = 0)
+/mob/living/proc/get_pixel_x_offset(lying_current = FALSE)
 	return initial(pixel_x)
 
-/mob/living/proc/get_standard_pixel_y_offset(lying_current = 0)
+/mob/living/proc/get_pixel_y_offset(lying_current = FALSE)
 	return initial(pixel_y)
 
 //Attack animation port below
@@ -1017,7 +1031,7 @@
 
 
 /mob/living/do_attack_animation(atom/A)
-	var/final_pixel_y = get_standard_pixel_y_offset(lying_current)
+	var/final_pixel_y = default_pixel_y
 	..(A, final_pixel_y)
 
 	//Show an image of the wielded weapon over the person who got dunked.
@@ -1214,3 +1228,19 @@
 		T.add_vomit_floor(src, getToxLoss() > 0 ? TRUE : FALSE)
 
 	return TRUE
+
+/mob/living/get_targetzone()
+	if(zone_sel)
+		return zone_sel.selecting
+	return pick(TARGET_ZONE_ALL)
+
+/mob/living/is_busy()
+	return combo_animation || attack_animation || ..()
+
+/mob/living/proc/has_bodypart(name)
+	return FALSE
+
+/mob/living/proc/has_organ(name)
+	if(name == O_EYES)
+		return TRUE
+	return FALSE

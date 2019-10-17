@@ -583,6 +583,10 @@
 				message = "<B>[src]</B> [pick("slightly moans feigning pain.", "appears to be in pain!")]"
 				m_type = 2
 
+			add_combo_value_all(15)
+
+			cloud_emote = "cloud-pain"
+
 		if ("scream")
 			if(miming)
 				message = "<B>[src]</B> acts out a scream!"
@@ -617,6 +621,8 @@
 						else
 							message = "<B>[src]</B> makes a very loud noise."
 							m_type = 2
+
+			add_combo_value_all(15)
 
 			cloud_emote = "cloud-scream"
 

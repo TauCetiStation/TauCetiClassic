@@ -30,7 +30,7 @@
 
 	For the drain proc, see events/ninja.dm
 */
-/obj/item/clothing/gloves/space_ninja/Touch(atom/A,proximity)
+/obj/item/clothing/gloves/space_ninja/Touch(mob/living/carbon/human/attacker, atom/A, proximity)
 	if(!candrain || draining) return 0
 
 	var/mob/living/carbon/human/H = loc

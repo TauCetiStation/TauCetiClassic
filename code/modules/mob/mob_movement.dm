@@ -122,7 +122,7 @@
 	return
 
 
-/client/Move(n, direct)
+/client/Move(n, direct, forced = FALSE)
 	if(!mob)
 		return // Moved here to avoid nullrefs below
 
@@ -130,11 +130,15 @@
 
 	if(isobserver(mob))	return mob.Move(n,direct)
 
-	if(moving || mob.throwing)	return 0
+	if(!forced)
+		if(moving || mob.throwing)
+			return
 
-	if(world.time < move_delay)	return
+		if(world.time < move_delay)
+			return
 
-	if(mob.stat==DEAD)	return
+	if(!forced && mob.stat)
+		return
 
 /*	// handle possible spirit movement
 	if(istype(mob,/mob/spirit))
@@ -170,7 +174,7 @@
 			direct = pick(cardinal)
 		return mob.buckled.relaymove(mob,direct)
 
-	if(!mob.canmove)
+	if(!forced && !mob.canmove)
 		return
 
 	if(!mob.lastarea)

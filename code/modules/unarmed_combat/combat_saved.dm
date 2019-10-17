@@ -1,0 +1,249 @@
+#define ANIM_MAX_HIT_TURN_ANGLE 40
+#define COMBOPOINTS_LOSE_PER_TICK 0.7
+#define MIN_COMBOPOINTS_LOSE_PER_TICK 0.3
+
+/datum/combo_saved
+	var/last_hit_registered = 0
+	var/delete_after_no_hits = 10 SECONDS
+
+	var/fullness = 0
+	var/image/combo_icon
+	var/list/combo_elements_icons = list()
+
+	var/datum/progressbar/progbar
+	var/list/combo_elements = list()
+	var/mob/living/attacker
+	var/mob/living/victim
+	var/datum/combat_combo/next_combo
+
+	var/last_hand_hit = 0 // Switching hands doubles fullness gained.
+
+	var/max_combo_elements = 4
+
+/datum/combo_saved/New(mob/living/victim, mob/living/attacker, combo_element, combo_value, max_combo_elements = 4)
+	last_hit_registered = world.time + delete_after_no_hits
+
+	src.attacker = attacker
+	src.victim = victim
+	progbar = new(attacker, 100, victim, my_icon_state="combat_prog_bar", insert_under=TRUE)
+
+	src.max_combo_elements = max_combo_elements // Take note, that there are only sprites for 4 atm.
+
+/datum/combo_saved/proc/set_combo_icon(image/new_icon)
+	if(!attacker)
+		return
+
+	if(combo_icon && attacker.client)
+		attacker.client.images -= combo_icon
+
+	if(new_icon)
+		combo_icon = new_icon
+		combo_icon.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		combo_icon.loc = victim
+		if(attacker.client)
+			attacker.client.images += combo_icon
+			var/matrix/M = matrix()
+			M.Scale(0.1)
+			combo_icon.transform = M
+			var/matrix/N = matrix()
+			animate(combo_icon, transform=N, time=2)
+
+		INVOKE_ASYNC(src, .proc/shake_combo_icon)
+
+/datum/combo_saved/proc/shake_combo_icon()
+	sleep(2) // This is here for set_combo_icon to properly animate the icon.
+
+	if(!attacker || !attacker.client)
+		return
+
+	var/matrix/M = matrix()
+	for(var/i in 1 to 3)
+		if(!combo_icon)
+			break
+		M.Turn(pick(-30, 30))
+		animate(combo_icon, transform=M, time=2)
+		sleep(2)
+		M = matrix()
+		animate(combo_icon, transform=M, time=1)
+		sleep(1)
+
+/datum/combo_saved/proc/animate_attack(combo_element, combo_value, mob/living/V, mob/living/A)
+	if(A.attack_animation || A.combo_animation)
+		return
+	A.attack_animation = TRUE
+
+	combo_value = min(ANIM_MAX_HIT_TURN_ANGLE, combo_value)
+
+	var/matrix/M = matrix(A.default_transform)
+	if(iscarbon(A))
+		if(A.hand)
+			M.Turn(-combo_value)
+		else
+			M.Turn(combo_value)
+	else
+		M.Turn(pick(-combo_value, combo_value))
+
+	animate(A, transform=M, time=2)
+	sleep(2)
+	animate(A, transform=A.default_transform, time=1)
+	sleep(1)
+	A.transform = A.default_transform
+
+	A.attack_animation = FALSE
+
+/datum/combo_saved/proc/update_combo_elements()
+	if(attacker && attacker.client)
+		for(var/combo_element_icon in combo_elements_icons)
+			attacker.client.images -= combo_element_icon
+
+		var/i = 1
+		for(var/c_el in combo_elements)
+			var/CC_icon_state = "combo_element_combo"
+			switch(c_el)
+				if(I_HELP)
+					CC_icon_state = "combo_element_help"
+				if(I_DISARM)
+					CC_icon_state = "combo_element_disarm"
+				if(I_GRAB)
+					CC_icon_state = "combo_element_grab"
+				if(I_HURT)
+					CC_icon_state = "combo_element_hurt"
+			var/image/C_EL_I = image(icon='icons/mob/unarmed_combat_combos.dmi', icon_state="[CC_icon_state]_[i]")
+			C_EL_I.loc = victim
+			C_EL_I.layer = ABOVE_HUD_LAYER
+			C_EL_I.plane = ABOVE_HUD_PLANE
+			C_EL_I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+			C_EL_I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+			C_EL_I.pixel_x = 8
+			C_EL_I.pixel_y = -2
+			combo_elements_icons += C_EL_I
+			attacker.client.images += C_EL_I
+			i++
+
+/datum/combo_saved/proc/get_next_combo()
+	var/target_zone = attacker.get_targetzone()
+
+	var/combo_hash = "[target_zone]|"
+	for(var/CE in combo_elements)
+		combo_hash += "[CE]#"
+
+	var/datum/combat_combo/CC = global.combat_combos[combo_hash]
+	if(CC && CC.can_execute(src))
+		next_combo = global.combat_combos[combo_hash]
+		set_combo_icon(next_combo.get_combo_icon())
+		next_combo.on_ready(victim, attacker)
+		combo_elements.Cut()
+
+		return TRUE
+	return FALSE
+
+// Returns TRUE if a we want to cancel the AltClick/whatever was there. But actually, basically always
+// returns TRUE.
+/datum/combo_saved/proc/activate_combo()
+	if(!attacker)
+		return FALSE
+
+	if(!next_combo) // A little feature, which allows us to reset the combo bar.
+		combo_elements.Cut()
+		update_combo_elements()
+		return TRUE
+
+	var/datum/combat_combo/CC = next_combo
+	if(CC.can_execute(src, show_warning = TRUE))
+		next_combo = null
+		CC.pre_execute(victim, attacker)
+
+		if(CC.heavy_animation)
+			CC.before_animation(victim, attacker)
+		INVOKE_ASYNC(CC, /datum/combat_combo.proc/animate_combo, victim, attacker)
+
+		CC.execute(victim, attacker)
+		fullness -= CC.fullness_lose_on_execute
+		set_combo_icon(null)
+		combo_elements.Cut()
+		register_attack(CC.name, 0)
+	else
+		set_combo_icon(null)
+		next_combo = null
+		combo_elements.Cut()
+		update_combo_elements()
+	return TRUE
+
+/datum/combo_saved/proc/register_attack(combo_element, combo_value)
+	if(!attacker)
+		return
+
+	last_hit_registered = world.time
+	if(combo_elements.len == max_combo_elements)
+		combo_elements.Cut(1, 2)
+
+	if(attacker.hand != last_hand_hit)
+		combo_value *= 2
+		last_hand_hit = attacker.hand
+
+	if(attacker.incapacitated())
+		combo_value *= 0.5
+	if(victim.incapacitated())
+		combo_value *= 0.5
+
+	if(attacker.crawling) // Suffer, crawling scum.
+		combo_value *= 0.5
+	if(victim.crawling) // SUFFER CRAWLING SCUM.
+		combo_value *= 2.0
+
+	combo_elements += combo_element
+
+	fullness = min(100, fullness + combo_value)
+
+	if(next_combo)
+		set_combo_icon(null)
+		next_combo = null
+	else
+		get_next_combo()
+
+	update_combo_elements()
+
+	if(combo_element == I_DISARM || combo_element == I_HURT)
+		INVOKE_ASYNC(src, .proc/animate_attack, combo_element, combo_value, victim, attacker)
+
+	return FALSE
+
+/datum/combo_saved/proc/update()
+	if(!attacker)
+		return
+
+	if(combo_icon && (SSmob.times_fired % 3) == 0)
+		INVOKE_ASYNC(src, .proc/shake_combo_icon)
+
+	if(!next_combo && get_next_combo())
+		update_combo_elements()
+
+	progbar.update(fullness)
+
+	var/fullness_to_remove = COMBOPOINTS_LOSE_PER_TICK
+	fullness_to_remove = max(MIN_COMBOPOINTS_LOSE_PER_TICK, fullness_to_remove - length(attacker.combos_performed) * 0.1)
+	fullness -= fullness_to_remove
+	if(fullness < 0 || last_hit_registered + delete_after_no_hits < world.time)
+		qdel(src)
+
+/datum/combo_saved/Destroy()
+	if(attacker.client)
+		if(combo_icon)
+			attacker.client.images -= combo_icon
+		for(var/c_el_i in combo_elements_icons)
+			attacker.client.images -= c_el_i
+	QDEL_NULL(combo_icon)
+	QDEL_LIST(combo_elements_icons)
+	attacker.combo_animation = FALSE
+	attacker.attack_animation = FALSE
+	attacker.combos_performed -= src
+	victim.combos_saved -= src
+	attacker = null
+	victim = null
+	QDEL_NULL(progbar)
+	next_combo = null
+	return ..()
+
+#undef ANIM_MAX_HIT_TURN_ANGLE
+#undef COMBOPOINTS_LOSE_PER_TICK
+#undef MIN_COMBOPOINTS_LOSE_PER_TICK

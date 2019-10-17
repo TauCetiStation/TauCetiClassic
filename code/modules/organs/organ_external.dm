@@ -56,6 +56,11 @@
 
 	var/regen_bodypart_penalty = 0 // This variable determines how much time it would take to regenerate a bodypart, and the cost of it's regeneration.
 
+	// These are here for cases of cool aliens who's legs are considered arms or vice-versa.
+	var/is_head = FALSE
+	var/is_arm = FALSE
+	var/is_leg = FALSE
+
 /obj/item/organ/external/atom_init(mapload, mob/living/carbon/human/H)
 	. = ..()
 	recolor()
@@ -670,6 +675,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	vital = TRUE
 	w_class = ITEM_SIZE_NORMAL
 
+	is_head = TRUE
+
 	var/disfigured = FALSE
 	var/mob/living/carbon/brain/brainmob
 	var/brain_op_stage = 0
@@ -809,6 +816,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
 
+	is_arm = TRUE
+
 /obj/item/organ/external/l_arm/process()
 	..()
 	if(owner)
@@ -830,6 +839,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
 
+	is_arm = TRUE
+
 /obj/item/organ/external/r_arm/process()
 	..()
 	if(owner)
@@ -850,6 +861,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
 
+	is_leg = TRUE
 
 /obj/item/organ/external/r_leg
 	name = "right leg"
@@ -865,6 +877,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
+
+	is_leg = TRUE
 
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
 	if(!disfigured)

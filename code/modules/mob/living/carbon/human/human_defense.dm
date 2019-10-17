@@ -478,3 +478,35 @@
 		rig.take_hit(damage)
 
 	if(penetrated_dam) SS.create_breaches(damtype, penetrated_dam)
+
+/mob/living/carbon/human/is_usable_head(targetzone = null)
+	if(isnull(targetzone))
+		var/obj/item/organ/external/head = get_bodypart(BP_HEAD)
+		if(head && head.is_head && head.is_usable())
+			return TRUE
+	var/obj/item/organ/external/BP = get_bodypart(targetzone)
+	if(BP)
+		return BP.is_head && BP.is_usable()
+	return FALSE
+
+/mob/living/carbon/human/is_usable_arm(targetzone = null)
+	if(isnull(targetzone))
+		var/list/pos_arms = list(get_bodypart(BP_L_ARM), get_bodypart(BP_R_ARM))
+		for(var/obj/item/organ/external/arm in pos_arms)
+			if(arm && arm.is_arm && arm.is_usable())
+				return TRUE
+	var/obj/item/organ/external/BP = get_bodypart(targetzone)
+	if(BP)
+		return BP.is_arm && BP.is_usable()
+	return FALSE
+
+/mob/living/carbon/human/is_usable_leg(targetzone = null)
+	if(isnull(targetzone))
+		var/list/pos_legs = list(get_bodypart(BP_L_LEG), get_bodypart(BP_R_LEG))
+		for(var/obj/item/organ/external/leg in pos_legs)
+			if(leg && leg.is_leg && leg.is_usable())
+				return TRUE
+	var/obj/item/organ/external/BP = get_bodypart(targetzone)
+	if(BP)
+		return BP.is_leg && BP.is_usable()
+	return FALSE
