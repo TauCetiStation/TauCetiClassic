@@ -156,7 +156,7 @@
 
 //mob/living/carbon/monkey/bullet_act(obj/item/projectile/Proj)taken care of in living
 
-/mob/living/carbon/monkey/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+/mob/living/carbon/monkey/helpReaction(mob/living/attacker, show_message = TRUE)
 	help_shake_act(attacker)
 	get_scooped(attacker)
 
