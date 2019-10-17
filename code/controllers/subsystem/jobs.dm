@@ -322,6 +322,9 @@ var/datum/subsystem/job/SSjob
 
 					// If the job isn't filled
 					if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
+						Debug("DO pass, Player: [player], Level:[level], Job:[job.title]")
+						AssignRole(player, job.title)
+						unassigned -= player
 						break
 
 	// Hand out random jobs to the people who didn't get any in the last check
@@ -348,7 +351,7 @@ var/datum/subsystem/job/SSjob
 			player.ready = 0
 			unassigned -= player
 			ticker.mode.antag_candidates -= player.mind
-			alert(player, "You were returned to the lobby because your preference unavailable.","You were returned to the lobby","OK")
+			alert(player, "You were return to the lobby because your preference unavailable.","You were returned to the lobby","OK")
 	return 1
 
 //Gives the player the stuff he should have with his rank
