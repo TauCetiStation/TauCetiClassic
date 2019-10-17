@@ -121,8 +121,7 @@
 			mob.control_object.loc = get_step(mob.control_object,direct)
 	return
 
-// We don't use step_x and step_y, these are here so G-D FORBID SOMEBODY PASSES forced INTO step_x! ~Luduk
-/client/Move(n, direct, step_x = 0,step_y = 0, forced = FALSE)
+/client/Move(n, direct, forced = FALSE)
 	if(!mob)
 		return // Moved here to avoid nullrefs below
 
