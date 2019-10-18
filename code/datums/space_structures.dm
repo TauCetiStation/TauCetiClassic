@@ -115,3 +115,9 @@
 	structure_id = "iss"
 	desc = "Unknown huge object"
 	mappath = "maps/templates/space_structures/iss.dmm"
+
+/datum/map_template/space_structure/NASA_satellite
+	name = "NASA satellite"
+	structure_id = "NASA satellite"
+	desc = "Unknown small object"
+	mappath = "maps/templates/space_structures/satellite.dmm"

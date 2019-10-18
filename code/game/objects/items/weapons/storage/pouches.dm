@@ -122,7 +122,7 @@
 		/obj/item/device/radio/headset,
 		/obj/item/weapon/minihoe,
 		/obj/item/weapon/hatchet,
-		/obj/item/weapon/extinguisher/mini,
+		/obj/item/weapon/reagent_containers/spray/extinguisher/mini,
 		/obj/item/weapon/hand_labeler,
 		/obj/item/clothing/gloves,
 		/obj/item/clothing/glasses,

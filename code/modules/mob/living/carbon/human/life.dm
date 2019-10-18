@@ -994,10 +994,7 @@
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
 
 	if(reagents && !species.flags[IS_SYNTHETIC]) //Synths don't process reagents.
-		var/alien = null
-		if(species)
-			alien = species.name
-		reagents.metabolize(src,alien)
+		reagents.metabolize(src)
 
 		var/total_phoronloss = 0
 		for(var/obj/item/I in src)
@@ -1124,6 +1121,7 @@
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
 		blinded = 1
 		silent = 0
+		clear_stat_indicator()
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()	//TODO
 		if(!in_stasis)
@@ -1210,6 +1208,14 @@
 					adjustHalLoss(-1)
 		if(!sleeping) //No refactor - no life!
 			clear_alert("asleep")
+
+		if(stat == UNCONSCIOUS)
+			if(client)
+				throw_stat_indicator(IND_STAT)
+			else
+				throw_stat_indicator(IND_STAT_NOCLIENT)
+		else
+			clear_stat_indicator()
 
 		if(embedded_flag && !(life_tick % 10))
 			var/list/E
@@ -1340,7 +1346,7 @@
 				if(locate(/obj/item/weapon/gun/energy/sniperrifle, contents))
 					var/obj/item/weapon/gun/energy/sniperrifle/s = locate() in src
 					if(s.zoom)
-						s.zoom()
+						s.toggle_zoom()
 
 	else
 		sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
@@ -1569,6 +1575,8 @@
 					to_chat(src, "Too hard to concentrate...")
 					remoteview_target = null
 					reset_view(null)//##Z2
+			if(force_remote_viewing)
+				isRemoteObserve = TRUE
 			if(!isRemoteObserve && client && !client.adminobs)
 				remoteview_target = null
 				reset_view(null)
@@ -1625,7 +1633,7 @@
 	if(isturf(loc) && rand(1,1000) == 1)
 		var/turf/T = loc
 		if(T.get_lumcount() < 0.1)
-			playsound_local(src, pick(scarySounds), VOL_EFFECTS_MASTER)
+			playsound_local(src, pick(SOUNDIN_SCARYSOUNDS), VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/human/proc/handle_virus_updates()
 	if(status_flags & GODMODE)	return 0	//godmode

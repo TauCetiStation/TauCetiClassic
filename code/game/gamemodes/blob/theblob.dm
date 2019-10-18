@@ -12,6 +12,8 @@
 	var/brute_resist = 4
 	var/fire_resist = 1
 
+	density = TRUE
+	opacity = TRUE
 
 /obj/effect/blob/atom_init()
 	blobs += src
