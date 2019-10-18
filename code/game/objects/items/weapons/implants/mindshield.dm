@@ -36,7 +36,7 @@
 	else
 		to_chat(H, "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>")
 
-	for(var/obj/item/weapon/implant/syndi_loyalty/I in imp_in.contents)
+	for(var/obj/item/weapon/implant/syndi_loyalty/I in H.contents)
 		if(I.implanted)
 			I.meltdown()
 
