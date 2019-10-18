@@ -6,26 +6,19 @@
 	var/forgotten = FALSE
 
 /obj/item/weapon/implant/syndi_loyalty/implanted(mob/M)
-	START_PROCESSING(SSobj, src)
-	return TRUE
+	if((usr.mind.special_role != "traitor" && usr.mind.special_role != "Syndicate") || isloyalsyndi(C))
+		return FALSE
+	return ..()
 
 /obj/item/weapon/implant/syndi_loyalty/inject(mob/living/carbon/C, def_zone)
-	if((usr.mind.special_role != "traitor" && usr.mind.special_role != "Syndicate") || isloyalsyndi(C))
-		loc = get_turf(usr)
-		return
-
-	. = ..(C, def_zone)
-
-	implant_master = usr.mind
-
+	..(C, def_zone)
+	START_PROCESSING(SSobj, src)
 
 	for(var/obj/item/weapon/implant/mindshield/I in imp_in.contents)
 		if(I.implanted)
 			qdel(I)
-	for(var/obj/item/weapon/implant/mindshield/loyalty/I in imp_in.contents)
-		if(I.implanted)
-			qdel(I)
 
+	implant_master = usr.mind
 	ticker.mode.traitors += imp_in.mind
 
 	to_chat(imp_in, "<span class='userdanger'> <B>ATTENTION:</B> You were implanted with Syndicate loyalty implant...</span>")
@@ -53,11 +46,9 @@
 
 	implant_master.syndicate_implanted_minds  += imp_in.mind
 
-	return TRUE
-
 /obj/item/weapon/implant/syndi_loyalty/Destroy()
 	forget()
-	..()
+	return ..()
 
 /obj/item/weapon/implant/syndi_loyalty/process()
 	if(!implanted || !imp_in)
@@ -115,7 +106,7 @@
 
 /obj/item/weapon/implant/syndi_loyalty/Destroy()
 	forget()
-	..()
+	return ..()
 
 /obj/item/weapon/implant/syndi_loyalty/get_data()
 	var/dat = {"

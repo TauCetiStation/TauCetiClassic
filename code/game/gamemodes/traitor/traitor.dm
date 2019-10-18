@@ -132,12 +132,12 @@
 			harm_objective.owner = traitor
 			harm_objective.find_target()
 			traitor.objectives += harm_objective
-		if(51 to 120)
+		if(51 to 115)
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = traitor
 			steal_objective.find_target()
 			traitor.objectives += steal_objective
-		if(121 to 135)
+		if(116 to 135)
 			var/datum/objective/implant/implant_objective = new
 			implant_objective.owner = traitor
 			implant_objective.find_target()
