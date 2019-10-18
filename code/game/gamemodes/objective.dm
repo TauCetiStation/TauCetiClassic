@@ -40,7 +40,21 @@ var/global/list/all_objectives = list()
 			break
 
 /datum/objective/implant/find_target()
-	..()
+	var/list/possible_targets = list()
+	for(var/datum/mind/possible_target in ticker.minds)
+		if(possible_target.assigned_role in protected_jobs)
+			continue
+		var/mob/possible_target_mob = possible_target.current
+		if(possible_target_mob.client \
+		&& possible_target_mob.stat != DEAD \
+		&& (ROLE_TRAITOR in possible_target_mob.client.prefs.be_role) \
+		&& !jobban_isbanned(possible_target_mob, ROLE_TRAITOR) \
+		&& !role_available_in_minutes(possible_target_mob, ROLE_TRAITOR) \
+		&& ishuman(possible_target.current))
+			possible_targets += possible_target
+	if(possible_targets.len > 0)
+		target = pick(possible_targets)
+
 	if(target && target.current)
 		explanation_text = "Implant with Syndicate loyalty implant and protect [target.current.real_name], the [target.assigned_role]."
 	else
