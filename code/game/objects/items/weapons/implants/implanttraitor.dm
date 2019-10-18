@@ -6,7 +6,7 @@
 	var/forgotten = FALSE
 
 /obj/item/weapon/implant/syndi_loyalty/implanted(mob/M)
-	if((usr.mind.special_role != "traitor" && usr.mind.special_role != "Syndicate") || isloyalsyndi(C))
+	if((usr.mind.special_role != "traitor" && usr.mind.special_role != "Syndicate") || isloyalsyndi(M))
 		return FALSE
 	return ..()
 
