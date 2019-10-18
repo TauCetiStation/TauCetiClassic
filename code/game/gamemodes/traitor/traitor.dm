@@ -245,7 +245,6 @@
 					text += "<br><b>The tools used by the traitor were:</b>"
 					for(var/entry in traitor.uplink_items_bought)
 						text += "<br>[entry]"
-
 				else
 					text += "<br>The traitor was a smooth operator this round (did not purchase any uplink items)."
 			if(traitor.syndicate_implanted_minds.len > 0)
