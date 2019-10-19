@@ -1,4 +1,4 @@
-#define FONT_ASIZE "5pt"
+#define FONT_ASIZE "10pt"
 //#define FONT_ACOLOR "#f0f"
 #define FONT_ACOLOR "#3f0"
 #define FONT_ASTYLE "Arial Black"

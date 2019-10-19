@@ -1,5 +1,5 @@
 #define CHARS_PER_LINE 5
-#define FONT_SIZE "5pt"
+#define FONT_SIZE "10pt"
 #define FONT_COLOR "#09f"
 #define FONT_STYLE "Arial Black"
 #define SCROLL_SPEED 2
@@ -37,8 +37,8 @@
 
 	var/friendc = 0      // track if Friend Computer mode
 
-	maptext_height = 28
-	maptext_width = 32
+	maptext_height = 56
+	maptext_width = 64
 
 	// new display
 	// register for radio system

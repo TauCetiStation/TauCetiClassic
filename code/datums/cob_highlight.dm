@@ -1,4 +1,4 @@
-#define COB_HINT "Rotate (ALT + LMB)\nCancel (RMB)\nAmount [using_this.get_amount()]"
+#define COB_HINT "<div style=\"font-size:10pt\">Rotate (ALT + LMB)\nCancel (RMB)\nAmount [using_this.get_amount()]</div>"
 
 /client/var/datum/craft_or_build/cob
 
@@ -26,10 +26,10 @@
 	b_overlay.alpha = 185
 	b_overlay.dir = build_direction
 	b_overlay.maptext = COB_HINT
-	b_overlay.maptext_width = 128
-	b_overlay.maptext_height = 32
-	b_overlay.maptext_y = -32
-	b_overlay.maptext_x = -16
+	b_overlay.maptext_width = 256
+	b_overlay.maptext_height = 64
+	b_overlay.maptext_y = -64
+	b_overlay.maptext_x = -32
 	C.images += b_overlay
 	C.cob.in_building_mode = TRUE
 

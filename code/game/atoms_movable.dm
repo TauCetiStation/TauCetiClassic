@@ -1,7 +1,6 @@
 /atom/movable
 	layer = 3
 	appearance_flags = TILE_BOUND
-	glide_size = 12
 	var/last_move = null
 	var/anchored = 0
 	var/move_speed = 10

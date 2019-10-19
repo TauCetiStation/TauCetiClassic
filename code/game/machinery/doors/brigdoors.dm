@@ -1,5 +1,5 @@
 #define CHARS_PER_LINE 5
-#define FONT_SIZE "5pt"
+#define FONT_SIZE "10pt"
 #define FONT_COLOR "#09f"
 #define FONT_STYLE "Arial Black"
 #define MAIN_SCREEN 0
@@ -38,8 +38,8 @@
 	var/obj/item/device/radio/intercom/radio // for /s announce
 
 
-	maptext_height = 26
-	maptext_width = 32
+	maptext_height = 52
+	maptext_width = 64
 
 /obj/machinery/door_timer/atom_init()
 	..()
