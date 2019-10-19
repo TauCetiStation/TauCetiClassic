@@ -4052,7 +4052,7 @@
 	},
 /area/centcom/arrival)
 "apm" = (
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /turf/unsimulated/floor{
 	icon_state = "sandwater"
 	},
@@ -21649,7 +21649,7 @@
 	},
 /area/tdome/tdomeadmin)
 "nnb" = (
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "redyellowfull"
