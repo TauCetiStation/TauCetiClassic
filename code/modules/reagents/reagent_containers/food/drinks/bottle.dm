@@ -11,6 +11,7 @@
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	var/is_glass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
+
 	var/stop_spin_bottle = FALSE //Gotta stop the rotation.
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/atom_init()
@@ -54,6 +55,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/pickup(mob/living/user)
 	animate(src, transform = null, time = 0) //Restore bottle to its original position
+
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
 
@@ -161,6 +163,21 @@
 
 	return
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/after_throw(datum/callback/callback)
+	..()
+	if(is_glass)
+		var/obj/item/weapon/broken_bottle/BB =  new /obj/item/weapon/broken_bottle(loc)
+		var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
+		I.Blend(BB.broken_outline, ICON_OVERLAY, rand(5), 1)
+		I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+		BB.icon = I
+		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+		new /obj/item/weapon/shard(loc)
+		if(reagents && reagents.total_volume)
+			src.reagents.reaction(loc, TOUCH)
+		qdel(src)
+
+
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/weapon/broken_bottle
 
@@ -182,6 +199,11 @@
 /obj/item/weapon/broken_bottle/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
+/obj/item/weapon/broken_bottle/after_throw(datum/callback/callback)
+	..()
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+	new /obj/item/weapon/shard(loc)
+	qdel(src)
 
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gin
@@ -426,3 +448,5 @@
 	reagents.add_reagent("beer", 100)
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
+
+

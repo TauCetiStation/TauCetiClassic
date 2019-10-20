@@ -1009,6 +1009,9 @@
 /mob/living/carbon/slime/getTrail()
 	return null
 
+/mob/living/carbon/slime/get_species()
+	return SLIME
+
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*

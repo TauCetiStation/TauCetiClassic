@@ -90,8 +90,9 @@
 	canSmoothWith = list(/turf/simulated/wall/mineral/phoron, /obj/structure/falsewall/phoron)
 
 /turf/simulated/wall/mineral/phoron/attackby(obj/item/weapon/W, mob/user)
-	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
-		ignite(is_hot(W))
+	var/W_temp = W.get_current_temperature()
+	if(W_temp > 300)//If the temperature of the object is over 300, then ignite
+		ignite(W_temp)
 		return
 	..()
 
