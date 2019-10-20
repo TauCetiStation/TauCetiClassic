@@ -49,7 +49,7 @@
 
 /mob/living/simple_animal/shade/howling_ghost/proc/spooky_ghosty()
 	if(prob(20)) //haunt
-		playsound(loc, pick('sound/spookoween/ghosty_wind.ogg','sound/spookoween/ghost_whisper.ogg','sound/spookoween/chain_rattling.ogg'), 300, 1)
+		playsound(loc, pick('sound/spookoween/ghosty_wind.ogg','sound/spookoween/ghost_whisper.ogg','sound/spookoween/chain_rattling.ogg'), VOL_EFFECTS_MASTER)
 	if(prob(20)) //flickers
 		var/obj/machinery/light/L = locate(/obj/machinery/light) in view(5, src)
 		if(L)
@@ -156,11 +156,11 @@
 /mob/living/simple_animal/hostile/retaliate/clown/insane/proc/stalk()
 	var/mob/living/M = target
 	if(M.stat == DEAD)
-		playsound(M.loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
+		playsound(M.loc, 'sound/spookoween/insane_low_laugh.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 	if(timer == 0)
 		timer = rand(5,15)
-		playsound(M.loc, pick('sound/spookoween/scary_horn.ogg','sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), 300, 1)
+		playsound(M.loc, pick('sound/spookoween/scary_horn.ogg','sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), VOL_EFFECTS_MASTER)
 		spawn(12)
 			var/turf/T = get_turf(src)
 			var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
@@ -186,7 +186,7 @@
 					var/mob/living/carbon/human/H = target
 					var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(dam_zone)]
-					to_chat(target,"<span class='danger'>[src] claws [target] with his bloody hands.")
+					to_chat(target,"<span class='danger'>[src] claws [target] with his bloody hands.</span>")
 					H.apply_damage(rand(5,30), BRUTE, BP, H.run_armor_check(BP, "melee"), DAM_SHARP | DAM_EDGE)
 			spawn(28)
 				if(buckled)
@@ -210,7 +210,7 @@
 	if(istype(O, /obj/item/weapon/nullrod))
 		if(prob(20))
 			visible_message("[src] finally found the peace it deserves. <i>You hear honks echoing off into the distance.</i>")
-			playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
+			playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', VOL_EFFECTS_MASTER)
 			icon_state = null
 			var/atom/movable/overlay/clown_dead = null
 			clown_dead = new(loc)
