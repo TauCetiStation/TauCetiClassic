@@ -19,8 +19,8 @@
 
 	//var/list/
 	can_be_placed_into = list(
-		/obj/machinery/chem_master/,
-		/obj/machinery/chem_dispenser/,
+		/obj/machinery/chem_master,
+		/obj/machinery/chem_dispenser,
 		/obj/machinery/reagentgrinder,
 		/obj/machinery/juicer,
 		/obj/structure/table,
@@ -41,10 +41,11 @@
 		/mob/living/simple_animal/hostile/retaliate/goat,
 		/obj/machinery/computer/centrifuge,
 		/obj/machinery/sleeper,
-		/obj/machinery/smartfridge/,
+		/obj/machinery/smartfridge,
 		/obj/machinery/biogenerator,
 		/obj/machinery/hydroponics,
-		/obj/machinery/constructable_frame)
+		/obj/machinery/constructable_frame,
+		/obj/item/clothing/suit/space/rig)
 
 /obj/item/weapon/reagent_containers/glass/atom_init()
 	. = ..()
@@ -84,7 +85,7 @@
 		var/contained = english_list(injected)
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been splashed with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to splash [M.name] ([M.key]). Reagents: [contained]</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) splashed [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		msg_admin_attack("[user.name] ([user.ckey]) splashed [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
 
 		for(var/mob/O in viewers(world.view, user))
 			O.show_message(text("<span class = 'rose'>[] has been splashed with something by []!</span>", target, user), 1)
@@ -115,6 +116,7 @@
 
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class = 'notice'>You transfer [trans] units of the solution to [target].</span>")
+		playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 15) // Sound taken from "Eris" build
 
 	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
 	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
@@ -129,12 +131,29 @@
 	else if(istype(target, /obj/machinery/radiocarbon_spectrometer))
 		return
 
+	else if(istype(target, /obj/machinery/color_mixer))
+		var/obj/machinery/color_mixer/CM = target
+		if(CM.filling_tank_id)
+			if(CM.beakers[CM.filling_tank_id])
+				if(user.a_intent == I_GRAB)
+					var/obj/item/weapon/reagent_containers/glass/GB = CM.beakers[CM.filling_tank_id]
+					GB.afterattack(src, user, flag)
+				else
+					afterattack(CM.beakers[CM.filling_tank_id], user, flag)
+				CM.updateUsrDialog()
+				CM.update_icon()
+				return
+			else
+				to_chat(user, "<span class='warning'>You try to fill [user.a_intent == I_GRAB ? "[src] up from a tank" : "a tank up"], but find it is absent.</span>")
+				return
+
+
 	else if(reagents && reagents.total_volume)
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 		src.reagents.reaction(target, TOUCH)
 		spawn(5) src.reagents.clear_reagents()
 		var/turf/T = get_turf(src)
-		message_admins("[key_name_admin(usr)] splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+		message_admins("[key_name_admin(usr)] splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z]) [ADMIN_JMP(usr)]")
 		log_game("[usr.ckey]([usr]) splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z])")
 		return
 
@@ -275,13 +294,13 @@
 	item_state = "bucket"
 	m_amt = 200
 	g_amt = 0
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,50,70)
 	volume = 70
 	flags = OPENCONTAINER
 	body_parts_covered = HEAD
-	slot_flags = SLOT_HEAD
+	slot_flags = SLOT_FLAGS_HEAD
 
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/D, mob/user)
 	if(isprox(D))
@@ -290,9 +309,9 @@
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 		user.drop_from_inventory(src)
 		qdel(src)
-	if (istype(D, /obj/item/weapon/weldingtool))
+	if (iswelder(D))
 		var/obj/item/weapon/weldingtool/WT = D
-		if(WT.remove_fuel(0,user))
+		if(WT.use(0,user))
 			user.remove_from_mob(src)
 			var/obj/item/clothing/head/helmet/battlebucket/BBucket = new(usr.loc)
 			loc.visible_message("<span class = 'rose'>[src] is shaped into [BBucket] by [user.name] with the weldingtool.</span>", blind_message = "<span class = 'rose'>You hear welding.</span>")

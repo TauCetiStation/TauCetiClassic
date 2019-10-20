@@ -130,7 +130,7 @@
 
 	if (href_list["volume_adj"])
 		var/diff = text2num(href_list["volume_adj"])
-		volume_rate = Clamp(volume_rate+diff, minrate, maxrate)
+		volume_rate = CLAMP(volume_rate+diff, minrate, maxrate)
 		update_icon()
 
 //Huge scrubber
@@ -141,21 +141,27 @@
 	volume = 50000
 	volume_rate = 5000
 
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 500      //internal circuitry, friction losses and stuff
 	active_power_usage = 100000 //100 kW ~ 135 HP
 
-	var/global/gid = 1
+	var/static/gid = 1
 	var/id = 0
 
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/atom_init()
 	. = ..()
+	scrubber_huge_list += src
+
 	cell = null
 
 	id = gid
 	gid++
 
 	name = "[name] (ID [id])"
+
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/Destroy()
+	scrubber_huge_list -= src
+	return ..()
 
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/attack_ghost(mob/user)
 	return //Do not show anything
@@ -179,10 +185,13 @@
 
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/process_atmos()
 	if(!on || (stat & (NOPOWER | BROKEN)))
-		update_use_power(0)
+		if(use_power)
+			set_power_use(NO_POWER_USE)
 		last_flow_rate = 0
 		last_power_draw = 0
 		return FALSE
+	if(!use_power)
+		set_power_use(IDLE_POWER_USE)
 
 	var/power_draw = -1
 
@@ -200,14 +209,14 @@
 		update_connected_network()
 
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(iswrench(I))
 		if(on)
 			to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
 			return
 
 		anchored = !anchored
 		user.SetNextMove(CLICK_CD_INTERACT)
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 
 		return
@@ -215,7 +224,7 @@
 	//doesn't use power cells
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		return
-	if (istype(I, /obj/item/weapon/screwdriver))
+	if (isscrewdriver(I))
 		return
 
 	//doesn't hold tanks
@@ -229,7 +238,7 @@
 	name = "Stationary Air Scrubber"
 
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/stationary/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		to_chat(user, "<span class='notice'>The bolts are too tight for you to unscrew!</span>")
 		return
 

@@ -17,7 +17,7 @@
 				return
 			if (src.client)
 				if (client.prefs.muted & MUTE_IC)
-					to_chat(src, "\red You cannot send IC messages (muted).")
+					to_chat(src, "<span class='warning'>You cannot send IC messages (muted).</span>")
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
@@ -62,15 +62,15 @@
 		if ("help")
 			to_chat(src, "alarm,alert,notice,flash,blink,whistle,beep,boop")
 		else
-			to_chat(src, "\blue Unusable emote '[act]'. Say *help for a list.")
+			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 
 	if (message)
 		log_emote("[name]/[key] : [message]")
 
-		for(var/mob/M in dead_mob_list)
-			if (!M.client || isnewplayer(M))
-				continue //skip monkeys, leavers, and new_players
-			if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
+		for(var/mob/M in observer_list)
+			if (!M.client)
+				continue //skip leavers
+			if((M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
 				M.show_message(message)
 
 

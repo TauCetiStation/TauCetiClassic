@@ -10,7 +10,7 @@
 	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act,1,length(act))
 
-	var/muzzled = istype(wear_mask, /obj/item/clothing/mask/muzzle)
+	var/muzzled = istype(wear_mask, /obj/item/clothing/mask/muzzle) || silent
 	//var/m_type = 1
 
 	for (var/obj/item/weapon/implant/I in src)
@@ -19,6 +19,9 @@
 
 	if(stat == DEAD && (act != "deathgasp"))
 		return
+
+	var/cloud_emote = ""
+
 	switch(act)
 		if ("airguitar")
 			if (!src.restrained())
@@ -58,7 +61,7 @@
 			if (input2 == "Visible")
 				m_type = 1
 			else if (input2 == "Hearable")
-				if (src.miming)
+				if (src.miming || has_trait(TRAIT_MUTE))
 					return
 				m_type = 2
 			else
@@ -73,7 +76,7 @@
 
 			if (src.client)
 				if (client.prefs.muted & MUTE_IC)
-					to_chat(src, "\red You cannot send IC messages (muted).")
+					to_chat(src, "<span class='warning'>You cannot send IC messages (muted).</span>")
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
@@ -101,8 +104,8 @@
 			m_type = 1
 
 		if ("choke")
-			if(miming)
-				message = "<B>[src]</B> clutches his throat desperately!"
+			if(miming || has_trait(TRAIT_MUTE))
+				message = "<B>[src]</B> clutches their throat desperately!"
 				m_type = 1
 			else
 				if (!muzzled)
@@ -141,7 +144,7 @@
 			m_type = 1
 
 		if ("chuckle")
-			if(miming)
+			if(miming || has_trait(TRAIT_MUTE))
 				message = "<B>[src]</B> appears to chuckle."
 				m_type = 1
 			else
@@ -168,7 +171,7 @@
 			m_type = 1
 
 		if ("cough")
-			if(miming)
+			if(miming || has_trait(TRAIT_MUTE))
 				message = "<B>[src]</B> appears to cough!"
 				m_type = 1
 			else
@@ -200,23 +203,36 @@
 			m_type = 1
 
 		if ("gasp")
-			if(miming)
+			if(has_trait(TRAIT_MUTE))
+				message = "<B>[src]</B> sucks in air violently!"
+				m_type = 1
+			else if(miming)
 				message = "<B>[src]</B> appears to be gasping!"
 				m_type = 1
 			else
 				if (!muzzled)
-					message = "<B>[src]</B> gasps!"
+					if(auto)
+						if(message == "coughs up blood!")
+							if(world.time-lastSoundEmote >= 30)
+								if(gender == FEMALE)
+									playsound(src, pick(SOUNDIN_FBCOUGH), VOL_EFFECTS_MASTER, null, FALSE)
+								else
+									playsound(src, pick(SOUNDIN_MBCOUGH), VOL_EFFECTS_MASTER, null, FALSE)
+								lastSoundEmote = world.time
+					message = "<B>[src]</B> [message ? message : "gasps!"]"
 					m_type = 2
 				else
-					message = "<B>[src]</B> makes a weak noise."
+					message = "<B>[src]</B> makes a noise."
 					m_type = 2
+
+			cloud_emote = "cloud-gasp"
 
 		if ("deathgasp")
 			message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
 			m_type = 1
 
 		if ("giggle")
-			if(miming)
+			if(miming || has_trait(TRAIT_MUTE))
 				message = "<B>[src]</B> giggles silently!"
 				m_type = 1
 			else
@@ -279,7 +295,7 @@
 			m_type = 1
 
 		if ("cry")
-			if(miming)
+			if(miming || has_trait(TRAIT_MUTE))
 				message = "<B>[src]</B> cries."
 				m_type = 1
 			else
@@ -291,7 +307,7 @@
 					m_type = 2
 
 		if ("sigh")
-			if(miming)
+			if(miming || has_trait(TRAIT_MUTE))
 				message = "<B>[src]</B> sighs."
 				m_type = 1
 			else
@@ -303,7 +319,10 @@
 					m_type = 2
 
 		if ("laugh")
-			if(miming)
+			if(has_trait(TRAIT_MUTE))
+				message = "<B>[src]</B> laughs silently."
+				m_type = 1
+			else if(miming)
 				message = "<B>[src]</B> acts out a laugh."
 				m_type = 1
 			else
@@ -315,16 +334,23 @@
 					m_type = 2
 
 		if ("mumble")
-			message = "<B>[src]</B> mumbles!"
-			m_type = 2
-			if(miming)
+			if(has_trait(TRAIT_MUTE))
+				message = "<B>[src]</B> makes an annoyed face!"
 				m_type = 1
+			else
+				message = "<B>[src]</B> mumbles!"
+				m_type = 2
+				if(miming)
+					m_type = 1
 
 		if ("grumble")
 			if(miming)
 				message = "<B>[src]</B> grumbles!"
 				m_type = 1
-			if (!muzzled)
+			else if(has_trait(TRAIT_MUTE))
+				message = "<B>[src]</B> makes an annoyed face!"
+				m_type = 1
+			else if (!muzzled)
 				message = "<B>[src]</B> grumbles!"
 				m_type = 2
 			else
@@ -335,6 +361,9 @@
 			if(miming)
 				message = "<B>[src]</B> appears to groan!"
 				m_type = 1
+			else if(has_trait(TRAIT_MUTE))
+				message = "<B>[src]</B> makes a very annoyed face!"
+				m_type = 1
 			else
 				if (!muzzled)
 					message = "<B>[src]</B> groans!"
@@ -344,12 +373,21 @@
 					m_type = 2
 
 		if ("moan")
+			m_type = 2
 			if(miming)
 				message = "<B>[src]</B> appears to moan!"
 				m_type = 1
 			else
-				message = "<B>[src]</B> moans!"
-				m_type = 2
+				if(!message)
+					message = "<B>[src]</B> moans!"
+				if(muzzled || has_trait(TRAIT_MUTE))
+					message = "<B>[src]</B> moans silently!"
+				else if(auto)
+					if(lastSoundEmote >= world.time)
+						return
+					message = pick("<B>[src]</B> grunts in pain!", "<B>[src]</B> grunts!", "<B>[src]</B> wrinkles \his face and grunts!")
+					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_LIGHT_PAIN : SOUNDIN_MALE_LIGHT_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
+					lastSoundEmote = world.time + 4 SECONDS
 
 		if ("johnny")
 			var/M
@@ -358,7 +396,7 @@
 			if (!M)
 				param = null
 			else
-				if(miming)
+				if(miming || has_trait(TRAIT_MUTE))
 					message = "<B>[src]</B> takes a drag from a cigarette and blows \"[M]\" out in smoke."
 					m_type = 1
 				else
@@ -421,7 +459,7 @@
 			m_type = 1
 
 		if ("sneeze")
-			if (miming)
+			if (miming || has_trait(TRAIT_MUTE))
 				message = "<B>[src]</B> sneezes."
 				m_type = 1
 			else
@@ -435,11 +473,11 @@
 		if ("sniff")
 			message = "<B>[src]</B> sniffs."
 			m_type = 2
-			if(miming)
+			if(miming || has_trait(TRAIT_MUTE))
 				m_type = 1
 
 		if ("snore")
-			if (miming)
+			if (miming || has_trait(TRAIT_MUTE))
 				message = "<B>[src]</B> sleeps soundly."
 				m_type = 1
 			else
@@ -451,7 +489,7 @@
 					m_type = 2
 
 		if ("whimper")
-			if (miming)
+			if (miming || has_trait(TRAIT_MUTE))
 				message = "<B>[src]</B> appears hurt."
 				m_type = 1
 			else
@@ -470,7 +508,7 @@
 			if (!muzzled)
 				message = "<B>[src]</B> yawns."
 				m_type = 2
-				if(miming)
+				if(miming || has_trait(TRAIT_MUTE))
 					m_type = 1
 
 		if ("collapse")
@@ -529,8 +567,24 @@
 				else
 					message = "<B>[src]</B> sadly can't find anybody to give daps to, and daps \himself. Shameful."
 
+		if("pain")
+			if(muzzled)
+				message = "<B>[src]</B> makes a weak noise."
+				m_type = 1 // Can't we get defines for these?
+			else if(auto)
+				message = pick("<B>[src]</B> moans in pain.", "<B>[src]</B> slightly winces in pain and moans.", "<B>[src]</B> presses \his lips together in pain and moans.", "<B>[src]</B> twists in pain.")
+				m_type = 2
+				cloud_emote = "cloud-pain"
+				if((species.name != SKRELL) && has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(50)) // skrells don't have much emotions to cry in pain, but they can still moan
+					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_WHINER_PAIN : SOUNDIN_MALE_WHINER_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
+				else
+					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_PASSIVE_PAIN : SOUNDIN_MALE_PASSIVE_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
+			else
+				message = "<B>[src]</B> [pick("slightly moans feigning pain.", "appears to be in pain!")]"
+				m_type = 2
+
 		if ("scream")
-			if (miming)
+			if(miming)
 				message = "<B>[src]</B> acts out a scream!"
 				m_type = 1
 			else
@@ -538,42 +592,50 @@
 				if(virus_scream || !(species && species.flags[NO_PAIN]))
 					if (!muzzled)
 						if (auto)
-							if(world.time-lastScream >= 30)//prevent scream spam with things like poly spray
-								message = "<B>[src]</B> screams in agony!"
-								var/list/screamSound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg', 'sound/misc/wilhelm.ogg', 'sound/misc/goofy.ogg')
-								if (gender == FEMALE) //Females have their own screams. Trannys be damned.
-									screamSound = list('sound/misc/femalescream1.ogg', 'sound/misc/femalescream2.ogg', 'sound/misc/femalescream3.ogg', 'sound/misc/femalescream4.ogg', 'sound/misc/femalescream5.ogg')
-								var/scream = pick(screamSound)//AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
-								playsound(get_turf(src), scream, 50, 0)
+							if(has_trait(TRAIT_MUTE))
+								message = "<B>[src]</B> twists their face into an agonised expression!"
+								m_type = 1
+							else if(lastSoundEmote <= world.time) // prevent scream spam with things like poly spray
+								message = "<B>[src]</B> [pick("screams in agony", "writhes in heavy pain and screams", "screams in pain as much as [gender == FEMALE ? "she" : "he"] can", "screams in pain loudly")]!"
+								if (gender == FEMALE) // Females have their own screams. Trannys be damned.
+									playsound(src, pick(SOUNDIN_FEMALE_HEAVY_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
+								else if(gender == MALE)
+									playsound(src, pick(SOUNDIN_MALE_HEAVY_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 								m_type = 2
-								lastScream = world.time
+								lastSoundEmote = world.time + 4 SECONDS
 						else
-							message = "<B>[src]</B> screams!"
+							if(!message)
+								message = "<B>[src]</B> screams!"
 							m_type = 2
+							if(has_trait(TRAIT_MUTE))
+								message = "<B>[src]</B> opens their mouth like a fish gasping for air!"
+								m_type = 1
 					else
-						message = "<B>[src]</B> makes a very loud noise."
-						m_type = 2
+						if(has_trait(TRAIT_MUTE))
+							message = "<B>[src]</B> makes a very hurt expression!"
+							m_type = 1
+						else
+							message = "<B>[src]</B> makes a very loud noise."
+							m_type = 2
+
+			cloud_emote = "cloud-scream"
 
 		if ("help")
 			to_chat(src, "blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough,\ncry, custom, deathgasp, drool, eyebrow, frown, gasp, giggle, groan, grumble, handshake, hug-(none)/mob, glare-(none)/mob,\ngrin, laugh, look-(none)/mob, moan, mumble, nod, pale, point-atom, raise, salute, shake, shiver, shrug,\nsigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, whimper,\nwink, yawn")
 
 		else
-			to_chat(src, "\blue Unusable emote '[act]'. Say *help for a list.")
+			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 
-
-
-
-
-	if (message)
+	if(message)
 		log_emote("[name]/[key] : [message]")
 
  //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
  // Maybe some people are okay with that.
 
-		for(var/mob/M in dead_mob_list)
-			if(!M.client || isnewplayer(M))
-				continue //skip monkeys, leavers and new players
-			if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
+		for(var/mob/M in observer_list)
+			if(!M.client)
+				continue //skip leavers
+			if((M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
 				M.show_message(message)
 
 
@@ -583,6 +645,11 @@
 		else if (m_type & 2)
 			for (var/mob/O in (hearers(src.loc, null) | get_mobs_in_view(world.view,src)))
 				O.show_message(message, m_type)
+
+	if(cloud_emote)
+		var/image/emote_bubble = image('icons/mob/emote.dmi', src, cloud_emote, EMOTE_LAYER)
+		flick_overlay(emote_bubble, clients, 30)
+		QDEL_IN(emote_bubble, 3 SECONDS)
 
 /mob/living/carbon/human/verb/pose()
 	set name = "Set Pose"

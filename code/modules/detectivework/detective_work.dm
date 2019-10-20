@@ -1,9 +1,9 @@
 //CONTAINS: Suit fibers and Detective's Scanning Computer
 
-atom/var/list/suit_fibers
+/atom/var/list/suit_fibers
 
-atom/proc/add_fibers(mob/living/carbon/human/M)
-	if(M.gloves && istype(M.gloves,/obj/item/clothing/))
+/atom/proc/add_fibers(mob/living/carbon/human/M)
+	if(M.gloves && istype(M.gloves,/obj/item/clothing))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.transfer_blood) //bloodied gloves transfer blood to touched objects
 			if(add_blood(G.bloody_hands_mob)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
@@ -54,6 +54,8 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 /obj/machinery/computer/forensic_scanning
 	name = "\improper High-Res Forensic Scanning Computer"
 	icon_state = "forensic"
+	state_broken_preset = "securityb"
+	state_nopower_preset = "security0"
 	light_color = "#a91515"
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/scanning
@@ -144,7 +146,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				if(istype(I, /obj/item/weapon/evidencebag))
 					scanning = I.contents[1]
 					scanning.loc = src
-					I.overlays.Cut()
+					I.underlays.Cut()
 					I.w_class = initial(I.w_class)
 					I.icon_state = "evidenceobj"
 				else
@@ -163,7 +165,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				if(!card.fingerprints)
 					card.fingerprints = list()
 				if(card.amount > 1 || !card.fingerprints.len)
-					to_chat(usr, "\red ERROR: No prints/too many cards.")
+					to_chat(usr, "<span class='warning'>ERROR: No prints/too many cards.</span>")
 					if(card.loc == src)
 						card.loc = src.loc
 					card = null
@@ -172,7 +174,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				I.loc = src
 				process_card()
 			else
-				to_chat(usr, "\red Invalid Object Rejected.")
+				to_chat(usr, "<span class='warning'>Invalid Object Rejected.</span>")
 		if("database") //Viewing all records in each database
 			canclear = 1
 			if(href_list["delete_record"])
@@ -252,7 +254,6 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				var/obj/item/weapon/paper/P = new(loc)
 				var/list/dossier = files[href_list["identifier"]]
 				P.name = "\improper Database File ([dossier[2]])"
-				P.icon_state = "paper_words"
 				P.info = "<b>Criminal Evidence Database</b><br><br>"
 				P.info += "Consolidated data points: [dossier[2]]<br>"
 				var/print_string = "Fingerprints: Print not complete!<br>"
@@ -287,6 +288,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 						P.info += "&nbsp<b>Blood:</b><br>"
 						for(var/named in blood)
 							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
+				P.update_icon()
 			else
 				to_chat(usr, "ERROR.  Database not found!<br>")
 		if("auxiliary") //Viewing a record from the "misc" database.
@@ -328,7 +330,6 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				var/obj/item/weapon/paper/P = new(loc)
 				var/list/outputs = misc[href_list["identifier"]]
 				P.name = "\improper Auxiliary Database File ([outputs[3]])"
-				P.icon_state = "paper_words"
 				P.info = "<b>Auxiliary Evidence Database</b><br><br>"
 				P.info += "<big><b>Consolidated data points:</b> [outputs[3]]</big><br>"
 				var/list/prints = outputs[4]
@@ -354,6 +355,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					P.info += "&nbsp<b>Blood:</b><br>"
 					for(var/named in blood)
 						P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
+				P.update_icon()
 			else
 				to_chat(usr, "ERROR.  Database not found!<br>")
 		if("scan")
@@ -422,7 +424,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				var/obj/item/weapon/paper/P = new(loc)
 				P.name = "\improper Scan Data ([scan_name])"
 				P.info = "<tt>[scan_data]</tt>"
-				P.icon_state = "paper_words"
+				P.update_icon()
 			else
 				temp = "Print Failed: No Data"
 		if("erase")
@@ -596,7 +598,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			to_chat(usr, "No match found.")
 		qdel(card)
 	else
-		to_chat(usr, "\red ERROR: No prints/too many cards.")
+		to_chat(usr, "<span class='warning'>ERROR: No prints/too many cards.</span>")
 		if(card.loc == src)
 			card.loc = src.loc
 		card = null
@@ -614,6 +616,9 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 	return
 
 /obj/machinery/computer/forensic_scanning/detective
-	icon_state = "library"
+	icon_state = "computer_old"
+	req_access = list()
 	name = "PowerScan Mk.I"
 	light_color = "#3550b6"
+	state_broken_preset = null
+	state_nopower_preset = null

@@ -10,7 +10,7 @@
 	var/datum/disease2/disease/virus2 = null
 
 /obj/machinery/computer/centrifuge/attackby(obj/O, mob/user)
-	if(istype(O, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(O))
 		return ..(O,user)
 
 	if(istype(O,/obj/item/weapon/reagent_containers/glass/beaker/vial))
@@ -128,7 +128,7 @@
 					delay = delay / 2
 
 			curing = round(delay)
-			playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
+			playsound(src, 'sound/machines/juicer.ogg', VOL_EFFECTS_MASTER)
 			update_icon()
 			return TRUE
 
@@ -204,4 +204,5 @@
 	<u>Additional Notes:</u> <field>
 "}
 
+	P.update_icon()
 	state("The nearby computer prints out a pathology report.")

@@ -8,7 +8,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	var/created_name = "Floorbot"
 
 /obj/item/weapon/toolbox_tiles_sensor
@@ -20,7 +20,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	var/created_name = "Floorbot"
 
 //Floorbot
@@ -113,7 +113,7 @@
 	else
 		..()
 
-/obj/machinery/bot/floorbot/Emag(mob/user)
+/obj/machinery/bot/floorbot/emag_act(mob/user)
 	..()
 	if(open && !locked && user)
 		to_chat(user, "<span class='notice'>The [src] buzzes and beeps.</span>")
@@ -225,7 +225,7 @@
 
 	if(src.target && (src.target != null) && src.path.len == 0)
 		spawn(0)
-			if(!istype(src.target, /turf/))
+			if(!istype(src.target, /turf))
 				src.path = get_path_to(src, get_turf(src.target), /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = FALSE)
 			else
 				src.path = get_path_to(src, get_turf(src.target), /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = FALSE)
@@ -245,7 +245,7 @@
 			src.eattile(src.target)
 		else if(istype(src.target, /obj/item/stack/sheet/metal))
 			src.maketile(src.target)
-		else if(istype(src.target, /turf/) && emagged < 2)
+		else if(istype(src.target, /turf) && emagged < 2)
 			repair(src.target)
 		else if(emagged == 2 && istype(src.target,/turf/simulated/floor))
 			var/turf/simulated/floor/F = src.target
@@ -255,7 +255,7 @@
 				F.break_tile_to_plating()
 			else
 				F.ReplaceWithLattice()
-			visible_message("\red [src] makes an excited booping sound.")
+			visible_message("<span class='warning'>[src] makes an excited booping sound.</span>")
 			spawn(50)
 				src.amount ++
 				src.anchored = 0
@@ -268,7 +268,7 @@
 
 
 /obj/machinery/bot/floorbot/proc/repair(turf/target)
-	if(istype(target, /turf/space/))
+	if(istype(target, /turf/space))
 		if(target.loc.name == "Space")
 			return
 	else if(!istype(target, /turf/simulated/floor))
@@ -277,8 +277,8 @@
 		return
 	src.anchored = 1
 	src.icon_state = "floorbot-c"
-	if(istype(target, /turf/space/))
-		visible_message("\red [src] begins to repair the hole")
+	if(istype(target, /turf/space))
+		visible_message("<span class='warning'>[src] begins to repair the hole</span>")
 		var/obj/item/stack/tile/plasteel/T = new /obj/item/stack/tile/plasteel
 		src.repairing = 1
 		spawn(50)
@@ -289,7 +289,7 @@
 			src.anchored = 0
 			src.target = null
 	else
-		visible_message("\red [src] begins to improve the floor.")
+		visible_message("<span class='warning'>[src] begins to improve the floor.</span>")
 		src.repairing = 1
 		spawn(50)
 			src.loc.icon_state = "floor"
@@ -302,7 +302,7 @@
 /obj/machinery/bot/floorbot/proc/eattile(obj/item/stack/tile/plasteel/T)
 	if(!istype(T))
 		return
-	visible_message("\red [src] begins to collect tiles.")
+	visible_message("<span class='warning'>[src] begins to collect tiles.</span>")
 	src.repairing = 1
 	spawn(20)
 		if(QDELETED(T))
@@ -325,7 +325,7 @@
 		return
 	if(M.get_amount() > 1)
 		return
-	visible_message("\red [src] begins to create tiles.")
+	visible_message("<span class='warning'>[src] begins to create tiles.</span>")
 	src.repairing = 1
 	spawn(20)
 		if(QDELETED(M))
@@ -345,7 +345,7 @@
 
 /obj/machinery/bot/floorbot/explode()
 	src.on = 0
-	src.visible_message("\red <B>[src] blows apart!</B>", 1)
+	src.visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/storage/toolbox/mechanical/N = new /obj/item/weapon/storage/toolbox/mechanical(Tsec)

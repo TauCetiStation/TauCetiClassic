@@ -7,6 +7,7 @@
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	invisibility = INVISIBILITY_OBSERVER
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 
 	pass_flags = PASSBLOB
 	faction = "blob"
@@ -35,7 +36,7 @@
 
 /mob/camera/blob/proc/add_points(points)
 	if(points != 0)
-		blob_points = Clamp(blob_points + points, 0, max_blob_points)
+		blob_points = CLAMP(blob_points + points, 0, max_blob_points)
 /mob/camera/blob/say(var/message)
 	if (!message)
 		return
@@ -81,11 +82,9 @@
 			stat(null, "Core Health: [blob_core.health]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
 
-/mob/camera/blob/Move(var/NewLoc, var/Dir = 0)
-	var/obj/effect/blob/B = locate() in range("3x3", NewLoc)
+/mob/camera/blob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = FALSE
+	var/obj/effect/blob/B = locate() in range(3, NewLoc)
 	if(NewLoc && B)
 		loc = NewLoc
-	else
-		return 0
-
-
+		return TRUE

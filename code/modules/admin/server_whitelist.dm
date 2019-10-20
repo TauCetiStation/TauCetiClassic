@@ -1,7 +1,7 @@
 //see also config.serverwhitelist
 
 //return 1, if player in server db, or 0
-proc/check_if_a_new_player(key)
+/proc/check_if_a_new_player(key)
 	if(!establish_db_connection())
 		world.log << "Ban database connection failure. Key [key] not checked"
 		diary << "Ban database connection failure. Key [key] not checked"
@@ -32,13 +32,13 @@ proc/check_if_a_new_player(key)
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
-		to_chat(usr, "\red Failed to establish database connection")
+		to_chat(usr, "<span class='warning'>Failed to establish database connection</span>")
 		return
 
 	var/ckey = ckey(copytext(input(usr, "", "Player ckey") as text, 1, MAX_MESSAGE_LEN))
 
 	if(check_if_a_new_player(ckey))
-		to_chat(src, "\red Player already in whitelist")
+		to_chat(src, "<span class='warning'>Player already in whitelist</span>")
 		return
 
 	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (ckey, firstseen) VALUES ('[ckey], Now()')")

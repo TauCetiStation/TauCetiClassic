@@ -2,7 +2,6 @@
 	name = "Disease Splicer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "crew"
-
 	var/datum/disease2/effectholder/memorybank = null
 	var/list/species_buffer = null
 	var/analysed = 0
@@ -12,7 +11,7 @@
 	var/scanning = 0
 
 /obj/machinery/computer/diseasesplicer/attackby(obj/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		return ..(I,user)
 
 	if(istype(I,/obj/item/weapon/virusdish))

@@ -4,9 +4,9 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	item_state = "flashlight"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 50
 	g_amt = 20
 	action_button_name = "Toggle Flashlight"
@@ -93,7 +93,7 @@
 	icon_state = "seclite"
 	item_state = "seclite"
 	force = 7 // Not as good as a stun baton.
-	hitsound = 'sound/weapons/genhit1.ogg'
+	hitsound = list('sound/weapons/genhit1.ogg')
 
 /obj/item/device/flashlight/pen
 	name = "penlight"
@@ -102,7 +102,7 @@
 	item_state = ""
 	flags = CONDUCT
 	brightness_on = 2
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 /obj/item/device/flashlight/drone
 	name = "low-power flashlight"
@@ -111,7 +111,7 @@
 	item_state = ""
 	flags = CONDUCT
 	brightness_on = 2
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 
 // the desk lamps are a bit special
@@ -121,7 +121,7 @@
 	icon_state = "lamp"
 	item_state = "lamp"
 	brightness_on = 4
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 	flags = CONDUCT
 	m_amt = 0
 	g_amt = 0
@@ -149,7 +149,7 @@
 /obj/item/device/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	brightness_on = 4
 	icon_state = "flare"
 	item_state = "flare"
@@ -157,7 +157,7 @@
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
-	light_color = "#ff0000"
+	light_color = LIGHT_COLOR_FLARE
 	light_power = 2
 	action_button_name = "Toggle Flare"
 
@@ -173,10 +173,6 @@
 	fuel = max(fuel - 1, 0)
 	if(!fuel || !on)
 		turn_off()
-		if(!fuel)
-			icon_state = "[initial(icon_state)]-empty"
-			item_state = icon_state
-		STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0
@@ -187,6 +183,11 @@
 		update_brightness(U)
 	else
 		update_brightness(null)
+
+	if(!fuel)
+		icon_state = "[initial(icon_state)]-empty"
+		item_state = icon_state
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/attack_self(mob/user)
 
@@ -217,7 +218,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floor1" //not a slime extract sprite but... something close enough!
 	item_state = "slime"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	m_amt = 0
 	g_amt = 0
 	brightness_on = 6
@@ -271,13 +272,13 @@
 
 		if(ismob(A))
 			var/mob/M = A
-			msg_admin_attack("[user] ([user.ckey]) attacked [M.name] ([M.ckey]) with Emp-light <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
+			msg_admin_attack("[user] ([user.ckey]) attacked [M.name] ([M.ckey]) with Emp-light", user)
 			M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been attacked with Emp-light by [user.name] ([user.ckey])</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked with Emp-light [M.name]'s ([M.ckey])</font>")
 			M.visible_message("<span class='danger'>[user] blinks \the [src] at the [A]</span>")
 		else
 			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].</span>")
-		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.</span>")
+		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.")
 		A.emp_act(1)
 	else
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")

@@ -7,6 +7,10 @@
 var/list/blacklisted_builds = list(
 	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
 	"1408" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
+	"1428" = "bug causing right-click menus to show too many verbs that's been fixed in version 1429",
+	"1434" = "bug turf images weren't reapplied properly when moving around the map",
+	"1468" = "bug with screen-loc mouse parameter (x and y axis were switched) and several mouse hit problems",
+	"1469" = "bug with screen-loc mouse parameter (x and y axis were switched) and several mouse hit problems"
 	)
 
 	/*
@@ -49,6 +53,12 @@ var/list/blacklisted_builds = list(
 		completed_asset_jobs += job
 		return
 
+	if (href_list["action"] && href_list["action"] == "debugFileOutput" && href_list["file"] && href_list["message"])
+		var/file = href_list["file"]
+		var/message = href_list["message"]
+		debugFileOutput.error(file, message, src)
+		return
+
 	//Admin PM
 	if(href_list["priv_msg"])
 		var/client/C = locate(href_list["priv_msg"])
@@ -56,7 +66,10 @@ var/list/blacklisted_builds = list(
 			var/mob/M = C
 			C = M.client
 		if(href_list["ahelp_reply"])
-			cmd_ahelp_reply(C)
+			cmd_ahelp_reply(C, text2num(href_list["ahelp_reply"]))
+			return
+		if(href_list["mentor_pm"])
+			cmd_mentor_pm(C)
 			return
 		cmd_admin_pm(C,null)
 		return
@@ -80,6 +93,7 @@ var/list/blacklisted_builds = list(
 		if("usr")		hsrc = mob
 		if("prefs")		return prefs.process_link(usr,href_list)
 		if("vars")		return view_var_Topic(href,href_list,hsrc)
+		if("updateVolume")	return update_volume(href_list)
 
 	switch(href_list["action"])
 		if ("openLink")
@@ -87,17 +101,21 @@ var/list/blacklisted_builds = list(
 
 	..()	//redirect to hsrc.Topic()
 
+/client/Destroy()
+	..() // Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
+	return QDEL_HINT_HARDDEL_NOW
+
 /client/proc/handle_spam_prevention(message, mute_type)
 	if(global_message_cooldown && (world.time < last_message_time + 5))
 		return 1
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			to_chat(src, "\red You have exceeded the spam filter limit for identical messages. An auto-mute was applied.")
+			to_chat(src, "<span class='warning'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>")
 			cmd_admin_mute(src.mob, mute_type, 1)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			to_chat(src, "\red You are nearing the spam filter limit for identical messages.")
+			to_chat(src, "<span class='warning'>You are nearing the spam filter limit for identical messages.</span>")
 			return 0
 	else
 		last_message_time = world.time
@@ -131,21 +149,18 @@ var/list/blacklisted_builds = list(
 	if(connection != "seeker")					//Invalid connection type.
 		return null
 
-	if(IsGuestKey(key))
-		alert(src,"This server doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
-		qdel(src)
-		return
-
 	// Change the way they should download resources.
 	if(config.resource_urls)
 		src.preload_rsc = pick(config.resource_urls)
 	else src.preload_rsc = 1 // If config.resource_urls is not set, preload like normal.
 
-	to_chat(src, "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears.")
+	to_chat(src, "<span class='warning'>If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</span>")
 
 
 	clients += src
 	directory[ckey] = src
+
+	global.ahelp_tickets.ClientLogin(src)
 
 	//Admin Authorisation
 	holder = admin_datums[ckey]
@@ -161,7 +176,9 @@ var/list/blacklisted_builds = list(
 
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
-	if(!prefs)
+	if(prefs)
+		prefs.parent = src
+	else
 		prefs = new /datum/preferences(src)
 		preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
@@ -179,12 +196,37 @@ var/list/blacklisted_builds = list(
 
 	prefs.save_preferences()
 
+	prefs_ready = TRUE // if moved below parent call, Login feature with lobby music will be broken and maybe anything else.
+
 	. = ..()	//calls mob.Login()
 	spawn() // Goonchat does some non-instant checks in start()
 		chatOutput.start()
 
+	if(config.allow_donators && (ckey in donators) || config.allow_byond_membership && IsByondMember())
+		supporter = 1
 
 	spawn(50)//should wait for goonchat initialization
+		if(config.client_limit_panic_bunker_count != null)
+			if(!(ckey in admin_datums) && !(src in mentors) && !supporter && (clients.len > config.client_limit_panic_bunker_count) && !(ckey in joined_player_list))
+				if (config.client_limit_panic_bunker_link)
+					to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
+					SEND_LINK(src, config.client_limit_panic_bunker_link)
+				else
+					to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
+					log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
+					qdel(src)
+				return
+
+		if(config.registration_panic_bunker_age)
+			if(!(ckey in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
+				to_chat(src, "<span class='danger'>Sorry, but server is currently accepting only users with registration date before [config.registration_panic_bunker_age]. Try to connect later.</span>")
+				message_admins("<span class='adminnotice'>[key_name(src)] has been blocked by panic bunker. Connection rejected.</span>")
+				log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
+				qdel(src)
+				return
+			if(holder)
+				to_chat("<span class='adminnotice'>Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]</span>")
+
 		if(config.byond_version_min && byond_version < config.byond_version_min)
 			to_chat(src, "<span class='warning bold'>Your version of Byond is too old. Update to the [config.byond_version_min] or later for playing on our server.</span>")
 			log_access("Failed Login: [key] [computer_id] [address] - byond version less that minimal required: [byond_version].[byond_build])")
@@ -195,7 +237,7 @@ var/list/blacklisted_builds = list(
 		if(config.byond_version_recommend && byond_version < config.byond_version_recommend)
 			to_chat(src, "<span class='warning bold'>Your version of Byond is less that recommended. Update to the [config.byond_version_recommend] for better experiense.</span>")
 
-		if((byond_version >= 512 && (!byond_build || byond_build < 1386)) || num2text(byond_build) in blacklisted_builds)
+		if((byond_version >= 512 && (!byond_build || byond_build < 1421)) || num2text(byond_build) in blacklisted_builds)
 			to_chat(src, "<span class='warning bold'>You are using the inappropriate Byond version. Update to the latest Byond version or install another from http://www.byond.com/download/build/ for playing on our server.</span>")
 			message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a inappropriate byond version: [byond_version].[byond_build]. Connection rejected.</span>")
 			log_access("Failed Login: [key] [computer_id] [address] - inappropriate byond version: [byond_version].[byond_build])")
@@ -217,10 +259,9 @@ var/list/blacklisted_builds = list(
 		add_admin_verbs()
 		admin_memo_show()
 
-	if(config.allow_donators && ckey in donators)
-		donator = 1
-		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting us! You have access to all the additional donator-only features this month.</span>")
-		
+	if (supporter)
+		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")
+
 	log_client_to_db(tdata)
 
 	send_resources()
@@ -246,7 +287,6 @@ var/list/blacklisted_builds = list(
 		if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. \
 		This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
 
-
 	//////////////
 	//DISCONNECT//
 	//////////////
@@ -257,9 +297,11 @@ var/list/blacklisted_builds = list(
 	if(holder)
 		holder.owner = null
 		admins -= src
+	global.ahelp_tickets.ClientLogout(src)
 	directory -= ckey
 	mentors -= src
 	clients -= src
+	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
@@ -276,7 +318,7 @@ var/list/blacklisted_builds = list(
 	if(!dbcon.IsConnected())
 		return
 
-	var/sql_ckey = sql_sanitize_text(src.ckey)
+	var/sql_ckey = sanitize_sql(src.ckey)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age, ingameage FROM erro_player WHERE ckey = '[sql_ckey]'")
 	query.Execute()
@@ -316,9 +358,9 @@ var/list/blacklisted_builds = list(
 		if(!isnum(sql_id))
 			return
 
-	var/sql_ip = sql_sanitize_text(src.address)
-	var/sql_computerid = sql_sanitize_text(src.computer_id)
-	var/sql_admin_rank = sql_sanitize_text(admin_rank)
+	var/sql_ip = sanitize_sql(src.address)
+	var/sql_computerid = sanitize_sql(src.computer_id)
+	var/sql_admin_rank = sanitize_sql(admin_rank)
 
 
 	if(sql_id)
@@ -367,7 +409,13 @@ var/list/blacklisted_builds = list(
 
 			if (!cidcheck_failedckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a cid randomizer. Connection rejected.</span>")
-				send2slack_logs(key_name(src), "has been detected as using a cid randomizer. Connection rejected.", "(CidRandomizer)")
+				world.send2bridge(
+					type = list(BRIDGE_ADMINLOG),
+					attachment_title = "Cid Randomizer",
+					attachment_msg = "**[key_name(src)]** has been detected as using a cid randomizer. Connection rejected.",
+					attachment_color = BRIDGE_COLOR_ADMINLOG,
+				)
+
 				cidcheck_failedckeys[ckey] = TRUE
 				notes_add(ckey, "Detected as using a cid randomizer.")
 
@@ -378,7 +426,12 @@ var/list/blacklisted_builds = list(
 		else
 			if (cidcheck_failedckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after showing they removed their cid randomizer</span>")
-				send2slack_logs(key_name(src), "has been allowed to connect after showing they removed their cid randomizer.", "(CidRandomizer)")
+				world.send2bridge(
+					type = list(BRIDGE_ADMINLOG),
+					attachment_title = "Cid Randomizer",
+					attachment_msg = "**[key_name(src)]** has been allowed to connect after showing they removed their cid randomizer",
+					attachment_color = BRIDGE_COLOR_ADMINLOG,
+				)
 				cidcheck_failedckeys -= ckey
 			if (cidcheck_spoofckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after appearing to have attempted to spoof a cid randomizer check because it <i>appears</i> they aren't spoofing one this time</span>")
@@ -424,12 +477,18 @@ var/list/blacklisted_builds = list(
 	if(player_ingame_age <= 0)
 		return
 
-	var/sql_ckey = sql_sanitize_text(src.ckey)
-	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[player_ingame_age]' WHERE ckey = '[sql_ckey]'")
+	var/sql_ckey = sanitize_sql(src.ckey)
+	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[player_ingame_age]' WHERE ckey = '[sql_ckey]' AND cast(ingameage as unsigned integer) < [player_ingame_age]")
 	query_update.Execute()
 
 #undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT
+
+/client/Click(atom/object, atom/location, control, params)
+	var/list/modifiers = params2list(params)
+	if(modifiers["drag"])
+		return
+	..()
 
 //checks if a client is afk
 //3000 frames = 5 minutes
@@ -437,18 +496,6 @@ var/list/blacklisted_builds = list(
 	if(inactivity > duration)
 		return inactivity
 	return 0
-
-// Byond seemingly calls stat, each tick.
-// Calling things each tick can get expensive real quick.
-// So we slow this down a little.
-// See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
-/client/Stat()
-	. = ..()
-	if (holder)
-		sleep(1)
-	else
-		sleep(5)
-		stoplag()
 
 // Send resources to the client.
 /client/proc/send_resources()
@@ -473,5 +520,47 @@ var/list/blacklisted_builds = list(
 	set category = "OOC"
 	set desc = "Closes all opened NanoUI."
 
-	to_chat(src, "<span class='notice'>You forcibly close any opened NanoUI interfaces.")
+	to_chat(src, "<span class='notice'>You forcibly close any opened NanoUI interfaces.</span>")
 	nanomanager.close_user_uis(usr)
+
+/client/proc/show_character_previews(mutable_appearance/MA)
+	var/pos = 0
+	for(var/D in cardinal)
+		pos++
+		var/obj/screen/O = LAZYACCESS(char_render_holders, "[D]")
+		if(!O)
+			O = new
+			LAZYSET(char_render_holders, "[D]", O)
+			screen |= O
+		O.appearance = MA
+		O.dir = D
+		O.underlays += image('icons/turf/floors.dmi', "floor")
+		O.screen_loc = "character_preview_map:0,[pos]"
+
+/client/proc/clear_character_previews()
+	for(var/index in char_render_holders)
+		var/obj/screen/S = char_render_holders[index]
+		screen -= S
+		qdel(S)
+	char_render_holders = null
+
+/client/proc/is_blocked_by_regisration_panic_bunker()
+	var/regex/joined_date_regex = regex("joined = \"(\\d+)-(\\d+)-(\\d+)\"")
+	var/regex/bunker_date_regex = regex("(\\d+)-(\\d+)-(\\d+)")
+	var/user_page = get_webpage("http://www.byond.com/members/[ckey]?format=text")
+
+	if (!user_page)
+		return
+
+	joined_date_regex.Find(user_page)
+	bunker_date_regex.Find(config.registration_panic_bunker_age)
+
+	var/user_year = text2num(joined_date_regex.group[1])
+	var/user_month = text2num(joined_date_regex.group[2])
+	var/user_day = text2num(joined_date_regex.group[3])
+
+	var/bunker_year = text2num(bunker_date_regex.group[1])
+	var/bunker_month = text2num(bunker_date_regex.group[2])
+	var/bunker_day = text2num(bunker_date_regex.group[3])
+
+	return (user_year > bunker_year) || (user_year == bunker_year && user_month > bunker_month) || (user_year == bunker_year && user_month == bunker_month && user_day > bunker_day)

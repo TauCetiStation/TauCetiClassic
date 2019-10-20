@@ -36,8 +36,8 @@
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
 /obj/machinery/computer/secure_data/ui_interact(mob/user)
-	if (src.z > ZLEVEL_EMPTY)
-		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
+	if (!SSmapping.has_level(z))
+		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return
 
 	var/dat
@@ -160,7 +160,7 @@
 						for(var/i=1, i<=Perp.len, i += 2)
 							var/crimstat = ""
 							var/datum/data/record/R = Perp[i]
-							if(istype(Perp[i+1],/datum/data/record/))
+							if(istype(Perp[i+1],/datum/data/record))
 								var/datum/data/record/E = Perp[i+1]
 								crimstat = E.fields["criminal"]
 							var/background
@@ -361,6 +361,7 @@ What a mess.*/
 				else
 					P.info += "<B>Security Record Lost!</B><BR>"
 				P.info += "</TT>"
+				P.update_icon()
 				printing = null
 				updateUsrDialog()
 //RECORD DELETE
@@ -409,7 +410,7 @@ What a mess.*/
 				screen = 3
 
 		if("New Record (General)")
-			active1 = CreateGeneralRecord()
+			active1 = CreateGeneralRecord() // todo: datacore.manifest_inject or scaner (Identity Analyser)
 			active2 = null
 
 //FIELD FUNCTIONS

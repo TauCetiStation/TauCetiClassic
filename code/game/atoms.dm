@@ -88,9 +88,7 @@
 
 	LAZYCLEARLIST(overlays)
 
-	if(light)
-		light.destroy()
-		light = null
+	QDEL_NULL(light)
 
 	return ..()
 
@@ -140,11 +138,11 @@
 
 /*//Convenience proc to see whether a container can be accessed in a certain way.
 
-	proc/can_subract_container()
-		return flags & EXTRACT_CONTAINER
+/atom/proc/can_subract_container()
+	return flags & EXTRACT_CONTAINER
 
-	proc/can_add_container()
-		return flags & INSERT_CONTAINER
+/atom/proc/can_add_container()
+	return flags & INSERT_CONTAINER
 */
 
 /atom/proc/can_mob_interact(mob/user)
@@ -172,6 +170,9 @@
 
 /atom/proc/emp_act(severity)
 	return
+
+/atom/proc/emag_act()
+	return FALSE
 
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
@@ -423,19 +424,22 @@
 /atom/proc/add_blood(mob/living/carbon/human/M)
 	if(flags & NOBLOODY) return 0
 	.=1
-	if (!( istype(M, /mob/living/carbon/human) ))
+	if(!istype(M))
 		return 0
+
+	if(M.species.flags[NO_BLOOD_TRAILS])
+		return 0
+
+	if(M.reagents.has_reagent("metatrombine"))
+		return FALSE
+
 	if (!istype(M.dna, /datum/dna))
 		M.dna = new /datum/dna(null)
 		M.dna.real_name = M.real_name
 	M.check_dna()
 	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
-	add_dirt_cover(new M.species.blood_color)
-//	blood_color = "#A10808"
-//	if (M.species)
-//		blood_color = M.species.blood_color
-	return
+	add_dirt_cover(M.species.blood_datum)
 
 /atom/proc/add_dirt_cover(dirt_datum)
 	if(flags & NOBLOODY) return 0
@@ -445,25 +449,6 @@
 	else
 		dirt_overlay.add_dirt(dirt_datum)
 	return 1
-
-/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	if( istype(src, /turf/simulated) )
-		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
-
-		// Make toxins vomit look different
-		if(toxvomit)
-			var/datum/reagents/R = M.reagents
-			if(!locate(/datum/reagent/luminophore) in R.reagent_list)
-				this.icon_state = "vomittox_[pick(1,4)]"
-			else
-				this.icon_state = "vomittox_nc_[pick(1,4)]"
-				this.alpha = 127
-				var/datum/reagent/new_color = locate(/datum/reagent/luminophore) in R.reagent_list
-				this.color = new_color.color
-				this.light_color = this.color
-				this.set_light(3)
-				this.stop_light()
-
 
 /atom/proc/clean_blood()
 	src.germ_level = 0
@@ -502,6 +487,9 @@
 //This proc is called on the location of an atom when the atom is Destroy()'d
 /atom/proc/handle_atom_del(atom/A)
 
+/atom/Entered(atom/movable/AM, atom/oldLoc)
+	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
+
 // Byond seemingly calls stat, each tick.
 // Calling things each tick can get expensive real quick.
 // So we slow this down a little.
@@ -523,3 +511,99 @@
 
 	if(changed)
 		animate(src, transform = ntransform, time = 2, easing = EASE_IN|EASE_OUT)
+
+/atom/proc/handle_slip(mob/living/carbon/C, weaken_amount, obj/O, lube)
+	return
+
+/turf/simulated/handle_slip(mob/living/carbon/C, weaken_amount, obj/O, lube)
+	if(has_gravity(src))
+		var/obj/buckled_obj
+		if(C.buckled)
+			buckled_obj = C.buckled
+			if(!(lube & GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
+				return FALSE
+		else
+			if((C.lying && !C.crawling) || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
+				return FALSE
+			if(C.m_intent == MOVE_INTENT_WALK && (lube & NO_SLIP_WHEN_WALKING))
+				return FALSE
+		if(!(lube & SLIDE_ICE))
+			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
+			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+
+		var/olddir = C.dir
+
+		if(!(lube & SLIDE_ICE))
+			C.Weaken(weaken_amount)
+			C.stop_pulling()
+		else
+			C.Weaken(2)
+
+		if(buckled_obj)
+			buckled_obj.unbuckle_mob(C)
+			lube |= SLIDE_ICE
+
+		if(lube & SLIDE)
+			step(C, olddir)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 1)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 2)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 3)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 4)
+			C.take_bodypart_damage(2) // Was 5 -- TLE
+		else if(lube & SLIDE_ICE)
+			var/has_NOSLIP = FALSE
+			if(ishuman(C))
+				var/mob/living/carbon/human/H = C
+				if((istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
+					has_NOSLIP = TRUE
+			if (C.m_intent == MOVE_INTENT_RUN && !has_NOSLIP && prob(30))
+				step(C, olddir)
+			else
+				C.inertia_dir = 0
+		return TRUE
+
+/turf/space/handle_slip()
+	return
+
+// Recursive function to find everything this atom is holding.
+/atom/proc/get_contents(obj/item/weapon/storage/Storage = null)
+	var/list/L = list()
+
+	if(Storage) //If it called itself
+		L += Storage.return_inv()
+
+		//Leave this commented out, it will cause storage items to exponentially add duplicate to the list
+		//for(var/obj/item/weapon/storage/S in Storage.return_inv()) //Check for storage items
+		//	L += get_contents(S)
+
+		for(var/obj/item/weapon/gift/G in Storage.return_inv()) //Check for gift-wrapped items
+			L += G.gift
+			if(istype(G.gift, /obj/item/weapon/storage))
+				L += get_contents(G.gift)
+
+		for(var/obj/item/smallDelivery/D in Storage.return_inv()) //Check for package wrapped items
+			L += D.wrapped
+			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
+				L += get_contents(D.wrapped)
+		return L
+
+	else
+
+		L += src.contents
+		for(var/obj/item/weapon/storage/S in src.contents)	//Check for storage items
+			L += get_contents(S)
+
+		for(var/obj/item/weapon/gift/G in src.contents) //Check for gift-wrapped items
+			L += G.gift
+			if(istype(G.gift, /obj/item/weapon/storage))
+				L += get_contents(G.gift)
+
+		for(var/obj/item/smallDelivery/D in src.contents) //Check for package wrapped items
+			L += D.wrapped
+			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
+				L += get_contents(D.wrapped)
+		return L
+
+// Called after we wrench/unwrench this object
+/obj/proc/wrenched_change()
+	return

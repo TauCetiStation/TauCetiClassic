@@ -7,7 +7,7 @@
 	opacity = 1
 	density = 1
 	layer = DOOR_LAYER
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	var/base_layer = DOOR_LAYER
 	var/icon_state_open  = "door0"
 	var/icon_state_close = "door1"
@@ -24,8 +24,8 @@
 	var/block_air_zones = 1 //If set, air zones cannot merge across the door even when it is opened.
 	var/emergency = 0 // Emergency access override
 
-	var/door_open_sound  = 'sound/machines/airlock/airlockToggle_2.ogg'
-	var/door_close_sound = 'sound/machines/airlock/airlockToggle_2.ogg'
+	var/door_open_sound  = 'sound/machines/airlock/toggle.ogg'
+	var/door_close_sound = 'sound/machines/airlock/toggle.ogg'
 
 	var/dock_tag
 
@@ -133,7 +133,7 @@
 		return
 	if(src.operating)
 		return
-	if(src.density && hasPower() && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
+	if(src.density && hasPower() && istype(I, /obj/item/weapon/melee/energy/blade))
 		update_icon(AIRLOCK_EMAG)
 		sleep(6)
 		if(!open())
@@ -147,7 +147,7 @@
 	if(!src.requiresID())
 		user = null
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(src.allowed(user))
+	if(src.allowed(user) || emergency)
 		if(src.density)
 			open()
 		else
@@ -157,6 +157,15 @@
 		do_animate("deny")
 	return
 
+/obj/machinery/door/emag_act(mob/user)
+	if(src.density && hasPower())
+		update_icon(AIRLOCK_EMAG)
+		sleep(6)
+		if(!open())
+			update_icon(AIRLOCK_CLOSED)
+		operating = -1
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/blob_act()
 	if(prob(40))
@@ -307,7 +316,7 @@
  */
 
 /obj/machinery/door/proc/do_open()
-	playsound(src, door_open_sound, 100, 1)
+	playsound(src, door_open_sound, VOL_EFFECTS_MASTER)
 	do_animate("opening")
 	sleep(3)
 	set_opacity(FALSE)
@@ -319,7 +328,7 @@
 	update_nearby_tiles()
 
 /obj/machinery/door/proc/do_close()
-	playsound(src, door_close_sound, 100, 1)
+	playsound(src, door_close_sound, VOL_EFFECTS_MASTER)
 	do_animate("closing")
 	sleep(3)
 	density = TRUE
@@ -369,8 +378,8 @@
 		else
 			source.thermal_conductivity = initial(source.thermal_conductivity)
 
-/obj/machinery/door/Move(new_loc, new_dir)
-	..()
+/obj/machinery/door/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	update_nearby_tiles()
 
 /obj/machinery/door/proc/hasPower()

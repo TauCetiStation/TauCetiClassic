@@ -39,7 +39,7 @@
 /var/const/access_virology = 39
 /var/const/access_cmo = 40
 /var/const/access_qm = 41
-/var/const/access_court = 42
+//var/const/access_ = 42 // FREE SPACE, USE THIS FIRST
 /var/const/access_clown = 43
 /var/const/access_mime = 44
 /var/const/access_surgery = 45
@@ -68,6 +68,8 @@
 /var/const/access_detective = 68
 /var/const/access_barber = 69
 /var/const/access_paramedic = 70
+/var/const/access_engineering_lobby = 71
+/var/const/access_medbay_storage = 72
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -89,10 +91,8 @@
 	//MONEY
 /var/const/access_crate_cash = 200
 
-/obj/var/list/req_access = null
-/obj/var/req_access_txt = "0"
-/obj/var/list/req_one_access = null
-/obj/var/req_one_access_txt = "0"
+/obj/var/list/req_access = list()
+/obj/var/list/req_one_access = list()
 
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
@@ -140,25 +140,6 @@
 		if(Machine.emagged)
 			return TRUE
 
-	//These generations have been moved out of /obj/New() because they were slowing down the creation of objects that never even used the access system.
-	if(!islist(req_access))
-		req_access = list()
-		if(req_access_txt)
-			var/list/req_access_str = splittext(req_access_txt,";")
-			for(var/x in req_access_str)
-				var/n = text2num(x)
-				if(n)
-					req_access += n
-
-	if(!islist(req_one_access))
-		req_one_access = list()
-		if(req_one_access_txt)
-			var/list/req_one_access_str = splittext(req_one_access_txt,";")
-			for(var/x in req_one_access_str)
-				var/n = text2num(x)
-				if(n)
-					req_one_access += n
-
 	if(!req_access.len && !req_one_access.len) //no requirements
 		return TRUE
 	if(!AM)
@@ -174,24 +155,6 @@
 	return TRUE
 
 /obj/proc/check_access_list(list/L)
-	if(!islist(req_access))
-		req_access = list()
-		if(req_access_txt)
-			var/list/req_access_str = splittext(req_access_txt,";")
-			for(var/x in req_access_str)
-				var/n = text2num(x)
-				if(n)
-					req_access += n
-
-	if(!islist(req_one_access))
-		req_one_access = list()
-		if(req_one_access_txt)
-			var/list/req_one_access_str = splittext(req_one_access_txt,";")
-			for(var/x in req_one_access_str)
-				var/n = text2num(x)
-				if(n)
-					req_one_access += n
-
 	if(!req_access.len && !req_one_access.len)
 		return TRUE
 	if(!islist(L))
@@ -228,7 +191,7 @@
 			return get_all_centcom_access()
 
 /proc/get_all_accesses()
-	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_court,
+	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers,
 	            access_medical, access_genetics, access_morgue, access_rd,
 	            access_tox, access_tox_storage, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
 	            access_external_airlocks, access_change_ids, access_ai_upload,
@@ -238,7 +201,7 @@
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_psychiatrist, access_cmo, access_qm, access_clown, access_mime, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_minisat, access_recycler, access_detective, access_barber, access_paramedic)
+	            access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_minisat, access_recycler, access_detective, access_barber, access_paramedic, access_medbay_storage, access_engineering_lobby)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_creed, access_cent_captain)
@@ -251,13 +214,13 @@
 		if(0)
 			return get_all_accesses()
 		if(1) //security
-			return list(access_sec_doors, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos, access_detective)
+			return list(access_sec_doors, access_security, access_brig, access_armory, access_forensics_lockers, access_hos, access_detective)
 		if(2) //medbay
-			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_psychiatrist, access_virology, access_surgery, access_cmo, access_paramedic)
+			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_psychiatrist, access_virology, access_surgery, access_cmo, access_paramedic, access_medbay_storage)
 		if(3) //research
 			return list(access_research, access_tox, access_tox_storage, access_robotics, access_xenobiology, access_xenoarch, access_minisat, access_rd)
 		if(4) //engineering and maintenance
-			return list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_minisat, access_ce)
+			return list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_minisat, access_ce, access_engineering_lobby)
 		if(5) //command
 			return list(access_heads, access_RC_announce, access_keycard_auth, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_tcomsat, access_gateway, access_all_personal_lockers, access_heads_vault, access_hop, access_captain)
 		if(6) //station general
@@ -299,8 +262,6 @@
 			return "Security"
 		if(access_brig)
 			return "Holding Cells"
-		if(access_court)
-			return "Courtroom"
 		if(access_forensics_lockers)
 			return "Forensics"
 		if(access_medical)
@@ -427,6 +388,11 @@
 			return "Barber"
 		if(access_paramedic)
 			return "Paramedic"
+		if(access_engineering_lobby)
+			return "Engineering Department"
+		if(access_medbay_storage)
+			return "Medbay Storage"
+
 
 /proc/get_centcom_access_desc(A)
 	switch(A)
@@ -473,6 +439,11 @@
 		"Emergency Response Team Leader",
 		"NanoTrasen Representative")
 
+/proc/get_all_velocity_jobs()
+	return list("Velocity Chief",
+	            "Velocity Officer",
+	            "Velocity Medical Doctor")
+
 //gets the actual job rank (ignoring alt titles)
 //this is used solely for sechuds
 /obj/proc/GetJobRealName()
@@ -515,7 +486,7 @@
 
 	return "Unknown"
 
-proc/FindNameFromID(mob/living/carbon/human/H)
+/proc/FindNameFromID(mob/living/carbon/human/H)
 	ASSERT(istype(H))
 	var/obj/item/weapon/card/id/C = H.get_active_hand()
 	if( istype(C) || istype(C, /obj/item/device/pda) )
@@ -544,7 +515,7 @@ proc/FindNameFromID(mob/living/carbon/human/H)
 		if(ID)
 			return ID.registered_name
 
-proc/get_all_job_icons() //For all existing HUD icons
+/proc/get_all_job_icons() //For all existing HUD icons
 	return joblist + list("Prisoner")
 
 /obj/proc/GetJobName() //Used in secHUD icon generation
@@ -568,4 +539,6 @@ proc/get_all_job_icons() //For all existing HUD icons
 		return jobName
 	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job
 		return "Centcom"
+	if(jobName in get_all_velocity_jobs())
+		return jobName
 	return "Unknown" //Return unknown if none of the above apply

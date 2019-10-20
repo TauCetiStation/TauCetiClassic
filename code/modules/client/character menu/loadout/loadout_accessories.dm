@@ -1,6 +1,6 @@
 /datum/gear/accessory
 	subtype_path = /datum/gear/accessory
-	slot = slot_wear_mask
+	slot = SLOT_WEAR_MASK
 	sort_category = "Accessories"
 
 /datum/gear/accessory/scarf
@@ -33,10 +33,6 @@
 /datum/gear/accessory/headscarf
 	display_name = "Zhan Headscarf"
 	path = /obj/item/clothing/head/headscarf
-
-/datum/gear/accessory/bandana
-	display_name = "Bandana"
-	path = /obj/item/clothing/mask/bandana/red
 
 /datum/gear/accessory/haircomb
 	display_name = "Purple comb"
@@ -71,7 +67,7 @@
 /datum/gear/accessory/armband
 	display_name = "Armband selection"
 	path = /obj/item/clothing/accessory/armband
-	allowed_roles = list("Security Officer")
+	allowed_roles = list("Security Officer", "Security Cadet", "Warden", "Detective", "Head of Security", "Forensic Technician" )
 
 /datum/gear/accessory/armband/New()
 	..()

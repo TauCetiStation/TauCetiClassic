@@ -45,16 +45,6 @@
 	to_chat(usr, "You will [(prefs.chat_toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from radios or speakers")
 	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/toggleadminhelpsound()
-	set name = "Hear/Silence Adminhelps"
-	set category = "Preferences"
-	set desc = "Toggle hearing a notification when admin PMs are recieved."
-	if(!holder)	return
-	prefs.toggles ^= SOUND_ADMINHELP
-	prefs.save_preferences()
-	to_chat(usr, "You will [(prefs.toggles & SOUND_ADMINHELP) ? "now" : "no longer"] hear a sound when adminhelps arrive.")
-	feedback_add_details("admin_verb","AHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/verb/deadchat() // Deadchat toggle is usable by anyone.
 	set name = "Show/Hide Deadchat"
 	set category = "Preferences"
@@ -78,37 +68,6 @@
 	to_chat(src, "You will [(prefs.chat_toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat.")
 	feedback_add_details("admin_verb","TP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/verb/toggletitlemusic()
-	set name = "Hear/Silence LobbyMusic"
-	set category = "Preferences"
-	set desc = "Toggles hearing the GameLobby music."
-	prefs.toggles ^= SOUND_LOBBY
-	prefs.save_preferences()
-	if(prefs.toggles & SOUND_LOBBY)
-		to_chat(src, "You will now hear music in the game lobby.")
-		if(isnewplayer(mob))
-			playtitlemusic()
-	else
-		to_chat(src, "You will no longer hear music in the game lobby.")
-		if(isnewplayer(mob))
-			src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jamsz
-	feedback_add_details("admin_verb","TLobby") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/verb/togglemidis()
-	set name = "Hear/Silence Midis"
-	set category = "Preferences"
-	set desc = "Toggles hearing sounds uploaded by admins."
-	prefs.toggles ^= SOUND_MIDI
-	prefs.save_preferences()
-	if(prefs.toggles & SOUND_MIDI)
-		to_chat(src, "You will now hear any sounds uploaded by admins.")
-		var/sound/break_sound = sound(null, repeat = 0, wait = 0, channel = 777)
-		break_sound.priority = 250
-		src << break_sound	//breaks the client's sound output on channel 777
-	else
-		to_chat(src, "You will no longer hear sounds uploaded by admins; any currently playing midis have been disabled.")
-	feedback_add_details("admin_verb","TMidi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/verb/listen_ooc()
 	set name = "Show/Hide OOC"
 	set category = "Preferences"
@@ -127,21 +86,6 @@
 
 	to_chat(src, "You will [(prefs.chat_toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel.")
 	feedback_add_details("admin_verb","TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
-/client/verb/Toggle_Soundscape() //All new ambience should be added here so it works with this verb until someone better at things comes up with a fix that isn't awful
-	set name = "Hear/Silence Ambience"
-	set category = "Preferences"
-	set desc = "Toggles hearing ambient sound effects."
-	prefs.toggles ^= SOUND_AMBIENCE
-	prefs.save_preferences()
-	if(prefs.toggles & SOUND_AMBIENCE)
-		to_chat(src, "You will now hear ambient sounds.")
-	else
-		to_chat(src, "You will no longer hear ambient sounds.")
-		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 1)
-		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
-	feedback_add_details("admin_verb","TAmbi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/toggle_be_role(role in special_roles)
 	set name = "Toggle SpecialRole Candidacy"
@@ -212,19 +156,6 @@
 	to_chat(src, "You will [(prefs.toggles & SHOW_PROGBAR) ? "now" : "no longer"] see progress bars.")
 	feedback_add_details("admin_verb","PRB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/verb/toggle_media()
-	set name = "Hear/Silence Streaming"
-	set category = "Preferences"
-	set desc = "Toggle hearing streaming media (radios, jukeboxes, etc)."
-	prefs.toggles ^= SOUND_STREAMING
-	prefs.save_preferences()
-	to_chat(src, "You will [(prefs.toggles & SOUND_STREAMING) ? "now" : "no longer"] hear streamed media.")
-	if(!media) return
-	if(prefs.toggles & SOUND_STREAMING)
-		media.update_music()
-	else
-		media.stop_music()
-
 var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON)
 
 /client/verb/pick_ghost_orbit()
@@ -248,3 +179,61 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	to_chat(src, "You will [(prefs.chat_toggles & CHAT_CKEY) ? "now" : "no longer"] show your ckey in LOOC and deadchat.")
 	feedback_add_details("admin_verb","SC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/toggle_ambient_occlusion()
+	set name = "Toggle Ambient Occlusion"
+	set category = "Preferences"
+	set desc = "Toggle ambient occlusion."
+
+	prefs.ambientocclusion = !prefs.ambientocclusion
+	to_chat(src, "Ambient Occlusion: [prefs.ambientocclusion ? "Enabled" : "Disabled"].")
+	prefs.save_preferences()
+	if(screen && screen.len)
+		var/obj/screen/plane_master/game_world/PM = locate() in screen
+		PM.backdrop(mob)
+	feedback_add_details("admin_verb","TAC")
+
+/client/verb/set_parallax_quality()
+	set name = "Set Parallax Quality"
+	set category = "Preferences"
+	set desc = "Set space parallax quality."
+
+	var/new_setting = input(src, "Parallax quality:") as null|anything in list("Disable", "Low", "Medium", "High", "Insane")
+	if(!new_setting)
+		return
+
+	switch(new_setting)
+		if("Disable")
+			prefs.parallax = PARALLAX_DISABLE
+		if("Low")
+			prefs.parallax = PARALLAX_LOW
+		if("Medium")
+			prefs.parallax = PARALLAX_MED
+		if("High")
+			prefs.parallax = PARALLAX_HIGH
+		if("Insane")
+			prefs.parallax = PARALLAX_INSANE
+
+	to_chat(src, "Parallax (Fancy Space): [new_setting].")
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","TPX")
+
+	if (mob && mob.hud_used)
+		mob.hud_used.update_parallax_pref()
+
+/client/verb/set_parallax_theme()
+	set name = "Set Parallax Theme"
+	set category = "Preferences"
+	set desc = "Set space parallax theme."
+
+	var/new_setting = input(src, "Parallax theme:") as null|anything in list(PARALLAX_THEME_CLASSIC, PARALLAX_THEME_TG)
+	if(!new_setting)
+		return
+
+	prefs.parallax_theme = new_setting
+	to_chat(src, "Parallax theme: [new_setting].")
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","SPX")
+
+	if (mob && mob.hud_used)
+		mob.hud_used.update_parallax_pref()

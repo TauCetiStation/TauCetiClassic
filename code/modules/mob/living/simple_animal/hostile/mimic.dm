@@ -20,7 +20,7 @@
 	melee_damage_lower = 8
 	melee_damage_upper = 12
 	attacktext = "attacks"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = list('sound/weapons/bite.ogg')
 
 	min_oxy = 0
 	max_oxy = 0
@@ -35,6 +35,8 @@
 	faction = "mimic"
 	move_to_delay = 8
 
+	animalistic = FALSE
+
 /mob/living/simple_animal/hostile/mimic/FindTarget()
 	. = ..()
 	if(.)
@@ -42,7 +44,7 @@
 
 /mob/living/simple_animal/hostile/mimic/death()
 	..()
-	visible_message("\red <b>[src]</b> stops moving!")
+	visible_message("<span class='warning'><b>[src]</b> stops moving!</span>")
 	qdel(src)
 
 

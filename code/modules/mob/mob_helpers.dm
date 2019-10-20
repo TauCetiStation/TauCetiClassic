@@ -30,14 +30,14 @@
 	if(isnull(full_prosthetic))
 		robolimb_count = 0
 		for(var/obj/item/organ/external/BP in bodyparts)
-			if(BP.status & ORGAN_ROBOT)
+			if(BP.is_robotic())
 				robolimb_count++
 		full_prosthetic = (robolimb_count == bodyparts.len)
 
 	if(!full_prosthetic && target_zone)
 		var/obj/item/organ/external/BP = get_bodypart(target_zone)
 		if(BP)
-			return BP.status & ORGAN_ROBOT
+			return BP.is_robotic()
 
 	return full_prosthetic
 
@@ -183,7 +183,7 @@
 		p++
 	return t
 
-proc/slur(phrase)
+/proc/slur(phrase)
 	phrase = html_decode(phrase)
 	var/leng=lentext(phrase)
 	var/counter=lentext(phrase)
@@ -222,7 +222,7 @@ proc/slur(phrase)
 	p = 1//1 is the start of any word
 	while(p <= n)//while P, which starts at 1 is less or equal to N which is the length.
 		var/n_letter = copytext(te, p, p + 1)//copies text from a certain distance. In this case, only one letter at a time.
-		if (prob(80) && (lowertext_(n_letter) in alphabet))
+		if (prob(80) && (text2ascii(lowertext_(n_letter)) in alphabet))
 			if (prob(10))
 				n_letter = text("[n_letter]-[n_letter]-[n_letter]-[n_letter]")//replaces the current letter with this instead.
 			else
@@ -461,7 +461,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 #undef SAFE_PERP
 
 /proc/IsAdminGhost(mob/user)
-	if(!user) // Are they a mob? Auto interface updates call this with a null src
+	if(!istype(user)) // Are they a mob? Auto interface updates call this with a null src
 		return
 	if(!user.client) // Do they have a client?
 		return
@@ -483,3 +483,9 @@ var/list/intents = list("help","disarm","grab","hurt")
 			to_chat(src, "<span class='warning'>Please wait while someone else will finish interacting with [target].</span>")
 		return TRUE
 	return FALSE
+
+/mob/proc/become_busy(_hand = 0)
+	busy_with_action = TRUE
+
+/mob/proc/become_not_busy(_hand = 0)
+	busy_with_action = FALSE

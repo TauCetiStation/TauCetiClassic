@@ -17,13 +17,14 @@
 	name = "status display"
 	anchored = 1
 	density = 0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
-	var/mode = 1	// 0 = Blank
+	var/mode = 5	// 0 = Blank
 					// 1 = Shuttle timer
 					// 2 = Arbitrary message(s)
 					// 3 = alert picture
 					// 4 = Supply shuttle timer
+					// 5 = default N picture
 
 	var/picture_state	// icon_state of alert picture
 	var/message1 = ""	// message line 1
@@ -36,7 +37,7 @@
 
 	var/friendc = 0      // track if Friend Computer mode
 
-	maptext_height = 26
+	maptext_height = 28
 	maptext_width = 32
 
 	// new display
@@ -44,9 +45,13 @@
 
 /obj/machinery/status_display/atom_init()
 	. = ..()
+	status_display_list += src
 	radio_controller.add_object(src, frequency)
+	update()
+
 
 /obj/machinery/status_display/Destroy()
+	status_display_list -= src
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	return ..()
@@ -128,6 +133,8 @@
 				else
 					line1 = ""
 			update_display(line1, line2)
+		if(5)				// default picture
+			set_picture("default")
 
 /obj/machinery/status_display/examine(mob/user)
 	..()
@@ -203,6 +210,10 @@
 			if(supply_display)
 				mode = 4
 
+		if("default")
+			mode = 5
+
+
 	update()
 
 
@@ -221,6 +232,13 @@
 
 	var/emotion = "Neutral"
 
+/obj/machinery/ai_status_display/atom_init()
+	. = ..()
+	ai_status_display_list += src
+
+/obj/machinery/ai_status_display/Destroy()
+	ai_status_display_list -= src
+	return ..()
 
 /obj/machinery/ai_status_display/process()
 	if(stat & NOPOWER)
@@ -287,7 +305,7 @@
 	overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
 
 #undef CHARS_PER_LINE
-#undef FOND_SIZE
+#undef FONT_SIZE
 #undef FONT_COLOR
 #undef FONT_STYLE
 #undef SCROLL_SPEED

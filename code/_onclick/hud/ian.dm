@@ -54,7 +54,7 @@
 
 
 /datum/hud/proc/ian_hud()
-	if(!(is_alien_whitelisted(mymob, "ian") || (config.allow_donators && mymob.client.donator && !is_alien_whitelisted_banned(mymob, "ian"))))
+	if(!(is_alien_whitelisted(mymob, "ian") || (mymob.client.supporter && !is_alien_whitelisted_banned(mymob, "ian"))))
 		return
 
 	var/ui_style = 'icons/mob/screen_corgi.dmi'
@@ -116,7 +116,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "hair"
 	inv_box.screen_loc = ui_ian_head
-	inv_box.slot_id = slot_head
+	inv_box.slot_id = SLOT_HEAD
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.other += inv_box
@@ -134,7 +134,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mouth"
 	inv_box.screen_loc = ui_ian_mouth
-	inv_box.slot_id = slot_mouth
+	inv_box.slot_id = SLOT_MOUTH
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.r_hand_hud_object = inv_box
@@ -145,7 +145,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "id"
 	inv_box.screen_loc = ui_ian_neck
-	inv_box.slot_id = slot_neck
+	inv_box.slot_id = SLOT_NECK
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.adding += inv_box
@@ -155,7 +155,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
 	inv_box.screen_loc = ui_ian_back
-	inv_box.slot_id = slot_back
+	inv_box.slot_id = SLOT_BACK
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.adding += inv_box

@@ -1,5 +1,5 @@
 //Returns 1 if mob can be infected, 0 otherwise. Checks his clothing.
-proc/get_infection_chance(mob/living/carbon/M, vector = "Airborne")
+/proc/get_infection_chance(mob/living/carbon/M, vector = "Airborne")
 	var/score = 0
 	if (!istype(M))
 		return 0
@@ -44,7 +44,7 @@ proc/get_infection_chance(mob/living/carbon/M, vector = "Airborne")
 //	log_debug("Infection got through")
 	return 1
 
-proc/get_bite_infection_chance(mob/living/carbon/M, target_zone)
+/proc/get_bite_infection_chance(mob/living/carbon/M, target_zone)
 	if (!istype(M) || !target_zone)
 		return 0
 
@@ -58,7 +58,7 @@ proc/get_bite_infection_chance(mob/living/carbon/M, target_zone)
 	return 100
 
 //Checks if table-passing table can reach target (5 tile radius)
-proc/airborne_can_reach(turf/source, turf/target)
+/proc/airborne_can_reach(turf/source, turf/target)
 	var/obj/dummy = new(source)
 	dummy.pass_flags = PASSTABLE
 

@@ -4,13 +4,8 @@ var/list/preferences_datums = list()
 
 var/const/MAX_SAVE_SLOTS = 10
 
-//used for alternate_option
-#define GET_RANDOM_JOB 0
-#define BE_ASSISTANT 1
-#define RETURN_TO_LOBBY 2
-
 #define MAX_GEAR_COST 5
-#define MAX_GEAR_COST_DONATOR MAX_GEAR_COST+3
+#define MAX_GEAR_COST_SUPPORTER MAX_GEAR_COST+3
 /datum/preferences
 	var/client/parent
 	//doohickeys for savefiles
@@ -41,6 +36,17 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
+
+	//sound volume preferences
+	var/snd_music_vol = 100
+	var/snd_ambient_vol = 100
+	var/snd_effects_master_vol = 100
+	var/snd_effects_voice_announcement_vol = 100
+	var/snd_effects_misc_vol = 100
+	var/snd_effects_instrument_vol = 100
+	var/snd_notifications_vol = 100
+	var/snd_admin_vol = 100
+	var/snd_jukebox_vol = 100
 
 	//antag preferences
 	var/list/be_role = list()
@@ -81,9 +87,6 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/religion = "None"               //Religious association.
 	var/nanotrasen_relation = "Neutral"
 
-	//Mob preview
-	var/icon/preview_icon = null
-
 	//Jobs, uses bitflags
 	var/job_civilian_high = 0
 	var/job_civilian_med = 0
@@ -110,7 +113,13 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/med_record = ""
 	var/sec_record = ""
 	var/gen_record = ""
-	var/disabilities = 0
+
+	// Quirk list
+	var/list/positive_quirks = list()
+	var/list/negative_quirks = list()
+	var/list/neutral_quirks = list()
+	var/list/all_quirks = list()
+	var/list/character_quirks = list()
 
 	// OOC Metadata:
 	var/metadata = ""
@@ -121,10 +130,13 @@ var/const/MAX_SAVE_SLOTS = 10
 	// jukebox volume
 	var/volume = 100
 	var/parallax = PARALLAX_HIGH
+	var/ambientocclusion = TRUE
+	var/parallax_theme = PARALLAX_THEME_CLASSIC
 
-	//custom loadout
+  //custom loadout
 	var/list/gear = list()
 	var/gear_tab = "General"
+	var/list/custom_items = list()
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -141,16 +153,13 @@ var/const/MAX_SAVE_SLOTS = 10
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
 	update_preview_icon()
-	user << browse_rsc(preview_icon, "previewicon.png")
-	user << browse_rsc('html/prefs/dossier_empty.png')
-	user << browse_rsc('html/prefs/dossier_photos.png')
-	user << browse_rsc('html/prefs/opacity7.png')
 
 	var/dat = "<html><body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
 	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
 	dat += "<style>body{background-image:url('dossier_empty.png');background-color: #F5ECDD;background-repeat:no-repeat;background-position:center top;}</style>"
 	dat += "<style>.main_menu{margin-left:150px;margin-top:135px}</style>"
+
 	if(path)
 		dat += "<div class='main_menu'>"
 		dat += "Slot: <b>[real_name]</b> - "
@@ -161,7 +170,9 @@ var/const/MAX_SAVE_SLOTS = 10
 		dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
 		dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
 		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"] - "
-		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"]"
+		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"] - "
+		dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"] - "
+		dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"]"
 		dat += "<br><a href='?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
 		dat += "</div>"
 	else
@@ -181,15 +192,25 @@ var/const/MAX_SAVE_SLOTS = 10
 			dat += ShowLoadSlot(user)
 		if("loadout")
 			dat += ShowCustomLoadout(user)
+		if("quirks")
+			dat += ShowQuirks(user)
+		if("fluff")
+			dat += ShowFluffMenu(user)
+
 	dat += "</body></html>"
-	user << browse(entity_ja(dat), "window=preferences;size=618x778;can_close=0;can_minimize=0;can_maximize=0;can_resize=0")
+
+	winshow(user, "preferences_window", TRUE)
+	user << browse(entity_ja(dat), "window=preferences_browser")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)
 		return
 
 	if(href_list["preference"] == "close")
-		user << browse(null, "window=preferences")
+		user << browse(null, "window=preferences_window")
+		var/client/C = user.client
+		if(C)
+			C.clear_character_previews()
 		return
 
 	if(!isnewplayer(user))
@@ -222,6 +243,12 @@ var/const/MAX_SAVE_SLOTS = 10
 		if("loadout")
 			menu_type = "loadout"
 
+		if("quirks")
+			menu_type = "quirks"
+
+		if("fluff")
+			menu_type = "fluff"
+
 		if("load_slot")
 			if(!IsGuestKey(user.key))
 				menu_type = "load_slot"
@@ -240,6 +267,13 @@ var/const/MAX_SAVE_SLOTS = 10
 
 		if("loadout")
 			process_link_loadout(user, href_list)
+
+		if("quirks")
+			process_link_quirks(user, href_list)
+
+		if("fluff")
+			process_link_fluff(user, href_list)
+			return 1
 
 	ShowChoices(user)
 	return 1
@@ -305,11 +339,19 @@ var/const/MAX_SAVE_SLOTS = 10
 		var/status = organ_data[name]
 
 		if(status == "amputated")
-			BP.amputated = 1
-			BP.status |= ORGAN_DESTROYED
-			BP.destspawn = 1
+			qdel(BP) // Destroy will handle everything
 		if(status == "cyborg")
-			BP.status |= ORGAN_ROBOT
+			var/zone = BP.body_zone
+			qdel(BP)
+			switch(zone)
+				if(BP_L_ARM)
+					new /obj/item/organ/external/l_arm/robot(null, character)
+				if(BP_R_ARM)
+					new /obj/item/organ/external/r_arm/robot(null, character)
+				if(BP_L_LEG)
+					new /obj/item/organ/external/l_leg/robot(null, character)
+				if(BP_R_LEG)
+					new /obj/item/organ/external/r_leg/robot(null, character)
 		if(status == "assisted")
 			IO.mechassist()
 		else if(status == "mechanical")
@@ -317,27 +359,13 @@ var/const/MAX_SAVE_SLOTS = 10
 
 		else continue
 
-
-	//Disabilities
-	if(disabilities & DISABILITY_NEARSIGHTED)
-		character.disabilities|=NEARSIGHTED
-	if(disabilities & DISABILITY_EPILEPTIC)
-		character.disabilities|=EPILEPSY
-	if(disabilities & DISABILITY_COUGHING)
-		character.disabilities|=COUGHING
-	if(disabilities & DISABILITY_TOURETTES)
-		character.disabilities|=TOURETTES
-	if(disabilities & DISABILITY_NERVOUS)
-		character.disabilities|=NERVOUS
-	if(disabilities & DISABILITY_FATNESS)
-		character.mutations += FAT
-		character.nutrition = 1000
-		character.overeatduration = 2000
+	// Apply skin color
+	character.apply_recolor()
 
 	// Wheelchair necessary?
 	var/obj/item/organ/external/l_leg = character.bodyparts_by_name[BP_L_LEG]
 	var/obj/item/organ/external/r_leg = character.bodyparts_by_name[BP_R_LEG]
-	if((!l_leg || l_leg.status & ORGAN_DESTROYED) && (!r_leg || r_leg.status & ORGAN_DESTROYED)) // TODO cane if its only single leg.
+	if(!l_leg && !r_leg) // TODO cane if its only single leg.
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
 		character.buckled = W
 		character.update_canmove()

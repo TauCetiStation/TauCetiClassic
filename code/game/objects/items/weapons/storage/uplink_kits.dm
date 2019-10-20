@@ -1,4 +1,5 @@
-/obj/item/weapon/storage/box/syndicate/
+/obj/item/weapon/storage/box/syndicate
+	icon_state = "doom_box"
 
 /obj/item/weapon/storage/box/syndicate/atom_init()
 	. = ..()
@@ -42,11 +43,12 @@
 			var/obj/item/weapon/implanter/U = new /obj/item/weapon/implanter(src)
 			U.imp = new /obj/item/weapon/implant/uplink(U)
 			new /obj/item/weapon/implanter/explosive(src)
-			new /obj/item/weapon/implanter/adrenalin(src)
+			new /obj/item/weapon/implanter/adrenaline(src)
+			new /obj/item/weapon/implanter/emp(src)
 			new /obj/item/weapon/implanter/storage(src)
 
 		if("hacker")
-			new /obj/item/weapon/aiModule/syndicate(src)
+			new /obj/item/weapon/aiModule/freeform/syndicate(src)
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/device/encryptionkey/binary(src)
 			new /obj/item/device/multitool/ai_detect(src)
@@ -89,7 +91,6 @@
 
 		if("gadgets")
 			new /obj/item/clothing/gloves/yellow(src)
-			new /obj/item/weapon/pen/paralysis(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/device/flashlight/emp(src)
 			new /obj/item/clothing/shoes/syndigaloshes(src)
@@ -103,7 +104,7 @@
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"
 	desc = "A sleek, sturdy box."
-	icon_state = "box_of_doom"
+	icon_state = "doom_box"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	name = "boxed freedom implant (with injector)"
@@ -127,6 +128,24 @@
 /obj/item/weapon/storage/box/syndie_kit/imp_explosive/atom_init()
 	new /obj/item/weapon/implanter/explosive(src)
 	. = ..()
+
+/obj/item/weapon/storage/box/syndie_kit/imp_adrenaline/atom_init()
+	. = ..()
+	var/obj/item/weapon/implanter/O = new(src)
+	O.imp = new /obj/item/weapon/implant/adrenaline(O)
+	O.update()
+
+/obj/item/weapon/storage/box/syndie_kit/imp_adrenaline
+	name = "box (A)"
+
+/obj/item/weapon/storage/box/syndie_kit/imp_emp/atom_init()
+	. = ..()
+	var/obj/item/weapon/implanter/O = new(src)
+	O.imp = new /obj/item/weapon/implant/emp(O)
+	O.update()
+
+/obj/item/weapon/storage/box/syndie_kit/imp_emp
+	name = "box (M)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	name = "boxed uplink implant (with injector)"
@@ -230,6 +249,7 @@
 /obj/item/weapon/storage/box/syndie_kit/merch
 	name = "box (M)"
 	desc = "Box containing some Syndicate merchandise for real agents!"
+	icon_state = "syndie_box"
 
 /obj/item/weapon/storage/box/syndie_kit/merch/atom_init()
 	. = ..()

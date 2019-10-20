@@ -1,5 +1,5 @@
 //like orange but only checks north/south/east/west for one step
-proc/cardinalrange(center)
+/proc/cardinalrange(center)
 	var/list/things = list()
 	for(var/direction in cardinal)
 		var/turf/T = get_step(center, direction)
@@ -16,7 +16,7 @@ proc/cardinalrange(center)
 	anchored = 1
 	density = 1
 	dir = 1
-	use_power = 0//Living things generally dont use power
+	use_power = NO_POWER_USE//Living things generally dont use power
 	idle_power_usage = 0
 	active_power_usage = 0
 
@@ -68,7 +68,7 @@ proc/cardinalrange(center)
 /obj/machinery/am_shielding/Destroy()
 	if(control_unit)	control_unit.remove_shielding(src)
 	if(processing)	shutdown_core()
-	visible_message("\red The [src.name] melts!")
+	visible_message("<span class='warning'>The [src.name] melts!</span>")
 	//Might want to have it leave a mess on the floor but no sprites for now
 	return ..()
 
@@ -205,7 +205,7 @@ proc/cardinalrange(center)
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "box"
 	item_state = "electronic"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	flags = CONDUCT
 	throwforce = 5
 	throw_speed = 1
@@ -214,7 +214,7 @@ proc/cardinalrange(center)
 	w_amt = 2000
 
 /obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/device/multitool) && istype(src.loc,/turf))
+	if(ismultitool(I) && istype(src.loc,/turf))
 		new/obj/machinery/am_shielding(src.loc)
 		qdel(src)
 		return

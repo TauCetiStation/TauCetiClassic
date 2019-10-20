@@ -45,9 +45,9 @@
 		sleep(5)
 		icon_state = initial(icon_state)
 		updateUsrDialog()
-	else if(istype(P, /obj/item/weapon/wrench))
+	else if(iswrench(P))
 		user.SetNextMove(CLICK_CD_INTERACT)
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 	else
@@ -126,6 +126,7 @@
 				counter++
 			P.info += "</TT>"
 			P.name = "Security Record ([G.fields["name"]])"
+			P.update_icon()
 			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 	..()
@@ -162,6 +163,7 @@
 				counter++
 			P.info += "</TT>"
 			P.name = "Medical Record ([G.fields["name"]])"
+			P.update_icon()
 			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 	..()

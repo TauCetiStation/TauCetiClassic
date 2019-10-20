@@ -3,7 +3,6 @@
 
 	for(var/obj/item/weapon/larva_bite/G in src)
 		G.process()
-
 	if(istype(src.loc, /obj/item/alien_embryo))
 		sleeping = 5
 
@@ -11,10 +10,13 @@
 
 	..()
 
-/mob/living/carbon/alien/larva
+/mob/living/carbon/alien/larva/proc/update_progression()
+	if(stat != DEAD)
+		if(amount_grown < max_grown)
+			amount_grown++
 
-	proc/handle_random_events()
-		return
+/mob/living/carbon/alien/larva/proc/handle_random_events()
+	return
 
 /mob/living/carbon/alien/larva/handle_hud_icons_health()
 	if (healths)

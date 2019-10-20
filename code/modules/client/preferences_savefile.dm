@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 19
+#define SAVEFILE_VERSION_MAX 25
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -49,6 +49,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["aooccolor"] << S["ooccolor"]
 		aooccolor = ooccolor
 
+	if(current_version < 25)
+		var/const/SOUND_ADMINHELP = 1
+		var/const/SOUND_MIDI = 2
+		var/const/SOUND_AMBIENCE = 4
+		var/const/SOUND_LOBBY = 8
+		var/const/SOUND_STREAMING = 64
+
+		toggles &= ~(SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SOUND_STREAMING)
+		S["toggles"] << toggles
+
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 17)
 		for(var/organ_name in organ_data)
@@ -67,6 +77,27 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(!(species in lang.allowed_species))
 				language = "None"
 				S["language"] << language
+
+	if(current_version < 21)
+		S["disabilities"] << null
+
+		all_quirks = list()
+		positive_quirks = list()
+		negative_quirks = list()
+		neutral_quirks = list()
+
+		S["all_quirks"] << all_quirks
+		S["positive_quirks"] << positive_quirks
+		S["negative_quirks"] << negative_quirks
+		S["neutral_quirks"] << neutral_quirks
+
+	if(current_version < 23)
+		var/datum/job/assistant/J = new
+
+		if(player_alt_titles && \
+			player_alt_titles[J.title] in list("Technical Assistant", "Medical Intern", "Research Assistant", "Security Cadet"))
+
+			player_alt_titles -= J.title
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
@@ -96,18 +127,29 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["aooccolor"]			>> aooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
+	S["UI_style_color"]		>> UI_style_color
+	S["UI_style_alpha"]		>> UI_style_alpha
 	S["default_slot"]		>> default_slot
 	S["chat_toggles"]		>> chat_toggles
 	S["toggles"]			>> toggles
 	S["ghost_orbit"]		>> ghost_orbit
 	S["randomslot"]			>> randomslot
-	S["UI_style_color"]		>> UI_style_color
-	S["UI_style_alpha"]		>> UI_style_alpha
 	S["permamuted"]			>> permamuted
 	S["permamuted"]			>> muted
+	S["parallax"]			>> parallax
+	S["parallax_theme"]		>> parallax_theme
+	S["ambientocclusion"]	>> ambientocclusion
 
-	//Antag preferences
-	S["be_role"]			>> be_role
+	//Sound preferences
+	S["snd_music_vol"]						>> snd_music_vol
+	S["snd_ambient_vol"]					>> snd_ambient_vol
+	S["snd_effects_master_vol"]				>> snd_effects_master_vol
+	S["snd_effects_voice_announcement_vol"]	>> snd_effects_voice_announcement_vol
+	S["snd_effects_misc_vol"]				>> snd_effects_misc_vol
+	S["snd_effects_instrument_vol"]			>> snd_effects_instrument_vol
+	S["snd_notifications_vol"]				>> snd_notifications_vol
+	S["snd_admin_vol"]						>> snd_admin_vol
+	S["snd_jukebox_vol"]					>> snd_jukebox_vol
 
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary
@@ -126,9 +168,23 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
 	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
 	UI_style_alpha	= sanitize_integer(UI_style_alpha, 0, 255, initial(UI_style_alpha))
+	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
+	parallax_theme	= sanitize_text(parallax_theme, initial(parallax_theme))
+	ambientocclusion = sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
 	if(!cid_list)
 		cid_list = list()
 	ignore_cid_warning = sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
+
+	snd_music_vol = sanitize_integer(snd_music_vol, 0, 100, initial(snd_music_vol))
+	snd_ambient_vol = sanitize_integer(snd_ambient_vol, 0, 100, initial(snd_ambient_vol))
+	snd_effects_master_vol = sanitize_integer(snd_effects_master_vol, 0, 100, initial(snd_effects_master_vol))
+	snd_effects_voice_announcement_vol = sanitize_integer(snd_effects_voice_announcement_vol, 0, 100, initial(snd_effects_voice_announcement_vol))
+	snd_effects_misc_vol = sanitize_integer(snd_effects_misc_vol, 0, 100, initial(snd_effects_misc_vol))
+	snd_effects_instrument_vol = sanitize_integer(snd_effects_instrument_vol, 0, 100, initial(snd_effects_instrument_vol))
+	snd_notifications_vol = sanitize_integer(snd_notifications_vol, 0, 100, initial(snd_notifications_vol))
+	snd_admin_vol = sanitize_integer(snd_admin_vol, 0, 100, initial(snd_admin_vol))
+	snd_jukebox_vol = sanitize_integer(snd_jukebox_vol, 0, 100, initial(snd_jukebox_vol))
+
 	return 1
 
 /datum/preferences/proc/save_preferences()
@@ -150,13 +206,28 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["aooccolor"]			<< aooccolor
 	S["lastchangelog"]		<< lastchangelog
 	S["UI_style"]			<< UI_style
-	S["be_role"]			<< be_role
+	S["UI_style_color"]		<< UI_style_color
+	S["UI_style_alpha"]		<< UI_style_alpha
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
 	S["chat_toggles"]		<< chat_toggles
 	S["ghost_orbit"]		<< ghost_orbit
 	S["randomslot"]			<< randomslot
 	S["permamuted"]			<< permamuted
+	S["parallax"]			<< parallax
+	S["parallax_theme"]		<< parallax_theme
+	S["ambientocclusion"]	<< ambientocclusion
+
+	//Sound preferences
+	S["snd_music_vol"]						<< snd_music_vol
+	S["snd_ambient_vol"]					<< snd_ambient_vol
+	S["snd_effects_master_vol"]				<< snd_effects_master_vol
+	S["snd_effects_voice_announcement_vol"]	<< snd_effects_voice_announcement_vol
+	S["snd_effects_misc_vol"]				<< snd_effects_misc_vol
+	S["snd_effects_instrument_vol"]			<< snd_effects_instrument_vol
+	S["snd_notifications_vol"]				<< snd_notifications_vol
+	S["snd_admin_vol"]						<< snd_admin_vol
+	S["snd_jukebox_vol"]					<< snd_jukebox_vol
 	return 1
 
 /datum/preferences/proc/load_saved_character(dir)
@@ -212,27 +283,31 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_med"]		>> job_engsec_med
 	S["job_engsec_low"]		>> job_engsec_low
 
+	//Traits
+	S["all_quirks"]			>> all_quirks
+	S["positive_quirks"]	>> positive_quirks
+	S["negative_quirks"]	>> negative_quirks
+	S["neutral_quirks"]		>> neutral_quirks
+
 	//Miscellaneous
 	S["flavor_text"]		>> flavor_text
 	S["med_record"]			>> med_record
 	S["sec_record"]			>> sec_record
 	S["gen_record"]			>> gen_record
 	S["be_role"]			>> be_role
-	S["disabilities"]		>> disabilities
 	S["player_alt_titles"]	>> player_alt_titles
 	S["organ_data"]			>> organ_data
 	S["gear"]				>> gear
+	S["custom_items"]		>> custom_items
 
 	S["nanotrasen_relation"] >> nanotrasen_relation
 	S["home_system"] 		>> home_system
 	S["citizenship"] 		>> citizenship
 	S["faction"] 			>> faction
 	S["religion"] 			>> religion
-	S["parallax"]			>> parallax
+
 	S["uplinklocation"] 	>> uplinklocation
 
-	S["UI_style_color"]		>> UI_style_color
-	S["UI_style_alpha"]		>> UI_style_alpha
 
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary
@@ -242,14 +317,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= sanitize_name(real_name)
-	if(isnull(species)) species = HUMAN
+
+	if(isnull(species))
+		species = HUMAN
+	var/datum/species/species_obj = all_species[species]
+
 	if(isnull(language)) language = "None"
 	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)
 	if(!real_name) real_name = random_name(gender)
 	if(!gear) gear = list()
+	if(!custom_items) custom_items = list()
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
-	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
+	age				= sanitize_integer(age, species_obj.min_age, species_obj.max_age, initial(age))
 	r_hair			= sanitize_integer(r_hair, 0, 255, initial(r_hair))
 	g_hair			= sanitize_integer(g_hair, 0, 255, initial(g_hair))
 	b_hair			= sanitize_integer(b_hair, 0, 255, initial(b_hair))
@@ -270,19 +350,22 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	socks			= sanitize_integer(socks, 1, socks_t.len, initial(socks))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	b_type			= sanitize_text(b_type, initial(b_type))
-	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
-	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
-	job_civilian_med = sanitize_integer(job_civilian_med, 0, 65535, initial(job_civilian_med))
-	job_civilian_low = sanitize_integer(job_civilian_low, 0, 65535, initial(job_civilian_low))
-	job_medsci_high = sanitize_integer(job_medsci_high, 0, 65535, initial(job_medsci_high))
-	job_medsci_med = sanitize_integer(job_medsci_med, 0, 65535, initial(job_medsci_med))
-	job_medsci_low = sanitize_integer(job_medsci_low, 0, 65535, initial(job_medsci_low))
-	job_engsec_high = sanitize_integer(job_engsec_high, 0, 65535, initial(job_engsec_high))
-	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
-	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
+	job_civilian_high = sanitize_integer(job_civilian_high, 0, 16777215, initial(job_civilian_high))
+	job_civilian_med = sanitize_integer(job_civilian_med, 0, 16777215, initial(job_civilian_med))
+	job_civilian_low = sanitize_integer(job_civilian_low, 0, 16777215, initial(job_civilian_low))
+	job_medsci_high = sanitize_integer(job_medsci_high, 0, 16777215, initial(job_medsci_high))
+	job_medsci_med = sanitize_integer(job_medsci_med, 0, 16777215, initial(job_medsci_med))
+	job_medsci_low = sanitize_integer(job_medsci_low, 0, 16777215, initial(job_medsci_low))
+	job_engsec_high = sanitize_integer(job_engsec_high, 0, 16777215, initial(job_engsec_high))
+	job_engsec_med = sanitize_integer(job_engsec_med, 0, 16777215, initial(job_engsec_med))
+	job_engsec_low = sanitize_integer(job_engsec_low, 0, 16777215, initial(job_engsec_low))
 
-	if(isnull(disabilities)) disabilities = 0
+	all_quirks = SANITIZE_LIST(all_quirks)
+	positive_quirks = SANITIZE_LIST(positive_quirks)
+	negative_quirks = SANITIZE_LIST(negative_quirks)
+	neutral_quirks = SANITIZE_LIST(neutral_quirks)
+
 	if(!player_alt_titles) player_alt_titles = new()
 	if(!organ_data) src.organ_data = list()
 	if(!be_role) src.be_role = list()
@@ -387,27 +470,29 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_med"]		<< job_engsec_med
 	S["job_engsec_low"]		<< job_engsec_low
 
+	//Traits
+	S["all_quirks"]			<< all_quirks
+	S["positive_quirks"]	<< positive_quirks
+	S["negative_quirks"]	<< negative_quirks
+	S["neutral_quirks"]		<< neutral_quirks
+
 	//Miscellaneous
 	S["flavor_text"]		<< flavor_text
 	S["med_record"]			<< med_record
 	S["sec_record"]			<< sec_record
 	S["gen_record"]			<< gen_record
-	S["player_alt_titles"]		<< player_alt_titles
 	S["be_role"]			<< be_role
-	S["disabilities"]		<< disabilities
+	S["player_alt_titles"]		<< player_alt_titles
 	S["organ_data"]			<< organ_data
 	S["gear"]				<< gear
+	S["custom_items"]		<< custom_items
 
 	S["nanotrasen_relation"] << nanotrasen_relation
 	S["home_system"] 		<< home_system
 	S["citizenship"] 		<< citizenship
 	S["faction"] 			<< faction
 	S["religion"] 			<< religion
-	S["parallax"]			<< parallax
 	S["uplinklocation"] << uplinklocation
-
-	S["UI_style_color"]		<< UI_style_color
-	S["UI_style_alpha"]		<< UI_style_alpha
 
 	return 1
 

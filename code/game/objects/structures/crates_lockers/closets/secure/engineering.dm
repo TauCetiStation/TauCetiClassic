@@ -34,6 +34,7 @@
 	new /obj/item/device/multitool(src)
 	new /obj/item/device/flash(src)
 	new /obj/item/taperoll/engineering(src)
+	new /obj/item/weapon/storage/pouch/engineering_supply(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "Electrical Supplies"
@@ -125,7 +126,7 @@
 
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/device/flashlight(src)
-	new /obj/item/weapon/extinguisher(src)
+	new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
 	new /obj/item/device/radio/headset/headset_eng(src)
 	new /obj/item/clothing/suit/storage/hazardvest(src)
 	new /obj/item/clothing/mask/gas/coloured(src)

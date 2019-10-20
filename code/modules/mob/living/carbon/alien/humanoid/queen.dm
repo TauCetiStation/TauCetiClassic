@@ -19,9 +19,7 @@
 	R.my_atom = src
 
 	//there should only be one queen
-	for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
-		if(Q == src)
-			continue
+	for(var/mob/living/carbon/alien/humanoid/queen/Q in queen_list)
 		if(Q.stat == DEAD)
 			continue
 		if(Q.client)
@@ -31,7 +29,11 @@
 	real_name = src.name
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin,/mob/living/carbon/alien/humanoid/proc/resin,/mob/living/carbon/alien/humanoid/proc/screech)
 	. = ..()
+	queen_list += src
 
+/mob/living/carbon/alien/humanoid/queen/Destroy()
+	queen_list -= src
+	return ..()
 
 /mob/living/carbon/alien/humanoid/queen/handle_hud_icons_health()
 	if (src.healths)
@@ -62,15 +64,15 @@
 	set desc = "Lay an egg to produce huggers to impregnate prey with."
 	set category = "Alien"
 
-	if(locate(/obj/effect/alien/egg) in get_turf(src))
+	if(locate(/obj/structure/alien/egg) in get_turf(src))
 		to_chat(src, "There's already an egg here.")
 		return
 
 	if(powerc(75,1))//Can't plant eggs on spess tiles. That's silly.
 		adjustToxLoss(-75)
 		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\green <B>[src] has laid an egg!</B>"), 1)
-		new /obj/effect/alien/egg(loc)
+			O.show_message(text("<span class='notice'><B>[src] has laid an egg!</B></span>"), 1)
+		new /obj/structure/alien/egg(loc)
 	return
 
 /mob/living/carbon/alien/humanoid/queen/update_icons()

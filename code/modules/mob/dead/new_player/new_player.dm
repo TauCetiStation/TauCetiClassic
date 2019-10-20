@@ -18,13 +18,23 @@
 		loc = locate(1,1,1)
 	lastarea = loc
 	. = ..()
+	new_player_list += src
+
+/mob/dead/new_player/Destroy()
+	new_player_list -= src
+	return ..()
 
 /mob/dead/new_player/verb/new_player_panel()
 	set src = usr
 	new_player_panel_proc()
 
 /mob/dead/new_player/proc/new_player_panel_proc()
-	var/output = "<div align='center'><B>New Player Options</B>"
+	var/output = null
+	if(length(src.key) > 15)
+		output += "<div align='center'><B>Welcome,<br></B>"
+		output += "<div align='center'><B>[src.key]!</B>"
+	else
+		output += "<div align='center'><B>Welcome, [src.key]!</B>"
 	output +="<hr>"
 	output += "<p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
@@ -38,7 +48,7 @@
 
 	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
 
-	if(!IsGuestKey(src.key))
+/*	if(!IsGuestKey(src.key))
 		establish_db_connection()
 
 		if(dbcon.IsConnected())
@@ -56,9 +66,9 @@
 				output += "<p><b><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
 			else
 				output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
+commented cause polls are kinda broken now, needs refactoring */
 
 	output += "</div>"
-
 	src << browse(entity_ja(output),"window=playersetup;size=210x240;can_close=0")
 	return
 
@@ -83,6 +93,8 @@
 		return 0
 
 	if(href_list["show_preferences"])
+		client << browse_rsc('html/prefs/dossier_empty.png')
+		client << browse_rsc('html/prefs/opacity7.png')
 		client.prefs.ShowChoices(src)
 		return 1
 
@@ -94,12 +106,15 @@
 			ready = !ready
 
 	if(href_list["refresh"])
-		src << browse(null, "window=playersetup") //closes the player setup window
+		src << browse(null, "window=playersetup") // closes the player setup window
 		new_player_panel_proc()
 
 	if(href_list["observe"])
 		if(!(ckey in admin_datums) && jobban_isbanned(src, "Observer"))
 			to_chat(src, "<span class='red'>You have been banned from observing. Declare yourself.</span>")
+			return 0
+		if(!SSmapping.station_loaded)
+			to_chat(src, "<span class='red'>There is no station yet, please wait.</span>")
 			return 0
 		if(alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup","Yes","No") == "Yes")
 			if(!client)
@@ -107,18 +122,18 @@
 			var/mob/dead/observer/observer = new()
 
 			spawning = 1
-			src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
+			playsound_stop(CHANNEL_MUSIC) // MAD JAMS cant last forever yo
 
 
 			observer.started_as_observer = 1
 			close_spawn_windows()
 			var/obj/O = locate("landmark*Observer-Start")
-			to_chat(src, "\blue Now teleporting.")
+			to_chat(src, "<span class='notice'>Now teleporting.</span>")
 			observer.loc = O.loc
 			observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
-			//client.prefs.update_preview_icon()
-			//observer.icon = client.prefs.preview_icon
+			// client.prefs.update_preview_icon()
+			// observer.icon = client.prefs.preview_icon
 			observer.icon = 'icons/mob/mob.dmi'
 			observer.icon_state = "ghost"
 			observer.alpha = 127
@@ -136,7 +151,7 @@
 
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-			to_chat(usr, "\red The round is either not ready, or has already finished...")
+			to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 			return
 
 		if(client.prefs.species != HUMAN)
@@ -152,7 +167,7 @@
 	if(href_list["SelectedJob"])
 
 		if(!enter_allowed)
-			to_chat(usr, "\blue There is an administrative lock on entering the game!")
+			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
 
 		if(client.prefs.species != HUMAN)
@@ -162,20 +177,26 @@
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return
 
-	if(href_list["privacy_poll"])
+	if(href_list["preference"] && (!ready || (href_list["preference"] == "close")))
+		if(client)
+			client.prefs.process_link(src, href_list)
+	else if(!href_list["late_join"])
+		new_player_panel()
+
+/*	if(href_list["privacy_poll"])
 		establish_db_connection()
 		if(!dbcon.IsConnected())
 			return
 		var/voted = 0
 
-		//First check if the person has not voted yet.
+		// First check if the person has not voted yet.
 		var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_privacy WHERE ckey='[src.ckey]'")
 		query.Execute()
 		while(query.NextRow())
 			voted = 1
 			break
 
-		//This is a safety switch, so only valid options pass through
+		// This is a safety switch, so only valid options pass through
 		var/option = "UNKNOWN"
 		switch(href_list["privacy_poll"])
 			if("signed")
@@ -200,11 +221,6 @@
 			to_chat(usr, "<b>Thank you for your vote!</b>")
 			usr << browse(null,"window=privacypoll")
 
-	if(href_list["preference"] && (!ready || (href_list["preference"] == "close")))
-		if(client)
-			client.prefs.process_link(src, href_list)
-	else if(!href_list["late_join"])
-		new_player_panel()
 
 	if(href_list["showpoll"])
 
@@ -260,6 +276,7 @@
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
 					if(!isnull(href_list["option_[optionid]"]))	//Test if this optionid was selected
 						vote_on_poll(pollid, optionid, 1)
+*/ // commented cause polls are kinda broken now, needs refactoring
 
 /mob/dead/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
@@ -273,6 +290,8 @@
 		return FALSE
 	if(!job.is_species_permitted(client))
 		return FALSE
+	if(!job.map_check())
+		return FALSE
 	return TRUE
 
 
@@ -280,10 +299,10 @@
 	if (src != usr)
 		return 0
 	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-		to_chat(usr, "\red The round is either not ready, or has already finished...")
+		to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 		return 0
 	if(!enter_allowed)
-		to_chat(usr, "\blue There is an administrative lock on entering the game!")
+		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 		return 0
 	if(!IsJobAvailable(rank))
 		to_chat(src, alert("[rank] is not available. Please try another."))
@@ -296,7 +315,6 @@
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
 	SSjob.EquipRank(character, rank, 1)					//equips the human
-	EquipCustomItems(character)
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")
@@ -337,6 +355,9 @@
 
 	joined_player_list += character.ckey
 
+	if(!issilicon(character))
+		SSquirks.AssignQuirks(character, character.client, TRUE)
+
 	qdel(src)
 
 /mob/dead/new_player/proc/AnnounceArrival(mob/living/carbon/human/character, rank)
@@ -349,32 +370,113 @@
 
 /mob/dead/new_player/proc/LateChoices()
 	var/mills = world.time // 1/10 of a second, not real milliseconds but whatever
-	//var/secs = ((mills % 36000) % 600) / 10 //Not really needed, but I'll leave it here for refrence.. or something
-	var/mins = (mills % 36000) / 600
-	var/hours = mills / 36000
+	var/mins = round((mills % 36000) / 600)
+	var/hours = round(mills / 36000)
+	var/which_time_is_it = ""
+	if(mins == 1)
+		which_time_is_it = "<b>[mins]</b> minute."
+	else
+		which_time_is_it = "<b>[mins]</b> minutes."
+	if(hours)
+		if(hours == 1)
+			which_time_is_it = "<b>[hours]</b> hour and [which_time_is_it]"
+		else
+			which_time_is_it = "<b>[hours]</b> hours and [which_time_is_it]"
 
-	var/dat = "<html><body><center>"
-	dat += "Round Duration: [round(hours)]h [round(mins)]m<br>"
+	var/dat = "<div class='notice'>Round Duration: [which_time_is_it]</div>"
 
-	if(SSshuttle) //In case Nanotrasen decides reposess CentComm's shuttles.
-		if(SSshuttle.direction == 2) //Shuttle is going to centcomm, not recalled
-			dat += "<font color='red'><b>The station has been evacuated.</b></font><br>"
-		if(SSshuttle.direction == 1 && SSshuttle.timeleft() < 300 && SSshuttle.alert == 0) // Emergency shuttle is past the point of no recall
-			dat += "<font color='red'>The station is currently undergoing evacuation procedures.</font><br>"
-		if(SSshuttle.direction == 1 && SSshuttle.alert == 1) // Crew transfer initiated
-			dat += "<font color='red'>The station is currently undergoing crew transfer procedures.</font><br>"
-
-	dat += "Choose from the following open positions:<br>"
+	if(SSshuttle) // In case Nanotrasen decides reposess CentComm's shuttles.
+		switch(SSshuttle.direction)
+			if(2) // Shuttle is going to centcomm, not recalled
+				dat += "<div class='notice red'>The station has been evacuated.</div><br>"
+			if(1)
+				if(SSshuttle.timeleft() < 300 && SSshuttle.alert == 0) // Emergency shuttle is past the point of no recall
+					dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
+				else if(SSshuttle.alert == 1) // Crew transfer initiated
+					dat += "<div class='notice red'>The station is currently undergoing crew transfer procedures.</div><br>"
+	var/available_job_count = 0
+	var/number_of_extra_line_breaks = 0 // We will need it in the end.
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobAvailable(job.title))
-			var/active = 0
-			// Only players with the job assigned and AFK for less than 10 minutes count as active
-			for(var/mob/M in player_list) if(M.mind && M.client && M.mind.assigned_role == job.title && M.client.inactivity <= 10 * 60 * 10)
-				active++
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions]) (Active: [active])</a><br>"
+			available_job_count++
 
-	dat += "</center>"
-	src << browse(entity_ja(dat), "window=latechoices;size=300x640;can_close=1")
+	if(!available_job_count)
+		dat += "<div class='notice red'>There are currently no open positions!</div>"
+	else
+		dat += "<div class='clearBoth'>Choose from the following open positions:</div>"
+		var/list/categorizedJobs = list(
+			"Command" = list(jobs = list(), titles = command_positions, color = "#aac1ee"),
+			"Engineering" = list(jobs = list(), titles = engineering_positions, color = "#ffd699"),
+			"Security" = list(jobs = list(), titles = security_positions, color = "#ff9999"),
+			"Miscellaneous" = list(jobs = list(), titles = list(), color = "#ffffff", colBreak = TRUE),
+			"Synthetic" = list(jobs = list(), titles = nonhuman_positions, color = "#ccffcc"),
+			"Service" = list(jobs = list(), titles = civilian_positions, color = "#cccccc"),
+			"Medical" = list(jobs = list(), titles = medical_positions, color = "#99ffe6", colBreak = TRUE),
+			"Science" = list(jobs = list(), titles = science_positions, color = "#e6b3e6"),
+		)
+
+		for(var/datum/job/job in SSjob.occupations)
+			if(job && IsJobAvailable(job.title))
+				var/categorized = FALSE
+				for(var/jobcat in categorizedJobs)
+					var/list/jobs = categorizedJobs[jobcat]["jobs"]
+					if(job.title in categorizedJobs[jobcat]["titles"])
+						categorized = TRUE
+						if(jobcat == "Command")
+
+							if(job.title == "Captain") // Put captain at top of command jobs
+								jobs.Insert(1, job)
+							else
+								jobs += job
+						else // Put heads at top of non-command jobs
+							if(job.title in command_positions)
+								jobs.Insert(1, job)
+							else
+								jobs += job
+				if(!categorized)
+					categorizedJobs["Miscellaneous"]["jobs"] += job
+
+
+		dat += "<table><tr><td valign='top'>"
+		for(var/jobcat in categorizedJobs)
+			if(categorizedJobs[jobcat]["colBreak"])
+				dat += "</td><td valign='top'>"
+			if(!length(categorizedJobs[jobcat]["jobs"]))
+				continue
+			var/color = categorizedJobs[jobcat]["color"]
+			dat += "<fieldset style='border: 2px solid [color]; display: inline'>"
+			dat += "<legend align='center' style='color: [color]'>[jobcat]</legend>"
+			for(var/datum/job/job in categorizedJobs[jobcat]["jobs"])
+				var/position_class = "otherPosition"
+				if(job.title in command_positions)
+					position_class = "commandPosition"
+				var/active = 0
+				if(job.current_positions) // If theres any people on this job already, we check if they are active and display it
+					for(var/mob/M in player_list) // Only players with the job assigned and AFK for less than 10 minutes count as active
+						if(M.mind && M.client && M.mind.assigned_role == job.title && M.client.inactivity <= 10 * 60 * 10)
+							active++
+				if(job.current_positions && active < job.current_positions)
+					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])<br><i>(Active: [active])</i></a>"
+					number_of_extra_line_breaks++
+				else
+					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a>"
+				categorizedJobs[jobcat]["jobs"] -= job
+
+			dat += "</fieldset><br>"
+		dat += "</td></tr></table>"
+		dat += "</div></div>"
+
+	// Removing the old window method but leaving it here for reference
+	//src << browse(entity_ja(dat), "window=latechoices;size=300x640;can_close=1")
+
+	// Added the new browser window method
+	var/accurate_length = 600
+	if(number_of_extra_line_breaks) // We will expand window length for each <br>(Active: [active]) until its reaches 700 (worst cases)
+		accurate_length = min(700, accurate_length + (number_of_extra_line_breaks * 8))
+	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 680, accurate_length)
+	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
+	popup.set_content(dat)
+	popup.open(FALSE) // FALSE is passed to open so that it doesn't use the onclose() proc
 
 
 /mob/dead/new_player/proc/create_character()
@@ -405,7 +507,7 @@
 	else
 		client.prefs.copy_to(new_character)
 
-	src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
+	playsound_stop(CHANNEL_MUSIC) // MAD JAMS cant last forever yo
 
 	if(mind)
 		mind.active = 0					//we wish to transfer the key manually
@@ -418,34 +520,8 @@
 	new_character.name = real_name
 	new_character.dna.ready_dna(new_character)
 	new_character.dna.b_type = client.prefs.b_type
-
-/*	if(client.prefs.disabilities)
-		// Set defer to 1 if you add more crap here so it only recalculates struc_enzymes once. - N3X
-		new_character.dna.SetSEState(GLASSESBLOCK,1,0)
-		new_character.disabilities |= NEARSIGHTED */
-
-	if(client.prefs.disabilities & DISABILITY_NEARSIGHTED)
-		new_character.dna.SetSEState(GLASSESBLOCK,1,1)
-		new_character.disabilities |= NEARSIGHTED
-
-	if(client.prefs.disabilities & DISABILITY_EPILEPTIC)
-		new_character.dna.SetSEState(EPILEPSYBLOCK,1,1)
-		new_character.disabilities |= EPILEPSY
-
-	if(client.prefs.disabilities & DISABILITY_COUGHING)
-		new_character.dna.SetSEState(COUGHBLOCK,1,1)
-		new_character.disabilities |= COUGHING
-
-	if(client.prefs.disabilities & DISABILITY_TOURETTES)
-		new_character.dna.SetSEState(TWITCHBLOCK,1,1)
-		new_character.disabilities |= TOURETTES
-
-	if(client.prefs.disabilities & DISABILITY_NERVOUS)
-		new_character.dna.SetSEState(NERVOUSBLOCK,1,1)
-		new_character.disabilities |= NERVOUS
-
-	// And uncomment this, too.
 	new_character.dna.UpdateSE()
+
 	if(key)
 		new_character.key = key		//Manually transfer the key to log them in
 
@@ -458,8 +534,8 @@
 
 	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")
 
-/mob/dead/new_player/Move()
-	return 0
+/mob/dead/new_player/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	return FALSE
 
 /mob/dead/new_player/proc/close_spawn_windows()
 	src << browse(null, "window=latechoices") //closes late choices window
@@ -496,5 +572,5 @@
 /mob/dead/new_player/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null)
 	return
 
-/mob/dead/new_player/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, mob/speaker = null, hard_to_hear = 0)
+/mob/dead/new_player/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
 	return

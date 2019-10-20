@@ -1,9 +1,5 @@
 var/datum/subsystem/job/SSjob
 
-#define GET_RANDOM_JOB 0
-#define BE_ASSISTANT 1
-#define RETURN_TO_LOBBY 2
-
 /datum/subsystem/job
 	name = "Jobs"
 
@@ -14,12 +10,15 @@ var/datum/subsystem/job/SSjob
 	var/list/occupations = list()		//List of all jobs
 	var/list/unassigned = list()		//Players who need jobs
 	var/list/job_debug = list()			//Debug info
+	var/obj/effect/landmark/start/fallback_landmark
 
 /datum/subsystem/job/New()
 	NEW_SS_GLOBAL(SSjob)
 
 
 /datum/subsystem/job/Initialize(timeofday)
+	SSmapping.LoadMapConfig() // Required before SSmapping initialization so we can modify the jobs
+	init_joblist()
 	SetupOccupations()
 	LoadJobs("config/jobs.txt")
 	..()
@@ -73,6 +72,8 @@ var/datum/subsystem/job/SSjob
 			return 0
 		if(!job.player_old_enough(player.client))
 			return 0
+		if(!job.map_check())
+			return 0
 		var/position_limit = job.total_positions
 		if(!latejoin)
 			position_limit = job.spawn_positions
@@ -103,6 +104,8 @@ var/datum/subsystem/job/SSjob
 		if(!job.player_old_enough(player.client))
 			Debug("FOC player not old enough, Player: [player]")
 			continue
+		if(!job.map_check())
+			continue
 		if(flag && (!(flag in player.client.prefs.be_role)))
 			Debug("FOC flag failed, Player: [player], Flag: [flag], ")
 			continue
@@ -124,6 +127,9 @@ var/datum/subsystem/job/SSjob
 			continue
 
 		if(!job.is_species_permitted(player.client))
+			continue
+
+		if(!job.map_check())
 			continue
 
 		if(jobban_isbanned(player, job.title))
@@ -308,6 +314,9 @@ var/datum/subsystem/job/SSjob
 					Debug("DO player not old enough, Player: [player], Job:[job.title]")
 					continue
 
+				if(!job.map_check())
+					continue
+
 				// If the player wants that job on this level, then try give it to him.
 				if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 
@@ -323,6 +332,7 @@ var/datum/subsystem/job/SSjob
 	for(var/mob/dead/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == GET_RANDOM_JOB)
 			GiveRandomJob(player)
+			Debug("DO pass, alternate random job, Player: [player]")
 
 	Debug("DO, Standard Check end")
 
@@ -337,8 +347,10 @@ var/datum/subsystem/job/SSjob
 	//For ones returning to lobby
 	for(var/mob/dead/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == RETURN_TO_LOBBY)
+			Debug("Alternate return to lobby, Player: [player]")
 			player.ready = 0
 			unassigned -= player
+			ticker.mode.antag_candidates -= player.mind
 	return 1
 
 //Gives the player the stuff he should have with his rank
@@ -353,7 +365,7 @@ var/datum/subsystem/job/SSjob
 		var/list/custom_equip_slots = list() //If more than one item takes the same slot, all after the first one spawn in storage.
 		var/list/custom_equip_leftovers = list()
 		var/metadata
-		if(H.client.prefs.gear && H.client.prefs.gear.len && job.title != "Cyborg" && job.title != "AI")
+		if(H.client.prefs.gear && H.client.prefs.gear.len && job.give_loadout_items)
 			for(var/thing in H.client.prefs.gear)
 				var/datum/gear/G = gear_datums[thing]
 				if(G)
@@ -378,7 +390,7 @@ var/datum/subsystem/job/SSjob
 						// This is a miserable way to fix the loadout overwrite bug, but the alternative requires
 						// adding an arg to a bunch of different procs. Will look into it after this merge. ~ Z
 						metadata = H.client.prefs.gear[G.display_name]
-						if(G.slot == slot_wear_mask || G.slot == slot_wear_suit || G.slot == slot_head)
+						if(G.slot == SLOT_WEAR_MASK || G.slot == SLOT_WEAR_SUIT || G.slot == SLOT_HEAD)
 							custom_equip_leftovers += thing
 						else if(H.equip_to_slot_or_del(G.spawn_item(H, metadata), G.slot))
 							to_chat(H, "<span class='notice'>Equipping you with \the [thing]!</span>")
@@ -393,10 +405,6 @@ var/datum/subsystem/job/SSjob
 
 		job.equip(H)
 		job.apply_fingerprints(H)
-
-		if(H.species)
-			H.species.after_job_equip(H, job)
-
 
 		for(var/thing in custom_equip_leftovers)
 			var/datum/gear/G = gear_datums[thing]
@@ -416,16 +424,24 @@ var/datum/subsystem/job/SSjob
 	H.job = rank
 
 	if(!joined_late)
-		var/obj/S = null
-		for(var/obj/effect/landmark/start/sloc in landmarks_list)
-			if(sloc.name != rank)	continue
-			if(locate(/mob/living) in sloc.loc)	continue
-			S = sloc
-			break
-		if(!S)
-			S = locate("start*[rank]") // use old stype
-		if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
-			H.loc = S.loc
+		var/obj/effect/landmark/start/spawn_mark = null
+		for(var/obj/effect/landmark/start/landmark in landmarks_list)
+			if((landmark.name == rank) && !(locate(/mob/living) in landmark.loc))
+				spawn_mark = landmark
+				break
+		if(!spawn_mark)
+			spawn_mark = locate("start*[rank]") // use old stype
+
+		if(!spawn_mark)
+			if(!fallback_landmark)
+				for(var/obj/effect/landmark/start/landmark in landmarks_list)
+					if(landmark.name == "Fallback-Start")
+						fallback_landmark = landmark
+			warning("Failed to find spawn position for [rank]. Using fallback spawn position!")
+			spawn_mark = fallback_landmark
+
+		if(istype(spawn_mark, /obj/effect/landmark/start) && istype(spawn_mark.loc, /turf))
+			H.loc = spawn_mark.loc
 		// Moving wheelchair if they have one
 		if(H.buckled && istype(H.buckled, /obj/structure/stool/bed/chair/wheelchair))
 			H.buckled.loc = H.loc
@@ -447,7 +463,7 @@ var/datum/subsystem/job/SSjob
 		H.mind.store_memory(remembered_info)
 
 	spawn(0)
-		to_chat(H, "\blue<b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b>")
+		to_chat(H, "<span class='notice'><b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b></span>")
 
 	var/alt_title = null
 	if(H.mind)
@@ -463,20 +479,29 @@ var/datum/subsystem/job/SSjob
 			if("Clown")	//don't need bag preference stuff!
 			else
 				switch(H.backbag) //BS12 EDIT
-					if(1)
-						H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 					if(2)
 						var/obj/item/weapon/storage/backpack/BPK = new(H)
-						new /obj/item/weapon/storage/box/survival(BPK)
-						H.equip_to_slot_or_del(BPK, slot_back,1)
+						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 					if(3)
 						var/obj/item/weapon/storage/backpack/satchel/norm/BPK = new(H)
-						new /obj/item/weapon/storage/box/survival(BPK)
-						H.equip_to_slot_or_del(BPK, slot_back,1)
+						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 					if(4)
 						var/obj/item/weapon/storage/backpack/satchel/BPK = new(H)
-						new /obj/item/weapon/storage/box/survival(BPK)
-						H.equip_to_slot_or_del(BPK, slot_back,1)
+						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
+
+	/*
+	Placed here so the backpack that spawns if there is no job backpack has already spawned by now.
+	*/
+	if(H.species)
+		H.species.after_job_equip(H, job)
+
+	// Happy Valentines day!
+	if(Holiday == "Valentine's Day")
+		for(var/obj/item/weapon/storage/backpack/BACKP in H)
+			new /obj/item/weapon/storage/fancy/heart_box(BACKP)
+
+	//Give custom items
+	give_custom_items(H, job)
 
 	//Deferred item spawning.
 	for(var/thing in spawn_in_storage)
@@ -503,15 +528,8 @@ var/datum/subsystem/job/SSjob
 		to_chat(H, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
 
 	spawnId(H, rank, alt_title)
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_l_ear)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), SLOT_L_EAR)
 
-	//Gives glasses to the vision impaired
-	if(H.disabilities & NEARSIGHTED)
-		var/equipped = H.equip_to_slot_or_del(new /obj/item/clothing/glasses/regular(H), slot_glasses)
-		if(equipped != 1)
-			var/obj/item/clothing/glasses/G = H.glasses
-			G.name = "prescription " + G.name
-			G.prescription = 1
 //		H.update_icons()
 
 	H.hud_updateflag |= (1 << ID_HUD)
@@ -547,9 +565,9 @@ var/datum/subsystem/job/SSjob
 		if(H.mind && H.mind.initial_account)
 			C.associated_account_number = H.mind.initial_account.account_number
 
-		H.equip_to_slot_or_del(C, slot_wear_id)
+		H.equip_to_slot_or_del(C, SLOT_WEAR_ID)
 
-	H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_belt)
+	H.equip_to_slot_or_del(new /obj/item/device/pda(H), SLOT_BELT)
 	if(locate(/obj/item/device/pda,H))
 		var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 		pda.owner = H.real_name
@@ -623,7 +641,3 @@ var/datum/subsystem/job/SSjob
 
 		tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|YOUNG=[level6]|-"
 		feedback_add_details("job_preferences",tmp_str)
-
-#undef GET_RANDOM_JOB
-#undef BE_ASSISTANT
-#undef RETURN_TO_LOBBY

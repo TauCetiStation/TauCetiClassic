@@ -3,16 +3,16 @@ var/global/BSACooldown = 0
 
 
 ////////////////////////////////
-/proc/message_admins(msg)
+proc/message_admins(msg, reg_flag = R_ADMIN)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 	log_adminwarn(msg)
 	for(var/client/C in admins)
-		if(C.holder.rights & R_ADMIN)
+		if(C.holder.rights & reg_flag)
 			to_chat(C, msg)
 
-/proc/msg_admin_attack(text) //Toggleable Attack Messages
+/proc/msg_admin_attack(text, mob/living/target) //Toggleable Attack Messages
 	log_attack(text)
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[text]</span></span> [ADMIN_PPJMPFLW(target)]"
 	for(var/client/C in admins)
 		if(R_ADMIN & C.holder.rights)
 			if(C.prefs.chat_toggles & CHAT_ATTACKLOGS)
@@ -53,11 +53,12 @@ var/global/BSACooldown = 0
 		<a href='?src=\ref[src];traitor=\ref[M]'>TP</a> -
 		<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> -
 		<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> -
-		<a href='?src=\ref[src];adminplayerobservefollow=\ref[M]'>FLW</a>\] </b><br>
+		<a href='?src=\ref[src];adminplayerobservefollow=\ref[M]'>FLW</a>\] <br>
 		<b>Mob type</b> = [M.type]<br><br>
 		<b>GeoIP:</b> <A href='?src=\ref[src];geoip=\ref[M]'>Get</A> |
 		<b>List of CIDs:</b> <A href='?src=\ref[src];cid_list=\ref[M]'>Get</A> (<A href='?src=\ref[src];cid_ignore=\ref[M]'>Ignore Warning</A>)<br>
-		<b>Related accounts by IP and cid</b>: <A href='?src=\ref[src];related_accounts=\ref[M]'>Get</A><br><br>
+		<b>Related accounts by IP and cid</b>: <A href='?src=\ref[src];related_accounts=\ref[M]'>Get</A><br>
+		<b>BYOND profile</b>: <A target='_blank' href='http://byond.com/members/[M.ckey]'>[M.ckey]</A><br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
 		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |
@@ -254,6 +255,7 @@ var/global/BSACooldown = 0
 /datum/admins/proc/show_player_info(key as text)
 	set category = "Admin"
 	set name = "Show Player Info"
+	key = ckey(key)
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
@@ -320,7 +322,7 @@ var/global/BSACooldown = 0
 		if(0)
 			dat += {"Welcome to the admin newscaster.<BR> Here you can add, edit and censor every newspiece on the network.
 				<BR>Feed channels and stories entered through here will be uneditable and handled as official news by the rest of the units.
-				<BR>Note that this panel allows full freedom over the news network, there are no constrictions except the few basic ones. Don't break things!</FONT>
+				<BR>Note that this panel allows full freedom over the news network, there are no constrictions except the few basic ones. Don't break things!
 			"}
 			if(news_network.wanted_issue)
 				dat+= "<HR><A href='?src=\ref[src];ac_view_wanted=1'>Read Wanted Issue</A>"
@@ -405,7 +407,7 @@ var/global/BSACooldown = 0
 			if(src.admincaster_feed_channel.censored)
 				dat+={"
 					<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>
-					No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>
+					No further feed story additions are allowed while the D-Notice is in effect.<BR><BR>
 				"}
 			else
 				if( isemptylist(src.admincaster_feed_channel.messages) )
@@ -472,7 +474,7 @@ var/global/BSACooldown = 0
 			if(src.admincaster_feed_channel.censored)
 				dat+={"
 					<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>
-					No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>
+					No further feed story additions are allowed while the D-Notice is in effect.<BR><BR>
 				"}
 			else
 				if( isemptylist(src.admincaster_feed_channel.messages) )
@@ -591,7 +593,9 @@ var/global/BSACooldown = 0
 			<A href='?src=\ref[src];secretsadmin=showgm'>Show Game Mode</A><BR>
 			<A href='?src=\ref[src];secretsadmin=manifest'>Show Crew Manifest</A><BR>
 			<A href='?src=\ref[src];secretsadmin=DNA'>List DNA (Blood)</A><BR>
-			<A href='?src=\ref[src];secretsadmin=fingerprints'>List Fingerprints</A><BR><BR>
+			<A href='?src=\ref[src];secretsadmin=fingerprints'>List Fingerprints</A><BR>
+			<A href='?src=\ref[src];secretsadmin=night_shift_set'>Set Night Shift Mode</A><BR>
+			<BR>
 			<BR>
 			"}
 
@@ -693,11 +697,11 @@ var/global/BSACooldown = 0
 	set desc="Restarts the world"
 	if (!usr.client.holder)
 		return
-	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
+	var/confirm = alert("Restart the game world? Warning: game stats will be lost if round not ended.", "Restart", "Yes", "Cancel")
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
-		to_chat(world, "\red <b>Restarting world!</b> \blue Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!")
+		to_chat(world, "<span class='warning'><b>Restarting world!</b> <span class='notice'>Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span></span>")
 		log_admin("[key_name(usr)] initiated a reboot.")
 
 		feedback_set_details("end_error","admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]")
@@ -707,7 +711,7 @@ var/global/BSACooldown = 0
 			blackbox.save_all_data_to_sql()
 
 		sleep(50)
-		world.Reboot()
+		world.Reboot(end_state = "admin reboot - by [usr.key]")
 
 
 /datum/admins/proc/announce()
@@ -717,10 +721,10 @@ var/global/BSACooldown = 0
 	if(!check_rights(0))
 		return
 
-	var/message = sanitize(input("Global message to send:", "Admin Announce", null, null)  as message, 500, extra = 0)
+	var/message = sanitize(input("Global message to send:", "Admin Announce", null, null)  as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
 
 	if(message)
-		to_chat(world, "\blue <b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n &emsp; [message]")
+		to_chat(world, "<span class='admin_announce'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n <span class='italic emojify linkify'>[message]</span></span>")
 		log_admin("Announce: [key_name(usr)] : [message]")
 		feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -786,17 +790,18 @@ var/global/BSACooldown = 0
 	set category = "Server"
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
-	if(ticker.current_state == GAME_STATE_PREGAME)
-		ticker.can_fire = 1
-		ticker.timeLeft = 0
+
+	if(ticker.current_state < GAME_STATE_PREGAME)
+		to_chat(usr, "<span class='warning'>Error: Start Now: Game is in startup, please wait until it has finished.</span>")
+		return 0
+
+	if(ticker.start_now())
 		log_admin("[usr.key] has started the game.")
 		message_admins("<font color='blue'>[usr.key] has started the game.</font>")
 		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return 1
-	else if (ticker.current_state == GAME_STATE_STARTUP)
-		to_chat(usr, "<font color='red'>Error: Start Now: Game is in startup, please wait until it has finished.</font>")
 	else
-		to_chat(usr, "<font color='red'>Error: Start Now: Game has already started.</font>")
+		to_chat(usr, "<span class='warning'>Error: Start Now: Game has already started.</span>")
 
 	return 0
 
@@ -810,7 +815,7 @@ var/global/BSACooldown = 0
 	else
 		to_chat(world, "<B>New players may now enter the game.</B>")
 	log_admin("[key_name(usr)] toggled new player game entering.")
-	message_admins("\blue [key_name_admin(usr)] toggled new player game entering.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] toggled new player game entering.</span>")
 	world.update_status()
 	feedback_add_details("admin_verb","TE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -836,7 +841,7 @@ var/global/BSACooldown = 0
 		to_chat(world, "<B>You may now respawn.</B>")
 	else
 		to_chat(world, "<B>You may no longer respawn :(</B>")
-	message_admins("\blue [key_name_admin(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].")
+	message_admins("[key_name_admin(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].")
 	log_admin("[key_name(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].")
 	world.update_status()
 	feedback_add_details("admin_verb","TR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -859,6 +864,29 @@ var/global/BSACooldown = 0
 	message_admins("[key_name_admin(usr)] toggled Space Ninjas [toggle_space_ninja ? "on" : "off"].")
 	feedback_add_details("admin_verb","TSN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/change_FH_control_type()
+	set category = "Server"
+	set desc="Change facehuggers control type"
+	set name="Change FH control type"
+	var/FH_control_type = input("Choose a control type of facehuggers.","FH control type") as null|anything in list("Static AI(default)", "Dynamic AI", "Playable(+SAI)")
+	feedback_add_details("admin_verb","CFHAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	switch(FH_control_type)
+		if("Static AI(default)")
+			facehuggers_control_type = FACEHUGGERS_STATIC_AI
+			for(var/obj/item/clothing/mask/facehugger/FH in facehuggers_list)
+				STOP_PROCESSING(SSobj, FH)
+		if("Dynamic AI")
+			facehuggers_control_type = FACEHUGGERS_DYNAMIC_AI
+			for(var/obj/item/clothing/mask/facehugger/FH in facehuggers_list)
+				START_PROCESSING(SSobj, FH)
+		if("Playable(+SAI)")
+			facehuggers_control_type = FACEHUGGERS_PLAYABLE
+			for(var/obj/item/clothing/mask/facehugger/FH in facehuggers_list)
+				STOP_PROCESSING(SSobj, FH)
+	if(FH_control_type)
+		to_chat(observer_list, "<B>Facehuggers' control type was changed. Now you can [(facehuggers_control_type == FACEHUGGERS_PLAYABLE) ? "" : "no longer"] control the facehugger</B>")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed facehuggers' control type to: [FH_control_type].</span>")
+
 /datum/admins/proc/delay()
 	set category = "Server"
 	set desc="Delay the game start"
@@ -873,11 +901,19 @@ var/global/BSACooldown = 0
 		if(newtime < 0)
 			to_chat(world, "<b>The game start has been delayed.</b>")
 			log_admin("[key_name(usr)] delayed the round start.")
-			send2slack_service("[key_name(usr)] delayed the round start.")
+			world.send2bridge(
+				type = list(BRIDGE_ROUNDSTAT),
+				attachment_msg = "**[key_name(usr)]** delayed the round start",
+				attachment_color = BRIDGE_COLOR_ROUNDSTAT,
+			)
 		else
 			to_chat(world, "<b>The game will start in [newtime] seconds.</b>")
 			log_admin("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
-			send2slack_service("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
+			world.send2bridge(
+				type = list(BRIDGE_ROUNDSTAT),
+				attachment_msg = "**[key_name(usr)]** set the pre-game delay to [newtime] seconds.",
+				attachment_color = BRIDGE_COLOR_ROUNDSTAT,
+			)
 		feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/delay_end()
@@ -890,7 +926,11 @@ var/global/BSACooldown = 0
 		ticker.delay_end = !ticker.delay_end
 		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		message_admins("<span class='adminnotice'>[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].</span>")
-		send2slack_service("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
+		world.send2bridge(
+			type = list(BRIDGE_ROUNDSTAT),
+			attachment_msg = "**[key_name(usr)]** [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
+			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
+		)
 	else
 		return alert("The game has not started yet!")
 
@@ -899,7 +939,7 @@ var/global/BSACooldown = 0
 	set desc="Toggle admin jumping"
 	set name="Toggle Jump"
 	config.allow_admin_jump = !(config.allow_admin_jump)
-	message_admins("\blue Toggled admin jumping to [config.allow_admin_jump].")
+	message_admins("<span class='notice'>Toggled admin jumping to [config.allow_admin_jump].</span>")
 	feedback_add_details("admin_verb","TJ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/adspawn()
@@ -907,7 +947,7 @@ var/global/BSACooldown = 0
 	set desc="Toggle admin spawning"
 	set name="Toggle Spawn"
 	config.allow_admin_spawning = !(config.allow_admin_spawning)
-	message_admins("\blue Toggled admin item spawning to [config.allow_admin_spawning].")
+	message_admins("<span class='notice'>Toggled admin item spawning to [config.allow_admin_spawning].</span>")
 	feedback_add_details("admin_verb","TAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/adrev()
@@ -915,7 +955,7 @@ var/global/BSACooldown = 0
 	set desc="Toggle admin revives"
 	set name="Toggle Revive"
 	config.allow_admin_rev = !(config.allow_admin_rev)
-	message_admins("\blue Toggled reviving to [config.allow_admin_rev].")
+	message_admins("<span class='notice'>Toggled reviving to [config.allow_admin_rev].</span>")
 	feedback_add_details("admin_verb","TAR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/immreboot()
@@ -925,7 +965,7 @@ var/global/BSACooldown = 0
 	if(!usr.client.holder)	return
 	if( alert("Reboot server?",,"Yes","No") == "No")
 		return
-	to_chat(world, "\red <b>Rebooting world!</b> \blue Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!")
+	to_chat(world, "<span class='warning'><b>Rebooting world!</b> <span class='notice'>Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span></span>")
 	log_admin("[key_name(usr)] initiated an immediate reboot.")
 
 	feedback_set_details("end_error","immediate admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]")
@@ -934,7 +974,7 @@ var/global/BSACooldown = 0
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
 
-	world.Reboot()
+	world.Reboot(end_state = "immediate admin reboot - by [usr.key]")
 
 /datum/admins/proc/toggle_job_restriction()
 	set category = "Server"
@@ -951,7 +991,7 @@ var/global/BSACooldown = 0
 /datum/admins/proc/unprison(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
-	if (M.z == ZLEVEL_CENTCOMM)
+	if (is_centcom_level(M.z))
 		if (config.allow_admin_jump)
 			M.loc = pick(latejoin)
 			message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
@@ -1017,7 +1057,7 @@ var/global/BSACooldown = 0
 			return "Destroy the AI"
 		if(3)
 			var/count = 0
-			for(var/mob/living/carbon/monkey/Monkey in world)
+			for(var/mob/living/carbon/monkey/Monkey in not_world)
 				if(Monkey.z == ZLEVEL_STATION)
 					count++
 			return "Kill all [count] of the monkeys on the station"
@@ -1100,12 +1140,12 @@ var/global/BSACooldown = 0
 	else
 		to_chat(world, "<B>Guests may now enter the game.</B>")
 	log_admin("[key_name(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
-	message_admins("\blue [key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
+	message_admins("[key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
 	feedback_add_details("admin_verb","TGU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/output_ai_laws()
 	var/ai_number = 0
-	for(var/mob/living/silicon/S in mob_list)
+	for(var/mob/living/silicon/S in silicon_list)
 		ai_number++
 		if(isAI(S))
 			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")
@@ -1137,7 +1177,7 @@ var/global/BSACooldown = 0
 		H.regenerate_icons()
 
 
-/proc/get_options_bar(whom, detail = 2, name = 0, link = 1, reply = null)
+/proc/get_options_bar(whom, detail = 2, name = 0, link = 1, reply = null, mentor_pm = FALSE)
 	if(!whom)
 		return "<b>(*null*)</b>"
 	var/mob/M
@@ -1152,12 +1192,12 @@ var/global/BSACooldown = 0
 		return "<b>(*not an mob*)</b>"
 	switch(detail)
 		if(0)
-			return "<b>[key_name(C, link, name, 0, reply)]</b>"
+			return "<b>[key_name(C, link, name, 0, reply, mentor_pm)]</b>"
 		if(1)
-			return "<b>[key_name(C, link, name, 1, reply)](<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)</b>"
+			return "<b>[key_name(C, link, name, 1, reply, mentor_pm)](<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)</b>"
 		if(2)
 			var/ref_mob = "\ref[M]"
-			return "<b>[key_name(C, link, name, 1, reply)](<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?_src_=holder;check_antagonist=1'>CA</A>)</b>"
+			return "<b>[key_name(C, link, name, 1, reply, mentor_pm)](<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?_src_=holder;check_antagonist=1'>CA</A>)</b>"
 
 
 

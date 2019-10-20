@@ -20,6 +20,14 @@
 	#define SEC_HUD 1 //Security HUD mode
 	#define MED_HUD 2 //Medical HUD mode
 
+/mob/living/silicon/atom_init()
+	. = ..()
+	silicon_list += src
+
+/mob/living/silicon/Destroy()
+	silicon_list -= src
+	return ..()
+
 /mob/living/silicon/proc/show_laws()
 	return
 
@@ -41,8 +49,8 @@
 			src.take_bodypart_damage(10)
 			Stun(rand(1,5))
 	flash_eyes(affect_silicon = 1)
-	to_chat(src, "\red <B>*BZZZT*</B>")
-	to_chat(src, "\red Warning: Electromagnetic pulse detected.")
+	to_chat(src, "<span class='warning'><B>*BZZZT*</B></span>")
+	to_chat(src, "<span class='warning'>Warning: Electromagnetic pulse detected.</span>")
 	..()
 
 /mob/living/silicon/proc/damage_mob(brute = 0, fire = 0, tox = 0)
@@ -105,9 +113,7 @@
 		stat(null, "Station Time: [worldtime2text()]")
 
 		if(SSshuttle.online && SSshuttle.location < 2)
-			var/timeleft = SSshuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+			stat(null, "ETA-[shuttleeta2text()]")
 
 		if(stat == CONSCIOUS)
 			stat(null, text("System integrity: [round((health / maxHealth) * 100)]%"))

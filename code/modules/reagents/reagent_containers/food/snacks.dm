@@ -47,27 +47,28 @@
 
 	if(!CanEat(user, M, src, "eat")) return	//tc code
 
-	if(istype(M, /mob/living/carbon))
-		var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
-		if(M == user)								//If you're eating it yourself
-			if(istype(M,/mob/living/carbon/human))
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		var/fullness = C.get_nutrition()
+		if(C == user)								//If you're eating it yourself
+			if(ishuman(C))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags[IS_SYNTHETIC])
 					to_chat(H, "<span class='rose'>You have a monitor for a head, where do you think you're going to put that?</span>")
 					return
 			if (fullness <= 50)
-				to_chat(M, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
+				to_chat(C, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
 			if (fullness > 50 && fullness <= 150)
-				to_chat(M, "<span class='notice'>You hungrily begin to eat [src].</span>")
+				to_chat(C, "<span class='notice'>You hungrily begin to eat [src].</span>")
 			if (fullness > 150 && fullness <= 350)
-				to_chat(M, "<span class='notice'>You take a bite of [src].</span>")
+				to_chat(C, "<span class='notice'>You take a bite of [src].</span>")
 			if (fullness > 350 && fullness <= 550)
-				to_chat(M, "<span class='notice'>You unwillingly chew a bit of [src].</span>")
+				to_chat(C, "<span class='notice'>You unwillingly chew a bit of [src].</span>")
 			if (fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
-				to_chat(M, "<span class='rose'>You cannot force any more of [src] to go down your throat.</span>")
+				to_chat(C, "<span class='rose'>You cannot force any more of [src] to go down your throat.</span>")
 				return 0
 		else
-			if(istype(M,/mob/living/carbon/human))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags[IS_SYNTHETIC])
 					to_chat(H, "<span class='rose'>They have a monitor for a head, where do you think you're going to put that?</span>")
@@ -87,7 +88,7 @@
 
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-				msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
+				msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])", user)
 
 				for(var/mob/O in viewers(world.view, user))
 					O.show_message("<span class='rose'>[user] feeds [M] [src].</span>", 1)
@@ -98,7 +99,7 @@
 
 
 		if(reagents)								//Handle ingestion of the reagent.
-			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+			playsound(M, 'sound/items/eatfood.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 			if(reagents.total_volume)
 				if(reagents.total_volume > bitesize)
 					/*
@@ -144,7 +145,7 @@
 
 		user.visible_message( \
 			"[user] scoops up some [src] with \the [U]!", \
-			"<span class='notice'>You scoop up some [src] with \the [U]!" \
+			"<span class='notice'>You scoop up some [src] with \the [U]!</span>" \
 		)
 
 		bitecount++
@@ -187,7 +188,7 @@
 			istype(W, /obj/item/weapon/shard) \
 		)
 		inaccurate = 1
-	else if(W.w_class <= 2 && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
+	else if(W.w_class <= ITEM_SIZE_SMALL && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
 		if(!iscarbon(user))
 			return 1
 		to_chat(user, "<span class='rose'>You slip [W] inside [src].</span>")
@@ -297,7 +298,7 @@
 	desc = "Probably too incredible for mortal men to fully enjoy."
 	icon_state = "aesirsalad"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#468C00"
+	filling_color = "#468c00"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/aesirsalad/atom_init()
@@ -309,7 +310,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/candy
 	name = "candy"
 	desc = "Nougat, love it or hate it."
-	filling_color = "#7D5F46"
+	filling_color = "#7d5f46"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/atom_init()
@@ -333,7 +334,7 @@
 	name = "candy corn"
 	desc = "It's a handful of candy corn. Cannot be stored in a detective's hat, alas."
 	icon_state = "candy_corn"
-	filling_color = "#FFFCB0"
+	filling_color = "#fffcb0"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/candy_corn/atom_init()
@@ -346,7 +347,7 @@
 	desc = "Commander Riker's What-The-Crisps"
 	icon_state = "chips"
 	trash = /obj/item/trash/chips
-	filling_color = "#E8C31E"
+	filling_color = "#e8c31e"
 	bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/chips/atom_init()
@@ -359,7 +360,7 @@
 	name = "cookie"
 	desc = "COOKIE!!!"
 	icon_state = "COOKIE!!!"
-	filling_color = "#DBC94F"
+	filling_color = "#dbc94f"
 	bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/cookie/atom_init()
@@ -370,7 +371,7 @@
 	name = "Chocolate Bar"
 	desc = "Such sweet, fattening food."
 	icon_state = "chocolatebar"
-	filling_color = "#7D5F46"
+	filling_color = "#7d5f46"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar/atom_init()
@@ -383,7 +384,7 @@
 	name = "Chocolate Egg"
 	desc = "Such sweet, fattening food."
 	icon_state = "chocolateegg"
-	filling_color = "#7D5F46"
+	filling_color = "#7d5f46"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolateegg/atom_init()
@@ -397,7 +398,7 @@
 	name = "donut"
 	desc = "Goes great with Robust Coffee."
 	icon_state = "donut1"
-	filling_color = "#D9C386"
+	filling_color = "#d9c386"
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/normal
 	name = "donut"
@@ -418,7 +419,7 @@
 	name = "Chaos Donut"
 	desc = "Like life, it never quite tastes the same."
 	icon_state = "donut1"
-	filling_color = "#ED11E6"
+	filling_color = "#ed11e6"
 	bitesize = 10
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/chaos/atom_init()
@@ -457,7 +458,7 @@
 	name = "Jelly Donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
-	filling_color = "#ED1169"
+	filling_color = "#ed1169"
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/atom_init()
@@ -474,7 +475,7 @@
 	name = "Jelly Donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
-	filling_color = "#ED1169"
+	filling_color = "#ed1169"
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly/atom_init()
@@ -491,7 +492,7 @@
 	name = "Jelly Donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
-	filling_color = "#ED1169"
+	filling_color = "#ed1169"
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly/atom_init()
@@ -508,7 +509,7 @@
 	name = "egg"
 	desc = "An egg!"
 	icon_state = "egg"
-	filling_color = "#FDFFD1"
+	filling_color = "#fdffd1"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/atom_init()
 	. = ..()
@@ -518,6 +519,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	..()
 	new /obj/effect/decal/cleanable/egg_smudge(loc)
+	if(prob(13))
+		if(global.chicken_count < MAX_CHICKENS)
+			new /mob/living/simple_animal/chick(loc)
 	reagents.reaction(hit_atom, TOUCH)
 	visible_message("<span class='rose'>\The [src.name] has been squashed.</span>", "<span class='rose'>You hear a smack.</span>")
 	qdel(src)
@@ -573,7 +577,7 @@
 	name = "Fried egg"
 	desc = "A fried egg, with a touch of salt and pepper."
 	icon_state = "friedegg"
-	filling_color = "#FFDF78"
+	filling_color = "#ffdf78"
 	bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/friedegg/atom_init()
@@ -587,7 +591,7 @@
 	name = "Boiled egg"
 	desc = "A hard boiled egg."
 	icon_state = "egg"
-	filling_color = "#FFFFFF"
+	filling_color = "#ffffff"
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledegg/atom_init()
 	. = ..()
@@ -595,22 +599,13 @@
 	reagents.add_reagent("vitamin", 1)
 	reagents.add_reagent("egg", 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/flour
-	name = "flour"
-	desc = "A small bag filled with some flour."
-	icon_state = "flour"
-
-/obj/item/weapon/reagent_containers/food/snacks/flour/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 1)
-
 /obj/item/weapon/reagent_containers/food/snacks/appendix
 //yes, this is the same as meat. I might do something different in future
 	name = "appendix"
 	desc = "An appendix which looks perfectly healthy."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "appendix"
-	filling_color = "#E00D34"
+	filling_color = "#e00d34"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/appendix/atom_init()
@@ -623,13 +618,13 @@
 	name = "inflamed appendix"
 	desc = "An appendix which appears to be inflamed."
 	icon_state = "appendixinflamed"
-	filling_color = "#E00D7A"
+	filling_color = "#e00d7a"
 
 /obj/item/weapon/reagent_containers/food/snacks/tofu
 	name = "Tofu"
 	icon_state = "tofu"
 	desc = "We all love tofu."
-	filling_color = "#FFFEE0"
+	filling_color = "#fffee0"
 	bitesize = 3
 
 
@@ -641,7 +636,7 @@
 	name = "Tofurkey"
 	desc = "A fake turkey made from tofu."
 	icon_state = "tofurkey"
-	filling_color = "#FFFEE0"
+	filling_color = "#fffee0"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/tofurkey/atom_init()
@@ -653,7 +648,7 @@
 	name = "Stuffing"
 	desc = "Moist, peppery breadcrumbs for filling the body cavities of dead birds. Dig in!"
 	icon_state = "stuffing"
-	filling_color = "#C9AC83"
+	filling_color = "#c9ac83"
 	bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/stuffing/atom_init()
@@ -664,19 +659,19 @@
 	name = "carp fillet"
 	desc = "A fillet of spess carp meat"
 	icon_state = "fishfillet"
-	filling_color = "#FFDEFE"
+	filling_color = "#ffdefe"
 	bitesize = 6
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("protein", 3)
 	reagents.add_reagent("carpotoxin", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/fishfingers
 	name = "Fish Fingers"
 	desc = "A finger of fish."
 	icon_state = "fishfingers"
-	filling_color = "#FFDEFE"
+	filling_color = "#ffdefe"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/fishfingers/atom_init()
@@ -688,7 +683,7 @@
 	name = "huge mushroom slice"
 	desc = "A slice from a huge mushroom."
 	icon_state = "hugemushroomslice"
-	filling_color = "#E0D7C5"
+	filling_color = "#e0d7c5"
 	bitesize = 6
 
 /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice/atom_init()
@@ -700,7 +695,7 @@
 	name = "tomato slice"
 	desc = "A slice from a huge tomato"
 	icon_state = "tomatomeat"
-	filling_color = "#DB0000"
+	filling_color = "#db0000"
 	bitesize = 6
 
 /obj/item/weapon/reagent_containers/food/snacks/tomatomeat/atom_init()
@@ -711,7 +706,7 @@
 	name = "bear meat"
 	desc = "A very manly slab of meat."
 	icon_state = "bearmeat"
-	filling_color = "#DB0000"
+	filling_color = "#db0000"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/bearmeat/atom_init()
@@ -724,7 +719,7 @@
 	name = "meat"
 	desc = "A slab of meat."
 	icon_state = "xenomeat"
-	filling_color = "#43DE18"
+	filling_color = "#43de18"
 	bitesize = 6
 
 /obj/item/weapon/reagent_containers/food/snacks/xenomeat/atom_init()
@@ -758,7 +753,7 @@
 	name = "meatball"
 	desc = "A great meal all round."
 	icon_state = "meatball"
-	filling_color = "#DB0000"
+	filling_color = "#db0000"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/meatball/atom_init()
@@ -770,7 +765,7 @@
 	name = "Sausage"
 	desc = "A piece of mixed, long meat."
 	icon_state = "sausage"
-	filling_color = "#DB0000"
+	filling_color = "#db0000"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage/atom_init()
@@ -782,7 +777,7 @@
 	name = "Donk-pocket"
 	desc = "The food of choice for the seasoned traitor."
 	icon_state = "donkpocket"
-	filling_color = "#DEDEAB"
+	filling_color = "#dedeab"
 	var/warm = 0
 
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket/atom_init()
@@ -801,19 +796,20 @@
 	name = "brainburger"
 	desc = "A strange looking burger. It looks almost sentient."
 	icon_state = "brainburger"
-	filling_color = "#F2B6EA"
+	filling_color = "#f2b6ea"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/brainburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("protein", 4)
 	reagents.add_reagent("alkysine", 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/ghostburger
 	name = "Ghost Burger"
 	desc = "Spooky! It doesn't look very filling."
 	icon_state = "ghostburger"
-	filling_color = "#FFF2FF"
+	filling_color = "#fff2ff"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/ghostburger/atom_init()
@@ -825,7 +821,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/human
 	var/hname = ""
 	var/job = null
-	filling_color = "#D63C3C"
+	filling_color = "#d63c3c"
 
 /obj/item/weapon/reagent_containers/food/snacks/human/burger
 	name = "-burger"
@@ -835,7 +831,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/human/burger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("protein", 4)
 	reagents.add_reagent("vitamin", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/cheeseburger
@@ -845,7 +842,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/cheeseburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("cheese", 4)
 	reagents.add_reagent("vitamin", 1)
 
 
@@ -853,19 +851,20 @@
 	name = "burger"
 	desc = "The cornerstone of every nutritious breakfast."
 	icon_state = "hburger"
-	filling_color = "#D63C3C"
+	filling_color = "#d63c3c"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeyburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("protein", 4)
 	reagents.add_reagent("vitamin", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/fishburger
 	name = "Fillet -o- Carp Sandwich"
 	desc = "Almost like a carp is yelling somewhere... Give me back that fillet -o- carp, give me that carp."
 	icon_state = "fishburger"
-	filling_color = "#FFDEFE"
+	filling_color = "#ffdefe"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/fishburger/atom_init()
@@ -877,7 +876,7 @@
 	name = "Tofu Burger"
 	desc = "What.. is that meat?"
 	icon_state = "tofuburger"
-	filling_color = "#FFFEE0"
+	filling_color = "#fffee0"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/tofuburger/atom_init()
@@ -889,7 +888,7 @@
 	name = "roburger"
 	desc = "The lettuce is the only organic component. Beep."
 	icon_state = "roburger"
-	filling_color = "#CCCCCC"
+	filling_color = "#cccccc"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/roburger/atom_init()
@@ -903,7 +902,7 @@
 	name = "roburger"
 	desc = "This massive patty looks like poison. Beep."
 	icon_state = "roburger"
-	filling_color = "#CCCCCC"
+	filling_color = "#cccccc"
 	volume = 100
 	bitesize = 0.1
 
@@ -917,7 +916,7 @@
 	name = "xenoburger"
 	desc = "Smells caustic. Tastes like heresy."
 	icon_state = "xburger"
-	filling_color = "#43DE18"
+	filling_color = "#43de18"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/xenoburger/atom_init()
@@ -929,7 +928,7 @@
 	name = "Clown Burger"
 	desc = "This tastes funny..."
 	icon_state = "clownburger"
-	filling_color = "#FF00FF"
+	filling_color = "#ff00ff"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger/atom_init()
@@ -946,7 +945,7 @@
 	name = "Mime Burger"
 	desc = "Its taste defies language."
 	icon_state = "mimeburger"
-	filling_color = "#FFFFFF"
+	filling_color = "#ffffff"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/mimeburger/atom_init()
@@ -958,7 +957,7 @@
 	desc = "That's all you can say!"
 	icon_state = "omelette"
 	trash = /obj/item/trash/plate
-	filling_color = "#FFF9A8"
+	filling_color = "#fff9a8"
 	bitesize = 1
 
 	//var/herp = 0
@@ -971,7 +970,7 @@
 	name = "Muffin"
 	desc = "A delicious and spongy little cake"
 	icon_state = "muffin"
-	filling_color = "#E0CF9B"
+	filling_color = "#e0cf9b"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin/atom_init()
@@ -983,7 +982,7 @@
 	desc = "Just like back home, on clown planet! HONK!"
 	icon_state = "pie"
 	trash = /obj/item/trash/plate
-	filling_color = "#FBFFB8"
+	filling_color = "#fbffb8"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/atom_init()
@@ -1015,7 +1014,7 @@
 	desc = "Mmm, waffles."
 	icon_state = "waffles"
 	trash = /obj/item/trash/waffles
-	filling_color = "#E6DEB5"
+	filling_color = "#e6deb5"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/waffles/atom_init()
@@ -1028,7 +1027,7 @@
 	desc = "The only good recipe for eggplant."
 	icon_state = "eggplantparm"
 	trash = /obj/item/trash/plate
-	filling_color = "#4D2F5E"
+	filling_color = "#4d2f5e"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/eggplantparm/atom_init()
@@ -1041,7 +1040,7 @@
 	desc = "Not made of people. Honest." //Totally people.
 	icon_state = "soylent_green"
 	trash = /obj/item/trash/waffles
-	filling_color = "#B8E6B5"
+	filling_color = "#b8e6b5"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/soylentgreen/atom_init()
@@ -1054,7 +1053,7 @@
 	desc = "Not made of people. Honest." //Actually honest for once.
 	icon_state = "soylent_yellow"
 	trash = /obj/item/trash/waffles
-	filling_color = "#E6FA61"
+	filling_color = "#e6fa61"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/soylenviridians/atom_init()
@@ -1081,7 +1080,7 @@
 	icon_state = "meatpie"
 	desc = "A delicious tofu pie."
 	trash = /obj/item/trash/plate
-	filling_color = "#FFFEE0"
+	filling_color = "#fffee0"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/tofupie/atom_init()
@@ -1093,7 +1092,7 @@
 	name = "amanita pie"
 	desc = "Sweet and tasty poison pie."
 	icon_state = "amanita_pie"
-	filling_color = "#FFCCCC"
+	filling_color = "#ffcccc"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/amanita_pie/atom_init()
@@ -1107,7 +1106,7 @@
 	name = "plump pie"
 	desc = "I bet you love stuff made out of plump helmets!"
 	icon_state = "plump_pie"
-	filling_color = "#B8279B"
+	filling_color = "#b8279b"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/plump_pie/atom_init()
@@ -1127,7 +1126,7 @@
 	icon_state = "xenomeatpie"
 	desc = "A delicious meatpie. Probably heretical."
 	trash = /obj/item/trash/plate
-	filling_color = "#43DE18"
+	filling_color = "#43de18"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/xemeatpie/atom_init()
@@ -1140,7 +1139,7 @@
 	desc = "A savory dish of alien wing wang in soy."
 	icon_state = "wingfangchu"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#43DE18"
+	filling_color = "#43de18"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/wingfangchu/atom_init()
@@ -1154,7 +1153,7 @@
 	icon_state = "kabob"
 	desc = "A human meat, on a stick."
 	trash = /obj/item/stack/rods
-	filling_color = "#A85340"
+	filling_color = "#a85340"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/human/kabob/atom_init()
@@ -1166,7 +1165,7 @@
 	icon_state = "kabob"
 	desc = "Delicious meat, on a stick."
 	trash = /obj/item/stack/rods
-	filling_color = "#A85340"
+	filling_color = "#a85340"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeykabob/atom_init()
@@ -1178,7 +1177,7 @@
 	icon_state = "kabob"
 	desc = "Vegan meat, on a stick."
 	trash = /obj/item/stack/rods
-	filling_color = "#FFFEE0"
+	filling_color = "#fffee0"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/tofukabob/atom_init()
@@ -1190,7 +1189,7 @@
 	desc = "A grifftastic sandwich that burns your tongue and then leaves it numb!"
 	icon_state = "cubancarp"
 	trash = /obj/item/trash/plate
-	filling_color = "#E9ADFF"
+	filling_color = "#e9adff"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/cubancarp/atom_init()
@@ -1205,7 +1204,7 @@
 	icon_state = "popcorn"
 	trash = /obj/item/trash/popcorn
 	var/unpopped = 0
-	filling_color = "#FFFAD4"
+	filling_color = "#fffad4"
 	bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
 
 /obj/item/weapon/reagent_containers/food/snacks/popcorn/atom_init()
@@ -1230,8 +1229,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sosjerky/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 1)
-	reagents.add_reagent("sugar", 3)
+	reagents.add_reagent("protein", 3)
+	reagents.add_reagent("sugar", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin
 	name = "4no Raisins"
@@ -1249,7 +1248,7 @@
 	name = "Space Twinkie"
 	icon_state = "space_twinkie"
 	desc = "Guaranteed to survive longer then you will."
-	filling_color = "#FFE591"
+	filling_color = "#ffe591"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie/atom_init()
@@ -1261,7 +1260,7 @@
 	icon_state = "cheesie_honkers"
 	desc = "Bite sized cheesie snacks that will honk all over your mouth."
 	trash = /obj/item/trash/cheesie
-	filling_color = "#FFA305"
+	filling_color = "#ffa305"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers/atom_init()
@@ -1273,6 +1272,7 @@
 	name = "chow mein"
 	desc = "What is in this anyways?"
 	icon_state = "chinese1"
+	trash = /obj/item/trash/chinese1
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein/atom_init()
 	. = ..()
@@ -1284,6 +1284,7 @@
 	name = "Sweet & Sour Chicken Balls"
 	desc = "Is this chicken cooked? The odds are better than wok paper scissors."
 	icon_state = "chickenball"
+	trash = /obj/item/trash/snack_bowl
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball/atom_init()
 	. = ..()
@@ -1294,6 +1295,7 @@
 	name = "Admiral Yamamoto carp"
 	desc = "Tastes like chicken."
 	icon_state = "chinese2"
+	trash = /obj/item/trash/chinese2
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/tao/atom_init()
 	. = ..()
@@ -1305,6 +1307,7 @@
 	name = "chinese newdles"
 	desc = "Made fresh, weekly!"
 	icon_state = "chinese3"
+	trash = /obj/item/trash/chinese3
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles/atom_init()
 	. = ..()
@@ -1315,6 +1318,7 @@
 	name = "fried rice"
 	desc = "A timeless classic."
 	icon_state = "chinese4"
+	trash = /obj/item/trash/chinese4
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/rice/atom_init()
 	. = ..()
@@ -1326,7 +1330,7 @@
 	name = "Syndi-Cakes"
 	icon_state = "syndi_cakes"
 	desc = "An extremely moist snack cake that tastes just as good after being nuked."
-	filling_color = "#FF5D05"
+	filling_color = "#ff5d05"
 	bitesize = 3
 
 	trash = /obj/item/trash/syndi_cakes
@@ -1340,7 +1344,7 @@
 	name = "Loaded Baked Potato"
 	desc = "Totally baked."
 	icon_state = "loadedbakedpotato"
-	filling_color = "#9C7A68"
+	filling_color = "#9c7a68"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato/atom_init()
@@ -1352,7 +1356,7 @@
 	desc = "AKA: French Fries, Freedom Fries, etc."
 	icon_state = "fries"
 	trash = /obj/item/trash/plate
-	filling_color = "#EDDD00"
+	filling_color = "#eddd00"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/fries/atom_init()
@@ -1364,7 +1368,7 @@
 	desc = "Dope from a soy."
 	icon_state = "soydope"
 	trash = /obj/item/trash/plate
-	filling_color = "#C4BF76"
+	filling_color = "#c4bf76"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/soydope/atom_init()
@@ -1375,7 +1379,7 @@
 	name = "Spaghetti"
 	desc = "A bundle of raw spaghetti."
 	icon_state = "spagetti"
-	filling_color = "#EDDD00"
+	filling_color = "#eddd00"
 	bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/spagetti/atom_init()
@@ -1388,7 +1392,7 @@
 	desc = "Fries. Covered in cheese. Duh."
 	icon_state = "cheesyfries"
 	trash = /obj/item/trash/plate
-	filling_color = "#EDDD00"
+	filling_color = "#eddd00"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesyfries/atom_init()
@@ -1399,7 +1403,7 @@
 	name = "Fortune cookie"
 	desc = "A true prophecy in each cookie!"
 	icon_state = "fortune_cookie"
-	filling_color = "#E8E79E"
+	filling_color = "#e8e79e"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/fortunecookie/atom_init()
@@ -1410,7 +1414,7 @@
 	name = "Burned mess"
 	desc = "Someone should be demoted from chef for this."
 	icon_state = "badrecipe"
-	filling_color = "#211F02"
+	filling_color = "#211f02"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/badrecipe/atom_init()
@@ -1423,7 +1427,7 @@
 	desc = "A piece of hot spicy meat."
 	icon_state = "meatstake"
 	trash = /obj/item/trash/plate
-	filling_color = "#7A3D11"
+	filling_color = "#7a3d11"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/meatsteak/atom_init()
@@ -1437,7 +1441,7 @@
 	desc = "Jello gelatin, from Alfred Hubbard's cookbook."
 	icon_state = "spacylibertyduff"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#42B873"
+	filling_color = "#42b873"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff/atom_init()
@@ -1450,7 +1454,7 @@
 	desc = "Looks curiously toxic."
 	icon_state = "amanitajelly"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#ED0758"
+	filling_color = "#ed0758"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/amanitajelly/atom_init()
@@ -1464,7 +1468,7 @@
 	desc = "It's all twisted up!"
 	icon_state = "poppypretzel"
 	bitesize = 2
-	filling_color = "#916E36"
+	filling_color = "#916e36"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/poppypretzel/atom_init()
@@ -1490,7 +1494,7 @@
 	name = "slime soup"
 	desc = "If no water is available, you may substitute tears."
 	icon_state = "slimesoup"
-	filling_color = "#C4DBA0"
+	filling_color = "#c4dba0"
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/slimesoup/atom_init()
@@ -1504,7 +1508,7 @@
 	name = "Tomato soup"
 	desc = "Smells like copper."
 	icon_state = "tomatosoup"
-	filling_color = "#FF0000"
+	filling_color = "#ff0000"
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/bloodsoup/atom_init()
@@ -1518,7 +1522,7 @@
 	name = "Clown's Tears"
 	desc = "Not very funny."
 	icon_state = "clownstears"
-	filling_color = "#C4FBFF"
+	filling_color = "#c4fbff"
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/clownstears/atom_init()
@@ -1533,7 +1537,7 @@
 	desc = "A true vegan meal." //TODO
 	icon_state = "vegetablesoup"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#AFC4B5"
+	filling_color = "#afc4b5"
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/vegetablesoup/atom_init()
@@ -1547,7 +1551,7 @@
 	desc = "To think, the botanist would've beat you to death with one of these."
 	icon_state = "nettlesoup"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#AFC4B5"
+	filling_color = "#afc4b5"
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/nettlesoup/atom_init()
@@ -1562,7 +1566,7 @@
 	desc = "The mystery is, why aren't you eating it?"
 	icon_state = "mysterysoup"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#F082FF"
+	filling_color = "#f082ff"
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/mysterysoup/atom_init()
@@ -1609,7 +1613,7 @@
 	desc = "I wish this was soup."
 	icon_state = "wishsoup"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#D1F4FF"
+	filling_color = "#d1f4ff"
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/wishsoup/atom_init()
@@ -1625,7 +1629,7 @@
 	desc = "A five alarm Texan Chili!"
 	icon_state = "hotchili"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#FF3C00"
+	filling_color = "#ff3c00"
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/hotchili/atom_init()
@@ -1640,7 +1644,7 @@
 	name = "Cold Chili"
 	desc = "This slush is barely a liquid!"
 	icon_state = "coldchili"
-	filling_color = "#2B00FF"
+	filling_color = "#2b00ff"
 	bitesize = 5
 
 	trash = /obj/item/trash/snack_bowl
@@ -1676,7 +1680,7 @@
 	desc = "Just add water!"
 	icon_state = "monkeycube"
 	bitesize = 12
-	filling_color = "#ADAC7F"
+	filling_color = "#adac7f"
 
 	var/wrapped = 0
 	var/monkey_type = /mob/living/carbon/monkey
@@ -1783,7 +1787,7 @@
 	name = "Spell Burger"
 	desc = "This is absolutely Ei Nath."
 	icon_state = "spellburger"
-	filling_color = "#D505FF"
+	filling_color = "#d505ff"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/spellburger/atom_init()
@@ -1795,12 +1799,13 @@
 	name = "Big Bite Burger"
 	desc = "Forget the Big Mac. THIS is the future!"
 	icon_state = "bigbiteburger"
-	filling_color = "#E3D681"
+	filling_color = "#e3d681"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/bigbiteburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 14)
+	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("protein", 10)
 	reagents.add_reagent("vitamin", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/enchiladas
@@ -1808,7 +1813,7 @@
 	desc = "Viva La Mexico!"
 	icon_state = "enchiladas"
 	trash = /obj/item/trash/tray
-	filling_color = "#A36A1F"
+	filling_color = "#a36a1f"
 	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/enchiladas/atom_init()
@@ -1821,7 +1826,7 @@
 	desc = "Eeee Eee!"
 	icon_state = "monkeysdelight"
 	trash = /obj/item/trash/tray
-	filling_color = "#5C3C11"
+	filling_color = "#5c3c11"
 	bitesize = 6
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeysdelight/atom_init()
@@ -1836,7 +1841,7 @@
 	name = "Baguette"
 	desc = "Bon appetit!"
 	icon_state = "baguette"
-	filling_color = "#E3D796"
+	filling_color = "#e3d796"
 
 /obj/item/weapon/reagent_containers/food/snacks/baguette/atom_init()
 	. = ..()
@@ -1850,7 +1855,7 @@
 	name = "Fish and Chips"
 	desc = "I do say so myself chap."
 	icon_state = "fishandchips"
-	filling_color = "#E3D796"
+	filling_color = "#e3d796"
 
 /obj/item/weapon/reagent_containers/food/snacks/fishandchips/atom_init()
 	. = ..()
@@ -1876,7 +1881,7 @@
 	desc = "A grand creation of meat, cheese, bread, and several leaves of lettuce! Arthur Dent would be proud."
 	icon_state = "sandwich"
 	trash = /obj/item/trash/plate
-	filling_color = "#D9BE29"
+	filling_color = "#d9be29"
 
 /obj/item/weapon/reagent_containers/food/snacks/sandwich/atom_init()
 	. = ..()
@@ -1889,7 +1894,7 @@
 	desc = "Now if you only had a pepper bar."
 	icon_state = "toastedsandwich"
 	trash = /obj/item/trash/plate
-	filling_color = "#D9BE29"
+	filling_color = "#d9be29"
 
 /obj/item/weapon/reagent_containers/food/snacks/toastedsandwich/atom_init()
 	. = ..()
@@ -1902,7 +1907,7 @@
 	desc = "Goes great with Tomato soup!"
 	icon_state = "toastedsandwich"
 	trash = /obj/item/trash/plate
-	filling_color = "#D9BE29"
+	filling_color = "#d9be29"
 
 /obj/item/weapon/reagent_containers/food/snacks/grilledcheese/atom_init()
 	. = ..()
@@ -1915,7 +1920,7 @@
 	desc = "Drinking this feels like being a vampire! A tomato vampire..."
 	icon_state = "tomatosoup"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#D92929"
+	filling_color = "#d92929"
 
 /obj/item/weapon/reagent_containers/food/snacks/tomatosoup/atom_init()
 	. = ..()
@@ -1929,7 +1934,7 @@
 	desc = "Waffles from Roffle. Co."
 	icon_state = "rofflewaffles"
 	trash = /obj/item/trash/waffles
-	filling_color = "#FF00F7"
+	filling_color = "#ff00f7"
 
 /obj/item/weapon/reagent_containers/food/snacks/rofflewaffles/atom_init()
 	. = ..()
@@ -1942,7 +1947,7 @@
 	name = "Stew"
 	desc = "A nice and warm stew. Healthy and strong."
 	icon_state = "stew"
-	filling_color = "#9E673A"
+	filling_color = "#9e673a"
 
 /obj/item/weapon/reagent_containers/food/snacks/stew/atom_init()
 	. = ..()
@@ -1958,7 +1963,7 @@
 	desc = "A slice of bread covered with delicious jam."
 	icon_state = "jellytoast"
 	trash = /obj/item/trash/plate
-	filling_color = "#B572AB"
+	filling_color = "#b572ab"
 
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/atom_init()
 	. = ..()
@@ -1982,7 +1987,7 @@
 	name = "Jelly Burger"
 	desc = "Culinary delight..?"
 	icon_state = "jellyburger"
-	filling_color = "#B572AB"
+	filling_color = "#b572ab"
 
 /obj/item/weapon/reagent_containers/food/snacks/jellyburger/atom_init()
 	. = ..()
@@ -2030,7 +2035,7 @@
 	desc = "A plain dish of noodles, this sucks."
 	icon_state = "spagettiboiled"
 	trash = /obj/item/trash/plate
-	filling_color = "#FCEE81"
+	filling_color = "#fcee81"
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspagetti/atom_init()
 	. = ..()
@@ -2043,7 +2048,7 @@
 	desc = "A boring dish of boring rice."
 	icon_state = "boiledrice"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#FFFBDB"
+	filling_color = "#fffbdb"
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledrice/atom_init()
 	. = ..()
@@ -2055,7 +2060,7 @@
 	name = "Sushi"
 	desc = "This is the Japanese preparation and serving of specially prepared vinegared rice combined with varied ingredients such as chiefly seafood"
 	icon_state = "sushi"
-	filling_color = "#FFFBDB"
+	filling_color = "#fffbdb"
 
 /obj/item/weapon/reagent_containers/food/snacks/sushi/atom_init()
 	. = ..()
@@ -2069,7 +2074,7 @@
 	desc = "Where's the Jam!"
 	icon_state = "rpudding"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#FFFBDB"
+	filling_color = "#fffbdb"
 
 /obj/item/weapon/reagent_containers/food/snacks/ricepudding/atom_init()
 	. = ..()
@@ -2082,7 +2087,7 @@
 	desc = "Spaghetti and crushed tomatoes. Just like your abusive father used to make!"
 	icon_state = "pastatomato"
 	trash = /obj/item/trash/plate
-	filling_color = "#DE4545"
+	filling_color = "#de4545"
 
 /obj/item/weapon/reagent_containers/food/snacks/pastatomato/atom_init()
 	. = ..()
@@ -2096,7 +2101,7 @@
 	desc = "Now thats a nic'e meatball!"
 	icon_state = "meatballspagetti"
 	trash = /obj/item/trash/plate
-	filling_color = "#DE4545"
+	filling_color = "#de4545"
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballspagetti/atom_init()
 	. = ..()
@@ -2108,7 +2113,7 @@
 	name = "Spesslaw"
 	desc = "A lawyers favourite"
 	icon_state = "spesslaw"
-	filling_color = "#DE4545"
+	filling_color = "#de4545"
 
 /obj/item/weapon/reagent_containers/food/snacks/spesslaw/atom_init()
 	. = ..()
@@ -2120,7 +2125,7 @@
 	name = "Poppy Pretzel"
 	desc = "A large soft pretzel full of POP!"
 	icon_state = "poppypretzel"
-	filling_color = "#AB7D2E"
+	filling_color = "#ab7d2e"
 
 /obj/item/weapon/reagent_containers/food/snacks/poppypretzel/atom_init()
 	. = ..()
@@ -2132,7 +2137,7 @@
 	desc = "Tasty fries from fresh Carrots."
 	icon_state = "carrotfries"
 	trash = /obj/item/trash/plate
-	filling_color = "#FAA005"
+	filling_color = "#faa005"
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries/atom_init()
 	. = ..()
@@ -2145,11 +2150,13 @@
 	name = "Super Bite Burger"
 	desc = "This is a mountain of a burger. FOOD!"
 	icon_state = "superbiteburger"
-	filling_color = "#CCA26A"
+	filling_color = "#cca26a"
 
 /obj/item/weapon/reagent_containers/food/snacks/superbiteburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 50)
+	reagents.add_reagent("nutriment", 32)
+	reagents.add_reagent("cheese", 4)
+	reagents.add_reagent("protein", 16)
 	reagents.add_reagent("vitamin", 5)
 	bitesize = 10
 
@@ -2157,7 +2164,7 @@
 	name = "Candied Apple"
 	desc = "An apple coated in sugary sweetness."
 	icon_state = "candiedapple"
-	filling_color = "#F21873"
+	filling_color = "#f21873"
 
 /obj/item/weapon/reagent_containers/food/snacks/candiedapple/atom_init()
 	. = ..()
@@ -2169,7 +2176,7 @@
 	name = "Apple Pie"
 	desc = "A pie containing sweet sweet love... or apple."
 	icon_state = "applepie"
-	filling_color = "#E0EDC5"
+	filling_color = "#e0edc5"
 
 /obj/item/weapon/reagent_containers/food/snacks/applepie/atom_init()
 	. = ..()
@@ -2182,7 +2189,7 @@
 	name = "Cherry Pie"
 	desc = "Taste so good, make a grown man cry."
 	icon_state = "cherrypie"
-	filling_color = "#FF525A"
+	filling_color = "#ff525a"
 
 /obj/item/weapon/reagent_containers/food/snacks/cherrypie/atom_init()
 	. = ..()
@@ -2194,7 +2201,7 @@
 	name = "Two Bread"
 	desc = "It is very bitter and winy."
 	icon_state = "twobread"
-	filling_color = "#DBCC9A"
+	filling_color = "#dbcc9a"
 
 /obj/item/weapon/reagent_containers/food/snacks/twobread/atom_init()
 	. = ..()
@@ -2207,7 +2214,7 @@
 	desc = "You wish you had some peanut butter to go with this..."
 	icon_state = "jellysandwich"
 	trash = /obj/item/trash/plate
-	filling_color = "#9E3A78"
+	filling_color = "#9e3a78"
 
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/atom_init()
 	. = ..()
@@ -2241,7 +2248,7 @@
 	name = "mint"
 	desc = "it is only wafer thin."
 	icon_state = "mint"
-	filling_color = "#F2F2F2"
+	filling_color = "#f2f2f2"
 
 /obj/item/weapon/reagent_containers/food/snacks/mint/atom_init()
 	. = ..()
@@ -2253,7 +2260,7 @@
 	desc = "A delicious and hearty mushroom soup."
 	icon_state = "mushroomsoup"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#E386BF"
+	filling_color = "#e386bf"
 
 /obj/item/weapon/reagent_containers/food/snacks/mushroomsoup/atom_init()
 	. = ..()
@@ -2265,7 +2272,7 @@
 	name = "plump helmet biscuit"
 	desc = "This is a finely-prepared plump helmet biscuit. The ingredients are exceptionally minced plump helmet, and well-minced dwarven wheat flour."
 	icon_state = "phelmbiscuit"
-	filling_color = "#CFB4C4"
+	filling_color = "#cfb4c4"
 
 /obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit/atom_init()
 	. = ..()
@@ -2284,7 +2291,7 @@
 	desc = "A legendary egg custard that makes friends out of enemies. Probably too hot for a cat to eat."
 	icon_state = "chawanmushi"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#F0F2E4"
+	filling_color = "#f0f2e4"
 
 /obj/item/weapon/reagent_containers/food/snacks/chawanmushi/atom_init()
 	. = ..()
@@ -2296,7 +2303,7 @@
 	desc = "Wait, how do you spell it again..?"
 	icon_state = "beetsoup"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#FAC9FF"
+	filling_color = "#fac9ff"
 
 /obj/item/weapon/reagent_containers/food/snacks/beetsoup/atom_init()
 	. = ..()
@@ -2322,7 +2329,7 @@
 	desc = "A proper salad, basic and simple, with little bits of carrot, tomato and apple intermingled. Vegan!"
 	icon_state = "herbsalad"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#76B87F"
+	filling_color = "#76b87f"
 
 /obj/item/weapon/reagent_containers/food/snacks/tossedsalad/atom_init()
 	. = ..()
@@ -2335,7 +2342,7 @@
 	desc = "It's just a salad of questionable 'herbs' with meatballs and fried potato slices. Nothing suspicious about it."
 	icon_state = "validsalad"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#76B87F"
+	filling_color = "#76b87f"
 
 /obj/item/weapon/reagent_containers/food/snacks/validsalad/atom_init()
 	. = ..()
@@ -2348,7 +2355,7 @@
 	desc = "A tasty dessert that won't make it through a metal detector."
 	icon_state = "gappletart"
 	trash = /obj/item/trash/plate
-	filling_color = "#FFFF00"
+	filling_color = "#ffff00"
 
 /obj/item/weapon/reagent_containers/food/snacks/appletart/atom_init()
 	. = ..()
@@ -2368,7 +2375,7 @@
 	icon_state = "meatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice
 	slices_num = 5
-	filling_color = "#FF7575"
+	filling_color = "#ff7575"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/meatbread/atom_init()
 	. = ..()
@@ -2382,7 +2389,7 @@
 	desc = "A slice of delicious meatbread."
 	icon_state = "meatbreadslice"
 	trash = /obj/item/trash/plate
-	filling_color = "#FF7575"
+	filling_color = "#ff7575"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/xenomeatbread
@@ -2391,7 +2398,7 @@
 	icon_state = "xenomeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice
 	slices_num = 5
-	filling_color = "#8AFF75"
+	filling_color = "#8aff75"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/xenomeatbread/atom_init()
 	. = ..()
@@ -2405,7 +2412,7 @@
 	desc = "A slice of delicious meatbread. Extra Heretical."
 	icon_state = "xenobreadslice"
 	trash = /obj/item/trash/plate
-	filling_color = "#8AFF75"
+	filling_color = "#8aff75"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/spidermeatbread
@@ -2435,7 +2442,7 @@
 	icon_state = "bananabread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/bananabreadslice
 	slices_num = 5
-	filling_color = "#EDE5AD"
+	filling_color = "#ede5ad"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bananabread/atom_init()
 	. = ..()
@@ -2448,7 +2455,7 @@
 	desc = "A slice of delicious banana bread."
 	icon_state = "bananabreadslice"
 	trash = /obj/item/trash/plate
-	filling_color = "#EDE5AD"
+	filling_color = "#ede5ad"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/tofubread
@@ -2457,7 +2464,7 @@
 	icon_state = "tofubread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice
 	slices_num = 5
-	filling_color = "#F7FFE0"
+	filling_color = "#f7ffe0"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/tofubread/atom_init()
 	. = ..()
@@ -2470,7 +2477,7 @@
 	desc = "A slice of delicious tofubread."
 	icon_state = "tofubreadslice"
 	trash = /obj/item/trash/plate
-	filling_color = "#F7FFE0"
+	filling_color = "#f7ffe0"
 	bitesize = 2
 
 
@@ -2480,7 +2487,7 @@
 	icon_state = "carrotcake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/carrotcakeslice
 	slices_num = 5
-	filling_color = "#FFD675"
+	filling_color = "#ffd675"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/carrotcake/atom_init()
 	. = ..()
@@ -2494,7 +2501,7 @@
 	desc = "Carrotty slice of Carrot Cake, carrots are good for your eyes! Also not a lie."
 	icon_state = "carrotcake_slice"
 	trash = /obj/item/trash/plate
-	filling_color = "#FFD675"
+	filling_color = "#ffd675"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/braincake
@@ -2503,7 +2510,7 @@
 	icon_state = "braincake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/braincakeslice
 	slices_num = 5
-	filling_color = "#E6AEDB"
+	filling_color = "#e6aedb"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/braincake/atom_init()
 	. = ..()
@@ -2518,7 +2525,7 @@
 	desc = "Lemme tell you something about prions. THEY'RE DELICIOUS."
 	icon_state = "braincakeslice"
 	trash = /obj/item/trash/plate
-	filling_color = "#E6AEDB"
+	filling_color = "#e6aedb"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesecake
@@ -2527,7 +2534,7 @@
 	icon_state = "cheesecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cheesecakeslice
 	slices_num = 5
-	filling_color = "#FAF7AF"
+	filling_color = "#faf7af"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesecake/atom_init()
 	. = ..()
@@ -2540,7 +2547,7 @@
 	desc = "Slice of pure cheestisfaction"
 	icon_state = "cheesecake_slice"
 	trash = /obj/item/trash/plate
-	filling_color = "#FAF7AF"
+	filling_color = "#faf7af"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/plaincake
@@ -2549,7 +2556,7 @@
 	icon_state = "plaincake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/plaincakeslice
 	slices_num = 5
-	filling_color = "#F7EDD5"
+	filling_color = "#f7edd5"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/plaincake/atom_init()
 	. = ..()
@@ -2561,7 +2568,7 @@
 	desc = "Just a slice of cake, it is enough for everyone."
 	icon_state = "plaincake_slice"
 	trash = /obj/item/trash/plate
-	filling_color = "#F7EDD5"
+	filling_color = "#f7edd5"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/orangecake
@@ -2570,7 +2577,7 @@
 	icon_state = "orangecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/orangecakeslice
 	slices_num = 5
-	filling_color = "#FADA8E"
+	filling_color = "#fada8e"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/orangecake/atom_init()
 	. = ..()
@@ -2582,7 +2589,7 @@
 	desc = "Just a slice of cake, it is enough for everyone."
 	icon_state = "orangecake_slice"
 	trash = /obj/item/trash/plate
-	filling_color = "#FADA8E"
+	filling_color = "#fada8e"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/limecake
@@ -2591,7 +2598,7 @@
 	icon_state = "limecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/limecakeslice
 	slices_num = 5
-	filling_color = "#CBFA8E"
+	filling_color = "#cbfa8e"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/limecake/atom_init()
 	. = ..()
@@ -2603,7 +2610,7 @@
 	desc = "Just a slice of cake, it is enough for everyone."
 	icon_state = "limecake_slice"
 	trash = /obj/item/trash/plate
-	filling_color = "#CBFA8E"
+	filling_color = "#cbfa8e"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/lemoncake
@@ -2612,7 +2619,7 @@
 	icon_state = "lemoncake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/lemoncakeslice
 	slices_num = 5
-	filling_color = "#FAFA8E"
+	filling_color = "#fafa8e"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/lemoncake/atom_init()
 	. = ..()
@@ -2624,7 +2631,7 @@
 	desc = "Just a slice of cake, it is enough for everyone."
 	icon_state = "lemoncake_slice"
 	trash = /obj/item/trash/plate
-	filling_color = "#FAFA8E"
+	filling_color = "#fafa8e"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/chocolatecake
@@ -2654,7 +2661,7 @@
 	icon_state = "cheesewheel"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
 	slices_num = 5
-	filling_color = "#FFF700"
+	filling_color = "#fff700"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel/atom_init()
 	. = ..()
@@ -2667,7 +2674,7 @@
 	name = "Cheese wedge"
 	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
 	icon_state = "cheesewedge"
-	filling_color = "#FFF700"
+	filling_color = "#fff700"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/birthdaycake
@@ -2676,7 +2683,7 @@
 	icon_state = "birthdaycake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/birthdaycakeslice
 	slices_num = 5
-	filling_color = "#FFD6D6"
+	filling_color = "#ffd6d6"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/birthdaycake/atom_init()
 	. = ..()
@@ -2690,7 +2697,7 @@
 	desc = "A slice of your birthday"
 	icon_state = "birthdaycakeslice"
 	trash = /obj/item/trash/plate
-	filling_color = "#FFD6D6"
+	filling_color = "#ffd6d6"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread
@@ -2699,7 +2706,7 @@
 	icon_state = "bread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice
 	slices_num = 5
-	filling_color = "#FFE396"
+	filling_color = "#ffe396"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/atom_init()
 	. = ..()
@@ -2712,7 +2719,7 @@
 	desc = "A slice of home."
 	icon_state = "breadslice"
 	trash = /obj/item/trash/plate
-	filling_color = "#D27332"
+	filling_color = "#d27332"
 	bitesize = 2
 
 
@@ -2722,7 +2729,7 @@
 	icon_state = "creamcheesebread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/creamcheesebreadslice
 	slices_num = 5
-	filling_color = "#FFF896"
+	filling_color = "#fff896"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/creamcheesebread/atom_init()
 	. = ..()
@@ -2735,7 +2742,7 @@
 	desc = "A slice of yum!"
 	icon_state = "creamcheesebreadslice"
 	trash = /obj/item/trash/plate
-	filling_color = "#FFF896"
+	filling_color = "#fff896"
 	bitesize = 2
 
 
@@ -2743,7 +2750,7 @@
 	name = "Watermelon Slice"
 	desc = "A slice of watery goodness."
 	icon_state = "watermelonslice"
-	filling_color = "#FF3867"
+	filling_color = "#ff3867"
 	bitesize = 2
 
 
@@ -2753,7 +2760,7 @@
 	icon_state = "applecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/applecakeslice
 	slices_num = 5
-	filling_color = "#EBF5B8"
+	filling_color = "#ebf5b8"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/applecake/atom_init()
 	. = ..()
@@ -2765,7 +2772,7 @@
 	desc = "A slice of heavenly cake."
 	icon_state = "applecakeslice"
 	trash = /obj/item/trash/plate
-	filling_color = "#EBF5B8"
+	filling_color = "#ebf5b8"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pumpkinpie
@@ -2774,7 +2781,7 @@
 	icon_state = "pumpkinpie"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pumpkinpieslice
 	slices_num = 5
-	filling_color = "#F5B951"
+	filling_color = "#f5b951"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pumpkinpie/atom_init()
 	. = ..()
@@ -2786,14 +2793,14 @@
 	desc = "A slice of pumpkin pie, with whipped cream on top. Perfection."
 	icon_state = "pumpkinpieslice"
 	trash = /obj/item/trash/plate
-	filling_color = "#F5B951"
+	filling_color = "#f5b951"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/cracker
 	name = "Cracker"
 	desc = "It's a salted cracker."
 	icon_state = "cracker"
-	filling_color = "#F5DEB8"
+	filling_color = "#f5deb8"
 
 /obj/item/weapon/reagent_containers/food/snacks/cracker/atom_init()
 	. = ..()
@@ -2805,7 +2812,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza
 	slices_num = 6
-	filling_color = "#BAA14C"
+	filling_color = "#baa14c"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita
 	name = "Margherita"
@@ -2825,7 +2832,7 @@
 	name = "Margherita slice"
 	desc = "A slice of the classic pizza."
 	icon_state = "pizzamargheritaslice"
-	filling_color = "#BAA14C"
+	filling_color = "#baa14c"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza
@@ -2846,7 +2853,7 @@
 	name = "Meatpizza slice"
 	desc = "A slice of a meaty pizza."
 	icon_state = "meatpizzaslice"
-	filling_color = "#BAA14C"
+	filling_color = "#baa14c"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroompizza
@@ -2866,7 +2873,7 @@
 	name = "Mushroompizza slice"
 	desc = "Maybe it is the last slice of pizza in your life."
 	icon_state = "mushroompizzaslice"
-	filling_color = "#BAA14C"
+	filling_color = "#baa14c"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza
@@ -2888,7 +2895,7 @@
 	name = "Vegetable pizza slice"
 	desc = "A slice of the most green pizza of all pizzas not containing green ingredients "
 	icon_state = "vegetablepizzaslice"
-	filling_color = "#BAA14C"
+	filling_color = "#baa14c"
 	bitesize = 2
 
 /obj/item/pizzabox
@@ -2992,7 +2999,7 @@
 	update_icon()
 
 /obj/item/pizzabox/attackby( obj/item/I, mob/user )
-	if( istype(I, /obj/item/pizzabox/) )
+	if( istype(I, /obj/item/pizzabox) )
 		var/obj/item/pizzabox/box = I
 
 		if( !box.open && !src.open )
@@ -3020,7 +3027,7 @@
 
 		return
 
-	if( istype(I, /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/) ) // Long ass fucking object name
+	if( istype(I, /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza) ) // Long ass fucking object name
 
 		if( src.open )
 			user.drop_item()
@@ -3034,7 +3041,7 @@
 			to_chat(user, "<span class='rose'>You try to push the [I] through the lid but it doesn't work!</span>")
 		return
 
-	if( istype(I, /obj/item/weapon/pen/) )
+	if( istype(I, /obj/item/weapon/pen) )
 
 		if( src.open )
 			return
@@ -3076,7 +3083,7 @@
 	desc = "It's like an enormous, leathery carrot. With an eye."
 	icon_state = "dionaroast"
 	trash = /obj/item/trash/plate
-	filling_color = "#75754B"
+	filling_color = "#75754b"
 
 /obj/item/weapon/reagent_containers/food/snacks/dionaroast/atom_init()
 	. = ..()
@@ -3123,14 +3130,6 @@
 ///////////////////////////////////////////
 // new old food stuff from bs12
 ///////////////////////////////////////////
-
-/* Egg + flour = dough
-/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/flour))
-		new /obj/item/weapon/reagent_containers/food/snacks/dough(src)
-		to_chat(user, "<span class='notice'>You make some dough.</span>")
-		qdel(W)
-		qdel(src) */
 
 /obj/item/weapon/reagent_containers/food/snacks/dough
 	name = "dough"
@@ -3283,7 +3282,7 @@
 	name = "Deep Fried Foods Holder Obj"
 	desc = "If you can see this description the code for the deep fryer fucked up."
 	icon_state = "deepfried_holder_icon"
-	filling_color = "#FFAD33"
+	filling_color = "#ffad33"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/deepfryholder/atom_init()
@@ -3453,7 +3452,7 @@
 	desc = "A serving of some tender and delicious turkey."
 	icon_state = "turkeyslice"
 	trash = /obj/item/trash/plate
-	filling_color = "#B97A57"
+	filling_color = "#b97a57"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/herbsalad
@@ -3461,7 +3460,7 @@
 	desc = "A tasty salad with apples on top."
 	icon_state = "herbsalad"
 	trash = /obj/item/trash/snack_bowl
-	filling_color = "#76B87F"
+	filling_color = "#76b87f"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/herbsalad/atom_init()
@@ -3473,7 +3472,7 @@
 	desc = "Meat, beans, cheese, and rice wrapped up as an easy-to-hold meal."
 	icon_state = "burrito"
 	trash = /obj/item/trash/plate
-	filling_color = "#A36A1F"
+	filling_color = "#a36a1f"
 	bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/burrito/atom_init()
@@ -3515,7 +3514,7 @@
 	desc = "A piece of freshly-grilled salmon meat."
 	icon_state = "salmonsteak"
 	trash = /obj/item/trash/plate
-	filling_color = "#7A3D11"
+	filling_color = "#7a3d11"
 	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/salmonsteak/atom_init()
@@ -3529,7 +3528,7 @@
 	name = "Fudge"
 	desc = "Chocolate fudge, a timeless classic treat."
 	icon_state = "fudge"
-	filling_color = "#7D5F46"
+	filling_color = "#7d5f46"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/fudge/atom_init()
@@ -3541,7 +3540,7 @@
 	name = "Chocolate Cherry Fudge"
 	desc = "Chocolate fudge surrounding sweet cherries. Good for tricking kids into eating some fruit."
 	icon_state = "fudge_cherry"
-	filling_color = "#7D5F46"
+	filling_color = "#7d5f46"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/fudge/cherry/atom_init()
@@ -3553,7 +3552,7 @@
 	name = "Cookies 'n' Cream Fudge"
 	desc = "An extra creamy fudge with bits of real chocolate cookie mixed in. Crunchy!"
 	icon_state = "fudge_cookies_n_cream"
-	filling_color = "#7D5F46"
+	filling_color = "#7d5f46"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/fudge/cookies_n_cream/atom_init()
@@ -3565,7 +3564,7 @@
 	name = "Turtle Fudge"
 	desc = "Chocolate fudge with caramel and nuts. It doesn't contain real turtles, thankfully."
 	icon_state = "fudge_turtle"
-	filling_color = "#7D5F46"
+	filling_color = "#7d5f46"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/fudge/turtle/atom_init()
@@ -3577,7 +3576,7 @@
 	name = "Toffee"
 	desc = "A hard, brittle candy with a distinctive taste."
 	icon_state = "toffee"
-	filling_color = "#7D5F46"
+	filling_color = "#7d5f46"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/toffee/atom_init()
@@ -3590,7 +3589,7 @@
 	name = "Caramel"
 	desc = "Chewy and dense, yet it practically melts in your mouth!"
 	icon_state = "caramel"
-	filling_color = "#DB944D"
+	filling_color = "#db944d"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/caramel/atom_init()
@@ -3602,7 +3601,7 @@
 	name = "candy cane"
 	desc = "A festive mint candy cane."
 	icon_state = "candycane"
-	filling_color = "#F2F2F2"
+	filling_color = "#f2f2f2"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/candycane/atom_init()
@@ -3613,7 +3612,7 @@
 	name = "Saltwater Taffy"
 	desc = "Old fashioned saltwater taffy. Chewy!"
 	icon_state = "candy1"
-	filling_color = "#7D5F46"
+	filling_color = "#7d5f46"
 	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/taffy/atom_init()
@@ -3626,7 +3625,7 @@
 	name = "Nougat"
 	desc = "A soft, chewy candy commonly found in candybars."
 	icon_state = "nougat"
-	filling_color = "#7D5F46"
+	filling_color = "#7d5f46"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/nougat/atom_init()
@@ -3642,7 +3641,7 @@
 	name = "cotton candy"
 	desc = "Light and fluffy, it's like eating a cloud made from sugar!"
 	icon_state = "cottoncandy_plain"
-	filling_color = "#FFFFFF"
+	filling_color = "#ffffff"
 	trash = /obj/item/weapon/c_tube
 	bitesize = 3
 
@@ -3654,7 +3653,7 @@
 	name = "cotton candy"
 	desc = "Light and fluffy, it's like eating a cloud made from sugar!"
 	icon_state = "cottoncandy_red"
-	filling_color = "#801E28"
+	filling_color = "#801e28"
 	trash = /obj/item/weapon/c_tube
 	bitesize = 4
 
@@ -3678,7 +3677,7 @@
 	name = "cotton candy"
 	desc = "Light and fluffy, it's like eating a cloud made from sugar!"
 	icon_state = "cottoncandy_green"
-	filling_color = "#365E30"
+	filling_color = "#365e30"
 	trash = /obj/item/weapon/c_tube
 	bitesize = 4
 
@@ -3702,7 +3701,7 @@
 	name = "cotton candy"
 	desc = "Light and fluffy, it's like eating a cloud made from sugar!"
 	icon_state = "cottoncandy_orange"
-	filling_color = "#E78108"
+	filling_color = "#e78108"
 	trash = /obj/item/weapon/c_tube
 	bitesize = 4
 
@@ -3738,7 +3737,7 @@
 	name = "cotton candy"
 	desc = "Light and fluffy, it's like eating a cloud made from sugar!"
 	icon_state = "cottoncandy_rainbow"
-	filling_color = "#C8A5DC"
+	filling_color = "#c8a5dc"
 	trash = /obj/item/weapon/c_tube
 	bitesize = 4
 
@@ -3755,7 +3754,7 @@
 	name = "gummy bear"
 	desc = "A small edible bear. It's squishy and chewy!"
 	icon_state = "gbear"
-	filling_color = "#FFFFFF"
+	filling_color = "#ffffff"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummybear/atom_init()
@@ -3766,7 +3765,7 @@
 	name = "gummy worm"
 	desc = "An edible worm, made from gelatin."
 	icon_state = "gworm"
-	filling_color = "#FFFFFF"
+	filling_color = "#ffffff"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/atom_init()
@@ -3777,7 +3776,7 @@
 	name = "jelly bean"
 	desc = "A candy bean, guarenteed to not give you gas."
 	icon_state = "jbean"
-	filling_color = "#FFFFFF"
+	filling_color = "#ffffff"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/atom_init()
@@ -3788,7 +3787,7 @@
 	name = "jawbreaker"
 	desc = "An unbelievably hard candy. The name is fitting."
 	icon_state = "jawbreaker"
-	filling_color = "#ED0758"
+	filling_color = "#ed0758"
 	bitesize = 0.1	//this is gonna take a while, you'll be working at this all shift.
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/jawbreaker/atom_init()
@@ -3823,7 +3822,7 @@
 	name = "bubblegum"
 	desc = "Chewy!"
 	icon_state = "bubblegum"
-	filling_color = "#FF7495"
+	filling_color = "#ff7495"
 	bitesize = 0.2
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gum/atom_init()
@@ -3834,7 +3833,7 @@
 	name = "sucker"
 	desc = "For being such a good sport!"
 	icon_state = "sucker"
-	filling_color = "#FFFFFF"
+	filling_color = "#ffffff"
 	bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/sucker/atom_init()
@@ -3849,7 +3848,7 @@
 	name = "gummy bear"
 	desc = "A small edible bear. It's red!"
 	icon_state = "gbear_red"
-	filling_color = "#801E28"
+	filling_color = "#801e28"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummybear/red/atom_init()
@@ -3871,7 +3870,7 @@
 	name = "gummy bear"
 	desc = "A small edible bear. It's green!"
 	icon_state = "gbear_green"
-	filling_color = "#365E30"
+	filling_color = "#365e30"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummybear/green/atom_init()
@@ -3893,7 +3892,7 @@
 	name = "gummy bear"
 	desc = "A small edible bear. It's orange!"
 	icon_state = "gbear_orange"
-	filling_color = "#E78108"
+	filling_color = "#e78108"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummybear/orange/atom_init()
@@ -3915,7 +3914,7 @@
 	name = "gummy bear"
 	desc = "A small bear. Wait... what?"
 	icon_state = "gbear_wtf"
-	filling_color = "#60A584"
+	filling_color = "#60a584"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummybear/wtf/atom_init()
@@ -3930,7 +3929,7 @@
 	name = "gummy worm"
 	desc = "An edible worm, made from gelatin. It's red!"
 	icon_state = "gworm_red"
-	filling_color = "#801E28"
+	filling_color = "#801e28"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/red/atom_init()
@@ -3952,7 +3951,7 @@
 	name = "gummy worm"
 	desc = "An edible worm, made from gelatin. It's green!"
 	icon_state = "gworm_green"
-	filling_color = "#365E30"
+	filling_color = "#365e30"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/green/atom_init()
@@ -3974,7 +3973,7 @@
 	name = "gummy worm"
 	desc = "An edible worm, made from gelatin. It's orange!"
 	icon_state = "gworm_orange"
-	filling_color = "#E78108"
+	filling_color = "#e78108"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/orange/atom_init()
@@ -3996,7 +3995,7 @@
 	name = "gummy worm"
 	desc = "An edible worm. Did it just move?"
 	icon_state = "gworm_wtf"
-	filling_color = "#60A584"
+	filling_color = "#60a584"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/wtf/atom_init()
@@ -4011,7 +4010,7 @@
 	name = "jelly bean"
 	desc = "A candy bean, guarenteed to not give you gas. It's red!"
 	icon_state = "jbean_red"
-	filling_color = "#801E28"
+	filling_color = "#801e28"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/red/atom_init()
@@ -4033,7 +4032,7 @@
 	name = "jelly bean"
 	desc = "A candy bean, guarenteed to not give you gas. It's green!"
 	icon_state = "jbean_green"
-	filling_color = "#365E30"
+	filling_color = "#365e30"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/green/atom_init()
@@ -4055,7 +4054,7 @@
 	name = "jelly bean"
 	desc = "A candy bean, guarenteed to not give you gas. It's orange!"
 	icon_state = "jbean_orange"
-	filling_color = "#E78108"
+	filling_color = "#e78108"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/orange/atom_init()
@@ -4132,7 +4131,7 @@
 	name = "jelly bean"
 	desc = "A candy bean, guarenteed to not give you gas. You aren't sure what color it is."
 	icon_state = "jbean_wtf"
-	filling_color = "#60A584"
+	filling_color = "#60a584"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/wtf/atom_init()
@@ -4148,38 +4147,38 @@
 	desc = "Nougat, love it or hate it."
 	icon_state = "candy"
 	trash = /obj/item/trash/candy
-	filling_color = "#7D5F46"
+	filling_color = "#7d5f46"
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/rice
 	name = "Asteroid Crunch Bar"
 	desc = "Crunchy rice deposits in delicious chocolate! A favorite of miners galaxy-wide."
 	icon_state = "asteroidcrunch"
 	trash = /obj/item/trash/candy
-	filling_color = "#7D5F46"
+	filling_color = "#7d5f46"
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/yumbaton
 	name = "Yum-baton Bar"
 	desc = "Chocolate and toffee in the shape of a baton. Security sure knows how to pound these down!"
 	icon_state = "yumbaton"
-	filling_color = "#7D5F46"
+	filling_color = "#7d5f46"
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/malper
 	name = "Malper Bar"
 	desc = "A chocolate syringe filled with a caramel injection. Just what the doctor ordered!"
 	icon_state = "malper"
-	filling_color = "#7D5F46"
+	filling_color = "#7d5f46"
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/caramel_nougat
 	name = "Toxins Test Bar"
 	desc = "An explosive combination of chocolate, caramel, and nougat. Research has never been so tasty!"
 	icon_state = "toxinstest"
-	filling_color = "#7D5F46"
+	filling_color = "#7d5f46"
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/toolerone
 	name = "Tool-erone Bar"
 	desc = "Chocolate-covered nougat, shaped like a wrench. Great for an engineer on the go!"
 	icon_state = "toolerone"
-	filling_color = "#7D5F46"
+	filling_color = "#7d5f46"
 
 ///////////////////////////////////////////
 // SUCKERS! :3
@@ -4189,7 +4188,7 @@
 	name = "sucker"
 	desc = "For being such a good sport! It's red!"
 	icon_state = "sucker_red"
-	filling_color = "#801E28"
+	filling_color = "#801e28"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/sucker/red/atom_init()
@@ -4211,7 +4210,7 @@
 	name = "sucker"
 	desc = "For being such a good sport! It's green!"
 	icon_state = "sucker_green"
-	filling_color = "#365E30"
+	filling_color = "#365e30"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/sucker/green/atom_init()
@@ -4233,7 +4232,7 @@
 	name = "sucker"
 	desc = "For being such a good sport! It's orange!"
 	icon_state = "sucker_orange"
-	filling_color = "#E78108"
+	filling_color = "#e78108"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/sucker/orange/atom_init()
@@ -4259,7 +4258,7 @@
 	name = "gummy worm"
 	desc = "An edible worm, made from gelatin. It's red!"
 	icon_state = "gworm_red"
-	filling_color = "#801E28"
+	filling_color = "#801e28"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/red/atom_init()
@@ -4281,7 +4280,7 @@
 	name = "gummy worm"
 	desc = "An edible worm, made from gelatin. It's green!"
 	icon_state = "gworm_green"
-	filling_color = "#365E30"
+	filling_color = "#365e30"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/green/atom_init()
@@ -4303,7 +4302,7 @@
 	name = "gummy worm"
 	desc = "An edible worm, made from gelatin. It's orange!"
 	icon_state = "gworm_orange"
-	filling_color = "#E78108"
+	filling_color = "#e78108"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/orange/atom_init()
@@ -4325,7 +4324,7 @@
 	name = "gummy worm"
 	desc = "An edible worm. Did it just move?"
 	icon_state = "gworm_wtf"
-	filling_color = "#60A584"
+	filling_color = "#60a584"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/wtf/atom_init()
@@ -4345,3 +4344,11 @@
 /obj/item/weapon/reagent_containers/food/snacks/ectoplasm/atom_init()
 	. = ..()
 	reagents.add_reagent("ectoplasm", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/fries/cardboard
+	icon_state = "fries_cardboard"
+	trash = /obj/item/trash/fries
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesyfries/cardboard
+	icon_state = "cheesyfries_cardboard"
+	trash = /obj/item/trash/fries

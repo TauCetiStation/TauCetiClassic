@@ -4,11 +4,13 @@
 	icon_state = "wheelchair"
 	anchored = 0
 	buckle_movable = 1
+	flags = NODECONSTRUCT
 
 	var/driving = 0
 	var/mob/living/pulling = null
 	var/bloodiness
-
+	var/brake = 0
+	var/alert = 0
 
 /obj/structure/stool/bed/chair/wheelchair/handle_rotation()
 	overlays = null
@@ -17,7 +19,37 @@
 	if(buckled_mob)
 		buckled_mob.dir = dir
 
+/obj/structure/stool/bed/chair/wheelchair/post_buckle_mob(mob/living/M)
+	. = ..()
+	if(!buckled_mob && alert)
+		M.clear_alert("brake")
+		alert = 0
+
+/obj/structure/stool/bed/chair/wheelchair/verb/toggle_brake()
+	set name = "Toggle brake"
+	set category = "Object"
+	set src in oview(1)
+
+	brake = !brake
+
+	if(isliving(usr))
+		var/mob/living/M = usr
+		if(buckled_mob == M)
+			if(brake)
+				M.throw_alert("brake")
+				alert = 1
+			else
+				M.clear_alert("brake")
+				alert = 0
+	if(brake)
+		to_chat(usr, "<span class='notice'>You turn the brake on.</span>")
+	else
+		to_chat(usr, "<span class='notice'>You turn the brake off.</span>")
+
 /obj/structure/stool/bed/chair/wheelchair/relaymove(mob/user, direction)
+	if(brake)
+		to_chat(user, "<span class='red'>You cannot drive while brake is on.</span>")
+		return
 	if(user.stat || user.stunned || user.weakened || user.paralysis || user.lying || user.restrained())
 		if(user==pulling)
 			pulling = null
@@ -36,7 +68,7 @@
 		if(user==pulling)
 			return
 	if(pulling && (get_dir(src.loc, pulling.loc) == direction))
-		to_chat(user, "<span class='red'>You cannot go there.")
+		to_chat(user, "<span class='red'>You cannot go there.</span>")
 		return
 	if(pulling && buckled_mob && (buckled_mob == user))
 		to_chat(user, "<span class='red'>You cannot drive while being pushed.</span>")
@@ -74,8 +106,10 @@
 		create_track()
 	driving = 0
 
-/obj/structure/stool/bed/chair/wheelchair/Move()
-	..()
+/obj/structure/stool/bed/chair/wheelchair/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	if(brake)
+		return FALSE
+	. = ..()
 	if(buckled_mob)
 		var/mob/living/occupant = buckled_mob
 		if(!driving)
@@ -96,6 +130,8 @@
 		else
 			if (occupant && (src.loc != occupant.loc))
 				src.loc = occupant.loc // Failsafe to make sure the wheelchair stays beneath the occupant after driving
+	else if(has_gravity(src))
+		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER)
 	handle_rotation()
 
 /obj/structure/stool/bed/chair/wheelchair/attack_hand(mob/living/user)
@@ -130,6 +166,8 @@
 		return
 
 /obj/structure/stool/bed/chair/wheelchair/Bump(atom/A)
+	if(brake)
+		return
 	..()
 	if(!buckled_mob)	return
 
@@ -142,7 +180,7 @@
 		occupant.apply_effect(6, STUN, 0)
 		occupant.apply_effect(6, WEAKEN, 0)
 		occupant.apply_effect(6, STUTTER, 0)
-		playsound(src.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/punch1.ogg', VOL_EFFECTS_MASTER)
 		if(istype(A, /mob/living))
 			var/mob/living/victim = A
 			victim.apply_effect(6, STUN, 0)
@@ -154,7 +192,7 @@
 
 			pulling.attack_log += "\[[time_stamp()]\]<font color='red'> Crashed [occupant.name]'s ([occupant.ckey]) [name] into \a [A]</font>"
 			occupant.attack_log += "\[[time_stamp()]\]<font color='orange'> Thrusted into \a [A] by [pulling.name] ([pulling.ckey]) with \the [name]</font>"
-			msg_admin_attack("[pulling.name] ([pulling.ckey]) has thrusted [occupant.name]'s ([occupant.ckey]) [name] into \a [A] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[pulling.x];Y=[pulling.y];Z=[pulling.z]'>JMP</a>)")
+			msg_admin_attack("[pulling.name] ([pulling.ckey]) has thrusted [occupant.name]'s ([occupant.ckey]) [name] into \a [A]", pulling)
 		else
 			occupant.visible_message("<span class='danger'>[occupant] crashed into \the [A]!</span>")
 

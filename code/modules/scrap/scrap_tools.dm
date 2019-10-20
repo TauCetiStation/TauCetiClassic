@@ -8,7 +8,7 @@
 
 	max_storage_space = 120
 	max_w_class = ITEM_SIZE_LARGE
-	can_hold = list("/obj/item/weapon/scrap_lump")
+	can_hold = list(/obj/item/weapon/scrap_lump)
 	cant_hold = list()
 
 /obj/item/weapon/paper/crumpled/bloody/dickbutt

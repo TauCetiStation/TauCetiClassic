@@ -3,7 +3,7 @@
 	singular_name = "wired glass floor tile"
 	desc = "A glass tile, which is wired, somehow."
 	icon_state = "glass_wire"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	force = 3.0
 	throwforce = 5.0
 	throw_speed = 5
@@ -13,7 +13,7 @@
 
 /obj/item/stack/light_w/attackby(obj/item/O, mob/user)
 	..()
-	if(istype(O,/obj/item/weapon/wirecutters))
+	if(iswirecutter(O))
 		if(!use(1))
 			return
 		new/obj/item/stack/cable_coil/random(user.loc, 5)

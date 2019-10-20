@@ -103,9 +103,10 @@
 		previous.Detach()
 	return ..()
 
-/mob/living/simple_animal/space_worm/Move()
+/mob/living/simple_animal/space_worm/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	var/attachementNextPosition = loc
-	if(..())
+	. = ..()
+	if(.)
 		if(previous)
 			previous.Move(attachementNextPosition)
 		update_icon()

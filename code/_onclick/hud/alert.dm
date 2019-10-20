@@ -118,6 +118,21 @@
 	name = "Fat"
 	desc = "You ate too much food, lardass. Run around the station and lose some weight."
 
+/obj/screen/alert/full
+	name = "Full"
+	desc = "You feel full and satisfied, but you shouldn't eat much more."
+	icon_state = "full"
+
+/obj/screen/alert/well_fed
+	name = "Well Fed"
+	desc = "You feel quite satisfied, but you may be able to eat a bit more."
+	icon_state = "well_fed"
+
+/obj/screen/alert/fed
+	name = "Fed"
+	desc = "You feel moderately satisfied, but a bit more food may not hurt."
+	icon_state = "fed"
+
 /obj/screen/alert/hungry
 	name = "Hungry"
 	desc = "Some food would be good right about now."
@@ -238,6 +253,11 @@
 /obj/screen/alert/buckled
 	name = "Buckled"
 	desc = "You've been buckled to something and can't move. Click the alert to unbuckle unless you're handcuffed."
+
+/obj/screen/alert/brake
+	icon_state = "brake"
+	name = "Brake is on"
+	desc = "Wheelchair's brake is on right now, so you can't move."
 
 /obj/screen/alert/handcuffed // Not used right now.
 	name = "Handcuffed"

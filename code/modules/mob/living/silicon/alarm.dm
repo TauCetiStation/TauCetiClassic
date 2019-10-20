@@ -7,7 +7,12 @@
 	area = A
 	sources = sourcelist
 	cameras = cameralist
-	
+	datum_alarm_list += src
+
+/datum/alarm/Destroy()
+	datum_alarm_list -= src
+	return ..()
+
 /mob/living/silicon
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list())	//each sublist stores alarms keyed by the area name
 	var/list/alarms_to_show = list()
@@ -17,7 +22,7 @@
 
 /mob/living/silicon/proc/triggerAlarm(class, area/A, list/cameralist, source)
 	var/list/alarmlist = alarms[class]
-	
+
 	//see if there is already an alarm of this class for this area
 	if (A.name in alarmlist)
 		var/datum/alarm/existing = alarmlist[A.name]
@@ -29,11 +34,11 @@
 /mob/living/silicon/proc/cancelAlarm(class, area/A, source)
 	var/cleared = 0
 	var/list/alarmlist = alarms[class]
-	
+
 	if (A.name in alarmlist)
 		var/datum/alarm/alarm = alarmlist[A.name]
 		alarm.sources -= source
-		
+
 		if (!(alarm.sources.len))
 			cleared = 1
 			alarmlist -= A.name

@@ -107,6 +107,7 @@
 		else
 			msg += "[t_He] [t_has] [bicon(back)] \a [back] on [t_his] back.\n"
 
+	var/static/list/changeling_weapons = list(/obj/item/weapon/changeling_whip, /obj/item/weapon/shield/changeling, /obj/item/weapon/melee/arm_blade, /obj/item/weapon/changeling_hammer)
 	//left hand
 	if(l_hand && !(l_hand.flags&ABSTRACT))
 		if(l_hand.dirt_overlay)
@@ -115,6 +116,8 @@
 			msg += "<span class='wet'>[t_He] [t_is] holding [bicon(l_hand)] [l_hand.gender==PLURAL?"some":"a"] wet [l_hand.name] in [t_his] left hand!</span>\n"
 		else
 			msg += "[t_He] [t_is] holding [bicon(l_hand)] \a [l_hand] in [t_his] left hand.\n"
+	else if(l_hand && (l_hand.type in changeling_weapons))
+		msg += "<span class='warning'>[t_He] [t_has] [bicon(l_hand)] \a [l_hand] instead of his left arm!</span>\n"
 
 	//right hand
 	if(r_hand && !(r_hand.flags&ABSTRACT))
@@ -124,6 +127,8 @@
 			msg += "<span class='wet'>[t_He] [t_is] holding [bicon(r_hand)] [r_hand.gender==PLURAL?"some":"a"] wet [r_hand.name] in [t_his] right hand!</span>\n"
 		else
 			msg += "[t_He] [t_is] holding [bicon(r_hand)] \a [r_hand] in [t_his] right hand.\n"
+	else if(r_hand && (r_hand.type in changeling_weapons))
+		msg += "<span class='warning'>[t_He] [t_has] [bicon(r_hand)] \a [r_hand] instead of his right arm!</span>\n"
 
 	//gloves
 	if(gloves && !skipgloves)
@@ -133,8 +138,8 @@
 			msg += "<span class='wet'>[t_He] [t_has] [bicon(gloves)] [gloves.gender==PLURAL?"some":"a"] wet [gloves.name] on [t_his] hands!</span>\n"
 		else
 			msg += "[t_He] [t_has] [bicon(gloves)] \a [gloves] on [t_his] hands.\n"
-	else if(hand_dirt_color)
-		msg += "<span class='warning'>[t_He] [t_has] [hand_dirt_color.name]-stained hands!</span>\n"
+	else if(hand_dirt_datum)
+		msg += "<span class='warning'>[t_He] [t_has] [hand_dirt_datum.name]-stained hands!</span>\n"
 
 	//handcuffed?
 	if(handcuffed)
@@ -216,7 +221,10 @@
 		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
 	if(SMALLSIZE in mutations)
-		msg += "[t_He] [t_is] small halfling!\n"
+		if(gnomed)
+			msg += "[t_He] [t_is] a gnome!\n"
+		else
+			msg += "[t_He] [t_is] a small halfling!\n"
 
 	var/distance = get_dist(user,src)
 	if(istype(user, /mob/dead/observer) || user.stat == DEAD) // ghosts can see anything
@@ -259,40 +267,45 @@
 	var/list/is_bleeding = list()
 	var/applying_pressure = ""
 
-	for(var/obj/item/organ/external/BP in bodyparts)
+	for(var/BP_ZONE in species.has_bodypart)
+		var/BP_Name = parse_zone(BP_ZONE)
+		var/obj/item/organ/external/BP = bodyparts_by_name[BP_ZONE]
+		if(!BP)
+			is_destroyed[BP_Name] = 1
+			wound_flavor_text[BP_Name] = "<span class='warning'><b>[t_He] is missing [t_his] [BP_Name].</b></span>\n"
 		if(BP)
-			if(BP.status & ORGAN_DESTROYED)
-				is_destroyed["[BP.name]"] = 1
-				wound_flavor_text["[BP.name]"] = "<span class='warning'><b>[t_He] is missing [t_his] [BP.name].</b></span>\n"
+			if(istype(BP, /obj/item/organ/external/stump))
+				is_destroyed[BP_Name] = 1
+				wound_flavor_text[BP_Name] = "<span class='warning'><b>[t_He] [t_has] a stump where [t_his] [BP_Name] should be.</b></span>\n"
 				continue
 			if(BP.applied_pressure)
 				if(BP.applied_pressure == src)
 					applying_pressure = "<span class='info'>[t_He] is applying pressure to [t_his] [BP.name].</span><br>"
 				else
 					applying_pressure = "<span class='info'>[BP.applied_pressure] is applying pressure to [t_his] [BP.name].</span><br>"
-			if(BP.status & ORGAN_ROBOT)
+			if(BP.is_robotic())
 				if(!(BP.brute_dam + BP.burn_dam))
 					if(!species.flags[IS_SYNTHETIC])
-						wound_flavor_text["[BP.name]"] = "<span class='warning'>[t_He] has a robot [BP.name]!</span>\n"
+						wound_flavor_text[BP_Name] = "<span class='warning'>[t_He] has a robot [BP.name]!</span>\n"
 						continue
 				else
-					wound_flavor_text["[BP.name]"] = "<span class='warning'>[t_He] has a robot [BP.name], it has"
+					wound_flavor_text[BP_Name] = "<span class='warning'>[t_He] has a robot [BP.name], it has"
 				if(BP.brute_dam)
 					switch(BP.brute_dam)
 						if(0 to 20)
-							wound_flavor_text["[BP.name]"] += " some dents"
+							wound_flavor_text[BP_Name] += " some dents"
 						if(21 to INFINITY)
-							wound_flavor_text["[BP.name]"] += pick(" a lot of dents"," severe denting")
+							wound_flavor_text[BP_Name] += pick(" a lot of dents"," severe denting")
 				if(BP.brute_dam && BP.burn_dam)
-					wound_flavor_text["[BP.name]"] += " and"
+					wound_flavor_text[BP_Name] += " and"
 				if(BP.burn_dam)
 					switch(BP.burn_dam)
 						if(0 to 20)
-							wound_flavor_text["[BP.name]"] += " some burns"
+							wound_flavor_text[BP_Name] += " some burns"
 						if(21 to INFINITY)
-							wound_flavor_text["[BP.name]"] += pick(" a lot of burns"," severe melting")
-				if(wound_flavor_text["[BP.name]"])
-					wound_flavor_text["[BP.name]"] += "!</span>\n"
+							wound_flavor_text[BP_Name] += pick(" a lot of burns"," severe melting")
+				if(wound_flavor_text[BP_Name])
+					wound_flavor_text[BP_Name] += "!</span>\n"
 			else if(BP.wounds.len > 0)
 				var/list/wound_descriptors = list()
 				for(var/datum/wound/W in BP.wounds)
@@ -310,26 +323,27 @@
 					var/list/flavor_text = list()
 					var/list/no_exclude = list("gaping wound", "big gaping wound", "massive wound", "large bruise",\
 					"huge bruise", "massive bruise", "severe burn", "large burn", "deep burn", "carbonised area")
+					var/span_flavor = "<span class='warning'>"
 					for(var/wound in wound_descriptors)
 						switch(wound_descriptors[wound])
 							if(1)
 								if(!flavor_text.len)
-									flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(wound in no_exclude)  ? " what might be" : ""] a [wound]"
+									flavor_text += "[span_flavor][t_He] has[prob(10) && !(wound in no_exclude)  ? " what might be" : ""] a [wound]"
 								else
 									flavor_text += "[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a [wound]"
 							if(2)
 								if(!flavor_text.len)
-									flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
+									flavor_text += "[span_flavor][t_He] has[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
 								else
 									flavor_text += "[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
 							if(3 to 5)
 								if(!flavor_text.len)
-									flavor_text += "<span class='warning'>[t_He] has several [wound]s"
+									flavor_text += "[span_flavor][t_He] has several [wound]s"
 								else
 									flavor_text += " several [wound]s"
 							if(6 to INFINITY)
 								if(!flavor_text.len)
-									flavor_text += "<span class='warning'>[t_He] has a bunch of [wound]s"
+									flavor_text += "[span_flavor][t_He] has a bunch of [wound]s"
 								else
 									flavor_text += " a ton of [wound]\s"
 					var/flavor_text_string = ""
@@ -340,13 +354,13 @@
 							flavor_text_string += ","
 						flavor_text_string += flavor_text[text]
 					flavor_text_string += " on [t_his] [BP.name].</span><br>"
-					wound_flavor_text["[BP.name]"] = flavor_text_string
+					wound_flavor_text[BP_Name] = flavor_text_string
 				else
-					wound_flavor_text["[BP.name]"] = ""
+					wound_flavor_text[BP_Name] = ""
 				if(BP.status & ORGAN_BLEEDING)
-					is_bleeding["[BP.name]"] = 1
+					is_bleeding[BP_Name] = 1
 			else
-				wound_flavor_text["[BP.name]"] = ""
+				wound_flavor_text[BP_Name] = ""
 
 	//Handles the text strings being added to the actual description.
 	//If they have something that covers the limb, and it is not missing, put flavortext.  If it is covered but bleeding, add other flavortext.
@@ -404,8 +418,10 @@
 	if(display_gloves)
 		msg += "<span class='warning'><b>[src] has blood running from under [t_his] gloves!</b></span>\n"
 
-	for(var/implant in get_visible_implants(1))
-		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of their flesh!</b></span>\n"
+	var/list/implants = get_visible_implants(1)
+	for(var/implant in implants)
+		var/obj/item/organ/external/BP = implants[implant]
+		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of their [BP.name]!</b></span>\n"
 	if(digitalcamo)
 		msg += "<span class='warning'>[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.</span>\n"
 	if(mind && mind.changeling && mind.changeling.isabsorbing)
@@ -482,6 +498,12 @@
 				if(V.stealth_active)
 					to_chat(H, "<span class='notice'>You can't focus your eyes on [src].</span>")
 					return
+
+	if(roundstart_quirks.len && isobserver(user))
+		var/mob/dead/observer/O = user
+		if(O.started_as_observer)
+			msg += "<span class='notice'>[t_He] has these traits: [get_trait_string()].</span>"
+
 	to_chat(user, msg)
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.

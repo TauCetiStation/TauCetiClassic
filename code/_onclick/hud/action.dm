@@ -1,7 +1,7 @@
 #define AB_ITEM 1
 #define AB_SPELL 2
 #define AB_INNATE 3
-#define AB_GENERIC 4
+//#define AB_GENERIC 4
 
 #define AB_CHECK_RESTRAINED 1
 #define AB_CHECK_STUNNED 2
@@ -13,7 +13,6 @@
 /datum/action
 	var/name = "Generic Action"
 	var/action_type = AB_ITEM
-	var/procname = null
 	var/atom/movable/target = null
 	var/check_flags = 0
 	var/processing = 0
@@ -30,6 +29,8 @@
 /datum/action/Destroy()
 	if(owner)
 		Remove(owner)
+	target = null
+	return ..()
 
 /datum/action/proc/Grant(mob/living/T)
 	if(owner)
@@ -68,9 +69,6 @@
 				Activate()
 			else
 				Deactivate()
-		if(AB_GENERIC)
-			if(target && procname)
-				call(target,procname)(usr)
 	return
 
 /datum/action/proc/Activate()

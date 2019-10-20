@@ -45,14 +45,14 @@
 	set category = "Alien"
 
 	if(!isturf(src.loc))
-		to_chat(src, "\red You cannot evolve when you are inside something.")//Silly aliens!
+		to_chat(src, "<span class='warning'>You cannot evolve when you are inside something.</span>")//Silly aliens!
 		return
 
 	if(powerc(500))
 		// Queen check
 		var/no_queen = 1
-		for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
-			if(!Q.key && Q.brain_op_stage != 4)
+		for(var/mob/living/carbon/alien/humanoid/queen/Q in queen_list)
+			if(Q.stat == DEAD || !Q.key && Q.brain_op_stage != 4)
 				continue
 			no_queen = 0
 
@@ -62,9 +62,9 @@
 
 		if(no_queen)
 			adjustToxLoss(-500)
-			to_chat(src, "\green You begin to evolve!")
+			to_chat(src, "<span class='notice'>You begin to evolve!</span>")
 			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\green <B>[src] begins to twist and contort!</B>"), 1)
+				O.show_message(text("<span class='notice'><B>[src] begins to twist and contort!</B></span>"), 1)
 			var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (loc)
 			mind.transfer_to(new_xeno)
 			qdel(src)

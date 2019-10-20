@@ -4,8 +4,7 @@
 
 
 /datum/event/disease_outbreak/announce()
-	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-	world << sound('sound/AI/outbreak7.ogg')
+	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", "outbreak7")
 
 /datum/event/disease_outbreak/setup()
 	announceWhen = rand(15, 30)
@@ -13,12 +12,12 @@
 /datum/event/disease_outbreak/start()
 	var/virus_type = pick(/datum/disease/dnaspread, /datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/brainrot, /datum/disease/magnitis)
 
-	for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
+	for(var/mob/living/carbon/human/H in shuffle(human_list))
 		var/foundAlready = 0	// don't infect someone that already has the virus
 		var/turf/T = get_turf(H)
 		if(!T)
 			continue
-		if(T.z != ZLEVEL_STATION)
+		if(!is_station_level(T.z))
 			continue
 		for(var/datum/disease/D in H.viruses)
 			foundAlready = 1

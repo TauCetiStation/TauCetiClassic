@@ -1,4 +1,4 @@
-client/proc/one_click_antag()
+/client/proc/one_click_antag()
 	set name = "Create Antagonist"
 	set desc = "Auto-create an antagonist of your choice."
 	set category = "Admin"
@@ -265,10 +265,10 @@ client/proc/one_click_antag()
 		var/nuke_code = "[rand(10000, 99999)]"
 
 		if(nuke_spawn)
-			var/obj/item/weapon/paper/P = new
+			var/obj/item/weapon/paper/P = new(nuke_spawn.loc)
 			P.info = "Sadly, the Syndicate could not get you a nuclear bomb.  We have, however, acquired the arming code for the station's onboard nuke.  The nuclear authorization code is: <b>[nuke_code]</b>"
 			P.name = "nuclear bomb code and instructions"
-			P.loc = nuke_spawn.loc
+			P.update_icon()
 
 		if(closet_spawn)
 			new /obj/structure/closet/syndicate/nuclear(closet_spawn.loc)
@@ -299,7 +299,7 @@ client/proc/one_click_antag()
 							var/I = image('icons/mob/mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
 							synd_mind.current.client.images += I
 
-		for (var/obj/machinery/nuclearbomb/bomb in machines)
+		for (var/obj/machinery/nuclearbomb/bomb in poi_list)
 			bomb.r_code = nuke_code						// All the nukes are set to this code.
 
 	return 1
@@ -371,7 +371,7 @@ client/proc/one_click_antag()
 				//So they don't forget their code or mission.
 
 
-				to_chat(new_syndicate_commando, "\blue You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: \red<B> [input]</B>")
+				to_chat(new_syndicate_commando, "<span class='notice'>You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: <span class='warning'><B> [input]</B></span></span>")
 
 				numagents--
 		if(numagents >= 6)
@@ -428,7 +428,7 @@ client/proc/one_click_antag()
 	else
 		new_character.real_name = "[pick(first_names_female)] [pick(last_names)]"
 	new_character.name = new_character.real_name
-	new_character.age = rand(17,45)
+	new_character.age = rand(new_character.species.min_age, new_character.species.min_age * 1.5)
 
 	new_character.dna.ready_dna(new_character)
 	new_character.key = G_found.key
@@ -448,7 +448,7 @@ client/proc/one_click_antag()
 
 	new_syndicate_commando.real_name = "[!syndicate_leader_selected ? syndicate_commando_rank : syndicate_commando_leader_rank] [syndicate_commando_name]"
 	new_syndicate_commando.name = new_syndicate_commando.real_name
-	new_syndicate_commando.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
+	new_syndicate_commando.age = !syndicate_leader_selected ? rand(new_syndicate_commando.species.min_age, new_syndicate_commando.species.min_age * 1.5) : rand(new_syndicate_commando.species.min_age * 1.25, new_syndicate_commando.species.min_age * 1.75)
 
 	new_syndicate_commando.dna.ready_dna(new_syndicate_commando)//Creates DNA.
 
@@ -495,7 +495,7 @@ client/proc/one_click_antag()
 		var/max_raiders = 1
 		var/raiders = max_raiders
 		//Spawns vox raiders and equips them.
-		for (var/obj/effect/landmark/L in world)
+		for (var/obj/effect/landmark/L in landmarks_list)
 			if(L.name == "voxstart")
 				if(raiders<=0)
 					break
@@ -511,8 +511,8 @@ client/proc/one_click_antag()
 					break
 
 				new_vox.key = theghost.key
-				to_chat(new_vox, "\blue You are a Vox Primalis, fresh out of the Shoal. Your ship has arrived at the Tau Ceti system hosting the NSV Exodus... or was it the Luna? NSS? Utopia? Nobody is really sure, but everyong is raring to start pillaging! Your current goal is: \red<B> [input]</B>")
-				to_chat(new_vox, "\red Don't forget to turn on your nitrogen internals!")
+				to_chat(new_vox, "<span class='notice'>You are a Vox Primalis, fresh out of the Shoal. Your ship has arrived at the [system_name()] system hosting the NSV Exodus... or was it the Luna? NSS? Utopia? Nobody is really sure, but everyong is raring to start pillaging! Your current goal is: <span class='warning'><B> [input]</B></span></span>")
+				to_chat(new_vox, "<span class='warning'>Don't forget to turn on your nitrogen internals!</span>")
 
 				raiders--
 			if(raiders > max_raiders)
@@ -539,7 +539,7 @@ client/proc/one_click_antag()
 
 	new_vox.real_name = capitalize(newname)
 	new_vox.name = new_vox.real_name
-	new_vox.age = rand(12,20)
+	new_vox.age = rand(new_vox.species.min_age, new_vox.species.max_age)
 
 	new_vox.dna.ready_dna(new_vox) // Creates DNA.
 	new_vox.dna.mutantrace = "vox"
@@ -572,7 +572,7 @@ client/proc/one_click_antag()
 
 	return new_vox
 
-datum/admins/proc/makeAbductorTeam()
+/datum/admins/proc/makeAbductorTeam()
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 

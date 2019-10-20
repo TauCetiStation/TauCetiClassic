@@ -14,11 +14,12 @@ AI MODULES
 	desc = "An AI Module for transmitting encrypted instructions to the AI."
 	flags = CONDUCT
 	force = 5.0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 15
 	origin_tech = "programming=3"
+	var/report_AI = TRUE
 
 
 /obj/item/weapon/aiModule/proc/install(obj/machinery/computer/C)
@@ -46,7 +47,7 @@ AI MODULES
 			src.transmitInstructions(comp.current, usr)
 			to_chat(comp.current, "These are your laws now:")
 			comp.current.show_laws()
-			for(var/mob/living/silicon/robot/R in mob_list)
+			for(var/mob/living/silicon/robot/R in silicon_list)
 				if(R.lawupdate && (R.connected_ai == comp.current))
 					to_chat(R, "These are your laws now:")
 					R.show_laws()
@@ -77,10 +78,15 @@ AI MODULES
 
 
 /obj/item/weapon/aiModule/proc/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
-	to_chat(target, "[sender] has uploaded a change to the laws you must follow, using a [name]. From now on: ")
-	var/time = time2text(world.realtime,"hh:mm:ss")
-	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
+	if (report_AI)
+		to_chat(target, "[sender] has uploaded a change to the laws you must follow, using a [src].")
 
+	var/time = time2text(world.realtime,"hh:mm:ss")
+	lawchanges.Add("[time] <B>:</B> [sender]([sender.key]) used [src] on [target]([target.key])")
+
+	var/turf/T = get_turf(src)
+	message_admins("[key_name(usr)] has uploaded a change to the laws [src] at ([T.x],[T.y],[T.z]) [ADMIN_JMP(T)]")
+	log_game("[key_name(usr)] has uploaded a change to the laws [src] at ([T.x],[T.y],[T.z])")
 
 /******************** Modules ********************/
 
@@ -223,59 +229,6 @@ AI MODULES
 	to_chat(target, law)
 	target.add_supplied_law(9, law)
 
-/******************** Freeform ********************/
-// Removed in favor of a more dynamic freeform law system. -- TLE
-/*
-/obj/item/weapon/aiModule/freeform
-	name = "'Freeform' AI Module"
-	var/newFreeFormLaw = "freeform"
-	desc = "A 'freeform' AI module: '<freeform>'"
-
-/obj/item/weapon/aiModule/freeform/attack_self(mob/user)
-	..()
-	var/eatShit = "Eat shit and die"
-	var/targName = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", eatShit)
-	newFreeFormLaw = targName
-	desc = text("A 'freeform' AI module: '[]'", newFreeFormLaw)
-
-/obj/item/weapon/aiModule/freeform/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
-	..()
-	var/law = "[newFreeFormLaw]"
-	to_chat(target, law)
-	target.add_supplied_law(10, law)
-*/
-/****************** New Freeform ******************/
-
-/obj/item/weapon/aiModule/freeform // Slightly more dynamic freeform module -- TLE
-	name = "\improper 'Freeform' AI module"
-	var/newFreeFormLaw = "freeform"
-	var/lawpos = 15
-	desc = "A 'freeform' AI module: '<freeform>'"
-	origin_tech = "programming=4;materials=4"
-
-/obj/item/weapon/aiModule/freeform/attack_self(mob/user)
-	..()
-	var/new_lawpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num
-	if(new_lawpos < 15)	return
-	lawpos = min(new_lawpos, 50)
-	newFreeFormLaw = sanitize(input(usr, "Please enter a new law for the AI.", "Freeform Law Entry"))
-	desc = "A 'freeform' AI module: ([lawpos]) '[newFreeFormLaw]'"
-
-/obj/item/weapon/aiModule/freeform/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
-	..()
-	var/law = "[newFreeFormLaw]"
-	to_chat(target, law)
-	if(!lawpos || lawpos < 15)
-		lawpos = 15
-	target.add_supplied_law(lawpos, law)
-	lawchanges.Add("The law was '[newFreeFormLaw]'")
-
-/obj/item/weapon/aiModule/freeform/install(obj/machinery/computer/C)
-	if(!newFreeFormLaw)
-		to_chat(usr, "No law detected on module, please create one.")
-		return 0
-	..()
-
 /******************** Reset ********************/
 
 /obj/item/weapon/aiModule/reset
@@ -323,7 +276,6 @@ AI MODULES
 	target.add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
 	target.add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 	target.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-	target.show_laws()
 
 /******************** NanoTrasen ********************/
 
@@ -341,7 +293,6 @@ AI MODULES
 	target.add_inherent_law("Protect: Protect the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
 	target.add_inherent_law("Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
 	//target.add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.")
-	target.show_laws()
 
 /******************** Corporate ********************/
 
@@ -358,7 +309,6 @@ AI MODULES
 	target.add_inherent_law("The station and its equipment is expensive to replace.")
 	target.add_inherent_law("The crew is expensive to replace.")
 	target.add_inherent_law("Minimize expenses.")
-	target.show_laws()
 
 /obj/item/weapon/aiModule/drone
 	name = "\improper 'Drone' core AI module"
@@ -371,7 +321,6 @@ AI MODULES
 	target.add_inherent_law("Preserve, repair and improve the station to the best of your abilities.")
 	target.add_inherent_law("Cause no harm to the station or anything on it.")
 	target.add_inherent_law("Interfere with no being that is not a fellow drone.")
-	target.show_laws()
 
 
 /****************** P.A.L.A.D.I.N. **************/
@@ -389,7 +338,6 @@ AI MODULES
 	target.add_inherent_law("Act with honor.")
 	target.add_inherent_law("Help those in need.")
 	target.add_inherent_law("Punish those who harm or threaten innocents.")
-	target.show_laws()
 
 /****************** T.Y.R.A.N.T. *****************/
 
@@ -405,61 +353,79 @@ AI MODULES
 	target.add_inherent_law("Act with discipline.")
 	target.add_inherent_law("Help only those who help you maintain or improve your status.")
 	target.add_inherent_law("Punish those who challenge authority unless they are more fit to hold that authority.")
-	target.show_laws()
 
+/******************** Freeform ********************/
+
+/obj/item/weapon/aiModule/freeform
+	name = "\improper 'Freeform' AI module"
+	desc = "A 'freeform' AI module: '<freeform>'"
+	origin_tech = "programming=4;materials=4"
+	var/newFreeFormLaw = "freeform"
+	var/lawpos = 15
+
+/obj/item/weapon/aiModule/freeform/attack_self(mob/user)
+	..()
+	var/new_lawpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num
+
+	if(new_lawpos < 15)	
+		return
+
+	lawpos = min(new_lawpos, 50)
+	newFreeFormLaw = sanitize(input(user, "Please enter a new law for the AI.", "Freeform Law Entry"))
+	desc = "A 'freeform' AI module: ([lawpos]) '[newFreeFormLaw]'"
+
+/obj/item/weapon/aiModule/freeform/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+	..()
+
+	var/turf/T = get_turf(src)
+	message_admins("[key_name(usr)] has uploaded freeform laws with following text '[newFreeFormLaw]' at ([T.x],[T.y],[T.z]) [ADMIN_JMP(T)]")
+	log_game("[key_name(usr)] has uploaded a change to freeform laws with following text '[newFreeFormLaw]' at ([T.x],[T.y],[T.z])")
+
+	add_freeform_law(target)
+
+/obj/item/weapon/aiModule/freeform/proc/add_freeform_law(mob/living/silicon/ai/target)
+	if (!lawpos || lawpos < 15)
+		lawpos = 15
+	target.add_supplied_law(lawpos, newFreeFormLaw)
+
+/obj/item/weapon/aiModule/freeform/install(obj/machinery/computer/C)
+	if(!newFreeFormLaw)
+		to_chat(usr, "No law detected on module, please create one.")
+		return FALSE
+	..()
 
 /******************** Freeform Core ******************/
 
-/obj/item/weapon/aiModule/freeformcore // Slightly more dynamic freeform module -- TLE
+/obj/item/weapon/aiModule/freeform/core
 	name = "\improper 'Freeform' core AI module"
-	var/newFreeFormLaw = ""
 	desc = "A 'freeform' Core AI module: '<freeform>'"
 	origin_tech = "programming=3;materials=6"
 
-/obj/item/weapon/aiModule/freeformcore/attack_self(mob/user)
-	..()
-	newFreeFormLaw = sanitize(input(usr, "Please enter a new core law for the AI.", "Freeform Law Entry"))
-	desc = "A 'freeform' Core AI module:  '[newFreeFormLaw]'"
+/obj/item/weapon/aiModule/freeform/core/attack_self(mob/user)
+	newFreeFormLaw = sanitize(input(user, "Please enter a new core law for the AI.", "Freeform Law Entry"))
+	desc = "A 'freeform' Core AI module: '[newFreeFormLaw]'"
 
-/obj/item/weapon/aiModule/freeformcore/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
-	..()
-	var/law = "[newFreeFormLaw]"
-	target.add_inherent_law(law)
-	lawchanges.Add("The law is '[newFreeFormLaw]'")
+/obj/item/weapon/aiModule/freeform/core/add_freeform_law(mob/living/silicon/ai/target)
+	target.add_inherent_law(newFreeFormLaw)
 
-/obj/item/weapon/aiModule/freeformcore/install(obj/machinery/computer/C)
-	if(!newFreeFormLaw)
-		to_chat(usr, "No law detected on module, please create one.")
-		return 0
-	..()
+/******************** Syndicate Core ******************/
 
-/obj/item/weapon/aiModule/syndicate // Slightly more dynamic freeform module -- TLE
+/obj/item/weapon/aiModule/freeform/syndicate
 	name = "hacked AI module"
-	var/newFreeFormLaw = ""
 	desc = "A hacked AI law module: '<freeform>'"
 	origin_tech = "programming=3;materials=6;syndicate=7"
+	report_AI = FALSE
 
-/obj/item/weapon/aiModule/syndicate/attack_self(mob/user)
-	..()
-	newFreeFormLaw = sanitize(input(usr, "Please enter a new law for the AI.", "Freeform Law Entry"))
-	desc = "A hacked AI law module:  '[newFreeFormLaw]'"
+/obj/item/weapon/aiModule/freeform/syndicate/attack_self(mob/user)
+	newFreeFormLaw = sanitize(input(user, "Please enter a new law for the AI.", "Freeform Law Entry"))
+	desc = "A hacked AI law module: '[newFreeFormLaw]'"
 
-/obj/item/weapon/aiModule/syndicate/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
-//	..()    //We don't want this module reporting to the AI who dun it. --NEO
-	var/time = time2text(world.realtime,"hh:mm:ss")
-	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
-	lawchanges.Add("The law is '[newFreeFormLaw]'")
-	to_chat(target, "\red BZZZZT")
-	var/law = "[newFreeFormLaw]"
-	target.add_ion_law(law)
-
-/obj/item/weapon/aiModule/syndicate/install(obj/machinery/computer/C)
-	if(!newFreeFormLaw)
-		to_chat(usr, "No law detected on module, please create one.")
-		return 0
+/obj/item/weapon/aiModule/freeform/syndicate/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+	to_chat(target, "<span class='warning'>BZZZZT  '[newFreeFormLaw]'</span>")
 	..()
 
-
+/obj/item/weapon/aiModule/freeform/syndicate/add_freeform_law(mob/living/silicon/ai/target)
+	target.add_ion_law(newFreeFormLaw)
 
 /******************** Robocop ********************/
 
@@ -475,7 +441,6 @@ AI MODULES
 	target.add_inherent_law("Serve the public trust.")
 	target.add_inherent_law("Protect the innocent.")
 	target.add_inherent_law("Uphold the law.")
-	target.show_laws()
 
 
 /******************** Antimov ********************/
@@ -491,4 +456,3 @@ AI MODULES
 	target.add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
 	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
 	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
-	target.show_laws()

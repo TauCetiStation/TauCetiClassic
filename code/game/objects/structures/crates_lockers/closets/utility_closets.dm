@@ -23,7 +23,7 @@
 	new /obj/item/clothing/head/helmet/space/sk(src)
 	new /obj/item/clothing/suit/space/sk(src)
 
-	switch (pickweight(list("small" = 55, "aid" = 25, "tank" = 10, "both" = 10, "nothing" = 4, "delete" = 1)))
+	switch (pickweight(list("small" = 55, "aid" = 25, "tank" = 10, "both" = 10, "nothing" = 4)))
 		if ("small")
 			for (var/i in 1 to 2)
 				new /obj/item/weapon/tank/emergency_oxygen(src)
@@ -43,11 +43,7 @@
 			new /obj/item/clothing/mask/breath(src)
 			new /obj/item/weapon/storage/firstaid/o2(src)
 		if ("nothing")
-			// doot
-
-		// teehee - Ah, tg coders...
-		if ("delete")
-			qdel(src)
+			return
 
 		//If you want to re-add fire, just add "fire" = 15 to the pick list.
 		/*if ("fire")
@@ -73,7 +69,7 @@
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas/coloured(src)
 	new /obj/item/weapon/tank/oxygen/red(src)
-	new /obj/item/weapon/extinguisher(src)
+	new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
 
 /obj/structure/closet/firecloset/full/PopulateContents()
@@ -81,7 +77,7 @@
 	new /obj/item/clothing/mask/gas/coloured(src)
 	new /obj/item/device/flashlight(src)
 	new /obj/item/weapon/tank/oxygen/red(src)
-	new /obj/item/weapon/extinguisher(src)
+	new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
 
 /obj/structure/closet/firecloset/update_icon()
@@ -127,6 +123,10 @@
 		new /obj/item/device/multitool(src)
 	if(prob(5))
 		new /obj/item/clothing/gloves/yellow(src)
+	if(prob(5))
+		new /obj/item/weapon/storage/pouch/engineering_tools(src)
+	if(prob(1))
+		new /obj/item/weapon/storage/pouch/engineering_supply(src)
 	if(prob(40))
 		if(prob(75))
 			new /obj/item/clothing/head/hardhat/yellow(src)
@@ -197,7 +197,7 @@
 	new /obj/item/clothing/mask/gas/coloured(src)
 	new /obj/item/device/flashlight(src)
 	new /obj/item/weapon/tank/oxygen/red(src)
-	new /obj/item/weapon/extinguisher(src)
+	new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
 
 /*

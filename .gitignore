@@ -8,5 +8,6 @@
 taucetistation.dmb
 Thumbs.db
 data/
+cfg/
 .vscode
-map_images/
+**/MapFXDrawer/*.png

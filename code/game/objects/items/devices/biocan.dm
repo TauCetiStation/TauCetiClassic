@@ -4,9 +4,9 @@
 	icon = 'icons/obj/biocan.dmi'
 	icon_state = "biocan"
 	origin_tech = "biotech=3;materials=3;magnets=3"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	appearance_flags = KEEP_TOGETHER | TILE_BOUND
-	var/obj/item/weapon/organ/head/headobj = null
+	var/obj/item/organ/external/head/headobj = null
 	var/image/display_headobj = null
 	var/mob/living/carbon/brain/brainmob = null
 	var/commutator_enabled = FALSE
@@ -25,7 +25,7 @@
 				brainmob.loc = headobj
 				headobj.brainmob = brainmob
 				brainmob.timeofhostdeath = world.time
-				living_mob_list -= brainmob
+				alive_mob_list -= brainmob
 				brainmob = null
 			headobj.forceMove(get_turf(src))
 			headobj = null
@@ -47,7 +47,7 @@
 		to_chat(brainmob, "<span class='warning'>Your commutating device is now enabled.</span>")
 
 /obj/item/device/biocan/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/organ/head))
+	if(istype(W, /obj/item/organ/external/head))
 		if(!headobj)
 			headobj = W
 			user.drop_item()
@@ -59,7 +59,7 @@
 				brainmob.container = src
 				brainmob.stat = CONSCIOUS
 				dead_mob_list -= brainmob
-				living_mob_list += brainmob
+				alive_mob_list += brainmob
 			display_headobj = new (src)
 			display_headobj.appearance = W.appearance
 			display_headobj.transform = matrix()
@@ -77,7 +77,7 @@
 	user.visible_message("<span class='red'>\The [src.name] contents has been splashed over the floor. </span>")
 	if(headobj)
 		if(brainmob)
-			living_mob_list -= headobj.brainmob
+			alive_mob_list -= headobj.brainmob
 			brainmob.ghostize(can_reenter_corpse = FALSE)
 			brainmob.loc = headobj
 			brainmob.container = headobj
@@ -93,7 +93,7 @@
 	visible_message("<span class='red'>\The [src.name] has been shattered. </span>")
 	if(headobj)
 		if(brainmob)
-			living_mob_list -= headobj.brainmob
+			alive_mob_list -= headobj.brainmob
 			brainmob.ghostize(can_reenter_corpse = FALSE)
 			brainmob.loc = headobj
 			brainmob.container = headobj
@@ -102,5 +102,5 @@
 		headobj.forceMove(get_turf(src))
 		headobj = null
 	new /obj/item/weapon/shard(loc)
-	playsound(src, "shatter", 50, 1)
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	qdel(src)

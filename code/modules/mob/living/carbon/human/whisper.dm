@@ -3,21 +3,21 @@
 	var/alt_name = ""
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "\red Speech is currently admin-disabled.")
+		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
 	log_whisper("[src.name]/[src.key] : [message]")
 
 	if(src.client)
 		if (src.client.prefs.muted & MUTE_IC)
-			to_chat(src, "\red You cannot whisper (muted).")
+			to_chat(src, "<span class='warning'>You cannot whisper (muted).</span>")
 			return
 
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	if(!speech_allowed && usr == src)
-		to_chat(usr, "\red You can't speak.")
+		to_chat(usr, "<span class='warning'>You can't speak.</span>")
 		return
 
 	if (src.stat == DEAD)
@@ -39,6 +39,8 @@
 	var/datum/language/speaking = parse_language(message)
 	if(speaking)
 		message = copytext(message,2+length(speaking.key))
+	else if(species.force_racial_language)
+		speaking = all_languages[species.language]
 
 	whisper_say(message, speaking, alt_name)
 
@@ -56,7 +58,7 @@
 	message = capitalize(trim(message))
 
 	//TODO: handle_speech_problems for silent
-	if(!message || silent || miming)
+	if(!message || silent || miming || has_trait(TRAIT_MUTE))
 		return
 
 	// Mute disability
@@ -79,10 +81,8 @@
 	listening |= src
 
 	//ghosts
-	for(var/mob/M in dead_mob_list)	//does this include players who joined as observers as well?
-		if (!(M.client))
-			continue
-		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
+	for(var/mob/M in observer_list)	//does this include players who joined as observers as well?
+		if(M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 			listening |= M
 
 	//Pass whispers on to anything inside the immediate listeners.

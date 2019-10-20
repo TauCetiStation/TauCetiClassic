@@ -51,16 +51,16 @@
 	preview_icon.Blend(temp, ICON_OVERLAY)
 
 	for(var/obj/item/organ/external/BP in H.bodyparts)
-		if((BP.status & ORGAN_CUT_AWAY) || (BP.status & ORGAN_DESTROYED))
+		if((BP.status & ORGAN_CUT_AWAY) || (BP.is_stump))
 			continue
 		temp = new /icon(icobase, "[BP.body_zone]")
-		if(BP.status & ORGAN_ROBOT)
+		if(BP.is_robotic())
 			temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
 	//Tail
 	if(H.species.tail && H.species.flags[HAS_TAIL])
-		temp = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[H.species.tail]_s")
+		temp = new/icon("icon" = 'icons/mob/species/tail.dmi', "icon_state" = H.species.tail)
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
 	// Skin tone
@@ -173,7 +173,7 @@
 				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
 		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
-		var/objtype = pick(typesof(/datum/objective/abductee/) - /datum/objective/abductee/)
+		var/objtype = pick(typesof(/datum/objective/abductee) - /datum/objective/abductee)
 		var/datum/objective/abductee/O = new objtype()
 		ticker.mode.abductees += H.mind
 		H.mind.objectives += O
@@ -188,11 +188,11 @@
 		if(point_reward > 0)
 			open_machine()
 			SendBack(H)
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+			playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 			points += point_reward
 			return "<span class='good'>Experiment successfull! [point_reward] new data-points collected.</span>"
 		else
-			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
 			return "<span class='bad'>Experiment failed! No replacement organ detected.</span>"
 	else
 		src.visible_message("Brain activity nonexistant - disposing Sample...")

@@ -1,0 +1,3 @@
+#/bin/shell
+
+#if named as "round_reboot.sh" it will be executed in world/Reboot()

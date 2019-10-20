@@ -3,7 +3,7 @@
 	desc = "A folder."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "folder"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/weapon/folder/blue
 	desc = "A blue folder."
@@ -20,6 +20,10 @@
 /obj/item/weapon/folder/white
 	desc = "A white folder."
 	icon_state = "folder_white"
+
+/obj/item/weapon/folder/purple
+	desc = "A purple folder."
+	icon_state = "folder_purple"
 
 /obj/item/weapon/folder/update_icon()
 	overlays.Cut()

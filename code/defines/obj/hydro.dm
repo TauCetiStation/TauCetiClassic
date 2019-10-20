@@ -4,19 +4,37 @@
 	name = "plant analyzer"
 	desc = "A hand-held scanner which reports condition of the plant."
 	icon = 'icons/obj/device.dmi'
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	m_amt = 200
 	g_amt = 50
 	origin_tech = "materials=1;biotech=1"
 	icon_state = "hydro"
 	item_state = "plantanalyzer"
 
+	var/output_to_chat = TRUE
+
 /obj/item/device/plant_analyzer/attack_self(mob/user)
 	return FALSE
 
+/obj/item/device/plant_analyzer/verb/toggle_output()
+	set name = "Toggle Output"
+	set category = "Object"
+
+	output_to_chat = !output_to_chat
+	if(output_to_chat)
+		to_chat(usr, "The scanner now outputs data to chat.")
+	else
+		to_chat(usr, "The scanner now outputs data in a seperate window.")
+
 /obj/item/device/plant_analyzer/attack(mob/living/carbon/human/M, mob/living/user)
-	if(M.species && M.species.flags[IS_PLANT])
-		health_analyze(M, user, TRUE) // 1 means limb-scanning mode
+	if(istype(M) && M.species.flags[IS_PLANT])
+		add_fingerprint(user)
+		var/dat = health_analyze(M, user, TRUE, output_to_chat) // TRUE means limb-scanning mode
+		if(output_to_chat)
+			user << browse(entity_ja(dat), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+			onclose(user, "[M.name]_scan_report")
+		else
+			user.show_message(dat)
 
 // ********************************************************
 // Here's all the seeds (plants) that can be used in hydro
@@ -26,7 +44,7 @@
 	name = "pack of seeds"
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed" // unknown plant seed - these shouldn't exist in-game
-	w_class = 2.0 // Makes them pocketable
+	w_class = ITEM_SIZE_SMALL // Makes them pocketable
 	var/mypath = "/obj/item/seeds"
 	var/hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'//this is now path to plant's overlays (in hydropinic tray)
 	var/plantname = "Plants"
@@ -46,13 +64,13 @@
 /obj/item/seeds/attackby(obj/item/O, mob/user)
 	if (istype(O, /obj/item/device/plant_analyzer))
 		to_chat(user, "*** <B>[plantname]</B> ***")
-		to_chat(user, "-Plant Endurance: \blue [endurance]")
-		to_chat(user, "-Plant Lifespan: \blue [lifespan]")
+		to_chat(user, "-Plant Endurance: <span class='notice'>[endurance]</span>")
+		to_chat(user, "-Plant Lifespan: <span class='notice'>[lifespan]</span>")
 		if(yield != -1)
-			to_chat(user, "-Plant Yield: \blue [yield]")
-		to_chat(user, "-Plant Production: \blue [production]")
+			to_chat(user, "-Plant Yield: <span class='notice'>[yield]</span>")
+		to_chat(user, "-Plant Production: <span class='notice'>[production]</span>")
 		if(potency != -1)
-			to_chat(user, "-Plant Potency: \blue [potency]")
+			to_chat(user, "-Plant Potency: <span class='notice'>[potency]</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
@@ -1181,7 +1199,7 @@
 	icon_state = "logs"
 	force = 5
 	throwforce = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	throw_speed = 3
 	throw_range = 3
 	plant_type = 2
@@ -1206,7 +1224,7 @@
 	damtype = "fire"
 	force = 0
 	throwforce = 1
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 1
@@ -1220,7 +1238,7 @@
 	damtype = "fire"
 	force = 15
 	throwforce = 1
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 1
@@ -1235,14 +1253,14 @@
 		force = round((5 + potency / 5), 1)
 
 /obj/item/weapon/grown/deathnettle
-	desc = "The \red glowing \black nettle incites \red<B>rage</B>\black in you just from looking at it!"
+	desc = "The <span class='warning'>glowing</span> nettle incites <span class='warning'><B>rage</B></span> in you just from looking at it!"
 	icon = 'icons/obj/weapons.dmi'
 	name = "deathnettle"
 	icon_state = "deathnettle"
 	damtype = "fire"
 	force = 30
 	throwforce = 1
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 1
@@ -1258,7 +1276,7 @@
 		force = round((5 + potency / 2.5), 1)
 
 /obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
-	to_chat(viewers(user), "\red <b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return (BRUTELOSS | TOXLOSS)
 
 // *************************************
@@ -1309,16 +1327,16 @@
 	icon_state = "weedspray"
 	item_state = "spray"
 	flags = OPENCONTAINER | NOBLUDGEON
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 4
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 2
 	throw_range = 10
 	var/toxicity = 4
 	var/WeedKillStr = 2
 
 /obj/item/weapon/weedspray/suicide_act(mob/user)
-	to_chat(viewers(user), "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return (TOXLOSS)
 
 /obj/item/weapon/pestspray // -- Skie
@@ -1328,16 +1346,16 @@
 	icon_state = "pestspray"
 	item_state = "spraycan"
 	flags = OPENCONTAINER | NOBLUDGEON
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 4
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 2
 	throw_range = 10
 	var/toxicity = 4
 	var/PestKillStr = 2
 
 /obj/item/weapon/pestspray/suicide_act(mob/user)
-	to_chat(viewers(user), "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return (TOXLOSS)
 
 /obj/item/weapon/minihoe // -- Numbers
@@ -1349,7 +1367,7 @@
 	flags = CONDUCT | NOBLUDGEON
 	force = 5.0
 	throwforce = 7.0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	m_amt = 2550
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
@@ -1394,7 +1412,7 @@
 	name = "bottle of nutrient"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	var/mutmod = 0
 	var/yieldmod = 0
 

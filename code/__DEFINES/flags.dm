@@ -1,5 +1,8 @@
+#define ALL (~0) //For convenience.
+#define NONE 0
+
 //PREASSURE_FLAGS BITMASK
-#define STOPS_HIGHPRESSUREDMAGE 1    //These flags is used on the flags_pressure variable for SUIT and HEAD items which stop (high/low/all) pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
+#define STOPS_HIGHPRESSUREDMAGE 1    //These flags is used on the flags_pressure variable for SUIT and HEAD items which stop (high/low/all) pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_FLAGS_BACK) if you see it anywhere
 #define STOPS_LOWPRESSUREDMAGE  2    //To successfully stop you taking all pressure damage you must have both a suit and head item with STOPS_PRESSUREDMAGE flag.
 #define STOPS_PRESSUREDMAGE     3    //Used against both, high and low pressure.
 
@@ -14,7 +17,8 @@
 #define NODECONSTRUCT    64    // For machines and structures that should not break into parts, eg, holodeck stuff.
 #define ON_BORDER       128    // Item has priority to check when entering or leaving.
 #define THICKMATERIAL   256    // Prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with NOSLIP for shoes)
-#define NOSLIP          256    // Prevents from slipping on wet floors, in space etc.
+#define NOSLIP          512    // Prevents from slipping on wet floors, in space etc.
+#define NOATTACKANIMATION 512	   // Removes attack animation
 
 #define GLASSESCOVERSEYES   256
 #define MASKCOVERSEYES      256    // Get rid of some of the other retardation in these flags.
@@ -56,8 +60,11 @@
 #define RAD_IMMUNE         "rad_immune"
 #define VIRUS_IMMUNE       "virus_immune"
 #define BIOHAZZARD_IMMUNE  "biohazzard_immune"
+#define NO_VOMIT           "no_vomit"
 #define HAS_HAIR           "has_hair"
 #define NO_FINGERPRINT     "no_fingerprint"
+#define NO_MINORCUTS	   "no_minorcuts"
+#define NO_BLOOD_TRAILS    "no_blood_trails"
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.
@@ -84,24 +91,6 @@
 
 //turf-only flags
 #define NOJAUNT  1
-
-//ITEM INVENTORY SLOT BITMASKS
-#define SLOT_OCLOTHING       1
-#define SLOT_ICLOTHING       2
-#define SLOT_GLOVES          4
-#define SLOT_EYES            8
-#define SLOT_EARS           16
-#define SLOT_MASK           32
-#define SLOT_HEAD           64
-#define SLOT_FEET          128
-#define SLOT_ID            256
-#define SLOT_BELT          512
-#define SLOT_BACK         1024
-#define SLOT_POCKET       2048    // This is to allow items with a w_class of 3 or 4 to fit in pockets.
-#define SLOT_DENYPOCKET   4096    // This is to deny items with a w_class of 2 or 1 to fit in pockets.
-#define SLOT_TWOEARS      8192
-#define SLOT_TIE         16384
-
 
 //flags for customizing id-cards
 #define FORDBIDDEN_VIEW      1

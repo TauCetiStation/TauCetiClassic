@@ -28,7 +28,7 @@
 	var/area/thearea = teleportlocs[A]
 	usr.say("SCYAR NILA [thearea.name]")
 	if(do_after(usr, 50, target = usr))
-		playsound(usr,'sound/magic/Teleport_diss.ogg', 100, 2)
+		playsound(usr,'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
 		return thearea
 	else
 		return FALSE
@@ -60,7 +60,7 @@
 	else
 		teleport_place = T
 	var/list/returned = list()
-	for(var/obj/item/weapon/grab/G in list(U.get_active_hand(), U.get_inactive_hand()))
+	for(var/obj/item/weapon/grab/G in U.GetGrabs())
 		returned += G.affecting
 		G.affecting.forceMove(teleport_place)
 	if(length(returned))

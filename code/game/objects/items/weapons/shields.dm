@@ -8,29 +8,58 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "riot"
 	flags = CONDUCT
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	force = 5.0
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	g_amt = 7500
 	m_amt = 1000
 	origin_tech = "materials=2"
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
-	Get_shield_chance()
-		return block_chance
+/obj/item/weapon/shield/riot/Get_shield_chance()
+	return block_chance
 
-	attackby(obj/item/weapon/W, mob/user)
-		if(istype(W, /obj/item/weapon/melee/baton))
-			if(cooldown < world.time - 25)
-				user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
-				playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
-				cooldown = world.time
-		else
-			..()
+/obj/item/weapon/shield/riot/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/melee/baton))
+		if(cooldown < world.time - 25)
+			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
+			playsound(user, 'sound/effects/shieldbash.ogg', VOL_EFFECTS_MASTER)
+			cooldown = world.time
+	else
+		..()
+
+/obj/item/weapon/shield/riot/attack(mob/living/M, mob/user)
+	var/obj/item/weapon/shield/riot/tele/TS
+	if(istype(src, /obj/item/weapon/shield/riot/tele))
+		TS = src
+
+	if(M != user && ((TS && TS.active) || !TS) && !isrobot(M))
+		if(M.pulling)
+			M.stop_pulling()
+
+		user.do_attack_animation(M)
+		user.visible_message("<span class='warning'>[user.name] pushed away [M.name] with a [src.name]</span>")
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, M, user.dir), 1)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, M, user.dir), 2)
+		user.attack_log += "\[[time_stamp()]\]<font color='red'>pushed [M.name] ([M.ckey]) with [src.name].</font>"
+		M.attack_log += "\[[time_stamp()]\]<font color='orange'>pushed [user.name] ([user.ckey]) with [src.name].</font>"
+		msg_admin_attack("[key_name(user)] pushed [key_name(M)] with [src.name].", user)
+
+		if(prob(20))
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.shoes)
+					if(H.shoes.flags & NOSLIP)
+						return
+				M.Weaken(3)
+				shake_camera(M, 1, 1)
+
+	if(user.a_intent == I_HURT || M == user || (TS && !TS.active) || isrobot(M))
+		..()
 
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
@@ -42,7 +71,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	block_chance = 30
 	origin_tech = "materials=4;magnets=3;syndicate=4"
 	attack_verb = list("shoved", "bashed")
@@ -78,6 +107,7 @@
 	throw_speed = 3
 	throw_range = 4
 	block_chance = 50
+	w_class = ITEM_SIZE_NORMAL
 	var/active = 0
 
 /obj/item/weapon/shield/riot/tele/Get_shield_chance()
@@ -88,20 +118,20 @@
 /obj/item/weapon/shield/riot/tele/attack_self(mob/living/user)
 	active = !active
 	icon_state = "teleriot[active]"
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(src, 'sound/weapons/batonextend.ogg', VOL_EFFECTS_MASTER)
 
 	if(active)
 		force = 8
 		throwforce = 5
 		throw_speed = 2
-		w_class = 4
-		slot_flags = SLOT_BACK
+		w_class = ITEM_SIZE_LARGE
+		slot_flags = SLOT_FLAGS_BACK
 		to_chat(user, "<span class='notice'>You extend \the [src].</span>")
 	else
 		force = 3
 		throwforce = 3
 		throw_speed = 3
-		w_class = 3
+		w_class = ITEM_SIZE_NORMAL
 		slot_flags = null
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 	add_fingerprint(user)
@@ -124,16 +154,16 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 10
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = "magnets=3;syndicate=4"
 
 /obj/item/weapon/cloaking_device/attack_self(mob/user)
 	src.active = !( src.active )
 	if (src.active)
-		to_chat(user, "\blue The cloaking device is now active.")
+		to_chat(user, "<span class='notice'>The cloaking device is now active.</span>")
 		src.icon_state = "shield1"
 	else
-		to_chat(user, "\blue The cloaking device is now inactive.")
+		to_chat(user, "<span class='notice'>The cloaking device is now inactive.</span>")
 		src.icon_state = "shield0"
 	src.add_fingerprint(user)
 	return

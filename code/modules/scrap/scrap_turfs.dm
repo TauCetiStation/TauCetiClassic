@@ -1,5 +1,3 @@
-
-
 /obj/effect/scrap_pile_generator
 	name = "Gererates Scrap Pile"
 	icon_state = "rock"
@@ -37,8 +35,6 @@
 	for(var/turf/T in makesparse)
 		if(!locate(/obj/structure/scrap in T.contents))
 			new subtype(T)
-
-
 
 /turf/simulated/mineral/airfull
 	basetype = /turf/simulated/floor/plating/ironsand
@@ -124,7 +120,7 @@
 		if(!istype(T, /turf))
 			return 0
 		if (!dug)
-			if(!user.is_busy() && do_after(user, 60, target = src))
+			if(!user.is_busy() && W.use_tool(src, user, 60))
 				if(!dug) //someone else digged here
 					visible_message("<span class='notice'>\The [user] shovels new grave.</span>")
 					new /obj/structure/pit(src)

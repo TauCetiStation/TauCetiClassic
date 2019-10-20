@@ -1,6 +1,6 @@
 // reference: /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
 
-datum/proc/on_varedit(modified_var) //called whenever a var is edited
+/datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	return
 
 /client/proc/debug_variables(datum/D in world)
@@ -8,11 +8,13 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	set name = "View Variables"
 	//set src in world
 
-
 	if(!usr.client || !usr.client.holder)
-		to_chat(usr, "\red You need to be an administrator to access this.")
+		to_chat(usr, "<span class='warning'>You need to be an administrator to access this.</span>")
 		return
 
+	if(!check_rights(R_DEBUG|R_VAREDIT|R_LOG)) // Since client.holder still doesn't mean we have permissions...
+		to_chat(usr, "<span class='warning'>You need to be an administrator to access this.</span>")
+		return
 
 	var/title = ""
 	var/body = ""
@@ -180,12 +182,12 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 			body += "<br><font size='1'><a href='?_src_=vars;datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
 			body += {"
 			<br><font size='1'>
-			BRUTE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brute'>[M.getBruteLoss()]</a>
-			FIRE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=fire'>[M.getFireLoss()]</a>
-			TOXIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=toxin'>[M.getToxLoss()]</a>
-			OXY:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
-			CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
-			BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
+			BRUTE:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brute'>[M.getBruteLoss()]</a>
+			FIRE:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=fire'>[M.getFireLoss()]</a>
+			TOXIN:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=toxin'>[M.getToxLoss()]</a>
+			OXY:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
+			CLONE:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
+			BRAIN:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
 			</font>
 
 
@@ -404,8 +406,12 @@ body
 					index++
 				html += "</ul>"
 
-	else if (isnum(value) && findtext(name, "flags")) // flag variables may not always have flags in name, but i don't know any other way to detect them, so better than nothing.
-		html += "(<a href='?_src_=vars;view_flags=[value]'>F</a>) [name] = <span class='value'>[value]</span>"
+	else if (name in global.bitfields)
+		var/list/flags = list()
+		for (var/i in global.bitfields[name])
+			if (value & global.bitfields[name][i])
+				flags += i
+		html += "[name] = <span class='value'>[jointext(flags, ", ")]</span>"
 
 	else
 		html += "[name] = <span class='value'>[value]</span>"
@@ -419,14 +425,9 @@ body
 	if(usr.client != src || !holder)
 		return
 	if(href_list["Vars"])
-		if(!check_rights(R_DEBUG|R_ADMIN))
+		if(!check_rights(R_DEBUG|R_VAREDIT|R_LOG))
 			return
 		debug_variables(locate(href_list["Vars"]))
-
-	else if(href_list["view_flags"])
-		if(!check_rights(R_DEBUG|R_ADMIN))
-			return
-		view_flags_variables(href_list["view_flags"])
 
 	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
 	else if(href_list["rename"])
@@ -635,7 +636,7 @@ body
 					to_chat(usr, "No objects of this type exist")
 					return
 				log_admin("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
-				message_admins("\blue [key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
+				message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) </span>")
 			if("Type and subtypes")
 				var/i = 0
 				for(var/obj/Obj in world)
@@ -647,7 +648,7 @@ body
 					to_chat(usr, "No objects of this type exist")
 					return
 				log_admin("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
-				message_admins("\blue [key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
+				message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) </span>")
 
 	else if(href_list["explode"])
 		if(!check_rights(R_DEBUG|R_FUN))
@@ -1008,7 +1009,7 @@ body
 
 		if(amount != 0)
 			log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
-			message_admins("\blue [key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
+			message_admins("<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>")
 			href_list["datumrefresh"] = href_list["mobToDamage"]
 
 	else if(href_list["setckey"])
@@ -1025,7 +1026,7 @@ body
 
 		if(new_client == "Cancel") return
 
-		message_admins("\blue [key_name_admin(usr)] set client [new_client.ckey] to [C.name].", 1)
+		message_admins("<span class='notice'>[key_name_admin(usr)] set client [new_client.ckey] to [C.name].</span>", 1)
 		log_admin("[key_name(usr)] set client [new_client.ckey] to [C.name].")
 
 		C.ckey = new_client.ckey
@@ -1037,26 +1038,3 @@ body
 		src.debug_variables(DAT)
 
 	return
-
-/client/proc/view_flags_variables(N)
-	if(!usr.client || !usr.client.holder)
-		return
-
-	if(isnull(N))
-		return
-
-	if(!isnum(N))
-		N = text2num(N)
-
-	var/dat = "<html><head><title>Bit Flags list</title></head>"
-
-	var/i = 1
-	do
-		if(i & N)
-			dat += "<b>[i]</b> = <font color='#FF0000'>TRUE</font><br>"
-		else
-			dat += "<b>[i]</b> = FALSE<br>"
-		i *= 2
-	while(i < ~0)
-
-	usr << browse(entity_ja(dat), "window=bit_flags")

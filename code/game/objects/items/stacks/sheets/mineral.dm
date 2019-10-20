@@ -46,11 +46,6 @@ var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 	new/datum/stack_recipe("sign backing", /obj/item/sign_backing, 4, on_floor = TRUE)
 	)
 
-var/global/list/datum/stack_recipe/iron_recipes = list ( \
-	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = TRUE, on_floor = TRUE), \
-	null, \
-)
-
 var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, one_per_turf = TRUE, on_floor = TRUE), \
 	)
@@ -69,7 +64,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /obj/item/stack/sheet/mineral
 	force = 5.0
 	throwforce = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	throw_speed = 3
 	throw_range = 3
 
@@ -89,11 +84,6 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	sheettype = "iron"
 	color = "#333333"
 	perunit = 3750
-
-
-/obj/item/stack/sheet/mineral/iron/atom_init()
-	. = ..()
-	recipes = iron_recipes
 
 /*
  * Sandstone
@@ -186,7 +176,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	icon_state = "sheet-gold"
 	force = 5.0
 	throwforce = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	throw_speed = 3
 	throw_range = 3
 	origin_tech = "materials=4"
@@ -223,7 +213,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	icon_state = "sheet-clown"
 	force = 5.0
 	throwforce = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	throw_speed = 3
 	throw_range = 3
 	origin_tech = "materials=4"
@@ -286,7 +276,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	icon_state = "sheet-silver"
 	sheettype = "osmium"
 	origin_tech = "materials=5"
-	color = "#9999FF"
+	color = "#9999ff"
 	perunit = 2000
 
 // Fusion fuel.

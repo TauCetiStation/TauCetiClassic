@@ -25,9 +25,9 @@
 		var/obj/item/device/assembly/signaler/signaler = get_active_hand()
 		if(signaler.deadman && prob(80))
 			attack_log += "\[[time_stamp()]\]<font color='orange'>triggers their deadman's switch!</font>"
-			message_admins("\blue [key_name_admin(src)] triggers their deadman's switch! ([ADMIN_JMP(src)])")
-			log_game("\blue [key_name(src)] triggers their deadman's switch!")
-			src.visible_message("\red [src] triggers their deadman's switch!")
+			message_admins("<span class='notice'>[key_name_admin(src)] triggers their deadman's switch! [ADMIN_JMP(src)]</span>")
+			log_game("<span class='notice'>[key_name(src)] triggers their deadman's switch!</span>")
+			src.visible_message("<span class='warning'>[src] triggers their deadman's switch!</span>")
 			signaler.signal()
 
 	//Armor
@@ -43,13 +43,15 @@
 
 	if(!P.nodamage)
 		apply_damage(damage, P.damage_type, def_zone, absorb, flags, P)
+		if(LAZYLEN(P.proj_act_sound))
+			playsound(src, pick(P.proj_act_sound), VOL_EFFECTS_MASTER, null, FALSE, -5)
 	P.on_hit(src, absorb, def_zone)
 
 	return absorb
 
 //this proc handles being hit by a thrown atom
 /mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
-	if(istype(AM,/obj/))
+	if(istype(AM,/obj))
 		var/obj/O = AM
 		var/dtype = BRUTE
 		if(istype(O,/obj/item/weapon))
@@ -86,7 +88,7 @@
 				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been hit with a [O], thrown by [L.name] ([assailant.ckey])</font>")
 				L.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with a thrown [O]</font>")
 				if(!ismouse(src))
-					msg_admin_attack("[src.name] ([src.ckey]) was hit by a [O], thrown by [L.name] ([assailant.ckey]) [ADMIN_JMP(src)]")
+					msg_admin_attack("[src.name] ([src.ckey]) was hit by a [O], thrown by [L.name] ([assailant.ckey])", L)
 
 		// Begin BS12 momentum-transfer code.
 		if(O.throw_source && AM.fly_speed >= 15)
@@ -110,7 +112,7 @@
 	if(prob(armor))
 		damage_flags &= ~(DAM_SHARP | DAM_EDGE)
 
-	var/created_wound = apply_damage(throw_damage, dtype, null, armor, damage_flags, O)
+	var/created_wound = apply_damage(throw_damage, dtype, zone, armor, damage_flags, O)
 
 	//thrown weapon embedded object code.
 	if(dtype == BRUTE && istype(O, /obj/item))
@@ -118,7 +120,7 @@
 		if(!I.can_embed || I.is_robot_module())
 			return
 
-		var/sharp = is_sharp(I)
+		var/sharp = I.is_sharp()
 
 		var/damage = throw_damage //the effective damage used for embedding purposes, no actual damage is dealt here
 		if (armor)
@@ -189,18 +191,19 @@
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
-		set_light(light_range + 3)
+		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
 		update_fire()
 
 /mob/living/proc/ExtinguishMob()
 	if(on_fire)
 		on_fire = 0
 		fire_stacks = 0
-		set_light(max(0, light_range - 3))
+		for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
+			qdel(F)
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-    fire_stacks = Clamp(fire_stacks + add_fire_stacks, -20, 20)
+    fire_stacks = CLAMP(fire_stacks + add_fire_stacks, -20, 20)
 
 /mob/living/proc/handle_fire()
 	if(fire_stacks < 0)

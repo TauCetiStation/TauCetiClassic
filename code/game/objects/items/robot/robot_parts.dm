@@ -4,33 +4,38 @@
 	item_state = "buildpipe"
 	icon_state = "blank"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	var/part = null
 	var/sabotaged = 0 //Emagging limbs can have repercussions when installed as prosthetics.
+	var/bodypart_type
 
 /obj/item/robot_parts/l_arm
 	name = "robot left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_arm"
 	part = BP_L_ARM
+	bodypart_type = /obj/item/organ/external/l_arm/robot
 
 /obj/item/robot_parts/r_arm
 	name = "robot right arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_arm"
 	part = BP_R_ARM
+	bodypart_type = /obj/item/organ/external/r_arm/robot
 
 /obj/item/robot_parts/l_leg
 	name = "robot left leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_leg"
 	part = BP_L_LEG
+	bodypart_type = /obj/item/organ/external/l_leg/robot
 
 /obj/item/robot_parts/r_leg
 	name = "robot right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_leg"
 	part = BP_R_LEG
+	bodypart_type = /obj/item/organ/external/r_leg/robot
 
 /obj/item/robot_parts/chest
 	name = "robot torso"
@@ -58,7 +63,7 @@
 	var/obj/item/robot_parts/chest/chest = null
 	var/obj/item/robot_parts/head/head = null
 	var/created_name = ""
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/robot_parts/robot_suit/atom_init()
 	. = ..()
@@ -104,7 +109,7 @@
 		qdel(src)
 		return
 
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		if(contents.len)
 			to_chat(user, "<span class='info'>You disassemble robot frame to parts!</span>")
 			var/turf/T = get_turf(src)
@@ -127,7 +132,7 @@
 		user.drop_item()
 		W.loc = src
 		l_leg = W
-		w_class = 4
+		w_class = ITEM_SIZE_LARGE
 		update_icon()
 		return
 
@@ -137,7 +142,7 @@
 		user.drop_item()
 		W.loc = src
 		r_leg = W
-		w_class = 4
+		w_class = ITEM_SIZE_LARGE
 		update_icon()
 		return
 
@@ -147,7 +152,7 @@
 		user.drop_item()
 		W.loc = src
 		l_arm = W
-		w_class = 4
+		w_class = ITEM_SIZE_LARGE
 		update_icon()
 		return
 
@@ -157,7 +162,7 @@
 		user.drop_item()
 		W.loc = src
 		r_arm = W
-		w_class = 4
+		w_class = ITEM_SIZE_LARGE
 		update_icon()
 		return
 
@@ -168,7 +173,7 @@
 			user.drop_item()
 			W.loc = src
 			chest = W
-			w_class = 4
+			w_class = ITEM_SIZE_LARGE
 			update_icon()
 		else if(!W:wires)
 			to_chat(user, "<span class='info'>You need to attach wires to it first!</span>")
@@ -183,7 +188,7 @@
 			user.drop_item()
 			W.loc = src
 			head = W
-			w_class = 4
+			w_class = ITEM_SIZE_LARGE
 			update_icon()
 		else
 			to_chat(user, "<span class='info'>You need to attach a flash to it first!</span>")
@@ -283,7 +288,7 @@
 		cell = W
 		to_chat(user, "<span class='info'>You insert the cell!</span>")
 
-	else if(istype(W, /obj/item/stack/cable_coil))
+	else if(iscoil(W))
 		if(wires)
 			to_chat(user, "<span class='info'>You have already inserted wire!</span>")
 			return
@@ -295,7 +300,7 @@
 		wires = 1.0
 		to_chat(user, "<span class='info'>You insert the wire!</span>")
 
-	else if(istype(W, /obj/item/weapon/crowbar))
+	else if(iscrowbar(W))
 		if(!cell)
 			to_chat(user, "<span class='warning'>No cell installed!</span>")
 			return
@@ -304,7 +309,7 @@
 		cell.loc = get_turf(src)
 		cell = null
 
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(W))
 		if(!wires)
 			to_chat(user, "<span class='warning'>No wires installed!</span>")
 			return
@@ -333,7 +338,7 @@
 				flash1 = W
 		return
 
-	if(istype(W, /obj/item/weapon/crowbar))
+	if(iscrowbar(W))
 		if(flash1 || flash2)
 			to_chat(user, "<span class='info'>You remove the flash from the eye socket!</span>")
 			if(flash2)
@@ -355,12 +360,11 @@
 		return
 	return
 
-/obj/item/robot_parts/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/weapon/card/emag))
-		if(sabotaged)
-			to_chat(user, "<span class='warning'>[src] is already sabotaged!</span>")
-		else
-			to_chat(user, "<span class='warning'>You slide [W] into the dataport on [src] and short out the safeties.</span>")
-			sabotaged = 1
-		return
-	..()
+/obj/item/robot_parts/emag_act(mob/user)
+	if(sabotaged)
+		to_chat(user, "<span class='warning'>[src] is already sabotaged!</span>")
+		return FALSE
+	else
+		to_chat(user, "<span class='warning'>You slide card into the dataport on [src] and short out the safeties.</span>")
+		sabotaged = 1
+		return TRUE

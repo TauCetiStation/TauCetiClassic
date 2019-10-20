@@ -4,6 +4,8 @@
 	name = "Medical Records"
 	desc = "This can be used to check medical records."
 	icon_state = "medcomp"
+	state_broken_preset = "crewb"
+	state_nopower_preset = "crew0"
 	light_color = "#315ab4"
 	req_one_access = list(access_medical, access_forensics_lockers)
 	circuit = /obj/item/weapon/circuitboard/med_data
@@ -86,7 +88,7 @@
 				if(5.0)
 					dat += "<CENTER><B>Virus Database</B></CENTER>"
 					/*	Advanced diseases is weak! Feeble! Glory to virus2!
-					for(var/Dt in typesof(/datum/disease/))
+					for(var/Dt in typesof(/datum/disease))
 						var/datum/disease/Dis = new Dt(0)
 						if(istype(Dis, /datum/disease/advance))
 							continue // TODO (tm): Add advance diseases to the virus database which no one uses.
@@ -104,7 +106,7 @@
 					dat += "<a href='?src=\ref[src];screen=1'>Back</a>"
 					dat += "<br><b>Medical Robots:</b>"
 					var/bdat = null
-					for(var/obj/machinery/bot/medbot/M in machines)
+					for(var/obj/machinery/bot/medbot/M in bots_list)
 
 						if(M.z != src.z)	continue	//only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
@@ -495,6 +497,7 @@
 				else
 					P.info += "<B>Medical Record Lost!</B><BR>"
 				P.info += "</TT>"
+				P.update_icon()
 				src.printing = null
 
 	src.updateUsrDialog()
@@ -531,5 +534,7 @@
 /obj/machinery/computer/med_data/laptop
 	name = "Medical Laptop"
 	desc = "Cheap Nanotrasen Laptop."
-	icon_state = "medlaptop"
+	icon_state = "laptop_med"
+	state_broken_preset = "laptopb"
+	state_nopower_preset = "laptop0"
 	light_color = "#00b000"

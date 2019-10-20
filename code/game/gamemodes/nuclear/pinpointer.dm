@@ -2,8 +2,8 @@
 	name = "pinpointer"
 	icon_state = "pinoff"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
-	w_class = 2.0
+	slot_flags = SLOT_FLAGS_BELT
+	w_class = ITEM_SIZE_SMALL
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
@@ -50,7 +50,7 @@
 
 /obj/item/weapon/pinpointer/examine(mob/user)
 	..()
-	for(var/obj/machinery/nuclearbomb/bomb in machines)
+	for(var/obj/machinery/nuclearbomb/bomb in poi_list)
 		if(bomb.timing)
 			to_chat(user, "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]")
 
@@ -112,7 +112,7 @@
 					var/DNAstring = sanitize(input("Input DNA string to search for." , "Please Enter String." , ""))
 					if(!DNAstring)
 						return
-					for(var/mob/living/carbon/M in mob_list)
+					for(var/mob/living/carbon/M in carbon_list)
 						if(!M.dna)
 							continue
 						if(M.dna.unique_enzymes == DNAstring)
@@ -138,12 +138,12 @@
 			if(!target)
 				icon_state = "pinonnull"
 				return
-			playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)	//Plays a beep
+			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)	//Plays a beep
 			visible_message("Shuttle Locator active.")			//Lets the mob holding it know that the mode has changed
 	else
 		mode = SEARCH_FOR_DISK
 		if(istype(target, /obj/machinery/computer/syndicate_station))
-			playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
+			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>Authentication Disk Locator active.</span>")
 			target = null
 	return ..()

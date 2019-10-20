@@ -5,11 +5,21 @@
 	var/b_hair = 0
 	var/h_style = "Bald"
 
+	var/dyed_r_hair = 0
+	var/dyed_g_hair = 0
+	var/dyed_b_hair = 0
+	var/hair_painted = FALSE
+
 	//Facial hair colour and style
 	var/r_facial = 0
 	var/g_facial = 0
 	var/b_facial = 0
 	var/f_style = "Shaved"
+
+	var/dyed_r_facial = 0
+	var/dyed_g_facial = 0
+	var/dyed_b_facial = 0
+	var/facial_painted = FALSE
 
 	//Eye colour
 	var/r_eyes = 0
@@ -72,7 +82,7 @@
 	var/xylophone = 0 //For the spoooooooky xylophone cooldown
 
 	var/mob/remoteview_target = null
-	var/datum/dirt_cover/hand_dirt_color
+	var/datum/dirt_cover/hand_dirt_datum
 
 	// Organs regenerating variables.
 	var/regenerating_organ_time = 0
@@ -82,10 +92,20 @@
 	var/my_master = 0
 	var/my_golems = list()
 
-	var/lastScream = 0 // Prevent scream spam in some situations
+	// Prevent sound emotes spam in some situations
+	var/last_high_priority_sound_emote = 0 // high priority. these sounds can only be overlaid by sounds with the same priority
+	var/lastSoundEmote = 0 // medium priority. these sounds is not overlapped by lower priority sounds. TODO: make a variable of sound with a low priority and refactor emote system
+	var/last_pain_emote_sound = 0 // don't cry in pain too often
+	var/time_of_last_damage = 0 // don't cry from the pain that just came
+
 	var/name_override //For temporary visible name changes
 
 	var/full_prosthetic    // We are a robutt.
 	var/robolimb_count = 0 // Number of robot limbs.
 	var/sightglassesmod = null
 	var/datum/personal_crafting/handcrafting
+
+	var/shoving_fingers = FALSE // For force_vomit mechanic.
+
+	var/busy_left_hand = FALSE // See ambidextrous quirk and is_busy() override.
+	var/busy_right_hand = FALSE

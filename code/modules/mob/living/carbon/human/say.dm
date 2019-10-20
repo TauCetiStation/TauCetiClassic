@@ -3,14 +3,16 @@
 	var/message_range = world.view
 	var/italics = 0
 	var/alt_name = ""
+	var/sound/speech_sound
+	var/sound_vol
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "<span class='userdange'>You cannot speak in IC (Muted).</span>")
+			to_chat(src, "<span class='userdanger'>You cannot speak in IC (Muted).</span>")
 			return
 
 	//Meme stuff
-	if((!speech_allowed && usr == src) || miming)
-		to_chat(usr, "<span class='userdange'>You can't speak.</span>")
+	if(!speech_allowed && usr == src)
+		to_chat(usr, "<span class='userdanger'>You can't speak.</span>")
 		return
 
 	message =  sanitize(message)
@@ -27,6 +29,10 @@
 
 	if(copytext(message,1,2) == "*")
 		return emote(copytext(message,2))
+
+	if((miming || has_trait(TRAIT_MUTE)) && !(message_mode == "changeling" || message_mode == "alientalk"))
+		to_chat(usr, "<span class='userdanger'>You are mute.</span>")
+		return
 
 	if(!ignore_appearance && name != GetVoice())
 		alt_name = "(as [get_id_name("Unknown")])"
@@ -56,19 +62,15 @@
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
 				var/sm = sanitize(message)
-				for(var/mob/living/carbon/human/H in mob_list)
+				for(var/mob/living/carbon/human/H in human_list)
 					if(H.species.name != ABDUCTOR)
 						continue
-					else
-						if(user.team != H.team)
-							continue
-						else
-							to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
-							//return - technically you can add more aliens to a team
-				for(var/mob/M in dead_mob_list)
+					if(user.team != H.team)
+						continue
+					to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
+					//return - technically you can add more aliens to a team
+				for(var/mob/M in observer_list)
 					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
-					if(!isobserver(M) && (M.stat != DEAD))
-						to_chat(M, "<hr><span class='warning'>Если вы видите это сообщение, значит что-то сломалось. Пожалуйста, свЯжитесь со мной <b>SpaiR</b> на форуме (http://tauceti.ru/forums/index.php?action=profile;u=1929) или попросите кого-нибудь менЯ позвать. Пожалуйста, <u>запомните</u> что произошло в раунде, эта информациЯ очень <b>важна</b>. Чтобы сообщение исчезло попросите админа достать вас из тела и поместить обратно или сами уйдите в обсерверы.</span><hr>")
 				log_say("Abductor: [name]/[key] : [sm]")
 				return ""
 
@@ -92,6 +94,9 @@
 		message = handle_r[1]
 		verb = handle_r[2]
 		speech_problem_flag = handle_r[3]
+		if(handle_r[4]) // speech sound management
+			speech_sound = handle_r[4]
+			sound_vol = handle_r[5]
 
 	if(!message || stat)
 		return
@@ -166,10 +171,10 @@
 				for(var/M in mind.changeling.essences)
 					to_chat(M, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
 
-				for(var/mob/M in dead_mob_list)
-					if(!M.client || isnewplayer(M))
+				for(var/mob/M in observer_list)
+					if(!M.client)
 						continue //skip monkeys, leavers and new players
-					if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
+					if(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 						to_chat(M, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
 
 				to_chat(src, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
@@ -185,8 +190,6 @@
 						r_ear.talk_into(src,message, message_mode, verb, speaking)
 						used_radios += r_ear
 
-	var/sound/speech_sound
-	var/sound_vol
 	if((species.name == VOX || species.name == VOX_ARMALIS) && prob(20))
 		speech_sound = sound('sound/voice/shriek1.ogg')
 		sound_vol = 50
@@ -259,9 +262,11 @@
 
 //mob/living/carbon/human/proc/handle_speech_problems(message)
 /mob/living/carbon/human/proc/handle_speech_problems(message, message_mode)
-	var/list/returns[3]
+	var/list/returns[5]
 	var/verb = "says"
 	var/handled = 0
+	var/sound/speech_sound = null
+	var/sound_vol = 50
 	if(silent)
 		if(message_mode != "changeling")
 			message = ""
@@ -269,12 +274,24 @@
 	if(sdisabilities & MUTE)
 		message = ""
 		handled = 1
+	if(gnomed)
+		handled = 1
+		if((message_mode != "changeling") && prob(40))
+			if(prob(80))
+				message = pick("A-HA-HA-HA!", "U-HU-HU-HU!", "I'm a GN-NOME!", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!")
+			else if(config.rus_language)
+				message =  "[message]... Но я ГНОМ!"
+			else
+				message =  "[message]... But i'm A GNOME!"
+			verb = pick("yells like an idiot", "says rather loudly")
+			speech_sound = 'sound/magic/GNOMED.ogg'
+
 	if(wear_mask)
 		if(message_mode != "changeling")
 			message = wear_mask.speechModification(message)
 		handled = 1
 
-	if((HULK in mutations) && health >= 25 && length(message))
+	if((HULK in mutations) && health >= 25 && length(message) && !has_trait(TRAIT_STRONGMIND))
 		message = "[uppertext_(message)]!!!"
 		verb = pick("yells","roars","hollers")
 		handled = 1
@@ -288,7 +305,7 @@
 		handled = 1
 
 	var/braindam = getBrainLoss()
-	if(braindam >= 60)
+	if(braindam >= 60 && !has_trait(TRAIT_STRONGMIND))
 		handled = 1
 		if(prob(braindam/4))
 			message = stutter(message)
@@ -300,5 +317,7 @@
 	returns[1] = message
 	returns[2] = verb
 	returns[3] = handled
+	returns[4] = speech_sound
+	returns[5] = sound_vol
 
 	return returns

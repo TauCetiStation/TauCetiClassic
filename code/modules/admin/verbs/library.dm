@@ -1,7 +1,7 @@
 /client/proc/library_debug_remove()
 	set category = "Debug"
 	set name = "Library: Remove by id"
-	if(!check_rights(R_PERMISSIONS))	return
+	if(!check_rights(R_DEBUG))	return
 
 	establish_old_db_connection()
 	if(!dbcon_old.IsConnected())
@@ -32,7 +32,7 @@
 /client/proc/library_debug_read()
 	set category = "Debug"
 	set name = "Library: Read by id"
-	if(!check_rights(R_PERMISSIONS))	return
+	if(!check_rights(R_DEBUG))	return
 
 	establish_old_db_connection()
 	if(!dbcon_old.IsConnected())

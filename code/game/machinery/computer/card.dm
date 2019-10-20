@@ -200,7 +200,7 @@
 								jobdatum = J
 								break
 						if(!jobdatum)
-							to_chat(usr, "\red No log exists for this job: [t1]")
+							to_chat(usr, "<span class='warning'>No log exists for this job: [t1]</span>")
 							return
 
 						access = jobdatum.get_access()
@@ -249,6 +249,7 @@
 							<br>
 							[data_core ? data_core.get_manifest(0) : ""]
 						"}
+						P.update_icon()
 					else if (modify)
 						P.name = "access report"
 						P.info = {"<h4>Access Report</h4>
@@ -260,6 +261,7 @@
 							<u>Blood Type:</u> [modify.blood_type]<br><br>
 							<u>Access:</u><br>
 						"}
+						P.update_icon()
 
 						for(var/A in modify.access)
 							P.info += "  [get_access_desc(A)]"

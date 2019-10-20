@@ -8,22 +8,20 @@
 	unacidable = 1
 	density = 0
 	anchored = 1
-	luminosity = 3
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
 /obj/effect/anomaly/atom_init()
 	. = ..()
-	poi_list |= src
-	SetLuminosity(initial(luminosity))
+	poi_list += src
 	aSignal = new(src)
 	aSignal.code = rand(1,100)
 
 	aSignal.frequency = rand(1200, 1599)
-	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
+	if(IS_MULTIPLE(aSignal.frequency, 2))//signaller frequencies are always uneven!
 		aSignal.frequency++
 
 /obj/effect/anomaly/Destroy()
-	poi_list.Remove(src)
+	poi_list -= src
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()

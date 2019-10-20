@@ -5,13 +5,10 @@
 	item_state = "syringe_0"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	var/obj/item/weapon/implant/imp = null
 
 /obj/item/weapon/implanter/proc/update()
-
-
-/obj/item/weapon/implanter/update()
 	if (imp)
 		icon_state = "implanter1"
 	else
@@ -30,7 +27,7 @@
 		if(src && imp)
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'> Implanted with [src.name] ([src.imp.name])  by [user.name] ([user.ckey])</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] ([src.imp.name]) to implant [M.name] ([M.ckey])</font>")
-			msg_admin_attack("[user.name] ([user.ckey]) implanted [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			msg_admin_attack("[user.name] ([user.ckey]) implanted [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])", user)
 			if(imp.implanted(M))
 				user.visible_message("<span class ='userdanger'>[M] has been implanted by [user].</span>", "You implanted the implant into [M].")
 				imp.inject(M, def_zone)
@@ -63,11 +60,19 @@
 	. = ..()
 	update()
 
-/obj/item/weapon/implanter/adrenalin
-	name = "implanter-adrenalin"
+/obj/item/weapon/implanter/adrenaline
+	name = "implanter (A)"
 
-/obj/item/weapon/implanter/adrenalin/atom_init()
-	imp = new /obj/item/weapon/implant/adrenalin(src)
+/obj/item/weapon/implanter/adrenaline/atom_init()
+	imp = new /obj/item/weapon/implant/adrenaline(src)
+	. = ..()
+	update()
+
+/obj/item/weapon/implanter/emp
+	name = "implanter (M)"
+
+/obj/item/weapon/implanter/emp/atom_init()
+	imp = new /obj/item/weapon/implant/emp(src)
 	. = ..()
 	update()
 
@@ -103,7 +108,7 @@
 	if(istype(A,/obj/item) && imp)
 		var/obj/item/weapon/implant/compressed/c = imp
 		if (c.scanned)
-			to_chat(user, "\red Something is already scanned inside the implant!")
+			to_chat(user, "<span class='warning'>Something is already scanned inside the implant!</span>")
 			return
 		c.scanned = A
 		if(istype(A.loc,/mob/living/carbon/human))

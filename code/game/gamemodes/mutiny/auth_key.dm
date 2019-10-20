@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "nucleardisk"
 	item_state = "card-id"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 	var/time_entered_space
 	var/obj/item/device/radio/radio

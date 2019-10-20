@@ -55,8 +55,8 @@
 
 	//testing("[player_list.len] cur players")
 
-	//var/meme_limit = Clamp((num_players()/20), 1, 3)
-	var/meme_limit = Clamp((player_list.len/13), 1, 3)
+	//var/meme_limit = CLAMP((num_players()/20), 1, 3)
+	var/meme_limit = CLAMP((player_list.len/13), 1, 3)
 	//testing("Current meme limit is [meme_limit]")
 	var/i = 0
 
@@ -221,17 +221,17 @@
 		var/memewin = 1
 		var/attuned = 0
 		if((meme.current) && istype(meme.current,/mob/living/parasite/meme))
-			text += "The meme was <B>[meme.current.key]</B>.<BR>"
-			text += "The last host was <B>[meme.current:host.key]</B>.<BR>"
-			text += "<B>Hosts attuned:</B> [attuned]<BR>"
+			text += "The meme was <b>[meme.current.key]</b>.<br>"
+			text += "The last host was <b>[meme.current:host.key]</b>.<br>"
+			text += "<b>Hosts attuned:</b> [attuned]<br>"
 
 			var/count = 1
 			for(var/datum/objective/objective in meme.objectives)
 				if(objective.check_completion())
-					text += "<B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font><BR>"
+					text += "<b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span><br>"
 					feedback_add_details("meme_objective","[objective.type]|SUCCESS")
 				else
-					text += "<B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Failed.</font><BR>"
+					text += "<b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Failed.</span><br>"
 					feedback_add_details("meme_objective","[objective.type]|FAIL")
 					memewin = 0
 				count++
@@ -240,11 +240,15 @@
 			memewin = 0
 
 		if(memewin)
-			text += "<B>The meme was successful!<B>"
+			text += "<b>The meme was successful!</b>"
 			feedback_add_details("meme_success","SUCCESS")
 			score["roleswon"]++
 		else
-			text += "<B>The meme has failed!<B>"
+			text += "<b>The meme has failed!</b>"
 			feedback_add_details("meme_success","FAIL")
-		text += "<BR><HR>"
+
+	if(text)
+		antagonists_completion += list(list("mode" = "meme", "html" = text))
+		text = "<div class='block'>[text]</div>"
+		
 	return text

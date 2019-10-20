@@ -1,4 +1,15 @@
 #define MC_TICK_CHECK ( ( world.tick_usage > CURRENT_TICKLIMIT || src.state != SS_RUNNING ) ? pause() : 0 )
+
+#define MC_SPLIT_TICK_INIT(phase_count) var/original_tick_limit = CURRENT_TICKLIMIT; var/split_tick_phases = ##phase_count
+#define MC_SPLIT_TICK \
+    if(split_tick_phases > 1){\
+        CURRENT_TICKLIMIT = ((original_tick_limit - TICK_USAGE) / split_tick_phases) + TICK_USAGE;\
+        --split_tick_phases;\
+    } else {\
+        CURRENT_TICKLIMIT = original_tick_limit;\
+    }
+
+
 // Used to smooth out costs to try and avoid oscillation.
 #define MC_AVERAGE_FAST(average, current) (0.7 * (average) + 0.3 * (current))
 #define MC_AVERAGE(average, current) (0.8 * (average) + 0.2 * (current))
@@ -56,12 +67,16 @@
 
 // Timing subsystem
 // Don't run if there is an identical unique timer active
-#define TIMER_UNIQUE      0x1
+#define TIMER_UNIQUE      (1<<0)
 // For unique timers: Replace the old timer rather then not start this one
-#define TIMER_OVERRIDE    0x2
+#define TIMER_OVERRIDE    (1<<1)
 // Timing should be based on how timing progresses on clients, not the sever.
 //  tracking this is more expensive,
 //  should only be used in conjuction with things that have to progress client side, such as animate() or sound()
-#define TIMER_CLIENT_TIME 0x4
+#define TIMER_CLIENT_TIME (1<<2)
 // Timer can be stopped using deltimer()
-#define TIMER_STOPPABLE   0x8
+#define TIMER_STOPPABLE   (1<<3)
+///prevents distinguishing identical timers with the wait variable
+///
+///To be used with TIMER_UNIQUE
+#define TIMER_NO_HASH_WAIT (1<<4)

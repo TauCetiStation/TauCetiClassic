@@ -26,29 +26,29 @@
 		switch(slot_id)
 //			if("o_clothing")
 //			if("head")
-			if(slot_l_store)
+			if(SLOT_L_STORE)
 				if(l_store)
 					return
-				if(W.w_class > 3)
+				if(W.w_class > ITEM_SIZE_NORMAL)
 					return
 				u_equip(W)
 				l_store = W
 				update_inv_pockets()
-			if(slot_r_store)
+			if(SLOT_R_STORE)
 				if(r_store)
 					return
-				if(W.w_class > 3)
+				if(W.w_class > ITEM_SIZE_NORMAL)
 					return
 				u_equip(W)
 				r_store = W
 				update_inv_pockets()
 	else
 		switch(slot_id)
-			if(slot_wear_suit)
+			if(SLOT_WEAR_SUIT)
 				if(wear_suit)	wear_suit.attack_alien(src)
-			if(slot_head)
+			if(SLOT_HEAD)
 				if(head)		head.attack_alien(src)
-			if(slot_l_store)
+			if(SLOT_L_STORE)
 				if(l_store)		l_store.attack_alien(src)
-			if(slot_r_store)
+			if(SLOT_R_STORE)
 				if(r_store)		r_store.attack_alien(src)

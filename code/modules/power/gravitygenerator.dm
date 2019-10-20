@@ -4,20 +4,22 @@
 	name = "Gravity Generator Control"
 	desc = "A computer to control a local gravity generator.  Qualified personnel only."
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "airtunnel0e"
+	icon_state = "airtunnel"
+	state_broken_preset = "atmosb"
+	state_nopower_preset = "atmos0"
 	anchored = 1
 	density = 1
 	var/obj/machinery/gravity_generator = null
 
 
-/obj/machinery/gravity_generator/
+/obj/machinery/gravity_generator
 	name = "Gravitational Generator"
 	desc = "A device which produces a gravaton field when set up."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "TheSingGen"
 	anchored = 1
 	density = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 1000
 	var/on = 1
@@ -48,14 +50,14 @@
 	for(var/area/A in range(src,effectiverange))
 		if(A.name == "Space")
 			continue // No (de)gravitizing space.
-		if(A.master && !( A.master in localareas) )
-			localareas += A.master
+		if(!(A in localareas))
+			localareas += A
 
 /obj/machinery/computer/gravity_control_computer/proc/findgenerator()
 	var/obj/machinery/gravity_generator/foundgenerator = null
 	for(dir in list(NORTH,EAST,SOUTH,WEST))
 		//world << "SEARCHING IN [dir]"
-		foundgenerator = locate(/obj/machinery/gravity_generator/, get_step(src, dir))
+		foundgenerator = locate(/obj/machinery/gravity_generator, get_step(src, dir))
 		if (!isnull(foundgenerator))
 			//world << "FOUND"
 			break
@@ -109,7 +111,7 @@
 			for(var/area/A in gravity_generator:localareas)
 				var/obj/machinery/gravity_generator/G
 				for(G in machines)
-					if((A.master in G.localareas) && (G.on))
+					if((A in G.localareas) && (G.on))
 						break
 				if(!G)
 					A.gravitychange(0,A)

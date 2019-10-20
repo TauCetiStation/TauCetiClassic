@@ -93,8 +93,8 @@
 	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it."
 	icon_state = "emergency"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
-	w_class = 2.0
+	slot_flags = SLOT_FLAGS_BELT
+	w_class = ITEM_SIZE_SMALL
 	force = 4.0
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
 	volume = 2 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)

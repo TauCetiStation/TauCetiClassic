@@ -43,7 +43,7 @@
 			if(H.head)
 				to_chat(H, "<span class='userdanger'>You're already wearing something on your head!</span>")
 				return
-			H.equip_to_slot_if_possible(hood, slot_head, 0, 0, 1)
+			H.equip_to_slot_if_possible(hood, SLOT_HEAD, 0, 0, 1)
 	else
 		RemoveHood()
 	hooded = !hooded

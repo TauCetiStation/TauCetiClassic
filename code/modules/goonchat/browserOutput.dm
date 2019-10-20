@@ -28,7 +28,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	if(!owner) // In case the client vanishes before winexists returns
 		return 0
 
-	if(winget(owner, "browseroutput", "is-disabled") == "false")
+	if(winget(owner, "browseroutput", "is-visible") == "true") //Already setup
 		doneLoading()
 
 	else
@@ -62,9 +62,6 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 		if("doneLoading")
 			data = doneLoading(arglist(params))
 
-		if("debug")
-			data = debug(arglist(params))
-
 		if("ping")
 			data = ping(arglist(params))
 
@@ -79,15 +76,24 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 		return
 
 	loaded = TRUE
-	winset(owner, "browseroutput", "is-disabled=false")
+	showChat()
+
 	for(var/message in messageQueue)
-		to_chat(owner, message)
+		// whitespace has already been handled by the original to_chat
+		to_chat(owner, message, handle_whitespace=FALSE)
 
 	messageQueue = null
-	src.sendClientData()
+	sendClientData()
 
 	pingLoop()
 	sendEmojiList()
+
+	//do not convert to to_chat()
+	SEND_TEXT(owner, "<span style=\"font-size: 3; color: red;\">Failed to load fancy chat, reverting to old chat. Certain features won't work.</span>")
+
+/datum/chatOutput/proc/showChat()
+	winset(owner, "output", "is-visible=false")
+	winset(owner, "browseroutput", "is-disabled=false;is-visible=true")
 
 /datum/chatOutput/proc/pingLoop()
 	set waitfor = FALSE
@@ -104,7 +110,6 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	if(islist(data))
 		data = json_encode(data)
 	C << output("[data]", "[window]:ehjaxCallback")
-
 
 /datum/chatOutput/proc/sendClientData()
 	var/list/deets = list("clientData" = list())
@@ -123,7 +128,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 		if(connData && islist(connData) && connData.len > 0 && connData["connData"])
 			connectionHistory = connData["connData"]
 			var/list/found = new()
-			for(var/i = connectionHistory.len; i >= 1; i--)
+			for(var/i in connectionHistory.len to 1 step -1)
 				var/list/row = connectionHistory[i]
 				if(!row || row.len < 3 || !(row["ckey"] && row["compid"] && row["ip"]))
 					return
@@ -146,6 +151,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	error = "\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client : [owner.key ? owner.key : owner] triggered JS error: [error]"
 	chatDebug << error
 
+//currently not working as expected
 /client/verb/debug_chat()
 	set hidden = 1
 	chatOutput.ehjax_send(data = list("firebug" = 1))
@@ -193,43 +199,70 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 
 	return "<img [class] src='data:image/png;base64,[bicon_cache[key]]'>"
 
-/proc/to_chat(target, message)
-	if(!target) //shitty fix, but it's works
+/proc/to_chat(target, message, handle_whitespace=TRUE)
+	if(!Master.init_time || !SSchat) // This is supposed to be Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized but we don't have these variables
+		to_chat_immediate(target, message, handle_whitespace)
+		return
+	SSchat.queue(target, message, handle_whitespace)
+
+/proc/to_chat_immediate(target, message, handle_whitespace = TRUE)
+	if(!target || !message)
 		return
 
-	if(istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !(ismob(target) || islist(target) || isclient(target) || target == world))
-		target << message
-		if (!isatom(target)) // Really easy to mix these up, and not having to make sure things are mobs makes the code cleaner.
-			CRASH("DEBUG: to_chat called with invalid message")
+	//if(istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !(ismob(target) || islist(target) || isclient(target) || target == world))
+	if(istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !istext(message))
+		CRASH("DEBUG: to_chat called with invalid message: [message]")
 		return
 
-	else if(istext(message))
-		if(istext(target))
+	if(target == world)
+		target = clients
+
+	var/original_message = message
+
+	//Some macros remain in the string even after parsing and fuck up the eventual output
+	message = replacetext(message, "\improper", "")
+	message = replacetext(message, "\proper", "")
+	if(handle_whitespace)
+		message = replacetext(message, "\n", "<br>")
+		message = replacetext(message, "\t", ENTITY_TAB)
+
+	//message = entity_ja(message)//moved to js
+
+	if(islist(target))
+		var/encoded = url_encode(message)
+		for(var/I in target)
+			var/client/C = CLIENT_FROM_VAR(I) //Grab us a client if possible
+
+			if (!C)
+				continue
+
+			//Send it to the old style output window.
+			SEND_TEXT(C, original_message)
+
+			if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
+				continue
+
+			if(!C.chatOutput.loaded)
+				//Client still loading, put their messages in a queue
+				C.chatOutput.messageQueue += message
+				continue
+
+			C << output(encoded, "browseroutput:output")
+	else
+		var/client/C = CLIENT_FROM_VAR(target) //Grab us a client if possible
+
+		if (!C)
 			return
 
-		message = replacetext(message, "\n", "<br>")
+		//Send it to the old style output window.
+		SEND_TEXT(C, original_message)
 
-		message = macro2html(message)
-		if(findtext(message, "\improper"))
-			message = replacetext(message, "\improper", "")
-		if(findtext(message, "\proper"))
-			message = replacetext(message, "\proper", "")
+		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
+			return
 
-		//message = entity_ja(message)//moved to js
-		
-		var/client/C
-		if(istype(target, /client))
-			C = target
-		if(ismob(target))
-			C = target:client
+		if(!C.chatOutput.loaded)
+			//Client still loading, put their messages in a queue
+			C.chatOutput.messageQueue += message
+			return
 
-		if(C && C.chatOutput)
-			if(C.chatOutput.broken)
-				C << message
-				return
-
-			if(!C.chatOutput.loaded && C.chatOutput.messageQueue && islist(C.chatOutput.messageQueue))
-				C.chatOutput.messageQueue.Add(message)
-				return
-
-		target << output(url_encode(message), "browseroutput:output")
+		C << output(url_encode(message), "browseroutput:output")

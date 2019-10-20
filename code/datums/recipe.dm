@@ -55,7 +55,7 @@
 
 /datum/recipe/proc/check_items(obj/container) //1=precisely, 0=insufficiently, -1=superfluous
 	if (!items)
-		if (locate(/obj/) in container)
+		if (locate(/obj) in container)
 			return -1
 		else
 			return 1

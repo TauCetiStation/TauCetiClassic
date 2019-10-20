@@ -58,57 +58,64 @@
 
 /datum/design/fusion
 	name = "Fusion Core Control Console"
+	desc = "Part of the R-UST Mk. 8 Tokamak power generator"
 	id = "fusion_core_control"
 	build_path = /obj/item/weapon/circuitboard/fusion_core_control
-	req_tech = list("powerstorage" = 3, "engineering" = 3, "materials" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = list("Power")
 
 /datum/design/fusion/fuel_compressor
 	name = "Fusion Fuel Compressor"
+	desc = "Part of the R-UST Mk. 8 Tokamak power generator"
 	id = "fusion_fuel_compressor"
 	build_path = /obj/item/weapon/circuitboard/fusion_fuel_compressor
-	req_tech = list("powerstorage" = 4, "engineering" = 4, "materials" = 5)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = list("Power")
 
 /datum/design/fusion/fuel_control
 	name = "Fusion Fuel Control Console"
+	desc = "Part of the R-UST Mk. 8 Tokamak power generator"
 	id = "fusion_fuel_control"
 	build_path = /obj/item/weapon/circuitboard/fusion_fuel_control
-	req_tech = list("powerstorage" = 5, "engineering" = 4)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = list("Power")
 
 /datum/design/fusion/gyrotron_control
 	name = "Gyrotron Control Console"
+	desc = "Part of the R-UST Mk. 8 Tokamak power generator"
 	id = "gyrotron_control"
 	build_path = /obj/item/weapon/circuitboard/gyrotron_control
-	req_tech = list("programming" = 5, "engineering" = 5)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = list("Power")
 
 /datum/design/fusion/core
 	name = "Fusion Core"
+	desc = "Part of the R-UST Mk. 8 Tokamak power generator"
 	id = "fusion_core"
 	build_path = /obj/item/weapon/circuitboard/fusion_core
-	req_tech = list("bluespace" = 4, "magnets" = 5, "powerstorage" = 4)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = list("Power")
 
 /datum/design/fusion/injector
 	name = "Fusion Fuel Injector"
+	desc = "Part of the R-UST Mk. 8 Tokamak power generator"
 	id = "fusion_injector"
 	build_path = /obj/item/weapon/circuitboard/fusion_injector
-	req_tech = list("powerstorage" = 4, "engineering" = 5, "materials" = 5)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = list("Power")
 
 /datum/design/fusion/emitter/gyrotron
 	name = "Circuit Board (Gyrotron)"
+	desc = "Part of the R-UST Mk. 8 Tokamak power generator"
 	id = "gyrotron"
 	build_path = /obj/item/weapon/circuitboard/emitter/gyrotron
-	req_tech = list ("powerstorage" = 6, "engineering" = 5, "programming" = 6)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = list("Power")
 

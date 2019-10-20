@@ -10,7 +10,7 @@
 
 	var/turf/T = get_turf(usr)
 
-	message_admins("\blue [key_name_admin(usr)] creates the [side_x]x[side_y] asteroid on [T.x],[T.y],[T.z] [ADMIN_JMP(T)]")
+	message_admins("<span class='notice'>[key_name_admin(usr)] creates the [side_x]x[side_y] asteroid on [T.x],[T.y],[T.z] [ADMIN_JMP(T)]</span>")
 	log_admin("[key_name_admin(usr)] creates the [side_x]x[side_y] asteroid on [T.x],[T.y],[T.z]")
 
 	var/datum/map_template/asteroid = new(map = generate_asteroid_mapfile(side_x, side_y))
@@ -21,10 +21,10 @@
 
 	for(var/mob/M in player_list)
 		if(M.z == T.z)
-			M << sound('sound/effects/Explosion3.ogg')
+			M.playsound_local(null, 'sound/effects/Explosion3.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 	//shake the station!
-	for(var/mob/living/carbon/C in mob_list)
+	for(var/mob/living/carbon/C in carbon_list)
 		if(C.z == T.z)
 			if(C.buckled)
 				shake_camera(C, 4, 1)
@@ -40,7 +40,7 @@
 			targetAtoms += A
 
 	for(var/atom/movable/M in targetAtoms)
-		if(istype(M, /obj/machinery/atmospherics/) || istype(M,/obj/structure/cable/))
+		if(istype(M, /obj/machinery/atmospherics) || istype(M,/obj/structure/cable))
 			qdel(M)
 		else if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -55,7 +55,7 @@
 	//fix for basetypes coped from old turfs in mapload
 	for(var/turf/T2 in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 		                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
-		if(istype(T, /turf/simulated/floor/plating/airless/asteroid/) || istype(T, /turf/simulated/mineral/))
+		if(istype(T, /turf/simulated/floor/plating/airless/asteroid) || istype(T, /turf/simulated/mineral))
 			T2.basetype = /turf/simulated/floor/plating/airless/asteroid
 
 #define SPACETURF    "a"

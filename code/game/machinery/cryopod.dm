@@ -143,7 +143,7 @@ var/global/list/frozen_items = list()
 		/obj/item/clothing/suit,
 		/obj/item/clothing/shoes/magboots,
 		/obj/item/blueprints,
-		/obj/item/clothing/head/helmet/space/
+		/obj/item/clothing/head/helmet/space
 	)
 
 /obj/machinery/cryopod/right
@@ -301,7 +301,7 @@ var/global/list/frozen_items = list()
 				insert(M)
 				// Book keeping!
 				log_admin("[key_name_admin(M)] has entered a stasis pod.")
-				message_admins("\blue [key_name_admin(M)] has entered a stasis pod.")
+				message_admins("<span class='notice'>[key_name_admin(M)] has entered a stasis pod.</span>")
 
 				//Despawning occurs when process() is called with an occupant without a client.
 				add_fingerprint(M)

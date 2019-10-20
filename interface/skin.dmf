@@ -83,6 +83,10 @@ macro "macro"
 		name = "CTRL+A+REP"
 		command = ".west"
 		is-disabled = false
+	elem "MACRO-CTRL+B"
+		name = "CTRL+B"
+		command = "Click-On-Self"
+		is-disabled = false
 	elem "MACRO-CTRL+D+REP"
 		name = "CTRL+D+REP"
 		command = ".east"
@@ -98,6 +102,10 @@ macro "macro"
 	elem "MACRO-CTRL+G"
 		name = "CTRL+G"
 		command = "a-intent right"
+		is-disabled = false
+	elem "MACRO-CTRL+H"
+		name = "CTRL+H"
+		command = "holster"
 		is-disabled = false
 	elem "MACRO-CTRL+Q"
 		name = "CTRL+Q"
@@ -121,11 +129,11 @@ macro "macro"
 		is-disabled = false
 	elem "MACRO-CTRL+Y"
 		name = "CTRL+Y"
-		command = "Activate-Held-Object"
+		command = "Click-On-Held-Object"
 		is-disabled = false
 	elem "MACRO-CTRL+Z"
 		name = "CTRL+Z"
-		command = "Activate-Held-Object"
+		command = "Click-On-Held-Object"
 		is-disabled = false
 	elem "MACRO-F1"
 		name = "F1"
@@ -285,6 +293,14 @@ macro "hotkeymode"
 		name = "CTRL+A+REP"
 		command = ".west"
 		is-disabled = false
+	elem "HKMODE-B"
+		name = "B"
+		command = "Click-On-Self"
+		is-disabled = false
+	elem "HKMODE-CTRL+B"
+		name = "CTRL+B"
+		command = "Click-On-Self"
+		is-disabled = false
 	elem "HKMODE-D+REP"
 		name = "D+REP"
 		command = ".east"
@@ -371,19 +387,19 @@ macro "hotkeymode"
 		is-disabled = false
 	elem "HKMODE-Y"
 		name = "Y"
-		command = "Activate-Held-Object"
+		command = "Click-On-Held-Object"
 		is-disabled = false
 	elem "HKMODE-CTRL+Y"
 		name = "CTRL+Y"
-		command = "Activate-Held-Object"
+		command = "Click-On-Held-Object"
 		is-disabled = false
 	elem "HKMODE-Z"
 		name = "Z"
-		command = "Activate-Held-Object"
+		command = "Click-On-Held-Object"
 		is-disabled = false
 	elem "HKMODE-CTRL+Z"
 		name = "CTRL+Z"
-		command = "Activate-Held-Object"
+		command = "Click-On-Held-Object"
 		is-disabled = false
 	elem "HKMODE-F1"
 		name = "F1"
@@ -495,10 +511,28 @@ menu "menu"
 		is-disabled = false
 		saved-params = "is-checked"
 	elem "stretch"
-		name = "&Stretch to fit"
+		name = "&Auto (Stretch to fit)"
 		command = ".winset \"mapwindow.map.icon-size=0\""
 		category = "&Icons"
 		is-checked = true
+		can-check = true
+		group = "size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "icon128"
+		name = "&128x128 (4x)"
+		command = ".winset \"mapwindow.map.icon-size=128\""
+		category = "&Icons"
+		is-checked = false
+		can-check = true
+		group = "size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "icon96"
+		name = "&96x96 (3x)"
+		command = ".winset \"mapwindow.map.icon-size=96\""
+		category = "&Icons"
+		is-checked = false
 		can-check = true
 		group = "size"
 		is-disabled = false
@@ -512,8 +546,17 @@ menu "menu"
 		group = "size"
 		is-disabled = false
 		saved-params = "is-checked"
+	elem "icon48"
+		name = "&48x48 (1.5x)"
+		command = ".winset \"mapwindow.map.icon-size=48\""
+		category = "&Icons"
+		is-checked = false
+		can-check = true
+		group = "size"
+		is-disabled = false
+		saved-params = "is-checked"
 	elem "icon32"
-		name = "&32x32"
+		name = "&32x32 (1x)"
 		command = ".winset \"mapwindow.map.icon-size=32\""
 		category = "&Icons"
 		is-checked = false
@@ -536,6 +579,60 @@ menu "menu"
 		category = "&Icons"
 		is-checked = false
 		can-check = true
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem
+		name = "&Scaling Mode"
+		command = ""
+		category = ""
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "nn"
+		name = "&Nearest Neighbor"
+		command = ".winset \"mapwindow.map.zoom-mode=distort\""
+		category = "&Scaling Mode"
+		is-checked = false
+		can-check = true
+		group = "scaling"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "ps"
+		name = "&Point Sampling"
+		command = ".winset \"mapwindow.map.zoom-mode=normal\""
+		category = "&Scaling Mode"
+		is-checked = true
+		can-check = true
+		group = "scaling"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "bl"
+		name = "&Bilinear"
+		command = ".winset \"mapwindow.map.zoom-mode=blur\""
+		category = "&Scaling Mode"
+		is-checked = false
+		can-check = true
+		group = "scaling"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem
+		name = "&Options"
+		command = ""
+		category = ""
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem
+		name = "&Audio"
+		command = ".showvolumecontrols"
+		category = "&Options"
+		is-checked = false
+		can-check = false
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
@@ -1051,7 +1148,7 @@ window "mainwindow"
 	elem "input"
 		type = INPUT
 		pos = 3,420
-		size = 517x20
+		size = 477x20
 		anchor1 = 0,100
 		anchor2 = 100,100
 		font-family = ""
@@ -1094,11 +1191,21 @@ window "mainwindow"
 		on-size = ""
 		text = "Chat"
 		image = ""
-		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\""
+		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\"\"saybutton.is-checked=true?mebutton.is-checked=false\""
 		is-flat = false
 		stretch = false
 		is-checked = false
 		group = ""
+		button-type = pushbox
+	elem "mebutton"
+		type = BUTTON
+		pos = 480,420
+		size = 40x20
+		anchor1 = 100,100
+		anchor2 = none
+		saved-params = "is-checked"
+		text = "Emote"
+		command = ".winset \"mebutton.is-checked=true?input.command=\"!me \\\"\" macrobutton.is-checked=false:input.command=\"\"mebutton.is-checked=true?saybutton.is-checked=false\""
 		button-type = pushbox
 	elem "tooltip"
 		type = BROWSER
@@ -1185,7 +1292,7 @@ window "mapwindow"
 		border = none
 		drop-zone = true
 		right-click = false
-		saved-params = "icon-size"
+		saved-params = "icon-size;zoom-mode"
 		on-size = ""
 		icon-size = 0
 		text-mode = false
@@ -1246,7 +1353,7 @@ window "outputwindow"
 		font-style = ""
 		text-color = #000000
 		background-color = #ffffff
-		is-visible = true
+		is-visible = false
 		is-disabled = true
 		is-transparent = false
 		is-default = false
@@ -1261,7 +1368,93 @@ window "outputwindow"
 		use-title = false
 		on-show = ""
 		on-hide = ""
-
+	elem "output"
+		type = OUTPUT
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = ""
+		on-size = ""
+		show-history = false
+		show-url = false
+		auto-format = false
+		use-title = false
+		on_show = ""
+		on_hide = ""
+window "preferences_window"
+	elem "preferences_window"
+		type = MAIN
+		pos = 200,20
+		size = 810x770
+		anchor1 = none
+		anchor2 = none
+		background-color = none
+		is-visible = false
+		saved-params = ""
+		statusbar = false
+		can-close = false
+		can-minimize = false
+		can-resize = false
+	elem "preferences_browser"
+		type = BROWSER
+		pos = 0,0
+		size = 618x770
+		anchor1 = 0,0
+		anchor2 = 90,100
+		background-color = none
+		saved-params = ""
+	elem "character_preview_map"
+		type = MAP
+		pos = 618,0
+		size = 195x770
+		anchor1 = 90,0
+		anchor2 = 100,100
+		right-click = true
+		saved-params = "zoom;letterbox;zoom-mode"
+window "barber_window"
+	elem "barber_window"
+		type = MAIN
+		pos = 200,20
+		size = 620x680
+		anchor1 = none
+		anchor2 = none
+		background-color = none
+		is-visible = false
+		saved-params = ""
+		statusbar = false
+		can-close = true
+		can-minimize = false
+		can-resize = false
+	elem "barber_browser"
+		type = BROWSER
+		pos = 0,195
+		size = 620x485
+		anchor1 = 0,0
+		anchor2 = 90,100
+		background-color = none
+		saved-params = ""
+	elem "barber_preview_map"
+		type = MAP
+		pos = 0,0
+		size = 620x195
+		anchor1 = 90,0
+		anchor2 = 100,100
+		background-color = #ffffff
+		right-click = true
+		saved-params = "zoom;letterbox;zoom-mode"
 window "rpane"
 	elem "rpane"
 		type = MAIN
@@ -1712,7 +1905,6 @@ window "infowindow"
 		tab-font-family = ""
 		tab-font-size = 0
 		tab-font-style = ""
-		allow-html = false
 		multi-line = true
 		on-show = ".winset\"rpane.infob.is-visible=true;rpane.browseb.is-visible=true?rpane.infob.pos=130,0:rpane.infob.pos=65,0 rpane.textb.is-visible=true rpane.infob.is-checked=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=infowindow\""
 		on-hide = ".winset\"rpane.infob.is-visible=false;rpane.browseb.is-visible=true?rpane.browseb.is-checked=true rpane.rpanewindow.left=browserwindow:rpane.textb.is-visible=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=\""

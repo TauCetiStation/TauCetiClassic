@@ -21,6 +21,8 @@
 		return ..()
 	var/mob/living/to_die
 	if(content_mob != null && already_opened == 0)
+		if(content_mob == /mob/living/simple_animal/shiba)
+			new/obj/item/weapon/bikehorn/dogtoy(src)
 		if(content_mob == /mob/living/simple_animal/chick)
 			var/num = rand(4, 6)
 			for(var/i = 0, i < num, i++)
@@ -77,6 +79,10 @@
 /obj/structure/closet/critter/pug
 	name = "pug crate"
 	content_mob = /mob/living/simple_animal/pug
+
+/obj/structure/closet/critter/shiba
+	name = "shiba crate"
+	content_mob = /mob/living/simple_animal/shiba
 
 /obj/structure/closet/critter/pig
 	name = "pig crate"

@@ -5,7 +5,7 @@
 	item_state = "assembly"
 	flags = CONDUCT
 	throwforce = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3
 	throw_range = 10
 
@@ -109,12 +109,11 @@
 			S.on_found(finder)
 
 
-/obj/item/device/assembly_holder/Move()
-	..()
+/obj/item/device/assembly_holder/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	if(a_left && a_right)
 		a_left.holder_movement()
 		a_right.holder_movement()
-	return
 
 /obj/item/device/assembly_holder/hear_talk(mob/living/M, msg, verb, datum/language/speaking)
 	if(a_left)
@@ -136,15 +135,15 @@
 /obj/item/device/assembly_holder/attackby(obj/item/weapon/W, mob/user)
 	if(isscrewdriver(W))
 		if(!a_left || !a_right)
-			to_chat(user, "\red BUG:Assembly part missing, please report this!")
+			to_chat(user, "<span class='warning'>BUG:Assembly part missing, please report this!</span>")
 			return
 		a_left.toggle_secure()
 		a_right.toggle_secure()
 		secured = !secured
 		if(secured)
-			to_chat(user, "\blue \The [src] is ready!")
+			to_chat(user, "<span class='notice'>\The [src] is ready!</span>")
 		else
-			to_chat(user, "\blue \The [src] can now be taken apart!")
+			to_chat(user, "<span class='notice'>\The [src] can now be taken apart!</span>")
 		update_icon()
 		return
 	else if(W.IsSpecialAssembly())
@@ -158,7 +157,7 @@
 	src.add_fingerprint(user)
 	if(src.secured)
 		if(!a_left || !a_right)
-			to_chat(user, "\red Assembly part missing!")
+			to_chat(user, "<span class='warning'>Assembly part missing!</span>")
 			return
 		if(istype(a_left,a_right.type))//If they are the same type it causes issues due to window code
 			switch(alert("Which side would you like to use?",,"Left","Right"))

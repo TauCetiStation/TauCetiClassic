@@ -8,11 +8,11 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
 	force = 16
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
-	hitsound = 'sound/hallucinations/growl1.ogg'
+	hitsound = list('sound/voice/growl1.ogg')
 
 	attack_verb = list("bitten and scratched", "scratched")
 
@@ -51,7 +51,7 @@
 		user.visible_message("<span class='warning'>[user] starts to force the door to open with [src]!</span>",\
 							 "<span class='warning'>You start forcing the door to open.</span>",\
 							 "<span class='warning'>You hear metal strain.</span>")
-		playsound(A.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
+		playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(do_after(user, 70, target = A))
 			if(A.density && in_range(A, user))
 				user.visible_message("<span class='warning'>[user] forces the door to open with [src]!</span>",\
@@ -68,7 +68,7 @@
 			user.visible_message("<span class='warning'>[user] attempts to break open the airlock with [src]!</span>",\
 								 "<span class='warning'>You attempt to break open the airlock.</span>",\
 								 "<span class='warning'>You hear metal strain.</span>")
-			playsound(A.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
+			playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			if(do_after(user, 100, target = A))
 				if(A && A.density && in_range(A, user))
 					if(attempts >= 2 && prob(attempts*5))
@@ -76,7 +76,7 @@
 											 "<span class='warning'>You break the airlock.</span>",\
 											 "<span class='warning'>You hear a metal screeching sound.</span>")
 						A.door_rupture(user)
-						playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+						playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 						return
 				else
 					return
@@ -91,7 +91,7 @@
 		user.visible_message("<span class='warning'>[user] attempts to break open the emergency shutter with [src]!</span>",\
 							 "<span class='warning'>You attempt to break open the emergency shutter.</span>",\
 							 "<span class='warning'>You hear metal strain.</span>")
-		playsound(A.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
+		playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(do_after(user, 200, target = A))
 			if(A.density && in_range(A, user))
 				user.visible_message("<span class='warning'>[user] broke the emergency shutter with [src]!</span>",\
@@ -125,15 +125,15 @@
 	var/obj/item/organ/external/LArm = H.bodyparts_by_name[BP_L_ARM]
 	var/obj/item/organ/external/RArm = H.bodyparts_by_name[BP_R_ARM]
 
-	if(LArm && !(LArm.status & ORGAN_DESTROYED) && !istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
+	if(LArm && !(LArm.is_stump) && !istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
 		H.drop_l_hand()
-		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, slot_l_hand)
-	if(RArm && !(RArm.status & ORGAN_DESTROYED) && !istype(H.r_hand, /obj/item/weapon/melee/zombie_hand/right))
+		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, SLOT_L_HAND)
+	if(RArm && !(RArm.is_stump) && !istype(H.r_hand, /obj/item/weapon/melee/zombie_hand/right))
 		H.drop_r_hand()
-		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, slot_r_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
 
 	if(H.stat != DEAD && prob(10))
-		playsound(H, pick(spooks), 50, 1)
+		playsound(H, pick(spooks), VOL_EFFECTS_MASTER)
 
 /datum/species/zombie/handle_death(mob/living/carbon/human/H)
 	addtimer(CALLBACK(null, .proc/prerevive_zombie, H), rand(600,700))
@@ -145,7 +145,7 @@
 
 /proc/prerevive_zombie(mob/living/carbon/human/H)
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-	if(H.organs_by_name[O_BRAIN] && BP && !(BP.status & ORGAN_DESTROYED))
+	if(H.organs_by_name[O_BRAIN] && BP && !(BP.is_stump))
 		if(!H.key && H.mind)
 			for(var/mob/dead/observer/ghost in player_list)
 				if(ghost.mind == H.mind && ghost.can_reenter_corpse)
@@ -158,7 +158,7 @@
 
 /proc/revive_zombie(mob/living/carbon/human/H)
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-	if(!H.organs_by_name[O_BRAIN] || !BP || BP.status & ORGAN_DESTROYED)
+	if(!H.organs_by_name[O_BRAIN] || !BP || BP.is_stump)
 		return
 	if(!iszombie(H))
 		H.zombify()
@@ -185,7 +185,7 @@
 	// remove the character from the list of the dead
 	if(H.stat == DEAD)
 		dead_mob_list -= H
-		living_mob_list += H
+		alive_mob_list += H
 		H.tod = null
 		H.timeofdeath = 0
 	H.stat = CONSCIOUS
@@ -193,7 +193,7 @@
 	H.regenerate_icons()
 	H.update_health_hud()
 
-	playsound(H, pick(list('sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')), 50, 1)
+	playsound(H, pick(list('sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')), VOL_EFFECTS_MASTER)
 	to_chat(H, "<span class='danger'>Somehow you wake up and your hunger is still outrageous!</span>")
 	H.visible_message("<span class='danger'>[H] suddenly wakes up!</span>")
 
@@ -240,13 +240,13 @@
 
 	switch(species.name)
 		if(TAJARAN)
-			set_species(ZOMBIE_TAJARAN, FALSE, TRUE)
+			set_species(ZOMBIE_TAJARAN, TRUE, TRUE)
 		if(SKRELL)
-			set_species(ZOMBIE_SKRELL, FALSE, TRUE)
+			set_species(ZOMBIE_SKRELL, TRUE, TRUE)
 		if(UNATHI)
-			set_species(ZOMBIE_UNATHI, FALSE, TRUE)
+			set_species(ZOMBIE_UNATHI, TRUE, TRUE)
 		else
-			set_species(ZOMBIE, FALSE, TRUE)
+			set_species(ZOMBIE, TRUE, TRUE)
 
 /proc/zombie_talk(var/message)
 	var/list/message_list = splittext(message, " ")
@@ -281,7 +281,7 @@
 		var/has_leg = FALSE
 		for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG))
 			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
-			if(BP && !(BP.status & ORGAN_DESTROYED))
+			if(BP && !(BP.is_stump))
 				has_leg = TRUE
 		if(!has_leg)
 			tally += 10
@@ -355,7 +355,7 @@ var/list/zombie_list = list()
 	var/mob/living/carbon/human/target = null
 	var/min_dist = 999
 
-	for(var/mob/living/carbon/human/H in mob_list)
+	for(var/mob/living/carbon/human/H in human_list)
 		if(H.stat == DEAD || iszombie(H) || H.z != user.z)
 			continue
 		var/turf/target_turf = get_turf(H)

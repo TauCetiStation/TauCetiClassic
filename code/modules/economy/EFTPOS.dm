@@ -3,6 +3,7 @@
 	desc = "Swipe your ID card to make purchases electronically."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "eftpos"
+	hitsound = list('sound/items/surgery/defib_safetyOff.ogg')
 	var/machine_id = ""
 	var/eftpos_name = "Default EFTPOS scanner"
 	var/transaction_locked = 0
@@ -45,6 +46,7 @@
 	R.info += "3. Give the EFTPOS device to your customer, he/she must finish the transaction by swiping their ID card or a charge card with enough funds.<br>"
 	R.info += "4. If everything is done correctly, the money will be transferred. To unlock the device you will have to reset the EFTPOS device.<br>"
 
+	R.update_icon()
 
 	//stamp the paper
 	var/obj/item/weapon/stamp/centcomm/S = new
@@ -60,6 +62,8 @@
 	R.info = "<b>[eftpos_name] reference</b><br><br>"
 	R.info += "Access code: [access_code]<br><br>"
 	R.info += "<b>Do not lose or misplace this code.</b><br>"
+
+	R.update_icon()
 
 	//stamp the paper
 	var/obj/item/weapon/stamp/centcomm/S = new
@@ -111,7 +115,7 @@
 			if(!linked_account.suspended)
 				if(transaction_locked && !transaction_paid)
 					if(transaction_amount <= E.worth)
-						playsound(src, 'sound/machines/chime.ogg', 50, 1)
+						playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
 						src.visible_message("[bicon(src)] The [src] chimes.")
 						transaction_paid = 1
 
@@ -221,7 +225,7 @@
 					if(D)
 						if(!D.suspended)
 							if(transaction_amount <= D.money)
-								playsound(src, 'sound/machines/chime.ogg', 50, 1)
+								playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
 								src.visible_message("[bicon(src)] The [src] chimes.")
 								transaction_paid = 1
 
@@ -268,7 +272,7 @@
 				transaction_paid = 0
 			else
 				visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
-				playsound(src, 'sound/machines/chime.ogg', 50, 1)
+				playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
 				src.visible_message("[bicon(src)] The [src] chimes.")
 				transaction_paid = 1
 	else

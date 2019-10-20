@@ -3,7 +3,7 @@
 	id = "drink"
 	description = "Uh, some kind of drink."
 	reagent_state = LIQUID
-	color = "#E78108" // rgb: 231, 129, 8
+	color = "#e78108" // rgb: 231, 129, 8
 	custom_metabolism = DRINK_METABOLISM
 	nutriment_factor = 0
 	var/adj_dizzy = 0
@@ -27,8 +27,8 @@
 	name = "Orange juice"
 	id = "orangejuice"
 	description = "Both delicious AND rich in Vitamin C, what more do you need?"
-	color = "#E78108" // rgb: 231, 129, 8
-	taste_message = "orange juice"
+	color = "#e78108" // rgb: 231, 129, 8
+	taste_message = "orange"
 
 /datum/reagent/consumable/drink/orangejuice/on_general_digest(mob/living/M)
 	..()
@@ -40,7 +40,7 @@
 	id = "tomatojuice"
 	description = "Tomatoes made into juice. What a waste of big, juicy tomatoes, huh?"
 	color = "#731008" // rgb: 115, 16, 8
-	taste_message = "tomato juice"
+	taste_message = "tomato"
 
 /datum/reagent/consumable/drink/tomatojuice/on_general_digest(mob/living/M)
 	..()
@@ -51,8 +51,8 @@
 	name = "Lime Juice"
 	id = "limejuice"
 	description = "The sweet-sour juice of limes."
-	color = "#365E30" // rgb: 54, 94, 48
-	taste_message = "lime juice"
+	color = "#365e30" // rgb: 54, 94, 48
+	taste_message = "lime"
 
 /datum/reagent/consumable/drink/limejuice/on_general_digest(mob/living/M)
 	..()
@@ -64,7 +64,7 @@
 	id = "carrotjuice"
 	description = "It is just like a carrot but without crunching."
 	color = "#973800" // rgb: 151, 56, 0
-	taste_message = "carrot juice"
+	taste_message = "carrot"
 
 /datum/reagent/consumable/drink/carrotjuice/on_general_digest(mob/living/M)
 	..()
@@ -85,21 +85,21 @@
 	id = "berryjuice"
 	description = "A delicious blend of several different kinds of berries."
 	color = "#990066" // rgb: 153, 0, 102
-	taste_message = "berry juice"
+	taste_message = "berry"
 
 /datum/reagent/consumable/drink/grapejuice
 	name = "Grape Juice"
 	id = "grapejuice"
 	description = "It's grrrrrape!"
 	color = "#863333" // rgb: 134, 51, 51
-	taste_message = "grape juice"
+	taste_message = "grape"
 
 /datum/reagent/consumable/drink/grapesoda
 	name = "Grape Soda"
 	id = "grapesoda"
 	description = "Grapes made into a fine drank."
-	color = "#421C52" // rgb: 98, 57, 53
-	taste_message = "grape juice"
+	color = "#421c52" // rgb: 98, 57, 53
+	taste_message = "grape"
 	adj_drowsy 	= 	-3
 
 /datum/reagent/consumable/drink/poisonberryjuice
@@ -118,7 +118,7 @@
 	id = "watermelonjuice"
 	description = "Delicious juice made from watermelon."
 	color = "#863333" // rgb: 134, 51, 51
-	taste_message = "watermelon juice"
+	taste_message = "watermelon"
 
 /datum/reagent/consumable/drink/lemonjuice
 	name = "Lemon Juice"
@@ -132,7 +132,7 @@
 	id = "banana"
 	description = "The raw essence of a banana."
 	color = "#863333" // rgb: 175, 175, 0
-	taste_message = "banana juice"
+	taste_message = "banana"
 
 /datum/reagent/consumable/drink/nothing
 	name = "Nothing"
@@ -152,7 +152,7 @@
 	name = "Milk"
 	id = "milk"
 	description = "An opaque white liquid produced by the mammary glands of mammals."
-	color = "#DFDFDF" // rgb: 223, 223, 223
+	color = "#dfdfdf" // rgb: 223, 223, 223
 	taste_message = "milk"
 	diet_flags = DIET_DAIRY
 
@@ -167,7 +167,7 @@
 	name = "Soy Milk"
 	id = "soymilk"
 	description = "An opaque white liquid made from soybeans."
-	color = "#DFDFC7" // rgb: 223, 223, 199
+	color = "#dfdfc7" // rgb: 223, 223, 199
 	taste_message = "fake milk"
 	diet_flags = DIET_ALL
 
@@ -175,7 +175,7 @@
 	name = "Cream"
 	id = "cream"
 	description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
-	color = "#DFD7AF" // rgb: 223, 215, 175
+	color = "#dfd7af" // rgb: 223, 215, 175
 	taste_message = "cream"
 	diet_flags = DIET_DAIRY
 
@@ -183,7 +183,7 @@
 	name = "Grenadine Syrup"
 	id = "grenadine"
 	description = "Made in the modern day with proper pomegranate substitute. Who uses real fruit, anyways?"
-	color = "#FF004F" // rgb: 255, 0, 79
+	color = "#ff004f" // rgb: 255, 0, 79
 	taste_message = "grenadine"
 
 /datum/reagent/consumable/drink/hot_coco
@@ -354,7 +354,7 @@
 	name = "Lemon Lime"
 	description = "A tangy substance made of 0.5% natural citrus!"
 	id = "lemon_lime"
-	color = "#878F00" // rgb: 135, 40, 0
+	color = "#878f00" // rgb: 135, 40, 0
 	adj_temp = -8
 	taste_message = "citrus soda"
 
@@ -362,21 +362,21 @@
 	name = "Lemonade"
 	description = "Oh the nostalgia..."
 	id = "lemonade"
-	color = "#FFFF00" // rgb: 255, 255, 0
+	color = "#ffff00" // rgb: 255, 255, 0
 	taste_message = "lemonade"
 
 /datum/reagent/consumable/drink/cold/kiraspecial
 	name = "Kira Special"
 	description = "Long live the guy who everyone had mistaken for a girl. Baka!"
 	id = "kiraspecial"
-	color = "#CCCC99" // rgb: 204, 204, 153
+	color = "#cccc99" // rgb: 204, 204, 153
 	taste_message = "citrus soda"
 
 /datum/reagent/consumable/drink/cold/brownstar
 	name = "Brown Star"
 	description = "It's not what it sounds like..."
 	id = "brownstar"
-	color = "#9F3400" // rgb: 159, 052, 000
+	color = "#9f3400" // rgb: 159, 052, 000
 	adj_temp = - 2
 	taste_message = "orange soda"
 
@@ -384,7 +384,7 @@
 	name = "Milkshake"
 	description = "Glorious brainfreezing mixture."
 	id = "milkshake"
-	color = "#AEE5E4" // rgb" 174, 229, 228
+	color = "#aee5e4" // rgb" 174, 229, 228
 	adj_temp = -9
 	taste_message = "milkshake"
 	diet_flags = DIET_DAIRY
@@ -416,7 +416,7 @@
 	name = "Chocolate Milkshake"
 	description = "Glorious brainfreezing mixture. Now with cocoa!"
 	id = "milkshake_chocolate"
-	color = "#AEE5E4" // rgb" 174, 229, 228
+	color = "#aee5e4" // rgb" 174, 229, 228
 	adj_temp = -9
 	taste_message = "chocolate milk"
 
@@ -424,7 +424,7 @@
 	name = "Strawberry Milkshake"
 	description = "Glorious brainfreezing mixture. So sweet!"
 	id = "milkshake_strawberry"
-	color = "#AEE5E4" // rgb" 174, 229, 228
+	color = "#aee5e4" // rgb" 174, 229, 228
 	adj_temp = -9
 	taste_message = "strawberry milk"
 
@@ -439,12 +439,21 @@
 	..()
 	M.make_jittery(5)
 
+/datum/reagent/consumable/drink/cold/kvass
+	name = "kvass"
+	id = "kvass"
+	description = "A cool refreshing drink with a taste of socialism."
+	reagent_state = LIQUID
+	color = "#381600" // rgb: 56, 22, 0
+	adj_temp = -7
+	taste_message = "communism"
+
 /datum/reagent/consumable/doctor_delight
 	name = "The Doctor's Delight"
 	id = "doctorsdelight"
 	description = "A gulp a day keeps the MediBot away. That's probably for the best."
 	reagent_state = LIQUID
-	color = "#FF8CFF" // rgb: 255, 140, 255
+	color = "#ff8cff" // rgb: 255, 140, 255
 	custom_metabolism = FOOD_METABOLISM
 	nutriment_factor = 1
 	taste_message = "healthy dietary choices"
@@ -464,6 +473,29 @@
 	if(M.confused !=0)
 		M.confused = max(0, M.confused - 5)
 
+/datum/reagent/consumable/honey
+	name = "Honey"
+	id = "Honey"
+	description = "A golden yellow syrup, loaded with sugary sweetness."
+	reagent_state = LIQUID
+	color = "#feae00"
+	nutriment_factor = 15 * REAGENTS_METABOLISM
+	taste_message = "honey"
+
+/datum/reagent/consumable/honey/on_general_digest(mob/living/M)
+	..()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(!holder)
+			return
+		H.nutrition += 15
+		if(H.getBruteLoss() && prob(60))
+			M.heal_bodypart_damage(2, 0)
+		if(H.getFireLoss() && prob(50))
+			M.heal_bodypart_damage(0, 2)
+		if(H.getToxLoss() && prob(50))
+			H.adjustToxLoss(-2)
+
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 
 /datum/reagent/consumable/atomicbomb
@@ -478,8 +510,9 @@
 /datum/reagent/consumable/atomicbomb/on_general_digest(mob/living/M)
 	..()
 	M.druggy = max(M.druggy, 50)
-	M.confused = max(M.confused + 2,0)
-	M.make_dizzy(10)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.confused = max(M.confused + 2,0)
+		M.make_dizzy(10)
 	if(!M.stuttering)
 		M.stuttering = 1
 	M.stuttering += 3
@@ -524,7 +557,7 @@
 	id = "neurotoxin"
 	description = "A strong neurotoxin that puts the subject into a death-like state."
 	reagent_state = LIQUID
-	color = "#2E2E61" // rgb: 46, 46, 97
+	color = "#2e2e61" // rgb: 46, 46, 97
 	taste_message = "brain damageeeEEeee"
 	restrict_species = list(IPC, DIONA)
 
@@ -625,7 +658,7 @@
 	taste_message = "liquid fire"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/consumable/ethanol/on_mob_life(mob/living/M, alien) // There's a multiplier for Skrells, which can't be inbuilt in any other reasonable way.
+/datum/reagent/consumable/ethanol/on_mob_life(mob/living/M)
 	if(!..())
 		return
 
@@ -645,8 +678,14 @@
 		if(isnum(A.data))
 			d += A.data
 
-	if(alien == SKRELL) //Skrell get very drunk very quickly.
+	if(M.get_species() == SKRELL) //Skrell get very drunk very quickly.
 		d *= 5
+
+	if(M.has_trait(TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
+		d *= 0.7
+
+	if(M.has_trait(TRAIT_LIGHT_DRINKER))
+		d *= 2
 
 	M.dizziness += dizzy_adj
 	if(d >= slur_start && d < pass_out)
@@ -699,7 +738,7 @@
 	name = "Beer"
 	id = "beer"
 	description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
-	color = "#FBBF0D" // rgb: 251, 191, 13
+	color = "#fbbf0d" // rgb: 251, 191, 13
 	boozepwr = 1
 	nutriment_factor = 1
 	taste_message = "beer"
@@ -726,7 +765,7 @@
 	name = "Whiskey"
 	id = "whiskey"
 	description = "A superb and well-aged single-malt whiskey. Damn."
-	color = "#EE7732" // rgb: 238, 119, 50
+	color = "#ee7732" // rgb: 238, 119, 50
 	boozepwr = 2
 	dizzy_adj = 4
 
@@ -754,7 +793,8 @@
 	M.drowsyness = max(0, M.drowsyness - 7)
 	if(M.bodytemperature > BODYTEMP_NORMAL)
 		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-	M.make_jittery(5)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.make_jittery(5)
 
 /datum/reagent/consumable/ethanol/vodka
 	name = "Vodka"
@@ -771,7 +811,7 @@
 	name = "Bilk"
 	id = "bilk"
 	description = "This appears to be beer mixed with milk. Disgusting."
-	color = "#895C4C" // rgb: 137, 92, 76
+	color = "#895c4c" // rgb: 137, 92, 76
 	boozepwr = 1
 	nutriment_factor = 2
 	taste_message = "bilk"
@@ -792,7 +832,7 @@
 	name = "Gin"
 	id = "gin"
 	description = "It's gin. In space. I say, good sir."
-	color = "#CDD1DA" // rgb: 205, 209, 218
+	color = "#cdd1da" // rgb: 205, 209, 218
 	boozepwr = 1
 	dizzy_adj = 3
 	taste_message = "gin"
@@ -809,7 +849,7 @@
 	name = "Champagne"
 	id = "champagne"
 	description = "Une delicieuse boisson."
-	color = "#FCFCEE" // rgb: 252, 252, 238
+	color = "#fcfcee" // rgb: 252, 252, 238
 	boozepwr = 1
 	taste_message = "champagne"
 
@@ -817,7 +857,7 @@
 	name = "Tequila"
 	id = "tequilla"
 	description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
-	color = "#FFFF91" // rgb: 255, 255, 145
+	color = "#ffff91" // rgb: 255, 255, 145
 	boozepwr = 2
 	taste_message = "tequilla"
 
@@ -825,7 +865,7 @@
 	name = "Vermouth"
 	id = "vermouth"
 	description = "You suddenly feel a craving for a martini..."
-	color = "#91FF91" // rgb: 145, 255, 145
+	color = "#91ff91" // rgb: 145, 255, 145
 	boozepwr = 1.5
 	taste_message = "vermouth"
 
@@ -833,7 +873,7 @@
 	name = "Wine"
 	id = "wine"
 	description = "An premium alchoholic beverage made from distilled grape juice."
-	color = "#7E4043" // rgb: 126, 64, 67
+	color = "#7e4043" // rgb: 126, 64, 67
 	boozepwr = 1.5
 	dizzy_adj = 2
 	slur_start = 65			//amount absorbed after which mob starts slurring
@@ -844,7 +884,7 @@
 	name = "Cognac"
 	id = "cognac"
 	description = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
-	color = "#AB3C05" // rgb: 171, 60, 5
+	color = "#ab3c05" // rgb: 171, 60, 5
 	boozepwr = 1.5
 	dizzy_adj = 4
 	confused_start = 115	//amount absorbed after which mob starts confusing directions
@@ -874,7 +914,7 @@
 	name = "Absinthe"
 	id = "absinthe"
 	description = "Watch out that the Green Fairy doesn't come for you!"
-	color = "#33EE00" // rgb: 51, 238, 0
+	color = "#33ee00" // rgb: 51, 238, 0
 	boozepwr = 4
 	dizzy_adj = 5
 	slur_start = 15
@@ -954,13 +994,14 @@
 	name = "Deadrum"
 	id = "rum"
 	description = "Popular with the sailors. Not very popular with everyone else."
-	color = "#F09F42" // rgb: 240, 159, 66
+	color = "#f09f42" // rgb: 240, 159, 66
 	boozepwr = 1
 	taste_message = "rum"
 
 /datum/reagent/consumable/ethanol/deadrum/on_general_digest(mob/living/M)
 	..()
-	M.dizziness += 5
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.dizziness += 5
 
 /datum/reagent/consumable/ethanol/sake
 	name = "Sake"
@@ -1002,7 +1043,7 @@
 	name = "Cuba Libre"
 	id = "cubalibre"
 	description = "Rum, mixed with cola. Viva la revolucion."
-	color = "#3E1B00" // rgb: 62, 27, 0
+	color = "#3e1b00" // rgb: 62, 27, 0
 	boozepwr = 1.5
 	taste_message = "fruity alcohol"
 
@@ -1010,7 +1051,7 @@
 	name = "Whiskey Cola"
 	id = "whiskeycola"
 	description = "Whiskey, mixed with cola. Surprisingly refreshing."
-	color = "#3E1B00" // rgb: 62, 27, 0
+	color = "#3e1b00" // rgb: 62, 27, 0
 	boozepwr = 2
 	taste_message = "whiskey and coke"
 
@@ -1034,7 +1075,7 @@
 	name = "White Russian"
 	id = "whiterussian"
 	description = "That's just, like, your opinion, man..."
-	color = "#A68340" // rgb: 166, 131, 64
+	color = "#a68340" // rgb: 166, 131, 64
 	boozepwr = 3
 	taste_message = "creamy alcohol"
 
@@ -1042,7 +1083,7 @@
 	name = "Screwdriver"
 	id = "screwdrivercocktail"
 	description = "Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious."
-	color = "#A68310" // rgb: 166, 131, 16
+	color = "#a68310" // rgb: 166, 131, 16
 	boozepwr = 3
 	taste_message = "fruity alcohol"
 
@@ -1050,7 +1091,7 @@
 	name = "Booger"
 	id = "booger"
 	description = "Ewww..."
-	color = "#8CFF8C" // rgb: 140, 255, 140
+	color = "#8cff8c" // rgb: 140, 255, 140
 	boozepwr = 1.5
 	taste_message = "sweet alcohol"
 
@@ -1074,7 +1115,7 @@
 	name = "Tequila Sunrise"
 	id = "tequillasunrise"
 	description = "Tequila and orange juice. Much like a Screwdriver, only Mexican~"
-	color = "#FFE48C" // rgb: 255, 228, 140
+	color = "#ffe48c" // rgb: 255, 228, 140
 	boozepwr = 2
 	taste_message = "fruity alcohol"
 
@@ -1103,7 +1144,8 @@
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_general_digest(mob/living/M)
 	..()
-	M.Stun(2)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.Stun(10)
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"
@@ -1157,7 +1199,7 @@
 	name = "Margarita"
 	id = "margarita"
 	description = "On the rocks with salt on the rim. Arriba~!"
-	color = "#8CFF8C" // rgb: 140, 255, 140
+	color = "#8cff8c" // rgb: 140, 255, 140
 	boozepwr = 3
 	taste_message = "fruity alcohol"
 
@@ -1222,7 +1264,7 @@
 	name = "Snow White"
 	id = "snowwhite"
 	description = "A cold refreshment"
-	color = "#FFFFFF" // rgb: 255, 255, 255
+	color = "#ffffff" // rgb: 255, 255, 255
 	boozepwr = 1.5
 	taste_message = "refreshing alcohol"
 
@@ -1238,7 +1280,7 @@
 	name = "Blue Curacao"
 	id = "bluecuracao"
 	description = "Exotically blue, fruity drink, distilled from oranges."
-	color = "#0000CD" // rgb: 0, 0, 205
+	color = "#0000cd" // rgb: 0, 0, 205
 	boozepwr = 1.5
 	taste_message = "sweet alcohol"
 
@@ -1246,7 +1288,7 @@
 	name = "Sui Dream"
 	id = "suidream"
 	description = "Comprised of: White soda, blue curacao, melon liquor."
-	color = "#00A86B" // rgb: 0, 168, 107
+	color = "#00a86b" // rgb: 0, 168, 107
 	boozepwr = 0.5
 	taste_message = "sweet alcohol"
 
@@ -1262,7 +1304,7 @@
 	name = "Vodka and Tonic"
 	id = "vodkatonic"
 	description = "For when a gin and tonic isn't russian enough."
-	color = "#0064C8" // rgb: 0, 100, 200
+	color = "#0064c8" // rgb: 0, 100, 200
 	boozepwr = 3
 	dizzy_adj = 4
 	slurr_adj = 3
@@ -1282,7 +1324,7 @@
 	name = "Bahama mama"
 	id = "bahama_mama"
 	description = "Tropical cocktail."
-	color = "#FF7F3B" // rgb: 255, 127, 59
+	color = "#ff7f3b" // rgb: 255, 127, 59
 	boozepwr = 2
 	taste_message = "fruity alcohol"
 
@@ -1290,7 +1332,7 @@
 	name = "Singulo"
 	id = "singulo"
 	description = "A blue-space beverage!"
-	color = "#2E6671" // rgb: 46, 102, 113
+	color = "#2e6671" // rgb: 46, 102, 113
 	boozepwr = 5
 	dizzy_adj = 15
 	slurr_adj = 15
@@ -1313,7 +1355,7 @@
 	name = "Devils Kiss"
 	id = "devilskiss"
 	description = "Creepy time!"
-	color = "#A68310" // rgb: 166, 131, 16
+	color = "#a68310" // rgb: 166, 131, 16
 	boozepwr = 3
 	taste_message = "blood"
 
@@ -1321,7 +1363,7 @@
 	name = "Red Mead"
 	id = "red_mead"
 	description = "The true Viking's drink! Even though it has a strange red color."
-	color = "#C73C00" // rgb: 199, 60, 0
+	color = "#c73c00" // rgb: 199, 60, 0
 	boozepwr = 1.5
 	taste_message = "blood"
 
@@ -1404,7 +1446,7 @@
 	name = "Changeling Sting"
 	id = "changelingsting"
 	description = "You take a tiny sip and feel a burning sensation..."
-	color = "#2E6671" // rgb: 46, 102, 113
+	color = "#2e6671" // rgb: 46, 102, 113
 	boozepwr = 5
 	taste_message = "a tiny prick"
 
@@ -1412,7 +1454,7 @@
 	name = "Irish Car Bomb"
 	id = "irishcarbomb"
 	description = "Mmm, tastes like chocolate cake..."
-	color = "#2E6671" // rgb: 46, 102, 113
+	color = "#2e6671" // rgb: 46, 102, 113
 	boozepwr = 3
 	dizzy_adj = 5
 	taste_message = "creamy alcohol"
@@ -1421,7 +1463,7 @@
 	name = "Syndicate Bomb"
 	id = "syndicatebomb"
 	description = "Tastes like terrorism!"
-	color = "#2E6671" // rgb: 46, 102, 113
+	color = "#2e6671" // rgb: 46, 102, 113
 	boozepwr = 5
 	taste_message = "a job offer"
 
@@ -1429,7 +1471,7 @@
 	name = "Erika Surprise"
 	id = "erikasurprise"
 	description = "The surprise is it's green!"
-	color = "#2E6671" // rgb: 46, 102, 113
+	color = "#2e6671" // rgb: 46, 102, 113
 	boozepwr = 3
 	taste_message = "sweet alcohol"
 
@@ -1438,7 +1480,7 @@
 	id = "driestmartini"
 	description = "Only for the experienced. You think you see sand floating in the glass."
 	nutriment_factor = 1
-	color = "#2E6671" // rgb: 46, 102, 113
+	color = "#2e6671" // rgb: 46, 102, 113
 	boozepwr = 4
 	taste_message = "bitter alcohol"
 
@@ -1447,7 +1489,7 @@
 	id = "bananahonk"
 	description = "A drink from Clown Heaven."
 	nutriment_factor = 1
-	color = "#FFFF91" // rgb: 255, 255, 140
+	color = "#ffff91" // rgb: 255, 255, 140
 	boozepwr = 4
 	taste_message = "honks"
 

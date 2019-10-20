@@ -7,7 +7,7 @@
 	m_amt = 75
 	subspace_transmission = 1
 	canhear_range = 0 // can't hear headsets from very far away
-	slot_flags = SLOT_EARS
+	slot_flags = SLOT_FLAGS_EARS
 	var/translate_binary = 0
 	var/translate_hive = 0
 	var/obj/item/device/encryptionkey/keyslot1 = null
@@ -62,11 +62,24 @@
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_sec
 
+/obj/item/device/radio/headset/headset_sec/nt_pmc
+	name = "NT PMC Radio Headset. Works with default security frequency."
+	icon_state = "nt_pmc_earset"
+	item_color = "nt_pmc_earset"
+
 /obj/item/device/radio/headset/headset_sec/marinad
 	name = "marine headset"
 	icon_state = "marinad"
 	item_state = "headset"
 	desc = "Buzzz.... That's nine-nine charlie, requesting backup. Buzzz.... To access the security channel, use :s."
+
+/obj/item/device/radio/headset/headset_int
+	name = "internal affairs radio headset"
+	desc = "The headset of the NanoTrasen dog. To access the security channel, use :s. For command, use :c."
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "int_headset"
+	item_state = "int_headset"
+	ks2type = /obj/item/device/encryptionkey/headset_int
 
 /obj/item/device/radio/headset/headset_eng
 	name = "engineering radio headset"
@@ -220,6 +233,20 @@
 	. = ..()
 	set_frequency(1341)
 
+/obj/item/device/radio/headset/velocity
+	name = "Velocity Crew headset"
+	desc = "The headset, if you wish to talk to your fellow crew-nies. ; - Velocity crew channel."
+	icon_state = "vel_headset"
+	item_state = "headset"
+	maxf = 1341
+
+/obj/item/device/radio/headset/velocity/atom_init()
+	. = ..()
+	set_frequency(1245)
+
+/obj/item/device/radio/headset/velocity/chief
+	ks2type = /obj/item/device/encryptionkey/headset_cargo
+
 /obj/item/device/radio/headset/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/radio_grid))
 		if(grid)
@@ -229,14 +256,14 @@
 		user.drop_item()
 		var/obj/item/device/radio_grid/new_grid = W
 		new_grid.attach(src)
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(W))
 		if(!grid)
 			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
 			return
 		to_chat(user, "<span class='notice'>You pop out Shielded grid from [src]!</span>")
 		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
 		new_grid.dettach(src)
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(W))
 		if(!keyslot1 && !keyslot2)
 			to_chat(user, "<span class='notice'>This headset doesn't have any encryption keys!  How useless...</span>")
 			return
@@ -251,9 +278,9 @@
 			keyslot2.loc = T
 			keyslot2 = null
 		recalculateChannels()
-		playsound(user, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You pop out the encryption keys in the headset!</span>")
-	else if(istype(W, /obj/item/device/encryptionkey/))
+	else if(istype(W, /obj/item/device/encryptionkey))
 		if(keyslot1 && keyslot2)
 			to_chat(user, "<span class='notice'>The headset can't hold another key!</span>")
 			return

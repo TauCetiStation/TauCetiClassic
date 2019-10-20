@@ -55,7 +55,7 @@
 	var/obj/machinery/engine/laser/laser = src.laser[1]
 
 	if(!laser)
-		t += "\red No laser found"
+		t += "<span class='warning'>No laser found</span>"
 	else
 
 
@@ -123,4 +123,6 @@
 			spawn(rand(0, 15))
 				src.icon_state = "c_unpowered"
 				stat |= NOPOWER
+				update_power_use()
+	update_power_use()
 */

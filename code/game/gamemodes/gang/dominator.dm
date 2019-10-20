@@ -20,7 +20,7 @@
 	if(!istype(ticker.mode, /datum/game_mode/gang))
 		return INITIALIZE_HINT_QDEL
 	set_light(2)
-	poi_list |= src
+	poi_list += src
 
 /obj/machinery/dominator/examine(mob/user)
 	..()
@@ -50,7 +50,7 @@
 	var/datum/game_mode/gang/mode = ticker.mode
 	if(gang && (isnum(mode.A_timer) || isnum(mode.B_timer)))
 		if(((gang == "A") && mode.A_timer) || ((gang == "B") && mode.B_timer))
-			playsound(loc, 'sound/items/timer.ogg', 30, 0)
+			playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 30, FALSE)
 	else
 		return PROCESS_KILL
 
@@ -99,9 +99,8 @@
 			//	SSshuttle.settimeleft(0)
 				//SSshuttle.emergency.mode = SHUTTLE_DOCKED
 				//SSshuttle.emergency.timer = world.time
-				//priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+				//priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null,, "Priority")
 				//captain_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.")
-				//world << sound('sound/AI/shuttledock.ogg')
 			//else
 				//priority_announce("All hostile activity within station systems have ceased.","Network Alert")
 				//captain_announce("All hostile activity within station systems have ceased.")
@@ -118,7 +117,7 @@
 /obj/machinery/dominator/Destroy()
 	if(!(stat & BROKEN))
 		set_broken()
-	poi_list.Remove(src)
+	poi_list -= src
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
@@ -144,7 +143,7 @@
 			var/damage = Proj.damage
 			//if(Proj.forcedodge)
 			//	damage *= 0.5
-			playsound(src, 'sound/effects/bang.ogg', 50, 1)
+			playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 			visible_message("<span class='danger'>[src] was hit by [Proj].</span>")
 			healthcheck(damage)
 	..()
@@ -208,7 +207,7 @@
 /obj/machinery/dominator/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	playsound(src, 'sound/effects/bang.ogg', 50, 1)
+	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='danger'>[user] smashes against [src] with its claws.</span>",\
 	"<span class='danger'>You smash against [src] with your claws.</span>",\
 	"<span class='italics'>You hear metal scraping.</span>")
@@ -224,13 +223,13 @@
 
 //obj/machinery/dominator/mech_melee_attack(obj/mecha/M)
 //	if(M.damtype == "brute")
-//		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+//		playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 //		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
 //		healthcheck(M.force)
 //	return
 
 //obj/machinery/dominator/attack_hulk(mob/user)
-//	playsound(src, 'sound/effects/bang.ogg', 50, 1)
+//	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 //	user.visible_message("<span class='danger'>[user] smashes [src].</span>",\
 //	"<span class='danger'>You punch [src].</span>",\
 //	"<span class='italics'>You hear metal being slammed.</span>")
@@ -243,7 +242,7 @@
 		user.do_attack_animation(src)
 		if( (I.flags&NOBLUDGEON) || !I.force )
 			return
-		playsound(src, 'sound/weapons/smash.ogg', 50, 1)
+		playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='danger'>[user] has hit \the [src] with [I].</span>")
 		if(I.damtype == BURN || I.damtype == BRUTE)
 			healthcheck(I.force)

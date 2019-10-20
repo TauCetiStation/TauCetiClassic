@@ -170,7 +170,7 @@
 
 
 /obj/machinery/bot/secbot/proc/beingAttacked(obj/item/weapon/W, mob/user)
-	if(!istype(W, /obj/item/weapon/screwdriver) && W.force && !target)
+	if(!isscrewdriver(W) && W.force && !target)
 		target = user
 		mode = SECBOT_HUNT
 
@@ -182,12 +182,12 @@
 	frustration = 0
 	anchored = FALSE
 
-/obj/machinery/bot/secbot/Emag(mob/user)
+/obj/machinery/bot/secbot/emag_act(mob/user)
 	..()
 	if(open && !locked)
 		if(user)
 			to_chat(user, "<span class='warning'>You short out [src]'s target assessment circuits.</span>")
-		audible_message("<span class='userdanger'><B>[src] buzzes oddly!</span>")
+		audible_message("<span class='userdanger'>[src] buzzes oddly!</span>")
 		target = null
 		if(user)
 			oldtarget_name = user.name
@@ -220,20 +220,14 @@
 				forgetCurrentTarget()
 
 			if(target)		// make sure target exists
-				if(Adjacent(target))		// if right next to perp
+				if(Adjacent(target) && istype(target.loc, /turf))
 					if(iscarbon(target))
-						playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+						playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 						icon_state = "[lasercolor][icon_state_arrest]"
 						addtimer(CALLBACK(src, .proc/update_icon), 2)
 						var/mob/living/carbon/M = target
-						var/maxstuns = 4
-						if(M.stuttering < 10 && !(HULK in M.mutations))
-							M.stuttering = 10
-						M.Stun(10)
-						M.Weaken(10)
-						maxstuns--
-						if(maxstuns <= 0)
-							target = null
+						do_attack_animation(M)
+						M.apply_effect(60, AGONY, 0) // As much as a normal stunbaton
 
 						if(declare_arrests)
 							var/area/location = get_area(src)
@@ -249,15 +243,15 @@
 						//just harmbaton them until dead
 						if(world.time > next_harm_time)
 							next_harm_time = world.time + 15
-							playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+							playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 							visible_message("<span class='danger'>[src] beats [target] with the stun baton!</span>")
 							icon_state = "[lasercolor][icon_state_arrest]"
 							addtimer(CALLBACK(src, .proc/update_icon), 2)
-							target.AdjustStunned(10)
+							do_attack_animation(target)
 							target.adjustBruteLoss(15)
 							if(target.stat)
 								forgetCurrentTarget()
-								playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+								playsound(src, pick(SOUNDIN_BEEPSKY), VOL_EFFECTS_MASTER, null, FALSE)
 
 				else								// not next to perp
 					var/turf/olddist = get_dist(src, target)
@@ -279,9 +273,9 @@
 			if(iscarbon(target))
 				var/mob/living/carbon/C = target
 				if(!C.handcuffed && !arrest_type)
-					playsound(loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
+					playsound(src, 'sound/weapons/handcuffs.ogg', VOL_EFFECTS_MASTER, 30, null, -2)
 					mode = SECBOT_ARREST
-					visible_message("\red <B>[src] is trying to put handcuffs on [target]!</B>")
+					visible_message("<span class='warning bold'>[src] is trying to put handcuffs on [target]!</span>")
 					addtimer(CALLBACK(src, .proc/subprocess, SECBOT_PREP_ARREST), 60)
 
 			else
@@ -325,11 +319,9 @@
 			if(Adjacent(target))
 				if(iscarbon(target))
 					var/mob/living/carbon/mob_carbon = target
-					if(!mob_carbon.handcuffed)
-						mob_carbon.handcuffed = new /obj/item/weapon/handcuffs(target)
-						mob_carbon.update_inv_handcuffed()	//update the handcuffs overlay
+					mob_carbon.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(mob_carbon), SLOT_HANDCUFFED)
 				forgetCurrentTarget()
-				playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+				playsound(src, pick(SOUNDIN_BEEPSKY), VOL_EFFECTS_MASTER, null, FALSE)
 			else if(mode == SECBOT_ARREST)
 				anchored = FALSE
 				mode = SECBOT_HUNT
@@ -577,7 +569,7 @@
 			target = L
 			oldtarget_name = L.name
 			speak("Level [threatlevel] infraction alert!")
-			playsound(loc, pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg'), 50, 0)
+			playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), VOL_EFFECTS_MASTER, null, FALSE)
 			visible_message("<b>[src]</b> points at [L.name]!")
 			mode = SECBOT_HUNT
 			process() // ensure bot quickly responds to a perp
@@ -616,7 +608,7 @@
 
 /obj/machinery/bot/secbot/explode()
 	walk_to(src,0)
-	visible_message("\red <B>[src] blows apart!</B>", 1)
+	visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)
@@ -660,9 +652,9 @@
 
 /obj/item/weapon/secbot_assembly/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if(istype(W, /obj/item/weapon/weldingtool) && !build_step)
+	if(iswelder(W) && !build_step)
 		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0, user))
+		if(WT.use(0, user))
 			build_step++
 			overlays += image('icons/obj/aibots.dmi', "hs_hole")
 			to_chat(user, "You weld a hole in [src]!")

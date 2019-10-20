@@ -504,7 +504,7 @@
 
 //TODO: Get Mains valves working!
 /*
-obj/machinery/atmospherics/mains_pipe/valve
+/obj/machinery/atmospherics/mains_pipe/valve
 	icon_state = "mvalve0"
 
 	name = "mains shutoff valve"
@@ -515,159 +515,157 @@ obj/machinery/atmospherics/mains_pipe/valve
 	dir = SOUTH
 	initialize_mains_directions = SOUTH|NORTH
 
-	atom_init()
-		nodes.len = 2
-		. = ..()
-		initialize_mains_directions = dir | turn(dir, 180)
+/obj/machinery/atmospherics/mains_pipe/valve/atom_init()
+	nodes.len = 2
+	. = ..()
+	initialize_mains_directions = dir | turn(dir, 180)
 
-	update_icon(animation)
-		var/turf/simulated/floor = loc
-		var/hide = istype(floor) ? floor.intact : 0
-		level = 1
-		for(var/obj/machinery/atmospherics/mains_pipe/node in nodes)
-			if(node.level == 2)
-				hide = 0
-				level = 2
-				break
+/obj/machinery/atmospherics/mains_pipe/valve/update_icon(animation)
+	var/turf/simulated/floor = loc
+	var/hide = istype(floor) ? floor.intact : 0
+	level = 1
+	for(var/obj/machinery/atmospherics/mains_pipe/node in nodes)
+		if(node.level == 2)
+			hide = 0
+			level = 2
+			break
 
-		if(animation)
-			flick("[hide?"h":""]mvalve[src.open][!src.open]",src)
-		else
-			icon_state = "[hide?"h":""]mvalve[open]"
+	if(animation)
+		flick("[hide?"h":""]mvalve[src.open][!src.open]",src)
+	else
+		icon_state = "[hide?"h":""]mvalve[open]"
+
+/obj/machinery/atmospherics/mains_pipe/valve/atmos_init()
+	normalize_dir()
+	var/node1_dir
+	var/node2_dir
+
+	for(var/direction in cardinal)
+		if(direction&initialize_mains_directions)
+			if (!node1_dir)
+				node1_dir = direction
+			else if (!node2_dir)
+				node2_dir = direction
+
+	for(var/obj/machinery/atmospherics/mains_pipe/target in get_step(src,node1_dir))
+		if(target.initialize_mains_directions & get_dir(target,src))
+			nodes[1] = target
+			break
+	for(var/obj/machinery/atmospherics/mains_pipe/target in get_step(src,node2_dir))
+		if(target.initialize_mains_directions & get_dir(target,src))
+			nodes[2] = target
+			break
+
+	if(open)
+		..() // initialize internal pipes
+
+	update_icon()
+
+/obj/machinery/atmospherics/mains_pipe/valve/proc/normalize_dir()
+	if(dir==3)
+		set_dir(1)
+	else if(dir==12)
+		set_dir(4)
+
+/obj/machinery/atmospherics/mains_pipe/valve/proc/open()
+	if(open) return 0
+
+	open = 1
+	update_icon()
 
 	atmos_init()
-		normalize_dir()
-		var/node1_dir
-		var/node2_dir
 
-		for(var/direction in cardinal)
-			if(direction&initialize_mains_directions)
-				if (!node1_dir)
-					node1_dir = direction
-				else if (!node2_dir)
-					node2_dir = direction
+	return 1
 
-		for(var/obj/machinery/atmospherics/mains_pipe/target in get_step(src,node1_dir))
-			if(target.initialize_mains_directions & get_dir(target,src))
-				nodes[1] = target
-				break
-		for(var/obj/machinery/atmospherics/mains_pipe/target in get_step(src,node2_dir))
-			if(target.initialize_mains_directions & get_dir(target,src))
-				nodes[2] = target
-				break
+/obj/machinery/atmospherics/mains_pipe/valve/proc/close()
+	if(!open) return 0
 
-		if(open)
-			..() // initialize internal pipes
+	open = 0
+	update_icon()
 
-		update_icon()
+	for(var/obj/machinery/atmospherics/pipe/mains_component/node in src)
+		for(var/obj/machinery/atmospherics/pipe/mains_component/o in node.nodes)
+			o.disconnect(node)
+			o.build_network()
 
-	proc/normalize_dir()
-		if(dir==3)
-			set_dir(1)
-		else if(dir==12)
-			set_dir(4)
+	return 1
 
-	proc/open()
-		if(open) return 0
-
-		open = 1
-		update_icon()
-
-		atmos_init()
-
-		return 1
-
-	proc/close()
-		if(!open) return 0
-
-		open = 0
-		update_icon()
-
-		for(var/obj/machinery/atmospherics/pipe/mains_component/node in src)
-			for(var/obj/machinery/atmospherics/pipe/mains_component/o in node.nodes)
-				o.disconnect(node)
-				o.build_network()
-
-		return 1
-
-	attack_ai(mob/user as mob)
+/obj/machinery/atmospherics/mains_pipe/valve/attack_ai(mob/user as mob)
 		return
 
-	attack_paw(mob/user as mob)
+/obj/machinery/atmospherics/mains_pipe/valve/attack_paw(mob/user as mob)
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
-		src.add_fingerprint(usr)
-		update_icon(1)
-		sleep(10)
-		if (open)
-			close()
-		else
-			open()
+/obj/machinery/atmospherics/mains_pipe/valve/attack_hand(mob/user as mob)
+	src.add_fingerprint(usr)
+	update_icon(1)
+	sleep(10)
+	if (open)
+		close()
+	else
+		open()
 
-	digital		// can be controlled by AI
-		name = "digital mains valve"
-		desc = "A digitally controlled valve."
-		icon_state = "dvalve0"
+/obj/machinery/atmospherics/mains_pipe/valve/digital		// can be controlled by AI
+	name = "digital mains valve"
+	desc = "A digitally controlled valve."
+	icon_state = "dvalve0"
+	var/frequency = 0
+	var/id = null
+	var/datum/radio_frequency/radio_connection
 
-		attack_ai(mob/user as mob)
-			return src.attack_hand(user)
+/obj/machinery/atmospherics/mains_pipe/valve/digital/attack_ai(mob/user as mob)
+	return src.attack_hand(user)
 
-		attack_hand(mob/user as mob)
-			if(!src.allowed(user))
-				to_chat(user, "<span class='warning'>Access denied.</span>")
-				return
-			..()
+/obj/machinery/atmospherics/mains_pipe/valve/digital/attack_hand(mob/user as mob)
+	if(!src.allowed(user))
+		to_chat(user, "<span class='warning'>Access denied.</span>")
+		return
+	..()
 
-		//Radio remote control
+//Radio remote control
 
-		proc
-			set_frequency(new_frequency)
-				radio_controller.remove_object(src, frequency)
-				frequency = new_frequency
-				if(frequency)
-					radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
+/obj/machinery/atmospherics/mains_pipe/valve/digital/proc/set_frequency(new_frequency)
+	radio_controller.remove_object(src, frequency)
+	frequency = new_frequency
+	if(frequency)
+		radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
-		var/frequency = 0
-		var/id = null
-		var/datum/radio_frequency/radio_connection
+/obj/machinery/atmospherics/mains_pipe/valve/digital/Initialize()
+	. = ..()
+	if(frequency)
+		set_frequency(frequency)
 
-		Initialize()
-			. = ..()
-			if(frequency)
-				set_frequency(frequency)
+/obj/machinery/atmospherics/mains_pipe/valve/digital/update_icon(animation)
+	var/turf/simulated/floor = loc
+	var/hide = istype(floor) ? floor.intact : 0
+	level = 1
+	for(var/obj/machinery/atmospherics/mains_pipe/node in nodes)
+		if(node.level == 2)
+			hide = 0
+			level = 2
+			break
 
-		update_icon(animation)
-			var/turf/simulated/floor = loc
-			var/hide = istype(floor) ? floor.intact : 0
-			level = 1
-			for(var/obj/machinery/atmospherics/mains_pipe/node in nodes)
-				if(node.level == 2)
-					hide = 0
-					level = 2
-					break
+	if(animation)
+		flick("[hide?"h":""]dvalve[src.open][!src.open]",src)
+	else
+		icon_state = "[hide?"h":""]dvalve[open]"
 
-			if(animation)
-				flick("[hide?"h":""]dvalve[src.open][!src.open]",src)
+/obj/machinery/atmospherics/mains_pipe/valve/digital/receive_signal(datum/signal/signal)
+	if(!signal.data["tag"] || (signal.data["tag"] != id))
+		return 0
+
+	switch(signal.data["command"])
+		if("valve_open")
+			if(!open)
+				open()
+
+		if("valve_close")
+			if(open)
+				close()
+
+		if("valve_toggle")
+			if(open)
+				close()
 			else
-				icon_state = "[hide?"h":""]dvalve[open]"
-
-		receive_signal(datum/signal/signal)
-			if(!signal.data["tag"] || (signal.data["tag"] != id))
-				return 0
-
-			switch(signal.data["command"])
-				if("valve_open")
-					if(!open)
-						open()
-
-				if("valve_close")
-					if(open)
-						close()
-
-				if("valve_toggle")
-					if(open)
-						close()
-					else
-						open()
+				open()
 */

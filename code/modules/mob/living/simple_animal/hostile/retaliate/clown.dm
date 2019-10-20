@@ -22,7 +22,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attacktext = "attacks"
-	attack_sound = 'sound/items/bikehorn.ogg'
+	attack_sound = list('sound/items/bikehorn.ogg')
 
 	min_oxy = 5
 	max_oxy = 0
@@ -37,6 +37,8 @@
 	heat_damage_per_tick = 15	//amount of damage applied if animal's body temperature is higher than maxbodytemp
 	cold_damage_per_tick = 10	//same as heat_damage_per_tick, only if the bodytemperature it's lower than minbodytemp
 	unsuitable_atoms_damage = 10
+
+	animalistic = FALSE
 
 /mob/living/simple_animal/hostile/clown //Here's CopyPasta!!
 	name = "Clown"
@@ -61,7 +63,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attacktext = "honks"
-	attack_sound = 'sound/items/bikehorn.ogg'
+	attack_sound = list('sound/items/bikehorn.ogg')
 
 	min_oxy = 5
 	max_oxy = 0

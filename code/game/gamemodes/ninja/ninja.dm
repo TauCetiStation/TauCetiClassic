@@ -39,31 +39,13 @@
 		antag_candidates -= ninja //So it doesn't pick the same guy each time.
 		ninja_number--
 
-	/*var/datum/mind/ninja = pick(possible_ninjas)
-	ninjas += ninja
-	modePlayer += ninja
-	ninja.assigned_role = "MODE" //So they aren't chosen for other jobs.
-	ninja.special_role = "Ninja"
-	ninja.original = ninja.current*/
-
-	/*if(ninjastart.len == 0)
-		to_chat(ninja.current, "<B>\red A proper starting location for you could not be found, please report this bug!</B>")
-		to_chat(ninja.current, "<B>\red Attempting to place at a carpspawn.</B>")*/
-
 	//Until such a time as people want to place ninja spawn points, carpspawn will do fine.
 	for(var/obj/effect/landmark/L in landmarks_list)
 		if(L.name == "carpspawn")
 			ninjastart.Add(L)
 
 	if (ninjastart.len == 0)
-		//ninja.current << "<B>\red No spawneable locations could be found. Aborting.</B>"
 		return 0
-	/*if(ninjastart.len == 0 && latejoin.len > 0)
-		//ninja.current << "<B>\red No spawneable locations could be found. Defaulting to latejoin.</B>"
-		return 1
-	else if (ninjastart.len == 0)
-		//ninja.current << "<B>\red No spawneable locations could be found. Aborting.</B>"
-		return 0*/
 
 	return 1
 
@@ -83,7 +65,7 @@
 		if(!config.objectives_disabled)
 			forge_ninja_objectives(ninja)
 		else
-			to_chat(ninja.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
+			to_chat(ninja.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 		var/mob/living/carbon/human/N = ninja.current
 		N.internal = N.s_store
 		N.internals.icon_state = "internal1"
@@ -240,10 +222,10 @@
 				var/count = 1
 				for(var/datum/objective/objective in ninja.objectives)
 					if(objective.check_completion())
-						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
 						feedback_add_details("ninja_objective","[objective.type]|SUCCESS")
 					else
-						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 						feedback_add_details("ninja_objective","[objective.type]|FAIL")
 						ninjawin = 0
 					count++
@@ -256,13 +238,15 @@
 
 			if(!config.objectives_disabled)
 				if(ninjawin)
-					text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
+					text += "<br><span style='color: green; font-weight: bold;'>The [special_role_text] was successful!</span>"
 					feedback_add_details("traitor_success","SUCCESS")
 					score["roleswon"]++
 				else
-					text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
+					text += "<br><span style='color: green; font-weight: bold;'>The [special_role_text] has failed!</span>"
 					feedback_add_details("traitor_success","FAIL")
 
-				text += "<BR>"
-		text += "<HR>"
+	if(text)
+		antagonists_completion += list(list("mode" = "ninja", "html" = text))
+		text = "<div class='block'>[text]</div>"
+
 	return text

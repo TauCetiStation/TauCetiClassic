@@ -5,8 +5,8 @@
 /obj/item/device/beacon_locator
 	name = "locater device"
 	desc = "Used to scan and locate signals on a particular frequency according ."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "newpinoff"	//pinonfar, pinonmedium, pinonclose, pinondirect, pinonnull
+	icon = 'icons/obj/xenoarchaeology/tools.dmi'
+	icon_state = "newpinoff" // pinonfar, pinonmedium, pinonclose, pinondirect, pinonnull
 	item_state = "electronic"
 	var/frequency = 1459
 	var/scan_ticks = 0
@@ -42,7 +42,7 @@
 					if(SSobj.processing.Find(src))
 						//scan radios in the world to try and find one
 						var/cur_dist = 999
-						for(var/obj/item/device/radio/beacon/R in world)
+						for(var/obj/item/device/radio/beacon/R in radio_beacon_list)
 							if(R.z == src.z && R.frequency == src.frequency)
 								var/check_dist = get_dist(src,R)
 								if(check_dist < cur_dist)
@@ -52,9 +52,9 @@
 						scan_ticks = 0
 						var/turf/T = get_turf(src)
 						if(target_radio)
-							T.visible_message("[bicon(src)] [src] [pick("chirps","chirrups","cheeps")] happily.")
+							T.visible_message("[bicon(src)] [src] [pick("chirps", "chirrups", "cheeps")] happily.")
 						else
-							T.visible_message("[bicon(src)] [src] [pick("chirps","chirrups","cheeps")] sadly.")
+							T.visible_message("[bicon(src)] [src] [pick("chirps", "chirrups", "cheeps")] sadly.")
 		else
 			icon_state = "newpinoff"
 

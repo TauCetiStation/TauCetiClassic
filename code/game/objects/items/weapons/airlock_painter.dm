@@ -4,14 +4,14 @@
 	icon_state = "paint sprayer"
 	item_state = "paint sprayer"
 
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 
 	m_amt = 50
 	g_amt = 50
 	origin_tech = "engineering=1"
 
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 
 	var/static/list/modes // used to dye pipes, contains pipe colors.
 	var/obj/item/device/toner/ink
@@ -28,10 +28,10 @@
 
 	//This proc doesn't just check if the painter can be used, but also uses it.
 	//Only call this if you are certain that the painter will be used right after this check!
-/obj/item/weapon/airlock_painter/proc/use(mob/user, cost)
-	if(can_use(user, cost))
+/obj/item/weapon/airlock_painter/use(cost)
+	if(can_use(usr, cost))
 		ink.charges -= cost
-		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1)
+		playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER)
 		return 1
 	else
 		return 0
@@ -75,11 +75,11 @@
 		W.loc = src
 		to_chat(user, "<span class='notice'>You install \the [W] into \the [name].</span>")
 		ink = W
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/airlock_painter/attack_self(mob/user)
 	if(ink)
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		ink.loc = user.loc
 		user.put_in_hands(ink)
 		to_chat(user, "<span class='notice'>You remove \the [ink] from \the [name].</span>")

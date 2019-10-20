@@ -8,9 +8,9 @@
 	throwforce = 2.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("called", "rang")
-	hitsound = 'sound/weapons/ring.ogg'
+	hitsound = list('sound/weapons/ring.ogg')
 
 /obj/item/weapon/rsp
 	name = "\improper Rapid-Seed-Producer (RSP)"
@@ -22,66 +22,18 @@
 	anchored = 0.0
 	var/matter = 0
 	var/mode = 1
-	w_class = 3.0
-
-/obj/item/weapon/bananapeel
-	name = "banana peel"
-	desc = "A peel from a banana."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "banana_peel"
-	item_state = "banana_peel"
-	w_class = 2.0
-	throwforce = 0
-	throw_speed = 4
-	throw_range = 20
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/corncob
 	name = "corn cob"
 	desc = "A reminder of meals gone by."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "corncob"
 	item_state = "corncob"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
-
-/obj/item/weapon/soap
-	name = "soap"
-	desc = "A cheap bar of soap. Doesn't smell."
-	gender = PLURAL
-	icon = 'icons/obj/items.dmi'
-	icon_state = "soap"
-	w_class = 2.0
-	throwforce = 0
-	throw_speed = 4
-	throw_range = 20
-
-/obj/item/weapon/soap/nanotrasen
-	desc = "A Nanotrasen brand bar of soap. Smells of phoron."
-	icon_state = "soapnt"
-
-/obj/item/weapon/soap/deluxe
-	desc = "A deluxe Waffle Co. brand bar of soap. Smells of condoms."
-	icon_state = "soapdeluxe"
-
-/obj/item/weapon/soap/syndie
-	desc = "An untrustworthy bar of soap. Smells of fear."
-	icon_state = "soapsyndie"
-
-/obj/item/weapon/bikehorn
-	name = "bike horn"
-	desc = "A horn off of a bicycle."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "bike_horn"
-	item_state = "bike_horn"
-	throwforce = 3
-	w_class = 1.0
-	throw_speed = 3
-	throw_range = 15
-	attack_verb = list("HONKED")
-	var/spam_flag = 0
-
 
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
@@ -89,7 +41,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "c_tube"
 	throwforce = 1
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 4
 	throw_range = 5
 
@@ -103,7 +55,7 @@
 	flags = CONDUCT
 	force = 5.0
 	throwforce = 7.0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	m_amt = 50
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
@@ -115,7 +67,7 @@
 	var/size = 3.0
 	var/obj/item/gift = null
 	item_state = "gift"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 
 /obj/item/weapon/legcuffs
 	name = "legcuffs"
@@ -125,7 +77,7 @@
 	icon_state = "handcuff"
 	flags = CONDUCT
 	throwforce = 0
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "materials=1"
 	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
@@ -137,9 +89,9 @@
 	desc = "A trap used to catch bears and other legged creatures."
 	var/armed = 0
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>")
-		return (BRUTELOSS)
+/obj/item/weapon/legcuffs/beartrap/suicide_act(mob/user)
+	to_chat(viewers(user), "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>")
+	return (BRUTELOSS)
 
 /obj/item/weapon/legcuffs/beartrap/attack_self(mob/user)
 	..()
@@ -153,7 +105,7 @@
 		if(ishuman(AM))
 			if(isturf(src.loc))
 				var/mob/living/carbon/H = AM
-				if(H.m_intent == "run")
+				if(H.m_intent == "run" && !H.buckled)
 					armed = 0
 					H.legcuffed = src
 					src.loc = H
@@ -179,11 +131,11 @@
 	breakouttime = 35 //easy to apply, easy to break out of
 	origin_tech = "engineering=3;combat=1"
 	throw_speed = 5
-	var/weaken = 2
+	var/weaken = 0.8
 
 /obj/item/weapon/legcuffs/bola/after_throw(datum/callback/callback)
 	..()
-	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)
+	playsound(src,'sound/weapons/bolathrow.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom)
 	if(!iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
@@ -216,7 +168,7 @@
 	throwforce = 3.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("warned", "cautioned", "smashed")
 
 /obj/item/weapon/caution/cone
@@ -239,20 +191,21 @@
 	sharp = 1
 	edge = 1
 	desc = "Could probably be used as ... a throwing weapon?"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	force = 5.0
 	throwforce = 8.0
 	item_state = "shard-glass"
 	g_amt = 3750
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
+	var/on_step_sound = 'sound/effects/glass_step.ogg'
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), pick("<span class='danger'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='danger'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>"))
-		return (BRUTELOSS)
+/obj/item/weapon/shard/suicide_act(mob/user)
+	to_chat(viewers(user), pick("<span class='danger'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='danger'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>"))
+	return (BRUTELOSS)
 
 /obj/item/weapon/shard/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 /obj/item/weapon/shard/afterattack(atom/A, mob/user, proximity)
@@ -262,7 +215,7 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves && !(H.dna && H.dna.mutantrace == "adamantine")) //specflags please..
+		if(!H.gloves && !H.species.flags[NO_MINORCUTS]) //specflags please..
 			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
 			BP.take_damage(force / 2, null, damage_flags())
@@ -283,7 +236,7 @@
 	var/mob/currentUser = null
 	var/obj/item/device/radio/origradio = null
 	flags = CONDUCT | ONBELT
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	item_state = "radio"
 	throw_speed = 4
 	throw_range = 20
@@ -295,6 +248,7 @@
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "shrapnellarge"
 	desc = "A bunch of tiny bits of shattered metal."
+	on_step_sound = 'sound/effects/metalstep.ogg'
 
 /obj/item/weapon/shard/shrapnel/atom_init()
 	. = ..()
@@ -322,10 +276,10 @@
 	var/traitor_frequency = 0.0
 	var/obj/item/device/radio/origradio = null
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	item_state = "radio"
 	throwforce = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
@@ -337,10 +291,11 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
 	force = 3.0
+	hitsound = list('sound/effects/magic.ogg')
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = NOSHIELD
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
@@ -367,7 +322,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = NOSHIELD
 
 /obj/item/weapon/table_parts
@@ -425,16 +380,17 @@
 	m_amt = 40
 	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-		return (OXYLOSS)
+/obj/item/weapon/wire/suicide_act(mob/user)
+	to_chat(viewers(user), "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	return (OXYLOSS)
 
 /obj/item/weapon/module
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	item_state = "electronic"
 	flags = CONDUCT
+	usesound = 'sound/items/Deconstruct.ogg'
 	var/mtype = 1						// 1=electronic 2=hardware
 
 /obj/item/weapon/module/card_reader
@@ -470,7 +426,7 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "meat"
 	flags = CONDUCT
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = "biotech=2"
 
 /obj/item/weapon/hatchet
@@ -482,7 +438,7 @@
 	force = 12.0
 	sharp = 1
 	edge = 1
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 15.0
 	throw_speed = 4
 	throw_range = 4
@@ -491,7 +447,7 @@
 	attack_verb = list("chopped", "torn", "cut")
 
 /obj/item/weapon/hatchet/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 /obj/item/weapon/hatchet/unathiknife
@@ -511,9 +467,9 @@
 	edge = 1
 	throw_speed = 1
 	throw_range = 3
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	flags = NOSHIELD
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
@@ -532,7 +488,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigarpacket"
 	item_state = "cigarpacket"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	throwforce = 2
 	var/cigarcount = 6
 	flags = ONBELT */
@@ -542,6 +498,8 @@
 	name = "data cable"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "wire1"
+	flags = NOBLUDGEON | NOATTACKANIMATION | CONDUCT
+	w_class = ITEM_SIZE_SMALL
 
 	var/obj/machinery/machine
 
@@ -553,7 +511,7 @@
 	icon_state = "plastic-explosive0"
 	item_state = "plasticx"
 	flags = NOBLUDGEON
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = "syndicate=2"
 	var/timer = 10
 	var/atom/target = null
@@ -565,15 +523,15 @@
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "RPED"
 	item_state = "RPED"
-	w_class = 5
-	can_hold = list("/obj/item/weapon/stock_parts")
+	w_class = ITEM_SIZE_HUGE
+	can_hold = list(/obj/item/weapon/stock_parts)
 	storage_slots = 50
 	use_to_pickup = 1
 	allow_quick_gather = 1
 	allow_quick_empty = 1
 	collection_mode = 1
 	display_contents_with_number = 1
-	max_w_class = 3
+	max_w_class = ITEM_SIZE_NORMAL
 	var/works_from_distance = 0
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
@@ -590,9 +548,9 @@
 	desc = "A version of the RPED that allows for replacement of parts and scanning from a distance, along with higher capacity for parts."
 	icon_state = "BS_RPED"
 	item_state = "BS_RPED"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	storage_slots = 400
-	max_w_class = 3
+	max_w_class = ITEM_SIZE_NORMAL
 	works_from_distance = 1
 	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/PSHOOM.ogg'
 	alt_sound = 'sound/items/PSHOOM_2.ogg'
@@ -600,9 +558,9 @@
 /obj/item/weapon/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
 	if(alt_sound && prob(1))
-		playsound(src, alt_sound, 40, 1)
+		playsound(src, alt_sound, VOL_EFFECTS_MASTER)
 	else
-		playsound(src, pshoom_or_beepboopblorpzingshadashwoosh, 40, 1)
+		playsound(src, pshoom_or_beepboopblorpzingshadashwoosh, VOL_EFFECTS_MASTER)
 
 //Sorts stock parts inside an RPED by their rating.
 //Only use /obj/item/weapon/stock_parts/ with this sort proc!
@@ -613,7 +571,7 @@
 	name = "stock part"
 	desc = "What?"
 	icon = 'icons/obj/stock_parts.dmi'
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	var/rating = 1
 
 /obj/item/weapon/stock_parts/atom_init()

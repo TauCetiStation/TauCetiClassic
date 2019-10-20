@@ -1,13 +1,8 @@
-//Preference toggles
-#define SOUND_ADMINHELP	1
-#define SOUND_MIDI		2
-#define SOUND_AMBIENCE	4
-#define SOUND_LOBBY		8
+//Preference toggles (it had more bits, but updating player saves without wiping method is a bit more complex).
 #define SHOW_ANIMATIONS	16
 #define SHOW_PROGBAR	32
-#define SOUND_STREAMING	64
 
-#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SHOW_ANIMATIONS|SHOW_PROGBAR)
+#define TOGGLES_DEFAULT (SHOW_ANIMATIONS|SHOW_PROGBAR)
 
 //Chat toggles
 #define CHAT_OOC		1
@@ -32,6 +27,14 @@
 #define PARALLAX_LOW     2
 #define PARALLAX_DISABLE 3 //this option must be the highest number
 
+#define PARALLAX_THEME_CLASSIC "classic"
+#define PARALLAX_THEME_TG      "tgstation"
+
 #define PARALLAX_DELAY_DEFAULT world.tick_lag
 #define PARALLAX_DELAY_MED     1
 #define PARALLAX_DELAY_LOW     2
+
+//used for alternate_option
+#define GET_RANDOM_JOB 0
+#define BE_ASSISTANT 1
+#define RETURN_TO_LOBBY 2

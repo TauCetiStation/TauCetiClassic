@@ -4,7 +4,7 @@
 	icon_state = "flash"
 	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
 	throwforce = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 4
 	throw_range = 10
 	flags = CONDUCT
@@ -12,13 +12,16 @@
 
 	action_button_name = "Toggle Flash"
 
+	light_color = LIGHT_COLOR_WHITE
+	light_power = FLASH_LIGHT_POWER
+
 	var/times_used = 0 //Number of times it's been used.
 	var/broken = 0     //Is the flash burnt out?
 	var/last_used = 0 //last world.time it was used.
 
 /obj/item/device/flash/proc/clown_check(mob/user)
 	if(user && (CLUMSY in user.mutations) && prob(50))
-		to_chat(user, "\red \The [src] slips out of your hand.")
+		to_chat(user, "<span class='warning'>\The [src] slips out of your hand.</span>")
 		user.drop_item()
 		return 0
 	return 1
@@ -37,9 +40,13 @@
 /obj/item/device/flash/attack(mob/living/M, mob/user)
 	if(!user || !M)	return	//sanity
 
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
+		return
+
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been flashed (attempt) with [src.name]  by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to flash [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) Used the [src.name] to flash [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	msg_admin_attack("[user.name] ([user.ckey]) Used the [src.name] to flash [M.name] ([M.ckey])", user)
 
 	if(!clown_check(user))	return
 	if(broken)
@@ -52,6 +59,7 @@
 	//It will never break on the first use.
 	switch(times_used)
 		if(0 to 5)
+			flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
 			last_used = world.time
 			if(prob(times_used))	//if you use it 5 times in a minute it has a 10% chance to break!
 				broken = 1
@@ -62,7 +70,7 @@
 		else	//can only use it  5 times a minute
 			to_chat(user, "<span class='warning'>*click* *click*</span>")
 			return
-	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
 	var/flashfail = 0
 
 	if(iscarbon(M))
@@ -128,7 +136,11 @@
 
 
 /obj/item/device/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
-	if(!user || !clown_check(user)) 	return
+	if(!user || !clown_check(user))
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		return
 	if(broken)
 		user.show_message("<span class='warning'>The [src.name] is broken</span>", 2)
 		return
@@ -148,7 +160,7 @@
 		else	//can only use it  5 times a minute
 			user.show_message("<span class='warning'>*click* *click*</span>", 2)
 			return
-	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
 	flick("flash2", src)
 	if(user && isrobot(user))
 		spawn(0)
@@ -199,12 +211,12 @@
 	..()
 	if(!broken)
 		broken = 1
-		to_chat(user, "\red The bulb has burnt out!")
+		to_chat(user, "<span class='warning'>The bulb has burnt out!</span>")
 		icon_state = "flashburnt"
 
 /obj/item/device/flash/synthetic/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	..()
 	if(!broken)
 		broken = 1
-		to_chat(user, "\red The bulb has burnt out!")
+		to_chat(user, "<span class='warning'>The bulb has burnt out!</span>")
 		icon_state = "flashburnt"

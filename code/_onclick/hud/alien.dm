@@ -15,7 +15,7 @@
 	icon_state = "nightvision1"
 
 /obj/screen/alien/nightvision/Click()
-	if(istype(usr, /mob/living/carbon/alien/))
+	if(istype(usr, /mob/living/carbon/alien))
 		var/mob/living/carbon/alien/A = usr
 		A.toggle_nvg()
 
@@ -135,7 +135,7 @@
 	inv_box.screen_loc = ui_rhand
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
-	inv_box.slot_id = slot_r_hand
+	inv_box.slot_id = SLOT_R_HAND
 	src.r_hand_hud_object = inv_box
 	src.adding += inv_box
 
@@ -149,7 +149,7 @@
 	inv_box.screen_loc = ui_lhand
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
-	inv_box.slot_id = slot_l_hand
+	inv_box.slot_id = SLOT_L_HAND
 	src.l_hand_hud_object = inv_box
 	src.adding += inv_box
 

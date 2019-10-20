@@ -40,7 +40,6 @@
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
 	var/continous_rounds = 1			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/allow_Metadata = 1				// Metadata is supported.
-	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/fps = 20
 	var/socket_talk	= 0					// use socket_talk to communicate with other processes
 	var/list/resource_urls = null
@@ -63,6 +62,10 @@
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
+
+	var/registration_panic_bunker_age = null
+	var/client_limit_panic_bunker_count = null
+	var/client_limit_panic_bunker_link = null
 
 	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
 	var/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
@@ -91,6 +94,13 @@
 	var/media_base_url = "http://example.org"
 	var/server_rules_url
 	var/discord_invite_url
+	var/customitems_info_url
+
+	// Changelog
+	var/changelog_link = ""
+	var/changelog_hash_link = ""
+
+	var/repository_link = ""
 
 	//Alert level description
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
@@ -133,13 +143,15 @@
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/use_ingame_minutes_restriction_for_jobs = 0 //Do jobs use in-game minutes instead account age for restrictions?
 
+	var/add_player_age_value = 4320 //default minuts added with admin "Increase player age" button. 4320 minutes = 72 hours = 3 days
+
 	var/byond_version_min = 0
 	var/byond_version_recommend = 0
 
 	var/simultaneous_pm_warning_timeout = 100
 
 	var/assistant_maint = 0 //Do assistants get maint access?
-	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
+	var/gateway_enabled = 0
 	var/ghost_interaction = 0
 
 	var/comms_password = ""
@@ -149,23 +161,26 @@
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
 	var/use_overmap = 0
 
-	var/list/station_levels = list(1)				// Defines which Z-levels the station exists on.
-	var/list/admin_levels= list(2)					// Defines which Z-levels which are for admin functionality, for example including such areas as Central Command and the Syndicate Shuttle
-	var/list/contact_levels = list(1, 5)			// Defines which Z-levels which, for example, a Code Red announcement may affect
-	var/list/player_levels = list(1, 3, 4, 5, 6)	// Defines all Z-levels a character can typically reach
-
-	var/use_slack_bot = 0
-	var/slack_team = 0
+	var/chat_bridge = 0
 	var/antigrief_alarm_level = 1
 	var/check_randomizer = 0
+	var/proxy_autoban = 0
 
 	var/allow_donators = 0
+	var/allow_byond_membership = 0
 	var/donate_info_url = 0
+
+	var/customitem_slot_by_time = 80000 // Gives one slot for fluff items after playing this much minutes
 
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
 	var/craft_recipes_visibility = FALSE // If false, then users won't see crafting recipes in personal crafting menu until they have all required components and then it will show up.
+	var/starlight = FALSE	// Whether space turfs have ambient light or not
+	var/nightshift = FALSE
+
+	var/list/maplist = list()
+	var/datum/map_config/defaultmap
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -233,6 +248,9 @@
 
 				if ("use_ingame_minutes_restriction_for_jobs")
 					config.use_ingame_minutes_restriction_for_jobs = 1
+
+				if ("add_player_age_value")
+					config.add_player_age_value = text2num(value)
 
 				if ("log_ooc")
 					config.log_ooc = 1
@@ -372,6 +390,9 @@
 				if ("discord_invite_url")
 					discord_invite_url = value
 
+				if ("customitems_info_url")
+					customitems_info_url = value
+
 				if("serverwhitelist_message")
 					config.serverwhitelist_message = value
 
@@ -435,9 +456,6 @@
 				if("forbid_singulo_possession")
 					forbid_singulo_possession = 1
 
-				if("popup_admin_pm")
-					config.popup_admin_pm = 1
-
 				if("allow_holidays")
 					Holiday = 1
 
@@ -491,8 +509,8 @@
 				if("assistant_maint")
 					config.assistant_maint = 1
 
-				if("gateway_delay")
-					config.gateway_delay = text2num(value)
+				if("gateway_enabled")
+					config.gateway_enabled = 1
 
 				if("continuous_rounds")
 					config.continous_rounds = 1
@@ -542,23 +560,8 @@
 				if("use_overmap")
 					config.use_overmap = 1
 
-				if("station_levels")
-					config.station_levels = text2numlist(value, ";")
-
-				if("admin_levels")
-					config.admin_levels = text2numlist(value, ";")
-
-				if("contact_levels")
-					config.contact_levels = text2numlist(value, ";")
-
-				if("player_levels")
-					config.player_levels = text2numlist(value, ";")
-
-				if("use_slack_bot")
-					config.use_slack_bot = 1
-
-				if("slack_team")
-					config.slack_team = value
+				if("chat_bridge")
+					config.chat_bridge = value
 
 				if("antigrief_alarm_level")
 					config.antigrief_alarm_level = value
@@ -566,11 +569,38 @@
 				if("check_randomizer")
 					config.check_randomizer = value
 
+				if("proxy_autoban")
+					config.proxy_autoban = 1
+
 				if("allow_donators")
 					config.allow_donators = 1
 
+				if("allow_byond_membership")
+					config.allow_byond_membership = 1
+
 				if("donate_info_url")
 					config.donate_info_url = value
+
+				if("customitem_slot_by_time")
+					config.customitem_slot_by_time = text2num(value)
+
+				if("changelog_link")
+					config.changelog_link = value
+
+				if("changelog_hash_link")
+					config.changelog_hash_link = value
+
+				if("repository_link")
+					config.repository_link = value
+
+				if("registration_panic_bunker_age")
+					config.registration_panic_bunker_age = value
+
+				if("client_limit_panic_bunker_count")
+					config.client_limit_panic_bunker_count = text2num(value)
+
+				if("client_limit_panic_bunker_link")
+					config.client_limit_panic_bunker_link = value
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
@@ -615,6 +645,10 @@
 					config.organ_regeneration_multiplier = value / 100
 				if("craft_recipes_visibility")
 					config.craft_recipes_visibility = TRUE
+				if("starlight")
+					config.starlight = TRUE
+				if("nightshift")
+					config.nightshift = TRUE
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 
@@ -663,48 +697,6 @@
 				sqlfdbklogin = value
 			if ("feedback_password")
 				sqlfdbkpass = value
-			else
-				log_misc("Unknown setting in configuration: '[name]'")
-
-/datum/configuration/proc/loadforumsql(filename)  // -- TLE
-	var/list/Lines = file2list(filename)
-	for(var/t in Lines)
-		if(!t)	continue
-
-		t = trim(t)
-		if (length(t) == 0)
-			continue
-		else if (copytext(t, 1, 2) == "#")
-			continue
-
-		var/pos = findtext(t, " ")
-		var/name = null
-		var/value = null
-
-		if (pos)
-			name = lowertext(copytext(t, 1, pos))
-			value = copytext(t, pos + 1)
-		else
-			name = lowertext(t)
-
-		if (!name)
-			continue
-
-		switch (name)
-			if ("address")
-				forumsqladdress = value
-			if ("port")
-				forumsqlport = value
-			if ("database")
-				forumsqldb = value
-			if ("login")
-				forumsqllogin = value
-			if ("password")
-				forumsqlpass = value
-			if ("activatedgroup")
-				forum_activated_group = value
-			if ("authenticatedgroup")
-				forum_authenticated_group = value
 			else
 				log_misc("Unknown setting in configuration: '[name]'")
 
@@ -771,3 +763,53 @@
 		statclick = new/obj/effect/statclick/debug(null, "Edit", src)
 
 	stat("[name]:", statclick)
+
+/datum/configuration/proc/loadmaplist(filename)
+	var/list/Lines = file2list(filename)
+
+	var/datum/map_config/currentmap = null
+	for(var/t in Lines)
+		if(!t)
+			continue
+
+		t = trim(t)
+		if(length(t) == 0)
+			continue
+		else if(copytext(t, 1, 2) == "#")
+			continue
+
+		var/pos = findtext(t, " ")
+		var/command = null
+		var/data = null
+
+		if(pos)
+			command = lowertext(copytext(t, 1, pos))
+			data = copytext(t, pos + 1)
+		else
+			command = lowertext(t)
+
+		if(!command)
+			continue
+
+		if (!currentmap && command != "map")
+			continue
+
+		switch (command)
+			if ("map")
+				currentmap = load_map_config("maps/[data].json")
+				if(currentmap.defaulted)
+					error("Failed to load map config for [data]!")
+					currentmap = null
+			if ("minplayers","minplayer")
+				currentmap.config_min_users = text2num(data)
+			if ("maxplayers","maxplayer")
+				currentmap.config_max_users = text2num(data)
+			if ("default","defaultmap")
+				defaultmap = currentmap
+			if ("endmap")
+				maplist[currentmap.map_name] = currentmap
+				currentmap = null
+			if ("disabled")
+				currentmap = null
+			else
+				error("Unknown command in map vote config: '[command]'")

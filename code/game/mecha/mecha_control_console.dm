@@ -2,6 +2,8 @@
 	name = "Exosuit Control"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "mecha"
+	state_broken_preset = "techb"
+	state_nopower_preset = "tech0"
 	light_color = "#a97faa"
 	req_access = list(access_robotics)
 	circuit = "/obj/item/weapon/circuitboard/mecha_control"

@@ -22,7 +22,7 @@
 	var/sending = message + "<font color='blue'><b>Message dispatched by [my_department].</b></font>"
 
 	var/pass = 0
-	for(var/obj/machinery/message_server/MS in machines)
+	for(var/obj/machinery/message_server/MS in message_servers)
 		if(!MS.active) continue
 		// /obj/machinery/message_server/proc/send_rc_message(recipient = "",sender = "",message = "",stamp = "", id_auth = "", priority = 1)
 		MS.send_rc_message("Engineering/Security/Bridge", my_department, message, "", "", 2)
@@ -32,14 +32,14 @@
 		var/keyed_dpt1 = ckey("Engineering")
 		var/keyed_dpt2 = ckey("Security")
 		var/keyed_dpt3 = ckey("Bridge")
-		for (var/obj/machinery/requests_console/Console in allConsoles)
+		for (var/obj/machinery/requests_console/Console in requests_console_list)
 			var/keyed_department = ckey(Console.department)
 			if(keyed_department == keyed_dpt1 || keyed_department == keyed_dpt2 || keyed_department == keyed_dpt3)
 				if(Console.newmessagepriority < 2)
 					Console.newmessagepriority = 2
 					Console.icon_state = "req_comp2"
 				if(!Console.silent)
-					playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
+					playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 					for (var/mob/O in hearers(5, Console.loc))
 						O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [my_department]'"))
 				Console.messages += "<B><FONT color='red'>High Priority message from [my_department]</FONT></B><BR>[sending]"
@@ -83,7 +83,7 @@
 	var/sending = message + "<font color='blue'><b>Message dispatched by [my_department].</b></font>"
 
 	var/pass = 0
-	for(var/obj/machinery/message_server/MS in machines)
+	for(var/obj/machinery/message_server/MS in message_servers)
 		if(!MS.active) continue
 		// /obj/machinery/message_server/proc/send_rc_message(recipient = "",sender = "",message = "",stamp = "", id_auth = "", priority = 1)
 		MS.send_rc_message("Engineering/Security/Bridge", my_department, message, "", "", 2)
@@ -93,14 +93,14 @@
 		var/keyed_dpt1 = ckey("Engineering")
 		var/keyed_dpt2 = ckey("Security")
 		var/keyed_dpt3 = ckey("Bridge")
-		for (var/obj/machinery/requests_console/Console in allConsoles)
+		for (var/obj/machinery/requests_console/Console in requests_console_list)
 			var/keyed_department = ckey(Console.department)
 			if(keyed_department == keyed_dpt1 || keyed_department == keyed_dpt2 || keyed_department == keyed_dpt3)
 				if(Console.newmessagepriority < 2)
 					Console.newmessagepriority = 2
 					Console.icon_state = "req_comp2"
 				if(!Console.silent)
-					playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
+					playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 					for (var/mob/O in hearers(5, Console.loc))
 						O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [my_department]'"))
 				Console.messages += "<B><FONT color='red'>High Priority message from [my_department]</FONT></B><BR>[sending]"

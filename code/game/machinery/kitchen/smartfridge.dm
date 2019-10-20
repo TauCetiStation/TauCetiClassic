@@ -49,7 +49,7 @@
 		max_n_of_items = 1500 * B.rating
 
 /obj/machinery/smartfridge/proc/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O,/obj/item/seeds/))
+	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown) || istype(O,/obj/item/seeds))
 		return 1
 	return 0
 
@@ -62,7 +62,7 @@
 	icon_off = "seeds-off"
 
 /obj/machinery/smartfridge/seeds/accept_check(obj/item/O)
-	if(istype(O,/obj/item/seeds/))
+	if(istype(O,/obj/item/seeds))
 		return 1
 	return 0
 
@@ -86,7 +86,7 @@
 /obj/machinery/smartfridge/secure/extract
 	name = "\improper Slime Extract Storage"
 	desc = "A refrigerated storage unit for slime extracts."
-	req_access_txt = "47"
+	req_access = list(47)
 
 /obj/machinery/smartfridge/secure/extract/accept_check(obj/item/O)
 	if(istype(O,/obj/item/slime_extract))
@@ -98,29 +98,29 @@
 	desc = "A refrigerated storage unit for storing medicine and chemicals."
 	icon_state = "smartfridge" //To fix the icon in the map editor.
 	icon_on = "smartfridge_chem"
-	req_one_access_txt = "5;33"
+	req_one_access = list(5, 33)
 
 /obj/machinery/smartfridge/secure/medbay/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/reagent_containers/glass/))
+	if(istype(O,/obj/item/weapon/reagent_containers/glass))
 		return 1
-	if(istype(O,/obj/item/weapon/storage/pill_bottle/))
+	if(istype(O,/obj/item/weapon/storage/pill_bottle))
 		return 1
-	if(istype(O,/obj/item/weapon/reagent_containers/pill/))
+	if(istype(O,/obj/item/weapon/reagent_containers/pill))
 		return 1
 	return 0
 
 /obj/machinery/smartfridge/secure/virology
 	name = "\improper Refrigerated Virus Storage"
 	desc = "A refrigerated storage unit for storing viral material."
-	req_access_txt = "39"
+	req_access = list(39)
 	icon_state = "smartfridge_virology"
 	icon_on = "smartfridge_virology"
 	icon_off = "smartfridge_virology-off"
 
 /obj/machinery/smartfridge/secure/virology/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/reagent_containers/glass/beaker/vial/))
+	if(istype(O,/obj/item/weapon/reagent_containers/glass/beaker/vial))
 		return 1
-	if(istype(O,/obj/item/weapon/virusdish/))
+	if(istype(O,/obj/item/weapon/virusdish))
 		return 1
 	return 0
 
@@ -157,6 +157,7 @@
 		stat |= NOPOWER
 		if(!isbroken)
 			icon_state = icon_off
+	update_power_use()
 
 /*******************
 *   Item Adding
@@ -178,7 +179,7 @@
 
 	default_deconstruction_crowbar(O)
 
-	if(istype(O, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(O))
 		panel_open = !panel_open
 		to_chat(user, "You [panel_open ? "open" : "close"] the maintenance panel.")
 		overlays.Cut()
@@ -205,8 +206,8 @@
 				item_quants[O.name]++
 			else
 				item_quants[O.name] = 1
-			user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].", \
-								 "<span class='notice'>You add \the [O] to \the [src].")
+			user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
+								 "<span class='notice'>You add \the [O] to \the [src].</span>")
 
 			nanomanager.update_uis(src)
 
@@ -239,14 +240,13 @@
 		to_chat(user, "<span class='notice'>\The [src] smartly refuses [O].</span>")
 		return
 
-/obj/machinery/smartfridge/secure/attackby(obj/item/O, mob/user)
-	if (istype(O, /obj/item/weapon/card/emag))
-		emagged = 1
-		locked = -1
-		to_chat(user, "You short out the product lock on [src].")
-		return
-
-	..()
+/obj/machinery/smartfridge/secure/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	emagged = 1
+	locked = -1
+	to_chat(user, "You short out the product lock on [src].")
+	return TRUE
 
 /obj/machinery/smartfridge/attack_ai(mob/user)
 	if(IsAdminGhost(user))
@@ -343,7 +343,7 @@
 	if(!throw_item)
 		return 0
 	throw_item.throw_at(target,16,3,src)
-	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")
+	src.visible_message("<span class='warning'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
 	return 1
 
 /obj/machinery/smartfridge/proc/shock(mob/user, prb)
@@ -365,5 +365,5 @@
 	if(!.)
 		return
 	if (!allowed(usr) && !emagged && locked != -1 && href_list["vend"])
-		to_chat(usr, "\red Access denied.")
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return FALSE

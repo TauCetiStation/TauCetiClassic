@@ -31,7 +31,7 @@
 	name = "Gas turbine control computer"
 	desc = "A computer to remotely control a gas turbine."
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "airtunnel0e"
+	icon_state = "airtunnel"
 	circuit = /obj/item/weapon/circuitboard/turbine_control
 	anchored = 1
 	density = 1
@@ -266,7 +266,7 @@
 /obj/machinery/computer/turbine_computer/atom_init_late()
 	search_turbine()
 	doors = new /list()
-	for(var/obj/machinery/door/poddoor/P in machines)
+	for(var/obj/machinery/door/poddoor/P in poddoor_list)
 		if(P.id == id)
 			doors += P
 

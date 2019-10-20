@@ -34,6 +34,8 @@
 	var/p_x = 16
 	var/p_y = 16 // the pixel location of the tile that the player clicked. Default is the center
 
+	var/dispersion = 0.0
+
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
@@ -67,6 +69,8 @@
 	var/datum/vector_loc/location		// current location of the projectile in pixel space
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
+
+	var/list/proj_act_sound = null
 
 /obj/item/projectile/atom_init()
 	damtype = damage_type // TODO unify these vars properly (Bay12)
@@ -199,6 +203,7 @@
 	if(forcedodge == PROJECTILE_FORCE_MISS) // the bullet passes through a dense object!
 		if(M)
 			visible_message("<span class = 'notice'>\The [src] misses [M] narrowly!</span>")
+			playsound(M.loc, pick(SOUNDIN_BULLETMISSACT), VOL_EFFECTS_MASTER)
 
 		if(istype(A, /turf))
 			loc = A
@@ -219,11 +224,11 @@
 			M.attack_log += "\[[time_stamp()]\] <b>[old_firer]/[old_firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 			old_firer.attack_log += "\[[time_stamp()]\] <b>[old_firer]/[old_firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 			if(!fake)
-				msg_admin_attack("[old_firer.name] ([old_firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(old_firer)] [ADMIN_FLW(old_firer)]") //BS12 EDIT ALG
+				msg_admin_attack("[old_firer.name] ([old_firer.ckey]) shot [M.name] ([M.ckey]) with a [src]", old_firer) //BS12 EDIT ALG
 		else
 			M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 			if(!fake)
-				msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") //BS12 EDIT ALG
+				msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src]", M) //BS12 EDIT ALG
 
 
 	if(istype(A,/turf))
@@ -306,6 +311,10 @@
 
 /obj/item/projectile/proc/setup_trajectory()
 	var/offset = 0
+
+	if(dispersion)
+		var/radius = round(dispersion * 9, 1)
+		offset = rand(-radius, radius)
 
 	// plot the initial trajectory
 	trajectory = new()

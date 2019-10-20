@@ -116,7 +116,7 @@
 	id = "sterilizine"
 	description = "Sterilizes wounds in preparation for surgery."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c8a5dc" // rgb: 200, 165, 220
 
 	//makes you squeaky clean
 /datum/reagent/sterilizine/reaction_mob(mob/living/M, method=TOUCH, volume)
@@ -134,7 +134,7 @@
 	id = "leporazine"
 	description = "Leporazine can be use to stabilize an individuals body temperature."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c8a5dc" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
@@ -172,6 +172,10 @@
 /datum/reagent/dermaline/on_general_digest(mob/living/M)
 	..()
 	M.heal_bodypart_damage(0,3 * REM)
+	if(volume >= overdose && HUSK in M.mutations && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.mutations.Remove(HUSK)
+		H.update_body()
 
 /datum/reagent/dexalin
 	name = "Dexalin"
@@ -217,6 +221,14 @@
 	M.adjustToxLoss(6 * REM) // Let's just say it's thrice as poisonous.
 	return FALSE
 
+/datum/reagent/metatrombine
+	name = "Metatrombine"
+	id = "metatrombine"
+	description = "Metatrombine is a drug that induces high plateletes production. Can be used to temporarily coagulate blood in internal bleedings."
+	reagent_state = LIQUID
+	color = "#990000"
+	restrict_species = list(IPC, DIONA)
+
 /datum/reagent/tricordrazine
 	name = "Tricordrazine"
 	id = "tricordrazine"
@@ -253,12 +265,29 @@
 	M.hallucination = max(0, M.hallucination - 5 * REM)
 	M.adjustToxLoss(-2 * REM)
 
+/datum/reagent/thermopsis
+	name = "Thermopsis"
+	id = "thermopsis"
+	description = "Irritates stomach receptors, that leads to reflex rise of vomiting."
+	reagent_state = LIQUID
+	color = "#a0a000"
+	taste_message = "vomit"
+	restrict_species = list(IPC, DIONA)
+	data = 1
+
+/datum/reagent/thermopsis/on_general_digest(mob/living/M)
+	..()
+	data++
+	if(data > 10)
+		M.vomit()
+		data -= rand(0, 10)
+
 /datum/reagent/adminordrazine //An OP chemical for admins
 	name = "Adminordrazine"
 	id = "adminordrazine"
 	description = "It's magic. We don't have to explain it."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c8a5dc" // rgb: 200, 165, 220
 	taste_message = "admin abuse"
 
 /datum/reagent/adminordrazine/on_general_digest(mob/living/M)
@@ -376,7 +405,7 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		if(istype(IO))
-			if(IO.damage > 0)
+			if(IO.damage > 0 && IO.robotic < 2)
 				IO.damage = max(IO.damage - 1, 0)
 
 /datum/reagent/peridaxon
@@ -396,8 +425,17 @@
 
 		//Peridaxon is hard enough to get, it's probably fair to make this all organs
 		for(var/obj/item/organ/internal/IO in H.organs)
-			if(IO.damage > 0)
+			if(IO.damage > 0 && IO.robotic < 2)
 				IO.damage = max(IO.damage - 0.20, 0)
+
+/datum/reagent/stabyzol
+	name = "Stabyzol"
+	id = "stabyzol"
+	description = "Used to stimulate broken organs to a point where damage to them appears virtual while reagent is in patient's blood stream. Medicate only in small doses."
+	reagent_state = LIQUID
+	color = "#6f2cf2"
+	overdose = 10
+	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/kyphotorin
 	name = "Kyphotorin"
@@ -522,7 +560,7 @@
 	id = "spaceacillin"
 	description = "An all-purpose antiviral agent."
 	reagent_state = LIQUID
-	color = "#FFFFFF" // rgb: 200, 165, 220
+	color = "#ffffff" // rgb: 200, 165, 220
 	custom_metabolism = 0.01
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
@@ -573,10 +611,38 @@
 	description = "A chemical compound that causes a powerful fat-burning reaction."
 	reagent_state = LIQUID
 	nutriment_factor = 10 * REAGENTS_METABOLISM
-	color = "#BBEDA4" // rgb: 187, 237, 164
+	color = "#bbeda4" // rgb: 187, 237, 164
 	overdose = REAGENTS_OVERDOSE
 
 /datum/reagent/lipozine/on_general_digest(mob/living/M)
 	..()
 	M.nutrition = max(M.nutrition - nutriment_factor, 0)
 	M.overeatduration = 0
+
+/datum/reagent/aclometasone
+	name = "Aclometasone"
+	id = "aclometasone"
+	description = "Completely shuts down patient's metabolism, must be manually eliminated from the body, or otherwise patient might die due to extreme blood forming disorders."
+	reagent_state = LIQUID
+	color = "#074232"
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/stimulants
+	name = "Stimulants"
+	id = "stimulants"
+	description = "Stimulants to keep you up in a critical moment"
+	reagent_state = LIQUID
+	color = "#99ccff" // rgb: 200, 165, 220
+	custom_metabolism = 0.5
+	overdose = REAGENTS_OVERDOSE
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/stimulants/on_general_digest(mob/living/M)
+	..()
+	M.drowsyness = max(M.drowsyness - 5, 0)
+	M.AdjustParalysis(-3)
+	M.AdjustStunned(-3)
+	M.AdjustWeakened(-3)
+	var/mob/living/carbon/human/H = M
+	H.adjustHalLoss(-30)
+	H.shock_stage -= 20

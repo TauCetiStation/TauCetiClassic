@@ -19,22 +19,22 @@
 
 	var/callshuttle = 0
 
-	for(var/obj/machinery/computer/communications/commconsole in world)
-		if(commconsole.z == ZLEVEL_CENTCOMM)
+	for(var/obj/machinery/computer/communications/commconsole in communications_list)
+		if(is_centcom_level(commconsole.z))
 			continue
 		if(istype(commconsole.loc,/turf))
 			break
 		callshuttle++
 
-	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
-		if(commboard.z == ZLEVEL_CENTCOMM)
+	for(var/obj/item/weapon/circuitboard/communications/commboard in circuitboard_communications_list)
+		if(is_centcom_level(commboard.z))
 			continue
 		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
 			break
 		callshuttle++
 
 	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
-		if(shuttlecaller.z == ZLEVEL_CENTCOMM)
+		if(is_centcom_level(shuttlecaller.z))
 			continue
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			break
@@ -47,14 +47,13 @@
 		SSshuttle.incall(2)
 		log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 		message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-		captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
-		world << sound('sound/AI/shuttlecalled.ogg')
+		captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
 
 	if(explosive)
 		spawn(10)
 			explosion(src.loc, 3, 6, 12, 15)
 
-	for(var/obj/machinery/ai_status_display/O in world) //change status
+	for(var/obj/machinery/ai_status_display/O in ai_status_display_list) //change status
 		spawn( 0 )
 		O.mode = 2
 		if (istype(loc, /obj/item/device/aicard))

@@ -33,10 +33,13 @@
 		spawn(rand(0, 15))
 			icon_state = "scanner_off"
 			stat |= NOPOWER
+			update_power_use()
 	else
 		icon_state = "scanner_idle"
 		stat &= ~NOPOWER
+	update_power_use()
 
+//todo: rewrite to datacore.manifest_inject ?
 /obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
 	. = ..()
 	if(.)
@@ -72,12 +75,13 @@
 
 		<b><u>Black Marks</u></b>:<br> "}
 	for(var/A in marks)
-		text += "\red[A]<br>"
+		text += "<span class='warning'>[A]<br></span>"
 	to_chat(user, "<span class='notice'>You feel a sting as the scanner extracts some of your blood.</span>")
 	var/turf/T = get_step(src,outputdir)
 	var/obj/item/weapon/paper/print = new(T)
 	print.name = "[mname] Report"
 	print.info = text
+	print.update_icon()
 
 	for(var/datum/data/record/test in data_core.general)
 		if (test.fields["name"] == mname)

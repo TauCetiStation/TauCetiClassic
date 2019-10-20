@@ -39,6 +39,13 @@
 	heat_protection = LEGS
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 
+/obj/item/clothing/shoes/combat/cut // Basically combat shoes but for xenos.
+	name = "mangled combat boots"
+	desc = "When you REALLY want to turn up the heat<br>They have the toe caps cut off of them."
+	icon_state = "swat_cut"
+	clipped_status = CLIPPED
+	species_restricted = list("exclude", DIONA, VOX)
+
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
 	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
@@ -59,7 +66,7 @@
 	icon_state = "tourist"
 	permeability_coefficient = 1
 	species_restricted = null
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
@@ -67,6 +74,18 @@
 	icon_state = "wizard"
 	species_restricted = null
 	body_parts_covered = 0
+
+/obj/item/clothing/shoes/sandal/brown
+	name = "Brown Sandals"
+	desc = "Sweet looking brown sandals. Do not wear them with socks!"
+	icon_state = "sandals-brown"
+	item_color = "sandals-brown"
+
+/obj/item/clothing/shoes/sandal/pink
+	name = "Pink Sandals"
+	desc = "They radiate a cheap plastic aroma like from hell ramen."
+	icon_state = "sandals-pink"
+	item_color = "sandals-pink"
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic, black shoes."
@@ -127,14 +146,14 @@
 	icon_state = "slippers"
 	item_state = "slippers"
 	species_restricted = null
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/clothing/shoes/slippers_worn
 	name = "worn bunny slippers"
 	desc = "Fluffy..."
 	icon_state = "slippers_worn"
 	item_state = "slippers_worn"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/clothing/shoes/laceup
 	name = "laceup shoes"
@@ -187,9 +206,46 @@
 	icon_state = "roman"
 	item_state = "roman"
 
+/obj/item/clothing/shoes/boots/nt_pmc_boots
+	name = "NT PMC Boots"
+	desc = "Private security boots. Now with extra grip."
+	flags = NOSLIP
+	icon_state = "nt_pmc_boots"
+	item_state = "r_feet"
+	item_color = "nt_pmc_boots"
+
+/obj/item/clothing/shoes/boots/lizard_boots
+	name = "Lizard Boots"
+	desc = "Private security boots for Unathi."
+	flags = NOSLIP
+	icon_state = "Lizard_Boots"
+	item_state = "r_feet"
+	item_color = "Lizard_Boots"
+
 /obj/item/clothing/shoes/heels
 	name = "Heels"
 	icon_state = "high_shoes"
 
 /obj/item/clothing/shoes/heels/alternate
 	icon_state = "high_shoes2"
+
+/obj/item/clothing/shoes/boots/German
+	name = "Black Boots"
+	desc = "Deutschland army boots."
+	icon_state = "Black_Boots"
+	item_state = "jackboots"
+	item_color = "Black_Boots"
+
+/obj/item/clothing/shoes/brown_cut
+	name = "Cut Brown Boots"
+	desc = "Some shoes that was cut to fit unathi foot in it."
+	icon_state = "brown-cut"
+	item_color = "brown-cut"
+	species_restricted = null
+
+/obj/item/clothing/shoes/footwraps
+	name = "Footwraps"
+	desc = "Just some rags that you wrap around your foot to feel more comfortable. Better than nothing."
+	icon_state = "footwraps"
+	item_color = "footwraps"
+	species_restricted = null

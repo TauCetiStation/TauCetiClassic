@@ -31,13 +31,13 @@
 	name = "Isolation Cell"
 	icon_state = "iso2"
 
-/area/research_outpost/iso3
-	name = "Isolation Cell"
-	icon_state = "iso3"
-
 /area/research_outpost/harvesting
 	name = "Exotic Particles Collection"
 	icon_state = "anolab"
+
+/area/research_outpost/outpost_misc_lab
+	name = "Outpost Miscellaneous Research"
+	icon_state = "toxmisc"
 
 /area/research_outpost/sample
 	name = "Sample Preparation Room"

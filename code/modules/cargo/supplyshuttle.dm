@@ -17,11 +17,14 @@ var/list/mechtoys = list(
 	name = "supply shuttle"
 	icon_state = "shuttle3"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/supply/dock
 	name = "supply shuttle"
 	icon_state = "shuttle3"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 //SUPPLY PACKS MOVED TO /code/defines/obj/supplypacks.dm
 
@@ -52,12 +55,16 @@ var/list/mechtoys = list(
 
 	var/obj/structure/stool/bed/B = A
 	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
-		return 0
+		return FALSE
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
+		if(M.throwing) // so disposal outlets can throw mobs through plastic flaps
+			return TRUE
+		if(istype(M, /mob/living/simple_animal/hostile))
+			return FALSE
 		if(!M.lying && !istype(M, /mob/living/carbon/monkey) && !istype(M, /mob/living/carbon/slime) && !istype(M, /mob/living/simple_animal/mouse) && !istype(M, /mob/living/silicon/robot/drone))  //If your not laying down, or a small creature, no pass.
-			return 0
+			return FALSE
 	return ..()
 
 /obj/structure/plasticflaps/ex_act(severity)

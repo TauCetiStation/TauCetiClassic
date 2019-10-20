@@ -15,6 +15,7 @@
 	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
+	var/last_sound_emote = 0 // prevents sounds spam
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0
@@ -28,6 +29,14 @@
 	var/heat_protection = 0.5
 	var/leaping = 0
 	ventcrawler = 2
+
+/mob/living/carbon/alien/atom_init()
+	. = ..()
+	alien_list += src
+
+/mob/living/carbon/alien/Destroy()
+	alien_list -= src
+	return ..()
 
 /mob/living/carbon/alien/adjustToxLoss(amount)
 	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) //upper limit of max_plasma, lower limit of 0
@@ -154,7 +163,7 @@
 			var/sentinel = 0
 			var/hunter = 0
 
-			for(var/mob/living/carbon/alien/A in living_mob_list)
+			for(var/mob/living/carbon/alien/A in alien_list)
 				if(A.stat == DEAD)
 					continue
 				if(!A.key && A.brain_op_stage != 4)
@@ -180,8 +189,8 @@
 		else
 			var/no_queen = 1
 			var/mob/living/carbon/alien/queen
-			for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
-				if(!Q.key && Q.brain_op_stage != 4)
+			for(var/mob/living/carbon/alien/humanoid/queen/Q in queen_list)
+				if(Q.stat == DEAD || !Q.key && Q.brain_op_stage != 4)
 					continue
 				no_queen = 0
 				queen = Q
@@ -258,7 +267,7 @@ Hit Procs
 		damage /= 4
 
 
-	show_message("\red The blob attacks!")
+	show_message("<span class='warning'>The blob attacks!</span>")
 
 	adjustFireLoss(damage)
 
@@ -268,7 +277,7 @@ Hit Procs
 /mob/living/carbon/alien/meteorhit(O)
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
-			M.show_message(text("\red [] has been hit by []", src, O), 1)
+			M.show_message(text("<span class='warning'>[] has been hit by []</span>", src, O), 1)
 	if (health > 0)
 		adjustFireLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
 		adjustFireLoss(30)
@@ -286,15 +295,6 @@ Hit Procs
 	return 0
 
 /mob/living/carbon/alien/show_inv(mob/user)
-
-	user.set_machine(src)
-	var/dat = {"
-	<B><HR><FONT size=3>[name]</FONT></B>
-	<BR><HR><BR>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
-	<BR>"}
-	user << browse(entity_ja(dat), text("window=mob[name];size=340x480"))
-	onclose(user, "mob[name]")
 	return
 
 /mob/living/carbon/alien/getTrail()
@@ -306,7 +306,7 @@ Des: Gives the client of the alien an image on each infected mob.
 ----------------------------------------*/
 /mob/living/carbon/alien/proc/AddInfectionImages()
 	if (client)
-		for (var/mob/living/C in mob_list)
+		for (var/mob/living/C in living_list)
 			if(C.status_flags & XENO_HOST)
 				var/obj/item/alien_embryo/A = locate() in C
 				var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")

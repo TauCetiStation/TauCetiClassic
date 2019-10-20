@@ -7,7 +7,6 @@
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "grass1"
 	var/icon_spawn_state = "grass1"
-	luminosity = 3
 
 /turf/unsimulated/jungle/atom_init()
 	. = ..()
@@ -63,7 +62,7 @@
 	if(probability <= 0)
 		return
 
-	//world << "\blue Spread([probability])"
+	//world << "<span class='notice'>Spread([probability])</span>"
 	for(var/turf/unsimulated/jungle/J in orange(1, src))
 		if(!J.bushes_spawn)
 			continue
@@ -138,38 +137,38 @@
 
 /turf/unsimulated/jungle/water/Entered(atom/movable/O)
 	..()
-	if(istype(O, /mob/living/))
+	if(istype(O, /mob/living))
 		var/mob/living/M = O
 		//slip in the murky water if we try to run through it
 		if(prob(10 + (M.m_intent == "run" ? 40 : 0)))
-			M.slip("something slimy", 2, 1)
+			M.slip(2, src)
 
 		//piranhas - 25% chance to be an omnipresent risk, although they do practically no damage
 		if(prob(25))
-			to_chat(M, "\blue You feel something slithering around your legs.")
+			to_chat(M, "<span class='notice'>You feel something slithering around your legs.</span>")
 			if(prob(50))
 				spawn(rand(25,50))
 					var/turf/T = get_turf(M)
 					if(istype(T, /turf/unsimulated/jungle/water))
-						to_chat(M, pick("\red Something sharp bites you!","\red Sharp teeth grab hold of you!","\red You feel something take a chunk out of your leg!"))
+						to_chat(M, pick("<span class='warning'>Something sharp bites you!</span>","<span class='warning'>Sharp teeth grab hold of you!</span>","<span class='warning'>You feel something take a chunk out of your leg!</span>"))
 						M.apply_damage(rand(0, 1), BRUTE, null, null, DAM_SHARP)
 			if(prob(50))
 				spawn(rand(25,50))
 					var/turf/T = get_turf(M)
 					if(istype(T, /turf/unsimulated/jungle/water))
-						to_chat(M, pick("\red Something sharp bites you!","\red Sharp teeth grab hold of you!","\red You feel something take a chunk out of your leg!"))
+						to_chat(M, pick("<span class='warning'>Something sharp bites you!</span>","<span class='warning'>Sharp teeth grab hold of you!</span>","<span class='warning'>You feel something take a chunk out of your leg!</span>"))
 						M.apply_damage(rand(0, 1), BRUTE, null, null, DAM_SHARP)
 			if(prob(50))
 				spawn(rand(25,50))
 					var/turf/T = get_turf(M)
 					if(istype(T, /turf/unsimulated/jungle/water))
-						to_chat(M, pick("\red Something sharp bites you!","\red Sharp teeth grab hold of you!","\red You feel something take a chunk out of your leg!"))
+						to_chat(M, pick("<span class='warning'>Something sharp bites you!</span>","<span class='warning'>Sharp teeth grab hold of you!</span>","<span class='warning'>You feel something take a chunk out of your leg!</span>"))
 						M.apply_damage(rand(0, 1), BRUTE, null, null, DAM_SHARP)
 			if(prob(50))
 				spawn(rand(25,50))
 					var/turf/T = get_turf(M)
 					if(istype(T, /turf/unsimulated/jungle/water))
-						to_chat(M, pick("\red Something sharp bites you!","\red Sharp teeth grab hold of you!","\red You feel something take a chunk out of your leg!"))
+						to_chat(M, pick("<span class='warning'>Something sharp bites you!</span>","<span class='warning'>Sharp teeth grab hold of you!</span>","<span class='warning'>You feel something take a chunk out of your leg!</span>"))
 						M.apply_damage(rand(0, 1), BRUTE, null, null, DAM_SHARP)
 
 /turf/unsimulated/jungle/water/deep

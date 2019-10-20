@@ -74,6 +74,9 @@ var/list/cult_datums = list()
 	for(var/mob/living/silicon/S in player_list) // we hold mobs in this lists only with clients
 		S.client.images += blood_overlay
 
+/obj/effect/rune/update_icon()
+	color = "#a10808"
+
 /obj/effect/rune/Destroy()
 	QDEL_NULL(power)
 	QDEL_NULL(blood_overlay)
@@ -106,7 +109,7 @@ var/list/cult_datums = list()
 	for(var/obj/effect/rune/R in cult_runes)
 		if(!istype(R.power, power.type) || R == src)
 			continue
-		if(R.power.word3 == power.word3 && R.loc.z != ZLEVEL_CENTCOMM)
+		if(R.power.word3 == power.word3 && !is_centcom_level(R.loc.z))
 			allrunes += R
 	if(length(allrunes) > 0)
 		user.forceMove(get_turf(pick(allrunes)))
@@ -131,7 +134,7 @@ var/list/cult_datums = list()
 	icon_state ="book"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	unique = 1
 	var/unlocked = FALSE
 	var/notedat = ""
@@ -274,7 +277,7 @@ var/list/cult_datums = list()
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had the [name] used on him by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	msg_admin_attack("[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])", user)
 
 	if(istype(M, /mob/dead))
 		M.invisibility = 0
@@ -413,7 +416,7 @@ var/list/cult_datums = list()
 		to_chat(user, "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of.\
 		Most of these are useless, though.")
 
-obj/item/weapon/book/tome/imbued/atom_init()
+/obj/item/weapon/book/tome/imbued/atom_init()
 	. = ..()
 	unlocked = TRUE
 	if(!cultwords["travel"])

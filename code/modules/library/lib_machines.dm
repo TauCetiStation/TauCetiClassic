@@ -13,7 +13,7 @@
 /*
  * Borrowbook datum
  */
-datum/borrowbook // Datum used to keep track of who has borrowed what when and for how long.
+/datum/borrowbook // Datum used to keep track of who has borrowed what when and for how long.
 	var/bookname
 	var/mobname
 	var/getdate
@@ -26,13 +26,22 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 /obj/machinery/computer/libraryconsole
 	name = "visitor computer"
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "library"
+	icon_state = "computer_regular_library"
 	circuit = /obj/item/weapon/circuitboard/libraryconsole
+
+	state_broken_preset = "computer_regularb"
+	state_nopower_preset = "computer_regular0"
+
 	var/screenstate = 0
 	var/title
 	var/category = "Any"
 	var/author
 	var/page = 0
+
+/obj/machinery/computer/libraryconsole/old // an older-looking version, looks fancy
+	icon_state = "computer_old"
+	state_broken_preset = "computer_oldb"
+	state_nopower_preset = "computer_old0"
 
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user)
 	var/dat = "<HEAD><TITLE>Library Visitor</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
@@ -146,6 +155,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 	var/bibledelay = 0
 
+/obj/machinery/computer/libraryconsole/bookmanagement/old // an older-looking version, looks fancy
+	icon_state = "computer_old"
+	state_broken_preset = "computer_oldb"
+	state_nopower_preset = "computer_old0"
+
 /obj/machinery/computer/libraryconsole/bookmanagement/atom_init()
 	. = ..()
 	if(circuit)
@@ -213,21 +227,25 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			if(!dbcon_old.IsConnected())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
-				dat += {"<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A>([page] - [page + LIBRETURNLIMIT])<BR><BR>
-				<table>
-				<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td><td></td></tr>"}
-
 				var/DBQuery/query = dbcon_old.NewQuery("SELECT id, author, title, category, deletereason FROM library LIMIT [page], [LIBRETURNLIMIT]")
 				query.Execute()
 
+				var/first_id = null
+				var/last_id = null
+
 				while(query.NextRow())
-					var/id = query.item[1]
+					last_id = query.item[1]
+					if(!first_id)
+						first_id = last_id
 					var/author = query.item[2]
 					var/title = query.item[3]
 					var/category = query.item[4]
 					var/deletereason = query.item[5]
-					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[src];targetid=[id]'>\[Order\]</A></td><td>[(deletereason == null) ? "<A href='?src=\ref[src];deleteid=[id]'>\[Send removal request\]</A>" : "<font color=red>MARKED FOR REMOVAL</font>"]</td></tr>"
+					dat += "<tr><td>[last_id]</td><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[src];targetid=[last_id]'>\[Order\]</A></td><td>[(deletereason == null) ? "<A href='?src=\ref[src];deleteid=[last_id]'>\[Send removal request\]</A>" : "<font color=red>MARKED FOR REMOVAL</font>"]</td></tr>"
 				dat += "</table>"
+				dat = {"<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A>([first_id] - [last_id])<BR><BR>
+				<table>
+				<tr><td>ID</td><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td><td></td></tr>"} + dat
 			dat += {"
 			<BR><A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A>
 			 <A href='?src=\ref[src];pageprev=2'>\[<< Page\]</A>
@@ -266,9 +284,6 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	popup.open()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W, mob/user)
-	if (src.density && istype(W, /obj/item/weapon/card/emag))
-		src.emagged = 1
-		user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/barcodescanner))
 		var/obj/item/weapon/barcodescanner/scanner = W
 		scanner.computer = src
@@ -277,6 +292,12 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			V.show_message("[src] lets out a low, short blip.", 2)
 	else
 		..()
+
+/obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	emagged = 1
+	return TRUE
 
 /obj/machinery/computer/libraryconsole/bookmanagement/Topic(href, href_list)
 	. = ..()

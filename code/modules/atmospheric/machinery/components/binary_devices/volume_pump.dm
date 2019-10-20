@@ -13,10 +13,11 @@
 	set_frequency(frequency)
 
 /obj/machinery/atmospherics/components/binary/pump/high_power/on
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	icon_state = "map_on"
 
 /obj/machinery/atmospherics/components/binary/pump/high_power/update_icon()
+	..()
 	if(!powered())
 		icon_state = "off"
 	else

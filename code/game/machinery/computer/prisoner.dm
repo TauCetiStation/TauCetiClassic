@@ -1,9 +1,11 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/prisoner
-	name = "Prisoner Management"
+	name = "Implant Management"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "explosive"
+	state_broken_preset = "securityb"
+	state_nopower_preset = "security0"
 	light_color = "#a91515"
 	req_access = list(access_armory)
 	circuit = /obj/item/weapon/circuitboard/prisoner
@@ -13,7 +15,6 @@
 	var/timeleft = 60
 	var/stop = 0.0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
-	light_color = "#B40000"
 
 /obj/machinery/computer/prisoner/ui_interact(mob/user)
 	var/dat
@@ -39,7 +40,7 @@
 			if(!T.implanted) continue
 			var/loc_display = "Unknown"
 			var/mob/living/carbon/M = T.imp_in
-			if(M.z == ZLEVEL_STATION && !istype(M.loc, /turf/space))
+			if(is_station_level(M.z) && !istype(M.loc, /turf/space))
 				var/turf/mob_loc = get_turf_loc(M)
 				loc_display = mob_loc.loc
 			if(T.malfunction)
@@ -88,6 +89,6 @@
 		var/obj/item/weapon/implant/I = locate(href_list["warn"])
 		if((I)&&(I.imp_in))
 			var/mob/living/carbon/R = I.imp_in
-			to_chat(R, "\green You hear a voice in your head saying: '[warning]'")
+			to_chat(R, "<span class='notice'>You hear a voice in your head saying: '[warning]'</span>")
 
 	src.updateUsrDialog()

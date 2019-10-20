@@ -219,9 +219,8 @@
 	return temp_change
 
 /mob/living/carbon/slime/proc/handle_chemicals_in_body()
-
-	if(reagents) reagents.metabolize(src)
-
+	if(reagents)
+		reagents.metabolize(src)
 
 	src.updatehealth()
 
@@ -234,9 +233,6 @@
 		health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 	else
 		health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-
-
-
 
 	if(health < config.health_threshold_dead && stat != DEAD)
 		death()
@@ -453,6 +449,9 @@
 				for(var/mob/living/L in view(7,src))
 
 					if(isslime(L) || L.stat == DEAD) // Ignore other slimes and dead mobs
+						continue
+
+					if(L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
 						continue
 
 					if(L in Friends) // No eating friends!
@@ -764,6 +763,3 @@
 /mob/living/carbon/slime/proc/get_starve_nutrition() // Below it we will eat before everything else
 	if(isslimeadult(src)) return 300
 	else return 200
-
-/mob/living/carbon/slime/slip()
-	return FALSE

@@ -91,10 +91,11 @@ VOX HEIST ROUNDTYPE
 			newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
 
 		var/mob/living/carbon/human/vox = raider.current
+
 		vox.real_name = capitalize(newname)
 		vox.name = vox.real_name
 		raider.name = vox.name
-		vox.age = rand(12,20)
+		vox.age = rand(vox.species.min_age, vox.species.max_age)
 		vox.dna.mutantrace = "vox"
 		vox.set_species(VOX)
 		vox.languages = list() // Removing language from chargen.
@@ -175,18 +176,18 @@ VOX HEIST ROUNDTYPE
 	return objs
 
 /datum/game_mode/heist/proc/greet_vox(datum/mind/raider)
-	to_chat(raider.current, "\blue <B>You are a Vox Raider, fresh from the Shoal!</b>")
-	to_chat(raider.current, "\blue The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both.")
-	to_chat(raider.current, "\blue Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious.")
-	to_chat(raider.current, "\blue Use :V to voxtalk, :H to talk on your encrypted channel, and don't forget to turn on your nitrogen internals!")
-	to_chat(raider.current, "\red IF YOU HAVE NOT PLAYED A VOX BEFORE, REVIEW THIS THREAD: tauceti.ru/wiki/Vox_Raider")
+	to_chat(raider.current, "<span class='notice'><B>You are a Vox Raider, fresh from the Shoal!</b></span>")
+	to_chat(raider.current, "<span class='notice'>The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to [system_name()] and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both.</span>")
+	to_chat(raider.current, "<span class='notice'>Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious.</span>")
+	to_chat(raider.current, "<span class='notice'>Use :V to voxtalk, :H to talk on your encrypted channel, and don't forget to turn on your nitrogen internals!</span>")
+	to_chat(raider.current, "<span class='warning'>IF YOU HAVE NOT PLAYED A VOX BEFORE, REVIEW THIS THREAD: tauceti.ru/wiki/Vox_Raider</span>")
 	var/obj_count = 1
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in raider.objectives)
 			to_chat(raider.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 	else
-		to_chat(raider.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew or come up with other fun ideas. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
+		to_chat(raider.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew or come up with other fun ideas. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 
 	var/output_text = {"<font color='red'>============ќграбление - краткий курс============</font><BR>
 	<font color='red'>[sanitize(" райне рекомендуетс€ ознакомитьс€ вот с этой статьей или найти аналог - http://tauceti.ru/wiki/Vox_Raider")]</font><BR>
@@ -211,7 +212,7 @@ VOX HEIST ROUNDTYPE
 	//No objectives, go straight to the feedback.
 	if(!(raid_objectives.len)) return ..()
 
-	completion_text += "<B>Heist mode resume:</B><BR>"
+	completion_text += "<h3>Heist mode resume:</h3>"
 
 	var/win_type = "Major"
 	var/win_group = "Crew"
@@ -239,7 +240,7 @@ VOX HEIST ROUNDTYPE
 
 		win_type = "Major"
 		win_group = "Crew"
-		completion_text += "<B>The Vox Raiders have been wiped out!</B>"
+		completion_text += "<b>The Vox Raiders have been wiped out!</b>"
 
 	else if(!is_raider_crew_safe())
 
@@ -247,7 +248,7 @@ VOX HEIST ROUNDTYPE
 			win_type = "Major"
 
 		win_group = "Crew"
-		win_msg += "<B>The Vox Raiders have left someone behind!</B>"
+		win_msg += "<b>The Vox Raiders have left someone behind!</b>"
 
 	else
 
@@ -255,21 +256,21 @@ VOX HEIST ROUNDTYPE
 			if(win_type == "Minor")
 
 				win_type = "Major"
-			win_msg += "<B>The Vox Raiders escaped the station!</B>"
+			win_msg += "<b>The Vox Raiders escaped the station!</b>"
 		else
-			win_msg += "<B>The Vox Raiders were repelled!</B>"
+			win_msg += "<b>The Vox Raiders were repelled!</b>"
 
-	completion_text += " <B>[win_type] [win_group] victory!</B>"
+	completion_text += " <b>[win_type] [win_group] victory!</b>"
 	completion_text += win_msg
 	feedback_set_details("round_end_result","heist - [win_type] [win_group]")
 
 	var/count = 1
 	for(var/datum/objective/objective in raid_objectives)
 		if(objective.check_completion())
-			completion_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+			completion_text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
 			feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
 		else
-			completion_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+			completion_text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 			feedback_add_details("traitor_objective","[objective.type]|FAIL")
 		count++
 

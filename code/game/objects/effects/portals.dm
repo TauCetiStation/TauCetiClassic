@@ -3,13 +3,23 @@
 	desc = "Looks unstable. Best to test it with the clown."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
-	density = 1
-	unacidable = 1//Can't destroy energy portals.
+	density = TRUE
+	unacidable = TRUE // Can't destroy energy portals.
 	var/failchance = 5
 	var/destroy_after_init = TRUE
 	var/obj/item/target = null
 	var/creator = null
-	anchored = 1.0
+	anchored = TRUE
+
+/obj/effect/portal/atom_init()
+	. = ..()
+	portal_list += src
+	if(destroy_after_init)
+		QDEL_IN(src, 300)
+
+/obj/effect/portal/Destroy()
+	portal_list -= src
+	return ..()
 
 /obj/effect/portal/Bumped(mob/M)
 	spawn(0)
@@ -23,10 +33,7 @@
 		return
 	return
 
-/obj/effect/portal/atom_init()
-	. = ..()
-	if(destroy_after_init)
-		QDEL_IN(src, 300)
+
 
 /obj/effect/portal/proc/teleport(atom/movable/M, density_check = TELE_CHECK_NONE, respect_entrydir = FALSE, use_forceMove = TRUE)
 	if (istype(M, /obj/effect)) //sparks don't teleport
@@ -68,11 +75,11 @@
 	target = null
 	if(linked_console)
 		linked_console.active_wormhole = null
-		linked_console.use_power = 1
+		linked_console.set_power_use(IDLE_POWER_USE)
 		linked_console = null
 	if(linked_portal)
-		playsound(src, 'sound/effects/phasein.ogg', 25, 1)
-		playsound(linked_portal, 'sound/effects/phasein.ogg', 25, 1)
+		playsound(src, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER, 25)
+		playsound(linked_portal, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER, 25)
 		var/obj/effect/portal/tsci_wormhole/LP = linked_portal
 		linked_portal = null
 		LP.linked_portal = null
@@ -93,6 +100,8 @@
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		var/bad_effects = 0
+		if(H.species.flags[IS_SYNTHETIC])
+			return
 		if(prob(20))
 			bad_effects += 1
 			H.confused += 3
@@ -100,6 +109,6 @@
 			to_chat(H, "<span class='warning'>[msg]</span>")
 		if(prob(20))
 			bad_effects += 1
-			H.vomit() //No msg required, since vomit() will handle this.
+			H.invoke_vomit_async() //No msg required, since vomit() will handle this.
 		if(bad_effects == 2)
 			H.Paralyse(3)

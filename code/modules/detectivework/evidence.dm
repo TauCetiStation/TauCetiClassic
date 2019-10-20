@@ -6,7 +6,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
 	item_state = ""
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user, proximity)
 	if(!proximity) return
@@ -26,7 +26,7 @@
 	if(istype(I, /obj/item/device/core_sampler)) //core sampler interacts with evidence bags in another way
 		return
 
-	if(I.w_class > 3)
+	if(I.w_class > ITEM_SIZE_NORMAL)
 		to_chat(user, "<span class='notice'>[I] won't fit in [src].</span>")
 		return
 
@@ -101,7 +101,7 @@
 	var/amount = 10.0
 	item_state = "paper"
 	throwforce = 1
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	throw_speed = 3
 	throw_range = 5
 

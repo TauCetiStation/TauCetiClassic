@@ -222,7 +222,7 @@
 	id = "cleaner"
 	description = "A compound used to clean things. Now with 50% more sodium hypochlorite!"
 	reagent_state = LIQUID
-	color = "#A5F0EE" // rgb: 165, 240, 238
+	color = "#a5f0ee" // rgb: 165, 240, 238
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "floor cleaner"
 
@@ -275,9 +275,18 @@
 			if(H.shoes)
 				if(H.shoes.clean_blood())
 					H.update_inv_shoes()
-			else
-				H.clean_blood(1)
-				return
+			var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
+			var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
+			var/no_legs = FALSE
+			if(!l_foot && !r_foot)
+				no_legs = TRUE
+			if(!no_legs)
+				if(H.shoes && H.shoes.clean_blood())
+					H.update_inv_shoes()
+				else
+					H.feet_blood_DNA = null
+					H.feet_dirt_color = null
+					H.update_inv_shoes()
 		M.clean_blood()
 
 /datum/reagent/xenomicrobes
@@ -285,7 +294,7 @@
 	id = "xenomicrobes"
 	description = "Microbes with an entirely alien cellular structure."
 	reagent_state = LIQUID
-	color = "#535E66" // rgb: 83, 94, 102
+	color = "#535e66" // rgb: 83, 94, 102
 	taste_message = "something alien"
 
 /datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, volume)
@@ -298,7 +307,7 @@
 	id = "fluorosurfactant"
 	description = "A perfluoronated sulfonic acid that forms a foam when mixed with water."
 	reagent_state = LIQUID
-	color = "#9E6B38" // rgb: 158, 107, 56
+	color = "#9e6b38" // rgb: 158, 107, 56
 	taste_message = null
 
 /datum/reagent/foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
@@ -306,7 +315,7 @@
 	id = "foaming_agent"
 	description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
 	reagent_state = SOLID
-	color = "#664B63" // rgb: 102, 75, 99
+	color = "#664b63" // rgb: 102, 75, 99
 	taste_message = null
 
 /datum/reagent/nicotine
@@ -322,20 +331,29 @@
 /datum/reagent/nicotine/on_mob_life(mob/living/M)
 	if(!..())
 		return
-	if(volume >= 0.85)
-		if(world.time > (alert_time + 90 SECONDS))
-			to_chat(M, pick("<span class='danger'>You feel dizzy and weak</span>"))
-			alert_time = world.time
-		if(prob(60))
-			M.adjustOxyLoss(1)
-	if(volume < 0.7)
-		if(prob(10))
-			M.AdjustStunned(-1)
-			M.AdjustWeakened(-1)
-	if(volume > 1)
-		if(prob(80))
-			M.adjustOxyLoss(1)
-			M.drowsyness = min(40, (M.drowsyness + 2))
+	if(!holder.has_reagent("alkysine"))
+		if(volume >= 0.85)
+			if(world.time > (alert_time + 90 SECONDS))
+				to_chat(M, pick("<span class='danger'>You feel dizzy and weak</span>"))
+				alert_time = world.time
+			if(prob(60))
+				M.adjustOxyLoss(1)
+		if(volume < 0.7)
+			if(prob(10))
+				M.AdjustStunned(-1)
+				M.AdjustWeakened(-1)
+		if(volume > 1)
+			if(prob(80))
+				M.adjustOxyLoss(1)
+				M.drowsyness = min(40, (M.drowsyness + 2))
+			if(prob(3) & ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.invoke_vomit_async()
+		if(volume > 5)
+			if(prob(70))
+				M.adjustOxyLoss(1)
+	if(holder.has_reagent("anti_toxin"))
+		holder.remove_reagent("nicotine", 0.065)
 	return TRUE
 
 /datum/reagent/ammonia
@@ -350,7 +368,7 @@
 	name = "Ultra Glue"
 	id = "glue"
 	description = "An extremely powerful bonding agent."
-	color = "#FFFFCC" // rgb: 255, 255, 204
+	color = "#ffffcc" // rgb: 255, 255, 204
 	taste_message = null
 
 /datum/reagent/diethylamine
@@ -417,7 +435,7 @@
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.vomit()
+		H.invoke_vomit_async()
 		H.apply_effect(1,IRRADIATE,0)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -428,7 +446,7 @@
 	id = "nanites"
 	description = "Microscopic construction robots."
 	reagent_state = LIQUID
-	color = "#535E66" // rgb: 83, 94, 102
+	color = "#535e66" // rgb: 83, 94, 102
 	taste_message = "nanomachines, son"
 
 /datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, volume)
@@ -441,7 +459,7 @@
 	id = "nanites2"
 	description = "Friendly microscopic construction robots."
 	reagent_state = LIQUID
-	color = "#535E66" //rgb: 83, 94, 102
+	color = "#535e66" //rgb: 83, 94, 102
 	taste_message = "nanomachines, son"
 
 /datum/reagent/nanobots
@@ -449,7 +467,7 @@
 	id = "nanobots"
 	description = "Microscopic robots intended for use in humans. Must be loaded with further chemicals to be useful."
 	reagent_state = LIQUID
-	color = "#3E3959" //rgb: 62, 57, 89
+	color = "#3e3959" //rgb: 62, 57, 89
 	taste_message = "nanomachines, son"
 
 //Great healing powers. Metabolizes extremely slowly, but gets used up when it heals damage.
@@ -578,7 +596,7 @@
 				spawn(60)
 					if(spawning_horror)
 						to_chat(M, pick( "<b><span class='warning'>Something bursts out from inside you!</span></b>"))
-						message_admins("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots. (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>)")
+						message_admins("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots. (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>) [ADMIN_JMP(H)]")
 						log_game("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots")
 						new /mob/living/simple_animal/hostile/cyber_horror(H.loc)
 						spawning_horror = 0
@@ -586,89 +604,244 @@
 	else
 		holder.del_reagent("mednanobots")
 
+/datum/reagent/paint
+	name = "Paint"
+	id = "paint_"
+	reagent_state = LIQUID
+	data = list("r_color"=128,"g_color"=128,"b_color"=128)
+	description = "This paint will only adhere to floor tiles."
+	color = "#808080"
+	color_weight = 20
+	taste_message = "strong liquid colour"
+
+/datum/reagent/paint/red
+	name = "Red Paint"
+	id = "paint_red"
+	color = "#fe191a"
+	data = list("r_color"=254,"g_color"=25,"b_color"=26)
+
+/datum/reagent/paint/green
+	name = "Green Paint"
+	color = "#18a31a"
+	id = "paint_green"
+	data = list("r_color"=24,"g_color"=163,"b_color"=26)
+
+/datum/reagent/paint/blue
+	name = "Blue Paint"
+	color = "#247cff"
+	id = "paint_blue"
+	data = list("r_color"=36,"g_color"=124,"b_color"=255)
+
+/datum/reagent/paint/yellow
+	name = "Yellow Paint"
+	color = "#fdfe7d"
+	id = "paint_yellow"
+	data = list("r_color"=253,"g_color"=254,"b_color"=125)
+
+/datum/reagent/paint/violet
+	name = "Violet Paint"
+	color = "#cc0099"
+	id = "paint_violet"
+	data = list("r_color"=253,"g_color"=254,"b_color"=125)
+
+/datum/reagent/paint/black
+	name = "Black Paint"
+	color = "#333333"
+	id = "paint_black"
+	data = list("r_color"=51,"g_color"=51,"b_color"=51)
+
+/datum/reagent/paint/white
+	name = "White Paint"
+	color = "#f0f8ff"
+	id = "paint_white"
+	data = list("r_color"=240,"g_color"=248,"b_color"=255)
+
+/datum/reagent/paint/custom
+	name = "Custom Paint"
+	id = "paint_custom"
+
+/datum/reagent/paint/reaction_turf(turf/T, volume)
+	if(!istype(T) || istype(T, /turf/space))
+		return
+	if(color_weight < 15 || volume < 5)
+		return
+	var/ind = "[initial(T.icon)]|[color]"
+	if(!cached_icons[ind])
+		var/icon/overlay = new/icon(T.icon)
+		overlay.Blend(color, ICON_MULTIPLY)
+		overlay.SetIntensity(color_weight * 0.1)
+		T.icon = overlay
+		cached_icons[ind] = T.icon
+	else
+		T.icon = cached_icons[ind]
+
+/datum/reagent/paint/reaction_mob(mob/M, method=TOUCH, volume)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/r_tweak = ((data["r_color"] * volume * (color_weight / 10)) / 10) // volume of 10 basically just replaces the color alltogether, a potent hair dye this is.
+		var/g_tweak = ((data["g_color"] * volume * (color_weight / 10)) / 10)
+		var/b_tweak = ((data["b_color"] * volume * (color_weight / 10)) / 10)
+		var/volume_coefficient = max((10-volume)/10, 0)
+		var/hair_changes_occured = FALSE
+		var/body_changes_occured = FALSE
+		if(H.client && volume >= 5 && !H.glasses)
+			H.eye_blurry = max(H.eye_blurry, volume)
+			H.eye_blind = max(H.eye_blind, 1)
+		if(volume >= 10 && H.species.flags[HAS_SKIN_COLOR])
+			if(!H.wear_suit && !H.w_uniform && !H.shoes && !H.head && !H.wear_mask) // You either paint the full body, or beard/hair
+				H.r_skin = CLAMP(round(H.r_skin * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255) // Full body painting is costly! Hence, *0.1
+				H.g_skin = CLAMP(round(H.g_skin * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
+				H.b_skin = CLAMP(round(H.b_skin * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
+				H.dyed_r_hair = CLAMP(round(H.dyed_r_hair * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255) // If you're painting full body, all the painting is costly.
+				H.dyed_g_hair = CLAMP(round(H.dyed_g_hair * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
+				H.dyed_b_hair = CLAMP(round(H.dyed_b_hair * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
+				H.hair_painted = TRUE
+				H.dyed_r_facial = CLAMP(round(H.dyed_r_facial * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255)
+				H.dyed_g_facial = CLAMP(round(H.dyed_g_facial * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
+				H.dyed_b_facial = CLAMP(round(H.dyed_b_facial * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
+				H.facial_painted = TRUE
+				hair_changes_occured = TRUE
+				body_changes_occured = TRUE
+		else if(H.species && H.species.name in list(HUMAN, UNATHI, TAJARAN))
+			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
+				if(!H.hair_painted)
+					H.dyed_r_hair = CLAMP(round(H.r_hair * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_hair = CLAMP(round(H.g_hair * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_hair = CLAMP(round(H.b_hair * volume_coefficient + b_tweak), 0, 255)
+					H.hair_painted = TRUE
+				else
+					H.dyed_r_hair = CLAMP(round(H.dyed_r_hair * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_hair = CLAMP(round(H.dyed_g_hair * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_hair = CLAMP(round(H.dyed_b_hair * volume_coefficient + b_tweak), 0, 255)
+				hair_changes_occured = TRUE
+			if(!((H.wear_mask && (H.wear_mask.flags & HEADCOVERSMOUTH)) || (H.head && (H.head.flags & HEADCOVERSMOUTH))) && H.f_style != "Shaved")
+				if(!H.facial_painted)
+					H.dyed_r_facial = CLAMP(round(H.r_facial * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_facial = CLAMP(round(H.g_facial * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_facial = CLAMP(round(H.b_facial * volume_coefficient + b_tweak), 0, 255)
+					H.facial_painted = TRUE
+				else
+					H.dyed_r_facial = CLAMP(round(H.dyed_r_facial * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_facial = CLAMP(round(H.dyed_g_facial * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_facial = CLAMP(round(H.dyed_b_facial * volume_coefficient + b_tweak), 0, 255)
+				hair_changes_occured = TRUE
+		if(!H.head && !H.wear_mask && H.h_style == "Bald" && H.f_style == "Shaved" && volume >= 5)
+			H.lip_style = "spray_face"
+			H.lip_color = color
+			hair_changes_occured = TRUE
+			body_changes_occured = TRUE
+		if(hair_changes_occured)
+			H.update_hair()
+		if(body_changes_occured)
+			H.update_body()
+
+/datum/reagent/paint/reaction_obj(obj/O, volume)
+	if(istype(O, /obj/machinery/camera))
+		var/obj/machinery/camera/C = O
+		if(!C.painted)
+			if(!C.isXRay())
+				var/paint_time = min(volume * 1 SECOND, 10 SECONDS)
+				addtimer(CALLBACK(C, /obj/machinery/camera/proc/remove_paint_state, C.network), paint_time) // EMP turns it off for 90 SECONDS, 10 seems fair.
+				C.disconnect_viewers()
+				C.painted = TRUE
+				C.toggle_cam(FALSE) // Do not show deactivation message, it's just paint.
+				C.triggerCameraAlarm()
+			C.color = color
+
+/datum/reagent/paint_remover
+	name = "Paint Remover"
+	id = "paint_remover"
+	description = "Paint remover is used to remove floor paint from floor tiles."
+	reagent_state = 2
+	color = "#808080"
+
+/datum/reagent/paint_remover/reaction_mob(mob/M, method=TOUCH, volume)
+	if(method == TOUCH)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/changes_occured = FALSE
+			if(H.hair_painted && !(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
+				H.dyed_r_hair = H.r_hair
+				H.dyed_g_hair = H.g_hair
+				H.dyed_b_hair = H.b_hair
+				H.hair_painted = FALSE
+				changes_occured = TRUE
+			if(H.facial_painted && !((H.wear_mask && (H.wear_mask.flags & HEADCOVERSMOUTH)) || (H.head && (H.head.flags & HEADCOVERSMOUTH))) && H.f_style != "Shaved")
+				H.dyed_r_facial = H.r_facial
+				H.dyed_g_facial = H.g_facial
+				H.dyed_b_facial = H.b_facial
+				H.facial_painted = FALSE
+				changes_occured = TRUE
+			if(changes_occured)
+				H.update_hair()
+
+/datum/reagent/paint_remover/reaction_turf(turf/T, volume)
+	if(istype(T) && T.icon != initial(T.icon))
+		T.icon = initial(T.icon)
+
+/datum/reagent/paint_remover/reaction_obj(obj/O, volume)
+	if(istype(O, /obj/machinery/camera))
+		var/obj/machinery/camera/C = O
+		if(C.painted)
+			C.remove_paint_state()
+			C.color = null
+
 ////////////////////////////////////
 ///// All the barber's bullshit/////
 ////////////////////////////////////
-/datum/reagent/hair_dye
+/datum/reagent/paint/hair_dye
 	name = "Hair Dye"
 	id = "whitehairdye"
 	description = "A compound used to dye hair. Any hair."
 	data = list("r_color"=255,"g_color"=255,"b_color"=255)
 	reagent_state = LIQUID
-	color = "#FFFFFF" // to see rgb just look into data!
+	color = "#ffffff" // to see rgb just look into data!
+	color_weight = 10
 	taste_message = "liquid colour"
 
-/datum/reagent/hair_dye/red
+/*
+TODO: Convert everything to custom hair dye. ~ Luduk.
+*/
+
+/datum/reagent/paint/hair_dye/red
 	name = "Red Hair Dye"
 	id = "redhairdye"
 	data = list("r_color"=255,"g_color"=0,"b_color"=0)
-	color = "#FF0000"
+	color = "#ff0000"
 
-/datum/reagent/hair_dye/green
+/datum/reagent/paint/hair_dye/green
 	name = "Green Hair Dye"
 	id = "greenhairdye"
 	data = list("r_color"=0,"g_color"=255,"b_color"=0)
-	color = "#00FF00"
+	color = "#00ff00"
 
-/datum/reagent/hair_dye/blue
+/datum/reagent/paint/hair_dye/blue
 	name = "Blue Hair Dye"
 	id = "bluehairdye"
 	data = list("r_color"=0,"g_color"=0,"b_color"=255)
-	color = "#0000FF"
+	color = "#0000ff"
 
-/datum/reagent/hair_dye/black
+/datum/reagent/paint/hair_dye/black
 	name = "Black Hair Dye"
 	id = "blackhairdye"
 	data = list("r_color"=0,"g_color"=0,"b_color"=0)
 	color = "#000000"
 
-/datum/reagent/hair_dye/brown
+/datum/reagent/paint/hair_dye/brown
 	name = "Brown Hair Dye"
 	id = "brownhairdye"
 	data = list("r_color"=50,"g_color"=0,"b_color"=0)
 	color = "#500000"
 
-/datum/reagent/hair_dye/blond
+/datum/reagent/paint/hair_dye/blond
 	name = "Blond Hair Dye"
 	id = "blondhairdye"
 	data = list("r_color"=255,"g_color"=225,"b_color"=135)
-	color = "#FFE187"
+	color = "#ffe187"
 
-/datum/reagent/hair_dye/reaction_mob(mob/M, method=TOUCH, volume)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/r_tweak = ((data["r_color"] * volume) / 10) // volume of 10 basically just replaces the color alltogether, a potent hair dye this is.
-		var/g_tweak = ((data["g_color"] * volume) / 10)
-		var/b_tweak = ((data["b_color"] * volume) / 10)
-		var/volume_coefficient = max((10-volume)/10, 0)
-		if(H.client && volume >= 5 && !H.glasses)
-			H.eye_blurry = max(H.eye_blurry, volume)
-			H.eye_blind = max(H.eye_blind, 1)
-		if(volume >= 10 && H.species && H.species.flags[HAS_SKIN_COLOR])
-			if(!H.wear_suit && !H.w_uniform && !H.shoes && !H.head && !H.wear_mask) // You either paint the full body, or beard/hair
-				H.r_skin = Clamp(round(H.r_skin*max((100-volume)/100, 0) + r_tweak*0.1), 0, 255) // Full body painting is costly! Hence, *0.1
-				H.g_skin = Clamp(round(H.g_skin*max((100-volume)/100, 0) + g_tweak*0.1), 0, 255)
-				H.b_skin = Clamp(round(H.b_skin*max((100-volume)/100, 0) + b_tweak*0.1), 0, 255)
-				H.r_hair = Clamp(round(H.r_hair*max((100-volume)/100, 0) + r_tweak*0.1), 0, 255) // If you're painting full body, all the painting is costly.
-				H.g_hair = Clamp(round(H.g_hair*max((100-volume)/100, 0) + g_tweak*0.1), 0, 255)
-				H.b_hair = Clamp(round(H.b_hair*max((100-volume)/100, 0) + b_tweak*0.1), 0, 255)
-				H.r_facial = Clamp(round(H.r_facial*max((100-volume)/100, 0) + r_tweak*0.1), 0, 255)
-				H.g_facial = Clamp(round(H.g_facial*max((100-volume)/100, 0) + g_tweak*0.1), 0, 255)
-				H.b_facial = Clamp(round(H.b_facial*max((100-volume)/100, 0) + b_tweak*0.1), 0, 255)
-		else if(H.species && H.species.name in list(HUMAN, UNATHI, TAJARAN))
-			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
-				H.r_hair = Clamp(round(H.r_hair*volume_coefficient + r_tweak), 0, 255)
-				H.g_hair = Clamp(round(H.g_hair*volume_coefficient + g_tweak), 0, 255)
-				H.b_hair = Clamp(round(H.b_hair*volume_coefficient + b_tweak), 0, 255)
-			if(!((H.wear_mask && (H.wear_mask.flags & HEADCOVERSMOUTH)) || (H.head && (H.head.flags & HEADCOVERSMOUTH))) && H.f_style != "Shaved")
-				H.r_facial = Clamp(round(H.r_facial*volume_coefficient + r_tweak), 0, 255)
-				H.g_facial = Clamp(round(H.g_facial*volume_coefficient + g_tweak), 0, 255)
-				H.b_facial = Clamp(round(H.b_facial*volume_coefficient + b_tweak), 0, 255)
-		if(!H.head && !H.wear_mask && H.h_style == "Bald" && H.f_style == "Shaved" && volume >= 5)
-			H.lip_style = "spray_face"
-			H.lip_color = color
-		H.update_hair()
-		H.update_body()
+/datum/reagent/paint/hair_dye/custom
+	name = "Custom Hair Dye"
+	id = "customhairdye"
 
 /datum/reagent/hair_growth_accelerator
 	name = "Hair Growth Accelerator"
@@ -676,7 +849,7 @@
 	data = list("bald_head_list"=list("Bald", "Balding Hair", "Skinhead", "Unathi Horns", "Tajaran Ears"),"shaved_face_list"=list("Shaved"),"allowed_races"=list(HUMAN, UNATHI, TAJARAN))
 	description = "A substance for the bald. Renews hair. Apply to head or groin."
 	reagent_state = LIQUID
-	color = "#EFC769" // rgb: 239, 199, 105
+	color = "#efc769" // rgb: 239, 199, 105
 	taste_message = "hairs inside me"
 
 /datum/reagent/hair_growth_accelerator/reaction_mob(mob/M, method = TOUCH, volume)
@@ -721,7 +894,7 @@
 	reagent_state = LIQUID
 	taste_message = "spooky ghosts"
 	data = 1
-	color = "#FFA8E4" // rgb: 255, 168, 228
+	color = "#ffa8e4" // rgb: 255, 168, 228
 
 /datum/reagent/ectoplasm/on_general_digest(mob/living/M)
 	..()
@@ -760,3 +933,23 @@
 		if(180 to INFINITY)
 			M.adjustBrainLoss(100)
 	data++
+
+/datum/reagent/aqueous_foam
+	name = "Aqueous Film Forming Foam"
+	id = "aqueous_foam"
+	description = "Smothers the fire and seals in the flammable vapours."
+	reagent_state = LIQUID
+	taste_message = "fire repellant"
+	color = "#c2eaed" // rgb: 194, 234, 237
+
+/datum/reagent/aqueous_foam/reaction_turf(turf/T, method=TOUCH, volume)
+	var/obj/effect/effect/aqueous_foam/F = locate(/obj/effect/effect/aqueous_foam) in T
+	if(F)
+		INVOKE_ASYNC(F, /obj/effect/effect/aqueous_foam.proc/performAction) // So we don't instantinate a new object, but still make the room slightly colder.
+	else if(!T.density)
+		new /obj/effect/effect/aqueous_foam(T)
+
+/datum/reagent/aqueous_foam/on_slime_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(REM)
+	return FALSE

@@ -2,13 +2,11 @@
 	name = "submachine gun"
 	desc = "A lightweight, fast firing gun. Uses 9mm rounds."
 	icon_state = "saber"	//ugly
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/msmg9mm
+	can_be_holstered = FALSE
 	var/alarmed = 0
-
-/obj/item/weapon/gun/projectile/automatic/isHandgun()
-	return 0
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
@@ -24,7 +22,8 @@
 	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses 9mm rounds."
 	icon_state = "mac"
 	item_state = "mac"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
+	can_be_holstered = TRUE
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
 
@@ -39,10 +38,10 @@
 	desc = "A lightweight, compact bullpup SMG. Uses .45 ACP rounds in medium-capacity magazines and has a threaded barrel for silencers. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "c20r"
 	item_state = "c20r"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/m12mm
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 
 
 /obj/item/weapon/gun/projectile/automatic/c20r/atom_init()
@@ -52,7 +51,7 @@
 /obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target, mob/living/user, flag)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)
 		update_icon()
 		alarmed = 1
 	return
@@ -78,7 +77,7 @@
 	..()
 	overlays.Cut()
 	if(magazine)
-		var/image/magazine_icon = image('icons/obj/gun.dmi', "mag-[ceil(get_ammo(0) / 4) * 4]")
+		var/image/magazine_icon = image('icons/obj/gun.dmi', "mag-[CEIL(get_ammo(0) / 4) * 4]")
 		overlays += magazine_icon
 	if(silenced)
 		var/image/silencer_icon = image('icons/obj/gun.dmi', "c20r-silencer")
@@ -91,11 +90,11 @@
 	desc = "A heavily modified light machine gun with a tactical plasteel frame resting on a rather traditionally-made ballistic weapon. Has 'Aussec Armoury - 2531' engraved on the reciever, as well as '7.62x51mm'."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
-	w_class = 5
+	w_class = ITEM_SIZE_HUGE
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m762
-	fire_sound = 'sound/weapons/gunshot3.wav'
+	fire_sound = 'sound/weapons/guns/Gunshot2.wav'
 	var/cover_open = 0
 	var/wielded = 0
 
@@ -164,7 +163,7 @@
 						wield()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
-	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? ceil(get_ammo(0) / 12.5) * 25 : "-empty"]"
+	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/living/user, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(!wielded)
@@ -203,11 +202,11 @@
 	desc = "Based on the classic 'Chicago Typewriter'."
 	icon_state = "tommygun"
 	item_state = "shotgun"
-	w_class = 5
+	w_class = ITEM_SIZE_HUGE
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	//can_suppress = 0
  	//burst_size = 4
  	//fire_delay = 1
@@ -228,10 +227,10 @@
 	desc = "A basic energy-based carbine with fast rate of fire."
 	icon_state = "l10-car"
 	item_state = "l10-car"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	origin_tech = "combat=3;magnets=2"
 	mag_type = /obj/item/ammo_box/magazine/l10mag
-	fire_sound = 'sound/weapons/guns/l10c-shot.ogg'
+	fire_sound = 'sound/weapons/guns/gunpulse_l10c.ogg'
 	recoil = 0
 	energy_gun = 1
 
@@ -249,7 +248,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l10c/attack_self(mob/user)
 	if(magazine && magazine.ammo_count())
-		playsound(user, 'sound/weapons/guns/l10c-unload.ogg', 70, 1)
+		playsound(user, 'sound/weapons/guns/reload_l10c_unload.ogg', VOL_EFFECTS_MASTER)
 	if(chambered)
 		var/obj/item/ammo_casing/AC = chambered //Find chambered round
 		qdel(AC)
@@ -275,7 +274,7 @@
 			magazine.loc = src
 			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			if(AM.ammo_count())
-				playsound(user, 'sound/weapons/guns/l10c-load.ogg', 70, 1)
+				playsound(user, 'sound/weapons/guns/reload_l10c_load.ogg', VOL_EFFECTS_MASTER)
 			chamber_round()
 			A.update_icon()
 			update_icon(user)
@@ -310,10 +309,11 @@
 	desc = "C-5 submachine gun - cheap and light. Uses 9mm ammo."
 	icon_state = "c5"
 	item_state = "c5"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
+	can_be_holstered = TRUE
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/c5_9mm
-	fire_sound = 'sound/weapons/guns/c5_shot.wav'
+	fire_sound = 'sound/weapons/guns/gunshot_c5.wav'
 
 /obj/item/weapon/gun/projectile/automatic/c5/update_icon(mob/M)
 	icon_state = "c5[magazine ? "" : "-e"]"
@@ -330,10 +330,10 @@
 	desc = "L13 personal defense weapon - for combat security operations. Uses .38 ammo."
 	icon_state = "l13"
 	item_state = "l13"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/l13_38
-	fire_sound = 'sound/weapons/guns/l13_shot.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_l13.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/l13/update_icon(mob/M)
 	icon_state = "l13[magazine ? "" : "-e"]"
@@ -353,35 +353,30 @@
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
-
-/obj/item/weapon/gun/projectile/automatic/tommygun/isHandgun()
-	return 0
+	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/bar
 	name = "Browning M1918"
 	desc = "Browning Automatic Rifle."
 	icon_state = "bar"
 	item_state = "bar"
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/m3006
-	fire_sound = 'sound/weapons/gunshot3.wav'
+	fire_sound = 'sound/weapons/guns/Gunshot2.wav'
 
 /obj/item/weapon/gun/projectile/automatic/luger
 	name = "Luger P08"
 	desc = "A small, easily concealable gun. Uses 9mm rounds."
 	icon_state = "p08"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = "combat=2;materials=2;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m9pmm
+	can_be_holstered = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/luger/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
-
-/obj/item/weapon/gun/projectile/automatic/luger/isHandgun()
-	return 1
 
 /obj/item/weapon/gun/projectile/automatic/colt1911/dungeon
 	desc = "A single-action, semi-automatic, magazine-fed, recoil-operated pistol chambered for the .45 ACP cartridge."
@@ -393,6 +388,7 @@
 	name = "Robot SMG"
 	icon_state = "borg_smg"
 	mag_type = /obj/item/ammo_box/magazine/borg45
+	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/borg/update_icon()
 	return
@@ -402,6 +398,7 @@
 		magazine.loc = get_turf(src.loc)
 		magazine.update_icon()
 		magazine = null
+		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
 	else
 		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
@@ -412,10 +409,10 @@
 	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Compatible only with specialized magazines."
 	icon_state = "bulldog"
 	item_state = "bulldog"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/atom_init()
 	. = ..()
@@ -436,7 +433,7 @@
 /obj/item/weapon/gun/projectile/automatic/bulldog/afterattack(atom/target, mob/living/user, flag)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)
 		update_icon()
 		alarmed = 1
 	return
@@ -446,10 +443,10 @@
 	desc = ""
 	icon_state = "a28"
 	item_state = "a28"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m556
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/a28/atom_init()
 	. = ..()
@@ -466,11 +463,11 @@
 	name = "A74 assault rifle"
 	desc = "Stradi and Practican Maid Bai Spess soviets corporation, bazed he original design of 20 centuriyu fin about baars and vodka vile patrimonial it, saunds of balalaika place minvile, yuzes 7.74 caliber"
 	mag_type = /obj/item/ammo_box/magazine/a74mm
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	icon_state = "a74"
 	item_state = "a74"
 	origin_tech = "combat=5;materials=4;syndicate=6"
-	fire_sound = 'sound/weapons/guns/ak74_fire.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_ak74.ogg'
 	var/icon/mag_icon = icon('icons/obj/gun.dmi',"mag-a74")
 
 /obj/item/weapon/gun/projectile/automatic/a74/atom_init()
@@ -484,13 +481,3 @@
 		item_state = "[initial(icon_state)]"
 	else
 		item_state = "[initial(icon_state)]-e"
-
-/obj/item/weapon/gun/projectile/automatic/a74/attack_self(mob/user)
-	if(..())
-		playsound(user, 'sound/weapons/guns/ak74_reload.ogg', 50, 1)
-	update_icon()
-
-/obj/item/weapon/gun/projectile/automatic/a74/attackby(obj/item/A, mob/user)
-	if(..())
-		playsound(user, 'sound/weapons/guns/ak74_reload.ogg', 50, 1)
-	update_icon()

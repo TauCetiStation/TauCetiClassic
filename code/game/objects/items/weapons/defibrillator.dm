@@ -9,7 +9,7 @@
 	icon = 'icons/obj/defibrillator.dmi'
 	icon_state = "defibunit"
 	item_state = "defibunit"
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	force = 5
 	throwforce = 6
 	w_class = ITEM_SIZE_LARGE
@@ -52,7 +52,7 @@
 				new_overlays += "[initial(icon_state)]-powered"
 
 	if(bcell)
-		var/ratio = ceil(bcell.percent()/25) * 25
+		var/ratio = CEIL(bcell.percent()/25) * 25
 		new_overlays += "[initial(icon_state)]-charge[ratio]"
 	else
 		new_overlays += "[initial(icon_state)]-nocell"
@@ -103,9 +103,6 @@
 			bcell = null
 			to_chat(user, "<span class='notice'>You remove the cell from \the [src].</span>")
 			update_icon()
-	else if (istype(I, /obj/item/weapon/card/emag))
-		paddles.emag_act(user)
-		return
 	else
 		return ..()
 
@@ -144,9 +141,9 @@
 		return FALSE //not equipped
 
 	var/mob/living/carbon/human/H = loc
-	if((slot_flags & SLOT_BACK) && H.back == src)
+	if((slot_flags & SLOT_FLAGS_BACK) && H.back == src)
 		return TRUE
-	if((slot_flags & SLOT_BELT) && H.belt == src)
+	if((slot_flags & SLOT_FLAGS_BELT) && H.belt == src)
 		return TRUE
 	return FALSE
 
@@ -177,7 +174,7 @@
 	icon_state = "defibcompact"
 	item_state = "defibcompact"
 	w_class = ITEM_SIZE_NORMAL
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = list("biotech" = 3, "powerstorage" = 2)
 	charge_time = 1 SECONDS
 
@@ -237,7 +234,7 @@
 		update_icon()
 
 		make_announcement("beeps, \"Unit is re-energized.\"")
-		playsound(src, 'sound/items/defib_ready.ogg', 50, 0)
+		playsound(src, 'sound/items/surgery/defib_ready.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/item/weapon/twohanded/shockpaddles/update_icon()
 	icon_state = "defibpaddles[wielded]"
@@ -296,7 +293,7 @@
 	if(!H.organs_by_name[O_BRAIN])
 		return TRUE
 	var/obj/item/organ/external/bodypart_head = H.bodyparts_by_name[BP_HEAD]
-	if(!bodypart_head || (bodypart_head.status & ORGAN_DESTROYED))
+	if(!bodypart_head || (bodypart_head.is_stump))
 		return TRUE
 	return FALSE
 
@@ -330,22 +327,22 @@
 	if(!do_after(user, 30, H))
 		return
 	user.visible_message("<span class='notice'>\The [user] places [src] on [H]'s chest.</span>", "<span class='warning'>You place [src] on [H]'s chest.</span>")
-	playsound(get_turf(src), 'sound/items/defib_charge.ogg', 50, 0)
+	playsound(src, 'sound/items/surgery/defib_charge.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	var/error = can_defib(H)
 	if(error)
 		make_announcement(error)
-		playsound(get_turf(src), 'sound/items/defib_failed.ogg', 50, 0)
+		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
 	if(check_blood_level(H))
 		make_announcement("buzzes, \"Warning - Patient is in hypovolemic shock and require a blood transfusion. Operation aborted.\"") //also includes heart damage
-		playsound(get_turf(src), 'sound/items/defib_failed.ogg', 50, 0)
+		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
 	if(check_brain(H))
 		make_announcement("buzzes, \"Error - Patient's brain is missing or is too damaged to be functional. Operation aborted.\"") //also includes heart damage
-		playsound(get_turf(src), 'sound/items/defib_failed.ogg', 50, 0)
+		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
 	//placed on chest and short delay to shock for dramatic effect, revive time is ~5sec total
@@ -355,12 +352,12 @@
 	//deduct charge here, in case the base unit was EMPed or something during the delay time
 	if(!checked_use(charge_cost))
 		make_announcement("buzzes, \"Insufficient charge.\"")
-		playsound(get_turf(src), 'sound/items/defib_failed.ogg', 50, 0)
+		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
 	user.visible_message("<span class='warning'>[user] shocks [H] with [src].</span>", "<span class='warning'>You shock [H] with [src].</span>", "<span class='warning'>You hear electricity zaps flesh.</span>")
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Shock [H.name] ([H.ckey]) with [src.name]</font>"
-	msg_admin_attack("[user.name] ([user.ckey]) shock [H.name] ([H.ckey]) with [src.name] [ADMIN_FLW(user)]")
+	msg_admin_attack("[user.name] ([user.ckey]) shock [H.name] ([H.ckey]) with [src.name]", user)
 	H.apply_effect(4, STUN, 0)
 	H.apply_effect(4, WEAKEN, 0)
 	H.apply_effect(4, STUTTER, 0)
@@ -371,13 +368,13 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, H)
 	s.start()
-	playsound(get_turf(src), "bodyfall", 50, 1)
-	playsound(get_turf(src), 'sound/items/defib_zap.ogg', 50, 1, -1)
+	playsound(src, pick(SOUNDIN_BODYFALL), VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/items/surgery/defib_zap.ogg', VOL_EFFECTS_MASTER)
 	set_cooldown(cooldown_time)
 
 	if(H.stat == DEAD && (world.time - H.timeofdeath) >= DEFIB_TIME_LIMIT)
 		make_announcement("buzzes, \"Resuscitation failed - Severe neurological decay makes recovery of patient impossible. Further attempts futile.\"")
-		playsound(get_turf(src), 'sound/items/defib_failed.ogg', 50, 0)
+		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
 	if(H.health <= config.health_threshold_crit || prob(10))
@@ -389,7 +386,7 @@
 
 	if(H.health < config.health_threshold_dead)
 		make_announcement("buzzes, \"Resuscitation failed - Patinent's body is too wounded to sustain life.\"")
-		playsound(get_turf(src), 'sound/items/defib_failed.ogg', 50, 0)
+		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
 	if(H.stat == DEAD)
@@ -407,15 +404,15 @@
 			user.Weaken(6)
 
 	make_announcement("pings, \"Resuscitation successful.\"")
-	playsound(get_turf(src), 'sound/items/defib_success.ogg', 50, 0)
+	playsound(src, 'sound/items/surgery/defib_success.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/item/weapon/twohanded/shockpaddles/proc/return_to_body_dialog(mob/living/carbon/human/returnable)
 	if (returnable.key) //in body?
-		returnable << 'sound/misc/mario_1up.ogg'
+		returnable.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 	else if(returnable.mind)
 		for(var/mob/dead/observer/ghost in player_list)
 			if(ghost.mind == returnable.mind && ghost.can_reenter_corpse)
-				ghost << 'sound/misc/mario_1up.ogg'
+				ghost.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 				var/answer = alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate","Yes","No")
 				if(answer == "Yes")
 					ghost.reenter_corpse()
@@ -447,7 +444,7 @@
 		to_chat(user, "<span class='warning'>You can't do that while the safety is enabled.</span>")
 		return
 
-	playsound(get_turf(src), 'sound/items/defib_charge.ogg', 50, 0)
+	playsound(src, 'sound/items/surgery/defib_charge.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	audible_message("<span class='warning'>\The [src] lets out a steadily rising hum...</span>")
 
 	if(!do_after(user, charge_time, H))
@@ -456,12 +453,12 @@
 	//deduct charge here, in case the base unit was EMPed or something during the delay time
 	if(!checked_use(charge_cost))
 		make_announcement("buzzes, \"Insufficient charge.\"")
-		playsound(get_turf(src), 'sound/items/defib_failed.ogg', 50, 0)
+		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
 	user.visible_message("<span class='danger'><i>\The [user] shocks [H] with \the [src]!</i></span>", "<span class='warning'>You shock [H] with \the [src]!</span>")
-	playsound(get_turf(src), 'sound/items/defib_zap.ogg', 100, 1, -1)
-	playsound(loc, 'sound/weapons/Egloves.ogg', 100, 1, -1)
+	playsound(src, 'sound/items/surgery/defib_zap.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 	set_cooldown(cooldown_time)
 
 	H.apply_effect(4, STUN, 0)
@@ -469,9 +466,9 @@
 	H.apply_effect(4, STUTTER, 0)
 	H.electrocute_act(burn_damage_amt*2, src, def_zone = target_zone)
 
-	user.visible_message("[user] shocks [H] with [src].", "You shock [H] with [src].</span>", "You hear electricity zaps flesh.")
+	user.visible_message("[user] shocks [H] with [src].", "<span class='warning'>You shock [H] with [src].</span>", "You hear electricity zaps flesh.")
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Electrocuted [H.name] ([H.ckey]) with [src.name]</font>"
-	msg_admin_attack("[user.name] ([user.ckey]) used [src.name] to electrocute [H.name] ([H.ckey]) [ADMIN_FLW(user)]")
+	msg_admin_attack("[user.name] ([user.ckey]) used [src.name] to electrocute [H.name] ([H.ckey])", user)
 
 /obj/item/weapon/twohanded/shockpaddles/proc/apply_brain_damage(mob/living/carbon/human/H, var/deadtime)
 	if(deadtime < DEFIB_TIME_LOSS)
@@ -484,13 +481,13 @@
 	if(!brain)
 		return //no brain
 
-	var/brain_damage = Clamp((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, H.getBrainLoss(), MAX_BRAIN_DAMAGE)
+	var/brain_damage = CLAMP((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, H.getBrainLoss(), MAX_BRAIN_DAMAGE)
 	H.setBrainLoss(brain_damage)
 
 /obj/item/weapon/twohanded/shockpaddles/proc/make_announcement(message)
 	audible_message("<b>\The [src]</b> [message]", "\The [src] vibrates slightly.")
 
-/obj/item/weapon/twohanded/shockpaddles/proc/emag_act(mob/user)
+/obj/item/weapon/twohanded/shockpaddles/emag_act(mob/user)
 	if(safety)
 		safety = FALSE
 		to_chat(user, "<span class='warning'>You silently disable \the [src]'s safety protocols with the cryptographic sequencer.</span>")
@@ -500,6 +497,7 @@
 		to_chat(user, "<span class='notice'>You silently enable \the [src]'s safety protocols with the cryptographic sequencer.</span>")
 		burn_damage_amt = initial(burn_damage_amt)
 	update_icon()
+	return TRUE
 
 /obj/item/weapon/twohanded/shockpaddles/emp_act(severity)
 	var/new_safety = rand(0, 1)
@@ -507,10 +505,10 @@
 		safety = new_safety
 		if(safety)
 			make_announcement("beeps, \"Safety protocols enabled!\"")
-			playsound(get_turf(src), 'sound/items/defib_safetyOn.ogg', 50, 0)
+			playsound(src, 'sound/items/surgery/defib_safetyOn.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else
 			make_announcement("beeps, \"Safety protocols disabled!\"")
-			playsound(get_turf(src), 'sound/items/defib_safetyOff.ogg', 50, 0)
+			playsound(src, 'sound/items/surgery/defib_safetyOff.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		update_icon()
 	..()
 

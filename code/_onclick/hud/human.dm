@@ -99,7 +99,7 @@
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "i_clothing"
 	inv_box.icon = ui_style
-	inv_box.slot_id = slot_w_uniform
+	inv_box.slot_id = SLOT_W_UNIFORM
 	inv_box.icon_state = "center"
 	inv_box.screen_loc = ui_iclothing
 	inv_box.layer = HUD_LAYER
@@ -111,7 +111,7 @@
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "o_clothing"
 	inv_box.icon = ui_style
-	inv_box.slot_id = slot_wear_suit
+	inv_box.slot_id = SLOT_WEAR_SUIT
 	inv_box.icon_state = "suit"
 	inv_box.screen_loc = ui_oclothing
 	inv_box.layer = HUD_LAYER
@@ -127,7 +127,7 @@
 	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
 		inv_box.icon_state = "hand_r_active"
 	inv_box.screen_loc = ui_rhand
-	inv_box.slot_id = slot_r_hand
+	inv_box.slot_id = SLOT_R_HAND
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
@@ -143,7 +143,7 @@
 	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
 		inv_box.icon_state = "hand_l_active"
 	inv_box.screen_loc = ui_lhand
-	inv_box.slot_id = slot_l_hand
+	inv_box.slot_id = SLOT_L_HAND
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
@@ -178,7 +178,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "id"
 	inv_box.screen_loc = ui_id
-	inv_box.slot_id = slot_wear_id
+	inv_box.slot_id = SLOT_WEAR_ID
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
@@ -190,7 +190,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mask"
 	inv_box.screen_loc = ui_mask
-	inv_box.slot_id = slot_wear_mask
+	inv_box.slot_id = SLOT_WEAR_MASK
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
@@ -202,7 +202,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
 	inv_box.screen_loc = ui_back
-	inv_box.slot_id = slot_back
+	inv_box.slot_id = SLOT_BACK
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
@@ -214,7 +214,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
 	inv_box.screen_loc = ui_storage1
-	inv_box.slot_id = slot_l_store
+	inv_box.slot_id = SLOT_L_STORE
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
@@ -226,7 +226,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
 	inv_box.screen_loc = ui_storage2
-	inv_box.slot_id = slot_r_store
+	inv_box.slot_id = SLOT_R_STORE
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
@@ -238,7 +238,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "suitstorage"
 	inv_box.screen_loc = ui_sstore1
-	inv_box.slot_id = slot_s_store
+	inv_box.slot_id = SLOT_S_STORE
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
@@ -283,7 +283,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "gloves"
 	inv_box.screen_loc = ui_gloves
-	inv_box.slot_id = slot_gloves
+	inv_box.slot_id = SLOT_GLOVES
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
@@ -295,7 +295,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "glasses"
 	inv_box.screen_loc = ui_glasses
-	inv_box.slot_id = slot_glasses
+	inv_box.slot_id = SLOT_GLASSES
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
@@ -307,7 +307,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "ears"
 	inv_box.screen_loc = ui_l_ear
-	inv_box.slot_id = slot_l_ear
+	inv_box.slot_id = SLOT_L_EAR
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
@@ -319,7 +319,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "ears"
 	inv_box.screen_loc = ui_r_ear
-	inv_box.slot_id = slot_r_ear
+	inv_box.slot_id = SLOT_R_EAR
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
@@ -331,7 +331,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "hair"
 	inv_box.screen_loc = ui_head
-	inv_box.slot_id = slot_head
+	inv_box.slot_id = SLOT_HEAD
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
@@ -343,7 +343,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "shoes"
 	inv_box.screen_loc = ui_shoes
-	inv_box.slot_id = slot_shoes
+	inv_box.slot_id = SLOT_SHOES
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
@@ -355,7 +355,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "belt"
 	inv_box.screen_loc = ui_belt
-	inv_box.slot_id = slot_belt
+	inv_box.slot_id = SLOT_BELT
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color

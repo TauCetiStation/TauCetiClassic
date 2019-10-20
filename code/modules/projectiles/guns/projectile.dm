@@ -3,11 +3,13 @@
 	name = "projectile gun"
 	icon_state = "pistol"
 	origin_tech = "combat=2;materials=2"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	m_amt = 1000
 	fire_delay = 0
 	recoil = 1
+	var/bolt_slide_sound = 'sound/weapons/guns/TargetOn.ogg'
 	var/mag_type = /obj/item/ammo_box/magazine/m9mm //Removes the need for max_ammo and caliber info
+	var/mag_type2
 	var/obj/item/ammo_box/magazine/magazine
 	var/energy_gun = 0 //Used in examine, if 1 - no ammo count.
 
@@ -31,7 +33,7 @@
 		AC.loc = get_turf(src) //Eject casing onto ground.
 		AC.SpinAnimation(10, 1) //next gen special effects
 		spawn(3) //next gen sound effects
-			playsound(src.loc, 'sound/weapons/shell_drop.ogg', 50, 1)
+			playsound(src, 'sound/weapons/guns/shell_drop.ogg', VOL_EFFECTS_MASTER, 25)
 	if(empty_chamber)
 		chambered = null
 	if(no_casing)
@@ -55,10 +57,11 @@
 /obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
-		if (!magazine && istype(AM, mag_type))
+		if (!magazine && (istype(AM, mag_type) || (istype(AM, mag_type2) && mag_type != null)))
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
+			playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			chamber_round()
 			A.update_icon()
@@ -79,8 +82,12 @@
 		magazine.update_icon()
 		magazine = null
 		update_icon()
+		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
 		return 1
+	else if(chambered)
+		playsound(src, bolt_slide_sound, VOL_EFFECTS_MASTER)
+		process_chamber()
 	else
 		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
 	update_icon()

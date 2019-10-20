@@ -44,23 +44,23 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/floor_type = /obj/item/stack/tile/plasteel
 	var/lightfloor_state // for light floors, this is the state of the tile. 0-7, 0x4 is on-bit - use the helper procs below
 
-	proc/get_lightfloor_state()
-		return lightfloor_state & LIGHTFLOOR_STATE_BITS
+/turf/simulated/floor/proc/get_lightfloor_state()
+	return lightfloor_state & LIGHTFLOOR_STATE_BITS
 
-	proc/get_lightfloor_on()
-		return lightfloor_state & LIGHTFLOOR_ON_BIT
+/turf/simulated/floor/proc/get_lightfloor_on()
+	return lightfloor_state & LIGHTFLOOR_ON_BIT
 
-	proc/set_lightfloor_state(n)
-		lightfloor_state = get_lightfloor_on() | (n & LIGHTFLOOR_STATE_BITS)
+/turf/simulated/floor/proc/set_lightfloor_state(n)
+	lightfloor_state = get_lightfloor_on() | (n & LIGHTFLOOR_STATE_BITS)
 
-	proc/set_lightfloor_on(n)
-		if(n)
-			lightfloor_state |= LIGHTFLOOR_ON_BIT
-		else
-			lightfloor_state &= ~LIGHTFLOOR_ON_BIT
+/turf/simulated/floor/proc/set_lightfloor_on(n)
+	if(n)
+		lightfloor_state |= LIGHTFLOOR_ON_BIT
+	else
+		lightfloor_state &= ~LIGHTFLOOR_ON_BIT
 
-	proc/toggle_lightfloor_on()
-		lightfloor_state ^= LIGHTFLOOR_ON_BIT
+/turf/simulated/floor/proc/toggle_lightfloor_on()
+	lightfloor_state ^= LIGHTFLOOR_ON_BIT
 
 /turf/simulated/floor/atom_init()
 	. = ..()
@@ -174,12 +174,12 @@ var/list/wood_icons = list("wood","wood-broken")
 				icon_state = "grass[pick("1","2","3","4")]"
 	else if(is_carpet_floor())
 		if(!broken && !burnt)
-			if(icon_state != "carpetsymbol")
+			if(!(icon_state in list("carpetsymbol", "blackcarpetsymbol", "purplecarpetsymbol", "orangecarpetsymbol", "greencarpetsymbol", "bluecarpetsymbol", "blue2carpetsymbol", "redcarpetsymbol", "cyancarpetsymbol")))
 				var/connectdir = 0
 				for(var/direction in cardinal)
 					if(istype(get_step(src,direction),/turf/simulated/floor))
 						var/turf/simulated/floor/FF = get_step(src,direction)
-						if(FF.is_carpet_floor())
+						if(FF.is_carpet_floor() && FF.floor_type == floor_type)
 							connectdir |= direction
 
 				//Check the diagonal connections for corners, where you have, for example, connections both north and east. In this case it checks for a north-east connection to determine whether to add a corner marker or not.
@@ -189,31 +189,33 @@ var/list/wood_icons = list("wood","wood-broken")
 				if(connectdir & NORTH && connectdir & EAST)
 					if(istype(get_step(src,NORTHEAST),/turf/simulated/floor))
 						var/turf/simulated/floor/FF = get_step(src,NORTHEAST)
-						if(FF.is_carpet_floor())
+						if(FF.is_carpet_floor() && FF.floor_type == floor_type)
 							diagonalconnect |= 1
 
 				//Southeast
 				if(connectdir & SOUTH && connectdir & EAST)
 					if(istype(get_step(src,SOUTHEAST),/turf/simulated/floor))
 						var/turf/simulated/floor/FF = get_step(src,SOUTHEAST)
-						if(FF.is_carpet_floor())
+						if(FF.is_carpet_floor() && FF.floor_type == floor_type)
 							diagonalconnect |= 2
 
 				//Northwest
 				if(connectdir & NORTH && connectdir & WEST)
 					if(istype(get_step(src,NORTHWEST),/turf/simulated/floor))
 						var/turf/simulated/floor/FF = get_step(src,NORTHWEST)
-						if(FF.is_carpet_floor())
+						if(FF.is_carpet_floor() && FF.floor_type == floor_type)
 							diagonalconnect |= 4
 
 				//Southwest
 				if(connectdir & SOUTH && connectdir & WEST)
 					if(istype(get_step(src,SOUTHWEST),/turf/simulated/floor))
 						var/turf/simulated/floor/FF = get_step(src,SOUTHWEST)
-						if(FF.is_carpet_floor())
+						if(FF.is_carpet_floor() && FF.floor_type == floor_type)
 							diagonalconnect |= 8
 
-				icon_state = "carpet[connectdir]-[diagonalconnect]"
+				var/obj/item/stack/tile/carpet/C = floor_type
+				var/base_icon_state = initial(C.carpet_icon_state)
+				icon_state = "[base_icon_state][connectdir]-[diagonalconnect]"
 
 	else if(is_wood_floor())
 		if(!broken && !burnt)
@@ -315,7 +317,8 @@ var/list/wood_icons = list("wood","wood-broken")
 		src.icon_state = "wood-broken"
 		broken = 1
 	else if(is_carpet_floor())
-		src.icon_state = "carpet-broken"
+		var/obj/item/stack/tile/carpet/C = floor_type
+		icon_state = "[initial(C.carpet_icon_state)]-broken"
 		broken = 1
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
@@ -341,7 +344,8 @@ var/list/wood_icons = list("wood","wood-broken")
 		src.icon_state = "wood-broken"
 		burnt = 1
 	else if(is_carpet_floor())
-		src.icon_state = "carpet-broken"
+		var/obj/item/stack/tile/carpet/C = floor_type
+		icon_state = "[initial(C.carpet_icon_state)]-broken"
 		burnt = 1
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
@@ -361,6 +365,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				var/turf/simulated/floor/FF = get_step(src,direction)
 				FF.update_icon() //so siding get updated properly
 	else if(is_carpet_floor())
+		icon = 'icons/turf/floors.dmi'
 		spawn(5)
 			if(src)
 				for(var/direction in list(1,2,4,8,5,6,9,10))
@@ -370,6 +375,7 @@ var/list/wood_icons = list("wood","wood-broken")
 
 	if(!floor_type)
 		return
+	name = "plating"
 	icon_plating = "plating"
 	set_light(0)
 	floor_type = null
@@ -493,73 +499,76 @@ var/list/wood_icons = list("wood","wood-broken")
 				qdel(C)
 				set_lightfloor_state(0) //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()
-				to_chat(user, "\blue You replace the light bulb.")
+				to_chat(user, "<span class='notice'>You replace the light bulb.</span>")
 			else
-				to_chat(user, "\blue The lightbulb seems fine, no need to replace it.")
+				to_chat(user, "<span class='notice'>The lightbulb seems fine, no need to replace it.</span>")
 
-	if(istype(C, /obj/item/weapon/crowbar) && (!(is_plating())))
+	if(iscrowbar(C) && (!(is_plating())))
 		if(broken || burnt)
-			to_chat(user, "\red You remove the broken plating.")
+			to_chat(user, "<span class='warning'>You remove the broken plating.</span>")
 		else
 			if(is_wood_floor())
-				to_chat(user, "\red You forcefully pry off the planks, destroying them in the process.")
+				to_chat(user, "<span class='warning'>You forcefully pry off the planks, destroying them in the process.</span>")
 			else
 				var/obj/item/I = new floor_type(src)
 				if(is_light_floor())
 					var/obj/item/stack/tile/light/L = I
 					L.on = get_lightfloor_on()
 					L.state = get_lightfloor_state()
-				to_chat(user, "\red You remove the [I.name].")
+				to_chat(user, "<span class='warning'>You remove the [I.name].</span>")
 
 		make_plating()
 		// Can't play sounds from areas. - N3X
-		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 
 		return
 
-	if(istype(C, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(C))
 		if(is_wood_floor())
 			if(broken || burnt)
 				return
 			else
 				if(is_wood_floor())
-					to_chat(user, "\red You unscrew the planks.")
+					to_chat(user, "<span class='warning'>You unscrew the planks.</span>")
 					new floor_type(src)
 
 			make_plating()
-			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(is_catwalk())
 			if(broken)
 				return
 			ReplaceWithLattice()
-			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		return
 
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		if (is_plating())
 			if (R.get_amount() >= 2)
-				if(user.is_busy()) return
-				to_chat(user, "\blue Reinforcing the floor...")
-				if(do_after(user, 30, target = src) && R.use(2) && is_plating())
+				if(user.is_busy(src))
+					return
+				to_chat(user, "<span class='notice'>Reinforcing the floor...</span>")
+				if(R.use_tool(src, user, 30, amount = 2, volume = 50) && is_plating())
 					ChangeTurf(/turf/simulated/floor/engine)
-					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
+					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					return
 			else
-				to_chat(user, "\red You need more rods.")
+				to_chat(user, "<span class='warning'>You need more rods.</span>")
 		else if (is_catwalk())
-			to_chat(user, "\red The entire thing is 100% rods already, it doesn't need any more.")
+			to_chat(user, "<span class='warning'>The entire thing is 100% rods already, it doesn't need any more.</span>")
 		else
-			to_chat(user, "\red You must remove the plating first.")
+			to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 		return
 
 	if(istype(C, /obj/item/stack/tile))
 		if (is_catwalk())
-			to_chat(user, "\red The catwalk is too primitive to support tiling.")
+			to_chat(user, "<span class='warning'>The catwalk is too primitive to support tiling.</span>")
 		if(is_plating())
 			if(!broken && !burnt)
 				var/obj/item/stack/tile/T = C
 				floor_type = T.type
+				icon = initial(T.turf_type.icon)
+				name = initial(T.turf_type.name)
 				if(!T.use(1))
 					return
 				intact = 1
@@ -579,12 +588,12 @@ var/list/wood_icons = list("wood","wood-broken")
 							FF.update_icon() //so siding gets updated properly
 				update_icon()
 				levelupdate()
-				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 			else
-				to_chat(user, "\blue This section is too damaged to support a tile. Use a welder to fix the damage.")
+				to_chat(user, "<span class='notice'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>")
 
 
-	if(istype(C, /obj/item/stack/cable_coil))
+	if(iscoil(C))
 		if(is_plating() || is_catwalk())
 			var/obj/item/stack/cable_coil/coil = C
 			for(var/obj/structure/cable/LC in src)
@@ -593,29 +602,29 @@ var/list/wood_icons = list("wood","wood-broken")
 					return
 			coil.turf_place(src, user)
 		else
-			to_chat(user, "\red You must remove the plating first.")
+			to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 
 	if(istype(C, /obj/item/weapon/shovel))
 		if(is_grass_floor())
 			new /obj/item/weapon/ore/glass(src)
 			new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass
-			to_chat(user, "\blue You shovel the grass.")
+			to_chat(user, "<span class='notice'>You shovel the grass.</span>")
 			make_plating()
 		else
-			to_chat(user, "\red You cannot shovel this.")
+			to_chat(user, "<span class='warning'>You cannot shovel this.</span>")
 
-	if(istype(C, /obj/item/weapon/weldingtool))
+	if(iswelder(C))
 		var/obj/item/weapon/weldingtool/welder = C
 		if(welder.isOn() && (is_plating()))
 			if(broken || burnt)
-				if(welder.remove_fuel(0,user))
-					to_chat(user, "\red You fix some dents on the broken plating.")
-					playsound(src, 'sound/items/Welder.ogg', 80, 1)
+				if(welder.use(0,user))
+					to_chat(user, "<span class='warning'>You fix some dents on the broken plating.</span>")
+					playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 					icon_state = "plating"
 					burnt = 0
 					broken = 0
 				else
-					to_chat(user, "\blue You need more welding fuel to complete this task.")
+					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 
 #undef LIGHTFLOOR_ON_BIT
 

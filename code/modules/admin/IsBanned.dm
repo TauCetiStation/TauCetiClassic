@@ -1,5 +1,5 @@
 //Blocks an attempt to connect before even creating our client datum thing.
-world/IsBanned(key,address,computer_id)
+/world/IsBanned(key,address,computer_id)
 	if(config.serverwhitelist && !check_if_a_new_player(key))
 		return list("reason"="", "desc"="[config.serverwhitelist_message]")
 
@@ -9,7 +9,7 @@ world/IsBanned(key,address,computer_id)
 	//Guest Checking
 	if(!guests_allowed && IsGuestKey(key))
 		log_access("Failed Login: [key] - Guests not allowed")
-		message_admins("\blue Failed Login: [key] - Guests not allowed")
+		message_admins("<span class='notice'>Failed Login: [key] - Guests not allowed</span>")
 		return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
 
 	if(config.ban_legacy_system)
@@ -18,7 +18,7 @@ world/IsBanned(key,address,computer_id)
 		. = CheckBan( ckey(key), computer_id, address )
 		if(.)
 			log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
-			message_admins("\blue Failed Login: [key] id:[computer_id] ip:[address] - Banned [.["reason"]]")
+			message_admins("Failed Login: [key] id:[computer_id] ip:[address] - Banned [.["reason"]]")
 			return .
 
 		return ..()	//default pager ban stuff
@@ -54,7 +54,7 @@ world/IsBanned(key,address,computer_id)
 			//var/pip = query.item[2]
 			//var/pcid = query.item[3]
 			var/ackey = query.item[4]
-			var/reason = entity_ja(query.item[5])
+			var/reason = initial_ja(query.item[5])
 			var/expiration = query.item[6]
 			var/duration = query.item[7]
 			var/bantime = query.item[8]

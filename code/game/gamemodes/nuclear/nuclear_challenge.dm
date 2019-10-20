@@ -59,7 +59,8 @@ var/global/obj/item/device/nuclear_challenge/Challenge
 	if(!check_allowed(user) || !war_declaration)
 		return
 	command_alert(war_declaration, "Declaration of War")
-	player_list << sound('sound/machines/Alarm.ogg')
+	for(var/mob/M in player_list)
+		M.playsound_local(null, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 
 	to_chat(user, "You've attracted the attention of powerful forces within the syndicate. \
 	A bonus bundle of telecrystals has been granted to your team. Great things await you if you complete the mission.")
@@ -76,7 +77,7 @@ var/global/obj/item/device/nuclear_challenge/Challenge
 	if(player_list.len < CHALLENGE_MIN_PLAYERS)
 		to_chat(user, "The enemy crew is too small to be worth declaring war on.")
 		return 0
-	if(user.z != ZLEVEL_CENTCOM)
+	if(!is_centcom_level(user.z))
 		to_chat(user, "You have to be at your base to use this.")
 		return 0
 	if(world.time-round_start_time > CHALLENGE_TIME_LIMIT)

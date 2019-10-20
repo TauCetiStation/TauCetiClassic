@@ -9,21 +9,22 @@
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "shock"
 
-	attack(mob/M, mob/living/silicon/robot/user)
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+/obj/item/borg/stun/attack(mob/M, mob/living/silicon/robot/user)
+	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
+	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
+	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])", user)
+	playsound(src, 'sound/machines/defib_zap.ogg', VOL_EFFECTS_MASTER)
 
-		user.cell.charge -= 30
+	user.cell.charge -= 30
 
-		M.Weaken(5)
-		if (M.stuttering < 5)
-			M.stuttering = 5
-		M.Stun(5)
+	M.Weaken(5)
+	if (M.stuttering < 5)
+		M.stuttering = 5
+	M.Stun(5)
 
-		for(var/mob/O in viewers(M, null))
-			if (O.client)
-				O.show_message("\red <B>[user] has prodded [M] with an electrically-charged arm!</B>", 1, "\red You hear someone fall", 2)
+	for(var/mob/O in viewers(M, null))
+		if (O.client)
+			O.show_message("<span class='warning'><B>[user] has prodded [M] with an electrically-charged arm!</B></span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
 
 /obj/item/borg/overdrive
 	name = "overdrive"
