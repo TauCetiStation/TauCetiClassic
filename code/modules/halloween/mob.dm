@@ -198,6 +198,7 @@
 				sparks = new /datum/effect/effect/system/spark_spread()
 				sparks.set_up(3, 0, get_turf(src))
 				sparks.start()
+				target = null
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/MoveToTarget()
 	stalk(target)

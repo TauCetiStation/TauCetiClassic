@@ -10,13 +10,15 @@
 	item_state = "fakespider"
 	attack_verb = list("bitten", "hissed", "webbed")
 
+/obj/item/weapon/bikehorn/spidertoy/attack(mob/target, mob/user, def_zone)
+	. = ..()
+	playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MISC)
+
 /obj/item/weapon/bikehorn/spidertoy/attack_self(mob/user)
-	if (spam_flag == 0)
-		spam_flag = 1
-		playsound(src.loc, 'sound/weapons/bite.ogg', 50, 1)
+	if(cooldown <= world.time)
+		cooldown = world.time + 8
+		playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MISC)
 		src.add_fingerprint(user)
-		spawn(20)
-			spam_flag = 0
 	return
 
 /obj/effect/spider/stickyweb/nonstick
@@ -31,7 +33,7 @@
 	desc = "A pumpkin shaped bag that holds all sorts of goodies!"
 	icon = 'code/modules/halloween/halloween.dmi'
 	icon_state = "trickortreat"
-	item_state = null
+	item_state = "trickortreat"
 	foldable = null
 
 /obj/item/weapon/storage/box/trick_o_treat/atom_init()
