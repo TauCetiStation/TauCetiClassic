@@ -294,6 +294,20 @@
 		return TRUE // stops afterattack() call.
 	return ..()
 
+/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/afterattack(atom/A, mob/user, proximity)
+	if(!opened)
+		if (istype(A, /turf/simulated))
+			to_chat(user, "<span class='notice'>You need to open [src] first!</span>")
+		return
+
+	if(proximity && (user.a_intent == I_HURT) && reagents.total_volume && istype(A, /turf/simulated))
+		for(var/mob/O in viewers(world.view, user))
+			O.show_message(text("<span class='warning'>[] splashed [] on the ground!</span>", user, src), 1)
+		src.reagents.clear_reagents()
+		icon_state = "ramen_empty"
+		return
+	..()
+
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/on_reagent_change()
 	if(!reagents.total_volume) // actually its because we only have sprite, which won't look good with any other reagent than ramen.
 		flags &= ~OPENCONTAINER // and also there is no proper way to put the message about this, as it will require to edit all transfer procs in items.
@@ -323,7 +337,6 @@
 		icon_state = "water_cup"
 	else
 		icon_state = "water_cup_e"
-
 
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
@@ -366,3 +379,11 @@
 	desc = "A cup with the British flag emblazoned on it."
 	icon_state = "britcup"
 	volume = 30
+
+/obj/item/weapon/reagent_containers/food/drinks/afterattack(atom/A, mob/user, proximity)
+	if(proximity && (user.a_intent == I_HURT) && reagents.total_volume && istype(A, /turf/simulated))
+		for(var/mob/O in viewers(world.view, user))
+			O.show_message(text("<span class='warning'>[] splashed [] on the ground!</span>", user, src), 1)
+		src.reagents.clear_reagents()
+		return
+	..()

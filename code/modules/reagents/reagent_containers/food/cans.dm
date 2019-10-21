@@ -11,7 +11,6 @@
 		return
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/attack(mob/M, mob/user, def_zone)
-
 	if(!CanEat(user, M, src, "drink")) return
 
 	if (!canopened)
@@ -65,6 +64,19 @@
 		return 1
 
 	return 0
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/afterattack(atom/A, mob/user, proximity)
+	if (!canopened)
+		if (istype(A, /turf/simulated))
+			to_chat(user, "<span class='notice'>You need to open the drink!</span>")
+		return
+
+	if(proximity && (user.a_intent == I_HURT) && reagents.total_volume && istype(A, /turf/simulated))
+		for(var/mob/O in viewers(world.view, user))
+			O.show_message(text("<span class='warning'>[] splashed [] on the ground!</span>", user, src), 1)
+		src.reagents.clear_reagents()
+		return
+	..()
 
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/afterattack(obj/target, mob/user, proximity)
