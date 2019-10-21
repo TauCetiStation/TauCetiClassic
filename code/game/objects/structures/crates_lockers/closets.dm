@@ -177,6 +177,19 @@
 		open()
 		qdel(src)
 
+/obj/structure/closet/attackby(obj/item/C, mob/user)
+	if(istype(C,/obj/item/weapon/changeling_hammer)) // yeah, hammer ignore electrify
+		var/obj/item/weapon/changeling_hammer/W = C
+		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
+		visible_message("<span class='userdanger'>[user] has punched the [src]!</span>")
+		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+		if(W.use_charge(user) && prob(20))
+			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
+			open()
+			qdel(src)
+		return
+
 /obj/structure/closet/meteorhit(obj/O)
 	if(O.icon_state == "flaming")
 		for(var/mob/M in src)
