@@ -253,10 +253,10 @@
 	body_parts_covered = HEAD|FACE|EYES
 
 /obj/item/clothing/head/fedora
-	name = "fedora"
+	name = "black fedora"
 	icon_state = "fedora"
 	item_state = "fedora"
-	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
+	desc = "Unless you are good at guessing, it is not much use being a detective." // Hercule Poirot reference
 	action_button_name = "Tip Fedora"
 
 /obj/item/clothing/head/fedora/attack_self(mob/user)
@@ -276,13 +276,18 @@
 
 /obj/item/clothing/head/fedora/black
 	name = "fedora"
-	desc = "Someone wearing this definitely makes them cool."
 	icon_state = "hat_black"
 
 /obj/item/clothing/head/fedora/white
 	name = "white fedora"
+	icon_state = "fedora_white"
+
+/* OLD ONE
+/obj/item/clothing/head/fedora/white
+	name = "white fedora"
 	desc = "Someone wearing this definitely makes them cool."
 	icon_state = "hat_white"
+*/
 
 /obj/item/clothing/head/fedora/brown
  	name = "brown fedora"
@@ -369,3 +374,25 @@
 	icon_state = "ian"
 	body_parts_covered = HEAD
 	flags_inv = BLOCKHAIR|HIDEEARS
+
+/obj/item/clothing/head/byzantine_hat
+	name = "Byzantine skiadion"
+	desc = "Wearing this headdress makes you feel like a basileus."
+	icon_state = "Byzantine_hat"
+	item_state = "Byzantine_hat"
+	body_parts_covered = HEAD
+	flags_inv = BLOCKHAIR
+
+/obj/item/clothing/head/WAFFEN_SS_Cap
+	name = "Waffen SS Cap"
+	desc = "An officer's SS cap."
+	icon_state = "SS_cap"
+	item_state = "that"
+	item_color = "SS_cap"
+
+/obj/item/clothing/head/Nazi_Officer_Cap
+	name = "Nazi Officer Cap"
+	desc = "A nazi officer's cap."
+	icon_state = "officer_cap"
+	item_state = "that"
+	item_color = "officer_cap"

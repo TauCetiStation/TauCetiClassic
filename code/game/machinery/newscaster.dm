@@ -179,7 +179,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.ispowered = 0
 			stat |= NOPOWER
 			src.update_icon()
-
+	update_power_use()
 
 /obj/machinery/newscaster/ex_act(severity)
 	switch(severity)
@@ -327,7 +327,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT>\]</FONT><HR>"
 				if(src.viewing_channel.censored)
 					dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
-					dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
+					dat+="No further feed story additions are allowed while the D-Notice is in effect.<BR><BR>"
 				else
 					if( isemptylist(src.viewing_channel.messages) )
 						dat+="<I>No feed messages found in channel...</I><BR>"
@@ -707,18 +707,18 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				src.scanned_user = text("[T.registered_name] ([T.assignment])")
 				src.screen=2*/  //Obsolete after autorecognition
 
-	if(istype(I, /obj/item/weapon/wrench))
-		if(user.is_busy()) return
+	if(iswrench(I))
+		if(user.is_busy())
+			return
 		to_chat(user, "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>")
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 60, target = src))
+		if(I.use_tool(src, user, 60, volume = 50))
 			new /obj/item/newscaster_frame(loc)
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			qdel(src)
 		return
 
 	if (src.isbroken)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
+		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
 		for (var/mob/O in hearers(5, src.loc))
 			O.show_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
 	else
@@ -729,18 +729,18 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(W.force <15)
 				for (var/mob/O in hearers(5, src.loc))
 					O.show_message("[user.name] hits the [src.name] with the [W.name] with no visible effect." )
-					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
+					playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 			else
 				src.hitstaken++
 				if(src.hitstaken==3)
 					for (var/mob/O in hearers(5, src.loc))
 						O.show_message("[user.name] smashes the [src.name]!" )
 					src.isbroken=1
-					playsound(src.loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+					playsound(src, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER)
 				else
 					for (var/mob/O in hearers(5, src.loc))
 						O.show_message("[user.name] forcefully slams the [src.name] with the [I.name]!" )
-					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
+					playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 		else
 			to_chat(user, "<span class='info'>This does nothing.</span>")
 	src.update_icon()
@@ -889,7 +889,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				if(curr_page == 0) //We're at the start, get to the middle
 					src.screen=1
 			src.curr_page++
-			playsound(src.loc, "pageturn", 50, 1)
+			playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
 
 		else if(href_list["prev_page"])
 			if(curr_page == 0)
@@ -901,7 +901,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				if(curr_page == src.pages+1) //we're at the end, let's go back to the middle.
 					src.screen = 1
 			src.curr_page--
-			playsound(src.loc, "pageturn", 50, 1)
+			playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
 
 		if (istype(src.loc, /mob))
 			src.attack_self(src.loc)
@@ -974,9 +974,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		spawn(300)
 			src.alert = 0
 			src.update_icon()
-		playsound(src.loc, 'sound/machines/twobeep.ogg', 75, 1)
+		playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 	else
 		for(var/mob/O in hearers(world.view-1, T))
 			O.show_message("<span class='newscaster'><EM>[src.name]</EM> beeps, \"Attention! Wanted issue distributed!\"</span>",2)
-		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 75, 1)
+		playsound(src, 'sound/machines/warning-buzzer.ogg', VOL_EFFECTS_MASTER)
 	return

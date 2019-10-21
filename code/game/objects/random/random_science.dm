@@ -143,8 +143,8 @@
 	return pick(\
 					/obj/item/weapon/aiModule/antimov,\
 					/obj/item/weapon/aiModule/robocop,\
-					/obj/item/weapon/aiModule/syndicate,\
-					/obj/item/weapon/aiModule/freeformcore,\
+					/obj/item/weapon/aiModule/freeform/syndicate,\
+					/obj/item/weapon/aiModule/freeform/core,\
 					/obj/item/weapon/aiModule/tyrant,\
 					/obj/item/weapon/aiModule/paladin,\
 					/obj/item/weapon/aiModule/oxygen,\
@@ -200,6 +200,6 @@
 					prob(20);/obj/random/science/bomb_supply,\
 					prob(5);/obj/random/science/slimecore,\
 					prob(10);/obj/random/science/circuit,\
-					prob(2);/obj/item/weapon/extinguisher,\
+					prob(2);/obj/item/weapon/reagent_containers/spray/extinguisher,\
 					prob(50);/obj/random/science/stock_part\
 				)

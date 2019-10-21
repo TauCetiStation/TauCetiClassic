@@ -5,7 +5,7 @@
 	icon_state = "table2-idle"
 	density = 1
 	anchored = 1.0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 1
 	active_power_usage = 5
 	var/mob/living/carbon/human/victim = null
@@ -17,7 +17,7 @@
 	. = ..()
 	for(dir in list(NORTH,EAST,SOUTH,WEST))
 		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
-		if (computer)
+		if(computer)
 			computer.table = src
 			break
 //	spawn(100) //Wont the MC just call this process() before and at the 10 second mark anyway?
@@ -79,6 +79,11 @@
 
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
+
+	var/obj/item/weapon/W = O
+	if(!W.canremove || W.flags & NODROP)
+		return
+
 	user.drop_item()
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
@@ -143,6 +148,10 @@
 			user.SetNextMove(CLICK_CD_MELEE)
 			qdel(G)
 			return
+
+	if(!W.canremove || W.flags & NODROP)
+		return
+
 	user.drop_item()
 	if(W && W.loc)
 		W.loc = src.loc

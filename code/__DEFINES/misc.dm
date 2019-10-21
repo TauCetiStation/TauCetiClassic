@@ -19,15 +19,6 @@
 #define GHOST_ORBIT_SQUARE		"square"
 #define GHOST_ORBIT_PENTAGON	"pentagon"
 
-//zlevel defines, can be overriden for different maps in the appropriate _maps file.
-#define ZLEVEL_STATION  	1
-#define ZLEVEL_CENTCOMM 	2 //EI NATH!!
-#define ZLEVEL_CENTCOM  	2
-#define ZLEVEL_TELECOMMS	3
-#define ZLEVEL_DERELICT		4
-#define ZLEVEL_ASTEROID 	5
-#define ZLEVEL_EMPTY	 	6
-
 #define TRANSITIONEDGE		7 //Distance from edge to move to another z-level
 
 #define ENGINE_EJECT_Z		3 //Unused now
@@ -58,7 +49,7 @@
 #define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
 
 // Doors!
-#define DOOR_CRUSH_DAMAGE 10
+#define DOOR_CRUSH_DAMAGE 20
 
 #define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
 
@@ -110,7 +101,6 @@
 #define MAT_PLASTIC		"$plastic"
 #define MAT_BANANIUM	"$bananium"
 
-#define COIN_STANDARD "Coin"
 #define COIN_GOLD "Gold coin"
 #define COIN_SILVER "Silver coin"
 #define COIN_DIAMOND "Diamond coin"
@@ -119,6 +109,7 @@
 #define COIN_URANIUM "Uranium coin"
 #define COIN_BANANIUM "Bananium coin"
 #define COIN_PLATINUM "Platunum coin"
+#define COIN_MYTHRIL "Mythril coin"
 
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
@@ -200,3 +191,21 @@
 #define MOUSE_OPACITY_TRANSPARENT   0
 #define MOUSE_OPACITY_ICON          1
 #define MOUSE_OPACITY_OPAQUE        2
+
+// Used in browser.dm for common.css style.
+#define CSS_THEME_LIGHT "theme_light"
+#define CSS_THEME_DARK "theme_dark"
+
+#define BYOND_JOIN_LINK config.server ? "byond://[config.server]" : "byond://[world.address]:[world.port]"
+
+//Facehugger's control type
+#define FACEHUGGERS_STATIC_AI     0   // don't move by themselves
+#define FACEHUGGERS_DYNAMIC_AI    1   // controlled by simple AI
+#define FACEHUGGERS_PLAYABLE      2   // controlled by players
+
+//Time it takes to impregnate someone with facehugger
+#define MIN_IMPREGNATION_TIME 200
+#define MAX_IMPREGNATION_TIME 250
+
+#define DELAY2GLIDESIZE(delay) (world.icon_size / max(CEIL(delay / world.tick_lag), 1))
+

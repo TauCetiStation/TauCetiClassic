@@ -1,6 +1,7 @@
 /proc/Christmas_Game_Start()
 	for(var/obj/structure/flora/tree/pine/xmas in tree_xmas_list)
-		if(xmas.z != ZLEVEL_STATION)	continue
+		if(!is_station_level(xmas.z))
+			continue
 		for(var/turf/simulated/floor/T in orange(1,xmas))
 			for(var/i=1,i<=rand(1,5),i++)
 				new /obj/item/weapon/a_gift(T)
@@ -46,7 +47,7 @@
 		other_half.cracked = 1
 		other_half.icon_state = "cracker2"
 		target.put_in_active_hand(other_half)
-		playsound(user, 'sound/effects/snap.ogg', 50, 1)
+		playsound(user, 'sound/effects/snap.ogg', VOL_EFFECTS_MASTER)
 		return 1
 	return ..()
 

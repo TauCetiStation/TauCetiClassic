@@ -14,13 +14,6 @@
 	src:Topic(href, href_list)
 	return null
 
-/proc/is_on_same_plane_or_station(z1, z2)
-	if(z1 == z2)
-		return 1
-	if((z1 in config.station_levels) &&	(z2 in config.station_levels))
-		return 1
-	return 0
-
 /proc/get_area(atom/A)
 	if(isarea(A))
 		return A
@@ -50,21 +43,6 @@
 	source.luminosity = lum
 
 	return heard
-
-/proc/isStationLevel(level)
-	return level in config.station_levels
-
-/proc/isNotStationLevel(level)
-	return !isStationLevel(level)
-
-/proc/isPlayerLevel(level)
-	return level in config.player_levels
-
-/proc/isAdminLevel(level)
-	return level in config.admin_levels
-
-/proc/isNotAdminLevel(level)
-	return !isAdminLevel(level)
 
 /proc/circlerange(center=usr,radius=3)
 
@@ -350,42 +328,29 @@
 			return M
 	return null
 
-
-// Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
-/proc/get_active_candidates(buffer = 1)
-
+/proc/get_larva_candidates()
 	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
-	var/i = 0
-	while(candidates.len <= 0 && i < 5)
+	var/afk_time = 0
+	var/afk_threesold = 3000
+	while(!candidates.len && afk_time <= afk_threesold)
 		for(var/mob/dead/observer/G in player_list)
-			if(((G.client.inactivity/10)/60) <= buffer + i) // the most active players are more likely to become an alien
-				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+			if(!G.client)
+				continue
+			if((ROLE_ALIEN in G.client.prefs.be_role) && !jobban_isbanned(G, ROLE_ALIEN))
+				if(!G.client.is_afk(afk_time)) // the most active players are more likely to become an alien
 					candidates += G.key
-		i++
-	return candidates
-
-// Same as above but for alien candidates.
-
-/proc/get_alien_candidates()
-
-	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
-	var/i = 0
-	while(candidates.len <= 0 && i < 5)
-		for(var/mob/dead/observer/G in player_list)
-			if(ROLE_ALIEN in G.client.prefs.be_role)
-				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
-					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-						candidates += G.key
-		i++
+		afk_time += 600
 	return candidates
 
 /proc/get_candidates(be_role_type, afk_bracket=3000) //Get candidates for Blob
+	if(!be_role_type)
+		return
 	var/list/candidates = list()
 	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
 	while(!candidates.len && afk_bracket < 6000)
 		for(var/mob/dead/observer/G in player_list)
 			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-				if(!G.client.is_afk(afk_bracket) && (be_role_type in G.client.prefs.be_role))
+				if(!G.client.is_afk(afk_bracket) && (be_role_type in G.client.prefs.be_role)) // TODO: Replace it with something else. Causes runtimes if there are no ghosts(not observers!)
 					candidates += G.client
 		afk_bracket += 600 // Add a minute to the bracket, for every attempt
 	return candidates
@@ -535,6 +500,15 @@
 				return turn(dir,45)
 			else
 				return dir
+
+/proc/window_flash(client/C)
+	if(ismob(C))
+		var/mob/M = C
+		if(M.client)
+			C = M.client
+	if(!C)
+		return
+	winset(C, "mainwindow", "flash=5")
 
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)

@@ -5,6 +5,8 @@
 	density = 1
 	anchored = 1.0
 	icon_state = "operating"
+	state_broken_preset = "crewb"
+	state_nopower_preset = "crew0"
 	light_color = "#315ab4"
 	circuit = /obj/item/weapon/circuitboard/operating
 	var/mob/living/carbon/human/victim = null
@@ -12,9 +14,9 @@
 
 /obj/machinery/computer/operating/atom_init()
 	. = ..()
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		table = locate(/obj/machinery/optable, get_step(src, dir))
-		if (table)
+	for(var/newdir in cardinal)
+		table = locate(/obj/machinery/optable, get_step(src, newdir))
+		if(table)
 			table.computer = src
 			break
 

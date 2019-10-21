@@ -78,9 +78,9 @@
 	src.icon_state = src.icon_opened
 	src.opened = 1
 	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(src.loc, 'sound/items/zip.ogg', 15, 1, -3)
+		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
 	else
-		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
 	density = 0
 	return 1
 
@@ -121,9 +121,9 @@
 	src.icon_state = src.icon_closed
 	src.opened = 0
 	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(src.loc, 'sound/items/zip.ogg', 15, 1, -3)
+		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
 	else
-		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
 	density = 1
 	return 1
 
@@ -166,8 +166,8 @@
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
 		..()
-		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
-		visible_message("\red [user] destroys the [src]. ")
+		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+		visible_message("<span class='warning'>[user] destroys the [src]. </span>")
 		open()
 		qdel(src)
 
@@ -198,21 +198,15 @@
 		qdel(src)
 
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user)
-	if(src.opened)
+	if(tools_interact(W, user))
+		return
+
+	else if(src.opened)
 		if(istype(W, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = W
 			MouseDrop_T(G.affecting, user)      //act like they were dragged onto the closet
 		if(istype(W,/obj/item/tk_grab))
 			return 0
-		if(istype(W, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = W
-			if(!WT.remove_fuel(0,user))
-				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
-				return
-			new /obj/item/stack/sheet/metal(loc)
-			visible_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", "You hear welding.")
-			qdel(src)
-			return
 		if(isrobot(user))
 			return
 		if(!W.canremove || W.flags & NODROP)
@@ -224,17 +218,31 @@
 	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))
 		return
 
-	else if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-		user.SetNextMove(CLICK_CD_INTERACT)
-		if(!WT.remove_fuel(0,user))
-			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
-			return
-		src.welded = !src.welded
-		src.update_icon()
-		visible_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", "You hear welding.")
 	else
 		attack_hand(user)
+
+/obj/structure/closet/proc/tools_interact(obj/item/weapon/W, mob/user)
+	if(iswelder(W))
+		var/obj/item/weapon/weldingtool/WT = W
+		user.SetNextMove(CLICK_CD_INTERACT)
+		if(!WT.welding)
+			return FALSE
+		if(!WT.use(0,user))
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+			return TRUE
+		switch(opened)
+			if(1)
+				new /obj/item/stack/sheet/metal(loc)
+				visible_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>",
+								"<span class='notice'>You hear welding.</span>")
+				qdel(src)
+				return TRUE
+			if(0)
+				src.welded = !src.welded
+				src.update_icon()
+				visible_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>",
+								"<span class='warning'>You hear welding.</span>")
+				return TRUE
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/user)
 	if(istype(O, /obj/screen))	//fix for HUD elements making their way into the world	-Pete
@@ -253,6 +261,10 @@
 		return
 	if(istype(O, /obj/structure/closet))
 		return
+	if(istype(O, /obj/item))
+		var/obj/item/W = O
+		if(!W.canremove || W.flags & NODROP)
+			return
 	user.SetNextMove(CLICK_CD_INTERACT)
 	step_towards(O, src.loc)
 	if(user != O)

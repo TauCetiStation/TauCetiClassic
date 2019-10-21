@@ -206,9 +206,9 @@ var/list/advance_cures = 	list(
 
 		hidden = list( (properties["stealth"] > 2), (properties["stealth"] > 3) )
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
-		SetSpread(Clamp(properties["transmittable"] - symptoms.len, BLOOD, AIRBORNE))
-		permeability_mod = max(ceil(0.4 * properties["transmittable"]), 1)
-		cure_chance = 15 - Clamp(properties["resistance"], -5, 5) // can be between 10 and 20
+		SetSpread(CLAMP(properties["transmittable"] - symptoms.len, BLOOD, AIRBORNE))
+		permeability_mod = max(CEIL(0.4 * properties["transmittable"]), 1)
+		cure_chance = 15 - CLAMP(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
 		SetSeverity(properties["severity"])
 		GenerateCure(properties)
@@ -257,7 +257,7 @@ var/list/advance_cures = 	list(
 // Will generate a random cure, the less resistance the symptoms have, the harder the cure.
 /datum/disease/advance/proc/GenerateCure(list/properties = list())
 	if(properties && properties.len)
-		var/res = Clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
+		var/res = CLAMP(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
 		//world << "Res = [res]"
 		cure_id = advance_cures[res]
 
@@ -402,7 +402,7 @@ var/list/advance_cures = 	list(
 			AD.Refresh()
 
 		for(var/mob/living/carbon/human/H in shuffle(human_list))
-			if(H.stat == DEAD || H.z != ZLEVEL_STATION)
+			if(H.stat == DEAD || !is_station_level(H.z))
 				continue
 			if(!H.has_disease(D))
 				H.contract_disease(D, 1)

@@ -11,7 +11,7 @@
 	attack_verb = list("banned")
 
 /obj/item/weapon/banhammer/suicide_act(mob/user)
-	to_chat(viewers(user), "\red <b>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</b>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</b></span>")
 	return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/nullrod
@@ -74,7 +74,7 @@
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had the [name] used on him by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey]) ([ADMIN_JMP(user)]) ([ADMIN_FLW(user)])")
+	msg_admin_attack("[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])", user)
 
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='danger'>The rod slips out of your hand and hits your head.</span>")
@@ -97,7 +97,7 @@
 		power.action(user, 1)
 
 /obj/item/weapon/sord/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 /obj/item/weapon/claymore
@@ -118,7 +118,7 @@
 	return 50
 
 /obj/item/weapon/claymore/suicide_act(mob/user)
-	to_chat(viewers(user), "\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return(BRUTELOSS)
 
 /obj/item/weapon/claymore/light
@@ -126,7 +126,7 @@
 	can_embed = 0
 
 /obj/item/weapon/claymore/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 /obj/item/weapon/katana
@@ -144,14 +144,14 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/katana/suicide_act(mob/user)
-	to_chat(viewers(user), "\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b></span>")
 	return(BRUTELOSS)
 
 /obj/item/weapon/katana/Get_shield_chance()
 		return 50
 
 /obj/item/weapon/katana/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 /obj/item/weapon/harpoon
@@ -171,34 +171,37 @@
 	icon_state = "switchblade"
 	desc = "A sharp, concealable, spring-loaded knife."
 	flags = CONDUCT
-	force = 20
+	force = 1
 	w_class = ITEM_SIZE_SMALL
-	throwforce = 15
+	throwforce = 5
+	edge = FALSE
 	throw_speed = 3
 	throw_range = 6
 	m_amt = 12000
 	origin_tech = "materials=1"
-	hitsound = 'sound/weapons/Genhit.ogg'
+	hitsound = list('sound/weapons/Genhit.ogg')
 	attack_verb = list("stubbed", "poked")
-	var/extended
+	var/extended = FALSE
 
 /obj/item/weapon/switchblade/attack_self(mob/user)
 	extended = !extended
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(src, 'sound/weapons/batonextend.ogg', VOL_EFFECTS_MASTER)
 	if(extended)
 		force = 20
 		w_class = ITEM_SIZE_NORMAL
 		throwforce = 15
+		edge = TRUE
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-		hitsound = 'sound/weapons/bladeslice.ogg'
+		hitsound = list('sound/weapons/bladeslice.ogg')
 	else
 		force = 1
 		w_class = ITEM_SIZE_SMALL
 		throwforce = 5
+		edge = FALSE
 		icon_state = "switchblade"
 		attack_verb = list("stubbed", "poked")
-		hitsound = 'sound/weapons/Genhit.ogg'
+		hitsound = list('sound/weapons/Genhit.ogg')
 
 /obj/item/weapon/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting \his own throat with the [src.name]! It looks like \he's trying to commit suicide.</span>")

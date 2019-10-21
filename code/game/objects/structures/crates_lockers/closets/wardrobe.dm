@@ -13,6 +13,8 @@
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/under/rank/security(src)
 	for (var/i in 1 to 3)
+		new /obj/item/clothing/under/rank/cadet(src)
+	for (var/i in 1 to 3)
 		new /obj/item/clothing/shoes/jackboots(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/head/soft/sec(src)
@@ -248,8 +250,8 @@
 
 /obj/structure/closet/wardrobe/chemistry_white
 	name = "chemistry wardrobe"
-	icon_state = "white"
-	icon_closed = "white"
+	icon_state = "orange"
+	icon_closed = "orange"
 
 /obj/structure/closet/wardrobe/chemistry_white/PopulateContents()
 	for (var/i in 1 to 2)

@@ -5,7 +5,7 @@
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "weldingmask"
 /obj/random/cloth/masks/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/mask) - subtypesof(/obj/item/clothing/mask/cigarette) - list(/obj/item/clothing/mask/gas/death_commando, /obj/item/clothing/mask/facehugger/toy, /obj/item/clothing/mask/facehugger, /obj/item/clothing/mask/gas/shadowling, /obj/item/clothing/mask/ecig, /obj/item/clothing/mask/scarf/ninja, /obj/item/clothing/mask/gas/voice, /obj/item/clothing/mask/gas/voice/space_ninja, /obj/item/clothing/mask/facehugger/lamarr, /obj/item/clothing/mask/facehugger/toy, /obj/item/clothing/mask/gas/golem))
+	return pick(subtypesof(/obj/item/clothing/mask) - subtypesof(/obj/item/clothing/mask/cigarette) - list(/obj/item/clothing/mask/gas/death_commando, /obj/item/clothing/mask/facehugger_toy, /obj/item/clothing/mask/facehugger, /obj/item/clothing/mask/gas/shadowling, /obj/item/clothing/mask/ecig, /obj/item/clothing/mask/scarf/ninja, /obj/item/clothing/mask/gas/voice, /obj/item/clothing/mask/gas/voice/space_ninja, /obj/item/clothing/mask/facehugger/lamarr, /obj/item/clothing/mask/gas/golem))
 
 /obj/random/cloth/armor
 	name = "random armor"
@@ -21,7 +21,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "syndicate"
 /obj/random/cloth/spacesuit/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/suit/space) - list(/obj/item/clothing/suit/space/space_ninja, /obj/item/clothing/suit/space/golem, /obj/item/clothing/suit/space/shadowling, /obj/item/clothing/suit/space/changeling))
+	return pick(subtypesof(/obj/item/clothing/suit/space) - list(/obj/item/clothing/suit/space/space_ninja, /obj/item/clothing/suit/space/golem, /obj/item/clothing/suit/space/shadowling, /obj/item/clothing/suit/space/changeling, /obj/item/clothing/suit/space/rig/ert/stealth))
 
 /obj/random/cloth/storagesuit
 	name = "random storagesuit"
@@ -78,7 +78,7 @@
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "skrell_helmet_white"
 /obj/random/cloth/spacehelmet/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/head/helmet/space) - list(/obj/item/clothing/head/helmet/space/golem, /obj/item/clothing/head/helmet/space/space_ninja, /obj/item/clothing/head/helmet/space/changeling))
+	return pick(subtypesof(/obj/item/clothing/head/helmet/space) - list(/obj/item/clothing/head/helmet/space/golem, /obj/item/clothing/head/helmet/space/space_ninja, /obj/item/clothing/head/helmet/space/changeling, /obj/item/clothing/head/helmet/space/rig/ert/stealth))
 
 /obj/random/cloth/helmet
 	name = "random helmet"

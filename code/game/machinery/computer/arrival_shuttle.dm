@@ -18,6 +18,8 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/atom_init()
 //	curr_location= locate(/area/shuttle/arrival/pre_game)
+	arrival_note = "Arrival shuttle docked with the [station_name()]."
+	department_note = "Arrival shuttle left the [station_name()]."
 	radio = new (src)
 	. = ..()
 
@@ -126,8 +128,7 @@ var/lastMove = 0
 	for(var/mob/M in A)
 		if(M.client)
 			if(location == 1)
-				if(M.ear_deaf <= 0 || istype(M, /mob/dead/observer))
-					M << sound('sound/effects/shuttle_flying.ogg', volume = 50)
+				M.playsound_local(null, 'sound/effects/shuttle_flying.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			spawn(0)
 				if(M.buckled)
 					shake_camera(M, 2, 1)

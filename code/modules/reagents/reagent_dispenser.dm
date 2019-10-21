@@ -53,7 +53,7 @@
 		qdel(src)
 
 
-//Dispensers
+// "Tanks".
 /obj/structure/reagent_dispensers/watertank
 	name = "watertank"
 	desc = "A watertank."
@@ -64,22 +64,32 @@
 
 /obj/structure/reagent_dispensers/watertank/atom_init()
 	. = ..()
-	reagents.add_reagent("water",1000)
+	reagents.add_reagent("water", 1000)
+
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank
+	name = "AFFF tank"
+	desc = "A tank containing Aqueous Film Forming Foam(AFFF)."
+	icon_state = "affftank"
+
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank/atom_init()
+	. = ..()
+	reagents.clear_reagents()
+	reagents.add_reagent("aqueous_foam", 1000)
 
 /obj/structure/reagent_dispensers/watertank/examine(mob/user)
 	..()
 	if(src in oview(2, user) && modded)
-		to_chat(user, "\red Water faucet is wrenched open, leaking the water!")
+		to_chat(user, "<span class='warning'>Faucet is wrenched open, [src] is leaking!</span>")
 
 /obj/structure/reagent_dispensers/watertank/attackby(obj/item/weapon/W, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if (istype(W,/obj/item/weapon/wrench))
+	if (iswrench(W))
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
 		modded = modded ? 0 : 1
 		if (modded)
 			START_PROCESSING(SSobj, src)
-			leak_water(amount_per_transfer_from_this)
+			leak(amount_per_transfer_from_this)
 
 	add_fingerprint(usr)
 	return ..()
@@ -87,22 +97,23 @@
 /obj/structure/reagent_dispensers/watertank/process()
 	if(!src) return
 	if(modded)
-		leak_water(2)
+		leak(2)
 	else
 		STOP_PROCESSING(SSobj, src)
 
 /obj/structure/reagent_dispensers/watertank/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
 	if (. && modded)
-		leak_water(1)
+		leak(1)
 
-/obj/structure/reagent_dispensers/watertank/proc/leak_water(amount)
+/obj/structure/reagent_dispensers/watertank/proc/leak(amount)
 	if (reagents.total_volume == 0)
 		return
 
 	amount = min(amount, reagents.total_volume)
-	reagents.remove_reagent("water",amount)
-	spawn_fluid(loc, amount * 50)
+	var/datum/reagents/R = new/datum/reagents(amount * 50)
+	reagents.trans_to(R, amount * 50)
+	R.reaction(loc)
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
@@ -134,32 +145,32 @@
 	if (rig && !user.is_busy())
 		user.visible_message("[user] begins to detach [rig] from \the [src].", "You begin to detach [rig] from \the [src]")
 		if(do_after(user, 20, target = src))
-			user.visible_message("\blue [user] detaches [rig] from \the [src].", "\blue  You detach [rig] from \the [src]")
+			user.visible_message("<span class='notice'>[user] detaches [rig] from \the [src].</span>", "<span class='notice'>You detach [rig] from \the [src]</span>")
 			rig.loc = get_turf(usr)
 			rig = null
 			overlays = new/list()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W,/obj/item/weapon/wrench))
+	if (iswrench(W))
 		user.SetNextMove(CLICK_CD_RAPID)
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
 		modded = !modded
 		if (modded)
 			leak_fuel(amount_per_transfer_from_this)
-		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [src.x], [src.y], [src.z] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
+		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [src.x], [src.y], [src.z] [ADMIN_JMP(src)]")
 	if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
-			to_chat(user, "\red There is another device in the way.")
+			to_chat(user, "<span class='warning'>There is another device in the way.</span>")
 			return ..()
 		if(user.is_busy()) return
 		user.visible_message("[user] begins rigging [W] to \the [src].", "You begin rigging [W] to \the [src]")
-		if(do_after(user, 20, target = src))
-			user.visible_message("\blue [user] rigs [W] to \the [src].", "\blue  You rig [W] to \the [src]")
+		if(W.use_tool(src, user, 20))
+			user.visible_message("<span class='notice'>[user] rigs [W] to \the [src].</span>", "<span class='notice'>You rig [W] to \the [src]</span>")
 
 			var/obj/item/device/assembly_holder/H = W
 			if (istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))
-				message_admins("[key_name_admin(user)] rigged fueltank at ([loc.x],[loc.y],[loc.z]) for explosion. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+				message_admins("[key_name_admin(user)] rigged fueltank at ([loc.x],[loc.y],[loc.z]) for explosion. [ADMIN_JMP(user)]")
 				log_game("[key_name(user)] rigged fueltank at ([loc.x],[loc.y],[loc.z]) for explosion.")
 
 			rig = W
@@ -177,7 +188,7 @@
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-		if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
+		if(!istype(Proj ,/obj/item/projectile/beam/lasertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
 			explode()
 
 /obj/structure/reagent_dispensers/fueltank/blob_act()
@@ -287,3 +298,15 @@
 /obj/structure/reagent_dispensers/acid/atom_init()
 	. = ..()
 	reagents.add_reagent("sacid", 1000)
+
+/obj/structure/reagent_dispensers/kvasstank
+	name = "KBAC"
+	desc = "A cool refreshing drink with a taste of socialism."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "kvasstank"
+	possible_transfer_amounts = list(25,60,100)
+	amount_per_transfer_from_this = 25
+
+/obj/structure/reagent_dispensers/kvasstank/atom_init()
+	. = ..()
+	reagents.add_reagent("kvass",1000)

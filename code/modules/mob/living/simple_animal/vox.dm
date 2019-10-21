@@ -15,7 +15,7 @@
 	attacktext = "slammed its enormous claws into"
 	speed = -1
 	environment_smash = 2
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = list('sound/weapons/bladeslice.ogg')
 	status_flags = 0
 	universal_speak = 1
 
@@ -28,7 +28,7 @@
 	alive_mob_list -= src
 	dead_mob_list += src
 	stat = DEAD
-	visible_message("\red <B>[src] shudders violently and explodes!</B>","\red <B>You feel your body rupture!</B>")
+	visible_message("<span class='warning'><B>[src] shudders violently and explodes!</B></span>","<span class='warning'><B>You feel your body rupture!</B></span>")
 	explosion(get_turf(loc), -1, -1, 3, 5)
 	src.gib()
 	return
@@ -42,16 +42,16 @@
 			health -= damage
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
+					M.show_message("<span class='warning'><b>[src] has been attacked with the [O] by [user].</b></span>")
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b The [O] bounces harmlessly off of [src]. ")
+					M.show_message("<span class='warning'><b>The [O] bounces harmlessly off of [src].</b></span>")
 	else
-		to_chat(usr, "\red This weapon is ineffective, it does no damage.")
+		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with the [O]. ")
+				M.show_message("<span class='warning'>[user] gently taps [src] with the [O]. </span>")
 
 /mob/living/simple_animal/vox/armalis/verb/fire_quill(mob/target as mob in oview())
 
@@ -62,10 +62,10 @@
 	if(quills<=0)
 		return
 
-	to_chat(src, "\red You launch a razor-sharp quill at [target]!")
+	to_chat(src, "<span class='warning'>You launch a razor-sharp quill at [target]!</span>")
 	for(var/mob/O in oviewers())
 		if ((O.client && !( O.blinded )))
-			to_chat(O, "\red [src] launches a razor-sharp quill at [target]!")
+			to_chat(O, "<span class='warning'>[src] launches a razor-sharp quill at [target]!</span>")
 
 	var/obj/item/weapon/arrow/quill/Q = new(loc)
 	Q.fingerprintslast = src.ckey
@@ -73,7 +73,7 @@
 	quills--
 
 	spawn(100)
-		to_chat(src, "\red You feel a fresh quill slide into place.")
+		to_chat(src, "<span class='warning'>You feel a fresh quill slide into place.</span>")
 		quills++
 
 /mob/living/simple_animal/vox/armalis/verb/message_mob()
@@ -98,12 +98,12 @@
 		to_chat(src, "Not even the armalis can speak to the dead.")
 		return
 
-	to_chat(M, "\blue Like lead slabs crashing into the ocean, alien thoughts drop into your mind: [text]")
+	to_chat(M, "<span class='notice'>Like lead slabs crashing into the ocean, alien thoughts drop into your mind: [text]</span>")
 	if(istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		if(H.species.name == VOX)
 			return
-		to_chat(H, "\red Your nose begins to bleed...")
+		to_chat(H, "<span class='warning'>Your nose begins to bleed...</span>")
 		H.drip(1)
 
 /mob/living/simple_animal/vox/armalis/verb/shriek()
@@ -119,14 +119,14 @@
 		maxHealth += 200
 		health += 200
 		O.loc = src
-		visible_message("\blue [src] is quickly outfitted in [O] by [user].","\blue You quickly outfit [src] in [O].")
+		visible_message("<span class='notice'>[src] is quickly outfitted in [O] by [user].</span>","<span class='notice'>You quickly outfit [src] in [O].</span>")
 		regenerate_icons()
 		return
 	if(istype(O,/obj/item/vox/armalis_amp))
 		user.drop_item()
 		amp = O
 		O.loc = src
-		visible_message("\blue [src] is quickly outfitted in [O] by [user].","\blue You quickly outfit [src] in [O].")
+		visible_message("<span class='notice'>[src] is quickly outfitted in [O] by [user].</span>","<span class='notice'>You quickly outfit [src] in [O].</span>")
 		regenerate_icons()
 		return
 	return ..()

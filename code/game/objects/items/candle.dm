@@ -37,7 +37,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		visible_message(flavor_text)
 		set_light(CANDLE_LUMINOSITY, 1)
 		START_PROCESSING(SSobj, src)
-		playsound(get_turf(src), 'sound/items/matchstick_light.ogg', 50, 0)
+		playsound(src, 'sound/items/matchstick_light.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/item/candle/update_icon()
 	var/lighning_stage
@@ -63,7 +63,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 
 /obj/item/candle/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.isOn()) // Badasses dont get blinded by lighting their candle with a welding tool
 			light("<span class='warning'>[user] casually lights the [name] with [W].</span>")
@@ -80,26 +80,33 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		if(C.lit)
 			light()
 
+/obj/item/candle/get_current_temperature()
+	if(lit)
+		return 1000
+	else
+		return 0
+
+/obj/item/candle/extinguish()
+	var/obj/item/candle/C = new faded_candle(loc)
+	if(istype(loc, /mob))
+		var/mob/M = loc
+		M.drop_from_inventory(src, null)
+		M.put_in_hands(C)
+
+	qdel(src)
+
 /obj/item/candle/process()
 	if(!lit)
 		return
 	if(!infinite)
 		wax--
 	if(!wax)
-		dropped()
-		fade()
-		qdel(src)
+		extinguish()
 		return
 	update_icon()
 	if(istype(loc, /turf)) // start a fire if possible
 		var/turf/T = loc
 		T.hotspot_expose(700, 5)
-
-/obj/item/candle/proc/fade()
-	var/obj/item/candle/C = new faded_candle(src.loc)
-	if(istype(loc, /mob))
-		var/mob/M = loc
-		M.put_in_hands(C)
 
 /obj/item/candle/attack_self(mob/user)
 	if(lit)
@@ -140,7 +147,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 
 /obj/item/candle/ghost/proc/spook()
 	visible_message("<span class='warning bold'>Out of the tip of the flame, a face appears.</span>")
-	playsound(get_turf(src), 'sound/effects/screech.ogg', 50, 0)
+	playsound(src, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	for(var/mob/living/carbon/M in hearers(4, get_turf(src)))
 		if(!iscultist(M))
 			M.confused += 10
@@ -180,8 +187,8 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		if(istype(W, /obj/item/trash/candle))
 			to_chat(user, "<span class='warning'>The wax begins to corrupt and pulse like veins as it merges itself with the [src], impressive.</span>")
 			user.confused += 10 // Sights of this are not pleasant.
-			if(prob(10) && user.nutrition > 20)
-				user.vomit()
+			if(prob(10))
+				user.invoke_vomit_async()
 			wax += 50
 			user.drop_item()
 			qdel(W)

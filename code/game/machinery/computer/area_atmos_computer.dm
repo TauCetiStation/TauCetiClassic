@@ -2,6 +2,8 @@
 	name = "Area Air Control"
 	desc = "A computer used to control the stationary scrubbers and pumps in the area."
 	icon_state = "area_atmos"
+	state_broken_preset = "atmosb"
+	state_nopower_preset = "atmos0"
 	light_color = "#e6ffff"
 	circuit = "/obj/item/weapon/circuitboard/area_atmos"
 

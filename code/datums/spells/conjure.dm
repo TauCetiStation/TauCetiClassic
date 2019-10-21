@@ -22,7 +22,7 @@
 	for(var/turf/T in targets)
 		if(T.density && !summon_ignore_density)
 			targets -= T
-	playsound(loc, sound, 50, 1)
+	playsound(usr, sound, VOL_EFFECTS_MASTER)
 
 	if(do_after(usr,delay,target=usr))
 		if(deleting_previous)
@@ -128,7 +128,7 @@
 	name = "Harvester Toxin"
 	id = "harvester"
 	description = "A toxic cloud."
-	color = "#9C3636"
+	color = "#9c3636"
 	toxpwr = 0
 	custom_metabolism = 1
 

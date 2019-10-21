@@ -6,7 +6,7 @@
 	icon_state = "blackbox"
 	density = TRUE
 	anchored = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/captains_key
 	var/secondary_key
@@ -40,7 +40,7 @@
 		return
 
 	if(activated)
-		to_chat(user, "\blue \The [src] is already active!")
+		to_chat(user, "<span class='notice'>\The [src] is already active!</span>")
 		return
 
 	if(!mode.current_directive.directives_complete())
@@ -50,7 +50,7 @@
 	check_key_existence()
 	if(captains_key && secondary_key)
 		activated = 1
-		to_chat(user, "\blue You activate \the [src]!")
+		to_chat(user, "<span class='notice'>You activate \the [src]!</span>")
 		state("Command acknowledged. Initiating quantum entanglement relay to NanoTrasen High Command.")
 		return
 
@@ -71,7 +71,7 @@
 
 /obj/machinery/emergency_authentication_device/attackby(obj/item/weapon/O, mob/user)
 	if(activated)
-		to_chat(user, "\blue \The [src] is already active!")
+		to_chat(user, "<span class='notice'>\The [src] is already active!</span>")
 		return
 
 	if(!mode.current_directive.directives_complete())

@@ -29,7 +29,7 @@
 	hide = 1
 	toggled = 1
 	//anchored = 1
-	//use_power = 0
+	//use_power = NO_POWER_USE
 	//idle_power_usage = 0
 	heatgen = 0
 	autolinkers = list("c_relay")
@@ -80,7 +80,7 @@
 	network = "tcommsat"
 	heatgen = 0
 	autolinkers = list("receiverCent")
-	freq_listening = list(1345, 1341)
+	freq_listening = list(1345, 1341, 1245)
 
 
 //Buses
@@ -117,7 +117,7 @@
 /obj/machinery/telecomms/bus/preset_cent
 	id = "CentComm Bus"
 	network = "tcommsat"
-	freq_listening = list(1345, 1341)
+	freq_listening = list(1345, 1341, 1245)
 	heatgen = 0
 	autolinkers = list("processorCent", "centcomm")
 
@@ -199,7 +199,7 @@
 
 /obj/machinery/telecomms/server/presets/centcomm
 	id = "CentComm Server"
-	freq_listening = list(1345, 1341)
+	freq_listening = list(1345, 1341, 1245)
 	heatgen = 0
 	autolinkers = list("centcomm")
 

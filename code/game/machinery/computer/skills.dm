@@ -3,7 +3,9 @@
 /obj/machinery/computer/skills//TODO:SANITY
 	name = "Employment Records"
 	desc = "Used to view personnel's employment records."
-	icon_state = "medlaptop"
+	icon_state = "laptop_employment"
+	state_broken_preset = "laptopb"
+	state_nopower_preset = "laptop0"
 	light_color = "#00b000"
 	req_one_access = list(access_heads)
 	circuit = "/obj/item/weapon/circuitboard/skills"
@@ -34,8 +36,8 @@
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
 /obj/machinery/computer/skills/ui_interact(mob/user)
-	if (src.z > ZLEVEL_EMPTY)
-		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
+	if (!SSmapping.has_level(z))
+		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return
 
 	var/dat
@@ -308,7 +310,7 @@ What a mess.*/
 		if ("New Record (General)")
 			if(PDA_Manifest.len)
 				PDA_Manifest.Cut()
-			active1 = CreateGeneralRecord()
+			active1 = CreateGeneralRecord() // todo: datacore.manifest_inject or scaner (Identity Analyser)
 
 //FIELD FUNCTIONS
 		if ("Edit Field")

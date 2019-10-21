@@ -47,7 +47,7 @@ var/list/cult_runes = list()
 /datum/cult/proc/nearest_heretics(range = 7, ignore_nullrod = FALSE)
 	var/list/heretics = list()
 	var/turf/center = get_turf(holder)
-	for(var/mob/living/heretic in range(range, center))
+	for(var/mob/living/heretic in view(range, center))
 		if(iscultist(heretic))
 			continue
 		if(!ignore_nullrod)
@@ -87,7 +87,7 @@ var/list/cult_runes = list()
 	for(var/obj/effect/rune/R in cult_runes)
 		if(!istype(R.power, type) || R.power == src)
 			continue
-		if(R.power.word3 == src.word3 && R.loc.z != ZLEVEL_CENTCOMM)
+		if(R.power.word3 == src.word3 && !is_centcom_level(R.loc.z))
 			allrunes += R
 
 	var/length = length(allrunes)
@@ -100,9 +100,9 @@ var/list/cult_runes = list()
 		user.visible_message("<span class='userdanger'>[user] disappears in a flash of red light!</span>", \
 			"<span class='cult'>You feel as your body gets dragged through the dimension of Nar-Sie!</span>", \
 			"<span class='userdanger'>You hear a sickening crunch and sloshing of viscera.</span>")
-		playsound(user,'sound/magic/Teleport_diss.ogg', 100, 2)
+		playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
 		user.forceMove(get_turf(pick(allrunes)))
-		playsound(user,'sound/magic/Teleport_app.ogg', 100, 2)
+		playsound(user, 'sound/magic/Teleport_app.ogg', VOL_EFFECTS_MASTER)
 		return holder_reaction(user)
 	fizzle(user)
 
@@ -123,7 +123,7 @@ var/list/cult_runes = list()
 	for(var/obj/effect/rune/R in cult_runes)
 		if(!istype(R.power, type) || R.power == src)
 			continue
-		if(R.loc.z != ZLEVEL_CENTCOMM && R.power.word3 == src.word3)
+		if(!is_centcom_level(R.loc.z) && R.power.word3 == src.word3)
 			allrunes += R
 	var/length = length(allrunes)
 	if(length >= 5)
@@ -145,8 +145,8 @@ var/list/cult_runes = list()
 				O.forceMove(teleport_holder.loc)
 				O.visible_message("<span class='danger'>The [O] suddenly appears!</span>")
 		if(passed)
-			playsound(holder, 'sound/magic/SummonItems_generic.ogg', 100, 1)
-			playsound(teleport_holder, 'sound/magic/SummonItems_generic.ogg', 100, 1)
+			playsound(holder, 'sound/magic/SummonItems_generic.ogg', VOL_EFFECTS_MASTER)
+			playsound(teleport_holder, 'sound/magic/SummonItems_generic.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='userdanger'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
 				"<span class='cult'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
 				"<span class='userdanger'>You smell ozone.</span>")
@@ -280,7 +280,7 @@ var/list/cult_runes = list()
 /datum/cult/emp/action(mob/living/carbon/user)
 	var/emp_power = holder_reaction(user)
 	var/turf/turf = get_turf(holder)
-	playsound(holder, 'sound/items/Welder2.ogg', 25, 1)
+	playsound(holder, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER, 25)
 	turf.hotspot_expose(700,125)
 	empulse(turf, (emp_power - 2), emp_power)
 	qdel(holder)
@@ -306,7 +306,7 @@ var/list/cult_runes = list()
 				var/bdrain = rand(1, 25)
 				to_chat(C, "<span class='userdanger'>You feel weakened.</span>")
 				C.take_overall_damage(bdrain, 0)
-				playsound(R, 'sound/magic/transfer_blood.ogg', 100, 2)
+				playsound(R, 'sound/magic/transfer_blood.ogg', VOL_EFFECTS_MASTER)
 				drain += bdrain
 	if(!drain)
 		return fizzle(user)
@@ -323,9 +323,9 @@ var/list/cult_runes = list()
 	if(prob(drain * 1.5) && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/organ/external/BP in H.bodyparts)
-			if(BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED | ORGAN_DESTROYED | ORGAN_DEAD | ORGAN_ARTERY_CUT))
+			if(BP.is_stump || BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED | ORGAN_DEAD | ORGAN_ARTERY_CUT))
 				BP.rejuvenate()
-				to_chat(user, "<span class=cult'>You were honored by Nar-Sie. You can feel his power in your [BP]</span>")
+				to_chat(user, "<span class='cult'>You were honored by Nar-Sie. You can feel his power in your [BP]</span>")
 				break
 	user.heal_overall_damage(1.2 * drain, drain)
 
@@ -400,7 +400,7 @@ var/list/cult_runes = list()
 		return fizzle(user)
 
 	corpse_to_raise.revive()
-	playsound(holder, 'sound/magic/cult_revive.ogg', 100, 2)
+	playsound(holder, 'sound/magic/cult_revive.ogg', VOL_EFFECTS_MASTER)
 	ticker.mode.add_cultist(corpse_to_raise.mind) // all checks in proc add_cultist, No reason to worry
 
 
@@ -481,10 +481,10 @@ var/list/cult_runes = list()
 			return
 	if(ghost.can_reenter_corpse)
 		if(holder.loc != ajourned.loc)
-			to_chat(ghost, "<span class='cult'>The astral cord that ties your body and your spirit has been severed!</span")
+			to_chat(ghost, "<span class='cult'>The astral cord that ties your body and your spirit has been severed!</span>")
 			ghost.can_reenter_corpse = FALSE
 	else if(holder.loc == ajourned.loc)
-		to_chat(ghost, "<span class='cult'>The astral cord has been restored!</span")
+		to_chat(ghost, "<span class='cult'>The astral cord has been restored!</span>")
 		ghost.can_reenter_corpse = TRUE
 	if(cooldown < world.time)
 		cooldown = world.time + 100
@@ -501,7 +501,7 @@ var/list/cult_runes = list()
 		"<span class='userdanger'>You hear only complete silence for a moment.</span>")
 	ajourned = user
 	ghost = user.ghostize(TRUE)
-	playsound(holder, 'sound/effects/ghost.ogg', 100, 2)
+	playsound(holder, 'sound/effects/ghost.ogg', VOL_EFFECTS_MASTER)
 	START_PROCESSING(SSobj, src)
 
 /datum/cult/manifest
@@ -551,7 +551,7 @@ var/list/cult_runes = list()
 		break
 	if(!ghost || jobban_isbanned(ghost, ROLE_CULTIST) || jobban_isbanned(ghost, "Syndicate") || role_available_in_minutes(ghost, ROLE_CULTIST))
 		return fizzle(user)
-	playsound(holder, 'sound/magic/manifest.ogg', 100, 2)
+	playsound(holder, 'sound/magic/manifest.ogg', VOL_EFFECTS_MASTER)
 	user.say("Gal'h'rfikk harfrandid mud[pick("'","`")]gib!")
 	var/mob/living/carbon/human/dummy/D = new(holder.loc) // in soultstone code we have block for type dummy
 	user.visible_message("<span class='userdanger'>A shape forms in the center of the rune. A shape of... a man.</span>", \
@@ -770,7 +770,7 @@ var/list/cult_runes = list()
 				break
 	if(length(victims) < 1)
 		return fizzle(user)
-	playsound(holder, 'sound/magic/disintegrate.ogg', 100, 2)
+	playsound(holder, 'sound/magic/disintegrate.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/mob/H in victims)
 		if(sacrifice_target && sacrifice_target == H.mind)
@@ -828,7 +828,7 @@ var/list/cult_runes = list()
 		if(H.current)
 			to_chat(H.current, "<span class='cult'>Acolyte [user.real_name]: [input]</span>")
 
-	playsound(holder, 'sound/magic/message.ogg', 50, 1)
+	playsound(holder, 'sound/magic/message.ogg', VOL_EFFECTS_MASTER)
 	holder_reaction(user, input)
 
 /datum/cult/summon
@@ -886,7 +886,7 @@ var/list/cult_runes = list()
 		return
 	var/deafness_modifier = max(5, holder_reaction(user) / length(affected))
 	for(var/mob/living/carbon/C in affected)
-		C.playsound_local(get_turf(C), 'sound/effects/ear_ring_single.ogg', 100, 2)
+		C.playsound_local(null, 'sound/effects/mob/ear_ring_single.ogg', VOL_EFFECTS_MASTER)
 		C.ear_deaf += deafness_modifier
 		to_chat(C, "<span class='userdanger'>The world around you suddenly becomes quiet.</span>")
 		if(prob(1))
@@ -912,7 +912,7 @@ var/list/cult_runes = list()
 	var/list/affected = nearest_heretics()
 	if(length(affected) < 1)
 		return fizzle(user)
-	var/blindless_modifier = Clamp(holder_reaction(user) / length(affected), 5, 30)
+	var/blindless_modifier = CLAMP(holder_reaction(user) / length(affected), 5, 30)
 	for(var/mob/living/carbon/C in affected)
 		C.eye_blurry += blindless_modifier
 		C.eye_blind += blindless_modifier / 2
@@ -938,7 +938,7 @@ var/list/cult_runes = list()
 	var/list/heretics = nearest_heretics()
 	if(length(heretics) < 1)
 		return fizzle(user)
-	var/damage_modifier = min(153 / length(heretics), 71)
+	var/damage_modifier = min(150 / length(heretics), 45)
 
 	for(var/mob/living/carbon/M in heretics)
 		M.take_overall_damage(damage_modifier, damage_modifier)
@@ -962,7 +962,7 @@ var/list/cult_runes = list()
 	var/list/heretics = nearest_heretics()
 	if(length(heretics) < 1)
 		return fizzle(user)
-	var/stun_modifier = 6 / length(heretics)
+	var/stun_modifier = 12 / length(heretics)
 	for(var/mob/living/carbon/C in heretics)
 		C.flash_eyes()
 		if(C.stuttering < 1 && (!(HULK in C.mutations)))
@@ -977,6 +977,8 @@ var/list/cult_runes = list()
 	var/obj/item/weapon/nullrod/N = locate() in affected
 	if(N)
 		affected.visible_message("<span class='danger'>[user] invokes a talisman at [affected], but they are unaffected!</span>")
+		qdel(holder)
+		return
 	else
 		affected.visible_message("<span class='danger'>[user] invokes a talisman at [affected]!</span>")
 
@@ -986,9 +988,9 @@ var/list/cult_runes = list()
 		var/mob/living/carbon/C = affected
 		C.flash_eyes()
 		if(!(HULK in C.mutations))
-			C.silent += 15
-			C.Weaken(25)
-			C.Stun(25)
+			C.silent += 10
+			C.Weaken(15)
+			C.Stun(15)
 	qdel(holder)
 
 /datum/cult/stun/action(mob/living/carbon/user)
@@ -1038,13 +1040,13 @@ var/list/cult_runes = list()
 		to_chat(user, "<span class='warning'>You cant swap minds with yourself.</span>")
 		return FALSE
 	else if(!(target.type in compatible_mobs))
-		to_chat(user, "<span class='warning'>Their mind isn't compatible with yours.")
+		to_chat(user, "<span class='warning'>Their mind isn't compatible with yours.</span>")
 		return FALSE
 	else if(target.stat == DEAD)
 		to_chat(user, "<span class='warning'>Swapping your mind with a dead body is a bad idea, isn't it?</span>")
 		return FALSE
 	else if(!target.mind || !target.key)
-		to_chat(user, "<span class='warning'>He is catatonic, even our magic cant affect him.")
+		to_chat(user, "<span class='warning'>He is catatonic, even our magic cant affect him.</span>")
 		return FALSE
 	else if(brainswapping)
 		to_chat(user, "<span class='warning'>Someone is already conducting a ritual here.</span>")
@@ -1072,7 +1074,7 @@ var/list/cult_runes = list()
 	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), SLOT_SHOES)
 	user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), SLOT_BACK)
 	user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
-	playsound(holder, 'sound/magic/cult_equip.ogg', 100, 2)
+	playsound(holder, 'sound/magic/cult_equip.ogg', VOL_EFFECTS_MASTER)
 	qdel(holder)
 
 #undef BRAINSWAP_TIME

@@ -27,6 +27,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	origin_tech = "materials=1"
 	attack_verb = list("burnt", "singed")
 
+/obj/item/weapon/match/get_current_temperature()
+	if(lit)
+		return 1000
+	else
+		return 0
+
+/obj/item/weapon/match/extinguish()
+	burn_out()
+
 /obj/item/weapon/match/process()
 	var/turf/location = get_turf(src)
 	smoketime--
@@ -78,9 +87,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	flags |= NOREACT // so it doesn't react until you light it
 	create_reagents(chem_volume) // making the cigarrete a chemical holder with a maximum volume of 15
 
+/obj/item/clothing/mask/cigarette/get_current_temperature()
+	if(lit)
+		return 1000
+	else
+		return 0
+
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.isOn())//Badasses dont get blinded while lighting their cig with a welding tool
 			light("<span class='notice'>[user] casually lights the [name] with [W].</span>")
@@ -269,7 +284,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 
 /obj/item/clothing/mask/cigarette/cigar/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.isOn())
 			light("<span class='notice'>[user] insults [name] by lighting it with [W].</span>")
@@ -356,7 +371,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return
 
 /obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.isOn())//
 			light("<span class='notice'>[user] recklessly lights [name] with [W].</span>")
@@ -427,6 +442,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "lighter-[color]"
 	icon_state = icon_off
 
+/obj/item/weapon/lighter/get_current_temperature()
+	if(lit)
+		return 1500
+	else
+		return 0
+
 /obj/item/weapon/lighter/attack_self(mob/living/user)
 	if(user.r_hand == src || user.l_hand == src)
 		if(!lit)
@@ -434,10 +455,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			icon_state = icon_on
 			item_state = icon_on
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
-				playsound(src, 'sound/items/zippo.ogg', 20, 1, 1)
+				playsound(src, 'sound/items/zippo.ogg', VOL_EFFECTS_MASTER, 20)
 				user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
 			else
-				playsound(src, 'sound/items/lighter.ogg', 20, 1, 1)
+				playsound(src, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 20)
 				if(prob(95))
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src].</span>")
 				else
@@ -455,11 +476,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			icon_state = icon_off
 			item_state = icon_off
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
-				playsound(src, 'sound/items/zippo.ogg', 20, 1, 1)
-				user.visible_message("<span class='rose'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing.")
+				playsound(src, 'sound/items/zippo.ogg', VOL_EFFECTS_MASTER, 20)
+				user.visible_message("<span class='rose'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing.</span>")
 			else
-				user.visible_message("<span class='notice'>[user] quietly shuts off the [src].")
-				playsound(src, 'sound/items/lighter.ogg', 20, 1, 1)
+				user.visible_message("<span class='notice'>[user] quietly shuts off the [src].</span>")
+				playsound(src, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 20)
 
 			set_light(0)
 			STOP_PROCESSING(SSobj, src)

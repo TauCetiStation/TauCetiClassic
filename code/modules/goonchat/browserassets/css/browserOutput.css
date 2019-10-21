@@ -95,7 +95,7 @@ a.popt {text-decoration: none;}
 #ping {
 	position: fixed;
 	top: 0;
-	right: 120px;
+	right: 80px;
 	width: 45px;
 	background: #ddd;
 	height: 30px;
@@ -144,6 +144,7 @@ a.popt {text-decoration: none;}
 	line-height: 30px;
 	float: left;
 	margin-left: 5px;
+	font-size: 0.85em;
 }
 
 #userBar .sub i {
@@ -284,6 +285,7 @@ h1.alert, h2.alert	{color: #000000;}
 .emote					{font-style: italic;}
 .selecteddna			{color: #FFFFFF; 	background-color: #001B1B}
 .artefact				{color: #ffa500;}
+.electronicblue		{color: #00BFFF; background-color: #414141}
 
 /* Radio Channels */
 .comradio				{color: #193A7A;}
@@ -348,7 +350,7 @@ h1.alert, h2.alert	{color: #000000;}
 .tajaran				{color: #803B56;}
 .tajaran_signlang		{color: #941C1C;}
 .skrell					{color: #00CED1;}
-.soghun					{color: #228B22;}
+.soghun					{color: #73a800;}
 .vox					{color: #AA00AA;}
 .rough					{font-family: "Trebuchet MS", cursive, sans-serif;}
 .say_quote				{font-family: Georgia, Verdana, sans-serif;}

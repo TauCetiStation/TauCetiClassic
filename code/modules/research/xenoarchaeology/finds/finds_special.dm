@@ -28,13 +28,13 @@ var/list/bad_messages = list("Never take me off, please!",
 		"I want to be only yours!",
 		"Help me!")
 
-/obj/item/clothing/mask/gas/poltergeist/process(/mob/living/H)
+/obj/item/clothing/mask/gas/poltergeist/process(mob/living/H)
 	if(heard_talk.len && istype(src.loc, /mob/living) && prob(20))
 		var/mob/living/M = src.loc
 		M.say(pick(heard_talk))
 	if(istype(src.loc, /mob/living) && prob(2))
 		var/mob/living/M = src.loc
-		to_chat(M, "A strange voice goes through your head: <b><font color='red' size='[num2text(rand(1,3))]'><b>[pick(bad_messages)]</b></font>")
+		to_chat(M, "A strange voice goes through your head: <font color='red' size='[num2text(rand(1,3))]'><b>[pick(bad_messages)]</b></font>")
 
 /obj/item/clothing/mask/gas/poltergeist/hear_talk(mob/M, text)
 	..()
@@ -84,7 +84,7 @@ var/list/bad_messages = list("Never take me off, please!",
 				charges += 0.25
 			else
 				charges += 1
-				playsound(src.loc, 'sound/effects/splat.ogg', 50, 1, -3)
+				playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 
 	// use up stored charges
 	if(charges >= 10)
@@ -96,12 +96,12 @@ var/list/bad_messages = list("Never take me off, please!",
 			charges -= 1
 			var/spawn_type = pick(/mob/living/simple_animal/hostile/creature)
 			new spawn_type(pick(view(1,src)))
-			playsound(src.loc, pick('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg'), 50, 1, -3)
+			playsound(src, pick('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg'), VOL_EFFECTS_MASTER, null, null, -3)
 
 	if(charges >= 1)
 		if(shadow_wights.len < 5 && prob(5))
 			shadow_wights.Add(new /obj/effect/shadow_wight(src.loc))
-			playsound(src.loc, 'sound/effects/ghost.ogg', 50, 1, -3)
+			playsound(src, 'sound/effects/ghost.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 			charges -= 0.1
 
 	if(charges >= 0.1)
@@ -131,7 +131,7 @@ var/list/bad_messages = list("Never take me off, please!",
 /obj/item/weapon/vampiric/proc/bloodcall(mob/living/carbon/human/M)
 	last_bloodcall = world.time
 	if(istype(M))
-		playsound(src.loc, pick('sound/hallucinations/wail.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/far_noise.ogg'), 50, 1, -3)
+		playsound(src, pick('sound/hallucinations/wail.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/far_noise.ogg'), VOL_EFFECTS_MASTER, null, null, -3)
 		nearby_mobs.Add(M)
 
 		var/target = pick(BP_CHEST , BP_GROIN , BP_HEAD , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG)
@@ -188,27 +188,27 @@ var/list/bad_messages = list("Never take me off, please!",
 		src.loc = get_turf(pick(orange(1,src)))
 		var/mob/living/carbon/M = locate() in src.loc
 		if(M)
-			playsound(src.loc, pick('sound/hallucinations/behind_you1.ogg',\
-			'sound/hallucinations/behind_you2.ogg',\
-			'sound/hallucinations/i_see_you1.ogg',\
-			'sound/hallucinations/i_see_you2.ogg',\
-			'sound/hallucinations/im_here1.ogg',\
-			'sound/hallucinations/im_here2.ogg',\
-			'sound/hallucinations/look_up1.ogg',\
-			'sound/hallucinations/look_up2.ogg',\
-			'sound/hallucinations/over_here1.ogg',\
-			'sound/hallucinations/over_here2.ogg',\
-			'sound/hallucinations/over_here3.ogg',\
-			'sound/hallucinations/turn_around1.ogg',\
-			'sound/hallucinations/turn_around2.ogg',\
-			), 50, 1, -3)
+			var/list/hallsound = list('sound/hallucinations/behind_you1.ogg',
+			                          'sound/hallucinations/behind_you2.ogg',
+			                          'sound/hallucinations/i_see_you_1.ogg',
+			                          'sound/hallucinations/i_see_you_2.ogg',
+			                          'sound/hallucinations/im_here1.ogg',
+			                          'sound/hallucinations/im_here2.ogg',
+			                          'sound/hallucinations/look_up1.ogg',
+			                          'sound/hallucinations/look_up2.ogg',
+			                          'sound/hallucinations/over_here1.ogg',
+			                          'sound/hallucinations/over_here2.ogg',
+			                          'sound/hallucinations/over_here3.ogg',
+			                          'sound/hallucinations/turn_around1.ogg',
+			                          'sound/hallucinations/turn_around2.ogg')
+			playsound(src, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE, -3)
 			M.sleeping = max(M.sleeping,rand(5,10))
 			src.loc = null
 	else
 		STOP_PROCESSING(SSobj, src)
 
 /obj/effect/shadow_wight/Bump(var/atom/obstacle)
-	to_chat(obstacle, "\red You feel a chill run down your spine!")
+	to_chat(obstacle, "<span class='warning'>You feel a chill run down your spine!</span>")
 
 
  // healing tool

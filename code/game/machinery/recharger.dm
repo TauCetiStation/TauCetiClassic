@@ -6,7 +6,7 @@
 	icon_state = "recharger0"
 	desc = "A charging dock for energy based weaponry."
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
 	active_power_usage = 250
 	interact_offline = TRUE
@@ -40,10 +40,10 @@
 		// Checks to make sure he's not in space doing it, and that the area got proper power.
 		var/area/a = get_area(src)
 		if(!isarea(a))
-			to_chat(user, "\red The [name] blinks red as you try to insert the item!")
+			to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the item!</span>")
 			return
 		if(!a.power_equip && a.requires_power)
-			to_chat(user, "\red The [name] blinks red as you try to insert the item!")
+			to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the item!</span>")
 			return
 
 		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
@@ -54,21 +54,21 @@
 		user.drop_item()
 		G.loc = src
 		charging = G
-		playsound(src, 'sound/items/insert_key.ogg', 25, 1)
-		use_power = 2
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+		set_power_use(ACTIVE_POWER_USE)
 		update_icon()
-	else if(istype(G, /obj/item/weapon/wrench))
+	else if(iswrench(G))
 		if(charging)
-			to_chat(user, "\red Remove the weapon first!")
+			to_chat(user, "<span class='warning'>Remove the weapon first!</span>")
 			return
 		anchored = !anchored
 		to_chat(user, "You [anchored ? "attached" : "detached"] the recharger.")
-		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 	if (anchored && !charging)
 		if(default_deconstruction_screwdriver(user, istype(src, /obj/machinery/recharger/wallcharger) ? "wrechargeropen" : "rechargeropen", istype(src, /obj/machinery/recharger/wallcharger) ? "wrecharger0" : "recharger0", G))
 			return
 
-		if(panel_open && istype(G, /obj/item/weapon/crowbar))
+		if(panel_open && iscrowbar(G))
 			default_deconstruction_crowbar(G)
 			return
 
@@ -85,8 +85,8 @@
 		charging.update_icon()
 		charging.loc = loc
 		charging = null
-		playsound(src, 'sound/items/insert_key.ogg', 25, 1)
-		use_power = 1
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+		set_power_use(IDLE_POWER_USE)
 		update_icon()
 
 /obj/machinery/recharger/process()

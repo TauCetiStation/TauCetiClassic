@@ -35,16 +35,16 @@
 		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] [verb], \"[msg]\""
 		return
 
-/obj/item/device/taperecorder/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(istype(W, /obj/item/weapon/card/emag))
-		if(emagged == 0)
-			emagged = 1
-			recording = 0
-			to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
-			icon_state = "taperecorderidle"
-		else
-			to_chat(user, "<span class='warning'>It is already emagged!</span>")
+/obj/item/device/taperecorder/emag_act(mob/user)
+	if(emagged == 0)
+		emagged = 1
+		recording = 0
+		to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
+		icon_state = "taperecorderidle"
+		return TRUE
+	else
+		to_chat(user, "<span class='warning'>It is already emagged!</span>")
+		return FALSE
 
 /obj/item/device/taperecorder/proc/explode()
 	var/turf/T = get_turf(loc)
@@ -64,7 +64,7 @@
 	if(usr.stat)
 		return
 	if(emagged == 1)
-		to_chat(usr, "\red The tape recorder makes a scratchy noise.")
+		to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
 		return
 	icon_state = "taperecorderrecording"
 	if(timerecorded < 3600 && playing == 0)
@@ -91,7 +91,7 @@
 	if(usr.stat)
 		return
 	if(emagged == 1)
-		to_chat(usr, "\red The tape recorder makes a scratchy noise.")
+		to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
 		return
 	if(recording == 1)
 		recording = 0
@@ -191,7 +191,7 @@
 	if(usr.stat)
 		return
 	if(emagged == 1)
-		to_chat(usr, "\red The tape recorder makes a scratchy noise.")
+		to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
 		return
 	if(!canprint)
 		to_chat(usr, "<span class='notice'>The recorder can't print that fast!</span>")
@@ -217,11 +217,11 @@
 		if(usr.stat)
 			return
 		if(emagged == 1)
-			to_chat(usr, "\red The tape recorder makes a scratchy noise.")
+			to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
 			return
 		icon_state = "taperecorderrecording"
 		if(timerecorded < 3600 && playing == 0)
-			to_chat(usr, "\blue Recording started.")
+			to_chat(usr, "<span class='notice'>Recording started.</span>")
 			recording = 1
 			timestamp+= timerecorded
 			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] Recording started."
@@ -234,7 +234,7 @@
 			icon_state = "taperecorderidle"
 			return
 		else
-			to_chat(usr, "\red Either your tape recorder's memory is full, or it is currently playing back its memory.")
+			to_chat(usr, "<span class='warning'>Either your tape recorder's memory is full, or it is currently playing back its memory.</span>")
 	else
 		if(usr.stat)
 			to_chat(usr, "Not when you're incapacitated.")
@@ -243,7 +243,7 @@
 			recording = 0
 			timestamp+= timerecorded
 			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] Recording stopped."
-			to_chat(usr, "\blue Recording stopped.")
+			to_chat(usr, "<span class='notice'>Recording stopped.</span>")
 			icon_state = "taperecorderidle"
 			return
 		else if(playing == 1)
@@ -254,5 +254,5 @@
 			icon_state = "taperecorderidle"
 			return
 		else
-			to_chat(usr, "\red Stop what?")
+			to_chat(usr, "<span class='warning'>Stop what?</span>")
 			return

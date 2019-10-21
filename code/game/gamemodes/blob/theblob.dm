@@ -12,6 +12,8 @@
 	var/brute_resist = 4
 	var/fire_resist = 1
 
+	density = TRUE
+	opacity = TRUE
 
 /obj/effect/blob/atom_init()
 	blobs += src
@@ -24,7 +26,7 @@
 /obj/effect/blob/Destroy()
 	blobs -= src
 	if(isturf(loc)) //Necessary because Expand() is retarded and spawns a blob and then deletes it
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 
@@ -40,7 +42,7 @@
 
 /obj/effect/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
-	var/damage = Clamp(0.01 * exposed_temperature / fire_resist, 0, 4 - fire_resist)
+	var/damage = CLAMP(0.01 * exposed_temperature / fire_resist, 0, 4 - fire_resist)
 	if(damage)
 		health -= damage
 		update_icon()
@@ -149,13 +151,13 @@
 
 /obj/effect/blob/attackby(obj/item/weapon/W, mob/user)
 	..()
-	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	var/damage = 0
 	switch(W.damtype)
 		if("fire")
 			damage = (W.force / max(src.fire_resist,1))
-			if(istype(W, /obj/item/weapon/weldingtool))
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			if(iswelder(W))
+				playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 		if("brute")
 			damage = (W.force / max(src.brute_resist,1))
 
@@ -165,8 +167,8 @@
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
 	..()
-	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	src.visible_message("\red <B>The [src.name] has been attacked by \the [M].")
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
+	src.visible_message("<span class='danger'>The [src.name] has been attacked by \the [M].</span>")
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 	if(!damage) // Avoid divide by zero errors
 		return

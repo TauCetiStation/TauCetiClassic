@@ -31,7 +31,7 @@
 		report("Antibodies detected: [antigens2string(C.antibodies)]", user)
 
 /obj/item/device/antibody_scanner/proc/report(text, mob/user)
-	to_chat(user, "\blue [bicon(src)] \The [src] beeps, \"[text]\"")
+	to_chat(user, "<span class='notice'>[bicon(src)] \The [src] beeps, \"[text]\"</span>")
 
 ///////////////VIRUS DISH///////////////
 
@@ -60,7 +60,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(prob(50))
 		to_chat(user, "\The [src] shatters!")
-		message_admins("Virus dish shattered by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>[src.x],[src.y],[src.z]</a>)")
+		message_admins("Virus dish shattered by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) [ADMIN_JMP(src)]")
 		log_game("Virus dish shattered by [user.ckey]([user]) in ([src.x],[src.y],[src.z])")
 		if(virus2.infectionchance > 0)
 			for(var/mob/living/carbon/target in view(1, get_turf(src)))

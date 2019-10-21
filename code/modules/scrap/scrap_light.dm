@@ -12,8 +12,17 @@
 /obj/item/device/flashlight/flare/torch/attackby(obj/item/W, mob/user, params) // ravioli ravioli here comes stupid copypastoli
 	..()
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(is_hot(W))
+	if(W.get_current_temperature())
 		light(user)
+
+/obj/item/device/flashlight/flare/torch/get_current_temperature()
+	if(on)
+		return 1500
+	else
+		return 0
+
+/obj/item/device/flashlight/flare/torch/extinguish()
+	turn_off()
 
 /obj/item/device/flashlight/flare/torch/proc/light(mob/user)
 	// Usual checks
@@ -96,7 +105,7 @@
 		R.use(1)
 		can_buckle = TRUE
 		buckle_require_restraints = TRUE
-		to_chat(user, "<span class='italics'>You add a rod to \the [src].")
+		to_chat(user, "<i>You add a rod to \the [src].</i>")
 		var/image/stake = image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_rod")
 		stake.pixel_y = 16
 		stake.layer = 5
@@ -105,11 +114,11 @@
 			//if("Grill")
 			//	R.use(1)
 			//	grill = TRUE
-			//	to_chat(user, "<span class='italics'>You add a grill to \the [src].")
+			//	to_chat(user, "<i>You add a grill to \the [src].</i>")
 			//	overlays += image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_grill")
 			//else
 			//	return ..()
-	if(is_hot(W))
+	if(W.get_current_temperature())
 		StartBurning()
 /*	if(grill)
 		if(user.a_intent != "hurt" && !(W.flags_1 & ABSTRACT_1))
@@ -120,8 +129,8 @@
 				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 					return
 				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-				W.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-				W.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_x = CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_y = CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 		else */
 	return ..()
 

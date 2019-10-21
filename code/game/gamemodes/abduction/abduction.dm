@@ -25,7 +25,7 @@
 
 /datum/game_mode/abduction/announce()
 	to_chat(world, "<B>The current game mode is - Abduction!</B>")
-	to_chat(world, "There are alien <b>abductors</b> sent to [world.name] to perform nefarious experiments!")
+	to_chat(world, "There are alien <b>abductors</b> sent to [station_name()] to perform nefarious experiments!")
 	to_chat(world, "<b>Abductors</b> - kidnap the crew and replace their organs with experimental ones.")
 	to_chat(world, "<b>Crew</b> - don't get abducted and stop the abductors.")
 
@@ -257,24 +257,27 @@
 			var/datum/objective/objective = team_objectives[team_number]
 			if (con.experiment.points >= objective.target_amount)
 				SSshuttle.incall(0.5)
-				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
-				world << sound('sound/AI/shuttlecalled.ogg')
+				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
 				finished = 1
 				return ..()
 	return ..()
 
 /datum/game_mode/abduction/declare_completion()
-	completion_text += "<B>Abduction mode resume:</B><br>"
+	completion_text += "<h3>Abduction mode resume:</h3>"
 	for(var/team_number in 1 to abductor_teams)
 		var/obj/machinery/abductor/console/console = get_team_console(team_number)
 		var/datum/objective/objective = team_objectives[team_number]
 		var/team_name = team_names[team_number]
 		if(console.experiment.points >= objective.target_amount)
-			completion_text += "<B>[team_name]</B> team managed to <font color='green'><B>complete</B></font> their mission! "
+			mode_result = "win - abductor complete mission"
+			feedback_set_details("round_end_result",mode_result)
+			completion_text += "<b>[team_name]</b> team managed to <span style='color: green; font-weight: bold;'>complete</span> their mission! "
 			completion_text += "[live_check(team_number)]"
 			completion_text += "[pick("Science of Galaxy","Greytide Science")] continues moving forward!<BR>"
 		else
-			completion_text += "<B>[team_name]</B> team <font color='red'>failed</font> their mission."
+			mode_result = "loss - staff stopped abductors"
+			feedback_set_details("round_end_result",mode_result)
+			completion_text += "<b>[team_name]</b> team <span style='color: red; font-weight: bold;'>failed</span> their mission."
 			completion_text += "[live_check(team_number)]"
 			completion_text += "Station crew managed to stop [pick("Science of Galaxy","Greytide Science")].<BR>"
 	..()
@@ -290,9 +293,9 @@
 		if((A.team == team_number) && (A.stat != DEAD))
 			alive++
 	if(alive >= 2)
-		text += "All of them <B>alive</B>. "
+		text += "All of them <b>alive</b>. "
 	else
-		text += "Someone from them is <B>dead</B>. "
+		text += "Someone from them is <b>dead</b>. "
 	return text
 
 /datum/game_mode/proc/auto_declare_completion_abduction()
@@ -300,7 +303,7 @@
 	if(abductors.len)
 		text += printlogo("abductor", "abductors")
 		for(var/team_name in abduction_teams)
-			text += "<BR><FONT size = 4, color = #800080><b>[team_name] members:</B></FONT>"
+			text += "<br><span style='color: #800080; font-weight: bold;'>[team_name] members:</span>"
 
 			for(var/datum/mind/abductor in abductors)
 				if(findtext(abductor.name,team_name))
@@ -311,29 +314,33 @@
 					if(!config.objectives_disabled)
 						for(var/datum/objective/objective in abductor.objectives)
 							if(objective.check_completion())
-								text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+								text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
 								feedback_add_details("abductor_objective","[objective.type]|SUCCESS")
 							else
-								text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+								text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 								feedback_add_details("abductor_objective","[objective.type]|FAIL")
 								abductorwin = 0
 							count++
 
 						if(abductor.current && abductor.current.stat!=2 && abductorwin)
-							text += "<BR><font color='green'><B>The abductor was successful!</B></font>"
+							text += "<br><span style='color: green; font-weight: bold;'>The abductor was successful!</span>"
 							feedback_add_details("abductor_success","SUCCESS")
 							score["roleswon"]++
 						else
-							text += "<BR><font color='red'><B>The abductor has failed!</B></font>"
+							text += "<br><span style='color: red; font-weight: bold;'>The abductor has failed!</span>"
 							feedback_add_details("abductor_success","FAIL")
 
-		text += "<BR>"
+		text += "<br>"
 		if(abductees.len)
-			text += "<BR><B>The abductees were:</B>"
+			text += "<br><b>The abductees were:</b>"
 			for(var/datum/mind/abductee_mind in abductees)
 				text += printplayer(abductee_mind)
 				text += printobjectives(abductee_mind)
-		text += "<BR><HR>"
+
+	if(text)
+		antagonists_completion += list(list("mode" = "abduction", "html" = text))
+		text = "<div class='block'>[text]</div>"
+
 	return text
 
 // Machinery
@@ -352,12 +359,13 @@
 
 /obj/effect/landmark/abductor/console/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/effect/landmark/abductor/console/atom_init_late()
 	var/obj/machinery/abductor/console/c = new /obj/machinery/abductor/console(src.loc)
 	c.team = team
 	c.Initialize()
-
-	return INITIALIZE_HINT_QDEL
+	qdel(src)
 
 /obj/effect/landmark/abductor/agent
 /obj/effect/landmark/abductor/scientist

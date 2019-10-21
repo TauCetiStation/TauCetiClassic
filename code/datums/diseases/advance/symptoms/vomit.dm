@@ -41,15 +41,8 @@ Bonus
 	return
 
 /datum/symptom/vomit/proc/Vomit(mob/living/M)
+	M.vomit()
 
-	M.visible_message("<B>[M]</B> vomits on the floor!")
-
-	M.nutrition -= 20
-	M.adjustToxLoss(-3)
-
-	var/turf/pos = get_turf(M)
-	pos.add_vomit_floor(M)
-	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
 /*
 //////////////////////////////////////
 
@@ -80,15 +73,13 @@ Bonus
 	level = 4
 
 /datum/symptom/vomit/blood/Vomit(mob/living/M)
-
-	M.Stun(1)
-	M.visible_message("<B>[M]</B> vomits on the floor!")
+	M.vomit()
 
 	// They lose blood and health.
 	var/brute_dam = M.getBruteLoss()
 	if(brute_dam < 50)
 		M.adjustBruteLoss(3)
 
-	var/turf/simulated/pos = get_turf(M)
-	pos.add_blood_floor(M)
-	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+	var/turf/simulated/T = get_turf(M)
+	if(istype(T))
+		T.add_blood_floor(M)

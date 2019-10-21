@@ -18,12 +18,12 @@
 
 /obj/item/weapon/handcuffs/attack(mob/living/carbon/C, mob/user)
 	if (!ishuman(user) && !isIAN(user))
-		to_chat(user, "\red You don't have the dexterity to do this!")
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(!istype(C))
 		return
 	if ((CLUMSY in usr.mutations) && prob(50))
-		to_chat(user, "\red Uh ... how do those things work?!")
+		to_chat(user, "<span class='warning'>Uh ... how do those things work?!</span>")
 		place_handcuffs(user, user)
 		return
 	if(!C.handcuffed)
@@ -36,18 +36,18 @@
 			if (G.loc == user && G.state >= GRAB_AGGRESSIVE)
 				place_handcuffs(C, user)
 				return
-		to_chat(user, "\red You need to have a firm grip on [C] before you can put \the [src] on!")
+		to_chat(user, "<span class='warning'>You need to have a firm grip on [C] before you can put \the [src] on!</span>")
 
 /obj/item/weapon/handcuffs/proc/place_handcuffs(mob/living/carbon/target, mob/user)
 	if(user.is_busy(target))
 		return
 
-	playsound(src, cuff_sound, 30, 1, -2)
+	playsound(src, cuff_sound, VOL_EFFECTS_MASTER, 30, null, -2)
 
 	if (ishuman(target) || isIAN(target) || ismonkey(target))
 		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [target.name] ([target.ckey])</font>")
-		msg_admin_attack("[key_name(user)] attempted to handcuff [key_name(target)]")
+		msg_admin_attack("[key_name(user)] attempted to handcuff [key_name(target)]", user)
 
 		if(do_mob(user, target, HUMAN_STRIP_DELAY) && mob_can_equip(target, SLOT_HANDCUFFED))
 			if(!isrobot(user) && !isIAN(user) && user != target)
@@ -77,29 +77,34 @@
 	breakouttime = 300 //Deciseconds = 30s
 	cuff_sound = 'sound/weapons/cablecuff.ogg'
 
+/obj/item/weapon/handcuffs/cable/CheckParts(list/parts_list)
+	..()
+	for(var/obj/item/stack/cable_coil/C in contents)
+		color = C.color
+
 /obj/item/weapon/handcuffs/cable/red
-	color = "#DD0000"
+	color = "#dd0000"
 
 /obj/item/weapon/handcuffs/cable/yellow
-	color = "#DDDD00"
+	color = "#dddd00"
 
 /obj/item/weapon/handcuffs/cable/blue
-	color = "#0000DD"
+	color = "#0000dd"
 
 /obj/item/weapon/handcuffs/cable/green
-	color = "#00DD00"
+	color = "#00dd00"
 
 /obj/item/weapon/handcuffs/cable/pink
-	color = "#DD00DD"
+	color = "#dd00dd"
 
 /obj/item/weapon/handcuffs/cable/orange
-	color = "#DD8800"
+	color = "#dd8800"
 
 /obj/item/weapon/handcuffs/cable/cyan
-	color = "#00DDDD"
+	color = "#00dddd"
 
 /obj/item/weapon/handcuffs/cable/white
-	color = "#FFFFFF"
+	color = "#ffffff"
 
 /obj/item/weapon/handcuffs/cyborg
 	dispenser = 1

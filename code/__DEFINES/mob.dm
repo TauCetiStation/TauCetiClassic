@@ -3,16 +3,23 @@
 #define ORGAN_ATTACHABLE 2
 #define ORGAN_BLEEDING   4
 #define ORGAN_BROKEN     8
-#define ORGAN_DESTROYED  16
-#define ORGAN_ROBOT      32
-#define ORGAN_SPLINTED   64
-#define ORGAN_DEAD       128
-#define ORGAN_MUTATED    256
-#define ORGAN_ARTERY_CUT 512
+#define ORGAN_SPLINTED   16
+#define ORGAN_DEAD       32
+#define ORGAN_MUTATED    64
+#define ORGAN_ARTERY_CUT 128
 
 #define DROPLIMB_EDGE  0
 #define DROPLIMB_BLUNT 1
 #define DROPLIMB_BURN  2
+
+#define DROPLIMB_THRESHOLD_EDGE    5
+#define DROPLIMB_THRESHOLD_TEAROFF 2
+#define DROPLIMB_THRESHOLD_DESTROY 1
+#define ORGAN_DAMAGE_SPILLOVER_MULTIPLIER 0.005
+
+#define BODYPART_ORGANIC   1
+#define BODYPART_ROBOTIC   2
+#define BODYPART_SKELETON  3
 
 // Bodypart defines
 #define BP_CHEST  "chest"
@@ -32,9 +39,6 @@
 #define O_LIVER    "liver"
 #define O_KIDNEYS  "kidneys"
 #define O_APPENDIX "appendix"
-
-#define AGE_MIN 25			//youngest a character can be
-#define AGE_MAX 85			//oldest a character can be
 
 #define LEFT  1
 #define RIGHT 2
@@ -78,8 +82,6 @@
 #define SLIME          "Slime"
 
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
-
-#define ALIEN_SELECT_AFK_BUFFER 1 // How many minutes that a person can be AFK before not being allowed to be an alien.
 
 #define SHOES_SLOWDOWN -1.0			// How much shoes slow you down by default. Negative values speed you up
 
@@ -132,3 +134,7 @@
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
+
+// Indicators.
+#define IND_STAT          "stat"
+#define IND_STAT_NOCLIENT "stat_noclient"

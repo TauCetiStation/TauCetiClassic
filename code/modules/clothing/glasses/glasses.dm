@@ -29,7 +29,7 @@
 				icon_state = initial(icon_state)
 				vision_flags = initial(vision_flags)
 				to_chat(usr, "You activate the optical matrix on the [src].")
-			playsound(src.loc, activation_sound, 10, 0)
+			playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
 			H.update_inv_glasses()
 			H.update_sight()
 
@@ -173,17 +173,15 @@
 	set src in usr
 
 	if(usr.canmove && !usr.stat && !usr.restrained())
-		if(src.up)
-			src.up = !src.up
-			src.flags |= GLASSESCOVERSEYES
-			flags_inv |= HIDEEYES
+		if(up)
+			up = !up
+			flags |= GLASSESCOVERSEYES
 			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
 			to_chat(usr, "You flip \the [src] down to protect your eyes.")
 		else
-			src.up = !src.up
-			src.flags &= ~HEADCOVERSEYES
-			flags_inv &= ~HIDEEYES
+			up = !up
+			flags &= ~GLASSESCOVERSEYES
 			body_parts_covered &= ~EYES
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push \the [src] up out of your face.")
@@ -258,7 +256,7 @@
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	if(istype(src.loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src.loc
-		to_chat(M, "\red The Optical Thermal Scanner overloads and blinds you!")
+		to_chat(M, "<span class='warning'>The Optical Thermal Scanner overloads and blinds you!</span>")
 		if(M.glasses == src)
 			M.eye_blind = 3
 			M.eye_blurry = 5
@@ -353,3 +351,20 @@
 	icon_state = "supergar"
 	item_state = "supergar"
 	toggleable = 0
+
+/obj/item/clothing/glasses/sunglasses/noir
+	name = "noir sunglasses"
+	desc = "Somehow these seem even more out-of-date than normal sunglasses."
+	action_button_name = "Toggle Noir"
+
+/obj/item/clothing/glasses/sunglasses/noir/attack_self(mob/user)
+	toggle_noir()
+
+/obj/item/clothing/glasses/sunglasses/noir/verb/toggle_noir()
+	set name = "Toggle Noir"
+	set category = "Object"
+
+	if(usr.incapacitated())
+		return
+	active = !active
+	to_chat(usr, "<span class='notice'>You toggle the Noire Mode [active ? "on. Let the investigation begin." : "off."]</span>")

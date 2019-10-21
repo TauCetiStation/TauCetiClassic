@@ -10,6 +10,7 @@
 	item_color = "b"
 	var/allow_reagents = 0
 	var/malfunction = 0
+	var/uses = 0
 
 /obj/item/weapon/implant/atom_init()
 	. = ..()
@@ -58,7 +59,7 @@
 	return 0
 
 /obj/item/weapon/implant/proc/meltdown()	//breaks it down, making implant unrecongizible
-	to_chat(imp_in, "\red You feel something melting inside [part ? "your [part.name]" : "you"]!")
+	to_chat(imp_in, "<span class='warning'>You feel something melting inside [part ? "your [part.name]" : "you"]!</span>")
 	if (part)
 		part.take_damage(burn = 15, used_weapon = "Electronics meltdown")
 	else
@@ -73,7 +74,6 @@
 	name = "tracking implant"
 	desc = "Track with this."
 	var/id = 1.0
-
 
 /obj/item/weapon/implant/tracking/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -108,7 +108,6 @@ Implant Specifics:<BR>"}
 	spawn(delay)
 		malfunction--
 
-
 /obj/item/weapon/implant/dexplosive
 	name = "explosive"
 	desc = "And boom goes the weasel."
@@ -127,12 +126,10 @@ Implant Specifics:<BR>"}
 <b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
 	return dat
 
-
 /obj/item/weapon/implant/dexplosive/trigger(emote, source)
 	if(emote == "deathgasp")
 		src.activate("death")
 	return
-
 
 /obj/item/weapon/implant/dexplosive/activate(cause)
 	if((!cause) || (!src.imp_in))	return 0
@@ -182,15 +179,15 @@ Implant Specifics:<BR>"}
 	var/need_gib = null
 	if(istype(imp_in, /mob))
 		var/mob/T = imp_in
-		message_admins("Explosive implant triggered in [T] ([T.key]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>) ")
+		message_admins("Explosive implant triggered in [T] ([T.key]). [ADMIN_JMP(T)]")
 		log_game("Explosive implant triggered in [T] ([T.key]).")
 		need_gib = 1
 
 		if(ishuman(imp_in))
 			if (elevel == "Localized Limb")
 				if(part) //For some reason, small_boom() didn't work. So have this bit of working copypaste.
-					imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!")
-					playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
+					imp_in.visible_message("<span class='warning'>Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!</span>")
+					playsound(src, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER)
 					sleep(25)
 					if (istype(part,/obj/item/organ/external/chest) ||	\
 						istype(part,/obj/item/organ/external/groin) ||	\
@@ -253,8 +250,8 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/explosive/proc/small_boom()
 	if (ishuman(imp_in) && part)
-		imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!")
-		playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
+		imp_in.visible_message("<span class='warning'>Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!</span>")
+		playsound(imp_in, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER)
 		spawn(25)
 			if (ishuman(imp_in) && part)
 				//No tearing off these parts since it's pretty much killing
@@ -267,6 +264,61 @@ Implant Specifics:<BR>"}
 					part.droplimb(null, null, DROPLIMB_BLUNT)
 			explosion(get_turf(imp_in), -1, -1, 2, 3)
 			qdel(src)
+
+/obj/item/weapon/implant/adrenaline
+	name = "adrenaline implant"
+	desc = "Removes all stuns and knockdowns."
+	icon_state = "implant"
+	uses = 3
+
+	action_button_name = "Adrenaline implant"
+	action_button_is_hands_free = TRUE
+
+/obj/item/weapon/implant/adrenaline/get_data()
+	var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> Cybersun Industries Adrenalin Implant<BR>
+<b>Life:</b> Five days.<BR>
+<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
+<HR>
+<b>Implant Details:</b> Subjects injected with implant can activate a massive injection of adrenalin.<BR>
+<b>Function:</b> Contains nanobots to stimulate body to mass-produce Adrenalin.<BR>
+<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
+<b>Integrity:</b> Implant can only be used three times before the nanobots are depleted."}
+	return dat
+
+/obj/item/weapon/implant/adrenaline/ui_action_click()
+	uses--
+	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
+	if(ishuman(imp_in))
+		var/mob/living/carbon/human/H = imp_in
+		H.halloss = 0
+		H.shock_stage = 0
+	imp_in.stat = CONSCIOUS
+	imp_in.SetParalysis(0)
+	imp_in.SetStunned(0)
+	imp_in.SetWeakened(0)
+	imp_in.lying = 0
+	imp_in.update_canmove()
+	imp_in.reagents.add_reagent("hyperzine", 1)
+	imp_in.reagents.add_reagent("stimulants", 4)
+	if (!uses)
+		qdel(src)
+
+/obj/item/weapon/implant/emp
+	name = "emp implant"
+	desc = "Triggers an EMP."
+	icon_state = "emp"
+	uses = 3
+
+	action_button_name = "EMP pulse"
+	action_button_is_hands_free = TRUE
+
+/obj/item/weapon/implant/emp/ui_action_click()
+	uses--
+	empulse(imp_in, 3, 5)
+	if(!uses)
+		qdel(src)
 
 /obj/item/weapon/implant/chem
 	name = "chemical implant"
@@ -331,43 +383,6 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	spawn(20)
 		malfunction--
-
-/obj/item/weapon/implant/adrenalin
-	name = "adrenalin"
-	desc = "Removes all stuns and knockdowns."
-	var/uses
-
-/obj/item/weapon/implant/adrenalin/get_data()
-	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Cybersun Industries Adrenalin Implant<BR>
-<b>Life:</b> Five days.<BR>
-<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
-<HR>
-<b>Implant Details:</b> Subjects injected with implant can activate a massive injection of adrenalin.<BR>
-<b>Function:</b> Contains nanobots to stimulate body to mass-produce Adrenalin.<BR>
-<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
-<b>Integrity:</b> Implant can only be used three times before the nanobots are depleted."}
-	return dat
-
-
-/obj/item/weapon/implant/adrenalin/trigger(emote, mob/source)
-	if (src.uses < 1)	return 0
-	if (emote == "pale")
-		src.uses--
-		to_chat(source, "\blue You feel a sudden surge of energy!")
-		source.SetStunned(0)
-		source.SetWeakened(0)
-		source.SetParalysis(0)
-
-	return
-
-
-/obj/item/weapon/implant/adrenalin/implanted(mob/source)
-	source.mind.store_memory("A implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.", 0)
-	to_chat(source, "The implanted freedom implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.")
-	return 1
-
 
 /obj/item/weapon/implant/death_alarm
 	name = "death alarm implant"

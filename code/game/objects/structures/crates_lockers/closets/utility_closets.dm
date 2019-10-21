@@ -69,7 +69,7 @@
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas/coloured(src)
 	new /obj/item/weapon/tank/oxygen/red(src)
-	new /obj/item/weapon/extinguisher(src)
+	new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
 
 /obj/structure/closet/firecloset/full/PopulateContents()
@@ -77,7 +77,7 @@
 	new /obj/item/clothing/mask/gas/coloured(src)
 	new /obj/item/device/flashlight(src)
 	new /obj/item/weapon/tank/oxygen/red(src)
-	new /obj/item/weapon/extinguisher(src)
+	new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
 
 /obj/structure/closet/firecloset/update_icon()
@@ -123,6 +123,10 @@
 		new /obj/item/device/multitool(src)
 	if(prob(5))
 		new /obj/item/clothing/gloves/yellow(src)
+	if(prob(5))
+		new /obj/item/weapon/storage/pouch/engineering_tools(src)
+	if(prob(1))
+		new /obj/item/weapon/storage/pouch/engineering_supply(src)
 	if(prob(40))
 		if(prob(75))
 			new /obj/item/clothing/head/hardhat/yellow(src)
@@ -193,7 +197,7 @@
 	new /obj/item/clothing/mask/gas/coloured(src)
 	new /obj/item/device/flashlight(src)
 	new /obj/item/weapon/tank/oxygen/red(src)
-	new /obj/item/weapon/extinguisher(src)
+	new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
 
 /*

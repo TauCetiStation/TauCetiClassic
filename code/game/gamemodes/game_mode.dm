@@ -22,15 +22,16 @@
 	var/explosion_in_progress = 0 //sit back and relax
 	var/nar_sie_has_risen = 0 //check, if there is already one god in the world who was summoned (only for tomes)
 	var/completion_text = ""
+	var/mode_result = "undefined"
 	var/list/datum/mind/modePlayer = new
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
-	var/list/protected_jobs = list()	// Jobs that can't be traitors because
+	var/list/protected_jobs = list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor")	// Jobs that can't be traitors because
 	var/required_players = 0
 	var/required_players_secret = 0 //Minimum number of players for that game mode to be chose in Secret
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
-	var/list/restricted_jobs_autotraitor = list("Cyborg", "Security Officer", "Warden")
+	var/list/restricted_jobs_autotraitor = list("Cyborg", "Security Officer", "Warden", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor")
 	var/autotraitor_delay = 15 MINUTES // how often to try to add new traitors.
 	var/role_type = null
 	var/newscaster_announcements = null
@@ -65,7 +66,7 @@ Devices and Tools;
 /obj/item/weapon/storage/box/syndie_kit/space:3:Space Suit;
 /obj/item/clothing/glasses/thermal/syndi:3:Thermal Imaging Glasses;
 /obj/item/device/encryptionkey/binary:3:Binary Translator Key;
-/obj/item/weapon/aiModule/syndicate:7:Hacked AI Upload Module;
+/obj/item/weapon/aiModule/freeform/syndicate:7:Hacked AI Upload Module;
 /obj/item/weapon/plastique:2:C-4 (Destroys walls);
 /obj/item/device/powersink:5:Powersink (DANGER!);
 /obj/item/device/radio/beacon/syndicate:7:Singularity Beacon (DANGER!);
@@ -128,12 +129,21 @@ Implants;
 		send_intercept()
 	start_state = new /datum/station_state()
 	start_state.count(1)
+
+	if(dbcon.IsConnected())
+		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET game_mode = '[sanitize_sql(ticker.mode)]' WHERE id = [round_id]")
+		query_round_game_mode.Execute()
+
 	return 1
 
 
 ///process()
 ///Called by the gameticker
 /datum/game_mode/process()
+	// For objectives such as "Make an example of...", which require mid-game checks for completion
+	for(var/datum/mind/traitor_mind in traitors)
+		for(var/datum/objective/objective in traitor_mind.objectives)
+			objective.check_completion()
 	return 0
 
 
@@ -161,26 +171,27 @@ Implants;
 	for(var/mob/M in player_list)
 		if(M.client)
 			clients++
+			var/area/mob_area = get_area(M)
 			if(ishuman(M))
 				if(!M.stat)
 					surviving_humans++
-					if(M.loc && M.loc.loc && M.loc.loc.type in escape_locations)
+					if(mob_area.type in escape_locations)
 						escaped_humans++
 			if(!M.stat)
 				surviving_total++
-				if(M.loc && M.loc.loc && M.loc.loc.type in escape_locations)
+				if(mob_area.type in escape_locations)
 					escaped_total++
 
-				if(M.loc && M.loc.loc && M.loc.loc.type == /area/shuttle/escape/centcom)
+				if(mob_area.type == /area/shuttle/escape/centcom)
 					escaped_on_shuttle++
 
-				if(M.loc && M.loc.loc && M.loc.loc.type == /area/shuttle/escape_pod1/centcom)
+				if(mob_area.type == /area/shuttle/escape_pod1/centcom)
 					escaped_on_pod_1++
-				if(M.loc && M.loc.loc && M.loc.loc.type == /area/shuttle/escape_pod2/centcom)
+				if(mob_area.type == /area/shuttle/escape_pod2/centcom)
 					escaped_on_pod_2++
-				if(M.loc && M.loc.loc && M.loc.loc.type == /area/shuttle/escape_pod3/centcom)
+				if(mob_area.type == /area/shuttle/escape_pod3/centcom)
 					escaped_on_pod_3++
-				if(M.loc && M.loc.loc && M.loc.loc.type == /area/shuttle/escape_pod5/centcom)
+				if(mob_area.type == /area/shuttle/escape_pod5/centcom)
 					escaped_on_pod_5++
 
 			if(isobserver(M))
@@ -194,8 +205,10 @@ Implants;
 		feedback_set("survived_human",surviving_humans)
 	if(surviving_total > 0)
 		feedback_set("survived_total",surviving_total)
+		score["crew_survived"] = surviving_total
 	if(escaped_humans > 0)
 		feedback_set("escaped_human",escaped_humans)
+		score["crew_escaped"] = escaped_humans
 	if(escaped_total > 0)
 		feedback_set("escaped_total",escaped_total)
 	if(escaped_on_shuttle > 0)
@@ -258,10 +271,10 @@ Implants;
 				var/extra = 8
 				suplink.uses += extra
 				if(man.mind) man.mind.total_TC += extra
-				to_chat(man, "\red We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.")
+				to_chat(man, "<span class='warning'>We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.</span>")
 			else
 				// Give them a warning!
-				to_chat(man, "\red They are on to you!")
+				to_chat(man, "<span class='warning'>They are on to you!</span>")
 
 		// Some poor people who were just in the wrong place at the wrong time..
 		else if(prob(10))
@@ -282,12 +295,10 @@ Implants;
 
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
-	world << sound('sound/AI/commandreport.ogg')
+
+	station_announce(sound = "commandreport")
 
 /*	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-	for(var/mob/M in player_list)
-		if(!isnewplayer(M))
-			M << sound('sound/AI/intercept.ogg')
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)*/
 
@@ -372,7 +383,7 @@ Implants;
 //Reports player logouts//
 //////////////////////////
 /proc/display_roundstart_logout_report()
-	var/msg = "\blue <b>Roundstart logout report\n\n"
+	var/msg = "<span class='notice'><b>Roundstart logout report</b>\n\n</span>"
 	for(var/mob/living/L in living_list)
 
 		if(L.ckey)
@@ -461,9 +472,9 @@ Implants;
 	var/count = 1
 	for(var/datum/objective/objective in ply.objectives)
 		if(objective.check_completion())
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
 		else
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='red'><b>Fail.</b></font>"
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 		count++
 	return text
 
@@ -475,7 +486,7 @@ Implants;
 		var/icon/flat = getFlatIcon(ply.current,exact=1)
 		end_icons += flat
 		tempstate = end_icons.len
-		text += {"<BR><img src="logo_[tempstate].png"> <B>[ply.key]</B> was <B>[ply.name]</B> ("}
+		text += {"<br><img src="logo_[tempstate].png"> <b>[ply.key]</b> was <b>[ply.name]</b> ("}
 		if(ply.current.stat == DEAD)
 			text += "died"
 			flat.Turn(90)
@@ -488,7 +499,7 @@ Implants;
 		var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
 		end_icons += sprotch
 		tempstate = end_icons.len
-		text += {"<BR><img src="logo_[tempstate].png"> <B>[ply.key]</B> was <B>[ply.name]</B> ("}
+		text += {"<br><img src="logo_[tempstate].png"> <b>[ply.key]</b> was <b>[ply.name]</b> ("}
 		text += "body destroyed"
 	text += ")"
 	return text
@@ -499,5 +510,5 @@ Implants;
 	end_icons += logo
 	var/tempstate = end_icons.len
 	var/text = ""
-	text += {"<img src="logo_[tempstate].png"> <B>The [antagname] were:</B> <img src="logo_[tempstate].png">"}
+	text += {"<img src="logo_[tempstate].png"> <b>The [antagname] were:</b> <img src="logo_[tempstate].png">"}
 	return text

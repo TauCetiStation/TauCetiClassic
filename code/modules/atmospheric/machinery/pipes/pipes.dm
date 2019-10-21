@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/pipe
 	can_unwrench = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 	can_buckle = 1
 	buckle_require_restraints = 1
 	buckle_lying = -1

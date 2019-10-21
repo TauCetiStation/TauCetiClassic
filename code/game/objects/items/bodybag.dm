@@ -38,7 +38,7 @@
 			src.name = "body bag"
 	//..() //Doesn't need to run the parent. Since when can fucking bodybags be welded shut? -Agouri
 		return
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(W))
 		to_chat(user, "You cut the tag off the bodybag")
 		src.name = "body bag"
 		src.overlays.Cut()
@@ -105,5 +105,5 @@
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
 	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
-		to_chat(usr, "\red You can't fold that up anymore..")
+		to_chat(usr, "<span class='warning'>You can't fold that up anymore..</span>")
 	..()

@@ -57,7 +57,7 @@
 /obj/structure/cellular_biomass/attack_hand(mob/user)
 	..()
 	user.SetNextMove(CLICK_CD_MELEE)
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	return
 
 /obj/structure/cellular_biomass/attack_paw()
@@ -69,7 +69,7 @@
 /obj/structure/cellular_biomass/attackby(obj/item/weapon/W, mob/user)
 	..()
 	health -= W.force
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	healthcheck()
 	return
 
@@ -103,7 +103,7 @@
 /obj/structure/cellular_biomass/core
 	layer = 3
 	health = 120
-	light_color = "#710F8C"
+	light_color = "#710f8c"
 	light_range = 3
 	icon_state = "light_1"
 

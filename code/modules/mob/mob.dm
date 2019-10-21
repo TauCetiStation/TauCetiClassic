@@ -182,37 +182,20 @@
 	return
 
 /mob/verb/mode()
-	set name = "Activate Held Object"
-	set category = "Object"
-	set src = usr
+	set name = "Click On Held Object"
+	set category = "IC"
 
-	if(istype(loc,/obj/mecha))
+	var/obj/item/W = get_active_hand()
+	if(!W)
 		return
 
-	if(hand)
-		var/obj/item/W = l_hand
-		if(W)
-			W.attack_self(src)
-			update_inv_l_hand()
-	else
-		var/obj/item/W = r_hand
-		if(W)
-			W.attack_self(src)
-			update_inv_r_hand()
-	if(next_move < world.time)
-		next_move = world.time + 2
-	return
+	ClickOn(W)
 
-/*
-/mob/verb/dump_source()
+/mob/verb/click_on_self()
+	set name = "Click On Self"
+	set category = "IC"
 
-	var/master = "<PRE>"
-	for(var/t in typesof(/area))
-		master += text("[]\n", t)
-		//Foreach goto(26)
-	src << browse(master)
-	return
-*/
+	ClickOn(usr)
 
 /mob/verb/memory()
 	set name = "Notes"
@@ -262,9 +245,9 @@
 	if(flavor_text && flavor_text != "")
 		var/msg = flavor_text
 		if(lentext(msg) <= 40)
-			return "\blue [msg]"
+			return "<span class='notice'>[msg]</span>"
 		else
-			return "\blue [copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a>"
+			return "<span class='notice'>[copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a></span>"
 
 //mob verbs are faster than object verbs. See http://www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
 /mob/verb/examinate(atom/A as mob|obj|turf in view())
@@ -316,20 +299,20 @@
 	set category = "OOC"
 
 	if(!abandon_allowed)
-		to_chat(usr, "\blue Respawn is disabled.")
+		to_chat(usr, "<span class='notice'>Respawn is disabled.</span>")
 		return
 	if(stat != DEAD || !ticker)
-		to_chat(usr, "\blue <B>You must be dead to use this!</B>")
+		to_chat(usr, "<span class='notice'><B>You must be dead to use this!</B></span>")
 		return
 	if(ticker && istype(ticker.mode, /datum/game_mode/meteor))
-		to_chat(usr, "\blue Respawn is disabled for this roundtype.")
+		to_chat(usr, "<span class='notice'>Respawn is disabled for this roundtype.</span>")
 		return
 	else
 		var/deathtime = world.time - src.timeofdeath
 		if(istype(src,/mob/dead/observer))
 			var/mob/dead/observer/G = src
 			if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
-				to_chat(usr, "\blue <B>Upon using the antagHUD you forfeighted the ability to join the round.</B>")
+				to_chat(usr, "<span class='notice'><B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
 				return
 		var/deathtimeminutes = round(deathtime / 600)
 		var/pluralcheck = "minute"
@@ -350,7 +333,7 @@
 
 	log_game("[usr.name]/[usr.key] used abandon mob.")
 
-	to_chat(usr, "\blue <B>Make sure to play a different character, and please roleplay correctly!</B>")
+	to_chat(usr, "<span class='notice'><B>Make sure to play a different character, and please roleplay correctly!</B></span>")
 
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
@@ -379,7 +362,7 @@
 	if(client.holder && (client.holder.rights & R_ADMIN))
 		is_admin = TRUE
 	else if(stat != DEAD || isnewplayer(src) || jobban_isbanned(src, "Observer"))
-		to_chat(usr, "\blue You must be observing to use this!")
+		to_chat(usr, "<span class='notice'>You must be observing to use this!</span>")
 		return
 
 	if(is_admin && stat == DEAD)
@@ -477,6 +460,12 @@
 	if(!AM || !src || src == AM || !isturf(AM.loc))	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
 	if(!AM.anchored)
+		if(ismob(AM))
+			var/mob/M = AM
+			if(M.buckled) // If we are trying to pull something that is buckled we will pull the thing its buckled to
+				start_pulling(M.buckled)
+				return
+
 		AM.add_fingerprint(src)
 
 		// If we're pulling something then drop what we're currently pulling and pull this instead.
@@ -561,15 +550,7 @@ value of dizziness ranges from 0 to 1000
 below 100 is not dizzy
 */
 /mob/proc/make_dizzy(amount)
-	if(!istype(src, /mob/living/carbon/human)) // for the moment, only humans get dizzy
-		return
-
-	dizziness = min(1000, dizziness + amount)	// store what will be new value
-													// clamped to max 1000
-	if(dizziness > 100 && !is_dizzy)
-		spawn(0)
-			dizzy_process()
-
+	return
 
 /*
 dizzy process - wiggles the client's pixel offset over time
@@ -594,25 +575,17 @@ note dizziness decrements automatically in the mob's Life() proc.
 // jitteriness - copy+paste of dizziness
 
 /mob/proc/make_jittery(amount)
-	if(!istype(src, /mob/living/carbon/human)) // for the moment, only humans get dizzy
-		return
-
-	jitteriness = min(1000, jitteriness + amount)	// store what will be new value
-													// clamped to max 1000
-	if(jitteriness > 100 && !is_jittery)
-		spawn(0)
-			jittery_process()
-
+	return
 
 // Typo from the oriignal coder here, below lies the jitteriness process. So make of his code what you will, the previous comment here was just a copypaste of the above.
 /mob/proc/jittery_process()
 	is_jittery = TRUE
-	while(jitteriness > 100)
+	while(jitteriness > 30)
 //		var/amplitude = jitteriness*(sin(jitteriness * 0.044 * world.time) + 1) / 70
 //		pixel_x = amplitude * sin(0.008 * jitteriness * world.time)
 //		pixel_y = amplitude * cos(0.008 * jitteriness * world.time)
 
-		var/amplitude = min(4, jitteriness / 100)
+		var/amplitude = min(4, jitteriness / 30)
 		pixel_x = rand(-amplitude, amplitude)
 		pixel_y = rand(-amplitude/3, amplitude/3)
 
@@ -626,9 +599,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 	..()
 
 	if(statpanel("Status"))
+		if(round_id)
+			stat(null, "Round ID: #[round_id]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(client)
 			stat(null, "Your in-game age: [client.player_ingame_age]")
+			stat(null, "Map: [SSmapping.config?.map_name || "Loading..."]")
+			var/datum/map_config/cached = SSmapping.next_map_config
+			if(cached)
+				stat(null, "Next Map: [cached.map_name]")
 			if(client.holder)
 				if(ticker.mode && ticker.mode.config_tag == "malfunction")
 					var/datum/game_mode/malfunction/GM = ticker.mode
@@ -638,7 +617,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 					stat(null, "ETA-[shuttleeta2text()]")
 
 	if(client && client.holder)
-		if((client.holder.rights & R_ADMIN))
+		if(statpanel("Tickets"))
+			global.ahelp_tickets.stat_entry()
+		if(client.holder.rights & R_ADMIN)
 			if(statpanel("MC"))
 				stat("CPU:", "[world.cpu]")
 				if(client.holder.rights & R_DEBUG)
@@ -975,7 +956,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 		src.verbs -= /mob/proc/yank_out_object
 		clear_alert("embeddedobject")
 
-	if(istype(src, /mob/living/carbon/human))
+	embedded -= selection
+
+	if(ishuman(src))
 
 		var/mob/living/carbon/human/H = src
 		var/obj/item/organ/external/BP
@@ -1088,29 +1071,3 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/can_unbuckle(mob/user)
 	return 1
-
-/*
-/mob/living/on_varedit(modified_var)
-	switch(modified_var)
-		if("weakened")
-			SetWeakened(weakened)
-		if("stunned")
-			SetStunned(stunned)
-		if("paralysis")
-			SetParalysis(paralysis)
-		if("sleeping")
-			SetSleeping(sleeping)
-		if("eye_blind")
-			set_blindness(eye_blind)
-		if("eye_damage")
-			set_eye_damage(eye_damage)
-		if("eye_blurry")
-			set_blurriness(eye_blurry)
-		if("ear_deaf")
-			setEarDamage(-1, ear_deaf)
-		if("ear_damage")
-			setEarDamage(ear_damage, -1)
-		if("maxHealth")
-			updatehealth()
-		if("resize")
-			update_transform()*/

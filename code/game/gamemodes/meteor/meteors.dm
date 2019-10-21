@@ -52,8 +52,9 @@
 				endy = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE)
 				endx = world.maxx - TRANSITIONEDGE
 
-		pickedstart = locate(startx, starty, ZLEVEL_STATION)
-		pickedgoal = locate(endx, endy, ZLEVEL_STATION)
+		var/picked_zlevel = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
+		pickedstart = locate(startx, starty, picked_zlevel)
+		pickedgoal = locate(endx, endy, picked_zlevel)
 		max_i--
 		if(max_i <= 0)
 			return
@@ -99,10 +100,10 @@
 	if(A)
 		var/turf/T = get_turf(A)
 		var/area/T_area = get_area(T)
-		message_admins("<span class='warning'>[src] hit [A] in [T_area] ([ADMIN_JMP(T)]).</span>")
+		message_admins("<span class='warning'>[src] hit [A] in [T_area] [ADMIN_JMP(T)].</span>")
 		log_game("[src] hit [A] ([T.x], [T.y], [T.z]) in [T_area].")
 		A.meteorhit(src)
-		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
+		playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER)
 	if(--src.hits <= 0)
 
 		// Prevent meteors from blowing up the singularity's containment.
@@ -134,20 +135,20 @@
 	if(!istype(A, /obj/machinery/power/emitter) && \
 		!istype(A, /obj/machinery/field_generator))
 		if(--src.hits <= 0)
-			playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
+			playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER)
 			qdel(src) // Dont blow up singularity containment if we get stuck there.
 			return
 	if(A)
 		var/turf/F = get_turf(A)
 		var/area/T_area = get_area(F)
-		message_admins("<span class='warning'>[src] hit [A]  in [T_area] ([ADMIN_JMP(F)]).</span>")
+		message_admins("<span class='warning'>[src] hit [A]  in [T_area] [ADMIN_JMP(F)].</span>")
 		log_game("[src] hit [A] ([F.x], [F.y], [F.z]) in [T_area].")
 		for(var/mob/M in player_list)
 			var/turf/T = get_turf(M)
 			if(!T || T.z != src.z)
 				continue
 			shake_camera(M, 3, get_dist(M.loc, src.loc) > 20 ? 1 : 3)
-			playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
+			playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER)
 		explosion(src.loc, 0, 1, 2, 3, 0)
 
 	if(--src.hits <= 0)

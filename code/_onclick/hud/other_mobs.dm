@@ -97,7 +97,7 @@
 	if(!E.host)
 		return
 	if(!(E.flags_allowed & ESSENCE_SELF_VOICE))
-		to_chat(E, "<span class='userdanger'>Your host forbade you speaking with your voice")
+		to_chat(E, "<span class='userdanger'>Your host forbade you speaking with your voice.</span>")
 		return
 	if(E.self_voice)
 		icon_state = "voice_off"
@@ -110,7 +110,7 @@
 	if(!E.host)
 		return
 	if(!(E.flags_allowed & ESSENCE_PHANTOM))
-		to_chat(E, "<span class='userdanger'>Your host forbade you own phantom")
+		to_chat(E, "<span class='userdanger'>Your host forbade you own phantom.</span>")
 		return
 	if(E.phantom.showed)
 		E.phantom.hide_phantom()

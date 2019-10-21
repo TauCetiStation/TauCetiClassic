@@ -201,7 +201,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 /datum/asset/simple/paper
 	assets = list(
-		"paper_dickbutt.png" = 'icons/paper_icons/dickbutt.png'
+		"paper_dickbutt.png" = 'icons/paper_icons/dickbutt.png',
+		"bluentlogo.png" = 'icons/paper_icons/bluentlogo.png'
 	)
 
 /datum/asset/simple/chess

@@ -33,7 +33,7 @@
 
 /obj/item/decoration/garland/atom_init()
 	. = ..()
-	light_color = pick("#FF0000", "#6111FF", "#FFA500", "#44FAFF")
+	light_color = pick("#ff0000", "#6111ff", "#ffa500", "#44faff")
 	update_garland()
 
 /obj/item/decoration/garland/attack_self(mob/user)
@@ -120,7 +120,7 @@
 			// Center the icon where the user clicked.
 			W.pixel_x = (text2num(click_params["icon-x"]) - 16)
 			W.pixel_y = (text2num(click_params["icon-y"]) - 16)
-			if(istype(W,/obj/item/weapon/organ/head))
+			if(istype(W, /obj/item/organ/external/head))
 				W.pixel_y -= 10 // Head always has 10 pixels shift
 				W.dir = 2 // Rotate head face to us
 				W.transform = turn(null, null)	//Turn it to initial angle

@@ -22,6 +22,11 @@
 
 	assembly_type = /obj/structure/door_assembly/door_assembly_med
 
+/obj/machinery/door/airlock/virology
+	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
+
+	assembly_type = /obj/structure/door_assembly/door_assembly_viro
+
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance access"
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
@@ -79,6 +84,10 @@
 	glass   = TRUE
 
 /obj/machinery/door/airlock/medical/glass
+	opacity = FALSE
+	glass   = TRUE
+
+/obj/machinery/door/airlock/virology/glass
 	opacity = FALSE
 	glass   = TRUE
 

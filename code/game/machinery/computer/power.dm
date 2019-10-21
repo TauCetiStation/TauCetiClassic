@@ -8,7 +8,7 @@
 	light_color = "#ffcc33"
 	density = 1
 	anchored = 1
-	use_power = 2
+	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 80
 	circuit = /obj/item/weapon/circuitboard/powermonitor
@@ -50,7 +50,7 @@
 	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
 	if(!powernet)
-		t += "\red No connection"
+		t += "<span class='warning'>No connection</span>"
 	else
 
 		var/list/L = list()

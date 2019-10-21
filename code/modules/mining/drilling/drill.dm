@@ -1,7 +1,7 @@
 /obj/machinery/mining
 	icon = 'icons/obj/mining_drill.dmi'
 	anchored = 0
-	use_power = 0         //The drill takes power directly from a cell.
+	use_power = NO_POWER_USE         //The drill takes power directly from a cell.
 	density = 1
 	layer = MOB_LAYER+0.1 //So it draws over mobs in the tile north of it.
 
@@ -373,7 +373,7 @@
 
 /obj/machinery/mining/drill/proc/cut_hand(mob/user)
 	if(!ishuman(user)) // no hand no cut
-		to_chat(user, "<span class='danger'> You feel, that [src] want to cut your arm")
+		to_chat(user, "<span class='danger'>You feel, that [src] want to cut your arm</span>")
 		return 0
 
 	var/mob/living/carbon/human/H = user
@@ -383,15 +383,15 @@
 		return
 
 	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, "melee")/2, 1)
-	to_chat(H, "<span class='danger'> You feel, that [src] try to cut your [BP]!")
+	to_chat(H, "<span class='danger'>You feel, that [src] try to cut your [BP]!</span>")
 
-	if(BP.status & ORGAN_DESTROYED)
+	if(BP.is_stump)
 		return
 
 	BP = BP.parent
 
 	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, "melee")/2, 1)
-	to_chat(H, "<span class='danger'> You feel, that [src] try to cut your [BP]!")
+	to_chat(H, "<span class='danger'>You feel, that [src] try to cut your [BP]!</span>")
 
 /obj/machinery/mining/drill/update_icon()
 	if(need_player_check)

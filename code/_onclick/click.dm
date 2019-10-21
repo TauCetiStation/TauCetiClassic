@@ -72,16 +72,17 @@
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
 		return
+	if(HardsuitClickOn(A))
+		return
 
 	if(stat || paralysis || stunned || weakened)
 		return
 
 	face_atom(A) // change direction to face what you clicked on
-
 	if(next_move > world.time) // in the year 2000...
 		return
 
-	if(istype(loc,/obj/mecha))
+	if(istype(loc, /obj/mecha))
 		if(!locate(/turf) in list(A, A.loc)) // Prevents inventory from being drilled
 			return
 		var/obj/mecha/M = loc
@@ -95,17 +96,13 @@
 		throw_item(A)
 		return
 
-	if(!istype(A,/obj/item/weapon/gun) && !isturf(A) && !istype(A,/obj/screen))
+	if(!istype(A, /obj/item/weapon/gun) && !isturf(A) && !istype(A, /obj/screen))
 		last_target_click = world.time
 
 	var/obj/item/W = get_active_hand()
-
 	if(W == A)
 		W.attack_self(src)
-		if(hand)
-			update_inv_l_hand()
-		else
-			update_inv_r_hand()
+		W.update_inv_mob()
 		return
 
 	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
@@ -114,8 +111,7 @@
 
 		// No adjacency needed
 		if(W)
-
-			var/resolved = A.attackby(W,src,params)
+			var/resolved = A.attackby(W, src, params)
 			if(!resolved && A && W)
 				W.afterattack(A, src, 1, params) // 1 indicates adjacency
 		else
@@ -143,9 +139,9 @@
 			else
 				RangedAttack(A, params)
 
-// Default behavior: ignore double clicks, consider them normal clicks instead
+// Default behavior: ignore double clicks (don't add normal clicks, as it will do three clicks instead of two with double).
 /mob/proc/DblClickOn(atom/A, params)
-	ClickOn(A,params)
+	return
 
 
 //	Translates into attack_hand, etc.
@@ -204,6 +200,9 @@
 	This is overridden in ai.dm
 */
 /mob/proc/ShiftClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && I.ShiftClickAction(A, src))
+		return
 	A.ShiftClick(src)
 	return
 /atom/proc/ShiftClick(mob/user)
@@ -215,7 +214,12 @@
 	Ctrl click
 	For most objects, pull
 */
+
+
 /mob/proc/CtrlClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && I.CtrlClickAction(A, src))
+		return
 	A.CtrlClick(src)
 	return
 
@@ -228,9 +232,11 @@
 
 /*
 	Alt click
-	Unused except for AI
 */
 /mob/proc/AltClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && I.AltClickAction(A, src))
+		return
 	A.AltClick(src)
 	return
 
@@ -242,7 +248,6 @@
 		else
 			user.listed_turf = T
 			user.client.statpanel = T.name
-	return
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.AdjacentQuick(src)
@@ -252,6 +257,9 @@
 	Unused except for AI
 */
 /mob/proc/CtrlShiftClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && I.CtrlShiftClickAction(A, src))
+		return
 	A.CtrlShiftClick(src)
 	return
 
@@ -274,7 +282,7 @@
 		SetNextMove(CLICK_CD_MELEE)
 		var/obj/item/projectile/beam/LE = new (loc)
 		LE.damage = 20
-		playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
+		playsound(src, 'sound/weapons/guns/gunpulse_taser2.ogg', VOL_EFFECTS_MASTER)
 		LE.Fire(A, src)
 		nutrition = max(nutrition - rand(10, 40), 0)
 		handle_regular_hud_updates()

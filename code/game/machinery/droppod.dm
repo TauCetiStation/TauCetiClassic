@@ -294,7 +294,7 @@
 	intruder.client.eye = eyeobj
 
 /obj/structure/droppod/proc/ChooseTarget()
-	if(!eyeobj || eyeobj.z == ZLEVEL_CENTCOMM)
+	if(!eyeobj || is_centcom_level(eyeobj.z))
 		return
 	var/turf/teleport_turf = get_turf(eyeobj.loc)
 	if(teleport_turf.obscured)
@@ -355,7 +355,7 @@
 
 /obj/structure/droppod/proc/StartDrop()
 	verbs -= /obj/structure/droppod/verb/Start_Verb
-	playsound(src, 'sound/effects/drop_start.ogg', 100, 2)
+	playsound(src, 'sound/effects/drop_start.ogg', VOL_EFFECTS_MASTER)
 	flags |= STATE_DROPING
 	density = FALSE
 	opacity = FALSE
@@ -377,7 +377,7 @@
 		shake_camera(M, 2, 2)
 	for(var/turf/simulated/floor/T in RANGE_TURFS(1, src))
 		T.break_tile_to_plating()
-	playsound(loc, 'sound/effects/drop_land.ogg', 100, 2)
+	playsound(src, 'sound/effects/drop_land.ogg', VOL_EFFECTS_MASTER)
 	density = TRUE
 	opacity = TRUE
 	AimTarget = null
@@ -401,7 +401,7 @@
 		to_chat(user, "<span class ='userdanger'>[src] is lock down!</span>")
 		return
 
-	if(istype(O, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(O))
 		if(flags & ADVANCED_AIMING_INSTALLED)
 			if(flags & STATE_AIMING)
 				CancelAdvancedAiming()
@@ -412,16 +412,16 @@
 		else
 			to_chat(user, "<span class ='notice'>Advanced aiming system does not installed in [src]!</span>")
 
-	else if(istype(O, /obj/item/weapon/weldingtool))
+	else if(iswelder(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(obj_integrity < max_integrity && WT.remove_fuel(0, user))
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		if(obj_integrity < max_integrity && WT.use(0, user))
+			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 			obj_integrity = min(obj_integrity + 10, max_integrity)
 			visible_message("<span class='notice'>[user] has repaired some dents on [src]!</span>")
 
 	else if(user.a_intent == "hurt" || (O.flags & ABSTRACT))
-		playsound(src, 'sound/weapons/smash.ogg', 50, 1)
+		playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
 		user.SetNextMove(CLICK_CD_MELEE)
 		take_damage(O.force)
 		return ..()
@@ -494,7 +494,7 @@
 
 /obj/structure/droppod/bullet_act(obj/item/projectile/Proj)
 	if((Proj.damage && Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='danger'>[src] was hit by [Proj].</span>")
 		take_damage(Proj.damage)
 		if(!(flags & IS_LOCKED))
@@ -511,7 +511,7 @@
 
 /obj/structure/droppod/attack_animal(mob/living/simple_animal/M)
 	..()
-	playsound(src, 'sound/effects/bang.ogg', 50, 1)
+	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 	take_damage(rand(M.melee_damage_lower, M.melee_damage_upper))
 
 /********Stats********/
@@ -598,7 +598,7 @@
 				<div class='wr'>
 				<div class='header'>Storage</div>
 				<div class='links'>
-				<a href='?src=\ref[src];eject_items=1'>Eject Items</span><br>
+				<a href='?src=\ref[src];eject_items=1'>Eject Items<br>
 				[Stored_Nuclear ? "<a href='?src=\ref[src];nuclear=1'>Eject Nuclear</a><br>" : null]</a><br>
 				[second_intruder ? "<a href='?src=\ref[src];eject_passenger=1'>Eject Passenger</a><br>" : null]</a><br>
 				</div>
@@ -754,7 +754,7 @@
 /obj/item/device/drop_caller/attack_self(mob/user)
 	if(!iscarbon(user))
 		return
-	playsound(src, 'sound/effects/drop_start.ogg', 100, 2)
+	playsound(src, 'sound/effects/drop_start.ogg', VOL_EFFECTS_MASTER)
 	var/obj/spawn_drop = new drop_type(get_turf(user))
 	spawn_drop.pixel_x = rand(-150, 150)
 	spawn_drop.pixel_y = 500
@@ -782,7 +782,7 @@
 	if(chosen_place)
 		chosen_place.pods_spawned += 6
 		var/obj/spawn_drop = new drop_type(chosen_place.loc)
-		playsound(src, 'sound/effects/drop_start.ogg', 100, 2)
+		playsound(src, 'sound/effects/drop_start.ogg', VOL_EFFECTS_MASTER)
 		spawn_drop.pixel_x = rand(-150, 150)
 		spawn_drop.pixel_y = 500
 		animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)

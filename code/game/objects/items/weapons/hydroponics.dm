@@ -52,10 +52,10 @@
 					else
 						S.item_quants[G.name] = 1
 				else
-					to_chat(user, "\blue The seed bag is full.")
+					to_chat(user, "<span class='notice'>The seed bag is full.</span>")
 					S.updateUsrDialog()
 					return
-			to_chat(user, "\blue You pick up all the seeds.")
+			to_chat(user, "<span class='notice'>You pick up all the seeds.</span>")
 		else
 			if (S.contents.len < S.capacity)
 				S.contents += src;
@@ -64,7 +64,7 @@
 				else
 					S.item_quants[name] = 1
 			else
-				to_chat(user, "\blue The seed bag is full.")
+				to_chat(user, "<span class='notice'>The seed bag is full.</span>")
 		S.updateUsrDialog()
 	return
 
@@ -126,8 +126,8 @@
  */
 
 /obj/item/weapon/grown/sunflower/attack(mob/M, mob/user)
-	to_chat(M, "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>")
-	to_chat(user, "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>")
+	to_chat(M, "<font color='green'><b>[user]</b> smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER</b></font>")
+	to_chat(user, "<font color='green'>Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>")
 
 
 /*
@@ -135,7 +135,7 @@
  */
 /obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user)
 	if(!user.gloves)
-		to_chat(user, "\red The nettle burns your bare hand!")
+		to_chat(user, "<span class='warning'>The nettle burns your bare hand!</span>")
 		if(istype(user, /mob/living/carbon/human))
 			var/obj/item/organ/external/BP = user.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
 			BP.take_damage(0, force)
@@ -146,7 +146,7 @@
 	if(!proximity) return
 	if(force > 0)
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
-		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	else
 		to_chat(usr, "All the leaves have fallen off the nettle from violent whacking.")
 		qdel(src)
@@ -168,18 +168,18 @@
 			user.take_bodypart_damage(0, force)
 		if(prob(50))
 			user.Paralyse(5)
-			to_chat(user, "\red You are stunned by the Deathnettle when you try picking it up!")
+			to_chat(user, "<span class='warning'>You are stunned by the Deathnettle when you try picking it up!</span>")
 
 /obj/item/weapon/grown/deathnettle/attack(mob/living/carbon/M, mob/user)
 	if(!..()) return
 	if(istype(M, /mob/living))
-		to_chat(M, "\red You are stunned by the powerful acid of the Deathnettle!")
+		to_chat(M, "<span class='warning'>You are stunned by the powerful acid of the Deathnettle!</span>")
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had the [src.name] used on them by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] on [M.name] ([M.ckey])</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] on [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] on [M.name] ([M.ckey])", user)
 
-		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 
 		M.eye_blurry += force/7
 		if(prob(20))

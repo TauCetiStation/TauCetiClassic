@@ -56,7 +56,7 @@
 
 	if(on)
 		on = 0
-		to_chat(user, "\blue You turn off the light")
+		to_chat(user, "<span class='notice'>You turn off the light</span>")
 		set_light(0)
 	else
 		if(!cell)
@@ -64,14 +64,14 @@
 		if(cell.charge <= 0)
 			return
 		on = 1
-		to_chat(user, "\blue You turn on the light")
+		to_chat(user, "<span class='notice'>You turn on the light</span>")
 		set_light(brightness_on)
 
 	updateicon()
 
 
 /obj/machinery/floodlight/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/screwdriver))
+	if (isscrewdriver(W))
 		if (!open)
 			if(unlocked)
 				unlocked = 0
@@ -80,7 +80,7 @@
 				unlocked = 1
 				to_chat(user, "You unscrew the battery panel.")
 
-	if (istype(W, /obj/item/weapon/crowbar))
+	if (iscrowbar(W))
 		if(unlocked)
 			if(open)
 				open = 0

@@ -84,14 +84,14 @@
 // bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
 // Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
 // The values here should add up to 1.
-// arms and legs 7.5%, each of the torso parts has 15% and the head has 30%
+// arms and legs 10%, each of the torso parts has 15% and the head has 30%
 #define THERMAL_PROTECTION_HEAD			0.3
 #define THERMAL_PROTECTION_UPPER_TORSO	0.15
 #define THERMAL_PROTECTION_LOWER_TORSO	0.15
-#define THERMAL_PROTECTION_LEG_LEFT		0.075
-#define THERMAL_PROTECTION_LEG_RIGHT	0.075
-#define THERMAL_PROTECTION_ARM_LEFT		0.075
-#define THERMAL_PROTECTION_ARM_RIGHT	0.075
+#define THERMAL_PROTECTION_LEG_LEFT		0.1
+#define THERMAL_PROTECTION_LEG_RIGHT	0.1
+#define THERMAL_PROTECTION_ARM_LEFT		0.1
+#define THERMAL_PROTECTION_ARM_RIGHT	0.1
 
 // Suit sensor levels
 #define SUIT_SENSOR_OFF      0
@@ -117,3 +117,16 @@
 #define REACTION_HIT_BY_BULLET 5
 #define REACTION_ATACKED 6
 #define REACTION_THROWITEM 7
+
+// Hardsuit mount places. Used to limit subtypes of the same module
+#define MODULE_MOUNT_AI 				1
+#define MODULE_MOUNT_GRENADELAUNCHER 	2
+#define MODULE_MOUNT_SHOULDER_RIGHT 	4
+#define MODULE_MOUNT_SHOULDER_LEFT 		8
+#define MODULE_MOUNT_INJECTOR 			16
+#define MODULE_MOUNT_CHEST 				32
+
+// Rig module damage levels
+#define MODULE_NO_DAMAGE 0
+#define MODULE_DAMAGED 1
+#define MODULE_DESTROYED 2

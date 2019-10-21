@@ -12,12 +12,54 @@
 	var/behind = null
 	var/behind_buckled = null
 
+	var/roll_sound = null // Janicart and office chair use this when moving.
+
 /obj/structure/stool/bed/chair/atom_init()
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/stool/bed/chair/atom_init_late()
 	handle_rotation()
+
+/obj/structure/stool/bed/chair/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
+	if(buckled_mob)
+		var/mob/living/occupant = buckled_mob
+		if(occupant && (src.loc != occupant.loc))
+			if(propelled)
+				for(var/mob/O in src.loc)
+					if(O != occupant)
+						Bump(O)
+			else
+				unbuckle_mob()
+	else if(has_gravity(src) && roll_sound)
+		playsound(src, roll_sound, VOL_EFFECTS_MASTER)
+	handle_rotation()
+
+/obj/structure/stool/bed/chair/Bump(atom/A)
+	..()
+	if(!buckled_mob)
+		return
+
+	if(propelled)
+		on_propelled_bump(A)
+
+/obj/structure/stool/bed/chair/proc/on_propelled_bump(atom/A)
+	var/mob/living/occupant = unbuckle_mob()
+	. = occupant
+	occupant.throw_at(A, 3, propelled)
+	shake_camera(occupant, 1, 1)
+	occupant.apply_effect(6, STUN, 0)
+	occupant.apply_effect(6, WEAKEN, 0)
+	occupant.apply_effect(12, STUTTER, 0)
+	playsound(src, 'sound/weapons/punch1.ogg', VOL_EFFECTS_MASTER)
+	if(istype(A, /mob/living))
+		var/mob/living/victim = A
+		victim.apply_effect(6, STUN, 0)
+		victim.apply_effect(6, WEAKEN, 0)
+		victim.apply_effect(12, STUTTER, 0)
+		victim.take_bodypart_damage(10)
+	occupant.visible_message("<span class='danger'>[occupant] crashed into \the [A]!</span>")
 
 /obj/structure/stool/bed/chair/attackby(obj/item/weapon/W, mob/user)
 	..()
@@ -28,7 +70,7 @@
 			return
 		user.drop_item()
 		var/obj/structure/stool/bed/chair/e_chair/E = new /obj/structure/stool/bed/chair/e_chair(src.loc)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		E.dir = dir
 		E.part = SK
 		SK.loc = E
@@ -42,7 +84,7 @@
 			flip_time = 60	//6 sec with
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(!flipped)
-			user.visible_message("<span class='notice'>[usr] flips \the [src] down.</span>","<span class='notice'>You flips \the [src] down.")
+			user.visible_message("<span class='notice'>[usr] flips \the [src] down.</span>","<span class='notice'>You flips \the [src] down.</span>")
 			flip()
 			if(buckled_mob && !buckled_mob.restrained())
 				var/mob/living/L = buckled_mob
@@ -50,7 +92,7 @@
 				L.apply_effect(2, WEAKEN, 0)
 				L.apply_damage(3, BRUTE, BP_HEAD)
 		else if(!user.is_busy() && do_after(user, flip_time, target = usr))
-			user.visible_message("<span class='notice'>[user] flips \the [src] up.</span>","<span class='notice'>You flips \the [src] up.")
+			user.visible_message("<span class='notice'>[user] flips \the [src] up.</span>","<span class='notice'>You flips \the [src] up.</span>")
 			flip()
 	else
 		..()
@@ -89,21 +131,18 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(config.ghost_interaction)
-		src.dir = turn(src.dir, 90)
-		handle_rotation()
+	if(!config.ghost_interaction && isobserver(usr))
 		return
-	else
-		if(ismouse(usr))
-			return
-		if(!usr || !isturf(usr.loc))
-			return
-		if(usr.incapacitated())
-			return
+	if(ismouse(usr))
+		return
+	if(!usr || !isturf(usr.loc))
+		return
+	if(usr.incapacitated())
+		return
 
-		src.dir = turn(src.dir, 90)
-		handle_rotation()
-		return
+	src.dir = turn(src.dir, 90)
+	handle_rotation()
+	return
 
 /obj/structure/stool/bed/chair/post_buckle_mob(mob/living/M)
 	. = ..()
@@ -139,7 +178,7 @@
 		flipped = 1
 		anchored = 0		// can be pulled
 		buckle_movable = 0
-		playsound(src.loc, 'sound/items/chair_fall.ogg', 25, 1)
+		playsound(src, 'sound/items/chair_fall.ogg', VOL_EFFECTS_MASTER, 25)
 	else
 		M.TurnTo(flip_angle,0)
 		flipped = 0
@@ -147,10 +186,6 @@
 		buckle_movable = initial(buckle_movable)
 
 	animate(src, transform = M, pixel_y = offset_y, pixel_x = offset_x, time = 2, easing = EASE_IN|EASE_OUT)
-	handle_rotation()
-
-/obj/structure/stool/bed/chair/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	. = ..()
 	handle_rotation()
 
 /obj/structure/stool/bed/chair/barber
@@ -214,8 +249,8 @@
 	desc = "Old is never too old to not be in fashion."
 
 /obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	if(iswrench(W))
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/wood(loc)
 		qdel(src)
@@ -228,8 +263,8 @@
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
-			playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(loc, "sparks", 50, 1)
+			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
 			new /obj/item/stack/sheet/wood(loc)
 			qdel(src)
@@ -273,37 +308,7 @@
 	buckle_movable = 1
 	can_flipped = 1
 
-/obj/structure/stool/bed/chair/office/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	. = ..()
-	if(buckled_mob)
-		var/mob/living/occupant = buckled_mob
-		if (occupant && (src.loc != occupant.loc))
-			if (propelled)
-				for (var/mob/O in src.loc)
-					if (O != occupant)
-						Bump(O)
-			else
-				unbuckle_mob()
-	handle_rotation()
-
-/obj/structure/stool/bed/chair/office/Bump(atom/A)
-	..()
-	if(!buckled_mob)	return
-
-	if(propelled)
-		var/mob/living/occupant = unbuckle_mob()
-		occupant.throw_at(A, 3, propelled)
-		occupant.apply_effect(6, STUN, 0)
-		occupant.apply_effect(6, WEAKEN, 0)
-		occupant.apply_effect(6, STUTTER, 0)
-		playsound(src.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
-		if(istype(A, /mob/living))
-			var/mob/living/victim = A
-			victim.apply_effect(6, STUN, 0)
-			victim.apply_effect(6, WEAKEN, 0)
-			victim.apply_effect(6, STUTTER, 0)
-			victim.take_bodypart_damage(10)
-		occupant.visible_message("<span class='danger'>[occupant] crashed into \the [A]!</span>")
+	roll_sound = 'sound/effects/roll.ogg'
 
 /obj/structure/stool/bed/chair/office/light
 	icon_state = "officechair_white"

@@ -74,7 +74,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(iscrowbar(I))
 		if(anchored == 2)
 			to_chat(user, "Unscrew the hoses first!")
 			return
@@ -428,13 +428,13 @@
 					syr.update_icon()
 			else if(istype(reagent_source, /obj/item/weapon/reagent_containers/spray))
 				visible_message("<span class='notice'>[user] sprays [target] with [reagent_source].</span>")
-				playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
+				playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 			else if(reagent_source.amount_per_transfer_from_this) // Droppers, cans, beakers, what have you.
 				visible_message("<span class='notice'>[user] uses [reagent_source] on [target].</span>")
 
 			// Beakers, bottles, buckets, etc.  Can't use is_open_container though.
 			if(istype(reagent_source, /obj/item/weapon/reagent_containers/glass))
-				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+				playsound(src, 'sound/effects/slosh.ogg', VOL_EFFECTS_MASTER, 25)
 
 		// There needs to be a good amount of mutagen to actually work
 		if(S.has_reagent("mutagen", 5))
@@ -630,27 +630,27 @@
 	else if (istype(O, /obj/item/device/plant_analyzer))
 		if(planted && myseed)
 			to_chat(user, "*** <B>[myseed.plantname]</B> ***")//Carn: now reports the plants growing, not the seeds.
-			to_chat(user, "-Plant Age: \blue [age]")
-			to_chat(user, "-Plant Endurance: \blue [myseed.endurance]")
-			to_chat(user, "-Plant Lifespan: \blue [myseed.lifespan]")
+			to_chat(user, "-Plant Age: <span class='notice'>[age]</span>")
+			to_chat(user, "-Plant Endurance: <span class='notice'>[myseed.endurance]</span>")
+			to_chat(user, "-Plant Lifespan: <span class='notice'>[myseed.lifespan]</span>")
 			if(myseed.yield != -1)
-				to_chat(user, "-Plant Yield: \blue [myseed.yield]")
-			to_chat(user, "-Plant Production: \blue [myseed.production]")
+				to_chat(user, "-Plant Yield: <span class='notice'>[myseed.yield]</span>")
+			to_chat(user, "-Plant Production: <span class='notice'>[myseed.production]</span>")
 			if(myseed.potency != -1)
-				to_chat(user, "-Plant Potency: \blue [myseed.potency]")
-			to_chat(user, "-Weed level: \blue [weedlevel]/10")
-			to_chat(user, "-Pest level: \blue [pestlevel]/10")
-			to_chat(user, "-Toxicity level: \blue [toxic]/100")
-			to_chat(user, "-Water level: <span class='notice'> [waterlevel]/[maxwater]</span>")
-			to_chat(user, "-Nutrition level: <span class='notice'> [nutrilevel]/[maxnutri]</span>")
+				to_chat(user, "-Plant Potency: <span class='notice'>[myseed.potency]</span>")
+			to_chat(user, "-Weed level: <span class='notice'>[weedlevel]/10</span>")
+			to_chat(user, "-Pest level: <span class='notice'>[pestlevel]/10</span>")
+			to_chat(user, "-Toxicity level: <span class='notice'>[toxic]/100</span>")
+			to_chat(user, "-Water level: <span class='notice'>[waterlevel]/[maxwater]</span>")
+			to_chat(user, "-Nutrition level: <span class='notice'>[nutrilevel]/[maxnutri]</span>")
 			to_chat(user, "")
 		else
 			to_chat(user, "<B>No plant found.</B>")
-			to_chat(user, "-Weed level: \blue [weedlevel]/10")
-			to_chat(user, "-Pest level: \blue [pestlevel]/10")
-			to_chat(user, "-Toxicity level: \blue [toxic]/100")
-			to_chat(user, "-Water level: <span class='notice'> [waterlevel]/[maxwater]</span>")
-			to_chat(user, "-Nutrition level: <span class='notice'> [nutrilevel]/[maxnutri]</span>")
+			to_chat(user, "-Weed level: <span class='notice'>[weedlevel]/10</span>")
+			to_chat(user, "-Pest level: <span class='notice'>[pestlevel]/10</span>")
+			to_chat(user, "-Toxicity level: <span class='notice'>[toxic]/100</span>")
+			to_chat(user, "-Water level: <span class='notice'>[waterlevel]/[maxwater]</span>")
+			to_chat(user, "-Nutrition level: <span class='notice'>[nutrilevel]/[maxnutri]</span>")
 			to_chat(user, "")
 
 	else if (istype(O, /obj/item/weapon/minihoe))
@@ -667,7 +667,7 @@
 		adjustToxic(myWKiller.toxicity)
 		adjustWeeds(-myWKiller.WeedKillStr)
 		to_chat(user, "You apply the weedkiller solution into [src].")
-		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
+		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 		qdel(O)
 		update_icon()
 
@@ -680,33 +680,36 @@
 			S.handle_item_insertion(G, 1)
 			score["stuffharvested"]++
 
-	else if(istype(O, /obj/item/weapon/wrench) && unwrenchable)
+	else if(iswrench(O) && unwrenchable)
 		if(anchored == 2)
 			to_chat(user, "Unscrew the hoses first!")
 			return
 
 		if(!anchored && !isinspace())
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			anchored = 1
 			to_chat(user, "You wrench [src] in place.")
 		else if(anchored)
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			anchored = 0
 			to_chat(user, "You unwrench [src].")
 
-	else if(istype(O, /obj/item/weapon/wirecutters) && unwrenchable)
+		wrenched_change()
+
+	else if(iswirecutter(O) && unwrenchable)
 
 		if(anchored)
 			if(anchored == 2)
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				anchored = 1
 				to_chat(user, "<span class='notice'>You snip \the [src]'s hoses.</span>")
 
 			else if(anchored == 1)
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				anchored = 2
 				to_chat(user, "<span class='notice'>You reconnect \the [src]'s hoses.</span>")
 
+			wrenched_change()
 			update_icon()
 
 	else if ( istype(O, /obj/item/weapon/pestspray) )
@@ -715,12 +718,12 @@
 		adjustToxic(myPKiller.toxicity)
 		adjustPests(-myPKiller.PestKillStr)
 		to_chat(user, "You apply the pestkiller solution into [src].")
-		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
+		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 		qdel(O)
 		update_icon()
 	else if(istype(O, /obj/item/apiary))
 		if(planted)
-			to_chat(user, "\red The hydroponics tray is already occupied!")
+			to_chat(user, "<span class='warning'>The hydroponics tray is already occupied!</span>")
 		else
 			user.remove_from_mob()
 			qdel(O)
@@ -785,21 +788,30 @@
 	var/t_amount = 0
 	var/list/result = list()
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
-	while(t_amount < getYield())
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(output_loc, potency)
-		result.Add(t_prod) // User gets a consumable
-		if(!t_prod)
-			return
-		t_prod.seed = mypath
-		t_prod.species = species
-		t_prod.lifespan = lifespan
-		t_prod.endurance = endurance
-		t_prod.maturation = maturation
-		t_prod.production = production
-		t_prod.yield = yield
-		t_prod.potency = potency
-		t_prod.plant_type = plant_type
-		t_amount++
+	if(ispath(produce, /obj/item/weapon/reagent_containers/food/snacks/grown))
+		while(t_amount < getYield())
+			var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(output_loc, potency)
+			result.Add(t_prod) // User gets a consumable
+			if(!t_prod)
+				return
+			t_prod.seed = mypath
+			t_prod.species = species
+			t_prod.lifespan = lifespan
+			t_prod.endurance = endurance
+			t_prod.maturation = maturation
+			t_prod.production = production
+			t_prod.yield = yield
+			t_prod.potency = potency
+			t_prod.plant_type = plant_type
+			t_amount++
+	else // Messa's Tear and S'rendarr's Hand leaf are not grown consumables and dont have reqired variables
+		while(t_amount < getYield())
+			var/t_prod = new produce(output_loc)
+			result.Add(t_prod) // User gets a consumable
+			if(!t_prod)
+				return
+			t_amount++
+
 	if(getYield() >= 1)
 		score["stuffharvested"]++
 
@@ -972,7 +984,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "soil"
 	density = FALSE
-	use_power = FALSE
+	use_power = NO_POWER_USE
 	unwrenchable = FALSE
 
 /obj/machinery/hydroponics/soil/update_icon()//as a regular tray but without overlays under it (awter level, nutri, weeds, etc)

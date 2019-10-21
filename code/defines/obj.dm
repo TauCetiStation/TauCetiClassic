@@ -250,7 +250,7 @@ var/global/ManifestJSON
 		"bot" = bot,\
 		"misc" = misc\
 		)
-	ManifestJSON = list2json(PDA_Manifest)
+	ManifestJSON = replacetext(list2json(PDA_Manifest), "'", "`")
 	return PDA_Manifest
 
 
