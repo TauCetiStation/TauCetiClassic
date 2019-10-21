@@ -121,6 +121,12 @@
 	desc = "Walk like an Egyptian."
 	icon_state = "pharoah_hat"
 
+/obj/item/clothing/suit/ghost_sheet
+	name = "ghost sheet"
+	desc = "The hands float by themselves, so it's extra spooky."
+	icon_state = "ghost_sheet"
+	item_state = "ghost_sheet"
+
 		/////////////////
 		//Spooky Vender//
 		/////////////////
@@ -132,21 +138,22 @@
 	icon_state = "SpookyVend"
 	product_slogans = "SpookyVend: Get Spooked Today"
 	products = list(/obj/item/weapon/bikehorn/spidertoy = 4,
-					/obj/item/weapon/storage/box/trick_o_treat = 25,
-					/obj/item/clothing/head/helmet/skull = 3,
-					/obj/item/clothing/under/skeleton = 3,
-					/obj/item/clothing/head/pharoah = 3,
-					/obj/item/clothing/under/mummy = 3,
-					/obj/item/clothing/head/scarecrow_hat = 3,
-					/obj/item/clothing/under/scarecrow = 3,
-					/obj/item/clothing/head/lobsterhat = 3,
-					/obj/item/clothing/under/lobster = 3,
-					/obj/item/clothing/suit/dracula = 3,
-					/obj/item/clothing/under/draculass = 3,
-					/obj/item/clothing/suit/gothcoat = 3,
-					/obj/item/clothing/head/pumpkinhead = 3,)
-	prices = list(/obj/item/weapon/bikehorn/spidertoy = 5,
 					/obj/item/weapon/storage/box/trick_o_treat = 50,
+					/obj/item/clothing/head/helmet/skull = 4,
+					/obj/item/clothing/under/skeleton = 4,
+					/obj/item/clothing/head/pharoah = 4,
+					/obj/item/clothing/under/mummy = 4,
+					/obj/item/clothing/head/scarecrow_hat = 4,
+					/obj/item/clothing/under/scarecrow = 4,
+					/obj/item/clothing/head/lobsterhat = 3,
+					/obj/item/clothing/under/lobster = 4,
+					/obj/item/clothing/suit/dracula = 4,
+					/obj/item/clothing/under/draculass = 4,
+					/obj/item/clothing/suit/gothcoat = 4,
+					/obj/item/clothing/head/pumpkinhead = 4,
+					/obj/item/clothing/suit/ghost_sheet = 5,)
+	prices = list(/obj/item/weapon/bikehorn/spidertoy = 5,
+					/obj/item/weapon/storage/box/trick_o_treat = 80,
 					/obj/item/clothing/head/helmet/skull = 20,
 					/obj/item/clothing/under/skeleton = 20,
 					/obj/item/clothing/head/pharoah = 20,
@@ -158,4 +165,5 @@
 					/obj/item/clothing/suit/dracula = 20,
 					/obj/item/clothing/under/draculass = 20,
 					/obj/item/clothing/suit/gothcoat = 20,
-					/obj/item/clothing/head/pumpkinhead = 20,)
+					/obj/item/clothing/head/pumpkinhead = 20,
+					/obj/item/clothing/suit/ghost_sheet = 20,)
