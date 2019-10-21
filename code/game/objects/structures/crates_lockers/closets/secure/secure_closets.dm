@@ -43,6 +43,33 @@
 				src.req_access += pick(get_all_accesses())
 	..()
 
+/obj/structure/closet/secure_closet/attackby(obj/item/C, mob/user)
+	if(istype(C,/obj/item/weapon/changeling_hammer))
+		var/obj/item/weapon/changeling_hammer/W = C
+		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
+		visible_message("<span class='userdanger'>[user] has punched the [src]!</span>")
+		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+		if(W.use_charge(user) && prob(20))
+			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
+			open()
+			src.dump_contents()
+			qdel(src)
+		return
+
+/obj/structure/closet/attackby(obj/item/C, mob/user)
+	if(istype(C,/obj/item/weapon/changeling_hammer))
+		var/obj/item/weapon/changeling_hammer/W = C
+		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
+		visible_message("<span class='userdanger'>[user] has punched the [src]!</span>")
+		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+		if(W.use_charge(user) && prob(20))
+			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
+			open()
+			qdel(src)
+		return
+
 /obj/structure/closet/secure_closet/proc/togglelock(mob/user)
 	if(src.opened)
 		to_chat(user, "<span class='notice'>Close the locker first.</span>")
