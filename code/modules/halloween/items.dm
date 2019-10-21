@@ -11,8 +11,9 @@
 	attack_verb = list("bitten", "hissed", "webbed")
 
 /obj/item/weapon/bikehorn/spidertoy/attack(mob/target, mob/user, def_zone)
-	. = ..()
 	playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MISC)
+	return
+	// so it doesnt make a bikehorn noise
 
 /obj/item/weapon/bikehorn/spidertoy/attack_self(mob/user)
 	if(cooldown <= world.time)
@@ -153,17 +154,17 @@
 					/obj/item/clothing/head/pumpkinhead = 4,
 					/obj/item/clothing/suit/ghost_sheet = 5,)
 	prices = list(/obj/item/weapon/bikehorn/spidertoy = 5,
-					/obj/item/weapon/storage/box/trick_o_treat = 80,
-					/obj/item/clothing/head/helmet/skull = 20,
-					/obj/item/clothing/under/skeleton = 20,
-					/obj/item/clothing/head/pharoah = 20,
-					/obj/item/clothing/under/mummy = 20,
-					/obj/item/clothing/head/scarecrow_hat = 20,
-					/obj/item/clothing/under/scarecrow = 20,
-					/obj/item/clothing/head/lobsterhat = 20,
-					/obj/item/clothing/under/lobster = 20,
-					/obj/item/clothing/suit/dracula = 20,
-					/obj/item/clothing/under/draculass = 20,
-					/obj/item/clothing/suit/gothcoat = 20,
-					/obj/item/clothing/head/pumpkinhead = 20,
-					/obj/item/clothing/suit/ghost_sheet = 20,)
+					/obj/item/weapon/storage/box/trick_o_treat = 50,
+					/obj/item/clothing/head/helmet/skull = 10,
+					/obj/item/clothing/under/skeleton = 10,
+					/obj/item/clothing/head/pharoah = 10,
+					/obj/item/clothing/under/mummy = 10,
+					/obj/item/clothing/head/scarecrow_hat = 10,
+					/obj/item/clothing/under/scarecrow = 10,
+					/obj/item/clothing/head/lobsterhat = 10,
+					/obj/item/clothing/under/lobster = 10,
+					/obj/item/clothing/suit/dracula = 10,
+					/obj/item/clothing/under/draculass = 10,
+					/obj/item/clothing/suit/gothcoat = 10,
+					/obj/item/clothing/head/pumpkinhead = 10,
+					/obj/item/clothing/suit/ghost_sheet = 10,)
