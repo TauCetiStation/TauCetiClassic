@@ -734,7 +734,7 @@
 /area/jungle)
 "cJ" = (
 /obj/structure/closet/crate/secure/gear,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/weapon/minihoe,
 /turf/unsimulated/jungle/clear,
 /area/jungle)

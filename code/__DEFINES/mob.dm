@@ -134,3 +134,7 @@
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
+
+// Indicators.
+#define IND_STAT          "stat"
+#define IND_STAT_NOCLIENT "stat_noclient"

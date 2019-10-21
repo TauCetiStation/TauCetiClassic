@@ -994,10 +994,7 @@
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
 
 	if(reagents && !species.flags[IS_SYNTHETIC]) //Synths don't process reagents.
-		var/alien = null
-		if(species)
-			alien = species.name
-		reagents.metabolize(src,alien)
+		reagents.metabolize(src)
 
 		var/total_phoronloss = 0
 		for(var/obj/item/I in src)
@@ -1124,6 +1121,7 @@
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
 		blinded = 1
 		silent = 0
+		clear_stat_indicator()
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()	//TODO
 		if(!in_stasis)
@@ -1210,6 +1208,14 @@
 					adjustHalLoss(-1)
 		if(!sleeping) //No refactor - no life!
 			clear_alert("asleep")
+
+		if(stat == UNCONSCIOUS)
+			if(client)
+				throw_stat_indicator(IND_STAT)
+			else
+				throw_stat_indicator(IND_STAT_NOCLIENT)
+		else
+			clear_stat_indicator()
 
 		if(embedded_flag && !(life_tick % 10))
 			var/list/E
