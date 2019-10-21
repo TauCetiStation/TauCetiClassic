@@ -513,7 +513,7 @@ var/list/slot_equipment_priority = list(
 
 	to_chat(usr, "<span class='notice'>You start unequipping the [C].</span>")
 	C.equipping = 1
-	if(do_after(usr, C.equip_time, target = C))
+	if(do_after(usr, C.equip_time, target = C.loc))
 		remove_from_mob(C)
 		to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
 	else
@@ -538,7 +538,7 @@ var/list/slot_equipment_priority = list(
 
 	to_chat(usr, "<span class='notice'>You start equipping the [C].</span>")
 	C.equipping = 1
-	if(do_after(usr, C.equip_time, target = C))
+	if(do_after(usr, C.equip_time, target = C.loc))
 		equip_to_slot_if_possible(C, slot)
 		to_chat(usr, "<span class='notice'>You have finished equipping the [C].</span>")
 	else
