@@ -32,6 +32,8 @@
 	// Whether or not the accessory can be affected by colouration
 	var/do_colouration = 1
 
+	var/ipc_head_compatible = "Default"
+
 /*
 ////////////////////////////
 /  =--------------------=  /
@@ -1113,6 +1115,24 @@
 	name = "eyes IPC screen"
 	icon_state = "ipc_eyes"
 	species_allowed = list(IPC)
+
+/datum/sprite_accessory/hair/ipc_screen_alien
+	name = "alien IPC screen"
+	icon_state = "ipc_alien"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Alien"
+
+/datum/sprite_accessory/hair/ipc_screen_double
+	name = "double IPC screen"
+	icon_state = "ipc_double"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Double"
+
+/datum/sprite_accessory/hair/ipc_screen_pillar
+	name = "pillar IPC screen"
+	icon_state = "ipc_pillar"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Pillar"
 
 /datum/sprite_accessory/hair/ipc_color_array
 	name = "colored IPC screen with an eye"
