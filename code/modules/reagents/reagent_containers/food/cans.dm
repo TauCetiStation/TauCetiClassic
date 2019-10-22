@@ -2,10 +2,17 @@
 	name = "soda can"
 	var/canopened = 0
 
+/obj/item/weapon/reagent_containers/food/drinks/cans/atom_init()
+	. = ..()
+
+	if(!canopened)
+		flags &= ~OPENCONTAINER
+
 /obj/item/weapon/reagent_containers/food/drinks/cans/attack_self(mob/user)
 	if (!canopened)
 		playsound(src, pick(SOUNDIN_CAN_OPEN), VOL_EFFECTS_MASTER, rand(10, 50))
 		to_chat(user, "<span class='notice'>You open the drink with an audible pop!</span>")
+		flags |= OPENCONTAINER
 		canopened = 1
 	else
 		return
@@ -65,22 +72,12 @@
 
 	return 0
 
-/obj/item/weapon/reagent_containers/food/drinks/cans/afterattack(atom/A, mob/user, proximity)
-	if (!canopened)
-		if (istype(A, /turf/simulated))
-			to_chat(user, "<span class='notice'>You need to open the drink!</span>")
-		return
-
-	if(proximity && (user.a_intent == I_HURT) && reagents.total_volume && istype(A, /turf/simulated))
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message(text("<span class='warning'>[] splashed [] on the ground!</span>", user, src), 1)
-		src.reagents.clear_reagents()
-		return
-	..()
-
-
 /obj/item/weapon/reagent_containers/food/drinks/cans/afterattack(obj/target, mob/user, proximity)
 	if(!proximity) return
+
+	if(istype(target, /turf/simulated))
+		..()
+		return
 
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
@@ -104,8 +101,6 @@
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>[target] is full.</span>")
 			return
-
-
 
 		var/datum/reagent/refill
 		var/datum/reagent/refillName

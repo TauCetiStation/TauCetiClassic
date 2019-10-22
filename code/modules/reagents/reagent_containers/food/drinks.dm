@@ -126,6 +126,23 @@
 			addtimer(CALLBACK(src, .proc/refill_by_borg, user, refill, trans), 300)
 	update_icon()
 
+/obj/item/weapon/reagent_containers/food/drinks/afterattack(atom/A, mob/user, proximity)
+	if(proximity && (user.a_intent == I_HURT) && reagents.total_volume && istype(A, /turf/simulated))
+		if (!is_open_container())
+			to_chat(user, "<span class='notice'>You need to open [src]!</span>")
+			return
+
+		to_chat(user, "<span class = 'notice'>You splash the solution onto [A].</span>")
+
+		src.reagents.reaction(A, TOUCH)
+		src.reagents.clear_reagents()
+
+		var/turf/T = get_turf(src)
+		message_admins("[key_name_admin(usr)] splashed [src.reagents.get_reagents()] on [A], location ([T.x],[T.y],[T.z]) [ADMIN_JMP(usr)]")
+		log_game("[usr.ckey]([usr]) splashed [src.reagents.get_reagents()] on [A], location ([T.x],[T.y],[T.z])")
+		return
+	..()
+
 /obj/item/weapon/reagent_containers/food/drinks/proc/refill_by_borg(user, refill, trans)
 	reagents.add_reagent(refill, trans)
 	to_chat(user, "Cyborg [src] refilled.")
@@ -294,24 +311,12 @@
 		return TRUE // stops afterattack() call.
 	return ..()
 
-/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/afterattack(atom/A, mob/user, proximity)
-	if(!opened)
-		if (istype(A, /turf/simulated))
-			to_chat(user, "<span class='notice'>You need to open [src] first!</span>")
-		return
-
-	if(proximity && (user.a_intent == I_HURT) && reagents.total_volume && istype(A, /turf/simulated))
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message(text("<span class='warning'>[] splashed [] on the ground!</span>", user, src), 1)
-		src.reagents.clear_reagents()
-		icon_state = "ramen_empty"
-		return
-	..()
-
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/on_reagent_change()
 	if(!reagents.total_volume) // actually its because we only have sprite, which won't look good with any other reagent than ramen.
 		flags &= ~OPENCONTAINER // and also there is no proper way to put the message about this, as it will require to edit all transfer procs in items.
+		update_icon()
 		return
+
 	..()
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen
@@ -379,11 +384,3 @@
 	desc = "A cup with the British flag emblazoned on it."
 	icon_state = "britcup"
 	volume = 30
-
-/obj/item/weapon/reagent_containers/food/drinks/afterattack(atom/A, mob/user, proximity)
-	if(proximity && (user.a_intent == I_HURT) && reagents.total_volume && istype(A, /turf/simulated))
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message(text("<span class='warning'>[] splashed [] on the ground!</span>", user, src), 1)
-		src.reagents.clear_reagents()
-		return
-	..()
