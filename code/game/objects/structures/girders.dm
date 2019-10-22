@@ -120,7 +120,7 @@
 					new /obj/structure/falsewall/reinforced(loc)
 					qdel(src)
 				else
-					if (src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...
+					if (istype (src, /obj/structure/girder/reinforced))
 						if(S.get_amount() < 1)
 							return ..()
 						to_chat(user, "<span class='notice'>Now finalising reinforced wall.</span>")
