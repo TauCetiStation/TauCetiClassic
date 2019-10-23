@@ -196,14 +196,15 @@
 	if(!client)
 		return
 
-	if (!speaker || (sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
-		if (speaker != src)
-			return
-
 	if(say_understands(speaker, language))
-		to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span> [language.format_message(message, verb)]</span>")
+		message = "<span class='game say'><span class='name'>[speaker_name]</span> [language.format_message(message, verb)]</span>"
 	else
-		to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span> [verb].</span>")
+		message = "<span class='game say'><span class='name'>[speaker_name]</span> [verb].</span>"
+
+	if (speaker != src)
+		show_message(message, 1)
+	else
+		show_message(message)
 
 /mob/proc/hear_sleep(message, datum/language/language)
 	var/heard = ""
