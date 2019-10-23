@@ -201,6 +201,10 @@
 	else
 		message = "<span class='game say'><span class='name'>[speaker_name]</span> [verb].</span>"
 
+	if(src.status_flags & PASSEMOTES)
+		for(var/obj/item/weapon/holder/H in src.contents)
+			H.show_message(message)
+
 	if (speaker != src)
 		show_message(message, 1)
 	else
