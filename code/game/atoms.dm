@@ -577,14 +577,16 @@
 		//	L += get_contents(S)
 
 		for(var/obj/item/weapon/gift/G in Storage.return_inv()) //Check for gift-wrapped items
-			L += G.gift
-			if(istype(G.gift, /obj/item/weapon/storage))
-				L += get_contents(G.gift)
+			for(var/obj/I in G.contents)
+				L += I
+				if(istype(I, /obj/item/weapon/storage))
+					L += get_contents(I)
 
 		for(var/obj/item/smallDelivery/D in Storage.return_inv()) //Check for package wrapped items
-			L += D.wrapped
-			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
-				L += get_contents(D.wrapped)
+			for(var/obj/I in D.contents)
+				L += I
+				if(istype(I, /obj/item/weapon/storage)) //this should never happen
+					L += get_contents(I)
 		return L
 
 	else
@@ -594,14 +596,16 @@
 			L += get_contents(S)
 
 		for(var/obj/item/weapon/gift/G in src.contents) //Check for gift-wrapped items
-			L += G.gift
-			if(istype(G.gift, /obj/item/weapon/storage))
-				L += get_contents(G.gift)
+			for(var/obj/I in G.contents)
+				L += I
+				if(istype(I, /obj/item/weapon/storage))
+					L += get_contents(I)
 
 		for(var/obj/item/smallDelivery/D in src.contents) //Check for package wrapped items
-			L += D.wrapped
-			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
-				L += get_contents(D.wrapped)
+			for(var/obj/I in D.contents)
+				L += I
+				if(istype(I, /obj/item/weapon/storage)) //this should never happen
+					L += get_contents(I)
 		return L
 
 // Called after we wrench/unwrench this object

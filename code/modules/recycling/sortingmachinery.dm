@@ -3,29 +3,30 @@
 	name = "large parcel"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycloset"
-	var/obj/wrapped = null
 	density = 1
 	var/sortTag = ""
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 /obj/structure/bigDelivery/Destroy()
-	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
-		wrapped.loc = (get_turf(loc))
-		if(istype(wrapped, /obj/structure/closet))
-			var/obj/structure/closet/O = wrapped
-			O.welded = 0
+	if(src.contents.len) //sometimes items can disappear. For example, bombs. --rastaf0
+		for(var/obj/I in contents)
+			if(istype(I, /obj/structure/closet))
+				var/obj/structure/closet/O = I
+				O.welded = 0
+			I.loc = get_turf(src)
 	var/turf/T = get_turf(src)
 	for(var/atom/movable/AM in contents)
 		AM.loc = T
 	return ..()
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
-	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
-		wrapped.loc = (get_turf(src.loc))
-		if(istype(wrapped, /obj/structure/closet))
-			var/obj/structure/closet/O = wrapped
-			O.welded = 0
+	if(src.contents.len) //sometimes items can disappear. For example, bombs. --rastaf0
+		for(var/obj/I in contents)
+			if(istype(I, /obj/structure/closet))
+				var/obj/structure/closet/O = I
+				O.welded = 0
+			I.loc = get_turf(src)
 	qdel(src)
 	return
 
@@ -53,17 +54,17 @@
 	name = "small parcel"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycrateSmall"
-	var/obj/item/wrapped = null
 	var/sortTag = ""
 
 /obj/item/smallDelivery/attack_self(mob/user)
-	if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
-		wrapped.loc = user.loc
+	user.drop_item()
+	if(src.contents.len) //sometimes items can disappear. For example, bombs. --rastaf0
 		if(ishuman(user))
-			user.put_in_hands(wrapped)
+			for(var/obj/I in contents)
+				user.put_in_hands(I)
 		else
-			wrapped.loc = get_turf_loc(src)
-
+			for(var/obj/I in contents)
+				I.loc = get_turf(src)
 	qdel(src)
 	return
 
@@ -128,7 +129,6 @@
 				P.icon_state = "deliverycrate3"
 			else
 				P.icon_state = "deliverycrate4"
-			P.wrapped = O
 			O.loc = P
 			var/i = round(O.w_class)
 			if(i in list(1,2,3,4,5))
@@ -142,21 +142,21 @@
 		if (src.amount > 3 && !O.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 			P.icon_state = "deliverycrate"
-			P.wrapped = O
 			O.loc = P
 			src.amount -= 3
 		else if(src.amount < 3)
 			to_chat(user, "<span class='notice'>You need more paper.</span>")
 	else if (istype (target, /obj/structure/closet))
 		var/obj/structure/closet/O = target
-		if (src.amount > 3 && !O.opened)
+		if (src.amount > 3 && !O.opened && !O.welded)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
-			P.wrapped = O
 			O.welded = 1
 			O.loc = P
 			src.amount -= 3
 		else if(src.amount < 3)
 			to_chat(user, "<span class='notice'>You need more paper.</span>")
+		else
+			to_chat(user, "<span class='notice'>You cannot wrap are welded closet.</span>")
 	else
 		to_chat(user, "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>")
 	if (src.amount <= 0)

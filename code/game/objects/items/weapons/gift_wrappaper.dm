@@ -25,9 +25,13 @@
 
 /obj/item/weapon/gift/attack_self(mob/user)
 	user.drop_item()
-	if(src.gift)
-		user.put_in_active_hand(gift)
-		src.gift.add_fingerprint(user)
+	if(src.contents.len) //sometimes items can disappear. For example, bombs. --rastaf0
+		if(ishuman(user))
+			for(var/obj/I in contents)
+				user.put_in_hands(I)
+		else
+			for(var/obj/I in contents)
+				I.loc = get_turf(src)
 	else
 		to_chat(user, "<span class='notice'>The gift was empty!</span>")
 	qdel(src)
@@ -153,7 +157,6 @@
 				G.size = W.w_class
 				G.w_class = G.size + 1
 				G.icon_state = text("gift[]", G.size)
-				G.gift = W
 				W.loc = G
 				G.add_fingerprint(user)
 				W.add_fingerprint(user)
