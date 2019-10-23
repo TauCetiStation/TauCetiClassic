@@ -34,10 +34,6 @@
 	display_name = "Zhan Headscarf"
 	path = /obj/item/clothing/head/headscarf
 
-/datum/gear/accessory/bandana
-	display_name = "Bandana"
-	path = /obj/item/clothing/mask/bandana/red
-
 /datum/gear/accessory/haircomb
 	display_name = "Purple comb"
 	path = /obj/item/weapon/haircomb
@@ -71,7 +67,7 @@
 /datum/gear/accessory/armband
 	display_name = "Armband selection"
 	path = /obj/item/clothing/accessory/armband
-	allowed_roles = list("Security Officer")
+	allowed_roles = list("Security Officer", "Security Cadet", "Warden", "Detective", "Head of Security", "Forensic Technician" )
 
 /datum/gear/accessory/armband/New()
 	..()
