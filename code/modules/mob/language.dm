@@ -142,9 +142,6 @@
 	signlang_verb = list("emits a series of short beeps", "screeches in boops", "eminates short pings", "projects a series of screeches")
 	flags = SIGNLANG // For all intents and purposes, this is basically a sign language.
 
-/datum/language/diona_space/format_message(message, verb)
-	return "<span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
-
 /datum/language/human
 	name = "Sol Common"
 	desc = "A bastardized hybrid of informal English and elements of Mandarin Chinese; the common language of the Sol system."
@@ -197,11 +194,8 @@
 	colour = "rough"
 	key = list("4")
 	allowed_species = list(HUMAN)
-	signlang_verb = list("making signs with hands", "signing", "waving hands", "gesticulates")
+	signlang_verb = list("makes signs with hands", "gestures", "waves hands", "gesticulates")
 	flags = SIGNLANG
-
-/datum/language/solsign/format_message(message, verb)
-	return "<span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
 
 // Language handling.
 /mob/proc/add_language(language)
