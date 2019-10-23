@@ -196,7 +196,7 @@
 		return
 
 	if(say_understands(speaker, language))
-		message = "<B>[src]</B> [verb], \"[language.format_message(message)]\""
+		message = "<B>[src]</B> [verb], [language.format_message(message)]"
 	else
 		message = "<B>[src]</B> [verb]."
 

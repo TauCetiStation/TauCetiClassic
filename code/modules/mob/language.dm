@@ -191,6 +191,18 @@
 	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
 	syllables = list ("gra","ba","ba","breh","bra","rah","dur","ra","ro","gro","go","ber","bar","geh","heh", "gra")
 
+/datum/language/solsign
+	name = "Sol Sign Language"
+	desc = "Universal Sol Sign language. Common language of deaf-muted people."
+	colour = "rough"
+	key = list("4")
+	allowed_species = list(HUMAN)
+	signlang_verb = list("making signs with hands", "signing", "waving hands", "gesticulates")
+	flags = SIGNLANG
+
+/datum/language/solsign/format_message(message, verb)
+	return "<span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
+
 // Language handling.
 /mob/proc/add_language(language)
 

@@ -16,6 +16,7 @@
 		return
 
 	message =  sanitize(message)
+	var/datum/language/speaking = parse_language(message)
 
 	if(stat == DEAD)
 		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
@@ -31,8 +32,13 @@
 		return emote(copytext(message,2))
 
 	if((miming || has_trait(TRAIT_MUTE)) && !(message_mode == "changeling" || message_mode == "alientalk"))
-		to_chat(usr, "<span class='userdanger'>You are mute.</span>")
-		return
+		if (speaking)
+			if (!(speaking.flags & SIGNLANG) || miming)
+				to_chat(usr, "<span class='userdanger'>You are mute.</span>")
+				return
+		else
+			to_chat(usr, "<span class='userdanger'>You are mute.</span>")
+			return
 
 	if(!ignore_appearance && name != GetVoice())
 		alt_name = "(as [get_id_name("Unknown")])"
@@ -45,7 +51,6 @@
 			message = copytext(message,3)
 
 	//parse the language code and consume it or use default racial language if forced.
-	var/datum/language/speaking = parse_language(message)
 	if (speaking)
 		message = copytext(message,2+length(speaking.key))
 	else if(species.force_racial_language)
