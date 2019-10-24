@@ -24,14 +24,11 @@
 		icon_state = "gift[pick(1, 2, 3)]"
 
 /obj/item/weapon/gift/attack_self(mob/user)
-	user.drop_item()
+	user.drop_from_inventory(src)
 	if(src.contents.len) //sometimes items can disappear. For example, bombs. --rastaf0
-		if(ishuman(user))
-			for(var/obj/I in contents)
-				user.put_in_hands(I)
-		else
-			for(var/obj/I in contents)
-				I.forceMove(get_turf(src))
+		for(var/obj/I in contents)
+			user.put_in_active_hand(I)
+			I.add_fingerprint(user)
 	else
 		to_chat(user, "<span class='notice'>The gift was empty!</span>")
 	qdel(src)
