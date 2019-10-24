@@ -64,7 +64,7 @@
 				user.put_in_hands(I)
 		else
 			for(var/obj/I in contents)
-				I.loc = get_turf(src)
+				I.forceMove(get_turf(src))
 	qdel(src)
 	return
 
