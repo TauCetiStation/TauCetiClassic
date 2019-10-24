@@ -212,7 +212,7 @@
 
 /mob/proc/hear_sleep(message, datum/language/language)
 	var/heard = ""
-	if (language && (language.flags & NONVERBAL) && (language.flags & SIGNLANG))
+	if (language && ((language.flags & NONVERBAL) || (language.flags & SIGNLANG)))
 		return
 
 	else if(prob(15))
