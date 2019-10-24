@@ -15,9 +15,6 @@
 				var/obj/structure/closet/O = I
 				O.welded = 0
 			I.forceMove(get_turf(src))
-	var/turf/T = get_turf(src)
-	for(var/atom/movable/AM in contents)
-		AM.loc = T
 	return ..()
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
@@ -57,7 +54,7 @@
 	var/sortTag = ""
 
 /obj/item/smallDelivery/attack_self(mob/user)
-	user.drop_item()
+	user.drop_from_inventory(src)
 	if(src.contents.len) //sometimes items can disappear. For example, bombs. --rastaf0
 		if(ishuman(user))
 			for(var/obj/I in contents)
@@ -148,15 +145,17 @@
 			to_chat(user, "<span class='notice'>You need more paper.</span>")
 	else if (istype (target, /obj/structure/closet))
 		var/obj/structure/closet/O = target
-		if (src.amount > 3 && !O.opened && !O.welded)
+		if(src.amount < 3)
+			to_chat(user, "<span class='notice'>You need more paper.</span>")
+			return
+		else if(O.welded)
+			to_chat(user, "<span class='notice'>You cannot wrap a welded closet.</span>")
+			return
+		else if (!O.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 			O.welded = 1
 			O.loc = P
 			src.amount -= 3
-		else if(src.amount < 3)
-			to_chat(user, "<span class='notice'>You need more paper.</span>")
-		else
-			to_chat(user, "<span class='notice'>You cannot wrap are welded closet.</span>")
 	else
 		to_chat(user, "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>")
 	if (src.amount <= 0)
