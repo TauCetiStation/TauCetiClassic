@@ -26,7 +26,7 @@
 			if(istype(I, /obj/structure/closet))
 				var/obj/structure/closet/O = I
 				O.welded = 0
-			I.loc = get_turf(src)
+			I.forceMove(get_turf(src))
 	qdel(src)
 	return
 
