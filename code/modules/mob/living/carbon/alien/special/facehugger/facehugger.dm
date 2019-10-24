@@ -234,6 +234,36 @@
 			return wear_mask
 	return FALSE
 
+/obj/item/clothing/mask/facehugger/proc/interact_with_helmet(headgear, mob/living/carbon/human/H)
+	if(current_hugger)
+		if(prob(50))
+			H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and rips it off in the process!</span>", "<span class='userdanger'>[src] smashes against yours [headgear], and rips it off in the process!</span>")
+			H.unEquip(headgear)
+			return FALSE
+		else
+			H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and fails to rip it off!</span>", "<span class='userdanger'>[src] smashes against yours's [headgear], and fails to rip it off!</span>")
+			var/mob/living/carbon/alien/facehugger/FH = current_hugger
+			to_chat(FH, "<span class='danger'>You died while trying to remove [H]'s [headgear]</span>!")
+			FH.ghostize(can_reenter_corpse = FALSE)
+			Die()
+			qdel(current_hugger)
+			return TRUE
+
+	if(prob(40))
+		H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and rips it off in the process!</span>", "<span class='userdanger'>[src] smashes against yours [headgear], and rips it off in the process!</span>")
+		H.unEquip(headgear)
+	else
+		H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and fails to rip it off!</span>", "<span class='userdanger'>[src] smashes against yours's [headgear], and fails to rip it off!</span>")
+	if(prob(33))
+		H.visible_message("<span class='danger'>[H]'s [headgear] melts from the acid!</span>", "<span class='userdanger'>Your [headgear] melts from the acid!</span>")
+		qdel(headgear)
+	if(prob(66))
+		Die()
+	else
+		H.visible_message("<span class='danger'>[src] bounces off of the [headgear]!</span>", "<span class='userdanger'>[src] bounces off of the [headgear]!</span>")
+		GoIdle()
+	return TRUE
+
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/carbon/C)
 	if(!CanHug(C, FALSE))
 		return
@@ -243,20 +273,7 @@
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		var/headgear = H.mouth_is_protected()
-		if(headgear)
-			if(prob(40))
-				H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and rips it off in the process!</span>", "<span class='userdanger'>[src] smashes against yours [headgear], and rips it off in the process!</span>")
-				H.unEquip(headgear)
-			else
-				H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and fails to rip it off!</span>", "<span class='userdanger'>[src] smashes against yours's [headgear], and fails to rip it off!</span>")
-			if(prob(33))
-				H.visible_message("<span class='danger'>[H]'s [headgear] melts from the acid!</span>", "<span class='userdanger'>Your [headgear] melts from the acid!</span>")
-				qdel(headgear)
-			if(prob(66))
-				Die()
-			else
-				H.visible_message("<span class='danger'>[src] bounces off of the [headgear]!</span>", "<span class='userdanger'>[src] bounces off of the [headgear]!</span>")
-				GoIdle()
+		if(headgear && interact_with_helmet(headgear, H))
 			return FALSE
 	else
 		if(C.wear_mask)

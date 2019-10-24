@@ -429,10 +429,10 @@ When we finish, facehugger's player will be transfered inside embryo.
 	switch(state)
 		if(GRAB_PASSIVE)
 			var/mob/living/carbon/alien/facehugger/FH = assailant
-			FH.leap_at_face(affecting)
 			state = GRAB_AGGRESSIVE
 			hud.icon_state = "grab/neck"
 			hud.name = "grab around neck"
+			FH.leap_at_face(affecting)
 		if(GRAB_AGGRESSIVE)
 			assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] neck!</span>")
 			state = GRAB_NECK
