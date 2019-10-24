@@ -90,6 +90,18 @@
 		for(var/mob/O in viewers(user, 3))
 			O.show_message("<span class='warning'>The locker has been sliced open by [user] with an [W.name]!</span>", 1, "You hear metal being sliced and sparks flying.", 2)
 
+	else if(istype(W,/obj/item/weapon/changeling_hammer))
+		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
+		visible_message("<span class='userdanger'>[user] has punched the [src]!</span>")
+		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+		if(W.use_charge(user) && prob(20))
+			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/bang.ogg'), VOL_EFFECTS_MASTER)
+			open()
+			src.dump_contents()
+			qdel(src)
+		return
+
 	else if(istype(W,/obj/item/weapon/packageWrap) || iswelder(W))
 		return ..(W,user)
 	else
