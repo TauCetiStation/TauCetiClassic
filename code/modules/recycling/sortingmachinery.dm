@@ -9,21 +9,24 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 /obj/structure/bigDelivery/Destroy()
-	if(src.contents.len) //sometimes items can disappear. For example, bombs. --rastaf0
-		for(var/obj/I in contents)
-			if(istype(I, /obj/structure/closet))
-				var/obj/structure/closet/O = I
-				O.welded = 0
-			I.forceMove(get_turf(src))
+	var/atom/movable/AM = locate() in contents
+	if(AM) //sometimes items can disappear. For example, bombs. --rastaf0
+		if(istype(AM, /obj/structure/closet))
+			var/obj/structure/closet/O = AM
+			O.welded = 0
+		AM.forceMove(get_turf(src))
 	return ..()
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
-	if(src.contents.len) //sometimes items can disappear. For example, bombs. --rastaf0
-		for(var/obj/I in contents)
-			if(istype(I, /obj/structure/closet))
-				var/obj/structure/closet/O = I
-				O.welded = 0
-			I.forceMove(get_turf(src))
+	var/atom/movable/AM = locate() in contents
+	if(AM) //sometimes items can disappear. For example, bombs. --rastaf0
+		if(istype(AM, /obj/structure/closet))
+			var/obj/structure/closet/O = AM
+			O.welded = 0
+		AM.forceMove(get_turf(src))
+	else
+		to_chat(user, "<span class='notice'>The parcel was empty!</span>")
+	playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
 	qdel(src)
 	return
 
@@ -55,13 +58,13 @@
 
 /obj/item/smallDelivery/attack_self(mob/user)
 	user.drop_from_inventory(src)
-	if(src.contents.len) //sometimes items can disappear. For example, bombs. --rastaf0
-		if(ishuman(user))
-			for(var/obj/I in contents)
-				user.put_in_hands(I)
-		else
-			for(var/obj/I in contents)
-				I.forceMove(get_turf(src))
+	var/atom/movable/AM = locate() in contents
+	if(AM) //sometimes items can disappear. For example, bombs. --rastaf0
+		user.put_in_active_hand(AM)
+		AM.add_fingerprint(user)
+	else
+		to_chat(user, "<span class='notice'>The parcel was empty!</span>")
+	playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
 	qdel(src)
 	return
 

@@ -25,12 +25,13 @@
 
 /obj/item/weapon/gift/attack_self(mob/user)
 	user.drop_from_inventory(src)
-	if(src.contents.len) //sometimes items can disappear. For example, bombs. --rastaf0
-		for(var/obj/I in contents)
-			user.put_in_active_hand(I)
-			I.add_fingerprint(user)
+	var/atom/movable/AM = locate() in contents
+	if(AM) //sometimes items can disappear. For example, bombs. --rastaf0
+		user.put_in_active_hand(AM)
+		AM.add_fingerprint(user)
 	else
 		to_chat(user, "<span class='notice'>The gift was empty!</span>")
+	playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
 	qdel(src)
 	return
 
