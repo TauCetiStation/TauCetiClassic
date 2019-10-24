@@ -202,6 +202,17 @@
 		if(W)
 			W.forceMove(src.loc)
 
+	else if(istype(W,/obj/item/weapon/changeling_hammer))
+		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
+		visible_message("<span class='userdanger'>[user] has punched the [src]!</span>")
+		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+		if(W.use_charge(user) && prob(20))
+			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/bang.ogg'), VOL_EFFECTS_MASTER)
+			open()
+			qdel(src)
+		return
+
 	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))
 		return
 
