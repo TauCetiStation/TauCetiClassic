@@ -182,13 +182,15 @@
 					if(genmsg != null)
 						gen_record = genmsg
 
+	var/datum/species/specie_obj = all_species[species]
+
 	switch(href_list["task"])
 		if("random")
 			switch(href_list["preference"])
 				if("name")
 					real_name = random_name(gender)
 				if("age")
-					age = rand(AGE_MIN, AGE_MAX)
+					age = rand(specie_obj.min_age, specie_obj.max_age)
 				if("hair")
 					r_hair = rand(0,255)
 					g_hair = rand(0,255)
@@ -231,9 +233,9 @@
 						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("age")
-					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
+					var/new_age = input(user, "Choose your character's age:\n([specie_obj.min_age]-[specie_obj.max_age])", "Character Preference") as num|null
 					if(new_age)
-						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
+						age = max(min( round(text2num(new_age)), specie_obj.max_age), specie_obj.min_age)
 
 				if("species")
 					var/list/new_species = list(HUMAN)

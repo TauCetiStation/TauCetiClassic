@@ -746,6 +746,14 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "fuel tank crate"
 	group = "Engineering"
 
+/datum/supply_pack/aqueous_foam_tank
+	name = "AFFF crate"
+	contains = list(/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank)
+	cost = 800
+	crate_type = /obj/structure/largecrate
+	crate_name = "AFFF crate"
+	group = "Engineering"
+
 /datum/supply_pack/solar
 	name = "Solar Pack crate"
 	contains  = list(/obj/item/solar_assembly,

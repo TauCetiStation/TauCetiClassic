@@ -74,12 +74,12 @@
 	src = null
 	return
 
-/datum/reagent/proc/on_mob_life(mob/living/M, alien)
+/datum/reagent/proc/on_mob_life(mob/living/M)
 	if(!M || !holder)
 		return
 	if(!isliving(M))
 		return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
-	if(!check_digesting(M, alien)) // You can't overdose on what you can't digest
+	if(!check_digesting(M)) // You can't overdose on what you can't digest
 		return
 	if((overdose > 0) && (volume >= overdose))//Overdosing, wooo
 		M.adjustToxLoss(overdose_dam)
@@ -103,19 +103,16 @@
 
 /// Everything under now does. end EUGH
 
-/datum/reagent/proc/check_digesting(mob/living/M, alien)
-	if(restrict_species)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.species.name in restrict_species)
-				return FALSE
-		if(ismonkey(M))
-			var/mob/living/carbon/monkey/C = M
-			if(C.race in restrict_species)
-				return FALSE
+/datum/reagent/proc/check_digesting(mob/living/M)
+	var/species_name = M.get_species()
+	if(restrict_species && (species_name in restrict_species))
+		return FALSE
+
 	var/should_general_digest = TRUE
-	var/datum/species/specimen = all_species[alien]
-	should_general_digest = specimen.call_digest_proc(M, src)
+	if(species_name in all_species)
+		var/datum/species/specimen = all_species[species_name]
+		should_general_digest = specimen.call_digest_proc(M, src)
+
 	if(should_general_digest)
 		on_general_digest(M)
 	return TRUE
@@ -148,6 +145,9 @@
 	return TRUE
 
 /datum/reagent/proc/on_golem_digest(mob/living/M)
+	return TRUE
+
+/datum/reagent/proc/on_slime_digest(mob/living/M)
 	return TRUE
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
