@@ -65,24 +65,19 @@
 		if(istype(SNG) && SNG.candrain && !SNG.draining)
 			SNG.drain("CELL",src,H.wear_suit)
 			
-
 		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == "grab")
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(src.charge > 0)
 				if(H.nutrition < 450)
-
 					if(src.charge >= 500)
 						H.nutrition += 50
 						src.charge -= 500
 					else
 						H.nutrition += src.charge/10
 						src.charge = 0
-
 					to_chat(user, "<span class='notice'>You attach your fingers to the cell and siphon off some of the stored charge for your own use.</span>")
 					if(src.charge < 0) src.charge = 0
 					if(H.nutrition > 500) H.nutrition = 500
-					//src.charging = 1
-
 				else
 					to_chat(user, "<span class='notice'>You are already fully charged.</span>")
 			else
