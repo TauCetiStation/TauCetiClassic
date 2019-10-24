@@ -31,7 +31,7 @@
 				user.put_in_hands(I)
 		else
 			for(var/obj/I in contents)
-				I.loc = get_turf(src)
+				I.forceMove(get_turf(src))
 	else
 		to_chat(user, "<span class='notice'>The gift was empty!</span>")
 	qdel(src)
