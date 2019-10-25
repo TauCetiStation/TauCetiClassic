@@ -32,7 +32,7 @@
 	// Whether or not the accessory can be affected by colouration
 	var/do_colouration = 1
 
-	var/ipc_head_compatible = "Default"
+	var/ipc_head_compatible
 
 /*
 ////////////////////////////
@@ -1011,110 +1011,129 @@
 	icon_state = "ipc_pink"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_red
 	name = "red IPC screen"
 	icon_state = "ipc_red"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_green
 	name = "green IPC screen"
 	icon_state = "ipc_green"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_blue
 	name = "blue IPC screen"
 	icon_state = "ipc_blue"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_breakout
 	name = "breakout IPC screen"
 	icon_state = "ipc_breakout"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_eight
 	name = "eight IPC screen"
 	icon_state = "ipc_eight"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_goggles
 	name = "goggles IPC screen"
 	icon_state = "ipc_goggles"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_heart
 	name = "heart IPC screen"
 	icon_state = "ipc_heart"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_monoeye
 	name = "monoeye IPC screen"
 	icon_state = "ipc_monoeye"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_nature
 	name = "nature IPC screen"
 	icon_state = "ipc_nature"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_orange
 	name = "orange IPC screen"
 	icon_state = "ipc_orange"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_purple
 	name = "purple IPC screen"
 	icon_state = "ipc_purple"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_shower
 	name = "shower IPC screen"
 	icon_state = "ipc_shower"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_static
 	name = "static IPC screen"
 	icon_state = "ipc_static"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_yellow
 	name = "yellow IPC screen"
 	icon_state = "ipc_yellow"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_dot
 	name = "dot IPC screen"
 	icon_state = "ipc_dot"
 	species_allowed = list(IPC)
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_four
 	name = "four IPC screen"
 	icon_state = "ipc_four"
 	species_allowed = list(IPC)
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_eye
 	name = "eye IPC screen"
 	icon_state = "ipc_eye"
 	species_allowed = list(IPC)
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_eyes
 	name = "eyes IPC screen"
 	icon_state = "ipc_eyes"
 	species_allowed = list(IPC)
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_screen_alien
 	name = "alien IPC screen"
@@ -1139,30 +1158,35 @@
 	icon_state = "ipc_color_array"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_television
 	name = "TV IPC screen"
 	icon_state = "ipc_television"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_color_array_horizontal
 	name = "horizontal colored IPC screen"
 	icon_state = "ipc_color_array_horizontal"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_color_array_vertical
 	name = "vertical colored IPC screen"
 	icon_state = "ipc_color_array_vertical"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/ipc_miami
 	name = "miami IPC screen"
 	icon_state = "ipc_miami"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = "Default"
 
 /datum/sprite_accessory/hair/unathi_warrior_horns
 	name = "Warrior Horns"

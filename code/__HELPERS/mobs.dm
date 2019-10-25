@@ -17,13 +17,11 @@
 
 	return h_style
 
-/proc/random_ipc_monitor(ipc_head, species)
+/proc/random_ipc_monitor(ipc_head)
 	var/h_style = "Bald"
 	var/list/valid_hairstyles = list()
 	for(var/hairstyle in hair_styles_list)
 		var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-		if(!(species in S.species_allowed))
-			continue
 		if(ipc_head != S.ipc_head_compatible)
 			continue
 		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]

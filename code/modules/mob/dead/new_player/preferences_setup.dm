@@ -6,9 +6,10 @@
 		else
 			gender = FEMALE
 	s_tone = random_skin_tone()
-	h_style = random_hair_style(gender, species)
 	if(species == IPC)
-		h_style = random_ipc_monitor(ipc_head, species)
+		h_style = random_ipc_monitor(ipc_head)
+	else
+		h_style = random_hair_style(gender, species)
 	f_style = random_facial_hair_style(gender, species)
 	randomize_hair_color("hair")
 	randomize_hair_color("facial")
