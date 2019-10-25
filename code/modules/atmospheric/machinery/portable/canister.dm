@@ -6,7 +6,7 @@
 
 	density = TRUE
 	flags = CONDUCT
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/valve_open = FALSE
 	var/release_log = ""

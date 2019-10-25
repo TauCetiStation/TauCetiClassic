@@ -94,7 +94,7 @@
 /turf/simulated/floor/plating,
 /area/djstation)
 "ap" = (
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/djstation)
 "aq" = (
@@ -171,7 +171,7 @@
 	},
 /area/djstation)
 "ay" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"

@@ -187,7 +187,7 @@
 
 /obj/machinery/computer/telescience/proc/close_wormhole()
 	if(active_wormhole)
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 		qdel(active_wormhole)
 		active_wormhole = null
 
@@ -239,7 +239,7 @@
 
 				// use a lot of power
 				use_power(power * 1500)
-				use_power = 2
+				set_power_use(ACTIVE_POWER_USE)
 
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, get_turf(telepad))

@@ -329,8 +329,7 @@
 /area/derelict/lab)
 "bc" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard,
 /turf/simulated/shuttle/plating,
@@ -440,8 +439,7 @@
 /area/derelict/lab)
 "bu" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -538,8 +536,7 @@
 /area/derelict/lab)
 "bH" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard,
 /turf/simulated/floor{

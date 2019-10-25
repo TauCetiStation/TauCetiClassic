@@ -241,17 +241,19 @@
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
 
+/obj/item/clothing/mask/tie
+	body_parts_covered = 0
+	w_class = ITEM_SIZE_TINY
+
 /obj/item/clothing/mask/tie/collar
 	name = "silver collar"
 	desc = "A common collar with silver covering"
 	icon_state = "collar"
-	body_parts_covered = 0
 
 /obj/item/clothing/mask/tie/collar2
 	name = "gold collar"
 	desc = "A common collar with gold covering"
 	icon_state = "collar2"
-	body_parts_covered = 0
 
 /obj/item/clothing/mask/ecig
 	name = "electronic cigarette"

@@ -21,7 +21,7 @@
 	density = FALSE
 	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
 	unacidable = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/datum/wires/syndicatebomb/wires = null
 	var/timer = 60

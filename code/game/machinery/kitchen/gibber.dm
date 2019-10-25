@@ -6,7 +6,7 @@
 	icon_state = "grinder"
 	density = TRUE
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 500
 	var/operating = FALSE //Is it on?

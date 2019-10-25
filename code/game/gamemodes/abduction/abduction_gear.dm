@@ -567,27 +567,33 @@
 /obj/item/weapon/scalpel/alien
 	name = "alien scalpel"
 	icon = 'icons/obj/abductor.dmi'
+	toolspeed = 0.3
 
 /obj/item/weapon/hemostat/alien
 	name = "alien hemostat"
 	icon = 'icons/obj/abductor.dmi'
+	toolspeed = 0.3
 
 /obj/item/weapon/retractor/alien
 	name = "alien retractor"
 	icon = 'icons/obj/abductor.dmi'
+	toolspeed = 0.3
 
 /obj/item/weapon/circular_saw/alien
 	name = "alien saw"
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "saw"
+	toolspeed = 0.3
 
 /obj/item/weapon/surgicaldrill/alien
 	name = "alien drill"
 	icon = 'icons/obj/abductor.dmi'
+	toolspeed = 0.3
 
 /obj/item/weapon/cautery/alien
 	name = "alien cautery"
 	icon = 'icons/obj/abductor.dmi'
+	toolspeed = 0.3
 
 
 // OPERATING TABLE / BEDS / LOCKERS	/ OTHER
@@ -666,11 +672,8 @@
 /obj/structure/table/abductor
 	name = "alien table"
 	desc = "Advanced flat surface technology at work!"
-	icon = 'icons/obj/abductor.dmi'
-
-/obj/structure/table/abductor/atom_init()		// Fuck this shit, I am out...
-	. = ..()
-	verbs -= /obj/structure/table/verb/do_flip
+	icon = 'icons/obj/smooth_structures/abductor_table.dmi'
+	flipable = FALSE // Fuck this shit, I am out...
 
 /obj/structure/closet/abductor
 	name = "alien locker"

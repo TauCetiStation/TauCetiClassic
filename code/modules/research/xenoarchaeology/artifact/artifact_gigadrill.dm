@@ -3,7 +3,7 @@
 	desc = "A giant alien drill mounted on long treads."
 	icon = 'icons/obj/xenoarchaeology/artifacts.dmi'
 	icon_state = "gigadrill"
-	use_power = FALSE
+	use_power = NO_POWER_USE
 	density = TRUE
 	layer = 3.1 // to go over ores
 	var/active = FALSE

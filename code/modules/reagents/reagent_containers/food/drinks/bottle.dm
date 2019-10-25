@@ -12,6 +12,51 @@
 	var/is_glass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
 
+	var/stop_spin_bottle = FALSE //Gotta stop the rotation.
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/atom_init()
+	. = ..()
+	if (!is_glass)
+		verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle()
+	set name = "Spin bottle"
+	set category = "Object"
+	set src in view(1)
+
+	if(!ishuman(usr))  //Checking human and status
+		return
+	if(usr.incapacitated() || usr.stat || usr.lying)
+		return
+	if(usr.is_busy())
+		return
+
+	if(!stop_spin_bottle)
+		if(usr.get_active_hand() == src || usr.get_inactive_hand() == src)
+			usr.drop_from_inventory(src)
+
+		if(isturf(loc))
+			var/speed = rand(1, 3)
+			var/loops
+			var/sleep_not_stacking
+			switch(speed) //At a low speed, the bottle should not make 10 loops
+				if(3)
+					loops = rand(7, 10)
+					sleep_not_stacking = 40
+				if(1 to 2)
+					loops = rand(10, 15)
+					sleep_not_stacking = 25
+
+			stop_spin_bottle = TRUE
+			SpinAnimation(speed, loops, pick(0, 1)) //SpinAnimation(speed, loops, clockwise, segments)
+			transform = turn(matrix(), dir2angle(pick(alldirs)))
+			sleep(sleep_not_stacking) //Not stacking
+			stop_spin_bottle = FALSE
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/pickup(mob/living/user)
+	animate(src, transform = null, time = 0) //Restore bottle to its original position
+
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
 
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
@@ -118,11 +163,27 @@
 
 	return
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/after_throw(datum/callback/callback)
+	..()
+	if(is_glass)
+		var/obj/item/weapon/broken_bottle/BB =  new /obj/item/weapon/broken_bottle(loc)
+		var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
+		I.Blend(BB.broken_outline, ICON_OVERLAY, rand(5), 1)
+		I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+		BB.icon = I
+		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+		new /obj/item/weapon/shard(loc)
+		if(reagents && reagents.total_volume)
+			src.reagents.reaction(loc, TOUCH)
+		qdel(src)
+
+
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/weapon/broken_bottle
 
 	name = "Broken Bottle"
 	desc = "A bottle with a sharp broken bottom."
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "broken_bottle"
 	force = 9.0
@@ -138,6 +199,11 @@
 /obj/item/weapon/broken_bottle/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
+/obj/item/weapon/broken_bottle/after_throw(datum/callback/callback)
+	..()
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+	new /obj/item/weapon/shard(loc)
+	qdel(src)
 
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gin
@@ -294,6 +360,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao/atom_init()
 	. = ..()
 	reagents.add_reagent("bluecuracao", 100)
+	verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle //very bad sprite for spin
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine
 	name = "Briar Rose Grenadine Syrup"
@@ -381,3 +448,5 @@
 	reagents.add_reagent("beer", 100)
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
+
+

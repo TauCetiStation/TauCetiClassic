@@ -486,7 +486,7 @@
 	},
 /area/ai_monitored/storage/eva)
 "aaK" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_x = 32
@@ -529,7 +529,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -2841,36 +2841,13 @@
 	},
 /area/security/brig)
 "aeC" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/reagent_dispensers/watertank,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/floor{
-	icon_state = "whitepurplefull"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "warningline"
-	},
-/area/rnd/xenobiology)
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor,
+/area/storage/tools)
 "aeD" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor{
-	icon_state = "whitepurplefull"
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "warningline"
-	},
-/area/rnd/xenobiology)
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor,
+/area/atmos)
 "aeE" = (
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
@@ -3185,6 +3162,42 @@
 	icon_state = "warningline"
 	},
 /area/rnd/xenobiology)
+"aeX" = (
+/obj/structure/object_wall/mining{
+	icon_state = "5-2"
+	},
+/turf/space,
+/area/shuttle/mining/station)
+"aeY" = (
+/obj/structure/object_wall/mining{
+	icon_state = "5-3"
+	},
+/turf/space,
+/area/shuttle/mining/station)
+"aeZ" = (
+/obj/structure/window/reinforced/shuttle/mining{
+	icon_state = "5-4"
+	},
+/turf/space,
+/area/shuttle/mining/station)
+"afa" = (
+/obj/machinery/door/unpowered/shuttle/wagon,
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "5-5"
+	},
+/area/shuttle/mining/station)
+"afb" = (
+/obj/structure/window/reinforced/shuttle/mining{
+	icon_state = "5-6"
+	},
+/turf/space,
+/area/shuttle/mining/station)
+"afc" = (
+/obj/structure/object_wall/mining{
+	icon_state = "5-7"
+	},
+/turf/space,
+/area/shuttle/mining/station)
 "afd" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -3197,12 +3210,64 @@
 	icon_state = "warning"
 	},
 /area/engine/engineering)
+"afe" = (
+/obj/structure/object_wall/mining{
+	icon_state = "5-8"
+	},
+/turf/space,
+/area/shuttle/mining/station)
+"aff" = (
+/obj/structure/object_wall/mining{
+	icon_state = "5-9"
+	},
+/turf/space,
+/area/shuttle/mining/station)
+"afg" = (
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "2-7"
+	},
+/area/shuttle/mining/station)
 "afh" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
+"afi" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor{
+	icon_state = "whitepurplefull"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warningline"
+	},
+/area/rnd/xenobiology)
+"afj" = (
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor/plating,
+/area/maintenance/bridge)
+"afk" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor{
+	icon_state = "whitepurplefull"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warningline"
+	},
+/area/rnd/xenobiology)
 "afm" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -3333,10 +3398,10 @@
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
 "agX" = (
-/obj/machinery/door/unpowered/shuttle/mining,
-/turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+/obj/structure/object_wall/mining{
+	icon_state = "5-1"
 	},
+/turf/space,
 /area/shuttle/mining/station)
 "aha" = (
 /obj/structure/table,
@@ -3633,7 +3698,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -4000,8 +4065,7 @@
 /area/medical/chemistry)
 "arF" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/structure/lattice,
 /turf/space,
@@ -4116,8 +4180,7 @@
 /area/rnd/telesci)
 "atn" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r9"
+	icon_state = "4-1"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -4622,14 +4685,7 @@
 /area/medical/hallway)
 "aBX" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r10"
-	},
-/obj/structure/shuttle/engine/propulsion/burst/new_shuttle{
-	density = 0;
-	dir = 8;
-	icon_state = "ming_left";
-	opacity = 0
+	icon_state = "4-9"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -5108,7 +5164,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
@@ -5852,12 +5908,12 @@
 /turf/simulated/wall/r_wall,
 /area/aisat)
 "aYr" = (
-/obj/item/weapon/legcuffs/beartrap,
-/obj/item/weapon/legcuffs/beartrap,
-/obj/item/weapon/storage/box/mousetraps,
-/obj/item/weapon/storage/box/mousetraps,
+/obj/machinery/alarm{
+	pixel_y = 23
+	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor,
-/area/janitor)
+/area/storage/primary)
 "aYs" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -6976,8 +7032,7 @@
 	dir = 8
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
@@ -7777,12 +7832,9 @@
 	},
 /area/security/brig)
 "bCJ" = (
-/obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_l3"
-	},
+/obj/machinery/light,
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "4-7"
 	},
 /area/shuttle/mining/station)
 "bDN" = (
@@ -7793,7 +7845,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
 "bDP" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -10398,8 +10450,7 @@
 /area/ai_monitored/storage/eva)
 "cvK" = (
 /obj/structure/object_wall/mining{
-	dir = 4;
-	icon_state = "ming_l4"
+	icon_state = "1-7"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -10456,8 +10507,7 @@
 	dir = 4
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -10492,7 +10542,7 @@
 	},
 /area/rnd/telesci)
 "cxi" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11445,18 +11495,10 @@
 	},
 /area/rnd/hallway)
 "cNf" = (
-/obj/structure/object_wall/mining{
-	density = 0;
-	dir = 8;
-	icon_state = "window_frame";
-	name = "window frame";
-	opacity = 0
-	},
-/obj/structure/grille,
 /obj/structure/window/reinforced/shuttle/mining{
-	icon_state = "rwindow0"
+	icon_state = "1-4,6"
 	},
-/turf/simulated/shuttle/plating,
+/turf/space,
 /area/shuttle/mining/station)
 "cNr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -12505,8 +12547,7 @@
 /area/maintenance/science)
 "dcz" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
@@ -13515,7 +13556,6 @@
 	},
 /area/crew_quarters/heads)
 "dvy" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Engineering Equip Storage APC";
@@ -13526,6 +13566,7 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "yellow"
@@ -14874,8 +14915,7 @@
 /area/atmos)
 "dSZ" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -15191,7 +15231,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
 "dZA" = (
@@ -15689,7 +15729,6 @@
 "ego" = (
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/structure/window/reinforced{
@@ -15724,7 +15763,6 @@
 /obj/structure/closet/secure_closet/security,
 /obj/machinery/light,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
@@ -16549,12 +16587,12 @@
 	},
 /area/hallway/primary/central)
 "evh" = (
-/obj/structure/shuttle/window/new_shuttle{
-	dir = 1;
-	icon_state = "ming2_window_w"
+/obj/machinery/light{
+	dir = 1
 	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "2-4,5,6"
+	},
 /area/shuttle/mining/station)
 "evk" = (
 /obj/machinery/porta_turret/station_default,
@@ -19964,7 +20002,7 @@
 	},
 /area/crew_quarters/bar)
 "fzm" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -20882,7 +20920,7 @@
 /turf/simulated/floor,
 /area/storage/tools)
 "fOG" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -22039,9 +22077,11 @@
 	},
 /area/quartermaster/office)
 "ghk" = (
-/obj/structure/ore_box,
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "3-7"
 	},
 /area/shuttle/mining/station)
 "ghK" = (
@@ -22470,11 +22510,11 @@
 /turf/simulated/floor/plating/airless,
 /area/quartermaster/recycler)
 "gqq" = (
-/obj/structure/shuttle/window/new_shuttle{
-	icon_state = "ming2_window_w"
+/obj/structure/object_wall/mining{
+	icon_state = "2-8";
+	opacity = 0
 	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
+/turf/space,
 /area/shuttle/mining/station)
 "gqz" = (
 /obj/structure/table,
@@ -23815,7 +23855,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating{
-	dir = 8;
+	dir = 4;
 	icon_state = "warnplatecorner"
 	},
 /area/maintenance/cargo)
@@ -23848,11 +23888,11 @@
 	},
 /area/engine/engineering)
 "gNN" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -30
 	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -24171,8 +24211,7 @@
 /area/engine/chiefs_office)
 "gTP" = (
 /obj/structure/object_wall/mining{
-	dir = 4;
-	icon_state = "ming_l2"
+	icon_state = "2-9"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -24698,12 +24737,11 @@
 /turf/space,
 /area/space)
 "hcd" = (
-/obj/machinery/light{
-	dir = 8
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
 	},
-/obj/structure/closet/crate,
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "3-3"
 	},
 /area/shuttle/mining/station)
 "hcq" = (
@@ -25109,8 +25147,7 @@
 /area/hallway/secondary/entry)
 "hhJ" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/structure/lattice,
 /turf/space,
@@ -26091,11 +26128,13 @@
 /turf/simulated/floor/plating,
 /area/quartermaster/recycleroffice)
 "hyL" = (
-/obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r5"
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
 	},
-/turf/space,
+/obj/machinery/light,
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "4-3"
+	},
 /area/shuttle/mining/station)
 "hyO" = (
 /obj/structure/table,
@@ -27386,14 +27425,11 @@
 	},
 /area/storage/tech)
 "hYI" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	pixel_y = 28
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "bot"
-	},
+/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/weapon/storage/box/mousetraps,
+/obj/item/weapon/storage/box/mousetraps,
+/obj/item/weapon/legcuffs/beartrap,
+/turf/simulated/floor,
 /area/janitor)
 "hYJ" = (
 /obj/item/weapon/storage/secure/safe{
@@ -28416,8 +28452,7 @@
 /area/rnd/hallway)
 "iqQ" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -28732,8 +28767,8 @@
 /area/storage/tech/north)
 "iuU" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming2_r2"
+	icon_state = "2-2";
+	opacity = 0
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -28906,7 +28941,7 @@
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
 "ixY" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor/plating,
 /area/engine/engineering)
 "iyf" = (
@@ -30058,11 +30093,10 @@
 	},
 /area/maintenance/bridge)
 "iSH" = (
-/obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r3"
+/obj/structure/closet/mining,
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "3-2"
 	},
-/turf/space,
 /area/shuttle/mining/station)
 "iSJ" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -30685,8 +30719,7 @@
 /area/crew_quarters/security)
 "jfx" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -31442,12 +31475,10 @@
 	},
 /area/crew_quarters)
 "jsz" = (
-/obj/structure/shuttle/window/new_shuttle{
-	dir = 8;
-	icon_state = "ming2_window_w"
+/obj/structure/window/reinforced/shuttle/mining{
+	icon_state = "3-9"
 	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
+/turf/space,
 /area/shuttle/mining/station)
 "jtc" = (
 /obj/structure/disposalpipe/trunk{
@@ -34150,11 +34181,9 @@
 /turf/simulated/floor,
 /area/ai_monitored/storage/eva)
 "kkh" = (
-/obj/structure/object_wall/mining{
-	dir = 4;
-	icon_state = "ming_l1"
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "4-4,6"
 	},
-/turf/space,
 /area/shuttle/mining/station)
 "kli" = (
 /obj/machinery/door/airlock/maintenance{
@@ -34826,9 +34855,11 @@
 	},
 /area/engine/equip)
 "kwN" = (
-/obj/structure/closet/emcloset,
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "2-3"
 	},
 /area/shuttle/mining/station)
 "kwP" = (
@@ -37008,9 +37039,12 @@
 /turf/simulated/floor,
 /area/janitor)
 "leM" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor,
-/area/storage/tools)
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
+	},
+/area/janitor)
 "leQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -37805,7 +37839,7 @@
 /obj/machinery/camera{
 	c_tag = "Dorm West"
 	},
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -38595,7 +38629,6 @@
 	name = "Head of Security RC";
 	pixel_y = 30
 	},
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/clothing/mask/gas/sechailer,
 /turf/simulated/floor{
@@ -38691,8 +38724,7 @@
 /area/turret_protected/aisat_interior)
 "lIT" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
@@ -38813,7 +38845,7 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "escape"
 	},
@@ -38977,8 +39009,8 @@
 /area/lawoffice)
 "lNh" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming2_r4"
+	icon_state = "4-2";
+	opacity = 0
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -39090,7 +39122,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
@@ -40140,8 +40172,7 @@
 	dir = 8
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
@@ -40269,8 +40300,7 @@
 /area/toxins/brainstorm_center)
 "mgu" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/caution/cone,
 /turf/simulated/floor/plating/airless{
@@ -41304,18 +41334,9 @@
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
 "mwo" = (
-/obj/structure/object_wall/mining{
-	density = 0;
-	dir = 4;
-	icon_state = "window_frame";
-	name = "window frame";
-	opacity = 0
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "4-5"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/shuttle/mining{
-	icon_state = "rwindow0"
-	},
-/turf/simulated/shuttle/plating,
 /area/shuttle/mining/station)
 "mwL" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -43045,14 +43066,7 @@
 /area/engine/break_room)
 "naJ" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r7"
-	},
-/obj/structure/shuttle/engine/propulsion/burst/new_shuttle{
-	density = 0;
-	dir = 8;
-	icon_state = "ming_left";
-	opacity = 0
+	icon_state = "2-1"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -43093,7 +43107,6 @@
 	},
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
@@ -43500,9 +43513,10 @@
 /turf/simulated/floor/carpet,
 /area/chapel/main)
 "nib" = (
-/turf/simulated/shuttle/wall/newes_shuttle/mining{
-	icon_state = "ming2_wall"
+/obj/structure/object_wall/mining{
+	icon_state = "1-3"
 	},
+/turf/space,
 /area/shuttle/mining/station)
 "nic" = (
 /obj/structure/stool,
@@ -43853,7 +43867,6 @@
 	dir = 1
 	},
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/device/radio/intercom{
@@ -44178,8 +44191,7 @@
 /area/security/vacantoffice)
 "nth" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/scrap_lump,
 /turf/simulated/floor{
@@ -44350,14 +44362,15 @@
 /area/rnd/telesci)
 "nxZ" = (
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "3-4,5,6"
 	},
 /area/shuttle/mining/station)
 "nyd" = (
-/turf/simulated/shuttle/wall/newes_shuttle/mining{
-	dir = 1;
-	icon_state = "ming2_wall"
+/obj/structure/object_wall/mining{
+	icon_state = "4-8";
+	opacity = 0
 	},
+/turf/space,
 /area/shuttle/mining/station)
 "nyp" = (
 /obj/machinery/firealarm{
@@ -44845,7 +44858,6 @@
 	},
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
@@ -45054,7 +45066,7 @@
 "nHz" = (
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/structure/rack,
 /obj/effect/decal/cleanable/liquid_fuel,
 /turf/simulated/floor/plating,
@@ -45281,7 +45293,7 @@
 /area/maintenance/cargo)
 "nLK" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "nMj" = (
@@ -46290,8 +46302,7 @@
 	dir = 4
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -47510,8 +47521,7 @@
 /area/maintenance/chapel)
 "oBS" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard,
 /obj/item/weapon/shard{
@@ -49239,7 +49249,7 @@
 	},
 /area/toxins/server)
 "pfH" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor/wood,
 /area/bridge/meeting_room)
 "pfQ" = (
@@ -49765,7 +49775,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/flashlight,
@@ -50220,8 +50230,7 @@
 	dir = 8
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -50776,7 +50785,6 @@
 "pHQ" = (
 /obj/structure/closet/secure_closet/warden,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
@@ -51791,7 +51799,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
@@ -52201,8 +52209,7 @@
 "qdp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -52350,11 +52357,12 @@
 /area/chapel/office)
 "qgu" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/machinery/alarm{
-	pixel_y = 23
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
 	},
-/turf/simulated/floor,
-/area/storage/primary)
+/area/janitor)
 "qgH" = (
 /obj/structure/closet/lawcloset,
 /turf/simulated/floor{
@@ -52519,7 +52527,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "qjw" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitegreenfull"
@@ -52956,8 +52964,7 @@
 	pixel_x = -12
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -53041,7 +53048,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/flashlight,
@@ -53419,8 +53426,7 @@
 /area/maintenance/chapel)
 "qwM" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard,
 /turf/simulated/floor/plating,
@@ -54791,7 +54797,7 @@
 	},
 /area/chapel/office)
 "qUo" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -55840,8 +55846,7 @@
 	dir = 4
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -56145,7 +56150,7 @@
 /area/engine/equip)
 "rtL" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/weapon/storage/belt/utility,
 /obj/item/clothing/mask/gas/coloured,
 /turf/simulated/floor/plating,
@@ -57594,8 +57599,7 @@
 	dir = 1
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -57787,7 +57791,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
 "rXe" = (
@@ -57844,8 +57848,7 @@
 "rXq" = (
 /obj/structure/lattice,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/stack/rods,
 /turf/space,
@@ -57868,7 +57871,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "rYL" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -58792,8 +58795,7 @@
 /area/ai_monitored/storage/eva)
 "smT" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r6"
+	icon_state = "1-1"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -60983,8 +60985,7 @@
 /area/crew_quarters)
 "sYC" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken4"
@@ -61052,9 +61053,8 @@
 /turf/simulated/floor,
 /area/ai_monitored/storage/eva)
 "sZw" = (
-/obj/structure/stool/bed/chair/schair,
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "2-4,5,6"
 	},
 /area/shuttle/mining/station)
 "sZH" = (
@@ -61547,8 +61547,7 @@
 /area/medical/hallway/outbranch)
 "tgW" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/wood,
 /area/maintenance/eva)
@@ -65253,8 +65252,7 @@
 /area/toxins/brainstorm_center)
 "upf" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/stack/rods,
 /obj/structure/lattice,
@@ -65589,7 +65587,7 @@
 /obj/structure/sign/warning/fire{
 	pixel_y = 32
 	},
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
 "utp" = (
@@ -66816,12 +66814,10 @@
 	},
 /area/maintenance/science)
 "uOh" = (
-/obj/structure/stool/bed/chair/schair{
-	dir = 4
+/obj/structure/object_wall/mining{
+	icon_state = "1-5"
 	},
-/turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
-	},
+/turf/space,
 /area/shuttle/mining/station)
 "uOt" = (
 /obj/machinery/power/solar_control{
@@ -66910,11 +66906,9 @@
 /area/supply/station)
 "uQg" = (
 /obj/structure/object_wall/mining{
-	icon_state = "ming_l3"
+	icon_state = "1-8"
 	},
-/turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
-	},
+/turf/space,
 /area/shuttle/mining/station)
 "uQk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -67871,8 +67865,7 @@
 /area/engine/engineering)
 "vhw" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /mob/living/simple_animal/mouse,
 /turf/simulated/floor/plating,
@@ -68668,8 +68661,7 @@
 /area/atmos)
 "vvC" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
@@ -68934,8 +68926,7 @@
 "vzw" = (
 /obj/structure/window/reinforced,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -69711,7 +69702,7 @@
 	dir = 6
 	},
 /turf/simulated/floor{
-	dir = 4;
+	dir = 1;
 	icon_state = "warnwhitecorner"
 	},
 /area/rnd/lab)
@@ -69918,8 +69909,7 @@
 "vKB" = (
 /obj/structure/lattice,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/space,
 /area/space)
@@ -70111,15 +70101,10 @@
 	name = "Food Court Maintenance"
 	})
 "vNW" = (
-/obj/machinery/light{
-	dir = 4
+/obj/structure/object_wall/mining{
+	icon_state = "1-9"
 	},
-/obj/machinery/computer/mine_sci_shuttle/flight_comp{
-	dir = 8
-	},
-/turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
-	},
+/turf/space,
 /area/shuttle/mining/station)
 "vOc" = (
 /turf/simulated/floor/plating,
@@ -71019,8 +71004,7 @@
 /area/crew_quarters/gym)
 "waO" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken3"
@@ -71756,8 +71740,7 @@
 /area/crew_quarters/captain)
 "wnr" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
@@ -72837,8 +72820,7 @@
 /area/tcommsat/chamber)
 "wMe" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r1"
+	icon_state = "1-2"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -72847,7 +72829,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
@@ -73366,8 +73348,7 @@
 "wVH" = (
 /obj/item/weapon/scrap_lump,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/stack/rods,
 /obj/structure/window/reinforced{
@@ -73885,8 +73866,7 @@
 /area/rnd/mixing)
 "xcX" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/science)
@@ -73910,8 +73890,7 @@
 	dir = 1
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -73984,7 +73963,7 @@
 	},
 /area/maintenance/science)
 "xeL" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -74950,9 +74929,9 @@
 	},
 /area/rnd/mixing)
 "xvW" = (
-/obj/item/weapon/reagent_containers/glass/bucket,
-/turf/simulated/floor,
-/area/janitor)
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor/plating,
+/area/maintenance/eva)
 "xwu" = (
 /obj/structure/flora/tree/jungle/small{
 	icon_state = "tree5"
@@ -75323,8 +75302,7 @@
 /area/rnd/mixing)
 "xCd" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r8"
+	icon_state = "3-1"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -77224,10 +77202,12 @@
 /turf/simulated/floor/wood,
 /area/crew_quarters/dormthree)
 "ylV" = (
-/obj/structure/object_wall/mining{
-	icon_state = "ming_l4"
+/obj/machinery/computer/mine_sci_shuttle/flight_comp{
+	dir = 8
 	},
-/turf/space,
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "3-8"
+	},
 /area/shuttle/mining/station)
 "ylX" = (
 /obj/machinery/door/firedoor,
@@ -91496,7 +91476,7 @@ smT
 naJ
 xCd
 atn
-aBX
+agX
 smh
 smh
 smh
@@ -91753,7 +91733,7 @@ wMe
 iuU
 iSH
 lNh
-hyL
+aeX
 smh
 qJH
 vpM
@@ -92009,8 +91989,8 @@ kHU
 nib
 kwN
 hcd
-ghk
-nyd
+hyL
+aeY
 smh
 qJH
 vpM
@@ -92266,8 +92246,8 @@ kHU
 cNf
 sZw
 nxZ
-nxZ
-mwo
+kkh
+aeZ
 smh
 xHd
 rIG
@@ -92520,11 +92500,11 @@ pcn
 kHU
 kHU
 kHU
-nib
-sZw
+uOh
+evh
 nxZ
-nxZ
-agX
+mwo
+afa
 ouY
 qJH
 wjC
@@ -92780,8 +92760,8 @@ kHU
 cNf
 sZw
 nxZ
-nxZ
-mwo
+kkh
+afb
 cZY
 vBU
 yeh
@@ -93035,10 +93015,10 @@ plf
 plf
 kHU
 cvK
-uQg
-uOh
+afg
+ghk
 bCJ
-ylV
+afc
 wqE
 iFh
 pgt
@@ -93291,11 +93271,11 @@ plf
 plf
 plf
 kHU
-kHU
+uQg
 gqq
-vNW
-evh
-kHU
+ylV
+nyd
+afe
 wqE
 wrF
 oCz
@@ -93548,11 +93528,11 @@ plf
 plf
 plf
 kHU
-kHU
+vNW
 gTP
 jsz
-kkh
-kHU
+aBX
+aff
 wqE
 smh
 wco
@@ -96672,7 +96652,7 @@ ear
 fKz
 sBB
 gLD
-leM
+aeC
 dvz
 eZN
 eZN
@@ -96920,7 +96900,7 @@ dSp
 wqP
 czH
 ear
-qgu
+aYr
 hkV
 cUF
 cUF
@@ -97165,7 +97145,7 @@ chJ
 khF
 sZH
 trO
-pme
+qgu
 wRi
 aet
 hqa
@@ -97419,10 +97399,10 @@ xLH
 mRW
 eJg
 chJ
-hYI
+pme
 abe
 eyG
-mFj
+leM
 wRi
 jOl
 lmA
@@ -97677,9 +97657,9 @@ gpL
 eJg
 chJ
 dlP
-xvW
+hYI
 tKH
-aYr
+mFj
 wRi
 nxc
 mOK
@@ -108210,7 +108190,7 @@ gul
 uNm
 yaE
 wze
-jJd
+xvW
 gul
 emo
 wze
@@ -119591,7 +119571,7 @@ vNi
 aes
 aex
 aez
-aeC
+afi
 aeG
 aex
 aeN
@@ -120315,7 +120295,7 @@ ada
 jIl
 vXB
 knA
-mUQ
+afj
 jIl
 sWU
 grK
@@ -121133,7 +121113,7 @@ vNi
 aeu
 aey
 aeA
-aeD
+afk
 aeH
 aey
 aeO
@@ -121561,7 +121541,7 @@ iir
 iir
 oiB
 mKz
-rom
+aeD
 rtz
 uVU
 qqY

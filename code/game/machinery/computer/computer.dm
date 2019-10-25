@@ -3,7 +3,7 @@
 	icon = 'icons/obj/computer.dmi'
 	density = 1
 	anchored = 1.0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 300
 	active_power_usage = 300
 	allowed_checks = ALLOWED_CHECK_TOPIC

@@ -7,7 +7,7 @@
 	icon_state = "smes"
 	density = 1
 	anchored = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/output = 50000
 	var/lastout = 0

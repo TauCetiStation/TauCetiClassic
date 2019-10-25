@@ -433,8 +433,7 @@
 /area/awaymission/labs/cave)
 "by" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -791,7 +790,7 @@
 /area/awaymission/labs/researchdivision)
 "cw" = (
 /turf/simulated/floor{
-	dir = 8;
+	dir = 4;
 	icon_state = "warnwhitecorner"
 	},
 /area/awaymission/labs/researchdivision)
@@ -2696,7 +2695,7 @@
 	name = "James MacDonald"
 	},
 /turf/simulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "warningcorner"
 	},
 /area/awaymission/labs/researchdivision)
@@ -3207,7 +3206,7 @@
 /area/awaymission/labs/researchdivision)
 "hR" = (
 /turf/simulated/floor{
-	dir = 8;
+	dir = 4;
 	icon_state = "warningcorner"
 	},
 /area/awaymission/labs/researchdivision)
@@ -3223,7 +3222,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 4;
+	dir = 1;
 	icon_state = "warningcorner"
 	},
 /area/awaymission/labs/researchdivision)
@@ -8802,13 +8801,13 @@
 /area/awaymission/labs/security)
 "uC" = (
 /turf/simulated/floor{
-	dir = 4;
+	dir = 1;
 	icon_state = "warningcorner"
 	},
 /area/awaymission/labs/security)
 "uD" = (
 /turf/simulated/floor{
-	dir = 8;
+	dir = 4;
 	icon_state = "warningcorner"
 	},
 /area/awaymission/labs/security)

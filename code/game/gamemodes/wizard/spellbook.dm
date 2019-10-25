@@ -235,7 +235,14 @@
 	buy_word = "Summon"
 	var/item_path= null
 
+/datum/spellbook_entry/item/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) // Specific circumstances
+	. = ..()
+	if(.)
+		return surplus != 0
+
 /datum/spellbook_entry/item/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	if(surplus > 0)
+		surplus = max(surplus - 1, 0)
 	new item_path (get_turf(user))
 	feedback_add_details("wizard_spell_learned", log_name)
 	return 1
@@ -249,12 +256,14 @@
 		dat += "[surplus] left.<br>"
 	return dat
 
+/* Commented because admins ban everyone who uses this staff... Somebody should rebalance this thing
 /datum/spellbook_entry/item/staffchange
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	item_path = /obj/item/weapon/gun/magic/change
 	log_name = "ST"
 	cost = 4
+*/
 
 /datum/spellbook_entry/item/staffanimation
 	name = "Staff of Animation"
@@ -328,6 +337,15 @@
 	feedback_add_details("wizard_spell_learned",log_name)
 	return 1
 
+/datum/spellbook_entry/item/tophat
+	name = "The Wabbajack Hat"
+	desc = "A magical hat that comes with it's own pocket dimension."
+	item_path = /obj/item/clothing/head/wizard/tophat
+	log_name = "TH"
+	category = "Assistance"
+	refundable = FALSE
+	cost = 1
+	surplus = 1
 
 /*datum/spellbook_entry/item/battlemage
 	name = "Battlemage Armour"

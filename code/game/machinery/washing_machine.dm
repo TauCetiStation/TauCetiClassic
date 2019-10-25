@@ -5,7 +5,7 @@
 	icon_state = "wm_10"
 	density = 1
 	anchored = 1.0
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/state = 1
 	//1 = empty, open door
 	//2 = empty, closed door

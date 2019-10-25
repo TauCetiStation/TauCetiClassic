@@ -6,6 +6,28 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = list(SKRELL , HUMAN)
 
+
+	action_button_name = "Toggle Helmet Light" //this copypaste everywhere!
+	var/brightness_on = 4 //luminosity when on
+	var/on = 0
+
+	light_color = "#00ffff"
+
+/obj/item/clothing/head/helmet/space/skrell/attack_self(mob/user)
+	if(!isturf(user.loc))
+		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
+		return
+	on = !on
+	icon_state = "[initial(icon_state)][on ? "-light" : ""]"
+	usr.update_inv_head()
+
+	if(on)	set_light(brightness_on)
+	else	set_light(0)
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_head()
+
 /obj/item/clothing/head/helmet/space/skrell/white
 	icon_state = "skrell_helmet_white"
 	item_state = "skrell_helmet_white"
@@ -144,7 +166,6 @@
 	icon_state = "vox-carapace"
 	item_state = "vox-carapace"
 	desc = "A glowing visor, perhaps stolen from a depressed Cylon."
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	armor = list(melee = 65, bullet = 50, laser = 70, energy = 20, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/suit/space/vox/carapace

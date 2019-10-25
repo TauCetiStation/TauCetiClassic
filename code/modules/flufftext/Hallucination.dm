@@ -47,7 +47,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
         //STRANGE ITEMS
 
 			if(16 to 25)
-				if(!halitem)
+				if(!halitem && !has_trait(TRAIT_STRONGMIND))
 					halitem = new
 					var/list/slots_free = list(ui_lhand,ui_rhand)
 					if(l_hand) slots_free -= ui_lhand
@@ -101,7 +101,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
         // FLASHES OF DANGER, TURFS
 
 			if(26 to 40)
-				if(!halimage)
+				if(!halimage && !has_trait(TRAIT_STRONGMIND))
 					var/list/possible_points = list()
 					for(var/turf/simulated/floor/F in view(src,world.view))
 						possible_points += F
@@ -181,7 +181,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						spawn(rand(10,30))
 							playsound_local(target, gunsound, VOL_EFFECTS_MASTER)
 							if(prob(60))
-								playsound_local(target, pick(SOUNDIN_MSCREAM + SOUNDIN_FSCREAM), VOL_EFFECTS_MASTER, null, FALSE)
+								playsound_local(target, pick(SOUNDIN_FEMALE_HEAVY_PAIN + SOUNDIN_MALE_HEAVY_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 					if(8) // MELEE
 						var/list/hallsound = list('sound/weapons/smash.ogg',
 						                          'sound/weapons/polkan_atk.ogg',
@@ -242,7 +242,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
         // FLASHES OF DANGER, MOBS
 
 			if(66 to 70)
-				if(!halbody)
+				if(!halbody && !has_trait(TRAIT_STRONGMIND))
 					var/list/possible_points = list()
 					for(var/turf/simulated/floor/F in view(src,world.view))
 						possible_points += F
@@ -262,9 +262,13 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							if(client) client.images -= halbody
 							halbody = null
 
+			if(71 to 73)
+				if(!has_trait(TRAIT_STRONGMIND))
+					fake_attack(src)
+
         // FAKE DEATH
 
-			if(71 to 72)
+			if(74 to 75)
 				src.sleeping = 20
 				hal_crit = 1
 				hal_screwyhud = 1
