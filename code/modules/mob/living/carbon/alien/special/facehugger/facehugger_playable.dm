@@ -361,7 +361,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		return
 	confirm()
 
-	if(assailant.client)
+	if(assailant && assailant.client)
 		assailant.client.screen -= hud
 		assailant.client.screen += hud
 
