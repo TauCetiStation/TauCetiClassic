@@ -32,6 +32,10 @@
 	. = ..()
 	verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
 
+/obj/item/weapon/reagent_containers/spray/attackby(obj/item/I, mob/user)
+	..()
+	update_icon()
+
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A, mob/user)
 	if(istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
 	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/stool/bed/chair/janitorialcart))
@@ -137,12 +141,18 @@
 	else
 		user.newtonian_move(movementdirection)
 
+/obj/item/weapon/reagent_containers/spray/update_icon()
+	if(reagents.total_volume < 10 && icon_state == "cleaner") // We're specifying the name just not to break any other sub-objects's update_icon()'s
+		icon_state = "cleaner_empty"
+	else if(icon_state == "cleaner_empty")
+		icon_state = "cleaner"
 
 /obj/item/weapon/reagent_containers/spray/proc/Spray_at(turf/start, turf/target)
 	var/spray_size_current = spray_size // This ensures, that a player doesn't switch to another mode mid-fly.
 	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
 	D.create_reagents(amount_per_transfer_from_this)
 	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_size)
+	update_icon()
 	D.icon += mix_color_from_reagents(D.reagents.reagent_list)
 
 	if(!chempuff_dense)
@@ -190,6 +200,7 @@
 		reagents.reaction(usr.loc)
 		sleep(5)
 		reagents.clear_reagents()
+		update_icon()
 //hair dyes!
 /obj/item/weapon/reagent_containers/spray/hair_color_spray
 	name = "hair color spray"
