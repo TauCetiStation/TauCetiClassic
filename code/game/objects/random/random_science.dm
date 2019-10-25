@@ -203,16 +203,16 @@
 					prob(10);/obj/random/science/circuit,\
 					prob(2);/obj/item/weapon/reagent_containers/spray/extinguisher,\
 					prob(50);/obj/random/science/stock_part,\
-					prob(3);/obj/item/device/encryptionkey/headset_sec,\
-					prob(3);/obj/item/device/encryptionkey/headset_int,\
-					prob(3);/obj/item/device/encryptionkey/headset_eng,\
-					prob(3);/obj/item/device/encryptionkey/headset_rob,\
-					prob(3);/obj/item/device/encryptionkey/headset_med,\
-					prob(3);/obj/item/device/encryptionkey/headset_sci,\
-					prob(3);/obj/item/device/encryptionkey/headset_medsci,\
-					prob(3);/obj/item/device/encryptionkey/headset_com,\
-					prob(2);/obj/item/device/encryptionkey/heads/rd,\
-					prob(2);/obj/item/device/encryptionkey/heads/hos,\
-					prob(2);/obj/item/device/encryptionkey/heads/ce,\
+					prob(2);/obj/item/device/encryptionkey/headset_sec,\
+					prob(2);/obj/item/device/encryptionkey/headset_int,\
+					prob(2);/obj/item/device/encryptionkey/headset_eng,\
+					prob(2);/obj/item/device/encryptionkey/headset_rob,\
+					prob(2);/obj/item/device/encryptionkey/headset_med,\
+					prob(2);/obj/item/device/encryptionkey/headset_sci,\
+					prob(2);/obj/item/device/encryptionkey/headset_medsci,\
+					prob(2);/obj/item/device/encryptionkey/headset_com,\
+					prob(1);/obj/item/device/encryptionkey/heads/rd,\
+					prob(1);/obj/item/device/encryptionkey/heads/hos,\
+					prob(1);/obj/item/device/encryptionkey/heads/ce,\
 					prob(1);/obj/item/device/encryptionkey/heads/captain\
 				)
