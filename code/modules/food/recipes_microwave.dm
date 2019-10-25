@@ -118,6 +118,7 @@
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/bun,
 		/obj/item/clothing/mask/gas/clown_hat,
+		/obj/item/weapon/bikehorn,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/clownburger
 
