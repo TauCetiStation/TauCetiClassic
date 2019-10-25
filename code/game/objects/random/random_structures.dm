@@ -222,6 +222,7 @@
 					prob(5);/obj/structure/safe,\
 					prob(5);/obj/machinery/the_singularitygen/tesla,\
 					prob(5);/obj/machinery/the_singularitygen,\
+					prob(1);/obj/machinery/wish_granter_dark,\
 					prob(1);/obj/machinery/nuclearbomb\
 				)
 
