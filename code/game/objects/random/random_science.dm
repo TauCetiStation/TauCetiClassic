@@ -214,5 +214,5 @@
 					prob(2);/obj/item/device/encryptionkey/heads/rd,\
 					prob(2);/obj/item/device/encryptionkey/heads/hos,\
 					prob(2);/obj/item/device/encryptionkey/heads/ce,\
-					prob(1);/obj/item/device/encryptionkey/heads/captain,\
+					prob(1);/obj/item/device/encryptionkey/heads/captain\
 				)
