@@ -148,7 +148,7 @@
 	return !locked
 
 /obj/structure/closet/crate/secure/AltClick(mob/user)
-	if(!user.stat && !user.restrained() && get_dist(user,src) <= 1)
+	if(!user.incapacitated() && get_dist(user,src) <= 1)
 		src.togglelock(user)
 	..()
 

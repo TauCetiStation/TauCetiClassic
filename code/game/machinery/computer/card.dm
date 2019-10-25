@@ -41,7 +41,7 @@
 	set name = "Eject ID Card"
 	set src in oview(1)
 
-	if(!usr || usr.stat || usr.lying || usr.restrained() || issilicon(usr))	return
+	if(!usr || usr.incapacitated() || issilicon(usr))	return
 
 	if(modify)
 		to_chat(usr, "You remove \the [modify] from \the [src].")
