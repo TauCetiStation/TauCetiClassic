@@ -72,34 +72,33 @@
 
 	return 0
 
-/obj/item/weapon/reagent_containers/food/drinks/cans/afterattack(obj/target, mob/user, proximity)
+/obj/item/weapon/reagent_containers/food/drinks/cans/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 
-	if(istype(target, /turf/simulated))
-		..()
+	if (!is_open_container())
+		to_chat(user, "<span class='notice'>You need to open [src]!</span>")
 		return
 
-	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+	if(istype(A, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
-		if(!target.reagents.total_volume)
-			to_chat(user, "<span class='warning'>[target] is empty.</span>")
+		if(!A.reagents.total_volume)
+			to_chat(user, "<span class='warning'>[A] is empty.</span>")
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return
 
-			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-			to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
+		var/trans = A.reagents.trans_to(src, A:amount_per_transfer_from_this)
+		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [A].</span>")
 
-	else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
-
+	else if(istype(A, /obj) && A.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='warning'>[src] is empty.</span>")
 			return
 
-		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			to_chat(user, "<span class='warning'>[target] is full.</span>")
+		if(A.reagents.total_volume >= A.reagents.maximum_volume)
+			to_chat(user, "<span class='warning'>[A] is full.</span>")
 			return
 
 		var/datum/reagent/refill
@@ -108,8 +107,8 @@
 			refill = reagents.get_master_reagent_id()
 			refillName = reagents.get_master_reagent_name()
 
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
+		var/trans = src.reagents.trans_to(A, amount_per_transfer_from_this)
+		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [A].</span>")
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
@@ -117,6 +116,16 @@
 			bro.cell.use(chargeAmount)
 			to_chat(user, "Now synthesizing [trans] units of [refillName]...")
 			addtimer(CALLBACK(src, .proc/refill_by_borg, user, refill, trans), 300)
+
+	else if((user.a_intent == I_HURT) && reagents.total_volume && istype(A, /turf/simulated))
+		to_chat(user, "<span class = 'notice'>You splash the solution onto [A].</span>")
+
+		reagents.reaction(A, TOUCH)
+		reagents.clear_reagents()
+
+		var/turf/T = get_turf(src)
+		message_admins("[key_name_admin(usr)] splashed [reagents.get_reagents()] on [A], location ([T.x],[T.y],[T.z]) [ADMIN_JMP(usr)]")
+		log_game("[usr.ckey]([usr]) splashed [reagents.get_reagents()] on [A], location ([T.x],[T.y],[T.z])")
 	return
 
 
