@@ -69,10 +69,13 @@
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(src.charge > 0)
 				if(H.nutrition < 450)
-					src.use(50)
-					H.nutrition += 50
 					to_chat(user, "<span class='notice'>You attach your fingers to the cell and siphon off some of the stored charge for your own use.</span>")
-					if(H.nutrition > 500) H.nutrition = 500
+					while (H.nutrition < 500)
+						sleep(10)
+						src.use(50)
+						H.nutrition += 50
+						to_chat(user, "<span class='notice'>Draining... [round(src.percent() )]% of battery charge left.</span>")
+						if(H.nutrition > 500) H.nutrition = 500
 				else
 					to_chat(user, "<span class='notice'>You are already fully charged.</span>")
 			else
