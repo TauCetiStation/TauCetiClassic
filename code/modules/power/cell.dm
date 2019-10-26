@@ -64,7 +64,21 @@
 		var/obj/item/clothing/gloves/space_ninja/SNG = H.gloves
 		if(istype(SNG) && SNG.candrain && !SNG.draining)
 			SNG.drain("CELL",src,H.wear_suit)
-
+			
+		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == "grab")
+			user.SetNextMove(CLICK_CD_MELEE)
+			if(src.charge > 0)
+				if(H.nutrition < 450)
+					src.use(50)
+					H.nutrition += 50
+					to_chat(user, "<span class='notice'>You attach your fingers to the cell and siphon off some of the stored charge for your own use.</span>")
+					if(H.nutrition > 500) H.nutrition = 500
+				else
+					to_chat(user, "<span class='notice'>You are already fully charged.</span>")
+			else
+				to_chat(user, "There is no charge to draw from that cell.")
+			return
+			
 /obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
