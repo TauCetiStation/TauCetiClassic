@@ -356,12 +356,10 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 
 /obj/item/weapon/fh_grab/process()
-	if(!assailant)
-		qdel(src)
+	if(!confirm())
 		return
-	confirm()
 
-	if(assailant && assailant.client)
+	if(assailant.client)
 		assailant.client.screen -= hud
 		assailant.client.screen += hud
 
