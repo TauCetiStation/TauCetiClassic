@@ -77,6 +77,11 @@
 		return
 	close_machine(target)
 
+/obj/machinery/sleeper/CtrlShiftClick(mob/user)
+	if(!iscarbon(user) && !isrobot(user)) 
+		return
+	open_machine()	
+
 /obj/machinery/sleeper/process()
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/H = occupant

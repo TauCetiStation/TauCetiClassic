@@ -254,7 +254,7 @@
 
 /*
 	Control+Shift click
-	Unused except for AI
+	Used for AI, bodyscanner (eject body), sleeper (open sleeper), cryo cell (open cryo cell)
 */
 /mob/proc/CtrlShiftClickOn(atom/A)
 	var/obj/item/I = get_active_hand()

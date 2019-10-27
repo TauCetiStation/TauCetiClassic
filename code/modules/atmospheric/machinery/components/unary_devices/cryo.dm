@@ -121,6 +121,11 @@
 		return
 	close_machine(target)
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/CtrlShiftClick(mob/user)
+	if(!iscarbon(user) && !isrobot(user)) 
+		return
+	open_machine()	
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/allow_drop()
 	return 0
 

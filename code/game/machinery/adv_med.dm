@@ -79,6 +79,11 @@
 	close_machine(target)
 	playsound(src, 'sound/machines/analysis.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
+/obj/machinery/bodyscanner/CtrlShiftClick(mob/user)
+	if(!iscarbon(user) && !isrobot(user)) 
+		return
+	eject()
+
 /obj/machinery/bodyscanner/ex_act(severity)
 	var/should_destroy = FALSE
 	switch(severity)

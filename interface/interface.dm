@@ -42,6 +42,10 @@ Hotkey-Mode: (hotkey-mode must be on)
 \t 2 = disarm-intent
 \t 3 = grab-intent
 \t 4 = harm-intent
+\t Alt+Click = list of items on the floor
+\t Shift+Click = examine the item
+\t Ctrl+Click = pull the item
+\t Ctrl+Shift+Click = eject body from the body scanner, sleeper, cryo cell
 </font>"}
 
 	var/other = {"<font color='purple'>
