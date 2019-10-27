@@ -303,6 +303,15 @@
 		..()
 	update_icon()
 
+/obj/machinery/washing_machine/AltClick(mob/user)
+	if(!user.canUseTopic(src))
+		return
+	if(state_open)
+		to_chat(user, "<span class='notice'>Close the door first</span>")
+		return
+	start()
+	update_icon()
+
 /obj/machinery/washing_machine/attack_ai(mob/user)
 	if(IsAdminGhost(user))
 		return ..()

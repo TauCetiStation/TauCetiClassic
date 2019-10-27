@@ -144,6 +144,9 @@
 #define MANIFEST_ERROR_CONTENTS		2
 #define MANIFEST_ERROR_ITEM			4
 
+//used by canUseTopic()
+#define BE_CLOSE TRUE		//! in the case of a silicon, to select if they need to be next to the atom
+#define NO_DEXTERY TRUE		//! if other mobs (monkeys, aliens, etc) can use this
 
 //teleport checks
 #define TELE_CHECK_NONE 0

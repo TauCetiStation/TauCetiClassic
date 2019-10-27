@@ -185,6 +185,12 @@
 
 //mob/living/silicon/pai/bullet_act(obj/item/projectile/Proj)
 
+/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close = FALSE, no_dextery = FALSE)
+	if(be_close && !in_range(M, src))
+		to_chat(src, "<span class='warning'>You are too far away!</span>")
+		return FALSE
+	return TRUE
+
 /mob/living/silicon/pai/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")

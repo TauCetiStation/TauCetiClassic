@@ -274,6 +274,9 @@ Class Procs:
 	if(!can_mob_interact(usr))
 		return FALSE
 
+	if(!usr.canUseTopic(src))
+		return FALSE
+
 	if((allowed_checks & ALLOWED_CHECK_TOPIC) && !emagged && !allowed(usr))
 		allowed_fail(usr)
 		to_chat(usr, "<span class='warning'>Access Denied.</span>")

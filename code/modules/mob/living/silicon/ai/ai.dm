@@ -900,6 +900,15 @@ var/list/ai_verbs_default = list(
 		return 1
 	return 0
 
+/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+	if(control_disabled || incapacitated())
+		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
+		return FALSE
+	if(be_close && !in_range(M, src))
+		to_chat(src, "<span class='warning'>You are too far away!</span>")
+		return FALSE
+	return TRUE
+
 /mob/living/silicon/ai/proc/is_in_chassis()
 	return istype(loc, /turf)
 

@@ -148,9 +148,10 @@
 	return !locked
 
 /obj/structure/closet/crate/secure/AltClick(mob/user)
-	if(!user.incapacitated() && get_dist(user,src) <= 1)
-		src.togglelock(user)
 	..()
+	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
+		return
+	else src.togglelock(user)
 
 /obj/structure/closet/crate/secure/proc/togglelock(mob/user)
 	if(src.opened)

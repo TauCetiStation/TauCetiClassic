@@ -33,8 +33,9 @@
 	return formatted
 
 /obj/machinery/computer/card/AltClick(mob/user)
-	if(get_dist(user,src) <= 1)
-		eject_id()
+	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
+		return
+	eject_id()
 
 /obj/machinery/computer/card/verb/eject_id()
 	set category = "Object"

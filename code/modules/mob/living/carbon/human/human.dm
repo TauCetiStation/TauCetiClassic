@@ -472,6 +472,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return TRUE
 	return 0
 
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = FALSE, no_dextery = FALSE)
+	if(!Adjacent(M) && (M.loc != src))
+		if(be_close == 0)
+			return TRUE
+		to_chat(src, "<span class='warning'>You are too far away!</span>")
+		return FALSE
+	return TRUE
+
 /mob/living/carbon/human/resist()
 	..()
 	if(usr && !usr.incapacitated())

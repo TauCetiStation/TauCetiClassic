@@ -255,6 +255,13 @@
 			colour = input(user,"Choose Color") as color
 			update_icon()
 
+/obj/item/toy/crayon/spraycan/AltClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		to_chat(user, "<span class='notice'>You [capped ? "Remove" : "Replace"] the cap of the [src]</span>")
+		capped = capped ? 0 : 1
+		icon_state = "spraycan[capped ? "_cap" : ""]"
+		update_icon()
+
 /obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return

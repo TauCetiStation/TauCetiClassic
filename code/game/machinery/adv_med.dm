@@ -127,6 +127,11 @@
 			update_power_use()
 	update_power_use()
 
+/obj/machinery/bodyscanner/AltClick(mob/user)
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return
+	eject()
+
 /obj/machinery/body_scanconsole
 	var/obj/machinery/bodyscanner/connected
 	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mindshield/loyalty)

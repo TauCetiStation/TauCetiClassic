@@ -29,9 +29,10 @@
 		return 0
 
 /obj/structure/closet/secure_closet/AltClick(mob/user)
-	if(!user.incapacitated() && get_dist(user,src) <= 1)
-		src.togglelock(user)
 	..()
+	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
+		return
+	else src.togglelock(user)
 
 /obj/structure/closet/secure_closet/emp_act(severity)
 	for(var/obj/O in src)

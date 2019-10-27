@@ -431,6 +431,8 @@
 //	..()
 	return
 
+/mob/proc/canUseTopic(atom/movable/M, be_close = FALSE, no_dextery = FALSE)
+	return
 
 /mob/proc/pull_damage()
 	if(ishuman(src))

@@ -235,17 +235,18 @@
 		return
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
-	if(!user.incapacitated() && get_dist(user,src) <= 1)
-		if(!state_open)
-			on = !on
-			update_icon()
+	if(user.canUseTopic(src, BE_CLOSE, FALSE) && !state_open)
+		on = !on
+		update_icon()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
-	if(!user.incapacitated() && get_dist(user,src) <= 1)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE))
 		if(state_open)
 			close_machine()
 		else
 			open_machine()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Topic(href, href_list)
 	. = ..()
