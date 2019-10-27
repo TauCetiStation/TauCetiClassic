@@ -9,7 +9,7 @@
 	var/ghost_name = "Unknown"
 	var/creating_blob = 0
 	faction = "blob"
-	emotions_allowed = FALSE //Blobs can't emote
+	me_verb_allowed = FALSE //Blobs can't emote
 
 
 /mob/living/blob/atom_init()

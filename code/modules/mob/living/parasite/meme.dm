@@ -290,7 +290,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 
 	if(!src.host)
 		return
-	if(!host.emotions_allowed)
+	if(!host.me_verb_allowed)
 		to_chat(usr, "<span class='warning'>Your host already can't use body language..</span>")
 		return
 	if(!use_points(250))
@@ -303,11 +303,11 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 		to_chat(host, "<span class='warning'>Your body feels numb.. You lose your ability to use body language.</span>")
 		to_chat(usr, "<span class='warning'>Your host can't use body language anymore.</span>")
 
-		host.emotions_allowed = FALSE
+		host.me_verb_allowed = FALSE
 
 		sleep(1200) // maybe it is better to use addtimer()? 120 seconds is too much
 
-		host.emotions_allowed = TRUE
+		host.me_verb_allowed = TRUE
 		to_chat(host, "<span class='warning'>Your body has feeling again..</span>")
 		to_chat(usr, "<span class='warning'>[host] can use body language again.</span>")
 

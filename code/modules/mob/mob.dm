@@ -36,7 +36,7 @@
 
 /mob/proc/show_message(message, message_type = MESSAGE_VISIBLE, alternative_message, alternative_message_type)
 
-	if(!client || !message_type || !message)
+	if(!client || !message)
 		return FALSE
 
 	var/blind = (sdisabilities & BLIND) || blinded || paralysis
@@ -49,6 +49,10 @@
 			message = alternative_message
 		else
 			return FALSE
+
+	if(stat && (message_type & MESSAGE_AUDIBLE))
+		to_chat(src, "<I>... You can almost hear something ...</I>")
+		return
 
 	to_chat(src, message)
 	return message

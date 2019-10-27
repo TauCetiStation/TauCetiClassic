@@ -25,7 +25,7 @@
 
 	message = sanitize(message)
 
-	if(emotions_allowed)
+	if(me_verb_allowed)
 		usr.emote("me", usr.emote_type, message, FALSE)
 	else
 		to_chat(usr, "You are unable to emote.")

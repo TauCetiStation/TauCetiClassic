@@ -36,7 +36,7 @@
 	. += 				"</tr>"
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Ghost sight:</td>"
-	. += 					"<td><a href='?_src_=prefs;preference=ghost_sight'><b>[(chat_toggles & CHAT_GHOSTSIGHT_ALL) ? "All Emotes" : ((chat_toggles & CHAT_GHOSTSIGHT_ALLMANUAL) ? "All manual-only emotes" : "Nearest Creatures")]</b></a></td>"
+	. += 					"<td><a href='?_src_=prefs;preference=ghost_sight'><b>[(chat_ghostsight == CHAT_GHOSTSIGHT_ALL) ? "All Emotes" : ((chat_ghostsight == CHAT_GHOSTSIGHT_ALLMANUAL) ? "All manual-only emotes" : "Nearest Creatures")]</b></a></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Ghost radio:</td>"
@@ -154,11 +154,11 @@
 		if("ghost_sight")
 			switch(chat_ghostsight)
 				if(CHAT_GHOSTSIGHT_ALL)
-					chat_ghostsight = CHAT_GHOSTSIGHT_ALL
-				if(CHAT_GHOSTSIGHT_ALLMANUAL)
 					chat_ghostsight = CHAT_GHOSTSIGHT_ALLMANUAL
-				if(CHAT_GHOSTSIGHT_NEARBYMOBS)
+				if(CHAT_GHOSTSIGHT_ALLMANUAL)
 					chat_ghostsight = CHAT_GHOSTSIGHT_NEARBYMOBS
+				if(CHAT_GHOSTSIGHT_NEARBYMOBS)
+					chat_ghostsight = CHAT_GHOSTSIGHT_ALL
 
 		if("ghost_ears")
 			chat_toggles ^= CHAT_GHOSTEARS

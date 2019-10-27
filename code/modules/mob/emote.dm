@@ -1,7 +1,7 @@
 // All mobs should have custom emote, really. TODO: Put all emotions into one proc. Copy paste is bad, it is everywere in different emote procs
 /mob/proc/custom_emote(m_type = 1, message)
 
-	if(stat || !emotions_allowed && usr == src)
+	if(stat || !me_verb_allowed && usr == src)
 		to_chat(usr, "You are unable to emote.")
 		return
 

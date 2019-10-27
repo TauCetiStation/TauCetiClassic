@@ -406,7 +406,7 @@
 			else
 				return auto ? FALSE : to_chat(src, "<span class='warning'>You can't make sounds that often, you have to wait a bit.</span>")
 
-	if(message_output_area && output_message && output_message_type)
+	if(message_output_area && output_message)
 		for(var/mob/M in message_output_area)
 			M.show_message(output_message, output_message_type, alternative_output_message, alternative_output_message_type)
 
