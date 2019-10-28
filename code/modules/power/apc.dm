@@ -616,10 +616,11 @@
 
 /obj/machinery/power/apc/interact(mob/user)
 	//Synthetic human mob goes here.
+	if (usr.is_busy()) 
+		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == "grab")
-			if (usr.is_busy()) return
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(emagged || (stat & BROKEN))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -633,6 +634,9 @@
 						to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and start siphon off some of the stored charge for your own use.</span>")
 						
 						while(H.nutrition < 450)
+							if (!src.cell)
+								to_chat(user, "<span class='notice'>There is no cell.</span>")
+								break
 							if (usr.is_busy() || do_after(user,10,target = src))
 								H.nutrition += 50
 								src.cell.use(500)
