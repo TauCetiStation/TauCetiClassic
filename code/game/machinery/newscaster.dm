@@ -893,7 +893,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		switch(screen)
 			if(0) //Cover
 				dat+="<DIV ALIGN='center'><B><FONT SIZE=6>The Griffon</FONT></B></div>"
-				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen Space Facilities</FONT></div><HR>"
+				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen© Space Facilities</FONT></div><HR>"
 				if(isemptylist(src.news_content))
 					if(src.important_message)
 						dat+="Contents:<BR><ul><B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [src.pages+2]\]</FONT><BR></ul>"
@@ -933,7 +933,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 								user << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR>"
 							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
-							dat+="<FONT SIZE=1>Likes: [MESSAGE.likes] Dislikes: [MESSAGE.dislikes]</FONT><BR><BR>" //check this in game
+							dat+="<FONT SIZE=1>Likes: [MESSAGE.likes] Dislikes: [MESSAGE.dislikes]</FONT><BR><BR>"
 						dat+="</ul>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[src.scribble]\"</I>"
