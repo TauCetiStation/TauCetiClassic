@@ -634,10 +634,11 @@
 						to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and start siphon off some of the stored charge for your own use.</span>")
 						
 						while(H.nutrition < 450)
-							if (!src.cell)
-								to_chat(user, "<span class='notice'>There is no cell.</span>")
-								break
-							if (usr.is_busy() || do_after(user,10,target = src))
+							if (do_after(user,10,target = src))
+								if (!src.cell)
+									to_chat(user, "<span class='notice'>There is no cell.</span>")
+									break
+									
 								H.nutrition += 50
 								src.cell.use(500)
 								to_chat(user, "<span class='notice'>Draining... [round(src.cell.percent() )]% left.</span>")
