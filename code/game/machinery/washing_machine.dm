@@ -306,7 +306,7 @@
 /obj/machinery/washing_machine/AltClick(mob/user)
 	if(!user.canUseTopic(src))
 		return
-	if(state_open)
+	if(state == 1 || state == 3 || state == 6)
 		to_chat(user, "<span class='notice'>Close the door first</span>")
 		return
 	start()
