@@ -632,7 +632,6 @@
 						to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and start siphon off some of the stored charge for your own use.</span>")
 						while(H.nutrition < 450)
 							if (do_after(user,10,target = src))
-								sleep(10)
 								H.nutrition += 50
 								src.cell.charge -= 500
 								to_chat(user, "<span class='notice'>Draining... [round(src.cell.percent() )]% left.</span>")
@@ -641,7 +640,7 @@
 									to_chat (user, "There is no charge to draw from that APC.")
 									break
 								else if(H.nutrition > 450)
-									to_chat(user, "<span class='notice'>You at fully charge.</span>")
+									to_chat(user, "<span class='notice'>You are fully charge.</span>")
 									break
 							else break
 					else
