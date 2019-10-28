@@ -616,7 +616,7 @@
 
 /obj/machinery/power/apc/interact(mob/user)
 	//Synthetic human mob goes here.
-	if (usr.is_busy()) 
+	if (user.is_busy()) 
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -639,12 +639,12 @@
 									to_chat(user, "<span class='notice'>There is no cell.</span>")
 									break
 									
-								H.nutrition += 50
-								src.cell.use(500)
+								if(src.cell.use(500))
+									H.nutrition += 50
 								to_chat(user, "<span class='notice'>Draining... [round(src.cell.percent() )]% left.</span>")
 								
 								if(H.nutrition > 450)
-									to_chat(user, "<span class='notice'>You at fully charge.</span>")
+									to_chat(user, "<span class='notice'>You are at fully charge.</span>")
 									break
 								else if(src.cell.charge <= 0)
 									to_chat (user, "There is no charge to draw from that APC.")
