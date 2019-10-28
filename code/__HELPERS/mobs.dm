@@ -191,7 +191,7 @@
 		target_null = FALSE
 		if(target != user)
 			Tloc = target.loc
-		target.in_use_action = TRUE
+			target.in_use_action = TRUE
 
 	var/atom/Uloc = null
 	if(!can_move)
@@ -251,5 +251,5 @@
 		qdel(progbar)
 	if(user)
 		user.become_not_busy(_hand = busy_hand)
-	if(target)
+	if(target && target != user)
 		target.in_use_action = FALSE
