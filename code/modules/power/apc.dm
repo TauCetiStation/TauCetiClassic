@@ -634,9 +634,12 @@
 						to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and start siphon off some of the stored charge for your own use.</span>")
 						
 						while(H.nutrition < 450)
-							if (do_after(user,10,target = src))
-								if (!src.cell)
+							if(do_after(user,10,target = src))
+								if(!src.cell)
 									to_chat(user, "<span class='notice'>There is no cell.</span>")
+									break
+									
+								if(src.emagged || src.malfai || src.stat & BROKEN && H.a_intent == "grab")
 									break
 									
 								if(src.cell.use(500))
@@ -644,7 +647,7 @@
 								to_chat(user, "<span class='notice'>Draining... [round(src.cell.percent() )]% left.</span>")
 								
 								if(H.nutrition > 450)
-									to_chat(user, "<span class='notice'>You are at fully charge.</span>")
+									to_chat(user, "<span class='notice'>You at fully charge.</span>")
 									break
 								else if(src.cell.charge <= 0)
 									to_chat (user, "There is no charge to draw from that APC.")
@@ -652,11 +655,21 @@
 									
 							else break
 					else
+						
 						H.nutrition += src.cell.charge/10
 						src.cell.charge = 0
-
+						
+					if(!src.cell)
+						src.cell = null
+						src.charging = 0
+						return
+						
+					if(src.emagged || src.malfai || src.stat & BROKEN && H.a_intent == "grab")
+						return
+					
 					if(src.cell.charge < 0) src.cell.charge = 0
 					if(H.nutrition > 500) H.nutrition = 500
+
 					src.charging = 1
 
 				else
