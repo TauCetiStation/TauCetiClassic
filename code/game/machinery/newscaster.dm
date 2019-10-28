@@ -19,7 +19,9 @@
 
 /datum/message_comment
 	var/author = ""
+	var/backup_author = ""
 	var/body = ""
+	var/backup_body = ""
 	var/time = ""
 
 /datum/feed_channel
@@ -393,7 +395,14 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				else
 					for(var/datum/feed_message/MESSAGE in src.viewing_channel.messages)
 						dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
-						dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.body == "\[REDACTED\]") ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=\ref[src];censor_channel_story_author=\ref[MESSAGE]'>[(MESSAGE.author == "\[REDACTED\]") ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
+						dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.body == "\[REDACTED\]") ? ("Undo story censorship") : ("Censor story")]</A>  -\
+						                   <A href='?src=\ref[src];censor_channel_story_author=\ref[MESSAGE]'>[(MESSAGE.author == "\[REDACTED\]") ? ("Undo Author censorship") : ("Censor message Author")]</A></FONT><BR>"
+						dat+="<HR><B>Comments:</B><BR>"
+						for(var/datum/message_comment/COMMENT in MESSAGE.comments)
+							dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
+							dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_author_comment=\ref[COMMENT]'>[(COMMENT.author == "\[REDACTED\]") ? ("Undo Author censorship") : ("Censor Author")]</A></FONT><BR>"
+							dat+="-<FONT SIZE=3>[COMMENT.body]</FONT><BR>"
+							dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_body_comment=\ref[COMMENT]'>[(COMMENT.body == "\[REDACTED\]") ? ("Undo comment censorship") : ("Censor comment")]</A></FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[10]'>Back</A>"
 			if(13)
 				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>"
@@ -674,6 +683,22 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		else
 			MSG.body = MSG.backup_body
 
+	else if(href_list["censor_author_comment"])
+		var/datum/message_comment/COMMENT = locate(href_list["censor_author_comment"])
+		if(COMMENT.author != "<B>\[REDACTED\]</B>")
+			COMMENT.backup_author = COMMENT.author
+			COMMENT.author = "<B>\[REDACTED\]</B>"
+		else
+			COMMENT.author = COMMENT.backup_author
+
+	else if(href_list["censor_body_comment"])
+		var/datum/message_comment/COMMENT = locate(href_list["censor_body_comment"])
+		if(COMMENT.body != "<B>\[REDACTED\]</B>")
+			COMMENT.backup_body = COMMENT.body
+			COMMENT.body = "<B>\[REDACTED\]</B>"
+		else
+			COMMENT.body = COMMENT.backup_body
+
 	else if(href_list["pick_d_notice"])
 		var/datum/feed_channel/FC = locate(href_list["pick_d_notice"])
 		src.viewing_channel = FC
@@ -722,7 +747,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 	else if(href_list["leave_a_comment"])
 		var/datum/feed_message/FM = locate(href_list["leave_a_comment"])
-		if(FM.comment_msg == "" || src.channel_name == "")
+		if(FM.comment_msg == "")
 			return
 		else
 			var/datum/message_comment/COMMENT = new /datum/message_comment
