@@ -619,6 +619,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == "grab")
+			if (usr.is_busy()) return
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(emagged || (stat & BROKEN))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
