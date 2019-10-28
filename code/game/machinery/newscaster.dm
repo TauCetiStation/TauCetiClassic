@@ -29,6 +29,7 @@
 	var/list/datum/feed_message/messages = list()
 	//var/message_count = 0
 	var/locked = 0
+	var/lock_comments = FALSE
 	var/author = ""
 	var/backup_author = ""
 	var/censored = 0
@@ -358,8 +359,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 							for(var/datum/message_comment/COMMENT in MESSAGE.comments)
 								dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
 								dat+="-<FONT SIZE=3>[COMMENT.body]</FONT><BR>"
-							dat+="<HR><B><A href='?src=\ref[src];your_comment=\ref[MESSAGE]'>Your comment:</B></A> [MESSAGE.comment_msg]"
-							dat+="<BR><B><A href='?src=\ref[src];leave_a_comment=\ref[MESSAGE]'>Leave a comment.</A></B><BR><HR>"
+							if(src.viewing_channel.lock_comments)
+								dat+="<B><FONT SIZE=3>Comments are closed!</FONT></B><BR><HR>"
+							else
+								dat+="<B><A href='?src=\ref[src];your_comment=\ref[MESSAGE]'>Your comment:</B></A> [MESSAGE.comment_msg]"
+								dat+="<BR><B><A href='?src=\ref[src];leave_a_comment=\ref[MESSAGE]'>Leave a comment.</A></B><BR><HR>"
 				dat+="<A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
 			if(10)
@@ -387,7 +391,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Back</A>"
 			if(12)
 				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>"
-				dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_author=\ref[src.viewing_channel]'>[(src.viewing_channel.author=="\[REDACTED\]") ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><HR>"
+				dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_author=\ref[src.viewing_channel]'>[(src.viewing_channel.author=="\[REDACTED\]") ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><BR>"
+				dat+="<B><FONT SIZE=2><A href='?src=\ref[src];locked_comments=1'>Close comments on forever</A>:</B> [(src.viewing_channel.lock_comments) ? ("NO") : ("YES")]</FONT><HR>"
 
 
 				if( isemptylist(src.viewing_channel.messages) )
@@ -402,7 +407,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 							dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
 							dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_author_comment=\ref[COMMENT]'>[(COMMENT.author == "\[REDACTED\]") ? ("Undo Author censorship") : ("Censor Author")]</A></FONT><BR>"
 							dat+="-<FONT SIZE=3>[COMMENT.body]</FONT><BR>"
-							dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_body_comment=\ref[COMMENT]'>[(COMMENT.body == "\[REDACTED\]") ? ("Undo comment censorship") : ("Censor comment")]</A></FONT><BR>"
+							dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_body_comment=\ref[COMMENT]'>[(COMMENT.body == "\[REDACTED\]") ? ("Undo comment censorship") : ("Censor comment")]</A></FONT><BR><HR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[10]'>Back</A>"
 			if(13)
 				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>"
@@ -685,17 +690,17 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 	else if(href_list["censor_author_comment"])
 		var/datum/message_comment/COMMENT = locate(href_list["censor_author_comment"])
-		if(COMMENT.author != "<B>\[REDACTED\]</B>")
+		if(COMMENT.author != "<FONT SIZE=3><B>\[REDACTED\]</B></FONT>")
 			COMMENT.backup_author = COMMENT.author
-			COMMENT.author = "<B>\[REDACTED\]</B>"
+			COMMENT.author = "<FONT SIZE=3><B>\[REDACTED\]</B></FONT>"
 		else
 			COMMENT.author = COMMENT.backup_author
 
 	else if(href_list["censor_body_comment"])
 		var/datum/message_comment/COMMENT = locate(href_list["censor_body_comment"])
-		if(COMMENT.body != "<B>\[REDACTED\]</B>")
+		if(COMMENT.body != "<FONT SIZE=3><B>\[REDACTED\]</B></FONT>")
 			COMMENT.backup_body = COMMENT.body
-			COMMENT.body = "<B>\[REDACTED\]</B>"
+			COMMENT.body = "<FONT SIZE=3><B>\[REDACTED\]</B></FONT>"
 		else
 			COMMENT.body = COMMENT.backup_body
 
@@ -747,7 +752,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 	else if(href_list["leave_a_comment"])
 		var/datum/feed_message/FM = locate(href_list["leave_a_comment"])
-		if(FM.comment_msg == "")
+		if(FM.comment_msg == "" || FM.comment_msg == null)
 			return
 		else
 			var/datum/message_comment/COMMENT = new /datum/message_comment
@@ -758,6 +763,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			FM.comments += COMMENT
 
 			FM.comment_msg = ""
+
+	else if(href_list["locked_comments"])
+		if(src.viewing_channel.lock_comments)
+			src.viewing_channel.lock_comments = FALSE
+		else
+			src.viewing_channel.lock_comments = TRUE
 
 	src.updateUsrDialog()
 
