@@ -628,15 +628,26 @@
 				H.adjustFireLoss(10,0)
 			else if(src.cell && src.cell.charge > 0)
 				if(H.nutrition < 450)
-
-					if(src.cell.charge >= 500)
-						H.nutrition += 50
-						src.cell.charge -= 500
+					if(src.cell.charge >= 500)	
+						to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and start siphon off some of the stored charge for your own use.</span>")
+						while(H.nutrition < 450)
+							if (do_after(user,10,target = src))
+								sleep(10)
+								H.nutrition += 50
+								src.cell.charge -= 500
+								to_chat(user, "<span class='notice'>Draining... [round(src.cell.percent() )]% left.</span>")
+								
+								if(src.cell.charge <= 0)
+									to_chat (user, "There is no charge to draw from that APC.")
+									break
+								else if(H.nutrition > 450)
+									to_chat(user, "<span class='notice'>You at fully charge.</span>")
+									break
+							else break
 					else
 						H.nutrition += src.cell.charge/10
 						src.cell.charge = 0
 
-					to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and siphon off some of the stored charge for your own use.</span>")
 					if(src.cell.charge < 0) src.cell.charge = 0
 					if(H.nutrition > 500) H.nutrition = 500
 					src.charging = 1
