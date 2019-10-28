@@ -3,24 +3,27 @@
 //###-Agouri###################################
 
 /datum/feed_message
-	var/author =""
-	var/body =""
+	var/author = ""
+	var/body = ""
 	//var/parent_channel
-	var/backup_body =""
-	var/backup_author =""
+	var/backup_body = ""
+	var/backup_author = ""
 	var/is_admin_message = 0
 	var/icon/img = null
 	var/icon/backup_img
+	var/list/voting_mob = list() //Mob who voted
+	var/likes = 0
+	var/dislikes = 0
 
 /datum/feed_channel
-	var/channel_name=""
+	var/channel_name= ""
 	var/list/datum/feed_message/messages = list()
 	//var/message_count = 0
-	var/locked=0
-	var/author=""
-	var/backup_author=""
-	var/censored=0
-	var/is_admin_channel=0
+	var/locked = 0
+	var/author = ""
+	var/backup_author = ""
+	var/censored = 0
+	var/is_admin_channel = 0
 	//var/page = null //For newspapers
 
 /datum/feed_message/proc/clear()
@@ -279,11 +282,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(6)
 				dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed story to Network.</B></FONT><HR><BR>"
 				if(src.channel_name=="")
-					dat+="<FONT COLOR='maroon'>•Invalid receiving channel name.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>ï¿½Invalid receiving channel name.</FONT><BR>"
 				if(src.scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>•Channel author unverified.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>ï¿½Channel author unverified.</FONT><BR>"
 				if(src.msg == "" || src.msg == "\[REDACTED\]")
-					dat+="<FONT COLOR='maroon'>•Invalid message body.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>ï¿½Invalid message body.</FONT><BR>"
 
 				dat+="<BR><A href='?src=\ref[src];setScreen=[3]'>Return</A><BR>"
 			if(7)
@@ -297,18 +300,18 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					else
 						existing_authors += FC.author
 				if(src.scanned_user in existing_authors)
-					dat+="<FONT COLOR='maroon'>•There already exists a Feed channel under your name.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>ï¿½There already exists a Feed channel under your name.</FONT><BR>"
 				if(src.channel_name=="" || src.channel_name == "\[REDACTED\]")
-					dat+="<FONT COLOR='maroon'>•Invalid channel name.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>ï¿½Invalid channel name.</FONT><BR>"
 				var/check = 0
 				for(var/datum/feed_channel/FC in news_network.network_channels)
 					if(FC.channel_name == src.channel_name)
 						check = 1
 						break
 				if(check)
-					dat+="<FONT COLOR='maroon'>•Channel name already in use.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>ï¿½Channel name already in use.</FONT><BR>"
 				if(src.scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>•Channel author unverified.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>ï¿½Channel author unverified.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[2]'>Return</A><BR>"
 			if(8)
 				var/total_num=length(news_network.network_channels)
@@ -340,6 +343,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 								usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
 							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
+							dat+="<FONT SIZE=1><A href='?src=\ref[src];setLike=\ref[MESSAGE]'>Likes</A>: [MESSAGE.likes] \
+											   <A href='?src=\ref[src];setDislike=\ref[MESSAGE]'>Dislikes</A>: [MESSAGE.dislikes]</FONT><BR>"
 				dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
 			if(10)
@@ -419,11 +424,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(16)
 				dat+="<B><FONT COLOR='maroon'>ERROR: Wanted Issue rejected by Network.</B></FONT><HR><BR>"
 				if(src.channel_name=="" || src.channel_name == "\[REDACTED\]")
-					dat+="<FONT COLOR='maroon'>•Invalid name for person wanted.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>ï¿½Invalid name for person wanted.</FONT><BR>"
 				if(src.scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>•Issue author unverified.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>ï¿½Issue author unverified.</FONT><BR>"
 				if(src.msg == "" || src.msg == "\[REDACTED\]")
-					dat+="<FONT COLOR='maroon'>•Invalid description.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>ï¿½Invalid description.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
 			if(17)
 				dat+="<B>Wanted Issue successfully deleted from Circulation</B><BR>"
@@ -690,8 +695,26 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		src.viewing_channel = FC
 		src.screen = 12
 
+	else if(href_list["setLike"])
+		var/datum/feed_message/FM = locate(href_list["setLike"])
+		src.rating("like", FM)
+
+	else if(href_list["setDislike"])
+		var/datum/feed_message/FM = locate(href_list["setDislike"])
+		src.rating("dislike", FM)
+
 	src.updateUsrDialog()
 
+/obj/machinery/newscaster/proc/rating(evaluation, datum/feed_message/FM)
+	if(src.scanned_user in FM.voting_mob)
+		return
+
+	if(src.scanned_user != "Unknown")
+		FM.voting_mob += src.scanned_user
+		if(evaluation == "like")
+			FM.likes += 1 
+		if(evaluation == "dislike")
+			FM.dislikes += 1
 
 /obj/machinery/newscaster/attackby(obj/item/I, mob/user)
 
@@ -803,7 +826,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		switch(screen)
 			if(0) //Cover
 				dat+="<DIV ALIGN='center'><B><FONT SIZE=6>The Griffon</FONT></B></div>"
-				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen© Space Facilities</FONT></div><HR>"
+				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasenï¿½ Space Facilities</FONT></div><HR>"
 				if(isemptylist(src.news_content))
 					if(src.important_message)
 						dat+="Contents:<BR><ul><B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [src.pages+2]\]</FONT><BR></ul>"
