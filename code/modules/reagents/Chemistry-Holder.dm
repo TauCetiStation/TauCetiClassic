@@ -181,15 +181,16 @@ var/const/INGEST = 2
 	//src.handle_reactions() Don't need to handle reactions on the source since you're (presumably isolating and) transferring a specific reagent.
 	return amount
 
-/datum/reagents/proc/metabolize(mob/M, alien)
+/datum/reagents/proc/metabolize(mob/M)
 	if(has_reagent("aclometasone")) // Has a "unique" metabolization disabling factor, which just prevents any metabolization at all without affecting hunger. ~Luduk
 		return
+
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if(M && R)
 			var/mob/living/carbon/C = M //currently metabolism work only for carbon, there is no need to check mob type
 			var/remove_amount = R.custom_metabolism * C.get_metabolism_factor()
-			R.on_mob_life(M, alien)
+			R.on_mob_life(M)
 			remove_reagent(R.id, remove_amount)
 	update_total()
 

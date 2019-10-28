@@ -16,6 +16,12 @@
 /obj/item/weapon/melee/energy/can_spin()
 	return can_spin && active
 
+/obj/item/weapon/melee/energy/get_current_temperature()
+	if(active)
+		return 3500
+	else
+		return 0
+
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='warning'><b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b></span>", \
 						"<span class='warning'><b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b></span>"))
