@@ -14,9 +14,16 @@
 	var/list/voting_mob = list() //Mob who voted
 	var/likes = 0
 	var/dislikes = 0
+	var/comment_msg = "" //Feed comment
+	var/list/datum/message_comment/comments = list() 
+
+/datum/message_comment
+	var/author = ""
+	var/body = ""
+	var/time = ""
 
 /datum/feed_channel
-	var/channel_name= ""
+	var/channel_name = ""
 	var/list/datum/feed_message/messages = list()
 	//var/message_count = 0
 	var/locked = 0
@@ -121,10 +128,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		// 0 = there hasn't been a news/wanted update in the last alert_delay
 		// 1 = there has
 	var/scanned_user = "Unknown" //Will contain the name of the person who currently uses the newscaster
-	var/msg = "";                //Feed message
+	var/msg = ""                //Feed message
 	var/obj/item/weapon/photo/photo = null
-	var/channel_name = ""; //the feed channel which will be receiving the feed, or being created
-	var/c_locked=0;        //Will our new channel be locked to public submissions?
+	var/channel_name = "" //the feed channel which will be receiving the feed, or being created
+	var/c_locked = 0        //Will our new channel be locked to public submissions?
 	var/hitstaken = 0      //Death at 3 hits from an item with force>=15
 	var/datum/feed_channel/viewing_channel = null
 	light_range = 0
@@ -345,7 +352,13 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 							dat+="<FONT SIZE=1><A href='?src=\ref[src];setLike=\ref[MESSAGE]'>Likes</A>: [MESSAGE.likes] \
 											   <A href='?src=\ref[src];setDislike=\ref[MESSAGE]'>Dislikes</A>: [MESSAGE.dislikes]</FONT><BR>"
-				dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
+							dat+="<HR><B>Comments:</B><BR>"
+							for(var/datum/message_comment/COMMENT in MESSAGE.comments)
+								dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
+								dat+="-<FONT SIZE=3>[COMMENT.body]</FONT><BR>"
+							dat+="<HR><B><A href='?src=\ref[src];your_comment=\ref[MESSAGE]'>Your comment:</B></A> [MESSAGE.comment_msg]"
+							dat+="<BR><B><A href='?src=\ref[src];leave_a_comment=\ref[MESSAGE]'>Leave a comment.</A></B><BR><HR>"
+				dat+="<A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
 			if(10)
 				dat+="<B>Nanotrasen Feed Censorship Tool</B><BR>"
@@ -703,6 +716,24 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		var/datum/feed_message/FM = locate(href_list["setDislike"])
 		src.rating("dislike", FM)
 
+	else if(href_list["your_comment"])
+		var/datum/feed_message/FM = locate(href_list["your_comment"])
+		FM.comment_msg = sanitize(input(usr, "Write your comment", "Network Channel Handler", input_default(FM.comment_msg)), extra = FALSE)
+
+	else if(href_list["leave_a_comment"])
+		var/datum/feed_message/FM = locate(href_list["leave_a_comment"])
+		if(FM.comment_msg == "" || src.channel_name == "")
+			return
+		else
+			var/datum/message_comment/COMMENT = new /datum/message_comment
+			COMMENT.author = src.scanned_user
+			COMMENT.body = FM.comment_msg
+			COMMENT.time = worldtime2text()
+
+			FM.comments += COMMENT
+
+			FM.comment_msg = ""
+
 	src.updateUsrDialog()
 
 /obj/machinery/newscaster/proc/rating(evaluation, datum/feed_message/FM)
@@ -865,7 +896,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 							if(MESSAGE.img)
 								user << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR>"
-							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR><BR>"
+							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
+							dat+="<FONT SIZE=1>Likes: [MESSAGE.likes] Dislikes: [MESSAGE.dislikes]</FONT><BR><BR>" //check this in game
 						dat+="</ul>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[src.scribble]\"</I>"
