@@ -29,7 +29,7 @@
 		return 0
 
 /obj/structure/closet/secure_closet/AltClick(mob/user)
-	if(!user.incapacitated() && get_dist(user,src) <= 1)
+	if(!user.incapacitated() && in_range(user, src))
 		src.togglelock(user)
 	..()
 

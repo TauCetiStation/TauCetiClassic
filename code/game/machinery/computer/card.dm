@@ -33,7 +33,7 @@
 	return formatted
 
 /obj/machinery/computer/card/AltClick(mob/user)
-	if(get_dist(user,src) <= 1)
+	if(in_range(user, src))
 		eject_id()
 
 /obj/machinery/computer/card/verb/eject_id()

@@ -235,13 +235,13 @@
 		return
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
-	if(!user.incapacitated() && get_dist(user,src) <= 1)
+	if(!user.incapacitated() && in_range(user, src))
 		if(!state_open)
 			on = !on
 			update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
-	if(!user.incapacitated() && get_dist(user,src) <= 1)
+	if(!user.incapacitated() && in_range(user, src))
 		if(state_open)
 			close_machine()
 		else
