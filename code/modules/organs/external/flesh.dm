@@ -464,6 +464,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 		// if damage >= 50 AFTER treatment then it's probably too severe to heal within the timeframe of a round.
 		if (W.can_autoheal() && W.wound_damage() < 50)
 			heal_amt += 0.5
+			var/mob/living/carbon/H = BP.owner
+			if(H.sleeping)
+				if(istype(H.buckled, /obj/structure/stool/bed))
+					heal_amt += 0.2
+				else if((locate(/obj/structure/table) in H.loc))
+					heal_amt += 0.1
+				if((locate(/obj/item/weapon/bedsheet) in H.loc))
+					heal_amt += 0.1
 
 		//we only update wounds once in [wound_update_accuracy] ticks so have to emulate realtime
 		heal_amt = heal_amt * BP.wound_update_accuracy
