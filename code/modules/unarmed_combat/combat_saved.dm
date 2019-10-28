@@ -85,8 +85,12 @@
 
 	animate(A, transform=M, time=2)
 	sleep(2)
+	if(QDELING(A))
+		return
 	animate(A, transform=A.default_transform, time=1)
 	sleep(1)
+	if(QDELING(A))
+		return
 	A.transform = A.default_transform
 
 	A.attack_animation = FALSE

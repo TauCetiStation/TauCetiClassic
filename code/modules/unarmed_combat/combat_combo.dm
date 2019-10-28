@@ -116,6 +116,23 @@ var/global/list/combat_combos_by_name = list()
 
 	return TRUE
 
+/datum/combat_combo/proc/do_combo(mob/living/victim, mob/living/attacker, delay)
+	var/endtime = world.time + delay
+	while(world.time < endtime)
+		stoplag()
+		if(QDELING(victim))
+			return FALSE
+		if(QDELING(attacker))
+			return FALSE
+		if(!attacker.combo_animation)
+			return FALSE
+		if(additional_checks(victim, attacker))
+			return FALSE
+	return TRUE
+
+/datum/combat_combo/proc/additional_checks(mob/living/victim, mob/living/attacker)
+	return FALSE
+
 /datum/combat_combo/proc/get_combo_icon()
 	var/image/I = image(icon='icons/mob/unarmed_combat_combos.dmi', icon_state=combo_icon_state)
 	I.layer = ABOVE_HUD_LAYER

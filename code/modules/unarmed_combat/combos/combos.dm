@@ -63,7 +63,9 @@
 	heavy_animation = TRUE
 
 /datum/combat_combo/slide_kick/animate_combo(mob/living/victim, mob/living/attacker)
-	sleep(3)
+	if(!do_combo(victim, attacker, 3))
+		after_animation(victim, attacker)
+		return
 
 	var/slide_dir = get_dir(attacker, victim)
 
@@ -219,7 +221,9 @@
 	heavy_animation = TRUE
 
 /datum/combat_combo/uppercut/animate_combo(mob/living/victim, mob/living/attacker)
-	sleep(3)
+	if(!do_combo(victim, attacker, 3))
+		after_animation(victim, attacker)
+		return
 
 	attacker.set_dir(pick(NORTH, SOUTH)) // So they will appear sideways, as if they are actually knocking with their fist.
 
@@ -265,10 +269,14 @@
 	var/prev_victim_pix_y = victim.pixel_y
 
 	animate(attacker, transform = M, pixel_y = attacker.pixel_y + 8, time = 2)
-	sleep(2)
+	if(!do_combo(victim, attacker, 2))
+		after_animation(victim, attacker)
+		return
 	animate(attacker, transform = prev_attacker_M, pixel_y = attacker.pixel_y + 8, time = 2)
 	animate(victim, transform = victim_M, pixel_y = victim.pixel_y + 16, time = 2)
-	sleep(2)
+	if(!do_combo(victim, attacker, 2))
+		after_animation(victim, attacker)
+		return
 
 	var/atom/move_attacker_to = victim.loc
 	var/atom/move_victim_dir = get_dir(victim, get_step_away(victim, attacker))
@@ -280,7 +288,9 @@
 
 	animate(attacker, pixel_y = attacker.pixel_y - 16, time = 2)
 	animate(victim, pixel_y = prev_victim_pix_y, time = 2)
-	sleep(2)
+	if(!do_combo(victim, attacker, 2))
+		after_animation(victim, attacker)
+		return
 
 	attacker.transform = prev_attacker_M
 	victim.transform = prev_victim_M
@@ -328,7 +338,9 @@
 	heavy_animation = TRUE
 
 /datum/combat_combo/suplex/animate_combo(mob/living/victim, mob/living/attacker)
-	sleep(3)
+	if(!do_combo(victim, attacker, 3))
+		after_animation(victim, attacker)
+		return
 
 	var/DTM = get_dir(attacker, victim)
 	var/victim_dir = get_dir(victim, attacker)
@@ -381,7 +393,9 @@
 	victim.anchored = TRUE
 	attacker.anchored = TRUE
 	animate(victim, pixel_x = victim.pixel_x - shift_x, pixel_y = victim.pixel_y - 20 - shift_y, time = 2)
-	sleep(2)
+	if(!do_combo(victim, attacker, 2))
+		after_animation(victim, attacker)
+		return
 
 	victim.forceMove(get_step(victim, victim_dir))
 	victim.anchored = prev_victim_anchored
@@ -422,7 +436,9 @@
 	heavy_animation = TRUE
 
 /datum/combat_combo/diving_elbow_drop/animate_combo(mob/living/victim, mob/living/attacker)
-	sleep(3)
+	if(!do_combo(victim, attacker, 3))
+		after_animation(victim, attacker)
+		return
 
 	var/DTM = get_dir(attacker, victim)
 	var/shift_x = 0
@@ -458,16 +474,23 @@
 	M.Turn(pick(-100, 100))
 
 	animate(attacker, transform = M, pixel_x = attacker.pixel_x + shift_x, pixel_y = attacker.pixel_y + shift_y + 36, time = 4)
-	sleep(4)
+	if(!do_combo(victim, attacker, 4))
+		after_animation(victim, attacker)
+		return
 
-	sleep(3) // Hover ominously.
+	// Hover ominously.
+	if(!do_combo(victim, attacker, 3))
+		after_animation(victim, attacker)
+		return
 
 	attacker.pixel_x = prev_pix_x
 	attacker.pixel_y = prev_pix_y + 32
 	attacker.forceMove(victim.loc)
 
 	animate(attacker, pixel_y = prev_pix_y, time = 2)
-	sleep(2)
+	if(!do_combo(victim, attacker, 2))
+		after_animation(victim, attacker)
+		return
 
 	for(var/mob/living/L in victim.loc)
 		if(L == attacker)
@@ -504,7 +527,9 @@
 	heavy_animation = TRUE
 
 /datum/combat_combo/dropkick/animate_combo(mob/living/victim, mob/living/attacker)
-	sleep(3)
+	if(!do_combo(victim, attacker, 3))
+		after_animation(victim, attacker)
+		return
 
 	var/dropkick_dir = get_dir(attacker, victim)
 	var/face_dir = get_dir(victim, attacker)
@@ -537,7 +562,9 @@
 	attacker.set_dir(NORTH) // Face up.
 
 	animate(attacker, pixel_x = attacker.pixel_x + shift_x, pixel_y = attacker.pixel_y + shift_y, transform  = M, time = 3)
-	sleep(3)
+	if(!do_combo(victim, attacker, 3))
+		after_animation(victim, attacker)
+		return
 
 	attacker.pixel_x = prev_pix_x
 	attacker.pixel_y = prev_pix_y
@@ -596,7 +623,18 @@
 			for(var/mob/living/L in cur_movers)
 				INVOKE_ASYNC(GLOBAL_PROC, .proc/_step, L, dropkick_dir)
 
-			sleep(attacker.movement_delay() * 0.5) // Since they were the one to push.
+			// Since they were the one to push.
+			if(!do_combo(victim, attacker, attacker.movement_delay() * 0.5))
+				for(var/j in 1 to i)
+					var/mob/living/L = movers["[j]"]
+					var/list/prev_info_el = prev_info["[j]"]
+					L.pixel_x = prev_info_el["pix_x"]
+					L.pixel_y = prev_info_el["pix_y"]
+					L.pass_flags = prev_info_el["pass_flags"]
+					L.apply_effect(5, WEAKEN, blocked = 0)
+
+				after_animation(victim, attacker)
+				return
 
 	for(var/j in 1 to i)
 		var/mob/living/L = movers["[j]"]
@@ -626,7 +664,9 @@
 	heavy_animation = TRUE
 
 /datum/combat_combo/charge/animate_combo(mob/living/victim, mob/living/attacker)
-	sleep(3)
+	if(!do_combo(victim, attacker, 3))
+		after_animation(victim, attacker)
+		return
 
 	attacker.Grab(victim, GRAB_NECK)
 	var/success = FALSE
@@ -715,7 +755,9 @@
 	heavy_animation = TRUE
 
 /datum/combat_combo/spin_throw/animate_combo(mob/living/victim, mob/living/attacker)
-	sleep(3)
+	if(!do_combo(victim, attacker, 3))
+		after_animation(victim, attacker)
+		return
 
 	attacker.Grab(victim, GRAB_AGGRESSIVE)
 	var/success = FALSE
