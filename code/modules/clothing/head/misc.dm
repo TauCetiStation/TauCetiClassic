@@ -340,7 +340,7 @@
 	desc = "Be aware of rolling boulders."
 
 /obj/item/clothing/head/necromancer_hood
-	name = "Black hood"
+	name = "black hood"
 	desc = "It's hood that covers the head."
 	icon_state = "necromancer"
 	item_state = "necromancer"
