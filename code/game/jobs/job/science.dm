@@ -16,7 +16,7 @@
 		access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_maint_tunnels
 	)
 	minimal_player_age = 7
-	minimal_player_ingame_minutes = 2400
+	minimal_player_ingame_minutes = 600
 	restricted_species = list(UNATHI, TAJARAN, DIONA, IPC)
 
 /datum/job/rd/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -55,7 +55,7 @@
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 	alt_titles = list("Phoron Researcher")
-	minimal_player_ingame_minutes = 1560
+	minimal_player_ingame_minutes = 180
 	restricted_species = list(UNATHI, DIONA)
 
 /datum/job/scientist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -96,7 +96,7 @@
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research, access_xenoarch)
-	minimal_player_ingame_minutes = 1400
+	minimal_player_ingame_minutes = 180
 
 /datum/job/xenoarchaeologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -131,7 +131,7 @@
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research, access_xenobiology)
-	minimal_player_ingame_minutes = 1560
+	minimal_player_ingame_minutes = 180
 
 /datum/job/xenobiologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H) return 0
@@ -168,7 +168,7 @@
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_robotics, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
 	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
-	minimal_player_ingame_minutes = 1560
+	minimal_player_ingame_minutes = 180
 
 /datum/job/roboticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -201,7 +201,6 @@
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research)
-	minimal_player_ingame_minutes = 520
 
 /datum/job/research_assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)
