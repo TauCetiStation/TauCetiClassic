@@ -620,6 +620,8 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
+		var/obj/item/organ/internal/liver/ipc/L = locate(/obj/item/organ/internal/liver/ipc) in H.organs
+		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in L
 		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == "grab")
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(emagged || (stat & BROKEN))
@@ -629,24 +631,22 @@
 				to_chat(H, "<span class='warning'>The APC power currents surge eratically, damaging your chassis!</span>")
 				H.adjustFireLoss(10,0)
 			else if(src.cell && src.cell.charge > 0)
-				if(H.nutrition < 450)
+				if(H.nutrition < C.maxcharge-50)
 					if(src.cell.charge >= 500)	
-						to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and start siphon off some of the stored charge for your own use.</span>")
-						
-						while(H.nutrition < 450)
+						to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and begin siphoning charge process...</span>")
+						while(H.nutrition < C.maxcharge)
 							if(do_after(user,10,target = src))
 								if(!src.cell)
 									to_chat(user, "<span class='notice'>There is no cell.</span>")
 									break
-									
 								if(src.emagged || src.malfai || src.stat & BROKEN && H.a_intent == "grab")
 									break
 									
 								if(src.cell.use(500))
 									H.nutrition += 50
-								to_chat(user, "<span class='notice'>Draining... [round(src.cell.percent() )]% left.</span>")
+								to_chat(user, "<span class='notice'>Draining... Battery has [round(100.0*H.nutrition/C.maxcharge)]% of charge.</span>")
 								
-								if(H.nutrition > 450)
+								if(H.nutrition >= C.maxcharge)
 									to_chat(user, "<span class='notice'>You at fully charge.</span>")
 									break
 								else if(src.cell.charge <= 0)
@@ -667,8 +667,10 @@
 					if(src.emagged || src.malfai || src.stat & BROKEN && H.a_intent == "grab")
 						return
 					
-					if(src.cell.charge < 0) src.cell.charge = 0
-					if(H.nutrition > 500) H.nutrition = 500
+					if(src.cell.charge < 0) 
+						src.cell.charge = 0
+					if(H.nutrition > C.maxcharge) 
+						H.nutrition = C.maxcharge
 
 					src.charging = 1
 
