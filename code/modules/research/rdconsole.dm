@@ -637,7 +637,7 @@ cause a ton of data to be lost, an admin can go send it back.
 			for(var/T in Tech.unlocks_designs)
 				var/datum/design/D = files.design_by_id[T]
 				var/list/unlock_data = list(
-					"text" =           "[D.name]",
+					"text" = "[D.name]"
 				)
 				unlock_list += list(unlock_data)
 			technology_data["unlocks"] = unlock_list
