@@ -467,7 +467,10 @@ cause a ton of data to be lost, an admin can go send it back.
 					))
 
 				// This calculates how much research points we missed because we already researched items with such orig_tech levels
-				var/tech_points_mod = files.experiments.get_object_research_value(linked_destroy.loaded_item) / files.experiments.get_object_research_value(linked_destroy.loaded_item, ignoreRepeat = TRUE)
+				var/research_value = files.experiments.get_object_research_value(linked_destroy.loaded_item, ignoreRepeat = TRUE)
+				var/tech_points_mod = research_value
+				if(!research_value == 0)
+					tech_points_mod = files.experiments.get_object_research_value(linked_destroy.loaded_item) / research_value
 
 				var/list/destroy_list = list(
 					"has_item" =              TRUE,
