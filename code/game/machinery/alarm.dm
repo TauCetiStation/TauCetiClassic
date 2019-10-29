@@ -959,6 +959,8 @@ FIRE ALARM
 	var/last_process = 0
 	var/wiresexposed = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
+	var/delta = FALSE
+	var/check_delay = 0
 
 /obj/machinery/firealarm/update_icon()
 	if(wiresexposed)
@@ -1069,6 +1071,11 @@ FIRE ALARM
 	if(locate(/obj/fire) in loc)
 		alarm()
 
+	if(delta)
+		if(check_delay > world.time)
+			return
+		playsound(src, 'sound/machines/alarm_delta.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		check_delay = world.time + 8 SECONDS
 	return
 
 /obj/machinery/firealarm/power_change()
