@@ -44,7 +44,7 @@
 
 /obj/item/ammo_casing/price = 10
 /obj/item/ammo_casing/energy/price = 0
-/obj/item/ammo_casing/l10/price = 0
+/obj/item/ammo_casing/plasma/price = 0
 /obj/item/ammo_casing/magic/price = 0
 
 /obj/item/projectile/bullet/price = 50
