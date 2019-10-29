@@ -353,8 +353,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 								usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
 							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
-							dat+="<FONT SIZE=1><A href='?src=\ref[src];setLike=\ref[MESSAGE]'>Likes</A>: [MESSAGE.likes] \
-											   <A href='?src=\ref[src];setDislike=\ref[MESSAGE]'>Dislikes</A>: [MESSAGE.dislikes]</FONT><BR>"
+							//If a person has already voted, then the button will not be clickable
+							dat+="<FONT SIZE=1>[(src.scanned_user in MESSAGE.voters) ? ("Likes") : ("<A href='?src=\ref[src];setLike=\ref[MESSAGE]'>Likes</A>")]: [MESSAGE.likes] \
+											   [(src.scanned_user in MESSAGE.voters) ? ("Dislikes") : ("<A href='?src=\ref[src];setDislike=\ref[MESSAGE]'>Dislikes</A>")]: [MESSAGE.dislikes]</FONT>"
 							dat+="<HR><B>Comments:</B><BR>"
 							for(var/datum/message_comment/COMMENT in MESSAGE.comments)
 								dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
@@ -773,7 +774,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	src.updateUsrDialog()
 
 /obj/machinery/newscaster/proc/rating(evaluation, datum/feed_message/FM)
-	if(src.scanned_user == "Unknown" || src.scanned_user in FM.voters)
+	if(src.scanned_user == "Unknown")
 		return
 
 	FM.voters += src.scanned_user
