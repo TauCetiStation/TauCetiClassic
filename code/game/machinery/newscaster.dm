@@ -11,11 +11,11 @@
 	var/is_admin_message = 0
 	var/icon/img = null
 	var/icon/backup_img
-	var/list/voting_mob = list() //Mob who voted
+	var/list/voters = list() //Stores a string with voters
 	var/likes = 0
 	var/dislikes = 0
 	var/comment_msg = "" //Feed comment
-	var/list/datum/message_comment/comments = list() 
+	var/list/datum/message_comment/comments = list() //Stores all comments under the feed message
 
 /datum/message_comment
 	var/author = ""
@@ -773,15 +773,14 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	src.updateUsrDialog()
 
 /obj/machinery/newscaster/proc/rating(evaluation, datum/feed_message/FM)
-	if(src.scanned_user in FM.voting_mob)
+	if(src.scanned_user == "Unknown" || src.scanned_user in FM.voters)
 		return
 
-	if(src.scanned_user != "Unknown")
-		FM.voting_mob += src.scanned_user
-		if(evaluation == "like")
-			FM.likes += 1 
-		if(evaluation == "dislike")
-			FM.dislikes += 1
+	FM.voters += src.scanned_user
+	if(evaluation == "like")
+		FM.likes += 1 
+	if(evaluation == "dislike")
+		FM.dislikes += 1
 
 /obj/machinery/newscaster/attackby(obj/item/I, mob/user)
 
