@@ -1890,22 +1890,31 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/grenade/chem_grenade/large
 	category = list("Weapons")
 
-/datum/design/l10
-	name = "L10-c"
-	desc = "A basic energy-based carbine with fast rate of fire."
-	id = "l10"
+/datum/design/plasma_10_gun
+	name = "plasma 10-bc"
+	desc = "A basic plasma-based bullpup carbine with fast rate of fire."
+	id = "plasma_10_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 4500, MAT_DIAMOND = 500, MAT_URANIUM = 1000)
-	build_path = /obj/item/weapon/gun/projectile/automatic/l10c
+	build_path = /obj/item/weapon/gun/plasma
 	category = list("Weapons")
 
-/datum/design/l10_mag
-	name = "L10-c battery"
-	desc = "A special battery with protection from EM pulse."
-	id = "l10_mag"
+/datum/design/plasma_104_gun
+	name = "plasma 104-sass"
+	desc = "A plasma-based semi-automatic short shotgun."
+	id = "plasma_104_gun"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 8000, MAT_DIAMOND = 750, MAT_URANIUM = 5000)
+	build_path = /obj/item/weapon/gun/plasma/p104sass
+	category = list("Weapons")
+
+/datum/design/plasma_mag
+	name = "plasma weapon battery pack"
+	desc = "A special battery case with protection against EM pulse. Has standardized dimensions and can be used with any plasma type gun of this series."
+	id = "plasma_mag"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_GOLD = 2000, MAT_SILVER = 1500)
-	build_path = /obj/item/ammo_box/magazine/l10mag
+	build_path = /obj/item/ammo_box/magazine/plasma
 	category = list("Weapons")
 
 /datum/design/smg
