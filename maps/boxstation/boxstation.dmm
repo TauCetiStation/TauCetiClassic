@@ -2385,11 +2385,15 @@
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker"
 	},
-/obj/item/weapon/gun/projectile/automatic/l10c{
+/obj/item/weapon/gun/plasma/p104sass{
 	pixel_y = 2
 	},
-/obj/item/weapon/gun/projectile/automatic/l10c{
+/obj/item/weapon/gun/plasma/p104sass,
+/obj/item/weapon/gun/plasma{
 	pixel_y = -2
+	},
+/obj/item/weapon/gun/plasma{
+	pixel_y = -4
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
