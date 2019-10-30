@@ -34,15 +34,9 @@
 	allowed_target_zones = list(BP_CHEST)
 
 /datum/combat_combo/push/execute(mob/living/victim, mob/living/attacker)
-	var/obj/item/organ/external/BP = attacker.get_targetzone()
+	var/armor_check = victim.run_armor_check(null, "melee")
 
-	var/armor_check = 0
-	if(ishuman(victim))
-		var/mob/living/carbon/human/H = victim
-		BP = H.get_bodypart(BP)
-		armor_check = victim.run_armor_check(BP, "melee")
-
-	victim.apply_effect(3, WEAKEN, BP, blocked = armor_check)
+	victim.apply_effect(3, WEAKEN, blocked = armor_check)
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	victim.visible_message("<span class='danger'>[attacker] has pushed [victim] to the ground!</span>")
 
@@ -100,14 +94,8 @@
 				if(L.is_bigger_than(attacker))
 					continue slide_kick_loop
 
-				var/obj/item/organ/external/BP = attacker.get_targetzone()
-				var/armor_check = 0
-				if(ishuman(L))
-					var/mob/living/carbon/human/H = victim
-					BP = H.get_bodypart(BP)
-					armor_check = H.run_armor_check(BP, "melee")
-
-				L.apply_effect(2, WEAKEN, BP, blocked = armor_check)
+				var/armor_check = victim.run_armor_check(attacker.get_targetzone(), "melee")
+				L.apply_effect(2, WEAKEN, blocked = armor_check)
 
 				var/end_string = "to the ground!"
 				if(CLUMSY in attacker.mutations) // Make a funny
@@ -184,20 +172,19 @@
 			break
 
 	if(victim_G)
-		var/obj/item/organ/external/BP = attacker.get_targetzone()
-		var/armor_check = 0
+		var/target_zone = attacker.get_targetzone()
+		var/armor_check = victim.run_armor_check(target_zone, "melee")
+
 		if(ishuman(victim))
 			var/mob/living/carbon/human/H = victim
-			BP = H.get_bodypart(BP)
-			armor_check = H.run_armor_check(BP, "melee")
-
+			var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
 			victim.visible_message("<span class='danger'>[attacker] [pick("bent", "twisted")] [victim]'s [BP.name] into a jointlock!</span>")
-			if(armor_check < 2)
+			if(armor_check < 30)
 				to_chat(victim, "<span class='danger'>You feel extreme pain!</span>")
 				victim.adjustHalLoss(CLAMP(0, 40 - victim.halloss, 40)) // up to 40 halloss
 
 		victim_G.force_down = TRUE
-		victim.apply_effect(3, WEAKEN, BP, blocked = armor_check)
+		victim.apply_effect(3, WEAKEN, blocked = armor_check)
 		victim.visible_message("<span class='danger'>[attacker] presses [victim] to the ground!</span>")
 
 		step_to(attacker, victim)
@@ -296,15 +283,10 @@
 	victim.transform = prev_victim_M
 	victim.layer = prev_victim_layer
 
-	var/obj/item/organ/external/BP = BP_HEAD
-	var/armor_check = 0
-	if(ishuman(victim))
-		var/mob/living/carbon/human/H = victim
-		BP = H.get_bodypart(BP)
-		armor_check = H.run_armor_check(BP, "melee")
+	var/armor_check = victim.run_armor_check(BP_HEAD, "melee")
 
-	victim.apply_effect(2, WEAKEN, BP, blocked = armor_check)
-	victim.apply_damage(20, BRUTE, BP, blocked = armor_check)
+	victim.apply_effect(2, WEAKEN, blocked = armor_check)
+	victim.apply_damage(20, BRUTE, BP_HEAD, blocked = armor_check)
 	victim.visible_message("<span class='danger'>[attacker] has performed an uppercut on [victim]!</span>")
 
 	if(iscarbon(victim))
@@ -401,12 +383,7 @@
 	victim.anchored = prev_victim_anchored
 	attacker.anchored = prev_attacker_anchored
 
-	var/obj/item/organ/external/BP = BP_GROIN
-	var/armor_check = 0
-	if(ishuman(victim))
-		var/mob/living/carbon/human/H = victim
-		BP = H.get_bodypart(BP)
-		armor_check = H.run_armor_check(H, "melee")
+	var/armor_check = victim.run_armor_check(null, "melee")
 
 	victim.apply_effect(5, WEAKEN, blocked = armor_check)
 	victim.apply_damage(30, BRUTE, blocked = armor_check)
@@ -496,7 +473,7 @@
 		if(L == attacker)
 			continue
 		if(L.lying || L.resting || L.crawling)
-			L.apply_damage(30, BRUTE, blocked =0) // A body dropped on us! Armor ain't helping.
+			L.apply_damage(30, BRUTE, blocked = 0) // A body dropped on us! Armor ain't helping.
 		L.apply_effect(6, WEAKEN, blocked = 0)
 
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
@@ -707,12 +684,8 @@
 					for(var/mob/living/L in to_check)
 						if(L.is_bigger_than(victim))
 							continue
-						var/obj/item/organ/external/BP = BP_CHEST
-						var/armor_check = 0
-						if(ishuman(L))
-							var/mob/living/carbon/human/H = victim
-							BP = H.get_bodypart(BP)
-							armor_check = H.run_armor_check(H, "melee")
+
+						var/armor_check = victim.run_armor_check(null, "melee")
 
 						var/obj/structure/table/facetable = locate() in T
 						if(facetable)
