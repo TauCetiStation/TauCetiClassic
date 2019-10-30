@@ -13,17 +13,12 @@
 		return
 	return
 
-/obj/effect/blob/resource/PulseAnimation(var/activate = 0)
-	if(activate)
-		..()
-	return
-
 /obj/effect/blob/resource/run_action()
 
 	if(resource_delay > world.time)
 		return 0
 
-	PulseAnimation(1)
+	PulseAnimation()
 
 	resource_delay = world.time + 40 // 4 seconds
 
