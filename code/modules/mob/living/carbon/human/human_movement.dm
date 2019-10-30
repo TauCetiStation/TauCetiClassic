@@ -61,6 +61,9 @@
 	var/chem_nullify_debuff = FALSE
 	if(!species.flags[NO_BLOOD] && (reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")))
 		chem_nullify_debuff = TRUE
+	
+	if(species.flags[IS_SYNTHETIC])
+		chem_nullify_debuff = TRUE
 
 	for(var/obj/item/I in list(wear_suit, back, shoes))
 		if(!(I.slowdown > 0 && chem_nullify_debuff))
