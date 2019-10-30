@@ -71,9 +71,7 @@
 	PulseAnimation()
 
 	RegenHealth()
-
-	if(run_action())//If we can do something here then we dont need to pulse more
-		return
+	run_action()
 
 	if(pulse > 30)
 		return//Inf loop check
@@ -94,10 +92,8 @@
 		return
 	return
 
-
 /obj/effect/blob/proc/run_action()
-	return 0
-
+	return
 
 /obj/effect/blob/proc/expand(turf/T = null, prob = 1)
 	if(prob && !prob(health))	return

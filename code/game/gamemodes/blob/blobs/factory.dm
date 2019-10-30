@@ -20,14 +20,11 @@
 
 /obj/effect/blob/factory/run_action()
 	if(spores.len >= max_spores)
-		return 0
+		return
 	if(spore_delay > world.time)
-		return 0
+		return
 	spore_delay = world.time + 100 // 10 seconds
-	PulseAnimation()
 	new/mob/living/simple_animal/hostile/blobspore(src.loc, src)
-	return 0
-
 
 /mob/living/simple_animal/hostile/blobspore
 	name = "blob"
