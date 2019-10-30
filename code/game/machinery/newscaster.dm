@@ -16,6 +16,12 @@
 	var/dislikes = 0
 	var/comment_msg = "" //Feed comment
 	var/list/datum/message_comment/comments = list() //Stores all comments under the feed message
+	var/comments_closed = TRUE
+
+	var/icon/like = icon("icons/misc/raiting_for_paper.dmi", "like")
+	var/icon/like_clicked = icon("icons/misc/raiting_for_paper.dmi", "like_clicked")
+	var/icon/dislike = icon("icons/misc/raiting_for_paper.dmi", "dislike")
+	var/icon/dislike_clicked = icon("icons/misc/raiting_for_paper.dmi", "dislike_clicked")
 
 /datum/message_comment
 	var/author = ""
@@ -224,7 +230,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(ishuman(user) || issilicon(user)) // need abit of rewriting this to make it work for observers.
 		var/mob/living/human_or_robot_user = user
 		var/dat
-		dat = text("<HEAD><TITLE>Newscaster</TITLE></HEAD><H3>Newscaster Unit #[src.unit_no]</H3>")
+		dat = text("<HEAD><TITLE>Newscaster</TITLE></HEAD><H3>Newscaster Unit #[src.unit_no]</H3><style>img {border-style:none;}</style></style>")
 
 		src.scan_user(human_or_robot_user) //Newscaster scans you
 
@@ -353,18 +359,29 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 								usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
 							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
+
+							usr << browse_rsc(MESSAGE.like, "like.png")
+							usr << browse_rsc(MESSAGE.like_clicked, "like_clicked.png")
+							usr << browse_rsc(MESSAGE.dislike, "dislike.png")
+							usr << browse_rsc(MESSAGE.dislike_clicked, "dislike_clicked.png")
 							//If a person has already voted, then the button will not be clickable
-							dat+="<FONT SIZE=1>[(src.scanned_user in MESSAGE.voters) ? ("Likes") : ("<A href='?src=\ref[src];setLike=\ref[MESSAGE]'>Likes</A>")]: [MESSAGE.likes] \
-											   [(src.scanned_user in MESSAGE.voters) ? ("Dislikes") : ("<A href='?src=\ref[src];setDislike=\ref[MESSAGE]'>Dislikes</A>")]: [MESSAGE.dislikes]</FONT>"
-							dat+="<HR><B>Comments:</B><BR>"
-							for(var/datum/message_comment/COMMENT in MESSAGE.comments)
-								dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
-								dat+="-<FONT SIZE=3>[COMMENT.body]</FONT><BR>"
-							if(src.viewing_channel.lock_comments)
-								dat+="<B><FONT SIZE=3>Comments are closed!</FONT></B><BR><HR>"
+							dat+="<FONT SIZE=1>[(src.scanned_user in MESSAGE.voters) ? ("<img src='like_clicked.png'>") : ("<A href='?src=\ref[src];setLike=\ref[MESSAGE]' style='text-decoration: none;'><img src='like.png'></A>")]: <FONT SIZE=2>[MESSAGE.likes]</FONT> \
+											   [(src.scanned_user in MESSAGE.voters) ? ("<img src='dislike_clicked.png'>") : ("<A href='?src=\ref[src];setDislike=\ref[MESSAGE]' style='text-decoration: none;'><img src='dislike.png'></A>")]: <FONT SIZE=2>[MESSAGE.dislikes]</FONT></FONT>"
+
+							dat+="<HR><A href='?src=\ref[src];open_comments=\ref[MESSAGE]'><B>Comments</B></A>: [(MESSAGE.comments.len != 0) ? ("([MESSAGE.comments.len])") : ("")]<BR>"
+							if(!MESSAGE.comments_closed)
+								for(var/datum/message_comment/COMMENT in MESSAGE.comments)
+									dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
+									dat+="-<FONT SIZE=3>[COMMENT.body]</FONT><BR>"
+								if(src.viewing_channel.lock_comments)
+									dat+="<B><FONT SIZE=3>Comments are closed!</FONT></B><BR><HR>"
+								else
+									dat+="<B><A href='?src=\ref[src];your_comment=\ref[MESSAGE]'>Your comment:</B></A> [MESSAGE.comment_msg]"
+									dat+="<BR><B><A href='?src=\ref[src];leave_a_comment=\ref[MESSAGE]'>Leave a comment.</A></B><BR>"
 							else
-								dat+="<B><A href='?src=\ref[src];your_comment=\ref[MESSAGE]'>Your comment:</B></A> [MESSAGE.comment_msg]"
-								dat+="<BR><B><A href='?src=\ref[src];leave_a_comment=\ref[MESSAGE]'>Leave a comment.</A></B><BR><HR>"
+								dat+=""
+							dat+="<HR>"
+
 				dat+="<A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
 			if(10)
@@ -770,6 +787,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.viewing_channel.lock_comments = FALSE
 		else
 			src.viewing_channel.lock_comments = TRUE
+
+	else if(href_list["open_comments"])
+		var/datum/feed_message/FM = locate(href_list["open_comments"])
+		(FM.comments_closed) ? (FM.comments_closed = FALSE) : (FM.comments_closed = TRUE)
 
 	src.updateUsrDialog()
 
