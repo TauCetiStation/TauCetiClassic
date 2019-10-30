@@ -50,7 +50,7 @@
 		last_resource_collection = world.time
 
 	health = min(initial(health), health + 1)
-	for(var/i = 1; i < 8; i += i)
+	for(var/i in cardinal)
 		Pulse(0, i)
 	for(var/b_dir in alldirs)
 		if(!prob(5))
