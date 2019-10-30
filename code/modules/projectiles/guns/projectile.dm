@@ -11,7 +11,6 @@
 	var/mag_type = /obj/item/ammo_box/magazine/m9mm //Removes the need for max_ammo and caliber info
 	var/mag_type2
 	var/obj/item/ammo_box/magazine/magazine
-	var/energy_gun = 0 //Used in examine, if 1 - no ammo count.
 
 /obj/item/weapon/gun/projectile/atom_init()
 	. = ..()
@@ -100,7 +99,7 @@
 
 /obj/item/weapon/gun/projectile/examine(mob/user)
 	..()
-	if(!energy_gun && src in view(1, user))
+	if(src in view(1, user))
 		to_chat(user, "Has [get_ammo()] round\s remaining.")
 
 /obj/item/weapon/gun/projectile/proc/get_ammo(countchambered = 1)
