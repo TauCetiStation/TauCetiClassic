@@ -149,7 +149,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(species.flags[IS_SYNTHETIC])
 			var/obj/item/organ/internal/liver/ipc/L = locate(/obj/item/organ/internal/liver/ipc) in organs
 			var/obj/item/weapon/stock_parts/cell/I = locate(/obj/item/weapon/stock_parts/cell) in L
-			stat(null, "Charge: [round(100.0*nutrition/I.maxcharge)%]")
+			stat(null, "Charge: [round(100.0*nutrition/I.maxcharge)]%")
 			stat(null, "Operating temp: [round(bodytemperature-T0C)]&deg;C")
 		if(internal)
 			if(!internal.air_contents)
