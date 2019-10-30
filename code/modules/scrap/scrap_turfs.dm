@@ -1,10 +1,3 @@
-#define RESOURCE_HIGH_MAX 6
-#define RESOURCE_HIGH_MIN 3
-#define RESOURCE_MID_MAX 4
-#define RESOURCE_MID_MIN 2
-#define RESOURCE_LOW_MAX 1
-#define RESOURCE_LOW_MIN 0
-
 /obj/effect/scrap_pile_generator
 	name = "Gererates Scrap Pile"
 	icon_state = "rock"
@@ -59,16 +52,16 @@
 
 /turf/proc/resource_definition()
 	LAZYINITLIST(resources)
-	LAZYSET(resources, "silicates", rand(RESOURCE_HIGH_MIN,RESOURCE_HIGH_MAX))
-	LAZYSET(resources, "carbonaceous rock", rand(RESOURCE_HIGH_MIN,RESOURCE_HIGH_MAX))
-	LAZYSET(resources, "iron", rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX))
-	LAZYSET(resources, "gold", rand(RESOURCE_LOW_MIN,RESOURCE_MID_MAX))
-	LAZYSET(resources, "silver", rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX))
-	LAZYSET(resources, "uranium", rand(RESOURCE_LOW_MIN,RESOURCE_MID_MAX))
-	LAZYSET(resources, "diamond", rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX))
-	LAZYSET(resources, "phoron", rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX))
-	LAZYSET(resources, "osmium", rand(RESOURCE_LOW_MIN,RESOURCE_MID_MIN))
-	LAZYSET(resources, "hydrogen", rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX))
+	LAZYSET(resources, "silicates", rand(3,6))
+	LAZYSET(resources, "carbonaceous rock", rand(3,6))
+	LAZYSET(resources, "iron", rand(2,4))
+	LAZYSET(resources, "gold", rand(0,4))
+	LAZYSET(resources, "silver", rand(0,1))
+	LAZYSET(resources, "uranium", rand(0,4))
+	LAZYSET(resources, "diamond", rand(0,1))
+	LAZYSET(resources, "phoron", rand(2,4))
+	LAZYSET(resources, "osmium", rand(0,2))
+	LAZYSET(resources, "hydrogen", rand(2,4))
 
 /turf/simulated/floor/plating/ironsand/junkyard
 	var/dug = 0
@@ -147,10 +140,3 @@
 					dug = 1
 		return
 	..(W,user)
-
-#undef RESOURCE_HIGH_MAX
-#undef RESOURCE_HIGH_MIN
-#undef RESOURCE_MID_MAX
-#undef RESOURCE_MID_MIN
-#undef RESOURCE_LOW_MAX
-#undef RESOURCE_LOW_MIN
