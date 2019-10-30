@@ -190,7 +190,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						                          'sound/weapons/armbomb.ogg')
 						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
 					if(9) // GUNPULSES
-						var/list/gunsound_list = list('sound/weapons/guns/gunpulse_l10c.ogg',
+						var/list/gunsound_list = list('sound/weapons/guns/plasma10_shot.ogg',
 						                              'sound/weapons/guns/gunpulse_Taser.ogg',
 						                              'sound/weapons/guns/gunpulse_laser.ogg',
 						                              'sound/weapons/guns/gunpulse_stunrevolver.ogg')
