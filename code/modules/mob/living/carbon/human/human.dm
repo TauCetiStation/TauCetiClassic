@@ -149,11 +149,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(species.flags[IS_SYNTHETIC])
 			var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
 			var/obj/item/weapon/stock_parts/cell/I = locate(/obj/item/weapon/stock_parts/cell) in IO
-			if(istype(I))
+			if(I)
 				stat(null, "Charge: [round(100.0*nutrition/I.maxcharge)]%")
 				stat(null, "Operating temp: [round(bodytemperature-T0C)]&deg;C")
-			else
-				return TRUE
 		if(internal)
 			if(!internal.air_contents)
 				qdel(internal)
