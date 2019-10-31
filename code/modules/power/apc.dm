@@ -620,8 +620,8 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/internal/liver/ipc/L = locate(/obj/item/organ/internal/liver/ipc) in H.organs
-		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in L
+		var/obj/item/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
+		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
 		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == "grab")
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(emagged || (stat & BROKEN))
@@ -639,14 +639,14 @@
 								if(!src.cell)
 									to_chat(user, "<span class='notice'>There is no cell.</span>")
 									break
-								if(src.emagged || src.malfai || src.stat & BROKEN && H.a_intent == "grab")
+								if((emagged || malfhack || stat & (BROKEN|EMPED) || shorted) && H.a_intent == "grab")
 									break
 									
 								if(src.cell.use(500))
 									H.nutrition += 50
 								to_chat(user, "<span class='notice'>Draining... Battery has [round(100.0*H.nutrition/C.maxcharge)]% of charge.</span>")
 								
-								if(H.nutrition >= C.maxcharge)
+								if(H.nutrition >= C.maxcharge-50)
 									to_chat(user, "<span class='notice'>You at fully charge.</span>")
 									break
 								else if(src.cell.charge <= 0)
@@ -664,7 +664,12 @@
 						src.charging = 0
 						return
 						
-					if(src.emagged || src.malfai || src.stat & BROKEN && H.a_intent == "grab")
+					if((emagged || malfhack || stat & (BROKEN|EMPED) || shorted) && H.a_intent == "grab")
+						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+						s.set_up(3, 1, src)
+						s.start()
+						to_chat (user, "<span class='warning'>Something wrong with that APC.</span>")
+						H.adjustFireLoss(10,0)
 						return
 					
 					if(src.cell.charge < 0) 
