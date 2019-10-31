@@ -14,9 +14,8 @@
 	var/list/voters = list() //Stores a string with voters
 	var/likes = 0
 	var/dislikes = 0
-	var/comment_msg = "" //Feed comment
 	var/list/datum/message_comment/comments = list() //Stores all comments under the feed message
-	var/comments_closed = TRUE
+	var/comments_closed = TRUE //Spoiler
 
 	var/icon/like = icon("icons/misc/raiting_for_paper.dmi", "like")
 	var/icon/like_clicked = icon("icons/misc/raiting_for_paper.dmi", "like_clicked")
@@ -122,6 +121,17 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		// 9 = viewing channel feeds
 		// 10 = censor feed story
 		// 11 = censor feed channel
+		// 12 = pick censor channel
+		// 13 = pick d notice
+		// 14 = wanted issue handler
+		// 15 = create wanted issue
+		// 16 = ERROR: Cannot create wanted issue
+		// 17 = wanted issue deleted
+		// 18 = view wanted issue
+		// 19 = wanted issue edited
+		// 20 = orinting successful
+		// 21 = need more paper
+		// 22 = ERROR: Cannot create comment
 		//Holy shit this is outdated, made this when I was still starting newscasters :3
 	var/paper_remaining = 0
 	var/securityCaster = 0
@@ -145,7 +155,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/datum/feed_channel/viewing_channel = null
 	light_range = 0
 	anchored = 1
-
+	var/comment_msg = "" //This message afret string "Your comment:"
 
 /obj/machinery/newscaster/security_unit                   //Security unit
 	name = "Security Newscaster"
@@ -365,19 +375,19 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 							usr << browse_rsc(MESSAGE.dislike, "dislike.png")
 							usr << browse_rsc(MESSAGE.dislike_clicked, "dislike_clicked.png")
 							//If a person has already voted, then the button will not be clickable
-							dat+="<FONT SIZE=1>[(src.scanned_user in MESSAGE.voters) ? ("<img src='like_clicked.png'>") : ("<A href='?src=\ref[src];setLike=\ref[MESSAGE]' style='text-decoration: none;'><img src='like.png'></A>")]: <FONT SIZE=2>[MESSAGE.likes]</FONT> \
-											   [(src.scanned_user in MESSAGE.voters) ? ("<img src='dislike_clicked.png'>") : ("<A href='?src=\ref[src];setDislike=\ref[MESSAGE]' style='text-decoration: none;'><img src='dislike.png'></A>")]: <FONT SIZE=2>[MESSAGE.dislikes]</FONT></FONT>"
+							dat+="<FONT SIZE=1>[((src.scanned_user in MESSAGE.voters) || (src.scanned_user == "Unknown")) ? ("<img src='like_clicked.png'>") : ("<A href='?src=\ref[src];setLike=\ref[MESSAGE]'><img src='like.png'></A>")]: <FONT SIZE=2>[MESSAGE.likes]</FONT> \
+											   [((src.scanned_user in MESSAGE.voters) || (src.scanned_user == "Unknown")) ? ("<img src='dislike_clicked.png'>") : ("<A href='?src=\ref[src];setDislike=\ref[MESSAGE]'><img src='dislike.png'></A>")]: <FONT SIZE=2>[MESSAGE.dislikes]</FONT></FONT>"
 
-							dat+="<HR><A href='?src=\ref[src];open_comments=\ref[MESSAGE]'><B>Comments</B></A>: [(MESSAGE.comments.len != 0) ? ("([MESSAGE.comments.len])") : ("")]<BR>"
-							if(!MESSAGE.comments_closed)
+							dat+="<HR><A href='?src=\ref[src];open_comments=\ref[MESSAGE]'><B>All Comments</B></A>: [(MESSAGE.comments.len != 0) ? ("([MESSAGE.comments.len])") : ("")]<BR>"
+							if(!MESSAGE.comments_closed) //Spoiler
 								for(var/datum/message_comment/COMMENT in MESSAGE.comments)
 									dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
 									dat+="-<FONT SIZE=3>[COMMENT.body]</FONT><BR>"
-								if(src.viewing_channel.lock_comments)
-									dat+="<B><FONT SIZE=3>Comments are closed!</FONT></B><BR><HR>"
-								else
-									dat+="<B><A href='?src=\ref[src];your_comment=\ref[MESSAGE]'>Your comment:</B></A> [MESSAGE.comment_msg]"
+								if(!src.viewing_channel.lock_comments)
+									dat+="<B><A href='?src=\ref[src];your_comment=1'>Your comment:</B></A> [src.comment_msg]"
 									dat+="<BR><B><A href='?src=\ref[src];leave_a_comment=\ref[MESSAGE]'>Leave a comment.</A></B><BR>"
+								else
+									dat+="<B><FONT SIZE=3>Comments are closed!</FONT></B><BR><HR>"
 							else
 								dat+=""
 							dat+="<HR>"
@@ -498,8 +508,15 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(21)
 				dat+="<FONT COLOR='maroon'>Unable to print newspaper. Insufficient paper. Please notify maintenance personnel to refill machine storage.</FONT><BR><BR>"
 				dat+="<A href='?src=\ref[src];setScreen=[0]'>Return</A>"
+			if(22)
+				dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit comment to Network.</B></FONT><HR><BR>"
+				if(src.comment_msg == "" || src.comment_msg == null)
+					dat+="<FONT COLOR='maroon'>Invalid lenght of comment.</FONT><BR>"
+				if(src.scanned_user == "Unknown")
+					dat+="<FONT COLOR='maroon'>Channel author unverified.</FONT><BR>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Return</A><BR>"
 			else
-				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
+				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com | If (break (likes/dislikes) || (system of commenting)) then report this bug in tauceti github "
 
 
 		human_or_robot_user << browse(entity_ja(dat), "window=newscaster_main;size=400x600")
@@ -765,22 +782,21 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		src.rating("dislike", FM)
 
 	else if(href_list["your_comment"])
-		var/datum/feed_message/FM = locate(href_list["your_comment"])
-		FM.comment_msg = sanitize(input(usr, "Write your comment", "Network Channel Handler", input_default(FM.comment_msg)), extra = FALSE)
+		src.comment_msg = sanitize(input(usr, "Write your comment", "Network Channel Handler", input_default(src.comment_msg)), extra = FALSE)
 
 	else if(href_list["leave_a_comment"])
 		var/datum/feed_message/FM = locate(href_list["leave_a_comment"])
-		if(FM.comment_msg == "" || FM.comment_msg == null)
-			return
+		if(src.comment_msg == "" || src.comment_msg == null || src.scanned_user == "Unknown")
+			src.screen = 22
 		else
 			var/datum/message_comment/COMMENT = new /datum/message_comment
 			COMMENT.author = src.scanned_user
-			COMMENT.body = FM.comment_msg
+			COMMENT.body = src.comment_msg
 			COMMENT.time = worldtime2text()
 
 			FM.comments += COMMENT
 
-			FM.comment_msg = ""
+			src.comment_msg = ""
 
 	else if(href_list["locked_comments"])
 		if(src.viewing_channel.lock_comments)
@@ -790,14 +806,14 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 	else if(href_list["open_comments"])
 		var/datum/feed_message/FM = locate(href_list["open_comments"])
-		(FM.comments_closed) ? (FM.comments_closed = FALSE) : (FM.comments_closed = TRUE)
+		if(FM.comments_closed)
+			FM.comments_closed = FALSE
+		else
+			FM.comments_closed = TRUE
 
 	src.updateUsrDialog()
 
 /obj/machinery/newscaster/proc/rating(evaluation, datum/feed_message/FM)
-	if(src.scanned_user == "Unknown")
-		return
-
 	FM.voters += src.scanned_user
 	if(evaluation == "like")
 		FM.likes += 1 
