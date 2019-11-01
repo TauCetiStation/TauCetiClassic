@@ -254,4 +254,5 @@
 
 	can_hold = list(
 		/obj/item/clothing/mask/gas,
+		/obj/item/clothing/mask/breath
 		)
