@@ -254,11 +254,4 @@
 
 	can_hold = list(
 		/obj/item/clothing/mask/gas,
-		/obj/item/clothing/mask/gas/welding,
-		/obj/item/clothing/mask/gas/sechailer,
-		/obj/item/clothing/mask/gas/swat,
-		/obj/item/clothing/mask/gas/syndicate,
-		/obj/item/clothing/mask/gas/voice,
-		/obj/item/clothing/mask/gas/coloured,
-		/obj/item/clothing/mask/gas/German
 		)
