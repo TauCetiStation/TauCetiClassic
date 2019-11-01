@@ -190,8 +190,8 @@
 	if(target)
 		target_null = FALSE
 		if(target != user)
-			Tloc = target.loc
 			target.in_use_action = TRUE
+			Tloc = target.loc
 
 	var/atom/Uloc = null
 	if(!can_move)
