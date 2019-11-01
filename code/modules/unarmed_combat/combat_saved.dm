@@ -85,11 +85,11 @@
 
 	animate(A, transform=M, time=2)
 	sleep(2)
-	if(QDELING(A))
+	if(QDELING(A) || QDELING(src))
 		return
 	animate(A, transform=A.default_transform, time=1)
 	sleep(1)
-	if(QDELING(A))
+	if(QDELING(A) || QDELING(src))
 		return
 	A.transform = A.default_transform
 
