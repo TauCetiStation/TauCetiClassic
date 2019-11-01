@@ -98,5 +98,5 @@
 	path = /obj/item/clothing/mask/tie/collar2
 
 /datum/gear/accessory/gasmask_pouch
-	display_name = "gasmask pouch"
+	display_name = "Gasmask pouch"
 	path = /obj/item/weapon/storage/pouch/gasmask
