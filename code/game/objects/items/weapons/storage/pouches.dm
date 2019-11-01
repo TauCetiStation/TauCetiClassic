@@ -250,6 +250,7 @@
 
 	storage_slots = 1
 	w_class = ITEM_SIZE_NORMAL
+	slot_flags = SLOT_FLAGS_BELT|SLOT_FLAGS_DENYPOCKET
 	max_w_class = ITEM_SIZE_NORMAL
 
 	can_hold = list(
