@@ -100,3 +100,7 @@
 /datum/gear/accessory/gold_collar
 	display_name = "Gold Collar"
 	path = /obj/item/clothing/mask/tie/collar2
+
+/datum/gear/accessory/gasmask_pouch
+	display_name = "gasmask pouch"
+	path = /obj/item/weapon/storage/pouch/gasmask
