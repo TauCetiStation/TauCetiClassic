@@ -241,3 +241,24 @@
 	overlays.Cut()
 	if(contents.len)
 		overlays += image('icons/obj/pouches.dmi', "baton_layer")
+
+/obj/item/weapon/storage/pouch/gasmask
+	name = "gasmask pouch"
+	desc = "Can hold your gasmask. Allows you to quickly use it."
+	icon_state = "gasmask_pouch"
+	item_state = "gasmask_pouch"
+
+	storage_slots = 1
+	w_class = ITEM_SIZE_NORMAL
+	max_w_class = ITEM_SIZE_NORMAL
+
+	can_hold = list(
+		/obj/item/clothing/mask/gas,
+		/obj/item/clothing/mask/gas/welding,
+		/obj/item/clothing/mask/gas/sechailer,
+		/obj/item/clothing/mask/gas/swat,
+		/obj/item/clothing/mask/gas/syndicate,
+		/obj/item/clothing/mask/gas/voice,
+		/obj/item/clothing/mask/gas/coloured,
+		/obj/item/clothing/mask/gas/German
+		)
