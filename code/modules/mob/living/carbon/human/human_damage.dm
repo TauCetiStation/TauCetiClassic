@@ -99,15 +99,11 @@
 // =============================================
 
 /mob/living/carbon/human/getToxLoss()
-	if(reagents.has_reagent("aclometasone")) // Doesn't modify our toxLoss, but pretends that we aren't intoxified.
-		return 0
 	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
 		toxloss = 0
 	return ..()
 
 /mob/living/carbon/human/adjustToxLoss(amount)
-	if(reagents.has_reagent("aclometasone")) // Doesn't allow to modify our toxLoss.
-		return
 	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
 		toxloss = 0
 	else
@@ -115,8 +111,6 @@
 		..(amount)
 
 /mob/living/carbon/human/setToxLoss(amount)
-	if(reagents.has_reagent("aclometasone")) // Doesn't allow to modify our toxLoss.
-		return
 	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
 		toxloss = 0
 	else
@@ -154,6 +148,8 @@
 
 	if(species.flags[IS_SYNTHETIC])
 		return
+
+	time_of_last_damage = world.time
 
 	var/heal_prob = max(0, 80 - getCloneLoss())
 	var/mut_prob = min(80, getCloneLoss()+10)

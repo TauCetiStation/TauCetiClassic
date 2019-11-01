@@ -523,8 +523,12 @@
 			holder.installed_modules -= src
 		qdel(src)
 
-/obj/item/weapon/extinguisher/mounted
-	max_water = 100
+/obj/item/weapon/reagent_containers/spray/extinguisher/mounted
+	volume = 400
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/mounted/atom_init()
+	. = ..()
+	flags |= OPENCONTAINER
 
 /obj/item/rig_module/device/extinguisher
 	name = "hardsuit fire extinguisher"
@@ -535,29 +539,29 @@
 	use_power_cost = 20
 	module_cooldown = 5
 	origin_tech = "materials=1;engineering=1;programming=2"
-	device_type = /obj/item/weapon/extinguisher/mounted
+	device_type = /obj/item/weapon/reagent_containers/spray/extinguisher/mounted
 	need_adjacent = FALSE
 
 /obj/item/rig_module/device/extinguisher/init_charges()
 	charges = list()
-	charges["water"] = new /datum/rig_charge("water", "water", 0) // syncs with the extinguisher
+	charges["aqueous_foam"] = new /datum/rig_charge("Aqueous Film Forming Foam", "aqueous_foam", 0) // syncs with the extinguisher
 
 /obj/item/rig_module/device/extinguisher/atom_init()
 	. = ..()
 	if(device)
-		var/obj/item/weapon/extinguisher/ext = device
+		var/obj/item/weapon/reagent_containers/spray/extinguisher/ext = device
 		ext.safety = FALSE
-		charges["water"].charges = ext.reagents.total_volume
+		charges["aqueous_foam"].charges = ext.reagents.total_volume
 
 /obj/item/rig_module/device/extinguisher/engage(atom/target)
 	. = ..()
 	if(device)
-		addtimer(CALLBACK(src, .proc/update_water_ammount), 5) // because extinguisher uses spawns
+		addtimer(CALLBACK(src, .proc/update_foam_ammount), 5) // because extinguisher uses spawns
 
-/obj/item/rig_module/device/extinguisher/proc/update_water_ammount()
+/obj/item/rig_module/device/extinguisher/proc/update_foam_ammount()
 	if(device)
-		var/obj/item/weapon/extinguisher/ext = device
-		charges["water"].charges = ext.reagents.total_volume
+		var/obj/item/weapon/reagent_containers/spray/extinguisher/ext = device
+		charges["aqueous_foam"].charges = ext.reagents.total_volume
 
 /obj/item/rig_module/metalfoam_spray
 	name = "hardsuit metal foam spray"
@@ -653,9 +657,9 @@
 	module_cooldown = 30 SECONDS
 
 /obj/item/rig_module/stealth/activate(forced = FALSE)
-	if(!..())	
+	if(!..())
 		return FALSE
-	if(holder.wearer.is_busy()) 
+	if(holder.wearer.is_busy())
 		return FALSE
 
 	var/mob/living/carbon/human/H = holder.wearer
@@ -671,9 +675,9 @@
 
 /obj/item/rig_module/stealth/deactivate()
 	. = ..()
-	if(!.)	
+	if(!.)
 		return FALSE
-		
+
 	holder.canremove = TRUE
 	holder.wearer.alpha = 255
 

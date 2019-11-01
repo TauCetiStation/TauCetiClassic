@@ -39,15 +39,9 @@
 	damage = 0
 
 /obj/item/organ/internal/proc/is_bruised()
-	// If not robotic, and owner has stabyzol in bloodstream, we are considered not bruised.
-	if(!robotic && owner.reagents.has_reagent("stabyzol"))
-		return FALSE
 	return damage >= min_bruised_damage
 
 /obj/item/organ/internal/proc/is_broken()
-	// If not robotic, and owner has stabyzol in bloodstream, we are considered not bruised.
-	if(!robotic && owner.reagents.has_reagent("stabyzol"))
-		return FALSE
 	return damage >= min_broken_damage
 
 
