@@ -488,7 +488,7 @@ var/datum/subsystem/job/SSjob
 					if(4)
 						var/obj/item/weapon/storage/backpack/satchel/norm/BPK = new(H)
 						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
-					if(6)
+					if(5)
 						var/obj/item/weapon/storage/backpack/satchel/BPK = new(H)
 						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 
