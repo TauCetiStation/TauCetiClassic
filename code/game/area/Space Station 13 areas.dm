@@ -1480,7 +1480,7 @@ var/list/soft_station_areas = list (
 	/area/maintenance/starboardsolar,
 	/area/maintenance/portsolar,
 	/area/maintenance/auxsolarstarboard,
-	/area/shuttle/arrival,
+	/area/shuttle/arrival/station,
 	/area/shuttle/escape/station,
 	/area/shuttle/escape_pod1/station,
 	/area/shuttle/escape_pod2/station,
