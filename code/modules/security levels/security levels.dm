@@ -1,4 +1,5 @@
 /var/security_level = 0
+/var/global/delta_timer_id = 0
 
 
 /proc/set_security_level(level)
@@ -23,7 +24,8 @@
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
 						FA.overlays = list()
 						FA.overlays += image('icons/obj/monitors.dmi', "overlay_green")
-						FA.delta = FALSE
+				deltimer(delta_timer_id)
+				delta_timer_id = 0
 
 			if(SEC_LEVEL_BLUE)
 				if(security_level < SEC_LEVEL_BLUE)
@@ -35,7 +37,8 @@
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
 						FA.overlays = list()
 						FA.overlays += image('icons/obj/monitors.dmi', "overlay_blue")
-						FA.delta = FALSE
+				deltimer(delta_timer_id)
+				delta_timer_id = 0
 
 			if(SEC_LEVEL_RED)
 				if(security_level < SEC_LEVEL_RED)
@@ -52,7 +55,8 @@
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
 						FA.overlays = list()
 						FA.overlays += image('icons/obj/monitors.dmi', "overlay_red")
-						FA.delta = FALSE
+				deltimer(delta_timer_id)
+				delta_timer_id = 0
 
 			if(SEC_LEVEL_DELTA)
 				security_level = SEC_LEVEL_DELTA
@@ -61,10 +65,22 @@
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
 						FA.overlays = list()
 						FA.overlays += image('icons/obj/monitors.dmi', "overlay_delta")
-						FA.delta = TRUE
+				if(!delta_timer_id)
+					delta_alarm()
 		SSnightshift.check_nightshift() // Night shift mode turns off if security level is raised to red or above
 	else
 		return
+
+/proc/delta_alarm()
+    delta_timer_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/delta_alarm, FALSE), 8 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+    for(var/mob/M in player_list)
+        if (is_station_level(M.z))
+            var/area/A = get_area(M)
+            if (soft_station_areas.Find(A.type))
+                M.playsound_local(get_turf(M), 'sound/machines/alarm_delta.ogg', VOL_EFFECTS_MASTER, 20, FALSE)
+            else if (!non_station_areas.Find(A.type))
+                M.playsound_local(get_turf(M), 'sound/machines/alarm_delta.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+    return
 
 /proc/get_security_level()
 	switch(security_level)
