@@ -622,7 +622,7 @@
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
 		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
-		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == "grab")
+		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == I_GRAB && C)
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(emagged || (stat & BROKEN))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
