@@ -630,51 +630,51 @@
 				s.start()
 				to_chat(H, "<span class='warning'>The APC power currents surge eratically, damaging your chassis!</span>")
 				H.adjustFireLoss(10,0)
-			else if(src.cell && src.cell.charge > 0)
+			else if(src.cell && src.cell.charge > 500 && H.a_intent == I_GRAB)
 				if(H.nutrition < C.maxcharge-50)
-					if(src.cell.charge >= 500)	
-						to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and begin siphoning charge process...</span>")
+					if(src.cell.charge)
+						to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and start siphon off some of the stored charge for your own use.</span>")
 						while(H.nutrition < C.maxcharge)
 							if(do_after(user,10,target = src))
 								if(!src.cell)
 									to_chat(user, "<span class='notice'>There is no cell.</span>")
 									break
-								if((emagged || malfhack || stat & (BROKEN|EMPED) || shorted) && H.a_intent == "grab")
+								else if((emagged || malfhack || (stat & (BROKEN|EMPED)) || shorted) && H.a_intent == I_GRAB)
 									break
-									
-								if(H.nutrition >= C.maxcharge-50)
-									to_chat(user, "<span class='notice'>You at fully charge.</span>")
+								else if(H.nutrition >= C.maxcharge-50)
+									to_chat(user, "<span class='notice'>You're fully charge.</span>")
 									break
+								else if(src.cell.charge <= 0)
+									to_chat (user, "<span class='notice'>There is no charge to draw from that APC.</span>")
+									break
+											
 								else if(src.cell.use(500))
 									H.nutrition += C.maxcharge*0.10
 									to_chat(user, "<span class='notice'>Draining... Battery has [round(100.0*H.nutrition/C.maxcharge)]% of charge.</span>")
-									
-								if(src.cell.charge <= 0)
-									to_chat (user, "<span class='notice'>There is no charge to draw from that APC.</span>")
-									break
-									
-							else break
+							
+							else
+								to_chat (user, "<span class='notice'>There is no charge to draw from that APC.</span>")
+								break
 					else
-						
+
 						H.nutrition += src.cell.charge/10
 						src.cell.charge = 0
-						
+
 					if(!src.cell)
-						src.cell = null
 						src.charging = 0
 						return
-						
-					if((emagged || malfhack || stat & (BROKEN|EMPED) || shorted) && H.a_intent == "grab")
+
+					if((emagged || malfhack || (stat & (BROKEN|EMPED)) || shorted) && H.a_intent == I_GRAB)
 						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 						s.set_up(3, 1, src)
 						s.start()
 						to_chat (user, "<span class='warning'>Something wrong with that APC.</span>")
 						H.adjustFireLoss(10,0)
 						return
-					
-					if(src.cell.charge < 0) 
+
+					if(src.cell.charge < 0)
 						src.cell.charge = 0
-					if(H.nutrition > C.maxcharge) 
+					if(H.nutrition > C.maxcharge)
 						H.nutrition = C.maxcharge
 
 					src.charging = 1
