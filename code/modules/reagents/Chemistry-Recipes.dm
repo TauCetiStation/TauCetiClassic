@@ -1600,6 +1600,12 @@
 	required_reagents = list("capsaicin" = 1, "hot_ramen" = 6)
 	result_amount = 6
 
+/datum/chemical_reaction/hot_hell_ramen
+	name = "Hot Spicy Ramen"
+	id = "hot_hell_ramen"
+	result = "hot_hell_ramen"
+	required_reagents = list("water" = 1, "hell_ramen" = 3)
+	result_amount = 3
 
 ////////////////////////////////////////// COCKTAILS //////////////////////////////////////
 
@@ -2316,6 +2322,13 @@
 	if(istype(T))
 		new /obj/item/stack/sheet/mineral/deuterium(T, created_volume)
 
+/datum/chemical_reaction/aqueous_foam
+	name = "Aqueous Film Forming Foam"
+	id = "aqueous_foam"
+	result = "aqueous_foam"
+	required_reagents = list("fluorosurfactant" = 1, "silicon" = 1)
+	result_amount = 10
+
 /datum/chemical_reaction/hair_dye
 	name = "Hair Dye"
 	id = "whitehairdye"
@@ -2488,25 +2501,3 @@ TODO: Convert everything to custom hair dye,
 	if(new_color_weight >= 10)
 		chd.color_weight = new_color_weight
 		holder.remove_reagent("water", modifier)
-
-/datum/chemical_reaction/metatrombine
-	name = "Metatrombine"
-	id = "metatrombine"
-	result = "metatrombine"
-	required_reagents = list("chlorine" = 1, "nitrogen" = 1, "potassium" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/stabyzol
-	name = "Stabyzol"
-	id = "stabyzol"
-	result = "stabyzol"
-	required_reagents = list("mutagen" = 1, "ethanol" = 1, "sugar" = 1)
-	result_amount = 2
-
-// This reagent completely stops mob's metabolism. It should be very rare, and by no chance acquired by accident.
-/datum/chemical_reaction/aclometasone
-	name = "Aclometasone"
-	id = "aclometasone"
-	result = "aclometasone"
-	required_reagents = list("mindbreaker" = 3, "hyperzine" = 1, "coffee" = 1, "phoron" = 1)
-	result_amount = 1

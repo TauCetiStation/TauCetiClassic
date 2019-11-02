@@ -219,9 +219,8 @@
 	return temp_change
 
 /mob/living/carbon/slime/proc/handle_chemicals_in_body()
-
-	if(reagents) reagents.metabolize(src)
-
+	if(reagents)
+		reagents.metabolize(src)
 
 	src.updatehealth()
 
@@ -234,9 +233,6 @@
 		health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 	else
 		health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-
-
-
 
 	if(health < config.health_threshold_dead && stat != DEAD)
 		death()

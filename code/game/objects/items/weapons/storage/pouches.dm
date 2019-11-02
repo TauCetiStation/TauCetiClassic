@@ -122,7 +122,7 @@
 		/obj/item/device/radio/headset,
 		/obj/item/weapon/minihoe,
 		/obj/item/weapon/hatchet,
-		/obj/item/weapon/extinguisher/mini,
+		/obj/item/weapon/reagent_containers/spray/extinguisher/mini,
 		/obj/item/weapon/hand_labeler,
 		/obj/item/clothing/gloves,
 		/obj/item/clothing/glasses,
@@ -254,11 +254,5 @@
 
 	can_hold = list(
 		/obj/item/clothing/mask/gas,
-		/obj/item/clothing/mask/gas/welding,
-		/obj/item/clothing/mask/gas/sechailer,
-		/obj/item/clothing/mask/gas/swat,
-		/obj/item/clothing/mask/gas/syndicate,
-		/obj/item/clothing/mask/gas/voice,
-		/obj/item/clothing/mask/gas/coloured,
-		/obj/item/clothing/mask/gas/German
+		/obj/item/clothing/mask/breath
 		)

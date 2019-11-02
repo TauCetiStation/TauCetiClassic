@@ -258,19 +258,6 @@
 	icon_state = "wood"
 	},
 /area/centcom/arrival)
-"aaw" = (
-/obj/effect/step_trigger/teleporter/random{
-	affect_ghosts = 1;
-	name = "escapeshuttle_leave";
-	teleport_x = 25;
-	teleport_x_offset = 245;
-	teleport_y = 25;
-	teleport_y_offset = 245;
-	teleport_z = 6;
-	teleport_z_offset = 6
-	},
-/turf/space/transit/east/shuttlespace_ew5,
-/area/space)
 "aax" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -376,19 +363,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/arrival)
-"aaF" = (
-/obj/effect/step_trigger/teleporter/random{
-	affect_ghosts = 1;
-	name = "escapeshuttle_leave";
-	teleport_x = 25;
-	teleport_x_offset = 245;
-	teleport_y = 25;
-	teleport_y_offset = 245;
-	teleport_z = 6;
-	teleport_z_offset = 6
-	},
-/turf/space/transit/east/shuttlespace_ew14,
-/area/space)
 "aaG" = (
 /obj/machinery/door/airlock/medical/glass,
 /obj/structure/curtain/medical,
@@ -445,9 +419,6 @@
 "aaN" = (
 /turf/unsimulated/wall/fakeglass,
 /area/syndicate_mothership)
-"aaO" = (
-/turf/unsimulated/wall/fakeglass,
-/area/space)
 "aaP" = (
 /turf/unsimulated/wall/fakeglass,
 /area/centcom/arrival)
@@ -486,12 +457,136 @@
 "aaY" = (
 /turf/unsimulated/wall/fakeglass,
 /area/wizard_station)
+"aaZ" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron6";
+	smooth = 0
+	},
+/area/tophat)
 "abb" = (
 /turf/space,
 /area/shuttle/escape_pod1/transit)
+"abd" = (
+/obj/machinery/computer/arcade,
+/obj/structure/sign/velocity_overlay/reklama{
+	name = "\improper It's in the Hat!";
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abe" = (
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abf" = (
+/obj/effect/overlay/tophat_portal{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abg" = (
+/obj/machinery/vending/tophat_vend,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abh" = (
+/obj/machinery/vending/boozeomat{
+	req_access = list()
+	},
+/obj/item/weapon/reagent_containers/food/drinks/shaker,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abi" = (
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/device/flashlight/lamp/green,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abj" = (
+/obj/structure/stool/bar,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abk" = (
+/obj/structure/table/woodentable/fancy/black,
+/obj/machinery/chem_dispenser/soda{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abl" = (
+/obj/structure/table/woodentable/fancy/black,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abm" = (
+/obj/structure/table/woodentable/fancy/black,
+/obj/machinery/chem_dispenser/beer{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
 "abn" = (
 /turf/unsimulated/wall/fakeglass,
 /area/centcom/evac)
+"abo" = (
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/weapon/reagent_containers/glass/rag,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abp" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron12";
+	smooth = 0
+	},
+/area/tophat)
+"abq" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron10";
+	smooth = 0
+	},
+/area/tophat)
+"abr" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron3";
+	smooth = 0
+	},
+/area/tophat)
+"abs" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron5";
+	smooth = 0
+	},
+/area/tophat)
+"abt" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron9";
+	smooth = 0
+	},
+/area/tophat)
 "abC" = (
 /obj/structure/window/reinforced{
 	dir = 5;
@@ -893,42 +988,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/holding)
-"adU" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew9,
-/area/space)
-"adV" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew8,
-/area/space)
-"adW" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew10,
-/area/space)
-"adX" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew2,
-/area/space)
 "adY" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -1160,15 +1219,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom)
-"afX" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew3,
-/area/space)
 "aga" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
@@ -1206,15 +1256,6 @@
 /obj/structure/stool/bed/chair/schair/wagon/bench,
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/arrival/pre_game)
-"ago" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew4,
-/area/space)
 "agr" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "19,10";
@@ -1729,8 +1770,7 @@
 "aid" = (
 /obj/structure/lattice,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/space,
 /area/space)
@@ -1746,9 +1786,6 @@
 	icon_state = "black"
 	},
 /area/syndicate_mothership/droppod_garage)
-"aig" = (
-/turf/simulated/mineral,
-/area/syndicate_mothership)
 "aih" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -4004,33 +4041,6 @@
 	icon_state = "warnplate"
 	},
 /area/centcom/arrival)
-"ape" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew11,
-/area/space)
-"apf" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew12,
-/area/space)
-"apg" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew13,
-/area/space)
 "api" = (
 /obj/machinery/door/poddoor{
 	id = "velocity_main2";
@@ -4042,7 +4052,7 @@
 	},
 /area/centcom/arrival)
 "apm" = (
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /turf/unsimulated/floor{
 	icon_state = "sandwater"
 	},
@@ -6311,8 +6321,7 @@
 "axb" = (
 /obj/random/vending/cola,
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "axc" = (
@@ -8293,8 +8302,7 @@
 "aDb" = (
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "aDi" = (
@@ -8875,8 +8883,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "aFd" = (
@@ -9760,8 +9767,7 @@
 /area/centcom/evac)
 "aIb" = (
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "aIc" = (
@@ -10002,8 +10008,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "aJe" = (
@@ -10622,8 +10627,7 @@
 	pixel_y = 32
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "aLc" = (
@@ -11231,8 +11235,7 @@
 	pixel_y = 32
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "aOc" = (
@@ -11785,8 +11788,7 @@
 "aQb" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "aQg" = (
@@ -12018,8 +12020,7 @@
 "aRb" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "aRi" = (
@@ -13867,31 +13868,6 @@
 	pixel_y = 24
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = -2
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_y = 6
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = 3;
-	pixel_y = 9
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = 6;
-	pixel_y = 2
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = -1
-	},
 /turf/simulated/shuttle/floor4{
 	name = "red floor";
 	nitrogen = 103.984;
@@ -14887,8 +14863,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "bag" = (
@@ -15278,8 +15253,7 @@
 /obj/structure/table,
 /obj/item/weapon/folder,
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "bbc" = (
@@ -16304,8 +16278,7 @@
 	},
 /obj/item/weapon/pen,
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "bob" = (
@@ -16345,8 +16318,7 @@
 	dir = 8
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "btb" = (
@@ -16409,8 +16381,7 @@
 "bAb" = (
 /obj/structure/flora/plant/random,
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "bBb" = (
@@ -16491,8 +16462,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "bIb" = (
@@ -21679,7 +21649,7 @@
 	},
 /area/tdome/tdomeadmin)
 "nnb" = (
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "redyellowfull"
@@ -25703,13 +25673,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aaZ
+abr
+abr
+abr
+abr
+abr
+abs
 aaM
 aaM
 aaM
@@ -25960,13 +25930,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abp
+abd
+abe
+abh
+abk
+abm
+abp
 aaM
 aaM
 aaM
@@ -26217,13 +26187,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abp
+abe
+abe
+abe
+abe
+abe
+abp
 aaM
 aaM
 aaM
@@ -26474,13 +26444,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abp
+abf
+abe
+abi
+abl
+abo
+abp
 aaM
 aaM
 aaM
@@ -26731,13 +26701,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abp
+abe
+abe
+abj
+abj
+abj
+abp
 aaM
 aaM
 aaM
@@ -26988,13 +26958,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abp
+abg
+abe
+abe
+abe
+abe
+abp
 aaM
 aaM
 aaM
@@ -27245,13 +27215,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abq
+abr
+abr
+abr
+abr
+abr
+abt
 aaM
 aaM
 aaM
@@ -74376,8 +74346,8 @@ aaM
 aaM
 aaM
 aeD
-adX
-adV
+alT
+alT
 aeD
 aaM
 aaM
@@ -74633,8 +74603,8 @@ aaM
 aaM
 aaM
 aeD
-afX
-adU
+alT
+alT
 aeD
 aaM
 aaM
@@ -74890,8 +74860,8 @@ aaM
 aaM
 aaM
 aeD
-ago
-adW
+alT
+alT
 aeD
 aaM
 aaM
@@ -75147,8 +75117,8 @@ aaM
 aaM
 aaM
 aeD
-adX
-ape
+alT
+alT
 aeD
 aaM
 aaM
@@ -75404,8 +75374,8 @@ aaM
 aaM
 aaM
 aeD
-afX
-apf
+alT
+alT
 aeD
 aaM
 aaM
@@ -75661,8 +75631,8 @@ aaM
 aaM
 aaM
 aeD
-ago
-apg
+alT
+alT
 aeD
 aaM
 aaM
@@ -75918,8 +75888,8 @@ aaM
 aaM
 aaM
 aeD
-aaw
-aaF
+ahG
+ahG
 aeD
 aaM
 aaM
@@ -79744,9 +79714,9 @@ aaM
 aaM
 aaM
 aaM
-aaO
+aaN
 amJ
-aaO
+aaN
 aaM
 aaM
 aaM
@@ -80001,9 +79971,9 @@ aaM
 aaM
 aaM
 aaM
-aaO
+aaN
 aii
-aaO
+aaN
 aaM
 aaM
 aaM
@@ -81293,7 +81263,7 @@ alN
 alW
 amZ
 aie
-alt
+aaM
 aaM
 aaM
 aaM
@@ -82063,8 +82033,8 @@ alF
 alF
 als
 aie
-aeD
-aeD
+aie
+aie
 aaM
 aaM
 aaM
@@ -85641,7 +85611,7 @@ ahF
 ahF
 ahF
 ahF
-aig
+ahF
 aie
 ajG
 ajN
@@ -85898,7 +85868,7 @@ ahF
 ahF
 ahF
 ahF
-aig
+ahF
 aie
 ajH
 ajN
@@ -86155,7 +86125,7 @@ ahF
 ahF
 ahF
 ahF
-aig
+ahF
 aie
 ajI
 ajN
@@ -86412,7 +86382,7 @@ ahF
 ahF
 ahF
 ahF
-aig
+ahF
 aie
 ajJ
 ajO
@@ -86669,7 +86639,7 @@ ahF
 ahF
 ahF
 ahF
-aig
+ahF
 aie
 aie
 aie

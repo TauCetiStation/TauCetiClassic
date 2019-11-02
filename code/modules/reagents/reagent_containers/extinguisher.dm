@@ -1,0 +1,79 @@
+/obj/item/weapon/reagent_containers/spray/extinguisher
+	name = "fire extinguisher"
+	desc = "A traditional red fire extinguisher."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "fire_extinguisher"
+	item_state = "fire_extinguisher"
+	hitsound = 'sound/weapons/smash.ogg'
+	flags = CONDUCT
+	throwforce = 10
+	w_class = ITEM_SIZE_NORMAL
+	throw_speed = 2
+	throw_range = 10
+	force = 10.0
+	m_amt = 90
+	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
+
+	triple_shot = TRUE
+	spray_size = 3
+	spray_sizes = list(3)
+
+	amount_per_transfer_from_this = 10
+	volume = 600
+
+	spray_sound = 'sound/effects/refill.ogg'
+	volume_modifier = -3
+
+	chempuff_dense = FALSE
+
+	spray_cloud_move_delay = 2
+	spray_cloud_react_delay = 0
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/atom_init()
+	. = ..()
+	flags ^= OPENCONTAINER|NOBLUDGEON
+	icon_state = "[initial(icon_state)][!safety]"
+	reagents.add_reagent("aqueous_foam", volume)
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned/atom_init() // Station-spawned, as in, in-cabinets extinguishers shouldn't be full by default.
+	. = ..()
+	reagents.clear_reagents()
+	reagents.add_reagent("aqueous_foam", rand(volume * 0.5, volume))
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/wrench))
+		if(is_open_container())
+			flags ^= OPENCONTAINER
+		else
+			flags |= OPENCONTAINER
+		to_chat(user, "<span class='notice'>You [is_open_container() ? "open" : "close"] the fill cap.</span>")
+	else
+		..()
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/examine(mob/user)
+	..()
+	to_chat(user, "The safety is [safety ? "on" : "off"].")
+	to_chat(user, "The fill cap is [is_open_container() ? "open" : "closed"].")
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/attack_self(mob/user)
+	safety = !safety
+	icon_state = "[initial(icon_state)][!safety]"
+	to_chat(usr, "<span class = 'notice'>You switch the safety [safety ? "on" : "off"].</span>")
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/mini
+	name = "fire extinguisher"
+	desc = "A light and compact fibreglass-framed model fire extinguisher."
+	icon_state = "miniFE"
+	item_state = "miniFE"
+	hitsound = null // It is much lighter, after all.
+	throwforce = 2
+	w_class = ITEM_SIZE_SMALL
+	force = 3.0
+	m_amt = 0
+
+	volume = 120
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned/atom_init() // Station-spawned, as in, in-cabinets extinguishers shouldn't be full by default.
+	. = ..()
+	reagents.clear_reagents()
+	reagents.add_reagent("aqueous_foam", rand(volume * 0.5, volume))

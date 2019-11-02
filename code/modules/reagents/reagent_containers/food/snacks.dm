@@ -519,6 +519,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	..()
 	new /obj/effect/decal/cleanable/egg_smudge(loc)
+	if(prob(13))
+		if(global.chicken_count < MAX_CHICKENS)
+			new /mob/living/simple_animal/chick(loc)
 	reagents.reaction(hit_atom, TOUCH)
 	visible_message("<span class='rose'>\The [src.name] has been squashed.</span>", "<span class='rose'>You hear a smack.</span>")
 	qdel(src)
@@ -661,7 +664,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("protein", 3)
 	reagents.add_reagent("carpotoxin", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/fishfingers
@@ -1226,8 +1229,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sosjerky/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 1)
-	reagents.add_reagent("sugar", 3)
+	reagents.add_reagent("protein", 3)
+	reagents.add_reagent("sugar", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin
 	name = "4no Raisins"
