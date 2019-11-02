@@ -642,15 +642,15 @@
 								if((emagged || malfhack || stat & (BROKEN|EMPED) || shorted) && H.a_intent == "grab")
 									break
 									
-								if(src.cell.use(500))
-									H.nutrition += 50
-								to_chat(user, "<span class='notice'>Draining... Battery has [round(100.0*H.nutrition/C.maxcharge)]% of charge.</span>")
-								
 								if(H.nutrition >= C.maxcharge-50)
 									to_chat(user, "<span class='notice'>You at fully charge.</span>")
 									break
-								else if(src.cell.charge <= 0)
-									to_chat (user, "There is no charge to draw from that APC.")
+								else if(src.cell.use(500))
+									H.nutrition += C.maxcharge*0.10
+									to_chat(user, "<span class='notice'>Draining... Battery has [round(100.0*H.nutrition/C.maxcharge)]% of charge.</span>")
+									
+								if(src.cell.charge <= 0)
+									to_chat (user, "<span class='notice'>There is no charge to draw from that APC.</span>")
 									break
 									
 							else break
