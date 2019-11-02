@@ -339,7 +339,7 @@
 	item_state = "indiana_hat"
 	desc = "Be aware of rolling boulders."
 
-/obj/item/clothing/head/necromancer_hood
+/obj/item/clothing/head/black_hood
 	name = "black hood"
 	desc = "It's hood that covers the head."
 	icon_state = "necromancer"
