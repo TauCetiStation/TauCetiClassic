@@ -14,19 +14,17 @@
 	..()
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
-
 	def_zone = check_zone(def_zone)
 	if(!has_bodypart(def_zone))
 		return PROJECTILE_FORCE_MISS //if they don't have the body part in question then the projectile just passes by.
 
-	if(P.impact_force)
-		for(var/i=1, i<=P.impact_force, i++)
-			step_to(src, get_step(loc, P.dir))
-			if(istype(src.loc, /turf/simulated))
-				src.loc.add_blood(src)
+	return ..()
+
+/mob/living/carbon/human/mob_bullet_act(obj/item/projectile/P, def_zone)
+	. = PROJECTILE_ALL_OK
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
-		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
+		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam) || (istype(P, /obj/item/projectile/plasma) && P.damage <= 20))
 			if(check_reflect(def_zone, dir, P.dir)) // Checks if you've passed a reflection% check
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
 								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
@@ -39,11 +37,11 @@
 					// redirect the projectile
 					P.redirect(new_x, new_y, curloc, src)
 
-				return -1 // complete projectile permutation
+				return PROJECTILE_FORCE_MISS // complete projectile permutation
 
 	if(check_shields(P.damage, "the [P.name]", P.dir))
 		P.on_hit(src, 100, def_zone)
-		return 2
+		return 2 // i have no idea what is 2 and in projectile.dm it seems unused, haven't checked any other places in code.
 
 	if(istype(P, /obj/item/projectile/bullet/weakbullet))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
@@ -55,7 +53,7 @@
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
-		return
+		return PROJECTILE_ACTED
 
 	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
@@ -76,7 +74,7 @@
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
-		return
+		return PROJECTILE_ACTED
 
 	if(istype(P, /obj/item/projectile/energy/bolt))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
@@ -90,7 +88,7 @@
 					if(C.flags & THICKMATERIAL )
 						visible_message("<span class='userdanger'>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
 						qdel(P)
-						return
+						return PROJECTILE_ACTED
 
 		BP = bodyparts_by_name[check_zone(def_zone)]
 		var/armorblock = run_armor_check(BP, "energy")
@@ -102,7 +100,7 @@
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
-		return
+		return PROJECTILE_ACTED
 
 	if(istype(P, /obj/item/projectile/bullet))
 		var/obj/item/projectile/bullet/B = P
@@ -145,8 +143,6 @@
 	if(istype(wear_suit, /obj/item/clothing/suit))
 		var/obj/item/clothing/suit/V = wear_suit
 		V.attack_reaction(src, REACTION_HIT_BY_BULLET)
-
-	return (..(P , def_zone))
 
 /mob/living/carbon/human/proc/check_reflect(def_zone, hol_dir, hit_dir) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 	if(head && head.IsReflect(def_zone, hol_dir, hit_dir))

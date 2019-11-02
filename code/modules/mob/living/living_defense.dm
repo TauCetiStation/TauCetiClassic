@@ -18,6 +18,16 @@
 
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
+
+	if(P.impact_force) // we want this to be before everything as this is unblockable type of effect at this moment. If something changes, then mob_bullet_act() won't be needed probably as separate proc.
+		if(istype(loc, /turf/simulated))
+			loc.add_blood(src)
+		throw_at(get_edge_target_turf(src, P.dir), P.impact_force, 1, P.firer, spin = TRUE)
+
+	. = mob_bullet_act(P, def_zone)
+	if(. != PROJECTILE_ALL_OK)
+		return
+
 	flash_weak_pain()
 
 	//Being hit while using a deadman switch
@@ -48,6 +58,9 @@
 	P.on_hit(src, absorb, def_zone)
 
 	return absorb
+
+/mob/living/proc/mob_bullet_act(obj/item/projectile/P, def_zone) // this one can be used to help with the order of code things to run.
+	return PROJECTILE_ALL_OK
 
 //this proc handles being hit by a thrown atom
 /mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
