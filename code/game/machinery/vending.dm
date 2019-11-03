@@ -402,6 +402,9 @@
 	if(!.)
 		return
 
+	if(!src || !istype(src, /obj/machinery/vending))
+		return
+
 	if(href_list["remove_coin"] && !issilicon(usr) && !isobserver(usr))
 		if(!coin)
 			to_chat(usr, "There is no coin in this machine.")
@@ -437,6 +440,9 @@
 		if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
 			to_chat(usr, "<span class='warning'>Access denied.</span>")//Unless emagged of course
 			flick(src.icon_deny, src)
+			return FALSE
+
+		if(!in_range(src, usr) && !isobserver(usr))
 			return FALSE
 
 		var/datum/data/vending_product/R = locate(href_list["vend"])
