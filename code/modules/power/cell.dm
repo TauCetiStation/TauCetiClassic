@@ -65,22 +65,30 @@
 		if(istype(SNG) && SNG.candrain && !SNG.draining)
 			SNG.drain("CELL",src,H.wear_suit)
 			
-		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == "grab")
-			user.SetNextMove(CLICK_CD_MELEE)
-			if(src.charge > 0)
-				if(H.nutrition < 450)
-					to_chat(user, "<span class='notice'>You attach your fingers to the cell and siphon off some of the stored charge for your own use.</span>")
-					while (H.nutrition < 500)
-						sleep(10)
-						src.use(50)
-						H.nutrition += 50
-						to_chat(user, "<span class='notice'>Draining... [round(src.percent() )]% of battery charge left.</span>")
-						if(H.nutrition > 500) H.nutrition = 500
-				else
-					to_chat(user, "<span class='notice'>You are already fully charged.</span>")
+	if(H.species.flags[IS_SYNTHETIC] && H.a_intent == I_GRAB)
+		var/drain = 0
+		var/maxcap = 0
+		var/obj/item/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
+		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
+		user.SetNextMove(CLICK_CD_MELEE)
+		if(charge > 0 && !maxcap && C)
+			if (do_after(user,30,target = src))
+				if(charge<=drain || drain<charge)
+					drain = charge
+				if((H.nutrition+drain) > C.maxcharge)
+					drain = C.maxcharge - H.nutrition
+					maxcap = 1
+				if(H.nutrition >= C.maxcharge)
+					H.nutrition = C.maxcharge
+					to_chat(user, "<span class='warning'>Procedure interrupted. Charge maxed.</span>")
+					return
+				use((drain+C.maxcharge)/0.5)
+				H.nutrition += drain
+				to_chat(user, "<span class='notice'>Energy drained from the cell.</span>")
 			else
-				to_chat(user, "There is no charge to draw from that cell.")
-			return
+				to_chat(user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
+		else
+			to_chat(user, "<span class='warning'>This cell is empty and of no use.</span>")
 			
 /obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user)
 	..()
