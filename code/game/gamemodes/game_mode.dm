@@ -39,7 +39,7 @@
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
 	var/uplink_welcome = "Syndicate Uplink Console:"
-	var/uplink_uses = 20
+	var/uplink_uses = 0
 	var/uplink_items = {"Highly Visible and Dangerous Weapons;
 /obj/item/weapon/gun/projectile/revolver/syndie:6:Revolver;
 /obj/item/ammo_box/a357:2:Ammo-357;
