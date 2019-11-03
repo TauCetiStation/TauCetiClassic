@@ -90,7 +90,7 @@
 
 /datum/intruder_tools/shuttle_unlocker
 	name = "Shuttle Unlocker"
-	desc = "An unlocker of the Shuttle, which Parked near your base. In Bonus aboard, will be tactical aid and instruments. Caution. You'll have to buy spacesuit's in addition."
+	desc = "An unlocker of the Shuttle, which is parked near your base. In Bonus aboard, will be tactical aid and instruments. Caution. You'll have to buy spacesuits in addition."
 	delete_dat_after_buying = TRUE
 	cost = 30
 
@@ -128,13 +128,13 @@
 
 /datum/intruder_tools/Drop_system
 	name = "Exosuit Drop System"
-	desc = "A module for exosuit, that allow you launching at Long distances"
+	desc = "A module for exosuit that allows you launching at Long distances"
 	item = /obj/item/mecha_parts/mecha_equipment/Drop_system
 	cost = 15
 
 /datum/intruder_tools/droppod
 	name = "Drop Pod"
-	desc = "A two-seater pod, that can fall into station, aim system can be upgraded with camera bug and simple Drop System."
+	desc = "A two-seater pod to drop into station, aim system can be upgraded with camera bug and simple Drop System."
 	item = /obj/item/device/drop_caller/Syndi
 	cost = 14
 
@@ -146,19 +146,19 @@
 
 /datum/intruder_tools/camera_bug
 	name = "Camera Bug"
-	desc = "Can be attached to Drop Pod to reach exemplary accuracy and allow to return to the base."
+	desc = "Can be attached to Drop Pod to attain exemplary accuracy; also allows to return to the base."
 	item = /obj/item/device/camera_bug
 	cost = 2
 
 /datum/intruder_tools/rig
-	name = "Syndi Rig"
-	desc = "The red syndicate space rig with additional armor plating.\
+	name = "Syndicate Hybrid suit"
+	desc = "The red syndicate space suit with additional armor plating.\
 	 Nanotrasen crewmembers are trained to report red space suit sightings."
 	item = /obj/item/weapon/storage/box/syndie_kit/rig
 	cost = 8
 
 /datum/intruder_tools/armor
-	name = "Syndi Assault Armor"
+	name = "Syndicate Assault Armor"
 	desc = "The red syndicate heavy armor with additional armor plating and helmet to it."
 	item = /obj/item/weapon/storage/box/syndie_kit/armor
 	cost = 4
