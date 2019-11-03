@@ -172,7 +172,7 @@
 						var/obj/item/clothing/shoes/orange/L = S
 						if (L.chained)
 							L.remove_cuffs()
-					if(new_icon_state == "orange1")
+					if(new_shoe_icon_state == "orange1")
 						new_icon_state = "orange"
 					if(new_shoe_name == "shackles")
 						new_name = "orange shoes"
