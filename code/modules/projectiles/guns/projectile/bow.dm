@@ -289,5 +289,5 @@
 		..()
 
 /obj/item/weapon/crossbow/vox
-	var/max_tension = 5                   
-	var/release_speed = 5
+	max_tension = 5
+	release_speed = 5
