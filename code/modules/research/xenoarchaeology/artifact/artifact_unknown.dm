@@ -19,12 +19,12 @@
 
 	// setup primary effect - these are the main ones (mixed)
 	if(need_inicial == 1)
-		var/effecttype = pick(valid_primary_effect_types)
+		var/effecttype = pick(global.valid_primary_effect_types)
 		my_effect = new effecttype(src)
 
 		// 50% chance to have a secondary stealthy (and mostly bad) effect
 		if(prob(50))
-			effecttype = pick(valid_secondary_effect_types)
+			effecttype = pick(global.valid_secondary_effect_types)
 			secondary_effect = new effecttype(src)
 			if(prob(50))
 				secondary_effect.ToggleActivate(0)
