@@ -173,9 +173,9 @@
 						if (L.chained)
 							L.remove_cuffs()
 					if(new_shoe_icon_state == "orange1")
-						new_icon_state = "orange"
+						new_shoe_icon_state = "orange"
 					if(new_shoe_name == "shackles")
-						new_name = "orange shoes"
+						new_shoe_name = "orange shoes"
 					if(S.item_state == "o_shoes1")
 						S.item_state = "o_shoes"
 					S.icon_state = new_shoe_icon_state
