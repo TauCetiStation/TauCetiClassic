@@ -83,7 +83,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	lastMove = world.time
 
 	if(curr_location.type != dest_location.type)
-		var/area/transit_location = locate(/area/vox_station/transit)
+		var/area/transit_location = locate(/area/shuttle/vox/transit)
 		curr_location.move_contents_to(transit_location)
 		curr_location = transit_location
 		sleep(VOX_SHUTTLE_MOVE_TIME)
@@ -144,15 +144,15 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 				return
 		vox_move_to(/area/shuttle/vox/station)
 	else if(href_list["solars_fore_starboard"])
-		vox_move_to(/area/vox_station/northeast_solars)
+		vox_move_to(/area/shuttle/vox/northeast_solars)
 	else if(href_list["solars_fore_port"])
-		vox_move_to(/area/vox_station/northwest_solars)
+		vox_move_to(/area/shuttle/vox/northwest_solars)
 	else if(href_list["solars_aft_starboard"])
-		vox_move_to(/area/vox_station/southeast_solars)
+		vox_move_to(/area/shuttle/vox/southeast_solars)
 	else if(href_list["solars_aft_port"])
-		vox_move_to(/area/vox_station/southwest_solars)
+		vox_move_to(/area/shuttle/vox/southwest_solars)
 	else if(href_list["mining"])
-		vox_move_to(/area/vox_station/mining)
+		vox_move_to(/area/shuttle/vox/mining)
 
 	updateUsrDialog()
 

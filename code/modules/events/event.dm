@@ -84,28 +84,28 @@
 
 /datum/event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in! (TG-stuff)
 	var/list/safe_areas = list(
-	/area/ai_monitored/storage/secure,
-	/area/turret_protected/ai,
-	/area/turret_protected/ai_upload,
-	/area/engine,
-	/area/solar,
-	/area/holodeck,
+	/area/station/aisat/storage_secure,
+	/area/station/aisat/ai_chamber,
+	/area/station/bridge/ai_upload,
+	/area/station/engineering,
+	/area/station/solar,
+	/area/station/civilian/holodeck,
 	/area/shuttle/arrival,
 	/area/shuttle/escape/station,
 	/area/shuttle/escape_pod1/station,
 	/area/shuttle/escape_pod2/station,
 	/area/shuttle/escape_pod3/station,
-	/area/shuttle/escape_pod5/station,
+	/area/shuttle/escape_pod4/station,
 	/area/shuttle/mining/station,
 	/area/shuttle/transport1/station,
 	/area/shuttle/administration/station,
 	/area/shuttle/specops/station,
-	/area/atmos)
+	/area/station/engineering/atmos)
 
-	//These are needed because /area/engine has to be removed from the list, but we still want these areas to get fucked up.
+	//These are needed because /area/station/engineering has to be removed from the list, but we still want these areas to get fucked up.
 	var/list/danger_areas = list(
-	/area/engine/break_room,
-	/area/engine/chiefs_office)
+	/area/station/engineering/break_room,
+	/area/station/engineering/chiefs_office)
 
 	//Need to locate() as it's just a list of paths.
 	return locate(pick((the_station_areas - safe_areas) + danger_areas))

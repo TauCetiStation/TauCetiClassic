@@ -98,7 +98,7 @@
 		if(medical)
 			if(isturf(medical.loc))
 				var/area/A = get_area(medical)
-				if(istype(A, /area/medical/sleeper))
+				if(istype(A, /area/station/medical/sleeper))
 					target_beacon = medical
 					found = 1
 					break

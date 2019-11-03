@@ -111,7 +111,7 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/proc/lock_doors(area/A)
 	SSshuttle.undock_act(/area/centcom/arrival, "velocity_1")
-	SSshuttle.undock_act(/area/hallway/secondary/entry, "arrival_1")
+	SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_1")
 	SSshuttle.undock_act(A)
 
 /obj/machinery/computer/arrival_shuttle/proc/open_doors(area/A, arrival)
@@ -121,7 +121,7 @@ var/lastMove = 0
 			SSshuttle.dock_act(A)
 
 		if(2) //Station
-			SSshuttle.dock_act(/area/hallway/secondary/entry, "arrival_1")
+			SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_1")
 			SSshuttle.dock_act(A)
 
 /obj/machinery/computer/arrival_shuttle/proc/shake_mobs(area/A)

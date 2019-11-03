@@ -35,18 +35,18 @@ var/global/wcDw
 
 	//RED (Only sec stuff honestly)
 	var/wsRedList = list(
-		/area/security/armoury,
-		/area/security/brig,
-		/area/security/detectives_office,
-		/area/security/hos,
-		/area/security/lobby,
-		/area/security/main,
-		/area/security/prison,
-		/area/security/warden,
-		/area/security/range,
-		/area/security/forensic_office,
-		/area/security/checkpoint,
-		/area/security/secconfhall
+		/area/station/security/armoury,
+		/area/station/security/brig,
+		/area/station/security/detectives_office,
+		/area/station/security/hos,
+		/area/station/security/lobby,
+		/area/station/security/main,
+		/area/station/security/prison,
+		/area/station/security/warden,
+		/area/station/security/range,
+		/area/station/security/forensic_office,
+		/area/station/security/checkpoint,
+		/area/station/security/secconfhall
 		)
 
 	for(var/A in wsRedList)
@@ -57,34 +57,34 @@ var/global/wcDw
 
 	//PURPLE (RnD + Research outpost)
 	var/wsPurpleList = list(
-		/area/rnd/lab,
-		/area/crew_quarters/hor,
-		/area/rnd/hallway,
-		/area/rnd/xenobiology,
-		/area/rnd/storage,
-		/area/rnd/test_area,
-		/area/rnd/mixing,
-		/area/rnd/misc_lab,
-		/area/rnd/telesci,
-		/area/rnd/scibreak,
-		/area/toxins/server,
-		/area/assembly/chargebay,
-		/area/assembly/robotics,
-		/area/toxins/brainstorm_center,
-		/area/research_outpost/hallway,
-		/area/research_outpost/gearstore,
-		/area/research_outpost/maint,
-		/area/research_outpost/iso1,
-		/area/research_outpost/iso2,
-		/area/research_outpost/harvesting,
-		/area/research_outpost/outpost_misc_lab,
-		/area/research_outpost/anomaly,
-		/area/research_outpost/med,
-		/area/research_outpost/entry,
-		/area/research_outpost/longtermstorage,
-		/area/research_outpost/tempstorage,
-		/area/research_outpost/maintstore2,
-		/area/medical/genetics
+		/area/station/rnd/lab,
+		/area/station/rnd/hor,
+		/area/station/rnd/hallway,
+		/area/station/rnd/xenobiology,
+		/area/station/rnd/storage,
+		/area/station/rnd/test_area,
+		/area/station/rnd/mixing,
+		/area/station/rnd/misc_lab,
+		/area/station/rnd/telesci,
+		/area/station/rnd/scibreak,
+		/area/station/rnd/server,
+		/area/station/rnd/chargebay,
+		/area/station/rnd/robotics,
+		/area/station/rnd/brainstorm_center,
+		/area/asteroid/research_outpost/hallway,
+		/area/asteroid/research_outpost/gearstore,
+		/area/asteroid/research_outpost/maint,
+		/area/asteroid/research_outpost/iso1,
+		/area/asteroid/research_outpost/iso2,
+		/area/asteroid/research_outpost/harvesting,
+		/area/asteroid/research_outpost/outpost_misc_lab,
+		/area/asteroid/research_outpost/anomaly,
+		/area/asteroid/research_outpost/med,
+		/area/asteroid/research_outpost/entry,
+		/area/asteroid/research_outpost/longtermstorage,
+		/area/asteroid/research_outpost/tempstorage,
+		/area/asteroid/research_outpost/maintstore2,
+		/area/station/medical/genetics
 		)
 
 	for(var/A in wsPurpleList)
@@ -95,18 +95,18 @@ var/global/wcDw
 
 	//BROWN (Mining + Cargo)
 	var/wsBrownList = list(
-		/area/quartermaster/office,
-		/area/quartermaster/storage,
-		/area/quartermaster/qm,
-		/area/quartermaster/recycler,
-		/area/quartermaster/recycleroffice,
-		/area/quartermaster/miningbreaktime,
-		/area/quartermaster/miningoffice,
-		/area/mine/production,
-		/area/mine/eva,
-		/area/mine/living_quarters,
-		/area/mine/maintenance,
-		/area/mine/west_outpost
+		/area/station/cargo/office,
+		/area/station/cargo/storage,
+		/area/station/cargo/qm,
+		/area/station/cargo/recycler,
+		/area/station/cargo/recycleroffice,
+		/area/station/cargo/miningbreaktime,
+		/area/station/cargo/miningoffice,
+		/area/asteroid/mine/production,
+		/area/asteroid/mine/eva,
+		/area/asteroid/mine/living_quarters,
+		/area/asteroid/mine/maintenance,
+		/area/asteroid/mine/west_outpost
 		)
 
 	for(var/A in wsBrownList)
@@ -117,10 +117,10 @@ var/global/wcDw
 
 	//GREEN (Virology and Hydro areas)
 	var/wsGreenList = list(
-		/area/medical/virology,
-		/area/hydroponics,
-		/area/research_outpost/maintstore1,
-		/area/research_outpost/sample
+		/area/station/medical/virology,
+		/area/station/civilian/hydroponics,
+		/area/asteroid/research_outpost/maintstore1,
+		/area/asteroid/research_outpost/sample
 		)
 
 	for(var/A in wsGreenList)
@@ -131,22 +131,22 @@ var/global/wcDw
 
 	//BLUE (Some of Medbay areas)
 	var/wsBlueList = list(
-		/area/medical/reception,
-		/area/medical/morgue,
-		/area/medical/hallway,
-		/area/medical/genetics_cloning,
-		/area/medical/cmo,
-		/area/medical/psych,
-		/area/medical/patients_rooms,
-		/area/medical/patient_a,
-		/area/medical/patient_b,
-		/area/medical/medbreak,
-		/area/medical/surgeryobs,
-		/area/medical/surgery,
-		/area/medical/surgery2,
-		/area/medical/storage,
-		/area/medical/chemistry,
-		/area/medical/sleeper
+		/area/station/medical/reception,
+		/area/station/medical/morgue,
+		/area/station/medical/hallway,
+		/area/station/medical/genetics_cloning,
+		/area/station/medical/cmo,
+		/area/station/medical/psych,
+		/area/station/medical/patients_rooms,
+		/area/station/medical/patient_a,
+		/area/station/medical/patient_b,
+		/area/station/medical/medbreak,
+		/area/station/medical/surgeryobs,
+		/area/station/medical/surgery,
+		/area/station/medical/surgery2,
+		/area/station/medical/storage,
+		/area/station/medical/chemistry,
+		/area/station/medical/sleeper
 		)
 
 	for(var/A in wsBlueList)
@@ -156,15 +156,15 @@ var/global/wcDw
 			D.color = wcBlue
 
 	//BAR
-	for(var/obj/structure/window/W in locate(/area/crew_quarters/bar))
+	for(var/obj/structure/window/W in locate(/area/station/civilian/bar))
 		W.color = wcBar
-	for(var/obj/machinery/door/window/D in locate(/area/crew_quarters/bar))
+	for(var/obj/machinery/door/window/D in locate(/area/station/civilian/bar))
 		D.color = wcBar
 
 	//DWARFS
-	for(var/obj/structure/window/W in locate(/area/mine/dwarf))
+	for(var/obj/structure/window/W in locate(/area/asteroid/mine/dwarf))
 		W.color = wcDw
-	for(var/obj/machinery/door/window/D in locate(/area/mine/dwarf))
+	for(var/obj/machinery/door/window/D in locate(/area/asteroid/mine/dwarf))
 		D.color = wcDw
 
 	//IGNORE COLORED
@@ -190,10 +190,10 @@ var/global/wcDw
 		/area/shuttle/escape_pod3/station,
 		/area/shuttle/escape_pod3/centcom,
 		/area/shuttle/escape_pod3/transit,
-		/area/shuttle/escape_pod5,
-		/area/shuttle/escape_pod5/station,
-		/area/shuttle/escape_pod5/centcom,
-		/area/shuttle/escape_pod5/transit,
+		/area/shuttle/escape_pod4,
+		/area/shuttle/escape_pod4/station,
+		/area/shuttle/escape_pod4/centcom,
+		/area/shuttle/escape_pod4/transit,
 		/area/shuttle/mining,
 		/area/shuttle/mining/station,
 		/area/shuttle/mining/outpost,
@@ -207,7 +207,7 @@ var/global/wcDw
 		/area/shuttle/syndicate_elite/station,
 		/area/shuttle/administration/centcom,
 		/area/shuttle/administration/station,
-		/area/shuttle/research,
+		/area/shuttle/mining/research,
 		/area/shuttle/vox/station
 		)
 

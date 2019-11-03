@@ -35,7 +35,7 @@
 	lastMove = world.time
 
 	if(curr_location == locate(/area/shuttle/officer/station))
-		SSshuttle.undock_act(/area/hallway/secondary/exit, "arrival_officer")
+		SSshuttle.undock_act(/area/station/hallway/secondary/exit, "arrival_officer")
 		SSshuttle.undock_act(curr_location)
 		radio.autosay(department_note, "Arrivals Alert System") //вывод сообщения об отбытии шаттла
 	else if(curr_location == locate(/area/shuttle/officer/velocity))
@@ -65,7 +65,7 @@
 	curr_location.move_contents_to(dest_location)
 
 	if(dest_location == locate(/area/shuttle/officer/station))
-		SSshuttle.dock_act(/area/hallway/secondary/exit, "arrival_officer")
+		SSshuttle.dock_act(/area/station/hallway/secondary/exit, "arrival_officer")
 		SSshuttle.dock_act(dest_location)
 		radio.autosay(arrival_note, "Arrivals Alert System") //вывод сообщения об прибытии шаттла
 	else if(dest_location == locate(/area/shuttle/officer/velocity))
@@ -107,23 +107,3 @@
 		officer_move_to(/area/shuttle/officer/centcomm)
 
 	updateUsrDialog()
-
-
-/area/shuttle/officer
-	name = "Officer Shuttle"
-
-/area/shuttle/officer/velocity
-	name = "NTS Velocity"
-	icon_state = "shuttle2"
-
-/area/shuttle/officer/transit
-	icon_state = "shuttle"
-
-/area/shuttle/officer/station
-	name = "NSS Exodus"
-	icon_state = "shuttle"
-	looped_ambience = 'sound/ambience/loop_space.ogg'
-
-/area/shuttle/officer/centcomm
-	name = "Centcomm"
-	icon_state = "shuttle"
