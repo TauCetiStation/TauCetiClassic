@@ -86,7 +86,7 @@
 
 	if(href_list["program"])
 		var/prog = href_list["program"]
-		if(holoscene_templates.Find(prog))
+		if(holoscene_templates.Find(prog) && (issilicon(usr) || isobserver(usr) || in_range(src, usr))
 			loadIdProgram(prog)
 
 	else if(href_list["AIoverride"])
@@ -233,6 +233,7 @@
 	return 1
 
 /obj/machinery/computer/HolodeckControl/proc/loadIdProgram(id = "turnoff")
+	if(id in restricted_programs && !safety_disabled) return
 	current_scene = holoscene_templates[id]
 	loadProgram()
 
