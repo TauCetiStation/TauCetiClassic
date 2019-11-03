@@ -346,7 +346,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor
 	name = "Emeraldine Melon Liquor"
 	desc = "A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light."
-	icon_state = "alco-green" //Placeholder.
+	icon_state = "melonliquorbottle"
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor/atom_init()
 	. = ..()
@@ -355,12 +355,11 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao
 	name = "Miss Blue Curacao"
 	desc = "A fruity, exceptionally azure drink. Does not allow the imbiber to use the fifth magic."
-	icon_state = "alco-blue" //Placeholder.
+	icon_state = "bluecuracaobottle"
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao/atom_init()
 	. = ..()
 	reagents.add_reagent("bluecuracao", 100)
-	verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle //very bad sprite for spin
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine
 	name = "Briar Rose Grenadine Syrup"
