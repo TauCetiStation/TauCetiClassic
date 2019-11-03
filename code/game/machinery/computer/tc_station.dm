@@ -1,6 +1,6 @@
 var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
-#define INITIAL_NUCLEAR_TELECRYSTALS 30
-#define TELECRYSTALS_PER_ONE_OPERATIVE 9
+#define INITIAL_NUCLEAR_TELECRYSTALS 0
+#define TELECRYSTALS_PER_ONE_OPERATIVE 0
 
 /obj/machinery/computer/telecrystals
 	name = "\improper Telecrystal assignment station"
