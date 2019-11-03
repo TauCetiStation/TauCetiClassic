@@ -215,6 +215,16 @@
 	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
 	new /obj/item/clothing/shoes/magboots/syndie(src)
 	make_exact_fit()
+	
+/obj/item/weapon/storage/box/syndie_kit/striker
+	name = "box (H)"
+
+/obj/item/weapon/storage/box/syndie_kit/striker/atom_init()
+	. = ..()
+	new /obj/item/clothing/head/helmet/space/syndicate/striker(src)
+	new /obj/item/clothing/suit/space/syndicate/striker(src)
+	new /obj/item/clothing/shoes/magboots/syndie(src)
+	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/armor
 	name = "box (K)"

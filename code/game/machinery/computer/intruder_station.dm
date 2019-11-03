@@ -150,6 +150,13 @@
 	item = /obj/item/device/camera_bug
 	cost = 2
 
+/datum/intruder_tools/striker
+	name = "Syndicate Striker suit"
+	desc = "The military-grade syndicate space suit with robust armor plating.\
+	 Used extensively in large scale military operations."
+	item = /obj/item/weapon/storage/box/syndie_kit/striker
+	cost = 12
+
 /datum/intruder_tools/rig
 	name = "Syndicate Hybrid suit"
 	desc = "The red syndicate space suit with additional armor plating.\

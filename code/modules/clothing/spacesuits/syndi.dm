@@ -64,7 +64,7 @@
 	desc = "That's obviously some kind of military space helmet."
 	icon_state = "syndicate-helm-striker"
 	item_state = "syndicate-helm-striker"
-	armor = list(melee = 60, bullet = 45, laser = 40,energy = 45, bomb = 50, bio = 100, rad = 30)
+	armor = list(melee = 60, bullet = 70, laser = 70,energy = 60, bomb = 50, bio = 100, rad = 30)
 	brightness = 4
 
 /obj/item/clothing/suit/space/syndicate/striker
@@ -72,7 +72,7 @@
 	desc = "That's obviously some kind of military space suit."
 	icon_state = "syndicate-striker"
 	item_state = "syndicate-striker"
-	armor = list(melee = 60, bullet = 45, laser = 40,energy = 45, bomb = 50, bio = 100, rad = 30)
+	armor = list(melee = 60, bullet = 70, laser = 70,energy = 60, bomb = 50, bio = 100, rad = 30)
 	breach_threshold = 12
 
 
