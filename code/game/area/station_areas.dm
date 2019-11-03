@@ -612,7 +612,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Storage
 
-/area/station/storage/eva
+/area/station/ai_monitored/eva
 	name = "EVA Storage"
 	icon_state = "eva"
 
@@ -649,7 +649,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "AI Satellite Exterior"
 	icon_state = "storage"
 
-/area/station/aisat/storage_secure
+/area/station/ai_monitored/storage_secure
 	name = "Secure Storage"
 	icon_state = "storage"
 
@@ -733,8 +733,8 @@ var/list/the_station_areas = list (
 	/area/station/rnd,
 	/area/station/storage,
 	/area/station/construction,
-	/area/station/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0,
-	/area/station/aisat/storage_secure,
+	/area/station/ai_monitored/eva, //do not try to simplify to "/area/station/ai_monitored" --rastaf0,
+	/area/station/ai_monitored/storage_secure,
 	/area/station/bridge/ai_upload, //do not try to simplify to "/area/turret_protected" --rastaf0,
 	/area/station/aisat/ai_chamber
 )

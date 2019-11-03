@@ -78,7 +78,7 @@
 	dir = 5;
 	icon_state = "siding4"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aag" = (
 /obj/machinery/computer/atmos_alert,
 /turf/simulated/floor{
@@ -132,7 +132,7 @@
 	dir = 5;
 	icon_state = "siding4"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaj" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/briefcase/inflatable{
@@ -156,7 +156,7 @@
 /turf/simulated/floor{
 	icon_state = "siding8"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aak" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -209,7 +209,7 @@
 /turf/simulated/floor{
 	icon_state = "siding8"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aao" = (
 /obj/machinery/computer/security/engineering,
 /turf/simulated/floor{
@@ -243,7 +243,7 @@
 /turf/simulated/floor{
 	icon_state = "siding6"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aas" = (
 /obj/item/device/radio/intercom{
 	desc = "Talk... listen through this.";
@@ -308,7 +308,7 @@
 	dir = 5;
 	icon_state = "siding4"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aax" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -321,7 +321,7 @@
 /turf/simulated/floor{
 	icon_state = "siding8"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aay" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/lights/mixed,
@@ -333,7 +333,7 @@
 	dir = 1;
 	icon_state = "siding2"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaz" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -342,7 +342,7 @@
 	dir = 1;
 	icon_state = "siding1"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaA" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -350,7 +350,7 @@
 /turf/simulated/floor{
 	icon_state = "siding5"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaB" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -358,7 +358,7 @@
 /turf/simulated/floor{
 	icon_state = "siding9"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaC" = (
 /obj/structure/table/reinforced,
 /obj/item/device/radio/off{
@@ -385,7 +385,7 @@
 	dir = 1;
 	icon_state = "siding2"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaD" = (
 /obj/structure/table/reinforced,
 /turf/simulated/floor{
@@ -395,7 +395,7 @@
 	dir = 1;
 	icon_state = "siding2"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaE" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "storeroom"
@@ -415,7 +415,7 @@
 /turf/simulated/floor{
 	icon_state = "siding10"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaG" = (
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -436,7 +436,7 @@
 	dir = 1;
 	icon_state = "siding2"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaH" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -444,7 +444,7 @@
 /turf/simulated/floor{
 	icon_state = "siding8"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaI" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/toolbox/electrical{
@@ -462,7 +462,7 @@
 	dir = 1;
 	icon_state = "siding2"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaJ" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/welding,
@@ -484,7 +484,7 @@
 	dir = 1;
 	icon_state = "siding2"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaK" = (
 /obj/random/vending/snack,
 /obj/machinery/status_display{
@@ -507,7 +507,7 @@
 	dir = 1;
 	icon_state = "siding1"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaM" = (
 /obj/machinery/floodlight,
 /obj/structure/cable{
@@ -522,7 +522,7 @@
 	dir = 1;
 	icon_state = "siding1"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaN" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -537,7 +537,7 @@
 	dir = 1;
 	icon_state = "siding1"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaO" = (
 /obj/machinery/alarm{
 	dir = 4;
@@ -553,7 +553,7 @@
 	dir = 5;
 	icon_state = "siding4"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaP" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/glass{
@@ -578,7 +578,7 @@
 /turf/simulated/floor{
 	icon_state = "siding8"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaQ" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/rglass{
@@ -593,7 +593,7 @@
 /turf/simulated/floor{
 	icon_state = "siding8"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaR" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor{
@@ -603,7 +603,7 @@
 	dir = 5;
 	icon_state = "siding4"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaS" = (
 /turf/simulated/floor{
 	dir = 5;
@@ -640,7 +640,7 @@
 /turf/simulated/floor{
 	icon_state = "siding8"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aaV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -3832,7 +3832,7 @@
 /area/station/civilian/chapel)
 "anO" = (
 /turf/simulated/wall/r_wall,
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "anS" = (
 /obj/machinery/door/airlock/mining{
 	name = "Mining Equpment";
@@ -4039,7 +4039,7 @@
 /turf/simulated/floor{
 	icon_state = "bluefull"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "ary" = (
 /obj/structure/rack,
 /obj/item/weapon/tank/oxygen,
@@ -4807,7 +4807,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "aEr" = (
 /obj/item/stack/sheet/glass{
 	amount = 50;
@@ -6377,7 +6377,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/r_wall,
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "bhm" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -9867,7 +9867,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "clc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -9886,7 +9886,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "clz" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -10447,7 +10447,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "cvK" = (
 /obj/structure/object_wall/mining{
 	icon_state = "1-7"
@@ -10790,7 +10790,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "cBj" = (
 /obj/structure/toilet{
 	dir = 4
@@ -10907,7 +10907,7 @@
 	dir = 1;
 	icon_state = "warning"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "cCD" = (
 /obj/structure/closet{
 	name = "Evidence Closet"
@@ -13184,7 +13184,7 @@
 	dir = 1;
 	icon_state = "yellow"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "doE" = (
 /obj/item/weapon/table_parts/wood/fancy/black,
 /turf/simulated/floor/wood{
@@ -13873,7 +13873,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "dzv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
 	dir = 1;
@@ -13953,7 +13953,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "dBU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -14281,7 +14281,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "dHA" = (
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -14451,7 +14451,7 @@
 /area/station/maintenance/eva)
 "dKv" = (
 /turf/simulated/wall/r_wall,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "dKx" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Office";
@@ -19908,7 +19908,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/wall/r_wall,
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "fxm" = (
 /obj/structure/stool,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -22195,7 +22195,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "gjh" = (
 /obj/machinery/atmospherics/components/unary/portables_connector,
 /turf/simulated/floor{
@@ -23035,7 +23035,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "gyJ" = (
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
@@ -24748,7 +24748,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "hcu" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /obj/item/clothing/under/patient_gown,
@@ -27091,7 +27091,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "hQN" = (
 /obj/machinery/door/firedoor,
 /obj/structure/grille,
@@ -27342,7 +27342,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "hWA" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -28028,7 +28028,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "ijD" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -28301,7 +28301,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "inJ" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -28969,7 +28969,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "iyO" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -29094,7 +29094,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "iAW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
@@ -30470,7 +30470,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "jcc" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -30970,7 +30970,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "jiI" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -34179,7 +34179,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "kkh" = (
 /turf/simulated/shuttle/floor/mining{
 	icon_state = "4-4,6"
@@ -34286,7 +34286,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "kmD" = (
 /obj/machinery/door/window{
 	base_state = "right";
@@ -34967,7 +34967,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "kyj" = (
 /obj/structure/disposaloutlet,
 /obj/structure/disposalpipe/trunk{
@@ -36619,7 +36619,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "kYA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/firealarm{
@@ -37093,7 +37093,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "lfn" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -38663,7 +38663,7 @@
 	dir = 1;
 	icon_state = "yellowcorner"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "lIC" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
@@ -39171,7 +39171,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "lPN" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
@@ -39248,7 +39248,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "lQR" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/bodybags{
@@ -40052,7 +40052,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "mcG" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -40439,7 +40439,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "mio" = (
 /obj/machinery/door/airlock/research{
 	name = "Telescience Research Room";
@@ -40606,7 +40606,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "mko" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -41067,7 +41067,7 @@
 	dir = 9;
 	icon_state = "yellow"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "mqB" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -43169,7 +43169,7 @@
 "ncv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "ncB" = (
 /obj/structure/object_wall/pod{
 	dir = 1;
@@ -43230,7 +43230,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /turf/simulated/floor/plating,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "ndk" = (
 /obj/machinery/flasher{
 	id = "entryflash"
@@ -45458,7 +45458,7 @@
 /area/station/gateway)
 "nPT" = (
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "nPY" = (
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber North";
@@ -46656,7 +46656,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/r_wall,
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "oiB" = (
 /obj/machinery/atmospherics/components/unary/portables_connector,
 /obj/structure/closet/fireaxecabinet{
@@ -50776,7 +50776,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "pHN" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/brown,
@@ -51961,7 +51961,7 @@
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "qal" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -52957,7 +52957,7 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "qoB" = (
 /obj/structure/sink/kitchen{
 	dir = 4;
@@ -53879,7 +53879,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "qES" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -54269,7 +54269,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "qLD" = (
 /obj/structure/sign/mark{
 	icon_state = "x4"
@@ -54551,7 +54551,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "qPO" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -54723,7 +54723,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "qSO" = (
 /obj/machinery/computer/scan_consolenew,
 /obj/item/device/radio/intercom{
@@ -55182,7 +55182,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "rbh" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Telecoms Server Access";
@@ -55739,7 +55739,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "rnq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -56615,7 +56615,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "rCF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -57923,7 +57923,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "rZw" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -58127,7 +58127,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /turf/simulated/floor/plating,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "sdn" = (
 /obj/machinery/light{
 	dir = 8
@@ -58235,7 +58235,7 @@
 	dir = 8;
 	icon_state = "yellow"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "seq" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor,
@@ -58792,7 +58792,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "smT" = (
 /obj/structure/object_wall/mining{
 	icon_state = "1-1"
@@ -59187,7 +59187,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "srN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -59904,7 +59904,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "sDk" = (
 /obj/machinery/newscaster{
 	dir = 1;
@@ -60067,7 +60067,7 @@
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "sGA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
 	dir = 4
@@ -60311,7 +60311,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "sMd" = (
 /obj/machinery/chem_master,
 /obj/structure/disposalpipe/segment{
@@ -60483,7 +60483,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "sPo" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -61051,7 +61051,7 @@
 "sZk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "sZw" = (
 /turf/simulated/shuttle/floor/mining{
 	icon_state = "2-4,5,6"
@@ -61909,7 +61909,7 @@
 	name = "(OUT) Space Large Air Vent"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "tmO" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -62038,7 +62038,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "tpg" = (
 /obj/machinery/camera/motion{
 	c_tag = "MiniSat Antechamber";
@@ -62571,7 +62571,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "txY" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -63109,7 +63109,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "tFV" = (
 /obj/structure/flora/plant/random,
 /turf/simulated/floor{
@@ -63528,7 +63528,7 @@
 /turf/simulated/floor{
 	icon_state = "bluefull"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "tLV" = (
 /obj/machinery/access_button{
 	command = "cycle_exterior";
@@ -63935,7 +63935,7 @@
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "tTw" = (
 /obj/machinery/vending/security,
 /obj/machinery/alarm{
@@ -64608,7 +64608,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "ugu" = (
 /obj/machinery/hologram/holopad,
 /obj/structure/cable{
@@ -65095,7 +65095,7 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "unl" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -66431,7 +66431,7 @@
 	pixel_y = 16
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "uHl" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
@@ -66796,7 +66796,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "uOb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -69764,7 +69764,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "vJI" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -70928,7 +70928,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "vZH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -72903,7 +72903,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/storage/eva)
+/area/station/ai_monitored/eva)
 "wNb" = (
 /obj/machinery/portable_atmospherics/canister,
 /turf/simulated/floor{
@@ -74253,7 +74253,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "xkC" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27;
@@ -75962,7 +75962,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/storage_secure)
+/area/station/ai_monitored/storage_secure)
 "xOf" = (
 /obj/structure/sign/poster{
 	official = 1;

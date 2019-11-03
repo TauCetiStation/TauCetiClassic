@@ -110,7 +110,7 @@
 			/area/station/aisat/ai_chamber,
 			/area/station/bridge/ai_upload,
 			/area/station/aisat/antechamber_interior,
-			/area/station/aisat/storage_secure,
+			/area/station/ai_monitored/storage_secure,
 			/area/station/tcommsat/computer,
 			/area/station/tcommsat/chamber,
 			/area/station/aisat/teleport,

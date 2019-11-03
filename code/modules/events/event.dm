@@ -84,7 +84,7 @@
 
 /datum/event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in! (TG-stuff)
 	var/list/safe_areas = list(
-	/area/station/aisat/storage_secure,
+	/area/station/ai_monitored/storage_secure,
 	/area/station/aisat/ai_chamber,
 	/area/station/bridge/ai_upload,
 	/area/station/engineering,
