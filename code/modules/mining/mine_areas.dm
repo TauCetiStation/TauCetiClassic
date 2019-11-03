@@ -3,11 +3,11 @@
 /area/asteroid
 	name = "Asteroid"
 	icon_state = "unexplored"
-	requires_power = 0
 
 /area/asteroid/artifactroom
 	name = "Asteroid - Artifact"
 	icon_state = "cave"
+	requires_power = 0
 
 /area/asteroid/mine
 	icon_state = "mining"
