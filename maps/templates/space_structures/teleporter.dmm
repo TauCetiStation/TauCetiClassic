@@ -4,7 +4,7 @@
 /area/space)
 "b" = (
 /turf/simulated/wall/r_wall,
-/area/station/aisat/teleport)
+/area/AIsattele)
 "c" = (
 /obj/structure/lattice,
 /turf/space,
@@ -16,7 +16,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/aisat/teleport)
+/area/AIsattele)
 "e" = (
 /obj/machinery/teleport/station,
 /obj/structure/cable{
@@ -24,78 +24,78 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/aisat/teleport)
+/area/AIsattele)
 "f" = (
 /turf/simulated/floor/plating/airless,
-/area/station/aisat/teleport)
+/area/AIsattele)
 "g" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/aisat/teleport)
+/area/AIsattele)
 "h" = (
 /obj/structure/cable,
 /turf/simulated/floor/plating/airless,
-/area/station/aisat/teleport)
+/area/AIsattele)
 "i" = (
 /obj/structure/rack,
 /obj/item/clothing/gloves/yellow,
 /turf/simulated/floor/plating/airless,
-/area/station/aisat/teleport)
+/area/AIsattele)
 "j" = (
 /obj/structure/girder,
 /turf/simulated/floor/plating/airless,
-/area/station/aisat/teleport)
+/area/AIsattele)
 "k" = (
 /obj/item/weapon/stock_parts/cell,
 /turf/simulated/floor/plating/airless,
-/area/station/aisat/teleport)
+/area/AIsattele)
 "l" = (
 /obj/structure/grille{
 	destroyed = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/aisat/teleport)
+/area/AIsattele)
 "m" = (
 /turf/space,
-/area/station/aisat/teleport)
+/area/AIsattele)
 "n" = (
 /obj/item/weapon/table_parts,
 /turf/simulated/floor/plating/airless,
-/area/station/aisat/teleport)
+/area/AIsattele)
 "o" = (
 /obj/structure/lattice,
 /turf/space,
-/area/station/aisat/teleport)
+/area/AIsattele)
 "p" = (
 /obj/structure/closet,
 /turf/simulated/floor/plating/airless,
-/area/station/aisat/teleport)
+/area/AIsattele)
 "q" = (
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/aisat/teleport)
+/area/AIsattele)
 "r" = (
 /obj/structure/grille{
 	destroyed = 1
 	},
 /turf/space,
-/area/station/aisat/teleport)
+/area/AIsattele)
 "s" = (
 /obj/item/weapon/storage/toolbox/electrical{
 	pixel_x = 1;
 	pixel_y = -1
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/aisat/teleport)
+/area/AIsattele)
 "t" = (
 /obj/item/weapon/disk/research_points,
 /turf/simulated/floor/plating/airless,
-/area/station/aisat/teleport)
+/area/AIsattele)
 
 (1,1,1) = {"
 a

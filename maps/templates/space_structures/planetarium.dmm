@@ -7,88 +7,88 @@
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien20"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "c" = (
 /turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien24"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "d" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien21"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "e" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien22"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "f" = (
 /turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien16"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "g" = (
 /turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien19"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "h" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien23"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "i" = (
 /obj/structure/window/phoronreinforced{
 	dir = 6
 	},
 /turf/unsimulated/floor/abductor,
 /turf/space,
-/area/space_structures/planetarium)
+/area/planetarium)
 "j" = (
 /turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien6"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "k" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien17"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "l" = (
 /obj/structure/closet/abductor,
 /obj/item/weapon/storage/box/alienhandcuffs,
 /turf/unsimulated/floor/abductor,
-/area/space_structures/planetarium)
+/area/planetarium)
 "m" = (
 /turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien9"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "n" = (
 /obj/structure/window/phoronreinforced{
 	dir = 6
 	},
 /turf/space,
-/area/space_structures/planetarium)
+/area/planetarium)
 "o" = (
 /obj/structure/window/phoronreinforced{
 	dir = 6
 	},
 /turf/unsimulated/floor/abductor,
-/area/space_structures/planetarium)
+/area/planetarium)
 "p" = (
 /turf/unsimulated/floor/abductor,
-/area/space_structures/planetarium)
+/area/planetarium)
 "q" = (
 /obj/singularity/academy,
 /turf/space,
-/area/space_structures/planetarium)
+/area/planetarium)
 "r" = (
 /obj/structure/closet/abductor,
 /obj/item/bluespace_crystal,
@@ -97,122 +97,122 @@
 	light_color = "#8b008b"
 	},
 /turf/unsimulated/floor/abductor,
-/area/space_structures/planetarium)
+/area/planetarium)
 "s" = (
 /obj/structure/closet/abductor,
 /obj/item/gland/viral,
 /obj/item/weapon/disk/research_points,
 /turf/unsimulated/floor/abductor,
-/area/space_structures/planetarium)
+/area/planetarium)
 "t" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien7"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "u" = (
 /turf/space,
 /turf/unsimulated/wall/abductor,
-/area/space_structures/planetarium)
+/area/planetarium)
 "v" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien8"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "w" = (
 /obj/machinery/light/small{
 	dir = 8;
 	light_color = "#8b008b"
 	},
 /turf/unsimulated/floor/abductor,
-/area/space_structures/planetarium)
+/area/planetarium)
 "x" = (
 /obj/machinery/light/small{
 	dir = 4;
 	light_color = "#8b008b"
 	},
 /turf/unsimulated/floor/abductor,
-/area/space_structures/planetarium)
+/area/planetarium)
 "y" = (
 /turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien5"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "z" = (
 /obj/structure/table/abductor,
 /obj/structure/planetarium_spawner,
 /turf/unsimulated/floor/abductor,
 /turf/space,
-/area/space_structures/planetarium)
+/area/planetarium)
 "A" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien18"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "B" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien14"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "C" = (
 /obj/effect/decal/cleanable/blood/gibs/xeno/up,
 /turf/unsimulated/floor/abductor,
-/area/space_structures/planetarium)
+/area/planetarium)
 "D" = (
 /obj/structure/window/phoronreinforced,
 /obj/structure/window/phoronreinforced{
 	dir = 8
 	},
 /turf/unsimulated/floor/abductor,
-/area/space_structures/planetarium)
+/area/planetarium)
 "E" = (
 /obj/structure/window/phoronreinforced,
 /obj/structure/window/phoronreinforced{
 	dir = 4
 	},
 /turf/unsimulated/floor/abductor,
-/area/space_structures/planetarium)
+/area/planetarium)
 "F" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien15"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "G" = (
 /obj/effect/decal/cleanable/blood/gibs/xeno/limb,
 /turf/unsimulated/floor/abductor,
-/area/space_structures/planetarium)
+/area/planetarium)
 "H" = (
 /obj/machinery/light/small{
 	light_color = "#8b008b"
 	},
 /obj/effect/decal/cleanable/blood/gibs/xeno/limb,
 /turf/unsimulated/floor/abductor,
-/area/space_structures/planetarium)
+/area/planetarium)
 "I" = (
 /obj/item/weapon/scalpel/alien,
 /obj/effect/decal/cleanable/blood/gibs/xeno/body,
 /turf/unsimulated/floor/abductor,
-/area/space_structures/planetarium)
+/area/planetarium)
 "K" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien12"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "L" = (
 /obj/structure/table/abductor,
 /obj/structure/planetarium_spawner,
 /turf/unsimulated/floor/abductor,
-/area/space_structures/planetarium)
+/area/planetarium)
 "M" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien13"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "N" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien10"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "O" = (
 /obj/structure/window/phoronreinforced{
 	dir = 1
@@ -221,7 +221,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/abductor,
-/area/space_structures/planetarium)
+/area/planetarium)
 "P" = (
 /obj/structure/window/phoronreinforced{
 	dir = 8
@@ -231,27 +231,27 @@
 	},
 /obj/item/weapon/haircomb,
 /turf/unsimulated/floor/abductor,
-/area/space_structures/planetarium)
+/area/planetarium)
 "R" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien2"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "S" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien4"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "U" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien11"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 "X" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien3"
 	},
-/area/space_structures/planetarium)
+/area/planetarium)
 
 (1,1,1) = {"
 a

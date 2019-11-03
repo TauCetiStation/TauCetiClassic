@@ -11,17 +11,17 @@
 /turf/simulated/floor{
 	icon_state = "solarpanel"
 	},
-/area/space_structures/djstation/solars)
+/area/djstation/solars)
 "ad" = (
 /turf/simulated/floor/plating/airless,
-/area/space_structures/djstation/solars)
+/area/djstation/solars)
 "ae" = (
 /obj/structure/lattice,
 /turf/space,
 /area/space)
 "af" = (
 /turf/simulated/wall,
-/area/space_structures/djstation)
+/area/djstation)
 "ag" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -32,7 +32,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "ah" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -43,7 +43,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "ai" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -56,17 +56,17 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "aj" = (
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "ak" = (
 /obj/machinery/telecomms/relay/preset/ruskie,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "al" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -77,26 +77,26 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "am" = (
 /obj/machinery/power/terminal,
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "an" = (
 /obj/item/device/multitool,
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "ao" = (
 /obj/item/weapon/storage/toolbox/mechanical{
 	pixel_x = -2;
 	pixel_y = -1
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "ap" = (
 /obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "aq" = (
 /obj/structure/cable{
 	d2 = 2;
@@ -107,7 +107,7 @@
 	name = "power storage unit"
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "ar" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -115,7 +115,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "as" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -126,7 +126,7 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "at" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -141,7 +141,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "au" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -149,40 +149,40 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "av" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/syndicate,
 /obj/item/clothing/head/helmet/space/syndicate,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "aw" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(0)
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "ax" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "ay" = (
 /obj/random/vending/snack,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "az" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aA" = (
 /obj/machinery/light_switch{
 	pixel_y = 28
@@ -191,7 +191,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aB" = (
 /obj/machinery/newscaster{
 	pixel_y = 32
@@ -203,7 +203,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aC" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -216,19 +216,19 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "aD" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aE" = (
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aF" = (
 /obj/machinery/light{
 	dir = 1
@@ -236,7 +236,7 @@
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aG" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -250,12 +250,12 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "aH" = (
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aI" = (
 /obj/machinery/light_switch{
 	pixel_y = 28
@@ -263,21 +263,21 @@
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aJ" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aK" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aL" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -290,7 +290,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "aM" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -300,7 +300,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "aN" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave{
@@ -310,7 +310,7 @@
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aO" = (
 /obj/machinery/door/airlock/glass{
 	name = "Kitchen"
@@ -319,7 +319,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aP" = (
 /obj/structure/table,
 /obj/item/device/radio/intercom{
@@ -331,14 +331,14 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aQ" = (
 /obj/structure/stool/bed/chair/office/light,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aR" = (
 /obj/machinery/door/airlock/glass{
 	name = "Cabin"
@@ -347,7 +347,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aS" = (
 /obj/machinery/sleeper{
 	dir = 8
@@ -355,7 +355,7 @@
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aT" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -365,7 +365,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "aU" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -376,14 +376,14 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "aV" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aW" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
@@ -391,7 +391,7 @@
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aX" = (
 /obj/structure/table,
 /obj/item/weapon/disk/research_points,
@@ -399,7 +399,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aY" = (
 /obj/structure/table,
 /obj/item/device/radio/intercom{
@@ -413,7 +413,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "aZ" = (
 /obj/structure/table,
 /obj/item/weapon/paper/djstation{
@@ -423,7 +423,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "ba" = (
 /obj/structure/computerframe{
 	anchored = 1;
@@ -432,7 +432,7 @@
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "bb" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
@@ -440,23 +440,23 @@
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "bc" = (
 /obj/machinery/light,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "bd" = (
 /obj/structure/closet,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "be" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/wall,
-/area/space_structures/djstation)
+/area/djstation)
 "bf" = (
 /obj/machinery/door/airlock{
 	name = "Restroom";
@@ -465,14 +465,14 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "bg" = (
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "bh" = (
 /obj/machinery/status_display{
 	layer = 4;
@@ -485,7 +485,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "bi" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating/airless,
@@ -494,7 +494,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "bk" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 4
@@ -503,7 +503,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "bl" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -513,7 +513,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "bm" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -527,7 +527,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "bn" = (
 /obj/structure/sink{
 	dir = 8;
@@ -538,7 +538,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "bo" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -546,7 +546,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "bp" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
@@ -558,7 +558,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "bq" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -571,14 +571,14 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/space_structures/djstation)
+/area/djstation)
 "br" = (
 /obj/machinery/door/airlock/external{
 	name = "Ruskie DJ Station";
 	req_access = list(0)
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/djstation)
+/area/djstation)
 "bs" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1

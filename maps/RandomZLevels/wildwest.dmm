@@ -4,31 +4,31 @@
 /area)
 "ab" = (
 /turf/simulated/shuttle/wall,
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "ac" = (
 /turf/simulated/floor/engine/cult,
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "ad" = (
 /obj/structure/cult/pylon,
 /turf/simulated/floor/engine/cult,
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "ae" = (
 /turf/simulated/shuttle/plating{
 	icon_state = "cultdamage5"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "af" = (
 /mob/living/simple_animal/hostile/faithless,
 /turf/simulated/floor/engine/cult,
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "ag" = (
 /turf/simulated/shuttle/plating{
 	icon_state = "bcircuitoff"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "ah" = (
 /turf/simulated/wall/cult,
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "ai" = (
 /obj/effect/forcefield{
 	desc = "You can't get in. Heh.";
@@ -36,27 +36,27 @@
 	name = "Blocker"
 	},
 /turf/simulated/wall/cult,
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "aj" = (
 /turf/simulated/shuttle/plating{
 	icon_state = "cultdamage3"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "ak" = (
 /turf/simulated/shuttle/plating{
 	icon_state = "cultdamage6"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "al" = (
 /obj/effect/gateway,
 /turf/simulated/floor/engine/cult,
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "am" = (
 /mob/living/simple_animal/hostile/faithless,
 /turf/simulated/shuttle/plating{
 	icon_state = "bcircuitoff"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "an" = (
 /obj/effect/forcefield{
 	desc = "You can't get in. Heh.";
@@ -64,24 +64,24 @@
 	name = "Blocker"
 	},
 /turf/simulated/shuttle/wall,
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "ao" = (
 /turf/simulated/shuttle/plating{
 	icon_state = "gcircuitoff"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "ap" = (
 /obj/machinery/wish_granter_dark,
 /turf/simulated/shuttle/plating{
 	icon_state = "gcircuitoff"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "aq" = (
 /obj/structure/cult/pylon,
 /turf/simulated/shuttle/plating{
 	icon_state = "gcircuitoff"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "ar" = (
 /obj/machinery/gateway{
 	dir = 9
@@ -89,7 +89,7 @@
 /turf/simulated/shuttle/plating{
 	icon_state = "gcircuitoff"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "as" = (
 /obj/machinery/gateway{
 	dir = 1
@@ -97,7 +97,7 @@
 /turf/simulated/shuttle/plating{
 	icon_state = "gcircuitoff"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "at" = (
 /obj/machinery/gateway{
 	dir = 5
@@ -105,7 +105,7 @@
 /turf/simulated/shuttle/plating{
 	icon_state = "gcircuitoff"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "au" = (
 /obj/machinery/gateway{
 	dir = 8
@@ -113,13 +113,13 @@
 /turf/simulated/shuttle/plating{
 	icon_state = "gcircuitoff"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "av" = (
 /obj/machinery/gateway/center,
 /turf/simulated/shuttle/plating{
 	icon_state = "gcircuitoff"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "aw" = (
 /obj/machinery/gateway{
 	dir = 4
@@ -127,7 +127,7 @@
 /turf/simulated/shuttle/plating{
 	icon_state = "gcircuitoff"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "ax" = (
 /obj/machinery/gateway{
 	dir = 10
@@ -135,13 +135,13 @@
 /turf/simulated/shuttle/plating{
 	icon_state = "gcircuitoff"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "ay" = (
 /obj/machinery/gateway,
 /turf/simulated/shuttle/plating{
 	icon_state = "gcircuitoff"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "az" = (
 /obj/machinery/gateway{
 	dir = 6
@@ -149,37 +149,37 @@
 /turf/simulated/shuttle/plating{
 	icon_state = "gcircuitoff"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "aA" = (
 /obj/effect/meatgrinder,
 /turf/simulated/shuttle/plating{
 	icon_state = "gcircuitoff"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "aB" = (
 /obj/structure/cult/pylon,
 /turf/simulated/shuttle/plating{
 	icon_state = "bcircuitoff"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "aC" = (
 /turf/simulated/shuttle/plating{
 	icon_state = "cultdamage2"
 	},
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "aD" = (
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "aE" = (
 /mob/living/simple_animal/hostile/faithless,
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "aF" = (
 /obj/machinery/door/airlock/vault{
 	locked = 1
 	},
 /turf/simulated/floor/engine/cult,
-/area/awaymission/wildwest/vaultdoors)
+/area/awaymission/wwvaultdoors)
 "aG" = (
 /turf/simulated/mineral,
 /area)
@@ -204,11 +204,11 @@
 	locked = 1
 	},
 /turf/simulated/floor/engine/cult,
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "aK" = (
 /obj/effect/landmark/corpse/miner/rig,
 /turf/simulated/floor/engine/cult,
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "aL" = (
 /obj/effect/forcefield{
 	desc = "You can't get in. Heh.";
@@ -216,13 +216,13 @@
 	name = "Blocker"
 	},
 /turf/simulated/mineral,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "aM" = (
 /turf/simulated/wall/mineral/silver,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "aN" = (
 /turf/simulated/mineral,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "aO" = (
 /obj/effect/forcefield{
 	desc = "You can't get in. Heh.";
@@ -230,7 +230,7 @@
 	name = "Blocker"
 	},
 /turf/simulated/wall/mineral/diamond,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "aP" = (
 /obj/effect/forcefield{
 	desc = "You can't get in. Heh.";
@@ -238,7 +238,7 @@
 	name = "Blocker"
 	},
 /turf/simulated/wall/mineral/gold,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "aQ" = (
 /obj/effect/forcefield{
 	desc = "You can't get in. Heh.";
@@ -246,30 +246,30 @@
 	name = "Blocker"
 	},
 /turf/simulated/wall/mineral/silver,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "aR" = (
 /obj/structure/ore_box,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "aS" = (
 /obj/item/weapon/paper{
 	info = "meat grinder requires sacri"
 	},
 /turf/simulated/floor/engine/cult,
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "aT" = (
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "aU" = (
 /obj/effect/landmark/corpse/syndicatecommando,
 /turf/simulated/floor/engine/cult,
-/area/awaymission/wildwest/vault)
+/area/awaymission/wwvault)
 "aV" = (
 /turf/simulated/mineral,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "aW" = (
 /turf/simulated/wall/mineral/sandstone,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "aX" = (
 /obj/effect/forcefield{
 	desc = "You can't get in. Heh.";
@@ -277,86 +277,86 @@
 	name = "Blocker"
 	},
 /turf/simulated/wall/mineral/sandstone,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "aY" = (
 /obj/effect/decal/cleanable/blood/gibs/body{
 	icon_state = "gibup1"
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "aZ" = (
 /obj/effect/mine/dnascramble,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "ba" = (
 /obj/effect/mine/dnascramble,
 /obj/item/ammo_box/a12mm,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bb" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "bc" = (
 /turf/simulated/floor/plating,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "bd" = (
 /obj/machinery/door/airlock/sandstone,
 /turf/simulated/floor/plating,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "be" = (
 /obj/item/ammo_box/a12mm,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bf" = (
 /mob/living/simple_animal/hostile/syndicate/ranged,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bg" = (
 /turf/simulated/wall/mineral/sandstone,
 /area)
 "bh" = (
 /obj/structure/largecrate,
 /turf/simulated/floor/plating,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "bi" = (
 /obj/effect/landmark/corpse/miner/rig,
 /obj/effect/mine/dnascramble,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bj" = (
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bk" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bl" = (
 /obj/effect/decal/cleanable/blood/gibs/body{
 	icon_state = "gibup1"
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bm" = (
 /obj/effect/mine/dnascramble,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bn" = (
 /mob/living/simple_animal/hostile/syndicate/ranged,
 /turf/simulated/floor/plating,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "bo" = (
 /obj/structure/closet/crate,
 /turf/simulated/floor/plating,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "bp" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bq" = (
 /obj/effect/landmark/corpse/miner/rig,
 /turf/simulated/floor/plating,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "br" = (
 /obj/structure/lattice,
 /turf/space,
@@ -365,15 +365,15 @@
 /obj/effect/mine/dnascramble,
 /obj/item/ammo_box/a12mm,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bt" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "bu" = (
 /turf/simulated/wall/mineral/sandstone,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bv" = (
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
@@ -393,20 +393,20 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "by" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bz" = (
 /mob/living/simple_animal/hostile/syndicate/ranged,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bA" = (
 /obj/structure/closet{
 	icon_closed = "cabinet_closed";
@@ -414,40 +414,40 @@
 	icon_state = "cabinet_closed"
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bB" = (
 /obj/structure/stool/bed,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bC" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/gun/projectile,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bD" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bE" = (
 /mob/living/simple_animal/hostile/syndicate/ranged,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bF" = (
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bG" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/book/manual/wiki/barman_recipes,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bH" = (
 /obj/machinery/vending/dinnerware,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bI" = (
 /obj/machinery/vending/boozeomat,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bJ" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/item/weapon/reagent_containers/food/condiment/flour,
@@ -457,7 +457,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bK" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/book/manual/wiki/chefs_recipes,
@@ -465,7 +465,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bL" = (
 /obj/structure/table/woodentable,
 /obj/machinery/kitchen_machine/microwave,
@@ -473,14 +473,14 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bM" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bN" = (
 /obj/structure/closet/secure_closet/freezer/meat,
 /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh,
@@ -492,7 +492,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bO" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
@@ -503,7 +503,7 @@
 /area)
 "bP" = (
 /turf/simulated/wall/mineral/sandstone,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "bQ" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -517,7 +517,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "bR" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -528,7 +528,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "bS" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -543,7 +543,7 @@
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "bT" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -559,7 +559,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bV" = (
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
@@ -568,7 +568,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "bW" = (
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -591,15 +591,15 @@
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "bY" = (
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "bZ" = (
 /turf/simulated/floor/plating/ironsand{
 	icon_state = "ironsand2"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "ca" = (
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -614,16 +614,16 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cb" = (
 /obj/machinery/door/window,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "cc" = (
 /obj/structure/table/woodentable,
 /obj/item/ammo_box/a357,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "cd" = (
 /obj/effect/landmark/corpse/chef{
 	mobname = "Chef"
@@ -632,7 +632,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "ce" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -644,7 +644,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cf" = (
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -656,7 +656,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cg" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper{
@@ -667,7 +667,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "ch" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/gun/projectile,
@@ -675,63 +675,63 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "ci" = (
 /obj/structure/mineral_door/wood{
 	icon_state = "woodopening"
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "cj" = (
 /obj/structure/stool,
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "ck" = (
 /obj/item/ammo_box/a12mm,
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "cl" = (
 /obj/structure/stool,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "cm" = (
 /obj/structure/bookcase{
 	icon_state = "book-5"
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cn" = (
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "co" = (
 /obj/item/weapon/moneybag,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cp" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cq" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cr" = (
 /obj/structure/table/woodentable,
 /obj/machinery/kitchen_machine/microwave,
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cs" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "ct" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
@@ -748,59 +748,59 @@
 "cv" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "cw" = (
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cx" = (
 /obj/item/weapon/moneybag,
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cy" = (
 /obj/structure/stool/bed/chair/wood/wings,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cz" = (
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cA" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "cB" = (
 /obj/effect/mine/phoron,
 /obj/item/ammo_box/a12mm,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "cC" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/toolbox/electrical,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cD" = (
 /obj/structure/table/woodentable,
 /obj/item/clothing/gloves/yellow,
 /obj/item/device/multitool,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cE" = (
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cF" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cG" = (
 /mob/living/simple_animal/hostile/creature,
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cH" = (
 /obj/effect/landmark/corpse/chef{
 	mobname = "Chef"
@@ -808,46 +808,46 @@
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cI" = (
 /obj/structure/bookcase{
 	icon_state = "book-5"
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "cJ" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/condiment/peppermill,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "cK" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "cL" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/twohanded/dualsaber,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cM" = (
 /obj/effect/landmark/corpse/miner/rig,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cN" = (
 /mob/living/simple_animal/hostile/creature,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cO" = (
 /obj/structure/mineral_door/wood{
 	icon_state = "woodopening"
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cP" = (
 /mob/living/simple_animal/hostile/creature,
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cQ" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -862,13 +862,13 @@
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cR" = (
 /obj/structure/stool/bed/chair/wood/wings{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cS" = (
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -883,66 +883,66 @@
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cT" = (
 /obj/effect/decal/remains/human,
 /mob/living/simple_animal/hostile/syndicate/ranged/space{
 	name = "Syndicate Commander"
 	},
 /turf/simulated/floor/plating,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "cU" = (
 /obj/item/weapon/paper{
 	info = "We've discovered something floating in space. We can't really tell how old it is, but it is scraped and bent to hell. There object is the size of about a room with double doors that we have yet to break into.   It is a lot sturdier than we could have imagined.  We have decided to call it 'The Vault' ";
 	name = "Planer Saul's Journal: Page 1"
 	},
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cV" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/monkeysdelight,
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cW" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/butch,
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cX" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/stew,
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "cY" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "cZ" = (
 /obj/structure/stool/bed/chair/comfy/teal{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "da" = (
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "db" = (
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dc" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -957,28 +957,28 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "dd" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/creamcheesebread,
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "de" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/kitchen/rollingpin,
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "df" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/lemoncake,
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "dg" = (
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -994,41 +994,41 @@
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "dh" = (
 /obj/effect/landmark/corpse/syndicatecommando{
 	mobname = "Syndicate Commando"
 	},
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "di" = (
 /obj/machinery/mineral/mint,
 /turf/simulated/floor/plating,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "dj" = (
 /obj/structure/window/reinforced{
 	dir = 5;
 	health = 1e+007
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dk" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,
 /turf/simulated/wall/mineral/sandstone,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dm" = (
 /obj/structure/mineral_door/wood{
 	icon_state = "woodopening"
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dn" = (
 /obj/structure/mineral_door/wood{
 	icon_state = "woodopening"
 	},
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "do" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1039,14 +1039,14 @@
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/brown,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "dq" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "dr" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
@@ -1056,136 +1056,136 @@
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "ds" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/patron,
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "dt" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "du" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dv" = (
 /obj/effect/mine/phoron,
 /obj/item/ammo_box/a12mm,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dw" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dx" = (
 /turf/simulated/floor/plating/ironsand{
 	icon_state = "ironsand4"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "dy" = (
 /obj/effect/landmark/corpse/miner/rig,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dz" = (
 /turf/simulated/floor/plating/ironsand{
 	icon_state = "ironsand12"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "dA" = (
 /turf/simulated/floor/plating/ironsand{
 	icon_state = "ironsand14"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "dB" = (
 /obj/structure/toilet,
 /mob/living/simple_animal/hostile/creature,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "dC" = (
 /turf/simulated/floor/plating/ironsand{
 	icon_state = "ironsand9"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "dD" = (
 /obj/structure/mineral_door/wood{
 	icon_state = "woodopening"
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "dE" = (
 /obj/structure/largecrate,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dF" = (
 /turf/simulated/floor/plating/ironsand{
 	icon_state = "ironsand7"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "dG" = (
 /obj/machinery/washing_machine,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dH" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/blue,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dI" = (
 /obj/effect/decal/cleanable/blood/gibs/body{
 	icon_state = "gibdown1"
 	},
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dJ" = (
 /obj/structure/stool/bed/chair/comfy/brown,
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dK" = (
 /obj/structure/stool/bed/chair/comfy/beige,
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dL" = (
 /obj/machinery/door/airlock/sandstone,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dM" = (
 /obj/structure/table/woodentable,
 /obj/machinery/computer/security/telescreen/entertainment,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dN" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8;
 	icon_state = "comfychair_brown"
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dO" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4;
 	icon_state = "comfychair_brown"
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dP" = (
 /obj/effect/decal/cleanable/blood/gibs/body{
 	icon_state = "gibdown1"
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dQ" = (
 /obj/machinery/computer/security/telescreen/entertainment,
 /turf/simulated/wall/mineral/sandstone,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dR" = (
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
@@ -1200,7 +1200,7 @@
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "dS" = (
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
@@ -1211,7 +1211,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "dT" = (
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
@@ -1226,11 +1226,11 @@
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "dU" = (
 /obj/machinery/door/airlock/sandstone,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "dV" = (
 /obj/machinery/shower{
 	dir = 4
@@ -1239,7 +1239,7 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dW" = (
 /obj/machinery/shower{
 	dir = 8
@@ -1248,39 +1248,39 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dX" = (
 /obj/structure/stool/bed/chair/comfy/beige{
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dY" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly,
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "dZ" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/coffee,
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "ea" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eb" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/donut/normal,
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "ec" = (
 /obj/structure/stool/bed/chair/comfy/beige{
 	dir = 8
 	},
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "ed" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -1312,13 +1312,13 @@
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "eh" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "ei" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -1333,14 +1333,14 @@
 "ej" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "ek" = (
 /obj/effect/mine/phoron,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "el" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/washing_machine,
@@ -1348,35 +1348,35 @@
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "em" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/blue,
 /obj/item/ammo_box/a357,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "en" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4;
 	icon_state = "comfychair_brown"
 	},
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eo" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "ep" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8;
 	icon_state = "comfychair_brown"
 	},
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eq" = (
 /obj/item/weapon/gun/projectile/shotgun,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "er" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -1385,7 +1385,7 @@
 /turf/simulated/floor/plating/ironsand{
 	icon_state = "ironsand12"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "es" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1393,24 +1393,24 @@
 /turf/simulated/floor/plating/ironsand{
 	icon_state = "ironsand2"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "et" = (
 /turf/simulated/wall/r_wall,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "eu" = (
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "ev" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "ew" = (
 /mob/living/simple_animal/hostile/syndicate/ranged,
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "ex" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -1419,7 +1419,7 @@
 /turf/simulated/floor/plating/ironsand{
 	icon_state = "ironsand7"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "ey" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1427,23 +1427,23 @@
 /turf/simulated/floor/plating/ironsand{
 	icon_state = "ironsand4"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "ez" = (
 /obj/machinery/mineral/input,
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "eA" = (
 /obj/machinery/mineral/mint,
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "eB" = (
 /obj/machinery/mineral/output,
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "eC" = (
 /obj/structure/stool/bed/chair/comfy/brown,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eD" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1451,25 +1451,25 @@
 /turf/simulated/floor/plating/ironsand{
 	icon_state = "ironsand12"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "eE" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/blue,
 /obj/item/weapon/gun/projectile,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eF" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/blue,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eG" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/coffee,
 /obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly,
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eH" = (
 /obj/structure/stool/bed/chair/comfy/beige{
 	dir = 8
@@ -1478,7 +1478,7 @@
 	icon_state = "gibdown1"
 	},
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eI" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1486,26 +1486,26 @@
 /turf/simulated/floor/plating/ironsand{
 	icon_state = "ironsand7"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "eJ" = (
 /obj/structure/sign/warning/vacuum,
 /turf/simulated/wall/r_wall,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "eK" = (
 /obj/effect/decal/mecha_wreckage/gygax{
 	anchored = 1
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eL" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/landmark/corpse/miner/rig,
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eM" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/simulated/wall/mineral/sandstone,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eN" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -1514,7 +1514,7 @@
 /turf/simulated/floor/plating/ironsand{
 	icon_state = "ironsand14"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "eO" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -1527,7 +1527,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "eP" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -1536,7 +1536,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "eQ" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -1547,7 +1547,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "eR" = (
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -1562,70 +1562,70 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "eS" = (
 /obj/effect/mine/phoron,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eT" = (
 /obj/effect/decal/mecha_wreckage/gygax{
 	anchored = 1
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eU" = (
 /obj/structure/stool/bed/chair/comfy/beige{
 	dir = 1;
 	icon_state = "comfychair_beige"
 	},
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eV" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 1
 	},
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eW" = (
 /obj/effect/decal/cleanable/blood/gibs/body{
 	icon_state = "gibup1"
 	},
 /turf/simulated/floor/carpet,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eX" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eY" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "eZ" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fa" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fb" = (
 /obj/machinery/vending/cola,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fc" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1633,21 +1633,21 @@
 /turf/simulated/floor/plating/ironsand{
 	icon_state = "ironsand9"
 	},
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "fd" = (
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "fe" = (
 /obj/structure/sink,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "ff" = (
 /obj/effect/decal/mecha_wreckage/durand{
 	anchored = 1
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fg" = (
 /obj/effect/decal/cleanable/blood/gibs/body{
 	icon_state = "gibdown1"
@@ -1656,7 +1656,7 @@
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fh" = (
 /obj/effect/landmark/corpse/doctor{
 	mobname = "Doctor Mugabee"
@@ -1665,14 +1665,14 @@
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fi" = (
 /obj/item/stack/medical/bruise_pack,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fj" = (
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -1684,32 +1684,32 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "fk" = (
 /obj/effect/decal/mecha_wreckage/seraph{
 	anchored = 1
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fl" = (
 /obj/effect/decal/mecha_wreckage/ripley/deathripley{
 	anchored = 1
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fm" = (
 /turf/simulated/wall/mineral{
 	icon_state = "sandstone0";
 	mineral = "sandstone"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fn" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fo" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -1721,42 +1721,42 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "fp" = (
 /obj/structure/toilet{
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fq" = (
 /obj/structure/toilet{
 	dir = 1
 	},
 /obj/item/ammo_box/a357,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fr" = (
 /obj/effect/decal/mecha_wreckage/ripley/deathripley{
 	anchored = 1
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fs" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/wall/mineral/sandstone,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "ft" = (
 /obj/effect/decal/cleanable/blood/gibs/body{
 	icon_state = "gibdown1"
 	},
 /turf/simulated/wall/mineral/sandstone,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fu" = (
 /obj/structure/stool/bed/chair/comfy/beige{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fv" = (
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
@@ -1765,14 +1765,14 @@
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fw" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fx" = (
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
@@ -1781,7 +1781,7 @@
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fy" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1813,47 +1813,47 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "fB" = (
 /obj/effect/mine/phoron,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fC" = (
 /obj/effect/decal/cleanable/blood/gibs/body{
 	icon_state = "gibdown1"
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fD" = (
 /obj/effect/decal/mecha_wreckage/mauler{
 	anchored = 1
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fE" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fF" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fG" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fH" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fI" = (
 /obj/effect/decal/cleanable/blood/gibs/body{
 	icon_state = "gibup1"
@@ -1862,7 +1862,7 @@
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fJ" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -1873,17 +1873,17 @@
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "fK" = (
 /obj/structure/window/reinforced{
 	dir = 1;
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "fL" = (
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "fM" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1893,7 +1893,7 @@
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "fN" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -1905,52 +1905,52 @@
 "fO" = (
 /mob/living/simple_animal/hostile/syndicate,
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "fP" = (
 /obj/effect/decal/mecha_wreckage/ripley/deathripley{
 	anchored = 1
 	},
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fQ" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fR" = (
 /obj/effect/mine/dnascramble,
 /obj/effect/landmark/corpse/miner/rig,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fS" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/gun/projectile/shotgun,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fT" = (
 /obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fU" = (
 /obj/structure/window/reinforced{
 	dir = 8;
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "fV" = (
 /obj/machinery/hydroponics/soil,
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "fW" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "fX" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -1966,25 +1966,25 @@
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "fY" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "fZ" = (
 /obj/item/weapon/paper{
 	info = "The Vault...it just keeps growing and growing.  I went on my daily walk through the garden and now its just right outside the mansion... a few days ago it was only barely visible. But whatever is inside...its calling to me.";
 	name = "Planer Sauls' Journal: Page 7"
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "ga" = (
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "gb" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1993,7 +1993,7 @@
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "gc" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -2007,16 +2007,16 @@
 "ge" = (
 /obj/effect/landmark/corpse/miner/rig,
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gf" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gg" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/gun/projectile/revolver/russian,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gh" = (
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
@@ -2025,31 +2025,31 @@
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gi" = (
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "gj" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gk" = (
 /mob/living/simple_animal/hostile/syndicate,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gl" = (
 /obj/machinery/photocopier,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gm" = (
 /obj/item/weapon/gun/projectile,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gn" = (
 /mob/living/simple_animal/hostile/creature,
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "go" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -2058,7 +2058,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "gp" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/forcefield{
@@ -2067,15 +2067,15 @@
 	name = "Blocker"
 	},
 /turf/simulated/mineral,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gq" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gr" = (
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gs" = (
 /obj/structure/stool/bed/chair/comfy/beige{
 	dir = 4
@@ -2084,11 +2084,11 @@
 	icon_state = "gibdown1"
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gt" = (
 /obj/machinery/washing_machine,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gu" = (
 /obj/effect/decal/cleanable/blood/gibs/body{
 	icon_state = "gibup1"
@@ -2098,25 +2098,25 @@
 	dir = 8;
 	icon_state = "barber"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gv" = (
 /obj/item/weapon/hatchet,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gw" = (
 /obj/item/weapon/gun/projectile/automatic/silenced,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gx" = (
 /obj/item/weapon/gun/projectile/shotgun,
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gy" = (
 /obj/effect/landmark/corpse/syndicatecommando{
 	mobname = "Syndicate Commando"
 	},
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "gz" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -2129,7 +2129,7 @@
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gA" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -2141,7 +2141,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gB" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -2154,7 +2154,7 @@
 	icon_state = "fwindow"
 	},
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gC" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -2167,7 +2167,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gD" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -2175,18 +2175,18 @@
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "gE" = (
 /obj/structure/window/reinforced,
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "gF" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/grass,
-/area/awaymission/wildwest/mansion)
+/area/awaymission/wwgov)
 "gG" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -2199,7 +2199,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor,
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gH" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/forcefield{
@@ -2208,80 +2208,80 @@
 	name = "Blocker"
 	},
 /turf/simulated/mineral,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gI" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s6"
 	},
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gJ" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall12"
 	},
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gK" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall8"
 	},
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gL" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/shuttle{
 	icon_state = "floor2"
 	},
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gM" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall4"
 	},
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gN" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s10"
 	},
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gO" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall3"
 	},
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gP" = (
 /obj/structure/stool/bed/chair,
 /turf/simulated/shuttle{
 	icon_state = "floor2"
 	},
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gQ" = (
 /turf/simulated/shuttle{
 	icon_state = "floor2"
 	},
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gR" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gS" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swallc1"
 	},
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gT" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swallc2"
 	},
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gU" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s9"
 	},
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gV" = (
 /obj/effect/landmark{
 	name = "awaystart"
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 "gW" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/space/syndicate/infiltrator,
@@ -2291,7 +2291,7 @@
 /turf/simulated/shuttle{
 	icon_state = "floor2"
 	},
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gX" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -2309,14 +2309,14 @@
 /turf/simulated/shuttle{
 	icon_state = "floor2"
 	},
-/area/awaymission/wildwest/refinery)
+/area/awaymission/wwrefine)
 "gY" = (
 /obj/item/weapon/paper{
 	info = "The syndicate have invaded.  Their ships appeared out of nowhere and now they likely intend to kill us all and take everything.  On the off-chance that the Vault may grant us sanctuary, many of us have decided to force our way inside and bolt the door, taking as many provisions with us as we can carry.  In case you find this, send for help immediately and open the Vault. Find us inside.";
 	name = "Planer Saul's Journal: Page 8"
 	},
 /turf/simulated/floor/plating/ironsand,
-/area/awaymission/wildwest/mines)
+/area/awaymission/wwmines)
 
 (1,1,1) = {"
 aa

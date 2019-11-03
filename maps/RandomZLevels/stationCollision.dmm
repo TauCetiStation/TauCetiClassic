@@ -5,39 +5,39 @@
 "ab" = (
 /obj/machinery/power/tracker,
 /turf/simulated/floor/plating/airless,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ac" = (
 /obj/machinery/power/tracker,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ad" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor{
 	icon_state = "damaged2"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ae" = (
 /obj/structure/lattice,
 /turf/space,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "af" = (
 /turf/space,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ag" = (
 /turf/simulated/floor/plating/airless,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ah" = (
 /turf/simulated/floor{
 	icon_state = "damaged3"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ai" = (
 /obj/machinery/power/solar/fake,
 /turf/space,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aj" = (
 /turf/simulated/wall,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ak" = (
 /obj/structure/lattice,
 /turf/space,
@@ -46,17 +46,17 @@
 /turf/simulated/floor{
 	icon_state = "damaged2"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "am" = (
 /turf/simulated/floor{
 	icon_state = "damaged5"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "an" = (
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ao" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -66,14 +66,14 @@
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ap" = (
 /obj/singularity/academy,
 /turf/space,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "aq" = (
 /turf/simulated/wall/r_wall,
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "ar" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -83,23 +83,23 @@
 /turf/simulated/floor{
 	icon_state = "damaged5"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "as" = (
 /obj/machinery/power/solar_control{
 	stat = 1
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "at" = (
 /obj/machinery/power/solar_control,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "au" = (
 /obj/structure/computerframe{
 	anchored = 1
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "av" = (
 /obj/machinery/light{
 	dir = 4
@@ -116,7 +116,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "aw" = (
 /obj/structure/sign/warning/securearea{
 	pixel_x = 32
@@ -129,7 +129,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "ax" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
@@ -137,7 +137,7 @@
 /turf/simulated/floor{
 	icon_state = "damaged3"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ay" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -145,7 +145,7 @@
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "az" = (
 /obj/structure/sign/plaques/golden{
 	pixel_y = 31
@@ -153,7 +153,7 @@
 /turf/simulated/floor{
 	icon_state = "damaged2"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aA" = (
 /obj/structure/sign/plaques{
 	pixel_y = 31
@@ -161,28 +161,28 @@
 /turf/simulated/floor{
 	icon_state = "damaged2"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aB" = (
 /turf/simulated/floor{
 	icon_state = "damaged4"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aC" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "aD" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
 	dir = 1;
 	icon_state = "diagonalWall3"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "aE" = (
 /obj/machinery/door/airlock/engineering,
 /turf/simulated/floor/plating/airless,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aF" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -192,7 +192,7 @@
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aG" = (
 /obj/machinery/light{
 	dir = 8
@@ -200,7 +200,7 @@
 /turf/simulated/floor{
 	icon_state = "damaged3"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aH" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -208,51 +208,51 @@
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aI" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
 	icon_state = "burst_l"
 	},
 /turf/space,
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "aJ" = (
 /turf/simulated/floor/plating/airless,
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "aK" = (
 /turf/space,
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "aL" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aM" = (
 /obj/structure/table,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aN" = (
 /obj/machinery/robotic_fabricator,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aO" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
 	icon_state = "propulsion_r"
 	},
 /turf/space,
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "aP" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "aQ" = (
 /turf/simulated/floor/plating/airless,
 /turf/simulated/shuttle/wall{
 	icon_state = "diagonalWall3"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "aR" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -262,7 +262,7 @@
 /turf/simulated/floor{
 	icon_state = "damaged3"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aS" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -272,28 +272,28 @@
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aT" = (
 /obj/structure/closet/secure_closet/engineering_welding,
 /obj/machinery/light,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aU" = (
 /obj/machinery/mech_bay_recharge_port,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aV" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aW" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aX" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -303,13 +303,13 @@
 /turf/simulated/floor{
 	icon_state = "damaged2"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "aY" = (
 /turf/simulated/shuttle/plating,
 /turf/simulated/shuttle/wall{
 	icon_state = "diagonalWall3"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "aZ" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -327,7 +327,7 @@
 /turf/simulated/floor{
 	icon_state = "floorscorched2"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "bc" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -342,7 +342,7 @@
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "bd" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
@@ -351,20 +351,20 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "be" = (
 /obj/structure/shuttle/engine/heater,
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bf" = (
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bg" = (
 /obj/machinery/sleeper,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bh" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -374,31 +374,31 @@
 /turf/simulated/floor{
 	icon_state = "damaged2"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "bi" = (
 /obj/machinery/vending/snack,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bj" = (
 /obj/machinery/vending/cola,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bk" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bl" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bm" = (
 /obj/structure/closet/syndicate,
 /obj/item/clothing/suit/space/rig/syndi,
@@ -406,18 +406,18 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bn" = (
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bo" = (
 /obj/structure/closet/syndicate,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bp" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
@@ -425,21 +425,21 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bq" = (
 /obj/structure/shuttle/engine/router,
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "br" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bs" = (
 /obj/item/weapon/storage/toolbox/syndicate,
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bt" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -447,23 +447,23 @@
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "bu" = (
 /obj/machinery/door/airlock/centcom,
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bv" = (
 /obj/machinery/door/airlock/centcom,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bw" = (
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "bx" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -473,15 +473,15 @@
 /turf/simulated/floor{
 	icon_state = "floorscorched2"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "by" = (
 /turf/simulated/wall/r_wall,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "bz" = (
 /turf/simulated/floor{
 	icon_state = "floorscorched2"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "bA" = (
 /obj/machinery/bot/medbot/mysterious{
 	desc = "A dark little medical robot. She looks somewhat underwhelmed.";
@@ -490,7 +490,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bB" = (
 /obj/structure/stool/bed/chair{
 	dir = 4
@@ -498,20 +498,20 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bC" = (
 /obj/structure/table,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bD" = (
 /obj/structure/table,
 /obj/item/weapon/paper/sc_safehint_paper_shuttle,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bE" = (
 /obj/structure/stool/bed/chair{
 	dir = 8
@@ -519,31 +519,31 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bF" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bG" = (
 /turf/simulated/floor{
 	icon_state = "damaged2"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "bH" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "bI" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "bJ" = (
 /obj/item/weapon/shard,
 /mob/living/carbon/alien/larva{
@@ -555,12 +555,12 @@
 	dir = 5;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "bK" = (
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "bL" = (
 /obj/machinery/light{
 	dir = 1
@@ -568,7 +568,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "bM" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -577,21 +577,21 @@
 	dir = 9;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "bN" = (
 /obj/machinery/door/window/eastleft,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "bO" = (
 /obj/machinery/door/window/westright,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "bP" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -600,13 +600,13 @@
 	dir = 5;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "bQ" = (
 /obj/structure/filingcabinet/filingcabinet,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "bR" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -617,23 +617,23 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "bS" = (
 /mob/living/simple_animal/lizard,
 /turf/simulated/floor/grass,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "bT" = (
 /turf/simulated/floor/grass,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "bU" = (
 /mob/living/carbon/monkey,
 /turf/simulated/floor/grass,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "bV" = (
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "bW" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -643,29 +643,29 @@
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "bX" = (
 /turf/simulated/shuttle/plating,
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "bY" = (
 /obj/machinery/power/solar/fake,
 /turf/simulated/floor{
 	icon_state = "solarpanel"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "bZ" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "ca" = (
 /turf/simulated/floor,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cb" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -674,7 +674,7 @@
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cc" = (
 /mob/living/carbon/alien/humanoid/sentinel{
 	fireloss = 200;
@@ -683,7 +683,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cd" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -692,25 +692,25 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "ce" = (
 /mob/living/simple_animal/hostile/creature{
 	name = "Experiment 35b"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cf" = (
 /obj/machinery/dna_scannernew,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cg" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/grass,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "ch" = (
 /obj/machinery/power/emitter{
 	anchored = 1;
@@ -719,19 +719,19 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "ci" = (
 /turf/simulated/floor{
 	icon_state = "solarpanel"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "cj" = (
 /obj/machinery/door/window/southleft,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "ck" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -744,7 +744,7 @@
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cl" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -757,7 +757,7 @@
 	dir = 6;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cm" = (
 /obj/structure/table,
 /obj/item/weapon/clipboard,
@@ -766,7 +766,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cn" = (
 /obj/item/clothing/suit/space/syndicate,
 /obj/item/clothing/under/syndicate,
@@ -781,13 +781,13 @@
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "co" = (
 /obj/structure/window/reinforced,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cp" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -797,13 +797,13 @@
 	dir = 6;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cq" = (
 /obj/machinery/door/window/southright,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cr" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -813,7 +813,7 @@
 	dir = 10;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cs" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
@@ -821,40 +821,40 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "ct" = (
 /obj/machinery/computer/scan_consolenew,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cu" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/grass,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cv" = (
 /obj/structure/window/reinforced,
 /mob/living/carbon/monkey,
 /turf/simulated/floor/grass,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cw" = (
 /obj/structure/window/reinforced,
 /turf/simulated/floor/grass,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cx" = (
 /obj/structure/window/reinforced,
 /obj/effect/overlay/palmtree_l,
 /turf/simulated/floor/grass,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cy" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
 /turf/space,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cz" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
@@ -867,32 +867,32 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cA" = (
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cB" = (
 /obj/structure/window/reinforced,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cC" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
 	icon_state = "propulsion_l"
 	},
 /turf/space,
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "cD" = (
 /turf/simulated/floor/plating/airless,
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "cE" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -902,13 +902,13 @@
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "cF" = (
 /obj/machinery/door/window/eastleft,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cG" = (
 /obj/machinery/power/emitter{
 	anchored = 1;
@@ -919,7 +919,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cH" = (
 /obj/item/clothing/mask/facehugger,
 /mob/living/carbon/alien/humanoid/queen{
@@ -929,13 +929,13 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cI" = (
 /obj/effect/decal/remains/human,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cJ" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
@@ -943,7 +943,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cK" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
@@ -956,7 +956,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cL" = (
 /obj/effect/decal/remains/human{
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
@@ -970,7 +970,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cM" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -979,13 +979,13 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cN" = (
 /obj/effect/rune,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cO" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -994,7 +994,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cP" = (
 /obj/machinery/light{
 	dir = 4
@@ -1002,30 +1002,30 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cQ" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple,
 /turf/space,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "cR" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "cS" = (
 /obj/structure/closet/firecloset,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cT" = (
 /obj/structure/alien/weeds/node,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cU" = (
 /mob/living/carbon/alien/humanoid/hunter{
 	fireloss = 200;
@@ -1034,7 +1034,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cV" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -1048,7 +1048,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cW" = (
 /obj/machinery/light{
 	dir = 8
@@ -1056,7 +1056,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cX" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1064,10 +1064,10 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cY" = (
 /turf/space,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "cZ" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -1075,20 +1075,20 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "da" = (
 /obj/machinery/door/airlock/atmos{
 	name = "Airlock"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "db" = (
 /obj/machinery/shower{
 	dir = 4
 	},
 /obj/structure/window/reinforced/tinted,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dc" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -1096,13 +1096,13 @@
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dd" = (
 /obj/structure/closet/l3closet/scientist,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "de" = (
 /obj/machinery/light{
 	dir = 8
@@ -1113,7 +1113,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "df" = (
 /obj/machinery/door/window/northleft{
 	name = "Windoor"
@@ -1121,7 +1121,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dg" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -1129,7 +1129,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dh" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -1139,7 +1139,7 @@
 /turf/simulated/floor{
 	icon_state = "damaged5"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "di" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -1147,7 +1147,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dj" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1157,7 +1157,7 @@
 /turf/simulated/floor{
 	icon_state = "damaged2"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "dk" = (
 /obj/machinery/door_control{
 	id = "Narsiedoor";
@@ -1167,7 +1167,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dl" = (
 /obj/machinery/door/poddoor{
 	id = "Narsiedoor";
@@ -1176,7 +1176,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dm" = (
 /obj/machinery/power/emitter{
 	anchored = 1;
@@ -1186,7 +1186,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dn" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/captain,
@@ -1197,11 +1197,11 @@
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "do" = (
 /obj/structure/closet/firecloset,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "dp" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1211,7 +1211,7 @@
 /turf/simulated/floor{
 	icon_state = "floorscorched2"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "dq" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Security Airlock"
@@ -1222,7 +1222,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dr" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -1232,7 +1232,7 @@
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "ds" = (
 /obj/machinery/door/window/westright{
 	name = "Windoor"
@@ -1248,7 +1248,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dt" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -1258,14 +1258,14 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "du" = (
 /obj/effect/decal/remains/human,
 /obj/item/clothing/suit/storage/labcoat,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dv" = (
 /obj/machinery/door/airlock/hatch{
 	name = "High-Security Airlock"
@@ -1273,7 +1273,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dw" = (
 /obj/item/ammo_casing/shotgun,
 /obj/effect/decal/remains/human,
@@ -1286,13 +1286,13 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/item/weapon/gun/projectile/shotgun/combat,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "dx" = (
 /turf/simulated/floor{
 	dir = 0;
 	icon_state = "blue"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "dy" = (
 /obj/machinery/message_server{
 	stat = 1
@@ -1301,7 +1301,7 @@
 	dir = 0;
 	icon_state = "blue"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "dz" = (
 /obj/machinery/computer/message_monitor{
 	stat = 1
@@ -1310,18 +1310,18 @@
 	dir = 0;
 	icon_state = "blue"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "dA" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "bluecorner"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "dB" = (
 /turf/simulated/floor{
 	icon_state = "floorscorched2"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "dC" = (
 /obj/machinery/shower{
 	dir = 4;
@@ -1331,12 +1331,12 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dD" = (
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dE" = (
 /obj/structure/window/reinforced,
 /obj/structure/cable,
@@ -1349,7 +1349,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dF" = (
 /obj/machinery/door/window/southright{
 	name = "Windoor"
@@ -1359,13 +1359,13 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dG" = (
 /obj/structure/window/reinforced,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dH" = (
 /obj/machinery/door/window/southright{
 	name = "Windoor"
@@ -1373,7 +1373,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dI" = (
 /obj/structure/window/reinforced,
 /obj/effect/decal/remains/human,
@@ -1381,7 +1381,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dJ" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -1391,13 +1391,13 @@
 /obj/item/weapon/paper/sc_safehint_paper_prison,
 /obj/item/weapon/gun/projectile/shotgun/combat,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "dK" = (
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dL" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -1408,7 +1408,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dM" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -1419,12 +1419,12 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dN" = (
 /turf/simulated/floor{
 	icon_state = "bluecorner"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "dO" = (
 /obj/machinery/light{
 	dir = 4
@@ -1435,25 +1435,25 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "dP" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "dQ" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blue"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "dR" = (
 /obj/structure/showcase{
 	icon_state = "showcase_2"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "dS" = (
 /obj/item/ammo_casing/a12mm{
 	pixel_x = 2;
@@ -1465,7 +1465,7 @@
 	},
 /obj/item/ammo_casing/a12mm,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "dT" = (
 /obj/effect/decal/remains/human{
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
@@ -1477,7 +1477,7 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/item/weapon/gun/projectile/automatic/c20r,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "dU" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1492,7 +1492,7 @@
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "dV" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -1500,7 +1500,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "dW" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1508,13 +1508,13 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dX" = (
 /obj/item/weapon/table_parts,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dY" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
@@ -1524,7 +1524,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "dZ" = (
 /obj/structure/computerframe{
 	anchored = 1
@@ -1532,7 +1532,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "ea" = (
 /obj/machinery/light,
 /obj/structure/computerframe{
@@ -1541,7 +1541,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eb" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -1549,10 +1549,10 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "ec" = (
 /turf/simulated/wall,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "ed" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -1563,25 +1563,25 @@
 /obj/structure/grille,
 /obj/item/weapon/shard,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ee" = (
 /obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "bluecorner"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ef" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "blue"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "eg" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "blue"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "eh" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -1590,25 +1590,25 @@
 	dir = 0;
 	icon_state = "blue"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ei" = (
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "blue"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ej" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blue"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ek" = (
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "blue"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "el" = (
 /obj/effect/decal/remains/human{
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
@@ -1623,33 +1623,33 @@
 	},
 /obj/item/weapon/gun/projectile/automatic/c20r,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "em" = (
 /obj/structure/window/reinforced,
 /obj/machinery/computer/aiupload,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "en" = (
 /obj/structure/window/reinforced,
 /obj/machinery/door/window/brigdoor/eastleft,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eo" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "ep" = (
 /obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eq" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -1657,7 +1657,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "er" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1667,7 +1667,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "es" = (
 /obj/structure/computerframe{
 	anchored = 1
@@ -1676,11 +1676,11 @@
 	dir = 4;
 	icon_state = "blue"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "et" = (
 /obj/machinery/door/window/westright,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "eu" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -1688,7 +1688,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ev" = (
 /obj/machinery/door/airlock/command,
 /obj/structure/cable{
@@ -1697,7 +1697,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ew" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -1705,7 +1705,7 @@
 /turf/simulated/floor{
 	icon_state = "damaged4"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ex" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -1713,13 +1713,13 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ey" = (
 /obj/machinery/door/window/eastleft{
 	name = "Windoor"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ez" = (
 /obj/effect/decal/remains/human{
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
@@ -1731,7 +1731,7 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/item/weapon/gun/projectile/automatic/c20r,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "eA" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -1742,7 +1742,7 @@
 	dir = 4;
 	icon_state = "blue"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "eB" = (
 /obj/effect/decal/remains/human{
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
@@ -1753,7 +1753,7 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/item/weapon/gun/projectile/automatic/c20r,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "eC" = (
 /obj/structure/window/reinforced/tinted,
 /obj/structure/window/reinforced/tinted{
@@ -1769,24 +1769,24 @@
 /obj/item/stack/sheet/glass,
 /obj/item/stack/sheet/plasteel,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "eD" = (
 /obj/structure/AIcore,
 /turf/simulated/floor/greengrid,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eE" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/greengrid,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eF" = (
 /turf/simulated/floor/greengrid,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eG" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/greengrid,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eH" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
@@ -1795,7 +1795,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eI" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -1804,7 +1804,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eJ" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
@@ -1816,7 +1816,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eK" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
@@ -1829,7 +1829,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating/airless,
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eL" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -1839,14 +1839,14 @@
 	icon_state = "small"
 	},
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "eM" = (
 /obj/structure/table,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "bluecorner"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "eN" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -1858,19 +1858,19 @@
 	dir = 9;
 	icon_state = "blue"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "eO" = (
 /obj/structure/window/reinforced,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blue"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "eP" = (
 /obj/structure/window/reinforced/tinted,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "eQ" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato,
@@ -1880,7 +1880,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eR" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -1889,7 +1889,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eS" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -1900,7 +1900,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eT" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -1910,7 +1910,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eU" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -1920,7 +1920,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eV" = (
 /obj/machinery/door/window/eastleft{
 	name = "Windoor"
@@ -1931,7 +1931,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
@@ -1945,7 +1945,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eX" = (
 /obj/machinery/r_n_d/server{
 	stat = 1
@@ -1953,7 +1953,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eY" = (
 /obj/machinery/power/emitter{
 	anchored = 1;
@@ -1964,29 +1964,29 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "eZ" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "bluecorner"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "fa" = (
 /obj/structure/stool/bed/chair/office/light,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "fb" = (
 /obj/structure/window/reinforced/tinted,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "fc" = (
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "fd" = (
 /obj/structure/window/reinforced/tinted,
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "fe" = (
 /obj/structure/window/reinforced/tinted,
 /obj/structure/window/reinforced/tinted{
@@ -1994,7 +1994,7 @@
 	},
 /obj/structure/closet/secure_closet/engineering_electrical,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ff" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/capacitor,
@@ -2011,7 +2011,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "fg" = (
 /obj/structure/stool/bed/chair{
 	dir = 1
@@ -2019,7 +2019,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "fh" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/manipulator,
@@ -2038,14 +2038,14 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "fi" = (
 /obj/machinery/computer/crew,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "bluecorner"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "fj" = (
 /obj/machinery/light/small,
 /obj/structure/computerframe{
@@ -2055,14 +2055,14 @@
 	dir = 1;
 	icon_state = "blue"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "fk" = (
 /obj/structure/table,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blue"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "fl" = (
 /obj/structure/computerframe{
 	anchored = 1
@@ -2071,13 +2071,13 @@
 	dir = 1;
 	icon_state = "bluecorner"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "fm" = (
 /obj/machinery/door/airlock/gold{
 	name = "Airlock"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "fn" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil,
@@ -2089,7 +2089,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "fo" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/matter_bin{
@@ -2101,7 +2101,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "fp" = (
 /obj/machinery/door/window/eastleft{
 	name = "Windoor"
@@ -2109,47 +2109,47 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "fq" = (
 /obj/structure/target_stake,
 /obj/item/target/syndicate,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "fr" = (
 /obj/structure/closet/secure_closet/captains,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "fs" = (
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ft" = (
 /obj/structure/window/reinforced/tinted,
 /obj/machinery/portable_atmospherics/powered/pump,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "fu" = (
 /turf/simulated/floor{
 	icon_state = "damaged3"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "fv" = (
 /turf/simulated/floor{
 	icon_state = "damaged2"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "fw" = (
 /obj/item/ammo_casing/a12mm{
 	pixel_x = -4;
 	pixel_y = 3
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "fx" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -2160,7 +2160,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "fy" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal{
@@ -2176,7 +2176,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "fz" = (
 /obj/machinery/r_n_d/circuit_imprinter,
 /obj/structure/window/reinforced{
@@ -2185,13 +2185,13 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "fA" = (
 /obj/machinery/r_n_d/protolathe,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "fB" = (
 /obj/machinery/r_n_d/destructive_analyzer,
 /obj/structure/window/reinforced{
@@ -2200,7 +2200,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "fC" = (
 /obj/structure/table,
 /obj/item/device/analyzer,
@@ -2211,7 +2211,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "fD" = (
 /obj/structure/table/holotable,
 /obj/item/weapon/gun/energy/floragun{
@@ -2226,14 +2226,14 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "fE" = (
 /obj/structure/target_stake,
 /obj/item/weapon/grown/sunflower,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "fF" = (
 /obj/item/ammo_casing/c45,
 /obj/item/ammo_casing/c45{
@@ -2242,38 +2242,38 @@
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "fG" = (
 /obj/item/ammo_casing/a12mm,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "fH" = (
 /obj/effect/decal/remains/robot,
 /turf/simulated/floor{
 	icon_state = "damaged5"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "fI" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "fJ" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "fK" = (
 /obj/structure/table/reinforced,
 /turf/simulated/floor{
 	icon_state = "damaged3"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "fL" = (
 /turf/simulated/wall/cult,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "fM" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -2284,7 +2284,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "fN" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -2294,17 +2294,17 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "fO" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s6"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "fP" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall14"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "fQ" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -2315,7 +2315,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "fR" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -2323,7 +2323,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "fS" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -2334,14 +2334,14 @@
 	},
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "fT" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
 	dir = 3;
 	icon_state = "swall_f10"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "fU" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp/green{
@@ -2358,7 +2358,7 @@
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "fV" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -2366,16 +2366,16 @@
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "fW" = (
 /obj/structure/girder,
 /turf/simulated/floor{
 	icon_state = "damaged5"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "fX" = (
 /turf/simulated/wall,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "fY" = (
 /obj/structure/stool/bed/chair{
 	dir = 4
@@ -2383,7 +2383,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "fZ" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -2391,12 +2391,12 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "ga" = (
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gb" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -2404,22 +2404,22 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gc" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall3"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "gd" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall1"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "ge" = (
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "gf" = (
 /obj/structure/stool/bed/chair{
 	dir = 1
@@ -2427,7 +2427,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "gg" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 1
@@ -2435,7 +2435,7 @@
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "gh" = (
 /obj/item/weapon/storage/secure/safe/sc_ssafe{
 	pixel_x = 4;
@@ -2444,24 +2444,24 @@
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "gi" = (
 /turf/simulated/floor{
 	icon_state = "damaged4"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "gj" = (
 /turf/simulated/floor{
 	icon_state = "damaged4"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "gk" = (
 /obj/structure/closet/wardrobe,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gl" = (
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gm" = (
 /obj/structure/closet/wardrobe/pjs,
 /obj/structure/window/reinforced/tinted{
@@ -2474,59 +2474,59 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gn" = (
 /obj/structure/closet/wardrobe/pink,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "go" = (
 /obj/structure/kitchenspike,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gp" = (
 /obj/structure/closet/crate,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gq" = (
 /obj/machinery/gibber,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gr" = (
 /obj/machinery/vending/boozeomat,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gs" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/barman_recipes,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gt" = (
 /obj/item/ammo_casing/shotgun,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gu" = (
 /obj/structure/table,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gv" = (
 /obj/structure/stool,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gw" = (
 /obj/structure/stool/bed/chair,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gx" = (
 /obj/structure/table/woodentable,
 /obj/item/candle,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gy" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -2536,7 +2536,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gz" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -2549,7 +2549,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "gA" = (
 /obj/machinery/status_display{
 	pixel_y = 32
@@ -2557,7 +2557,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "gB" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -2571,16 +2571,16 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "gC" = (
 /turf/simulated/wall,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "gD" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gE" = (
 /obj/machinery/door/window/eastleft{
 	name = "Windoor"
@@ -2589,13 +2589,13 @@
 	name = "Windoor"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gF" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gG" = (
 /obj/item/ammo_casing/shotgun,
 /obj/machinery/power/apc{
@@ -2608,7 +2608,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gH" = (
 /obj/item/ammo_casing/shotgun,
 /obj/item/ammo_casing/shotgun,
@@ -2619,7 +2619,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gI" = (
 /obj/item/ammo_casing/a12mm{
 	pixel_y = 4
@@ -2630,7 +2630,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "gJ" = (
 /obj/structure/table,
 /obj/structure/cable{
@@ -2639,7 +2639,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gK" = (
 /obj/structure/stool,
 /obj/structure/cable{
@@ -2648,19 +2648,19 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gL" = (
 /obj/structure/stool/bed/chair{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gM" = (
 /obj/structure/stool/bed/chair{
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gN" = (
 /obj/machinery/door/airlock/sandstone{
 	name = "Airlock"
@@ -2668,10 +2668,10 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gO" = (
 /turf/simulated/floor/carpet,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gP" = (
 /obj/effect/decal/remains/human{
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
@@ -2679,26 +2679,26 @@
 	},
 /obj/effect/landmark/sc_bible_spawner,
 /turf/simulated/floor/carpet,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gQ" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gR" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "chapel"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gS" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "chapel"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "gT" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -2708,7 +2708,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "gU" = (
 /obj/machinery/door/unpowered/shuttle{
 	name = "Shuttle Airlock"
@@ -2716,13 +2716,13 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "gV" = (
 /obj/machinery/door/airlock/external{
 	welded = 1
 	},
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "gW" = (
 /obj/structure/sign/warning/vacuum{
 	pixel_y = 32
@@ -2731,28 +2731,28 @@
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "gX" = (
 /obj/effect/decal/remains/human,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warningcorner"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "gY" = (
 /obj/machinery/computer/security,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "gZ" = (
 /obj/machinery/computer/secure_data,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "ha" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/security_space_law,
@@ -2762,7 +2762,7 @@
 	dir = 1;
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hb" = (
 /obj/structure/closet/wardrobe/red,
 /obj/machinery/light{
@@ -2775,21 +2775,21 @@
 	dir = 1;
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hc" = (
 /obj/structure/closet/secure_closet/security,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hd" = (
 /obj/structure/closet/secure_closet/security,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "he" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2802,7 +2802,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "hf" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/blue,
@@ -2810,7 +2810,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hg" = (
 /obj/structure/window/reinforced/tinted{
 	dir = 4
@@ -2819,7 +2819,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hh" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/purple,
@@ -2828,7 +2828,7 @@
 	},
 /obj/effect/decal/remains/human,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hi" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/purple,
@@ -2836,23 +2836,23 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hj" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hk" = (
 /obj/structure/table,
 /obj/item/ammo_casing/shotgun,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hl" = (
 /obj/structure/table,
 /obj/item/ammo_casing/shotgun,
 /obj/item/ammo_casing/shotgun,
 /obj/item/ammo_casing/shotgun,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hm" = (
 /obj/structure/stool,
 /obj/structure/cable{
@@ -2861,30 +2861,30 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hn" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "ho" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hp" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "chapel"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hq" = (
 /turf/simulated/floor{
 	icon_state = "chapel"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hr" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -2895,7 +2895,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hs" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -2909,7 +2909,7 @@
 	dir = 1
 	},
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "ht" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -2922,21 +2922,21 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hu" = (
 /obj/effect/decal/remains/human,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hv" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hw" = (
 /obj/structure/table/reinforced,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hx" = (
 /obj/structure/stool/bed/chair{
 	dir = 1
@@ -2946,10 +2946,10 @@
 	dir = 8;
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hy" = (
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hz" = (
 /obj/structure/sign/departments/medbay{
 	pixel_y = -32
@@ -2960,11 +2960,11 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "hA" = (
 /obj/structure/window/reinforced,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hB" = (
 /obj/machinery/door/window/southleft{
 	name = "Windoor"
@@ -2973,7 +2973,7 @@
 	dir = 4;
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hC" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2981,7 +2981,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "hD" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -2994,13 +2994,13 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "hE" = (
 /obj/structure/sink/kitchen{
 	pixel_y = 32
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hF" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/condiment/enzyme,
@@ -3010,12 +3010,12 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hG" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hH" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -3023,7 +3023,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hI" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -3033,57 +3033,57 @@
 	dir = 4
 	},
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hJ" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hK" = (
 /obj/structure/stool/bed/chair{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hL" = (
 /obj/structure/table,
 /obj/item/weapon/storage/fancy/donut_box,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hM" = (
 /obj/structure/table,
 /obj/item/weapon/handcuffs,
 /obj/item/device/flash,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hN" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "hO" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/blue,
 /obj/effect/decal/remains/human,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hP" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/purple,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hQ" = (
 /obj/machinery/processor,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hR" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/chefs_recipes,
 /obj/item/weapon/kitchen/rollingpin,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hS" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -3092,7 +3092,7 @@
 	},
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hT" = (
 /obj/effect/decal/remains/human,
 /obj/item/weapon/butch,
@@ -3100,21 +3100,21 @@
 /obj/item/clothing/head/chefhat,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hU" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hV" = (
 /obj/item/clothing/head/helmet/space/syndicate,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "hW" = (
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hX" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -3124,7 +3124,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hY" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -3132,7 +3132,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "hZ" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -3142,13 +3142,13 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "ia" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/item/ammo_casing/a12mm,
 /obj/item/ammo_casing/a12mm,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "ib" = (
 /obj/machinery/power/apc{
 	cell_type = 7500;
@@ -3164,7 +3164,7 @@
 	dir = 8;
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "ic" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -3172,7 +3172,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "id" = (
 /obj/structure/stool/bed/chair{
 	dir = 1
@@ -3183,7 +3183,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "ie" = (
 /obj/effect/decal/remains/human,
 /obj/structure/cable{
@@ -3195,7 +3195,7 @@
 	dir = 4;
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "if" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Glass Airlock";
@@ -3207,37 +3207,37 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "ig" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ih" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/simulated/floor{
 	icon_state = "damaged2"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ii" = (
 /obj/machinery/kitchen_machine/microwave,
 /obj/structure/table,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "ij" = (
 /obj/structure/stool,
 /obj/item/ammo_casing/a12mm,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "ik" = (
 /obj/item/ammo_casing/a12mm,
 /obj/item/ammo_casing/a12mm,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "il" = (
 /obj/machinery/portable_atmospherics/canister/phoron,
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "im" = (
 /obj/structure/stool/bed/chair{
 	dir = 4
@@ -3245,12 +3245,12 @@
 /obj/item/ammo_casing/a12mm,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "in" = (
 /obj/structure/table,
 /obj/item/ammo_casing/a12mm,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "io" = (
 /obj/structure/stool/bed/chair{
 	dir = 8
@@ -3259,72 +3259,72 @@
 /obj/item/ammo_casing/a12mm,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "ip" = (
 /obj/item/ammo_casing/a12mm,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "iq" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "ir" = (
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "is" = (
 /turf/simulated/floor{
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "it" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "iu" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/blue,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "iv" = (
 /obj/machinery/smartfridge,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "iw" = (
 /obj/machinery/vending/dinnerware,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "ix" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /obj/machinery/light,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "iy" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "iz" = (
 /obj/machinery/door/window/eastright{
 	name = "Windoor"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "iA" = (
 /obj/item/ammo_casing/a12mm,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "iB" = (
 /obj/machinery/door/airlock/engineering,
 /turf/simulated/floor{
 	icon_state = "damaged3"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "iC" = (
 /obj/item/ammo_casing/a12mm,
 /obj/structure/cable{
@@ -3334,22 +3334,22 @@
 	},
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "iD" = (
 /obj/machinery/door/airlock/engineering,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "iE" = (
 /obj/item/ammo_casing/a12mm,
 /obj/item/ammo_casing/a12mm,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "iF" = (
 /obj/structure/stool/bed/chair{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "iG" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -3362,12 +3362,12 @@
 	},
 /obj/item/stack/rods,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "iH" = (
 /obj/effect/decal/remains/human,
 /obj/item/ammo_casing/a12mm,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "iI" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -3378,7 +3378,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "iJ" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -3386,7 +3386,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "iK" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -3397,11 +3397,11 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "iL" = (
 /obj/machinery/door/airlock/security,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "iM" = (
 /obj/machinery/door/airlock/glass,
 /obj/structure/cable{
@@ -3410,11 +3410,11 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "iN" = (
 /obj/machinery/door/airlock/glass,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/midblock)
+/area/awaymission/midblock)
 "iO" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -3422,7 +3422,7 @@
 /obj/structure/grille,
 /obj/item/weapon/shard,
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "iP" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -3430,12 +3430,12 @@
 /obj/item/stack/rods,
 /obj/effect/decal/remains/human,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "iQ" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "iR" = (
 /obj/structure/toilet{
 	dir = 4
@@ -3444,13 +3444,13 @@
 	dir = 9;
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "iS" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "iT" = (
 /obj/machinery/sleeper{
 	icon_state = "sleeper_0-r"
@@ -3458,12 +3458,12 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "iU" = (
 /turf/simulated/floor{
 	icon_state = "damaged4"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "iV" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -3471,27 +3471,27 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "iW" = (
 /turf/simulated/floor{
 	icon_state = "damaged5"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "iX" = (
 /turf/simulated/floor/grass,
-/area/awaymission/stationcollision/syndishuttle)
+/area/awaymission/syndishuttle)
 "iY" = (
 /obj/structure/window/reinforced/tinted,
 /turf/simulated/floor{
 	icon_state = "damaged4"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "iZ" = (
 /obj/structure/window/reinforced/tinted,
 /turf/simulated/floor{
 	icon_state = "damaged3"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ja" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -3500,7 +3500,7 @@
 /turf/simulated/floor{
 	icon_state = "damaged3"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "jb" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -3511,37 +3511,37 @@
 	dir = 10;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "jc" = (
 /turf/simulated/wall,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jd" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "je" = (
 /obj/structure/closet/wardrobe/orange,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "jf" = (
 /obj/structure/stool/bed,
 /turf/simulated/floor{
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "jg" = (
 /obj/structure/stool,
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "red"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "jh" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
@@ -3550,7 +3550,7 @@
 /turf/simulated/floor{
 	icon_state = "damaged2"
 	},
-/area/awaymission/stationcollision/northblock)
+/area/awaymission/northblock)
 "ji" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -3566,22 +3566,22 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/awaymission/stationcollision/research)
+/area/awaymission/research)
 "jj" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Glass Airlock";
 	req_access = list(0)
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jt" = (
 /obj/structure/girder,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "ju" = (
 /obj/machinery/door/airlock/glass,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "jv" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock"
@@ -3592,11 +3592,11 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jx" = (
 /obj/machinery/door/airlock/glass,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jy" = (
 /obj/machinery/door/airlock/glass,
 /obj/structure/cable{
@@ -3605,10 +3605,10 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jz" = (
 /turf/simulated/wall,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "jA" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -3619,7 +3619,7 @@
 /obj/structure/window/reinforced,
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jB" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -3627,7 +3627,7 @@
 /obj/structure/window/reinforced,
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jC" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -3637,40 +3637,40 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jD" = (
 /obj/item/ammo_casing/a12mm,
 /obj/item/ammo_casing/a12mm,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "jE" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "jF" = (
 /obj/effect/decal/remains/human{
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
 	name = "Syndicate agent remains"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "jG" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/item/ammo_casing/a12mm,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "jH" = (
 /obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "jI" = (
 /obj/structure/closet/toolcloset,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jJ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -3678,11 +3678,11 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jK" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jL" = (
 /obj/structure/stool/bed/chair{
 	dir = 4
@@ -3690,13 +3690,13 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jM" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jN" = (
 /obj/structure/table,
 /obj/item/weapon/pen,
@@ -3704,7 +3704,7 @@
 	dir = 1;
 	icon_state = "whitehall"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jO" = (
 /obj/structure/noticeboard{
 	dir = 1;
@@ -3716,57 +3716,57 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jP" = (
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jQ" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "jR" = (
 /obj/machinery/gateway{
 	dir = 9
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "jS" = (
 /obj/machinery/gateway{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "jT" = (
 /obj/machinery/gateway{
 	dir = 5
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "jU" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "jV" = (
 /turf/simulated/floor/wood,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jW" = (
 /obj/structure/bookcase,
 /turf/simulated/floor/wood,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jX" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jY" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "jZ" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -3776,7 +3776,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "ka" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -3787,28 +3787,28 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kb" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/item/ammo_casing/a12mm,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kc" = (
 /obj/structure/sign/warning/pods{
 	pixel_y = -32
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kd" = (
 /obj/structure/sign/warning/vacuum{
 	pixel_y = -32
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "ke" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "kf" = (
 /obj/machinery/light/small,
 /obj/machinery/power/apc{
@@ -3817,11 +3817,11 @@
 	},
 /obj/structure/cable,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "kg" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "kh" = (
 /obj/structure/stool/bed/chair{
 	dir = 4
@@ -3832,30 +3832,30 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "ki" = (
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "kj" = (
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "kk" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "kl" = (
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "km" = (
 /obj/machinery/light{
 	dir = 4
@@ -3866,13 +3866,13 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "kn" = (
 /obj/machinery/gateway{
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "ko" = (
 /obj/structure/cable{
 	d2 = 2;
@@ -3881,27 +3881,27 @@
 	},
 /obj/machinery/gateway/center,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "kp" = (
 /obj/machinery/gateway{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "kq" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4;
 	icon_state = "comfychair_brown"
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "kr" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "ks" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -3912,7 +3912,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kt" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -3923,17 +3923,17 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "ku" = (
 /obj/machinery/door/airlock/external{
 	welded = 1
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kv" = (
 /obj/machinery/door/airlock/medical,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "kw" = (
 /obj/machinery/light{
 	dir = 8
@@ -3942,13 +3942,13 @@
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "kx" = (
 /obj/machinery/gateway{
 	dir = 10
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "ky" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -3957,13 +3957,13 @@
 	},
 /obj/machinery/gateway,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "kz" = (
 /obj/machinery/gateway{
 	dir = 6
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "kA" = (
 /obj/machinery/light{
 	dir = 4
@@ -3972,33 +3972,33 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "kB" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "kC" = (
 /obj/structure/stool/bed/chair/comfy/brown,
 /turf/simulated/floor/wood,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "kD" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp/green,
 /turf/simulated/floor/wood,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "kE" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion_r"
 	},
 /obj/structure/shuttle/engine/propulsion,
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kF" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kG" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion_l"
@@ -4011,7 +4011,7 @@
 	},
 /obj/structure/shuttle/engine/propulsion,
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kH" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1;
@@ -4019,7 +4019,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/space,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kI" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1;
@@ -4027,26 +4027,26 @@
 	},
 /obj/structure/window/reinforced,
 /turf/space,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kJ" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s10"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kK" = (
 /obj/machinery/vending/hydronutrients,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kL" = (
 /obj/machinery/vending/hydroseeds,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kM" = (
 /obj/structure/sink/kitchen{
 	pixel_y = 32
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kN" = (
 /obj/item/weapon/melee/energy/sword/red,
 /obj/item/clothing/shoes/syndigaloshes,
@@ -4057,30 +4057,30 @@
 	},
 /obj/item/weapon/paper/sc_safehint_paper_hydro,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kO" = (
 /obj/machinery/hydroponics,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kP" = (
 /obj/structure/morgue,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "kQ" = (
 /obj/machinery/vending/medical,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "kR" = (
 /obj/structure/stool/bed/roller,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "kS" = (
 /obj/structure/table,
 /obj/item/weapon/paper/pamphlet{
@@ -4095,7 +4095,7 @@
 	dir = 4;
 	icon_state = "warningcorner"
 	},
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "kT" = (
 /obj/effect/landmark{
 	name = "awaystart"
@@ -4104,7 +4104,7 @@
 	dir = 1;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "kU" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -4118,7 +4118,7 @@
 	dir = 1;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "kV" = (
 /obj/structure/table,
 /obj/item/device/camera,
@@ -4126,14 +4126,14 @@
 	dir = 1;
 	icon_state = "warningcorner"
 	},
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "kW" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8;
 	icon_state = "comfychair_brown"
 	},
 /turf/simulated/floor/wood,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "kX" = (
 /obj/structure/stool/bed/chair{
 	dir = 4
@@ -4141,13 +4141,13 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kY" = (
 /obj/structure/stool/bed/chair,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "kZ" = (
 /obj/structure/stool/bed/chair{
 	dir = 8
@@ -4155,14 +4155,14 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "la" = (
 /obj/structure/morgue,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lb" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -4171,32 +4171,32 @@
 	dir = 4;
 	icon_state = "whitehall"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lc" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "ld" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitehall"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "le" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "lf" = (
 /obj/effect/landmark{
 	name = "awaystart"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "lg" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -4207,14 +4207,14 @@
 	name = "awaystart"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "lh" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "li" = (
 /obj/structure/window/reinforced/tinted{
 	dir = 8
@@ -4223,13 +4223,13 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lj" = (
 /obj/structure/window/reinforced/tinted{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lk" = (
 /obj/structure/stool/bed,
 /obj/structure/window/reinforced/tinted,
@@ -4241,34 +4241,34 @@
 	dir = 4;
 	icon_state = "whitehall"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "ll" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "lm" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "ln" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/wood,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lo" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "lp" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/hydroponics,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "lq" = (
 /obj/item/weapon/grown/deathnettle,
 /obj/item/clothing/shoes/brown,
@@ -4276,7 +4276,7 @@
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "lr" = (
 /obj/machinery/light{
 	dir = 8
@@ -4285,13 +4285,13 @@
 	dir = 8;
 	icon_state = "whitehall"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "ls" = (
 /obj/structure/window/reinforced/tinted{
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lt" = (
 /obj/structure/stool/bed,
 /obj/structure/window/reinforced/tinted,
@@ -4300,21 +4300,21 @@
 	dir = 4;
 	icon_state = "whitehall"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lu" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "lv" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "lw" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -4325,7 +4325,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lx" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -4333,7 +4333,7 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "ly" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -4341,17 +4341,17 @@
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lz" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "lA" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall12"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "lB" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -4365,32 +4365,32 @@
 	dir = 1
 	},
 /turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "lC" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s9"
 	},
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "lD" = (
 /obj/structure/closet/crate/hydroponics,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "lE" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "lF" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "lG" = (
 /obj/machinery/computer/operating,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lH" = (
 /obj/machinery/optable,
 /obj/machinery/light/small{
@@ -4402,7 +4402,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lI" = (
 /obj/structure/sink{
 	pixel_y = 32
@@ -4410,7 +4410,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lJ" = (
 /obj/structure/stool/bed,
 /obj/structure/window/reinforced/tinted,
@@ -4420,7 +4420,7 @@
 	dir = 4;
 	icon_state = "whitehall"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lK" = (
 /obj/effect/decal/remains/human,
 /obj/structure/cable{
@@ -4429,7 +4429,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lL" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -4440,10 +4440,10 @@
 	name = "Security Airlock"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "lM" = (
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "lN" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -4451,7 +4451,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "lO" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -4462,21 +4462,21 @@
 	name = "power storage unit"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "lP" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "lQ" = (
 /obj/structure/table,
 /obj/item/weapon/shovel/spade,
 /obj/item/weapon/reagent_containers/spray/plantbgone,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "lR" = (
 /obj/machinery/light,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
+/area/awaymission/arrivalblock)
 "lS" = (
 /obj/effect/decal/remains/human,
 /obj/item/clothing/mask/surgical,
@@ -4485,13 +4485,13 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lT" = (
 /obj/machinery/door/window/westright{
 	name = "Windoor"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lU" = (
 /obj/machinery/vending/wallmed1{
 	pixel_x = 31
@@ -4500,13 +4500,13 @@
 	dir = 4;
 	icon_state = "whitehall"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lV" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lW" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -4514,7 +4514,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lX" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -4522,7 +4522,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lY" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -4533,7 +4533,7 @@
 	dir = 1;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "lZ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -4549,7 +4549,7 @@
 	dir = 1;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "ma" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -4560,7 +4560,7 @@
 	dir = 5;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "mb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -4569,7 +4569,7 @@
 	},
 /obj/machinery/door/airlock/engineering,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "mc" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -4577,7 +4577,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "md" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -4595,7 +4595,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "me" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -4605,13 +4605,13 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "mf" = (
 /obj/structure/closet/secure_closet/medical2,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "mg" = (
 /obj/structure/closet/crate/medical{
 	name = "Surgical Tools"
@@ -4625,13 +4625,13 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "mh" = (
 /obj/structure/stool/bed/roller,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "mi" = (
 /obj/structure/window/reinforced/tinted{
 	dir = 8
@@ -4639,30 +4639,30 @@
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "mj" = (
 /obj/machinery/sleeper,
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "mk" = (
 /obj/machinery/sleep_console,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "ml" = (
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "mm" = (
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
 	},
-/area/awaymission/stationcollision/southblock)
+/area/awaymission/southblock)
 "mn" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -4671,7 +4671,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 "mo" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -4683,7 +4683,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/gateroom)
 
 (1,1,1) = {"
 aa

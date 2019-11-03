@@ -7,25 +7,25 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ac" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall12"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ad" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ae" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/ghostship)
+/area/ghostship)
 "af" = (
 /obj/structure/computerframe{
 	anchored = 1
@@ -38,17 +38,17 @@
 	dir = 8;
 	icon_state = "brown"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ag" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall7"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ah" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall11"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ai" = (
 /obj/structure/computerframe{
 	anchored = 1
@@ -61,7 +61,7 @@
 	dir = 4;
 	icon_state = "brown"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "aj" = (
 /obj/structure/stool/bed/chair/schair/wagon,
 /obj/structure/cellular_biomass/grass/meat,
@@ -71,7 +71,7 @@
 	dir = 8;
 	icon_state = "brown"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ak" = (
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
@@ -79,7 +79,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "al" = (
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
@@ -87,7 +87,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s9"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "am" = (
 /obj/structure/stool/bed/chair/schair/wagon,
 /obj/effect/decal/cleanable/blood,
@@ -95,7 +95,7 @@
 	dir = 4;
 	icon_state = "brown"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "an" = (
 /obj/effect/decal/cleanable/cellular/meat,
 /obj/structure/cellular_biomass/grass/meat,
@@ -105,61 +105,61 @@
 	dir = 8;
 	icon_state = "brown"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ao" = (
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ap" = (
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "aq" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ar" = (
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "as" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "at" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "au" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "av" = (
 /obj/machinery/computer/monitor,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "aw" = (
 /obj/machinery/computer/general_air_control/fuel_injection,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ax" = (
 /obj/structure/stool/bed/chair/schair/wagon,
 /obj/structure/cellular_biomass/grass/meat,
@@ -169,7 +169,7 @@
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ay" = (
 /obj/effect/decal/cleanable/cellular/meat,
 /obj/structure/cellular_biomass/grass/meat,
@@ -178,119 +178,119 @@
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "az" = (
 /obj/structure/stool/bed/chair/schair/wagon,
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "aA" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall3"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "aB" = (
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "aC" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall15"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "aD" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "aE" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall14"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "aF" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall12"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "aG" = (
 /turf/simulated/floor/wood,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s9"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "aH" = (
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "aI" = (
 /turf/simulated/floor{
 	icon_state = "stairs_middle"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "aJ" = (
 /obj/structure/flora/pottedplant/tropical_1,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "aK" = (
 /obj/structure/flora/pottedplant/tropical_2,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "aL" = (
 /turf/simulated/floor/wood,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "aM" = (
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "aN" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "aO" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall3"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "aP" = (
 /obj/structure/stool/bed/psych,
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "aQ" = (
 /obj/effect/decal/cleanable/cellular/meat,
 /obj/structure/cellular_biomass/grass/meat,
 /obj/item/clothing/under/dress/dress_evening,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "aR" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "aS" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "aT" = (
 /obj/structure/cellular_biomass/grass/meat,
 /obj/effect/decal/cleanable/blood/gibs/limb,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "aU" = (
 /obj/structure/stool/bed/psych,
 /obj/structure/cellular_biomass/core/meat,
@@ -298,53 +298,53 @@
 /obj/item/clothing/mask/michael_guess_1,
 /obj/item/clothing/under/dress/dress_orange,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "aV" = (
 /obj/structure/stool/bed/psych,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "aW" = (
 /turf/simulated/floor/wood,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "aX" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall13"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "aY" = (
 /turf/simulated/floor/wood,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "aZ" = (
 /obj/structure/flora/pottedplant{
 	icon_state = "plant-21"
 	},
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "ba" = (
 /obj/structure/flora/pottedplant{
 	icon_state = "plant-22"
 	},
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bb" = (
 /turf/simulated/floor/wood,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f9"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bc" = (
 /obj/machinery/vending/boozeomat,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bd" = (
 /obj/structure/cellular_biomass/grass/meat,
 /obj/machinery/light/small{
@@ -353,17 +353,17 @@
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "be" = (
 /obj/structure/mineral_door/wood,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bf" = (
 /obj/structure/table/woodentable/fancy,
 /obj/machinery/chem_dispenser/beer,
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bg" = (
 /obj/effect/decal/cleanable/cellular/meat,
 /obj/structure/cellular_biomass/grass/meat,
@@ -372,32 +372,32 @@
 /obj/item/clothing/under/det/max_payne,
 /obj/item/weapon/switchblade,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bh" = (
 /obj/structure/table/woodentable/fancy,
 /obj/machinery/chem_dispenser/soda,
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bi" = (
 /obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bj" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bk" = (
 /obj/structure/cellular_biomass/grass/meat,
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bl" = (
 /obj/structure/cellular_biomass/grass/meat,
 /mob/living/simple_animal/hostile/cellular/meat/creep_standing,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bm" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/light/small{
@@ -406,66 +406,66 @@
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bn" = (
 /obj/structure/table/woodentable/fancy,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bo" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bp" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bq" = (
 /obj/structure/table/woodentable,
 /obj/structure/cellular_biomass/grass/meat,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "br" = (
 /obj/structure/table/woodentable,
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bs" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bt" = (
 /obj/structure/table/woodentable/fancy,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bu" = (
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bv" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bw" = (
 /obj/structure/stool/bar,
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bx" = (
 /obj/structure/stool/bar,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "by" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall13"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bz" = (
 /obj/structure/flora/pottedplant{
 	icon_state = "plant-21"
@@ -474,81 +474,81 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bA" = (
 /obj/structure/cellular_biomass/grass/meat,
 /obj/effect/decal/cleanable/blood/gibs/body,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bB" = (
 /obj/structure/cellular_biomass/grass/meat,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bC" = (
 /obj/structure/table/woodentable/fancy,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
 /obj/structure/cellular_biomass/grass/meat,
 /obj/item/weapon/coin/gold,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bD" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bE" = (
 /obj/structure/table/woodentable/fancy,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bF" = (
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bG" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bH" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bI" = (
 /turf/simulated/floor/plating,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f9"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bJ" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/plating,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bK" = (
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bL" = (
 /obj/structure/cellular_biomass/grass/meat,
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bM" = (
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bN" = (
 /obj/structure/cellular_biomass/grass/meat,
 /obj/effect/decal/cleanable/blood/gibs/limb,
@@ -556,25 +556,25 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bO" = (
 /obj/structure/cellular_biomass/grass/meat,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bP" = (
 /obj/machinery/door/unpowered/shuttle,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor/plating,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bQ" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bR" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/landmark/corpse/engineer/rig{
@@ -585,13 +585,13 @@
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bS" = (
 /turf/simulated/floor/plating,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bT" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -599,19 +599,19 @@
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bU" = (
 /obj/machinery/door/unpowered/shuttle,
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bV" = (
 /obj/machinery/door/unpowered/shuttle,
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor/plating,
-/area/space_structures/ghostship)
+/area/ghostship)
 "bW" = (
 /obj/effect/decal/cleanable{
 	icon = 'icons/effects/crayondecal.dmi';
@@ -620,7 +620,7 @@
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bX" = (
 /obj/effect/decal/cleanable{
 	icon = 'icons/effects/crayondecal.dmi';
@@ -629,7 +629,7 @@
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bY" = (
 /obj/effect/decal/cleanable{
 	icon = 'icons/effects/crayondecal.dmi';
@@ -638,7 +638,7 @@
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "bZ" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -650,13 +650,13 @@
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ca" = (
 /turf/simulated/floor/plating,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cb" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced{
@@ -668,19 +668,19 @@
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cc" = (
 /turf/simulated/floor/plating,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cd" = (
 /obj/structure/mirror,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall11"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ce" = (
 /obj/structure/sink{
 	dir = 8;
@@ -692,14 +692,14 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cf" = (
 /obj/structure/toilet,
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cg" = (
 /obj/structure/toilet,
 /obj/structure/cellular_biomass/core/meat,
@@ -707,7 +707,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ch" = (
 /obj/structure/sink{
 	dir = 4;
@@ -719,19 +719,19 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ci" = (
 /obj/structure/mirror,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall7"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cj" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ck" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced{
@@ -743,7 +743,7 @@
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cl" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced{
@@ -756,7 +756,7 @@
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cm" = (
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
@@ -764,14 +764,14 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s10"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cn" = (
 /obj/structure/cellular_biomass/grass/meat,
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "co" = (
 /obj/effect/decal/cleanable/cellular/meat,
 /obj/structure/cellular_biomass/grass/meat,
@@ -779,20 +779,20 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cp" = (
 /obj/structure/cellular_biomass/grass/meat,
 /obj/structure/cellular_biomass/wall/meat,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cq" = (
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cr" = (
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
@@ -800,36 +800,36 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cs" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s9"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "ct" = (
 /turf/space,
-/area/space_structures/ghostship)
+/area/ghostship)
 "cu" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f5"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cv" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/ghostship)
+/area/ghostship)
 "cw" = (
 /obj/structure/shuttle/engine/propulsion/burst/right,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/ghostship)
+/area/ghostship)
 "cx" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,
 /obj/structure/window/reinforced{
@@ -837,59 +837,59 @@
 	req_access = list(72)
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/ghostship)
+/area/ghostship)
 "cy" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s6"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cz" = (
 /obj/effect/decal/cleanable/blood/gibs/limb,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cA" = (
 /turf/simulated/floor/plating,
-/area/space_structures/ghostship)
+/area/ghostship)
 "cB" = (
 /obj/structure/cellular_biomass/grass/meat,
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cC" = (
 /obj/structure/cellular_biomass/grass/meat,
 /obj/effect/decal/cleanable/blood/gibs/body,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "cD" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "cE" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cF" = (
 /obj/structure/cellular_biomass/grass/meat,
 /obj/effect/decal/cleanable/blood/gibs/body,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/ghostship)
+/area/ghostship)
 "cG" = (
 /obj/structure/flora/pottedplant,
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "cH" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
@@ -897,7 +897,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "cI" = (
 /obj/structure/table/woodentable,
 /obj/effect/decal/cleanable/blood,
@@ -905,7 +905,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "cJ" = (
 /obj/structure/stool/bed/chair/wood/normal,
 /obj/structure/cellular_biomass/core/meat,
@@ -916,14 +916,14 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 "cK" = (
 /obj/structure/stool/bed/chair/wood/normal,
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/space_structures/ghostship)
+/area/ghostship)
 
 (1,1,1) = {"
 aa
