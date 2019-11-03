@@ -56,7 +56,7 @@
 /datum/artifact_effect/badfeeling/DoEffectPulse()
 	if(holder)
 		var/turf/T = get_turf(holder)
-		for(var/mob/living/carbon/human/H in range(src.effectrange,T))
+		for(var/mob/living/carbon/human/H in range(src.effectrange, T))
 			if(prob(50))
 				if(prob(95))
 					to_chat(H, "<font color='red' size='[num2text(rand(1, 3))]'><b>[pick(drastic_messages)]</b></font>")
