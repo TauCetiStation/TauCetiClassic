@@ -258,6 +258,10 @@
 	icon_state = "wood"
 	},
 /area/centcom/arrival)
+"aaw" = (
+/obj/effect/landmark/blockway,
+/turf/space,
+/area/space)
 "aax" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -77649,7 +77653,7 @@ ahF
 ahF
 ahF
 ahF
-aaM
+aaw
 akb
 aih
 akM
@@ -77906,7 +77910,7 @@ ahF
 ahF
 ahF
 ahF
-aaM
+aaw
 akc
 akx
 akN
@@ -78163,7 +78167,7 @@ ahF
 ahF
 ahF
 aaM
-aaM
+aaw
 akd
 akw
 akM
