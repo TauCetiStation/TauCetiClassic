@@ -3306,7 +3306,7 @@
 	},
 /area/syndicate_station/start)
 "amy" = (
-/obj/random/vending/snack,
+/obj/machinery/vending/snack/hacked,
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
@@ -3436,7 +3436,10 @@
 	},
 /area/syndicate_mothership)
 "amM" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/vending/cigarette{
+	name = "hacked Cigarette machine";
+	prices = list()
+	},
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
@@ -6319,7 +6322,7 @@
 	},
 /area/centcom/arrival)
 "axb" = (
-/obj/random/vending/cola,
+/obj/machinery/vending/cola/hacked,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -8300,7 +8303,10 @@
 	},
 /area/centcom/specops)
 "aDb" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/coffee{
+	name = "hacked Hot Drinks machine";
+	prices = list()
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
