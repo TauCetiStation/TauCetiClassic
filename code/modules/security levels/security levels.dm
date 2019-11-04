@@ -1,6 +1,5 @@
 /var/security_level = 0
-/var/global/delta_timer_id = 0
-
+/var/delta_timer_id = 0
 
 /proc/set_security_level(level)
 	switch(level)
@@ -71,14 +70,17 @@
 	else
 		return
 
+var/list/loud_alarm_areas = typecacheof(subtypesof(/area/station))
+var/list/quiet_alarm_areas = typecacheof(subtypesof(/area/station/maintenance) + subtypesof(/area/station/storage))
+
 /proc/delta_alarm()
     delta_timer_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/delta_alarm, FALSE), 8 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
     for(var/mob/M in player_list)
         if (is_station_level(M.z))
             var/area/A = get_area(M)
-            if (soft_station_areas.Find(A.type))
+            if (is_type_in_typecache(A, quiet_alarm_areas))
                 M.playsound_local(get_turf(M), 'sound/machines/alarm_delta.ogg', VOL_EFFECTS_MASTER, 20, FALSE)
-            else if (!non_station_areas.Find(A.type))
+            else if (is_type_in_typecache(A, loud_alarm_areas))
                 M.playsound_local(get_turf(M), 'sound/machines/alarm_delta.ogg', VOL_EFFECTS_MASTER, null, FALSE)
     return
 
