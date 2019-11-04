@@ -625,8 +625,8 @@
 	wander = 0
 	idle_vision_range = 6
 	move_to_delay = 7
-	retreat_distance = 1
-	minimum_distance = 2
+	retreat_distance = 2
+	minimum_distance = 3
 	health = 140
 	maxHealth = 140
 	melee_damage_lower = 15
@@ -636,9 +636,9 @@
 	attack_sound = list('sound/weapons/circsawhit.ogg')
 	ranged = 1
 	ranged_message = "shoots"
-	ranged_cooldown_cap = 1
-	projectiletype = /obj/item/projectile/beam/drone/mining
-	projectilesound = 'sound/weapons/guns/gunpulse_laser3.ogg'
+	ranged_cooldown_cap = 2
+	projectiletype = /obj/item/projectile/kinetic
+	projectilesound = 'sound/weapons/guns/kenetic_accel.ogg'
 	wanted_objects = list(/obj/item/weapon/ore/diamond,
 						  /obj/item/weapon/ore/glass,
 						  /obj/item/weapon/ore/gold,
@@ -713,7 +713,7 @@
 	wander = 0
 	ranged = 1
 	retreat_distance = 2
-	minimum_distance = 4
+	minimum_distance = 3
 	icon_state = "mining_drone_offense"
 
 /mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
@@ -771,9 +771,13 @@
 		to_chat(user, "Already hacked.")
 		return FALSE
 	else
-		to_chat(user, "You hack the NT mining drone,his gun clicked.")
+		to_chat(user, "You hack the NT mining drone, his gun clicked.")
 		emagged = 1
 		projectiletype = /obj/item/projectile/beam/xray
+		projectilesound = 'sound/weapons/guns/gunpulse_laser3.ogg'
+		ranged_cooldown_cap = 1
+		minimum_distance = 4
+		retreat_distance = 3
 		return TRUE
 
 /**********************Lazarus Injector**********************/
