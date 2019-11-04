@@ -82,30 +82,23 @@
 		potentialRandomEvents.Remove(type)*/
 	..()
 
-/datum/event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in! (TG-stuff)
-	var/list/safe_areas = list(
+var/list/safe_areas = typecacheof(list(
 	/area/station/ai_monitored/storage_secure,
 	/area/station/aisat/ai_chamber,
 	/area/station/bridge/ai_upload,
-	/area/station/engineering,
+	/area/station/engineering/engine,
+	/area/station/engineering/singularity,
+	/area/station/engineering/atmos,
 	/area/station/solar,
-	/area/station/civilian/holodeck,
-	/area/shuttle/arrival,
-	/area/shuttle/escape/station,
-	/area/shuttle/escape_pod1/station,
-	/area/shuttle/escape_pod2/station,
-	/area/shuttle/escape_pod3/station,
-	/area/shuttle/escape_pod4/station,
-	/area/shuttle/mining/station,
-	/area/shuttle/transport1/station,
-	/area/shuttle/administration/station,
-	/area/shuttle/specops/station,
-	/area/station/engineering/atmos)
+	/area/station/civilian/holodeck))
 
-	//These are needed because /area/station/engineering has to be removed from the list, but we still want these areas to get fucked up.
-	var/list/danger_areas = list(
-	/area/station/engineering/break_room,
-	/area/station/engineering/chiefs_office)
+var/list/the_event_areas = typecacheof(subtypesof(/area/station)) - safe_areas
+
+/datum/event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in! (TG-stuff)
+	//DEBUG
+	//to_chat(world, "<b>AREAS FOR RANDOM EVETNT PROC:</b>")
+	//for(var/areatype in the_event_areas)
+	//	to_chat(world, "* [areatype]")
 
 	//Need to locate() as it's just a list of paths.
-	return locate(pick((the_station_areas - safe_areas) + danger_areas))
+	return locate(pick(the_event_areas))

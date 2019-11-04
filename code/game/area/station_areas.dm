@@ -697,20 +697,5 @@ var/list/centcom_areas = list (
 	/area/shuttle/escape_pod4/centcom,
 	/area/shuttle/transport1/centcom,
 	/area/shuttle/administration/centcom,
-	/area/shuttle/specops/centcom,
-)
-
-//SPACE STATION 13
-var/list/the_station_areas = list (
-	/area/shuttle/arrival/station,
-	/area/shuttle/escape/station,
-	/area/shuttle/escape_pod1/station,
-	/area/shuttle/escape_pod2/station,
-	/area/shuttle/escape_pod3/station,
-	/area/shuttle/escape_pod4/station,
-	/area/shuttle/mining/station,
-	/area/shuttle/transport1/station,
-	/area/shuttle/administration/station,
-	/area/shuttle/specops/station,
-	/area/station
+	/area/shuttle/specops/centcom
 )
