@@ -82,7 +82,7 @@
 		potentialRandomEvents.Remove(type)*/
 	..()
 
-var/list/safe_areas = typecacheof(list(
+var/list/safe_areas = list(
 	/area/station/ai_monitored/storage_secure,
 	/area/station/aisat/ai_chamber,
 	/area/station/bridge/ai_upload,
@@ -90,9 +90,9 @@ var/list/safe_areas = typecacheof(list(
 	/area/station/engineering/singularity,
 	/area/station/engineering/atmos,
 	/area/station/solar,
-	/area/station/civilian/holodeck))
+	/area/station/civilian/holodeck) + subtypesof(/area/station/solar) + subtypesof(/area/station/civilian/holodeck)
 
-var/list/the_event_areas = typecacheof(subtypesof(/area/station)) - safe_areas
+var/list/the_event_areas = subtypesof(/area/station) - safe_areas
 
 /datum/event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in! (TG-stuff)
 	//DEBUG
