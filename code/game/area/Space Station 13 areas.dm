@@ -1447,55 +1447,6 @@ var/list/the_station_areas = list (
 	/area/turret_protected/ai
 )
 
-//Non station areas on station z-level
-var/list/non_station_areas = list (
-	/area/space,
-	/area/syndicate_station/southwest,
-	/area/syndicate_station/northwest,
-	/area/syndicate_station/northeast,
-	/area/syndicate_station/southeast,
-	/area/syndicate_station/north,
-	/area/syndicate_station/south,
-	/area/vox_station/southwest_solars,
-	/area/vox_station/northwest_solars,
-	/area/vox_station/northeast_solars,
-	/area/vox_station/southeast_solars,
-	/area/shuttle/syndicate_elite/station
-)
-
-var/list/soft_station_areas = list (
-	/area/maintenance,
-	/area/maintenance/eva,
-	/area/maintenance/dormitory,
-	/area/maintenance/chapel,
-	/area/maintenance/medbay,
-	/area/maintenance/science,
-	/area/maintenance/bridge,
-	/area/maintenance/cargo,
-	/area/maintenance/engineering,
-	/area/maintenance/incinerator,
-	/area/maintenance/atmos,
-	/area/maintenance/disposal,
-	/area/maintenance/auxsolarport,
-	/area/maintenance/starboardsolar,
-	/area/maintenance/portsolar,
-	/area/maintenance/auxsolarstarboard,
-	/area/shuttle/arrival/station,
-	/area/shuttle/escape/station,
-	/area/shuttle/escape_pod1/station,
-	/area/shuttle/escape_pod2/station,
-	/area/shuttle/escape_pod3/station,
-	/area/shuttle/escape_pod5/station,
-	/area/shuttle/mining/station,
-	/area/shuttle/transport1/station,
-	/area/shuttle/administration/station,
-	/area/shuttle/specops/station,
-	/area/shuttle/officer/station,
-	/area/storage/emergency,
-	/area/storage/emergency2,
-	/area/storage/emergency3
-)
-
 /area/beach
 	name = "Keelin's private beach"
 	icon_state = "null"
