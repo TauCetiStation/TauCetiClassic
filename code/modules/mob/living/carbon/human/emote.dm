@@ -429,11 +429,6 @@
 #undef ONE_HAND_IS_USABLE
 #undef BOTH_HANDS_ARE_USABLE
 #undef HAS_HEAD
-#undef (!species.flags[NO_BREATH])
-#undef (!species.flags[NO_PAIN])
-#undef (get_species() != SKRELL)
-#undef (get_species() != DIONA)
-#undef (get_species() != ZOMBIE)
 
 /mob/living/carbon/human/verb/pose()
 	set name = "Set Pose"
