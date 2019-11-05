@@ -753,6 +753,11 @@
 	to_chat(usr, "<span class='info'>You instruct [src] to drop any collected ore.</span>")
 	DropOre()
 
+/mob/living/simple_animal/hostile/mining_drone/AltClick(mob/user)
+	if(in_range(user, src))
+		to_chat(user, "<span class='notice'>You unloaded ore to the floor.</span>")
+		DropOre()
+
 /mob/living/simple_animal/hostile/mining_drone/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n"
 	if (src.health < src.maxHealth)
