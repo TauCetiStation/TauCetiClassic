@@ -75,6 +75,12 @@
 		else
 			to_chat(user, "The time [worldtime2text()] is displayed in the corner of the screen.")
 
+/obj/item/device/pda/AltClick(mob/user)
+	if (can_use(user) && id)
+		remove_id()
+		update_icon()
+	else if (can_use(user))
+		verb_remove_pen()
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -360,7 +366,7 @@
 		return 0
 
 	var/mob/M = loc
-	if(M.stat || M.restrained() || M.paralysis || M.stunned || M.weakened)
+	if(M.incapacitated())
 		return 0
 	if((src in M.contents) || ( istype(loc, /turf) && in_range(src, M) ))
 		return 1
