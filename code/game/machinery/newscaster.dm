@@ -384,10 +384,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 									dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
 									dat+="-<FONT SIZE=3>[COMMENT.body]</FONT><BR>"
 								if(!src.viewing_channel.lock_comments)
-									dat+="<B><A href='?src=\ref[src];your_comment=1'>Your comment:</B></A> [src.comment_msg]"
-									dat+="<BR><B><A href='?src=\ref[src];leave_a_comment=\ref[MESSAGE]'>Leave a comment.</A></B><BR>"
+									dat+="<B><A href='?src=\ref[src];leave_a_comment=\ref[MESSAGE]'>Leave a comment</A></B><BR>"
 								else
-									dat+="<B><FONT SIZE=3>Comments are closed!</FONT></B><BR><HR>"
+									dat+="<B><FONT SIZE=3>Comments are closed!</FONT></B><BR>"
 							else
 								dat+=""
 							dat+="<HR>"
@@ -420,7 +419,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(12)
 				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>"
 				dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_author=\ref[src.viewing_channel]'>[(src.viewing_channel.author=="\[REDACTED\]") ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><BR>"
-				dat+="<B><FONT SIZE=2><A href='?src=\ref[src];locked_comments=1'>Close comments on forever</A>:</B> [(src.viewing_channel.lock_comments) ? ("NO") : ("YES")]</FONT><HR>"
 
 
 				if( isemptylist(src.viewing_channel.messages) )
@@ -429,8 +427,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					for(var/datum/feed_message/MESSAGE in src.viewing_channel.messages)
 						dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 						dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.body == "\[REDACTED\]") ? ("Undo story censorship") : ("Censor story")]</A>  -\
-						                   <A href='?src=\ref[src];censor_channel_story_author=\ref[MESSAGE]'>[(MESSAGE.author == "\[REDACTED\]") ? ("Undo Author censorship") : ("Censor message Author")]</A></FONT><BR>"
-						dat+="<HR><B>Comments:</B><BR>"
+						                   <A href='?src=\ref[src];censor_channel_story_author=\ref[MESSAGE]'> [(MESSAGE.author == "\[REDACTED\]") ? ("Undo Author censorship") : ("Censor message Author")]</A></FONT><BR>"
+						dat+="<HR><B>All Comments:</B><B><FONT SIZE=2><A href='?src=\ref[src];locked_comments=1'>[(src.viewing_channel.lock_comments) ? ("Unlock") : ("Lock")]</A></B></FONT><BR>"
 						for(var/datum/message_comment/COMMENT in MESSAGE.comments)
 							dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
 							dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_author_comment=\ref[COMMENT]'>[(COMMENT.author == "\[REDACTED\]") ? ("Undo Author censorship") : ("Censor Author")]</A></FONT><BR>"
@@ -725,17 +723,17 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 	else if(href_list["censor_author_comment"])
 		var/datum/message_comment/COMMENT = locate(href_list["censor_author_comment"])
-		if(COMMENT.author != "<FONT SIZE=3><B>\[REDACTED\]</B></FONT>")
+		if(COMMENT.author != "<FONT SIZE=2><B>\[REDACTED\]</B></FONT>")
 			COMMENT.backup_author = COMMENT.author
-			COMMENT.author = "<FONT SIZE=3><B>\[REDACTED\]</B></FONT>"
+			COMMENT.author = "<FONT SIZE=2><B>\[REDACTED\]</B></FONT>"
 		else
 			COMMENT.author = COMMENT.backup_author
 
 	else if(href_list["censor_body_comment"])
 		var/datum/message_comment/COMMENT = locate(href_list["censor_body_comment"])
-		if(COMMENT.body != "<FONT SIZE=3><B>\[REDACTED\]</B></FONT>")
+		if(COMMENT.body != "<FONT SIZE=2><B>\[REDACTED\]</B></FONT>")
 			COMMENT.backup_body = COMMENT.body
-			COMMENT.body = "<FONT SIZE=3><B>\[REDACTED\]</B></FONT>"
+			COMMENT.body = "<FONT SIZE=2><B>\[REDACTED\]</B></FONT>"
 		else
 			COMMENT.body = COMMENT.backup_body
 
@@ -781,11 +779,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		var/datum/feed_message/FM = locate(href_list["setDislike"])
 		src.rating("dislike", FM)
 
-	else if(href_list["your_comment"])
-		src.comment_msg = sanitize(input(usr, "Write your comment", "Network Channel Handler", input_default(src.comment_msg)), extra = FALSE)
-
 	else if(href_list["leave_a_comment"])
 		var/datum/feed_message/FM = locate(href_list["leave_a_comment"])
+		src.comment_msg = sanitize(input(usr, "Write your comment", "Network Channel Handler", input_default(src.comment_msg)), extra = FALSE)
 		if(src.comment_msg == "" || src.comment_msg == null || src.scanned_user == "Unknown")
 			src.screen = 22
 		else
