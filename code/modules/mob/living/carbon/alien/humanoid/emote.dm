@@ -146,7 +146,7 @@
 			if(!M.client)
 				continue //skip leavers
 			if((M.client.prefs.chat_ghostsight != CHAT_GHOSTSIGHT_NEARBYMOBS) && !(M in viewers(src, null)))
-				to_chat(M, "<a href='byond://?src=\ref[src];track=\ref[src]'>(F)</a> <B>[src]</B> [message]") // ghosts don't need cheking for deafness, the type of message, etc
+				to_chat(M, "<a href='byond://?src=\ref[src];track=\ref[src]'>(F)</a> <B>[src]</B> [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
 
 		if(m_type & 1)
 			for(var/mob/O in viewers(src, null))

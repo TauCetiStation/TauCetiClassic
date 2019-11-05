@@ -7,11 +7,6 @@
 #define ONE_HAND_IS_USABLE (!restrained() && ((bodyparts_by_name[BP_L_ARM] && bodyparts_by_name[BP_L_ARM].is_usable()) || (bodyparts_by_name[BP_R_ARM] && bodyparts_by_name[BP_R_ARM].is_usable())))
 #define BOTH_HANDS_ARE_USABLE (!restrained() && bodyparts_by_name[BP_L_ARM] && bodyparts_by_name[BP_L_ARM].is_usable() && bodyparts_by_name[BP_L_ARM] && bodyparts_by_name[BP_R_ARM].is_usable())
 #define HAS_HEAD (bodyparts_by_name[BP_HEAD] && bodyparts_by_name[BP_HEAD].is_usable()) // it may look weird but what if I told you that an IPC can live and make emotions without a head?
-#define BREATHING (!species.flags[NO_BREATH])
-#define FEELS_PAIN (!species.flags[NO_PAIN])
-#define NOT_DIONA (get_species() != DIONA)
-#define NOT_SKRELL (get_species() != SKRELL)
-#define NOT_ZOMBIE (get_species() != ZOMBIE)
 
 // auto = FALSE means that the sound is called by a human manually; auto = TRUE - automatically, in the code
 /mob/living/carbon/human/emote(act = "", message_type = MESSAGE_VISIBLE, message = "", auto = TRUE)
@@ -64,7 +59,7 @@
 			muzzled_message = "groans silently!"
 			miming_message = "appears to groan!"
 			if(auto)
-				conditions_for_emote = FEELS_PAIN
+				conditions_for_emote = (!species.flags[NO_PAIN])
 				cloud_emote = "cloud-pain"
 				sound_priority = MEDIUM
 				message = pick("grunts in pain!", "grunts!", "wrinkles [his_macro] face and grunts!")
@@ -77,11 +72,11 @@
 			muzzled_message = "makes a weak noise."
 			miming_message = pick("slightly moans feigning pain.", "appears to be in pain!")
 			if(auto)
-				conditions_for_emote = FEELS_PAIN
+				conditions_for_emote = (!species.flags[NO_PAIN])
 				cloud_emote = "cloud-pain"
 				sound_priority = MEDIUM
 				message = pick("groans in pain.", "slightly winces in pain and groans.", "presses [his_macro] lips together in pain and groans.", "twists in pain.")
-				if(NOT_SKRELL && has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(66)) // skrells don't have much emotions to cry in pain, but they can still groan
+				if((get_species() != SKRELL) && has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(66)) // skrells don't have much emotions to cry in pain, but they can still groan
 					emote_sound = pick((gender == FEMALE) ? SOUNDIN_FEMALE_WHINER_PAIN : SOUNDIN_MALE_WHINER_PAIN)
 				else
 					emote_sound = pick((gender == FEMALE) ? SOUNDIN_FEMALE_PASSIVE_PAIN : SOUNDIN_MALE_PASSIVE_PAIN)
@@ -93,9 +88,9 @@
 			mute_message = pick("opens their mouth like a fish gasping for air!", "twists their face into an agonised expression!", "makes a very hurt expression!")
 			muzzled_message = pick("makes a loud noise!", "groans soundly!", "screams silently!")
 			miming_message = "acts out a scream!"
-			conditions_for_emote = NOT_DIONA
+			conditions_for_emote = (get_species() != DIONA)
 			if(auto)
-				conditions_for_emote = FEELS_PAIN
+				conditions_for_emote = (!species.flags[NO_PAIN])
 				sound_priority = HIGH
 				message = pick("screams in agony!", "writhes in heavy pain and screams!", "screams in pain as much as [he_macro] can!", "screams in pain loudly!")
 				emote_sound = pick((gender == FEMALE) ? SOUNDIN_FEMALE_HEAVY_PAIN : SOUNDIN_MALE_HEAVY_PAIN)
@@ -107,7 +102,7 @@
 			muzzled_message = "appears to [(get_species() == DIONA) ? "creak" : "cough"]."
 			miming_message = (get_species() == DIONA) ? "creaks." : "coughs."
 			if(auto)
-				conditions_for_emote = BREATHING
+				conditions_for_emote = (!species.flags[NO_BREATH])
 				sound_priority = MEDIUM
 				emote_sound = pick((gender == FEMALE) ? SOUNDIN_FBCOUGH : SOUNDIN_MBCOUGH)
 
@@ -126,7 +121,7 @@
 			mute_message = message
 			muzzled_message = pick("snores.", "makes a noise.")
 			miming_message = "snores."
-			conditions_for_emote = BREATHING
+			conditions_for_emote = (!species.flags[NO_BREATH])
 
 		if ("whimper")
 			message_type = MESSAGE_AUDIBLE
@@ -134,7 +129,7 @@
 			mute_message = "whimpers"
 			muzzled_message = pick("whimpers.", "makes a weak noise.", "whines.")
 			miming_message = "whimpers."
-			conditions_for_emote = NOT_ZOMBIE
+			conditions_for_emote = (get_species() != ZOMBIE)
 
 		if ("sniff")
 			message_type = MESSAGE_AUDIBLE
@@ -149,7 +144,7 @@
 			mute_message = "sneezes."
 			muzzled_message = "makes a strange noise."
 			miming_message = "sneezes."
-			conditions_for_emote = NOT_ZOMBIE
+			conditions_for_emote = (get_species() != ZOMBIE)
 
 		if ("gasp")
 			message_type = MESSAGE_AUDIBLE
@@ -158,7 +153,7 @@
 			miming_message = "appears to be gasping!"
 			muzzled_message = "makes a weak noise."
 			message = "gasps!"
-			conditions_for_emote = BREATHING
+			conditions_for_emote = (!species.flags[NO_BREATH])
 
 		if ("moan")
 			message_type = MESSAGE_AUDIBLE
@@ -166,7 +161,7 @@
 			miming_message = "appears to moan!"
 			muzzled_message = "moans silently!"
 			message = "moans!"
-			conditions_for_emote = NOT_ZOMBIE
+			conditions_for_emote = (get_species() != ZOMBIE)
 
 		if ("sigh")
 			message_type = MESSAGE_AUDIBLE
@@ -174,7 +169,7 @@
 			mute_message = message
 			muzzled_message = "makes a weak noise."
 			miming_message = "sighs."
-			conditions_for_emote = NOT_ZOMBIE
+			conditions_for_emote = (get_species() != ZOMBIE)
 
 		if ("mumble")
 			message_type = MESSAGE_VISIBLE
@@ -191,7 +186,7 @@
 			mute_message = "laughs silently."
 			muzzled_message = pick("makes a weak noise.", "giggles sligthly.")
 			miming_message = "acts out a laugh."
-			conditions_for_emote = NOT_SKRELL && HAS_HEAD && NOT_ZOMBIE
+			conditions_for_emote = (get_species() != SKRELL) && HAS_HEAD && (get_species() != ZOMBIE)
 
 		if ("cry")
 			message_type = MESSAGE_AUDIBLE | MESSAGE_VISIBLE
@@ -199,7 +194,7 @@
 			mute_message = message
 			muzzled_message = "makes a [pick("sad face", "weak noise")] and frowns."
 			miming_message = message
-			conditions_for_emote = NOT_SKRELL && NOT_DIONA && HAS_HEAD && NOT_ZOMBIE
+			conditions_for_emote = (get_species() != SKRELL) && (get_species() != DIONA) && HAS_HEAD && (get_species() != ZOMBIE)
 
 		if ("giggle")
 			message_type = MESSAGE_AUDIBLE | MESSAGE_VISIBLE
@@ -207,7 +202,7 @@
 			mute_message = "smiles slightly and [pick("chuckles", "giggles")] silently"
 			muzzled_message = "[pick("chuckles", "giggles")] slightly."
 			miming_message = "appears to [pick("chuckle", "giggle")]."
-			conditions_for_emote = NOT_ZOMBIE
+			conditions_for_emote = (get_species() != ZOMBIE)
 
 		if ("clap")
 			message_type = MESSAGE_VISIBLE | MESSAGE_AUDIBLE
@@ -215,14 +210,14 @@
 			mute_message = message
 			muzzled_message = message
 			miming_message = message
-			conditions_for_emote = BOTH_HANDS_ARE_USABLE && NOT_ZOMBIE
+			conditions_for_emote = BOTH_HANDS_ARE_USABLE && (get_species() != ZOMBIE)
 
 // ========== VISIBLE ==========
 
 		if ("raisehand")
 			message_type = MESSAGE_VISIBLE
 			message = "raises a hand."
-			conditions_for_emote = ONE_HAND_IS_USABLE && NOT_ZOMBIE
+			conditions_for_emote = ONE_HAND_IS_USABLE && (get_species() != ZOMBIE)
 
 		if ("blink")
 			message_type = MESSAGE_VISIBLE
@@ -232,7 +227,7 @@
 		if ("drool")
 			message_type = MESSAGE_VISIBLE
 			message = "drools."
-			conditions_for_emote = HAS_HEAD && NOT_DIONA
+			conditions_for_emote = HAS_HEAD && (get_species() != DIONA)
 
 		if ("eyebrow")
 			message_type = MESSAGE_VISIBLE
@@ -251,12 +246,12 @@
 		if ("nod")
 			message_type = MESSAGE_VISIBLE
 			message = "nods."
-			conditions_for_emote = HAS_HEAD && NOT_ZOMBIE
+			conditions_for_emote = HAS_HEAD && (get_species() != ZOMBIE)
 
 		if ("wave")
 			message_type = MESSAGE_VISIBLE
 			message = "waves."
-			conditions_for_emote = ONE_HAND_IS_USABLE && NOT_ZOMBIE
+			conditions_for_emote = ONE_HAND_IS_USABLE && (get_species() != ZOMBIE)
 
 		if ("deathgasp")
 			message_type = MESSAGE_VISIBLE
@@ -270,7 +265,7 @@
 		if ("shrug")
 			message_type = MESSAGE_VISIBLE
 			message = "shrugs."
-			conditions_for_emote = NOT_ZOMBIE
+			conditions_for_emote = (get_species() != ZOMBIE)
 
 		if ("smile")
 			message_type = MESSAGE_VISIBLE
@@ -284,12 +279,12 @@
 		if ("wink")
 			message_type = MESSAGE_VISIBLE
 			message = "winks."
-			conditions_for_emote = HAS_HEAD && NOT_ZOMBIE
+			conditions_for_emote = HAS_HEAD && (get_species() != ZOMBIE)
 
 		if ("yawn")
 			message_type = MESSAGE_VISIBLE
 			message = "yawns."
-			conditions_for_emote = BREATHING
+			conditions_for_emote = (!species.flags[NO_BREATH])
 
 		if ("collapse")
 			message_type = MESSAGE_VISIBLE
@@ -299,12 +294,12 @@
 		if ("bow")
 			message_type = MESSAGE_VISIBLE
 			message = pick("bows.", "bows in favor.")
-			conditions_for_emote = NOT_ZOMBIE
+			conditions_for_emote = (get_species() != ZOMBIE)
 
 		if ("salute")
 			message_type = MESSAGE_VISIBLE
 			message = "salutes."
-			conditions_for_emote = ONE_HAND_IS_USABLE && NOT_ZOMBIE
+			conditions_for_emote = ONE_HAND_IS_USABLE && (get_species() != ZOMBIE)
 
 // ========== SPECIAL ==========
 
@@ -417,7 +412,7 @@
 			continue
 		switch(M.client.prefs.chat_ghostsight)
 			if(CHAT_GHOSTSIGHT_ALL)
-				to_chat(M, "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> <B>[src]</B> [message]") // ghosts don't need cheking for deafness, the type of message, etc. So to_chat() is better here
+				to_chat(M, "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> <B>[src]</B> [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
 			if(CHAT_GHOSTSIGHT_ALLMANUAL)
 				if(!auto)
 					to_chat(M, "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> <B>[src]</B> [message]")
@@ -434,11 +429,11 @@
 #undef ONE_HAND_IS_USABLE
 #undef BOTH_HANDS_ARE_USABLE
 #undef HAS_HEAD
-#undef BREATHING
-#undef FEELS_PAIN
-#undef NOT_SKRELL
-#undef NOT_DIONA
-#undef NOT_ZOMBIE
+#undef (!species.flags[NO_BREATH])
+#undef (!species.flags[NO_PAIN])
+#undef (get_species() != SKRELL)
+#undef (get_species() != DIONA)
+#undef (get_species() != ZOMBIE)
 
 /mob/living/carbon/human/verb/pose()
 	set name = "Set Pose"
