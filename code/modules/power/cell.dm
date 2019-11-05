@@ -66,25 +66,18 @@
 			SNG.drain("CELL",src,H.wear_suit)
 			
 		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == I_GRAB)
-			var/drain = 0
-			var/maxcap = 0
 			var/obj/item/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
 			var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
+			var/drain = 0
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(charge > 0 && !maxcap && C)
 				if (do_after(user,30,target = src))
-					if(charge<=drain || drain<charge)
-						drain = charge
-					if((H.nutrition+drain) > C.maxcharge)
-						drain = C.maxcharge - H.nutrition
-						maxcap = 1
-					if(H.nutrition >= C.maxcharge)
-						H.nutrition = C.maxcharge
+					if(H.nutrition>src.maxcharge*0.9)
 						to_chat(user, "<span class='warning'>Procedure interrupted. Charge maxed.</span>")
-						return
-					use((drain+C.maxcharge)/0.5)
-					H.nutrition += drain
-					to_chat(user, "<span class='notice'>Energy drained from the cell.</span>")
+					else
+						src.use(drain/0.5)
+						H.nutrition += (drain*0.5)
+						to_chat(user, "<span class='notice'>Energy gained from the cell.</span>")
 				else
 					to_chat(user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
 			else
