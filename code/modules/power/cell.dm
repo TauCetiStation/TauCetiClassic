@@ -70,7 +70,7 @@
 			var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
 			var/drain = 0
 			user.SetNextMove(CLICK_CD_MELEE)
-			if(charge > 0 && !maxcap && C)
+			if(charge > 0 && C)
 				if (do_after(user,30,target = src))
 					if(H.nutrition>src.maxcharge*0.9)
 						to_chat(user, "<span class='warning'>Procedure interrupted. Charge maxed.</span>")
