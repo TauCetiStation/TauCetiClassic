@@ -68,7 +68,7 @@
 		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == I_GRAB)
 			var/obj/item/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
 			var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
-			var/drain = 0
+			var/drain = C.maxcharge-H.nutrition
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(charge > 0 && C)
 				if (do_after(user,30,target = src))
