@@ -106,8 +106,6 @@
 
 	//Check if we're on fire
 	handle_fire()
-	if(on_fire && fire_stacks > 0)
-		fire_stacks -= 0.5
 
 	//Status updates, death etc.
 	handle_regular_status_updates()		//Optimized a bit
@@ -773,7 +771,8 @@
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
-	if(..())
+	. = ..()
+	if(.) //if the mob isn't on fire anymore
 		return
 	var/thermal_protection = get_heat_protection(30000) //If you don't have fire suit level protection, you get a temperature increase
 	if((1 - thermal_protection) > 0.0001)

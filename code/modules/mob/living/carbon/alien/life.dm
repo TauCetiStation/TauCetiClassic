@@ -28,9 +28,8 @@
 	handle_stomach()
 
 	//Handle being on fire
-	handle_fire()
-	if(on_fire && fire_stacks > 0)
-		fire_stacks -= 0.5
+	handle_fire()	
+	
 	//Status updates, death etc.
 	handle_regular_status_updates()
 	update_canmove()
@@ -237,7 +236,8 @@
 
 ///FIRE CODE
 /mob/living/carbon/alien/handle_fire()
-	if(..())
+	. = ..()
+	if(.) //if the mob isn't on fire anymore
 		return
 	adjustFireLoss(6)
 	return

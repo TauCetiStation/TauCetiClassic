@@ -49,9 +49,6 @@
 
 	//Check if we're on fire
 	handle_fire()
-	if(on_fire && fire_stacks > 0)
-		fire_stacks -= 0.5
-
 
 	//Status updates, death etc.
 	handle_regular_status_updates()
@@ -618,7 +615,8 @@
 
 ///FIRE CODE
 /mob/living/carbon/monkey/handle_fire()
-	if(..())
+	. = ..()
+	if(.) //if the mob isn't on fire anymore
 		return
 	adjustFireLoss(6)
 	return

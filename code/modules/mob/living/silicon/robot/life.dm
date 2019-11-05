@@ -9,6 +9,7 @@
 
 	//Status updates, death etc.
 	clamp_values()
+	handle_fire()
 	handle_regular_status_updates()
 	handle_actions()
 
@@ -312,3 +313,15 @@
 	else
 		canmove = TRUE
 	return canmove
+
+//Robots on fire
+/mob/living/silicon/robot/handle_fire()
+	. = ..()
+	if(.) //if the mob isn't on fire anymore
+		return
+	if(fire_stacks > 0)
+		fire_stacks--
+		fire_stacks = max(0, fire_stacks)
+	else
+		ExtinguishMob()
+		return TRUE
