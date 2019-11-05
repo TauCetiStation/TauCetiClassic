@@ -773,11 +773,13 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 	else if(href_list["setLike"])
 		var/datum/feed_message/FM = locate(href_list["setLike"])
-		src.rating("like", FM)
+		FM.voters += src.scanned_user
+		FM.likes += 1 
 
 	else if(href_list["setDislike"])
 		var/datum/feed_message/FM = locate(href_list["setDislike"])
-		src.rating("dislike", FM)
+		FM.voters += src.scanned_user
+		FM.dislikes += 1
 
 	else if(href_list["leave_a_comment"])
 		var/datum/feed_message/FM = locate(href_list["leave_a_comment"])
@@ -808,13 +810,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			FM.comments_closed = TRUE
 
 	src.updateUsrDialog()
-
-/obj/machinery/newscaster/proc/rating(evaluation, datum/feed_message/FM)
-	FM.voters += src.scanned_user
-	if(evaluation == "like")
-		FM.likes += 1 
-	if(evaluation == "dislike")
-		FM.dislikes += 1
 
 /obj/machinery/newscaster/attackby(obj/item/I, mob/user)
 
