@@ -64,13 +64,13 @@
 		
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
+		var/obj/item/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
+		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
 		var/obj/item/clothing/gloves/space_ninja/SNG = H.gloves
 		if(istype(SNG) && SNG.candrain && !SNG.draining)
 			SNG.drain("CELL",src,H.wear_suit)
 			
-		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == I_GRAB)
-			var/obj/item/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
-			var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
+		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == I_GRAB && C)
 			var/drain = C.maxcharge-H.nutrition
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(charge > 0 && C)
