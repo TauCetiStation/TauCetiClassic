@@ -88,9 +88,7 @@ var/list/safe_areas = list(
 	/area/station/bridge/ai_upload,
 	/area/station/engineering/engine,
 	/area/station/engineering/singularity,
-	/area/station/engineering/atmos,
-	/area/station/solar,
-	/area/station/civilian/holodeck) + subtypesof(/area/station/solar) + subtypesof(/area/station/civilian/holodeck)
+	/area/station/engineering/atmos) + typesof(/area/station/solar) + typesof(/area/station/civilian/holodeck)
 
 var/list/the_event_areas = subtypesof(/area/station) - safe_areas
 
