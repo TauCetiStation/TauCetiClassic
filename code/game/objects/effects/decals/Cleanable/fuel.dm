@@ -66,9 +66,11 @@
 			continue
 		if(O.CanPass(null, S, 0, 0) && S.CanPass(null, O, 0, 0))
 			new/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel(O, amount * 0.25, d)
+			for(var/mob/living/L in O.loc)
+				L.adjust_fire_stacks(10)
 			O.hotspot_expose((T20C * 2) + 380, 500) //Light flamethrower fuel on fire immediately.
 
 	amount *= 0.25
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/Crossed(mob/living/M)
-	M.adjust_fire_stacks(10)
+	M.adjust_fire_stacks(5)
