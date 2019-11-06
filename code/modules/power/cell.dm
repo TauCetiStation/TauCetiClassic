@@ -75,6 +75,8 @@
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(charge > 0)
 				if (do_after(user,30,target = src))
+					if(drain>src.charge)
+						drain = src.charge
 					if(H.nutrition>src.maxcharge*0.9)
 						to_chat(user, "<span class='warning'>Procedure interrupted. Charge maxed.</span>")
 					else
