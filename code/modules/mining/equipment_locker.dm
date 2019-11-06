@@ -601,8 +601,8 @@
 /**********************Mining drone**********************/
 
 /mob/living/simple_animal/hostile/mining_drone
-	name = "Nanotrasen minebot"
-	desc = "" //not used now
+	name = "nanotrasen minebot"
+	desc = "Robot used to support the miners can be configured to search and collect ore or destroy monsters."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
@@ -760,17 +760,19 @@
 
 /mob/living/simple_animal/hostile/mining_drone/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n"
+	msg += "Robot used to support the miners can be configured to search and collect ore or destroy monsters.\n"
 	if (src.health < src.maxHealth)
-		msg += "<span class='warning'>"
-		if (src.health >= src.maxHealth/2)
-			msg += "It looks slightly dented.\n"
-		else if (src.health <= src.maxHealth/4)
-			msg += "<B>IT A FALLING APART!</B>\n"
-		else
-			msg += "<B>It looks severely dented!</B>\n"
-		msg += "</span>"
-	msg += "*---------*</span>"
+		if (src.health >= src.maxHealth * 0.7) //140 > health >= 98
+			msg += "<span class='warning'>It looks slightly dented.</span>\n"
+		else if (src.health <= src.maxHealth * 0.3) //42 >= health
+			msg += "<span class='warning'><B>IT IS FALLING APART!</B></span>\n"
+		else // 98 > health > 42
+			msg += "<span class='warning'><B>It looks severely dented!</B></span>\n"
+	else //health = 140
+		msg += "<span class='notice'>It looks without dents.</span>\n"
+	msg += "<span cass='info'>*---------*</span>"
 	to_chat(user, msg)
+
 /mob/living/simple_animal/hostile/mining_drone/emag_act(mob/user)
 	if(emagged)
 		to_chat(user, "Already hacked.")
