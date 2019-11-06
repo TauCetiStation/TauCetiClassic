@@ -141,7 +141,7 @@ var/const/MAX_SAVE_SLOTS = 10
 
 /datum/preferences/New(client/C)
 	parent = C
-	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
+	b_type = random_blood_type()
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)

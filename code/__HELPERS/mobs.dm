@@ -1,3 +1,6 @@
+/proc/random_blood_type()
+	return pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
+
 /proc/random_hair_style(gender, species = HUMAN)
 	var/h_style = "Bald"
 
