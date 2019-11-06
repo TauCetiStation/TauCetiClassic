@@ -201,7 +201,7 @@
 /obj/item/projectile/bullet/incendiary/on_hit(atom/target, blocked = 0)
 	if(istype(target, /mob/living/carbon))
 		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(10)
+		M.adjust_fire_stacks(15)
 		M.IgniteMob()
 
 /obj/item/projectile/bullet/chameleon

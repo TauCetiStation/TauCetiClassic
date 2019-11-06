@@ -248,7 +248,7 @@
 	if(!on_fire)
 		return TRUE //the mob is no longer on fire, no need to do the rest.
 	if(fire_stacks > 0)
-		adjust_fire_stacks(-0.3) //the fire is slowly consumed
+		adjust_fire_stacks(-0.1) //the fire is slowly consumed
 	else
 		ExtinguishMob()
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
