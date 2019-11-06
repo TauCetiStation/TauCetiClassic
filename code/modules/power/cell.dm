@@ -59,6 +59,9 @@
 
 /obj/item/weapon/stock_parts/cell/attack_self(mob/user)
 	src.add_fingerprint(user)
+	if(user.is_busy())
+		return
+		
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/clothing/gloves/space_ninja/SNG = H.gloves
@@ -76,7 +79,7 @@
 						to_chat(user, "<span class='warning'>Procedure interrupted. Charge maxed.</span>")
 					else
 						src.use(drain/0.5)
-						H.nutrition += (drain*0.5)
+						H.nutrition += (drain)
 						to_chat(user, "<span class='notice'>Energy gained from the cell.</span>")
 				else
 					to_chat(user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
