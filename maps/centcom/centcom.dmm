@@ -959,19 +959,6 @@
 	icon_state = "black"
 	},
 /area/custom/syndicate_mothership/droppod_garage)
-"adA" = (
-/obj/structure/lattice,
-/turf/space,
-/area/shuttle/escape_pod3/centcom)
-"adC" = (
-/obj/structure/lattice,
-/obj/structure/disposalpipe/segment{
-	desc = "Pipe for transfer more fuel.";
-	dir = 4;
-	name = "filling pipe"
-	},
-/turf/space,
-/area/shuttle/escape_pod3/centcom)
 "adH" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -9690,7 +9677,9 @@
 /area/centcom/evac)
 "aHJ" = (
 /obj/machinery/door/airlock/external{
-	name = "Salvage Shuttle Dock"
+	dock_tag = "arrival_specops";
+	locked = 1;
+	name = "Arrival Airlock"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor5"
@@ -9952,8 +9941,7 @@
 /area/centcom/evac)
 "aIJ" = (
 /obj/machinery/door/airlock/external{
-	locked = 1;
-	name = "Salvage Shuttle Dock"
+	name = "Arrival Airlock"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor5"
@@ -40484,7 +40472,7 @@ aaM
 aaM
 aHv
 abn
-aIJ
+aHJ
 abn
 aHv
 aaM
@@ -41258,7 +41246,7 @@ hyb
 aIy
 hOb
 hRb
-aIJ
+aHJ
 aaM
 aaM
 aKu
@@ -43314,11 +43302,11 @@ hyb
 aIy
 hOb
 hRb
-aIJ
+aHJ
 ahJ
-adA
-adC
-aID
+ahJ
+aKu
+aaM
 aaM
 aaM
 aaM
@@ -43573,9 +43561,9 @@ hPb
 hRb
 abn
 aaM
-aID
-adC
-aID
+aaM
+aKu
+aaM
 aaM
 aaM
 aaM
@@ -43830,9 +43818,9 @@ aIO
 aHv
 aHv
 aaM
-aID
-adC
-aID
+aaM
+aKu
+aaM
 aaM
 aaM
 aaM
@@ -44082,14 +44070,14 @@ aHv
 aaM
 aHv
 aHv
-aHJ
+aIJ
 aHv
 aHv
 aaM
 aaM
-aID
-adC
-aID
+aaM
+aKu
+aaM
 aaM
 aaM
 aaM
@@ -44333,7 +44321,7 @@ aAm
 aaM
 aaM
 abn
-aHJ
+aIJ
 abn
 aaM
 aaM
@@ -44589,9 +44577,9 @@ aBX
 aAm
 aaM
 aaM
-aaM
-aaM
-aaM
+aID
+aID
+aID
 aaM
 aaM
 aaM
@@ -44846,9 +44834,9 @@ aBX
 aAm
 aaM
 aaM
-aaM
-aaM
-aaM
+aID
+aID
+aID
 aaM
 aaM
 aaM
@@ -45103,9 +45091,9 @@ aBX
 aAm
 aaM
 aaM
-aaM
-aaM
-aaM
+aID
+aID
+aID
 aHv
 aHv
 aHv
@@ -45360,9 +45348,9 @@ aCa
 aAm
 aaM
 aaM
-aaM
-aaM
-aaM
+aID
+aID
+aID
 aHv
 hWb
 aIc
