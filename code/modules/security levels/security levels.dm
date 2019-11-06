@@ -70,8 +70,8 @@
 	else
 		return
 
-var/list/loud_alarm_areas = typecacheof(subtypesof(/area/station))
-var/list/quiet_alarm_areas = typecacheof(subtypesof(/area/station/maintenance) + subtypesof(/area/station/storage))
+var/list/loud_alarm_areas = typecacheof(typesof(/area/station))
+var/list/quiet_alarm_areas = typecacheof(typesof(/area/station/maintenance) + typesof(/area/station/storage))
 
 /proc/delta_alarm()
     delta_timer_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/delta_alarm, FALSE), 8 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
