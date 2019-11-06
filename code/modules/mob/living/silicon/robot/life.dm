@@ -327,4 +327,6 @@
 		return TRUE
 
 /mob/living/silicon/robot/update_fire()
-	updateicon()
+	if(on_fire)
+		overlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning")
+	else overlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning")

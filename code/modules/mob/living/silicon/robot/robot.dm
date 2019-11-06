@@ -1013,9 +1013,6 @@
 		else
 			overlays += "ov-openpanel -c"
 
-	if(on_fire)
-		overlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning")
-	else overlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning")
 
 
 	if(module_active && istype(module_active,/obj/item/borg/combat/shield))
