@@ -1244,6 +1244,62 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Junkyard"
 	icon_state = "away"
 	always_unpowered = 1
+	var/structures_max = 1
+	var/structures = 0
+	var/amount_of_garbage = 0
+	var/amount_of_centipedes = 0
+	var/delay_process = 200
+	var/process = 0
+	var/list/turf/simulated/floor/plating/ironsand/junkyard/turf_spawn_list
+
+/area/awaymission/junkyard/atom_init()
+	..()
+	LAZYINITLIST(turf_spawn_list)
+	return INITIALIZE_HINT_LATELOAD
+
+/area/awaymission/junkyard/atom_init_late()
+	for(var/turf/simulated/floor/plating/ironsand/junkyard/turf_junk in contents)
+		LAZYADD(turf_spawn_list, turf_junk)
+	START_PROCESSING(SSobj, src)
+
+/area/awaymission/junkyard/process()
+	process +=1
+	if(process >= delay_process)
+		if(amount_of_garbage > 200 && amount_of_centipedes < 4)
+			new /mob/living/simple_animal/centipede(pick(turf_spawn_list))
+		if(amount_of_garbage > 500 && amount_of_centipedes < 8)
+			new /mob/living/simple_animal/centipede(pick(turf_spawn_list))
+		if(amount_of_garbage > 800 && amount_of_centipedes < 16)
+			new /mob/living/simple_animal/centipede(pick(turf_spawn_list))
+		process = 0
+
+/area/awaymission/junkyard/north_west
+	name = "Junkyard North West"
+
+/area/awaymission/junkyard/west
+	name = "Junkyard West"
+
+/area/awaymission/junkyard/south_west
+	name = "Junkyard South West"
+
+/area/awaymission/junkyard/north
+	name = "Junkyard North"
+
+/area/awaymission/junkyard/north_south_west_east
+	name = "Junkyard North South West East"
+	structures_max = 2
+
+/area/awaymission/junkyard/south
+	name = "Junkyard South"
+
+/area/awaymission/junkyard/north_east
+	name = "Junkyard North East"
+
+/area/awaymission/junkyard/east
+	name = "Junkyard East"
+
+/area/awaymission/junkyard/south_east
+	name = "Junkyard South East"
 
 /area/awaymission/BMPship1
 	name = "Aft Block"

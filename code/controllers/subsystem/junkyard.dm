@@ -29,9 +29,16 @@ var/datum/subsystem/junkyard/SSjunkyard
 		return
 
 	var/list/turfs_to_init = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
+
 	for(var/thing in turfs_to_init)
 		var/turf/T = thing
-		if(istype(T, /turf/simulated/mineral/airfull/junkyard))
+		if(istype(T, /turf/simulated/floor/plating/ironsand/junkyard))
+			T.spawn_structures_junkyard()
+		CHECK_TICK
+
+	for(var/thing in turfs_to_init)
+		var/turf/T = thing
+		if(istype(T, /turf/unsimulated/wall/junkyard))
 			T.surround_by_scrap()
 		if(istype(T, /turf/simulated/floor/plating/ironsand/junkyard))
 			T.surround_by_scrap()

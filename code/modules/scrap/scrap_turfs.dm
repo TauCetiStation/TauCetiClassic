@@ -50,6 +50,19 @@
 		if(!A.density && !locate(/obj/structure/scrap in A.contents))
 			new /obj/random/scrap/dense_weighted(A)
 
+/turf/proc/spawn_structures_junkyard()
+	if(prob(2))
+		if(prob(10))
+			var/area/awaymission/junkyard/self_area = get_area(src)
+			if(self_area.structures_max > self_area.structures)
+				var/datum/map_template/junkyard_structure/template
+				template = structures_junkyard_templates[pick(structures_junkyard_templates)]
+				var/status = template.check_deploy(src)
+				if(status)
+					template.load(src, centered = TRUE)
+					//LAZYREMOVE(structures_junkyard_templates, template)
+					self_area.structures += 1
+
 /turf/proc/resource_definition()
 	LAZYINITLIST(resources)
 	LAZYSET(resources, "silicates", rand(3,6))
