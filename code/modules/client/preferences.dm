@@ -106,6 +106,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	// maps each organ to either null(intact), "cyborg" or "amputated"
 	// will probably not be able to do this for head and torso ;)
 	var/list/organ_data = list()
+	var/ipc_head = "Default"
 
 	var/list/player_alt_titles = new()		// the default name of a job like "Medical Doctor"
 
@@ -304,6 +305,18 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.gender = gender
 	character.age = age
 	character.b_type = b_type
+
+	if(species == IPC)
+		qdel(character.bodyparts_by_name[BP_HEAD])
+		switch(ipc_head)
+			if("Default")
+				new /obj/item/organ/external/head/robot/ipc(null, character)
+			if("Alien")
+				new /obj/item/organ/external/head/robot/ipc/alien(null, character)
+			if("Double")
+				new /obj/item/organ/external/head/robot/ipc/double(null, character)
+			if("Pillar")
+				new /obj/item/organ/external/head/robot/ipc/pillar(null, character)
 
 	character.r_eyes = r_eyes
 	character.g_eyes = g_eyes
