@@ -742,10 +742,6 @@
 	icon_state = "snackteal"
 	light_color = "#ffc400"
 
-/obj/machinery/vending/snack/hacked
-	name = "hacked Getmore Chocolate Corp"
-	prices = list()
-
 /obj/machinery/vending/chinese
 	name = "\improper Mr. Chang"
 	desc = "A self-serving Chinese food machine, for all your Chinese food needs."
@@ -817,10 +813,6 @@
 	icon_state = "gib"
 	product_slogans = "You will lose your guts because of our drinks!; Explosion - in a can!"
 	light_color = "d23c3c"
-
-/obj/machinery/vending/cola/hacked
-	name = "hacked Robust Softdrinks"
-	prices = list()
 
 //This one's from bay12
 /obj/machinery/vending/cart

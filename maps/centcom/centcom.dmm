@@ -1239,8 +1239,7 @@
 	req_access = list(150)
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "dark"
 	},
 /area/syndicate_mothership)
 "agj" = (
@@ -3310,7 +3309,10 @@
 	},
 /area/syndicate_station/start)
 "amy" = (
-/obj/machinery/vending/snack/hacked,
+/obj/machinery/vending/snack{
+	name = "hacked Getmore Chocolate Corp";
+	prices = list()
+	},
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
@@ -4341,8 +4343,7 @@
 	req_access = list(150)
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "dark"
 	},
 /area/syndicate_mothership)
 "aqf" = (
@@ -5204,8 +5205,7 @@
 	req_access = list(150)
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "white"
 	},
 /area/syndicate_mothership)
 "atc" = (
@@ -6326,7 +6326,10 @@
 	},
 /area/centcom/arrival)
 "axb" = (
-/obj/machinery/vending/cola/hacked,
+/obj/machinery/vending/cola{
+	name = "hacked Robust Softdrinks";
+	prices = list()
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -12237,8 +12240,7 @@
 	req_access = list(150)
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "aSc" = (
