@@ -495,11 +495,12 @@
 	if(prob(30) && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-		BP.createwound(CUT, 15)
-		BP.embed(new /obj/item/weapon/shard)
+		var/obj/item/weapon/shard/S = new
+		BP.embed(S)
+		H.apply_damage(15, def_zone = BP_HEAD, damage_flags = DAM_SHARP|DAM_EDGE, used_weapon = S)
 		H.emote("scream",,, 1)
 	else
-		M.apply_damage(15,def_zone = BP_HEAD)
+		M.apply_damage(15, def_zone = BP_HEAD)
 	shatter()
 
 /*
