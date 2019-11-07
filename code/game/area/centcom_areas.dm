@@ -15,9 +15,6 @@
 /area/centcom/evac
 	name = "Centcom Emergency Shuttle"
 
-/area/centcom/suppy
-	name = "Centcom Supply Shuttle"
-
 /area/centcom/ferry
 	name = "Centcom Transport Shuttle"
 
@@ -38,9 +35,6 @@
 
 /area/centcom/holding
 	name = "Holding Facility"
-
-/area/centcom/arrival
-	name = "Arrival Shuttle Dock" 
 
 //PRISON
 /area/centcom/prison
@@ -69,3 +63,6 @@
 /area/centcom/tdome/tdomeobserve
 	name = "Thunderdome (Observer.)"
 	icon_state = "purple"
+
+// CENTCOM AREA LIST
+var/list/centcom_areas_typecache = typecacheof(centcom_shuttle_areas + typesof(/area/centcom))

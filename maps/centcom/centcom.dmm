@@ -6,7 +6,7 @@
 	name = "\improper billboard"
 	},
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "aab" = (
 /obj/effect/step_trigger/thrower{
 	affect_ghosts = 1;
@@ -91,7 +91,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aak" = (
 /obj/structure/rack,
 /obj/item/weapon/implanter,
@@ -102,7 +102,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aal" = (
 /obj/structure/closet/crate,
 /obj/item/device/flash,
@@ -115,7 +115,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aam" = (
 /obj/machinery/light,
 /obj/structure/table/reinforced,
@@ -123,7 +123,7 @@
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aan" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -131,7 +131,7 @@
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aao" = (
 /obj/machinery/door/airlock/centcom{
 	req_access = list(101)
@@ -139,7 +139,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aap" = (
 /obj/machinery/door_control{
 	desc = "A remote control switch for port-side blast doors.";
@@ -176,7 +176,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aaq" = (
 /obj/machinery/door_control{
 	desc = "A remote control switch for port-side blast doors.";
@@ -213,13 +213,13 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aar" = (
 /obj/structure/closet/secure_closet/velocity_security/full,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aas" = (
 /obj/structure/closet/secure_closet/velocity_security/full,
 /obj/machinery/light{
@@ -228,7 +228,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aat" = (
 /obj/machinery/door/airlock/glass{
 	req_access = list(101)
@@ -236,7 +236,7 @@
 /turf/unsimulated/floor{
 	icon_state = "purplechecker"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aau" = (
 /obj/structure/table/woodentable,
 /obj/machinery/faxmachine{
@@ -249,7 +249,7 @@
 	dir = 8;
 	icon_state = "wood"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aav" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/stamp/velocity,
@@ -257,7 +257,7 @@
 	dir = 8;
 	icon_state = "wood"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aaw" = (
 /obj/machinery/door/poddoor,
 /turf/unsimulated/wall,
@@ -273,7 +273,7 @@
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aay" = (
 /obj/structure/sign/barber{
 	pixel_y = 32
@@ -284,7 +284,7 @@
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aaz" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
@@ -303,7 +303,7 @@
 /turf/unsimulated/floor{
 	icon_state = "carpet3-0"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aaA" = (
 /obj/structure/sink{
 	dir = 4;
@@ -324,7 +324,7 @@
 	dir = 8;
 	icon_state = "wood"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aaC" = (
 /obj/machinery/door_control{
 	desc = "A remote control switch for port-side blast doors.";
@@ -350,7 +350,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aaD" = (
 /obj/machinery/vending/medical{
 	req_access = list(101)
@@ -358,7 +358,7 @@
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aaE" = (
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
@@ -366,7 +366,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aaF" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
@@ -380,7 +380,7 @@
 /turf/unsimulated/floor/velocity{
 	icon_state = "white"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aaH" = (
 /obj/machinery/computer/med_data{
 	dir = 8
@@ -388,7 +388,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aaI" = (
 /obj/structure/centcom_barrier,
 /obj/structure/mirror/magic{
@@ -397,7 +397,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aaJ" = (
 /obj/machinery/atm{
 	pixel_x = -30
@@ -405,7 +405,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aaK" = (
 /obj/structure/closet/secure_closet/barber{
 	req_access = list(101)
@@ -423,7 +423,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aaM" = (
 /turf/space,
 /area/space)
@@ -438,7 +438,7 @@
 /area/custom/abductor_ship)
 "aaP" = (
 /turf/unsimulated/wall/fakeglass,
-/area/centcom/arrival)
+/area/velocity)
 "aaQ" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "Now It?s Pepsi for Those Who Think Young";
@@ -446,7 +446,7 @@
 	name = "\improper billboard"
 	},
 /turf/unsimulated/wall/fakeglass,
-/area/centcom/arrival)
+/area/velocity)
 "aaR" = (
 /turf/unsimulated/wall/fakeglass,
 /area/centcom/specops)
@@ -631,31 +631,31 @@
 "acd" = (
 /obj/machinery/door/poddoor,
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "ace" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "1,4"
 	},
 /turf/space/shuttle,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acf" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "0,4"
 	},
 /turf/space/shuttle,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acg" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "3,4"
 	},
 /turf/space/shuttle,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "ach" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "2,4"
 	},
 /turf/space/shuttle,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "aci" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -689,7 +689,7 @@
 	opacity = 0
 	},
 /turf/space,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acl" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "4,4";
@@ -697,13 +697,13 @@
 	opacity = 0
 	},
 /turf/space,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acm" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "9,4"
 	},
 /turf/space/shuttle,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acn" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "7,4";
@@ -711,103 +711,103 @@
 	opacity = 0
 	},
 /turf/space,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "aco" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "11,4"
 	},
 /turf/space/shuttle,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acp" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "10,4"
 	},
 /turf/space/shuttle,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acq" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "12,4"
 	},
 /turf/space/shuttle,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acr" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "1,3"
 	},
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acs" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "0,3"
 	},
 /turf/space/shuttle,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "act" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "3,3"
 	},
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acu" = (
 /obj/structure/closet/wagon,
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acy" = (
 /obj/machinery/computer/arrival_shuttle,
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acz" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "9,3"
 	},
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acB" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "11,3"
 	},
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acC" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "12,3"
 	},
 /turf/space/shuttle,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acD" = (
 /turf/simulated/shuttle/floor/wagon{
 	icon_state = "sign_1"
 	},
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acE" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "0,2"
 	},
 /turf/space/shuttle,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acF" = (
 /obj/machinery/door/airlock/wagon,
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acG" = (
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acH" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "12,2"
 	},
 /turf/space/shuttle,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acI" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "0,1"
 	},
 /turf/space/shuttle,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acJ" = (
 /obj/structure/object_wall/wagon,
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acK" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -815,18 +815,18 @@
 /turf/simulated/shuttle/floor/wagon{
 	icon_state = "sign_2"
 	},
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acO" = (
 /turf/simulated/shuttle/floor/wagon{
 	icon_state = "sign_3"
 	},
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acP" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "9,1"
 	},
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acQ" = (
 /obj/effect/landmark/gateway_transit,
 /turf/unsimulated/floor,
@@ -841,20 +841,20 @@
 /turf/simulated/shuttle/floor/wagon{
 	icon_state = "sign_2"
 	},
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acU" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "12,1"
 	},
 /turf/space/shuttle,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acV" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "6,4";
 	opacity = 0
 	},
 /turf/space,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "acW" = (
 /turf/unsimulated/floor{
 	dir = 9;
@@ -875,7 +875,7 @@
 	icon_state = "0,0"
 	},
 /turf/space/shuttle,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "adk" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "8,4";
@@ -883,7 +883,7 @@
 	opacity = 0
 	},
 /turf/space,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "adl" = (
 /turf/unsimulated/floor{
 	dir = 5;
@@ -893,19 +893,19 @@
 "adm" = (
 /obj/machinery/door/unpowered/shuttle/wagon,
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "adn" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "1,0"
 	},
 /turf/space,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "ado" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "3,0"
 	},
 /turf/space,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "adp" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "5,0";
@@ -913,7 +913,7 @@
 	opacity = 0
 	},
 /turf/space,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "adq" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "4,0";
@@ -921,7 +921,7 @@
 	opacity = 0
 	},
 /turf/space,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "adr" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "7,0";
@@ -929,7 +929,7 @@
 	opacity = 0
 	},
 /turf/space,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "ads" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "6,0";
@@ -937,19 +937,19 @@
 	opacity = 0
 	},
 /turf/space,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "adt" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "9,0"
 	},
 /turf/space,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "adu" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "12,0"
 	},
 /turf/space/shuttle,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "adv" = (
 /obj/machinery/light{
 	dir = 8
@@ -1107,7 +1107,7 @@
 	opacity = 0
 	},
 /turf/space,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "afa" = (
 /obj/machinery/flasher{
 	id = "shutflash";
@@ -1121,7 +1121,7 @@
 	icon_state = "11,0"
 	},
 /turf/space,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "afe" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -1256,18 +1256,18 @@
 	icon_state = "bench_2"
 	},
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "agl" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/structure/stool/bed/chair/schair/wagon/bench,
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "agm" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench,
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "agr" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "19,10";
@@ -1370,13 +1370,13 @@
 	icon_state = "bench_2"
 	},
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "agI" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench{
 	dir = 1
 	},
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "agK" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "6,8"
@@ -1438,7 +1438,7 @@
 	icon_state = "bench_2"
 	},
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "agV" = (
 /obj/structure/closet/erokez,
 /turf/simulated/shuttle/floor/erokez,
@@ -2474,7 +2474,7 @@
 	icon_state = "bench_2"
 	},
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "akn" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "2,4"
@@ -2489,7 +2489,7 @@
 	dir = 1
 	},
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/arrival/pre_game)
+/area/shuttle/arrival/velocity)
 "akp" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "8,4"
@@ -2582,7 +2582,7 @@
 	icon_state = "0,0"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "akG" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "2,3"
@@ -3492,7 +3492,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "anq" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
@@ -3500,7 +3500,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "anr" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 1
@@ -3508,7 +3508,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ans" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -3536,7 +3536,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/centcom/arrival)
+/area/velocity)
 "ant" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -3550,7 +3550,7 @@
 	dir = 9;
 	icon_state = "warnplate"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "anu" = (
 /obj/machinery/atmospherics/components/unary/tank/oxygen{
 	dir = 4
@@ -3558,7 +3558,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "anv" = (
 /obj/machinery/telecomms/allinone{
 	intercept = 1
@@ -3574,7 +3574,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "anx" = (
 /obj/item/weapon/scalpel,
 /obj/item/weapon/circular_saw{
@@ -3596,7 +3596,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "anD" = (
 /obj/structure/table,
 /obj/item/weapon/hemostat,
@@ -3631,7 +3631,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "anG" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -3652,7 +3652,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "anI" = (
 /obj/machinery/airlock_sensor{
 	frequency = 1331;
@@ -3672,7 +3672,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "anK" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/space,
@@ -3718,14 +3718,14 @@
 /area/shuttle/transport1/centcom)
 "aoo" = (
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "aot" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "aou" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -3736,7 +3736,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aov" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -3745,7 +3745,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aow" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -3757,7 +3757,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aox" = (
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/deliveryChute{
@@ -3766,11 +3766,11 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aoz" = (
 /obj/structure/disposalpipe/segment,
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "aoA" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -3778,7 +3778,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aoB" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -3789,7 +3789,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aoC" = (
 /obj/machinery/door/window/southleft{
 	dir = 1;
@@ -3799,7 +3799,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aoD" = (
 /obj/machinery/door/window/southright{
 	dir = 1;
@@ -3809,7 +3809,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aoE" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -3820,7 +3820,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aoF" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -3829,7 +3829,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aoI" = (
 /obj/machinery/light{
 	dir = 8
@@ -3837,12 +3837,12 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aoJ" = (
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aoK" = (
 /obj/machinery/ignition_switch{
 	id = "Incinerator_v";
@@ -3858,7 +3858,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aoO" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 8
@@ -3868,7 +3868,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aoP" = (
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	frequency = 1331;
@@ -3888,7 +3888,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aoQ" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
@@ -3898,7 +3898,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aoR" = (
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 4
@@ -3906,7 +3906,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aoS" = (
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	frequency = 1331;
@@ -3926,7 +3926,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aoT" = (
 /obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/shuttle/floor4{
@@ -3934,7 +3934,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aoU" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -3945,7 +3945,7 @@
 	dir = 5;
 	icon_state = "warnplate"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aoV" = (
 /obj/machinery/door/poddoor{
 	id = "velocity_drop";
@@ -3957,7 +3957,7 @@
 	layer = 2
 	},
 /turf/simulated/floor/plating,
-/area/centcom/arrival)
+/area/velocity)
 "aoW" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "3,1"
@@ -3973,7 +3973,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aoZ" = (
 /obj/machinery/door_control{
 	id = "velocity_main2";
@@ -3985,7 +3985,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apa" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "incerator_velocity2"
@@ -4000,7 +4000,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -4025,7 +4025,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/centcom/arrival)
+/area/velocity)
 "apc" = (
 /obj/machinery/igniter{
 	id = "Incinerator_v"
@@ -4039,7 +4039,7 @@
 	dir = 10;
 	icon_state = "warnplate"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apd" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -4050,7 +4050,7 @@
 	dir = 6;
 	icon_state = "warnplate"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "api" = (
 /obj/machinery/door/poddoor{
 	id = "velocity_main2";
@@ -4060,13 +4060,13 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apm" = (
 /obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /turf/unsimulated/floor{
 	icon_state = "sandwater"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apn" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -4080,7 +4080,7 @@
 /turf/unsimulated/floor{
 	icon_state = "sandwater"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apo" = (
 /obj/machinery/power/smes/magical{
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
@@ -4093,7 +4093,7 @@
 /turf/unsimulated/floor{
 	icon_state = "sandwater"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "app" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma6"
@@ -4121,12 +4121,12 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apv" = (
 /turf/unsimulated/floor{
 	icon_state = "sandwater"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apw" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -4136,7 +4136,7 @@
 /turf/unsimulated/floor{
 	icon_state = "sandwater"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apy" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma3"
@@ -4157,7 +4157,7 @@
 /turf/unsimulated/floor{
 	icon_state = "sandwater"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apE" = (
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
@@ -4167,53 +4167,53 @@
 /turf/unsimulated/floor{
 	icon_state = "sandwater"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apF" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/unsimulated/floor{
 	icon_state = "sandwater"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apG" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "0,2"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "apL" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "0,1"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "apM" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "0,4"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "apN" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "0,3"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "apO" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "0,6"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "apP" = (
 /obj/structure/object_wall/cargo,
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "apQ" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "0,7"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "apR" = (
 /obj/item/weapon/paper{
 	info = "Some stuff is missing...";
@@ -4239,7 +4239,7 @@
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apU" = (
 /obj/machinery/shower{
 	pixel_y = 20
@@ -4253,7 +4253,7 @@
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apV" = (
 /obj/machinery/shower{
 	pixel_y = 20
@@ -4267,7 +4267,7 @@
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apW" = (
 /obj/structure/mirror{
 	pixel_y = 28
@@ -4279,7 +4279,7 @@
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apX" = (
 /obj/machinery/computer/arrival_shuttle{
 	dir = 4
@@ -4287,7 +4287,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apY" = (
 /obj/structure/rack,
 /obj/machinery/light{
@@ -4296,7 +4296,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "apZ" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/door_control{
@@ -4309,7 +4309,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqa" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -4337,7 +4337,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Drop Pods room";
@@ -4353,13 +4353,13 @@
 	icon_state = "1,0"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aqg" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/cargo,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aqh" = (
 /turf/unsimulated/wall/splashscreen,
 /area/start)
@@ -4383,7 +4383,7 @@
 	dir = 6;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aql" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/light{
@@ -4393,14 +4393,14 @@
 	dir = 8;
 	icon_state = "wood"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqm" = (
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqn" = (
 /obj/machinery/light{
 	dir = 8
@@ -4408,12 +4408,12 @@
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqo" = (
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqp" = (
 /obj/machinery/light{
 	dir = 4
@@ -4421,7 +4421,7 @@
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqq" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -4433,7 +4433,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqt" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
@@ -4447,7 +4447,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqu" = (
 /obj/structure/table,
 /obj/item/clothing/suit/straight_jacket,
@@ -4455,13 +4455,13 @@
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqv" = (
 /obj/structure/stool/bed,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqw" = (
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -4472,23 +4472,23 @@
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqx" = (
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqy" = (
 /obj/machinery/gibber,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqC" = (
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqD" = (
 /obj/machinery/light{
 	dir = 1
@@ -4496,23 +4496,23 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqE" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "1,1"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aqF" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "3,0"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aqG" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "2"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aqH" = (
 /turf/space,
 /area/shuttle/alien/base)
@@ -4535,26 +4535,26 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor/wood,
-/area/centcom/arrival)
+/area/velocity)
 "aqM" = (
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqN" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqO" = (
 /obj/machinery/washing_machine,
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqP" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -4563,13 +4563,13 @@
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqQ" = (
 /obj/structure/closet/secure_closet/personal,
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqR" = (
 /obj/machinery/computer/station_alert{
 	dir = 4
@@ -4577,7 +4577,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqT" = (
 /obj/structure/closet/crate/seized_inventory,
 /obj/item/weapon/game_kit/random,
@@ -4585,7 +4585,7 @@
 	dir = 4;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqW" = (
 /obj/item/weapon/storage/box/bodybags{
 	pixel_x = 3;
@@ -4594,29 +4594,29 @@
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aqX" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor/engine,
-/area/centcom/arrival)
+/area/velocity)
 "arb" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,0"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "arc" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "1,7"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "ard" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "2,0"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "are" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -4625,7 +4625,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "arj" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -4652,7 +4652,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ark" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -4665,7 +4665,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "arl" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -4692,7 +4692,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "arn" = (
 /obj/structure/sign/mark{
 	icon_state = "*";
@@ -4704,7 +4704,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aro" = (
 /obj/machinery/door/poddoor/shutters{
 	dir = 4;
@@ -4714,7 +4714,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "arp" = (
 /obj/machinery/door/poddoor/shutters{
 	dir = 8;
@@ -4724,7 +4724,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "arr" = (
 /obj/structure/plasticflaps{
 	opacity = 1
@@ -4736,7 +4736,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ars" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "CKLoad";
@@ -4745,7 +4745,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aru" = (
 /obj/structure/stool/bed/alien,
 /turf/unsimulated/floor{
@@ -4777,14 +4777,14 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "arx" = (
 /obj/structure/table/woodentable,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "arz" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -4811,28 +4811,28 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "arJ" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,1"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "arK" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "2,1"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "arM" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "0,2"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "arN" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "3,1"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "arO" = (
 /obj/structure/table/reinforced,
 /obj/machinery/status_display{
@@ -4854,12 +4854,12 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "arP" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,5"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "arR" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/folder/red,
@@ -4870,7 +4870,7 @@
 	dir = 8;
 	icon_state = "wood"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "arS" = (
 /obj/structure/table/woodentable,
 /obj/machinery/door_control{
@@ -4885,7 +4885,7 @@
 	dir = 8;
 	icon_state = "wood"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "arU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -4894,17 +4894,17 @@
 	dir = 8;
 	icon_state = "wood"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "arY" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,2"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "arZ" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asa" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Supply Shuttle";
@@ -4913,13 +4913,13 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asb" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "3,0"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "asc" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper_bin{
@@ -4931,7 +4931,7 @@
 	dir = 8;
 	icon_state = "wood"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ase" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/grille,
@@ -4959,30 +4959,30 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ash" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "2,2"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "asi" = (
 /obj/machinery/computer/cargo,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asj" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "3,1"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "ask" = (
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "warnplate"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asl" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma5"
@@ -4998,7 +4998,7 @@
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asq" = (
 /obj/machinery/door/window/southleft{
 	dir = 1;
@@ -5008,7 +5008,7 @@
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asr" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -5019,7 +5019,7 @@
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ass" = (
 /obj/machinery/door/airlock/glass{
 	name = "Armoury Section";
@@ -5028,7 +5028,7 @@
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asv" = (
 /obj/machinery/door/airlock/security{
 	name = "Prison Wing";
@@ -5037,26 +5037,26 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asw" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/hand_labeler,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asx" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "0,3"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "asy" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area/centcom/arrival)
+/area/velocity)
 "asz" = (
 /obj/machinery/color_mixer,
 /turf/unsimulated/floor{
@@ -5070,13 +5070,13 @@
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asB" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asC" = (
 /obj/machinery/cryopod{
 	storage = 0
@@ -5084,7 +5084,7 @@
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asD" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced{
@@ -5106,12 +5106,12 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asE" = (
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asF" = (
 /obj/machinery/body_scanconsole,
 /obj/machinery/iv_drip,
@@ -5132,24 +5132,24 @@
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "3,2"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "asK" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,2"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "asL" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,3"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "asN" = (
 /obj/random/vending/cola,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asO" = (
 /obj/random/vending/snack,
 /obj/machinery/light,
@@ -5157,7 +5157,7 @@
 	dir = 8;
 	icon_state = "wood"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asP" = (
 /obj/structure/table/reinforced,
 /obj/machinery/kitchen_machine/microwave{
@@ -5168,7 +5168,7 @@
 	dir = 8;
 	icon_state = "wood"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asQ" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced{
@@ -5190,7 +5190,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "asR" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/glass{
@@ -5200,7 +5200,7 @@
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Kitchen";
@@ -5217,17 +5217,17 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "atd" = (
 /obj/machinery/door/unpowered/shuttle/wagon,
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,3"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "ate" = (
 /obj/structure/sign/poster,
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "atf" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -5236,7 +5236,7 @@
 	dir = 1;
 	icon_state = "orangefull"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atg" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced,
@@ -5259,7 +5259,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ath" = (
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 30
@@ -5267,7 +5267,7 @@
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atk" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -5294,29 +5294,29 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atn" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "4,0"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "ato" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "2,3"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "atp" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "4,1"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "atq" = (
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atr" = (
 /obj/machinery/light{
 	dir = 4
@@ -5324,7 +5324,7 @@
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ats" = (
 /turf/unsimulated/floor/velocity{
 	icon_state = "white"
@@ -5337,7 +5337,7 @@
 	dir = 8;
 	icon_state = "wood"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atv" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -5349,7 +5349,7 @@
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atw" = (
 /obj/machinery/flasher_button{
 	id = "velocity_cell2";
@@ -5382,7 +5382,7 @@
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atx" = (
 /obj/machinery/door/airlock{
 	name = "Unit 1"
@@ -5390,7 +5390,7 @@
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aty" = (
 /obj/effect/landmark/trololo,
 /obj/machinery/door/airlock/centcom{
@@ -5399,7 +5399,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atB" = (
 /obj/machinery/door/poddoor,
 /turf/unsimulated/wall,
@@ -5418,7 +5418,7 @@
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atI" = (
 /obj/structure/urinal{
 	pixel_y = 32
@@ -5429,7 +5429,7 @@
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atJ" = (
 /obj/structure/sink{
 	dir = 4;
@@ -5441,7 +5441,7 @@
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atK" = (
 /obj/structure/rack,
 /obj/item/device/camera,
@@ -5453,7 +5453,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atL" = (
 /obj/structure/table/glass,
 /obj/structure/mirror/magic{
@@ -5470,7 +5470,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atP" = (
 /turf/simulated/shuttle/plating,
 /area/space)
@@ -5506,7 +5506,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atU" = (
 /obj/structure/centcom_barrier,
 /obj/structure/reagent_dispensers/peppertank{
@@ -5515,13 +5515,13 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atV" = (
 /obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atW" = (
 /obj/structure/centcom_barrier,
 /obj/structure/stool/bed/chair/metal/red{
@@ -5531,7 +5531,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "atX" = (
 /obj/machinery/recharger/wallcharger{
 	pixel_x = 32
@@ -5542,7 +5542,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aub" = (
 /obj/machinery/light{
 	dir = 8
@@ -5550,7 +5550,7 @@
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auc" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -5559,7 +5559,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aue" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
@@ -5570,7 +5570,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auj" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "5,1"
@@ -5596,7 +5596,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aun" = (
 /obj/structure/closet/emcloset{
 	pixel_x = -7
@@ -5608,7 +5608,7 @@
 	dir = 1;
 	icon_state = "green"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aup" = (
 /obj/structure/sign/velocity_overlay/reklama/soda_ad{
 	pixel_x = -28;
@@ -5617,14 +5617,14 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auq" = (
 /obj/random/vending/snack,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "green"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aur" = (
 /obj/machinery/newscaster{
 	pixel_y = 32
@@ -5635,19 +5635,19 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aut" = (
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "red"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auu" = (
 /obj/structure/flora/plant/random,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auv" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -5674,7 +5674,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auw" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "17,1";
@@ -5689,19 +5689,19 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auy" = (
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "loadingarea"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auz" = (
 /obj/random/vending/cola,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auA" = (
 /obj/machinery/chem_dispenser,
 /obj/item/weapon/storage/box/beakers,
@@ -5714,7 +5714,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auC" = (
 /obj/machinery/door_control{
 	desc = "A remote control switch for port-side shutters.";
@@ -5728,19 +5728,19 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auI" = (
 /turf/simulated/shuttle/plating,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auJ" = (
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "warnplate"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auK" = (
 /obj/machinery/door_control{
 	desc = "A remote control switch for port-side blast doors.";
@@ -5773,12 +5773,12 @@
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auM" = (
 /turf/unsimulated/floor{
 	icon_state = "bot"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auO" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -5787,20 +5787,20 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auP" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/centcom/arrival)
+/area/velocity)
 "auQ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "auS" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -5815,7 +5815,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auT" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -5833,13 +5833,13 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auV" = (
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "auZ" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Checkpoint";
@@ -5848,7 +5848,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "avf" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "19,1";
@@ -5871,7 +5871,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "avi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -5880,7 +5880,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "avn" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -5892,12 +5892,12 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "avo" = (
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "avr" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -5906,7 +5906,7 @@
 	dir = 8;
 	icon_state = "warnplate"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "avs" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -5933,7 +5933,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "avt" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "19,0";
@@ -5966,7 +5966,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "avC" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -5975,13 +5975,13 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "avD" = (
 /obj/structure/disposalpipe/segment,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "avG" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/milosoup,
@@ -6015,7 +6015,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "avU" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/briefcase,
@@ -6034,14 +6034,14 @@
 	dir = 4;
 	icon_state = "green"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "avX" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "Space Beer. Take it easy.";
 	name = "\improper billboard"
 	},
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "awb" = (
 /obj/machinery/light{
 	dir = 1
@@ -6083,13 +6083,13 @@
 	dir = 4;
 	icon_state = "green"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "awm" = (
 /obj/machinery/status_display{
 	layer = 4
 	},
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "awn" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light{
@@ -6098,13 +6098,13 @@
 /turf/unsimulated/floor{
 	icon_state = "green"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "awo" = (
 /obj/structure/table/reinforced,
 /turf/unsimulated/floor{
 	icon_state = "green"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "awr" = (
 /obj/structure/sign/directions/velocity{
 	dir = 4;
@@ -6113,7 +6113,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "awt" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -6187,7 +6187,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "awC" = (
 /turf/simulated/shuttle/plating,
 /turf/simulated/shuttle/wall{
@@ -6217,7 +6217,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "awH" = (
 /obj/structure/closet/wardrobe/xenos,
 /obj/structure/disposalpipe/segment,
@@ -6225,14 +6225,14 @@
 	dir = 4;
 	icon_state = "green"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "awI" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/simulated/floor/grass,
-/area/centcom/arrival)
+/area/velocity)
 "awJ" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -6244,21 +6244,21 @@
 	name = "Officer Robust"
 	},
 /turf/simulated/floor/grass,
-/area/centcom/arrival)
+/area/velocity)
 "awK" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/simulated/floor/grass,
-/area/centcom/arrival)
+/area/velocity)
 "awL" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/flora/ausbushes/brflowers,
 /turf/simulated/floor/grass,
-/area/centcom/arrival)
+/area/velocity)
 "awT" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/centcom,
@@ -6307,14 +6307,14 @@
 	dir = 8;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "awZ" = (
 /obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "axa" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Cargo";
@@ -6324,7 +6324,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "axb" = (
 /obj/random/vending/cola,
 /turf/unsimulated/floor{
@@ -6335,12 +6335,12 @@
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,3"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "axd" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "3,3"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "axf" = (
 /obj/structure/closet/wardrobe/white,
 /obj/structure/disposalpipe/segment,
@@ -6348,27 +6348,27 @@
 	dir = 4;
 	icon_state = "green"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "axg" = (
 /obj/structure/window/reinforced,
 /obj/structure/flora/ausbushes/brflowers,
 /turf/simulated/floor/grass,
-/area/centcom/arrival)
+/area/velocity)
 "axh" = (
 /obj/structure/window/reinforced,
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/simulated/floor/grass,
-/area/centcom/arrival)
+/area/velocity)
 "axi" = (
 /obj/structure/window/reinforced,
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/simulated/floor/grass,
-/area/centcom/arrival)
+/area/velocity)
 "axj" = (
 /obj/structure/window/reinforced,
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/simulated/floor/grass,
-/area/centcom/arrival)
+/area/velocity)
 "axk" = (
 /obj/machinery/information_display{
 	icon_state = "screen_amin_velocity_90";
@@ -6377,40 +6377,40 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "axp" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,4"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "axq" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "0,4"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "axr" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "4,7"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "axs" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "5,0"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "axt" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "2,4"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "axu" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "5,1"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "axv" = (
 /obj/structure/closet/wardrobe/mixed,
 /obj/structure/disposalpipe/segment,
@@ -6418,7 +6418,7 @@
 	dir = 4;
 	icon_state = "green"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "axB" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -6444,12 +6444,12 @@
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "0,5"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "axG" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "3,4"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "axH" = (
 /obj/structure/closet/wardrobe/grey,
 /obj/structure/window/reinforced,
@@ -6461,7 +6461,7 @@
 	dir = 4;
 	icon_state = "green"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "axK" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "<5555> Best in space. Since 2322.";
@@ -6469,7 +6469,7 @@
 	name = "\improper billboard"
 	},
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "axN" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -6481,17 +6481,17 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "axO" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,4"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "axS" = (
 /turf/unsimulated/floor{
 	icon_state = "red"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "axT" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -6533,14 +6533,14 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "axW" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/centcom/arrival)
+/area/velocity)
 "axY" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -6555,7 +6555,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "axZ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -6572,7 +6572,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ayb" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "Caterpillar Tractor Co.";
@@ -6580,7 +6580,7 @@
 	name = "\improper billboard"
 	},
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "ayc" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "In Decay";
@@ -6588,7 +6588,7 @@
 	name = "\improper billboard"
 	},
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "ayd" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "Summer in NeoTokyo.";
@@ -6596,13 +6596,13 @@
 	name = "\improper billboard"
 	},
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "aye" = (
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ayf" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
@@ -6618,7 +6618,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ayh" = (
 /obj/machinery/door_control{
 	desc = "A remote control switch for port-side shutters.";
@@ -6635,7 +6635,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ayk" = (
 /obj/structure/closet/emcloset{
 	pixel_x = -7
@@ -6643,13 +6643,13 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ayl" = (
 /obj/machinery/vending/cigarette,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aym" = (
 /obj/machinery/newscaster{
 	pixel_y = -28
@@ -6658,7 +6658,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ayn" = (
 /obj/machinery/door/airlock/centcom{
 	req_access = list(101)
@@ -6667,7 +6667,7 @@
 	dir = 1;
 	icon_state = "bluefull"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ayo" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -6714,7 +6714,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ayr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -6723,7 +6723,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ays" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access = list(101)
@@ -6731,7 +6731,7 @@
 /turf/unsimulated/floor{
 	icon_state = "bot"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ayt" = (
 /obj/item/weapon/crowbar/red,
 /turf/simulated/shuttle/plating,
@@ -6742,14 +6742,14 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ayw" = (
 /obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "bluefull"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ayx" = (
 /obj/structure/stool/bed/chair/barber{
 	dir = 1
@@ -6763,7 +6763,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ayz" = (
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = -30
@@ -6774,13 +6774,13 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ayA" = (
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "bluefull"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ayB" = (
 /turf/unsimulated/floor{
 	icon_state = "purplechecker"
@@ -6793,7 +6793,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ayE" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -6818,13 +6818,13 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ayJ" = (
 /obj/structure/closet/toolcloset,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ayK" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -6938,7 +6938,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "azg" = (
 /obj/structure/closet/emcloset{
 	pixel_x = 7
@@ -6947,13 +6947,13 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "azh" = (
 /obj/structure/closet/crate,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "azi" = (
 /turf/unsimulated/floor{
 	icon_state = "circuit"
@@ -7068,7 +7068,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "azD" = (
 /obj/machinery/door_control{
 	id = "velocity_main";
@@ -7080,7 +7080,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "azE" = (
 /obj/machinery/computer/pod{
 	id = "NTrasen";
@@ -7130,7 +7130,7 @@
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,5"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "azP" = (
 /obj/machinery/door/poddoor{
 	id = "velocity_main";
@@ -7146,7 +7146,7 @@
 /turf/unsimulated/floor{
 	icon_state = "circuit"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "azQ" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "diagonalWall3"
@@ -7246,7 +7246,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aAb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Apply butt";
@@ -7256,7 +7256,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aAc" = (
 /obj/effect/landmark/start{
 	name = "Velocity Officer"
@@ -7265,7 +7265,7 @@
 	dir = 1;
 	icon_state = "bluefull"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aAd" = (
 /obj/machinery/light{
 	dir = 8
@@ -7308,13 +7308,13 @@
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aAk" = (
 /obj/machinery/door/unpowered/shuttle/wagon,
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,6"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aAl" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -7361,7 +7361,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aAz" = (
 /obj/structure/table,
 /turf/unsimulated/floor{
@@ -7379,12 +7379,12 @@
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aAB" = (
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aAD" = (
 /obj/machinery/light{
 	dir = 1
@@ -7411,7 +7411,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aAH" = (
 /obj/machinery/deployable/barrier{
 	req_access = list(101)
@@ -7420,7 +7420,7 @@
 	dir = 4;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aAJ" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/hypospray,
@@ -7719,7 +7719,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aBu" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /obj/machinery/light{
@@ -7728,14 +7728,14 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aBv" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aBy" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Engine looks like broken";
@@ -7748,7 +7748,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aBA" = (
 /obj/structure/sign/velocity_overlay{
 	density = 1;
@@ -7759,7 +7759,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aBC" = (
 /obj/machinery/mech_bay_recharge_port,
 /turf/unsimulated/floor{
@@ -7968,14 +7968,14 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aBV" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aBW" = (
 /obj/effect/landmark{
 	name = "Marauder Exit"
@@ -8161,7 +8161,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aCx" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
@@ -8170,7 +8170,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aCy" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
@@ -8178,7 +8178,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aCz" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
@@ -8186,13 +8186,13 @@
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aCB" = (
 /obj/structure/window/reinforced,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aCC" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
@@ -8200,7 +8200,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aCD" = (
 /obj/machinery/mech_bay_recharge_port,
 /obj/machinery/light{
@@ -9385,14 +9385,14 @@
 "aGH" = (
 /obj/machinery/door/poddoor/shutters,
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "aGI" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	locked = 1;
 	req_access = list(101)
 	},
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "aGN" = (
 /obj/machinery/door/airlock/external{
 	name = "Salvage Shuttle Dock"
@@ -9513,7 +9513,7 @@
 	icon_state = "6,0"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aHl" = (
 /obj/machinery/cryopod/right{
 	storage = 0
@@ -9547,7 +9547,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aHp" = (
 /turf/unsimulated/floor{
 	name = "plating"
@@ -9661,7 +9661,7 @@
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "2,5"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aHD" = (
 /obj/structure/window/reinforced{
 	dir = 5;
@@ -10348,7 +10348,7 @@
 	icon_state = "6,1"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aKj" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s6"
@@ -10558,7 +10558,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aKP" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -12015,7 +12015,7 @@
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "2,1"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aRb" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/unsimulated/floor{
@@ -12456,7 +12456,7 @@
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "3,5"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aSC" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -12673,12 +12673,12 @@
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,1"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aTk" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "0,6"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aTn" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 4
@@ -12863,7 +12863,7 @@
 	icon_state = "7,0"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aTJ" = (
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -13033,7 +13033,7 @@
 	icon_state = "7,1"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aUn" = (
 /turf/unsimulated/floor{
 	dir = 10;
@@ -13104,7 +13104,7 @@
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "3"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aUz" = (
 /obj/machinery/conveyor{
 	dir = 10;
@@ -13195,7 +13195,7 @@
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "2,6"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aUQ" = (
 /obj/machinery/light{
 	dir = 4
@@ -13203,12 +13203,12 @@
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,6"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aUS" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "3,6"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aUT" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall3"
@@ -13219,25 +13219,25 @@
 	icon_state = "7,7"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aUW" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "8,0"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aUY" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "8,2"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aVa" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "8,1"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aVb" = (
 /obj/effect/step_trigger/thrower{
 	affect_ghosts = 1;
@@ -13421,7 +13421,7 @@
 	icon_state = "8,4"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aVy" = (
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
@@ -13432,7 +13432,7 @@
 	icon_state = "8,3"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aVC" = (
 /obj/structure/closet/secure_closet/bar,
 /turf/unsimulated/floor{
@@ -13490,13 +13490,13 @@
 	icon_state = "8,6"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aVP" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "8,5"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aVQ" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave{
@@ -13549,37 +13549,37 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "aWf" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "8,7"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aWg" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "9,0"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aWh" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "9,2"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aWi" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "9,1"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aWj" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "9,4"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aWk" = (
 /obj/structure/closet/secure_closet/freezer/meat,
 /turf/unsimulated/floor{
@@ -13607,19 +13607,19 @@
 	icon_state = "9,3"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aWu" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "9,6"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aWv" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "9,5"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aWw" = (
 /obj/structure/table{
 	dir = 9;
@@ -13672,7 +13672,7 @@
 	icon_state = "9,7"
 	},
 /turf/space,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "aWE" = (
 /obj/effect/overlay/palmtree_r,
 /turf/unsimulated/beach/sand,
@@ -13688,7 +13688,7 @@
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aWH" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall3"
@@ -13700,7 +13700,7 @@
 	dir = 1;
 	icon_state = "diagonalWall3"
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aWJ" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall14"
@@ -13730,7 +13730,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aWM" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -13753,7 +13753,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aWO" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -13776,7 +13776,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aWP" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
@@ -13789,7 +13789,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aWR" = (
 /obj/machinery/status_display,
 /turf/unsimulated/wall,
@@ -13801,7 +13801,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aWU" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -13836,7 +13836,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXb" = (
 /obj/machinery/access_button{
 	command = "cycle_exterior";
@@ -13847,7 +13847,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXc" = (
 /obj/machinery/door/airlock/hatch{
 	frequency = 1331;
@@ -13860,7 +13860,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXd" = (
 /obj/machinery/door_control{
 	id = "skipjack";
@@ -13872,7 +13872,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXe" = (
 /obj/structure/stool/bed/chair{
 	dir = 1
@@ -13882,7 +13882,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXf" = (
 /obj/effect/landmark{
 	name = "voxstart"
@@ -13892,14 +13892,14 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXg" = (
 /turf/simulated/shuttle/floor4{
 	name = "red floor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXh" = (
 /obj/machinery/access_button{
 	command = "cycle_exterior";
@@ -13910,7 +13910,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXi" = (
 /obj/machinery/door/airlock/hatch{
 	frequency = 1331;
@@ -13923,7 +13923,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXj" = (
 /obj/machinery/light{
 	dir = 4
@@ -13945,7 +13945,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXm" = (
 /obj/item/weapon/stool,
 /turf/simulated/shuttle/floor4{
@@ -13953,7 +13953,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXn" = (
 /obj/item/clothing/head/collectable/petehat{
 	desc = "It smells faintly of reptile.";
@@ -13964,7 +13964,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXt" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomeaxe";
@@ -14027,7 +14027,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXD" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -14052,7 +14052,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXE" = (
 /obj/effect/landmark{
 	name = "voxstart"
@@ -14063,7 +14063,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXG" = (
 /obj/machinery/door/airlock/hatch{
 	frequency = 1331;
@@ -14077,7 +14077,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXI" = (
 /obj/machinery/access_button{
 	command = "cycle_interior";
@@ -14088,7 +14088,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXK" = (
 /obj/machinery/door/airlock/hatch{
 	req_access = list(150)
@@ -14098,7 +14098,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXM" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/red,
@@ -14213,7 +14213,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXY" = (
 /obj/machinery/access_button{
 	command = "cycle_interior";
@@ -14224,14 +14224,14 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aXZ" = (
 /turf/simulated/shuttle/plating{
 	name = "dark plating";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYa" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -14241,7 +14241,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYb" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -14251,7 +14251,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYd" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -14274,7 +14274,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYe" = (
 /obj/structure/window/basic{
 	dir = 1
@@ -14288,7 +14288,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYf" = (
 /obj/structure/window/basic{
 	dir = 1
@@ -14300,7 +14300,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYg" = (
 /obj/structure/window/basic{
 	dir = 1
@@ -14312,7 +14312,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYh" = (
 /obj/structure/window/basic{
 	dir = 1
@@ -14324,7 +14324,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYi" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/pickaxe,
@@ -14337,7 +14337,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYk" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/circular_saw,
@@ -14349,7 +14349,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYl" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/scalpel,
@@ -14364,7 +14364,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYm" = (
 /obj/machinery/optable,
 /obj/item/brain,
@@ -14376,7 +14376,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYn" = (
 /obj/item/organ/external/r_arm,
 /turf/simulated/shuttle/floor4{
@@ -14384,7 +14384,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYo" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -14410,7 +14410,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYt" = (
 /obj/machinery/camera{
 	c_tag = "Red Team";
@@ -14453,7 +14453,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYx" = (
 /obj/structure/rack,
 /obj/item/weapon/tank/nitrogen,
@@ -14467,7 +14467,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYz" = (
 /obj/structure/rack,
 /obj/item/weapon/rcd,
@@ -14479,7 +14479,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYA" = (
 /obj/structure/rack,
 /obj/item/clothing/accessory/storage/black_vest,
@@ -14491,7 +14491,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYB" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/dartgun/vox/raider,
@@ -14505,7 +14505,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYC" = (
 /obj/machinery/sleeper{
 	dir = 4
@@ -14515,7 +14515,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYF" = (
 /obj/machinery/camera{
 	c_tag = "Arena";
@@ -14526,7 +14526,7 @@
 /area/centcom/tdome)
 "aYG" = (
 /turf/space,
-/area/shuttle/officer/centcomm)
+/area/shuttle/officer/centcom)
 "aYJ" = (
 /turf/space,
 /area/centcom/evac)
@@ -14552,7 +14552,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYQ" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomegen";
@@ -14573,7 +14573,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYV" = (
 /obj/machinery/body_scanconsole{
 	known_implants = list(/obj/item/weapon/implant/cortical)
@@ -14583,7 +14583,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aYW" = (
 /obj/machinery/door/airlock/command{
 	name = "Thunderdome Administration";
@@ -14612,7 +14612,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "diagonalWall3"
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aZb" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall2"
@@ -14629,7 +14629,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aZd" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -14706,14 +14706,14 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aZo" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aZq" = (
 /obj/structure/rack,
 /obj/item/clothing/accessory/storage/black_vest,
@@ -14725,7 +14725,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aZr" = (
 /obj/structure/rack,
 /obj/item/weapon/crossbow,
@@ -14738,7 +14738,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aZs" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -14770,7 +14770,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aZE" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -14785,7 +14785,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aZL" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -14800,7 +14800,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aZN" = (
 /obj/item/clothing/head/bowler,
 /obj/item/weapon/broken_bottle,
@@ -14809,7 +14809,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aZP" = (
 /obj/item/clothing/head/bearpelt,
 /obj/item/xenos_claw,
@@ -14818,7 +14818,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aZQ" = (
 /obj/item/clothing/suit/space/syndicate/civilian,
 /turf/simulated/shuttle/floor4{
@@ -14826,7 +14826,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aZR" = (
 /obj/item/clothing/head/collectable/xenom,
 /obj/item/clothing/head/chicken,
@@ -14836,7 +14836,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aZS" = (
 /obj/item/weapon/spacecash/c50,
 /obj/structure/stool/bed/chair{
@@ -14847,7 +14847,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "aZT" = (
 /obj/item/weapon/spacecash/c1000,
 /obj/item/weapon/spacecash/c500,
@@ -14856,7 +14856,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "bab" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
@@ -14877,7 +14877,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "bai" = (
 /obj/structure/AIcore,
 /turf/simulated/shuttle/floor4{
@@ -14885,7 +14885,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "bam" = (
 /obj/structure/jungle_plant,
 /turf/simulated/shuttle/floor4{
@@ -14893,7 +14893,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "ban" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -14915,7 +14915,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "bao" = (
 /obj/item/weapon/storage/briefcase/inflatable,
 /obj/item/weapon/storage/briefcase/inflatable,
@@ -14924,7 +14924,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "bap" = (
 /obj/item/clothing/head/helmet/space/syndicate/civilian,
 /turf/simulated/shuttle/floor4{
@@ -14932,7 +14932,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "baq" = (
 /obj/item/clothing/head/helmet/space/syndicate/striker,
 /turf/simulated/shuttle/floor4{
@@ -14940,7 +14940,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "bar" = (
 /turf/unsimulated/wall,
 /area/custom/wizard_station)
@@ -15368,7 +15368,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "bbm" = (
 /obj/item/clothing/suit/space/syndicate/striker,
 /turf/simulated/shuttle/floor4{
@@ -15376,7 +15376,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "bbo" = (
 /obj/structure/stool/bed/chair/wood/wings{
 	dir = 4
@@ -15497,7 +15497,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "bbX" = (
 /obj/structure/table/woodentable,
 /obj/item/device/megaphone,
@@ -15827,7 +15827,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "bej" = (
 /obj/machinery/abductor/experiment{
 	team = 3
@@ -15938,7 +15938,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/shuttle/vox/station)
+/area/shuttle/vox/arkship)
 "beQ" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/melee/baton,
@@ -15987,7 +15987,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "bfh" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/box/handcuffs,
@@ -16585,28 +16585,28 @@
 	dir = 9;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "bTb" = (
 /obj/structure/largecrate,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "bUb" = (
 /obj/structure/closet,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "bVb" = (
 /obj/structure/closet,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "bWb" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -16616,19 +16616,19 @@
 	dir = 8;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "bXb" = (
 /turf/unsimulated/floor{
 	dir = 9;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "bYb" = (
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "bZb" = (
 /obj/machinery/status_display{
 	pixel_x = 32;
@@ -16644,7 +16644,7 @@
 	dir = 4;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cab" = (
 /obj/effect/landmark/start{
 	name = "Fallback-Start"
@@ -16652,25 +16652,25 @@
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cbb" = (
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ccb" = (
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cdb" = (
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ceb" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -16682,7 +16682,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cfb" = (
 /obj/machinery/door_control{
 	id = "ck_warehouse";
@@ -16695,12 +16695,12 @@
 	dir = 10;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cgb" = (
 /turf/unsimulated/floor{
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "chb" = (
 /obj/machinery/light{
 	dir = 1
@@ -16709,13 +16709,13 @@
 	dir = 9;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cib" = (
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cjb" = (
 /obj/machinery/door_control{
 	id = "ck_warehouse";
@@ -16728,7 +16728,7 @@
 	dir = 5;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ckb" = (
 /obj/structure/flora/plant/random,
 /obj/structure/centcom_barrier,
@@ -16736,14 +16736,14 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "clb" = (
 /obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cmb" = (
 /obj/structure/flora/plant/random,
 /obj/machinery/door_control{
@@ -16758,13 +16758,13 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cnb" = (
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cob" = (
 /obj/structure/sign/directions/velocity{
 	dir = 4;
@@ -16775,21 +16775,21 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cpb" = (
 /obj/structure/closet/crate,
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cqb" = (
 /obj/structure/closet/crate,
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "brown"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "crb" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -16797,7 +16797,7 @@
 /turf/unsimulated/floor{
 	icon_state = "sandwater"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "csb" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -16810,7 +16810,7 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ctb" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
@@ -16825,7 +16825,7 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cub" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -16833,24 +16833,24 @@
 /turf/unsimulated/floor{
 	icon_state = "carpet6-0"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cvb" = (
 /turf/unsimulated/floor{
 	icon_state = "carpet8-0"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cwb" = (
 /turf/unsimulated/floor{
 	icon_state = "carpet1-0"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cxb" = (
 /obj/structure/flora/plant/random,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cyb" = (
 /obj/machinery/door_control{
 	id = "velocity_hall";
@@ -16862,7 +16862,7 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "czb" = (
 /obj/machinery/door_control{
 	id = "velocity_room02";
@@ -16874,24 +16874,24 @@
 /turf/unsimulated/floor{
 	icon_state = "carpet6-0"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cAb" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/unsimulated/floor{
 	icon_state = "carpet12-0"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cBb" = (
 /turf/unsimulated/floor{
 	icon_state = "carpet10-0"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cCb" = (
 /obj/machinery/door/airlock/centcom,
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cDb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -16907,7 +16907,7 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cEb" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
@@ -16916,17 +16916,17 @@
 /turf/unsimulated/floor{
 	icon_state = "carpet3-0"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cFb" = (
 /turf/unsimulated/floor{
 	icon_state = "carpet3-0"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cGb" = (
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cHb" = (
 /obj/machinery/light{
 	dir = 1
@@ -16934,7 +16934,7 @@
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cIb" = (
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -16942,13 +16942,13 @@
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cJb" = (
 /obj/structure/flora/plant/random,
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cKb" = (
 /obj/structure/disposalpipe/junction{
 	dir = 1
@@ -16978,7 +16978,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cLb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -16986,7 +16986,7 @@
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cMb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -16995,7 +16995,7 @@
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cNb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -17006,7 +17006,7 @@
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cOb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
@@ -17018,7 +17018,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cPb" = (
 /obj/structure/dryer{
 	dir = 8;
@@ -17035,7 +17035,7 @@
 /turf/unsimulated/floor{
 	icon_state = "carpet3-0"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cRb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -17051,7 +17051,7 @@
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cSb" = (
 /obj/structure/disposalpipe/junction{
 	dir = 1;
@@ -17070,13 +17070,13 @@
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cTb" = (
 /obj/machinery/door/firedoor,
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cUb" = (
 /obj/machinery/door_control{
 	id = "velocity_hall";
@@ -17088,13 +17088,13 @@
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cVb" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cWb" = (
 /obj/machinery/door_control{
 	id = "velocity_room02";
@@ -17106,7 +17106,7 @@
 /turf/unsimulated/floor{
 	icon_state = "carpet5-0"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cXb" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 1
@@ -17114,12 +17114,12 @@
 /turf/unsimulated/floor{
 	icon_state = "carpet12-0"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cYb" = (
 /turf/unsimulated/floor{
 	icon_state = "carpet9-0"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "cZb" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/directions/velocity{
@@ -17130,7 +17130,7 @@
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dab" = (
 /obj/machinery/door/airlock/centcom{
 	req_access = list(101)
@@ -17138,7 +17138,7 @@
 /turf/unsimulated/floor{
 	icon_state = "bcircuitoff"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dbb" = (
 /obj/structure/sign/directions/velocity{
 	dir = 4;
@@ -17148,12 +17148,12 @@
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dcb" = (
 /turf/unsimulated/floor{
 	icon_state = "bcircuitoff"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ddb" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
@@ -17161,7 +17161,7 @@
 /turf/unsimulated/floor{
 	icon_state = "bcircuitoff"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "deb" = (
 /obj/structure/table/reinforced{
 	icon_state = "table"
@@ -17171,7 +17171,7 @@
 /turf/unsimulated/floor{
 	icon_state = "bcircuitoff"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dfb" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 8
@@ -17179,7 +17179,7 @@
 /turf/unsimulated/floor{
 	icon_state = "bcircuitoff"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dgb" = (
 /obj/structure/sign/mark{
 	icon_state = "rrt"
@@ -17187,7 +17187,7 @@
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dhb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -17207,12 +17207,12 @@
 /turf/unsimulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dib" = (
 /turf/unsimulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "djb" = (
 /obj/machinery/flasher{
 	id = "velocity_cell1";
@@ -17221,7 +17221,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dkb" = (
 /obj/structure/flora/plant/random,
 /obj/machinery/light{
@@ -17230,7 +17230,7 @@
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dlb" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -17239,7 +17239,7 @@
 /turf/unsimulated/floor{
 	icon_state = "bcircuitoff"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dmb" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
@@ -17247,7 +17247,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dnb" = (
 /obj/structure/sink{
 	dir = 8;
@@ -17258,14 +17258,14 @@
 	dir = 4;
 	icon_state = "warnwhite"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dob" = (
 /obj/structure/closet/emcloset,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "warnwhite"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dpb" = (
 /obj/structure/rail_centcomm{
 	icon_state = "rail_03"
@@ -17299,7 +17299,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dsb" = (
 /obj/machinery/flasher{
 	id = "velocity_cell2";
@@ -17308,7 +17308,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dtb" = (
 /obj/structure/sign/warning/securearea{
 	pixel_x = -32
@@ -17320,7 +17320,7 @@
 	dir = 4;
 	icon_state = "warnwhite"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dub" = (
 /obj/structure/closet/l3closet/security,
 /obj/structure/sign/warning/biohazard{
@@ -17333,7 +17333,7 @@
 	dir = 8;
 	icon_state = "warnwhite"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dvb" = (
 /obj/structure/rail_centcomm{
 	icon_state = "rail_03"
@@ -17357,13 +17357,13 @@
 	dir = 4;
 	icon_state = "warnwhite"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dyb" = (
 /obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dzb" = (
 /obj/structure/closet/l3closet/security,
 /obj/structure/centcom_barrier,
@@ -17371,24 +17371,24 @@
 	dir = 8;
 	icon_state = "warnwhite"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dAb" = (
 /obj/machinery/door/airlock/centcom,
 /obj/effect/landmark/trololo,
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dBb" = (
 /obj/structure/sign/directions/velocity{
 	icon_state = "tablo02"
 	},
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "dCb" = (
 /obj/structure/sign/warning/electricshock,
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "dDb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -17408,7 +17408,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dEb" = (
 /obj/machinery/flasher{
 	id = "velocity_cell3";
@@ -17417,18 +17417,18 @@
 /turf/unsimulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dFb" = (
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "green"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dGb" = (
 /turf/unsimulated/floor{
 	icon_state = "rampbottom"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dHb" = (
 /obj/machinery/light{
 	dir = 4
@@ -17436,13 +17436,13 @@
 /turf/unsimulated/floor{
 	icon_state = "rampbottom"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dIb" = (
 /turf/simulated/shuttle/plating,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dJb" = (
 /obj/machinery/door/airlock/glass{
 	icon_state = "door_locked";
@@ -17458,12 +17458,12 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "vwall12"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dKb" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall12"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dLb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -17476,19 +17476,19 @@
 	dir = 9;
 	icon_state = "delivery"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dMb" = (
 /obj/structure/disposalpipe/junction{
 	dir = 1;
 	icon_state = "pipe-j2"
 	},
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "dNb" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall3"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dOb" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = -32
@@ -17496,7 +17496,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dPb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -17506,7 +17506,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dQb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -17526,7 +17526,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dRb" = (
 /obj/machinery/flasher{
 	id = "velocity_cell4";
@@ -17535,7 +17535,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dSb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -17552,7 +17552,7 @@
 	dir = 9;
 	icon_state = "delivery"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dTb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -17561,7 +17561,7 @@
 	dir = 1;
 	icon_state = "red"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dUb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -17579,7 +17579,7 @@
 	dir = 4;
 	icon_state = "rampbottom"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dVb" = (
 /obj/structure/sign/mark{
 	icon_state = "ylf"
@@ -17587,7 +17587,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dWb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -17597,14 +17597,14 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dXb" = (
 /obj/structure/shuttle/window{
 	icon_state = "2"
 	},
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
-/area/centcom/arrival)
+/area/velocity)
 "dYb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -17618,7 +17618,7 @@
 	dir = 9;
 	icon_state = "delivery"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "dZb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -17632,7 +17632,7 @@
 	dir = 4;
 	icon_state = "rampbottom"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eab" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -17645,13 +17645,13 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ebb" = (
 /obj/structure/sign/monorail_map,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall3"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ecb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	icon_state = "chair_a02"
@@ -17659,7 +17659,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "edb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	icon_state = "chair_a01"
@@ -17667,17 +17667,17 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eeb" = (
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_11"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "efb" = (
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_12"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "egb" = (
 /obj/machinery/porta_turret/crescent,
 /turf/unsimulated/floor{
@@ -17691,12 +17691,12 @@
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_09"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eib" = (
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_10"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ejb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -17706,7 +17706,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ekb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -17731,24 +17731,24 @@
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_07"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "emb" = (
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_08"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "enb" = (
 /turf/simulated/shuttle/plating,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eob" = (
 /obj/machinery/door/airlock/glass,
 /turf/simulated/shuttle/floor{
 	icon_state = "vwall12"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "epb" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "Just billboard";
@@ -17758,13 +17758,13 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall12"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eqb" = (
 /turf/simulated/shuttle/plating,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f9"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "erb" = (
 /obj/structure/sign/mark{
 	icon_state = "b4"
@@ -17783,12 +17783,12 @@
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_05"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eub" = (
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_06"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "evb" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "Lunar Software";
@@ -17798,7 +17798,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall12"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ewb" = (
 /obj/structure/sign/mark{
 	icon_state = "b2"
@@ -17811,7 +17811,7 @@
 	dir = 1;
 	icon_state = "green"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eyb" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light{
@@ -17821,17 +17821,17 @@
 	dir = 1;
 	icon_state = "green"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ezb" = (
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_03"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eAb" = (
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_04"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eBb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -17857,7 +17857,7 @@
 	dir = 1;
 	icon_state = "warning"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eDb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 1;
@@ -17866,7 +17866,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eEb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 1;
@@ -17875,17 +17875,17 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eFb" = (
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_01"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eGb" = (
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_02"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eHb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -17899,7 +17899,7 @@
 	dir = 9;
 	icon_state = "delivery"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eIb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -17913,7 +17913,7 @@
 	dir = 4;
 	icon_state = "rampbottom"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eJb" = (
 /obj/machinery/door/airlock/security{
 	name = "Security Checkpoint";
@@ -17923,7 +17923,7 @@
 	dir = 9;
 	icon_state = "delivery"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eKb" = (
 /obj/machinery/light{
 	dir = 8
@@ -17940,7 +17940,7 @@
 	dir = 1;
 	icon_state = "rampbottom"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eMb" = (
 /obj/machinery/light{
 	dir = 4
@@ -17949,12 +17949,12 @@
 	dir = 1;
 	icon_state = "rampbottom"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eNb" = (
 /turf/unsimulated/floor{
 	icon_state = "warning"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "eOb" = (
 /obj/structure/sign/warning/electricshock,
 /turf/unsimulated/wall,
@@ -18115,20 +18115,20 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "feb" = (
 /obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "brownold"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "ffb" = (
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "loadingarea"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "fgb" = (
 /obj/machinery/light{
 	dir = 8
@@ -18174,7 +18174,7 @@
 	dir = 8;
 	icon_state = "green"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "flb" = (
 /turf/simulated/shuttle/wall/newes_shuttle{
 	icon_state = "vel_wall04"
@@ -18210,7 +18210,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "fqb" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -18291,7 +18291,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "fzb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "centcomm_specops"
@@ -18319,7 +18319,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "fBb" = (
 /obj/structure/sign/mark{
 	icon_state = "yrt"
@@ -18356,13 +18356,13 @@
 	dir = 1
 	},
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "fFb" = (
 /obj/structure/sign/tablo{
 	icon_state = "parking"
 	},
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "fGb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -18371,7 +18371,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "fHb" = (
 /obj/structure/sign/mark{
 	icon_state = "x4"
@@ -18387,7 +18387,7 @@
 /turf/unsimulated/floor{
 	icon_state = "warning"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "fJb" = (
 /turf/unsimulated/floor{
 	icon_state = "circuit"
@@ -18395,7 +18395,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f5"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "fKb" = (
 /turf/unsimulated/floor{
 	icon_state = "circuit"
@@ -18403,7 +18403,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f9"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "fLb" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/structure/sign/warning/pods{
@@ -18469,13 +18469,13 @@
 	dir = 4;
 	icon_state = "rubber_floor1"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "fQb" = (
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "warning"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "fRb" = (
 /obj/structure/sign/warning/nosmoking/circle{
 	pixel_y = 32
@@ -18483,7 +18483,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "fSb" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -18526,7 +18526,7 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "fYb" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -18634,7 +18634,7 @@
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gjb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -18646,7 +18646,7 @@
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gkb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -18657,13 +18657,13 @@
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "glb" = (
 /turf/unsimulated/floor/velocity{
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gmb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -18675,7 +18675,7 @@
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gnb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -18690,7 +18690,7 @@
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gob" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -18708,7 +18708,7 @@
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gpb" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -18777,7 +18777,7 @@
 	dir = 4;
 	icon_state = "rubber_floor1"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gwb" = (
 /obj/effect/forcefield{
 	desc = "You can't get in. Heh.";
@@ -18788,7 +18788,7 @@
 	dir = 4;
 	icon_state = "rubber_floor1"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gxb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -18801,7 +18801,7 @@
 	dir = 4;
 	icon_state = "rubber_floor1"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gyb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -18814,7 +18814,7 @@
 	dir = 4;
 	icon_state = "rubber_floor1"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gzb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -18826,7 +18826,7 @@
 	dir = 4;
 	icon_state = "rubber_floor1"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gAb" = (
 /obj/structure/sign/warning/securearea{
 	name = "\improper ARMORY";
@@ -18863,7 +18863,7 @@
 	dir = 4;
 	icon_state = "rubber_floor1"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gDb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -18875,7 +18875,7 @@
 	dir = 4;
 	icon_state = "rubber_floor1"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gEb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -18886,7 +18886,7 @@
 	dir = 4;
 	icon_state = "rubber_floor1"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gFb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -18903,7 +18903,7 @@
 	dir = 4;
 	icon_state = "rubber_floor1"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gGb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Armory Special Operations";
@@ -18933,7 +18933,7 @@
 	dir = 4;
 	icon_state = "rubber_floor1"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gIb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -18951,7 +18951,7 @@
 	dir = 4;
 	icon_state = "rubber_floor1"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gJb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -18969,7 +18969,7 @@
 	dir = 4;
 	icon_state = "rubber_floor1"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gKb" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/unsimulated/floor{
@@ -19004,7 +19004,7 @@
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gNb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -19015,7 +19015,7 @@
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gOb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -19026,7 +19026,7 @@
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gPb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -19038,7 +19038,7 @@
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gQb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -19050,7 +19050,7 @@
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gRb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -19068,7 +19068,7 @@
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gSb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "General Access";
@@ -19142,7 +19142,7 @@
 	dir = 4;
 	icon_state = "rubber_floor1"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "gZb" = (
 /obj/structure/sign/mark{
 	icon_state = "x3"
@@ -19196,7 +19196,7 @@
 	dir = 4;
 	icon_state = "rubber_floor1"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "hfb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -19213,7 +19213,7 @@
 	dir = 4;
 	icon_state = "rubber_floor1"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "hgb" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -19257,7 +19257,7 @@
 "hlb" = (
 /obj/structure/sign/warning/securearea,
 /turf/unsimulated/wall,
-/area/centcom/arrival)
+/area/velocity)
 "hmb" = (
 /obj/structure/sign/mark{
 	icon_state = "b4"
@@ -19266,7 +19266,7 @@
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "hnb" = (
 /obj/structure/sign/mark{
 	icon_state = "b2"
@@ -19275,7 +19275,7 @@
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "hob" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -19287,7 +19287,7 @@
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "hpb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -19299,7 +19299,7 @@
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "hqb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -19316,7 +19316,7 @@
 	dir = 4;
 	icon_state = "rubber_floor2"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "hrb" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s6"
@@ -22805,7 +22805,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/centcom/arrival)
+/area/velocity)
 "qfb" = (
 /obj/machinery/door/poddoor/cargo{
 	id = "QMLoaddoor2";
@@ -22816,7 +22816,7 @@
 	id = "QMLoad2"
 	},
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "qgb" = (
 /obj/machinery/door/poddoor/cargo{
 	id = "QMLoaddoor1";
@@ -22826,7 +22826,7 @@
 	id = "QMLoad"
 	},
 /turf/simulated/shuttle/floor/wagon,
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "qhb" = (
 /obj/machinery/light{
 	dir = 8
@@ -22834,7 +22834,7 @@
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "0,1"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 "qib" = (
 /obj/machinery/light{
 	dir = 4
@@ -22842,7 +22842,7 @@
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,6"
 	},
-/area/shuttle/supply/dock)
+/area/shuttle/supply/velocity)
 
 (1,1,1) = {"
 ahG

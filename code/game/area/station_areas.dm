@@ -680,22 +680,3 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/tcommsat/computer
 	name = "Telecoms Control Room"
 	icon_state = "tcomsatcomp"
-
-/////////////////////////////////////////////////////////////////////
-/*
- Lists of areas to be used with is_type_in_list.
- Used in gamemodes code at the moment. --rastaf0
-*/
-
-// CENTCOM
-var/list/centcom_areas = list (
-	/area/centcom,
-	/area/shuttle/escape/centcom,
-	/area/shuttle/escape_pod1/centcom,
-	/area/shuttle/escape_pod2/centcom,
-	/area/shuttle/escape_pod3/centcom,
-	/area/shuttle/escape_pod4/centcom,
-	/area/shuttle/transport1/centcom,
-	/area/shuttle/administration/centcom,
-	/area/shuttle/specops/centcom
-)

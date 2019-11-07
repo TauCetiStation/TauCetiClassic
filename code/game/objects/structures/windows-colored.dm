@@ -171,7 +171,7 @@ var/global/wcDw
 	var/wsIgnoreList = list(
 		/area/shuttle,
 		/area/shuttle/arrival,
-		/area/shuttle/arrival/pre_game,
+		/area/shuttle/arrival/velocity,
 		/area/shuttle/arrival/transit,
 		/area/shuttle/arrival/station,
 		/area/shuttle/escape,
@@ -208,7 +208,7 @@ var/global/wcDw
 		/area/shuttle/administration/centcom,
 		/area/shuttle/administration/station,
 		/area/shuttle/mining/research,
-		/area/shuttle/vox/station
+		/area/shuttle/vox/arkship
 		)
 
 	for(var/A in wsIgnoreList)

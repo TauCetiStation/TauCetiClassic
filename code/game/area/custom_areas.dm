@@ -2,6 +2,13 @@
  //CUSTOM//
  //////////
 
+//VELOCITY
+/area/velocity
+	name = "Velocity Dock 42"
+	icon_state = "centcom"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
 //Alien base
 /area/custom/alien
 	name = "Alien base"

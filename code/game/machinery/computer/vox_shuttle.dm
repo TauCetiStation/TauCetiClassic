@@ -35,7 +35,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	if(.)
 		return
 
-	if(get_area(src) != locate(/area/shuttle/vox/station))
+	if(get_area(src) != locate(/area/shuttle/vox/arkship))
 		return // no point in this console after moving shuttle from start position.
 
 	if(announce_vox_departure)
@@ -59,7 +59,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 /obj/machinery/computer/vox_station/atom_init()
 	. = ..()
-	curr_location = locate(/area/shuttle/vox/station)
+	curr_location = locate(/area/shuttle/vox/arkship)
 
 /obj/machinery/computer/vox_station/proc/vox_move_to(area/destination)
 	if(moving)
@@ -70,11 +70,11 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	if(curr_location == dest_location)
 		return
 
-	if(dest_location == locate(/area/shuttle/vox/station))
+	if(dest_location == locate(/area/shuttle/vox/arkship))
 		returning = TRUE
 
 	if(announce_vox_departure)
-		if(curr_location == locate(/area/shuttle/vox/station))
+		if(curr_location == locate(/area/shuttle/vox/arkship))
 			command_alert("Внимание, [station_name()], неподалёку от вашей станции проходит корабль не отвечающий на наши запросы. По последним данным этот корабль принадлежит Торговой Конфедерации.")
 		else if(returning)
 			command_alert("Your guests are pulling away, Exodus - moving too fast for us to draw a bead on them. Looks like they're heading out of [system_name()] at a rapid clip.", "NSV Icarus")
@@ -92,7 +92,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 	curr_location.move_contents_to(dest_location)
 	curr_location = dest_location
-	if(istype(dest_location, /area/shuttle/vox/station))
+	if(istype(dest_location, /area/shuttle/vox/arkship))
 		vox_shuttle_location = "start"
 	moving = FALSE
 
@@ -142,7 +142,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 				warning = TRUE
 				addtimer(CALLBACK(src, .proc/reset_warning), 10 SECONDS) // so, if someone accidentaly uses this, it won't stuck for a whole round.
 				return
-		vox_move_to(/area/shuttle/vox/station)
+		vox_move_to(/area/shuttle/vox/arkship)
 	else if(href_list["solars_fore_starboard"])
 		vox_move_to(/area/shuttle/vox/northeast_solars)
 	else if(href_list["solars_fore_port"])

@@ -11,7 +11,7 @@ var/datum/subsystem/shuttle/SSshuttle
 #define SUPPLY_DOCKZ 2          //Z-level of the Dock.
 #define SUPPLY_STATIONZ 1       //Z-level of the Station.
 #define SUPPLY_STATION_AREATYPE /area/shuttle/supply/station //Type of the supply shuttle area for station
-#define SUPPLY_DOCK_AREATYPE /area/shuttle/supply/dock	//Type of the supply shuttle area for dock
+#define SUPPLY_DOCK_AREATYPE /area/shuttle/supply/velocity	//Type of the supply shuttle area for dock
 
 /datum/subsystem/shuttle
 	name = "Shuttles"

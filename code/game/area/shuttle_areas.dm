@@ -5,8 +5,10 @@
 //These are shuttle areas, they must contain two areas in a subgroup if you want to move a shuttle from one
 //place to another. Look at escape shuttle for example.
 //All shuttles show now be under shuttle since we have smooth-wall code.
- 
+
 /area/shuttle
+	name = "Shuttle"
+	icon_state = "shuttle"
 	requires_power = 0
 	valid_territory = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
@@ -32,7 +34,7 @@
 	icon_state = "shuttle"
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 
-/area/shuttle/officer/centcomm
+/area/shuttle/officer/centcom
 	name = "Centcomm"
 	icon_state = "shuttle"
 
@@ -40,21 +42,17 @@
 /area/shuttle/supply/station
 	name = "supply shuttle"
 	icon_state = "shuttle3"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 
-/area/shuttle/supply/dock
+/area/shuttle/supply/velocity
 	name = "supply shuttle"
 	icon_state = "shuttle3"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 //Arrival Velocity Shuttle
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
 
-/area/shuttle/arrival/pre_game
+/area/shuttle/arrival/velocity
 	name = "NTS Velocity"
 	icon_state = "shuttle2"
 
@@ -80,7 +78,6 @@
 /area/shuttle/escape/centcom
 	name = "Emergency Shuttle Centcom"
 	icon_state = "shuttle"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/shuttle/escape/transit // the area to pass through for 3 minute transit
 	name = "Emergency Shuttle Transit"
@@ -211,60 +208,44 @@
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 //Vox shuttle
-/area/shuttle/vox/station
+/area/shuttle/vox/arkship
 	name = "Vox Skipjack"
 	icon_state = "yellow"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/shuttle/vox/transit
 	name = "hyperspace"
 	icon_state = "shuttle"
-	requires_power = 0
 	parallax_movedir = NORTH
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/shuttle/vox/southwest_solars
 	name = "Aft port solars"
 	icon_state = "southwest"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/shuttle/vox/northwest_solars
 	name = "Fore port solars"
 	icon_state = "northwest"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/shuttle/vox/northeast_solars
 	name = "Fore starboard solars"
 	icon_state = "northeast"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/shuttle/vox/southeast_solars
 	name = "Aft starboard solars"
 	icon_state = "southeast"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/shuttle/vox/mining
 	name = "Nearby mining asteroid"
 	icon_state = "north"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 //Syndicate Shuttle
 /area/shuttle/syndicate
 	name = "Syndicate Station"
 	icon_state = "yellow"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	ambience = 'sound/ambience/syndicate_station.ogg'
 
 /area/shuttle/syndicate/start
@@ -310,3 +291,33 @@
 	name = "hyperspace"
 	icon_state = "shuttle"
 	parallax_movedir = NORTH
+
+//Shuttle lists, group by areas
+// CENTCOM
+var/list/centcom_shuttle_areas = list (
+	/area/shuttle/escape/centcom,
+	/area/shuttle/escape_pod1/centcom,
+	/area/shuttle/escape_pod2/centcom,
+	/area/shuttle/escape_pod3/centcom,
+	/area/shuttle/escape_pod4/centcom,
+	/area/shuttle/transport1/centcom,
+	/area/shuttle/administration/centcom,
+	/area/shuttle/specops/centcom,
+	/area/shuttle/officer/centcom
+)
+
+// DOCKED TO STATION
+var/list/station_shuttle_areas = list (
+	/area/shuttle/escape/station,
+	/area/shuttle/escape_pod1/station,
+	/area/shuttle/escape_pod2/station,
+	/area/shuttle/escape_pod3/station,
+	/area/shuttle/escape_pod4/station,
+	/area/shuttle/transport1/station,
+	/area/shuttle/administration/station,
+	/area/shuttle/specops/station,
+	/area/shuttle/officer/station,
+	/area/shuttle/supply/station,
+	/area/shuttle/arrival/station,
+	/area/shuttle/mining/station
+)

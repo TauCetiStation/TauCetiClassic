@@ -39,9 +39,9 @@
 		SSshuttle.undock_act(curr_location)
 		radio.autosay(department_note, "Arrivals Alert System") //вывод сообщения об отбытии шаттла
 	else if(curr_location == locate(/area/shuttle/officer/velocity))
-		SSshuttle.undock_act(/area/centcom/arrival, "velocity_officer")
+		SSshuttle.undock_act(/area/velocity, "velocity_officer")
 		SSshuttle.undock_act(curr_location)
-	else if(curr_location == locate(/area/shuttle/officer/centcomm))
+	else if(curr_location == locate(/area/shuttle/officer/centcom))
 		SSshuttle.undock_act(/area/centcom/evac, "centcomm_officer")
 		SSshuttle.undock_act(curr_location)
 
@@ -49,17 +49,17 @@
 	curr_location.move_contents_to(transit_location, null, EAST)
 	curr_location = transit_location
 
-	if(from_area == locate(/area/shuttle/officer/velocity) && dest_location == locate(/area/shuttle/officer/centcomm))
+	if(from_area == locate(/area/shuttle/officer/velocity) && dest_location == locate(/area/shuttle/officer/centcom))
 		sleep(OFFICER_SHUTTLE_MOVE_TIME)
 	else if(from_area == locate(/area/shuttle/officer/velocity) && dest_location == locate(/area/shuttle/officer/station))
 		sleep(OFFICER_SHUTTLE_MOVE_TIME/2)
-	else if(from_area == locate(/area/shuttle/officer/centcomm) && dest_location == locate(/area/shuttle/officer/velocity))
+	else if(from_area == locate(/area/shuttle/officer/centcom) && dest_location == locate(/area/shuttle/officer/velocity))
 		sleep(OFFICER_SHUTTLE_MOVE_TIME)
-	else if(from_area == locate(/area/shuttle/officer/centcomm) && dest_location == locate(/area/shuttle/officer/station))
+	else if(from_area == locate(/area/shuttle/officer/centcom) && dest_location == locate(/area/shuttle/officer/station))
 		sleep(OFFICER_SHUTTLE_MOVE_TIME)
 	else if(from_area == locate(/area/shuttle/officer/station) && dest_location == locate(/area/shuttle/officer/velocity))
 		sleep(OFFICER_SHUTTLE_MOVE_TIME/2)
-	else if(from_area == locate(/area/shuttle/officer/station) && dest_location == locate(/area/shuttle/officer/centcomm))
+	else if(from_area == locate(/area/shuttle/officer/station) && dest_location == locate(/area/shuttle/officer/centcom))
 		sleep(OFFICER_SHUTTLE_MOVE_TIME)
 
 	curr_location.move_contents_to(dest_location)
@@ -69,10 +69,10 @@
 		SSshuttle.dock_act(dest_location)
 		radio.autosay(arrival_note, "Arrivals Alert System") //вывод сообщения об прибытии шаттла
 	else if(dest_location == locate(/area/shuttle/officer/velocity))
-		SSshuttle.dock_act(/area/centcom/arrival, "velocity_officer")
+		SSshuttle.dock_act(/area/velocity, "velocity_officer")
 		SSshuttle.dock_act(dest_location)
-	else if(dest_location == locate(/area/shuttle/officer/centcomm))
-		SSshuttle.dock_act(/area/shuttle/officer/centcomm, "centcomm_officer")
+	else if(dest_location == locate(/area/shuttle/officer/centcom))
+		SSshuttle.dock_act(/area/shuttle/officer/centcom, "centcomm_officer")
 		SSshuttle.dock_act(dest_location)
 
 	curr_location = dest_location
@@ -104,6 +104,6 @@
 	else if(href_list["station"])
 		officer_move_to(/area/shuttle/officer/station)
 	else if(href_list["centcomm"])
-		officer_move_to(/area/shuttle/officer/centcomm)
+		officer_move_to(/area/shuttle/officer/centcom)
 
 	updateUsrDialog()
