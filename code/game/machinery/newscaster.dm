@@ -17,10 +17,10 @@
 	var/list/datum/message_comment/comments = list() //Stores all comments under the feed message
 	var/comments_closed = TRUE //Spoiler
 
-	var/icon/like = icon("icons/misc/raiting_for_paper.dmi", "like")
-	var/icon/like_clicked = icon("icons/misc/raiting_for_paper.dmi", "like_clicked")
-	var/icon/dislike = icon("icons/misc/raiting_for_paper.dmi", "dislike")
-	var/icon/dislike_clicked = icon("icons/misc/raiting_for_paper.dmi", "dislike_clicked")
+	var/static/icon/like = icon("icons/misc/raiting_for_paper.dmi", "like")
+	var/static/icon/like_clicked = icon("icons/misc/raiting_for_paper.dmi", "like_clicked")
+	var/static/icon/dislike = icon("icons/misc/raiting_for_paper.dmi", "dislike")
+	var/static/icon/dislike_clicked = icon("icons/misc/raiting_for_paper.dmi", "dislike_clicked")
 
 /datum/message_comment
 	var/author = ""
@@ -57,6 +57,11 @@
 	src.backup_author = ""
 	src.censored = 0
 	src.is_admin_channel = 0
+
+/datum/feed_message/Destroy()
+	QDEL_LIST(voters)
+	QDEL_LIST(comments)
+	return ..()
 
 /datum/feed_network
 	var/list/datum/feed_channel/network_channels = list()
