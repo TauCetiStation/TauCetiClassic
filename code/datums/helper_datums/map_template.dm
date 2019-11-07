@@ -147,6 +147,6 @@
 		var/datum/map_template/junkyard_structure/structure_type = item
 		if(!(initial(structure_type.mappath)))
 			continue
-		var/datum/map_template/space_structure/S = new structure_type()
+		var/datum/map_template/junkyard_structure/S = new structure_type()
 		structures_junkyard_templates[S.structure_id] = S
 		map_templates[S.structure_id] = S

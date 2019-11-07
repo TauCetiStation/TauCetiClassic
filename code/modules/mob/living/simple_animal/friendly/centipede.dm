@@ -42,5 +42,7 @@
 		return
 	for(var/obj/item/weapon/scrap_lump/scrap in oview(src, 5))
 		walk_to(src, scrap.loc,0,2)
-		qdel(scrap)
 		break
+	for(var/obj/item/weapon/scrap_lump/scrap in oview(src, 1))
+		walk_to(src,0)
+		qdel(scrap)

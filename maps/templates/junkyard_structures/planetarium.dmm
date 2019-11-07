@@ -1,4 +1,4 @@
-"a" = (/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard)
+"a" = (/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
 "b" = (/turf/simulated/floor/plating/ironsand/junkyard,/turf/unsimulated/wall/abductor{icon_state = "alien20"},/area/planetarium)
 "c" = (/turf/unsimulated/wall/abductor{icon_state = "alien21"},/area/planetarium)
 "d" = (/turf/unsimulated/wall/abductor{icon_state = "alien22"},/area/planetarium)

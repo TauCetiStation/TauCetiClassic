@@ -1265,6 +1265,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 		LAZYADD(turf_spawn_list, turf_junk)
 
 /area/awaymission/junkyard/process()
+	if(LAZYLEN(turf_spawn_list))
+		for(var/turf/simulated/floor/plating/ironsand/junkyard/turf_junk in contents)
+			LAZYADD(turf_spawn_list, turf_junk)
 	process +=1
 	if(process >= delay_process)
 
@@ -1292,6 +1295,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 			new /obj/random/mobs/moderate(spawn_pile)
 			new /obj/effect/scrap_pile_generator(spawn_pile)
 			process_pile = 0
+
 		process = 0
 
 /area/awaymission/junkyard/north_west
@@ -1321,6 +1325,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/awaymission/junkyard/south_east
 	name = "Junkyard South East"
+
+/area/awaymission/junkyard/structure
+	name = "Junkyard Structure"
 
 /area/awaymission/BMPship1
 	name = "Aft Block"

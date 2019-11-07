@@ -31,10 +31,6 @@
 				return FALSE
 	return TRUE
 
-/datum/map_template/junkyard_structure/broken_teleporter
-	structure_id = "broken_teleporter_junkyard"
-	mappath = "maps/templates/junkyard_structures/broken_teleporter.dmm"
-
 /datum/map_template/junkyard_structure/broken_cloning_lab
 	structure_id = "broken_cloning_lab_junkyard"
 	mappath = "maps/templates/junkyard_structures/cloning_lab.dmm"
@@ -55,20 +51,10 @@
 	structure_id = "smelter_junkyard"
 	mappath = "maps/templates/junkyard_structures/smelter.dmm"
 
-/obj/effect/junkyard_structure_generator
-	name = "junkyard structure generator"
-	var/datum/map_template/junkyard_structure/template
+/datum/map_template/junkyard_structure/broken_teleporter
+	structure_id = "broken_teleporter_junkyard"
+	mappath = "maps/templates/junkyard_structures/broken_teleporter.dmm"
 
-/obj/effect/junkyard_structure_generator/atom_init(mapload, heap_size = 1)
-	. = ..()
-	template = pick(structures_junkyard_templates)
-	var/turf/T = get_turf(src)
-	T = get_turf(src)
-	var/status = template.check_deploy(T)
-	if(status)
-		template.load(T, centered = TRUE)
-	qdel(src)
-
-/obj/effect/junkyard_structure_generator/Destroy()
-	template = null
-	. = ..()
+/datum/map_template/junkyard_structure/camp
+	structure_id = "camp_junkyard"
+	mappath = "maps/templates/junkyard_structures/camp.dmm"

@@ -1,4 +1,4 @@
-"a" = (/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard)
+"a" = (/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
 "b" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8; req_access = list(72)},/turf/simulated/floor/plating,/area/agrospheregarden)
 "c" = (/turf/simulated/wall,/area/agrospheregarden)
 "d" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plating,/area/agrospheregarden)

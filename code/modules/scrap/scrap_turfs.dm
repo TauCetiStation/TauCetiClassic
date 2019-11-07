@@ -51,23 +51,29 @@
 			new /obj/random/scrap/dense_weighted(A)
 
 /turf/proc/spawn_structures_junkyard()
-	if(prob(2))
-		if(prob(20))
-			var/area/awaymission/junkyard/self_area = get_area(src)
-			if(istype(self_area, /area/awaymission/junkyard))
-				if(self_area.structures_max > self_area.structures)
-					var/datum/map_template/junkyard_structure/template
-					template = structures_junkyard_templates[pick(structures_junkyard_templates)]
-					var/status = template.check_deploy(src)
-					if(status)
-						template.load(src, centered = TRUE)
-						var/affected = template.get_affected_turfs(src, centered=TRUE)
-						for(var/turf/simulated/wall/T in affected)
-							T.make_old()
-						for(var/obj/T in affected)
-							T.make_old()
-						LAZYREMOVE(structures_junkyard_templates, template.structure_id)
-						self_area.structures += 1
+	if(!prob(3))
+		return
+	if(!prob(10))
+		return
+	var/area/awaymission/junkyard/self_area = get_area(src)
+	if(!istype(self_area, /area/awaymission/junkyard))
+		return
+
+	if(self_area.structures_max <= self_area.structures)
+		return
+
+	var/datum/map_template/junkyard_structure/template = structures_junkyard_templates[pick(structures_junkyard_templates)]
+	var/status = template.check_deploy(src)
+	if(status)
+		template.load(src, centered = TRUE)
+		var/affected = template.get_affected_turfs(src, centered=TRUE)
+		for(var/turf/simulated/T in affected)
+			if(!istype(T, /turf/simulated/floor/plating/ironsand/junkyard))
+				T.make_old()
+			for(var/obj/sub_obj in T.contents)
+				sub_obj.make_old()
+		self_area.structures += 1
+		return
 
 /turf/proc/resource_definition()
 	LAZYINITLIST(resources)
