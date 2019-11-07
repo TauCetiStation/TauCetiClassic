@@ -631,7 +631,7 @@
 				to_chat(H, "<span class='warning'>The APC power currents surge eratically, damaging your chassis!</span>")
 				H.adjustFireLoss(10,0)
 			else if(src.cell && src.cell.charge > 500 && H.a_intent == I_GRAB)
-				if(H.nutrition < C.maxcharge-50)
+				if(H.nutrition < C.maxcharge*0.9)
 					if(src.cell.charge)
 						to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and start siphon off some of the stored charge for your own use.</span>")
 						while(H.nutrition < C.maxcharge)
@@ -641,19 +641,19 @@
 									break
 								else if((emagged || malfhack || (stat & (BROKEN|EMPED)) || shorted) && H.a_intent == I_GRAB)
 									break
-								else if(H.nutrition >= C.maxcharge-50)
+								else if(H.nutrition > C.maxcharge*0.9)
 									to_chat(user, "<span class='notice'>You're fully charge.</span>")
 									break
-								else if(src.cell.charge <= 0)
-									to_chat (user, "<span class='notice'>There is no charge to draw from that APC.</span>")
+								else if(src.cell.charge < src.cell.maxcharge*0.1)
+									to_chat (user, "<span class='notice'>There is not enough charge to draw from that APC.</span>")
 									break
 											
 								else if(src.cell.use(500))
-									H.nutrition += C.maxcharge*0.10
+									H.nutrition += C.maxcharge*0.1
 									to_chat(user, "<span class='notice'>Draining... Battery has [round(100.0*H.nutrition/C.maxcharge)]% of charge.</span>")
 							
 							else
-								to_chat (user, "<span class='notice'>There is no charge to draw from that APC.</span>")
+								to_chat (user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
 								break
 					else
 
