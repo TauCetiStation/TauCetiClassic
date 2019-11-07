@@ -213,28 +213,6 @@
 	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
-/obj/item/projectile/l10
-	name ="projectile"
-	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "l10"
-	layer = ABOVE_HUD_LAYER
-	plane = ABOVE_HUD_PLANE
-	light_color = "#2be4b8"
-	light_power = 2
-	light_range = 2
-	damage = 18
-	damage_type = BURN
-	flag = "energy"
-	eyeblur = 4
-	sharp = 0
-	edge = 0
-
-	muzzle_type = /obj/effect/projectile/energy/muzzle
-
-/obj/item/projectile/l10/atom_init()
-	. = ..()
-	proj_act_sound = SOUNDIN_LASERACT
-
 /obj/item/projectile/bullet/midbullet3
 	damage = 35
 
