@@ -1,0 +1,61 @@
+"a" = (/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard)
+"b" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8; req_access = list(72)},/turf/simulated/floor/plating,/area/agrospheregarden)
+"c" = (/turf/simulated/wall,/area/agrospheregarden)
+"d" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plating,/area/agrospheregarden)
+"e" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/floor/plating,/area/agrospheregarden)
+"f" = (/turf/simulated/floor/plating,/area/agrospheregarden)
+"g" = (/obj/structure/shuttle/engine/propulsion{dir = 1},/turf/simulated/floor/plating,/area/agrospheregarden)
+"h" = (/obj/structure/shuttle/engine/heater{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8; req_access = list(72)},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/agrospheregarden)
+"i" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/agrospheregarden)
+"j" = (/turf/simulated/floor/grass,/area/agrospheregarden)
+"k" = (/obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom,/turf/simulated/floor/grass,/area/agrospheregarden)
+"l" = (/obj/structure/flora/ausbushes/lavendergrass,/turf/simulated/floor/grass,/area/agrospheregarden)
+"m" = (/obj/machinery/light{dir = 8},/turf/simulated/floor/grass,/area/agrospheregarden)
+"n" = (/obj/item/weapon/reagent_containers/food/snacks/grown/harebell,/turf/simulated/floor/grass,/area/agrospheregarden)
+"o" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/machinery/light{dir = 4},/turf/simulated/floor/grass,/area/agrospheregarden)
+"p" = (/obj/structure/shuttle/engine/propulsion{dir = 8},/turf/simulated/floor/plating,/area/agrospheregarden)
+"q" = (/obj/structure/shuttle/engine/heater{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/agrospheregarden)
+"r" = (/obj/item/weapon/reagent_containers/food/snacks/grown/mtear,/turf/simulated/floor/grass,/area/agrospheregarden)
+"s" = (/obj/structure/flora/junglebush/c,/turf/simulated/floor/grass,/area/agrospheregarden)
+"t" = (/obj/structure/flora/tree/jungle,/turf/simulated/floor/grass,/area/agrospheregarden)
+"u" = (/obj/structure/shuttle/engine/heater{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8; req_access = list(72)},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/agrospheregarden)
+"v" = (/obj/structure/shuttle/engine/propulsion{dir = 4},/turf/simulated/floor/plating,/area/agrospheregarden)
+"w" = (/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle,/turf/simulated/floor/grass,/area/agrospheregarden)
+"x" = (/obj/structure/flora/junglebush/large,/turf/simulated/floor/grass,/area/agrospheregarden)
+"y" = (/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle{pixel_x = -15; pixel_y = 15},/turf/simulated/floor/grass,/area/agrospheregarden)
+"z" = (/obj/structure/flora/tree/jungle/small,/turf/simulated/floor/grass,/area/agrospheregarden)
+"A" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/machinery/light{dir = 8},/turf/simulated/floor/grass,/area/agrospheregarden)
+"B" = (/obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom{pixel_x = 6; pixel_y = -5},/turf/simulated/floor/grass,/area/agrospheregarden)
+"C" = (/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap,/turf/simulated/floor/grass,/area/agrospheregarden)
+"D" = (/obj/machinery/light{dir = 4},/obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom,/turf/simulated/floor/grass,/area/agrospheregarden)
+"E" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap,/turf/simulated/floor/grass,/area/agrospheregarden)
+"F" = (/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap{pixel_x = -20; pixel_y = 10},/turf/simulated/floor/grass,/area/agrospheregarden)
+"G" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/tree/jungle/small,/turf/simulated/floor/grass,/area/agrospheregarden)
+"H" = (/obj/item/weapon/reagent_containers/food/snacks/grown/harebell{pixel_x = 6; pixel_y = 7},/turf/simulated/floor/grass,/area/agrospheregarden)
+"I" = (/obj/machinery/light{dir = 4},/turf/simulated/floor/grass,/area/agrospheregarden)
+
+(1,1,1) = {"
+aaaaaabccdccbaaaaaa
+aaaaaaecfffceaaaaaa
+aaaaaagcfffcgaaaaaa
+aaaaaahccdcchaaaaaa
+aaaaaaicjjjciaaaaaa
+aaaaaiijkjjjiiaaaaa
+aaaaiijjljjjjiiaaaa
+aaaiimjjjnjjjoiiaaa
+pqcirjsjjjjtsjjicuv
+aiijjjtwjjjjjjjjiia
+aijxxjjyljzjljjljia
+aiAjjjjrjBjlnCtlDia
+ainsjjjjjljjjsEFxia
+aiijjtjjjjjjxjjliia
+pqcixjjGjjjjjjricuv
+aaaiimxjHjjtlIiiaaa
+aaaaiikjsjjxjiiaaaa
+aaaaaiiljjkjiiaaaaa
+aaaaaabcjjjcbaaaaaa
+aaaaaaeccdcceaaaaaa
+aaaaaaacfffcaaaaaaa
+aaaaaaacfffcaaaaaaa
+aaaaaaaccdccaaaaaaa
+"}

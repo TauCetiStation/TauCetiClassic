@@ -1248,8 +1248,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/structures = 0
 	var/amount_of_garbage = 0
 	var/amount_of_centipedes = 0
-	var/delay_process = 200
+	var/amount_of_aggressive = 0
+	var/delay_process = 40
 	var/process = 0
+	var/delay_process_pile = 6
+	var/process_pile = 0
 	var/list/turf/simulated/floor/plating/ironsand/junkyard/turf_spawn_list
 
 /area/awaymission/junkyard/atom_init()
@@ -1260,17 +1263,35 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/awaymission/junkyard/atom_init_late()
 	for(var/turf/simulated/floor/plating/ironsand/junkyard/turf_junk in contents)
 		LAZYADD(turf_spawn_list, turf_junk)
-	START_PROCESSING(SSobj, src)
 
 /area/awaymission/junkyard/process()
 	process +=1
 	if(process >= delay_process)
-		if(amount_of_garbage > 200 && amount_of_centipedes < 4)
+
+		if(amount_of_garbage > 100 && amount_of_centipedes < 4)
 			new /mob/living/simple_animal/centipede(pick(turf_spawn_list))
-		if(amount_of_garbage > 500 && amount_of_centipedes < 8)
+		if(amount_of_garbage > 300 && amount_of_centipedes < 8)
 			new /mob/living/simple_animal/centipede(pick(turf_spawn_list))
-		if(amount_of_garbage > 800 && amount_of_centipedes < 16)
+		if(amount_of_garbage > 500 && amount_of_centipedes < 16)
 			new /mob/living/simple_animal/centipede(pick(turf_spawn_list))
+
+		if(amount_of_aggressive < 3 && prob(20))
+			new /obj/random/mobs/dangerous(pick(turf_spawn_list))
+		if(amount_of_aggressive < 6 && prob(40))
+			new /obj/random/mobs/moderate(pick(turf_spawn_list))
+
+		process_pile += 1
+
+		if(process_pile >= delay_process_pile)
+			var/turf/spawn_pile = pick(turf_spawn_list)
+			var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread(spawn_pile)
+			smoke.set_up(5, 0, spawn_pile)
+			smoke.start()
+			if(prob(10))
+				new /obj/random/mobs/dangerous(spawn_pile)
+			new /obj/random/mobs/moderate(spawn_pile)
+			new /obj/effect/scrap_pile_generator(spawn_pile)
+			process_pile = 0
 		process = 0
 
 /area/awaymission/junkyard/north_west

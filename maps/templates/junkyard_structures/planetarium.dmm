@@ -1,0 +1,71 @@
+"a" = (/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard)
+"b" = (/turf/simulated/floor/plating/ironsand/junkyard,/turf/unsimulated/wall/abductor{icon_state = "alien20"},/area/planetarium)
+"c" = (/turf/unsimulated/wall/abductor{icon_state = "alien21"},/area/planetarium)
+"d" = (/turf/unsimulated/wall/abductor{icon_state = "alien22"},/area/planetarium)
+"e" = (/turf/unsimulated/wall/abductor{icon_state = "alien23"},/area/planetarium)
+"f" = (/turf/simulated/floor/plating/ironsand/junkyard,/turf/unsimulated/wall/abductor{icon_state = "alien24"},/area/planetarium)
+"g" = (/turf/simulated/floor/plating/ironsand/junkyard,/turf/unsimulated/wall/abductor{icon_state = "alien16"},/area/planetarium)
+"h" = (/turf/unsimulated/wall/abductor{icon_state = "alien17"},/area/planetarium)
+"i" = (/obj/structure/closet/abductor,/obj/item/weapon/storage/box/alienhandcuffs,/turf/unsimulated/floor/abductor,/area/planetarium)
+"j" = (/obj/structure/closet/abductor,/obj/item/bluespace_crystal,/obj/machinery/light/small{dir = 1; light_color = "#8b008b"},/turf/unsimulated/floor/abductor,/area/planetarium)
+"k" = (/obj/structure/closet/abductor,/obj/item/gland/viral,/obj/item/weapon/disk/research_points,/turf/unsimulated/floor/abductor,/area/planetarium)
+"l" = (/turf/unsimulated/wall/abductor{icon_state = "alien18"},/area/planetarium)
+"m" = (/turf/simulated/floor/plating/ironsand/junkyard,/turf/unsimulated/wall/abductor{icon_state = "alien19"},/area/planetarium)
+"n" = (/obj/structure/window/phoronreinforced{dir = 6},/turf/simulated/floor/plating/ironsand/junkyard,/area/planetarium)
+"o" = (/obj/structure/window/phoronreinforced{dir = 6},/turf/unsimulated/floor/abductor,/area/planetarium)
+"p" = (/turf/unsimulated/floor/abductor,/area/planetarium)
+"q" = (/turf/unsimulated/wall/abductor{icon_state = "alien7"},/area/planetarium)
+"r" = (/turf/unsimulated/wall/abductor{icon_state = "alien8"},/area/planetarium)
+"s" = (/turf/unsimulated/floor/abductor,/obj/structure/window/phoronreinforced{dir = 6},/turf/simulated/floor/plating/ironsand/junkyard,/area/planetarium)
+"t" = (/obj/machinery/light/small{dir = 8; light_color = "#8b008b"},/turf/unsimulated/floor/abductor,/area/planetarium)
+"u" = (/obj/machinery/light/small{dir = 4; light_color = "#8b008b"},/turf/unsimulated/floor/abductor,/area/planetarium)
+"v" = (/turf/unsimulated/wall/abductor{icon_state = "alien14"},/area/planetarium)
+"w" = (/obj/structure/window/phoronreinforced,/obj/structure/window/phoronreinforced{dir = 4},/turf/unsimulated/floor/abductor,/area/planetarium)
+"x" = (/obj/structure/window/phoronreinforced,/obj/structure/window/phoronreinforced{dir = 8},/turf/unsimulated/floor/abductor,/area/planetarium)
+"y" = (/turf/unsimulated/wall/abductor{icon_state = "alien15"},/area/planetarium)
+"z" = (/turf/unsimulated/wall/abductor{icon_state = "alien12"},/area/planetarium)
+"A" = (/obj/structure/table/abductor,/obj/structure/planetarium_spawner,/turf/unsimulated/floor/abductor,/area/planetarium)
+"B" = (/obj/singularity/academy,/turf/simulated/floor/plating/ironsand/junkyard,/area/planetarium)
+"C" = (/turf/unsimulated/wall/abductor{icon_state = "alien13"},/area/planetarium)
+"D" = (/turf/unsimulated/wall/abductor{icon_state = "alien10"},/area/planetarium)
+"E" = (/obj/structure/window/phoronreinforced{dir = 1},/obj/structure/window/phoronreinforced{dir = 4},/turf/unsimulated/floor/abductor,/area/planetarium)
+"F" = (/obj/structure/window/phoronreinforced{dir = 8},/obj/structure/window/phoronreinforced{dir = 1},/obj/item/weapon/haircomb,/turf/unsimulated/floor/abductor,/area/planetarium)
+"G" = (/turf/unsimulated/wall/abductor{icon_state = "alien11"},/area/planetarium)
+"H" = (/turf/simulated/floor/plating/ironsand/junkyard,/turf/unsimulated/wall/abductor{icon_state = "alien6"},/area/planetarium)
+"I" = (/turf/simulated/floor/plating/ironsand/junkyard,/turf/unsimulated/wall/abductor{icon_state = "alien9"},/area/planetarium)
+"J" = (/turf/simulated/floor/plating/ironsand/junkyard,/turf/unsimulated/wall/abductor,/area/planetarium)
+"K" = (/turf/simulated/floor/plating/ironsand/junkyard,/turf/unsimulated/wall/abductor{icon_state = "alien5"},/area/planetarium)
+"L" = (/turf/unsimulated/floor/abductor,/obj/structure/table/abductor,/obj/structure/planetarium_spawner,/turf/simulated/floor/plating/ironsand/junkyard,/area/planetarium)
+"M" = (/obj/effect/decal/cleanable/blood/gibs/xeno/up,/turf/unsimulated/floor/abductor,/area/planetarium)
+"N" = (/obj/effect/decal/cleanable/blood/gibs/xeno/limb,/turf/unsimulated/floor/abductor,/area/planetarium)
+"O" = (/obj/machinery/light/small{light_color = "#8b008b"},/obj/effect/decal/cleanable/blood/gibs/xeno/limb,/turf/unsimulated/floor/abductor,/area/planetarium)
+"P" = (/obj/item/weapon/scalpel/alien,/obj/effect/decal/cleanable/blood/gibs/xeno/body,/turf/unsimulated/floor/abductor,/area/planetarium)
+"Q" = (/turf/unsimulated/wall/abductor{icon_state = "alien2"},/area/planetarium)
+"R" = (/turf/unsimulated/wall/abductor{icon_state = "alien3"},/area/planetarium)
+"S" = (/turf/unsimulated/wall/abductor{icon_state = "alien4"},/area/planetarium)
+
+(1,1,1) = {"
+aaaaaaaaabcdefaaaaaaaaa
+aaaaaaaaghijklmaaaaaaaa
+aaaaaaanoppppponaaaaaaa
+aaaaaanoppppppponaaaaaa
+aaaaanoppoqpropponaaaaa
+aaaanopponoponopponaaaa
+aaanopponaopoanspponaaa
+aanopponaaspoaanspponaa
+abspponaabopofaanoppofa
+ghpponaaghtpulmaanopplm
+vppploooopwoxpoooohpppy
+ztApppppppsBopppppppAuC
+DppproooopEsFposooqpppG
+HqpponaaHqtpurIaanopprI
+aJopponaaJopoKaanoppoKa
+aanopponaaopoaanopponaa
+aaanopponaopoanopponaaa
+aaaanopponoponopponaaaa
+aaaaanoppohplopponaaaaa
+aaaaaanoppppppponaaaaaa
+aaaaaaanoppLMNonaaaaaaa
+aaaaaaaaHqpOPrIaaaaaaaa
+aaaaaaaaaJQRSKaaaaaaaaa
+"}

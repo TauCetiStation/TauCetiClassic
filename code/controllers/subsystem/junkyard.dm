@@ -43,6 +43,9 @@ var/datum/subsystem/junkyard/SSjunkyard
 		if(istype(T, /turf/simulated/floor/plating/ironsand/junkyard))
 			T.surround_by_scrap()
 			T.resource_definition()
+			var/area/A = get_area(T)
+			if(!A.isprocessing)
+				START_PROCESSING(SSobj, A)
 		CHECK_TICK
 	junkyard_initialised = 1
 	SSweather.eligible_zlevels.Add(zlevel) //junkyard

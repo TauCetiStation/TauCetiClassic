@@ -237,3 +237,26 @@
 
 /obj/effect/decal/mecha_wreckage/make_old()
 	salvage_num = 8
+
+/turf/simulated/wall/proc/make_old()
+	color = pick("#996633", "#663300", "#666666")
+	light_color = color
+	name = pick("old ", "expired ", "dirty ") + initial(name)
+	desc += pick(" Warranty has expired.", " The inscriptions on this thing were erased by time.", " Looks completely wasted.")
+	germ_level = pick(80,110,160)
+	if(prob(40))
+		if(prob(70))
+			light_power = light_power / pick(1.5, 2, 2.5)
+		if(prob(70))
+			light_range = light_range / pick(1.5, 2, 2.5)
+		if(prob(15))
+			light_range = 0
+			light_power = 0
+	if(prob(60))
+		if(prob(25))
+			damage = 90
+		if(prob(45))
+			damage = 60
+		if(prob(60))
+			damage = 75
+	update_icon()

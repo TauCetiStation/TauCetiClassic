@@ -31,9 +31,29 @@
 				return FALSE
 	return TRUE
 
-/datum/map_template/junkyard_structure/toilet
-	structure_id = "junkyard_toilet"
-	mappath = "maps/templates/space_structures/toilet.dmm"
+/datum/map_template/junkyard_structure/broken_teleporter
+	structure_id = "broken_teleporter_junkyard"
+	mappath = "maps/templates/junkyard_structures/broken_teleporter.dmm"
+
+/datum/map_template/junkyard_structure/broken_cloning_lab
+	structure_id = "broken_cloning_lab_junkyard"
+	mappath = "maps/templates/junkyard_structures/cloning_lab.dmm"
+
+/datum/map_template/junkyard_structure/garden
+	structure_id = "garden_junkyard"
+	mappath = "maps/templates/junkyard_structures/garden.dmm"
+
+/datum/map_template/junkyard_structure/old_ship
+	structure_id = "old_ship_junkyard"
+	mappath = "maps/templates/junkyard_structures/old_ship.dmm"
+
+/datum/map_template/junkyard_structure/planetarium
+	structure_id = "planetarium_junkyard"
+	mappath = "maps/templates/junkyard_structures/planetarium.dmm"
+
+/datum/map_template/junkyard_structure/smelter
+	structure_id = "smelter_junkyard"
+	mappath = "maps/templates/junkyard_structures/smelter.dmm"
 
 /obj/effect/junkyard_structure_generator
 	name = "junkyard structure generator"

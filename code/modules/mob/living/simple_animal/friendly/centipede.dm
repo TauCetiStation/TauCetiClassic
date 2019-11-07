@@ -18,6 +18,7 @@
 	response_harm   = "kicks the"
 	minbodytemp = 198	// Below -75 Degrees Celcius
 	maxbodytemp = 423	// Above 150 Degrees Celcius
+	faction = "Junkyard"
 	var/area/awaymission/junkyard/area_spawn
 
 /mob/living/simple_animal/centipede/atom_init()
@@ -39,7 +40,7 @@
 	..()
 	if(health <= 0)
 		return
-	for(var/obj/item/weapon/scrap_lump/scrap in oview(src, 3))
+	for(var/obj/item/weapon/scrap_lump/scrap in oview(src, 5))
 		walk_to(src, scrap.loc,0,2)
 		qdel(scrap)
 		break
