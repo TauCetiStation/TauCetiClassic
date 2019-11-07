@@ -1,10 +1,10 @@
 
 /datum/artifact_effect/stun
-	effecttype = "stun"
+	effect_name = "Stun"
 
 /datum/artifact_effect/stun/New()
 	..()
-	effect_type = pick(2,5)
+	effect_type = pick(ARTIFACT_EFFECT_PSIONIC, ARTIFACT_EFFECT_ORGANIC)
 
 /datum/artifact_effect/stun/DoEffectTouch(mob/toucher)
 	if(toucher && iscarbon(toucher))

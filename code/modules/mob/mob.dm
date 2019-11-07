@@ -236,11 +236,6 @@
 	if(msg)
 		flavor_text = msg
 
-/mob/proc/warn_flavor_changed()
-	if(flavor_text && flavor_text != "") // don't spam people that don't use it!
-		to_chat(src, "<h2 class='alert'>OOC Warning:</h2>")
-		to_chat(src, "<span class='alert'>Your flavor text is likely out of date! <a href='byond://?src=\ref[src];flavor_change=1'>Change</a></span>")
-
 /mob/proc/print_flavor_text()
 	if(flavor_text && flavor_text != "")
 		var/msg = flavor_text
@@ -426,9 +421,6 @@
 		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, entity_ja(flavor_text)), text("window=[];size=500x200", name))
 		onclose(usr, "[name]")
 
-	if(href_list["flavor_change"])
-		update_flavor_text()
-//	..()
 	return
 
 
