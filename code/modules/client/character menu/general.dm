@@ -220,7 +220,7 @@
 					g_skin = rand(0,255)
 					b_skin = rand(0,255)
 				if("bag")
-					backbag = rand(1,4)
+					backbag = rand(1,5)
 				if("all")
 					randomize_appearance_for()	//no params needed
 		if("input")
