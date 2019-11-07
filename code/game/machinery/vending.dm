@@ -402,9 +402,6 @@
 	if(!.)
 		return
 
-	if(!src || !istype(src, /obj/machinery/vending))
-		return
-
 	if(href_list["remove_coin"] && !issilicon(usr) && !isobserver(usr))
 		if(!coin)
 			to_chat(usr, "There is no coin in this machine.")

@@ -86,7 +86,7 @@
 
 	if(href_list["program"])
 		var/prog = href_list["program"]
-		if(holoscene_templates.Find(prog) && (issilicon(usr) || in_range(src, usr)))
+		if(holoscene_templates.Find(prog))
 			loadIdProgram(prog)
 
 	else if(href_list["AIoverride"])

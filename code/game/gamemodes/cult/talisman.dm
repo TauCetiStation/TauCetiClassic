@@ -56,7 +56,10 @@
 
 
 /obj/item/weapon/paper/talisman/supply/Topic(href, href_list)
-	if (!src || !istype(src, /obj/item/weapon/paper/talisman/supply) || usr.incapacitated() || !in_range(src, usr))
+	if (!src || usr.incapacitated() || if(!iscultist(user)) || !in_range(src, usr))
+		return
+	if(!uses)
+		qdel(src)
 		return
 	if (href_list["rune"])
 		switch(href_list["rune"])
