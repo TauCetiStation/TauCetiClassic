@@ -27,7 +27,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/ignore_cid_warning = 0
 
 	//game-preferences
-	var/UI_style = "White"
+	var/UI_style = null
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
 	var/aooccolor = "#b82e00"
@@ -141,6 +141,7 @@ var/const/MAX_SAVE_SLOTS = 10
 
 /datum/preferences/New(client/C)
 	parent = C
+	UI_style = global.available_ui_styles[1]
 	b_type = random_blood_type()
 	if(istype(C))
 		if(!IsGuestKey(C.key))
