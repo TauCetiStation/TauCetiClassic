@@ -351,7 +351,7 @@ var/datum/subsystem/job/SSjob
 			player.ready = 0
 			unassigned -= player
 			ticker.mode.antag_candidates -= player.mind
-			to_chat(player, "<b><font color='red'>You were returned to the lobby because your preference unavailable.</font></b>")
+			to_chat(player, "<span class='alert bold'>You were returned to the lobby because your job preferences unavailable.  You can change this behavior in preferences.</font>")
 	return 1
 
 //Gives the player the stuff he should have with his rank
