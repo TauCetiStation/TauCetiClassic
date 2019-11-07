@@ -59,7 +59,6 @@
 	src.is_admin_channel = 0
 
 /datum/feed_message/Destroy()
-	QDEL_LIST(voters)
 	QDEL_LIST(comments)
 	return ..()
 
