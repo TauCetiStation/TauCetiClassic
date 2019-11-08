@@ -1495,19 +1495,20 @@
 					if(icon_num)
 						healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]")
 
-		switch(get_nutrition())
-			if(NUTRITION_LEVEL_FULL to INFINITY)
-				throw_alert("nutrition", /obj/screen/alert/fat)
-			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-				throw_alert("nutrition", /obj/screen/alert/full)
-			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-				throw_alert("nutrition", /obj/screen/alert/well_fed)
-			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-				throw_alert("nutrition", /obj/screen/alert/fed)
-			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-				throw_alert("nutrition", /obj/screen/alert/hungry)
-			else
-				throw_alert("nutrition", /obj/screen/alert/starving)
+		if(nutrition_icon)
+			switch(get_nutrition())
+				if(NUTRITION_LEVEL_FULL to INFINITY)
+					nutrition_icon.icon_state = "fat"
+				if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+					nutrition_icon.icon_state = "full"
+				if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+					nutrition_icon.icon_state = "well_fed"
+				if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+					nutrition_icon.icon_state = "fed"
+				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+					nutrition_icon.icon_state = "hungry"
+				else
+					nutrition_icon.icon_state = "starving"
 
 		if(pressure)
 			pressure.icon_state = "pressure[pressure_alert]"

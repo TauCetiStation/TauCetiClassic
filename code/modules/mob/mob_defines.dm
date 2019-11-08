@@ -37,6 +37,7 @@
 	var/obj/screen/leap/leap_icon = null
 	var/obj/screen/neurotoxin_icon = null
 	var/obj/screen/healthdoll = null
+	var/obj/screen/nutrition_icon = null
 
 	var/obj/screen/alien_plasma_display = null
 	var/obj/screen/nightvisionicon = null
