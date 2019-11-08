@@ -1,11 +1,11 @@
 
 //todo
 /datum/artifact_effect/sleepy
-	effecttype = "sleepy"
+	effect_name = "Sleepy"
 
 /datum/artifact_effect/sleepy/New()
 	..()
-	effect_type = pick(5,2)
+	effect_type = pick(ARTIFACT_EFFECT_PSIONIC, ARTIFACT_EFFECT_ORGANIC)
 
 /datum/artifact_effect/sleepy/DoEffectTouch(mob/toucher)
 	if(toucher)

@@ -667,7 +667,6 @@ var/list/cult_runes = list()
 		if(istype(closet.loc, /obj/structure/bigDelivery))
 			var/obj/structure/bigDelivery/D = closet.loc
 			closet.forceMove(get_turf(D.loc))
-			D.wrapped = null
 			qdel(D)
 		if(closet.welded || closet.locked || !closet.opened)
 			closet.welded = FALSE

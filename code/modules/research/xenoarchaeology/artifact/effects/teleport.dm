@@ -1,7 +1,7 @@
 
 /datum/artifact_effect/teleport
-	effecttype = "teleport"
-	effect_type = 6
+	effect_name = "Teleport"
+	effect_type = ARTIFACT_EFFECT_BLUESPACE
 
 /datum/artifact_effect/teleport/DoEffectTouch(mob/user)
 	var/weakness = GetAnomalySusceptibility(user)

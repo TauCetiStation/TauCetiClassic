@@ -1,12 +1,12 @@
 
 /datum/artifact_effect/radiate
-	effecttype = "radiate"
+	effect_name = "Radiate"
 	var/radiation_amount
 
 /datum/artifact_effect/radiate/New()
 	..()
 	radiation_amount = rand(1, 10)
-	effect_type = pick(4,5)
+	effect_type = pick(ARTIFACT_EFFECT_PARTICLE, ARTIFACT_EFFECT_ORGANIC)
 
 /datum/artifact_effect/radiate/DoEffectTouch(mob/living/user)
 	if(user)

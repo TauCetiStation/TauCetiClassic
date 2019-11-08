@@ -116,13 +116,20 @@
 /obj/item/clothing/suit/storage/hazardvest
 	name = "hazard vest"
 	desc = "A high-visibility vest used in work zones."
-	icon_state = "hazard"
-	item_state = "hazard"
+	icon_state = "hazard_orange"
+	item_state = "hazard_orange"
 	blood_overlay_type = "armor"
 	allowed = list (/obj/item/device/analyzer, /obj/item/device/flashlight, /obj/item/device/multitool, /obj/item/device/radio, /obj/item/device/t_scanner,
 	/obj/item/weapon/crowbar, /obj/item/weapon/screwdriver, /obj/item/weapon/weldingtool, /obj/item/weapon/wirecutters, /obj/item/weapon/wrench, /obj/item/weapon/tank/emergency_oxygen,
 	/obj/item/clothing/mask/gas, /obj/item/taperoll/engineering)
 	body_parts_covered = UPPER_TORSO
+
+/obj/item/clothing/suit/storage/hazardvest/atom_init()
+	. = ..()
+	var/vest_color = pick("orange", "black")
+	icon_state = "hazard_[vest_color]"
+	item_state = icon_state
+	desc = "A high-visibility [vest_color] vest used in work zones."
 
 //Lawyer
 /obj/item/clothing/suit/storage/lawyer/bluejacket

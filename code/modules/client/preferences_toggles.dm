@@ -110,25 +110,30 @@
 		to_chat(usr, "This only for human")
 		return
 
-	var/UI_style_new = input(usr, "Select a style, we recommend White for customization") in list("White", "Midnight", "Orange", "old")
-	if(!UI_style_new) return
+	var/UI_style_new = input(usr, "Select a style, we recommend White for customization") as null|anything in sortList(global.available_ui_styles)
+	if(!UI_style_new)
+		return
 
 	var/UI_style_alpha_new = input(usr, "Select a new alpha(transparence) parametr for UI, between 50 and 255") as num
-	if(!UI_style_alpha_new | !(UI_style_alpha_new <= 255 && UI_style_alpha_new >= 50)) return
+	if(!UI_style_alpha_new || !(UI_style_alpha_new <= 255 && UI_style_alpha_new >= 50))
+		return
 
 	var/UI_style_color_new = input(usr, "Choose your UI color, dark colors are not recommended!") as color|null
-	if(!UI_style_color_new) return
+	if(!UI_style_color_new)
+		return
 
 	//update UI
-	var/list/icons = usr.hud_used.adding + usr.hud_used.other +usr.hud_used.hotkeybuttons
+	var/list/icons = usr.hud_used.adding + usr.hud_used.other + usr.hud_used.hotkeybuttons
 	icons.Add(usr.zone_sel)
 
+	var/ui_style = ui_style2icon(UI_style_new)
+	var/list/icon_states = icon_states(ui_style) // so it wont break hud with dmi that has no specific icon_state.
+
 	for(var/obj/screen/I in icons)
-		if(I.color && I.alpha)
-			I.icon = ui_style2icon(UI_style_new)
+		if(I.alpha && (I.icon_state in icon_states)) // I.color can AND will be null if player doesn't use it, don't check it.
+			I.icon = ui_style
 			I.color = UI_style_color_new
 			I.alpha = UI_style_alpha_new
-
 
 
 	if(alert("Like it? Save changes?",,"Yes", "No") == "Yes")

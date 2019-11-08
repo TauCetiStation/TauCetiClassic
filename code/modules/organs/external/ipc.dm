@@ -34,6 +34,28 @@
 /obj/item/organ/external/head/robot/ipc/update_sprite()
 	IPC_UPDATE_SPRITE
 
+/obj/item/organ/external/head/robot/ipc/alien
+	icon = 'icons/mob/human_races/r_machine.dmi'
+	icon_state = "head_alien"
+
+/obj/item/organ/external/head/robot/ipc/alien/update_sprite()
+	return
+
+/obj/item/organ/external/head/robot/ipc/double
+	icon = 'icons/mob/human_races/r_machine.dmi'
+	icon_state = "head_double"
+
+/obj/item/organ/external/head/robot/ipc/double/update_sprite()
+	return
+
+/obj/item/organ/external/head/robot/ipc/pillar
+	icon = 'icons/mob/human_races/r_machine.dmi'
+	icon_state = "head_pillar"
+
+/obj/item/organ/external/head/robot/ipc/pillar/update_sprite()
+	return
+
+
 /obj/item/organ/external/groin/robot/ipc
 	name = "ipc groin"
 

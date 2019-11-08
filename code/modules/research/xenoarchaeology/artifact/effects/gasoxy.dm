@@ -1,13 +1,13 @@
 
 /datum/artifact_effect/gasoxy
-	effecttype = "gasoxy"
+	effect_name = "Gas Oxygen"
 	var/max_pressure
 
 /datum/artifact_effect/gasoxy/New()
 	..()
-	effect = pick(EFFECT_TOUCH, EFFECT_AURA)
-	max_pressure = rand(115,1000)
-	effect_type = pick(6,7)
+	effect = pick(ARTIFACT_EFFECT_TOUCH, ARTIFACT_EFFECT_AURA)
+	max_pressure = rand(115, 1000)
+	effect_type = pick(ARTIFACT_EFFECT_BLUESPACE, ARTIFACT_EFFECT_SYNTH)
 
 
 /datum/artifact_effect/gasoxy/DoEffectTouch(mob/user)
