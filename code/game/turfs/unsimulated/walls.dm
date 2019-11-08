@@ -4,7 +4,7 @@
 	icon_state = "box"
 	opacity = 1
 	density = 1
-	smooth = FALSE
+	smooth = SMOOTH_TRUE
 
 /turf/unsimulated/wall/junkyard
 	name = "rock"
