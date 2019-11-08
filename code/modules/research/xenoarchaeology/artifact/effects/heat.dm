@@ -1,17 +1,14 @@
 
 //inverse of /datum/artifact_effect/cold, the two effects split up for neatness' sake
 /datum/artifact_effect/heat
-	effecttype = "heat"
+	effect_name = "Heat"
 	var/target_temp
 
 /datum/artifact_effect/heat/New()
 	..()
-	effect_type = pick(5,6,7)
-
-/datum/artifact_effect/heat/New()
-	..()
-	target_temp = rand(300,600)
-	effect = pick(EFFECT_TOUCH, EFFECT_AURA)
+	effect_type = pick(ARTIFACT_EFFECT_ORGANIC, ARTIFACT_EFFECT_BLUESPACE, ARTIFACT_EFFECT_SYNTH)
+	target_temp = rand(300, 600)
+	effect = pick(ARTIFACT_EFFECT_TOUCH, ARTIFACT_EFFECT_AURA)
 
 /datum/artifact_effect/heat/DoEffectTouch(mob/user)
 	if(holder)
