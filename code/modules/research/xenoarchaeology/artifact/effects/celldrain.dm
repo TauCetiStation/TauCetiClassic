@@ -1,42 +1,44 @@
 
 //todo
-/datum/artifact_effect/cellcharge
-	effecttype = "cellcharge"
-	effect_type = 3
+/datum/artifact_effect/celldrain
+	effect_name = "Cell Drain"
+	effect_type = ARTIFACT_EFFECT_ELECTRO
 
-/datum/artifact_effect/cellcharge/DoEffectTouch(mob/user)
+/datum/artifact_effect/celldrain/DoEffectTouch(mob/user)
 	if(user)
 		if(istype(user, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = user
 			for (var/obj/item/weapon/stock_parts/cell/D in R.contents)
-				D.charge += rand() * 100 + 50
-				to_chat(R, "<span class='notice'>SYSTEM ALERT: Large energy boost detected!</span>")
+				D.charge = max(D.charge - rand() * 100, 0)
+				to_chat(R, "<span class='notice'>SYSTEM ALERT: Energy drain detected!</span>")
 			return 1
 
-/datum/artifact_effect/cellcharge/DoEffectAura()
-	if(holder)
-		var/turf/T = get_turf(holder)
-		for (var/obj/machinery/power/apc/C in range(src.effectrange, T))
-			for (var/obj/item/weapon/stock_parts/cell/B in C.contents)
-				B.charge += 25
-		for (var/obj/machinery/power/smes/S in range (src.effectrange,src))
-			S.charge += 25
-		for (var/mob/living/silicon/robot/M in range(src.effectrange,T))
-			for (var/obj/item/weapon/stock_parts/cell/D in M.contents)
-				D.charge += 25
-				to_chat(M, "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>")
 		return 1
 
-/datum/artifact_effect/cellcharge/DoEffectPulse()
+/datum/artifact_effect/celldrain/DoEffectAura()
 	if(holder)
 		var/turf/T = get_turf(holder)
 		for (var/obj/machinery/power/apc/C in range(src.effectrange, T))
 			for (var/obj/item/weapon/stock_parts/cell/B in C.contents)
-				B.charge += rand() * 100
+				B.charge = max(B.charge - 50,0)
 		for (var/obj/machinery/power/smes/S in range (src.effectrange,src))
-			S.charge += 250
+			S.charge = max(S.charge - 100,0)
 		for (var/mob/living/silicon/robot/M in range(src.effectrange,T))
 			for (var/obj/item/weapon/stock_parts/cell/D in M.contents)
-				D.charge += rand() * 100
-				to_chat(M, "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>")
-		return 1
+				D.charge = max(D.charge - 50,0)
+				to_chat(M, "<span class='warning'>SYSTEM ALERT: Energy drain detected!</span>")
+	return 1
+
+/datum/artifact_effect/celldrain/DoEffectPulse()
+	if(holder)
+		var/turf/T = get_turf(holder)
+		for (var/obj/machinery/power/apc/C in range(src.effectrange, T))
+			for (var/obj/item/weapon/stock_parts/cell/B in C.contents)
+				B.charge = max(B.charge - rand() * 150,0)
+		for (var/obj/machinery/power/smes/S in range (src.effectrange,src))
+			S.charge = max(S.charge - 250,0)
+		for (var/mob/living/silicon/robot/M in range(src.effectrange,T))
+			for (var/obj/item/weapon/stock_parts/cell/D in M.contents)
+				D.charge = max(D.charge - rand() * 150,0)
+				to_chat(M, "<span class='warning'>SYSTEM ALERT: Energy drain detected!</span>")
+	return 1
