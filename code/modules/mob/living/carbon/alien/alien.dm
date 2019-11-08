@@ -109,7 +109,7 @@
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > 700)
 		//Body temperature is too hot.
-		throw_alert("alien_fire")
+		throw_alert("alien_fire", /obj/screen/alert/alien_fire)
 		switch(bodytemperature)
 			if(700 to 850)
 				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
