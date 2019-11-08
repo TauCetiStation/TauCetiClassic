@@ -1,19 +1,99 @@
-"a" = (/turf/simulated/wall,/area/awaymission/junkyard/structure)
-"b" = (/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
-"c" = (/obj/structure/closet,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
-"d" = (/obj/item/weapon/wirerod,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
-"e" = (/obj/item/weapon/shovel,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
-"f" = (/obj/item/weapon/storage/toolbox/electrical,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
-"g" = (/obj/structure/pit,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
-"h" = (/obj/structure/stool/bed/chair/metal{dir = 4},/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
-"i" = (/obj/structure/bonfire,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
-"j" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet/blue,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/wall,
+/area/awaymission/junkyard/structure)
+"b" = (
+/turf/simulated/floor/plating/ironsand/junkyard,
+/area/awaymission/junkyard/structure)
+"c" = (
+/obj/structure/closet,
+/turf/simulated/floor/plating/ironsand/junkyard,
+/area/awaymission/junkyard/structure)
+"d" = (
+/obj/item/weapon/wirerod,
+/turf/simulated/floor/plating/ironsand/junkyard,
+/area/awaymission/junkyard/structure)
+"e" = (
+/obj/item/weapon/shovel,
+/turf/simulated/floor/plating/ironsand/junkyard,
+/area/awaymission/junkyard/structure)
+"f" = (
+/obj/item/weapon/storage/toolbox/electrical,
+/turf/simulated/floor/plating/ironsand/junkyard,
+/area/awaymission/junkyard/structure)
+"g" = (
+/obj/structure/pit,
+/turf/simulated/floor/plating/ironsand/junkyard,
+/area/awaymission/junkyard/structure)
+"h" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 4
+	},
+/turf/simulated/floor/plating/ironsand/junkyard,
+/area/awaymission/junkyard/structure)
+"i" = (
+/obj/structure/bonfire,
+/turf/simulated/floor/plating/ironsand/junkyard,
+/area/awaymission/junkyard/structure)
+"j" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/blue,
+/turf/simulated/floor/plating/ironsand/junkyard,
+/area/awaymission/junkyard/structure)
 
 (1,1,1) = {"
-aaaaaab
-accdjbe
-afbbbbg
-ahbbbbb
-bbbbibb
-bbbbbbb
+a
+a
+a
+a
+b
+b
+"}
+(2,1,1) = {"
+a
+c
+f
+h
+b
+b
+"}
+(3,1,1) = {"
+a
+c
+b
+b
+b
+b
+"}
+(4,1,1) = {"
+a
+d
+b
+b
+b
+b
+"}
+(5,1,1) = {"
+a
+j
+b
+b
+i
+b
+"}
+(6,1,1) = {"
+a
+b
+b
+b
+b
+b
+"}
+(7,1,1) = {"
+b
+e
+g
+b
+b
+b
 "}
