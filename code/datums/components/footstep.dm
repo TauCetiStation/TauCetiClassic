@@ -70,7 +70,7 @@
 	if(!T)
 		return
 	if(isfile(footstep_sounds) || istext(footstep_sounds))
-		playsound(T, footstep_sounds, volume)
+		playsound(T, footstep_sounds, VOL_EFFECTS_MASTER, volume)
 		return
 	var/turf_footstep
 	switch(footstep_type)
@@ -101,16 +101,8 @@
 		return
 
 	if(H.shoes) //are we wearing shoes
-		playsound(T, pick(footstep[T.footstep][1]),
-			VOL_EFFECTS_MASTER,
-			footstep[T.footstep][2] * volume,
-			TRUE,
-			footstep[T.footstep][3] + e_range)
+		playsound(T, pick(footstep[T.footstep][1]), VOL_EFFECTS_MASTER, footstep[T.footstep][2] * volume, TRUE, footstep[T.footstep][3] + e_range)
 		if(H.shoes.wet)
 			playsound(T, 'sound/effects/mob/footstep/wet_shoes_step.ogg', VOL_EFFECTS_MASTER)
 	else
-		playsound(T, pick(barefootstep[T.barefootstep][1]),
-			VOL_EFFECTS_MASTER,
-			barefootstep[T.barefootstep][2] * volume,
-			TRUE,
-			barefootstep[T.barefootstep][3] + e_range)
+		playsound(T, pick(barefootstep[T.barefootstep][1]), VOL_EFFECTS_MASTER, barefootstep[T.barefootstep][2] * volume, TRUE, barefootstep[T.barefootstep][3] + e_range)
