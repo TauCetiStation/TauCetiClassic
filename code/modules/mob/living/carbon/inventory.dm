@@ -1,7 +1,7 @@
 /mob/living/carbon/proc/stripPanelUnEquip(mob/living/who, where, obj/item/this_item)
 	if(QDELETED(src) || QDELETED(who) || !where || who.is_busy(src))
 		return
-	if(!who.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(!who.canUseTopic(src, BE_CLOSE, NO_DEXTERY, NO_TK))
 		return
 
 	var/strip_gloves = FALSE
@@ -47,7 +47,7 @@
 			return
 		if(who.get_active_hand() != this_item)
 			return
-	if(!who.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(!who.canUseTopic(src, BE_CLOSE, NO_DEXTERY, NO_TK))
 		return
 
 	var/obj/item/slot_ref = get_slot_ref(where)

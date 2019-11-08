@@ -30,7 +30,7 @@
 
 /obj/structure/closet/secure_closet/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)) || !isturf(loc))
 		return
 	else src.togglelock(user)
 

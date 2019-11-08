@@ -33,7 +33,7 @@
 	return formatted
 
 /obj/machinery/computer/card/AltClick(mob/user)
-	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
+	if(!user.canUseTopic(src, !issilicon(user), FALSE, NO_TK) || !is_operational())
 		return
 	eject_id()
 

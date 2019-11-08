@@ -304,7 +304,7 @@
 	update_icon()
 
 /obj/machinery/washing_machine/AltClick(mob/user)
-	if(!user.canUseTopic(src))
+	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	if(state == 1 || state == 3 || state == 6)
 		to_chat(user, "<span class='notice'>Close the door first</span>")

@@ -131,6 +131,11 @@
 	storage_ui.on_open(user)
 	storage_ui.show_to(user)
 
+/obj/item/weapon/storage/AltClick(mob/user)
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user), NO_TK) || issilicon(user))
+		return
+	src.open(user)	
+
 /obj/item/weapon/storage/proc/prepare_ui()
 	if(!storage_ui)
 		storage_ui = new storage_ui_path(src)

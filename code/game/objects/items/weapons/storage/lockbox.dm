@@ -52,6 +52,12 @@
 		to_chat(user, "<span class='warning'>Its locked!</span>")
 	return
 
+/obj/item/weapon/storage/lockbox/AltClick(mob/user)
+	if(locked)
+		to_chat(user, "<span class='warning'>Its locked!</span>")
+	else
+		..()
+
 /obj/item/weapon/storage/lockbox/emag_act(mob/user)
 	if(broken)
 		return FALSE

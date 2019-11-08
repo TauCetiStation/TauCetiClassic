@@ -281,7 +281,7 @@
 		..()
 
 /obj/item/stack/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK, ismonkey(user)))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user), NO_TK))
 		return
 	if(is_cyborg())
 		return
