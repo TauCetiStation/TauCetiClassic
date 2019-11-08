@@ -1494,20 +1494,22 @@
 						icon_num = 5
 					if(icon_num)
 						healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]")
-
-		switch(get_nutrition())
-			if(NUTRITION_LEVEL_FULL to INFINITY)
-				throw_alert("nutrition","fat")
-			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-				throw_alert("nutrition", "full")
-			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-				throw_alert("nutrition", "well_fed")
-			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-				throw_alert("nutrition", "fed")
-			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-				throw_alert("nutrition","hungry")
-			else
-				throw_alert("nutrition","starving")
+		if(!species.flags[IS_SYNTHETIC])
+			switch(get_nutrition())
+				if(NUTRITION_LEVEL_FULL to INFINITY)
+					throw_alert("nutrition","fat")
+				if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+					throw_alert("nutrition", "full")
+				if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+					throw_alert("nutrition", "well_fed")
+				if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+					throw_alert("nutrition", "fed")
+				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+					throw_alert("nutrition","hungry")
+				else
+					throw_alert("nutrition","starving")
+		else
+			clear_alert("nutrition")
 
 		if(pressure)
 			pressure.icon_state = "pressure[pressure_alert]"
@@ -1587,7 +1589,15 @@
 			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[mind.changeling.chem_charges]</font></div>"
 		else
 			hud_used.lingchemdisplay.invisibility = 101
-
+			
+		if(species.flags[IS_SYNTHETIC])
+			var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
+			var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
+			if(C)
+				hud_used.ipcpowerdisplay.invisibility = 0
+				hud_used.ipcpowerdisplay.maptext = {"<div style="font-size:[FONT_ASIZE];color:[FONT_ACOLOR];font:'[FONT_ASTYLE]';text-align:center;" valign="middle"> [round(100*nutrition/C.maxcharge)]%<br> [C.maxcharge/100]%</div>"}
+			else
+				hud_used.ipcpowerdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#FF0000'>X</font></div>"
 	..()
 
 	return 1
