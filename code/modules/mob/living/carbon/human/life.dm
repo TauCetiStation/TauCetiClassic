@@ -21,7 +21,6 @@
 
 /mob/living/carbon/human
 	var/prev_gender = null // Debug for plural genders
-	var/in_stasis = 0
 
 
 /mob/living/carbon/human/Life()
@@ -53,16 +52,13 @@
 	life_tick++
 	var/datum/gas_mixture/environment = loc.return_air()
 
-	in_stasis = istype(loc, /obj/structure/closet/body_bag/cryobag) && loc:opened == 0
-	if(in_stasis) loc:used++
-
 	if(life_tick%30==15)
 		hud_updateflag = 1022
 
 	voice = GetVoice()
 
 	//No need to update all of these procs if the guy is dead.
-	if(stat != DEAD && !in_stasis)
+	if(stat != DEAD && !IS_IN_STASIS(src))
 		if(SSmob.times_fired%4==2 || failed_last_breath || (health < config.health_threshold_crit)) 	//First, resolve location and get a breath
 			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
 
@@ -71,32 +67,41 @@
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
-		//Mutations and radiation
-		handle_mutations_and_radiation()
+		if(stat != DEAD) // incase if anyone wonder why - mob can die while any of those procs run, so we recheck stat where needed.
+			//Mutations and radiation
+			handle_mutations_and_radiation()
 
-		//Chemicals in the body
-		handle_chemicals_in_body()
+		if(stat != DEAD)
+			//Chemicals in the body
+			handle_chemicals_in_body()
 
-		//Disabilities
-		handle_disabilities()
+		if(stat != DEAD)
+			//Disabilities
+			handle_disabilities()
 
-		//Random events (vomiting etc)
-		handle_random_events()
+			//Random events (vomiting etc)
+			handle_random_events()
 
-		handle_virus_updates()
+			handle_virus_updates()
 
-		//stuff in the stomach
-		handle_stomach()
+			//stuff in the stomach
+			handle_stomach()
 
-		handle_shock()
+			handle_shock()
 
-		handle_pain()
+			handle_pain()
 
-		handle_medical_side_effects()
+			handle_medical_side_effects()
 
-		handle_heart_beat()
+			handle_heart_beat()
 
-	handle_stasis_bag()
+			//This block was in handle_regular_status_updates under != DEAD
+			stabilize_body_temperature()	//Body temperature adjusts itself
+			handle_bodyparts()	//Optimized.
+			if(!species.flags[NO_BLOOD] && bodytemperature >= 170)
+				var/blood_volume = round(vessel.get_reagent_amount("blood"))
+				if(blood_volume > 0)
+					handle_blood(blood_volume)
 
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
 		return											//We go ahead and process them 5 times for HUD images and other stuff though.
@@ -262,16 +267,6 @@
 								say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom", "PACKETS!!!"))
 							if(3)
 								emote("drool")
-
-/mob/living/carbon/human/proc/handle_stasis_bag()
-	// Handle side effects from stasis bag
-	if(in_stasis)
-		// First off, there's no oxygen supply, so the mob will slowly take brain damage
-		adjustBrainLoss(0.1)
-
-		// Next, the method to induce stasis has some adverse side-effects, manifesting
-		// as cloneloss
-		adjustCloneLoss(0.1)
 
 /mob/living/carbon/human/proc/handle_mutations_and_radiation()
 
@@ -1124,13 +1119,6 @@
 		clear_stat_indicator()
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()	//TODO
-		if(!in_stasis)
-			stabilize_body_temperature()	//Body temperature adjusts itself
-			handle_bodyparts()	//Optimized.
-			if(!species.flags[NO_BLOOD] && bodytemperature >= 170)
-				var/blood_volume = round(vessel.get_reagent_amount("blood"))
-				if(blood_volume > 0)
-					handle_blood(blood_volume)
 
 		if(health <= config.health_threshold_dead || brain_op_stage == 4.0)
 			death()
