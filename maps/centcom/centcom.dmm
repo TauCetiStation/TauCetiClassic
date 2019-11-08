@@ -419,9 +419,6 @@
 "aaN" = (
 /turf/unsimulated/wall/fakeglass,
 /area/syndicate_mothership)
-"aaO" = (
-/turf/unsimulated/wall/fakeglass,
-/area/space)
 "aaP" = (
 /turf/unsimulated/wall/fakeglass,
 /area/centcom/arrival)
@@ -1789,9 +1786,6 @@
 	icon_state = "black"
 	},
 /area/syndicate_mothership/droppod_garage)
-"aig" = (
-/turf/simulated/mineral,
-/area/syndicate_mothership)
 "aih" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -4058,7 +4052,7 @@
 	},
 /area/centcom/arrival)
 "apm" = (
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /turf/unsimulated/floor{
 	icon_state = "sandwater"
 	},
@@ -6327,8 +6321,7 @@
 "axb" = (
 /obj/random/vending/cola,
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "axc" = (
@@ -8309,8 +8302,7 @@
 "aDb" = (
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "aDi" = (
@@ -8891,8 +8883,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "aFd" = (
@@ -9776,8 +9767,7 @@
 /area/centcom/evac)
 "aIb" = (
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "aIc" = (
@@ -10018,8 +10008,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "aJe" = (
@@ -10638,8 +10627,7 @@
 	pixel_y = 32
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "aLc" = (
@@ -11247,8 +11235,7 @@
 	pixel_y = 32
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "aOc" = (
@@ -11801,8 +11788,7 @@
 "aQb" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "aQg" = (
@@ -12034,8 +12020,7 @@
 "aRb" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "aRi" = (
@@ -13883,31 +13868,6 @@
 	pixel_y = 24
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = -2
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_y = 6
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = 3;
-	pixel_y = 9
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = 6;
-	pixel_y = 2
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = -1
-	},
 /turf/simulated/shuttle/floor4{
 	name = "red floor";
 	nitrogen = 103.984;
@@ -14903,8 +14863,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "bag" = (
@@ -15294,8 +15253,7 @@
 /obj/structure/table,
 /obj/item/weapon/folder,
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "bbc" = (
@@ -16320,8 +16278,7 @@
 	},
 /obj/item/weapon/pen,
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "bob" = (
@@ -16361,8 +16318,7 @@
 	dir = 8
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "btb" = (
@@ -16425,8 +16381,7 @@
 "bAb" = (
 /obj/structure/flora/plant/random,
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "bBb" = (
@@ -16507,8 +16462,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/syndicate_mothership)
 "bIb" = (
@@ -21695,7 +21649,7 @@
 	},
 /area/tdome/tdomeadmin)
 "nnb" = (
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "redyellowfull"
@@ -79760,9 +79714,9 @@ aaM
 aaM
 aaM
 aaM
-aaO
+aaN
 amJ
-aaO
+aaN
 aaM
 aaM
 aaM
@@ -80017,9 +79971,9 @@ aaM
 aaM
 aaM
 aaM
-aaO
+aaN
 aii
-aaO
+aaN
 aaM
 aaM
 aaM
@@ -81309,7 +81263,7 @@ alN
 alW
 amZ
 aie
-alt
+aaM
 aaM
 aaM
 aaM
@@ -82079,8 +82033,8 @@ alF
 alF
 als
 aie
-aeD
-aeD
+aie
+aie
 aaM
 aaM
 aaM
@@ -85657,7 +85611,7 @@ ahF
 ahF
 ahF
 ahF
-aig
+ahF
 aie
 ajG
 ajN
@@ -85914,7 +85868,7 @@ ahF
 ahF
 ahF
 ahF
-aig
+ahF
 aie
 ajH
 ajN
@@ -86171,7 +86125,7 @@ ahF
 ahF
 ahF
 ahF
-aig
+ahF
 aie
 ajI
 ajN
@@ -86428,7 +86382,7 @@ ahF
 ahF
 ahF
 ahF
-aig
+ahF
 aie
 ajJ
 ajO
@@ -86685,7 +86639,7 @@ ahF
 ahF
 ahF
 ahF
-aig
+ahF
 aie
 aie
 aie

@@ -27,6 +27,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	origin_tech = "materials=1"
 	attack_verb = list("burnt", "singed")
 
+/obj/item/weapon/match/get_current_temperature()
+	if(lit)
+		return 1000
+	else
+		return 0
+
+/obj/item/weapon/match/extinguish()
+	burn_out()
+
 /obj/item/weapon/match/process()
 	var/turf/location = get_turf(src)
 	smoketime--
@@ -78,6 +87,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	flags |= NOREACT // so it doesn't react until you light it
 	create_reagents(chem_volume) // making the cigarrete a chemical holder with a maximum volume of 15
 
+/obj/item/clothing/mask/cigarette/get_current_temperature()
+	if(lit)
+		return 1000
+	else
+		return 0
+
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(iswelder(W))
@@ -107,6 +122,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	else if(istype(W, /obj/item/device/assembly/igniter))
 		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name].</span>")
+		
+	else if(istype(W, /obj/item/weapon/pen/edagger))
+		var/obj/item/weapon/pen/edagger/E = W
+		if(E.on)
+			light("<span class='warning'>[user] swings their [W], barely missing their nose. They light their [name] in the process.</span>")
 
 	//can't think of any other way to update the overlays :<
 	user.update_inv_l_hand()
@@ -297,6 +317,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else if(istype(W, /obj/item/device/assembly/igniter))
 		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name] with the power of science.</span>")
 
+	else if(istype(W, /obj/item/weapon/pen/edagger))
+		var/obj/item/weapon/pen/edagger/E = W
+		if(E.on)
+			light("<span class='warning'>[user] swings their [W], barely missing their nose. They light their [name] in the process.</span>")
+
 /////////////////
 //SMOKING PIPES//
 /////////////////
@@ -426,6 +451,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "lighter-[color]-on"
 	icon_off = "lighter-[color]"
 	icon_state = icon_off
+
+/obj/item/weapon/lighter/get_current_temperature()
+	if(lit)
+		return 1500
+	else
+		return 0
 
 /obj/item/weapon/lighter/attack_self(mob/living/user)
 	if(user.r_hand == src || user.l_hand == src)

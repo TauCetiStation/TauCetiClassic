@@ -217,6 +217,9 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	drill_verb = "cutting"
 
+/obj/item/weapon/pickaxe/plasmacutter/get_current_temperature()
+	return 3800
+
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"

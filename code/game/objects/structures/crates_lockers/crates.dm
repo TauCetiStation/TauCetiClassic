@@ -151,7 +151,8 @@
 	..()
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)) || !isturf(loc))
 		return
-	else src.togglelock(user)
+	src.togglelock(user)
+
 
 /obj/structure/closet/crate/secure/proc/togglelock(mob/user)
 	if(src.opened)

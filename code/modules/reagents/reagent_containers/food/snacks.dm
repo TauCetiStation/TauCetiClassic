@@ -664,7 +664,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("protein", 3)
 	reagents.add_reagent("carpotoxin", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/fishfingers
@@ -926,10 +926,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger
 	name = "Clown Burger"
-	desc = "This tastes funny..."
+	desc = "This tastes funny... And HONKS!"
 	icon_state = "clownburger"
 	filling_color = "#ff00ff"
 	bitesize = 2
+	var/cooldown = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger/atom_init()
 	. = ..()
@@ -940,6 +941,13 @@
 */
 	reagents.add_reagent("nutriment", 6)
 	reagents.add_reagent("vitamin", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/clownburger/attack_self(mob/user)
+	if(cooldown <= world.time)
+		cooldown = world.time + 8
+		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
+		src.add_fingerprint(user)
+	return
 
 /obj/item/weapon/reagent_containers/food/snacks/mimeburger
 	name = "Mime Burger"
@@ -1229,8 +1237,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sosjerky/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 1)
-	reagents.add_reagent("sugar", 3)
+	reagents.add_reagent("protein", 3)
+	reagents.add_reagent("sugar", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin
 	name = "4no Raisins"

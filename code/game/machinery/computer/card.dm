@@ -37,6 +37,7 @@
 		return
 	eject_id()
 
+
 /obj/machinery/computer/card/verb/eject_id()
 	set category = "Object"
 	set name = "Eject ID Card"

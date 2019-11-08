@@ -29,10 +29,11 @@
 		return 0
 
 /obj/structure/closet/secure_closet/AltClick(mob/user)
-	..()
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)) || !isturf(loc))
 		return
-	else src.togglelock(user)
+	src.togglelock(user)
+  ..()
+
 
 /obj/structure/closet/secure_closet/emp_act(severity)
 	for(var/obj/O in src)
