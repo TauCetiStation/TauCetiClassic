@@ -24,6 +24,7 @@
 	var/hotkey_ui_hidden = 0	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
 	var/obj/screen/lingchemdisplay
+	var/obj/screen/ipcpowerdisplay
 	var/obj/screen/lingstingdisplay
 	var/obj/screen/blobpwrdisplay
 	var/obj/screen/blobhealthdisplay
@@ -56,6 +57,7 @@
 	disarm_intent = null
 	help_intent = null
 	lingchemdisplay = null
+	ipcpowerdisplay = null
 	blobpwrdisplay = null
 	blobhealthdisplay = null
 	r_hand_hud_object = null
@@ -196,6 +198,7 @@
 			mymob.client.screen += mymob.healthdoll
 			mymob.client.screen += mymob.internals
 			mymob.client.screen += lingstingdisplay
+			mymob.client.screen += ipcpowerdisplay
 			mymob.client.screen += lingchemdisplay
 			mymob.client.screen += mymob.gun_setting_icon
 
@@ -215,6 +218,7 @@
 			//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
 			mymob.client.screen -= mymob.zone_sel	//zone_sel is a mob variable for some reason.
 			mymob.client.screen -= lingstingdisplay
+			mymob.client.screen -= ipcpowerdisplay
 			mymob.client.screen -= lingchemdisplay
 
 			//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
@@ -243,6 +247,7 @@
 			mymob.client.screen -= mymob.internals
 			mymob.client.screen -= lingstingdisplay
 			mymob.client.screen -= lingchemdisplay
+			mymob.client.screen -= ipcpowerdisplay
 			mymob.client.screen -= mymob.gun_setting_icon
 
 			hidden_inventory_update()
