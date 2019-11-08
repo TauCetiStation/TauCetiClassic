@@ -407,7 +407,7 @@
 	ipcpowerdisplay.icon = 'icons/mob/screen1_robot.dmi'
 	ipcpowerdisplay.name = "power storage"
 	ipcpowerdisplay.icon_state = "ipcpower"
-	ipcpowerdisplay.screen_loc = ui_ipcpowerdisplay
+	ipcpowerdisplay.screen_loc = ui_internal
 	ipcpowerdisplay.layer = ABOVE_HUD_LAYER
 	ipcpowerdisplay.plane = ABOVE_HUD_PLANE
 	ipcpowerdisplay.invisibility = 101
