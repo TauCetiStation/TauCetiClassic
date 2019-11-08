@@ -10,6 +10,10 @@
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 	var/dirt = 0
+	var/footstep
+	var/barefootstep
+	var/clawfootstep
+	var/heavyfootstep
 
 /turf/simulated/atom_init()
 	..()
@@ -56,7 +60,7 @@
 				dirtoverlay.alpha = 20
 			else
 				dirtoverlay.alpha = min(dirtoverlay.alpha+5, 255)
-
+/*
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 
@@ -80,7 +84,7 @@
 						O.footstep++
 				else
 					playsound(src, footstepsound, VOL_EFFECTS_MASTER, 20)
-
+*/
 		// Tracking blood
 		var/list/bloodDNA = null
 		var/datum/dirt_cover/blooddatum
