@@ -149,6 +149,8 @@
 		if(prob(1))
 			if(prob(10))
 				new /obj/random/mobs/peacefull(src)
+				if(prob(5))
+					new /obj/random/mobs/dangerous(src)
 
 /turf/simulated/floor/plating/ironsand/junkyard/attackby(obj/item/weapon/W, mob/user)
 	if(!W || !user)
