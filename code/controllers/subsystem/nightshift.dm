@@ -44,7 +44,7 @@ var/datum/subsystem/nightshift/SSnightshift
 	for(var/obj/machinery/power/apc/APC in apc_list)
 		if (is_station_level(APC.z) || is_mining_level(APC.z))
 			var/preset = "soft"
-			if(is_type_in_list(get_area(APC), hard_lighting_arealist))
+			if(is_type_in_typecache(get_area(APC), hard_lighting_arealist))
 				preset = "hard"
 
 			APC.set_nightshift(active, preset)
@@ -59,50 +59,4 @@ var/list/lighting_presets = list(
 	"6000K" = list("color" = "#fff3ef", "power" = 0.8, "range" = 8),
 )
 
-var/hard_lighting_arealist = list(
-	/area/station/medical/reception,
-	/area/station/medical/morgue,
-	/area/station/medical/hallway,
-	/area/station/medical/genetics_cloning,
-	/area/station/medical/cmo,
-	/area/station/medical/psych,
-	/area/station/medical/patients_rooms,
-	/area/station/medical/patient_a,
-	/area/station/medical/patient_b,
-	/area/station/medical/medbreak,
-	/area/station/medical/surgeryobs,
-	/area/station/medical/surgery,
-	/area/station/medical/surgery2,
-	/area/station/medical/storage,
-	/area/station/medical/chemistry,
-	/area/station/medical/sleeper,
-	/area/station/medical/virology,
-	/area/station/rnd/lab,
-	/area/station/rnd/hor,
-	/area/station/rnd/hallway,
-	/area/station/rnd/xenobiology,
-	/area/station/rnd/storage,
-	/area/station/rnd/test_area,
-	/area/station/rnd/mixing,
-	/area/station/rnd/misc_lab,
-	/area/station/rnd/telesci,
-	/area/station/rnd/scibreak,
-	/area/station/rnd/server,
-	/area/station/rnd/chargebay,
-	/area/station/rnd/robotics,
-	/area/station/rnd/brainstorm_center,
-	/area/asteroid/research_outpost/hallway,
-	/area/asteroid/research_outpost/gearstore,
-	/area/asteroid/research_outpost/maint,
-	/area/asteroid/research_outpost/iso1,
-	/area/asteroid/research_outpost/iso2,
-	/area/asteroid/research_outpost/harvesting,
-	/area/asteroid/research_outpost/outpost_misc_lab,
-	/area/asteroid/research_outpost/anomaly,
-	/area/asteroid/research_outpost/med,
-	/area/asteroid/research_outpost/entry,
-	/area/asteroid/research_outpost/longtermstorage,
-	/area/asteroid/research_outpost/tempstorage,
-	/area/asteroid/research_outpost/maintstore2,
-	/area/station/medical/genetics,
-	)
+var/hard_lighting_arealist = typecacheof(typesof(/area/station/medical) + typesof(/area/station/rnd) + typesof(/area/asteroid/research_outpost))
