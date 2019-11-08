@@ -1101,7 +1101,7 @@
 		visible_message("<span class='notice'>[user] butchers [src].</span>")
 		gib()
 
-/mob/living/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/living/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE

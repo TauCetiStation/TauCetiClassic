@@ -492,13 +492,6 @@ var/list/slot_equipment_priority = list(
 	else
 		return ..()
 
-/mob/proc/CanUseTopicInventory(mob/target)
-	if(is_busy() || !canmove || !in_range(src, target) || isdrone(src) || incapacitated() || !Adjacent(target))
-		return FALSE
-
-	if(ishuman(src) || isrobot(src) || ismonkey(src) || isIAN(src) || isalienadult(src))
-		return TRUE
-
 //Create delay for equipping
 /mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing/
 

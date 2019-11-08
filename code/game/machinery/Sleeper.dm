@@ -157,7 +157,11 @@
 /obj/machinery/sleeper/AltClick(mob/user)
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return
-	open_machine()
+	if(state_open)
+		close_machine()
+	else
+		open_machine()
+	return ..()
 
 /obj/machinery/sleeper/emp_act(severity)
 	if(filtering)

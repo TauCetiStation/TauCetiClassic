@@ -434,7 +434,7 @@
 	if(icon_move && !stat)
 		flick(icon_move, src)
 
-/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE

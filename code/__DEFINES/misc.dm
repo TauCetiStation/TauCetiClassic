@@ -147,6 +147,7 @@
 //used by canUseTopic()
 #define BE_CLOSE TRUE		//! in the case of a silicon, to select if they need to be next to the atom
 #define NO_DEXTERY TRUE		//! if other mobs (monkeys, aliens, etc) can use this
+#define NO_TK TRUE			//! used to check telekinesis
 
 //teleport checks
 #define TELE_CHECK_NONE 0
