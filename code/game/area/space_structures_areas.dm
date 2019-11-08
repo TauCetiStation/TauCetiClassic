@@ -140,3 +140,53 @@
 /area/space_structures/derelict_lab
 	name = "Abandoned Lab"
 	icon_state = "yellow"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/derelict/ds_eng
+	name = "Engineering"
+	icon_state = "engine_smes"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/derelict/ds_med
+	name = "Medbay"
+	icon_state = "medbay"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/derelict/ds_medstor
+	name = "Medical storage"
+	icon_state = "medbay3"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/derelict/ds_bridge
+	name = "Bridge"
+	icon_state = "bridge"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/derelict/ds_brig
+	name = "Brig"
+	icon_state = "brig"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/derelict/ds_hallway
+	name = "Hallway"
+	icon_state = "hallC"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/derelict/ds_bar
+	name = "Bar"
+	icon_state = "bar"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+area/derelict/ds_shuttle
+	name = "Escape shuttle"
+	icon_state = "escape"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
