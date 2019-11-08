@@ -1466,33 +1466,33 @@ var/list/the_station_areas = list (
 // DS - destroyed station
 
 /area/derelict/DS_eng
-	name = "DS eng"
+	name = "Engineering"
 	icon_state = "engine_smes"
 
 /area/derelict/DS_med
-	name = "DS med"
+	name = "Medbay"
 	icon_state = "medbay"
 
 /area/derelict/DS_medstor
-	name = "DS med storage"
+	name = "Medical storage"
 	icon_state = "medbay3"
 
 /area/derelict/DS_bridge
-	name = "DS bridge"
+	name = "Bridge"
 	icon_state = "bridge"
 
 /area/derelict/DS_brig
-	name = "DS brig"
+	name = "Brig"
 	icon_state = "brig"
 
 /area/derelict/DS_hallway
-	name = "DS hallway"
+	name = "Hallway"
 	icon_state = "hallC"
 
 /area/derelict/DS_bar
-	name = "DS bar"
+	name = "Bar"
 	icon_state = "bar"
 
 area/derelict/DS_shuttle
-	name = "DS shuttle"
+	name = "Escape shuttle"
 	icon_state = "escape"
