@@ -1249,9 +1249,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/amount_of_garbage = 0
 	var/amount_of_centipedes = 0
 	var/amount_of_aggressive = 0
-	var/delay_process = 40
+	var/delay_process = 60
 	var/process = 0
-	var/delay_process_pile = 6
+	var/delay_process_pile = 7
 	var/process_pile = 0
 	var/max_centipedes = 16
 	var/max_aggressive = 6
@@ -1363,6 +1363,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	tag_down = "west"
 	tag_right = "north"
 	tag_left = "south_east"
+	max_aggressive = 3
 
 /area/awaymission/junkyard/west
 	name = "Junkyard West"
@@ -1371,6 +1372,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	tag_down = "south_west"
 	tag_right = "center"
 	tag_left = "east"
+	max_aggressive = 6
 
 /area/awaymission/junkyard/south_west
 	name = "Junkyard South West"
@@ -1379,6 +1381,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	tag_down = "north_east"
 	tag_right = "south"
 	tag_left = "north_east"
+	max_aggressive = 3
 
 /area/awaymission/junkyard/north
 	name = "Junkyard North"
@@ -1387,6 +1390,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	tag_down = "center"
 	tag_right = "north_east"
 	tag_left = "north_west"
+	max_aggressive = 6
 
 /area/awaymission/junkyard/center
 	name = "Junkyard Center"
@@ -1396,6 +1400,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	tag_down = "south"
 	tag_right = "east"
 	tag_left = "west"
+	max_aggressive = 16
 
 /area/awaymission/junkyard/south
 	name = "Junkyard South"
@@ -1404,6 +1409,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	tag_down = "north"
 	tag_right = "south_east"
 	tag_left = "south_west"
+	max_aggressive = 6
 
 /area/awaymission/junkyard/north_east
 	name = "Junkyard North East"
@@ -1412,6 +1418,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	tag_down = "east"
 	tag_right = "south_west"
 	tag_left = "north"
+	max_aggressive = 3
 
 /area/awaymission/junkyard/east
 	name = "Junkyard East"
@@ -1420,6 +1427,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	tag_down = "south_east"
 	tag_right = "west"
 	tag_left = "center"
+	max_aggressive = 6
 
 /area/awaymission/junkyard/south_east
 	name = "Junkyard South East"
@@ -1428,6 +1436,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	tag_down = "north_west"
 	tag_right = "north_west"
 	tag_left = "south"
+	max_aggressive = 3
 
 /area/awaymission/junkyard/structure
 	name = "Junkyard Structure"
