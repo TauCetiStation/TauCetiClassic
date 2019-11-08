@@ -225,7 +225,7 @@
 "aQ" = (
 /obj/structure/junkyard_cave/right{
 	dir = 4;
-	name = "cave left";
+	name = "cave left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/east)
@@ -250,6 +250,7 @@
 "aX" = (
 /obj/structure/junkyard_cave{
 	name = "cave top";
+	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/north_west)
