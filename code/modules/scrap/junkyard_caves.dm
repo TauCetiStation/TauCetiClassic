@@ -19,8 +19,17 @@
 		LAZYADD(A.caves, src)
 
 /obj/structure/junkyard_cave/Crossed(AM as mob|obj)
-	if(target && !istype(AM, /mob/living/carbon))
+	if(!target)
+		return
+	if(istype(AM, /mob/living/carbon))
 		var/atom/movable/M = AM
+		M.loc = get_turf(target)
+	if(istype(AM, /obj))
+		var/obj/M = AM
+		M.loc = get_turf(target)
+
+/obj/structure/junkyard_cave/Bumped(mob/living/carbon/M)
+	if(target)
 		M.loc = get_turf(target)
 
 /obj/structure/junkyard_cave/right
