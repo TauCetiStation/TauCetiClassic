@@ -1,0 +1,5575 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ao" = (
+/obj/machinery/computer/crew,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"aF" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/derelict/DS_bar)
+"bk" = (
+/obj/item/ammo_casing/a357,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"bo" = (
+/obj/structure/table/glass,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/obj/item/weapon/stamp/cmo,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"bu" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/eastleft{
+	dir = 8;
+	name = "Kitchen";
+	req_access = list(28)
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/derelict/DS_bar)
+"bv" = (
+/obj/machinery/computer/security,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"bD" = (
+/obj/structure/lattice,
+/turf/space,
+/area/derelict/DS_hallway)
+"bE" = (
+/obj/structure/closet/theatrecloset,
+/turf/simulated/floor/wood,
+/area/derelict/DS_bar)
+"bG" = (
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_hallway)
+"bI" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_bar)
+"bJ" = (
+/obj/item/weapon/shard,
+/turf/space,
+/area/space)
+"bO" = (
+/obj/machinery/chem_dispenser/soda,
+/obj/structure/table,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/derelict/DS_bar)
+"bS" = (
+/obj/machinery/power/smes,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor,
+/area/derelict/DS_eng)
+"bW" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"bX" = (
+/obj/machinery/door/airlock/glass{
+	name = "Diner"
+	},
+/turf/simulated/floor,
+/area/derelict/DS_bar)
+"ca" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "yellow"
+	},
+/area/derelict/DS_eng)
+"cd" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -30;
+	pixel_y = 5
+	},
+/turf/simulated/floor,
+/area/derelict/DS_bridge)
+"cj" = (
+/obj/structure/flora/pottedplant,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"cl" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"cs" = (
+/obj/structure/table/glass,
+/turf/simulated/floor/plating,
+/area/derelict/DS_eng)
+"cC" = (
+/turf/space,
+/area/derelict/DS_brig)
+"dd" = (
+/obj/machinery/bodyscanner,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"de" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall8"
+	},
+/area/derelict/DS_med)
+"dv" = (
+/obj/structure/flora/pottedplant{
+	icon_state = "plant-18"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"dN" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_x = -24
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"dV" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3"
+	},
+/area/derelict/DS_bar)
+"dW" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/beer,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/derelict/DS_bar)
+"ei" = (
+/obj/machinery/media/jukebox/bar,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bar)
+"en" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall14"
+	},
+/area/derelict/DS_med)
+"eo" = (
+/turf/space,
+/area/derelict/DS_eng)
+"es" = (
+/obj/structure/table/woodentable,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bar)
+"eH" = (
+/obj/machinery/door/airlock/glass{
+	name = "Escape Hall"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"eJ" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/derelict/DS_bridge)
+"eL" = (
+/turf/simulated/floor/carpet/purple,
+/area/derelict/DS_bar)
+"eS" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3"
+	},
+/area/space)
+"fs" = (
+/obj/random/vending/snack,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_medstor)
+"fD" = (
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"fI" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/item/ammo_casing/a357,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/DS_bridge)
+"fJ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_hallway)
+"fK" = (
+/obj/item/weapon/disk/research_points/rare,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"fZ" = (
+/obj/structure/table/woodentable,
+/obj/item/clothing/suit/batman,
+/obj/item/clothing/head/batman_helmet,
+/turf/simulated/floor/wood,
+/area/derelict/DS_bar)
+"ge" = (
+/obj/structure/flora/pottedplant{
+	icon_state = "plant-22"
+	},
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"gm" = (
+/obj/machinery/door/airlock/command{
+	name = "Gateway Access";
+	req_access = list(62)
+	},
+/turf/simulated/floor,
+/area/derelict/DS_bridge)
+"gA" = (
+/obj/structure/closet/secure_closet/medical3,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_medstor)
+"gE" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall14"
+	},
+/area/derelict/DS_bar)
+"gM" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/ammo_casing/a74,
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"hd" = (
+/obj/random/vending/cola,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_medstor)
+"hq" = (
+/obj/machinery/power/solar{
+	id = "portsolar";
+	name = "Port Solar Array"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel"
+	},
+/area/derelict/DS_eng)
+"hr" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall7"
+	},
+/area/derelict/DS_medstor)
+"hu" = (
+/obj/random/vending/snack,
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"hw" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_hallway)
+"hE" = (
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "MedbayFoyer1";
+	name = "Medbay";
+	req_access = list(5)
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"hJ" = (
+/turf/simulated/floor{
+	icon_state = "damaged3"
+	},
+/area/derelict/DS_eng)
+"hO" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_eng)
+"hU" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swallc2"
+	},
+/area/derelict/DS_med)
+"hW" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "warning"
+	},
+/area/derelict/DS_eng)
+"ia" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_medstor)
+"ik" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall7"
+	},
+/area/derelict/DS_med)
+"in" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"ip" = (
+/obj/item/stack/sheet/metal{
+	amount = 5
+	},
+/turf/space,
+/area/derelict/DS_brig)
+"iG" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_medstor)
+"iU" = (
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "bridge blast";
+	name = "Bridge Blast Doors";
+	opacity = 0
+	},
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_bridge)
+"jt" = (
+/obj/structure/sign/double/barsign,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall12"
+	},
+/area/derelict/DS_bar)
+"jv" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_hallway)
+"jD" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swallc3"
+	},
+/area/derelict/DS_shuttle)
+"jJ" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3"
+	},
+/area/derelict/DS_brig)
+"jM" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/paper{
+	info = "Wherah is BANANAS?";
+	info_links = "Clown Memo"
+	},
+/obj/item/toy/prize/honk,
+/obj/item/weapon/reagent_containers/spray/watergun,
+/turf/simulated/floor/wood,
+/area/derelict/DS_bar)
+"jN" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"jO" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/derelict/DS_med)
+"jR" = (
+/obj/structure/table,
+/obj/item/weapon/hemostat,
+/obj/item/weapon/cautery,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"jV" = (
+/obj/item/stack/sheet/metal{
+	amount = 10
+	},
+/turf/space,
+/area/derelict/DS_brig)
+"jZ" = (
+/obj/random/vending/cola,
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"kd" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bar)
+"kg" = (
+/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_medstor)
+"km" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_med)
+"kn" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"ku" = (
+/obj/structure/table,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/derelict/DS_bridge)
+"kP" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bar)
+"lb" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Engineering";
+	req_access = list(71)
+	},
+/turf/simulated/floor,
+/area/derelict/DS_eng)
+"lo" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/space,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/DS_bridge)
+"lp" = (
+/obj/item/ammo_casing/a74,
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"lt" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall7"
+	},
+/area/derelict/DS_bar)
+"lz" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3"
+	},
+/area/derelict/DS_med)
+"lK" = (
+/obj/machinery/door_control{
+	id = "Gateway_shutters";
+	name = "Gateway Shutters";
+	pixel_x = -25;
+	pixel_y = 9;
+	req_access = list(57)
+	},
+/turf/simulated/floor,
+/area/derelict/DS_bridge)
+"lR" = (
+/obj/machinery/vending/medical,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"lZ" = (
+/obj/machinery/gateway/center/station,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"ma" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_medstor)
+"md" = (
+/obj/machinery/door/airlock/glass{
+	name = "Escape Hall"
+	},
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"mt" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall12"
+	},
+/area/derelict/DS_bar)
+"mx" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/item/weapon/storage/firstaid/regular,
+/turf/simulated/floor,
+/area/derelict/DS_bridge)
+"mz" = (
+/turf/simulated/floor,
+/area/derelict/DS_shuttle)
+"mA" = (
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bar)
+"mD" = (
+/obj/item/ammo_casing/a357,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/DS_bridge)
+"mE" = (
+/obj/item/ammo_casing/a357,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"mQ" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "yellow"
+	},
+/area/derelict/DS_eng)
+"na" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall12"
+	},
+/area/derelict/DS_hallway)
+"nl" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"no" = (
+/obj/random/vending/cola,
+/obj/machinery/light_construct{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"np" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"nu" = (
+/obj/machinery/atmospherics/pipe/simple/visible,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/derelict/DS_med)
+"ny" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_med)
+"nG" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_med)
+"nL" = (
+/obj/structure/table/woodentable,
+/obj/item/device/flashlight/lamp/green{
+	on = 0;
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/item/clothing/suit/superman,
+/turf/simulated/floor/wood,
+/area/derelict/DS_bar)
+"nM" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Bridge";
+	req_access = list(19)
+	},
+/turf/simulated/floor,
+/area/derelict/DS_bridge)
+"nS" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"oe" = (
+/obj/machinery/vending/theater,
+/turf/simulated/floor/wood,
+/area/derelict/DS_bar)
+"oh" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitebluecorner"
+	},
+/area/derelict/DS_med)
+"op" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall12"
+	},
+/area/derelict/DS_medstor)
+"oD" = (
+/obj/structure/closet/emcloset,
+/turf/simulated/floor,
+/area/derelict/DS_shuttle)
+"oG" = (
+/obj/machinery/gateway{
+	dir = 6
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bridge)
+"oH" = (
+/obj/effect/landmark/corpse/doctor{
+	mobname = "Marhall DeShawn";
+	name = "Marhall DeShawn"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"oW" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "damaged3"
+	},
+/area/derelict/DS_eng)
+"oY" = (
+/obj/structure/lattice,
+/turf/space,
+/area/derelict/DS_brig)
+"pa" = (
+/obj/structure/flora/pottedplant,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"pc" = (
+/obj/effect/landmark/corpse/doctor{
+	mobname = "John Lerson";
+	name = "John Lerson"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"ph" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 5
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"pu" = (
+/obj/structure/table,
+/obj/machinery/kitchen_machine/microwave{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/turf/simulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/derelict/DS_bar)
+"pB" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/ammo_casing/a74,
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"pC" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder,
+/turf/simulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/derelict/DS_bar)
+"pF" = (
+/obj/structure/table,
+/obj/item/device/radio/off{
+	pixel_y = 6
+	},
+/obj/item/device/radio/off{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/device/radio/off{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/device/radio/off,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/DS_bridge)
+"pG" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "blue"
+	},
+/area/derelict/DS_hallway)
+"pM" = (
+/obj/item/weapon/bedsheet/medical,
+/obj/structure/stool/bed,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"pS" = (
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/derelict/DS_bar)
+"ql" = (
+/turf/simulated/floor{
+	icon_state = "damaged3"
+	},
+/area/derelict/DS_hallway)
+"qn" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3"
+	},
+/area/derelict/DS_shuttle)
+"qp" = (
+/obj/machinery/gateway{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bridge)
+"qw" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swallc3"
+	},
+/area/derelict/DS_brig)
+"qy" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/space,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"qz" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "Gateway_shutters";
+	name = "Gateway Shutters"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor,
+/area/derelict/DS_bridge)
+"qR" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_medstor)
+"qY" = (
+/turf/simulated/floor/plating,
+/area/derelict/DS_shuttle)
+"rc" = (
+/obj/structure/table/reinforced,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bar)
+"rd" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall11"
+	},
+/area/derelict/DS_med)
+"rh" = (
+/obj/machinery/computer/station_alert,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"rl" = (
+/obj/structure/closet/secure_closet/medical2,
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_x = -24
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"rm" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"rw" = (
+/turf/space,
+/area/space)
+"rB" = (
+/obj/item/weapon/storage/firstaid/fire{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/firstaid/fire,
+/obj/structure/table/glass,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_medstor)
+"rC" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "solar_tool_inner";
+	locked = 1;
+	name = "Engineering External Access";
+	req_access = list(13)
+	},
+/turf/space,
+/area/derelict/DS_eng)
+"rQ" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"rV" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/corpse/commander{
+	mobname = "Leonid Skvortsov";
+	name = "Leonid Skvortsov"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/DS_bridge)
+"sr" = (
+/obj/structure/computerframe{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_eng)
+"su" = (
+/obj/structure/closet/emcloset,
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"sv" = (
+/obj/machinery/door/airlock/command/glass{
+	id_tag = "CMO_door";
+	name = "Chief Medical Officer";
+	req_access = list(40)
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"sD" = (
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/spray/cleaner,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"sE" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swallc3"
+	},
+/area/derelict/DS_med)
+"sJ" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "yellow"
+	},
+/area/derelict/DS_eng)
+"sK" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"sN" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/space,
+/area/derelict/DS_brig)
+"sS" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/food/condiment/sugar,
+/obj/item/weapon/reagent_containers/food/condiment/enzyme,
+/obj/item/weapon/reagent_containers/food/condiment/rice,
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker,
+/obj/item/weapon/reagent_containers/food/condiment/peppermill,
+/obj/item/weapon/reagent_containers/food/condiment/ketchup,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/derelict/DS_bar)
+"sW" = (
+/obj/structure/flora/pottedplant,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"tg" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swallc3"
+	},
+/area/derelict/DS_shuttle)
+"tt" = (
+/obj/machinery/body_scanconsole,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"tE" = (
+/obj/machinery/computer/operating,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"tJ" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"tM" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"tP" = (
+/obj/machinery/door/airlock{
+	name = "Honk Office";
+	req_access = list(46)
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bar)
+"uc" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_med)
+"ud" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_med)
+"uh" = (
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"uJ" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"uN" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_med)
+"uS" = (
+/obj/structure/table,
+/obj/item/weapon/retractor,
+/obj/item/weapon/FixOVein{
+	pixel_x = -5
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"uV" = (
+/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline{
+	pixel_x = 7;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/glass/bottle/antitoxin{
+	pixel_x = -4;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/syringe/inaprovaline{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
+/obj/item/weapon/reagent_containers/glass/bottle/toxin{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/syringe/inaprovaline{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/structure/table/glass,
+/obj/item/weapon/storage/box/masks{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/box/gloves,
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_medstor)
+"uW" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/computer/secure_data{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/derelict/DS_brig)
+"vc" = (
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/derelict/DS_eng)
+"vf" = (
+/obj/item/weapon/defibrillator/loaded,
+/obj/machinery/recharger/wallcharger{
+	dir = 1;
+	pixel_x = 5;
+	pixel_y = 25
+	},
+/obj/structure/table,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "warning"
+	},
+/area/derelict/DS_med)
+"vg" = (
+/obj/structure/stool/bar,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bar)
+"vi" = (
+/obj/machinery/door/airlock/glass{
+	name = "Kitchen";
+	req_access = list(28)
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/derelict/DS_bar)
+"vm" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f6"
+	},
+/area/derelict/DS_eng)
+"vz" = (
+/obj/item/stack/sheet/metal{
+	amount = 5
+	},
+/turf/space,
+/area/space)
+"vD" = (
+/obj/item/weapon/storage/firstaid/toxin{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/firstaid/toxin,
+/obj/structure/table/glass,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_medstor)
+"vG" = (
+/obj/structure/table,
+/obj/item/stack/rods{
+	amount = 15
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "yellow"
+	},
+/area/derelict/DS_eng)
+"vK" = (
+/obj/item/weapon/storage/firstaid/o2{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/firstaid/o2,
+/obj/structure/table/glass,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_medstor)
+"vQ" = (
+/obj/structure/grille,
+/turf/space,
+/area/derelict/DS_eng)
+"vS" = (
+/obj/machinery/door/window/eastleft{
+	name = "Bar Desk";
+	req_access = list(25)
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bar)
+"wa" = (
+/obj/machinery/computer/med_data,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"wg" = (
+/obj/item/stack/sheet/metal{
+	amount = 5
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_eng)
+"wz" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/derelict/DS_bar)
+"wD" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/computer/security{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/derelict/DS_brig)
+"wL" = (
+/obj/item/ammo_casing/a357,
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"wN" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_bar)
+"wX" = (
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/turf/space,
+/area/space)
+"wY" = (
+/turf/simulated/floor{
+	icon_state = "yellow"
+	},
+/area/derelict/DS_eng)
+"xv" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/derelict/DS_shuttle)
+"xx" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay Reception";
+	req_access = list(5)
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"xB" = (
+/obj/structure/lattice,
+/turf/space,
+/area/derelict/DS_eng)
+"xS" = (
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"xT" = (
+/obj/machinery/status_display{
+	layer = 4
+	},
+/turf/simulated/wall/r_wall,
+/area/derelict/DS_bridge)
+"xW" = (
+/obj/structure/flora/pottedplant{
+	icon_state = "plant-18"
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"yd" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/simulated/floor/plating,
+/area/space)
+"yj" = (
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"yu" = (
+/obj/machinery/gateway{
+	dir = 10
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bridge)
+"yw" = (
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/turf/space,
+/area/derelict/DS_eng)
+"yA" = (
+/obj/structure/lattice,
+/turf/space,
+/area/space)
+"yJ" = (
+/obj/item/ammo_casing/a74,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"yM" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_medstor)
+"yU" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medical Supplies";
+	req_access = list(72)
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_medstor)
+"yW" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall13"
+	},
+/area/derelict/DS_med)
+"ze" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"zf" = (
+/obj/structure/closet/secure_closet/engineering_personal,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "yellow"
+	},
+/area/derelict/DS_eng)
+"zp" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_shuttle)
+"zt" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/derelict/DS_medstor)
+"zx" = (
+/turf/simulated/floor{
+	icon_state = "damaged4"
+	},
+/area/derelict/DS_hallway)
+"zy" = (
+/turf/simulated/floor/wood,
+/area/derelict/DS_bar)
+"zK" = (
+/turf/simulated/shuttle/wall,
+/area/derelict/DS_bar)
+"Ab" = (
+/obj/machinery/light_construct{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"Ak" = (
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/derelict/DS_hallway)
+"AB" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "blue"
+	},
+/area/derelict/DS_hallway)
+"AE" = (
+/obj/structure/table/glass,
+/obj/item/device/sensor_device,
+/obj/item/clothing/glasses/hud/health,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"AF" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f9"
+	},
+/area/derelict/DS_hallway)
+"AL" = (
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"AT" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall12"
+	},
+/area/derelict/DS_brig)
+"AX" = (
+/obj/structure/barricade/wooden,
+/turf/simulated/floor/plating,
+/area/space)
+"AZ" = (
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/turf/simulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"Be" = (
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_eng)
+"Bj" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swallc3"
+	},
+/area/derelict/DS_shuttle)
+"Bm" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/space,
+/area/derelict/DS_eng)
+"Bq" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/DS_bridge)
+"Br" = (
+/obj/machinery/computer/communications,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"BC" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/derelict/DS_bar)
+"BF" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/DS_bridge)
+"BP" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_medstor)
+"BS" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"Cj" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/derelict/DS_bar)
+"CJ" = (
+/obj/structure/stool/bed/roller,
+/turf/simulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"CL" = (
+/obj/structure/table/woodentable,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"CZ" = (
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_x = -24
+	},
+/turf/simulated/floor,
+/area/derelict/DS_bridge)
+"Da" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_shuttle)
+"Df" = (
+/obj/item/weapon/arrow/rod,
+/turf/space,
+/area/space)
+"Dg" = (
+/obj/machinery/computer/secure_data,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"Dl" = (
+/obj/machinery/computer/med_data,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"Dw" = (
+/obj/machinery/gateway{
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bridge)
+"DD" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_med)
+"DF" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_bar)
+"DJ" = (
+/obj/item/weapon/bedsheet/medical,
+/obj/structure/stool/bed,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"EO" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Surgery Maintenance";
+	req_access = list(45)
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_med)
+"ER" = (
+/turf/simulated/floor/plating,
+/area/derelict/DS_brig)
+"ES" = (
+/obj/machinery/gateway{
+	dir = 9
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bridge)
+"EY" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall1"
+	},
+/area/derelict/DS_med)
+"Fm" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitebluecorner"
+	},
+/area/derelict/DS_med)
+"Fp" = (
+/obj/machinery/vending/blood,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"Fq" = (
+/obj/item/weapon/paper{
+	info = "The captain of Vostok station. We've been attacked with CDA-4.  Guard wing destroyed, we ask for help.";
+	name = "Attention"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/DS_bridge)
+"Fv" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall12"
+	},
+/area/space)
+"Fw" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"FB" = (
+/obj/structure/stool/bed/chair/comfy/brown,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"FF" = (
+/obj/structure/table,
+/obj/item/weapon/bonegel{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/weapon/bonesetter,
+/obj/item/device/radio/intercom{
+	frequency = 1485;
+	name = "Station Intercom (Medbay)";
+	pixel_y = 25
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"FJ" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3"
+	},
+/area/derelict/DS_eng)
+"FT" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"FU" = (
+/obj/structure/closet/secure_closet/exile,
+/turf/simulated/floor,
+/area/derelict/DS_bridge)
+"Gb" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_x = -24
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_medstor)
+"Gc" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_bar)
+"Gh" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_bridge)
+"Gk" = (
+/turf/space,
+/area/derelict/DS_hallway)
+"Go" = (
+/obj/machinery/optable,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"Gt" = (
+/obj/machinery/gateway{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bridge)
+"Gw" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swallc3"
+	},
+/area/space)
+"GB" = (
+/obj/machinery/power/tracker,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_eng)
+"GG" = (
+/obj/machinery/door/window/brigdoor{
+	id = "Cell 1";
+	name = "Cell 1";
+	req_access = list(2)
+	},
+/turf/simulated/floor,
+/area/derelict/DS_brig)
+"GI" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall13"
+	},
+/area/derelict/DS_hallway)
+"GJ" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/r_wall,
+/area/derelict/DS_bridge)
+"GR" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/landmark/corpse/clown{
+	mobname = "Mr.Syndicate";
+	name = "Mr.Syndicate"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"GV" = (
+/turf/simulated/floor/plating,
+/area/space)
+"GW" = (
+/turf/simulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"GY" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swallc3"
+	},
+/area/derelict/DS_bar)
+"Ha" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Bridge";
+	req_access = list(19)
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/derelict/DS_bridge)
+"Hi" = (
+/obj/machinery/light_construct{
+	dir = 1
+	},
+/turf/space,
+/area/derelict/DS_eng)
+"Hn" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/derelict/DS_bar)
+"Ho" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_hallway)
+"Hv" = (
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"Hw" = (
+/turf/simulated/shuttle/wall,
+/area/derelict/DS_med)
+"HE" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f9"
+	},
+/area/derelict/DS_eng)
+"HP" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall12"
+	},
+/area/derelict/DS_eng)
+"HR" = (
+/turf/simulated/floor{
+	icon_state = "whitebluecorner"
+	},
+/area/derelict/DS_med)
+"HY" = (
+/obj/structure/grille,
+/turf/space,
+/area/space)
+"Ik" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "arrival_escape";
+	locked = 1;
+	name = "Escape Airlock"
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_shuttle)
+"Im" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"Io" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swallc3"
+	},
+/area/derelict/DS_med)
+"Is" = (
+/obj/structure/table/glass,
+/turf/simulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_medstor)
+"It" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall4"
+	},
+/area/derelict/DS_med)
+"Iy" = (
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/DS_bridge)
+"Iz" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swallc3"
+	},
+/area/derelict/DS_hallway)
+"IQ" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_x = -24
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor,
+/area/derelict/DS_shuttle)
+"IS" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"IU" = (
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_medstor)
+"JD" = (
+/obj/machinery/gateway,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bridge)
+"JL" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/derelict/DS_shuttle)
+"JO" = (
+/obj/structure/closet/secure_closet/medical1,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"JU" = (
+/obj/machinery/deepfryer,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/derelict/DS_bar)
+"JW" = (
+/obj/machinery/door/airlock/medical{
+	name = "Operating Theatre 1";
+	req_access = list(45)
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"Ki" = (
+/obj/item/weapon/storage/firstaid/adv{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/firstaid/adv{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/structure/table/glass,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_medstor)
+"Kp" = (
+/turf/simulated/floor{
+	icon_state = "damaged5"
+	},
+/area/derelict/DS_hallway)
+"Kq" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_eng)
+"Kt" = (
+/obj/machinery/vending/boozeomat,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/derelict/DS_bar)
+"Kw" = (
+/obj/structure/lattice,
+/obj/structure/lattice,
+/turf/space,
+/area/derelict/DS_eng)
+"KM" = (
+/obj/machinery/chem_dispenser/soda{
+	dir = 4
+	},
+/obj/structure/table,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/derelict/DS_bar)
+"KV" = (
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/firstaid/regular,
+/obj/structure/table/glass,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_medstor)
+"KX" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall15"
+	},
+/area/derelict/DS_eng)
+"Ll" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/sheet/glass{
+	amount = 50;
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "yellow"
+	},
+/area/derelict/DS_eng)
+"Lr" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/derelict/DS_bar)
+"LN" = (
+/obj/structure/filingcabinet/chestdrawer,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"LO" = (
+/obj/structure/table,
+/obj/item/weapon/razor,
+/obj/machinery/camera{
+	c_tag = "Surgery Operating 2";
+	network = list("SS13","Medical")
+	},
+/obj/structure/disposalpipe/segment,
+/obj/item/weapon/surgicaldrill,
+/obj/item/weapon/scalpel/manager,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"LT" = (
+/obj/structure/stool/bed/chair/metal,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/derelict/DS_shuttle)
+"Mq" = (
+/turf/simulated/floor{
+	icon_state = "damaged4"
+	},
+/area/derelict/DS_eng)
+"Ms" = (
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/derelict/DS_shuttle)
+"Mu" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"MM" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "warning"
+	},
+/area/derelict/DS_eng)
+"MU" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/derelict/DS_med)
+"MV" = (
+/obj/structure/stool/bed/roller,
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"Nh" = (
+/turf/simulated/floor,
+/area/derelict/DS_brig)
+"Nl" = (
+/turf/simulated/floor/plating,
+/area/derelict/DS_eng)
+"Np" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3"
+	},
+/area/derelict/DS_medstor)
+"Ny" = (
+/obj/item/weapon/arrow/rod,
+/turf/space,
+/area/derelict/DS_brig)
+"NB" = (
+/obj/structure/table,
+/obj/item/weapon/circular_saw{
+	pixel_y = 10
+	},
+/obj/item/weapon/scalpel,
+/obj/machinery/vending/wallmed2{
+	pixel_y = 32
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"NC" = (
+/obj/random/vending/cola,
+/obj/machinery/light_construct{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"NR" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitehall"
+	},
+/area/derelict/DS_hallway)
+"NS" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_bar)
+"NV" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/DS_bridge)
+"Om" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_med)
+"On" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bar)
+"Oo" = (
+/obj/random/vending/snack,
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"Oq" = (
+/obj/item/weapon/storage/box/beakers{
+	pixel_x = 10;
+	pixel_y = 10
+	},
+/obj/item/weapon/storage/box/syringes{
+	pixel_y = 10
+	},
+/obj/item/weapon/storage/box/cdeathalarm_kit{
+	pixel_x = 10
+	},
+/obj/structure/table/glass,
+/obj/item/weapon/storage/box/bodybags{
+	pixel_x = -1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_medstor)
+"Os" = (
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Prison Gate";
+	name = "Security Blast Door";
+	opacity = 0
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/derelict/DS_brig)
+"OA" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swallc2"
+	},
+/area/derelict/DS_shuttle)
+"OF" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/derelict/DS_bar)
+"OH" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/obj/machinery/door/airlock/medical{
+	name = "Cooling Room";
+	req_access = list(72)
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"OI" = (
+/obj/item/weapon/shard,
+/turf/space,
+/area/derelict/DS_brig)
+"OO" = (
+/obj/structure/closet/theatrecloset,
+/obj/item/device/guitar/electric,
+/turf/simulated/floor/wood,
+/area/derelict/DS_bar)
+"Pe" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_med)
+"Pf" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall12"
+	},
+/area/derelict/DS_med)
+"Pg" = (
+/turf/simulated/floor,
+/area/derelict/DS_eng)
+"Po" = (
+/obj/structure/dresser,
+/turf/simulated/floor/wood,
+/area/derelict/DS_bar)
+"Pp" = (
+/obj/machinery/iv_drip,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"PP" = (
+/turf/simulated/floor,
+/area/derelict/DS_bridge)
+"PT" = (
+/obj/item/stack/sheet/metal{
+	amount = 5
+	},
+/turf/space,
+/area/derelict/DS_eng)
+"PV" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_x = -24
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/effect/landmark/corpse/bridgeofficer{
+	mobname = "Marty Shon";
+	name = "Marty Shon"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"PW" = (
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel"
+	},
+/area/derelict/DS_eng)
+"PY" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_med)
+"Qb" = (
+/obj/structure/stool/bed/chair/metal,
+/turf/simulated/floor,
+/area/derelict/DS_shuttle)
+"Qf" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_eng)
+"Qj" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall8"
+	},
+/area/derelict/DS_medstor)
+"Ql" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/derelict/DS_med)
+"Qu" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bar)
+"Qv" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "Gateway_shutters";
+	name = "Gateway Shutters"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor,
+/area/derelict/DS_bridge)
+"QU" = (
+/obj/effect/landmark/corpse/chef{
+	mobname = "Honnibal Lacter";
+	name = "Honnibal Lacter"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"QZ" = (
+/obj/machinery/light_construct{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/derelict/DS_brig)
+"RB" = (
+/turf/simulated/floor/plating,
+/area/derelict/DS_hallway)
+"RJ" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_eng)
+"RR" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_bar)
+"RZ" = (
+/obj/structure/table/woodentable,
+/obj/item/toy/laugh_button,
+/obj/item/weapon/lipstick/purple{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/simulated/floor/wood,
+/area/derelict/DS_bar)
+"Sa" = (
+/obj/item/weapon/arrow/rod,
+/turf/space,
+/area/derelict/DS_eng)
+"Se" = (
+/obj/machinery/vending/dinnerware,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/derelict/DS_bar)
+"Sg" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall15"
+	},
+/area/derelict/DS_medstor)
+"Sh" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"Si" = (
+/obj/machinery/door/airlock/glass{
+	name = "Central Access"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"Sk" = (
+/obj/machinery/door/airlock/glass{
+	name = "Central Access"
+	},
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"Sn" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/eastleft{
+	dir = 2;
+	name = "Medbay Reception"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"Sq" = (
+/turf/simulated/floor{
+	icon_state = "damaged5"
+	},
+/area/derelict/DS_brig)
+"Ss" = (
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/derelict/DS_brig)
+"St" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swallc2"
+	},
+/area/derelict/DS_eng)
+"SI" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 10
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/derelict/DS_med)
+"SK" = (
+/obj/item/weapon/shard,
+/turf/space,
+/area/derelict/DS_eng)
+"To" = (
+/obj/machinery/computer/crew,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"Tp" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swallc2"
+	},
+/area/derelict/DS_bar)
+"Tv" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/DS_bridge)
+"TF" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/light_construct{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/derelict/DS_hallway)
+"TG" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall11"
+	},
+/area/derelict/DS_bar)
+"TM" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_brig)
+"TU" = (
+/obj/item/weapon/arrow/rod,
+/turf/space,
+/area/derelict/DS_hallway)
+"TX" = (
+/obj/machinery/door/airlock/medical/glass{
+	req_access = list(5)
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"Ua" = (
+/obj/structure/flora/plant/random,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"US" = (
+/turf/simulated/floor{
+	icon_state = "damaged3"
+	},
+/area/derelict/DS_brig)
+"Vu" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"Vv" = (
+/obj/machinery/light,
+/turf/simulated/floor/wood,
+/area/derelict/DS_bar)
+"Vw" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swallc3"
+	},
+/area/derelict/DS_hallway)
+"VB" = (
+/obj/machinery/kitchen_machine/grill,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/derelict/DS_bar)
+"VE" = (
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/turf/space,
+/area/derelict/DS_brig)
+"VM" = (
+/obj/structure/table/glass,
+/obj/item/clothing/suit/straight_jacket,
+/obj/item/clothing/accessory/stethoscope,
+/obj/item/clothing/accessory/stethoscope,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/turf/simulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_medstor)
+"VY" = (
+/obj/item/weapon/shard,
+/turf/space,
+/area/derelict/DS_hallway)
+"We" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_eng)
+"Wx" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_hallway)
+"WG" = (
+/obj/random/vending/snack,
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"WK" = (
+/obj/structure/table/woodentable,
+/obj/item/clothing/head/santahat,
+/obj/item/clothing/suit/santa,
+/obj/item/weapon/storage/backpack/santabag,
+/turf/simulated/floor/wood,
+/area/derelict/DS_bar)
+"WO" = (
+/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_medstor)
+"WY" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitebluecorner"
+	},
+/area/derelict/DS_med)
+"Xq" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f6"
+	},
+/area/derelict/DS_hallway)
+"XD" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"Ya" = (
+/obj/structure/table/woodentable,
+/obj/structure/flora/plant/deskferntrim,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_med)
+"Yg" = (
+/obj/machinery/computer/card,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"Ys" = (
+/obj/structure/closet/crate,
+/obj/item/clothing/gloves/black,
+/obj/item/weapon/crowbar,
+/obj/item/clothing/mask/bandana/black,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/space)
+"Yw" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/derelict/DS_eng)
+"YA" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3"
+	},
+/area/derelict/DS_medstor)
+"YI" = (
+/obj/machinery/atmospherics/pipe/manifold4w/visible,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/derelict/DS_med)
+"YY" = (
+/obj/item/weapon/shard,
+/turf/simulated/floor/plating,
+/area/derelict/DS_eng)
+"Zj" = (
+/obj/machinery/gateway{
+	dir = 5
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "vault"
+	},
+/area/derelict/DS_bridge)
+"Zo" = (
+/obj/structure/table/woodentable,
+/obj/machinery/faxmachine{
+	department = "Bridge"
+	},
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/derelict/DS_bridge)
+"Zr" = (
+/obj/structure/stool/bed/chair/office/light,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"Zs" = (
+/obj/effect/landmark/corpse/doctor{
+	mobname = "Stepan Vasilenko";
+	name = "Stepan Vasilenko"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"ZC" = (
+/turf/simulated/wall/r_wall,
+/area/derelict/DS_bridge)
+"ZH" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3"
+	},
+/area/derelict/DS_hallway)
+"ZK" = (
+/obj/structure/closet/crate,
+/obj/item/device/multitool,
+/obj/item/device/multitool,
+/obj/item/device/assembly/prox_sensor,
+/obj/item/device/flashlight,
+/turf/simulated/floor/plating,
+/area/space)
+"ZM" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swallc2"
+	},
+/area/derelict/DS_brig)
+"ZO" = (
+/turf/simulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/derelict/DS_medstor)
+"ZY" = (
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/derelict/DS_med)
+"ZZ" = (
+/obj/machinery/kitchen_machine/oven,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/derelict/DS_bar)
+
+(1,1,1) = {"
+vQ
+vQ
+vQ
+vQ
+vQ
+vQ
+vQ
+vQ
+vQ
+vQ
+vQ
+vQ
+eo
+eo
+Sa
+vQ
+vQ
+vQ
+eo
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(2,1,1) = {"
+vQ
+eo
+eo
+eo
+eo
+eo
+eo
+eo
+eo
+eo
+eo
+eo
+Sa
+eo
+eo
+eo
+eo
+vQ
+eo
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+bJ
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(3,1,1) = {"
+vQ
+eo
+eo
+eo
+eo
+eo
+eo
+Bm
+eo
+eo
+eo
+Sa
+eo
+eo
+eo
+eo
+eo
+vQ
+eo
+rw
+bJ
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(4,1,1) = {"
+vQ
+eo
+eo
+eo
+yw
+Bm
+eo
+eo
+SK
+eo
+Sa
+eo
+Nl
+xB
+xB
+xB
+xB
+vQ
+xB
+rw
+rw
+yA
+rw
+rw
+rw
+rw
+qw
+jJ
+jJ
+jJ
+jJ
+jJ
+jJ
+jJ
+jJ
+OI
+cC
+cC
+Ny
+cC
+cC
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(5,1,1) = {"
+vQ
+eo
+We
+GB
+Nl
+Nl
+Nl
+eo
+eo
+Sa
+eo
+Nl
+Nl
+eo
+eo
+rw
+rw
+rw
+rw
+rw
+rw
+yA
+rw
+rw
+rw
+rw
+AT
+Nh
+GG
+Nh
+QZ
+Nh
+Nh
+Nh
+oY
+cC
+cC
+cC
+cC
+Ny
+cC
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(6,1,1) = {"
+vQ
+eo
+Be
+hO
+Nl
+Nl
+We
+xB
+xB
+eo
+eo
+Nl
+Nl
+eo
+SK
+rw
+rw
+rw
+rw
+rw
+rw
+yA
+rw
+rw
+rw
+rw
+AT
+Nh
+Os
+Nh
+Sq
+Ss
+ER
+cC
+oY
+cC
+cC
+Ny
+cC
+cC
+Ny
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(7,1,1) = {"
+vQ
+eo
+eo
+hO
+Nl
+eo
+eo
+Sa
+eo
+Nl
+YY
+Nl
+Nl
+Bm
+eo
+rw
+rw
+Gk
+VY
+jv
+jv
+ZH
+ZH
+ZH
+ZH
+ZH
+ZM
+wD
+uW
+US
+US
+cC
+cC
+ip
+oY
+cC
+Ny
+cC
+sN
+cC
+cC
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(8,1,1) = {"
+vQ
+Nl
+hq
+Nl
+PW
+Nl
+eo
+eo
+Nl
+Nl
+Nl
+Nl
+Nl
+eo
+eo
+Gk
+Gk
+Gk
+Gk
+Gk
+Gk
+Gk
+Gk
+Gk
+Gk
+Gk
+Nh
+ER
+oY
+oY
+cC
+cC
+cC
+cC
+cC
+cC
+cC
+cC
+Ny
+Ny
+cC
+rw
+rw
+Df
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(9,1,1) = {"
+vQ
+Nl
+Nl
+Nl
+Nl
+xB
+xB
+Nl
+YY
+Nl
+wg
+Nl
+Nl
+eo
+eo
+Gk
+Xq
+ZH
+ZH
+ZH
+ZH
+ZH
+Gk
+ZH
+ZH
+Iz
+TM
+TM
+oY
+oY
+cC
+cC
+cC
+cC
+cC
+cC
+cC
+OI
+cC
+cC
+sN
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(10,1,1) = {"
+vQ
+Nl
+Nl
+We
+xB
+Kw
+Nl
+Nl
+Nl
+Be
+Nl
+Nl
+eo
+yw
+eo
+Xq
+AF
+xS
+xS
+TF
+su
+xS
+ql
+Kp
+RB
+Vw
+cC
+cC
+cC
+cC
+cC
+cC
+cC
+cC
+ip
+cC
+cC
+cC
+cC
+cC
+jV
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(11,1,1) = {"
+vQ
+Nl
+PW
+xB
+xB
+Nl
+YY
+Nl
+Nl
+Nl
+Nl
+Nl
+eo
+eo
+eo
+GI
+xS
+xS
+Hv
+xS
+xS
+Kp
+zx
+RB
+Gk
+Gk
+cC
+ip
+cC
+cC
+cC
+cC
+cC
+Ny
+cC
+cC
+oY
+oY
+oY
+oY
+cC
+rw
+Df
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(12,1,1) = {"
+vQ
+Nl
+Nl
+eo
+Nl
+Nl
+Nl
+Be
+Nl
+Nl
+Nl
+eo
+eo
+eo
+Nl
+rC
+xS
+xS
+xS
+xS
+xS
+Ak
+RB
+RB
+bD
+bD
+cC
+VE
+cC
+cC
+cC
+cC
+cC
+cC
+ER
+cC
+oY
+oY
+oY
+oY
+cC
+rw
+rw
+jD
+qn
+qn
+Bj
+rw
+rw
+rw
+"}
+(13,1,1) = {"
+vQ
+Nl
+Nl
+eo
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+eo
+eo
+eo
+FJ
+FJ
+KX
+FJ
+FJ
+lb
+FJ
+FJ
+FJ
+xB
+eo
+eo
+xB
+Gk
+TU
+Gk
+bD
+bD
+Gk
+Gk
+ZH
+ZH
+ZH
+ZH
+ZH
+ZH
+ZH
+ZH
+ZH
+ZH
+OA
+oD
+oD
+tg
+qn
+qn
+Bj
+"}
+(14,1,1) = {"
+rw
+GV
+GV
+Df
+rw
+bJ
+rw
+rw
+bJ
+rw
+rw
+eo
+eo
+eo
+vm
+HE
+Ll
+vG
+mQ
+zf
+zf
+eo
+xB
+PT
+eo
+eo
+Gk
+Gk
+Gk
+bD
+RB
+Ak
+Kp
+xS
+lp
+lp
+xS
+Hv
+xS
+Sk
+xS
+xS
+md
+IQ
+mz
+mz
+Ms
+zp
+qY
+Ik
+"}
+(15,1,1) = {"
+rw
+GV
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+HP
+Nl
+vm
+HE
+hW
+Mq
+vc
+Nl
+eo
+Bm
+eo
+eo
+eo
+eo
+eo
+Gk
+Gk
+Gk
+RB
+RB
+ql
+xS
+IS
+gM
+IS
+IS
+IS
+IS
+Si
+IS
+IS
+eH
+xv
+mz
+mz
+Ms
+zp
+qY
+Ik
+"}
+(16,1,1) = {"
+rw
+HY
+HY
+HY
+HY
+HY
+HY
+HY
+rw
+rw
+HY
+HP
+Nl
+HP
+bS
+MM
+hJ
+Nl
+eo
+eo
+eo
+eo
+Sa
+Sa
+Sa
+Sa
+bD
+bD
+iU
+ZC
+nM
+ZC
+ZC
+ZC
+ZC
+ZC
+ZC
+ZC
+ZC
+ZC
+nS
+xS
+na
+Qb
+mz
+JL
+Ms
+Da
+Da
+Da
+"}
+(17,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+HP
+Nl
+HP
+bS
+eo
+Sa
+xB
+eo
+Sa
+Sa
+eo
+eo
+eo
+eo
+eo
+Gk
+RB
+Gh
+wa
+pB
+PV
+NC
+ZC
+mx
+cd
+CZ
+PP
+FU
+ZC
+xS
+xS
+na
+LT
+mz
+JL
+Ms
+Da
+rw
+rw
+"}
+(18,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+bJ
+rw
+rw
+HP
+Nl
+HP
+Hi
+yw
+eo
+eo
+eo
+Sa
+eo
+eo
+eo
+eo
+xB
+HP
+RB
+RB
+Gh
+ao
+Tv
+fI
+WG
+ZC
+ku
+PP
+eJ
+PP
+ZC
+ZC
+xS
+xS
+na
+Qb
+mz
+JL
+Ms
+Da
+rw
+rw
+"}
+(19,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+HP
+xB
+eo
+eo
+Sa
+eo
+Bm
+Sa
+eo
+eo
+eo
+eo
+eo
+Nl
+HP
+hu
+xS
+Gh
+rh
+Bq
+Fq
+Zo
+ZC
+ES
+qp
+yu
+PP
+Qv
+lK
+xS
+xS
+Wx
+Qb
+mz
+JL
+Ms
+Da
+Da
+Da
+"}
+(20,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Df
+Df
+Df
+eo
+xB
+eo
+eo
+eo
+eo
+eo
+eo
+xB
+eo
+eo
+cs
+RJ
+wY
+HP
+no
+Hv
+xT
+Br
+rV
+lo
+BS
+GJ
+Dw
+lZ
+JD
+PP
+qz
+PP
+xS
+xS
+Ho
+Qb
+mz
+JL
+Ms
+zp
+qY
+Ik
+"}
+(21,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+eo
+xB
+eo
+Sa
+Bm
+eo
+Sa
+eo
+xB
+eo
+Qf
+oW
+Pg
+wY
+HP
+nl
+xS
+Gh
+Yg
+BF
+mD
+CL
+ZC
+Zj
+Gt
+oG
+PP
+Qv
+PP
+xS
+xS
+hw
+Qb
+mz
+JL
+Ms
+Da
+Da
+Da
+"}
+(22,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Df
+eo
+eo
+Sa
+eo
+eo
+yw
+eo
+Mq
+Nl
+Nl
+Mq
+Mq
+Pg
+wY
+HP
+xS
+xS
+Gh
+Dg
+NV
+Iy
+Im
+ZC
+ku
+PP
+PP
+PP
+ZC
+ZC
+xS
+xS
+na
+Qb
+mz
+JL
+Ms
+Da
+rw
+rw
+"}
+(23,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+eo
+eo
+eo
+yw
+eo
+eo
+sr
+sJ
+sJ
+vc
+sJ
+sJ
+sJ
+ca
+HP
+xS
+xS
+Gh
+bv
+ze
+yJ
+Mu
+ZC
+pF
+PP
+PP
+PP
+PP
+gm
+xS
+xS
+na
+LT
+mz
+JL
+Ms
+Da
+rw
+rw
+"}
+(24,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Df
+rw
+vz
+eo
+eo
+xB
+eo
+FJ
+FJ
+Kq
+Yw
+lb
+Kq
+Yw
+FJ
+FJ
+FJ
+St
+Sk
+Sk
+Gh
+ZC
+Ha
+ZC
+ZC
+ZC
+ZC
+ZC
+ZC
+ZC
+ZC
+ZC
+nS
+xS
+na
+Qb
+mz
+JL
+Ms
+Da
+Da
+Da
+"}
+(25,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Df
+rw
+yA
+na
+jZ
+xS
+xS
+xS
+xS
+xS
+xS
+Ab
+xS
+xS
+Sk
+xS
+xS
+xS
+pG
+AB
+pG
+Sk
+xS
+tJ
+xS
+xS
+xS
+xS
+Sk
+xS
+xS
+md
+mz
+mz
+mz
+Ms
+zp
+qY
+Ik
+"}
+(26,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+wX
+rw
+rw
+GV
+na
+hu
+xS
+xS
+xS
+xS
+Hv
+xS
+xS
+xS
+xS
+Sk
+xS
+xS
+xS
+xS
+rQ
+xS
+Sk
+xS
+xS
+xS
+xS
+xS
+xS
+Sk
+xS
+xS
+md
+mz
+mz
+mz
+Ms
+zp
+qY
+Ik
+"}
+(27,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Df
+rw
+Df
+rw
+Fv
+GV
+en
+lz
+lz
+PY
+NR
+fJ
+NR
+km
+lz
+lz
+lz
+lz
+lz
+hr
+Np
+Np
+YA
+Np
+Sg
+Sk
+Sk
+lt
+NS
+wN
+wN
+wN
+wN
+RR
+gE
+qn
+qn
+qn
+qn
+qn
+qn
+OA
+"}
+(28,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+bJ
+Fv
+GV
+Pf
+To
+Zr
+ZY
+bG
+bG
+bG
+uN
+To
+uh
+AE
+uh
+Ua
+op
+gA
+Gb
+hd
+fs
+op
+xS
+wL
+jt
+dW
+kP
+Kt
+ei
+kP
+kP
+mt
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(29,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Df
+Df
+rw
+rw
+Fv
+GV
+Pf
+Sh
+qy
+Sn
+bG
+bG
+bG
+uN
+Dl
+Zr
+bo
+cl
+uh
+op
+Oq
+iG
+kg
+Is
+op
+xS
+xS
+mt
+bO
+kP
+kP
+kP
+kP
+kP
+mt
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(30,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Df
+rw
+Fv
+GV
+Pf
+uh
+Zr
+ZY
+bG
+bG
+bG
+uN
+LN
+uh
+uh
+fK
+uh
+op
+KV
+IU
+WO
+Is
+op
+GR
+xS
+DF
+rc
+rc
+rc
+rc
+rc
+vS
+mt
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(31,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+vz
+rw
+rw
+rw
+Fv
+GV
+Pf
+xx
+uc
+DD
+hE
+PY
+hE
+Om
+Pe
+nG
+sv
+ud
+DD
+op
+vK
+IU
+IU
+qR
+op
+xS
+xS
+Gc
+vg
+vg
+vg
+vg
+vg
+kP
+mt
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(32,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Fv
+AX
+Pf
+rm
+sK
+sK
+mE
+sK
+fD
+dv
+sK
+sK
+oH
+sK
+xW
+op
+rB
+IU
+ma
+ZO
+op
+wL
+xS
+Gc
+Qu
+kP
+kP
+kP
+kP
+kP
+gE
+dV
+dV
+dV
+GY
+rw
+rw
+rw
+"}
+(33,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Fv
+AX
+Pf
+Ya
+yj
+bk
+uh
+pc
+bk
+bk
+uh
+bk
+uh
+AL
+GW
+op
+vD
+IU
+IU
+VM
+op
+xS
+wL
+bI
+es
+On
+kP
+vg
+BC
+wz
+mt
+oe
+pS
+nL
+mt
+rw
+rw
+rw
+"}
+(34,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Df
+rw
+rw
+Fv
+AX
+Pf
+FB
+HR
+XD
+XD
+sW
+XD
+XD
+XD
+WY
+uh
+uh
+GW
+op
+Ki
+BP
+BP
+uV
+op
+xS
+xS
+bX
+kP
+kP
+kP
+vg
+aF
+Vv
+mt
+OO
+eL
+fZ
+mt
+rw
+rw
+rw
+"}
+(35,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Fv
+GV
+Pf
+tM
+GW
+sE
+lz
+lz
+lz
+lz
+EY
+in
+bk
+uh
+AZ
+Qj
+yM
+ia
+yU
+zt
+Qj
+xS
+QU
+bX
+kP
+kP
+mA
+vg
+aF
+zy
+tP
+zy
+eL
+jM
+mt
+rw
+rw
+rw
+"}
+(36,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Fv
+GV
+Pf
+np
+Oo
+Pf
+cj
+sK
+sK
+sK
+sK
+oh
+uh
+uh
+Fm
+sK
+sK
+sK
+sK
+Vu
+TX
+xS
+xS
+bX
+kP
+kP
+kP
+vg
+aF
+Vv
+mt
+bE
+eL
+RZ
+mt
+rw
+rw
+rw
+"}
+(37,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Fv
+GV
+en
+lz
+lz
+yW
+pa
+XD
+XD
+XD
+XD
+WY
+AL
+bk
+uh
+uh
+uh
+uh
+uh
+GW
+TX
+xS
+xS
+DF
+es
+On
+kP
+vg
+Cj
+Lr
+mt
+bE
+eL
+WK
+mt
+rw
+rw
+rw
+"}
+(38,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Df
+rw
+Fv
+GV
+GV
+GV
+yd
+en
+ny
+JW
+ny
+lz
+Hw
+tM
+uh
+uh
+uh
+It
+lR
+uh
+dd
+GW
+It
+xS
+xS
+Gc
+kd
+kP
+kP
+kP
+kP
+kP
+tP
+zy
+zy
+Po
+mt
+rw
+rw
+rw
+"}
+(39,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Fv
+GV
+GV
+GV
+ZK
+Pf
+LO
+uh
+Pp
+rl
+Pf
+uJ
+uh
+Zs
+uh
+de
+Fp
+uh
+tt
+GW
+Pf
+nS
+xS
+Gc
+bu
+bu
+bu
+bu
+zK
+vi
+gE
+dV
+dV
+dV
+Tp
+rw
+rw
+rw
+"}
+(40,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+GV
+GV
+GV
+GV
+Pf
+FF
+uh
+uh
+uh
+Pf
+jN
+ph
+uh
+uh
+dN
+uh
+uh
+uh
+GW
+de
+xS
+xS
+bI
+VB
+Hn
+Hn
+Hn
+KM
+Hn
+mt
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(41,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+yA
+GV
+GV
+GV
+Pf
+NB
+uh
+Go
+uh
+Pf
+vf
+bW
+uh
+HR
+XD
+WY
+uh
+uh
+GW
+TX
+xS
+xS
+mt
+JU
+Hn
+Hn
+Hn
+Hn
+Hn
+mt
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(42,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Fv
+rw
+rw
+rw
+yA
+rw
+GV
+Ys
+Pf
+jR
+uh
+tE
+uh
+Pf
+JO
+bW
+uh
+CJ
+It
+pM
+uh
+uh
+GW
+TX
+xS
+xS
+mt
+ZZ
+Hn
+Hn
+Hn
+Hn
+Hn
+mt
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(43,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Fv
+yA
+rw
+rw
+rw
+rw
+rw
+GV
+Pf
+uS
+uh
+uh
+uh
+Pf
+sD
+FT
+XD
+MV
+Pf
+DJ
+Fw
+kn
+ge
+Pf
+xS
+xS
+mt
+pu
+Hn
+Se
+sS
+pC
+OF
+mt
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(44,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Fv
+GV
+GV
+rw
+rw
+rw
+rw
+yA
+Io
+lz
+EO
+lz
+ik
+rd
+lz
+OH
+lz
+ik
+rd
+lz
+lz
+lz
+lz
+rd
+ZH
+ZH
+TG
+dV
+dV
+dV
+dV
+dV
+dV
+mt
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(45,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Fv
+GV
+GV
+GV
+rw
+rw
+rw
+yA
+GV
+GV
+GV
+GV
+Pf
+MU
+nu
+YI
+jO
+Pf
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(46,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Fv
+GV
+GV
+GV
+yA
+rw
+rw
+rw
+rw
+GV
+GV
+GV
+Pf
+Ql
+Ql
+SI
+jO
+Pf
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}
+(47,1,1) = {"
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+Gw
+eS
+eS
+eS
+eS
+rw
+rw
+rw
+rw
+eS
+eS
+eS
+Io
+lz
+lz
+lz
+lz
+hU
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+rw
+"}

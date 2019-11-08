@@ -1462,3 +1462,37 @@ var/list/the_station_areas = list (
 /area/tophat
 	name = "Tophat"
 	icon_state = "tophat-room"
+
+// DS - destroyed station
+
+/area/derelict/DS_eng
+	name = "DS eng"
+	icon_state = "engine_smes"
+
+/area/derelict/DS_med
+	name = "DS med"
+	icon_state = "medbay"
+
+/area/derelict/DS_medstor
+	name = "DS med storage"
+	icon_state = "medbay3"
+
+/area/derelict/DS_bridge
+	name = "DS bridge"
+	icon_state = "bridge"
+
+/area/derelict/DS_brig
+	name = "DS brig"
+	icon_state = "brig"
+
+/area/derelict/DS_hallway
+	name = "DS hallway"
+	icon_state = "hallC"
+
+/area/derelict/DS_bar
+	name = "DS bar"
+	icon_state = "bar"
+
+area/derelict/DS_shuttle
+	name = "DS shuttle"
+	icon_state = "escape"

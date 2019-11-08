@@ -49,7 +49,7 @@
 	structure_id = "abandoned_lab"
 	desc = "Debris of an unknown lab"
 	mappath = "maps/templates/space_structures/abandoned_lab.dmm"
-	
+
 /datum/map_template/space_structure/agrosphere
 	name = "agrosphere"
 	structure_id = "agrosphere"
@@ -121,3 +121,9 @@
 	structure_id = "NASA satellite"
 	desc = "Unknown small object"
 	mappath = "maps/templates/space_structures/satellite.dmm"
+
+/datum/map_template/space_structure/destoyed_station
+	name = "destoyed_station"
+	structure_id = "destoyed_station"
+	desc = "Unexplored destoyed station"
+	mappath = "maps/templates/space_structures/destroyed_station.dmm"
