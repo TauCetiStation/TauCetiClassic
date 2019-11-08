@@ -3,7 +3,7 @@
 	icon_state = "rock"
 
 /obj/effect/scrap_pile_generator/atom_init(mapload, heap_size = 1)
-	. = ..()
+	..()
 	var/size = 0
 	var/maintype = /obj/random/scrap/dense_weighted
 	var/subtype = /obj/random/scrap/sparse_weighted
@@ -35,6 +35,10 @@
 	for(var/turf/T in makesparse)
 		if(!locate(/obj/structure/scrap in T.contents))
 			new subtype(T)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/scrap_pile_generator/atom_init_late()
+	qdel(src)
 
 /turf/simulated/mineral/airfull
 	basetype = /turf/simulated/floor/plating/ironsand

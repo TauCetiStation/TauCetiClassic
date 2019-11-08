@@ -36,6 +36,8 @@ var/datum/subsystem/junkyard/SSjunkyard
 			T.spawn_structures_junkyard()
 		CHECK_TICK
 
+	var/list/areas = list()
+
 	for(var/thing in turfs_to_init)
 		var/turf/T = thing
 		if(istype(T, /turf/unsimulated/wall/junkyard))
@@ -44,9 +46,14 @@ var/datum/subsystem/junkyard/SSjunkyard
 			T.surround_by_scrap()
 			T.resource_definition()
 			var/area/A = get_area(T)
+			if(!is_type_in_list(A, areas))
+				LAZYADD(areas, A)
 			if(!A.isprocessing)
 				START_PROCESSING(SSobj, A)
 		CHECK_TICK
+	for(var/area/awaymission/junkyard/A in areas)
+		A.areas = areas
+		A.connect_caves()
 	junkyard_initialised = 1
 	SSweather.eligible_zlevels.Add(zlevel) //junkyard
 

@@ -7,13 +7,12 @@
 	smooth = FALSE
 
 /turf/unsimulated/wall/junkyard
-	name = "wall"
+	name = "rock"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "rock_labor_junkyard"
 	opacity = 1
 	density = 1
 	smooth = FALSE
-
 
 /turf/unsimulated/wall/fakeglass
 	name = "window"

@@ -41,11 +41,7 @@
 
 /datum/map_template/junkyard_structure/old_ship
 	structure_id = "old_ship_junkyard"
-	mappath = "maps/templates/junkyard_structures/old_ship.dmm"
-
-/datum/map_template/junkyard_structure/planetarium
-	structure_id = "planetarium_junkyard"
-	mappath = "maps/templates/junkyard_structures/planetarium.dmm"
+	mappath = "maps/templates/junkyard_structures/old_ship2.dmm"
 
 /datum/map_template/junkyard_structure/smelter
 	structure_id = "smelter_junkyard"

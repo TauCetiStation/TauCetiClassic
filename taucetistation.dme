@@ -1807,6 +1807,7 @@
 #include "code\modules\research\xenoarchaeology\tools\tools_locater.dm"
 #include "code\modules\research\xenoarchaeology\tools\tools_pickaxe.dm"
 #include "code\modules\research\xenoarchaeology\tools\tools_wave_scanner.dm"
+#include "code\modules\scrap\junkyard_caves.dm"
 #include "code\modules\scrap\junkyard_structures.dm"
 #include "code\modules\scrap\oldificator.dm"
 #include "code\modules\scrap\scrap.dm"

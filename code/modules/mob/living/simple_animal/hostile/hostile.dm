@@ -40,7 +40,8 @@
 
 /mob/living/simple_animal/hostile/Destroy()
 	if(area_spawn)
-		area_spawn.amount_of_centipedes -= 1
+		area_spawn.amount_of_aggressive -= 1
+		area_spawn = null
 	return ..()
 
 /mob/living/simple_animal/hostile/death()
