@@ -11,7 +11,6 @@
 "ad" = (
 /obj/structure/junkyard_cave/left{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -227,7 +226,6 @@
 /obj/structure/junkyard_cave/right{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/east)
@@ -252,8 +250,6 @@
 "aX" = (
 /obj/structure/junkyard_cave{
 	name = "cave top";
-	tag = "";
-	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/north_west)
@@ -276,7 +272,6 @@
 "bd" = (
 /obj/structure/junkyard_cave/left{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -284,7 +279,6 @@
 "be" = (
 /obj/structure/junkyard_cave{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -292,7 +286,6 @@
 "bf" = (
 /obj/structure/junkyard_cave/right{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -300,7 +293,6 @@
 "bg" = (
 /obj/structure/junkyard_cave/left{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -308,7 +300,6 @@
 "bh" = (
 /obj/structure/junkyard_cave{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -316,7 +307,6 @@
 "bi" = (
 /obj/structure/junkyard_cave/right{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -327,7 +317,6 @@
 "bk" = (
 /obj/structure/junkyard_cave/left{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -335,7 +324,6 @@
 "bl" = (
 /obj/structure/junkyard_cave{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -343,7 +331,6 @@
 "bm" = (
 /obj/structure/junkyard_cave/right{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -355,7 +342,6 @@
 /obj/structure/junkyard_cave/right{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -367,7 +353,6 @@
 /obj/structure/junkyard_cave/right{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -376,7 +361,6 @@
 /obj/structure/junkyard_cave{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -388,7 +372,6 @@
 /obj/structure/junkyard_cave/right{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -397,7 +380,6 @@
 /obj/structure/junkyard_cave{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -406,7 +388,6 @@
 /obj/structure/junkyard_cave/left{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -414,7 +395,6 @@
 "bw" = (
 /obj/structure/junkyard_cave/left{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -422,7 +402,6 @@
 "bx" = (
 /obj/structure/junkyard_cave{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -430,7 +409,6 @@
 "by" = (
 /obj/structure/junkyard_cave/left{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -438,7 +416,6 @@
 "bz" = (
 /obj/structure/junkyard_cave{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -446,7 +423,6 @@
 "bA" = (
 /obj/structure/junkyard_cave/right{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -455,7 +431,6 @@
 /obj/structure/junkyard_cave{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -464,7 +439,6 @@
 /obj/structure/junkyard_cave/left{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -473,7 +447,6 @@
 /obj/structure/junkyard_cave/right{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -482,7 +455,6 @@
 /obj/structure/junkyard_cave{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -491,7 +463,6 @@
 /obj/structure/junkyard_cave/left{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -499,7 +470,6 @@
 "bG" = (
 /obj/structure/junkyard_cave/left{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -511,7 +481,6 @@
 /obj/structure/junkyard_cave/right{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -520,7 +489,6 @@
 /obj/structure/junkyard_cave{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -529,7 +497,6 @@
 /obj/structure/junkyard_cave/left{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -537,7 +504,6 @@
 "bL" = (
 /obj/structure/junkyard_cave/left{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -545,7 +511,6 @@
 "bM" = (
 /obj/structure/junkyard_cave{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -553,7 +518,6 @@
 "bN" = (
 /obj/structure/junkyard_cave/right{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -565,7 +529,6 @@
 /obj/structure/junkyard_cave/right{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -573,7 +536,6 @@
 "bQ" = (
 /obj/structure/junkyard_cave/left{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -581,7 +543,6 @@
 "bR" = (
 /obj/structure/junkyard_cave{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -589,7 +550,6 @@
 "bS" = (
 /obj/structure/junkyard_cave/right{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -601,7 +561,6 @@
 /obj/structure/junkyard_cave/right{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -610,7 +569,6 @@
 /obj/structure/junkyard_cave{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -618,7 +576,6 @@
 "bW" = (
 /obj/structure/junkyard_cave{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -626,7 +583,6 @@
 "bX" = (
 /obj/structure/junkyard_cave/right{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -638,7 +594,6 @@
 /obj/structure/junkyard_cave/right{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -647,7 +602,6 @@
 /obj/structure/junkyard_cave{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -656,7 +610,6 @@
 /obj/structure/junkyard_cave/left{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -692,7 +645,6 @@
 /obj/structure/junkyard_cave/right{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -701,7 +653,6 @@
 /obj/structure/junkyard_cave{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -710,7 +661,6 @@
 /obj/structure/junkyard_cave/left{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -719,7 +669,6 @@
 /obj/structure/junkyard_cave{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -728,7 +677,6 @@
 /obj/structure/junkyard_cave/left{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -740,7 +688,6 @@
 /obj/structure/junkyard_cave/left{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -748,7 +695,6 @@
 "cs" = (
 /obj/structure/junkyard_cave/right{
 	name = "cave top";
-	tag = "";
 	tag_cave = "top"
 	},
 /turf/simulated/floor/plating,
@@ -757,7 +703,6 @@
 /obj/structure/junkyard_cave/left{
 	dir = 1;
 	name = "cave down";
-	tag = "";
 	tag_cave = "down"
 	},
 /turf/simulated/floor/plating,
@@ -766,7 +711,7 @@
 /obj/structure/junkyard_cave/right{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
+	tag_cave = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/west)
@@ -782,7 +727,7 @@
 /obj/structure/junkyard_cave/left{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
+	tag_cave = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/west)
@@ -790,7 +735,7 @@
 /obj/structure/junkyard_cave/right{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
+	tag_cave = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/north_west)
@@ -806,7 +751,7 @@
 /obj/structure/junkyard_cave/left{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
+	tag_cave = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/north_west)
@@ -814,7 +759,7 @@
 /obj/structure/junkyard_cave/right{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
+	tag_cave = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/south_west)
@@ -830,7 +775,7 @@
 /obj/structure/junkyard_cave/left{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
+	tag_cave = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/south_west)
@@ -838,7 +783,7 @@
 /obj/structure/junkyard_cave/right{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
+	tag_cave = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/north)
@@ -854,7 +799,7 @@
 /obj/structure/junkyard_cave/left{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
+	tag_cave = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/north)
@@ -862,7 +807,7 @@
 /obj/structure/junkyard_cave/right{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
+	tag_cave = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/center)
@@ -878,7 +823,7 @@
 /obj/structure/junkyard_cave/left{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
+	tag_cave = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/center)
@@ -894,7 +839,7 @@
 /obj/structure/junkyard_cave/left{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
+	tag_cave = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/east)
@@ -902,7 +847,7 @@
 /obj/structure/junkyard_cave/right{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
+	tag_cave = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/south)
@@ -918,7 +863,7 @@
 /obj/structure/junkyard_cave/left{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
+	tag_cave = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/south)
@@ -926,7 +871,7 @@
 /obj/structure/junkyard_cave/right{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
+	tag_cave = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/south_east)
@@ -942,7 +887,7 @@
 /obj/structure/junkyard_cave/left{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
+	tag_cave = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/south_east)
@@ -950,7 +895,7 @@
 /obj/structure/junkyard_cave/right{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
+	tag_cave = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/north_east)
@@ -966,7 +911,7 @@
 /obj/structure/junkyard_cave/left{
 	dir = 4;
 	name = "cave left";
-	tag = "left"
+	tag_cave = "left"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard/north_east)
