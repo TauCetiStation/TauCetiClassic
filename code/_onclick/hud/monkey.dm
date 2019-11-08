@@ -1,4 +1,4 @@
-/datum/hud/proc/monkey_hud(ui_style='icons/mob/screen1_old.dmi')
+/datum/hud/proc/monkey_hud()
 
 	src.adding = list()
 	src.other = list()

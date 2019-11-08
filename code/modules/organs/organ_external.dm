@@ -604,7 +604,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(!supplied_wound || (W in supplied_wound.embedded_objects)) // Just in case.
 		return
 
-	owner.throw_alert("embeddedobject")
+	owner.throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 
 	supplied_wound.embedded_objects += W
 	implants += W

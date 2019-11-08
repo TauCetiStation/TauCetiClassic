@@ -60,7 +60,7 @@ var/specops_shuttle_timeleft = 0
 	var/area/end_location = locate(/area/shuttle/specops/centcom)
 
 	SSshuttle.undock_act(start_location)
-	SSshuttle.undock_act(/area/hallway/secondary/entry, "arrival_specops")
+	SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_specops")
 
 	sleep(10)
 
@@ -175,7 +175,7 @@ var/specops_shuttle_timeleft = 0
 	start_location.move_contents_to(end_location)
 
 	SSshuttle.dock_act(end_location)
-	SSshuttle.dock_act(/area/hallway/secondary/entry, "arrival_specops")
+	SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_specops")
 
 	for(var/turf/T in get_area_turfs(end_location) )
 		var/mob/M = locate(/mob) in T

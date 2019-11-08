@@ -134,7 +134,7 @@ VOX HEIST ROUNDTYPE
 		return FALSE
 
 	for(var/datum/mind/vox in cortical_stacks)
-		if(get_area(cortical_stacks[vox]) != locate(/area/shuttle/vox/station))
+		if(get_area(cortical_stacks[vox]) != locate(/area/shuttle/vox/arkship))
 			return FALSE
 
 	return TRUE
@@ -294,7 +294,7 @@ VOX HEIST ROUNDTYPE
 				var/left_behind = TRUE
 
 				var/obj/item/weapon/implant/cortical/I = GM.cortical_stacks[vox]
-				if(I && I.implanted && I.imp_in == vox.current && get_area(I) == locate(/area/shuttle/vox/station))
+				if(I && I.implanted && I.imp_in == vox.current && get_area(I) == locate(/area/shuttle/vox/arkship))
 					left_behind = FALSE
 
 				if(left_behind)

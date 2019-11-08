@@ -172,7 +172,7 @@
 							R.lockcharge = !R.lockcharge
 							to_chat(R, "Your lockdown has been lifted!")
 						else
-							R.throw_alert("locked")
+							R.throw_alert("locked", /obj/screen/alert/locked)
 							R.lockcharge = !R.lockcharge
 					//		R.cell.charge = 0
 							to_chat(R, "You have been locked down!")
