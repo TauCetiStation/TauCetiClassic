@@ -402,6 +402,15 @@
 	lingchemdisplay.layer = ABOVE_HUD_LAYER
 	lingchemdisplay.plane = ABOVE_HUD_PLANE
 	lingchemdisplay.invisibility = 101
+	
+	ipcpowerdisplay = new /obj/screen()
+	ipcpowerdisplay.icon = 'icons/mob/screen1_robot.dmi'
+	ipcpowerdisplay.name = "power storage"
+	ipcpowerdisplay.icon_state = "ipcpower"
+	ipcpowerdisplay.screen_loc = ui_ipcpowerdisplay
+	ipcpowerdisplay.layer = ABOVE_HUD_LAYER
+	ipcpowerdisplay.plane = ABOVE_HUD_PLANE
+	ipcpowerdisplay.invisibility = 101
 
 	lingstingdisplay = new /obj/screen()
 	lingstingdisplay.icon = 'icons/mob/screen_gen.dmi'
@@ -446,7 +455,7 @@
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay, ipcpowerdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += src.adding + src.hotkeybuttons
 	mymob.client.screen += mymob.client.void
 	inventory_shown = 0
