@@ -177,6 +177,7 @@
 	if(!mymob.client)
 		return 0
 	var/display_hud_version = version
+	var/mob/living/carbon/human/H = usr
 	if(!display_hud_version)	//If 0 or blank, display the next hud version
 		display_hud_version = hud_version + 1
 	if(display_hud_version > HUD_VERSIONS)	//If the requested version number is greater than the available versions, reset back to the first version
@@ -196,7 +197,8 @@
 			mymob.client.screen += mymob.zone_sel				//This one is a special snowflake
 			mymob.client.screen += mymob.healths				//As are the rest of these.
 			mymob.client.screen += mymob.healthdoll
-			mymob.client.screen += mymob.internals
+			if(!H.species.flags[IS_SYNTHETIC])
+				mymob.client.screen += mymob.internals
 			mymob.client.screen += lingstingdisplay
 			mymob.client.screen += ipcpowerdisplay
 			mymob.client.screen += lingchemdisplay
