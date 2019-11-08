@@ -11,18 +11,18 @@
 /area/space)
 "d" = (
 /turf/simulated/wall/r_wall,
-/area/derelict/teleporter)
+/area/space_structures/teleporter)
 "e" = (
 /turf/simulated/floor/plating/airless,
-/area/derelict/teleporter)
+/area/space_structures/teleporter)
 "f" = (
 /turf/simulated/floor/airless,
-/area/derelict/teleporter)
+/area/space_structures/teleporter)
 "g" = (
 /turf/simulated/floor/airless{
 	icon_state = "damaged2"
 	},
-/area/derelict/teleporter)
+/area/space_structures/teleporter)
 "h" = (
 /obj/machinery/light_construct/small{
 	dir = 1
@@ -30,25 +30,25 @@
 /turf/simulated/floor/airless{
 	icon_state = "damaged3"
 	},
-/area/derelict/teleporter)
+/area/space_structures/teleporter)
 "i" = (
 /obj/machinery/computer/teleporter,
 /turf/simulated/floor/airless,
-/area/derelict/teleporter)
+/area/space_structures/teleporter)
 "j" = (
 /obj/machinery/teleport/station,
 /turf/simulated/floor/airless,
-/area/derelict/teleporter)
+/area/space_structures/teleporter)
 "k" = (
 /obj/machinery/teleport/hub,
 /turf/simulated/floor/airless,
-/area/derelict/teleporter)
+/area/space_structures/teleporter)
 "l" = (
 /obj/machinery/light_construct/small{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/derelict/teleporter)
+/area/space_structures/teleporter)
 "m" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/cell{
@@ -56,23 +56,23 @@
 	maxcharge = 15000
 	},
 /turf/simulated/floor/airless,
-/area/derelict/teleporter)
+/area/space_structures/teleporter)
 "n" = (
 /turf/simulated/floor/airless{
 	icon_state = "damaged4"
 	},
-/area/derelict/teleporter)
+/area/space_structures/teleporter)
 "o" = (
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
 /turf/simulated/floor/airless,
-/area/derelict/teleporter)
+/area/space_structures/teleporter)
 "p" = (
 /obj/item/weapon/disk/research_points,
 /turf/simulated/floor/airless,
-/area/derelict/teleporter)
+/area/space_structures/teleporter)
 
 (1,1,1) = {"
 a

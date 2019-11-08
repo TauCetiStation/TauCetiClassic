@@ -71,7 +71,6 @@
 
 	var/obj/item/smallDelivery/D = new(R.loc)
 	R.loc = D
-	D.wrapped = R
 	D.name = "small parcel - 'EFTPOS access code'"
 
 /obj/item/device/eftpos/attack_self(mob/user)

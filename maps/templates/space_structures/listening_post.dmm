@@ -7,14 +7,14 @@
 /area/space)
 "ac" = (
 /turf/simulated/wall,
-/area/listening_post)
+/area/space_structures/listening_post)
 "ad" = (
 /obj/machinery/computer/message_monitor,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "ae" = (
 /obj/structure/table,
 /obj/machinery/computer/libraryconsole/bookmanagement,
@@ -22,7 +22,7 @@
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "af" = (
 /obj/structure/rack,
 /obj/item/weapon/tank/emergency_oxygen/engi,
@@ -31,7 +31,7 @@
 	dir = 2;
 	icon_state = "podhatch"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "ag" = (
 /obj/machinery/computer/security{
 	dir = 4
@@ -47,7 +47,7 @@
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "ah" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
@@ -56,13 +56,13 @@
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "ai" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "aj" = (
 /obj/machinery/telecomms/relay/preset/ruskie{
 	id = "Listening Outpost Omega"
@@ -71,7 +71,7 @@
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "ak" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/syndicate,
@@ -80,14 +80,14 @@
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "al" = (
 /turf/simulated/floor/plating,
-/area/listening_post)
+/area/space_structures/listening_post)
 "am" = (
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/plating,
-/area/listening_post)
+/area/space_structures/listening_post)
 "an" = (
 /obj/structure/curtain/open/shower/security,
 /obj/machinery/light/small,
@@ -97,7 +97,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "ao" = (
 /obj/machinery/computer/med_data{
 	dir = 4
@@ -106,7 +106,7 @@
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "ap" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp,
@@ -114,7 +114,7 @@
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "aq" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
@@ -126,11 +126,11 @@
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "ar" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/plating,
-/area/listening_post)
+/area/space_structures/listening_post)
 "as" = (
 /obj/machinery/door/airlock{
 	name = "Toilet"
@@ -138,7 +138,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "at" = (
 /obj/structure/toilet{
 	pixel_y = 15
@@ -153,7 +153,7 @@
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "au" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/syndicate/jailbreaker,
@@ -162,21 +162,21 @@
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "av" = (
 /obj/structure/closet/crate/bin,
 /turf/simulated/floor,
-/area/listening_post)
+/area/space_structures/listening_post)
 "aw" = (
 /turf/simulated/floor,
-/area/listening_post)
+/area/space_structures/listening_post)
 "ax" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/machinery/washing_machine,
 /turf/simulated/floor,
-/area/listening_post)
+/area/space_structures/listening_post)
 "ay" = (
 /obj/structure/filingcabinet,
 /obj/item/weapon/paper/monitorkey,
@@ -184,7 +184,7 @@
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "az" = (
 /obj/structure/rack,
 /obj/item/device/multitool,
@@ -192,7 +192,7 @@
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "aA" = (
 /obj/structure/rack,
 /obj/item/device/geoscanner,
@@ -201,14 +201,14 @@
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "aB" = (
 /obj/structure/dispenser/oxygen,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "aC" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Telecommunications"
@@ -217,7 +217,7 @@
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "aD" = (
 /obj/machinery/door/airlock/hatch{
 	name = "E.V.A."
@@ -226,7 +226,7 @@
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "aE" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
@@ -238,7 +238,7 @@
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "aF" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave,
@@ -246,7 +246,7 @@
 	pixel_x = -30
 	},
 /turf/simulated/floor,
-/area/listening_post)
+/area/space_structures/listening_post)
 "aG" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
@@ -262,46 +262,46 @@
 	pixel_x = -30
 	},
 /turf/simulated/floor,
-/area/listening_post)
+/area/space_structures/listening_post)
 "aH" = (
 /obj/machinery/door/airlock{
 	name = "Personal Quarters"
 	},
 /turf/simulated/floor,
-/area/listening_post)
+/area/space_structures/listening_post)
 "aI" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/listening_post)
+/area/space_structures/listening_post)
 "aJ" = (
 /obj/random/vending/snack,
 /turf/simulated/floor,
-/area/listening_post)
+/area/space_structures/listening_post)
 "aK" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
 /turf/simulated/floor,
-/area/listening_post)
+/area/space_structures/listening_post)
 "aL" = (
 /obj/machinery/computer/arcade,
 /turf/simulated/floor,
-/area/listening_post)
+/area/space_structures/listening_post)
 "aM" = (
 /obj/structure/flora/plant/random,
 /turf/simulated/floor,
-/area/listening_post)
+/area/space_structures/listening_post)
 "aN" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/light/small,
 /turf/simulated/floor,
-/area/listening_post)
+/area/space_structures/listening_post)
 "aO" = (
 /obj/random/vending/cola,
 /turf/simulated/floor,
-/area/listening_post)
+/area/space_structures/listening_post)
 "aP" = (
 /obj/machinery/door/airlock{
 	name = "Cabin"
@@ -309,11 +309,11 @@
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "aQ" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /turf/simulated/floor/plating,
-/area/listening_post)
+/area/space_structures/listening_post)
 "aR" = (
 /obj/machinery/door/airlock/medical{
 	name = "Infirmary"
@@ -322,57 +322,57 @@
 	dir = 1;
 	icon_state = "white"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "aS" = (
 /obj/structure/bookcase/manuals/security,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "aT" = (
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "aU" = (
 /obj/item/weapon/bedsheet/syndie,
 /obj/structure/stool/bed,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "aV" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/listening_post)
+/area/space_structures/listening_post)
 "aW" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
 /turf/simulated/floor,
-/area/listening_post)
+/area/space_structures/listening_post)
 "aX" = (
 /obj/machinery/sleeper/upgraded,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "white"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "aY" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "white"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "aZ" = (
 /obj/structure/closet/secure_closet/medical1,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "white"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "ba" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -388,7 +388,7 @@
 	nitrogen = 0.01;
 	oxygen = 0.01
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "bb" = (
 /obj/structure/table/holotable/wooden,
 /obj/item/weapon/book/manual/nuclear,
@@ -396,7 +396,7 @@
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "bc" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/item/clothing/head/welding/fluff/yuki_matsuda_1,
@@ -411,7 +411,7 @@
 	nitrogen = 0.01;
 	oxygen = 0.01
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "bd" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/tactical,
@@ -421,7 +421,7 @@
 	dir = 1;
 	icon_state = "white"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "be" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -430,7 +430,7 @@
 	dir = 1;
 	icon_state = "dark"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "bf" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
@@ -439,13 +439,13 @@
 	nitrogen = 0.01;
 	oxygen = 0.01
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "bg" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/listening_post)
+/area/space_structures/listening_post)
 "bh" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/phoron{
@@ -462,36 +462,36 @@
 	nitrogen = 0.01;
 	oxygen = 0.01
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "bi" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/plating,
-/area/listening_post)
+/area/space_structures/listening_post)
 "bj" = (
 /obj/structure/sign/poster{
 	pixel_y = 32
 	},
 /turf/simulated/floor,
-/area/listening_post)
+/area/space_structures/listening_post)
 "bk" = (
 /obj/structure/closet/wardrobe/black,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "bl" = (
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "bm" = (
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "white"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 "bn" = (
 /obj/machinery/iv_drip,
 /obj/structure/sink{
@@ -502,7 +502,7 @@
 	dir = 1;
 	icon_state = "white"
 	},
-/area/listening_post)
+/area/space_structures/listening_post)
 
 (1,1,1) = {"
 aa

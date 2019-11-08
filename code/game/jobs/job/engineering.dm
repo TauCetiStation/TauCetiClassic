@@ -27,8 +27,9 @@
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), SLOT_BACK)
+		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chief_engineer(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat/white(H), SLOT_HEAD)
@@ -68,8 +69,9 @@
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), SLOT_BACK)
+		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/engineer(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(H), SLOT_BELT)
@@ -109,8 +111,9 @@
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), SLOT_BACK)
+		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/atmospheric_technician(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/atmos(H), SLOT_L_STORE)
@@ -144,8 +147,9 @@
 		return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), SLOT_BACK)
+		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/color/yellow(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/yellow(H), SLOT_SHOES)
 

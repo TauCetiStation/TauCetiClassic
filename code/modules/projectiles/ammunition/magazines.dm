@@ -271,26 +271,6 @@
 	max_ammo = 7
 	multiple_sprites = 1
 
-/obj/item/ammo_box/magazine/l10mag
-	name = "L10-c battery"
-	desc = "A special battery with protection from EM pulse."
-	icon_state = "l10_clip"
-	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/l10
-	caliber = "energy"
-	max_ammo = 25
-
-/obj/item/ammo_box/magazine/l10mag/examine(mob/user)
-	..()
-	if(src in view(1, user))
-		to_chat(user, "<span class='notice'>You see a charge meter, it reads: [round(ammo_count() * 100 / max_ammo)]%.</span>")
-
-/obj/item/ammo_box/magazine/l10mag/attack_self(mob/user)
-	return
-
-/obj/item/ammo_box/magazine/l10mag/update_icon()
-	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
-
 /obj/item/ammo_box/magazine/c5_9mm
 	name = "magazine (9mm rubber)"
 	icon_state = "c5_mag"
@@ -482,3 +462,73 @@
 /obj/item/ammo_box/magazine/a74mm/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[CEIL(ammo_count(0) / 30) * 30]"
+
+/obj/item/ammo_box/magazine/plasma
+	name = "plasma weapon battery pack"
+	desc = "A special battery case with protection against EM pulse. Uses fast charge method. Has standardized dimensions and can be used with any plasma type gun of this series. Power cell can be replaced."
+	icon_state = "plasma_clip"
+	origin_tech = "combat=2"
+	ammo_type = null // unused, those are inside guns of this type.
+	caliber = "plasma"
+	max_ammo = 0 // not used with this magazine.
+
+	var/obj/item/weapon/stock_parts/cell/power_supply
+	var/cell_type = /obj/item/weapon/stock_parts/cell/super // we balance ammo consumption and amount over this type of battery, because even this battery still requires basic materials to craft.
+
+/obj/item/ammo_box/magazine/plasma/atom_init()
+	. = ..()
+	if(cell_type)
+		power_supply = new cell_type(src)
+	else
+		power_supply = new(src)
+	update_icon()
+
+/obj/item/ammo_box/magazine/plasma/Destroy()
+	QDEL_NULL(power_supply)
+	return ..()
+
+/obj/item/ammo_box/magazine/plasma/attackby(obj/item/A, mob/user, silent = FALSE)
+	if(power_supply && isscrewdriver(A))
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		user.put_in_hands(power_supply)
+		power_supply = null
+		update_icon()
+	else if(istype(A, /obj/item/weapon/stock_parts/cell) && !power_supply && user.drop_from_inventory(A))
+		playsound(src, 'sound/items/change_drill.ogg', VOL_EFFECTS_MASTER)
+		A.forceMove(src)
+		power_supply = A
+		update_icon()
+	else
+		return ..()
+
+/obj/item/ammo_box/magazine/plasma/get_round(keep = FALSE)
+	return null
+
+/obj/item/ammo_box/magazine/plasma/proc/get_charge()
+	if(!power_supply)
+		return 0
+	return power_supply.charge
+
+/obj/item/ammo_box/magazine/plasma/proc/has_overcharge()
+	return power_supply.charge > PLASMAGUN_OVERCHARGE
+
+/obj/item/ammo_box/magazine/plasma/ammo_count() // we don't use this proc
+	return 0
+
+/obj/item/ammo_box/magazine/plasma/examine(mob/user)
+	. = ..(user, 1)
+	if(.)
+		to_chat(user, "<span class='notice'>You see a charge meter, it reads: [power_supply ? round(power_supply.charge * 100 / power_supply.maxcharge) : "nan"]%.</span>")
+
+/obj/item/ammo_box/magazine/plasma/attack_self(mob/user) // check parent proc before adding ..() or removing this one.
+	return
+
+/obj/item/ammo_box/magazine/plasma/update_icon()
+	if(!power_supply)
+		icon_state = "[initial(icon_state)]-0"
+		return
+	// yes, it stops reporting accurate data for icon if its overflowing with energy till it drops charge under certain amount.
+	icon_state = "[initial(icon_state)]-[has_overcharge() ? "oc" : CEIL(power_supply.charge / power_supply.maxcharge * 5) * 20]"
+
+/obj/item/ammo_box/magazine/plasma/emp_act() // just incase if someone adds emp_act in parent.
+	return
