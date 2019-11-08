@@ -1510,6 +1510,13 @@
 					throw_alert("nutrition","starving")
 		else
 			clear_alert("nutrition")
+			
+			if(HUD_STYLE_STANDARD)
+				client.screen -= internals
+			if(HUD_STYLE_REDUCED)
+				client.screen -= internals
+			if(HUD_STYLE_NOHUD)
+				client.screen -= internals
 
 		if(pressure)
 			pressure.icon_state = "pressure[pressure_alert]"
