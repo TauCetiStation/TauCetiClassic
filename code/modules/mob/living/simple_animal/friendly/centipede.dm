@@ -11,8 +11,8 @@
 	speak_chance = 10
 	turns_per_move = 3
 	see_in_dark = 6
-	health = 70
-	maxHealth = 70
+	health = 30
+	maxHealth = 30
 	response_help  = "is played"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
@@ -46,3 +46,4 @@
 	for(var/obj/item/weapon/scrap_lump/scrap in oview(src, 1))
 		walk_to(src,0)
 		qdel(scrap)
+		break
