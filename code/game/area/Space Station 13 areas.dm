@@ -1401,6 +1401,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	tag_right = "east"
 	tag_left = "west"
 	max_aggressive = 16
+	delay_process = 40
+	delay_process_pile = 10
 
 /area/awaymission/junkyard/south
 	name = "Junkyard South"
