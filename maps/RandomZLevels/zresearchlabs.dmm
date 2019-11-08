@@ -414,7 +414,7 @@
 /area/awaymission/labs/cave)
 "bv" = (
 /turf/unsimulated/jungle/rock,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -446,7 +446,7 @@
 	oxygen = 21.8366;
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -544,7 +544,7 @@
 /area/awaymission/labs/cave)
 "bR" = (
 /turf/unsimulated/desert,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -640,7 +640,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -703,7 +703,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -742,7 +742,7 @@
 	icon_state = "solarpanel";
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -857,7 +857,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -931,7 +931,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -1010,14 +1010,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
 "cV" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -1029,7 +1029,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -1052,7 +1052,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -1063,7 +1063,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -1081,7 +1081,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -1095,7 +1095,7 @@
 	icon_state = "solarpanel";
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -1103,7 +1103,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -1232,7 +1232,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -1851,7 +1851,7 @@
 	pixel_y = 1
 	},
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -2122,7 +2122,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -2156,7 +2156,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -3975,7 +3975,7 @@
 "jE" = (
 /obj/machinery/porta_turret,
 /turf/unsimulated/desert,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4204,7 +4204,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4250,7 +4250,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4317,7 +4317,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4335,7 +4335,7 @@
 	icon_state = "solarpanel";
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4353,7 +4353,7 @@
 	icon_state = "solarpanel";
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4378,7 +4378,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4436,7 +4436,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4480,7 +4480,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4512,7 +4512,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4527,7 +4527,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4547,7 +4547,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4562,7 +4562,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4627,7 +4627,7 @@
 	icon_state = "solarpanel";
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4651,7 +4651,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4662,7 +4662,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4685,7 +4685,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4725,7 +4725,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4792,7 +4792,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4812,7 +4812,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4827,7 +4827,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4845,7 +4845,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4859,7 +4859,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -4872,7 +4872,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -5007,7 +5007,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -5024,7 +5024,7 @@
 	icon_state = "solarpanel";
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -5072,14 +5072,14 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
 "lI" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/unsimulated/desert,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -5143,7 +5143,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -5163,7 +5163,7 @@
 	icon_state = "solarpanel";
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -5182,7 +5182,7 @@
 	icon_state = "solarpanel";
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -5208,7 +5208,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -5228,7 +5228,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -5249,7 +5249,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -5263,7 +5263,7 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
@@ -6408,7 +6408,7 @@
 "oJ" = (
 /obj/machinery/conveyor,
 /turf/unsimulated/desert,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
 	name = "Desert"
 	})
