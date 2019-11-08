@@ -4,8 +4,7 @@
 
 /mob/living/Destroy()
 	living_list -= src
-	..()
-	return QDEL_HINT_HARDDEL_NOW
+	return ..()
 
 /mob/living/proc/OpenCraftingMenu()
 	return
