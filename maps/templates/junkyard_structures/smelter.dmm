@@ -1,0 +1,37 @@
+"a" = (/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"b" = (/turf/simulated/wall,/area/awaymission/junkyard/structure)
+"c" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/grille,/obj/machinery/door/firedoor,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"d" = (/obj/machinery/conveyor{id = "mining_internal"},/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"e" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/closet/crate,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"f" = (/obj/machinery/power/port_gen/pacman/scrap,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"g" = (/obj/machinery/status_display{layer = 4; pixel_y = 32},/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"h" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/firedoor,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"i" = (/obj/machinery/door/window/westright{name = "Production Area"; req_access = list(48)},/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"j" = (/obj/machinery/conveyor_switch/oneway{id = "mining_internal"; name = "mining conveyor"},/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"k" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/structure/grille,/obj/machinery/door/firedoor,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"l" = (/obj/machinery/mineral/input,/obj/machinery/conveyor{id = "mining_internal"},/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"m" = (/obj/machinery/door/window/westleft{name = "Production Area"; req_access = list(48)},/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"n" = (/obj/machinery/light{dir = 4},/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"o" = (/obj/machinery/mineral/processing_unit_console,/turf/simulated/wall/r_wall,/area/awaymission/junkyard/structure)
+"p" = (/obj/machinery/mineral/processing_unit,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"q" = (/obj/structure/closet/crate,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"r" = (/obj/machinery/conveyor{id = "mining_internal"},/obj/machinery/mineral/output,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"s" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/grille,/obj/machinery/door/firedoor,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"t" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/grille,/obj/machinery/door/firedoor,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"u" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/grille,/obj/machinery/door/firedoor,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"v" = (/obj/machinery/mineral/stacking_unit_console,/turf/simulated/wall/r_wall,/area/awaymission/junkyard/structure)
+"w" = (/obj/machinery/conveyor{dir = 8; id = "mining_internal"},/obj/structure/plasticflaps,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"x" = (/obj/machinery/conveyor{dir = 8; id = "mining_internal"},/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"y" = (/obj/machinery/conveyor{dir = 8; id = "mining_internal"},/obj/machinery/mineral/output,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"z" = (/obj/machinery/mineral/stacking_machine,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+"A" = (/obj/machinery/conveyor{dir = 10; id = "mining_internal"},/obj/machinery/mineral/input,/obj/machinery/light,/turf/simulated/floor/plating/ironsand/junkyard,/area/awaymission/junkyard/structure)
+
+(1,1,1) = {"
+abbbbbbcd
+aaaefgfhd
+aaaiaajkl
+aaamaanop
+aaaeqaqcr
+aaastuvkd
+aaaawxyzA
+"}
