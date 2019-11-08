@@ -8,7 +8,21 @@
 			continue
 		if(gender == FEMALE && S.gender == MALE)
 			continue
-		if( !(species in S.species_allowed))
+		if(!(species in S.species_allowed))
+			continue
+		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
+
+	if(valid_hairstyles.len)
+		h_style = pick(valid_hairstyles)
+
+	return h_style
+
+/proc/random_ipc_monitor(ipc_head)
+	var/h_style = "Bald"
+	var/list/valid_hairstyles = list()
+	for(var/hairstyle in hair_styles_list)
+		var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
+		if(ipc_head != S.ipc_head_compatible)
 			continue
 		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
 
@@ -36,6 +50,7 @@
 		f_style = pick(valid_facialhairstyles)
 
 		return f_style
+
 
 /proc/random_name(gender, species = HUMAN)
 	if(gender==FEMALE)	return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
