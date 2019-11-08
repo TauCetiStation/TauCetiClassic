@@ -1595,7 +1595,7 @@
 			var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
 			if(C)
 				hud_used.ipcpowerdisplay.invisibility = 0
-				hud_used.ipcpowerdisplay.maptext = {"<div style="font-size:[FONT_ASIZE];color:[FONT_ACOLOR];font:'[FONT_ASTYLE]';text-align:center;" valign="middle"> [round(100*nutrition/C.maxcharge)]%<br> [C.maxcharge/100]%</div>"}
+				hud_used.ipcpowerdisplay.maptext = {"<div style="font-size:[FONT_ASIZE];color:[FONT_ACOLOR];font:'[FONT_ASTYLE]';text-align:center;" valign="middle"> [round(100*nutrition/C.maxcharge)]%<br> [round(bodytemperature-T0C)]&deg;C</div>"}
 			else
 				hud_used.ipcpowerdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#FF0000'>X</font></div>"
 	..()
