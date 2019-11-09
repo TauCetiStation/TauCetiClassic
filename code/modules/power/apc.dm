@@ -635,11 +635,11 @@
 					if(src.cell.charge)
 						to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and start siphon off some of the stored charge for your own use.</span>")
 						while(H.nutrition < C.maxcharge)
-							if(do_after(user,10,target = src))
+							if(do_after(user,10,target = src) && H.a_intent == I_GRAB)
 								if(!src.cell)
 									to_chat(user, "<span class='notice'>There is no cell.</span>")
 									break
-								else if((emagged || malfhack || (stat & (BROKEN|EMPED)) || shorted) && H.a_intent == I_GRAB)
+								else if(emagged || malfhack || (stat & (BROKEN|EMPED)) || shorted)
 									break
 								else if(H.nutrition > C.maxcharge*0.9)
 									to_chat(user, "<span class='notice'>You're fully charge.</span>")
@@ -664,7 +664,7 @@
 						src.charging = 0
 						return
 
-					if((emagged || malfhack || (stat & (BROKEN|EMPED)) || shorted) && H.a_intent == I_GRAB)
+					if(emagged || malfhack || (stat & (BROKEN|EMPED)) || shorted)
 						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 						s.set_up(3, 1, src)
 						s.start()
