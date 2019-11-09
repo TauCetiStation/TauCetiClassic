@@ -143,50 +143,40 @@
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
-/area/derelict/ds_eng
+/area/space_structures/destroyed_station
+	name = "Destroyed_station"
+	icon_state = "yellow"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/space_structures/destroyed_station/eng
 	name = "Engineering"
 	icon_state = "engine_smes"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
-/area/derelict/ds_med
+/area/space_structures/destroyed_station/med
 	name = "Medbay"
 	icon_state = "medbay"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
-/area/derelict/ds_medstor
+/area/space_structures/destroyed_station/medstor
 	name = "Medical storage"
 	icon_state = "medbay3"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
-/area/derelict/ds_bridge
+/area/space_structures/destroyed_station/bridge
 	name = "Bridge"
 	icon_state = "bridge"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
-/area/derelict/ds_brig
+/area/space_structures/destroyed_station/brig
 	name = "Brig"
 	icon_state = "brig"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
-/area/derelict/ds_hallway
+/area/space_structures/destroyed_station/hallway
 	name = "Hallway"
 	icon_state = "hallC"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
-/area/derelict/ds_bar
+/area/space_structures/destroyed_station/bar
 	name = "Bar"
 	icon_state = "bar"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
-area/derelict/ds_shuttle
+area/space_structures/destroyed_station/shuttle
 	name = "Escape shuttle"
 	icon_state = "escape"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
