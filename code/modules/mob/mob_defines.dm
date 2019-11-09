@@ -58,7 +58,6 @@
 	var/disabilities = 0	//Carbon
 	var/atom/movable/pulling = null
 	var/next_move = null
-	var/monkeyizing = null	//Carbon
 	var/other = 0.0
 	var/notransform = null	//Carbon
 	var/hand = 0            //active hand; 0 is right hand, 1 is left hand //todo: we need defines for this...
