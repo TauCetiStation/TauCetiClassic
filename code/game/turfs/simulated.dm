@@ -60,31 +60,7 @@
 				dirtoverlay.alpha = 20
 			else
 				dirtoverlay.alpha = min(dirtoverlay.alpha+5, 255)
-/*
-		if(istype(M, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
 
-			//Footstep sound
-			if(istype(H:shoes, /obj/item/clothing/shoes) && !H.buckled)
-				var/obj/item/clothing/shoes/O = H.shoes
-
-				var/footstepsound = pick(SOUNDIN_FOOTSTEPS)
-
-				if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
-					if(prob(25))
-						footstepsound = pick(SOUNDIN_CLOWNSTEP)
-				if(H.shoes.wet)
-					footstepsound = 'sound/effects/waterstep.ogg'
-
-				if(H.m_intent == "run")
-					if(O.footstep >= 2)
-						O.footstep = 0
-						playsound(src, footstepsound, VOL_EFFECTS_MASTER)
-					else
-						O.footstep++
-				else
-					playsound(src, footstepsound, VOL_EFFECTS_MASTER, 20)
-*/
 		// Tracking blood
 		var/list/bloodDNA = null
 		var/datum/dirt_cover/blooddatum
