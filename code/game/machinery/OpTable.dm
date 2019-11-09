@@ -77,8 +77,10 @@
 	if (ishuman(O) && isrobot(user))
 		var/mob/living/silicon/robot/R = user
 		var/mob/living/carbon/human/M = O
-		if (R.module != null && istype(R.module, /obj/item/weapon/robot_module/surgeon) && !M.buckled)
-			take_victim(O, usr)
+		if (R.module != null && istype(R.module, /obj/item/weapon/robot_module/surgeon))
+			if (M.buckled)
+				M.buckled.user_unbuckle_mob(R)
+			take_victim(O, R)
 		return
 	
 	if(isrobot(user) || isessence(user))
