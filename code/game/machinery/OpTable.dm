@@ -74,6 +74,13 @@
 
 
 /obj/machinery/optable/MouseDrop_T(obj/O, mob/user)
+	if (ishuman(O) && isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		var/mob/living/carbon/human/M = O
+		if (R.module != null && istype(R.module, /obj/item/weapon/robot_module/surgeon) && !M.buckled && !M.restrained())
+			take_victim(O, usr)
+		return
+	
 	if(isrobot(user) || isessence(user))
 		return
 
