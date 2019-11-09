@@ -188,7 +188,7 @@
 	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
 	syllables = list ("gra","ba","ba","breh","bra","rah","dur","ra","ro","gro","go","ber","bar","geh","heh", "gra")
 
-/datum/language/solsign
+/datum/language/unisign
 	name = "Universal Sign Language"
 	desc = "Standart language made of gestures. Common language of deaf and muted people."
 	colour = "rough"
