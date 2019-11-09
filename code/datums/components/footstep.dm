@@ -24,13 +24,13 @@
 			RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), .proc/play_humanstep)
 			return
 		if(FOOTSTEP_MOB_CLAW)
-			footstep_sounds = clawfootstep
+			footstep_sounds = global.clawfootstep
 		if(FOOTSTEP_MOB_BAREFOOT)
-			footstep_sounds = barefootstep
+			footstep_sounds = global.barefootstep
 		if(FOOTSTEP_MOB_HEAVY)
-			footstep_sounds = heavyfootstep
+			footstep_sounds = global.heavyfootstep
 		if(FOOTSTEP_MOB_SHOE)
-			footstep_sounds = footstep
+			footstep_sounds = global.footstep
 		if(FOOTSTEP_MOB_SLIME)
 			footstep_sounds = 'sound/effects/mob/footstep/slime1.ogg'
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), .proc/play_simplestep) //Note that this doesn't get called for humans.
@@ -101,7 +101,7 @@
 		return
 
 	if(H.shoes) //are we wearing shoes
-		playsound(T, pick(footstep[T.footstep][1]), VOL_EFFECTS_MASTER, footstep[T.footstep][2] * volume, TRUE, footstep[T.footstep][3] + e_range)
+		playsound(T, pick(global.footstep[T.footstep][1]), VOL_EFFECTS_MASTER, global.footstep[T.footstep][2] * volume, TRUE, global.footstep[T.footstep][3] + e_range)
 		H.shoes.play_unique_footstep_sound() // TODO: port https://github.com/tgstation/tgstation/blob/master/code/datums/components/squeak.dm
 	else
-		playsound(T, pick(barefootstep[T.barefootstep][1]), VOL_EFFECTS_MASTER, barefootstep[T.barefootstep][2] * volume, TRUE, barefootstep[T.barefootstep][3] + e_range)
+		playsound(T, pick(global.barefootstep[T.barefootstep][1]), VOL_EFFECTS_MASTER, global.barefootstep[T.barefootstep][2] * volume, TRUE, global.barefootstep[T.barefootstep][3] + e_range)
