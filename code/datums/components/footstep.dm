@@ -43,7 +43,7 @@
 
 	var/mob/living/LM = parent
 	if(!T.footstep || LM.buckled || LM.lying || LM.throwing || LM.crawling || LM.is_ventcrawling || !has_gravity(LM, T))
-		if (LM.lying && !LM.buckled && T.footstep && LM.is_ventcrawling) //play crawling sound if we're lying
+		if (LM.lying && !LM.buckled && T.footstep && (LM.is_ventcrawling || LM.crawling)) //play crawling sound if we're lying
 			playsound(T, 'sound/effects/mob/footstep/crawl1.ogg', VOL_EFFECTS_MASTER)
 		return
 
