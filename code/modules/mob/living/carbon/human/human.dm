@@ -119,7 +119,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	. = ..()
 
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, 2)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN)
 	human_list += src
 
 	if(dna)
