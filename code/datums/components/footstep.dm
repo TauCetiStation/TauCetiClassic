@@ -102,7 +102,6 @@
 
 	if(H.shoes) //are we wearing shoes
 		playsound(T, pick(footstep[T.footstep][1]), VOL_EFFECTS_MASTER, footstep[T.footstep][2] * volume, TRUE, footstep[T.footstep][3] + e_range)
-		if(H.shoes.wet)
-			playsound(T, 'sound/effects/mob/footstep/wet_shoes_step.ogg', VOL_EFFECTS_MASTER)
+		H.shoes.play_unique_footstep_sound() // TODO: port https://github.com/tgstation/tgstation/blob/master/code/datums/components/squeak.dm
 	else
 		playsound(T, pick(barefootstep[T.barefootstep][1]), VOL_EFFECTS_MASTER, barefootstep[T.barefootstep][2] * volume, TRUE, barefootstep[T.barefootstep][3] + e_range)

@@ -270,6 +270,11 @@ BLIND     // can't see anything
 	else
 		..()
 
+/obj/item/clothing/shoes/play_unique_footstep_sound()
+	..()
+	if(wet)
+		playsound(src, 'sound/effects/mob/footstep/wet_shoes_step.ogg', VOL_EFFECTS_MASTER)
+
 /obj/item/proc/negates_gravity()
 	return 0
 
