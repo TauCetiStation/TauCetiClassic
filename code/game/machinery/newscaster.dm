@@ -17,11 +17,6 @@
 	var/list/datum/message_comment/comments = list() //Stores all comments under the feed message
 	var/comments_closed = TRUE //Spoiler
 
-	var/static/icon/like = icon("icons/misc/raiting_for_paper.dmi", "like")
-	var/static/icon/like_clicked = icon("icons/misc/raiting_for_paper.dmi", "like_clicked")
-	var/static/icon/dislike = icon("icons/misc/raiting_for_paper.dmi", "dislike")
-	var/static/icon/dislike_clicked = icon("icons/misc/raiting_for_paper.dmi", "dislike_clicked")
-
 /datum/message_comment
 	var/author = ""
 	var/backup_author = ""
@@ -373,14 +368,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 								usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
 							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
-
-							usr << browse_rsc(MESSAGE.like, "like.png")
-							usr << browse_rsc(MESSAGE.like_clicked, "like_clicked.png")
-							usr << browse_rsc(MESSAGE.dislike, "dislike.png")
-							usr << browse_rsc(MESSAGE.dislike_clicked, "dislike_clicked.png")
 							//If a person has already voted, then the button will not be clickable
-							dat+="<FONT SIZE=1>[((src.scanned_user in MESSAGE.voters) || (src.scanned_user == "Unknown")) ? ("<img src='like_clicked.png'>") : ("<A href='?src=\ref[src];setLike=\ref[MESSAGE]'><img src='like.png'></A>")]: <FONT SIZE=2>[MESSAGE.likes]</FONT> \
-											   [((src.scanned_user in MESSAGE.voters) || (src.scanned_user == "Unknown")) ? ("<img src='dislike_clicked.png'>") : ("<A href='?src=\ref[src];setDislike=\ref[MESSAGE]'><img src='dislike.png'></A>")]: <FONT SIZE=2>[MESSAGE.dislikes]</FONT></FONT>"
+							dat+="<FONT SIZE=1>[((src.scanned_user in MESSAGE.voters) || (src.scanned_user == "Unknown")) ? ("<img src=like_clck.png>") : ("<A href='?src=\ref[src];setLike=\ref[MESSAGE]'><img src=like.png></A>")]: <FONT SIZE=2>[MESSAGE.likes]</FONT> \
+											   [((src.scanned_user in MESSAGE.voters) || (src.scanned_user == "Unknown")) ? ("<img src=dislike_clck.png>") : ("<A href='?src=\ref[src];setDislike=\ref[MESSAGE]'><img src=dislike.png></A>")]: <FONT SIZE=2>[MESSAGE.dislikes]</FONT></FONT>"
 
 							dat+="<HR><A href='?src=\ref[src];open_comments=\ref[MESSAGE]'><B>All Comments</B></A>: [(MESSAGE.comments.len != 0) ? ("([MESSAGE.comments.len])") : ("")]<BR>"
 							if(!MESSAGE.comments_closed) //Spoiler
