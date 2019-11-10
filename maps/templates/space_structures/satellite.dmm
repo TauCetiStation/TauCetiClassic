@@ -11,7 +11,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "c" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -24,7 +24,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "d" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -34,7 +34,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "e" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -52,7 +52,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "f" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
@@ -73,7 +73,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "h" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
@@ -109,43 +109,43 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "satellitecorner2"
 	},
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "m" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
 	icon_state = "satellite_n2"
 	},
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "n" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "satellite_n2"
 	},
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "o" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "satellite_n2"
 	},
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "p" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "satellite_n2"
 	},
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "q" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "satellitecorner2"
 	},
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "r" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8;
 	icon_state = "burst_l"
 	},
 /turf/space,
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "s" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8;
@@ -161,7 +161,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/shuttle/floor,
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "t" = (
 /obj/machinery/light/small/emergency{
 	dir = 8
@@ -171,53 +171,53 @@
 	fixed_name = "Major Tom"
 	},
 /turf/simulated/shuttle/floor,
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "u" = (
 /obj/item/weapon/disk/research_points/rare,
 /turf/simulated/shuttle/floor,
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "v" = (
 /turf/simulated/shuttle/floor,
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "w" = (
 /obj/machinery/door/unpowered/shuttle/officer,
 /turf/simulated/shuttle/floor,
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "x" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
 	icon_state = "satellitecorner2"
 	},
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "y" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
 	icon_state = "satellite_s2"
 	},
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "z" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "satellite_s2"
 	},
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "A" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "satellite_s2"
 	},
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "B" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "satellite_s2"
 	},
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "C" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "satellitecorner2"
 	},
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "D" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
@@ -239,7 +239,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "F" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
@@ -289,7 +289,7 @@
 	},
 /turf/space,
 /turf/simulated/floor/plating/airless/catwalk,
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 "K" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -303,7 +303,7 @@
 	},
 /turf/space,
 /turf/simulated/floor/plating/airless/catwalk,
-/area/nasa_satellite)
+/area/space_structures/nasa_satellite)
 
 (1,1,1) = {"
 b

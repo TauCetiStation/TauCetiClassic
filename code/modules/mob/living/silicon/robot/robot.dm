@@ -742,7 +742,7 @@
 		else
 			sleep(6)
 			if(prob(50))
-				throw_alert("hacked")
+				throw_alert("hacked", /obj/screen/alert/hacked)
 				emagged = 1
 				lawupdate = 0
 				connected_ai = null
