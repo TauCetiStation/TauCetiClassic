@@ -251,13 +251,12 @@
 /turf/simulated/floor,
 /area/space_structures/destroyed_station/shuttle)
 "eJ" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/power/apc,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
-/turf/simulated/floor,
-/area/space_structures/destroyed_station/bridge)
+/area/space_structures/destroyed_station/bar)
 "eL" = (
 /turf/simulated/floor/carpet/purple,
 /area/space_structures/destroyed_station/bar)
@@ -1020,15 +1019,6 @@
 /area/space_structures/destroyed_station/bridge)
 "rl" = (
 /obj/structure/closet/secure_closet/medical2,
-/obj/machinery/power/apc{
-	dir = 8;
-	environ = 0;
-	equipment = 0;
-	lighting = 0;
-	locked = 0;
-	name = "Worn-out APC";
-	pixel_x = -24
-	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1774,10 +1764,6 @@
 	},
 /area/space_structures/destroyed_station/bridge)
 "CZ" = (
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /obj/machinery/power/apc{
 	dir = 8;
 	environ = 0;
@@ -2123,10 +2109,6 @@
 	icon_state = "whitebluecorner"
 	},
 /area/space_structures/destroyed_station/med)
-"HY" = (
-/obj/structure/grille,
-/turf/space,
-/area/space)
 "Ik" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_escape";
@@ -2286,11 +2268,6 @@
 	icon_state = "swall12"
 	},
 /area/space_structures/destroyed_station/shuttle)
-"Kw" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/space,
-/area/space_structures/destroyed_station/eng)
 "KM" = (
 /obj/machinery/chem_dispenser/soda{
 	dir = 4
@@ -2626,15 +2603,6 @@
 /turf/space,
 /area/space_structures/destroyed_station/eng)
 "PV" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	environ = 0;
-	equipment = 0;
-	lighting = 0;
-	locked = 0;
-	name = "Worn-out APC";
-	pixel_x = -24
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -2644,6 +2612,7 @@
 	name = "Marty Shon"
 	},
 /obj/effect/decal/cleanable/blood,
+/obj/machinery/power/apc,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -2900,12 +2869,6 @@
 	icon_state = "white"
 	},
 /area/space_structures/destroyed_station/med)
-"Uh" = (
-/obj/item/stack/sheet/metal{
-	amount = 5
-	},
-/turf/space,
-/area/space_structures/destroyed_station/brig)
 "US" = (
 /turf/simulated/floor{
 	icon_state = "damaged3"
@@ -3494,7 +3457,7 @@ US
 US
 cC
 cC
-Uh
+ip
 oY
 cC
 Ny
@@ -3622,7 +3585,7 @@ Nl
 Nl
 We
 xB
-Kw
+xB
 Nl
 Nl
 Nl
@@ -3651,7 +3614,7 @@ cC
 cC
 cC
 cC
-Uh
+ip
 cC
 cC
 cC
@@ -3696,7 +3659,7 @@ RB
 Gk
 Gk
 cC
-Uh
+ip
 cC
 cC
 cC
@@ -3825,17 +3788,17 @@ qn
 Bj
 "}
 (14,1,1) = {"
-rw
-GV
-GV
-Df
-rw
-bJ
-rw
-rw
-bJ
-rw
-rw
+eo
+Nl
+Nl
+Sa
+eo
+SK
+eo
+eo
+SK
+eo
+eo
 eo
 eo
 eo
@@ -3877,17 +3840,17 @@ qY
 Ik
 "}
 (15,1,1) = {"
-rw
-GV
-rw
-rw
-rw
-rw
-rw
-rw
-rw
-rw
-rw
+eo
+Nl
+eo
+eo
+eo
+eo
+eo
+eo
+eo
+eo
+eo
 HP
 Nl
 aa
@@ -3929,17 +3892,17 @@ qY
 Ik
 "}
 (16,1,1) = {"
-rw
-HY
-HY
-HY
-HY
-HY
-HY
-HY
-rw
-rw
-HY
+eo
+vQ
+vQ
+vQ
+vQ
+vQ
+vQ
+vQ
+eo
+eo
+vQ
 HP
 Nl
 HP
@@ -4069,7 +4032,7 @@ WG
 ZC
 ku
 PP
-eJ
+PP
 PP
 ZC
 ZC
@@ -4802,7 +4765,7 @@ kP
 kP
 kP
 kP
-kP
+eJ
 Rs
 dV
 dV
