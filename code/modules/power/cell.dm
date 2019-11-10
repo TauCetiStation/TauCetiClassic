@@ -77,7 +77,7 @@
 				if (do_after(user,30,target = src))
 					if(drain>src.charge)
 						drain = src.charge
-					if(H.nutrition>С.maxcharge*0.9)
+					if(H.nutrition>C.maxcharge*0.9)
 						to_chat(user, "<span class='warning'>Procedure interrupted. Charge maxed.</span>")
 					else
 						src.use(drain/0.5)
