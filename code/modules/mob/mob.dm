@@ -1,9 +1,26 @@
+/**
+  * Delete a mob
+  *
+  * Removes mob from the following global lists
+  * * GLOB.mob_list
+  * * GLOB.dead_mob_list
+  * * GLOB.alive_mob_list
+  * Clears alerts for this mob
+  *
+  * Parent call
+  *
+  * Returns QDEL_HINT_HARDDEL (don't change this)
+  */
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	mob_list -= src
-	dead_mob_list -= src
-	alive_mob_list -= src
+	global.mob_list -= src
+	global.dead_mob_list -= src
+	global.alive_mob_list -= src
+	for (var/alert in alerts)
+		clear_alert(alert, TRUE)
+	qdel(hud_used)
 	ghostize(bancheck = TRUE)
-	return ..()
+	..()
+	return QDEL_HINT_HARDDEL_NOW
 
 /mob/atom_init()
 	spawn()
