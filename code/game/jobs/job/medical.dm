@@ -189,6 +189,7 @@
 	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical, access_morgue, access_genetics, access_research, access_medbay_storage)
 	minimal_player_ingame_minutes = 960
+	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/geneticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -227,6 +228,7 @@
 	access = list(access_medical, access_virology, access_medbay_storage)
 	alt_titles = list("Pathologist","Microbiologist")
 	minimal_player_ingame_minutes = 960
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA)
 
 /datum/job/virologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -267,6 +269,7 @@
 	access = list(access_medical, access_psychiatrist, access_medbay_storage)
 	alt_titles = list("Psychologist")
 	minimal_player_ingame_minutes = 960
+	restricted_species = list(UNATHI)
 
 /datum/job/psychiatrist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
