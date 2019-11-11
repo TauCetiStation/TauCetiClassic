@@ -71,15 +71,16 @@
 			SNG.drain("CELL",src,H.wear_suit)
 			
 		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == I_GRAB && C)
-			var/drain = C.maxcharge-H.nutrition
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(charge > 0)
+				var/drain = 0
 				if (do_after(user,30,target = src))
 					if(drain>src.charge)
 						drain = src.charge
 					if(H.nutrition>C.maxcharge*0.9)
 						to_chat(user, "<span class='warning'>Procedure interrupted. Charge maxed.</span>")
 					else
+						drain = C.maxcharge-H.nutrition
 						src.use(drain/0.5)
 						H.nutrition += drain
 						to_chat(user, "<span class='notice'>Energy gained from the cell.</span>")
