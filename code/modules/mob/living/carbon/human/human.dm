@@ -145,6 +145,13 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
+		//Info for IPC
+		if(species.flags[IS_SYNTHETIC])
+			var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
+			var/obj/item/weapon/stock_parts/cell/I = locate(/obj/item/weapon/stock_parts/cell) in IO
+			if(I)
+				stat(null, "Charge: [round(100.0*nutrition/I.maxcharge)]%")
+				stat(null, "Operating temp: [round(bodytemperature-T0C)]&deg;C")
 		if(internal)
 			if(!internal.air_contents)
 				qdel(internal)

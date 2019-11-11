@@ -90,7 +90,7 @@ var/global/list/spawned_surprises = list()
 	var/list/turfs = null
 
 
-	turfs = get_area_turfs(/area/mine/unexplored)
+	turfs = get_area_turfs(/area/asteroid/mine/unexplored)
 
 	if(!turfs.len)
 		return 0
@@ -112,7 +112,7 @@ var/global/list/spawned_surprises = list()
 		surroundings += range(7, locate(T.x,T.y+size,T.z))
 		surroundings += range(7, locate(T.x+size,T.y+size,T.z))
 
-		if(locate(/area/mine/explored) in surroundings)			// +5s are for view range
+		if(locate(/area/asteroid/mine/explored) in surroundings)			// +5s are for view range
 			valid = 0
 			continue
 

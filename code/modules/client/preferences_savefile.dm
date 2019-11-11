@@ -160,7 +160,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
 	aooccolor		= sanitize_hexcolor(aooccolor, initial(aooccolor))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
-	UI_style		= sanitize_inlist(UI_style, list("White", "Midnight","Orange","old"), initial(UI_style))
+	UI_style		= sanitize_inlist(UI_style, global.available_ui_styles, global.available_ui_styles[1])
 	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
 	toggles		= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
@@ -297,6 +297,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["be_role"]			>> be_role
 	S["player_alt_titles"]	>> player_alt_titles
 	S["organ_data"]			>> organ_data
+	S["ipc_head"]			>> ipc_head
 	S["gear"]				>> gear
 	S["custom_items"]		>> custom_items
 
@@ -368,6 +369,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(!player_alt_titles) player_alt_titles = new()
 	if(!organ_data) src.organ_data = list()
+	if(!ipc_head) src.ipc_head = "Default"
 	if(!be_role) src.be_role = list()
 
 	if(!home_system) home_system = "None"
@@ -484,6 +486,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["be_role"]			<< be_role
 	S["player_alt_titles"]		<< player_alt_titles
 	S["organ_data"]			<< organ_data
+	S["ipc_head"]			<< ipc_head
 	S["gear"]				<< gear
 	S["custom_items"]		<< custom_items
 

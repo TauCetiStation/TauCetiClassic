@@ -539,7 +539,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /*****************************Survival Pod********************************/
 
 
-/area/survivalpod
+/area/custom/survivalpod
 	name = "\improper Emergency Shelter"
 	icon_state = "away"
 	requires_power = 0
