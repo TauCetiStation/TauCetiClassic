@@ -6,12 +6,9 @@
 	if(istype(src.loc, /obj/item/alien_embryo))
 		sleeping = 5
 
-	update_progression()
-
 	..()
 
-/mob/living/carbon/alien/larva/proc/update_progression()
-	if(stat != DEAD)
+	if(stat != DEAD && !IS_IN_STASIS(src)) // not dead and not in stasis
 		if(amount_grown < max_grown)
 			amount_grown++
 
