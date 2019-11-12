@@ -642,9 +642,9 @@
 	..()
 	if(istype(M, /mob/living/carbon) && M.stat != DEAD)
 		to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
-		if(M.monkeyizing)
+		if(M.notransform)
 			return
-		M.monkeyizing = 1
+		M.notransform = TRUE
 		M.canmove = 0
 		M.icon = null
 		M.overlays.Cut()
