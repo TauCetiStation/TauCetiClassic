@@ -116,17 +116,9 @@
 			UI_style_alpha = UI_style_alpha_new
 
 		if("ui")
-			switch(UI_style)
-				if("White")
-					UI_style = "Midnight"
-				if("Midnight")
-					UI_style = "Orange"
-				if("Orange")
-					UI_style = "old"
-				if("old")
-					UI_style = "White"
-				else
-					UI_style = "White"
+			var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style) as null|anything in sortList(global.available_ui_styles)
+			if(pickedui)
+				UI_style = pickedui
 
 		if("parallaxup")
 			parallax = WRAP(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)

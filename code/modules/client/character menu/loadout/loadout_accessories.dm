@@ -96,3 +96,7 @@
 /datum/gear/accessory/gold_collar
 	display_name = "Gold Collar"
 	path = /obj/item/clothing/mask/tie/collar2
+
+/datum/gear/accessory/holy
+	display_name = "Holy Cross"
+	path = /obj/item/clothing/accessory/holy

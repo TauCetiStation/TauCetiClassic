@@ -61,10 +61,15 @@
 	var/chem_nullify_debuff = FALSE
 	if(!species.flags[NO_BLOOD] && (reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")))
 		chem_nullify_debuff = TRUE
+	
+	if(wear_suit && wear_suit.slowdown && !species.flags[IS_SYNTHETIC] && !(wear_suit.slowdown > 0 && chem_nullify_debuff))
+		tally += wear_suit.slowdown
+			
+	if(back && back.slowdown && !(back.slowdown > 0 && chem_nullify_debuff))
+		tally += back.slowdown
 
-	for(var/obj/item/I in list(wear_suit, back, shoes))
-		if(!(I.slowdown > 0 && chem_nullify_debuff))
-			tally += I.slowdown
+	if(shoes && shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
+		tally += shoes.slowdown
 
 	if(!chem_nullify_debuff)
 		for(var/x in list(l_hand, r_hand))

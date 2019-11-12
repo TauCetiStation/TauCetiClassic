@@ -248,7 +248,7 @@
 			var/obj/screen/alert/host_alert = host.alerts[alert]
 			if(length(host_alert.overlays) > 0)
 				continue
-			var/obj/screen/alert/new_alert = throw_alert(alert)
+			var/obj/screen/alert/new_alert = throw_alert(alert, host_alert.type)
 			if(new_alert)
 				new_alert.icon_state = host_alert.icon_state
 

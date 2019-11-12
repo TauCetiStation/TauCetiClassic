@@ -487,7 +487,7 @@
 		if(suiciding)
 			adjustOxyLoss(2)//If you are suiciding, you should die a little bit faster
 			failed_last_breath = 1
-			throw_alert("oxy")
+			throw_alert("oxy", /obj/screen/alert/oxy)
 			return 0
 		if(health > config.health_threshold_crit)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
@@ -496,7 +496,7 @@
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 			failed_last_breath = 1
 
-		throw_alert("oxy")
+		throw_alert("oxy", /obj/screen/alert/oxy)
 
 		return 0
 
@@ -534,7 +534,7 @@
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			failed_last_breath = 1
 
-		throw_alert("oxy")
+		throw_alert("oxy", /obj/screen/alert/oxy)
 
 	else
 		// We're in safe limits
@@ -580,7 +580,7 @@
 		if(reagents)
 			reagents.add_reagent("toxin", CLAMP(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 		breath.adjust_gas(species.poison_type, -poison / 6, update = FALSE) //update after
-		throw_alert("tox_in_air")
+		throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
 	else
 		clear_alert("tox_in_air")
 
@@ -703,28 +703,28 @@
 	if(bodytemperature > species.heat_level_1)
 		//Body temperature is too hot.
 		if(bodytemperature > species.heat_level_3)
-			throw_alert("temp","hot",3)
+			throw_alert("temp", /obj/screen/alert/hot, 3)
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
 		else if(bodytemperature > species.heat_level_2)
 			if(on_fire)
-				throw_alert("temp","hot",3)
+				throw_alert("temp", /obj/screen/alert/hot, 3)
 				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
 			else
-				throw_alert("temp","hot",2)
+				throw_alert("temp", /obj/screen/alert/hot, 2)
 				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_2, used_weapon = "High Body Temperature")
 		else
-			throw_alert("temp","hot",1)
+			throw_alert("temp", /obj/screen/alert/hot, 1)
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
 	else if(bodytemperature < species.cold_level_1)
 		if(!istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 			if(bodytemperature < species.cold_level_3)
-				throw_alert("temp","cold",3)
+				throw_alert("temp", /obj/screen/alert/cold, 3)
 				take_overall_damage(burn=COLD_DAMAGE_LEVEL_3, used_weapon = "Low Body Temperature")
 			else if(bodytemperature < species.cold_level_2)
-				throw_alert("temp","cold",2)
+				throw_alert("temp", /obj/screen/alert/cold, 2)
 				take_overall_damage(burn=COLD_DAMAGE_LEVEL_2, used_weapon = "Low Body Temperature")
 			else
-				throw_alert("temp","cold",1)
+				throw_alert("temp", /obj/screen/alert/cold, 1)
 				take_overall_damage(burn=COLD_DAMAGE_LEVEL_1, used_weapon = "Low Body Temperature")
 		else
 			clear_alert("temp")
@@ -745,15 +745,15 @@
 	if(adjusted_pressure >= species.hazard_high_pressure)
 		var/pressure_damage = min( ( (adjusted_pressure / species.hazard_high_pressure) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE)
 		take_overall_damage(brute=pressure_damage, used_weapon = "High Pressure")
-		throw_alert("pressure","highpressure",2)
+		throw_alert("pressure", /obj/screen/alert/highpressure, 2)
 	else if(adjusted_pressure >= species.warning_high_pressure)
-		throw_alert("pressure","highpressure",1)
+		throw_alert("pressure", /obj/screen/alert/highpressure, 1)
 	else if(adjusted_pressure >= species.warning_low_pressure)
 		clear_alert("pressure")
 	else if(adjusted_pressure >= species.hazard_low_pressure)
-		throw_alert("pressure","lowpressure",1)
+		throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 	else
-		throw_alert("pressure","lowpressure",2)
+		throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 		apply_effect(is_in_space ? 15 : 7, AGONY, 0)
 		take_overall_damage(burn=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
 
@@ -1186,7 +1186,7 @@
 			if(halloss > 0)
 				adjustHalLoss(-3)
 		else if(sleeping)
-			throw_alert("asleep")
+			throw_alert("asleep", /obj/screen/alert/asleep)
 			speech_problem_flag = 1
 			handle_dreams()
 			adjustHalLoss(-3)
@@ -1497,17 +1497,17 @@
 
 		switch(get_nutrition())
 			if(NUTRITION_LEVEL_FULL to INFINITY)
-				throw_alert("nutrition","fat")
+				throw_alert("nutrition", /obj/screen/alert/fat)
 			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-				throw_alert("nutrition", "full")
+				throw_alert("nutrition", /obj/screen/alert/full)
 			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-				throw_alert("nutrition", "well_fed")
+				throw_alert("nutrition", /obj/screen/alert/well_fed)
 			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-				throw_alert("nutrition", "fed")
+				throw_alert("nutrition", /obj/screen/alert/fed)
 			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-				throw_alert("nutrition","hungry")
+				throw_alert("nutrition", /obj/screen/alert/hungry)
 			else
-				throw_alert("nutrition","starving")
+				throw_alert("nutrition", /obj/screen/alert/starving)
 
 		if(pressure)
 			pressure.icon_state = "pressure[pressure_alert]"

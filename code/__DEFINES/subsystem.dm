@@ -50,6 +50,7 @@
 #define SS_PRIOTITY_ICON_SMOOTH   35
 #define SS_PRIORITY_SPACEDRIFT    30
 #define SS_PRIORITY_THROWING      25
+#define SS_PRIORITY_FASTPROCESS   25
 #define SS_PRIORITY_AIR           20
 #define SS_PRIORITY_FLUIDS        20
 #define SS_PRIORITY_GARBAGE       15
@@ -64,6 +65,7 @@
 #define SS_WAIT_LIGHTING      2
 #define SS_WAIT_PARALAX       2
 #define SS_WAIT_ORBIT         2
+#define SS_WAIT_FASTPROCESS   2
 #define SS_WAIT_FLUIDS        3
 #define SS_WAIT_GARBAGE       5
 #define SS_WAIT_SPACEDRIFT    5

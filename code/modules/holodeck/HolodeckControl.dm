@@ -143,7 +143,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/HolodeckControl/atom_init_late()
-	linkedholodeck = locate(/area/holodeck/alphadeck)
+	linkedholodeck = locate(/area/station/civilian/holodeck/alphadeck)
 
 //This could all be done better, but it works for now.
 /obj/machinery/computer/HolodeckControl/Destroy()
