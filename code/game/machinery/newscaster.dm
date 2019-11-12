@@ -142,6 +142,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		// 21 = need more paper
 		// 22 = ERROR: Cannot create comment
 		// 23 = all comment
+		// 24 = all comment for security
 		//Holy shit this is outdated, made this when I was still starting newscasters :3
 	var/paper_remaining = 0
 	var/securityCaster = 0
@@ -385,7 +386,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 							dat+="<FONT SIZE=1>[((src.scanned_user in MESSAGE.voters) || (src.scanned_user == "Unknown")) ? ("<img src=like_clck.png>") : ("<A href='?src=\ref[src];setLike=\ref[MESSAGE]'><img src=like.png></A>")]: <FONT SIZE=2>[MESSAGE.likes]</FONT> \
 											   [((src.scanned_user in MESSAGE.voters) || (src.scanned_user == "Unknown")) ? ("<img src=dislike_clck.png>") : ("<A href='?src=\ref[src];setDislike=\ref[MESSAGE]'><img src=dislike.png></A>")]: <FONT SIZE=2>[MESSAGE.dislikes]</FONT></FONT>"
 
-							dat+="<A href='?src=\ref[src];open_pages=\ref[MESSAGE]'><B>Open Comments</B></A><HR>"
+							dat+="<BR><A href='?src=\ref[src];open_pages=\ref[MESSAGE]'><B>Open Comments</B></A><HR>"
 
 				dat+="<A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
@@ -424,13 +425,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 						dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 						dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.body == "\[REDACTED\]") ? ("Undo story censorship") : ("Censor story")]</A>  -\
 						                   <A href='?src=\ref[src];censor_channel_story_author=\ref[MESSAGE]'> [(MESSAGE.author == "\[REDACTED\]") ? ("Undo Author censorship") : ("Censor message Author")]</A></FONT><BR>"
-						dat+="<HR><B>All Comments:</B><B><FONT SIZE=2><A href='?src=\ref[src];locked_comments=1'>[(src.viewing_channel.lock_comments) ? ("Unlock") : ("Lock")]</A></B></FONT><BR>"
-						/*for(var/datum/message_comment/COMMENT in MESSAGE.comments)
-							dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
-							dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_author_comment=\ref[COMMENT]'>[(COMMENT.author == "\[REDACTED\]") ? ("Undo Author censorship") : ("Censor Author")]</A></FONT><BR>"
-							dat+="-<FONT SIZE=3>[COMMENT.body]</FONT><BR>"
-							dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_body_comment=\ref[COMMENT]'>[(COMMENT.body == "\[REDACTED\]") ? ("Undo comment censorship") : ("Censor comment")]</A></FONT><BR><HR>"
-							*/
+						dat+="<HR><A href='?src=\ref[src];open_censor_pages=\ref[MESSAGE]'><B>Open Comments</B></A> - <B><FONT SIZE=2><A href='?src=\ref[src];locked_comments=1'>[(src.viewing_channel.lock_comments) ? ("Unlock") : ("Lock")]</A></B></FONT><BR><HR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[10]'>Back</A>"
 			if(13)
 				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>"
@@ -510,15 +505,17 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				if(src.scanned_user == "Unknown")
 					dat+="<FONT COLOR='maroon'>Invalid name.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Return</A><BR>"
-			if(23)
+			if(23) 
 				dat+="<B>Story ([src.viewing_message.body])</B><HR>"
 				var/datum/feed_message/MESSAGE = src.viewing_message
-				dat+="Number of Comments - [(MESSAGE.count_comments != 0) ? ("([MESSAGE.count_comments])") : ("")]"
+				dat+="Number of Comments - [MESSAGE.count_comments]<BR>"
 				if(!src.viewing_channel.lock_comments)
-					dat+="<BR><B><A href='?src=\ref[src];leave_a_comment=\ref[MESSAGE]'>Leave a comment</A></B><HR>"
+					dat+="<B><A href='?src=\ref[src];leave_a_comment=\ref[MESSAGE]'>Leave a comment</A></B>"
 				else
-					dat+="<B><FONT SIZE=3>Comments are closed!</FONT></B><HR>"
+					dat+="<B><FONT SIZE=3>Comments are closed!</FONT></B>"
 				var/datum/comment_pages/PAGE = src.current_page
+				if(PAGE.comments.len != 0) //perfecto
+					dat+="<HR>"
 				for(var/datum/message_comment/COMMENT in PAGE.comments)
 					dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
 					dat+="-<FONT SIZE=3>[COMMENT.body]</FONT><BR>"
@@ -526,9 +523,25 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<HR>"
 				for(var/datum/comment_pages/PAGES in MESSAGE.pages)
 					i++ 
-					dat+="[(src.current_page != PAGES) ? ("<A href='?src=\ref[src];next_page=\ref[PAGES]'> [i]</A>") : (" [i]")]<HR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[9]'>Return</A><BR>"
-				dat+="<A href='?src=\ref[src];refresh=1'>Refresh</A>"
+					dat+="[(src.current_page != PAGES) ? ("<A href='?src=\ref[src];next_page=\ref[PAGES]'> [i]</A>") : (" [i]")]"
+				dat+="<HR><A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
+				dat+="<A href='?src=\ref[src];setScreen=[9]'>Return</A>"
+			if(24) 
+				dat+="<B>Story ([src.viewing_message.body])</B><HR>"
+				var/datum/feed_message/MESSAGE = src.viewing_message
+				dat+="Number of Comments - [MESSAGE.count_comments]<HR>"
+				var/datum/comment_pages/PAGE = src.current_page
+				for(var/datum/message_comment/COMMENT in PAGE.comments)
+					dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
+					dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_author_comment=\ref[COMMENT]'>[(COMMENT.author == "\[REDACTED\]") ? ("Undo Author censorship") : ("Censor Author")]</A></FONT><BR>"
+					dat+="-<FONT SIZE=3>[COMMENT.body]</FONT><BR>"
+					dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_body_comment=\ref[COMMENT]'>[(COMMENT.body == "\[REDACTED\]") ? ("Undo comment censorship") : ("Censor comment")]</A></FONT><BR><HR>"
+				var/i = 0
+				for(var/datum/comment_pages/PAGES in MESSAGE.pages)
+					i++ 
+					dat+="[(src.current_page != PAGES) ? ("<A href='?src=\ref[src];next_censor_page=\ref[PAGES]'> [i]</A>") : (" [i]")]"
+				dat+="<HR><A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
+				dat+="<A href='?src=\ref[src];setScreen=[10]'>Return</A>"
 			else
 				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com | If (break (likes/dislikes) or (system of commenting)) then report this bug in tauceti github "
 
@@ -799,17 +812,26 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		FM.voters += src.scanned_user
 		FM.dislikes += 1
 
-	else if(href_list["open_pages"])
+	else if(href_list["open_pages"]) //page with comments for assistants
 		var/datum/feed_message/FM = locate(href_list["open_pages"])
-		src.screen = 23
 		src.viewing_message = FM
-		for(var/datum/comment_pages/CP in FM.pages)
-			src.current_page = CP
-			break
+		src.current_page = FM.pages[1]
+		src.screen = 23
+
+	else if(href_list["open_censor_pages"]) //page with comments for security
+		var/datum/feed_message/FM = locate(href_list["open_censor_pages"])
+		src.viewing_message = FM
+		src.current_page = FM.pages[1]
+		src.screen = 24
 
 	else if(href_list["next_page"])
 		var/datum/comment_pages/CP = locate(href_list["next_page"])
 		src.screen = 23
+		src.current_page = CP
+
+	else if(href_list["next_censor_page"])
+		var/datum/comment_pages/CP = locate(href_list["next_censor_page"])
+		src.screen = 24
 		src.current_page = CP
 
 	else if(href_list["leave_a_comment"])
