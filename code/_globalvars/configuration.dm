@@ -6,7 +6,7 @@ var/join_test_merge = null
 var/station_name = "NSS Exodus"
 var/system_name = "Tau Ceti"
 var/game_version = "TauCetiStation"
-var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 544)
+var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 200)
 var/changelog_hash = ""
 
 var/list/donators = list()
