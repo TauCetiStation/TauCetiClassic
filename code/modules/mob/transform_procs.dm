@@ -58,7 +58,7 @@
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if(H.species && !H.species.primitive) //If the creature in question has no primitive set, this is going to be messy.
+		if(!H.species.primitive) //If the creature in question has no primitive set, this is going to be messy.
 			gib()
 			return
 		O = new H.species.primitive(loc)
