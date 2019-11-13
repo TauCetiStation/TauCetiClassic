@@ -1,5 +1,5 @@
 /mob/living/proc/add_quirk(quirk, spawn_effects)
-	if(has_trait(quirk))
+	if(HAS_TRAIT(src, quirk))
 		return
 	if(!SSquirks || !SSquirks.quirks[quirk])
 		return
