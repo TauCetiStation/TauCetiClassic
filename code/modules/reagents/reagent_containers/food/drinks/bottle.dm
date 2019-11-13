@@ -11,7 +11,6 @@
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	var/is_glass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
-
 	var/stop_spin_bottle = FALSE //Gotta stop the rotation.
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/atom_init()
@@ -55,7 +54,6 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/pickup(mob/living/user)
 	animate(src, transform = null, time = 0) //Restore bottle to its original position
-
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
 
@@ -172,10 +170,87 @@
 		I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 		BB.icon = I
 		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-		new /obj/item/weapon/shard(loc)
 		if(reagents && reagents.total_volume)
 			src.reagents.reaction(loc, TOUCH)
-		qdel(src)
+	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov
+	name = "Molotov Cocktail"
+	desc = "Throw and run!"
+	w_class = ITEM_SIZE_SMALL
+	icon = 'icons/obj/makeshift.dmi'
+	icon_state = "molotov_preview"
+	force = 9.0
+	throwforce = 6.0
+	throw_speed = 4
+	throw_range = 6
+	item_state = "beer"
+	attack_verb = list("attacked")
+	sharp = 0
+	edge = 0
+	is_transparent = 1
+	is_glass = 1
+	volume = 100
+	var/active = 0
+	var/bottle_icon
+	var/bottle_icon_state
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/weapon/W, mob/living/user)
+	. = ..()
+	if(active && reagents.total_volume)
+		return
+	var/is_W_lit = FALSE
+	if(istype(W, /obj/item/weapon/match))
+		var/obj/item/weapon/match/O = W
+		if(O.lit)
+			is_W_lit = TRUE
+	else if(istype(W, /obj/item/weapon/lighter))
+		var/obj/item/weapon/lighter/O = W
+		if(O.lit)
+			is_W_lit = TRUE
+	else if(iswelder(W))
+		var/obj/item/weapon/weldingtool/O = W
+		if(O.welding)
+			is_W_lit = TRUE
+	if(!is_W_lit)
+		return
+	else
+		return
+	user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
+	active = 1
+	update_icon()
+	add_fingerprint(user)
+	if(iscarbon(user) && istype(user.get_active_hand(), src))
+		var/mob/living/carbon/C = user
+		C.throw_mode_on()
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/after_throw(datum/callback/callback)
+	if(active)
+		/turf/proc/create_fire
+			. = ..()
+	else
+		return
+	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/CheckParts(list/parts_list)
+	..()
+	for(var/obj/item/I in contents)
+		if(istype(I, /obj/item/weapon/reagent_containers/food/drinks/bottle))
+			bottle_icon = I.icon
+			bottle_icon_state = I.icon_state
+		update_icon()
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/update_icon()
+	..()
+	var/list/overlays_list = list('icons/obj/drinks.dmi', "molotov_rag", "molotov_active")
+	icon = bottle_icon
+	icon_state = bottle_icon_state
+	overlays_list += image('icons/obj/drinks.dmi', "molotov_rag")
+	overlays = overlays_list
+	if (active == 1)
+		overlays += image('icons/obj/makeshift.dmi', "molotov_active")
+	else
+		return
 
 
 //Keeping this here for now, I'll ask if I should keep it here.
@@ -449,4 +524,7 @@
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
 
-
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/atom_init()
+	reagents.add_reagent("fuel", 100)
+	pixel_x = rand(-10.0, 10)
+	pixel_y = rand(-10.0, 10)
