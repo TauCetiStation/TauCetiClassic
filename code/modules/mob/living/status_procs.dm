@@ -13,5 +13,5 @@
 		qdel(T)
 		return TRUE
 
-/mob/living/proc/has_quirk(quirk)
-	return roundstart_quirks[quirk]
+/mob/living/proc/has_quirk(quirktype)
+	return roundstart_quirks[quirktype]

@@ -30,7 +30,7 @@
 	return BP && BP.open == 1 && target.op_stage.lipoplasty == 0
 
 /datum/surgery_step/lipoplasty/cut_fat/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!HAS_TRAIT(target, TRAIT_FAT))
+	if(!target.has_quirk(/datum/quirk/fatness))
 		user.visible_message("[user] begins to cut away [target]'s excess fat with \the [tool].",
 			"You begin to cut away [target]'s excess fat with \the [tool].")
 		if (target.overeatduration > 0)
@@ -41,7 +41,7 @@
 	..()
 
 /datum/surgery_step/lipoplasty/cut_fat/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!HAS_TRAIT(target, TRAIT_FAT))
+	if(!target.has_quirk(/datum/quirk/fatness))
 		if (target.overeatduration > 0)
 			user.visible_message("<span class='notice'>[user] cuts [target]'s excess fat loose with \the [tool].</span>",
 				"<span class='notice'>You have cut [target]'s excess fat loose with \the [tool].</span>")

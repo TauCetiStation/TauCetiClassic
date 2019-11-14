@@ -22,7 +22,7 @@
 	if(RUN in mutations)
 		tally -= 0.5
 
-	if(FAT in mutations)
+	if(HAS_TRAIT(src, TRAIT_FAT))
 		tally += 1.5
 
 	if(crawling)

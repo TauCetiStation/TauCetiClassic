@@ -77,3 +77,4 @@
 
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
+#define OBESITY_TRAIT      "obesity"

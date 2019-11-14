@@ -105,8 +105,9 @@
 	var/mutations = owner ? owner.mutations : list()
 	var/fat
 	var/g
-	if(body_zone == BP_CHEST)
-		fat = (FAT in mutations) ? "fat" : null
+
+	if(body_zone == BP_CHEST && owner)
+		fat = HAS_TRAIT(owner, TRAIT_FAT) ? "fat" : null
 	if(body_zone in list(BP_CHEST, BP_GROIN, BP_HEAD))
 		g = (gender == FEMALE ? "f" : "m")
 
