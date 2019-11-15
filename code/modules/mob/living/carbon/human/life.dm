@@ -1485,7 +1485,7 @@
 					if(icon_num)
 						healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]")
 
-		if(nutrition_icon)
+		if(nutrition_icon && !species.flags[IS_SYNTHETIC])
 			switch(get_nutrition())
 				if(NUTRITION_LEVEL_FULL to INFINITY)
 					nutrition_icon.icon_state = "fat"
@@ -1502,13 +1502,13 @@
 		else
 			if(HUD_STYLE_STANDARD)
 				client.screen -= internals
-        client.screen -= nutrition_icon
+        		client.screen -= nutrition_icon
 			if(HUD_STYLE_REDUCED)
 				client.screen -= internals
-        client.screen -= nutrition_icon
+        		client.screen -= nutrition_icon
 			if(HUD_STYLE_NOHUD)
 				client.screen -= internals
-        client.screen -= nutrition_icon
+        		client.screen -= nutrition_icon
 
 		if(pressure)
 			pressure.icon_state = "pressure[pressure_alert]"
