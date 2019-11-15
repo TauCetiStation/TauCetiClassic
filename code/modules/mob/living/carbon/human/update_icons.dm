@@ -364,7 +364,8 @@ Please contact me on #coderbus IRC. ~Carn x
 //For legacy support.
 /mob/living/carbon/human/regenerate_icons()
 	..()
-	if(monkeyizing)		return
+	if(notransform)
+		return
 	update_hair()
 	update_mutations()
 	update_mutantrace()
