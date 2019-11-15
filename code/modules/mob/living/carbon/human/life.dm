@@ -351,17 +351,7 @@
 						BP.add_autopsy_data("Radiation Poisoning", damage)
 
 /mob/living/carbon/human/proc/breathe()
-	if(NO_BREATH in src.mutations)
-		return //#Z2 We need no breath with this mutation
-	if(reagents.has_reagent("lexorin"))
-		return
-	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return
-	if(species && (species.flags[NO_BREATHE] || species.flags[IS_SYNTHETIC]))
-		return
-	if(dna && dna.mutantrace == "adamantine")
-		return
-	if(ismob(loc))
+	if(!need_breathe()) 
 		return
 
 	var/datum/gas_mixture/environment = loc.return_air()

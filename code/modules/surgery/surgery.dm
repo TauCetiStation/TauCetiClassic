@@ -41,7 +41,7 @@
 /datum/surgery_step/proc/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if(can_infect && BP)
-		spread_germs_to_organ(BP, user)
+		spread_germs_to_organ(BP, user, tool)
 	if(ishuman(user) && prob(60))
 		var/mob/living/carbon/human/H = user
 		if(blood_level)
@@ -58,15 +58,26 @@
 /datum/surgery_step/proc/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return null
 
-/proc/spread_germs_to_organ(obj/item/organ/external/BP, mob/living/carbon/human/user)
+/proc/spread_germs_to_organ(obj/item/organ/external/BP, mob/living/carbon/human/user, obj/item/tool)
 	if(!istype(user) || !istype(BP))
 		return
 
-	var/germ_level = user.germ_level
+	var/germ_level = 0
 	if(user.gloves)
-		germ_level = user.gloves.germ_level
+		germ_level += user.gloves.germ_level
+	else 
+		germ_level += user.germ_level
 
-	BP.germ_level = max(germ_level, BP.germ_level) //as funny as scrubbing microbes out with clean gloves is - no.
+	if(tool.blood_DNA && tool.blood_DNA.len) //germs from blood-stained tools
+		germ_level += GERM_LEVEL_AMBIENT * 0.25
+
+	for(var/mob/living/carbon/human/H in view(2, BP.owner.loc)) //germs from people
+		if(isturf(H.loc))
+			if(AStar(BP.owner.loc, BP.owner.loc, /turf/proc/Distance, 2))
+				if(H.need_breathe() && !H.wear_mask) //wearing a mask helps preventing people from breathing cooties into open incisions
+					germ_level += H.germ_level * 0.25
+
+	BP.germ_level = max(germ_level, BP.germ_level)
 	if(BP.germ_level)
 		BP.owner.bad_bodyparts |= BP
 
