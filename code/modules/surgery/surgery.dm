@@ -71,11 +71,8 @@
 	if(tool.blood_DNA && tool.blood_DNA.len) //germs from blood-stained tools
 		germ_level += GERM_LEVEL_AMBIENT * 0.25
 
-	for(var/mob/living/carbon/human/H in view(2, BP.owner.loc)) //germs from people
-		if(isturf(H.loc))
-			if(AStar(BP.owner.loc, BP.owner.loc, /turf/proc/Distance, 2))
-				if(H.need_breathe() && !H.wear_mask) //wearing a mask helps preventing people from breathing cooties into open incisions
-					germ_level += H.germ_level * 0.25
+	if(ishuman(user) && user.need_breathe() && !user.wear_mask) //wearing a mask helps preventing people from breathing germs into open incisions
+		germ_level += user.germ_level * 0.25
 
 	BP.germ_level = max(germ_level, BP.germ_level)
 	if(BP.germ_level)
