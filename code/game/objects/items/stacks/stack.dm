@@ -198,6 +198,9 @@
 	return istype(loc, /obj/item/weapon/robot_module) || istype(loc, /mob/living/silicon)
 
 /obj/item/stack/use(used, transfer = FALSE)
+	if(used < 0)
+		stack_trace("[src.type]/use() called with a negative parameter [used]")
+		return FALSE
 	if(zero_amount())
 		return FALSE
 	if(amount < used)
