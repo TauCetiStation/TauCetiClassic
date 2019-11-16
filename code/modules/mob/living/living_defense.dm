@@ -222,7 +222,7 @@
 	if(on_fire && fire_stacks <= 0)
 		ExtinguishMob()
 
-/mob/living/proc/spreadFire(mob/living/L)
+/mob/living/proc/SpreadFire(mob/living/L)
 	if(!istype(L))
 		return
 

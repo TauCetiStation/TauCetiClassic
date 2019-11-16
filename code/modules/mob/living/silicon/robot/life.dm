@@ -316,8 +316,7 @@
 
 //Robots on fire
 /mob/living/silicon/robot/handle_fire()
-	. = ..()
-	if(.) //if the mob isn't on fire anymore
+	if(..())
 		return
 	if(fire_stacks > 0)
 		fire_stacks--

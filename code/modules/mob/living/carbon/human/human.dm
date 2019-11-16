@@ -590,8 +590,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
 		MB.RunOver(src)	
+	SpreadFire(AM)
 	. = ..()
-	spreadFire(AM)
 
 // Get rank from ID, ID inside PDA, PDA, ID in wallet, etc.
 /mob/living/carbon/human/proc/get_authentification_rank(if_no_id = "No id", if_no_job = "No job")

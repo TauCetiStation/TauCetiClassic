@@ -499,14 +499,11 @@
 			else
 				throw_alert("pressure","lowpressure",1)
 
-//FIRE CODE
 /mob/living/carbon/ian/handle_fire()
-	. = ..()
-	if(.) //if the mob isn't on fire anymore
+	if(..())
 		return
 	adjustFireLoss(6)
 	return
-//END FIRE CODE
 
 /mob/living/carbon/ian/calculate_affecting_pressure(pressure)
 	..()

@@ -236,8 +236,7 @@
 
 ///FIRE CODE
 /mob/living/carbon/alien/handle_fire()
-	. = ..()
-	if(.) //if the mob isn't on fire anymore
+	if(..())
 		return
 	adjustFireLoss(6)
 	return
