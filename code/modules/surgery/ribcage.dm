@@ -730,3 +730,8 @@
 	user.drop_item()
 	var/obj/item/organ/internal/accum = target.organs_by_name[O_LIVER]
 	tool.forceMove(accum)
+
+	var/obj/item/weapon/stock_parts/cell/C = tool
+
+	if (target.nutrition > C.maxcharge)
+		target.nutrition = C.maxcharge
