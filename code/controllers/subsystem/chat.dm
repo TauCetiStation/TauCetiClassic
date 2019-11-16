@@ -32,7 +32,6 @@ var/datum/subsystem/chat/SSchat
 	if(target == world)
 		target = clients
 
-	var/original_message = message
 	//Some macros remain in the string even after parsing and fuck up the eventual output
 	message = replacetext(message, "\improper", "")
 	message = replacetext(message, "\proper", "")
