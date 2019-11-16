@@ -97,7 +97,7 @@
 		var/obj/item/weapon/implant/I = locate(href_list["Shock"])
 		if((I)&&(I.imp_in))
 			if(lastUsing + SHOCK_COOLDOWN > world.time)
-				to_chat(usr, "It isn't readying to use now.")
+				to_chat(usr, "It isn't ready to use.")
 			else
 				var/mob/living/carbon/R = I.imp_in
 				log_game("<span class='notice'> [key_name_admin(R)] was shocked with tracking implant by [key_name_admin(usr)]!</span>")
