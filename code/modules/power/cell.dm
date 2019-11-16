@@ -59,34 +59,33 @@
 
 /obj/item/weapon/stock_parts/cell/attack_self(mob/user)
 	src.add_fingerprint(user)
-	if(user.is_busy())
-		return
 		
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
-		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
+
 		var/obj/item/clothing/gloves/space_ninja/SNG = H.gloves
 		if(istype(SNG) && SNG.candrain && !SNG.draining)
 			SNG.drain("CELL",src,H.wear_suit)
 			
-		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == I_GRAB && C)
+		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == I_GRAB)
+			var/obj/item/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
+			var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
 			user.SetNextMove(CLICK_CD_MELEE)
-			if(charge > 0)
-				if (do_after(user,30,target = src))
-					var/drain = 0
-					drain = C.maxcharge-H.nutrition
-					if(drain>src.charge)
-						drain = src.charge
-					if(H.nutrition>C.maxcharge*0.9)
-						to_chat(user, "<span class='warning'>Procedure interrupted. Charge maxed.</span>")
+			if(C)
+				if(charge > 0)
+					if (do_after(user,30,target = src))
+						var/drain = C.maxcharge-H.nutrition
+						if(drain>src.charge)
+							drain = src.charge
+						if(H.nutrition>C.maxcharge*0.9)
+							to_chat(user, "<span class='warning'>Procedure interrupted. Charge maxed.</span>")
+						else
+							H.nutrition += src.use(drain)*0.5
+							to_chat(user, "<span class='notice'>Energy gained from the cell.</span>")
 					else
-						H.nutrition += src.use(drain)*0.5
-						to_chat(user, "<span class='notice'>Energy gained from the cell.</span>")
+						to_chat(user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
 				else
-					to_chat(user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
-			else
-				to_chat(user, "<span class='warning'>This cell is empty and of no use.</span>")
+					to_chat(user, "<span class='warning'>This cell is empty and of no use.</span>")
 			
 /obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user)
 	..()
