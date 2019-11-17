@@ -57,7 +57,7 @@
 	user.visible_message("<span class='red'>[user]'s hand slips, cutting [target]'s chest with \the [tool]!</span>",
 		"<span class='red'>Your hand slips, cutting [target]'s chest with \the [tool]!</span>")
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	BP.createwound(CUT, 30)
+	BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/lipoplasty/remove_fat
 	allowed_tools = list(
@@ -109,4 +109,4 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, cutting [target]'s belly with \the [tool]!</span>" , \
 	"<span class='warning'>Your hand slips, cutting [target]'s belly with \the [tool]!</span>" )
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	BP.createwound(CUT, 30)
+	BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, tool)

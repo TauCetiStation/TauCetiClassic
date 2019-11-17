@@ -2,16 +2,19 @@
 	set invisibility = 0
 	//set background = 1
 
-	if(monkeyizing)
+	if(notransform)
 		return
 
 	..()
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
-	if (stat != DEAD) //still "breathing"
+	if (stat != DEAD && !IS_IN_STASIS(src)) //still "breathing"
 		//Mutations and radiation
 		handle_mutations_and_radiation()
+
+		//stuff in the stomach
+		handle_stomach()
 
 		update_icons()
 
@@ -23,9 +26,6 @@
 
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
-
-	//stuff in the stomach
-	handle_stomach()
 
 	//Handle being on fire
 	handle_fire()
