@@ -439,9 +439,6 @@
 			flick(src.icon_deny, src)
 			return FALSE
 
-		if(!in_range(src, usr) && !isobserver(usr))
-			return FALSE
-
 		var/datum/data/vending_product/R = locate(href_list["vend"])
 		if (!R || !istype(R) || !R.product_path || R.amount <= 0)
 			return FALSE

@@ -56,7 +56,7 @@
 
 
 /obj/item/weapon/paper/talisman/supply/Topic(href, href_list)
-	if (!src || usr.incapacitated() || if(!iscultist(user)) || !in_range(src, usr))
+	if (!src || usr.incapacitated() || !iscultist(usr) || !in_range(src, usr))
 		return
 	if(!uses)
 		qdel(src)
