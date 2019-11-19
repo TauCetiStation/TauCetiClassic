@@ -17,7 +17,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				to_chat(usr, "<span class='warning'>You can't hatch here.</span>")
 				usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 				return
-			usr.notransform = 1
+			usr.notransform = TRUE
 			usr.visible_message("<span class='warning'>[usr]'s things suddenly slip off. They hunch over and vomit up a copious amount of purple goo which begins to shape around them!</span>", \
 								"<span class='shadowling'>You remove any equipment which would hinder your hatching and begin regurgitating the resin which will protect you.</span>")
 
@@ -61,7 +61,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			sleep(10)
 			playsound(src, 'sound/effects/ghost.ogg', VOL_EFFECTS_MASTER)
 
-			usr.notransform = 0
+			usr.notransform = FALSE
 
 			to_chat(usr, "<i><b><font size=3>YOU LIVE!!!</i></b></font>")
 
@@ -99,7 +99,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				to_chat(usr, "<span class='warning'>You can't evolve here.</span>")
 				usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 				return
-			usr.notransform = 1
+			usr.notransform = TRUE
 			usr.Stun(34)
 			usr.visible_message("<span class='warning'>[usr] rapidly bends and contorts, their eyes flaring a deep crimson!</span>", \
 								"<span class='shadowling'>You begin unlocking the genetic vault within you and prepare yourself for the power to come.</span>")
@@ -158,7 +158,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				A.real_name = usr.real_name
 			usr.invisibility = 60 //This is pretty bad, but is also necessary for the shuttle call to function properly
 			usr.flags |= GODMODE
-			usr.notransform = 1
+			usr.notransform = TRUE
 			sleep(50)
 			if(!ticker.mode.shadowling_ascended)
 				SSshuttle.incall(0.3)

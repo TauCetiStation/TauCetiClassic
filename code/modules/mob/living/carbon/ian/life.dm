@@ -96,7 +96,7 @@
 					else
 						emote(pick(emote_hear),2)
 
-	if (stat != DEAD)
+	if (stat != DEAD && !IS_IN_STASIS(src))
 		if(SSmob.times_fired%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
 			breathe()
