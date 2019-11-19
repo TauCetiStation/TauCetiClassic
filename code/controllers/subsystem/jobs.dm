@@ -445,8 +445,15 @@ var/datum/subsystem/job/SSjob
 			H.loc = spawn_mark.loc
 		// Moving wheelchair if they have one
 		if(H.buckled && istype(H.buckled, /obj/structure/stool/bed/chair/wheelchair))
-			H.buckled.loc = H.loc
-			H.buckled.dir = H.dir
+			if(rank == "Cyborg")
+				var/obj/structure/stool/bed/chair/wheelchair/W = H.buckled
+				W.buckled_mob = null
+				H.buckled = null
+				H.update_canmove()
+				qdel(W)
+			else
+				H.buckled.loc = H.loc
+				H.buckled.dir = H.dir
 
 	//give them an account in the station database
 	var/datum/money_account/M = create_random_account_and_store_in_mind(H)
