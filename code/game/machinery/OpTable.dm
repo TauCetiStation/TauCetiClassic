@@ -73,30 +73,29 @@
 		return 0
 
 
-/obj/machinery/optable/MouseDrop_T(atom/A, mob/user)
-	if (user.incapacitated())
-		return
-
-	if (iscarbon(A) && (iscarbon(user) || isrobot(user)))
-		var/mob/living/carbon/M = A
-		if (M.buckled)
-			M.buckled.user_unbuckle_mob(user)
-		take_victim(M, user)
+/obj/machinery/optable/MouseDrop_T(obj/O, mob/user)
+	if (ishuman(O) && isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		var/mob/living/carbon/human/M = O
+		if (R.module != null && istype(R.module, /obj/item/weapon/robot_module/surgeon))
+			if (M.buckled)
+				M.buckled.user_unbuckle_mob(R)
+			take_victim(O, R)
 		return
 	
 	if(isrobot(user) || isessence(user))
 		return
 
-	if ((!( istype(A, /obj/item/weapon) ) || user.get_active_hand() != A))
+	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
 
-	var/obj/item/weapon/W = A
+	var/obj/item/weapon/W = O
 	if(!W.canremove || W.flags & NODROP)
 		return
 
 	user.drop_item()
-	if (A.loc != src.loc)
-		step(A, get_dir(A, src))
+	if (O.loc != src.loc)
+		step(O, get_dir(O, src))
 	return
 
 /obj/machinery/optable/proc/check_victim()
