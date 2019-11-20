@@ -248,6 +248,9 @@
 	return FALSE
 
 /obj/item/stack/proc/add(_amount)
+	if(_amount < 0)
+		stack_trace("[src.type]/add() called with a negative parameter [_amount]")
+		return
 	amount += _amount
 	update_icon()
 	update_weight()
