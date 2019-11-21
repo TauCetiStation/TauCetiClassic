@@ -31,7 +31,7 @@
 /mob/living/simple_animal/shiba/regenerate_icons()
 	overlays.Cut()
 	if(facehugger)
-		overlays += image('icons/mob/mask.dmi',"facehugger_corgi")
+		add_overlay(image('icons/mob/mask.dmi',"facehugger_corgi"))
 
 /mob/living/simple_animal/shiba/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/newspaper))

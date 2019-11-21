@@ -58,7 +58,7 @@
 					snow_side.pixel_x += 32
 				if(WEST)
 					snow_side.pixel_x += -32
-			overlays += snow_side
+			add_overlay(snow_side)
 
 /obj/item/snowball
 	name = "snowball"

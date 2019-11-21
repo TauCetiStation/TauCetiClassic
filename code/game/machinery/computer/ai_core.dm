@@ -302,9 +302,9 @@ That prevents a few funky behaviors.
 								T.occupier = A
 								A.control_disabled = 1
 								if (A.stat == DEAD)
-									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-404")
+									T.add_overlay(image('icons/obj/computer.dmi', "ai-fixer-404"))
 								else
-									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
+									T.add_overlay(image('icons/obj/computer.dmi', "ai-fixer-full"))
 								T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-empty")
 								A.cancel_camera()
 								to_chat(A, "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.")
@@ -312,7 +312,7 @@ That prevents a few funky behaviors.
 						else
 							if(!C.contents.len && T.occupier && !T.active)
 								C.name = "inteliCard - [T.occupier.name]"
-								T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
+								T.add_overlay(image('icons/obj/computer.dmi', "ai-fixer-empty"))
 								if (T.occupier.stat == DEAD)
 									C.icon_state = "aicard-404"
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
@@ -341,7 +341,7 @@ That prevents a few funky behaviors.
 								T.occupant = A
 								C.AI = null
 								A.control_disabled = 1
-								T.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
+								T.add_overlay(image('icons/obj/computer.dmi', "ai-fixer-full"))
 								T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-empty")
 								A.cancel_camera()
 								to_chat(A, "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.")
@@ -351,7 +351,7 @@ That prevents a few funky behaviors.
 								if (T.occupant.stat)
 									to_chat(U, "<span class='warning'><b>ERROR</b>:</span> [T.occupant.name] data core is corrupted. Unable to install.")
 								else
-									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
+									T.add_overlay(image('icons/obj/computer.dmi', "ai-fixer-empty"))
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
 									to_chat(T.occupant, "You have been downloaded to a mobile storage device. Still no remote access.")
 									to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [T.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")

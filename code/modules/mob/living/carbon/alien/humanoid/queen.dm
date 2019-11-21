@@ -85,7 +85,7 @@
 	else
 		icon_state = "queen_s"
 	for(var/image/I in overlays_standing)
-		overlays += I
+		add_overlay(I)
 
 /mob/living/carbon/alien/humanoid/queen/movement_delay()
 	return(5 + move_delay_add + config.alien_delay)
@@ -105,4 +105,4 @@
 	else
 		icon_state = "queen_s-old"
 	for(var/image/I in overlays_standing)
-		overlays += I
+		add_overlay(I)

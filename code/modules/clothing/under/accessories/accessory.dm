@@ -23,7 +23,7 @@
 		return
 	has_suit = S
 	loc = has_suit
-	has_suit.overlays += inv_overlay
+	has_suit.add_overlay(inv_overlay)
 
 	if(!silent)
 		to_chat(user, "<span class='notice'>You attach [src] to [has_suit].</span>")

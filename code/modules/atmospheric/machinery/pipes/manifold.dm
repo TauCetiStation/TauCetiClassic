@@ -40,8 +40,8 @@
 	var/obj/machinery/atmospherics/node3 = NODE3
 
 	overlays.Cut()
-	overlays += icon_manager.get_atmos_icon("manifold", , pipe_color, "core" + icon_connect_type)
-	overlays += icon_manager.get_atmos_icon("manifold", , , "clamps" + icon_connect_type)
+	add_overlay(icon_manager.get_atmos_icon("manifold", , pipe_color, "core" + icon_connect_type))
+	add_overlay(icon_manager.get_atmos_icon("manifold", , , "clamps" + icon_connect_type))
 	underlays.Cut()
 
 	var/turf/T = get_turf(src)

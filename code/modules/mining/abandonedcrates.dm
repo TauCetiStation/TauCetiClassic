@@ -77,7 +77,7 @@
 				to_chat(user, "<span class='notice'>The crate unlocks!</span>")
 				locked = 0
 				overlays.Cut()
-				overlays += greenlight
+				add_overlay(greenlight)
 			else if (input == null || input > max || input < min)
 				to_chat(user, "<span class='notice'>You leave the crate alone.</span>")
 			else

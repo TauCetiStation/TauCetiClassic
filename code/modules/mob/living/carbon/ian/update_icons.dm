@@ -12,7 +12,7 @@
 /mob/living/carbon/ian/proc/apply_overlay(index)
 	var/image/I = overlays_inv[index]
 	if(I)
-		overlays += I
+		add_overlay(I)
 
 /mob/living/carbon/ian/proc/remove_overlay(index)
 	if(overlays_inv[index])

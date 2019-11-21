@@ -25,7 +25,7 @@
 	alpha = 255
 
 	overlays.Cut()
-	overlays += icon_manager.get_atmos_icon("pipe", , pipe_color, "cap[icon_connect_type]")
+	add_overlay(icon_manager.get_atmos_icon("pipe", , pipe_color, "cap[icon_connect_type]"))
 
 /obj/machinery/atmospherics/pipe/cap/visible
 	level = PIPE_VISIBLE_LEVEL

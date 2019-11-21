@@ -22,8 +22,8 @@
 			to_chat(user, "<span class='notice'>You put \the [held_container] onto \the [src].</span>")
 			var/image/I = image("icon" = W, "layer" = FLOAT_LAYER, "pixel_y" = 13 * PIXEL_MULTIPLIER)
 			var/image/I2 = image("icon" = src.icon, icon_state ="bunsen_prong", "layer" = FLOAT_LAYER)
-			overlays += I
-			overlays += I2
+			add_overlay(I)
+			add_overlay(I2)
 			if(heating)
 				spawn(heat_time)
 					try_heating()

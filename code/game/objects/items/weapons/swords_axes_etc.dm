@@ -166,7 +166,7 @@
 		I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY)
 		blood_overlay = I
 
-		overlays += blood_overlay
+		add_overlay(blood_overlay)
 
 	return
 

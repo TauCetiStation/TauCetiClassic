@@ -22,8 +22,8 @@
 
 		if(chargelevel != newlevel)
 
-			overlays.Cut()
-			overlays += "ccharger-o[newlevel]"
+			cut_overlays()
+			add_overlay("ccharger-o[newlevel]")
 
 			chargelevel = newlevel
 	else

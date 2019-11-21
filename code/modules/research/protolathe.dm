@@ -151,7 +151,7 @@ Note: Must be placed west/left of and R&D console to function.
 
 	to_chat(user, "<span class='notice'>You add [amount] sheets to the [name].</span>")
 
-	overlays += "protolathe_[stack.name]"
+	add_overlay("protolathe_[stack.name]")
 	sleep(10)
 	overlays -= "protolathe_[stack.name]"
 

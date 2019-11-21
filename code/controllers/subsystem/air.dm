@@ -429,7 +429,7 @@ var/datum/subsystem/air/SSair
 	else
 		tiles_to_update += T
 		#ifdef ZASDBG
-		T.overlays += mark
+		T.add_overlay(mark)
 		#endif
 
 		T.needs_air_update = TRUE

@@ -12,7 +12,7 @@
 	alpha = 255
 
 	overlays.Cut()
-	overlays += icon_manager.get_atmos_icon("pipe", , pipe_color, "universal")
+	add_overlay(icon_manager.get_atmos_icon("pipe", , pipe_color, "universal"))
 	underlays.Cut()
 
 	var/obj/machinery/atmospherics/node1 = NODE1
@@ -50,7 +50,7 @@
 	alpha = 255
 
 	overlays.Cut()
-	overlays += icon_manager.get_atmos_icon("pipe", , pipe_color, "universal")
+	add_overlay(icon_manager.get_atmos_icon("pipe", , pipe_color, "universal"))
 	underlays.Cut()
 
 	var/obj/machinery/atmospherics/node1 = NODE1

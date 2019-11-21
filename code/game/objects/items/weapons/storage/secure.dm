@@ -44,10 +44,10 @@
 		if(istype(W, /obj/item/weapon/melee/energy/blade) && (!src.emagged))
 			emagged = 1
 			user.SetNextMove(CLICK_CD_MELEE)
-			src.overlays += image('icons/obj/storage.dmi', icon_sparking)
+			src.add_overlay(image('icons/obj/storage.dmi', icon_sparking))
 			sleep(6)
 			overlays.Cut()
-			overlays += image('icons/obj/storage.dmi', icon_locking)
+			add_overlay(image('icons/obj/storage.dmi', icon_locking))
 			locked = 0
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
@@ -90,10 +90,10 @@
 		return FALSE
 	emagged = 1
 	user.SetNextMove(CLICK_CD_MELEE)
-	src.overlays += image('icons/obj/storage.dmi', icon_sparking)
+	src.add_overlay(image('icons/obj/storage.dmi', icon_sparking))
 	sleep(6)
 	overlays.Cut()
-	overlays += image('icons/obj/storage.dmi', icon_locking)
+	add_overlay(image('icons/obj/storage.dmi', icon_locking))
 	locked = 0
 	to_chat(user, "You short out the lock on [src].")
 	return TRUE
@@ -133,7 +133,7 @@
 			else if ((src.code == src.l_code) && (src.emagged == 0) && (src.l_set == 1))
 				src.locked = 0
 				src.overlays = null
-				overlays += image('icons/obj/storage.dmi', icon_opened)
+				add_overlay(image('icons/obj/storage.dmi', icon_opened))
 				src.code = null
 			else
 				src.code = "ERROR"

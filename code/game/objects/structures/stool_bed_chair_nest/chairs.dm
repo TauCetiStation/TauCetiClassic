@@ -233,7 +233,7 @@
 
 /obj/structure/stool/bed/chair/schair/post_buckle_mob(mob/living/M)
 	if(buckled_mob)
-		overlays += sarmrest
+		add_overlay(sarmrest)
 	else
 		overlays -= sarmrest
 
@@ -284,7 +284,7 @@
 
 /obj/structure/stool/bed/chair/comfy/post_buckle_mob(mob/living/M)
 	if(buckled_mob)
-		overlays += armrest
+		add_overlay(armrest)
 	else
 		overlays -= armrest
 

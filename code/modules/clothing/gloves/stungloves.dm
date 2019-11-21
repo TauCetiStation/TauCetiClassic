@@ -76,9 +76,9 @@
 	..()
 	overlays.Cut()
 	if(wired)
-		overlays += image(icon = icon, icon_state = "gloves_wire")
+		add_overlay(image(icon = icon, icon_state = "gloves_wire"))
 	if(cell)
-		overlays += image(icon = icon, icon_state = "gloves_cell")
+		add_overlay(image(icon = icon, icon_state = "gloves_cell"))
 	if(wired && cell)
 		var/obj/item/weapon/stock_parts/cell/C = cell
 		if(!C.charge)

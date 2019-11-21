@@ -141,7 +141,7 @@ var/global/list/image/fluidtrack_cache=list()
 		track.fresh=0
 		track.overlay=I
 		stack[stack_idx]=track
-		overlays += I
+		add_overlay(I)
 	updatedtracks=0 // Clear our memory of updated tracks.
 
 /obj/effect/decal/cleanable/blood/tracks/footprints

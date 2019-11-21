@@ -6,7 +6,7 @@
 
 /turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null)
 	if(graphic_add && graphic_add.len)
-		overlays += graphic_add
+		add_overlay(graphic_add)
 	if(graphic_remove && graphic_remove.len)
 		overlays -= graphic_remove
 

@@ -172,7 +172,7 @@
 			if(ishuman(src)) //Until this part rewrite.
 				update_targeted()
 			else
-				overlays += target_locked
+				add_overlay(target_locked)
 			spawn(0)
 				sleep(20)
 				if(target_locked)

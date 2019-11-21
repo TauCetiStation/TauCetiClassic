@@ -259,7 +259,7 @@
 		if(F.type in can_be_placed)
 			var/mutable_appearance/condiment = mutable_appearance(icon, "[initial(F.icon_state)]")
 			condiment.pixel_x += cond_number
-			overlays += condiment
+			add_overlay(condiment)
 			cond_number += 4
 
 //////////////////////

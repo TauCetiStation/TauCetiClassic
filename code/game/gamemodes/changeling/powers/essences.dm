@@ -255,7 +255,7 @@
 		if(healthdoll && host.healthdoll)
 			healthdoll.overlays.Cut()
 			healthdoll.icon_state = host.healthdoll.icon_state
-			healthdoll.overlays += host.healthdoll.overlays
+			healthdoll.add_overlay(host.healthdoll.overlays)
 		if(healths && host.healths)
 			healths.icon_state = host.healths.icon_state
 		if(internals && host.internals)

@@ -167,7 +167,7 @@
 	being_built = D
 	desc = "It's building \a [initial(D.name)]."
 	remove_resources(D)
-	overlays += "fab-active"
+	add_overlay("fab-active")
 	set_power_use(ACTIVE_POWER_USE)
 	updateUsrDialog()
 	sleep(get_construction_time_w_coeff(D))
@@ -549,7 +549,7 @@
 		var/obj/item/stack/sheet/stack = W
 		var/sname = "[stack.name]"
 		if(resources[material] < res_max_amount)
-			overlays += "fab-load-[material2name(material)]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
+			add_overlay("fab-load-[material2name(material)]")//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
 
 			var/transfer_amount = min(stack.get_amount(), round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
 			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT

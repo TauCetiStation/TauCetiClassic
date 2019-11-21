@@ -33,7 +33,7 @@
 	//lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	overlays.Cut()
 	for(var/image/I in overlays_standing)
-		overlays += I
+		add_overlay(I)
 
 
 
@@ -128,7 +128,7 @@
 	overlays -= overlays_standing[M_FIRE_LAYER]
 	if(on_fire)
 		overlays_standing[M_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
-		overlays += overlays_standing[M_FIRE_LAYER]
+		add_overlay(overlays_standing[M_FIRE_LAYER])
 		return
 	else
 		overlays_standing[M_FIRE_LAYER]		= null

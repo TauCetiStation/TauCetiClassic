@@ -310,7 +310,7 @@
 	if(!opened)
 		icon_state = icon_closed
 		if(welded)
-			overlays += "welded"
+			add_overlay("welded")
 	else
 		icon_state = icon_opened
 

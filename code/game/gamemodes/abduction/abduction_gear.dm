@@ -647,12 +647,12 @@
 
 		flick("belt_anim_on",animation)
 		sleep(7)
-		overlays += belt
+		add_overlay(belt)
 		fastened.anchored = 1
 		fastened.SetStunned(INFINITY)
 		qdel(animation)
 	else
-		overlays -= belt
+		cut_overlay(belt)
 		switch(fastened.lying_current)
 			if(90)	animation.dir = 2
 			else	animation.dir = 1

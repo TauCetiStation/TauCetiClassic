@@ -28,7 +28,7 @@
 	if(istype(module_active, /obj/item/weapon/melee/energy/sword/cyborg))
 		var/obj/item/weapon/melee/energy/sword/cyborg/SW = module_active
 		if(SW.active)
-			overlays += sword_overlay
+			add_overlay(sword_overlay)
 
 /obj/item/device/radio/borg/syndicate
 	syndie = 1
@@ -46,7 +46,7 @@
 	if(istype(user, /mob/living/silicon/robot/syndicate))
 		var/mob/living/silicon/robot/syndicate/S = user
 		if(active)
-			S.overlays += S.sword_overlay
+			S.add_overlay(S.sword_overlay)
 		else
 			S.overlays -= S.sword_overlay
 

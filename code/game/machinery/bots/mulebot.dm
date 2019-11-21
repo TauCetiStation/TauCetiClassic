@@ -403,7 +403,7 @@
 		AM.pixel_y += 9
 		if(AM.layer < layer)
 			AM.layer = layer + 0.1
-		overlays += AM
+		add_overlay(AM)
 
 	load= AM
 	mode = 0

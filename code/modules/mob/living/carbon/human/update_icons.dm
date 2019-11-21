@@ -144,21 +144,21 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/apply_overlay(cache_index)
 	var/image/I = overlays_standing[cache_index]
 	if(I)
-		overlays += I
+		add_overlay(I)
 
 /mob/living/carbon/human/proc/remove_overlay(cache_index)
 	if(overlays_standing[cache_index])
-		overlays -= overlays_standing[cache_index]
+		cut_overlay(overlays_standing[cache_index])
 		overlays_standing[cache_index] = null
 
 /mob/living/carbon/human/proc/apply_damage_overlay(cache_index)
 	var/image/I = overlays_damage[cache_index]
 	if(I)
-		overlays += I
+		add_overlay(I)
 
 /mob/living/carbon/human/proc/remove_damage_overlay(cache_index)
 	if(overlays_damage[cache_index])
-		overlays -= overlays_damage[cache_index]
+		cut_overlay(overlays_damage[cache_index])
 		overlays_damage[cache_index] = null
 
 //UPDATES OVERLAYS FROM OVERLAYS_LYING/OVERLAYS_STANDING
@@ -193,7 +193,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			continue
 		var/mutable_appearance/temp = BP.get_icon()
 
-		base_icon.overlays += temp
+		base_icon.add_overlay(temp)
 
 	standing += base_icon
 
@@ -435,7 +435,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				else
 					tie = image("icon" = 'icons/mob/accessory.dmi', "icon_state" = "[tie_color]", "layer" = -UNIFORM_LAYER + A.layer_priority)
 				tie.color = A.color
-				standing.overlays += tie
+				standing.add_overlay(tie)
 
 		if(FAT in mutations)
 			if(U.flags & ONESIZEFITSALL)
@@ -570,7 +570,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(shoes.dirt_overlay)
 			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
 			bloodsies.color = shoes.dirt_overlay.color
-			standing.overlays += bloodsies
+			standing.add_overlay(bloodsies)
 	else
 		if(feet_blood_DNA)
 			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
@@ -666,7 +666,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/obj/item/clothing/suit/S = wear_suit
 			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="[S.blood_overlay_type]blood")
 			bloodsies.color = wear_suit.dirt_overlay.color
-			standing.overlays += bloodsies
+			standing.add_overlay(bloodsies)
 		standing.color = wear_suit.color
 		overlays_standing[SUIT_LAYER] = standing
 

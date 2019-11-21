@@ -83,7 +83,7 @@
 		return
 
 	overlays.Cut()
-	overlays += damage_overlays[overlay]
+	add_overlay(damage_overlays[overlay])
 	damage_overlay = overlay
 
 	return

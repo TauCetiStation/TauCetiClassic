@@ -19,7 +19,7 @@
 
 	overlays -= stat_indicator // we can't do anything with overlays, so we need to re-apply it (incase of question).
 	stat_indicator.icon_state = state
-	overlays += stat_indicator
+	add_overlay(stat_indicator)
 
 /mob/proc/clear_stat_indicator()
 	if(!stat_indicator || !stat_indicator.icon_state)

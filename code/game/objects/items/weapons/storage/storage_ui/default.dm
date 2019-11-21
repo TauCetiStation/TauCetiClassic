@@ -284,9 +284,9 @@
 		stored_start.transform = M_start
 		stored_continue.transform = M_continue
 		stored_end.transform = M_end
-		storage_start.overlays += stored_start
-		storage_start.overlays += stored_continue
-		storage_start.overlays += stored_end
+		storage_start.add_overlay(stored_start)
+		storage_start.add_overlay(stored_continue)
+		storage_start.add_overlay(stored_end)
 
 		O.screen_loc = "4:[round((startpoint+endpoint)/2)],2:16"
 		O.maptext = ""

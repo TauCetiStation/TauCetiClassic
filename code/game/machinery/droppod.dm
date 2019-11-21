@@ -172,7 +172,7 @@
 		mob_overlay.overlays = usr.overlays
 		mob_overlay.pixel_x = 1
 		mob_overlay.pixel_y = 25
-		overlays += mob_overlay
+		add_overlay(mob_overlay)
 		intruder = usr
 		verbs -= /obj/structure/droppod/verb/move_inside
 	return
@@ -662,7 +662,7 @@
 			overlays -= image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3)
 		else
 			flags |= IS_LOCKED
-			overlays += image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3)
+			add_overlay(image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3))
 			to_chat(intruder, "<span class='notice'>You blocked [src].</span>")
 		send_byjax(intruder, "droppod.browser", "commands", get_commands())
 		return

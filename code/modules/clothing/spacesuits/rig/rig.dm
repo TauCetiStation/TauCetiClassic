@@ -539,7 +539,7 @@
 		if(module.suit_overlay_image)
 			user.overlays -= module.suit_overlay_image
 			if(equipped)
-				user.overlays += module.suit_overlay_image
+				user.add_overlay(module.suit_overlay_image)
 
 //Engineering rig
 /obj/item/clothing/head/helmet/space/rig/engineering
@@ -664,7 +664,7 @@
 			lamp = image(icon = 'icons/mob/nuclear_helm_overlays.dmi', icon_state = "terror[combat_mode ? "_combat" : ""]_glow", layer = ABOVE_LIGHTING_LAYER)
 			lamp.plane = LIGHTING_PLANE + 1
 			lamp.alpha = on ? 255 : 127
-			user.overlays += lamp
+			user.add_overlay(lamp)
 		user.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/rig/syndi/verb/toggle_light(mob/user)

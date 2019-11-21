@@ -84,7 +84,7 @@
 
 	overlays.Cut()
 	if(stat == CONSCIOUS)
-		overlays += "eyes-[icon_state]"
+		add_overlay("eyes-[icon_state]")
 	else
 		overlays -= "eyes"
 

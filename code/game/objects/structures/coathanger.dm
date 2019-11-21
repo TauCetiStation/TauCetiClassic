@@ -75,8 +75,8 @@
 	else icon_state = "coatrack0"
 	
 	if (istype(coat, /obj/item/clothing/suit/storage/labcoat))
-		overlays += image(icon, icon_state = "coat_lab")
+		add_overlay(image(icon, icon_state = "coat_lab"))
 	if (istype(coat, /obj/item/clothing/suit/storage/labcoat/cmo))
-		overlays += image(icon, icon_state = "coat_cmo")
+		add_overlay(image(icon, icon_state = "coat_cmo"))
 	if (istype(coat, /obj/item/clothing/suit/storage/det_suit))
-		overlays += image(icon, icon_state = "coat_det")
+		add_overlay(image(icon, icon_state = "coat_det"))

@@ -184,7 +184,7 @@
 		to_chat(user, "You [panel_open ? "open" : "close"] the maintenance panel.")
 		overlays.Cut()
 		if(panel_open)
-			overlays += image(icon, icon_panel)
+			add_overlay(image(icon, icon_panel))
 		nanomanager.update_uis(src)
 		return
 

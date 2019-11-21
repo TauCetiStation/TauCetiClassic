@@ -149,7 +149,7 @@
 	if(wrapper_color)
 		var/image/I = image(icon, "pillbottle_wrap")
 		I.color = wrapper_color
-		overlays += I
+		add_overlay(I)
 
 /obj/item/weapon/storage/pill_bottle/bicaridine
 	name = "pill bottle (Bicaridine)"

@@ -139,10 +139,10 @@
 	. = ..()
 	if(locked)
 		overlays.Cut()
-		overlays += redlight
+		add_overlay(redlight)
 	else
 		overlays.Cut()
-		overlays += greenlight
+		add_overlay(greenlight)
 
 /obj/structure/closet/crate/secure/can_open()
 	return !locked
@@ -165,7 +165,7 @@
 			if((O.client && !( O.blinded )))
 				to_chat(O, "<span class='notice'>The crate has been [locked ? null : "un"]locked by [user].</span>")
 		overlays.Cut()
-		overlays += locked ? redlight : greenlight
+		add_overlay(locked ? redlight : greenlight)
 	else
 		to_chat(user, "<span class='notice'>Access Denied</span>")
 
@@ -207,8 +207,8 @@
 		return FALSE
 	user.SetNextMove(CLICK_CD_MELEE)
 	overlays.Cut()
-	overlays += emag
-	overlays += sparks
+	add_overlay(emag)
+	add_overlay(sparks)
 	spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
 	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	src.locked = 0
@@ -223,11 +223,11 @@
 		if(!locked)
 			src.locked = 1
 			overlays.Cut()
-			overlays += redlight
+			add_overlay(redlight)
 		else
 			overlays.Cut()
-			overlays += emag
-			overlays += sparks
+			add_overlay(emag)
+			add_overlay(sparks)
 			spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
 			playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 			src.locked = 0

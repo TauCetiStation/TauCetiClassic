@@ -878,11 +878,11 @@
 
 	overlays.Cut()
 	if(newmessage)
-		overlays += image('icons/obj/pda.dmi', "pda-r")
+		add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 	if(id)
 		var/id_overlay = get_id_overlay(id)
 		if(id_overlay)
-			overlays += image('icons/obj/pda.dmi', id_overlay)
+			add_overlay(image('icons/obj/pda.dmi', id_overlay))
 
 /obj/item/device/pda/proc/get_id_overlay(obj/item/weapon/card/id/I)
 	if(!I)
@@ -1061,7 +1061,7 @@
 
 		log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
 		P.overlays.Cut()
-		P.overlays += image('icons/obj/pda.dmi', "pda-r")
+		P.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 		P.newmessage = 1
 	else
 		to_chat(U, "<span class='notice'>ERROR: Messaging server is not responding.</span>")

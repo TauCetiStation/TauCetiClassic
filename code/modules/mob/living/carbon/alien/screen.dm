@@ -5,7 +5,7 @@
 
 /obj/screen/zone_sel/alien/update_icon()
 	overlays.Cut()
-	overlays += selecting
+	add_overlay(selecting)
 
 /mob/living/carbon/alien/proc/updatePlasmaDisplay()
 	if(visual_counter)

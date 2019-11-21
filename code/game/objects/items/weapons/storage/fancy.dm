@@ -207,9 +207,9 @@
 
 /obj/item/weapon/storage/fancy/crayons/update_icon()
 	overlays = list() //resets list
-	overlays += image('icons/obj/crayons.dmi',"crayonbox")
+	add_overlay(image('icons/obj/crayons.dmi',"crayonbox"))
 	for(var/obj/item/toy/crayon/crayon in contents)
-		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
+		add_overlay(image('icons/obj/crayons.dmi',crayon.colourName))
 
 /obj/item/weapon/storage/fancy/crayons/update_icon()
 	var/list/crayon_overlays = list()
@@ -258,9 +258,9 @@
 
 /obj/item/weapon/storage/fancy/glowsticks/update_icon()
 	overlays = list() //resets list
-	overlays += image('icons/obj/glowsticks.dmi',"sticksbox")
+	add_overlay(image('icons/obj/glowsticks.dmi',"sticksbox"))
 	for(var/obj/item/weapon/reagent_containers/food/snacks/glowstick/glowstick in contents)
-		overlays += image('icons/obj/glowsticks.dmi',glowstick.colourName)
+		add_overlay(image('icons/obj/glowsticks.dmi',glowstick.colourName))
 
 /obj/item/weapon/storage/fancy/glowsticks/adv
 	name = "box of advanced glowsticks"
@@ -385,11 +385,11 @@
 	src.icon_state = "vialbox[total_contents]"
 	src.overlays.Cut()
 	if (!broken)
-		overlays += image(icon, src, "led[locked]")
+		add_overlay(image(icon, src, "led[locked]"))
 		if(locked)
-			overlays += image(icon, src, "cover")
+			add_overlay(image(icon, src, "cover"))
 	else
-		overlays += image(icon, src, "ledb")
+		add_overlay(image(icon, src, "ledb"))
 	return
 
 /obj/item/weapon/storage/lockbox/vials/attackby(obj/item/weapon/W, mob/user)

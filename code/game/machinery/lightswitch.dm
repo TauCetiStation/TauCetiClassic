@@ -45,7 +45,7 @@
 	else
 		icon_state = "light[on]"
 		overlay.icon_state = "light[on]-overlay"
-		overlays += overlay
+		add_overlay(overlay)
 
 /obj/machinery/light_switch/examine(mob/user)
 	..()
