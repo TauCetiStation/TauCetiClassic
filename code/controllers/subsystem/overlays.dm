@@ -7,19 +7,15 @@ var/datum/subsystem/overlays/SSoverlays
 	priority = SS_PRIORITY_OVERLAYS
 	init_order = SS_INIT_ORDER_OVERLAY
 
-	var/list/queue
-	var/list/stats
-	var/list/overlay_icon_state_caches
-	var/list/overlay_icon_cache
+	var/list/queue = list()
+	var/list/stats = list()
+	var/list/overlay_icon_state_caches = list()
+	var/list/overlay_icon_cache = list()
 
 /datum/subsystem/overlays/New()
 	NEW_SS_GLOBAL(SSoverlays)
 
 /datum/subsystem/overlays/Initialize()
-	overlay_icon_state_caches = list()
-	overlay_icon_cache = list()
-	queue = list()
-	stats = list()
 	fire(mc_check = FALSE)
 	return ..()
 
