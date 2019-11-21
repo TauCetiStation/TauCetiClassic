@@ -128,7 +128,7 @@
 		..()
 
 /mob/living/simple_animal/cat/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 
 	if(inventory_mouth)
 		add_overlay(image('icons/mob/animal.dmi',inventory_mouth.icon_state))

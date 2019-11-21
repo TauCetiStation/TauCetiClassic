@@ -153,7 +153,7 @@ Note: Must be placed west/left of and R&D console to function.
 
 	add_overlay("protolathe_[stack.name]")
 	sleep(10)
-	overlays -= "protolathe_[stack.name]"
+	cut_overlay("protolathe_[stack.name]")
 
 	use_power(max(1000, (3750 * amount / 10)))
 

@@ -74,7 +74,7 @@
 
 /obj/item/clothing/gloves/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(wired)
 		add_overlay(image(icon = icon, icon_state = "gloves_wire"))
 	if(cell)

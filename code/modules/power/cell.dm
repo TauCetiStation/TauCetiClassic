@@ -7,7 +7,7 @@
 	addtimer(CALLBACK(src, .proc/updateicon), 5)
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(charge < 0.01)
 		return

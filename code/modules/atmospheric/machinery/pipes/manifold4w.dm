@@ -32,7 +32,7 @@
 	var/obj/machinery/atmospherics/node3 = NODE3
 	var/obj/machinery/atmospherics/node4 = NODE4
 
-	overlays.Cut()
+	cut_overlays()
 	add_overlay(icon_manager.get_atmos_icon("manifold", , pipe_color, "4way" + icon_connect_type))
 	add_overlay(icon_manager.get_atmos_icon("manifold", , , "clamps_4way" + icon_connect_type))
 	underlays.Cut()

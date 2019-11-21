@@ -13,7 +13,7 @@
 
 /mob/living/carbon/alien/humanoid/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
-	overlays.Cut()
+	cut_overlays()
 	for(var/image/I in overlays_standing)
 		add_overlay(I)
 
@@ -156,7 +156,7 @@
 	if(update_icons)		update_icons()
 
 /mob/living/carbon/alien/humanoid/update_fire()
-	overlays -= overlays_standing[X_FIRE_LAYER]
+	cut_overlay(overlays_standing[X_FIRE_LAYER])
 	if(on_fire)
 		overlays_standing[X_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
 		add_overlay(overlays_standing[X_FIRE_LAYER])

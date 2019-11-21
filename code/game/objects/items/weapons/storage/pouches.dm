@@ -189,7 +189,7 @@
 
 /obj/item/weapon/storage/pouch/flare/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(contents.len)
 		add_overlay(image('icons/obj/pouches.dmi', "flare_[contents.len]"))
 
@@ -216,7 +216,7 @@
 
 /obj/item/weapon/storage/pouch/pistol_holster/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(contents.len)
 		add_overlay(image('icons/obj/pouches.dmi', "pistol_layer"))
 
@@ -238,6 +238,6 @@
 
 /obj/item/weapon/storage/pouch/baton_holster/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(contents.len)
 		add_overlay(image('icons/obj/pouches.dmi', "baton_layer"))

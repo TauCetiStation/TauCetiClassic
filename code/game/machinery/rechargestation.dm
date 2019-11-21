@@ -164,7 +164,7 @@
 
 /obj/machinery/recharge_station/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	switch(round(chargepercentage()))
 		if(1 to 20)
 			add_overlay(image('icons/obj/objects.dmi', "statn_c0"))

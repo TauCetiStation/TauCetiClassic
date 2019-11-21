@@ -279,7 +279,7 @@
 
 	if(!(update_state & UPSTATE_ALLGOOD))
 		if(overlays.len)
-			overlays = 0
+			cut_overlays()
 			return
 
 
@@ -287,7 +287,7 @@
 	if(update & 2)
 
 		if(overlays.len)
-			overlays = 0
+			cut_overlays()
 
 		if(!(stat & (BROKEN|MAINT)) && update_state & UPSTATE_ALLGOOD)
 			add_overlay(status_overlays_lock[locked+1])

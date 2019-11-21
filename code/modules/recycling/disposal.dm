@@ -362,7 +362,7 @@
 
 // update the icon & overlays to reflect mode & status
 /obj/machinery/disposal/proc/update()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)
 		icon_state = "disposal-broken"
 		mode = 0

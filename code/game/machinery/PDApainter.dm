@@ -11,7 +11,7 @@
 
 
 /obj/machinery/pdapainter/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"

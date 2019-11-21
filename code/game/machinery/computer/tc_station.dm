@@ -49,7 +49,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 
 /obj/machinery/computer/telecrystals/uplinker/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(uplinkholder)
 		add_overlay("[initial(icon_state)]-closed")
 

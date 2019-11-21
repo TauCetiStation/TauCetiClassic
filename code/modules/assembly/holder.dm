@@ -59,7 +59,7 @@
 
 
 /obj/item/device/assembly_holder/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(a_left)
 		add_overlay("[a_left.icon_state]_left")
 		for(var/O in a_left.attached_overlays)

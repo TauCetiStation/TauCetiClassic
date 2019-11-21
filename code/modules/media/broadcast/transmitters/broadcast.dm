@@ -83,7 +83,7 @@
 */
 
 /obj/machinery/media/transmitter/broadcast/update_icon()
-	overlays = 0
+	cut_overlays()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(on)

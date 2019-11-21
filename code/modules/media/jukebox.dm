@@ -88,7 +88,7 @@ var/global/loopModeNames=list(
 	update_icon()
 
 /obj/machinery/media/jukebox/update_icon()
-	overlays = 0
+	cut_overlays()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		if(stat & BROKEN)
 			icon_state = "[state_base]-broken"

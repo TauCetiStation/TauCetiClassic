@@ -86,13 +86,13 @@
 				src.occupier.lying = 0
 				dead_mob_list -= src.occupier
 				alive_mob_list += src.occupier
-				src.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
+				src.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-404"))
 				add_overlay(image('icons/obj/computer.dmi', "ai-fixer-full"))
 				src.occupier.add_ai_verbs()
 			src.updateUsrDialog()
 			sleep(10)
 		src.active = 0
-		src.overlays -= image('icons/obj/computer.dmi', "ai-fixer-on")
+		src.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-on"))
 
 	src.updateUsrDialog()
 
@@ -101,7 +101,7 @@
 	..()
 	// Broken / Unpowered
 	if((stat & BROKEN) || (stat & NOPOWER))
-		overlays.Cut()
+		cut_overlays()
 
 	// Working / Powered
 	else

@@ -48,7 +48,7 @@
 		if(active)
 			S.add_overlay(S.sword_overlay)
 		else
-			S.overlays -= S.sword_overlay
+			S.cut_overlay(S.sword_overlay)
 
 /obj/item/weapon/melee/energy/sword/cyborg/attack(mob/M, mob/living/silicon/robot/R)
 	if(R.cell)

@@ -49,7 +49,7 @@ field_generator power level display
 	return ..()
 
 /obj/machinery/field_generator/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(warming_up)
 		add_overlay("+a[warming_up]")
 	if(LAZYLEN(fields))

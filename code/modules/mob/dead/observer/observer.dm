@@ -51,13 +51,13 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
 
 		if(ishuman(body))
-			overlays = body.overlays
+			copy_overlays(body)
 		else
 			icon = body.icon
 			icon_state = body.icon_state
-			overlays = body.overlays
+			copy_overlays(body)
 
-		overlays -= list(body.typing_indicator, body.stat_indicator)
+		cut_overlay(list(body.typing_indicator, body.stat_indicator))
 
 		alpha = 127
 

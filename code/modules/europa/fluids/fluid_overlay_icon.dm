@@ -1,6 +1,6 @@
 /obj/effect/fluid/update_icon()
 
-	overlays.Cut()
+	cut_overlays()
 
 	if(fluid_amount > FLUID_DEEP)
 		alpha = FLUID_MAX_ALPHA

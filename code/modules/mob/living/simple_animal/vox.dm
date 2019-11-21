@@ -133,7 +133,7 @@
 
 /mob/living/simple_animal/vox/armalis/regenerate_icons()
 
-	overlays = list()
+	cut_overlays()
 	if(armour)
 		var/icon/armour = image('icons/mob/vox.dmi',"armour")
 		speed = 1

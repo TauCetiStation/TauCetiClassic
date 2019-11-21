@@ -28,7 +28,7 @@
 	user.notransform = TRUE
 	user.canmove = 0
 	user.icon = null
-	user.overlays.Cut()
+	user.cut_overlays()
 	user.invisibility = 101
 
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( user.loc )

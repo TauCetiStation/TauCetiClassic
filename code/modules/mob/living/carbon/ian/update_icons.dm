@@ -16,7 +16,7 @@
 
 /mob/living/carbon/ian/proc/remove_overlay(index)
 	if(overlays_inv[index])
-		overlays -= overlays_inv[index]
+		cut_overlay(overlays_inv[index])
 		overlays_inv[index] = null
 
 /mob/living/carbon/ian/regenerate_icons()

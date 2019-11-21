@@ -199,7 +199,7 @@
 			to_chat(user, "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>")
 			sleep(10)
 			updateUsrDialog()
-			overlays -= "fab-load-[material2name(material)]" //No matter what the overlay shall still be deleted
+			cut_overlay("fab-load-[material2name(material)]") //No matter what the overlay shall still be deleted
 		else
 			to_chat(user, "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>")
 		return

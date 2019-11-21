@@ -21,7 +21,7 @@
 
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
-						FA.overlays = list()
+						FA.cut_overlays()
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_green"))
 			if(SEC_LEVEL_BLUE)
 				if(security_level < SEC_LEVEL_BLUE)
@@ -31,7 +31,7 @@
 				security_level = SEC_LEVEL_BLUE
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
-						FA.overlays = list()
+						FA.cut_overlays()
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_blue"))
 			if(SEC_LEVEL_RED)
 				if(security_level < SEC_LEVEL_RED)
@@ -46,7 +46,7 @@
 
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
-						FA.overlays = list()
+						FA.cut_overlays()
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_red"))
 
 			if(SEC_LEVEL_DELTA)
@@ -54,7 +54,7 @@
 				captain_announce(config.alert_desc_delta, title = null, subtitle = "Attention! Delta security level reached!", sound = "delta")
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
-						FA.overlays = list()
+						FA.cut_overlays()
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_delta"))
 		SSnightshift.check_nightshift() // Night shift mode turns off if security level is raised to red or above
 	else

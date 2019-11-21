@@ -876,7 +876,7 @@
 /obj/item/device/pda/update_icon()
 	..()
 
-	overlays.Cut()
+	cut_overlays()
 	if(newmessage)
 		add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 	if(id)
@@ -1060,7 +1060,7 @@
 		nanomanager.update_user_uis(U, P) // Update the sending user's PDA UI so that they can see the new message
 
 		log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
-		P.overlays.Cut()
+		P.cut_overlays()
 		P.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 		P.newmessage = 1
 	else

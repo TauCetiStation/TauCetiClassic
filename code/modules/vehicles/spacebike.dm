@@ -250,7 +250,7 @@
 	..()
 
 /obj/vehicle/space/spacebike/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(on)
 		add_overlay(image('icons/obj/vehicles.dmi', "[bike_icon]_on_overlay", MOB_LAYER + 1))

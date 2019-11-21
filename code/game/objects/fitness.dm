@@ -106,5 +106,5 @@
 		gymnast.apply_effect(25,AGONY,0)
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnessweight"
-		overlays -= W
+		cut_overlay(W)
 		to_chat(user, "[finishmessage]")

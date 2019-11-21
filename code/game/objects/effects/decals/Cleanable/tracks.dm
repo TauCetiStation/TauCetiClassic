@@ -120,7 +120,7 @@ var/global/list/image/fluidtrack_cache=list()
 		update_icon()
 
 /obj/effect/decal/cleanable/blood/tracks/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	color = "#ffffff"
 	var/truedir=0
 

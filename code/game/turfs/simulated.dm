@@ -195,7 +195,7 @@
 /turf/simulated/proc/make_dry_floor()
 	if(wet)
 		if(wet_overlay)
-			overlays -= wet_overlay
+			cut_overlay(wet_overlay)
 			wet_overlay = null
 		wet = 0
 		UpdateSlip()

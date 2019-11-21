@@ -17,7 +17,7 @@
 	if(stat_indicator.icon_state == state)
 		return
 
-	overlays -= stat_indicator // we can't do anything with overlays, so we need to re-apply it (incase of question).
+	cut_overlay(stat_indicator) // we can't do anything with overlays, so we need to re-apply it (incase of question).
 	stat_indicator.icon_state = state
 	add_overlay(stat_indicator)
 
@@ -25,5 +25,5 @@
 	if(!stat_indicator || !stat_indicator.icon_state)
 		return
 
-	overlays -= stat_indicator
+	cut_overlay(stat_indicator)
 	stat_indicator.icon_state = null

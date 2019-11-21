@@ -231,7 +231,7 @@
 	updateUsrDialog()
 
 /obj/structure/stool/bed/chair/janitorialcart/update_icon()
-	overlays = list()
+	cut_overlays()
 
 	if(mybucket)
 		add_overlay("cart_bucket")

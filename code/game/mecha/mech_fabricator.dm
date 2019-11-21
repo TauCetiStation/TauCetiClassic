@@ -172,7 +172,7 @@
 	updateUsrDialog()
 	sleep(get_construction_time_w_coeff(D))
 	set_power_use(IDLE_POWER_USE)
-	overlays -= "fab-active"
+	cut_overlay("fab-active")
 	desc = initial(desc)
 
 	var/location = get_step(src,(dir))
@@ -557,7 +557,7 @@
 			to_chat(user, "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>")
 			sleep(10)
 			updateUsrDialog()
-			overlays -= "fab-load-[material2name(material)]" //No matter what the overlay shall still be deleted
+			cut_overlay("fab-load-[material2name(material)]") //No matter what the overlay shall still be deleted
 		else
 			to_chat(user, "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>")
 		return

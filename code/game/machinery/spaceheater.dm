@@ -53,7 +53,7 @@
 	else
 		icon_state = "sheater-off"
 
-	overlays.Cut()
+	cut_overlays()
 	if(panel_open)
 		add_overlay("sheater-open")
 

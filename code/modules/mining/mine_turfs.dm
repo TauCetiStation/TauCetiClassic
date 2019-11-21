@@ -37,7 +37,7 @@
 	update_overlays()
 
 /turf/simulated/mineral/update_overlays()
-	overlays.Cut()
+	cut_overlays()
 	if(!mineral)
 		name = "\improper Rock"
 		icon_state = "rock"
@@ -122,7 +122,7 @@
 			ore_amount = rand(3,5)
 	if(ore_amount >= 8)
 		name = "\improper [mineral.display_name] rich deposit"
-		overlays.Cut()
+		cut_overlays()
 		add_overlay("rock_[mineral.name]")
 	else
 		name = "\improper Rock"
@@ -612,7 +612,7 @@
 
 /turf/proc/update_overlays()
 
-	overlays.Cut()
+	cut_overlays()
 
 	for(var/direction_to_check in cardinal)
 		if(istype(get_step(src, direction_to_check), /turf/simulated/mineral))

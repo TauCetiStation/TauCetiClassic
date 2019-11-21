@@ -67,7 +67,7 @@
 			ignore_clothing = 1
 
 /obj/machinery/gibber/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if (dirty)
 		src.add_overlay(image('icons/obj/kitchen.dmi', "grbloody"))
 	if(stat & (NOPOWER|BROKEN))

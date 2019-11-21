@@ -121,7 +121,7 @@
 	if(wired)
 		src.add_overlay(image('icons/obj/xenoarchaeology/artifacts.dmi', "crystal_overlay"))
 	else
-		overlays.Cut()
+		cut_overlays()
 	return
 
 // laser_act

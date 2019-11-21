@@ -11,7 +11,7 @@
 
 	alpha = 255
 
-	overlays.Cut()
+	cut_overlays()
 	add_overlay(icon_manager.get_atmos_icon("pipe", , pipe_color, "universal"))
 	underlays.Cut()
 
@@ -49,7 +49,7 @@
 
 	alpha = 255
 
-	overlays.Cut()
+	cut_overlays()
 	add_overlay(icon_manager.get_atmos_icon("pipe", , pipe_color, "universal"))
 	underlays.Cut()
 

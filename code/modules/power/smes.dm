@@ -215,11 +215,11 @@
 		terminal = null
 
 /obj/machinery/power/smes/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)	return
 
 	if(panel_open)
-		overlays.Cut()
+		cut_overlays()
 		return
 
 

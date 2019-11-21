@@ -26,7 +26,7 @@
 		else
 			icon_state = "donateidle"
 
-	overlays = null
+	cut_overlays()
 
 	if(beaker)
 		if(attached)

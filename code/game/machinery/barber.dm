@@ -66,7 +66,7 @@
 			icon_state += "_e"
 
 	if(beaker_update)
-		overlays.Cut()
+		cut_overlays()
 
 		for(var/tank_id in tanks)
 			var/obj/item/weapon/reagent_containers/glass/tank = beakers[tank_id]

@@ -148,7 +148,7 @@
 			user.visible_message("<span class='notice'>[user] detaches [rig] from \the [src].</span>", "<span class='notice'>You detach [rig] from \the [src]</span>")
 			rig.loc = get_turf(usr)
 			rig = null
-			overlays = new/list()
+			cut_overlays()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/weapon/W, mob/user)
 	if (iswrench(W))

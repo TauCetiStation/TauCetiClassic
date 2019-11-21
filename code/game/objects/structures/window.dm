@@ -450,7 +450,7 @@
 		var/ratio = health / maxhealth
 		ratio = CEIL(ratio * 4) * 25
 
-		overlays -= crack_overlay
+		cut_overlay(crack_overlay)
 		if(ratio > 75)
 			return
 		crack_overlay = image('icons/obj/window.dmi',"damage[ratio]",-(layer+0.1))

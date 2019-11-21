@@ -189,7 +189,7 @@
 	return 1
 
 /obj/screen/zone_sel/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	add_overlay(image('icons/mob/zone_sel.dmi', "[selecting]"))
 
 /obj/screen/pull

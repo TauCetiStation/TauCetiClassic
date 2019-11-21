@@ -70,7 +70,7 @@
 	update_icon()
 
 /obj/item/robot_parts/robot_suit/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(l_arm)
 		add_overlay("l_arm+o")
 	if(r_arm)
@@ -120,7 +120,7 @@
 			r_leg = null
 			chest = null
 			head = null
-			overlays.Cut()
+			cut_overlays()
 			w_class = initial(w_class)
 		else
 			to_chat(user, "<span class='warning'>Nothing attached to robot frame!</span>")

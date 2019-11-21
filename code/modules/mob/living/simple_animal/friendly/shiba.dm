@@ -29,7 +29,7 @@
 	desc = "Tastes like... well you know..."
 
 /mob/living/simple_animal/shiba/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(facehugger)
 		add_overlay(image('icons/mob/mask.dmi',"facehugger_corgi"))
 

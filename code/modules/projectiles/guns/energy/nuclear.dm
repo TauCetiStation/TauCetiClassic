@@ -127,7 +127,7 @@
 
 
 /obj/item/weapon/gun/energy/gun/nuclear/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	update_charge()
 	update_reactor()
 	update_mode()

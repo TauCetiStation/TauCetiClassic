@@ -49,7 +49,7 @@
 
 	explosion(location, 0, 0, 2, 3)
 	if(target && !QDELETED(target))
-		target.overlays -= image('icons/obj/assemblies.dmi', "plastic-explosive2")
+		target.cut_overlay(image('icons/obj/assemblies.dmi', "plastic-explosive2"))
 	if(src)
 		qdel(src)
 

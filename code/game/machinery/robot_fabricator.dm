@@ -26,7 +26,7 @@
 					count++
 
 				to_chat(user, "You insert [count] metal sheet\s into the fabricator.")
-				src.overlays -= "fab-load-metal"
+				src.cut_overlay("fab-load-metal")
 				updateDialog()
 		else
 			to_chat(user, "The robot part maker is full. Please remove metal from the robot part maker in order to insert more.")
@@ -123,6 +123,6 @@
 							src.being_built = null
 						set_power_use(IDLE_POWER_USE)
 						src.operating = 0
-						src.overlays -= "fab-active"
+						src.cut_overlay("fab-active")
 
 	updateUsrDialog()

@@ -254,7 +254,7 @@
 
 	click_border_start.Cut()
 	click_border_end.Cut()
-	storage_start.overlays.Cut()
+	storage_start.cut_overlays()
 
 	var/matrix/M = matrix()
 	M.Scale((storage_width-storage_cap_width*2+3)/32,1)

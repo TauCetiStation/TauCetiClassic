@@ -80,7 +80,7 @@
 		return
 
 	if(overlays.len && !friendc || mode == 4)
-		overlays.Cut()
+		cut_overlays()
 
 	switch(mode)
 		if(0)				//blank
@@ -184,7 +184,7 @@
 
 /obj/machinery/status_display/proc/remove_display()
 	if(overlays.len)
-		overlays.Cut()
+		cut_overlays()
 	if(maptext)
 		maptext = ""
 
@@ -242,7 +242,7 @@
 
 /obj/machinery/ai_status_display/process()
 	if(stat & NOPOWER)
-		overlays.Cut()
+		cut_overlays()
 		return
 
 	update()
@@ -257,7 +257,7 @@
 /obj/machinery/ai_status_display/proc/update()
 
 	if(mode==0) //Blank
-		overlays.Cut()
+		cut_overlays()
 		return
 
 	if(mode==1)	// AI emoticon
@@ -301,7 +301,7 @@
 /obj/machinery/ai_status_display/proc/set_picture(state)
 	picture_state = state
 	if(overlays.len)
-		overlays.Cut()
+		cut_overlays()
 	add_overlay(image('icons/obj/status_display.dmi', icon_state=picture_state))
 
 #undef CHARS_PER_LINE

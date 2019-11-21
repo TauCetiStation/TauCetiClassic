@@ -443,7 +443,7 @@
 
 	mode = 0
 
-	overlays.Cut()
+	cut_overlays()
 
 	if(buckled_mob)
 		unbuckle_mob()

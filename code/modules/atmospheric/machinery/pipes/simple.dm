@@ -86,7 +86,7 @@
 
 	alpha = 255
 
-	overlays.Cut()
+	cut_overlays()
 
 	var/obj/machinery/atmospherics/node1 = NODE1
 	var/obj/machinery/atmospherics/node2 = NODE2

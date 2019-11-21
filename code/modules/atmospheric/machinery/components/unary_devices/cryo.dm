@@ -319,7 +319,7 @@
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	var/image/I
 
 	if(panel_open)
@@ -347,7 +347,7 @@
 
 		if(occupant)
 			var/image/pickle = image(occupant.icon, occupant.icon_state)
-			pickle.overlays = occupant.overlays
+			pickle.copy_overlays(occupant)
 			pickle.pixel_z = 20
 			pickle.layer = 5
 			add_overlay(pickle)

@@ -59,7 +59,7 @@
 		M.name_override = disguise.name
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
-		M.overlays = disguise.overlays
+		M.copy_overlays(disguise, TRUE)
 		M.update_inv_r_hand()
 		M.update_inv_l_hand()
 	return
@@ -73,7 +73,7 @@
 		spawn(0)
 			anim(M.loc,M,'icons/mob/mob.dmi',,"uncloak",,M.dir)
 		M.name_override = null
-		M.overlays.Cut()
+		M.cut_overlays()
 		M.regenerate_icons()
 	return
 

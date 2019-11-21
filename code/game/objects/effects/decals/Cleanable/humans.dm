@@ -72,7 +72,7 @@ var/global/list/image/splatter_cache=list()
 			var/obj/item/clothing/shoes/S = perp.shoes
 			if(istype(S))
 				if((dirt_overlay && dirt_overlay.color != basedatum.color) || (!dirt_overlay))
-					S.overlays.Cut()
+					S.cut_overlays()
 					S.add_dirt_cover(basedatum)
 				S.track_blood = max(amount,S.track_blood)
 				if(!S.blood_DNA)
@@ -197,7 +197,7 @@ var/global/list/image/splatter_cache=list()
 	blood.Blend(basedatum.color, ICON_MULTIPLY)
 
 	icon = blood
-	overlays.Cut()
+	cut_overlays()
 	add_overlay(giblets)
 
 /obj/effect/decal/cleanable/blood/gibs/up

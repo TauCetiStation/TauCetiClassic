@@ -77,7 +77,7 @@
 
 /mob/living/carbon/alien/humanoid/queen/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
-	overlays.Cut()
+	cut_overlays()
 	if(stat == DEAD)
 		icon_state = "queen_dead"
 	else if(stat == UNCONSCIOUS || lying || resting)
@@ -97,7 +97,7 @@
 
 /mob/living/carbon/alien/humanoid/queen/large/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
-	overlays.Cut()
+	cut_overlays()
 	if(stat == DEAD)
 		icon_state = "queen_dead-old"
 	else if(stat == UNCONSCIOUS || lying || resting)

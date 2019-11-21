@@ -220,7 +220,7 @@ var/datum/subsystem/air/SSair
 		T.needs_air_update = FALSE
 
 		#ifdef ZASDBG
-		T.overlays -= mark
+		T.cut_overlay(mark)
 		#endif
 
 		if (MC_TICK_CHECK)
@@ -236,7 +236,7 @@ var/datum/subsystem/air/SSair
 		T.needs_air_update = FALSE
 
 		#ifdef ZASDBG
-		T.overlays -= mark
+		T.cut_overlay(mark)
 		#endif
 
 		if (MC_TICK_CHECK)

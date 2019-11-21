@@ -115,7 +115,7 @@ var/jungle_plants_init = 0
 		J.bitesize = 1+round(J.reagents.total_volume / 2, 1)
 		J.attack_hand(user)
 
-		overlays -= fruit_overlay
+		cut_overlay(fruit_overlay)
 		fruit_overlay = icon('code/modules/jungle/jungle.dmi',"fruit[fruits_left]")
 		fruit_overlay.Blend(rgb(fruit_r, fruit_g, fruit_b), ICON_ADD)
 		add_overlay(fruit_overlay)

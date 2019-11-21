@@ -280,7 +280,7 @@
 
 
 /obj/machinery/door/firedoor/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(density)
 		icon_state = "door_closed"
 		if(hatch_open)

@@ -144,7 +144,7 @@
 			H.loc = get_turf(beacon)
 		if (src)
 			qdel(src)
-		H.overlays -= I
+		H.cut_overlay(I)
 		qdel(I)
 
 

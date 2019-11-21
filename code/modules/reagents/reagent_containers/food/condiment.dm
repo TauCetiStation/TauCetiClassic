@@ -251,7 +251,7 @@
 				qdel(src)
 
 /obj/structure/condiment_shelf/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(!contents.len)
 		return
 	var/cond_number = 0

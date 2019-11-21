@@ -58,7 +58,7 @@
 	update_parents()
 
 /obj/machinery/atmospherics/components/pipeturbine/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if (dP > 10)
 		add_overlay(image('icons/obj/pipeturbine.dmi', "moto-turb"))
 	if (kin_energy > 100000)

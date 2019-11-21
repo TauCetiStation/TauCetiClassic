@@ -27,7 +27,7 @@
 
 			chargelevel = newlevel
 	else
-		overlays.Cut()
+		cut_overlays()
 /obj/machinery/cell_charger/examine(mob/user)
 	..()
 	to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")

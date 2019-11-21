@@ -172,7 +172,7 @@
 	if(isscrewdriver(W) && anchored)
 		src.panel_open = !src.panel_open
 		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
-		src.overlays.Cut()
+		src.cut_overlays()
 		if(src.panel_open)
 			src.add_overlay(image(src.icon, "[initial(icon_state)]-panel"))
 		src.updateUsrDialog()

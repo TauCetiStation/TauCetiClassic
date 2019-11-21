@@ -99,7 +99,7 @@
 
 /obj/machinery/power/solar/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)
 		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER))
 	else
@@ -299,16 +299,16 @@
 	if(stat & BROKEN)
 		icon_state = "powerb"
 		set_light(0)
-		overlays.Cut()
+		cut_overlays()
 		return
 	if(stat & NOPOWER)
 		icon_state = "power0"
 		set_light(0)
-		overlays.Cut()
+		cut_overlays()
 		return
 	icon_state = "solar"
 	set_light(light_range_on, light_power_on)
-	overlays.Cut()
+	cut_overlays()
 	if(cdir > 0)
 		add_overlay(image('icons/obj/computer.dmi', "solar_overlay_[dir]", FLY_LAYER, angle2dir(cdir)))
 	return

@@ -69,7 +69,7 @@
 			return 1
 
 /obj/structure/coatrack/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	
 	if (hat) icon_state = "coatrack1"
 	else icon_state = "coatrack0"

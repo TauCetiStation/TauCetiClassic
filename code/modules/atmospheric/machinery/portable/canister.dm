@@ -142,7 +142,7 @@ update_flag
 */
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
-		overlays.Cut()
+		cut_overlays()
 		src.icon_state = text("[]-1", src.canister_color)
 		return
 
@@ -172,7 +172,7 @@ update_flag
 	if(update_flag == last_update)
 		return
 
-	overlays.Cut()
+	cut_overlays()
 
 	if(update_flag & HOLDING)
 		add_overlay("can-open")

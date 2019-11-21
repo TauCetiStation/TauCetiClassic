@@ -28,7 +28,7 @@
 	M.notransform = TRUE
 	M.canmove = 0
 	M.icon = null
-	M.overlays.Cut()
+	M.cut_overlays()
 	M.invisibility = 101
 
 	if(istype(M, /mob/living/silicon/robot))

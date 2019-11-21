@@ -51,7 +51,7 @@
 				toEat.On_Consume(M, user)
 				if(toEat)
 					qdel(toEat)
-				overlays.Cut()
+				cut_overlays()
 				return
 
 /*
@@ -269,7 +269,7 @@
 /obj/item/weapon/tray/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 
 	// Drop all the things. All of them.
-	overlays.Cut()
+	cut_overlays()
 	for(var/obj/item/I in carrying)
 		I.loc = M.loc
 		carrying.Remove(I)
@@ -446,7 +446,7 @@
 		foundtable = 1
 		break
 
-	overlays.Cut()
+	cut_overlays()
 
 	for(var/obj/item/I in carrying)
 		I.loc = loc

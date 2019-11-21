@@ -1463,7 +1463,7 @@
 								healths.icon_state = "health6"
 
 		if(healthdoll)
-			healthdoll.overlays.Cut()
+			healthdoll.cut_overlays()
 			if(stat == DEAD)
 				healthdoll.icon_state = "healthdoll_DEAD"
 			else

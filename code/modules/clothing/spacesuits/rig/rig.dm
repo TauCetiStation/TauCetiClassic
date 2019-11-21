@@ -537,7 +537,7 @@
 
 	for(var/obj/item/rig_module/module in installed_modules)
 		if(module.suit_overlay_image)
-			user.overlays -= module.suit_overlay_image
+			user.cut_overlay(module.suit_overlay_image)
 			if(equipped)
 				user.add_overlay(module.suit_overlay_image)
 
@@ -659,7 +659,7 @@
 /obj/item/clothing/head/helmet/space/rig/syndi/update_icon(mob/user)
 	icon_state = "rig[on]-syndie[combat_mode ? "-combat" : ""]"
 	if(user)
-		user.overlays -= lamp
+		user.cut_overlay(lamp)
 		if(equipped_on_head && camera && (on || combat_mode))
 			lamp = image(icon = 'icons/mob/nuclear_helm_overlays.dmi', icon_state = "terror[combat_mode ? "_combat" : ""]_glow", layer = ABOVE_LIGHTING_LAYER)
 			lamp.plane = LIGHTING_PLANE + 1

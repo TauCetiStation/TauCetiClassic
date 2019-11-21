@@ -74,7 +74,7 @@
 	if(!check_icon_cache())
 		return
 
-	overlays.Cut()
+	cut_overlays()
 
 
 	var/turf/T = get_turf(src)

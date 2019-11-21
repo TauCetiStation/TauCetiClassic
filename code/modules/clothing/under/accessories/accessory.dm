@@ -32,7 +32,7 @@
 /obj/item/clothing/accessory/proc/on_removed(mob/user)
 	if(!has_suit)
 		return
-	has_suit.overlays -= inv_overlay
+	has_suit.cut_overlay(inv_overlay)
 	has_suit = null
 	usr.put_in_hands(src)
 	add_fingerprint(user)

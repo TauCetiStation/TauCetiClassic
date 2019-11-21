@@ -702,7 +702,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(!owner)
 		return
 
-	overlays.Cut()
+	cut_overlays()
 	//Add (facial) hair.
 	if(owner.f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[owner.f_style]

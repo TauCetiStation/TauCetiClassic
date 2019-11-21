@@ -31,7 +31,7 @@
 	..()
 	update_hud()
 	//lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
-	overlays.Cut()
+	cut_overlays()
 	for(var/image/I in overlays_standing)
 		add_overlay(I)
 
@@ -125,7 +125,7 @@
 	if(update_icons)		update_icons()
 
 /mob/living/carbon/monkey/update_fire()
-	overlays -= overlays_standing[M_FIRE_LAYER]
+	cut_overlay(overlays_standing[M_FIRE_LAYER])
 	if(on_fire)
 		overlays_standing[M_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
 		add_overlay(overlays_standing[M_FIRE_LAYER])

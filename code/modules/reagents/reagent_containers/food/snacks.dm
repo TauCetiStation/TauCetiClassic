@@ -149,7 +149,7 @@
 		)
 
 		bitecount++
-		U.overlays.Cut()
+		U.cut_overlays()
 		var/image/I = new(U.icon, "loadedfood")
 		I.color = filling_color
 		U.add_overlay(I)
@@ -2920,7 +2920,7 @@
 
 /obj/item/pizzabox/update_icon()
 
-	overlays = list()
+	cut_overlays()
 
 	// Set appropriate description
 	if( open && pizza )

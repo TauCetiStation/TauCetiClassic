@@ -99,7 +99,7 @@
 	return ..()
 
 /mob/living/carbon/slime/regenerate_icons()
-	overlays.len = 0
+	cut_overlays()
 	//var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
 	//icon_dead = "[icon_text] dead"
 	//if(stat != DEAD)

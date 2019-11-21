@@ -220,7 +220,7 @@
 
 /obj/machinery/hydroponics/update_icon()
 	//Refreshes the icon and sets the luminosity
-	overlays.Cut()
+	cut_overlays()
 
 	UpdateDescription()
 
@@ -988,7 +988,7 @@
 	unwrenchable = FALSE
 
 /obj/machinery/hydroponics/soil/update_icon()//as a regular tray but without overlays under it (awter level, nutri, weeds, etc)
-	overlays.Cut()
+	cut_overlays()
 
 	UpdateDescription()
 

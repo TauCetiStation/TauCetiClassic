@@ -203,7 +203,7 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(reagents.total_volume)
 		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
@@ -319,7 +319,7 @@
 		return
 
 /obj/item/weapon/reagent_containers/glass/bucket/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if (reagents.total_volume > 1)
 		add_overlay("bucket_water")
 	if (!is_open_container())

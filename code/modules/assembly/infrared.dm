@@ -42,7 +42,7 @@
 	return secured
 
 /obj/item/device/assembly/infra/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	attached_overlays = list()
 	if(on)
 		add_overlay("infrared_on")

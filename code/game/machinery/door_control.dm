@@ -70,7 +70,7 @@
 	return ..()
 
 /obj/machinery/door_control/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	switch(buildstage)
 		if(DOOR_CONTROL_COMPLETE)
 			if(!wiresexposed)

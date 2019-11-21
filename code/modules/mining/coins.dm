@@ -103,7 +103,7 @@
 			return
 
 		new /obj/item/stack/cable_coil/red(user.loc, 1)
-		overlays = list()
+		cut_overlays()
 		string_attached = null
 		to_chat(user, "<span class='notice'>You detach the string from the coin.</span>")
 	else

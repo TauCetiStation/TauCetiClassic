@@ -41,7 +41,7 @@
 	else if(iswirecutter(W))
 		to_chat(user, "You cut the tag off the bodybag")
 		src.name = "body bag"
-		src.overlays.Cut()
+		src.cut_overlays()
 		return
 
 
