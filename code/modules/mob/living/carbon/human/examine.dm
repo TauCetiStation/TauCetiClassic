@@ -246,9 +246,15 @@
 	msg += "<span class='warning'>"
 
 	if(nutrition < 100)
-		msg += "[t_He] [t_is] severely malnourished.\n"
+		if(!species.flags[IS_SYNTHETIC])
+			msg += "[t_He] [t_is] severely malnourished.\n"
+		else
+			msg += "His indicator blinks red.\n"
 	else if(nutrition >= 500)
-		msg += "[t_He] [t_is] quite chubby.\n"
+		if(!species.flags[IS_SYNTHETIC])
+			msg += "[t_He] [t_is] quite chubby.\n"
+		else
+			msg += "His indicator blinks blue.\n"
 
 	msg += "</span>"
 
