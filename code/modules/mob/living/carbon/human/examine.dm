@@ -244,17 +244,15 @@
 					to_chat(user, "<span class='deadsay'>[t_He] has a pulse!</span>")
 
 	msg += "<span class='warning'>"
-
-	if(nutrition < 100)
-		if(!species.flags[IS_SYNTHETIC])
+	
+	if(!species.flags[IS_SYNTHETIC])
+		if(nutrition < 100)
 			msg += "[t_He] [t_is] severely malnourished.\n"
-		else
-			msg += "His indicator blinks red.\n"
-	else if(nutrition >= 500)
-		if(!species.flags[IS_SYNTHETIC])
+		else if(nutrition >= 500)
 			msg += "[t_He] [t_is] quite chubby.\n"
-		else
-			msg += "His indicator blinks blue.\n"
+	else
+		if(nutrition < (nutrition*0.10))
+			msg += "His indicator of charge blinks red.\n"
 
 	msg += "</span>"
 
