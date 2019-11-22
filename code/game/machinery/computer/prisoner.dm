@@ -69,15 +69,18 @@
 
 	if(href_list["inject1"])
 		var/obj/item/weapon/implant/I = locate(href_list["inject1"])
-		if(I)	I.activate(1)
+		if(I && istype(I) && I in implant_list)
+			if(I)	I.activate(1)
 
 	else if(href_list["inject5"])
 		var/obj/item/weapon/implant/I = locate(href_list["inject5"])
-		if(I)	I.activate(5)
+		if(I && istype(I) && I in implant_list)
+			if(I)	I.activate(5)
 
 	else if(href_list["inject10"])
 		var/obj/item/weapon/implant/I = locate(href_list["inject10"])
-		if(I)	I.activate(10)
+		if(I && istype(I) && I in implant_list)
+			if(I)	I.activate(10)
 
 	else if(href_list["lock"])
 		if(src.allowed(usr))
@@ -89,13 +92,13 @@
 		var/warning = sanitize(input(usr,"Message:","Enter your message here!",""))
 		if(!warning) return
 		var/obj/item/weapon/implant/I = locate(href_list["warn"])
-		if((I)&&(I.imp_in))
+		if(I && istype(I) && I.imp_in)
 			var/mob/living/carbon/R = I.imp_in
 			to_chat(R, "<span class='notice'>You hear a voice in your head saying: '[warning]'</span>")
 
 	else if(href_list["Shock"])
 		var/obj/item/weapon/implant/I = locate(href_list["Shock"])
-		if((I)&&(I.imp_in))
+		if(I && istype(I) && I.imp_in)
 			if(lastUsing + SHOCK_COOLDOWN > world.time)
 				to_chat(usr, "It isn't ready to use.")
 			else
@@ -106,12 +109,5 @@
 				R.Stun(7)
 				playsound(R, 'sound/items/surgery/defib_zap.ogg')
 				lastUsing = world.time
-
-	else if(href_list["lock"])
-		if(src.allowed(usr))
-			screen = !screen
-		else
-			to_chat(usr, "Unauthorized Access.")
-
 	src.updateUsrDialog()
-	#undef SHOCK_COOLDOWN
+#undef SHOCK_COOLDOWN
