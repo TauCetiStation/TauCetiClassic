@@ -253,8 +253,10 @@
 	else
 		var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
 		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
-		if(nutrition < (C.maxcharge*0.1))
+		if(nutrition < (C.maxcharge*0.1) && C)
 			msg += "His indicator of charge blinks red.\n"
+		else
+			msg += "[t_He] has no battery!\n"
 
 	msg += "</span>"
 
