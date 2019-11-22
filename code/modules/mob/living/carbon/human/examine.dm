@@ -255,7 +255,7 @@
 		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
 		if(nutrition < (C.maxcharge*0.1) && C)
 			msg += "His indicator of charge blinks red.\n"
-		else
+		if(!C)
 			msg += "[t_He] has no battery!\n"
 
 	msg += "</span>"
