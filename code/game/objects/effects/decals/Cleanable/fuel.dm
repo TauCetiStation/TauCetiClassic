@@ -40,7 +40,10 @@
 					amount *= 0.75
 
 /obj/effect/decal/cleanable/liquid_fuel/Crossed(mob/living/M)
-	M.adjust_fire_stacks(5)
+	if(M.crawling)
+		M.adjust_fire_stacks(10)
+	if(M.fire_stacks <= 5)
+		M.adjust_fire_stacks(5)
 
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel
