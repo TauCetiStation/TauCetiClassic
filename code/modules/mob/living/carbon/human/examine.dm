@@ -251,7 +251,9 @@
 		else if(nutrition >= 500)
 			msg += "[t_He] [t_is] quite chubby.\n"
 	else
-		if(nutrition < (nutrition*0.10))
+		var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
+		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
+		if(nutrition < (C.maxcharge*0.1))
 			msg += "His indicator of charge blinks red.\n"
 
 	msg += "</span>"
