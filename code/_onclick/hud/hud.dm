@@ -14,6 +14,17 @@
 	including inventories and item quick actions.
 */
 
+// The default UI style is the first one in the list
+var/global/list/available_ui_styles = list(
+	"White" = 'icons/mob/screen1_White.dmi',
+	"Midnight" = 'icons/mob/screen1_Midnight.dmi',
+	"old" = 'icons/mob/screen1_old.dmi',
+	"Orange" = 'icons/mob/screen1_Orange.dmi'
+	)
+
+/proc/ui_style2icon(ui_style)
+	return global.available_ui_styles[ui_style] || global.available_ui_styles[global.available_ui_styles[1]]
+
 /datum/hud
 	var/mob/mymob
 
@@ -41,14 +52,22 @@
 	var/action_buttons_hidden = 0
 	var/list/obj/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
 
+	// subtypes can override this to force a specific UI style
+	var/ui_style
+
 /datum/hud/New(mob/owner)
 	mymob = owner
+
+	if (!ui_style)
+		// will fall back to the default if any of these are null
+		ui_style = ui_style2icon(mymob.client && mymob.client.prefs && mymob.client.prefs.UI_style)
+
 	for(var/mytype in subtypesof(/obj/screen/plane_master))
 		var/obj/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
+
 	instantiate()
-	..()
 
 /datum/hud/Destroy()
 	grab_intent = null
@@ -131,18 +150,17 @@
 	if(!mymob.client)
 		return 0
 
-	var/ui_style = ui_style2icon(mymob.client.prefs.UI_style)
 	var/ui_color = mymob.client.prefs.UI_style_color
 	var/ui_alpha = mymob.client.prefs.UI_style_alpha
 
 	if(ishuman(mymob))
-		human_hud(ui_style, ui_color, ui_alpha) // Pass the player the UI style chosen in preferences
+		human_hud(ui_color, ui_alpha) // Pass the player the UI style chosen in preferences
 	else if(isIAN(mymob))
 		ian_hud()
 	else if(ismonkey(mymob))
-		monkey_hud(ui_style)
+		monkey_hud()
 	else if(isbrain(mymob))
-		brain_hud(ui_style)
+		brain_hud()
 	else if(isfacehugger(mymob))
 		facehugger_hud()
 	else if(islarva(mymob))

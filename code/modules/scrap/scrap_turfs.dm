@@ -50,9 +50,22 @@
 		if(!A.density && !locate(/obj/structure/scrap in A.contents))
 			new /obj/random/scrap/dense_weighted(A)
 
+/turf/proc/resource_definition()
+	LAZYINITLIST(resources)
+	LAZYSET(resources, "silicates", rand(3,6))
+	LAZYSET(resources, "carbonaceous rock", rand(3,6))
+	LAZYSET(resources, "iron", rand(2,4))
+	LAZYSET(resources, "gold", rand(0,4))
+	LAZYSET(resources, "silver", rand(0,1))
+	LAZYSET(resources, "uranium", rand(0,4))
+	LAZYSET(resources, "diamond", rand(0,1))
+	LAZYSET(resources, "phoron", rand(2,4))
+	LAZYSET(resources, "osmium", rand(0,2))
+	LAZYSET(resources, "hydrogen", rand(2,4))
+
 /turf/simulated/floor/plating/ironsand/junkyard
 	var/dug = 0
-
+	has_resources = 1
 
 /turf/simulated/floor/plating/ironsand/junkyard/surround_by_scrap()
 	if(prob(1))
