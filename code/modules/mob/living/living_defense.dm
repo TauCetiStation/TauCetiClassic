@@ -204,7 +204,7 @@
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
-		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
+		src.visible_message("<span class='warning'>[src] catches fire!</span>",
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
 		update_fire()
