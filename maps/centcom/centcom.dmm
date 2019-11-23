@@ -14729,7 +14729,7 @@
 /area/shuttle/vox/station)
 "aZr" = (
 /obj/structure/rack,
-/obj/item/weapon/crossbow/vox,
+/obj/item/weapon/crossbow,
 /obj/item/weapon/arrow,
 /obj/item/weapon/arrow,
 /obj/item/weapon/arrow,
