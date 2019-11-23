@@ -616,9 +616,13 @@
 
 /obj/machinery/power/apc/interact(mob/user)
 	//Synthetic human mob goes here.
+	if (user.is_busy()) 
+		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == "grab")
+		var/obj/item/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
+		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
+		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == I_GRAB && C)
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(emagged || (stat & BROKEN))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -626,19 +630,53 @@
 				s.start()
 				to_chat(H, "<span class='warning'>The APC power currents surge eratically, damaging your chassis!</span>")
 				H.adjustFireLoss(10,0)
-			else if(src.cell && src.cell.charge > 0)
-				if(H.nutrition < 450)
-
-					if(src.cell.charge >= 500)
-						H.nutrition += 50
-						src.cell.charge -= 500
+			else if(src.cell && src.cell.charge > 500 && H.a_intent == I_GRAB)
+				if(H.nutrition < C.maxcharge*0.9)
+					if(src.cell.charge)
+						to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and start siphon off some of the stored charge for your own use.</span>")
+						while(H.nutrition < C.maxcharge)
+							if(do_after(user,10,target = src) && H.a_intent == I_GRAB)
+								if(!src.cell)
+									to_chat(user, "<span class='notice'>There is no cell.</span>")
+									break
+								else if(emagged || malfhack || (stat & (BROKEN|EMPED)) || shorted)
+									break
+								else if(H.nutrition > C.maxcharge*0.9)
+									to_chat(user, "<span class='notice'>You're fully charge.</span>")
+									break
+								else if(src.cell.charge < src.cell.maxcharge*0.1)
+									to_chat (user, "<span class='notice'>There is not enough charge to draw from that APC.</span>")
+									break
+											
+								else if(src.cell.use(500))
+									H.nutrition += C.maxcharge*0.1
+									to_chat(user, "<span class='notice'>Draining... Battery has [round(100.0*H.nutrition/C.maxcharge)]% of charge.</span>")
+							
+							else
+								to_chat (user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
+								break
 					else
+
 						H.nutrition += src.cell.charge/10
 						src.cell.charge = 0
 
-					to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and siphon off some of the stored charge for your own use.</span>")
-					if(src.cell.charge < 0) src.cell.charge = 0
-					if(H.nutrition > 500) H.nutrition = 500
+					if(!src.cell)
+						src.charging = 0
+						return
+
+					if(emagged || malfhack || (stat & (BROKEN|EMPED)) || shorted)
+						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+						s.set_up(3, 1, src)
+						s.start()
+						to_chat (user, "<span class='warning'>Something wrong with that APC.</span>")
+						H.adjustFireLoss(10,0)
+						return
+
+					if(src.cell.charge < 0)
+						src.cell.charge = 0
+					if(H.nutrition > C.maxcharge)
+						H.nutrition = C.maxcharge
+
 					src.charging = 1
 
 				else
