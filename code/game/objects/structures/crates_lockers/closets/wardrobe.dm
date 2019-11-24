@@ -215,15 +215,13 @@
 	icon_state = "white"
 	icon_closed = "white"
 
-/obj/structure/closet/wardrobe/toxins_white/PopulateContents()
+/obj/structure/closet/wardrobe/science_white/PopulateContents()
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/under/rank/scientist(src)
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/suit/storage/labcoat(src)
+		new /obj/item/clothing/suit/storage/labcoat/science(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/shoes/white(src)
-	for (var/i in 1 to 3)
-		new /obj/item/clothing/shoes/slippers(src)
 
 
 /obj/structure/closet/wardrobe/robotics_black

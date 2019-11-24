@@ -562,11 +562,15 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Research Division"
 	icon_state = "research"
 
+/area/station/rnd/storage
+	name = "Research Storage"
+	icon_state = "research"
+
 /area/station/rnd/xenobiology
 	name = "Xenobiology Lab"
 	icon_state = "toxlab"
 
-/area/station/rnd/storage
+/area/station/rnd/toxins_storage
 	name = "Toxins Storage"
 	icon_state = "toxstorage"
 
