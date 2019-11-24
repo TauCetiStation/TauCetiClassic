@@ -303,6 +303,67 @@
 	icon_state = "mimepack"
 	item_state = "mimepack"
 
+/obj/item/weapon/storage/backpack/sportsatchel
+	name = "sporty satchel"
+	desc = "A casual sporty satchel with extra pocket."
+	icon_state = "sportysatchel_grey"
+	item_state = "sportysatchel_grey"
+
+/obj/item/weapon/storage/backpack/sportsatchel/med
+	name = "medical sporty satchel"
+	desc = "A sterile sporty satchel used in medical departments."
+	icon_state = "sportysatchel_med"
+	item_state = "sportysatchel_med"
+
+/obj/item/weapon/storage/backpack/sportsatchel/vir
+	name = "virologist sporty satchel"
+	desc = "A sterile sporty satchel with virologist colours."
+	icon_state = "sportysatchel_vir"
+	item_state = "sportysatchel_vir"
+
+/obj/item/weapon/storage/backpack/sportsatchel/chem
+	name = "chemist sporty satchel"
+	desc = "A sterile sporty satchel with chemist colours."
+	icon_state = "sportysatchel_chem"
+	item_state = "sportysatchel_chem"
+
+/obj/item/weapon/storage/backpack/sportsatchel/gen
+	name = "geneticist sporty satchel"
+	desc = "A sterile sporty satchel with geneticist colours."
+	icon_state = "couriersatchel_gen"
+	item_state = "couriersatchel_gen"
+
+/obj/item/weapon/storage/backpack/sportsatchel/sci
+	name = "scientist sporty satchel"
+	desc = "Useful for holding research materials."
+	icon_state = "sportysatchel_sci"
+	item_state = "sportysatchel_sci"
+
+/obj/item/weapon/storage/backpack/sportsatchel/hyd
+	name = "hydroponics sporty satchel"
+	desc = "A green backpack for plant related work."
+	icon_state = "sportysatchel_hyd"
+	item_state = "sportysatchel_hyd"
+
+/obj/item/weapon/storage/backpack/sportsatchel/eng
+	name = "engineer sporty satchel"
+	desc = "A casual sporty satchel made of insulated material"
+	icon_state = "sportysatchel_eng"
+	item_state = "sportysatchel_eng"
+
+/obj/item/weapon/storage/backpack/sportsatchel/sec
+	name = "security sporty satchel"
+	desc = "A robust sporty satchel for security related needs."
+	icon_state = "sportysatchel_sec"
+	item_state = "sportysatchel_sec"
+
+/obj/item/weapon/storage/backpack/sportsatchel/cap
+	name = "captain sporty satchel"
+	desc = "An exclusive sporty satchel for Nanotrasen officers."
+	icon_state = "sportysatchel_cap"
+	item_state = "sportysatchel_cap"
+
+
 /obj/item/weapon/storage/backpack/satchel/flat
 	name = "smuggler's satchel"
 	desc = "A very slim satchel that can easily fit into tight spaces."

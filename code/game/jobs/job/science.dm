@@ -35,6 +35,8 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
 		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(6)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/sportsatchel/sci(H), SLOT_BACK)
 
 	if(visualsOnly)
 		return
@@ -75,6 +77,8 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
 		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(6)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/sportsatchel/sci(H), SLOT_BACK)
 
 	if(visualsOnly)
 		return
@@ -117,6 +121,8 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
 		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(6)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/sportsatchel/sci(H), SLOT_BACK)
 
 	if(visualsOnly)
 		return
@@ -154,6 +160,8 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
 		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(6)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/sportsatchel/sci(H), SLOT_BACK)
 
 	if(visualsOnly)
 		return
@@ -184,6 +192,7 @@
 	if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
 	if(H.backbag == 4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
 	if(H.backbag == 5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+	if(H.backbag == 6) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/sportsatchel/sci(H), SLOT_BACK)
 	if(H.gender == FEMALE)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/roboticist_fem(H), SLOT_W_UNIFORM)
 	else
@@ -225,6 +234,8 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
 		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(6)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/sportsatchel/sci(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist_new(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), SLOT_SHOES)
 

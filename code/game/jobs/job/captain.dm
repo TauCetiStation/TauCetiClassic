@@ -22,6 +22,7 @@
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/cap(H), SLOT_BACK)
 		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(6) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/sportsatchel/cap(H), SLOT_BACK)
 
 	var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/captain(H)
 	if(H.age > (H.species.min_age + H.species.max_age) / 2)
@@ -87,6 +88,7 @@
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
 		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(6) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/sportsatchel/cap(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_personnel(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), SLOT_SHOES)
 

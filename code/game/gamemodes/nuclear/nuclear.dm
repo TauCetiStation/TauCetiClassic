@@ -262,6 +262,8 @@
 		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(synd_mob), SLOT_BACK)
 	if(synd_mob.backbag == 5)
 		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(synd_mob), SLOT_BACK)
+	if(synd_mob.backbag == 6)
+		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/sportsatchel(synd_mob), SLOT_BACK)
 	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m12mm(synd_mob), SLOT_IN_BACKPACK)
 	synd_mob.equip_to_slot_or_del(new /obj/item/device/radio/uplink(synd_mob), SLOT_IN_BACKPACK)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), SLOT_IN_BACKPACK)

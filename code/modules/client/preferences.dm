@@ -400,7 +400,7 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	character.socks = socks
 
-	if(backbag > 5 || backbag < 1)
+	if(backbag > 6 || backbag < 1)
 		backbag = 1 //Same as above
 	character.backbag = backbag
 

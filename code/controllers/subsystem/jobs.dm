@@ -492,6 +492,9 @@ var/datum/subsystem/job/SSjob
 					if(5)
 						var/obj/item/weapon/storage/backpack/satchel/BPK = new(H)
 						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
+					if(6)
+						var/obj/item/weapon/storage/backpack/sportsatchel/BPK = new(H)
+						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 
 	/*
 	Placed here so the backpack that spawns if there is no job backpack has already spawned by now.

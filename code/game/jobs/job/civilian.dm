@@ -81,6 +81,7 @@
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), SLOT_BACK)
 		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(6) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/sportsatchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/miner(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
 
@@ -151,6 +152,7 @@
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
 		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(6) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/sportsatchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
 	if(H.gender == FEMALE)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/bartender_fem(H), SLOT_W_UNIFORM)
@@ -216,6 +218,7 @@
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/hyd(H), SLOT_BACK)
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/hyd(H), SLOT_BACK)
 		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(6) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/sportsatchel(H), SLOT_BACK)
 	if(H.gender == FEMALE)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/hydroponics_fem(H), SLOT_W_UNIFORM)
 	else
