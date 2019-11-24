@@ -64,8 +64,9 @@ var/datum/subsystem/ticker/ticker
 	'sound/lobby/sundown.ogg',\
 	'sound/lobby/hanging_masses.ogg',\
 	'sound/lobby/admiral-station-13.ogg',\
-	'sound/lobby/robocop_gb_intro.ogg')
 
+	'sound/lobby/robocop_gb_intro.ogg'),\
+	'sound/music/Earth_in_window.ogg')
 
 /datum/subsystem/ticker/Initialize(timeofday)
 	if(!syndicate_code_phrase)
