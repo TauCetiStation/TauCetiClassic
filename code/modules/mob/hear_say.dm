@@ -228,7 +228,7 @@
 	if (sdisabilities & DEAF || ear_deaf)
 		return
 
-	else if(prob(15))
+	if(prob(15))
 		var/list/punctuation = list(",", "!", ".", ";", "?")
 		var/list/messages = splittext(message, " ")
 		var/R = rand(1, messages.len)
