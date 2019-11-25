@@ -61,7 +61,17 @@
 		if(speaker == src)
 			to_chat(src, "<span class='warning'>You cannot hear yourself speak!</span>")
 		else
-			to_chat(src, "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear \him.")
+			var/pronoun = null
+			switch(speaker.gender)
+				if(MALE)
+					pronoun = "him"
+				if(FEMALE)
+					pronoun = "she"
+				if(PLURAL)
+					pronoun = "them"
+				else
+					pronoun = "it"
+			to_chat(src, "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear [pronoun].")
 	else
 		if(language)
 			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][language.format_message(message, verb)]</span>")
@@ -213,6 +223,9 @@
 /mob/proc/hear_sleep(message, datum/language/language)
 	var/heard = ""
 	if (language && ((language.flags & NONVERBAL) || (language.flags & SIGNLANG)))
+		return
+
+	if (sdisabilities & DEAF || ear_deaf)
 		return
 
 	else if(prob(15))
