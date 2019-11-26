@@ -14,17 +14,12 @@
 	storage_slots = 7
 
 	var/obj/item/weapon/tank/tank = null                // Tank of gas for use in firing the cannon.
-	var/obj/item/weapon/storage/tank_container          // Something to hold the tank item so we don't accidentally fire it.
+	var/obj/item/weapon/storage/tank_container = new()  // Something to hold the tank item so we don't accidentally fire it.
 	var/pressure_setting = 10                           // Percentage of the gas in the tank used to fire the projectile.
 	var/possible_pressure_amounts = list(5,10,20,25,50) // Possible pressure settings.
 	var/minimum_tank_pressure = 10                      // Minimum pressure to fire the gun.
 	var/cooldown = 0                                    // Whether or not we're cooling down.
 	var/cooldown_time = 50                              // Time between shots.
-
-/obj/item/weapon/storage/pneumatic/atom_init()
-	. = ..()
-	tank_container = new(src)
-	tank_container.tag = "gas_tank_holder"
 
 /obj/item/weapon/storage/pneumatic/verb/set_pressure() //set amount of tank pressure.
 
