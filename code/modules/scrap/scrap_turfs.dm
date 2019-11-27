@@ -3,7 +3,7 @@
 	icon_state = "rock"
 
 /obj/effect/scrap_pile_generator/atom_init(mapload, heap_size = 1)
-	. = ..()
+	..()
 	var/size = 0
 	var/maintype = /obj/random/scrap/dense_weighted
 	var/subtype = /obj/random/scrap/sparse_weighted
@@ -35,6 +35,7 @@
 	for(var/turf/T in makesparse)
 		if(!locate(/obj/structure/scrap in T.contents))
 			new subtype(T)
+	return INITIALIZE_HINT_QDEL
 
 /turf/simulated/mineral/airfull
 	basetype = /turf/simulated/floor/plating/ironsand
@@ -49,6 +50,31 @@
 		A = get_step(src, newdir)
 		if(!A.density && !locate(/obj/structure/scrap in A.contents))
 			new /obj/random/scrap/dense_weighted(A)
+
+/turf/proc/spawn_structures_junkyard()
+	if(!prob(3))
+		return
+	if(!prob(10))
+		return
+	var/area/awaymission/junkyard/self_area = get_area(src)
+	if(!istype(self_area, /area/awaymission/junkyard))
+		return
+
+	if(self_area.structures_max <= self_area.structures)
+		return
+
+	var/datum/map_template/junkyard_structure/template = structures_junkyard_templates[pick(structures_junkyard_templates)]
+	var/status = template.check_deploy(src)
+	if(status)
+		template.load(src, centered = TRUE)
+		var/affected = template.get_affected_turfs(src, centered=TRUE)
+		for(var/turf/simulated/T in affected)
+			if(!istype(T, /turf/simulated/floor/plating/ironsand/junkyard))
+				T.make_old()
+			for(var/obj/sub_obj in T.contents)
+				sub_obj.make_old()
+		self_area.structures += 1
+		return
 
 /turf/proc/resource_definition()
 	LAZYINITLIST(resources)
@@ -111,8 +137,6 @@
 		if(prob(1))
 			new /obj/effect/scrap_pile_generator(src, 2)
 			return
-		if(prob(1) && prob(30))
-			new /obj/random/mobs/moderate(src)
 
 /turf/simulated/floor/plating/ironsand/junkyard/dangerous/surround_by_scrap()
 	if(..())
@@ -120,10 +144,10 @@
 			new /obj/effect/scrap_pile_generator(src, 3)
 			return
 		if(prob(1))
-			new /obj/random/mobs/dangerous(src)
 			if(prob(10))
 				new /obj/random/mobs/peacefull(src)
-
+				if(prob(5))
+					new /obj/random/mobs/dangerous(src)
 
 /turf/simulated/floor/plating/ironsand/junkyard/attackby(obj/item/weapon/W, mob/user)
 	if(!W || !user)

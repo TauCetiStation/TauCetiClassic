@@ -28,7 +28,8 @@
 	icon_state = "firstaid"
 /obj/random/mobs/dangerous/item_to_spawn()
 		return pick(\
-						/mob/living/simple_animal/hostile/giant_spider/nurse,\
-						/mob/living/simple_animal/hostile/giant_spider/hunter,\
-						/mob/living/simple_animal/hostile/giant_spider\
+						/mob/living/simple_animal/hostile/mimic/crate,\
+						/mob/living/simple_animal/hostile/faithless,\
+						/mob/living/simple_animal/hostile/hivebot,\
+						/mob/living/simple_animal/hostile/cellular/nanite/eng\
 					)
