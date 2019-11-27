@@ -285,13 +285,16 @@
 			slowdown = offline_slowdown
 
 	if(!offline)
-		cell.use(passive_energy_use)
+		var/total_energy_use = passive_energy_use
 
 		for(var/obj/item/rig_module/module in installed_modules)
-			cell.use(module.process_module())
+			total_energy_use += module.process_module()
 			if(!wearer) // module might unequip us
 				break
-		cell.charge = min(cell.maxcharge, cell.charge)
+		if(total_energy_use > 0)
+			cell.use(total_energy_use)
+		else if(total_energy_use < 0)
+			cell.give(-total_energy_use)
 
 /obj/item/clothing/suit/space/rig/proc/give_actions(mob/living/carbon/human/H)
 	for(var/obj/item/rig_module/module in installed_modules)

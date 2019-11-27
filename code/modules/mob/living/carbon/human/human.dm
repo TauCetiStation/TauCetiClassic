@@ -119,6 +119,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	. = ..()
 
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN)
 	human_list += src
 
 	if(dna)
@@ -1247,9 +1248,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					stage++
 			else
 				if(!prob((reagents.total_volume * 9) + 10))
-					visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but it gets stuck in your throat!</span>")
-					adjustOxyLoss(3)
-					adjustHalLoss(5)
+					H.visible_message("<span class='warning'>[H] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but it gets stuck in your throat!</span>")
+					H.adjustOxyLoss(3)
+					H.adjustHalLoss(5)
 					return FALSE
 				H.vomit()
 		else

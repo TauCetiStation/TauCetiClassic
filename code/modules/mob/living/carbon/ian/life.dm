@@ -96,7 +96,7 @@
 					else
 						emote(pick(emote_hear),2)
 
-	if (stat != DEAD)
+	if (stat != DEAD && !IS_IN_STASIS(src))
 		if(SSmob.times_fired%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
 			breathe()
@@ -166,15 +166,15 @@
 		SB.icon_state = "stam_bar_[round(stamina, 5)]"
 
 	if(oxygen_alert)
-		throw_alert("ian_oxy")
+		throw_alert("ian_oxy", /obj/screen/alert/ian_oxy)
 	else
 		clear_alert("ian_oxy")
 	if(phoron_alert)
-		throw_alert("ian_tox")
+		throw_alert("ian_tox", /obj/screen/alert/ian_tox)
 	else
 		clear_alert("ian_tox")
 	if(fire_alert)
-		throw_alert("ian_hot")
+		throw_alert("ian_hot", /obj/screen/alert/ian_hot)
 	else
 		clear_alert("ian_hot")
 
@@ -487,19 +487,19 @@
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-			throw_alert("pressure","highpressure",2)
+			throw_alert("pressure", /obj/screen/alert/highpressure, 2)
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			throw_alert("pressure","highpressure",1)
+			throw_alert("pressure", /obj/screen/alert/highpressure, 1)
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
 			clear_alert("pressure")
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-			throw_alert("pressure","lowpressure",1)
+			throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 		else
 			if( !(COLD_RESISTANCE in mutations) )
 				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				throw_alert("pressure","lowpressure",2)
+				throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 			else
-				throw_alert("pressure","lowpressure",1)
+				throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 
 /mob/living/carbon/ian/handle_fire()
 	if(..())

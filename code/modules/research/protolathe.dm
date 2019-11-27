@@ -138,14 +138,14 @@ Note: Must be placed west/left of and R&D console to function.
 	var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
 	if(!I)
 		return
-	if(amount < 0)//No negative numbers
-		amount = 0
-	if(amount == 0)
-		return
 	if(amount > stack.get_amount())
 		amount = stack.get_amount()
 	if(max_material_storage - TotalMaterials() < (amount*stack.perunit))//Can't overfill
 		amount = min(stack.get_amount(), round((max_material_storage-TotalMaterials())/stack.perunit))
+	if(amount < 0)//No negative numbers
+		amount = 0
+	if(amount == 0)
+		return
 
 	busy = TRUE
 

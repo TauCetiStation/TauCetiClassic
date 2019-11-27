@@ -202,6 +202,11 @@
 	if(wear_id)
 		msg += "[t_He] [t_is] wearing [bicon(wear_id)] \a [wear_id].\n"
 
+	//Status effects
+	var/list/status_examines = status_effect_examines()
+	if (length(status_examines))
+		msg += status_examines
+
 	//Jitters
 	if(is_jittery)
 		if(jitteriness >= 300)
@@ -528,3 +533,12 @@
 				return 0
 	else
 		return 0
+
+/mob/living/proc/status_effect_examines() //You can include this in any mob's examine() to show the examine texts of status effects!
+	var/list/dat = list()
+	for(var/V in status_effects)
+		var/datum/status_effect/E = V
+		if(E.examine_text)
+			dat += "[E.examine_text]\n" //dat.Join("\n") doesn't work here, for some reason
+	if(dat.len)
+		return dat.Join()

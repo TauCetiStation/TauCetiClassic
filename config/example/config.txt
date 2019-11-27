@@ -285,3 +285,7 @@ REPOSITORY_LINK https://github.com/TauCetiStation/TauCetiClassic
 
 ## Link used by limit panic bunker to redirect a client
 # CLIENT_LIMIT_PANIC_BUNKER_LINK byond://game.taucetistation.org:2507
+
+## Replaces whatever map json file with maps/testmap.json to load testmap only.
+## Saves alot of initialization time, since only centcomm and testmap will be loaded. For tests where map doesn't matter.
+# SUMMON_TESTMAP

@@ -30,7 +30,7 @@
 
 /obj/item/weapon/gun/magic/special_check(mob/M, atom/target)
 	var/area/A = get_area(M)
-	if(istype(A, /area/wizard_station))
+	if(istype(A, /area/custom/wizard_station))
 		to_chat(M, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].</span>")
 		return FALSE
 	if(M.mind.special_role != "Wizard" && !global_access)

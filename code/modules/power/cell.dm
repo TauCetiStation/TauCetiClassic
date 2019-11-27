@@ -21,6 +21,9 @@
 
 // use power from a cell, returns the amount actually used
 /obj/item/weapon/stock_parts/cell/use(amount)
+	if(amount < 0)
+		stack_trace("[src.type]/use() called with a negative parameter [amount]")
+		return 0
 	if(rigged && amount > 0)
 		explode()
 		return 0
@@ -31,6 +34,9 @@
 
 // recharge the cell
 /obj/item/weapon/stock_parts/cell/proc/give(amount)
+	if(amount < 0)
+		stack_trace("[src.type]/give() called with a negative parameter [amount]")
+		return 0
 	if(rigged && amount > 0)
 		explode()
 		return 0
