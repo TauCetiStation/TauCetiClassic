@@ -500,28 +500,28 @@ Note that amputating the affected organ does in fact remove the infection from t
 			return 1
 	return 0
 
-/obj/item/organ/external/get_icon()
+/obj/item/organ/external/get_icon(icon_layer)
 	if (!owner)
 		return
 
 	update_sprite()
-	var/mutable_appearance/MA = mutable_appearance(icon, icon_state)
+	var/mutable_appearance/MA = mutable_appearance(icon, icon_state, -icon_layer)
 	MA.color = color
 
 	return MA
 
-/obj/item/organ/external/head/get_icon()
+/obj/item/organ/external/head/get_icon(icon_layer)
 	if (!owner)
 		return
 
 	update_sprite()
-	var/mutable_appearance/MA = mutable_appearance(icon, icon_state)
+	var/mutable_appearance/MA = mutable_appearance(icon, icon_state, -icon_layer)
 	MA.color = color
 	. = list(MA)
 
 	//Eyes
 	if(species && species.eyes)
-		var/mutable_appearance/img_eyes_s = mutable_appearance('icons/mob/human_face.dmi', species.eyes)
+		var/mutable_appearance/img_eyes_s = mutable_appearance('icons/mob/human_face.dmi', species.eyes, -icon_layer)
 		if(!(HULK in owner.mutations))
 			img_eyes_s.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
 		else
@@ -530,7 +530,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	//Mouth	(lipstick!)
 	if(owner.lip_style && owner.species.flags[HAS_LIPS]) // skeletons are allowed to wear lipstick no matter what you think, agouri.
-		var/mutable_appearance/lips = mutable_appearance('icons/mob/human_face.dmi', "lips_[owner.lip_style]_s")
+		var/mutable_appearance/lips = mutable_appearance('icons/mob/human_face.dmi', "lips_[owner.lip_style]_s", -icon_layer)
 		lips.color = owner.lip_color
 		. += lips
 
@@ -711,11 +711,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 			r_facial = owner.r_facial
 			g_facial = owner.g_facial
 			b_facial = owner.b_facial
-			var/image/facial = image("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
+			var/mutable_appearance/facial = mutable_appearance(facial_hair_style.icon, "[facial_hair_style.icon_state]_s")
 			if(facial_hair_style.do_colouration)
 				facial.color = RGB_CONTRAST(owner.r_facial, owner.g_facial, owner.b_facial)
 
-			overlays.Add(facial)
+			add_overlay(facial)
 
 	if(owner.h_style)
 		var/datum/sprite_accessory/hair_style = hair_styles_list[owner.h_style]
@@ -724,11 +724,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 			r_hair = owner.r_hair
 			g_hair = owner.g_hair
 			b_hair = owner.b_hair
-			var/image/hair = image("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
+			var/mutable_appearance/hair = mutable_appearance(hair_style.icon, "[hair_style.icon_state]_s")
 			if(hair_style.do_colouration)
 				hair.color = RGB_CONTRAST(owner.r_hair, owner.g_hair, owner.b_hair)
 
-			overlays.Add(hair)
+			add_overlay(hair)
 
 /obj/item/organ/external/head/attackby(obj/item/weapon/W, mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)

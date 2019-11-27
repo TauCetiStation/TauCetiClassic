@@ -186,16 +186,11 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/fat = (FAT in mutations) ? "fat" : null
 	var/g = (gender == FEMALE ? "f" : "m")
 
-	var/mutable_appearance/base_icon = mutable_appearance(null, null, -BODY_LAYER)
-
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.is_stump)
 			continue
-		var/mutable_appearance/temp = BP.get_icon()
 
-		base_icon.add_overlay(temp)
-
-	standing += base_icon
+		standing += BP.get_icon(BODY_LAYER)
 
 	//Underwear
 	if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
@@ -237,7 +232,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
 		if(facial_hair_style && facial_hair_style.species_allowed && (BP.species.name in facial_hair_style.species_allowed))
-			var/image/facial_s = image("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s", "layer" = -HAIR_LAYER)
+			var/mutable_appearance/facial_s = mutable_appearance(facial_hair_style.icon, "[facial_hair_style.icon_state]_s", -HAIR_LAYER)
 			if(facial_hair_style.do_colouration)
 				if(!facial_painted)
 					facial_s.color = RGB_CONTRAST(r_facial, g_facial, b_facial)
@@ -248,7 +243,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style && hair_style.species_allowed && (BP.species.name in hair_style.species_allowed))
-			var/image/hair_s = image("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s", "layer" = -HAIR_LAYER)
+			var/mutable_appearance/hair_s = mutable_appearance(hair_style.icon, "[hair_style.icon_state]_s", -HAIR_LAYER)
 			if(hair_style.do_colouration)
 				if(!hair_painted)
 					hair_s.color = RGB_CONTRAST(r_hair, g_hair, b_hair)

@@ -229,4 +229,6 @@
 			ad.Cut();\
 		}\
 		A.flags_2 &= ~OVERLAY_QUEUED_2;\
+		if(isturf(A)){SSdemo.mark_turf(A);}\
+		if(isobj(A) || ismob(A)){SSdemo.mark_dirty(A);}\
 	}

@@ -51,6 +51,7 @@
 		if(SSatoms.InitAtom(src, args))
 			//we were deleted
 			return
+	SSdemo.mark_new(src)
 
 	var/list/created = SSatoms.created_atoms
 	if(created)

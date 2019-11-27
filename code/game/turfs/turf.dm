@@ -308,6 +308,7 @@
 	if(old_flooded)
 		flooded = 1
 		update_icon()
+	SSdemo.mark_turf(W)
 
 	return W
 
