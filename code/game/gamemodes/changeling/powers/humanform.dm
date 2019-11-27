@@ -26,7 +26,7 @@
 	for (var/obj/item/weapon/implant/I in user) //Still preserving implants
 		implants += I
 
-	user.monkeyizing = 1
+	user.notransform = TRUE
 	user.canmove = 0
 	user.icon = null
 	user.overlays.Cut()

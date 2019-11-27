@@ -88,6 +88,8 @@
 
 		update_muts=1
 
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_BAREFOOT, 0.5, -1)
+
 	. = ..()
 
 	monkey_list += src

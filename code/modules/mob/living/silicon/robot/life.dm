@@ -2,7 +2,7 @@
 	set invisibility = 0
 	//set background = 1
 
-	if (src.monkeyizing)
+	if (notransform)
 		return
 
 	src.blinded = null
@@ -252,15 +252,15 @@
 			if(0.75 to INFINITY)
 				clear_alert("charge")
 			if(0.5 to 0.75)
-				throw_alert("charge","lowcell",1)
+				throw_alert("charge", /obj/screen/alert/lowcell, 1)
 			if(0.25 to 0.5)
-				throw_alert("charge","lowcell",2)
+				throw_alert("charge", /obj/screen/alert/lowcell, 2)
 			if(0.01 to 0.25)
-				throw_alert("charge","lowcell",3)
+				throw_alert("charge", /obj/screen/alert/lowcell, 3)
 			else
-				throw_alert("charge","emptycell")
+				throw_alert("charge", /obj/screen/alert/emptycell)
 	else
-		throw_alert("charge","nocell")
+		throw_alert("charge", /obj/screen/alert/nocell)
 
 	if(pullin)
 		if(pulling)

@@ -57,6 +57,14 @@
 
 	var/animalistic = TRUE // Determines whether the being here is an animal or nah.
 
+	///What kind of footstep this mob should have. Null if it shouldn't have any.
+	var/footstep_type
+
+/mob/living/simple_animal/atom_init()
+	. = ..()
+	if(footstep_type)
+		AddComponent(/datum/component/footstep, footstep_type)
+
 /mob/living/simple_animal/updatehealth()
 	return
 

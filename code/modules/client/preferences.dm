@@ -27,7 +27,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/ignore_cid_warning = 0
 
 	//game-preferences
-	var/UI_style = "White"
+	var/UI_style = null
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
 	var/aooccolor = "#b82e00"
@@ -101,7 +101,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/job_engsec_low = 0
 
 	//Keeps track of preferrence for not getting any wanted jobs
-	var/alternate_option = 0
+	var/alternate_option = RETURN_TO_LOBBY
 
 	// maps each organ to either null(intact), "cyborg" or "amputated"
 	// will probably not be able to do this for head and torso ;)
@@ -141,7 +141,8 @@ var/const/MAX_SAVE_SLOTS = 10
 
 /datum/preferences/New(client/C)
 	parent = C
-	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
+	UI_style = global.available_ui_styles[1]
+	b_type = random_blood_type()
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)

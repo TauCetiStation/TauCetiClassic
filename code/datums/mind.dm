@@ -1129,7 +1129,7 @@
 
 	else if (href_list["monkey"])
 		var/mob/living/L = current
-		if (L.monkeyizing)
+		if (L.notransform)
 			return
 		switch(href_list["monkey"])
 			if("healthy")
@@ -1473,7 +1473,7 @@
 
 	var/is_currently_brigged = 0
 
-	if(istype(T.loc,/area/security/brig))
+	if(istype(T.loc,/area/station/security/brig))
 		is_currently_brigged = 1
 		for(var/obj/item/weapon/card/id/card in current)
 			is_currently_brigged = 0

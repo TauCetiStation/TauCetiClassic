@@ -142,9 +142,6 @@
 	signlang_verb = list("emits a series of short beeps", "screeches in boops", "eminates short pings", "projects a series of screeches")
 	flags = SIGNLANG // For all intents and purposes, this is basically a sign language.
 
-/datum/language/diona_space/format_message(message, verb)
-	return "<span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
-
 /datum/language/human
 	name = "Sol Common"
 	desc = "A bastardized hybrid of informal English and elements of Mandarin Chinese; the common language of the Sol system."
@@ -190,6 +187,15 @@
 	key = list("3")
 	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
 	syllables = list ("gra","ba","ba","breh","bra","rah","dur","ra","ro","gro","go","ber","bar","geh","heh", "gra")
+
+/datum/language/unisign
+	name = "Universal Sign Language"
+	desc = "Standart language made of gestures. Common language of deaf and muted people."
+	colour = "rough"
+	key = list("4")
+	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
+	signlang_verb = list("makes signs with hands", "gestures", "waves hands", "gesticulates")
+	flags = SIGNLANG
 
 // Language handling.
 /mob/proc/add_language(language)
