@@ -229,12 +229,23 @@ var/list/ai_verbs_default = list(
 	set name = "Cryptomine"
 	var/n1 = rand(1,999)
 	var/n2 = rand(1,999)
-	answer = n1 + n2
+	var/list/op = list("*", "+", "-", "/")
+	var/op2 = pick(op)
 	var/t
 	t += "<center><h3>Solve math to gain research points!</h3></center>\n"
-
-	t += "<center>[n1] + [n2] = <a href='byond://?src=\ref[src];answer=1'>?</a></center><br>"
-	if(win == TRUE)
+	if(op2 == "*")
+		answer = n1*n2
+		t += "<center>[n1] * [n2] = <a href='byond://?src=\ref[src];answer=1'>?</a></center><br>"
+	else if(op2 == "+")
+		answer = n1+n2
+		t += "<center>[n1] + [n2] = <a href='byond://?src=\ref[src];answer=1'>?</a></center><br>"
+	else if(op2 == "-")
+		answer = n1-n2
+		t += "<center>[n1] - [n2] = <a href='byond://?src=\ref[src];answer=1'>?</a></center><br>"
+	else if(op2 == "/")
+		answer = round(n1/n2)
+		t += "<center>[n1] / [n2] = <a href='byond://?src=\ref[src];answer=1'>?</a></center><br>"
+	if(win)
 		t += "<left><font color='green'><h3><b>[points_gained] points added.</b></h3></font></left><br>"
 
 	var/datum/browser/popup = new(src, "cryptomine", "Cryptomine", 300, 200)
@@ -552,15 +563,16 @@ var/list/ai_verbs_default = list(
 			return
 
 	if(href_list["answer"])
+		points_gained = rand(1,10)
 		answer2 = input("Type answer.", answer2) as num
 		if(answer == answer2)
 			win = TRUE
 			for(var/obj/machinery/computer/rdconsole/RD in RDcomputer_list)
 				if(RD.id == 1)
-					points_gained = rand(1,10)
 					RD.files.research_points += points_gained
 			cryptomine()
 		else
+			points_gained = 0
 			win = FALSE
 			cryptomine()
 
