@@ -301,7 +301,6 @@
 #include "code\game\area\ai_monitored.dm"
 #include "code\game\area\areas.dm"
 #include "code\game\area\gamma_areas.dm"
-#include "code\game\area\Space Station 13 areas.dm"
 #include "code\game\dna\dn2_misc.dm"
 #include "code\game\dna\dna2.dm"
 #include "code\game\dna\dna2_domutcheck.dm"
