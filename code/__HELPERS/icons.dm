@@ -665,12 +665,12 @@ The _flatIcons list is a cache for generated icon files.
 			noIcon = TRUE // Do not render this object.
 
 	var/curdir
-	if(!exact && (A.dir != 2))
-		curdir = A.dir
-	else if(exact)
-		curdir = 2
-	else
+	if(!exact && (!A.dir || A.dir == SOUTH))
 		curdir = defdir
+	else if(exact)
+		curdir = SOUTH
+	else
+		curdir = A.dir
 
 	var/curblend
 	if(A.blend_mode == BLEND_DEFAULT)
@@ -864,7 +864,8 @@ var/global/list/humanoid_icon_cache = list()
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 
 		for(var/D in showDirs)
-			body.dir = D
+			body.set_dir(D)
+			COMPILE_OVERLAYS(body)
 			var/icon/partial = getFlatIcon(body)
 			out_icon.Insert(partial,dir=D)
 
