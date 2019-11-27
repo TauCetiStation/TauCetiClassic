@@ -14,7 +14,8 @@ var/list/ai_verbs_default = list(
 	/mob/living/silicon/ai/proc/show_laws_verb,
 	/mob/living/silicon/ai/proc/toggle_acceleration,
 	/mob/living/silicon/ai/proc/change_floor,
-	/mob/living/silicon/ai/proc/ai_emergency_message
+	/mob/living/silicon/ai/proc/ai_emergency_message,
+	/mob/living/silicon/ai/proc/cryptomine
 )
 
 //Not sure why this is necessary...
@@ -53,6 +54,11 @@ var/list/ai_verbs_default = list(
 	var/obj/item/device/radio/headset/heads/ai_integrated/aiRadio = null
 	var/custom_sprite = 0 //For our custom sprites
 	var/next_emergency_message_time = 0
+	var/win
+	var/answer = null
+	var/answer2 = null
+	var/points_gained
+
 //Hud stuff
 
 	//MALFUNCTION
@@ -217,6 +223,24 @@ var/list/ai_verbs_default = list(
 		set_power_use(NO_POWER_USE)
 	if(powered_ai.anchored)
 		set_power_use(ACTIVE_POWER_USE)
+
+/mob/living/silicon/ai/proc/cryptomine()
+	set category = "AI Commands"
+	set name = "Cryptomine"
+	var/n1 = rand(1,999)
+	var/n2 = rand(1,999)
+	answer = n1 + n2
+	var/t
+	t += "<center><h3>Solve math to gain research points!</h3></center>\n"
+
+	t += "<center>[n1] + [n2] = <a href='byond://?src=\ref[src];answer=1'>?</a></center><br>"
+	if(win == TRUE)
+		t += "<left><font color='green'><h3><b>[points_gained] points added.</b></h3></font></left><br>"
+
+	var/datum/browser/popup = new(src, "cryptomine", "Cryptomine", 300, 200)
+	popup.set_content(t)
+	popup.open()
+
 
 /mob/living/silicon/ai/proc/pick_icon()
 	set category = "AI Commands"
@@ -466,7 +490,7 @@ var/list/ai_verbs_default = list(
 /mob/living/silicon/ai/Topic(href, href_list)
 	if(usr != src)
 		return
-	..()
+	. = ..()
 	if (href_list["mach_close"])
 		if (href_list["mach_close"] == "aialerts")
 			viewalerts = 0
@@ -526,6 +550,19 @@ var/list/ai_verbs_default = list(
 		else
 			to_chat(src, "<span class='rose'>System error. Cannot locate [html_decode(href_list["trackname"])].</span>")
 			return
+
+	if(href_list["answer"])
+		answer2 = input("Type answer.", answer2) as num
+		if(answer == answer2)
+			win = TRUE
+			for(var/obj/machinery/computer/rdconsole/RD in RDcomputer_list)
+				if(RD.id == 1)
+					points_gained = rand(1,10)
+					RD.files.research_points += points_gained
+			cryptomine()
+		else
+			win = FALSE
+			cryptomine()
 
 	else if (href_list["faketrack"])
 		var/mob/target = locate(href_list["track"]) in living_list
