@@ -29,17 +29,18 @@
 /mob/living/carbon/human/dust()
 	death(1)
 	var/atom/movable/overlay/animation = null
+	var/icon/I = getFlatIcon(src)
 	notransform = TRUE
 	canmove = 0
-	icon = null
-	invisibility = 101
 
 	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
+	I.Blend(icon('icons/effects/effects.dmi',"disappear"),ICON_OVERLAY)
+	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+	icon = null
+	invisibility = 101
+	animation.icon = I
 	animation.master = src
 
-	flick("dust-h", animation)
 	new /obj/effect/decal/remains/human(loc)
 
 	spawn(15)
