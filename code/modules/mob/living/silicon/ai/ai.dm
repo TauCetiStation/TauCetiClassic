@@ -232,7 +232,6 @@ var/list/ai_verbs_default = list(
 	var/list/op = list("*", "+", "-", "/")
 	var/op2 = pick(op)
 	var/t
-	t += "<center><h3>Solve math to gain research points!</h3></center>\n"
 	t += "<div class='statusDisplay'>"
 	if(op2 == "*")
 		answer = n1*n2
@@ -244,11 +243,11 @@ var/list/ai_verbs_default = list(
 		answer = n1-n2
 		t += "<center>[n1] - [n2] = <a href='byond://?src=\ref[src];answer=1'>?</a></center>"
 	else if(op2 == "/")
-		answer = round(n1/n2)
+		answer = round(n1/n2, 0.01)
 		t += "<center>[n1] / [n2] = <a href='byond://?src=\ref[src];answer=1'>?</a></center>"
 	t += "</div>"
 	if(win)
-		t += "<font color=green><left><h3><b>[points_gained] points added.</b></h3></left></font>"
+		t += "<br><left><h3><b><font color=green>[points_gained] points added.</font></b></h3></left>"
 
 	var/datum/browser/popup = new(src, "cryptomine", "Cryptomine", 300, 200)
 	popup.set_content(t)
