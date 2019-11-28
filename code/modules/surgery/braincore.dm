@@ -109,7 +109,7 @@
 	target.organs -= B
 	target.organs_by_name -= O_BRAIN // this is SOOO wrong.
 
-	target:brain_op_stage = 4.0
+	target.brain_op_stage = 4.0
 	target.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
 
 /datum/surgery_step/brain/saw_spine/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
