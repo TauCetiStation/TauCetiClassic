@@ -1,4 +1,7 @@
 /mob/living/carbon/ian/Life()
+	if (notransform)
+		return
+
 	..()
 
 	if(soap_eaten) //Yeshhh, even dead, as long as body exist or timer runs out, its a chemical reaction after all!
