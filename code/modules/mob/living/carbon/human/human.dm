@@ -2033,6 +2033,21 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	else
 		return 1
 
+/mob/living/carbon/human/proc/need_breathe()
+	if(NO_BREATH in src.mutations)
+		return FALSE
+	if(reagents.has_reagent("lexorin"))
+		return FALSE
+	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		return FALSE
+	if(species && (species.flags[NO_BREATHE] || species.flags[IS_SYNTHETIC]))
+		return FALSE
+	if(dna && dna.mutantrace == "adamantine")
+		return FALSE
+	if(ismob(loc))
+		return FALSE
+	return TRUE
+
 /mob/living/carbon/human/CanObtainCentcommMessage()
 	return istype(l_ear, /obj/item/device/radio/headset) || istype(r_ear, /obj/item/device/radio/headset)
 
