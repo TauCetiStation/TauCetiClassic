@@ -58,7 +58,7 @@ var/list/ai_verbs_default = list(
 	var/answer = null
 	var/answer2 = null
 	var/points_gained
-
+	
 //Hud stuff
 
 	//MALFUNCTION
@@ -233,20 +233,22 @@ var/list/ai_verbs_default = list(
 	var/op2 = pick(op)
 	var/t
 	t += "<center><h3>Solve math to gain research points!</h3></center>\n"
+	t += "<div class='statusDisplay'>"
 	if(op2 == "*")
 		answer = n1*n2
-		t += "<center>[n1] * [n2] = <a href='byond://?src=\ref[src];answer=1'>?</a></center><br>"
+		t += "<center>[n1] * [n2] = <a href='byond://?src=\ref[src];answer=1'>?</a></center>"
 	else if(op2 == "+")
 		answer = n1+n2
-		t += "<center>[n1] + [n2] = <a href='byond://?src=\ref[src];answer=1'>?</a></center><br>"
+		t += "<center>[n1] + [n2] = <a href='byond://?src=\ref[src];answer=1'>?</a></center>"
 	else if(op2 == "-")
 		answer = n1-n2
-		t += "<center>[n1] - [n2] = <a href='byond://?src=\ref[src];answer=1'>?</a></center><br>"
+		t += "<center>[n1] - [n2] = <a href='byond://?src=\ref[src];answer=1'>?</a></center>"
 	else if(op2 == "/")
 		answer = round(n1/n2)
-		t += "<center>[n1] / [n2] = <a href='byond://?src=\ref[src];answer=1'>?</a></center><br>"
+		t += "<center>[n1] / [n2] = <a href='byond://?src=\ref[src];answer=1'>?</a></center>"
+	t += "</div>"
 	if(win)
-		t += "<left><font color='green'><h3><b>[points_gained] points added.</b></h3></font></left><br>"
+		t += "<font color=green><left><h3><b>[points_gained] points added.</b></h3></left></font>"
 
 	var/datum/browser/popup = new(src, "cryptomine", "Cryptomine", 300, 200)
 	popup.set_content(t)
@@ -563,17 +565,18 @@ var/list/ai_verbs_default = list(
 			return
 
 	if(href_list["answer"])
-		points_gained = rand(1,10)
 		answer2 = input("Type answer.", answer2) as num
 		if(answer == answer2)
-			win = TRUE
+			points_gained = rand(1,10)
 			for(var/obj/machinery/computer/rdconsole/RD in RDcomputer_list)
 				if(RD.id == 1)
 					RD.files.research_points += points_gained
+			win = TRUE
 			cryptomine()
-		else
 			points_gained = 0
+		else
 			win = FALSE
+			points_gained = 0
 			cryptomine()
 
 	else if (href_list["faketrack"])
