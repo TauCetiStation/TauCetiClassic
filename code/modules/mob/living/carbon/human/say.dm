@@ -49,7 +49,7 @@
 	var/datum/language/speaking = parse_language(message)
 
 	//check if we're muted and not using gestures
-	if (has_trait(TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk"))
+	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk"))
 		if (!(speaking && (speaking.flags & SIGNLANG)))
 			to_chat(usr, "<span class='userdanger'>You are mute.</span>")
 			return
