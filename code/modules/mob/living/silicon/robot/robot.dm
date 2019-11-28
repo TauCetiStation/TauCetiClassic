@@ -966,7 +966,6 @@
 	return 0
 
 /mob/living/silicon/robot/proc/updateicon()
-
 	overlays.Cut()
 	if(stat == CONSCIOUS)
 		overlays += "eyes"
@@ -974,6 +973,8 @@
 		overlays += "eyes-[icon_state]"
 	else
 		overlays -= "eyes"
+		
+	update_fire()	
 
 	if(opened && custom_sprite == 1) //Custom borgs also have custom panels, heh
 		if(wiresexposed)

@@ -416,6 +416,9 @@
 			return FALSE
 	return TRUE
 
+/mob/living/simple_animal/IgniteMob()
+	return FALSE
+
 /mob/living/simple_animal/say(var/message)
 	if(stat)
 		return

@@ -116,8 +116,6 @@
 		handle_environment(environment)
 
 	handle_fire()
-	if(on_fire && fire_stacks > 0)
-		fire_stacks -= 0.5
 
 	handle_regular_status_updates()
 	update_canmove()
@@ -505,6 +503,7 @@
 	if(..())
 		return
 	adjustFireLoss(6)
+	return
 
 /mob/living/carbon/ian/calculate_affecting_pressure(pressure)
 	..()

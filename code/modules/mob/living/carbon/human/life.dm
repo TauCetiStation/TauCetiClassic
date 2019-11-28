@@ -113,8 +113,6 @@
 
 	//Check if we're on fire
 	handle_fire()
-	if(on_fire && fire_stacks > 0)
-		fire_stacks -= 0.5
 
 	//Status updates, death etc.
 	handle_regular_status_updates()		//Optimized a bit

@@ -33,3 +33,5 @@
 	else
 		health = 100 - getBruteLoss() - getFireLoss()
 
+/mob/living/silicon/pai/IgniteMob(var/mob/living/silicon/pai/P)
+	return FALSE //No we're not flammable
