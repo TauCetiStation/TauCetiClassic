@@ -182,6 +182,7 @@
 
 	switch(display_hud_version)
 		if(HUD_STYLE_STANDARD)	//Default HUD
+			var/mob/living/carbon/human/H = mymob
 			hud_shown = 1	//Governs behavior of other procs
 			if(adding)
 				mymob.client.screen += adding
@@ -189,15 +190,23 @@
 				mymob.client.screen += other
 			if(hotkeybuttons && !hotkey_ui_hidden)
 				mymob.client.screen += hotkeybuttons
-
-			action_intent.screen_loc = ui_acti //Restore intent selection to the original position
-			mymob.client.screen += mymob.zone_sel				//This one is a special snowflake
-			mymob.client.screen += mymob.healths				//As are the rest of these.
-			mymob.client.screen += mymob.healthdoll
-			mymob.client.screen += mymob.internals
-			mymob.client.screen += lingstingdisplay
-			mymob.client.screen += lingchemdisplay
-			mymob.client.screen += mymob.gun_setting_icon
+			if(H.species.flags[IS_SYNTHETIC])
+				action_intent.screen_loc = ui_acti
+				mymob.client.screen -= mymob.internals
+				mymob.client.screen -= mymob.nutrition
+				mymob.client.screen += mymob.zone_sel
+				mymob.client.screen += mymob.healths
+				mymob.client.screen += mymob.healthdoll
+				mymob.client.screen += mymob.gun_setting_icon
+			else
+				action_intent.screen_loc = ui_acti //Restore intent selection to the original position
+				mymob.client.screen += mymob.zone_sel				//This one is a special snowflake
+				mymob.client.screen += mymob.healths				//As are the rest of these.
+				mymob.client.screen += mymob.healthdoll
+				mymob.client.screen += mymob.internals
+				mymob.client.screen += lingstingdisplay
+				mymob.client.screen += lingchemdisplay
+				mymob.client.screen += mymob.gun_setting_icon
 
 			hidden_inventory_update()
 			persistant_inventory_update()
