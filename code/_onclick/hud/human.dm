@@ -451,8 +451,9 @@
 
 	mymob.client.screen = list()
 
+	var/mob/living/carbon/human/H = mymob
 	if(H.species.flags[IS_SYNTHETIC])
-		mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.gun_setting_icon, ipcpowerdisplay)
+		mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.gun_setting_icon)
 	else
 		mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.nutrition_icon, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += src.adding + src.hotkeybuttons
