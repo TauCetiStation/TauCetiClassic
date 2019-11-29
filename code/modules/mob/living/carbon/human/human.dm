@@ -1977,6 +1977,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return
 	to_chat(src,"<span class='warning'>Well... I need my mask back.</span>")
 
+/mob/living/carbon/human/has_brain()
+	if(organs_by_name[O_BRAIN])
+		var/obj/item/organ/internal/IO = organs_by_name[O_BRAIN]
+		if(istype(IO))
+			return 1
+	return 0
 
 /mob/living/carbon/human/has_eyes()
 	if(organs_by_name[O_EYES])

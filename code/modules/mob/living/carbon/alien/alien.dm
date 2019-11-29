@@ -166,7 +166,7 @@
 			for(var/mob/living/carbon/alien/A in alien_list)
 				if(A.stat == DEAD)
 					continue
-				if(!A.key && A.brain_op_stage != 4)
+				if(!A.key && A.has_brain())
 					continue
 
 				if(isfacehugger(A))
@@ -190,7 +190,7 @@
 			var/no_queen = 1
 			var/mob/living/carbon/alien/queen
 			for(var/mob/living/carbon/alien/humanoid/queen/Q in queen_list)
-				if(Q.stat == DEAD || !Q.key && Q.brain_op_stage != 4)
+				if(Q.stat == DEAD || !Q.key && Q.has_brain())
 					continue
 				no_queen = 0
 				queen = Q

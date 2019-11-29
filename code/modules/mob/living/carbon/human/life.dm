@@ -1110,7 +1110,7 @@
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()	//TODO
 
-		if(health <= config.health_threshold_dead || brain_op_stage == 4.0)
+		if(health <= config.health_threshold_dead || !has_brain())
 			death()
 			blinded = 1
 			silent = 0
