@@ -68,6 +68,8 @@
 			SNG.drain("CELL",src,H.wear_suit)
 			
 		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == I_GRAB)
+			if(user.is_busy())
+				return
 			var/obj/item/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
 			var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
 			user.SetNextMove(CLICK_CD_MELEE)
@@ -85,6 +87,7 @@
 					else
 						to_chat(user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
 				else
+					updateicon()
 					to_chat(user, "<span class='warning'>This cell is empty and of no use.</span>")
 			
 /obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user)
