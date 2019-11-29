@@ -7,7 +7,7 @@ var/global/send_emergency_team = 0 // Used for automagic response teams
 var/ert_base_chance = 10 // Default base chance. Will be incremented by increment ERT chance.
 var/can_call_ert
 
-/client/proc/response_team()
+/client/proc/dispatch_response_team()
 	set name = "Dispatch Emergency Response Team"
 	set category = "Special Verbs"
 	set desc = "Send an emergency response team to the station."
@@ -30,13 +30,59 @@ var/can_call_ert
 		switch(alert("The station is not in red alert. Do you still want to dispatch a response team?",,"Yes","No"))
 			if("No")
 				return
+
 	if(send_emergency_team)
 		to_chat(usr, "<span class='warning'>Looks like somebody beat you to it!</span>")
 		return
 
+	var/customtext = sanitize(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
+	var/customname = sanitize_safe(input(usr, "Pick a title for the report.", "Title") as text|null)
+	if(!customtext)
+		customtext = "It would appear that an emergency response team was requested for [station_name()]. Unfortunately, we were unable to send one at this time."
+	if(!customname)
+		customname = "Central Command"
+
 	message_admins("[key_name_admin(usr)] is dispatching an Emergency Response Team.", 1)
 	log_admin("[key_name(usr)] used Dispatch Response Team.")
-	trigger_armed_response_team(1)
+	command_alert(customtext, customname, "yesert")
+	trigger_emergency_response_team()
+
+/client/proc/reject_response_team()
+	set name = "Reject Emergency Response Team"
+	set category = "Special Verbs"
+	set desc = "Reject Emergency Response Team request from the station."
+
+	if(!holder)
+		to_chat(usr, "<span class='warning'>Only administrators may use this command.</span>")
+		return
+	if(!ticker)
+		to_chat(usr, "<span class='warning'>The game hasn't started yet!</span>")
+		return
+	if(ticker.current_state == 1)
+		to_chat(usr, "<span class='warning'>The round hasn't started yet!</span>")
+		return
+	if(send_emergency_team)
+		to_chat(usr, "<span class='warning'>Central Command has already dispatched an emergency response team!</span>")
+		return
+	if(alert("Do you want to reject an Emergency Response Team request?",,"Yes","No") != "Yes")
+		return
+	if(send_emergency_team)
+		to_chat(usr, "<span class='warning'>Looks like somebody beat you to it!</span>")
+		return
+
+	var/customtext = sanitize(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
+	var/customname = sanitize_safe(input(usr, "Pick a title for the report.", "Title") as text|null)
+	if(!customtext)
+		customtext = "It would appear that an emergency response team was requested for [station_name()]. Unfortunately, we were unable to send one at this time."
+	if(!customname)
+		customname = "Central Command"
+
+	command_alert(customtext, customname, "noert")
+
+/proc/trigger_emergency_response_team()
+	send_emergency_team = 1
+	sleep(600 * 5)
+	send_emergency_team = 0 // Can no longer join the ERT.
 
 
 /client/verb/JoinResponseTeam()
