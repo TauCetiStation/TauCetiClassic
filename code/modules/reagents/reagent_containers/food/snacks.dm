@@ -926,10 +926,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger
 	name = "Clown Burger"
-	desc = "This tastes funny..."
+	desc = "This tastes funny... And HONKS!"
 	icon_state = "clownburger"
 	filling_color = "#ff00ff"
 	bitesize = 2
+	var/cooldown = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger/atom_init()
 	. = ..()
@@ -940,6 +941,13 @@
 */
 	reagents.add_reagent("nutriment", 6)
 	reagents.add_reagent("vitamin", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/clownburger/attack_self(mob/user)
+	if(cooldown <= world.time)
+		cooldown = world.time + 8
+		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
+		src.add_fingerprint(user)
+	return
 
 /obj/item/weapon/reagent_containers/food/snacks/mimeburger
 	name = "Mime Burger"
@@ -1726,8 +1734,8 @@
 			BP.hidden = surprise
 			BP.cavity = 0
 		else 		//someone is having a bad day
-			BP.createwound(CUT, 30)
 			BP.embed(surprise)
+			BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, "Animal escaping the ribcage")
 	else if (ismonkey(M))
 		M.visible_message("<span class='danger'>[M] suddenly tears in half!</span>")
 		var/mob/living/carbon/monkey/ook = new monkey_type(M.loc)

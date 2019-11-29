@@ -257,8 +257,10 @@
 	if(synd_mob.backbag == 2)
 		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), SLOT_BACK)
 	if(synd_mob.backbag == 3)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(synd_mob), SLOT_BACK)
+		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(synd_mob), SLOT_BACK)
 	if(synd_mob.backbag == 4)
+		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(synd_mob), SLOT_BACK)
+	if(synd_mob.backbag == 5)
 		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(synd_mob), SLOT_BACK)
 	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m12mm(synd_mob), SLOT_IN_BACKPACK)
 	synd_mob.equip_to_slot_or_del(new /obj/item/device/radio/uplink(synd_mob), SLOT_IN_BACKPACK)
@@ -304,14 +306,13 @@
 					return 0
 	return 1
 
-
 /datum/game_mode/nuclear/declare_completion()
 	if(config.objectives_disabled)
 		return
 	var/disk_rescued = 1
 	for(var/obj/item/weapon/disk/nuclear/D in poi_list)
 		var/disk_area = get_area(D)
-		if(!is_type_in_list(disk_area, centcom_areas))
+		if(!is_type_in_typecache(disk_area, centcom_areas_typecache))
 			disk_rescued = 0
 			break
 	var/crew_evacuated = (SSshuttle.location==2)

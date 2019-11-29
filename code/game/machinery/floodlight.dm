@@ -23,7 +23,7 @@
 
 /obj/machinery/floodlight/process()
 	if(on)
-		if(cell.charge >= use)
+		if(cell && cell.charge >= use)
 			cell.use(use)
 		else
 			on = 0

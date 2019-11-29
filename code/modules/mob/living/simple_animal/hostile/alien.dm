@@ -34,6 +34,9 @@
 	minbodytemp = 0
 	heat_damage_per_tick = 20
 
+/mob/living/simple_animal/hostile/alien/atom_init()
+	. = ..()
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW)
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"

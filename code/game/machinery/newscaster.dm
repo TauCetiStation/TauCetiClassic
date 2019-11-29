@@ -2,25 +2,44 @@
 //################### NEWSCASTERS BE HERE! ####
 //###-Agouri###################################
 
+#define COMMENTS_ON_PAGE 5 //number of comments per page
+
 /datum/feed_message
-	var/author =""
-	var/body =""
+	var/author = ""
+	var/body = ""
 	//var/parent_channel
-	var/backup_body =""
-	var/backup_author =""
+	var/backup_body = ""
+	var/backup_author = ""
 	var/is_admin_message = 0
 	var/icon/img = null
 	var/icon/backup_img
+	var/list/voters = list() //stores a string with voters
+	var/likes = 0
+	var/dislikes = 0
+	var/count_comments = 0
+	var/comments_closed = TRUE //spoiler
+	var/list/datum/comment_pages/pages = list()
+
+/datum/comment_pages
+	var/list/datum/message_comment/comments = list() //stores COMMENTS_ON_PAGE comments
+  
+/datum/message_comment
+	var/author = ""
+	var/backup_author = ""
+	var/body = ""
+	var/backup_body = ""
+	var/time = ""
 
 /datum/feed_channel
-	var/channel_name=""
+	var/channel_name = ""
 	var/list/datum/feed_message/messages = list()
 	//var/message_count = 0
-	var/locked=0
-	var/author=""
-	var/backup_author=""
-	var/censored=0
-	var/is_admin_channel=0
+	var/locked = 0
+	var/lock_comments = FALSE
+	var/author = ""
+	var/backup_author = ""
+	var/censored = 0
+	var/is_admin_channel = 0
 	//var/page = null //For newspapers
 
 /datum/feed_message/proc/clear()
@@ -39,6 +58,14 @@
 	src.backup_author = ""
 	src.censored = 0
 	src.is_admin_channel = 0
+
+/datum/feed_message/Destroy()
+	QDEL_LIST(pages)
+	return ..()
+
+/datum/comment_pages/Destroy()
+	QDEL_LIST(comments)
+	return ..()
 
 /datum/feed_network
 	var/list/datum/feed_channel/network_channels = list()
@@ -103,6 +130,19 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		// 9 = viewing channel feeds
 		// 10 = censor feed story
 		// 11 = censor feed channel
+		// 12 = pick censor channel
+		// 13 = pick d notice
+		// 14 = wanted issue handler
+		// 15 = create wanted issue
+		// 16 = ERROR: Cannot create wanted issue
+		// 17 = wanted issue deleted
+		// 18 = view wanted issue
+		// 19 = wanted issue edited
+		// 20 = orinting successful
+		// 21 = need more paper
+		// 22 = ERROR: Cannot create comment
+		// 23 = all comment
+		// 24 = all comment for security
 		//Holy shit this is outdated, made this when I was still starting newscasters :3
 	var/paper_remaining = 0
 	var/securityCaster = 0
@@ -118,15 +158,17 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		// 0 = there hasn't been a news/wanted update in the last alert_delay
 		// 1 = there has
 	var/scanned_user = "Unknown" //Will contain the name of the person who currently uses the newscaster
-	var/msg = "";                //Feed message
+	var/msg = ""                //Feed message
 	var/obj/item/weapon/photo/photo = null
-	var/channel_name = ""; //the feed channel which will be receiving the feed, or being created
-	var/c_locked=0;        //Will our new channel be locked to public submissions?
+	var/channel_name = "" //the feed channel which will be receiving the feed, or being created
+	var/c_locked = 0        //Will our new channel be locked to public submissions?
 	var/hitstaken = 0      //Death at 3 hits from an item with force>=15
 	var/datum/feed_channel/viewing_channel = null
 	light_range = 0
 	anchored = 1
-
+	var/comment_msg = "" //stores a comment that has not yet been posted
+	var/datum/comment_pages/current_page = null
+	var/datum/feed_message/viewing_message = null
 
 /obj/machinery/newscaster/security_unit                   //Security unit
 	name = "Security Newscaster"
@@ -211,7 +253,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(ishuman(user) || issilicon(user)) // need abit of rewriting this to make it work for observers.
 		var/mob/living/human_or_robot_user = user
 		var/dat
-		dat = text("<HEAD><TITLE>Newscaster</TITLE></HEAD><H3>Newscaster Unit #[src.unit_no]</H3>")
+		dat = text("<HEAD><TITLE>Newscaster</TITLE></HEAD><H3>Newscaster Unit #[src.unit_no]</H3><style>img {border-style:none;}</style></style>")
 
 		src.scan_user(human_or_robot_user) //Newscaster scans you
 
@@ -279,11 +321,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(6)
 				dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed story to Network.</B></FONT><HR><BR>"
 				if(src.channel_name=="")
-					dat+="<FONT COLOR='maroon'>•Invalid receiving channel name.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Invalid receiving channel name.</FONT><BR>"
 				if(src.scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>•Channel author unverified.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Channel author unverified.</FONT><BR>"
 				if(src.msg == "" || src.msg == "\[REDACTED\]")
-					dat+="<FONT COLOR='maroon'>•Invalid message body.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Invalid message body.</FONT><BR>"
 
 				dat+="<BR><A href='?src=\ref[src];setScreen=[3]'>Return</A><BR>"
 			if(7)
@@ -297,18 +339,18 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					else
 						existing_authors += FC.author
 				if(src.scanned_user in existing_authors)
-					dat+="<FONT COLOR='maroon'>•There already exists a Feed channel under your name.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>There already exists a Feed channel under your name.</FONT><BR>"
 				if(src.channel_name=="" || src.channel_name == "\[REDACTED\]")
-					dat+="<FONT COLOR='maroon'>•Invalid channel name.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Invalid channel name.</FONT><BR>"
 				var/check = 0
 				for(var/datum/feed_channel/FC in news_network.network_channels)
 					if(FC.channel_name == src.channel_name)
 						check = 1
 						break
 				if(check)
-					dat+="<FONT COLOR='maroon'>•Channel name already in use.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Channel name already in use.</FONT><BR>"
 				if(src.scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>•Channel author unverified.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Channel author unverified.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[2]'>Return</A><BR>"
 			if(8)
 				var/total_num=length(news_network.network_channels)
@@ -340,7 +382,13 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 								usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
 							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
-				dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
+							//If a person has already voted, then the button will not be clickable
+							dat+="<FONT SIZE=1>[((src.scanned_user in MESSAGE.voters) || (src.scanned_user == "Unknown")) ? ("<img src=like_clck.png>") : ("<A href='?src=\ref[src];setLike=\ref[MESSAGE]'><img src=like.png></A>")]: <FONT SIZE=2>[MESSAGE.likes]</FONT> \
+											   [((src.scanned_user in MESSAGE.voters) || (src.scanned_user == "Unknown")) ? ("<img src=dislike_clck.png>") : ("<A href='?src=\ref[src];setDislike=\ref[MESSAGE]'><img src=dislike.png></A>")]: <FONT SIZE=2>[MESSAGE.dislikes]</FONT></FONT>"
+
+							dat+="<BR><A href='?src=\ref[src];open_pages=\ref[MESSAGE]'><B>Open Comments</B></A><HR>"
+
+				dat+="<A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
 			if(10)
 				dat+="<B>Nanotrasen Feed Censorship Tool</B><BR>"
@@ -367,7 +415,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Back</A>"
 			if(12)
 				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>"
-				dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_author=\ref[src.viewing_channel]'>[(src.viewing_channel.author=="\[REDACTED\]") ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><HR>"
+				dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_author=\ref[src.viewing_channel]'>[(src.viewing_channel.author=="\[REDACTED\]") ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><BR>"
 
 
 				if( isemptylist(src.viewing_channel.messages) )
@@ -375,7 +423,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				else
 					for(var/datum/feed_message/MESSAGE in src.viewing_channel.messages)
 						dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
-						dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.body == "\[REDACTED\]") ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=\ref[src];censor_channel_story_author=\ref[MESSAGE]'>[(MESSAGE.author == "\[REDACTED\]") ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
+						dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.body == "\[REDACTED\]") ? ("Undo story censorship") : ("Censor story")]</A>  -\
+						                   <A href='?src=\ref[src];censor_channel_story_author=\ref[MESSAGE]'> [(MESSAGE.author == "\[REDACTED\]") ? ("Undo Author censorship") : ("Censor message Author")]</A></FONT><BR>"
+						dat+="<HR><A href='?src=\ref[src];open_censor_pages=\ref[MESSAGE]'><B>Open Comments</B></A> - <B><FONT SIZE=2><A href='?src=\ref[src];locked_comments=1'>[(src.viewing_channel.lock_comments) ? ("Unlock") : ("Lock")]</A></B></FONT><BR><HR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[10]'>Back</A>"
 			if(13)
 				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>"
@@ -419,11 +469,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(16)
 				dat+="<B><FONT COLOR='maroon'>ERROR: Wanted Issue rejected by Network.</B></FONT><HR><BR>"
 				if(src.channel_name=="" || src.channel_name == "\[REDACTED\]")
-					dat+="<FONT COLOR='maroon'>•Invalid name for person wanted.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Invalid name for person wanted.</FONT><BR>"
 				if(src.scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>•Issue author unverified.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Issue author unverified.</FONT><BR>"
 				if(src.msg == "" || src.msg == "\[REDACTED\]")
-					dat+="<FONT COLOR='maroon'>•Invalid description.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Invalid description.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
 			if(17)
 				dat+="<B>Wanted Issue successfully deleted from Circulation</B><BR>"
@@ -448,8 +498,52 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(21)
 				dat+="<FONT COLOR='maroon'>Unable to print newspaper. Insufficient paper. Please notify maintenance personnel to refill machine storage.</FONT><BR><BR>"
 				dat+="<A href='?src=\ref[src];setScreen=[0]'>Return</A>"
+			if(22)
+				dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit comment to Network.</B></FONT><HR><BR>"
+				if(src.comment_msg == "" || src.comment_msg == null)
+					dat+="<FONT COLOR='maroon'>Invalid lenght of comment.</FONT><BR>"
+				if(src.scanned_user == "Unknown")
+					dat+="<FONT COLOR='maroon'>Invalid name.</FONT><BR>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Return</A><BR>"
+			if(23) 
+				dat+="<B>Story ([src.viewing_message.body])</B><HR>"
+				var/datum/feed_message/MESSAGE = src.viewing_message
+				dat+="Number of Comments - [MESSAGE.count_comments]<BR>"
+				if(!src.viewing_channel.lock_comments)
+					dat+="<B><A href='?src=\ref[src];leave_a_comment=\ref[MESSAGE]'>Leave a comment</A></B>"
+				else
+					dat+="<B><FONT SIZE=3>Comments are closed!</FONT></B>"
+				var/datum/comment_pages/PAGE = src.current_page
+				if(PAGE.comments.len != 0) //perfecto
+					dat+="<HR>"
+				for(var/datum/message_comment/COMMENT in PAGE.comments)
+					dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
+					dat+="-<FONT SIZE=3>[COMMENT.body]</FONT><BR>"
+				var/i = 0
+				dat+="<HR>"
+				for(var/datum/comment_pages/PAGES in MESSAGE.pages)
+					i++ 
+					dat+="[(src.current_page != PAGES) ? ("<A href='?src=\ref[src];next_page=\ref[PAGES]'> [i]</A>") : (" [i]")]"
+				dat+="<HR><A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
+				dat+="<A href='?src=\ref[src];setScreen=[9]'>Return</A>"
+			if(24) 
+				dat+="<B>Story ([src.viewing_message.body])</B><HR>"
+				var/datum/feed_message/MESSAGE = src.viewing_message
+				dat+="Number of Comments - [MESSAGE.count_comments]<HR>"
+				var/datum/comment_pages/PAGE = src.current_page
+				for(var/datum/message_comment/COMMENT in PAGE.comments)
+					dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
+					dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_author_comment=\ref[COMMENT]'>[(COMMENT.author == "\[REDACTED\]") ? ("Undo Author censorship") : ("Censor Author")]</A></FONT><BR>"
+					dat+="-<FONT SIZE=3>[COMMENT.body]</FONT><BR>"
+					dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_body_comment=\ref[COMMENT]'>[(COMMENT.body == "\[REDACTED\]") ? ("Undo comment censorship") : ("Censor comment")]</A></FONT><BR><HR>"
+				var/i = 0
+				for(var/datum/comment_pages/PAGES in MESSAGE.pages)
+					i++ 
+					dat+="[(src.current_page != PAGES) ? ("<A href='?src=\ref[src];next_censor_page=\ref[PAGES]'> [i]</A>") : (" [i]")]"
+				dat+="<HR><A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
+				dat+="<A href='?src=\ref[src];setScreen=[10]'>Return</A>"
 			else
-				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
+				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com | If (break (likes/dislikes) or (system of commenting)) then report this bug in tauceti github "
 
 
 		human_or_robot_user << browse(entity_ja(dat), "window=newscaster_main;size=400x600")
@@ -525,6 +619,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.screen = 6
 		else
 			var/datum/feed_message/newMsg = new /datum/feed_message
+			var/datum/comment_pages/CP = new /datum/comment_pages
 			newMsg.author = src.scanned_user
 			newMsg.body = src.msg
 			if(photo)
@@ -533,6 +628,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			for(var/datum/feed_channel/FC in news_network.network_channels)
 				if(FC.channel_name == src.channel_name)
 					FC.messages += newMsg                  //Adding message to the network's appropriate feed_channel
+					newMsg.pages += CP
 					break
 			src.screen = 4
 			for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
@@ -656,6 +752,22 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		else
 			MSG.body = MSG.backup_body
 
+	else if(href_list["censor_author_comment"])
+		var/datum/message_comment/COMMENT = locate(href_list["censor_author_comment"])
+		if(COMMENT.author != "<FONT SIZE=2><B>\[REDACTED\]</B></FONT>")
+			COMMENT.backup_author = COMMENT.author
+			COMMENT.author = "<FONT SIZE=2><B>\[REDACTED\]</B></FONT>"
+		else
+			COMMENT.author = COMMENT.backup_author
+
+	else if(href_list["censor_body_comment"])
+		var/datum/message_comment/COMMENT = locate(href_list["censor_body_comment"])
+		if(COMMENT.body != "<FONT SIZE=2><B>\[REDACTED\]</B></FONT>")
+			COMMENT.backup_body = COMMENT.body
+			COMMENT.body = "<FONT SIZE=2><B>\[REDACTED\]</B></FONT>"
+		else
+			COMMENT.body = COMMENT.backup_body
+
 	else if(href_list["pick_d_notice"])
 		var/datum/feed_channel/FC = locate(href_list["pick_d_notice"])
 		src.viewing_channel = FC
@@ -690,8 +802,70 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		src.viewing_channel = FC
 		src.screen = 12
 
-	src.updateUsrDialog()
+	else if(href_list["setLike"])
+		var/datum/feed_message/FM = locate(href_list["setLike"])
+		FM.voters += src.scanned_user
+		FM.likes += 1 
 
+	else if(href_list["setDislike"])
+		var/datum/feed_message/FM = locate(href_list["setDislike"])
+		FM.voters += src.scanned_user
+		FM.dislikes += 1
+
+	else if(href_list["open_pages"]) //page with comments for assistants
+		var/datum/feed_message/FM = locate(href_list["open_pages"])
+		src.viewing_message = FM
+		src.current_page = FM.pages[1]
+		src.screen = 23
+
+	else if(href_list["open_censor_pages"]) //page with comments for security
+		var/datum/feed_message/FM = locate(href_list["open_censor_pages"])
+		src.viewing_message = FM
+		src.current_page = FM.pages[1]
+		src.screen = 24
+
+	else if(href_list["next_page"])
+		var/datum/comment_pages/CP = locate(href_list["next_page"])
+		src.screen = 23
+		src.current_page = CP
+
+	else if(href_list["next_censor_page"])
+		var/datum/comment_pages/CP = locate(href_list["next_censor_page"])
+		src.screen = 24
+		src.current_page = CP
+
+	else if(href_list["leave_a_comment"])
+		var/datum/feed_message/FM = locate(href_list["leave_a_comment"])
+		src.comment_msg = sanitize(input(usr, "Write your comment", "Network Channel Handler", input_default(src.comment_msg)), extra = FALSE)
+		if(src.comment_msg == "" || src.comment_msg == null || src.scanned_user == "Unknown")
+			src.screen = 22
+		else
+			var/datum/message_comment/COMMENT = new /datum/message_comment
+			COMMENT.author = src.scanned_user
+			COMMENT.body = src.comment_msg
+			COMMENT.time = worldtime2text()
+
+			var/lenght = FM.pages.len //find the last page
+			var/size = FM.pages[lenght].comments.len
+
+			if(size - COMMENTS_ON_PAGE != 0) //Create new page, if comments on the page are equal 
+				FM.pages[lenght].comments += COMMENT
+			else:
+				var/datum/comment_pages/CP = new /datum/comment_pages
+				FM.pages += CP
+				CP.comments += COMMENT
+
+			FM.count_comments += 1
+
+			src.comment_msg = ""
+
+	else if(href_list["locked_comments"])
+		if(src.viewing_channel.lock_comments)
+			src.viewing_channel.lock_comments = FALSE
+		else
+			src.viewing_channel.lock_comments = TRUE
+
+	src.updateUsrDialog()
 
 /obj/machinery/newscaster/attackby(obj/item/I, mob/user)
 
@@ -803,7 +977,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		switch(screen)
 			if(0) //Cover
 				dat+="<DIV ALIGN='center'><B><FONT SIZE=6>The Griffon</FONT></B></div>"
-				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen© Space Facilities</FONT></div><HR>"
+				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on NanotrasenÂ© Space Facilities</FONT></div><HR>"
 				if(isemptylist(src.news_content))
 					if(src.important_message)
 						dat+="Contents:<BR><ul><B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [src.pages+2]\]</FONT><BR></ul>"
@@ -842,7 +1016,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 							if(MESSAGE.img)
 								user << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR>"
-							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR><BR>"
+							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
+							dat+="<FONT SIZE=1>Likes: [MESSAGE.likes] Dislikes: [MESSAGE.dislikes]</FONT><BR><BR>"
 						dat+="</ul>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[src.scribble]\"</I>"
@@ -980,3 +1155,5 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			O.show_message("<span class='newscaster'><EM>[src.name]</EM> beeps, \"Attention! Wanted issue distributed!\"</span>",2)
 		playsound(src, 'sound/machines/warning-buzzer.ogg', VOL_EFFECTS_MASTER)
 	return
+
+#undef COMMENTS_ON_PAGE

@@ -1,7 +1,8 @@
 /mob/living/carbon/monkey/Life()
 	set invisibility = 0
 	//set background = 1
-	if (monkeyizing)	return
+	if (notransform)
+		return
 	if (update_muts)
 		update_muts=0
 		domutcheck(src,null,MUTCHK_FORCED)
@@ -11,7 +12,7 @@
 	if(loc)
 		environment = loc.return_air()
 
-	if (stat != DEAD)
+	if (stat != DEAD && !IS_IN_STASIS(src))
 		if(!istype(src,/mob/living/carbon/monkey/diona))
 			//First, resolve location and get a breath
 			if(SSmob.times_fired%4==2)
@@ -49,9 +50,6 @@
 
 	//Check if we're on fire
 	handle_fire()
-	if(on_fire && fire_stacks > 0)
-		fire_stacks -= 0.5
-
 
 	//Status updates, death etc.
 	handle_regular_status_updates()
@@ -414,19 +412,19 @@
 	switch(adjusted_pressure)
 		if(hazard_high_pressure to INFINITY)
 			adjustBruteLoss( min( ( (adjusted_pressure / hazard_high_pressure) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-			throw_alert("pressure","highpressure",2)
+			throw_alert("pressure", /obj/screen/alert/highpressure, 2)
 		if(warning_high_pressure to hazard_high_pressure)
-			throw_alert("pressure","highpressure",1)
+			throw_alert("pressure", /obj/screen/alert/highpressure, 1)
 		if(warning_low_pressure to warning_high_pressure)
 			clear_alert("pressure")
 		if(hazard_low_pressure to warning_low_pressure)
-			throw_alert("pressure","lowpressure",1)
+			throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 		else
 			if( !(COLD_RESISTANCE in mutations) )
 				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				throw_alert("pressure","lowpressure",2)
+				throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 			else
-				throw_alert("pressure","lowpressure",1)
+				throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 
 	return
 

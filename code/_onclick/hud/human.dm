@@ -1,4 +1,4 @@
-/datum/hud/proc/human_hud(ui_style='icons/mob/screen1_White.dmi', ui_color = "#ffffff", ui_alpha = 255)
+/datum/hud/proc/human_hud(ui_color = "#ffffff", ui_alpha = 255)
 
 	src.adding = list()
 	src.other = list()
@@ -388,6 +388,12 @@
 	mymob.healthdoll.name = "health doll"
 	mymob.healthdoll.screen_loc = ui_healthdoll
 
+	mymob.nutrition_icon = new
+	mymob.nutrition_icon.icon = 'icons/mob/screen_gen.dmi'
+	mymob.nutrition_icon.icon_state = "starving"
+	mymob.nutrition_icon.name = "nutrition"
+	mymob.nutrition_icon.screen_loc = ui_nutrition
+
 	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = ui_style
 	mymob.pullin.update_icon(mymob)
@@ -443,7 +449,6 @@
 				src.adding += mymob.gun_run_icon
 			src.adding += mymob.gun_move_icon
 
-
 	mymob.client.screen = list()
 
 	if(H.species.flags[IS_SYNTHETIC])
@@ -453,7 +458,6 @@
 	mymob.client.screen += src.adding + src.hotkeybuttons
 	mymob.client.screen += mymob.client.void
 	inventory_shown = 0
-
 
 /mob/living/carbon/human/verb/toggle_hotkey_verbs()
 	set category = "OOC"

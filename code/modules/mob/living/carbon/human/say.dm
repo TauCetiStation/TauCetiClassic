@@ -30,7 +30,8 @@
 	if(copytext(message,1,2) == "*")
 		return emote(copytext(message,2))
 
-	if((miming || has_trait(TRAIT_MUTE)) && !(message_mode == "changeling" || message_mode == "alientalk"))
+	//check if we are miming
+	if (miming && !(message_mode == "changeling" || message_mode == "alientalk"))
 		to_chat(usr, "<span class='userdanger'>You are mute.</span>")
 		return
 
@@ -46,6 +47,20 @@
 
 	//parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
+
+	//check if we're muted and not using gestures
+	if (has_trait(TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk"))
+		if (!(speaking && (speaking.flags & SIGNLANG)))
+			to_chat(usr, "<span class='userdanger'>You are mute.</span>")
+			return
+
+	if (speaking && (speaking.flags & SIGNLANG))
+		var/obj/item/organ/external/LH = src.get_bodypart(BP_L_ARM)
+		var/obj/item/organ/external/RH = src.get_bodypart(BP_R_ARM)
+		if (!(LH && LH.is_usable() && RH && RH.is_usable()))
+			to_chat(usr, "<span class='userdanger'>You tried to make a gesture, but your hands are not responding.</span>")
+			return
+
 	if (speaking)
 		message = copytext(message,2+length(speaking.key))
 	else if(species.force_racial_language)

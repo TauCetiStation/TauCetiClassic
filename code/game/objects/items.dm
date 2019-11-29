@@ -256,7 +256,7 @@
 	src.loc = T
 
 /obj/item/examine(mob/user)
-	..()
+	. = ..()
 	var/size
 	switch(src.w_class)
 		if(1.0)
@@ -1003,3 +1003,6 @@ var/global/list/items_blood_overlay_by_type = list()
 // Is called when somebody is stripping us using the panel. Return TRUE to allow the strip, FALSE to disallow.
 /obj/item/proc/onStripPanelUnEquip(mob/living/who, strip_gloves = FALSE)
 	return TRUE
+
+/obj/item/proc/play_unique_footstep_sound() // TODO: port https://github.com/tgstation/tgstation/blob/master/code/datums/components/squeak.dm
+	return

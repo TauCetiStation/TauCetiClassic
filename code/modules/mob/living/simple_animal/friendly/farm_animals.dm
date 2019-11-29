@@ -22,6 +22,7 @@
 	melee_damage_lower = 1
 	melee_damage_upper = 5
 	var/datum/reagents/udder = null
+	footstep_type = FOOTSTEP_MOB_SHOE
 
 /mob/living/simple_animal/hostile/retaliate/goat/atom_init()
 	udder = new(50)
