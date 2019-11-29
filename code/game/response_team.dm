@@ -45,6 +45,8 @@ var/can_call_ert
 	message_admins("[key_name_admin(usr)] is dispatching an Emergency Response Team.", 1)
 	log_admin("[key_name(usr)] used Dispatch Response Team.")
 	command_alert(customtext, customname, "yesert")
+
+	can_call_ert = 0
 	trigger_emergency_response_team()
 
 /client/proc/reject_response_team()
@@ -77,6 +79,7 @@ var/can_call_ert
 	if(!customname)
 		customname = "Central Command"
 
+	can_call_ert = 0
 	command_alert(customtext, customname, "noert")
 
 /proc/trigger_emergency_response_team()
