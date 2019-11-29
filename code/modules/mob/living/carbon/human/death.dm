@@ -27,23 +27,27 @@
 		if(src)			qdel(src)
 
 /mob/living/carbon/human/dust()
+	var/icon/I = getFlatIcon(src)
+	playsound(src, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER)
+	emote("scream",,, 1)
 	death(1)
 	var/atom/movable/overlay/animation = null
-	var/icon/I = getFlatIcon(src)
 	notransform = TRUE
 	canmove = 0
-
-	animation = new(loc)
-	I.Blend(icon('icons/effects/effects.dmi',"disappear"),ICON_OVERLAY)
-	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	icon = null
 	invisibility = 101
+
+	animation = new(loc)
+	I.MapColors(rgb(45,45,45), rgb(70,70,70), rgb(30,30,30), rgb(0,0,0))
+	I.Blend(icon('icons/effects/effects.dmi',"disappear"),ICON_OVERLAY)
+	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	animation.icon = I
 	animation.master = src
 
+	new /obj/effect/decal/cleanable/ash(loc)
 	new /obj/effect/decal/remains/human(loc)
 
-	spawn(15)
+	spawn(20)
 		if(animation)	qdel(animation)
 		if(src)			qdel(src)
 
