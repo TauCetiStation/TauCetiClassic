@@ -1074,54 +1074,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		message_admins("Admin [key_name_admin(usr)] has disabled random events.")
 	feedback_add_details("admin_verb","TRE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/parsepencode(t)
-	t = replacetext(t, "\[center\]", "<center>")
-	t = replacetext(t, "\[/center\]", "</center>")
-	t = replacetext(t, "\[br\]", "<BR>")
-	t = replacetext(t, "\[b\]", "<B>")
-	t = replacetext(t, "\[/b\]", "</B>")
-	t = replacetext(t, "\[i\]", "<I>")
-	t = replacetext(t, "\[/i\]", "</I>")
-	t = replacetext(t, "\[u\]", "<U>")
-	t = replacetext(t, "\[/u\]", "</U>")
-	t = replacetext(t, "\[large\]", "<font size=\"4\">")
-	t = replacetext(t, "\[/large\]", "</font>")
-
-	// tables
-	t = replacetext(t, "\[table\]", "<table border=3px cellpadding=5px bordercolor=\"black\">")
-	t = replacetext(t, "\[/table\]", "</table>")
-	t = replacetext(t, "\[tr\]", "<tr>")
-	t = replacetext(t, "\[/tr\]", "</tr>")
-	t = replacetext(t, "\[td\]", "<td>")
-	t = replacetext(t, "\[/td\]", "</td>")
-	t = replacetext(t, "\[th\]", "<th>")
-	t = replacetext(t, "\[/th\]", "</th>")
-
-	// standart head
-	t = replacetext(t, "\[h\]", "<h3 style=\"text-align:center;\">")
-	t = replacetext(t, "\[/h\]", "</h3>")
-
-	// bordered head;
-	t = replacetext(t, "\[bh\]", "<h3 style=\"border-width: 4px; border-style: solid; padding: 10px; text-align:center;\">")
-	t = replacetext(t, "\[/bh\]", "</h3>")
-
-	// blockquote
-	t = replacetext(t, "\[quote\]", "<blockquote style=\"line-height:normal; margin-bottom:10px; font-style:italic; letter-spacing: 1.25px; text-align:right;\">")
-	t = replacetext(t, "\[/quote\]", "</blockquote>")
-
-	// div
-	t = replacetext(t, "\[block\]", "<div style=\"border-width: 4px; border-style: dashed;\">")
-	t = replacetext(t, "\[/block\]", "</div>")
-
-	t = replacetext(t, "\[*\]", "<li>")
-	t = replacetext(t, "\[hr\]", "<HR>")
-	t = replacetext(t, "\[small\]", "<font size = \"1\">")
-	t = replacetext(t, "\[/small\]", "</font>")
-	t = replacetext(t, "\[list\]", "<ul>")
-	t = replacetext(t, "\[/list\]", "</ul>")
-
-	return t
-
 /client/proc/send_fax_message()
 	set name = "Send Fax Message"
 	set category = "Special Verbs"
@@ -1129,7 +1081,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/sent_text = sanitize(input(usr, "Please, enter the text you want to send.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN)
+	var/sent_text = sanitize(input(usr, "Please, enter the text you want to send.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 	if(!sent_text)
 		return
 
@@ -1160,7 +1112,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/obj/item/weapon/paper/P = new
 	P.name = sent_name
-	P.info = parsepencode(sent_text)
+	P.info = parsebbcode(sent_text)
 	P.update_icon()
 
 	if(stamp_type)
