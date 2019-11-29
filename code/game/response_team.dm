@@ -38,7 +38,7 @@ var/can_call_ert
 	var/customtext = sanitize(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 	var/customname = sanitize_safe(input(usr, "Pick a title for the report.", "Title") as text|null)
 	if(!customtext)
-		customtext = "It would appear that an emergency response team was requested for [station_name()]. Unfortunately, we were unable to send one at this time."
+		customtext = "It would appear that an emergency response team was requested for [station_name()]. We will prepare and send one as soon as possible."
 	if(!customname)
 		customname = "Central Command"
 
