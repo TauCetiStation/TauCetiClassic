@@ -21662,9 +21662,13 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/stamp{
+/obj/item/weapon/stamp/accept{
 	pixel_x = -3;
 	pixel_y = 3
+	},
+/obj/item/weapon/stamp/denied{
+	pixel_x = 3;
+	pixel_y = -3
 	},
 /obj/machinery/light_switch{
 	pixel_x = -23
@@ -27140,7 +27144,7 @@
 	},
 /area/station/storage/primary)
 "aWO" = (
-/obj/item/weapon/stamp{
+/obj/item/weapon/stamp/accept{
 	pixel_x = -3;
 	pixel_y = 3
 	},

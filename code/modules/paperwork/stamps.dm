@@ -46,6 +46,11 @@
 	icon_state = "stamp-cmo"
 	item_color = "cmo"
 
+/obj/item/weapon/stamp/accept
+	name = "\improper ACCEPTED rubber stamp"
+	icon_state = "stamp-accept"
+	item_color = "greencoat"
+
 /obj/item/weapon/stamp/denied
 	name = "\improper DENIED rubber stamp"
 	icon_state = "stamp-deny"
