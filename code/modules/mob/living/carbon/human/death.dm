@@ -28,19 +28,19 @@
 
 /mob/living/carbon/human/dust()
 	var/icon/I = getFlatIcon(src)
+	var/atom/movable/overlay/animation = null
 	playsound(src, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER)
 	emote("scream",,, 1)
 	death(1)
-	var/atom/movable/overlay/animation = null
 	notransform = TRUE
 	canmove = 0
 	icon = null
 	invisibility = 101
 
-	animation = new(loc)
 	I.MapColors(rgb(45,45,45), rgb(70,70,70), rgb(30,30,30), rgb(0,0,0))
 	I.Blend(icon('icons/effects/effects.dmi',"disappear"),ICON_OVERLAY)
 	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+	animation = new(loc)
 	animation.icon = I
 	animation.master = src
 
