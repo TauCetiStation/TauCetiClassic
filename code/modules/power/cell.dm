@@ -83,11 +83,11 @@
 							to_chat(user, "<span class='warning'>Procedure interrupted. Charge maxed.</span>")
 						else
 							H.nutrition += src.use(drain)*0.5
+							updateicon()
 							to_chat(user, "<span class='notice'>Energy gained from the cell.</span>")
 					else
 						to_chat(user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
 				else
-					updateicon()
 					to_chat(user, "<span class='warning'>This cell is empty and of no use.</span>")
 			
 /obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user)
