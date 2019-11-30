@@ -21662,16 +21662,16 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/stamp/accept{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/item/weapon/stamp/denied{
 	pixel_x = 3;
 	pixel_y = -3
 	},
 /obj/machinery/light_switch{
 	pixel_x = -23
+	},
+/obj/item/weapon/stamp/approve{
+	pixel_x = -3;
+	pixel_y = 3
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -27144,13 +27144,13 @@
 	},
 /area/station/storage/primary)
 "aWO" = (
-/obj/item/weapon/stamp/accept{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/item/weapon/stamp/denied{
 	pixel_x = 4;
 	pixel_y = -2
+	},
+/obj/item/weapon/stamp/approve{
+	pixel_x = -3;
+	pixel_y = 3
 	},
 /obj/structure/table,
 /turf/simulated/floor,
