@@ -84,7 +84,7 @@
 						else
 							H.nutrition += src.use(drain)*0.5
 							updateicon()
-							to_chat(user, "<span class='notice'>Energy gained from the cell.</span>")
+							to_chat(user, "<span class='notice'>[round(100.0*drain/maxcharge, 1)] of energy gained from the cell.</span>")
 					else
 						to_chat(user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
 				else
