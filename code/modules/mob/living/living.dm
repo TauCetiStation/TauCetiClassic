@@ -62,7 +62,7 @@
 				return 1
 
 		//Fat
-		if(FAT in M.mutations)
+		if(HAS_TRAIT(src, TRAIT_FAT))
 			var/ran = 40
 			if(isrobot(src))
 				ran = 20

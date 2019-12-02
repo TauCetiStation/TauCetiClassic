@@ -480,7 +480,7 @@
 			return FALSE
 		//fat mutation
 		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
-			if(FAT in H.mutations)
+			if(HAS_TRAIT(H, TRAIT_FAT))
 				//testing("[M] TOO FAT TO WEAR [src]!")
 				if(!(flags & ONESIZEFITSALL))
 					if(!disable_warning)

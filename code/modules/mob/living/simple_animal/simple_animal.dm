@@ -408,7 +408,7 @@
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
 			return FALSE
-		if(animalistic && L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
+		if(animalistic && HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
 			return FALSE
 	if (istype(the_target, /obj/mecha))
 		var/obj/mecha/M = the_target

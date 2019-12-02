@@ -183,7 +183,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(BODY_LAYER)
 	var/list/standing = list()
 
-	var/fat = (FAT in mutations) ? "fat" : null
+	var/fat = HAS_TRAIT(src, TRAIT_FAT) ? "fat" : null
 	var/g = (gender == FEMALE ? "f" : "m")
 
 	for(var/obj/item/organ/external/BP in bodyparts)
@@ -264,11 +264,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_mutations()
 	remove_overlay(MUTATIONS_LAYER)
-	var/fat
-	if(FAT in mutations)
-		fat = "fat"
 
-	var/list/standing	= list()
+	var/list/standing = list()
+	var/fat = HAS_TRAIT(src, TRAIT_FAT) ? "fat" : null
 	var/g = (gender == FEMALE) ? "f" : "m"
 
 	for(var/datum/dna/gene/gene in dna_genes)
@@ -302,11 +300,9 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/update_mutantrace()
 	remove_overlay(MUTANTRACE_LAYER)
 
-	var/fat
-	if(FAT in mutations)
-		fat = "fat"
+	var/list/standing = list()
+	var/fat = HAS_TRAIT(src, TRAIT_FAT) ? "fat" : null
 
-	var/list/standing	= list()
 	if(dna)
 		switch(dna.mutantrace)
 			if("golem" , "shadow")
@@ -432,7 +428,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				tie.color = A.color
 				standing.add_overlay(tie)
 
-		if(FAT in mutations)
+		if(HAS_TRAIT(src, TRAIT_FAT))
 			if(U.flags & ONESIZEFITSALL)
 				standing.icon	= 'icons/mob/uniform_fat.dmi'
 			else
@@ -670,7 +666,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			drop_l_hand()
 			drop_r_hand()
 
-		if(FAT in mutations)
+		if(HAS_TRAIT(src, TRAIT_FAT))
 			if(!(wear_suit.flags & ONESIZEFITSALL))
 				to_chat(src, "<span class='warning'>You burst out of \the [wear_suit]!</span>")
 				drop_from_inventory(wear_suit)
