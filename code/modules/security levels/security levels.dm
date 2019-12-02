@@ -1,5 +1,5 @@
 /var/security_level = 0
-
+/var/delta_timer_id = 0
 
 /proc/set_security_level(level)
 	switch(level)
@@ -23,6 +23,9 @@
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
 						FA.cut_overlays()
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_green"))
+				deltimer(delta_timer_id)
+				delta_timer_id = 0
+
 			if(SEC_LEVEL_BLUE)
 				if(security_level < SEC_LEVEL_BLUE)
 					captain_announce(config.alert_desc_blue_upto, title = null, subtitle = "Attention! Security level elevated to blue", sound = "blue")
@@ -33,6 +36,9 @@
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
 						FA.cut_overlays()
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_blue"))
+				deltimer(delta_timer_id)
+				delta_timer_id = 0
+
 			if(SEC_LEVEL_RED)
 				if(security_level < SEC_LEVEL_RED)
 					captain_announce(config.alert_desc_red_upto, title = null, subtitle = "Attention! Code red!", sound = "red")
@@ -48,6 +54,8 @@
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
 						FA.cut_overlays()
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_red"))
+				deltimer(delta_timer_id)
+				delta_timer_id = 0
 
 			if(SEC_LEVEL_DELTA)
 				security_level = SEC_LEVEL_DELTA
@@ -56,9 +64,25 @@
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
 						FA.cut_overlays()
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_delta"))
+				if(!delta_timer_id)
+					delta_alarm()
 		SSnightshift.check_nightshift() // Night shift mode turns off if security level is raised to red or above
 	else
 		return
+
+var/list/loud_alarm_areas = typecacheof(typesof(/area/station))
+var/list/quiet_alarm_areas = typecacheof(typesof(/area/station/maintenance) + typesof(/area/station/storage))
+
+/proc/delta_alarm()
+    delta_timer_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/delta_alarm, FALSE), 8 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+    for(var/mob/M in player_list)
+        if (is_station_level(M.z))
+            var/area/A = get_area(M)
+            if (is_type_in_typecache(A, quiet_alarm_areas))
+                M.playsound_local(get_turf(M), 'sound/machines/alarm_delta.ogg', VOL_EFFECTS_MASTER, 20, FALSE)
+            else if (is_type_in_typecache(A, loud_alarm_areas))
+                M.playsound_local(get_turf(M), 'sound/machines/alarm_delta.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+    return
 
 /proc/get_security_level()
 	switch(security_level)

@@ -113,8 +113,6 @@
 
 	//Check if we're on fire
 	handle_fire()
-	if(on_fire && fire_stacks > 0)
-		fire_stacks -= 0.5
 
 	//Status updates, death etc.
 	handle_regular_status_updates()		//Optimized a bit
@@ -351,17 +349,7 @@
 						BP.add_autopsy_data("Radiation Poisoning", damage)
 
 /mob/living/carbon/human/proc/breathe()
-	if(NO_BREATH in src.mutations)
-		return //#Z2 We need no breath with this mutation
-	if(reagents.has_reagent("lexorin"))
-		return
-	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return
-	if(species && (species.flags[NO_BREATHE] || species.flags[IS_SYNTHETIC]))
-		return
-	if(dna && dna.mutantrace == "adamantine")
-		return
-	if(ismob(loc))
+	if(!need_breathe()) 
 		return
 
 	var/datum/gas_mixture/environment = loc.return_air()

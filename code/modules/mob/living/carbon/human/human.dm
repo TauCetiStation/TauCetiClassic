@@ -594,10 +594,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot
-/mob/living/carbon/human/Crossed(var/atom/movable/AM)
+/mob/living/carbon/human/Crossed(atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
-		MB.RunOver(src)
+		MB.RunOver(src)	
+	SpreadFire(AM)
+	. = ..()
 
 // Get rank from ID, ID inside PDA, PDA, ID in wallet, etc.
 /mob/living/carbon/human/proc/get_authentification_rank(if_no_id = "No id", if_no_job = "No job")
@@ -2030,6 +2032,21 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return species.taste_sensitivity
 	else
 		return 1
+
+/mob/living/carbon/human/proc/need_breathe()
+	if(NO_BREATH in src.mutations)
+		return FALSE
+	if(reagents.has_reagent("lexorin"))
+		return FALSE
+	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		return FALSE
+	if(species && (species.flags[NO_BREATHE] || species.flags[IS_SYNTHETIC]))
+		return FALSE
+	if(dna && dna.mutantrace == "adamantine")
+		return FALSE
+	if(ismob(loc))
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/human/CanObtainCentcommMessage()
 	return istype(l_ear, /obj/item/device/radio/headset) || istype(r_ear, /obj/item/device/radio/headset)
