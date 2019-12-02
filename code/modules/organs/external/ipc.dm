@@ -1,11 +1,6 @@
 #define IPC_UPDATE_SPRITE \
 	var/gender = owner ? owner.gender : MALE; \
-	var/mutations = owner ? owner.mutations : list(); \
-	var/fat; \
 	var/g; \
-	if(body_zone == BP_CHEST) { \
-		fat = (FAT in mutations) ? "fat" : null; \
-	} \
 	if(body_zone in list(BP_CHEST, BP_GROIN, BP_HEAD)) { \
 		g = (gender == FEMALE ? "f" : "m"); \
 	} \
@@ -13,7 +8,7 @@
 		g = null; \
 	}\
 	icon = species.icobase; \
-	icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""]";
+	icon_state = "[body_zone][g ? "_[g]" : ""]";
 
 /obj/item/organ/external/chest/robot/ipc
 	name = "ipc chest"

@@ -29,31 +29,14 @@ var/datum/subsystem/junkyard/SSjunkyard
 		return
 
 	var/list/turfs_to_init = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
-
 	for(var/thing in turfs_to_init)
 		var/turf/T = thing
-		if(istype(T, /turf/simulated/floor/plating/ironsand/junkyard))
-			T.spawn_structures_junkyard()
-		CHECK_TICK
-
-	var/list/areas = list()
-
-	for(var/thing in turfs_to_init)
-		var/turf/T = thing
-		if(istype(T, /turf/unsimulated/wall/junkyard))
+		if(istype(T, /turf/simulated/mineral/airfull/junkyard))
 			T.surround_by_scrap()
 		if(istype(T, /turf/simulated/floor/plating/ironsand/junkyard))
 			T.surround_by_scrap()
 			T.resource_definition()
-			var/area/A = get_area(T)
-			if(!is_type_in_list(A, areas))
-				LAZYADD(areas, A)
-			if(!A.isprocessing)
-				START_PROCESSING(SSobj, A)
 		CHECK_TICK
-	for(var/area/awaymission/junkyard/A in areas)
-		A.areas = areas
-		A.connect_caves()
 	junkyard_initialised = 1
 	SSweather.eligible_zlevels.Add(zlevel) //junkyard
 

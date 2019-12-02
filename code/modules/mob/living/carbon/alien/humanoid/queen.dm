@@ -77,7 +77,7 @@
 
 /mob/living/carbon/alien/humanoid/queen/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
-	overlays.Cut()
+	cut_overlays()
 	if(stat == DEAD)
 		icon_state = "queen_dead"
 	else if(stat == UNCONSCIOUS || lying || resting)
@@ -85,7 +85,7 @@
 	else
 		icon_state = "queen_s"
 	for(var/image/I in overlays_standing)
-		overlays += I
+		add_overlay(I)
 
 /mob/living/carbon/alien/humanoid/queen/movement_delay()
 	return(5 + move_delay_add + config.alien_delay)
@@ -97,7 +97,7 @@
 
 /mob/living/carbon/alien/humanoid/queen/large/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
-	overlays.Cut()
+	cut_overlays()
 	if(stat == DEAD)
 		icon_state = "queen_dead-old"
 	else if(stat == UNCONSCIOUS || lying || resting)
@@ -105,4 +105,4 @@
 	else
 		icon_state = "queen_s-old"
 	for(var/image/I in overlays_standing)
-		overlays += I
+		add_overlay(I)

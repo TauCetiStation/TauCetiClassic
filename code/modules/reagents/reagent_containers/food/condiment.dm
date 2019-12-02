@@ -251,7 +251,7 @@
 				qdel(src)
 
 /obj/structure/condiment_shelf/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(!contents.len)
 		return
 	var/cond_number = 0
@@ -259,7 +259,7 @@
 		if(F.type in can_be_placed)
 			var/mutable_appearance/condiment = mutable_appearance(icon, "[initial(F.icon_state)]")
 			condiment.pixel_x += cond_number
-			overlays += condiment
+			add_overlay(condiment)
 			cond_number += 4
 
 //////////////////////

@@ -29,26 +29,6 @@
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
 	var/attack_faction = null //Put a faction string here to have a mob only ever attack a specific faction
 
-	var/area/awaymission/junkyard/area_spawn
-
-/mob/living/simple_animal/hostile/atom_init()
-	.=..()
-	if(istype(get_area(src.loc), /area/awaymission/junkyard))
-		area_spawn = get_area(src.loc)
-		area_spawn.amount_of_aggressive += 1
-		faction = "Junkyard"
-
-/mob/living/simple_animal/hostile/Destroy()
-	if(area_spawn)
-		area_spawn.amount_of_aggressive -= 1
-		area_spawn = null
-	return ..()
-
-/mob/living/simple_animal/hostile/death()
-	if(area_spawn)
-		area_spawn.amount_of_aggressive -= 1
-		area_spawn = null
-	return ..()
 
 /mob/living/simple_animal/hostile/Life()
 	. = ..()
@@ -131,7 +111,7 @@
 			return FALSE
 		if(L in friends)
 			return FALSE
-		if(animalistic && L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
+		if(animalistic && HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
 			return FALSE
 		return TRUE
 	if(isobj(the_target))

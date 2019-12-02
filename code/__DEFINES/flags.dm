@@ -39,7 +39,9 @@
 #define	NOREACT  4096    //Reagents dont' react inside this container.
 
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
-#define HOLOGRAM_2   1
+#define HOLOGRAM_2         (1<<0)
+/// atom queued to SSoverlay
+#define OVERLAY_QUEUED_2   (1<<1)
 
 //Species flags.
 #define NO_BLOOD           "no_blood"

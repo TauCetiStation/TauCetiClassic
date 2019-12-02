@@ -31,19 +31,11 @@
 	icon = 'icons/obj/structures/scrap/refine.dmi'
 	icon_state = "unrefined"
 	w_class = ITEM_SIZE_LARGE
-	var/area/awaymission/junkyard/area_spawn
 
 /obj/item/weapon/scrap_lump/atom_init()
 	. = ..()
 	pixel_x = rand(0, 16) - 8
 	pixel_y = rand(0, 8) - 8
-	if(istype(get_area(src.loc), /area/awaymission/junkyard))
-		area_spawn = get_area(src.loc)
-		area_spawn.amount_of_garbage += 1
-
-/obj/item/weapon/scrap_lump/Destroy()
-	area_spawn.amount_of_garbage -= 1
-	return ..()
 
 var/global/list/datum/stack_recipe/scrap_recipes = list ( \
 	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
