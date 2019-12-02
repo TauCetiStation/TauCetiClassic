@@ -645,13 +645,13 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 			if(4)
 				I.pixel_y += 1
 
-		overlays += I//And finally add the overlay.
-	overlays += image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9)
+		add_overlay(I)//And finally add the overlay.
+	add_overlay(image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9))
 
 //When ninja steal malfunctions.
 /mob/proc/NinjaStealthMalf()
 	invisibility = 0//Set ninja invis to 0.
-	overlays += image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9)
+	add_overlay(image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9))
 	playsound(src, 'sound/effects/stealthoff.ogg', VOL_EFFECTS_MASTER)
 
 //=======//GENERIC VERB MODIFIERS//=======//

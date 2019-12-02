@@ -156,6 +156,9 @@
 //	if(isrobot(user))
 //		return
 
+	if(default_unfasten_wrench(user, B))
+		return
+
 	if(src.beaker)
 		to_chat(user, "Something is already loaded into the machine.")
 		return

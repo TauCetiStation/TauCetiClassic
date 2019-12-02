@@ -64,7 +64,7 @@
 
 	if(stat != DEAD)
 		if(blinded)
-			throw_alert("blind")
+			throw_alert("blind", /obj/screen/alert/blind)
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else if(is_vision_obstructed())
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)

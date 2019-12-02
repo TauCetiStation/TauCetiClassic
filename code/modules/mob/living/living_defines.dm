@@ -50,5 +50,6 @@
 	var/lasttaste = 0 // Prevent tastes spam
 
 	var/list/roundstart_quirks = list()
+	var/list/status_effects // a list of all status effects the mob has
 
 	var/force_remote_viewing = FALSE

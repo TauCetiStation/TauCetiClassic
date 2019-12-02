@@ -285,13 +285,16 @@
 			slowdown = offline_slowdown
 
 	if(!offline)
-		cell.use(passive_energy_use)
+		var/total_energy_use = passive_energy_use
 
 		for(var/obj/item/rig_module/module in installed_modules)
-			cell.use(module.process_module())
+			total_energy_use += module.process_module()
 			if(!wearer) // module might unequip us
 				break
-		cell.charge = min(cell.maxcharge, cell.charge)
+		if(total_energy_use > 0)
+			cell.use(total_energy_use)
+		else if(total_energy_use < 0)
+			cell.give(-total_energy_use)
 
 /obj/item/clothing/suit/space/rig/proc/give_actions(mob/living/carbon/human/H)
 	for(var/obj/item/rig_module/module in installed_modules)
@@ -534,9 +537,9 @@
 
 	for(var/obj/item/rig_module/module in installed_modules)
 		if(module.suit_overlay_image)
-			user.overlays -= module.suit_overlay_image
+			user.cut_overlay(module.suit_overlay_image)
 			if(equipped)
-				user.overlays += module.suit_overlay_image
+				user.add_overlay(module.suit_overlay_image)
 
 //Engineering rig
 /obj/item/clothing/head/helmet/space/rig/engineering
@@ -656,12 +659,12 @@
 /obj/item/clothing/head/helmet/space/rig/syndi/update_icon(mob/user)
 	icon_state = "rig[on]-syndie[combat_mode ? "-combat" : ""]"
 	if(user)
-		user.overlays -= lamp
+		user.cut_overlay(lamp)
 		if(equipped_on_head && camera && (on || combat_mode))
 			lamp = image(icon = 'icons/mob/nuclear_helm_overlays.dmi', icon_state = "terror[combat_mode ? "_combat" : ""]_glow", layer = ABOVE_LIGHTING_LAYER)
 			lamp.plane = LIGHTING_PLANE + 1
 			lamp.alpha = on ? 255 : 127
-			user.overlays += lamp
+			user.add_overlay(lamp)
 		user.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/rig/syndi/verb/toggle_light(mob/user)

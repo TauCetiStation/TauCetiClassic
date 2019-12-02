@@ -112,12 +112,12 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		return
 
 	var/amount = round(input("How many sheets do you want to add?") as num)
+	if(amount > stack.get_amount())
+		amount = min(stack.get_amount(), round((max_material_amount-TotalMaterials())/stack.perunit))
 	if(amount < 0)
 		amount = 0
 	if(amount == 0)
 		return
-	if(amount > stack.get_amount())
-		amount = min(stack.get_amount(), round((max_material_amount-TotalMaterials())/stack.perunit))
 
 	busy = 1
 	use_power(max(1000, (3750*amount/10)))

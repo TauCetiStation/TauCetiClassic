@@ -96,7 +96,7 @@
 
 /datum/intruder_tools/shuttle_unlocker/buy(obj/machinery/computer/intruder_station/console, mob/living/user)
 	var/area/cur_area = get_area(console)
-	if(!istype(cur_area, /area/syndicate_mothership))
+	if(!istype(cur_area, /area/custom/syndicate_mothership))
 		to_chat(user, "<span class='userdanger'>If you see this, Please, Notify nearest coder or mapper about wrong place of this station!</span>")
 		return
 

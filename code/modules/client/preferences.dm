@@ -27,7 +27,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/ignore_cid_warning = 0
 
 	//game-preferences
-	var/UI_style = "White"
+	var/UI_style = null
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
 	var/aooccolor = "#b82e00"
@@ -101,11 +101,12 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/job_engsec_low = 0
 
 	//Keeps track of preferrence for not getting any wanted jobs
-	var/alternate_option = 0
+	var/alternate_option = RETURN_TO_LOBBY
 
 	// maps each organ to either null(intact), "cyborg" or "amputated"
 	// will probably not be able to do this for head and torso ;)
 	var/list/organ_data = list()
+	var/ipc_head = "Default"
 
 	var/list/player_alt_titles = new()		// the default name of a job like "Medical Doctor"
 
@@ -140,7 +141,8 @@ var/const/MAX_SAVE_SLOTS = 10
 
 /datum/preferences/New(client/C)
 	parent = C
-	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
+	UI_style = global.available_ui_styles[1]
+	b_type = random_blood_type()
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -305,6 +307,18 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.age = age
 	character.b_type = b_type
 
+	if(species == IPC)
+		qdel(character.bodyparts_by_name[BP_HEAD])
+		switch(ipc_head)
+			if("Default")
+				new /obj/item/organ/external/head/robot/ipc(null, character)
+			if("Alien")
+				new /obj/item/organ/external/head/robot/ipc/alien(null, character)
+			if("Double")
+				new /obj/item/organ/external/head/robot/ipc/double(null, character)
+			if("Pillar")
+				new /obj/item/organ/external/head/robot/ipc/pillar(null, character)
+
 	character.r_eyes = r_eyes
 	character.g_eyes = g_eyes
 	character.b_eyes = b_eyes
@@ -386,7 +400,7 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	character.socks = socks
 
-	if(backbag > 4 || backbag < 1)
+	if(backbag > 5 || backbag < 1)
 		backbag = 1 //Same as above
 	character.backbag = backbag
 

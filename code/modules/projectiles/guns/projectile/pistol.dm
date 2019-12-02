@@ -24,7 +24,7 @@
 /obj/item/weapon/gun/projectile/wjpp/atom_init()
 	. = ..()
 	mag = image('icons/obj/gun.dmi', "mag")
-	overlays += mag
+	add_overlay(mag)
 
 /obj/item/weapon/gun/projectile/wjpp/spec
 	icon_state = "9mm_wjpp_spec"
@@ -39,14 +39,14 @@
 	return
 
 /obj/item/weapon/gun/projectile/wjpp/attack_self(mob/user)
-	overlays -= mag
+	cut_overlay(mag)
 	..()
 
 /obj/item/weapon/gun/projectile/wjpp/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if ((!magazine && (istype(AM, mag_type) || istype(AM, mag_type2))))
-			overlays += mag
+			add_overlay(mag)
 			..()
 
 /obj/item/weapon/gun/projectile/automatic/silenced/update_icon()
@@ -166,12 +166,12 @@
 
 /obj/item/weapon/gun/projectile/sec_pistol/proc/update_magazine()
 	if(magazine)
-		src.overlays = 0
-		overlays += image('icons/obj/gun.dmi', "at7-mag")
+		cut_overlays()
+		add_overlay(image('icons/obj/gun.dmi', "at7-mag"))
 		return
 
 /obj/item/weapon/gun/projectile/sec_pistol/update_icon(load = 0)
-	src.overlays = 0
+	cut_overlays()
 	update_magazine()
 	if(load)
 		icon_state = "[initial(icon_state)]"

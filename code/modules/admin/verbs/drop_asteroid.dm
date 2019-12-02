@@ -68,11 +68,11 @@
 /proc/generate_asteroid_mapfile(size_x, size_y)
 	var/map = "\
 		\"[SPACETURF]\" = (/turf/space,/area/space)\n\
-		\"[FLOORTURF]\" = (/turf/simulated/floor/plating/airless/asteroid,/area/mine/unexplored)\n\
-		\"[CAVETURF]\" = (/turf/simulated/mineral/random/caves,/area/mine/unexplored)\n\
-		\"[RESCAVETURF]\" = (/turf/simulated/mineral/random/high_chance,/area/mine/unexplored)\n\
-		\"[MOBTURF]\" = (/mob/living/simple_animal/hostile/asteroid/goliath,/turf/simulated/floor/plating/airless/asteroid,/area/mine/unexplored)\n\
-		\"[ARTTURF]\" = (/obj/machinery/artifact,/turf/simulated/floor/plating/airless/asteroid,/area/mine/unexplored)\n\
+		\"[FLOORTURF]\" = (/turf/simulated/floor/plating/airless/asteroid,/area/asteroid/mine/unexplored)\n\
+		\"[CAVETURF]\" = (/turf/simulated/mineral/random/caves,/area/asteroid/mine/unexplored)\n\
+		\"[RESCAVETURF]\" = (/turf/simulated/mineral/random/high_chance,/area/asteroid/mine/unexplored)\n\
+		\"[MOBTURF]\" = (/mob/living/simple_animal/hostile/asteroid/goliath,/turf/simulated/floor/plating/airless/asteroid,/area/asteroid/mine/unexplored)\n\
+		\"[ARTTURF]\" = (/obj/machinery/artifact,/turf/simulated/floor/plating/airless/asteroid,/area/asteroid/mine/unexplored)\n\
 		(1,1,1) = {\""
 
 	var/side_x = round(size_x / 10)//10% space from side
