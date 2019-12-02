@@ -79,8 +79,7 @@
 						var/drain = C.maxcharge-H.nutrition
 						if(drain > src.charge)
 							drain = src.charge
-						if(H.nutrition > C.maxcharge)
-							H.nutrition = C.maxcharge
+						if(H.nutrition > C.maxcharge*0.9)
 							to_chat(user, "<span class='warning'>Procedure interrupted. Charge maxed.</span>")
 						else
 							H.nutrition += src.use(drain)
