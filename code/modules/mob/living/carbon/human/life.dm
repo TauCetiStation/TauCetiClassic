@@ -163,7 +163,7 @@
 		return ONE_ATMOSPHERE - pressure_difference
 
 /mob/living/carbon/human/proc/handle_disabilities()
-	if (disabilities & EPILEPSY || has_trait(TRAIT_EPILEPSY))
+	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
 		if ((prob(1) && paralysis < 1))
 			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			for(var/mob/O in viewers(src, null))
@@ -172,13 +172,13 @@
 				O.show_message(text("<span class='danger'>[src] starts having a seizure!</span>"), 1)
 			Paralyse(10)
 			make_jittery(1000)
-	if (disabilities & COUGHING || has_trait(TRAIT_COUGH))
+	if (disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
 		if ((prob(5) && paralysis <= 1))
 			drop_item()
 			spawn( 0 )
 				emote("cough")
 				return
-	if (disabilities & TOURETTES || has_trait(TRAIT_TOURETTE))
+	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		speech_problem_flag = 1
 		if ((prob(10) && paralysis <= 1))
 			Stun(10)
@@ -199,7 +199,7 @@
 				pixel_x = old_x
 				pixel_y = old_y
 				return
-	if (disabilities & NERVOUS || has_trait(TRAIT_NERVOUS))
+	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
 		speech_problem_flag = 1
 		if (prob(10))
 			stuttering = max(10, stuttering)
@@ -250,7 +250,7 @@
 					resting = 1
 
 			if(13 to 18)
-				if(getBrainLoss() >= 60 && !has_trait(TRAIT_STRONGMIND))
+				if(getBrainLoss() >= 60 && !HAS_TRAIT(src, TRAIT_STRONGMIND))
 					if(config.rus_language)//TODO:CYRILLIC dictionary?
 						switch(rand(1, 3))
 							if(1)
@@ -1039,31 +1039,30 @@
 			SetStunned(0)
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
-	if(FAT in mutations)
-		if(!has_trait(TRAIT_FAT) && overeatduration < 100)
+	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
+		if(!has_quirk(/datum/quirk/fatness) && overeatduration < 100)
 			to_chat(src, "<span class='notice'>You feel fit again!</span>")
-			mutations.Remove(FAT)
+			REMOVE_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 			update_body()
 			update_mutantrace()
 			update_mutations()
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 	else
-		if((has_trait(TRAIT_FAT) || overeatduration > 500) && isturf(loc))
+		if((has_quirk(/datum/quirk/fatness) || overeatduration >= 500) && isturf(loc))
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
-				mutations.Add(FAT)
+				ADD_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 				update_body()
 				update_mutantrace()
 				update_mutations()
 				update_inv_w_uniform()
 				update_inv_wear_suit()
 
-
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)
 		var/met_factor = get_metabolism_factor()
 		nutrition = max(0, nutrition - met_factor * 0.1)
-		if(has_trait(TRAIT_STRESS_EATER))
+		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
 			nutrition = max(0, nutrition - met_factor * getHalLoss() * 0.01)
 
 	if (nutrition > 450)
@@ -1203,7 +1202,7 @@
 
 
 		//Eyes
-		if(sdisabilities & BLIND || has_trait(TRAIT_BLIND))	//disabled-blind, doesn't get better on its own
+		if(sdisabilities & BLIND || HAS_TRAIT(src, TRAIT_BLIND))	//disabled-blind, doesn't get better on its own
 			blinded = 1
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
@@ -1215,7 +1214,7 @@
 			eye_blurry = max(eye_blurry-1, 0)
 
 		//Ears
-		if(sdisabilities & DEAF || has_trait(TRAIT_DEAF))	//disabled-deaf, doesn't get better on its own
+		if(sdisabilities & DEAF || HAS_TRAIT(src, TRAIT_DEAF))	//disabled-deaf, doesn't get better on its own
 			ear_deaf = max(ear_deaf, 1)
 		else if(ear_deaf)			//deafness, heals slowly over time
 			ear_deaf = max(ear_deaf-1, 0)
@@ -1500,7 +1499,7 @@
 		var/nearsighted = 0
 		var/impaired    = 0
 
-		if(disabilities & NEARSIGHTED || has_trait(TRAIT_NEARSIGHT))
+		if(disabilities & NEARSIGHTED || HAS_TRAIT(src, TRAIT_NEARSIGHT))
 			nearsighted = 1
 
 		if(glasses)

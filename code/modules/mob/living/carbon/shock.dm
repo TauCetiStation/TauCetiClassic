@@ -71,23 +71,23 @@
 	var/current_health = round(100 - (traumatic_shock - (getOxyLoss() + 0.7 * getToxLoss()))) // don't consider suffocation and toxins
 	switch(current_health)
 		if(80 to 99)
-			if(has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(20))
+			if(HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) && prob(20))
 				pain_sound_name = "pain"
 		if(40 to 80)
-			if(!has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && prob(110 - current_health))
+			if(!HAS_TRAIT(src, TRAIT_HIGH_PAIN_THRESHOLD) && prob(110 - current_health))
 				pain_sound_name = "pain"
 		if(10 to 39)
-			if(has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(80 - current_health))
+			if(HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) && prob(80 - current_health))
 				pain_sound_name = "scream"
-			if(!has_trait(TRAIT_HIGH_PAIN_THRESHOLD) || !prob(current_health))
+			if(!HAS_TRAIT(src, TRAIT_HIGH_PAIN_THRESHOLD) || !prob(current_health))
 				pain_sound_name = "pain"
 		if(-INFINITY to 9)
-			if(has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && prob(25))
+			if(HAS_TRAIT(src, TRAIT_HIGH_PAIN_THRESHOLD) && prob(25))
 				pain_sound_name = "pain"
 			else
 				pain_sound_name = "scream"
 	if(pain_sound_name)
 		emote(pain_sound_name, auto = TRUE)
-		last_pain_emote_sound = world.time + (has_trait(TRAIT_LOW_PAIN_THRESHOLD) ? rand(15 SECONDS, 30 SECONDS) : rand(30 SECONDS, 60 SECONDS))
+		last_pain_emote_sound = world.time + (HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) ? rand(15 SECONDS, 30 SECONDS) : rand(30 SECONDS, 60 SECONDS))
 		if(pain_sound_name == "scream") // don't cry out in pain too often
-			last_pain_emote_sound += (has_trait(TRAIT_LOW_PAIN_THRESHOLD) ? rand(5 SECONDS, 10 SECONDS) : rand(10 SECONDS, 20 SECONDS))
+			last_pain_emote_sound += (HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) ? rand(5 SECONDS, 10 SECONDS) : rand(10 SECONDS, 20 SECONDS))
