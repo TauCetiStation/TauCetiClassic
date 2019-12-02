@@ -64,7 +64,7 @@
 
 /obj/item/weapon/firstaid_arm_assembly/atom_init_late()
 	if(skin)
-		overlays += image('icons/obj/aibots.dmi', "kit_skin_[skin]")
+		add_overlay(image('icons/obj/aibots.dmi', "kit_skin_[skin]"))
 
 /obj/machinery/bot/medbot/atom_init()
 	..()
@@ -79,7 +79,7 @@
 
 /obj/machinery/bot/medbot/atom_init_late()
 	if(skin)
-		overlays += image('icons/obj/aibots.dmi', "medskin_[skin]")
+		add_overlay(image('icons/obj/aibots.dmi', "medskin_[skin]"))
 
 /obj/machinery/bot/medbot/turn_on()
 	. = ..()
@@ -588,7 +588,7 @@
 					build_step++
 					to_chat(user, "<span class='notice'>You add the health sensor to [src].</span>")
 					name = "First aid/robot arm/health analyzer assembly"
-					overlays += image('icons/obj/aibots.dmi', "na_scanner")
+					add_overlay(image('icons/obj/aibots.dmi', "na_scanner"))
 
 			if(1)
 				if(isprox(W))

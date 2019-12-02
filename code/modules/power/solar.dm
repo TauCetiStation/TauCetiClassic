@@ -99,11 +99,11 @@
 
 /obj/machinery/power/solar/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)
-		overlays += image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER)
+		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER))
 	else
-		overlays += image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER)
+		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER))
 		src.dir = angle2dir(adir)
 	return
 
@@ -299,18 +299,18 @@
 	if(stat & BROKEN)
 		icon_state = "powerb"
 		set_light(0)
-		overlays.Cut()
+		cut_overlays()
 		return
 	if(stat & NOPOWER)
 		icon_state = "power0"
 		set_light(0)
-		overlays.Cut()
+		cut_overlays()
 		return
 	icon_state = "solar"
 	set_light(light_range_on, light_power_on)
-	overlays.Cut()
+	cut_overlays()
 	if(cdir > 0)
-		overlays += image('icons/obj/computer.dmi', "solar_overlay_[dir]", FLY_LAYER, angle2dir(cdir))
+		add_overlay(image('icons/obj/computer.dmi', "solar_overlay_[dir]", FLY_LAYER, angle2dir(cdir)))
 	return
 
 /obj/machinery/power/solar_control/attackby(I, mob/user)

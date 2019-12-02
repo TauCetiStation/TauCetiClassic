@@ -146,7 +146,7 @@
 	stampoverlay.icon_state = "paper_[icon_state]"
 
 	LAZYADD(P.stamped, type)
-	P.overlays += stampoverlay
+	P.add_overlay(stampoverlay)
 
 /obj/item/weapon/stamp/attack_paw(mob/user)
 	return attack_hand(user)

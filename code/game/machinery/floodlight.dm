@@ -84,7 +84,7 @@
 		if(unlocked)
 			if(open)
 				open = 0
-				overlays = null
+				cut_overlays()
 				to_chat(user, "You crowbar the battery panel in place.")
 			else
 				if(unlocked)

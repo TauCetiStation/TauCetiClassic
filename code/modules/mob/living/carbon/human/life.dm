@@ -1450,7 +1450,7 @@
 								healths.icon_state = "health6"
 
 		if(healthdoll)
-			healthdoll.overlays.Cut()
+			healthdoll.cut_overlays()
 			if(stat == DEAD)
 				healthdoll.icon_state = "healthdoll_DEAD"
 			else
@@ -1470,7 +1470,7 @@
 					if(damage > (comparison*4))
 						icon_num = 5
 					if(icon_num)
-						healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]")
+						healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
 
 		if(nutrition_icon)
 			switch(get_nutrition())

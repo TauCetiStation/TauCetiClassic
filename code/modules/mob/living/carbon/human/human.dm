@@ -1816,7 +1816,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /obj/screen/leap/atom_init()
 	. = ..()
-	overlays += image(icon, "leap")
+	add_overlay(image(icon, "leap"))
 	update_icon()
 
 /obj/screen/leap/update_icon()
@@ -1997,14 +1997,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	//	species.handle_mutant_bodyparts(src,"black")
 	//	species.handle_hair(src,"black")
 	//	species.update_color(src,"black")
-	//	overlays += "electrocuted_base"
+	//	add_overlay("electrocuted_base")
 	//	spawn(anim_duration)
 	//		if(src)
 	//			if(dna && dna.species)
 	//				dna.species.handle_mutant_bodyparts(src)
 	//				dna.species.handle_hair(src)
 	//				dna.species.update_color(src)
-	//			overlays -= "electrocuted_base"
+	//			cut_overlay("electrocuted_base")
 	//else //or just do a generic animation
 	var/list/viewing = list()
 	for(var/mob/M in viewers(src))

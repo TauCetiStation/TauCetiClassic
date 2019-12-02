@@ -80,7 +80,7 @@
 		user.loc = src.loc
 		var/image/W = image('icons/obj/fitness.dmi',"fitnessweight-w")
 		W.layer = MOB_LAYER + 1
-		overlays += W
+		add_overlay(W)
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 		user.visible_message("<B>[user] is [bragmessage]!</B>")
 		var/reps = 0
@@ -106,5 +106,5 @@
 		gymnast.apply_effect(25,AGONY,0)
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnessweight"
-		overlays -= W
+		cut_overlay(W)
 		to_chat(user, "[finishmessage]")
