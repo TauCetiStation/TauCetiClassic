@@ -75,18 +75,19 @@
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(C)
 				if(charge > 0)
-					if (do_after(user,30,target = src))
-						var/drain = C.maxcharge-H.nutrition
-						if(drain > src.charge)
-							drain = src.charge
-						if(H.nutrition > C.maxcharge*0.9)
-							to_chat(user, "<span class='warning'>Procedure interrupted. Charge maxed.</span>")
+					if(H.nutrition <= C.maxcharge*0.9)
+						if (do_after(user,30,target = src))
+							var/drain = C.maxcharge-H.nutrition
+							if(drain > src.charge)
+								drain = src.charge
+							else
+								H.nutrition += src.use(drain)
+								updateicon()
+								to_chat(user, "<span class='notice'>[round(100.0*drain/maxcharge, 1)]% of energy gained from the cell.</span>")
 						else
-							H.nutrition += src.use(drain)
-							updateicon()
-							to_chat(user, "<span class='notice'>[round(100.0*drain/maxcharge, 1)]% of energy gained from the cell.</span>")
-					else
-						to_chat(user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
+							to_chat(user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
+					else 
+						to_chat(user, "<span class='warning'>Procedure interrupted. Charge at maximum capacity.</span>")
 				else
 					to_chat(user, "<span class='warning'>This cell is empty and of no use.</span>")
 			
