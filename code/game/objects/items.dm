@@ -480,7 +480,7 @@
 			return FALSE
 		//fat mutation
 		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
-			if(FAT in H.mutations)
+			if(HAS_TRAIT(H, TRAIT_FAT))
 				//testing("[M] TOO FAT TO WEAR [src]!")
 				if(!(flags & ONESIZEFITSALL))
 					if(!disable_warning)
@@ -926,7 +926,7 @@
 		if(blood_overlay.color != dirt_overlay.color)
 			overlays.Remove(blood_overlay)
 			blood_overlay.color = dirt_overlay.color
-			overlays += blood_overlay
+			add_overlay(blood_overlay)
 
 /obj/item/add_blood(mob/living/carbon/human/M)
 	if (!..())

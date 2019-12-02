@@ -26,13 +26,13 @@
 		else
 			icon_state = "donateidle"
 
-	overlays = null
+	cut_overlays()
 
 	if(beaker)
 		if(attached)
-			overlays += "beakeractive"
+			add_overlay("beakeractive")
 		else
-			overlays += "beakeridle"
+			add_overlay("beakeridle")
 		if(beaker.reagents.total_volume)
 			var/image/filling = image('icons/obj/iv_drip.dmi', src, "reagent")
 
@@ -47,7 +47,7 @@
 				if(91 to INFINITY)	filling.icon_state = "reagent100"
 
 			filling.icon += mix_color_from_reagents(beaker.reagents.reagent_list)
-			overlays += filling
+			add_overlay(filling)
 
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
 	..()

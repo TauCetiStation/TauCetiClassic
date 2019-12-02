@@ -182,9 +182,9 @@
 	if(isscrewdriver(O))
 		panel_open = !panel_open
 		to_chat(user, "You [panel_open ? "open" : "close"] the maintenance panel.")
-		overlays.Cut()
+		cut_overlays()
 		if(panel_open)
-			overlays += image(icon, icon_panel)
+			add_overlay(image(icon, icon_panel))
 		nanomanager.update_uis(src)
 		return
 

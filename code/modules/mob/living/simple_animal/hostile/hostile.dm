@@ -111,7 +111,7 @@
 			return FALSE
 		if(L in friends)
 			return FALSE
-		if(animalistic && L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
+		if(animalistic && HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
 			return FALSE
 		return TRUE
 	if(isobj(the_target))
