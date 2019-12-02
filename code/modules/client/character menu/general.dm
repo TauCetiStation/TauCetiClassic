@@ -87,9 +87,11 @@
 							. += "<li>Retinal overlayed [organ_name]</li>"
 						else
 							. += "<li>Mechanically assisted [organ_name]</li>"
+			if(species == IPC)
+				. += "<br>Head: <a href='byond://?src=\ref[user];preference=ipc_head;task=input'>[ipc_head]</a>"
+
 			if(!ind)
 				. += "<br>\[...\]"
-
 		//Appearance
 		if("appearance")
 			. += "<b>Hair</b>"
@@ -196,7 +198,10 @@
 					g_hair = rand(0,255)
 					b_hair = rand(0,255)
 				if("h_style")
-					h_style = random_hair_style(gender, species)
+					if(species == IPC)
+						h_style = random_ipc_monitor(ipc_head)
+					else
+						h_style = random_hair_style(gender, species)
 				if("facial")
 					r_facial = rand(0,255)
 					g_facial = rand(0,255)
@@ -220,7 +225,7 @@
 					g_skin = rand(0,255)
 					b_skin = rand(0,255)
 				if("bag")
-					backbag = rand(1,4)
+					backbag = rand(1,5)
 				if("all")
 					randomize_appearance_for()	//no params needed
 		if("input")
@@ -256,7 +261,10 @@
 
 					if(prev_species != species)
 						f_style = random_facial_hair_style(gender, species)
-						h_style = random_hair_style(gender, species)
+						if(species == IPC)
+							h_style = random_ipc_monitor(ipc_head)
+						else
+							h_style = random_hair_style(gender, species)
 						ResetJobs()
 						ResetQuirks()
 						if(language && language != "None")
@@ -298,7 +306,8 @@
 								continue
 							if(!(species in S.species_allowed))
 								continue
-
+						if(species == IPC && ipc_head != S.ipc_head_compatible )
+							continue
 						valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
 
 					var/new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in valid_hairstyles
@@ -488,6 +497,11 @@
 									organ_data[organ] = "assisted"
 								if("Mechanical")
 									organ_data[organ] = "mechanical"
+				// Choosing a head for an IPC
+				if("ipc_head")
+					var/list/ipc_heads = list("Default", "Alien", "Double", "Pillar")
+					ipc_head = input("Please select a head type", "Character Generation", null) in ipc_heads
+					h_style = random_ipc_monitor(ipc_head)
 
 				if("skin_style")
 					var/skin_style_name = input(user, "Select a new skin style") as null|anything in list("default1", "default2", "default3")
@@ -502,7 +516,11 @@
 						gender = MALE
 
 					f_style = random_facial_hair_style(gender, species)
-					h_style = random_hair_style(gender, species)
+					if(species == IPC)
+						h_style = random_ipc_monitor(ipc_head)
+					else
+						h_style = random_hair_style(gender, species)
+
 
 				if("randomslot")
 					randomslot = !randomslot

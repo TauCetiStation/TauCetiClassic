@@ -22,6 +22,11 @@
 
 	var/initialized = FALSE
 
+	/// a very temporary list of overlays to remove
+	var/list/remove_overlays
+	/// a very temporary list of overlays to add
+	var/list/add_overlays
+
 	///Chemistry.
 	var/datum/reagents/reagents = null
 
@@ -574,14 +579,18 @@
 		//	L += get_contents(S)
 
 		for(var/obj/item/weapon/gift/G in Storage.return_inv()) //Check for gift-wrapped items
-			L += G.gift
-			if(istype(G.gift, /obj/item/weapon/storage))
-				L += get_contents(G.gift)
+			var/atom/movable/AM = locate() in G.contents
+			if(AM)
+				L += AM
+				if(istype(AM, /obj/item/weapon/storage))
+					L += get_contents(AM)
 
 		for(var/obj/item/smallDelivery/D in Storage.return_inv()) //Check for package wrapped items
-			L += D.wrapped
-			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
-				L += get_contents(D.wrapped)
+			var/atom/movable/AM = locate() in D.contents
+			if(AM)
+				L += AM
+				if(istype(AM, /obj/item/weapon/storage)) //this should never happen
+					L += get_contents(AM)
 		return L
 
 	else
@@ -591,14 +600,18 @@
 			L += get_contents(S)
 
 		for(var/obj/item/weapon/gift/G in src.contents) //Check for gift-wrapped items
-			L += G.gift
-			if(istype(G.gift, /obj/item/weapon/storage))
-				L += get_contents(G.gift)
+			var/atom/movable/AM = locate() in G.contents
+			if(AM)
+				L += AM
+				if(istype(AM, /obj/item/weapon/storage))
+					L += get_contents(AM)
 
 		for(var/obj/item/smallDelivery/D in src.contents) //Check for package wrapped items
-			L += D.wrapped
-			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
-				L += get_contents(D.wrapped)
+			var/atom/movable/AM = locate() in D.contents
+			if(AM)
+				L += AM
+				if(istype(AM, /obj/item/weapon/storage)) //this should never happen
+					L += get_contents(AM)
 		return L
 
 // Called after we wrench/unwrench this object

@@ -103,8 +103,8 @@
 	icon_state = "husk_s"
 	H.h_style = null
 	H.update_hair()
-	overlays = H.overlays
-	overlays += image('icons/mob/blob.dmi', icon_state = "blob_head")
+	copy_overlays(H, TRUE)
+	add_overlay(image('icons/mob/blob.dmi', icon_state = "blob_head"))
 	H.loc = src
 	is_zombie = 1
 	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")

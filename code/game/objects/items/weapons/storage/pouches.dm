@@ -189,9 +189,9 @@
 
 /obj/item/weapon/storage/pouch/flare/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(contents.len)
-		overlays += image('icons/obj/pouches.dmi', "flare_[contents.len]")
+		add_overlay(image('icons/obj/pouches.dmi', "flare_[contents.len]"))
 
 /obj/item/weapon/storage/pouch/flare/vial
 	name = "vial pouch"
@@ -216,9 +216,9 @@
 
 /obj/item/weapon/storage/pouch/pistol_holster/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(contents.len)
-		overlays += image('icons/obj/pouches.dmi', "pistol_layer")
+		add_overlay(image('icons/obj/pouches.dmi', "pistol_layer"))
 
 /obj/item/weapon/storage/pouch/baton_holster
 	name = "baton sheath"
@@ -238,6 +238,6 @@
 
 /obj/item/weapon/storage/pouch/baton_holster/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(contents.len)
-		overlays += image('icons/obj/pouches.dmi', "baton_layer")
+		add_overlay(image('icons/obj/pouches.dmi', "baton_layer"))

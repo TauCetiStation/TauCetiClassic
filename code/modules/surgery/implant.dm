@@ -65,7 +65,7 @@
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
-	BP.createwound(CUT, 20)
+	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/cavity/close_space
 	priority = 2
@@ -101,7 +101,7 @@
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
-	BP.createwound(CUT, 20)
+	BP.take_damage(0, 20, used_weapon = tool)
 
 /datum/surgery_step/cavity/place_item
 	priority = 0
@@ -148,7 +148,7 @@
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
-	BP.createwound(CUT, 20)
+	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 //////////////////////////////////////////////////////////////////
 //					IMPLANT/ITEM REMOVAL SURGERY						//
@@ -244,7 +244,7 @@
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
-	BP.createwound(CUT, 20)
+	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 	if (BP.implants.len)
 		var/fail_prob = 10
 		fail_prob += 100 - tool_quality(tool)

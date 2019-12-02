@@ -117,7 +117,7 @@
 		crumpled = TRUE
 		icon_state = "crumpled"
 		throw_range = 5
-		overlays = null
+		cut_overlays()
 	else
 		icon_state = "scrap"
 		throw_range = 1
@@ -246,7 +246,7 @@
 	LAZYCLEARLIST(ico)
 	LAZYCLEARLIST(offset_x)
 	LAZYCLEARLIST(offset_y)
-	overlays.Cut()
+	cut_overlays()
 	updateinfolinks()
 	update_icon()
 
@@ -262,7 +262,7 @@
 	P.ico        = LAZYCOPY(ico)
 	P.offset_x   = LAZYCOPY(offset_x)
 	P.offset_y   = LAZYCOPY(offset_y)
-	P.overlays   = overlays.Copy()
+	P.copy_overlays(src, TRUE)
 
 	P.updateinfolinks()
 	P.update_icon()

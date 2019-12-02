@@ -234,6 +234,19 @@
 		ui.push_data(data)
 		return
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
+	if(!user.incapacitated() && in_range(user, src))
+		if(!state_open)
+			on = !on
+			update_icon()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
+	if(!user.incapacitated() && in_range(user, src))
+		if(state_open)
+			close_machine()
+		else
+			open_machine()
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/Topic(href, href_list)
 	. = ..()
 	if(!. || usr == occupant || panel_open)
@@ -306,7 +319,7 @@
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	var/image/I
 
 	if(panel_open)
@@ -315,7 +328,7 @@
 		I = image(icon, "pod-o_top")
 		I.layer = 5 // this needs to be fairly high so it displays over most things, but it needs to be under lighting (at 10)
 		I.pixel_z = 32
-		overlays += I
+		add_overlay(I)
 
 	else if(state_open)
 		icon_state = "pod-open"
@@ -323,30 +336,30 @@
 		I = image(icon, "pod-open_top")
 		I.layer = 5
 		I.pixel_z = 32
-		overlays += I
+		add_overlay(I)
 	else
 		icon_state = "pod-[on]"
 
 		I = image(icon, "pod-[on]_top")
 		I.layer = 5
 		I.pixel_z = 32
-		overlays += I
+		add_overlay(I)
 
 		if(occupant)
 			var/image/pickle = image(occupant.icon, occupant.icon_state)
-			pickle.overlays = occupant.overlays
+			pickle.copy_overlays(occupant)
 			pickle.pixel_z = 20
 			pickle.layer = 5
-			overlays += pickle
+			add_overlay(pickle)
 
 		I = image(icon, "lid-[on]")
 		I.layer = 5
-		overlays += I
+		add_overlay(I)
 
 		I = image(icon, "lid-[on]_top")
 		I.layer = 5
 		I.pixel_z = 32
-		overlays += I
+		add_overlay(I)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_crawl_through()
 	return //can't ventcrawl in or out of cryo.

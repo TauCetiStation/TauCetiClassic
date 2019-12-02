@@ -1,9 +1,26 @@
+/**
+  * Delete a mob
+  *
+  * Removes mob from the following global lists
+  * * GLOB.mob_list
+  * * GLOB.dead_mob_list
+  * * GLOB.alive_mob_list
+  * Clears alerts for this mob
+  *
+  * Parent call
+  *
+  * Returns QDEL_HINT_HARDDEL (don't change this)
+  */
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	mob_list -= src
-	dead_mob_list -= src
-	alive_mob_list -= src
+	global.mob_list -= src
+	global.dead_mob_list -= src
+	global.alive_mob_list -= src
+	for (var/alert in alerts)
+		clear_alert(alert, TRUE)
+	qdel(hud_used)
 	ghostize(bancheck = TRUE)
-	return ..()
+	..()
+	return QDEL_HINT_HARDDEL_NOW
 
 /mob/atom_init()
 	spawn()
@@ -236,11 +253,6 @@
 	if(msg)
 		flavor_text = msg
 
-/mob/proc/warn_flavor_changed()
-	if(flavor_text && flavor_text != "") // don't spam people that don't use it!
-		to_chat(src, "<h2 class='alert'>OOC Warning:</h2>")
-		to_chat(src, "<span class='alert'>Your flavor text is likely out of date! <a href='byond://?src=\ref[src];flavor_change=1'>Change</a></span>")
-
 /mob/proc/print_flavor_text()
 	if(flavor_text && flavor_text != "")
 		var/msg = flavor_text
@@ -426,9 +438,6 @@
 		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, entity_ja(flavor_text)), text("window=[];size=500x200", name))
 		onclose(usr, "[name]")
 
-	if(href_list["flavor_change"])
-		update_flavor_text()
-//	..()
 	return
 
 
@@ -672,7 +681,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(world.time < client.move_delay)	return 0
 	if(stat==2)							return 0
 	if(anchored)						return 0
-	if(monkeyizing)						return 0
+	if(notransform)						return 0
 	if(restrained())					return 0
 	return 1
 

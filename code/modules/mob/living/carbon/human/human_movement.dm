@@ -22,7 +22,7 @@
 	if(RUN in mutations)
 		tally -= 0.5
 
-	if(FAT in mutations)
+	if(HAS_TRAIT(src, TRAIT_FAT))
 		tally += 1.5
 
 	if(crawling)
@@ -62,9 +62,14 @@
 	if(!species.flags[NO_BLOOD] && (reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")))
 		chem_nullify_debuff = TRUE
 
-	for(var/obj/item/I in list(wear_suit, back, shoes))
-		if(!(I.slowdown > 0 && chem_nullify_debuff))
-			tally += I.slowdown
+	if(wear_suit && wear_suit.slowdown && !species.flags[IS_SYNTHETIC] && !(wear_suit.slowdown > 0 && chem_nullify_debuff))
+		tally += wear_suit.slowdown
+
+	if(back && back.slowdown && !(back.slowdown > 0 && chem_nullify_debuff))
+		tally += back.slowdown
+
+	if(shoes && shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
+		tally += shoes.slowdown
 
 	if(!chem_nullify_debuff)
 		for(var/x in list(l_hand, r_hand))
@@ -80,6 +85,13 @@
 
 	if(bodytemperature < species.cold_level_1)
 		tally += (species.cold_level_1 - bodytemperature) / 10 * 1.75
+
+	var/turf/T = get_turf(src)
+	if(T)
+		tally += T.slowdown
+		var/obj/effect/fluid/F = locate(/obj/effect/fluid) in T
+		if(F)
+			tally += F.fluid_amount * 0.005
 
 	if(get_species() == UNATHI && bodytemperature > species.body_temperature)
 		tally -= min((bodytemperature - species.body_temperature) / 10, 1) //will be on the border of heat_level_1

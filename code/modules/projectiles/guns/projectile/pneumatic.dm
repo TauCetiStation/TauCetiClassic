@@ -1,3 +1,6 @@
+#define PNEUMATIC_SPEED_CAP 40
+#define PNEUMATIC_SPEED_DIVISOR 800
+
 /obj/item/weapon/storage/pneumatic
 	name = "pneumatic cannon"
 	desc = "A large gas-powered cannon."
@@ -17,13 +20,10 @@
 	var/minimum_tank_pressure = 10                      // Minimum pressure to fire the gun.
 	var/cooldown = 0                                    // Whether or not we're cooling down.
 	var/cooldown_time = 50                              // Time between shots.
-	var/force_divisor = 400                             // Force equates to speed. Speed/5 equates to a damage multiplier for whoever you hit.
-	                                                    // For reference, a fully pressurized oxy tank at 50% gas release firing a health
-	                                                    // analyzer with a force_divisor of 10 hit with a damage multiplier of 3000+.
+
 /obj/item/weapon/storage/pneumatic/atom_init()
 	. = ..()
-	tank_container = new(src)
-	tank_container.tag = "gas_tank_holder"
+	tank_container = new()
 
 /obj/item/weapon/storage/pneumatic/verb/set_pressure() //set amount of tank pressure.
 
@@ -126,8 +126,7 @@
 		return 0
 
 	var/obj/item/object = contents[1]
-	var/speed = ((fire_pressure*tank.volume)/object.w_class)/force_divisor //projectile speed.
-	if(speed>80) speed = 80 //damage cap.
+	var/speed = min(PNEUMATIC_SPEED_CAP, ((fire_pressure*tank.volume)/object.w_class)/PNEUMATIC_SPEED_DIVISOR) //projectile speed.
 
 	playsound(src, 'sound/weapons/guns/gunshot_pneumaticgun.ogg', VOL_EFFECTS_MASTER, null, null, -2)
 	user.visible_message("<span class='danger'>[user] fires [src] and launches [object] at [target]!</span>","<span class='danger'>You fire [src] and launch [object] at [target]!</span>")
@@ -143,6 +142,11 @@
 	spawn(cooldown_time)
 		cooldown = 0
 		to_chat(user, "[src]'s gauge informs you it's ready to be fired again.")
+
+/obj/item/weapon/storage/pneumatic/Destroy()
+	QDEL_NULL(tank)
+	QDEL_NULL(tank_container)
+	return ..()
 
 //Constructable pneumatic cannon.
 
@@ -226,3 +230,6 @@
 		return
 	else
 		..()
+
+#undef PNEUMATIC_SPEED_CAP
+#undef PNEUMATIC_SPEED_DIVISOR
