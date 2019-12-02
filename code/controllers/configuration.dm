@@ -178,6 +178,10 @@
 	var/craft_recipes_visibility = FALSE // If false, then users won't see crafting recipes in personal crafting menu until they have all required components and then it will show up.
 	var/starlight = FALSE	// Whether space turfs have ambient light or not
 	var/nightshift = FALSE
+	
+	var/initial_nuclear_telecrystals = 0
+	var/telecrystals_per_one_operative = 0
+	var/telecrystals_per_active_player = 8
 
 	var/list/maplist = list()
 	var/datum/map_config/defaultmap
@@ -653,6 +657,12 @@
 					config.starlight = TRUE
 				if("nightshift")
 					config.nightshift = TRUE
+				if("initial_nuclear_telecrystals")
+					config.initial_nuclear_telecrystals = value
+				if("telecrystals_per_one_operative")
+					config.telecrystals_per_one_operative = value
+				if("telecrystals_per_active_player ")
+					config.telecrystals_per_active_player  = value
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 

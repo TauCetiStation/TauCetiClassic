@@ -63,3 +63,8 @@ ANIMAL_DELAY 0
 
 ## If server time is beetween 11 pm and 8 am, lights will become more dim and easy on the eyes, comment to disable
 NIGHTSHIFT
+
+## Nuclear mode options. Determines how much telecrystals nukies get before the calculations, how much telecrystals get each operative and how much telecrystals gets added per any active player.
+INITIAL_NUCLEAR_TELECRYSTALS 0
+TELECRYSTALS_PER_ONE_OPERATIVE 0
+TELECRYSTALS_PER_ACTIVE_PLAYER 8

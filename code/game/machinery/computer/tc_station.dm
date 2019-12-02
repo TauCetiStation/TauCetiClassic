@@ -1,7 +1,4 @@
 var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
-#define INITIAL_NUCLEAR_TELECRYSTALS 0
-#define TELECRYSTALS_PER_ONE_OPERATIVE 0
-#define TELECRYSTALS_PER_ACTIVE_PLAYER 8
 
 /obj/machinery/computer/telecrystals
 	name = "\improper Telecrystal assignment station"
@@ -144,9 +141,9 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	var/danger
 	var/active_players = length(player_list)
 	var/agent_numbers = CLAMP((active_players / 5), 2, 6)
-	storedcrystals = agent_numbers * TELECRYSTALS_PER_ONE_OPERATIVE + INITIAL_NUCLEAR_TELECRYSTALS
+	storedcrystals = agent_numbers * config.telecrystals_per_one_operative + config.initial_nuclear_telecrystals
 	danger = active_players
-	storedcrystals += danger*TELECRYSTALS_PER_ACTIVE_PLAYER
+	storedcrystals += danger*config.telecrystals_per_active_player 
 
 /////////
 
