@@ -78,7 +78,7 @@ var/datum/subsystem/demo/SSdemo
 	if(!config.record_replays)
 		can_fire = FALSE
 		return ..()
-	demo_file = file("data/demos/[round_id].txt")
+	demo_file = file("[logs_folder]/demo.txt")
 	WRITE_FILE(demo_file, "demo version 1") // increment this if you change the format
 	WRITE_FILE(demo_file, "commit HEAD") // Change HEAD to code that gets current git commit
 
