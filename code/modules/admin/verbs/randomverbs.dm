@@ -1112,7 +1112,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/obj/item/weapon/paper/P = new
 	P.name = sent_name
-	P.info = parsebbcode(sent_text)
+	var/parsed_text = parsebbcode(sent_text)
+	parsed_text = replacetext(parsed_text, "\[nt\]", "<img src = bluentlogo.png />")
+	P.info = parsed_text
 	P.update_icon()
 
 	if(stamp_type)
