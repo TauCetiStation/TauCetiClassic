@@ -11,6 +11,7 @@
 	deflect_chance = 15
 	step_energy_drain = 6
 	var/obj/item/clothing/glasses/hud/health/mech/hud
+	var/last_panic = 0
 
 /obj/mecha/medical/odysseus/atom_init()
 	. = ..()
@@ -84,3 +85,30 @@
 			holder.icon_state = "hudhealthy"
 
 		C.images += holder
+
+/obj/mecha/medical/odysseus/verb/ambulance_signal()
+	set category = "Exosuit Interface"
+	set name = "Activate ambulance signal"
+	set src = usr.loc
+	set popup_menu = 0
+	if(usr!=src.occupant)
+		return
+	if(world.time > last_panic + 60)
+		last_panic = world.time
+		src.occupant_message("<font color='blue'>You activate ambulance signal.</font>")
+		playsound(src, 'sound/mecha/siren.ogg', VOL_EFFECTS_MASTER, 95, FALSE)
+		light_color = COLOR_BLUE
+		set_light(2)
+		sleep(5)
+		set_light(0)
+		sleep(5)
+		light_color = COLOR_BLUE
+		set_light(2)
+		sleep(5)
+		set_light(0)
+		sleep(5)
+		light_color = COLOR_BLUE
+		set_light(2)
+		sleep(6)
+		set_light(0)
+	return
