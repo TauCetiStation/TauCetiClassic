@@ -216,3 +216,21 @@
 #define MESSAGE_AUDIBLE 2
 
 #define PLASMAGUN_OVERCHARGE 30100
+
+//! ## Overlays subsystem
+
+///Compile all the overlays for an atom from the cache lists
+#define COMPILE_OVERLAYS(A)\
+	if (TRUE) {\
+		var/list/ad = A.add_overlays;\
+		var/list/rm = A.remove_overlays;\
+		if(LAZYLEN(rm)){\
+			A.overlays -= rm;\
+			rm.Cut();\
+		}\
+		if(LAZYLEN(ad)){\
+			A.overlays |= ad;\
+			ad.Cut();\
+		}\
+		A.flags_2 &= ~OVERLAY_QUEUED_2;\
+	}

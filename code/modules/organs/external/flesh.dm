@@ -96,38 +96,38 @@
 	if(BP.owner.stat == CONSCIOUS)
 		switch(total_weapon_damage)
 			if(1 to 4)
-				if(BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(total_weapon_damage * 15))
+				if(HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD) && prob(total_weapon_damage * 15))
 					previous_pain_emote_name = "grunt"
 			if(5 to 19)
-				if(BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(total_weapon_damage * 5))
+				if(HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD) && prob(total_weapon_damage * 5))
 					pain_emote_name = "scream"
-				else if(BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && prob(total_weapon_damage * 5))
+				else if(HAS_TRAIT(BP.owner, TRAIT_HIGH_PAIN_THRESHOLD) && prob(total_weapon_damage * 5))
 					previous_pain_emote_name = "grunt"
 				else
 					previous_pain_emote_name = "grunt"
 			if(20 to INFINITY)
-				if(BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && !prob(total_weapon_damage))
+				if(HAS_TRAIT(BP.owner, TRAIT_HIGH_PAIN_THRESHOLD) && !prob(total_weapon_damage))
 					pain_emote_name = "grunt"
-				else if(BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) || prob(total_weapon_damage * 3))
+				else if(HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD) || prob(total_weapon_damage * 3))
 					previous_pain_emote_name = "scream"
 				else
 					previous_pain_emote_name = "grunt"
 		switch(current_bp_damage)
 			if(1 to 15)
-				if((!BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && prob(current_bp_damage * 4)) || (BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(current_bp_damage * 6)))
+				if((!HAS_TRAIT(BP.owner, TRAIT_HIGH_PAIN_THRESHOLD) && prob(current_bp_damage * 4)) || (HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD) && prob(current_bp_damage * 6)))
 					pain_emote_name = "grunt"
 			if(15 to 29)
 				if(total_weapon_damage < 20)
-					if(BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(current_bp_damage * 3))
+					if(HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD) && prob(current_bp_damage * 3))
 						pain_emote_name = "scream"
-					else if(BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && prob(current_bp_damage * 3))
+					else if(HAS_TRAIT(BP.owner, TRAIT_HIGH_PAIN_THRESHOLD) && prob(current_bp_damage * 3))
 						pain_emote_name = "grunt"
 					else
 						pain_emote_name = "grunt"
 			if(30 to INFINITY)
-				if(BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && !prob(current_bp_damage))
+				if(HAS_TRAIT(BP.owner, TRAIT_HIGH_PAIN_THRESHOLD) && !prob(current_bp_damage))
 					pain_emote_name = "grunt"
-				else if(prob(current_bp_damage + total_weapon_damage * 4) || BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD))
+				else if(prob(current_bp_damage) || HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD))
 					pain_emote_name = "scream"
 				else
 					pain_emote_name = "grunt"

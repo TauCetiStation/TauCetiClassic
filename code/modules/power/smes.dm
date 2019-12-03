@@ -215,25 +215,25 @@
 		terminal = null
 
 /obj/machinery/power/smes/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)	return
 
 	if(panel_open)
-		overlays.Cut()
+		cut_overlays()
 		return
 
 
-	overlays += image('icons/obj/power.dmi', "smes-op[online]")
+	add_overlay(image('icons/obj/power.dmi', "smes-op[online]"))
 
 	if(charging)
-		overlays += image('icons/obj/power.dmi', "smes-oc1")
+		add_overlay(image('icons/obj/power.dmi', "smes-oc1"))
 	else
 		if(chargemode)
-			overlays += image('icons/obj/power.dmi', "smes-oc0")
+			add_overlay(image('icons/obj/power.dmi', "smes-oc0"))
 
 	var/clevel = chargedisplay()
 	if(clevel>0)
-		overlays += image('icons/obj/power.dmi', "smes-og[clevel]")
+		add_overlay(image('icons/obj/power.dmi', "smes-og[clevel]"))
 	return
 
 

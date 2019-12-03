@@ -115,7 +115,7 @@
 			//	R.use(1)
 			//	grill = TRUE
 			//	to_chat(user, "<i>You add a grill to \the [src].</i>")
-			//	overlays += image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_grill")
+			//	add_overlay(image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_grill"))
 			//else
 			//	return ..()
 	if(W.get_current_temperature())

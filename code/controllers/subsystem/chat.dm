@@ -32,7 +32,6 @@ var/datum/subsystem/chat/SSchat
 	if(target == world)
 		target = clients
 
-	var/original_message = message
 	//Some macros remain in the string even after parsing and fuck up the eventual output
 	message = replacetext(message, "\improper", "")
 	message = replacetext(message, "\proper", "")
@@ -46,9 +45,6 @@ var/datum/subsystem/chat/SSchat
 		for(var/I in target)
 			var/client/C = CLIENT_FROM_VAR(I) //Grab us a client if possible
 
-			//Send it to the old style output window.
-			SEND_TEXT(C, original_message)
-
 			if(!C?.chatOutput || C.chatOutput.broken) //A player who hasn't updated his skin file.
 				continue
 
@@ -61,9 +57,6 @@ var/datum/subsystem/chat/SSchat
 			payload[C] += encoded
 	else
 		var/client/C = CLIENT_FROM_VAR(target) //Grab us a client if possible
-
-		//Send it to the old style output window.
-		SEND_TEXT(C, original_message)
 
 		if(!C?.chatOutput || C.chatOutput.broken) //A player who hasn't updated his skin file.
 			return

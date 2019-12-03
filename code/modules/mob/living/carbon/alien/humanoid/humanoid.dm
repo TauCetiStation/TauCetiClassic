@@ -29,6 +29,7 @@
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/atom_init()
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 1, -2)
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src

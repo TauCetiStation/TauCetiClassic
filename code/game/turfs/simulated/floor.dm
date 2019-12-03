@@ -43,6 +43,10 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/mineral = "metal"
 	var/floor_type = /obj/item/stack/tile/plasteel
 	var/lightfloor_state // for light floors, this is the state of the tile. 0-7, 0x4 is on-bit - use the helper procs below
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/simulated/floor/proc/get_lightfloor_state()
 	return lightfloor_state & LIGHTFLOOR_STATE_BITS
@@ -566,11 +570,11 @@ var/list/wood_icons = list("wood","wood-broken")
 		if(is_plating())
 			if(!broken && !burnt)
 				var/obj/item/stack/tile/T = C
+				if(!T.use(1))
+					return
 				floor_type = T.type
 				icon = initial(T.turf_type.icon)
 				name = initial(T.turf_type.name)
-				if(!T.use(1))
-					return
 				intact = 1
 				if(istype(T,/obj/item/stack/tile/light))
 					var/obj/item/stack/tile/light/L = T

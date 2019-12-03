@@ -22,6 +22,11 @@
 
 	var/initialized = FALSE
 
+	/// a very temporary list of overlays to remove
+	var/list/remove_overlays
+	/// a very temporary list of overlays to add
+	var/list/add_overlays
+
 	///Chemistry.
 	var/datum/reagents/reagents = null
 

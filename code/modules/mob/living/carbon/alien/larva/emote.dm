@@ -88,7 +88,7 @@
 			if (input2 == "Visible")
 				m_type = 1
 			else if (input2 == "Hearable")
-				if (has_trait(TRAIT_MUTE))
+				if (HAS_TRAIT(src, TRAIT_MUTE))
 					return
 				m_type = 2
 			else

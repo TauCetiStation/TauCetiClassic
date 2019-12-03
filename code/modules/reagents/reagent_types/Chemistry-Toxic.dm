@@ -149,7 +149,7 @@
 
 /datum/reagent/toxin/minttoxin/on_general_digest(mob/living/M)
 	..()
-	if(FAT in M.mutations)
+	if(HAS_TRAIT(M, TRAIT_FAT))
 		M.gib()
 
 /datum/reagent/toxin/carpotoxin
@@ -647,7 +647,7 @@
 		M.notransform = TRUE
 		M.canmove = 0
 		M.icon = null
-		M.overlays.Cut()
+		M.cut_overlays()
 		M.invisibility = 101
 		for(var/obj/item/W in M)
 			if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something

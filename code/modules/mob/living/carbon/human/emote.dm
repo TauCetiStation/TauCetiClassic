@@ -20,7 +20,7 @@
 	var/muzzled_message = "" // medium priority. usually HEARABLE
 	var/miming_message = "" // low priority. usually VISIBLE
 
-	var/muted = has_trait(TRAIT_MUTE)
+	var/muted = HAS_TRAIT(src, TRAIT_MUTE)
 	var/muzzled = istype(wear_mask, /obj/item/clothing/mask/muzzle)
 	var/can_make_a_sound = !(muted || muzzled || silent)
 
@@ -76,7 +76,7 @@
 				cloud_emote = "cloud-pain"
 				sound_priority = MEDIUM
 				message = pick("groans in pain.", "slightly winces in pain and groans.", "presses [his_macro] lips together in pain and groans.", "twists in pain.")
-				if((get_species() != SKRELL) && has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(66)) // skrells don't have much emotions to cry in pain, but they can still groan
+				if((get_species() != SKRELL) && HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) && prob(66)) // skrells don't have much emotions to cry in pain, but they can still groan
 					emote_sound = pick((gender == FEMALE) ? SOUNDIN_FEMALE_WHINER_PAIN : SOUNDIN_MALE_WHINER_PAIN)
 				else
 					emote_sound = pick((gender == FEMALE) ? SOUNDIN_FEMALE_PASSIVE_PAIN : SOUNDIN_MALE_PASSIVE_PAIN)

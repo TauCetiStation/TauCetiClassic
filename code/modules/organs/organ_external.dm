@@ -105,8 +105,9 @@
 	var/mutations = owner ? owner.mutations : list()
 	var/fat
 	var/g
-	if(body_zone == BP_CHEST)
-		fat = (FAT in mutations) ? "fat" : null
+
+	if(body_zone == BP_CHEST && owner)
+		fat = HAS_TRAIT(owner, TRAIT_FAT) ? "fat" : null
 	if(body_zone in list(BP_CHEST, BP_GROIN, BP_HEAD))
 		g = (gender == FEMALE ? "f" : "m")
 
@@ -702,7 +703,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(!owner)
 		return
 
-	overlays.Cut()
+	cut_overlays()
 	//Add (facial) hair.
 	if(owner.f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[owner.f_style]

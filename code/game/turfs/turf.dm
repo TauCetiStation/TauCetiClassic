@@ -25,6 +25,7 @@
 	//Mining resource generation stuff.
 	var/has_resources
 	var/list/resources
+	var/slowdown = 0
 
 /turf/atom_init()
 	if(initialized)
