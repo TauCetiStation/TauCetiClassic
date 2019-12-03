@@ -127,7 +127,7 @@
 			if(30 to INFINITY)
 				if(HAS_TRAIT(BP.owner, TRAIT_HIGH_PAIN_THRESHOLD) && !prob(current_bp_damage))
 					pain_emote_name = "grunt"
-				else if(prob(current_bp_damage) || HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD))
+				else if(prob(current_bp_damage + total_weapon_damage * 4) || HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD))
 					pain_emote_name = "scream"
 				else
 					pain_emote_name = "grunt"
