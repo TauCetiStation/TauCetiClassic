@@ -558,3 +558,17 @@ var/failed_old_db_connections = 0
 
 /world/proc/incrementMaxZ()
 	maxz++
+
+// This proc reads the current git commit number of a master branch
+/proc/GetGitMasterCommit()
+	var/commitFile = ".git/refs/remotes/upstream/master"
+	if(fexists(commitFile) == 0)
+		warning("GetMasterGitCommit() File not found ([commitFile]), using HEAD as a current commit")
+		return "HEAD"
+
+	var/text = file2text(commitFile)
+	if(!text)
+		warning("GetMasterGitCommit() File is empty ([commitFile]), using HEAD as a current commit")
+		return "HEAD"
+
+	return text

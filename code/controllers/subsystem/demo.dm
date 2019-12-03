@@ -80,7 +80,7 @@ var/datum/subsystem/demo/SSdemo
 		return ..()
 	demo_file = file("[logs_folder]/demo.txt")
 	WRITE_FILE(demo_file, "demo version 1") // increment this if you change the format
-	WRITE_FILE(demo_file, "commit HEAD") // Change HEAD to code that gets current git commit
+	WRITE_FILE(demo_file, "commit [GetGitMasterCommit()]")
 
 	// write a "snapshot" of the world at this point.
 	// start with turfs
