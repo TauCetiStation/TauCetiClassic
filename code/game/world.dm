@@ -561,7 +561,7 @@ var/failed_old_db_connections = 0
 
 // This proc reads the current git commit number of a master branch
 /proc/GetGitMasterCommit()
-	var/commitFile = ".git/refs/remotes/upstream/master"
+	var/commitFile = ".git/refs/remotes/origin/master"
 	if(fexists(commitFile) == 0)
 		warning("GetMasterGitCommit() File not found ([commitFile]), using HEAD as a current commit")
 		return "HEAD"
