@@ -212,6 +212,18 @@
 		t = replacetext(t, char, repl_chars[char])
 	return t
 
+var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f")
+/proc/random_string(length, list/characters)
+	. = ""
+	for (var/i in 1 to length)
+		. += pick(characters)
+
+/proc/random_short_color()
+	return "#" + random_string(3, global.hex_characters)
+
+/proc/random_color()
+	return "#" + random_string(6, global.hex_characters)
+
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)
 	while (length(t) < u)

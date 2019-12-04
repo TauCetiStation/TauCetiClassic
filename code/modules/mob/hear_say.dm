@@ -202,21 +202,32 @@
 		to_chat(src, "[part_a][speaker_name][part_b][formatted][part_c]")
 
 /mob/proc/hear_signlang(message, verb = "gestures", datum/language/language, mob/speaker = null)
+	var/speaker_name = speaker.name
 	if(!client)
 		return
 
 	if(say_understands(speaker, language))
-		message = "<B>[src]</B> [verb], \"[language.format_message(message)]\""
+		message = "<span class='game say'><span class='name'>[speaker_name]</span> [language.format_message(message, verb)]</span>"
 	else
-		message = "<B>[src]</B> [verb]."
+		message = "<span class='game say'><span class='name'>[speaker_name]</span> [verb].</span>"
 
 	if(src.status_flags & PASSEMOTES)
 		for(var/obj/item/weapon/holder/H in src.contents)
 			H.show_message(message)
-	show_message(message)
 
-/mob/proc/hear_sleep(message)
+	if (speaker != src)
+		show_message(message, 1)
+	else
+		show_message(message)
+
+/mob/proc/hear_sleep(message, datum/language/language)
 	var/heard = ""
+	if (language && ((language.flags & NONVERBAL) || (language.flags & SIGNLANG)))
+		return
+
+	if (sdisabilities & DEAF || ear_deaf)
+		return
+
 	if(prob(15))
 		var/list/punctuation = list(",", "!", ".", ";", "?")
 		var/list/messages = splittext(message, " ")

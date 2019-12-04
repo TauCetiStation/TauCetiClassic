@@ -60,7 +60,8 @@
 	if(blood_DNA && blood_DNA.len && blood_overlay)
 		new_overlays += blood_overlay
 
-	overlays = new_overlays
+	cut_overlays()
+	add_overlay(new_overlays)
 
 /obj/item/weapon/defibrillator/ui_action_click()
 	toggle_paddles()

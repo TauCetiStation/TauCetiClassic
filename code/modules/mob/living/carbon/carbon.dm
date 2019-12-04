@@ -10,7 +10,7 @@
 	..()
 
 	// Increase germ_level regularly
-	if(germ_level < GERM_LEVEL_AMBIENT && prob(80))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
+	if(germ_level < GERM_LEVEL_AMBIENT && prob(80) && !IS_IN_STASIS(src))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
 		germ_level++
 
 /mob/living/carbon/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
@@ -20,11 +20,11 @@
 		if(nutrition && stat != DEAD)
 			var/met_factor = get_metabolism_factor()
 			nutrition -= met_factor * 0.01
-			if(has_trait(TRAIT_STRESS_EATER))
+			if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
 				nutrition -= met_factor * getHalLoss() * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
 			if(m_intent == "run")
 				nutrition -= met_factor * 0.01
-		if((FAT in mutations) && m_intent == "run" && bodytemperature <= 360)
+		if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == "run" && bodytemperature <= 360)
 			bodytemperature += 2
 
 		// Moving around increases germ_level faster

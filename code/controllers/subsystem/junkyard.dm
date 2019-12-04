@@ -35,6 +35,7 @@ var/datum/subsystem/junkyard/SSjunkyard
 			T.surround_by_scrap()
 		if(istype(T, /turf/simulated/floor/plating/ironsand/junkyard))
 			T.surround_by_scrap()
+			T.resource_definition()
 		CHECK_TICK
 	junkyard_initialised = 1
 	SSweather.eligible_zlevels.Add(zlevel) //junkyard

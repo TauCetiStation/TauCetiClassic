@@ -565,8 +565,8 @@ ________________________________________________________________________________
 					playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 					for (var/mob/O in hearers(3, P.loc))
 						O.show_message(text("[bicon(P)] *[P.ttone]*"))
-				P.overlays.Cut()
-				P.overlays += image('icons/obj/pda.dmi', "pda-r")
+				P.cut_overlays()
+				P.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 				var/mob/living/L = null
 				if(P.loc && isliving(P.loc))
 					L = P.loc

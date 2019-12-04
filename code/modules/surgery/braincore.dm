@@ -35,9 +35,11 @@
 	target.brain_op_stage = 2
 
 /datum/surgery_step/brain/saw_skull/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, cracking [target]'s skull with \the [tool]!</span>" , \
 	"<span class='warning'>Your hand slips, cracking [target]'s skull with \the [tool]!</span>" )
-	target.apply_damage(max(10, tool.force), BRUTE, BP_HEAD)
+	BP.fracture()
+	BP.take_damage(max(10, tool.force), 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/brain/cut_brain
 	allowed_tools = list(
@@ -64,9 +66,10 @@
 	target.brain_op_stage = 3
 
 /datum/surgery_step/brain/cut_brain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
-	target.apply_damage(50, BRUTE, BP_HEAD, 1, DAM_SHARP)
+	BP.take_damage(50, 0, DAM_SHARP|DAM_EDGE,  tool)
 
 /datum/surgery_step/brain/saw_spine
 	allowed_tools = list(
@@ -110,9 +113,10 @@
 	target.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
 
 /datum/surgery_step/brain/saw_spine/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
-	target.apply_damage(30, BRUTE, BP_HEAD, 1, DAM_SHARP)
+	BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, tool)
 	if (ishuman(user))
 		user:bloody_body(target)
 		user:bloody_hands(target, 0)
@@ -147,9 +151,10 @@
 
 
 /datum/surgery_step/brain/bone_chips/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, jabbing \the [tool] in [target]'s brain!</span>", \
 	"<span class='warning'>Your hand slips, jabbing \the [tool] in [target]'s brain!</span>")
-	target.apply_damage(30, BRUTE, BP_HEAD, 1, DAM_SHARP)
+	BP.take_damage(30, 0, DAM_SHARP, tool)
 
 /datum/surgery_step/brain/hematoma
 	allowed_tools = list(
@@ -177,9 +182,10 @@
 
 
 /datum/surgery_step/brain/hematoma/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, bruising [target]'s brain with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, bruising [target]'s brain with \the [tool]!</span>")
-	target.apply_damage(20, BRUTE, BP_HEAD, 1, DAM_SHARP)
+	BP.take_damage(20, 0, used_weapon = tool)
 
 //////////////////////////////////////////////////////////////////
 //				SLIME CORE EXTRACTION							//

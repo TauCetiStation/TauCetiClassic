@@ -172,7 +172,7 @@
 /datum/reagent/dermaline/on_general_digest(mob/living/M)
 	..()
 	M.heal_bodypart_damage(0,3 * REM)
-	if(volume >= overdose && HUSK in M.mutations && ishuman(M))
+	if(volume >= overdose && (HUSK in M.mutations) && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.mutations.Remove(HUSK)
 		H.update_body()
@@ -220,14 +220,6 @@
 	..()
 	M.adjustToxLoss(6 * REM) // Let's just say it's thrice as poisonous.
 	return FALSE
-
-/datum/reagent/metatrombine
-	name = "Metatrombine"
-	id = "metatrombine"
-	description = "Metatrombine is a drug that induces high plateletes production. Can be used to temporarily coagulate blood in internal bleedings."
-	reagent_state = LIQUID
-	color = "#990000"
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/tricordrazine
 	name = "Tricordrazine"
@@ -428,15 +420,6 @@
 			if(IO.damage > 0 && IO.robotic < 2)
 				IO.damage = max(IO.damage - 0.20, 0)
 
-/datum/reagent/stabyzol
-	name = "Stabyzol"
-	id = "stabyzol"
-	description = "Used to stimulate broken organs to a point where damage to them appears virtual while reagent is in patient's blood stream. Medicate only in small doses."
-	reagent_state = LIQUID
-	color = "#6f2cf2"
-	overdose = 10
-	restrict_species = list(IPC, DIONA)
-
 /datum/reagent/kyphotorin
 	name = "Kyphotorin"
 	id = "kyphotorin"
@@ -618,14 +601,6 @@
 	..()
 	M.nutrition = max(M.nutrition - nutriment_factor, 0)
 	M.overeatduration = 0
-
-/datum/reagent/aclometasone
-	name = "Aclometasone"
-	id = "aclometasone"
-	description = "Completely shuts down patient's metabolism, must be manually eliminated from the body, or otherwise patient might die due to extreme blood forming disorders."
-	reagent_state = LIQUID
-	color = "#074232"
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/stimulants
 	name = "Stimulants"

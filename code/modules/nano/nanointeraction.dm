@@ -46,7 +46,7 @@
 		return
 	if(z in config.admin_levels)						// Syndicate borgs can interact with everything on the admin level
 		return STATUS_INTERACTIVE
-	if(istype(get_area(src), /area/syndicate_station))	// If elsewhere, they can interact with everything on the syndicate shuttle
+	if(istype(get_area(src), /area/shuttle/syndicate))	// If elsewhere, they can interact with everything on the syndicate shuttle
 		return STATUS_INTERACTIVE
 	if(istype(src_object, /obj/machinery))				// Otherwise they can only interact with emagged machinery
 		var/obj/machinery/Machine = src_object

@@ -7,20 +7,23 @@
 	addtimer(CALLBACK(src, .proc/updateicon), 5)
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(charge < 0.01)
 		return
 	else if(charge/maxcharge >=0.995)
-		overlays += image('icons/obj/power.dmi', "cell-o2")
+		add_overlay(image('icons/obj/power.dmi', "cell-o2"))
 	else
-		overlays += image('icons/obj/power.dmi', "cell-o1")
+		add_overlay(image('icons/obj/power.dmi', "cell-o1"))
 
 /obj/item/weapon/stock_parts/cell/proc/percent()		// return % charge of cell
 	return 100.0*charge/maxcharge
 
 // use power from a cell, returns the amount actually used
 /obj/item/weapon/stock_parts/cell/use(amount)
+	if(amount < 0)
+		stack_trace("[src.type]/use() called with a negative parameter [amount]")
+		return 0
 	if(rigged && amount > 0)
 		explode()
 		return 0
@@ -31,6 +34,9 @@
 
 // recharge the cell
 /obj/item/weapon/stock_parts/cell/proc/give(amount)
+	if(amount < 0)
+		stack_trace("[src.type]/give() called with a negative parameter [amount]")
+		return 0
 	if(rigged && amount > 0)
 		explode()
 		return 0

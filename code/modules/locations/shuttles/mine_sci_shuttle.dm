@@ -2,12 +2,12 @@
 
 #define STATION_DOCK /area/shuttle/mining/station
 #define MINE_DOCK /area/shuttle/mining/outpost
-#define SCI_DOCK /area/shuttle/research
+#define SCI_DOCK /area/shuttle/mining/research
 
 #define M_S_SHUTTLE_FLOOR /turf/simulated/shuttle/floor/mining
 
 var/global/obj/machinery/computer/mine_sci_shuttle/flight_comp/autopilot = null
-var/global/area/mine_sci_curr_location = null
+var/global/area/asteroid/mine_sci_curr_location = null
 
 /obj/machinery/computer/mine_sci_shuttle
 	name = "Mine-Science Shuttle Console"
@@ -71,7 +71,7 @@ var/global/area/mine_sci_curr_location = null
 	state_broken_preset = null
 	state_nopower_preset = null
 	circuit = /obj/item/weapon/circuitboard/mine_sci_shuttle/flight_comp
-	var/area/mine_sci_curr_location
+	var/area/asteroid/mine_sci_curr_location
 	var/moving = 0
 	var/lastMove = 0
 
