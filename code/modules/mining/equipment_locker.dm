@@ -759,8 +759,8 @@
 		DropOre()
 
 /mob/living/simple_animal/hostile/mining_drone/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!</span>\n"
-	msg += "Robot used to support the miners can be configured to search and collect ore or destroy monsters.\n"
+	..()
+	var/msg = null
 	if (src.health < src.maxHealth)
 		if (src.health >= src.maxHealth * 0.7)
 			msg += "<span class='warning'>It looks slightly dented.</span>\n"
@@ -770,7 +770,6 @@
 			msg += "<span class='warning'><B>It looks severely dented!</B></span>\n"
 	else
 		msg += "<span class='notice'>It looks without dents.</span>\n"
-	msg += "<span class='info'>*---------*</span>"
 	to_chat(user, msg)
 
 /mob/living/simple_animal/hostile/mining_drone/emag_act(mob/user)
