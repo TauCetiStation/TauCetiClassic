@@ -90,12 +90,14 @@
 	set category = "Exosuit Interface"
 	set name = "Activate ambulance signal"
 	set src = usr.loc
-	set popup_menu = 0
-	if(usr!=src.occupant)
+	set popup_menu = FALSE
+
+	if(usr != src.occupant)
 		return
+
 	if(world.time > last_panic + 60)
 		last_panic = world.time
-		src.occupant_message("<font color='blue'>You activate ambulance signal.</font>")
+		src.occupant_message("<span class='notice'>You activate ambulance signal.</span>")
 		playsound(src, 'sound/mecha/siren.ogg', VOL_EFFECTS_MASTER, 95, FALSE)
 		light_color = COLOR_BLUE
 		set_light(2)
@@ -111,4 +113,3 @@
 		set_light(2)
 		sleep(6)
 		set_light(0)
-	return
