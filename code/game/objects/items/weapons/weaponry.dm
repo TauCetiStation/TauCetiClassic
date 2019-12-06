@@ -154,6 +154,58 @@
 	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
+/obj/item/weapon/carbon_blade
+	name = "carbon blade"
+	desc = "Black blade with a cellular structure of hexagons, the cutting edge of the blade is made of diamond"
+	icon_state = "carbon_blade"
+	item_state = "carbon_blade_defense"
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
+	force = 20
+	throwforce = 10
+	edge = TRUE
+	sharp = TRUE
+	w_class = ITEM_SIZE_LARGE
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	var/block_chance = 65
+	var/stand = TRUE
+	var/damage_in_stand = 20
+	var/damage_out_of_stand = 50
+
+/obj/item/weapon/carbon_blade/suicide_act(mob/user)
+	to_chat(viewers(user), "<span class='warning'><b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
+	return(BRUTELOSS)
+
+/obj/item/weapon/carbon_blade/Get_shield_chance()
+		return block_chance
+
+/obj/item/weapon/carbon_blade/attack(mob/living/carbon/M, mob/living/carbon/user)
+	change_stand(M)
+	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
+	return ..()
+
+/obj/item/weapon/carbon_blade/proc/change_stand(mob/living/carbon/M)
+	if(stand)
+		force = damage_in_stand
+		throwforce = 10
+		block_chance = 65
+		item_state = "carbon_blade_defense"
+	else
+		force = damage_out_of_stand
+		throwforce = 20
+		block_chance = 0
+		item_state = "carbon_blade_attack"
+
+	if(M.get_inactive_hand())
+		force /= 2
+		throwforce /= 2
+		block_chance = 0
+
+	update_icon()
+
+/obj/item/weapon/carbon_blade/attack_self(mob/user)
+	stand = !stand
+	change_stand(user)
+
 /obj/item/weapon/harpoon
 	name = "harpoon"
 	sharp = 1
