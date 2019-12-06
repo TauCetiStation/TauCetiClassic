@@ -170,6 +170,8 @@
 	var/stand = TRUE
 	var/damage_in_stand = 20
 	var/damage_out_of_stand = 50
+	var/block_chance_in_stand = 65
+	var/block_chanceout_of_stand = 0
 
 /obj/item/weapon/carbon_blade/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='warning'><b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
@@ -187,12 +189,12 @@
 	if(stand)
 		force = damage_in_stand
 		throwforce = 10
-		block_chance = 65
+		block_chance = block_chance_in_stand
 		item_state = "carbon_blade_defense"
 	else
 		force = damage_out_of_stand
 		throwforce = 20
-		block_chance = 0
+		block_chance = block_chanceout_of_stand
 		item_state = "carbon_blade_attack"
 
 	if(M.get_inactive_hand())
