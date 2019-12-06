@@ -176,13 +176,7 @@
 	return(BRUTELOSS)
 
 /obj/item/weapon/carbon_blade/Get_shield_chance()
-	if(M.get_inactive_hand())
-		if(block_chance)
-			return block_chance / 2
-		else
-			return 0
-	else
-		return block_chance
+	return block_chance
 
 /obj/item/weapon/carbon_blade/attack(mob/living/carbon/M, mob/living/carbon/user)
 	change_stand(M)
@@ -204,6 +198,8 @@
 	if(M.get_inactive_hand())
 		force /= 2
 		throwforce /= 2
+		if(block_chance)
+			block_chance /= 2
 
 	update_icon()
 
