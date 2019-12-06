@@ -166,7 +166,7 @@
 	sharp = TRUE
 	w_class = ITEM_SIZE_LARGE
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	var/block_chance = 65
+	var/block_chance = 60
 	var/stand = TRUE
 	var/damage_in_stand = 20
 	var/damage_out_of_stand = 50
@@ -176,6 +176,12 @@
 	return(BRUTELOSS)
 
 /obj/item/weapon/carbon_blade/Get_shield_chance()
+	if(M.get_inactive_hand())
+		if(block_chance)
+			return block_chance / 2
+		else
+			return 0
+	else
 		return block_chance
 
 /obj/item/weapon/carbon_blade/attack(mob/living/carbon/M, mob/living/carbon/user)
@@ -187,7 +193,7 @@
 	if(stand)
 		force = damage_in_stand
 		throwforce = 10
-		block_chance = 65
+		block_chance = 60
 		item_state = "carbon_blade_defense"
 	else
 		force = damage_out_of_stand
@@ -198,7 +204,6 @@
 	if(M.get_inactive_hand())
 		force /= 2
 		throwforce /= 2
-		block_chance = 0
 
 	update_icon()
 
