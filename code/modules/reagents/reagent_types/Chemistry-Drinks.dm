@@ -510,7 +510,7 @@
 /datum/reagent/consumable/atomicbomb/on_general_digest(mob/living/M)
 	..()
 	M.druggy = max(M.druggy, 50)
-	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.confused = max(M.confused + 2,0)
 		M.make_dizzy(10)
 	if(!M.stuttering)
@@ -681,10 +681,10 @@
 	if(M.get_species() == SKRELL) //Skrell get very drunk very quickly.
 		d *= 5
 
-	if(M.has_trait(TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
+	if(HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 		d *= 0.7
 
-	if(M.has_trait(TRAIT_LIGHT_DRINKER))
+	if(HAS_TRAIT(M, TRAIT_LIGHT_DRINKER))
 		d *= 2
 
 	M.dizziness += dizzy_adj
@@ -793,7 +793,7 @@
 	M.drowsyness = max(0, M.drowsyness - 7)
 	if(M.bodytemperature > BODYTEMP_NORMAL)
 		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.make_jittery(5)
 
 /datum/reagent/consumable/ethanol/vodka
@@ -1000,7 +1000,7 @@
 
 /datum/reagent/consumable/ethanol/deadrum/on_general_digest(mob/living/M)
 	..()
-	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.dizziness += 5
 
 /datum/reagent/consumable/ethanol/sake
@@ -1144,7 +1144,7 @@
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_general_digest(mob/living/M)
 	..()
-	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.Stun(10)
 
 /datum/reagent/consumable/ethanol/irish_cream

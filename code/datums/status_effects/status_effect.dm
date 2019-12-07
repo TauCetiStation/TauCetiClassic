@@ -189,7 +189,7 @@
 /datum/status_effect/stacking/proc/add_stacks(stacks_added)
 	if(stacks_added > 0 && !can_gain_stacks())
 		return FALSE
-	owner.overlays -= status_overlay
+	owner.cut_overlay(status_overlay)
 	owner.underlays -= status_underlay
 	stacks += stacks_added
 	if(stacks > 0)
@@ -204,7 +204,7 @@
 		stacks = min(stacks, max_stacks)
 		status_overlay.icon_state = "[overlay_state][stacks]"
 		status_underlay.icon_state = "[underlay_state][stacks]"
-		owner.overlays += status_overlay
+		owner.add_overlay(status_overlay)
 		owner.underlays += status_underlay
 	else
 		fadeout_effect()
@@ -227,13 +227,13 @@
 	status_underlay.pixel_x = -owner.pixel_x
 	status_underlay.transform = matrix() * (icon_height/world.icon_size) * 3
 	status_underlay.alpha = 40
-	owner.overlays += status_overlay
+	owner.add_overlay(status_overlay)
 	owner.underlays += status_underlay
 	return ..()
 
 /datum/status_effect/stacking/Destroy()
 	if(owner)
-		owner.overlays -= status_overlay
+		owner.cut_overlay(status_overlay)
 		owner.underlays -= status_underlay
 	QDEL_NULL(status_overlay)
 	return ..()

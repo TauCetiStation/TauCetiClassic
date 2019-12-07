@@ -876,13 +876,13 @@
 /obj/item/device/pda/update_icon()
 	..()
 
-	overlays.Cut()
+	cut_overlays()
 	if(newmessage)
-		overlays += image('icons/obj/pda.dmi', "pda-r")
+		add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 	if(id)
 		var/id_overlay = get_id_overlay(id)
 		if(id_overlay)
-			overlays += image('icons/obj/pda.dmi', id_overlay)
+			add_overlay(image('icons/obj/pda.dmi', id_overlay))
 
 /obj/item/device/pda/proc/get_id_overlay(obj/item/weapon/card/id/I)
 	if(!I)
@@ -1060,8 +1060,8 @@
 		nanomanager.update_user_uis(U, P) // Update the sending user's PDA UI so that they can see the new message
 
 		log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
-		P.overlays.Cut()
-		P.overlays += image('icons/obj/pda.dmi', "pda-r")
+		P.cut_overlays()
+		P.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 		P.newmessage = 1
 	else
 		to_chat(U, "<span class='notice'>ERROR: Messaging server is not responding.</span>")

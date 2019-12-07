@@ -99,7 +99,7 @@ var/jungle_plants_init = 0
 	fruit_g = rand(1,255)
 	fruit_b = fruit_type * 36
 	fruit_overlay.Blend(rgb(fruit_r, fruit_g, fruit_b), ICON_ADD)
-	overlays += fruit_overlay
+	add_overlay(fruit_overlay)
 	plant_strength = rand(20,200)
 
 /obj/structure/jungle_plant/attack_hand(mob/user)
@@ -115,9 +115,9 @@ var/jungle_plants_init = 0
 		J.bitesize = 1+round(J.reagents.total_volume / 2, 1)
 		J.attack_hand(user)
 
-		overlays -= fruit_overlay
+		cut_overlay(fruit_overlay)
 		fruit_overlay = icon('code/modules/jungle/jungle.dmi',"fruit[fruits_left]")
 		fruit_overlay.Blend(rgb(fruit_r, fruit_g, fruit_b), ICON_ADD)
-		overlays += fruit_overlay
+		add_overlay(fruit_overlay)
 	else
 		to_chat(user, "<span class='warning'>There are no fruit left on [src].</span>")
