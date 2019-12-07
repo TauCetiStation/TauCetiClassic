@@ -178,7 +178,7 @@
 	return(BRUTELOSS)
 
 /obj/item/weapon/carbon_blade/Get_shield_chance()
-		return block_chance
+	return block_chance
 
 /obj/item/weapon/carbon_blade/attack(mob/living/carbon/M, mob/living/carbon/user)
 	change_stand(M)
