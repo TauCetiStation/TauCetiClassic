@@ -200,7 +200,7 @@
 	if(M.get_inactive_hand())
 		force /= 2
 		throwforce /= 2
-		block_chance = 0
+		block_chance /= 2
 
 	update_icon()
 
