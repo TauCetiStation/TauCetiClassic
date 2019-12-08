@@ -1,4 +1,8 @@
 //I will need to recode parts of this but I am way too tired atm
+
+#define BLOB_NODE_MAX_PATH 15
+#define BLOB_CORE_MAX_PATH 20
+
 /obj/effect/blob
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
@@ -64,7 +68,7 @@
 		health_timestamp = world.time + 10 // 1 seconds
 
 
-/obj/effect/blob/proc/Pulse(max_pulse_path = 20, origin_dir = 0) //Todo: Fix spaceblob expand
+/obj/effect/blob/proc/Pulse(max_pulse_path = BLOB_NODE_MAX_PATH, origin_dir = 0) //Todo: Fix spaceblob expand
 
 	//set background = 1
 

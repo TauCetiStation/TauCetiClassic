@@ -51,7 +51,7 @@
 
 	health = min(initial(health), health + 1)
 	for(var/dir in cardinal)
-		Pulse(20, dir)
+		Pulse(BLOB_CORE_MAX_PATH, dir)
 	for(var/b_dir in alldirs)
 		if(!prob(5))
 			continue
