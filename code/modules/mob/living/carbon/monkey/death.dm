@@ -20,7 +20,7 @@
 
 /mob/living/carbon/monkey/dust()
 	var/atom/movable/overlay/animation = null
-	var/icon/I = getFlatIcon(src)
+	var/icon/I = new(getFlatIcon(src),,,1)
 	playsound(src, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER)
 	death(1)
 	notransform = TRUE
@@ -35,8 +35,8 @@
 	I.AddAlphaMask(T)
 
 	animation = new(loc)
-	animation.icon = I
 	animation.master = src
+	flick(I, animation)
 
 	new /obj/effect/decal/cleanable/ash(loc)
 

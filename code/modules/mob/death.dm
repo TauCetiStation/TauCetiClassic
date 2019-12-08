@@ -46,8 +46,8 @@
 	I.AddAlphaMask(T)
 
 	animation = new(loc)
-	animation.icon = I
 	animation.master = src
+	flick(I, animation)
 
 	new /obj/effect/decal/cleanable/ash(loc)
 	dead_mob_list -= src
