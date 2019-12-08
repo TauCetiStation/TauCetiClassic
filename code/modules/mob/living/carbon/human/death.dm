@@ -27,8 +27,8 @@
 		if(src)			qdel(src)
 
 /mob/living/carbon/human/dust()
-	var/icon/I = getFlatIcon(src)
 	var/atom/movable/overlay/animation = null
+	var/icon/I = getFlatIcon(src)
 	playsound(src, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER)
 	emote("scream",,, 1)
 	death(1)
@@ -37,9 +37,12 @@
 	icon = null
 	invisibility = 101
 
+	var/icon/T = icon('icons/effects/effects.dmi',"disappear")
+	T.BecomeAlphaMask()
+
 	I.MapColors(rgb(45,45,45), rgb(70,70,70), rgb(30,30,30), rgb(0,0,0))
-	I.Blend(icon('icons/effects/effects.dmi',"disappear"),ICON_OVERLAY)
-	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+	I.AddAlphaMask(T)
+
 	animation = new(loc)
 	animation.icon = I
 	animation.master = src
