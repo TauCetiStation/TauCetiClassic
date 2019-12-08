@@ -21,7 +21,7 @@
 
 /obj/effect/blob/node/Life()
 	for(var/dir in cardinal)
-		Pulse(5, dir)
+		Pulse(15, dir)
 	health = min(initial(health), health + 1)
 
 /obj/effect/blob/node/update_icon()
