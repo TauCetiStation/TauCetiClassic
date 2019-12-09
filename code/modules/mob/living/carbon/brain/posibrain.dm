@@ -142,7 +142,6 @@
 	brainmob.robot_talk_understand = 1
 	brainmob.stat = CONSCIOUS
 	brainmob.silent = 0
-	brainmob.brain_op_stage = 4.0
 	dead_mob_list -= brainmob
 
 	. = ..()

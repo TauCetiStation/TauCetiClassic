@@ -27,7 +27,7 @@
 //overwrite this after it's created if the apiary needs a custom machinery sprite
 /obj/machinery/apiary/atom_init()
 	. = ..()
-	overlays += image('icons/obj/apiary_bees_etc.dmi', icon_state="apiary")
+	add_overlay(image('icons/obj/apiary_bees_etc.dmi', icon_state="apiary"))
 
 /obj/machinery/apiary/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj ,/obj/item/projectile/energy/floramut))

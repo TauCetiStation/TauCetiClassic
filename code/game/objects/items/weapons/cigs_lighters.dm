@@ -122,6 +122,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	else if(istype(W, /obj/item/device/assembly/igniter))
 		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name].</span>")
+		
+	else if(istype(W, /obj/item/weapon/pen/edagger))
+		var/obj/item/weapon/pen/edagger/E = W
+		if(E.on)
+			light("<span class='warning'>[user] swings their [W], barely missing their nose. They light their [name] in the process.</span>")
 
 	//can't think of any other way to update the overlays :<
 	user.update_inv_l_hand()
@@ -311,6 +316,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	else if(istype(W, /obj/item/device/assembly/igniter))
 		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name] with the power of science.</span>")
+
+	else if(istype(W, /obj/item/weapon/pen/edagger))
+		var/obj/item/weapon/pen/edagger/E = W
+		if(E.on)
+			light("<span class='warning'>[user] swings their [W], barely missing their nose. They light their [name] in the process.</span>")
 
 /////////////////
 //SMOKING PIPES//

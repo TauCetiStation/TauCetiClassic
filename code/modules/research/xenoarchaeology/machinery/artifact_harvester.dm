@@ -106,7 +106,7 @@
 			inserted_battery.battery_effect.process()
 
 			// if the effect works by touch, activate it on anyone viewing the console
-			if(inserted_battery.battery_effect.effect == EFFECT_TOUCH)
+			if(inserted_battery.battery_effect.effect == ARTIFACT_EFFECT_TOUCH)
 				var/list/nearby = viewers(1, src)
 				for(var/mob/M in nearby)
 					if(M.machine == src)
@@ -234,8 +234,8 @@
 
 							// duplicate the artifact's effect datum
 							if(!inserted_battery.battery_effect)
-								var/effecttype = source_effect.type
-								var/datum/artifact_effect/E = new effecttype(inserted_battery)
+								var/new_effect_type = source_effect.type
+								var/datum/artifact_effect/E = new new_effect_type(inserted_battery)
 
 								// duplicate it's unique settings
 								for(var/varname in list("chargelevelmax", "artifact_id", "effect", "effectrange", "trigger"))
@@ -262,6 +262,7 @@
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 
 		src.inserted_battery.loc = src.loc
+		src.inserted_battery.update_icon()
 		src.inserted_battery = null
 		icon_state = "harvester"
 		owned_scanner.icon_state = "xenoarch_scanner"

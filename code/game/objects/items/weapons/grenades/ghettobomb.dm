@@ -57,7 +57,8 @@
 	if(active)
 		overlays_list += image('icons/obj/makeshift.dmi', "can_grenade_active")
 
-	overlays = overlays_list
+	cut_overlays()
+	add_overlay(overlays_list)
 
 /obj/item/weapon/grenade/cancasing/activate(mob/user)
 	if(user)
@@ -100,7 +101,8 @@
 	if(active)
 		overlays_list += image('icons/obj/makeshift.dmi', "can_grenade_rag_active")
 
-	overlays = overlays_list
+	cut_overlays()
+	add_overlay(overlays_list)
 
 /obj/item/weapon/grenade/cancasing/rag/attack_self(mob/user)
 	return

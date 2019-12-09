@@ -30,7 +30,8 @@
 	if(copytext(message,1,2) == "*")
 		return emote(copytext(message,2))
 
-	if((miming || has_trait(TRAIT_MUTE)) && !(message_mode == "changeling" || message_mode == "alientalk"))
+	//check if we are miming
+	if (miming && !(message_mode == "changeling" || message_mode == "alientalk"))
 		to_chat(usr, "<span class='userdanger'>You are mute.</span>")
 		return
 
@@ -46,6 +47,20 @@
 
 	//parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
+
+	//check if we're muted and not using gestures
+	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk"))
+		if (!(speaking && (speaking.flags & SIGNLANG)))
+			to_chat(usr, "<span class='userdanger'>You are mute.</span>")
+			return
+
+	if (speaking && (speaking.flags & SIGNLANG))
+		var/obj/item/organ/external/LH = src.get_bodypart(BP_L_ARM)
+		var/obj/item/organ/external/RH = src.get_bodypart(BP_R_ARM)
+		if (!(LH && LH.is_usable() && RH && RH.is_usable()))
+			to_chat(usr, "<span class='userdanger'>You tried to make a gesture, but your hands are not responding.</span>")
+			return
+
 	if (speaking)
 		message = copytext(message,2+length(speaking.key))
 	else if(species.force_racial_language)
@@ -291,7 +306,7 @@
 			message = wear_mask.speechModification(message)
 		handled = 1
 
-	if((HULK in mutations) && health >= 25 && length(message) && !has_trait(TRAIT_STRONGMIND))
+	if((HULK in mutations) && health >= 25 && length(message) && !HAS_TRAIT(src, TRAIT_STRONGMIND))
 		message = "[uppertext_(message)]!!!"
 		verb = pick("yells","roars","hollers")
 		handled = 1
@@ -305,7 +320,7 @@
 		handled = 1
 
 	var/braindam = getBrainLoss()
-	if(braindam >= 60 && !has_trait(TRAIT_STRONGMIND))
+	if(braindam >= 60 && !HAS_TRAIT(src, TRAIT_STRONGMIND))
 		handled = 1
 		if(prob(braindam/4))
 			message = stutter(message)

@@ -181,6 +181,7 @@
 
 	var/list/maplist = list()
 	var/datum/map_config/defaultmap
+	var/load_testmap = FALSE // swaps whatever.json with testmap.json in SSmapping init phase.
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -601,6 +602,9 @@
 
 				if("client_limit_panic_bunker_link")
 					config.client_limit_panic_bunker_link = value
+
+				if("summon_testmap")
+					config.load_testmap = TRUE
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")

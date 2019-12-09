@@ -47,7 +47,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
         //STRANGE ITEMS
 
 			if(16 to 25)
-				if(!halitem && !has_trait(TRAIT_STRONGMIND))
+				if(!halitem && !HAS_TRAIT(src, TRAIT_STRONGMIND))
 					halitem = new
 					var/list/slots_free = list(ui_lhand,ui_rhand)
 					if(l_hand) slots_free -= ui_lhand
@@ -101,7 +101,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
         // FLASHES OF DANGER, TURFS
 
 			if(26 to 40)
-				if(!halimage && !has_trait(TRAIT_STRONGMIND))
+				if(!halimage && !HAS_TRAIT(src, TRAIT_STRONGMIND))
 					var/list/possible_points = list()
 					for(var/turf/simulated/floor/F in view(src,world.view))
 						possible_points += F
@@ -190,7 +190,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						                          'sound/weapons/armbomb.ogg')
 						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
 					if(9) // GUNPULSES
-						var/list/gunsound_list = list('sound/weapons/guns/gunpulse_l10c.ogg',
+						var/list/gunsound_list = list('sound/weapons/guns/plasma10_shot.ogg',
 						                              'sound/weapons/guns/gunpulse_Taser.ogg',
 						                              'sound/weapons/guns/gunpulse_laser.ogg',
 						                              'sound/weapons/guns/gunpulse_stunrevolver.ogg')
@@ -242,7 +242,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
         // FLASHES OF DANGER, MOBS
 
 			if(66 to 70)
-				if(!halbody && !has_trait(TRAIT_STRONGMIND))
+				if(!halbody && !HAS_TRAIT(src, TRAIT_STRONGMIND))
 					var/list/possible_points = list()
 					for(var/turf/simulated/floor/F in view(src,world.view))
 						possible_points += F
@@ -263,7 +263,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							halbody = null
 
 			if(71 to 73)
-				if(!has_trait(TRAIT_STRONGMIND))
+				if(!HAS_TRAIT(src, TRAIT_STRONGMIND))
 					fake_attack(src)
 
         // FAKE DEATH

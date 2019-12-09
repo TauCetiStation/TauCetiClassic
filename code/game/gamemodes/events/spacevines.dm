@@ -213,7 +213,7 @@
 /proc/spacevine_infestation()
 	spawn() //to stop the secrets panel hanging
 		var/list/turf/simulated/floor/turfs = list() //list of all the empty floor turfs in the hallway areas
-		for(var/areapath in typesof(/area/hallway))
+		for(var/areapath in typesof(/area/station/hallway))
 			var/area/A = locate(areapath)
 			for(var/turf/simulated/floor/F in A.contents)
 				if(!F.contents.len)

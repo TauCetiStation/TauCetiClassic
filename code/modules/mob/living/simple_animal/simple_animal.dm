@@ -57,6 +57,14 @@
 
 	var/animalistic = TRUE // Determines whether the being here is an animal or nah.
 
+	///What kind of footstep this mob should have. Null if it shouldn't have any.
+	var/footstep_type
+
+/mob/living/simple_animal/atom_init()
+	. = ..()
+	if(footstep_type)
+		AddComponent(/datum/component/footstep, footstep_type)
+
 /mob/living/simple_animal/updatehealth()
 	return
 
@@ -382,9 +390,9 @@
 /mob/living/simple_animal/update_targeted()
 	if(!targeted_by && target_locked)
 		qdel(target_locked)
-	overlays = null
+	cut_overlays()
 	if (targeted_by && target_locked)
-		overlays += target_locked
+		add_overlay(target_locked)
 
 /mob/living/simple_animal/update_fire()
 	return
@@ -400,13 +408,16 @@
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
 			return FALSE
-		if(animalistic && L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
+		if(animalistic && HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
 			return FALSE
 	if (istype(the_target, /obj/mecha))
 		var/obj/mecha/M = the_target
 		if (M.occupant)
 			return FALSE
 	return TRUE
+
+/mob/living/simple_animal/IgniteMob()
+	return FALSE
 
 /mob/living/simple_animal/say(var/message)
 	if(stat)

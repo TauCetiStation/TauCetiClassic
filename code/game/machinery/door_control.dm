@@ -70,7 +70,7 @@
 	return ..()
 
 /obj/machinery/door_control/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	switch(buildstage)
 		if(DOOR_CONTROL_COMPLETE)
 			if(!wiresexposed)
@@ -85,12 +85,12 @@
 				if(stat & NOPOWER)
 					return
 				else if(emagged)
-					overlays += image('icons/obj/stationobjs.dmi', "doorctrl_assembly-emagged")
+					add_overlay(image('icons/obj/stationobjs.dmi', "doorctrl_assembly-emagged"))
 				else if(connected_poddoors.len || connected_airlocks.len)
-					overlays += image('icons/obj/stationobjs.dmi', "doorctrl_assembly-is_id")
+					add_overlay(image('icons/obj/stationobjs.dmi', "doorctrl_assembly-is_id"))
 					return
 				else
-					overlays += image('icons/obj/stationobjs.dmi', "doorctrl_assembly-no_id")
+					add_overlay(image('icons/obj/stationobjs.dmi', "doorctrl_assembly-no_id"))
 					return
 		if(DOOR_CONTROL_WITHOUT_WIRES)
 			icon_state = "doorctrl_assembly0"

@@ -24,13 +24,13 @@
 
 
 /obj/structure/dispenser/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	switch(oxygentanks)
-		if(1 to 3)	overlays += "oxygen-[oxygentanks]"
-		if(4 to INFINITY) overlays += "oxygen-4"
+		if(1 to 3)	add_overlay("oxygen-[oxygentanks]")
+		if(4 to INFINITY) add_overlay("oxygen-4")
 	switch(phorontanks)
-		if(1 to 4)	overlays += "phoron-[phorontanks]"
-		if(5 to INFINITY) overlays += "phoron-5"
+		if(1 to 4)	add_overlay("phoron-[phorontanks]")
+		if(5 to INFINITY) add_overlay("phoron-5")
 
 
 /obj/structure/dispenser/attack_hand(mob/user)

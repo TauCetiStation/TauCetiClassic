@@ -32,25 +32,31 @@
 
 	return formatted
 
+/obj/machinery/computer/card/AltClick(mob/user)
+	if(in_range(user, src))
+		eject_id()
+
 /obj/machinery/computer/card/verb/eject_id()
 	set category = "Object"
 	set name = "Eject ID Card"
 	set src in oview(1)
 
-	if(!usr || usr.stat || usr.lying)	return
+	if(!usr || usr.incapacitated() || issilicon(usr))	return
 
-	if(scan)
-		to_chat(usr, "You remove \the [scan] from \the [src].")
-		scan.loc = get_turf(src)
-		if(!usr.get_active_hand())
-			usr.put_in_hands(scan)
-		scan = null
-	else if(modify)
+	if(modify)
 		to_chat(usr, "You remove \the [modify] from \the [src].")
 		modify.loc = get_turf(src)
 		if(!usr.get_active_hand())
 			usr.put_in_hands(modify)
 		modify = null
+		playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	else if(scan)
+		to_chat(usr, "You remove \the [scan] from \the [src].")
+		scan.loc = get_turf(src)
+		if(!usr.get_active_hand())
+			usr.put_in_hands(scan)
+		scan = null
+		playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else
 		to_chat(usr, "There is nothing to remove from the console.")
 	return
@@ -68,6 +74,7 @@
 		id_card.loc = src
 		modify = id_card
 
+	playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	nanomanager.update_uis(src)
 	attack_hand(user)
 
@@ -140,6 +147,7 @@
 				modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 				if(ishuman(usr))
 					modify.loc = usr.loc
+					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 					if(!usr.get_active_hand())
 						usr.put_in_hands(modify)
 					modify = null
@@ -152,11 +160,13 @@
 					usr.drop_item()
 					I.loc = src
 					modify = I
+					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 		if ("scan")
 			if (scan)
 				if(ishuman(usr))
 					scan.loc = usr.loc
+					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 					if(!usr.get_active_hand())
 						usr.put_in_hands(scan)
 					scan = null
@@ -169,6 +179,7 @@
 					usr.drop_item()
 					I.loc = src
 					scan = I
+					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 		if("access")
 			if(href_list["allowed"])

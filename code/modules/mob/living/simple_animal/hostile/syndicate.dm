@@ -37,6 +37,8 @@
 
 	animalistic = FALSE
 
+	footstep_type = FOOTSTEP_MOB_SHOE
+
 /mob/living/simple_animal/hostile/syndicate/death()
 	..()
 	if(corpse)
@@ -133,10 +135,30 @@
 	corpse = /obj/effect/landmark/mobcorpse/syndicatecommando
 	speed = 0
 
+/mob/living/simple_animal/hostile/syndicate/ranged/space/elite
+	icon_state = "elitesyndicaterangedpsace"
+	icon_living = "elitesyndicaterangedpsace"
+	name = "Elite Syndicate Commando"
+	maxHealth = 220
+	health = 220
+	projectiletype = /obj/item/projectile/bullet/rifle3
+	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 0
+	min_co2 = 0
+	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
+	minbodytemp = 0
+	corpse = /obj/effect/landmark/mobcorpse/syndicatecommando
+	speed = 0
+
+	weapon1 = /obj/item/weapon/gun/projectile/automatic/c20r
+	weapon2 = /obj/item/weapon/shield/energy
+
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(movement_dir = 0)
 	return
-
-
 
 /mob/living/simple_animal/hostile/viscerator
 	name = "viscerator"
