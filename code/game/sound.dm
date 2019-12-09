@@ -181,6 +181,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		. = prefs.snd_admin_vol
 	else if(volume_channel & VOL_JUKEBOX)
 		. = prefs.snd_jukebox_vol
+	else if(volume_channel & VOL_DELTA)
+		. = prefs.snd_delta_vol
 	else
 		CRASH("unknown volume_channel: [volume_channel]")
 
@@ -223,6 +225,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 					media.stop_music()
 				else if(vol && !old_vol)
 					media.update_music()
+		if(VOL_DELTA)
+			prefs.snd_delta_vol = vol
 
 /client/proc/update_volume(href_list)
 	var/slider
@@ -389,6 +393,9 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			),
 		"Jukebox" = list(
 			"Master" = "[VOL_JUKEBOX]"
+			),
+		"Delta Sound" = list(
+			"Master" = "[VOL_DELTA]"
 			)
 		)
 
@@ -401,7 +408,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		"[VOL_EFFECTS_INSTRUMENT]" = prefs.snd_effects_instrument_vol,
 		"[VOL_NOTIFICATIONS]" = prefs.snd_notifications_vol,
 		"[VOL_ADMIN]" = prefs.snd_admin_vol,
-		"[VOL_JUKEBOX]" = prefs.snd_jukebox_vol
+		"[VOL_JUKEBOX]" = prefs.snd_jukebox_vol,
+		"[VOL_DELTA]" = prefs.snd_delta_vol
 		)
 
 	var/list/sliders_hint = list(
@@ -413,7 +421,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		"[VOL_EFFECTS_INSTRUMENT]" = "Music instruments.",
 		"[VOL_NOTIFICATIONS]" = "OOC notifications such as admin PM, cloning.",
 		"[VOL_ADMIN]" = "Admin sounds and music.",
-		"[VOL_JUKEBOX]" = "In-game jukebox's volume."
+		"[VOL_JUKEBOX]" = "In-game jukebox's volume.",
+		"[VOL_DELTA]" = "Delta's siren etc."
 		)
 
 	var/dat = {"
