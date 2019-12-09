@@ -79,9 +79,9 @@ var/list/quiet_alarm_areas = typecacheof(typesof(/area/station/maintenance) + ty
         if (is_station_level(M.z))
             var/area/A = get_area(M)
             if (is_type_in_typecache(A, quiet_alarm_areas))
-                M.playsound_local(get_turf(M), 'sound/machines/alarm_delta.ogg', VOL_EFFECTS_MASTER, 20, FALSE)
+                M.playsound_local(get_turf(M), 'sound/machines/alarm_delta.ogg', VOL_DELTA, 20, FALSE)
             else if (is_type_in_typecache(A, loud_alarm_areas))
-                M.playsound_local(get_turf(M), 'sound/machines/alarm_delta.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+                M.playsound_local(get_turf(M), 'sound/machines/alarm_delta.ogg', VOL_DELTA, null, FALSE)
     return
 
 /proc/get_security_level()
