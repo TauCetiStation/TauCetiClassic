@@ -47,6 +47,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/snd_notifications_vol = 100
 	var/snd_admin_vol = 100
 	var/snd_jukebox_vol = 100
+	var/snd_delta_vol = 100
 
 	//antag preferences
 	var/list/be_role = list()
@@ -413,4 +414,3 @@ var/const/MAX_SAVE_SLOTS = 10
 	if(icon_updates)
 		character.update_body()
 		character.update_hair()
-
