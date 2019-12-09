@@ -150,6 +150,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["snd_notifications_vol"]				>> snd_notifications_vol
 	S["snd_admin_vol"]						>> snd_admin_vol
 	S["snd_jukebox_vol"]					>> snd_jukebox_vol
+	S["snd_delta_vol"]						>> snd_delta_vol
 
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary
@@ -184,6 +185,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	snd_notifications_vol = sanitize_integer(snd_notifications_vol, 0, 100, initial(snd_notifications_vol))
 	snd_admin_vol = sanitize_integer(snd_admin_vol, 0, 100, initial(snd_admin_vol))
 	snd_jukebox_vol = sanitize_integer(snd_jukebox_vol, 0, 100, initial(snd_jukebox_vol))
+	snd_delta_vol = sanitize_integer(snd_delta_vol, 0, 100, initial(snd_delta_vol))
 
 	return 1
 
@@ -228,6 +230,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["snd_notifications_vol"]				<< snd_notifications_vol
 	S["snd_admin_vol"]						<< snd_admin_vol
 	S["snd_jukebox_vol"]					<< snd_jukebox_vol
+	S["snd_delta_vol"]						<< snd_delta_vol
 	return 1
 
 /datum/preferences/proc/load_saved_character(dir)
