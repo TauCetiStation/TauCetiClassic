@@ -1,6 +1,6 @@
 /obj/machinery/biogenerator
 	name = "Biogenerator"
-	desc = "Splits the vegetation put into it into macro- and micro-nutrients, synthesizes fertilizers, fiber, and more from them."
+	desc = "Splits the vegetation on to macro- and micro-nutrients, synthesizes fertilizers, fiber, and more."
 	icon = 'icons/obj/machines/biogenerator.dmi'
 	icon_state = "biogen-empty"
 	density = 1

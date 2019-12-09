@@ -576,7 +576,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk
 	seed = "/obj/item/seeds/honky-seed"
 	name = "Clowny banana"
-	desc = "Looks very colorful and tasty, a Clown will kill for this banana!"
+	desc = "Looks very colorful and tasty, a Clown would kill for this banana!"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "h-banana"
 	item_state = "h-banana"
