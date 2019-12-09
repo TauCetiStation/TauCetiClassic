@@ -11273,6 +11273,7 @@
 /obj/item/clothing/suit/space/globose/mining,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/globose/mining,
+/obj/item/device/suit_cooling_unit,
 /obj/machinery/alarm{
 	dir = 1;
 	locked = 0;
