@@ -11,8 +11,8 @@
 #define VOL_NOTIFICATIONS (1<<6) // mainly for ghosts, such as cloning ready, admin pm, etc.
 #define VOL_ADMIN (1<<7) // admin sounds or music (fun category).
 
-// jukebox not a VOL_MUSIC sub category because jukebox plays thru javascript, which is not boynd's sound datum.
-#define VOL_JUKEBOX (1<<8)
+#define VOL_JUKEBOX (1<<8) // jukebox not a VOL_MUSIC sub category because jukebox plays thru javascript, which is not boynd's sound datum.
+#define VOL_DELTA (1<<9) // For delta sounds.
 
 //Misc
 #define VOL_LINEAR_TO_NON(vol_raw) ((20 ** CLAMP(vol_raw * 0.01, 0, 1.0)) - 0.99) / (20 - 0.99) // this converts byond's linear volume into non linear (don't change anything without heavy testing with debug, even 0.01 difference may break the sound or functions that connects with this).
