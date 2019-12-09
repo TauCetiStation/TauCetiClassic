@@ -1,7 +1,7 @@
 //I will need to recode parts of this but I am way too tired atm
 
-#define BLOB_NODE_MAX_PATH 15
-#define BLOB_CORE_MAX_PATH 20
+#define BLOB_NODE_MAX_PATH 10
+#define BLOB_CORE_MAX_PATH 15
 
 /obj/effect/blob
 	name = "blob"
