@@ -255,6 +255,24 @@
 	yield = 3
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/honkyseed)
+
+/obj/item/seeds/honkyseed
+	name = "pack of honk-banana seeds"
+	desc = "They're seeds that grow into banana trees."
+	icon_state = "seed-banana-honk"
+	mypath = "/obj/item/seeds/honkyseed"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	species = "honk"
+	plantname = "Honk banana Tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk"
+	lifespan = 60
+	endurance = 40
+	maturation = 6
+	production = 6
+	yield = 4
+	plant_type = 0
+	growthstages = 6
 
 /obj/item/seeds/eggplantseed
 	name = "pack of eggplant seeds"
