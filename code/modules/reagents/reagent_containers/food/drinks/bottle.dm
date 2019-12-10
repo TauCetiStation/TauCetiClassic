@@ -161,6 +161,25 @@
 
 	return
 
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/attackby(obj/item/W, mob/user)
+	if(is_glass == FALSE)
+		to_chat(user, "<span class='notice'>That won't work.</span>")
+		..()
+		return
+	else if(istype(W, /obj/item/stack/medical/bruise_pack/rags))
+		var/rags = /obj/item/stack/medical/bruise_pack/rags
+		user.drop_item()
+		rags = W
+		to_chat(user, "<span class='notice'>You splash liquid onto the floor and attach the [rags] to the [src].</span>")
+		var/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/B =  new /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov(loc)
+		B.icon_state = src.icon_state
+		var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
+		B.icon = I
+		B.overlays += image('icons/obj/makeshift.dmi', "molotov_rag")
+		update_icon()
+		qdel(src)
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/after_throw(datum/callback/callback)
 	..()
 	if(is_glass)
@@ -184,20 +203,26 @@
 	throwforce = 6.0
 	throw_speed = 4
 	throw_range = 6
-	item_state = "beer"
+	item_state = "beer_molotov"
 	attack_verb = list("attacked")
 	sharp = 0
 	edge = 0
 	is_transparent = 1
 	is_glass = 1
 	volume = 100
+	amount_per_transfer_from_this = 10
 	var/active = 0
 	var/bottle_icon
 	var/bottle_icon_state
+	var/is_molotov = 1
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/weapon/W, mob/living/user)
 	. = ..()
-	if(active && reagents.total_volume)
+	if(istype(W, /obj/item/stack/medical/bruise_pack/rags))
+		to_chat(user, "<span class='notice'>This is already molotov.</span>")
+		return
+	if(active == 1)
+		to_chat(user, "<span class='notice'>This is already burn!.</span>")
 		return
 	var/is_W_lit = FALSE
 	if(istype(W, /obj/item/weapon/match))
@@ -214,43 +239,34 @@
 			is_W_lit = TRUE
 	if(!is_W_lit)
 		return
-	else
-		return
-	user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
-	active = 1
-	update_icon()
-	add_fingerprint(user)
+	if(is_W_lit == TRUE)
+		user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
+		active = 1
+		update_icon()
+		add_fingerprint(user)
 	if(iscarbon(user) && istype(user.get_active_hand(), src))
 		var/mob/living/carbon/C = user
 		C.throw_mode_on()
+	else
+		return
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/after_throw(datum/callback/callback)
-	if(active)
-		/turf/proc/create_fire
-			. = ..()
+	..()
+	if(is_glass && active)
+		new/obj/fire/process(loc)
+		. = ..()
 	else
 		return
 	qdel(src)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/CheckParts(list/parts_list)
-	..()
-	for(var/obj/item/I in contents)
-		if(istype(I, /obj/item/weapon/reagent_containers/food/drinks/bottle))
-			bottle_icon = I.icon
-			bottle_icon_state = I.icon_state
-		update_icon()
-
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/update_icon()
 	..()
-	var/list/overlays_list = list('icons/obj/drinks.dmi', "molotov_rag", "molotov_active")
-	icon = bottle_icon
-	icon_state = bottle_icon_state
-	overlays_list += image('icons/obj/drinks.dmi', "molotov_rag")
-	overlays = overlays_list
-	if (active == 1)
-		overlays += image('icons/obj/makeshift.dmi', "molotov_active")
-	else
-		return
+	if (active == TRUE)
+		overlays += image('icons/obj/makeshift.dmi' ,"molotov_active")
+		bottle_icon_state = "beer_molotov_act"
+		set_light(2)
+		START_PROCESSING(SSobj, src)
+
 
 
 //Keeping this here for now, I'll ask if I should keep it here.
@@ -525,6 +541,7 @@
 	pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/atom_init()
-	reagents.add_reagent("fuel", 100)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	. = ..()
+	var/datum/reagents/R = new/datum/reagents(100)
+	reagents = R
+	R.my_atom = src
