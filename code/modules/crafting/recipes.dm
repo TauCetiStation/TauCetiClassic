@@ -71,11 +71,3 @@
 	result = /obj/item/weapon/handcuffs/cable
 	parts = list(/obj/item/stack/cable_coil = 1)
 
-
-/datum/crafting_recipe/molotov
-	name = "cocktail molotov"
-	result = /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov
-	reqs = list(/obj/item/stack/medical/bruise_pack/rags = 1,
-				/obj/item/weapon/reagent_containers/food/drinks/bottle = 1)
-	parts = list(/obj/item/weapon/reagent_containers/food/drinks/bottle = 1)
-	time = 50
