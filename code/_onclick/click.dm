@@ -129,8 +129,15 @@
 			UnarmedAttack(A)
 		return
 
-	if(!isturf(loc)) // This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that
-		return
+	if(!isturf(loc)) // (This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that.) Not anymore
+		if(TK in mutations)//Now telekinesing from inside a closet is possible
+			var/dist = get_dist(src, A)
+			if(dist > tk_maxrange)
+				return
+			SetNextMove(max(dist, CLICK_CD_MELEE))
+			A.attack_tk(src)
+		else
+			return
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
 	sdepth = A.storage_depth_turf()
