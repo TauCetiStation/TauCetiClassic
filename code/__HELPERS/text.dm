@@ -353,6 +353,54 @@ var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8
 		new_text += copytext(text, i, i+1)
 	return new_text
 
+/proc/parsebbcode(t, colour = "black")
+	t = replacetext(t, "\[center\]", "<center>")
+	t = replacetext(t, "\[/center\]", "</center>")
+	t = replacetext(t, "\[br\]", "<br>")
+	t = replacetext(t, "\[b\]", "<b>")
+	t = replacetext(t, "\[/b\]", "</b>")
+	t = replacetext(t, "\[i\]", "<i>")
+	t = replacetext(t, "\[/i\]", "</i>")
+	t = replacetext(t, "\[u\]", "<u>")
+	t = replacetext(t, "\[/u\]", "</u>")
+	t = replacetext(t, "\[large\]", "<font size=\"4\">")
+	t = replacetext(t, "\[/large\]", "</font>")
+	t = replacetext(t, "\[*\]", "<li>")
+	t = replacetext(t, "\[small\]", "<font size = \"1\">")
+	t = replacetext(t, "\[/small\]", "</font>")
+	t = replacetext(t, "\[list\]", "<ul>")
+	t = replacetext(t, "\[/list\]", "</ul>")
+	t = replacetext(t, "\[hr\]", "<hr>")
+	t = replacetext(t, "\n", "<br>")
+
+	// tables
+	t = replacetext(t, "\[table\]", "<table border=3px cellpadding=5px bordercolor=\"[colour]\">")
+	t = replacetext(t, "\[/table\]", "</table>")
+	t = replacetext(t, "\[tr\]", "<tr>")
+	t = replacetext(t, "\[/tr\]", "</tr>")
+	t = replacetext(t, "\[td\]", "<td><font color=\"[colour]\">")
+	t = replacetext(t, "\[/td\]", "</font></td>")
+	t = replacetext(t, "\[th\]", "<th><font color=\"[colour]\">")
+	t = replacetext(t, "\[/th\]", "</font></th>")
+
+	// standart head
+	t = replacetext(t, "\[h\]", "<font size=\"4\"><center><b>")
+	t = replacetext(t, "\[/h\]", "</b></center></font>")
+
+	// bordered head;
+	t = replacetext(t, "\[bh\]", "<div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b>")
+	t = replacetext(t, "\[/bh\]", "</b></center></font></div>")
+
+	// blockquote
+	t = replacetext(t, "\[quote\]", "<blockquote style=\"line-height:normal; margin-bottom:10px; font-style:italic; letter-spacing: 1.25px; text-align:right;\">")
+	t = replacetext(t, "\[/quote\]", "</blockquote>")
+
+	// div
+	t = replacetext(t, "\[block\]", "<div style=\"border-width: 4px; border-style: dashed;\">")
+	t = replacetext(t, "\[/block\]", "</div>")
+
+	return t
+
 /*
  * Byond
  * (remove this when byond lern unicode)

@@ -261,7 +261,14 @@
 							return
 
 		else if(mob.confused)
-			step(mob, pick(cardinal))
+			var/newdir = direct
+			if(mob.confused > 40)
+				newdir = pick(alldirs)
+			else if(prob(mob.confused * 1.5))
+				newdir = angle2dir(dir2angle(direct) + 180)
+			else if(prob(mob.confused * 3))
+				newdir = angle2dir(dir2angle(direct) + pick(90, -90))
+			step(mob, newdir)
 		else
 			. = mob.SelfMove(n, direct)
 

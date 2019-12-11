@@ -276,9 +276,9 @@
 	else if(getBrainLoss() >= 60)
 		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-	if(!key && brain_op_stage != 4 && stat != DEAD)
+	if(!key && has_brain() && stat != DEAD)
 		msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
-	else if(!client && brain_op_stage != 4 && stat != DEAD)
+	else if(!client && has_brain() && stat != DEAD)
 		msg += "[t_He] [t_has] suddenly fallen asleep.\n"
 
 	var/list/wound_flavor_text = list()

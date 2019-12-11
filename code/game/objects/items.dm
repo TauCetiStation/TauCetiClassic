@@ -158,7 +158,7 @@
 		message += "<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span><br>"
 	if(M.has_brain_worms())
 		message += "<span class='warning'>Subject suffering from aberrant brain activity. Recommend further scanning.</span><br>"
-	else if(M.getBrainLoss() >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)
+	else if(M.getBrainLoss() >= 100 || (istype(M, /mob/living/carbon/human) && !M:has_brain() && M:should_have_organ(O_BRAIN)))
 		message += "<span class='warning'>Subject is brain dead.</span>"
 	else if(M.getBrainLoss() >= 60)
 		message += "<span class='warning'>Severe brain damage detected. Subject likely to have mental retardation.</span><br>"
