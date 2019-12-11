@@ -268,7 +268,7 @@
 				C.throw_mode_on()
 			else
 			user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W], but he didn’t succeed!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W], but he didn’t succeed!!</span>")
-				return
+			return
 		else
 			return
 
