@@ -39,7 +39,7 @@ var/list/GPS_list = list()
 		t += "<BR><A href='?src=\ref[src];tag=1'>Set Tag</A> "
 		t += "<BR>Tag: [gpstag]"
 		if(locked_location && locked_location.loc)
-			t += "<BR>Bluespace coordinates saved: [locked_location.loc]"
+			t += "<BR>Bluespace coordinates saved: [locked_location.loc] ([locked_location.x], [locked_location.y], [locked_location.z])"
 
 		for(var/obj/item/device/gps/G in GPS_list)
 			var/turf/pos = get_turf(G)

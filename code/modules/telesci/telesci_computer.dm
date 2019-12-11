@@ -16,6 +16,7 @@
 	var/power_off
 	var/rotation_off
 	var/angle_off
+	var/sector_power_cost
 	var/last_target
 
 	var/rotation = 0
@@ -204,7 +205,8 @@
 		return
 
 	if(telepad)
-		var/truePower = CLAMP(power + power_off, 1, 1000)
+		var/power_coeff = 1 + abs(src.z - z_co) * sector_power_cost;
+		var/truePower = CLAMP((power + power_off) / power_coeff, 1, 1000)
 		var/trueRotation = rotation + rotation_off
 		var/trueAngle = CLAMP(angle + angle_off, 1, 90)
 
@@ -272,7 +274,7 @@
 
 /obj/machinery/computer/telescience/proc/prepare_wormhole(mob/user)
 	if(rotation == null || angle == null || z_co == null)
-		temp_msg = "ERROR!<BR>Set a angle, rotation and sector."
+		temp_msg = "ERROR!<BR>Set an angle, rotation and sector."
 		return
 	if(power <= 0)
 		telefail()
@@ -323,7 +325,7 @@
 		var/new_angle = input("Please input desired elevation in degrees.", name, angle) as num
 		if(!..())
 			return
-		angle = CLAMP(round(new_angle, 0.1), 1, 9999)
+		angle = CLAMP(round(new_angle, 0.1), 1, 115)
 
 	if(href_list["setpower"])
 		var/index = href_list["setpower"]
@@ -373,3 +375,4 @@
 	angle_off = rand(-25, 25)
 	power_off = rand(-4, 0)
 	rotation_off = rand(-10, 10)
+	sector_power_cost = rand(5, 20) / 100;
