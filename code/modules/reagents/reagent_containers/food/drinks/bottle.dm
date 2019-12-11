@@ -12,6 +12,8 @@
 	var/is_glass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
 	var/stop_spin_bottle = FALSE //Gotta stop the rotation.
+	var/is_molotov = 0
+	var/active = 0
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/atom_init()
 	. = ..()
@@ -169,16 +171,19 @@
 		return
 	else if(istype(W, /obj/item/stack/medical/bruise_pack/rags))
 		var/rags = /obj/item/stack/medical/bruise_pack/rags
-		user.drop_item()
 		rags = W
 		to_chat(user, "<span class='notice'>You splash liquid onto the floor and attach the [rags] to the [src].</span>")
-		var/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/B =  new /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov(loc)
+		msg_admin_attack("[user.name] ([user.ckey]) crafting \a [src]", user)
+		var/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/B =  new /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov(user.loc)
 		B.icon_state = src.icon_state
 		var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
 		B.icon = I
 		B.overlays += image('icons/obj/makeshift.dmi', "molotov_rag")
-		update_icon()
+		item_state = "beer_molotov_act"
+		update_icon(B)
 		qdel(src)
+		user.put_in_active_hand(B)
+		qdel(W)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/after_throw(datum/callback/callback)
 	..()
@@ -191,6 +196,12 @@
 		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 		if(reagents && reagents.total_volume)
 			src.reagents.reaction(loc, TOUCH)
+		if(active && is_molotov)
+			var/turf/location = get_turf(src)
+			location.hotspot_expose(1000, 500)
+			playsound (src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
+	else
+		return
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov
@@ -211,10 +222,9 @@
 	is_glass = 1
 	volume = 100
 	amount_per_transfer_from_this = 10
-	var/active = 0
-	var/bottle_icon
-	var/bottle_icon_state
-	var/is_molotov = 1
+	active = 0
+	var/activate_sound = 'sound/items/matchstick_light.ogg'
+	is_molotov = 1
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/weapon/W, mob/living/user)
 	. = ..()
@@ -240,32 +250,55 @@
 	if(!is_W_lit)
 		return
 	if(is_W_lit == TRUE)
-		user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
-		active = 1
-		update_icon()
-		add_fingerprint(user)
-	if(iscarbon(user) && istype(user.get_active_hand(), src))
-		var/mob/living/carbon/C = user
-		C.throw_mode_on()
-	else
-		return
+		if(reagents && reagents.total_volume)
+			user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
+			active = 1
+			update_icon()
+			addtimer(CALLBACK(src, .proc/detonate), 100)
+			if(user.hand && loc == user)
+				user.update_inv_r_hand()
+			else
+				user.update_inv_l_hand()
+			add_fingerprint(user)
+			var/turf/T = get_turf(src)
+			if(T)
+				log_game("[key_name(usr)] has light up a Molotov Cocktail for burning at [T.loc] [COORD(T)].")
+			if(iscarbon(user) && istype(user.get_active_hand(), src))
+				var/mob/living/carbon/C = user
+				C.throw_mode_on()
+			else
+			user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W], but he didn’t succeed!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W], but he didn’t succeed!!</span>")
+				return
+		else
+			return
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/after_throw(datum/callback/callback)
 	..()
-	if(is_glass && active)
-		new/obj/fire/process(loc)
-		. = ..()
+	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/proc/detonate()
+	if(active && is_molotov && reagents && reagents.total_volume)
+		src.reagents.reaction(loc, TOUCH)
+		explosion(loc, 0, 0, 1)
+		var/turf/location = get_turf(src)
+		location.hotspot_expose(1000, 500)
+		playsound (src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
+		qdel(src)
 	else
 		return
-	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/update_icon()
 	..()
 	if (active == TRUE)
+		item_state = "beer_molotov_act"
 		overlays += image('icons/obj/makeshift.dmi' ,"molotov_active")
-		bottle_icon_state = "beer_molotov_act"
+		playsound(src, activate_sound, VOL_EFFECTS_MASTER)
 		set_light(2)
 		START_PROCESSING(SSobj, src)
+	else
+		return
+
+
 
 
 
@@ -540,7 +573,7 @@
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/atom_init()
+obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/atom_init()
 	. = ..()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
