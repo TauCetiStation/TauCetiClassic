@@ -1037,7 +1037,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		animate(client, color = null, time = transition_time)
 
-mob/proc/instant_vision_update(state=null, atom/A)
+/mob/proc/instant_vision_update(state=null, atom/A)
 	if(!client || isnull(state))
 		return
 
