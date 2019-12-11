@@ -1037,7 +1037,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		animate(client, color = null, time = transition_time)
 
-/mob/proc/instant_vision_update(state=null, atom/A)
+mob/proc/instant_vision_update(state=null, atom/A)
 	if(!client || isnull(state))
 		return
 
@@ -1048,9 +1048,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 			client.eye = client.mob
 			client.perspective = MOB_PERSPECTIVE
 		if(1)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-			if(A)
-				client.perspective = EYE_PERSPECTIVE
+			if(XRAY in mutations)
+				return
+			else
+				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+				if(A)
+					client.perspective = EYE_PERSPECTIVE
 				client.eye = A
 
 //You can buckle on mobs if you're next to them since most are dense
