@@ -169,7 +169,7 @@
 		to_chat(user, "<span class='notice'>That won't work.</span>")
 		..()
 		return
-	else if(istype(W, /obj/item/stack/medical/bruise_pack/rags))
+	else if(istype(W, /obj/item/stack/medical/bruise_pack/rags)) //Molotov's Craft
 		var/rags = /obj/item/stack/medical/bruise_pack/rags
 		rags = W
 		to_chat(user, "<span class='notice'>You splash liquid onto the floor and attach the [rags] to the [src].</span>")
@@ -196,7 +196,7 @@
 		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 		if(reagents && reagents.total_volume)
 			src.reagents.reaction(loc, TOUCH)
-		if(active && is_molotov)
+		if(active && is_molotov) //for molotov
 			var/turf/location = get_turf(src)
 			location.hotspot_expose(1000, 500)
 			playsound (src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
@@ -234,7 +234,7 @@
 	if(active == 1)
 		to_chat(user, "<span class='notice'>This is already burn!.</span>")
 		return
-	var/is_W_lit = FALSE
+	var/is_W_lit = FALSE //Igniting
 	if(istype(W, /obj/item/weapon/match))
 		var/obj/item/weapon/match/O = W
 		if(O.lit)
@@ -250,7 +250,7 @@
 	if(!is_W_lit)
 		return
 	if(is_W_lit == TRUE)
-		if(reagents && reagents.total_volume)
+		if(reagents && reagents.total_volume) //Don't ignite if Molotov empty
 			user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
 			active = 1
 			update_icon()
