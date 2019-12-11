@@ -19,6 +19,7 @@ var/round_id = 0
 	load_mode()
 	load_last_mode()
 	load_motd()
+	load_host_announces()
 	load_test_merge()
 	load_admins()
 	load_mentors()
@@ -342,6 +343,22 @@ var/shutdown_processed = FALSE
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
+
+/world/proc/load_host_announces()
+	var/list/files = flist("data/announces/")
+
+	host_announces = "" // reset in case of reload
+
+	if(files.len)
+
+		for(var/file in files)
+
+			if(length(host_announces))
+				host_announces += "<hr>"
+
+			host_announces += trim(file2text("data/announces/[file]"))
+		
+		host_announces = "<h2>Important Admin Announces:</h2><br>[host_announces]"
 
 /world/proc/load_test_merge()
 	if(fexists("test_merge.txt"))

@@ -7,9 +7,11 @@
 	..()
 
 	if(join_motd)
-		to_chat(src, "<div class=\"motd\">[join_motd]</div>")
+		to_chat(src, "<div class='motd'>[join_motd]</div>")
 	if(join_test_merge)
-		to_chat(src, "<div>[join_test_merge]</div>")
+		to_chat(src, "<div class='test_merges'>[join_test_merge]</div>")
+	if(host_announces)
+		to_chat(src, "<div class='host_announces emojify linkify'>[host_announces]</div>")
 
 	sight |= SEE_TURFS
 
