@@ -83,18 +83,18 @@
 */
 
 /obj/machinery/media/transmitter/broadcast/update_icon()
-	overlays = 0
+	cut_overlays()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(on)
-		overlays+="broadcaster on"
+		add_overlay("broadcaster on")
 		set_light(3) // OH FUUUUCK
 		set_power_use(ACTIVE_POWER_USE)
 	else
 		set_light(1) // Only the tile we're on.
 		set_power_use(IDLE_POWER_USE)
 	if(sources.len)
-		overlays+="broadcaster linked"
+		add_overlay("broadcaster linked")
 
 /obj/machinery/media/transmitter/broadcast/proc/update_on()
 	if(on)

@@ -96,7 +96,7 @@ var/global/list/tophats_list = list()
 		var/mob/M = AM
 		to_chat(M, "<span class='warning'>You feel dizzy, as you exit through [src]!</span>")
 
-	var/list/pos_turfs = get_area_turfs(/area/tophat)
+	var/list/pos_turfs = get_area_turfs(/area/custom/tophat)
 	if(pos_turfs.len && loc != null)
 		AM.forceMove(loc)
 		AM.throw_at(pick(pos_turfs), 4, 2)
@@ -235,7 +235,7 @@ var/global/list/tophats_list = list()
 	if(pos_turfs && pos_turfs.len && src_turf)
 		visible_message("<span class='danger'>[src] rips and tears, as EVERYTHING flies out of it...</span>")
 
-		var/list/to_exit = get_area_turfs(/area/tophat)
+		var/list/to_exit = get_area_turfs(/area/custom/tophat)
 
 		for(var/turf/T in to_exit)
 			for(var/atom/movable/AM in T)

@@ -1,6 +1,9 @@
 /mob/living/carbon/alien/facehugger/Life()
 	set invisibility = 0
 
+	if (notransform)
+		return
+
 	for(var/obj/item/weapon/fh_grab/G in src)
 		G.process()
 

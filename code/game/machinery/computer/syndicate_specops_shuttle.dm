@@ -22,7 +22,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 	var/allowedtocall = 0
 
 /proc/syndicate_elite_process()
-	var/area/syndicate_mothership/control/syndicate_ship = locate()//To find announcer. This area should exist for this proc to work.
+	var/area/custom/syndicate_mothership/control/syndicate_ship = locate()//To find announcer. This area should exist for this proc to work.
 	var/mob/living/silicon/decoy/announcer = locate() in syndicate_ship//We need a fake AI to announce some stuff below. Otherwise it will be wonky.
 
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.

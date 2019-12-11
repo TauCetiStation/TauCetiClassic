@@ -134,7 +134,7 @@
 		raider.objectives = raid_objectives
 		greet_vox(raider)
 
-	for(var/atom/movable/AM in locate(/area/shuttle/vox/station))
+	for(var/atom/movable/AM in locate(/area/shuttle/vox/arkship))
 		heist_recursive_price_reset(AM)
 
 	return ..()
@@ -144,7 +144,7 @@
 		return 0
 
 	for(var/obj/stack in cortical_stacks)
-		if (get_area(stack) != locate(/area/shuttle/vox/station))
+		if (get_area(stack) != locate(/area/shuttle/vox/arkship))
 			return 0
 	return 1
 
@@ -268,7 +268,7 @@
 				sav_score = 0
 			if(max_score > sav_score)
 				S["HeistMaxScore"] << num2text(heist_rob_total,9)
-			for(var/atom/movable/AM in locate(/area/shuttle/vox/station))
+			for(var/atom/movable/AM in locate(/area/shuttle/vox/arkship))
 				if(AM.get_price())
 					var/count = 0
 					S["[AM.type]"] >> count
@@ -283,7 +283,7 @@
 				var/tempstate = end_icons.len
 				text += {"<br><img src="logo_[tempstate].png"> <b>[raider.key]</b> was <b>[raider.name]</b> ("}
 				var/area/A = get_area(raider.current)
-				if(!istype(A, /area/shuttle/vox/station))
+				if(!istype(A, /area/shuttle/vox/arkship))
 					text += "left behind)"
 					continue
 				else if(raider.current.stat == DEAD)

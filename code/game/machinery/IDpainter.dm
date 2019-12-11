@@ -12,14 +12,14 @@
 
 
 /obj/machinery/idpainter/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
 		return
 
 	if(storedcard)
-		overlays += "[initial(icon_state)]-closed"
+		add_overlay("[initial(icon_state)]-closed")
 
 	if(powered())
 		icon_state = initial(icon_state)

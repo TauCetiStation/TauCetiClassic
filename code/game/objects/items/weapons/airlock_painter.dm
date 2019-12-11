@@ -29,6 +29,9 @@
 	//This proc doesn't just check if the painter can be used, but also uses it.
 	//Only call this if you are certain that the painter will be used right after this check!
 /obj/item/weapon/airlock_painter/use(cost)
+	if(cost < 0)
+		stack_trace("[src.type]/use() called with a negative parameter [cost]")
+		return 0
 	if(can_use(usr, cost))
 		ink.charges -= cost
 		playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER)

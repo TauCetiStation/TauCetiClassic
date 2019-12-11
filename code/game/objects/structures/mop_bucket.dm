@@ -40,6 +40,6 @@
 	update_icon()
 
 /obj/structure/mopbucket/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(reagents.total_volume > 1)
-		overlays += "mopbucket_water"
+		add_overlay("mopbucket_water")

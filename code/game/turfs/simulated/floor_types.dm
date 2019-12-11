@@ -30,6 +30,9 @@
 	name = "floor"
 	icon_state = "wood"
 	floor_type = /obj/item/stack/tile/wood
+	footstep = FOOTSTEP_WOOD
+	barefootstep = FOOTSTEP_WOOD_BAREFOOT
+	clawfootstep = FOOTSTEP_WOOD_CLAW
 
 /turf/unsimulated/desert
 	name = "sand"
@@ -40,6 +43,7 @@
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
+	footstep = FOOTSTEP_PLATING
 
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
 	if(iswrench(C))
@@ -113,6 +117,7 @@
 	icon_state = "plating"
 	floor_type = null
 	intact = 0
+	footstep = FOOTSTEP_PLATING
 
 /turf/simulated/floor/plating/airless
 	icon_state = "plating"
@@ -145,7 +150,8 @@
 	heat_capacity = 0
 	layer = 2
 
-/turf/simulated/shuttle/wall
+
+/turf/simulated/shuttle/wall // It's not even a floor. What is this doing here?!
 	name = "wall"
 	icon_state = "wall1"
 	opacity = 1
@@ -155,19 +161,35 @@
 /turf/simulated/shuttle/floor
 	name = "floor"
 	icon_state = "floor"
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/simulated/shuttle/plating
 	name = "plating"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "plating"
+	footstep = FOOTSTEP_PLATING
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/simulated/shuttle/floor4 // Added this floor tile so that I have a seperate turf to check in the shuttle -- Polymorph
 	name = "Brig floor"        // Also added it into the 2x3 brig area of the shuttle.
 	icon_state = "floor4"
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/simulated/floor/beach
 	name = "Beach"
 	icon = 'icons/misc/beach.dmi'
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_SAND
 
 /turf/simulated/floor/beach/sand
 	name = "Sand"
@@ -177,6 +199,10 @@
 	name = "Coastline"
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "sandwater"
+	footstep = FOOTSTEP_WATER_SHALLOW
+	barefootstep = FOOTSTEP_WATER_SHALLOW
+	clawfootstep = FOOTSTEP_WATER_SHALLOW
+	heavyfootstep = FOOTSTEP_WATER_SHALLOW
 
 /turf/simulated/floor/beach/water
 	name = "Water"
@@ -184,10 +210,14 @@
 	light_color = "#00bfff"
 	light_power = 2
 	light_range = 2
+	footstep = FOOTSTEP_WATER_DEEP
+	barefootstep = FOOTSTEP_WATER_DEEP
+	clawfootstep = FOOTSTEP_WATER_DEEP
+	heavyfootstep = FOOTSTEP_WATER_DEEP
 
 /turf/simulated/floor/beach/water/atom_init()
 	. = ..()
-	overlays += image("icon"='icons/misc/beach.dmi',"icon_state"="water5","layer"=MOB_LAYER+0.1)
+	add_overlay(image("icon"='icons/misc/beach.dmi',"icon_state"="water5","layer"=MOB_LAYER+0.1))
 
 /turf/simulated/floor/beach/water/break_tile()
 	return
@@ -199,6 +229,9 @@
 	name = "Grass patch"
 	icon_state = "grass1"
 	floor_type = /obj/item/stack/tile/grass
+	footstep = FOOTSTEP_GRASS
+	barefootstep = FOOTSTEP_GRASS
+	clawfootstep = FOOTSTEP_GRASS
 
 /turf/simulated/floor/grass/atom_init()
 	icon_state = "grass[pick("1","2","3","4")]"
@@ -217,6 +250,9 @@
 	icon_state = "carpet"
 	floor_type = /obj/item/stack/tile/carpet
 	icon = 'icons/turf/carpets.dmi'
+	footstep = FOOTSTEP_CARPET
+	barefootstep = FOOTSTEP_CARPET_BAREFOOT
+	clawfootstep = FOOTSTEP_CARPET_BAREFOOT
 
 /turf/simulated/floor/carpet/black
 	name = "black carpet"
@@ -275,6 +311,9 @@
 	name = "Iron Sand"
 	icon_state = "ironsand1"
 	basetype = /turf/simulated/floor/plating/ironsand
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
 
 /turf/simulated/floor/plating/ironsand/ex_act()
 	return 0
@@ -291,6 +330,9 @@
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
 
 /turf/simulated/floor/plating/snow/ex_act(severity)
 	return
@@ -310,6 +352,8 @@
 //	accepts_lighting=0 			// Don't apply overlays
 
 	intact = 0
+
+	footstep = FOOTSTEP_CATWALK
 
 /turf/simulated/floor/plating/airless/catwalk/atom_init()
 	. = ..()

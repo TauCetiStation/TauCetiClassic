@@ -41,7 +41,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, tearing skin on [target]'s face with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, tearing skin on [target]'s face with \the [tool]!</span>")
-	target.apply_damage(10, BRUTE, BP, null, DAM_SHARP | DAM_EDGE)
+	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/plastic_surgery/adjust_vocal
 	allowed_tools = list(
@@ -108,23 +108,13 @@
 /datum/surgery_step/plastic_surgery/reshape_face/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='notice'>[user] alters [target]'s appearance with \the [tool].</span>",		\
 	"<span class='notice'>You alter [target]'s appearance with \the [tool].</span>")
-	var/i
-	while (!i)
-		var/randomname
-		if (target.gender == MALE)
-			randomname = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
-		else
-			randomname = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
-		if (findname(randomname))
-			continue
-		else
-			target.real_name = randomname
-			i++
+	target.real_name = random_unique_name(target.gender)
 
 /datum/surgery_step/plastic_surgery/reshape_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, tearing skin on [target]'s face with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, tearing skin on [target]'s face with \the [tool]!</span>")
-	target.apply_damage(20, BRUTE, BP_HEAD, 1, DAM_SHARP)
+	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/plastic_surgery/cauterize
 	allowed_tools = list(
@@ -161,4 +151,5 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, leaving a small burn on [target]'s face with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, leaving a small burn on [target]'s face with \the [tool]!</span>")
-	target.apply_damage(4, BURN, BP)
+	BP.take_damage(0, 4, used_weapon = tool)
+	
