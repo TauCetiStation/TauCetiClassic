@@ -4,8 +4,8 @@
 #define FONT_ASTYLE "Arial Black"
 
 /obj/screen/zone_sel/alien/update_icon()
-	overlays.Cut()
-	overlays += selecting
+	cut_overlays()
+	add_overlay(selecting)
 
 /mob/living/carbon/alien/proc/updatePlasmaDisplay()
 	if(visual_counter)

@@ -75,13 +75,13 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(magazine)
 		var/image/magazine_icon = image('icons/obj/gun.dmi', "mag-[CEIL(get_ammo(0) / 4) * 4]")
-		overlays += magazine_icon
+		add_overlay(magazine_icon)
 	if(silenced)
 		var/image/silencer_icon = image('icons/obj/gun.dmi', "c20r-silencer")
-		overlays += silencer_icon
+		add_overlay(silencer_icon)
 	icon_state = "c20r[chambered ? "" : "-e"]"
 	return
 
@@ -338,12 +338,12 @@
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/proc/update_magazine()
 	if(magazine)
-		src.overlays = 0
-		overlays += "[magazine.icon_state]_o"
+		cut_overlays()
+		add_overlay("[magazine.icon_state]_o")
 		return
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/update_icon()
-	src.overlays = 0
+	cut_overlays()
 	update_magazine()
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 	return
@@ -371,9 +371,9 @@
 	update_icon()
 
 /obj/item/weapon/gun/projectile/automatic/a28/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(magazine)
-		overlays += "[magazine.icon_state]-o"
+		add_overlay("[magazine.icon_state]-o")
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 	return
 
@@ -393,9 +393,9 @@
 	update_icon()
 
 /obj/item/weapon/gun/projectile/automatic/a74/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(magazine)
-		overlays += mag_icon
+		add_overlay(mag_icon)
 		item_state = "[initial(icon_state)]"
 	else
 		item_state = "[initial(icon_state)]-e"

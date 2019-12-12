@@ -49,7 +49,7 @@
 		var/old_plane = new_master.plane
 		new_master.layer = FLOAT_LAYER
 		new_master.plane = FLOAT_PLANE
-		thealert.overlays += new_master
+		thealert.add_overlay(new_master)
 		new_master.layer = old_layer
 		new_master.plane = old_plane
 		thealert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
@@ -128,36 +128,6 @@
 	icon_state = "tox_in_air"
 //End gas alerts
 
-
-/obj/screen/alert/fat
-	name = "Fat"
-	desc = "You ate too much food, lardass. Run around the station and lose some weight."
-	icon_state = "fat"
-
-/obj/screen/alert/full
-	name = "Full"
-	desc = "You feel full and satisfied, but you shouldn't eat much more."
-	icon_state = "full"
-
-/obj/screen/alert/well_fed
-	name = "Well Fed"
-	desc = "You feel quite satisfied, but you may be able to eat a bit more."
-	icon_state = "well_fed"
-
-/obj/screen/alert/fed
-	name = "Fed"
-	desc = "You feel moderately satisfied, but a bit more food may not hurt."
-	icon_state = "fed"
-
-/obj/screen/alert/hungry
-	name = "Hungry"
-	desc = "Some food would be good right about now."
-	icon_state = "hungry"
-
-/obj/screen/alert/starving
-	name = "Starving"
-	desc = "Some food would be to kill for right about now. The hunger pains make moving around a chore."
-	icon_state = "starving"
 
 /obj/screen/alert/hot
 	name = "Too Hot"

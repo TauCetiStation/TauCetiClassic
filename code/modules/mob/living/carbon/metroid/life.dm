@@ -2,7 +2,7 @@
 	set invisibility = 0
 	//set background = 1
 
-	if (src.monkeyizing)
+	if (notransform)
 		return
 
 	..()
@@ -451,7 +451,7 @@
 					if(isslime(L) || L.stat == DEAD) // Ignore other slimes and dead mobs
 						continue
 
-					if(L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
+					if(HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
 						continue
 
 					if(L in Friends) // No eating friends!

@@ -128,10 +128,10 @@
 		..()
 
 /mob/living/simple_animal/cat/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 
 	if(inventory_mouth)
-		overlays += image('icons/mob/animal.dmi',inventory_mouth.icon_state)
+		add_overlay(image('icons/mob/animal.dmi',inventory_mouth.icon_state))
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/cat/Runtime

@@ -3325,6 +3325,7 @@
 /obj/structure/table,
 /obj/item/weapon/retractor,
 /obj/item/stack/medical/advanced/bruise_pack,
+/obj/item/stack/nanopaste,
 /obj/item/weapon/FixOVein{
 	pixel_x = -6;
 	pixel_y = 1
@@ -14728,7 +14729,7 @@
 /area/shuttle/vox/arkship)
 "aZr" = (
 /obj/structure/rack,
-/obj/item/weapon/crossbow,
+/obj/item/weapon/crossbow/vox,
 /obj/item/weapon/arrow,
 /obj/item/weapon/arrow,
 /obj/item/weapon/arrow,

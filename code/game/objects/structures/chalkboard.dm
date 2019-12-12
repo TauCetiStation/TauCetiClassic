@@ -70,7 +70,7 @@
 			return
 
 	//t = replacetext(t, "\n", "<BR>")
-	t = parsepencode(t) // Encode everything from pencode to html
+	t = parsebbcode(t) // Encode everything from pencode to html
 
 	if(!t)
 		return
@@ -132,27 +132,6 @@
 			desc = "Oh! Something offensive is written on a chalkboard!"
 			icon_state = "board_honk[rand(1, 5)]"
 			content = "HONK"
-
-/obj/structure/chalkboard/proc/parsepencode(t)
-
-	t = replacetext(t, "\[center\]", "<center>")
-	t = replacetext(t, "\[/center\]", "</center>")
-	t = replacetext(t, "\[br\]", "<BR>")
-	t = replacetext(t, "\[b\]", "<B>")
-	t = replacetext(t, "\[/b\]", "</B>")
-	t = replacetext(t, "\[i\]", "<I>")
-	t = replacetext(t, "\[/i\]", "</I>")
-	t = replacetext(t, "\[u\]", "<U>")
-	t = replacetext(t, "\[/u\]", "</U>")
-	t = replacetext(t, "\[large\]", "<font size=\"4\">")
-	t = replacetext(t, "\[/large\]", "</font>")
-	t = replacetext(t, "\[*\]", "<li>")
-	t = replacetext(t, "\[small\]", "<font size = \"1\">")
-	t = replacetext(t, "\[/small\]", "</font>")
-	t = replacetext(t, "\[list\]", "<ul>")
-	t = replacetext(t, "\[/list\]", "</ul>")
-
-	return t
 
 /obj/structure/chalkboard/proc/count_occurrences(string, substring)
 	var/count = 0

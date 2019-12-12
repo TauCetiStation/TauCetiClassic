@@ -74,7 +74,7 @@
 			user.visible_message("[user] was unable to connect [used_atom] to [holder].", "You failed to connect [used_atom] to [holder]")
 			return 0
 	user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
-	holder.overlays += used_atom.icon_state+"+o"
+	holder.add_overlay(used_atom.icon_state+"+o")
 	user.drop_item()
 	qdel(used_atom)
 	return 1

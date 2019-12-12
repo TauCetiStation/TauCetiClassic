@@ -221,5 +221,6 @@
 		mannequin.job = previewJob.title
 		previewJob.equip(mannequin, TRUE)
 
+	COMPILE_OVERLAYS(mannequin)
 	parent.show_character_previews(new /mutable_appearance(mannequin))
 	qdel(mannequin)

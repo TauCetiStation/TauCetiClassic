@@ -58,7 +58,7 @@
 	return ..()
 
 /obj/effect/effect/aqueous_foam/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	overlays.Add(fore_image)
 
 /obj/effect/effect/aqueous_foam/proc/disolve()
