@@ -89,8 +89,8 @@
 		if(l_leg && r_leg)
 			if(chest && head)
 				feedback_inc("cyborg_frames_built",1)
-				return 1
-	return 0
+				return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
 
 /obj/item/robot_parts/robot_suit/attackby(obj/item/W, mob/user)
 	..()

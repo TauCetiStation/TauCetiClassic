@@ -48,6 +48,7 @@
 #include "code\__DEFINES\mc.dm"
 #include "code\__DEFINES\misc.dm"
 #include "code\__DEFINES\mob.dm"
+#include "code\__DEFINES\objectives.dm"
 #include "code\__DEFINES\preferences.dm"
 #include "code\__DEFINES\qdel.dm"
 #include "code\__DEFINES\research.dm"
