@@ -299,7 +299,7 @@
 		icon_state = "door_open"
 		if(blocked)
 			add_overlay("welded_open")
-	return
+	SSdemo.mark_dirty(src)
 
 	// CHECK PRESSURE
 /obj/machinery/door/firedoor/process()
