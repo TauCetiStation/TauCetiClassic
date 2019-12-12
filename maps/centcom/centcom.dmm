@@ -17350,18 +17350,6 @@
 	icon_state = "floorgrime"
 	},
 /area/velocity)
-"drj" = (
-/obj/structure/window/reinforced/shuttle/default{
-	dir = 2;
-	icon_state = "window12"
-	},
-/obj/structure/grille,
-/obj/item/decoration/garland{
-	light_power = 0.9;
-	light_range = 4
-	},
-/turf/simulated/shuttle/plating,
-/area/shuttle/escape/centcom)
 "dsb" = (
 /obj/machinery/flasher{
 	id = "velocity_cell2";
@@ -19455,18 +19443,6 @@
 	icon_state = "blue"
 	},
 /area/centcom/evac)
-"hzu" = (
-/obj/structure/window/reinforced/shuttle/default{
-	dir = 2;
-	icon_state = "13"
-	},
-/obj/structure/grille,
-/obj/item/decoration/garland{
-	light_power = 0.9;
-	light_range = 4
-	},
-/turf/simulated/shuttle/plating,
-/area/shuttle/escape/centcom)
 "hAb" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/light,
@@ -22593,10 +22569,6 @@
 /obj/structure/window/reinforced/shuttle/default{
 	icon_state = "13"
 	},
-/obj/item/decoration/garland{
-	light_power = 0.9;
-	light_range = 4
-	},
 /turf/simulated/shuttle/plating,
 /area/shuttle/escape/centcom)
 "pjb" = (
@@ -22677,10 +22649,6 @@
 	},
 /obj/structure/window/reinforced/shuttle/default{
 	icon_state = "12"
-	},
-/obj/item/decoration/garland{
-	light_power = 0.9;
-	light_range = 4
 	},
 /turf/simulated/shuttle/plating,
 /area/shuttle/escape/centcom)
@@ -22973,10 +22941,6 @@
 	icon_state = "3"
 	},
 /obj/structure/grille,
-/obj/item/decoration/garland{
-	light_power = 0.9;
-	light_range = 4
-	},
 /turf/simulated/shuttle/plating,
 /area/shuttle/escape/centcom)
 "qeb" = (
@@ -23047,18 +23011,6 @@
 /obj/structure/flora/grass/green,
 /turf/simulated/floor/grass,
 /area/centcom/holding)
-"uiQ" = (
-/obj/structure/window/reinforced/shuttle/default{
-	dir = 2;
-	icon_state = "12"
-	},
-/obj/structure/grille,
-/obj/item/decoration/garland{
-	light_power = 0.9;
-	light_range = 4
-	},
-/turf/simulated/shuttle/plating,
-/area/shuttle/escape/centcom)
 "usp" = (
 /obj/item/decoration/garland,
 /turf/unsimulated/wall/fakeglass,
@@ -38949,7 +38901,7 @@ aaM
 aaM
 aaM
 aaM
-hzu
+mdb
 oyb
 aVy
 pAb
@@ -38959,7 +38911,7 @@ aUE
 pab
 afj
 ptb
-hzu
+mdb
 aaM
 aaM
 aaM
@@ -39206,7 +39158,7 @@ aaM
 aaM
 aaM
 aaM
-drj
+okb
 aff
 aVy
 oQb
@@ -39216,7 +39168,7 @@ aUE
 pbb
 afi
 afE
-drj
+okb
 aaM
 aaM
 aaM
@@ -39463,7 +39415,7 @@ aaM
 aaM
 aaM
 aaM
-uiQ
+olb
 oGb
 aVy
 pAb
@@ -39473,7 +39425,7 @@ aUE
 pcb
 afi
 pub
-uiQ
+olb
 aaV
 abn
 abn
@@ -40748,7 +40700,7 @@ aaM
 aaM
 aaM
 aaM
-hzu
+mdb
 avJ
 aVy
 avJ
@@ -40758,7 +40710,7 @@ avJ
 avJ
 aVy
 aeT
-hzu
+mdb
 aaM
 mpD
 aQV
@@ -41005,7 +40957,7 @@ aaM
 aaM
 aaM
 aaM
-drj
+okb
 avJ
 aVy
 avJ
@@ -41015,7 +40967,7 @@ avJ
 avJ
 aVy
 pyb
-drj
+okb
 aaM
 mpD
 mOb
@@ -41262,7 +41214,7 @@ aaM
 aaM
 aaM
 aaM
-uiQ
+olb
 avJ
 aVy
 avJ
@@ -41272,7 +41224,7 @@ avJ
 avJ
 aVy
 aeT
-uiQ
+olb
 aaM
 mpD
 aRG
@@ -41776,7 +41728,7 @@ aaM
 aaM
 aaM
 aaM
-hzu
+mdb
 orb
 aVy
 aVy
@@ -42033,7 +41985,7 @@ aaM
 aaM
 aaM
 aaM
-drj
+okb
 avJ
 aVy
 avJ
@@ -42290,7 +42242,7 @@ aNs
 aNs
 aNs
 aaM
-uiQ
+olb
 avJ
 aVy
 avJ
