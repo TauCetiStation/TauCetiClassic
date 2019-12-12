@@ -229,6 +229,7 @@ var/list/airlock_overlays = list()
 		if(AIRLOCK_DENY, AIRLOCK_OPENING, AIRLOCK_CLOSING, AIRLOCK_EMAG)
 			icon_state = "nonexistenticonstate"
 	set_airlock_overlays(state)
+	SSdemo.mark_dirty(src)
 
 /obj/machinery/door/airlock/proc/set_airlock_overlays(state)
 	var/image/frame_overlay

@@ -1,7 +1,8 @@
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'Click On Held Object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
-	return
+	SSdemo.mark_dirty(src)
+	SSdemo.mark_dirty(user)
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
@@ -14,6 +15,9 @@
 	add_fingerprint(user)
 	if(W && !(W.flags & NOBLUDGEON))
 		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
+	SSdemo.mark_dirty(src)
+	SSdemo.mark_dirty(W)
+	SSdemo.mark_dirty(user)
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	if(!istype(I) || !ismob(user))
@@ -36,6 +40,9 @@
 		if(istype(H.wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = H.wear_suit
 			V.attack_reaction(src, REACTION_ATACKED, user)
+	SSdemo.mark_dirty(src)
+	SSdemo.mark_dirty(I)
+	SSdemo.mark_dirty(user)
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
@@ -203,6 +210,9 @@
 					to_chat(M, "Aargh it burns!")
 		M.updatehealth()
 	add_fingerprint(user)
+	SSdemo.mark_dirty(src)
+	SSdemo.mark_dirty(M)
+	SSdemo.mark_dirty(user)
 	return 1
 
 /*

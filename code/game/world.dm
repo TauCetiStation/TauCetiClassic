@@ -1,4 +1,5 @@
 var/round_id = 0
+var/logs_folder
 
 #define RECOMMENDED_VERSION 511
 /world/New()
@@ -69,6 +70,15 @@ var/round_id = 0
 		log_sql("Feedback database connection established.")
 
 	SetRoundID()
+
+	var/date = time2text(world.realtime, "YYYY/MM/DD")
+	logs_folder = "data/stat_logs/[date]/round-"
+
+	if(round_id)
+		logs_folder += round_id
+	else
+		var/timestamp = replacetext(time_stamp(), ":", ".")
+		logs_folder += "[timestamp]"
 
 	Get_Holiday()
 
@@ -548,3 +558,17 @@ var/failed_old_db_connections = 0
 
 /world/proc/incrementMaxZ()
 	maxz++
+
+// This proc reads the current git commit number of a master branch
+/proc/GetGitMasterCommit()
+	var/commitFile = ".git/refs/remotes/origin/master"
+	if(fexists(commitFile) == 0)
+		warning("GetMasterGitCommit() File not found ([commitFile]), using HEAD as a current commit")
+		return "HEAD"
+
+	var/text = file2text(commitFile)
+	if(!text)
+		warning("GetMasterGitCommit() File is empty ([commitFile]), using HEAD as a current commit")
+		return "HEAD"
+
+	return text
