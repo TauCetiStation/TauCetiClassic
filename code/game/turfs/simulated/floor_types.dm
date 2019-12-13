@@ -267,7 +267,7 @@
 	playsound(src, 'sound/effects/water_turf_entered_mob.ogg', VOL_EFFECTS_MASTER)
 	if(stat)
 		return
-	if(prob(15))
+	if(prob(25))
 		adjustFireLoss(rand(50, 15))
 		Weaken(rand(10, 15))
 		eye_blind += rand(15, 20)
