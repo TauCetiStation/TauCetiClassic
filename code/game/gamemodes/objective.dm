@@ -109,7 +109,7 @@ var/global/list/all_objectives = list()
 /datum/objective/mutiny/rp/find_target_by_role(role, role_type=0)
 	..(role, role_type)
 	if(target && target.current)
-		explanation_text = "Assassinate, capture or convert [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Capture, convert or exile from station [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]. Assassinate if you have no choice."
 	else
 		explanation_text = "Free Objective"
 	return target
@@ -117,17 +117,24 @@ var/global/list/all_objectives = list()
 	// less violent rev objectives
 /datum/objective/mutiny/rp/check_completion()
 	if(target && target.current)
+		if(target.current.stat == DEAD)
+			return OBJECTIVE_HALFWIN
+
 		//assume that only carbon mobs can become rev heads for now
-		if(target.current.stat == DEAD || target.current:handcuffed || !ishuman(target.current))
+		if(target.current:handcuffed || !ishuman(target.current))
 			return OBJECTIVE_WIN
+
 		// Check if they're converted
 		if(istype(ticker.mode, /datum/game_mode/revolution))
 			if(target in ticker.mode:head_revolutionaries)
 				return OBJECTIVE_WIN
+
 		var/turf/T = get_turf(target.current)
-		if(T && !is_station_level(T.z))			//If they leave the station they count as dead for this
+		if(T && !is_station_level(T.z))
 			return OBJECTIVE_WIN
+
 		return OBJECTIVE_LOSS
+
 	return OBJECTIVE_WIN
 
 /datum/objective/anti_revolution/execute/find_target()
@@ -718,7 +725,7 @@ var/global/list/all_objectives = list()
 
 
 /* Isn't suited for global objectives
-/*---------CULTIST----------*/
+//---------CULTIST----------
 /datum/objective/eldergod
 	explanation_text = "Summon Nar-Sie via the use of an appropriate rune. It will only work if nine cultists stand on and around it."
 
@@ -760,7 +767,8 @@ var/global/list/all_objectives = list()
 		return OBJECTIVE_WIN
 	else
 		return OBJECTIVE_WIN
-/*-------ENDOF CULTIST------*/
+//-------ENDOF CULTIST------
+*/
 
 //Meme objectives
 /datum/objective/meme_attune/proc/gen_amount_goal(lowbound = 4, highbound = 6)
