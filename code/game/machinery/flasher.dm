@@ -122,11 +122,11 @@
 
 		if (!src.anchored)
 			user.show_message(text("<span class='warning'>[src] can now be moved.</span>"))
-			src.overlays.Cut()
+			src.cut_overlays()
 
 		else if (src.anchored)
 			user.show_message(text("<span class='warning'>[src] is now secured.</span>"))
-			src.overlays += "[base_state]-s"
+			src.add_overlay("[base_state]-s")
 
 /obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user)
 	return attack_hand(user)

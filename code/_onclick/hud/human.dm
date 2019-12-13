@@ -1,4 +1,4 @@
-/datum/hud/proc/human_hud(ui_style='icons/mob/screen1_White.dmi', ui_color = "#ffffff", ui_alpha = 255)
+/datum/hud/proc/human_hud(ui_color = "#ffffff", ui_alpha = 255)
 
 	src.adding = list()
 	src.other = list()
@@ -388,6 +388,12 @@
 	mymob.healthdoll.name = "health doll"
 	mymob.healthdoll.screen_loc = ui_healthdoll
 
+	mymob.nutrition_icon = new
+	mymob.nutrition_icon.icon = 'icons/mob/screen_gen.dmi'
+	mymob.nutrition_icon.icon_state = "starving"
+	mymob.nutrition_icon.name = "nutrition"
+	mymob.nutrition_icon.screen_loc = ui_nutrition
+
 	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = ui_style
 	mymob.pullin.update_icon(mymob)
@@ -417,8 +423,8 @@
 	mymob.zone_sel.icon = ui_style
 	mymob.zone_sel.color = ui_color
 	mymob.zone_sel.alpha = ui_alpha
-	mymob.zone_sel.overlays.Cut()
-	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
+	mymob.zone_sel.cut_overlays()
+	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]"))
 
 	if(mymob.leap_icon)
 		src.adding += mymob.leap_icon
@@ -446,7 +452,7 @@
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.nutrition_icon, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += src.adding + src.hotkeybuttons
 	mymob.client.screen += mymob.client.void
 	inventory_shown = 0

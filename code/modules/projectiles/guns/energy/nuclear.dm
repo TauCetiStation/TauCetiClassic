@@ -98,28 +98,28 @@
 
 /obj/item/weapon/gun/energy/gun/nuclear/proc/update_charge()
 	if (crit_fail)
-		overlays += "nucgun-whee"
+		add_overlay("nucgun-whee")
 		return
 	var/ratio = power_supply.charge / power_supply.maxcharge
 	ratio = CEIL(ratio * 4) * 25
-	overlays += "nucgun-[ratio]"
+	add_overlay("nucgun-[ratio]")
 
 /obj/item/weapon/gun/energy/gun/nuclear/proc/update_reactor()
 	if(crit_fail)
-		overlays += "nucgun-crit"
+		add_overlay("nucgun-crit")
 		return
 	if(lightfail)
-		overlays += "nucgun-medium"
+		add_overlay("nucgun-medium")
 	else if ((power_supply.charge/power_supply.maxcharge) <= 0.5)
-		overlays += "nucgun-light"
+		add_overlay("nucgun-light")
 	else
-		overlays += "nucgun-clean"
+		add_overlay("nucgun-clean")
 
 /obj/item/weapon/gun/energy/gun/nuclear/proc/update_mode()
 	if (select == 1)
-		overlays += "nucgun-stun"
+		add_overlay("nucgun-stun")
 	else if (select == 2)
-		overlays += "nucgun-kill"
+		add_overlay("nucgun-kill")
 
 /obj/item/weapon/gun/energy/gun/nuclear/emp_act(severity)
 	..()
@@ -127,7 +127,7 @@
 
 
 /obj/item/weapon/gun/energy/gun/nuclear/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	update_charge()
 	update_reactor()
 	update_mode()

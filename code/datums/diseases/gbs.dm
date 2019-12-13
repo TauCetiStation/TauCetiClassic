@@ -33,6 +33,10 @@
 			affected_mob.adjustToxLoss(5)
 			affected_mob.updatehealth()
 		if(5)
+			if(QDELETED(affected_mob))
+				return
+			if(affected_mob.notransform)
+				return
 			to_chat(affected_mob, "<span class='warning'>Your body feels as if it's trying to rip itself open...</span>")
 			if(prob(50))
 				affected_mob.gib()

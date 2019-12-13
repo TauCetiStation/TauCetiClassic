@@ -102,6 +102,7 @@
 		Moved(oldloc, Dir)
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
@@ -114,6 +115,7 @@
 			O.Check()
 	if (orbiting)
 		orbiting.Check()
+	SSdemo.mark_dirty(src)
 	return 1
 
 /atom/movable/proc/setLoc(T, teleported=0)

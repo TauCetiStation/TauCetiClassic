@@ -44,7 +44,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, slicing [target]'s eyes wth \the [tool]!</span>" , \
 	"<span class='warning'>Your hand slips, slicing [target]'s eyes wth \the [tool]!</span>" )
-	BP.createwound(CUT, 10)
+	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 	IO.take_damage(5, 0)
 
 /datum/surgery_step/eye/lift_eyes
@@ -75,7 +75,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, damaging [target]'s eyes with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, damaging [target]'s eyes with \the [tool]!</span>")
-	target.apply_damage(10, BRUTE, BP)
+	BP.take_damage(10, 0, used_weapon = tool)
 	IO.take_damage(5, 0)
 
 /datum/surgery_step/eye/mend_eyes
@@ -108,7 +108,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, stabbing \the [tool] into [target]'s eye!</span>", \
 	"<span class='warning'>Your hand slips, stabbing \the [tool] into [target]'s eye!</span>")
-	target.apply_damage(10, BRUTE, BP, null, DAM_SHARP)
+	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 	IO.take_damage(5, 0)
 
 /datum/surgery_step/eye/cauterize
@@ -141,7 +141,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips,  searing [target]'s eyes with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, searing [target]'s eyes with \the [tool]!</span>")
-	target.apply_damage(5, BURN, BP)
+	BP.take_damage(0, 5, used_weapon = tool)
 	IO.take_damage(5, 0)
 
 //////////////////////////////////////////////////////////////////
@@ -192,7 +192,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s cameras wth \the [tool]!</span>" ,
 	"<span class='warning'>Your hand slips, scratching [target]'s cameras wth \the [tool]!</span>")
-	BP.createwound(CUT, 10)
+	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 	IO.take_damage(5, 0)
 
 /datum/surgery_step/ipc_eye/mend_cameras
@@ -226,12 +226,11 @@
 	var/dam_amt = 2
 
 	if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
-		target.apply_damage(6, BURN, BP, null)
+		BP.take_damage(0, 6, used_weapon = tool)
 
 	else if(iswrench(tool))
-		target.apply_damage(12, BRUTE, BP, null)
-		BP.createwound(CUT, 5)
-
+		BP.take_damage(12, 0, used_weapon = tool)
+		BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
 	IO.take_damage(dam_amt,0)
 	if(!target.is_bruised_organ(O_KIDNEYS))
 		to_chat(target, "<span class='warning italics'>SEVERE VISUAL SENSOR DAMAGE DETECTED. %REACTION_OVERLOAD%.</span>")
@@ -267,5 +266,5 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips,  denting [target]'s cameras with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, denting [target]'s cameras with \the [tool]!</span>")
-	target.apply_damage(5, BRUTE, BP)
+	BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
 	IO.take_damage(5, 0)

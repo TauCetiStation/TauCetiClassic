@@ -1,4 +1,4 @@
-/datum/hud/proc/monkey_hud(ui_style='icons/mob/screen1_old.dmi')
+/datum/hud/proc/monkey_hud()
 
 	src.adding = list()
 	src.other = list()
@@ -194,8 +194,8 @@
 
 	mymob.zone_sel = new /obj/screen/zone_sel()
 	mymob.zone_sel.icon = ui_style
-	mymob.zone_sel.overlays.Cut()
-	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
+	mymob.zone_sel.cut_overlays()
+	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]"))
 
 	//Handle the gun settings buttons
 	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)
