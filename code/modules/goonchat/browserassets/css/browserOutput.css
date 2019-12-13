@@ -262,18 +262,18 @@ a.popt {text-decoration: none;}
 .motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {/* color: #08457e; */ color: inherit; text-decoration: underline;}
 .motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover {color: #1560bd;}
 
-/* ANNOUNCES */
-.host_announces {
+/* ANNOUNCEMENTS */
+.host_announcements {
 	border-left: 3px solid #800000;
 	color: #800000;
 	padding-left: 8px;
 	margin-bottom: 4px;
 }
-.host_announces h1, .host_announces h2, .host_announces h3, .host_announces h4, .host_announces h5, .host_announces h6 {
+.host_announcements h1, .host_announcements h2, .host_announcements h3, .host_announcements h4, .host_announcements h5, .host_announcements h6 {
 	color: #800000;
 	text-decoration: underline;
 }
-.host_announces hr {
+.host_announcements hr {
 	margin: 8px auto;
 	width: 60%;
 	border: 0;

@@ -2,7 +2,7 @@ var/datum/configuration/config = null
 
 var/host = null
 var/join_motd = null
-var/host_announces
+var/host_announcements
 var/join_test_merge = null
 var/station_name = "NSS Exodus"
 var/system_name = "Tau Ceti"
