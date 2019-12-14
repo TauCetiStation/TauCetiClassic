@@ -217,6 +217,7 @@
 	slowdown = 6
 
 /turf/simulated/floor/beach/water/Entered(atom/movable/AM)
+	..()
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(L.m_intent == MOVE_INTENT_WALK)
