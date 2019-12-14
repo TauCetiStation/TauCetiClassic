@@ -115,6 +115,7 @@
 			O.Check()
 	if (orbiting)
 		orbiting.Check()
+	SSdemo.mark_dirty(src)
 	return 1
 
 /atom/movable/proc/setLoc(T, teleported=0)
