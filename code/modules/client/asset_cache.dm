@@ -205,6 +205,14 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"bluentlogo.png" = 'icons/paper_icons/bluentlogo.png'
 	)
 
+/datum/asset/simple/newscaster
+	assets = list(
+		"like.png" = 'icons/newscaster_icons/like.png',
+		"like_clck.png" = 'icons/newscaster_icons/like_clck.png',
+		"dislike.png" = 'icons/newscaster_icons/dislike.png',
+		"dislike_clck.png" = 'icons/newscaster_icons/dislike_clck.png'
+	)
+
 /datum/asset/simple/chess
 	assets = list(
 		"BR.png" = 'icons/obj/chess/board_BR.png',

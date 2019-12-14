@@ -248,7 +248,6 @@ MOVED TO STUNGLOVES.DM FOR CONVENIENCE ~Luduk
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
 	species_restricted = list("exclude" , UNATHI , TAJARAN)
-	var/footstep = 1	//used for squeeks whilst walking(tc)
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/shoes.dmi')
 
 //Cutting shoes
@@ -273,6 +272,11 @@ MOVED TO STUNGLOVES.DM FOR CONVENIENCE ~Luduk
 				to_chat(user, "<span class='notice'>[src] have already been clipped!</span>")
 	else
 		..()
+
+/obj/item/clothing/shoes/play_unique_footstep_sound()
+	..()
+	if(wet)
+		playsound(src, 'sound/effects/mob/footstep/wet_shoes_step.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/proc/negates_gravity()
 	return 0

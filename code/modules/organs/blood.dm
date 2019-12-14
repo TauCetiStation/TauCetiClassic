@@ -38,9 +38,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 /mob/living/carbon/var/tmp/next_blood_squirt = 0 // until this moved to heart or not...
 /mob/living/carbon/human/proc/handle_blood(blood_volume = 0)
 
-	// Aclometasone prevents blood forming, by preventing metabolism.
-	// *Blood regeneration is here, for some reason* ~Luduk
-	if(blood_volume < BLOOD_VOLUME_NORMAL && blood_volume && !reagents.has_reagent("aclometasone"))
+	//Blood regeneration if there is some space
+	if(blood_volume < BLOOD_VOLUME_NORMAL && blood_volume)
 		var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
 		if(B) // Make sure there's some blood at all
 			if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
@@ -61,13 +60,12 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	// being pumped properly anymore.
 	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
 
-	if(!reagents.has_reagent("stabyzol") || IO.robotic)
-		if(IO.damage > 1 && IO.damage < IO.min_bruised_damage)
-			blood_volume *= 0.8
-		else if(IO.damage >= IO.min_bruised_damage && IO.damage < IO.min_broken_damage)
-			blood_volume *= 0.6
-		else if(IO.damage >= IO.min_broken_damage && IO.damage < INFINITY)
-			blood_volume *= 0.3
+	if(IO.damage > 1 && IO.damage < IO.min_bruised_damage)
+		blood_volume *= 0.8
+	else if(IO.damage >= IO.min_bruised_damage && IO.damage < IO.min_broken_damage)
+		blood_volume *= 0.6
+	else if(IO.damage >= IO.min_broken_damage && IO.damage < INFINITY)
+		blood_volume *= 0.3
 
 	//Effects of bloodloss
 	switch(blood_volume)
@@ -118,10 +116,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			nutrition -= 10
 		else if(nutrition >= 200)
 			nutrition -= 3
-
-	// We don't bleed out at all if metatrombine is injected.
-	if(reagents.has_reagent("metatrombine"))
-		return
 
 	//Bleeding out
 	var/blood_max = 0
@@ -194,9 +188,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 //Makes a blood drop, leaking certain amount of blood from the mob
 /mob/living/carbon/human/proc/drip(amt, tar = src, ddir)
-	if(reagents.has_reagent("metatrombine"))
-		return 0
-
 	if(remove_blood(amt))
 		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = species.blood_datum)
 		return amt

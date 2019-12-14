@@ -59,6 +59,7 @@
 	desc = "A magic hat that can break the world."
 
 /obj/item/clothing/head/collectable/tophat/badmin_magic_hat/atom_init()
+	. = ..()
 	log_admin("Badmin [src] spawned on [x]:[y]:[z]")
 	message_admins("<span class='notice'>Badmin [src] spawned on [x]:[y]:[z]</span>")
 

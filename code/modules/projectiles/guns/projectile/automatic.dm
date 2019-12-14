@@ -75,13 +75,13 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(magazine)
 		var/image/magazine_icon = image('icons/obj/gun.dmi', "mag-[CEIL(get_ammo(0) / 4) * 4]")
-		overlays += magazine_icon
+		add_overlay(magazine_icon)
 	if(silenced)
 		var/image/silencer_icon = image('icons/obj/gun.dmi', "c20r-silencer")
-		overlays += silencer_icon
+		add_overlay(silencer_icon)
 	icon_state = "c20r[chambered ? "" : "-e"]"
 	return
 
@@ -222,88 +222,6 @@
 
 //=================NEW GUNS=================\\
 
-/obj/item/weapon/gun/projectile/automatic/l10c
-	name = "L10-c"
-	desc = "A basic energy-based carbine with fast rate of fire."
-	icon_state = "l10-car"
-	item_state = "l10-car"
-	w_class = ITEM_SIZE_LARGE
-	origin_tech = "combat=3;magnets=2"
-	mag_type = /obj/item/ammo_box/magazine/l10mag
-	fire_sound = 'sound/weapons/guns/gunpulse_l10c.ogg'
-	recoil = 0
-	energy_gun = 1
-
-/obj/item/weapon/gun/projectile/automatic/l10c/atom_init()
-	. = ..()
-	update_icon()
-
-/obj/item/weapon/gun/projectile/automatic/l10c/process_chamber()
-	return ..(0, 1, 1)
-
-/obj/item/weapon/gun/projectile/automatic/l10c/afterattack(atom/target, mob/living/user, flag)
-	..()
-	update_icon(user)
-	return
-
-/obj/item/weapon/gun/projectile/automatic/l10c/attack_self(mob/user)
-	if(magazine && magazine.ammo_count())
-		playsound(user, 'sound/weapons/guns/reload_l10c_unload.ogg', VOL_EFFECTS_MASTER)
-	if(chambered)
-		var/obj/item/ammo_casing/AC = chambered //Find chambered round
-		qdel(AC)
-		chambered = null
-		magazine.stored_ammo += new magazine.ammo_type(magazine)
-	if (magazine)
-		magazine.loc = get_turf(src.loc)
-		user.put_in_hands(magazine)
-		magazine.update_icon()
-		magazine = null
-		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
-	else
-		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
-	update_icon(user)
-	return
-
-/obj/item/weapon/gun/projectile/automatic/l10c/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
-		if (!magazine && istype(AM, mag_type))
-			user.remove_from_mob(AM)
-			magazine = AM
-			magazine.loc = src
-			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
-			if(AM.ammo_count())
-				playsound(user, 'sound/weapons/guns/reload_l10c_load.ogg', VOL_EFFECTS_MASTER)
-			chamber_round()
-			A.update_icon()
-			update_icon(user)
-			return 1
-		else if (magazine)
-			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
-	return 0
-
-/obj/item/weapon/gun/projectile/automatic/l10c/update_icon(mob/M)
-	if(!magazine)
-		icon_state = "[initial(icon_state)]-e"
-		item_state = "[initial(item_state)]-e"
-	else if(chambered)
-		icon_state = "[initial(icon_state)]"
-		item_state = "[initial(item_state)]"
-	else if(magazine && magazine.ammo_count())
-		icon_state = "[initial(icon_state)]"
-		item_state = "[initial(item_state)]"
-	else
-		icon_state = "[initial(icon_state)]-0"
-		item_state = "[initial(item_state)]-0"
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-		H.update_inv_belt()
-	return
-
-
 /obj/item/weapon/gun/projectile/automatic/c5
 	name = "security submachine gun"
 	desc = "C-5 submachine gun - cheap and light. Uses 9mm ammo."
@@ -420,12 +338,12 @@
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/proc/update_magazine()
 	if(magazine)
-		src.overlays = 0
-		overlays += "[magazine.icon_state]_o"
+		cut_overlays()
+		add_overlay("[magazine.icon_state]_o")
 		return
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/update_icon()
-	src.overlays = 0
+	cut_overlays()
 	update_magazine()
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 	return
@@ -453,9 +371,9 @@
 	update_icon()
 
 /obj/item/weapon/gun/projectile/automatic/a28/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(magazine)
-		overlays += "[magazine.icon_state]-o"
+		add_overlay("[magazine.icon_state]-o")
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 	return
 
@@ -475,9 +393,9 @@
 	update_icon()
 
 /obj/item/weapon/gun/projectile/automatic/a74/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(magazine)
-		overlays += mag_icon
+		add_overlay(mag_icon)
 		item_state = "[initial(icon_state)]"
 	else
 		item_state = "[initial(icon_state)]-e"

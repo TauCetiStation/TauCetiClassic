@@ -1258,7 +1258,7 @@ var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 		toArea = locate(/area/shuttle/administration/centcom)
 
 		SSshuttle.undock_act(fromArea)
-		SSshuttle.undock_act(/area/hallway/secondary/entry, "arrival_admin")
+		SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_admin")
 	else
 		fromArea = locate(/area/shuttle/administration/centcom)
 		toArea = locate(/area/shuttle/administration/station)
@@ -1277,7 +1277,7 @@ var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 		admin_shuttle_location = 1
 
 		SSshuttle.dock_act(toArea)
-		SSshuttle.dock_act(/area/hallway/secondary/entry, "arrival_admin")
+		SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_admin")
 
 	moving = FALSE
 
@@ -1299,7 +1299,7 @@ var/ferry_location = 0 // 0 = centcom , 1 = station
 		toArea = locate(/area/shuttle/transport1/centcom)
 
 		SSshuttle.undock_act(fromArea)
-		SSshuttle.undock_act(/area/hallway/secondary/entry, "arrival_ferry")
+		SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_ferry")
 	else
 		fromArea = locate(/area/shuttle/transport1/centcom)
 		toArea = locate(/area/shuttle/transport1/station)
@@ -1318,7 +1318,7 @@ var/ferry_location = 0 // 0 = centcom , 1 = station
 		ferry_location = 1
 
 		SSshuttle.dock_act(toArea)
-		SSshuttle.dock_act(/area/hallway/secondary/entry, "arrival_ferry")
+		SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_ferry")
 
 	moving = FALSE
 

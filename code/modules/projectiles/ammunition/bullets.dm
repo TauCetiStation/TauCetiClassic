@@ -163,10 +163,6 @@
 	caliber = "a3006"
 	projectile_type = "/obj/item/projectile/bullet/midbullet3"
 
-/obj/item/ammo_casing/l10
-	caliber = "energy"
-	projectile_type = "/obj/item/projectile/l10"
-
 /obj/item/ammo_casing/flare
 	desc = "A flare for flare gun."
 	caliber = "flare"

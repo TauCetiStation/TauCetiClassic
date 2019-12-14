@@ -24,12 +24,14 @@
 		icon_state = "gift[pick(1, 2, 3)]"
 
 /obj/item/weapon/gift/attack_self(mob/user)
-	user.drop_item()
-	if(src.gift)
-		user.put_in_active_hand(gift)
-		src.gift.add_fingerprint(user)
+	user.drop_from_inventory(src)
+	var/atom/movable/AM = locate() in contents
+	if(AM) //sometimes items can disappear. For example, bombs. --rastaf0
+		user.put_in_active_hand(AM)
+		AM.add_fingerprint(user)
 	else
 		to_chat(user, "<span class='notice'>The gift was empty!</span>")
+	playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
 	qdel(src)
 	return
 
@@ -153,7 +155,6 @@
 				G.size = W.w_class
 				G.w_class = G.size + 1
 				G.icon_state = text("gift[]", G.size)
-				G.gift = W
 				W.loc = G
 				G.add_fingerprint(user)
 				W.add_fingerprint(user)

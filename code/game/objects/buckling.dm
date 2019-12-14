@@ -29,7 +29,7 @@
 	M.set_dir(dir)
 	buckled_mob = M
 	post_buckle_mob(M)
-	M.throw_alert("buckled", new_master = src)
+	M.throw_alert("buckled", /obj/screen/alert/buckled, new_master = src)
 	correct_pixel_shift(M)
 	M.update_canmove()
 	return 1
