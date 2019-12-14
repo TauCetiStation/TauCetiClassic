@@ -227,14 +227,14 @@
 /turf/simulated/floor/beach/water/waterpool
 	icon_state = "seadeep"
 
-/turf/simulated/floor/beach/water/waterpool/Entered(atom/movable/AM, atom/OL)
+/turf/simulated/floor/beach/water/waterpool/Entered(atom/movable/AM, atom/old_loc)
 	..()
-	if(!istype(OL, /turf/simulated/floor/beach/water/waterpool))
+	if(!istype(old_loc, /turf/simulated/floor/beach/water/waterpool))
 		AM.entered_water_turf()
 
-/turf/simulated/floor/beach/water/waterpool/Exited(atom/movable/AM, atom/NL)
+/turf/simulated/floor/beach/water/waterpool/Exited(atom/movable/AM, atom/new_loc)
 	..()
-	if(!istype(NL, /turf/simulated/floor/beach/water/waterpool))
+	if(!istype(new_loc, /turf/simulated/floor/beach/water/waterpool))
 		AM.exited_water_turf()
 
 /atom/movable/proc/exited_water_turf()
@@ -268,9 +268,9 @@
 	if(stat)
 		return
 	if(prob(25))
-		adjustFireLoss(rand(50, 15))
+		adjustFireLoss(rand(10, 20))
 		Weaken(rand(10, 15))
-		eye_blind += rand(15, 20)
+		eye_blind += rand(20, 25)
 		playsound(src, 'sound/machines/cfieldfail.ogg', VOL_EFFECTS_MASTER, null, FALSE, -4)
 	if(!eye_blind)
 		to_chat(src, "<span class='userdanger'>BF%AO@DAT-T[pick("@$%!", "-TEN-TEN%#!", "ENTION")]YAW$!$@@&@CRITI[pick("CAL-CAL", "CAL", "-TI-TI^$#&&@!")]!TAQQ@%@OV[pick("ERL", "ER-ER-ER", "-OAD-D")]%#^WW@ZF%^#D</span>")
