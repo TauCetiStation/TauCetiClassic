@@ -100,6 +100,8 @@
 /obj/item/device/assembly/attach_assembly(obj/item/device/assembly/A, mob/user)
 	holder = new/obj/item/device/assembly_holder(get_turf(src))
 	if(holder.attach(A,src,user))
+		message_admins("[key_name_admin(user)] attached \the [A] to \the [src]. [ADMIN_JMP(user)]")
+		log_game("[key_name_admin(user)] attached \the [A] to \the [src].")
 		to_chat(user, "<span class='notice'>You attach \the [A] to \the [src]!</span>")
 		return 1
 	return 0

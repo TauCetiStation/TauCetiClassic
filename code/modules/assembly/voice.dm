@@ -14,7 +14,7 @@
 /obj/item/device/assembly/voice/hear_talk(mob/living/M, msg)
 
 	msg = lowertext_(sanitize(msg))
-	
+
 	if(listening)
 		recorded = msg
 		listening = 0
@@ -22,6 +22,11 @@
 			O.show_message(text("Activation message is '[recorded]'."),1)
 	else
 		if(findtext(msg, recorded))
+			var/time = time2text(world.realtime,"hh:mm:ss")
+			var/turf/T = get_turf(src)
+			lastsignalers.Add("[time] <B>:</B> [M.ckey] activated [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> \"[recorded]\"")
+			message_admins("[src] activated by [M], location ([T.x],[T.y],[T.z]) <B>:</B> \"[recorded]\" [ADMIN_JMP(usr)]")
+			log_game("[src] activated by [M.ckey]([M]), location ([T.x],[T.y],[T.z]), code: \"[recorded]\"")
 			for(var/mob/O in hearers(1, src.loc))
 				O.show_message(text("Beeeep"),1)
 			spawn(10)
