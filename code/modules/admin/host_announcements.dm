@@ -1,6 +1,6 @@
 /client/proc/host_announcements()
 	set name = "Host Announcements"
-	set desc = "Edit or make new stick server announcement"
+	set desc = "Edit or make new sticky server announcement"
 	set category = "Server"
 
 	var/folder = "data/announcements/"
