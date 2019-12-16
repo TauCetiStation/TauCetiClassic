@@ -61,7 +61,17 @@
 		if(speaker == src)
 			to_chat(src, "<span class='warning'>You cannot hear yourself speak!</span>")
 		else
-			to_chat(src, "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear \him.")
+			var/pronoun = null
+			switch(speaker.gender)
+				if(MALE)
+					pronoun = "him"
+				if(FEMALE)
+					pronoun = "her"
+				if(PLURAL)
+					pronoun = "them"
+				else
+					pronoun = "it"
+			to_chat(src, "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear [pronoun].")
 	else
 		if(language)
 			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][language.format_message(message, verb)]</span>")
@@ -215,7 +225,10 @@
 	if (language && ((language.flags & NONVERBAL) || (language.flags & SIGNLANG)))
 		return
 
-	else if(prob(15))
+	if (sdisabilities & DEAF || ear_deaf)
+		return
+
+	if(prob(15))
 		var/list/punctuation = list(",", "!", ".", ";", "?")
 		var/list/messages = splittext(message, " ")
 		var/R = rand(1, messages.len)

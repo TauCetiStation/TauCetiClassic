@@ -38,14 +38,14 @@
 		overlay = image(icon, "light1-overlay")
 		overlay.plane = LIGHTING_PLANE + 1
 
-	overlays.Cut()
+	cut_overlays()
 	if(stat & (NOPOWER|BROKEN))
 		icon_state = "light-p"
 		set_light(0)
 	else
 		icon_state = "light[on]"
 		overlay.icon_state = "light[on]-overlay"
-		overlays += overlay
+		add_overlay(overlay)
 
 /obj/machinery/light_switch/examine(mob/user)
 	..()

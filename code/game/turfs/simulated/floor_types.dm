@@ -217,7 +217,7 @@
 
 /turf/simulated/floor/beach/water/atom_init()
 	. = ..()
-	overlays += image("icon"='icons/misc/beach.dmi',"icon_state"="water5","layer"=MOB_LAYER+0.1)
+	add_overlay(image("icon"='icons/misc/beach.dmi',"icon_state"="water5","layer"=MOB_LAYER+0.1))
 
 /turf/simulated/floor/beach/water/break_tile()
 	return

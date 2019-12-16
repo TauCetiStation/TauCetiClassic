@@ -210,7 +210,7 @@ GATEWAY_DELAY 18000
 #CONTINUOUS_ROUNDS
 
 ## Uncomment to restrict non-admins from using humanoid alien races
-USEALIENWHITELIST
+#USEALIENWHITELIST
 
 ## Comment this to unrestrict the number of alien players allowed in the round. The number represents the number of alien players for every human player.
 #ALIEN_PLAYER_RATIO 0.2
@@ -289,3 +289,6 @@ REPOSITORY_LINK https://github.com/TauCetiStation/TauCetiClassic
 ## Replaces whatever map json file with maps/testmap.json to load testmap only.
 ## Saves alot of initialization time, since only centcomm and testmap will be loaded. For tests where map doesn't matter.
 # SUMMON_TESTMAP
+
+## Enables demo recordings, works slower on windows
+# RECORD_REPLAYS

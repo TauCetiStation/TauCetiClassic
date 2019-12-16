@@ -28,9 +28,8 @@
 	handle_environment(environment)
 
 	//Handle being on fire
-	handle_fire()
-	if(on_fire && fire_stacks > 0)
-		fire_stacks -= 0.5
+	handle_fire()	
+	
 	//Status updates, death etc.
 	handle_regular_status_updates()
 	update_canmove()
@@ -101,14 +100,14 @@
 		silent = 0
 	else				//ALIVE. LIGHTS ARE ON
 		if(isalienadult(src))
-			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
+			if(health < config.health_threshold_dead || !has_brain())
 				death()
 				blinded = 1
 				stat = DEAD
 				silent = 0
 				return 1
 		else if(isfacehugger(src) || islarva(src))
-			if(health < 0 || brain_op_stage == 4.0)
+			if(health < 0 || !has_brain())
 				death()
 				blinded = 1
 				stat = DEAD
@@ -242,4 +241,3 @@
 	adjustFireLoss(6)
 	return
 //END FIRE CODE
-

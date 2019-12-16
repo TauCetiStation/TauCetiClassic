@@ -13,9 +13,9 @@
 	var/alert = 0
 
 /obj/structure/stool/bed/chair/wheelchair/handle_rotation()
-	overlays = null
+	cut_overlays()
 	var/image/O = image(icon = 'icons/obj/objects.dmi', icon_state = "w_overlay", layer = FLY_LAYER, dir = src.dir)
-	overlays += O
+	add_overlay(O)
 	if(buckled_mob)
 		buckled_mob.dir = dir
 

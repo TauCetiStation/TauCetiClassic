@@ -170,12 +170,12 @@
 		if(severity < LUBE_FLOOR) // Thats right, lube does not add nor clean wet overlay. So if the floor was wet before and we add lube, wet overlay simply stays longer.
 			if(!wet_overlay)      // For stealth - floor must be dry, so added lube effect will be invisible.
 				wet_overlay = image('icons/effects/water.dmi', "wet_floor", src)
-				overlays += wet_overlay
+				add_overlay(wet_overlay)
 
 /turf/simulated/proc/make_dry_floor()
 	if(wet)
 		if(wet_overlay)
-			overlays -= wet_overlay
+			cut_overlay(wet_overlay)
 			wet_overlay = null
 		wet = 0
 		UpdateSlip()
