@@ -11,6 +11,7 @@ var/datum/subsystem/nightshift/SSnightshift
 	var/nightshift_start_time = 23
 	var/nightshift_end_time = 8
 	var/high_security_mode = FALSE
+	var/alarm_mode = FALSE
 
 
 /datum/subsystem/nightshift/New()
@@ -27,6 +28,7 @@ var/datum/subsystem/nightshift/SSnightshift
 
 /datum/subsystem/nightshift/proc/check_nightshift()
 	var/emergency = security_level >= SEC_LEVEL_RED
+	var/alarm = security_level == SEC_LEVEL_DELTA
 	var/current_hour = text2num(time2text(world.realtime, "hh"))
 	var/current_minute = text2num(time2text(world.realtime, "mm"))
 
@@ -36,7 +38,10 @@ var/datum/subsystem/nightshift/SSnightshift
 		high_security_mode = emergency
 	if(emergency)
 		night_time = FALSE
-	if(nightshift_active != night_time)
+	if(alarm)
+		night_time = TRUE
+	if(nightshift_active != night_time || alarm_mode != alarm)
+		alarm_mode = alarm
 		update_nightshift(night_time)
 
 /datum/subsystem/nightshift/proc/update_nightshift(active)
@@ -46,6 +51,8 @@ var/datum/subsystem/nightshift/SSnightshift
 			var/preset = "soft"
 			if(is_type_in_typecache(get_area(APC), hard_lighting_arealist))
 				preset = "hard"
+			if(alarm_mode)
+				preset = "alarm"
 
 			APC.set_nightshift(active, preset)
 			CHECK_TICK
@@ -53,6 +60,7 @@ var/datum/subsystem/nightshift/SSnightshift
 var/list/lighting_presets = list(
 	"soft" = list("color" = "#ffe4c9", "power" = 0.8, "range" = 8),
 	"hard" = list("color" = "#e8e9ff", "power" = 0.8, "range" = 8),
+	"alarm" = list("color" = "#ff6841", "power" = 0.8, "range" = 8),
 	"3000K" = list("color" = "#ffb46b", "power" = 0.8, "range" = 8),
 	"4000K" = list("color" = "#ffd1a3", "power" = 0.8, "range" = 8),
 	"5000K" = list("color" = "#ffe4ce", "power" = 0.8, "range" = 8),
