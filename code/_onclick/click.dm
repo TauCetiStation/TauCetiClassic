@@ -130,12 +130,8 @@
 		return
 
 	if(!isturf(loc)) // (This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that.) Not anymore
-		if((TK in mutations) && (XRAY in mutations))//Now telekinesing from inside a closet is possible
-			var/dist = get_dist(src, A)
-			if(dist > tk_maxrange)
-				return
-			SetNextMove(max(dist, CLICK_CD_MELEE))
-			A.attack_tk(src)
+		if(TK && XRAY in mutations)//Now telekinesing from inside a closet is possible
+			ranged_attack_tk(A)
 		else
 			return
 
@@ -182,11 +178,14 @@
 	if(a_intent == "hurt" && (LASEREYES in mutations))
 		LaserEyes(A) // moved into a proc below
 	else if(TK in mutations)
-		var/dist = get_dist(src, A)
-		if(dist > tk_maxrange)
-			return
-		SetNextMove(max(dist, CLICK_CD_MELEE))
-		A.attack_tk(src)
+		ranged_attack_tk(A)
+
+/mob/proc/ranged_attack_tk(atom/A)
+	var/dist = get_dist(src, A)
+	if(dist > tk_maxrange)
+		return
+	SetNextMove(max(dist, CLICK_CD_MELEE))
+	A.attack_tk(src)
 
 /*
 	Restrained ClickOn
