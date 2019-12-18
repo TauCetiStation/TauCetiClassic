@@ -371,6 +371,7 @@
 /obj/machinery/hydroponics/proc/plantdies()
 	health = 0
 	harvest = FALSE
+	visible_message("<span class='warning'>A [myseed.plantname] dies, his roots dry out...</span>")
 	pestlevel = 0 // Pests die
 	if(!dead)
 		update_icon()

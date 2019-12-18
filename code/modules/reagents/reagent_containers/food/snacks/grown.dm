@@ -574,7 +574,7 @@
 	pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk
-	seed = "/obj/item/seeds/honky-seed"
+	seed = "/obj/item/seeds/honkyseed"
 	name = "Clowny banana"
 	desc = "Looks very colorful and tasty, a Clown would kill for this banana!"
 	icon = 'icons/obj/items.dmi'

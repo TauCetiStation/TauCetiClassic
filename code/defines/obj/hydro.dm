@@ -266,11 +266,11 @@
 	species = "honk"
 	plantname = "Honk banana Tree"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk"
-	lifespan = 60
-	endurance = 40
+	lifespan = 50
+	endurance = 30
 	maturation = 6
 	production = 6
-	yield = 4
+	yield = 3
 	plant_type = 0
 	growthstages = 6
 
