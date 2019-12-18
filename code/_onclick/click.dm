@@ -130,7 +130,7 @@
 		return
 
 	if(!isturf(loc)) // (This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that.) Not anymore
-		if(TK && XRAY in mutations)//Now telekinesing from inside a closet is possible
+		if((TK in mutations) && (XRAY in mutations))//Now telekinesing from inside a closet is possible
 			ranged_attack_tk(A)
 		else
 			return
