@@ -187,6 +187,8 @@
 	var/datum/map_config/defaultmap
 	var/load_testmap = FALSE // swaps whatever.json with testmap.json in SSmapping init phase.
 
+	var/record_replays = FALSE
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for (var/T in L)
@@ -609,6 +611,9 @@
 
 				if("summon_testmap")
 					config.load_testmap = TRUE
+
+				if("record_replays")
+					config.record_replays = TRUE
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")

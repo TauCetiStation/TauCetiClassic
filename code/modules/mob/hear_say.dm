@@ -66,7 +66,7 @@
 				if(MALE)
 					pronoun = "him"
 				if(FEMALE)
-					pronoun = "she"
+					pronoun = "her"
 				if(PLURAL)
 					pronoun = "them"
 				else

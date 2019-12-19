@@ -410,6 +410,7 @@ to destroy them and players will be able to make replacements.
 	name = "circuit board (Color Mixer)"
 	build_path = /obj/machinery/color_mixer
 	origin_tech = "programming=2;materials=2"
+	board_type = "machine"
 	req_components = list(
 							/obj/item/weapon/circuitboard/color_mixer = 1,
 							/obj/item/weapon/stock_parts/manipulator = 2,
