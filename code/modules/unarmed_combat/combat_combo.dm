@@ -124,8 +124,6 @@ var/global/list/combat_combos_by_name = list()
 			return FALSE
 		if(QDELING(attacker))
 			return FALSE
-		if(victim.monkeyizing || attacker.monkeyizing)
-			return FALSE
 		if(victim.notransform || attacker.notransform)
 			return FALSE
 		if(!attacker.combo_animation)

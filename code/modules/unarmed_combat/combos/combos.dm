@@ -9,7 +9,7 @@
 
 /datum/combat_combo/disarm/execute(mob/living/victim, mob/living/attacker)
 	var/list/pos_guns = list(victim.get_active_hand())
-	if(attacker.has_trait(TRAIT_MULTITASKING))
+	if(HAS_TRAIT(attacker, TRAIT_MULTITASKING))
 		pos_guns += victim.get_inactive_hand()
 
 	for(var/obj/item/weapon/gun/G in pos_guns)
