@@ -165,6 +165,10 @@
 			mode_result = "loss - revolution stopped"
 			feedback_set_details("round_end_result",mode_result)
 			completion_text += "<span style='color: red; font-weight: bold;'>The heads of staff managed to stop the revolution!</span>"
+		else
+			mode_result = "loss - revolution was not successful" // halfloss? :D
+			feedback_set_details("round_end_result",mode_result)
+			completion_text += "<span style='color: red; font-weight: bold;'>The revolution failed to achieve their goals.</span>"
 	..()
 	return 1
 
