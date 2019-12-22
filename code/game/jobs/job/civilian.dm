@@ -43,8 +43,6 @@
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 	minimal_player_ingame_minutes = 480
-	restricted_species = list(SKRELL, DIONA)
-
 
 /datum/job/cargo_tech/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -72,7 +70,6 @@
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
 	minimal_player_ingame_minutes = 480
-	restricted_species = list(SKRELL)
 
 /datum/job/mining/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -107,7 +104,7 @@
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mailsorting, access_recycler)
 	minimal_player_ingame_minutes = 480
-	restricted_species = list(SKRELL)
+	restricted_species = list(DIONA)
 
 /datum/job/recycler/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
