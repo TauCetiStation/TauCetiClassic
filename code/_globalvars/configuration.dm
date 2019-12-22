@@ -8,7 +8,7 @@ var/station_name = "NSS Exodus"
 var/system_name = "Tau Ceti"
 var/game_version = "TauCetiStation"
 var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 200)
-#define gamestory_start_year 2213
+var/gamestory_start_year = 2213
 var/changelog_hash = ""
 
 var/list/donators = list()
