@@ -100,10 +100,13 @@
 
 /obj/item/weapon/folder/blue/fluff/matthew_riebhardt //Matthew Riebhardt - ZekeSulastin
 	name = "academic journal"
-	desc = "An academic journal, seemingly pertaining to medical genetics. This issue is for the second quarter of [gamestory_start_year]. Paper flags demarcate some articles the owner finds interesting."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "matthewriebhardt"
 
+/obj/item/weapon/folder/blue/fluff/matthew_riebhardt/atom_init()
+	. = ..()
+	desc = "An academic journal, seemingly pertaining to medical genetics. This issue is for the second quarter of [gamestory_start_year]. Paper flags demarcate some articles the owner finds interesting."
+	
 /obj/item/weapon/pen/fluff/multi //spaceman96: Trenna Seber
 	name = "multicolor pen"
 	desc = "It's a cool looking pen. Lots of colors!"
