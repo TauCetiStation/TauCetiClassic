@@ -41,7 +41,7 @@
 			if(O.status_flags & PASSEMOTES)
 				for(var/obj/item/weapon/holder/thing in O.contents)
 					thing.show_message(message, m_type)
-			if(m_type & SHOWMSG_VISUAL && O in feel_emote)
+			if(m_type & SHOWMSG_VISUAL && (O in feel_emote))
 				O.show_message(message, SHOWMSG_FEEL)
 				continue
 			O.show_message(message, m_type)
