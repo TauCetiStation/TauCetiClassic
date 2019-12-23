@@ -591,12 +591,12 @@ var/failed_old_db_connections = 0
 /proc/GetGitMasterCommit(no_head = 0)
 	var/commitFile = ".git/refs/remotes/origin/master"
 	if(fexists(commitFile) == 0)
-		warning("GetMasterGitCommit() File not found ([commitFile]), using HEAD as a current commit")
+		info("GetMasterGitCommit() File not found ([commitFile]), using HEAD as a current commit")
 		return no_head ? 0 : "HEAD"
 
 	var/text = trim(file2text(commitFile))
 	if(!text)
-		warning("GetMasterGitCommit() File is empty ([commitFile]), using HEAD as a current commit")
+		info("GetMasterGitCommit() File is empty ([commitFile]), using HEAD as a current commit")
 		return no_head ? 0 : "HEAD"
 
 	return text
