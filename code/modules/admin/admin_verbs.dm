@@ -82,6 +82,7 @@ var/list/admin_verbs_log = list(
 	/datum/admins/proc/view_atk_log,	//shows the server combat-log, doesn't do anything presently,
 	/client/proc/giveruntimelog,		//allows us to give access to runtime logs to somebody,
 	/client/proc/getserverlog,			//allows us to fetch server logs (diary) for other days,
+	/client/proc/getreplay,				//allows us to fetch replays for other days,
 	/client/proc/investigate_show,		//various admintools for investigation. Such as a singulo grief-log,
 	)
 var/list/admin_verbs_variables = list(
@@ -188,7 +189,8 @@ var/list/admin_verbs_permissions = list(
 	/client/proc/gsw_add,
 	/client/proc/library_debug_remove,
 	/client/proc/library_debug_read,
-	/client/proc/regisration_panic_bunker
+	/client/proc/regisration_panic_bunker,
+	/client/proc/host_announcements,
 	)
 var/list/admin_verbs_rejuv = list(
 	/client/proc/cmd_admin_rejuvenate,

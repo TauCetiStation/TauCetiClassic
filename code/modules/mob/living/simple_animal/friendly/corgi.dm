@@ -24,12 +24,12 @@
 	desc = "Tastes like... well you know..."
 
 /mob/living/simple_animal/corgi/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(facehugger)
 		if(istype(src, /mob/living/simple_animal/corgi/puppy))
-			overlays += image('icons/mob/mask.dmi',"facehugger_corgipuppy")
+			add_overlay(image('icons/mob/mask.dmi',"facehugger_corgipuppy"))
 		else
-			overlays += image('icons/mob/mask.dmi',"facehugger_corgi")
+			add_overlay(image('icons/mob/mask.dmi',"facehugger_corgi"))
 
 /mob/living/simple_animal/corgi/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/newspaper))

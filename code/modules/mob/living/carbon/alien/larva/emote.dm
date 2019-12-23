@@ -88,7 +88,7 @@
 			if (input2 == "Visible")
 				m_type = SHOWMSG_VISUAL
 			else if (input2 == "Hearable")
-				if (has_trait(TRAIT_MUTE))
+				if (HAS_TRAIT(src, TRAIT_MUTE))
 					return
 				m_type = SHOWMSG_AUDIO
 			else

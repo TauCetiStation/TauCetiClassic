@@ -115,14 +115,14 @@
 		FH.Attach(C)
 
 /mob/living/carbon/alien/facehugger/regenerate_icons()
-	overlays = list()
+	cut_overlays()
 	update_inv_r_hand(0)
 	update_hud()
 	update_icons()
 
 /mob/living/carbon/alien/facehugger/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
-	overlays.Cut()
+	cut_overlays()
 	if(stat == DEAD)
 		icon_state = "facehugger_dead"
 	else if(lying || resting)
@@ -356,10 +356,8 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 
 /obj/item/weapon/fh_grab/process()
-	if(!assailant)
-		qdel(src)
+	if(!confirm())
 		return
-	confirm()
 
 	if(assailant.client)
 		assailant.client.screen -= hud
@@ -429,10 +427,10 @@ When we finish, facehugger's player will be transfered inside embryo.
 	switch(state)
 		if(GRAB_PASSIVE)
 			var/mob/living/carbon/alien/facehugger/FH = assailant
-			FH.leap_at_face(affecting)
 			state = GRAB_AGGRESSIVE
 			hud.icon_state = "grab/neck"
 			hud.name = "grab around neck"
+			FH.leap_at_face(affecting)
 		if(GRAB_AGGRESSIVE)
 			assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] neck!</span>")
 			state = GRAB_NECK

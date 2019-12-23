@@ -151,7 +151,7 @@ var/list/blob_nodes = list()
 	return
 
 /mob/living/carbon/human/proc/Blobize()
-	if (monkeyizing)
+	if (notransform)
 		return
 	var/obj/effect/blob/core/new_blob = new /obj/effect/blob/core (loc)
 	if(!client)

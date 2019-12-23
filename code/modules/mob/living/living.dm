@@ -3,9 +3,15 @@
 	living_list += src
 
 /mob/living/Destroy()
+	if(LAZYLEN(status_effects))
+		for(var/s in status_effects)
+			var/datum/status_effect/S = s
+			if(S.on_remove_on_mob_delete) //the status effect calls on_remove when its mob is deleted
+				qdel(S)
+			else
+				S.be_replaced()
 	living_list -= src
-	..()
-	return QDEL_HINT_HARDDEL_NOW
+	return ..()
 
 /mob/living/proc/OpenCraftingMenu()
 	return
@@ -14,6 +20,14 @@
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
 		return
+	if(!ismovableatom(A) || is_blocked_turf(A))
+		if(confused && stat == CONSCIOUS && m_intent == "run")	
+			playsound(get_turf(src), pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)	
+			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")	
+			apply_damage(3, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
+			Stun(3)
+			Weaken(2)
+			
 	if(ismob(A))
 		var/mob/M = A
 		if(MobBump(M))
@@ -30,6 +44,9 @@
 
 //Called when we bump onto a mob
 /mob/living/proc/MobBump(mob/M)
+	//Even if we don't push/swap places, we "touched" them, so spread fire
+	SpreadFire(M)
+
 	if(now_pushing)
 		return 1
 
@@ -53,7 +70,7 @@
 				return 1
 
 		//Fat
-		if(FAT in M.mutations)
+		if(HAS_TRAIT(src, TRAIT_FAT))
 			var/ran = 40
 			if(isrobot(src))
 				ran = 20
@@ -956,8 +973,11 @@
 				clear_fullscreen("flash", 25)
 		return 1
 
+/mob/living/proc/has_brain()
+	return TRUE
+
 /mob/living/proc/has_eyes()
-	return 1
+	return TRUE
 
 //-TG Port for smooth standing/lying animations
 /mob/living/proc/get_standard_pixel_x_offset(lying_current = 0)

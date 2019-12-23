@@ -11,7 +11,7 @@
 		if(I.type in typesof(path))
 			user.drop_item()
 			qdel(I)
-			overlays += image('icons/obj/pipes/disposal.dmi', "dispover-handle")
+			add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-handle"))
 			return
 	user.drop_item()
 	I.loc = src.loc

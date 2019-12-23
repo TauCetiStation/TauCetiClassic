@@ -88,6 +88,8 @@
 
 		update_muts=1
 
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_BAREFOOT, 0.5, -1)
+
 	. = ..()
 
 	monkey_list += src
@@ -438,3 +440,6 @@
 	message = capitalize(trim_left(message))
 
 	..(message, speaking, verb, alt_name, italics, message_range, used_radios)
+
+/mob/living/carbon/monkey/get_species()
+	return race

@@ -13,6 +13,7 @@
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])", user)
+	playsound(src, 'sound/machines/defib_zap.ogg', VOL_EFFECTS_MASTER)
 
 	user.cell.charge -= 30
 

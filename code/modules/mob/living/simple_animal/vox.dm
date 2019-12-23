@@ -127,14 +127,14 @@
 
 /mob/living/simple_animal/vox/armalis/regenerate_icons()
 
-	overlays = list()
+	cut_overlays()
 	if(armour)
 		var/icon/armour = image('icons/mob/vox.dmi',"armour")
 		speed = 1
-		overlays += armour
+		add_overlay(armour)
 	if(amp)
 		var/icon/amp = image('icons/mob/vox.dmi',"amplifier")
-		overlays += amp
+		add_overlay(amp)
 	return
 
 /obj/item/vox/armalis_armour

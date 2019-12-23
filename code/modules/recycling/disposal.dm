@@ -353,7 +353,7 @@
 
 // update the icon & overlays to reflect mode & status
 /obj/machinery/disposal/proc/update()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)
 		icon_state = "disposal-broken"
 		mode = 0
@@ -362,7 +362,7 @@
 
 	// flush handle
 	if(flush)
-		overlays += image('icons/obj/pipes/disposal.dmi', "dispover-handle")
+		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-handle"))
 
 	// only handle is shown if no power
 	if(stat & NOPOWER || mode == -1)
@@ -370,13 +370,13 @@
 
 	// 	check for items in disposal - occupied light
 	if(contents.len > 0)
-		overlays += image('icons/obj/pipes/disposal.dmi', "dispover-full")
+		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-full"))
 
 	// charging and ready light
 	if(mode == 1)
-		overlays += image('icons/obj/pipes/disposal.dmi', "dispover-charge")
+		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-charge"))
 	else if(mode == 2)
-		overlays += image('icons/obj/pipes/disposal.dmi', "dispover-ready")
+		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-ready"))
 
 // timed process
 // charge the gas reservoir and perform flush if ready
@@ -504,7 +504,7 @@
 			I.loc = src
 			visible_message("\the [I] lands in \the [src].")
 		else
-			visible_message("\the [I] bounces off of \the [src]'s rim!.")
+			visible_message("\the [I] bounces off of \the [src]'s rim!")
 		return 0
 	else
 		return ..(mover, target, height, air_group)
@@ -549,8 +549,7 @@
 		AM.loc = src
 		if(istype(AM, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = AM
-			if(FAT in H.mutations)		// is a human and fat?
-				has_fat_guy = 1			// set flag on holder
+			has_fat_guy = HAS_TRAIT(H, TRAIT_FAT) // is a human and fat? set flag on holder
 		if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
 			var/obj/structure/bigDelivery/T = AM
 			src.destinationTag = T.sortTag

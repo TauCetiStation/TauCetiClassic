@@ -454,7 +454,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 	if(threatcount == SAFE_PERP)
 		return SAFE_PERP
 
-	if(!istype(src, /mob/living/simple_animal/hostile/retaliate/goat))
+	if(!istype(src, /mob/living/simple_animal/hostile/retaliate/goat) && !istype(src, /mob/living/simple_animal/hostile/mining_drone))
 		threatcount += 4
 	return threatcount
 

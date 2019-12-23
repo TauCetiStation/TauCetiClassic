@@ -41,7 +41,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		return FALSE
 	if(wear_suit && (wear_suit.flags & NOSLIP))
 		return FALSE
-	if(FAT in mutations)
+	if(HAS_TRAIT(src, TRAIT_FAT))
 		to_chat(src, "<span class='notice'>Air suddenly rushes past you!</span>")
 		return FALSE
 	..()

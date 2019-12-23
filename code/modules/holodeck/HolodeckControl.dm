@@ -143,7 +143,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/HolodeckControl/atom_init_late()
-	linkedholodeck = locate(/area/holodeck/alphadeck)
+	linkedholodeck = locate(/area/station/civilian/holodeck/alphadeck)
 
 //This could all be done better, but it works for now.
 /obj/machinery/computer/HolodeckControl/Destroy()
@@ -232,6 +232,7 @@
 	return 1
 
 /obj/machinery/computer/HolodeckControl/proc/loadIdProgram(id = "turnoff")
+	if(id in restricted_programs && !safety_disabled) return
 	current_scene = holoscene_templates[id]
 	loadProgram()
 

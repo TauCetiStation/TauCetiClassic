@@ -51,7 +51,7 @@
 				toEat.On_Consume(M, user)
 				if(toEat)
 					qdel(toEat)
-				overlays.Cut()
+				cut_overlays()
 				return
 
 /*
@@ -269,7 +269,7 @@
 /obj/item/weapon/tray/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 
 	// Drop all the things. All of them.
-	overlays.Cut()
+	cut_overlays()
 	for(var/obj/item/I in carrying)
 		I.loc = M.loc
 		carrying.Remove(I)
@@ -426,7 +426,7 @@
 
 			I.loc = src
 			carrying.Add(I)
-			overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer)
+			add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
 
 /obj/item/weapon/tray/dropped(mob/user)
 
@@ -439,7 +439,7 @@
 		foundtable = 1
 		break
 
-	overlays.Cut()
+	cut_overlays()
 
 	for(var/obj/item/I in carrying)
 		I.loc = loc

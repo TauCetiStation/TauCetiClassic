@@ -166,7 +166,7 @@
 		if(istype(T, /turf/simulated/wall))
 			var/turf/simulated/wall/W = T
 			W.thermite = 1
-			W.overlays += image('icons/effects/effects.dmi',icon_state = "#673910")
+			W.add_overlay(image('icons/effects/effects.dmi',icon_state = "#673910"))
 
 /datum/reagent/thermite/on_general_digest(mob/living/M)
 	..()
@@ -933,3 +933,23 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 		if(180 to INFINITY)
 			M.adjustBrainLoss(100)
 	data++
+
+/datum/reagent/aqueous_foam
+	name = "Aqueous Film Forming Foam"
+	id = "aqueous_foam"
+	description = "Smothers the fire and seals in the flammable vapours."
+	reagent_state = LIQUID
+	taste_message = "fire repellant"
+	color = "#c2eaed" // rgb: 194, 234, 237
+
+/datum/reagent/aqueous_foam/reaction_turf(turf/T, method=TOUCH, volume)
+	var/obj/effect/effect/aqueous_foam/F = locate(/obj/effect/effect/aqueous_foam) in T
+	if(F)
+		INVOKE_ASYNC(F, /obj/effect/effect/aqueous_foam.proc/performAction) // So we don't instantinate a new object, but still make the room slightly colder.
+	else if(!T.density)
+		new /obj/effect/effect/aqueous_foam(T)
+
+/datum/reagent/aqueous_foam/on_slime_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(REM)
+	return FALSE

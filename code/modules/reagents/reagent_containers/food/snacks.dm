@@ -146,10 +146,10 @@
 		)
 
 		bitecount++
-		U.overlays.Cut()
+		U.cut_overlays()
 		var/image/I = new(U.icon, "loadedfood")
 		I.color = filling_color
-		U.overlays += I
+		U.add_overlay(I)
 
 		var/obj/item/weapon/reagent_containers/food/snacks/collected = new type
 		collected.loc = U
@@ -516,6 +516,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	..()
 	new /obj/effect/decal/cleanable/egg_smudge(loc)
+	if(prob(13))
+		if(global.chicken_count < MAX_CHICKENS)
+			new /mob/living/simple_animal/chick(loc)
 	reagents.reaction(hit_atom, TOUCH)
 	visible_message("<span class='rose'>\The [src.name] has been squashed.</span>", "<span class='rose'>You hear a smack.</span>")
 	qdel(src)
@@ -658,7 +661,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("protein", 3)
 	reagents.add_reagent("carpotoxin", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/fishfingers
@@ -920,10 +923,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger
 	name = "Clown Burger"
-	desc = "This tastes funny..."
+	desc = "This tastes funny... And HONKS!"
 	icon_state = "clownburger"
 	filling_color = "#ff00ff"
 	bitesize = 2
+	var/cooldown = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger/atom_init()
 	. = ..()
@@ -934,6 +938,13 @@
 */
 	reagents.add_reagent("nutriment", 6)
 	reagents.add_reagent("vitamin", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/clownburger/attack_self(mob/user)
+	if(cooldown <= world.time)
+		cooldown = world.time + 8
+		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
+		src.add_fingerprint(user)
+	return
 
 /obj/item/weapon/reagent_containers/food/snacks/mimeburger
 	name = "Mime Burger"
@@ -1223,8 +1234,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sosjerky/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 1)
-	reagents.add_reagent("sugar", 3)
+	reagents.add_reagent("protein", 3)
+	reagents.add_reagent("sugar", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin
 	name = "4no Raisins"
@@ -1720,8 +1731,8 @@
 			BP.hidden = surprise
 			BP.cavity = 0
 		else 		//someone is having a bad day
-			BP.createwound(CUT, 30)
 			BP.embed(surprise)
+			BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, "Animal escaping the ribcage")
 	else if (ismonkey(M))
 		M.visible_message("<span class='danger'>[M] suddenly tears in half!</span>")
 		var/mob/living/carbon/monkey/ook = new monkey_type(M.loc)
@@ -2906,7 +2917,7 @@
 
 /obj/item/pizzabox/update_icon()
 
-	overlays = list()
+	cut_overlays()
 
 	// Set appropriate description
 	if( open && pizza )
@@ -2934,7 +2945,7 @@
 		if( pizza )
 			var/image/pizzaimg = image("food.dmi", icon_state = pizza.icon_state)
 			pizzaimg.pixel_y = -3
-			overlays += pizzaimg
+			add_overlay(pizzaimg)
 
 		return
 	else
@@ -2951,7 +2962,7 @@
 		if( doimgtag )
 			var/image/tagimg = image("food.dmi", icon_state = "pizzabox_tag")
 			tagimg.pixel_y = boxes.len * 3
-			overlays += tagimg
+			add_overlay(tagimg)
 
 	icon_state = "pizzabox[boxes.len+1]"
 

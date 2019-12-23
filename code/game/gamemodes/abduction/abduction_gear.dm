@@ -59,7 +59,7 @@
 		M.name_override = disguise.name
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
-		M.overlays = disguise.overlays
+		M.copy_overlays(disguise, TRUE)
 		M.update_inv_r_hand()
 		M.update_inv_l_hand()
 	return
@@ -73,7 +73,7 @@
 		spawn(0)
 			anim(M.loc,M,'icons/mob/mob.dmi',,"uncloak",,M.dir)
 		M.name_override = null
-		M.overlays.Cut()
+		M.cut_overlays()
 		M.regenerate_icons()
 	return
 
@@ -567,27 +567,33 @@
 /obj/item/weapon/scalpel/alien
 	name = "alien scalpel"
 	icon = 'icons/obj/abductor.dmi'
+	toolspeed = 0.3
 
 /obj/item/weapon/hemostat/alien
 	name = "alien hemostat"
 	icon = 'icons/obj/abductor.dmi'
+	toolspeed = 0.3
 
 /obj/item/weapon/retractor/alien
 	name = "alien retractor"
 	icon = 'icons/obj/abductor.dmi'
+	toolspeed = 0.3
 
 /obj/item/weapon/circular_saw/alien
 	name = "alien saw"
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "saw"
+	toolspeed = 0.3
 
 /obj/item/weapon/surgicaldrill/alien
 	name = "alien drill"
 	icon = 'icons/obj/abductor.dmi'
+	toolspeed = 0.3
 
 /obj/item/weapon/cautery/alien
 	name = "alien cautery"
 	icon = 'icons/obj/abductor.dmi'
+	toolspeed = 0.3
 
 
 // OPERATING TABLE / BEDS / LOCKERS	/ OTHER
@@ -641,12 +647,12 @@
 
 		flick("belt_anim_on",animation)
 		sleep(7)
-		overlays += belt
+		add_overlay(belt)
 		fastened.anchored = 1
 		fastened.SetStunned(INFINITY)
 		qdel(animation)
 	else
-		overlays -= belt
+		cut_overlay(belt)
 		switch(fastened.lying_current)
 			if(90)	animation.dir = 2
 			else	animation.dir = 1

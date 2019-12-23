@@ -161,17 +161,10 @@ var/list/department_radio_keys = list(
 		var/list/hear = hear(message_range, T)
 		var/list/hearturfs = list()
 
-		for(var/I in hear)
-			if(istype(I, /mob))
-				var/mob/M = I
-				listening += M
-				hearturfs += M.locs[1]
-				for(var/obj/O in M.contents)
-					listening_obj |= O
-			else if(istype(I, /obj))
-				var/obj/O = I
-				hearturfs += O.locs[1]
-				listening_obj |= O
+		for(var/atom/movable/AM in hear)
+			listening |= AM.get_listeners()
+			listening_obj |= AM.get_listening_objs()
+			hearturfs += AM.locs[1]
 
 		for(var/mob/M in player_list)
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))

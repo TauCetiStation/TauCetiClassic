@@ -54,7 +54,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			balloon = image(icon,"extraction_balloon")
 			balloon.pixel_y = 10
 			balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-			holder_obj.overlays += balloon
+			holder_obj.add_overlay(balloon)
 			playsound(holder_obj, 'sound/effects/fulext_deploy.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 			animate(holder_obj, pixel_z = 10, time = 20)
 			sleep(20)
@@ -84,7 +84,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			if(istype(A, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = A
 				H.say(pick(extraction_appends))
-				playsound(H, pick(SOUNDIN_MSCREAM), VOL_EFFECTS_MASTER, null, FALSE)
+				playsound(H, pick(SOUNDIN_MALE_HEAVY_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 				H.SetParalysis(0) // wakey wakey
 				H.drowsyness = 0
 				H.sleeping = 0
@@ -99,7 +99,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			sleep(10)
 			animate(holder_obj, pixel_z = 10, time = 10)
 			sleep(10)
-			holder_obj.overlays -= balloon
+			holder_obj.cut_overlay(balloon)
 			if(!A)
 				return
 			A.anchored = 0 // An item has to be unanchored to be extracted in the first place.

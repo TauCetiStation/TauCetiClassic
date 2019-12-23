@@ -182,6 +182,9 @@ var/list/ai_verbs_default = list(
 	qdel(eyeobj)
 	return ..()
 
+/mob/living/silicon/ai/IgniteMob()
+	return FALSE //No we're not flammable
+
 
 /*
 	The AI Power supply is a dummy object used for powering the AI since only machinery should be using power.
@@ -358,7 +361,7 @@ var/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/confirm = alert("Are you sure you want to call the shuttle?", "Confirm Shuttle Call", "Yes", "No")
+	var/confirm = alert(src, "Are you sure you want to call the shuttle?", "Confirm Shuttle Call", "Yes", "No")
 
 	if(check_unable(AI_CHECK_WIRELESS))
 		return

@@ -2,7 +2,7 @@
 	set invisibility = 0
 	//set background = 1
 
-	if (src.monkeyizing)
+	if (notransform)
 		return
 
 	..()
@@ -219,9 +219,8 @@
 	return temp_change
 
 /mob/living/carbon/slime/proc/handle_chemicals_in_body()
-
-	if(reagents) reagents.metabolize(src)
-
+	if(reagents)
+		reagents.metabolize(src)
 
 	src.updatehealth()
 
@@ -234,9 +233,6 @@
 		health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 	else
 		health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-
-
-
 
 	if(health < config.health_threshold_dead && stat != DEAD)
 		death()
@@ -455,7 +451,7 @@
 					if(isslime(L) || L.stat == DEAD) // Ignore other slimes and dead mobs
 						continue
 
-					if(L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
+					if(HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
 						continue
 
 					if(L in Friends) // No eating friends!

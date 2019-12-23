@@ -261,3 +261,42 @@
 	damage = 35
 	stoping_power = 8
 	kill_count = 14
+
+/obj/item/projectile/plasma
+	name = "plasma"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "plasma_bolt"
+	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
+	light_color = LIGHT_COLOR_PLASMA
+	light_power = 2
+	light_range = 2
+	damage = 18
+	damage_type = BURN
+	flag = "energy"
+	eyeblur = 4
+	sharp = 0
+	edge = 0
+
+	muzzle_type = /obj/effect/projectile/plasma/muzzle
+
+/obj/item/projectile/plasma/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_LASERACT
+
+/obj/item/projectile/plasma/overcharge
+	icon_state = "plasma_bolt_oc"
+	light_color = LIGHT_COLOR_PLASMA_OC
+	damage = 25
+
+	muzzle_type = /obj/effect/projectile/plasma/muzzle/overcharge
+
+/obj/item/projectile/plasma/overcharge/massive
+	icon_state = "plasma_massive_oc"
+	light_range = 3
+	damage = 110
+	impact_force = 20 // massive punch
+	step_delay = 3 // slow moving, provides time to dodge it.
+	proj_impact_sound = 'sound/weapons/guns/plasma10_hit.ogg'
+
+	impact_type = /obj/effect/projectile/plasma/impact/overcharge

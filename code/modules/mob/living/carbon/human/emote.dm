@@ -10,7 +10,7 @@
 	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act,1,length(act))
 
-	var/muzzled = istype(wear_mask, /obj/item/clothing/mask/muzzle)
+	var/muzzled = istype(wear_mask, /obj/item/clothing/mask/muzzle) || silent
 	//var/m_type = SHOWMSG_VISUAL
 
 	for (var/obj/item/weapon/implant/I in src)
@@ -61,7 +61,7 @@
 			if (input2 == "Visible")
 				m_type = SHOWMSG_VISUAL
 			else if (input2 == "Hearable")
-				if (src.miming || has_trait(TRAIT_MUTE))
+				if (src.miming || HAS_TRAIT(src, TRAIT_MUTE))
 					return
 				m_type = SHOWMSG_AUDIO
 			else
@@ -104,7 +104,7 @@
 			m_type = SHOWMSG_VISUAL
 
 		if ("choke")
-			if(miming || has_trait(TRAIT_MUTE))
+			if(miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> clutches their throat desperately!"
 				m_type = SHOWMSG_VISUAL
 			else
@@ -144,7 +144,7 @@
 			m_type = SHOWMSG_VISUAL
 
 		if ("chuckle")
-			if(miming || has_trait(TRAIT_MUTE))
+			if(miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> appears to chuckle."
 				m_type = SHOWMSG_VISUAL
 			else
@@ -171,7 +171,7 @@
 			m_type = SHOWMSG_VISUAL
 
 		if ("cough")
-			if(miming || has_trait(TRAIT_MUTE))
+			if(miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> appears to cough!"
 				m_type = SHOWMSG_VISUAL
 			else
@@ -203,7 +203,7 @@
 			m_type = SHOWMSG_VISUAL
 
 		if ("gasp")
-			if(has_trait(TRAIT_MUTE))
+			if(HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> sucks in air violently!"
 				m_type = SHOWMSG_VISUAL
 			else if(miming)
@@ -232,7 +232,7 @@
 			m_type = SHOWMSG_VISUAL
 
 		if ("giggle")
-			if(miming || has_trait(TRAIT_MUTE))
+			if(miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> giggles silently!"
 				m_type = SHOWMSG_VISUAL
 			else
@@ -295,7 +295,7 @@
 			m_type = SHOWMSG_VISUAL
 
 		if ("cry")
-			if(miming || has_trait(TRAIT_MUTE))
+			if(miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> cries."
 				m_type = SHOWMSG_VISUAL
 			else
@@ -307,7 +307,7 @@
 					m_type = SHOWMSG_AUDIO
 
 		if ("sigh")
-			if(miming || has_trait(TRAIT_MUTE))
+			if(miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> sighs."
 				m_type = SHOWMSG_VISUAL
 			else
@@ -319,7 +319,7 @@
 					m_type = SHOWMSG_AUDIO
 
 		if ("laugh")
-			if(has_trait(TRAIT_MUTE))
+			if(HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> laughs silently."
 				m_type = SHOWMSG_VISUAL
 			else if(miming)
@@ -334,7 +334,7 @@
 					m_type = SHOWMSG_AUDIO
 
 		if ("mumble")
-			if(has_trait(TRAIT_MUTE))
+			if(HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> makes an annoyed face!"
 				m_type = SHOWMSG_VISUAL
 			else
@@ -347,7 +347,7 @@
 			if(miming)
 				message = "<B>[src]</B> grumbles!"
 				m_type = SHOWMSG_VISUAL
-			else if(has_trait(TRAIT_MUTE))
+			else if(HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> makes an annoyed face!"
 				m_type = SHOWMSG_VISUAL
 			else if (!muzzled)
@@ -361,7 +361,7 @@
 			if(miming)
 				message = "<B>[src]</B> appears to groan!"
 				m_type = SHOWMSG_VISUAL
-			else if(has_trait(TRAIT_MUTE))
+			else if(HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> makes a very annoyed face!"
 				m_type = SHOWMSG_VISUAL
 			else
@@ -373,15 +373,21 @@
 					m_type = SHOWMSG_AUDIO
 
 		if ("moan")
+			m_type = SHOWMSG_AUDIO
 			if(miming)
 				message = "<B>[src]</B> appears to moan!"
 				m_type = SHOWMSG_VISUAL
-			else if(has_trait(TRAIT_MUTE))
-				message = "<B>[src]</B> moans silently!"
-				m_type = SHOWMSG_VISUAL
 			else
-				message = "<B>[src]</B> moans!"
-				m_type = SHOWMSG_AUDIO
+				if(!message)
+					message = "<B>[src]</B> moans!"
+				if(muzzled || HAS_TRAIT(src, TRAIT_MUTE))
+					message = "<B>[src]</B> moans silently!"
+				else if(auto)
+					if(lastSoundEmote >= world.time)
+						return
+					message = pick("<B>[src]</B> grunts in pain!", "<B>[src]</B> grunts!", "<B>[src]</B> wrinkles \his face and grunts!")
+					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_LIGHT_PAIN : SOUNDIN_MALE_LIGHT_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
+					lastSoundEmote = world.time + 4 SECONDS
 
 		if ("johnny")
 			var/M
@@ -390,7 +396,7 @@
 			if (!M)
 				param = null
 			else
-				if(miming || has_trait(TRAIT_MUTE))
+				if(miming || HAS_TRAIT(src, TRAIT_MUTE))
 					message = "<B>[src]</B> takes a drag from a cigarette and blows \"[M]\" out in smoke."
 					m_type = SHOWMSG_VISUAL
 				else
@@ -453,7 +459,7 @@
 			m_type = SHOWMSG_VISUAL
 
 		if ("sneeze")
-			if (miming || has_trait(TRAIT_MUTE))
+			if (miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> sneezes."
 				m_type = SHOWMSG_VISUAL
 			else
@@ -467,11 +473,11 @@
 		if ("sniff")
 			message = "<B>[src]</B> sniffs."
 			m_type = SHOWMSG_AUDIO
-			if(miming || has_trait(TRAIT_MUTE))
+			if(miming || HAS_TRAIT(src, TRAIT_MUTE))
 				m_type = SHOWMSG_VISUAL
 
 		if ("snore")
-			if (miming || has_trait(TRAIT_MUTE))
+			if (miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> sleeps soundly."
 				m_type = SHOWMSG_VISUAL
 			else
@@ -483,7 +489,7 @@
 					m_type = SHOWMSG_AUDIO
 
 		if ("whimper")
-			if (miming || has_trait(TRAIT_MUTE))
+			if (miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> appears hurt."
 				m_type = SHOWMSG_VISUAL
 			else
@@ -502,7 +508,7 @@
 			if (!muzzled)
 				message = "<B>[src]</B> yawns."
 				m_type = SHOWMSG_AUDIO
-				if(miming || has_trait(TRAIT_MUTE))
+				if(miming || HAS_TRAIT(src, TRAIT_MUTE))
 					m_type = SHOWMSG_VISUAL
 
 		if ("collapse")
@@ -562,14 +568,20 @@
 					message = "<B>[src]</B> sadly can't find anybody to give daps to, and daps \himself. Shameful."
 
 		if("pain")
-			if(miming)
-				message = "<span class='bold'>[src]</span> appears to be in pain!"
+			if(muzzled)
+				message = "<B>[src]</B> makes a weak noise."
 				m_type = SHOWMSG_VISUAL // Can't we get defines for these?
+			else if(auto)
+				message = pick("<B>[src]</B> moans in pain.", "<B>[src]</B> slightly winces in pain and moans.", "<B>[src]</B> presses \his lips together in pain and moans.", "<B>[src]</B> twists in pain.")
+				m_type = SHOWMSG_AUDIO
+				cloud_emote = "cloud-pain"
+				if((species.name != SKRELL) && HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) && prob(50)) // skrells don't have much emotions to cry in pain, but they can still moan
+					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_WHINER_PAIN : SOUNDIN_MALE_WHINER_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
+				else
+					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_PASSIVE_PAIN : SOUNDIN_MALE_PASSIVE_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 			else
-				message = "<span class='bold'>[src]</span> [message ? message : "twists in pain"]."
-				m_type = SHOWMSG_VISUAL
-
-			cloud_emote = "cloud-pain"
+				message = "<B>[src]</B> [pick("slightly moans feigning pain.", "appears to be in pain!")]"
+				m_type = SHOWMSG_AUDIO
 
 		if ("scream")
 			if(miming)
@@ -580,27 +592,26 @@
 				if(virus_scream || !(species && species.flags[NO_PAIN]))
 					if (!muzzled)
 						if (auto)
-							if(has_trait(TRAIT_MUTE) && world.time-lastSoundEmote >= 30)
+							if(HAS_TRAIT(src, TRAIT_MUTE))
 								message = "<B>[src]</B> twists their face into an agonised expression!"
 								m_type = SHOWMSG_VISUAL
-								lastSoundEmote = world.time
-							else if(world.time-lastSoundEmote >= 30)//prevent scream spam with things like poly spray
-								message = "<B>[src]</B> screams in agony!" // AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
+							else if(lastSoundEmote <= world.time) // prevent scream spam with things like poly spray
+								message = "<B>[src]</B> [pick("screams in agony", "writhes in heavy pain and screams", "screams in pain as much as [gender == FEMALE ? "she" : "he"] can", "screams in pain loudly")]!"
 								if (gender == FEMALE) // Females have their own screams. Trannys be damned.
-									playsound(src, pick(SOUNDIN_FSCREAM), VOL_EFFECTS_MASTER, null, FALSE)
-								else
-									playsound(src, pick(SOUNDIN_MSCREAM), VOL_EFFECTS_MASTER, null, FALSE)
+									playsound(src, pick(SOUNDIN_FEMALE_HEAVY_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
+								else if(gender == MALE)
+									playsound(src, pick(SOUNDIN_MALE_HEAVY_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 								m_type = SHOWMSG_AUDIO
-								lastSoundEmote = world.time
+								lastSoundEmote = world.time + 4 SECONDS
 						else
 							if(!message)
 								message = "<B>[src]</B> screams!"
 							m_type = SHOWMSG_AUDIO
-							if(has_trait(TRAIT_MUTE))
+							if(HAS_TRAIT(src, TRAIT_MUTE))
 								message = "<B>[src]</B> opens their mouth like a fish gasping for air!"
 								m_type = SHOWMSG_VISUAL
 					else
-						if(has_trait(TRAIT_MUTE))
+						if(HAS_TRAIT(src, TRAIT_MUTE))
 							message = "<B>[src]</B> makes a very hurt expression!"
 							m_type = SHOWMSG_VISUAL
 						else
@@ -636,7 +647,7 @@
 				O.show_message(message, m_type)
 
 	if(cloud_emote)
-		var/image/emote_bubble = image('icons/mob/emote.dmi', src, cloud_emote, MOB_LAYER + 1)
+		var/image/emote_bubble = image('icons/mob/emote.dmi', src, cloud_emote, EMOTE_LAYER)
 		flick_overlay(emote_bubble, clients, 30)
 		QDEL_IN(emote_bubble, 3 SECONDS)
 

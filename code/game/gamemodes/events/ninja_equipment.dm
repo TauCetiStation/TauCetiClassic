@@ -564,8 +564,8 @@ ________________________________________________________________________________
 				if (!P.message_silent)
 					playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 					P.audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)
-				P.overlays.Cut()
-				P.overlays += image('icons/obj/pda.dmi', "pda-r")
+				P.cut_overlays()
+				P.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 				var/mob/living/L = null
 				if(P.loc && isliving(P.loc))
 					L = P.loc

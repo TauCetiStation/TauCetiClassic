@@ -78,7 +78,7 @@
 		return FALSE
 
 	for(var/mob/living/carbon/human/H in compiled)
-		if(H.stat != DEAD || (NOCLONE in H.mutations) || H.species.flags[NO_SCAN] || H.brain_op_stage == 4.0 || H.suiciding || !H.ckey || !H.mind)
+		if(H.stat != DEAD || (NOCLONE in H.mutations) || H.species.flags[NO_SCAN] || !H.has_brain() || H.suiciding || !H.ckey || !H.mind)
 			continue
 
 		return TRUE

@@ -4,7 +4,21 @@
 */
 
 // 1 decisecond click delay (above and beyond mob/next_move)
-/mob/var/next_click	= 0
+// This is mainly modified by click code, to modify click delays elsewhere, use next_move and SetNextMove()
+/mob/var/next_click = 0
+
+// THESE DO NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
+/mob/var/next_move_adjust = 0   // Amount to adjust action/click delays by, + or -
+/mob/var/next_move_modifier = 1 // Value to multiply action/click delays by
+
+
+//Delays the mob's next click/action by num deciseconds
+// eg: 10-3 = 7 deciseconds of delay
+// eg: 10*0.5 = 5 deciseconds of delay
+// DOES NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
+
+/mob/proc/SetNextMove(num)
+	next_move = world.time + ((num + next_move_adjust) * next_move_modifier)
 
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
@@ -36,16 +50,13 @@
 	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
-/mob/var/next_move_modifier = 0 // for now just used for species
-
-
-/mob/proc/SetNextMove(num)
-	next_move = world.time + num + next_move_modifier
-
 /mob/proc/ClickOn( atom/A, params )
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
+
+	if(notransform)
+		return
 
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
@@ -118,8 +129,11 @@
 			UnarmedAttack(A)
 		return
 
-	if(!isturf(loc)) // This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that
-		return
+	if(!isturf(loc)) // (This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that.) Not anymore
+		if((TK in mutations) && (XRAY in mutations))//Now telekinesing from inside a closet is possible
+			ranged_attack_tk(A)
+		else
+			return
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
 	sdepth = A.storage_depth_turf()
@@ -164,11 +178,14 @@
 	if(a_intent == "hurt" && (LASEREYES in mutations))
 		LaserEyes(A) // moved into a proc below
 	else if(TK in mutations)
-		var/dist = get_dist(src, A)
-		if(dist > tk_maxrange)
-			return
-		SetNextMove(max(dist, CLICK_CD_MELEE))
-		A.attack_tk(src)
+		ranged_attack_tk(A)
+
+/mob/proc/ranged_attack_tk(atom/A)
+	var/dist = get_dist(src, A)
+	if(dist > tk_maxrange)
+		return
+	SetNextMove(max(dist, CLICK_CD_MELEE))
+	A.attack_tk(src)
 
 /*
 	Restrained ClickOn

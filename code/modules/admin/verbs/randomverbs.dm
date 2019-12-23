@@ -1074,7 +1074,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		message_admins("Admin [key_name_admin(usr)] has disabled random events.")
 	feedback_add_details("admin_verb","TRE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
 /client/proc/send_fax_message()
 	set name = "Send Fax Message"
 	set category = "Special Verbs"
@@ -1082,7 +1081,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/sent_text = sanitize(input(usr, "Please, enter the text you want to send.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN)
+	var/sent_text = sanitize(input(usr, "Please, enter the text you want to send.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 	if(!sent_text)
 		return
 
@@ -1113,7 +1112,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/obj/item/weapon/paper/P = new
 	P.name = sent_name
-	P.info = sent_text
+	var/parsed_text = parsebbcode(sent_text)
+	parsed_text = replacetext(parsed_text, "\[nt\]", "<img src = bluentlogo.png />")
+	P.info = parsed_text
 	P.update_icon()
 
 	if(stamp_type)

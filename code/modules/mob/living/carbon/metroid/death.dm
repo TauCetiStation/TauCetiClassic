@@ -3,7 +3,7 @@
 		return
 	stat = DEAD
 	icon_state = "[colour] baby slime dead"
-	overlays.len = 0
+	cut_overlays()
 
 	if(!gibbed)
 		if(istype(src, /mob/living/carbon/slime/adult))

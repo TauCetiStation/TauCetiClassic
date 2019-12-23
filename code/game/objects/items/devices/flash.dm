@@ -173,11 +173,14 @@
 			sleep(5)
 			qdel(animation)
 
-	for(var/mob/living/carbon/M in oviewers(3, null))
+	for(var/mob/living/carbon/M in oviewers(6, null))
 		var/safety = M:eyecheck()
 		if(!safety)
 			if(!M.blinded)
+				var/power = rand(3,5)
 				M.flash_eyes()
+				if (M.confused < power)
+					M.confused += power
 
 	return
 

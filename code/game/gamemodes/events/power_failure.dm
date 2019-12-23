@@ -9,7 +9,7 @@ var/power_fail_event = 0
 		if(prob(25))
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/play_ambience), 600)
 
-	var/list/skipped_areas = list(/area/turret_protected/ai, /area/tcommsat/computer, /area/tcommsat/chamber)
+	var/list/skipped_areas = list(/area/station/aisat/ai_chamber, /area/station/tcommsat/computer, /area/station/tcommsat/chamber)
 
 	for(var/obj/machinery/power/smes/S in smes_list)
 		var/area/current_area = get_area(S)
@@ -36,7 +36,7 @@ var/power_fail_event = 0
 
 /proc/power_restore(announce = 1, badminery = 0)
 	power_fail_event = 0
-	var/list/skipped_areas = list(/area/turret_protected/ai, /area/tcommsat/computer, /area/tcommsat/chamber)
+	var/list/skipped_areas = list(/area/station/aisat/ai_chamber, /area/station/tcommsat/computer, /area/station/tcommsat/chamber)
 
 	if(announce)
 		command_alert("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal", "poweron")
