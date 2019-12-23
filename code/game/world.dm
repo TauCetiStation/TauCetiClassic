@@ -144,7 +144,9 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["stationtime"] = worldtime2text()
 		s["gamestate"] = ticker.current_state
 		s["roundduration"] = roundduration2text()
-		s["map"] = SSmapping.config?.map_name || "Loading..."
+		s["map_name"] = SSmapping.config?.map_name || "Loading..."
+		s["popcap"] = config.client_limit_panic_bunker_count ? config.client_limit_panic_bunker_count : 0
+		s["round_id"] = round_id
 		var/n = 0
 		var/admins = 0
 
