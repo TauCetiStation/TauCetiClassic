@@ -1,8 +1,12 @@
 var/round_id = 0
 var/logs_folder
 
-#define RECOMMENDED_VERSION 511
+#define RECOMMENDED_VERSION 512
 /world/New()
+#ifdef DEBUG
+	enable_debugger()
+#endif
+
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
@@ -589,3 +593,10 @@ var/failed_old_db_connections = 0
 		return "HEAD"
 
 	return text
+
+#ifdef DEBUG
+/world/proc/enable_debugger()
+	var/dll = world.GetConfig("env", "EXTOOLS_DLL")
+	if (dll)
+		call(dll, "debug_initialize")()
+#endif
