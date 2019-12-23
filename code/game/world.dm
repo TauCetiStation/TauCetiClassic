@@ -1,4 +1,5 @@
 var/round_id = 0
+var/base_commit_sha = 0
 var/logs_folder
 
 #define RECOMMENDED_VERSION 511
@@ -71,6 +72,7 @@ var/logs_folder
 		log_sql("Feedback database connection established.")
 
 	SetRoundID()
+	base_commit_sha = GetGitMasterCommit(1)
 
 	var/date = time2text(world.realtime, "YYYY/MM/DD")
 	logs_folder = "data/stat_logs/[date]/round-"
@@ -86,6 +88,12 @@ var/logs_folder
 	src.update_status()
 
 	round_log("Server starting up")
+
+	if(base_commit_sha)
+		info("Base SHA: [base_commit_sha]")
+
+	if(fexists("test_merge.txt"))
+		info("TM: [trim(file2text("test_merge.txt"))]")
 
 	. = ..()
 
@@ -147,6 +155,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["map_name"] = SSmapping.config?.map_name || "Loading..."
 		s["popcap"] = config.client_limit_panic_bunker_count ? config.client_limit_panic_bunker_count : 0
 		s["round_id"] = round_id
+		s["revision"] = base_commit_sha
 		var/n = 0
 		var/admins = 0
 
@@ -579,15 +588,15 @@ var/failed_old_db_connections = 0
 	maxz++
 
 // This proc reads the current git commit number of a master branch
-/proc/GetGitMasterCommit()
+/proc/GetGitMasterCommit(no_head = 0)
 	var/commitFile = ".git/refs/remotes/origin/master"
 	if(fexists(commitFile) == 0)
 		warning("GetMasterGitCommit() File not found ([commitFile]), using HEAD as a current commit")
-		return "HEAD"
+		return no_head ? 0 : "HEAD"
 
-	var/text = file2text(commitFile)
+	var/text = trim(file2text(commitFile))
 	if(!text)
 		warning("GetMasterGitCommit() File is empty ([commitFile]), using HEAD as a current commit")
-		return "HEAD"
+		return no_head ? 0 : "HEAD"
 
 	return text
