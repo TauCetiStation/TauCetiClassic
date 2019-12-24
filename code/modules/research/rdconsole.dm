@@ -284,16 +284,21 @@ cause a ton of data to be lost, an admin can go send it back.
 			if("imprinter")
 				linked_imprinter.linked_console = null
 				linked_imprinter = null
+				
+	/////////////////////////////////////////////////////////
+	/////////////TODO: Fix instant research bug./////////////
+	/////////////////////////////////////////////////////////
 	if(href_list["reset"]) //Reset the R&D console's database.
 		griefProtection()
 		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
 			screen = "working"
-			qdel(files)
-			files = new /datum/research(src)
+			//qdel(files)
+			//files = new /datum/research(src)
 			spawn(20)
 				screen = "main"
 				nanomanager.update_uis(src)
+				to_chat(usr, "<span class='warning'>Sorry, temporary disabled!</span>")
 	if(href_list["lock"]) //Lock the console from use by anyone without tox access.
 		if(allowed(usr) || emagged)
 			screen = "locked"
