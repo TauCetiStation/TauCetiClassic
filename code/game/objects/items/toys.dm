@@ -479,6 +479,7 @@
 /obj/item/toy/prize
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "ripleytoy"
+	w_class = ITEM_SIZE_SMALL
 	var/cooldown = 0
 
 //all credit to skasi for toy mech fun ideas
@@ -593,6 +594,7 @@
 	desc = null
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoy"
+	w_class = ITEM_SIZE_SMALL
 	var/cooldown = 0
 	var/toysay = "What the fuck did you do?"
 
@@ -1271,7 +1273,6 @@ Owl & Griffin toys
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "carpplushie"
 	item_state = "carp_plushie"
-	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("bitten", "eaten", "fin slapped")
 	var/bitesound = 'sound/weapons/bite.ogg'
 	var/next_hug = 0
@@ -1489,8 +1490,7 @@ Owl & Griffin toys
 							/obj/item/toy/prize/poly/polysec				= 1,
 							/obj/item/toy/prize/poly/polycompanion			= 1,
 							/obj/item/toy/prize/poly/polygold				= 1,
-							/obj/item/toy/prize/poly/polyspecial			= 1,
-							/obj/item/toy/moocan                            = 1
+							/obj/item/toy/prize/poly/polyspecial			= 1
 							)
 	return pick(figures)
 
@@ -1516,6 +1516,7 @@ Owl & Griffin toys
 	desc = "Mystical! Magical! Ages 8+!"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "eight-ball"
+	w_class = ITEM_SIZE_SMALL
 	var/use_action = "shakes the ball"
 	var/last_time_used = 0
 	var/list/possible_answers = list("Definitely", "All signs point to yes.", "Most likely.", "Yes.", "Ask again later.", "Better not tell you now.", "Future Unclear.", "Maybe.", "Doubtful.", "No.", "Don't count on it.", "Never.")
@@ -1539,6 +1540,7 @@ Owl & Griffin toys
 	name = "Magic Conch Shell"
 	desc = "All hail the Magic Conch!"
 	icon_state = "conch"
+	w_class = ITEM_SIZE_SMALL
 	use_action = "pulls the string"
 	possible_answers = list("Yes.", "No.", "Try asking again.", "Nothing.", "I don't think so.", "Neither.", "Maybe someday.")
 	answer_sound = null
