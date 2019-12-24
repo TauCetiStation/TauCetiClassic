@@ -1,8 +1,12 @@
 var/round_id = 0
 var/logs_folder
 
-#define RECOMMENDED_VERSION 511
+#define RECOMMENDED_VERSION 512
 /world/New()
+#ifdef DEBUG
+	enable_debugger()
+#endif
+
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
@@ -20,6 +24,7 @@ var/logs_folder
 	load_mode()
 	load_last_mode()
 	load_motd()
+	load_host_announcements()
 	load_test_merge()
 	load_admins()
 	load_mentors()
@@ -353,6 +358,22 @@ var/shutdown_processed = FALSE
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
 
+/world/proc/load_host_announcements()
+	var/list/files = flist("data/announcements/")
+
+	host_announcements = "" // reset in case of reload
+
+	if(files.len)
+
+		for(var/file in files)
+
+			if(length(host_announcements))
+				host_announcements += "<hr>"
+
+			host_announcements += trim(file2text("data/announcements/[file]"))
+		
+		host_announcements = "<h2>Important Admin Announcements:</h2><br>[host_announcements]"
+
 /world/proc/load_test_merge()
 	if(fexists("test_merge.txt"))
 		join_test_merge = "<strong>Test merged PRs:</strong> "
@@ -572,3 +593,10 @@ var/failed_old_db_connections = 0
 		return "HEAD"
 
 	return text
+
+#ifdef DEBUG
+/world/proc/enable_debugger()
+	var/dll = world.GetConfig("env", "EXTOOLS_DLL")
+	if (dll)
+		call(dll, "debug_initialize")()
+#endif

@@ -189,7 +189,8 @@ var/list/admin_verbs_permissions = list(
 	/client/proc/gsw_add,
 	/client/proc/library_debug_remove,
 	/client/proc/library_debug_read,
-	/client/proc/regisration_panic_bunker
+	/client/proc/regisration_panic_bunker,
+	/client/proc/host_announcements,
 	)
 var/list/admin_verbs_rejuv = list(
 	/client/proc/cmd_admin_rejuvenate,
