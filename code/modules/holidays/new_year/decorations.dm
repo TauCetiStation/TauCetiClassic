@@ -128,7 +128,7 @@
 		return
 	if(!(W.flags & ABSTRACT))
 		if(user.drop_item())
-			user.visible_message("[user] attaches [W] to \the [src] .", "<span class='notice'>You attache [W] to \the [src].</span>")
+			user.visible_message("[user] attaches [W] to \the [src] .", "<span class='notice'>You attach [W] to \the [src].</span>")
 			W.forceMove(loc)
 			W.layer = 5.1 // Item should be on the tree, not under
 			W.anchored = 1 // Make item a part of the tree
