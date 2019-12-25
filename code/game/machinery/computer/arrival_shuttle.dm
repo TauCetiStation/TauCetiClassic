@@ -85,7 +85,7 @@ var/lastMove = 0
 	toArea.parallax_movedir = WEST
 	fromArea.move_contents_to(toArea, null, WEST)
 	location = 1
-	shake_mobs(toArea)
+	shake_mobs(toArea, EAST)
 
 	curr_location = toArea
 	fromArea = toArea
@@ -99,7 +99,7 @@ var/lastMove = 0
 	radio.autosay(arrival_note, "Arrivals Alert System")
 
 	location = destLocation
-	shake_mobs(toArea)
+	shake_mobs(toArea, WEST)
 
 	curr_location = destArea
 	moving = 0
@@ -124,42 +124,12 @@ var/lastMove = 0
 			SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_1")
 			SSshuttle.dock_act(A)
 
-/obj/machinery/computer/arrival_shuttle/proc/shake_mobs(area/A)
+/obj/machinery/computer/arrival_shuttle/proc/shake_mobs(area/A, fall_direction)
 	for(var/mob/M in A)
 		if(M.client)
 			if(location == 1)
 				M.playsound_local(null, 'sound/effects/shuttle_flying.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			spawn(0)
-				if(M.buckled)
-					shake_camera(M, 2, 1)
-				else
-					shake_camera(M, 4, 2)
-					M.Weaken(4)
-		if(isliving(M) && !M.buckled)
-			var/mob/living/L = M
-			if(isturf(L.loc))
-				for(var/i=0, i < 5, i++)
-					var/turf/T = L.loc
-					var/hit = 0
-					T = get_step(T, EAST)
-					if(T.density)
-						hit = 1
-						if(i > 1)
-							L.adjustBruteLoss(10)
-						break
-					else
-						for(var/atom/movable/AM in T.contents)
-							if(AM.density)
-								hit = 1
-								if(i > 1)
-									L.adjustBruteLoss(10)
-									if(isliving(AM))
-										var/mob/living/bumped = AM
-										bumped.adjustBruteLoss(10)
-								break
-					if(hit)
-						break
-					step(L, EAST)
+	SSshuttle.Shake_mobs(A, fall_direction)
 
 /obj/machinery/computer/arrival_shuttle/ui_interact(user)
 	var/dat = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];move=1'>Send</A></b></center><br>"
