@@ -1,8 +1,8 @@
 var/datum/subsystem/shuttle/SSshuttle
 
-#define SHUTTLEARRIVETIME 10		// 10 minutes = 600 seconds
-#define SHUTTLELEAVETIME 10		// 3 minutes = 180 seconds
-#define SHUTTLETRANSITTIME 10		// 2 minutes = 120 seconds
+#define SHUTTLEARRIVETIME 600		// 10 minutes = 600 seconds
+#define SHUTTLELEAVETIME 180		// 3 minutes = 180 seconds
+#define SHUTTLETRANSITTIME 120		// 2 minutes = 120 seconds
 
 #define SHUTTLE_IN_TRANSIT 0
 #define SHUTTLE_AT_STATION 1
@@ -130,7 +130,7 @@ var/datum/subsystem/shuttle/SSshuttle
 							//pods
 					start_location = locate(/area/shuttle/escape_pod1/transit)
 					end_location = locate(/area/shuttle/escape_pod1/centcom)
-					if( prob(100) ) // 5% that they survive
+					if( prob(5) ) // 5% that they survive
 						start_location.move_contents_to(end_location, null, NORTH)
 
 					for(var/obj/machinery/door/D in end_location)
@@ -141,7 +141,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location = locate(/area/shuttle/escape_pod2/transit)
 					end_location = locate(/area/shuttle/escape_pod2/centcom)
-					if( prob(100) ) // 5% that they survive
+					if( prob(5) ) // 5% that they survive
 						start_location.move_contents_to(end_location, null, NORTH)
 
 					for(var/obj/machinery/door/D in end_location)
@@ -152,7 +152,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location = locate(/area/shuttle/escape_pod3/transit)
 					end_location = locate(/area/shuttle/escape_pod3/centcom)
-					if( prob(100) ) // 5% that they survive
+					if( prob(5) ) // 5% that they survive
 						start_location.move_contents_to(end_location, null, NORTH)
 
 					for(var/obj/machinery/door/D in end_location)
@@ -162,7 +162,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location = locate(/area/shuttle/escape_pod4/transit)
 					end_location = locate(/area/shuttle/escape_pod4/centcom)
-					if( prob(100) ) // 5% that they survive
+					if( prob(5) ) // 5% that they survive
 						start_location.move_contents_to(end_location, null, EAST)
 
 					for(var/obj/machinery/door/D in end_location)
