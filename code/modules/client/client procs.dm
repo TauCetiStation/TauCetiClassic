@@ -268,6 +268,12 @@ var/list/blacklisted_builds = list(
 
 	generate_clickcatcher()
 
+	// Set config based title for main window
+	if (config.server_name)
+		winset(src, "mainwindow", "title='[world.name]: [config.server_name]'")
+	else
+		winset(src, "mainwindow", "title='[world.name]'")
+
 	if(prefs.lastchangelog != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
 		winset(src, "rpane.changelog", "font-style=bold;background-color=#B1E477")
