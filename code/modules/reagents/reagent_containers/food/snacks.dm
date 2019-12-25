@@ -2358,6 +2358,20 @@
 	reagents.add_reagent("vitamin", 2)
 	bitesize = 3
 
+/obj/item/weapon/reagent_containers/food/snacks/olivyesalad
+	name = "Olivye salad"
+	desc = "It's a traditional salad dish in Russian cuisine."
+	icon_state = "olivyesalad"
+	trash = /obj/item/trash/snack_bowl
+	filling_color = "#76b87f"
+
+/obj/item/weapon/reagent_containers/food/snacks/olivyesalad/atom_init()
+	. = ..()
+	reagents.add_reagent("plantmatter", 9)
+	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("protein", 5)
+	bitesize = 3
+
 /obj/item/weapon/reagent_containers/food/snacks/appletart
 	name = "golden apple streusel tart"
 	desc = "A tasty dessert that won't make it through a metal detector."

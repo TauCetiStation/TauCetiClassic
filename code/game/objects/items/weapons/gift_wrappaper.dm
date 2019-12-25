@@ -30,8 +30,10 @@
 		user.put_in_active_hand(AM)
 		AM.add_fingerprint(user)
 	else
-		to_chat(user, "<span class='notice'>The gift was empty!</span>")
+		to_chat(user, "<span class='warning'>The gift was empty!</span>")
 	playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
+	if(sender)
+		to_chat(user, "<span class='notice'>Looks like it was from [sender]!</span>")
 	qdel(src)
 	return
 
@@ -159,6 +161,9 @@
 				G.add_fingerprint(user)
 				W.add_fingerprint(user)
 				src.add_fingerprint(user)
+				#ifdef NEWYEARCONTENT
+				to_chat(user, "<span class='notice'>You feel like you could put that under a christmas tree.</span>")
+				#endif
 			if (src.amount <= 0)
 				new /obj/item/weapon/c_tube( src.loc )
 				qdel(src)
