@@ -267,7 +267,7 @@ var/datum/subsystem/vote/SSvote
 			. += "&emsp;(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
 		. += "</li><li>"
 		//crew transfer
-		if(admin || config.allow_vote_mode)
+		if(admin || config.allow_vote_mode && world.has_round_started())
 			. += "<a href='?src=\ref[src];vote=crew_transfer'>Crew Transfer</a>"
 		else
 			. += "<font color='grey'>Crew Transfer (Disallowed)</font>"
