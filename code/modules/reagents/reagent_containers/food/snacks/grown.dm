@@ -573,6 +573,24 @@
 	pixel_x = rand(-5.0, 5)
 	pixel_y = rand(-5.0, 5)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk
+	seed = "/obj/item/seeds/honkyseed"
+	name = "Clowny banana"
+	desc = "Looks very colorful and tasty, a Clown would kill for this banana!"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "h-banana"
+	item_state = "h-banana"
+	filling_color = "#fcf695"
+	can_be_holstered = TRUE
+	trash = /obj/item/weapon/bananapeel/honk
+	bitesize = 5
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk/atom_init()
+	. = ..()
+	reagents.add_reagent("banana", 1+round((potency / 10), 1))
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	seed = "/obj/item/seeds/chiliseed"
 	name = "chili"
