@@ -160,7 +160,7 @@
 		to_chat(user, "<span class='notice'>Looks like there is [how_many_gifts] gifts for you under \the tree!</span>")
 		src.visible_message("<span class='notice'>[H] takes a gift from \the [src].</span>",
 			"<span class='notice'>You take a gift from \the [src].</span>")
-		G.loc = H.loc
+		G.forceMove(H.loc)
 		user.put_in_active_hand(G)
 	else
 		shake()
@@ -235,6 +235,7 @@
 	var/health = 50
 
 /obj/structure/snowman/attackby(obj/item/W, mob/user)
+	. = ..()
 	if(istype(W, /obj/item/clothing/head/that))
 		if(icon_state == "snowman_s")
 			user.drop_item()
@@ -244,7 +245,7 @@
 			"<span class='notice'>You put a hat on the snowman. He looks happy!</span>")
 		else
 			to_chat(user, "<span class='warning'>But snowman already has a hat!</span>")
-	. = ..()
+		return
 	if(W.force > 4)
 		health -= W.force
 		if(health <= 0)
