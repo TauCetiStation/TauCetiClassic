@@ -102,7 +102,7 @@
 
 
 /obj/effect/blob/proc/run_action()
-	B.PulseAnimation()
+	PulseAnimation()
 	return 0
 
 
