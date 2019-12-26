@@ -81,6 +81,7 @@
 				if (buf.types & DNA2_BUF_UE) //unique enzymes? yes
 					M.real_name = buf.dna.real_name
 					M.name = buf.dna.real_name
+					M.dna.unique_enzymes = buf.dna.unique_enzymes // bullshit
 				uses--
 			else
 				M.dna.SetUIValue(block,src.GetValue())

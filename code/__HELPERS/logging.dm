@@ -204,15 +204,6 @@
 #undef LOG_CLEANING
 
 /proc/drop_round_stats()
-	var/date = time2text(world.realtime, "YYYY/MM/DD")
-	var/round_stats_loc = "data/stat_logs/[date]/round-"
-
-	if(round_id)
-		round_stats_loc += round_id
-	else
-		var/timestamp = replacetext(time_stamp(), ":", ".")
-		round_stats_loc += "[timestamp]"
-
 	var/list/stats = list()
 
 	stats["round_id"] = round_id
@@ -230,7 +221,7 @@
 	stats["achievements"] = achievements
 	stats["centcomm_communications"] = centcomm_communications
 
-	var/stat_file = file("[round_stats_loc]/stat.json")
+	var/stat_file = file("[logs_folder]/stat.json")
 
 	stat_file << list2json(stats)
 
