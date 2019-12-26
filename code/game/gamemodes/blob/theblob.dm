@@ -97,12 +97,12 @@
 	for (var/obj/effect/blob/B in blobs_affected)
 		B.run_action()
 		B.RegenHealth()
-		B.PulseAnimation()
 
 	return
 
 
 /obj/effect/blob/proc/run_action()
+	B.PulseAnimation()
 	return 0
 
 
