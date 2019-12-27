@@ -425,8 +425,6 @@ body
 	if(usr.client != src || !holder)
 		return
 	if(href_list["Vars"])
-		if(!check_rights(R_DEBUG|R_VAREDIT|R_LOG))
-			return
 		debug_variables(locate(href_list["Vars"]))
 
 	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
