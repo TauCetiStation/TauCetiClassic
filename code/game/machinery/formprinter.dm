@@ -10,6 +10,7 @@
 	var/list/wiki_forms = list()
 
 /obj/machinery/formprinter/atom_init()
+	. = ..()
 	if(!config.wikiurl)
 		return
 	var/form_list = get_webpage("[config.wikiurl]/[wiki_namespace]/List?action=raw")
