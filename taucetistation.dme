@@ -501,6 +501,7 @@
 #include "code\game\machinery\fax.dm"
 #include "code\game\machinery\flasher.dm"
 #include "code\game\machinery\floodlight.dm"
+#include "code\game\machinery\formprinter.dm"
 #include "code\game\machinery\hologram.dm"
 #include "code\game\machinery\holosign.dm"
 #include "code\game\machinery\hydroponics.dm"
