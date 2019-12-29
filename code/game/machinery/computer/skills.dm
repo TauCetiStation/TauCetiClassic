@@ -22,7 +22,7 @@
 	var/rank = null                          // Rank of authenticated person
 	var/screen = null                        // What type of screen now output
 	var/datum/data/record/active1 = null     // Current using record
-	var/temp = null                          // Buffer for rank change interface. Custom rights for this
+	var/temp = null                          // Buffer for temporary menu show
 	var/printing = FALSE                     // Printing action lock
 	var/list/Perp                            // Buffer for searched results
 	var/searched_text = null                 // Name of found person
