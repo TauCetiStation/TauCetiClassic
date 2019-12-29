@@ -283,10 +283,14 @@ What a mess.*/
 				printing = FALSE
 		// RECORD DELETE
 		if ("Delete All Records")
+			//FIXME: Now only removing security records, not general
+			/*
 			temp = ""
 			temp += "Are you sure you wish to delete all Employment records?<br>"
 			temp += "<a href='?src=\ref[src];choice=Purge All Records'>Yes</a><br>"
 			temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
+			*/
+			temp = "<b>Error!</b> This function does not appear to be working at the moment. Our apologies."
 
 		if ("Purge All Records")
 			if(PDA_Manifest.len)
