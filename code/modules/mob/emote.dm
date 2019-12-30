@@ -22,8 +22,10 @@
 		log_emote("[name]/[key] : [message]")
  		
 		if(findtext(message," snores.") == 0) // Hearing gasp and such every five seconds is not good emotes were not global for a reason.
-			for(var/mob/M in observer_list)
-				if((M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src, null)))
+			for(var/mob/M in player_list)
+				if(isnewplayer(M))
+					continue
+				if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src, null)))
 					to_chat(M, message)
 
 		var/list/to_check
