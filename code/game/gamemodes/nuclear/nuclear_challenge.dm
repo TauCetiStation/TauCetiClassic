@@ -1,6 +1,6 @@
 #define CHALLENGE_TELECRYSTALS 200
 #define CHALLENGE_TIME_LIMIT 6000
-#define CHALLENGE_MIN_PLAYERS 30
+#define CHALLENGE_MIN_PLAYERS 40
 
 var/global/obj/item/device/nuclear_challenge/Challenge
 
