@@ -295,7 +295,7 @@
 
 /obj/item/clothing/suit/armor/syndiassault
 	name = "assault armor"
-	desc = "Heavy armored suit designed to endure all types of damage, from punches to heavy lasers. Might impair movement."
+	desc = "Heavy armored suit designed to endure all types of damage, from punches to heavy lasers."
 	icon_state = "assaultarmor"
 	item_state = "assaultarmor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
