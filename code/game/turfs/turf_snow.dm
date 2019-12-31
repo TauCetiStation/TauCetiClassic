@@ -344,7 +344,8 @@
 	var/turf/simulated/T = loc
 	if(istype(T) && T.frozen_overlay)
 		T.frozen_overlay = null
-		T.zone.frozen_objs -= src
+		if(T.zone)
+			T.zone.frozen_objs -= src
 	return ..()
 
 /obj/effect/overlay/frozen/proc/spread()
