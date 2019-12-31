@@ -126,7 +126,7 @@
 	if(W.get_current_temperature())
 		StartBurning()
 	if(istype(W, /obj/item/stack/sheet/wood) || istype(W, /obj/item/weapon/grown/log))
-		to_chat(user, "<span class='italics'>You added [W] into \the [src].")
+		to_chat(user, "<span class='italics'>You added [W] into \the [src].</span>")
 		var/add_fuel = rand(55, 85)
 		if(istype(W, /obj/item/stack/sheet/wood))
 			var/obj/item/stack/sheet/wood/S = W

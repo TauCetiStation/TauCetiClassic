@@ -358,7 +358,7 @@
 /turf/simulated/floor/plating/airless/catwalk/atom_init()
 	. = ..()
 	update_icon(1)
-	if(is_station_level(z))
+	if(!is_station_level(z))
 		set_light(1.5)
 
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)

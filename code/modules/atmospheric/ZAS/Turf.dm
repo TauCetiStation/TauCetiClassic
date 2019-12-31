@@ -18,7 +18,7 @@
 		cut_overlay(graphic_remove)
 
 /turf/simulated/proc/temperature_act(temp = T0C)
-	if(is_station_level(z))
+	if(!is_station_level(z))
 		return
 	if(temp < T0C)
 		if(!frozen_overlay)

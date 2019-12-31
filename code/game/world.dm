@@ -2,11 +2,15 @@ var/round_id = 0
 var/base_commit_sha = 0
 var/logs_folder
 
+var/it_is_a_snow_day = FALSE
+
 #define RECOMMENDED_VERSION 512
 /world/New()
 #ifdef DEBUG
 	enable_debugger()
 #endif
+
+	it_is_a_snow_day = prob(50)
 
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")

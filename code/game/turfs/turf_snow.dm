@@ -6,13 +6,16 @@
 
 	basetype = /turf/simulated/snow
 	footstep = FOOTSTEP_SNOWSTEP
+	barefootstep = FOOTSTEP_SNOWSTEP
+	clawfootstep = FOOTSTEP_SNOWSTEP
+	heavyfootstep = FOOTSTEP_SNOWSTEP
 
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
 	temperature = TM50C
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 
-	plane = GAME_PLANE
+	//plane = GAME_PLANE
 
 	var/static/datum/dirt_cover/basedatum = /datum/dirt_cover/snow
 	var/static/image/snow_fall_overlay
@@ -20,14 +23,16 @@
 /turf/simulated/snow/atom_init(mapload)
 	. = ..()
 
-	if(!snow_fall_overlay)
-		snow_fall_overlay = image(icon, "snow_fall")
-		snow_fall_overlay.plane = LIGHTING_PLANE
-		snow_fall_overlay.layer = LIGHTING_LAYER - 1
-	overlays += snow_fall_overlay
+	if(it_is_a_snow_day)
+		if(!snow_fall_overlay)
+			snow_fall_overlay = image(icon, "snow_fall")
+			snow_fall_overlay.plane = LIGHTING_PLANE + 1
+			//win snow_fall_overlay.plane = LIGHTING_PLANE
+			//snow_fall_overlay.layer = LIGHTING_LAYER - 1
+		add_overlay(snow_fall_overlay)
 
 	if(IS_EVEN(x) && IS_EVEN(y))
-		set_light(1.4, 1, "#0000FF")
+		set_light(1.4, 1, "#0000ff")
 
 	if(type == /turf/simulated/snow)
 		icon_state = pick(
@@ -43,6 +48,8 @@
 	return QDEL_HINT_LETMELIVE
 
 /turf/simulated/snow/proc/populate_flora()
+	if(locate(/obj/structure/, src)) // shuttles
+		return
 	if(snow_map_noise)
 		var/land_type = snow_map_noise.map_array[x][y]
 		switch(land_type)
@@ -76,23 +83,23 @@
 		user.SetNextMove(CLICK_CD_RAPID)
 		if(L)
 			if(R.get_amount() < 2)
-				to_chat(user, "\red You don't have enough rods to do that.")
+				to_chat(user, "<span class='warning'>You don't have enough rods to do that.</span>")
 				return
 			if(user.is_busy()) return
-			to_chat(user, "\blue You begin to build a catwalk.")
+			to_chat(user, "<span class='notice'>You begin to build a catwalk.</span>")
 			if(do_after(user,30,target = src))
 				if(!R.use(2))
 					return
-				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-				to_chat(user, "\blue You build a catwalk!")
+				playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
+				to_chat(user, "<span class='notice'>You build a catwalk!</span>")
 				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
 				qdel(L)
 				return
 
 		if(!R.use(1))
 			return
-		to_chat(user, "\blue Constructing support lattice ...")
-		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+		to_chat(user, "<span class='notice'>Constructing support lattice ...</span>")
+		playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 		ReplaceWithLattice()
 
 	else if (istype(C, /obj/item/stack/tile/plasteel))
@@ -103,15 +110,15 @@
 				return
 			qdel(L)
 			user.SetNextMove(CLICK_CD_RAPID)
-			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+			playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 			S.build(src)
 			return
 		else
-			to_chat(user, "\red The plating is going to need some support.")
+			to_chat(user, "<span class='warning'>The plating is going to need some support.</span>")
 
 /turf/simulated/snow/Entered(atom/movable/AM)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		to_chat(usr, "\red Movement is admin-disabled.")//This is to identify lag problems
+		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
 		return
 
 	..()
@@ -135,7 +142,7 @@
 				var/obj/item/clothing/shoes/S = perp.shoes
 				if(istype(S))
 					if((dirt_overlay && dirt_overlay.color != basedatum.color) || (!dirt_overlay))
-						S.overlays.Cut()
+						S.cut_overlays()
 						S.add_dirt_cover(basedatum)
 					S.track_blood = max(amount,S.track_blood)
 					if(!S.blood_DNA)
@@ -166,6 +173,9 @@
 
 	basetype = /turf/simulated/snow/ice
 	footstep = FOOTSTEP_ICESTEP
+	barefootstep = FOOTSTEP_ICESTEP
+	clawfootstep = FOOTSTEP_ICESTEP
+	heavyfootstep = FOOTSTEP_ICESTEP
 
 /turf/simulated/snow/ice/ChangeTurf(path, force_lighting_update = 0)
 	if(path != type)
@@ -184,19 +194,19 @@
 		return
 	if(user.is_busy())
 		return
-	playsound(src, 'sound/effects/digging.ogg', 50, 1, -1)
+	playsound(src, 'sound/effects/digging.ogg', VOL_EFFECTS_MASTER)
 	var/type = src.type
 	if(!do_after(user, 20 SECONDS, target = src) || type != src.type)
 		return
 	new /obj/effect/overlay/ice_hole(src)
-	playsound(src, 'sound/effects/digging.ogg', 50, 1, -1)
+	playsound(src, 'sound/effects/digging.ogg', VOL_EFFECTS_MASTER)
 
 /atom/movable
 	var/ice_slide_count = 0
 
 /turf/simulated/snow/ice/Entered(atom/movable/AM)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		to_chat(usr, "\red Movement is admin-disabled.")//This is to identify lag problems
+		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
 		return
 
 	..()
@@ -284,7 +294,7 @@
 						mined_ore_loss = mineral.ore_loss
 				D.power_supply.use(D.drill_cost)
 
-		playsound(user, P.usesound, 70, 0)
+		playsound(user, P.usesound, VOL_EFFECTS_INSTRUMENT)
 		to_chat(user, "<span class='warning'>You start [P.drill_verb].</span>")
 
 		if(!user.is_busy() && do_after(user,P.toolspeed, target = src))
@@ -328,7 +338,7 @@
 	T.frozen_overlay = src
 	T.zone.frozen_objs += src
 
-	playsound(src, 'sound/effects/icestep.ogg', 50, 1)
+	playsound(src, 'sound/effects/icestep.ogg', VOL_EFFECTS_MASTER)
 
 /obj/effect/overlay/frozen/Destroy()
 	var/turf/simulated/T = loc
@@ -416,7 +426,7 @@
 	. = ..()
 	if(is_sharp(W) && !user.is_busy())
 		to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
-		playsound(src, 'sound/weapons/slice.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
 		if(!do_after(user, 80, target = src) || QDELETED(src))
 			return
 		var/amount = rand(1, meat_amount_max)

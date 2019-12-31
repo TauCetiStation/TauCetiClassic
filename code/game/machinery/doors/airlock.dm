@@ -354,8 +354,8 @@ var/list/airlock_overlays = list()
 		add_overlay(sparks_overlay)
 		old_sparks_overlay = sparks_overlay
 	if(frozen_overlay != old_frozen_overlay)
-		overlays -= old_frozen_overlay
-		overlays += frozen_overlay
+		cut_overlay(old_frozen_overlay)
+		add_overlay(frozen_overlay)
 		old_frozen_overlay = frozen_overlay
 
 /proc/get_airlock_overlay(icon_state, icon_file)
@@ -1107,7 +1107,7 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/proc/check_temperature(temp = T0C, update_icon = FALSE)
 	frozen = FALSE
-	if(is_station_level(z))
+	if(!is_station_level(z))
 		return
 
 	if(temp < T0C)
@@ -1125,7 +1125,7 @@ var/list/airlock_overlays = list()
 			if(GM.temperature < T0C)
 				frozen = TRUE
 				break
-
+	
 	if(frozen && update_icon)
 		update_icon()
 

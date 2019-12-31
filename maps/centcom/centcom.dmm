@@ -636,25 +636,25 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "1,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/velocity)
 "acf" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "0,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/velocity)
 "acg" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "3,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/velocity)
 "ach" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "2,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/velocity)
 "aci" = (
 /obj/machinery/door/poddoor{
@@ -702,7 +702,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "9,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/velocity)
 "acn" = (
 /obj/structure/object_wall/wagon{
@@ -716,19 +716,19 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "11,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/velocity)
 "acp" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "10,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/velocity)
 "acq" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "12,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/velocity)
 "acr" = (
 /obj/structure/object_wall/wagon{
@@ -740,7 +740,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "0,3"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/velocity)
 "act" = (
 /obj/structure/object_wall/wagon{
@@ -772,7 +772,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "12,3"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/velocity)
 "acD" = (
 /turf/simulated/shuttle/floor/wagon{
@@ -783,7 +783,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "0,2"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/velocity)
 "acF" = (
 /obj/machinery/door/airlock/wagon,
@@ -796,13 +796,13 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "12,2"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/velocity)
 "acI" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "0,1"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/velocity)
 "acJ" = (
 /obj/structure/object_wall/wagon,
@@ -846,7 +846,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "12,1"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/velocity)
 "acV" = (
 /obj/structure/object_wall/wagon{
@@ -874,7 +874,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "0,0"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/velocity)
 "adk" = (
 /obj/structure/object_wall/wagon{
@@ -948,7 +948,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "12,0"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/velocity)
 "adv" = (
 /obj/machinery/light{
