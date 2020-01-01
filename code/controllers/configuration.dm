@@ -167,8 +167,9 @@
 	var/proxy_autoban = 0
 
 	var/allow_donators = 0
+	var/allow_tauceti_patrons = 0
 	var/allow_byond_membership = 0
-	var/donate_info_url = 0
+	var/donate_info_url
 
 	var/customitem_slot_by_time = 80000 // Gives one slot for fluff items after playing this much minutes
 
@@ -577,6 +578,9 @@
 
 				if("allow_donators")
 					config.allow_donators = 1
+
+				if("allow_tauceti_patrons")
+					config.allow_tauceti_patrons = 1
 
 				if("allow_byond_membership")
 					config.allow_byond_membership = 1

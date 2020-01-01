@@ -29,8 +29,7 @@ var/logs_folder
 	load_test_merge()
 	load_admins()
 	load_mentors()
-	if(config.allow_donators)
-		load_donators()
+	load_supporters()
 	if(config.usewhitelist)
 		load_whitelist()
 	if(config.usealienwhitelist)
@@ -409,16 +408,35 @@ var/shutdown_processed = FALSE
 			var/active_hours_left = num2text((active_until - world.realtime) / 36000, 1)
 			log_game("Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]. Enabled by [enabled_by]. Active hours left: [active_hours_left]")
 
-/world/proc/load_donators()
-	if(!fexists("config/donators.txt"))
-		return
-	var/L = file2list("config/donators.txt")
-	for(var/line in L)
-		if(!length(line))
-			continue
-		if(copytext(line,1,2) == "#")
-			continue
-		donators.Add(ckey(line))
+/world/proc/load_supporters()
+	if(config.allow_donators && fexists("config/donators.txt"))
+		var/L = file2list("config/donators.txt")
+		for(var/line in L)
+			if(!length(line))
+				continue
+			if(copytext(line,1,2) == "#")
+				continue
+			donators.Add(ckey(line))
+
+	// just some tau ceti specific stuff
+	if(config.allow_tauceti_patrons)
+		var/w = get_webpage("https://taucetistation.org/patreon/json")
+		if(!w)
+			warning("Failed to load taucetistation.org patreon list")
+			message_admins("Failed to load taucetistation.org patreon list, please inform responsible persons")
+		else
+			var/list/l = json2list(w)
+			for(var/i in l)
+				if(l[i]["reward_price"] == "5.00")
+					donators.Add(ckey(l[i]["name"]))
+
+	for(var/client/C in clients)
+		C.update_supporter_status()
+
+/client/proc/update_supporter_status()
+	if(ckey in donators || config.allow_byond_membership && IsByondMember())
+		supporter = 1
+
 
 /world/proc/load_proxy_whitelist()
 	if(!fexists("config/proxy_whitelist.txt"))

@@ -251,6 +251,9 @@ ANTIGRIEF_ALARM_LEVEL 1
 ## Uncomment to provide special actions for people from /config/donators.txt
 #ALLOW_DONATORS
 
+## Uncomment to provide special actions for Tau Ceti Station patrons
+#ALLOW_TAUCETI_PATRONS
+
 ## Uncomment to provide special actions (same as for donators) for people with Byond Membership
 #ALLOW_BYOND_MEMBERSHIP
 
