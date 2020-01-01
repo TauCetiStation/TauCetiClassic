@@ -135,8 +135,7 @@
 	icon_state = "victor_kaminsky_1"
 
 /obj/item/fluff/victor_kaminsky_1/attack_self(mob/user)
-	for(var/mob/O in viewers(user, null))
-		O.show_message("[user] shows you: [bicon(src)] [src.name].", 1)
+	user.visible_message("[user] shows you: [bicon(src)] [src.name].")
 	src.add_fingerprint(user)
 
 /obj/item/fluff/ana_issek_2 //suethecake: Ana Issek
@@ -251,8 +250,7 @@
 
 /obj/item/weapon/fluff/cado_keppel_1/attack_self(mob/user)
 	if(user.r_hand == src || user.l_hand == src)
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("<span class='warning'>[] uses [] to comb their hair with incredible style and sophistication. What a guy.</span>", user, src), 1)
+		visible_message("<span class='warning'>[user] uses [src] to comb their hair with incredible style and sophistication. What a guy.</span>")
 	return
 
 /obj/item/weapon/fluff/hugo_cinderbacth_1 //thatoneguy: Hugo Cinderbatch

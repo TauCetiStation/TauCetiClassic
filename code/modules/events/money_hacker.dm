@@ -40,8 +40,7 @@
 					Console.icon_state = "req_comp2"
 				if(!Console.silent)
 					playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-					for (var/mob/O in hearers(5, Console.loc))
-						O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [my_department]'"))
+					Console.audible_message("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [my_department]'")
 				Console.messages += "<B><FONT color='red'>High Priority message from [my_department]</FONT></B><BR>[sending]"
 
 /datum/event/money_hacker/tick()
@@ -101,6 +100,5 @@
 					Console.icon_state = "req_comp2"
 				if(!Console.silent)
 					playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-					for (var/mob/O in hearers(5, Console.loc))
-						O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [my_department]'"))
+					Console.audible_message("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [my_department]'")
 				Console.messages += "<B><FONT color='red'>High Priority message from [my_department]</FONT></B><BR>[sending]"

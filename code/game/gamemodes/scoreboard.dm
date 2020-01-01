@@ -47,7 +47,8 @@
 			//for (var/obj/item/weapon/card/id/C1 in get_contents_in_object(E, /obj/item/weapon/card/id))
 			//	cashscore += C1.money
 
-			cashscore += E.mind.initial_account.money
+			if(E.mind && E.mind.initial_account)
+				cashscore += E.mind.initial_account.money
 
 			for (var/obj/item/weapon/spacecash/C2 in get_contents_in_object(E, /obj/item/weapon/spacecash))
 				cashscore += C2.worth

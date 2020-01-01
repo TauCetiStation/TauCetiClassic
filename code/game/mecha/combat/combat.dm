@@ -116,7 +116,7 @@
 		M.adjustBruteLoss(1)
 		M.updatehealth()
 		for (var/mob/V in viewers(src))
-			V.show_message("[src.name] shakes [M] like a rag doll.")
+			V.oldshow_message("[src.name] shakes [M] like a rag doll.")
 	return
 */
 
