@@ -218,8 +218,7 @@
 		if(user)
 			to_chat(user, "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>")
 		spawn(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("<span class='warning'><B>[src] buzzes oddly!</B></span>", 1)
+			audible_message("<span class='warning'><B>[src] buzzes oddly!</B></span>")
 		flick("medibot_spark", src)
 		patient = null
 		if(user)

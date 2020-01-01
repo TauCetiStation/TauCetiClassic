@@ -24,9 +24,7 @@ This is what happens, when we attack aliens.
 						stuttering = 5
 					Stun(5)
 
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message("<span class='warning'><B>[src] has been touched with the stun gloves by [M]!</B></span>", 1, "<span class='warning'>You hear someone fall.</span>", 2)
+					visible_message("<span class='warning'><B>[src] has been touched with the stun gloves by [M]!</B></span>", blind_message = "<span class='warning'>You hear someone fall.</span>")
 					return
 				else
 					to_chat(M, "<span class='warning'>Not enough charge! </span>")
@@ -52,42 +50,30 @@ This is what happens, when we attack aliens.
 						sleep(3)
 						step_away(src,M,15)
 				playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has punched []!</B></span>", M, src), 1)
+				visible_message("<span class='warning'><B>[M] has punched [src]!</B></span>")
 				if (damage > 9||prob(5))//Regular humans have a very small chance of weakening an alien.
 					Weaken(1,5)
-					for(var/mob/O in viewers(M, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'><B>[] has weakened []!</B></span>", M, src), 1, "<span class='warning'>You hear someone fall.</span>", 2)
+					visible_message("<span class='warning'><B>[M] has weakened [src]!</B></span>", blind_message = "<span class='warning'>You hear someone fall.</span>")
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has attempted to punch []!</B></span>", M, src), 1)
+				visible_message("<span class='warning'><B>[M] has attempted to punch [src]!</B></span>")
 
 		if ("disarm")
 			if (!lying)
 				if (prob(5))//Very small chance to push an alien down.
 					Weaken(2)
 					playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'><B>[] has pushed down []!</B></span>", M, src), 1)
+					visible_message("<span class='warning'><B>[M] has pushed down [src]!</B></span>")
 				else
 					if (prob(50))
 						drop_item()
 						playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-						for(var/mob/O in viewers(src, null))
-							if ((O.client && !( O.blinded )))
-								O.show_message(text("<span class='warning'><B>[] has disarmed []!</B></span>", M, src), 1)
+						visible_message("<span class='warning'><B>[M] has disarmed [src]!</B></span>")
 					else
 						playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-						for(var/mob/O in viewers(src, null))
-							if ((O.client && !( O.blinded )))
-								O.show_message(text("<span class='warning'><B>[] has attempted to disarm []!</B></span>", M, src), 1)
+						visible_message("<span class='warning'><B>[M] has attempted to disarm [src]!</B></span>")
 	return
 
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M)
@@ -111,9 +97,7 @@ This is what happens, when we attack aliens.
 				return
 			if (health > 0)
 				playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[M.name] has bit [src]!</B></span>"), 1)
+				visible_message("<span class='warning'><B>[M.name] has bit [src]!</B></span>")
 				adjustBruteLoss(rand(1, 3))
 				updatehealth()
 	return
@@ -150,17 +134,13 @@ This is what happens, when we attack aliens.
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
 			AdjustWeakened(-3)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='notice'>[M.name] nuzzles [] trying to wake it up!</span>", src), 1)
+			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake it up!</span>")
 
 		else
 			if (health > 0)
 				playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 				var/damage = rand(1, 3)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[M.name] has bit []!</B></span>", src), 1)
+				visible_message("<span class='warning'><B>[M.name] has bit [src]!</B></span>")
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
@@ -176,9 +156,7 @@ This is what happens, when we attack aliens.
 
 	if (health > -100)
 
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("<span class='warning'><B>The [M.name] glomps []!</B></span>", src), 1)
+		visible_message("<span class='warning'><B>The [M.name] glomps [src]!</B></span>")
 
 		var/damage = rand(1, 3)
 
@@ -206,9 +184,7 @@ This is what happens, when we attack aliens.
 				if(M.powerlevel < 0)
 					M.powerlevel = 0
 
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>The [M.name] has shocked []!</B></span>", src), 1)
+				visible_message("<span class='warning'><B>The [M.name] has shocked [src]!</B></span>")
 
 				Weaken(power)
 				if (stuttering < power)

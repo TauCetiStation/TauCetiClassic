@@ -240,9 +240,9 @@
 				if (M == usr)
 					to_chat(usr, "<span class='notice'>You put \the [W] into [src].</span>")
 				else if (M in range(1)) //If someone is standing close enough, they can tell what it is...
-					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
+					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>", SHOWMSG_VISUAL)
 				else if (W && W.w_class >= ITEM_SIZE_NORMAL) //Otherwise they can only see large or normal items from a distance...
-					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
+					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>", SHOWMSG_VISUAL)
 		if(crit_fail && prob(25))
 			remove_from_storage(W, get_turf(src))
 		if(!NoUpdate)

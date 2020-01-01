@@ -165,11 +165,7 @@
 /mob/living/carbon/human/proc/handle_disabilities()
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
 		if ((prob(1) && paralysis < 1))
-			to_chat(src, "<span class='warning'>You have a seizure!</span>")
-			for(var/mob/O in viewers(src, null))
-				if(O == src)
-					continue
-				O.show_message(text("<span class='danger'>[src] starts having a seizure!</span>"), 1)
+			visible_message("<span class='danger'>[src] starts having a seizure!</span>", self_message = "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
 			make_jittery(1000)
 	if (disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
@@ -1149,7 +1145,7 @@
 			if(halloss > 100)
 				//src << "<span class='notice'>You're in too much pain to keep going...</span>"
 				//for(var/mob/O in oviewers(src, null))
-				//	O.show_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
+				//	O.show_messageold("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
 				if(prob(3))
 					Paralyse(10)
 				else
