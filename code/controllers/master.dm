@@ -49,7 +49,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/queue_priority_count = 0        // Running total so that we don't have to loop thru the queue each run to split up the tick
 	var/queue_priority_count_bg = 0     // Same, but for background subsystems
 	var/map_loading = FALSE             // Are we loading in a new map?
-	var/initialized_controllers = FALSE // Are controllers end initalization?
 
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
@@ -137,7 +136,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	var/time = (world.timeofday - start_timeofday) / 10
 
-	initialized_controllers = TRUE
 	world.log << "Initializations complete in [time] second[time == 1 ? "" : "s"]!"
 	to_chat(world, "<span class='success'>Initializations complete!</span>")
 
