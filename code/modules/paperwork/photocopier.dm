@@ -11,8 +11,20 @@
 	var/obj/item/weapon/photo/photocopy = null
 	var/obj/item/weapon/paper_bundle/bundle = null
 	var/copies = 1	//how many copies to print!
-	var/toner = 30 //how much toner is left! woooooo~
+	var/toner = 50 //how much toner is left! woooooo~
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
+
+	// form printer functionality
+	var/wiki_namespace = "Guide_to_Paperwork"
+	var/list/wiki_forms = list()
+
+
+/obj/machinery/photocopier/atom_init()
+	. = ..()
+	if(!config.wikiurl)
+		return
+	var/form_list = get_webpage("[config.wikiurl]/[wiki_namespace]/List?action=raw")
+	wiki_forms = splittext(form_list, "\n")
 
 /obj/machinery/photocopier/ui_interact(mob/user)
 	var/dat = "Photocopier<BR><BR>"
@@ -30,6 +42,12 @@
 	dat += "Current toner level: [toner]"
 	if(!toner)
 		dat +="<BR>Please insert a new toner cartridge!"
+	if(length(wiki_forms) != 0)
+		dat += "<br>Choose form from database:<br><pre>"
+		var/regex/spaces = new("\\s", "g")
+		for(var/F in wiki_forms)
+			dat += "<a href='byond://?src=\ref[src];form=[spaces.Replace(F, "_")]'>[F]</a>\n"
+		dat += "</pre>"
 	user << browse(entity_ja(dat), "window=copier")
 	onclose(user, "copier")
 
@@ -123,7 +141,10 @@
 			else
 				p.desc += " - Copied by [tempAI.name]"
 			toner -= 5
-
+	else if(href_list["form"])
+		if(toner > 0)
+			print(href_list["form"])
+			sleep(15)
 	updateUsrDialog()
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user)
@@ -158,9 +179,10 @@
 	else if(istype(O, /obj/item/device/toner))
 		if(toner == 0)
 			user.drop_item()
-			qdel(O)
-			toner = 30
+			var/obj/item/device/toner/T = O
+			toner = T.charges
 			to_chat(user, "<span class='notice'>You insert the toner cartridge into \the [src].</span>")
+			qdel(O)
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
@@ -255,6 +277,31 @@
 		toner = 0
 	return p
 
+/obj/machinery/photocopier/proc/print(form_name)
+	var/contents = sanitize_safe(get_webpage("[config.wikiurl]/[wiki_namespace]/[form_name]?action=raw"), , , , FALSE)
+	var/obj/item/weapon/paper/P = new(src.loc)
+	P.name = replacetext(form_name, "_", " ")
+	contents = parsebbcode(contents)
+	contents = replacetext(contents, "\[field\]", "<span class=\"paper_field\"></span>")
+	if(toner > 10)
+		P.info = "<font color = #101010>"
+	else
+		P.info = "<font color = #808080>"
+	P.info += contents + "</font>"//</font>
+	//count fields
+	var/laststart = 1
+	while(TRUE)
+		var/i = findtext(contents, "<span class=\"paper_field\">", laststart) //</span>
+		if(i==0)
+			break
+		laststart = i+1
+		P.fields++
+
+	P.updateinfolinks()
+	P.update_icon()
+	P.pixel_y = rand(-8, 8)
+	P.pixel_x = rand(-9, 9)
+	toner--
 
 /obj/item/device/toner
 	name = "toner cartridge"
