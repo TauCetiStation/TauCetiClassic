@@ -71,7 +71,7 @@
 	var/type
 
 	for(var/i = 1; i < args.len; i += 2)
-		if(!msg)
+		if(!args[i]) // visible_message() & audible_message() has null as msg by default
 			continue
 
 		type = args[i + 1]
