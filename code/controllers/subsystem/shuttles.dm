@@ -226,6 +226,8 @@ var/datum/subsystem/shuttle/SSshuttle
 				return 0
 
 			else if((fake_recall != 0) && (timeleft <= fake_recall))
+				log_admin("Gamemode fake-recalled the shuttle.")
+				message_admins("<span class='notice'>Gamemode fake-recalled the shuttle.</span>")
 				recall()
 				fake_recall = 0
 				return 0
