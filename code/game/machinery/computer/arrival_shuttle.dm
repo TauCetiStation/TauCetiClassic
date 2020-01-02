@@ -96,7 +96,8 @@ var/lastMove = 0
 	sleep(PARALLAX_LOOP_TIME)
 
 	fromArea.move_contents_to(toArea, null, WEST)
-	radio.autosay(arrival_note, "Arrivals Alert System")
+	if (!radio_message_via_ai(arrival_note))
+		radio.autosay(arrival_note, "Arrivals Alert System")
 
 	location = destLocation
 	shake_mobs(toArea)
@@ -201,3 +202,12 @@ var/lastMove = 0
 			arrival_shuttle_move()
 		else
 			to_chat(usr, "<span class='notice'>Shuttle is already moving or docked with station.</span>")
+
+/obj/machinery/computer/arrival_shuttle/proc/radio_message_via_ai(msg)
+	if (!msg)
+		return 0
+	for (var/mob/living/silicon/ai/A in ai_list)
+		if (A.can_retransmit_messages())
+			A.retransmit_message(msg)
+			return 1
+	return 0
