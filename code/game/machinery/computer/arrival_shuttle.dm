@@ -99,8 +99,11 @@ var/lastMove = 0
 	sleep(PARALLAX_LOOP_TIME)
 
 	fromArea.move_contents_to(toArea, null, WEST)
-	if (!radio_message_via_ai(arrival_note))
-		radio.autosay(arrival_note, "Arrivals Alert System")
+	
+	// Sending message only on EXODUS
+	if (destLocation == ARRIVAL_SHUTTLE_EXODUS)
+		if (!radio_message_via_ai(arrival_note))
+			radio.autosay(arrival_note, "Arrivals Alert System")
 
 	location = destLocation
 	shake_mobs(toArea)
