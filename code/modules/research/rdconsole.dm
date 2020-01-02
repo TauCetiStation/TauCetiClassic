@@ -115,7 +115,8 @@ cause a ton of data to be lost, an admin can go send it back.
 /obj/machinery/computer/rdconsole/atom_init()
 	. = ..()
 	RDcomputer_list += src
-	files = new /datum/research(src) //Setup the research data holder.
+	if(!files)
+		files = new /datum/research(src) //Setup the research data holder.
 	SyncRDevices()
 
 /obj/machinery/computer/rdconsole/Destroy()
