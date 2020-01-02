@@ -1,9 +1,12 @@
 #define ARRIVAL_SHUTTLE_MOVE_TIME 175
 #define ARRIVAL_SHUTTLE_COOLDOWN 650
+#define ARRIVAL_SHUTTLE_VELOCITY 0
+#define ARRIVAL_SHUTTLE_TRANSIT 1
+#define ARRIVAL_SHUTTLE_EXODUS 2
 
 
-var/location = 0 // 0 - Start 2 - NSS Exodus 1 - transit
-var/moving = 0
+var/location = ARRIVAL_SHUTTLE_VELOCITY // 0 - Start 2 - NSS Exodus 1 - transit
+var/moving = FALSE
 var/area/curr_location
 var/lastMove = 0
 
@@ -24,7 +27,7 @@ var/lastMove = 0
 	. = ..()
 
 /obj/machinery/computer/arrival_shuttle/proc/try_move_from_station()
-	if(moving || location != 2 || !SSshuttle)
+	if(moving || location != ARRIVAL_SHUTTLE_EXODUS || !SSshuttle)
 		return
 	var/myArea = get_area(src)
 	if(SSshuttle.forbidden_atoms_check(myArea))
@@ -43,21 +46,21 @@ var/lastMove = 0
 		return
 	if(!arrival_shuttle_ready_move())
 		return
-	moving = 1
+	moving = TRUE
 	lastMove = world.time
 	var/area/fromArea
 	var/area/toArea
 	var/area/destArea
 	var/destLocation
 
-	if(location == 0)
+	if(location == ARRIVAL_SHUTTLE_VELOCITY)
 		fromArea = locate(/area/shuttle/arrival/velocity)
 		destArea = locate(/area/shuttle/arrival/station)
-		destLocation = 2
-	else if(location == 2)
+		destLocation = ARRIVAL_SHUTTLE_EXODUS
+	else if(location == ARRIVAL_SHUTTLE_EXODUS)
 		fromArea = locate(/area/shuttle/arrival/station)
 		destArea = locate(/area/shuttle/arrival/velocity)
-		destLocation = 0
+		destLocation = ARRIVAL_SHUTTLE_VELOCITY
 	else
 		return
 
@@ -84,7 +87,7 @@ var/lastMove = 0
 
 	toArea.parallax_movedir = WEST
 	fromArea.move_contents_to(toArea, null, WEST)
-	location = 1
+	location = ARRIVAL_SHUTTLE_TRANSIT
 	shake_mobs(toArea)
 
 	curr_location = toArea
@@ -103,10 +106,10 @@ var/lastMove = 0
 	shake_mobs(toArea)
 
 	curr_location = destArea
-	moving = 0
+	moving = FALSE
 	open_doors(toArea, location)
 
-	if(location == 2)
+	if(location == ARRIVAL_SHUTTLE_EXODUS)
 		addtimer(CALLBACK(src, .proc/try_move_from_station), 600)
 
 
@@ -128,7 +131,7 @@ var/lastMove = 0
 /obj/machinery/computer/arrival_shuttle/proc/shake_mobs(area/A)
 	for(var/mob/M in A)
 		if(M.client)
-			if(location == 1)
+			if(location == ARRIVAL_SHUTTLE_TRANSIT)
 				M.playsound_local(null, 'sound/effects/shuttle_flying.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			spawn(0)
 				if(M.buckled)
@@ -174,7 +177,7 @@ var/lastMove = 0
 	if(href_list["move"])
 		if(!arrival_shuttle_ready_move())
 			to_chat(usr, "<span class='notice'>Shuttle is not ready to move yet.</span>")
-		else if(!moving && location == 0)
+		else if(!moving && location == ARRIVAL_SHUTTLE_VELOCITY)
 			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
 			arrival_shuttle_move()
 		else
@@ -197,7 +200,7 @@ var/lastMove = 0
 	if(href_list["back"])
 		if(!arrival_shuttle_ready_move())
 			to_chat(usr, "<span class='notice'>Shuttle is not ready to move yet.</span>")
-		else if(!moving && location == 2)
+		else if(!moving && location == ARRIVAL_SHUTTLE_EXODUS)
 			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
 			arrival_shuttle_move()
 		else
