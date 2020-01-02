@@ -10908,16 +10908,21 @@
 	},
 /area/station/hallway/primary/fore)
 "asf" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -15781,6 +15786,9 @@
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -15789,7 +15797,14 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light/small,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	name = "Toxins launch APC";
+	pixel_y = -24
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warning"
@@ -15816,6 +15831,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
@@ -16307,6 +16327,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -66091,6 +66116,11 @@
 "cIf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warning"
@@ -77765,6 +77795,10 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"wan" = (
+/obj/machinery/light,
+/turf/simulated/wall,
+/area/station/maintenance/science)
 "wbb" = (
 /obj/machinery/door/airlock/mining{
 	name = "Recycler office";
@@ -118038,7 +118072,7 @@ bFH
 bFH
 bFH
 bFH
-bFH
+wan
 aFa
 bRm
 aHY
