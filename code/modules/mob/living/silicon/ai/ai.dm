@@ -340,12 +340,7 @@ var/list/ai_verbs_default = list(
 	src << browse(entity_ja(dat), "window=aialerts&can_close=0")
 
 /mob/living/silicon/ai/proc/can_retransmit_messages()
-	if (stat == DEAD && \
-		control_disabled && \
-		(!aiRadio || aiRadio.disabledAi) && \
-		allow_auto_broadcast_messages)
-		return FALSE
-	return TRUE
+	return (stat != DEAD && !control_disabled && aiRadio && !aiRadio.disabledAi && allow_auto_broadcast_messages)
 
 /mob/living/silicon/ai/proc/retransmit_message(message)
 	if (aiRadio)
