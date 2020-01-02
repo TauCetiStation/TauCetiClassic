@@ -53,6 +53,7 @@ var/list/ai_verbs_default = list(
 	var/obj/item/device/radio/headset/heads/ai_integrated/aiRadio = null
 	var/custom_sprite = 0 //For our custom sprites
 	var/next_emergency_message_time = 0
+	var/allow_auto_broadcast_messages = TRUE // For disabling retransmiting
 //Hud stuff
 
 	//MALFUNCTION
@@ -333,6 +334,18 @@ var/list/ai_verbs_default = list(
 	viewalerts = 1
 	src << browse(entity_ja(dat), "window=aialerts&can_close=0")
 
+/mob/living/silicon/ai/proc/can_retransmit_messages()
+	if (stat == DEAD && \
+		src.control_disabled && \
+		(!src.aiRadio || src.aiRadio.disabledAi) && \
+		src.allow_auto_broadcast_messages)
+		return FALSE
+	return TRUE
+
+/mob/living/silicon/ai/proc/retransmit_message(message)
+	if (src.aiRadio)
+		src.aiRadio.talk_into(src, message)
+
 /mob/living/silicon/ai/var/message_cooldown = 0
 /mob/living/silicon/ai/proc/ai_announcement()
 
@@ -388,7 +401,6 @@ var/list/ai_verbs_default = list(
 		F.color = f_color
 
 	to_chat(usr, "Floor color was change to [f_color]")
-
 
 /mob/living/silicon/ai/proc/ai_emergency_message()
 	set category = "AI Commands"
