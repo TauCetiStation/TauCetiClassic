@@ -77795,10 +77795,6 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
-"wan" = (
-/obj/machinery/light,
-/turf/simulated/wall,
-/area/station/maintenance/science)
 "wbb" = (
 /obj/machinery/door/airlock/mining{
 	name = "Recycler office";
@@ -118072,7 +118068,7 @@ bFH
 bFH
 bFH
 bFH
-wan
+bFH
 aFa
 bRm
 aHY
