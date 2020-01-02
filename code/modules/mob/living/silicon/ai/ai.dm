@@ -341,20 +341,20 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/can_retransmit_messages()
 	if (stat == DEAD && \
-		src.control_disabled && \
-		(!src.aiRadio || src.aiRadio.disabledAi) && \
-		src.allow_auto_broadcast_messages)
+		control_disabled && \
+		(!aiRadio || aiRadio.disabledAi) && \
+		allow_auto_broadcast_messages)
 		return FALSE
 	return TRUE
 
 /mob/living/silicon/ai/proc/retransmit_message(message)
-	if (src.aiRadio)
-		src.aiRadio.talk_into(src, message)
+	if (aiRadio)
+		aiRadio.talk_into(src, message)
 
 /mob/living/silicon/ai/proc/retransmit_on()
 	set category = "AI Commands"
 	set name = "Toggle Auto Messages On"
-	src.allow_auto_broadcast_messages = TRUE
+	allow_auto_broadcast_messages = TRUE
 	to_chat(usr, "You core is <b>connected</b> to station information module.")
 	verbs -= list(/mob/living/silicon/ai/proc/retransmit_on)
 	verbs |= list(/mob/living/silicon/ai/proc/retransmit_off)
@@ -362,7 +362,7 @@ var/list/ai_verbs_default = list(
 /mob/living/silicon/ai/proc/retransmit_off()
 	set category = "AI Commands"
 	set name = "Toggle Auto Messages Off"
-	src.allow_auto_broadcast_messages = FALSE
+	allow_auto_broadcast_messages = FALSE
 	to_chat(usr, "You core is <b>disconnected</b> from station information module.")
 	verbs -= list(/mob/living/silicon/ai/proc/retransmit_off)
 	verbs |= list(/mob/living/silicon/ai/proc/retransmit_on)
