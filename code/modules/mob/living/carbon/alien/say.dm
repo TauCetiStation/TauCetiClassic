@@ -54,9 +54,9 @@
 		if(!S.stat)
 			if(S.alien_talk_understand)
 				if(S.alien_talk_understand == alien_talk_understand)
-					S.show_message(rendered, 2)
+					S.show_message(rendered, SHOWMSG_AUDIO)
 			else if (S.hivecheck())
-				S.show_message(rendered, 2)
+				S.show_message(rendered, SHOWMSG_AUDIO)
 
 	var/list/listening = hearers(1, src)
 	listening -= src
@@ -79,7 +79,7 @@
 		rendered = "<i><span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span></i>"
 
 		for (var/mob/M in heard)
-			M.show_message(rendered, 2)
+			M.show_message(rendered, SHOWMSG_AUDIO)
 
 	//message = say_quote(message)
 	message = "<span class='say_quote'>hisses,</span> \"<span class='body'>[message]</span>\""
@@ -90,4 +90,4 @@
 		if (isnewplayer(M))
 			continue
 		if (M.stat > 1)
-			M.show_message(rendered, 2)
+			to_chat(rendered)

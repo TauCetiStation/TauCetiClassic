@@ -41,13 +41,11 @@
 	..()
 
 	busy = 1
-	for(var/mob/O in viewers(user))
-		O.show_message(text("<span class='warning'>[user] started pulling the [src].</span>"), 1)
+	visible_message("<span class='warning'>[user] started pulling the [src].</span>")
 
 	if(do_after(user, 50))
 		set_state(!on)
-		for(var/mob/O in viewers(user))
-			O.show_message(text("<span class='warning'>[user] flipped the [src] into the [on ? "on": "off"] position.</span>"), 1)
+		visible_message("<span class='warning'>[user] flipped the [src] into the [on ? "on": "off"] position.</span>")
 	busy = 0
 
 /obj/structure/powerswitch/proc/set_state(state)

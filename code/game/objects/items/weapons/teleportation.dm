@@ -166,11 +166,12 @@ Frequency:
 	for(var/obj/effect/portal/PO in portal_list)
 		if(PO.creator == src)	count++
 	if(count >= 3)
-		user.show_message("<span class='notice'>\The [src] is recharging!</span>")
+		to_chat(user, "<span class='notice'>\The [src] is recharging!</span>")
 		return
 	var/T = L[t1]
-	for(var/mob/O in hearers(user, null))
-		O.show_message("<span class='notice'>Locked In.</span>", 2)
+
+	user.audible_message("<span class='notice'>Locked In.</span>") //why not personal audible message?
+
 	var/obj/effect/portal/P = new /obj/effect/portal( get_turf(src) )
 	P.target = T
 	P.creator = src

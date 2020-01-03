@@ -547,9 +547,7 @@
 	if (!message)
 		return
 
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span>",2)
-	return
+	audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span>")
 
 /obj/machinery/vending/power_change()
 	if(stat & BROKEN)

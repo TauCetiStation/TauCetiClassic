@@ -556,3 +556,16 @@ var/datum/subsystem/ticker/ticker
 	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
 		return TRUE
 	return FALSE
+
+/world/proc/has_round_finished()
+	if (ticker && ticker.current_state >= GAME_STATE_FINISHED)
+		return TRUE
+	return FALSE
+
+/world/proc/has_round_preparing()
+	if (ticker && ticker.current_state <= GAME_STATE_SETTING_UP)
+		return TRUE
+	// Still no intialized?
+	else if(!ticker)
+		return TRUE
+	return FALSE
