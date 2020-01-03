@@ -123,7 +123,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 
 		transit_location.parallax_movedir = EAST
 		mine_sci_curr_location.move_contents_to(transit_location)
-		SSshuttle.Shake_mobs(transit_location, WEST)
+		SSshuttle.shake_mobs_in_area(transit_location, WEST)
 
 		sleep(MINE_SHUTTLE_MOVE_TIME)
 		transit_location.parallax_slowdown()
@@ -152,7 +152,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 
 		transit_location.move_contents_to(destination)
 
-		SSshuttle.Shake_mobs(destination, EAST)
+		SSshuttle.shake_mobs_in_area(destination, EAST)
 
 		if(istype(destination, STATION_DOCK))
 			SSshuttle.dock_act(/area/station/hallway/secondary/entry, "stat_dock")

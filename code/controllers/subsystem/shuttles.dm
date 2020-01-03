@@ -123,7 +123,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, 'sound/effects/escape_shuttle/es_cc_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					Shake_mobs(end_location, WEST)
+					shake_mobs_in_area(end_location, WEST)
 
 					dock_act(end_location, "shuttle_escape")
 
@@ -137,7 +137,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						D.open()
 						CHECK_TICK
 
-					Shake_mobs(end_location, EAST)
+					shake_mobs_in_area(end_location, EAST)
 
 					start_location = locate(/area/shuttle/escape_pod2/transit)
 					end_location = locate(/area/shuttle/escape_pod2/centcom)
@@ -148,7 +148,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						D.open()
 						CHECK_TICK
 
-					Shake_mobs(end_location, EAST)
+					shake_mobs_in_area(end_location, EAST)
 
 					start_location = locate(/area/shuttle/escape_pod3/transit)
 					end_location = locate(/area/shuttle/escape_pod3/centcom)
@@ -158,7 +158,7 @@ var/datum/subsystem/shuttle/SSshuttle
 					for(var/obj/machinery/door/D in end_location)
 						D.open()
 
-					Shake_mobs(end_location, EAST)
+					shake_mobs_in_area(end_location, EAST)
 
 					start_location = locate(/area/shuttle/escape_pod4/transit)
 					end_location = locate(/area/shuttle/escape_pod4/centcom)
@@ -169,7 +169,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						D.open()
 						CHECK_TICK
 
-					Shake_mobs(end_location, WEST)
+					shake_mobs_in_area(end_location, WEST)
 
 					online = 0
 
@@ -304,7 +304,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				// Some aesthetic turbulance shaking
 				for(var/mob/M in end_location)
 					M.playsound_local(null, 'sound/effects/escape_shuttle/es_acceleration.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-				Shake_mobs(end_location, EAST)
+				shake_mobs_in_area(end_location, EAST)
 
 				//pods
 				if(alert == 0) // Crew Transfer not for pods
@@ -322,7 +322,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
-					Shake_mobs(end_location, WEST)
+					shake_mobs_in_area(end_location, WEST)
 
 					start_location = locate(/area/shuttle/escape_pod2/station)
 					end_location = locate(/area/shuttle/escape_pod2/transit)
@@ -334,7 +334,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
-					Shake_mobs(end_location, WEST)
+					shake_mobs_in_area(end_location, WEST)
 
 					start_location = locate(/area/shuttle/escape_pod3/station)
 					end_location = locate(/area/shuttle/escape_pod3/transit)
@@ -346,7 +346,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
-					Shake_mobs(end_location, WEST)
+					shake_mobs_in_area(end_location, WEST)
 
 					start_location = locate(/area/shuttle/escape_pod4/station)
 					end_location = locate(/area/shuttle/escape_pod4/transit)
@@ -358,7 +358,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
-					Shake_mobs(end_location, EAST)
+					shake_mobs_in_area(end_location, EAST)
 
 					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.", sound = "emer_shut_left")
 				else
@@ -369,10 +369,9 @@ var/datum/subsystem/shuttle/SSshuttle
 		else
 			return 1
 
-/datum/subsystem/shuttle/proc/Shake_mobs(area/A, fall_direction)
+/datum/subsystem/shuttle/proc/shake_mobs_in_area(area/A, fall_direction)
 	for(var/mob/M in A)
 		if(M.client)
-			spawn(0)
 			if(M.buckled)
 				shake_camera(M, 2, 1) // buckled, not a lot of shaking
 			else

@@ -85,7 +85,8 @@ var/lastMove = 0
 	toArea.parallax_movedir = WEST
 	fromArea.move_contents_to(toArea, null, WEST)
 	location = 1
-	shake_mobs(toArea, EAST)
+	play_flying_sound(toArea)
+	SSshuttle.shake_mobs_in_area(toArea, EAST)
 
 	curr_location = toArea
 	fromArea = toArea
@@ -99,7 +100,8 @@ var/lastMove = 0
 	radio.autosay(arrival_note, "Arrivals Alert System")
 
 	location = destLocation
-	shake_mobs(toArea, WEST)
+	play_flying_sound(toArea)
+	SSshuttle.shake_mobs_in_area(toArea, WEST)
 
 	curr_location = destArea
 	moving = 0
@@ -124,12 +126,11 @@ var/lastMove = 0
 			SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_1")
 			SSshuttle.dock_act(A)
 
-/obj/machinery/computer/arrival_shuttle/proc/shake_mobs(area/A, fall_direction)
+/obj/machinery/computer/arrival_shuttle/proc/play_flying_sound(area/A)
 	for(var/mob/M in A)
 		if(M.client)
 			if(location == 1)
 				M.playsound_local(null, 'sound/effects/shuttle_flying.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	SSshuttle.Shake_mobs(A, fall_direction)
 
 /obj/machinery/computer/arrival_shuttle/ui_interact(user)
 	var/dat = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];move=1'>Send</A></b></center><br>"
