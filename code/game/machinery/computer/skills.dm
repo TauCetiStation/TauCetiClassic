@@ -1,4 +1,8 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+#define SKILLS_MODE_MAIN_SCREEN 1
+#define SKILLS_MODE_MAINTENACE_SCREEN 2
+#define SKILLS_MODE_EDIT_SCREEN 3
+#define SKILLS_MODE_SEARCH_SCREEN 4
 
 /obj/machinery/computer/skills//TODO:SANITY
 	name = "Employment Records"
@@ -10,12 +14,6 @@
 	req_one_access = list(access_heads)
 	circuit = "/obj/item/weapon/circuitboard/skills"
 	allowed_checks = ALLOWED_CHECK_NONE
-
-	// Type of current screen 
-	var/const/mode_main_screen = 1
-	var/const/mode_maintenance_screen = 2
-	var/const/mode_edit_screen = 3
-	var/const/mode_search_result_screen = 4
 
 	var/obj/item/weapon/card/id/scan = null  //current id card inside machine
 	var/authenticated = null                 // Are user authenticated?
@@ -49,7 +47,7 @@
 		dat = "Confirm Identity: <a href='?src=\ref[src];choice=Confirm Identity'>[scan ? scan.name : "----------"]</a><hr>"
 		if (authenticated)
 			switch(screen)
-				if(mode_main_screen)
+				if(SKILLS_MODE_MAIN_SCREEN)
 					dat += {"<p style='text-align:center;'>
 						<a href='?src=\ref[src];choice=Search Records'>Search Records</a><br>
 						<a href='?src=\ref[src];choice=New Record (General)'>New Record</a><br></p>
@@ -76,12 +74,12 @@
 						dat += "</table><hr width='75%' />"
 					dat += text("<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><br><br>", src)
 					dat += text("<A href='?src=\ref[];choice=Log Out'>{Log Out}</A>",src)
-				if(mode_maintenance_screen)
+				if(SKILLS_MODE_MAINTENACE_SCREEN)
 					dat += {"<b>Records Maintenance</b>
 					<hr><br>
 					<a href='?src=\ref[src];choice=Delete All Records'>Delete All Records</a><br><br>
 					<a href='?src=\ref[src];choice=Return'>Back</a>"}
-				if(mode_edit_screen)
+				if(SKILLS_MODE_EDIT_SCREEN)
 					dat += "<center><b>Employment Record</b></center><br>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
 						var/icon/front = active1.fields["photo_f"]
@@ -110,7 +108,7 @@
 					<a href='?src=\ref[src];choice=Delete Record (ALL)'>Delete Record (ALL)</a><br><br>
 					<a href='?src=\ref[src];choice=Print Record'>Print Record</a><br>
 					<a href='?src=\ref[src];choice=Return'>Back</a><br>"}
-				if(mode_search_result_screen)
+				if(SKILLS_MODE_SEARCH_SCREEN)
 					if(!Perp.len)
 						dat += text("ERROR.  String could not be located.<br><br><A href='?src=\ref[];choice=Return'>Back</A>", src)
 					else
@@ -177,7 +175,7 @@ What a mess.*/
 			temp = null
 
 		if ("Return")
-			screen = mode_main_screen
+			screen = SKILLS_MODE_MAIN_SCREEN
 			active1 = null
 
 		if("Confirm Identity")
@@ -204,24 +202,24 @@ What a mess.*/
 				src.active1 = null
 				src.authenticated = usr.name
 				src.rank = "AI"
-				src.screen = mode_main_screen
+				src.screen = SKILLS_MODE_MAIN_SCREEN
 			else if (isrobot(usr))
 				src.active1 = null
 				src.authenticated = usr.name
 				var/mob/living/silicon/robot/R = usr
 				src.rank = R.braintype
-				src.screen = mode_main_screen
+				src.screen = SKILLS_MODE_MAIN_SCREEN
 			else if (isobserver(usr))
 				src.active1 = null
 				src.authenticated = "Centcomm Agent"
 				src.rank = "Overseer"
-				src.screen = mode_main_screen
+				src.screen = SKILLS_MODE_MAIN_SCREEN
 			else if (istype(scan, /obj/item/weapon/card/id))
 				active1 = null
 				if(check_access(scan))
 					authenticated = scan.registered_name
 					rank = scan.assignment
-					screen = mode_main_screen
+					screen = SKILLS_MODE_MAIN_SCREEN
 		// RECORD FUNCTIONS
 		if("Search Records")
 			var/t1 = sanitize_safe(input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text)
@@ -245,10 +243,10 @@ What a mess.*/
 					if ((E.fields["name"] == R.fields["name"] && E.fields["id"] == R.fields["id"]))
 						Perp[i+1] = E
 			searched_text = t1
-			screen = mode_search_result_screen
+			screen = SKILLS_MODE_SEARCH_SCREEN
 
 		if("Record Maintenance")
-			screen = mode_maintenance_screen
+			screen = SKILLS_MODE_MAINTENACE_SCREEN
 			active1 = null
 
 		if ("Browse Record")
@@ -258,7 +256,7 @@ What a mess.*/
 			else
 				for(var/datum/data/record/E in data_core.security)
 				active1 = R
-				screen = mode_edit_screen
+				screen = SKILLS_MODE_EDIT_SCREEN
 
 		if ("Print Record")
 			if (!( printing ))
@@ -415,3 +413,8 @@ What a mess.*/
 			continue
 
 	..(severity)
+
+#undef SKILLS_MODE_MAIN_SCREEN
+#undef SKILLS_MODE_MAINTENACE_SCREEN
+#undef SKILLS_MODE_EDIT_SCREEN
+#undef SKILLS_MODE_SEARCH_SCREEN
