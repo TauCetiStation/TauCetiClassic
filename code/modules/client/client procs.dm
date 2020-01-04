@@ -202,8 +202,7 @@ var/list/blacklisted_builds = list(
 	spawn() // Goonchat does some non-instant checks in start()
 		chatOutput.start()
 
-	if(config.allow_donators && (ckey in donators) || config.allow_byond_membership && IsByondMember())
-		supporter = 1
+	update_supporter_status()
 
 	spawn(50)//should wait for goonchat initialization
 		if(config.client_limit_panic_bunker_count != null)
