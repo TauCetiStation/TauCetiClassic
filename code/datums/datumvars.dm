@@ -12,7 +12,7 @@
 		to_chat(usr, "<span class='warning'>You need to be an administrator to access this.</span>")
 		return
 
-	if(!check_rights(R_DEBUG|R_VAREDIT)) // Since client.holder still doesn't mean we have permissions...
+	if(!check_rights(R_DEBUG|R_VAREDIT|R_LOG)) // Since client.holder still doesn't mean we have permissions...
 		return
 	
 	var/title = ""
@@ -426,7 +426,7 @@ body
 	if(usr.client != src || !holder)
 		return
 	if(href_list["Vars"])
-		if(!check_rights(R_DEBUG|R_VAREDIT))
+		if(!check_rights(R_DEBUG|R_VAREDIT|R_LOG))
 			return
 		debug_variables(locate(href_list["Vars"]))
 
