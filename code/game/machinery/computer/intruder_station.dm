@@ -37,7 +37,7 @@
 
 	for(var/datum/intruder_tools/T in tools)
 		dat += "[T.name] ([T.cost]):"
-		var/buyable = (available_telecrystalls >= T.cost)
+		var/buyable = (stored_uplink && stored_uplink.hidden_uplink && available_telecrystalls >= T.cost)
 		dat += "<a href ='?src=\ref[src];buy=\ref[T]'>[buyable ? "Buy"  : "<font color='grey'>Buy</font>"]</a> | "
 		dat += "<a href ='?src=\ref[src];desc=\ref[T]'>Show Desc</a><BR>"
 		if(show_tool_desc == T)
@@ -87,6 +87,15 @@
 	if(delete_dat_after_buying)
 		console.tools -= src
 		qdel(src)
+
+
+/datum/intruder_tools/war_device
+	name = "War Device"
+	desc = "Device to send a declaration of hostilities to the target, delaying your shuttle departure for 20 minutes while they prepare for your assault.  \
+			Such a brazen move will attract the attention of powerful benefactors within the Syndicate, who will supply your team with a massive amount of bonus telecrystals.  \
+			Must be used within five minutes, or your benefactors will lose interest."
+	delete_dat_after_buying = TRUE
+	item = /obj/item/device/nuclear_challenge
 
 /datum/intruder_tools/shuttle_unlocker
 	name = "Shuttle Unlocker"
