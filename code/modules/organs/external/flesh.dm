@@ -63,7 +63,7 @@
 
 	var/datum/wound/created_wound
 	if(brute)
-		if(BP.owner && ishuman(BP.owner))
+		if(ishuman(BP.owner))
 			var/mob/living/carbon/human/HU = BP.owner
 			if(HU.w_uniform && istype(HU.w_uniform, /obj/item/clothing/under/rank/clown))
 				playsound(HU, 'sound/effects/squeak.ogg', VOL_EFFECTS_MISC, vol = 65)
