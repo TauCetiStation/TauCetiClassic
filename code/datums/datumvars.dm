@@ -12,10 +12,9 @@
 		to_chat(usr, "<span class='warning'>You need to be an administrator to access this.</span>")
 		return
 
-	if(!check_rights(R_DEBUG|R_VAREDIT|R_LOG)) // Since client.holder still doesn't mean we have permissions...
-		to_chat(usr, "<span class='warning'>You need to be an administrator to access this.</span>")
+	if(!check_rights(R_DEBUG|R_VAREDIT)) // Since client.holder still doesn't mean we have permissions...
 		return
-
+	
 	var/title = ""
 	var/body = ""
 
@@ -306,6 +305,8 @@
 
 	var/list/names = list()
 	for (var/V in D.vars)
+		if((V in VE_HIDDEN_LOG) && !check_rights(R_LOG, show_msg = FALSE))
+			continue
 		names += V
 
 	names = sortList(names)
@@ -425,7 +426,7 @@ body
 	if(usr.client != src || !holder)
 		return
 	if(href_list["Vars"])
-		if(!check_rights(R_DEBUG|R_VAREDIT|R_LOG))
+		if(!check_rights(R_DEBUG|R_VAREDIT))
 			return
 		debug_variables(locate(href_list["Vars"]))
 

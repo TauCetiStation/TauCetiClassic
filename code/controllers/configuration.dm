@@ -186,6 +186,9 @@
 
 	var/record_replays = FALSE
 
+	
+	var/sandbox = FALSE
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for (var/T in L)
@@ -614,6 +617,9 @@
 
 				if("record_replays")
 					config.record_replays = TRUE
+
+				if("sandbox")
+					config.sandbox = TRUE
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
