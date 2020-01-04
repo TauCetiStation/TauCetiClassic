@@ -1,3 +1,5 @@
+#define WIKI_NAMESPACE "Guide_to_Paperwork"
+
 /obj/machinery/photocopier
 	name = "photocopier"
 	icon = 'icons/obj/library.dmi'
@@ -13,18 +15,6 @@
 	var/copies = 1	//how many copies to print!
 	var/toner = 50 //how much toner is left! woooooo~
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
-
-	// form printer functionality
-	var/wiki_namespace = "Guide_to_Paperwork"
-	var/list/wiki_forms = list()
-
-
-/obj/machinery/photocopier/atom_init()
-	. = ..()
-	if(!config.wikiurl)
-		return
-	var/form_list = get_webpage("[config.wikiurl]/[wiki_namespace]/List?action=raw")
-	wiki_forms = splittext(form_list, "\n")
 
 /obj/machinery/photocopier/ui_interact(mob/user)
 	var/dat = "Photocopier<BR><BR>"
@@ -42,11 +32,10 @@
 	dat += "Current toner level: [toner]"
 	if(!toner)
 		dat +="<BR>Please insert a new toner cartridge!"
-	if(length(wiki_forms) != 0)
+	if(length(global.wiki_forms) != 0)
 		dat += "<br>Choose form from database:<br><pre>"
-		var/regex/spaces = new("\\s", "g")
 		for(var/F in wiki_forms)
-			dat += "<a href='byond://?src=\ref[src];form=[spaces.Replace(F, "_")]'>[F]</a>\n"
+			dat += "<a href='byond://?src=\ref[src];form=[replacetext(F, " ", "_")]'>[F]</a>\n"
 		dat += "</pre>"
 	user << browse(entity_ja(dat), "window=copier")
 	onclose(user, "copier")
@@ -143,7 +132,7 @@
 			toner -= 5
 	else if(href_list["form"])
 		if(toner > 0)
-			print(href_list["form"])
+			print_form(href_list["form"])
 			sleep(15)
 	updateUsrDialog()
 
@@ -277,17 +266,20 @@
 		toner = 0
 	return p
 
-/obj/machinery/photocopier/proc/print(form_name)
-	var/contents = sanitize_safe(get_webpage("[config.wikiurl]/[wiki_namespace]/[form_name]?action=raw"), , , , FALSE)
+/obj/machinery/photocopier/proc/print_form(form_name)
+	form_name = replacetext(form_name, "_", " ")
+	var/contents = global.wiki_forms[form_name]
+	if(contents == null)
+		return
+
 	var/obj/item/weapon/paper/P = new(src.loc)
-	P.name = replacetext(form_name, "_", " ")
-	contents = parsebbcode(contents)
-	contents = replacetext(contents, "\[field\]", "<span class=\"paper_field\"></span>")
+	P.name = form_name
 	if(toner > 10)
 		P.info = "<font color = #101010>"
 	else
 		P.info = "<font color = #808080>"
 	P.info += contents + "</font>"//</font>
+
 	//count fields
 	var/laststart = 1
 	while(TRUE)
@@ -308,3 +300,14 @@
 	icon_state = "tonercartridge"
 	var/charges = 50
 	var/max_charges = 50
+
+/proc/load_forms_from_wiki()
+	if(config.wikiurl)
+		var/form_list = sanitize_safe(get_webpage("[config.wikiurl]/[WIKI_NAMESPACE]/List?action=raw"), extra = FALSE)
+		var/list/form_keys = splittext(form_list, "\n")
+		for(var/form_name in form_keys)
+			var/contents = sanitize_safe(get_webpage("[config.wikiurl]/[WIKI_NAMESPACE]/[replacetext(form_name, " ", "_")]?action=raw"), extra = FALSE)
+			contents = parsebbcode(contents)
+			contents = replacetext(contents, "\[field\]", "<span class=\"paper_field\"></span>")
+			global.wiki_forms[form_name] = contents
+#undef WIKI_NAMESPACE

@@ -38,6 +38,7 @@ var/logs_folder
 	load_proxy_whitelist()
 	LoadBans()
 	investigate_reset()
+	load_forms_from_wiki()
 
 	spawn
 		changelog_hash = trim(get_webpage(config.changelog_hash_link))
@@ -382,7 +383,7 @@ var/shutdown_processed = FALSE
 				host_announcements += "<hr>"
 
 			host_announcements += trim(file2text("data/announcements/[file]"))
-		
+
 		host_announcements = "<h2>Important Admin Announcements:</h2><br>[host_announcements]"
 
 /world/proc/load_test_merge()

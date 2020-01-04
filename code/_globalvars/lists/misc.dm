@@ -97,3 +97,5 @@ var/global/list/valid_secondary_effect_types = list(
 	/datum/artifact_effect/heat,
 	/datum/artifact_effect/hurt,
 	/datum/artifact_effect/radiate)
+
+var/global/list/wiki_forms = list()
