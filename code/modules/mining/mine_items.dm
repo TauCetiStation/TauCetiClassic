@@ -381,6 +381,9 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/pickaxe/drill/jackhammer/attackby()
 	return
 
+/obj/item/weapon/pickaxe/drill/jackhammer/rig
+	on = TRUE
+
 /obj/item/weapon/pickaxe/drill/diamond_drill //When people ask about the badass leader of the mining tools, they are talking about ME!
 	name = "diamond mining drill"
 	icon_state = "diamond_drill"
