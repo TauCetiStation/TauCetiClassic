@@ -266,8 +266,7 @@
 			if(href_list["send"])
 
 				sradio.send_signal("ACTIVATE")
-				for(var/mob/O in hearers(1, src.loc))
-					O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
+				audible_message("[bicon(src)] *beep* *beep*", hearing_distance = 1)
 
 			if(href_list["freq"])
 
@@ -653,9 +652,7 @@
 /mob/living/silicon/pai/proc/CheckDNA(var/mob/M, var/mob/living/silicon/pai/P)
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
-		var/turf/T = get_turf_or_move(P.loc)
-		for (var/mob/v in viewers(T))
-			v.show_message("<span class='notice'>[M] presses \his thumb against [P].</span>", 3, "<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>", 2)
+		P.visible_message("<span class='notice'>[M] presses \his thumb against [P].</span>", blind_message = "<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>")
 		var/datum/dna/dna = M.dna
 		to_chat(P, "<font color = red><h3>[M]'s UE string : [dna.unique_enzymes]</h3></font>")
 		if(dna.unique_enzymes == P.master_dna)

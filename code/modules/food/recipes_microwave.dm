@@ -613,6 +613,15 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/validsalad
 
+/datum/recipe/microwave/olivyesalad
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sausage,
+		/obj/item/weapon/reagent_containers/food/snacks/boiledegg,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/potato
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/olivyesalad
+
 ////////////////////////////FOOD ADDITTIONS///////////////////////////////
 
 /datum/recipe/microwave/wrap

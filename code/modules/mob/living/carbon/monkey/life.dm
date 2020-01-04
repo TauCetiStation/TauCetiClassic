@@ -484,9 +484,7 @@
 				adjustOxyLoss(1)
 			Paralyse(3)
 		if(halloss > 100)
-			to_chat(src, "<span class='notice'>You're in too much pain to keep going...</span>")
-			for(var/mob/O in oviewers(src, null))
-				O.show_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
+			visible_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", self_message = "<span class='notice'>You're in too much pain to keep going...</span>")
 			Paralyse(10)
 			setHalLoss(99)
 

@@ -34,7 +34,7 @@
 			user << browse(entity_ja(dat), "window=[M.name]_scan_report;size=400x400;can_resize=1")
 			onclose(user, "[M.name]_scan_report")
 		else
-			user.show_message(dat)
+			to_chat(user, dat)
 
 // ********************************************************
 // Here's all the seeds (plants) that can be used in hydro
@@ -248,6 +248,24 @@
 	species = "banana"
 	plantname = "Banana Tree"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/banana"
+	lifespan = 50
+	endurance = 30
+	maturation = 6
+	production = 6
+	yield = 3
+	plant_type = 0
+	growthstages = 6
+	mutatelist = list(/obj/item/seeds/honkyseed)
+
+/obj/item/seeds/honkyseed
+	name = "pack of honk-banana seeds"
+	desc = "They're seeds that grow into banana trees."
+	icon_state = "seed-banana-honk"
+	mypath = "/obj/item/seeds/honkyseed"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	species = "honk"
+	plantname = "Honk banana Tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk"
 	lifespan = 50
 	endurance = 30
 	maturation = 6
@@ -1210,7 +1228,7 @@
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
-		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
+		to_chat(user, "<span class='notice'>You make planks out of \the [src]!</span>")
 		for(var/i in 1 to 2)
 			new/obj/item/stack/sheet/wood(user.loc)
 		qdel(src)

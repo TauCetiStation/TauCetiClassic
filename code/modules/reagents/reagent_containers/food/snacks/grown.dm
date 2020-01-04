@@ -497,7 +497,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/melee/energy))
-		user.show_message("<span class='notice'>You carve a face into [src]!</span>", 1)
+		to_chat(user, "<span class='notice'>You carve a face into [src]!</span>")
 		new /obj/item/clothing/head/pumpkinhead (user.loc)
 		qdel(src)
 		return
@@ -568,6 +568,24 @@
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/atom_init()
+	. = ..()
+	reagents.add_reagent("banana", 1+round((potency / 10), 1))
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk
+	seed = "/obj/item/seeds/honkyseed"
+	name = "Clowny banana"
+	desc = "Looks very colorful and tasty, a Clown would kill for this banana!"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "h-banana"
+	item_state = "h-banana"
+	filling_color = "#fcf695"
+	can_be_holstered = TRUE
+	trash = /obj/item/weapon/bananapeel/honk
+	bitesize = 5
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk/atom_init()
 	. = ..()
 	reagents.add_reagent("banana", 1+round((potency / 10), 1))
 	pixel_x = rand(-5.0, 5)

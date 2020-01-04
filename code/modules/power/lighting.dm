@@ -429,11 +429,7 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(prob(1+W.force * 5))
 
-			to_chat(user, "You hit the light, and it smashes!")
-			for(var/mob/M in viewers(src))
-				if(M == user)
-					continue
-				M.show_message("[user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
+			user.visible_message("[user.name] smashed the light!", blind_message = "You hear a tinkle of breaking glass", self_message = "You hit the light, and it smashes!")
 			if(on && (W.flags & CONDUCT))
 				//if(!user.mutations & COLD_RESISTANCE)
 				if (prob(12))
@@ -509,8 +505,7 @@
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
-		for(var/mob/M in viewers(src))
-			M.show_message("<span class='warning'>[user.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
+		visible_message("<span class='warning'>[user.name] smashed the light!</span>", blind_message = "You hear a tinkle of breaking glass")
 		broken()
 	return
 
@@ -521,8 +516,7 @@
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		..()
-		for(var/mob/O in viewers(src))
-			O.show_message("<span class='warning'>[M.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
+		visible_message("<span class='warning'>[M.name] smashed the light!</span>", blind_message = "You hear a tinkle of breaking glass")
 		broken()
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player

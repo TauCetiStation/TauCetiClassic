@@ -117,8 +117,7 @@
 
 	if (!pda.message_silent)
 		playsound(pda, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-		for (var/mob/O in hearers(3, pda.loc))
-			O.show_message(text("[bicon(pda)] *[pda.ttone]*"))
+		pda.audible_message("[bicon(pda)] *[pda.ttone]*", hearing_distance = 3)
 
 	to_chat(head_mutineer.current, fluff.get_pda_body())
 	return 1
