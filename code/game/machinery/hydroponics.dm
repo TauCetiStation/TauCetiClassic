@@ -220,7 +220,7 @@
 
 /obj/machinery/hydroponics/update_icon()
 	//Refreshes the icon and sets the luminosity
-	overlays.Cut()
+	cut_overlays()
 
 	UpdateDescription()
 
@@ -239,18 +239,18 @@
 			lastproduce = age //Cheating by putting this here, it means that it isn't instantly ready to harvest
 		else
 			I = image(icon = myseed.hydroponictray_icon_path, icon_state = "[myseed.species]-grow[myseed.growthstages]") // Same
-		overlays += I
+		add_overlay(I)
 
 		if(waterlevel <= 10)
-			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowwater3")
+			add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowwater3"))
 		if(nutrilevel <= 2)
-			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lownutri3")
+			add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lownutri3"))
 		if(health <= (myseed.endurance / 2))
-			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowhealth3")
+			add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowhealth3"))
 		if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_alert3")
+			add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_alert3"))
 		if(harvest)
-			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_harvest3")
+			add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_harvest3"))
 
 	if(istype(myseed,/obj/item/seeds/glowshroom))
 		set_light(round(myseed.potency/10))
@@ -371,6 +371,7 @@
 /obj/machinery/hydroponics/proc/plantdies()
 	health = 0
 	harvest = FALSE
+	visible_message("<span class='warning'>A [myseed.plantname] dies, his roots dry out...</span>")
 	pestlevel = 0 // Pests die
 	if(!dead)
 		update_icon()
@@ -394,6 +395,7 @@
 		yieldmod = myNut.yieldmod
 		mutmod = myNut.mutmod
 		to_chat(user, "You replace the nutrient solution in [src].")
+		playsound(src, 'sound/items/cork_and_liquid.ogg', VOL_EFFECTS_MASTER, 90)
 		qdel(O)
 		update_icon()
 
@@ -441,13 +443,13 @@
 			switch(rand(100))
 				if(91 to 100)
 					plantdies()
-				if(81 to 90)
+				if(76 to 90)
 					mutatespecie()
-				if(66 to 80)
+				if(66 to 75)
 					hardmutate()
 				if(41 to 65)
 					mutate()
-				if(21 to 41)
+				if(21 to 40)
 					to_chat(user, "The plants don't seem to react...")
 				if(11 to 20)
 					mutateweed()
@@ -657,6 +659,7 @@
 		if(weedlevel > 0)
 			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0
+			playsound(src, pick('sound/items/rake1.ogg', 'sound/items/rake2.ogg', 'sound/items/rake3.ogg'), VOL_EFFECTS_MASTER, 95)
 			update_icon()
 		else
 			to_chat(user, "<span class='notice'>This plot is completely devoid of weeds. It doesn't need uprooting.</span>")
@@ -988,24 +991,24 @@
 	unwrenchable = FALSE
 
 /obj/machinery/hydroponics/soil/update_icon()//as a regular tray but without overlays under it (awter level, nutri, weeds, etc)
-	overlays.Cut()
+	cut_overlays()
 
 	UpdateDescription()
 
 	if(planted)
 		if(dead)
-			overlays += image(icon = myseed.hydroponictray_icon_path, icon_state="[myseed.species]-dead")
+			add_overlay(image(icon = myseed.hydroponictray_icon_path, icon_state="[myseed.species]-dead"))
 		else if(harvest)
 			if(myseed.plant_type == 2) // Shrooms don't have a -harvest graphic
-				overlays += image(icon = myseed.hydroponictray_icon_path, icon_state="[myseed.species]-grow[myseed.growthstages]")
+				add_overlay(image(icon = myseed.hydroponictray_icon_path, icon_state="[myseed.species]-grow[myseed.growthstages]"))
 			else
-				overlays += image(icon = myseed.hydroponictray_icon_path, icon_state="[myseed.species]-harvest")
+				add_overlay(image(icon = myseed.hydroponictray_icon_path, icon_state="[myseed.species]-harvest"))
 		else if(age < myseed.maturation)
 			var/t_growthstate = ((age / myseed.maturation) * myseed.growthstages )
-			overlays += image(icon = myseed.hydroponictray_icon_path, icon_state="[myseed.species]-grow[round(t_growthstate)]")
+			add_overlay(image(icon = myseed.hydroponictray_icon_path, icon_state="[myseed.species]-grow[round(t_growthstate)]"))
 			lastproduce = age
 		else
-			overlays += image(icon = myseed.hydroponictray_icon_path, icon_state="[myseed.species]-grow[myseed.growthstages]")
+			add_overlay(image(icon = myseed.hydroponictray_icon_path, icon_state="[myseed.species]-grow[myseed.growthstages]"))
 
 	if(!luminosity)
 		if(istype(myseed,/obj/item/seeds/glowshroom))

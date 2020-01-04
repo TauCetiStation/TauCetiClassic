@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/larva/emote(act,m_type=1,message = null)
+/mob/living/carbon/alien/larva/emote(act,m_type=SHOWMSG_VISUAL,message = null)
 
 	if(stat == UNCONSCIOUS || sleeping > 0)
 		return
@@ -17,66 +17,66 @@
 
 		if("hiss")
 			message = "<B>The [src.name]</B> hisses softly."
-			m_type = 2
+			m_type = SHOWMSG_AUDIO
 		if("growl")
 			message = "<B>The [src.name]</B> growls softly."
-			m_type = 2
+			m_type = SHOWMSG_AUDIO
 		if("whimper")
 			message = "<B>The [src.name]</B> whimpers sadly."
-			m_type = 2
+			m_type = SHOWMSG_AUDIO
 		if("roar")
 			message = "<B>The [src.name]</B> roars [pick("softly", "like a little predator")]."
-			m_type = 2
+			m_type = SHOWMSG_AUDIO
 
 //  ========== BASIC ==========
 
 		if("tail")
 			message = "<B>The [src.name]</B> waves its tail[pick(" like a snake", "")]."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 		if("drool")
 			message = "<B>The [src.name]</B> drools [pick("like a little predator", "hungry")]."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 		if("nod")
 			message = "<B>The [src.name]</B> nods its head."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 		if("sit")
 			message = "<B>The [src.name]</B> sits down [pick("and curls up in a ball", "like a little kitten")]."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 		if("sway")
 			message = "<B>The [src.name]</B> sways around dizzily."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 		if("sulk")
 			message = "<B>The [src.name]</B> sulks down sadly."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 		if("twitch")
 			message = "<B>The [src.name]</B> twitches violently."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 		if("shake")
 			message = "<B>The [src.name]</B> shakes its head."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 //  ========== EXTENDED ==========
 
 		if("dance")
 			if (!src.restrained())
 				message = "<B>The [src.name]</B> dances around [pick("happily", "joyfully")]."
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 		if("roll")
 			if (!src.restrained())
 				message = "<B>The [src.name]</B> rolls [pick("like a snake", "on the floor", "around itslef")]."
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 		if("gnarl")
 			if(!muzzled)
 				message = "<B>The [src.name]</B> gnarls and shows its teeth."
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 		if("jump")
 			if(!src.restrained())
 				message = "<B>The [src.name]</B> jumps around[pick(" happily", " joyfully", "")]."
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 		if("scratch")
 			if (!src.restrained())
 				message = "<B>The [src.name]</B> scratches."
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 
 //  ========== SPECIAL ==========
 
@@ -86,11 +86,11 @@
 				return
 			var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
 			if (input2 == "Visible")
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else if (input2 == "Hearable")
-				if (has_trait(TRAIT_MUTE))
+				if (HAS_TRAIT(src, TRAIT_MUTE))
 					return
-				m_type = 2
+				m_type = SHOWMSG_AUDIO
 			else
 				alert("Unable to use this emote, must be either hearable or visible.")
 				return
@@ -114,9 +114,9 @@
 			to_chat(src, "<span class='notice'>This action is not provided: \"[act]\". Write \"*help\" to find out all available emotes. Write \"*custom\" to do your own emote. \
 			                                   Otherwise, you can perform your action via the \"F4\" button.</span>")
 	if(message)
-		if(muzzled && (m_type & 2))
+		if(muzzled && (m_type & SHOWMSG_AUDIO))
 			message = "<B>The [src.name]</B>[pick("", " looks around angrily and", " shakes violently and")] makes a[pick("", " very faint", " very weak", " very quiet")] noise."
-		if(m_type & 2)
+		if(m_type & SHOWMSG_AUDIO)
 			if(last_sound_emote < world.time)
 				last_sound_emote = world.time + 4 SECONDS
 			else
@@ -128,12 +128,12 @@
 			if(!M.client)
 				continue //skip leavers
 			if((M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
-				M.show_message(message)
+				to_chat(M, message)
 
-		if(m_type & 1)
+		if(m_type & SHOWMSG_VISUAL)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)
-		else if(m_type & 2)
+		else if(m_type & SHOWMSG_AUDIO)
 			if(!muzzled)
 				playsound(src, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER, 60)
 			for(var/mob/O in hearers(src, null))

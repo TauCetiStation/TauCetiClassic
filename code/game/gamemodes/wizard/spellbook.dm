@@ -43,7 +43,7 @@
 	return 0
 
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) //return point value or -1 for failure
-	if(!istype(get_area(user), /area/wizard_station))
+	if(!istype(get_area(user), /area/custom/wizard_station))
 		to_chat(user, "<span clas=='warning'>You can only refund spells at the wizard lair</span>")
 		return -1
 	if(!S)

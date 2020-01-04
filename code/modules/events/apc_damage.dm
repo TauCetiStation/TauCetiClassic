@@ -28,7 +28,7 @@
 			apcs += apc
 			// Greatly increase the chance for APCs in maintenance areas to be selected
 			var/area/A = get_area(apc)
-			if(istype(A,/area/maintenance))
+			if(istype(A,/area/station/maintenance))
 				apcs += apc
 				apcs += apc
 

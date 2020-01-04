@@ -69,6 +69,10 @@
 	path = /obj/item/clothing/head/det_hat/fluff/kung
 	cost = 1
 
+/datum/gear/head/black_hood
+	display_name = "Black hood"
+	path = /obj/item/clothing/head/black_hood
+
 /datum/gear/head/beret
 	display_name = "Beret selection"
 	path = /obj/item/clothing/head/beret

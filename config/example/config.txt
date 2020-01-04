@@ -210,7 +210,7 @@ GATEWAY_DELAY 18000
 #CONTINUOUS_ROUNDS
 
 ## Uncomment to restrict non-admins from using humanoid alien races
-USEALIENWHITELIST
+#USEALIENWHITELIST
 
 ## Comment this to unrestrict the number of alien players allowed in the round. The number represents the number of alien players for every human player.
 #ALIEN_PLAYER_RATIO 0.2
@@ -251,6 +251,9 @@ ANTIGRIEF_ALARM_LEVEL 1
 ## Uncomment to provide special actions for people from /config/donators.txt
 #ALLOW_DONATORS
 
+## Uncomment to provide special actions for Tau Ceti Station patrons
+#ALLOW_TAUCETI_PATRONS
+
 ## Uncomment to provide special actions (same as for donators) for people with Byond Membership
 #ALLOW_BYOND_MEMBERSHIP
 
@@ -285,3 +288,14 @@ REPOSITORY_LINK https://github.com/TauCetiStation/TauCetiClassic
 
 ## Link used by limit panic bunker to redirect a client
 # CLIENT_LIMIT_PANIC_BUNKER_LINK byond://game.taucetistation.org:2507
+
+## Replaces whatever map json file with maps/testmap.json to load testmap only.
+## Saves alot of initialization time, since only centcomm and testmap will be loaded. For tests where map doesn't matter.
+# SUMMON_TESTMAP
+
+## Enables demo recordings, works slower on windows
+# RECORD_REPLAYS
+
+## Run server in sandbox mode - everyone has admin permissions without logs, bans
+## not recommended if you host server without virt box/docker/etc. and do not restrict clients access to server
+# SANDBOX

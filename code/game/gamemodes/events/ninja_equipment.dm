@@ -559,14 +559,13 @@ ________________________________________________________________________________
 					if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
 						if(isnewplayer(M))
 							continue
-						M.show_message("<span class='game say'>PDA Message - <span class='name'>[U]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t]</span></span>")
+						to_chat(M, "<span class='game say'>PDA Message - <span class='name'>[U]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t]</span></span>")
 
 				if (!P.message_silent)
 					playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-					for (var/mob/O in hearers(3, P.loc))
-						O.show_message(text("[bicon(P)] *[P.ttone]*"))
-				P.overlays.Cut()
-				P.overlays += image('icons/obj/pda.dmi', "pda-r")
+					P.audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)
+				P.cut_overlays()
+				P.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 				var/mob/living/L = null
 				if(P.loc && isliving(P.loc))
 					L = P.loc
@@ -1400,8 +1399,7 @@ It is possible to destroy the net by the occupant or someone else.
 			var/mob/living/carbon/M = affecting
 			M.captured = 0 //Important.
 			M.anchored = initial(M.anchored) //Changes the mob's anchored status to the original one; this is not handled by the can_move proc.
-			for(var/mob/O in viewers(src, 3))
-				O.show_message(text("[] was recovered from the energy net!", M.name), 1, text("You hear a grunt."), 2)
+			M.visible_message("[M.name] was recovered from the energy net!", "You hear a grunt.")
 			//if(!isnull(master))//As long as they still exist.
 			//	master << "<span class='warning'><b>ERROR</b>:</span> unable to initiate transport protocol. Procedure terminated."
 		qdel(src)
@@ -1465,7 +1463,7 @@ It is possible to destroy the net by the occupant or someone else.
 		to_chat(M, "<span class='warning'>You appear in a strange place!</span>")
 
 		for(var/mob/O in viewers(src, 3))
-			O.show_message(text("[] vanished!", M), 1, text("You hear sparks flying!"), 2)
+			O.oldshow_message(text("[] vanished!", M), 1, text("You hear sparks flying!"), 2)
 
 		if(!isnull(master))//As long as they still exist.
 			to_chat(master, "<span class='notice'><b>SUCCESS</b>:</span> transport procedure of \the [affecting] complete.")
@@ -1505,8 +1503,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 /obj/effect/energy_net/hitby(AM)
 	..()
-	for(var/mob/O in viewers(src, null))
-		O.show_message(text("<span class='warning'><B>[src] was hit by [AM].</B></span>"), 1)
+	src.visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 10
@@ -1521,9 +1518,7 @@ It is possible to destroy the net by the occupant or someone else.
 /obj/effect/energy_net/attack_hand(mob/living/carbon/human/user)
 	if (HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)
-		to_chat(usr, text("<span class='notice'>You easily destroy the energy net.</span>"))
-		for(var/mob/O in oviewers(src))
-			O.show_message(text("<span class='warning'>[] rips the energy net apart!</span>", usr), 1)
+		user.visible_message("<span class='warning'>[user] rips the energy net apart!</span>", "<span class='notice'>You easily destroy the energy net.</span>")
 		health-=50
 	healthcheck()
 	return
@@ -1536,15 +1531,14 @@ It is possible to destroy the net by the occupant or someone else.
 	user.SetNextMove(CLICK_CD_MELEE)
 	if (islarva(user) || isfacehugger(user))
 		return
-	to_chat(usr, text("<span class='notice'>You claw at the net.</span>"))
-	for(var/mob/O in oviewers(src))
-		O.show_message(text("<span class='warning'>[] claws at the energy net!</span>", usr), 1)
 	playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 	health -= rand(10, 20)
-	if(health <= 0)
-		to_chat(usr, text("<span class='notice'>You slice the energy net to pieces.</span>"))
-		for(var/mob/O in oviewers(src))
-			O.show_message(text("<span class='warning'>[] slices the energy net apart!</span>", usr), 1)
+
+	if(health > 0)
+		user.visible_message("<span class='warning'>[user] claws at the energy net!</span>", "<span class='notice'>You claw at the net.</span>")
+	else
+		user.visible_message("<span class='warning'>[user] slices the energy net apart!</span>", "<span class='notice'>You slice the energy net to pieces.</span>")
+
 	healthcheck()
 	return
 

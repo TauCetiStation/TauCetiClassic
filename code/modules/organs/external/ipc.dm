@@ -1,11 +1,6 @@
 #define IPC_UPDATE_SPRITE \
 	var/gender = owner ? owner.gender : MALE; \
-	var/mutations = owner ? owner.mutations : list(); \
-	var/fat; \
 	var/g; \
-	if(body_zone == BP_CHEST) { \
-		fat = (FAT in mutations) ? "fat" : null; \
-	} \
 	if(body_zone in list(BP_CHEST, BP_GROIN, BP_HEAD)) { \
 		g = (gender == FEMALE ? "f" : "m"); \
 	} \
@@ -13,7 +8,7 @@
 		g = null; \
 	}\
 	icon = species.icobase; \
-	icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""]";
+	icon_state = "[body_zone][g ? "_[g]" : ""]";
 
 /obj/item/organ/external/chest/robot/ipc
 	name = "ipc chest"
@@ -33,6 +28,28 @@
 
 /obj/item/organ/external/head/robot/ipc/update_sprite()
 	IPC_UPDATE_SPRITE
+
+/obj/item/organ/external/head/robot/ipc/alien
+	icon = 'icons/mob/human_races/r_machine.dmi'
+	icon_state = "head_alien"
+
+/obj/item/organ/external/head/robot/ipc/alien/update_sprite()
+	return
+
+/obj/item/organ/external/head/robot/ipc/double
+	icon = 'icons/mob/human_races/r_machine.dmi'
+	icon_state = "head_double"
+
+/obj/item/organ/external/head/robot/ipc/double/update_sprite()
+	return
+
+/obj/item/organ/external/head/robot/ipc/pillar
+	icon = 'icons/mob/human_races/r_machine.dmi'
+	icon_state = "head_pillar"
+
+/obj/item/organ/external/head/robot/ipc/pillar/update_sprite()
+	return
+
 
 /obj/item/organ/external/groin/robot/ipc
 	name = "ipc groin"

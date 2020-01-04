@@ -124,20 +124,31 @@ Class Procs:
 	var/datum/radio_frequency/radio_connection
 	var/radio_filter_out
 	var/radio_filter_in
+	var/speed_process = FALSE  // Process as fast as possible?
 
 /obj/machinery/atom_init()
 	. = ..()
 	machines += src
-	START_PROCESSING(SSmachine, src)
+
+	if (speed_process)
+		START_PROCESSING(SSfastprocess, src)
+	else
+		START_PROCESSING(SSmachine, src)
+
 	power_change()
 	update_power_use()
 
 /obj/machinery/Destroy()
 	if(frequency)
 		set_frequency(null)
+
 	set_power_use(NO_POWER_USE)
 	machines -= src
-	STOP_PROCESSING(SSmachine, src)
+
+	if (speed_process)
+		STOP_PROCESSING(SSfastprocess, src)
+	else
+		STOP_PROCESSING(SSmachine, src)
 
 	dropContents()
 	return ..()
@@ -472,8 +483,7 @@ Class Procs:
 	return
 
 /obj/machinery/proc/state(msg)
-	for(var/mob/O in hearers(src, null))
-		O.show_message("[bicon(src)] <span class = 'notice'>[msg]</span>", 2)
+	audible_message("[bicon(src)] <span class = 'notice'>[msg]</span>")
 
 /obj/machinery/proc/ping(text=null)
 	if (!text)

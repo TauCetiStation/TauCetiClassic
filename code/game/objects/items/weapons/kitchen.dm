@@ -51,7 +51,7 @@
 				toEat.On_Consume(M, user)
 				if(toEat)
 					qdel(toEat)
-				overlays.Cut()
+				cut_overlays()
 				return
 
 /*
@@ -269,7 +269,7 @@
 /obj/item/weapon/tray/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 
 	// Drop all the things. All of them.
-	overlays.Cut()
+	cut_overlays()
 	for(var/obj/item/I in carrying)
 		I.loc = M.loc
 		carrying.Remove(I)
@@ -313,13 +313,11 @@
 			M.take_bodypart_damage(5)
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] with the tray!</B></span>", user, M), 1)
+			M.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
 			return
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] with the tray!</B></span>", user, M), 1)
+			M.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
 			return
 
 
@@ -341,12 +339,9 @@
 
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] with the tray!</B></span>", user, M), 1)
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //sound playin'
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] with the tray!</B></span>", user, M), 1)
+		M.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
 		if(prob(10))
 			M.Stun(rand(1,3))
 			M.take_bodypart_damage(3)
@@ -365,12 +360,10 @@
 
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] in the face with the tray!</B></span>", user, M), 1)
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //sound playin' again
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] in the face with the tray!</B></span>", user, M), 1)
+		M.visible_message("<span class='warning'><B>[user] slams [M] in the face with the tray!</B></span>")
+
 		if(prob(30))
 			M.Stun(rand(2,4))
 			M.take_bodypart_damage(4)
@@ -433,7 +426,7 @@
 
 			I.loc = src
 			carrying.Add(I)
-			overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer)
+			add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
 
 /obj/item/weapon/tray/dropped(mob/user)
 
@@ -446,7 +439,7 @@
 		foundtable = 1
 		break
 
-	overlays.Cut()
+	cut_overlays()
 
 	for(var/obj/item/I in carrying)
 		I.loc = loc

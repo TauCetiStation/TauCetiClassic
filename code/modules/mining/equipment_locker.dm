@@ -602,7 +602,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone
 	name = "nanotrasen minebot"
-	desc = "A small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
+	desc = "Robot used to support the miners can be configured to search and collect ore or destroy monsters."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
@@ -610,6 +610,9 @@
 	mouse_opacity = 1
 	faction = "neutral"
 	a_intent = "harm"
+	var/emagged = 0
+	light_power = 2
+	light_range = 4
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -620,22 +623,22 @@
 	max_n2 = 0
 	minbodytemp = 0
 	wander = 0
-	idle_vision_range = 5
-	move_to_delay = 10
-	retreat_distance = 1
-	minimum_distance = 2
-	health = 100
-	maxHealth = 100
+	idle_vision_range = 6
+	move_to_delay = 7
+	retreat_distance = 2
+	minimum_distance = 3
+	health = 140
+	maxHealth = 140
 	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage_upper = 20
 	environment_smash = 0
 	attacktext = "drills"
 	attack_sound = list('sound/weapons/circsawhit.ogg')
 	ranged = 1
 	ranged_message = "shoots"
-	ranged_cooldown_cap = 3
+	ranged_cooldown_cap = 2
 	projectiletype = /obj/item/projectile/kinetic
-	projectilesound = 'sound/weapons/guns/Gunshot3.ogg'
+	projectilesound = 'sound/weapons/guns/kenetic_accel.ogg'
 	wanted_objects = list(/obj/item/weapon/ore/diamond,
 						  /obj/item/weapon/ore/glass,
 						  /obj/item/weapon/ore/gold,
@@ -661,7 +664,7 @@
 			else
 				to_chat(user, "<span class='info'>You start repair some of the armor on [src].</span>")
 				if(W.use_tool(src, user, 20, volume = 50))
-					health += 10
+					health += 15
 					to_chat(user, "<span class='info'>You repaired some of the armor on [src].</span>")
 			return
 	..()
@@ -669,6 +672,9 @@
 /mob/living/simple_animal/hostile/mining_drone/death()
 	..()
 	visible_message("<span class='danger'>[src] is destroyed!</span>")
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
 	new /obj/effect/decal/remains/robot(src.loc)
 	DropOre()
 	qdel(src)
@@ -702,12 +708,12 @@
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
 	stop_automated_movement_when_pulled = 0
-	idle_vision_range = 5
+	idle_vision_range = 6
 	search_objects = 0
 	wander = 0
 	ranged = 1
-	retreat_distance = 1
-	minimum_distance = 2
+	retreat_distance = 2
+	minimum_distance = 3
 	icon_state = "mining_drone_offense"
 
 /mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
@@ -746,6 +752,39 @@
 
 	to_chat(usr, "<span class='info'>You instruct [src] to drop any collected ore.</span>")
 	DropOre()
+
+/mob/living/simple_animal/hostile/mining_drone/AltClick(mob/user)
+	if(in_range(user, src))
+		to_chat(user, "<span class='notice'>You unloaded ore to the floor.</span>")
+		DropOre()
+
+/mob/living/simple_animal/hostile/mining_drone/examine(mob/user)
+	..()
+	var/msg = null
+	if (src.health < src.maxHealth)
+		if (src.health >= src.maxHealth * 0.7)
+			msg += "<span class='warning'>It looks slightly dented.</span>\n"
+		else if (src.health <= src.maxHealth * 0.3)
+			msg += "<span class='warning'><B>IT IS FALLING APART!</B></span>\n"
+		else
+			msg += "<span class='warning'><B>It looks severely dented!</B></span>\n"
+	else
+		msg += "<span class='notice'>It looks without dents.</span>\n"
+	to_chat(user, msg)
+
+/mob/living/simple_animal/hostile/mining_drone/emag_act(mob/user)
+	if(emagged)
+		to_chat(user, "Already hacked.")
+		return FALSE
+	else
+		to_chat(user, "You hack the NT mining drone, his gun clicked.")
+		emagged = 1
+		projectiletype = /obj/item/projectile/beam/xray
+		projectilesound = 'sound/weapons/guns/gunpulse_laser3.ogg'
+		ranged_cooldown_cap = 1
+		minimum_distance = 4
+		retreat_distance = 3
+		return TRUE
 
 /**********************Lazarus Injector**********************/
 

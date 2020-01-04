@@ -30,6 +30,8 @@
 		/turf/simulated/wall/r_wall,
 		/obj/structure/falsewall,
 		/obj/structure/falsewall/reinforced,
+		/obj/structure/girder,
+		/obj/structure/girder/reinforced
 		)
 	smooth = SMOOTH_TRUE
 
@@ -70,7 +72,7 @@
 		generate_overlays()
 
 	if(!damage)
-		overlays.Cut()
+		cut_overlays()
 		return
 
 	var/overlay = round(damage / damage_cap * damage_overlays.len) + 1
@@ -80,8 +82,8 @@
 	if(damage_overlay && overlay == damage_overlay) //No need to update.
 		return
 
-	overlays.Cut()
-	overlays += damage_overlays[overlay]
+	cut_overlays()
+	add_overlay(damage_overlays[overlay])
 	damage_overlay = overlay
 
 	return
@@ -386,8 +388,7 @@
 			if(user.loc == T && user.get_active_hand() == W)
 				to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
 				dismantle_wall()
-				for(var/mob/O in viewers(user, 5))
-					O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart.</span>", 2)
+				visible_message("<span class='warning'>The wall was sliced apart by [user]!</span>", blind_message = "<span class='warning'>You hear metal being sliced apart.</span>", viewing_distance = 5)
 		return
 
 	//DRILLING
@@ -404,8 +405,7 @@
 			if(user.loc == T && user.get_active_hand() == W)
 				to_chat(user, "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>")
 				dismantle_wall()
-				for(var/mob/O in viewers(user, 5))
-					O.show_message("<span class='warning'>The wall was drilled through by [user]!</span>", 1, "<span class='warning'>You hear the grinding of metal.</span>", 2)
+				visible_message("<span class='warning'>The wall was drilled through by [user]!</span>", blind_message = "<span class='warning'>You hear the grinding of metal.</span>", viewing_distance = 5)
 		return
 
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -426,8 +426,7 @@
 				playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 				playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 				dismantle_wall(1)
-				for(var/mob/O in viewers(user, 5))
-					O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart and sparks flying.</span>", 2)
+				visible_message("<span class='warning'>The wall was sliced apart by [user]!</span>", blind_message = "<span class='warning'>You hear metal being sliced apart and sparks flying.</span>", viewing_distance = 5)
 		return
 	else if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
 		var/obj/item/weapon/changeling_hammer/C = W

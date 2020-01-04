@@ -1,7 +1,7 @@
 /mob/living/carbon/monkey/gib()
 	death(1)
 	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
+	notransform = TRUE
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -21,7 +21,7 @@
 /mob/living/carbon/monkey/dust()
 	death(1)
 	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
+	notransform = TRUE
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -45,8 +45,7 @@
 	stat = DEAD
 
 	if(!gibbed)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("<b>The [name]</b> lets out a faint chimper as it collapses and stops moving...", 1) //ded -- Urist
+		visible_message("<b>The [name]</b> lets out a faint chimper as it collapses and stops moving...")
 
 	update_canmove()
 

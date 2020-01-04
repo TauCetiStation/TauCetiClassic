@@ -1129,7 +1129,7 @@
 
 	else if (href_list["monkey"])
 		var/mob/living/L = current
-		if (L.monkeyizing)
+		if (L.notransform)
 			return
 		switch(href_list["monkey"])
 			if("healthy")
@@ -1139,14 +1139,12 @@
 					if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]</span>")
-						src = null
 						M = H.monkeyize()
 						src = M.mind
 						//world << "DEBUG: \"healthy\": M=[M], M.mind=[M.mind], src=[src]!"
 					else if (istype(M) && length(M.viruses))
 						for(var/datum/disease/D in M.viruses)
 							D.cure(0)
-						sleep(0) //because deleting of virus is done through spawn(0)
 			if("infected")
 				if (usr.client.holder.rights & R_SPAWN)
 					var/mob/living/carbon/human/H = current
@@ -1154,7 +1152,6 @@
 					if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize and infect [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]</span>", 1)
-						src = null
 						M = H.monkeyize()
 						src = M.mind
 						current.contract_disease(new /datum/disease/jungle_fever,1,0)
@@ -1167,16 +1164,10 @@
 						for(var/datum/disease/D in M.viruses)
 							if (istype(D,/datum/disease/jungle_fever))
 								D.cure(0)
-								sleep(0) //because deleting of virus is doing throught spawn(0)
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
-						var/obj/item/weapon/dnainjector/m2h/m2h = new
-						var/obj/item/weapon/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
-						src = null
-						m2h.inject(M)
-						src = mobfinder.loc:mind
-						qdel(mobfinder)
-						current.radiation -= 50
+						M = M.humanize()
+						src = M.mind
 
 	else if (href_list["silicon"])
 		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
@@ -1473,7 +1464,7 @@
 
 	var/is_currently_brigged = 0
 
-	if(istype(T.loc,/area/security/brig))
+	if(istype(T.loc,/area/station/security/brig))
 		is_currently_brigged = 1
 		for(var/obj/item/weapon/card/id/card in current)
 			is_currently_brigged = 0

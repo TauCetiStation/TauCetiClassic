@@ -37,6 +37,8 @@
 
 	faction = "russian"
 
+	footstep_type = FOOTSTEP_MOB_BAREFOOT
+
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson
 	name = "Hudson"

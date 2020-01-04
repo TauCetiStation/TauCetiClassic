@@ -7,15 +7,15 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "ac" = (
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "ad" = (
 /turf/simulated/wall,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "ae" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/pill_bottle/zoom{
@@ -37,19 +37,19 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "af" = (
 /obj/machinery/chem_master,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "ag" = (
 /obj/item/toy/figure/chemist,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "ah" = (
 /obj/item/weapon/reagent_containers/pill/paracetamol{
 	pixel_x = 12;
@@ -80,7 +80,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "ai" = (
 /obj/item/weapon/reagent_containers/pill/LSD{
 	pixel_x = 7;
@@ -96,7 +96,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aj" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/firstaid/toxin,
@@ -104,13 +104,13 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "ak" = (
 /obj/item/weapon/reagent_containers/pill/methylphenidate,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "al" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/food/snacks/dionaroast,
@@ -118,21 +118,21 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "am" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "an" = (
 /obj/machinery/hydroponics/constructable,
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "ao" = (
 /obj/machinery/light{
 	dir = 8
@@ -142,20 +142,20 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "ap" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1
 	},
 /turf/space,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aq" = (
 /obj/structure/table/glass,
 /obj/machinery/kitchen_machine/microwave,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "ar" = (
 /obj/machinery/light{
 	dir = 4
@@ -165,7 +165,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "as" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 1
@@ -179,7 +179,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "at" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/pill/happy{
@@ -197,7 +197,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "au" = (
 /obj/item/seeds/ambrosiadeusseed,
 /obj/item/seeds/ambrosiadeusseed,
@@ -211,7 +211,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "av" = (
 /obj/item/weapon/hatchet,
 /obj/item/weapon/pestspray,
@@ -219,7 +219,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aw" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced{
@@ -233,85 +233,85 @@
 	req_access = list(72)
 	},
 /turf/simulated/floor/plating,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "ay" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/simulated/floor/plating,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aA" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom,
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aB" = (
 /obj/machinery/hydroponics/constructable,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aC" = (
 /obj/machinery/hydroponics/constructable,
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aD" = (
 /obj/machinery/hydroponics/constructable,
 /obj/item/weapon/grown/deathnettle,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aE" = (
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aF" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom{
 	pixel_x = 6;
 	pixel_y = -5
 	},
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aG" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aH" = (
 /turf/simulated/floor/plating,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aI" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aJ" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aK" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aL" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aM" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aN" = (
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/plating,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aO" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
@@ -324,23 +324,23 @@
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aP" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/mtear,
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aQ" = (
 /obj/structure/flora/junglebush/c,
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aR" = (
 /obj/structure/flora/tree/jungle,
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aS" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle,
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aT" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 4
@@ -354,76 +354,76 @@
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aU" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aV" = (
 /obj/structure/flora/junglebush/large,
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aW" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle{
 	pixel_x = -15;
 	pixel_y = 15
 	},
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aX" = (
 /obj/structure/flora/tree/jungle/small,
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aY" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "aZ" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap,
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "ba" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom,
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "bb" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap,
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "bc" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap{
 	pixel_x = -20;
 	pixel_y = 10
 	},
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "bd" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/tree/jungle/small,
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "fK" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell{
 	pixel_x = 6;
 	pixel_y = 7
 	},
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 "OZ" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/floor/grass,
-/area/agrospheregarden)
+/area/space_structures/agrospheregarden)
 
 (1,1,1) = {"
 aa

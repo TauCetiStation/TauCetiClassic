@@ -5,7 +5,7 @@
 	config_tag = "rp-revolution"
 	role_type = ROLE_REV
 	required_players = 4
-	required_players_secret = 15
+	required_players_secret = 20
 	required_enemies = 2
 	recommended_enemies = 2
 
@@ -63,7 +63,7 @@
 				var/datum/objective/mutiny/rp/rev_obj = new
 				rev_obj.owner = rev_mind
 				rev_obj.target = head_mind
-				rev_obj.explanation_text = "Assassinate, convert or capture [head_mind.name], the [head_mind.assigned_role]."
+				rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
 				rev_mind.objectives += rev_obj
 
 		update_all_rev_icons()
@@ -125,10 +125,6 @@
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/turf/T = get_turf(rev_mind.current)
 		if(rev_mind.current.stat != DEAD)
-			// TODO: add a similar check that also checks whether they're without ID in the brig..
-			//       probably wanna export this stuff into a separate function for use by both
-			//       revs and heads
-			//assume that only carbon mobs can become rev heads for now
 			if(!rev_mind.current:handcuffed && T && is_station_level(T.z))
 				return 0
 	return 1
@@ -147,15 +143,32 @@
 /datum/game_mode/revolution/rp_revolution/declare_completion()
 	completion_text += "<h3>RP-revolution mode resume:</h3>"
 	if(!config.objectives_disabled)
-		if(finished == 1)
-			mode_result = "win - heads overthrown"
+		if(finished == 1) // rews win, but at what cost?
+			var/dead_heads = 0
+			var/alive_heads = 0
+			for(var/datum/mind/head_mind in heads)
+				if(head_mind.current.stat == DEAD)
+					dead_heads++
+				else
+					alive_heads++
+
+			if(alive_heads >= dead_heads)
+				mode_result = "win - heads overthrown"
+				completion_text += "<span style='color: green; font-weight: bold;'>The heads of staff were overthrown! The revolutionaries win! It's a clear victory!</span>"
+			else
+				mode_result = "halfwin - heads overthrown, but revolution is losing support"
+				completion_text += "<span style='color: orange; font-weight: bold;'>The heads of staff were overthrown, but many heads died. The revolutionaries win, but lose support.</span>"
+
 			feedback_set_details("round_end_result",mode_result)
-			completion_text += "<span style='color: red; font-weight: bold;'>The heads of staff were overthrown! The revolutionaries win!</span>"
 			score["traitorswon"]++
 		else if(finished == 2)
 			mode_result = "loss - revolution stopped"
 			feedback_set_details("round_end_result",mode_result)
 			completion_text += "<span style='color: red; font-weight: bold;'>The heads of staff managed to stop the revolution!</span>"
+		else
+			mode_result = "loss - revolution was not successful" // halfloss? :D
+			feedback_set_details("round_end_result",mode_result)
+			completion_text += "<span style='color: red; font-weight: bold;'>The revolution failed to achieve their goals.</span>"
 	..()
 	return 1
 
@@ -212,7 +225,7 @@
 					var/datum/objective/mutiny/rp/rev_obj = new
 					rev_obj.owner = H.mind
 					rev_obj.target = head_mind
-					rev_obj.explanation_text = "Assassinate or capture [head_mind.name], the [head_mind.assigned_role]."
+					rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
 					H.mind.objectives += rev_obj
 
 				update_all_rev_icons()
@@ -264,6 +277,6 @@
 			var/datum/objective/mutiny/rp/rev_obj = new
 			rev_obj.owner = rev_mind
 			rev_obj.target = M.mind
-			rev_obj.explanation_text = "Assassinate, convert or capture [M.real_name], the [M.mind.assigned_role]."
+			rev_obj.explanation_text = "Capture, convert or exile from station [M.name], the [M.mind.assigned_role]. Assassinate if you have no choice."
 			rev_mind.objectives += rev_obj
 			to_chat(rev_mind.current, "<span class='warning'>A new Head of Staff, [M.real_name], the [M.mind.assigned_role] has appeared. Your objectives have been updated.</span>")

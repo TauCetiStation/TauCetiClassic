@@ -18,12 +18,10 @@
 	if(listening)
 		recorded = msg
 		listening = 0
-		for(var/mob/O in hearers(1, src.loc))
-			O.show_message(text("Activation message is '[recorded]'."),1)
+		audible_message("Activation message is '[recorded]'.", hearing_distance = 1)
 	else
 		if(findtext(msg, recorded))
-			for(var/mob/O in hearers(1, src.loc))
-				O.show_message(text("Beeeep"),1)
+			audible_message("Beeeep", hearing_distance = 1)
 			spawn(10)
 				pulse(0)
 
@@ -31,8 +29,7 @@
 	if(secured)
 		if(!holder)
 			listening = !listening
-			for(var/mob/O in hearers(1, src.loc))
-				O.show_message(text("[listening ? "Now" : "No longer"] recording input."),1)
+			audible_message("[listening ? "Now" : "No longer"] recording input.", hearing_distance = 1)
 
 /obj/item/device/assembly/voice/attack_self(mob/user)
 	if(!user)

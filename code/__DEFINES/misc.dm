@@ -169,6 +169,8 @@
 
 // (Bay12 = -2), but we don't have that projectile code, so...
 #define PROJECTILE_FORCE_MISS -1
+#define PROJECTILE_ACTED 0 // it means that something else has took control of bullet_act() proc and it didn't run till the end.
+#define PROJECTILE_ALL_OK 3
 
 #define COORD(A) "([A.x],[A.y],[A.z])"
 
@@ -209,3 +211,24 @@
 
 #define DELAY2GLIDESIZE(delay) (world.icon_size / max(CEIL(delay / world.tick_lag), 1))
 
+#define PLASMAGUN_OVERCHARGE 30100
+
+//! ## Overlays subsystem
+
+///Compile all the overlays for an atom from the cache lists
+#define COMPILE_OVERLAYS(A)\
+	if (TRUE) {\
+		var/list/ad = A.add_overlays;\
+		var/list/rm = A.remove_overlays;\
+		if(LAZYLEN(rm)){\
+			A.overlays -= rm;\
+			rm.Cut();\
+		}\
+		if(LAZYLEN(ad)){\
+			A.overlays |= ad;\
+			ad.Cut();\
+		}\
+		A.flags_2 &= ~OVERLAY_QUEUED_2;\
+		if(isturf(A)){SSdemo.mark_turf(A);}\
+		if(isobj(A) || ismob(A)){SSdemo.mark_dirty(A);}\
+	}

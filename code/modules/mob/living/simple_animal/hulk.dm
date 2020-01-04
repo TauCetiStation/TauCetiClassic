@@ -212,18 +212,12 @@
 			if (O.damtype == HALLOSS)
 				damage = 0
 			adjustBruteLoss(damage)
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='warning'><b>[src] has been attacked with [O] by [user].</b></span>")
+			visible_message("<span class='warning'><b>[src] has been attacked with [O] by [user].</b></span>")
 		else
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='warning'><b>[O] bounces harmlessly off of [src].</b></span>")
+			visible_message("<span class='warning'><b>[O] bounces harmlessly off of [src].</b></span>")
 	else
 		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
+		visible_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
 
 /mob/living/simple_animal/hulk/bullet_act(obj/item/projectile/P)
 	..()

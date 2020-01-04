@@ -202,6 +202,11 @@
 	if(wear_id)
 		msg += "[t_He] [t_is] wearing [bicon(wear_id)] \a [wear_id].\n"
 
+	//Status effects
+	var/list/status_examines = status_effect_examines()
+	if (length(status_examines))
+		msg += status_examines
+
 	//Jitters
 	if(is_jittery)
 		if(jitteriness >= 300)
@@ -234,8 +239,7 @@
 		if((stat == DEAD || src.losebreath || iszombie(src)) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
 		if(istype(user, /mob/living/carbon/human) && !user.stat && distance <= 1)
-			for(var/mob/O in viewers(user.loc, null))
-				O.show_message("[user] checks [src]'s pulse.", 1)
+			user.visible_message("[user] checks [src]'s pulse.")
 		spawn(15)
 			if(distance <= 1 && user && user.stat != UNCONSCIOUS)
 				if(pulse == PULSE_NONE)
@@ -244,11 +248,25 @@
 					to_chat(user, "<span class='deadsay'>[t_He] has a pulse!</span>")
 
 	msg += "<span class='warning'>"
+	
+	if(!species.flags[IS_SYNTHETIC])
+		if(nutrition < 100)
+			msg += "[t_He] [t_is] severely malnourished.\n"
+		else if(nutrition >= 500)
+			msg += "[t_He] [t_is] quite chubby.\n"
+	else
+		var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
+		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
+		if(C)
+			if(nutrition < (C.maxcharge*0.1))
+				msg += "His indicator of charge blinks red.\n"
+		else
+			msg += "[t_He] has no battery!\n"
 
-	if(nutrition < 100)
-		msg += "[t_He] [t_is] severely malnourished.\n"
-	else if(nutrition >= 500)
-		msg += "[t_He] [t_is] quite chubby.\n"
+	if(fire_stacks > 0)
+		msg += "[t_He] [t_is] covered in something flammable.\n"
+	if(fire_stacks < 0)
+		msg += "[t_He] look[t_is] a little soaked.\n"
 
 	msg += "</span>"
 
@@ -257,9 +275,9 @@
 	else if(getBrainLoss() >= 60)
 		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-	if(!key && brain_op_stage != 4 && stat != DEAD)
+	if(!key && has_brain() && stat != DEAD)
 		msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
-	else if(!client && brain_op_stage != 4 && stat != DEAD)
+	else if(!client && has_brain() && stat != DEAD)
 		msg += "[t_He] [t_has] suddenly fallen asleep.\n"
 
 	var/list/wound_flavor_text = list()
@@ -528,3 +546,12 @@
 				return 0
 	else
 		return 0
+
+/mob/living/proc/status_effect_examines() //You can include this in any mob's examine() to show the examine texts of status effects!
+	var/list/dat = list()
+	for(var/V in status_effects)
+		var/datum/status_effect/E = V
+		if(E.examine_text)
+			dat += "[E.examine_text]\n" //dat.Join("\n") doesn't work here, for some reason
+	if(dat.len)
+		return dat.Join()

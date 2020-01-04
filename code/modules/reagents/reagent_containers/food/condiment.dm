@@ -68,11 +68,9 @@
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
 	else
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message("<span class='rose'> [user] attempts to feed [M] [src].</span>", 1)
+		user.visible_message("<span class='rose'> [user] attempts to feed [M] [src].</span>")
 		if(!do_mob(user, M)) return
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message("<span class='rose'> [user] feeds [M] [src].</span>", 1)
+		user.visible_message("<span class='rose'> [user] feeds [M] [src].</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
 		msg_admin_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])", user)
@@ -251,7 +249,7 @@
 				qdel(src)
 
 /obj/structure/condiment_shelf/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(!contents.len)
 		return
 	var/cond_number = 0
@@ -259,7 +257,7 @@
 		if(F.type in can_be_placed)
 			var/mutable_appearance/condiment = mutable_appearance(icon, "[initial(F.icon_state)]")
 			condiment.pixel_x += cond_number
-			overlays += condiment
+			add_overlay(condiment)
 			cond_number += 4
 
 //////////////////////

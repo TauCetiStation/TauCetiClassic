@@ -166,7 +166,7 @@ Implants;
 	var/escaped_on_pod_5 = 0
 	var/escaped_on_shuttle = 0
 
-	var/list/area/escape_locations = list(/area/shuttle/escape/centcom, /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom)
+	var/list/area/escape_locations = list(/area/shuttle/escape/centcom, /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod4/centcom)
 
 	for(var/mob/M in player_list)
 		if(M.client)
@@ -191,7 +191,7 @@ Implants;
 					escaped_on_pod_2++
 				if(mob_area.type == /area/shuttle/escape_pod3/centcom)
 					escaped_on_pod_3++
-				if(mob_area.type == /area/shuttle/escape_pod5/centcom)
+				if(mob_area.type == /area/shuttle/escape_pod4/centcom)
 					escaped_on_pod_5++
 
 			if(isobserver(M))
@@ -470,11 +470,17 @@ Implants;
 /datum/game_mode/proc/printobjectives(datum/mind/ply)
 	var/text = ""
 	var/count = 1
+	var/result
 	for(var/datum/objective/objective in ply.objectives)
-		if(objective.check_completion())
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
-		else
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
+		result = objective.check_completion()
+		switch(result)
+			if(OBJECTIVE_WIN)
+				text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
+			if(OBJECTIVE_LOSS)
+				text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
+			if(OBJECTIVE_HALFWIN)
+				text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: orange; font-weight: bold;'>Half success.</span>"
+
 		count++
 	return text
 

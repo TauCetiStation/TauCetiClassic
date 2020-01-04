@@ -35,8 +35,7 @@
 
 	if(!gibbed)
 		playsound(src, 'sound/voice/xenomorph/death_1.ogg', VOL_EFFECTS_MASTER)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("<B>[src]</B> lets out a waning guttural screech, green blood bubbling from its maw...", 1)
+		visible_message("<B>[src]</B> lets out a waning guttural screech, green blood bubbling from its maw...")
 		update_canmove()
 		update_icons()
 
@@ -52,7 +51,7 @@
 /mob/living/carbon/alien/gib()
 	death(1)
 	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
+	notransform = TRUE
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -73,7 +72,7 @@
 /mob/living/carbon/alien/dust()
 	death(1)
 	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
+	notransform = TRUE
 	canmove = 0
 	icon = null
 	invisibility = 101

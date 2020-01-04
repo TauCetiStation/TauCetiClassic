@@ -70,14 +70,13 @@
 
 	if(powerc(75,1))//Can't plant eggs on spess tiles. That's silly.
 		adjustToxLoss(-75)
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("<span class='notice'><B>[src] has laid an egg!</B></span>"), 1)
+		visible_message("<span class='notice'><B>[src] has laid an egg!</B></span>")
 		new /obj/structure/alien/egg(loc)
 	return
 
 /mob/living/carbon/alien/humanoid/queen/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
-	overlays.Cut()
+	cut_overlays()
 	if(stat == DEAD)
 		icon_state = "queen_dead"
 	else if(stat == UNCONSCIOUS || lying || resting)
@@ -85,7 +84,7 @@
 	else
 		icon_state = "queen_s"
 	for(var/image/I in overlays_standing)
-		overlays += I
+		add_overlay(I)
 
 /mob/living/carbon/alien/humanoid/queen/movement_delay()
 	return(5 + move_delay_add + config.alien_delay)
@@ -97,7 +96,7 @@
 
 /mob/living/carbon/alien/humanoid/queen/large/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
-	overlays.Cut()
+	cut_overlays()
 	if(stat == DEAD)
 		icon_state = "queen_dead-old"
 	else if(stat == UNCONSCIOUS || lying || resting)
@@ -105,4 +104,4 @@
 	else
 		icon_state = "queen_s-old"
 	for(var/image/I in overlays_standing)
-		overlays += I
+		add_overlay(I)

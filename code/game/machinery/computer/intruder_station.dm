@@ -37,7 +37,7 @@
 
 	for(var/datum/intruder_tools/T in tools)
 		dat += "[T.name] ([T.cost]):"
-		var/buyable = (available_telecrystalls >= T.cost)
+		var/buyable = (stored_uplink && stored_uplink.hidden_uplink && available_telecrystalls >= T.cost)
 		dat += "<a href ='?src=\ref[src];buy=\ref[T]'>[buyable ? "Buy"  : "<font color='grey'>Buy</font>"]</a> | "
 		dat += "<a href ='?src=\ref[src];desc=\ref[T]'>Show Desc</a><BR>"
 		if(show_tool_desc == T)
@@ -88,6 +88,15 @@
 		console.tools -= src
 		qdel(src)
 
+
+/datum/intruder_tools/war_device
+	name = "War Device"
+	desc = "Device to send a declaration of hostilities to the target, delaying your shuttle departure for 20 minutes while they prepare for your assault.  \
+			Such a brazen move will attract the attention of powerful benefactors within the Syndicate, who will supply your team with a massive amount of bonus telecrystals.  \
+			Must be used within five minutes, or your benefactors will lose interest."
+	delete_dat_after_buying = TRUE
+	item = /obj/item/device/nuclear_challenge
+
 /datum/intruder_tools/shuttle_unlocker
 	name = "Shuttle Unlocker"
 	desc = "An unlocker of the Shuttle, which Parked near your base. In Bonus aboard, will be tactical aid and instruments. Caution. You'll have to buy spacesuit's in addition."
@@ -96,7 +105,7 @@
 
 /datum/intruder_tools/shuttle_unlocker/buy(obj/machinery/computer/intruder_station/console, mob/living/user)
 	var/area/cur_area = get_area(console)
-	if(!istype(cur_area, /area/syndicate_mothership))
+	if(!istype(cur_area, /area/custom/syndicate_mothership))
 		to_chat(user, "<span class='userdanger'>If you see this, Please, Notify nearest coder or mapper about wrong place of this station!</span>")
 		return
 

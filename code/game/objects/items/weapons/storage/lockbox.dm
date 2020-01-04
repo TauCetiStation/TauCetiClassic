@@ -43,8 +43,8 @@
 		spark_system.start()
 		playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-		for(var/mob/O in viewers(user, 3))
-			O.show_message(text("<span class='warning'>The locker has been sliced open by [] with an energy blade!</span>", user), 1, text("<span class='warning'>You hear metal being sliced and sparks flying.</span>"), 2)
+
+		user.visible_message("<span class='warning'>The locker has been sliced open by [user] with an energy blade!</span>", blind_message = "<span class='warning'>You hear metal being sliced and sparks flying.</span>", viewing_distance = 3)
 
 	if(!locked)
 		..()
@@ -59,8 +59,7 @@
 	locked = FALSE
 	desc = "It appears to be broken."
 	icon_state = icon_broken
-	for(var/mob/O in viewers(user, 3))
-		O.show_message(text("<span class='warning'>The locker has been broken by [] with an electromagnetic card!</span>", user), 1, text("<span class='warning'>You hear a faint electrical spark.</span>"), 2)
+	user.visible_message("<span class='warning'>The locker has been broken by [] with an electromagnetic card!</span>", blind_message = "<span class='warning'>You hear a faint electrical spark.</span>", viewing_distance = 3)
 	return TRUE
 
 /obj/item/weapon/storage/lockbox/open(mob/user)

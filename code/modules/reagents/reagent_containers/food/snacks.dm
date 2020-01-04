@@ -77,12 +77,10 @@
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 
 				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
-					for(var/mob/O in viewers(world.view, user))
-						O.show_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", 1)
+					user.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>")
 				else
-					for(var/mob/O in viewers(world.view, user))
-						O.show_message("<span class='rose'>[user] cannot force anymore of [src] down [M]'s throat.</span>", 1)
-						return 0
+					user.visible_message("<span class='rose'>[user] cannot force anymore of [src] down [M]'s throat.</span>")
+					return
 
 				if(!do_mob(user, M)) return
 
@@ -90,8 +88,7 @@
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
 				msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])", user)
 
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message("<span class='rose'>[user] feeds [M] [src].</span>", 1)
+				user.visible_message("<span class='rose'>[user] feeds [M] [src].</span>")
 
 			else
 				to_chat(user, "This creature does not seem to have a mouth!</span>")
@@ -149,10 +146,10 @@
 		)
 
 		bitecount++
-		U.overlays.Cut()
+		U.cut_overlays()
 		var/image/I = new(U.icon, "loadedfood")
 		I.color = filling_color
-		U.overlays += I
+		U.add_overlay(I)
 
 		var/obj/item/weapon/reagent_containers/food/snacks/collected = new type
 		collected.loc = U
@@ -926,10 +923,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger
 	name = "Clown Burger"
-	desc = "This tastes funny..."
+	desc = "This tastes funny... And HONKS!"
 	icon_state = "clownburger"
 	filling_color = "#ff00ff"
 	bitesize = 2
+	var/cooldown = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger/atom_init()
 	. = ..()
@@ -940,6 +938,13 @@
 */
 	reagents.add_reagent("nutriment", 6)
 	reagents.add_reagent("vitamin", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/clownburger/attack_self(mob/user)
+	if(cooldown <= world.time)
+		cooldown = world.time + 8
+		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
+		src.add_fingerprint(user)
+	return
 
 /obj/item/weapon/reagent_containers/food/snacks/mimeburger
 	name = "Mime Burger"
@@ -1726,8 +1731,8 @@
 			BP.hidden = surprise
 			BP.cavity = 0
 		else 		//someone is having a bad day
-			BP.createwound(CUT, 30)
 			BP.embed(surprise)
+			BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, "Animal escaping the ribcage")
 	else if (ismonkey(M))
 		M.visible_message("<span class='danger'>[M] suddenly tears in half!</span>")
 		var/mob/living/carbon/monkey/ook = new monkey_type(M.loc)
@@ -2350,6 +2355,20 @@
 	reagents.add_reagent("vitamin", 2)
 	bitesize = 3
 
+/obj/item/weapon/reagent_containers/food/snacks/olivyesalad
+	name = "Olivye salad"
+	desc = "It's a traditional salad dish in Russian cuisine."
+	icon_state = "olivyesalad"
+	trash = /obj/item/trash/snack_bowl
+	filling_color = "#76b87f"
+
+/obj/item/weapon/reagent_containers/food/snacks/olivyesalad/atom_init()
+	. = ..()
+	reagents.add_reagent("plantmatter", 9)
+	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("protein", 5)
+	bitesize = 3
+
 /obj/item/weapon/reagent_containers/food/snacks/appletart
 	name = "golden apple streusel tart"
 	desc = "A tasty dessert that won't make it through a metal detector."
@@ -2912,7 +2931,7 @@
 
 /obj/item/pizzabox/update_icon()
 
-	overlays = list()
+	cut_overlays()
 
 	// Set appropriate description
 	if( open && pizza )
@@ -2940,7 +2959,7 @@
 		if( pizza )
 			var/image/pizzaimg = image("food.dmi", icon_state = pizza.icon_state)
 			pizzaimg.pixel_y = -3
-			overlays += pizzaimg
+			add_overlay(pizzaimg)
 
 		return
 	else
@@ -2957,7 +2976,7 @@
 		if( doimgtag )
 			var/image/tagimg = image("food.dmi", icon_state = "pizzabox_tag")
 			tagimg.pixel_y = boxes.len * 3
-			overlays += tagimg
+			add_overlay(tagimg)
 
 	icon_state = "pizzabox[boxes.len+1]"
 

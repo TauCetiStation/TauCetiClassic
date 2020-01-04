@@ -1,7 +1,8 @@
 /mob/living/carbon/monkey/Life()
 	set invisibility = 0
 	//set background = 1
-	if (monkeyizing)	return
+	if (notransform)
+		return
 	if (update_muts)
 		update_muts=0
 		domutcheck(src,null,MUTCHK_FORCED)
@@ -11,7 +12,7 @@
 	if(loc)
 		environment = loc.return_air()
 
-	if (stat != DEAD)
+	if (stat != DEAD && !IS_IN_STASIS(src))
 		if(!istype(src,/mob/living/carbon/monkey/diona))
 			//First, resolve location and get a breath
 			if(SSmob.times_fired%4==2)
@@ -49,9 +50,6 @@
 
 	//Check if we're on fire
 	handle_fire()
-	if(on_fire && fire_stacks > 0)
-		fire_stacks -= 0.5
-
 
 	//Status updates, death etc.
 	handle_regular_status_updates()
@@ -77,23 +75,23 @@
 
 /mob/living/carbon/monkey/proc/handle_disabilities()
 
-	if (disabilities & EPILEPSY || has_trait(TRAIT_EPILEPSY))
+	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
 		if ((prob(1) && paralysis < 10))
 			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
-	if (disabilities & COUGHING || has_trait(TRAIT_COUGH))
+	if (disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
 		if ((prob(5) && paralysis <= 1))
 			drop_item()
 			spawn( 0 )
 				emote("cough")
 				return
-	if (disabilities & TOURETTES || has_trait(TRAIT_TOURETTE))
+	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		if ((prob(10) && paralysis <= 1))
 			Stun(10)
 			spawn( 0 )
 				emote("twitch")
 				return
-	if (disabilities & NERVOUS || has_trait(TRAIT_NERVOUS))
+	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
 		if (prob(10))
 			stuttering = max(10, stuttering)
 
@@ -414,19 +412,19 @@
 	switch(adjusted_pressure)
 		if(hazard_high_pressure to INFINITY)
 			adjustBruteLoss( min( ( (adjusted_pressure / hazard_high_pressure) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-			throw_alert("pressure","highpressure",2)
+			throw_alert("pressure", /obj/screen/alert/highpressure, 2)
 		if(warning_high_pressure to hazard_high_pressure)
-			throw_alert("pressure","highpressure",1)
+			throw_alert("pressure", /obj/screen/alert/highpressure, 1)
 		if(warning_low_pressure to warning_high_pressure)
 			clear_alert("pressure")
 		if(hazard_low_pressure to warning_low_pressure)
-			throw_alert("pressure","lowpressure",1)
+			throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 		else
 			if( !(COLD_RESISTANCE in mutations) )
 				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				throw_alert("pressure","lowpressure",2)
+				throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 			else
-				throw_alert("pressure","lowpressure",1)
+				throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 
 	return
 
@@ -470,7 +468,7 @@
 		silent = 0
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()
-		if(health < config.health_threshold_dead || brain_op_stage == 4.0)
+		if(health < config.health_threshold_dead || !has_brain())
 			death()
 			blinded = 1
 			stat = DEAD
@@ -486,9 +484,7 @@
 				adjustOxyLoss(1)
 			Paralyse(3)
 		if(halloss > 100)
-			to_chat(src, "<span class='notice'>You're in too much pain to keep going...</span>")
-			for(var/mob/O in oviewers(src, null))
-				O.show_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
+			visible_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", self_message = "<span class='notice'>You're in too much pain to keep going...</span>")
 			Paralyse(10)
 			setHalLoss(99)
 

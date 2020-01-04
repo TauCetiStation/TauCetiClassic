@@ -1,9 +1,26 @@
+/**
+  * Delete a mob
+  *
+  * Removes mob from the following global lists
+  * * GLOB.mob_list
+  * * GLOB.dead_mob_list
+  * * GLOB.alive_mob_list
+  * Clears alerts for this mob
+  *
+  * Parent call
+  *
+  * Returns QDEL_HINT_HARDDEL (don't change this)
+  */
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	mob_list -= src
-	dead_mob_list -= src
-	alive_mob_list -= src
+	global.mob_list -= src
+	global.dead_mob_list -= src
+	global.alive_mob_list -= src
+	for (var/alert in alerts)
+		clear_alert(alert, TRUE)
+	qdel(hud_used)
 	ghostize(bancheck = TRUE)
-	return ..()
+	..()
+	return QDEL_HINT_HARDDEL_NOW
 
 /mob/atom_init()
 	spawn()
@@ -32,59 +49,98 @@
 	for(var/g in env.gas)
 		t += "<span class='notice'>[g]: [env.gas[g]] / [env.gas[g] * R_IDEAL_GAS_EQUATION * env.temperature / env.volume]kPa</span>\n"
 
-	usr.show_message(t, 1)
+	to_chat(usr, t)
 
-/mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+// Show IC message to mob (if you need to show message to multiple mobs around - audible_message()/visible_message() is your choice)
+// Messages can be of different types, just use suitable for you SHOWMSG_* define as second parameter
+// You can pass multiple messages with different types, just alternate them, for example:
+// show_message("message", SHOWMSG_VISUAL, "message2", SHOWMSG_AUDIO, "message3", SHOWMSG_FEEL)
+// SHOWMSG_ALWAYS can be used for fallback message in last priority
+// Message types are bitflags, so you can specify multiple types for messages, ex. SHOWMSG_VISUAL | SHOWMSG_FEEL:
+// show_message("message", SHOWMSG_AUDIO, "message2", SHOWMSG_VISUAL | SHOWMSG_FEEL)
+// User will see first message with suitable type for his (dis)abilities, so sort messages in priority
+// If you don't need all this, want to show just a feedback or OOC message - use to_chat()
 
-	if(!client)
+/mob/proc/show_message()
+	ASSERT(!(args.len % 2))
+
+	if(!client && !length(src.parasites))
 		return FALSE
 
-	if(type)
-		if((type & 1) && ((sdisabilities & BLIND) || blinded || paralysis) )//Vision related
-			if(!alt)
-				return FALSE
-			else
-				msg = alt
-				type = alt_type
-		if((type & 2) && ((sdisabilities & DEAF) || ear_deaf))//Hearing related
-			if (!alt)
-				return FALSE
-			else
-				msg = alt
-				type = alt_type
-				if (((type & 1) && (sdisabilities & BLIND)))
-					return FALSE
-	// Added voice muffling for Issue 41.
-	if(stat == UNCONSCIOUS || sleeping > 0)
-		msg = "<I>... You can almost hear someone talking ...</I>"
-	to_chat(src, msg)
-	return msg
+	var/msg
+	var/type
 
-/mob/living/carbon/show_message(msg, type, alt, alt_type)
+	for(var/i = 1; i < args.len; i += 2)
+		if(!args[i]) // visible_message() & audible_message() has null as msg by default
+			continue
+
+		type = args[i + 1]
+
+		if((type & SHOWMSG_VISUAL) && !(sdisabilities & BLIND) && !blinded && !paralysis) // Vision related
+			msg = args[i]
+			break
+
+		if((type & SHOWMSG_AUDIO) && !(sdisabilities & DEAF) && !ear_deaf) // Hearing related
+			if(stat == UNCONSCIOUS || sleeping > 0)
+				msg = "<i>... You can almost hear something ...</i>"
+			else
+				msg = args[i]
+			break
+
+		if(type & SHOWMSG_FEEL) // todo: species check (IPC)?
+			msg = args[i]
+			break
+
+	if(!msg)
+		return FALSE
+	
+	to_chat(src, msg)
+	return list(msg, type) // should pass args to parasites
+
+/mob/living/carbon/show_message()
 	. = ..()
 	if(. && length(parasites))
-		for(var/M in parasites)
-			to_chat(M, .)
+		for(var/mob/living/M in parasites) // todo: need to combine parasites mechanic with /obj/item/weapon/holder (PASSEMOTES) and maybe .contents too (tg HEAR_1)
+			M.show_message(arglist(.))
+
+/obj/item/weapon/holder/proc/show_message()
+	for(var/mob/living/M in contents)
+		M.show_message(arglist(args))
+
+/obj/item/alien_embryo/proc/show_message() // not used?
+	for(var/mob/living/M in contents)
+		M.show_message(arglist(args))
+
 // Show a message to all mobs in sight of this one
 // This would be for visible actions by the src mob
 // message is the message output to anyone who can see e.g. "[src] does something!"
 // self_message (optional) is what the src mob sees  e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
-/mob/visible_message(message, self_message, blind_message)
-	for(var/mob/M in viewers(src))
-		var/msg = message
-		if(self_message && M == src)
-			msg = self_message
-		M.show_message(msg, 1, blind_message, 2)
+// WHY this self_message/blind_message/deaf_message so inconsistent as positional args!
+// todo:
+// * need to combine visible_message/audible_message to one proc (something like show_message) (maybe it will be a mess because of *_distance ?)
+// * replace show_message in /emote()'s & custom_emote()
+// * need some version combined with playsound (one cycle for audio message and sound)
+
+/mob/visible_message(message, self_message, blind_message, viewing_distance = world.view, list/ignored_mobs)
+	for(var/mob/M in (viewers(get_turf(src), viewing_distance) - ignored_mobs)) //todo: get_hearers_in_view() (tg)
+
+		if(M == src && self_message)
+			to_chat(M, self_message)
+			continue
+
+		M.show_message(message, SHOWMSG_VISUAL, blind_message, SHOWMSG_AUDIO)
 
 // Show a message to all mobs in sight of this atom
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
-/atom/proc/visible_message(message, blind_message)
-	for(var/mob/M in viewers(src))
-		M.show_message(message, 1, blind_message, 2)
+
+/atom/proc/visible_message(message, blind_message, viewing_distance = world.view, list/ignored_mobs)
+	//todo: for range<=1 combine SHOWMSG_FEEL with SHOWMSG_VISUAL like in custom_emote?
+	for(var/mob/M in (viewers(get_turf(src), viewing_distance) - ignored_mobs)) //todo: get_hearers_in_view() (tg)
+		M.show_message(message, SHOWMSG_VISUAL, blind_message, SHOWMSG_AUDIO)
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
@@ -93,15 +149,14 @@
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/mob/audible_message(message, deaf_message, hearing_distance, self_message)
-	var/range = world.view
-	if(hearing_distance)
-		range = hearing_distance
-	for(var/mob/M in get_hearers_in_view(range, src))
-		var/msg = message
+/mob/audible_message(message, deaf_message, hearing_distance = world.view, self_message, list/ignored_mobs)
+	for(var/mob/M in (get_hearers_in_view(hearing_distance, src) - ignored_mobs))
+
 		if(self_message && M == src)
-			msg = self_message
-		M.show_message(msg, 2, deaf_message, 1)
+			to_chat(M, self_message)
+			continue
+
+		M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
 
 // Show a message to all mobs in earshot of this atom
 // Use for objects performing audible actions
@@ -109,12 +164,9 @@
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/atom/proc/audible_message(message, deaf_message, hearing_distance)
-	var/range = world.view
-	if(hearing_distance)
-		range = hearing_distance
-	for(var/mob/M in get_hearers_in_view(range, src))
-		M.show_message(message, 2, deaf_message, 1)
+/atom/proc/audible_message(message, deaf_message, hearing_distance = world.view, list/ignored_mobs)
+	for(var/mob/M in (get_hearers_in_view(hearing_distance, src) - ignored_mobs))
+		M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
 
 /mob/proc/findname(msg)
 	for(var/mob/M in mob_list)
@@ -236,11 +288,6 @@
 	if(msg)
 		flavor_text = msg
 
-/mob/proc/warn_flavor_changed()
-	if(flavor_text && flavor_text != "") // don't spam people that don't use it!
-		to_chat(src, "<h2 class='alert'>OOC Warning:</h2>")
-		to_chat(src, "<span class='alert'>Your flavor text is likely out of date! <a href='byond://?src=\ref[src];flavor_change=1'>Change</a></span>")
-
 /mob/proc/print_flavor_text()
 	if(flavor_text && flavor_text != "")
 		var/msg = flavor_text
@@ -254,7 +301,7 @@
 	set name = "Examine"
 	set category = "IC"
 
-	if(sdisabilities & BLIND || blinded || stat == UNCONSCIOUS)
+	if((sdisabilities & BLIND || blinded) && !in_range(A, usr) || stat == UNCONSCIOUS)
 		to_chat(usr, "<span class='notice'>Something is there but you can't see it.</span>")
 		return
 
@@ -426,9 +473,6 @@
 		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, entity_ja(flavor_text)), text("window=[];size=500x200", name))
 		onclose(usr, "[name]")
 
-	if(href_list["flavor_change"])
-		update_flavor_text()
-//	..()
 	return
 
 
@@ -672,7 +716,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(world.time < client.move_delay)	return 0
 	if(stat==2)							return 0
 	if(anchored)						return 0
-	if(monkeyizing)						return 0
+	if(notransform)						return 0
 	if(restrained())					return 0
 	return 1
 
@@ -1039,9 +1083,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 			client.eye = client.mob
 			client.perspective = MOB_PERSPECTIVE
 		if(1)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-			if(A)
-				client.perspective = EYE_PERSPECTIVE
+			if(XRAY in mutations)
+				return
+			else
+				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+				if(A)
+					client.perspective = EYE_PERSPECTIVE
 				client.eye = A
 
 //You can buckle on mobs if you're next to them since most are dense

@@ -6,7 +6,7 @@ var/global/list/all_objectives = list()
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
 	var/datum/mind/target = null		//If they are focused on a particular person.
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
-	var/completed = 0					//currently only used for custom objectives.
+	var/completed = OBJECTIVE_LOSS   //currently only used for custom objectives.
 
 	var/list/protected_jobs = list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor") // They can't be targets of any objective.
 
@@ -62,9 +62,9 @@ var/global/list/all_objectives = list()
 /datum/objective/assassinate/check_completion()
 	if(target && target.current)
 		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || !SSmapping.has_level(target.current.z) || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
-			return 1
-		return 0
-	return 1
+			return OBJECTIVE_WIN
+		return OBJECTIVE_LOSS
+	return OBJECTIVE_WIN
 
 
 
@@ -89,12 +89,12 @@ var/global/list/all_objectives = list()
 /datum/objective/mutiny/check_completion()
 	if(target && target.current)
 		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
-			return 1
+			return OBJECTIVE_WIN
 		var/turf/T = get_turf(target.current)
 		if(T && !is_station_level(T.z))			//If they leave the station they count as dead for this
-			return 2
-		return 0
-	return 1
+			return OBJECTIVE_HALFWIN
+		return OBJECTIVE_LOSS
+	return OBJECTIVE_WIN
 
 
 /datum/objective/mutiny/rp/find_target()
@@ -109,7 +109,7 @@ var/global/list/all_objectives = list()
 /datum/objective/mutiny/rp/find_target_by_role(role, role_type=0)
 	..(role, role_type)
 	if(target && target.current)
-		explanation_text = "Assassinate, capture or convert [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Capture, convert or exile from station [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]. Assassinate if you have no choice."
 	else
 		explanation_text = "Free Objective"
 	return target
@@ -117,18 +117,25 @@ var/global/list/all_objectives = list()
 	// less violent rev objectives
 /datum/objective/mutiny/rp/check_completion()
 	if(target && target.current)
+		if(target.current.stat == DEAD)
+			return OBJECTIVE_HALFWIN
+
 		//assume that only carbon mobs can become rev heads for now
-		if(target.current.stat == DEAD || target.current:handcuffed || !ishuman(target.current))
-			return TRUE
+		if(target.current:handcuffed || !ishuman(target.current))
+			return OBJECTIVE_WIN
+
 		// Check if they're converted
 		if(istype(ticker.mode, /datum/game_mode/revolution))
 			if(target in ticker.mode:head_revolutionaries)
-				return TRUE
+				return OBJECTIVE_WIN
+
 		var/turf/T = get_turf(target.current)
-		if(T && !is_station_level(T.z))			//If they leave the station they count as dead for this
-			return TRUE
-		return FALSE
-	return TRUE
+		if(T && !is_station_level(T.z))
+			return OBJECTIVE_WIN
+
+		return OBJECTIVE_LOSS
+
+	return OBJECTIVE_WIN
 
 /datum/objective/anti_revolution/execute/find_target()
 	..()
@@ -150,9 +157,9 @@ var/global/list/all_objectives = list()
 /datum/objective/anti_revolution/execute/check_completion()
 	if(target && target.current)
 		if(target.current.stat == DEAD || !ishuman(target.current))
-			return 1
-		return 0
-	return 1
+			return OBJECTIVE_WIN
+		return OBJECTIVE_LOSS
+	return OBJECTIVE_WIN
 
 /datum/objective/anti_revolution/brig
 	var/already_completed = 0
@@ -176,16 +183,16 @@ var/global/list/all_objectives = list()
 
 /datum/objective/anti_revolution/brig/check_completion()
 	if(already_completed)
-		return 1
+		return OBJECTIVE_WIN
 
 	if(target && target.current)
 		if(target.current.stat == DEAD)
-			return 0
+			return OBJECTIVE_LOSS
 		if(target.is_brigged(10 * 60 * 10))
 			already_completed = 1
-			return 1
-		return 0
-	return 0
+			return OBJECTIVE_WIN
+		return OBJECTIVE_LOSS
+	return OBJECTIVE_LOSS
 
 /datum/objective/anti_revolution/demote/find_target()
 	..()
@@ -210,13 +217,13 @@ var/global/list/all_objectives = list()
 			var/obj/item/device/pda/P = I
 			I = P.id
 
-		if(!istype(I)) return 1
+		if(!istype(I)) return OBJECTIVE_WIN
 
 		if(I.assignment == "Test Subject")
-			return 1
+			return OBJECTIVE_WIN
 		else
-			return 0
-	return 1
+			return OBJECTIVE_LOSS
+	return OBJECTIVE_WIN
 
 /datum/objective/debrain/find_target()//I want braaaainssss
 	..()
@@ -237,17 +244,17 @@ var/global/list/all_objectives = list()
 
 /datum/objective/debrain/check_completion()
 	if(!target)//If it's a free objective.
-		return 1
+		return OBJECTIVE_WIN
 	if( !owner.current || owner.current.stat==DEAD )//If you're otherwise dead.
-		return 0
+		return OBJECTIVE_LOSS
 	if( !target.current || !isbrain(target.current) )
-		return 0
+		return OBJECTIVE_LOSS
 	var/atom/A = target.current
 	while(A.loc)			//check to see if the brainmob is on our person
 		A = A.loc
 		if(A == owner.current)
-			return 1
-	return 0
+			return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
 
 /datum/objective/dehead/find_target()
 	..()
@@ -267,15 +274,15 @@ var/global/list/all_objectives = list()
 
 /datum/objective/dehead/check_completion()
 	if(!target)//If it's a free objective.
-		return 1
+		return OBJECTIVE_WIN
 	if( !owner.current || owner.current.stat==DEAD )//If you're otherwise dead.
-		return 0
+		return OBJECTIVE_LOSS
 	var/list/all_items = owner.current.get_contents()
 	for(var/obj/item/device/biocan/B in all_items)
 		if(B.brainmob && B.brainmob == target.current)
-			return 1
-		return 0
-	return 0
+			return OBJECTIVE_WIN
+		return OBJECTIVE_LOSS
+	return OBJECTIVE_LOSS
 
 
 /datum/objective/protect/find_target()//The opposite of killing a dude.
@@ -297,12 +304,12 @@ var/global/list/all_objectives = list()
 
 /datum/objective/protect/check_completion()
 	if(!target)			//If it's a free objective.
-		return 1
+		return OBJECTIVE_WIN
 	if(target.current)
 		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current))
-			return 0
-		return 1
-	return 0
+			return OBJECTIVE_LOSS
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
 
 
 /datum/objective/hijack
@@ -310,11 +317,11 @@ var/global/list/all_objectives = list()
 
 /datum/objective/hijack/check_completion()
 	if(!owner.current || owner.current.stat)
-		return 0
+		return OBJECTIVE_LOSS
 	if(SSshuttle.location<2)
-		return 0
+		return OBJECTIVE_LOSS
 	if(issilicon(owner.current))
-		return 0
+		return OBJECTIVE_LOSS
 	var/area/shuttle = locate(/area/shuttle/escape/centcom)
 	var/list/protected_mobs = list(/mob/living/silicon/ai, /mob/living/silicon/pai)
 	for(var/mob/living/player in player_list)
@@ -322,8 +329,8 @@ var/global/list/all_objectives = list()
 		if (player.mind && (player.mind != owner))
 			if(player.stat != DEAD)			//they're not dead!
 				if(get_turf(player) in shuttle)
-					return 0
-	return 1
+					return OBJECTIVE_LOSS
+	return OBJECTIVE_WIN
 
 
 /datum/objective/block
@@ -332,11 +339,11 @@ var/global/list/all_objectives = list()
 
 /datum/objective/block/check_completion()
 	if(!istype(owner.current, /mob/living/silicon))
-		return 0
+		return OBJECTIVE_LOSS
 	if(SSshuttle.location<2)
-		return 0
+		return OBJECTIVE_LOSS
 	if(!owner.current)
-		return 0
+		return OBJECTIVE_LOSS
 	var/area/shuttle = locate(/area/shuttle/escape/centcom)
 	var/protected_mobs[] = list(/mob/living/silicon/ai, /mob/living/silicon/pai, /mob/living/silicon/robot)
 	for(var/mob/living/player in player_list)
@@ -344,15 +351,15 @@ var/global/list/all_objectives = list()
 		if (player.mind)
 			if (player.stat != DEAD)
 				if (get_turf(player) in shuttle)
-					return 0
-	return 1
+					return OBJECTIVE_LOSS
+	return OBJECTIVE_WIN
 
 /datum/objective/silence
 	explanation_text = "Do not allow anyone to escape the station.  Only allow the shuttle to be called when everyone is dead and your story is the only one left."
 
 /datum/objective/silence/check_completion()
 	if(SSshuttle.location<2)
-		return 0
+		return OBJECTIVE_LOSS
 
 	for(var/mob/living/player in player_list)
 		if(player == owner.current)
@@ -362,9 +369,9 @@ var/global/list/all_objectives = list()
 				var/turf/T = get_turf(player)
 				if(!T)	continue
 				switch(T.loc.type)
-					if(/area/shuttle/escape/centcom, /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom)
-						return 0
-	return 1
+					if(/area/shuttle/escape/centcom, /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod4/centcom)
+						return OBJECTIVE_LOSS
+	return OBJECTIVE_WIN
 
 
 /datum/objective/escape
@@ -373,37 +380,37 @@ var/global/list/all_objectives = list()
 
 /datum/objective/escape/check_completion()
 	if(issilicon(owner.current))
-		return 0
+		return OBJECTIVE_LOSS
 	if(isbrain(owner.current))
-		return 0
+		return OBJECTIVE_LOSS
 	if(SSshuttle.location<2)
-		return 0
+		return OBJECTIVE_LOSS
 	if(!owner.current || owner.current.stat ==2)
-		return 0
+		return OBJECTIVE_LOSS
 	var/turf/location = get_turf(owner.current.loc)
 	if(!location)
-		return 0
+		return OBJECTIVE_LOSS
 
 	if(istype(location, /turf/simulated/shuttle/floor4)) // Fails traitors if they are in the shuttle brig -- Polymorph
 		if(istype(owner.current, /mob/living/carbon))
 			var/mob/living/carbon/C = owner.current
 			if (!C.restrained())
-				return 1
-		return 0
+				return OBJECTIVE_WIN
+		return OBJECTIVE_LOSS
 
 	var/area/check_area = location.loc
 	if(istype(check_area, /area/shuttle/escape/centcom))
-		return 1
+		return OBJECTIVE_WIN
 	if(istype(check_area, /area/shuttle/escape_pod1/centcom))
-		return 1
+		return OBJECTIVE_WIN
 	if(istype(check_area, /area/shuttle/escape_pod2/centcom))
-		return 1
+		return OBJECTIVE_WIN
 	if(istype(check_area, /area/shuttle/escape_pod3/centcom))
-		return 1
-	if(istype(check_area, /area/shuttle/escape_pod5/centcom))
-		return 1
+		return OBJECTIVE_WIN
+	if(istype(check_area, /area/shuttle/escape_pod4/centcom))
+		return OBJECTIVE_WIN
 	else
-		return 0
+		return OBJECTIVE_LOSS
 
 
 
@@ -412,10 +419,10 @@ var/global/list/all_objectives = list()
 
 /datum/objective/survive/check_completion()
 	if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
-		return 0		//Brains no longer win survive objectives. --NEO
+		return OBJECTIVE_LOSS		//Brains no longer win survive objectives. --NEO
 	if(issilicon(owner.current) && owner.current != owner.original)
-		return 0
-	return 1
+		return OBJECTIVE_LOSS
+	return OBJECTIVE_WIN
 
 // Similar to the anti-rev objective, but for traitors
 /datum/objective/brig
@@ -440,17 +447,17 @@ var/global/list/all_objectives = list()
 
 /datum/objective/brig/check_completion()
 	if(already_completed)
-		return 1
+		return OBJECTIVE_WIN
 
 	if(target && target.current)
 		if(target.current.stat == DEAD)
-			return 0
+			return OBJECTIVE_LOSS
 		// Make the actual required time a bit shorter than the official time
 		if(target.is_brigged(10 * 60 * 5))
 			already_completed = 1
-			return 1
-		return 0
-	return 0
+			return OBJECTIVE_WIN
+		return OBJECTIVE_LOSS
+	return OBJECTIVE_LOSS
 
 // Harm a crew member, making an example of them
 /datum/objective/harm
@@ -475,25 +482,25 @@ var/global/list/all_objectives = list()
 
 /datum/objective/harm/check_completion()
 	if(already_completed)
-		return 1
+		return OBJECTIVE_WIN
 
 	if(target && target.current && istype(target.current, /mob/living/carbon/human))
 		if(target.current.stat == DEAD)
-			return 0
+			return OBJECTIVE_LOSS
 
 		var/mob/living/carbon/human/H = target.current
 		for(var/obj/item/organ/external/BP in H.bodyparts)
 			if(BP.status & ORGAN_BROKEN)
 				already_completed = 1
-				return 1
+				return OBJECTIVE_WIN
 			if(BP.is_stump)
 				already_completed = 1
-				return 1
+				return OBJECTIVE_WIN
 
 		var/obj/item/organ/external/head/BP = H.bodyparts_by_name[BP_HEAD]
 		if(BP.disfigured)
-			return 1
-	return 0
+			return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
 
 
 /datum/objective/nuclear
@@ -573,8 +580,8 @@ var/global/list/all_objectives = list()
 	return steal_target
 
 /datum/objective/steal/check_completion()
-	if(!steal_target || !owner.current)	return 0
-	if(!isliving(owner.current))	return 0
+	if(!steal_target || !owner.current)	return OBJECTIVE_LOSS
+	if(!isliving(owner.current))	return OBJECTIVE_LOSS
 	var/list/all_items = owner.current.get_contents()
 	switch (target_name)
 		if("28 moles of phoron (full tank)","10 diamonds","50 gold bars","25 refined uranium bars")
@@ -600,32 +607,32 @@ var/global/list/all_objectives = list()
 			for(var/obj/item/device/aicard/C in all_items) //Check for ai card
 				for(var/mob/living/silicon/ai/M in C)
 					if(istype(M, /mob/living/silicon/ai) && M.stat != DEAD) //See if any AI's are alive inside that card.
-						return 1
+						return OBJECTIVE_WIN
 
 			for(var/obj/item/clothing/suit/space/space_ninja/S in all_items) //Let an AI downloaded into a space ninja suit count
 				if(S.AI && S.AI.stat != DEAD)
-					return 1
+					return OBJECTIVE_WIN
 			for(var/mob/living/silicon/ai/ai in ai_list)
 				if(ai.stat == DEAD)
 					continue
 				if(istype(ai.loc, /turf))
 					var/area/check_area = get_area(ai)
 					if(istype(check_area, /area/shuttle/escape/centcom))
-						return 1
+						return OBJECTIVE_WIN
 					if(istype(check_area, /area/shuttle/escape_pod1/centcom))
-						return 1
+						return OBJECTIVE_WIN
 					if(istype(check_area, /area/shuttle/escape_pod2/centcom))
-						return 1
+						return OBJECTIVE_WIN
 					if(istype(check_area, /area/shuttle/escape_pod3/centcom))
-						return 1
-					if(istype(check_area, /area/shuttle/escape_pod5/centcom))
-						return 1
+						return OBJECTIVE_WIN
+					if(istype(check_area, /area/shuttle/escape_pod4/centcom))
+						return OBJECTIVE_WIN
 		else
 
 			for(var/obj/I in all_items) //Check for items
 				if(istype(I, steal_target))
-					return 1
-	return 0
+					return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
 
 
 
@@ -637,20 +644,20 @@ var/global/list/all_objectives = list()
 
 /datum/objective/download/check_completion()
 	if(!ishuman(owner.current))
-		return 0
+		return OBJECTIVE_LOSS
 	if(!owner.current || owner.current.stat == DEAD)
-		return 0
+		return OBJECTIVE_LOSS
 	if(!(istype(owner.current:wear_suit, /obj/item/clothing/suit/space/space_ninja)&&owner.current:wear_suit:s_initialized))
-		return 0
+		return OBJECTIVE_LOSS
 	var/current_amount
 	var/obj/item/clothing/suit/space/space_ninja/S = owner.current:wear_suit
 	if(!S.stored_research.len)
-		return 0
+		return OBJECTIVE_LOSS
 	else
 		for(var/datum/tech/current_data in S.stored_research)
 			if(current_data.level>1)	current_amount+=(current_data.level-1)
-	if(current_amount<target_amount)	return 0
-	return 1
+	if(current_amount<target_amount)	return OBJECTIVE_LOSS
+	return OBJECTIVE_WIN
 
 
 
@@ -687,8 +694,8 @@ var/global/list/all_objectives = list()
 			continue
 		captured_amount+=2
 	if(captured_amount<target_amount)
-		return 0
-	return 1
+		return OBJECTIVE_LOSS
+	return OBJECTIVE_WIN
 
 
 
@@ -711,21 +718,21 @@ var/global/list/all_objectives = list()
 
 /datum/objective/absorb/check_completion()
 	if(owner && owner.changeling && owner.changeling.absorbed_dna && (owner.changeling.absorbedcount >= target_amount))
-		return 1
+		return OBJECTIVE_WIN
 	else
-		return 0
+		return OBJECTIVE_LOSS
 
 
 
 /* Isn't suited for global objectives
-/*---------CULTIST----------*/
+//---------CULTIST----------
 /datum/objective/eldergod
 	explanation_text = "Summon Nar-Sie via the use of an appropriate rune. It will only work if nine cultists stand on and around it."
 
 /datum/objective/eldergod/check_completion()
 	if(eldergod) //global var, defined in rune4.dm
-		return 1
-	return 0
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
 
 /datum/objective/survivecult
 	var/num_cult
@@ -733,7 +740,7 @@ var/global/list/all_objectives = list()
 
 /datum/objective/survivecult/check_completion()
 	if(SSshuttle.location<2)
-		return 0
+		return OBJECTIVE_LOSS
 	var/cultists_escaped = 0
 	var/area/shuttle/escape/centcom/C = /area/shuttle/escape/centcom
 	for(var/turf/T in	get_area_turfs(C.type))
@@ -741,8 +748,8 @@ var/global/list/all_objectives = list()
 			if(iscultist(H))
 				cultists_escaped++
 	if(cultists_escaped>=5)
-		return 1
-	return 0
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
 
 /datum/objective/sacrifice/proc/find_target() //stolen from traitor target objective
  //I don't know how to make it work with the rune otherwise, so I'll do it via a global var, sacrifice_target, defined in rune15.dm
@@ -757,11 +764,12 @@ var/global/list/all_objectives = list()
 
 /datum/objective/sacrifice/check_completion() //again, calling on a global list defined in rune15.dm
 	if(sacrifice_target.current in sacrificed)
-		return 1
+		return OBJECTIVE_WIN
 	else
-		return 0
-/*-------ENDOF CULTIST------*/
+		return OBJECTIVE_LOSS
+//-------ENDOF CULTIST------
 */
+
 //Meme objectives
 /datum/objective/meme_attune/proc/gen_amount_goal(lowbound = 4, highbound = 6)
 	target_amount = rand (lowbound,highbound)
@@ -770,9 +778,9 @@ var/global/list/all_objectives = list()
 
 /datum/objective/meme_attune/check_completion()
 	if(owner && owner.current && istype(owner.current,/mob/living/parasite/meme) && (owner.current:indoctrinated.len >= target_amount))
-		return 1
+		return OBJECTIVE_WIN
 	else
-		return 0
+		return OBJECTIVE_LOSS
 
 
 //Vox heist objectives.
@@ -810,8 +818,8 @@ var/global/list/all_objectives = list()
 		if (target.current.stat == DEAD)
 			return FALSE // They're dead. Fail.
 		//if (!target.current.restrained())
-		//	return 0 // They're loose. Close but no cigar.
-		if(get_area(target) == locate(/area/shuttle/vox/station))
+		//	return OBJECTIVE_LOSS // They're loose. Close but no cigar.
+		if(get_area(target) == locate(/area/shuttle/vox/arkship))
 			return TRUE
 	else
 		return FALSE
@@ -857,7 +865,7 @@ var/global/list/all_objectives = list()
 /datum/objective/heist/loot/check_completion()
 	var/total_amount = 0
 
-	for(var/obj/O in locate(/area/shuttle/vox/station))
+	for(var/obj/O in locate(/area/shuttle/vox/arkship))
 		if(istype(O,target)) total_amount++
 		for(var/obj/I in O.contents)
 			if(istype(I, target))
@@ -893,7 +901,7 @@ var/global/list/all_objectives = list()
 /datum/objective/heist/salvage/check_completion()
 	var/total_amount = 0
 
-	for(var/obj/item/O in locate(/area/shuttle/vox/station))
+	for(var/obj/item/O in locate(/area/shuttle/vox/arkship))
 
 		var/obj/item/stack/sheet/S
 		if(istype(O, /obj/item/stack/sheet))
@@ -950,10 +958,10 @@ var/heist_rob_total = 0
 	explanation_text = "Ransack the station for any valuables."
 /datum/objective/heist/robbery/check_completion()
 	heist_rob_total = 0
-	for(var/atom/movable/AM in locate(/area/shuttle/vox/station))
+	for(var/atom/movable/AM in locate(/area/shuttle/vox/arkship))
 		heist_recursive_price_check(AM)
-	if(heist_rob_total >= target_amount) return 1
-	return 0*/
+	if(heist_rob_total >= target_amount) return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS*/
 
 /datum/objective/heist/inviolate_crew
 	explanation_text = "Do not leave any Vox behind, alive or dead."
@@ -961,8 +969,8 @@ var/heist_rob_total = 0
 /datum/objective/heist/inviolate_crew/check_completion()
 	var/datum/game_mode/heist/H = ticker.mode
 	if(H.is_raider_crew_safe())
-		return TRUE
-	return FALSE
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
 
 #define MAX_VOX_KILLS 13 //Number of kills during the round before the Inviolate is broken.
 						 //Would be nice to use vox-specific kills but is currently not feasible.
@@ -973,5 +981,5 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 
 /datum/objective/heist/inviolate_death/check_completion()
 	if(vox_kills > MAX_VOX_KILLS)
-		return FALSE
-	return TRUE
+		return OBJECTIVE_LOSS
+	return OBJECTIVE_WIN

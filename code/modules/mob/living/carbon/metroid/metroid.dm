@@ -99,14 +99,14 @@
 	return ..()
 
 /mob/living/carbon/slime/regenerate_icons()
-	overlays.len = 0
+	cut_overlays()
 	//var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
 	//icon_dead = "[icon_text] dead"
 	//if(stat != DEAD)
 		//icon_state = icon_text
 	if(stat != DEAD)
 		if(mood)
-			overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
+			add_overlay(image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]"))
 	//else
 		//icon_state = icon_dead
 	..()
@@ -253,7 +253,7 @@
 
 		//paralysis += 1
 
-	show_message("<span class='warning'>The blob attacks you!</span>")
+	to_chat("<span class='warning'>The blob attacks you!</span>")
 
 	adjustFireLoss(damage)
 
@@ -269,9 +269,7 @@
 	return
 
 /mob/living/carbon/slime/meteorhit(O)
-	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
-			M.show_message(text("<span class='warning'>[] has been hit by []</span>", src, O), 1)
+	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
 	if (health > 0)
 		adjustBruteLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
 		adjustFireLoss(30)
@@ -288,10 +286,7 @@
 	if(Victim) return // can't attack while eating!
 
 	if (health > -100)
-
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("<span class='warning'><B>The [M.name] has glomped []!</B></span>", src), 1)
+		visible_message("<span class='warning'><B>The [M.name] has glomped [src]!</B></span>")
 
 		var/damage = rand(1, 3)
 		attacked += 5
@@ -345,9 +340,7 @@
 				return
 			if (health > 0)
 				attacked += 10
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[M.name] has attacked [src]!</B></span>"), 1)
+				visible_message("<span class='warning'><B>[M.name] has attacked [src]!</B></span>")
 				adjustBruteLoss(rand(1, 3))
 				updatehealth()
 	return
@@ -367,15 +360,11 @@
 	if(Victim)
 		if(Victim == M)
 			if(prob(60))
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>", 1)
+				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>")
 				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 
 			else
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='warning'>[M] manages to wrestle \the [name] off!</span>", 1)
+				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off!</span>")
 				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 
 				if(prob(90) && !client)
@@ -396,15 +385,11 @@
 		else
 			M.do_attack_animation(src)
 			if(prob(30))
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [Victim]!</span>", 1)
+				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [Victim]!</span>")
 				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 
 			else
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='warning'>[M] manages to wrestle \the [name] off of [Victim]!</span>", 1)
+				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off of [Victim]!</span>")
 				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 
 				if(prob(80) && !client)
@@ -435,9 +420,7 @@
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message("<span class='warning'><B>[src] has been touched with the stun gloves by [M]!</B></span>", 1, "<span class='warning'>You hear someone fall.</span>", 2)
+					visible_message("<span class='warning'><B>[src] has been touched with the stun gloves by [M]!</B></span>", blind_message = "<span class='warning'>You hear someone fall.</span>")
 					return
 				else
 					to_chat(M, "<span class='warning'>Not enough charge! </span>")
@@ -472,17 +455,13 @@
 
 
 				playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has punched []!</B></span>", M, src), 1)
+				visible_message("<span class='warning'><B>[M] has punched [src]!</B></span>")
 
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has attempted to punch []!</B></span>", M, src), 1)
+				visible_message("<span class='warning'><B>[M] has attempted to punch [src]!</B></span>")
 	return
 
 
@@ -498,9 +477,7 @@
 
 	switch(M.a_intent)
 		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>"), 1)
+			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
 
 		if ("hurt")
 
@@ -510,20 +487,14 @@
 				var/damage = rand(15, 30)
 				if (damage >= 25)
 					damage = rand(20, 40)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'><B>[] has attacked [name]!</B></span>", M), 1)
+					visible_message("<span class='warning'><B>[M] has attacked [name]!</B></span>")
 				else
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'><B>[] has wounded [name]!</B></span>", M), 1)
+					visible_message("<span class='warning'><B>[M] has wounded [name]!</B></span>")
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has attempted to lunge at [name]!</B></span>", M), 1)
+				visible_message("<span class='warning'><B>[M] has attempted to lunge at [name]!</B></span>")
 
 		if ("grab")
 			M.Grab(src)
@@ -534,9 +505,7 @@
 			attacked += 10
 
 			if(prob(95))
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has tackled [name]!</B></span>", M), 1)
+				visible_message("<span class='warning'><B>[M] has tackled [name]!</B></span>")
 
 				if(Victim)
 					Victim = null
@@ -560,9 +529,7 @@
 
 			else
 				drop_item()
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has disarmed [name]!</B></span>", M), 1)
+				visible_message("<span class='warning'><B>[M] has disarmed [name]!</B></span>")
 			adjustBruteLoss(damage)
 			updatehealth()
 	return

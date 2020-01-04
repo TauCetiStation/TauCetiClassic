@@ -316,7 +316,10 @@ var/list/cult_datums = list()
 	if (!isturf(user.loc))
 		to_chat(user, "<span class='userdanger'>You do not have enough space to write a proper rune.</span>")
 		return
-
+	for(var/obj/structure/obj_to_check in user.loc)
+		if(obj_to_check.density)
+			to_chat(user, "<span class='warning'>There is not enough space to write a proper rune.</span>")
+			return
 	if (length(cult_runes) >= CULT_RUNES_LIMIT + length(ticker.mode.cult)) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
 		alert("The cloth of reality can't take that much of a strain. Remove some runes first!")
 		return

@@ -172,9 +172,9 @@
 	if(isscrewdriver(W) && anchored)
 		src.panel_open = !src.panel_open
 		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
-		src.overlays.Cut()
+		src.cut_overlays()
 		if(src.panel_open)
-			src.overlays += image(src.icon, "[initial(icon_state)]-panel")
+			src.add_overlay(image(src.icon, "[initial(icon_state)]-panel"))
 		src.updateUsrDialog()
 
 		return
@@ -547,9 +547,7 @@
 	if (!message)
 		return
 
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span>",2)
-	return
+	audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span>")
 
 /obj/machinery/vending/power_change()
 	if(stat & BROKEN)

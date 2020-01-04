@@ -145,11 +145,11 @@
 	update_icon()
 
 /obj/item/weapon/storage/pill_bottle/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(wrapper_color)
 		var/image/I = image(icon, "pillbottle_wrap")
 		I.color = wrapper_color
-		overlays += I
+		add_overlay(I)
 
 /obj/item/weapon/storage/pill_bottle/bicaridine
 	name = "pill bottle (Bicaridine)"

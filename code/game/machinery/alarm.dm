@@ -780,7 +780,7 @@
 
 
 /obj/machinery/alarm/attack_alien(mob/living/carbon/alien/humanoid/user)
-	user.show_message("You don't want to break these things", 1);
+	to_chat(user, "You don't want to break these things");
 	return
 
 /obj/machinery/alarm/attackby(obj/item/W, mob/user)
@@ -1180,9 +1180,9 @@ FIRE ALARM
 
 	if(is_station_level(z) || is_mining_level(z))
 		if(security_level)
-			overlays += image('icons/obj/monitors.dmi', "overlay_[get_security_level()]")
+			add_overlay(image('icons/obj/monitors.dmi', "overlay_[get_security_level()]"))
 		else
-			overlays += image('icons/obj/monitors.dmi', "overlay_green")
+			add_overlay(image('icons/obj/monitors.dmi', "overlay_green"))
 
 	update_icon()
 

@@ -146,11 +146,11 @@
 				if (ID in virusDB)
 					var/datum/data/record/V = virusDB[ID]
 					message += "<span class='warning'>Warning: Pathogen [V.fields["name"]] detected in subject's blood. Known antigen : [V.fields["antigen"]]</span><br>"
-//			user.show_message(text("<span class='warning'>Warning: Unknown pathogen detected in subject's blood.</span>"))
+//			user.oldshow_message(text("<span class='warning'>Warning: Unknown pathogen detected in subject's blood.</span>"))
 		if(C.roundstart_quirks.len)
 			message += "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span><br>"
 	if(M.getCloneLoss())
-		user.show_message("<span class='warning'>Subject appears to have been imperfectly cloned.</span>")
+		to_chat(user, "<span class='warning'>Subject appears to have been imperfectly cloned.</span>")
 	for(var/datum/disease/D in M.viruses)
 		if(!D.hidden[SCANNER])
 			message += "<span class = 'warning bold'>Warning: [D.form] Detected</span>\n<span class = 'warning'>Name: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span><br>"
@@ -158,7 +158,7 @@
 		message += "<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span><br>"
 	if(M.has_brain_worms())
 		message += "<span class='warning'>Subject suffering from aberrant brain activity. Recommend further scanning.</span><br>"
-	else if(M.getBrainLoss() >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)
+	else if(M.getBrainLoss() >= 100 || (istype(M, /mob/living/carbon/human) && !M:has_brain() && M:should_have_organ(O_BRAIN)))
 		message += "<span class='warning'>Subject is brain dead.</span>"
 	else if(M.getBrainLoss() >= 60)
 		message += "<span class='warning'>Severe brain damage detected. Subject likely to have mental retardation.</span><br>"
@@ -256,7 +256,7 @@
 	src.loc = T
 
 /obj/item/examine(mob/user)
-	..()
+	. = ..()
 	var/size
 	switch(src.w_class)
 		if(1.0)
@@ -480,7 +480,7 @@
 			return FALSE
 		//fat mutation
 		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
-			if(FAT in H.mutations)
+			if(HAS_TRAIT(H, TRAIT_FAT))
 				//testing("[M] TOO FAT TO WEAR [src]!")
 				if(!(flags & ONESIZEFITSALL))
 					if(!disable_warning)
@@ -874,8 +874,7 @@
 		M.adjustBruteLoss(10)
 		*/
 	if(M != user)
-		for(var/mob/O in (viewers(M) - user - M))
-			O.show_message("<span class='warning'>[M] has been stabbed in the eye with [src] by [user].</span>", 1)
+		visible_message("<span class='warning'>[M] has been stabbed in the eye with [src] by [user].</span>", ignored_mobs = list(user, M))
 		to_chat(M, "<span class='warning'>[user] stabs you in the eye with [src]!</span>")
 		to_chat(user, "<span class='warning'>You stab [M] in the eye with [src]!</span>")
 	else
@@ -926,7 +925,7 @@
 		if(blood_overlay.color != dirt_overlay.color)
 			overlays.Remove(blood_overlay)
 			blood_overlay.color = dirt_overlay.color
-			overlays += blood_overlay
+			add_overlay(blood_overlay)
 
 /obj/item/add_blood(mob/living/carbon/human/M)
 	if (!..())
@@ -954,8 +953,7 @@ var/global/list/items_blood_overlay_by_type = list()
 		blood_overlay = IMG
 
 /obj/item/proc/showoff(mob/user)
-	for (var/mob/M in view(user))
-		M.show_message("[user] holds up [src]. <a HREF=?src=\ref[M];lookitem=\ref[src]>Take a closer look.</a>",1)
+	user.visible_message("[user] holds up [src]. <a HREF=?_src_=usr;lookitem=\ref[src]>Take a closer look.</a>")
 
 /mob/living/carbon/verb/showoff()
 	set name = "Show Held Item"
@@ -1003,3 +1001,6 @@ var/global/list/items_blood_overlay_by_type = list()
 // Is called when somebody is stripping us using the panel. Return TRUE to allow the strip, FALSE to disallow.
 /obj/item/proc/onStripPanelUnEquip(mob/living/who, strip_gloves = FALSE)
 	return TRUE
+
+/obj/item/proc/play_unique_footstep_sound() // TODO: port https://github.com/tgstation/tgstation/blob/master/code/datums/components/squeak.dm
+	return

@@ -1,5 +1,5 @@
 /mob/living/proc/add_quirk(quirk, spawn_effects)
-	if(has_trait(quirk))
+	if(HAS_TRAIT(src, quirk))
 		return
 	if(!SSquirks || !SSquirks.quirks[quirk])
 		return
@@ -13,5 +13,5 @@
 		qdel(T)
 		return TRUE
 
-/mob/living/proc/has_quirk(quirk)
-	return roundstart_quirks[quirk]
+/mob/living/proc/has_quirk(quirktype)
+	return roundstart_quirks[quirktype]
