@@ -13,6 +13,7 @@ var/list/ai_verbs_default = list(
 	/mob/living/silicon/ai/proc/pick_icon,
 	/mob/living/silicon/ai/proc/show_laws_verb,
 	/mob/living/silicon/ai/proc/toggle_acceleration,
+	/mob/living/silicon/ai/proc/toggle_retransmit,
 	/mob/living/silicon/ai/proc/change_floor,
 	/mob/living/silicon/ai/proc/ai_emergency_message
 )
@@ -78,10 +79,6 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	verbs |= ai_verbs_default
-	if (allow_auto_broadcast_messages)
-		verbs |= list(/mob/living/silicon/ai/proc/retransmit_off)
-	else
-		verbs |= list(/mob/living/silicon/ai/proc/retransmit_on)
 
 /mob/living/silicon/ai/proc/hcattack_ai(atom/A)
 	if(!holo || !isliving(A) || !in_range(eyeobj, A))
@@ -98,7 +95,6 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/remove_ai_verbs()
 	verbs -= ai_verbs_default
-	verbs -= list(/mob/living/silicon/ai/proc/retransmit_on, /mob/living/silicon/ai/proc/retransmit_off)
 
 /mob/living/silicon/ai/atom_init(mapload, datum/ai_laws/L, obj/item/device/mmi/B, safety = 0)
 	. = ..()
@@ -346,21 +342,14 @@ var/list/ai_verbs_default = list(
 	if (aiRadio)
 		aiRadio.talk_into(src, message)
 
-/mob/living/silicon/ai/proc/retransmit_on()
+/mob/living/silicon/ai/proc/toggle_retransmit()
 	set category = "AI Commands"
-	set name = "Toggle Auto Messages On"
-	allow_auto_broadcast_messages = TRUE
-	to_chat(usr, "You core is <b>connected</b> to station information module.")
-	verbs -= list(/mob/living/silicon/ai/proc/retransmit_on)
-	verbs |= list(/mob/living/silicon/ai/proc/retransmit_off)
-
-/mob/living/silicon/ai/proc/retransmit_off()
-	set category = "AI Commands"
-	set name = "Toggle Auto Messages Off"
-	allow_auto_broadcast_messages = FALSE
-	to_chat(usr, "You core is <b>disconnected</b> from station information module.")
-	verbs -= list(/mob/living/silicon/ai/proc/retransmit_off)
-	verbs |= list(/mob/living/silicon/ai/proc/retransmit_on)
+	set name = "Toggle Auto Messages"
+	if (allow_auto_broadcast_messages)
+		to_chat(usr, "Your core is <b>disconnected</b> from station information module.")
+	else
+		to_chat(usr, "Your core is <b>connected</b> to station information module.")
+	allow_auto_broadcast_messages = !allow_auto_broadcast_messages
 
 /mob/living/silicon/ai/var/message_cooldown = 0
 /mob/living/silicon/ai/proc/ai_announcement()
