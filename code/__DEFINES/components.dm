@@ -35,6 +35,27 @@
 // /atom signals
 #define COMSIG_ATOM_ENTERED "atom_entered"						//from base of atom/Entered(): (atom/movable/entering, /atom)
 
+#define COMSIG_MOUSEDROP_ONTO "mousedrop_onto"					//from base of atom/MouseDrop(): (/atom/over, /mob/user)
+	#define COMPONENT_NO_MOUSEDROP 1
+#define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"			//from base of atom/MouseDrop_T: (/atom/from, /mob/user)
+
 // /atom/movable signals
 #define COMSIG_MOVABLE_CROSSED "movable_crossed"				//from base of atom/movable/Crossed(): (/atom/movable)
 #define COMSIG_MOVABLE_MOVED "movable_moved"					//from base of atom/movable/Moved(): (/atom, dir)
+
+// /obj/item signals
+#define COMSIG_ITEM_ATTACK "item_attack"						//from base of obj/item/attack(): (/mob/living/target, /mob/living/user, def_zone)
+	#define COMPONENT_ITEM_NO_ATTACK 1
+
+#define COMSIG_ITEM_ATTACK_SELF "item_attack_self"					//from base of obj/item/attack_self(): (/mob/user)
+	#define COMPONENT_NO_INTERACT 1
+
+#define COMSIG_ITEM_SHIFTCLICKWITH "item_shiftclickwith"			//from base of mob/ShiftClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_CTRLCLICKWITH "item_ctrlclickwith"				//from base of mob/CtrlClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_ALTCLICKWITH "item_altclickwith"				//from base of mob/AltClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_CTRLSHIFTCLICKWITH "item_ctrlshiftclickwith"	//from base of mob/CtrlShiftClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_MIDDLECLICKWITH "item_middleclickwith"			//from base of mob/MiddleClickOn(): (atom/target, mob/user)
+	#define COMSIG_ITEM_CANCEL_CLICKWITH 1
+
+#define COMSIG_ITEM_MOUSEDROP_ONTO "item_mousedrop_onto"			//from base of atom/MouseDrop(): (/atom/over, /atom/dropping, /mob/user)
+	//#define COMPONENT_NO_MOUSEDROP 1
