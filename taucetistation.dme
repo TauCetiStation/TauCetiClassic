@@ -130,6 +130,7 @@
 #include "code\_onclick\hud\ai.dm"
 #include "code\_onclick\hud\alert.dm"
 #include "code\_onclick\hud\alien.dm"
+#include "code\_onclick\hud\default_hud.dm"
 #include "code\_onclick\hud\facehugger.dm"
 #include "code\_onclick\hud\fullscreen.dm"
 #include "code\_onclick\hud\hud.dm"

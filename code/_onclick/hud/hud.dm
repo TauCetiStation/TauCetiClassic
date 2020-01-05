@@ -177,6 +177,8 @@ var/global/list/available_ui_styles = list(
 		blob_hud()
 	else if(isessence(mymob))
 		changeling_essence_hud()
+	else if(isliving(mymob))
+		default_hud(ui_color, ui_alpha)
 
 	if(istype(mymob.loc,/obj/mecha))
 		show_hud(HUD_STYLE_REDUCED)
