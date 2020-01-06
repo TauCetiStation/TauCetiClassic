@@ -8,8 +8,8 @@
 // But incase of next tier battery (30000), number of shots will be 37, which is alot.
 #define PLASMA_SHOT_ENERGY_COST (20000 / number_of_shots)
 #define PLASMA_PROJECTILE_ENERGY_COST FLOOR(PLASMA_SHOT_ENERGY_COST / max_projectile_per_fire, 1)
-#define PLASMAGUN_NORMAL "normal"
-#define PLASMAGUN_OVERCHARGE "overcharge"
+#define PLASMAGUN_NORMAL_TYPE "normal"
+#define PLASMAGUN_OVERCHARGE_TYPE "overcharge"
 
 /obj/item/weapon/gun/plasma // this will act as placeholder too (previously it was L10-C under projectile guns).
 	name = "plasma 10-bc"
@@ -25,8 +25,8 @@
 	var/overcharge_fire_sound = 'sound/weapons/guns/plasma10_overcharge_shot.ogg'
 
 	var/list/ammo_type = list(
-		PLASMAGUN_NORMAL     = /obj/item/ammo_casing/plasma,
-		PLASMAGUN_OVERCHARGE = /obj/item/ammo_casing/plasma/overcharge
+		PLASMAGUN_NORMAL_TYPE     = /obj/item/ammo_casing/plasma,
+		PLASMAGUN_OVERCHARGE_TYPE = /obj/item/ammo_casing/plasma/overcharge
 		)
 
 	var/mag_type = /obj/item/ammo_box/magazine/plasma
@@ -44,8 +44,8 @@
 	overcharge_fire_sound = 'sound/weapons/guns/plasma10_overcharge_massive_shot.ogg'
 
 	ammo_type = list(
-		PLASMAGUN_NORMAL     = /obj/item/ammo_casing/plasma,
-		PLASMAGUN_OVERCHARGE = /obj/item/ammo_casing/plasma/overcharge/massive
+		PLASMAGUN_NORMAL_TYPE     = /obj/item/ammo_casing/plasma,
+		PLASMAGUN_OVERCHARGE_TYPE = /obj/item/ammo_casing/plasma/overcharge/massive
 		)
 
 	w_class = ITEM_SIZE_HUGE
@@ -88,11 +88,11 @@
 	var/max_projectile_per_fire = src.max_projectile_per_fire
 
 	if(!overcharged)
-		shot = ammo_type[PLASMAGUN_NORMAL]
+		shot = ammo_type[PLASMAGUN_NORMAL_TYPE]
 		fire_delay = initial(fire_delay)
 		fire_sound = initial(fire_sound)
 	else
-		shot = ammo_type[PLASMAGUN_OVERCHARGE]
+		shot = ammo_type[PLASMAGUN_OVERCHARGE_TYPE]
 		fire_delay = 0
 		fire_sound = overcharge_fire_sound
 		max_projectile_per_fire = 1
@@ -184,5 +184,5 @@
 	update_inv_mob()
 
 #undef PLASMA_PROJECTILE_ENERGY_COST
-#undef PLASMAGUN_NORMAL
-#undef PLASMAGUN_OVERCHARGE
+#undef PLASMAGUN_NORMAL_TYPE
+#undef PLASMAGUN_OVERCHARGE_TYPE
