@@ -45073,12 +45073,6 @@
 /obj/effect/decal/cleanable/liquid_fuel,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
-"nIb" = (
-/obj/structure/closet/emergency_wall{
-	pixel_y = 32
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/bridge)
 "nIc" = (
 /obj/structure/rack,
 /obj/item/seeds/cabbageseed,
@@ -120287,7 +120281,7 @@ iir
 iir
 iir
 jIl
-nIb
+vOc
 jkw
 jIl
 kHU
