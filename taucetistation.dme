@@ -200,6 +200,7 @@
 #include "code\datums\components\_component.dm"
 #include "code\datums\components\footstep.dm"
 #include "code\datums\components\slippery.dm"
+#include "code\datums\components\swiping.dm"
 #include "code\datums\diseases\appendicitis.dm"
 #include "code\datums\diseases\brainrot.dm"
 #include "code\datums\diseases\cold.dm"
