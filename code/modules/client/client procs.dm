@@ -160,7 +160,7 @@ var/list/blacklisted_builds = list(
 	clients += src
 	directory[ckey] = src
 
-	global.ahelp_tickets.ClientLogin(src)
+	global.ahelp_tickets?.ClientLogin(src)
 
 	//Admin Authorisation
 	holder = admin_datums[ckey]
