@@ -45074,9 +45074,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "nIb" = (
-/obj/structure/closet/emergency_wall{
-	pixel_y = 32
-	},
+/obj/structure/closet/walllocker/emerglocker/north,
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "nIc" = (
