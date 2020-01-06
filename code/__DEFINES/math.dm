@@ -32,7 +32,7 @@
 #endif
 #define CLAMP01(x) (CLAMP(x, 0, 1))
 
-#define SIGN(x) ( (x)!=0 ? (x) / abs(x) : 0 )
+#define SIGN(x) (x < 0 ? -1 : 1)
 
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 
