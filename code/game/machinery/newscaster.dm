@@ -850,7 +850,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 			if(size - COMMENTS_ON_PAGE != 0) //Create new page, if comments on the page are equal 
 				FM.pages[lenght].comments += COMMENT
-			else:
+			else
 				var/datum/comment_pages/CP = new /datum/comment_pages
 				FM.pages += CP
 				CP.comments += COMMENT
