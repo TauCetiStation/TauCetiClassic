@@ -3,6 +3,26 @@
 	flags = NOBLOODY
 	can_embed = 0
 
+	sweep_step = 2
+
+/obj/item/weapon/melee/energy/atom_init()
+	. = ..()
+	make_swipable(src,
+					interupt_on_sweep_hit_types = list(/obj/structure/table, /obj/machinery/disposal, /obj/structure/rack),
+
+					can_sweep=TRUE,
+					can_spin=TRUE,
+
+					can_sweep_call=CALLBACK(src, /obj/item/weapon/melee/energy.proc/can_sweep),
+					can_spin_call=CALLBACK(src, /obj/item/weapon/melee/energy.proc/can_spin),
+					)
+
+/obj/item/weapon/melee/energy/proc/can_sweep(mob/user)
+	return active
+
+/obj/item/weapon/melee/energy/proc/can_spin(mob/user)
+	return active
+
 /obj/item/weapon/melee/energy/get_current_temperature()
 	if(active)
 		return 3500
@@ -28,6 +48,8 @@
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	sharp = 1
 	edge = 1
+
+	sweep_step = 5
 
 /obj/item/weapon/melee/energy/axe/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='warning'><b>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</b></span>")

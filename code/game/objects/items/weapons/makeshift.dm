@@ -13,6 +13,26 @@
 	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 
+/obj/item/weapon/twohanded/spear/atom_init()
+	. = ..()
+	make_swipable(src,
+					can_push=TRUE,
+					hit_on_harm_push = TRUE,
+					can_push_on_chair=TRUE,
+
+					can_pull=TRUE,
+					hit_on_harm_pull = TRUE,
+
+					can_push_call=CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_push),
+					can_pull_call=CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_pull),
+					)
+
+/obj/item/weapon/twohanded/spear/proc/can_sweep_push(atom/target, mob/user)
+	return wielded
+
+/obj/item/weapon/twohanded/spear/proc/can_sweep_pull(atom/target, mob/user)
+	return wielded
+
 /obj/item/weapon/twohanded/spear/update_icon()
 	icon_state = "spearglass[wielded]"
 
@@ -49,6 +69,14 @@
 
 /obj/item/weapon/melee/cattleprod/atom_init()
 	. = ..()
+	make_swipable(src,
+					can_push=TRUE,
+					hit_on_harm_push = TRUE,
+					can_push_on_chair=TRUE,
+
+					can_pull=TRUE,
+					hit_on_harm_pull = TRUE,
+					)
 	update_icon()
 
 /obj/item/weapon/melee/cattleprod/attack_self(mob/user)

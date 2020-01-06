@@ -79,6 +79,17 @@
 	slot_flags = SLOT_FLAGS_BELT
 	force = 10
 
+	sweep_step = 2
+
+/obj/item/weapon/melee/classic_baton/atom_init()
+	. = ..()
+	make_swipable(src,
+					interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep),
+
+					can_sweep=TRUE,
+					can_spin = TRUE,
+					)
+
 /obj/item/weapon/melee/classic_baton/attack(mob/M, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
@@ -126,6 +137,40 @@
 	w_class = ITEM_SIZE_SMALL
 	force = 3
 	var/on = 0
+
+	sweep_step = 5
+
+/obj/item/weapon/melee/telebaton/atom_init()
+	. = ..()
+	make_swipable(src,
+					interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep),
+
+					can_sweep=TRUE,
+					can_spin=TRUE,
+
+					can_push=TRUE,
+					hit_on_harm_push = TRUE,
+
+					can_pull=TRUE,
+					hit_on_harm_pull = TRUE,
+
+					can_sweep_call=CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep),
+					can_spin_call=CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_spin),
+					can_push_call=CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep_push),
+					can_pull_call=CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep_pull),
+					)
+
+/obj/item/weapon/melee/telebaton/proc/can_sweep()
+	return on
+
+/obj/item/weapon/melee/telebaton/proc/can_spin()
+	return on
+
+/obj/item/weapon/melee/telebaton/proc/can_sweep_push()
+	return on
+
+/obj/item/weapon/melee/telebaton/proc/can_sweep_pull()
+	return on
 
 /obj/item/weapon/melee/telebaton/attack_self(mob/user)
 	on = !on

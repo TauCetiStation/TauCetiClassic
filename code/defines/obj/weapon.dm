@@ -59,6 +59,10 @@
 	m_amt = 50
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
+/obj/item/weapon/cane/atom_init()
+	. = ..()
+	make_swipable(src, can_push=TRUE, can_pull=TRUE)
+
 /obj/item/weapon/gift
 	name = "gift"
 	desc = "A wrapped item."
@@ -296,11 +300,27 @@
 	flags = NOSHIELD
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
+/obj/item/weapon/staff/atom_init()
+	. = ..()
+	make_swipable(src, can_push=TRUE, can_pull=TRUE)
+
 /obj/item/weapon/staff/broom
 	name = "broom"
 	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "broom"
+
+/obj/item/weapon/staff/broom/atom_init()
+	. = ..()
+	make_swipable(src,
+					can_push=TRUE,
+					can_push_on_chair=TRUE,
+
+					can_pull=TRUE,
+
+					can_sweep=TRUE,
+					can_spin=TRUE,
+					)
 
 /obj/item/weapon/staff/gentcane
 	name = "Gentlemans Cane"
@@ -443,6 +463,10 @@
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
 
+/obj/item/weapon/hatchet/atom_init()
+	. = ..()
+	make_swipable(src, interupt_on_sweep_hit_types=list(/obj, /turf), can_sweep=TRUE, can_spin=TRUE)
+
 /obj/item/weapon/hatchet/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
@@ -469,6 +493,12 @@
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
+
+/obj/item/weapon/scythe/atom_init()
+	. = ..()
+	make_swipable(src,
+					interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep),
+					can_sweep=TRUE, can_spin=TRUE)
 
 /obj/item/weapon/scythe/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
