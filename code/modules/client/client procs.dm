@@ -307,7 +307,7 @@ var/list/blacklisted_builds = list(
 	if(holder)
 		holder.owner = null
 		admins -= src
-	global.ahelp_tickets.ClientLogout(src)
+	global.ahelp_tickets?.ClientLogout(src)
 	directory -= ckey
 	mentors -= src
 	clients -= src
