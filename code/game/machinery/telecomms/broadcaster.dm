@@ -685,7 +685,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			var/rendered = "[part_a][source][part_b]\"[text]\"[part_c]"
 
 			for (var/mob/R in heard_normal)
-				R.show_message(rendered, 2)
+				R.show_message(rendered, SHOWMSG_AUDIO)
 
 		/* --- Process all the mobs that heard a garbled voice (did not understand) --- */
 			// Displays garbled message (ie "f*c* **u, **i*er!")
@@ -695,7 +695,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			var/rendered = "[part_a][source][part_b][quotedmsg][part_c]"
 
 			for (var/mob/R in heard_garbled)
-				R.show_message(rendered, 2)
+				R.show_message(rendered, SHOWMSG_AUDIO)
 
 
 		/* --- Complete gibberish. Usually happens when there's a compressed message --- */
@@ -705,7 +705,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			var/rendered = "[part_a][Gibberish(source, compression + 50)][part_b][quotedmsg][part_c]"
 
 			for (var/mob/R in heard_gibberish)
-				R.show_message(rendered, 2)
+				R.show_message(rendered, SHOWMSG_AUDIO)
 
 //Use this to test if an obj can communicate with a Telecommunications Network
 

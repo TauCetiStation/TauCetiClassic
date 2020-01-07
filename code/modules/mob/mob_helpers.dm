@@ -384,9 +384,9 @@ var/list/intents = list("help","disarm","grab","hurt")
 	for(var/mob/M in targets)
 		var/turf/targetturf = get_turf(M)
 		if((targetturf.z == sourceturf.z))
-			M.show_message("<span class='info'>[bicon(broadcast_source)] [message]</span>", 1)
+			to_chat(M, "<span class='info'>[bicon(broadcast_source)] [message]</span>")
 	for(var/mob/dead/observer/G in player_list) //Ghosts? Why not.
-		G.show_message("<span class='info'>[bicon(broadcast_source)] [message]</span>", 1)
+		to_chat(G, "<span class='info'>[bicon(broadcast_source)] [message]</span>")
 
 /mob/living/proc/assess_perp(obj/access_obj, check_access, auth_weapons, check_records, check_arrest)
 	if(stat == DEAD)
@@ -454,7 +454,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 	if(threatcount == SAFE_PERP)
 		return SAFE_PERP
 
-	if(!istype(src, /mob/living/simple_animal/hostile/retaliate/goat))
+	if(!istype(src, /mob/living/simple_animal/hostile/retaliate/goat) && !istype(src, /mob/living/simple_animal/hostile/mining_drone))
 		threatcount += 4
 	return threatcount
 

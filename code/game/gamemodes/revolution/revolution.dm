@@ -372,6 +372,8 @@
 //Announces the end of the game with all relavent information stated//
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/declare_completion()
+	if(name == "rp-revolution") // hack, we should move game_mode/revolution/rp_revolution to game_mode/rp_revolution
+		return ..()
 	completion_text += "<h3>Revolution mode resume:</h3>"
 	if(!config.objectives_disabled)
 		if(finished == 1)

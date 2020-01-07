@@ -1,7 +1,8 @@
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'Click On Held Object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
-	return
+	SSdemo.mark_dirty(src)
+	SSdemo.mark_dirty(user)
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
@@ -14,6 +15,9 @@
 	add_fingerprint(user)
 	if(W && !(W.flags & NOBLUDGEON))
 		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
+	SSdemo.mark_dirty(src)
+	SSdemo.mark_dirty(W)
+	SSdemo.mark_dirty(user)
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	if(!istype(I) || !ismob(user))
@@ -36,6 +40,9 @@
 		if(istype(H.wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = H.wear_suit
 			V.attack_reaction(src, REACTION_ATACKED, user)
+	SSdemo.mark_dirty(src)
+	SSdemo.mark_dirty(I)
+	SSdemo.mark_dirty(user)
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
@@ -44,7 +51,7 @@
 
 
 /obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
-	var/messagesource = M
+	var/mob/messagesource = M
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M,user,src))
 			return 0
@@ -169,11 +176,10 @@
 		if(!(user in viewers(M, null)))
 			showname = "."
 
-		for(var/mob/O in viewers(messagesource, null))
-			if(attack_verb.len)
-				O.show_message("<span class='warning'><B>[M] has been [pick(attack_verb)] with [src][showname] </B></span>", 1)
-			else
-				O.show_message("<span class='warning'><B>[M] has been attacked with [src][showname] </B></span>", 1)
+		if(attack_verb.len)
+			messagesource.visible_message("<span class='warning'><B>[M] has been [pick(attack_verb)] with [src][showname] </B></span>")
+		else
+			messagesource.visible_message("<span class='warning'><B>[M] has been attacked with [src][showname] </B></span>")
 
 		if(!showname && user)
 			if(user.client)
@@ -203,6 +209,9 @@
 					to_chat(M, "Aargh it burns!")
 		M.updatehealth()
 	add_fingerprint(user)
+	SSdemo.mark_dirty(src)
+	SSdemo.mark_dirty(M)
+	SSdemo.mark_dirty(user)
 	return 1
 
 /*

@@ -52,7 +52,7 @@
 		// Queen check
 		var/no_queen = 1
 		for(var/mob/living/carbon/alien/humanoid/queen/Q in queen_list)
-			if(Q.stat == DEAD || !Q.key && Q.brain_op_stage != 4)
+			if(Q.stat == DEAD || !Q.key && Q.has_brain())
 				continue
 			no_queen = 0
 
@@ -63,8 +63,7 @@
 		if(no_queen)
 			adjustToxLoss(-500)
 			to_chat(src, "<span class='notice'>You begin to evolve!</span>")
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("<span class='notice'><B>[src] begins to twist and contort!</B></span>"), 1)
+			visible_message("<span class='notice'><B>[src] begins to twist and contort!</B></span>")
 			var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (loc)
 			mind.transfer_to(new_xeno)
 			qdel(src)

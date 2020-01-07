@@ -297,7 +297,7 @@ var/global/list/tophats_list = list()
 			else
 				visible_message("<span class='warning'>[src] jumps out of [M_loc]!</span>")
 
-			M_loc.drop_from_inventory(src, M_loc)
+			M_loc.drop_from_inventory(src, M_loc.loc)
 
 			return jump_out(rec_level = rec_level - 1)
 

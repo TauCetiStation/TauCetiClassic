@@ -60,6 +60,9 @@
 	if((variable in VE_MASS_ICONS) && !check_rights(R_DEBUG|R_EVENT))
 		return
 
+	if((variable in VE_HIDDEN_LOG) && !check_rights(R_LOG))
+		return
+
 	if(isnull(var_value))
 		to_chat(usr, "Unable to determine variable type.")
 
