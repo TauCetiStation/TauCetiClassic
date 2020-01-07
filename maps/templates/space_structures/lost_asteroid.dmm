@@ -71,11 +71,8 @@
 /turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
 "n" = (
-/obj/machinery/mineral/output,
-/obj/machinery/conveyor{
-	id = "mining_internal"
-	},
-/turf/simulated/floor/plating/airless/asteroid,
+/obj/machinery/smartfridge/survival_pod/empty,
+/turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
 "o" = (
 /turf/simulated/floor/pod,
