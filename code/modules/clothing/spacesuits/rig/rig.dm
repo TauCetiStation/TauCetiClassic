@@ -926,7 +926,7 @@
 	desc = "A special helmet designed for deep-space exploration, no longer produced by NT. Has reinforced plating and improved protection against radiation."
 	icon_state = "rig0-geo"
 	item_state = "geologist_helm"
-	item_color = "geol"
+	item_color = "geo"
 	armor = list(melee = 60, bullet = 30, laser = 30,energy = 40, bomb = 55, bio = 100, rad = 20) //Decent-medium stats, since it's rare and belongs to some random guy.
 
 /obj/item/clothing/suit/space/rig/geologist

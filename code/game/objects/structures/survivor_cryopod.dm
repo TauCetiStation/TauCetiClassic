@@ -199,5 +199,5 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/jane_sidsuit(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
 
-	H.equip_to_slot_or_del(new /obj/item/weapon/dnainjector/nobreath(H), SLOT_L_HAND)
-	H.equip_to_slot_or_del(new /obj/item/weapon/dnainjector/xraymut(H), SLOT_L_HAND)
+	H.equip_to_slot_or_del(new /obj/item/weapon/dnainjector/nobreath(H), SLOT_L_STORE)
+	H.equip_to_slot_or_del(new /obj/item/weapon/dnainjector/xraymut(H), SLOT_R_STORE)
