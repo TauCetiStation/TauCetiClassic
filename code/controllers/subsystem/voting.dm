@@ -13,6 +13,7 @@ var/datum/subsystem/vote/SSvote
 	var/time_remaining = 0
 	var/mode = null
 	var/question = null
+	var/description = null
 	var/list/choices = list()
 	var/list/voted = list()
 	var/list/voting = list()
@@ -185,6 +186,18 @@ var/datum/subsystem/vote/SSvote
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
+				for (var/M in config.votable_modes)
+					var/list/submodes = new()
+					if (config.is_custom_mode_set(M))
+						for (var/datum/game_mode/D in config.get_runnable_modes(M))
+							submodes.Add(D.name)
+					else if (M == "secret")
+						for (var/datum/game_mode/D in config.get_runnable_modes())
+							submodes.Add(D.name)
+					if (submodes.len > 0)
+						description += "<b>[M]</b>: "
+						description += submodes.Join(", ")
+						description += "<br>"
 			if("crew_transfer")
 				if(!is_admin)
 					if(get_security_level() == "red" || get_security_level() == "delta")
@@ -254,6 +267,8 @@ var/datum/subsystem/vote/SSvote
 				. += " [html_decode("&#10003")]" // Checkmark
 			. += "</li>"
 		. += "</ul><hr>"
+		if (description)
+			. += "[description]<hr>"
 		if(admin)
 			. += "(<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a>) "
 	else
