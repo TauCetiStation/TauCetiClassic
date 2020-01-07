@@ -168,7 +168,7 @@ var/datum/subsystem/ticker/ticker
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
 	var/init_start = world.timeofday
 	//Create and announce mode
-	if(master_mode=="secret" || master_mode=="bs12" || master_mode=="tau classic")
+	if(config.is_hide_gamemode(master_mode))
 		hide_mode = 1
 
 	var/list/datum/game_mode/runnable_modes
@@ -195,7 +195,7 @@ var/datum/subsystem/ticker/ticker
 			src.mode = new mtype
 
 	else if(master_mode=="bs12" || master_mode=="tau classic")
-		runnable_modes = config.get_custom_modes(master_mode)
+		runnable_modes = config.get_runnable_modes(master_mode)
 		if (runnable_modes.len==0)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
