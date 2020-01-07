@@ -77,11 +77,8 @@
 	},
 /area/space_structures/mercenary_pod)
 "n" = (
-/obj/structure/closet/walllocker{
-	pixel_y = 32
-	},
-/obj/item/ammo_box/magazine/c5_9mm/letal,
-/obj/item/ammo_box/magazine/c5_9mm/letal,
+/obj/structure/alien/weeds,
+/obj/structure/stool/bed/nest,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor7"
 	},
@@ -448,7 +445,7 @@ a
 a
 a
 e
-z
+n
 z
 D
 e

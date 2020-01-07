@@ -187,3 +187,17 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen/double(H), SLOT_S_STORE)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/c5/mercenary(H), SLOT_BELT)
+
+/obj/structure/survivor_cryopod/clone
+	name = "DNA modifier"
+	desc = "Computer linked to this machine got broken, thus trapping someone inside!"
+	icon_state = "scanner_1"
+	open_state = "scanner_0"
+	survivor_memory = "You are nothing but another mere clone, doomed to die in this laboratory. Something went VERY wrong as you heard explosions and gunshots while scientist ran out of the room."
+
+/obj/structure/survivor_cryopod/clone/equip_survivor(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/jane_sidsuit(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
+
+	H.equip_to_slot_or_del(new /obj/item/weapon/dnainjector/nobreath(H), SLOT_L_HAND)
+	H.equip_to_slot_or_del(new /obj/item/weapon/dnainjector/xraymut(H), SLOT_L_HAND)

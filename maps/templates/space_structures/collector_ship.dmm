@@ -145,6 +145,7 @@
 /area/space_structures/collector_ship)
 "av" = (
 /obj/structure/rack,
+/obj/item/weapon/scrap_lump,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -202,6 +203,9 @@
 /area/space_structures/collector_ship)
 "aD" = (
 /obj/structure/displaycase/broken,
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
 /obj/item/weapon/gun/energy/laser/retro/jetsons,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
@@ -362,6 +366,7 @@
 /area/space_structures/collector_ship)
 "bc" = (
 /obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
