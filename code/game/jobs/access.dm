@@ -519,7 +519,7 @@
 	return joblist + list("Prisoner")
 
 /obj/proc/GetJobName() //Used in secHUD icon generation
-	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id) && !istype(src,/obj/item/weapon/card/id/syndicate))
+	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
 		return
 
 	var/jobName
