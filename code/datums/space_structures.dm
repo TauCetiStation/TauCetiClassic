@@ -126,7 +126,7 @@
 	name = "Lost Asteroid"
 	structure_id = "lost_asteroid"
 	desc = "Undiscovered asteroid"
-	mappath = "maps/templates/space_structures/lost_asteroid.dmm"
+	mappath = "maps/templates/space_structures/remote_asteroid.dmm"
 
 /datum/map_template/space_structure/collector_ship
 	name = "Collector Ship"

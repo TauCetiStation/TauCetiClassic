@@ -9,11 +9,10 @@
 /turf/simulated/mineral/random/labormineral,
 /area/space_structures/lost_asteroid)
 "d" = (
-/obj/machinery/telecomms/relay,
-/turf/simulated/floor/pod,
+/turf/simulated/mineral/random/high_chance,
 /area/space_structures/lost_asteroid)
 "e" = (
-/turf/simulated/mineral/random/high_chance,
+/turf/simulated/wall,
 /area/space_structures/lost_asteroid)
 "f" = (
 /obj/structure/inflatable/survival,
@@ -27,9 +26,6 @@
 /turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
 "h" = (
-/turf/simulated/wall,
-/area/space_structures/lost_asteroid)
-"i" = (
 /obj/machinery/mineral/unloading_machine{
 	icon_state = "unloader-corner"
 	},
@@ -37,7 +33,7 @@
 	icon_state = "asteroidplating"
 	},
 /area/space_structures/lost_asteroid)
-"j" = (
+"i" = (
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "mining_external"
@@ -50,10 +46,10 @@
 	icon_state = "asteroidplating"
 	},
 /area/space_structures/lost_asteroid)
-"k" = (
+"j" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space_structures/lost_asteroid)
-"l" = (
+"k" = (
 /obj/structure/window/reinforced/tinted,
 /obj/structure/window/reinforced/tinted{
 	dir = 4
@@ -69,53 +65,46 @@
 	icon_state = "asteroidplating"
 	},
 /area/space_structures/lost_asteroid)
-"m" = (
+"l" = (
 /obj/structure/fans,
 /turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
-"n" = (
+"m" = (
+/obj/machinery/smartfridge/survival_pod/empty,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/space)
-"o" = (
+/area/space_structures/lost_asteroid)
+"n" = (
+/obj/structure/survivor_cryopod/geologist,
 /turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
-"p" = (
+"o" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp,
 /turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
-"q" = (
+"p" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
+"q" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
+/area/space_structures/lost_asteroid)
 "r" = (
-/obj/machinery/conveyor{
-	id = "mining_internal"
-	},
-/obj/machinery/mineral/output,
-/turf/simulated/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
-/area/space_structures/lost_asteroid)
-"s" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
-/area/space_structures/lost_asteroid)
-"t" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/structure/ore_box,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space_structures/lost_asteroid)
-"u" = (
+"s" = (
 /obj/machinery/power/port_gen/pacman,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space_structures/lost_asteroid)
-"v" = (
+"t" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -124,32 +113,34 @@
 /obj/item/weapon/storage/bag/ore,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space_structures/lost_asteroid)
-"w" = (
-/obj/structure/survivor_cryopod/geologist,
+"u" = (
+/obj/structure/inflatable/survival,
+/obj/structure/sign/mining/archaeology/survival{
+	dir = 8
+	},
 /turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
-"x" = (
+"v" = (
 /obj/structure/stool/bed/pod,
 /obj/item/weapon/bedsheet,
 /turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
-"y" = (
+"w" = (
+/turf/simulated/floor/pod,
+/area/space_structures/lost_asteroid)
+"x" = (
 /obj/structure/inflatable/door/survival_pod,
 /turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
-"z" = (
+"y" = (
 /mob/living/simple_animal/hostile/mining_drone,
 /turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
-"A" = (
-/obj/structure/inflatable/door/survival_pod{
-	density = 0;
-	icon_state = "door_surv_open"
-	},
-/obj/item/weapon/wrench,
+"z" = (
+/obj/machinery/telecomms/relay,
 /turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
-"B" = (
+"A" = (
 /obj/machinery/conveyor{
 	id = "mining_internal"
 	},
@@ -160,37 +151,44 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space_structures/lost_asteroid)
-"C" = (
+"B" = (
 /obj/item/weapon/reagent_containers/glass/bucket,
 /obj/item/weapon/shovel,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space_structures/lost_asteroid)
-"D" = (
+"C" = (
 /obj/structure/pit,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space_structures/lost_asteroid)
-"E" = (
-/obj/structure/inflatable/survival,
-/obj/structure/sign/mining/archaeology/survival{
-	dir = 8
-	},
+"D" = (
+/obj/structure/table,
+/obj/item/weapon/wrench,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
-"F" = (
+"E" = (
 /obj/structure/stool/bed/chair/comfy/beige{
 	dir = 8
 	},
 /turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
-"G" = (
+"F" = (
 /obj/structure/table,
 /obj/item/rig_module/device/orescanner,
 /obj/item/weapon/screwdriver,
 /turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
-"H" = (
+"G" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
+/turf/simulated/floor/pod,
+/area/space_structures/lost_asteroid)
+"H" = (
+/obj/structure/inflatable/door/survival_pod{
+	density = 0;
+	icon_state = "door_surv_open"
+	},
+/obj/item/weapon/wrench,
 /turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
 "I" = (
@@ -207,9 +205,8 @@
 	},
 /area/space_structures/lost_asteroid)
 "J" = (
-/obj/structure/table,
-/obj/item/weapon/wrench,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/structure/inflatable/survival,
+/obj/structure/sign/mining/archaeology,
 /turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
 "K" = (
@@ -219,7 +216,7 @@
 /area/space_structures/lost_asteroid)
 "L" = (
 /obj/structure/inflatable/survival,
-/obj/structure/sign/mining/archaeology,
+/obj/structure/sign/mining/archaeology/survival,
 /turf/simulated/floor/pod,
 /area/space_structures/lost_asteroid)
 "M" = (
@@ -229,9 +226,20 @@
 	},
 /area/space_structures/lost_asteroid)
 "N" = (
-/obj/structure/inflatable/survival,
-/obj/structure/sign/mining/archaeology/survival,
-/turf/simulated/floor/pod,
+/obj/machinery/conveyor{
+	id = "mining_internal"
+	},
+/obj/machinery/mineral/output,
+/turf/simulated/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
+/area/space_structures/lost_asteroid)
+"O" = (
+/obj/machinery/conveyor{
+	id = "mining_internal"
+	},
+/obj/machinery/mineral/output,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space_structures/lost_asteroid)
 
 (1,1,1) = {"
@@ -443,7 +451,7 @@ b
 b
 b
 b
-e
+d
 c
 c
 c
@@ -542,7 +550,7 @@ c
 c
 c
 c
-n
+j
 a
 a
 a
@@ -571,7 +579,7 @@ b
 b
 b
 b
-e
+d
 b
 b
 b
@@ -588,8 +596,8 @@ c
 c
 c
 c
-n
-n
+j
+j
 a
 a
 a
@@ -611,30 +619,30 @@ c
 c
 c
 b
+d
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+c
 e
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-c
-c
-h
-h
-h
-h
-h
-h
-h
-k
+e
+e
+e
+e
+e
+e
+j
 a
 a
 a
@@ -663,24 +671,24 @@ b
 b
 b
 b
+d
+b
+b
+b
+b
+b
+b
+c
+c
 e
-b
-b
-b
-b
-b
-b
-c
-c
 h
-i
-n
-B
+O
+A
 I
 M
-r
-k
-n
+N
+j
+j
 a
 a
 "}
@@ -703,29 +711,29 @@ b
 b
 b
 b
+d
+b
+b
+b
+b
+d
+b
+b
+b
+b
+c
+c
+c
+c
 e
-b
-b
-b
-b
-e
-b
-b
-b
-b
-c
-c
-c
-c
-h
+i
+q
 j
-s
-k
-k
-k
-s
-s
-k
+j
+j
+q
+q
+j
 a
 a
 "}
@@ -748,9 +756,9 @@ b
 b
 b
 b
-e
-e
-e
+d
+d
+d
 b
 b
 b
@@ -763,15 +771,15 @@ c
 c
 c
 c
-k
-k
-s
-s
-s
-e
-s
-k
-n
+j
+j
+q
+q
+q
+d
+q
+j
+j
 a
 "}
 (13,1,1) = {"
@@ -792,13 +800,13 @@ b
 b
 b
 b
-e
+d
 b
 b
 b
 b
 b
-e
+d
 b
 b
 b
@@ -808,16 +816,16 @@ c
 c
 c
 c
-k
-k
-k
-k
-e
-e
-k
-e
-k
-n
+j
+j
+j
+j
+d
+d
+j
+d
+j
+j
 "}
 (14,1,1) = {"
 a
@@ -835,15 +843,15 @@ b
 b
 b
 b
-e
+d
 b
 b
-e
+d
 b
 b
 b
 b
-e
+d
 b
 b
 b
@@ -853,16 +861,16 @@ c
 c
 c
 c
-h
-t
-k
-k
 e
-e
-s
-e
-e
-k
+r
+j
+j
+d
+d
+q
+d
+d
+j
 "}
 (15,1,1) = {"
 a
@@ -879,13 +887,13 @@ b
 b
 b
 b
-e
+d
 b
 b
 b
 b
 b
-e
+d
 b
 b
 b
@@ -898,16 +906,16 @@ c
 c
 c
 c
-l
-u
 k
-e
-e
-e
 s
-e
-k
-k
+j
+d
+d
+d
+q
+d
+j
+j
 "}
 (16,1,1) = {"
 a
@@ -921,18 +929,18 @@ c
 b
 b
 b
-e
+d
 b
 b
 b
 b
 b
-e
+d
 b
 b
 b
 b
-e
+d
 b
 b
 b
@@ -943,16 +951,16 @@ c
 c
 c
 c
-h
-v
-k
-k
 e
-e
-k
-e
-k
-k
+t
+j
+j
+d
+d
+j
+d
+j
+j
 "}
 (17,1,1) = {"
 a
@@ -979,7 +987,7 @@ b
 b
 b
 b
-e
+d
 b
 b
 b
@@ -990,14 +998,14 @@ c
 c
 b
 b
-C
-k
-k
-k
-s
-k
-k
-k
+B
+j
+j
+j
+q
+j
+j
+j
 "}
 (18,1,1) = {"
 a
@@ -1035,14 +1043,14 @@ c
 c
 b
 b
-D
-s
-k
-s
-k
-k
-k
-n
+C
+q
+j
+q
+j
+j
+j
+j
 "}
 (19,1,1) = {"
 a
@@ -1059,15 +1067,15 @@ b
 b
 b
 b
-e
+d
 b
 b
-e
+d
 b
 b
 b
-e
-e
+d
+d
 b
 b
 b
@@ -1079,14 +1087,14 @@ c
 c
 f
 f
-E
+u
 f
 f
-k
-k
-s
-k
-k
+j
+j
+q
+j
+j
 a
 "}
 (20,1,1) = {"
@@ -1101,12 +1109,10 @@ b
 b
 b
 b
-e
+d
 b
-e
-e
-b
-b
+d
+d
 b
 b
 b
@@ -1115,7 +1121,9 @@ b
 b
 b
 b
-e
+b
+b
+d
 b
 b
 b
@@ -1123,15 +1131,15 @@ c
 c
 c
 f
-m
-x
+l
+v
+D
 J
-L
-k
-s
-s
-k
-k
+j
+q
+q
+j
+j
 a
 "}
 (21,1,1) = {"
@@ -1142,7 +1150,7 @@ c
 c
 b
 b
-e
+d
 b
 b
 b
@@ -1160,7 +1168,7 @@ b
 b
 b
 b
-e
+d
 b
 b
 b
@@ -1168,15 +1176,15 @@ c
 c
 c
 g
-n
-o
-o
+m
+w
+w
 K
-s
-k
-k
-k
-k
+q
+j
+j
+j
+j
 a
 "}
 (22,1,1) = {"
@@ -1189,7 +1197,7 @@ b
 b
 b
 b
-e
+d
 b
 b
 b
@@ -1199,7 +1207,7 @@ b
 b
 b
 b
-e
+d
 b
 b
 b
@@ -1213,15 +1221,15 @@ c
 c
 c
 f
-w
-o
-F
-N
-k
-k
-k
-k
 n
+w
+E
+L
+j
+j
+j
+j
+j
 a
 "}
 (23,1,1) = {"
@@ -1238,7 +1246,7 @@ b
 b
 b
 b
-e
+d
 b
 b
 b
@@ -1259,13 +1267,13 @@ c
 c
 f
 f
-y
+x
 f
 f
-k
-k
-k
-k
+j
+j
+j
+j
 a
 a
 "}
@@ -1283,7 +1291,7 @@ b
 b
 b
 b
-e
+d
 b
 b
 b
@@ -1293,7 +1301,7 @@ b
 b
 b
 b
-e
+d
 b
 b
 b
@@ -1303,14 +1311,14 @@ c
 c
 c
 f
-p
 o
-G
+w
+F
 f
-k
-k
+j
+j
 b
-k
+j
 a
 a
 "}
@@ -1332,11 +1340,11 @@ b
 b
 b
 b
-e
+d
 b
 b
 b
-e
+d
 b
 b
 b
@@ -1348,14 +1356,14 @@ c
 c
 c
 f
-q
-z
-H
+p
+y
+G
 f
-k
+j
 b
 b
-k
+j
 a
 a
 "}
@@ -1386,7 +1394,7 @@ b
 b
 b
 b
-e
+d
 b
 b
 c
@@ -1397,10 +1405,10 @@ f
 f
 f
 f
-k
+j
 b
 b
-k
+j
 a
 a
 "}
@@ -1422,13 +1430,13 @@ b
 b
 b
 b
-e
+d
 b
 b
 b
 b
 b
-e
+d
 b
 b
 b
@@ -1439,13 +1447,13 @@ c
 c
 c
 f
-d
-A
-k
-k
+z
+H
+j
+j
 b
 b
-n
+j
 a
 a
 "}
@@ -1489,7 +1497,7 @@ f
 b
 b
 b
-n
+j
 a
 a
 a
@@ -1509,14 +1517,14 @@ b
 b
 b
 b
-e
-e
+d
+d
 b
 b
 b
 b
 b
-e
+d
 b
 b
 b
@@ -1533,7 +1541,7 @@ c
 c
 c
 c
-n
+j
 a
 a
 a
@@ -1558,7 +1566,7 @@ b
 b
 b
 b
-e
+d
 b
 b
 b
