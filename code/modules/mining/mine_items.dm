@@ -482,6 +482,10 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	update_icon()
 	return
 
+/obj/item/weapon/gun/energy/kinetic_accelerator/silenced
+	silenced = TRUE
+	desc = "According to Nanotrasen accounting, this is mining equipment. It's capacitor was modified to allow stealthy silenced reloads."
+
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/item/projectile/kinetic
 	select_name = "kinetic"
@@ -879,7 +883,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/structure/sign/mining/survival
 	name = "shelter sign"
 	desc = "A high visibility sign designating a safe shelter."
-	icon = 'icons/turf/walls.dmi'
 	icon_state = "survival"
 
 /obj/structure/sign/mining/attack_hand(mob/user)
@@ -888,6 +891,16 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	user.SetNextMove(CLICK_CD_INTERACT)
 	user.visible_message("[user] removes the sign.", "You remove the sign.")
 	qdel(src)
+
+/obj/structure/sign/mining/archaeology
+	name = "nanotrasen far-recon research corps sign"
+	desc = "A sign denoting this very shelter as a part of far-recon corps. In the name of Science!"
+	icon_state = "ntpod_sci"
+
+/obj/structure/sign/mining/archaeology/survival
+	name = "shelter sign"
+	desc = "A high visibility sign designating a safe shelter."
+	icon_state = "survival_sci"
 
 //Fluff
 /obj/structure/tubes

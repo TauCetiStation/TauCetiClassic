@@ -5,11 +5,11 @@
 //DJSTATION
 
 /area/space_structures/djstation
-	name = "Ruskie DJ Station"
+	name = "Unidentified Station"
 	icon_state = "DJ"
 
 /area/space_structures/djstation/solars
-	name = "DJ Station Solars"
+	name = "Unidentified Station Solars"
 	icon_state = "DJ"
 
 
@@ -72,71 +72,99 @@
 //Random structures
 
 /area/space_structures/teleporter
-	name = "Derelict Teleporter"
+	name = "Unidentified Structure"
 	icon_state = "teleporter"
 
 /area/space_structures/abandoned_ship
-	name = "Abandoned Ship"
+	name = "Unidentified Ship"
 	icon_state = "yellow"
 
 /area/space_structures/agrospheregarden
-	name = "Agroshere Structure"
+	name = "Unidentified Structure"
 	icon_state = "yellow"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/space_structures/planetarium
-	name = "Planetarium"
+	name = "Unidentified Structure"
 	icon_state = "yellow"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/space_structures/robostatoin
-	name = "Robostation"
+	name = "Unidentified Station"
 	icon_state = "yellow"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/space_structures/ghostship
-	name = "Ghost Ship"
+	name = "Unidentified Ship"
 	icon_state = "yellow"
 	always_unpowered = 1
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/space_structures/delivery_shuttle
-	name = "Delivery Shuttle"
+	name = "Unidentified Shuttle"
 	icon_state = "shuttle"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/space_structures/cloning_lab
-	name = "Cloning Facility"
+	name = "Unidentified Structure"
 	icon_state = "purple"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/space_structures/listening_post
-	name = "Listening Post"
+	name = "Remote Asteroid"
 	icon_state = "syndie-elite"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/space_structures/syndicate_fighter
-	name = "Shiv Fighter"
+	name = "Unidentified Ship"
 	icon_state = "syndie-elite"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = 0
 
 /area/space_structures/iss
-	name = "Ancient Space Station"
+	name = "Unidentified Station"
 	icon_state = "yellow"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = 0
 
 /area/space_structures/nasa_satellite
-	name = "NASA_satellite"
+	name = "Unidentified Satellite"
 	icon_state = "yellow"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	looped_ambience = 'sound/music/space_oddity.ogg'
 
 /area/space_structures/derelict_lab
-	name = "Abandoned Lab"
+	name = "Unidentified Station"
 	icon_state = "yellow"
+
+/area/space_structures/lost_asteroid
+	name = "Remote Asteroid"
+	icon_state = "unexplored"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
+	ambience = list(
+		'sound/ambience/space_1.ogg',
+		'sound/ambience/space_2.ogg',
+		'sound/ambience/space_3.ogg',
+		'sound/ambience/space_4.ogg',
+		'sound/ambience/space_5.ogg',
+		'sound/ambience/space_6.ogg',
+		'sound/ambience/space_7.ogg',
+		'sound/ambience/space_8.ogg',
+		'sound/music/dwarf_fortress.ogg'
+	)
+
+/area/space_structures/collector_ship
+	name = "Unidentified Ship"
+	icon_state = "yellow"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/space_structures/mercenary_pod
+	name = "Unidentified Shuttle"
+	icon_state = "syndie-elite"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED

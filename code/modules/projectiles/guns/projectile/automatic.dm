@@ -243,6 +243,11 @@
 		H.update_inv_belt()
 	return
 
+/obj/item/weapon/gun/projectile/automatic/c5/mercenary
+	name = "submachine gun"
+	mag_type = /obj/item/ammo_box/magazine/c5_9mm/letal
+	mag_type2 = /obj/item/ammo_box/magazine/c5_9mm
+
 /obj/item/weapon/gun/projectile/automatic/l13
 	name = "security submachine gun"
 	desc = "L13 personal defense weapon - for combat security operations. Uses .38 ammo."

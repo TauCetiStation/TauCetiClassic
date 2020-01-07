@@ -919,3 +919,22 @@
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/metalfoam_spray)
+
+//Geologist rig (random ruins item)
+/obj/item/clothing/head/helmet/space/rig/geologist
+	name = "geologist hardsuit helmet"
+	desc = "A special helmet designed for deep-space exploration, no longer produced by NT. Has reinforced plating and improved protection against radiation."
+	icon_state = "rig0-geo"
+	item_state = "geologist_helm"
+	item_color = "geol"
+	armor = list(melee = 60, bullet = 30, laser = 30,energy = 40, bomb = 55, bio = 100, rad = 20) //Decent-medium stats, since it's rare and belongs to some random guy.
+
+/obj/item/clothing/suit/space/rig/geologist
+	icon_state = "rig-geologist"
+	name = "geologist hardsuit"
+	desc = "A special suit similar to that used by Nanotrasen miners, but no longer produced due to expensiveness. Has reinforced plating and improved radiation shielding."
+	item_state = "mining_hardsuit"
+	armor = list(melee = 70, bullet = 30, laser = 30,energy = 40, bomb = 55, bio = 100, rad = 100)
+	breach_threshold = 26
+	max_mounted_devices = 4
+	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/anomaly_scanner, /obj/item/rig_module/device/drill)

@@ -107,7 +107,7 @@
 /datum/map_template/space_structure/listening_post
 	name = "listening_post"
 	structure_id = "listening_post"
-	desc = "Unknown object"
+	desc = "Undiscovered asteroid"
 	mappath = "maps/templates/space_structures/listening_post.dmm"
 
 /datum/map_template/space_structure/iss
@@ -121,3 +121,21 @@
 	structure_id = "NASA satellite"
 	desc = "Unknown small object"
 	mappath = "maps/templates/space_structures/satellite.dmm"
+
+/datum/map_template/space_structure/lost_asteroid
+	name = "Lost Asteroid"
+	structure_id = "lost_asteroid"
+	desc = "Undiscovered asteroid"
+	mappath = "maps/templates/space_structures/lost_asteroid.dmm"
+
+/datum/map_template/space_structure/collector_ship
+	name = "Collector Ship"
+	structure_id = "collector_ship"
+	desc = "Unknown ship"
+	mappath = "maps/templates/space_structures/collector_ship.dmm"
+
+/datum/map_template/space_structure/military_escape_shuttle
+	name = "Military Escape Shuttle"
+	structure_id = "military_escape_shuttle"
+	desc = "Unknown shuttle"
+	mappath = "maps/templates/space_structures/military_escape_shuttle.dmm"

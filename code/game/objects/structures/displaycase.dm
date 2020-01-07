@@ -95,4 +95,10 @@
 		healthcheck()
 		return
 
-
+/obj/structure/displaycase/broken
+	name = "broken display case"
+	desc = "Remains of display case for prizes, relics and awards. Looks like someone didn't pacify the urge!"
+	icon_state = "glassboxb0"
+	occupied = 0
+	destroyed = 1
+	density = 0

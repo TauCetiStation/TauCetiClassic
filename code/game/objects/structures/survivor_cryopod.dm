@@ -148,3 +148,42 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/globose(H), SLOT_WEAR_SUIT)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/globose(H), SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(H), SLOT_S_STORE)
+
+/obj/structure/survivor_cryopod/geologist
+	survivor_memory = "As you wake up, your mind clears... You are the Geologist of Nanotrasen Exploration Corps! You've been on this piece of rock for quite long time. Sent to recon mission, you somehow fucked comms relay up, but, however, managed to assemble decent base here! Unfortunately, your food supplies were running low, so you decided to enter cryo-stasis. And now it's time to rise and mine..."
+
+/obj/structure/survivor_cryopod/geologist/equip_survivor(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist_new(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(H), SLOT_WEAR_MASK)
+
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/geologist(H), SLOT_WEAR_SUIT)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/geologist(H), SLOT_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen/double(H), SLOT_S_STORE)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/kinetic_accelerator/silenced(H), SLOT_BELT)
+
+/obj/structure/survivor_cryopod/syndicate
+	name = "military-grade cryopod"
+	desc = "Cryopod painted in menacing colors. That's it."
+	icon_state = "syndipod"
+	open_state = "syndipod-open"
+
+/obj/structure/survivor_cryopod/syndicate/opened
+	icon_state = "syndipod-open"
+	opened = TRUE
+	density = FALSE
+
+/obj/structure/survivor_cryopod/syndicate/mercenary
+	survivor_memory = "To flee from your self-destructing vessel, Free Mercenary Ship 'Hydra', you jumped into one of three escape modules. Unfortunately, the THING that caused self-destruction slipped in with you. You managed to block the THING in the cockpit and entered cryo-stasis, being almost sure that THING will never escape it's prison. Almost..."
+
+/obj/structure/survivor_cryopod/syndicate/mercenary/equip_survivor(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/tactical(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/swat(H), SLOT_WEAR_MASK)
+
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/globose/black(H), SLOT_WEAR_SUIT)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/globose/black(H), SLOT_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen/double(H), SLOT_S_STORE)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/c5/mercenary(H), SLOT_BELT)
