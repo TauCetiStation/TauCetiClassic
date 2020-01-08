@@ -26,7 +26,8 @@
 
 /obj/item/weapon/grenade/examine(mob/user)
 	..()
-	to_chat(user, "The timer is set [det_time = 1 ? "for instant detonation" : "to [det_time/10]  seconds"].")
+	if(!istype(src, /obj/item/weapon/grenade/cancasing)) // ghetto bomb examine verb: > You can't tell when it will explode!
+		to_chat(user, "The timer is set [det_time == 1 ? "for instant detonation" : "to [det_time/10]  seconds"].")
 
 /obj/item/weapon/grenade/attack_self(mob/user)
 	if(active)
@@ -34,7 +35,7 @@
 	if(!clown_check(user))
 		return
 
-	to_chat(user, "<span class='warning'>You prime \the [name]! [det_time/10] seconds!</span>")
+	to_chat(user, "<span class='warning'>You prime \the [name]![det_time != 1 ? " [det_time/10] seconds!" : ""]</span>")
 	activate(user)
 	add_fingerprint(user)
 	if(iscarbon(user))
