@@ -36,7 +36,7 @@
 /datum/recipe
 	var/list/reagents       // example:  = list("berryjuice" = 5) // do not list same reagent twice
 	var/list/items          // example: = list(/obj/item/weapon/crowbar, /obj/item/weapon/welder) // place /foo/bar before /foo
-	var/list/exclude_items  // example: = list(/obj/iteam/weapon/welder) when items have =list(/obj/item/weapon)
+	var/list/excluded_items  // example: = list(/obj/iteam/weapon/welder) when items have =list(/obj/item/weapon)
 	var/result              // example: = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
 	var/time = 100          // 1/10 part of second
 	var/byproduct		    // example: = /obj/item/weapon/kitchen/mould		// byproduct to return, such as a mould or trash
@@ -64,20 +64,17 @@
 	var/list/checklist = items.Copy()
 	for (var/obj/O in container)
 		var/found = 0
-		for (var/type in checklist)
-			if (istype(O,type))
-				// checking if subtype in exlcude list
-				if (length(exclude_items))
-					var/exclude = FALSE
-					for (var/exclude_type in exclude_items)
-						if (istype(O,exclude_type))
-							exclude = TRUE
-							break
-					if (exclude)
-						break
-				checklist-=type
-				found = 1
-				break
+		item_in_checklist:
+			for (var/type in checklist)
+				if (istype(O, type))
+					// checking if subtype in exlcude list
+					if (length(excluded_items))
+						for (var/excluded_type in excluded_items)
+							if (istype(O, excluded_type))
+								break item_in_checklist
+					checklist-=type
+					found = 1
+					break
 		if (!found)
 			. = -1
 	if (checklist.len)

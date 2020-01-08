@@ -123,7 +123,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
 	)
 	// see /datum/recipe/grill/human/kabob
-	exclude_items = list(
+	excluded_items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat/human
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/kabob
