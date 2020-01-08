@@ -172,15 +172,21 @@ var/datum/subsystem/ticker/ticker
 		hide_mode = 1
 
 	var/list/datum/game_mode/runnable_modes
-	if(master_mode=="random" || master_mode=="secret")
-		runnable_modes = config.get_runnable_modes()
+	if (config.is_modeset(master_mode))
+		// master_mode is name of collection of gamemodes
+		if(config.is_custom_modeset(master_mode))
+			runnable_modes = config.get_runnable_modes(master_mode)
+		else
+			// get random runnable mode
+			runnable_modes = config.get_runnable_modes()
 
 		if (runnable_modes.len==0)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
 			return 0
 
-		if(secret_force_mode != "secret")
+		// hiding forced gamemode in secret
+		if(master_mode == "secret" && secret_force_mode != "secret")
 			var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
 			if(!smode.can_start())
 				message_admins("<span class='notice'>Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.</span>")
@@ -194,20 +200,8 @@ var/datum/subsystem/ticker/ticker
 			var/mtype = src.mode.type
 			src.mode = new mtype
 
-	else if(master_mode=="bs12" || master_mode=="tau classic")
-		runnable_modes = config.get_runnable_modes(master_mode)
-		if (runnable_modes.len==0)
-			current_state = GAME_STATE_PREGAME
-			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
-			return 0
-		SSjob.ResetOccupations()
-		if(!src.mode)
-			src.mode = pick(runnable_modes)
-		if(src.mode)
-			var/mtype = src.mode.type
-			src.mode = new mtype
-
 	else
+		// master_mode is config tag of gamemode
 		src.mode = config.pick_mode(master_mode)
 
 	if (!src.mode.can_start())
