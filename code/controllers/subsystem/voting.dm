@@ -187,7 +187,7 @@ var/datum/subsystem/vote/SSvote
 			if("gamemode")
 				choices.Add(config.votable_modes)
 				for (var/M in config.votable_modes)
-					var/list/submodes = new()
+					var/list/submodes = list()
 					if (config.is_custom_mode_set(M))
 						for (var/datum/game_mode/D in config.get_runnable_modes(M))
 							submodes.Add(D.name)
