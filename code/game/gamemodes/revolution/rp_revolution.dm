@@ -116,7 +116,7 @@
 /////////////////////////////
 //Checks for a head victory//
 /////////////////////////////
-/datum/game_mode/revolution/rp_revolution/check_heads_victory()
+/datum/game_mode/rp_revolution/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/turf/T = get_turf(rev_mind.current)
 		if(rev_mind.current.stat != DEAD)
