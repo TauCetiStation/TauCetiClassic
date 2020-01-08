@@ -145,5 +145,5 @@
 /atom/movable/lighting_object/Move()
 	return
 
-/atom/movable/lighting_object/forceMove(atom/destination)
+/atom/movable/lighting_object/forceMove(atom/destination, keep_pulling)
 	return

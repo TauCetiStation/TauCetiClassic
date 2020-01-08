@@ -358,7 +358,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			if("commandreport")
 				. = 'sound/AI/commandreport.ogg'
 	if(!.)
-		WARNING("No sound file for [soundin]")
+		warning("No sound file for [soundin]")
 
 /client/verb/show_volume_controls()
 	set name = ".showvolumecontrols"
