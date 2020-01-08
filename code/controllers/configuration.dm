@@ -729,39 +729,32 @@
 		qdel(M)
 	return new /datum/game_mode/extended()
 
-/datum/configuration/proc/is_hide_gamemode(g_mode)
-	if (g_mode && (g_mode=="secret" || g_mode=="bs12" || g_mode=="tau classic"))
-		return TRUE
-	return FALSE
+/datum/configuration/proc/is_hidden_gamemode(g_mode)
+	return (g_mode && (g_mode=="secret" || g_mode=="bs12" || g_mode=="tau classic"))
 
-/datum/configuration/proc/is_mode_set(g_mode)
-	if (g_mode && (g_mode=="random" || g_mode=="secret" || g_mode=="bs12" || g_mode=="tau classic"))
-		return TRUE
-	return FALSE
+/datum/configuration/proc/is_modeset(g_mode)
+	return (g_mode && (g_mode=="random" || g_mode=="secret" || g_mode=="bs12" || g_mode=="tau classic"))
 
-/datum/configuration/proc/is_custom_mode_set(g_mode)
-	if (g_mode && (g_mode=="bs12" || g_mode=="tau classic"))
-		return TRUE
-	return FALSE
+/datum/configuration/proc/is_custom_modeset(g_mode)
+	return (g_mode && (g_mode=="bs12" || g_mode=="tau classic"))
 
-/datum/configuration/proc/is_mode_tag_allowed(g_mode)
-	if (g_mode && (g_mode in modes))
-		return TRUE
-	return FALSE
+// As argument accpet config tag of gamemode, not name
+/datum/configuration/proc/is_mode_allowed(g_mode_tag)
+	return (g_mode_tag && (g_mode_tag in modes))
 
-/datum/configuration/proc/get_runnable_modes(mode_set=null)
+/datum/configuration/proc/get_runnable_modes(modeset=null)
 	var/list/datum/game_mode/runnable_modes = new
 	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
 		var/datum/game_mode/M = new T()
 		//log_debug("[T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
-		if (!is_mode_tag_allowed(M.config_tag))
+		if (!is_mode_allowed(M.config_tag))
 			qdel(M)
 			continue
-		if (is_custom_mode_set(M.config_tag))
-			//mode sets in game modes too =(
+		if (is_custom_modeset(M.config_tag))
+			//modesets in game modes too =(
 			qdel(M)
 			continue
-		if(!mode_set || mode_set == "random" || mode_set == "secret")
+		if(!modeset || modeset == "random" || modeset == "secret")
 			if(global.master_last_mode && global.secret_force_mode == "secret" && global.master_mode == "secret")
 				if(M.name != "AutoTraitor" && M.name == global.master_last_mode)
 					qdel(M)
@@ -769,8 +762,8 @@
 			if (probabilities[M.config_tag]<=0)
 				qdel(M)
 				continue
-		else if (is_custom_mode_set(mode_set))
-			switch(mode_set)
+		else if (is_custom_modeset(modeset))
+			switch(modeset)
 				if("bs12")
 					switch(M.config_tag)
 						if("traitorchan","traitor","blob","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")

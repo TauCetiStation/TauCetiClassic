@@ -168,7 +168,7 @@ var/datum/subsystem/ticker/ticker
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
 	var/init_start = world.timeofday
 	//Create and announce mode
-	if(config.is_hide_gamemode(master_mode))
+	if(config.is_hidden_gamemode(master_mode))
 		hide_mode = 1
 
 	var/list/datum/game_mode/runnable_modes
