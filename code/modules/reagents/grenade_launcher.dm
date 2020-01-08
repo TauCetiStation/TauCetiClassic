@@ -43,9 +43,7 @@
 		to_chat(usr, "<span class='warning'>The grenade launcher is empty.</span>")
 
 /obj/item/weapon/gun/grenadelauncher/proc/fire_grenade(atom/target, mob/user)
-	for(var/mob/O in viewers(world.view, user))
-		O.show_message(text("<span class='warning'>[] fired a grenade!</span>", user), 1)
-	to_chat(user, "<span class='warning'>You fire the grenade launcher!</span>")
+	user.visible_message("<span class='warning'>[user] fired a grenade!</span>", self_message = "<span class='warning'>You fire the grenade launcher!</span>")
 	var/obj/item/weapon/grenade/chem_grenade/F = grenades[1] //Now with less copypasta!
 	grenades -= F
 	F.loc = user.loc

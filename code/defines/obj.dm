@@ -54,119 +54,6 @@
 	var/locked[] = list()
 
 
-
-/obj/effect/datacore/proc/get_manifest(monochrome, OOC)
-	var/list/heads = new()
-	var/list/sec = new()
-	var/list/eng = new()
-	var/list/med = new()
-	var/list/sci = new()
-	var/list/civ = new()
-	var/list/bot = new()
-	var/list/misc = new()
-	var/list/isactive = new()
-	var/dat = {"
-	<head><style>
-		.manifest {border-collapse:collapse;}
-		.manifest td, th {border:1px solid [monochrome?"black":"#DEF; background-color:white; color:black"]; padding:.25em}
-		.manifest th {height: 2em; [monochrome?"border-top-width: 3px":"background-color: #48C; color:white"]}
-		.manifest tr.head th { [monochrome?"border-top-width: 1px":"background-color: #488;"] }
-		.manifest td:first-child {text-align:right}
-		.manifest tr.alt td {[monochrome?"border-top-width: 2px":"background-color: #DEF"]}
-	</style></head>
-	<table class="manifest" width='350px'>
-	<tr class='head'><th>Name</th><th>Rank</th><th>Activity</th></tr>
-	"}
-	var/even = 0
-	// sort mobs
-	for(var/datum/data/record/t in data_core.general)
-		var/name = t.fields["name"]
-		var/rank = t.fields["rank"]
-		var/real_rank = t.fields["real_rank"]
-		if(OOC)
-			var/active = 0
-			for(var/mob/M in player_list)
-				if(M.real_name == name && M.client && M.client.inactivity <= 10 * 60 * 10)
-					active = 1
-					break
-			isactive[name] = active ? "Active" : "Inactive"
-		else
-			isactive[name] = t.fields["p_stat"]
-			//world << "[name]: [rank]"
-			//cael - to prevent multiple appearances of a player/job combination, add a continue after each line
-		var/department = 0
-		if(real_rank in command_positions)
-			heads[name] = rank
-			department = 1
-		if(real_rank in security_positions)
-			sec[name] = rank
-			department = 1
-		if(real_rank in engineering_positions)
-			eng[name] = rank
-			department = 1
-		if(real_rank in medical_positions)
-			med[name] = rank
-			department = 1
-		if(real_rank in science_positions)
-			sci[name] = rank
-			department = 1
-		if(real_rank in civilian_positions)
-			civ[name] = rank
-			department = 1
-		if(real_rank in nonhuman_positions)
-			bot[name] = rank
-			department = 1
-		if(!department && !(name in heads))
-			misc[name] = rank
-	if(heads.len > 0)
-		dat += "<tr><th colspan=3>Heads</th></tr>"
-		for(name in heads)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[heads[name]]</td><td>[isactive[name]]</td></tr>"
-			even = !even
-	if(sec.len > 0)
-		dat += "<tr><th colspan=3>Security</th></tr>"
-		for(name in sec)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sec[name]]</td><td>[isactive[name]]</td></tr>"
-			even = !even
-	if(eng.len > 0)
-		dat += "<tr><th colspan=3>Engineering</th></tr>"
-		for(name in eng)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[eng[name]]</td><td>[isactive[name]]</td></tr>"
-			even = !even
-	if(med.len > 0)
-		dat += "<tr><th colspan=3>Medical</th></tr>"
-		for(name in med)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[med[name]]</td><td>[isactive[name]]</td></tr>"
-			even = !even
-	if(sci.len > 0)
-		dat += "<tr><th colspan=3>Science</th></tr>"
-		for(name in sci)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sci[name]]</td><td>[isactive[name]]</td></tr>"
-			even = !even
-	if(civ.len > 0)
-		dat += "<tr><th colspan=3>Civilian</th></tr>"
-		for(name in civ)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[civ[name]]</td><td>[isactive[name]]</td></tr>"
-			even = !even
-	// in case somebody is insane and added them to the manifest, why not
-	if(bot.len > 0)
-		dat += "<tr><th colspan=3>Silicon</th></tr>"
-		for(name in bot)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[bot[name]]</td><td>[isactive[name]]</td></tr>"
-			even = !even
-	// misc guys
-	if(misc.len > 0)
-		dat += "<tr><th colspan=3>Miscellaneous</th></tr>"
-		for(name in misc)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[misc[name]]</td><td>[isactive[name]]</td></tr>"
-			even = !even
-
-	dat += "</table>"
-	dat = replacetext(dat, "\n", "") // so it can be placed on paper correctly
-	dat = replacetext(dat, "\t", "")
-	return dat
-
-
 /*
 We can't just insert in HTML into the nanoUI so we need the raw data to play with.
 Instead of creating this list over and over when someone leaves their PDA open to the page
@@ -252,6 +139,67 @@ var/global/ManifestJSON
 		)
 	ManifestJSON = replacetext(list2json(PDA_Manifest), "'", "`")
 	return PDA_Manifest
+
+// Using json manifest for html manifest. One proc for manifest generation
+/obj/effect/datacore/proc/get_manifest(monochrome, OOC)
+	if (PDA_Manifest.len < 1)
+		get_manifest_json()
+	var/dat = {"
+	<head><style>
+		.manifest {border-collapse:collapse;}
+		.manifest td, th {border:1px solid [monochrome?"black":"#DEF; background-color:white; color:black"]; padding:.25em}
+		.manifest th {height: 2em; [monochrome?"border-top-width: 3px":"background-color: #48C; color:white"]}
+		.manifest tr.head th { [monochrome?"border-top-width: 1px":"background-color: #488;"] }
+		.manifest td:first-child {text-align:right}
+		.manifest tr.alt td {[monochrome?"border-top-width: 2px":"background-color: #DEF"]}
+	</style></head>
+	<table class="manifest" width='350px'>
+	<tr class='head'><th>Name</th><th>Rank</th><th>Activity</th></tr>
+	"}
+	var/even = 0
+	// Formating keyword -> Description
+	var/list/departments_list = list(\
+		"heads" = "Heads",\
+		"sec" = "Security",\
+		"eng" = "Engineering",\
+		"med" = "Medical",\
+		"sci" = "Science",\
+		"civ" = "Civilian",\
+		"bot" = "Silicon",\
+		"misc" = "Miscellaneous"\
+	)
+	var/list/inactive_players_namejob = new()
+	// Collect inactive players-jobs if OOC
+	if (OOC)
+		for (var/mob/M in player_list)
+			if (M.real_name && M.job && M.client && M.client.inactivity > 10 * 60 * 10)
+				inactive_players_namejob.Add("[M.real_name]/[M.job]")		
+	// render crew manifest
+	var/list/person = new() // buffer for employ record
+	for (var/dep in departments_list)
+		if((dep in PDA_Manifest) && PDA_Manifest[dep].len > 0)
+			dat += "<tr><th colspan=3>[departments_list[dep]]</th></tr>"
+			for(person in PDA_Manifest[dep])
+				dat += "<tr[even ? " class='alt'" : ""]>"
+				dat += "<td>[person["name"]]</td>"
+				dat += "<td>[person["rank"]]</td>"
+				// Show real activity player
+				if (OOC)
+					var/namejob = "[person["name"]]/[person["rank"]]"
+					if(namejob in inactive_players_namejob)
+						dat += "<td>Inactive</td>"
+					else
+						dat += "<td>Active</td>"
+				// Show record activity
+				else
+					dat += "<td>[person["active"]]</td>"
+				dat +="</tr>"
+				even = !even
+		even = 0
+	dat += "</table>"
+	dat = replacetext(dat, "\n", "") // so it can be placed on paper correctly
+	dat = replacetext(dat, "\t", "")
+	return dat
 
 
 /obj/effect/list_container

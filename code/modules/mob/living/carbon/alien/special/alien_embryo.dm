@@ -36,10 +36,6 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	baby = null
 	return ..()
 
-/obj/item/alien_embryo/proc/show_message(message, m_type)
-	for(var/mob/living/M in contents)
-		M.show_message(message,m_type)
-
 /obj/item/clothing/mask/facehugger/proc/host_is_dead()
 	if(current_hugger)
 		var/mob/living/carbon/alien/facehugger/FH = current_hugger

@@ -470,11 +470,17 @@ Implants;
 /datum/game_mode/proc/printobjectives(datum/mind/ply)
 	var/text = ""
 	var/count = 1
+	var/result
 	for(var/datum/objective/objective in ply.objectives)
-		if(objective.check_completion())
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
-		else
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
+		result = objective.check_completion()
+		switch(result)
+			if(OBJECTIVE_WIN)
+				text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
+			if(OBJECTIVE_LOSS)
+				text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
+			if(OBJECTIVE_HALFWIN)
+				text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: orange; font-weight: bold;'>Half success.</span>"
+
 		count++
 	return text
 
