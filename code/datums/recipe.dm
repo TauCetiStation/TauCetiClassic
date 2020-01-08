@@ -67,7 +67,7 @@
 		for (var/type in checklist)
 			if (istype(O,type))
 				// checking if subtype in exlcude list
-				if (exclude_items && exclude_items.len > 0)
+				if (length(exclude_items))
 					var/exclude = FALSE
 					for (var/exclude_type in exclude_items)
 						if (istype(O,exclude_type))
