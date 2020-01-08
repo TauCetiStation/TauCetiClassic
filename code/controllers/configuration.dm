@@ -742,6 +742,7 @@
 /datum/configuration/proc/is_mode_allowed(g_mode_tag)
 	return (g_mode_tag && (g_mode_tag in modes))
 
+// if modset is null - return all runnable modes
 /datum/configuration/proc/get_runnable_modes(modeset=null)
 	var/list/datum/game_mode/runnable_modes = new
 	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
