@@ -150,7 +150,6 @@ var/datum/subsystem/mapping/SSmapping
 	next_map_config = SSmapping.next_map_config
 
 #undef SPACE_STRUCTURES_AMMOUNT
-#undef SPACE_STRUCTURES_ZLEVELS
 
 #define INIT_ANNOUNCE(X) info(X)
 /datum/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
