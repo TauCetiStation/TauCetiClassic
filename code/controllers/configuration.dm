@@ -743,7 +743,7 @@
 	return (g_mode_tag && (g_mode_tag in modes))
 
 // if modset is null - return all runnable modes
-/datum/configuration/proc/get_runnable_modes(modeset=null)
+/datum/configuration/proc/get_runnable_modes(modeset="random")
 	var/list/datum/game_mode/runnable_modes = new
 	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
 		var/datum/game_mode/M = new T()
@@ -756,7 +756,7 @@
 			qdel(M)
 			continue
 		if(!modeset || modeset == "random" || modeset == "secret")
-			if(global.master_last_mode && global.secret_force_mode == "secret" && global.master_mode == "secret")
+			if(global.master_last_mode && global.secret_force_mode == "secret" && modeset == "secret")
 				if(M.name != "AutoTraitor" && M.name == global.master_last_mode)
 					qdel(M)
 					continue

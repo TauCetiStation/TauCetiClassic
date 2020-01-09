@@ -173,13 +173,8 @@ var/datum/subsystem/ticker/ticker
 
 	var/list/datum/game_mode/runnable_modes
 	if (config.is_modeset(master_mode))
-		// master_mode is name of collection of gamemodes
-		if(config.is_custom_modeset(master_mode))
-			runnable_modes = config.get_runnable_modes(master_mode)
-		else
-			// get random runnable mode
-			runnable_modes = config.get_runnable_modes()
-
+		runnable_modes = config.get_runnable_modes(master_mode)
+		
 		if (runnable_modes.len==0)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
@@ -195,7 +190,10 @@ var/datum/subsystem/ticker/ticker
 
 		SSjob.ResetOccupations()
 		if(!src.mode)
-			src.mode = pickweight(runnable_modes)
+			if (config.is_custom_modeset(master_mode))
+				src.mode = pick(runnable_modes)
+			else
+				src.mode = pickweight(runnable_modes)
 		if(src.mode)
 			var/mtype = src.mode.type
 			src.mode = new mtype
