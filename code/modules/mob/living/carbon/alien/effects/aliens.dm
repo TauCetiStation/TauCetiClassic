@@ -525,9 +525,6 @@
 #undef GROWING
 #undef GROWN
 
-#define MIN_GROWTH_TIME
-#define MAX_GROWTH_TIME
-
 /*
  * Air generator
  */
