@@ -313,7 +313,7 @@
 		if(WT.use(0,user))
 			user.remove_from_mob(src)
 			var/obj/item/clothing/head/helmet/battlebucket/BBucket = new(usr.loc)
-			loc.visible_message("<span class = 'rose'>[src] is shaped into [BBucket] by [user.name] with the weldingtool.</span>", "<span class = 'rose'>You hear welding.</span>")
+			loc.visible_message("<span class = 'rose'>[src] is shaped into [BBucket] by [user.name] with the weldingtool.</span>", blind_message = "<span class = 'rose'>You hear welding.</span>")
 			qdel(src)
 		return
 
