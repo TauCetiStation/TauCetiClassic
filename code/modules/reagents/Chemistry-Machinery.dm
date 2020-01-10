@@ -135,11 +135,19 @@
 		amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
 		amount = CLAMP(amount, 0, 100) // Since the user can actually type the commands himself, some sanity checking
 
+		// user.SetNextMove(CLICK_CD_INTERACT) // it seems that cooldown isn't needed too
+		playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 20)
+
 	if(href_list["dispense"])
 		if (dispensable_reagents.Find(href_list["dispense"]) && beaker != null)
 			var/obj/item/weapon/reagent_containers/B = src.beaker
 			var/datum/reagents/R = B.reagents
 			var/space = R.maximum_volume - R.total_volume
+
+			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 20)
+			if ((space > 0) && (energy * 10 >= min(amount, space)))
+				playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 40) // 15 isn't enough
+
 			R.add_reagent(href_list["dispense"], min(amount, energy * 10, space))
 			energy = max(energy - min(amount, energy * 10, space) / 10, 0)
 
@@ -148,6 +156,9 @@
 			var/obj/item/weapon/reagent_containers/B = beaker
 			B.loc = loc
 			beaker = null
+
+			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 20)
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 
 
 /obj/machinery/chem_dispenser/attackby(obj/item/weapon/reagent_containers/B, mob/user)
@@ -173,6 +184,7 @@
 		user.drop_item()
 		B.loc = src
 		to_chat(user, "You set [B] on the machine.")
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		nanomanager.update_uis(src) // update all UIs attached to src
 		return
 
