@@ -136,7 +136,8 @@
 		amount = CLAMP(amount, 0, 100) // Since the user can actually type the commands himself, some sanity checking
 
 		// user.SetNextMove(CLICK_CD_INTERACT) // it seems that cooldown isn't needed too
-		playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 20)
+		if(iscarbon(usr))
+			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
 
 	if(href_list["dispense"])
 		if (dispensable_reagents.Find(href_list["dispense"]) && beaker != null)
@@ -144,7 +145,9 @@
 			var/datum/reagents/R = B.reagents
 			var/space = R.maximum_volume - R.total_volume
 
-			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 20)
+			if(iscarbon(usr))
+				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
+
 			if ((space > 0) && (energy * 10 >= min(amount, space)))
 				playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 40) // 15 isn't enough
 
@@ -157,7 +160,9 @@
 			B.loc = loc
 			beaker = null
 
-			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 20)
+			if(iscarbon(usr))
+				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
+
 			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 
 
