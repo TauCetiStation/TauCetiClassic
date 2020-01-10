@@ -207,7 +207,7 @@
 	copied = replacetext(copied, "<font face=\"[P.crayonfont]\" color=", "<font face=\"[P.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
 	copied = replacetext(copied, "<img ", "<img style=\"filter: gray;\"")	//IE is still IE
 	copied = replacetext(copied, "<font color=", "<font nocolor=")
-	copied = replacetext(copied, "<table bordercolor=", "<table bordernocolor=")
+	copied = replacetext(copied, "<table border=3px cellpadding=5px bordercolor=", "<table border=3px cellpadding=5px bordernocolor=")
 	P.info += copied
 	P.info += "</font>"//</font>
 	P.name = copy.name // -- Doohl
