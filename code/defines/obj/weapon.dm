@@ -61,7 +61,10 @@
 
 /obj/item/weapon/cane/atom_init()
 	. = ..()
-	make_swipable(src, can_push=TRUE, can_pull=TRUE)
+	var/datum/swipe_component_builder/SCB = new
+	SCB.can_push = TRUE
+	SCB.can_pull = TRUE
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/gift
 	name = "gift"
@@ -302,7 +305,10 @@
 
 /obj/item/weapon/staff/atom_init()
 	. = ..()
-	make_swipable(src, can_push=TRUE, can_pull=TRUE)
+	var/datum/swipe_component_builder/SCB = new
+	SCB.can_push = TRUE
+	SCB.can_pull = TRUE
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/staff/broom
 	name = "broom"
@@ -312,15 +318,15 @@
 
 /obj/item/weapon/staff/broom/atom_init()
 	. = ..()
-	make_swipable(src,
-					can_push=TRUE,
-					can_push_on_chair=TRUE,
+	var/datum/swipe_component_builder/SCB = new
+	SCB.can_push = TRUE
+	SCB.can_push_on_chair = TRUE
 
-					can_pull=TRUE,
+	SCB.can_pull = TRUE
 
-					can_sweep=TRUE,
-					can_spin=TRUE,
-					)
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/staff/gentcane
 	name = "Gentlemans Cane"
@@ -465,7 +471,12 @@
 
 /obj/item/weapon/hatchet/atom_init()
 	. = ..()
-	make_swipable(src, interupt_on_sweep_hit_types=list(/obj, /turf), can_sweep=TRUE, can_spin=TRUE)
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/obj, /turf)
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/hatchet/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
@@ -496,9 +507,12 @@
 
 /obj/item/weapon/scythe/atom_init()
 	. = ..()
-	make_swipable(src,
-					interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep),
-					can_sweep=TRUE, can_spin=TRUE)
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/scythe/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return

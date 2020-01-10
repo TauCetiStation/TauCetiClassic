@@ -19,22 +19,25 @@
 	create_reagents(5)
 	. = ..()
 	mop_list += src
-	make_swipable(src,
-					can_push=TRUE,
-					can_push_on_chair=TRUE,
 
-					can_pull=TRUE,
+	var/datum/swipe_component_builder/SCB = new
+	SCB.can_push = TRUE
+	SCB.can_push_on_chair = TRUE
 
-					can_sweep=TRUE,
-					can_spin=TRUE,
+	SCB.can_pull = TRUE
 
-					on_sweep_to_check=CALLBACK(src, /obj/item/weapon/mop.proc/on_sweep_to_check),
-					on_sweep_finish=CALLBACK(src, /obj/item/weapon/mop.proc/on_sweep_finish),
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
 
-					on_sweep_push=CALLBACK(src, /obj/item/weapon/mop.proc/on_sweep_push),
 
-					on_sweep_pull=CALLBACK(src, /obj/item/weapon/mop.proc/on_sweep_pull),
-					)
+	SCB.on_sweep_to_check = CALLBACK(src, /obj/item/weapon/mop.proc/on_sweep_to_check)
+	SCB.on_sweep_finish = CALLBACK(src, /obj/item/weapon/mop.proc/on_sweep_finish)
+
+	SCB.on_sweep_push = CALLBACK(src, /obj/item/weapon/mop.proc/on_sweep_push)
+
+	SCB.on_sweep_pull = CALLBACK(src, /obj/item/weapon/mop.proc/on_sweep_pull)
+
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/mop/Destroy()
 	mop_list -= src

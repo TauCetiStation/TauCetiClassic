@@ -15,17 +15,20 @@
 
 /obj/item/weapon/twohanded/spear/atom_init()
 	. = ..()
-	make_swipable(src,
-					can_push=TRUE,
-					hit_on_harm_push = TRUE,
-					can_push_on_chair=TRUE,
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
 
-					can_pull=TRUE,
-					hit_on_harm_pull = TRUE,
+	SCB.can_push = TRUE
+	SCB.can_push_on_chair = TRUE
+	SCB.hit_on_harm_push = TRUE
 
-					can_push_call=CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_push),
-					can_pull_call=CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_pull),
-					)
+	SCB.can_pull = TRUE
+	SCB.hit_on_harm_pull = TRUE
+
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_push)
+	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_pull)
+
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/twohanded/spear/proc/can_sweep_push(atom/target, mob/user)
 	return wielded
@@ -69,14 +72,17 @@
 
 /obj/item/weapon/melee/cattleprod/atom_init()
 	. = ..()
-	make_swipable(src,
-					can_push=TRUE,
-					hit_on_harm_push = TRUE,
-					can_push_on_chair=TRUE,
+	var/datum/swipe_component_builder/SCB = new
 
-					can_pull=TRUE,
-					hit_on_harm_pull = TRUE,
-					)
+	SCB.can_push = TRUE
+	SCB.can_push_on_chair = TRUE
+	SCB.hit_on_harm_push = TRUE
+
+	SCB.can_pull = TRUE
+	SCB.hit_on_harm_pull = TRUE
+
+	AddComponent(/datum/component/swiping, SCB)
+
 	update_icon()
 
 /obj/item/weapon/melee/cattleprod/attack_self(mob/user)

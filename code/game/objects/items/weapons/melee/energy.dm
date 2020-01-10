@@ -7,15 +7,15 @@
 
 /obj/item/weapon/melee/energy/atom_init()
 	. = ..()
-	make_swipable(src,
-					interupt_on_sweep_hit_types = list(/obj/structure/table, /obj/machinery/disposal, /obj/structure/rack),
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
 
-					can_sweep=TRUE,
-					can_spin=TRUE,
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
 
-					can_sweep_call=CALLBACK(src, /obj/item/weapon/melee/energy.proc/can_sweep),
-					can_spin_call=CALLBACK(src, /obj/item/weapon/melee/energy.proc/can_spin),
-					)
+	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/melee/energy.proc/can_sweep)
+	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/melee/energy.proc/can_spin)
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/melee/energy/proc/can_sweep(mob/user)
 	return active

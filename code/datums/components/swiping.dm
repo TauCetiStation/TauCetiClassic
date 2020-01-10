@@ -1,45 +1,7 @@
-// Please do not add this component directly, and instead use this proc.
-// Since AddComponent does not support named arguments.
-/proc/make_swipable(atom/A,
-					interupt_on_sweep_hit_types=list(/atom), // Which items will cause a stun when hit.
-					can_push=FALSE,                          // Whether you can push stuff with this weapon.
-					hit_on_harm_push=FALSE,                  // Whether pushing on I_HURT will cause you to hit mobs.
-					can_push_on_chair=FALSE,                 // Whether you can go WOOSH on chair-like structures when pushing.
-
-					can_pull=FALSE,                          // Whether you can pull stuff with this weapon.
-					hit_on_harm_pull=FALSE,                  // Whether pulling on I_HURT will cause you to hit mobs.
-
-					can_sweep=FALSE,                         // Whether you can sweep at all using this weapon.
-					can_spin=FALSE,                          // Whether you can spin-sweep 1 tile around you with this weapon. can_sweep is not required to be able to spin.
-
-					datum/callback/can_sweep_call=null,       // A callback that allows to check for additional conditions before sweeping.
-					datum/callback/can_spin_call=null,        // A callback that allows to check for additional conditions before spinning.
-
-					datum/callback/on_sweep_move=null,        // A callback that replaces default_on_sweep_move.
-					datum/callback/can_sweep_hit=null,        // A callback that replaces default_can_sweep_hit.
-					datum/callback/on_sweep_hit=null,         // A callback that replaces default_on_sweep_hit.
-					datum/callback/on_sweep_to_check=null,    // A callback that replaces default_on_sweep_to_check.
-					datum/callback/on_sweep_finish=null,      // A callback that replaces default_on_sweep_to_check.
-					datum/callback/on_sweep_interupt=null,    // A callback that replaces default_on_sweep_interupt.
-					datum/callback/sweep_continue_check=null, // A callback that replaces default_sweep_continue_check.
-
-					datum/callback/on_spin=null,              // A callback that completely replaces the spin logic. Is used in double energy swords.
-
-					datum/callback/can_push_call=null,       // A callback that allows to check for additional conditions before pushing.
-					datum/callback/can_pull_call=null,       // A callback that allows to check for additional conditions before pulling.
-
-					datum/callback/on_sweep_push=null,         // A callback that replaces default_sweep_push.
-					datum/callback/on_sweep_push_success=null, // A callback that replaces default_sweep_push_success.
-
-					datum/callback/on_sweep_pull=null,         // A callback that replaces default_sweep_pull.
-					datum/callback/on_sweep_pull_success=null, // A callback that replaces default_sweep_pull_success.
-					)
-	A.AddComponent(/datum/component/swiping, interupt_on_sweep_hit_types, can_push, hit_on_harm_push, can_push_on_chair, can_pull,
-	               hit_on_harm_pull, can_sweep, can_spin, can_sweep_call, can_spin_call, on_sweep_move, can_sweep_hit, on_sweep_hit,
-	               on_sweep_to_check, on_sweep_finish, on_sweep_interupt, sweep_continue_check, on_spin, can_push_call, can_pull_call,
-	               on_sweep_push, on_sweep_push_success, on_sweep_pull, on_sweep_pull_success)
-
-
+// The appearance of a swiping weapon.
+// TODO: Add some sort of trail to indicate "movement"?
+// (?) Allow to be catched by hand(at the cost of being hit by it, or perhaps intergrate with combos).
+// (?) Pass pull_act, ex_act, emp_act, and etc to the swiped item.
 /obj/effect/effect/weapon_sweep
 	name = "sweep"
 
@@ -49,6 +11,46 @@
 	glide_size = DELAY2GLIDESIZE(sweep_item.sweep_step)
 
 	appearance = sweep_item.appearance
+
+
+
+// Is used to set all the required params for swiping component.
+// Instantinate before adding component, no need to save anywhere.
+/datum/swipe_component_builder
+	var/list/interupt_on_sweep_hit_types = list(/atom) // Which items will cause a stun when hit.
+
+	var/can_push = FALSE                               // Whether you can push stuff with this weapon.
+	var/hit_on_harm_push = FALSE                       // Whether pushing on I_HURT will cause you to hit mobs.
+	var/can_push_on_chair = FALSE                      // Whether you can go WOOSH on chair-like structures when pushing.
+
+	var/can_pull = FALSE                               // Whether you can pull stuff with this weapon.
+	var/hit_on_harm_pull = FALSE                       // Whether pulling on I_HURT will cause you to hit mobs.
+
+	var/can_sweep = FALSE                              // Whether you can sweep at all using this weapon.
+	var/can_spin = FALSE                               // Whether you can spin-sweep 1 tile around you with this weapon. can_sweep is not required to be able to spin.
+
+	var/datum/callback/can_push_call                   // A callback that allows to check for additional conditions before pushing.
+	var/datum/callback/can_pull_call                   // A callback that allows to check for additional conditions before pulling.
+	var/datum/callback/can_sweep_call                  // A callback that allows to check for additional conditions before sweeping.
+	var/datum/callback/can_spin_call                   // A callback that allows to check for additional conditions before spinning.
+
+	var/datum/callback/on_sweep_move                   // A callback that replaces default_on_sweep_move.
+	var/datum/callback/can_sweep_hit                   // A callback that replaces default_can_sweep_hit.
+	var/datum/callback/on_sweep_hit                    // A callback that replaces default_on_sweep_hit.
+	var/datum/callback/on_sweep_to_check               // A callback that replaces default_on_sweep_to_check.
+	var/datum/callback/on_sweep_finish                 // A callback that replaces default_on_sweep_finish.
+	var/datum/callback/on_sweep_interupt               // A callback that replaces default_on_sweep_interupt.
+
+	var/datum/callback/on_spin                         // A callback that completely replaces the spin logic. Is used in double energy swords.
+
+	var/datum/callback/sweep_continue_check            // A callback that replaces default_sweep_continue_check.
+
+	var/datum/callback/on_sweep_push                   // A callback that replaces default_sweep_push.
+	var/datum/callback/on_sweep_push_success           // A callback that replaces default_sweep_push_success.
+
+	var/datum/callback/on_sweep_pull                   // A callback that replaces default_sweep_pull.
+	var/datum/callback/on_sweep_pull_success           // A callback that replaces default_sweep_pull_success.
+
 
 
 /datum/component/swiping
@@ -86,83 +88,51 @@
 	var/datum/callback/on_sweep_pull
 	var/datum/callback/on_sweep_pull_success
 
-/datum/component/swiping/Initialize(interupt_on_sweep_hit_types=list(/atom), // Which items will cause a stun when hit.
-									can_push=FALSE,                          // Whether you can push stuff with this weapon.
-									hit_on_harm_push=FALSE,                  // Whether pushing on I_HURT will cause you to hit mobs.
-									can_push_on_chair=FALSE,                 // Whether you can go WOOSH on chair-like structures when pushing.
-
-									can_pull=FALSE,                          // Whether you can pull stuff with this weapon.
-									hit_on_harm_pull=FALSE,                  // Whether pulling on I_HURT will cause you to hit mobs.
-
-									can_sweep=FALSE,                         // Whether you can sweep at all using this weapon.
-									can_spin=FALSE,                          // Whether you can spin-sweep 1 tile around you with this weapon. can_sweep is not required to be able to spin.
-
-									datum/callback/can_sweep_call=null,       // A callback that allows to check for additional conditions before sweeping.
-									datum/callback/can_spin_call=null,        // A callback that allows to check for additional conditions before spinning.
-
-									datum/callback/on_sweep_move=null,        // A callback that replaces default_on_sweep_move.
-									datum/callback/can_sweep_hit=null,        // A callback that replaces default_can_sweep_hit.
-									datum/callback/on_sweep_hit=null,         // A callback that replaces default_on_sweep_hit.
-									datum/callback/on_sweep_to_check=null,    // A callback that replaces default_on_sweep_to_check.
-									datum/callback/on_sweep_finish=null,      // A callback that replaces default_on_sweep_to_check.
-									datum/callback/on_sweep_interupt=null,    // A callback that replaces default_on_sweep_interupt.
-									datum/callback/sweep_continue_check=null, // A callback that replaces default_sweep_continue_check.
-
-									datum/callback/on_spin=null,              // A callback that completely replaces the spin logic. Is used in double energy swords.
-
-									datum/callback/can_push_call=null,       // A callback that allows to check for additional conditions before pushing.
-									datum/callback/can_pull_call=null,       // A callback that allows to check for additional conditions before pulling.
-
-									datum/callback/on_sweep_push=null,         // A callback that replaces default_sweep_push.
-									datum/callback/on_sweep_push_success=null, // A callback that replaces default_sweep_push_success.
-
-									datum/callback/on_sweep_pull=null,         // A callback that replaces default_sweep_pull.
-									datum/callback/on_sweep_pull_success=null, // A callback that replaces default_sweep_pull_success.
-									)
+/datum/component/swiping/Initialize(datum/swipe_component_builder/SCB)
 	if(!istype(parent, /obj/item/weapon))
 		return COMPONENT_INCOMPATIBLE
 
-	src.interupt_on_sweep_hit_types = interupt_on_sweep_hit_types
+	interupt_on_sweep_hit_types = SCB.interupt_on_sweep_hit_types
 
-	if(can_push)
-		src.can_push = TRUE
-		src.hit_on_harm_push = hit_on_harm_push
-		src.can_push_on_chair = can_push_on_chair
+	if(SCB.can_push)
+		can_push = TRUE
+		hit_on_harm_push = SCB.hit_on_harm_push
+		can_push_on_chair = SCB.can_push_on_chair
 
-		src.can_push_call = can_push_call
-		src.on_sweep_push = on_sweep_push
-		src.on_sweep_push_success = on_sweep_push_success
+		can_push_call = SCB.can_push_call
+		on_sweep_push = SCB.on_sweep_push
+		on_sweep_push_success = SCB.on_sweep_push_success
 
 		RegisterSignal(parent, list(COMSIG_ITEM_CTRLCLICKWITH), .proc/sweep_push)
 		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK), .proc/on_push_attack)
 
-	if(can_pull)
-		src.can_pull = TRUE
-		src.hit_on_harm_pull = hit_on_harm_pull
+	if(SCB.can_pull)
+		can_pull = TRUE
+		hit_on_harm_pull = SCB.hit_on_harm_pull
 
-		src.can_pull_call = can_pull_call
-		src.on_sweep_pull = on_sweep_pull
-		src.on_sweep_pull_success = on_sweep_pull_success
+		can_pull_call = SCB.can_pull_call
+		on_sweep_pull = SCB.on_sweep_pull
+		on_sweep_pull_success = SCB.on_sweep_pull_success
 
 		RegisterSignal(parent, list(COMSIG_ITEM_CTRLSHIFTCLICKWITH), .proc/sweep_pull)
 
-	src.on_sweep_move = on_sweep_move
-	src.can_sweep_hit = can_sweep_hit
-	src.on_sweep_hit = on_sweep_hit
-	src.on_sweep_to_check = on_sweep_to_check
-	src.on_sweep_finish = on_sweep_finish
-	src.on_sweep_interupt = on_sweep_interupt
-	src.sweep_continue_check = sweep_continue_check
+	on_sweep_move = SCB.on_sweep_move
+	can_sweep_hit = SCB.can_sweep_hit
+	on_sweep_hit = SCB.on_sweep_hit
+	on_sweep_to_check = SCB.on_sweep_to_check
+	on_sweep_finish = SCB.on_sweep_finish
+	on_sweep_interupt = SCB.on_sweep_interupt
+	sweep_continue_check = SCB.sweep_continue_check
 
-	if(can_sweep)
-		src.can_sweep = TRUE
-		src.can_sweep_call = can_sweep_call
+	if(SCB.can_sweep)
+		can_sweep = TRUE
+		can_sweep_call = SCB.can_sweep_call
 		RegisterSignal(parent, list(COMSIG_ITEM_ALTCLICKWITH), .proc/sweep_facing)
 
-	if(can_spin)
-		src.can_spin = TRUE
-		src.can_spin_call = can_spin_call
-		src.on_spin = on_spin
+	if(SCB.can_spin)
+		can_spin = TRUE
+		can_spin_call = SCB.can_spin_call
+		on_spin = SCB.on_spin
 		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/sweep_spin)
 		RegisterSignal(parent, list(COMSIG_ITEM_MIDDLECLICKWITH), .proc/sweep_spin_click)
 
@@ -538,7 +508,7 @@
 	var/turf/dropping_turf = get_turf(dropping)
 
 	if(get_dir(user, over_turf) == reverse_direction(get_dir(user, dropping_turf)))
-		if(can_spin && sweep_spin(user) != NONE)
+		if(can_spin && sweep_spin(parent, user) != NONE)
 			return COMPONENT_NO_MOUSEDROP
 
 	if(!istype(over_turf) || !istype(dropping_turf))
@@ -549,10 +519,10 @@
 	for(var/turf/T in turfs)
 		if(!in_range(user, T))
 			if(get_dir(dropping, over) == get_dir(user, over))
-				if(can_push && sweep_push(over, user) != NONE)
+				if(can_push && sweep_push(parent, over, user) != NONE)
 					return COMPONENT_NO_MOUSEDROP
 			else
-				if(can_pull && sweep_pull(dropping, user) != NONE)
+				if(can_pull && sweep_pull(parent, dropping, user) != NONE)
 					return COMPONENT_NO_MOUSEDROP
 		directions += get_dir(user, T)
 

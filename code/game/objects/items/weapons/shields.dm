@@ -4,18 +4,19 @@
 
 /obj/item/weapon/shield/atom_init()
 	. = ..()
-	make_swipable(src,
-					interupt_on_sweep_hit_types = list(/turf, /obj/structure/table, /obj/machinery/disposal, /obj/structure/rack),
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
 
-					can_sweep=TRUE,
+	SCB.can_sweep = TRUE
 
-					can_push = TRUE,
-					hit_on_harm_push = TRUE,
+	SCB.can_push = TRUE
+	SCB.hit_on_harm_push = TRUE
 
-					on_sweep_hit=CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit),
+	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
 
-					on_sweep_push_success=CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success),
-					)
+	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
+
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/shield/proc/on_sweep_hit(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/target, mob/living/user)
 	var/datum/component/swiping/SW = GetComponent(/datum/component/swiping)
@@ -122,21 +123,22 @@
 
 /obj/item/weapon/shield/energy/atom_init()
 	. = ..()
-	make_swipable(src,
-					interupt_on_sweep_hit_types = list(/turf, /obj/structure/table, /obj/machinery/disposal, /obj/structure/rack),
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
 
-					can_sweep=TRUE,
+	SCB.can_sweep = TRUE
 
-					can_push = TRUE,
-					hit_on_harm_push = TRUE,
+	SCB.can_push = TRUE
+	SCB.hit_on_harm_push = TRUE
 
-					on_sweep_hit=CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit),
+	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
 
-					on_sweep_push_success=CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success),
+	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
 
-					can_sweep_call=CALLBACK(src, /obj/item/weapon/shield/energy.proc/can_sweep),
-					can_push_call=CALLBACK(src, /obj/item/weapon/shield/energy.proc/can_sweep_push),
-					)
+	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/shield/energy.proc/can_sweep)
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/shield/energy.proc/can_sweep_push)
+
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/shield/energy/proc/can_sweep(mob/user)
 	return active
@@ -178,21 +180,22 @@
 
 /obj/item/weapon/shield/riot/tele/atom_init()
 	. = ..()
-	make_swipable(src,
-					interupt_on_sweep_hit_types = list(/turf, /obj/structure/table, /obj/machinery/disposal, /obj/structure/rack),
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
 
-					can_sweep=TRUE,
+	SCB.can_sweep = TRUE
 
-					can_push = TRUE,
-					hit_on_harm_push = TRUE,
+	SCB.can_push = TRUE
+	SCB.hit_on_harm_push = TRUE
 
-					on_sweep_hit=CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit),
+	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
 
-					on_sweep_push_success=CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success),
+	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
 
-					can_sweep_call=CALLBACK(src, /obj/item/weapon/shield/riot/tele.proc/can_sweep),
-					can_push_call=CALLBACK(src, /obj/item/weapon/shield/riot/tele.proc/can_sweep_push),
-					)
+	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/shield/riot/tele.proc/can_sweep)
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/shield/riot/tele.proc/can_sweep_push)
+
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/shield/riot/tele/proc/can_sweep(mob/user)
 	return active
