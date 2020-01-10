@@ -21,7 +21,7 @@
 		if(15 to 25)
 			M.drowsyness  = max(M.drowsyness, 20)
 		if(25 to INFINITY)
-			M.sleeping += 1
+			M.SetSleeping(20)
 			M.adjustOxyLoss(-M.getOxyLoss())
 			M.SetWeakened(0)
 			M.SetStunned(0)
@@ -304,7 +304,7 @@
 	M.drowsyness = 0
 	M.stuttering = 0
 	M.confused = 0
-	M.sleeping = 0
+	M.SetSleeping(0)
 	M.jitteriness = 0
 	for(var/datum/disease/D in M.viruses)
 		D.spread = "Remissive"

@@ -202,7 +202,7 @@
 	return "<span class='bad'>ERROR</span>"
 
 /obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
-	H.Sleeping(8)
+	H.Sleeping(16)
 	var/area/A
 	if(console && console.pad && console.pad.teleport_target)
 		A = console.pad.teleport_target

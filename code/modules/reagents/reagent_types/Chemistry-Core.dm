@@ -165,13 +165,13 @@
 			if(20 to 40)
 				M.make_jittery(6)
 				if(prob(15))
-					M.sleeping += 1
+					M.SetSleeping(20)
 			if(40 to 80)
 				M.make_jittery(12)
 				if(prob(30))
-					M.sleeping += 1
+					M.SetSleeping(20)
 			if(80 to INFINITY)
-				M.sleeping += 1
+				M.SetSleeping(20)
 	data++
 
 /datum/reagent/water/unholywater/reaction_obj(obj/O, volume)

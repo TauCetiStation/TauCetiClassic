@@ -269,13 +269,13 @@ Gunshots/explosions/opening doors/less rare audio (done)
         // FAKE DEATH
 
 			if(74 to 75)
-				src.sleeping = 20
+				src.SetSleeping(40)
 				hal_crit = 1
 				hal_screwyhud = 1
 				to_chat(src, "<span class='userdanger'>[pick("FUCK!", "FOR FUCKS SAKE, END THIS!", "", "WHY-Y-Y?!", "NOT AGAIN")] I LOST! [pick("NNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHH!", "DAMN THIS GAME IS SO HARD!", "I CAN'T PLAY THIS GAME ANY MORE!")]</span>")
 				playsound_local(null, 'sound/hallucinations/fake_death.ogg', VOL_EFFECTS_MASTER)
 				spawn(rand(50,100))
-					src.sleeping = 0
+					src.SetSleeping(0)
 					hal_crit = 0
 					hal_screwyhud = 0
 

@@ -165,9 +165,9 @@
 
 		if ("faint")
 			message = "<B>[src]</B> faints."
-			if(src.sleeping)
+			if(IsSleeping())
 				return //Can't faint while asleep
-			src.sleeping += 10 //Short-short nap
+			SetSleeping(20) //Short-short nap
 			m_type = SHOWMSG_VISUAL
 
 		if ("cough")

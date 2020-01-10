@@ -590,7 +590,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/Crossed(atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
-		MB.RunOver(src)	
+		MB.RunOver(src)
 	SpreadFire(AM)
 	. = ..()
 
@@ -2060,3 +2060,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 													// clamped to max 1000
 	if(jitteriness > 30 && !is_jittery)
 		INVOKE_ASYNC(src, /mob.proc/jittery_process)
+
+/mob/living/carbon/update_stat()
+	if(IsSleeping())
+		stat = UNCONSCIOUS
+		blinded = TRUE

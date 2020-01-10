@@ -18,7 +18,7 @@
 	if(adj_drowsy)
 		M.drowsyness = max(0,M.drowsyness + adj_drowsy)
 	if(adj_sleepy)
-		M.sleeping = max(0,M.sleeping + adj_sleepy)
+		M.Sleeping(adj_sleepy)
 	if(adj_temp)
 		if(M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
 			M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
@@ -230,7 +230,7 @@
 
 /datum/reagent/consumable/drink/coffee/soy_latte/on_general_digest(mob/living/M)
 	..()
-	M.sleeping = 0
+	M.SetSleeping(0)
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1, 0)
 
@@ -245,7 +245,7 @@
 
 /datum/reagent/consumable/drink/coffee/cafe_latte/on_general_digest(mob/living/M)
 	..()
-	M.sleeping = 0
+	M.SetSleeping(0)
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1, 0)
 
@@ -521,9 +521,9 @@
 	data++
 	switch(data)
 		if(51 to 200)
-			M.sleeping += 1
+			M.SetSleeping(20)
 		if(201 to INFINITY)
-			M.sleeping += 1
+			M.SetSleeping(20)
 			M.adjustToxLoss(2)
 
 /datum/reagent/consumable/gargle_blaster
@@ -665,7 +665,7 @@
 	if(adj_drowsy)
 		M.drowsyness = max(0,M.drowsyness + adj_drowsy)
 	if(adj_sleepy)
-		M.sleeping = max(0,M.sleeping + adj_sleepy)
+		M.SetSleeping(adj_sleepy)
 
 	if(!src.data || (!isnum(src.data) && src.data.len))
 		data = 1   //if it doesn't exist we set it.  if it's a list we're going to set it to 1 as well.  This is to

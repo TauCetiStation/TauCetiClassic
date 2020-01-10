@@ -297,7 +297,7 @@
 		if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 			Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-				Sleeping(5)
+				Sleeping(10)
 		else if(SA_pp > 0.01) // There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			if(prob(20))
 				emote(pick("giggle", "laugh"))
@@ -388,7 +388,7 @@
 		drowsyness--
 		eye_blurry = max(2, eye_blurry)
 		if (prob(5))
-			sleeping += 1
+			Sleeping(2)
 			Paralyse(5)
 
 	if(confused)
@@ -550,14 +550,8 @@
 			stat = UNCONSCIOUS
 			if(halloss > 0)
 				adjustHalLoss(-3)
-		else if(sleeping)
-			handle_dreams()
-			adjustHalLoss(-3)
-			sleeping = max(sleeping - 1, 0)
+		else if(IsSleeping())
 			blinded = TRUE
-			stat = UNCONSCIOUS
-			if( prob(10) && health && !hal_crit )
-				emote("snore")
 		else if(resting)
 			if(halloss > 0)
 				adjustHalLoss(-3)

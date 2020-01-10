@@ -119,7 +119,7 @@
 		return
 
 	for(var/datum/disease/D in viruses)
-		if(D.spread_by_touch())	
+		if(D.spread_by_touch())
 			M.contract_disease(D, 0, 1, CONTACT_HANDS)
 
 	for(var/datum/disease/D in M.viruses)
@@ -265,9 +265,9 @@
 				H.w_uniform.add_fingerprint(M)
 
 			if(lying)
-				src.sleeping = max(0,src.sleeping-5)
+				AdjustSleeping(-10)
 				if (!M.lying)
-					if(!src.sleeping)
+					if(!IsSleeping())
 						src.resting = 0
 					if(src.crawling)
 						if(crawl_can_use() && src.pass_flags & PASSCRAWL)
@@ -276,7 +276,7 @@
 					M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
 				else
-					if(!src.sleeping)
+					if(!IsSleeping())
 						M.visible_message("<span class='notice'>[M] cuddles with [src] to make [t_him] feel better!</span>", \
 								"<span class='notice'>You cuddle with [src] to make [t_him] feel better!</span>")
 					else
@@ -316,7 +316,7 @@
 	set name = "Crawl"
 	set category = "IC"
 
-	if( stat || weakened || stunned || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled)
+	if( stat || weakened || stunned || paralysis || resting || (status_flags & FAKEDEATH) || buckled)
 		return
 	if(crawl_getup)
 		return
@@ -545,11 +545,11 @@
 	set name = "Sleep"
 	set category = "IC"
 
-	if(sleeping)
+	if(IsSleeping())
 		to_chat(src, "<span class='rose'>You are already sleeping</span>")
 		return
 	if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
-		sleeping = 20 //Short nap
+		SetSleeping(100) //Short nap
 
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
@@ -892,3 +892,8 @@
 					break
 			R.reaction(loc)
 			adjustToxLoss(-toxins_puked)
+
+/mob/living/carbon/update_stat()
+	if(IsSleeping())
+		stat = UNCONSCIOUS
+		blinded = TRUE
