@@ -622,10 +622,3 @@ var/failed_old_db_connections = 0
 		return no_head ? 0 : "HEAD"
 
 	return text
-
-#ifdef DEBUG
-/world/proc/enable_debugger()
-	var/dll = world.GetConfig("env", "EXTOOLS_DLL")
-	if (dll)
-		call(dll, "debug_initialize")()
-#endif

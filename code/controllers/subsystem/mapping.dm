@@ -69,7 +69,7 @@ var/datum/subsystem/mapping/SSmapping
 	var/y2
 
 /datum/subsystem/mapping/proc/spawn_space_structures()
-	if(!levels_by_trait(ZTRAIT_SPACE_RUINS).len)
+	if(!length(levels_by_trait(ZTRAIT_SPACE_RUINS)))
 		return
 
 	// picking structures to spawn
