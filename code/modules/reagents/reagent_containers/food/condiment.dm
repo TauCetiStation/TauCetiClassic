@@ -90,7 +90,8 @@
 		if(!target.reagents.total_volume)
 			to_chat(user, "<span class='rose'> [target] is empty.</span>")
 			return
-
+		if (!reagents.maximum_volume)
+			to_chat(user, "<span class='rose'> [src] can't hold this.</span>")
 		if(reagents.total_volume >= reagents.maximum_volume)
 			to_chat(user, "<span class='rose'> [src] is full.</span>")
 			return
@@ -102,6 +103,9 @@
 	else if(target.is_open_container() || istype(target, /obj/item/weapon/reagent_containers/food/snacks))
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='rose'> [src] is empty.</span>")
+			return
+		if (!target.reagents.maximum_volume)
+			to_chat(user, "<span class='rose'> [target] can't hold this.</span>")
 			return
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, "<span class='rose'> you can't add anymore to [target].</span>")
@@ -220,7 +224,7 @@
 
 /obj/structure/condiment_shelf/attack_hand(mob/user)
 	if(contents.len)
-		var/obj/item/weapon/reagent_containers/food/condiment/choice = input("Which condiment would you like to remove from the shelf?") in contents as obj|null
+		var/obj/item/weapon/reagent_containers/food/condiment/choice = input("Which condiment would you like to remove from the shelf?") in contents
 		if(choice)
 			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr) || usr.incapacitated())
 				return

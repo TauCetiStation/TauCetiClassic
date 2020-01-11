@@ -38,7 +38,7 @@ Note: Must be placed west/left of and R&D console to function.
 
 	var/max_material_storage = 100000
 	var/efficiency_coeff
-	var/list/loaded_materials = list()
+	var/list/datum/rnd_material/loaded_materials = list()
 	var/list/queue = list()
 
 /obj/machinery/r_n_d/protolathe/atom_init()
