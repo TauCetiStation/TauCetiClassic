@@ -156,8 +156,7 @@
 			scan_data += chemID
 			scan_data += "<br>"
 
-	for(var/mob/O in viewers(usr))
-		O.show_message("<span class='warning'>\the [src] rattles and prints out a sheet of paper.</span>", 1)
+	usr.visible_message("<span class='warning'>\the [src] rattles and prints out a sheet of paper.</span>")
 
 	sleep(10)
 
@@ -211,8 +210,8 @@
 		if(!BP.open)
 			to_chat(usr, "<b>You have to cut the limb open first!</b>")
 			return
-		for(var/mob/O in viewers(M))
-			O.show_message("<span class='warning'>[user.name] scans the wounds on [M.name]'s [BP.name] with \the [src.name]</span>", 1)
+
+		M.visible_message("<span class='warning'>[user.name] scans the wounds on [M.name]'s [BP.name] with \the [src.name]</span>")
 		playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "[bicon(src)]<span class='notice'>Scanning completed!</span>")
 		src.add_data(BP)

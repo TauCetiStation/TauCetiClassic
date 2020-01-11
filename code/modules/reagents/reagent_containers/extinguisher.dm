@@ -12,6 +12,7 @@
 	throw_range = 10
 	force = 10.0
 	m_amt = 90
+	safety = TRUE
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 
 	triple_shot = TRUE

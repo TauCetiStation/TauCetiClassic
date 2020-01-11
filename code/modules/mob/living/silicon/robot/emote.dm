@@ -1,4 +1,4 @@
-/mob/living/silicon/robot/emote(act,m_type=1,message = null)
+/mob/living/silicon/robot/emote(act,m_type=SHOWMSG_VISUAL,message = null)
 	var/param = null
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
@@ -41,7 +41,7 @@
 					message = "<B>[src]</B> salutes to [param]."
 				else
 					message = "<B>[src]</b> salutes."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 		if ("bow")
 			if (!src.buckled)
 				var/M = null
@@ -57,37 +57,37 @@
 					message = "<B>[src]</B> bows to [param]."
 				else
 					message = "<B>[src]</B> bows."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("clap")
 			if (!src.restrained())
 				message = "<B>[src]</B> claps."
-				m_type = 2
+				m_type = SHOWMSG_AUDIO
 		if ("flap")
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps his wings."
-				m_type = 2
+				m_type = SHOWMSG_AUDIO
 
 		if ("aflap")
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps his wings ANGRILY!"
-				m_type = 2
+				m_type = SHOWMSG_AUDIO
 
 		if ("twitch")
 			message = "<B>[src]</B> twitches violently."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("twitch_s")
 			message = "<B>[src]</B> twitches."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("nod")
 			message = "<B>[src]</B> nods."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("deathgasp")
 			message = "<B>[src]</B> shudders violently for a moment, then becomes motionless, its eyes slowly darkening."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("glare")
 			var/M = null
@@ -134,7 +134,7 @@
 				message = "<B>[src]</B> looks at [param]."
 			else
 				message = "<B>[src]</B> looks."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if("beep")
 			var/M = null
@@ -151,7 +151,7 @@
 			else
 				message = "<B>[src]</B> beeps."
 			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if("ping")
 			var/M = null
@@ -168,7 +168,7 @@
 			else
 				message = "<B>[src]</B> pings."
 			playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if("buzz")
 			var/M = null
@@ -185,14 +185,14 @@
 			else
 				message = "<B>[src]</B> buzzes."
 			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if("law")
 			if (istype(module,/obj/item/weapon/robot_module/security))
 				message = "<B>[src]</B> shows its legal authorization barcode."
 
 				playsound(src, 'sound/voice/beepsky/iamthelaw.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-				m_type = 2
+				m_type = SHOWMSG_AUDIO
 			else
 				to_chat(src, "You are not THE LAW, pal.")
 
@@ -201,7 +201,7 @@
 				message = "<B>[src]</B>'s speakers skreech, \"Halt! Security!\"."
 
 				playsound(src, 'sound/voice/halt.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-				m_type = 2
+				m_type = SHOWMSG_AUDIO
 			else
 				to_chat(src, "You are not security.")
 
@@ -211,7 +211,7 @@
 			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 
 	if ((message && src.stat == CONSCIOUS))
-		if (m_type & 1)
+		if (m_type & SHOWMSG_VISUAL)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)
 		else

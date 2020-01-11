@@ -1,8 +1,6 @@
-#define SOLID 1
-#define LIQUID 2
-#define GAS 3
 #define MAX_PILL_SPRITE 24
 #define MAX_BOTTLE_SPRITE 3
+
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	density = 1

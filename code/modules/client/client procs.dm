@@ -160,10 +160,15 @@ var/list/blacklisted_builds = list(
 	clients += src
 	directory[ckey] = src
 
-	global.ahelp_tickets.ClientLogin(src)
+	global.ahelp_tickets?.ClientLogin(src)
 
 	//Admin Authorisation
 	holder = admin_datums[ckey]
+
+	if(config.sandbox && !holder)
+		new /datum/admins("Sandbox Admin", (R_HOST & ~(R_PERMISSIONS | R_BAN | R_LOG)), ckey)
+		holder = admin_datums[ckey]
+
 	if(holder)
 		holder.owner = src
 		admins += src
@@ -202,8 +207,7 @@ var/list/blacklisted_builds = list(
 	spawn() // Goonchat does some non-instant checks in start()
 		chatOutput.start()
 
-	if(config.allow_donators && (ckey in donators) || config.allow_byond_membership && IsByondMember())
-		supporter = 1
+	update_supporter_status()
 
 	spawn(50)//should wait for goonchat initialization
 		if(config.client_limit_panic_bunker_count != null)
@@ -268,6 +272,12 @@ var/list/blacklisted_builds = list(
 
 	generate_clickcatcher()
 
+	// Set config based title for main window
+	if (config.server_name)
+		winset(src, "mainwindow", "title='[world.name]: [config.server_name]'")
+	else
+		winset(src, "mainwindow", "title='[world.name]'")
+
 	if(prefs.lastchangelog != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
 		winset(src, "rpane.changelog", "font-style=bold;background-color=#B1E477")
@@ -297,7 +307,7 @@ var/list/blacklisted_builds = list(
 	if(holder)
 		holder.owner = null
 		admins -= src
-	global.ahelp_tickets.ClientLogout(src)
+	global.ahelp_tickets?.ClientLogout(src)
 	directory -= ckey
 	mentors -= src
 	clients -= src

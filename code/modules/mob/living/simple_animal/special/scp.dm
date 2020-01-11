@@ -191,9 +191,7 @@
 /mob/living/simple_animal/special/scp173/attackby(obj/item/O, mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	to_chat(user, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
-	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
-			M.show_message("<span class='warning'>[user] gently taps [src] with [O].</span>")
+	visible_message("<span class='warning'>[user] gently taps [src] with [O].</span>")
 
 /mob/living/simple_animal/special/scp173/bullet_act(obj/item/projectile/Proj)
 	visible_message("[Proj] ricochets off [src]!")
