@@ -136,7 +136,7 @@
 /datum/game_mode/mutiny/proc/equip_head_mutineer()
 	equip_head(head_mutineer, "mutineer", /mob/living/carbon/human/proc/recruit_mutineer)
 
-/datum/game_mode/mutiny/proc/equip_head(datum/mind/head, faction, proc/recruitment_verb)
+/datum/game_mode/mutiny/proc/equip_head(datum/mind/head, faction, recruitment_verb)
 	var/mob/living/carbon/human/H = head.current
 	to_chat(H, "You are the Head [capitalize(faction)]!")
 	head.special_role = "head_[faction]"
