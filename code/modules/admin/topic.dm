@@ -1733,7 +1733,7 @@
 		P.update_icon()
 
 		var/obj/item/weapon/stamp/centcomm/S = new
-		S.stamp_paper(P, use_stamp_by_message = TRUE)
+		S.stamp_paper(P)
 
 		send_fax(usr, P, "All")
 

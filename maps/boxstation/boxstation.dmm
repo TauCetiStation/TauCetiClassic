@@ -22884,9 +22884,7 @@
 /obj/structure/table,
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/stamp{
-	name = "Quartermaster's stamp"
-	},
+/obj/item/weapon/stamp/qm,
 /turf/simulated/floor,
 /area/station/cargo/qm)
 "aOK" = (

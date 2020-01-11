@@ -1123,7 +1123,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if(stamp_text)
 			S.stamp_paper(P, stamp_text)
 		else
-			S.stamp_paper(P, use_stamp_by_message = TRUE)
+			S.stamp_paper(P)
 
 	send_fax(usr, P, department)
 

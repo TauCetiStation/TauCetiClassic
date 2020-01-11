@@ -586,7 +586,7 @@
 	info = get_airlock_wires_identification()
 
 	var/obj/item/weapon/stamp/centcomm/S = new
-	S.stamp_paper(src, "This paper has been stamped by the Centcomm Engineer Department.")
+	S.stamp_paper(src, "Centcomm Engineer Department")
 
 	update_icon()
 	updateinfolinks()
@@ -608,7 +608,7 @@
 	info = get_space_structures_info()
 
 	var/obj/item/weapon/stamp/centcomm/S = new
-	S.stamp_paper(src, "This paper has been stamped by the Centcomm Science Department.")
+	S.stamp_paper(src, "Centcomm Science Department")
 
 	update_icon()
 	updateinfolinks()
