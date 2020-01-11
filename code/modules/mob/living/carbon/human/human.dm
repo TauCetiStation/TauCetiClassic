@@ -1864,7 +1864,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	toggle_leap()
 
-	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .leap_end, prev_intent))
+	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .proc/leap_end, prev_intent))
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)
 	status_flags &= ~LEAPING

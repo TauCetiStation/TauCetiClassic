@@ -211,7 +211,7 @@
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])", user)
 
-	var/t = user:zone_sel.selecting
+	var/t = user.zone_sel.selecting
 	if (t == BP_HEAD)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
