@@ -30,10 +30,10 @@
 			makesparse |= get_step(T, todir)
 	makesparse -= makescrap
 	for(var/turf/T in makescrap)
-		if(!locate(/obj/structure/scrap in T.contents))
+		if(!(locate(/obj/structure/scrap) in T.contents))
 			new maintype(T)
 	for(var/turf/T in makesparse)
-		if(!locate(/obj/structure/scrap in T.contents))
+		if(!(locate(/obj/structure/scrap) in T.contents))
 			new subtype(T)
 
 /turf/simulated/mineral/airfull
@@ -47,7 +47,7 @@
 	var/turf/A
 	for (var/newdir in alldirs)
 		A = get_step(src, newdir)
-		if(!A.density && !locate(/obj/structure/scrap in A.contents))
+		if(!A.density && !(locate(/obj/structure/scrap) in A.contents))
 			new /obj/random/scrap/dense_weighted(A)
 
 /turf/proc/resource_definition()
