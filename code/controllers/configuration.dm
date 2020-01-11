@@ -742,17 +742,16 @@
 /datum/configuration/proc/is_mode_allowed(g_mode_tag)
 	return (g_mode_tag && (g_mode_tag in modes))
 
-// if modset is null - return all runnable modes
-/datum/configuration/proc/get_runnable_modes(modeset="random")
+// check_ready - if true only ready players count
+/datum/configuration/proc/get_runnable_modes(modeset="random", check_ready=TRUE)
 	var/list/datum/game_mode/runnable_modes = new
 	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
 		var/datum/game_mode/M = new T()
-		//log_debug("[T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
+		// log_debug("[T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
 		if (!is_mode_allowed(M.config_tag))
 			qdel(M)
 			continue
 		if (is_custom_modeset(M.config_tag))
-			//modesets in game modes too =(
 			qdel(M)
 			continue
 		if(!modeset || modeset == "random" || modeset == "secret")
@@ -775,10 +774,12 @@
 						if("traitor","blob","extended","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
 							qdel(M)
 							continue
-		//log_debug("checking [M.config_tag]")
-		if (M.can_start())
-			runnable_modes[M] = probabilities[M.config_tag]
-			//log_debug("runnable_mode\[[runnable_modes.len]\] = [M.config_tag]")
+		var/mod_prob = probabilities[M.config_tag]
+		if (is_custom_modeset(modeset))
+			mod_prob = 1
+		if (((!check_ready) && M.potential_runnable()) || (check_ready && M.can_start()))
+			runnable_modes[M] = mod_prob
+			// log_debug("runnable_mode\[[runnable_modes.len]\] = [M.config_tag] [mod_prob]")
 	return runnable_modes
 
 /datum/configuration/proc/stat_entry()

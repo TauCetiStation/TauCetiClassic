@@ -190,10 +190,7 @@ var/datum/subsystem/ticker/ticker
 
 		SSjob.ResetOccupations()
 		if(!src.mode)
-			if (config.is_custom_modeset(master_mode))
-				src.mode = pick(runnable_modes)
-			else
-				src.mode = pickweight(runnable_modes)
+			src.mode = pickweight(runnable_modes)
 		if(src.mode)
 			var/mtype = src.mode.type
 			src.mode = new mtype
@@ -202,7 +199,8 @@ var/datum/subsystem/ticker/ticker
 		// master_mode is config tag of gamemode
 		src.mode = config.pick_mode(master_mode)
 
-	if (!src.mode.can_start())
+	// Before assign the crew setup antag roles without crew jobs
+	if (!src.mode.assign_outsider_antag_roles())
 		message_admins("<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed.")
 		qdel(mode)
 		mode = null
