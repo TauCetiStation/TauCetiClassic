@@ -211,7 +211,7 @@
 					move_delay += 6
 				move_delay += 1+config.run_speed
 			if("walk")
-				move_delay += 7+config.walk_speed
+				move_delay += 2.5+config.walk_speed
 		move_delay += mob.movement_delay()
 
 		if(mob.pulledby || mob.buckled) // Wheelchair driving!

@@ -134,7 +134,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> [speaking.format_message(text, verb)]</span></i>"
 		else
 			rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> [verb], <span class='message'>\"[text]\"</span></span></i>"
-		master.show_message(rendered, 2)
+		to_chat(master, rendered)
 	return
 
 /obj/machinery/hologram/holopad/proc/create_holo(mob/living/silicon/ai/A, turf/T = loc)

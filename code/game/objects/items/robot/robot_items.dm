@@ -22,9 +22,8 @@
 		M.stuttering = 5
 	M.Stun(5)
 
-	for(var/mob/O in viewers(M, null))
-		if (O.client)
-			O.show_message("<span class='warning'><B>[user] has prodded [M] with an electrically-charged arm!</B></span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
+
+	M.visible_message("<span class='warning'><B>[user] has prodded [M] with an electrically-charged arm!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
 
 /obj/item/borg/overdrive
 	name = "overdrive"

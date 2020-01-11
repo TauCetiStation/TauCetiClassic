@@ -413,6 +413,8 @@
 			info += t // Oh, he wants to edit to the end of the file, let him.
 			updateinfolinks()
 
+		playsound(src, pick(SOUNDIN_PEN), VOL_EFFECTS_MASTER, null, FALSE)
+
 		update_space(t)
 
 		show_content(usr, forceshow = TRUE, infolinks = TRUE)

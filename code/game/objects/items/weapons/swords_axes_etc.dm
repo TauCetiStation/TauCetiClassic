@@ -103,8 +103,7 @@
 			M.stuttering = 8
 		M.Stun(8)
 		M.Weaken(8)
-		for(var/mob/O in viewers(M))
-			if (O.client)	O.show_message("<span class='warning'><B>[M] has been beaten with \the [src] by [user]!</B></span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
+		user.visible_message("<span class='warning'><B>[M] has been beaten with \the [src] by [user]!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
 	else
 		playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 		M.Stun(5)
@@ -114,8 +113,7 @@
 		msg_admin_attack("[key_name(user)] attacked [key_name(user)] with [src.name] (INTENT: [uppertext(user.a_intent)])", user)
 		src.add_fingerprint(user)
 
-		for(var/mob/O in viewers(M))
-			if (O.client)	O.show_message("<span class='warning'><B>[M] has been stunned with \the [src] by [user]!</B></span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
+		user.visible_message("<span class='warning'><B>[M] has been stunned with \the [src] by [user]!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
 
 //Telescopic baton
 /obj/item/weapon/melee/telebaton

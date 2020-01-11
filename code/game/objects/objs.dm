@@ -199,7 +199,7 @@
 	var/mob/mo = locate(/mob) in src
 	if(mo)
 		var/rendered = "<span class='game say'><span class='name'>[M.name]: </span> <span class='message'>[text]</span></span>"
-		mo.show_message(rendered, 2)
+		mo.oldshow_message(rendered, 2)
 		*/
 	return
 

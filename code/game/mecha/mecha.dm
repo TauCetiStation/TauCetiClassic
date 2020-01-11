@@ -566,7 +566,7 @@
 		to_chat(user, "<span class='warning'>You smash at the armored suit!</span>")
 		for (var/mob/V in viewers(src))
 			if(V.client && !(V.blinded))
-				V.show_message("<span class='warning'>The [user] smashes against [src.name]'s armor!</span>", 1)
+				V.oldshow_message("<span class='warning'>The [user] smashes against [src.name]'s armor!</span>", 1)
 	else
 		src.log_append_to_last("Armor saved.")
 		playsound(src, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
@@ -574,7 +574,7 @@
 		src.occupant_message("<span class='notice'>The [user]'s attack is stopped by the armor.</span>")
 		for (var/mob/V in viewers(src))
 			if(V.client && !(V.blinded))
-				V.show_message("<span class='notice'>The [user] rebounds off the [src.name] armor!</span>", 1)
+				V.oldshow_message("<span class='notice'>The [user] rebounds off the [src.name] armor!</span>", 1)
 	return
 */
 
@@ -611,7 +611,7 @@
 /*
 		for (var/mob/V in viewers(src))
 			if(V.client && !(V.blinded))
-				V.show_message("The [W] bounces off [src.name] armor.", 1)
+				V.oldshow_message("The [W] bounces off [src.name] armor.", 1)
 */
 	else
 		src.occupant_message("<font color='red'><b>[user] hits [src] with [W].</b></font>")
@@ -778,7 +778,7 @@
 /*
 			for (var/mob/V in viewers(src))
 				if(V.client && !(V.blinded))
-					V.show_message("The [W] bounces off [src.name] armor.", 1)
+					V.oldshow_message("The [W] bounces off [src.name] armor.", 1)
 */
 		else
 			src.occupant_message("<font color='red'><b>[user] hits [src] with [W].</b></font>")

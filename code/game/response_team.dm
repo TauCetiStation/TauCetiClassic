@@ -36,6 +36,7 @@ var/can_call_ert
 
 	message_admins("[key_name_admin(usr)] is dispatching an Emergency Response Team.", 1)
 	log_admin("[key_name(usr)] used Dispatch Response Team.")
+	feedback_set_details("ERT", "Admin dispatch")
 	trigger_armed_response_team(1)
 
 

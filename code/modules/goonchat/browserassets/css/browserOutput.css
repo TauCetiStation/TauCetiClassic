@@ -253,9 +253,40 @@ a.popt {text-decoration: none;}
 ******************************************/
 
 /* MOTD */
-.motd {color: #470062;}
+.motd {
+	color: #470062;
+	border-left: 3px solid #470062;
+	padding-left: 8px;
+	margin-bottom: 4px;
+}
 .motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {/* color: #08457e; */ color: inherit; text-decoration: underline;}
 .motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover {color: #1560bd;}
+
+/* ANNOUNCEMENTS */
+.host_announcements {
+	border-left: 3px solid #800000;
+	color: #800000;
+	padding-left: 8px;
+	margin-bottom: 4px;
+}
+.host_announcements h1, .host_announcements h2, .host_announcements h3, .host_announcements h4, .host_announcements h5, .host_announcements h6 {
+	color: #800000;
+	text-decoration: underline;
+}
+.host_announcements hr {
+	margin: 8px auto;
+	width: 60%;
+	border: 0;
+	border-top: 1px dashed #800000;
+}
+
+/* TEST MERGES */
+.test_merges {
+	border-left: 3px solid #000; /* #013220 */
+	padding-left: 8px;
+	margin-bottom: 4px;
+}
+
 
 /* ADD HERE FOR BOLD */
 .bold, .name, .prefix, .ooc, .adminooc, .adminlooc, .admin, .adminobserverooc, .adminooc, .adminobserver, .adminsay, .wet {font-weight: bold;}

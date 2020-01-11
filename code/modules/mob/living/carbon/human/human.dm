@@ -279,9 +279,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	return
 
 /mob/living/carbon/human/meteorhit(O)
-	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
-			M.show_message("<span class='warning'>[src] has been hit by [O]</span>", 1)
+	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
 	if (health > 0)
 		var/obj/item/organ/external/BP = bodyparts_by_name[pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD)]
 		if(!BP)
@@ -316,10 +314,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(M.Victim) return // can't attack while eating!
 
 	if (health > -100)
-
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("<span class='warning'><B>The [M.name] glomps []!</B></span>", src), 1)
+		visible_message("<span class='warning'><B>The [M.name] glomps [src]!</B></span>")
 
 		var/damage = rand(1, 3)
 
@@ -353,9 +348,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				if(M.powerlevel < 0)
 					M.powerlevel = 0
 
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>The [M.name] has shocked []!</B></span>", src), 1)
+				visible_message("<span class='warning'><B>The [M.name] has shocked [src]!</B></span>")
 
 				Weaken(power)
 				if (stuttering < power)
@@ -1400,12 +1393,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		say = sanitize(say)
 	var/mob/T = creatures[target]
 	if(REMOTE_TALK in T.mutations)
-		T.show_message("<span class='notice'>You hear [src.real_name]'s voice: [say]</span>")
+		to_chat(T, "<span class='notice'>You hear [src.real_name]'s voice: [say]</span>")
 	else
-		T.show_message("<span class='notice'>You hear a voice that seems to echo around the room: [say]</span>")
-	usr.show_message("<span class='notice'>You project your mind into [T.real_name]: [say]</span>")
-	for(var/mob/dead/observer/G in observer_list)
-		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[T]</b>: [say]</i>")
+		to_chat(T, "<span class='notice'>You hear a voice that seems to echo around the room: [say]</span>")
+	to_chat(usr, "<span class='notice'>You project your mind into [T.real_name]: [say]</span>")
+	to_chat(observer_list, "<i>Telepathic message from <b>[src]</b> to <b>[T]</b>: [say]</i>")
 	log_say("Telepathic message from [key_name(src)] to [key_name(T)]: [say]")
 
 /mob/living/carbon/human/proc/remoteobserve()
@@ -1872,7 +1864,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	toggle_leap()
 
-	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .leap_end, prev_intent))
+	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .proc/leap_end, prev_intent))
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)
 	status_flags &= ~LEAPING

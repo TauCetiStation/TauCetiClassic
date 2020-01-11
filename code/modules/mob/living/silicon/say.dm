@@ -182,9 +182,9 @@
 
 		for(var/mob/M in hearers(T.loc))//The location is the object, default distance.
 			if(M.say_understands(src))//If they understand AI speak. Humans and the like will be able to.
-				M.show_message(rendered_a, 2)
+				M.show_message(rendered_a, SHOWMSG_AUDIO)
 			else//If they do not.
-				M.show_message(rendered_b, 2)
+				M.show_message(rendered_b, SHOWMSG_AUDIO)
 		/*Radios "filter out" this conversation channel so we don't need to account for them.
 		This is another way of saying that we won't bother dealing with them.*/
 	else
@@ -211,7 +211,9 @@
 		if(S.robot_talk_understand && (S.robot_talk_understand == robot_talk_understand)) // This SHOULD catch everything caught by the one below, but I'm not going to change it.
 			if(istype(S , /mob/living/silicon/ai))
 				var/renderedAI = "<i><span class='binarysay'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
-				S.show_message(renderedAI, 2)
+				S.show_message(renderedAI, SHOWMSG_AUDIO)
+			else if(istype(S, /mob/living/carbon/brain))
+				S.show_message(rendered, SHOWMSG_AUDIO)
 			else
 				var/mob/living/silicon/robot/borg = S
 				//if(istype(borg) && borg.is_component_functioning("comms"))
@@ -219,15 +221,15 @@
 				//	if(!borg.use_power(RC.active_usage))
 				if(!istype(borg) || !borg.is_component_functioning("comms"))
 					continue // No power.
-				S.show_message(rendered, 2)
+				S.show_message(rendered, SHOWMSG_AUDIO)
 
 
 		else if (S.binarycheck())
 			if(istype(S , /mob/living/silicon/ai))
 				var/renderedAI = "<i><span class='binarysay'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
-				S.show_message(renderedAI, 2)
+				S.show_message(renderedAI, SHOWMSG_AUDIO)
 			else
-				S.show_message(rendered, 2)
+				S.show_message(rendered, SHOWMSG_AUDIO)
 
 	var/list/listening = hearers(1, src)
 	listening -= src
@@ -244,12 +246,11 @@
 		rendered = "<i><span class='binarysay'><span class='name'>[voice_name]</span> <span class='message'>[verb], \"[message_beep]\"</span></span></i>"
 
 		for (var/mob/M in heard)
-			M.show_message(rendered, 2)
+			M.show_message(rendered, SHOWMSG_AUDIO)
 
 	rendered = "<i><span class='binarysay'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[verb], \"[message]\"</span></span></i>"
 
-	for (var/mob/M in observer_list)
-		M.show_message(rendered, 2)
+	to_chat(observer_list, rendered)
 
 #undef IS_AI
 #undef IS_ROBOT
