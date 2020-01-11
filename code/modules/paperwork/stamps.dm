@@ -182,7 +182,7 @@
 	P.stamp_text += (P.stamp_text == "" ? "" : "<br>")
 
 	var/message = stamp_text ? stamp_text : stamp_message
-	P.stamp_text += "<div style=\"margin-top:20px;\"><font size=\"5\"><div style=\"display:inline;border-width:5px;border-style:double;border-color:[stamp_border];color:[stamp_color];padding:3px\">[message]</div></font></div>"
+	P.stamp_text += "<div style=\"margin-top:20px;\"><font size=\"5\"><div style=\"border-color:[stamp_border];color:[stamp_color];display:inline;border-width:5px;border-style:double;padding:3px\">[message]</div></font></div>"
 
 	var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 	var/x

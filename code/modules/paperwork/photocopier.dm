@@ -205,6 +205,7 @@
 	var/copied = html_decode(copy.info)
 	copied = replacetext(copied, "<font face=\"[P.deffont]\" color=", "<font face=\"[P.deffont]\" nocolor=")	//state of the art techniques in action
 	copied = replacetext(copied, "<font face=\"[P.crayonfont]\" color=", "<font face=\"[P.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+	copied = replacetext(copied, "color:", "nocolor:") // Russian server? I hope nobody will write this on paper
 	P.info += copied
 	P.info += "</font>"//</font>
 	P.name = copy.name // -- Doohl
