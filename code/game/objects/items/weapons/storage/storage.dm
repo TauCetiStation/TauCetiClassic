@@ -261,7 +261,7 @@
 		storage_ui.on_post_remove(usr)
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
-/obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location, var/NoUpdate = FALSE)
+/obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
 	if(!istype(W))
 		return FALSE
 
@@ -359,7 +359,7 @@
 			failure = 1
 			continue
 		success = 1
-		handle_item_insertion(I, prevent_warning = TRUE, NoUpdate = TRUE) // First 1 is no messages, second 1 is no ui updates
+		handle_item_insertion(I, TRUE, TRUE) // First 1 is no messages, second 1 is no ui updates
 	if(success && !failure)
 		to_chat(user, "<span class='notice'>You put everything into \the [src].</span>")
 		update_ui_after_item_insertion()
