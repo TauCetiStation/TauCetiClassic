@@ -168,14 +168,14 @@
 	. = ..()
 	update_canmove()
 
-/mob/dead/observer/forceMove(atom/destination)
+/mob/dead/observer/forceMove(atom/destination, keep_pulling)
 	if(destination)
 		if(loc)
 			loc.Exited(src)
 		loc = destination
 		loc.Entered(src)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //called when src is thrown into hit_atom
 /atom/movable/proc/throw_impact(atom/hit_atom)

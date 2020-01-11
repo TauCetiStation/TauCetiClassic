@@ -588,7 +588,7 @@
 				message = "<B>[src]</B> acts out a scream!"
 				m_type = SHOWMSG_VISUAL
 			else
-				virus_scream = locate(/datum/disease2/effect/scream, src) in virus2
+				virus_scream = locate(/datum/disease2/effect/scream) in virus2
 				if(virus_scream || !(species && species.flags[NO_PAIN]))
 					if (!muzzled)
 						if (auto)
