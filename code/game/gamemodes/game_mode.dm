@@ -23,7 +23,7 @@
 	var/nar_sie_has_risen = 0 //check, if there is already one god in the world who was summoned (only for tomes)
 	var/completion_text = ""
 	var/mode_result = "undefined"
-	var/list/datum/mind/modePlayer = new
+	var/list/datum/mind/modePlayer = new // list of current antags.
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor")	// Jobs that can't be traitors because
 	var/required_players = 0
@@ -38,6 +38,7 @@
 	var/ert_disabled = 0
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
+	var/check_ready = TRUE
 	var/uplink_welcome = "Syndicate Uplink Console:"
 	var/uplink_uses = 20
 	var/uplink_items = {"Highly Visible and Dangerous Weapons;
@@ -84,35 +85,45 @@ Implants;
 	to_chat(world, "<B>Notice</B>: [src] did not define announce()")
 
 
-///can_start()
-///Checks to see if the game can be setup and ran with the current number of players or whatnot.
+// can_start()
+// Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
 	for(var/mob/dead/new_player/player in new_player_list)
-		if(player.client && player.ready)
+		if(player.client && (!check_ready || player.ready))
 			playerC++
-
+	// no antag_candidates need
+	if (playerC == 0 && required_players == 0)
+		return TRUE
+	// check for minimal player on server
+	if((master_mode == "secret" && playerC < required_players_secret) || playerC < required_players)
+		return FALSE
+	// get list of all antags possiable
 	antag_candidates = get_players_for_role(role_type)
 	if(antag_candidates.len < required_enemies)
-		return 0
+		return FALSE
+	// assign_outsider_antag_roles use antag_candidates list
+	// fill antag_candidates before return
+	return TRUE
 
-	if(master_mode=="secret")
-		if(playerC >= required_players_secret)
-			return 1
-	else
-		if(playerC >= required_players)
-			return 1
-	return 0
+/datum/game_mode/proc/potential_runnable()
+	check_ready = FALSE
+	var/ret = can_start()
+	check_ready = TRUE
+	return ret
 
+/datum/game_mode/proc/assign_outsider_antag_roles()
+	// already get antags in can_start
+	return can_start()
 
-///pre_setup()
-///Attempts to select players for special roles the mode might have.
+// pre_setup()
+// Attempts to select players for special roles the mode might have.
+// mind.assigned_role already set for players
 /datum/game_mode/proc/pre_setup()
-	return 1
+	return TRUE
 
-
-///post_setup()
-///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
+// post_setup()
+// Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup()
 	var/list/exclude_autotraitor_for = list("extended", "sandbox", "meteor", "gang", "epidemic") // config_tag var
 	if(!(config_tag in exclude_autotraitor_for))
@@ -309,7 +320,7 @@ Implants;
 
 	// Assemble a list of active players without jobbans.
 	for(var/mob/dead/new_player/player in new_player_list)
-		if(player.client && player.ready)
+		if(player.client && (!check_ready || player.ready))
 			if(role in player.client.prefs.be_role)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role) && !role_available_in_minutes(player, role))
 					players += player
