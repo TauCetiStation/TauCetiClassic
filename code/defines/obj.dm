@@ -177,7 +177,7 @@ var/global/ManifestJSON
 	// render crew manifest
 	var/list/person = new() // buffer for employ record
 	for (var/dep in departments_list)
-		if((dep in PDA_Manifest) && PDA_Manifest[dep].len > 0)
+		if((dep in PDA_Manifest) && length(PDA_Manifest[dep]))
 			dat += "<tr><th colspan=3>[departments_list[dep]]</th></tr>"
 			for(person in PDA_Manifest[dep])
 				dat += "<tr[even ? " class='alt'" : ""]>"
