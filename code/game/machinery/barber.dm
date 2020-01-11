@@ -8,7 +8,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 
-	var/list/beakers = list()
+	var/list/obj/item/weapon/reagent_containers/glass/beaker/beakers = list()
 	var/processing = FALSE
 	var/efficiency = 0 // How fast do we do the mixing.
 

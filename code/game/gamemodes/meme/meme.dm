@@ -218,12 +218,12 @@
 /datum/game_mode/proc/auto_declare_completion_meme()
 	var/text = ""
 	for(var/datum/mind/meme in memes)
-		var/memewin = 1
-		var/attuned = 0
-		if((meme.current) && istype(meme.current,/mob/living/parasite/meme))
-			text += "The meme was <b>[meme.current.key]</b>.<br>"
-			text += "The last host was <b>[meme.current:host.key]</b>.<br>"
-			text += "<b>Hosts attuned:</b> [attuned]<br>"
+		var/memewin = TRUE
+		if(meme?.current && istype(meme.current, /mob/living/parasite/meme))
+			var/mob/living/parasite/meme/M = meme.current
+			text += "The meme was <b>[M.key]</b>.<br>"
+			text += "The last host was <b>[M.host.key]</b>.<br>"
+			text += "<b>Hosts attuned:</b> [M.indoctrinated.len]<br>"
 
 			var/count = 1
 			for(var/datum/objective/objective in meme.objectives)
@@ -233,11 +233,11 @@
 				else
 					text += "<b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Failed.</span><br>"
 					feedback_add_details("meme_objective","[objective.type]|FAIL")
-					memewin = 0
+					memewin = FALSE
 				count++
 
 		else
-			memewin = 0
+			memewin = FALSE
 
 		if(memewin)
 			text += "<b>The meme was successful!</b>"
