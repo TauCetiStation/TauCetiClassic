@@ -183,6 +183,7 @@ var/datum/subsystem/ticker/ticker
 		// hiding forced gamemode in secret
 		if(master_mode == "secret" && secret_force_mode != "secret")
 			var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
+			smode.modeset = master_mode
 			if(!smode.can_start())
 				message_admins("<span class='notice'>Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.</span>")
 			else
@@ -194,6 +195,7 @@ var/datum/subsystem/ticker/ticker
 		if(src.mode)
 			var/mtype = src.mode.type
 			src.mode = new mtype
+			src.mode.modeset = master_mode
 
 	else
 		// master_mode is config tag of gamemode

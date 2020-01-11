@@ -747,6 +747,7 @@
 	var/list/datum/game_mode/runnable_modes = new
 	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
 		var/datum/game_mode/M = new T()
+		M.modeset = modeset
 		// log_debug("[T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
 		if (!is_mode_allowed(M.config_tag))
 			qdel(M)

@@ -18,6 +18,7 @@
 	var/votable = 1
 	var/playable_mode = 1
 	var/probability = 0
+	var/modeset = null        // if game_mode in modeset
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
 	var/nar_sie_has_risen = 0 //check, if there is already one god in the world who was summoned (only for tomes)
@@ -96,7 +97,7 @@ Implants;
 	if (playerC == 0 && required_players == 0)
 		return TRUE
 	// check for minimal player on server
-	if((master_mode == "secret" && playerC < required_players_secret) || playerC < required_players)
+	if((modeset && modeset == "secret" && playerC < required_players_secret) || playerC < required_players)
 		return FALSE
 	// get list of all antags possiable
 	antag_candidates = get_players_for_role(role_type)
