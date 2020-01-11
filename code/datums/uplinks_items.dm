@@ -53,8 +53,6 @@
 		return new item(loc)
 
 /datum/uplink_item/proc/buy(obj/item/device/uplink/U, mob/user)
-
-	..()
 	if(!istype(U))
 		return 0
 

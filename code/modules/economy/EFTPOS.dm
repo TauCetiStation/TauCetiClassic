@@ -274,7 +274,5 @@
 				playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
 				src.visible_message("[bicon(src)] The [src] chimes.")
 				transaction_paid = 1
-	else
-		..()
 
 	//emag?

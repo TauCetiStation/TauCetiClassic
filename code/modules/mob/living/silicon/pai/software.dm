@@ -848,7 +848,7 @@
 // Interaction module
 /mob/living/silicon/pai/proc/softwareInteraction()
 	var/dat = "<h2>Interaction Module</h2><hr>"
- 	dat += "This module provides a connection to various kinds of electronics which obviously should have a compatible connector. However, some devices' systems are too complex to interact with them.<br>"
+	dat += "This module provides a connection to various kinds of electronics which obviously should have a compatible connector. However, some devices' systems are too complex to interact with them.<br>"
 	dat += "After the cable is connected, you can mark any compatible object it is connected to for remote access. Each marked device takes 5% of maximum memory, but only five devices can be marked.<br>"
 	dat += "When connected remotely, make sure distance between you and marked device is not too long. Otherwise, data packets might not be delivered which causes loss of control.<br>"
 	dat += "<br>"

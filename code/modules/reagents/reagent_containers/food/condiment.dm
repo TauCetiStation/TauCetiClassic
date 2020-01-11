@@ -224,7 +224,7 @@
 
 /obj/structure/condiment_shelf/attack_hand(mob/user)
 	if(contents.len)
-		var/obj/item/weapon/reagent_containers/food/condiment/choice = input("Which condiment would you like to remove from the shelf?") in contents as obj|null
+		var/obj/item/weapon/reagent_containers/food/condiment/choice = input("Which condiment would you like to remove from the shelf?") in contents
 		if(choice)
 			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr) || usr.incapacitated())
 				return
