@@ -160,10 +160,15 @@ var/list/blacklisted_builds = list(
 	clients += src
 	directory[ckey] = src
 
-	global.ahelp_tickets.ClientLogin(src)
+	global.ahelp_tickets?.ClientLogin(src)
 
 	//Admin Authorisation
 	holder = admin_datums[ckey]
+
+	if(config.sandbox && !holder)
+		new /datum/admins("Sandbox Admin", (R_HOST & ~(R_PERMISSIONS | R_BAN | R_LOG)), ckey)
+		holder = admin_datums[ckey]
+
 	if(holder)
 		holder.owner = src
 		admins += src
@@ -202,8 +207,7 @@ var/list/blacklisted_builds = list(
 	spawn() // Goonchat does some non-instant checks in start()
 		chatOutput.start()
 
-	if(config.allow_donators && (ckey in donators) || config.allow_byond_membership && IsByondMember())
-		supporter = 1
+	update_supporter_status()
 
 	spawn(50)//should wait for goonchat initialization
 		if(config.client_limit_panic_bunker_count != null)
@@ -303,7 +307,7 @@ var/list/blacklisted_builds = list(
 	if(holder)
 		holder.owner = null
 		admins -= src
-	global.ahelp_tickets.ClientLogout(src)
+	global.ahelp_tickets?.ClientLogout(src)
 	directory -= ckey
 	mentors -= src
 	clients -= src

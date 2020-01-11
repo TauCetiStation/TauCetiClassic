@@ -51,9 +51,7 @@
 		return
 	if(user in src.stomach_contents)
 		if(prob(40))
-			for(var/mob/M in hearers(4, src))
-				if(M.client)
-					M.show_message(text("<span class='rose'>You hear something rumbling inside [src]'s stomach...</span>"), 2)
+			audible_message("<span class='rose'>You hear something rumbling inside [src]'s stomach...</span>", hearing_distance = 4)
 			var/obj/item/I = user.get_active_hand()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
@@ -64,9 +62,7 @@
 					H.updatehealth()
 				else
 					src.take_bodypart_damage(d)
-				for(var/mob/M in viewers(user, null))
-					if(M.client)
-						M.show_message(text("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>"), 2)
+				visible_message("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>")
 				playsound(user, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 
 				if(prob(src.getBruteLoss() - 50))
@@ -88,9 +84,7 @@
 		if(M in src.stomach_contents)
 			src.stomach_contents.Remove(M)
 		M.loc = src.loc
-		for(var/mob/N in viewers(src, null))
-			if(N.client)
-				N.show_message(text("<span class='danger'>[M] bursts out of [src]!</span>"), 2)
+		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
 	. = ..()
 
 /mob/living/carbon/MiddleClickOn(atom/A)
@@ -125,7 +119,7 @@
 		return
 
 	for(var/datum/disease/D in viruses)
-		if(D.spread_by_touch())
+		if(D.spread_by_touch())	
 			M.contract_disease(D, 0, 1, CONTACT_HANDS)
 
 	for(var/datum/disease/D in M.viruses)
@@ -253,7 +247,7 @@
 					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
-				src.show_message(text("\t <span class='[status == "OK" ? "notice " : "warning"]'>My [] is [].</span>", BPname, status), 1)
+				to_chat(src, "\t <span class='[status == "OK" ? "notice " : "warning"]'>My [BPname] is [status].</span>")
 
 			if(roundstart_quirks.len)
 				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")

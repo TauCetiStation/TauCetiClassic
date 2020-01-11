@@ -558,27 +558,27 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				var/rendered = "[part_a][N][part_b][quotedmsg][part_c]"
 				for (var/mob/R in heard_masked)
 					if(istype(R, /mob/living/silicon/ai))
-						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[N] ([J]) </a>[part_b][quotedmsg][part_c]", 2)
+						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[N] ([J]) </a>[part_b][quotedmsg][part_c]", SHOWMSG_AUDIO)
 					else
-						R.show_message(rendered, 2)
+						R.show_message(rendered, SHOWMSG_AUDIO)
 
 			if (length(heard_normal))
 				var/rendered = "[part_a][M.real_name][part_b][quotedmsg][part_c]"
 
 				for (var/mob/R in heard_normal)
 					if(istype(R, /mob/living/silicon/ai))
-						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.real_name] ([eqjobname]) </a>[part_b][quotedmsg][part_c]", 2)
+						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.real_name] ([eqjobname]) </a>[part_b][quotedmsg][part_c]", SHOWMSG_AUDIO)
 					else
-						R.show_message(rendered, 2)
+						R.show_message(rendered, SHOWMSG_AUDIO)
 
 			if (length(heard_voice))
 				var/rendered = "[part_a][M.voice_name][part_b][pick(M.speak_emote)][part_c]"
 
 				for (var/mob/R in heard_voice)
 					if(istype(R, /mob/living/silicon/ai))
-						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name] ([eqjobname]) </a>[part_b][pick(M.speak_emote)][part_c]", 2)
+						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name] ([eqjobname]) </a>[part_b][pick(M.speak_emote)][part_c]", SHOWMSG_AUDIO)
 					else
-						R.show_message(rendered, 2)
+						R.show_message(rendered, SHOWMSG_AUDIO)
 
 			if (length(heard_garbled))
 				quotedmsg = M.say_quote(stars(message))
@@ -586,9 +586,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 				for (var/mob/R in heard_voice)
 					if(istype(R, /mob/living/silicon/ai))
-						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name]</a>[part_b][quotedmsg][part_c]", 2)
+						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name]</a>[part_b][quotedmsg][part_c]", SHOWMSG_AUDIO)
 					else
-						R.show_message(rendered, 2)
+						R.show_message(rendered, SHOWMSG_AUDIO)
 
 /obj/item/device/radio/hear_talk(mob/M, msg, verb = "says", datum/language/speaking = null)
 
