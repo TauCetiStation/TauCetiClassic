@@ -1192,8 +1192,9 @@
 			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
 	return
 
-/obj/item/device/pda/attack(mob/living/C, mob/living/user)
-	if (istype(C, /mob/living/carbon))
+/obj/item/device/pda/attack(mob/living/L, mob/living/user)
+	if (istype(L, /mob/living/carbon))
+		var/mob/living/carbon/C = L
 		var/data_message = ""
 		switch(scanmode)
 			if(1)
@@ -1226,22 +1227,23 @@
 				to_chat(user, data_message)
 
 			if(2)
-				if (!istype(C:dna, /datum/dna))
+				if (!istype(C.dna, /datum/dna))
 					data_message += "<span class='notice'>No fingerprints found on [C]</span>"
-				else if(!istype(C, /mob/living/carbon/monkey))
-					if(!isnull(C:gloves))
+				else if(istype(C, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = C
+					if(H.gloves)
 						data_message += "<span class='notice'>No fingerprints found on [C]</span>"
 				else
-					data_message += text("<span class='notice'>[C]'s Fingerprints: [md5(C:dna.uni_identity)]</span>")
-				if ( !(C:blood_DNA) )
+					data_message += text("<span class='notice'>[C]'s Fingerprints: [md5(C.dna.uni_identity)]</span>")
+				if ( !(C.blood_DNA) )
 					data_message += "<span class='notice'>No blood found on [C]</span>"
-					if(C:blood_DNA)
-						C:blood_DNA = null
+					if(C.blood_DNA)
+						C.blood_DNA = null
 				else
 					data_message += "<span class='notice'>Blood found on [C]. Analysing...</span>"
 					spawn(15)
-						for(var/blood in C:blood_DNA)
-							data_message += "<span class='notice'>Blood type: [C:blood_DNA[blood]]\nDNA: [blood]</span>"
+						for(var/blood in C.blood_DNA)
+							data_message += "<span class='notice'>Blood type: [C.blood_DNA[blood]]\nDNA: [blood]</span>"
 				to_chat(user, data_message)
 
 			if(4)
