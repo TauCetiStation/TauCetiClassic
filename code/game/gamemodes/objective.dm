@@ -777,11 +777,12 @@ var/global/list/all_objectives = list()
 	return target_amount
 
 /datum/objective/meme_attune/check_completion()
-	if(owner && owner.current && istype(owner.current,/mob/living/parasite/meme) && (owner.current:indoctrinated.len >= target_amount))
-		return OBJECTIVE_WIN
-	else
-		return OBJECTIVE_LOSS
-
+	if(owner?.current)
+		if (istype(owner.current, /mob/living/parasite/meme))
+			var/mob/living/parasite/meme/M = owner.current
+			if (M.indoctrinated.len >= target_amount)
+				return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
 
 //Vox heist objectives.
 
