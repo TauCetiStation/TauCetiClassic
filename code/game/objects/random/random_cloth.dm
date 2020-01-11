@@ -94,7 +94,7 @@
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "santa"
 /obj/random/cloth/head/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/head) - list(/obj/item/clothing/head/shadowling, /obj/item/clothing/head/collectable/tophat/badmin_magic_hat) - (subtypesof(/obj/item/clothing/head/helmet) + subtypesof(/obj/item/clothing/head/helmet/space)))
+	return pick(subtypesof(/obj/item/clothing/head) - list(/obj/item/clothing/head/shadowling, /obj/item/clothing/head/collectable/tophat/badmin_magic_hat, /obj/item/clothing/head/wizard/tophat) - (subtypesof(/obj/item/clothing/head/helmet) + subtypesof(/obj/item/clothing/head/helmet/space)))
 
 /obj/random/cloth/gloves
 	name = "random gloves"

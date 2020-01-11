@@ -733,7 +733,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/head/attackby(obj/item/weapon/W, mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(istype(W,/obj/item/weapon/scalpel))
+	if(istype(W, /obj/item/weapon/scalpel) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/shard))
 		switch(brain_op_stage)
 			if(0)
 				//todo: should be replaced with visible_message
@@ -754,7 +754,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 					brain_op_stage = 3.0
 			else
 				..()
-	else if(istype(W,/obj/item/weapon/circular_saw))
+	else if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/crowbar) || istype(W, /obj/item/weapon/hatchet))
 		switch(brain_op_stage)
 			if(1)
 				for(var/mob/O in (oviewers(brainmob) - user))

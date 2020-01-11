@@ -569,43 +569,43 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	a_boost = rand(1,7)
 
 //This proc prevents the suit from being taken off.
-/obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/U, X = 0)
+/obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/human/U, X = FALSE)
 	if(X)//If you want to check for icons.
-		if(U.mind.protector_role == 1)
-			icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
-			U:gloves.icon_state = "s-ninjak"
-			U:gloves.item_state = "s-ninjak"
+		if(U.mind.protector_role)
+			icon_state = U.gender == FEMALE ? "s-ninjakf" : "s-ninjak"
+			U.gloves.icon_state = "s-ninjak"
+			U.gloves.item_state = "s-ninjak"
 		else
-			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
-			U:gloves.icon_state = "s-ninjan"
-			U:gloves.item_state = "s-ninjan"
+			icon_state = U.gender == FEMALE ? "s-ninjanf" : "s-ninjan"
+			U.gloves.icon_state = "s-ninjan"
+			U.gloves.item_state = "s-ninjan"
 	else
 		if(U.mind.special_role!="Ninja")
 			to_chat(U, "<span class='warning'><B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAU?HORIZED USÈ DETÈC???eD\nCoMMÈNCING SUB-R0U?IN3 13...\nTÈRMInATING U-U-USÈR...</span>")
 			U.gib()
 			return 0
-		if(!istype(U:head, /obj/item/clothing/head/helmet/space/space_ninja))
+		if(!istype(U.head, /obj/item/clothing/head/helmet/space/space_ninja))
 			to_chat(U, "<span class='warning'><B>ERROR</B>: 100113</span> UNABLE TO LOCATE HEAD GEAR\nABORTING...")
 			return 0
-		if(!istype(U:shoes, /obj/item/clothing/shoes/space_ninja))
+		if(!istype(U.shoes, /obj/item/clothing/shoes/space_ninja))
 			to_chat(U, "<span class='warning'><B>ERROR</B>: 122011</span> UNABLE TO LOCATE FOOT GEAR\nABORTING...")
 			return 0
-		if(!istype(U:gloves, /obj/item/clothing/gloves/space_ninja))
+		if(!istype(U.gloves, /obj/item/clothing/gloves/space_ninja))
 			to_chat(U, "<span class='warning'><B>ERROR</B>: 110223</span> UNABLE TO LOCATE HAND GEAR\nABORTING...")
 			return 0
 
 		affecting = U
 		canremove = 0
 		slowdown = 0
-		n_hood = U:head
+		n_hood = U.head
 		n_hood.canremove=0
-		n_shoes = U:shoes
+		n_shoes = U.shoes
 		n_shoes.canremove=0
 		n_shoes.slowdown--
-		n_gloves = U:gloves
+		n_gloves = U.gloves
 		n_gloves.canremove=0
 
-	return 1
+	return TRUE
 
 //This proc allows the suit to be taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()

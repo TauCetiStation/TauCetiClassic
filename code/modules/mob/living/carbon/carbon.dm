@@ -247,7 +247,7 @@
 					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
-				to_chat("\t <span class='[status == "OK" ? "notice " : "warning"]'>My [BPname] is [status].</span>")
+				to_chat(src, "\t <span class='[status == "OK" ? "notice " : "warning"]'>My [BPname] is [status].</span>")
 
 			if(roundstart_quirks.len)
 				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
