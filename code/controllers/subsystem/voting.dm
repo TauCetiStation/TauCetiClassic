@@ -44,6 +44,7 @@ var/datum/subsystem/vote/SSvote
 	time_remaining = 0
 	mode = null
 	question = null
+	description = null
 	choices.Cut()
 	voted.Cut()
 	voting.Cut()
@@ -187,17 +188,14 @@ var/datum/subsystem/vote/SSvote
 			if("gamemode")
 				choices.Add(config.votable_modes)
 				for (var/M in config.votable_modes)
-					var/list/submodes = list()
-					if (config.is_custom_modeset(M))
-						for (var/datum/game_mode/D in config.get_runnable_modes(M))
+					if (config.is_modeset(M))
+						var/list/submodes = list()
+						for (var/datum/game_mode/D in config.get_runnable_modes(M, FALSE))
 							submodes.Add(D.name)
-					else if (M == "secret" || M == "random")
-						for (var/datum/game_mode/D in config.get_runnable_modes())
-							submodes.Add(D.name)
-					if (submodes.len > 0)
-						description += "<b>[M]</b>: "
-						description += submodes.Join(", ")
-						description += "<br>"
+						if (length(submodes) > 0)
+							description += "<b>[M]</b>: "
+							description += submodes.Join(", ")
+							description += "<br>"
 			if("crew_transfer")
 				if(!is_admin)
 					if(get_security_level() == "red" || get_security_level() == "delta")
