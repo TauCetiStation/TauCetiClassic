@@ -441,7 +441,7 @@ Class Procs:
 			var/P
 			if(W.works_from_distance)
 				to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
-				for(var/var/obj/item/C in component_parts)
+				for(var/obj/item/C in component_parts)
 					to_chat(user, "<span class='notice'>    [C.name]</span>")
 			for(var/obj/item/weapon/stock_parts/A in component_parts)
 				for(var/D in CB.req_components)
@@ -462,7 +462,7 @@ Class Procs:
 			RefreshParts()
 		else
 			to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
-			for(var/var/obj/item/C in component_parts)
+			for(var/obj/item/C in component_parts)
 				to_chat(user, "<span class='notice'>    [C.name]</span>")
 		if(shouldplaysound)
 			W.play_rped_sound()

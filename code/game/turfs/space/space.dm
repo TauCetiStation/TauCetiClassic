@@ -155,7 +155,7 @@
 			if(ismob(A))
 				var/mob/M = A
 				if(M.pulling)
-					M.pulling.forceMove(get_turf(M), keep_pulling = TRUE)
+					M.pulling.forceMove(get_turf(M), TRUE)
 
 
 			stoplag()//Let a diagonal move finish, if necessary
