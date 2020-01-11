@@ -220,5 +220,5 @@
 	else
 		icon_state = "experiment"
 
-/obj/machinery/abductor/experiment/visible_message(text)
+/obj/machinery/abductor/experiment/visible_message(text, blind_message, viewing_distance, list/ignored_mobs)
 	return "beeps, \"[text]\""

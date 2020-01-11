@@ -11,7 +11,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 	var/max_material_amount = 75000.0
 	var/efficiency_coeff
-	var/list/loaded_materials = list()
+	var/list/datum/rnd_material/loaded_materials = list()
 	reagents = new(0)
 	var/list/queue = list()
 
