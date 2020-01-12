@@ -35,14 +35,16 @@
 	icon_state = "stamp-hop"
 	item_color = "hop"
 	stamp_message = "Head of Personnel"
-	stamp_color = "#cc0000"
-	stamp_border = "#990000"
+	stamp_color = "#6ec0ea"
+	stamp_border = "#1f66a0"
 
 /obj/item/weapon/stamp/hos
 	name = "head of security's rubber stamp"
 	icon_state = "stamp-hos"
 	item_color = "hosred"
 	stamp_message = "Head of Security"
+	stamp_color = "#cc0000"
+	stamp_border = "#990000"
 
 /obj/item/weapon/stamp/ce
 	name = "chief engineer's rubber stamp"
