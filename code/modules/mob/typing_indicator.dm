@@ -13,8 +13,6 @@
 			overlays.Remove(typing_indicator)
 		typing_indicator.icon_state = indi_icon
 
-	typing_indicator.invisibility = invisibility
-
 	if(state)
 		if(client && !stat)
 			overlays.Add(typing_indicator)
