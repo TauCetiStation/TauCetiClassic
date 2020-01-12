@@ -82,6 +82,7 @@
 	stamp_message = "APPROVED"
 	stamp_color = "#007b00"
 	stamp_border = "#1d5215"
+	big_stamp = TRUE
 
 /obj/item/weapon/stamp/denied
 	name = "\improper DENIED rubber stamp"
@@ -90,6 +91,7 @@
 	stamp_message = "DENIED"
 	stamp_color = "#a23e3e"
 	stamp_border = "#660000"
+	big_stamp = TRUE
 
 /obj/item/weapon/stamp/clown
 	name = "clown's rubber stamp"
@@ -98,6 +100,7 @@
 	stamp_message = "HONK!"
 	stamp_color = "#ff99cc"
 	stamp_border = "#ff66cc"
+	big_stamp = TRUE
 
 /obj/item/weapon/stamp/internalaffairs
 	name = "internal affairs rubber stamp"
@@ -106,6 +109,7 @@
 	stamp_message = "Internal Affairs"
 	stamp_color = "black"
 	stamp_border = "black"
+	big_stamp = TRUE
 
 /obj/item/weapon/stamp/centcomm
 	name = "centcomm rubber stamp"
@@ -184,7 +188,10 @@
 	P.stamp_text += (P.stamp_text == "" ? "" : "<br>")
 
 	var/message = stamp_text ? stamp_text : stamp_message
-	P.stamp_text += "<div style=\"margin-top:20px;\"><font size=\"5\"><div style=\"border-color:[stamp_border];color:[stamp_color];display:inline;border-width:5px;border-style:double;padding:3px\">[message]</div></font></div>"
+	if (big_stamp)
+		P.stamp_text += "<div style=\"margin-top:20px;\"><font size=\"5\"><div style=\"border-color:[stamp_border];color:[stamp_color];display:inline;border-width:5px;border-style:double;padding:3px\">[message]</div></font></div>"
+	else
+		P.stamp_text += "<div style=\"margin-top:20px;margin-left:3px\"><font size=\"5\"><div style=\"border-color:[stamp_border];color:[stamp_color];display:inline;border-width:2px;border-style:solid;padding:3px\">[message]</div></font></div>"
 
 	var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 	var/x
