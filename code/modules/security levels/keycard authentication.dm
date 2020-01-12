@@ -160,6 +160,7 @@
 				return
 
 			trigger_armed_response_team(1)
+			feedback_set_details("ERT", "Keycard dispatch")
 			feedback_inc("alert_keycard_auth_ert",1)
 
 /obj/machinery/keycard_auth/proc/is_ert_blocked()

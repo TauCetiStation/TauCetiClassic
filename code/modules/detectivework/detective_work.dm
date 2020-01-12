@@ -410,10 +410,15 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 						scan_data += "Fibers/Materials Found:<br>"
 						for(var/data in scanning.suit_fibers)
 							scan_data += "- [data]<br>"
-					if(istype(scanning,/obj/item/device/detective_scanner) || (istype(scanning, /obj/item/device/pda) && scanning:cartridge && scanning:cartridge.access_security))
+					if (istype(scanning, /obj/item/device/detective_scanner))
 						scan_data += "<br><b>Data transfered from \the [scanning] to Database.</b><br>"
 						add_data_scanner(scanning)
-					else if(!scanning.fingerprints)
+					if (istype(scanning, /obj/item/device/pda))
+						var/obj/item/device/pda/PDA = scanning
+						if (PDA?.cartridge?.access_security)
+							scan_data += "<br><b>Data transfered from \the [scanning] to Database.</b><br>"
+							add_data_scanner(scanning)
+					else if (!scanning.fingerprints)
 						scan_data += "<br><b><a href='?src=\ref[src];operation=add'>Add to Database?</a></b><br>"
 			else
 				temp = "Scan Failed: No Object"
@@ -458,19 +463,16 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				var/list/data = D.stored[atom]
 				add_data_master(atom,data[1],data[2],data[3],data[4])
 		D.stored = list()
-	else if(istype(W, /obj/item/device/pda) && W:cartridge && W:cartridge.access_security)
-		if(W:cartridge.stored_data)
-			for(var/atom in W:cartridge.stored_data)
-				var/list/data = W:cartridge.stored_data[atom]
-				add_data_master(atom,data[1],data[2],data[3],data[4])
-		W:cartridge.stored_data = list()
-	return
+	else if (istype(W, /obj/item/device/pda))
+		var/obj/item/device/pda/PDA = W
+		if (PDA?.cartridge?.access_security && PDA?.cartridge?.stored_data)
+			for(var/atom in PDA.cartridge.stored_data)
+				var/list/data = PDA.cartridge.stored_data[atom]
+				add_data_master(atom, data[1], data[2], data[3], data[4])
+			PDA.cartridge.stored_data = list()
 
 /obj/machinery/computer/forensic_scanning/proc/add_data(atom/scanned_atom)
-	return add_data_master("\ref [scanned_atom]", scanned_atom.fingerprints,\
-	scanned_atom.suit_fibers, scanned_atom.blood_DNA, "[scanned_atom.name] (Direct Scan)")
-
-
+	return add_data_master("\ref [scanned_atom]", scanned_atom.fingerprints, scanned_atom.suit_fibers, scanned_atom.blood_DNA, "[scanned_atom.name] (Direct Scan)")
 
 /********************************
 *****DO NOT DIRECTLY CALL ME*****

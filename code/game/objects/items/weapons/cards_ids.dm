@@ -113,9 +113,7 @@
 		fingerprint_hash = md5(H.dna.uni_identity)
 
 /obj/item/weapon/card/id/attack_self(mob/user)
-	for(var/mob/O in viewers(user, null))
-		O.show_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]", 1)
-
+	visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]")
 	src.add_fingerprint(user)
 	return
 

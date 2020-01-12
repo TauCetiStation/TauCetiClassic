@@ -170,7 +170,7 @@
 
 	return hear
 
-
+// todo: tg
 /proc/get_hearers_in_view(R, atom/source)
 	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
@@ -244,8 +244,6 @@
 
 	return mobs
 
-#define SIGN(X) ((X<0)?-1:1)
-
 /proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
 	var/turf/T
 	if(X1==X2)
@@ -275,7 +273,6 @@
 			if(T.opacity)
 				return 0
 	return 1
-#undef SIGN
 
 /proc/isInSight(atom/A, atom/B)
 	var/turf/Aturf = get_turf(A)

@@ -19,6 +19,15 @@ script:
 
 matrix:
   include:
+    - name: "DreamChecker"
+      env: SPACEMAN_DMM_VERSION=suite-1.1
+      cache:
+        directories: $HOME/spaceman_dmm/$SPACEMAN_DMM_VERSION
+      install:
+        - ./scripts/install-spaceman-dmm.sh dreamchecker
+      script:
+        - ~/dreamchecker
+
     - name: "Code and Map Linting"
       env: TEST=LINTING
       addons:

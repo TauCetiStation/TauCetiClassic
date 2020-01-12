@@ -493,9 +493,7 @@
 
 
 /mob/living/silicon/robot/meteorhit(obj/O)
-	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span class='warning'>[src] has been hit by [O]</span>"), 1)
-		//Foreach goto(19)
+	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
 	if (health > 0)
 		adjustBruteLoss(30)
 		if ((O.icon_state == "flaming"))
@@ -563,8 +561,7 @@
 			adjustBruteLoss(-30)
 			updatehealth()
 			add_fingerprint(user)
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("<span class='warning'>[user] has fixed some of the dents on [src]!</span>"), 1)
+			user.visible_message("<span class='warning'>[user] has fixed some of the dents on [src]!</span>")
 		else
 			to_chat(user, "Need more welding fuel!")
 			return
@@ -579,8 +576,7 @@
 			return
 		adjustFireLoss(-30)
 		updatehealth()
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("<span class='warning'>[user] has fixed some of the burnt wires on [src]!</span>"), 1)
+		user.visible_message("<span class='warning'>[user] has fixed some of the burnt wires on [src]!</span>")
 
 	else if (iscrowbar(W))	// crowbar means open or close the cover
 		if(opened)
@@ -797,9 +793,7 @@
 	switch(M.a_intent)
 
 		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='notice'>[M] caresses [src]'s plating with its scythe-like arm.</span>"), 1)
+			visible_message("<span class='notice'>[M] caresses [src]'s plating with its scythe-like arm.</span>")
 
 		if ("grab")
 			M.Grab(src)
@@ -810,17 +804,14 @@
 			if (prob(90))
 
 				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					O.show_message(text("<span class='warning'><B>[] has slashed at []!</B></span>", M, src), 1)
+				visible_message("<span class='warning'><B>[M] has slashed at [src]!</B></span>")
 				if(prob(8))
 					flash_eyes(affect_silicon = 1)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] took a swipe at []!</B></span>", M, src), 1)
+				visible_message("<span class='warning'><B>[M] took a swipe at [src]!</B></span>")
 
 		if ("disarm")
 			if(!(lying))
@@ -830,14 +821,10 @@
 					step(src,get_dir(M,src))
 					spawn(5) step(src,get_dir(M,src))
 					playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'><B>[] has forced back []!</B></span>", M, src), 1)
+					visible_message("<span class='warning'><B>[M] has forced back [src]!</B></span>")
 				else
 					playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'><B>[] attempted to force back []!</B></span>", M, src), 1)
+					visible_message("<span class='warning'><B>[M] attempted to force back [src]!</B></span>")
 	return
 
 
@@ -851,9 +838,7 @@
 
 	if (health > -100)
 
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("<span class='warning'><B>The [M.name] glomps []!</B></span>", src), 1)
+		visible_message("<span class='warning'><B>The [M.name] glomps [src]!</B></span>")
 
 		var/damage = rand(1, 3)
 
@@ -882,9 +867,7 @@
 				if(M.powerlevel < 0)
 					M.powerlevel = 0
 
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>The [M.name] has electrified []!</B></span>", src), 1)
+				visible_message("<span class='warning'><B>The [M.name] has electrified [src]!</B></span>")
 
 				flash_eyes(affect_silicon = 1)
 

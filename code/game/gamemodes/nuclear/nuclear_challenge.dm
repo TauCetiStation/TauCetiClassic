@@ -1,6 +1,6 @@
 #define CHALLENGE_TELECRYSTALS 200
 #define CHALLENGE_TIME_LIMIT 6000
-#define CHALLENGE_MIN_PLAYERS 30
+#define CHALLENGE_MIN_PLAYERS 40
 
 var/global/obj/item/device/nuclear_challenge/Challenge
 
@@ -68,6 +68,11 @@ var/global/obj/item/device/nuclear_challenge/Challenge
 	var/obj/item/device/radio/uplink/U = new(get_turf(user))
 	U.hidden_uplink.uses = CHALLENGE_TELECRYSTALS
 	U.hidden_uplink.uplink_type = "nuclear"
+
+	message_admins("[key_name_admin(usr)] is declaring war on station.")
+	log_admin("[key_name(usr)] is declaring war on station.")
+	feedback_set_details("NUCLEAR_WAR", "Declared by [key_name(usr)]")
+
 	qdel(src)
 
 /obj/item/device/nuclear_challenge/proc/check_allowed(mob/living/user)

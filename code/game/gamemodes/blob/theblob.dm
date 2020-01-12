@@ -1,4 +1,8 @@
 //I will need to recode parts of this but I am way too tired atm
+
+#define BLOB_NODE_MAX_PATH 10
+#define BLOB_CORE_MAX_PATH 15
+
 /obj/effect/blob
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
@@ -64,38 +68,41 @@
 		health_timestamp = world.time + 10 // 1 seconds
 
 
-/obj/effect/blob/proc/Pulse(pulse = 0, origin_dir = 0)//Todo: Fix spaceblob expand
+/obj/effect/blob/proc/Pulse(max_pulse_path = BLOB_NODE_MAX_PATH, origin_dir = 0) //Todo: Fix spaceblob expand
 
 	//set background = 1
 
-	PulseAnimation()
+	var/to_pulse = max_pulse_path
 
-	RegenHealth()
+	var/dirn = origin_dir
+	if(!dirn)
+		dirn = pick(cardinal)
 
-	if(run_action())//If we can do something here then we dont need to pulse more
-		return
+	var/obj/effect/blob/CurBlob = src
+	var/list/blobs_affected = list()
+	blobs_affected += src
 
-	if(pulse > 30)
-		return//Inf loop check
+	while(to_pulse > 0)
+		var/turf/T = get_step(CurBlob, dirn)
+		var/obj/effect/blob/NextBlob = (locate(/obj/effect/blob) in T)
+		if(!NextBlob)
+			CurBlob.expand(T) // No blob here so try and expand
+			break
+		var/prev_dir = reverse_dir[dirn]
+		dirn = pick(cardinal - prev_dir)
+		CurBlob = NextBlob
+		blobs_affected += CurBlob
+		to_pulse -= 1
 
-	//Looking for another blob to pulse
-	var/list/dirs = list(1,2,4,8)
-	dirs.Remove(origin_dir)//Dont pulse the guy who pulsed us
-	for(var/i = 1 to 4)
-		if(!dirs.len)	break
-		var/dirn = pick(dirs)
-		dirs.Remove(dirn)
-		var/turf/T = get_step(src, dirn)
-		var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
-		if(!B)
-			expand(T)//No blob here so try and expand
-			return
-		B.Pulse((pulse+1),get_dir(src.loc,T))
-		return
+	for (var/obj/effect/blob/B in blobs_affected)
+		B.run_action()
+		B.RegenHealth()
+
 	return
 
 
 /obj/effect/blob/proc/run_action()
+	PulseAnimation()
 	return 0
 
 
