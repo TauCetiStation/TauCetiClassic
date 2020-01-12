@@ -257,7 +257,7 @@ var/datum/subsystem/ticker/ticker
 	world.send2bridge(
 		type = list(BRIDGE_ROUNDSTAT),
 		attachment_title = "Round is started, gamemode - **[master_mode]**",
-		attachment_msg = "Join now: <[BYOND_JOIN_LINK]>",
+		attachment_msg = "Round #[round_id]; Join now: <[BYOND_JOIN_LINK]>",
 		attachment_color = BRIDGE_COLOR_ANNOUNCE,
 	)
 
