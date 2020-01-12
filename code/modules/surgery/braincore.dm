@@ -9,6 +9,8 @@
 	blood_level = 1
 
 /datum/surgery_step/brain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	if (!ishuman(target))
+		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	return target_zone == BP_HEAD && BP.open
 

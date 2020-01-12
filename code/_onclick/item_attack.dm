@@ -53,7 +53,7 @@
 /obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
 	var/mob/messagesource = M
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
-		if (do_surgery(M,user,src))
+		if (do_surgery(M, user, src))
 			return 0
 
 	// Knifing
