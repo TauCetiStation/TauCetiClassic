@@ -138,14 +138,19 @@
 /obj/structure/closet/crate/secure/atom_init()
 	. = ..()
 	if(locked)
-		overlays.Cut()
-		overlays += redlight
+		cut_overlays()
+		add_overlay(redlight)
 	else
-		overlays.Cut()
-		overlays += greenlight
+		cut_overlays()
+		add_overlay(greenlight)
 
 /obj/structure/closet/crate/secure/can_open()
 	return !locked
+
+/obj/structure/closet/crate/secure/AltClick(mob/user)
+	if(!user.incapacitated() && in_range(user, src))
+		src.togglelock(user)
+	..()
 
 /obj/structure/closet/crate/secure/proc/togglelock(mob/user)
 	if(src.opened)
@@ -159,8 +164,8 @@
 		for(var/mob/O in viewers(user, 3))
 			if((O.client && !( O.blinded )))
 				to_chat(O, "<span class='notice'>The crate has been [locked ? null : "un"]locked by [user].</span>")
-		overlays.Cut()
-		overlays += locked ? redlight : greenlight
+		cut_overlays()
+		add_overlay(locked ? redlight : greenlight)
 	else
 		to_chat(user, "<span class='notice'>Access Denied</span>")
 
@@ -201,10 +206,10 @@
 	if(!locked)
 		return FALSE
 	user.SetNextMove(CLICK_CD_MELEE)
-	overlays.Cut()
-	overlays += emag
-	overlays += sparks
-	spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
+	cut_overlays()
+	add_overlay(emag)
+	add_overlay(sparks)
+	spawn(6) cut_overlay(sparks) //Tried lots of stuff but nothing works right. so i have to use this *sadface*
 	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	src.locked = 0
 	src.broken = 1
@@ -217,13 +222,13 @@
 	if(!broken && !opened  && prob(50/severity))
 		if(!locked)
 			src.locked = 1
-			overlays.Cut()
-			overlays += redlight
+			cut_overlays()
+			add_overlay(redlight)
 		else
-			overlays.Cut()
-			overlays += emag
-			overlays += sparks
-			spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
+			cut_overlays()
+			add_overlay(emag)
+			add_overlay(sparks)
+			spawn(6) cut_overlay(sparks) //Tried lots of stuff but nothing works right. so i have to use this *sadface*
 			playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 			src.locked = 0
 	if(!opened && prob(20/severity))

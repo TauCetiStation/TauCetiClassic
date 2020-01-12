@@ -172,9 +172,9 @@
 	if(isscrewdriver(W) && anchored)
 		src.panel_open = !src.panel_open
 		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
-		src.overlays.Cut()
+		src.cut_overlays()
 		if(src.panel_open)
-			src.overlays += image(src.icon, "[initial(icon_state)]-panel")
+			src.add_overlay(image(src.icon, "[initial(icon_state)]-panel"))
 		src.updateUsrDialog()
 
 		return
@@ -207,6 +207,7 @@
 					icon_state = initial(icon_state)
 					stat &= ~NOPOWER
 					set_light(light_range_on, light_power_on)
+				wrenched_change()
 
 	else if(currently_vending && istype(W, /obj/item/device/pda) && W.GetID())
 		var/obj/item/weapon/card/I = W.GetID()
@@ -546,9 +547,7 @@
 	if (!message)
 		return
 
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span>",2)
-	return
+	audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span>")
 
 /obj/machinery/vending/power_change()
 	if(stat & BROKEN)
@@ -564,6 +563,8 @@
 				src.icon_state = "[initial(icon_state)]-off"
 				stat |= NOPOWER
 				set_light(0)
+				update_power_use()
+	update_power_use()
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
@@ -702,22 +703,48 @@
 	desc = "A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars."
 	product_slogans = "Try our new nougat bar!;Twice the calories for half the price!"
 	product_ads = "The healthiest!;Award-winning chocolate bars!;Mmm! So good!;Oh my god it's so juicy!;Have a snack.;Snacks are good for you!;Have some more Getmore!;Best quality snacks straight from mars.;We love chocolate!;Try our new jerky!"
-	icon_state = "snack"
+	icon_state = "snackred"
 	light_color = "#d00023"
-	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 6,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,/obj/item/weapon/reagent_containers/food/snacks/chips =6,
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 6,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 6,
+					/obj/item/weapon/reagent_containers/food/snacks/chips = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 6,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
-	prices = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 1,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 5,/obj/item/weapon/reagent_containers/food/snacks/chips = 1,
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 1,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 5,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 5,
+					/obj/item/weapon/reagent_containers/food/snacks/chips = 1,
 					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 2,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 1,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 1,
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 1)
 	refill_canister = /obj/item/weapon/vending_refill/snack
+
+/obj/random/vending/snack
+	name = "random snack vendor"
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "snackrandom"
+
+/obj/random/vending/snack/item_to_spawn()
+	return pick(typesof(/obj/machinery/vending/snack))
+
+/obj/machinery/vending/snack/blue
+	icon_state = "snackblue"
+	light_color = "#5efb00"
+
+/obj/machinery/vending/snack/orange
+	icon_state = "snackorange"
+	light_color = "#ff8b02"
+
+/obj/machinery/vending/snack/green
+	icon_state = "snackgreen"
+	light_color = "#10ff1f"
+
+/obj/machinery/vending/snack/teal
+	icon_state = "snackteal"
+	light_color = "#ffc400"
 
 /obj/machinery/vending/chinese
 	name = "\improper Mr. Chang"
 	desc = "A self-serving Chinese food machine, for all your Chinese food needs."
 	product_slogans = "Taste 5000 years of culture!"
-	icon_state = "snack"
+	icon_state = "chang"
 	light_color = "#d00023"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein = 6, /obj/item/weapon/reagent_containers/food/snacks/chinese/tao = 6, /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball = 6, /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/chinese/rice = 6, /obj/item/weapon/kitchen/utensil/fork/sticks = 18)
@@ -728,7 +755,7 @@
 /obj/machinery/vending/cola
 	name = "Robust Softdrinks"
 	desc = "A softdrink vendor provided by Robust Industries, LLC."
-	icon_state = "Cola_Machine"
+	icon_state = "colablue"
 	light_color = "#315ab4"
 	product_slogans = "Robust Softdrinks: More robust than a toolbox to the head!"
 	product_ads = "Refreshing!;Hope you're thirsty!;Over 1 million drinks sold!;Thirsty? Why not cola?;Please, have a drink!;Drink up!;The best drinks in space."
@@ -742,6 +769,48 @@
 					/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle = 2,/obj/item/weapon/reagent_containers/food/drinks/cans/space_up = 1,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/iced_tea = 1,/obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice = 1)
 	refill_canister = /obj/item/weapon/vending_refill/cola
+
+/obj/random/vending/cola
+	name = "random cola vendor"
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "colarandom"
+
+/obj/random/vending/cola/item_to_spawn()
+	return pick(typesof(/obj/machinery/vending/cola))
+
+/obj/machinery/vending/cola/blue
+
+/obj/machinery/vending/cola/black
+	icon_state = "colablack"
+	light_color = "#dddddd"
+
+/obj/machinery/vending/cola/red
+	desc = "It vends cola, in space."
+	icon_state = "colared"
+	product_slogans = "Cola in space!"
+	light_color = "#bf0a38"
+
+/obj/machinery/vending/cola/spaceup
+	desc = "Indulge in an explosion of flavor."
+	icon_state = "spaceup"
+	product_slogans = "Space-up! Like a hull breach in your mouth."
+	light_color = "#18d32f"
+
+/obj/machinery/vending/cola/starkist
+	desc = "The taste of a star in liquid form."
+	icon_state = "starkist"
+	product_slogans = "Drink the stars! Star-kist!"
+	light_color = "#d1751a"
+
+/obj/machinery/vending/cola/soda
+	icon_state = "soda"
+	light_color = "c8c8be"
+
+/obj/machinery/vending/cola/gib
+	desc = "Canned explosion of different flavors in this very vendor!"
+	icon_state = "gib"
+	product_slogans = "You will lose your guts because of our drinks!; Explosion - in a can!"
+	light_color = "d23c3c"
 
 //This one's from bay12
 /obj/machinery/vending/cart
@@ -801,7 +870,6 @@
 	light_power_on = 1
 	light_color = "#e6fff2"
 	icon_deny = "wallmed-deny"
-	req_access = list(5)
 	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
 	products = list(/obj/item/stack/medical/bruise_pack = 2,/obj/item/stack/medical/ointment = 2,/obj/item/weapon/reagent_containers/hypospray/autoinjector = 4,/obj/item/device/healthanalyzer = 1)
 	contraband = list(/obj/item/weapon/reagent_containers/syringe/antitoxin = 4,/obj/item/weapon/reagent_containers/syringe/antiviral = 4,/obj/item/weapon/reagent_containers/pill/tox = 1)
@@ -989,7 +1057,7 @@
 
 /obj/machinery/vending/sovietsoda
 	name = "BODA"
-	desc = "An old sweet water vending machine,how did this end up here?"
+	desc = "An old sweet water vending machine, how did this end up here?"
 	icon_state = "sovietsoda"
 	product_ads = "For Tsar and Country.;Have you fulfilled your nutrition quota today?;Very nice!;We are simple people, for this is all we eat.;If there is a person, there is a problem. If there is no person, then there is no problem."
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda = 30)

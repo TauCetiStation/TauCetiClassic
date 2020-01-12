@@ -468,8 +468,8 @@
 		if(istype(target, /obj/item/clothing/suit/space) || istype(target, /obj/item/clothing/head/helmet/space))
 			var/obj/item/clothing/C = target
 			var/list/current_armor = C.armor
-			if(current_armor.["melee"] < 80)
-				current_armor.["melee"] = min(current_armor.["melee"] + 10, 80)
+			if(current_armor["melee"] < 80)
+				current_armor["melee"] = min(current_armor["melee"] + 10, 80)
 				if(istype(C, /obj/item/clothing/suit/space))
 					var/obj/item/clothing/suit/space/S = C
 					S.breach_threshold = min(S.breach_threshold + 2, 24)

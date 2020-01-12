@@ -64,10 +64,10 @@
 
 
 /obj/item/device/assembly/timer/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	attached_overlays = list()
 	if(timing)
-		overlays += "timer_timing"
+		add_overlay("timer_timing")
 		attached_overlays += "timer_timing"
 	if(holder)
 		holder.update_icon()
@@ -76,7 +76,7 @@
 
 /obj/item/device/assembly/timer/interact(mob/user)//TODO: Have this use the wires
 	if(!secured)
-		user.show_message("<span class='warning'>The [name] is unsecured!</span>")
+		to_chat(user, "<span class='warning'>The [name] is unsecured!</span>")
 		return 0
 	var/second = time % 60
 	var/minute = (time - second) / 60

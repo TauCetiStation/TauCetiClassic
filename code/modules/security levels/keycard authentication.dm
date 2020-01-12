@@ -15,10 +15,10 @@
 	//1 = select event
 	//2 = authenticate
 	anchored = 1.0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 
 /obj/machinery/keycard_auth/attack_ai(mob/user)
 	if(IsAdminGhost(user))
@@ -46,11 +46,12 @@
 				broadcast_request() //This is the device making the initial event request. It needs to broadcast to other devices
 
 /obj/machinery/keycard_auth/power_change()
-	if(powered(ENVIRON))
+	if(powered(power_channel))
 		stat &= ~NOPOWER
 		icon_state = "auth_off"
 	else
 		stat |= NOPOWER
+	update_power_use()
 
 /obj/machinery/keycard_auth/ui_interact(mob/user)
 	if(stat & (NOPOWER|BROKEN))
@@ -159,6 +160,7 @@
 				return
 
 			trigger_armed_response_team(1)
+			feedback_set_details("ERT", "Keycard dispatch")
 			feedback_inc("alert_keycard_auth_ert",1)
 
 /obj/machinery/keycard_auth/proc/is_ert_blocked()
@@ -186,7 +188,7 @@ var/global/timer_maint_revoke_id = 0
 	captain_announce("The maintenance access requirement has been readded on all maintenance airlocks.")
 
 /proc/change_maintenance_access(allow_state)
-	for(var/area/maintenance/M in all_areas)
+	for(var/area/station/maintenance/M in all_areas)
 		for(var/obj/machinery/door/airlock/A in M)
 			A.emergency = allow_state
 			A.update_icon()

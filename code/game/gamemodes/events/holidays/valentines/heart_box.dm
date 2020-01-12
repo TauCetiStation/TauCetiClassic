@@ -25,7 +25,7 @@
 
 /obj/item/weapon/storage/fancy/heart_box/update_icon()
 	if(!opened)
-		overlays.Cut()
+		cut_overlays()
 		icon_state = "heartbox_full"
 		item_state = "heartbox"
 		return
@@ -42,7 +42,7 @@
 		if(C.icon_state == "candyheart_yellow")
 			candy_color = "yellow_"
 		candy_overlays += image('icons/obj/valentines.dmi', "[candy_color][candy_position]")
-	overlays = candy_overlays
+	add_overlay(candy_overlays)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/candyheart

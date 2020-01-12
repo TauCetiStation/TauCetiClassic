@@ -352,7 +352,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 					if(CHANNEL.is_admin_channel)
 						dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen'><A href='?src=\ref[src];ac_show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
 					else
-						dat+="<B><A href='?src=\ref[src];ac_show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR></B>"
+						dat+="<B><A href='?src=\ref[src];ac_show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : null]<BR></B>"
 			dat+={"<BR><HR><A href='?src=\ref[src];ac_refresh=1'>Refresh</A>
 				<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Back</A>
 			"}
@@ -436,7 +436,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 				dat+="<I>No feed channels found active...</I><BR>"
 			else
 				for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
-					dat+="<A href='?src=\ref[src];ac_pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
+					dat+="<A href='?src=\ref[src];ac_pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : null]<BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A>"
 		if(11)
 			dat+={"
@@ -449,7 +449,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 				dat+="<I>No feed channels found active...</I><BR>"
 			else
 				for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
-					dat+="<A href='?src=\ref[src];ac_pick_d_notice=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
+					dat+="<A href='?src=\ref[src];ac_pick_d_notice=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : null]<BR>"
 
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Back</A>"
 		if(12)
@@ -1258,7 +1258,7 @@ var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 		toArea = locate(/area/shuttle/administration/centcom)
 
 		SSshuttle.undock_act(fromArea)
-		SSshuttle.undock_act(/area/hallway/secondary/entry, "arrival_admin")
+		SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_admin")
 	else
 		fromArea = locate(/area/shuttle/administration/centcom)
 		toArea = locate(/area/shuttle/administration/station)
@@ -1277,7 +1277,7 @@ var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 		admin_shuttle_location = 1
 
 		SSshuttle.dock_act(toArea)
-		SSshuttle.dock_act(/area/hallway/secondary/entry, "arrival_admin")
+		SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_admin")
 
 	moving = FALSE
 
@@ -1299,7 +1299,7 @@ var/ferry_location = 0 // 0 = centcom , 1 = station
 		toArea = locate(/area/shuttle/transport1/centcom)
 
 		SSshuttle.undock_act(fromArea)
-		SSshuttle.undock_act(/area/hallway/secondary/entry, "arrival_ferry")
+		SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_ferry")
 	else
 		fromArea = locate(/area/shuttle/transport1/centcom)
 		toArea = locate(/area/shuttle/transport1/station)
@@ -1318,7 +1318,7 @@ var/ferry_location = 0 // 0 = centcom , 1 = station
 		ferry_location = 1
 
 		SSshuttle.dock_act(toArea)
-		SSshuttle.dock_act(/area/hallway/secondary/entry, "arrival_ferry")
+		SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_ferry")
 
 	moving = FALSE
 

@@ -149,7 +149,7 @@
 
 /datum/reagent/toxin/minttoxin/on_general_digest(mob/living/M)
 	..()
-	if(FAT in M.mutations)
+	if(HAS_TRAIT(M, TRAIT_FAT))
 		M.gib()
 
 /datum/reagent/toxin/carpotoxin
@@ -215,8 +215,7 @@
 				if(E.name == "Wallrot")
 					qdel(E)
 
-			for(var/mob/O in viewers(W, null))
-				O.show_message("<span class='notice'>The fungi are completely dissolved by the solution!</span>", 1)
+			W.visible_message("<span class='notice'>The fungi are completely dissolved by the solution!</span>")
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/structure/alien/weeds))
@@ -642,12 +641,12 @@
 	..()
 	if(istype(M, /mob/living/carbon) && M.stat != DEAD)
 		to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
-		if(M.monkeyizing)
+		if(M.notransform)
 			return
-		M.monkeyizing = 1
+		M.notransform = TRUE
 		M.canmove = 0
 		M.icon = null
-		M.overlays.Cut()
+		M.cut_overlays()
 		M.invisibility = 101
 		for(var/obj/item/W in M)
 			if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something

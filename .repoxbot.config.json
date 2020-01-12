@@ -20,6 +20,7 @@
     "diffPathsLabels": {
         "^diff.+/icons/.+\\.dmi$": "Sprites",
         "^diff.+/maps/.+\\.dmm$": "Map Edit",
-        "^diff --git a/tools/.+$": "Tools"
+        "^diff --git a/tools/.+$": "Tools",
+        "^diff --git a/sound/.+$": "Sound"
     }
 }

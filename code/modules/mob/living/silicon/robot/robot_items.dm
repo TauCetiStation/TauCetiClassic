@@ -34,7 +34,7 @@
 
 				I.loc = src
 				carrying.Add(I)
-				overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer)
+				add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
 				addedSomething = 1
 		if ( addedSomething )
 			user.visible_message("<span class='notice'>[user] load some items onto their service tray.</span>")
@@ -60,7 +60,7 @@
 			dropspot = target.loc
 
 
-		overlays = null
+		cut_overlays()
 
 		var/droppedSomething = 0
 
@@ -193,8 +193,7 @@
 		for(var/mob/living/carbon/slime/slime in viewers(get_turf_loc(user), null))
 			slime.tame = 0
 			slime.rabid = 1
-			for(var/mob/O in viewers(get_turf_loc(user), null))
-				O.show_message(text("<span class='warning'>The [slime] is driven into a frenzy!.</span>"), 1)
+			user.visible_message("<span class='warning'>The [slime] is driven into a frenzy!.</span>")
 		uses -= 1
 		to_chat(user, "Bloodlust emitter sends a pulse.")
 	else

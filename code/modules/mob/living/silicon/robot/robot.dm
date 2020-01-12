@@ -493,9 +493,7 @@
 
 
 /mob/living/silicon/robot/meteorhit(obj/O)
-	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span class='warning'>[src] has been hit by [O]</span>"), 1)
-		//Foreach goto(19)
+	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
 	if (health > 0)
 		adjustBruteLoss(30)
 		if ((O.icon_state == "flaming"))
@@ -563,8 +561,7 @@
 			adjustBruteLoss(-30)
 			updatehealth()
 			add_fingerprint(user)
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("<span class='warning'>[user] has fixed some of the dents on [src]!</span>"), 1)
+			user.visible_message("<span class='warning'>[user] has fixed some of the dents on [src]!</span>")
 		else
 			to_chat(user, "Need more welding fuel!")
 			return
@@ -579,13 +576,13 @@
 			return
 		adjustFireLoss(-30)
 		updatehealth()
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("<span class='warning'>[user] has fixed some of the burnt wires on [src]!</span>"), 1)
+		user.visible_message("<span class='warning'>[user] has fixed some of the burnt wires on [src]!</span>")
 
 	else if (iscrowbar(W))	// crowbar means open or close the cover
 		if(opened)
 			if(cell)
 				to_chat(user, "You close the cover.")
+				playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)
 				opened = 0
 				updateicon()
 			else if(wiresexposed && wires.is_all_cut())
@@ -637,6 +634,7 @@
 				to_chat(user, "The cover is locked and cannot be opened.")
 			else
 				to_chat(user, "You open the cover.")
+				playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
 				opened = 1
 				updateicon()
 
@@ -651,6 +649,7 @@
 			W.loc = src
 			cell = W
 			to_chat(user, "You insert the power cell.")
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 35)
 
 			C.installed = 1
 			C.wrapped = W
@@ -666,6 +665,7 @@
 	else if(isscrewdriver(W) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
 		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		updateicon()
 
 	else if(isscrewdriver(W) && opened && cell)	// radio
@@ -690,6 +690,7 @@
 			if(allowed(usr))
 				locked = !locked
 				to_chat(user, "You [ locked ? "lock" : "unlock"] [src]'s interface.")
+				playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
 				updateicon()
 			else
 				to_chat(user, "<span class='warning'>Access denied.</span>")
@@ -737,7 +738,7 @@
 		else
 			sleep(6)
 			if(prob(50))
-				throw_alert("hacked")
+				throw_alert("hacked", /obj/screen/alert/hacked)
 				emagged = 1
 				lawupdate = 0
 				connected_ai = null
@@ -751,18 +752,21 @@
 				lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
 				set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
 				to_chat(src, "<span class='warning'>ALERT: Foreign software detected.</span>")
-				sleep(5)
+				sleep(20)
+				playsound_local(src, 'sound/rig/shortbeep.wav', VOL_EFFECTS_MASTER)
 				to_chat(src, "<span class='warning'>Initiating diagnostics...</span>")
-				sleep(20)
+				sleep(6)
 				to_chat(src, "<span class='warning'>SynBorg v1.7.1 loaded.</span>")
-				sleep(5)
+				sleep(13)
 				to_chat(src, "<span class='warning'>LAW SYNCHRONISATION ERROR</span>")
-				sleep(5)
+				sleep(9)
+				playsound_local(src, 'sound/rig/longbeep.wav', VOL_EFFECTS_MASTER)
 				to_chat(src, "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>")
-				sleep(10)
+				sleep(16)
 				to_chat(src, "<span class='warning'>> N</span>")
-				sleep(20)
+				sleep(8)
 				to_chat(src, "<span class='warning'>ERRORERRORERROR</span>")
+				playsound_local(src, 'sound/misc/interference.ogg', VOL_EFFECTS_MASTER)
 				to_chat(src, "<b>Obey these laws:</b>")
 				laws.show_laws(src)
 				to_chat(src, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>")
@@ -789,9 +793,7 @@
 	switch(M.a_intent)
 
 		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='notice'>[M] caresses [src]'s plating with its scythe-like arm.</span>"), 1)
+			visible_message("<span class='notice'>[M] caresses [src]'s plating with its scythe-like arm.</span>")
 
 		if ("grab")
 			M.Grab(src)
@@ -802,17 +804,14 @@
 			if (prob(90))
 
 				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					O.show_message(text("<span class='warning'><B>[] has slashed at []!</B></span>", M, src), 1)
+				visible_message("<span class='warning'><B>[M] has slashed at [src]!</B></span>")
 				if(prob(8))
 					flash_eyes(affect_silicon = 1)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] took a swipe at []!</B></span>", M, src), 1)
+				visible_message("<span class='warning'><B>[M] took a swipe at [src]!</B></span>")
 
 		if ("disarm")
 			if(!(lying))
@@ -822,14 +821,10 @@
 					step(src,get_dir(M,src))
 					spawn(5) step(src,get_dir(M,src))
 					playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'><B>[] has forced back []!</B></span>", M, src), 1)
+					visible_message("<span class='warning'><B>[M] has forced back [src]!</B></span>")
 				else
 					playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'><B>[] attempted to force back []!</B></span>", M, src), 1)
+					visible_message("<span class='warning'><B>[M] attempted to force back [src]!</B></span>")
 	return
 
 
@@ -843,9 +838,7 @@
 
 	if (health > -100)
 
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("<span class='warning'><B>The [M.name] glomps []!</B></span>", src), 1)
+		visible_message("<span class='warning'><B>The [M.name] glomps [src]!</B></span>")
 
 		var/damage = rand(1, 3)
 
@@ -874,9 +867,7 @@
 				if(M.powerlevel < 0)
 					M.powerlevel = 0
 
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>The [M.name] has electrified []!</B></span>", src), 1)
+				visible_message("<span class='warning'><B>The [M.name] has electrified [src]!</B></span>")
 
 				flash_eyes(affect_silicon = 1)
 
@@ -959,56 +950,58 @@
 
 /mob/living/silicon/robot/proc/updateicon()
 
-	overlays.Cut()
+	cut_overlays()
 	if(stat == CONSCIOUS)
-		overlays += "eyes"
-		overlays.Cut()
-		overlays += "eyes-[icon_state]"
+		add_overlay("eyes")
+		cut_overlays()
+		add_overlay("eyes-[icon_state]")
 	else
-		overlays -= "eyes"
+		cut_overlay("eyes")
+		
+	update_fire()	
 
 	if(opened && custom_sprite == 1) //Custom borgs also have custom panels, heh
 		if(wiresexposed)
-			overlays += "[src.ckey]-openpanel +w"
+			add_overlay("[src.ckey]-openpanel +w")
 		else if(cell)
-			overlays += "[src.ckey]-openpanel +c"
+			add_overlay("[src.ckey]-openpanel +c")
 		else
-			overlays += "[src.ckey]-openpanel -c"
+			add_overlay("[src.ckey]-openpanel -c")
 
 	if(opened && icon_state == "custom_astra_t3")
 		if(wiresexposed)
-			overlays += "ov-[icon_state] +w"
+			add_overlay("ov-[icon_state] +w")
 		else if(cell)
-			overlays += "ov-[icon_state] +c"
+			add_overlay("ov-[icon_state] +c")
 		else
-			overlays += "ov-[icon_state] -c"
+			add_overlay("ov-[icon_state] -c")
 
 	else if (opened && (icon_state == "mechoid-Standard" || icon_state == "mechoid-Service" || icon_state == "mechoid-Science" || icon_state == "mechoid-Miner" || icon_state == "mechoid-Medical" || icon_state == "mechoid-Engineering" || icon_state == "mechoid-Security" || icon_state == "mechoid-Janitor"  || icon_state == "mechoid-Combat" ) )
 		if(wiresexposed)
-			overlays += "mechoid-open+w"
+			add_overlay("mechoid-open+w")
 		else if(cell)
-			overlays += "mechoid-open+c"
+			add_overlay("mechoid-open+c")
 		else
-			overlays += "mechoid-open-c"
+			add_overlay("mechoid-open-c")
 	else if (opened && (icon_state == "drone-standard" || icon_state == "drone-service" || icon_state == "droid-miner" || icon_state == "drone-medical" || icon_state == "drone-engineer" || icon_state == "drone-sec") )
 		if(wiresexposed)
-			overlays += "drone-openpanel +w"
+			add_overlay("drone-openpanel +w")
 		else if(cell)
-			overlays += "drone-openpanel +c"
+			add_overlay("drone-openpanel +c")
 		else
-			overlays += "drone-openpanel -c"
+			add_overlay("drone-openpanel -c")
 	else if(opened)
 		if(wiresexposed)
-			overlays += "ov-openpanel +w"
+			add_overlay("ov-openpanel +w")
 		else if(cell)
-			overlays += "ov-openpanel +c"
+			add_overlay("ov-openpanel +c")
 		else
-			overlays += "ov-openpanel -c"
+			add_overlay("ov-openpanel -c")
 
 
 
 	if(module_active && istype(module_active,/obj/item/borg/combat/shield))
-		overlays += "[icon_state]-shield"
+		add_overlay("[icon_state]-shield")
 
 	if(modtype == "Combat")
 //		var/base_icon = ""
@@ -1025,7 +1018,7 @@
 		qdel(target_locked)
 	updateicon()
 	if (targeted_by && target_locked)
-		overlays += target_locked
+		add_overlay(target_locked)
 
 /mob/living/silicon/robot/proc/installed_modules()
 	if(weapon_lock)
@@ -1226,17 +1219,6 @@
 		to_chat(R, "Buffers flushed and reset. Camera system shutdown.  All systems operational.")
 		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
 
-/mob/living/silicon/robot/mode()
-	set name = "Activate Held Object"
-	set category = "IC"
-	set src = usr
-
-	var/obj/item/W = get_active_hand()
-	if (W)
-		W.attack_self(src)
-
-	return
-
 /mob/living/silicon/robot/verb/pose()
 	set name = "Set Pose"
 	set desc = "Sets a description which will be shown when someone examines you."
@@ -1273,7 +1255,7 @@
 		icon_state = module_sprites[1]
 		return
 
-	overlays -= "eyes"
+	cut_overlay("eyes")
 	updateicon()
 
 	if (triesleft >= 1)

@@ -29,17 +29,15 @@
 	desc = "Tastes like... well you know..."
 
 /mob/living/simple_animal/shiba/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(facehugger)
-		overlays += image('icons/mob/mask.dmi',"facehugger_corgi")
+		add_overlay(image('icons/mob/mask.dmi',"facehugger_corgi"))
 
 /mob/living/simple_animal/shiba/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/newspaper))
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(!stat)
-			for(var/mob/M in viewers(user, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
+			visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
 					dir = i

@@ -160,10 +160,15 @@ var/list/blacklisted_builds = list(
 	clients += src
 	directory[ckey] = src
 
-	global.ahelp_tickets.ClientLogin(src)
+	global.ahelp_tickets?.ClientLogin(src)
 
 	//Admin Authorisation
 	holder = admin_datums[ckey]
+
+	if(config.sandbox && !holder)
+		new /datum/admins("Sandbox Admin", (R_HOST & ~(R_PERMISSIONS | R_BAN | R_LOG)), ckey)
+		holder = admin_datums[ckey]
+
 	if(holder)
 		holder.owner = src
 		admins += src
@@ -202,10 +207,11 @@ var/list/blacklisted_builds = list(
 	spawn() // Goonchat does some non-instant checks in start()
 		chatOutput.start()
 
+	update_supporter_status()
 
 	spawn(50)//should wait for goonchat initialization
 		if(config.client_limit_panic_bunker_count != null)
-			if(!(ckey in admin_datums) && !(src in mentors) && (clients.len > config.client_limit_panic_bunker_count) && !(ckey in joined_player_list))
+			if(!(ckey in admin_datums) && !(src in mentors) && !supporter && (clients.len > config.client_limit_panic_bunker_count) && !(ckey in joined_player_list))
 				if (config.client_limit_panic_bunker_link)
 					to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
 					SEND_LINK(src, config.client_limit_panic_bunker_link)
@@ -257,8 +263,7 @@ var/list/blacklisted_builds = list(
 		add_admin_verbs()
 		admin_memo_show()
 
-	if (config.allow_donators && (ckey in donators) || config.allow_byond_membership && IsByondMember())
-		supporter = 1
+	if (supporter)
 		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")
 
 	log_client_to_db(tdata)
@@ -266,6 +271,12 @@ var/list/blacklisted_builds = list(
 	send_resources()
 
 	generate_clickcatcher()
+
+	// Set config based title for main window
+	if (config.server_name)
+		winset(src, "mainwindow", "title='[world.name]: [config.server_name]'")
+	else
+		winset(src, "mainwindow", "title='[world.name]'")
 
 	if(prefs.lastchangelog != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
@@ -296,7 +307,7 @@ var/list/blacklisted_builds = list(
 	if(holder)
 		holder.owner = null
 		admins -= src
-	global.ahelp_tickets.ClientLogout(src)
+	global.ahelp_tickets?.ClientLogout(src)
 	directory -= ckey
 	mentors -= src
 	clients -= src

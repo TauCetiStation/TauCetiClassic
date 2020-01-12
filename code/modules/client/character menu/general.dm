@@ -87,9 +87,11 @@
 							. += "<li>Retinal overlayed [organ_name]</li>"
 						else
 							. += "<li>Mechanically assisted [organ_name]</li>"
+			if(species == IPC)
+				. += "<br>Head: <a href='byond://?src=\ref[user];preference=ipc_head;task=input'>[ipc_head]</a>"
+
 			if(!ind)
 				. += "<br>\[...\]"
-
 		//Appearance
 		if("appearance")
 			. += "<b>Hair</b>"
@@ -182,19 +184,24 @@
 					if(genmsg != null)
 						gen_record = genmsg
 
+	var/datum/species/specie_obj = all_species[species]
+
 	switch(href_list["task"])
 		if("random")
 			switch(href_list["preference"])
 				if("name")
 					real_name = random_name(gender)
 				if("age")
-					age = rand(AGE_MIN, AGE_MAX)
+					age = rand(specie_obj.min_age, specie_obj.max_age)
 				if("hair")
 					r_hair = rand(0,255)
 					g_hair = rand(0,255)
 					b_hair = rand(0,255)
 				if("h_style")
-					h_style = random_hair_style(gender, species)
+					if(species == IPC)
+						h_style = random_ipc_monitor(ipc_head)
+					else
+						h_style = random_hair_style(gender, species)
 				if("facial")
 					r_facial = rand(0,255)
 					g_facial = rand(0,255)
@@ -218,7 +225,7 @@
 					g_skin = rand(0,255)
 					b_skin = rand(0,255)
 				if("bag")
-					backbag = rand(1,4)
+					backbag = rand(1,5)
 				if("all")
 					randomize_appearance_for()	//no params needed
 		if("input")
@@ -231,9 +238,9 @@
 						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("age")
-					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
+					var/new_age = input(user, "Choose your character's age:\n([specie_obj.min_age]-[specie_obj.max_age])", "Character Preference") as num|null
 					if(new_age)
-						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
+						age = max(min( round(text2num(new_age)), specie_obj.max_age), specie_obj.min_age)
 
 				if("species")
 					var/list/new_species = list(HUMAN)
@@ -254,7 +261,10 @@
 
 					if(prev_species != species)
 						f_style = random_facial_hair_style(gender, species)
-						h_style = random_hair_style(gender, species)
+						if(species == IPC)
+							h_style = random_ipc_monitor(ipc_head)
+						else
+							h_style = random_hair_style(gender, species)
 						ResetJobs()
 						ResetQuirks()
 						if(language && language != "None")
@@ -296,7 +306,8 @@
 								continue
 							if(!(species in S.species_allowed))
 								continue
-
+						if(species == IPC && ipc_head != S.ipc_head_compatible )
+							continue
 						valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
 
 					var/new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in valid_hairstyles
@@ -486,6 +497,11 @@
 									organ_data[organ] = "assisted"
 								if("Mechanical")
 									organ_data[organ] = "mechanical"
+				// Choosing a head for an IPC
+				if("ipc_head")
+					var/list/ipc_heads = list("Default", "Alien", "Double", "Pillar")
+					ipc_head = input("Please select a head type", "Character Generation", null) in ipc_heads
+					h_style = random_ipc_monitor(ipc_head)
 
 				if("skin_style")
 					var/skin_style_name = input(user, "Select a new skin style") as null|anything in list("default1", "default2", "default3")
@@ -500,7 +516,11 @@
 						gender = MALE
 
 					f_style = random_facial_hair_style(gender, species)
-					h_style = random_hair_style(gender, species)
+					if(species == IPC)
+						h_style = random_ipc_monitor(ipc_head)
+					else
+						h_style = random_hair_style(gender, species)
+
 
 				if("randomslot")
 					randomslot = !randomslot

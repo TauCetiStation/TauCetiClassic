@@ -37,6 +37,7 @@
 	var/obj/screen/leap/leap_icon = null
 	var/obj/screen/neurotoxin_icon = null
 	var/obj/screen/healthdoll = null
+	var/obj/screen/nutrition_icon = null
 
 	var/obj/screen/alien_plasma_display = null
 	var/obj/screen/nightvisionicon = null
@@ -57,7 +58,6 @@
 	var/disabilities = 0	//Carbon
 	var/atom/movable/pulling = null
 	var/next_move = null
-	var/monkeyizing = null	//Carbon
 	var/other = 0.0
 	var/notransform = null	//Carbon
 	var/hand = 0            //active hand; 0 is right hand, 1 is left hand //todo: we need defines for this...
@@ -176,7 +176,7 @@
 	var/mob/living/carbon/LAssailant = null
 
 //Wizard mode, but can be used in other modes thanks to the brand new "Give Spell" badmin button
-	var/obj/effect/proc_holder/spell/list/spell_list = list()
+	var/list/obj/effect/proc_holder/spell/spell_list = list()
 
 //Changlings, but can be used in other modes
 //	var/obj/effect/proc_holder/changpower/list/power_list = list()

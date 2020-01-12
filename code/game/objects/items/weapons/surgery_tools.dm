@@ -21,6 +21,7 @@
 	flags = CONDUCT
 	w_class = ITEM_SIZE_SMALL
 	origin_tech = "materials=1;biotech=1"
+	usesound = 'sound/items/surgery/Retract.ogg'
 
 /*
  * Hemostat
@@ -36,6 +37,7 @@
 	w_class = ITEM_SIZE_SMALL
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
+	usesound = 'sound/items/surgery/Hemostat.ogg'
 
 /*
  * Cautery
@@ -51,6 +53,8 @@
 	w_class = ITEM_SIZE_SMALL
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
+	usesound = 'sound/items/surgery/cautery.ogg'
+
 
 /*
  * Surgical Drill
@@ -68,6 +72,7 @@
 	w_class = ITEM_SIZE_SMALL
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
+	usesound = 'sound/items/surgery/SurgDrill.ogg'
 
 /obj/item/weapon/surgicaldrill/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='warning'><b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b></span>", \
@@ -109,6 +114,8 @@
 	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks basic and could be improved."
 	icon_state = "scalpel_laser1_on"
 	damtype = "fire"
+	usesound = 'sound/items/surgery/laserscalp.ogg'
+	toolspeed = 1.2
 
 /obj/item/weapon/scalpel/laser2
 	name = "laser scalpel"
@@ -116,6 +123,7 @@
 	icon_state = "scalpel_laser2_on"
 	damtype = "fire"
 	force = 12.0
+	usesound = 'sound/items/surgery/laserscalp.ogg'
 
 /obj/item/weapon/scalpel/laser3
 	name = "laser scalpel"
@@ -123,12 +131,15 @@
 	icon_state = "scalpel_laser3_on"
 	damtype = "fire"
 	force = 15.0
+	usesound = 'sound/items/surgery/laserscalp.ogg'
+	toolspeed = 0.6
 
 /obj/item/weapon/scalpel/manager
 	name = "incision management system"
 	desc = "A true extension of the surgeon's body, this marvel instantly and completely prepares an incision allowing for the immediate commencement of therapeutic steps."
 	icon_state = "scalpel_manager_on"
 	force = 7.5
+	toolspeed = 0.6
 
 /*
  * Circular Saw
@@ -151,6 +162,8 @@
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharp = 1
 	edge = 1
+	usesound = 'sound/items/surgery/Bone_Saw.ogg'
+
 
 //misc, formerly from code/defines/weapons.dm
 /obj/item/weapon/bonegel
@@ -160,6 +173,7 @@
 	force = 0
 	w_class = ITEM_SIZE_SMALL
 	throwforce = 1.0
+	usesound = 'sound/items/surgery/Bone_Gel.ogg'
 
 /obj/item/weapon/FixOVein
 	name = "FixOVein"
@@ -170,6 +184,7 @@
 	origin_tech = "materials=1;biotech=3"
 	w_class = ITEM_SIZE_SMALL
 	var/usage_amount = 10
+	usesound = 'sound/items/surgery/Fix-O-vein.ogg'
 
 /obj/item/weapon/bonesetter
 	name = "bone setter"
@@ -181,3 +196,6 @@
 	throw_range = 5
 	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("attacked", "hit", "bludgeoned")
+	usesound = 'sound/items/surgery/BonSet.ogg'
+
+

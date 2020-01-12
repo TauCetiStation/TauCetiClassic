@@ -286,7 +286,7 @@
 	icon_state = "shower"
 	density = 0
 	anchored = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/on = 0
 	var/obj/effect/mist/mymist = null
 	var/ismist = 0				//needs a var so we can make it linger~
@@ -390,12 +390,12 @@
 			to_chat(usr, "[bicon(src)]<span class='notice'>Is payed, you may turn it on now.</span>")
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
-	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
+	cut_overlays()					//once it's been on for a while, in addition to handling the water overlay.
 	if(mymist)
 		qdel(mymist)
 
 	if(on)
-		overlays += image('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir)
+		add_overlay(image('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir))
 		if(watertemp == "freezing")
 			return
 		if(!ismist)

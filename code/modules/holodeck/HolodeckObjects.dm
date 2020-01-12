@@ -43,7 +43,7 @@
 /turf/simulated/floor/holofloor/desert/atom_init()
 	. = ..()
 	if(prob(10))
-		overlays += "asteroid[rand(0,9)]"
+		add_overlay("asteroid[rand(0,9)]")
 
 /turf/simulated/floor/holofloor/attackby(obj/item/weapon/W, mob/user)
 	return
@@ -52,8 +52,6 @@
 /obj/structure/table/holotable
 	name = "table"
 	desc = "A square piece of metal standing on four metal legs. It can not move."
-	icon = 'icons/obj/tables.dmi'
-	icon_state = "table"
 	density = 1
 	anchored = 1.0
 	layer = 2.8
@@ -76,8 +74,7 @@
 /obj/structure/table/holotable/wooden
 	name = "table"
 	desc = "A square piece of wood standing on four wooden legs. It can not move."
-	icon = 'icons/obj/tables.dmi'
-	icon_state = "woodtable"
+	icon = 'icons/obj/smooth_structures/wooden_table.dmi'
 
 /obj/structure/holostool
 	name = "stool"
@@ -311,10 +308,10 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
 	anchored = 1.0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	var/ready = 0
 	var/area/currentarea = null
 	var/eventstarted = 0

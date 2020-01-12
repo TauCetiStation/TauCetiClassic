@@ -225,7 +225,7 @@
 /area/awaymission)
 "O" = (
 /turf/space,
-/area/planet/clown)
+/area/custom/planet/clown)
 "P" = (
 /obj/structure/ladder{
 	height = 1;

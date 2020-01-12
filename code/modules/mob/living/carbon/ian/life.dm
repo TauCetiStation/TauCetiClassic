@@ -1,4 +1,7 @@
 /mob/living/carbon/ian/Life()
+	if (notransform)
+		return
+
 	..()
 
 	if(soap_eaten) //Yeshhh, even dead, as long as body exist or timer runs out, its a chemical reaction after all!
@@ -96,7 +99,7 @@
 					else
 						emote(pick(emote_hear),2)
 
-	if (stat != DEAD)
+	if (stat != DEAD && !IS_IN_STASIS(src))
 		if(SSmob.times_fired%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
 			breathe()
@@ -116,8 +119,6 @@
 		handle_environment(environment)
 
 	handle_fire()
-	if(on_fire && fire_stacks > 0)
-		fire_stacks -= 0.5
 
 	handle_regular_status_updates()
 	update_canmove()
@@ -166,15 +167,15 @@
 		SB.icon_state = "stam_bar_[round(stamina, 5)]"
 
 	if(oxygen_alert)
-		throw_alert("ian_oxy")
+		throw_alert("ian_oxy", /obj/screen/alert/ian_oxy)
 	else
 		clear_alert("ian_oxy")
 	if(phoron_alert)
-		throw_alert("ian_tox")
+		throw_alert("ian_tox", /obj/screen/alert/ian_tox)
 	else
 		clear_alert("ian_tox")
 	if(fire_alert)
-		throw_alert("ian_hot")
+		throw_alert("ian_hot", /obj/screen/alert/ian_hot)
 	else
 		clear_alert("ian_hot")
 
@@ -403,19 +404,19 @@
 		jitteriness = max(0, jitteriness - 1)
 
 /mob/living/carbon/ian/proc/handle_disabilities()
-	if (disabilities & EPILEPSY || has_trait(TRAIT_EPILEPSY))
+	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
 		if (prob(1) && paralysis < 10)
 			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
-	if (disabilities & COUGHING || has_trait(TRAIT_COUGH))
+	if (disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
 		if (prob(5) && paralysis <= 1)
 			drop_item()
 			emote("cough")
-	if (disabilities & TOURETTES || has_trait(TRAIT_TOURETTE))
+	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		if (prob(10) && paralysis <= 1)
 			Stun(10)
 			emote("twitch")
-	if (disabilities & NERVOUS || has_trait(TRAIT_NERVOUS))
+	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
 		if (prob(10))
 			stuttering = max(10, stuttering)
 
@@ -487,24 +488,25 @@
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-			throw_alert("pressure","highpressure",2)
+			throw_alert("pressure", /obj/screen/alert/highpressure, 2)
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			throw_alert("pressure","highpressure",1)
+			throw_alert("pressure", /obj/screen/alert/highpressure, 1)
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
 			clear_alert("pressure")
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-			throw_alert("pressure","lowpressure",1)
+			throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 		else
 			if( !(COLD_RESISTANCE in mutations) )
 				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				throw_alert("pressure","lowpressure",2)
+				throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 			else
-				throw_alert("pressure","lowpressure",1)
+				throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 
 /mob/living/carbon/ian/handle_fire()
 	if(..())
 		return
 	adjustFireLoss(6)
+	return
 
 /mob/living/carbon/ian/calculate_affecting_pressure(pressure)
 	..()

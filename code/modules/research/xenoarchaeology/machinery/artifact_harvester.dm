@@ -8,7 +8,7 @@
 	density = TRUE
 	idle_power_usage = 50
 	active_power_usage = 750
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	var/harvesting = FALSE
 	var/obj/item/weapon/particles_battery/inserted_battery
 	var/obj/machinery/artifact/cur_artifact
@@ -87,7 +87,7 @@
 
 		// check if we've finished
 		if(inserted_battery.stored_charge >= inserted_battery.capacity)
-			use_power = 1
+			set_power_use(IDLE_POWER_USE)
 			harvesting = FALSE
 			cur_artifact.anchored = FALSE
 			cur_artifact.being_used = FALSE
@@ -106,7 +106,7 @@
 			inserted_battery.battery_effect.process()
 
 			// if the effect works by touch, activate it on anyone viewing the console
-			if(inserted_battery.battery_effect.effect == EFFECT_TOUCH)
+			if(inserted_battery.battery_effect.effect == ARTIFACT_EFFECT_TOUCH)
 				var/list/nearby = viewers(1, src)
 				for(var/mob/M in nearby)
 					if(M.machine == src)
@@ -114,7 +114,7 @@
 
 		// if there's no charge left, finish
 		if(inserted_battery.stored_charge <= 0)
-			use_power = 1
+			set_power_use(IDLE_POWER_USE)
 			inserted_battery.stored_charge = 0
 			harvesting = FALSE
 			if(inserted_battery.battery_effect && inserted_battery.battery_effect.activated)
@@ -223,7 +223,7 @@
 
 						if(source_effect)
 							harvesting = TRUE
-							use_power = 2
+							set_power_use(ACTIVE_POWER_USE)
 							cur_artifact.anchored = TRUE
 							cur_artifact.being_used = TRUE
 							icon_state = "harvester_on"
@@ -234,8 +234,8 @@
 
 							// duplicate the artifact's effect datum
 							if(!inserted_battery.battery_effect)
-								var/effecttype = source_effect.type
-								var/datum/artifact_effect/E = new effecttype(inserted_battery)
+								var/new_effect_type = source_effect.type
+								var/datum/artifact_effect/E = new new_effect_type(inserted_battery)
 
 								// duplicate it's unique settings
 								for(var/varname in list("chargelevelmax", "artifact_id", "effect", "effectrange", "trigger"))
@@ -262,6 +262,7 @@
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 
 		src.inserted_battery.loc = src.loc
+		src.inserted_battery.update_icon()
 		src.inserted_battery = null
 		icon_state = "harvester"
 		owned_scanner.icon_state = "xenoarch_scanner"
@@ -274,7 +275,7 @@
 						inserted_battery.battery_effect.ToggleActivate(1)
 					last_process = world.time
 					harvesting = -1
-					use_power = 2
+					set_power_use(ACTIVE_POWER_USE)
 					icon_state = "harvester_on"
 					owned_scanner.icon_state = "xenoarch_scanner"
 					var/message = "<b>[src]</b> states, \"Warning, battery charge dump commencing.\""

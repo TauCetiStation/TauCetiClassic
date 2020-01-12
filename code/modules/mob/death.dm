@@ -3,7 +3,7 @@
 /mob/proc/gib()
 	death(1)
 	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
+	notransform = TRUE
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -28,7 +28,7 @@
 /mob/proc/dust()
 	death(1)
 	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
+	notransform = TRUE
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -48,7 +48,6 @@
 
 
 /mob/proc/death(gibbed)
-
 	//Quick fix for corpses kept propped up in chairs. ~Z
 	drop_r_hand()
 	drop_l_hand()
@@ -59,4 +58,3 @@
 	alive_mob_list -= src
 	dead_mob_list += src
 	clear_fullscreens()
-	return ..(gibbed)

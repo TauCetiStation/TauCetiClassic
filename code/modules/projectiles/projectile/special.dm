@@ -106,11 +106,10 @@
 			if(prob(15))
 				M.apply_effect((rand(30,80)),IRRADIATE)
 				M.Weaken(5)
-				for (var/mob/V in viewers(src))
-					V.show_message("<span class='warning'>[M] writhes in pain as \his vacuoles boil.</span>", 3, "<span class='warning'>You hear the crunching of leaves.</span>", 2)
+				visible_message("<span class='warning'>[M] writhes in pain as \his vacuoles boil.</span>", blind_message = "<span class='warning'>You hear the crunching of leaves.</span>")
 			if(prob(35))
 			//	for (var/mob/V in viewers(src)) //Public messages commented out to prevent possible metaish genetics experimentation and stuff. - Cheridan
-			//		V.show_message("<span class='warning'>[M] is mutated by the radiation beam.</span>", 3, "<span class='warning'>You hear the snapping of twigs.</span>", 2)
+			//		V.show_messageold("<span class='warning'>[M] is mutated by the radiation beam.</span>", 3, "<span class='warning'>You hear the snapping of twigs.</span>", 2)
 				if(prob(80))
 					randmutb(M)
 					domutcheck(M,null)
@@ -119,13 +118,13 @@
 					domutcheck(M,null)
 			else
 				M.adjustFireLoss(rand(5,15))
-				M.show_message("<span class='warning'>The radiation beam singes you!</span>")
+				to_chat(M, "<span class='warning'>The radiation beam singes you!</span>")
 			//	for (var/mob/V in viewers(src))
-			//		V.show_message("<span class='warning'>[M] is singed by the radiation beam.</span>", 3, "<span class='warning'>You hear the crackle of burning leaves.</span>", 2)
+			//		V.show_messageold("<span class='warning'>[M] is singed by the radiation beam.</span>", 3, "<span class='warning'>You hear the crackle of burning leaves.</span>", 2)
 	else if(istype(target, /mob/living/carbon))
 	//	for (var/mob/V in viewers(src))
-	//		V.show_message("The radiation beam dissipates harmlessly through [M]", 3)
-		M.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
+	//		V.show_messageold("The radiation beam dissipates harmlessly through [M]", 3)
+		to_chat(M, "<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 	else
 		return 1
 
@@ -147,7 +146,7 @@
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))
 			M.nutrition += 30
 	else if (istype(target, /mob/living/carbon))
-		M.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
+		to_chat(M, "<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 	else
 		return 1
 
@@ -262,3 +261,42 @@
 	damage = 35
 	stoping_power = 8
 	kill_count = 14
+
+/obj/item/projectile/plasma
+	name = "plasma"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "plasma_bolt"
+	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
+	light_color = LIGHT_COLOR_PLASMA
+	light_power = 2
+	light_range = 2
+	damage = 18
+	damage_type = BURN
+	flag = "energy"
+	eyeblur = 4
+	sharp = 0
+	edge = 0
+
+	muzzle_type = /obj/effect/projectile/plasma/muzzle
+
+/obj/item/projectile/plasma/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_LASERACT
+
+/obj/item/projectile/plasma/overcharge
+	icon_state = "plasma_bolt_oc"
+	light_color = LIGHT_COLOR_PLASMA_OC
+	damage = 25
+
+	muzzle_type = /obj/effect/projectile/plasma/muzzle/overcharge
+
+/obj/item/projectile/plasma/overcharge/massive
+	icon_state = "plasma_massive_oc"
+	light_range = 3
+	damage = 110
+	impact_force = 20 // massive punch
+	step_delay = 3 // slow moving, provides time to dodge it.
+	proj_impact_sound = 'sound/weapons/guns/plasma10_hit.ogg'
+
+	impact_type = /obj/effect/projectile/plasma/impact/overcharge

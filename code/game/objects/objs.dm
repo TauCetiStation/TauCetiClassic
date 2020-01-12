@@ -176,6 +176,22 @@
 /obj/proc/hides_under_flooring()
 	return level == 1
 
+/atom/movable/proc/get_listeners()
+	return list()
+
+/mob/get_listeners()
+	. = list(src)
+	for(var/mob/M in contents)
+		. |= M.get_listeners()
+
+/atom/movable/proc/get_listening_objs()
+	return list(src)
+
+/mob/get_listening_objs()
+	. = list()
+	for(var/atom/movable/AM in contents)
+		. |= AM.get_listening_objs()
+
 /obj/proc/hear_talk(mob/M, text, verb, datum/language/speaking)
 	if(talking_atom)
 		talking_atom.catchMessage(text, M)
@@ -183,7 +199,7 @@
 	var/mob/mo = locate(/mob) in src
 	if(mo)
 		var/rendered = "<span class='game say'><span class='name'>[M.name]: </span> <span class='message'>[text]</span></span>"
-		mo.show_message(rendered, 2)
+		mo.oldshow_message(rendered, 2)
 		*/
 	return
 

@@ -132,27 +132,27 @@ Probably not a good idea to run this unless you want to see how the proc works i
 		underlays += image(icon='old_or_unused.dmi',icon_state="red", pixel_x = -32)
 
 		// Testing image overlays
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = -32)
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = 32)
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = -32, pixel_y = -32)
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = -32))
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = 32))
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = -32, pixel_y = -32))
 
 		// Testing icon file overlays (defaults to mob's state)
-		overlays += '_flat_demoIcons2.dmi'
+		add_overlay('_flat_demoIcons2.dmi')
 
 		// Testing icon_state overlays (defaults to mob's icon)
-		overlays += "white"
+		add_overlay("white")
 
 		// Testing dynamic icon overlays
 		var/icon/I = icon('old_or_unused.dmi', icon_state="aqua")
 		I.Shift(NORTH,16,1)
-		overlays+=I
+		add_overlay(I)
 
 		// Testing dynamic image overlays
 		I=image(icon=I,pixel_x = -32, pixel_y = 32)
-		overlays+=I
+		add_overlay(I)
 
 		// Testing object types (and layers)
-		overlays+=/obj/effect/overlayTest
+		add_overlay(/obj/effect/overlayTest)
 
 		loc = locate (10,10,1)
 	verb
@@ -182,7 +182,7 @@ Probably not a good idea to run this unless you want to see how the proc works i
 
 		Add_Overlay()
 			set name = "4. Add Overlay"
-			overlays += image(icon='old_or_unused.dmi',icon_state="yellow",pixel_x = rand(-64,32), pixel_y = rand(-64,32))
+			add_overlay(image(icon='old_or_unused.dmi',icon_state="yellow",pixel_x = rand(-64,32), pixel_y = rand(-64,32)))
 
 		Stress_Test()
 			set name = "5. Stress Test"
@@ -665,12 +665,12 @@ The _flatIcons list is a cache for generated icon files.
 			noIcon = TRUE // Do not render this object.
 
 	var/curdir
-	if(!exact && (A.dir != 2))
-		curdir = A.dir
-	else if(exact)
-		curdir = 2
-	else
+	if(!exact && (!A.dir || A.dir == SOUTH))
 		curdir = defdir
+	else if(exact)
+		curdir = SOUTH
+	else
+		curdir = A.dir
 
 	var/curblend
 	if(A.blend_mode == BLEND_DEFAULT)
@@ -733,10 +733,17 @@ The _flatIcons list is a cache for generated icon files.
 
 	var/icon/add // Icon of overlay being added
 
-		// Current dimensions of flattened icon
-	var/{flatX1=1;flatX2=flat.Width();flatY1=1;flatY2=flat.Height()}
-		// Dimensions of overlay being added
-	var/{addX1;addX2;addY1;addY2}
+	// Current dimensions of flattened icon
+	var/flatX1 = 1
+	var/flatX2 = flat.Width()
+	var/flatY1 = 1
+	var/flatY2 = flat.Height()
+
+	// Dimensions of overlay being added
+	var/addX1
+	var/addX2
+	var/addY1
+	var/addY2
 
 	for(var/I in layers)
 
@@ -803,7 +810,7 @@ The _flatIcons list is a cache for generated icon files.
 			if(2)	I.pixel_x++
 			if(3)	I.pixel_y--
 			if(4)	I.pixel_y++
-		overlays += I//And finally add the overlay.
+		add_overlay(I)//And finally add the overlay.
 
 /proc/getHologramIcon(icon/A, safety=1)//If safety is on, a new icon is not created.
 	var/icon/flat_icon = safety ? A : new(A)//Has to be a new icon to not constantly change the same icon.
@@ -864,7 +871,8 @@ var/global/list/humanoid_icon_cache = list()
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 
 		for(var/D in showDirs)
-			body.dir = D
+			body.set_dir(D)
+			COMPILE_OVERLAYS(body)
 			var/icon/partial = getFlatIcon(body)
 			out_icon.Insert(partial,dir=D)
 

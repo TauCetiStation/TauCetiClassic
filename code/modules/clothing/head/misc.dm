@@ -264,8 +264,8 @@
 
 /obj/item/clothing/head/fedora/proc/fedoraproc(mob/user)
 	if(user.canmove && !user.stat && !user.restrained())
-		for(var/mob/living/carbon/M in range(7,src))
-			M.show_message("[user] tips their fedora.")
+		user.visible_message("[user] tips their fedora.")
+
 
 /obj/item/clothing/head/fedora/verb/fedoratip()
 	set category = "Object"
@@ -339,8 +339,8 @@
 	item_state = "indiana_hat"
 	desc = "Be aware of rolling boulders."
 
-/obj/item/clothing/head/necromancer_hood
-	name = "necromancer's hood"
+/obj/item/clothing/head/black_hood
+	name = "black hood"
 	desc = "It's hood that covers the head."
 	icon_state = "necromancer"
 	item_state = "necromancer"

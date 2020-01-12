@@ -8,7 +8,7 @@
 	reference = "control_box"
 	anchored = 0
 	density = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 500
 	active_power_usage = 10000
 	construction_state = 0
@@ -34,7 +34,7 @@
 
 /obj/machinery/particle_accelerator/control_box/update_state()
 	if(construction_state < 3)
-		use_power = 0
+		set_power_use(NO_POWER_USE)
 		assembled = 0
 		active = 0
 		for(var/obj/structure/particle_accelerator/part in connected_parts)
@@ -44,7 +44,7 @@
 		connected_parts = list()
 		return
 	if(!part_scan())
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 		active = 0
 		connected_parts = list()
 
@@ -117,9 +117,9 @@
 	..()
 	if(stat & NOPOWER)
 		active = 0
-		use_power = 0
+		set_power_use(NO_POWER_USE)
 	else if(!stat && construction_state == 3)
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 	return
 
 
@@ -189,13 +189,13 @@
 /obj/machinery/particle_accelerator/control_box/proc/toggle_power()
 	src.active = !src.active
 	if(src.active)
-		src.use_power = 2
+		set_power_use(ACTIVE_POWER_USE)
 		for(var/obj/structure/particle_accelerator/part in connected_parts)
 			part.strength = src.strength
 			part.powered = 1
 			part.update_icon()
 	else
-		src.use_power = 1
+		set_power_use(IDLE_POWER_USE)
 		for(var/obj/structure/particle_accelerator/part in connected_parts)
 			part.strength = null
 			part.powered = 0

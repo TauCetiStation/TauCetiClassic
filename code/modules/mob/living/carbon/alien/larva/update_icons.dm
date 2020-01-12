@@ -1,12 +1,12 @@
 /mob/living/carbon/alien/larva/regenerate_icons()
-	overlays = list()
+	cut_overlays()
 	update_inv_r_hand(0)
 	update_hud()
 	update_icons()
 
 /mob/living/carbon/alien/larva/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
-	overlays.Cut()
+	cut_overlays()
 	var/state = 0
 	if(amount_grown > 150)
 		state = 2

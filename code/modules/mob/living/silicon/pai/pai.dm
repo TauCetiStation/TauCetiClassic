@@ -10,16 +10,16 @@
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
 
-	var/ram = 100	// Used as currency to purchase different abilities
+	var/maxram = 100					// We will reset ram to this value in the future.
+	var/ram = 100						// Used as currency to purchase different abilities
 	var/list/software = list()
-	var/userDNA		// The DNA string of our assigned user
+	var/userDNA							// The DNA string of our assigned user
 	var/obj/item/device/paicard/card	// The card we inhabit
 	var/obj/item/device/radio/radio		// Our primary radio
 
 	var/speakStatement = "states"
 	var/speakExclamation = "declares"
 	var/speakQuery = "queries"
-
 
 	var/obj/item/weapon/pai_cable/cable		// The cable we produce and use when door or camera jacking
 
@@ -46,8 +46,12 @@
 	var/datum/data/record/securityActive1		// Could probably just combine all these into one
 	var/datum/data/record/securityActive2
 
-	var/obj/machinery/door/hackdoor		// The airlock being hacked
-	var/hackprogress = 0				// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
+	var/obj/hackobj							// The device being hacked
+	var/hacksuccess							// The hack is complete?
+	var/list/markedobjects = list()			// Marked devices that pAI may access remotely
+	var/hackprogress = 0		    		// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
+	var/usetime								// Used in delay, last time delay was called
+	var/interaction_type					// Interaction type
 
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
@@ -83,6 +87,11 @@
 		pda.toff = 1
 
 	. = ..()
+
+/mob/living/silicon/pai/Destroy()
+	hackobj = null
+	markedobjects.Cut()
+	return ..()
 
 /mob/living/silicon/pai/Stat()
 	..()
@@ -121,9 +130,7 @@
 	src.silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes
 	to_chat(src, "<font color=green><b>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</b></font>")
 	if(prob(20))
-		var/turf/T = get_turf_or_move(src.loc)
-		for (var/mob/M in viewers(T))
-			M.show_message("<span class='warning'>A shower of sparks spray from [src]'s inner workings.</span>", 3, "<span class='warning'>You hear and smell the ozone hiss of electrical sparks being expelled violently.</span>", 2)
+		visible_message("<span class='warning'>A shower of sparks spray from [src]'s inner workings.</span>", blind_message = "<span class='warning'>You hear and smell the ozone hiss of electrical sparks being expelled violently.</span>")
 		return src.death(0)
 
 	switch(pick(1,2,3))
@@ -165,8 +172,7 @@
 // See software.dm for Topic()
 
 /mob/living/silicon/pai/meteorhit(obj/O)
-	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span class='warning'>[] has been hit by []</span>", src, O), 1)
+	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
 	if (src.health > 0)
 		src.adjustBruteLoss(30)
 		if ((O.icon_state == "flaming"))
@@ -188,26 +194,20 @@
 	switch(M.a_intent)
 
 		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='notice'>[M] caresses [src]'s casing with its scythe like arm.</span>"), 1)
+			visible_message("<span class='notice'>[M] caresses [src]'s casing with its scythe like arm.</span>")
 
 		else //harm
 			var/damage = rand(10, 20)
 			if (prob(90))
 				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has slashed at []!</B></span>", M, src), 1)
+				visible_message("<span class='warning'><B>[M] has slashed at [src]!</B></span>")
 				if(prob(8))
 					flash_eyes(affect_silicon = 1)
 				src.adjustBruteLoss(damage)
 				src.updatehealth()
 			else
 				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] took a swipe at []!</B></span>", M, src), 1)
+				visible_message("<span class='warning'><B>[M] took a swipe at [src]!</B></span>")
 	return
 
 ///mob/living/silicon/pai/attack_hand(mob/living/carbon/M)
@@ -217,16 +217,17 @@
 		var/mob/living/U = usr
 		U.cameraFollow = null
 	if (!C)
-		src.unset_machine()
-		src.reset_view(null)
+		unset_machine()
+		reset_view(null)
+		current = null
 		return 0
 	if (stat == DEAD || !C.status || !(src.network in C.network)) return 0
 
 	// ok, we're alive, camera is good and in our network...
 
-	src.set_machine(src)
-	src:current = C
-	src.reset_view(C)
+	set_machine(src)
+	current = C
+	reset_view(C)
 	return 1
 
 

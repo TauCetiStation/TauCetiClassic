@@ -143,7 +143,7 @@
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/use_ingame_minutes_restriction_for_jobs = 0 //Do jobs use in-game minutes instead account age for restrictions?
 
-	var/add_player_age_value = 4000 //default minuts added with admin "Increase player age" button
+	var/add_player_age_value = 4320 //default minuts added with admin "Increase player age" button. 4320 minutes = 72 hours = 3 days
 
 	var/byond_version_min = 0
 	var/byond_version_recommend = 0
@@ -167,8 +167,9 @@
 	var/proxy_autoban = 0
 
 	var/allow_donators = 0
+	var/allow_tauceti_patrons = 0
 	var/allow_byond_membership = 0
-	var/donate_info_url = 0
+	var/donate_info_url
 
 	var/customitem_slot_by_time = 80000 // Gives one slot for fluff items after playing this much minutes
 
@@ -181,6 +182,12 @@
 
 	var/list/maplist = list()
 	var/datum/map_config/defaultmap
+	var/load_testmap = FALSE // swaps whatever.json with testmap.json in SSmapping init phase.
+
+	var/record_replays = FALSE
+
+	
+	var/sandbox = FALSE
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -575,6 +582,9 @@
 				if("allow_donators")
 					config.allow_donators = 1
 
+				if("allow_tauceti_patrons")
+					config.allow_tauceti_patrons = 1
+
 				if("allow_byond_membership")
 					config.allow_byond_membership = 1
 
@@ -601,6 +611,15 @@
 
 				if("client_limit_panic_bunker_link")
 					config.client_limit_panic_bunker_link = value
+
+				if("summon_testmap")
+					config.load_testmap = TRUE
+
+				if("record_replays")
+					config.record_replays = TRUE
+
+				if("sandbox")
+					config.sandbox = TRUE
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")

@@ -18,7 +18,7 @@
 	icon_state = "sp_base"
 	anchored = 1
 	density = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
 	var/id = 0
@@ -99,11 +99,11 @@
 
 /obj/machinery/power/solar/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)
-		overlays += image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER)
+		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER))
 	else
-		overlays += image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER)
+		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER))
 		src.dir = angle2dir(adir)
 	return
 
@@ -264,7 +264,7 @@
 	light_color = "#b88b2e"
 	anchored = 1
 	density = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 20
 	var/light_range_on = 1.5
@@ -299,18 +299,18 @@
 	if(stat & BROKEN)
 		icon_state = "powerb"
 		set_light(0)
-		overlays.Cut()
+		cut_overlays()
 		return
 	if(stat & NOPOWER)
 		icon_state = "power0"
 		set_light(0)
-		overlays.Cut()
+		cut_overlays()
 		return
 	icon_state = "solar"
 	set_light(light_range_on, light_power_on)
-	overlays.Cut()
+	cut_overlays()
 	if(cdir > 0)
-		overlays += image('icons/obj/computer.dmi', "solar_overlay_[dir]", FLY_LAYER, angle2dir(cdir))
+		add_overlay(image('icons/obj/computer.dmi', "solar_overlay_[dir]", FLY_LAYER, angle2dir(cdir)))
 	return
 
 /obj/machinery/power/solar_control/attackby(I, mob/user)
@@ -475,6 +475,8 @@
 		spawn(rand(0, 15))
 			stat |= NOPOWER
 			update_icon()
+			update_power_use()
+	update_power_use()
 
 
 /obj/machinery/power/solar_control/proc/broken()

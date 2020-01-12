@@ -28,7 +28,7 @@ field_generator power level display
 	icon_state = "Field_Gen"
 	anchored = FALSE
 	density = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/var_edit_start = FALSE
 	var/var_power      = FALSE
@@ -49,18 +49,18 @@ field_generator power level display
 	return ..()
 
 /obj/machinery/field_generator/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(warming_up)
-		overlays += "+a[warming_up]"
+		add_overlay("+a[warming_up]")
 	if(LAZYLEN(fields))
-		overlays += "+on"
+		add_overlay("+on")
 	// Power level indicator
 	// Scale % power to % FG_POWER_LEVELS and truncate value
 	var/level = round(FG_POWER_LEVELS * power / FG_MAX_POWER)
 	// Clamp between 0 and FG_POWER_LEVELS for out of range power values
 	level = between(0, level, FG_POWER_LEVELS)
 	if(level)
-		overlays += "+p[level]"
+		add_overlay("+p[level]")
 
 /obj/machinery/field_generator/process()
 	if(var_edit_start)

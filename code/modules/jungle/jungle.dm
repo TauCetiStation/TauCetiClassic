@@ -14,7 +14,7 @@
 #define RANDOM_LOWER_X 18
 #define RANDOM_LOWER_Y 18
 
-/area/jungle
+/area/awaymission/jungle
 	name = "jungle"
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "area"
@@ -100,22 +100,22 @@
 			qdel(D)*/
 
 //a shuttle has crashed somewhere on the map, it should have a power cell to let the adventurers get home
-/area/jungle/crash_ship_source
+/area/awaymission/jungle/crash_ship_source
 	icon_state = "crash"
 
-/area/jungle/crash_ship_clean
+/area/awaymission/jungle/crash_ship_clean
 	icon_state = "crash"
 
-/area/jungle/crash_ship_one
+/area/awaymission/jungle/crash_ship_one
 	icon_state = "crash"
 
-/area/jungle/crash_ship_two
+/area/awaymission/jungle/crash_ship_two
 	icon_state = "crash"
 
-/area/jungle/crash_ship_three
+/area/awaymission/jungle/crash_ship_three
 	icon_state = "crash"
 
-/area/jungle/crash_ship_four
+/area/awaymission/jungle/crash_ship_four
 	icon_state = "crash"
 
 //randomly spawns, will create rivers around the map
@@ -135,9 +135,9 @@
 	to_chat(world, "<span class='warning'><b>Setting up jungle, this may take a bleeding eternity...</b></span>")
 
 	//crash dat shuttle
-	var/area/start_location = locate(/area/jungle/crash_ship_source)
-	var/area/clean_location = locate(/area/jungle/crash_ship_clean)
-	var/list/ship_locations = list(/area/jungle/crash_ship_one, /area/jungle/crash_ship_two, /area/jungle/crash_ship_three, /area/jungle/crash_ship_four)
+	var/area/start_location = locate(/area/awaymission/jungle/crash_ship_source)
+	var/area/clean_location = locate(/area/awaymission/jungle/crash_ship_clean)
+	var/list/ship_locations = list(/area/awaymission/jungle/crash_ship_one, /area/awaymission/jungle/crash_ship_two, /area/awaymission/jungle/crash_ship_three, /area/awaymission/jungle/crash_ship_four)
 	var/area/end_location = locate( pick(ship_locations) )
 	ship_locations -= end_location.type
 

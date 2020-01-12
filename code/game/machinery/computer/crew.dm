@@ -3,7 +3,7 @@
 	desc = "Used to monitor active health sensors built into most of the crew's uniforms."
 	icon_state = "crew"
 	light_color = "#315ab4"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 250
 	active_power_usage = 500
 	circuit = "/obj/item/weapon/circuitboard/crew"

@@ -3,7 +3,7 @@
 	desc = "Swipe your ID card to make purchases electronically."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "eftpos"
-	hitsound = list('sound/items/defib_safetyOff.ogg')
+	hitsound = list('sound/items/surgery/defib_safetyOff.ogg')
 	var/machine_id = ""
 	var/eftpos_name = "Default EFTPOS scanner"
 	var/transaction_locked = 0
@@ -71,7 +71,6 @@
 
 	var/obj/item/smallDelivery/D = new(R.loc)
 	R.loc = D
-	D.wrapped = R
 	D.name = "small parcel - 'EFTPOS access code'"
 
 /obj/item/device/eftpos/attack_self(mob/user)
@@ -275,7 +274,5 @@
 				playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
 				src.visible_message("[bicon(src)] The [src] chimes.")
 				transaction_paid = 1
-	else
-		..()
 
 	//emag?

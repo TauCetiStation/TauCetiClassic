@@ -17,14 +17,15 @@
 	)
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 2400
-	restricted_species = list(TAJARAN, DIONA, IPC)
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, IPC)
 
 /datum/job/hos/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), SLOT_BACK)
+		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	if(H.gender == FEMALE)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security_fem(H), SLOT_W_UNIFORM)
 	else
@@ -69,8 +70,9 @@
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), SLOT_BACK)
+		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	if(H.gender == FEMALE)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden_fem(H), SLOT_W_UNIFORM)
 	else
@@ -109,14 +111,15 @@
 	access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
-	restricted_species = list(DIONA, IPC)
+	restricted_species = list(DIONA)
 
 /datum/job/detective/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
+		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/det(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), SLOT_GLOVES)
@@ -159,8 +162,9 @@
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), SLOT_BACK)
+		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), SLOT_S_STORE)
@@ -194,13 +198,15 @@
 	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
+	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/forensic/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
+		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/forensic_technician(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/red(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), SLOT_GLOVES)
@@ -241,8 +247,9 @@
 		return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), SLOT_BACK)
+		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cadet(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/weapon/book/manual/wiki/security_space_law, SLOT_R_HAND)

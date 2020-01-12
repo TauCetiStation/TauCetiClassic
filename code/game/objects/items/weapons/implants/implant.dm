@@ -10,6 +10,7 @@
 	item_color = "b"
 	var/allow_reagents = 0
 	var/malfunction = 0
+	var/uses = 0
 
 /obj/item/weapon/implant/atom_init()
 	. = ..()
@@ -74,7 +75,6 @@
 	desc = "Track with this."
 	var/id = 1.0
 
-
 /obj/item/weapon/implant/tracking/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 <b>Name:</b> Tracking Beacon<BR>
@@ -108,7 +108,6 @@ Implant Specifics:<BR>"}
 	spawn(delay)
 		malfunction--
 
-
 /obj/item/weapon/implant/dexplosive
 	name = "explosive"
 	desc = "And boom goes the weasel."
@@ -127,12 +126,10 @@ Implant Specifics:<BR>"}
 <b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
 	return dat
 
-
 /obj/item/weapon/implant/dexplosive/trigger(emote, source)
 	if(emote == "deathgasp")
 		src.activate("death")
 	return
-
 
 /obj/item/weapon/implant/dexplosive/activate(cause)
 	if((!cause) || (!src.imp_in))	return 0
@@ -195,7 +192,7 @@ Implant Specifics:<BR>"}
 					if (istype(part,/obj/item/organ/external/chest) ||	\
 						istype(part,/obj/item/organ/external/groin) ||	\
 						istype(part,/obj/item/organ/external/head))
-						part.createwound(BRUISE, 60)	//mangle them instead
+						part.take_damage(60, used_weapon = "Explosion") //mangle them instead
 						explosion(get_turf(imp_in), -1, -1, 2, 3)
 						qdel(src)
 					else
@@ -262,10 +259,66 @@ Implant Specifics:<BR>"}
 				if (istype(part,/obj/item/organ/external/chest) ||	\
 					istype(part,/obj/item/organ/external/groin) ||	\
 					istype(part,/obj/item/organ/external/head))
-					part.createwound(BRUISE, 60)	//mangle them instead
+					part.take_damage(60, used_weapon = "Explosion")	//mangle them instead
 				else
 					part.droplimb(null, null, DROPLIMB_BLUNT)
 			explosion(get_turf(imp_in), -1, -1, 2, 3)
+			qdel(src)
+
+/obj/item/weapon/implant/adrenaline
+	name = "adrenaline implant"
+	desc = "Removes all stuns and knockdowns."
+	icon_state = "implant"
+	uses = 3
+
+	action_button_name = "Adrenaline implant"
+	action_button_is_hands_free = TRUE
+
+/obj/item/weapon/implant/adrenaline/get_data()
+	var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> Cybersun Industries Adrenalin Implant<BR>
+<b>Life:</b> Five days.<BR>
+<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
+<HR>
+<b>Implant Details:</b> Subjects injected with implant can activate a massive injection of adrenalin.<BR>
+<b>Function:</b> Contains nanobots to stimulate body to mass-produce Adrenalin.<BR>
+<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
+<b>Integrity:</b> Implant can only be used three times before the nanobots are depleted."}
+	return dat
+
+/obj/item/weapon/implant/adrenaline/ui_action_click()
+	uses--
+	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
+	if(ishuman(imp_in))
+		var/mob/living/carbon/human/H = imp_in
+		H.halloss = 0
+		H.shock_stage = 0
+	imp_in.stat = CONSCIOUS
+	imp_in.SetParalysis(0)
+	imp_in.SetStunned(0)
+	imp_in.SetWeakened(0)
+	imp_in.lying = 0
+	imp_in.update_canmove()
+	imp_in.reagents.add_reagent("hyperzine", 1)
+	imp_in.reagents.add_reagent("stimulants", 4)
+	if (!uses)
+		qdel(src)
+
+/obj/item/weapon/implant/emp
+	name = "emp implant"
+	desc = "Triggers an EMP."
+	icon_state = "emp"
+	uses = 3
+
+	action_button_name = "EMP pulse"
+	action_button_is_hands_free = TRUE
+
+/obj/item/weapon/implant/emp/ui_action_click()
+	if (uses > 0)
+		empulse(imp_in, 3, 5)
+		uses--
+		if (!uses)
 			qdel(src)
 
 /obj/item/weapon/implant/chem
@@ -332,43 +385,6 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	spawn(20)
 		malfunction--
 
-/obj/item/weapon/implant/adrenalin
-	name = "adrenalin"
-	desc = "Removes all stuns and knockdowns."
-	var/uses
-
-/obj/item/weapon/implant/adrenalin/get_data()
-	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Cybersun Industries Adrenalin Implant<BR>
-<b>Life:</b> Five days.<BR>
-<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
-<HR>
-<b>Implant Details:</b> Subjects injected with implant can activate a massive injection of adrenalin.<BR>
-<b>Function:</b> Contains nanobots to stimulate body to mass-produce Adrenalin.<BR>
-<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
-<b>Integrity:</b> Implant can only be used three times before the nanobots are depleted."}
-	return dat
-
-
-/obj/item/weapon/implant/adrenalin/trigger(emote, mob/source)
-	if (src.uses < 1)	return 0
-	if (emote == "pale")
-		src.uses--
-		to_chat(source, "<span class='notice'>You feel a sudden surge of energy!</span>")
-		source.SetStunned(0)
-		source.SetWeakened(0)
-		source.SetParalysis(0)
-
-	return
-
-
-/obj/item/weapon/implant/adrenalin/implanted(mob/source)
-	source.mind.store_memory("A implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.", 0)
-	to_chat(source, "The implanted freedom implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.")
-	return 1
-
-
 /obj/item/weapon/implant/death_alarm
 	name = "death alarm implant"
 	desc = "An alarm which monitors host vital signs and transmits a radio message upon death."
@@ -402,7 +418,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	switch (cause)
 		if("death")
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			if(istype(t, /area/syndicate_station) || istype(t, /area/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) )
+			if(istype(t, /area/shuttle/syndicate) || istype(t, /area/custom/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) )
 				//give the syndies a bit of stealth
 				a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
 			else

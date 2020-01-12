@@ -25,7 +25,7 @@
 	stampoverlay.pixel_x = rand(-2, 2)
 	stampoverlay.pixel_y = rand(-3, 2)
 	stampoverlay.icon_state = "paper_stamp-rd"
-	overlays += stampoverlay
+	add_overlay(stampoverlay)
 
 	update_icon()
 
@@ -100,10 +100,13 @@
 
 /obj/item/weapon/folder/blue/fluff/matthew_riebhardt //Matthew Riebhardt - ZekeSulastin
 	name = "academic journal"
-	desc = "An academic journal, seemingly pertaining to medical genetics. This issue is for the second quarter of 2557. Paper flags demarcate some articles the owner finds interesting."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "matthewriebhardt"
 
+/obj/item/weapon/folder/blue/fluff/matthew_riebhardt/atom_init()
+	. = ..()
+	desc = "An academic journal, seemingly pertaining to medical genetics. This issue is for the second quarter of [gamestory_start_year]. Paper flags demarcate some articles the owner finds interesting."
+	
 /obj/item/weapon/pen/fluff/multi //spaceman96: Trenna Seber
 	name = "multicolor pen"
 	desc = "It's a cool looking pen. Lots of colors!"
@@ -132,8 +135,7 @@
 	icon_state = "victor_kaminsky_1"
 
 /obj/item/fluff/victor_kaminsky_1/attack_self(mob/user)
-	for(var/mob/O in viewers(user, null))
-		O.show_message("[user] shows you: [bicon(src)] [src.name].", 1)
+	user.visible_message("[user] shows you: [bicon(src)] [src.name].")
 	src.add_fingerprint(user)
 
 /obj/item/fluff/ana_issek_2 //suethecake: Ana Issek
@@ -248,8 +250,7 @@
 
 /obj/item/weapon/fluff/cado_keppel_1/attack_self(mob/user)
 	if(user.r_hand == src || user.l_hand == src)
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("<span class='warning'>[] uses [] to comb their hair with incredible style and sophistication. What a guy.</span>", user, src), 1)
+		visible_message("<span class='warning'>[user] uses [src] to comb their hair with incredible style and sophistication. What a guy.</span>")
 	return
 
 /obj/item/weapon/fluff/hugo_cinderbacth_1 //thatoneguy: Hugo Cinderbatch

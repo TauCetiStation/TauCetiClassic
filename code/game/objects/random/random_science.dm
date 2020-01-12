@@ -96,6 +96,7 @@
 					/obj/item/weapon/circuitboard/destructive_analyzer,\
 					/obj/item/weapon/circuitboard/protolathe,\
 					/obj/item/weapon/circuitboard/autolathe,\
+					/obj/item/weapon/circuitboard/chem_dispenser,\
 					/obj/item/weapon/circuitboard/pandemic,\
 					/obj/item/weapon/circuitboard/message_monitor,\
 					/obj/item/weapon/circuitboard/arcade,\
@@ -200,6 +201,14 @@
 					prob(20);/obj/random/science/bomb_supply,\
 					prob(5);/obj/random/science/slimecore,\
 					prob(10);/obj/random/science/circuit,\
-					prob(2);/obj/item/weapon/extinguisher,\
-					prob(50);/obj/random/science/stock_part\
+					prob(2);/obj/item/weapon/reagent_containers/spray/extinguisher,\
+					prob(50);/obj/random/science/stock_part,\
+					prob(1);/obj/item/device/encryptionkey/headset_sec,\
+					prob(1);/obj/item/device/encryptionkey/headset_int,\
+					prob(1);/obj/item/device/encryptionkey/headset_eng,\
+					prob(1);/obj/item/device/encryptionkey/headset_rob,\
+					prob(1);/obj/item/device/encryptionkey/headset_med,\
+					prob(1);/obj/item/device/encryptionkey/headset_sci,\
+					prob(1);/obj/item/device/encryptionkey/headset_medsci,\
+					prob(1);/obj/item/device/encryptionkey/headset_com\
 				)

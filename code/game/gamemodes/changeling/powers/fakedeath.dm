@@ -12,14 +12,12 @@
 /obj/effect/proc_holder/changeling/fakedeath/sting_action(mob/living/user)
 
 	if(user.fake_death)
-		var/fake_pick = pick("oxy", "tox", "fire", "clone")
+		var/fake_pick = pick("oxy", "tox", "clone")
 		switch(fake_pick)
 			if("oxy")
 				user.adjustOxyLoss(rand(200,300))
 			if("tox")
 				user.adjustToxLoss(rand(200,300))
-			if("fire")
-				user.adjustFireLoss(rand(200,300))
 			if("clone")
 				user.adjustCloneLoss(rand(200,300))
 
@@ -50,9 +48,9 @@
 	if(user && user.mind && user.mind.changeling && user.mind.changeling.purchasedpowers)
 		user.mind.changeling.instatis = FALSE
 		user.fake_death = FALSE
-		user.clear_alert("stasis")
+		user.clear_alert("regen_stasis")
 		for(var/mob/M in user.mind.changeling.essences)
-			M.clear_alert("stasis")
+			M.clear_alert("regen_stasis")
 
 		if(user.stat != DEAD) //Player was resurrected before stasis completion
 			to_chat(user, "<span class='notice'>Our stasis was interrupted.</span>")
@@ -78,9 +76,9 @@
 	if(user.mind.changeling.instatis) //In case if user clicked ability several times without making a choice.
 		return
 	user.mind.changeling.instatis = TRUE
-	user.throw_alert("stasis")
+	user.throw_alert("regen_stasis", /obj/screen/alert/regen_stasis)
 	for(var/mob/M in user.mind.changeling.essences)
-		M.throw_alert("stasis")
+		M.throw_alert("regen_stasis", /obj/screen/alert/regen_stasis)
 	if(user.stat == DEAD)//In case player gave answer too late
 		user.fake_death = FALSE
 	else

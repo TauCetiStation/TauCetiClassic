@@ -2,7 +2,7 @@
 
 	var/list/motionTargets = list()
 	var/detectTime = 0
-	var/area/ai_monitored/area_motion = null
+	var/area/station/ai_monitored/area_motion = null
 	var/alarm_delay = 100 // Don't forget, there's another 10 seconds in queueAlarm()
 
 

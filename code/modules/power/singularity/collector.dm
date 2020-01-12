@@ -9,7 +9,7 @@ var/global/list/rad_collectors = list()
 	anchored = FALSE
 	density = TRUE
 	req_access = list(access_engine_equip)
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/obj/item/weapon/tank/phoron/P = null
 	var/last_power = 0
 	var/active = FALSE
@@ -129,13 +129,13 @@ var/global/list/rad_collectors = list()
 
 
 /obj/machinery/power/rad_collector/proc/update_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(P)
-		overlays += image('icons/obj/singularity.dmi', "ptank")
+		add_overlay(image('icons/obj/singularity.dmi', "ptank"))
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(active)
-		overlays += image('icons/obj/singularity.dmi', "on")
+		add_overlay(image('icons/obj/singularity.dmi', "on"))
 
 
 /obj/machinery/power/rad_collector/proc/toggle_power()

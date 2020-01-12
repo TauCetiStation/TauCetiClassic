@@ -88,7 +88,7 @@ var/global/loopModeNames=list(
 	update_icon()
 
 /obj/machinery/media/jukebox/update_icon()
-	overlays = 0
+	cut_overlays()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		if(stat & BROKEN)
 			icon_state = "[state_base]-broken"
@@ -99,9 +99,9 @@ var/global/loopModeNames=list(
 	icon_state = state_base
 	if(playing)
 		if(emagged)
-			overlays += "[state_base]-emagged"
+			add_overlay("[state_base]-emagged")
 		else
-			overlays += "[state_base]-running"
+			add_overlay("[state_base]-running")
 
 /obj/machinery/media/jukebox/proc/check_reload()
 	return world.time > last_reload + JUKEBOX_RELOAD_COOLDOWN
@@ -352,6 +352,6 @@ var/global/loopModeNames=list(
 		"lobby" = "Lobby Mix"
 	)
 	playlist_id = "lobby"
-	use_power = 0
+	use_power = NO_POWER_USE
 	invisibility=101
 	autoplay = 1

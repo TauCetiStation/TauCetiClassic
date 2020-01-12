@@ -64,10 +64,11 @@
 	desc = "A wrapped item."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "gift3"
-	var/size = 3.0
-	var/obj/item/gift = null
 	item_state = "gift"
-	w_class = ITEM_SIZE_LARGE
+	w_class = ITEM_SIZE_NORMAL
+	var/size = ITEM_SIZE_NORMAL
+	var/sender = FALSE
+	var/recipient = FALSE
 
 /obj/item/weapon/legcuffs
 	name = "legcuffs"
@@ -110,12 +111,8 @@
 					H.legcuffed = src
 					src.loc = H
 					H.update_inv_legcuffed()
-					to_chat(H, "<span class='danger'>You step on \the [src]!</span>")
+					H.visible_message("<span class='danger'>[H] steps on \the [src].</span>", "<span class='danger'>You step on \the [src]!</span>")
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
-					for(var/mob/O in viewers(H, null))
-						if(O == H)
-							continue
-						O.show_message("<span class='danger'>[H] steps on \the [src].</span>", 1)
 		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
 			armed = 0
 			var/mob/living/simple_animal/SA = AM
@@ -197,6 +194,7 @@
 	item_state = "shard-glass"
 	g_amt = 3750
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
+	var/on_step_sound = 'sound/effects/glass_step.ogg'
 
 /obj/item/weapon/shard/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='danger'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
@@ -247,6 +245,7 @@
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "shrapnellarge"
 	desc = "A bunch of tiny bits of shattered metal."
+	on_step_sound = 'sound/effects/metalstep.ogg'
 
 /obj/item/weapon/shard/shrapnel/atom_init()
 	. = ..()
@@ -496,6 +495,8 @@
 	name = "data cable"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "wire1"
+	flags = NOBLUDGEON | NOATTACKANIMATION | CONDUCT
+	w_class = ITEM_SIZE_SMALL
 
 	var/obj/machinery/machine
 

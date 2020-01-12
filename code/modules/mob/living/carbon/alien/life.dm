@@ -2,16 +2,19 @@
 	set invisibility = 0
 	//set background = 1
 
-	if(monkeyizing)
+	if(notransform)
 		return
 
 	..()
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
-	if (stat != DEAD) //still "breathing"
+	if (stat != DEAD && !IS_IN_STASIS(src)) //still "breathing"
 		//Mutations and radiation
 		handle_mutations_and_radiation()
+
+		//stuff in the stomach
+		handle_stomach()
 
 		update_icons()
 
@@ -24,13 +27,9 @@
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
 
-	//stuff in the stomach
-	handle_stomach()
-
 	//Handle being on fire
-	handle_fire()
-	if(on_fire && fire_stacks > 0)
-		fire_stacks -= 0.5
+	handle_fire()	
+	
 	//Status updates, death etc.
 	handle_regular_status_updates()
 	update_canmove()
@@ -101,14 +100,14 @@
 		silent = 0
 	else				//ALIVE. LIGHTS ARE ON
 		if(isalienadult(src))
-			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
+			if(health < config.health_threshold_dead || !has_brain())
 				death()
 				blinded = 1
 				stat = DEAD
 				silent = 0
 				return 1
 		else if(isfacehugger(src) || islarva(src))
-			if(health < 0 || brain_op_stage == 4.0)
+			if(health < 0 || !has_brain())
 				death()
 				blinded = 1
 				stat = DEAD
@@ -242,4 +241,3 @@
 	adjustFireLoss(6)
 	return
 //END FIRE CODE
-

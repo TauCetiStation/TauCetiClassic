@@ -533,9 +533,8 @@
 						possible_targets += possible_target.current
 
 				var/mob/def_target = null
-				var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain)
-				if (objective&&(objective.type in objective_list) && objective:target)
-					def_target = objective:target.current
+				if (objective?.target && is_type_in_list(objective, list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain)))
+					def_target = objective.target.current
 
 				var/new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
 				if (!new_target) return
@@ -950,6 +949,7 @@
 					ticker.mode.grant_changeling_powers(current)
 					special_role = "Changeling"
 					to_chat(current, "<B><font color='red'>Your powers are awoken. A flash of memory returns to us...we are a changeling!</font></B>")
+					current.playsound_local(null, 'sound/antag/ling_aler.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 					if(config.objectives_disabled)
 						to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 					log_admin("[key_name_admin(usr)] has changeling'ed [current].")
@@ -1038,6 +1038,7 @@
 					ticker.mode.traitors += src
 					special_role = "traitor"
 					to_chat(current, "<B><span class='warning'>You are a traitor!</span></B>")
+					current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 					log_admin("[key_name_admin(usr)] has traitor'ed [current].")
 					if (config.objectives_disabled)
 						to_chat(current, "<i>You have been turned into an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>")
@@ -1127,7 +1128,7 @@
 
 	else if (href_list["monkey"])
 		var/mob/living/L = current
-		if (L.monkeyizing)
+		if (L.notransform)
 			return
 		switch(href_list["monkey"])
 			if("healthy")
@@ -1137,14 +1138,12 @@
 					if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]</span>")
-						src = null
 						M = H.monkeyize()
 						src = M.mind
 						//world << "DEBUG: \"healthy\": M=[M], M.mind=[M.mind], src=[src]!"
 					else if (istype(M) && length(M.viruses))
 						for(var/datum/disease/D in M.viruses)
 							D.cure(0)
-						sleep(0) //because deleting of virus is done through spawn(0)
 			if("infected")
 				if (usr.client.holder.rights & R_SPAWN)
 					var/mob/living/carbon/human/H = current
@@ -1152,7 +1151,6 @@
 					if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize and infect [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]</span>", 1)
-						src = null
 						M = H.monkeyize()
 						src = M.mind
 						current.contract_disease(new /datum/disease/jungle_fever,1,0)
@@ -1165,16 +1163,10 @@
 						for(var/datum/disease/D in M.viruses)
 							if (istype(D,/datum/disease/jungle_fever))
 								D.cure(0)
-								sleep(0) //because deleting of virus is doing throught spawn(0)
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
-						var/obj/item/weapon/dnainjector/m2h/m2h = new
-						var/obj/item/weapon/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
-						src = null
-						m2h.inject(M)
-						src = mobfinder.loc:mind
-						qdel(mobfinder)
-						current.radiation -= 50
+						M = M.humanize()
+						src = M.mind
 
 	else if (href_list["silicon"])
 		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
@@ -1322,6 +1314,7 @@
 		to_chat(cur_AI, "<span class='bold'>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</span>")
 		special_role = "malfunction"
 		cur_AI.icon_state = "ai-malf"
+		cur_AI.playsound_local(null, 'sound/antag/malf.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /datum/mind/proc/make_Traitor()
 	if(!(src in ticker.mode.traitors))
@@ -1470,7 +1463,7 @@
 
 	var/is_currently_brigged = 0
 
-	if(istype(T.loc,/area/security/brig))
+	if(istype(T.loc,/area/station/security/brig))
 		is_currently_brigged = 1
 		for(var/obj/item/weapon/card/id/card in current)
 			is_currently_brigged = 0

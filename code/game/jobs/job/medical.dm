@@ -23,8 +23,9 @@
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/medic(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/med(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/med(H), SLOT_BACK)
+		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chief_medical_officer(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/heads/cmo(H), SLOT_BELT)
@@ -59,8 +60,9 @@
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/medic(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/med(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/med(H), SLOT_BACK)
+		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/adv(H), SLOT_L_HAND)
 	H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), SLOT_S_STORE)
@@ -125,8 +127,10 @@
 		if(2)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/medic(H), SLOT_BACK)
 		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/med(H), SLOT_BACK)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
 		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/med(H), SLOT_BACK)
+		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	if(visualsOnly)
@@ -164,8 +168,10 @@
 		if(2)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_chem(H), SLOT_BACK)
 		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/chem(H), SLOT_BACK)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/chem(H), SLOT_BACK)
 		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/chem(H), SLOT_BACK)
+		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	if(visualsOnly)
@@ -189,7 +195,6 @@
 	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical, access_morgue, access_genetics, access_research, access_medbay_storage)
 	minimal_player_ingame_minutes = 960
-	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/geneticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -202,8 +207,10 @@
 		if(2)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_gen(H), SLOT_BACK)
 		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/gen(H), SLOT_BACK)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/gen(H), SLOT_BACK)
 		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/gen(H), SLOT_BACK)
+		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	if(visualsOnly)
@@ -228,7 +235,7 @@
 	access = list(access_medical, access_virology, access_medbay_storage)
 	alt_titles = list("Pathologist","Microbiologist")
 	minimal_player_ingame_minutes = 960
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA)
+	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/virologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -243,8 +250,10 @@
 		if(2)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_vir(H), SLOT_BACK)
 		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/vir(H), SLOT_BACK)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/vir(H), SLOT_BACK)
 		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/vir(H), SLOT_BACK)
+		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	if(visualsOnly)
@@ -269,14 +278,14 @@
 	access = list(access_medical, access_psychiatrist, access_medbay_storage)
 	alt_titles = list("Psychologist")
 	minimal_player_ingame_minutes = 960
-	restricted_species = list(UNATHI)
 
 /datum/job/psychiatrist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
+		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), SLOT_WEAR_SUIT)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), SLOT_SHOES)
 
@@ -316,8 +325,9 @@
 		return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
+		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), SLOT_SHOES)
 
