@@ -122,7 +122,7 @@
 	big_stamp = TRUE
 
 /obj/item/weapon/stamp/fakecentcomm
-	name = "centcom rubber stamp"
+	name = "cantcom rubber stamp"
 	icon_state = "stamp-fakecentcom"
 	item_color = "fakecentcom"
 	//stamp_message = "Central Compound Quantum Relay"
