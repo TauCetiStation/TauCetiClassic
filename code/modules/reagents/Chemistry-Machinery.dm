@@ -135,7 +135,6 @@
 		amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
 		amount = CLAMP(amount, 0, 100) // Since the user can actually type the commands himself, some sanity checking
 
-		// user.SetNextMove(CLICK_CD_INTERACT) // it seems that cooldown isn't needed too
 		if(iscarbon(usr))
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
 
