@@ -49,9 +49,9 @@
 	owner.adjustHalLoss(-0.5) //reduce stamina loss by 0.5 per tick, 10 per 2 seconds
 
 	if(human_owner)
-		human_owner.drowsyness *= 0.997
-		human_owner.slurring *= 0.997
-		human_owner.confused *= 0.997
+		human_owner.drowsyness = max(0, human_owner.drowsyness * 0.997)
+		human_owner.slurring = max(0, human_owner.slurring * 0.997)
+		human_owner.confused = max(0, human_owner.confused * 0.997)
 
 	if(prob(20))
 		if(carbon_owner)
