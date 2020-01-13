@@ -19183,12 +19183,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "aHU" = (
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/science)
+/obj/structure/disposalpipe/segment,
+/turf/simulated/wall/r_wall,
+/area/station/rnd/brainstorm_center)
 "aHV" = (
 /obj/machinery/portable_atmospherics/powered/scrubber/huge,
 /turf/simulated/floor{
@@ -19855,15 +19852,12 @@
 	},
 /area/station/civilian/gym)
 "aJg" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "aJh" = (
@@ -20744,19 +20738,27 @@
 /area/station/hallway/primary/central)
 "aKU" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/wall/r_wall,
-/area/station/rnd/brainstorm_center)
-"aKV" = (
-/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/rnd/brainstorm_center)
+"aKV" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/rnd/brainstorm_center)
 "aKW" = (
-/obj/structure/disposalpipe/segment,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -20767,6 +20769,7 @@
 	req_access = list(47)
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/rnd/brainstorm_center)
 "aKX" = (
@@ -21305,7 +21308,6 @@
 /area/station/civilian/chapel)
 "aMa" = (
 /obj/structure/bookcase/manuals/research_and_development,
-/obj/structure/disposalpipe/segment,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -22036,16 +22038,19 @@
 /area/station/civilian/locker)
 "aNx" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
+	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/wall,
-/area/station/civilian/gym)
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/rnd/brainstorm_center)
 "aNy" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = 27
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -22904,6 +22909,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -24035,7 +24041,6 @@
 	},
 /area/station/rnd/brainstorm_center)
 "aRl" = (
-/obj/structure/disposalpipe/segment,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -24045,6 +24050,10 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor{
 	icon_state = "whitepurple"
 	},
@@ -44623,6 +44632,7 @@
 	dir = 0;
 	network = list("SS13","Research")
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurple"
@@ -48727,13 +48737,6 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/storage)
-"bSx" = (
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/wall/r_wall,
-/area/station/rnd/brainstorm_center)
 "bSy" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -57440,11 +57443,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "coi" = (
-/obj/structure/disposalpipe/segment,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -60026,7 +60032,6 @@
 /obj/effect/landmark/start{
 	name = "Scientist"
 	},
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
@@ -60578,7 +60583,6 @@
 "cvb" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/cups,
-/obj/structure/disposalpipe/segment,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -61450,7 +61454,6 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "cxE" = (
-/obj/structure/disposalpipe/segment,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -61461,6 +61464,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -65018,10 +65022,6 @@
 /turf/simulated/wall/r_wall,
 /area/station/aisat/ai_chamber)
 "cFQ" = (
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -65029,6 +65029,7 @@
 	},
 /obj/structure/closet,
 /obj/item/weapon/storage/belt,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "cFR" = (
@@ -68391,6 +68392,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -115819,7 +115821,7 @@ aJt
 aLs
 aOV
 bGX
-aKU
+aHS
 aMa
 coi
 aOW
@@ -116076,9 +116078,9 @@ aEO
 aGu
 aOV
 bGX
-aKV
+aHS
 cjL
-czf
+aKU
 bWK
 lFl
 bWc
@@ -116331,11 +116333,11 @@ aOV
 aDS
 aDS
 aOV
-aNx
-aGN
-bSx
+aOV
+bGX
+aHS
 csu
-czf
+aKU
 clP
 lFl
 aRk
@@ -116588,11 +116590,11 @@ aDM
 aAC
 aEQ
 aGN
-aHU
+aGN
 aJg
 aKW
 cxE
-coi
+aKV
 cvb
 ctD
 aRl
@@ -116847,12 +116849,12 @@ aKR
 aGv
 aOU
 cFQ
-aHS
+aHU
 bIX
 aNy
 aOZ
 dWb
-czf
+aNx
 aSO
 buH
 aVR
