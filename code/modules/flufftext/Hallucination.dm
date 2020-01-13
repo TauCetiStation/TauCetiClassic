@@ -269,7 +269,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
         // FAKE DEATH
 
 			if(74 to 75)
-				src.SetSleeping(40)
+				src.SetSleeping(40 SECONDS)
 				hal_crit = 1
 				hal_screwyhud = 1
 				to_chat(src, "<span class='userdanger'>[pick("FUCK!", "FOR FUCKS SAKE, END THIS!", "", "WHY-Y-Y?!", "NOT AGAIN")] I LOST! [pick("NNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHH!", "DAMN THIS GAME IS SO HARD!", "I CAN'T PLAY THIS GAME ANY MORE!")]</span>")

@@ -61,7 +61,7 @@
 
 		if(air1.gas.len)
 			if(occupant.bodytemperature < T0C && occupant.health < 100)
-				occupant.SetSleeping(max(10 / efficiency, (1 / occupant.bodytemperature) * 4000 / efficiency))
+				occupant.SetSleeping(max(10 / efficiency, (1 / occupant.bodytemperature) * 4000 / efficiency) SECONDS)
 				occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
 
 				if(air1.gas["oxygen"] > 2)

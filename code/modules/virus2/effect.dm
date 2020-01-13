@@ -109,7 +109,7 @@
 				if(!activated)
 					activated = TRUE
 					H.visible_message("<span class='danger'>[H] suddenly closes \his eyes. \His body falls lifeless and stops moving. \He seems to stop breathing.</span>")
-					H.SetSleeping(600)
+					H.SetSleeping(600 SECONDS)
 					handle_infected_death(H)
 					H.update_canmove()
 					disease.dead = TRUE
@@ -345,7 +345,7 @@
 /datum/disease2/effect/heal/coma/proc/coma(mob/living/carbon/human/M)
 	//M.emote("deathgasp")
 	M.status_flags |= FAKEDEATH
-	M.SetSleeping(999) //Well, I hope its good enough
+	M.SetSleeping(999 SECONDS) //Well, I hope its good enough
 	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
 
 /datum/disease2/effect/heal/coma/proc/uncoma(mob/living/carbon/human/M)
@@ -934,7 +934,7 @@
 			if(prob(50))
 				mob.emote("collapse")
 			else
-				mob.SetSleeping(max(mob.AmountSleeping(), 5))
+				mob.SetSleeping(max(mob.AmountSleeping(), 5 SECONDS))
 
 /datum/disease2/effect/blind
 	name = "Hyphema"

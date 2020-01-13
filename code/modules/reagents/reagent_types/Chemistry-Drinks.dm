@@ -202,7 +202,7 @@
 	color = "#482000" // rgb: 72, 32, 0
 	adj_dizzy = -5
 	adj_drowsy = -3
-	adj_sleepy = -4
+	adj_sleepy = -40
 	adj_temp = 25
 	taste_message = "coffee"
 
@@ -256,7 +256,7 @@
 	color = "#101000" // rgb: 16, 16, 0
 	adj_dizzy = -2
 	adj_drowsy = -1
-	adj_sleepy = -6
+	adj_sleepy = -60
 	adj_temp = 20
 	taste_message = "tea"
 
@@ -284,7 +284,7 @@
 	color = "#664300" // rgb: 102, 67, 0
 	adj_dizzy = -5
 	adj_drowsy = -3
-	adj_sleepy = -4
+	adj_sleepy = -40
 
 /datum/reagent/consumable/drink/cold/sodawater
 	name = "Soda Water"
@@ -315,7 +315,7 @@
 	id = "nuka_cola"
 	description = "Cola, cola never changes."
 	color = "#100800" // rgb: 16, 8, 0
-	adj_sleepy = -4
+	adj_sleepy = -40
 	taste_message = "cola"
 
 /datum/reagent/consumable/drink/cold/nuka_cola/on_general_digest(mob/living/M)
@@ -331,7 +331,7 @@
 	description = "Blows right through you like a space wind."
 	color = "#102000" // rgb: 16, 32, 0
 	adj_drowsy = -7
-	adj_sleepy = -2
+	adj_sleepy = -20
 	taste_message = "lime soda"
 
 /datum/reagent/consumable/drink/cold/dr_gibb
@@ -521,9 +521,9 @@
 	data++
 	switch(data)
 		if(51 to 200)
-			M.SetSleeping(20)
+			M.SetSleeping(20 SECONDS)
 		if(201 to INFINITY)
-			M.SetSleeping(20)
+			M.SetSleeping(20 SECONDS)
 			M.adjustToxLoss(2)
 
 /datum/reagent/consumable/gargle_blaster
@@ -755,7 +755,7 @@
 	boozepwr = 1.5
 	dizzy_adj = -5
 	adj_drowsy = -3
-	adj_sleepy = -4
+	adj_sleepy = -40
 
 /datum/reagent/consumable/ethanol/kahlua/on_general_digest(mob/living/M)
 	..()

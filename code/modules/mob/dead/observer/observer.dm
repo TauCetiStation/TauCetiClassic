@@ -242,7 +242,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			robot.toggle_all_components()
 		else
 			resting = 1
-			Sleeping(2)
+			Sleeping(2 SECONDS)
 		var/mob/dead/observer/ghost = ghostize(can_reenter_corpse = FALSE)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 		ghost.timeofdeath = world.time // Because the living mob won't have a time of death and we want the respawn timer to work properly.
 	return

@@ -23,7 +23,7 @@
 	var/prev_gender = null // Debug for plural genders
 
 
-/mob/living/carbon/human/Life()
+/mob/living/carbon/human/Life(seconds)
 	set invisibility = 0
 	set background = 1
 
@@ -577,7 +577,7 @@
 
 			// Enough to make us sleep as well
 			if(SA_pp > SA_sleep_min)
-				Sleeping(10)
+				Sleeping(10 SECONDS)
 
 		// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 		else if(SA_pp > 0.15)
@@ -1078,7 +1078,7 @@
 		eye_blurry = max(2, eye_blurry)
 		if(prob(5))
 			emote("yawn")
-			Sleeping(10)
+			Sleeping(10 SECONDS)
 			Paralyse(5)
 
 	confused = max(0, confused - 1)

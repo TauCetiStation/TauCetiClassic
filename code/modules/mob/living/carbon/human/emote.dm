@@ -167,7 +167,7 @@
 			message = "<B>[src]</B> faints."
 			if(IsSleeping())
 				return //Can't faint while asleep
-			SetSleeping(20) //Short-short nap
+			SetSleeping(20 SECONDS) //Short-short nap
 			m_type = SHOWMSG_VISUAL
 
 		if ("cough")

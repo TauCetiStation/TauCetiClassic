@@ -265,7 +265,7 @@
 				H.w_uniform.add_fingerprint(M)
 
 			if(lying)
-				AdjustSleeping(-10)
+				AdjustSleeping(-10 SECONDS)
 				if (!M.lying)
 					if(!IsSleeping())
 						src.resting = 0
@@ -549,7 +549,7 @@
 		to_chat(src, "<span class='rose'>You are already sleeping</span>")
 		return
 	if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
-		SetSleeping(100) //Short nap
+		SetSleeping(40 SECONDS) //Short nap
 
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()

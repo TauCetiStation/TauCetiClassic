@@ -70,7 +70,7 @@
 
 /obj/structure/survivor_cryopod/proc/spawn_survivor(mob/M)
 	var/mob/living/carbon/human/H = new(loc, HUMAN)
-	H.SetSleeping(2000)
+	H.SetSleeping(2000 SECONDS)
 	H.drowsyness = 1000
 
 	if(fixed_gender)
@@ -112,7 +112,7 @@
 	to_chat(H, "<span class='notice'>[survivor_memory]</span>")
 	sleep(30)
 
-	H.SetSleeping(10)
+	H.SetSleeping(10 SECONDS)
 	H.drowsyness = 20
 
 	density = FALSE

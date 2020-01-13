@@ -93,7 +93,7 @@
 			message = "<B>[src]</B> faints."
 			if(IsSleeping())
 				return
-			SetSleeping(20)
+			SetSleeping(20 SECONDS)
 			m_type = SHOWMSG_VISUAL
 		if("dance")
 			if(!restrained())

@@ -21,7 +21,7 @@
 		if(15 to 25)
 			M.drowsyness  = max(M.drowsyness, 20)
 		if(25 to INFINITY)
-			M.SetSleeping(20)
+			M.SetSleeping(20 SECONDS)
 			M.adjustOxyLoss(-M.getOxyLoss())
 			M.SetWeakened(0)
 			M.SetStunned(0)

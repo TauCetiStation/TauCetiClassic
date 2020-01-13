@@ -137,7 +137,7 @@
 /datum/reagent/toxin/cyanide/on_general_digest(mob/living/M)
 	..()
 	M.adjustOxyLoss(4 * REM)
-	M.SetSleeping(20)
+	M.SetSleeping(20 SECONDS)
 
 /datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
@@ -295,7 +295,7 @@
 		if(2 to 199)
 			M.Weaken(30)
 		if(200 to INFINITY)
-			M.SetSleeping(20)
+			M.SetSleeping(20 SECONDS)
 
 /datum/reagent/toxin/potassium_chloride
 	name = "Potassium Chloride"
@@ -353,9 +353,9 @@
 			M.confused += 2
 			M.drowsyness += 2
 		if(2 to 50)
-			M.SetSleeping(20)
+			M.SetSleeping(20 SECONDS)
 		if(51 to INFINITY)
-			M.SetSleeping(20)
+			M.SetSleeping(20 SECONDS)
 			M.adjustToxLoss((data - 50) * REM)
 	data++
 
