@@ -17,7 +17,7 @@
 	)
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
-	restricted_species = list(UNATHI, TAJARAN, DIONA, IPC)
+	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
 
@@ -59,7 +59,6 @@
 	alt_titles = list("Maintenance Technician","Engine Technician","Electrician")
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 540
-	restricted_species = list(IPC)
 
 	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
 
@@ -140,7 +139,6 @@
 	access = list(access_engineering_lobby, access_construction, access_maint_tunnels)
 	minimal_player_age = 1
 	minimal_player_ingame_minutes = 200
-	restricted_species = list(IPC)
 
 /datum/job/technical_assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)

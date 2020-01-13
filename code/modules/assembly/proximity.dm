@@ -34,6 +34,11 @@
 	update_icon()
 	return secured
 
+/obj/item/device/assembly/prox_sensor/attach_assembly(obj/item/device/assembly/A, mob/user)
+	. = ..()
+	message_admins("[key_name_admin(user)] attached \the [A] to \the [src]. [ADMIN_JMP(user)]")
+	log_game("[key_name_admin(user)] attached \the [A] to \the [src].")
+
 /obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM)
 	if (istype(AM, /obj/effect/beam))	return
 	if (AM.move_speed < 12)	sense()
@@ -107,7 +112,7 @@
 
 /obj/item/device/assembly/prox_sensor/interact(mob/user)//TODO: Change this to the wires thingy
 	if(!secured)
-		user.show_message("<span class='warning'>The [name] is unsecured!</span>")
+		to_chat(user, "<span class='warning'>The [name] is unsecured!</span>")
 		return 0
 	var/second = time % 60
 	var/minute = (time - second) / 60

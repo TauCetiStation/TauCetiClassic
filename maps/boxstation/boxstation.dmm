@@ -1825,7 +1825,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "adf" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced,
@@ -9882,7 +9882,7 @@
 	dir = 1;
 	icon_state = "warnplate"
 	},
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "aqo" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -10908,16 +10908,21 @@
 	},
 /area/station/hallway/primary/fore)
 "asf" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -14846,7 +14851,7 @@
 	dir = 9;
 	icon_state = "warning"
 	},
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "azS" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 4
@@ -14884,7 +14889,7 @@
 	dir = 5;
 	icon_state = "warning"
 	},
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "azV" = (
 /obj/structure/grille,
 /obj/structure/cable{
@@ -15369,7 +15374,7 @@
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "aAJ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -15378,7 +15383,7 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "aAK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -15388,7 +15393,7 @@
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "aAL" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
@@ -15403,7 +15408,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "aAN" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -15781,20 +15786,30 @@
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "aBt" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light/small,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	name = "Toxins launch APC";
+	pixel_y = -24
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warning"
 	},
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "aBu" = (
 /obj/structure/computerframe,
 /obj/item/weapon/shard,
@@ -15816,11 +15831,16 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
 	},
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "aBy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -15834,7 +15854,7 @@
 	dir = 8
 	},
 /turf/simulated/wall,
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "aBA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
 	dir = 4;
@@ -16307,10 +16327,15 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "aCn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor/grass,
@@ -20201,7 +20226,7 @@
 	dir = 5;
 	icon_state = "warning"
 	},
-/area/station/rnd/misc_lab)
+/area/station/rnd/mixing)
 "aJy" = (
 /obj/structure/closet,
 /turf/simulated/floor/plating,
@@ -46055,7 +46080,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "bMg" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -48314,7 +48339,7 @@
 /area/station/engineering/atmos)
 "bRf" = (
 /turf/simulated/wall,
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "bRg" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /obj/structure/cable{
@@ -53537,7 +53562,7 @@
 	name = "Toxins Launcher Bay Door"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "ceQ" = (
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -66092,6 +66117,11 @@
 "cIf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warning"
@@ -69666,7 +69696,7 @@
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "gab" = (
 /obj/machinery/door/airlock/security{
 	name = "Security Checkpoint";
@@ -73111,7 +73141,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "platebotc"
 	},
-/area/station/rnd/mixing)
+/area/station/rnd/tox_launch)
 "neb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{

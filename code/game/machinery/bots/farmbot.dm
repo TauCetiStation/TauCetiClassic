@@ -177,8 +177,7 @@
 	if(user)
 		to_chat(user, "<span class='warning'>You short out [src]'s plant identifier circuits.</span>")
 	spawn(0)
-		for(var/mob/O in hearers(src, null))
-			O.show_message("<span class='warning'><B>[src] buzzes oddly!</B></span>", 1)
+		audible_message("<span class='warning'><B>[src] buzzes oddly!</B></span>")
 	flick("farmbot_broke", src)
 	src.emagged = 1
 	src.on = 1

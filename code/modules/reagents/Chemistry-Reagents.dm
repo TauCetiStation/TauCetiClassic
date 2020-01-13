@@ -1,6 +1,3 @@
-#define SOLID 1
-#define LIQUID 2
-#define GAS 3
 #define FOOD_METABOLISM 0.4
 #define DRINK_METABOLISM 0.8
 #define REAGENTS_OVERDOSE 30

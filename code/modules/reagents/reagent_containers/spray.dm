@@ -467,3 +467,6 @@
 	origin_tech = "combat=1;materials=1"
 	spray_size = 4
 	spray_sizes = list(4)
+
+	spray_cloud_move_delay = 1
+	spray_cloud_react_delay = 0

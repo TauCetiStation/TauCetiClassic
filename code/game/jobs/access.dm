@@ -533,6 +533,10 @@
 		var/obj/item/weapon/card/id/I = src
 		jobName = I.rank
 		alt = I.assignment
+	if(istype(src, /obj/item/weapon/card/id/syndicate))
+		var/obj/item/weapon/card/id/syndicate/S = src
+		jobName = S.assignment
+		alt = S.assignment
 	if(alt in get_alternate_titles(jobName))
 		return alt
 	if(jobName in get_all_job_icons()) //Check if the job has a hud icon

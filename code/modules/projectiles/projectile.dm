@@ -376,7 +376,7 @@
 	current = T
 	yo = U.y - T.y
 	xo = U.x - T.x
-	INVOKE_ASYNC(src, .process)
+	process()
 
 /obj/item/projectile/test //Used to see if you can hit them.
 	invisibility = 101 //Nope!  Can't see me!

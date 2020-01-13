@@ -54,12 +54,20 @@
 		user.remove_from_mob(det)
 		det.loc = src
 		detonator = det
+		if(istimer(det.a_left))
+			var/obj/item/device/assembly/timer/T = det.a_left
+			det_time = T.time * 10
+		else if(istimer(det.a_right))
+			var/obj/item/device/assembly/timer/T = det.a_right
+			det_time = T.time * 10
 		icon_state = initial(icon_state) +"_ass"
 		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 		stage = 1
 	else if(isscrewdriver(W) && path != 2)
 		if(stage == 1)
 			path = 1
+			if(!detonator)
+				det_time = 1
 			if(beakers.len)
 				to_chat(user, "<span class='notice'>You lock the assembly.</span>")
 				name = "grenade"

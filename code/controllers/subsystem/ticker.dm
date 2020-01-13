@@ -257,7 +257,7 @@ var/datum/subsystem/ticker/ticker
 	world.send2bridge(
 		type = list(BRIDGE_ROUNDSTAT),
 		attachment_title = "Round is started, gamemode - **[master_mode]**",
-		attachment_msg = "Join now: <[BYOND_JOIN_LINK]>",
+		attachment_msg = "Round #[round_id]; Join now: <[BYOND_JOIN_LINK]>",
 		attachment_color = BRIDGE_COLOR_ANNOUNCE,
 	)
 
@@ -554,5 +554,18 @@ var/datum/subsystem/ticker/ticker
 
 /world/proc/has_round_started()
 	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
+		return TRUE
+	return FALSE
+
+/world/proc/has_round_finished()
+	if (ticker && ticker.current_state >= GAME_STATE_FINISHED)
+		return TRUE
+	return FALSE
+
+/world/proc/has_round_preparing()
+	if (ticker && ticker.current_state <= GAME_STATE_SETTING_UP)
+		return TRUE
+	// Still no intialized?
+	else if(!ticker)
 		return TRUE
 	return FALSE
