@@ -121,7 +121,6 @@
 			mob.control_object.loc = get_step(mob.control_object,direct)
 	return
 
-
 /client/Move(n, direct, forced = FALSE)
 	if(!mob)
 		return // Moved here to avoid nullrefs below
@@ -283,13 +282,9 @@
 		for (var/obj/item/weapon/grab/G in mob.grabbed_by)
 			G.adjust_position()
 
-		moving = 0
+		moving = FALSE
 		if(mob && .)
-			mob.throwing = 0
-
-		return .
-
-	return
+			mob.throwing = FALSE
 
 /mob/proc/SelfMove(turf/n, direct)
 	return Move(n, direct)

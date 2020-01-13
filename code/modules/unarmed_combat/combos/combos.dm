@@ -81,7 +81,7 @@
 		if(attacker.client)
 			attacker.client.Move(T, slide_dir, forced=TRUE)
 		else
-			attacker.Move(T, slide_dir, forced=TRUE)
+			attacker.Move(T, slide_dir)
 
 		if(T != attacker.loc)
 			break
@@ -674,7 +674,7 @@
 				if(attacker.client)
 					attacker.client.Move(T, charge_dir, forced=TRUE)
 				else
-					attacker.Move(T, charge_dir, forced=TRUE)
+					attacker.Move(T, charge_dir)
 
 				attacker.set_dir(charge_dir)
 				victim_G.adjust_position(adjust_time = 0, force_loc = TRUE, force_dir = charge_dir)
