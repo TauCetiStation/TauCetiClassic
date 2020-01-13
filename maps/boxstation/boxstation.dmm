@@ -17448,9 +17448,6 @@
 /turf/simulated/floor,
 /area/station/civilian/gym)
 "aEC" = (
-/obj/machinery/camera{
-	c_tag = "Gym West"
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 20
@@ -22903,6 +22900,9 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -68391,9 +68391,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/machinery/light{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -78415,6 +78412,9 @@
 	pixel_x = -32
 	},
 /obj/machinery/hologram/holopad,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
