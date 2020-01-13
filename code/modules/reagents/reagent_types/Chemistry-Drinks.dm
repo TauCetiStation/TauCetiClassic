@@ -18,7 +18,7 @@
 	if(adj_drowsy)
 		M.drowsyness = max(0,M.drowsyness + adj_drowsy)
 	if(adj_sleepy)
-		M.Sleeping(adj_sleepy)
+		M.AdjustSleeping(adj_sleepy)
 	if(adj_temp)
 		if(M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
 			M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
@@ -202,7 +202,7 @@
 	color = "#482000" // rgb: 72, 32, 0
 	adj_dizzy = -5
 	adj_drowsy = -3
-	adj_sleepy = -2
+	adj_sleepy = -4
 	adj_temp = 25
 	taste_message = "coffee"
 
@@ -256,7 +256,7 @@
 	color = "#101000" // rgb: 16, 16, 0
 	adj_dizzy = -2
 	adj_drowsy = -1
-	adj_sleepy = -3
+	adj_sleepy = -6
 	adj_temp = 20
 	taste_message = "tea"
 
@@ -284,7 +284,7 @@
 	color = "#664300" // rgb: 102, 67, 0
 	adj_dizzy = -5
 	adj_drowsy = -3
-	adj_sleepy = -2
+	adj_sleepy = -4
 
 /datum/reagent/consumable/drink/cold/sodawater
 	name = "Soda Water"
@@ -315,7 +315,7 @@
 	id = "nuka_cola"
 	description = "Cola, cola never changes."
 	color = "#100800" // rgb: 16, 8, 0
-	adj_sleepy = -2
+	adj_sleepy = -4
 	taste_message = "cola"
 
 /datum/reagent/consumable/drink/cold/nuka_cola/on_general_digest(mob/living/M)
@@ -331,7 +331,7 @@
 	description = "Blows right through you like a space wind."
 	color = "#102000" // rgb: 16, 32, 0
 	adj_drowsy = -7
-	adj_sleepy = -1
+	adj_sleepy = -2
 	taste_message = "lime soda"
 
 /datum/reagent/consumable/drink/cold/dr_gibb
@@ -755,7 +755,7 @@
 	boozepwr = 1.5
 	dizzy_adj = -5
 	adj_drowsy = -3
-	adj_sleepy = -2
+	adj_sleepy = -4
 
 /datum/reagent/consumable/ethanol/kahlua/on_general_digest(mob/living/M)
 	..()

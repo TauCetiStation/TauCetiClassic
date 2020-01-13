@@ -934,7 +934,7 @@
 			if(prob(50))
 				mob.emote("collapse")
 			else
-				mob.SetSleeping(max(mob.sleeping, 5))
+				mob.SetSleeping(max(mob.AmountSleeping(), 5))
 
 /datum/disease2/effect/blind
 	name = "Hyphema"
