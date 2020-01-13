@@ -43,6 +43,9 @@
 	return ..()
 
 /datum/status_effect/incapacitating/sleeping/tick()
+	if(!owner.client)
+		duration = max(duration, world.time + 1 SECOND)
+
 	owner.adjustHalLoss(-0.5) //reduce stamina loss by 0.5 per tick, 10 per 2 seconds
 
 	if(human_owner)
