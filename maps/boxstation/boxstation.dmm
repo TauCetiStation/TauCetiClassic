@@ -69773,12 +69773,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/chiefs_office)
-"guw" = (
-/obj/machinery/light,
-/turf/simulated/floor{
-	icon_state = "freezerfloor"
-	},
-/area/station/civilian/toilet)
 "gvb" = (
 /obj/structure/closet/secure_closet/engineering_chief,
 /obj/structure/disposalpipe/segment,
@@ -70440,6 +70434,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -112746,7 +112743,7 @@ aEa
 aEa
 hIp
 eRs
-guw
+thb
 aEa
 bfd
 aKx
