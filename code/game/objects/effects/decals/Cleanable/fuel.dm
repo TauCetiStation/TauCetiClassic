@@ -40,6 +40,8 @@
 					amount *= 0.75
 
 /obj/effect/decal/cleanable/liquid_fuel/Crossed(mob/living/M)
+	if (!istype(M))
+		return
 	if(M.crawling)
 		M.adjust_fire_stacks(10)
 	if(M.fire_stacks <= 5)

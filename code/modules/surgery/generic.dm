@@ -7,11 +7,9 @@
 	can_infect = 1
 
 /datum/surgery_step/generic/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (isslime(target))
+	if (!ishuman(target))
 		return FALSE
 	if (target_zone == O_EYES)	//there are specific steps for eye surgery
-		return FALSE
-	if (!ishuman(target))
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (!BP)
@@ -309,11 +307,9 @@
 	allowed_species = list(IPC)
 
 /datum/surgery_step/ipcgeneric/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(isslime(target))
+	if(!ishuman(target))
 		return FALSE
 	if(target_zone == O_EYES)	//there are specific steps for eye surgery
-		return FALSE
-	if(!ishuman(target))
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if(!BP)
