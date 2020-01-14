@@ -166,7 +166,7 @@
 			for(var/mob/living/carbon/alien/A in alien_list)
 				if(A.stat == DEAD)
 					continue
-				if(!A.key && A.brain_op_stage != 4)
+				if(!A.key && A.has_brain())
 					continue
 
 				if(isfacehugger(A))
@@ -190,7 +190,7 @@
 			var/no_queen = 1
 			var/mob/living/carbon/alien/queen
 			for(var/mob/living/carbon/alien/humanoid/queen/Q in queen_list)
-				if(Q.stat == DEAD || !Q.key && Q.brain_op_stage != 4)
+				if(Q.stat == DEAD || !Q.key && Q.has_brain())
 					continue
 				no_queen = 0
 				queen = Q
@@ -266,7 +266,7 @@ Hit Procs
 		damage /= 4
 
 
-	show_message("<span class='warning'>The blob attacks!</span>")
+	to_chat(src, "<span class='warning'>The blob attacks!</span>")
 
 	adjustFireLoss(damage)
 
@@ -274,9 +274,7 @@ Hit Procs
 	return
 
 /mob/living/carbon/alien/meteorhit(O)
-	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
-			M.show_message(text("<span class='warning'>[] has been hit by []</span>", src, O), 1)
+	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
 	if (health > 0)
 		adjustFireLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
 		adjustFireLoss(30)

@@ -119,26 +119,28 @@
 				to_chat(usr, "Added a freeform law.")
 
 			if(istype(P, /obj/item/device/mmi) || istype(P, /obj/item/device/mmi/posibrain))
-				if(!P:brainmob)
-					to_chat(user, "<span class='warning'>Sticking an empty [P] into the frame would sort of defeat the purpose.</span>")
+				var/obj/item/device/mmi/M = P
+
+				if(!M.brainmob)
+					to_chat(user, "<span class='warning'>Sticking an empty [M] into the frame would sort of defeat the purpose.</span>")
 					return
-				if(P:brainmob.stat == DEAD)
-					to_chat(user, "<span class='warning'>Sticking a dead [P] into the frame would sort of defeat the purpose.</span>")
+				if(M.brainmob.stat == DEAD)
+					to_chat(user, "<span class='warning'>Sticking a dead [M] into the frame would sort of defeat the purpose.</span>")
 					return
 
-				if(jobban_isbanned(P:brainmob, "AI"))
-					to_chat(user, "<span class='warning'>This [P] does not seem to fit.</span>")
+				if(jobban_isbanned(M.brainmob, "AI"))
+					to_chat(user, "<span class='warning'>This [M] does not seem to fit.</span>")
 					return
 
-				if(P:brainmob.mind)
-					ticker.mode.remove_cultist(P:brainmob.mind, 1)
-					ticker.mode.remove_revolutionary(P:brainmob.mind, 1)
-					ticker.mode.remove_gangster(P:brainmob.mind, 1)
+				if(M.brainmob.mind)
+					ticker.mode.remove_cultist(M.brainmob.mind, 1)
+					ticker.mode.remove_revolutionary(M.brainmob.mind, 1)
+					ticker.mode.remove_gangster(M.brainmob.mind, 1)
 
 				user.drop_item()
-				P.loc = src
-				brain = P
-				to_chat(usr, "Added [P].")
+				M.loc = src
+				brain = M
+				to_chat(usr, "Added [M].")
 				icon_state = "3b"
 
 			if(iscrowbar(P) && brain)

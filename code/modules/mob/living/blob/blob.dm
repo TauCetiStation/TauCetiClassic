@@ -22,7 +22,7 @@
 	return//No talking for you
 
 
-/mob/living/blob/emote(act,m_type=1,message = null)
+/mob/living/blob/emote(act,m_type=SHOWMSG_VISUAL,message = null)
 	return
 
 

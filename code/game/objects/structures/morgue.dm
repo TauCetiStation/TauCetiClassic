@@ -78,7 +78,7 @@
 		return FALSE
 
 	for(var/mob/living/carbon/human/H in compiled)
-		if(H.stat != DEAD || (NOCLONE in H.mutations) || H.species.flags[NO_SCAN] || H.brain_op_stage == 4.0 || H.suiciding || !H.ckey || !H.mind)
+		if(H.stat != DEAD || (NOCLONE in H.mutations) || H.species.flags[NO_SCAN] || !H.has_brain() || H.suiciding || !H.ckey || !H.mind)
 			continue
 
 		return TRUE
@@ -372,17 +372,15 @@
 		return //don't let you cremate something twice or w/e
 
 	if(contents.len <= 0)
-		for (var/mob/M in viewers(src))
-			M.show_message("<span class='rose'>You hear a hollow crackle.</span>", 1)
-			return
+		audible_message("<span class='rose'>You hear a hollow crackle.</span>")
+		return
 
 	else
 		if(!isemptylist(src.search_contents_for(/obj/item/weapon/disk/nuclear)))
 			to_chat(usr, "<span class='notice'>You get the feeling that you shouldn't cremate one of the items in the cremator.</span>")
 			return
 
-		for (var/mob/M in viewers(src))
-			M.show_message("<span class='rose'>You hear a roar as the crematorium activates.</span>", 1)
+		audible_message("<span class='rose'>You hear a roar as the crematorium activates.</span>")
 
 		cremating = 1
 		locked = 1

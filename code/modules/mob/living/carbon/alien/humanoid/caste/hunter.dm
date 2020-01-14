@@ -62,7 +62,7 @@
 			update_icons()
 			to_chat(src, "<span class='notice'>You are now invisible.</span>")
 			for(var/mob/O in oviewers(src, null))
-				O.show_message(text("<span class='warning'><B>[src] fades into the surroundings!</B></span>"), 1)
+				O.show_messageold(text("<span class='warning'><B>[src] fades into the surroundings!</B></span>"), 1)
 			spawn(250)
 				if(!isnull(src))//Don't want the game to runtime error when the mob no-longer exists.
 					alien_invis = 0.0
@@ -118,7 +118,7 @@
 		stop_pulling()
 		leaping = TRUE
 		update_icons()
-		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, spin = FALSE, diagonals_first = TRUE, callback = CALLBACK(src, .leap_end))
+		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, spin = FALSE, diagonals_first = TRUE, callback = CALLBACK(src, .proc/leap_end))
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_end()
 	SetNextMove(CLICK_CD_MELEE) // so we can't click again right after leaping.

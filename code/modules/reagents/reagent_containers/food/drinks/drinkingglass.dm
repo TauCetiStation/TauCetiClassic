@@ -540,8 +540,7 @@
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to splash [M.name] ([M.key]). Reagents: [contained]</font>")
 			msg_admin_attack("[user.name] ([user.ckey]) splashed [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
 
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message(text("<span class='warning'>[] has been splashed with [] in the face by []!</span>", target, src, user), 1)
+			user.visible_message("<span class='warning'>[target] has been splashed with [src] in the face by [user]!</span>")
 			src.reagents.reaction(target, TOUCH)
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/clear_reagents), 5)
 			return

@@ -312,9 +312,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	step_away(src,my_target,2)
-	for(var/mob/M in oviewers(world.view,my_target))
-		to_chat(M, "<span class='warning'><B>[my_target] flails around wildly.</B></span>")
-	my_target.show_message("<span class='warning'><B>[src] has been attacked by [my_target] </B></span>", 1) //Lazy.
+	my_target.visible_message("<span class='warning'><B>[my_target] flails around wildly.</B></span>", self_message = "<span class='warning'><B>[src] has been attacked by [my_target] </B></span>")
 
 	src.health -= P.force
 
@@ -375,7 +373,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				src.do_attack_animation(my_target)
 				if(weapon_name)
 					my_target.playsound_local(null, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
-					my_target.show_message("<span class='warning'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", 1)
+					my_target.show_message("<span class='warning'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", SHOWMSG_VISUAL)
 					my_target.halloss += 8
 					if(prob(20)) my_target.eye_blurry += 3
 					if(prob(33))
@@ -383,7 +381,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							fake_blood(my_target)
 				else
 					my_target.playsound_local(null, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER, 35)
-					my_target.show_message("<span class='warning'><B>[src.name] has punched [my_target]!</B></span>", 1)
+					my_target.show_message("<span class='warning'><B>[src.name] has punched [my_target]!</B></span>", SHOWMSG_VISUAL)
 					my_target.halloss += 4
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)

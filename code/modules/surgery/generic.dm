@@ -7,11 +7,9 @@
 	can_infect = 1
 
 /datum/surgery_step/generic/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (isslime(target))
+	if (!ishuman(target))
 		return FALSE
 	if (target_zone == O_EYES)	//there are specific steps for eye surgery
-		return FALSE
-	if (!ishuman(target))
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (!BP)
@@ -54,8 +52,6 @@
 	BP.open = 1
 	BP.take_damage(1, 1, DAM_SHARP|DAM_EDGE, tool)
 	BP.clamp()
-	if (target_zone == BP_HEAD)
-		target.brain_op_stage = 1
 
 /datum/surgery_step/generic/cut_with_laser/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -93,8 +89,6 @@
 	BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
 	BP.clamp()
 	BP.open = 2
-	if (target_zone == BP_HEAD)
-		target.brain_op_stage = 1
 
 /datum/surgery_step/generic/incision_manager/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -131,8 +125,6 @@
 	BP.open = 1
 	BP.status |= ORGAN_BLEEDING
 	BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
-	if (target_zone == BP_HEAD)
-		target.brain_op_stage = 1
 
 /datum/surgery_step/generic/cut_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -315,11 +307,9 @@
 	allowed_species = list(IPC)
 
 /datum/surgery_step/ipcgeneric/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(isslime(target))
+	if(!ishuman(target))
 		return FALSE
 	if(target_zone == O_EYES)	//there are specific steps for eye surgery
-		return FALSE
-	if(!ishuman(target))
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if(!BP)

@@ -17,7 +17,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 // ================
 
 // a list of all the parasites in the mob
-/mob/living/carbon/var/list/parasites = list()
+/mob/var/list/parasites = list()
 
 /mob/living/parasite
 	var/mob/living/carbon/host // the host that this parasite occupies
@@ -247,11 +247,10 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 
 	//message = say_quote(message)
 	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'><i>[message]</i></span></span>"
-	//target.show_message(rendered)
+	//target.show_messageold(rendered)
 	to_chat(target, rendered)
 	to_chat(usr, "<i>You make [target] hear:</i> [rendered]")
-	for(var/mob/dead/observer/G in observer_list)
-		G.show_message("[usr] makes [target] hear: [rendered]")
+	to_chat(observer_list, "[usr] makes [target] hear: [rendered]")
 	log_say("Memetic Thought: [key_name(usr)] makes [key_name(target)] hear: [speaker] [message]")
 
 // Mutes the host
@@ -419,8 +418,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 	if(!use_points(350))
 		return
 
-	for(var/mob/M in view(1, host))
-		M.show_message("<B>[host]</B> whispers something incoherent.",2) // 2 stands for hearable message
+	audible_message("<B>[host]</B> whispers something incoherent.", hearing_distance = 1)
 
 	// Find out whether the target can hear
 	if(target.disabilities & 32 || target.ear_deaf)
@@ -459,8 +457,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 	if(!use_points(750))
 		return
 
-	for(var/mob/M in view(host)+src)
-		M.show_message("<B>[host]</B> screams something incoherent!",2) // 2 stands for hearable message
+	audible_message("<B>[host]</B> screams something incoherent!", hearing_distance = 1)
 
 	// Find out whether the target can hear
 	if(target.disabilities & 32 || target.ear_deaf)

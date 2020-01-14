@@ -157,8 +157,7 @@
 			to_chat(usr, "You grip \the [name]'s handles.")
 		else
 			if(usr != pulling)
-				for(var/mob/O in viewers(pulling, null))
-					O.show_message("<span class='red'>[usr] breaks [pulling]'s grip on the wheelchair.</span>", 1)
+				visible_message("<span class='red'>[usr] breaks [pulling]'s grip on the wheelchair.</span>")
 			else
 				to_chat(usr, "You let go of \the [name]'s handles.")
 			pulling.pulledby = null

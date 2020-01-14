@@ -5,11 +5,11 @@
 
 // these defines are made in order not to lose your mind(easier readability) and not to add a comment to each such check
 #define ONE_HAND_IS_USABLE (!restrained() && ((bodyparts_by_name[BP_L_ARM] && bodyparts_by_name[BP_L_ARM].is_usable()) || (bodyparts_by_name[BP_R_ARM] && bodyparts_by_name[BP_R_ARM].is_usable())))
-#define BOTH_HANDS_ARE_USABLE (!restrained() && bodyparts_by_name[BP_L_ARM] && bodyparts_by_name[BP_L_ARM].is_usable() && bodyparts_by_name[BP_R_ARM] && bodyparts_by_name[BP_R_ARM].is_usable())
+#define BOTH_HANDS_ARE_USABLE (!restrained() && bodyparts_by_name[BP_L_ARM] && bodyparts_by_name[BP_L_ARM].is_usable() && bodyparts_by_name[BP_L_ARM] && bodyparts_by_name[BP_R_ARM].is_usable())
 #define HAS_HEAD (bodyparts_by_name[BP_HEAD] && bodyparts_by_name[BP_HEAD].is_usable()) // it may look weird but what if I told you that an IPC can live and make emotions without a head?
 
 // auto = FALSE means that the sound is called by a human manually; auto = TRUE - automatically, in the code
-/mob/living/carbon/human/emote(act = "", message_type = MESSAGE_VISIBLE, message = "", auto = TRUE)
+/mob/living/carbon/human/emote(act = "", message_type = SHOWMSG_VISUAL, message = "", auto = TRUE)
 	var/cloud_emote = ""
 	var/sound_priority = LOW
 	var/emote_sound
@@ -53,7 +53,7 @@
 // ========== VOICED ==========
 
 		if ("grunt")
-			message_type = MESSAGE_AUDIBLE
+			message_type = SHOWMSG_AUDIO
 			message = pick("grunts slightly.", "groans.")
 			mute_message = "writhes and sighs sligtly."
 			muzzled_message = "groans silently!"
@@ -66,7 +66,7 @@
 				emote_sound = (gender == FEMALE) ? pick(SOUNDIN_FEMALE_LIGHT_PAIN) : pick(SOUNDIN_MALE_LIGHT_PAIN)
 
 		if("groan")
-			message_type = MESSAGE_AUDIBLE
+			message_type = SHOWMSG_AUDIO
 			message = "groans."
 			mute_message = pick("writhes and sighs sligtly.", "makes a very annoyed face.")
 			muzzled_message = "makes a weak noise."
@@ -82,7 +82,7 @@
 					emote_sound = pick((gender == FEMALE) ? SOUNDIN_FEMALE_PASSIVE_PAIN : SOUNDIN_MALE_PASSIVE_PAIN)
 
 		if ("scream")
-			message_type = MESSAGE_AUDIBLE
+			message_type = SHOWMSG_AUDIO
 			cloud_emote = "cloud-scream"
 			message = pick("screams loudly!", "screams!")
 			mute_message = pick("opens their mouth like a fish gasping for air!", "twists their face into an agonised expression!", "makes a very hurt expression!")
@@ -96,35 +96,35 @@
 				emote_sound = pick((gender == FEMALE) ? SOUNDIN_FEMALE_HEAVY_PAIN : SOUNDIN_MALE_HEAVY_PAIN)
 
 		if ("cough")
-			message_type = MESSAGE_AUDIBLE
+			message_type = SHOWMSG_AUDIO
 			message = (get_species() == DIONA) ? "creaks." : "coughs."
 			mute_message = (get_species() == DIONA) ? "creaks." : "coughs."
 			muzzled_message = "appears to [(get_species() == DIONA) ? "creak" : "cough"]."
 			miming_message = (get_species() == DIONA) ? "creaks." : "coughs."
 			if(auto)
-				conditions_for_emote = (!species.flags[NO_BREATH])
+				conditions_for_emote = (!species.flags[NO_BREATHE])
 				sound_priority = MEDIUM
 				emote_sound = pick((gender == FEMALE) ? SOUNDIN_FBCOUGH : SOUNDIN_MBCOUGH)
 
 // ========== AUDIBLE ==========
 
 		if ("choke")
-			message_type = muted ? MESSAGE_VISIBLE : MESSAGE_AUDIBLE
+			message_type = muted ? SHOWMSG_VISUAL : SHOWMSG_AUDIO
 			message = "chokes."
 			mute_message = "clutches their throat desperately!"
 			muzzled_message = "makes a weak noise."
 			miming_message = message
 
 		if ("snore")
-			message_type = MESSAGE_AUDIBLE
+			message_type = SHOWMSG_AUDIO
 			message = pick("snores.", "sleeps soundly.")
 			mute_message = message
 			muzzled_message = pick("snores.", "makes a noise.")
 			miming_message = "snores."
-			conditions_for_emote = (!species.flags[NO_BREATH])
+			conditions_for_emote = (!species.flags[NO_BREATHE])
 
 		if ("whimper")
-			message_type = MESSAGE_AUDIBLE
+			message_type = SHOWMSG_AUDIO
 			message = "whimpers."
 			mute_message = "whimpers"
 			muzzled_message = pick("whimpers.", "makes a weak noise.", "whines.")
@@ -132,14 +132,14 @@
 			conditions_for_emote = (get_species() != ZOMBIE)
 
 		if ("sniff")
-			message_type = MESSAGE_AUDIBLE
+			message_type = SHOWMSG_AUDIO
 			message = "sniffs."
 			mute_message = "sniffs."
 			muzzled_message = "sniffs."
 			miming_message = "sniffs."
 
 		if ("sneeze")
-			message_type = MESSAGE_AUDIBLE
+			message_type = SHOWMSG_AUDIO
 			message = "sneezes."
 			mute_message = "sneezes."
 			muzzled_message = "makes a strange noise."
@@ -147,16 +147,16 @@
 			conditions_for_emote = (get_species() != ZOMBIE)
 
 		if ("gasp")
-			message_type = MESSAGE_AUDIBLE
+			message_type = SHOWMSG_AUDIO
 			cloud_emote = "cloud-gasp"
 			mute_message = "sucks in air violently!"
 			miming_message = "appears to be gasping!"
 			muzzled_message = "makes a weak noise."
 			message = "gasps!"
-			conditions_for_emote = (!species.flags[NO_BREATH])
+			conditions_for_emote = (!species.flags[NO_BREATHE])
 
 		if ("moan")
-			message_type = MESSAGE_AUDIBLE
+			message_type = SHOWMSG_AUDIO
 			mute_message = "moans silently."
 			miming_message = "appears to moan!"
 			muzzled_message = "moans silently!"
@@ -164,7 +164,7 @@
 			conditions_for_emote = (get_species() != ZOMBIE)
 
 		if ("sigh")
-			message_type = MESSAGE_AUDIBLE
+			message_type = SHOWMSG_AUDIO
 			message = "sighs."
 			mute_message = message
 			muzzled_message = "makes a weak noise."
@@ -172,7 +172,7 @@
 			conditions_for_emote = (get_species() != ZOMBIE)
 
 		if ("mumble")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = pick("grumbles.", "mumbles.")
 			mute_message = "makes an annoyed face!"
 			muzzled_message = "makes a weak noise"
@@ -181,7 +181,7 @@
 // ========== HYBRID ==========
 
 		if ("laugh")
-			message_type = MESSAGE_AUDIBLE | MESSAGE_VISIBLE
+			message_type = SHOWMSG_AUDIO | SHOWMSG_VISUAL
 			message = "laughs."
 			mute_message = "laughs silently."
 			muzzled_message = pick("makes a weak noise.", "giggles sligthly.")
@@ -189,7 +189,7 @@
 			conditions_for_emote = (get_species() != SKRELL) && HAS_HEAD && (get_species() != ZOMBIE)
 
 		if ("cry")
-			message_type = MESSAGE_AUDIBLE | MESSAGE_VISIBLE
+			message_type = SHOWMSG_AUDIO | SHOWMSG_VISUAL
 			message = "cries."
 			mute_message = message
 			muzzled_message = "makes a [pick("sad face", "weak noise")] and frowns."
@@ -197,7 +197,7 @@
 			conditions_for_emote = (get_species() != SKRELL) && (get_species() != DIONA) && HAS_HEAD && (get_species() != ZOMBIE)
 
 		if ("giggle")
-			message_type = MESSAGE_AUDIBLE | MESSAGE_VISIBLE
+			message_type = SHOWMSG_AUDIO | SHOWMSG_VISUAL
 			message = pick("chuckles.", "giggles.")
 			mute_message = "smiles slightly and [pick("chuckles", "giggles")] silently"
 			muzzled_message = "[pick("chuckles", "giggles")] slightly."
@@ -205,7 +205,7 @@
 			conditions_for_emote = (get_species() != ZOMBIE)
 
 		if ("clap")
-			message_type = MESSAGE_VISIBLE | MESSAGE_AUDIBLE
+			message_type = SHOWMSG_VISUAL | SHOWMSG_AUDIO
 			message = "claps."
 			mute_message = message
 			muzzled_message = message
@@ -215,89 +215,89 @@
 // ========== VISIBLE ==========
 
 		if ("raisehand")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = "raises a hand."
 			conditions_for_emote = ONE_HAND_IS_USABLE && (get_species() != ZOMBIE)
 
 		if ("blink")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = pick("blinks.", "blinks rapidly.")
 			conditions_for_emote = HAS_HEAD
 
 		if ("drool")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = "drools."
 			conditions_for_emote = HAS_HEAD && (get_species() != DIONA)
 
 		if ("eyebrow")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = "raises an eyebrow."
 			conditions_for_emote = HAS_HEAD
 
 		if ("twitch")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = pick("twitches violently.", "twitches.")
 
 		if ("frown")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = "frowns."
 			conditions_for_emote = HAS_HEAD
 
 		if ("nod")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = "nods."
 			conditions_for_emote = HAS_HEAD && (get_species() != ZOMBIE)
 
 		if ("wave")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = "waves."
 			conditions_for_emote = ONE_HAND_IS_USABLE && (get_species() != ZOMBIE)
 
 		if ("deathgasp")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = "seizes up and falls limp, [his_macro] eyes dead and lifeless..."
 
 		if ("grin")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = "grins."
 			conditions_for_emote = HAS_HEAD
 
 		if ("shrug")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = "shrugs."
 			conditions_for_emote = (get_species() != ZOMBIE)
 
 		if ("smile")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = "smiles."
 			conditions_for_emote = HAS_HEAD
 
 		if ("shiver")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = "shivers."
 
 		if ("wink")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = "winks."
 			conditions_for_emote = HAS_HEAD && (get_species() != ZOMBIE)
 
 		if ("yawn")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = "yawns."
-			conditions_for_emote = (!species.flags[NO_BREATH])
+			conditions_for_emote = (!species.flags[NO_BREATHE])
 
 		if ("collapse")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = "collapses!"
 			Paralyse(2)
 
 		if ("bow")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = pick("bows.", "bows in favor.")
 			conditions_for_emote = (get_species() != ZOMBIE)
 
 		if ("salute")
-			message_type = MESSAGE_VISIBLE
+			message_type = SHOWMSG_VISUAL
 			message = "salutes."
 			conditions_for_emote = ONE_HAND_IS_USABLE && (get_species() != ZOMBIE)
 
@@ -310,11 +310,11 @@
 			var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
 			switch(input2)
 				if ("Visible")
-					message_type = MESSAGE_VISIBLE
+					message_type = SHOWMSG_VISUAL
 				if ("Hearable")
 					if (!can_make_a_sound)
 						return
-					message_type = MESSAGE_AUDIBLE
+					message_type = SHOWMSG_AUDIO
 				else
 					alert("Unable to use this emote, must be either hearable or visible.")
 					return
@@ -347,7 +347,7 @@
 
 	if(initial_message)
 		message = initial_message
-	if((message_type & MESSAGE_AUDIBLE) && !(message_type & MESSAGE_VISIBLE)) // if(the human's mouth makes a sound, not something else). A bit crutchy but what to do
+	if((message_type & SHOWMSG_AUDIO) && !(message_type & SHOWMSG_VISUAL)) // if(the human's mouth makes a sound, not something else). A bit crutchy but what to do
 		if(muted)
 			message = mute_message
 		else if(muzzled || silent)
@@ -365,25 +365,25 @@
 	var/output_message_type
 	var/alternative_output_message
 	var/alternative_output_message_type
-	if(message_type & MESSAGE_VISIBLE)
+	if(message_type & SHOWMSG_VISUAL)
 		message_output_area = viewers(src)
 		output_message = "<B>[src]</B> [message]"
 		output_message_type = message_type
 		alternative_output_message = output_message
-		alternative_output_message_type = MESSAGE_VISIBLE
-		if(message_type & MESSAGE_AUDIBLE)
+		alternative_output_message_type = SHOWMSG_VISUAL
+		if(message_type & SHOWMSG_AUDIO)
 			alternative_output_message = "You can hear that someone [message]"
-			alternative_output_message_type = MESSAGE_AUDIBLE
+			alternative_output_message_type = SHOWMSG_AUDIO
 
-	if(message_type & MESSAGE_AUDIBLE)
+	if(message_type & SHOWMSG_AUDIO)
 		message_output_area = get_hearers_in_view(world.view, src)
 		output_message = "<B>[src]</B> [message]"
 		output_message_type = message_type
 		alternative_output_message = "You can hear that someone [message]"
-		alternative_output_message_type = MESSAGE_AUDIBLE
-		if(message_type & MESSAGE_VISIBLE)
+		alternative_output_message_type = SHOWMSG_AUDIO
+		if(message_type & SHOWMSG_VISUAL)
 			alternative_output_message = "You can see that <B>[src]</B> [message]"
-			alternative_output_message_type = MESSAGE_VISIBLE
+			alternative_output_message_type = SHOWMSG_VISUAL
 
 		if(emote_sound && can_make_a_sound && (get_species() in list(HUMAN, SKRELL, TAJARAN, UNATHI))) // sounds of emotions for other species will look absurdly. We need individual sounds for special races(diona, ipc, etc))
 			if(sound_priority == HIGH && next_high_priority_sound < world.time)

@@ -41,6 +41,8 @@ var/datum/subsystem/chat/SSchat
 
 	var/encoded = url_encode(message)
 
+	SSdemo.write_chat(target, message)
+
 	if(islist(target))
 		for(var/I in target)
 			var/client/C = CLIENT_FROM_VAR(I) //Grab us a client if possible

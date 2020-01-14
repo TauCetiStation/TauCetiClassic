@@ -75,7 +75,7 @@
 	w_class = ITEM_SIZE_HUGE
 	var/obj/structure/stool/origin_stool = null
 
-/obj/item/weapon/stool/throw_at()
+/obj/item/weapon/stool/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	return
 
 /obj/item/weapon/stool/atom_init()
