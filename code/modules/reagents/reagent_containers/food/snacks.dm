@@ -1165,7 +1165,7 @@
 	. = ..()
 	reagents.add_reagent("protein", 8)
 
-/obj/item/weapon/reagent_containers/food/snacks/monkeykabob
+/obj/item/weapon/reagent_containers/food/snacks/kabob
 	name = "Meat-kabob"
 	icon_state = "kabob"
 	desc = "Delicious meat, on a stick."
@@ -1173,7 +1173,7 @@
 	filling_color = "#a85340"
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/monkeykabob/atom_init()
+/obj/item/weapon/reagent_containers/food/snacks/kabob/atom_init()
 	. = ..()
 	reagents.add_reagent("protein", 8)
 
