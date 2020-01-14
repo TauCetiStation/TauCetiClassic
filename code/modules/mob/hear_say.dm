@@ -171,7 +171,7 @@
 		else
 			jobname = "Unknown"
 
-		if(speaker.mouse_opacity)
+		if(speaker.mouse_opacity && (speaker.alpha > 50))
 			if(changed_voice)
 				if(impersonating)
 					track = "<a href='byond://?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[impersonating]'>[speaker_name] ([jobname])</a>"
