@@ -211,10 +211,6 @@
 
 #define DELAY2GLIDESIZE(delay) (world.icon_size / max(CEIL(delay / world.tick_lag), 1))
 
-// Emotions
-#define MESSAGE_VISIBLE 1
-#define MESSAGE_AUDIBLE 2
-
 #define PLASMAGUN_OVERCHARGE 30100
 
 //! ## Overlays subsystem

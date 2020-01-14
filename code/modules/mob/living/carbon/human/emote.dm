@@ -358,33 +358,10 @@
 	if(!message || !message_type)
 		return
 
-	log_emote("[name]/[key] : [message]")
-
-	var/message_output_area
-	var/output_message
-	var/output_message_type
-	var/alternative_output_message
-	var/alternative_output_message_type
 	if(message_type & SHOWMSG_VISUAL)
-		message_output_area = viewers(src)
-		output_message = "<B>[src]</B> [message]"
-		output_message_type = message_type
-		alternative_output_message = output_message
-		alternative_output_message_type = SHOWMSG_VISUAL
-		if(message_type & SHOWMSG_AUDIO)
-			alternative_output_message = "You can hear that someone [message]"
-			alternative_output_message_type = SHOWMSG_AUDIO
-
-	if(message_type & SHOWMSG_AUDIO)
-		message_output_area = get_hearers_in_view(world.view, src)
-		output_message = "<B>[src]</B> [message]"
-		output_message_type = message_type
-		alternative_output_message = "You can hear that someone [message]"
-		alternative_output_message_type = SHOWMSG_AUDIO
-		if(message_type & SHOWMSG_VISUAL)
-			alternative_output_message = "You can see that <B>[src]</B> [message]"
-			alternative_output_message_type = SHOWMSG_VISUAL
-
+		for(var/mob/M in viewers(src))
+			M.show_message("<B>[src]</B> [message]", message_type)
+	else if(message_type & SHOWMSG_AUDIO)
 		if(emote_sound && can_make_a_sound && (get_species() in list(HUMAN, SKRELL, TAJARAN, UNATHI))) // sounds of emotions for other species will look absurdly. We need individual sounds for special races(diona, ipc, etc))
 			if(sound_priority == HIGH && next_high_priority_sound < world.time)
 				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE)
@@ -400,10 +377,10 @@
 				next_low_priority_sound = world.time + 4 SECONDS
 			else
 				return auto ? FALSE : to_chat(src, "<span class='warning'>You can't make sounds that often, you have to wait a bit.</span>")
+		for(var/mob/M in get_hearers_in_view(world.view, src))
+			M.show_message("<B>[src]</B> [message]", message_type)
 
-	if(message_output_area && output_message)
-		for(var/mob/M in message_output_area)
-			M.show_message(output_message, output_message_type, alternative_output_message, alternative_output_message_type)
+	log_emote("[name]/[key] : [message]")
 
 	for(var/mob/M in observer_list)
 		if(!M.client)
