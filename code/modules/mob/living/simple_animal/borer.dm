@@ -24,7 +24,7 @@
 			else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 				to_chat(M, "The captive mind of [src] whispers, \"[message]\"")
 
-/mob/living/captive_brain/emote(message)
+/mob/living/captive_brain/emote()
 	return
 
 /mob/living/simple_animal/borer

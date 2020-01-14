@@ -1,5 +1,5 @@
 #define CAN_MAKE_A_SOUND !muzzled && (last_sound_emote < world.time)
-/mob/living/carbon/alien/humanoid/emote(act, m_type = SHOWMSG_VISUAL, message = null)
+/mob/living/carbon/alien/humanoid/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 
 	if(stat == DEAD && (act != "deathgasp"))
 		return
