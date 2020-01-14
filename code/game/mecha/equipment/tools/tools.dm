@@ -632,18 +632,18 @@
 	do_after_cooldown()
 	return
 
-/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/dynhitby(atom/movable/A)
-	if(!action_checks(A))
-		return chassis.dynhitby(A)
-	if(prob(chassis.deflect_chance*deflect_coeff) || istype(A, /mob/living) || istype(A, /obj/item/mecha_parts/mecha_tracking))
-		chassis.occupant_message("<span class='notice'>The [A] bounces off the armor.</span>")
-		chassis.visible_message("The [A] bounces off the [chassis] armor")
+/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/dynhitby(atom/movable/AM, datum/thrownthing/throwingdatum)
+	if(!action_checks(AM))
+		return chassis.dynhitby(AM, throwingdatum)
+	if(prob(chassis.deflect_chance*deflect_coeff) || isliving(AM) || istype(AM, /obj/item/mecha_parts/mecha_tracking))
+		chassis.occupant_message("<span class='notice'>The [AM] bounces off the armor.</span>")
+		chassis.visible_message("The [AM] bounces off the [chassis] armor")
 		chassis.log_append_to_last("Armor saved.")
-		if(istype(A, /mob/living))
-			var/mob/living/M = A
+		if(isliving(AM))
+			var/mob/living/M = AM
 			M.take_bodypart_damage(10)
-	else if(istype(A, /obj))
-		var/obj/O = A
+	else if(isobj(AM))
+		var/obj/O = AM
 		if(O.throwforce)
 			chassis.take_damage(round(O.throwforce*damage_coeff))
 			chassis.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))

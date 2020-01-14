@@ -125,14 +125,14 @@
 	leaping = FALSE
 	update_icons()
 
-/mob/living/carbon/alien/humanoid/hunter/throw_impact(atom/A)
+/mob/living/carbon/alien/humanoid/hunter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!leaping)
 		return ..()
 
-	if(isliving(A))
-		var/mob/living/L = A
+	if(isliving(hit_atom))
+		var/mob/living/L = hit_atom
 		L.visible_message("<span class='danger'>[src] pounces on [L]!</span>", "<span class='userdanger'>[src] pounces on you!</span>")
-		if(issilicon(A))
+		if(issilicon(L))
 			L.Weaken(1) //Only brief stun
 		else
 			L.Weaken(5)
@@ -141,8 +141,8 @@
 		toggle_leap(FALSE)
 		pounce_cooldown = TRUE
 		addtimer(CALLBACK(src, .proc/refresh_pounce_cooldown), pounce_cooldown_time)
-	else if(A.density)
-		visible_message("<span class='danger'>[src] smashes into [A]!</span>", "<span class='alertalien'>You smashes into [A]!</span>")
+	else if(hit_atom.density)
+		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='alertalien'>You smash into [hit_atom]!</span>")
 		weakened = 2
 
 	update_canmove()
