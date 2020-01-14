@@ -44,7 +44,7 @@
 
 /obj/effect/effect/aqueous_foam/atom_init_late()
 	fore_image += image(icon, icon_state="afff_foam_fore", layer=MOB_LAYER + 0.9)
-	overlays.Add(fore_image)
+	add_overlay(fore_image)
 
 	if(loc.density || !has_gravity(loc) || istype(get_turf(src), /turf/space))
 		addtimer(CALLBACK(src, .proc/disolve), 5 SECONDS)
@@ -59,7 +59,7 @@
 
 /obj/effect/effect/aqueous_foam/update_icon()
 	cut_overlays()
-	overlays.Add(fore_image)
+	add_overlay(fore_image)
 
 /obj/effect/effect/aqueous_foam/proc/disolve()
 	if(disolving)
