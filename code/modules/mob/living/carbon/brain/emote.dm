@@ -1,4 +1,4 @@
-/mob/living/carbon/brain/emote(act, m_type = SHOWMSG_VISUAL, message = null, null)
+/mob/living/carbon/brain/emote(act, m_type = SHOWMSG_VISUAL, message = null, emote)
 	if(!(container && istype(container, /obj/item/device/mmi)))//No MMI, no emotes
 		return
 
