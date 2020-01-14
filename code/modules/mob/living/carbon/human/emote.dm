@@ -5,7 +5,7 @@
 
 // these defines are made in order not to lose your mind(easier readability) and not to add a comment to each such check
 #define ONE_HAND_IS_USABLE (!restrained() && ((bodyparts_by_name[BP_L_ARM] && bodyparts_by_name[BP_L_ARM].is_usable()) || (bodyparts_by_name[BP_R_ARM] && bodyparts_by_name[BP_R_ARM].is_usable())))
-#define BOTH_HANDS_ARE_USABLE (!restrained() && bodyparts_by_name[BP_L_ARM] && bodyparts_by_name[BP_L_ARM].is_usable() && bodyparts_by_name[BP_L_ARM] && bodyparts_by_name[BP_R_ARM].is_usable())
+#define BOTH_HANDS_ARE_USABLE (!restrained() && bodyparts_by_name[BP_L_ARM] && bodyparts_by_name[BP_L_ARM].is_usable() && bodyparts_by_name[BP_R_ARM] && bodyparts_by_name[BP_R_ARM].is_usable())
 #define HAS_HEAD (bodyparts_by_name[BP_HEAD] && bodyparts_by_name[BP_HEAD].is_usable()) // it may look weird but what if I told you that an IPC can live and make emotions without a head?
 
 // auto = FALSE means that the sound is called by a human manually; auto = TRUE - automatically, in the code
