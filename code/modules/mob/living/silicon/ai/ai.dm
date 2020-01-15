@@ -13,6 +13,7 @@ var/list/ai_verbs_default = list(
 	/mob/living/silicon/ai/proc/pick_icon,
 	/mob/living/silicon/ai/proc/show_laws_verb,
 	/mob/living/silicon/ai/proc/toggle_acceleration,
+	/mob/living/silicon/ai/proc/toggle_retransmit,
 	/mob/living/silicon/ai/proc/change_floor,
 	/mob/living/silicon/ai/proc/ai_emergency_message
 )
@@ -53,6 +54,7 @@ var/list/ai_verbs_default = list(
 	var/obj/item/device/radio/headset/heads/ai_integrated/aiRadio = null
 	var/custom_sprite = 0 //For our custom sprites
 	var/next_emergency_message_time = 0
+	var/allow_auto_broadcast_messages = TRUE // For disabling retransmiting
 //Hud stuff
 
 	//MALFUNCTION
@@ -181,6 +183,9 @@ var/list/ai_verbs_default = list(
 	ai_list -= src
 	qdel(eyeobj)
 	return ..()
+
+/mob/living/silicon/ai/IgniteMob()
+	return FALSE //No we're not flammable
 
 
 /*
@@ -330,6 +335,22 @@ var/list/ai_verbs_default = list(
 	viewalerts = 1
 	src << browse(entity_ja(dat), "window=aialerts&can_close=0")
 
+/mob/living/silicon/ai/proc/can_retransmit_messages()
+	return (stat != DEAD && !control_disabled && aiRadio && !aiRadio.disabledAi && allow_auto_broadcast_messages)
+
+/mob/living/silicon/ai/proc/retransmit_message(message)
+	if (aiRadio)
+		aiRadio.talk_into(src, message)
+
+/mob/living/silicon/ai/proc/toggle_retransmit()
+	set category = "AI Commands"
+	set name = "Toggle Auto Messages"
+	if (allow_auto_broadcast_messages)
+		to_chat(usr, "Your core is <b>disconnected</b> from station information module.")
+	else
+		to_chat(usr, "Your core is <b>connected</b> to station information module.")
+	allow_auto_broadcast_messages = !allow_auto_broadcast_messages
+
 /mob/living/silicon/ai/var/message_cooldown = 0
 /mob/living/silicon/ai/proc/ai_announcement()
 
@@ -385,7 +406,6 @@ var/list/ai_verbs_default = list(
 		F.color = f_color
 
 	to_chat(usr, "Floor color was change to [f_color]")
-
 
 /mob/living/silicon/ai/proc/ai_emergency_message()
 	set category = "AI Commands"
@@ -547,9 +567,7 @@ var/list/ai_verbs_default = list(
 	return
 
 /mob/living/silicon/ai/meteorhit(obj/O)
-	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span class='warning'>[] has been hit by []</span>", src, O), 1)
-		//Foreach goto(19)
+	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
 	if (health > 0)
 		adjustBruteLoss(30)
 		if ((O.icon_state == "flaming"))
@@ -574,26 +592,20 @@ var/list/ai_verbs_default = list(
 	switch(M.a_intent)
 
 		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='notice'>[M] caresses [src]'s plating with its scythe like arm.</span>"), 1)
+			visible_message("<span class='notice'>[M] caresses [src]'s plating with its scythe like arm.</span>")
 
 		else //harm
 			var/damage = rand(10, 20)
 			if (prob(90))
 				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has slashed at []!</B></span>", M, src), 1)
+				visible_message("<span class='warning'><B>[M] has slashed at [src]!</B></span>")
 				if(prob(8))
 					flash_eyes(affect_silicon = 1)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] took a swipe at []!</B></span>", M, src), 1)
+				visible_message("<span class='warning'><B>[M] took a swipe at [src]!</B></span>")
 	return
 
 /mob/living/silicon/ai/attack_animal(mob/living/simple_animal/M)

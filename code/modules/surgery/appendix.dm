@@ -48,7 +48,7 @@
 	var/obj/item/organ/external/BP = target.bodyparts_by_name[BP_GROIN]
 	user.visible_message("<span class='warning'>[user]'s hand slips, slicing an artery inside [target]'s abdomen with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, slicing an artery inside [target]'s abdomen with \the [tool]!</span>")
-	BP.createwound(CUT, 50, 1)
+	BP.take_damage(50, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/appendectomy/remove_appendix
 	allowed_tools = list(
@@ -87,4 +87,4 @@
 	var/obj/item/organ/external/BP = target.bodyparts_by_name[BP_GROIN]
 	user.visible_message("<span class='warning'>[user]'s hand slips, nicking organs in [target]'s abdomen with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, nicking organs in [target]'s abdomen with \the [tool]!</span>")
-	BP.createwound(BRUISE, 20)
+	BP.take_damage(20, 0, used_weapon = tool)

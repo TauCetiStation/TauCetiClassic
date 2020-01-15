@@ -1,6 +1,6 @@
 /obj/machinery/biogenerator
 	name = "Biogenerator"
-	desc = ""
+	desc = "Splits the vegetation into micro and macro nutriments, synthesizers, fertilizers, fiber, and etc."
 	icon = 'icons/obj/machines/biogenerator.dmi'
 	icon_state = "biogen-empty"
 	density = 1
@@ -139,7 +139,7 @@
 			dat += "10 milk: <A href='?src=\ref[src];action=create;item=milk'>Make</A> ([20/efficiency])<BR>"
 			dat += "10 cream: <A href='?src=\ref[src];action=create;item=cream'>Make</A> ([30/efficiency])<BR>"
 			dat += "Monkey cube: <A href='?src=\ref[src];action=create;item=monkey'>Make</A> ([250/efficiency])<BR>"
-			dat += "Meat: <A href='?src=\ref[src];action=create;item=meat'>Make</A><A href='?src=\ref[src];action=create;item=meat5'>x5</A> ([125/efficiency])<BR>"
+			dat += "Meat slice: <A href='?src=\ref[src];action=create;item=meat'>Make</A><A href='?src=\ref[src];action=create;item=meat5'>x5</A> ([80/efficiency])<BR>"
 			dat += "</div>"
 			dat += "<h3>Nutrients:</h3>"
 			dat += "<div class='statusDisplay'>"
@@ -154,6 +154,7 @@
 			dat += "Plant bag: <A href='?src=\ref[src];action=create;item=ptbag'>Make</A> ([200/efficiency])<BR>"
 			dat += "Mining satchel: <A href='?src=\ref[src];action=create;item=mnbag'>Make</A> ([200/efficiency])<BR>"
 			dat += "Botanical gloves: <A href='?src=\ref[src];action=create;item=gloves'>Make</A> ([250/efficiency])<BR>"
+			dat += "Brown shoes: <A href='?src=\ref[src];action=create;item=bshoes'>Make</A> ([250/efficiency])<BR>"
 			dat += "Utility belt: <A href='?src=\ref[src];action=create;item=tbelt'>Make</A> ([300/efficiency])<BR>"
 			dat += "Leather Satchel: <A href='?src=\ref[src];action=create;item=satchel'>Make</A> ([400/efficiency])<BR>"
 			dat += "Cash Bag: <A href='?src=\ref[src];action=create;item=cashbag'>Make</A> ([400/efficiency])<BR>"
@@ -213,7 +214,7 @@
 			if (check_cost(30/efficiency)) return 0
 			else beaker.reagents.add_reagent("cream",10)
 		if("meat")
-			if (check_cost(125/efficiency)) return 0
+			if (check_cost(80/efficiency)) return 0
 			else new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
 		if("monkey")
 			if(check_cost(250/efficiency)) return 0
@@ -252,7 +253,7 @@
 				new/obj/item/nutrient/rh(src.loc)
 				new/obj/item/nutrient/rh(src.loc)
 		if("meat5")
-			if (check_cost(125/efficiency)) return 0
+			if (check_cost(400/efficiency)) return 0
 			else
 				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
 				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
@@ -274,6 +275,9 @@
 		if("gloves")
 			if (check_cost(250/efficiency)) return 0
 			else new/obj/item/clothing/gloves/botanic_leather(src.loc)
+		if("bshoes")
+			if (check_cost(250/efficiency)) return 0
+			else new/obj/item/clothing/shoes/brown(src.loc)
 		if("tbelt")
 			if (check_cost(300/efficiency)) return 0
 			else new/obj/item/weapon/storage/belt/utility(src.loc)

@@ -49,9 +49,9 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 
 /obj/machinery/computer/telecrystals/uplinker/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(uplinkholder)
-		overlays += "[initial(icon_state)]-closed"
+		add_overlay("[initial(icon_state)]-closed")
 
 
 /obj/machinery/computer/telecrystals/uplinker/proc/ejectuplink()
@@ -139,7 +139,6 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		virgin = 0
 
 /obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
-	..()
 	var/danger
 	var/active_players = length(player_list)
 	var/agent_numbers = CLAMP((active_players / 5), 2, 6)

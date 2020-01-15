@@ -1,4 +1,4 @@
-/mob/living/carbon/human/emote(act,m_type=1,message = null, auto)
+/mob/living/carbon/human/emote(act,m_type=SHOWMSG_VISUAL,message = null, auto)
 	var/param = null
 	var/virus_scream = FALSE
 
@@ -11,7 +11,7 @@
 		act = copytext(act,1,length(act))
 
 	var/muzzled = istype(wear_mask, /obj/item/clothing/mask/muzzle) || silent
-	//var/m_type = 1
+	//var/m_type = SHOWMSG_VISUAL
 
 	for (var/obj/item/weapon/implant/I in src)
 		if (I.implanted)
@@ -26,15 +26,15 @@
 		if ("airguitar")
 			if (!src.restrained())
 				message = "<B>[src]</B> is strumming the air and headbanging like a safari chimp."
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 
 		if ("blink")
 			message = "<B>[src]</B> blinks."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("blink_r")
 			message = "<B>[src]</B> blinks rapidly."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("bow")
 			if (!src.buckled)
@@ -51,7 +51,7 @@
 					message = "<B>[src]</B> bows to [param]."
 				else
 					message = "<B>[src]</B> bows."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("custom")
 			var/input = sanitize(input("Choose an emote to display.") as text|null)
@@ -59,11 +59,11 @@
 				return
 			var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
 			if (input2 == "Visible")
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else if (input2 == "Hearable")
-				if (src.miming || has_trait(TRAIT_MUTE))
+				if (src.miming || HAS_TRAIT(src, TRAIT_MUTE))
 					return
-				m_type = 2
+				m_type = SHOWMSG_AUDIO
 			else
 				alert("Unable to use this emote, must be either hearable or visible.")
 				return
@@ -101,114 +101,114 @@
 					message = "<B>[src]</B> salutes to [param]."
 				else
 					message = "<B>[src]</b> salutes."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("choke")
-			if(miming || has_trait(TRAIT_MUTE))
+			if(miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> clutches their throat desperately!"
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else
 				if (!muzzled)
 					message = "<B>[src]</B> chokes!"
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 				else
 					message = "<B>[src]</B> makes a strong noise."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 
 		if ("clap")
 			if (!src.restrained())
 				message = "<B>[src]</B> claps."
-				m_type = 2
+				m_type = SHOWMSG_AUDIO
 				if(miming)
-					m_type = 1
+					m_type = SHOWMSG_VISUAL
 		if ("flap")
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps his wings."
-				m_type = 2
+				m_type = SHOWMSG_AUDIO
 				if(miming)
-					m_type = 1
+					m_type = SHOWMSG_VISUAL
 
 		if ("aflap")
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps his wings ANGRILY!"
-				m_type = 2
+				m_type = SHOWMSG_AUDIO
 				if(miming)
-					m_type = 1
+					m_type = SHOWMSG_VISUAL
 
 		if ("drool")
 			message = "<B>[src]</B> drools."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("eyebrow")
 			message = "<B>[src]</B> raises an eyebrow."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("chuckle")
-			if(miming || has_trait(TRAIT_MUTE))
+			if(miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> appears to chuckle."
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else
 				if (!muzzled)
 					message = "<B>[src]</B> chuckles."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 				else
 					message = "<B>[src]</B> makes a noise."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 
 		if ("twitch")
 			message = "<B>[src]</B> twitches violently."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("twitch_s")
 			message = "<B>[src]</B> twitches."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("faint")
 			message = "<B>[src]</B> faints."
 			if(src.sleeping)
 				return //Can't faint while asleep
 			src.sleeping += 10 //Short-short nap
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("cough")
-			if(miming || has_trait(TRAIT_MUTE))
+			if(miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> appears to cough!"
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else
 				if (!muzzled)
 					if (!(get_species() == DIONA))
 						message = "<B>[src]</B> coughs!"
-						m_type = 2
+						m_type = SHOWMSG_AUDIO
 					else
 						message = "<B>[src]</B> creaks!"
-						m_type = 2
+						m_type = SHOWMSG_AUDIO
 				else
 					message = "<B>[src]</B> makes a strong noise."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 
 		if ("frown")
 			message = "<B>[src]</B> frowns."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("nod")
 			message = "<B>[src]</B> nods."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("blush")
 			message = "<B>[src]</B> blushes."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("wave")
 			message = "<B>[src]</B> waves."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("gasp")
-			if(has_trait(TRAIT_MUTE))
+			if(HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> sucks in air violently!"
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else if(miming)
 				message = "<B>[src]</B> appears to be gasping!"
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else
 				if (!muzzled)
 					if(auto)
@@ -220,28 +220,28 @@
 									playsound(src, pick(SOUNDIN_MBCOUGH), VOL_EFFECTS_MASTER, null, FALSE)
 								lastSoundEmote = world.time
 					message = "<B>[src]</B> [message ? message : "gasps!"]"
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 				else
 					message = "<B>[src]</B> makes a noise."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 
 			cloud_emote = "cloud-gasp"
 
 		if ("deathgasp")
 			message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("giggle")
-			if(miming || has_trait(TRAIT_MUTE))
+			if(miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> giggles silently!"
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else
 				if (!muzzled)
 					message = "<B>[src]</B> giggles."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 				else
 					message = "<B>[src]</B> makes a noise."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 
 		if ("glare")
 			var/M = null
@@ -288,99 +288,99 @@
 				message = "<B>[src]</B> looks at [param]."
 			else
 				message = "<B>[src]</B> looks."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("grin")
 			message = "<B>[src]</B> grins."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("cry")
-			if(miming || has_trait(TRAIT_MUTE))
+			if(miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> cries."
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else
 				if (!muzzled)
 					message = "<B>[src]</B> cries."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 				else
 					message = "<B>[src]</B> makes a weak noise. \He frowns."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 
 		if ("sigh")
-			if(miming || has_trait(TRAIT_MUTE))
+			if(miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> sighs."
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else
 				if (!muzzled)
 					message = "<B>[src]</B> sighs."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 				else
 					message = "<B>[src]</B> makes a weak noise."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 
 		if ("laugh")
-			if(has_trait(TRAIT_MUTE))
+			if(HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> laughs silently."
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else if(miming)
 				message = "<B>[src]</B> acts out a laugh."
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else
 				if (!muzzled)
 					message = "<B>[src]</B> laughs."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 				else
 					message = "<B>[src]</B> makes a noise."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 
 		if ("mumble")
-			if(has_trait(TRAIT_MUTE))
+			if(HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> makes an annoyed face!"
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else
 				message = "<B>[src]</B> mumbles!"
-				m_type = 2
+				m_type = SHOWMSG_AUDIO
 				if(miming)
-					m_type = 1
+					m_type = SHOWMSG_VISUAL
 
 		if ("grumble")
 			if(miming)
 				message = "<B>[src]</B> grumbles!"
-				m_type = 1
-			else if(has_trait(TRAIT_MUTE))
+				m_type = SHOWMSG_VISUAL
+			else if(HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> makes an annoyed face!"
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else if (!muzzled)
 				message = "<B>[src]</B> grumbles!"
-				m_type = 2
+				m_type = SHOWMSG_AUDIO
 			else
 				message = "<B>[src]</B> makes a noise."
-				m_type = 2
+				m_type = SHOWMSG_AUDIO
 
 		if ("groan")
 			if(miming)
 				message = "<B>[src]</B> appears to groan!"
-				m_type = 1
-			else if(has_trait(TRAIT_MUTE))
+				m_type = SHOWMSG_VISUAL
+			else if(HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> makes a very annoyed face!"
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else
 				if (!muzzled)
 					message = "<B>[src]</B> groans!"
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 				else
 					message = "<B>[src]</B> makes a loud noise."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 
 		if ("moan")
-			m_type = 2
+			m_type = SHOWMSG_AUDIO
 			if(miming)
 				message = "<B>[src]</B> appears to moan!"
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else
 				if(!message)
 					message = "<B>[src]</B> moans!"
-				if(muzzled || has_trait(TRAIT_MUTE))
+				if(muzzled || HAS_TRAIT(src, TRAIT_MUTE))
 					message = "<B>[src]</B> moans silently!"
 				else if(auto)
 					if(lastSoundEmote >= world.time)
@@ -396,12 +396,12 @@
 			if (!M)
 				param = null
 			else
-				if(miming || has_trait(TRAIT_MUTE))
+				if(miming || HAS_TRAIT(src, TRAIT_MUTE))
 					message = "<B>[src]</B> takes a drag from a cigarette and blows \"[M]\" out in smoke."
-					m_type = 1
+					m_type = SHOWMSG_VISUAL
 				else
 					message = "<B>[src]</B> says, \"[M], please. He had a family.\" [src.name] takes a drag from a cigarette and blows his name out in smoke."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 
 		if ("point")
 			if (!restrained())
@@ -415,20 +415,20 @@
 					message = "<span class='notice'><b>[src]</b> points.</span>"
 				else
 					pointed(target)
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("raise")
 			if (!src.restrained())
 				message = "<B>[src]</B> raises a hand."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if("shake")
 			message = "<B>[src]</B> shakes \his head."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("shrug")
 			message = "<B>[src]</B> shrugs."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("signal")
 			if (!src.restrained())
@@ -438,88 +438,88 @@
 						message = "<B>[src]</B> raises [t1] finger\s."
 					else if (t1 <= 10 && (!src.r_hand && !src.l_hand))
 						message = "<B>[src]</B> raises [t1] finger\s."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("smile")
 			message = "<B>[src]</B> smiles."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("shiver")
 			message = "<B>[src]</B> shivers."
-			m_type = 2
+			m_type = SHOWMSG_AUDIO
 			if(miming)
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 
 		if ("pale")
 			message = "<B>[src]</B> goes pale for a second."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("tremble")
 			message = "<B>[src]</B> trembles in fear!"
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("sneeze")
-			if (miming || has_trait(TRAIT_MUTE))
+			if (miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> sneezes."
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else
 				if (!muzzled)
 					message = "<B>[src]</B> sneezes."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 				else
 					message = "<B>[src]</B> makes a strange noise."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 
 		if ("sniff")
 			message = "<B>[src]</B> sniffs."
-			m_type = 2
-			if(miming || has_trait(TRAIT_MUTE))
-				m_type = 1
+			m_type = SHOWMSG_AUDIO
+			if(miming || HAS_TRAIT(src, TRAIT_MUTE))
+				m_type = SHOWMSG_VISUAL
 
 		if ("snore")
-			if (miming || has_trait(TRAIT_MUTE))
+			if (miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> sleeps soundly."
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else
 				if (!muzzled)
 					message = "<B>[src]</B> snores."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 				else
 					message = "<B>[src]</B> makes a noise."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 
 		if ("whimper")
-			if (miming || has_trait(TRAIT_MUTE))
+			if (miming || HAS_TRAIT(src, TRAIT_MUTE))
 				message = "<B>[src]</B> appears hurt."
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else
 				if (!muzzled)
 					message = "<B>[src]</B> whimpers."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 				else
 					message = "<B>[src]</B> makes a weak noise."
-					m_type = 2
+					m_type = SHOWMSG_AUDIO
 
 		if ("wink")
 			message = "<B>[src]</B> winks."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("yawn")
 			if (!muzzled)
 				message = "<B>[src]</B> yawns."
-				m_type = 2
-				if(miming || has_trait(TRAIT_MUTE))
-					m_type = 1
+				m_type = SHOWMSG_AUDIO
+				if(miming || HAS_TRAIT(src, TRAIT_MUTE))
+					m_type = SHOWMSG_VISUAL
 
 		if ("collapse")
 			Paralyse(2)
 			message = "<B>[src]</B> collapses!"
-			m_type = 2
+			m_type = SHOWMSG_AUDIO
 			if(miming)
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 
 		if("hug")
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 			if (!src.restrained())
 				var/M = null
 				if (param)
@@ -536,7 +536,7 @@
 					message = "<B>[src]</B> hugs \himself."
 
 		if ("handshake")
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 			if (!src.restrained() && !src.r_hand)
 				var/mob/M = null
 				if (param)
@@ -554,7 +554,7 @@
 						message = "<B>[src]</B> holds out \his hand to [M]."
 
 		if("dap")
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 			if (!src.restrained())
 				var/M = null
 				if (param)
@@ -570,53 +570,53 @@
 		if("pain")
 			if(muzzled)
 				message = "<B>[src]</B> makes a weak noise."
-				m_type = 1 // Can't we get defines for these?
+				m_type = SHOWMSG_VISUAL // Can't we get defines for these?
 			else if(auto)
 				message = pick("<B>[src]</B> moans in pain.", "<B>[src]</B> slightly winces in pain and moans.", "<B>[src]</B> presses \his lips together in pain and moans.", "<B>[src]</B> twists in pain.")
-				m_type = 2
+				m_type = SHOWMSG_AUDIO
 				cloud_emote = "cloud-pain"
-				if((species.name != SKRELL) && has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(50)) // skrells don't have much emotions to cry in pain, but they can still moan
+				if((species.name != SKRELL) && HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) && prob(50)) // skrells don't have much emotions to cry in pain, but they can still moan
 					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_WHINER_PAIN : SOUNDIN_MALE_WHINER_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 				else
 					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_PASSIVE_PAIN : SOUNDIN_MALE_PASSIVE_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 			else
 				message = "<B>[src]</B> [pick("slightly moans feigning pain.", "appears to be in pain!")]"
-				m_type = 2
+				m_type = SHOWMSG_AUDIO
 
 		if ("scream")
 			if(miming)
 				message = "<B>[src]</B> acts out a scream!"
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else
-				virus_scream = locate(/datum/disease2/effect/scream, src) in virus2
+				virus_scream = locate(/datum/disease2/effect/scream) in virus2
 				if(virus_scream || !(species && species.flags[NO_PAIN]))
 					if (!muzzled)
 						if (auto)
-							if(has_trait(TRAIT_MUTE))
+							if(HAS_TRAIT(src, TRAIT_MUTE))
 								message = "<B>[src]</B> twists their face into an agonised expression!"
-								m_type = 1
+								m_type = SHOWMSG_VISUAL
 							else if(lastSoundEmote <= world.time) // prevent scream spam with things like poly spray
 								message = "<B>[src]</B> [pick("screams in agony", "writhes in heavy pain and screams", "screams in pain as much as [gender == FEMALE ? "she" : "he"] can", "screams in pain loudly")]!"
 								if (gender == FEMALE) // Females have their own screams. Trannys be damned.
 									playsound(src, pick(SOUNDIN_FEMALE_HEAVY_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 								else if(gender == MALE)
 									playsound(src, pick(SOUNDIN_MALE_HEAVY_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
-								m_type = 2
+								m_type = SHOWMSG_AUDIO
 								lastSoundEmote = world.time + 4 SECONDS
 						else
 							if(!message)
 								message = "<B>[src]</B> screams!"
-							m_type = 2
-							if(has_trait(TRAIT_MUTE))
+							m_type = SHOWMSG_AUDIO
+							if(HAS_TRAIT(src, TRAIT_MUTE))
 								message = "<B>[src]</B> opens their mouth like a fish gasping for air!"
-								m_type = 1
+								m_type = SHOWMSG_VISUAL
 					else
-						if(has_trait(TRAIT_MUTE))
+						if(HAS_TRAIT(src, TRAIT_MUTE))
 							message = "<B>[src]</B> makes a very hurt expression!"
-							m_type = 1
+							m_type = SHOWMSG_VISUAL
 						else
 							message = "<B>[src]</B> makes a very loud noise."
-							m_type = 2
+							m_type = SHOWMSG_AUDIO
 
 			cloud_emote = "cloud-scream"
 
@@ -636,13 +636,13 @@
 			if(!M.client)
 				continue //skip leavers
 			if((M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
-				M.show_message(message)
+				to_chat(M, message)
 
 
-		if (m_type & 1)
+		if (m_type & SHOWMSG_VISUAL)
 			for (var/mob/O in get_mobs_in_view(world.view,src))
 				O.show_message(message, m_type)
-		else if (m_type & 2)
+		else if (m_type & SHOWMSG_AUDIO)
 			for (var/mob/O in (hearers(src.loc, null) | get_mobs_in_view(world.view,src)))
 				O.show_message(message, m_type)
 

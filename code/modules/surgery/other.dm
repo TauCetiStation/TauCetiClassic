@@ -44,7 +44,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>" , \
 	"<span class='warning'>Your hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>")
-	BP.take_damage(5, 0)
+	BP.take_damage(5, 0, used_weapon = tool)
 
 //////////////////////////////////////////////////////////////////
 //					GROIN ORGAN PATCHING						//
@@ -150,7 +150,7 @@
 		else
 			dam_amt = 5
 			target.adjustToxLoss(10)
-			BP.createwound(CUT, 5)
+			BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
 
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO && IO.damage > 0)
@@ -207,11 +207,11 @@
 		"<span class='warning'>Your hand slips, smearing [tool] in the incision in [target]'s [IO], gumming it up!</span>")
 		var/dam_amt = 2
 		if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
-			target.apply_damage(6, BURN, BP, null)
+			BP.take_damage(0, 6, used_weapon = tool)
 
 		else if(iswrench(tool))
-			target.apply_damage(12, BRUTE, BP, null)
-			BP.createwound(CUT, 5)
+			BP.take_damage(12, 0, used_weapon = tool)
+			BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
 
 		if(IO.damage > 0 && IO.robotic == 2)
 			IO.take_damage(dam_amt,0)

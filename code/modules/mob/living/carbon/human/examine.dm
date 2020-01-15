@@ -239,8 +239,7 @@
 		if((stat == DEAD || src.losebreath || iszombie(src)) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
 		if(istype(user, /mob/living/carbon/human) && !user.stat && distance <= 1)
-			for(var/mob/O in viewers(user.loc, null))
-				O.show_message("[user] checks [src]'s pulse.", 1)
+			user.visible_message("[user] checks [src]'s pulse.")
 		spawn(15)
 			if(distance <= 1 && user && user.stat != UNCONSCIOUS)
 				if(pulse == PULSE_NONE)
@@ -249,11 +248,25 @@
 					to_chat(user, "<span class='deadsay'>[t_He] has a pulse!</span>")
 
 	msg += "<span class='warning'>"
+	
+	if(!species.flags[IS_SYNTHETIC])
+		if(nutrition < 100)
+			msg += "[t_He] [t_is] severely malnourished.\n"
+		else if(nutrition >= 500)
+			msg += "[t_He] [t_is] quite chubby.\n"
+	else
+		var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
+		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
+		if(C)
+			if(nutrition < (C.maxcharge*0.1))
+				msg += "His indicator of charge blinks red.\n"
+		else
+			msg += "[t_He] has no battery!\n"
 
-	if(nutrition < 100)
-		msg += "[t_He] [t_is] severely malnourished.\n"
-	else if(nutrition >= 500)
-		msg += "[t_He] [t_is] quite chubby.\n"
+	if(fire_stacks > 0)
+		msg += "[t_He] [t_is] covered in something flammable.\n"
+	if(fire_stacks < 0)
+		msg += "[t_He] look[t_is] a little soaked.\n"
 
 	msg += "</span>"
 
@@ -262,9 +275,9 @@
 	else if(getBrainLoss() >= 60)
 		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-	if(!key && brain_op_stage != 4 && stat != DEAD)
+	if(!key && has_brain() && stat != DEAD)
 		msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
-	else if(!client && brain_op_stage != 4 && stat != DEAD)
+	else if(!client && has_brain() && stat != DEAD)
 		msg += "[t_He] [t_has] suddenly fallen asleep.\n"
 
 	var/list/wound_flavor_text = list()

@@ -124,20 +124,31 @@ Class Procs:
 	var/datum/radio_frequency/radio_connection
 	var/radio_filter_out
 	var/radio_filter_in
+	var/speed_process = FALSE  // Process as fast as possible?
 
 /obj/machinery/atom_init()
 	. = ..()
 	machines += src
-	START_PROCESSING(SSmachine, src)
+
+	if (speed_process)
+		START_PROCESSING(SSfastprocess, src)
+	else
+		START_PROCESSING(SSmachine, src)
+
 	power_change()
 	update_power_use()
 
 /obj/machinery/Destroy()
 	if(frequency)
 		set_frequency(null)
+
 	set_power_use(NO_POWER_USE)
 	machines -= src
-	STOP_PROCESSING(SSmachine, src)
+
+	if (speed_process)
+		STOP_PROCESSING(SSfastprocess, src)
+	else
+		STOP_PROCESSING(SSmachine, src)
 
 	dropContents()
 	return ..()
@@ -430,7 +441,7 @@ Class Procs:
 			var/P
 			if(W.works_from_distance)
 				to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
-				for(var/var/obj/item/C in component_parts)
+				for(var/obj/item/C in component_parts)
 					to_chat(user, "<span class='notice'>    [C.name]</span>")
 			for(var/obj/item/weapon/stock_parts/A in component_parts)
 				for(var/D in CB.req_components)
@@ -451,7 +462,7 @@ Class Procs:
 			RefreshParts()
 		else
 			to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
-			for(var/var/obj/item/C in component_parts)
+			for(var/obj/item/C in component_parts)
 				to_chat(user, "<span class='notice'>    [C.name]</span>")
 		if(shouldplaysound)
 			W.play_rped_sound()
@@ -472,8 +483,7 @@ Class Procs:
 	return
 
 /obj/machinery/proc/state(msg)
-	for(var/mob/O in hearers(src, null))
-		O.show_message("[bicon(src)] <span class = 'notice'>[msg]</span>", 2)
+	audible_message("[bicon(src)] <span class = 'notice'>[msg]</span>")
 
 /obj/machinery/proc/ping(text=null)
 	if (!text)

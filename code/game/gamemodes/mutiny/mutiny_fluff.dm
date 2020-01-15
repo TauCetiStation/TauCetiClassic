@@ -166,7 +166,7 @@ NanoTrasen has [mode.loyalists.len] members of the crew in holding, while it inv
 <center><b>Gilthari Exports Incident Transcript</b></center>
 <center><font color='red'>CONFIDENTIAL: PROPERTY OF NANOTRASEN</font></center>
 <i>Location:</i> Operator's Desk, D Deck, Polumetis Installation<br>
-<i>Time:</i> 16:11, May 24, 2558 (Sol Reckoning)<br>
+<i>Time:</i> 16:11, May 24, [game_year-2] (Sol Reckoning)<br>
 <br>
 <br>
 

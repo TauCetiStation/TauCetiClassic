@@ -229,6 +229,7 @@ var/list/airlock_overlays = list()
 		if(AIRLOCK_DENY, AIRLOCK_OPENING, AIRLOCK_CLOSING, AIRLOCK_EMAG)
 			icon_state = "nonexistenticonstate"
 	set_airlock_overlays(state)
+	SSdemo.mark_dirty(src)
 
 /obj/machinery/door/airlock/proc/set_airlock_overlays(state)
 	var/image/frame_overlay
@@ -310,36 +311,36 @@ var/list/airlock_overlays = list()
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
 
-	// Doesn't used overlays.Cut() for performance reasons.
+	// Doesn't used cut_overlays() for performance reasons.
 	if(frame_overlay != old_frame_overlay)
-		overlays -= old_frame_overlay
-		overlays += frame_overlay
+		cut_overlay(old_frame_overlay)
+		add_overlay(frame_overlay)
 		old_frame_overlay = frame_overlay
 	if(filling_overlay != old_filling_overlay)
-		overlays -= old_filling_overlay
-		overlays += filling_overlay
+		cut_overlay(old_filling_overlay)
+		add_overlay(filling_overlay)
 		old_filling_overlay = filling_overlay
 	if(lights_overlay != old_lights_overlay)
 		if(lights_overlay)
 			lights_overlay.layer = LIGHTING_LAYER + 1
 			lights_overlay.plane = LIGHTING_PLANE + 1
-		overlays -= old_lights_overlay
-		overlays += lights_overlay
+		cut_overlay(old_lights_overlay)
+		add_overlay(lights_overlay)
 		old_lights_overlay = lights_overlay
 	if(panel_overlay != old_panel_overlay)
-		overlays -= old_panel_overlay
-		overlays += panel_overlay
+		cut_overlay(old_panel_overlay)
+		add_overlay(panel_overlay)
 		old_panel_overlay = panel_overlay
 	if(weld_overlay != old_weld_overlay)
-		overlays -= old_weld_overlay
-		overlays += weld_overlay
+		cut_overlay(old_weld_overlay)
+		add_overlay(weld_overlay)
 		old_weld_overlay = weld_overlay
 	if(sparks_overlay != old_sparks_overlay)
 		if(sparks_overlay)
 			sparks_overlay.layer = LIGHTING_LAYER + 1
 			sparks_overlay.plane = LIGHTING_PLANE + 1
-		overlays -= old_sparks_overlay
-		overlays += sparks_overlay
+		cut_overlay(old_sparks_overlay)
+		add_overlay(sparks_overlay)
 		old_sparks_overlay = sparks_overlay
 
 /proc/get_airlock_overlay(icon_state, icon_file)
@@ -1175,12 +1176,12 @@ var/list/airlock_overlays = list()
 	. = ..()
 	var/image/fire_overlay = image("icon"='icons/effects/effects.dmi', "icon_state"="s_fire", "layer" = (LIGHTING_LAYER + 1))
 	fire_overlay.plane = LIGHTING_PLANE + 1
-	overlays += fire_overlay
+	add_overlay(fire_overlay)
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/door_scrap/process()
 	if(ticker >= 300)
-		overlays.Cut()
+		cut_overlays()
 		STOP_PROCESSING(SSobj, src)
 		return
 	ticker++
