@@ -811,11 +811,9 @@
 				if(GRAB_PASSIVE)
 					if(ishuman(G.assailant))
 						var/mob/living/carbon/human/H = G.assailant
-						if(H.shoving_fingers && iscarbon(src))
-							var/mob/living/carbon/C_ = src
-							if(!istype(C_.wear_mask, /obj/item/clothing/mask/muzzle))
-								H.adjustBruteLoss(5) // We bit them.
-								H.shoving_fingers = FALSE
+						if(H.shoving_fingers && !istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
+							H.adjustBruteLoss(5) // We bit them.
+							H.shoving_fingers = FALSE
 					qdel(G)
 				if(GRAB_AGGRESSIVE)
 					if(prob(50 - (L.lying ? 35 : 0)))
