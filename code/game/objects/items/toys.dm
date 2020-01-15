@@ -827,7 +827,7 @@ Owl & Griffin toys
  * Fake nuke
  */
 /obj/item/toy/nuke
-	name = "\improper Nuclear Fission Explosive toy"
+	name = "Nuclear Fission Explosive toy"
 	desc = "A plastic model of a Nuclear Fission Explosive."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoyidle"
@@ -852,7 +852,7 @@ Owl & Griffin toys
  * Fake meteor
  */
 /obj/item/toy/minimeteor
-	name = "\improper Mini-Meteor"
+	name = "Mini-Meteor"
 	desc = "Relive the excitement of a meteor shower! SweetMeat-eor. Co is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor?"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "minimeteor"

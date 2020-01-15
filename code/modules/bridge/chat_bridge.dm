@@ -27,7 +27,6 @@
 
 	var/encoded_json = replacetext(list2json(json), "'", "`")//todo: replace on json_encode() after unicode update
 	//world.log << "send2bridge json: [encoded_json]"
-	encoded_json = replacetext(replacetext(encoded_json, "\improper", ""), "\proper", "")
 
 	spawn()
 		var/list/result = json2list(world.ext_python("get.py", "[shelleo_url_scrub(config.chat_bridge)] --json='[encoded_json]'"))
