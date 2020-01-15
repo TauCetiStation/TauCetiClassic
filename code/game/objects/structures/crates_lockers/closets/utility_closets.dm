@@ -201,6 +201,27 @@
 	new /obj/item/clothing/head/hardhat/red(src)
 
 /*
+ * Emergency closet
+ */
+/obj/structure/closet/emergency_wall
+	name = "emergency closet"
+	desc = "A wall mounted closet with emergency supplies."
+	icon_state = "emergency_wall"
+	icon_closed = "emergency_wall"
+	icon_opened = "emergency_wall_open"
+	anchored = TRUE
+	density = FALSE
+	wall_mounted = TRUE
+
+/obj/structure/closet/emergency_wall/PopulateContents()
+	new /obj/item/weapon/tank/emergency_oxygen(src)
+	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/weapon/crowbar/red(src)
+	new /obj/item/weapon/tank/emergency_oxygen(src)
+	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/weapon/crowbar/red(src)
+
+/*
  * First Aid
  */
 /obj/structure/closet/medical_wall //wall mounted medical closet

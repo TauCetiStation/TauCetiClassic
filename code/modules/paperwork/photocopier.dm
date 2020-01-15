@@ -205,6 +205,9 @@
 	var/copied = html_decode(copy.info)
 	copied = replacetext(copied, "<font face=\"[P.deffont]\" color=", "<font face=\"[P.deffont]\" nocolor=")	//state of the art techniques in action
 	copied = replacetext(copied, "<font face=\"[P.crayonfont]\" color=", "<font face=\"[P.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+	copied = replacetext(copied, "<img ", "<img style=\"filter: gray;\"")	//IE is still IE
+	copied = replacetext(copied, "<font color=", "<font nocolor=")
+	copied = replacetext(copied, "<table border=3px cellpadding=5px bordercolor=", "<table border=3px cellpadding=5px bordernocolor=")
 	P.info += copied
 	P.info += "</font>"//</font>
 	P.name = copy.name // -- Doohl
@@ -220,6 +223,8 @@
 			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-circle")
 		else if (findtext(copy.ico[i], "deny"))
 			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-x")
+		else if (findtext(copy.ico[i], "approve"))
+			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-check")
 		else
 			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-dots")
 		img.pixel_x = copy.offset_x[i]

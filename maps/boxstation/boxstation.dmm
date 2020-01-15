@@ -44209,9 +44209,7 @@
 	pixel_y = 8
 	},
 /obj/item/weapon/reagent_containers/glass/rag,
-/obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask{
-	pixel_y = 10
-	},
+/obj/item/weapon/reagent_containers/food/drinks/shaker,
 /obj/structure/table/reinforced,
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -56413,12 +56411,14 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "clA" = (
-/obj/structure/closet/walllocker/emerglocker/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 8;
 	frequency = 1379;
 	id_tag = "engineering_aux_pump";
 	name = "Engineering Aux Large Air Vent"
+	},
+/obj/structure/closet/emergency_wall{
+	pixel_y = 32
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
@@ -66252,7 +66252,9 @@
 	id_tag = "engineering_west_pump";
 	name = "Engineering West Large Air Vent"
 	},
-/obj/structure/closet/walllocker/emerglocker/north,
+/obj/structure/closet/emergency_wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cIH" = (
@@ -66663,7 +66665,9 @@
 	id_tag = "engineering_east_pump";
 	name = "Engineering East Large Air Vent"
 	},
-/obj/structure/closet/walllocker/emerglocker/north,
+/obj/structure/closet/emergency_wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/plating{
 	dir = 1
 	},
@@ -70326,7 +70330,9 @@
 /area/station/civilian/library)
 "hmb" = (
 /obj/structure/flora/plant/random,
-/obj/structure/closet/walllocker/emerglocker/west,
+/obj/structure/closet/emergency_wall{
+	pixel_x = -30
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -75932,7 +75938,7 @@
 	},
 /obj/item/trash/popcorn,
 /obj/machinery/vending/wallmed1{
-	pixel_x = 24
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -76856,7 +76862,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/closet/walllocker/emerglocker/east,
+/obj/structure/closet/emergency_wall{
+	pixel_x = 30
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
