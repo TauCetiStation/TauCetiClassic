@@ -894,6 +894,8 @@
 			adjustToxLoss(-toxins_puked)
 
 /mob/living/carbon/update_stat()
+	if(stat == DEAD)
+		return
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE

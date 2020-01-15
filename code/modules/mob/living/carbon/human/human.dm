@@ -2062,6 +2062,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		INVOKE_ASYNC(src, /mob.proc/jittery_process)
 
 /mob/living/carbon/update_stat()
+	if(stat == DEAD)
+		return
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
