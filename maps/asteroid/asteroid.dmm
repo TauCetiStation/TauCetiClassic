@@ -443,15 +443,14 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/structure/closet/walllocker/emerglocker/north{
-	dir = 1;
-	pixel_y = -32
-	},
 /obj/structure/table,
 /obj/machinery/cell_charger{
 	pixel_y = 5
 	},
 /obj/item/weapon/stock_parts/cell,
+/obj/structure/closet/emergency_wall{
+	pixel_x = -30
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maintstore1)
 "bm" = (
@@ -963,10 +962,12 @@
 	},
 /area/asteroid/research_outpost/atmos)
 "cm" = (
-/obj/structure/closet/walllocker/emerglocker/west,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/closet/emergency_wall{
+	pixel_x = -30
 	},
 /turf/simulated/floor{
 	icon_state = "whitecorner"
@@ -2041,7 +2042,9 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "eu" = (
-/obj/structure/closet/walllocker/emerglocker/north,
+/obj/structure/closet/emergency_wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitebluecorner"
@@ -6842,11 +6845,13 @@
 	},
 /area/asteroid/research_outpost/iso2)
 "oi" = (
-/obj/structure/closet/walllocker/emerglocker/west,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/closet/emergency_wall{
+	pixel_x = -30
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maintstore2)
