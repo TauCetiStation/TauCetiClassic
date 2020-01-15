@@ -181,7 +181,8 @@
 			stamp_border = chosen_stamp.stamp_border
 
 /obj/item/weapon/stamp/proc/stamp_paper(obj/item/weapon/paper/P, stamp_text)
-	P.stamp_text += (P.stamp_text == "" ? "" : "<br>")
+	if (P.stamp_text && P.stamp_text != "")
+		P.stamp_text += "<br>"
 
 	var/message = stamp_text ? stamp_text : stamp_message
 	if (big_stamp)
