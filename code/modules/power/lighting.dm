@@ -409,7 +409,7 @@
 				user.drop_item()	//drop the item to update overlays and such
 				qdel(L)
 
-				playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MISC, 25)
+				playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 25)
 				user.SetNextMove(CLICK_CD_INTERACT)
 
 				if(on && rigged)
@@ -565,7 +565,7 @@
 	L.brightness_power = brightness_power
 	L.brightness_color = brightness_color
 
-	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MISC, 25)
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 25)
 	user.SetNextMove(CLICK_CD_INTERACT)
 
 	// light item inherits the switchcount, then zero it
