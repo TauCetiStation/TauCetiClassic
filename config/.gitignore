@@ -1,4 +1,5 @@
 #ignore everything here, except subdirectories.
 *
 !*/
-!*/.gitignore
+/announcer
+!example/**
