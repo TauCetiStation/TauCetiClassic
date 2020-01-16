@@ -128,7 +128,7 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
 	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key][log_end]"
-
+	// log_debug("TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 	if (T == "ping")
 		var/x = 1
 		for (var/client/C)
@@ -244,6 +244,8 @@ var/world_topic_spam_protect_time = world.timeofday
 			return "Bad Key"
 
 		return show_player_info_irc(input["notes"])
+	else if (copytext(T,1,length("announce&")+1) == "announce&")
+		return receive_net_announce(T)
 
 
 
@@ -456,6 +458,7 @@ var/shutdown_processed = FALSE
 	config.load("config/game_options.txt","game_options")
 	config.loadsql("config/dbconfig.txt")
 	config.loadmaplist("config/maps.txt")
+	config.load_announcer_config("config/announcer")
 	// apply some settings from config..
 	abandon_allowed = config.respawn
 
@@ -622,3 +625,56 @@ var/failed_old_db_connections = 0
 		return no_head ? 0 : "HEAD"
 
 	return text
+
+/world/proc/send_net_announce(type, list/msg)
+	// get associated list for message
+	// return associated list with key as server url when receive somthing
+	var/list/response = list()
+	if (length(global.net_announcer_secret) < 2)
+		return response
+	if (!length(msg))
+		log_debug("send_net_announce: empty msg")
+		return response
+	if (!istext(type) || !length(type))
+		log_debug("send_net_announce: wrong type argument")
+		return response
+	// secret keep secret
+	for(var/i in 2 to length(global.net_announcer_secret))
+		var/server = global.net_announcer_secret[i]
+		var/request = text("[]?announce&secret=[]&type=[]&[]", server, global.net_announcer_secret[server], type, list2params(msg))
+		if (length(request))
+			response[server] = world.Export("[request]")
+	return response
+
+/world/proc/receive_net_announce(msg)
+	// validate message from /world/Topic
+	// actions in proccess_net_announce
+	if (!istext(msg))
+		return
+	var/regex/announce_format = regex(@"^announce&secret=([^&;]+)&type=([^&;]+)&")
+	announce_format.Find(msg)
+	if (length(announce_format.group) < 2 || !length(global.net_announcer_secret))
+		return
+	var/self = global.net_announcer_secret[1]
+	if (!self)
+		// empty secret
+		return
+	var/msg_secret = announce_format.group[1]
+	var/type = announce_format.group[2]
+	if (msg_secret != global.net_announcer_secret[self])
+		log_debug("Unauthorized connection for net_announce")
+		return
+	msg = announce_format.Replace(msg, "")
+	return proccess_net_announce(type, params2list(msg))
+
+/world/proc/proccess_net_announce(type, list/data)
+	if (!length(data))
+		// params2list errors
+		return
+	switch(type)
+		if ("ban")
+			if (!data["ckey"] || !data["ip"] || !data["cid"])
+				return
+			log_debug(text("Ban ckey=[] ip=[] cid=[]", data["ckey"], data["ip"], data["cid"]))
+			return "Ban message received by [global.net_announcer_secret[1]]"
+	log_debug("Unknown type of net announce message \"[type]\"")

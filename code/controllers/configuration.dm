@@ -1,3 +1,5 @@
+var/list/net_announcer_secret = list()
+
 /datum/configuration
 	var/name = "Configuration"			// datum name
 
@@ -832,3 +834,36 @@
 				currentmap = null
 			else
 				error("Unknown command in map vote config: '[command]'")
+
+/datum/configuration/proc/load_list_without_comments(filename)
+	// Loading text file to list and removing comments
+	// Comment line can start with # or end with #
+	// If line end with # before # place tab(s) or space(s)
+	var/list/data = list()
+	for(var/L in file2list(filename))
+		if (copytext(L, 1, 2) == "#")
+			continue
+		var/cut_position = findtext(L, regex(@"\s+#"))
+		if(cut_position)
+			L = trim(copytext(L, 1, cut_position))
+		if (length(L))
+			data += L
+	return data
+
+/datum/configuration/proc/load_announcer_config(config_path)
+	// Loading config of network communication between servers
+	// Server list loaded from serverlist.txt file. It's file with comments. 
+	// One line of file = one server. Format - byond://example.com:2506 = secret
+	// First server must be self link for loading the secret
+	if (!length(global.net_announcer_secret))
+		var/changed = FALSE
+		for(var/L in load_list_without_comments("[config_path]/serverlist.txt"))
+			var/delimiter_position = findtext(L,"=")
+			var/key = trim(copytext(L, 1, delimiter_position))
+			if(delimiter_position && length(key))
+				// remove restricted chars
+				L=replacetext(L,regex(@"[;&]","g"), "")
+				global.net_announcer_secret[key] = trim(copytext(L, delimiter_position+1))
+				changed = TRUE
+		if (changed)
+			log_misc("Loaded config for net announcer")
