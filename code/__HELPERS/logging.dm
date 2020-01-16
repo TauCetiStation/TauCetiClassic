@@ -16,7 +16,7 @@
 	world.log << "## ERROR: [msg][log_end]"
 
 //print a warning message to world.log
-#define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
+#define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [UNLINT(src)] usr: [usr].")
 /proc/warning(msg)
 	world.log << "## WARNING: [msg][log_end]"
 

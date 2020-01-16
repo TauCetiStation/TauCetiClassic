@@ -807,6 +807,19 @@
 			t_prod.potency = potency
 			t_prod.plant_type = plant_type
 			t_amount++
+	else if (ispath(produce, /obj/item/weapon/grown))
+		while ( t_amount < getYield())
+			var/obj/item/weapon/grown/t_prod = new produce(user.loc, potency)
+			t_prod.seed = mypath
+			t_prod.species = species
+			t_prod.lifespan = lifespan
+			t_prod.endurance = endurance
+			t_prod.maturation = maturation
+			t_prod.production = production
+			t_prod.yield = yield
+			t_prod.changePotency(potency)
+			t_prod.plant_type = plant_type
+			t_amount++
 	else // Messa's Tear and S'rendarr's Hand leaf are not grown consumables and dont have reqired variables
 		while(t_amount < getYield())
 			var/t_prod = new produce(output_loc)
@@ -827,67 +840,6 @@
 
 	if(t_yield > 0)
 		new/obj/item/stack/tile/grass(user.loc, t_yield)
-
-	parent.update_tray()
-
-/obj/item/seeds/gibtomato/harvest(mob/user = usr)
-	var/produce = text2path(productname)
-	var/obj/machinery/hydroponics/parent = loc
-	var/t_amount = 0
-
-	while (t_amount < (yield * parent.yieldmod))
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(user.loc, potency) // User gets a consumable
-
-		t_prod.seed = mypath
-		t_prod.species = species
-		t_prod.lifespan = lifespan
-		t_prod.endurance = endurance
-		t_prod.maturation = maturation
-		t_prod.production = production
-		t_prod.yield = yield
-		t_prod.potency = potency
-		t_prod.plant_type = plant_type
-		t_amount++
-
-	parent.update_tray()
-
-/obj/item/seeds/nettleseed/harvest(mob/user = usr)
-	var/produce = text2path(productname)
-	var/obj/machinery/hydroponics/parent = loc
-	var/t_amount = 0
-
-	while ( t_amount < (yield * parent.yieldmod ))
-		var/obj/item/weapon/grown/t_prod = new produce(user.loc, potency)
-		t_prod.seed = mypath
-		t_prod.species = species
-		t_prod.lifespan = lifespan
-		t_prod.endurance = endurance
-		t_prod.maturation = maturation
-		t_prod.production = production
-		t_prod.yield = yield
-		t_prod.changePotency(potency)
-		t_prod.plant_type = plant_type
-		t_amount++
-
-	parent.update_tray()
-
-/obj/item/seeds/deathnettleseed/harvest(mob/user = usr) //COPYPOASTAAAA
-	var/produce = text2path(productname)
-	var/obj/machinery/hydroponics/parent = loc
-	var/t_amount = 0
-
-	while (t_amount < (yield * parent.yieldmod))
-		var/obj/item/weapon/grown/t_prod = new produce(user.loc, potency)
-		t_prod.seed = mypath
-		t_prod.species = species
-		t_prod.lifespan = lifespan
-		t_prod.endurance = endurance
-		t_prod.maturation = maturation
-		t_prod.production = production
-		t_prod.yield = yield
-		t_prod.changePotency(potency)
-		t_prod.plant_type = plant_type
-		t_amount++
 
 	parent.update_tray()
 
