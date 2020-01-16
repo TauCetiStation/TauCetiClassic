@@ -202,7 +202,6 @@
 	interact_offline = TRUE
 	var/on = 0					// 1 if on, 0 if off
 	var/on_gs = 0
-	var/last_screw_sound = 0 // Last insert/remove sound
 	var/static_power_used = 0
 	var/brightness_range = 7	// luminosity when on, also used in power calculation
 	var/brightness_power = 2
@@ -389,7 +388,7 @@
 			return
 
 	// attempt to insert light
-	if(istype(W, /obj/item/weapon/light) && (last_screw_sound < world.time))
+	if(istype(W, /obj/item/weapon/light))
 		if(status != LIGHT_EMPTY)
 			to_chat(user, "There is a [fitting] already inserted.")
 			return
@@ -410,8 +409,8 @@
 				user.drop_item()	//drop the item to update overlays and such
 				qdel(L)
 
-				playsound(src, 'sound/machines/screw-in.ogg', VOL_EFFECTS_MISC, 25)
-				last_screw_sound = world.time + 5
+				playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MISC, 25)
+				user.SetNextMove(CLICK_CD_INTERACT)
 
 				if(on && rigged)
 
@@ -531,9 +530,6 @@
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
 
-	if(last_screw_sound > world.time)
-		return 1
-	
 	if(status == LIGHT_EMPTY)
 		to_chat(user, "There is no [fitting] in this light.")
 		return 1
@@ -569,8 +565,8 @@
 	L.brightness_power = brightness_power
 	L.brightness_color = brightness_color
 
-	playsound(src, 'sound/machines/screw-in.ogg', VOL_EFFECTS_MISC, 25)
-	last_screw_sound = world.time + 5
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MISC, 25)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	// light item inherits the switchcount, then zero it
 	L.switchcount = switchcount
