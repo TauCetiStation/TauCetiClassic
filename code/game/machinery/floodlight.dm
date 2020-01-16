@@ -60,7 +60,7 @@
 		set_light(0)
 		
 		user.SetNextMove(CLICK_CD_INTERACT)
-		playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 20)
+		playsound(src, 'sound/machines/floodlight.ogg', VOL_EFFECTS_MASTER, 40)
 	else
 		if(!cell)
 			return
@@ -71,7 +71,7 @@
 		set_light(brightness_on)
 		
 		user.SetNextMove(CLICK_CD_INTERACT)
-		playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 20)
+		playsound(src, 'sound/machines/floodlight.ogg', VOL_EFFECTS_MASTER, 40)
 		playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	updateicon()
