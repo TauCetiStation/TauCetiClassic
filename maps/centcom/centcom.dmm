@@ -7020,10 +7020,6 @@
 /turf/simulated/shuttle/plating,
 /area/shuttle/officer/velocity)
 "azu" = (
-/obj/structure/closet/walllocker/emerglocker/north{
-	pixel_x = -32;
-	pixel_y = 0
-	},
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	icon_state = "chair_c03";
 	name = "shuttle chair"
@@ -22145,7 +22141,6 @@
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "oAb" = (
-/obj/structure/closet/walllocker/emerglocker/north,
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "oBb" = (
@@ -22662,10 +22657,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/control)
-"pRb" = (
-/obj/structure/closet/walllocker/emerglocker/south,
-/turf/simulated/shuttle/floor,
-/area/shuttle/escape/centcom)
 "pSb" = (
 /obj/structure/closet/medical_wall,
 /obj/item/weapon/reagent_containers/blood/OMinus,
@@ -37661,7 +37652,7 @@ aVy
 aVy
 aVy
 aVy
-pRb
+oAb
 aUE
 aaM
 aaM
