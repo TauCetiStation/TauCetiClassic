@@ -98,7 +98,9 @@
 		attachment_msg = "**[key_name(usr)]** [text("has added a **[]** for **[] [] []** with the reason: ***[]*** to the ban database.", bantype_str, ckey, (job ? "([job])" : ""), (duration > 0 ? "([duration] minutes)" : ""), text("[sanitize(reason)]"))]",
 		attachment_color = BRIDGE_COLOR_ADMINBAN,
 	)
-	world.send_ban_announce(ckey, ip, computerid)
+	if (bantype == BANTYPE_PERMA || bantype == BANTYPE_TEMP)
+		// servers use data from DB
+		world.send_ban_announce(ckey, ip, computerid)
 
 /datum/admins/proc/DB_ban_unban(ckey, bantype, job = "")
 
@@ -585,4 +587,6 @@
 		attachment_msg = "**Tau Kitty** has added a **[bantype_str]** for **[ckey]** **[(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""]** with the reason: ***\"[reason]\"*** to the ban database.",
 		attachment_color = BRIDGE_COLOR_ADMINBAN,
 	)
-	world.send_ban_announce(ckey, ip, computerid)
+	if (bantype == BANTYPE_PERMA || bantype == BANTYPE_TEMP)
+		// servers use data from DB
+		world.send_ban_announce(ckey, ip, computerid)
