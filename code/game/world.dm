@@ -245,7 +245,7 @@ var/world_topic_spam_protect_time = world.timeofday
 
 		return show_player_info_irc(input["notes"])
 	else if (copytext(T,1,length("announce&")+1) == "announce&")
-		return receive_net_announce(T)
+		return receive_net_announce(T, addr)
 
 
 
@@ -626,6 +626,9 @@ var/failed_old_db_connections = 0
 
 	return text
 
+// Net announce
+#define NET_ANNOUNCE_BAN "ban"
+
 /world/proc/send_net_announce(type, list/msg)
 	// get associated list for message
 	// return associated list with key as server url when receive somthing
@@ -633,10 +636,8 @@ var/failed_old_db_connections = 0
 	if (length(global.net_announcer_secret) < 2)
 		return response
 	if (!length(msg))
-		log_debug("send_net_announce: empty msg")
 		return response
 	if (!istext(type) || !length(type))
-		log_debug("send_net_announce: wrong type argument")
 		return response
 	// secret keep secret
 	for(var/i in 2 to length(global.net_announcer_secret))
@@ -646,7 +647,24 @@ var/failed_old_db_connections = 0
 			response[server] = world.Export("[request]")
 	return response
 
-/world/proc/receive_net_announce(msg)
+/world/proc/send_ban_announce(ckey = null, ip = null, cid = null)
+	var/list/data = list()
+	if (ckey)
+		data["ckey"] = ckey
+	if (ip)
+		data["ip"] = ip
+	if (cid)
+		data["cid"] = cid
+	if (length(data))
+		var/list/received_data = send_net_announce(NET_ANNOUNCE_BAN, data)
+		for(var/R in received_data)
+			var/number_kicked = text2num(received_data[R])
+			if (number_kicked)
+				message_admins("Kicked [number_kicked] player(s) on [R]")
+		return TRUE
+	return FALSE
+
+/world/proc/receive_net_announce(msg, sender)
 	// validate message from /world/Topic
 	// actions in proccess_net_announce
 	if (!istext(msg))
@@ -662,19 +680,48 @@ var/failed_old_db_connections = 0
 	var/msg_secret = announce_format.group[1]
 	var/type = announce_format.group[2]
 	if (msg_secret != global.net_announcer_secret[self])
-		log_debug("Unauthorized connection for net_announce")
+		// log_debug("Unauthorized connection for net_announce")
 		return
 	msg = announce_format.Replace(msg, "")
-	return proccess_net_announce(type, params2list(msg))
+	return proccess_net_announce(type, params2list(msg), sender)
 
-/world/proc/proccess_net_announce(type, list/data)
+/world/proc/proccess_net_announce(type, list/data, sender)
 	if (!length(data))
 		// params2list errors
 		return
+	var/self_flag = FALSE
+	if (sender == ("127.0.0.1:[world.port]"))
+		self_flag = TRUE
 	switch(type)
-		if ("ban")
-			if (!data["ckey"] || !data["ip"] || !data["cid"])
-				return
-			log_debug(text("Ban ckey=[] ip=[] cid=[]", data["ckey"], data["ip"], data["cid"]))
-			return "Ban message received by [global.net_announcer_secret[1]]"
-	log_debug("Unknown type of net announce message \"[type]\"")
+		if (NET_ANNOUNCE_BAN)
+			// legacy system use files, we need DB for ban check
+			if (!self_flag && config && !config.ban_legacy_system)
+				return proccess_ban_announce(data, sender)
+	return
+
+/world/proc/proccess_ban_announce(list/data, sender, self)
+	var/list/to_kick = list()
+	for (var/mob/M in global.player_list)
+		var/list/ban_key = list()
+		if (data["ckey"] && M.ckey && M.ckey == data["ckey"])
+			ban_key += "ckey([data["ckey"]])"
+		if (data["cid"] && M.computer_id && M.computer_id == data["cid"])
+			ban_key += "cid([data["cid"]])"
+		if (data["ip"] && M.client && M.client.address && M.client.address == data["ip"])
+			ban_key += "ip([data["ip"]])"
+		if (length(ban_key) > 0)
+			var/banned = world.IsBanned(data["ckey"], data["ip"],  data["cid"])
+			if (banned && banned["reason"] && banned["desc"])
+				to_kick[M] = banned["desc"]
+				var/notify = text("Player [] kicked by ban announce from []. Reason: []. Matched [].", M.ckey, sender, banned["reason"], ban_key.Join(", "))
+				// message_admins(notify)
+				log_admin(notify)
+	for (var/mob/K in to_kick)
+		if (K.client)
+			// Message queue sometimes slow, send without delay before kick
+			to_chat_immediate(K, "<span class='warning'><BIG><B>You kicked from the server.</B></BIG></span>")
+			to_chat_immediate(K, "<span class='warning'>[to_kick[K]]</span>")
+			del(K.client)
+	return length(to_kick)
+
+#undef NET_ANNOUNCE_BAN
