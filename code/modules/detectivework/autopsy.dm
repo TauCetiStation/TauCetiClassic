@@ -86,10 +86,11 @@
 	set name = "Print Data"
 	if(!ishuman(usr) || usr.incapacitated() || usr.stat || usr.lying)
 		return
-		
-	var/scan_data = ""
+
 	flick("autopsy_printing",src)
 	playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
+
+	var/scan_data = ""
 
 	if(timeofdeath)
 		scan_data += "<b>Time of death:</b> [worldtime2text(timeofdeath)]<br><br>"
