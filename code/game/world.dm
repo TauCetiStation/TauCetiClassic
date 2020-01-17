@@ -648,6 +648,8 @@ var/failed_old_db_connections = 0
 	return response
 
 /world/proc/send_ban_announce(ckey = null, ip = null, cid = null)
+	if (!config.net_announcers["ban_send"])
+		return FALSE
 	var/list/data = list()
 	if (ckey)
 		data["ckey"] = ckey
@@ -695,7 +697,7 @@ var/failed_old_db_connections = 0
 	switch(type)
 		if (NET_ANNOUNCE_BAN)
 			// legacy system use files, we need DB for ban check
-			if (!self_flag && config && !config.ban_legacy_system)
+			if (config.net_announcers["ban_receive"] && !self_flag && config && !config.ban_legacy_system)
 				return proccess_ban_announce(data, sender)
 	return
 

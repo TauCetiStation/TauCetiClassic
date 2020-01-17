@@ -190,6 +190,7 @@ var/list/net_announcer_secret = list()
 
 	
 	var/sandbox = FALSE
+	var/list/net_announcers = list() // List of network announcers on
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -855,15 +856,25 @@ var/list/net_announcer_secret = list()
 	// Server list loaded from serverlist.txt file. It's file with comments. 
 	// One line of file = one server. Format - byond://example.com:2506 = secret
 	// First server must be self link for loading the secret
-	if (!length(global.net_announcer_secret))
-		var/changed = FALSE
-		for(var/L in load_list_without_comments("[config_path]/serverlist.txt"))
-			var/delimiter_position = findtext(L,"=")
-			var/key = trim(copytext(L, 1, delimiter_position))
-			if(delimiter_position && length(key))
-				// remove restricted chars
-				L=replacetext(L,regex(@"[;&]","g"), "")
-				global.net_announcer_secret[key] = trim(copytext(L, delimiter_position+1))
-				changed = TRUE
-		if (changed)
-			log_misc("Loaded config for net announcer")
+	for(var/L in load_list_without_comments("[config_path]/serverlist.txt"))
+		var/delimiter_position = findtext(L,"=")
+		var/key = trim(copytext(L, 1, delimiter_position))
+		if(delimiter_position && length(key))
+			// remove restricted chars
+			L=replacetext(L,regex(@"[;&]","g"), "")
+			global.net_announcer_secret[key] = trim(copytext(L, delimiter_position+1))
+	for(var/L in load_list_without_comments("[config_path]/ban.txt"))
+		var/delimiter_position = findtext(L,"=")
+		var/key = trim(copytext(L, 1, delimiter_position))
+		if(delimiter_position && length(key))
+			var/value = trim(copytext(L, delimiter_position+1))
+			switch(lowertext(key))
+				if ("receive")
+					if (value && (lowertext(value) == "true" || lowertext(value) == "on"))
+						net_announcers["ban_receive"] = TRUE
+						log_debug("RECV ON")
+				if ("send")
+					if (value && (lowertext(value) == "true" || lowertext(value) == "on"))
+						net_announcers["ban_send"] = TRUE
+						log_debug("SEND ON")
+				

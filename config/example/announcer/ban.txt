@@ -1,0 +1,5 @@
+# Config for ban announce settings
+# Recieve option can be True/On. If other option setted, server turn off ban announce proccessing.
+# Same for Send option.
+# RECEIVE = TRUE  # Server recieve ban announces
+# SEND = TRUE     # After writing ban to DB send ban announce to other servers.
