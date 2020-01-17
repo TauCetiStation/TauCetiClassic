@@ -179,6 +179,7 @@
 			stamp_message = chosen_stamp.stamp_message
 			stamp_color = chosen_stamp.stamp_color
 			stamp_border = chosen_stamp.stamp_border
+			big_stamp = chosen_stamp.big_stamp
 
 /obj/item/weapon/stamp/proc/stamp_paper(obj/item/weapon/paper/P, stamp_text)
 	if (P.stamp_text && P.stamp_text != "")
