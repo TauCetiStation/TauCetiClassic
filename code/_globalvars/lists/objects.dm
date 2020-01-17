@@ -59,7 +59,7 @@ var/global/list/conveyor_switch_list = list()
 var/global/list/rnd_server_list = list()
 var/global/list/PDAs = list()
 var/global/list/facehuggers_list = list()
-
 var/global/list/all_areas = list()
 var/global/list/area/areas_by_type = list()
 var/global/list/machines = list()
+var/global/list/vending_products = list() //this list is used to create product images in the vending machine window
