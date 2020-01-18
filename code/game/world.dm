@@ -633,18 +633,14 @@ var/failed_old_db_connections = 0
 	// get associated list for message
 	// return associated list with key as server url when receive somthing
 	var/list/response = list()
-	if (length(global.net_announcer_secret) < 2)
+	if (length(global.net_announcer_secret) < 2 || !length(msg) || !istext(type) || !length(type))
 		return response
-	if (!length(msg))
+	var/cargo = list2params(msg)
+	if (!length(cargo))
 		return response
-	if (!istext(type) || !length(type))
-		return response
-	// secret keep secret
 	for(var/i in 2 to length(global.net_announcer_secret))
 		var/server = global.net_announcer_secret[i]
-		var/request = text("[]?announce&secret=[]&type=[]&[]", server, global.net_announcer_secret[server], type, list2params(msg))
-		if (length(request))
-			response[server] = world.Export("[request]")
+		response[server] = world.Export(text("[]?announce&secret=[]&type=[]&[]", server, global.net_announcer_secret[server], type, cargo))
 	return response
 
 /world/proc/send_ban_announce(ckey = null, ip = null, cid = null)
@@ -674,11 +670,10 @@ var/failed_old_db_connections = 0
 	var/regex/announce_format = regex(@"^announce&secret=([^&;]+)&type=([^&;]+)&")
 	announce_format.Find(msg)
 	if (length(announce_format.group) < 2 || !length(global.net_announcer_secret))
-		return
+		return   // secret not found in message
 	var/self = global.net_announcer_secret[1]
 	if (!self)
-		// empty secret
-		return
+		return   // empty secret in config
 	var/msg_secret = announce_format.group[1]
 	var/type = announce_format.group[2]
 	if (msg_secret != global.net_announcer_secret[self])
@@ -711,7 +706,7 @@ var/failed_old_db_connections = 0
 			ban_key += "cid([data["cid"]])"
 		if (data["ip"] && M.client && M.client.address && M.client.address == data["ip"])
 			ban_key += "ip([data["ip"]])"
-		if (length(ban_key) > 0)
+		if (length(ban_key))
 			var/banned = world.IsBanned(data["ckey"], data["ip"],  data["cid"])
 			if (banned && banned["reason"] && banned["desc"])
 				to_kick[M] = banned["desc"]

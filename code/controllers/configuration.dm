@@ -856,6 +856,9 @@ var/list/net_announcer_secret = list()
 	// Server list loaded from serverlist.txt file. It's file with comments. 
 	// One line of file = one server. Format - byond://example.com:2506 = secret
 	// First server must be self link for loading the secret
+	//
+	// In config file ban.txt load settings for ban announcer.
+	// Format key = value
 	for(var/L in load_list_without_comments("[config_path]/serverlist.txt"))
 		var/delimiter_position = findtext(L,"=")
 		var/key = trim(copytext(L, 1, delimiter_position))
@@ -872,9 +875,6 @@ var/list/net_announcer_secret = list()
 				if ("receive")
 					if (value && (lowertext(value) == "true" || lowertext(value) == "on"))
 						net_announcers["ban_receive"] = TRUE
-						log_debug("RECV ON")
 				if ("send")
 					if (value && (lowertext(value) == "true" || lowertext(value) == "on"))
 						net_announcers["ban_send"] = TRUE
-						log_debug("SEND ON")
-				
