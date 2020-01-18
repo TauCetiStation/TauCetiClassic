@@ -140,15 +140,12 @@
 		step_towards(src, L)
 		toggle_leap(FALSE)
 		pounce_cooldown = TRUE
-		addtimer(CALLBACK(src, .proc/refresh_pounce_cooldown), pounce_cooldown_time)
+		addtimer(VARSET_CALLBACK(src, pounce_cooldown, FALSE), pounce_cooldown_time)
 	else if(hit_atom.density)
-		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='alertalien'>You smash into [hit_atom]!</span>")
+		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='alertalien'>You smashes into [hit_atom]!</span>")
 		weakened = 2
 
 	update_canmove()
-
-/mob/living/carbon/alien/humanoid/hunter/proc/refresh_pounce_cooldown()
-	pounce_cooldown = FALSE
 
 #undef MAX_ALIEN_LEAP_DIST
 

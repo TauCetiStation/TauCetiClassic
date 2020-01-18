@@ -50,7 +50,7 @@
 
 	//stamp the paper
 	var/obj/item/weapon/stamp/centcomm/S = new
-	S.stamp_paper(R, "This paper has been stamped by the EFTPOS device.")
+	S.stamp_paper(R, "EFTPOS")
 
 	//by default, connect to the station account
 	//the user of the EFTPOS device can change the target account though, and no-one will be the wiser (except whoever's being charged)
@@ -67,7 +67,7 @@
 
 	//stamp the paper
 	var/obj/item/weapon/stamp/centcomm/S = new
-	S.stamp_paper(R, "This paper has been stamped by the EFTPOS device.")
+	S.stamp_paper(R, "EFTPOS")
 
 	var/obj/item/smallDelivery/D = new(R.loc)
 	R.loc = D

@@ -28,18 +28,22 @@ Infestation:
 
 /datum/game_mode/infestation/can_start()
 	if(!..())
-		return 0
+		return FALSE
+	// Check for xeno_spawn landmark on map
+	for(var/obj/effect/landmark/L in landmarks_list)
+		if(L.name == "xeno_spawn")
+			return TRUE
+	return FALSE
+
+/datum/game_mode/infestation/assign_outsider_antag_roles()
+	if (!..())
+		return FALSE
 
 	var/xenomorphs_num = 0
 
-	//Check that we have enough vox.
-	if(antag_candidates.len < required_enemies)
-		return 0
-	else if(antag_candidates.len < recommended_enemies)
+	if(antag_candidates.len <= recommended_enemies)
 		xenomorphs_num = antag_candidates.len
-	else
-		xenomorphs_num = recommended_enemies
-
+	
 	while(xenomorphs_num > 0)
 		var/datum/mind/new_xeno = pick(antag_candidates)
 		xenomorphs += new_xeno
@@ -50,19 +54,14 @@ Infestation:
 		xeno.assigned_role = "MODE"
 		xeno.special_role = "Xenomorph"
 
-	//Build a list of spawn points.
+	return TRUE
 
+/datum/game_mode/infestation/pre_setup()
+	//Build a list of spawn points.
 	for(var/obj/effect/landmark/L in landmarks_list)
 		if(L.name == "xeno_spawn")
 			xeno_spawn.Add(L)
-
-	if(xeno_spawn.len == 0)
-		return 0
-
-	return 1
-
-/datum/game_mode/infestation/pre_setup()
-	return 1
+	return TRUE
 
 /datum/game_mode/infestation/post_setup()
 	for(var/check_spawn in xeno_spawn)

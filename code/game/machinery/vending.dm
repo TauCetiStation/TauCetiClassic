@@ -741,7 +741,7 @@
 	light_color = "#ffc400"
 
 /obj/machinery/vending/chinese
-	name = "\improper Mr. Chang"
+	name = "Mr. Chang"
 	desc = "A self-serving Chinese food machine, for all your Chinese food needs."
 	product_slogans = "Taste 5000 years of culture!"
 	icon_state = "chang"
@@ -1263,7 +1263,7 @@
 	update_icon()
 
 /obj/machinery/vending/sustenance
-	name = "\improper Sustenance Vendor"
+	name = "Sustenance Vendor"
 	desc = "A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement."
 	product_slogans = "Enjoy your meal.;Enough calories to support strenuous labor."
 	product_ads = "Sufficiently healthy.;Efficiently produced tofu!;Mmm! So good!;Have a meal.;You need food to live!;Have some more candy corn!;Try our new ice cups!"

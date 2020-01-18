@@ -28,7 +28,7 @@
 //	SetStunned(min(stunned, 30))
 	SetParalysis(min(paralysis, 30))
 //	SetWeakened(min(weakened, 20))
-	sleeping = 0
+	SetSleeping(0)
 	adjustBruteLoss(0)
 	adjustToxLoss(0)
 	adjustOxyLoss(0)
@@ -71,9 +71,8 @@
 
 	updatehealth()
 
-	if(src.sleeping)
+	if(IsSleeping())
 		Paralyse(3)
-		src.sleeping--
 
 	if(src.resting)
 		Weaken(5)
