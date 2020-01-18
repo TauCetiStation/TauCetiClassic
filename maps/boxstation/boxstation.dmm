@@ -22684,9 +22684,7 @@
 /obj/structure/table,
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/stamp{
-	name = "Quartermaster's stamp"
-	},
+/obj/item/weapon/stamp/qm,
 /turf/simulated/floor,
 /area/station/cargo/qm)
 "aOK" = (
@@ -31677,7 +31675,10 @@
 "bfB" = (
 /obj/structure/table,
 /obj/item/weapon/folder/yellow,
-/obj/item/weapon/stamp,
+/obj/item/weapon/stamp{
+	name = "recycler's rubber stamp";
+	stamp_message = "Recycler"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -77476,8 +77477,10 @@
 /obj/structure/table,
 /obj/item/weapon/hand_labeler,
 /obj/item/weapon/stamp{
+	name = "cargo rubber stamp";
 	pixel_x = -3;
-	pixel_y = 3
+	pixel_y = 3;
+	stamp_message = "Cargo"
 	},
 /obj/item/weapon/hand_labeler,
 /obj/structure/sign/poster{
@@ -78127,7 +78130,10 @@
 /area/station/cargo/miningoffice)
 "wNb" = (
 /obj/structure/table,
-/obj/item/weapon/stamp,
+/obj/item/weapon/stamp{
+	name = "cargo rubber stamp";
+	stamp_message = "Cargo"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
