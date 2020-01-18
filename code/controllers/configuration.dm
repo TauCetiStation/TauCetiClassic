@@ -154,8 +154,6 @@
 	var/gateway_enabled = 0
 	var/ghost_interaction = 0
 
-	var/comms_password = ""
-
 	var/enter_allowed = 1
 
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
@@ -530,9 +528,6 @@
 
 				if("uneducated_mice")
 					config.uneducated_mice = 1
-
-				if("comms_password")
-					config.comms_password = value
 
 				if("python_path")
 					if(value)
