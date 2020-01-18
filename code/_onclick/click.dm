@@ -11,6 +11,10 @@
 /mob/var/next_move_adjust = 0   // Amount to adjust action/click delays by, + or -
 /mob/var/next_move_modifier = 1 // Value to multiply action/click delays by
 
+// Cooldown for admin alarm for illegal clicks
+#define ILLEGAL_CLICK_CD 600
+/mob/var/next_click_illegal_alarm = 0
+
 
 //Delays the mob's next click/action by num deciseconds
 // eg: 10-3 = 7 deciseconds of delay
@@ -53,6 +57,13 @@
 /mob/proc/ClickOn( atom/A, params )
 	if(world.time <= next_click)
 		return
+
+	if(world.time > next_click_illegal_alarm && !istype(A, /turf))
+		next_click_illegal_alarm = world.time + ILLEGAL_CLICK_CD
+		if(!(src in viewers(A)))
+			message_admins("ILLEGAL: [key_name(src)] [ADMIN_FULLMONTY_NONAME(src)] attempted to click on [A] which is invisible to him.")
+			return
+
 	next_click = world.time + 1
 
 	if(notransform)
