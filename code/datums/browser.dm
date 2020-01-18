@@ -21,7 +21,7 @@
 	user = nuser
 	window_id = nwindow_id
 	if (ntitle)
-		title = format_text(ntitle)
+		title = ntitle
 	if (nwidth)
 		width = nwidth
 	if (nheight)

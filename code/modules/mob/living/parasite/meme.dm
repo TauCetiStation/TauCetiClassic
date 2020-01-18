@@ -29,7 +29,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 	else
 		client.eye = loc
 	client.perspective = EYE_PERSPECTIVE
-	sleeping = 0
+	SetSleeping(0)
 
 /mob/living/parasite/proc/enter_host(mob/living/carbon/host)
 	src.host = host

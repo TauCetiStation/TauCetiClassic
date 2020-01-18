@@ -4,7 +4,7 @@
 		return 0
 
 	var/list/json = list()
-	
+
 	json["type"] = type
 
 	if(msg)

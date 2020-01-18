@@ -81,7 +81,7 @@
 			break
 
 		if((type & SHOWMSG_AUDIO) && !(sdisabilities & DEAF) && !ear_deaf) // Hearing related
-			if(stat == UNCONSCIOUS || sleeping > 0)
+			if(stat == UNCONSCIOUS)
 				msg = "<i>... You can almost hear something ...</i>"
 			else
 				msg = args[i]
@@ -895,25 +895,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		paralysis = 0
 
-// ========== SLEEPING ==========
-/mob/proc/Sleeping(amount)
-	if(status_flags & CANPARALYSE) // because sleeping and paralysis are very similar statuses and i see no point in separate flags at this time (anyway, golems mostly).
-		sleeping = max(max(sleeping, amount), 0)
-	else
-		sleeping = 0
-
-/mob/proc/SetSleeping(amount)
-	if(status_flags & CANPARALYSE)
-		sleeping = max(amount, 0)
-	else
-		sleeping = 0
-
-/mob/proc/AdjustSleeping(amount)
-	if(status_flags & CANPARALYSE)
-		sleeping = max(sleeping + amount, 0)
-	else
-		sleeping = 0
-
 // ========== RESTING ==========
 /mob/proc/Resting(amount)
 	resting = max(max(resting, amount), 0)
@@ -1115,3 +1096,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/can_unbuckle(mob/user)
 	return 1
+
+/mob/proc/update_stat()
+	return

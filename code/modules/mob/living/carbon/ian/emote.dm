@@ -76,9 +76,9 @@
 			m_type = SHOWMSG_VISUAL
 		if ("faint")
 			message = "<B>[src]</B> faints."
-			if(sleeping)
+			if(IsSleeping())
 				return
-			sleeping += 10
+			SetSleeping(20 SECONDS)
 			m_type = SHOWMSG_VISUAL
 		if("dance")
 			if(!restrained())

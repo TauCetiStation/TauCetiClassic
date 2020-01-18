@@ -437,3 +437,10 @@
 	. = ..()
 	if(icon_move && !stat)
 		flick(icon_move, src)
+
+/mob/living/simple_animal/update_stat()
+	if(stat == DEAD)
+		return
+	if(IsSleeping())
+		stat = UNCONSCIOUS
+		blinded = TRUE

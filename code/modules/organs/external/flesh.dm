@@ -465,7 +465,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if (W.can_autoheal() && W.wound_damage() < 50)
 			heal_amt += 0.5
 			var/mob/living/carbon/H = BP.owner
-			if(H.sleeping)
+			if(H.IsSleeping())
 				if(istype(H.buckled, /obj/structure/stool/bed))
 					heal_amt += 0.2
 				else if((locate(/obj/structure/table) in H.loc))
