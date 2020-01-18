@@ -1,7 +1,7 @@
 // sound's priorities
-#define LOW    1
-#define MEDIUM 2
-#define HIGH   3
+#define SOUND_PRIORITY_LOW    1
+#define SOUND_PRIORITY_MEDIUM 2
+#define SOUND_PRIORITY_HIGH   3
 
 // these defines are made in order not to lose your mind(easier readability) and not to add a comment to each such check
 #define ONE_HAND_IS_USABLE (!restrained() && ((bodyparts_by_name[BP_L_ARM] && bodyparts_by_name[BP_L_ARM].is_usable()) || (bodyparts_by_name[BP_R_ARM] && bodyparts_by_name[BP_R_ARM].is_usable())))
@@ -11,7 +11,7 @@
 // auto = FALSE means that the sound is called by a human manually; auto = TRUE - automatically, in the code
 /mob/living/carbon/human/emote(act = "", message_type = SHOWMSG_VISUAL, message = "", auto = TRUE)
 	var/cloud_emote = ""
-	var/sound_priority = LOW
+	var/sound_priority = SOUND_PRIORITY_LOW
 	var/emote_sound
 	var/initial_message = message // useful in voiced emotions
 	var/conditions_for_emote = TRUE // special check in special emotions. For example, does a mob have the feeling of pain to scream from the pain?
@@ -61,7 +61,7 @@
 			if(auto)
 				conditions_for_emote = (!species.flags[NO_PAIN])
 				cloud_emote = "cloud-pain"
-				sound_priority = MEDIUM
+				sound_priority = SOUND_PRIORITY_MEDIUM
 				message = pick("grunts in pain!", "grunts!", "wrinkles [his_macro] face and grunts!")
 				emote_sound = (gender == FEMALE) ? pick(SOUNDIN_FEMALE_LIGHT_PAIN) : pick(SOUNDIN_MALE_LIGHT_PAIN)
 
@@ -74,7 +74,7 @@
 			if(auto)
 				conditions_for_emote = (!species.flags[NO_PAIN])
 				cloud_emote = "cloud-pain"
-				sound_priority = MEDIUM
+				sound_priority = SOUND_PRIORITY_MEDIUM
 				message = pick("groans in pain.", "slightly winces in pain and groans.", "presses [his_macro] lips together in pain and groans.", "twists in pain.")
 				if((get_species() != SKRELL) && HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) && prob(66)) // skrells don't have much emotions to cry in pain, but they can still groan
 					emote_sound = pick((gender == FEMALE) ? SOUNDIN_FEMALE_WHINER_PAIN : SOUNDIN_MALE_WHINER_PAIN)
@@ -91,7 +91,7 @@
 			conditions_for_emote = (get_species() != DIONA)
 			if(auto)
 				conditions_for_emote = (!species.flags[NO_PAIN])
-				sound_priority = HIGH
+				sound_priority = SOUND_PRIORITY_HIGH
 				message = pick("screams in agony!", "writhes in heavy pain and screams!", "screams in pain as much as [he_macro] can!", "screams in pain loudly!")
 				emote_sound = pick((gender == FEMALE) ? SOUNDIN_FEMALE_HEAVY_PAIN : SOUNDIN_MALE_HEAVY_PAIN)
 
@@ -103,7 +103,7 @@
 			miming_message = (get_species() == DIONA) ? "creaks." : "coughs."
 			if(auto)
 				conditions_for_emote = (!species.flags[NO_BREATHE])
-				sound_priority = MEDIUM
+				sound_priority = SOUND_PRIORITY_MEDIUM
 				emote_sound = pick((gender == FEMALE) ? SOUNDIN_FBCOUGH : SOUNDIN_MBCOUGH)
 
 // ========== AUDIBLE ==========
@@ -363,16 +363,16 @@
 			M.show_message("<B>[src]</B> [message]", message_type)
 	else if(message_type & SHOWMSG_AUDIO)
 		if(emote_sound && can_make_a_sound && (get_species() in list(HUMAN, SKRELL, TAJARAN, UNATHI))) // sounds of emotions for other species will look absurdly. We need individual sounds for special races(diona, ipc, etc))
-			if(sound_priority == HIGH && next_high_priority_sound < world.time)
+			if(sound_priority == SOUND_PRIORITY_HIGH && next_high_priority_sound < world.time)
 				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE)
 				next_high_priority_sound = world.time + 4 SECONDS
 				next_medium_priority_sound = next_high_priority_sound
 				next_low_priority_sound = next_high_priority_sound
-			else if(sound_priority == MEDIUM && next_medium_priority_sound < world.time)
+			else if(sound_priority == SOUND_PRIORITY_MEDIUM && next_medium_priority_sound < world.time)
 				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE)
 				next_medium_priority_sound = world.time + 4 SECONDS
 				next_low_priority_sound = next_medium_priority_sound
-			else if(sound_priority == LOW && next_low_priority_sound < world.time)
+			else if(sound_priority == SOUND_PRIORITY_LOW && next_low_priority_sound < world.time)
 				playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE)
 				next_low_priority_sound = world.time + 4 SECONDS
 			else
@@ -399,9 +399,9 @@
 		flick_overlay(emote_bubble, clients, 30)
 		QDEL_IN(emote_bubble, 3 SECONDS)
 
-#undef LOW
-#undef MEDIUM
-#undef HIGH
+#undef SOUND_PRIORITY_LOW
+#undef SOUND_PRIORITY_MEDIUM
+#undef SOUND_PRIORITY_HIGH
 
 #undef ONE_HAND_IS_USABLE
 #undef BOTH_HANDS_ARE_USABLE
