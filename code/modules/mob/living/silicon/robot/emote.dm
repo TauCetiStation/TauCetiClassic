@@ -66,7 +66,7 @@
 
 		if ("twitch")
 			message = "<B>[src]</B> [pick("twitches violently", "twitches")]."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if ("nod")
 			message = "<B>[src]</B> nods."
