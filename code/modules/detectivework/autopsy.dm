@@ -84,7 +84,7 @@
 	set category = "Object"
 	set src in view(usr, 1)
 	set name = "Print Data"
-	if(!ishuman(usr) || usr.incapacitated() || usr.stat || usr.lying)
+	if(!ishuman(usr) || usr.incapacitated() || usr.lying)
 		return
 
 	flick("autopsy_printing",src)
