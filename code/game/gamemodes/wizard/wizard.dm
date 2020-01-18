@@ -22,26 +22,25 @@
 	to_chat(world, "<B>The current game mode is - Wizard!</B>")
 	to_chat(world, "<B>There is a <span class='warning'>SPACE WIZARD</span> on the station. You can't let him achieve his objective!</B>")
 
+/datum/game_mode/wizard/can_start()
+	return (..() && wizardstart.len != 0)
 
-/datum/game_mode/wizard/can_start()//This could be better, will likely have to recode it later
-	if(!..())
-		return 0
+/datum/game_mode/wizard/assign_outsider_antag_roles()
+	if (!..())
+		return FALSE
 	var/datum/mind/wizard = pick(antag_candidates)
 	wizards += wizard
 	modePlayer += wizard
 	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
 	wizard.special_role = "Wizard"
 	wizard.original = wizard.current
-	if(wizardstart.len == 0)
-		to_chat(wizard.current, "<span class='danger'>A starting location for you could not be found, please report this bug!</span>")
-		return 0
-	return 1
-
+	return TRUE
+	
 
 /datum/game_mode/wizard/pre_setup()
 	for(var/datum/mind/wizard in wizards)
 		wizard.current.loc = pick(wizardstart)
-	return 1
+	return TRUE
 
 
 /datum/game_mode/wizard/post_setup()
