@@ -207,11 +207,7 @@
 	being_shocked = 1
 	var/power_bounced = power / 2
 	tesla_zap(src, 3, power_bounced)
-	spawn(10)
-		reset_shocked()
-
-/obj/proc/reset_shocked()
-	being_shocked = 0
+	addtimer(VARSET_CALLBACK(src, being_shocked, FALSE), 10)
 
 //mob - who is being feed
 //user - who is feeding
