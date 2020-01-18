@@ -1179,11 +1179,11 @@ var/global/list/common_tools = list(
 /proc/can_operate(mob/living/carbon/M)
 	return (locate(/obj/machinery/optable, M.loc) && M.resting) || \
 	(locate(/obj/structure/stool/bed/roller/roller_surg, M.loc) && 	\
-	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(95) || 	\
+	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.stat)) && prob(95) || 	\
 	(locate(/obj/structure/stool/bed/roller, M.loc) && 	\
-	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(75) || 	\
+	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.stat)) && prob(75) || 	\
 	(locate(/obj/structure/table, M.loc) && 	\
-	(M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(66))
+	(M.lying || M.weakened || M.stunned || M.paralysis || M.stat) && prob(66))
 
 /proc/reverse_direction(dir)
 	switch(dir)
