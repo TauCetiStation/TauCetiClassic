@@ -128,7 +128,7 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
 	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key][log_end]"
-	// log_debug("TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
+
 	if (T == "ping")
 		var/x = 1
 		for (var/client/C)
@@ -174,6 +174,9 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["admins"] = admins
 
 		return list2params(s)
+	
+	else if (copytext(T,1,length("announce&")+1) == "announce&")
+		return receive_net_announce(T, addr)
 
 /world/proc/PreShutdown(end_state)
 
