@@ -674,6 +674,16 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 	if(!customname)
 		customname = "NanoTrasen Update"
+
+	switch(alert("Should this be announced to the general population?",,"Yes","No","Cancel"))
+		if("Yes")
+			command_alert(input, customname)
+		if("No")
+			to_chat(world, "<span class='warning'>New NanoTrasen Update available at all communication consoles.</span>")
+			station_announce(sound = "commandreport")
+		if("Cancel")
+			return
+
 	for (var/obj/machinery/computer/communications/C in communications_list)
 		if(! (C.stat & (BROKEN|NOPOWER) ) )
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
@@ -682,13 +692,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			P.update_icon()
 			C.messagetitle.Add("[command_name()] Update")
 			C.messagetext.Add(P.info)
-
-	switch(alert("Should this be announced to the general population?",,"Yes","No"))
-		if("Yes")
-			command_alert(input, customname);
-		if("No")
-			to_chat(world, "<span class='warning'>New NanoTrasen Update available at all communication consoles.</span>")
-			station_announce(sound = "commandreport")
 
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report")

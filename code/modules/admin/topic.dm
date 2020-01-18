@@ -1720,8 +1720,9 @@
 
 	else if(href_list["CentcommFaxReply"])
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
+		var/department = locate(href_list["CentcommFaxReplyDestination"])
 
-		var/input = sanitize(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work.", "Outgoing message from Centcomm", "") as message|null, extra = FALSE)
+		var/input = sanitize(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection.", "Outgoing message from Centcomm", "") as message|null, extra = FALSE)
 		if(!input)
 			return
 
@@ -1729,13 +1730,19 @@
 
 		var/obj/item/weapon/paper/P = new
 		P.name = "[command_name()]- [customname]"
-		P.info = input
+		var/parsed_text = parsebbcode(input)
+		parsed_text = replacetext(parsed_text, "\[nt\]", "<img src = bluentlogo.png />")
+		P.info = parsed_text
 		P.update_icon()
 
 		var/obj/item/weapon/stamp/centcomm/S = new
 		S.stamp_paper(P)
 
-		send_fax(usr, P, "All")
+		switch(alert("Should this be sended to all fax machines?",,"Yes","No"))
+			if("Yes")
+				send_fax(usr, P, "All")
+			if("No")
+				send_fax(usr, P, "[department]")
 
 		add_communication_log(type = "fax-centcomm", title = customname ? customname : 0, author = "Centcomm Officer", content = input)
 
