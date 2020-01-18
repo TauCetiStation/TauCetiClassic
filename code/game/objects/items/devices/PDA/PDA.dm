@@ -2,7 +2,7 @@
 //The advanced pea-green monochrome lcd of tomorrow.
 
 /obj/item/device/pda
-	name = "\improper PDA"
+	name = "PDA"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"

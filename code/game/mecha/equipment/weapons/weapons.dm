@@ -203,7 +203,7 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
-	name = "\improper FNX-66 Carbine"
+	name = "FNX-66 Carbine"
 	icon_state = "mecha_carbine"
 	equip_cooldown = 5
 	projectile = /obj/item/projectile/bullet/incendiary

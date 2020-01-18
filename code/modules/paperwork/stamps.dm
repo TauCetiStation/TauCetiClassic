@@ -76,7 +76,7 @@
 	stamp_message = "Quartermaster"
 
 /obj/item/weapon/stamp/approve
-	name = "\improper APPROVED rubber stamp"
+	name = "APPROVED rubber stamp"
 	icon_state = "stamp-approve"
 	item_color = "greencoat"
 	stamp_message = "APPROVED"
@@ -85,7 +85,7 @@
 	big_stamp = TRUE
 
 /obj/item/weapon/stamp/denied
-	name = "\improper DENIED rubber stamp"
+	name = "DENIED rubber stamp"
 	icon_state = "stamp-deny"
 	item_color = "redcoat"
 	stamp_message = "DENIED"
