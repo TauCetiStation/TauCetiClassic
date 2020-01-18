@@ -104,7 +104,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
 	if(new_ooccolor)
-		prefs.ooccolor = new_ooccolor
+		prefs.ooccolor = normalize_color(new_ooccolor)
 		prefs.save_preferences()
 
 /client/verb/looc(msg as text)

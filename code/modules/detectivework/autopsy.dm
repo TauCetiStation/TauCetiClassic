@@ -84,11 +84,11 @@
 	set category = "Object"
 	set src in view(usr, 1)
 	set name = "Print Data"
+	if(!ishuman(usr) || usr.incapacitated() || usr.lying)
+		return
+
 	flick("autopsy_printing",src)
 	playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
-	if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
-		to_chat(usr, "No.")
-		return
 
 	var/scan_data = ""
 
