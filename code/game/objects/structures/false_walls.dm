@@ -72,54 +72,39 @@
 			icon_state = "fwall_open"
 
 /obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user)
-	if(opening)
+	if (opening)
 		to_chat(user, "<span class='warning'>You must wait until the door has stopped moving.</span>")
 		return
+
 	user.SetNextMove(CLICK_CD_INTERACT)
 
-	if(density)
+	if (density)
 		var/turf/T = get_turf(src)
-		if(T.density)
+
+		if (T.density)
 			to_chat(user, "<span class='warning'>The wall is blocked!</span>")
 			return
-		if(isscrewdriver(W))
+
+		if (isscrewdriver(W))
 			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
 			T.ChangeTurf(walltype)
 			qdel(src)
 
-		if( iswelder(W) )
+		if (iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
-			if( WT.welding )
+			if (WT.welding)
 				T.ChangeTurf(walltype)
-				if(walltype != /turf/simulated/wall/mineral/phoron)//Stupid shit keeps me from pushing the attackby() to phoron walls -Sieve
-					T = get_turf(src)
-					T.attackby(W, user)
+				T = get_turf(src)
+				T.attackby(W, user)
 				qdel(src)
 	else
 		to_chat(user, "<span class='notice'>You can't reach, close it first!</span>")
 
-	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
-		var/turf/T = get_turf(src)
-		T.ChangeTurf(walltype)
-		if(walltype != /turf/simulated/wall/mineral/phoron)
-			T = get_turf(src)
-			T.attackby(W, user)
-		qdel(src)
-
-	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
+	if (is_type_in_list(W, list(/obj/item/weapon/pickaxe/plasmacutter, /obj/item/weapon/pickaxe/drill/diamond_drill, /obj/item/weapon/melee/energy/blade)))
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(walltype)
 		T = get_turf(src)
 		T.attackby(W, user)
-		qdel(src)
-
-	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
-		var/turf/T = get_turf(src)
-		T.ChangeTurf(walltype)
-		if(walltype != /turf/simulated/wall/mineral/phoron)
-			T = get_turf(src)
-			T.attackby(W, user)
 		qdel(src)
 
 /*
@@ -203,10 +188,3 @@
 	icon = 'icons/turf/walls/has_false_walls/sandstone_wall.dmi'
 	walltype = /turf/simulated/wall/mineral/sandstone
 	canSmoothWith = list(/obj/structure/falsewall/sandstone, /turf/simulated/wall/mineral/sandstone)
-
-/obj/structure/falsewall/phoron
-	name = "phoron wall"
-	desc = "A wall with phoron plating. This is definately a bad idea."
-	icon = 'icons/turf/walls/has_false_walls/phoron_wall.dmi'
-	walltype = /turf/simulated/wall/mineral/phoron
-	canSmoothWith = list(/obj/structure/falsewall/phoron, /turf/simulated/wall/mineral/phoron)

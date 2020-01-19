@@ -210,8 +210,6 @@
 				icon = 'icons/obj/doors/airlocks/station/diamond.dmi'
 			if("uranium")
 				icon = 'icons/obj/doors/airlocks/station/uranium.dmi'
-			if("phoron")
-				icon = 'icons/obj/doors/airlocks/station/phoron.dmi'
 			if("clown")
 				icon = 'icons/obj/doors/airlocks/station/bananium.dmi'
 			if("sandstone")

@@ -3216,11 +3216,11 @@
 	},
 /area/awaymission/spacebattle/syndicate6)
 "jC" = (
-/turf/simulated/wall/mineral/phoron,
+/turf/simulated/wall/mineral/uranium,
 /area/awaymission/spacebattle/secret)
 "jD" = (
-/obj/machinery/door/airlock/phoron,
-/turf/simulated/wall/mineral/phoron,
+/obj/machinery/door/airlock/uranium,
+/turf/simulated/wall/mineral/uranium,
 /area/awaymission/spacebattle/secret)
 
 (1,1,1) = {"
