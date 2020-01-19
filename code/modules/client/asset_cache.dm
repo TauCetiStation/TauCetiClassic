@@ -341,7 +341,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 	return out.Join("\n")
 
-/datum/asset/spritesheet/proc/Insert(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
+/datum/asset/spritesheet/proc/insert_icon_in_list(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
 	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
 	if (!I || !length(icon_states(I)))  // that direction or state doesn't exist
 		return
@@ -352,7 +352,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		CRASH("duplicate sprite \"[sprite_name]\" in sheet [name] ([type])")
 
 	if (size)
-		var/position = size[SPRSZ_COUNT]++ //1++
+		var/position = size[SPRSZ_COUNT]++ //1
 		var/icon/sheet = size[SPRSZ_ICON]//2
 		size[SPRSZ_STRIPPED] = null
 		sheet.Insert(I, icon_state=sprite_name)
@@ -398,5 +398,5 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 		var/imgid = replacetext(replacetext("[item]", "/obj/item/", ""), "/", "-")
 
-		Insert(imgid, I)
+		insert_icon_in_list(imgid, I)
 	return ..()
