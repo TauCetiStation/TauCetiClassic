@@ -790,7 +790,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	contains = list(/obj/machinery/power/emitter,
 					/obj/machinery/power/emitter)
 	cost = 1500
-	crate_type = /obj/structure/closet/crate/secure/engisec
+	crate_type = /obj/structure/closet/crate/secure/large
 	crate_name = "Emitter crate"
 	access = access_ce
 	group = "Engineering"
@@ -799,23 +799,50 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	name = "Field Generator crate"
 	contains = list(/obj/machinery/field_generator,
 					/obj/machinery/field_generator)
-	crate_type = /obj/structure/closet/crate/engi
+	crate_type = /obj/structure/closet/crate/secure/large
 	crate_name = "Field Generator crate"
 
 /datum/supply_pack/engine/sing_gen
 	name = "Singularity Generator crate"
 	contains = list(/obj/machinery/the_singularitygen)
 	cost = 2000
-	crate_type = /obj/structure/closet/crate/engi
+	crate_type = /obj/structure/closet/crate/secure/large
+	access = access_engine
 	crate_name = "Singularity Generator crate"
+
+/datum/supply_pack/engine/tesla_gen
+	name = "Energy Ball Generator crate"
+	contains = list(/obj/machinery/the_singularitygen/tesla)
+	cost = 2000
+	crate_type = /obj/structure/closet/crate/secure/large
+	access = access_engine
+	crate_name = "Energy Ball Generator crate"
 
 /datum/supply_pack/engine/collector
 	name = "Collector crate"
 	contains = list(/obj/machinery/power/rad_collector,
 					/obj/machinery/power/rad_collector,
 					/obj/machinery/power/rad_collector)
-	crate_type = /obj/structure/closet/crate/engi
+	crate_type = /obj/structure/closet/crate/secure/large
+	access = access_engine
 	crate_name = "Collector crate"
+
+/datum/supply_pack/engine/ground_rod
+	name = "Grounding Rod crate"
+	contains = list(/obj/machinery/power/grounding_rod,
+					/obj/machinery/power/grounding_rod)
+	crate_type = /obj/structure/closet/crate/secure/large
+	access = access_engine
+	crate_name = "Grounding Rod crate"
+
+/datum/supply_pack/engine/tesla_coil
+	name = "Tesla Coil crate"
+	contains = list(/obj/machinery/power/tesla_coil,
+					/obj/machinery/power/tesla_coil,
+					/obj/machinery/power/tesla_coil)
+	crate_type = /obj/structure/closet/crate/secure/large
+	access = access_engine
+	crate_name = "Tesla Coil crate"
 
 /datum/supply_pack/engine/PA
 	name = "Particle Accelerator crate"
@@ -827,7 +854,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/structure/particle_accelerator/particle_emitter/right,
 					/obj/structure/particle_accelerator/power_box,
 					/obj/structure/particle_accelerator/end_cap)
-	crate_type = /obj/structure/closet/crate/engi
+	crate_type = /obj/structure/closet/crate/secure/large
+	access = access_engine
 	crate_name = "Particle Accelerator crate"
 
 /datum/supply_pack/mecha_ripley
