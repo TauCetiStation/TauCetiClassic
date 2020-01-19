@@ -33037,7 +33037,9 @@
 	},
 /area/station/rnd/hallway)
 "bih" = (
-/obj/item/weapon/phone{
+/obj/item/weapon/phone/hotline{
+	appearance_flags = 3;
+	hotline_name = "Station";
 	pixel_x = -3;
 	pixel_y = 3
 	},
