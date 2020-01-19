@@ -29,3 +29,13 @@
 	//Set complete normalize hex color
 	final_hex = "#" + rh_color + gh_color + bh_color
 	return final_hex
+
+/proc/adjust_brightness(color, value)
+	if (!color) return "#ffffff"
+	if (!value) return color
+
+	var/list/RGB = ReadRGB(color)
+	RGB[1] = CLAMP(RGB[1]+value,0,255)
+	RGB[2] = CLAMP(RGB[2]+value,0,255)
+	RGB[3] = CLAMP(RGB[3]+value,0,255)
+	return rgb(RGB[1],RGB[2],RGB[3])

@@ -10,7 +10,7 @@
 	can_be_holstered = TRUE
 
 /obj/item/weapon/gun/projectile/wjpp
-	name = "\improper W&J PP"
+	name = "W&J PP"
 	desc = "Double action semi-automatic 9mm pistol, popular with police and private security for being reliable, concealable and cheap."
 	icon_state = "9mm_wjpp"
 	item_state = "9mm_wjpp"
@@ -104,7 +104,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/pistol
-	name = "\improper Stechkin pistol"
+	name = "Stechkin pistol"
 	desc = "A small, easily concealable gun. Uses 9mm rounds."
 	icon_state = "pistol"
 	w_class = ITEM_SIZE_SMALL
@@ -131,7 +131,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/colt1911
 	desc = "A cheap Martian knock-off of a Colt M1911. Uses less-than-lethal .45 rounds."
-	name = "\improper Colt M1911"
+	name = "Colt M1911"
 	icon_state = "colt"
 	item_state = "colt"
 	w_class = ITEM_SIZE_SMALL
@@ -154,7 +154,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/sec_pistol
-	name = "\improper pistol"
+	name = "pistol"
 	desc = "AT-7 .45 caliber pistol."
 	icon_state = "at7"
 	fire_sound = 'sound/weapons/guns/gunshot_at7.wav'
@@ -180,7 +180,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/sec_pistol/acm38
-	name = "\improper pistol"
+	name = "pistol"
 	desc = "Seegert ACM38 pistol - when you need be TACTICOOL."
 	icon_state = "acm38"
 	item_state = "colt"
