@@ -67,14 +67,16 @@ var/hotline_timer_id = 0
 	listener = usr
 	to_chat(usr, "You picked up phone.")
 	playsound(src, 'sound/weapons/phone_pick.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2)
+	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(usr)] picked up a [hotline_name]'s phone. [ADMIN_JMP(usr)]")
 	update_verbs()
 
-/obj/item/weapon/phone/hotline/proc/hang_phone(user as mob)
+/obj/item/weapon/phone/hotline/proc/hang_phone(mob/user)
 	beeps = TRUE
 	picked = FALSE
 	listener = null
-	to_chat(user, "You hanged up phone.")
+	to_chat(user, "You hanged off phone.")
 	playsound(src, 'sound/weapons/phone_hang.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2)
+	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(usr)] hanged off a [hotline_name]'s phone. [ADMIN_JMP(user)]")
 	update_verbs()
 
 /obj/item/weapon/phone/hotline/proc/hang_verb()
@@ -135,6 +137,7 @@ var/hotline_timer_id = 0
 	if((destination in hotline_active) || hotline_global)
 		switch(alert("Stop a hotline?",,"Yes","No"))
 			if("Yes")
+				message_admins("<font color='red'>HOTLINE:</font> [key_name(usr)] stopped a [destination]'s hotline.")
 				if(destination == "All")
 					LAZYCLEARLIST(hotline_active)
 					hotline_global = ""
@@ -159,6 +162,7 @@ var/hotline_timer_id = 0
 	var/hotline_name = sanitize_safe(input(usr, "Pick a name for the Hotline.", "Name") as text)
 	if(!hotline_name)
 		hotline_name = "Hotline"
+	message_admins("<font color='red'>HOTLINE:</font> [key_name(usr)] started a [destination]'s hotline with name [hotline_name].")
 	if(destination == "All")
 		hotline_global = hotline_name
 		LAZYCLEARLIST(hotline_active)
@@ -220,4 +224,4 @@ var/hotline_timer_id = 0
 				heard++
 
 	log_say("Hotline/[key_name(usr)] : \[[destination]\]: [message]")
-	message_admins("Hotline/[destination]: [key_name_admin(usr)]. Heard by [heard] clients. Message: \"[message]\".")
+	message_admins("<font color='red'>HOTLINE:</font> [key_name(usr)] messaged [destination]([heard]). Message: \"[message]\".")
