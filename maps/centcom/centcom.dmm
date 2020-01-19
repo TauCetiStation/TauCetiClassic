@@ -490,6 +490,16 @@
 "abb" = (
 /turf/space,
 /area/shuttle/escape_pod1/transit)
+"abc" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/phone/hotline{
+	hotline_name = "ERT";
+	pixel_y = 3
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/living)
 "abd" = (
 /obj/machinery/computer/arcade,
 /obj/structure/sign/velocity_overlay/reklama{
@@ -612,6 +622,18 @@
 	name = "plating"
 	},
 /area/custom/wizard_station)
+"abu" = (
+/obj/structure/table,
+/obj/item/device/radio{
+	pixel_x = 4
+	},
+/obj/item/weapon/phone/hotline{
+	hotline_name = "Shuttle";
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/turf/simulated/shuttle/floor,
+/area/shuttle/escape/centcom)
 "abC" = (
 /obj/structure/window/reinforced{
 	dir = 5;
@@ -5985,9 +6007,7 @@
 /area/custom/wizard_station)
 "avI" = (
 /turf/unsimulated/wall,
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "avJ" = (
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 8
@@ -6042,18 +6062,14 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "awc" = (
 /obj/machinery/porta_turret/crescent,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "awi" = (
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 1
@@ -6111,9 +6127,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "awu" = (
 /obj/effect/landmark{
 	name = "prisonwarp"
@@ -6121,16 +6135,12 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "aww" = (
 /turf/unsimulated/floor{
 	icon_state = "bot"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "awx" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -6149,9 +6159,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "awy" = (
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 8
@@ -6261,17 +6269,13 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "awV" = (
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "awW" = (
 /obj/item/weapon/hemostat/alien,
 /obj/item/weapon/retractor/alien,
@@ -6430,9 +6434,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "axC" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "0,5"
@@ -6497,9 +6499,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "axU" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -6518,9 +6518,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "axV" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -6673,9 +6671,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "ayp" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -6689,9 +6685,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "ayq" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -6800,9 +6794,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "ayI" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -6997,9 +6989,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "azr" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
@@ -7322,16 +7312,18 @@
 	req_access = list(109)
 	},
 /obj/structure/sign/mark{
-	icon_state = "2";
+	icon_state = "1";
 	layer = 3.5;
-	pixel_x = -26
+	pixel_x = -6
+	},
+/obj/structure/sign/mark{
+	icon_state = "1";
+	layer = 3.5
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "aAu" = (
 /obj/structure/object_wall/velocity{
 	dir = 4;
@@ -7633,12 +7625,15 @@
 	name = "Brig";
 	req_access = list(109)
 	},
+/obj/structure/sign/mark{
+	icon_state = "2";
+	layer = 3.5;
+	pixel_x = -26
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "aBj" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -17660,9 +17655,7 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "ehb" = (
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_09"
@@ -17700,9 +17693,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "elb" = (
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_07"
@@ -17752,9 +17743,7 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "etb" = (
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_05"
@@ -17809,25 +17798,15 @@
 	},
 /area/velocity)
 "eBb" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Brig";
-	req_access = list(109)
-	},
-/obj/structure/sign/mark{
-	icon_state = "1";
-	layer = 3.5;
-	pixel_x = -6
-	},
-/obj/structure/sign/mark{
-	icon_state = "1";
-	layer = 3.5
+/obj/structure/table/reinforced,
+/obj/item/weapon/phone/hotline{
+	hotline_name = "Syndicate";
+	pixel_y = 3
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor"
+	icon_state = "bar"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/custom/syndicate_mothership)
 "eCb" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -17908,9 +17887,7 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "eLb" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -17947,9 +17924,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "eQb" = (
 /obj/structure/rail_centcomm{
 	icon_state = "rail_03"
@@ -18038,9 +18013,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "fab" = (
 /turf/simulated/shuttle/wall/newes_shuttle{
 	dir = 8;
@@ -18217,9 +18190,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "ftb" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
@@ -18393,6 +18364,15 @@
 	},
 /area/centcom/living)
 "fMb" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Brig";
+	req_access = list(109)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/prison)
+"fNb" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'LETHAL TURRETS'. Enter at your own risk!";
 	name = "LETHAL TURRETS";
@@ -18405,41 +18385,13 @@
 	dir = 1;
 	icon_state = "warning"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
-"fNb" = (
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "warning"
-	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "fOb" = (
-/obj/machinery/turretid{
-	control_area = "Solitary Confinement";
-	desc = "A firewall prevents AIs from interacting with this device.";
-	icon_state = "motion3";
-	name = "CentCom brig turret control";
-	pixel_y = 29;
-	req_access = 109
-	},
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'LETHAL TURRETS'. Enter at your own risk!";
-	name = "LETHAL TURRETS";
-	pixel_x = 32
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "warning"
 	},
-/area/centcom/prison{
-	requires_power = 0
-	})
+/area/centcom/prison)
 "fPb" = (
 /turf/unsimulated/floor/velocity{
 	dir = 4;
@@ -22642,13 +22594,27 @@
 	},
 /area/centcom/control)
 "pPb" = (
-/obj/structure/table,
-/obj/item/weapon/phone,
-/obj/item/device/radio{
-	pixel_x = 4
+/obj/machinery/turretid{
+	control_area = "Solitary Confinement";
+	desc = "A firewall prevents AIs from interacting with this device.";
+	icon_state = "motion3";
+	name = "CentCom brig turret control";
+	pixel_y = 29;
+	req_access = 109
 	},
-/turf/simulated/shuttle/floor,
-/area/shuttle/escape/centcom)
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'LETHAL TURRETS'. Enter at your own risk!";
+	name = "LETHAL TURRETS";
+	pixel_x = 32
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "warning"
+	},
+/area/centcom/prison)
 "pQb" = (
 /obj/machinery/computer/med_data{
 	dir = 8
@@ -37908,7 +37874,7 @@ oMb
 pTb
 aVy
 qab
-pPb
+abu
 oBb
 aUE
 aaM
@@ -51221,7 +51187,7 @@ aAM
 aAM
 aBL
 aFn
-aCl
+abc
 aDo
 aAM
 aAM
@@ -55825,7 +55791,7 @@ avI
 ekb
 avI
 avI
-eBb
+aAr
 avI
 avI
 axT
@@ -56101,7 +56067,7 @@ aww
 eKb
 egb
 avI
-fMb
+fNb
 fTb
 aBp
 aCT
@@ -56357,8 +56323,8 @@ awt
 awt
 awt
 awt
-aBf
-fNb
+fMb
+fOb
 fTb
 aCs
 gcb
@@ -56615,7 +56581,7 @@ aww
 awV
 awc
 avI
-fOb
+pPb
 fTb
 aBp
 aCV
@@ -56868,7 +56834,7 @@ avI
 azq
 avI
 avI
-aAr
+aBf
 avI
 avI
 avI
@@ -80952,7 +80918,7 @@ akQ
 akQ
 akQ
 akQ
-alN
+eBb
 akQ
 alX
 aie

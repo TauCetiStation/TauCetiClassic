@@ -39658,7 +39658,6 @@
 /area/station/security/vacantoffice)
 "bxw" = (
 /obj/structure/table,
-/obj/item/weapon/phone,
 /obj/item/clothing/accessory/stethoscope,
 /turf/simulated/floor{
 	dir = 10;
@@ -40079,10 +40078,6 @@
 	pixel_y = 24
 	},
 /obj/structure/table,
-/obj/item/weapon/phone{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";

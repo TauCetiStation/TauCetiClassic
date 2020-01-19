@@ -46262,10 +46262,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/item/weapon/phone{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /turf/simulated/floor/bluegrid,
 /area/station/bridge/server)
 "obY" = (
@@ -75190,7 +75186,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "xAD" = (
-/obj/item/weapon/phone,
 /obj/item/weapon/poster/contraband,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
