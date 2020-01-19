@@ -377,7 +377,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			else
 				shake_camera(M, 4, 2)// unbuckled, HOLY SHIT SHAKE THE ROOM
 				M.Weaken(3)
-		if(isliving(M) && !M.buckled)
+		if(isliving(M) && !issilicon(M) && !M.buckled)
 			var/mob/living/L = M
 			if(isturf(L.loc))
 				for(var/i=0, i < 5, i++)
