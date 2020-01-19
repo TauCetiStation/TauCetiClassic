@@ -257,8 +257,15 @@
 		ext.afterattack(target, chassis.occupant)
 	return 1
 
+/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/Topic(href, href_list)
+	..()
+	if (href_list["switch"])
+		ext.safety = !ext.safety
+		occupant_message("The [name] now [ext.safety ? "locked" : "ready"].")
+		update_equip_info()
+
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher/get_equip_info()
-	return "[..()] \[[ext.reagents.total_volume]\]"
+	return "[..()] \[[ext.reagents.total_volume]\]\[<a href='?src=\ref[src];switch=1'>[src.ext.safety ? "Safe" : "Ready"]</a>\]"
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher/on_reagent_change()
 	return
