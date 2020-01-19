@@ -49,10 +49,10 @@ var/hotline_timer_id = 0
 
 	if(picked && !verb_hang)
 		verb_hang = TRUE
-		src.verbs += /obj/item/weapon/phone/hotline/proc/hang_phone
+		src.verbs += /obj/item/weapon/phone/hotline/proc/hang_verb
 	if(!picked)
 		verb_hang = FALSE
-		src.verbs -= /obj/item/weapon/phone/hotline/proc/hang_phone
+		src.verbs -= /obj/item/weapon/phone/hotline/proc/hang_verb
 
 /obj/item/weapon/phone/hotline/proc/pick_phone()
 	set name = "Pick Phone"
@@ -76,7 +76,7 @@ var/hotline_timer_id = 0
 	listener = null
 	to_chat(user, "You hanged off phone.")
 	playsound(src, 'sound/weapons/phone_hang.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2)
-	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(usr)] hanged off a [hotline_name]'s phone. [ADMIN_JMP(user)]")
+	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(user)] hanged off a [hotline_name]'s phone. [ADMIN_JMP(user)]")
 	update_verbs()
 
 /obj/item/weapon/phone/hotline/proc/hang_verb()
@@ -95,14 +95,15 @@ var/hotline_timer_id = 0
 /proc/hotline_ring()
 	hotline_timer_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/hotline_ring, FALSE), 6 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 	for(var/obj/item/weapon/phone/hotline/h in hotline_clients)
-		if(((h.hotline_name in hotline_active) || hotline_global)  && h.activated && !h.picked)
+		if(((h.hotline_name in hotline_active) || hotline_global) && h.activated && !h.picked)
 			h.ringing = TRUE
 			playsound(h, 'sound/weapons/phone_ring.ogg', VOL_EFFECTS_MASTER, null, FALSE, 4)
 		else
-			if(h.picked && !h.beeps)
-				h.listener.playsound_local(null, 'sound/weapons/phone_beeps.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
-				h.beeps = TRUE
 			h.ringing = FALSE
+
+		if(!((h.hotline_name in hotline_active) || hotline_global) && h.activated && h.picked && !h.beeps)
+			h.listener.playsound_local(null, 'sound/weapons/phone_beeps.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
+			h.beeps = TRUE
 		h.update_verbs()
 
 /client/proc/hotline_set()
