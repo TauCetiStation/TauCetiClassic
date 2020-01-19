@@ -1,33 +1,82 @@
 // HOTLINE
-// A IC solution for Admin-to-mob hotline.
+// An IC solution for Admin-to-mob hotline.
 
-var/list/hotline_clients = list()
-var/list/hotline_active = list()
-var/hotline_global = ""
-var/hotline_timer_id = 0
+var/global/datum/hotline/admin_hotline = new()
+
+/datum/hotline
+	var/list/obj/item/weapon/phone/hotline/clients = list()
+	var/list/all_hotlines = list()
+	var/list/active_hotlines = list()
+	var/hotline_global = ""
+	var/timer_id = 0
+
+/datum/hotline/proc/update()
+	all_hotlines.Cut()
+	for(var/obj/item/weapon/phone/hotline/H in clients)
+		if(!(H.hotline_name in all_hotlines))
+			all_hotlines += H.hotline_name
+	for(var/H in active_hotlines)
+		if(!(H in all_hotlines))
+			all_hotlines += H
+	return all_hotlines
+
+/datum/hotline/proc/transmit(message as text, destination as text)
+	var/heard = 0
+	if(destination == "All")
+		for(var/obj/item/weapon/phone/hotline/H in clients)
+			if(H.picked)
+				H.say(message)
+				heard++
+	else
+		for(var/obj/item/weapon/phone/hotline/H in clients)
+			if(H.picked && (H.hotline_name == destination))
+				H.say(message)
+				heard++
+	return heard
+
+/datum/hotline/proc/stop_ring()
+	if(timer_id)
+		if((active_hotlines.len = 0) && !hotline_global)
+			deltimer(timer_id)
+			timer_id = 0
+			for(var/obj/item/weapon/phone/hotline/H in clients)
+				H.ringing = FALSE
+
+/datum/hotline/proc/ring()
+	timer_id = addtimer(CALLBACK(src, .proc/ring, FALSE), 6 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+	for(var/obj/item/weapon/phone/hotline/H in clients)
+		if(((H.hotline_name in active_hotlines) || hotline_global) && !H.disconnected && !H.picked)
+			H.ringing = TRUE
+			playsound(H, 'sound/weapons/phone_ring.ogg', VOL_EFFECTS_MASTER, null, FALSE, 4)
+		else
+			H.ringing = FALSE
+
+		if(!((H.hotline_name in active_hotlines) || hotline_global) && !H.disconnected && H.picked)
+			H.listener.playsound_local(null, 'sound/weapons/phone_beeps.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
+			H.disconnected = TRUE
+		H.update_verbs()
+
+
 
 /obj/item/weapon/phone/hotline
 	name = "red phone"
 	desc = "The rotary dial has been replaced with a black knob of unknown purpose. Should anything ever go wrong..."
-	var/activated = TRUE
-	var/beeps = FALSE
+	var/disconnected = FALSE
 	var/ringing = FALSE
 	var/picked = FALSE
-	var/verb_pick = FALSE
-	var/verb_hang = FALSE
 	var/hotline_name = "Hotline"
 	var/mob/listener = null
 	var/track_delay = 0
 
 /obj/item/weapon/phone/hotline/atom_init()
 	. = ..()
-	START_PROCESSING(SSobj, src)
-	hotline_clients += src
+	admin_hotline.clients += src
 	track_delay = world.time
 
 /obj/item/weapon/phone/hotline/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	hotline_clients -= src
+	admin_hotline.clients -= src
+	listener = null
 	return ..()
 
 /obj/item/weapon/phone/hotline/process()
@@ -36,98 +85,91 @@ var/hotline_timer_id = 0
 	if(listener)
 		var/turf/mainloc = get_turf(src)
 		if(!(listener in range(1,mainloc)))
-			hang_phone(listener)
+			hang_phone()
 	track_delay = world.time + 1 // 0.1 second
 
 /obj/item/weapon/phone/hotline/proc/update_verbs()
-	if(ringing && !verb_pick)
-		verb_pick = TRUE
-		src.verbs += /obj/item/weapon/phone/hotline/proc/pick_phone
-	if(!ringing)
-		verb_pick = FALSE
-		src.verbs -= /obj/item/weapon/phone/hotline/proc/pick_phone
+	if(ringing)
+		verbs += /obj/item/weapon/phone/hotline/proc/pick_verb
+	else
+		verbs -= /obj/item/weapon/phone/hotline/proc/pick_verb
 
-	if(picked && !verb_hang)
-		verb_hang = TRUE
-		src.verbs += /obj/item/weapon/phone/hotline/proc/hang_verb
-	if(!picked)
-		verb_hang = FALSE
-		src.verbs -= /obj/item/weapon/phone/hotline/proc/hang_verb
+	if(picked)
+		verbs += /obj/item/weapon/phone/hotline/proc/hang_verb
+	else
+		verbs -= /obj/item/weapon/phone/hotline/proc/hang_verb
 
-/obj/item/weapon/phone/hotline/proc/pick_phone()
+/obj/item/weapon/phone/hotline/proc/pick_verb()
 	set name = "Pick Phone"
 	set category = "Object"
-	set src in oview(usr, 1)
+	set src in oview(1)
 	if(!ishuman(usr) || usr.incapacitated() || usr.lying)
 		return
 
-	beeps = FALSE
+	disconnected = FALSE
 	ringing = FALSE
 	picked = TRUE
 	listener = usr
-	to_chat(usr, "You picked up phone.")
+	to_chat(usr, "You picked up the phone.")
 	playsound(src, 'sound/weapons/phone_pick.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2)
 	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(usr)] picked up a [hotline_name]'s phone. [ADMIN_JMP(usr)]")
+
+	START_PROCESSING(SSobj, src)
 	update_verbs()
 
-/obj/item/weapon/phone/hotline/proc/hang_phone(mob/user)
-	beeps = TRUE
+/obj/item/weapon/phone/hotline/proc/hang_phone()
+	to_chat(listener, "You hung up the phone.")
+	playsound(src, 'sound/weapons/phone_hang.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2)
+	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(listener)] hanged off a [hotline_name]'s phone. [ADMIN_JMP(listener)]")
+
 	picked = FALSE
 	listener = null
-	to_chat(user, "You hanged off phone.")
-	playsound(src, 'sound/weapons/phone_hang.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2)
-	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(user)] hanged off a [hotline_name]'s phone. [ADMIN_JMP(user)]")
+
+	STOP_PROCESSING(SSobj, src)
 	update_verbs()
 
 /obj/item/weapon/phone/hotline/proc/hang_verb()
 	set name = "Hang Phone"
 	set category = "Object"
-	set src in oview(usr, 1)
+	set src in oview(1)
 	if(!ishuman(usr) || usr.incapacitated() || usr.lying)
 		return
+	if(usr != listener)
+		if(disconnected)
+			return
 
-	hang_phone(usr)
+		if(usr.a_intent == I_HURT)
+			listener.playsound_local(null, 'sound/weapons/phone_beeps.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
+			disconnected = TRUE
+		else
+			to_chat(usr, "Why you even want do disrupt a call?")
+		return
+	hang_phone()
 
 /obj/item/weapon/phone/hotline/proc/say(message)
 	if(listener)
-		listener.show_message(message, SHOWMSG_AUDIO)
-
-/proc/hotline_ring()
-	hotline_timer_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/hotline_ring, FALSE), 6 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
-	for(var/obj/item/weapon/phone/hotline/h in hotline_clients)
-		if(((h.hotline_name in hotline_active) || hotline_global) && h.activated && !h.picked)
-			h.ringing = TRUE
-			playsound(h, 'sound/weapons/phone_ring.ogg', VOL_EFFECTS_MASTER, null, FALSE, 4)
-		else
-			h.ringing = FALSE
-
-		if(!((h.hotline_name in hotline_active) || hotline_global) && h.activated && h.picked && !h.beeps)
-			h.listener.playsound_local(null, 'sound/weapons/phone_beeps.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
-			h.beeps = TRUE
-		h.update_verbs()
+		var/part_a = "<span class='secradio'><span class='name'>"
+		var/part_b = "</span><b> [bicon(src)]\[Hotline\]</b> <span class='message'>"
+		var/part_c = "</span></span>"
+		var/rendered = "[part_a][hotline_name][part_b]says, \"[message]\"[part_c]"
+		listener.show_message(rendered, SHOWMSG_AUDIO)
 
 /client/proc/hotline_set()
 	set name = "Hotline Setup"
 	set category = "Special Verbs"
-	set desc = "Setup a IC admin-to-mob hotline."
+	set desc = "Setup an IC admin-to-mob hotline."
 
 	// Some code from response_team()
-	if(!holder)
-		to_chat(usr, "<span class='warning'>Only administrators may use this command.</span>")
-		return
 	if(!ticker)
 		to_chat(usr, "<span class='warning'>The game hasn't started yet!</span>")
 		return
-	if(ticker.current_state == 1)
+	if(ticker.current_state < GAME_STATE_PLAYING)
 		to_chat(usr, "<span class='warning'>The round hasn't started yet!</span>")
 		return
 
-	var/list/hotlines = list()
-	for(var/obj/item/weapon/phone/hotline/dist in hotline_clients)
-		if(!(dist.hotline_name in hotlines))
-			hotlines += dist.hotline_name
+	var/list/hotlines = admin_hotline.update()
 	if(!hotlines)
-		to_chat(usr, "<span class='warning'>There is not Hotline phones!</span>")
+		to_chat(usr, "<span class='warning'>There is no Hotline phones!</span>")
 		return
 	hotlines += "All"
 	var/destination = input(usr, "Please, choose the hotline you want to setup.") as null|anything in hotlines
@@ -135,29 +177,24 @@ var/hotline_timer_id = 0
 		return
 	hotlines -= "All"
 
-	if((destination in hotline_active) || hotline_global)
-		switch(alert("Stop a hotline?",,"Yes","No"))
+	if((destination in admin_hotline.active_hotlines) || admin_hotline.hotline_global)
+		switch(alert("Stop the hotline?",,"Yes","No"))
 			if("Yes")
 				message_admins("<font color='red'>HOTLINE:</font> [key_name(usr)] stopped a [destination]'s hotline.")
 				if(destination == "All")
-					LAZYCLEARLIST(hotline_active)
-					hotline_global = ""
-				else if(hotline_global)
-					for(var/h in hotlines)
-						hotline_active[h] = hotline_global
-					hotline_active -= destination
-					hotline_global = ""
+					admin_hotline.active_hotlines.Cut()
+					admin_hotline.hotline_global = ""
+				else if(admin_hotline.hotline_global)
+					for(var/H in hotlines)
+						admin_hotline.active_hotlines[H] = admin_hotline.hotline_global
+					admin_hotline.active_hotlines -= destination
+					admin_hotline.hotline_global = ""
 				else
-					hotline_active -= destination
-				if(!hotline_active && !hotline_global)
-					if(hotline_timer_id)
-						deltimer(hotline_timer_id)
-						hotline_timer_id = 0
-						for(var/obj/item/weapon/phone/hotline/h in hotline_clients)
-							h.ringing = FALSE
+					admin_hotline.active_hotlines -= destination
+				admin_hotline.stop_ring()
 		return
 
-	switch(alert("Start a hotline?",,"Yes","No"))
+	switch(alert("Start the hotline?",,"Yes","No"))
 		if("No")
 			return
 	var/hotline_name = sanitize_safe(input(usr, "Pick a name for the Hotline.", "Name") as text)
@@ -165,13 +202,12 @@ var/hotline_timer_id = 0
 		hotline_name = "Hotline"
 	message_admins("<font color='red'>HOTLINE:</font> [key_name(usr)] started a [destination]'s hotline with name [hotline_name].")
 	if(destination == "All")
-		hotline_global = hotline_name
-		LAZYCLEARLIST(hotline_active)
+		admin_hotline.hotline_global = hotline_name
+		admin_hotline.active_hotlines.Cut()
 	else
-		hotline_active[destination] = hotline_name
+		admin_hotline.active_hotlines[destination] = hotline_name
 
-	if(!hotline_timer_id)
-		hotline_ring()
+	admin_hotline.ring()
 
 /client/proc/hotline_say()
 	set name = "Hotline Say"
@@ -179,23 +215,20 @@ var/hotline_timer_id = 0
 	set desc = "Say to the Hotline"
 
 	// Some code from response_team()
-	if(!holder)
-		to_chat(usr, "<span class='warning'>Only administrators may use this command.</span>")
-		return
 	if(!ticker)
 		to_chat(usr, "<span class='warning'>The game hasn't started yet!</span>")
 		return
-	if(ticker.current_state == 1)
+	if(ticker.current_state < GAME_STATE_PLAYING)
 		to_chat(usr, "<span class='warning'>The round hasn't started yet!</span>")
 		return
 
-	if(!hotline_active)
+	if(!admin_hotline.active_hotlines)
 		to_chat(usr, "<span class='warning'>The Hotline isn't active!</span>")
 		return
 
 	var/list/hotlines = list()
-	for(var/h in hotline_active)
-		hotlines += h
+	for(var/H in admin_hotline.active_hotlines)
+		hotlines += H
 	hotlines += "All"
 	var/destination = input(usr, "Please, choose the hotline you want send message to.") as null|anything in hotlines
 	if(!destination)
@@ -205,24 +238,7 @@ var/hotline_timer_id = 0
 	if(!message)
 		return
 
-	var/obj/item/weapon/phone/hotline/phone = new
-	var/part_a = "<span class='secradio'><span class='name'>"
-	var/part_b = "</span><b> [bicon(phone)]\[Hotline\]</b> <span class='message'>"
-	var/part_c = "</span></span>"
-	var/rendered = "[part_a][hotline_global][part_b]says, \"[message]\"[part_c]"
-
-	var/heard = 0
-	if(destination == "All")
-		for(var/obj/item/weapon/phone/hotline/h in hotline_clients)
-			if(h.picked)
-				h.say(rendered)
-				heard++
-	else
-		var/hotline_name = hotline_active[destination]
-		for(var/obj/item/weapon/phone/hotline/client in hotline_clients)
-			if(client.picked && (client.hotline_name == destination))
-				client.say("[part_a][hotline_name][part_b]says, \"[message]\"[part_c]")
-				heard++
+	var/heard = admin_hotline.transmit(message, destination)
 
 	log_say("Hotline/[key_name(usr)] : \[[destination]\]: [message]")
 	message_admins("<font color='red'>HOTLINE:</font> [key_name(usr)] messaged [destination]([heard]). Message: \"[message]\".")
