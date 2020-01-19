@@ -10421,9 +10421,7 @@
 /obj/structure/table,
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/stamp{
-	name = "Quartermaster's stamp"
-	},
+/obj/item/weapon/stamp/qm,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -14385,7 +14383,11 @@
 "dJH" = (
 /obj/structure/closet,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/stamp,
+/obj/item/weapon/stamp{
+	icon_state = "stamp-cmo";
+	name = "medbay rubber stamp";
+	stamp_message = "Medbay"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "dJU" = (
@@ -20110,7 +20112,10 @@
 "fBa" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/stamp,
+/obj/item/weapon/stamp{
+	name = "miner's rubber stamp";
+	stamp_message = "Miner"
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -52403,10 +52408,6 @@
 /area/station/engineering/drone_fabrication)
 "qhy" = (
 /obj/structure/table,
-/obj/item/weapon/stamp{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/item/weapon/storage/firstaid/regular{
 	pixel_x = 6;
 	pixel_y = -5
@@ -52414,6 +52415,12 @@
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 24
+	},
+/obj/item/weapon/stamp{
+	name = "cargo rubber stamp";
+	pixel_x = -3;
+	pixel_y = 3;
+	stamp_message = "Cargo"
 	},
 /obj/item/clothing/head/soft,
 /turf/simulated/floor{
@@ -61607,8 +61614,10 @@
 	},
 /obj/item/weapon/clipboard,
 /obj/item/weapon/stamp{
+	name = "cargo rubber stamp";
 	pixel_x = -3;
-	pixel_y = 3
+	pixel_y = 3;
+	stamp_message = "Cargo"
 	},
 /obj/item/weapon/stamp/denied{
 	pixel_x = 4;
@@ -70146,10 +70155,13 @@
 "vOH" = (
 /obj/structure/table,
 /obj/item/weapon/folder/yellow,
-/obj/item/weapon/stamp,
 /obj/machinery/newscaster{
 	dir = 1;
 	pixel_y = 30
+	},
+/obj/item/weapon/stamp{
+	name = "recycler's rubber stamp";
+	stamp_message = "Recycler"
 	},
 /turf/simulated/floor{
 	dir = 5;

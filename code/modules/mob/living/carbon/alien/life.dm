@@ -28,8 +28,8 @@
 	handle_environment(environment)
 
 	//Handle being on fire
-	handle_fire()	
-	
+	handle_fire()
+
 	//Status updates, death etc.
 	handle_regular_status_updates()
 	update_canmove()
@@ -121,10 +121,8 @@
 			AdjustParalysis(-1)
 			blinded = 1
 			stat = UNCONSCIOUS
-		else if(sleeping)
-			sleeping = max(sleeping-1, 0)
-			blinded = 1
-			stat = UNCONSCIOUS
+		else if(IsSleeping())
+			blinded = TRUE
 		//CONSCIOUS
 		else
 			stat = CONSCIOUS
