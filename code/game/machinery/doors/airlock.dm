@@ -238,6 +238,10 @@ var/list/airlock_overlays = list()
 	var/image/panel_overlay
 	var/image/weld_overlay
 	var/image/sparks_overlay
+	var/light_range = 2
+	var/light_power = 2
+	var/light_color
+
 
 	switch(state)
 		if(AIRLOCK_CLOSED)
@@ -253,8 +257,13 @@ var/list/airlock_overlays = list()
 			if(lights && hasPower())
 				if(locked)
 					lights_overlay = get_airlock_overlay("lights_bolts", overlays_file)
+					light_color = "#c22345"
 				else if(emergency)
 					lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
+					light_color = "#d1d11d"
+				else
+					lights_overlay = get_airlock_overlay("lights_poweron", overlays_file)
+					light_color = "#239dc2"
 
 		if(AIRLOCK_DENY)
 			frame_overlay = get_airlock_overlay("closed", icon)
@@ -266,7 +275,9 @@ var/list/airlock_overlays = list()
 				panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
-			lights_overlay = get_airlock_overlay("lights_denied", overlays_file)
+			if(lights && hasPower())
+				lights_overlay = get_airlock_overlay("lights_denied", overlays_file)
+				light_color = "#c22345"
 
 		if(AIRLOCK_EMAG)
 			frame_overlay = get_airlock_overlay("closed", icon)
@@ -286,10 +297,11 @@ var/list/airlock_overlays = list()
 				filling_overlay = get_airlock_overlay("[inner_material]_closing", overlays_file)
 			else
 				filling_overlay = get_airlock_overlay("fill_closing", icon)
-			if(lights && hasPower())
-				lights_overlay = get_airlock_overlay("lights_closing", overlays_file)
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_closing", overlays_file)
+			if(lights && hasPower())
+				lights_overlay = get_airlock_overlay("lights_closing", overlays_file)
+				light_color = "#23c270"
 
 		if(AIRLOCK_OPEN)
 			frame_overlay = get_airlock_overlay("open", icon)
@@ -299,6 +311,17 @@ var/list/airlock_overlays = list()
 				filling_overlay = get_airlock_overlay("fill_open", icon)
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_open", overlays_file)
+			if(lights && hasPower())
+				if(locked)
+					lights_overlay = get_airlock_overlay("lights_bolts_open", overlays_file)
+					light_color = "#c22345"
+				else if(emergency)
+					lights_overlay = get_airlock_overlay("lights_emergency_open", overlays_file)
+					light_color = "#d1d11d"
+				else
+					lights_overlay = get_airlock_overlay("lights_poweron_open", overlays_file)
+					light_color = "#239dc2"
+
 
 		if(AIRLOCK_OPENING)
 			frame_overlay = get_airlock_overlay("opening", icon)
@@ -306,10 +329,11 @@ var/list/airlock_overlays = list()
 				filling_overlay = get_airlock_overlay("[inner_material]_opening", overlays_file)
 			else
 				filling_overlay = get_airlock_overlay("fill_opening", icon)
-			if(lights && hasPower())
-				lights_overlay = get_airlock_overlay("lights_opening", overlays_file)
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
+			if(lights && hasPower())
+				lights_overlay = get_airlock_overlay("lights_opening", overlays_file)
+				light_color = "#23c270"
 
 	// Doesn't used cut_overlays() for performance reasons.
 	if(frame_overlay != old_frame_overlay)
@@ -327,6 +351,9 @@ var/list/airlock_overlays = list()
 		cut_overlay(old_lights_overlay)
 		add_overlay(lights_overlay)
 		old_lights_overlay = lights_overlay
+		// Adding light to airlocks
+		set_light(light_range, light_power, light_color)
+
 	if(panel_overlay != old_panel_overlay)
 		cut_overlay(old_panel_overlay)
 		add_overlay(panel_overlay)
