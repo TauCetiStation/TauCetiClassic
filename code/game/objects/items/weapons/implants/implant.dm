@@ -192,7 +192,7 @@ Implant Specifics:<BR>"}
 					if (istype(part,/obj/item/organ/external/chest) ||	\
 						istype(part,/obj/item/organ/external/groin) ||	\
 						istype(part,/obj/item/organ/external/head))
-						part.createwound(BRUISE, 60)	//mangle them instead
+						part.take_damage(60, used_weapon = "Explosion") //mangle them instead
 						explosion(get_turf(imp_in), -1, -1, 2, 3)
 						qdel(src)
 					else
@@ -259,7 +259,7 @@ Implant Specifics:<BR>"}
 				if (istype(part,/obj/item/organ/external/chest) ||	\
 					istype(part,/obj/item/organ/external/groin) ||	\
 					istype(part,/obj/item/organ/external/head))
-					part.createwound(BRUISE, 60)	//mangle them instead
+					part.take_damage(60, used_weapon = "Explosion")	//mangle them instead
 				else
 					part.droplimb(null, null, DROPLIMB_BLUNT)
 			explosion(get_turf(imp_in), -1, -1, 2, 3)
@@ -315,10 +315,11 @@ Implant Specifics:<BR>"}
 	action_button_is_hands_free = TRUE
 
 /obj/item/weapon/implant/emp/ui_action_click()
-	uses--
-	empulse(imp_in, 3, 5)
-	if(!uses)
-		qdel(src)
+	if (uses > 0)
+		empulse(imp_in, 3, 5)
+		uses--
+		if (!uses)
+			qdel(src)
 
 /obj/item/weapon/implant/chem
 	name = "chemical implant"

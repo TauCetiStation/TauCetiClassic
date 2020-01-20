@@ -225,7 +225,7 @@
 	build_type = MINEFAB
 	build_path = /mob/living/simple_animal/hostile/mining_drone
 	materials = list(MAT_METAL=6000,MAT_GLASS=2000,MAT_PLASTIC=1000,MAT_GOLD=500,MAT_URANIUM=2000)
-	construction_time = 1200
+	construction_time = 800
 	category = list("Tools")
 
 /datum/design/mining_jetpack

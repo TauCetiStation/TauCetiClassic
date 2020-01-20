@@ -215,25 +215,25 @@
 		terminal = null
 
 /obj/machinery/power/smes/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)	return
 
 	if(panel_open)
-		overlays.Cut()
+		cut_overlays()
 		return
 
 
-	overlays += image('icons/obj/power.dmi', "smes-op[online]")
+	add_overlay(image('icons/obj/power.dmi', "smes-op[online]"))
 
 	if(charging)
-		overlays += image('icons/obj/power.dmi', "smes-oc1")
+		add_overlay(image('icons/obj/power.dmi', "smes-oc1"))
 	else
 		if(chargemode)
-			overlays += image('icons/obj/power.dmi', "smes-oc0")
+			add_overlay(image('icons/obj/power.dmi', "smes-oc0"))
 
 	var/clevel = chargedisplay()
 	if(clevel>0)
-		overlays += image('icons/obj/power.dmi', "smes-og[clevel]")
+		add_overlay(image('icons/obj/power.dmi', "smes-og[clevel]"))
 	return
 
 
@@ -414,9 +414,7 @@
 /obj/machinery/power/smes/proc/ion_act()
 	if(is_station_level(z))
 		if(prob(1)) //explosion
-			to_chat(world, "<span class='warning'>SMES explosion in [src.loc.loc]</span>")
-			for(var/mob/M in viewers(src))
-				M.show_message("<span class='warning'>The [src.name] is making strange noises!</span>", 3, "<span class='warning'>You hear sizzling electronics.</span>", 2)
+			audible_message("<span class='warning'>The [src.name] is making strange noises!</span>")
 			sleep(10*pick(4,5,6,7,10,14))
 			var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 			smoke.set_up(3, 0, src.loc)
@@ -424,9 +422,10 @@
 			smoke.start()
 			explosion(src.loc, -1, 0, 1, 3, 0)
 			qdel(src)
+			message_admins("SMES explosion in [src.loc.loc] [ADMIN_JMP(src)]")
+			log_game("SMES explosion in [src.loc.loc]")
 			return
 		if(prob(15)) //Power drain
-			to_chat(world, "<span class='warning'>SMES power drain in [src.loc.loc]</span>")
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
@@ -434,12 +433,15 @@
 				emp_act(1)
 			else
 				emp_act(2)
+			message_admins("SMES power drain in [src.loc.loc] [ADMIN_JMP(src)]")
+			log_game("SMES power drain in [src.loc.loc]")
 		if(prob(5)) //smoke only
-			to_chat(world, "<span class='warning'>SMES smoke in [src.loc.loc]</span>")
 			var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 			smoke.set_up(3, 0, src.loc)
 			smoke.attach(src)
 			smoke.start()
+			message_admins("SMES smoke in [src.loc.loc] [ADMIN_JMP(src)]")
+			log_game("SMES smoke in [src.loc.loc]")
 
 
 /obj/machinery/power/smes/emp_act(severity)

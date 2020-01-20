@@ -4,7 +4,7 @@
 var/bomb_set
 
 /obj/machinery/nuclearbomb
-	name = "\improper Nuclear Fission Explosive"
+	name = "Nuclear Fission Explosive"
 	desc = "Uh oh. RUN!!!!"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb0"
@@ -57,29 +57,29 @@ var/bomb_set
 		if (removal_stage == 5)
 			if (src.opened == 0)
 				src.opened = 1
-				overlays += image(icon, "npanel_open")
+				add_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You unscrew the control panel of [src].")
 
 			else
 				src.opened = 0
-				overlays -= image(icon, "npanel_open")
+				cut_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You screw the control panel of [src] back on.")
 		else if (src.auth)
 			if (src.opened == 0)
 				src.opened = 1
-				overlays += image(icon, "npanel_open")
+				add_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You unscrew the control panel of [src].")
 
 			else
 				src.opened = 0
-				overlays -= image(icon, "npanel_open")
+				cut_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You screw the control panel of [src] back on.")
 		else
 			if (src.opened == 0)
 				to_chat(user, "The [src] emits a buzzing noise, the panel staying locked in.")
 			if (src.opened == 1)
 				src.opened = 0
-				overlays -= image(icon, "npanel_open")
+				cut_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You screw the control panel of [src] back on.")
 			flick("nuclearbombc", src)
 

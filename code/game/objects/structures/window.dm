@@ -450,11 +450,11 @@
 		var/ratio = health / maxhealth
 		ratio = CEIL(ratio * 4) * 25
 
-		overlays -= crack_overlay
+		cut_overlay(crack_overlay)
 		if(ratio > 75)
 			return
 		crack_overlay = image('icons/obj/window.dmi',"damage[ratio]",-(layer+0.1))
-		overlays += crack_overlay
+		add_overlay(crack_overlay)
 
 /obj/structure/window/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 800)

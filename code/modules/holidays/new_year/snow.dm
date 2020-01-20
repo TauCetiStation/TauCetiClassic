@@ -44,7 +44,7 @@
 		qdel(src)
 
 /obj/structure/snow/proc/check_overlay()
-	overlays.Cut()
+	cut_overlays()
 	for(var/direction_to_check in cardinal)
 		if(!istype(get_step(src, direction_to_check), /turf/space) && !istype(get_step(src, direction_to_check), /turf/simulated/wall) && !istype(get_step(src, direction_to_check), /obj/structure/snow))
 			var/image/snow_side = image('icons/turf/snow.dmi', "[direction_to_check]")
@@ -58,7 +58,7 @@
 					snow_side.pixel_x += 32
 				if(WEST)
 					snow_side.pixel_x += -32
-			overlays += snow_side
+			add_overlay(snow_side)
 
 /obj/item/snowball
 	name = "snowball"

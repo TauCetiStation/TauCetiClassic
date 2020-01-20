@@ -10,17 +10,15 @@
 
 	if(typing_indicator.icon_state != indi_icon)
 		if(typing && state)
-			overlays.Remove(typing_indicator)
+			cut_overlay(typing_indicator)
 		typing_indicator.icon_state = indi_icon
-
-	typing_indicator.invisibility = invisibility
 
 	if(state)
 		if(client && !stat)
-			overlays.Add(typing_indicator)
+			add_overlay(typing_indicator)
 			typing = TRUE
 	else
-		overlays.Remove(typing_indicator)
+		cut_overlay(typing_indicator)
 		typing = FALSE
 
 /mob/verb/say_wrapper()

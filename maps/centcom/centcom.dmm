@@ -3325,6 +3325,7 @@
 /obj/structure/table,
 /obj/item/weapon/retractor,
 /obj/item/stack/medical/advanced/bruise_pack,
+/obj/item/stack/nanopaste,
 /obj/item/weapon/FixOVein{
 	pixel_x = -6;
 	pixel_y = 1
@@ -3456,14 +3457,6 @@
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
-"ana" = (
-/obj/machinery/door/poddoor/shutters/syndi{
-	id = "nukeop_war"
-	},
-/turf/unsimulated/floor{
-	icon_state = "bar"
 	},
 /area/custom/syndicate_mothership)
 "anb" = (
@@ -7027,10 +7020,6 @@
 /turf/simulated/shuttle/plating,
 /area/shuttle/officer/velocity)
 "azu" = (
-/obj/structure/closet/walllocker/emerglocker/north{
-	pixel_x = -32;
-	pixel_y = 0
-	},
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	icon_state = "chair_c03";
 	name = "shuttle chair"
@@ -13645,19 +13634,6 @@
 	icon_state = "white"
 	},
 /area/centcom/tdome)
-"aWx" = (
-/obj/machinery/door_control{
-	id = "nukeop_war";
-	name = "War door-control";
-	pixel_x = -30;
-	req_access = list(151)
-	},
-/obj/structure/table,
-/obj/item/device/nuclear_challenge,
-/turf/unsimulated/floor{
-	icon_state = "bar"
-	},
-/area/custom/syndicate_mothership)
 "aWy" = (
 /obj/structure/table/reinforced{
 	dir = 4;
@@ -14728,7 +14704,7 @@
 /area/shuttle/vox/arkship)
 "aZr" = (
 /obj/structure/rack,
-/obj/item/weapon/crossbow,
+/obj/item/weapon/crossbow/vox,
 /obj/item/weapon/arrow,
 /obj/item/weapon/arrow,
 /obj/item/weapon/arrow,
@@ -22165,7 +22141,6 @@
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "oAb" = (
-/obj/structure/closet/walllocker/emerglocker/north,
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "oBb" = (
@@ -22682,10 +22657,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/control)
-"pRb" = (
-/obj/structure/closet/walllocker/emerglocker/south,
-/turf/simulated/shuttle/floor,
-/area/shuttle/escape/centcom)
 "pSb" = (
 /obj/structure/closet/medical_wall,
 /obj/item/weapon/reagent_containers/blood/OMinus,
@@ -37681,7 +37652,7 @@ aVy
 aVy
 aVy
 aVy
-pRb
+oAb
 aUE
 aaM
 aaM
@@ -81499,7 +81470,7 @@ akQ
 akQ
 aie
 aie
-aie
+alt
 aaM
 aaM
 aaM
@@ -81754,9 +81725,9 @@ akQ
 akQ
 akQ
 akQ
-ana
-aWx
 aie
+aie
+alt
 aaM
 aaM
 aaM
@@ -82013,7 +81984,7 @@ alF
 als
 aie
 aie
-aie
+alt
 aaM
 aaM
 aaM

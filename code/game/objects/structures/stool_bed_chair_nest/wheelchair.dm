@@ -13,9 +13,9 @@
 	var/alert = 0
 
 /obj/structure/stool/bed/chair/wheelchair/handle_rotation()
-	overlays = null
+	cut_overlays()
 	var/image/O = image(icon = 'icons/obj/objects.dmi', icon_state = "w_overlay", layer = FLY_LAYER, dir = src.dir)
-	overlays += O
+	add_overlay(O)
 	if(buckled_mob)
 		buckled_mob.dir = dir
 
@@ -157,8 +157,7 @@
 			to_chat(usr, "You grip \the [name]'s handles.")
 		else
 			if(usr != pulling)
-				for(var/mob/O in viewers(pulling, null))
-					O.show_message("<span class='red'>[usr] breaks [pulling]'s grip on the wheelchair.</span>", 1)
+				visible_message("<span class='red'>[usr] breaks [pulling]'s grip on the wheelchair.</span>")
 			else
 				to_chat(usr, "You let go of \the [name]'s handles.")
 			pulling.pulledby = null

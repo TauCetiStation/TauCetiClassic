@@ -27,7 +27,7 @@
 	var/list/offset_x //offsets stored for later
 	var/list/offset_y //usage by the photocopier
 	var/rigged = 0
-	var/spam_flag = 0
+	var/spam_flag = FALSE
 	var/crumpled = FALSE
 
 	var/const/deffont = "Verdana"
@@ -117,7 +117,7 @@
 		crumpled = TRUE
 		icon_state = "crumpled"
 		throw_range = 5
-		overlays = null
+		cut_overlays()
 	else
 		icon_state = "scrap"
 		throw_range = 1
@@ -145,14 +145,10 @@
 /obj/item/weapon/paper/attack_self(mob/living/user)
 	examine(user)
 	if(rigged && (Holiday == "April Fool's Day"))
-		if(spam_flag == 0)
-			spam_flag = 1
+		if(!spam_flag)
+			spam_flag = TRUE
 			playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
-			addtimer(CALLBACK(src, .proc/reset_spam_flag), 20)
-	return
-
-/obj/item/weapon/paper/proc/reset_spam_flag()
-	spam_flag = 0
+			addtimer(VARSET_CALLBACK(src, spam_flag, FALSE), 20)
 
 /obj/item/weapon/paper/attack_ai(mob/living/silicon/ai/user)
 	var/dist
@@ -246,7 +242,7 @@
 	LAZYCLEARLIST(ico)
 	LAZYCLEARLIST(offset_x)
 	LAZYCLEARLIST(offset_y)
-	overlays.Cut()
+	cut_overlays()
 	updateinfolinks()
 	update_icon()
 
@@ -262,7 +258,7 @@
 	P.ico        = LAZYCOPY(ico)
 	P.offset_x   = LAZYCOPY(offset_x)
 	P.offset_y   = LAZYCOPY(offset_y)
-	P.overlays   = overlays.Copy()
+	P.copy_overlays(src, TRUE)
 
 	P.updateinfolinks()
 	P.update_icon()
@@ -281,64 +277,20 @@
 	if(findtext(t, "\[sign\]"))
 		t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[get_signature(P, user)]</i></font>")
 
-	t = replacetext(t, "\[center\]", "<center>")
-	t = replacetext(t, "\[/center\]", "</center>")
-	t = replacetext(t, "\[br\]", "<BR>")
-	t = replacetext(t, "\[b\]", "<B>")
-	t = replacetext(t, "\[/b\]", "</B>")
-	t = replacetext(t, "\[i\]", "<I>")
-	t = replacetext(t, "\[/i\]", "</I>")
-	t = replacetext(t, "\[u\]", "<U>")
-	t = replacetext(t, "\[/u\]", "</U>")
-	t = replacetext(t, "\[large\]", "<font size=\"4\">")
-	t = replacetext(t, "\[/large\]", "</font>")
-	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
-
-	// tables
-	t = replacetext(t, "\[table\]", "<table border=3px cellpadding=5px bordercolor=\"black\">")
-	t = replacetext(t, "\[/table\]", "</table>")
-	t = replacetext(t, "\[tr\]", "<tr>")
-	t = replacetext(t, "\[/tr\]", "</tr>")
-	t = replacetext(t, "\[td\]", "<td>")
-	t = replacetext(t, "\[/td\]", "</td>")
-	t = replacetext(t, "\[th\]", "<th>")
-	t = replacetext(t, "\[/th\]", "</th>")
-
-	// standart head
-	t = replacetext(t, "\[h\]", "<h3 style=\"font-family: Arial; text-align:center;\">")
-	t = replacetext(t, "\[/h\]", "</h3>")
-
-	// bordered head;
-	t = replacetext(t, "\[bh\]", "<h3 style=\"border-width: 4px; border-style: solid; font-family: Arial; padding: 10px; text-align:center;\">")
-	t = replacetext(t, "\[/bh\]", "</h3>")
-
-	// blockquote
-	t = replacetext(t, "\[quote\]", "<blockquote style=\"line-height:normal; margin-bottom:10px; font-style:italic; letter-spacing: 1.25px; text-align:right;\">")
-	t = replacetext(t, "\[/quote\]", "</blockquote>")
-
-	// div
-	t = replacetext(t, "\[block\]", "<div style=\"border-width: 4px; border-style: dashed;\">")
-	t = replacetext(t, "\[/block\]", "</div>")
-
-	if(!iscrayon)
-		t = replacetext(t, "\[*\]", "<li>")
-		t = replacetext(t, "\[hr\]", "<HR>")
-		t = replacetext(t, "\[small\]", "<font size = \"1\">")
-		t = replacetext(t, "\[/small\]", "</font>")
-		t = replacetext(t, "\[list\]", "<ul>")
-		t = replacetext(t, "\[/list\]", "</ul>")
-
-		t = "<font face=\"[deffont]\" color=[P.colour]>[t]</font>"
-	else // If it is a crayon, and he still tries to use these, make them empty!
+	var/font = deffont
+	if(iscrayon) // If it is a crayon, and he still tries to use these, make them empty!
 		t = replacetext(t, "\[*\]", "")
 		t = replacetext(t, "\[hr\]", "")
 		t = replacetext(t, "\[small\]", "")
 		t = replacetext(t, "\[/small\]", "")
 		t = replacetext(t, "\[list\]", "")
 		t = replacetext(t, "\[/list\]", "")
+		t = "<b>[t]</b>"
+		font = crayonfont
 
-		t = "<font face=\"[crayonfont]\" color=[P.colour]><b>[t]</b></font>"
-
+	t = parsebbcode(t, P.colour)
+	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
+	t = "<font face=\"[font]\" color=\"[P.colour]\">[t]</font>"
 //	t = replacetext(t, "#", "") // Junk converted to nothing!
 
 //Count the fields
@@ -456,6 +408,8 @@
 		else
 			info += t // Oh, he wants to edit to the end of the file, let him.
 			updateinfolinks()
+
+		playsound(src, pick(SOUNDIN_PEN), VOL_EFFECTS_MASTER, null, FALSE)
 
 		update_space(t)
 
@@ -628,7 +582,7 @@
 	info = get_airlock_wires_identification()
 
 	var/obj/item/weapon/stamp/centcomm/S = new
-	S.stamp_paper(src, "This paper has been stamped by the Centcomm Engineer Department.")
+	S.stamp_paper(src, "Centcomm Engineer Department")
 
 	update_icon()
 	updateinfolinks()
@@ -650,7 +604,7 @@
 	info = get_space_structures_info()
 
 	var/obj/item/weapon/stamp/centcomm/S = new
-	S.stamp_paper(src, "This paper has been stamped by the Centcomm Science Department.")
+	S.stamp_paper(src, "Centcomm Science Department")
 
 	update_icon()
 	updateinfolinks()

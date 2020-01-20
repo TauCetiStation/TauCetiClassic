@@ -137,7 +137,7 @@
 /datum/reagent/toxin/cyanide/on_general_digest(mob/living/M)
 	..()
 	M.adjustOxyLoss(4 * REM)
-	M.sleeping += 1
+	M.SetSleeping(20 SECONDS)
 
 /datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
@@ -149,7 +149,7 @@
 
 /datum/reagent/toxin/minttoxin/on_general_digest(mob/living/M)
 	..()
-	if(FAT in M.mutations)
+	if(HAS_TRAIT(M, TRAIT_FAT))
 		M.gib()
 
 /datum/reagent/toxin/carpotoxin
@@ -215,8 +215,7 @@
 				if(E.name == "Wallrot")
 					qdel(E)
 
-			for(var/mob/O in viewers(W, null))
-				O.show_message("<span class='notice'>The fungi are completely dissolved by the solution!</span>", 1)
+			W.visible_message("<span class='notice'>The fungi are completely dissolved by the solution!</span>")
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/structure/alien/weeds))
@@ -296,7 +295,7 @@
 		if(2 to 199)
 			M.Weaken(30)
 		if(200 to INFINITY)
-			M.sleeping += 1
+			M.SetSleeping(20 SECONDS)
 
 /datum/reagent/toxin/potassium_chloride
 	name = "Potassium Chloride"
@@ -354,9 +353,9 @@
 			M.confused += 2
 			M.drowsyness += 2
 		if(2 to 50)
-			M.sleeping += 1
+			M.SetSleeping(20 SECONDS)
 		if(51 to INFINITY)
-			M.sleeping += 1
+			M.SetSleeping(20 SECONDS)
 			M.adjustToxLoss((data - 50) * REM)
 	data++
 
@@ -647,7 +646,7 @@
 		M.notransform = TRUE
 		M.canmove = 0
 		M.icon = null
-		M.overlays.Cut()
+		M.cut_overlays()
 		M.invisibility = 101
 		for(var/obj/item/W in M)
 			if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something

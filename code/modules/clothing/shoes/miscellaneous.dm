@@ -17,7 +17,7 @@
 	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/swat
-	name = "\improper SWAT shoes"
+	name = "SWAT shoes"
 	desc = "When you want to turn up the heat."
 	icon_state = "swat"
 	item_state = "wjboots"
@@ -111,6 +111,10 @@
 	item_color = "clown"
 //	var/footstep = 1	//used for squeeks whilst walking
 	species_restricted = null
+
+/obj/item/clothing/shoes/clown_shoes/play_unique_footstep_sound()
+	..()
+	playsound(src, pick(SOUNDIN_CLOWNSTEP), VOL_EFFECTS_MASTER)
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"

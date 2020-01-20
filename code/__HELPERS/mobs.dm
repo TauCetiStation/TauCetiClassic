@@ -54,6 +54,15 @@
 
 		return f_style
 
+/proc/random_unique_name(gender, attempts_to_find_unique_name = 10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		if(gender == FEMALE)
+			. = capitalize(pick(global.first_names_female)) + " " + capitalize(pick(global.last_names))
+		else
+			. = capitalize(pick(global.first_names_male)) + " " + capitalize(pick(global.last_names))
+
+		if(!findname(.))
+			break
 
 /proc/random_name(gender, species = HUMAN)
 	if(gender==FEMALE)	return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))

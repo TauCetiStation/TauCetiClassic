@@ -220,8 +220,6 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	var/original_message = message
 
 	//Some macros remain in the string even after parsing and fuck up the eventual output
-	message = replacetext(message, "\improper", "")
-	message = replacetext(message, "\proper", "")
 	if(handle_whitespace)
 		message = replacetext(message, "\n", "<br>")
 		message = replacetext(message, "\t", ENTITY_TAB)

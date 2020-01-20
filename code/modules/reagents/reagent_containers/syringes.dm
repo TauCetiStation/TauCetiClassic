@@ -106,9 +106,7 @@
 						src.on_reagent_change()
 						src.reagents.handle_reactions()
 					infect_limb(user, target)
-					to_chat(user, "<span class='notice'>You take a blood sample from [target]</span>")
-					for(var/mob/O in viewers(4, user))
-						O.show_message("<span class='warning'>[user] takes a blood sample from [target].</span>", 1)
+					user.visible_message("<span class='warning'>[user] takes a blood sample from [target].</span>", self_message = "<span class='notice'>You take a blood sample from [target]</span>", viewing_distance = 4)
 
 			else //if not mob
 				if(!target.reagents.total_volume)
@@ -227,10 +225,10 @@
 /obj/item/weapon/reagent_containers/syringe/update_icon()
 	if(mode == SYRINGE_BROKEN)
 		icon_state = "broken"
-		overlays.Cut()
+		cut_overlays()
 		return
 	var/rounded_vol = round(reagents.total_volume,5)
-	overlays.Cut()
+	cut_overlays()
 	if(ismob(loc))
 		var/injoverlay
 		switch(mode)
@@ -238,7 +236,7 @@
 				injoverlay = "draw"
 			if (SYRINGE_INJECT)
 				injoverlay = "inject"
-		overlays += injoverlay
+		add_overlay(injoverlay)
 	icon_state = "[rounded_vol]"
 	item_state = "syringe_[rounded_vol]"
 
@@ -248,7 +246,7 @@
 		filling.icon_state = "syringe[rounded_vol]"
 
 		filling.icon += mix_color_from_reagents(reagents.reagent_list)
-		overlays += filling
+		add_overlay(filling)
 
 /obj/item/weapon/reagent_containers/syringe/proc/infect_limb(mob/living/carbon/user, mob/living/carbon/target)
 	if(ishuman(target))
@@ -344,11 +342,9 @@
 				return
 
 			if(ismob(target) && target != user)
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message(text("<span class='warning'><B>[] is trying to inject [] with a giant syringe!</B></span>", user, target), 1)
+				user.visible_message("<span class='warning'><B>[user] is trying to inject [target] with a giant syringe!</B></span>")
 				if(!do_mob(user, target, 300)) return
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message(text("<span class='warning'>[] injects [] with a giant syringe!</span>", user, target), 1)
+				user.visible_message("<span class='warning'>[user] injects [target] with a giant syringe!</span>")
 				src.reagents.reaction(target, INGEST)
 			if(ismob(target) && target == user)
 				src.reagents.reaction(target, INGEST)

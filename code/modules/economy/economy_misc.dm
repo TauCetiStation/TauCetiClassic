@@ -38,7 +38,7 @@
 #define MINERALS 8
 
 #define EMERGENCY 9
-#define GAS 10
+#define VESPENE_GAS 10
 #define MAINTENANCE 11
 #define ELECTRICAL 12
 #define ROBOTICS 13
@@ -123,7 +123,7 @@ var/global/economy_init = 0
 		T.target_name = station_account.owner_name
 		T.purpose = "Account creation"
 		T.amount = 75000
-		T.date = "2nd April, 2555"
+		T.date = "2nd April, [gamestory_start_year]"
 		T.time = "11:24"
 		T.source_terminal = "Biesel GalaxyNet Terminal #277"
 
@@ -145,7 +145,7 @@ var/global/economy_init = 0
 	T.target_name = department_account.owner_name
 	T.purpose = "Account creation"
 	T.amount = department_account.money
-	T.date = "2nd April, 2555"
+	T.date = "2nd April, [gamestory_start_year]"
 	T.time = "11:24"
 	T.source_terminal = "Biesel GalaxyNet Terminal #277"
 

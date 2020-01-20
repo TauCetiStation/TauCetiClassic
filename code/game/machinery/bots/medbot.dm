@@ -64,7 +64,7 @@
 
 /obj/item/weapon/firstaid_arm_assembly/atom_init_late()
 	if(skin)
-		overlays += image('icons/obj/aibots.dmi', "kit_skin_[skin]")
+		add_overlay(image('icons/obj/aibots.dmi', "kit_skin_[skin]"))
 
 /obj/machinery/bot/medbot/atom_init()
 	..()
@@ -79,7 +79,7 @@
 
 /obj/machinery/bot/medbot/atom_init_late()
 	if(skin)
-		overlays += image('icons/obj/aibots.dmi', "medskin_[skin]")
+		add_overlay(image('icons/obj/aibots.dmi', "medskin_[skin]"))
 
 /obj/machinery/bot/medbot/turn_on()
 	. = ..()
@@ -218,8 +218,7 @@
 		if(user)
 			to_chat(user, "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>")
 		spawn(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("<span class='warning'><B>[src] buzzes oddly!</B></span>", 1)
+			audible_message("<span class='warning'><B>[src] buzzes oddly!</B></span>")
 		flick("medibot_spark", src)
 		patient = null
 		if(user)
@@ -588,7 +587,7 @@
 					build_step++
 					to_chat(user, "<span class='notice'>You add the health sensor to [src].</span>")
 					name = "First aid/robot arm/health analyzer assembly"
-					overlays += image('icons/obj/aibots.dmi', "na_scanner")
+					add_overlay(image('icons/obj/aibots.dmi', "na_scanner"))
 
 			if(1)
 				if(isprox(W))

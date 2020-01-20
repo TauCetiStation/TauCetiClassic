@@ -337,8 +337,7 @@
 					return
 		to_chat(M, "<span class='red'>You look directly into The [src.name] and feel weak.</span>")
 		M.apply_effect(3, STUN)
-		for(var/mob/O in viewers(M, null))
-			O.show_message(text("<span class='danger'>[] stares blankly at The []!</span>", M, src), 1)
+		M.visible_message("<span class='danger'>[M] stares blankly at The [src]!</span>")
 	return
 
 /obj/singularity/proc/emp_area()

@@ -21,7 +21,7 @@
 		if(15 to 25)
 			M.drowsyness  = max(M.drowsyness, 20)
 		if(25 to INFINITY)
-			M.sleeping += 1
+			M.SetSleeping(20 SECONDS)
 			M.adjustOxyLoss(-M.getOxyLoss())
 			M.SetWeakened(0)
 			M.SetStunned(0)
@@ -172,7 +172,7 @@
 /datum/reagent/dermaline/on_general_digest(mob/living/M)
 	..()
 	M.heal_bodypart_damage(0,3 * REM)
-	if(volume >= overdose && HUSK in M.mutations && ishuman(M))
+	if(volume >= overdose && (HUSK in M.mutations) && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.mutations.Remove(HUSK)
 		H.update_body()
@@ -304,7 +304,7 @@
 	M.drowsyness = 0
 	M.stuttering = 0
 	M.confused = 0
-	M.sleeping = 0
+	M.SetSleeping(0)
 	M.jitteriness = 0
 	for(var/datum/disease/D in M.viruses)
 		D.spread = "Remissive"

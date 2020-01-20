@@ -244,7 +244,6 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
 	species_restricted = list("exclude" , UNATHI , TAJARAN)
-	var/footstep = 1	//used for squeeks whilst walking(tc)
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/shoes.dmi')
 
 //Cutting shoes
@@ -269,6 +268,11 @@ BLIND     // can't see anything
 				to_chat(user, "<span class='notice'>[src] have already been clipped!</span>")
 	else
 		..()
+
+/obj/item/clothing/shoes/play_unique_footstep_sound()
+	..()
+	if(wet)
+		playsound(src, 'sound/effects/mob/footstep/wet_shoes_step.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/proc/negates_gravity()
 	return 0
@@ -558,17 +562,13 @@ BLIND     // can't see anything
 	else if (istype(src.loc, /mob))
 		switch(sensor_mode)
 			if(0)
-				for(var/mob/V in viewers(usr, 1))
-					V.show_message("<span class='warning'>[usr] disables [src.loc]'s remote sensing equipment.</span>", 1)
+				M.visible_message("<span class='warning'>[usr] disables [src.loc]'s remote sensing equipment.</span>", viewing_distance = 1)
 			if(1)
-				for(var/mob/V in viewers(usr, 1))
-					V.show_message("[usr] turns [src.loc]'s remote sensors to binary.", 1)
+				M.visible_message("[usr] turns [src.loc]'s remote sensors to binary.", viewing_distance = 1)
 			if(2)
-				for(var/mob/V in viewers(usr, 1))
-					V.show_message("[usr] sets [src.loc]'s sensors to track vitals.", 1)
+				M.visible_message("[usr] sets [src.loc]'s sensors to track vitals.", viewing_distance = 1)
 			if(3)
-				for(var/mob/V in viewers(usr, 1))
-					V.show_message("[usr] sets [src.loc]'s sensors to maximum.", 1)
+				M.visible_message("[usr] sets [src.loc]'s sensors to maximum.", viewing_distance = 1)
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"

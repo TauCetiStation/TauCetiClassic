@@ -1,7 +1,13 @@
 var/round_id = 0
+var/base_commit_sha = 0
+var/logs_folder
 
-#define RECOMMENDED_VERSION 511
+#define RECOMMENDED_VERSION 512
 /world/New()
+#ifdef DEBUG
+	enable_debugger()
+#endif
+
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
@@ -19,11 +25,11 @@ var/round_id = 0
 	load_mode()
 	load_last_mode()
 	load_motd()
+	load_host_announcements()
 	load_test_merge()
 	load_admins()
 	load_mentors()
-	if(config.allow_donators)
-		load_donators()
+	load_supporters()
 	if(config.usewhitelist)
 		load_whitelist()
 	if(config.usealienwhitelist)
@@ -69,12 +75,28 @@ var/round_id = 0
 		log_sql("Feedback database connection established.")
 
 	SetRoundID()
+	base_commit_sha = GetGitMasterCommit(1)
+
+	var/date = time2text(world.realtime, "YYYY/MM/DD")
+	logs_folder = "data/stat_logs/[date]/round-"
+
+	if(round_id)
+		logs_folder += round_id
+	else
+		var/timestamp = replacetext(time_stamp(), ":", ".")
+		logs_folder += "[timestamp]"
 
 	Get_Holiday()
 
 	src.update_status()
 
 	round_log("Server starting up")
+
+	if(base_commit_sha)
+		info("Base SHA: [base_commit_sha]")
+
+	if(fexists("test_merge.txt"))
+		info("TM: [trim(file2text("test_merge.txt"))]")
 
 	. = ..()
 
@@ -133,7 +155,10 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["stationtime"] = worldtime2text()
 		s["gamestate"] = ticker.current_state
 		s["roundduration"] = roundduration2text()
-		s["map"] = SSmapping.config?.map_name || "Loading..."
+		s["map_name"] = SSmapping.config?.map_name || "Loading..."
+		s["popcap"] = config.client_limit_panic_bunker_count ? config.client_limit_panic_bunker_count : 0
+		s["round_id"] = round_id
+		s["revision"] = base_commit_sha
 		var/n = 0
 		var/admins = 0
 
@@ -149,78 +174,6 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["admins"] = admins
 
 		return list2params(s)
-
-	else if(copytext(T,1,9) == "adminmsg")
-		/*
-			We got an adminmsg from IRC bot lets split the input then validate the input.
-			expected output:
-				1. adminmsg = ckey of person the message is to
-				2. msg = contents of message, parems2list requires
-				3. validatationkey = the key the bot has, it should match the gameservers commspassword in it's configuration.
-				4. sender = the ircnick that send the message.
-		*/
-
-
-		var/input[] = params2list(T)
-		if(input["key"] != config.comms_password)
-			if(world_topic_spam_protect_ip == addr && abs(world_topic_spam_protect_time - world.time) < 50)
-
-				spawn(50)
-					world_topic_spam_protect_time = world.time
-					return "Bad Key (Throttled)"
-
-			world_topic_spam_protect_time = world.time
-			world_topic_spam_protect_ip = addr
-
-			return "Bad Key"
-
-		var/client/C
-
-		for(var/client/K in clients)
-			if(K.ckey == input["adminmsg"])
-				C = K
-				break
-		if(!C)
-			return "No client with that name on server"
-
-		var/message =	"<font color='red'>IRC-Admin PM from <b><a href='?irc_msg=1'>[C.holder ? "IRC-" + input["sender"] : "Administrator"]</a></b>: [input["msg"]]</font>"
-		var/amessage =  "<font color='blue'>IRC-Admin PM from <a href='?irc_msg=1'>IRC-[input["sender"]]</a> to <b>[key_name(C)]</b> : [input["msg"]]</font>"
-
-		C.received_irc_pm = world.time
-		C.irc_admin = input["sender"]
-
-		C.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
-		to_chat(C, message)
-
-
-		for(var/client/A in admins)
-			if(A != C)
-				to_chat(A, amessage)
-
-		return "Message Successful"
-
-	else if(copytext(T,1,6) == "notes")
-		/*
-			We got a request for notes from the IRC Bot
-			expected output:
-				1. notes = ckey of person the notes lookup is for
-				2. validationkey = the key the bot has, it should match the gameservers commspassword in it's configuration.
-		*/
-		var/input[] = params2list(T)
-		if(input["key"] != config.comms_password)
-			if(world_topic_spam_protect_ip == addr && abs(world_topic_spam_protect_time - world.time) < 50)
-
-				spawn(50)
-					world_topic_spam_protect_time = world.time
-					return "Bad Key (Throttled)"
-
-			world_topic_spam_protect_time = world.time
-			world_topic_spam_protect_ip = addr
-			return "Bad Key"
-
-		return show_player_info_irc(input["notes"])
-
-
 
 /world/proc/PreShutdown(end_state)
 
@@ -343,6 +296,22 @@ var/shutdown_processed = FALSE
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
 
+/world/proc/load_host_announcements()
+	var/list/files = flist("data/announcements/")
+
+	host_announcements = "" // reset in case of reload
+
+	if(files.len)
+
+		for(var/file in files)
+
+			if(length(host_announcements))
+				host_announcements += "<hr>"
+
+			host_announcements += trim(file2text("data/announcements/[file]"))
+		
+		host_announcements = "<h2>Important Admin Announcements:</h2><br>[host_announcements]"
+
 /world/proc/load_test_merge()
 	if(fexists("test_merge.txt"))
 		join_test_merge = "<strong>Test merged PRs:</strong> "
@@ -367,16 +336,35 @@ var/shutdown_processed = FALSE
 			var/active_hours_left = num2text((active_until - world.realtime) / 36000, 1)
 			log_game("Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]. Enabled by [enabled_by]. Active hours left: [active_hours_left]")
 
-/world/proc/load_donators()
-	if(!fexists("config/donators.txt"))
-		return
-	var/L = file2list("config/donators.txt")
-	for(var/line in L)
-		if(!length(line))
-			continue
-		if(copytext(line,1,2) == "#")
-			continue
-		donators.Add(ckey(line))
+/world/proc/load_supporters()
+	if(config.allow_donators && fexists("config/donators.txt"))
+		var/L = file2list("config/donators.txt")
+		for(var/line in L)
+			if(!length(line))
+				continue
+			if(copytext(line,1,2) == "#")
+				continue
+			donators.Add(ckey(line))
+
+	// just some tau ceti specific stuff
+	if(config.allow_tauceti_patrons)
+		var/w = get_webpage("https://taucetistation.org/patreon/json")
+		if(!w)
+			warning("Failed to load taucetistation.org patreon list")
+			message_admins("Failed to load taucetistation.org patreon list, please inform responsible persons")
+		else
+			var/list/l = json2list(w)
+			for(var/i in l)
+				if(l[i]["reward_price"] == "5.00")
+					donators.Add(ckey(l[i]["name"]))
+
+	for(var/client/C in clients)
+		C.update_supporter_status()
+
+/client/proc/update_supporter_status()
+	if(ckey in donators || config.allow_byond_membership && IsByondMember())
+		supporter = 1
+
 
 /world/proc/load_proxy_whitelist()
 	if(!fexists("config/proxy_whitelist.txt"))
@@ -548,3 +536,17 @@ var/failed_old_db_connections = 0
 
 /world/proc/incrementMaxZ()
 	maxz++
+
+// This proc reads the current git commit number of a master branch
+/proc/GetGitMasterCommit(no_head = 0)
+	var/commitFile = ".git/refs/remotes/origin/master"
+	if(fexists(commitFile) == 0)
+		info("GetMasterGitCommit() File not found ([commitFile]), using HEAD as a current commit")
+		return no_head ? 0 : "HEAD"
+
+	var/text = trim(file2text(commitFile))
+	if(!text)
+		info("GetMasterGitCommit() File is empty ([commitFile]), using HEAD as a current commit")
+		return no_head ? 0 : "HEAD"
+
+	return text

@@ -1,5 +1,5 @@
 #define CAN_MAKE_A_SOUND !muzzled && (last_sound_emote < world.time)
-/mob/living/carbon/alien/humanoid/emote(act, m_type = 1, message = null)
+/mob/living/carbon/alien/humanoid/emote(act, m_type = SHOWMSG_VISUAL, message = null)
 
 	if(stat == DEAD && (act != "deathgasp"))
 		return
@@ -16,29 +16,29 @@
 
 		if ("deathgasp")
 			message = "<B>[src]</B> lets out a waning guttural screech, green blood bubbling from its maw..."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 			to_chat(src, "<span class='warning'>Pretending to be dead is not a good idea. I must fight for my Queen!</span>")
 			if(CAN_MAKE_A_SOUND)
 				playsound(src, 'sound/voice/xenomorph/death_1.ogg', VOL_EFFECTS_MASTER, 50)
 				last_sound_emote = world.time + 7 SECONDS
 		if("whimper")
 			message = "<B>The [src.name]</B> sadly [pick("screeches", "whines")]."
-			m_type = 2
+			m_type = SHOWMSG_AUDIO
 			if(CAN_MAKE_A_SOUND)
 				playsound(src, 'sound/voice/xenomorph/whimper.ogg', VOL_EFFECTS_MASTER, 25)
 		if("roar")
 			message = "<B>The [src.name]</B>[pick(" triumphantly", " menacingly", "")] roars."
-			m_type = 2
+			m_type = SHOWMSG_AUDIO
 			if(CAN_MAKE_A_SOUND)
 				playsound(src, pick(SOUNDIN_XENOMORPH_ROAR), VOL_EFFECTS_MASTER, vary = FALSE)
 		if("hiss")
 			message = "<B>The [src.name]</B>[pick(" predatory", " dissatisfied", " maliciously", " menacingly", " suspiciously", "")] hisses!"
-			m_type = 2
+			m_type = SHOWMSG_AUDIO
 			if(CAN_MAKE_A_SOUND)
 				playsound(src, pick(SOUNDIN_XENOMORPH_HISS), VOL_EFFECTS_MASTER, vary = FALSE)
 		if("growl")
 			message = "<B>The [src.name]</B>[pick(" relaxed", " predatory", " excitedly", " joyfully", " maliciously", " menacingly", " suspiciously", "")] growls."
-			m_type = 2
+			m_type = SHOWMSG_AUDIO
 			if(CAN_MAKE_A_SOUND)
 				playsound(src, pick(SOUNDIN_XENOMORPH_GROWL), VOL_EFFECTS_MASTER, vary = FALSE)
 
@@ -46,53 +46,53 @@
 
 		if("scratch")
 			message = "<B>The [src.name]</B> [pick("maliciously", "menacingly", "excitedly", "erotically")] scratches the floor with its claws on its feet."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 		if("tail")
 			message = "<B>The [src.name]</B>[pick("", " menacingly", " slyly", " deftly", " erotically")] waves its tail."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 		if("twitch")
 			message = "<B>The [src.name]</B> [pick("unbearably", "mockingly")] twitches."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 		if("drool")
 			message = "<B>The [src.name]</B> drools [pick("like a true predator", "hungry")]."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 		if("nod")
 			message = "<B>The [src.name]</B> [pick("slowly", "predatory")] nods its head."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 		if("sway")
 			message = "<B>The [src.name]</B> sways around [pick("dizzily", "drunkenly", "wearily")]."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 		if("sulk")
 			message = "<B>The [src.name]</B> [pick("sulks down sadly", "sadly lowers its head")]."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 		if("shake")
 			message = "<B>The [src.name]</B> shakes its head [pick("like a true hunter", "and it seems to be grinning at you")]."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 		if("jump")
 			message = "<B>The [src.name]</B>[pick(" happily", " joyfully", "")] jumps!"
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 //  ========== EXTENDED ==========
 
 		if("dance")
 			if (!src.restrained())
 				message = "<B>The [src.name]</B> [pick("deftly", "quickly", "erotically", "joyfully")] moves its body."
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 		if("roll")
 			if (!src.restrained())
 				message = "<B>The [src.name]</B> falls on its back and[pick("", " cheerfully", " awkwardly")] rolls on the floor kinda like a kitten. [pick("Really cute.", "Very cute.", "So cute!")]"
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 				if(prob(50)) // xenomorphs are not kittens!
 					to_chat(src, "<span class='warning'>You feel shame. [pick("You want to hunt, not waste time", "You're not an obedient girl", "You're not a good girl")].</span>")
 		if("sit")
 			message = "<B>The [src.name]</B> sits down[pick(" like a good girl", " wearily", " and turns its tail into a ball")]."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 			if(prob(50)) // xenomorphs are not good girls!
 				to_chat(src, "<span class='warning'>You feel shame. [pick("You want to hunt, not waste time", "You're not an obedient girl", "You're not a good girl")].</span>")
 		if("grin")
 			if (!muzzled)
 				message = "<B>The [src.name]</B>[pick(" makes something like a smile and", "")] grinning its white[pick(" and crooked", " and slobbering", "")] teeth."
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 
 //  ========== SPECIAL ==========
 
@@ -102,11 +102,11 @@
 				return
 			var/input2 = input("Is this a visible or hearable emote?") in list("Visible", "Hearable")
 			if (input2 == "Visible")
-				m_type = 1
+				m_type = SHOWMSG_VISUAL
 			else if (input2 == "Hearable")
-				if(has_trait(TRAIT_MUTE))
+				if(HAS_TRAIT(src, TRAIT_MUTE))
 					return
-				m_type = 2
+				m_type = SHOWMSG_AUDIO
 			else
 				alert("Unable to use this emote, must be either hearable or visible.")
 				return
@@ -132,9 +132,9 @@
 
 
 	if(message)
-		if(muzzled && (m_type & 2))
+		if(muzzled && (m_type & SHOWMSG_AUDIO))
 			message = "<B>The [src.name]</B>[pick("", " looks around angrily and", " shakes violently and")] makes a[pick("", " faint", " weak", " quiet")] noise."
-		if(m_type & 2)
+		if(m_type & SHOWMSG_AUDIO)
 			if(last_sound_emote < world.time)
 				last_sound_emote = world.time + 7 SECONDS
 			else
@@ -146,12 +146,12 @@
 			if(!M.client)
 				continue //skip leavers
 			if((M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
-				M.show_message(message)
+				to_chat(M, message)
 
-		if(m_type & 1)
+		if(m_type & SHOWMSG_VISUAL)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)
-		else if(m_type & 2)
+		else if(m_type & SHOWMSG_AUDIO)
 			for(var/mob/O in hearers(src, null))
 				O.show_message(message, m_type)
 

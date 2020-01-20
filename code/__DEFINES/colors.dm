@@ -82,5 +82,5 @@
 
 //Human organ color mods
 #define HULK_SKIN_TONE rgb(48, 224, 40) // human
-#define HULK_SKIN_COLOR RGB_CONTRAST(35, 121, 11) // xenos
+#define HULK_SKIN_COLOR RGB_CONTRAST(0, 180, 60) // xenos
 #define NECROSIS_COLOR_MOD list(0.33,0.33,0.33, 0.59,0.59,0.59, 0.11,0.11,0.11)

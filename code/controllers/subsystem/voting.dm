@@ -13,6 +13,7 @@ var/datum/subsystem/vote/SSvote
 	var/time_remaining = 0
 	var/mode = null
 	var/question = null
+	var/description = null
 	var/list/choices = list()
 	var/list/voted = list()
 	var/list/voting = list()
@@ -43,6 +44,7 @@ var/datum/subsystem/vote/SSvote
 	time_remaining = 0
 	mode = null
 	question = null
+	description = null
 	choices.Cut()
 	voted.Cut()
 	voting.Cut()
@@ -185,6 +187,15 @@ var/datum/subsystem/vote/SSvote
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
+				for (var/M in config.votable_modes)
+					if (config.is_modeset(M))
+						var/list/submodes = list()
+						for (var/datum/game_mode/D in config.get_runnable_modes(M, FALSE))
+							submodes.Add(D.name)
+						if (length(submodes) > 0)
+							description += "<b>[M]</b>: "
+							description += submodes.Join(", ")
+							description += "<br>"
 			if("crew_transfer")
 				if(!is_admin)
 					if(get_security_level() == "red" || get_security_level() == "delta")
@@ -254,12 +265,14 @@ var/datum/subsystem/vote/SSvote
 				. += " [html_decode("&#10003")]" // Checkmark
 			. += "</li>"
 		. += "</ul><hr>"
+		if (description)
+			. += "[description]<hr>"
 		if(admin)
 			. += "(<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a>) "
 	else
 		. += "<h2>Start a vote:</h2><hr><ul><li>"
 		//restart
-		if(admin || config.allow_vote_restart)
+		if(admin || config.allow_vote_restart && world.has_round_started())
 			. += "<a href='?src=\ref[src];vote=restart'>Restart</a>"
 		else
 			. += "<font color='grey'>Restart (Disallowed)</font>"
@@ -267,7 +280,7 @@ var/datum/subsystem/vote/SSvote
 			. += "&emsp;(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
 		. += "</li><li>"
 		//crew transfer
-		if(admin || config.allow_vote_mode)
+		if(admin || config.allow_vote_mode && crew_transfer_available())
 			. += "<a href='?src=\ref[src];vote=crew_transfer'>Crew Transfer</a>"
 		else
 			. += "<font color='grey'>Crew Transfer (Disallowed)</font>"
@@ -275,7 +288,7 @@ var/datum/subsystem/vote/SSvote
 			. += "\t(<a href='?src=\ref[src];vote=toggle_crew'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
 		. += "</li><li>"
 		//gamemode
-		if(admin || config.allow_vote_mode)
+		if(admin || config.allow_vote_mode && world.has_round_preparing())
 			. += "<a href='?src=\ref[src];vote=gamemode'>GameMode</a>"
 		else
 			. += "<font color='grey'>GameMode (Disallowed)</font>"
@@ -317,11 +330,11 @@ var/datum/subsystem/vote/SSvote
 					initiate_vote("restart",usr.key)
 		if("crew_transfer")
 			if(config.allow_vote_mode || usr.client.holder)
-				if((ticker.current_state > GAME_STATE_SETTING_UP) && !SSshuttle.online && SSshuttle.location == 0)
+				if(crew_transfer_available())
 					initiate_vote("crew_transfer",usr.key)
 		if("gamemode")
 			if(config.allow_vote_mode || usr.client.holder)
-				if(ticker.current_state <= GAME_STATE_SETTING_UP)
+				if(world.has_round_preparing())
 					initiate_vote("gamemode",usr.key)
 		if("custom")
 			if(usr.client.holder)
@@ -344,3 +357,8 @@ var/datum/subsystem/vote/SSvote
 	if(old_stat_ooc && !ooc_allowed)
 		to_chat(world, "<B>The OOC channel has been globally enabled!</B>")
 		ooc_allowed = TRUE
+
+/datum/subsystem/vote/proc/crew_transfer_available()
+	if (world.has_round_started() && !world.has_round_finished() && !SSshuttle.online && SSshuttle.location == 0)
+		return TRUE
+	return FALSE

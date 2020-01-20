@@ -37,21 +37,21 @@
 	update_overlays()
 
 /turf/simulated/mineral/update_overlays()
-	overlays.Cut()
+	cut_overlays()
 	if(!mineral)
-		name = "\improper Rock"
+		name = "Rock"
 		icon_state = "rock"
 	else
 		if(ore_amount >= 8)
-			name = "\improper [mineral.display_name] rich deposit"
-			overlays += "rock_[mineral.name]"
+			name = "[mineral.display_name] rich deposit"
+			add_overlay("rock_[mineral.name]")
 		else
-			name = "\improper Rock"
+			name = "Rock"
 			icon_state = "rock"
 	if(excav_overlay)
-		overlays += excav_overlay
+		add_overlay(excav_overlay)
 	if(archaeo_overlay)
-		overlays += archaeo_overlay
+		add_overlay(archaeo_overlay)
 	var/turf/T
 	for(var/direction_to_check in cardinal)
 		if((istype(get_step(src, direction_to_check), /turf/simulated/floor)) || (istype(get_step(src, direction_to_check), /turf/space)) || (istype(get_step(src, direction_to_check), /turf/simulated/shuttle/floor)))
@@ -59,7 +59,7 @@
 			if (T)
 				var/image/I = image('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", layer=6)
 				I.plane = 6
-				T.overlays += I
+				T.add_overlay(I)
 
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
@@ -110,7 +110,7 @@
 
 /turf/simulated/mineral/proc/UpdateMineral()
 	if(!mineral)
-		name = "\improper Rock"
+		name = "Rock"
 		icon_state = "rock"
 		return
 	else
@@ -121,11 +121,11 @@
 		else
 			ore_amount = rand(3,5)
 	if(ore_amount >= 8)
-		name = "\improper [mineral.display_name] rich deposit"
-		overlays.Cut()
-		overlays += "rock_[mineral.name]"
+		name = "[mineral.display_name] rich deposit"
+		cut_overlays()
+		add_overlay("rock_[mineral.name]")
 	else
-		name = "\improper Rock"
+		name = "Rock"
 		icon_state = "rock"
 		return
 
@@ -261,7 +261,7 @@
 				var/datum/find/F = finds[1]
 				if(F.excavation_required <= excavation_level + F.view_range)
 					archaeo_overlay = "overlay_archaeo[rand(1,3)]"
-					overlays += archaeo_overlay
+					add_overlay(archaeo_overlay)
 
 			// there's got to be a better way to do this
 			var/update_excav_overlay = 0
@@ -279,7 +279,7 @@
 			if( !(excav_overlay && excavation_level > 0) || update_excav_overlay )
 				var/excav_quadrant = round(excavation_level / 25) + 1
 				excav_overlay = "overlay_excv[excav_quadrant]_[rand(1,3)]"
-				overlays += excav_overlay
+				add_overlay(excav_overlay)
 
 			/* Nope.
 			//extract pesky minerals while we're excavating
@@ -612,7 +612,7 @@
 
 /turf/proc/update_overlays()
 
-	overlays.Cut()
+	cut_overlays()
 
 	for(var/direction_to_check in cardinal)
 		if(istype(get_step(src, direction_to_check), /turf/simulated/mineral))
@@ -626,7 +626,7 @@
 					overlay_name = "rock_side_8"
 				if(8)
 					overlay_name = "rock_side_4"
-			overlays += image('icons/turf/asteroid.dmi', "[overlay_name]", layer=6)
+			add_overlay(image('icons/turf/asteroid.dmi', "[overlay_name]", layer=6))
 
 /turf/simulated/floor/plating/airless/asteroid/update_overlays()
 	..()
@@ -640,7 +640,7 @@
 					lattice = 1
 			if(!lattice)
 				var/image/I = image('icons/turf/asteroid.dmi', "asteroid_edge_[direction_to_check]")
-				src.overlays += I
+				src.add_overlay(I)
 
 /turf/proc/update_overlays_full()
 	var/turf/A

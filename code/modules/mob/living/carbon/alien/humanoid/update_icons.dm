@@ -13,9 +13,9 @@
 
 /mob/living/carbon/alien/humanoid/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
-	overlays.Cut()
+	cut_overlays()
 	for(var/image/I in overlays_standing)
-		overlays += I
+		add_overlay(I)
 
 	if(stat == DEAD)
 		//If we mostly took damage from fire
@@ -23,7 +23,7 @@
 			icon_state = "alien[caste]_husked"
 		else
 			icon_state = "alien[caste]_dead"
-	else if((stat == UNCONSCIOUS && !sleeping) || weakened)
+	else if((stat == UNCONSCIOUS && !IsSleeping()) || weakened)
 		icon_state = "alien[caste]_unconscious"
 	else if(leap_on_click)
 		icon_state = "alien[caste]_pounce"
@@ -156,10 +156,10 @@
 	if(update_icons)		update_icons()
 
 /mob/living/carbon/alien/humanoid/update_fire()
-	overlays -= overlays_standing[X_FIRE_LAYER]
+	cut_overlay(overlays_standing[X_FIRE_LAYER])
 	if(on_fire)
 		overlays_standing[X_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
-		overlays += overlays_standing[X_FIRE_LAYER]
+		add_overlay(overlays_standing[X_FIRE_LAYER])
 		return
 	else
 		overlays_standing[X_FIRE_LAYER]		= null

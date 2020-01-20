@@ -36,10 +36,6 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	baby = null
 	return ..()
 
-/obj/item/alien_embryo/proc/show_message(message, m_type)
-	for(var/mob/living/M in contents)
-		M.show_message(message,m_type)
-
 /obj/item/clothing/mask/facehugger/proc/host_is_dead()
 	if(current_hugger)
 		var/mob/living/carbon/alien/facehugger/FH = current_hugger
@@ -158,7 +154,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		new_xeno.playsound_local(null, 'sound/voice/xenomorph/big_hiss.ogg', VOL_EFFECTS_MASTER) // To get the player's attention
 
 		affected_mob.visible_message("<span class='userdanger'>[new_xeno] crawls out of [affected_mob]!</span>")
-		affected_mob.overlays += image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "bursted_stand")
+		affected_mob.add_overlay(image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "bursted_stand"))
 		STOP_PROCESSING(SSobj, src)
 		qdel(src)
 	else
@@ -167,7 +163,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			mob_container = baby
 			mob_container.forceMove(affected_mob)
 			baby.reset_view()
-			baby.sleeping = 0
+			baby.SetSleeping(0)
 			var/obj/item/weapon/larva_bite/G = new /obj/item/weapon/larva_bite(baby, src.loc)
 			baby.put_in_active_hand(G)
 			G.last_bite = world.time - 20
