@@ -7,8 +7,12 @@ var/join_test_merge = null
 var/station_name = "NSS Exodus"
 var/system_name = "Tau Ceti"
 var/game_version = "TauCetiStation"
+<<<<<<< HEAD
 var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 200)
 var/gamestory_start_year = 2213
+=======
+var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 544)
+>>>>>>> parent of c556052d98... gavno kakoet-to
 var/changelog_hash = ""
 
 var/list/donators = list()
