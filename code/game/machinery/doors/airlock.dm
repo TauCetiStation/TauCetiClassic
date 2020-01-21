@@ -5,6 +5,12 @@
 #define AIRLOCK_OPENING  4
 #define AIRLOCK_DENY     5
 #define AIRLOCK_EMAG     6
+#define AIRLOCK_POWERON_LIGHT_COLOR "#239dc2"
+#define AIRLOCK_BOLTS_LIGHT_COLOR "#c22345"
+#define AIRLOCK_ACCESS_LIGHT_COLOR "#23c270"
+#define AIRLOCK_EMERGENCY_LIGHT_COLOR "#d1d11d"
+#define AIRLOCK_DENY_LIGHT_COLOR "#c22345"
+
 var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock
@@ -216,6 +222,11 @@ var/list/airlock_overlays = list()
 	else
 		return 0
 
+// So icons update in case of cutting off power via APC
+/obj/machinery/door/airlock/power_change()
+	..()
+	update_icon()
+
 /obj/machinery/door/airlock/update_icon(state = AIRLOCK_DEFAULT)
 	switch(state)
 		if(AIRLOCK_DEFAULT)
@@ -238,9 +249,9 @@ var/list/airlock_overlays = list()
 	var/image/panel_overlay
 	var/image/weld_overlay
 	var/image/sparks_overlay
-	var/light_range = 2
-	var/light_power = 2
-	var/light_color
+	light_range = 0
+	light_power = 0
+	light_color = ""
 
 
 	switch(state)
@@ -255,15 +266,17 @@ var/list/airlock_overlays = list()
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
 			if(lights && hasPower())
+				light_range = 2
+				light_power = 2
 				if(locked)
 					lights_overlay = get_airlock_overlay("lights_bolts", overlays_file)
-					light_color = "#c22345"
+					light_color = AIRLOCK_BOLTS_LIGHT_COLOR
 				else if(emergency)
 					lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
-					light_color = "#d1d11d"
+					light_color = AIRLOCK_EMERGENCY_LIGHT_COLOR
 				else
 					lights_overlay = get_airlock_overlay("lights_poweron", overlays_file)
-					light_color = "#239dc2"
+					light_color = AIRLOCK_POWERON_LIGHT_COLOR
 
 		if(AIRLOCK_DENY)
 			frame_overlay = get_airlock_overlay("closed", icon)
@@ -276,8 +289,10 @@ var/list/airlock_overlays = list()
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
 			if(lights && hasPower())
+				light_range = 2
+				light_power = 2
 				lights_overlay = get_airlock_overlay("lights_denied", overlays_file)
-				light_color = "#c22345"
+				light_color = AIRLOCK_DENY_LIGHT_COLOR
 
 		if(AIRLOCK_EMAG)
 			frame_overlay = get_airlock_overlay("closed", icon)
@@ -300,8 +315,10 @@ var/list/airlock_overlays = list()
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_closing", overlays_file)
 			if(lights && hasPower())
+				light_range = 2
+				light_power = 2
 				lights_overlay = get_airlock_overlay("lights_closing", overlays_file)
-				light_color = "#23c270"
+				light_color = AIRLOCK_ACCESS_LIGHT_COLOR
 
 		if(AIRLOCK_OPEN)
 			frame_overlay = get_airlock_overlay("open", icon)
@@ -312,15 +329,17 @@ var/list/airlock_overlays = list()
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_open", overlays_file)
 			if(lights && hasPower())
+				light_range = 2
+				light_power = 2
 				if(locked)
 					lights_overlay = get_airlock_overlay("lights_bolts_open", overlays_file)
-					light_color = "#c22345"
+					light_color = AIRLOCK_BOLTS_LIGHT_COLOR
 				else if(emergency)
 					lights_overlay = get_airlock_overlay("lights_emergency_open", overlays_file)
-					light_color = "#d1d11d"
+					light_color = AIRLOCK_EMERGENCY_LIGHT_COLOR
 				else
 					lights_overlay = get_airlock_overlay("lights_poweron_open", overlays_file)
-					light_color = "#239dc2"
+					light_color = AIRLOCK_POWERON_LIGHT_COLOR
 
 
 		if(AIRLOCK_OPENING)
@@ -332,8 +351,10 @@ var/list/airlock_overlays = list()
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
 			if(lights && hasPower())
+				light_range = 2
+				light_power = 2
 				lights_overlay = get_airlock_overlay("lights_opening", overlays_file)
-				light_color = "#23c270"
+				light_color = AIRLOCK_ACCESS_LIGHT_COLOR
 
 	// Doesn't used cut_overlays() for performance reasons.
 	if(frame_overlay != old_frame_overlay)
@@ -721,6 +742,7 @@ var/list/airlock_overlays = list()
 					// Disrupt main power
 					if(!secondsMainPowerLost)
 						loseMainPower()
+						update_icon()
 					else
 						to_chat(usr, "Main power is already offline.")
 
