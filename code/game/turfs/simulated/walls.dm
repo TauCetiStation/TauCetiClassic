@@ -32,7 +32,6 @@
 		/obj/structure/falsewall/reinforced,
 		/obj/structure/girder,
 		/obj/structure/girder/reinforced,
-		// airlocks
 		/obj/machinery/door/airlock,
 		/obj/machinery/door/airlock/command,
 		/obj/machinery/door/airlock/security,
@@ -49,7 +48,6 @@
 		/obj/machinery/door/airlock/highsecurity,
 		/obj/machinery/door/airlock/vault,
 		/obj/machinery/door/airlock/external,
-		// glass airlocks
 		/obj/machinery/door/airlock/glass,
 		/obj/machinery/door/airlock/command/glass,
 		/obj/machinery/door/airlock/engineering/glass,
