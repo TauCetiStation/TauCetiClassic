@@ -1,7 +1,7 @@
 ///////////////ANTIBODY SCANNER///////////////
 
 /obj/item/device/antibody_scanner
-	name = "\improper Antibody Scanner"
+	name = "Antibody Scanner"
 	desc = "Scans living beings for antibodies in their blood."
 	icon_state = "health"
 	w_class = ITEM_SIZE_SMALL

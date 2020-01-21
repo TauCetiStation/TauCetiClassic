@@ -315,10 +315,11 @@ Implant Specifics:<BR>"}
 	action_button_is_hands_free = TRUE
 
 /obj/item/weapon/implant/emp/ui_action_click()
-	uses--
-	empulse(imp_in, 3, 5)
-	if(!uses)
-		qdel(src)
+	if (uses > 0)
+		empulse(imp_in, 3, 5)
+		uses--
+		if (!uses)
+			qdel(src)
 
 /obj/item/weapon/implant/chem
 	name = "chemical implant"

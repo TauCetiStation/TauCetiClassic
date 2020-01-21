@@ -40,7 +40,7 @@
 	return
 
 /obj/item/weapon/card/data/clown
-	name = "\proper the coordinates to clown planet"
+	name = "the coordinates to clown planet"
 	icon_state = "data"
 	item_state = "card-id"
 	layer = 3
@@ -113,9 +113,7 @@
 		fingerprint_hash = md5(H.dna.uni_identity)
 
 /obj/item/weapon/card/id/attack_self(mob/user)
-	for(var/mob/O in viewers(user, null))
-		O.show_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]", 1)
-
+	visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]")
 	src.add_fingerprint(user)
 	return
 
@@ -391,7 +389,7 @@
 	. = ..()
 
 /obj/item/weapon/card/id/centcom
-	name = "\improper CentCom. ID"
+	name = "CentCom. ID"
 	desc = "An ID straight from Cent. Com."
 	icon_state = "centcom"
 	registered_name = "Central Command"
@@ -403,7 +401,7 @@
 	. = ..()
 
 /obj/item/weapon/card/id/velocity
-	name = "\improper Cargo Industries. ID"
+	name = "Cargo Industries. ID"
 	desc = "An ID designed for Velocity crew workers."
 	icon_state = "velocity"
 	item_state = "velcard_id"
@@ -415,7 +413,7 @@
 	. = ..()
 
 /obj/item/weapon/card/id/ert
-	name = "\improper CentCom. ID"
+	name = "CentCom. ID"
 	icon_state = "ert"
 	registered_name = "Central Command"
 	assignment = "Emergency Response Team"

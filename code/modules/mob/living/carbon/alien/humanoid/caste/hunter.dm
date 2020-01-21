@@ -62,7 +62,7 @@
 			update_icons()
 			to_chat(src, "<span class='notice'>You are now invisible.</span>")
 			for(var/mob/O in oviewers(src, null))
-				O.show_message(text("<span class='warning'><B>[src] fades into the surroundings!</B></span>"), 1)
+				O.show_messageold(text("<span class='warning'><B>[src] fades into the surroundings!</B></span>"), 1)
 			spawn(250)
 				if(!isnull(src))//Don't want the game to runtime error when the mob no-longer exists.
 					alien_invis = 0.0
@@ -118,7 +118,7 @@
 		stop_pulling()
 		leaping = TRUE
 		update_icons()
-		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, spin = FALSE, diagonals_first = TRUE, callback = CALLBACK(src, .leap_end))
+		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, spin = FALSE, diagonals_first = TRUE, callback = CALLBACK(src, .proc/leap_end))
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_end()
 	SetNextMove(CLICK_CD_MELEE) // so we can't click again right after leaping.
@@ -140,15 +140,12 @@
 		step_towards(src, L)
 		toggle_leap(FALSE)
 		pounce_cooldown = TRUE
-		addtimer(CALLBACK(src, .proc/refresh_pounce_cooldown), pounce_cooldown_time)
+		addtimer(VARSET_CALLBACK(src, pounce_cooldown, FALSE), pounce_cooldown_time)
 	else if(A.density)
 		visible_message("<span class='danger'>[src] smashes into [A]!</span>", "<span class='alertalien'>You smashes into [A]!</span>")
 		weakened = 2
 
 	update_canmove()
-
-/mob/living/carbon/alien/humanoid/hunter/proc/refresh_pounce_cooldown()
-	pounce_cooldown = FALSE
 
 #undef MAX_ALIEN_LEAP_DIST
 

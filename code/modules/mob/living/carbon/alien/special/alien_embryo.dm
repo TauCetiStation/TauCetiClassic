@@ -36,10 +36,6 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	baby = null
 	return ..()
 
-/obj/item/alien_embryo/proc/show_message(message, m_type)
-	for(var/mob/living/M in contents)
-		M.show_message(message,m_type)
-
 /obj/item/clothing/mask/facehugger/proc/host_is_dead()
 	if(current_hugger)
 		var/mob/living/carbon/alien/facehugger/FH = current_hugger
@@ -167,7 +163,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			mob_container = baby
 			mob_container.forceMove(affected_mob)
 			baby.reset_view()
-			baby.sleeping = 0
+			baby.SetSleeping(0)
 			var/obj/item/weapon/larva_bite/G = new /obj/item/weapon/larva_bite(baby, src.loc)
 			baby.put_in_active_hand(G)
 			G.last_bite = world.time - 20

@@ -253,7 +253,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	chem_volume = 20
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
-	name = "\improper Cohiba Robusto cigar"
+	name = "Cohiba Robusto cigar"
 	desc = "There's little more you could want from a cigar."
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
@@ -436,7 +436,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	action_button_name = "Toggle Lighter"
 
 /obj/item/weapon/lighter/zippo
-	name = "\improper Zippo lighter"
+	name = "Zippo lighter"
 	desc = "The zippo."
 	icon_state = "zippo"
 	item_state = "zippo"

@@ -211,7 +211,7 @@
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])", user)
 
-	var/t = user:zone_sel.selecting
+	var/t = user.zone_sel.selecting
 	if (t == BP_HEAD)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -313,13 +313,11 @@
 			M.take_bodypart_damage(5)
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] with the tray!</B></span>", user, M), 1)
+			M.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
 			return
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] with the tray!</B></span>", user, M), 1)
+			M.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
 			return
 
 
@@ -341,12 +339,9 @@
 
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] with the tray!</B></span>", user, M), 1)
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //sound playin'
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] with the tray!</B></span>", user, M), 1)
+		M.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
 		if(prob(10))
 			M.Stun(rand(1,3))
 			M.take_bodypart_damage(3)
@@ -365,12 +360,10 @@
 
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] in the face with the tray!</B></span>", user, M), 1)
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //sound playin' again
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] in the face with the tray!</B></span>", user, M), 1)
+		M.visible_message("<span class='warning'><B>[user] slams [M] in the face with the tray!</B></span>")
+
 		if(prob(30))
 			M.Stun(rand(2,4))
 			M.take_bodypart_damage(4)

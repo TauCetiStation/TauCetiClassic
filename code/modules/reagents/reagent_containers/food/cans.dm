@@ -48,11 +48,9 @@
 		return
 
 	else
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message("<span class='warning'>[user] attempts to feed [M] [src].</span>", 1)
+		user.visible_message("<span class='warning'>[user] attempts to feed [M] [src].</span>")
 		if(!do_mob(user, M)) return
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message("<span class='warning'>[user] feeds [M] [src].</span>", 1)
+		user.visible_message("<span class='warning'>[user] feeds [M] [src].</span>")
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")

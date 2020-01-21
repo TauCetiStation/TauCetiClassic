@@ -5,7 +5,7 @@
 		return
 
 
-	if(sleeping || stat == 1)
+	if(stat == UNCONSCIOUS)
 		hear_sleep(message)
 		return
 
@@ -86,7 +86,7 @@
 	if(!client)
 		return
 
-	if(sleeping || stat==1) //If unconscious or sleeping
+	if(stat == UNCONSCIOUS)
 		hear_sleep(message)
 		return
 
@@ -213,12 +213,8 @@
 
 	if(src.status_flags & PASSEMOTES)
 		for(var/obj/item/weapon/holder/H in src.contents)
-			H.show_message(message)
-
-	if (speaker != src)
-		show_message(message, 1)
-	else
-		show_message(message)
+			H.show_message(message, SHOWMSG_VISUAL)
+	show_message(message, SHOWMSG_VISUAL)
 
 /mob/proc/hear_sleep(message, datum/language/language)
 	var/heard = ""

@@ -371,6 +371,7 @@
 /obj/machinery/hydroponics/proc/plantdies()
 	health = 0
 	harvest = FALSE
+	visible_message("<span class='warning'>A [myseed.plantname] dies, his roots dry out...</span>")
 	pestlevel = 0 // Pests die
 	if(!dead)
 		update_icon()
@@ -394,6 +395,7 @@
 		yieldmod = myNut.yieldmod
 		mutmod = myNut.mutmod
 		to_chat(user, "You replace the nutrient solution in [src].")
+		playsound(src, 'sound/items/cork_and_liquid.ogg', VOL_EFFECTS_MASTER, 90)
 		qdel(O)
 		update_icon()
 
@@ -441,13 +443,13 @@
 			switch(rand(100))
 				if(91 to 100)
 					plantdies()
-				if(81 to 90)
+				if(76 to 90)
 					mutatespecie()
-				if(66 to 80)
+				if(66 to 75)
 					hardmutate()
 				if(41 to 65)
 					mutate()
-				if(21 to 41)
+				if(21 to 40)
 					to_chat(user, "The plants don't seem to react...")
 				if(11 to 20)
 					mutateweed()
@@ -657,6 +659,7 @@
 		if(weedlevel > 0)
 			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0
+			playsound(src, pick('sound/items/rake1.ogg', 'sound/items/rake2.ogg', 'sound/items/rake3.ogg'), VOL_EFFECTS_MASTER, 95)
 			update_icon()
 		else
 			to_chat(user, "<span class='notice'>This plot is completely devoid of weeds. It doesn't need uprooting.</span>")
@@ -804,6 +807,19 @@
 			t_prod.potency = potency
 			t_prod.plant_type = plant_type
 			t_amount++
+	else if (ispath(produce, /obj/item/weapon/grown))
+		while ( t_amount < getYield())
+			var/obj/item/weapon/grown/t_prod = new produce(user.loc, potency)
+			t_prod.seed = mypath
+			t_prod.species = species
+			t_prod.lifespan = lifespan
+			t_prod.endurance = endurance
+			t_prod.maturation = maturation
+			t_prod.production = production
+			t_prod.yield = yield
+			t_prod.changePotency(potency)
+			t_prod.plant_type = plant_type
+			t_amount++
 	else // Messa's Tear and S'rendarr's Hand leaf are not grown consumables and dont have reqired variables
 		while(t_amount < getYield())
 			var/t_prod = new produce(output_loc)
@@ -824,67 +840,6 @@
 
 	if(t_yield > 0)
 		new/obj/item/stack/tile/grass(user.loc, t_yield)
-
-	parent.update_tray()
-
-/obj/item/seeds/gibtomato/harvest(mob/user = usr)
-	var/produce = text2path(productname)
-	var/obj/machinery/hydroponics/parent = loc
-	var/t_amount = 0
-
-	while (t_amount < (yield * parent.yieldmod))
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(user.loc, potency) // User gets a consumable
-
-		t_prod.seed = mypath
-		t_prod.species = species
-		t_prod.lifespan = lifespan
-		t_prod.endurance = endurance
-		t_prod.maturation = maturation
-		t_prod.production = production
-		t_prod.yield = yield
-		t_prod.potency = potency
-		t_prod.plant_type = plant_type
-		t_amount++
-
-	parent.update_tray()
-
-/obj/item/seeds/nettleseed/harvest(mob/user = usr)
-	var/produce = text2path(productname)
-	var/obj/machinery/hydroponics/parent = loc
-	var/t_amount = 0
-
-	while ( t_amount < (yield * parent.yieldmod ))
-		var/obj/item/weapon/grown/t_prod = new produce(user.loc, potency)
-		t_prod.seed = mypath
-		t_prod.species = species
-		t_prod.lifespan = lifespan
-		t_prod.endurance = endurance
-		t_prod.maturation = maturation
-		t_prod.production = production
-		t_prod.yield = yield
-		t_prod.changePotency(potency)
-		t_prod.plant_type = plant_type
-		t_amount++
-
-	parent.update_tray()
-
-/obj/item/seeds/deathnettleseed/harvest(mob/user = usr) //COPYPOASTAAAA
-	var/produce = text2path(productname)
-	var/obj/machinery/hydroponics/parent = loc
-	var/t_amount = 0
-
-	while (t_amount < (yield * parent.yieldmod))
-		var/obj/item/weapon/grown/t_prod = new produce(user.loc, potency)
-		t_prod.seed = mypath
-		t_prod.species = species
-		t_prod.lifespan = lifespan
-		t_prod.endurance = endurance
-		t_prod.maturation = maturation
-		t_prod.production = production
-		t_prod.yield = yield
-		t_prod.changePotency(potency)
-		t_prod.plant_type = plant_type
-		t_amount++
 
 	parent.update_tray()
 

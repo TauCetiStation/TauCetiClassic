@@ -52,7 +52,7 @@
 
 	msg += "<EM>[src.name]"
 	if(!(skipface && skipjumpsuit))
-		var/species_name = "\improper [get_species()]"
+		var/species_name = "[get_species()]"
 		msg += ", <span color='[species.flesh_color]'>\a [species_name]</span>"
 	msg += "</EM>!\n"
 
@@ -239,8 +239,7 @@
 		if((stat == DEAD || src.losebreath || iszombie(src)) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
 		if(istype(user, /mob/living/carbon/human) && !user.stat && distance <= 1)
-			for(var/mob/O in viewers(user.loc, null))
-				O.show_message("[user] checks [src]'s pulse.", 1)
+			user.visible_message("[user] checks [src]'s pulse.")
 		spawn(15)
 			if(distance <= 1 && user && user.stat != UNCONSCIOUS)
 				if(pulse == PULSE_NONE)

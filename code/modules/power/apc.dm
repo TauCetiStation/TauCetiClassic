@@ -173,10 +173,10 @@
 	//if area isn't specified use current
 	if(isarea(A) && src.areastring == null)
 		src.area = A
-		name = "\improper [area.name] APC"
+		name = "[area.name] APC"
 	else
 		src.area = get_area_name(areastring)
-		name = "\improper [area.name] APC"
+		name = "[area.name] APC"
 	area.apc = src
 	update_icon()
 
@@ -701,7 +701,7 @@
 	..()
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
-	user.show_message("You don't want to break these things", 1);
+	to_chat(user, "You don't want to break these things");
 	return
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)
@@ -993,8 +993,7 @@
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()
-				for(var/mob/M in viewers(src))
-					M.show_message("<span class='warning'>The [src.name] suddenly lets out a blast of smoke and some sparks!</span>", 3, "<span class='warning'>You hear sizzling electronics.</span>", 2)
+				visible_message("<span class='warning'>The [src.name] suddenly lets out a blast of smoke and some sparks!</span>", blind_message = "<span class='warning'>You hear sizzling electronics.</span>")
 
 
 /obj/machinery/power/apc/surplus()

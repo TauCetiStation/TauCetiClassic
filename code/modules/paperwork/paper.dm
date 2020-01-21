@@ -27,7 +27,7 @@
 	var/list/offset_x //offsets stored for later
 	var/list/offset_y //usage by the photocopier
 	var/rigged = 0
-	var/spam_flag = 0
+	var/spam_flag = FALSE
 	var/crumpled = FALSE
 
 	var/const/deffont = "Verdana"
@@ -145,14 +145,10 @@
 /obj/item/weapon/paper/attack_self(mob/living/user)
 	examine(user)
 	if(rigged && (Holiday == "April Fool's Day"))
-		if(spam_flag == 0)
-			spam_flag = 1
+		if(!spam_flag)
+			spam_flag = TRUE
 			playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
-			addtimer(CALLBACK(src, .proc/reset_spam_flag), 20)
-	return
-
-/obj/item/weapon/paper/proc/reset_spam_flag()
-	spam_flag = 0
+			addtimer(VARSET_CALLBACK(src, spam_flag, FALSE), 20)
 
 /obj/item/weapon/paper/attack_ai(mob/living/silicon/ai/user)
 	var/dist
@@ -413,6 +409,8 @@
 			info += t // Oh, he wants to edit to the end of the file, let him.
 			updateinfolinks()
 
+		playsound(src, pick(SOUNDIN_PEN), VOL_EFFECTS_MASTER, null, FALSE)
+
 		update_space(t)
 
 		show_content(usr, forceshow = TRUE, infolinks = TRUE)
@@ -584,7 +582,7 @@
 	info = get_airlock_wires_identification()
 
 	var/obj/item/weapon/stamp/centcomm/S = new
-	S.stamp_paper(src, "This paper has been stamped by the Centcomm Engineer Department.")
+	S.stamp_paper(src, "Centcomm Engineer Department")
 
 	update_icon()
 	updateinfolinks()
@@ -606,7 +604,7 @@
 	info = get_space_structures_info()
 
 	var/obj/item/weapon/stamp/centcomm/S = new
-	S.stamp_paper(src, "This paper has been stamped by the Centcomm Science Department.")
+	S.stamp_paper(src, "Centcomm Science Department")
 
 	update_icon()
 	updateinfolinks()

@@ -354,7 +354,7 @@ Ccomp's first proc.
 	G.has_enabled_antagHUD = 2
 	G.can_reenter_corpse = 1
 
-	G:show_message(text("<span class='notice'><B>You may now respawn.  You should roleplay as if you learned nothing about the round during your time with the dead.</B></span>"), 1)
+	to_chat(G, "<span class='notice'><B>You may now respawn. You should roleplay as if you learned nothing about the round during your time with the dead.</B></span>")
 	log_admin("[key_name(usr)] allowed [key_name(G)] to bypass the 30 minute respawn limit")
 	message_admins("Admin [key_name_admin(usr)] allowed [key_name_admin(G)] to bypass the 30 minute respawn limit")
 
@@ -674,6 +674,16 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 	if(!customname)
 		customname = "NanoTrasen Update"
+
+	switch(alert("Should this be announced to the general population?",,"Yes","No","Cancel"))
+		if("Yes")
+			command_alert(input, customname)
+		if("No")
+			to_chat(world, "<span class='warning'>New NanoTrasen Update available at all communication consoles.</span>")
+			station_announce(sound = "commandreport")
+		if("Cancel")
+			return
+
 	for (var/obj/machinery/computer/communications/C in communications_list)
 		if(! (C.stat & (BROKEN|NOPOWER) ) )
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
@@ -682,13 +692,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			P.update_icon()
 			C.messagetitle.Add("[command_name()] Update")
 			C.messagetext.Add(P.info)
-
-	switch(alert("Should this be announced to the general population?",,"Yes","No"))
-		if("Yes")
-			command_alert(input, customname);
-		if("No")
-			to_chat(world, "<span class='warning'>New NanoTrasen Update available at all communication consoles.</span>")
-			station_announce(sound = "commandreport")
 
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report")
@@ -1123,7 +1126,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if(stamp_text)
 			S.stamp_paper(P, stamp_text)
 		else
-			S.stamp_paper(P, use_stamp_by_message = TRUE)
+			S.stamp_paper(P)
 
 	send_fax(usr, P, department)
 
