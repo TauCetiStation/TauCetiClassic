@@ -14,7 +14,7 @@
 /obj/item/device/biocan/verb/safe_eject()
 	set name = "Safely eject head"
 	set category = "Object"
-	set src in view(0)
+	set src in usr
 
 	to_chat(usr, "<span class='notice'>You began to carefully extract [headobj] from the can.</span>")
 	if(!usr.is_busy() && do_after(usr,20))
@@ -30,8 +30,7 @@
 				// can be mouse if player have jobban for observer
 				if (brainmob.ghostize(can_reenter_corpse = FALSE))
 					dead_mob_list += brainmob
-			// moving brain to head
-			brainmob.container = headobj
+			brainmob.container = null
 			brainmob.loc = headobj
 			headobj.brainmob = brainmob
 			brainmob = null
@@ -45,7 +44,7 @@
 /obj/item/device/biocan/verb/toggle_speech()
 	set name = "Toggle commutator"
 	set category = "Object"
-	set src in view(0)
+	set src in usr
 
 	if(commutator_enabled)
 		commutator_enabled = FALSE
