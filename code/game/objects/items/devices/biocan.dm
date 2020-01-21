@@ -18,19 +18,29 @@
 
 	to_chat(usr, "<span class='notice'>You began to carefully extract [headobj] from the can.</span>")
 	if(!usr.is_busy() && do_after(usr,20))
-		if(headobj)
+		if (extract_head())
 			to_chat(usr, "<span class='notice'>You have successfully extracted [headobj].</span>")
-			if(brainmob)
-				brainmob.container = null
-				brainmob.loc = headobj
-				headobj.brainmob = brainmob
-				brainmob.timeofhostdeath = world.time
-				alive_mob_list -= brainmob
-				brainmob = null
-			headobj.forceMove(get_turf(src))
-			headobj = null
-			QDEL_NULL(display_headobj)
-			underlays.Cut()
+
+/obj/item/device/biocan/proc/extract_head(brain_destroyed = FALSE)
+	if (headobj)
+		if(brainmob)
+			alive_mob_list -= brainmob
+			brainmob.timeofhostdeath = world.time
+			if (brain_destroyed)
+				// can be mouse if player have jobban for observer
+				if (brainmob.ghostize(can_reenter_corpse = FALSE))
+					dead_mob_list += brainmob
+			// moving brain to head
+			brainmob.container = headobj
+			brainmob.loc = headobj
+			headobj.brainmob = brainmob
+			brainmob = null
+		headobj.forceMove(get_turf(src))
+		headobj = null
+		QDEL_NULL(display_headobj)
+		underlays.Cut()
+		return TRUE
+	return FALSE
 
 /obj/item/device/biocan/verb/toggle_speech()
 	set name = "Toggle commutator"
@@ -75,32 +85,12 @@
 	if(alert(user, "Are you sure you want to pour it on the floor? This will kill this head!",,"Cancel","Continue") != "Continue")
 		return
 	user.visible_message("<span class='red'>\The [src.name] contents has been splashed over the floor. </span>")
-	if(headobj)
-		if(brainmob)
-			alive_mob_list -= headobj.brainmob
-			brainmob.ghostize(can_reenter_corpse = FALSE)
-			brainmob.loc = headobj
-			brainmob.container = headobj
-			headobj.brainmob = brainmob
-			brainmob = null
-		headobj.forceMove(get_turf(src))
-		headobj = null
-		QDEL_NULL(display_headobj)
-		underlays.Cut()
+	extract_head(brain_destroyed = TRUE)
 	return
 
 /obj/item/device/biocan/throw_impact(atom/hit_atom)
 	visible_message("<span class='red'>\The [src.name] has been shattered. </span>")
-	if(headobj)
-		if(brainmob)
-			alive_mob_list -= headobj.brainmob
-			brainmob.ghostize(can_reenter_corpse = FALSE)
-			brainmob.loc = headobj
-			brainmob.container = headobj
-			headobj.brainmob = brainmob
-			brainmob = null
-		headobj.forceMove(get_turf(src))
-		headobj = null
+	extract_head(brain_destroyed = TRUE)
 	new /obj/item/weapon/shard(loc)
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	qdel(src)
