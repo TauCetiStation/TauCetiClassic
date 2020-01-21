@@ -230,6 +230,9 @@
 			msg += "[t_He] [t_is] a gnome!\n"
 		else
 			msg += "[t_He] [t_is] a small halfling!\n"
+	
+	if(!skipface && (status_flags & DISFIGURED))
+		msg += "<span class='warning'>[t_He] [t_is] totaly disfigured!</span>\n"
 
 	var/distance = get_dist(user,src)
 	if(istype(user, /mob/dead/observer) || user.stat == DEAD) // ghosts can see anything
