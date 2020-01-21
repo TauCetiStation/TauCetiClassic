@@ -4,7 +4,6 @@
 	var/amount = 0
 	var/max_amount = 0
 	var/price = 0
-	var/display_color = "blue"
 
 /obj/machinery/vending
 	name = "Vendomat"
@@ -118,7 +117,6 @@
 		R.amount = amount
 		R.max_amount = amount
 		R.price = price
-		R.display_color = pick("red","orange","green")
 
 		if(hidden)
 			hidden_records += R
@@ -129,7 +127,6 @@
 
 		var/atom/temp = typepath
 		R.product_name = initial(temp.name)
-//		world << "Added: [R.product_name]] - [R.amount] - [R.product_path]"
 	return
 
 /obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, datum/data/vending_product/machine, mob/user)  //Restocking from TG
@@ -360,7 +357,7 @@
 	if (product_records.len == 0)
 		dat += "<font color = 'red'>No product loaded!</font>"
 	else
-		dat += "<table>"
+		dat += {"<table cellpadding="2" cellspacing="1">"}
 		dat += print_recors(product_records)
 		if(extended_inventory)
 			dat += print_recors(hidden_records)
@@ -385,14 +382,16 @@
 	for (var/datum/data/vending_product/R in record)
 		dat += "<tr>"
 		dat += {"<td><span class="vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]"></td>"}
-		dat += "<td><font color = '[R.display_color]'><B>[R.product_name]</B>:</td>"
-		dat += "<td><b>[R.amount]</b> </font></td>"
+		dat += {"<td><font color = '#c9c9b5'><B>[R.product_name]</B></td>"}
+		dat += "<td><font color = '#0c4274'><b>[R.amount]</b> </font></td>"
 		if(R.price)
-			dat += "<td><b>(Price: [R.price])</b></td>"
+			dat += {"<td align="center"><font color = '#ffd700'><b>$[R.price]</b></td>"}
+		else
+			dat += {"<td align="center"><font color = '#32cd32'><b>Free</b></td>"}
 		if (R.amount > 0)
 			dat += "<td align='right'><a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A></td>"
 		else
-			dat += "<td align='right'><font color = 'red'>SOLD OUT</font></td>"
+			dat += "<td nowrap><font color = 'red'>SOLD OUT</font></td>"
 		dat += "</tr>"
 	return dat
 

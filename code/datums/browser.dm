@@ -100,7 +100,7 @@
 	[content]
 	[get_footer()]
 	"}
-//"
+
 /datum/browser/proc/open(use_onclose = 1)
 	var/window_size = ""
 	if (width && height)

@@ -271,21 +271,22 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	send_asset_list(client, uncommon)
 	send_asset_list(client, common)
 
-// spritesheet implementation - coalesces various icons into a single .png file
-// and uses CSS to select icons out of that file - saves on transferring some
-// 1400-odd individual PNG files
-#define SPR_SIZE 1
-#define SPR_IDX 2
-#define SPRSZ_COUNT 1
-#define SPRSZ_ICON 2
-#define SPRSZ_STRIPPED 3
-#define rustg_dmi_strip_metadata(fname) call("rust_g", "dmi_strip_metadata")(fname) // rust_g.dm - DM API for rust_g extension library
+/*Spritesheet implementation - coalesces various icons into a single .png file
+ and uses CSS to select icons out of that file - saves on transferring some
+1400-odd individual PNG files. (this is the port from tgstation)*/
+#define SPR_SIZE 1 //sprite size in list/sprites
+#define SPR_IDX 2 //sprite index in list/sprites
+#define SPRSZ_COUNT 1 //sprite size count in list/sizes
+#define SPRSZ_ICON 2 //sprite size icon in list/sizes
+#define SPRSZ_STRIPPED 3 ////sprite size stripped in list/sizes
+#define rustg_dmi_strip_metadata(fname) call("rust_g", "dmi_strip_metadata")(fname) // rust_g.dm - DM API for rust_g extension library. You can find rust_g.dll file in build directory.
+//Directions can be found at the [rust-g repo](https://github.com/tgstation/rust-g).
 
 /datum/asset/spritesheet
 	_abstract = /datum/asset/spritesheet
 	var/name
-	var/list/sizes = list()    // "32x32" -> list(10, icon/normal, icon/stripped)
-	var/list/sprites = list()  // "foo_bar" -> list("32x32", 5)
+	var/list/sizes = list()    // "32x32" -> list(sprite count, icon/normal, icon/stripped)
+	var/list/sprites = list()  // "foo_bar" -> list("32x32", sprite index)
 
 /datum/asset/spritesheet/register()
 	if (!name)
@@ -331,8 +332,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		var/idx = sprite[SPR_IDX]
 		var/size = sizes[size_id]
 
-		var/icon/tiny = size[SPRSZ_ICON] //2
-		var/icon/big = size[SPRSZ_STRIPPED] //3
+		var/icon/tiny = size[SPRSZ_ICON] 
+		var/icon/big = size[SPRSZ_STRIPPED] 
 		var/per_line = big.Width() / tiny.Width()
 		var/x = (idx % per_line) * tiny.Width()
 		var/y = round(idx / per_line) * tiny.Height()
@@ -352,8 +353,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		CRASH("duplicate sprite \"[sprite_name]\" in sheet [name] ([type])")
 
 	if (size)
-		var/position = size[SPRSZ_COUNT]++ //1
-		var/icon/sheet = size[SPRSZ_ICON]//2
+		var/position = size[SPRSZ_COUNT]++ 
+		var/icon/sheet = size[SPRSZ_ICON]
 		size[SPRSZ_STRIPPED] = null
 		sheet.Insert(I, icon_state=sprite_name)
 		sprites[sprite_name] = list(size_id, position)
@@ -375,28 +376,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		var/atom/item = k
 		if (!ispath(item, /atom))
 			continue
-
-		var/icon_file = initial(item.icon)
-		var/icon_state = initial(item.icon_state)
-		var/icon/I //product images
-
-		var/icon_states_list = icon_states(icon_file)
-		if(icon_state in icon_states_list)
-			I = icon(icon_file, icon_state, SOUTH)
-			var/c = initial(item.color)
-			if (!isnull(c) && c != "#FFFFFF")
-				I.Blend(c, ICON_MULTIPLY)
-		else
-			/*var/icon_states_string
-			for (var/an_icon_state in icon_states_list)
-				if (!icon_states_string)
-					icon_states_string = "[json_encode(an_icon_state)](\ref[an_icon_state])"
-				else
-					icon_states_string += ", [json_encode(an_icon_state)](\ref[an_icon_state])"*/
-			stack_trace("[item] does not have a valid icon state, icon=[icon_file], icon_state=[json_encode(icon_state)](\ref[icon_state])")//, icon_states=[icon_states_string]")
-			I = icon('icons/turf/floors.dmi', "", SOUTH)
-
+		var/obj/product = new item
+		var/icon/I = getFlatIcon(product)
 		var/imgid = replacetext(replacetext("[item]", "/obj/item/", ""), "/", "-")
-
 		insert_icon_in_list(imgid, I)
 	return ..()
