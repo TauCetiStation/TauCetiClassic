@@ -14,12 +14,19 @@
 /obj/item/device/biocan/verb/safe_eject()
 	set name = "Safely eject head"
 	set category = "Object"
-	set src in usr
+	set src in view(1)
 
+	if (!ishuman(usr))
+		return
 	to_chat(usr, "<span class='notice'>You began to carefully extract [headobj] from the can.</span>")
-	if(!usr.is_busy() && do_after(usr,20))
+	if(!usr.is_busy() && do_after(usr, 20, target = src, can_move = TRUE))
+		var/head_name = headobj.name
 		if (extract_head())
-			to_chat(usr, "<span class='notice'>You have successfully extracted [headobj].</span>")
+			to_chat(usr, "<span class='notice'>You have successfully extract [head_name].</span>")
+		else
+			to_chat(usr, "<span class='notice'>Extracting [head_name] was failed.</span>")
+	else
+		to_chat(usr, "<span class='notice'>Extracting [headobj] was interrupted.</span>")
 
 /obj/item/device/biocan/proc/extract_head(brain_destroyed = FALSE)
 	if (headobj)
@@ -44,8 +51,10 @@
 /obj/item/device/biocan/verb/toggle_speech()
 	set name = "Toggle commutator"
 	set category = "Object"
-	set src in usr
+	set src in view(1)
 
+	if (!ishuman(usr))
+		return
 	if(commutator_enabled)
 		commutator_enabled = FALSE
 		to_chat(usr, "<span class='warning'>You disable text to speech device, preventing [src.name]'s occupant from shouting.</span>")
