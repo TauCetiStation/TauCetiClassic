@@ -497,7 +497,7 @@
 
 /obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
 	if(L.stunned)
-		L.SetSleeping(60)
+		L.SetSleeping(120 SECONDS)
 	L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 	playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)

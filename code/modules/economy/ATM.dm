@@ -364,7 +364,7 @@ log transactions
 
 					//stamp the paper
 					var/obj/item/weapon/stamp/centcomm/S = new
-					S.stamp_paper(R, "This paper has been stamped by the Automatic Teller Machine.")
+					S.stamp_paper(R, "Automatic Teller Machine")
 
 				if(prob(50))
 					playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
@@ -402,7 +402,7 @@ log transactions
 
 					//stamp the paper
 					var/obj/item/weapon/stamp/centcomm/S = new
-					S.stamp_paper(R, "This paper has been stamped by the Automatic Teller Machine.")
+					S.stamp_paper(R, "Automatic Teller Machine")
 
 				if(prob(50))
 					playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)

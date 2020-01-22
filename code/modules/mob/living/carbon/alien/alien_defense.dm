@@ -129,7 +129,7 @@ This is what happens, when we attack aliens.
 	switch(M.a_intent)
 
 		if ("help")
-			sleeping = max(0,sleeping-5)
+			AdjustSleeping(-10 SECONDS)
 			resting = 0
 			AdjustParalysis(-3)
 			AdjustStunned(-3)

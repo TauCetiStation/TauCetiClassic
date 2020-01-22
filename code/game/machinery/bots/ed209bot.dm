@@ -486,11 +486,8 @@
 		if(L.lasertag_color != lasertag_color)
 			disabled = TRUE
 			qdel(Proj)
-			addtimer(CALLBACK(src, .proc/enable), 100)
+			addtimer(VARSET_CALLBACK(src, disabled, FALSE), 100)
 	..()
-
-/obj/machinery/bot/secbot/ed209/proc/enable()
-	disabled = FALSE
 
 /obj/machinery/bot/secbot/ed209/bluetag/atom_init() // If desired, you spawn red and bluetag bots easily
 	..()

@@ -77,7 +77,7 @@
 
 		//stamp the paper
 		var/obj/item/weapon/stamp/centcomm/S = new
-		S.stamp_paper(R, "This paper has been stamped by the Accounts Database.")
+		S.stamp_paper(R, "Accounts Database")
 
 	//add the account
 	M.transaction_log.Add(T)
