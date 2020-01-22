@@ -76,6 +76,7 @@
 	throw_range = 5
 	g_amt = 0
 	m_amt = 75
+	hitsound = list('sound/weapons/melee/screwdriver-stab.ogg')
 	attack_verb = list("stabbed")
 	usesound = 'sound/items/Screwdriver.ogg'
 	var/random_color = TRUE

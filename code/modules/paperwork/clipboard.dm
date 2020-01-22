@@ -1,6 +1,7 @@
 /obj/item/weapon/clipboard
 	name = "clipboard"
 	icon = 'icons/obj/bureaucracy.dmi'
+	hitsound = list('sound/weapons/melee/folder-slap.ogg')
 	icon_state = "clipboard"
 	item_state = "clipboard"
 	throwforce = 0

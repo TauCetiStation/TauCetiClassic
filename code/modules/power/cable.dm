@@ -396,6 +396,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	item_state = "coil"
+	hitsound = list('sound/weapons/melee/cable-slap.ogg')
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
 	full_w_class = ITEM_SIZE_SMALL

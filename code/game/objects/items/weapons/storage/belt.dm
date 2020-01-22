@@ -6,6 +6,7 @@
 	item_state = "utility"
 	storage_slots = 7
 	slot_flags = SLOT_FLAGS_BELT
+	hitsound = list('sound/weapons/melee/belt-slap.ogg')
 	attack_verb = list("whipped", "lashed", "disciplined")
 	use_to_pickup = TRUE
 
