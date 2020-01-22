@@ -89,7 +89,7 @@
 		underlays.Cut()
 	return
 
-/obj/item/device/biocan/throw_impact(atom/hit_atom)
+/obj/item/device/biocan/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	visible_message("<span class='red'>\The [src.name] has been shattered. </span>")
 	if(headobj)
 		if(brainmob)

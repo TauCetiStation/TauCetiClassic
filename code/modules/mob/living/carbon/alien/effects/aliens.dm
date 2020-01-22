@@ -107,7 +107,7 @@
 	healthcheck()
 	return
 
-/obj/structure/alien/resin/hitby(AM)
+/obj/structure/alien/resin/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	..()
 	visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
 	var/tforce = 0

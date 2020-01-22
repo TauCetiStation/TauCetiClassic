@@ -246,7 +246,7 @@
 	reagents.add_reagent("nutriment", 5)
 	bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/blackberry/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/grown/blackberry/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	var/obj/effect/decal/cleanable/new_smudge
 	new_smudge = new /obj/effect/decal/cleanable/egg_smudge(loc)
