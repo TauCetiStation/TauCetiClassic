@@ -357,7 +357,7 @@
 	if (product_records.len == 0)
 		dat += "<font color = 'red'>No product loaded!</font>"
 	else
-		dat += {"<table cellpadding="2" cellspacing="1">"}
+		dat += "<table>"
 		dat += print_recors(product_records)
 		if(extended_inventory)
 			dat += print_recors(hidden_records)
