@@ -3545,6 +3545,8 @@
 "hv" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	dock_tag = "sci_dock";
+	locked = 1;
 	name = "Research Outpost Dock Airlock";
 	req_access = list(65)
 	},
@@ -11683,6 +11685,8 @@
 /area/asteroid/research_outpost/outpost_misc_lab)
 "At" = (
 /obj/machinery/door/airlock/external{
+	dock_tag = "mine_dock";
+	locked = 1;
 	name = "Mining Shuttle Airlock";
 	req_access = list(48)
 	},
@@ -12293,6 +12297,9 @@
 	icon_state = "vault"
 	},
 /area/asteroid/research_outpost/iso1)
+"FB" = (
+/turf/space,
+/area/shuttle/mining/transit)
 "Gb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -14864,11 +14871,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -15121,11 +15128,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -15378,11 +15385,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -15635,11 +15642,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -15892,11 +15899,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -16149,11 +16156,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -16406,11 +16413,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -16663,11 +16670,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -16920,11 +16927,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
