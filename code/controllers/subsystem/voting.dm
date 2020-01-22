@@ -8,12 +8,13 @@ var/datum/subsystem/vote/SSvote
 	flags = SS_FIRE_IN_LOBBY | SS_KEEP_TIMING | SS_NO_INIT
 
 	var/initiator = null
-	var/started_time = null			//Not counting for custom votes, because it will apply voting cooldown and this is bad...
 	var/voting_started_time = null	//...thats why we use separate var to count remaining vote time.
 	var/time_remaining = 0
 	var/mode = null
 	var/question = null
 	var/description = null
+	var/list/last_vote_time = list() //Not counting for custom votes, because it will apply voting cooldown and this is bad...
+	var/list/delay_after_start = list("default", "restart")
 	var/list/choices = list()
 	var/list/voted = list()
 	var/list/voting = list()
@@ -167,9 +168,12 @@ var/datum/subsystem/vote/SSvote
 	var/is_admin = FALSE
 	if(check_rights(R_ADMIN))
 		is_admin = TRUE
+	var/timer_mode = "default"
+	if (vote_type == "restart")
+		timer_mode = "restart"
 	if(!mode)
-		if(started_time != null && !is_admin)
-			var/next_allowed_time = (started_time + config.vote_delay)
+		if(last_vote_time[timer_mode] != null && !is_admin)
+			var/next_allowed_time = (last_vote_time[timer_mode] + config.vote_delay)
 			if(next_allowed_time > world.time)
 				return 0
 
@@ -219,7 +223,7 @@ var/datum/subsystem/vote/SSvote
 		if(mode == "custom")
 			text += "\n[question]"
 		else
-			started_time = world.time
+			last_vote_time[timer_mode] = world.time
 		log_vote(text)
 		for(var/mob/M in player_list)
 			M.playsound_local(null, 'sound/misc/notice1.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
