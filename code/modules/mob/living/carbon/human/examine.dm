@@ -452,7 +452,7 @@
 		if(BP && BP.disfigured)
 			msg += "<span class='warning'><b>[t_His] face is violently disfigured!</b></span>\n"
 
-	if((!skipface || !skipjumpsuit) && (HUSK in mutations))
+	if((!skipface || !skipjumpsuit || !skipgloves) && (HUSK in mutations))
 		msg += "<span class='warning'><b>[t_His] skin is looking cadaveric!</b></span>\n"
 
 	if(hasHUD(user,"security"))
