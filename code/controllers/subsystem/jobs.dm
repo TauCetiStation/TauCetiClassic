@@ -207,6 +207,9 @@ var/datum/subsystem/job/SSjob
 	if((job.title == "AI") && (config) && (!config.allow_ai))
 		return 0
 
+	if(ticker.mode.name == "AI malfunction"&& job.spawn_positions)//no additional AIs with malf
+		job.total_positions = job.spawn_positions
+		job.spawn_positions = 0
 	for(var/i = job.total_positions, i > 0, i--)
 		for(var/level = 1 to 3)
 			var/list/candidates = list()
@@ -316,6 +319,7 @@ var/datum/subsystem/job/SSjob
 
 				if(!job.map_check())
 					continue
+
 
 				// If the player wants that job on this level, then try give it to him.
 				if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
@@ -588,6 +592,7 @@ var/datum/subsystem/job/SSjob
 	var/list/jobEntries = file2list(jobsfile)
 
 	for(var/job in jobEntries)
+
 		if(!job)
 			continue
 
@@ -612,7 +617,6 @@ var/datum/subsystem/job/SSjob
 			J.spawn_positions = text2num(value)
 			if(name == "AI" || name == "Cyborg")//I dont like this here but it will do for now
 				J.total_positions = 0
-
 	return 1
 
 /datum/subsystem/job/proc/HandleFeedbackGathering()
