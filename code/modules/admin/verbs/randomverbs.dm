@@ -1136,7 +1136,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("Fax message was created by [key_name_admin(usr)] and sent to [department]")
 	world.send2bridge(
 		type = list(BRIDGE_ADMINCOM),
-		attachment_title = ":fax: Fax message was created by **[key_name_admin(usr)]** and sent to ***[department]***",
+		attachment_title = ":fax: Fax message was created by **[key_name(usr)]** and sent to ***[department]***",
 		attachment_msg = sent_text,
 		attachment_color = BRIDGE_COLOR_ADMINCOM,
 	)
