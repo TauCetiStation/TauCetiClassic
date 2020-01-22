@@ -849,11 +849,6 @@
 	dir = 4;
 	pixel_x = -25
 	},
-/obj/machinery/camera{
-	c_tag = "Xenobiology Module North";
-	dir = 4;
-	network = list("SS13","Research")
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurplecorner"
@@ -10126,19 +10121,9 @@
 	},
 /area/station/security/lobby)
 "aqF" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/disposal,
-/obj/machinery/camera{
-	c_tag = "Xenobiology Module Middle";
-	dir = 8;
-	network = list("SS13","Research")
-	},
+/obj/machinery/chem_master,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "warning"
+	icon_state = "white"
 	},
 /area/station/rnd/xenobiology)
 "aqG" = (
@@ -12103,6 +12088,11 @@
 	pixel_y = 4;
 	req_access = list(55)
 	},
+/obj/machinery/camera{
+	c_tag = "Xenobiology Module Middle";
+	dir = 8;
+	network = list("SS13","Research")
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -12124,8 +12114,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aus" = (
-/obj/machinery/reagentgrinder,
-/obj/structure/table/glass,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurple"
@@ -12797,24 +12785,20 @@
 	pixel_y = 4;
 	req_access = list(55)
 	},
+/obj/machinery/camera{
+	c_tag = "Xenobiology Module Middle";
+	dir = 8;
+	network = list("SS13","Research")
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
 	},
 /area/station/rnd/xenobiology)
 "avL" = (
-/obj/item/weapon/storage/box/beakers{
-	pixel_x = 2;
-	pixel_y = 2
-	},
 /obj/item/device/radio/intercom{
 	pixel_y = 25
 	},
-/obj/machinery/camera{
-	c_tag = "Xenobiology Module SE";
-	network = list("SS13","Research")
-	},
-/obj/structure/table/glass,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurple"
@@ -13183,6 +13167,11 @@
 	pixel_y = 4;
 	req_access = list(55)
 	},
+/obj/machinery/camera{
+	c_tag = "Xenobiology Module Middle";
+	dir = 8;
+	network = list("SS13","Research")
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -13307,11 +13296,8 @@
 	},
 /area/station/civilian/hydroponics)
 "awP" = (
-/obj/item/stack/sheet/mineral/phoron{
-	amount = 5;
-	layer = 2.9
-	},
 /obj/structure/table/glass,
+/obj/item/weapon/book/manual/wiki/guide_to_xenobiology,
 /turf/simulated/floor{
 	icon_state = "whitepurplecorner"
 	},
@@ -13582,7 +13568,6 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurplecorner"
@@ -13937,10 +13922,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "ayj" = (
-/obj/machinery/optable{
-	name = "Xenobiology Operating Table"
-	},
-/obj/structure/disposalpipe/segment,
+/obj/machinery/smartfridge/secure/extract,
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
@@ -14199,6 +14181,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/landmark/start{
+	name = "Xenobiologist"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -14274,9 +14259,6 @@
 	},
 /area/station/storage/tech/north)
 "ayM" = (
-/obj/structure/stool/bed/chair/office/light{
-	dir = 1
-	},
 /obj/effect/landmark/start{
 	name = "Xenobiologist"
 	},
@@ -14314,35 +14296,26 @@
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/engineering)
 "ayR" = (
-/obj/machinery/monkey_recycler,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitecorner"
-	},
+/obj/structure/lattice,
+/turf/simulated/wall/r_wall,
 /area/station/rnd/xenobiology)
 "ayS" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/structure/sign/warning/deathsposal{
-	pixel_y = -32
-	},
-/obj/machinery/light,
+/obj/machinery/computer/operating,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "whitehall"
+	dir = 8;
+	icon_state = "whitecorner"
 	},
 /area/station/rnd/xenobiology)
 "ayT" = (
-/obj/structure/table,
-/obj/item/weapon/circular_saw,
-/obj/item/weapon/scalpel{
-	pixel_y = 12
+/obj/structure/disposalpipe/segment,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 12
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "whitecorner"
+	dir = 8;
+	icon_state = "whitehall"
 	},
 /area/station/rnd/xenobiology)
 "ayU" = (
@@ -14499,13 +14472,13 @@
 /area/station/ai_monitored/eva)
 "azg" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
-/obj/item/weapon/reagent_containers/spray/extinguisher,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whitepurple"
@@ -29984,8 +29957,6 @@
 	},
 /area/station/medical/hallway)
 "bcv" = (
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
@@ -30018,9 +29989,6 @@
 	},
 /area/station/cargo/storage)
 "bcz" = (
-/obj/structure/stool/bed/chair/office/light{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -30285,8 +30253,6 @@
 	},
 /area/station/rnd/xenobiology)
 "bda" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -30304,8 +30270,11 @@
 /area/station/bridge/captain_quarters)
 "bdd" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/donut_box,
-/turf/simulated/floor,
+/obj/item/weapon/storage/bag/bio,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitecorner"
+	},
 /area/station/rnd/xenobiology)
 "bde" = (
 /turf/simulated/floor{
@@ -34235,6 +34204,17 @@
 /obj/item/device/flashlight,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"bkG" = (
+/obj/structure/table,
+/obj/item/stack/sheet/mineral/phoron{
+	amount = 5;
+	layer = 2.9
+	},
+/obj/machinery/reagentgrinder,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/rnd/xenobiology)
 "bkH" = (
 /turf/simulated/floor{
 	icon_state = "white"
@@ -34318,6 +34298,35 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
+"bkM" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/structure/sign/warning/deathsposal{
+	pixel_y = -32
+	},
+/obj/machinery/disposal,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitecorner"
+	},
+/area/station/rnd/xenobiology)
+"bkN" = (
+/obj/structure/stool/bed/chair/office/light{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/rnd/xenobiology)
+"bkO" = (
+/obj/machinery/camera{
+	c_tag = "Xenobiology Module Middle";
+	dir = 8;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/rnd/xenobiology)
 "bkP" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -47825,10 +47834,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/structure/stool/bed/chair/office/light,
-/obj/effect/landmark/start{
-	name = "Xenobiologist"
-	},
+/obj/item/weapon/storage/fancy/donut_box,
+/obj/structure/table,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warning"
@@ -55357,6 +55364,11 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Xenobiology Module South";
+	dir = 4;
+	network = list("SS13","Research")
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warning"
@@ -55501,13 +55513,6 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/civilian/library)
-"cjH" = (
-/obj/machinery/chem_master,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "whitepurplecorner"
-	},
-/area/station/rnd/xenobiology)
 "cjI" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/engine/nitrogen,
@@ -57316,6 +57321,11 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Xenobiology Module South";
+	dir = 4;
+	network = list("SS13","Research")
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
@@ -58302,7 +58312,7 @@
 	},
 /area/station/aisat/antechamber)
 "cpR" = (
-/obj/machinery/smartfridge/secure/extract,
+/obj/machinery/monkey_recycler,
 /turf/simulated/floor{
 	icon_state = "whitecorner"
 	},
@@ -58321,12 +58331,16 @@
 	},
 /area/station/civilian/garden)
 "cpT" = (
-/obj/machinery/computer/operating{
-	name = "Xenobiology Operating Computer"
+/obj/structure/table,
+/obj/item/weapon/circular_saw{
+	pixel_y = 7
+	},
+/obj/item/weapon/scalpel,
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "whitecorner"
+	icon_state = "white"
 	},
 /area/station/rnd/xenobiology)
 "cpU" = (
@@ -60423,11 +60437,6 @@
 	},
 /area/station/civilian/garden)
 "cuF" = (
-/obj/machinery/camera{
-	c_tag = "Xenobiology Module South";
-	dir = 4;
-	network = list("SS13","Research")
-	},
 /obj/structure/table/reinforced,
 /obj/machinery/door_control{
 	id = "xenobio1";
@@ -60499,7 +60508,7 @@
 	},
 /area/station/medical/checkpoint)
 "cuL" = (
-/obj/structure/disposalpipe/segment,
+/obj/machinery/optable,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -62463,7 +62472,6 @@
 	},
 /area/station/engineering/engine)
 "czW" = (
-/obj/structure/stool/bed/chair/office/light,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -62475,6 +62483,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/stool/bed/chair/office/light,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -62493,7 +62502,10 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "czY" = (
-/obj/structure/stool/bed/chair/office/light,
+/obj/item/weapon/storage/box/monkeycubes,
+/obj/item/weapon/storage/box/monkeycubes,
+/obj/item/weapon/storage/box/monkeycubes,
+/obj/structure/table,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warning"
@@ -67544,12 +67556,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cMz" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = 12
+/obj/structure/table,
+/obj/item/weapon/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 2
 	},
+/obj/item/weapon/storage/box/syringes,
 /turf/simulated/floor{
-	dir = 8;
+	dir = 1;
 	icon_state = "whitehall"
 	},
 /area/station/rnd/xenobiology)
@@ -69407,6 +69421,7 @@
 	},
 /area/station/security/main)
 "fLb" = (
+/obj/machinery/computer/camera_advanced/xenobio,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warning"
@@ -71069,8 +71084,7 @@
 	dir = 4;
 	network = list("SS13","Research")
 	},
-/obj/item/weapon/book/manual/wiki/guide_to_xenobiology,
-/obj/item/weapon/storage/box/syringes,
+/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitepurple"
@@ -122000,7 +122014,7 @@ cbD
 axv
 cey
 fLb
-bdd
+bkN
 dUb
 azl
 azF
@@ -122768,7 +122782,7 @@ cnU
 ckF
 cuF
 cbD
-cjH
+asQ
 coY
 ayE
 ctC
@@ -123542,7 +123556,7 @@ awR
 axs
 cey
 cey
-cey
+bkO
 bcG
 mDb
 cbD
@@ -123788,7 +123802,7 @@ aai
 atM
 auo
 auF
-aqF
+avl
 atM
 avK
 arr
@@ -123798,7 +123812,7 @@ awy
 cbD
 cpR
 cey
-ayR
+bdd
 cbD
 cbD
 cbD
@@ -124052,10 +124066,10 @@ nub
 aWp
 awa
 aWM
-ceC
+cbD
 ayj
-cuL
-ayS
+cey
+cMz
 cbD
 aaa
 aaa
@@ -124309,10 +124323,10 @@ cjv
 cjr
 ckC
 ckC
-cfw
+cbD
 cpT
-cMz
-ayT
+cey
+aqF
 cbD
 aaa
 aaa
@@ -124566,10 +124580,10 @@ cbD
 cjr
 ckC
 ckC
-cfw
 cbD
-cbD
-cbD
+cuL
+cey
+bkG
 cbD
 aah
 aah
@@ -124823,11 +124837,11 @@ cbD
 avx
 ckC
 ckC
-cfw
-aah
-aaa
-aaa
-aaa
+ceC
+ayS
+ayT
+bkM
+cbD
 aaa
 aaa
 aup
@@ -125081,10 +125095,10 @@ cbD
 cbD
 cbD
 cfw
-aah
-aaa
-aaa
-aaa
+ayR
+cbD
+cbD
+cbD
 aaa
 aaa
 aup

@@ -110,6 +110,16 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/operating
 	category = list("Computer")
 
+/datum/design/slime_management
+	name = "Circuit Design (Slime management console)"
+	desc = "Allows for the construction of circuit boards used to build a slime management console."
+	id = "slime_management"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/camera_advanced/xenobio
+	category = list("Computer")
+
+
 /datum/design/pandemic
 	name = "Circuit Design (PanD.E.M.I.C. 2200)"
 	desc = "Allows for the construction of circuit boards used to build a PanD.E.M.I.C. 2200 console."

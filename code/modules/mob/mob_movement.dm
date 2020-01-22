@@ -142,6 +142,10 @@
 		return currentSpirit.Spirit_Move(direct) */
 
 	// handle possible AI movement
+
+	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
+		return mob.remote_control.relaymove(mob, direct)
+
 	if(isAI(mob))
 		return AIMove(n,direct,mob)
 

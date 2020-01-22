@@ -17,6 +17,7 @@
 	global.alive_mob_list -= src
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
+	remote_control = null
 	qdel(hud_used)
 	ghostize(bancheck = TRUE)
 	..()
