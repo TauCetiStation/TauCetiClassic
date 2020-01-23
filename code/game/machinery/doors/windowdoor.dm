@@ -206,7 +206,7 @@
 	..()
 
 //When an object is thrown at the window
-/obj/machinery/door/window/hitby(AM)
+/obj/machinery/door/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 
 	..()
 	visible_message("<span class='warning'><B>The glass door was hit by [AM].</B></span>", 1)

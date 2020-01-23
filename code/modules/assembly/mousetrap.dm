@@ -92,10 +92,10 @@
 		return 1	//end the search!
 	return 0
 
-/obj/item/device/assembly/mousetrap/hitby(A)
+/obj/item/device/assembly/mousetrap/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	if(!armed)
 		return ..()
-	visible_message("<span class='warning'>[src] is triggered by [A].</span>")
+	visible_message("<span class='warning'>[src] is triggered by [AM].</span>")
 	triggered(null)
 
 /obj/item/device/assembly/mousetrap/armed

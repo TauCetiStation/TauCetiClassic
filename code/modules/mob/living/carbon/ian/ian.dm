@@ -634,7 +634,7 @@
 		return
 	..()
 
-/mob/living/carbon/ian/hitby(atom/movable/AM)
+/mob/living/carbon/ian/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	if(is_armored(AM, msg = "armored"))
 		return
 	..()

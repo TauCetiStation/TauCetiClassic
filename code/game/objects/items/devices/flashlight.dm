@@ -11,7 +11,9 @@
 	g_amt = 20
 	action_button_name = "Toggle Flashlight"
 	var/on = 0
+	var/button_sound = 'sound/items/flashlight.ogg' // Sound when using light
 	var/brightness_on = 5 //luminosity when on
+	var/last_button_sound = 0 // Prevents spamming for Object lights
 
 /obj/item/device/flashlight/atom_init()
 	. = ..()
@@ -31,10 +33,18 @@
 		set_light(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
+	if (last_button_sound >= world.time)
+		return 0
+
 	if(!isturf(user.loc))
 		to_chat(user, "You cannot turn the light on while in this [user.loc].")//To prevent some lighting anomalities.
 		return 0
+
+	if (button_sound)
+		playsound(user, button_sound, VOL_EFFECTS_MASTER, 20)
+
 	on = !on
+	last_button_sound = world.time + 3
 	update_brightness(user)
 	action_button_name = null
 	return 1
@@ -101,6 +111,7 @@
 	icon_state = "penlight"
 	item_state = ""
 	flags = CONDUCT
+	button_sound = 'sound/items/penlight.ogg'
 	brightness_on = 2
 	w_class = ITEM_SIZE_TINY
 
@@ -120,6 +131,7 @@
 	desc = "A desk lamp with an adjustable mount."
 	icon_state = "lamp"
 	item_state = "lamp"
+	button_sound = 'sound/items/buttonclick.ogg'
 	brightness_on = 4
 	w_class = ITEM_SIZE_LARGE
 	flags = CONDUCT
@@ -201,6 +213,8 @@
 	. = ..()
 	// All good, turn it on.
 	if(.)
+		playsound(user, 'sound/items/flare.ogg', VOL_EFFECTS_MASTER)
+
 		user.visible_message("<span class='notice'>[user] activates the flare.</span>", "<span class='notice'>You pull the cord on the flare, activating it!</span>")
 		src.force = on_damage
 		src.damtype = "fire"
