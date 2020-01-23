@@ -228,9 +228,10 @@ var/datum/subsystem/job/SSjob
 			for(var/mob/dead/new_player/player in unassigned)
 				if(jobban_isbanned(player, "AI"))
 					continue
-				if(AssignRole(player, "AI"))
-					ai_selected++
-					break
+				if(ROLE_MALF in player.client.prefs.be_role)
+					if(AssignRole(player, "AI"))
+						ai_selected++
+						break
 	if(ai_selected)
 		return 1
 	return 0
@@ -278,14 +279,21 @@ var/datum/subsystem/job/SSjob
 	Debug("DO, AC1 end")
 
 	//Check for an AI
-	Debug("DO, Running AI Check")
-	FillAIPosition()
-	Debug("DO, AI Check end")
+	if(ticker.mode.name == "AI malfunction")
+		Debug("DO, Running AI Check")
+		FillAIPosition()
+		Debug("DO, AI Check end")
 
 	//Select one head
 	Debug("DO, Running Head Check")
 	FillHeadPosition()
 	Debug("DO, Head Check end")
+	
+	//Check for an AI
+	if(!(ticker.mode.name == "AI malfunction"))
+		Debug("DO, Running AI Check")
+		FillAIPosition()
+		Debug("DO, AI Check end")
 
 	//Other jobs are now checked
 	Debug("DO, Running Standard Check")
