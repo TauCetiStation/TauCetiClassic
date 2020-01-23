@@ -207,7 +207,7 @@ var/datum/subsystem/job/SSjob
 	if((job.title == "AI") && (config) && (!config.allow_ai))
 		return 0
 
-	if(ticker.mode.name == "AI malfunction"&& job.spawn_positions)//no additional AIs with malf
+	if(ticker.mode.name == "AI malfunction" && job.spawn_positions)//no additional AIs with malf
 		job.total_positions = job.spawn_positions
 		job.spawn_positions = 0
 	for(var/i = job.total_positions, i > 0, i--)
