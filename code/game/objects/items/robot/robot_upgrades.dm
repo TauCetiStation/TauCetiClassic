@@ -71,6 +71,7 @@
 				R.key = ghost.key
 
 	R.stat = CONSCIOUS
+	playsound(src, 'sound/mecha/powerup.ogg', VOL_EFFECTS_MASTER, 60, FALSE)
 	return 1
 
 

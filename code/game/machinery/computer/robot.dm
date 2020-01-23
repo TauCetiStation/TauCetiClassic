@@ -171,11 +171,17 @@
 						//	R.cell.charge = R.lockcharge
 							R.lockcharge = !R.lockcharge
 							to_chat(R, "Your lockdown has been lifted!")
+							playsound(R, 'sound/mecha/mechmove04.ogg', VOL_EFFECTS_MASTER, 80, FALSE)
 						else
 							R.throw_alert("locked", /obj/screen/alert/locked)
 							R.lockcharge = !R.lockcharge
 					//		R.cell.charge = 0
 							to_chat(R, "You have been locked down!")
+							playsound(R, 'sound/mecha/mechmove03.ogg', VOL_EFFECTS_MASTER, 95, FALSE)
+							sleep(8)
+							playsound(R, 'sound/mecha/mechmove03.ogg', VOL_EFFECTS_MASTER, 95, FALSE)
+							sleep(8)
+							playsound(R, 'sound/mecha/mechmove03.ogg', VOL_EFFECTS_MASTER, 95, FALSE)
 
 		else
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
