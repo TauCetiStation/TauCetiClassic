@@ -16,7 +16,7 @@
 	set category = "Object"
 	set src in view(1)
 
-	if (!ishuman(usr))
+	if (!ishuman(usr) || usr.incapacitated())
 		return
 	to_chat(usr, "<span class='notice'>You began to carefully extract [headobj] from the can.</span>")
 	if(!usr.is_busy() && do_after(usr, 20, target = src, can_move = TRUE))
@@ -53,7 +53,7 @@
 	set category = "Object"
 	set src in view(1)
 
-	if (!ishuman(usr))
+	if (!ishuman(usr) || usr.incapacitated())
 		return
 	if(commutator_enabled)
 		commutator_enabled = FALSE
