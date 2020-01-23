@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/humanoid/hunter
+/mob/living/carbon/xenomorph/humanoid/hunter
 	name = "alien hunter"
 	caste = "h"
 	maxHealth = 180
@@ -9,7 +9,7 @@
 	plasma_rate = 5
 	heal_rate = 3
 
-/mob/living/carbon/alien/humanoid/hunter/atom_init()
+/mob/living/carbon/xenomorph/humanoid/hunter/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
@@ -18,13 +18,13 @@
 	real_name = name
 	. = ..()
 
-/mob/living/carbon/alien/humanoid/hunter/handle_environment()
+/mob/living/carbon/xenomorph/humanoid/hunter/handle_environment()
 	if(m_intent == "run" || resting)
 		..()
 	else
 		adjustToxLoss(-heal_rate)
 
-/mob/living/carbon/alien/humanoid/hunter/handle_hud_icons_health()
+/mob/living/carbon/xenomorph/humanoid/hunter/handle_hud_icons_health()
 	if (healths)
 		if (stat != DEAD)
 			switch(health)
@@ -48,7 +48,7 @@
 
 //Hunter verbs
 /*
-/mob/living/carbon/alien/humanoid/hunter/verb/invis()
+/mob/living/carbon/xenomorph/humanoid/hunter/verb/invis()
 	set name = "Invisibility (50)"
 	set desc = "Makes you invisible for 15 seconds."
 	set category = "Alien"
@@ -74,7 +74,7 @@
 //Hunter verbs
 
 
-/mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap(message = 1)
+/mob/living/carbon/xenomorph/humanoid/hunter/proc/toggle_leap(message = 1)
 	leap_on_click = !leap_on_click
 	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
 	update_icons()
@@ -84,7 +84,7 @@
 		return
 
 
-/mob/living/carbon/alien/humanoid/hunter/ClickOn(atom/A, params)
+/mob/living/carbon/xenomorph/humanoid/hunter/ClickOn(atom/A, params)
 	if(next_move <= world.time && leap_on_click)
 		leap_at(A)
 	else
@@ -93,7 +93,7 @@
 
 #define MAX_ALIEN_LEAP_DIST 7
 
-/mob/living/carbon/alien/humanoid/hunter/proc/leap_at(atom/A)
+/mob/living/carbon/xenomorph/humanoid/hunter/proc/leap_at(atom/A)
 
 	if(buckled)
 		to_chat(src, "<span class='alertalien'>You cannot leap in your current state.</span>")
@@ -120,12 +120,12 @@
 		update_icons()
 		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, spin = FALSE, diagonals_first = TRUE, callback = CALLBACK(src, .proc/leap_end))
 
-/mob/living/carbon/alien/humanoid/hunter/proc/leap_end()
+/mob/living/carbon/xenomorph/humanoid/hunter/proc/leap_end()
 	SetNextMove(CLICK_CD_MELEE) // so we can't click again right after leaping.
 	leaping = FALSE
 	update_icons()
 
-/mob/living/carbon/alien/humanoid/hunter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/mob/living/carbon/xenomorph/humanoid/hunter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!leaping)
 		return ..()
 
@@ -149,5 +149,5 @@
 
 #undef MAX_ALIEN_LEAP_DIST
 
-/mob/living/carbon/alien/humanoid/hunter/movement_delay()
+/mob/living/carbon/xenomorph/humanoid/hunter/movement_delay()
 	return(-1 + move_delay_add + config.alien_delay)

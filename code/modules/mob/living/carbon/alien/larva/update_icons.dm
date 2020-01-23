@@ -1,10 +1,10 @@
-/mob/living/carbon/alien/larva/regenerate_icons()
+/mob/living/carbon/xenomorph/larva/regenerate_icons()
 	cut_overlays()
 	update_inv_r_hand(0)
 	update_hud()
 	update_icons()
 
-/mob/living/carbon/alien/larva/update_icons()
+/mob/living/carbon/xenomorph/larva/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
 	cut_overlays()
 	var/state = 0
@@ -24,10 +24,10 @@
 	else
 		icon_state = "larva[state]"
 
-/mob/living/carbon/alien/larva/update_transform() //All this is handled in update_icons()
-	return update_icons() 
+/mob/living/carbon/xenomorph/larva/update_transform() //All this is handled in update_icons()
+	return update_icons()
 
-/mob/living/carbon/alien/larva/update_hud()
+/mob/living/carbon/xenomorph/larva/update_hud()
 	//TODO
 	if (client)
 //		if(other)	client.screen |= hud_used.other		//Not used

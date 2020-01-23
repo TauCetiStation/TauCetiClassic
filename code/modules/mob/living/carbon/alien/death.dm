@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/facehugger/death(gibbed)
+/mob/living/carbon/xenomorph/facehugger/death(gibbed)
 	if(stat == DEAD)	return
 	if(healths)			healths.icon_state = "health6"
 	stat = DEAD
@@ -13,7 +13,7 @@
 
 	return ..(gibbed)
 
-/mob/living/carbon/alien/larva/death(gibbed)
+/mob/living/carbon/xenomorph/larva/death(gibbed)
 	if(stat == DEAD)	return
 	if(healths)			healths.icon_state = "health6"
 	stat = DEAD
@@ -28,7 +28,7 @@
 
 	return ..(gibbed)
 
-/mob/living/carbon/alien/humanoid/death(gibbed)
+/mob/living/carbon/xenomorph/humanoid/death(gibbed)
 	if(stat == DEAD)	return
 	if(healths)			healths.icon_state = "health6"
 	stat = DEAD
@@ -44,11 +44,11 @@
 
 	return ..(gibbed)
 
-/mob/living/carbon/alien/humanoid/praetorian/death()
+/mob/living/carbon/xenomorph/humanoid/praetorian/death()
 	..()
 	praetorians = (praetorians+1)
 
-/mob/living/carbon/alien/gib()
+/mob/living/carbon/xenomorph/gib()
 	death(1)
 	var/atom/movable/overlay/animation = null
 	notransform = TRUE
@@ -69,7 +69,7 @@
 		if(animation)	qdel(animation)
 		if(src)			qdel(src)
 
-/mob/living/carbon/alien/dust()
+/mob/living/carbon/xenomorph/dust()
 	death(1)
 	var/atom/movable/overlay/animation = null
 	notransform = TRUE

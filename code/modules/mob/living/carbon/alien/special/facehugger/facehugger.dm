@@ -177,7 +177,7 @@
 /*
 /obj/item/clothing/mask/facehugger/proc/show_messageold(message, m_type)
 	if(current_hugger)
-		var/mob/living/carbon/alien/facehugger/FH = current_hugger
+		var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
 		FH.show_message(message,m_type)*/
 
 /obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first = FALSE, datum/callback/callback)
@@ -250,7 +250,7 @@
 					H.unEquip(headgear)
 				else // the playable facehugger can't rip the helmet and dies
 					H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and fails to rip it off!</span>", "<span class='userdanger'>[src] smashes against yours's [headgear], and fails to rip it off!</span>")
-					var/mob/living/carbon/alien/facehugger/FH = current_hugger
+					var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
 					to_chat(FH, "<span class='danger'>You died while trying to remove [H]'s [headgear]</span>!")
 					FH.ghostize(can_reenter_corpse = FALSE)
 					Die()
@@ -294,7 +294,7 @@
 
 	return TRUE
 
-/obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/carbon/target, mob/living/carbon/alien/facehugger/FH)
+/obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/carbon/target, mob/living/carbon/xenomorph/facehugger/FH)
 	if(!target || target.stat == DEAD) //was taken off or something
 		return
 
@@ -310,7 +310,7 @@
 		icon_state = "[initial(icon_state)]_impregnated"
 		var/obj/item/alien_embryo/new_embryo = new /obj/item/alien_embryo(target)
 		if(current_hugger)
-			var/mob/living/carbon/alien/larva/new_xeno = new /mob/living/carbon/alien/larva(new_embryo)
+			var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva(new_embryo)
 			new_xeno.loc = new_embryo
 			new_embryo.baby = new_xeno
 			new_embryo.controlled_by_ai = FALSE

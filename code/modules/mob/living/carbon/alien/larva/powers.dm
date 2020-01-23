@@ -1,5 +1,5 @@
 
-/mob/living/carbon/alien/larva/verb/hide()
+/mob/living/carbon/xenomorph/larva/verb/hide()
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Alien"
@@ -20,7 +20,7 @@
 			if ((O.client && !( O.blinded )))
 				to_chat(O, text("[] slowly peaks up from the ground...", src))
 
-/mob/living/carbon/alien/larva/verb/evolve()
+/mob/living/carbon/xenomorph/larva/verb/evolve()
 	set name = "Evolve"
 	set desc = "Evolve into a fully grown Alien."
 	set category = "Alien"
@@ -48,14 +48,14 @@
 			return
 		var/alien_caste = alert(src, "Please choose which alien caste you shall belong to.",,"Hunter","Sentinel","Drone")
 
-		var/mob/living/carbon/alien/humanoid/new_xeno
+		var/mob/living/carbon/xenomorph/humanoid/new_xeno
 		switch(alien_caste)
 			if("Hunter")
-				new_xeno = new /mob/living/carbon/alien/humanoid/hunter(loc)
+				new_xeno = new /mob/living/carbon/xenomorph/humanoid/hunter(loc)
 			if("Sentinel")
-				new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(loc)
+				new_xeno = new /mob/living/carbon/xenomorph/humanoid/sentinel(loc)
 			if("Drone")
-				new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
+				new_xeno = new /mob/living/carbon/xenomorph/humanoid/drone(loc)
 		if(mind)	mind.transfer_to(new_xeno)
 		qdel(src)
 		return

@@ -1,5 +1,5 @@
 //unequip
-/mob/living/carbon/alien/humanoid/u_equip(obj/item/W)
+/mob/living/carbon/xenomorph/humanoid/u_equip(obj/item/W)
 	if (W == wear_suit)
 		wear_suit = null
 		update_inv_wear_suit(0)
@@ -19,7 +19,7 @@
 		l_hand = null
 		update_inv_l_hand(0)
 
-/mob/living/carbon/alien/humanoid/attack_ui(slot_id)
+/mob/living/carbon/xenomorph/humanoid/attack_ui(slot_id)
 	var/obj/item/W = get_active_hand()
 	if(W)
 		if(!istype(W))	return

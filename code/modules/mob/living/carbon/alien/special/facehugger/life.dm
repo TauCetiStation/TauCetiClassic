@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/facehugger/Life()
+/mob/living/carbon/xenomorph/facehugger/Life()
 	set invisibility = 0
 
 	if (notransform)
@@ -9,10 +9,10 @@
 
 	..()
 
-/mob/living/carbon/alien/facehugger/proc/handle_random_events()
+/mob/living/carbon/xenomorph/facehugger/proc/handle_random_events()
 	return
 
-/mob/living/carbon/alien/facehugger/handle_hud_icons_health()
+/mob/living/carbon/xenomorph/facehugger/handle_hud_icons_health()
 	if (!healths)
 		return
 	if (stat != DEAD)

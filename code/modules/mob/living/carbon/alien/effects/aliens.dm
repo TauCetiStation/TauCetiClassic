@@ -464,7 +464,7 @@
 			to_chat(user, "<span class='warning'>The facehugger hasn't grown yet.</span>")
 			return
 		if(GROWN)
-			var/mob/living/carbon/alien/facehugger/FH = new /mob/living/carbon/alien/facehugger(get_turf(src))
+			var/mob/living/carbon/xenomorph/facehugger/FH = new /mob/living/carbon/xenomorph/facehugger(get_turf(src))
 			FH.key = user.key
 			to_chat(FH, "<span class='notice'>You are now a facehugger, go hug some human faces <3</span>")
 			icon_state = "egg_hatched"

@@ -38,7 +38,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 
 /obj/item/clothing/mask/facehugger/proc/host_is_dead()
 	if(current_hugger)
-		var/mob/living/carbon/alien/facehugger/FH = current_hugger
+		var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
 		var/atom/movable/mob_container
 		mob_container = FH
 		mob_container.forceMove(get_turf(src))
@@ -148,7 +148,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			H.adjustToxLoss(rand(180, 200)) // Bad but effective solution.
 			H.organs_by_name[O_HEART].damage = rand(50, 100)
 			H.rupture_lung()
-		var/mob/living/carbon/alien/larva/new_xeno = new /mob/living/carbon/alien/larva(get_turf(affected_mob))
+		var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva(get_turf(affected_mob))
 		new_xeno.key = larva_candidate
 		new_xeno.update_icons()
 		new_xeno.playsound_local(null, 'sound/voice/xenomorph/big_hiss.ogg', VOL_EFFECTS_MASTER) // To get the player's attention
@@ -176,7 +176,7 @@ Proc: RefreshInfectionImage()
 Des: Removes all infection images from aliens and places an infection image on all infected mobs for aliens.
 ----------------------------------------*/
 /obj/item/alien_embryo/proc/RefreshInfectionImage()
-	for(var/mob/living/carbon/alien/alien in player_list)
+	for(var/mob/living/carbon/xenomorph/alien in player_list)
 		if(alien.client)
 			for(var/image/I in alien.client.images)
 				if(dd_hasprefix_case(I.icon_state, "infected"))
@@ -193,7 +193,7 @@ Des: Checks if the passed mob (C) is infected with the alien egg, then gives eac
 ----------------------------------------*/
 /obj/item/alien_embryo/proc/AddInfectionImages(mob/living/C)
 	if(C)
-		for(var/mob/living/carbon/alien/alien in alien_list)
+		for(var/mob/living/carbon/xenomorph/alien in alien_list)
 			if(alien.client)
 				if(C.status_flags & XENO_HOST)
 					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[stage]")
@@ -206,7 +206,7 @@ Des: Removes the alien infection image from all aliens in the world located in p
 
 /obj/item/alien_embryo/proc/RemoveInfectionImages(mob/living/C)
 	if(C)
-		for(var/mob/living/carbon/alien/alien in alien_list)
+		for(var/mob/living/carbon/xenomorph/alien in alien_list)
 			if(alien.client)
 				for(var/image/I in alien.client.images)
 					if(I.loc == C)

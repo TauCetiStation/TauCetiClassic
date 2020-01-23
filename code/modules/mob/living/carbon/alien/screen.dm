@@ -7,7 +7,7 @@
 	cut_overlays()
 	add_overlay(selecting)
 
-/mob/living/carbon/alien/proc/updatePlasmaDisplay()
+/mob/living/carbon/xenomorph/proc/updatePlasmaDisplay()
 	if(visual_counter)
 		if(alien_plasma_display) //clientless aliens
 			//alien_plasma_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='magenta'>[storedPlasma]</font></div>"
@@ -15,8 +15,8 @@
 			if(alien_plasma_display.maptext != new_text)
 				alien_plasma_display.maptext = new_text
 
-/mob/living/carbon/alien/larva/updatePlasmaDisplay()
+/mob/living/carbon/xenomorph/larva/updatePlasmaDisplay()
 	return
 
-/mob/living/carbon/alien/facehugger/updatePlasmaDisplay()
+/mob/living/carbon/xenomorph/facehugger/updatePlasmaDisplay()
 	return

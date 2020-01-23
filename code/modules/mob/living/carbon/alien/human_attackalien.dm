@@ -1,7 +1,7 @@
 /*----------------------------------------
 This is what happens, when alien attack.
 ----------------------------------------*/
-/mob/living/carbon/alien/UnarmedAttack(atom/A)
+/mob/living/carbon/xenomorph/UnarmedAttack(atom/A)
 	..()
 	A.attack_alien(src)
 
@@ -10,21 +10,21 @@ This is what happens, when alien attack.
 	return
 
 // Baby aliens
-/mob/living/carbon/alien/facehugger/UnarmedAttack(atom/A)
+/mob/living/carbon/xenomorph/facehugger/UnarmedAttack(atom/A)
 	SetNextMove(CLICK_CD_MELEE)
 	A.attack_facehugger(src)
 
 /atom/proc/attack_facehugger(mob/user)
 	return
 
-/mob/living/carbon/alien/larva/UnarmedAttack(atom/A)
+/mob/living/carbon/xenomorph/larva/UnarmedAttack(atom/A)
 	..()
 	A.attack_larva(src)
 
 /atom/proc/attack_larva(mob/user)
 	return
 
-/mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/M)
+/mob/living/carbon/human/attack_larva(mob/living/carbon/xenomorph/larva/M)
 	if(check_shields(0, M.name, get_dir(M,src) ))
 		visible_message("<span class='warning'><B>[M] attempted to touch [src]!</B></span>")
 		return 0
@@ -44,7 +44,7 @@ This is what happens, when alien attack.
 			apply_damage(damage, BRUTE, BP, armor_block)
 			updatehealth()
 
-/mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/carbon/human/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 	if(check_shields(0, M.name, get_dir(M,src) ))
 		visible_message("<span class='warning'><B>[M] attempted to touch [src]!</B></span>")
 		return 0

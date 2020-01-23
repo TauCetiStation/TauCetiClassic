@@ -1,7 +1,7 @@
 /*----------------------------------------
 This is what happens, when we attack aliens.
 ----------------------------------------*/
-/mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/xenomorph/attack_hand(mob/living/carbon/human/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -76,7 +76,7 @@ This is what happens, when we attack aliens.
 						visible_message("<span class='warning'><B>[M] has attempted to disarm [src]!</B></span>")
 	return
 
-/mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M)
+/mob/living/carbon/xenomorph/attack_paw(mob/living/carbon/monkey/M)
 	if(!ismonkey(M))	return//Fix for aliens receiving double messages when attacking other aliens.
 
 	if (!ticker)
@@ -102,7 +102,7 @@ This is what happens, when we attack aliens.
 				updatehealth()
 	return
 
-/mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M)
+/mob/living/carbon/xenomorph/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		return
 	if(M.melee_damage_upper == 0)
@@ -115,7 +115,7 @@ This is what happens, when we attack aliens.
 		adjustBruteLoss(damage)
 		updatehealth()
 
-/mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M)
+/mob/living/carbon/xenomorph/attack_alien(mob/living/carbon/xenomorph/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -147,7 +147,7 @@ This is what happens, when we attack aliens.
 				to_chat(M, "<span class='notice'><B>[name] is too injured for that.</B></span>")
 	return
 
-/mob/living/carbon/alien/attack_slime(mob/living/carbon/slime/M)
+/mob/living/carbon/xenomorph/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return

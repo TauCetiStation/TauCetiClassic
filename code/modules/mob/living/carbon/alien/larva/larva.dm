@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/larva
+/mob/living/carbon/xenomorph/larva
 	name = "alien larva"
 	real_name = "alien larva"
 	icon_state = "larva0"
@@ -21,7 +21,7 @@
 	var/obj/item/weapon/l_store = null
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
-/mob/living/carbon/alien/larva/atom_init()
+/mob/living/carbon/xenomorph/larva/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
@@ -32,20 +32,20 @@
 	. = ..()
 
 //This needs to be fixed
-/mob/living/carbon/alien/larva/Stat()
+/mob/living/carbon/xenomorph/larva/Stat()
 	..()
 	if(statpanel("Status"))
 		stat(null, "Progress: [amount_grown]/[max_grown]")
 
-/mob/living/carbon/alien/larva/start_pulling(atom/movable/AM)//Prevents mouse from pulling things
+/mob/living/carbon/xenomorph/larva/start_pulling(atom/movable/AM)//Prevents mouse from pulling things
 	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
 	return
 
-/mob/living/carbon/alien/larva/swap_hand()
+/mob/living/carbon/xenomorph/larva/swap_hand()
 	return
 
-/mob/living/carbon/alien/larva/movement_delay()
+/mob/living/carbon/xenomorph/larva/movement_delay()
 	var/tally = 0
-	if (istype(src, /mob/living/carbon/alien/larva)) //just in case
+	if (istype(src, /mob/living/carbon/xenomorph/larva)) //just in case
 		tally = -1
 	return (tally + move_delay_add + config.alien_delay)

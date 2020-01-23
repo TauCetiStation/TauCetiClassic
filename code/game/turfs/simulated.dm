@@ -138,7 +138,7 @@
 
 		this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 
-	else if( istype(M, /mob/living/carbon/alien ))
+	else if( istype(M, /mob/living/carbon/xenomorph ))
 		var/obj/effect/decal/cleanable/blood/xeno/this = new /obj/effect/decal/cleanable/blood/xeno(src)
 		this.blood_DNA["UNKNOWN BLOOD"] = "X*"
 

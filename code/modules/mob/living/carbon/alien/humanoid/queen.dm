@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/humanoid/queen
+/mob/living/carbon/xenomorph/humanoid/queen
 	name = "alien queen"
 	caste = "q"
 	maxHealth = 300
@@ -13,13 +13,13 @@
 	ventcrawler = 0
 
 
-/mob/living/carbon/alien/humanoid/queen/atom_init()
+/mob/living/carbon/xenomorph/humanoid/queen/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
 
 	//there should only be one queen
-	for(var/mob/living/carbon/alien/humanoid/queen/Q in queen_list)
+	for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in queen_list)
 		if(Q.stat == DEAD)
 			continue
 		if(Q.client)
@@ -27,15 +27,15 @@
 			break
 
 	real_name = src.name
-	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin,/mob/living/carbon/alien/humanoid/proc/resin,/mob/living/carbon/alien/humanoid/proc/screech)
+	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid,/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin,/mob/living/carbon/xenomorph/humanoid/proc/resin,/mob/living/carbon/xenomorph/humanoid/proc/screech)
 	. = ..()
 	queen_list += src
 
-/mob/living/carbon/alien/humanoid/queen/Destroy()
+/mob/living/carbon/xenomorph/humanoid/queen/Destroy()
 	queen_list -= src
 	return ..()
 
-/mob/living/carbon/alien/humanoid/queen/handle_hud_icons_health()
+/mob/living/carbon/xenomorph/humanoid/queen/handle_hud_icons_health()
 	if (src.healths)
 		if (src.stat != DEAD)
 			switch(health)
@@ -58,7 +58,7 @@
 
 
 //Queen verbs
-/mob/living/carbon/alien/humanoid/queen/verb/lay_egg()
+/mob/living/carbon/xenomorph/humanoid/queen/verb/lay_egg()
 
 	set name = "Lay Egg (75)"
 	set desc = "Lay an egg to produce huggers to impregnate prey with."
@@ -74,7 +74,7 @@
 		new /obj/structure/alien/egg(loc)
 	return
 
-/mob/living/carbon/alien/humanoid/queen/update_icons()
+/mob/living/carbon/xenomorph/humanoid/queen/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
 	cut_overlays()
 	if(stat == DEAD)
@@ -86,15 +86,15 @@
 	for(var/image/I in overlays_standing)
 		add_overlay(I)
 
-/mob/living/carbon/alien/humanoid/queen/movement_delay()
+/mob/living/carbon/xenomorph/humanoid/queen/movement_delay()
 	return(5 + move_delay_add + config.alien_delay)
 
-/mob/living/carbon/alien/humanoid/queen/large
+/mob/living/carbon/xenomorph/humanoid/queen/large
 	icon = 'icons/mob/alienqueen.dmi'
 	icon_state = "queen_s-old"
 	pixel_x = -16
 
-/mob/living/carbon/alien/humanoid/queen/large/update_icons()
+/mob/living/carbon/xenomorph/humanoid/queen/large/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
 	cut_overlays()
 	if(stat == DEAD)

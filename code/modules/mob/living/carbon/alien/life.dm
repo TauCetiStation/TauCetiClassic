@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/Life()
+/mob/living/carbon/xenomorph/Life()
 	set invisibility = 0
 	//set background = 1
 
@@ -37,7 +37,7 @@
 	if(client)
 		handle_regular_hud_updates()
 
-/mob/living/carbon/alien/proc/adjust_body_temperature(current, loc_temp, boost)
+/mob/living/carbon/xenomorph/proc/adjust_body_temperature(current, loc_temp, boost)
 	var/temperature = current
 	var/difference = abs(current-loc_temp)	//get difference
 	var/increments// = difference/10			//find how many increments apart they are
@@ -56,7 +56,7 @@
 		return temp_change
 
 /*
-/mob/living/carbon/alien/proc/get_thermal_protection()
+/mob/living/carbon/xenomorph/proc/get_thermal_protection()
 	var/thermal_protection = 1.0
 	//Handle normal clothing
 	if(head && (head.body_parts_covered & HEAD))
@@ -76,7 +76,7 @@
 
 	return thermal_protection
 
-/mob/living/carbon/alien/proc/add_fire_protection(temp)
+/mob/living/carbon/xenomorph/proc/add_fire_protection(temp)
 	var/fire_prot = 0
 	if(head)
 		if(head.protective_temperature > temp)
@@ -92,7 +92,7 @@
 	return fire_prot
 */
 
-/mob/living/carbon/alien/proc/handle_regular_status_updates()
+/mob/living/carbon/xenomorph/proc/handle_regular_status_updates()
 	updatehealth()
 
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
@@ -168,7 +168,7 @@
 	return 1
 
 
-/mob/living/carbon/alien/handle_regular_hud_updates()
+/mob/living/carbon/xenomorph/handle_regular_hud_updates()
 	if(!client)
 		return 0
 
@@ -185,13 +185,13 @@
 	return 1
 
 
-/mob/living/carbon/alien/proc/handle_hud_icons()
+/mob/living/carbon/xenomorph/proc/handle_hud_icons()
 
 	handle_hud_icons_health()
 
 	return 1
 
-/mob/living/carbon/alien/handle_vision()
+/mob/living/carbon/xenomorph/handle_vision()
 
 	if(stat == DEAD)
 		sight |= SEE_TURFS
@@ -211,10 +211,10 @@
 			see_invisible = 45
 	..()
 
-/mob/living/carbon/alien/proc/handle_hud_icons_health()
+/mob/living/carbon/xenomorph/proc/handle_hud_icons_health()
 	return
 
-/mob/living/carbon/alien/proc/handle_stomach()
+/mob/living/carbon/xenomorph/proc/handle_stomach()
 	spawn(0)
 		for(var/mob/living/M in stomach_contents)
 			if(M.loc != src)
@@ -233,7 +233,7 @@
 
 
 ///FIRE CODE
-/mob/living/carbon/alien/handle_fire()
+/mob/living/carbon/xenomorph/handle_fire()
 	if(..())
 		return
 	adjustFireLoss(6)

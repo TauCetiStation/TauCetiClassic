@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/humanoid/sentinel
+/mob/living/carbon/xenomorph/humanoid/sentinel
 	name = "alien sentinel"
 	caste = "s"
 	maxHealth = 150
@@ -9,17 +9,17 @@
 	plasma_rate = 10
 	heal_rate = 2
 
-/mob/living/carbon/alien/humanoid/sentinel/atom_init()
+/mob/living/carbon/xenomorph/humanoid/sentinel/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
 	if(name == "alien sentinel")
 		name = text("alien sentinel ([rand(1, 1000)])")
 	real_name = name
-	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin)
+	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid,/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin)
 	. = ..()
 
-/mob/living/carbon/alien/humanoid/sentinel/handle_hud_icons_health()
+/mob/living/carbon/xenomorph/humanoid/sentinel/handle_hud_icons_health()
 	if (healths)
 		if (stat != DEAD)
 			switch(health)
@@ -40,5 +40,5 @@
 		else
 			healths.icon_state = "health7"
 
-/mob/living/carbon/alien/humanoid/sentinel/movement_delay()
+/mob/living/carbon/xenomorph/humanoid/sentinel/movement_delay()
 	return(1 + move_delay_add + config.alien_delay)

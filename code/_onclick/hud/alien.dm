@@ -6,8 +6,8 @@
 	icon_state = "leap_off"
 
 /obj/screen/alien/leap/Click()
-	if(istype(usr, /mob/living/carbon/alien/humanoid))
-		var/mob/living/carbon/alien/humanoid/hunter/AH = usr
+	if(istype(usr, /mob/living/carbon/xenomorph/humanoid))
+		var/mob/living/carbon/xenomorph/humanoid/hunter/AH = usr
 		AH.toggle_leap()
 
 /obj/screen/alien/nightvision
@@ -15,12 +15,12 @@
 	icon_state = "nightvision1"
 
 /obj/screen/alien/nightvision/Click()
-	if(istype(usr, /mob/living/carbon/alien))
-		var/mob/living/carbon/alien/A = usr
+	if(istype(usr, /mob/living/carbon/xenomorph))
+		var/mob/living/carbon/xenomorph/A = usr
 		A.toggle_nvg()
 
 /*/obj/screen/alien/nightvision/Click()
-	var/mob/living/carbon/alien/A = usr
+	var/mob/living/carbon/xenomorph/A = usr
 	var/obj/effect/proc_holder/alien/nightvisiontoggle/T = locate() in A.abilities
 	if(T)
 		T.fire(A)*/
@@ -30,7 +30,7 @@
 	icon_state = "neurotoxin0"
 
 /obj/screen/alien/neurotoxin/Click()
-	var/mob/living/carbon/alien/humanoid/AH = usr
+	var/mob/living/carbon/xenomorph/humanoid/AH = usr
 	AH.toggle_neurotoxin()
 
 /datum/hud/proc/alien_hud()
@@ -186,12 +186,12 @@
 	using.plane = HUD_PLANE
 	src.adding += using
 
-	if(istype(mymob, /mob/living/carbon/alien/humanoid/hunter))
+	if(istype(mymob, /mob/living/carbon/xenomorph/humanoid/hunter))
 		mymob.leap_icon = new /obj/screen/alien/leap()
 		mymob.leap_icon.screen_loc = ui_storage2
 		src.adding += mymob.leap_icon
 
-	if(locate(/mob/living/carbon/alien/humanoid/proc/neurotoxin) in mymob.verbs)
+	if(locate(/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin) in mymob.verbs)
 		mymob.neurotoxin_icon = new /obj/screen/alien/neurotoxin()
 		mymob.neurotoxin_icon.screen_loc = ui_storage1
 		src.adding += mymob.neurotoxin_icon

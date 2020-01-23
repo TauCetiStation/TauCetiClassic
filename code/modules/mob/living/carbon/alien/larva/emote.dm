@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/larva/emote(act,m_type=SHOWMSG_VISUAL,message = null)
+/mob/living/carbon/xenomorph/larva/emote(act,m_type=SHOWMSG_VISUAL,message = null)
 
 	if(stat == UNCONSCIOUS)
 		return

@@ -623,7 +623,7 @@
 	new /obj/effect/decal/cleanable/blood/oil(loc)
 	qdel(src)
 
-/obj/machinery/bot/secbot/attack_alien(mob/living/carbon/alien/user)
+/obj/machinery/bot/secbot/attack_alien(mob/living/carbon/xenomorph/user)
 	..()
 	if(!isalien(target))
 		target = user

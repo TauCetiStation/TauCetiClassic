@@ -8,7 +8,7 @@
 
 #define BITE_COOLDOWN 20
 
-/mob/living/carbon/alien/facehugger
+/mob/living/carbon/xenomorph/facehugger
 	name = "alien facehugger"
 	desc = "It has some sort of a tube at the end of its tail."
 	real_name = "alien facehugger"
@@ -31,7 +31,7 @@
 	var/obj/item/weapon/r_store = null
 	var/obj/item/weapon/l_store = null
 
-/mob/living/carbon/alien/facehugger/atom_init()
+/mob/living/carbon/xenomorph/facehugger/atom_init()
 	. = ..()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
@@ -42,24 +42,24 @@
 	regenerate_icons()
 	a_intent = "grab"
 
-/mob/living/carbon/alien/facehugger/update_canmove(no_transform = FALSE)
+/mob/living/carbon/xenomorph/facehugger/update_canmove(no_transform = FALSE)
 	..()
 	density = initial(density)
 
-/mob/living/carbon/alien/facehugger/start_pulling(atom/movable/AM)
+/mob/living/carbon/xenomorph/facehugger/start_pulling(atom/movable/AM)
 	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
 	return
 
-/mob/living/carbon/alien/facehugger/swap_hand()
+/mob/living/carbon/xenomorph/facehugger/swap_hand()
 	return
 
-/mob/living/carbon/alien/facehugger/movement_delay()
+/mob/living/carbon/xenomorph/facehugger/movement_delay()
 	var/tally = 0
-	if (istype(src, /mob/living/carbon/alien/facehugger)) //just in case
+	if (istype(src, /mob/living/carbon/xenomorph/facehugger)) //just in case
 		tally = -1
 	return (tally + move_delay_add + config.alien_delay)
 
-/mob/living/carbon/alien/facehugger/verb/hide()
+/mob/living/carbon/xenomorph/facehugger/verb/hide()
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Alien"
@@ -74,16 +74,16 @@
 		layer = MOB_LAYER
 		visible_message("<span class='warning'>[src] slowly peaks up from the ground...</span>", "<span class='notice'>You have stopped hiding.</span>")
 
-/mob/living/carbon/alien/facehugger/u_equip(obj/item/W)
+/mob/living/carbon/xenomorph/facehugger/u_equip(obj/item/W)
 	if (W == r_hand)
 		r_hand = null
 		update_inv_r_hand(0)
 
-/mob/living/carbon/alien/facehugger/attack_ui(slot_id)
+/mob/living/carbon/xenomorph/facehugger/attack_ui(slot_id)
 	return
 
 // This is modified grab mechanic for facehugger
-/mob/living/carbon/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
+/mob/living/carbon/attack_facehugger(mob/living/carbon/xenomorph/facehugger/FH)
 	if((!ishuman(src) && !ismonkey(src)) || istype(src, /mob/living/carbon/human/machine))
 		return FALSE
 	if(FH.a_intent == I_GRAB)
@@ -107,20 +107,20 @@
  * This is called when facehugger has grabbed(left click) and then
  * used leap from hud action menu(the one that has left and right hand for anyone else).
  */
-/mob/living/carbon/alien/facehugger/proc/leap_at_face(mob/living/carbon/C)
+/mob/living/carbon/xenomorph/facehugger/proc/leap_at_face(mob/living/carbon/C)
 	if(ishuman(C) || ismonkey(C)) // CP! THIS IS DELTA SIX! DO WE NEED THIS? CP!
 		var/obj/item/clothing/mask/facehugger/FH = new(loc)
 		src.loc = FH
 		FH.current_hugger = src
 		FH.Attach(C)
 
-/mob/living/carbon/alien/facehugger/regenerate_icons()
+/mob/living/carbon/xenomorph/facehugger/regenerate_icons()
 	cut_overlays()
 	update_inv_r_hand(0)
 	update_hud()
 	update_icons()
 
-/mob/living/carbon/alien/facehugger/update_icons()
+/mob/living/carbon/xenomorph/facehugger/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
 	cut_overlays()
 	if(stat == DEAD)
@@ -130,7 +130,7 @@
 	else
 		icon_state = "facehugger"
 
-/mob/living/carbon/alien/facehugger/update_hud()
+/mob/living/carbon/xenomorph/facehugger/update_hud()
 	//TODO
 	if (client)
 //		if(other)	client.screen |= hud_used.other		//Not used
@@ -417,7 +417,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		qdel(src)
 		return
 
-	for(var/mob/living/carbon/alien/larva/baby in affecting.contents)
+	for(var/mob/living/carbon/xenomorph/larva/baby in affecting.contents)
 		to_chat(assailant, "<span class='warning'>[affecting] already impregnated.</span>")
 		qdel(src)
 		return
@@ -426,7 +426,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 	switch(state)
 		if(GRAB_PASSIVE)
-			var/mob/living/carbon/alien/facehugger/FH = assailant
+			var/mob/living/carbon/xenomorph/facehugger/FH = assailant
 			state = GRAB_AGGRESSIVE
 			hud.icon_state = "grab/neck"
 			hud.name = "grab around neck"

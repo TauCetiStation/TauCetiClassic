@@ -6,7 +6,7 @@ These are general powers. Specific powers are stored under the appropriate alien
 Doesn't work on other aliens/AI.*/
 
 
-/mob/living/carbon/alien/proc/powerc(X, Y)//Y is optional, checks for weed planting. X can be null.
+/mob/living/carbon/xenomorph/proc/powerc(X, Y)//Y is optional, checks for weed planting. X can be null.
 	if(stat)
 		to_chat(src, "<span class='warning'>You must be conscious to do this.</span>")
 		return 0
@@ -18,7 +18,7 @@ Doesn't work on other aliens/AI.*/
 		return 0
 	else	return 1
 
-/mob/living/carbon/alien/humanoid/verb/plant()
+/mob/living/carbon/xenomorph/humanoid/verb/plant()
 	set name = "Plant Weeds (50)"
 	set desc = "Plants some alien weeds."
 	set category = "Alien"
@@ -35,7 +35,7 @@ Doesn't work on other aliens/AI.*/
 	return
 
 /*
-/mob/living/carbon/alien/humanoid/verb/ActivateHuggers()
+/mob/living/carbon/xenomorph/humanoid/verb/ActivateHuggers()
 	set name = "Activate facehuggers (5)"
 	set desc = "Makes all nearby facehuggers activate."
 	set category = "Alien"
@@ -47,7 +47,7 @@ Doesn't work on other aliens/AI.*/
 		emote("roar")
 	return
 */
-/mob/living/carbon/alien/humanoid/verb/whisp(mob/M as mob in oview())
+/mob/living/carbon/xenomorph/humanoid/verb/whisp(mob/M as mob in oview())
 	set name = "Whisper (10)"
 	set desc = "Whisper to someone."
 	set category = "Alien"
@@ -61,7 +61,7 @@ Doesn't work on other aliens/AI.*/
 			to_chat(src, "<span class='noticealien'>You said: \"<I>[msg]</I>\" to [M]</span>")
 	return
 
-/mob/living/carbon/alien/humanoid/verb/transfer_plasma(mob/living/carbon/alien/M as mob in oview())
+/mob/living/carbon/xenomorph/humanoid/verb/transfer_plasma(mob/living/carbon/xenomorph/M as mob in oview())
 	set name = "Transfer Plasma"
 	set desc = "Transfer Plasma to another alien."
 	set category = "Alien"
@@ -81,7 +81,7 @@ Doesn't work on other aliens/AI.*/
 	return
 
 
-/mob/living/carbon/alien/humanoid/proc/corrosive_acid(O in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
+/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid(O in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
 	set name = "Corrossive Acid (200)"
 	set desc = "Drench an object in acid, destroying it over time."
 	set category = "Alien"
@@ -116,7 +116,7 @@ Doesn't work on other aliens/AI.*/
 	return
 
 /*
-/mob/living/carbon/alien/humanoid/proc/neurotoxin(mob/target in oview())
+/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin(mob/target in oview())
 	set name = "Spit Neurotoxin (50)"
 	set desc = "Spits neurotoxin at someone, paralyzing them for a short time if they are not wearing protective gear."
 	set category = "Alien"
@@ -154,7 +154,7 @@ Doesn't work on other aliens/AI.*/
 	return
 */
 
-/mob/living/carbon/alien/humanoid/proc/screech()
+/mob/living/carbon/xenomorph/humanoid/proc/screech()
 	set name = "Screech!"
 	set desc = "Emit a screech that stuns prey."
 	set category = "Alien"
@@ -200,7 +200,7 @@ Doesn't work on other aliens/AI.*/
 	last_screech = world.time
 #define ALIEN_NEUROTOXIN 1
 #define ALIEN_ACID 2
-/mob/living/carbon/alien/humanoid/proc/toggle_neurotoxin(message = 1)
+/mob/living/carbon/xenomorph/humanoid/proc/toggle_neurotoxin(message = 1)
 	switch(neurotoxin_on_click)
 
 		if(0)
@@ -221,21 +221,21 @@ Doesn't work on other aliens/AI.*/
 	update_icons()
 	return
 
-/mob/living/carbon/alien/humanoid/proc/neurotoxin()
+/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin()
 	set name = "Spit Neurotoxin"
 	set desc = "Spits neurotoxin at someone, paralyzing them for a short time if they are not wearing protective gear."
 	set category = "Alien"
 	toggle_neurotoxin(1)
 	return
 
-/mob/living/carbon/alien/humanoid/ClickOn(atom/A, params)
+/mob/living/carbon/xenomorph/humanoid/ClickOn(atom/A, params)
 	face_atom(A)
 	if(neurotoxin_on_click)
 		split_neurotoxin(A)
 	else
 		..()
 
-/mob/living/carbon/alien/humanoid/proc/split_neurotoxin(atom/target)
+/mob/living/carbon/xenomorph/humanoid/proc/split_neurotoxin(atom/target)
 	if(neurotoxin_next_shot > world.time)
 		to_chat(src, "<span class='warning'>You are not ready.</span>")
 		return
@@ -295,7 +295,7 @@ Doesn't work on other aliens/AI.*/
                              || (locate(/obj/structure/mineral_door/resin) in get_turf(src))   || (locate(/obj/structure/alien/resin/wall) in get_turf(src)) \
                              || (locate(/obj/structure/alien/resin/membrane) in get_turf(src)) || (locate(/obj/structure/stool/bed/nest) in get_turf(src))
                              // does anyone have an idea how to make it shorter?
-/mob/living/carbon/alien/humanoid/proc/resin() // -- TLE
+/mob/living/carbon/xenomorph/humanoid/proc/resin() // -- TLE
 	set name = "Secrete Resin (75)"
 	set desc = "Secrete tough malleable resin."
 	set category = "Alien"
@@ -321,7 +321,7 @@ Doesn't work on other aliens/AI.*/
 				new /obj/structure/stool/bed/nest(loc)
 	return
 
-/mob/living/carbon/alien/humanoid/verb/regurgitate()
+/mob/living/carbon/xenomorph/humanoid/verb/regurgitate()
 	set name = "Regurgitate"
 	set desc = "Empties the contents of your stomach."
 	set category = "Alien"
@@ -337,7 +337,7 @@ Doesn't work on other aliens/AI.*/
 			src.visible_message("<span class='warning'>[src] hurls out the contents of their stomach!</span>")
 	return
 
-/mob/living/carbon/alien/humanoid/verb/air_plant()
+/mob/living/carbon/xenomorph/humanoid/verb/air_plant()
 	set name = "Plant Air Generator (250)"
 	set desc = "Plants some alien weeds."
 	set category = "Alien"

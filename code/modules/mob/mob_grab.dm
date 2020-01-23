@@ -529,7 +529,7 @@
 		if( (ishuman(user) && HAS_TRAIT(user, TRAIT_FAT) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
 			var/mob/living/carbon/attacker = user
 			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
-			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
+			if(istype(user, /mob/living/carbon/xenomorph/humanoid/hunter))
 				if(!do_mob(user, affecting)||!do_after(user, 30, target = affecting)) return
 			else
 				if(!do_mob(user, affecting)||!do_after(user, 100, target = affecting)) return

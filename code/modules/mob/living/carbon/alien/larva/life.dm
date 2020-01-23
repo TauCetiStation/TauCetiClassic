@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/larva/Life()
+/mob/living/carbon/xenomorph/larva/Life()
 	set invisibility = 0
 
 	if (notransform)
@@ -15,10 +15,10 @@
 		if(amount_grown < max_grown)
 			amount_grown++
 
-/mob/living/carbon/alien/larva/proc/handle_random_events()
+/mob/living/carbon/xenomorph/larva/proc/handle_random_events()
 	return
 
-/mob/living/carbon/alien/larva/handle_hud_icons_health()
+/mob/living/carbon/xenomorph/larva/handle_hud_icons_health()
 	if (healths)
 		if (stat != DEAD)
 			switch(health)

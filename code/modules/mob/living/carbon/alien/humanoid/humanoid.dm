@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/humanoid
+/mob/living/carbon/xenomorph/humanoid
 	name = "alien"
 	icon = 'icons/mob/xenomorph.dmi'
 	icon_state = "alien_s"
@@ -28,7 +28,7 @@
 
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
-/mob/living/carbon/alien/humanoid/atom_init()
+/mob/living/carbon/xenomorph/humanoid/atom_init()
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 1, -2)
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
@@ -38,8 +38,8 @@
 	real_name = name
 	..()
 
-/mob/living/carbon/alien/humanoid/movement_delay()
+/mob/living/carbon/xenomorph/humanoid/movement_delay()
 	return (move_delay_add + config.alien_delay)
 
-///mob/living/carbon/alien/humanoid/bullet_act(obj/item/projectile/Proj) taken care of in living
+///mob/living/carbon/xenomorph/humanoid/bullet_act(obj/item/projectile/Proj) taken care of in living
 

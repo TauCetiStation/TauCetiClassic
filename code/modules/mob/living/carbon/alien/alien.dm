@@ -2,7 +2,7 @@
 #define HEAT_DAMAGE_LEVEL_2 4 //Amount of damage applied when your body temperature passes the 400K point
 #define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point
 
-/mob/living/carbon/alien
+/mob/living/carbon/xenomorph
 	name = "alien"
 	voice_name = "alien"
 	icon = 'icons/mob/xenomorph.dmi'
@@ -30,36 +30,36 @@
 	var/leaping = 0
 	ventcrawler = 2
 
-/mob/living/carbon/alien/atom_init()
+/mob/living/carbon/xenomorph/atom_init()
 	. = ..()
 	alien_list += src
 
-/mob/living/carbon/alien/Destroy()
+/mob/living/carbon/xenomorph/Destroy()
 	alien_list -= src
 	return ..()
 
-/mob/living/carbon/alien/adjustToxLoss(amount)
+/mob/living/carbon/xenomorph/adjustToxLoss(amount)
 	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) //upper limit of max_plasma, lower limit of 0
 	updatePlasmaDisplay()
 	return
 
-/mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
+/mob/living/carbon/xenomorph/adjustFireLoss(amount) // Weak to Fire
 	if(amount > 0)
 		..(amount * 2)
 	else
 		..(amount)
 	return
 
-/mob/living/carbon/alien/proc/getPlasma()
+/mob/living/carbon/xenomorph/proc/getPlasma()
 	return storedPlasma
 
-/mob/living/carbon/alien/eyecheck()
+/mob/living/carbon/xenomorph/eyecheck()
 	return 2
 
-/mob/living/carbon/alien/getToxLoss()
+/mob/living/carbon/xenomorph/getToxLoss()
 	return 0
 
-/mob/living/carbon/alien/updatehealth()
+/mob/living/carbon/xenomorph/updatehealth()
 	if(status_flags & GODMODE)
 		health = maxHealth
 		stat = CONSCIOUS
@@ -68,7 +68,7 @@
 		//toxloss isn't used for aliens, its actually used as alien powers!!
 		health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 
-/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/xenomorph/handle_environment(datum/gas_mixture/environment)
 
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/structure/alien/weeds) in loc)
@@ -123,7 +123,7 @@
 	else
 		clear_alert("alien_fire")
 
-/mob/living/carbon/alien/proc/handle_mutations_and_radiation()
+/mob/living/carbon/xenomorph/proc/handle_mutations_and_radiation()
 
 	// Aliens love radiation nom nom nom
 	if (radiation)
@@ -149,10 +149,10 @@
 				radiation -= 3
 				adjustToxLoss(3)
 
-/mob/living/carbon/alien/IsAdvancedToolUser()
+/mob/living/carbon/xenomorph/IsAdvancedToolUser()
 	return has_fine_manipulation
 
-/mob/living/carbon/alien/Stat()
+/mob/living/carbon/xenomorph/Stat()
 	..()
 
 	if(statpanel("Status"))
@@ -163,7 +163,7 @@
 			var/sentinel = 0
 			var/hunter = 0
 
-			for(var/mob/living/carbon/alien/A in alien_list)
+			for(var/mob/living/carbon/xenomorph/A in alien_list)
 				if(A.stat == DEAD)
 					continue
 				if(!A.key && A.has_brain())
@@ -188,8 +188,8 @@
 			stat(null, "Hunters: [hunter]")
 		else
 			var/no_queen = 1
-			var/mob/living/carbon/alien/queen
-			for(var/mob/living/carbon/alien/humanoid/queen/Q in queen_list)
+			var/mob/living/carbon/xenomorph/queen
+			for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in queen_list)
 				if(Q.stat == DEAD || !Q.key && Q.has_brain())
 					continue
 				no_queen = 0
@@ -203,23 +203,23 @@
 				stat(null, "Health: [queen.health]/[queen.maxHealth]")
 				stat(null, "Location: [queen.loc.loc.name]")
 
-/mob/living/carbon/alien/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
+/mob/living/carbon/xenomorph/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
 	if(status_flags & CANSTUN || ignore_canstun)
 		..()
 	else
 		// add some movement delay
 		move_delay_add = min(move_delay_add + round(amount / 2), 10) // a maximum delay of 10
 
-/mob/living/carbon/alien/getDNA()
+/mob/living/carbon/xenomorph/getDNA()
 	return null
 
-/mob/living/carbon/alien/setDNA()
+/mob/living/carbon/xenomorph/setDNA()
 	return
 
 /*----------------------------------------
 Hit Procs
 -----------------------------------------*/
-/mob/living/carbon/alien/ex_act(severity)
+/mob/living/carbon/xenomorph/ex_act(severity)
 	if(!blinded)
 		flash_eyes()
 
@@ -254,7 +254,7 @@ Hit Procs
 
 	updatehealth()
 
-/mob/living/carbon/alien/blob_act()
+/mob/living/carbon/xenomorph/blob_act()
 	if (stat == DEAD)
 		return
 	var/shielded = 0
@@ -273,7 +273,7 @@ Hit Procs
 	updatehealth()
 	return
 
-/mob/living/carbon/alien/meteorhit(O)
+/mob/living/carbon/xenomorph/meteorhit(O)
 	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
 	if (health > 0)
 		adjustFireLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
@@ -282,26 +282,26 @@ Hit Procs
 		updatehealth()
 	return
 
-/mob/living/carbon/alien/emp_act(severity)
+/mob/living/carbon/xenomorph/emp_act(severity)
 	return
 
-/mob/living/carbon/alien/attack_ui(slot_id)
+/mob/living/carbon/xenomorph/attack_ui(slot_id)
 	return
 
-/mob/living/carbon/alien/restrained()
+/mob/living/carbon/xenomorph/restrained()
 	return 0
 
-/mob/living/carbon/alien/show_inv(mob/user)
+/mob/living/carbon/xenomorph/show_inv(mob/user)
 	return
 
-/mob/living/carbon/alien/getTrail()
+/mob/living/carbon/xenomorph/getTrail()
 	return "xltrails"
 
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.
 ----------------------------------------*/
-/mob/living/carbon/alien/proc/AddInfectionImages()
+/mob/living/carbon/xenomorph/proc/AddInfectionImages()
 	if (client)
 		for (var/mob/living/C in living_list)
 			if(C.status_flags & XENO_HOST)
@@ -315,14 +315,14 @@ Des: Gives the client of the alien an image on each infected mob.
 Proc: RemoveInfectionImages()
 Des: Removes all infected images from the alien.
 ----------------------------------------*/
-/mob/living/carbon/alien/proc/RemoveInfectionImages()
+/mob/living/carbon/xenomorph/proc/RemoveInfectionImages()
 	if (client)
 		for(var/image/I in client.images)
 			if(dd_hasprefix_case(I.icon_state, "infected"))
 				qdel(I)
 	return
 
-/mob/living/carbon/alien/swap_hand()
+/mob/living/carbon/xenomorph/swap_hand()
 	var/obj/item/item_in_hand = src.get_active_hand()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
 		if(istype(item_in_hand,/obj/item/weapon/twohanded))
@@ -343,7 +343,7 @@ Des: Removes all infected images from the alien.
 		src.hands.dir = SOUTH*/
 	return
 
-/mob/living/carbon/alien/get_standard_pixel_y_offset(lying = 0)
+/mob/living/carbon/xenomorph/get_standard_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
 
 #undef HEAT_DAMAGE_LEVEL_1

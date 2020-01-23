@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/Logout()
+/mob/living/carbon/xenomorph/Logout()
 	..()
 	RemoveInfectionImages()
 	return

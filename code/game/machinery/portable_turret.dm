@@ -676,7 +676,7 @@ var/list/turret_icons
 	return
 
 
-/obj/machinery/porta_turret/attack_alien(mob/living/carbon/alien/humanoid/M)
+/obj/machinery/porta_turret/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 	M.do_attack_animation(src)
 	M.SetNextMove(CLICK_CD_MELEE)
 	if(!(stat & BROKEN))

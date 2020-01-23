@@ -5,21 +5,21 @@
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
 // CARBON
-#define isalienqueen(A) (istype(A, /mob/living/carbon/alien/humanoid/queen))
+#define isalienqueen(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/queen))
 
-#define isaliendrone(A) (istype(A, /mob/living/carbon/alien/humanoid/drone))
+#define isaliendrone(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/drone))
 
-#define isaliensentinel(A) (istype(A, /mob/living/carbon/alien/humanoid/sentinel))
+#define isaliensentinel(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/sentinel))
 
-#define isalienhunter(A) (istype(A, /mob/living/carbon/alien/humanoid/hunter))
+#define isalienhunter(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/hunter))
 
-#define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid))
+#define isalienadult(A) (istype(A, /mob/living/carbon/xenomorph/humanoid))
 
-#define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
+#define islarva(A) (istype(A, /mob/living/carbon/xenomorph/larva))
 
-#define isfacehugger(A) (istype(A, /mob/living/carbon/alien/facehugger))
+#define isfacehugger(A) (istype(A, /mob/living/carbon/xenomorph/facehugger))
 
-#define isalien(A) (istype(A, /mob/living/carbon/alien))
+#define isalien(A) (istype(A, /mob/living/carbon/xenomorph))
 
 #define isbrain(A) (istype(A, /mob/living/carbon/brain))
 

@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/Login()
+/mob/living/carbon/xenomorph/Login()
 	..()
 	AddInfectionImages()
 	update_hud()

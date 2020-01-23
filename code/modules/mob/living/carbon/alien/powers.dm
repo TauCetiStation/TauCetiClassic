@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/proc/toggle_nvg(message = 1)
+/mob/living/carbon/xenomorph/proc/toggle_nvg(message = 1)
 	if(stat != CONSCIOUS)
 		return
 

@@ -781,7 +781,7 @@
 				to_chat(src, "Hack attempt detected.")
 		return TRUE
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/silicon/robot/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -957,8 +957,8 @@
 		add_overlay("eyes-[icon_state]")
 	else
 		cut_overlay("eyes")
-		
-	update_fire()	
+
+	update_fire()
 
 	if(opened && custom_sprite == 1) //Custom borgs also have custom panels, heh
 		if(wiresexposed)

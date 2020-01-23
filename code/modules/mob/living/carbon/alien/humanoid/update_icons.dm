@@ -8,10 +8,10 @@
 #define X_TOTAL_LAYERS			6
 /////////////////////////////////
 
-/mob/living/carbon/alien/humanoid
+/mob/living/carbon/xenomorph/humanoid
 	var/list/overlays_standing[X_TOTAL_LAYERS]
 
-/mob/living/carbon/alien/humanoid/update_icons()
+/mob/living/carbon/xenomorph/humanoid/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
 	cut_overlays()
 	for(var/image/I in overlays_standing)
@@ -50,7 +50,7 @@
 		pixel_x = get_standard_pixel_x_offset(lying)
 		pixel_y = get_standard_pixel_y_offset(lying)
 
-/mob/living/carbon/alien/humanoid/regenerate_icons()
+/mob/living/carbon/xenomorph/humanoid/regenerate_icons()
 	..()
 	if (notransform)
 		return
@@ -64,14 +64,14 @@
 //	update_icons() //Handled in update_transform(), leaving this here as a reminder
 	update_transform()
 
-/mob/living/carbon/alien/humanoid/update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
+/mob/living/carbon/xenomorph/humanoid/update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
 	if(lying > 0)
 		lying = 90 //Anything else looks retarded
 	update_icons()
 	..()
 
 
-/mob/living/carbon/alien/humanoid/update_hud()
+/mob/living/carbon/xenomorph/humanoid/update_hud()
 	//TODO
 	if (client)
 //		if(other)	client.screen |= hud_used.other		//Not used
@@ -80,7 +80,7 @@
 
 
 
-/mob/living/carbon/alien/humanoid/update_inv_wear_suit(var/update_icons=1)
+/mob/living/carbon/xenomorph/humanoid/update_inv_wear_suit(var/update_icons=1)
 	if(wear_suit)
 		var/t_state = wear_suit.item_state
 		if(!t_state)	t_state = wear_suit.icon_state
@@ -105,7 +105,7 @@
 	if(update_icons)	update_icons()
 
 
-/mob/living/carbon/alien/humanoid/update_inv_head(var/update_icons=1)
+/mob/living/carbon/xenomorph/humanoid/update_inv_head(var/update_icons=1)
 	if (head)
 		var/t_state = head.item_state
 		if(!t_state)	t_state = head.icon_state
@@ -119,13 +119,13 @@
 	if(update_icons)	update_icons()
 
 
-/mob/living/carbon/alien/humanoid/update_inv_pockets(var/update_icons=1)
+/mob/living/carbon/xenomorph/humanoid/update_inv_pockets(var/update_icons=1)
 	if(l_store)		l_store.screen_loc = ui_storage1
 	if(r_store)		r_store.screen_loc = ui_storage2
 	if(update_icons)	update_icons()
 
 
-/mob/living/carbon/alien/humanoid/update_inv_r_hand(var/update_icons=1)
+/mob/living/carbon/xenomorph/humanoid/update_inv_r_hand(var/update_icons=1)
 	if(r_hand)
 		var/t_state = r_hand.item_state
 		if(!t_state)	t_state = r_hand.icon_state
@@ -135,7 +135,7 @@
 		overlays_standing[X_R_HAND_LAYER]	= null
 	if(update_icons)	update_icons()
 
-/mob/living/carbon/alien/humanoid/update_inv_l_hand(var/update_icons=1)
+/mob/living/carbon/xenomorph/humanoid/update_inv_l_hand(var/update_icons=1)
 	if(l_hand)
 		var/t_state = l_hand.item_state
 		if(!t_state)	t_state = l_hand.icon_state
@@ -146,7 +146,7 @@
 	if(update_icons)	update_icons()
 
 //Call when target overlay should be added/removed
-/mob/living/carbon/alien/humanoid/update_targeted(var/update_icons=1)
+/mob/living/carbon/xenomorph/humanoid/update_targeted(var/update_icons=1)
 	if (targeted_by && target_locked)
 		overlays_standing[TARGETED_LAYER]	= target_locked
 	else if (!targeted_by && target_locked)
@@ -155,7 +155,7 @@
 		overlays_standing[TARGETED_LAYER]	= null
 	if(update_icons)		update_icons()
 
-/mob/living/carbon/alien/humanoid/update_fire()
+/mob/living/carbon/xenomorph/humanoid/update_fire()
 	cut_overlay(overlays_standing[X_FIRE_LAYER])
 	if(on_fire)
 		overlays_standing[X_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
