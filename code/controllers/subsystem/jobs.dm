@@ -277,15 +277,15 @@ var/datum/subsystem/job/SSjob
 		assistant_candidates -= player
 	Debug("DO, AC1 end")
 
-	//Select one head
-	Debug("DO, Running Head Check")
-	FillHeadPosition()
-	Debug("DO, Head Check end")
-
 	//Check for an AI
 	Debug("DO, Running AI Check")
 	FillAIPosition()
 	Debug("DO, AI Check end")
+
+	//Select one head
+	Debug("DO, Running Head Check")
+	FillHeadPosition()
+	Debug("DO, Head Check end")
 
 	//Other jobs are now checked
 	Debug("DO, Running Standard Check")
