@@ -5,9 +5,11 @@
 #define AIRLOCK_OPENING  4
 #define AIRLOCK_DENY     5
 #define AIRLOCK_EMAG     6
-#define AIRLOCK_POWERON_LIGHT_COLOR "#239dc2"
+#define AIRLOCK_LIGHT_POWER 2
+#define AIRLOCK_LIGHT_RANGE 1.5
+#define AIRLOCK_POWERON_LIGHT_COLOR "#3aa7c2"
 #define AIRLOCK_BOLTS_LIGHT_COLOR "#c22345"
-#define AIRLOCK_ACCESS_LIGHT_COLOR "#23c270"
+#define AIRLOCK_ACCESS_LIGHT_COLOR "#57e69c"
 #define AIRLOCK_EMERGENCY_LIGHT_COLOR "#d1d11d"
 #define AIRLOCK_DENY_LIGHT_COLOR "#c22345"
 
@@ -266,8 +268,8 @@ var/list/airlock_overlays = list()
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
 			if(lights && hasPower())
-				light_range = 2
-				light_power = 2
+				light_range = AIRLOCK_LIGHT_RANGE
+				light_power = AIRLOCK_LIGHT_POWER
 				if(locked)
 					lights_overlay = get_airlock_overlay("lights_bolts", overlays_file)
 					light_color = AIRLOCK_BOLTS_LIGHT_COLOR
@@ -289,8 +291,8 @@ var/list/airlock_overlays = list()
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
 			if(lights && hasPower())
-				light_range = 2
-				light_power = 2
+				light_range = AIRLOCK_LIGHT_RANGE
+				light_power = AIRLOCK_LIGHT_POWER
 				lights_overlay = get_airlock_overlay("lights_denied", overlays_file)
 				light_color = AIRLOCK_DENY_LIGHT_COLOR
 
@@ -315,8 +317,8 @@ var/list/airlock_overlays = list()
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_closing", overlays_file)
 			if(lights && hasPower())
-				light_range = 2
-				light_power = 2
+				light_range = AIRLOCK_LIGHT_RANGE
+				light_power = AIRLOCK_LIGHT_POWER
 				lights_overlay = get_airlock_overlay("lights_closing", overlays_file)
 				light_color = AIRLOCK_ACCESS_LIGHT_COLOR
 
@@ -329,8 +331,8 @@ var/list/airlock_overlays = list()
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_open", overlays_file)
 			if(lights && hasPower())
-				light_range = 2
-				light_power = 2
+				light_range = AIRLOCK_LIGHT_RANGE
+				light_power = AIRLOCK_LIGHT_POWER
 				if(locked)
 					lights_overlay = get_airlock_overlay("lights_bolts_open", overlays_file)
 					light_color = AIRLOCK_BOLTS_LIGHT_COLOR
@@ -351,8 +353,8 @@ var/list/airlock_overlays = list()
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
 			if(lights && hasPower())
-				light_range = 2
-				light_power = 2
+				light_range = AIRLOCK_LIGHT_RANGE
+				light_power = AIRLOCK_LIGHT_POWER
 				lights_overlay = get_airlock_overlay("lights_opening", overlays_file)
 				light_color = AIRLOCK_ACCESS_LIGHT_COLOR
 
@@ -1237,3 +1239,11 @@ var/list/airlock_overlays = list()
 	var/spot = locate(/obj/effect/fluid) in loc
 	if(spot)
 		ticker +=10
+
+#undef AIRLOCK_POWERON_LIGHT_COLOR
+#undef AIRLOCK_BOLTS_LIGHT_COLOR
+#undef AIRLOCK_ACCESS_LIGHT_COLOR
+#undef AIRLOCK_EMERGENCY_LIGHT_COLOR
+#undef AIRLOCK_DENY_LIGHT_COLOR
+#undef AIRLOCK_LIGHT_POWER
+#undef AIRLOCK_LIGHT_RANGE
