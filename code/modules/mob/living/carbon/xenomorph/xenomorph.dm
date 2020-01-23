@@ -1,7 +1,3 @@
-#define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
-#define HEAT_DAMAGE_LEVEL_2 4 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point
-
 /mob/living/carbon/xenomorph
 	name = "alien"
 	voice_name = "alien"
@@ -345,7 +341,3 @@ Des: Removes all infected images from the alien.
 
 /mob/living/carbon/xenomorph/get_standard_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
-
-#undef HEAT_DAMAGE_LEVEL_1
-#undef HEAT_DAMAGE_LEVEL_2
-#undef HEAT_DAMAGE_LEVEL_3
