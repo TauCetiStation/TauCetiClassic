@@ -231,9 +231,9 @@ var/datum/subsystem/job/SSjob
 				if(AssignRole(player, "AI"))
 					ai_selected++
 					break
-		if(ai_selected)
-			return 1
-		return 0
+	if(ai_selected)
+		return 1
+	return 0
 
 
 /** Proc DivideOccupations
