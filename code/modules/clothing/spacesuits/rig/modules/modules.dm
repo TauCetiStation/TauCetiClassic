@@ -35,7 +35,7 @@
 	var/active_power_cost = 0           // Power used when turned on.
 	var/passive_power_cost = 0          // Power used when turned off.
 
-	var/list/charges                    // Associative list of charge types and remaining numbers. Starting charges are filled only inside init_charges() proc
+	var/list/datum/rig_charge/charges   // Associative list of charge types and remaining numbers. Starting charges are filled only inside init_charges() proc
 	var/charge_selected                 // Currently selected option used for charge dispensing.
 
 	var/suit_overlay

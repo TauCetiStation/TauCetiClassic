@@ -301,7 +301,7 @@
 	icon_state = "[initial(icon_state)][contents.len]"
 	return
 
-/obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)
+/obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
 	if(istype(W, /obj/item/clothing/mask/cigarette))
 		if(reagents)
 			reagents.trans_to(W, (reagents.total_volume/contents.len))
@@ -328,7 +328,7 @@
 		..()
 
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco
-	name = "\improper DromedaryCo packet"
+	name = "DromedaryCo packet"
 	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
 	icon_state = "Dpacket"
 	item_state = "Dpacket"

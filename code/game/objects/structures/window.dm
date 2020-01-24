@@ -141,7 +141,7 @@
 	return 1
 
 
-/obj/structure/window/hitby(AM)
+/obj/structure/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	..()
 	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0

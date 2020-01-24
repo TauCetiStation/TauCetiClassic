@@ -513,7 +513,7 @@
 	reagents.add_reagent("nutriment", 1)
 	reagents.add_reagent("egg", 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new /obj/effect/decal/cleanable/egg_smudge(loc)
 	if(prob(13))
@@ -996,7 +996,7 @@
 	reagents.add_reagent("banana",5)
 	reagents.add_reagent("vitamin", 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
 	src.visible_message("<span class='rose'>[src.name] splats.</span>","<span class='rose'>You hear a splat.</span>")
@@ -1165,7 +1165,7 @@
 	. = ..()
 	reagents.add_reagent("protein", 8)
 
-/obj/item/weapon/reagent_containers/food/snacks/monkeykabob
+/obj/item/weapon/reagent_containers/food/snacks/kabob
 	name = "Meat-kabob"
 	icon_state = "kabob"
 	desc = "Delicious meat, on a stick."
@@ -1173,7 +1173,7 @@
 	filling_color = "#a85340"
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/monkeykabob/atom_init()
+/obj/item/weapon/reagent_containers/food/snacks/kabob/atom_init()
 	. = ..()
 	reagents.add_reagent("protein", 8)
 

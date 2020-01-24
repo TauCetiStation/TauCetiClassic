@@ -154,8 +154,6 @@
 	var/gateway_enabled = 0
 	var/ghost_interaction = 0
 
-	var/comms_password = ""
-
 	var/enter_allowed = 1
 
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
@@ -531,9 +529,6 @@
 				if("uneducated_mice")
 					config.uneducated_mice = 1
 
-				if("comms_password")
-					config.comms_password = value
-
 				if("python_path")
 					if(value)
 						config.python_path = value
@@ -729,52 +724,58 @@
 		qdel(M)
 	return new /datum/game_mode/extended()
 
-/datum/configuration/proc/get_runnable_modes()
+/datum/configuration/proc/is_hidden_gamemode(g_mode)
+	return (g_mode && (g_mode=="secret" || g_mode=="bs12" || g_mode=="tau classic"))
+
+/datum/configuration/proc/is_modeset(g_mode)
+	return (g_mode && (g_mode=="random" || g_mode=="secret" || g_mode=="bs12" || g_mode=="tau classic"))
+
+/datum/configuration/proc/is_custom_modeset(g_mode)
+	return (g_mode && (g_mode=="bs12" || g_mode=="tau classic"))
+
+// As argument accpet config tag of gamemode, not name
+/datum/configuration/proc/is_mode_allowed(g_mode_tag)
+	return (g_mode_tag && (g_mode_tag in modes))
+
+// check_ready - if true only ready players count
+/datum/configuration/proc/get_runnable_modes(modeset="random", check_ready=TRUE)
 	var/list/datum/game_mode/runnable_modes = new
 	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
 		var/datum/game_mode/M = new T()
-		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
-		if (!(M.config_tag in modes))
+		M.modeset = modeset
+		// log_debug("[T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
+		if (!is_mode_allowed(M.config_tag))
 			qdel(M)
 			continue
-		if(master_last_mode)
-			if(secret_force_mode == "secret")
-				if(master_mode=="secret")
-					if(M.name != "AutoTraitor")
-						if(M.name == master_last_mode)
+		if (is_custom_modeset(M.config_tag))
+			qdel(M)
+			continue
+		if(!modeset || modeset == "random" || modeset == "secret")
+			if(global.master_last_mode && global.secret_force_mode == "secret" && modeset == "secret")
+				if(M.name != "AutoTraitor" && M.name == global.master_last_mode)
+					qdel(M)
+					continue
+			if (probabilities[M.config_tag]<=0)
+				qdel(M)
+				continue
+		else if (is_custom_modeset(modeset))
+			switch(modeset)
+				if("bs12")
+					switch(M.config_tag)
+						if("traitorchan","traitor","blob","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
 							qdel(M)
 							continue
-		if (probabilities[M.config_tag]<=0)
-			qdel(M)
-			continue
-		if (M.can_start())
-			runnable_modes[M] = probabilities[M.config_tag]
-			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
-	return runnable_modes
-
-/datum/configuration/proc/get_custom_modes(type_of_selection)
-	var/list/datum/game_mode/runnable_modes = new
-	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
-		var/datum/game_mode/M = new T()
-		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
-		if (!(M.config_tag in modes))
-			qdel(M)
-			continue
-		switch(type_of_selection)
-			if("bs12")
-				switch(M.config_tag)
-					if("traitorchan","traitor","blob","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
-						qdel(M)
-						continue
-			if("tau classic")
-				switch(M.config_tag)
-					if("traitor","blob","extended","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
-						qdel(M)
-						continue
-		if (M.can_start())
-			runnable_modes[M] = probabilities[M.config_tag]
-			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
-
+				if("tau classic")
+					switch(M.config_tag)
+						if("traitor","blob","extended","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
+							qdel(M)
+							continue
+		var/mod_prob = probabilities[M.config_tag]
+		if (is_custom_modeset(modeset))
+			mod_prob = 1
+		if (((!check_ready) && M.potential_runnable()) || (check_ready && M.can_start()))
+			runnable_modes[M] = mod_prob
+			// log_debug("runnable_mode\[[runnable_modes.len]\] = [M.config_tag] [mod_prob]")
 	return runnable_modes
 
 /datum/configuration/proc/stat_entry()
