@@ -42,6 +42,7 @@
 /obj/item/weapon/wrench/power
 	name = "Hand Drill"
 	desc ="A simple powered drill with a bolt bit"
+	hitsound = list('sound/items/tools/tool-hit.ogg')
 	icon_state = "drill_bolt"
 	item_state = "drill"
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
@@ -111,6 +112,7 @@
 /obj/item/weapon/screwdriver/power
 	name = "Hand Drill"
 	desc = "A simple hand drill with a screwdriver bit attached."
+	hitsound = list('sound/items/drill_hit.ogg')
 	icon_state = "drill_screw"
 	item_state = "drill"
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
@@ -121,7 +123,6 @@
 	throw_range = 3//it's heavier than a screw driver/wrench, so it does more damage, but can't be thrown as far
 	toolspeed = 0.7
 	attack_verb = list("drilled", "screwed", "jabbed","whacked")
-	hitsound = list('sound/items/drill_hit.ogg')
 	action_button_name = "Change mode"
 	random_color = FALSE
 
@@ -201,6 +202,7 @@
 	name = "welding tool"
 	desc = "Apply the hot spot to the metal."
 	icon = 'icons/obj/tools.dmi'
+	hitsound = 'sound/items/tools/tool-hit.ogg'
 	icon_state = "welder"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
@@ -403,6 +405,7 @@
 	//If we're turning it on
 	if(temp_welding > 0)
 		if (use(1))
+			hitsound = list('sound/items/Welder2.ogg')
 			to_chat(usr, "<span class='info'>The [src] switches on.</span>")
 			src.force = 15
 			src.damtype = "fire"
@@ -414,6 +417,7 @@
 			return
 	//Otherwise
 	else
+		hitsound = initial(hitsound)
 		to_chat(usr, "<span class='info'>The [src] switches off.</span>")
 		src.force = 3
 		src.damtype = "brute"
@@ -436,6 +440,7 @@
 	if (src.welding)
 		if (use(1))
 			to_chat(usr, "<span class='notice'>You switch the [src] on.</span>")
+			hitsound = list('sound/items/Welder2.ogg')
 			src.force = 15
 			src.damtype = "fire"
 			src.icon_state = initial(src.icon_state) + "1"
@@ -449,6 +454,7 @@
 			to_chat(usr, "<span class='notice'>You switch the [src] off.</span>")
 		else
 			to_chat(usr, "<span class='info'>The [src] shuts off!</span>")
+		hitsound = initial(hitsound)
 		src.force = 3
 		src.damtype = "brute"
 		src.icon_state = initial(src.icon_state)
@@ -568,6 +574,7 @@
 /obj/item/weapon/crowbar/power
 	name = "Jaws of Life"
 	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a prying head"
+	hitsound = list('sound/items/tools/tool-hit.ogg')
 	icon_state = "jaws_pry"
 	item_state = "jawsoflife"
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
