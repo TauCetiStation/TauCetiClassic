@@ -218,7 +218,7 @@
 			to_chat(M, "<span class='notice'>You have been [mute_string] unmuted from [usr.key].</span>")
 	else
 		if(alert("Would you like to make it permament?","Permamute?","Yes","No, round only") == "Yes")
-			var/permmutreason = input("Permamute Reason") as text
+			var/permmutreason = input("Permamute Reason") as text|null
 			if(permmutreason)
 				muteunmute = "permamuted"
 				M.client.prefs.permamuted |= mute_type
@@ -232,7 +232,7 @@
 				return
 
 		else if (alert("Add a notice for round mute?", "Mute Notice?", "Yes","No") == "Yes")
-			var/mutereason = input("Mute Reason") as text
+			var/mutereason = input("Mute Reason") as text|null
 			if(mutereason)
 				notes_add(M.key, "Muted from [mute_string]: [mutereason]", usr.client)
 				mutereason = sanitize(mutereason)
@@ -1136,7 +1136,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("Fax message was created by [key_name_admin(usr)] and sent to [department]")
 	world.send2bridge(
 		type = list(BRIDGE_ADMINCOM),
-		attachment_title = ":fax: Fax message was created by **[key_name_admin(usr)]** and sent to ***[department]***",
+		attachment_title = ":fax: Fax message was created by **[key_name(usr)]** and sent to ***[department]***",
 		attachment_msg = sent_text,
 		attachment_color = BRIDGE_COLOR_ADMINCOM,
 	)

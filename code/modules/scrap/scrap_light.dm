@@ -31,6 +31,7 @@
 		return
 	if(on)
 		return
+	playsound(user, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='notice'>[user] lits the [src] on.</span>", "<span class='notice'>You had lt on the [src]!</span>")
 	src.force = on_damage
 	src.damtype = "fire"

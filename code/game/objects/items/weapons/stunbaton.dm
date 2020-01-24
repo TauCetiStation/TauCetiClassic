@@ -96,7 +96,7 @@
 
 	add_fingerprint(user)
 
-/obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
+/obj/item/weapon/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if (prob(50))
 		if(istype(hit_atom, /mob/living))

@@ -269,8 +269,9 @@ var/datum/subsystem/ticker/ticker
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				qdel(S)
-
-		SSvote.started_time = world.time
+		if (length(SSvote.delay_after_start))
+			for (var/DT in SSvote.delay_after_start)
+				SSvote.last_vote_time[DT] = world.time
 
 		//Print a list of antagonists to the server log
 		antagonist_announce()
@@ -545,19 +546,10 @@ var/datum/subsystem/ticker/ticker
 	return TRUE
 
 /world/proc/has_round_started()
-	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
-		return TRUE
-	return FALSE
+	return (ticker && ticker.current_state >= GAME_STATE_PLAYING)
 
 /world/proc/has_round_finished()
-	if (ticker && ticker.current_state >= GAME_STATE_FINISHED)
-		return TRUE
-	return FALSE
+	return (ticker && ticker.current_state >= GAME_STATE_FINISHED)
 
-/world/proc/has_round_preparing()
-	if (ticker && ticker.current_state <= GAME_STATE_SETTING_UP)
-		return TRUE
-	// Still no intialized?
-	else if(!ticker)
-		return TRUE
-	return FALSE
+/world/proc/is_round_preparing()
+	return (ticker && ticker.current_state == GAME_STATE_PREGAME)
