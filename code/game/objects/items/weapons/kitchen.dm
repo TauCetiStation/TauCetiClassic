@@ -76,6 +76,7 @@
 	name = "fork"
 	desc = "Pointy."
 	force = 3
+	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
 	icon_state = "fork"
 
 /obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity)

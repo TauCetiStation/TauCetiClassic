@@ -26,6 +26,7 @@
 	w_class = ITEM_SIZE_SMALL
 	m_amt = 150
 	origin_tech = "materials=1;engineering=1"
+	hitsound = list('sound/items/tools/crowbar-hit.ogg')
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	usesound = 'sound/items/Ratchet.ogg'
 	var/random_color = TRUE
@@ -76,7 +77,7 @@
 	throw_range = 5
 	g_amt = 0
 	m_amt = 75
-	hitsound = list('sound/weapons/melee/screwdriver-stab.ogg')
+	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
 	attack_verb = list("stabbed")
 	usesound = 'sound/items/Screwdriver.ogg'
 	var/random_color = TRUE
@@ -146,6 +147,7 @@
 	w_class = ITEM_SIZE_SMALL
 	m_amt = 80
 	origin_tech = "materials=1;engineering=1"
+	hitsound = list('sound/items/tools/wirecutters-pinch.ogg')
 	attack_verb = list("pinched", "nipped")
 	sharp = 1
 	edge = 1
@@ -555,6 +557,7 @@
 	w_class = ITEM_SIZE_SMALL
 	m_amt = 50
 	origin_tech = "engineering=1"
+	hitsound = list('sound/items/tools/crowbar-hit.ogg')
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	usesound = 'sound/items/Crowbar.ogg'
 
