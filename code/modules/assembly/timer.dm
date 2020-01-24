@@ -35,6 +35,12 @@
 	return secured
 
 
+/obj/item/device/assembly/timer/attach_assembly(obj/item/device/assembly/A, mob/user)
+	. = ..()
+	message_admins("[key_name_admin(user)] attached \the [A] to \the [src]. [ADMIN_JMP(user)]")
+	log_game("[key_name_admin(user)] attached \the [A] to \the [src].")
+
+
 /obj/item/device/assembly/timer/proc/timer_end()
 	if(!secured)	return 0
 	pulse(0)

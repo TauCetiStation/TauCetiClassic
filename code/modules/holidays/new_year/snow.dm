@@ -73,7 +73,7 @@
 		var/mob/living/carbon/C = user
 		C.throw_mode_on()
 
-/obj/item/snowball/throw_impact(atom/target)
+/obj/item/snowball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	qdel(src)
 

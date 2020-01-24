@@ -133,7 +133,7 @@
 
 
 /obj/item/weapon/aiModule/broken // -- TLE
-	name = "\improper broken core AI module"
+	name = "broken core AI module"
 	desc = "broken Core AI Module: 'Reconfigures the AI's core laws.'"
 
 /obj/machinery/broken/atom_init()

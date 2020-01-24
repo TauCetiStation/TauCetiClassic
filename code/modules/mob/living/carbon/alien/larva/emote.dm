@@ -1,6 +1,6 @@
 /mob/living/carbon/alien/larva/emote(act,m_type=SHOWMSG_VISUAL,message = null)
 
-	if(stat == UNCONSCIOUS || sleeping > 0)
+	if(stat == UNCONSCIOUS)
 		return
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
