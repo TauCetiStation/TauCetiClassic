@@ -490,6 +490,13 @@
 "abb" = (
 /turf/space,
 /area/shuttle/escape_pod1/transit)
+"abc" = (
+/obj/structure/table/reinforced,
+/obj/item/device/megaphone,
+/turf/unsimulated/floor{
+	icon_state = "bar"
+	},
+/area/custom/syndicate_mothership)
 "abd" = (
 /obj/machinery/computer/arcade,
 /obj/structure/sign/velocity_overlay/reklama{
@@ -80695,7 +80702,7 @@ amm
 akQ
 akQ
 akQ
-alN
+abc
 akQ
 ame
 aie
