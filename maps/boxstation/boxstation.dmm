@@ -25850,6 +25850,7 @@
 "aUN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	dock_tag = "stat_dock";
 	name = "Arrival Airlock";
 	req_one_access = list(65,48)
 	},
@@ -72135,6 +72136,16 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
+"lbH" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "supply_dock";
+	locked = 1;
+	name = "Supply Dock Airlock";
+	req_access = list(31)
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "lcb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -98393,7 +98404,7 @@ xwb
 xJb
 xPb
 xSb
-xPb
+lbH
 bqM
 bqM
 bqM
@@ -98907,7 +98918,7 @@ xxb
 xLb
 xPb
 xTb
-xPb
+lbH
 bqM
 bqM
 bqM

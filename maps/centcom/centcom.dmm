@@ -168,9 +168,7 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/stamp/denied,
-/obj/item/weapon/stamp/centcomm{
-	name = "APPROVED rubber stamp"
-	},
+/obj/item/weapon/stamp/approve,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/item/device/taperecorder,
 /turf/unsimulated/floor{
@@ -205,9 +203,7 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/stamp/denied,
-/obj/item/weapon/stamp/centcomm{
-	name = "APPROVED rubber stamp"
-	},
+/obj/item/weapon/stamp/approve,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/item/device/taperecorder,
 /turf/unsimulated/floor{
@@ -492,14 +488,11 @@
 /area/shuttle/escape_pod1/transit)
 "abc" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/phone/hotline{
-	hotline_name = "ERT";
-	pixel_y = 3
-	},
+/obj/item/device/megaphone,
 /turf/unsimulated/floor{
-	icon_state = "floor"
+	icon_state = "bar"
 	},
-/area/centcom/living)
+/area/custom/syndicate_mothership)
 "abd" = (
 /obj/machinery/computer/arcade,
 /obj/structure/sign/velocity_overlay/reklama{
@@ -634,6 +627,16 @@
 	},
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
+"abv" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/phone/hotline{
+	hotline_name = "ERT";
+	pixel_y = 3
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/living)
 "abC" = (
 /obj/structure/window/reinforced{
 	dir = 5;
@@ -9838,7 +9841,9 @@
 "aIs" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/stamp,
+/obj/item/weapon/stamp{
+	name = "security rubber stamp"
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -51187,7 +51192,7 @@ aAM
 aAM
 aBL
 aFn
-abc
+abv
 aDo
 aAM
 aAM
@@ -80661,7 +80666,7 @@ amm
 akQ
 akQ
 akQ
-alN
+abc
 akQ
 ame
 aie

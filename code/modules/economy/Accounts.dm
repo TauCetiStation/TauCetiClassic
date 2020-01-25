@@ -103,10 +103,8 @@
 			T.source_terminal = terminal_id
 			D.transaction_log.Add(T)
 
-			return 1
-		break
-
-	return 0
+			return TRUE
+	return FALSE
 
 //this returns the first account datum that matches the supplied accnum/pin combination, it returns null if the combination did not match any account
 /proc/attempt_account_access(attempt_account_number, attempt_pin_number, security_level_passed = 0)

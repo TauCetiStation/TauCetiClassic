@@ -66,7 +66,7 @@
 		return
 	disolving = TRUE
 
-	overlays.Remove(fore_image)
+	cut_overlay(fore_image)
 	layer -= 0.01
 	flick("afff_foam-disolve", src)
 	QDEL_IN(src, 5)

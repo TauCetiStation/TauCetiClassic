@@ -34,7 +34,7 @@ VOX HEIST ROUNDTYPE
 			return TRUE
 	return FALSE
 
-/datum/game_mode/hiest/assign_outsider_antag_roles()
+/datum/game_mode/heist/assign_outsider_antag_roles()
 	if(!..())
 		return FALSE
 
