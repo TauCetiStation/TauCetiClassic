@@ -401,10 +401,10 @@
 	to_chat(usr, "You [lights_on ? "enable" : "disable"] your integrated light.")
 	if(lights_on)
 		set_light(5)
-		playsound_local(src, 'sound/effects/click_on.ogg', VOL_EFFECTS_MASTER, 40, FALSE)
+		playsound_local(src, 'sound/effects/click_on.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 	else
 		set_light(0)
-		playsound_local(src, 'sound/effects/click_off.ogg', VOL_EFFECTS_MASTER, 40, FALSE)
+		playsound_local(src, 'sound/effects/click_off.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 
 /mob/living/silicon/robot/proc/toggle_component()
 
