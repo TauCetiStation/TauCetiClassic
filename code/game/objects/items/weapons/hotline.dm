@@ -1,16 +1,23 @@
 // HOTLINE
 // An IC solution for Admin-to-mob hotline.
 
-var/global/datum/hotline/centcom_hotline = new()
+var/global/datum/hotline/hotline_controller = new()
 
 /datum/hotline
 	var/list/obj/item/weapon/phone/hotline/clients = list()
 	var/list/all_hotlines = list()
 	var/list/active_hotlines = list()
-	var/hotline_global = ""
-	var/timer_id = 0
+	var/timer_id = null
 
-/datum/hotline/proc/update()
+/datum/hotline/proc/connect(obj/item/weapon/phone/hotline/P)
+	if (istype(P))
+		clients += P
+
+/datum/hotline/proc/disconnect(obj/item/weapon/phone/hotline/P)
+	if (istype(P))
+		clients -= P
+
+/datum/hotline/proc/scan_phones()
 	all_hotlines.Cut()
 	for(var/obj/item/weapon/phone/hotline/H in src.clients)
 		if(!(H.hotline_name in all_hotlines))
@@ -18,197 +25,199 @@ var/global/datum/hotline/centcom_hotline = new()
 	for(var/H in active_hotlines)
 		if(!(H in all_hotlines))
 			all_hotlines += H
+	return
+
+/datum/hotline/proc/reconnect_phones()
+	for (var/obj/item/weapon/phone/hotline/H in src.clients)
+		if ((H.hotline_name in active_hotlines) && !H.connected)
+			H.connected = TRUE
+
+/datum/hotline/proc/get_hotlines()
 	return all_hotlines
+
+/datum/hotline/proc/get_active_hotlines()
+	return active_hotlines
+
+/datum/hotline/proc/is_active_hotline(hotline_name)
+	if (hotline_name == "All" && length(active_hotlines))
+		return TRUE
+	return (hotline_name in active_hotlines)
+
+// Stop hotline channel
+// "All" hotline name is special. It stop ALL hotlines
+/datum/hotline/proc/stop_hotline(hotline_name)
+	if (!hotline_name)
+		return
+	var/msg_log = "[key_name(usr)] stopped "
+	if (hotline_name == "All")
+		msg_log += "all hotlines."
+		active_hotlines.Cut()
+	else
+		msg_log += "a [hotline_name]'s hotline."
+		active_hotlines -= hotline_name
+	message_admins("<font color='red'>HOTLINE:</font> [msg_log]")
+	return
+
+// Start hotline channel
+// "All" hotline name is special. It start all hotlines
+/datum/hotline/proc/start_hotline(hotline_name)
+	if (!hotline_name)
+		return
+	scan_phones()
+	var/list/started = list()
+	if(hotline_name == "All")
+		for (var/H in all_hotlines)
+			active_hotlines[H] = TRUE
+			started += H
+	else
+		started += hotline_name
+		active_hotlines[hotline_name] = TRUE
+	message_admins("<font color='red'>HOTLINE:</font> [key_name(usr)] started hotline[length(started) > 1 ? "s" : ""] " + started.Join(", ") + ".")
+	reconnect_phones()
+	ring()
 
 /datum/hotline/proc/transmit(message as text, destination as text)
 	var/heard = 0
-	if(destination == "All")
-		for(var/obj/item/weapon/phone/hotline/H in src.clients)
-			if(H.picked)
-				H.say(message)
-				heard++
-	else
-		for(var/obj/item/weapon/phone/hotline/H in src.clients)
-			if(H.picked && (H.hotline_name == destination))
-				H.say(message)
-				heard++
+	for(var/obj/item/weapon/phone/hotline/H in src.clients)
+		if(H.picked && (destination == "All" || H.hotline_name == destination))
+			H.say(message)
+			heard++
 	log_say("Hotline/[key_name(usr)] : \[[destination]\]: [message]")
 	message_admins("<font color='red'>HOTLINE:</font> [key_name(usr)] messaged [destination]([heard]). Message: \"[message]\".")
-	return TRUE
+	return (heard > 0)
 
 /datum/hotline/proc/stop_ring()
-	if(timer_id && length(active_hotlines) == 0 && !hotline_global)
+	if(timer_id && !length(active_hotlines))
 		deltimer(timer_id)
-		timer_id = 0
+		timer_id = null
 		for(var/obj/item/weapon/phone/hotline/H in src.clients)
 			H.ringing = FALSE
 
 /datum/hotline/proc/ring()
 	timer_id = addtimer(CALLBACK(src, .proc/ring, FALSE), 6 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 	for(var/obj/item/weapon/phone/hotline/H in src.clients)
-		if(((H.hotline_name in active_hotlines) || hotline_global) && !H.disconnected && !H.picked)
+		if((H.hotline_name in active_hotlines) && H.connected && !H.picked)
 			H.ringing = TRUE
 			playsound(H, 'sound/weapons/phone_ring.ogg', VOL_EFFECTS_MASTER, null, FALSE, 4)
 		else
 			H.ringing = FALSE
 
-		if(!((H.hotline_name in active_hotlines) || hotline_global) && !H.disconnected && H.picked)
-			H.listener.playsound_local(null, 'sound/weapons/phone_beeps.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
-			H.disconnected = TRUE
-		H.update_verbs()
-
+		if((!(H.hotline_name in active_hotlines)) && H.connected && H.picked)
+			if (ishuman(H.loc))
+				var/mob/living/carbon/human/L = H.loc
+				L.playsound_local(null, 'sound/weapons/phone_beeps.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
+				L = null
+			H.connected = FALSE
 
 
 /obj/item/weapon/phone/hotline
 	name = "red phone"
 	desc = "The rotary dial has been replaced with a black knob of unknown purpose. Should anything ever go wrong..."
-	var/disconnected = FALSE
+	var/connected = TRUE
 	var/ringing = FALSE
 	var/picked = FALSE
 	var/hotline_name = "Hotline"
 	var/mob/listener = null
-	var/track_delay = 0
 
 /obj/item/weapon/phone/hotline/atom_init()
 	. = ..()
-	global.centcom_hotline.clients += src
-	track_delay = world.time
+	global.hotline_controller.connect(src)
 
 /obj/item/weapon/phone/hotline/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	global.centcom_hotline.clients -= src
-	listener = null
+	global.hotline_controller.disconnect(src)
 	return ..()
 
-/obj/item/weapon/phone/hotline/process()
-	if(track_delay > world.time)
-		return
-	if(listener)
-		var/turf/mainloc = get_turf(src)
-		if(!(listener in range(1,mainloc)))
-			hang_phone()
-	track_delay = world.time + 1 // 0.1 second
-
-/obj/item/weapon/phone/hotline/proc/update_verbs()
-	if(ringing)
-		verbs += /obj/item/weapon/phone/hotline/proc/pick_verb
+/obj/item/weapon/phone/hotline/attack_self(mob/user)
+	if (picked)
+		hang_phone()
 	else
-		verbs -= /obj/item/weapon/phone/hotline/proc/pick_verb
+		pick_phone()
+	return ..()
 
-	if(picked)
-		verbs += /obj/item/weapon/phone/hotline/proc/hang_verb
-	else
-		verbs -= /obj/item/weapon/phone/hotline/proc/hang_verb
+/obj/item/weapon/phone/hotline/dropped(mob/user)
+	if (picked)
+		hang_phone()
+	return ..()
 
-/obj/item/weapon/phone/hotline/proc/pick_verb()
-	set name = "Pick Phone"
-	set category = "Object"
-	set src in oview(1)
-	if(!ishuman(usr) || usr.incapacitated() || usr.lying)
+/obj/item/weapon/phone/hotline/proc/pick_phone()
+	if(picked || !ishuman(usr) || usr.incapacitated())
 		return
-
-	disconnected = FALSE
-	ringing = FALSE
-	picked = TRUE
-	listener = usr
-	to_chat(usr, "You picked up the phone.")
+	usr.visible_message("[usr] picked up the phone.", "You picked up the phone.")
 	playsound(src, 'sound/weapons/phone_pick.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2)
 	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(usr)] picked up a [hotline_name]'s phone. [ADMIN_JMP(usr)]")
-
-	START_PROCESSING(SSobj, src)
-	update_verbs()
+	connected = TRUE
+	ringing = FALSE
+	picked = TRUE
 
 /obj/item/weapon/phone/hotline/proc/hang_phone()
-	to_chat(listener, "You hung up the phone.")
+	if(!picked || !ishuman(usr) || usr.incapacitated())
+		return
+	usr.visible_message("[usr] hung up the phone.", "You hung up the phone.")
 	playsound(src, 'sound/weapons/phone_hang.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2)
-	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(listener)] hanged off a [hotline_name]'s phone. [ADMIN_JMP(listener)]")
-
+	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(usr)] hanged off a [hotline_name]'s phone. [ADMIN_JMP(usr)]")
+	connected = TRUE  // connection reset
 	picked = FALSE
-	listener = null
-
-	STOP_PROCESSING(SSobj, src)
-	update_verbs()
-
-/obj/item/weapon/phone/hotline/proc/hang_verb()
-	set name = "Hang Phone"
-	set category = "Object"
-	set src in oview(1)
-	if(!ishuman(usr) || usr.incapacitated() || usr.lying)
-		return
-	if(usr != listener)
-		if(disconnected)
-			return
-
-		if(usr.a_intent == I_HURT)
-			listener.playsound_local(null, 'sound/weapons/phone_beeps.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
-			disconnected = TRUE
-		else
-			to_chat(usr, "Why you even want do disrupt a call?")
-		return
-	hang_phone()
 
 /obj/item/weapon/phone/hotline/proc/say(message)
-	if(listener)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/L = loc
 		var/part_a = "<span class='secradio'><span class='name'>"
 		var/part_b = "</span><b> [bicon(src)]\[Hotline\]</b> <span class='message'>"
 		var/part_c = "</span></span>"
 		var/rendered = "[part_a][hotline_name][part_b]says, \"[message]\"[part_c]"
-		listener.show_message(rendered, SHOWMSG_AUDIO)
+		L.show_message(rendered, SHOWMSG_AUDIO)
+		L = null
 
 /client/proc/hotline_set()
-	set name = "Hotline Setup"
+	set name = "Hotline Toggle"
 	set category = "Special Verbs"
 	set desc = "Setup an IC admin-to-mob hotline."
 
-	// Some code from response_team()
-	if(!global.ticker)
+	// Checking hotlines exists
+	if(!world.has_round_started())
 		to_chat(usr, "<span class='warning'>The game hasn't started yet!</span>")
 		return
-	if(global.ticker.current_state < GAME_STATE_PLAYING)
-		to_chat(usr, "<span class='warning'>The round hasn't started yet!</span>")
-		return
 
-	var/list/hotlines = global.centcom_hotline.update()
+	global.hotline_controller.scan_phones()
+	var/list/hotlines = global.hotline_controller.get_hotlines()
 	if(!length(hotlines))
 		to_chat(usr, "<span class='warning'>There is no Hotline phones!</span>")
 		return
-	hotlines += "All"
-	var/destination = input(usr, "Please, choose the hotline you want to setup.") as null|anything in hotlines
+	// Render hotlines list and get hotline for action
+	var/list/hotlines_with_status = list()
+	for (var/H in hotlines)
+		if (global.hotline_controller.is_active_hotline(H))
+			hotlines_with_status += "[H] (Active)"
+		else
+			hotlines_with_status += H
+	if (global.hotline_controller.is_active_hotline("All"))
+		hotlines_with_status += "All (Active)"
+	else
+		hotlines_with_status += "All"
+	var/destination = input(usr, "Please, choose the hotline you want to setup.") as null|anything in hotlines_with_status
 	if(!destination)
 		return
-	hotlines -= "All"
-
-	if((destination in global.centcom_hotline.active_hotlines) || global.centcom_hotline.hotline_global)
-		switch(alert("Stop the hotline?",,"Yes","No"))
-			if("Yes")
-				message_admins("<font color='red'>HOTLINE:</font> [key_name(usr)] stopped a [destination]'s hotline.")
-				if(destination == "All")
-					global.centcom_hotline.active_hotlines.Cut()
-					global.centcom_hotline.hotline_global = ""
-				else if(global.centcom_hotline.hotline_global)
-					for(var/H in hotlines)
-						global.centom_hotline.active_hotlines[H] = global.centcom_hotline.hotline_global
-					global.centcom_hotline.active_hotlines -= destination
-					global.centcom_hotline.hotline_global = ""
-				else
-					global.centcom_hotline.active_hotlines -= destination
-				global.centcom_hotline.stop_ring()
+	destination = replacetext(destination, " (Active)", "")
+	if (!length(destination))
 		return
-
-	switch(alert("Start the hotline?",,"Yes","No"))
-		if("No")
-			return
-	var/hotline_name = sanitize_safe(input(usr, "Pick a name for the Hotline.", "Name") as text) // TODO: null too?
-	if(!hotline_name)
-		hotline_name = "Hotline"
-	message_admins("<font color='red'>HOTLINE:</font> [key_name(usr)] started a [destination]'s hotline with name [hotline_name].")
-	if(destination == "All")
-		global.centcom_hotline.hotline_global = hotline_name
-		global.centcom_hotline.active_hotlines.Cut()
-	else
-		global.centcom_hotline.active_hotlines[destination] = hotline_name
-
-	global.centcom_hotline.ring()
+	// Start or Stop hotline actions
+	if (global.hotline_controller.is_active_hotline(destination))
+		var/ask_msg = "Stop the [destination] hotline?"
+		if (destination == "All")
+			ask_msg = "Stop ALL hotlines?"
+		switch(alert(ask_msg,, "Yes", "No"))
+			if ("Yes")
+				global.hotline_controller.stop_hotline(destination)
+				return
+			if ("No")
+				if (destination != "All")
+					return
+	var/ask_start_msg = "Start [destination]'s hotline?"
+	if (destination == "ALL")
+		ask_start_msg = "Start ALL hotlines?"
+	if (alert(ask_start_msg,,"Yes","No") == "No")
+		return
+	global.hotline_controller.start_hotline(destination)
 
 /client/proc/hotline_say()
 	set name = "Hotline Say"
@@ -216,19 +225,16 @@ var/global/datum/hotline/centcom_hotline = new()
 	set desc = "Say to the Hotline"
 
 	// Some code from response_team()
-	if(!global.ticker)
-		to_chat(usr, "<span class='warning'>The game hasn't started yet!</span>")
-		return
-	if(global.ticker.current_state < GAME_STATE_PLAYING)
+	if(!world.has_round_started())
 		to_chat(usr, "<span class='warning'>The round hasn't started yet!</span>")
 		return
 
-	if(!global.centcom_hotline.active_hotlines)
+	if(!length(global.hotline_controller.active_hotlines))
 		to_chat(usr, "<span class='warning'>The Hotline isn't active!</span>")
 		return
 
 	var/list/hotlines = list()
-	for(var/H in global.centcom_hotline.active_hotlines)
+	for(var/H in global.hotline_controller.active_hotlines)
 		hotlines += H
 	hotlines += "All"
 	var/destination = input(usr, "Please, choose the hotline you want send message to.") as null|anything in hotlines
@@ -239,4 +245,4 @@ var/global/datum/hotline/centcom_hotline = new()
 	if(!message)
 		return
 
-	global.centcom_hotline.transmit(message, destination)
+	global.hotline_controller.transmit(message, destination)
