@@ -142,7 +142,7 @@ var/global/datum/hotline/hotline_controller = new()
 	usr.visible_message("[usr] picked up the phone.", "You picked up the phone.")
 	playsound(src, 'sound/weapons/phone_pick.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2)
 	log_game("[key_name(usr)] picked up a [hotline_name]'s phone.")
-	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(usr)] picked up a [hotline_name]'s phone.", "[ADMIN_PP(usr)] [ADMIN_VV(usr)] [ADMIN_SM(usr)] [ADMIN_TP(usr)] [ADMIN_FLW(usr)]")
+	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(usr)] [ADMIN_PP(usr)] [ADMIN_VV(usr)] [ADMIN_SM(usr)] [ADMIN_TP(usr)] [ADMIN_FLW(usr)] picked up a [hotline_name]'s phone.")
 	connected = TRUE
 	ringing = FALSE
 	picked = TRUE
@@ -153,7 +153,7 @@ var/global/datum/hotline/hotline_controller = new()
 	usr.visible_message("[usr] hung up the phone.", "You hung up the phone.")
 	playsound(src, 'sound/weapons/phone_hang.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2)
 	log_game("[key_name(usr)] hanged off a [hotline_name]'s phone.")
-	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(usr)] hanged off a [hotline_name]'s phone.", "[ADMIN_PP(usr)] [ADMIN_VV(usr)] [ADMIN_SM(usr)] [ADMIN_TP(usr)] [ADMIN_FLW(usr)]")
+	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(usr)] [ADMIN_PP(usr)] [ADMIN_VV(usr)] [ADMIN_SM(usr)] [ADMIN_TP(usr)] [ADMIN_FLW(usr)] hanged off a [hotline_name]'s phone.")
 	connected = TRUE  // connection reset
 	picked = FALSE
 
