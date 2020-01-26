@@ -309,8 +309,9 @@ var/const/INGEST = 2
 						if(ME2.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in seen)
 								to_chat(M, "<span class='notice'>[bicon(my_atom)] The [my_atom]'s power is consumed in the reaction.</span>")
-								ME2.name = "used slime extract"
-								ME2.desc = "This extract has been used up."
+							ME2.name = "used slime extract"
+							ME2.desc = "This extract has been used up."
+							ME2.origin_tech = null
 
 					playsound(my_atom, 'sound/effects/bubbles.ogg', VOL_EFFECTS_MASTER)
 
@@ -402,14 +403,14 @@ var/const/INGEST = 2
 	return
 
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, safety = 0)
-	if(!isnum(amount)) 
+	if(!isnum(amount))
 		return 1
-	if(amount < 0) 
+	if(amount < 0)
 		return 0
-	if(amount > 2000) 
+	if(amount > 2000)
 		return
 	update_total()
-	if(total_volume + amount > maximum_volume) 
+	if(total_volume + amount > maximum_volume)
 		amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 
 	for(var/A in reagent_list)
