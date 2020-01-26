@@ -3,15 +3,6 @@
 
 var/global/datum/hotline/hotline_controller = new()
 
-/proc/log_hotline(msg, submsg = "")
-	msg = submsg ? ": " + msg : msg
-	var/rendered = "<span class='notice'><b><font color='red'>HOTLINE: </font>[submsg]</b>[msg]</span>"
-	for(var/client/C in admins)
-		to_chat(C, rendered)
-	if (config.log_say)
-		msg = replace_characters(msg, list(JA_ENTITY=JA_PLACEHOLDER, JA_ENTITY_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
-		diary << "\[[time_stamp()]]HOTLINE: [msg][log_end]"
-
 /datum/hotline
 	var/list/obj/item/weapon/phone/hotline/clients = list()
 	var/list/all_hotlines = list()
@@ -66,8 +57,8 @@ var/global/datum/hotline/hotline_controller = new()
 				L.playsound_local(null, 'sound/weapons/phone_beeps.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
 				L = null
 			H.connected = FALSE
-	log_hotline(msg_log)
-	return
+	log_admin(msg_log)
+	message_admins("<font color='red'>HOTLINE:</font> [msg_log]")
 
 // Start hotline channel
 // "All" hotline name is special. It start all hotlines
@@ -83,7 +74,8 @@ var/global/datum/hotline/hotline_controller = new()
 	else
 		started += hotline_name
 		active_hotlines[hotline_name] = TRUE
-	log_hotline("[key_name(usr)] started hotline[length(started) > 1 ? "s" : ""] " + started.Join(", ") + ".")
+	log_admin("[key_name(usr)] started hotline[length(started) > 1 ? "s" : ""] " + started.Join(", ") + ".")
+	message_admins("<font color='red'>HOTLINE:</font> [key_name(usr)] started hotline[length(started) > 1 ? "s" : ""] " + started.Join(", ") + ".")
 	reconnect_phones()
 	ring()
 
@@ -94,7 +86,7 @@ var/global/datum/hotline/hotline_controller = new()
 			H.say(message)
 			heard++
 	log_say("Hotline/[key_name(usr)] : \[[destination]\]: [message]")
-	log_hotline("[key_name(usr)] messaged [destination]([heard]). Message: \"[message]\".")
+	message_admins("<font color='red'>HOTLINE:</font> [key_name(usr)] messaged [destination]([heard]). Message: \"[message]\".")
 	return (heard > 0)
 
 /datum/hotline/proc/stop_ring()
@@ -149,7 +141,8 @@ var/global/datum/hotline/hotline_controller = new()
 		return
 	usr.visible_message("[usr] picked up the phone.", "You picked up the phone.")
 	playsound(src, 'sound/weapons/phone_pick.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2)
-	log_hotline("[key_name_admin(usr)] picked up a [hotline_name]'s phone.", "[ADMIN_PP(usr)] [ADMIN_VV(usr)] [ADMIN_SM(usr)] [ADMIN_TP(usr)] [ADMIN_FLW(usr)]")
+	log_game("[key_name(usr)] picked up a [hotline_name]'s phone.")
+	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(usr)] picked up a [hotline_name]'s phone.", "[ADMIN_PP(usr)] [ADMIN_VV(usr)] [ADMIN_SM(usr)] [ADMIN_TP(usr)] [ADMIN_FLW(usr)]")
 	connected = TRUE
 	ringing = FALSE
 	picked = TRUE
@@ -159,7 +152,8 @@ var/global/datum/hotline/hotline_controller = new()
 		return
 	usr.visible_message("[usr] hung up the phone.", "You hung up the phone.")
 	playsound(src, 'sound/weapons/phone_hang.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2)
-	log_hotline("[key_name_admin(usr)] hanged off a [hotline_name]'s phone.", "[ADMIN_PP(usr)] [ADMIN_VV(usr)] [ADMIN_SM(usr)] [ADMIN_TP(usr)] [ADMIN_FLW(usr)]")
+	log_game("[key_name(usr)] hanged off a [hotline_name]'s phone.")
+	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(usr)] hanged off a [hotline_name]'s phone.", "[ADMIN_PP(usr)] [ADMIN_VV(usr)] [ADMIN_SM(usr)] [ADMIN_TP(usr)] [ADMIN_FLW(usr)]")
 	connected = TRUE  // connection reset
 	picked = FALSE
 
