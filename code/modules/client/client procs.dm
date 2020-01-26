@@ -211,7 +211,7 @@ var/list/blacklisted_builds = list(
 
 	spawn(50)//should wait for goonchat initialization
 		if(config.client_limit_panic_bunker_count != null)
-			if(!(ckey in admin_datums) && !(src in mentors) && !supporter && (clients.len > config.client_limit_panic_bunker_count) && !(ckey in joined_player_list))
+			if(!(ckey in admin_datums) && !supporter && (clients.len > config.client_limit_panic_bunker_count) && !(ckey in joined_player_list))
 				if (config.client_limit_panic_bunker_link)
 					to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
 					SEND_LINK(src, config.client_limit_panic_bunker_link)
