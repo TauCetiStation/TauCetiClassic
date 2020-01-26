@@ -152,7 +152,7 @@
 	..()
 
 	if(statpanel("Status"))
-		if(isalienqueen(src))
+		if(isxenoqueen(src))
 			var/hugger = 0
 			var/larva = 0
 			var/drone = 0
@@ -167,13 +167,13 @@
 
 				if(isfacehugger(A))
 					hugger++
-				else if(islarva(A))
+				else if(isxenolarva(A))
 					larva++
-				else if(isaliendrone(A))
+				else if(isxenodrone(A))
 					drone++
-				else if(isaliensentinel(A))
+				else if(isxenosentinel(A))
 					sentinel++
-				else if(isalienhunter(A))
+				else if(isxenohunter(A))
 					hunter++
 
 			stat(null, "Hive Status:")

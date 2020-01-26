@@ -66,7 +66,7 @@ Doesn't work on other aliens/AI.*/
 	set desc = "Transfer Plasma to another alien."
 	set category = "Alien"
 
-	if(isalien(M))
+	if(isxeno(M))
 		var/amount = input("Amount:", "Transfer Plasma to [M]") as num
 		if (amount)
 			amount = abs(round(amount))
@@ -122,7 +122,7 @@ Doesn't work on other aliens/AI.*/
 	set category = "Alien"
 
 	if(powerc(50))
-		if(isalien(target))
+		if(isxeno(target))
 			to_chat(src, "<span class='notice'>Your allies are not a valid target.</span>")
 			return
 		adjustToxLoss(-50)

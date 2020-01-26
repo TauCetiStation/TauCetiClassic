@@ -316,7 +316,7 @@
 
 /obj/machinery/bot/secbot/ed209/attack_alien(mob/living/carbon/xenomorph/user)
 	..()
-	if(!isalien(target))
+	if(!isxeno(target))
 		target = user
 		mode = SECBOT_HUNT
 

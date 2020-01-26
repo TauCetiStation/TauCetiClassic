@@ -1284,7 +1284,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if(isalien(user))
+	if(isxeno(user))
 		return 0
 	if (electrocute_mob(user, src, src))
 		return 1

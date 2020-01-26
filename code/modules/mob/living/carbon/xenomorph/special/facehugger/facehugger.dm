@@ -130,11 +130,11 @@
 		Die()
 
 /obj/item/clothing/mask/facehugger/attack_hand(mob/user)
-	if((stat == CONSCIOUS && !sterile) && !isalien(user))
+	if((stat == CONSCIOUS && !sterile) && !isxeno(user))
 		if(Attach(user))
 			return
 	else
-		if(stat == DEAD && isalien(user))
+		if(stat == DEAD && isxeno(user))
 			if(do_after(user, 20, target = src))
 				to_chat(user, "You ate a facehugger.")
 				qdel(src)
@@ -208,7 +208,7 @@
 				return FALSE
 	if(C.stat == DEAD)
 		return FALSE
-	if(isalien(C))
+	if(isxeno(C))
 		return FALSE
 	if(locate(/obj/item/alien_embryo) in C.contents)
 		return FALSE

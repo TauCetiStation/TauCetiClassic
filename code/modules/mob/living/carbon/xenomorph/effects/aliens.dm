@@ -139,7 +139,7 @@
 /obj/structure/alien/resin/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if (islarva(usr) || isfacehugger(usr))//Safety check for larva. /N
+	if (isxenolarva(usr) || isfacehugger(usr))//Safety check for larva. /N
 		return
 	user.visible_message("<span class='warning'>[usr] claws at the resin!</span>", self_message = "<span class='notice'>You claw at the [name].</span>")
 	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
@@ -409,7 +409,7 @@
 	addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 
 /obj/structure/alien/egg/attack_paw(mob/user)
-	if(isalien(user))
+	if(isxeno(user))
 		switch(status)
 			if(GROWN)
 				to_chat(user, "<span class='notice'>You retrieve the child.</span>")

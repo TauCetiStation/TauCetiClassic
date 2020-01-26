@@ -99,14 +99,14 @@
 		blinded = 1
 		silent = 0
 	else				//ALIVE. LIGHTS ARE ON
-		if(isalienadult(src))
+		if(isxenoadult(src))
 			if(health < config.health_threshold_dead || !has_brain())
 				death()
 				blinded = 1
 				stat = DEAD
 				silent = 0
 				return 1
-		else if(isfacehugger(src) || islarva(src))
+		else if(isfacehugger(src) || isxenolarva(src))
 			if(health < 0 || !has_brain())
 				death()
 				blinded = 1

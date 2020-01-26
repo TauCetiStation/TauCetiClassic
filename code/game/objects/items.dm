@@ -360,7 +360,7 @@
 	if (!user || anchored)
 		return
 
-	if(isalien(user)) // -- TLE
+	if(isxeno(user)) // -- TLE
 		var/mob/living/carbon/xenomorph/A = user
 
 		if(!A.has_fine_manipulation || w_class >= ITEM_SIZE_LARGE)

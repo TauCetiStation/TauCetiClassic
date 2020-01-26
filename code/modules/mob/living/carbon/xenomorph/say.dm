@@ -64,7 +64,7 @@
 
 	var/list/heard = list()
 	for (var/mob/M in listening)
-		if(!isalien(M) && !M.alien_talk_understand)
+		if(!isxeno(M) && !M.alien_talk_understand)
 			heard += M
 
 

@@ -26,7 +26,7 @@
 	var/typepath
 	if(ishuman(M))
 		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints
-	else if(isalien(M))
+	else if(isxeno(M))
 		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints/claws
 	else // can shomeone make shlime footprint shprites later pwetty pwease?
 		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints/paws
