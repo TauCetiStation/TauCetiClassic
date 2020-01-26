@@ -8,12 +8,6 @@ var/logs_folder
 	enable_debugger()
 #endif
 
-	//logs
-	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
-	href_logfile = file("data/logs/[date_string] hrefs.htm")
-	diary = file("data/logs/[date_string].log")
-	diary << "[log_end]\n[log_end]\nStarting up. [time2text(world.timeofday, "hh:mm.ss")][log_end]\n---------------------[log_end]"
-
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
 
@@ -36,7 +30,6 @@ var/logs_folder
 		load_whitelistSQL()
 	load_proxy_whitelist()
 	LoadBans()
-	investigate_reset()
 
 	spawn
 		changelog_hash = trim(get_webpage(config.changelog_hash_link))
@@ -44,9 +37,6 @@ var/logs_folder
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
 		// dumb and hardcoded but I don't care~
 		config.server_name += " #[(world.port % 1000) / 100]"
-
-	if(config && config.log_runtime)
-		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
 
 	world.send2bridge(
 		type = list(BRIDGE_ROUNDSTAT),
@@ -76,27 +66,11 @@ var/logs_folder
 
 	SetRoundID()
 	base_commit_sha = GetGitMasterCommit(1)
-
-	var/date = time2text(world.realtime, "YYYY/MM/DD")
-	logs_folder = "data/stat_logs/[date]/round-"
-
-	if(round_id)
-		logs_folder += round_id
-	else
-		var/timestamp = replacetext(time_stamp(), ":", ".")
-		logs_folder += "[timestamp]"
+	SetupLogs() // depends on round id
 
 	Get_Holiday()
 
 	src.update_status()
-
-	round_log("Server starting up")
-
-	if(base_commit_sha)
-		info("Base SHA: [base_commit_sha]")
-
-	if(fexists("test_merge.txt"))
-		info("TM: [trim(file2text("test_merge.txt"))]")
 
 	. = ..()
 
@@ -111,6 +85,36 @@ var/logs_folder
 #undef RECOMMENDED_VERSION
 
 	return
+
+/world/proc/SetupLogs()
+	var/log_suffix = round_id ? round_id : replacetext(time_stamp(), ":", ".")
+	var/log_date = time2text(world.realtime, "YYYY/MM/DD")
+	
+	global.log_directory = "data/logs/[log_date]/round-[log_suffix]"
+	global.log_investigate_directory = "[log_directory]/investigate"
+	global.log_debug_directory = "[log_directory]/debug"
+
+	global.game_log = file("[log_directory]/game.log")
+	global.hrefs_log = file("[log_directory]/href.log")
+	global.access_log = file("[log_directory]/access.log")
+
+	global.initialization_log = file("[log_debug_directory]/initialization.log")
+	global.runtime_log = file("[log_debug_directory]/runtime.log")
+	global.qdel_log  = file("[log_debug_directory]/qdel.log")
+	global.sql_error_log = file("[log_debug_directory]/sql.log")
+
+	round_log("Server starting up")
+
+	var/debug_rev_message = ""
+	if(base_commit_sha)
+		debug_rev_message += "Base SHA: [base_commit_sha]\n[log_end]"
+
+	if(fexists("test_merge.txt"))
+		debug_rev_message += "TM: [trim(file2text("test_merge.txt"))]\n[log_end]"
+
+	if(length(debug_rev_message))
+		info(debug_rev_message)
+		log_runtime(debug_rev_message)
 
 //world/Topic(href, href_list[])
 //		world << "Received a Topic() call!"
@@ -127,15 +131,18 @@ var/world_topic_spam_protect_ip = "0.0.0.0"
 var/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
-	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key][log_end]"
 
 	if (T == "ping")
+		log_href("TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
+
 		var/x = 1
 		for (var/client/C)
 			x++
 		return x
 
 	else if(T == "players")
+		log_href("TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
+
 		var/n = 0
 		for(var/mob/M in player_list)
 			if(M.client)
@@ -143,6 +150,8 @@ var/world_topic_spam_protect_time = world.timeofday
 		return n
 
 	else if (T == "status")
+		log_href("TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
+
 		var/list/s = list()
 		s["version"] = game_version
 		s["mode"] = custom_event_msg ? "event" : master_mode
@@ -175,6 +184,9 @@ var/world_topic_spam_protect_time = world.timeofday
 
 		return list2params(s)
 
+	else
+		log_href("TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
+
 /world/proc/PreShutdown(end_state)
 
 	if(dbcon.IsConnected())
@@ -189,12 +201,10 @@ var/world_topic_spam_protect_time = world.timeofday
 
 	world.log << "Runtimes count: [total_runtimes]. Runtimes skip count: [total_runtimes_skipped]."
 
-/* ToDo: these logs are too spamming, we should create different log for this. Also we have Debug buttons for this.
-
 	// Bad initializations log.
 	var/initlog = SSatoms.InitLog()
 	if(initlog)
-		world.log << initlog
+		log_initialization(initlog)
 
 	// Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
 	var/list/dellog = list()
@@ -217,9 +227,10 @@ var/world_topic_spam_protect_time = world.timeofday
 			dellog += "\tIgnored force: [I.no_respect_force] times"
 		if (I.no_hint)
 			dellog += "\tNo hint: [I.no_hint] times"
-	world.log << dellog.Join("\n")
+	if(dellog.len)
+		log_qdel(dellog.Join("\n"))
 
-*/
+
 
 var/shutdown_processed = FALSE
 

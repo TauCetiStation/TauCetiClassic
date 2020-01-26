@@ -4,19 +4,18 @@ var/global/BSACooldown = 0
 
 ////////////////////////////////
 proc/message_admins(msg, reg_flag = R_ADMIN)
+	log_adminwarn(msg) // todo: msg in html format, dublicates other logs; must be removed, use logs_*() where necessary (also, thanks you dear ZVE)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-	log_adminwarn(msg)
 	for(var/client/C in admins)
 		if(C.holder.rights & reg_flag)
 			to_chat(C, msg)
 
-/proc/msg_admin_attack(text, mob/living/target) //Toggleable Attack Messages
-	log_attack(text)
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[text]</span></span> [ADMIN_PPJMPFLW(target)]"
+/proc/msg_admin_attack(msg, mob/living/target) //Toggleable Attack Messages
+	log_attack(msg)
+	msg = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[msg]</span></span> [ADMIN_PPJMPFLW(target)]"
 	for(var/client/C in admins)
 		if(R_ADMIN & C.holder.rights)
 			if(C.prefs.chat_toggles & CHAT_ATTACKLOGS)
-				var/msg = rendered
 				to_chat(C, msg)
 
 

@@ -78,11 +78,10 @@ var/list/admin_verbs_admin = list(
 	/client/proc/debug_variables 		//allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify,
 	)
 var/list/admin_verbs_log = list(
-	/datum/admins/proc/view_txt_log,	//shows the server log (diary) for today,
-	/datum/admins/proc/view_atk_log,	//shows the server combat-log, doesn't do anything presently,
-	/client/proc/giveruntimelog,		//allows us to give access to runtime logs to somebody,
-	/client/proc/getserverlog,			//allows us to fetch server logs (diary) for other days,
-	/client/proc/getreplay,				//allows us to fetch replays for other days,
+	/client/proc/getserverlogs,			//allows us to fetch server logs (diary) for other days,
+	/client/proc/getcurrentlogs,			//allows us to fetch logs for other days,
+	/client/proc/getlogsbyid,			   //allows us to fetch logs by round id,
+	/client/proc/getoldlogs,			   //allows us to fetch logs by round id,
 	/client/proc/investigate_show,		//various admintools for investigation. Such as a singulo grief-log,
 	)
 var/list/admin_verbs_variables = list(
@@ -153,7 +152,6 @@ var/list/admin_verbs_server = list(
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
-	/client/proc/getruntimelog,                     //allows us to access runtime logs to somebody,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
 	/client/proc/ZASSettings,
@@ -221,8 +219,11 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/colorooc,
 	/client/proc/admin_ghost,
 	/client/proc/toggle_view_range,
-	/datum/admins/proc/view_txt_log,
-	/datum/admins/proc/view_atk_log,
+	/client/proc/getserverlogs,
+	/client/proc/getcurrentlogs,
+	/client/proc/getlogsbyid,
+	/client/proc/getoldlogs,
+	/client/proc/investigate_show,
 	/client/proc/cmd_admin_subtle_message,
 	/client/proc/cmd_admin_check_contents,
 	/datum/admins/proc/access_news_network,

@@ -2086,13 +2086,3 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	usr.client.cache = list()
 
 	to_chat(usr, "Your NanoUI Resource files have been refreshed")
-
-/client/proc/view_runtimes()
-	set category = "Debug"
-	set name = "View Runtimes"
-	set desc = "Open the runtime Viewer"
-
-	if(!check_rights(R_DEBUG))
-		return
-
-	error_cache.show_to(src)

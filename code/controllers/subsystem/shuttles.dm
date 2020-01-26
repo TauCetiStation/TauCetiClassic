@@ -524,7 +524,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		E.export_end()
 
 	centcom_message = msg
-	//investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", "cargo")
+	//log_investigate("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
 
 
 //Buyin
