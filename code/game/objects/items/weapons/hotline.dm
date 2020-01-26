@@ -51,7 +51,7 @@ var/global/datum/hotline/hotline_controller = new()
 		active_hotlines -= hotline_name
 
 	for(var/obj/item/weapon/phone/hotline/H in clients)
-		if(is_active_hotline(H.hotline_name))
+		if((H.hotline_name == hotline_name) || (hotline_name == "All"))
 			if(ishuman(H.loc))
 				var/mob/living/carbon/human/L = H.loc
 				L.playsound_local(null, 'sound/weapons/phone_beeps.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
