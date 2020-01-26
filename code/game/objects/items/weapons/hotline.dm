@@ -19,7 +19,7 @@ var/global/datum/hotline/hotline_controller = new()
 
 /datum/hotline/proc/scan_phones()
 	all_hotlines.Cut()
-	for(var/obj/item/weapon/phone/hotline/H in src.clients)
+	for(var/obj/item/weapon/phone/hotline/H in clients)
 		if(!(H.hotline_name in all_hotlines))
 			all_hotlines += H.hotline_name
 	for(var/H in active_hotlines)
@@ -28,7 +28,7 @@ var/global/datum/hotline/hotline_controller = new()
 	return
 
 /datum/hotline/proc/reconnect_phones()
-	for (var/obj/item/weapon/phone/hotline/H in src.clients)
+	for (var/obj/item/weapon/phone/hotline/H in clients)
 		if ((H.hotline_name in active_hotlines) && !H.connected)
 			H.connected = TRUE
 
@@ -78,7 +78,7 @@ var/global/datum/hotline/hotline_controller = new()
 
 /datum/hotline/proc/transmit(message as text, destination as text)
 	var/heard = 0
-	for(var/obj/item/weapon/phone/hotline/H in src.clients)
+	for(var/obj/item/weapon/phone/hotline/H in clients)
 		if(H.picked && (destination == "All" || H.hotline_name == destination))
 			H.say(message)
 			heard++
@@ -90,12 +90,12 @@ var/global/datum/hotline/hotline_controller = new()
 	if(timer_id && !length(active_hotlines))
 		deltimer(timer_id)
 		timer_id = null
-		for(var/obj/item/weapon/phone/hotline/H in src.clients)
+		for(var/obj/item/weapon/phone/hotline/H in clients)
 			H.ringing = FALSE
 
 /datum/hotline/proc/ring()
 	timer_id = addtimer(CALLBACK(src, .proc/ring, FALSE), 6 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
-	for(var/obj/item/weapon/phone/hotline/H in src.clients)
+	for(var/obj/item/weapon/phone/hotline/H in clients)
 		if((H.hotline_name in active_hotlines) && H.connected && !H.picked)
 			H.ringing = TRUE
 			playsound(H, 'sound/weapons/phone_ring.ogg', VOL_EFFECTS_MASTER, null, FALSE, 4)
