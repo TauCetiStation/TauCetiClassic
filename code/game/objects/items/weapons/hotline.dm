@@ -136,7 +136,7 @@ var/global/datum/hotline/hotline_controller = new()
 
 /obj/item/weapon/phone/hotline/dropped(mob/user)
 	if (picked)
-		hang_phone()
+		hang_phone(TRUE)
 	return ..()
 
 /obj/item/weapon/phone/hotline/proc/pick_phone()
@@ -149,8 +149,8 @@ var/global/datum/hotline/hotline_controller = new()
 	ringing = FALSE
 	picked = TRUE
 
-/obj/item/weapon/phone/hotline/proc/hang_phone()
-	if(!picked || !ishuman(usr) || usr.incapacitated())
+/obj/item/weapon/phone/hotline/proc/hang_phone(force_hang = FALSE)
+	if(!picked || !ishuman(usr) || (!force_hang && usr.incapacitated()))
 		return
 	usr.visible_message("[usr] hung up the phone.", "You hung up the phone.")
 	playsound(src, 'sound/weapons/phone_hang.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2)
@@ -213,7 +213,7 @@ var/global/datum/hotline/hotline_controller = new()
 				if (destination != "All")
 					return
 	var/ask_start_msg = "Start [destination]'s hotline?"
-	if (destination == "ALL")
+	if (destination == "All")
 		ask_start_msg = "Start ALL hotlines?"
 	if (alert(ask_start_msg,,"Yes","No") == "No")
 		return
