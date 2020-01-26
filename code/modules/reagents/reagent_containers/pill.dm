@@ -29,6 +29,7 @@
 				return
 
 		to_chat(M, "<span class='notice'>You swallow [src].</span>")
+		M.attack_log += text("\[[time_stamp()]\] <font color='red'>Swallow [src.name]. Reagents: [reagentlist(src)]</font>")
 		M.drop_from_inventory(src) //icon update
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, reagents.total_volume)
