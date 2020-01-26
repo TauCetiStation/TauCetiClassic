@@ -19,11 +19,12 @@
 
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/captain(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/cap(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/cap(H), SLOT_BACK)
+		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/captain(H)
-	if(H.age > 49)
+	if(H.age > (H.species.min_age + H.species.max_age) / 2)
 		var/obj/item/clothing/accessory/medal/gold/captain/new_medal = new
 		U.accessories += new_medal
 		new_medal.on_attached(U, H, TRUE)
@@ -46,7 +47,7 @@
 	L.inject(H)
 	START_PROCESSING(SSobj, L)
 	to_chat(world, "<b>[H.real_name] is the captain!</b>")//maybe should be announcment, not OOC notification?
-	
+
 	score["captain"].Add(H.real_name)
 
 	return TRUE
@@ -83,8 +84,9 @@
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
+		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_personnel(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), SLOT_SHOES)
 

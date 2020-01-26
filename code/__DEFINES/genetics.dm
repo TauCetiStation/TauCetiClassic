@@ -9,10 +9,9 @@
 #define XRAY			3
 #define HULK			4
 #define CLUMSY			5
-#define FAT				6
-#define HUSK			7
-#define NOCLONE			8
-#define LASEREYES		9 	// harm intent - click anywhere to shoot lasers from eyes
+#define HUSK			6
+#define NOCLONE			7
+#define LASEREYES		8 	// harm intent - click anywhere to shoot lasers from eyes
 
 	// Extra powers:
 //#define SHADOW			11 	// shadow teleportation (create in/out portals anywhere) (25%)

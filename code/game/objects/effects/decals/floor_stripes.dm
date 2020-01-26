@@ -11,5 +11,5 @@
 /obj/effect/decal/warning_stripes/atom_init()
 	..()
 
-	loc.overlays += src
+	loc.add_overlay(src)
 	return INITIALIZE_HINT_QDEL

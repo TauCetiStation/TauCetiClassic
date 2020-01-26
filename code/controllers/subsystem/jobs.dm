@@ -1,9 +1,5 @@
 var/datum/subsystem/job/SSjob
 
-#define GET_RANDOM_JOB 0
-#define BE_ASSISTANT 1
-#define RETURN_TO_LOBBY 2
-
 /datum/subsystem/job
 	name = "Jobs"
 
@@ -336,6 +332,7 @@ var/datum/subsystem/job/SSjob
 	for(var/mob/dead/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == GET_RANDOM_JOB)
 			GiveRandomJob(player)
+			Debug("DO pass, alternate random job, Player: [player]")
 
 	Debug("DO, Standard Check end")
 
@@ -350,8 +347,11 @@ var/datum/subsystem/job/SSjob
 	//For ones returning to lobby
 	for(var/mob/dead/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == RETURN_TO_LOBBY)
+			Debug("Alternate return to lobby, Player: [player]")
 			player.ready = 0
 			unassigned -= player
+			ticker.mode.antag_candidates -= player.mind
+			to_chat(player, "<span class='alert bold'>You were returned to the lobby because your job preferences unavailable.  You can change this behavior in preferences.</span>")
 	return 1
 
 //Gives the player the stuff he should have with his rank
@@ -484,9 +484,12 @@ var/datum/subsystem/job/SSjob
 						var/obj/item/weapon/storage/backpack/BPK = new(H)
 						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 					if(3)
-						var/obj/item/weapon/storage/backpack/satchel/norm/BPK = new(H)
+						var/obj/item/weapon/storage/backpack/alt/BPK = new(H)
 						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 					if(4)
+						var/obj/item/weapon/storage/backpack/satchel/norm/BPK = new(H)
+						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
+					if(5)
 						var/obj/item/weapon/storage/backpack/satchel/BPK = new(H)
 						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 
@@ -642,7 +645,3 @@ var/datum/subsystem/job/SSjob
 
 		tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|YOUNG=[level6]|-"
 		feedback_add_details("job_preferences",tmp_str)
-
-#undef GET_RANDOM_JOB
-#undef BE_ASSISTANT
-#undef RETURN_TO_LOBBY

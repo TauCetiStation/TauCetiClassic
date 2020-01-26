@@ -608,6 +608,11 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Internal Affairs Agent;jobban4=\ref[M]'>Internal Affairs Agent</a></td>"
 
+		if(jobban_isbanned(M, ROLE_SURVIVOR))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_SURVIVOR];jobban4=\ref[M]'><font color=red>[ROLE_SURVIVOR]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_SURVIVOR];jobban4=\ref[M]'>[ROLE_SURVIVOR]</a></td>"
+
 		jobs += "</tr></table>"
 
 	//Non-Human (Green)
@@ -2406,7 +2411,7 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","EgL")
 				for(var/obj/machinery/door/airlock/W in airlock_list)
-					if(is_station_level(W.z) && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
+					if(is_station_level(W.z) && !istype(get_area(W), /area/station/bridge) && !istype(get_area(W), /area/station/civilian/dormitories) && !istype(get_area(W), /area/station/security/prison))
 						W.req_access = list()
 				message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
 				command_alert("Centcomm airlock control override activated. Please take this time to get acquainted with your coworkers.")

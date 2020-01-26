@@ -613,7 +613,7 @@
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)
 	Sa.build_step = 1
-	Sa.overlays += image('icons/obj/aibots.dmi', "hs_hole")
+	Sa.add_overlay(image('icons/obj/aibots.dmi', "hs_hole"))
 	Sa.created_name = name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
@@ -656,14 +656,14 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0, user))
 			build_step++
-			overlays += image('icons/obj/aibots.dmi', "hs_hole")
+			add_overlay(image('icons/obj/aibots.dmi', "hs_hole"))
 			to_chat(user, "You weld a hole in [src]!")
 
 	else if(isprox(W) && build_step == 1)
 		user.drop_item()
 		build_step++
 		to_chat(user, "You add the prox sensor to [src]!")
-		overlays += image('icons/obj/aibots.dmi', "hs_eye")
+		add_overlay(image('icons/obj/aibots.dmi', "hs_eye"))
 		name = "helmet/signaler/prox sensor assembly"
 		qdel(W)
 
@@ -672,7 +672,7 @@
 		build_step++
 		to_chat(user, "You add the robot arm to [src]!")
 		name = "helmet/signaler/prox sensor/robot arm assembly"
-		overlays += image('icons/obj/aibots.dmi', "hs_arm")
+		add_overlay(image('icons/obj/aibots.dmi', "hs_arm"))
 		qdel(W)
 
 	else if(istype(W, /obj/item/weapon/melee/baton) && (build_step >= 3))

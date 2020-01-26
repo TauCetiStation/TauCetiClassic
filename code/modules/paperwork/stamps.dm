@@ -46,6 +46,11 @@
 	icon_state = "stamp-cmo"
 	item_color = "cmo"
 
+/obj/item/weapon/stamp/approve
+	name = "\improper APPROVED rubber stamp"
+	icon_state = "stamp-approve"
+	item_color = "greencoat"
+
 /obj/item/weapon/stamp/denied
 	name = "\improper DENIED rubber stamp"
 	icon_state = "stamp-deny"
@@ -146,7 +151,7 @@
 	stampoverlay.icon_state = "paper_[icon_state]"
 
 	LAZYADD(P.stamped, type)
-	P.overlays += stampoverlay
+	P.add_overlay(stampoverlay)
 
 /obj/item/weapon/stamp/attack_paw(mob/user)
 	return attack_hand(user)

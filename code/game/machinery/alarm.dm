@@ -1180,9 +1180,9 @@ FIRE ALARM
 
 	if(is_station_level(z) || is_mining_level(z))
 		if(security_level)
-			overlays += image('icons/obj/monitors.dmi', "overlay_[get_security_level()]")
+			add_overlay(image('icons/obj/monitors.dmi', "overlay_[get_security_level()]"))
 		else
-			overlays += image('icons/obj/monitors.dmi', "overlay_green")
+			add_overlay(image('icons/obj/monitors.dmi', "overlay_green"))
 
 	update_icon()
 

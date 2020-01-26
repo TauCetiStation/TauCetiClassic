@@ -76,6 +76,24 @@
 	to_chat(src, "Attempting to send file, this may take a fair few minutes if the file is very large.")
 	return
 
+//This proc allows download of past server logs saved within the data/stat_logs/ folder.
+//It works similarly to show-server-log.
+/client/proc/getreplay()
+	set name = ".getreplay"
+	set desc = "Fetch replay from data/stat_logs"
+	set category = null
+
+	var/path = browse_files("data/stat_logs/")
+	if(!path)
+		return
+
+	if(file_spam_check())
+		return
+
+	message_admins("[key_name_admin(src)] accessed file: [path]")
+	src << ftp( file(path) )
+	to_chat(src, "Attempting to send file, this may take a fair few minutes if the file is very large.")
+	return
 
 //Other log stuff put here for the sake of organisation
 

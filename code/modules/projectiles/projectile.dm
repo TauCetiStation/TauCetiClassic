@@ -70,7 +70,9 @@
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
 
-	var/list/proj_act_sound = null
+	var/list/proj_act_sound = null // this probably could be merged into the one below, because bullet_act is too specific, while on_impact (Bump) handles bullet_act too.
+	// ^ the one above used in bullet_act for mobs, while this one below used in on_impact() which happens after Bump() or killed by process. v
+	var/proj_impact_sound = null // originally made for big plasma ball hit sound, and its okay when both proj_act_sound and this one plays at the same time.
 
 /obj/item/projectile/atom_init()
 	damtype = damage_type // TODO unify these vars properly (Bay12)
@@ -113,7 +115,8 @@
 	//called when the projectile stops flying because it collided with something
 /obj/item/projectile/proc/on_impact(atom/A)
 	impact_effect(effect_transform)		// generate impact effect
-	return
+	if(proj_impact_sound)
+		playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)
 
 /obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  //Checks if you can hit them or not.
 	if(!istype(target) || !istype(user))
@@ -255,7 +258,7 @@
 		return 1
 
 
-/obj/item/projectile/process()
+/obj/item/projectile/process(boolet_number = 1) // we add default arg value, because there is alot of uses of projectiles without guns (e.g turrets).
 	var/first_step = 1
 
 	//plot the initial trajectory
@@ -296,7 +299,8 @@
 							return
 
 		if(first_step)
-			muzzle_effect(effect_transform)
+			if(boolet_number == 1) // so that it won't spam with muzzle effects incase of multiple pellets.
+				muzzle_effect(effect_transform)
 			first_step = 0
 		else if(!bumped)
 			tracer_effect(effect_transform)
@@ -353,7 +357,7 @@
 			P.activate()
 
 /obj/item/projectile/proc/impact_effect(matrix/M)
-	if(ispath(tracer_type) && location)
+	if(ispath(impact_type) && location)
 		var/obj/effect/projectile/P = new impact_type(location.loc)
 
 		if(istype(P))

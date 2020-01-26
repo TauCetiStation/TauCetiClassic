@@ -40,9 +40,6 @@
 #define O_KIDNEYS  "kidneys"
 #define O_APPENDIX "appendix"
 
-#define AGE_MIN 25			//youngest a character can be
-#define AGE_MAX 85			//oldest a character can be
-
 #define LEFT  1
 #define RIGHT 2
 
@@ -137,3 +134,7 @@
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
+
+// Indicators.
+#define IND_STAT          "stat"
+#define IND_STAT_NOCLIENT "stat_noclient"

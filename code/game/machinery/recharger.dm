@@ -16,7 +16,7 @@
                                         /obj/item/weapon/gun/energy,
                                         /obj/item/weapon/melee/baton,
                                         /obj/item/weapon/twohanded/shockpaddles/standalone,
-                                        /obj/item/ammo_box/magazine/l10mag
+                                        /obj/item/ammo_box/magazine/plasma
                                     )
 
 /obj/machinery/recharger/atom_init()
@@ -123,16 +123,12 @@
 			else
 				icon_state = "recharger2"
 			return
-		if(istype(charging, /obj/item/ammo_box/magazine/l10mag))
-			var/obj/item/ammo_box/magazine/l10mag/M = charging
-			if (M.stored_ammo.len < M.max_ammo)
-				M.stored_ammo += new M.ammo_type(M)
-				if(prob(80)) //double charging speed
-					if (M.stored_ammo.len < M.max_ammo)
-						M.stored_ammo += new M.ammo_type(M)
-				update_icon()
+		if(istype(charging, /obj/item/ammo_box/magazine/plasma))
+			var/obj/item/ammo_box/magazine/plasma/M = charging
+			if(M.power_supply.charge < M.power_supply.maxcharge)
+				M.power_supply.give(2000 * recharge_coeff) // fast charge (and yes, this can be abused to charge cells faster, but it means that you need a free magazine for that purpose).
 				icon_state = "recharger1"
-				use_power(500 * recharge_coeff)
+				use_power(5000 * recharge_coeff)
 			else
 				icon_state = "recharger2"
 
@@ -197,16 +193,12 @@
 				use_power(200 * recharge_coeff)
 			else
 				icon_state = "wrecharger2"
-		if(istype(charging, /obj/item/ammo_box/magazine/l10mag))
-			var/obj/item/ammo_box/magazine/l10mag/M = charging
-			if (M.stored_ammo.len < M.max_ammo)
-				M.stored_ammo += new M.ammo_type(M)
-				if(prob(80)) //double charging speed
-					if (M.stored_ammo.len < M.max_ammo)
-						M.stored_ammo += new M.ammo_type(M)
-				update_icon()
+		if(istype(charging, /obj/item/ammo_box/magazine/plasma))
+			var/obj/item/ammo_box/magazine/plasma/M = charging
+			if(M.power_supply.charge < M.power_supply.maxcharge)
+				M.power_supply.give(2000 * recharge_coeff)
 				icon_state = "wrecharger1"
-				use_power(500 * recharge_coeff)
+				use_power(5000 * recharge_coeff)
 			else
 				icon_state = "wrecharger2"
 

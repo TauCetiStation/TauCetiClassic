@@ -17,7 +17,7 @@ var/lastMove = 0
 
 
 /obj/machinery/computer/arrival_shuttle/atom_init()
-//	curr_location= locate(/area/shuttle/arrival/pre_game)
+//	curr_location= locate(/area/shuttle/arrival/velocity)
 	arrival_note = "Arrival shuttle docked with the [station_name()]."
 	department_note = "Arrival shuttle left the [station_name()]."
 	radio = new (src)
@@ -51,12 +51,12 @@ var/lastMove = 0
 	var/destLocation
 
 	if(location == 0)
-		fromArea = locate(/area/shuttle/arrival/pre_game)
+		fromArea = locate(/area/shuttle/arrival/velocity)
 		destArea = locate(/area/shuttle/arrival/station)
 		destLocation = 2
 	else if(location == 2)
 		fromArea = locate(/area/shuttle/arrival/station)
-		destArea = locate(/area/shuttle/arrival/pre_game)
+		destArea = locate(/area/shuttle/arrival/velocity)
 		destLocation = 0
 	else
 		return
@@ -110,18 +110,18 @@ var/lastMove = 0
 
 
 /obj/machinery/computer/arrival_shuttle/proc/lock_doors(area/A)
-	SSshuttle.undock_act(/area/centcom/arrival, "velocity_1")
-	SSshuttle.undock_act(/area/hallway/secondary/entry, "arrival_1")
+	SSshuttle.undock_act(/area/velocity, "velocity_1")
+	SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_1")
 	SSshuttle.undock_act(A)
 
 /obj/machinery/computer/arrival_shuttle/proc/open_doors(area/A, arrival)
 	switch(arrival)
 		if(0) //Velocity
-			SSshuttle.dock_act(/area/centcom/arrival, "velocity_1")
+			SSshuttle.dock_act(/area/velocity, "velocity_1")
 			SSshuttle.dock_act(A)
 
 		if(2) //Station
-			SSshuttle.dock_act(/area/hallway/secondary/entry, "arrival_1")
+			SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_1")
 			SSshuttle.dock_act(A)
 
 /obj/machinery/computer/arrival_shuttle/proc/shake_mobs(area/A)

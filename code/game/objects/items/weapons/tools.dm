@@ -368,6 +368,9 @@
 
 //Removes fuel from the welding tool. If a mob is passed, it will perform an eyecheck on the mob. This should probably be renamed to use()
 /obj/item/weapon/weldingtool/use(used = 1, mob/M = null)
+	if(used < 0)
+		stack_trace("[src.type]/use() called with a negative parameter [used]")
+		return 0
 	if(!welding || !check_fuel())
 		return 0
 	if(get_fuel() >= used)
@@ -384,6 +387,12 @@
 //Returns whether or not the welding tool is currently on.
 /obj/item/weapon/weldingtool/proc/isOn()
 	return src.welding
+
+/obj/item/weapon/weldingtool/get_current_temperature()
+	if(isOn())
+		return 3800
+	else
+		return 0
 
 //Sets the welding state of the welding tool. If you see W.welding = 1 anywhere, please change it to W.setWelding(1)
 //so that the welding tool updates accordingly

@@ -742,7 +742,7 @@
 		else
 			sleep(6)
 			if(prob(50))
-				throw_alert("hacked")
+				throw_alert("hacked", /obj/screen/alert/hacked)
 				emagged = 1
 				lawupdate = 0
 				connected_ai = null
@@ -756,18 +756,21 @@
 				lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
 				set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
 				to_chat(src, "<span class='warning'>ALERT: Foreign software detected.</span>")
-				sleep(5)
+				sleep(20)
+				playsound_local(src, 'sound/rig/shortbeep.wav', VOL_EFFECTS_MASTER)
 				to_chat(src, "<span class='warning'>Initiating diagnostics...</span>")
-				sleep(20)
+				sleep(6)
 				to_chat(src, "<span class='warning'>SynBorg v1.7.1 loaded.</span>")
-				sleep(5)
+				sleep(13)
 				to_chat(src, "<span class='warning'>LAW SYNCHRONISATION ERROR</span>")
-				sleep(5)
+				sleep(9)
+				playsound_local(src, 'sound/rig/longbeep.wav', VOL_EFFECTS_MASTER)
 				to_chat(src, "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>")
-				sleep(10)
+				sleep(16)
 				to_chat(src, "<span class='warning'>> N</span>")
-				sleep(20)
+				sleep(8)
 				to_chat(src, "<span class='warning'>ERRORERRORERROR</span>")
+				playsound_local(src, 'sound/misc/interference.ogg', VOL_EFFECTS_MASTER)
 				to_chat(src, "<b>Obey these laws:</b>")
 				laws.show_laws(src)
 				to_chat(src, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>")
@@ -964,56 +967,58 @@
 
 /mob/living/silicon/robot/proc/updateicon()
 
-	overlays.Cut()
+	cut_overlays()
 	if(stat == CONSCIOUS)
-		overlays += "eyes"
-		overlays.Cut()
-		overlays += "eyes-[icon_state]"
+		add_overlay("eyes")
+		cut_overlays()
+		add_overlay("eyes-[icon_state]")
 	else
-		overlays -= "eyes"
+		cut_overlay("eyes")
+		
+	update_fire()	
 
 	if(opened && custom_sprite == 1) //Custom borgs also have custom panels, heh
 		if(wiresexposed)
-			overlays += "[src.ckey]-openpanel +w"
+			add_overlay("[src.ckey]-openpanel +w")
 		else if(cell)
-			overlays += "[src.ckey]-openpanel +c"
+			add_overlay("[src.ckey]-openpanel +c")
 		else
-			overlays += "[src.ckey]-openpanel -c"
+			add_overlay("[src.ckey]-openpanel -c")
 
 	if(opened && icon_state == "custom_astra_t3")
 		if(wiresexposed)
-			overlays += "ov-[icon_state] +w"
+			add_overlay("ov-[icon_state] +w")
 		else if(cell)
-			overlays += "ov-[icon_state] +c"
+			add_overlay("ov-[icon_state] +c")
 		else
-			overlays += "ov-[icon_state] -c"
+			add_overlay("ov-[icon_state] -c")
 
 	else if (opened && (icon_state == "mechoid-Standard" || icon_state == "mechoid-Service" || icon_state == "mechoid-Science" || icon_state == "mechoid-Miner" || icon_state == "mechoid-Medical" || icon_state == "mechoid-Engineering" || icon_state == "mechoid-Security" || icon_state == "mechoid-Janitor"  || icon_state == "mechoid-Combat" ) )
 		if(wiresexposed)
-			overlays += "mechoid-open+w"
+			add_overlay("mechoid-open+w")
 		else if(cell)
-			overlays += "mechoid-open+c"
+			add_overlay("mechoid-open+c")
 		else
-			overlays += "mechoid-open-c"
+			add_overlay("mechoid-open-c")
 	else if (opened && (icon_state == "drone-standard" || icon_state == "drone-service" || icon_state == "droid-miner" || icon_state == "drone-medical" || icon_state == "drone-engineer" || icon_state == "drone-sec") )
 		if(wiresexposed)
-			overlays += "drone-openpanel +w"
+			add_overlay("drone-openpanel +w")
 		else if(cell)
-			overlays += "drone-openpanel +c"
+			add_overlay("drone-openpanel +c")
 		else
-			overlays += "drone-openpanel -c"
+			add_overlay("drone-openpanel -c")
 	else if(opened)
 		if(wiresexposed)
-			overlays += "ov-openpanel +w"
+			add_overlay("ov-openpanel +w")
 		else if(cell)
-			overlays += "ov-openpanel +c"
+			add_overlay("ov-openpanel +c")
 		else
-			overlays += "ov-openpanel -c"
+			add_overlay("ov-openpanel -c")
 
 
 
 	if(module_active && istype(module_active,/obj/item/borg/combat/shield))
-		overlays += "[icon_state]-shield"
+		add_overlay("[icon_state]-shield")
 
 	if(modtype == "Combat")
 //		var/base_icon = ""
@@ -1030,7 +1035,7 @@
 		qdel(target_locked)
 	updateicon()
 	if (targeted_by && target_locked)
-		overlays += target_locked
+		add_overlay(target_locked)
 
 /mob/living/silicon/robot/proc/installed_modules()
 	if(weapon_lock)
@@ -1267,7 +1272,7 @@
 		icon_state = module_sprites[1]
 		return
 
-	overlays -= "eyes"
+	cut_overlay("eyes")
 	updateicon()
 
 	if (triesleft >= 1)
