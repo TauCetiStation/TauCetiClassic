@@ -3,10 +3,14 @@
 
 var/global/datum/hotline/hotline_controller = new()
 
-/proc/log_hotline(var/msg, var/submsg = "")
-	var/rendered = text("<span class='notice'><b><font color='red'>HOTLINE: </font>[]</b>[]</span>", submsg, submsg ? ": " + msg : msg)
+/proc/log_hotline(msg, submsg = "")
+	msg = submsg ? ": " + msg : msg
+	var/rendered = "<span class='notice'><b><font color='red'>HOTLINE: </font>[submsg]</b>[msg]</span>"
 	for(var/client/C in admins)
 		to_chat(C, rendered)
+	if (config.log_say)
+		msg = replace_characters(msg, list(JA_ENTITY=JA_PLACEHOLDER, JA_ENTITY_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
+		diary << "\[[time_stamp()]]HOTLINE: [msg][log_end]"
 
 /datum/hotline
 	var/list/obj/item/weapon/phone/hotline/clients = list()
@@ -37,12 +41,6 @@ var/global/datum/hotline/hotline_controller = new()
 		if ((H.hotline_name in active_hotlines) && !H.connected)
 			H.connected = TRUE
 
-/datum/hotline/proc/get_hotlines()
-	return all_hotlines
-
-/datum/hotline/proc/get_active_hotlines()
-	return active_hotlines
-
 /datum/hotline/proc/is_active_hotline(hotline_name)
 	if (hotline_name == "All" && length(active_hotlines))
 		return TRUE
@@ -62,7 +60,7 @@ var/global/datum/hotline/hotline_controller = new()
 		active_hotlines -= hotline_name
 
 	for(var/obj/item/weapon/phone/hotline/H in clients)
-		if((H.hotline_name == hotline_name) || (hotline_name == "All"))
+		if(is_active_hotline(H.hotline_name))
 			if(ishuman(H.loc))
 				var/mob/living/carbon/human/L = H.loc
 				L.playsound_local(null, 'sound/weapons/phone_beeps.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
@@ -137,7 +135,7 @@ var/global/datum/hotline/hotline_controller = new()
 /obj/item/weapon/phone/hotline/attack_self(mob/user)
 	if (picked)
 		hang_phone()
-	else
+	else if(ringing)
 		pick_phone()
 	return ..()
 
@@ -186,7 +184,7 @@ var/global/datum/hotline/hotline_controller = new()
 		return
 
 	global.hotline_controller.scan_phones()
-	var/list/hotlines = global.hotline_controller.get_hotlines()
+	var/list/hotlines = global.hotline_controller.all_hotlines
 	if(!length(hotlines))
 		to_chat(usr, "<span class='warning'>There is no Hotline phones!</span>")
 		return
