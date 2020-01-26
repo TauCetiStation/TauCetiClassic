@@ -3,6 +3,11 @@
 
 var/global/datum/hotline/hotline_controller = new()
 
+/proc/log_hotline(var/msg, var/submsg = "")
+	var/rendered = text("<span class='notice'><b><font color='red'>HOTLINE: </font>[]</b>[]</span>", submsg, submsg ? ": " + msg : msg)
+	for(var/client/C in admins)
+		to_chat(C, rendered)
+
 /datum/hotline
 	var/list/obj/item/weapon/phone/hotline/clients = list()
 	var/list/all_hotlines = list()
@@ -55,7 +60,15 @@ var/global/datum/hotline/hotline_controller = new()
 	else
 		msg_log += "a [hotline_name]'s hotline."
 		active_hotlines -= hotline_name
-	message_admins("<font color='red'>HOTLINE:</font> [msg_log]")
+
+	for(var/obj/item/weapon/phone/hotline/H in clients)
+		if((H.hotline_name == hotline_name) || (hotline_name == "All"))
+			if(ishuman(H.loc))
+				var/mob/living/carbon/human/L = H.loc
+				L.playsound_local(null, 'sound/weapons/phone_beeps.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
+				L = null
+			H.connected = FALSE
+	log_hotline(msg_log)
 	return
 
 // Start hotline channel
@@ -72,18 +85,18 @@ var/global/datum/hotline/hotline_controller = new()
 	else
 		started += hotline_name
 		active_hotlines[hotline_name] = TRUE
-	message_admins("<font color='red'>HOTLINE:</font> [key_name(usr)] started hotline[length(started) > 1 ? "s" : ""] " + started.Join(", ") + ".")
+	log_hotline("[key_name(usr)] started hotline[length(started) > 1 ? "s" : ""] " + started.Join(", ") + ".")
 	reconnect_phones()
 	ring()
 
 /datum/hotline/proc/transmit(message as text, destination as text)
 	var/heard = 0
 	for(var/obj/item/weapon/phone/hotline/H in clients)
-		if(H.picked && (destination == "All" || H.hotline_name == destination))
+		if(H.picked && H.connected && (destination == "All" || H.hotline_name == destination))
 			H.say(message)
 			heard++
 	log_say("Hotline/[key_name(usr)] : \[[destination]\]: [message]")
-	message_admins("<font color='red'>HOTLINE:</font> [key_name(usr)] messaged [destination]([heard]). Message: \"[message]\".")
+	log_hotline("[key_name(usr)] messaged [destination]([heard]). Message: \"[message]\".")
 	return (heard > 0)
 
 /datum/hotline/proc/stop_ring()
@@ -102,13 +115,6 @@ var/global/datum/hotline/hotline_controller = new()
 		else
 			H.ringing = FALSE
 
-		if((!(H.hotline_name in active_hotlines)) && H.connected && H.picked)
-			if (ishuman(H.loc))
-				var/mob/living/carbon/human/L = H.loc
-				L.playsound_local(null, 'sound/weapons/phone_beeps.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
-				L = null
-			H.connected = FALSE
-
 
 /obj/item/weapon/phone/hotline
 	name = "red phone"
@@ -117,6 +123,7 @@ var/global/datum/hotline/hotline_controller = new()
 	var/ringing = FALSE
 	var/picked = FALSE
 	var/hotline_name = "Hotline"
+	var/addresser_name = ""
 	var/mob/listener = null
 
 /obj/item/weapon/phone/hotline/atom_init()
@@ -144,7 +151,7 @@ var/global/datum/hotline/hotline_controller = new()
 		return
 	usr.visible_message("[usr] picked up the phone.", "You picked up the phone.")
 	playsound(src, 'sound/weapons/phone_pick.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2)
-	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(usr)] picked up a [hotline_name]'s phone. [ADMIN_JMP(usr)]")
+	log_hotline("[key_name_admin(usr)] picked up a [hotline_name]'s phone.", "[ADMIN_PP(usr)] [ADMIN_VV(usr)] [ADMIN_SM(usr)] [ADMIN_TP(usr)] [ADMIN_FLW(usr)]")
 	connected = TRUE
 	ringing = FALSE
 	picked = TRUE
@@ -154,7 +161,7 @@ var/global/datum/hotline/hotline_controller = new()
 		return
 	usr.visible_message("[usr] hung up the phone.", "You hung up the phone.")
 	playsound(src, 'sound/weapons/phone_hang.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2)
-	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(usr)] hanged off a [hotline_name]'s phone. [ADMIN_JMP(usr)]")
+	log_hotline("[key_name_admin(usr)] hanged off a [hotline_name]'s phone.", "[ADMIN_PP(usr)] [ADMIN_VV(usr)] [ADMIN_SM(usr)] [ADMIN_TP(usr)] [ADMIN_FLW(usr)]")
 	connected = TRUE  // connection reset
 	picked = FALSE
 
@@ -164,7 +171,7 @@ var/global/datum/hotline/hotline_controller = new()
 		var/part_a = "<span class='secradio'><span class='name'>"
 		var/part_b = "</span><b> [bicon(src)]\[Hotline\]</b> <span class='message'>"
 		var/part_c = "</span></span>"
-		var/rendered = "[part_a][hotline_name][part_b]says, \"[message]\"[part_c]"
+		var/rendered = "[part_a][addresser_name ? addresser_name : hotline_name][part_b]says, \"[message]\"[part_c]"
 		L.show_message(rendered, SHOWMSG_AUDIO)
 		L = null
 
