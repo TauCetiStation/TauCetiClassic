@@ -218,6 +218,10 @@ Note: Must be placed west/left of and R&D console to function.
 	var/amount = RNDD.amount
 	for(var/i = 1 to amount)
 		var/obj/new_item = new D.build_path(loc)
+		// This is very important. Almost all items constructed via protolathe are unreliable
+		// And are deconstructions of items made by deconstructing other items
+		// So consider them tests of "new" construction techniques for an item already known
+		new_item.prototipify()
 		new_item.m_amt /= efficiency_coeff
 		new_item.g_amt /= efficiency_coeff
 	busy = FALSE
