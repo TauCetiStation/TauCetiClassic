@@ -78,6 +78,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 			AddDesign2Known(D)
 
 	experiments = new /datum/experiment_data()
+	// This is a science station. Most tech is already at least somewhat known.
+	experiments.init_known_tech()
 
 /datum/research/proc/IsResearched(datum/technology/T)
 	return !!researched_tech[T.id]
