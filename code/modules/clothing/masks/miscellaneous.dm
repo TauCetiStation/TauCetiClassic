@@ -277,3 +277,26 @@
 			to_chat(user, "<span class='notice'>You turn the [src] off</span>")
 		last_time_used = world.time
 	return
+
+/obj/item/clothing/mask/clownnose
+	name = "clown nose"
+	desc = "Take center ring at your carnival party with this red clown nose. These clown nose are made of lightweight foam and have a slit down the middle for a comfortable fit."
+	icon_state = "clownnose"
+	item_state = "clownnose"
+	w_class = ITEM_SIZE_SMALL
+	action_button_name = "HONK!"
+	var/cooldown = FALSE
+
+/obj/item/clothing/mask/clownnose/verb/honk()
+	set category = "Object"
+	set name = "HONK!"
+	set src in usr
+	if(!istype(usr, /mob/living)) return
+	if(usr.stat) return
+	if(cooldown < world.time - 8)
+		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
+		cooldown = world.time
+	return
+
+/obj/item/clothing/mask/clownnose/attack_self()
+	honk()

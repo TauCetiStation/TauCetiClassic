@@ -301,3 +301,27 @@
 	desc = "Soldier's black gas mask."
 	icon_state = "German_gasmask"
 	item_color = "German_gasmask"
+
+/obj/item/clothing/mask/gas/dallas
+	name = "dallas mask"
+	desc = "Replica of the mask which used by legendary clown robbers team. «Let's make that money.»"
+	icon_state = "dallas"
+	item_state = "dallas"
+
+/obj/item/clothing/mask/gas/hoxton
+	name = "hoxton mask"
+	desc = "Replica of the mask which used by legendary clown robbers team. «Time to rock and roll...»"
+	icon_state = "hoxton"
+	item_state = "hoxton"
+
+/obj/item/clothing/mask/gas/chains
+	name = "chains mask"
+	desc = "Replica of the mask which used by legendary clown robbers team. «Asses are for kicking, not for sitting, now get up!»"
+	icon_state = "chains"
+	item_state = "chains"
+
+/obj/item/clothing/mask/gas/wolf
+	name = "wolf mask"
+	desc = "Replica of the mask which used by legendary clown robbers team. «Alright, let's get rich.»"
+	icon_state = "wolf"
+	item_state = "wolf"
