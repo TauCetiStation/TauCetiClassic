@@ -16,5 +16,4 @@
 	user.drop_item()
 	I.loc = src.loc
 
-	for(var/mob/O in hearers(src, null))
-		O.show_message("[bicon(src)] <span class='notice'>The [src.name] beeps</span>", 2)
+	audible_message("[bicon(src)] <span class='notice'>The [src.name] beeps</span>")

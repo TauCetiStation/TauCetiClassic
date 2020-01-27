@@ -31,7 +31,7 @@
 				var/turf/TO = get_turf(chosen)			 // the turf of origin we're travelling TO
 
 				playsound(TO, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
-				command_alert("Massive bluespace translocation detected.", "Anomaly Alert")
+				command_alert("Massive bluespace translocation detected.", "Anomaly Alert", sound = "bluspacetrans")
 
 				var/list/flashers = list()
 				for(var/mob/living/carbon/human/M in viewers(TO, null))

@@ -43,7 +43,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	var/list/design_categories_protolathe = list()
 	var/list/design_categories_imprinter = list()
 
-	var/list/tech_trees = list() // associative
+	var/list/datum/tech/tech_trees = list() // associative
 	var/list/all_technologies = list() // associative
 	var/list/researched_tech = list()
 
@@ -70,7 +70,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	for(var/tech_tree_id in tech_trees)
 		var/datum/tech/Tech_Tree = tech_trees[tech_tree_id]
-		Tech_Tree.maxlevel = 1 + all_technologies[tech_tree_id].len
+		Tech_Tree.maxlevel = 1 + length(all_technologies[tech_tree_id])
 
 	for(var/design_id in design_by_id)
 		var/datum/design/D = design_by_id[design_id]

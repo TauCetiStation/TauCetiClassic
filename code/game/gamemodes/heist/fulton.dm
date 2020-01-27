@@ -87,7 +87,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 				playsound(H, pick(SOUNDIN_MALE_HEAVY_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 				H.SetParalysis(0) // wakey wakey
 				H.drowsyness = 0
-				H.sleeping = 0
+				H.SetSleeping(0)
 			//sleep(30)
 			holder_obj.loc = extraction_point
 			s = new /datum/effect/effect/system/spark_spread

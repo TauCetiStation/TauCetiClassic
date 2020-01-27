@@ -218,7 +218,7 @@
 			to_chat(M, "<span class='notice'>You have been [mute_string] unmuted from [usr.key].</span>")
 	else
 		if(alert("Would you like to make it permament?","Permamute?","Yes","No, round only") == "Yes")
-			var/permmutreason = input("Permamute Reason") as text
+			var/permmutreason = input("Permamute Reason") as text|null
 			if(permmutreason)
 				muteunmute = "permamuted"
 				M.client.prefs.permamuted |= mute_type
@@ -232,7 +232,7 @@
 				return
 
 		else if (alert("Add a notice for round mute?", "Mute Notice?", "Yes","No") == "Yes")
-			var/mutereason = input("Mute Reason") as text
+			var/mutereason = input("Mute Reason") as text|null
 			if(mutereason)
 				notes_add(M.key, "Muted from [mute_string]: [mutereason]", usr.client)
 				mutereason = sanitize(mutereason)
@@ -354,7 +354,7 @@ Ccomp's first proc.
 	G.has_enabled_antagHUD = 2
 	G.can_reenter_corpse = 1
 
-	G:show_message(text("<span class='notice'><B>You may now respawn.  You should roleplay as if you learned nothing about the round during your time with the dead.</B></span>"), 1)
+	to_chat(G, "<span class='notice'><B>You may now respawn. You should roleplay as if you learned nothing about the round during your time with the dead.</B></span>")
 	log_admin("[key_name(usr)] allowed [key_name(G)] to bypass the 30 minute respawn limit")
 	message_admins("Admin [key_name_admin(usr)] allowed [key_name_admin(G)] to bypass the 30 minute respawn limit")
 
@@ -674,6 +674,16 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 	if(!customname)
 		customname = "NanoTrasen Update"
+
+	switch(alert("Should this be announced to the general population?",,"Yes","No","Cancel"))
+		if("Yes")
+			command_alert(input, customname)
+		if("No")
+			to_chat(world, "<span class='warning'>New NanoTrasen Update available at all communication consoles.</span>")
+			station_announce(sound = "commandreport")
+		if("Cancel")
+			return
+
 	for (var/obj/machinery/computer/communications/C in communications_list)
 		if(! (C.stat & (BROKEN|NOPOWER) ) )
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
@@ -682,13 +692,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			P.update_icon()
 			C.messagetitle.Add("[command_name()] Update")
 			C.messagetext.Add(P.info)
-
-	switch(alert("Should this be announced to the general population?",,"Yes","No"))
-		if("Yes")
-			command_alert(input, customname);
-		if("No")
-			to_chat(world, "<span class='warning'>New NanoTrasen Update available at all communication consoles.</span>")
-			station_announce(sound = "commandreport")
 
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report")
@@ -1123,7 +1126,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if(stamp_text)
 			S.stamp_paper(P, stamp_text)
 		else
-			S.stamp_paper(P, use_stamp_by_message = TRUE)
+			S.stamp_paper(P)
 
 	send_fax(usr, P, department)
 
@@ -1133,7 +1136,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("Fax message was created by [key_name_admin(usr)] and sent to [department]")
 	world.send2bridge(
 		type = list(BRIDGE_ADMINCOM),
-		attachment_title = ":fax: Fax message was created by **[key_name_admin(usr)]** and sent to ***[department]***",
+		attachment_title = ":fax: Fax message was created by **[key_name(usr)]** and sent to ***[department]***",
 		attachment_msg = sent_text,
 		attachment_color = BRIDGE_COLOR_ADMINCOM,
 	)

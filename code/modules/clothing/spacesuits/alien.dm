@@ -284,7 +284,8 @@
 			toggle_stealth(TRUE)
 			return
 		if(wearer)
-			wearer.alpha = 5
+			wearer.alpha = 4
+			wearer.mouse_opacity = 0
 			if(current_charge <= (power_decrease * 15)) // there are 30 seconds to full discharge
 				wearer.playsound_local(null, 'sound/rig/loudbeep.wav', VOL_EFFECTS_MASTER, null, FALSE)
 				to_chat(wearer, "<span class='danger'>Critically low charge:</span> <span class='electronicblue'>\[ [current_charge] \]</span>")
@@ -319,6 +320,7 @@
 		on = FALSE
 		slowdown = 0.5
 		wearer.alpha = 255
+		wearer.mouse_opacity = 1
 	else if(!deactive)
 		if(!istype(wearer.head, /obj/item/clothing/head/helmet/space/vox/stealth))
 			to_chat(wearer, "<span class='warning'>The cloaking system cannot function without a helmet.</span>")
@@ -338,7 +340,8 @@
 			on = TRUE
 			to_chat(wearer, "<span class='notice'>Stealth mode in now on!</span>")
 			slowdown = 2
-			wearer.alpha = 5
+			wearer.alpha = 4
+			wearer.mouse_opacity = 0
 			START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/vox/stealth/proc/is_damaged(low_damage_check = FALSE)

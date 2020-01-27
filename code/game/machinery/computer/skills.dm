@@ -1,4 +1,8 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+#define SKILLS_MODE_MAIN_SCREEN 1
+#define SKILLS_MODE_MAINTENACE_SCREEN 2
+#define SKILLS_MODE_EDIT_SCREEN 3
+#define SKILLS_MODE_SEARCH_SCREEN 4
 
 /obj/machinery/computer/skills//TODO:SANITY
 	name = "Employment Records"
@@ -10,21 +14,18 @@
 	req_one_access = list(access_heads)
 	circuit = "/obj/item/weapon/circuitboard/skills"
 	allowed_checks = ALLOWED_CHECK_NONE
-	var/obj/item/weapon/card/id/scan = null
-	var/authenticated = null
-	var/rank = null
-	var/screen = null
-	var/datum/data/record/active1 = null
-	var/a_id = null
-	var/temp = null
-	var/printing = null
-	var/can_change_id = 0
-	var/list/Perp
-	var/tempname = null
-	//Sorting Variables
-	var/sortBy = "name"
-	var/order = 1 // -1 = Descending - 1 = Ascending
 
+	var/obj/item/weapon/card/id/scan = null  //current id card inside machine
+	var/authenticated = null                 // Are user authenticated?
+	var/rank = null                          // Rank of authenticated person
+	var/screen = null                        // What type of screen now output
+	var/datum/data/record/active1 = null     // Current using record
+	var/temp = null                          // Buffer for temporary menu show
+	var/printing = FALSE                     // Printing action lock
+	var/list/Perp                            // Buffer for searched results
+	var/searched_text = null                 // Name of found person
+	var/sortBy = "name"                      // field to sort
+	var/order = 1                            // -1 = Descending - 1 = Ascending
 
 /obj/machinery/computer/skills/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -39,82 +40,82 @@
 	if (!SSmapping.has_level(z))
 		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return
-
 	var/dat
 	if (temp)
-		dat = text("<TT>[]</TT><BR><BR><A href='?src=\ref[];choice=Clear Screen'>Clear Screen</A>", temp, src)
+		dat = "<tt>[temp]</tt><br><br><a href='?src=\ref[src];choice=Clear Screen'>Clear Screen</a>"
 	else
-		dat = text("Confirm Identity: <A href='?src=\ref[];choice=Confirm Identity'>[]</A><HR>", src, (scan ? text("[]", scan.name) : "----------"))
+		dat = "Confirm Identity: <a href='?src=\ref[src];choice=Confirm Identity'>[scan ? scan.name : "----------"]</a><hr>"
 		if (authenticated)
 			switch(screen)
-				if(1.0)
-					dat += {"
-						<p style='text-align:center;'>"}
-					dat += text("<A href='?src=\ref[];choice=Search Records'>Search Records</A><BR>", src)
-					dat += text("<A href='?src=\ref[];choice=New Record (General)'>New Record</A><BR>", src)
-					dat += {"
-						</p>
+				if(SKILLS_MODE_MAIN_SCREEN)
+					dat += {"<p style='text-align:center;'>
+						<a href='?src=\ref[src];choice=Search Records'>Search Records</a><br>
+						<a href='?src=\ref[src];choice=New Record (General)'>New Record</a><br></p>
 						<table style="text-align:center;" cellspacing="0" width="100%">
-						<tr>
-						<th>Records:</th>
-						</tr>
+						<tr><th>Records:</th></tr>
 						</table>
 						<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 						<tr>
-						<th><A href='?src=\ref[src];choice=Sorting;sort=name'>Name</A></th>
-						<th><A href='?src=\ref[src];choice=Sorting;sort=id'>ID</A></th>
-						<th><A href='?src=\ref[src];choice=Sorting;sort=rank'>Rank</A></th>
-						<th><A href='?src=\ref[src];choice=Sorting;sort=fingerprint'>Fingerprints</A></th>
+						<th><a href='?src=\ref[src];choice=Sorting;sort=name'>Name</a></th>
+						<th><a href='?src=\ref[src];choice=Sorting;sort=id'>ID</a></th>
+						<th><a href='?src=\ref[src];choice=Sorting;sort=rank'>Rank</a></th>
+						<th><a href='?src=\ref[src];choice=Sorting;sort=fingerprint'>Fingerprints</a></th>
 						</tr>"}
 					if(!isnull(data_core.general))
 						for(var/datum/data/record/R in sortRecord(data_core.general, sortBy, order))
 							for(var/datum/data/record/E in data_core.security)
 							var/background
-							dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
-							dat += text("<td>[]</td>", R.fields["id"])
-							dat += text("<td>[]</td>", R.fields["rank"])
-							dat += text("<td>[]</td>", R.fields["fingerprint"])
+							dat += {"<tr style=[background]>
+							<td><A href='?src=\ref[src];choice=Browse Record;d_rec=\ref[R]'>[R.fields["name"]]</a></td>
+							<td>[R.fields["id"]]</td>
+							<td>[R.fields["rank"]]</td>
+							<td>[R.fields["fingerprint"]]</td>
+							</tr>"}
 						dat += "</table><hr width='75%' />"
 					dat += text("<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><br><br>", src)
 					dat += text("<A href='?src=\ref[];choice=Log Out'>{Log Out}</A>",src)
-				if(2.0)
-					dat += "<B>Records Maintenance</B><HR>"
-					dat += "<BR><A href='?src=\ref[src];choice=Delete All Records'>Delete All Records</A><BR><BR><A href='?src=\ref[src];choice=Return'>Back</A>"
-				if(3.0)
-					dat += "<CENTER><B>Employment Record</B></CENTER><BR>"
+				if(SKILLS_MODE_MAINTENACE_SCREEN)
+					dat += {"<b>Records Maintenance</b>
+					<hr><br>
+					<a href='?src=\ref[src];choice=Delete All Records'>Delete All Records</a><br><br>
+					<a href='?src=\ref[src];choice=Return'>Back</a>"}
+				if(SKILLS_MODE_EDIT_SCREEN)
+					dat += "<center><b>Employment Record</b></center><br>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
 						var/icon/front = active1.fields["photo_f"]
 						var/icon/side = active1.fields["photo_s"]
 						user << browse_rsc(front, "front.png")
 						user << browse_rsc(side, "side.png")
-						dat += text("<table><tr><td>	\
-							Name: <A href='?src=\ref[src];choice=Edit Field;field=name'>[active1.fields["name"]]</A><BR> \
-							ID: <A href='?src=\ref[src];choice=Edit Field;field=id'>[active1.fields["id"]]</A><BR>\n	\
-							Sex: <A href='?src=\ref[src];choice=Edit Field;field=sex'>[active1.fields["sex"]]</A><BR>\n	\
-							Age: <A href='?src=\ref[src];choice=Edit Field;field=age'>[active1.fields["age"]]</A><BR>\n	\
-							Home system: [active1.fields["home_system"]]<BR>\n	\
-							Citizenship: [active1.fields["citizenship"]]<BR>\n	\
-							Faction: [active1.fields["faction"]]<BR>\n	\
-							Religion: [active1.fields["religion"]]<BR>\n	\
-							Rank: <A href='?src=\ref[src];choice=Edit Field;field=rank'>[active1.fields["rank"]]</A><BR>\n	\
-							Fingerprint: <A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
-							Physical Status: [active1.fields["p_stat"]]<BR>\n	\
-							Mental Status: [active1.fields["m_stat"]]<BR><BR>\n	\
-							Employment/skills summary:<BR> [decode(active1.fields["notes"])]<BR></td>	\
-							<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4>	\
-							<img src=side.png height=80 width=80 border=4></td></tr></table>")
+						dat += text({"<table><tr><td>
+							Name: <a href='?src=\ref[src];choice=Edit Field;field=name'>[active1.fields["name"]]</a><br>
+							ID: <a href='?src=\ref[src];choice=Edit Field;field=id'>[active1.fields["id"]]</a><br>
+							Sex: <a href='?src=\ref[src];choice=Edit Field;field=sex'>[active1.fields["sex"]]</a><br>
+							Age: <a href='?src=\ref[src];choice=Edit Field;field=age'>[active1.fields["age"]]</a><br>
+							Home system: [active1.fields["home_system"]]<br>
+							Citizenship: [active1.fields["citizenship"]]<br>
+							Faction: [active1.fields["faction"]]<br>
+							Religion: [active1.fields["religion"]]<br>
+							Rank: <a href='?src=\ref[src];choice=Edit Field;field=rank'>[active1.fields["rank"]]</a><br>
+							Fingerprint: <a href='?src=\ref[src];choice=Edit Field;field=fingerprint'>[active1.fields["fingerprint"]]</a><br>
+							Physical Status: [active1.fields["p_stat"]]<br>
+							Mental Status: [active1.fields["m_stat"]]<br><br>
+							Employment/skills summary:<BR> [decode(active1.fields["notes"])]<br></td>
+							<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4>
+							<img src=side.png height=80 width=80 border=4></td></tr></table>"})
 					else
-						dat += "<B>General Record Lost!</B><BR>"
-					dat += text("\n<A href='?src=\ref[];choice=Delete Record (ALL)'>Delete Record (ALL)</A><BR><BR>\n<A href='?src=\ref[];choice=Print Record'>Print Record</A><BR>\n<A href='?src=\ref[];choice=Return'>Back</A><BR>", src, src, src)
-				if(4.0)
+						dat += "<b>General Record Lost!</b><br>"
+					dat += {"
+					<a href='?src=\ref[src];choice=Delete Record (ALL)'>Delete Record (ALL)</a><br><br>
+					<a href='?src=\ref[src];choice=Print Record'>Print Record</a><br>
+					<a href='?src=\ref[src];choice=Return'>Back</a><br>"}
+				if(SKILLS_MODE_SEARCH_SCREEN)
 					if(!Perp.len)
 						dat += text("ERROR.  String could not be located.<br><br><A href='?src=\ref[];choice=Return'>Back</A>", src)
 					else
 						dat += {"
 							<table style="text-align:center;" cellspacing="0" width="100%">
-							<tr>					"}
-						dat += text("<th>Search Results for '[]':</th>", tempname)
-						dat += {"
+							<tr>
+							<th>Search Results for '[searched_text]':</th>
 							</tr>
 							</table>
 							<table style="text-align:center;" border="1" cellspacing="0" width="100%">
@@ -123,7 +124,7 @@
 							<th>ID</th>
 							<th>Rank</th>
 							<th>Fingerprints</th>
-							</tr>					"}
+							</tr>"}
 						for(var/i=1, i<=Perp.len, i += 2)
 							var/crimstat = ""
 							var/datum/data/record/R = Perp[i]
@@ -138,7 +139,7 @@
 							dat += text("<td>[]</td>", R.fields["fingerprint"])
 							dat += text("<td>[]</td></tr>", crimstat)
 						dat += "</table><hr width='75%' />"
-						dat += text("<br><A href='?src=\ref[];choice=Return'>Return to index.</A>", src)
+						dat += text("<br><A href='?src=\ref[];choice=Return'>Return to index</A>", src)
 				else
 		else
 			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
@@ -157,7 +158,7 @@ What a mess.*/
 		active1 = null
 
 	switch(href_list["choice"])
-// SORTING!
+		// SORTING!
 		if("Sorting")
 			// Reverse the order if clicked twice
 			if(sortBy == href_list["sort"])
@@ -169,12 +170,12 @@ What a mess.*/
 			// New sorting order!
 				sortBy = href_list["sort"]
 				order = initial(order)
-//BASIC FUNCTIONS
+		// BASIC FUNCTIONS
 		if("Clear Screen")
 			temp = null
 
 		if ("Return")
-			screen = 1
+			screen = SKILLS_MODE_MAIN_SCREEN
 			active1 = null
 
 		if("Confirm Identity")
@@ -201,25 +202,25 @@ What a mess.*/
 				src.active1 = null
 				src.authenticated = usr.name
 				src.rank = "AI"
-				src.screen = 1
+				src.screen = SKILLS_MODE_MAIN_SCREEN
 			else if (isrobot(usr))
 				src.active1 = null
 				src.authenticated = usr.name
 				var/mob/living/silicon/robot/R = usr
 				src.rank = R.braintype
-				src.screen = 1
+				src.screen = SKILLS_MODE_MAIN_SCREEN
 			else if (isobserver(usr))
 				src.active1 = null
 				src.authenticated = "Centcomm Agent"
 				src.rank = "Overseer"
-				src.screen = 1
+				src.screen = SKILLS_MODE_MAIN_SCREEN
 			else if (istype(scan, /obj/item/weapon/card/id))
 				active1 = null
 				if(check_access(scan))
 					authenticated = scan.registered_name
 					rank = scan.assignment
-					screen = 1
-//RECORD FUNCTIONS
+					screen = SKILLS_MODE_MAIN_SCREEN
+		// RECORD FUNCTIONS
 		if("Search Records")
 			var/t1 = sanitize_safe(input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text)
 			if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr))))
@@ -241,11 +242,11 @@ What a mess.*/
 					var/datum/data/record/R = Perp[i]
 					if ((E.fields["name"] == R.fields["name"] && E.fields["id"] == R.fields["id"]))
 						Perp[i+1] = E
-			tempname = t1
-			screen = 4
+			searched_text = t1
+			screen = SKILLS_MODE_SEARCH_SCREEN
 
 		if("Record Maintenance")
-			screen = 2
+			screen = SKILLS_MODE_MAINTENACE_SCREEN
 			active1 = null
 
 		if ("Browse Record")
@@ -255,44 +256,39 @@ What a mess.*/
 			else
 				for(var/datum/data/record/E in data_core.security)
 				active1 = R
-				screen = 3
-
-/*			if ("Search Fingerprints")
-			var/t1 = input("Search String: (Fingerprint)", "Secure. records", null, null)  as text
-			if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || (!in_range(src, user) && !issilicon(usr) && !isobserver(usr)))
-				return
-			active1 = null
-			t1 = lowertext(t1)
-			for(var/datum/data/record/R in data_core.general)
-				if (lowertext(R.fields["fingerprint"]) == t1)
-					active1 = R
-			if (!( active1 ))
-				temp = text("Could not locate record [].", t1)
-			else
-				for(var/datum/data/record/E in data_core.security)
-					if ((E.fields["name"] == active1.fields["name"] || E.fields["id"] == active1.fields["id"]))
-				screen = 3	*/
+				screen = SKILLS_MODE_EDIT_SCREEN
 
 		if ("Print Record")
 			if (!( printing ))
-				printing = 1
+				printing = TRUE
 				sleep(50)
 				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
-				P.info = "<CENTER><B>Employment Record</B></CENTER><BR>"
+				P.info = "<center><b>Employment Record</b></center><BR>"
 				if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
-					P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>\nEmployment/Skills Summary:<BR>\n[]<BR>", active1.fields["name"], active1.fields["id"], active1.fields["sex"], active1.fields["age"], active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"], decode(active1.fields["notes"]))
+					P.info += text("Name: []<BR>\n",active1.fields["name"])
+					P.info += text("ID: []<BR>\n", active1.fields["id"])
+					P.info += text("Sex: []<BR>\n",  active1.fields["sex"])
+					P.info += text("Age: []<BR>\n", active1.fields["age"])
+					P.info += text("Fingerprint: []<BR>\n", active1.fields["fingerprint"])
+					P.info += text("Physical Status: []<BR>\n", active1.fields["p_stat"])
+					P.info += text("Mental Status: []<BR>\n", active1.fields["m_stat"])
+					P.info += text("Employment/Skills Summary:<BR>\n[]<BR>",decode(active1.fields["notes"]))
 				else
-					P.info += "<B>General Record Lost!</B><BR>"
-				P.info += "</TT>"
+					P.info += "<b>General Record Lost!</b><br>"
+				P.info += "</tt>"
 				P.name = "Employment Record ([active1.fields["name"]])"
 				P.update_icon()
-				printing = null
-//RECORD DELETE
+				printing = FALSE
+		// RECORD DELETE
 		if ("Delete All Records")
+			//FIXME: Now only removing security records, not general
+			/*
 			temp = ""
 			temp += "Are you sure you wish to delete all Employment records?<br>"
 			temp += "<a href='?src=\ref[src];choice=Purge All Records'>Yes</a><br>"
 			temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
+			*/
+			temp = "<b>Error!</b> This function does not appear to be working at the moment. Our apologies."
 
 		if ("Purge All Records")
 			if(PDA_Manifest.len)
@@ -306,13 +302,13 @@ What a mess.*/
 				temp = "<h5>Are you sure you wish to delete the record (ALL)?</h5>"
 				temp += "<a href='?src=\ref[src];choice=Delete Record (ALL) Execute'>Yes</a><br>"
 				temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
-//RECORD CREATE
+		// RECORD CREATE
 		if ("New Record (General)")
 			if(PDA_Manifest.len)
 				PDA_Manifest.Cut()
 			active1 = CreateGeneralRecord() // todo: datacore.manifest_inject or scaner (Identity Analyser)
 
-//FIELD FUNCTIONS
+		// FIELD FUNCTIONS
 		if ("Edit Field")
 			var/a1 = active1
 			switch(href_list["field"])
@@ -364,8 +360,8 @@ What a mess.*/
 							return FALSE
 						active1.fields["species"] = t1
 
-//TEMPORARY MENU FUNCTIONS
-		else//To properly clear as per clear screen.
+		// TEMPORARY MENU FUNCTIONS
+		else // To properly clear as per clear screen.
 			temp=null
 			switch(href_list["choice"])
 				if ("Change Rank")
@@ -417,3 +413,8 @@ What a mess.*/
 			continue
 
 	..(severity)
+
+#undef SKILLS_MODE_MAIN_SCREEN
+#undef SKILLS_MODE_MAINTENACE_SCREEN
+#undef SKILLS_MODE_EDIT_SCREEN
+#undef SKILLS_MODE_SEARCH_SCREEN

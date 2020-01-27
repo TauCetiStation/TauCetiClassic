@@ -51,7 +51,7 @@ This is what happens, when alien attack.
 
 	switch(M.a_intent)
 		if ("help")
-			visible_message(text("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>"))
+			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
 		if ("grab")
 			M.Grab(src)
 		if("hurt")
@@ -79,17 +79,15 @@ This is what happens, when alien attack.
 			if (prob(80))
 				playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
 				Weaken(rand(3,5))
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has tackled down []!</B></span>", M, src), 1)
+				visible_message("<span class='warning'><B>[M] has tackled down [src]!</B></span>")
 				if (prob(25))
 					M.Weaken(rand(5,8))
 			else
 				if (prob(80))
 					playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 					drop_item()
-					visible_message(text("<span class='warning'><B>[] disarmed []!</B></span>", M, src))
+					visible_message("<span class='warning'><B>[M] disarmed [src]!</B></span>")
 				else
 					playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-					visible_message(text("<span class='warning'><B>[] has tried to disarm []!</B></span>", M, src))
+					visible_message("<span class='warning'><B>[M] has tried to disarm [src]!</B></span>")
 	return

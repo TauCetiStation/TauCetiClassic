@@ -26,6 +26,7 @@
 
 	// crappy hacks because you can't do \his[src] etc. I'm sorry this proc is so unreadable, blame the text macros :<
 	var/t_He = "It" //capitalised for use at the start of each line.
+	var/t_His = "Its"
 	var/t_his = "its"
 	var/t_him = "it"
 	var/t_has = "has"
@@ -35,6 +36,7 @@
 
 	if( skipjumpsuit && skipface ) //big suits/masks/helmets make it hard to tell their gender
 		t_He = "They"
+		t_His = "Their"
 		t_his = "their"
 		t_him = "them"
 		t_has = "have"
@@ -43,16 +45,18 @@
 		switch(gender)
 			if(MALE)
 				t_He = "He"
+				t_His = "His"
 				t_his = "his"
 				t_him = "him"
 			if(FEMALE)
 				t_He = "She"
+				t_His = "Her"
 				t_his = "her"
 				t_him = "her"
 
 	msg += "<EM>[src.name]"
 	if(!(skipface && skipjumpsuit))
-		var/species_name = "\improper [get_species()]"
+		var/species_name = "[get_species()]"
 		msg += ", <span color='[species.flesh_color]'>\a [species_name]</span>"
 	msg += "</EM>!\n"
 
@@ -239,8 +243,7 @@
 		if((stat == DEAD || src.losebreath || iszombie(src)) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
 		if(istype(user, /mob/living/carbon/human) && !user.stat && distance <= 1)
-			for(var/mob/O in viewers(user.loc, null))
-				O.show_message("[user] checks [src]'s pulse.", 1)
+			user.visible_message("[user] checks [src]'s pulse.")
 		spawn(15)
 			if(distance <= 1 && user && user.stat != UNCONSCIOUS)
 				if(pulse == PULSE_NONE)
@@ -249,7 +252,7 @@
 					to_chat(user, "<span class='deadsay'>[t_He] has a pulse!</span>")
 
 	msg += "<span class='warning'>"
-	
+
 	if(!species.flags[IS_SYNTHETIC])
 		if(nutrition < 100)
 			msg += "[t_He] [t_is] severely malnourished.\n"
@@ -271,9 +274,7 @@
 
 	msg += "</span>"
 
-	if(stat == UNCONSCIOUS)
-		msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
-	else if(getBrainLoss() >= 60)
+	if(bodyparts_by_name[BP_HEAD] && getBrainLoss() >= 60)
 		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
 	if(!key && has_brain() && stat != DEAD)
@@ -446,7 +447,13 @@
 	if(mind && mind.changeling && mind.changeling.isabsorbing)
 		msg += "<span class='warning'><b>[t_He] sucking fluids from someone through a giant proboscis!</b></span>\n"
 
+	if(!skipface)
+		var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
+		if(BP && BP.disfigured)
+			msg += "<span class='warning'><b>[t_His] face is violently disfigured!</b></span>\n"
 
+	if((!skipface || !skipjumpsuit || !skipgloves) && (HUSK in mutations))
+		msg += "<span class='warning'><b>[t_His] skin is looking cadaveric!</b></span>\n"
 
 	if(hasHUD(user,"security"))
 		var/perpname = "wot"
