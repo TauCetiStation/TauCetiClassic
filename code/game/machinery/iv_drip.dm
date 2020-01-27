@@ -180,6 +180,7 @@
 	name = "Artificial Ventilation drip"
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "av_drip"
+	desc = "This is an Artificial Ventillation machine that supports breathing while lungs is broken."
 	anchored = 0
 	density = 0
 	interact_offline = TRUE
@@ -193,7 +194,7 @@
 	if(attached)
 		REMOVE_TRAIT(attached, TRAIT_AV, "AV_DRIP")
 		attached = null
-	..()
+	return ..()
 
 /obj/machinery/av_drip/update_icon()
 	if(attached)
@@ -222,7 +223,7 @@
 	if(src.attached)
 		if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 			visible_message("The tube is ripped out of [attached]'s lungs, doesn't that hurt?")
-			attached:apply_damage(10, BRUTE, O_LUNGS)
+			attached:apply_damage(10, BRUTE, BP_CHEST)
 			REMOVE_TRAIT(attached, TRAIT_AV, "AV_DRIP")
 			attached = null
 			src.update_icon()
@@ -237,13 +238,9 @@
 					REMOVE_TRAIT(attached, TRAIT_AV, "AV_DRIP")
 		return
 
-/obj/machinery/av_drip/attack_ai(mob/user)
-	if(IsAdminGhost(user))
-		return ..()
 
 /obj/machinery/av_drip/examine(mob/user)
 	..()
-	to_chat(user, "This is an Artificial Lungs, machine that supports breathing while lungs is broken")
 	to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
 
 
@@ -251,12 +248,11 @@
 	name = "Cardiopulmonary bypass drip"
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "cpb_drip"
+	desc = "This is an Cardiopulmonary Bypass machine that temporarily takes over the function of the heart"
 	anchored = 0
 	density = TRUE
 	interact_offline = TRUE
 	var/mob/living/carbon/human/attached = null
-	var/bloodlast = 0
-	var/datum/reagent/blood/B
 
 /obj/machinery/cpb_drip/atom_init()
 	. = ..()
@@ -266,7 +262,7 @@
 	if(attached)
 		REMOVE_TRAIT(attached, TRAIT_CPB, "CPB_DRIP")
 		attached = null
-	..()
+	return ..()
 
 /obj/machinery/cpb_drip/update_icon()
 	if(attached)
@@ -297,21 +293,11 @@
 		playsound(src, "sound/machines/drip/cpb.ogg", VOL_EFFECTS_MASTER)
 		if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 			visible_message("The tubes is ripped out of [attached]'s heart, doesn't that hurt?")
-			attached:apply_damage(15, BRUTE, O_HEART)
+			attached:apply_damage(15, BRUTE, BP_CHEST)
 			REMOVE_TRAIT(attached, TRAIT_CPB, "CPB_DRIP")
 			attached = null
 			update_icon()
 
-/obj/machinery/cpb_drip/attack_ai(mob/user)
-	if(IsAdminGhost(user))
-		return ..()
-
-/obj/machinery/cpb_drip/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-
 /obj/machinery/cpb_drip/examine(mob/user)
 	..()
-	to_chat(user, "This is an Cardiopulmonary Bypass machine that temporarily takes over the function of the heart")
 	to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
