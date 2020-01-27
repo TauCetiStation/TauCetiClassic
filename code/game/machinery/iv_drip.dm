@@ -190,8 +190,9 @@
 	update_icon()
 
 /obj/machinery/av_drip/Destroy()
+	if(!attached)
+		REMOVE_TRAIT(attached, "TRAIT_AV", "AV_DRIP")
 	attached = null
-	REMOVE_TRAIT(attached, "TRAIT_AV", "AV_DRIP")
 	..()
 
 /obj/machinery/av_drip/update_icon()
@@ -262,8 +263,9 @@
 	update_icon()
 
 /obj/machinery/cpb_drip/Destroy()
+	if(!attached)
+		REMOVE_TRAIT(attached, "TRAIT_CPB", "CPB_DRIP")
 	attached = null
-	REMOVE_TRAIT(attached, "TRAIT_CPB", "CPB_DRIP")
 	..()
 
 /obj/machinery/cpb_drip/update_icon()
