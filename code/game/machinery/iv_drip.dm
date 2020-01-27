@@ -196,9 +196,10 @@
 
 /obj/machinery/av_drip/update_icon()
 	if(attached)
-		icon_state = "ventilating"
+		icon_state = "av_drip_ventilating"
 	else
 		icon_state = "av_drip"
+
 
 /obj/machinery/av_drip/MouseDrop(over_object, src_location, over_location)
 	..()
@@ -206,6 +207,7 @@
 		return
 	if(attached)
 		visible_message("[src.attached] is detached from \the [src]")
+		REMOVE_TRAIT(src.attached, "TRAIT_AV", "AV_DRIP")
 		src.attached = null
 		src.update_icon()
 		return
@@ -213,6 +215,7 @@
 	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		src.attached = over_object
+		ADD_TRAIT(src.attached, "TRAIT_AV", "AV_DRIP")
 		src.update_icon()
 
 
@@ -223,21 +226,23 @@
 		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
 			visible_message("The tube is ripped out of [src.attached]'s lungs, doesn't that hurt?")
 			src.attached:apply_damage(10, BRUTE, O_LUNGS)
+			REMOVE_TRAIT(src.attached, "TRAIT_AV", "AV_DRIP")
 			src.attached = null
 			src.update_icon()
 //		if(avoxy > 0)
-		src.attached.adjustOxyLoss(-4)
+		var/datum/gas_mixture/env = loc.return_air()
+		if(env.gas["oxygen"] >= 5)
+			if(!HAS_TRAIT_FROM(src.attached, "TRAIT_AV", "AV_DRIP"))
+				ADD_TRAIT(src.attached, "TRAIT_AV", "AV_DRIP")
+		else
+			if(HAS_TRAIT_FROM(src.attached, "TRAIT_AV", "AV_DRIP"))
+				REMOVE_TRAIT(src.attached, "TRAIT_AV", "AV_DRIP")
 		return
 
 
 /obj/machinery/av_drip/attack_ai(mob/user)
 	if(IsAdminGhost(user))
 		return ..()
-
-/obj/machinery/av_drip/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
 
 
 /obj/machinery/av_drip/examine(mob/user)
@@ -256,7 +261,7 @@
 	interact_offline = TRUE
 	var/mob/living/carbon/human/attached = null
 	var/bloodlast = 0
-/mob/living/carbon/human/var/datum/reagents/vessel
+	var/datum/reagent/blood/B
 
 /obj/machinery/av_drip/atom_init()
 	. = ..()
@@ -265,7 +270,7 @@
 
 /obj/machinery/cpb_drip/update_icon()
 	if(attached)
-		icon_state = "pumping"
+		icon_state = "cpb_drip_pumping"
 	else
 		icon_state = "cpb_drip"
 
@@ -275,16 +280,17 @@
 		return
 	if(attached)
 		visible_message("[src.attached] is detached from \the [src]")
+		REMOVE_TRAIT(src.attached, "TRAIT_CPB", "CPB_DRIP")
 		src.attached = null
 		src.update_icon()
-		src.attached.vessel = bloodlast
 		return
 
 	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		src.attached = over_object
 		src.update_icon()
-		bloodlast = src.attached.vessel
+		ADD_TRAIT(src.attached, "TRAIT_CPB", "CPB_DRIP")
+		return
 
 
 /obj/machinery/cpb_drip/process()
@@ -294,9 +300,9 @@
 		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
 			visible_message("The tubes is ripped out of [src.attached]'s heart, doesn't that hurt?")
 			src.attached:apply_damage(15, BRUTE, O_HEART)
+			REMOVE_TRAIT(src.attached, "TRAIT_CPB", "CPB_DRIP")
 			src.attached = null
 			src.update_icon()
-		src.attached.vessel = 501
 
 
 

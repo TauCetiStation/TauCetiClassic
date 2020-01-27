@@ -349,7 +349,7 @@
 						BP.add_autopsy_data("Radiation Poisoning", damage)
 
 /mob/living/carbon/human/proc/breathe()
-	if(!need_breathe()) 
+	if(!need_breathe())
 		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
