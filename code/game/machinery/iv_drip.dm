@@ -252,7 +252,7 @@
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "cpb_drip"
 	anchored = 0
-	density = 0
+	density = TRUE
 	interact_offline = TRUE
 	var/mob/living/carbon/human/attached = null
 	var/bloodlast = 0
