@@ -176,10 +176,6 @@
 		to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
 
 
-
-
-
-
 /obj/machinery/av_drip
 	name = "\improper AV drip"
 	icon = 'icons/obj/iv_drip.dmi'
@@ -189,10 +185,14 @@
 	interact_offline = TRUE
 	var/mob/living/carbon/human/attached = null
 
-
 /obj/machinery/av_drip/atom_init()
 	. = ..()
 	update_icon()
+
+/obj/machinery/av_drip/Destroy()
+	attached = null
+	REMOVE_TRAIT(attached, "TRAIT_AV", "AV_DRIP")
+	..()
 
 /obj/machinery/av_drip/update_icon()
 	if(attached)
@@ -200,58 +200,50 @@
 	else
 		icon_state = "av_drip"
 
-
 /obj/machinery/av_drip/MouseDrop(over_object, src_location, over_location)
 	..()
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
 	if(attached)
-		visible_message("[src.attached] is detached from \the [src]")
-		REMOVE_TRAIT(src.attached, "TRAIT_AV", "AV_DRIP")
-		src.attached = null
+		visible_message("[attached] is detached from \the [src]")
+		REMOVE_TRAIT(attached, "TRAIT_AV", "AV_DRIP")
+		attached = null
 		src.update_icon()
 		return
 
 	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
-		src.attached = over_object
-		ADD_TRAIT(src.attached, "TRAIT_AV", "AV_DRIP")
+		attached = over_object
+		ADD_TRAIT(attached, "TRAIT_AV", "AV_DRIP")
 		src.update_icon()
 
-
 /obj/machinery/av_drip/process()
-	//set background = 1
-//	var/avoxy = return_air(get_turf(src))
 	if(src.attached)
-		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
-			visible_message("The tube is ripped out of [src.attached]'s lungs, doesn't that hurt?")
-			src.attached:apply_damage(10, BRUTE, O_LUNGS)
-			REMOVE_TRAIT(src.attached, "TRAIT_AV", "AV_DRIP")
-			src.attached = null
+		if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
+			visible_message("The tube is ripped out of [attached]'s lungs, doesn't that hurt?")
+			attached:apply_damage(10, BRUTE, O_LUNGS)
+			REMOVE_TRAIT(attached, "TRAIT_AV", "AV_DRIP")
+			attached = null
 			src.update_icon()
-//		if(avoxy > 0)
-		var/datum/gas_mixture/env = loc.return_air()
-		if(env.gas["oxygen"] >= 5)
-			playsound(src, "sound/machines/drip/av.ogg", VOL_EFFECTS_MASTER)
-			if(!HAS_TRAIT_FROM(src.attached, "TRAIT_AV", "AV_DRIP"))
-				ADD_TRAIT(src.attached, "TRAIT_AV", "AV_DRIP")
 		else
-			if(HAS_TRAIT_FROM(src.attached, "TRAIT_AV", "AV_DRIP"))
-				REMOVE_TRAIT(src.attached, "TRAIT_AV", "AV_DRIP")
+			var/datum/gas_mixture/env = loc.return_air()
+			if(env.gas["oxygen"] >= 5)
+				playsound(src, "sound/machines/drip/av.ogg", VOL_EFFECTS_MASTER)
+				if(!HAS_TRAIT_FROM(attached, "TRAIT_AV", "AV_DRIP"))
+					ADD_TRAIT(attached, "TRAIT_AV", "AV_DRIP")
+			else
+				if(HAS_TRAIT_FROM(attached, "TRAIT_AV", "AV_DRIP"))
+					REMOVE_TRAIT(attached, "TRAIT_AV", "AV_DRIP")
 		return
-
 
 /obj/machinery/av_drip/attack_ai(mob/user)
 	if(IsAdminGhost(user))
 		return ..()
 
-
 /obj/machinery/av_drip/examine(mob/user)
 	..()
 	to_chat(user, "This is an Artificial Lungs, machine that supports breathing while lungs is broken")
 	to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
-
-
 
 
 /obj/machinery/cpb_drip
@@ -265,10 +257,14 @@
 	var/bloodlast = 0
 	var/datum/reagent/blood/B
 
-/obj/machinery/av_drip/atom_init()
+/obj/machinery/cpb_drip/atom_init()
 	. = ..()
 	update_icon()
 
+/obj/machinery/cpb_drip/Destroy()
+	attached = null
+	REMOVE_TRAIT(attached, "TRAIT_CPB", "CPB_DRIP")
+	..()
 
 /obj/machinery/cpb_drip/update_icon()
 	if(attached)
@@ -281,33 +277,28 @@
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
 	if(attached)
-		visible_message("[src.attached] is detached from \the [src]")
-		REMOVE_TRAIT(src.attached, "TRAIT_CPB", "CPB_DRIP")
-		src.attached = null
-		src.update_icon()
+		visible_message("[attached] is detached from \the [src]")
+		REMOVE_TRAIT(attached, "TRAIT_CPB", "CPB_DRIP")
+		attached = null
+		update_icon()
 		return
 
 	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
-		src.attached = over_object
-		src.update_icon()
-		ADD_TRAIT(src.attached, "TRAIT_CPB", "CPB_DRIP")
+		attached = over_object
+		update_icon()
+		ADD_TRAIT(attached, "TRAIT_CPB", "CPB_DRIP")
 		return
 
-
 /obj/machinery/cpb_drip/process()
-	//set background = 1
-//	var/avoxy = return_air(get_turf(src))
 	if(src.attached)
 		playsound(src, "sound/machines/drip/cpb.ogg", VOL_EFFECTS_MASTER)
-		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
-			visible_message("The tubes is ripped out of [src.attached]'s heart, doesn't that hurt?")
-			src.attached:apply_damage(15, BRUTE, O_HEART)
-			REMOVE_TRAIT(src.attached, "TRAIT_CPB", "CPB_DRIP")
-			src.attached = null
-			src.update_icon()
-
-
+		if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
+			visible_message("The tubes is ripped out of [attached]'s heart, doesn't that hurt?")
+			attached:apply_damage(15, BRUTE, O_HEART)
+			REMOVE_TRAIT(attached, "TRAIT_CPB", "CPB_DRIP")
+			attached = null
+			update_icon()
 
 /obj/machinery/cpb_drip/attack_ai(mob/user)
 	if(IsAdminGhost(user))
@@ -317,7 +308,6 @@
 	. = ..()
 	if(.)
 		return
-
 
 /obj/machinery/cpb_drip/examine(mob/user)
 	..()
