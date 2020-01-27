@@ -21,11 +21,11 @@
 	var/last_hit_zone = 0
 	var/force_down //determines if the affecting mob will be pinned to the ground
 	var/dancing //determines if assailant and affecting keep looking at each other. Basically a wrestling position
-	var/foundwound = 0
-	var/foundgerm = 0
-	var/foundorganwound = 0
-	var/foundorgangerm = 0
-	var/unknown_body = 0
+	var/foundwound = FALSE
+	var/foundgerm = FALSE
+	var/foundorganwound = FALSE
+	var/foundorgangerm = FALSE
+	var/unknown_body = FALSE
 	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mindshield/loyalty)
 
 	layer = 21
@@ -590,32 +590,32 @@
 	else
 		if(BP.wounds.len)
 			to_chat(user, "<span class='warning'>You find [BP.get_wounds_desc()]</span>")
-			foundwound = 1
+			foundwound = TRUE
 		for(var/I in BP.implants)
 			if(!is_type_in_list(I,known_implants))
-				unknown_body = 1
-		if(unknown_body == 1)
+				unknown_body = TRUE
+		if(unknown_body == FALSE)
 			to_chat(user, "<span class='notice'>You feel something solid under [BP.name]'s skin.</span>")
-			foundwound = 1
+			foundwound = TRUE
 		if(BP.germ_level >= INFECTION_LEVEL_ONE)
-			foundgerm = 1
+			foundgerm = TRUE
 		if((BP.name == "chest") || (BP.name == "head"))
 			for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 				if(IO.is_bruised())
-					foundorganwound = 1
+					foundorganwound = TRUE
 				if(IO.germ_level > 0)
-					foundorgangerm = 1
-			if(foundorgangerm == 1 && foundgerm == 0)
+					foundorgangerm = TRUE
+			if(foundorgangerm == TRUE && foundgerm == FALSE)
 				to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] slightly enlarged.</span>")
-				foundwound = 1
-			if(foundorganwound == 1)
+				foundwound = TRUE
+			if(foundorganwound == TRUE)
 				to_chat(user, "<span class='warning'>You find ecchymosis and inflation in [BP.name].</span>")
-				foundwound = 1
-		if(foundgerm == 1)
+				foundwound = TRUE
+		if(foundgerm == TRUE)
 			to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] greatly enlarged.</span>")
-		if(foundwound == 0)
+		if(foundwound == FALSE)
 			to_chat(user, "<span class='notice'>You find no visible wounds.</span>")
-			foundwound = 0
+			foundwound = FALSE
 
 	to_chat(user, "<span class='notice'>Checking bones now...</span>")
 	if(!do_mob(user, H, 60))
