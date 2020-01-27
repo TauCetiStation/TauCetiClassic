@@ -615,7 +615,6 @@
 			to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] greatly enlarged.</span>")
 		if(!foundwound)
 			to_chat(user, "<span class='notice'>You find no visible wounds.</span>")
-			foundwound = FALSE
 
 	to_chat(user, "<span class='notice'>Checking bones now...</span>")
 	if(!do_mob(user, H, 60))
