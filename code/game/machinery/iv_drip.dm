@@ -177,7 +177,7 @@
 
 
 /obj/machinery/av_drip
-	name = "\improper AV drip"
+	name = "Artificial Ventilation drip"
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "av_drip"
 	anchored = 0
@@ -191,7 +191,7 @@
 
 /obj/machinery/av_drip/Destroy()
 	if(attached)
-		REMOVE_TRAIT(attached, "TRAIT_AV", "AV_DRIP")
+		REMOVE_TRAIT(attached, TRAIT_AV, "AV_DRIP")
 		attached = null
 	..()
 
@@ -207,7 +207,7 @@
 		return
 	if(attached)
 		visible_message("[attached] is detached from \the [src]")
-		REMOVE_TRAIT(attached, "TRAIT_AV", "AV_DRIP")
+		REMOVE_TRAIT(attached, TRAIT_AV, "AV_DRIP")
 		attached = null
 		src.update_icon()
 		return
@@ -215,7 +215,7 @@
 	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		attached = over_object
-		ADD_TRAIT(attached, "TRAIT_AV", "AV_DRIP")
+		ADD_TRAIT(attached, TRAIT_AV, "AV_DRIP")
 		src.update_icon()
 
 /obj/machinery/av_drip/process()
@@ -223,18 +223,18 @@
 		if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 			visible_message("The tube is ripped out of [attached]'s lungs, doesn't that hurt?")
 			attached:apply_damage(10, BRUTE, O_LUNGS)
-			REMOVE_TRAIT(attached, "TRAIT_AV", "AV_DRIP")
+			REMOVE_TRAIT(attached, TRAIT_AV, "AV_DRIP")
 			attached = null
 			src.update_icon()
 		else
 			var/datum/gas_mixture/env = loc.return_air()
 			if(env.gas["oxygen"] >= 5)
 				playsound(src, "sound/machines/drip/av.ogg", VOL_EFFECTS_MASTER)
-				if(!HAS_TRAIT_FROM(attached, "TRAIT_AV", "AV_DRIP"))
-					ADD_TRAIT(attached, "TRAIT_AV", "AV_DRIP")
+				if(!HAS_TRAIT_FROM(attached, TRAIT_AV, "AV_DRIP"))
+					ADD_TRAIT(attached, TRAIT_AV, "AV_DRIP")
 			else
-				if(HAS_TRAIT_FROM(attached, "TRAIT_AV", "AV_DRIP"))
-					REMOVE_TRAIT(attached, "TRAIT_AV", "AV_DRIP")
+				if(HAS_TRAIT_FROM(attached, TRAIT_AV, "AV_DRIP"))
+					REMOVE_TRAIT(attached, TRAIT_AV, "AV_DRIP")
 		return
 
 /obj/machinery/av_drip/attack_ai(mob/user)
@@ -248,7 +248,7 @@
 
 
 /obj/machinery/cpb_drip
-	name = "\improper CPB drip"
+	name = "Cardiopulmonary bypass drip"
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "cpb_drip"
 	anchored = 0
@@ -264,7 +264,7 @@
 
 /obj/machinery/cpb_drip/Destroy()
 	if(attached)
-		REMOVE_TRAIT(attached, "TRAIT_CPB", "CPB_DRIP")
+		REMOVE_TRAIT(attached, TRAIT_CPB, "CPB_DRIP")
 		attached = null
 	..()
 
@@ -280,7 +280,7 @@
 		return
 	if(attached)
 		visible_message("[attached] is detached from \the [src]")
-		REMOVE_TRAIT(attached, "TRAIT_CPB", "CPB_DRIP")
+		REMOVE_TRAIT(attached, TRAIT_CPB, "CPB_DRIP")
 		attached = null
 		update_icon()
 		return
@@ -289,7 +289,7 @@
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		attached = over_object
 		update_icon()
-		ADD_TRAIT(attached, "TRAIT_CPB", "CPB_DRIP")
+		ADD_TRAIT(attached, TRAIT_CPB, "CPB_DRIP")
 		return
 
 /obj/machinery/cpb_drip/process()
@@ -298,7 +298,7 @@
 		if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 			visible_message("The tubes is ripped out of [attached]'s heart, doesn't that hurt?")
 			attached:apply_damage(15, BRUTE, O_HEART)
-			REMOVE_TRAIT(attached, "TRAIT_CPB", "CPB_DRIP")
+			REMOVE_TRAIT(attached, TRAIT_CPB, "CPB_DRIP")
 			attached = null
 			update_icon()
 
