@@ -588,7 +588,7 @@
 		if(BP.wounds.len)
 			to_chat(user, "<span class='warning'>You find [BP.get_wounds_desc()]</span>")
 			foundwound = TRUE
-		for(var/I in BP.implants)
+		if(length(BP.implants))
 			unknown_body = TRUE
 		if(unknown_body)
 			to_chat(user, "<span class='notice'>You feel something solid under [BP.name]'s skin.</span>")
