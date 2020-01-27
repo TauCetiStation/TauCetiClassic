@@ -221,9 +221,13 @@ Note: Must be placed west/left of and R&D console to function.
 		// This is very important. Almost all items constructed via protolathe are unreliable
 		// And are deconstructions of items made by deconstructing other items
 		// So consider them tests of "new" construction techniques for an item already known
-		new_item.prototipify()
+		// #define MAGIC_2_MANIPULATORS_MAX_OUTPUT_CONSIDERING_IT_SHOULD_ROUND_UP_TO_20_PERCENT_COEFFICIENT 2.5
+		new_item.prototipify(min_reliability=RNDD.design.reliability + efficiency_coeff * 2.5,  max_reliability=80 + efficiency_coeff * 2.5)
 		new_item.m_amt /= efficiency_coeff
 		new_item.g_amt /= efficiency_coeff
+
+		RNDD.design.reliability += RNDD.design.reliability * (RND_RELIABILITY_EXPONENT ^ RNDD.design.created_prototypes)
+		RNDD.design.created_prototypes++
 	busy = FALSE
 	queue -= RNDD
 

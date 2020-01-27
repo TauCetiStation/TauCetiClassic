@@ -38,6 +38,8 @@ other types of metals and chemistry for reagents).
 	var/build_path = null           //The file path of the object that gets created
 	var/list/category = null        //Primarily used for Mech Fabricators, but can be used for anything
 	var/starts_unlocked = FALSE     //If true does not require any technologies and unlocked from the start
+	var/reliability = 10            //Increased by each created prototype with formula: reliability += reliability * (RND_RELIABILITY_EXPONENT^created_prototypes)
+	var/created_prototypes = 0
 
 ///////////////////Computer Boards///////////////////////////////////
 
