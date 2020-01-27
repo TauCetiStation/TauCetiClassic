@@ -232,6 +232,7 @@
 //		if(avoxy > 0)
 		var/datum/gas_mixture/env = loc.return_air()
 		if(env.gas["oxygen"] >= 5)
+			playsound(src, "sound/machines/drip/av.ogg", VOL_EFFECTS_MASTER)
 			if(!HAS_TRAIT_FROM(src.attached, "TRAIT_AV", "AV_DRIP"))
 				ADD_TRAIT(src.attached, "TRAIT_AV", "AV_DRIP")
 		else
@@ -247,6 +248,7 @@
 
 /obj/machinery/av_drip/examine(mob/user)
 	..()
+	to_chat(user, "This is an Artificial Lungs, machine that supports breathing while lungs is broken")
 	to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
 
 
@@ -297,6 +299,7 @@
 	//set background = 1
 //	var/avoxy = return_air(get_turf(src))
 	if(src.attached)
+		playsound(src, "sound/machines/drip/cpb.ogg", VOL_EFFECTS_MASTER)
 		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
 			visible_message("The tubes is ripped out of [src.attached]'s heart, doesn't that hurt?")
 			src.attached:apply_damage(15, BRUTE, O_HEART)
@@ -318,4 +321,5 @@
 
 /obj/machinery/cpb_drip/examine(mob/user)
 	..()
+	to_chat(user, "This is an Cardiopulmonary Bypass machine that temporarily takes over the function of the heart")
 	to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
