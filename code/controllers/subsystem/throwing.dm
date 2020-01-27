@@ -122,17 +122,17 @@ var/datum/subsystem/throwing/SSthrowing
 			early_callback.Invoke()
 
 		if(AM)
-			thrownthing.throw_impact(AM)
+			thrownthing.throw_impact(AM, src)
 		else
 			if (!hit)
 				for (var/thing in get_turf(thrownthing)) //looking for our target on the turf we land on.
 					var/atom/A = thing
 					if (A == target)
 						hit = TRUE
-						thrownthing.throw_impact(A)
+						thrownthing.throw_impact(A, src)
 						break
 				if (!hit)
-					thrownthing.throw_impact(get_turf(thrownthing))  // we haven't hit something yet and we still must, let's hit the ground.
+					thrownthing.throw_impact(get_turf(thrownthing), src)  // we haven't hit something yet and we still must, let's hit the ground.
 					thrownthing.newtonian_move(init_dir)
 			else
 				thrownthing.newtonian_move(init_dir)

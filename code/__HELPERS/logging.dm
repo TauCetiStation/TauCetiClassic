@@ -1,5 +1,5 @@
 #define LOG_CLEANING(text) \
-  replace_characters(text, list("\proper"="","\improper"="", JA_ENTITY=JA_PLACEHOLDER, JA_ENTITY_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
+  replace_characters(text, list(JA_ENTITY=JA_PLACEHOLDER, JA_ENTITY_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
 
 //print an error message to world.log
 
@@ -16,7 +16,7 @@
 	world.log << "## ERROR: [msg][log_end]"
 
 //print a warning message to world.log
-#define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
+#define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [UNLINT(src)] usr: [usr].")
 /proc/warning(msg)
 	world.log << "## WARNING: [msg][log_end]"
 

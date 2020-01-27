@@ -71,7 +71,7 @@
 
 		var/obj/item/clothing/gloves/space_ninja/SNG = H.gloves
 		if(istype(SNG) && SNG.candrain && !SNG.draining)
-			SNG.drain("CELL",src,H.wear_suit)
+			SNG.drain(src, H.wear_suit)
 			
 		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == I_GRAB)
 			if(user.is_busy())

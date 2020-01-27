@@ -17,7 +17,7 @@
 	)
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 2400
-	restricted_species = list(TAJARAN, DIONA, IPC)
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, IPC)
 
 /datum/job/hos/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -111,7 +111,7 @@
 	access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
-	restricted_species = list(DIONA, IPC)
+	restricted_species = list(DIONA)
 
 /datum/job/detective/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -198,6 +198,7 @@
 	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
+	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/forensic/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

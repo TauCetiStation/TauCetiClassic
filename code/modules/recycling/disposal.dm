@@ -116,13 +116,11 @@
 			var/mob/GM = G.affecting
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(user.is_busy()) return
-			for (var/mob/V in viewers(usr))
-				V.show_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>", 3)
+			user.visible_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>")
 			if(G.use_tool(src, usr, 20))
 				GM.loc = src
 				GM.instant_vision_update(1,src)
-				for (var/mob/C in viewers(src))
-					C.show_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>", 3)
+				user.visible_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>")
 				qdel(G)
 				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Has placed [GM.name] ([GM.ckey]) in disposals.</font>"
 				GM.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [usr.name] ([usr.ckey])</font>"
@@ -142,11 +140,7 @@
 	if(I)
 		I.loc = src
 
-	to_chat(user, "<span class='notice'>You place \the [I] into the [src].</span>")
-	for(var/mob/M in viewers(src))
-		if(M == user)
-			continue
-		M.show_message("<span class='notice'>[user.name] places \the [I] into the [src].</span>", 3)
+	user.visible_message("<span class='notice'>[user.name] places \the [I] into the [src].</span>", self_message = "<span class='notice'>You place \the [I] into the [src].</span>")
 
 	update()
 
@@ -166,12 +160,15 @@
 	src.add_fingerprint(user)
 	var/target_loc = target.loc
 	var/msg
-	for (var/mob/V in viewers(usr))
-		if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-			V.show_message("<span class='red'>[usr] starts climbing into the disposal.</span>", 3)
-		if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-			if(target.anchored) return
-			V.show_message("<span class='red'>[usr] starts stuffing [target.name] into the disposal.</span>", 3)
+	var/self_msg
+
+	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
+		user.visible_message("<span class='red'>[usr] starts climbing into the disposal.</span>")
+	if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
+		if(target.anchored)
+			return
+		user.visible_message("<span class='red'>[usr] starts stuffing [target.name] into the disposal.</span>")
+
 	if(user.is_busy() || !do_after(usr, 20, target = src))
 		return
 	if(target_loc != target.loc)
@@ -179,10 +176,10 @@
 	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)	// if drop self, then climbed in
 											// must be awake, not stunned or whatever
 		msg = "<span class='red'>[user.name] climbs into the [src].</span>"
-		to_chat(user, "<span class='notice'>You climb into the [src].</span>")
+		self_msg = "<span class='notice'>You climb into the [src].</span>"
 	else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 		msg = "<span class='danger'>[user.name] stuffs [target.name] into the [src]!</span>"
-		to_chat(user, "<span class='red'>You stuff [target.name] into the [src]!</span>")
+		self_msg = "<span class='red'>You stuff [target.name] into the [src]!</span>"
 
 		user.attack_log += "\[[time_stamp()]\] <font color='red'>Has placed [target.name] ([target.ckey]) in disposals.</font>"
 		target.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>"
@@ -193,10 +190,7 @@
 	target.loc = src
 	target.instant_vision_update(1,src)
 
-	for (var/mob/C in viewers(src))
-		if(C == user)
-			continue
-		C.show_message(msg, 3)
+	user.visible_message(msg, self_message = self_msg)
 
 	update()
 	return
@@ -215,10 +209,10 @@
 		src.add_fingerprint(user)
 		var/target_loc = target.loc
 		var/msg
+		var/self_msg
 
 		if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis) return
-		for (var/mob/V in viewers(usr))
-			V.show_message("<span class='notice'>[usr] starts stuffing [target.name] into the disposal.</span>", 3)
+		user.visible_message("<span class='notice'>[user] starts stuffing [target.name] into the disposal.</span>")
 		if(user.is_busy() || !do_after(usr, 20, target = src))
 			return
 		if(target_loc != target.loc)
@@ -226,7 +220,7 @@
 
 		if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis) return
 		msg = "<span class='notice'>[user.name] stuffs [target.name] into the [src]!</span>"
-		to_chat(user, "<span class='notice'>You stuff [target.name] into the [src]!</span>")
+		self_msg = "<span class='notice'>You stuff [target.name] into the [src]!</span>"
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has placed [target.name] () in disposals.</font>")
 		//target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>")
@@ -234,10 +228,7 @@
 
 		target.loc = src
 
-		for (var/mob/C in viewers(src))
-			if(C == user)
-				continue
-			C.show_message(msg, 3)
+		user.visible_message(msg, self_message = self_msg)
 
 		update()
 		return
@@ -511,11 +502,9 @@
 			return
 		if(prob(75))
 			I.loc = src
-			for(var/mob/M in viewers(src))
-				M.show_message("\the [I] lands in \the [src].", 3)
+			visible_message("\the [I] lands in \the [src].")
 		else
-			for(var/mob/M in viewers(src))
-				M.show_message("\the [I] bounces off of \the [src]'s rim!", 3)
+			visible_message("\the [I] bounces off of \the [src]'s rim!")
 		return 0
 	else
 		return ..(mover, target, height, air_group)

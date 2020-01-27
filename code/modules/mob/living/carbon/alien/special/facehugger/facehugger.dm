@@ -174,13 +174,13 @@
 	if(stat == CONSCIOUS)
 		return HasProximity(finder)
 	return FALSE
-
-/obj/item/clothing/mask/facehugger/proc/show_message(message, m_type)
+/*
+/obj/item/clothing/mask/facehugger/proc/show_messageold(message, m_type)
 	if(current_hugger)
 		var/mob/living/carbon/alien/facehugger/FH = current_hugger
-		FH.show_message(message,m_type)
+		FH.show_message(message,m_type)*/
 
-/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin)
+/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first = FALSE, datum/callback/callback)
 	if(!..())
 		return
 	if(stat == CONSCIOUS)
@@ -191,7 +191,7 @@
 	if(icon_state == "[initial(icon_state)]_thrown")
 		icon_state = "[initial(icon_state)]"
 
-/obj/item/clothing/mask/facehugger/throw_impact(atom/hit_atom)
+/obj/item/clothing/mask/facehugger/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(stat == CONSCIOUS)
 		icon_state = "[initial(icon_state)]"

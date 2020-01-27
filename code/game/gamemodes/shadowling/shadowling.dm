@@ -94,7 +94,9 @@ Made by Xhuis
 			if(player.assigned_role == job)
 				antag_candidates -= player
 
-	var/shadowlings = 2 //How many shadowlings there are; hardcoded to 2
+	var/shadowlings = required_enemies
+	if (antag_candidates.len <= recommended_enemies)
+		shadowlings = antag_candidates.len
 
 	while(shadowlings)
 		var/datum/mind/shadow = pick(antag_candidates)
@@ -103,7 +105,7 @@ Made by Xhuis
 		modePlayer += shadow
 		shadow.special_role = "shadowling"
 		shadowlings--
-	return 1
+	return TRUE
 
 
 /datum/game_mode/shadowling/post_setup()

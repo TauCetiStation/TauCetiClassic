@@ -214,6 +214,64 @@
 	barefootstep = FOOTSTEP_WATER_DEEP
 	clawfootstep = FOOTSTEP_WATER_DEEP
 	heavyfootstep = FOOTSTEP_WATER_DEEP
+	slowdown = 6
+
+
+
+/turf/simulated/floor/beach/water/waterpool
+	icon_state = "seadeep"
+
+/turf/simulated/floor/beach/water/waterpool/Entered(atom/movable/AM, atom/old_loc)
+	..()
+	if(!istype(old_loc, /turf/simulated/floor/beach/water/waterpool))
+		AM.entered_water_turf()
+
+/turf/simulated/floor/beach/water/waterpool/Exited(atom/movable/AM, atom/new_loc)
+	..()
+	if(!istype(new_loc, /turf/simulated/floor/beach/water/waterpool))
+		AM.exited_water_turf()
+
+/atom/movable/proc/exited_water_turf()
+	return
+
+/mob/living/carbon/human/exited_water_turf()
+	Stun(2)
+	playsound(src, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
+
+/mob/living/silicon/robot/exited_water_turf()
+	Stun(2)
+	playsound(src, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
+
+/atom/movable/proc/entered_water_turf()
+	return
+
+/obj/item/entered_water_turf()
+	if(throwing)
+		playsound(src, 'sound/effects/water_turf_entered_obj.ogg', VOL_EFFECTS_MASTER)
+
+/mob/living/carbon/human/entered_water_turf()
+	Stun(2)
+	playsound(src, 'sound/effects/water_turf_entered_mob.ogg', VOL_EFFECTS_MASTER)
+	wear_suit?.make_wet()
+	w_uniform?.make_wet()
+	shoes?.make_wet()
+
+/mob/living/silicon/robot/entered_water_turf()
+	Stun(2)
+	playsound(src, 'sound/effects/water_turf_entered_mob.ogg', VOL_EFFECTS_MASTER)
+	if(stat)
+		return
+	if(prob(25))
+		adjustFireLoss(rand(10, 20))
+		Weaken(rand(10, 15))
+		eye_blind += rand(20, 25)
+		playsound(src, 'sound/machines/cfieldfail.ogg', VOL_EFFECTS_MASTER, null, FALSE, -4)
+	if(!eye_blind)
+		to_chat(src, "<span class='userdanger'>BF%AO@DAT-T[pick("@$%!", "-TEN-TEN%#!", "ENTION")]YAW$!$@@&@CRITI[pick("CAL-CAL", "CAL", "-TI-TI^$#&&@!")]!TAQQ@%@OV[pick("ERL", "ER-ER-ER", "-OAD-D")]%#^WW@ZF%^#D</span>")
+		playsound_local(null, 'sound/AI/ionstorm.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
+		eye_blind += rand(5, 10)
+
+
 
 /turf/simulated/floor/beach/water/atom_init()
 	. = ..()
