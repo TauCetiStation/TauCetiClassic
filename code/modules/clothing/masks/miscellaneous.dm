@@ -285,18 +285,19 @@
 	item_state = "clownnose"
 	w_class = ITEM_SIZE_SMALL
 	action_button_name = "HONK!"
-	var/cooldown = FALSE
+	var/next_honk = 0
 
 /obj/item/clothing/mask/clownnose/verb/honk()
 	set category = "Object"
 	set name = "HONK!"
 	set src in usr
-	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
-	if(cooldown < world.time - 8)
+
+	if(!isliving(usr) || usr.incapacitated())
+		return
+
+	if(next_honk < world.time)
 		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
-		cooldown = world.time
-	return
+		next_honk = world.time + 8
 
 /obj/item/clothing/mask/clownnose/attack_self()
 	honk()
