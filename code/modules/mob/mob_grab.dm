@@ -594,7 +594,7 @@
 		for(var/I in BP.implants)
 			if(!is_type_in_list(I,known_implants))
 				unknown_body = TRUE
-		if(unknown_body == FALSE)
+		if(!unknown_body)
 			to_chat(user, "<span class='notice'>You feel something solid under [BP.name]'s skin.</span>")
 			foundwound = TRUE
 		if(BP.germ_level >= INFECTION_LEVEL_ONE)
@@ -605,15 +605,15 @@
 					foundorganwound = TRUE
 				if(IO.germ_level > 0)
 					foundorgangerm = TRUE
-			if(foundorgangerm == TRUE && foundgerm == FALSE)
+			if(foundorgangerm && !foundgerm)
 				to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] slightly enlarged.</span>")
 				foundwound = TRUE
-			if(foundorganwound == TRUE)
+			if(foundorganwound)
 				to_chat(user, "<span class='warning'>You find ecchymosis and inflation in [BP.name].</span>")
 				foundwound = TRUE
-		if(foundgerm == TRUE)
+		if(foundgerm)
 			to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] greatly enlarged.</span>")
-		if(foundwound == FALSE)
+		if(!foundwound)
 			to_chat(user, "<span class='notice'>You find no visible wounds.</span>")
 			foundwound = FALSE
 
