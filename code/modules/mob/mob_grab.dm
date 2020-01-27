@@ -26,7 +26,6 @@
 	var/foundorganwound = FALSE
 	var/foundorgangerm = FALSE
 	var/unknown_body = FALSE
-	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mindshield/loyalty)
 
 	layer = 21
 	abstract = 1
@@ -590,11 +589,9 @@
 			to_chat(user, "<span class='warning'>You find [BP.get_wounds_desc()]</span>")
 			foundwound = TRUE
 		for(var/I in BP.implants)
-			if(!is_type_in_list(I,known_implants))
-				unknown_body = TRUE
-		if(!unknown_body)
+			unknown_body = TRUE
+		if(unknown_body)
 			to_chat(user, "<span class='notice'>You feel something solid under [BP.name]'s skin.</span>")
-			foundwound = TRUE
 		if(BP.germ_level >= INFECTION_LEVEL_ONE)
 			foundgerm = TRUE
 		if((BP.name == "chest") || (BP.name == "head"))
@@ -604,13 +601,13 @@
 				if(IO.germ_level > 0)
 					foundorgangerm = TRUE
 			if(foundorgangerm && !foundgerm)
-				to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] slightly enlarged.</span>")
+				to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] are slightly enlarged.</span>")
 				foundwound = TRUE
 			if(foundorganwound)
 				to_chat(user, "<span class='warning'>You find ecchymosis and inflation in [BP.name].</span>")
 				foundwound = TRUE
 		if(foundgerm)
-			to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] greatly enlarged.</span>")
+			to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] are greatly enlarged.</span>")
 		if(!foundwound)
 			to_chat(user, "<span class='notice'>You find no visible wounds.</span>")
 
