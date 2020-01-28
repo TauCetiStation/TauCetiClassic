@@ -229,7 +229,7 @@
 			update_icon()
 		else
 			var/datum/gas_mixture/env = loc.return_air()
-			if(env.total_moles > (ONE_ATMOSPHERE +- 20))
+			if(env.return_pressure() > (ONE_ATMOSPHERE - 20))
 				if((env.gas["oxygen"] / env.total_moles) > 0.10)
 					playsound(src, "sound/machines/drip/av.ogg", VOL_EFFECTS_MASTER)
 					if(!HAS_TRAIT_FROM(attached, TRAIT_AV, AV_TRAIT))
