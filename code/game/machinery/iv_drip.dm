@@ -210,23 +210,23 @@
 		visible_message("[attached] is detached from \the [src]")
 		REMOVE_TRAIT(attached, TRAIT_AV, "AV_DRIP")
 		attached = null
-		src.update_icon()
+		update_icon()
 		return
 
 	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		attached = over_object
 		ADD_TRAIT(attached, TRAIT_AV, "AV_DRIP")
-		src.update_icon()
+		update_icon()
 
 /obj/machinery/av_drip/process()
-	if(src.attached)
+	if(attached)
 		if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 			visible_message("The tube is ripped out of [attached]'s lungs, doesn't that hurt?")
 			attached.apply_damage(10, BRUTE, BP_CHEST)
 			REMOVE_TRAIT(attached, TRAIT_AV, "AV_DRIP")
 			attached = null
-			src.update_icon()
+			update_icon()
 		else
 			var/datum/gas_mixture/env = loc.return_air()
 			if(env.gas["oxygen"] >= 5)
@@ -289,7 +289,7 @@
 		return
 
 /obj/machinery/cpb_drip/process()
-	if(src.attached)
+	if(attached)
 		playsound(src, "sound/machines/drip/cpb.ogg", VOL_EFFECTS_MASTER)
 		if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 			visible_message("The tubes is ripped out of [attached]'s heart, doesn't that hurt?")
