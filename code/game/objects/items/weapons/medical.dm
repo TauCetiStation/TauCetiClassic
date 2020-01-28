@@ -18,7 +18,7 @@
 //FIRST-AID KIT
 /obj/item/weapon/storage/firstaid/tactical
 	name = "first-aid kit"
-	icon_state = "bezerk"
+	icon_state = "firstaid_kit_combat"
 	desc = "I hope you've got insurance."
 	max_w_class = ITEM_SIZE_NORMAL
 

@@ -10,7 +10,7 @@
 /obj/item/weapon/storage/firstaid
 	name = "first-aid kit"
 	desc = "It's an emergency medical kit for those serious boo-boos."
-	icon_state = "firstaid"
+	icon_state = "firstaid_kit"
 	throw_speed = 2
 	throw_range = 8
 	max_storage_space = DEFAULT_BOX_STORAGE
@@ -20,15 +20,13 @@
 /obj/item/weapon/storage/firstaid/fire
 	name = "fire first-aid kit"
 	desc = "It's an emergency medical kit for when the toxins lab <i>-spontaneously-</i> burns down."
-	icon_state = "ointment"
+	icon_state = "firstaid_kit_burn"
 	item_state = "firstaid-ointment"
 
 /obj/item/weapon/storage/firstaid/fire/atom_init()
 	. = ..()
 	if (empty)
 		return
-
-	icon_state = pick("ointment","firefirstaid")
 
 	new /obj/item/device/healthanalyzer(src)
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
@@ -38,7 +36,7 @@
 		new /obj/item/weapon/reagent_containers/pill/kelotane(src)// Replaced ointment with these since they actually work --Errorage
 
 /obj/item/weapon/storage/firstaid/regular
-	icon_state = "firstaid"
+	icon_state = "firstaid_kit"
 
 /obj/item/weapon/storage/firstaid/regular/atom_init()
 	. = ..()
@@ -54,15 +52,13 @@
 /obj/item/weapon/storage/firstaid/toxin
 	name = "toxin first aid"
 	desc = "Used to treat when you have a high amoutn of toxins in your body."
-	icon_state = "antitoxin"
+	icon_state = "firstaid_kit_toxin"
 	item_state = "firstaid-toxin"
 
 /obj/item/weapon/storage/firstaid/toxin/atom_init()
 	. = ..()
 	if (empty)
 		return
-
-	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
 
 	for (var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/syringe/antitoxin( src )
@@ -73,7 +69,7 @@
 /obj/item/weapon/storage/firstaid/o2
 	name = "oxygen deprivation first aid"
 	desc = "A box full of oxygen goodies."
-	icon_state = "o2"
+	icon_state = "firstaid_kit_oxygen"
 	item_state = "firstaid-o2"
 
 /obj/item/weapon/storage/firstaid/o2/atom_init()
@@ -89,7 +85,7 @@
 /obj/item/weapon/storage/firstaid/adv
 	name = "advanced first-aid kit"
 	desc = "Contains advanced medical treatments."
-	icon_state = "advfirstaid"
+	icon_state = "firstaid_kit_adv"
 	item_state = "firstaid-advanced"
 
 /obj/item/weapon/storage/firstaid/adv/atom_init()
