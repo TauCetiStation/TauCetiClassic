@@ -126,34 +126,34 @@ var/global/datum/hotline/hotline_controller = new()
 
 /obj/item/weapon/phone/hotline/attack_self(mob/user)
 	if (picked)
-		hang_phone()
+		hang_phone(usr)
 	else if(ringing)
-		pick_phone()
+		pick_phone(usr)
 	return ..()
 
 /obj/item/weapon/phone/hotline/dropped(mob/user)
 	if (picked)
-		hang_phone(TRUE)
+		hang_phone(usr, TRUE)
 	return ..()
 
-/obj/item/weapon/phone/hotline/proc/pick_phone()
-	if(picked || !ishuman(usr) || usr.incapacitated())
+/obj/item/weapon/phone/hotline/proc/pick_phone(mob/user)
+	if(picked || !ishuman(user) || user.incapacitated())
 		return
-	usr.visible_message("[usr] picked up the phone.", "You picked up the phone.")
+	user.visible_message("[user] picked up the phone.", "You picked up the phone.")
 	playsound(src, 'sound/weapons/phone_pick.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2)
-	log_game("[key_name(usr)] picked up a [hotline_name]'s phone.")
-	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(usr)] [ADMIN_PP(usr)] [ADMIN_VV(usr)] [ADMIN_SM(usr)] [ADMIN_TP(usr)] [ADMIN_FLW(usr)] picked up a [hotline_name]'s phone.")
+	log_game("[key_name(user)] picked up a [hotline_name]'s phone.")
+	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(user)] [ADMIN_PP(user)] [ADMIN_VV(user)] [ADMIN_SM(user)] [ADMIN_TP(user)] [ADMIN_FLW(user)] picked up a [hotline_name]'s phone.")
 	connected = TRUE
 	ringing = FALSE
 	picked = TRUE
 
-/obj/item/weapon/phone/hotline/proc/hang_phone(force_hang = FALSE)
-	if(!picked || !ishuman(usr) || (!force_hang && usr.incapacitated()))
+/obj/item/weapon/phone/hotline/proc/hang_phone(mob/user, force_hang = FALSE)
+	if(!picked || !ishuman(user) || (!force_hang && user.incapacitated()))
 		return
-	usr.visible_message("[usr] hung up the phone.", "You hung up the phone.")
+	user.visible_message("[user] hung up the phone.", "You hung up the phone.")
 	playsound(src, 'sound/weapons/phone_hang.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2)
-	log_game("[key_name(usr)] hanged off a [hotline_name]'s phone.")
-	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(usr)] [ADMIN_PP(usr)] [ADMIN_VV(usr)] [ADMIN_SM(usr)] [ADMIN_TP(usr)] [ADMIN_FLW(usr)] hanged off a [hotline_name]'s phone.")
+	log_game("[key_name(user)] hanged off a [hotline_name]'s phone.")
+	message_admins("<font color='red'>HOTLINE:</font> [key_name_admin(user)] [ADMIN_PP(user)] [ADMIN_VV(user)] [ADMIN_SM(user)] [ADMIN_TP(user)] [ADMIN_FLW(user)] hanged off a [hotline_name]'s phone.")
 	connected = TRUE  // connection reset
 	picked = FALSE
 
