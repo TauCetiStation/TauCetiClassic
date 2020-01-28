@@ -223,7 +223,7 @@
 	if(src.attached)
 		if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 			visible_message("The tube is ripped out of [attached]'s lungs, doesn't that hurt?")
-			attached:apply_damage(10, BRUTE, BP_CHEST)
+			attached.apply_damage(10, BRUTE, BP_CHEST)
 			REMOVE_TRAIT(attached, TRAIT_AV, "AV_DRIP")
 			attached = null
 			src.update_icon()
@@ -293,7 +293,7 @@
 		playsound(src, "sound/machines/drip/cpb.ogg", VOL_EFFECTS_MASTER)
 		if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 			visible_message("The tubes is ripped out of [attached]'s heart, doesn't that hurt?")
-			attached:apply_damage(15, BRUTE, BP_CHEST)
+			attached.apply_damage(15, BRUTE, BP_CHEST)
 			REMOVE_TRAIT(attached, TRAIT_CPB, "CPB_DRIP")
 			attached = null
 			update_icon()
