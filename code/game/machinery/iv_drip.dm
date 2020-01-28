@@ -229,13 +229,14 @@
 			update_icon()
 		else
 			var/datum/gas_mixture/env = loc.return_air()
-			if((env.gas["oxygen"] / env.total_moles) > 0.10)
-				playsound(src, "sound/machines/drip/av.ogg", VOL_EFFECTS_MASTER)
-				if(!HAS_TRAIT_FROM(attached, TRAIT_AV, AV_TRAIT))
-					ADD_TRAIT(attached, TRAIT_AV, AV_TRAIT)
-			else
-				if(HAS_TRAIT_FROM(attached, TRAIT_AV, AV_TRAIT))
-					REMOVE_TRAIT(attached, TRAIT_AV, AV_TRAIT)
+			if(env.total_moles > (ONE_ATMOSPHERE +- 20))
+				if((env.gas["oxygen"] / env.total_moles) > 0.10)
+					playsound(src, "sound/machines/drip/av.ogg", VOL_EFFECTS_MASTER)
+					if(!HAS_TRAIT_FROM(attached, TRAIT_AV, AV_TRAIT))
+						ADD_TRAIT(attached, TRAIT_AV, AV_TRAIT)
+				else
+					if(HAS_TRAIT_FROM(attached, TRAIT_AV, AV_TRAIT))
+						REMOVE_TRAIT(attached, TRAIT_AV, AV_TRAIT)
 		return
 
 
