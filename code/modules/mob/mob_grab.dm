@@ -21,11 +21,6 @@
 	var/last_hit_zone = 0
 	var/force_down //determines if the affecting mob will be pinned to the ground
 	var/dancing //determines if assailant and affecting keep looking at each other. Basically a wrestling position
-	var/foundwound = FALSE
-	var/foundgerm = FALSE
-	var/foundorganwound = FALSE
-	var/foundorgangerm = FALSE
-	var/unknown_body = FALSE
 
 	layer = 21
 	abstract = 1
@@ -576,6 +571,10 @@
 /obj/item/weapon/grab/proc/inspect_organ(mob/living/carbon/human/H, mob/user, target_zone)
 
 	var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
+	var/foundwound = FALSE
+	var/foundgerm = FALSE
+	var/foundorganwound = FALSE
+	var/foundorgangerm = FALSE
 
 	if(!BP || (BP.is_stump))
 		to_chat(user, "<span class='notice'>[H] is missing that bodypart.</span>")
@@ -585,12 +584,10 @@
 	if(!do_mob(user,H, 30))
 		to_chat(user, "<span class='notice'>You must stand still to inspect [BP] for wounds.</span>")
 	else
-		if(BP.wounds.len)
+		if(length(BP.wounds))
 			to_chat(user, "<span class='warning'>You find [BP.get_wounds_desc()]</span>")
 			foundwound = TRUE
 		if(length(BP.implants))
-			unknown_body = TRUE
-		if(unknown_body)
 			to_chat(user, "<span class='notice'>You feel something solid under [BP.name]'s skin.</span>")
 		if(BP.germ_level >= INFECTION_LEVEL_ONE)
 			foundgerm = TRUE
@@ -598,7 +595,7 @@
 			for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 				if(IO.is_bruised())
 					foundorganwound = TRUE
-				if(IO.germ_level > 0)
+				if(IO.germ_level >= INFECTION_LEVEL_ONE)
 					foundorgangerm = TRUE
 			if(foundorgangerm && !foundgerm)
 				to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] are slightly enlarged.</span>")
@@ -608,6 +605,7 @@
 				foundwound = TRUE
 		if(foundgerm)
 			to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] are greatly enlarged.</span>")
+			foundwound = TRUE
 		if(!foundwound)
 			to_chat(user, "<span class='notice'>You find no visible wounds.</span>")
 
@@ -636,3 +634,7 @@
 			bad = 1
 		if(!bad)
 			to_chat(user, "<span class='notice'>[H]'s skin is normal.</span>")
+	foundwound = FALSE
+	foundgerm = FALSE
+	foundorganwound = FALSE
+	foundorgangerm = FALSE
