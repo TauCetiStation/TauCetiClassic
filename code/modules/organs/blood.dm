@@ -68,7 +68,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		blood_volume *= 0.3
 
 	//Effects of bloodloss
-	if(!HAS_TRAIT_FROM(src, TRAIT_CPB, CPB_DRIP))
+	if(!HAS_TRAIT_FROM(src, TRAIT_CPB, CPB_TRAIT))
 		switch(blood_volume)
 			if(BLOOD_VOLUME_SAFE to 10000)
 				if(pale)
