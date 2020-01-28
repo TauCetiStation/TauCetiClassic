@@ -176,33 +176,33 @@
 		to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
 
 
-/obj/machinery/av_drip
-	name = "Artificial Ventilation drip"
+/obj/machinery/artifical_ventilation
+	name = "Artificial Ventilation machine"
 	icon = 'icons/obj/iv_drip.dmi'
-	icon_state = "av_drip"
+	icon_state = "av_idle"
 	desc = "This is an Artificial Ventillation machine that supports breathing while lungs is broken."
 	anchored = 0
 	density = 0
 	interact_offline = TRUE
 	var/mob/living/carbon/human/attached = null
 
-/obj/machinery/av_drip/atom_init()
+/obj/machinery/artifical_ventilation/atom_init()
 	. = ..()
 	update_icon()
 
-/obj/machinery/av_drip/Destroy()
+/obj/machinery/artifical_ventilation/Destroy()
 	if(attached)
 		REMOVE_TRAIT(attached, TRAIT_AV, AV_TRAIT)
 		attached = null
 	return ..()
 
-/obj/machinery/av_drip/update_icon()
+/obj/machinery/artifical_ventilation/update_icon()
 	if(attached)
-		icon_state = "av_drip_ventilating"
+		icon_state = "av_ventilating"
 	else
-		icon_state = "av_drip"
+		icon_state = "av_idle"
 
-/obj/machinery/av_drip/MouseDrop(over_object, src_location, over_location)
+/obj/machinery/artifical_ventilation/MouseDrop(over_object, src_location, over_location)
 	..()
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
@@ -219,7 +219,7 @@
 		ADD_TRAIT(attached, TRAIT_AV, AV_TRAIT)
 		update_icon()
 
-/obj/machinery/av_drip/process()
+/obj/machinery/artifical_ventilation/process()
 	if(attached)
 		if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 			visible_message("The tube is ripped out of [attached]'s lungs, doesn't that hurt?")
@@ -237,41 +237,43 @@
 				else
 					if(HAS_TRAIT_FROM(attached, TRAIT_AV, AV_TRAIT))
 						REMOVE_TRAIT(attached, TRAIT_AV, AV_TRAIT)
+			else
+				REMOVE_TRAIT(attached, TRAIT_AV, AV_TRAIT)
 		return
 
 
-/obj/machinery/av_drip/examine(mob/user)
+/obj/machinery/artifical_ventilation/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
 
 
-/obj/machinery/cpb_drip
-	name = "Cardiopulmonary bypass drip"
+/obj/machinery/cardiopulmonary_bypass
+	name = "Cardiopulmonary bypass machine"
 	icon = 'icons/obj/iv_drip.dmi'
-	icon_state = "cpb_drip"
+	icon_state = "cpb_idle"
 	desc = "This is an Cardiopulmonary Bypass machine that temporarily takes over the function of the heart"
 	anchored = 0
 	density = TRUE
 	interact_offline = TRUE
 	var/mob/living/carbon/human/attached = null
 
-/obj/machinery/cpb_drip/atom_init()
+/obj/machinery/cardiopulmonary_bypass/atom_init()
 	. = ..()
 	update_icon()
 
-/obj/machinery/cpb_drip/Destroy()
+/obj/machinery/cardiopulmonary_bypass/Destroy()
 	if(attached)
 		REMOVE_TRAIT(attached, TRAIT_CPB, CPB_TRAIT)
 		attached = null
 	return ..()
 
-/obj/machinery/cpb_drip/update_icon()
+/obj/machinery/cardiopulmonary_bypass/update_icon()
 	if(attached)
-		icon_state = "cpb_drip_pumping"
+		icon_state = "cpb_pumping"
 	else
-		icon_state = "cpb_drip"
+		icon_state = "cpb_idle"
 
-/obj/machinery/cpb_drip/MouseDrop(over_object, src_location, over_location)
+/obj/machinery/cardiopulmonary_bypass/MouseDrop(over_object, src_location, over_location)
 	..()
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
@@ -289,7 +291,7 @@
 		ADD_TRAIT(attached, TRAIT_CPB, CPB_TRAIT)
 		return
 
-/obj/machinery/cpb_drip/process()
+/obj/machinery/cardiopulmonary_bypass/process()
 	if(attached)
 		playsound(src, "sound/machines/drip/cpb.ogg", VOL_EFFECTS_MASTER)
 		if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
@@ -299,6 +301,6 @@
 			attached = null
 			update_icon()
 
-/obj/machinery/cpb_drip/examine(mob/user)
+/obj/machinery/cardiopulmonary_bypass/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
