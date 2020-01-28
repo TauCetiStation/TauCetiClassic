@@ -229,7 +229,7 @@
 			update_icon()
 		else
 			var/datum/gas_mixture/env = loc.return_air()
-			if(env.gas["oxygen"] >= 5)
+			if(env.gas["oxygen"] >= 15)
 				playsound(src, "sound/machines/drip/av.ogg", VOL_EFFECTS_MASTER)
 				if(!HAS_TRAIT_FROM(attached, TRAIT_AV, "AV_DRIP"))
 					ADD_TRAIT(attached, TRAIT_AV, "AV_DRIP")
