@@ -717,3 +717,60 @@ REAGENT SCANNER
 		user.update_inv_r_hand()
 	can_scan = FALSE
 	addtimer(CALLBACK(src, .proc/reset_color), 2 SECONDS)
+
+
+
+/obj/item/device/bloodtype_analyzer
+	desc = "A blood type analyzer which identifies type of a blood sample."
+	name = "blood type analyzer"
+	icon_state = "bloodtype"
+	item_state = "analyzer"
+	w_class = ITEM_SIZE_SMALL
+	flags = CONDUCT | OPENCONTAINER
+	slot_flags = SLOT_FLAGS_BELT
+	throwforce = 5
+	throw_speed = 4
+	throw_range = 20
+	m_amt = 30
+	g_amt = 20
+	origin_tech = "magnets=2;biotech=2"
+	var/list/blood_type = null
+
+/obj/item/device/bloodtype_analyzer/atom_init()
+	. = ..()
+	var/datum/reagents/R = new/datum/reagents(5)
+	reagents = R
+	R.my_atom = src
+
+/obj/item/device/bloodtype_analyzer/on_reagent_change()
+	if(reagents.total_volume)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			if(R.id != "blood")
+				reagents.clear_reagents()
+				return
+			else
+				blood_type = R.data["blood_type"]
+				break
+		switch(blood_type)
+			if("O+")
+				icon_state = initial(icon_state) + "_O+"
+			if("O-")
+				icon_state = initial(icon_state) + "_O-"
+			if("A+")
+				icon_state = initial(icon_state) + "_A+"
+			if("A-")
+				icon_state = initial(icon_state) + "_A-"
+			if("B+")
+				icon_state = initial(icon_state) + "_B+"
+			if("B-")
+				icon_state = initial(icon_state) + "_B-"
+			if("AB+")
+				icon_state = initial(icon_state) + "_AB+"
+			if("AB-")
+				icon_state = initial(icon_state) + "_AB-"
+	else
+		icon_state = initial(icon_state)
+
+/obj/item/device/bloodtype_analyzer/attack_self(mob/user)
+		to_chat(user, "Blood Type: [blood_type]")
+		reagents.clear_reagents()
