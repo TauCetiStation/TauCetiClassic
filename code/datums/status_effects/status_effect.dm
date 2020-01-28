@@ -1,3 +1,15 @@
+var/global/list/spawnable_status_effects = list(
+	/datum/status_effect/incapacitating/sleeping = list(
+		set_duration = new /datum/admin_arguments_request/integer("duration", FALSE, arg_def_val=-1, desc="Please enter a duration for the effect. Enter -1 for it to be permanent(May be very hard to remove later)."),
+		updating_canmove = new /datum/admin_arguments_request/bool("update canmove", FALSE, arg_def_val=TRUE, desc="Should the mob's ability to move be updated? (Enter true/false)."),
+	),
+
+	/datum/status_effect/incapacitating/stasis_bag = list(
+		set_duration = new /datum/admin_arguments_request/integer("duration", FALSE, arg_def_val=-1, desc="Please enter a duration for the effect. Enter -1 for it to be permanent(May be very hard to remove later)."),
+		updating_canmove = new /datum/admin_arguments_request/bool("update canmove", FALSE, arg_def_val=TRUE, desc="Should the mob's ability to move be updated? (Enter true/false)."),
+	),
+	)
+
 //Status effects are used to apply temporary or permanent effects to mobs. Mobs are aware of their status effects at all times.
 //This file contains their code, plus code for applying and removing them.
 //When making a new status effect, add a define to status_effects.dm in __DEFINES for ease of use!
@@ -90,6 +102,22 @@
 //////////////////
 // HELPER PROCS //
 //////////////////
+
+/proc/admin_spawn_status_effect(client/admin)
+	var/datum/status_effect/chosen_status_effect = input(admin, "Choose a status effect to apply.", "Status effect.") as null|anything in global.spawnable_status_effects
+	if(chosen_status_effect)
+		var/list/params = list(chosen_status_effect)
+		var/list/admin_spawn_requests = global.spawnable_status_effects[chosen_status_effect]
+
+		for(var/argument_name in admin_spawn_requests)
+			var/datum/admin_arguments_request/AAR = admin_spawn_requests[argument_name]
+			if(AAR.arg_named)
+				params[argument_name] = AAR.get_value(admin)
+			else
+				params += AAR.get_value(admin)
+
+		return params
+	return null
 
 /mob/living/proc/apply_status_effect(effect, ...) //applies a given status effect to this mob, returning the effect if it was successful
 	. = FALSE
