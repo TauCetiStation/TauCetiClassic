@@ -238,7 +238,8 @@
 					if(HAS_TRAIT_FROM(attached, TRAIT_AV, AV_TRAIT))
 						REMOVE_TRAIT(attached, TRAIT_AV, AV_TRAIT)
 			else
-				REMOVE_TRAIT(attached, TRAIT_AV, AV_TRAIT)
+				if(HAS_TRAIT_FROM(attached, TRAIT_AV, AV_TRAIT))
+						REMOVE_TRAIT(attached, TRAIT_AV, AV_TRAIT)
 		return
 
 
