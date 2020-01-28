@@ -774,3 +774,4 @@ REAGENT SCANNER
 /obj/item/device/bloodtype_analyzer/attack_self(mob/user)
 		to_chat(user, "Blood Type: [blood_type]")
 		reagents.clear_reagents()
+		blood_type = null
