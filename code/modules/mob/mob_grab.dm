@@ -601,7 +601,7 @@
 				to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] are slightly enlarged.</span>")
 				foundwound = TRUE
 			if(foundorganwound)
-				to_chat(user, "<span class='warning'>You find ecchymosis and inflation in [BP.name].</span>")
+				to_chat(user, "<span class='warning'>You find ecchymosis and inflation in the [BP.name].</span>")
 				foundwound = TRUE
 		if(foundgerm)
 			to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] are greatly enlarged.</span>")
