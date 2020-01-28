@@ -14847,6 +14847,22 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
+"azO" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Operating 1 APC";
+	pixel_x = 25
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/artifical_ventilation,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitehall"
+	},
+/area/station/medical/surgery)
 "azP" = (
 /obj/structure/grille,
 /turf/simulated/floor/plating,
@@ -31850,6 +31866,7 @@
 	},
 /area/station/rnd/hallway)
 "bfQ" = (
+/obj/machinery/artifical_ventilation,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
@@ -45290,6 +45307,7 @@
 /area/station/medical/surgery2)
 "bKI" = (
 /obj/machinery/light,
+/obj/machinery/cardiopulmonary_bypass,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -47325,6 +47343,7 @@
 /area/station/medical/hallway)
 "bPz" = (
 /obj/machinery/light,
+/obj/machinery/cardiopulmonary_bypass,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -49140,6 +49159,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/cardiopulmonary_bypass,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -76446,20 +76466,14 @@
 	},
 /area/station/medical/hallway)
 "sKb" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Operating 1 APC";
-	pixel_x = 25
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
+/obj/structure/stool/bed,
+/obj/machinery/artifical_ventilation,
+/obj/item/weapon/bedsheet/medical,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "whitehall"
+	dir = 1;
+	icon_state = "whiteblue"
 	},
-/area/station/medical/surgery)
+/area/station/medical/sleeper)
 "sLb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -116137,7 +116151,7 @@ itb
 aHi
 btg
 aRA
-btT
+sKb
 bAA
 bAP
 bKI
@@ -117696,7 +117710,7 @@ bQR
 bfY
 bga
 bTx
-sKb
+azO
 bgw
 bQR
 bLw
