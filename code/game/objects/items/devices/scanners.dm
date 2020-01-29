@@ -744,6 +744,7 @@ BLOODTYPE SCANNER
 	R.my_atom = src
 
 /obj/item/device/bloodtype_analyzer/on_reagent_change()
+	cut_overlays()
 	if(reagents.total_volume)
 		for(var/datum/reagent/R in reagents.reagent_list)
 			if(R.id != "blood")
@@ -754,23 +755,21 @@ BLOODTYPE SCANNER
 				break
 		switch(blood_type)
 			if("O+")
-				icon_state = initial(icon_state) + "_O+"
+				add_overlay(initial(icon_state) + "_O+")
 			if("O-")
-				icon_state = initial(icon_state) + "_O-"
+				add_overlay(initial(icon_state) + "_O-")
 			if("A+")
-				icon_state = initial(icon_state) + "_A+"
+				add_overlay(initial(icon_state) + "_A+")
 			if("A-")
-				icon_state = initial(icon_state) + "_A-"
+				add_overlay(initial(icon_state) + "_A-")
 			if("B+")
-				icon_state = initial(icon_state) + "_B+"
+				add_overlay(initial(icon_state) + "_B+")
 			if("B-")
-				icon_state = initial(icon_state) + "_B-"
+				add_overlay(initial(icon_state) + "_B-")
 			if("AB+")
-				icon_state = initial(icon_state) + "_AB+"
+				add_overlay(initial(icon_state) + "_AB+")
 			if("AB-")
-				icon_state = initial(icon_state) + "_AB-"
-	else
-		icon_state = initial(icon_state)
+				add_overlay(initial(icon_state) + "_AB-")
 
 /obj/item/device/bloodtype_analyzer/attack_self(mob/user)
 		to_chat(user, "Blood Type: [blood_type]")
