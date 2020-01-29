@@ -11,6 +11,7 @@
 	layer = 2.5
 	anchored = TRUE
 	interact_offline = TRUE
+	can_be_unanchored = TRUE
 
 	var/open = 0		// true if cover is open
 	var/locked = 1		// true if controls are locked
