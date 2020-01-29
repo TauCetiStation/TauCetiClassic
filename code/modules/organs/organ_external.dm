@@ -36,6 +36,7 @@
 	var/bandaged = FALSE              // Are there any visual bandages on this bodypart
 	var/is_stump = FALSE              // Is it just a leftover of a destroyed bodypart
 	var/leaves_stump = TRUE           // Does this bodypart leaves a stump when destroyed
+	var/bodypartdelta = 1.0           // This is delta applyed to body temperature, measured on different bodyparts
 
 	// Joint/state stuff.
 	var/cannot_amputate               // Impossible to amputate.
@@ -630,6 +631,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_TORSO_LAYER
 	regen_bodypart_penalty = 150
 
+	bodypartdelta = 1.08
+
 	cannot_amputate = TRUE
 
 	max_damage = 75
@@ -648,6 +651,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_GROIN_LAYER
 	regen_bodypart_penalty = 90
 
+	bodypartdelta = 1.06
+
 	cannot_amputate = TRUE
 
 	max_damage = 50
@@ -665,6 +670,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	parent_bodypart = BP_CHEST
 	limb_layer = LIMB_HEAD_LAYER
 	regen_bodypart_penalty = 100
+
+	bodypartdelta = 1.05
 
 	max_damage = 75
 	min_broken_damage = 35
@@ -806,6 +813,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_L_ARM_LAYER
 	regen_bodypart_penalty = 75
 
+	bodypartdelta = 1.0
+
 	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 30
@@ -827,6 +836,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_R_ARM_LAYER
 	regen_bodypart_penalty = 75
 
+	bodypartdelta = 1.0
+
 	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 30
@@ -847,6 +858,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_L_LEG_LAYER
 	regen_bodypart_penalty = 75
 
+	bodypartdelta = 0.75
+
 	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 30
@@ -862,6 +875,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	parent_bodypart = BP_GROIN
 	limb_layer = LIMB_R_LEG_LAYER
 	regen_bodypart_penalty = 75
+
+	bodypartdelta = 0.75
 
 	arterial_bleed_severity = 0.75
 	max_damage = 50

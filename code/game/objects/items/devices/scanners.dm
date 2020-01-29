@@ -719,7 +719,6 @@ REAGENT SCANNER
 	addtimer(CALLBACK(src, .proc/reset_color), 2 SECONDS)
 
 
-
 /obj/item/device/bloodtype_analyzer
 	desc = "A blood type analyzer which identifies type of a blood sample."
 	name = "blood type analyzer"
@@ -738,9 +737,7 @@ REAGENT SCANNER
 
 /obj/item/device/bloodtype_analyzer/atom_init()
 	. = ..()
-	var/datum/reagents/R = new/datum/reagents(5)
-	reagents = R
-	R.my_atom = src
+	create_reagents(5)
 
 /obj/item/device/bloodtype_analyzer/on_reagent_change()
 	if(reagents.total_volume)
@@ -791,34 +788,39 @@ REAGENT SCANNER
 	m_amt = 200
 	origin_tech = "magnets=1;biotech=1"
 
-/obj/item/device/thermometer/attack(mob/living/M, mob/living/user)
+/obj/item/device/thermometer/afterattack(atom/A, mob/user)
 	add_fingerprint(user)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
-			var/datum/gas_mixture/env = H.loc.return_air()
-				to_chat(user, "Temperature: [env.temperature]")
+	var/turf/T = get_turf(A)
+	var/datum/gas_mixture/env = T.return_air()
+	var/temp_celsium = 0.0
+	var/delta = 0.0
+	if(istype(A, /obj/item))
+		var/obj/item/I = A
+		temp_celsium = (env.temperature + I.get_current_temperature())-T0C
+	else if(isliving(A))
+		var/mob/living/L = A
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
+				temp_celsium = H.bodytemperature-T0C
+			else
+				var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+				if(!BP || (BP.is_stump))
+					to_chat(user, "<span class='notice'>[H] is missing that bodypart.</span>")
+					return
+				temp_celsium = (H.bodytemperature-T0C)*BP.bodypartdelta
 		else
-			var/delta = 1
-			var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
-			if(!BP || (BP.is_stump))
-				to_chat(user, "<span class='notice'>[H] is missing that bodypart.</span>")
-				return
-			switch(BP.name)
-				if("chest")
-					delta = 1.08
-				if("head")
-					delta = 1.05
-				if("groin")
-					delta = 1.06
-				if("left arm")
-					delta = 1
-				if("right arm")
-					delta = 1
-				if("left leg")
-					delta = 0.75
-				if("right leg")
-					delta = 0.75
-			to_chat(user, "Temperature: [(H.bodytemperature-T0C)*delta]&deg;C ([(((H.bodytemperature-T0C)*delta)*1.8)+32]&deg;F)")
+			temp_celsium = L.bodytemperature-T0C
 	else
-		to_chat(user, "<span class = 'warning'>Analyzing Temperature error.</span>")
+		temp_celsium = env.temperature-T0C
+
+	var/dist = get_dist(user, A)
+	if(dist > 1)
+		delta = dist * 0.01
+
+	if(delta > 0.1)
+		to_chat(user, "MEASUREMENT IMPOSSIBLE, TOO HIGH ERROR")
+		return
+	if(delta > 0.0)
+		temp_celsium = rand((temp_celsium - temp_celsium * delta) * 100, (temp_celsium + temp_celsium * delta) * 100) * 0.01
+	to_chat(user, "Temperature: [temp_celsium]&deg;C ([(temp_celsium * 1.8) + 32]&deg;F)")
