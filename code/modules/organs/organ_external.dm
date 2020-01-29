@@ -971,4 +971,3 @@ Note that amputating the affected organ does in fact remove the infection from t
 	for(var/obj/item/organ/external/BP in bodyparts)
 		BP.species = BP.owner.species
 		BP.recolor()
->>>>>>> parent of 5f87607c62... Добавил параметр дельты температуры конечностям, добавлена возможность измерять термометром температуру окружающей среды и предметов
