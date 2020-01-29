@@ -591,18 +591,17 @@
 			to_chat(user, "<span class='notice'>You feel something solid under [BP.name]'s skin.</span>")
 		if(BP.germ_level >= INFECTION_LEVEL_ONE)
 			foundgerm = TRUE
-		if((BP.name == "chest") || (BP.name == "head"))
-			for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
-				if(IO.is_bruised())
-					foundorganwound = TRUE
-				if(IO.germ_level >= INFECTION_LEVEL_ONE)
-					foundorgangerm = TRUE
-			if(foundorgangerm && !foundgerm)
-				to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] are slightly enlarged.</span>")
-				foundwound = TRUE
-			if(foundorganwound)
-				to_chat(user, "<span class='warning'>You find ecchymosis and inflation in the [BP.name].</span>")
-				foundwound = TRUE
+		for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
+			if(IO.is_bruised())
+				foundorganwound = TRUE
+			if(IO.germ_level >= INFECTION_LEVEL_ONE)
+				foundorgangerm = TRUE
+		if(foundorgangerm && !foundgerm)
+			to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] are slightly enlarged.</span>")
+			foundwound = TRUE
+		if(foundorganwound)
+			to_chat(user, "<span class='warning'>You find ecchymosis and inflation in the [BP.name].</span>")
+			foundwound = TRUE
 		if(foundgerm)
 			to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] are greatly enlarged.</span>")
 			foundwound = TRUE
