@@ -724,7 +724,7 @@ REAGENT SCANNER
 	desc = "A blood type analyzer which identifies type of a blood sample."
 	name = "blood type analyzer"
 	icon_state = "bloodtype"
-	item_state = "analyzer"
+	item_state = "bloodtype"
 	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT | OPENCONTAINER
 	slot_flags = SLOT_FLAGS_BELT
@@ -775,3 +775,50 @@ REAGENT SCANNER
 		to_chat(user, "Blood Type: [blood_type]")
 		reagents.clear_reagents()
 		blood_type = null
+
+
+/obj/item/device/thermometer
+	name = "Thermometer"
+	icon_state = "thermometer"
+	item_state = "thermometer"
+	desc = "A hand-held body temperature scanner."
+	flags = CONDUCT
+	slot_flags = SLOT_FLAGS_BELT
+	throwforce = 3
+	w_class = ITEM_SIZE_SMALL
+	throw_speed = 5
+	throw_range = 10
+	m_amt = 200
+	origin_tech = "magnets=1;biotech=1"
+
+/obj/item/device/thermometer/attack(mob/living/M, mob/living/user)
+	add_fingerprint(user)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
+			var/datum/gas_mixture/env = H.loc.return_air()
+				to_chat(user, "Temperature: [env.temperature]")
+		else
+			var/delta = 1
+			var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+			if(!BP || (BP.is_stump))
+				to_chat(user, "<span class='notice'>[H] is missing that bodypart.</span>")
+				return
+			switch(BP.name)
+				if("chest")
+					delta = 1.08
+				if("head")
+					delta = 1.05
+				if("groin")
+					delta = 1.06
+				if("left arm")
+					delta = 1
+				if("right arm")
+					delta = 1
+				if("left leg")
+					delta = 0.75
+				if("right leg")
+					delta = 0.75
+			to_chat(user, "Temperature: [(H.bodytemperature-T0C)*delta]&deg;C ([(((H.bodytemperature-T0C)*delta)*1.8)+32]&deg;F)")
+	else
+		to_chat(user, "<span class = 'warning'>Analyzing Temperature error.</span>")
