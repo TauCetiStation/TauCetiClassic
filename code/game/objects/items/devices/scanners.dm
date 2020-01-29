@@ -824,5 +824,9 @@ REAGENT SCANNER
 					delta = 0.75
 			to_chat(user, "Temperature: [(H.bodytemperature-T0C)*delta]&deg;C ([(((H.bodytemperature-T0C)*delta)*1.8)+32]&deg;F)")
 	else
+<<<<<<< HEAD
+		to_chat(user, "<span class = 'warning'>Analyzing Temperature error.</span>")
+>>>>>>> parent of 5f87607c62... Добавил параметр дельты температуры конечностям, добавлена возможность измерять термометром температуру окружающей среды и предметов
+=======
 		to_chat(user, "<span class = 'warning'>Analyzing Temperature error.</span>")
 >>>>>>> parent of 5f87607c62... Добавил параметр дельты температуры конечностям, добавлена возможность измерять термометром температуру окружающей среды и предметов
