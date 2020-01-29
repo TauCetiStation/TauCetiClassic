@@ -66,7 +66,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 		return
 
 	if(sender)
-		log_ooc("[sender.mob.name]/[sender.key] : [msg]")
+		log_ooc("[key_name(sender)] : [msg]")
 	else
 		log_ooc("[name]: [msg]")
 
@@ -153,7 +153,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 	else if(prefs.chat_toggles & CHAT_CKEY)
 		display_name += " ([key])"
 
-	log_ooc("(LOCAL) [mob.name]/[key] : [msg]")
+	log_ooc("(LOCAL) [key_name(mob)] : [msg]")
 
 	var/list/heard = get_mobs_in_view(7, src.mob)
 	for(var/mob/M in heard)

@@ -96,7 +96,7 @@ field_generator power level display
 					"<span class='notice'>You hear heavy droning.</span>")
 				turn_on()
 				playsound(src, 'sound/machines/cfieldbeforestart.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-				log_investigate("<font color='green'>activated</font> by [user.key].",INVESTIGATE_SINGULO)
+				log_investigate("<font color='green'>activated</font> by [key_name(user)].",INVESTIGATE_SINGULO)
 	else
 		to_chat(user, "<span class='notice'>The [src] needs to be firmly secured to the floor first.</span>")
 		return 1

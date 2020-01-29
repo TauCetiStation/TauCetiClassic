@@ -683,7 +683,7 @@
 				ticker.mode.traitors -= src
 				special_role = null
 				to_chat(current, "<span class='warning'><FONT size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a traitor to Nanotrasen.  Have a nice day!</B></FONT></span>")
-				log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
+				log_admin("[key_name(usr)] has de-traitor'ed [current].")
 
 	else if (href_list["revolution"])
 		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
@@ -701,7 +701,7 @@
 					ticker.mode.update_rev_icons_removed(src)
 					special_role = null
 					current.verbs -= /mob/living/carbon/human/proc/RevConvert
-				log_admin("[key_name_admin(usr)] has de-rev'ed [current].")
+				log_admin("[key_name(usr)] has de-rev'ed [current].")
 
 			if("rev")
 				if(src in ticker.mode.head_revolutionaries)
@@ -743,7 +743,7 @@
 				ticker.mode.head_revolutionaries += src
 				ticker.mode.update_all_rev_icons()
 				special_role = "Head Revolutionary"
-				log_admin("[key_name_admin(usr)] has head-rev'ed [current].")
+				log_admin("[key_name(usr)] has head-rev'ed [current].")
 
 			if("autoobjectives")
 				ticker.mode.forge_revolutionary_objectives(src)
@@ -864,7 +864,7 @@
 							cult.memoize_cult_objectives(src)
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT></span>")
 					memory = ""
-					log_admin("[key_name_admin(usr)] has de-cult'ed [current].")
+					log_admin("[key_name(usr)] has de-cult'ed [current].")
 			if("cultist")
 				if(!(src in ticker.mode.cult))
 					ticker.mode.cult += src
@@ -877,7 +877,7 @@
 					if (istype(cult))
 						if(!config.objectives_disabled)
 							cult.memoize_cult_objectives(src)
-					log_admin("[key_name_admin(usr)] has cult'ed [current].")
+					log_admin("[key_name(usr)] has cult'ed [current].")
 			if("tome")
 				var/mob/living/carbon/human/H = current
 				if (istype(H))
@@ -910,7 +910,7 @@
 					special_role = null
 					current.spellremove(current, config.feature_object_spell_system? "object":"verb")
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT></span>")
-					log_admin("[key_name_admin(usr)] has de-wizard'ed [current].")
+					log_admin("[key_name(usr)] has de-wizard'ed [current].")
 			if("wizard")
 				if(!(src in ticker.mode.wizards))
 					ticker.mode.wizards += src
@@ -918,7 +918,7 @@
 					//ticker.mode.learn_basic_spells(current)
 					to_chat(current, "<B><span class='warning'>You are the Space Wizard!</span></B>")
 					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
-					log_admin("[key_name_admin(usr)] has wizard'ed [current].")
+					log_admin("[key_name(usr)] has wizard'ed [current].")
 			if("lair")
 				current.loc = pick(wizardstart)
 			if("dressup")
@@ -942,7 +942,7 @@
 					if(changeling)
 						qdel(changeling)
 					to_chat(current, "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>")
-					log_admin("[key_name_admin(usr)] has de-changeling'ed [current].")
+					log_admin("[key_name(usr)] has de-changeling'ed [current].")
 			if("changeling")
 				if(!(src in ticker.mode.changelings))
 					ticker.mode.changelings += src
@@ -952,7 +952,7 @@
 					current.playsound_local(null, 'sound/antag/ling_aler.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 					if(config.objectives_disabled)
 						to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
-					log_admin("[key_name_admin(usr)] has changeling'ed [current].")
+					log_admin("[key_name(usr)] has changeling'ed [current].")
 			if("autoobjectives")
 				if(!config.objectives_disabled)
 					ticker.mode.forge_changeling_objectives(src)
@@ -977,7 +977,7 @@
 				if(src in ticker.mode.syndicates)
 					ticker.mode.remove_nuclear(src)
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a syndicate operative!</B></FONT></span>")
-					log_admin("[key_name_admin(usr)] has de-nuke op'ed [current].")
+					log_admin("[key_name(usr)] has de-nuke op'ed [current].")
 			if("nuclear")
 				if(!(src in ticker.mode.syndicates))
 					ticker.mode.syndicates += src
@@ -995,7 +995,7 @@
 					else
 						ticker.mode.forge_syndicate_objectives(src)
 					ticker.mode.greet_syndicate(src)
-					log_admin("[key_name_admin(usr)] has nuke op'ed [current].")
+					log_admin("[key_name(usr)] has nuke op'ed [current].")
 			if("lair")
 				current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
 			if("dressup")
@@ -1031,7 +1031,7 @@
 				if(src in ticker.mode.traitors)
 					ticker.mode.remove_traitor(src)
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT></span>")
-					log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
+					log_admin("[key_name(usr)] has de-traitor'ed [current].")
 
 			if("traitor")
 				if(!(src in ticker.mode.traitors))
@@ -1039,7 +1039,7 @@
 					special_role = "traitor"
 					to_chat(current, "<B><span class='warning'>You are a traitor!</span></B>")
 					current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					log_admin("[key_name_admin(usr)] has traitor'ed [current].")
+					log_admin("[key_name(usr)] has traitor'ed [current].")
 					if (config.objectives_disabled)
 						to_chat(current, "<i>You have been turned into an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>")
 					if(istype(current, /mob/living/silicon))
@@ -1185,11 +1185,11 @@
 					current_ai.icon_state = "ai"
 
 					to_chat(current_ai, "<span class='userdanger'>You have been patched! You are no longer malfunctioning!</span>")
-					log_admin("[key_name_admin(usr)] has de-malf'ed [current].")
+					log_admin("[key_name(usr)] has de-malf'ed [current].")
 
 			if("malf")
 				make_AI_Malf()
-				log_admin("[key_name_admin(usr)] has malf'ed [current].")
+				log_admin("[key_name(usr)] has malf'ed [current].")
 
 			if("unemag")
 				var/mob/living/silicon/robot/R = current
@@ -1206,7 +1206,7 @@
 					else if(R.module_state_3 == R.module.emag)
 						R.module_state_3 = null
 						R.contents -= R.module.emag
-					log_admin("[key_name_admin(usr)] has unemag'ed [R].")
+					log_admin("[key_name(usr)] has unemag'ed [R].")
 
 			if("unemagcyborgs")
 				if (istype(current, /mob/living/silicon/ai))
@@ -1225,7 +1225,7 @@
 							else if(R.module_state_3 == R.module.emag)
 								R.module_state_3 = null
 								R.contents -= R.module.emag
-					log_admin("[key_name_admin(usr)] has unemag'ed [ai]'s Cyborgs.")
+					log_admin("[key_name(usr)] has unemag'ed [ai]'s Cyborgs.")
 
 	else if (href_list["common"])
 		switch(href_list["common"])

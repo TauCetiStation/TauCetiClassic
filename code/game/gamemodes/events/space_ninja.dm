@@ -495,8 +495,8 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 	space_ninja_arrival(input, mission)
 
-	message_admins("<span class='notice'>[key_name_admin(key)] has spawned [input] as a Space Ninja.\nTheir <b>mission</b> is: [mission]</span>")
-	log_admin("[key] used Spawn Space Ninja.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] has spawned [input] as a Space Ninja.\nTheir <b>mission</b> is: [mission]</span>")
+	log_admin("[key_name(usr)] used Spawn Space Ninja.")
 
 	return
 

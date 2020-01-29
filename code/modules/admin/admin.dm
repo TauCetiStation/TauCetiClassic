@@ -795,8 +795,8 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		return 0
 
 	if(ticker.start_now())
-		log_admin("[usr.key] has started the game.")
-		message_admins("<font color='blue'>[usr.key] has started the game.</font>")
+		log_admin("[key_name(usr)] has started the game.")
+		message_admins("<font color='blue'>[key_name_admin(usr)] has started the game.</font>")
 		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return 1
 	else

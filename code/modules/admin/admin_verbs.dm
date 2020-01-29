@@ -706,8 +706,8 @@ var/list/admin_verbs_hideable = list(
 
 	if(deadmin_holder)
 		deadmin_holder.reassociate()
-		log_admin("[src] re-admined themself.")
-		message_admins("[src] re-admined themself.")
+		log_admin("[key_name(usr)] re-admined themself.")
+		message_admins("[key_name_admin(usr)] re-admined themself.")
 		to_chat(src, "<span class='interface'>You now have the keys to control the planet, or at least a small space station.</span>")
 		verbs -= /client/proc/readmin_self
 		feedback_add_details("admin_verb","RAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -718,8 +718,8 @@ var/list/admin_verbs_hideable = list(
 
 	if(holder)
 		if(alert("Confirm self-deadmin for the round?",,"Yes","No") == "Yes")
-			log_admin("[src] deadmined themself.")
-			message_admins("[src] deadmined themself.")
+			log_admin("[key_name(usr)] deadmined themself.")
+			message_admins("[key_name_admin(usr)] deadmined themself.")
 			deadmin()
 			to_chat(src, "<span class='interface'>You are now a normal player.</span>")
 			verbs += /client/proc/readmin_self
@@ -989,7 +989,7 @@ var/list/admin_verbs_hideable = list(
 		if((M.mind && M.mind.special_role) || (M.client && M.client.holder))
 			to_chat(M, "<font color='#960018'><span class='ooc'><span class='prefix'>Antag-OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
 
-	log_ooc("Antag-OOC: [key] : [msg]")
+	log_ooc("Antag-OOC: [key_name(src)] : [msg]")
 
 /client/proc/toggle_AI_interact()
 	set name = "Toggle Admin AI Interact"
@@ -1044,11 +1044,11 @@ var/list/admin_verbs_hideable = list(
 	if(choice == "--CANCEL--") return
 
 	message_admins("[key_name_admin(src)] started loading event-map [choice]")
-	log_admin("[key_name_admin(src)] started loading event-map [choice]")
+	log_admin("[key_name(src)] started loading event-map [choice]")
 
 	if(maploader.load_new_z_level(choice))//, load_speed = 100)
 		message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
-		log_admin("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
+		log_admin("[key_name(src)] loaded event-map [choice], zlevel [world.maxz]")
 	else
 		message_admins("[key_name_admin(src)] failed to load event-map [choice].")
 

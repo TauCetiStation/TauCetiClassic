@@ -44,7 +44,7 @@ var/global/list/rad_collectors = list()
 			user.visible_message(
 				"[user.name] turns the [name] [active? "on":"off"].",
 				"You turn the [name] [active? "on":"off"].")
-			log_investigate("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.gas["phoron"]/0.29)]%":"<font color='red'>It is empty</font>"].",INVESTIGATE_SINGULO)
+			log_investigate("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [key_name(user)]. [P?"Fuel: [round(P.air_contents.gas["phoron"]/0.29)]%":"<font color='red'>It is empty</font>"].",INVESTIGATE_SINGULO)
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 			return 1

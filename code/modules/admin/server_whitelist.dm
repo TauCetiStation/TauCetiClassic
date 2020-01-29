@@ -48,4 +48,4 @@
 		return
 
 	message_admins("[key_name_admin(src)] add [ckey] to server whitelist")
-	log_admin("[key_name_admin(src)] add [ckey] to server whitelist")
+	log_admin("[key_name(src)] add [ckey] to server whitelist")
