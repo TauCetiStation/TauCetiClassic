@@ -1253,7 +1253,7 @@
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/custom/syndicate_mothership)
+/area/syndicate_mothership)
 "agj" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench{
 	icon_state = "bench_2"
@@ -3326,7 +3326,7 @@
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
-/area/custom/syndicate_mothership)
+/area/syndicate_mothership)
 "amz" = (
 /obj/structure/table,
 /obj/item/weapon/retractor,
@@ -3459,7 +3459,7 @@
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
-/area/custom/syndicate_mothership)
+/area/syndicate_mothership)
 "amZ" = (
 /obj/machinery/computer/intruder_station,
 /turf/unsimulated/floor{
@@ -4355,7 +4355,7 @@
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/custom/syndicate_mothership)
+/area/syndicate_mothership)
 "aqf" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "1,0"
@@ -5217,7 +5217,7 @@
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
-/area/custom/syndicate_mothership)
+/area/syndicate_mothership)
 "atc" = (
 /obj/machinery/status_display{
 	supply_display = 1
@@ -6340,7 +6340,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/custom/syndicate_mothership)
+/area/syndicate_mothership)
 "axc" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,3"
@@ -8325,7 +8325,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/custom/syndicate_mothership)
+/area/syndicate_mothership)
 "aDi" = (
 /obj/machinery/door/poddoor{
 	id = "ASSAULT2";
@@ -12241,7 +12241,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/custom/syndicate_mothership)
+/area/syndicate_mothership)
 "aSc" = (
 /turf/unsimulated/floor{
 	dir = 5;
