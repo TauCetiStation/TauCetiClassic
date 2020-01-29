@@ -2,6 +2,8 @@
 	var/boolet_number = 0
 	distro += variance
 
+	BB.shot_from = loc
+
 	for(var/i = max(1, pellets), i > 0, i--)
 		boolet_number++
 		var/curloc = user.loc

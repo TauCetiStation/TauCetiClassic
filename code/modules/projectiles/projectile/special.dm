@@ -9,7 +9,7 @@
 	nodamage = 1
 	flag = "energy"
 
-/obj/item/projectile/ion/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/ion/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	empulse(target, 1, 1)
 	return 1
 
@@ -23,7 +23,7 @@
 	sharp = 1
 	edge = 1
 
-/obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/gyro/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	explosion(target, -1, 0, 2)
 	return 1
 
@@ -42,7 +42,7 @@
 	var/temperature = 100
 
 
-/obj/item/projectile/temp/on_hit(atom/target, blocked = 0)//These two could likely check temp protection on the mob
+/obj/item/projectile/temp/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0) //These two could likely check temp protection on the mob
 	if(istype(target, /mob/living))
 		var/mob/M = target
 		M.bodytemperature = temperature
@@ -97,7 +97,7 @@
 	nodamage = 1
 	flag = "energy"
 
-/obj/item/projectile/energy/floramut/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/energy/floramut/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	var/mob/living/M = target
 //	if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
 	if(ishuman(target))
@@ -138,7 +138,7 @@
 	nodamage = 1
 	flag = "energy"
 
-/obj/item/projectile/energy/florayield/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/energy/florayield/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	var/mob/M = target
 //	if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //These rays make plantmen fat.
 	if(ishuman(target)) //These rays make plantmen fat.
@@ -155,7 +155,7 @@
 /obj/item/projectile/beam/mindflayer
 	name = "flayer ray"
 
-/obj/item/projectile/beam/mindflayer/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/mindflayer/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(ishuman(target))
 		var/mob/living/carbon/human/M = target
 		M.adjustBrainLoss(20)
@@ -176,7 +176,7 @@
 	sharp = 0
 	edge = 0
 
-/obj/item/projectile/missile/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/missile/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	target.ex_act(1)
 	explosion(target, 1,2,4,5)
 	return 1
@@ -186,7 +186,7 @@
 /obj/item/projectile/missile/emp
 	damage = 10
 
-/obj/item/projectile/missile/emp/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/missile/emp/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	empulse(target, 4, 10)
 	return 1
 
@@ -210,7 +210,7 @@
 	. = ..()
 	proj_act_sound = SOUNDIN_ACIDACT
 
-/obj/item/projectile/acid_special/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/acid_special/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_bodypart_damage(damage)//+10=30

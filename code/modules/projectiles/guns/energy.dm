@@ -35,6 +35,9 @@
 	newshot()
 	..()
 
+/obj/item/weapon/gun/energy/announce_shot(mob/living/user)
+	user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a laser blast!")
+
 /obj/item/weapon/gun/energy/proc/newshot()
 	if (!ammo_type || !power_supply)
 		return

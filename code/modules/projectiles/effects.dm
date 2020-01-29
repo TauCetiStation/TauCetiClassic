@@ -3,7 +3,10 @@
 	icon_state = "bolt"
 	layer = LIGHTING_LAYER + 1
 	plane = LIGHTING_PLANE + 1
+
 	var/time_to_live = 3
+	// If tracer_list is used on projectile, all projectiles without the below being TRUE are qdeled.
+	var/deletes_itself = FALSE
 
 /obj/effect/projectile/atom_init()
 	. = ..()
