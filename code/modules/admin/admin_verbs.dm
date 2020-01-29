@@ -87,9 +87,9 @@ var/list/admin_verbs_log = list(
 	)
 var/list/admin_verbs_variables = list(
 	/client/proc/debug_variables,
-	/client/proc/add_player_age, 		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
+	/client/proc/add_player_age,
 	/client/proc/mass_apply_status_effect,
-	)
+)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel
 //	/client/proc/stickybanpanel,

@@ -3,12 +3,11 @@ var/global/list/spawnable_status_effects = list(
 		set_duration = new /datum/admin_arguments_request/integer("duration", FALSE, arg_def_val=-1, desc="Please enter a duration for the effect. Enter -1 for it to be permanent(May be very hard to remove later)."),
 		updating_canmove = new /datum/admin_arguments_request/bool("update canmove", FALSE, arg_def_val=TRUE, desc="Should the mob's ability to move be updated? (Enter true/false)."),
 	),
-
 	/datum/status_effect/incapacitating/stasis_bag = list(
 		set_duration = new /datum/admin_arguments_request/integer("duration", FALSE, arg_def_val=-1, desc="Please enter a duration for the effect. Enter -1 for it to be permanent(May be very hard to remove later)."),
 		updating_canmove = new /datum/admin_arguments_request/bool("update canmove", FALSE, arg_def_val=TRUE, desc="Should the mob's ability to move be updated? (Enter true/false)."),
 	),
-	)
+)
 
 //Status effects are used to apply temporary or permanent effects to mobs. Mobs are aware of their status effects at all times.
 //This file contains their code, plus code for applying and removing them.
