@@ -280,7 +280,7 @@
 
 /obj/item/clothing/mask/clownnose
 	name = "clown nose"
-	desc = "Take center ring at your carnival party with this red clown nose. These clown nose are made of lightweight foam and have a slit down the middle for a comfortable fit."
+	desc = "Be the attraction at your carnival party with this red clown nose. This clown nose is made out of lightweight foam and has a slit down the middle for a comfortable fit."
 	icon_state = "clownnose"
 	item_state = "clownnose"
 	w_class = ITEM_SIZE_SMALL
