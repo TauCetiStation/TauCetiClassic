@@ -448,6 +448,8 @@
 		H.apply_effect(3, WEAKEN)
 		H.apply_damages(0,0,1,4,0,5)
 		H.regen_bodyparts(4, FALSE)
+	else
+		volume += 0.07
 
 /datum/reagent/bicaridine
 	name = "Bicaridine"
@@ -532,7 +534,12 @@
 		if(15 to 35)
 			M.adjustCloneLoss(-2)
 			M.heal_bodypart_damage(2, 1)
-			M.status_flags &= ~DISFIGURED
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				var/obj/item/organ/external/head/BP = H.bodyparts_by_name[BP_HEAD]
+				if(BP && BP.disfigured)
+					BP.disfigured = FALSE
+					to_chat(M, "Your face is shaped normally again.")
 		if(35 to INFINITY)
 			M.adjustToxLoss(1)
 			M.make_dizzy(5)

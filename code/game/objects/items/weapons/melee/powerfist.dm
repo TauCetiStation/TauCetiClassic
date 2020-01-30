@@ -10,10 +10,14 @@
 	throw_range = 7
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;powerstorage=3;syndicate=3"
+	var/base_force = 0
 	var/fisto_setting = 1
 	var/gasperfist = 3
 	var/obj/item/weapon/tank/tank = null //Tank used for the gauntlet's piston-ram.
 
+/obj/item/weapon/melee/powerfist/atom_init(mapload, ...)
+	. = ..()
+	base_force = force
 
 /obj/item/weapon/melee/powerfist/examine(mob/user)
 	..()
@@ -72,25 +76,25 @@
 /obj/item/weapon/melee/powerfist/attack(mob/living/target, mob/living/user, def_zone)
 	if(!tank)
 		to_chat(user,"<span class='warning'>\The [src] can't operate without a source of gas!</span>")
-		return
+		return FALSE
 	else if(!tank.air_contents.remove(gasperfist * fisto_setting))
 		to_chat(user,"<span class='warning'>\The [src]'s piston-ram lets out a weak hiss, it needs more gas!</span>")
 		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
-		return
-	target.apply_damage(force * fisto_setting, BRUTE, def_zone)
-	target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as they punch [target.name]!</span>", \
-		"<span class='userdanger'>You cry out in pain as [user]'s punch flings you backwards!</span>")
-	new /obj/item/effect/kinetic_blast(target.loc)
-	playsound(src, 'sound/weapons/guns/resonator_blast.ogg', VOL_EFFECTS_MASTER)
-	playsound(src, 'sound/weapons/genhit2.ogg', VOL_EFFECTS_MASTER)
+		return FALSE
+	force = base_force * fisto_setting
+	var/success = ..()
+	force = base_force
+	if (success)
+		target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as they punch [target.name]!</span>",
+								"<span class='userdanger'>You cry out in pain as [user]'s punch flings you backwards!</span>")
+		new /obj/item/effect/kinetic_blast(target.loc)
+		playsound(src, 'sound/weapons/guns/resonator_blast.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, 'sound/weapons/genhit2.ogg', VOL_EFFECTS_MASTER)
 
-	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
-	target.throw_at(throw_target, 5 * fisto_setting, 1)
-
-	target.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been powerfisted by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>powerfisted [target.name]'s ([target.ckey])</font>")
-	msg_admin_attack("[user] ([user.ckey]) powerfisted [target.name] ([target.ckey])", user)
-	return
+		var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
+		target.throw_at(throw_target, 5 * fisto_setting, 1)
+		return TRUE
+	return FALSE
 
 /obj/item/weapon/melee/powerfist/update_icon()
 	icon_state = "powerfist_[fisto_setting]"

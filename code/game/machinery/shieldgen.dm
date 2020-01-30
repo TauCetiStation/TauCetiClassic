@@ -94,7 +94,7 @@
 	qdel(src)
 
 
-/obj/machinery/shield/hitby(AM)
+/obj/machinery/shield/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	//Let everyone know we've been hit!
 	visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
 

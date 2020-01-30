@@ -908,11 +908,13 @@
 	return
 
 /obj/item/clean_blood()
-	. = ..()
+	. = ..() // FIX: If item is `uncleanable` we shouldn't nullify `dirt_overlay`
 	if(uncleanable)
 		return
 	if(blood_overlay)
-		overlays.Remove(blood_overlay)
+		cut_overlay(blood_overlay)
+		blood_overlay.color = null
+		blood_overlay = null
 	if(istype(src, /obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = src
 		G.transfer_blood = 0
@@ -923,7 +925,7 @@
 	..()
 	if(dirt_overlay)
 		if(blood_overlay.color != dirt_overlay.color)
-			overlays.Remove(blood_overlay)
+			cut_overlay(blood_overlay)
 			blood_overlay.color = dirt_overlay.color
 			add_overlay(blood_overlay)
 

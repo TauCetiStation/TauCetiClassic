@@ -70,7 +70,7 @@
 		if(BP.is_robotic() && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
 		amount += BP.brute_dam
-	return amount
+	return round(amount, 0.01)
 
 /mob/living/carbon/human/adjustBruteLoss(amount)
 	if(amount > 0)
@@ -86,7 +86,7 @@
 		if(BP.is_robotic() && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
 		amount += BP.burn_dam
-	return amount
+	return round(amount, 0.01)
 
 /mob/living/carbon/human/adjustFireLoss(amount)
 	if(amount > 0)
