@@ -381,13 +381,13 @@
 	var/dat
 	for (var/datum/data/vending_product/R in record)
 		dat += "<tr>"
-		dat += {"<td><span class="vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]"></td>"}
-		dat += {"<td><font color = '#c9c9b5'><B>[R.product_name]</B></td>"}
+		dat += {"<td><span class="vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]"></span></td>"}
+		dat += {"<td><font color = '#c9c9b5'><B>[R.product_name]</B></font></td>"}
 		dat += "<td><font color = '#0c4274'><b>[R.amount]</b> </font></td>"
 		if(R.price)
-			dat += {"<td align="center"><font color = '#ffd700'><b>$[R.price]</b></td>"}
+			dat += {"<td align="center"><font color = '#ffd700'><b>$[R.price]</b></font></td>"}
 		else
-			dat += {"<td align="center"><font color = '#32cd32'><b>Free</b></td>"}
+			dat += {"<td align="center"><font color = '#32cd32'><b>Free</b></font></td>"}
 		if (R.amount > 0)
 			dat += "<td align='right'><a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A></td>"
 		else
