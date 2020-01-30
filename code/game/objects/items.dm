@@ -860,6 +860,9 @@
 		to_chat(user, "<span class='warning'>You cannot locate any eyes on this creature!</span>")
 		return
 
+	user.do_attack_animation(M)
+	playsound(M, 'sound/items/tools/screwdriver-stab.ogg', VOL_EFFECTS_MASTER)
+
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])", user) //BS12 EDIT ALG
@@ -904,7 +907,9 @@
 		BP.take_damage(7)
 	else
 		M.take_bodypart_damage(7)
+
 	M.eye_blurry += rand(3,4)
+
 	return
 
 /obj/item/clean_blood()
