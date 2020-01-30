@@ -32,6 +32,15 @@
 	nanomanager.close_uis(src)
 	return ..()
 
+/obj/proc/get_current_temperature()
+	/*
+	It actually returns a rise in temperature from the enviroment since I don't know why.
+	Before it was called "is_hot". And it returned 0 if something is not any hotter than it should be.
+
+	Slap me on the wrist if you ever will need this to return a meaningful value. ~Luduk
+	*/
+	return 0
+
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)
 		return loc.assume_air(giver)
