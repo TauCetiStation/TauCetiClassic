@@ -365,9 +365,7 @@
 
 		if(istype(P))
 			if(tracer_list)
-				to_chat(world, "Before adding impact: [tracer_list.len]")
 				tracer_list += P
-				to_chat(world, "After addming impact: [tracer_list.len]")
 			P.set_transform(M)
 			P.pixel_x = location.pixel_x
 			P.pixel_y = location.pixel_y

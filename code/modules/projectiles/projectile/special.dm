@@ -300,3 +300,212 @@
 	proj_impact_sound = 'sound/weapons/guns/plasma10_hit.ogg'
 
 	impact_type = /obj/effect/projectile/plasma/impact/overcharge
+
+/obj/item/projectile/pyrometer
+	name = "laser"
+	icon_state = "pyrometer"
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSMOB
+
+	damage = 0
+	nodamage = TRUE
+	fake = TRUE // This thing can't hurt, there's no reason to log it.
+
+	kill_count = 7
+
+	flag = "laser"
+	hitscan = TRUE
+	// eyeblur = 3
+
+	tracer_list = list()
+
+	muzzle_type = /obj/effect/projectile/pyrometer/muzzle
+	tracer_type = /obj/effect/projectile/pyrometer/tracer
+	impact_type = /obj/effect/projectile/pyrometer/impact
+
+	var/display_celsium = TRUE
+	var/display_fahrenheit = TRUE
+	var/display_kelvin = FALSE
+
+/obj/item/projectile/on_impact(atom/A)
+	return
+
+/obj/item/projectile/pyrometer/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	. = ..()
+	if(iscarbon(target) && def_zone == O_EYES)
+		var/mob/living/carbon/C = target
+		C.apply_effect(3, EYE_BLUR, blocked)
+
+	if(!firer || !istype(target, /turf/space))
+		var/temp = measure_temperature(target)
+		if(temp != "NONE")
+			var/term_col = get_term_color(target, temp)
+			if(term_col)
+				impact_effect(effect_transform)		// generate impact effect
+				if(proj_impact_sound)
+					playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)
+
+				for(var/atom/A in tracer_list)
+					A.color = term_col
+					A.set_light(1, 1, l_color=term_col)
+					A.alpha = 128
+
+
+// Return temperature if it was possible to measure,
+// "NONE" otherwise.
+/obj/item/projectile/pyrometer/proc/measure_temperature(atom/target)
+	var/turf/T = get_turf(target)
+	var/datum/gas_mixture/env = T.return_air()
+	var/temp_celsium = 0.0
+
+	if(isobj(target))
+		var/obj/O = target
+		temp_celsium = (env.temperature + O.get_current_temperature()) - T0C
+
+	else if(isliving(target))
+		var/mob/living/L = target
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			var/obj/item/organ/external/BP = H.get_bodypart(firer.zone_sel.selecting)
+			if(!BP)
+				return "NONE"
+
+			temp_celsium = (H.bodytemperature - T0C) * BP.temp_coeff
+		else
+			temp_celsium = L.bodytemperature - T0C
+
+	else
+		temp_celsium = env.temperature - T0C
+
+	var/dist = get_dist(firer, target)
+	var/delta = (dist - 1) * 0.025
+	to_chat(firer, "Dist: [dist] Delta: [delta]")
+
+	if(delta > 1.0)
+		firer.visible_message("[bicon(shot_from)]<b>[shot_from]</b> boops, \"<span class='warning'>Measurement impossible: Error too high.</span>\"")
+		return "NONE"
+	if(delta > 0.0)
+		temp_celsium = round(rand((temp_celsium - temp_celsium * delta) * 100, (temp_celsium + temp_celsium * delta) * 100) * 0.01, 1)
+
+	var/temp_string = "[bicon(shot_from)]<b>[shot_from]</b> beeps, \"<span class='notice'>Temperature:"
+	if(display_celsium)
+		temp_string += " [temp_celsium]&deg;C"
+	if(display_fahrenheit)
+		temp_string += " [(temp_celsium * 1.8) + 32]&deg;F"
+	if(display_kelvin)
+		temp_string += " [temp_celsium + T0C]&deg;K"
+	temp_string += "</span>\""
+
+	firer.visible_message(temp_string)
+	return temp_celsium
+
+/obj/item/projectile/pyrometer/proc/get_term_color(atom/target, temperature)
+	return COLOR_RED
+
+/obj/item/projectile/pyrometer/emagged
+	nodamage = FALSE
+	fake = FALSE
+
+	damage = 40
+	damage_type = BURN
+	sharp = TRUE // concentrated burns
+	flag = "laser"
+
+/obj/item/projectile/pyrometer/emagged
+
+/obj/item/projectile/pyrometer/emagged/measure_temperature(atom/target)
+	firer.visible_message("[bicon(shot_from)]<b>[shot_from]</b> boops, \"<span class='warning'>Measurement impossible: Safety protocol violated.</span>\"")
+	return PHORON_FLASHPOINT
+
+/obj/item/projectile/pyrometer/science_phoron
+	display_celsium = FALSE
+	display_fahrenheit = FALSE
+	display_kelvin = TRUE
+
+/obj/item/projectile/pyrometer/science_phoron/get_term_color(atom/target, temperature)
+	var/term_color
+	var/temp_kelvin = temperature + T0C
+
+	if(temp_kelvin == T20C)
+		term_color = COLOR_LIME
+	else
+		var/h = TRANSLATE_RANGE(temp_kelvin, 0, PHORON_FLASHPOINT, 0, 360)
+		var/s = 100
+		var/v = 100
+		if(temp_kelvin > PHORON_MINIMUM_BURN_TEMPERATURE)
+			s = 255
+			v = 255
+		term_color = HSVtoRGB(hsv(AngleToHue(h), s, v))
+	return term_color
+
+/obj/item/projectile/pyrometer/engineering
+	display_celsium = FALSE
+	display_fahrenheit = FALSE
+	display_kelvin = TRUE
+
+/obj/item/projectile/pyrometer/engineering/get_term_color(atom/target, temperature)
+	var/term_color
+	var/temp_kelvin = temperature + T0C
+
+	// Most machinery is at least 5 degrees hotter. If it's not - it's considered not working.
+	if(temp_kelvin < T20C + 5)
+		term_color = COLOR_BLUE
+	// Most machinery operates at *air* + 10 degrees, if it's higher - it's borked, or emagged.
+	else if(temp_kelvin > T20C + 10)
+		term_color = COLOR_RED
+	else
+		term_color = COLOR_LIME
+
+	return term_color
+
+/obj/item/projectile/pyrometer/atmospherics
+	display_celsium = TRUE
+	display_fahrenheit = TRUE
+	display_kelvin = TRUE
+
+/obj/item/projectile/pyrometer/atmospherics/get_term_color(atom/target, temperature)
+	var/term_color
+	var/temp_kelvin = temperature + T0C
+
+	// These temperatures are from species.dm, the human cold, heat level damages as used as
+	// delimeters. Since, these devices were mostly invented for and by humans.
+	if(temp_kelvin < all_species[HUMAN].cold_level_3)
+		term_color = COLOR_PURPLE
+	else if(temp_kelvin < all_species[HUMAN].cold_level_2)
+		term_color = COLOR_BLUE
+	else if(temp_kelvin < all_species[HUMAN].cold_level_1)
+		term_color = COLOR_CYAN
+	else if(temp_kelvin < all_species[HUMAN].heat_level_1)
+		term_color = COLOR_LIME
+	else if(temp_kelvin < all_species[HUMAN].heat_level_2)
+		term_color = COLOR_YELLOW
+	else if(temp_kelvin < all_species[HUMAN].heat_level_3)
+		term_color = COLOR_ORANGE
+	else
+		term_color = COLOR_RED
+
+	return term_color
+
+/obj/item/projectile/pyrometer/medical
+	display_celsium = TRUE
+	display_fahrenheit = TRUE
+	display_kelvin = FALSE
+
+/obj/item/projectile/pyrometer/medical/get_term_color(atom/target, temperature)
+	var/term_color
+
+	// Temperature is in celsius, temperatures here are with all regards to
+	// human biology. Screw the xeno scum!
+	if(temperature < 34)
+		term_color = COLOR_PURPLE
+	else if(temperature < 36.1)
+		term_color = COLOR_BLUE
+	else if(temperature < 37.1)
+		term_color = COLOR_LIME
+	else if(temperature < 38)
+		term_color = COLOR_YELLOW
+	else if(temperature < 40)
+		term_color = COLOR_ORANGE
+	else
+		term_color = COLOR_RED
+
+	return term_color

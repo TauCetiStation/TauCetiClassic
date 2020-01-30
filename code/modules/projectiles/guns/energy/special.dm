@@ -352,3 +352,81 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = null
 	toolspeed = 0.5
+
+/obj/item/weapon/gun/energy/pyrometer
+	name = "pyrometer"
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact."
+
+	w_class = ITEM_SIZE_SMALL
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "pyrometer"
+	item_state = "pyrometer"
+	origin_tech = "engineering=3;magnets=3"
+
+	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer)
+
+	var/emagged = FALSE
+
+/obj/item/weapon/gun/energy/pyrometer/emag_act(mob/user)
+	if(!emagged)
+		ammo_type |= /obj/item/ammo_casing/energy/pyrometer/emagged
+		origin_tech += ";syndicate=1"
+
+		emagged = TRUE
+
+/obj/item/weapon/gun/energy/pyrometer/update_icon()
+	return
+
+/obj/item/weapon/gun/energy/pyrometer/attack_self(mob/living/user)
+	select_fire(user)
+
+/obj/item/weapon/gun/energy/pyrometer/announce_shot(mob/living/user)
+	return
+
+/obj/item/weapon/gun/energy/pyrometer/universal
+	name = "universal pyrometer"
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct use physical contact. Comes with built-in multi-color laser pointer. And all possible pyrometer modes!"
+	icon_state = "pyrometer_robotics"
+	item_state = "pyrometer_robotics"
+
+	ammo_type = list(
+		/obj/item/ammo_casing/energy/pyrometer/science_phoron,
+		/obj/item/ammo_casing/energy/pyrometer/engineering,
+		/obj/item/ammo_casing/energy/pyrometer/atmospherics,
+		/obj/item/ammo_casing/energy/pyrometer/medical,
+	)
+
+/obj/item/weapon/gun/energy/pyrometer/science_phoron
+	name = "phoron-orienter pyrometer"
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Is fine-tuned for detecting when your pipe about to burst."
+	icon_state = "pyrometer_science_phoron"
+	item_state = "pyrometer_science_phoron"
+
+	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/science_phoron)
+
+/obj/item/weapon/gun/energy/pyrometer/engineering
+	name = "machinery pyrometer"
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Detects overheated machinery."
+	icon_state = "pyrometer_engineering"
+	item_state = "pyrometer_engineering"
+
+	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/engineering)
+
+/obj/item/weapon/gun/energy/pyrometer/engineering/robotics
+	icon_state = "pyrometer_robotics"
+	item_state = "pyrometer_robotics"
+
+/obj/item/weapon/gun/energy/pyrometer/atmospherics
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Is used to determine how much a living human would be screwed if he was to breath the air in the room you \"scan\"."
+	icon_state = "pyrometer_atmospherics"
+	item_state = "pyrometer_atmospherics"
+
+	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/atmospherics)
+
+/obj/item/weapon/gun/energy/pyrometer/medical
+	name = "NC thermometer"
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Is used to determine the temperature of your skeleton in the closet."
+	icon_state = "pyrometer_medical"
+	item_state = "pyrometer_medical"
+
+	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/medical)
