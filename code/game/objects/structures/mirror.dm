@@ -62,7 +62,7 @@
 /obj/structure/mirror/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(islarva(user) || isfacehugger(user))
+	if(isxenolarva(user) || isfacehugger(user))
 		return
 	if(shattered)
 		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)

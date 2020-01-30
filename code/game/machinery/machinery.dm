@@ -344,7 +344,7 @@ Class Procs:
 		return 1
 	if(!is_interactable())
 		return 1
-	if (!(ishuman(user) || issilicon(user) || ismonkey(user) || isalienqueen(user) || IsAdminGhost(user)))
+	if (!(ishuman(user) || issilicon(user) || ismonkey(user) || isxenoqueen(user) || IsAdminGhost(user)))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
 	if (!can_mob_interact(user))

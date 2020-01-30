@@ -526,15 +526,15 @@
 						return
 
 	if(M == assailant && state >= GRAB_AGGRESSIVE)
-		if( (ishuman(user) && HAS_TRAIT(user, TRAIT_FAT) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
+		if( (ishuman(user) && HAS_TRAIT(user, TRAIT_FAT) && ismonkey(affecting) ) || ( isxeno(user) && iscarbon(affecting) ) )
 			var/mob/living/carbon/attacker = user
 			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
-			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
+			if(istype(user, /mob/living/carbon/xenomorph/humanoid/hunter))
 				if(!do_mob(user, affecting)||!do_after(user, 30, target = affecting)) return
 			else
 				if(!do_mob(user, affecting)||!do_after(user, 100, target = affecting)) return
 			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
-			if(isalien(user))
+			if(isxeno(user))
 				if(affecting.stat == DEAD)
 					affecting.gib()
 					if(attacker.health >= attacker.maxHealth - attacker.getCloneLoss())

@@ -314,9 +314,9 @@
 	A.xo = U.x - T.x
 	A.process()
 
-/obj/machinery/bot/secbot/ed209/attack_alien(mob/living/carbon/alien/user)
+/obj/machinery/bot/secbot/ed209/attack_alien(mob/living/carbon/xenomorph/user)
 	..()
-	if(!isalien(target))
+	if(!isxeno(target))
 		target = user
 		mode = SECBOT_HUNT
 

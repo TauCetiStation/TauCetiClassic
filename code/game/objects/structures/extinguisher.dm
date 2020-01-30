@@ -13,7 +13,7 @@
 	has_extinguisher = new/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned(src)
 
 /obj/structure/extinguisher_cabinet/attackby(obj/item/O, mob/user)
-	if(isrobot(user) || isalien(user))
+	if(isrobot(user) || isxeno(user))
 		return
 	if(istype(O, /obj/item/weapon/reagent_containers/spray/extinguisher))
 		if(!has_extinguisher && opened)
@@ -29,7 +29,7 @@
 
 
 /obj/structure/extinguisher_cabinet/attack_hand(mob/user)
-	if(isrobot(user) || isalien(user))
+	if(isrobot(user) || isxeno(user))
 		return
 	if(has_extinguisher)
 		user.put_in_hands(has_extinguisher)
