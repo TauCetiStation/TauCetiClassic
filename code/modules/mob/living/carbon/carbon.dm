@@ -21,10 +21,10 @@
 			var/met_factor = get_metabolism_factor()
 			nutrition -= met_factor * 0.01
 			if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
-				nutrition -= met_factor * getHalLoss() * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
-			if(m_intent == "run")
+				nutrition -= met_factor * getHalLoss() * (m_intent == MOVE_INTENT_RUN ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
+			if(m_intent == MOVE_INTENT_RUN)
 				nutrition -= met_factor * 0.01
-		if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == "run" && bodytemperature <= 360)
+		if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == MOVE_INTENT_RUN && bodytemperature <= 360)
 			bodytemperature += 2
 
 		// Moving around increases germ_level faster

@@ -416,7 +416,7 @@ var/list/ghostteleportlocs = list()
 		if((istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && (H.wear_suit.flags & NOSLIP))) //Humans in rig with turn on magboots
 			return
 
-		if(H.m_intent == "run")
+		if(H.m_intent == MOVE_INTENT_RUN)
 			H.AdjustStunned(2)
 			H.AdjustWeakened(2)
 		else

@@ -762,8 +762,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(LEGCUFF_LAYER)
 
 	if(legcuffed)
-		if(src.m_intent != "walk")
-			src.m_intent = "walk"
+		if(src.m_intent != MOVE_INTENT_WALK)
+			src.m_intent = MOVE_INTENT_WALK
 			if(src.hud_used && src.hud_used.move_intent)
 				src.hud_used.move_intent.icon_state = "walking"
 

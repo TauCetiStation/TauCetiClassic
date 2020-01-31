@@ -288,7 +288,7 @@
 		tally += 5
 	else if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
 		return -1
-	else if(m_intent == "run" && a_intent == "hurt" && stamina >= 10)
+	else if(m_intent == MOVE_INTENT_RUN && a_intent == "hurt" && stamina >= 10)
 		stamina = max(0, stamina - 10)
 		tally -= 1
 

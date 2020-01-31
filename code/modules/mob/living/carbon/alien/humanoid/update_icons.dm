@@ -29,7 +29,7 @@
 		icon_state = "alien[caste]_pounce"
 	else if(stat == UNCONSCIOUS || lying || resting)
 		icon_state = "alien[caste]_sleep"
-	else if(m_intent == "run")
+	else if(m_intent == MOVE_INTENT_RUN)
 		icon_state = "alien[caste]_running"
 	else
 		icon_state = "alien[caste]_s"

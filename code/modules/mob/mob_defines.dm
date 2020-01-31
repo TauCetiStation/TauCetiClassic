@@ -117,7 +117,7 @@
 	var/intent = null//Living
 	var/a_intent = "help"//Living
 	var/m_int = null//Living
-	var/m_intent = "run"//Living
+	var/m_intent = MOVE_INTENT_RUN//Living
 	var/lastKnownIP = null
 	var/atom/movable/buckled = null//Living
 	var/obj/item/l_hand = null//Living

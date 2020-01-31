@@ -202,11 +202,11 @@
 		move_delay = world.time//set move delay
 		mob.last_move_intent = world.time + 10
 		switch(mob.m_intent)
-			if("run")
+			if(MOVE_INTENT_RUN)
 				if(mob.drowsyness > 0)
 					move_delay += 6
 				move_delay += 1+config.run_speed
-			if("walk")
+			if(MOVE_INTENT_WALK)
 				move_delay += 2.5+config.walk_speed
 		move_delay += mob.movement_delay()
 
