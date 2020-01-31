@@ -633,7 +633,3 @@
 			bad = 1
 		if(!bad)
 			to_chat(user, "<span class='notice'>[H]'s skin is normal.</span>")
-	foundwound = FALSE
-	foundgerm = FALSE
-	foundorganwound = FALSE
-	foundorgangerm = FALSE
