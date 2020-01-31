@@ -278,9 +278,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 #define SPR_IDX 2 //sprite index in list/sprites
 #define SPRSZ_COUNT 1 //sprite size count in list/sizes
 #define SPRSZ_ICON 2 //sprite size icon in list/sizes
-#define SPRSZ_STRIPPED 3 ////sprite size stripped in list/sizes
-//#define rustg_dmi_strip_metadata(fname) call("rust_g", "dmi_strip_metadata")(fname) // rust_g.dm - DM API for rust_g extension library. You can find rust_g.dll file in build directory.
-//Directions can be found at the [rust-g repo](https://github.com/tgstation/rust-g).
+#define SPRSZ_STRIPPED 3 //sprite size stripped in list/sizes
 
 /datum/asset/spritesheet
 	_abstract = /datum/asset/spritesheet
@@ -312,9 +310,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		// save flattened version
 		var/fname = "data/spritesheets/[name]_[size_id].png"
 		fcopy(size[SPRSZ_ICON], fname)
-		//var/error = rustg_dmi_strip_metadata(fname)
-		//if(length(error))
-		//	stack_trace("Failed to strip [name]_[size_id].png: [error]")
+		//shell("[config.python_path] scripts/strip_metadata.py [fname]")
+		world.ext_python("strip_metadata.py", "[fname]")
 		size[SPRSZ_STRIPPED] = icon(fname)
 		fdel(fname)
 
