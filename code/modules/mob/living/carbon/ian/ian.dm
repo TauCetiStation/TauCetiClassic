@@ -553,7 +553,7 @@
 			else
 				visible_message("<span class='danger'>[M.name] has attempted to bite [name]!</span>")
 
-/mob/living/carbon/ian/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/carbon/ian/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 	if (!ticker.mode)
 		to_chat(M, "<span class='warning'>You cannot attack people before the game has started.</span>")
 		return
