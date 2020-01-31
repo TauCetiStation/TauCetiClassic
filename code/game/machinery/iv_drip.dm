@@ -177,12 +177,12 @@
 
 
 /obj/machinery/artifical_ventilation
-	name = "Artificial Ventilation machine"
+	name = "artificial ventilation machine"
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "av_idle"
 	desc = "This is an Artificial Ventillation machine that supports breathing while lungs is broken."
-	anchored = 0
-	density = 0
+	anchored = FALSE
+	density = FALSE
 	interact_offline = TRUE
 	var/mob/living/carbon/human/attached = null
 
@@ -192,7 +192,7 @@
 
 /obj/machinery/artifical_ventilation/Destroy()
 	if(attached)
-		REMOVE_TRAIT(attached, TRAIT_AV, AV_TRAIT)
+		REMOVE_TRAIT(attached, TRAIT_AV, LA_TRAIT)
 		attached = null
 	return ..()
 
@@ -208,7 +208,7 @@
 		return
 	if(attached)
 		visible_message("[attached] is detached from \the [src]")
-		REMOVE_TRAIT(attached, TRAIT_AV, AV_TRAIT)
+		REMOVE_TRAIT(attached, TRAIT_AV, LA_TRAIT)
 		attached = null
 		update_icon()
 		return
@@ -216,30 +216,35 @@
 	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		attached = over_object
-		ADD_TRAIT(attached, TRAIT_AV, AV_TRAIT)
+		ADD_TRAIT(attached, TRAIT_AV, LA_TRAIT)
 		update_icon()
 
 /obj/machinery/artifical_ventilation/process()
+	var/soundclatch = FALSE
 	if(attached)
 		if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 			visible_message("The tube is ripped out of [attached]'s lungs, doesn't that hurt?")
 			attached.apply_damage(10, BRUTE, BP_CHEST)
-			REMOVE_TRAIT(attached, TRAIT_AV, AV_TRAIT)
+			REMOVE_TRAIT(attached, TRAIT_AV, LA_TRAIT)
 			attached = null
 			update_icon()
 		else
 			var/datum/gas_mixture/env = loc.return_air()
 			if(env.return_pressure() > (ONE_ATMOSPHERE - 20))
 				if((env.gas["oxygen"] / env.total_moles) > 0.10)
-					playsound(src, "sound/machines/drip/av.ogg", VOL_EFFECTS_MASTER)
-					if(!HAS_TRAIT_FROM(attached, TRAIT_AV, AV_TRAIT))
-						ADD_TRAIT(attached, TRAIT_AV, AV_TRAIT)
+					if(!soundclatch)
+						playsound(src, "sound/machines/drip/av.ogg", VOL_EFFECTS_MASTER)
+						soundclatch = TRUE
+					else
+						soundclatch = FALSE
+					if(!HAS_TRAIT_FROM(attached, TRAIT_AV, LA_TRAIT))
+						ADD_TRAIT(attached, TRAIT_AV, LA_TRAIT)
 				else
-					if(HAS_TRAIT_FROM(attached, TRAIT_AV, AV_TRAIT))
-						REMOVE_TRAIT(attached, TRAIT_AV, AV_TRAIT)
+					if(HAS_TRAIT_FROM(attached, TRAIT_AV, LA_TRAIT))
+						REMOVE_TRAIT(attached, TRAIT_AV, LA_TRAIT)
 			else
-				if(HAS_TRAIT_FROM(attached, TRAIT_AV, AV_TRAIT))
-					REMOVE_TRAIT(attached, TRAIT_AV, AV_TRAIT)
+				if(HAS_TRAIT_FROM(attached, TRAIT_AV, LA_TRAIT))
+					REMOVE_TRAIT(attached, TRAIT_AV, LA_TRAIT)
 		return
 
 
@@ -249,11 +254,11 @@
 
 
 /obj/machinery/cardiopulmonary_bypass
-	name = "Cardiopulmonary bypass machine"
+	name = "cardiopulmonary bypass machine"
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "cpb_idle"
 	desc = "This is an Cardiopulmonary Bypass machine that temporarily takes over the function of the heart"
-	anchored = 0
+	anchored = FALSE
 	density = TRUE
 	interact_offline = TRUE
 	var/mob/living/carbon/human/attached = null
@@ -264,7 +269,7 @@
 
 /obj/machinery/cardiopulmonary_bypass/Destroy()
 	if(attached)
-		REMOVE_TRAIT(attached, TRAIT_CPB, CPB_TRAIT)
+		REMOVE_TRAIT(attached, TRAIT_CPB, LA_TRAIT)
 		attached = null
 	return ..()
 
@@ -280,7 +285,7 @@
 		return
 	if(attached)
 		visible_message("[attached] is detached from \the [src]")
-		REMOVE_TRAIT(attached, TRAIT_CPB, CPB_TRAIT)
+		REMOVE_TRAIT(attached, TRAIT_CPB, LA_TRAIT)
 		attached = null
 		update_icon()
 		return
@@ -289,16 +294,21 @@
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		attached = over_object
 		update_icon()
-		ADD_TRAIT(attached, TRAIT_CPB, CPB_TRAIT)
+		ADD_TRAIT(attached, TRAIT_CPB, LA_TRAIT)
 		return
 
 /obj/machinery/cardiopulmonary_bypass/process()
+	var/soundclatch = FALSE
 	if(attached)
-		playsound(src, "sound/machines/drip/cpb.ogg", VOL_EFFECTS_MASTER)
+		if(!soundclatch)
+			playsound(src, "sound/machines/drip/cpb.ogg", VOL_EFFECTS_MASTER)
+			soundclatch = TRUE
+		else
+			soundclatch = FALSE
 		if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 			visible_message("The tubes is ripped out of [attached]'s heart, doesn't that hurt?")
 			attached.apply_damage(15, BRUTE, BP_CHEST)
-			REMOVE_TRAIT(attached, TRAIT_CPB, CPB_TRAIT)
+			REMOVE_TRAIT(attached, TRAIT_CPB, LA_TRAIT)
 			attached = null
 			update_icon()
 

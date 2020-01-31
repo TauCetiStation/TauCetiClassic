@@ -80,5 +80,4 @@
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
 #define OBESITY_TRAIT      "obesity"
-#define AV_TRAIT            "artifical_ventilation_machine"
-#define CPB_TRAIT           "cardiopulmonary_bypass_machine"
+#define LA_TRAIT            "life_assist_machines"
