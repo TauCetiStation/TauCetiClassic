@@ -75,7 +75,7 @@
 #define TRAIT_MUTE                "mute"
 #define TRAIT_STRONGMIND          "strong_mind"
 #define TRAIT_AV                  "artifical_ventilation"
-#define TRAIT_CPB                 "Cardiopulmonary_bypass"
+#define TRAIT_CPB                 "cardiopulmonary_bypass"
 
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
