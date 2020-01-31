@@ -359,7 +359,7 @@
 		if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 			Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-				Sleeping(5)
+				Sleeping(10 SECONDS)
 		else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			if(prob(20))
 				spawn(0) emote(pick("giggle", "laugh"))
@@ -448,7 +448,7 @@
 		drowsyness--
 		eye_blurry = max(2, eye_blurry)
 		if (prob(5))
-			sleeping += 1
+			Sleeping(2 SECONDS)
 			Paralyse(5)
 
 	if(confused)
@@ -468,7 +468,7 @@
 		silent = 0
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()
-		if(health < config.health_threshold_dead || brain_op_stage == 4.0)
+		if(health < config.health_threshold_dead || !has_brain())
 			death()
 			blinded = 1
 			stat = DEAD
@@ -484,9 +484,7 @@
 				adjustOxyLoss(1)
 			Paralyse(3)
 		if(halloss > 100)
-			to_chat(src, "<span class='notice'>You're in too much pain to keep going...</span>")
-			for(var/mob/O in oviewers(src, null))
-				O.show_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
+			visible_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", self_message = "<span class='notice'>You're in too much pain to keep going...</span>")
 			Paralyse(10)
 			setHalLoss(99)
 
@@ -496,15 +494,8 @@
 			stat = UNCONSCIOUS
 			if(halloss > 0)
 				adjustHalLoss(-3)
-		else if(sleeping)
-			handle_dreams()
-			adjustHalLoss(-3)
-			sleeping = max(sleeping-1, 0)
-			blinded = 1
-			stat = UNCONSCIOUS
-			if( prob(10) && health && !hal_crit )
-				spawn(0)
-					emote("snore")
+		else if(IsSleeping())
+			blinded = TRUE
 		else if(resting)
 			if(halloss > 0)
 				adjustHalLoss(-3)

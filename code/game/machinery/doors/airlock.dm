@@ -229,6 +229,7 @@ var/list/airlock_overlays = list()
 		if(AIRLOCK_DENY, AIRLOCK_OPENING, AIRLOCK_CLOSING, AIRLOCK_EMAG)
 			icon_state = "nonexistenticonstate"
 	set_airlock_overlays(state)
+	SSdemo.mark_dirty(src)
 
 /obj/machinery/door/airlock/proc/set_airlock_overlays(state)
 	var/image/frame_overlay
@@ -546,7 +547,7 @@ var/list/airlock_overlays = list()
 	return ..()
 
 /obj/machinery/door/airlock/attack_paw(mob/user)
-	if(istype(user, /mob/living/carbon/alien/humanoid))
+	if(istype(user, /mob/living/carbon/xenomorph/humanoid))
 		if(welded || locked)
 			to_chat(user, "<span class='warning'>The door is sealed, it cannot be pried open.</span>")
 			return

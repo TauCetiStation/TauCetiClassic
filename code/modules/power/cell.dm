@@ -65,12 +65,39 @@
 
 /obj/item/weapon/stock_parts/cell/attack_self(mob/user)
 	src.add_fingerprint(user)
+		
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
+
 		var/obj/item/clothing/gloves/space_ninja/SNG = H.gloves
 		if(istype(SNG) && SNG.candrain && !SNG.draining)
-			SNG.drain("CELL",src,H.wear_suit)
-
+			SNG.drain(src, H.wear_suit)
+			
+		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == I_GRAB)
+			if(user.is_busy())
+				return
+			var/obj/item/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
+			var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
+			user.SetNextMove(CLICK_CD_MELEE)
+			if(C)
+				if(charge <= 0)
+					to_chat(user, "<span class='warning'>This cell is empty and of no use.</span>")
+					return
+				if(!(H.nutrition <= C.maxcharge*0.9))
+					to_chat(user, "<span class='warning'>Procedure interrupted. Charge at maximum capacity.</span>")
+					return
+						
+				if (do_after(user,30,target = src))
+					var/drain = C.maxcharge-H.nutrition
+					if(drain > src.charge)
+						drain = src.charge
+					H.nutrition += src.use(drain)
+					updateicon()
+					to_chat(user, "<span class='notice'>[round(100.0*drain/maxcharge, 1)]% of energy gained from the cell.</span>")
+				else
+					to_chat(user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
+					return
+			
 /obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))

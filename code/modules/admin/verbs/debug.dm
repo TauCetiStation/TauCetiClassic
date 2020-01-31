@@ -151,7 +151,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		t += "<span class='notice'>[g]: [env.gas[g]] / [env.gas[g] * R_IDEAL_GAS_EQUATION * env.temperature / env.volume]kPa</span>\n"
 
 
-	usr.show_message(t, 1)
+	to_chat(usr, t)
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(mob/M in mob_list)

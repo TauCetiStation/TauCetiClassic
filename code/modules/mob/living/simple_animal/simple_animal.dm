@@ -237,9 +237,7 @@
 
 		if("help")
 			if (health > 0)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='notice'>[M] [response_help] [src]</span>")
+				visible_message("<span class='notice'>[M] [response_help] [src]</span>")
 
 		if("grab")
 			M.Grab(src)
@@ -247,21 +245,16 @@
 		if("hurt", "disarm")
 			M.do_attack_animation(src)
 			adjustBruteLoss(harm_intent_damage)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message("<span class='warning'>[M] [response_harm] [src]</span>")
+			visible_message("<span class='warning'>[M] [response_harm] [src]</span>")
 
 	return
 
-/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/simple_animal/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 
 	switch(M.a_intent)
 
 		if ("help")
-
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>"), 1)
+			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
 		if ("grab")
 			M.Grab(src)
 
@@ -272,7 +265,7 @@
 
 	return
 
-/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L)
+/mob/living/simple_animal/attack_larva(mob/living/carbon/xenomorph/larva/L)
 
 	switch(L.a_intent)
 		if("help")
@@ -444,3 +437,10 @@
 	. = ..()
 	if(icon_move && !stat)
 		flick(icon_move, src)
+
+/mob/living/simple_animal/update_stat()
+	if(stat == DEAD)
+		return
+	if(IsSleeping())
+		stat = UNCONSCIOUS
+		blinded = TRUE

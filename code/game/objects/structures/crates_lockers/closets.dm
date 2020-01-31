@@ -82,6 +82,7 @@
 	else
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
 	density = 0
+	SSdemo.mark_dirty(src)
 	return 1
 
 /obj/structure/closet/proc/close()
@@ -125,6 +126,7 @@
 	else
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
 	density = 1
+	SSdemo.mark_dirty(src)
 	return 1
 
 /obj/structure/closet/proc/toggle(mob/user)
@@ -313,6 +315,7 @@
 			add_overlay("welded")
 	else
 		icon_state = icon_opened
+	SSdemo.mark_dirty(src)
 
 /obj/structure/closet/hear_talk(mob/M, text, verb, datum/language/speaking)
 	for (var/atom/A in src)

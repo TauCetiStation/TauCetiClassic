@@ -151,7 +151,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
 			var/obj/item/weapon/stock_parts/cell/I = locate(/obj/item/weapon/stock_parts/cell) in IO
 			if(I)
-				stat(null, "Charge: [round(100.0*nutrition/I.maxcharge)]%")
+				stat(null, "Charge: [round(100.0*nutrition/I.maxcharge, 1)]%")
 				stat(null, "Operating temp: [round(bodytemperature-T0C)]&deg;C")
 		if(internal)
 			if(!internal.air_contents)
@@ -279,9 +279,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	return
 
 /mob/living/carbon/human/meteorhit(O)
-	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
-			M.show_message("<span class='warning'>[src] has been hit by [O]</span>", 1)
+	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
 	if (health > 0)
 		var/obj/item/organ/external/BP = bodyparts_by_name[pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD)]
 		if(!BP)
@@ -316,10 +314,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(M.Victim) return // can't attack while eating!
 
 	if (health > -100)
-
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("<span class='warning'><B>The [M.name] glomps []!</B></span>", src), 1)
+		visible_message("<span class='warning'><B>The [M.name] glomps [src]!</B></span>")
 
 		var/damage = rand(1, 3)
 
@@ -353,9 +348,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				if(M.powerlevel < 0)
 					M.powerlevel = 0
 
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>The [M.name] has shocked []!</B></span>", src), 1)
+				visible_message("<span class='warning'><B>The [M.name] has shocked [src]!</B></span>")
 
 				Weaken(power)
 				if (stuttering < power)
@@ -597,7 +590,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/Crossed(atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
-		MB.RunOver(src)	
+		MB.RunOver(src)
 	SpreadFire(AM)
 	. = ..()
 
@@ -1400,12 +1393,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		say = sanitize(say)
 	var/mob/T = creatures[target]
 	if(REMOTE_TALK in T.mutations)
-		T.show_message("<span class='notice'>You hear [src.real_name]'s voice: [say]</span>")
+		to_chat(T, "<span class='notice'>You hear [src.real_name]'s voice: [say]</span>")
 	else
-		T.show_message("<span class='notice'>You hear a voice that seems to echo around the room: [say]</span>")
-	usr.show_message("<span class='notice'>You project your mind into [T.real_name]: [say]</span>")
-	for(var/mob/dead/observer/G in observer_list)
-		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[T]</b>: [say]</i>")
+		to_chat(T, "<span class='notice'>You hear a voice that seems to echo around the room: [say]</span>")
+	to_chat(usr, "<span class='notice'>You project your mind into [T.real_name]: [say]</span>")
+	to_chat(observer_list, "<i>Telepathic message from <b>[src]</b> to <b>[T]</b>: [say]</i>")
 	log_say("Telepathic message from [key_name(src)] to [key_name(T)]: [say]")
 
 /mob/living/carbon/human/proc/remoteobserve()
@@ -1872,20 +1864,20 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	toggle_leap()
 
-	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .leap_end, prev_intent))
+	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .proc/leap_end, prev_intent))
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)
 	status_flags &= ~LEAPING
 	a_intent_change(prev_intent)
 
-/mob/living/carbon/human/throw_impact(atom/A)
+/mob/living/carbon/human/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!(status_flags & LEAPING))
 		return ..()
 
-	if(isliving(A))
-		var/mob/living/L = A
+	if(isliving(hit_atom))
+		var/mob/living/L = hit_atom
 		L.visible_message("<span class='danger'>\The [src] leaps at [L]!</span>", "<span class='userdanger'>[src] leaps on you!</span>")
-		if(issilicon(A))
+		if(issilicon(L))
 			L.Weaken(1) //Only brief stun
 			step_towards(src, L)
 		else
@@ -1894,8 +1886,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			step_towards(src, L)
 			Grab(L, GRAB_AGGRESSIVE)
 
-	else if(A.density)
-		visible_message("<span class='danger'>[src] smashes into [A]!</span>", "<span class='danger'>You smashes into [A]!</span>")
+	else if(hit_atom.density)
+		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smash into [hit_atom]!</span>")
 		weakened = 2
 
 	update_canmove()
@@ -1977,13 +1969,19 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return
 	to_chat(src,"<span class='warning'>Well... I need my mask back.</span>")
 
+/mob/living/carbon/human/has_brain()
+	if(organs_by_name[O_BRAIN])
+		var/obj/item/organ/internal/IO = organs_by_name[O_BRAIN]
+		if(istype(IO))
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/human/has_eyes()
 	if(organs_by_name[O_EYES])
 		var/obj/item/organ/internal/IO = organs_by_name[O_EYES]
 		if(istype(IO))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/human/is_nude(maximum_coverage = 0, pos_slots = list(src.head, src.shoes, src.neck, src.mouth, src.wear_suit, src.w_uniform, src.belt, src.gloves, src.glasses)) // Expands our pos_slots arg.
 	return ..()
@@ -2062,3 +2060,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 													// clamped to max 1000
 	if(jitteriness > 30 && !is_jittery)
 		INVOKE_ASYNC(src, /mob.proc/jittery_process)
+
+/mob/living/carbon/update_stat()
+	if(stat == DEAD)
+		return
+	if(IsSleeping())
+		stat = UNCONSCIOUS
+		blinded = TRUE

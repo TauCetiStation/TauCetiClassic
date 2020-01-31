@@ -409,6 +409,9 @@
 				user.drop_item()	//drop the item to update overlays and such
 				qdel(L)
 
+				playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 25)
+				user.SetNextMove(CLICK_CD_INTERACT)
+
 				if(on && rigged)
 
 					log_admin("LOG: Rigged light explosion, last touched by [fingerprintslast]")
@@ -429,11 +432,7 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(prob(1+W.force * 5))
 
-			to_chat(user, "You hit the light, and it smashes!")
-			for(var/mob/M in viewers(src))
-				if(M == user)
-					continue
-				M.show_message("[user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
+			user.visible_message("[user.name] smashed the light!", blind_message = "You hear a tinkle of breaking glass", self_message = "You hit the light, and it smashes!")
 			if(on && (W.flags & CONDUCT))
 				//if(!user.mutations & COLD_RESISTANCE)
 				if (prob(12))
@@ -473,7 +472,7 @@
 			s.start()
 			//if(!user.mutations & COLD_RESISTANCE)
 			if (prob(75))
-				electrocute_mob(user, get_area(src), src, rand(0.7,1.0))
+				electrocute_mob(user, get_area(src), src, rand(70, 100) * 0.01)
 
 
 // returns whether this light has power
@@ -502,15 +501,14 @@
 	flicker(1)
 
 // Aliens smash the bulb but do not get electrocuted./N
-/obj/machinery/light/attack_alien(mob/living/carbon/alien/humanoid/user)//So larva don't go breaking light bulbs.
+/obj/machinery/light/attack_alien(mob/living/carbon/xenomorph/humanoid/user)//So larva don't go breaking light bulbs.
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
 		to_chat(user, "<span class='notice'>That object is useless to you.</span>")
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
-		for(var/mob/M in viewers(src))
-			M.show_message("<span class='warning'>[user.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
+		visible_message("<span class='warning'>[user.name] smashed the light!</span>", blind_message = "You hear a tinkle of breaking glass")
 		broken()
 	return
 
@@ -521,8 +519,7 @@
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		..()
-		for(var/mob/O in viewers(src))
-			O.show_message("<span class='warning'>[M.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
+		visible_message("<span class='warning'>[M.name] smashed the light!</span>", blind_message = "You hear a tinkle of breaking glass")
 		broken()
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
@@ -567,6 +564,9 @@
 	L.brightness_range = brightness_range
 	L.brightness_power = brightness_power
 	L.brightness_color = brightness_color
+
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 25)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	// light item inherits the switchcount, then zero it
 	L.switchcount = switchcount
@@ -615,7 +615,7 @@
 
 	if(!skip_sound_and_sparks)
 		if(status == LIGHT_OK || status == LIGHT_BURNED)
-			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, 'sound/effects/light-break.ogg', VOL_EFFECTS_MASTER)
 		if(on)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
@@ -725,7 +725,7 @@
 	brightness_power = 2
 	brightness_color = "#a0a080"
 
-/obj/item/weapon/light/throw_impact(atom/hit_atom)
+/obj/item/weapon/light/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	shatter()
 
@@ -805,5 +805,5 @@
 		status = LIGHT_BROKEN
 		force = 5
 		sharp = 1
-		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, 'sound/effects/light-break.ogg', VOL_EFFECTS_MASTER)
 		update()

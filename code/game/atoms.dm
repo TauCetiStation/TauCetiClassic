@@ -51,6 +51,7 @@
 		if(SSatoms.InitAtom(src, args))
 			//we were deleted
 			return
+	SSdemo.mark_new(src)
 
 	var/list/created = SSatoms.created_atoms
 	if(created)
@@ -269,7 +270,7 @@
 /atom/proc/singularity_pull()
 	return
 
-/atom/proc/hitby(atom/movable/AM)
+/atom/proc/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	return
 
 /atom/proc/add_hiddenprint(mob/living/M)

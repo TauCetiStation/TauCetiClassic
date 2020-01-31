@@ -381,12 +381,12 @@
 	explanation_text = "Experiment on [target_amount] humans."
 
 /datum/objective/experiment/check_completion()
-	. = 0
+	. = OBJECTIVE_LOSS
 	var/ab_team = team
 	for(var/obj/machinery/abductor/experiment/E in abductor_machinery_list)
 		if(E.team == ab_team)
 			if(E.points >= target_amount)
-				return 1
+				return OBJECTIVE_WIN
 
 /datum/objective/abductee
 //	dangerrating = 5

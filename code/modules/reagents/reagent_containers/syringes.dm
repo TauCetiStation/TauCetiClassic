@@ -106,9 +106,7 @@
 						src.on_reagent_change()
 						src.reagents.handle_reactions()
 					infect_limb(user, target)
-					to_chat(user, "<span class='notice'>You take a blood sample from [target]</span>")
-					for(var/mob/O in viewers(4, user))
-						O.show_message("<span class='warning'>[user] takes a blood sample from [target].</span>", 1)
+					user.visible_message("<span class='warning'>[user] takes a blood sample from [target].</span>", self_message = "<span class='notice'>You take a blood sample from [target]</span>", viewing_distance = 4)
 
 			else //if not mob
 				if(!target.reagents.total_volume)
@@ -142,16 +140,16 @@
 
 			if(isliving(target))
 				var/mob/living/L = target
+				var/list/injected = list()
+				for(var/datum/reagent/R in src.reagents.reagent_list)
+					injected += R.name
+				var/contained = english_list(injected)
 				if(target != user)
 
 					if(!L.try_inject(user, TRUE))
 						return
 
 					var/mob/living/M = target
-					var/list/injected = list()
-					for(var/datum/reagent/R in src.reagents.reagent_list)
-						injected += R.name
-					var/contained = english_list(injected)
 					infect_limb(user, target)
 					M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
 					user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.key]). Reagents: [contained]</font>")
@@ -161,6 +159,7 @@
 				else
 					if(!L.try_inject(user, TRUE, TRUE))
 						return
+					user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject self ([user.ckey]). Reagents: [contained]</font>")
 					src.reagents.reaction(target, INGEST)
 					infect_limb(user, target)
 			var/datum/reagent/blood/B
@@ -216,6 +215,7 @@
 		var/syringestab_amount_transferred = rand(0, (reagents.total_volume - 5)) //nerfed by popular demand
 		reagents.trans_to(target, syringestab_amount_transferred)
 
+	playsound(target, 'sound/items/tools/screwdriver-stab.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='warning'><B>[user] stabs [target] with [src.name]!</B></span>")
 
 	desc += " It is broken."
@@ -344,11 +344,9 @@
 				return
 
 			if(ismob(target) && target != user)
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message(text("<span class='warning'><B>[] is trying to inject [] with a giant syringe!</B></span>", user, target), 1)
+				user.visible_message("<span class='warning'><B>[user] is trying to inject [target] with a giant syringe!</B></span>")
 				if(!do_mob(user, target, 300)) return
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message(text("<span class='warning'>[] injects [] with a giant syringe!</span>", user, target), 1)
+				user.visible_message("<span class='warning'>[user] injects [target] with a giant syringe!</span>")
 				src.reagents.reaction(target, INGEST)
 			if(ismob(target) && target == user)
 				src.reagents.reaction(target, INGEST)

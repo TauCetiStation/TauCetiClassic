@@ -2,10 +2,12 @@
 	name = "belt"
 	desc = "Can hold various things."
 	icon = 'icons/obj/clothing/belts.dmi'
+	force = 1.0
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	storage_slots = 7
 	slot_flags = SLOT_FLAGS_BELT
+	hitsound = list('sound/items/misc/belt-slap.ogg')
 	attack_verb = list("whipped", "lashed", "disciplined")
 	use_to_pickup = TRUE
 

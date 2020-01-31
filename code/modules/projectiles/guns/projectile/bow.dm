@@ -38,7 +38,6 @@
 /obj/item/weapon/crossbow
 
 	name = "powered crossbow"
-	desc = "A 2557AD twist on an old classic. Pick up that can."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow-solid"
@@ -54,6 +53,10 @@
 	var/mob/living/current_user = null    // Used to see if the person drawing the bow started drawing it.
 	var/obj/item/weapon/arrow = null      // Nocked arrow.
 	var/obj/item/weapon/stock_parts/cell/cell = null  // Used for firing special projectiles like rods.
+
+/obj/item/weapon/crossbow/atom_init()
+	. = ..()
+	desc = "A [gamestory_start_year+2]AD twist on an old classic. Pick up that can."
 
 /obj/item/weapon/crossbow/attackby(obj/item/W, mob/user)
 	if(!arrow)
