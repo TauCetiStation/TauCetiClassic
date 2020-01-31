@@ -214,6 +214,7 @@ var/list/blacklisted_builds = list(
 				if (config.client_limit_panic_bunker_link)
 					to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
 					SEND_LINK(src, config.client_limit_panic_bunker_link)
+					log_access("Failed Login: [key] [computer_id] [address] - redirected by limit bunker to [config.client_limit_panic_bunker_link]")
 				else
 					to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
 					log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
