@@ -189,7 +189,7 @@
 	else
 		to_chat(src, "Aborting suicide attempt.")
 
-/mob/living/carbon/alien/humanoid/verb/suicide()
+/mob/living/carbon/xenomorph/humanoid/verb/suicide()
 	set hidden = 1
 
 	if (stat == DEAD)

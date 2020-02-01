@@ -261,7 +261,7 @@
 	var/primed = null
 	throwforce = 15
 
-/obj/item/missile/throw_impact(atom/hit_atom)
+/obj/item/missile/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(primed)
 		explosion(hit_atom, 0, 0, 2, 4)
 		qdel(src)

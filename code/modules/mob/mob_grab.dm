@@ -526,15 +526,15 @@
 						return
 
 	if(M == assailant && state >= GRAB_AGGRESSIVE)
-		if( (ishuman(user) && HAS_TRAIT(user, TRAIT_FAT) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
+		if( (ishuman(user) && HAS_TRAIT(user, TRAIT_FAT) && ismonkey(affecting) ) || ( isxeno(user) && iscarbon(affecting) ) )
 			var/mob/living/carbon/attacker = user
 			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
-			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
+			if(istype(user, /mob/living/carbon/xenomorph/humanoid/hunter))
 				if(!do_mob(user, affecting)||!do_after(user, 30, target = affecting)) return
 			else
 				if(!do_mob(user, affecting)||!do_after(user, 100, target = affecting)) return
 			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
-			if(isalien(user))
+			if(isxeno(user))
 				if(affecting.stat == DEAD)
 					affecting.gib()
 					if(attacker.health >= attacker.maxHealth - attacker.getCloneLoss())
@@ -571,6 +571,10 @@
 /obj/item/weapon/grab/proc/inspect_organ(mob/living/carbon/human/H, mob/user, target_zone)
 
 	var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
+	var/foundwound = FALSE
+	var/foundgerm = FALSE
+	var/foundorganwound = FALSE
+	var/foundorgangerm = FALSE
 
 	if(!BP || (BP.is_stump))
 		to_chat(user, "<span class='notice'>[H] is missing that bodypart.</span>")
@@ -579,10 +583,30 @@
 	user.visible_message("<span class='notice'>[user] starts inspecting [affecting]'s [BP.name] carefully.</span>")
 	if(!do_mob(user,H, 30))
 		to_chat(user, "<span class='notice'>You must stand still to inspect [BP] for wounds.</span>")
-	else if(BP.wounds.len)
-		to_chat(user, "<span class='warning'>You find [BP.get_wounds_desc()]</span>")
 	else
-		to_chat(user, "<span class='notice'>You find no visible wounds.</span>")
+		if(length(BP.wounds))
+			to_chat(user, "<span class='warning'>You find [BP.get_wounds_desc()]</span>")
+			foundwound = TRUE
+		if(length(BP.implants))
+			to_chat(user, "<span class='notice'>You feel something solid under [BP.name]'s skin.</span>")
+		if(BP.germ_level >= INFECTION_LEVEL_ONE)
+			foundgerm = TRUE
+		for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
+			if(IO.is_bruised())
+				foundorganwound = TRUE
+			if(IO.germ_level >= INFECTION_LEVEL_ONE)
+				foundorgangerm = TRUE
+		if(foundorgangerm && !foundgerm)
+			to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] are slightly enlarged.</span>")
+			foundwound = TRUE
+		if(foundorganwound)
+			to_chat(user, "<span class='warning'>You find ecchymosis and inflation in the [BP.name].</span>")
+			foundwound = TRUE
+		if(foundgerm)
+			to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] are greatly enlarged.</span>")
+			foundwound = TRUE
+		if(!foundwound)
+			to_chat(user, "<span class='notice'>You find no visible wounds.</span>")
 
 	to_chat(user, "<span class='notice'>Checking bones now...</span>")
 	if(!do_mob(user, H, 60))

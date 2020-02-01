@@ -1,11 +1,12 @@
 /obj/item/weapon/stock_parts/cell
 	name = "power cell"
 	desc = "A rechargable electrochemical power cell."
+	hitsound = list('sound/items/tools/device_big-hit.ogg')
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	item_state = "cell"
 	origin_tech = "powerstorage=1"
-	force = 5.0
+	force = 3.0
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5

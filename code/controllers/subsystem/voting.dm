@@ -8,12 +8,13 @@ var/datum/subsystem/vote/SSvote
 	flags = SS_FIRE_IN_LOBBY | SS_KEEP_TIMING | SS_NO_INIT
 
 	var/initiator = null
-	var/started_time = null			//Not counting for custom votes, because it will apply voting cooldown and this is bad...
 	var/voting_started_time = null	//...thats why we use separate var to count remaining vote time.
 	var/time_remaining = 0
 	var/mode = null
 	var/question = null
 	var/description = null
+	var/list/last_vote_time = list() //Not counting for custom votes, because it will apply voting cooldown and this is bad...
+	var/list/delay_after_start = list("default", "restart")
 	var/list/choices = list()
 	var/list/voted = list()
 	var/list/voting = list()
@@ -167,9 +168,12 @@ var/datum/subsystem/vote/SSvote
 	var/is_admin = FALSE
 	if(check_rights(R_ADMIN))
 		is_admin = TRUE
+	var/timer_mode = "default"
+	if (vote_type == "restart")
+		timer_mode = "restart"
 	if(!mode)
-		if(started_time != null && !is_admin)
-			var/next_allowed_time = (started_time + config.vote_delay)
+		if(last_vote_time[timer_mode] != null && !is_admin)
+			var/next_allowed_time = (last_vote_time[timer_mode] + config.vote_delay)
 			if(next_allowed_time > world.time)
 				return 0
 
@@ -219,7 +223,7 @@ var/datum/subsystem/vote/SSvote
 		if(mode == "custom")
 			text += "\n[question]"
 		else
-			started_time = world.time
+			last_vote_time[timer_mode] = world.time
 		log_vote(text)
 		for(var/mob/M in player_list)
 			M.playsound_local(null, 'sound/misc/notice1.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
@@ -288,7 +292,7 @@ var/datum/subsystem/vote/SSvote
 			. += "\t(<a href='?src=\ref[src];vote=toggle_crew'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
 		. += "</li><li>"
 		//gamemode
-		if(admin || config.allow_vote_mode && world.has_round_preparing())
+		if(admin || config.allow_vote_mode && world.is_round_preparing())
 			. += "<a href='?src=\ref[src];vote=gamemode'>GameMode</a>"
 		else
 			. += "<font color='grey'>GameMode (Disallowed)</font>"
@@ -325,17 +329,14 @@ var/datum/subsystem/vote/SSvote
 			if(usr.client.holder)
 				config.allow_vote_mode = !config.allow_vote_mode
 		if("restart")
-			if(config.allow_vote_restart || usr.client.holder)
-				if(!SSshuttle.online && SSshuttle.location == 0)
-					initiate_vote("restart",usr.key)
+			if((config.allow_vote_restart || usr.client.holder) && !SSshuttle.online && SSshuttle.location == 0)
+				initiate_vote("restart",usr.key)
 		if("crew_transfer")
-			if(config.allow_vote_mode || usr.client.holder)
-				if(crew_transfer_available())
-					initiate_vote("crew_transfer",usr.key)
+			if((config.allow_vote_mode || usr.client.holder) && crew_transfer_available())
+				initiate_vote("crew_transfer",usr.key)
 		if("gamemode")
-			if(config.allow_vote_mode || usr.client.holder)
-				if(world.has_round_preparing())
-					initiate_vote("gamemode",usr.key)
+			if((config.allow_vote_mode || usr.client.holder) && world.is_round_preparing())
+				initiate_vote("gamemode",usr.key)
 		if("custom")
 			if(usr.client.holder)
 				initiate_vote("custom",usr.key)
@@ -359,6 +360,4 @@ var/datum/subsystem/vote/SSvote
 		ooc_allowed = TRUE
 
 /datum/subsystem/vote/proc/crew_transfer_available()
-	if (world.has_round_started() && !world.has_round_finished() && !SSshuttle.online && SSshuttle.location == 0)
-		return TRUE
-	return FALSE
+	return (world.has_round_started() && !world.has_round_finished() && !SSshuttle.online && SSshuttle.location == 0)

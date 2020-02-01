@@ -860,7 +860,7 @@
 			if(!CM.canmove && !CM.resting)	return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
-			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
+			if(isxenoadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
 				CM.visible_message("<span class='danger'>[CM] is trying to break the handcuffs!</span>", self_message = "<span class='rose'>You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)</span>")
 				spawn(0)
 					if(do_after(CM, 50, target = usr))
@@ -898,7 +898,7 @@
 			if(!CM.canmove && !CM.resting)	return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
-			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
+			if(isxenoadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
 				to_chat(usr, )
 				CM.visible_message("<span class='danger'>[CM] is trying to break the legcuffs!</span>", self_message = "<span class='notice'>You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)</span>")
 				spawn(0)
