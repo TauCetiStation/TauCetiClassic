@@ -63,7 +63,7 @@
 	return PROJECTILE_ALL_OK
 
 //this proc handles being hit by a thrown atom
-/mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
+/mob/living/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)//Standardization and logging -Sieve
 	if(istype(AM,/obj))
 		var/obj/O = AM
 		var/dtype = BRUTE
@@ -73,7 +73,7 @@
 		var/throw_damage = O.throwforce * (AM.fly_speed / 5)
 
 		var/zone
-		var/mob/living/L = isliving(O.thrower) ? O.thrower : null
+		var/mob/living/L = isliving(throwingdatum.thrower) ? throwingdatum.thrower : null
 		if(L)
 			zone = check_zone(L.zone_sel.selecting)
 		else
@@ -90,7 +90,7 @@
 			visible_message("<span class='notice'>\The [O] misses [src] narrowly!</span>")
 			return
 
-		if(O.thrower != src && check_shields(throw_damage, "[O]", get_dir(O,src)))
+		if(throwingdatum.thrower != src && check_shields(throw_damage, "[O]", get_dir(O,src)))
 			return
 
 		resolve_thrown_attack(O, throw_damage, dtype, zone)
@@ -111,7 +111,7 @@
 				"<span class='danger'>You stagger under the impact!</span>")
 
 			var/atom/throw_target = get_edge_target_turf(src, get_dir(O.throw_source, src))
-			throw_at(throw_target, 5, 1, O.thrower, FALSE, null, null, CALLBACK(src, .proc/pin_to_turf, W))
+			throw_at(throw_target, 5, 1, throwingdatum.thrower, FALSE, null, null, CALLBACK(src, .proc/pin_to_turf, W))
 
 
 /mob/living/proc/resolve_thrown_attack(obj/O, throw_damage, dtype, zone, armor)

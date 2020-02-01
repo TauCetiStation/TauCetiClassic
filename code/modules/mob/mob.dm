@@ -81,7 +81,7 @@
 			break
 
 		if((type & SHOWMSG_AUDIO) && !(sdisabilities & DEAF) && !ear_deaf) // Hearing related
-			if(stat == UNCONSCIOUS || sleeping > 0)
+			if(stat == UNCONSCIOUS)
 				msg = "<i>... You can almost hear something ...</i>"
 			else
 				msg = args[i]
@@ -93,7 +93,7 @@
 
 	if(!msg)
 		return FALSE
-	
+
 	to_chat(src, msg)
 	return list(msg, type) // should pass args to parasites
 
@@ -750,7 +750,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	density = !lying
 
-	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isalien(src))
+	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isxeno(src))
 		drop_l_hand()
 		drop_r_hand()
 
@@ -897,25 +897,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		paralysis = max(paralysis + amount, 0)
 	else
 		paralysis = 0
-
-// ========== SLEEPING ==========
-/mob/proc/Sleeping(amount)
-	if(status_flags & CANPARALYSE) // because sleeping and paralysis are very similar statuses and i see no point in separate flags at this time (anyway, golems mostly).
-		sleeping = max(max(sleeping, amount), 0)
-	else
-		sleeping = 0
-
-/mob/proc/SetSleeping(amount)
-	if(status_flags & CANPARALYSE)
-		sleeping = max(amount, 0)
-	else
-		sleeping = 0
-
-/mob/proc/AdjustSleeping(amount)
-	if(status_flags & CANPARALYSE)
-		sleeping = max(sleeping + amount, 0)
-	else
-		sleeping = 0
 
 // ========== RESTING ==========
 /mob/proc/Resting(amount)
@@ -1121,3 +1102,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/get_targetzone()
 	return null
+
+/mob/proc/update_stat()
+	return

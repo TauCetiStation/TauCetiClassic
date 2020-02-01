@@ -97,7 +97,7 @@
 		user.visible_message("<span class='danger'>[user] tears at [src]!</span>")
 
 /obj/structure/inflatable/attack_alien(mob/user)
-	if(islarva(user) || isfacehugger(user))
+	if(isxenolarva(user) || isfacehugger(user))
 		return
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)

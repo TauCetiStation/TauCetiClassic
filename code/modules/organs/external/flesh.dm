@@ -63,6 +63,10 @@
 
 	var/datum/wound/created_wound
 	if(brute)
+		if(ishuman(BP.owner))
+			var/mob/living/carbon/human/HU = BP.owner
+			if(HU.w_uniform && istype(HU.w_uniform, /obj/item/clothing/under/rank/clown))
+				playsound(HU, 'sound/effects/squeak.ogg', VOL_EFFECTS_MISC, vol = 65)
 		if(can_cut)
 			//need to check sharp again here so that blunt damage that was strong enough to break skin doesn't give puncture wounds
 			if(sharp && !edge)
@@ -465,7 +469,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if (W.can_autoheal() && W.wound_damage() < 50)
 			heal_amt += 0.5
 			var/mob/living/carbon/H = BP.owner
-			if(H.sleeping)
+			if(H.IsSleeping())
 				if(istype(H.buckled, /obj/structure/stool/bed))
 					heal_amt += 0.2
 				else if((locate(/obj/structure/table) in H.loc))

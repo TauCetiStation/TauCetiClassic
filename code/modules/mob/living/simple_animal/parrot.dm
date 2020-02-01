@@ -26,7 +26,7 @@
 
 
 /mob/living/simple_animal/parrot
-	name = "\improper Parrot"
+	name = "Parrot"
 	desc = "The parrot squaks, \"It's a Parrot! BAWWK!\""
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "parrot_fly"
@@ -137,7 +137,7 @@
 		return
 
 	//Is the usr's mob type able to do this? (lolaliens)
-	if(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr))
+	if(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isxenoadult(usr))
 
 		//Removing from inventory
 		if(href_list["remove_inv"])

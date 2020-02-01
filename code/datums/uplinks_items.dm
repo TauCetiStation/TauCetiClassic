@@ -243,6 +243,12 @@
 	if(istype(T))
 		T.TC_cost = cost
 
+/datum/uplink_item/dangerous/light_armor
+	name = "Armor Set"
+	desc = "A set of personal armor that includes armored vest and a helmet, designed to ensure survival of gone wild agent."
+	item = /obj/item/weapon/storage/box/syndie_kit/light_armor
+	cost = 10
+	uplink_types = list("traitor")
 
 // AMMUNITION
 

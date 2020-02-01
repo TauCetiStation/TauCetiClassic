@@ -261,7 +261,7 @@ to destroy them and players will be able to make replacements.
 							/obj/machinery/vending/cola/gib = "Robust Softdrinks (Dr. Gibb)",
 							/obj/machinery/vending/cigarette = "Cigarette",
 							/obj/machinery/vending/barbervend = "Fab-O-Vend",
-							/obj/machinery/vending/chinese = "\improper Mr. Chang",
+							/obj/machinery/vending/chinese = "Mr. Chang",
 							/obj/machinery/vending/medical = "NanoMed Plus",
 							/obj/machinery/vending/hydronutrients = "NutriMax",
 							/obj/machinery/vending/hydroseeds = "MegaSeed Servitor",

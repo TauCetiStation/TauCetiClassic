@@ -109,7 +109,7 @@
 				if(!activated)
 					activated = TRUE
 					H.visible_message("<span class='danger'>[H] suddenly closes \his eyes. \His body falls lifeless and stops moving. \He seems to stop breathing.</span>")
-					H.sleeping = 600
+					H.SetSleeping(600 SECONDS)
 					handle_infected_death(H)
 					H.update_canmove()
 					disease.dead = TRUE
@@ -337,8 +337,6 @@
 		return 1
 	else if(M.stat == UNCONSCIOUS)
 		return 0.5
-	else if(M.sleeping > 0)
-		return 0.25
 	else if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
 		to_chat(M, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
 		active_coma = TRUE
@@ -347,8 +345,7 @@
 /datum/disease2/effect/heal/coma/proc/coma(mob/living/carbon/human/M)
 	//M.emote("deathgasp")
 	M.status_flags |= FAKEDEATH
-	M.sleeping = 999 //Well, I hope its good enough
-	M.update_canmove()
+	M.SetSleeping(999 SECONDS) //Well, I hope its good enough
 	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
 
 /datum/disease2/effect/heal/coma/proc/uncoma(mob/living/carbon/human/M)
@@ -356,8 +353,7 @@
 		return
 	active_coma = FALSE
 	M.status_flags &= ~FAKEDEATH
-	M.sleeping = 0
-	M.update_canmove()
+	M.SetSleeping(0)
 
 /datum/disease2/effect/heal/coma/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
 	var/heal_amt = 4 * actual_power
@@ -938,7 +934,7 @@
 			if(prob(50))
 				mob.emote("collapse")
 			else
-				mob.sleeping = max(mob.sleeping, 5)
+				mob.SetSleeping(max(mob.AmountSleeping(), 5 SECONDS))
 
 /datum/disease2/effect/blind
 	name = "Hyphema"

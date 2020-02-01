@@ -41,9 +41,9 @@
 	if(user.is_busy())
 		return
 
-	if(istype(M,/mob/living/carbon/alien))
+	if(istype(M, /mob/living/carbon/xenomorph))
 		return
-	if(!istype(user,/mob/living/carbon/alien/humanoid))
+	if(!istype(user,/mob/living/carbon/xenomorph/humanoid))
 		return
 
 	if(M == usr)
