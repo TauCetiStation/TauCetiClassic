@@ -113,8 +113,8 @@ var/global/list/tophats_list = list()
 	if(istype(AM, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = AM
 		AM = G.affecting
-		if(ismob(AM.loc))
-			var/mob/M = AM.loc
+		if(ismob(G.loc))
+			var/mob/M = G.loc
 			M.drop_from_inventory(G)
 
 	. = TRUE
