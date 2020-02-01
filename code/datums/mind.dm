@@ -533,9 +533,8 @@
 						possible_targets += possible_target.current
 
 				var/mob/def_target = null
-				var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain)
-				if (objective&&(objective.type in objective_list) && objective:target)
-					def_target = objective:target.current
+				if (objective?.target && is_type_in_list(objective, list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain)))
+					def_target = objective.target.current
 
 				var/new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
 				if (!new_target) return
@@ -1139,14 +1138,12 @@
 					if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]</span>")
-						src = null
 						M = H.monkeyize()
 						src = M.mind
 						//world << "DEBUG: \"healthy\": M=[M], M.mind=[M.mind], src=[src]!"
 					else if (istype(M) && length(M.viruses))
 						for(var/datum/disease/D in M.viruses)
 							D.cure(0)
-						sleep(0) //because deleting of virus is done through spawn(0)
 			if("infected")
 				if (usr.client.holder.rights & R_SPAWN)
 					var/mob/living/carbon/human/H = current
@@ -1154,7 +1151,6 @@
 					if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize and infect [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]</span>", 1)
-						src = null
 						M = H.monkeyize()
 						src = M.mind
 						current.contract_disease(new /datum/disease/jungle_fever,1,0)
@@ -1167,16 +1163,10 @@
 						for(var/datum/disease/D in M.viruses)
 							if (istype(D,/datum/disease/jungle_fever))
 								D.cure(0)
-								sleep(0) //because deleting of virus is doing throught spawn(0)
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
-						var/obj/item/weapon/dnainjector/m2h/m2h = new
-						var/obj/item/weapon/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
-						src = null
-						m2h.inject(M)
-						src = mobfinder.loc:mind
-						qdel(mobfinder)
-						current.radiation -= 50
+						M = M.humanize()
+						src = M.mind
 
 	else if (href_list["silicon"])
 		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
@@ -1600,27 +1590,27 @@
 	mind.assigned_role = "slime"
 
 //XENO
-/mob/living/carbon/alien/mind_initialize()
+/mob/living/carbon/xenomorph/mind_initialize()
 	..()
 	mind.assigned_role = "Alien"
 	//XENO HUMANOID
-/mob/living/carbon/alien/humanoid/queen/mind_initialize()
+/mob/living/carbon/xenomorph/humanoid/queen/mind_initialize()
 	..()
 	mind.special_role = "Queen"
 
-/mob/living/carbon/alien/humanoid/hunter/mind_initialize()
+/mob/living/carbon/xenomorph/humanoid/hunter/mind_initialize()
 	..()
 	mind.special_role = "Hunter"
 
-/mob/living/carbon/alien/humanoid/drone/mind_initialize()
+/mob/living/carbon/xenomorph/humanoid/drone/mind_initialize()
 	..()
 	mind.special_role = "Drone"
 
-/mob/living/carbon/alien/humanoid/sentinel/mind_initialize()
+/mob/living/carbon/xenomorph/humanoid/sentinel/mind_initialize()
 	..()
 	mind.special_role = "Sentinel"
 	//XENO LARVA
-/mob/living/carbon/alien/larva/mind_initialize()
+/mob/living/carbon/xenomorph/larva/mind_initialize()
 	..()
 	mind.special_role = "Larva"
 

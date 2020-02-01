@@ -497,7 +497,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/melee/energy))
-		user.show_message("<span class='notice'>You carve a face into [src]!</span>", 1)
+		to_chat(user, "<span class='notice'>You carve a face into [src]!</span>")
 		new /obj/item/clothing/head/pumpkinhead (user.loc)
 		qdel(src)
 		return
@@ -573,6 +573,24 @@
 	pixel_x = rand(-5.0, 5)
 	pixel_y = rand(-5.0, 5)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk
+	seed = "/obj/item/seeds/honkyseed"
+	name = "Clowny banana"
+	desc = "Looks very colorful and tasty, a Clown would kill for this banana!"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "h-banana"
+	item_state = "h-banana"
+	filling_color = "#fcf695"
+	can_be_holstered = TRUE
+	trash = /obj/item/weapon/bananapeel/honk
+	bitesize = 5
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk/atom_init()
+	. = ..()
+	reagents.add_reagent("banana", 1+round((potency / 10), 1))
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	seed = "/obj/item/seeds/chiliseed"
 	name = "chili"
@@ -629,7 +647,7 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/tomato_smudge(loc)
 	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
@@ -677,7 +695,7 @@
 	reagents.add_reagent("blood", 1+round((potency / 5), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/blood/splatter(loc)
 	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
@@ -700,7 +718,7 @@
 	reagents.add_reagent("lube", 1+round((potency / 5), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/blood/oil(loc)
 	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
@@ -710,17 +728,20 @@
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(AM)
-	if (istype(AM, /mob/living/carbon))
-		var/mob/M =	AM
-		if (istype(M, /mob/living/carbon/human) && ( (isobj(M:shoes) && M:shoes.flags&NOSLIP) || (istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)  ))
-			return
+	if (iscarbon(AM))
+		var/mob/living/carbon/C = AM
 
-		M.stop_pulling()
-		to_chat(M, "<span class='notice'>You slipped on the [name]!</span>")
+		if (ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if ((H.shoes && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
+				return
+
+		C.stop_pulling()
+		to_chat(C, "<span class='notice'>You slipped on the [name]!</span>")
 		playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, null, -3)
-		if(!M.buckled)
-			M.Stun(8)
-			M.Weaken(5)
+		if(!C.buckled)
+			C.Stun(8)
+			C.Weaken(5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	seed = "/obj/item/seeds/wheatseed"
@@ -1028,7 +1049,7 @@
 	reagents.add_reagent("singulo", 1+round((potency / 5), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	var/mob/M = usr
 	var/outer_teleport_radius = potency / 10 //Plant potency determines radius of teleport.

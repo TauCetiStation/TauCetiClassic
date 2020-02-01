@@ -23,7 +23,7 @@
 	var/prev_gender = null // Debug for plural genders
 
 
-/mob/living/carbon/human/Life()
+/mob/living/carbon/human/Life(seconds)
 	set invisibility = 0
 	set background = 1
 
@@ -113,8 +113,6 @@
 
 	//Check if we're on fire
 	handle_fire()
-	if(on_fire && fire_stacks > 0)
-		fire_stacks -= 0.5
 
 	//Status updates, death etc.
 	handle_regular_status_updates()		//Optimized a bit
@@ -165,22 +163,18 @@
 		return ONE_ATMOSPHERE - pressure_difference
 
 /mob/living/carbon/human/proc/handle_disabilities()
-	if (disabilities & EPILEPSY || has_trait(TRAIT_EPILEPSY))
+	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
 		if ((prob(1) && paralysis < 1))
-			to_chat(src, "<span class='warning'>You have a seizure!</span>")
-			for(var/mob/O in viewers(src, null))
-				if(O == src)
-					continue
-				O.show_message(text("<span class='danger'>[src] starts having a seizure!</span>"), 1)
+			visible_message("<span class='danger'>[src] starts having a seizure!</span>", self_message = "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
 			make_jittery(1000)
-	if (disabilities & COUGHING || has_trait(TRAIT_COUGH))
+	if (disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
 		if ((prob(5) && paralysis <= 1))
 			drop_item()
 			spawn( 0 )
 				emote("cough")
 				return
-	if (disabilities & TOURETTES || has_trait(TRAIT_TOURETTE))
+	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		speech_problem_flag = 1
 		if ((prob(10) && paralysis <= 1))
 			Stun(10)
@@ -201,7 +195,7 @@
 				pixel_x = old_x
 				pixel_y = old_y
 				return
-	if (disabilities & NERVOUS || has_trait(TRAIT_NERVOUS))
+	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
 		speech_problem_flag = 1
 		if (prob(10))
 			stuttering = max(10, stuttering)
@@ -252,7 +246,7 @@
 					resting = 1
 
 			if(13 to 18)
-				if(getBrainLoss() >= 60 && !has_trait(TRAIT_STRONGMIND))
+				if(getBrainLoss() >= 60 && !HAS_TRAIT(src, TRAIT_STRONGMIND))
 					if(config.rus_language)//TODO:CYRILLIC dictionary?
 						switch(rand(1, 3))
 							if(1)
@@ -351,17 +345,7 @@
 						BP.add_autopsy_data("Radiation Poisoning", damage)
 
 /mob/living/carbon/human/proc/breathe()
-	if(NO_BREATH in src.mutations)
-		return //#Z2 We need no breath with this mutation
-	if(reagents.has_reagent("lexorin"))
-		return
-	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return
-	if(species && (species.flags[NO_BREATHE] || species.flags[IS_SYNTHETIC]))
-		return
-	if(dna && dna.mutantrace == "adamantine")
-		return
-	if(ismob(loc))
+	if(!need_breathe())
 		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
@@ -593,7 +577,7 @@
 
 			// Enough to make us sleep as well
 			if(SA_pp > SA_sleep_min)
-				Sleeping(5)
+				Sleeping(10 SECONDS)
 
 		// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 		else if(SA_pp > 0.15)
@@ -1051,31 +1035,30 @@
 			SetStunned(0)
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
-	if(FAT in mutations)
-		if(!has_trait(TRAIT_FAT) && overeatduration < 100)
+	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
+		if(!has_quirk(/datum/quirk/fatness) && overeatduration < 100)
 			to_chat(src, "<span class='notice'>You feel fit again!</span>")
-			mutations.Remove(FAT)
+			REMOVE_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 			update_body()
 			update_mutantrace()
 			update_mutations()
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 	else
-		if((has_trait(TRAIT_FAT) || overeatduration > 500) && isturf(loc))
+		if((has_quirk(/datum/quirk/fatness) || overeatduration >= 500) && isturf(loc))
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
-				mutations.Add(FAT)
+				ADD_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 				update_body()
 				update_mutantrace()
 				update_mutations()
 				update_inv_w_uniform()
 				update_inv_wear_suit()
 
-
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)
 		var/met_factor = get_metabolism_factor()
 		nutrition = max(0, nutrition - met_factor * 0.1)
-		if(has_trait(TRAIT_STRESS_EATER))
+		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
 			nutrition = max(0, nutrition - met_factor * getHalLoss() * 0.01)
 
 	if (nutrition > 450)
@@ -1091,11 +1074,11 @@
 			traumatic_shock++
 
 	if (drowsyness)
-		drowsyness--
+		drowsyness = max(0, drowsyness - 1)
 		eye_blurry = max(2, eye_blurry)
 		if(prob(5))
 			emote("yawn")
-			sleeping += 1
+			Sleeping(10 SECONDS)
 			Paralyse(5)
 
 	confused = max(0, confused - 1)
@@ -1122,7 +1105,7 @@
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()	//TODO
 
-		if(health <= config.health_threshold_dead || brain_op_stage == 4.0)
+		if(health <= config.health_threshold_dead || (!has_brain() && should_have_organ(O_BRAIN)))
 			death()
 			blinded = 1
 			silent = 0
@@ -1162,7 +1145,7 @@
 			if(halloss > 100)
 				//src << "<span class='notice'>You're in too much pain to keep going...</span>"
 				//for(var/mob/O in oviewers(src, null))
-				//	O.show_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
+				//	O.show_messageold("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
 				if(prob(3))
 					Paralyse(10)
 				else
@@ -1175,19 +1158,8 @@
 			stat = UNCONSCIOUS
 			if(halloss > 0)
 				adjustHalLoss(-3)
-		else if(sleeping)
-			throw_alert("asleep", /obj/screen/alert/asleep)
-			speech_problem_flag = 1
-			handle_dreams()
-			adjustHalLoss(-3)
-			if (mind)
-				if((mind.active && client != null) || immune_to_ssd) //This also checks whether a client is connected, if not, sleep is not reduced.
-					sleeping = max(sleeping-1, 0)
-			blinded = 1
-			stat = UNCONSCIOUS
-			if( prob(2) && health && !hal_crit )
-				spawn(0)
-					emote("snore")
+		else if(IsSleeping())
+			blinded = TRUE
 		//CONSCIOUS
 		else
 			stat = CONSCIOUS
@@ -1196,8 +1168,6 @@
 					adjustHalLoss(-3)
 				else
 					adjustHalLoss(-1)
-		if(!sleeping) //No refactor - no life!
-			clear_alert("asleep")
 
 		if(stat == UNCONSCIOUS)
 			if(client)
@@ -1215,7 +1185,7 @@
 
 
 		//Eyes
-		if(sdisabilities & BLIND || has_trait(TRAIT_BLIND))	//disabled-blind, doesn't get better on its own
+		if(sdisabilities & BLIND || HAS_TRAIT(src, TRAIT_BLIND))	//disabled-blind, doesn't get better on its own
 			blinded = 1
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
@@ -1227,7 +1197,7 @@
 			eye_blurry = max(eye_blurry-1, 0)
 
 		//Ears
-		if(sdisabilities & DEAF || has_trait(TRAIT_DEAF))	//disabled-deaf, doesn't get better on its own
+		if(sdisabilities & DEAF || HAS_TRAIT(src, TRAIT_DEAF))	//disabled-deaf, doesn't get better on its own
 			ear_deaf = max(ear_deaf, 1)
 		else if(ear_deaf)			//deafness, heals slowly over time
 			ear_deaf = max(ear_deaf-1, 0)
@@ -1463,7 +1433,7 @@
 								healths.icon_state = "health6"
 
 		if(healthdoll)
-			healthdoll.overlays.Cut()
+			healthdoll.cut_overlays()
 			if(stat == DEAD)
 				healthdoll.icon_state = "healthdoll_DEAD"
 			else
@@ -1483,7 +1453,7 @@
 					if(damage > (comparison*4))
 						icon_num = 5
 					if(icon_num)
-						healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]")
+						healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
 
 		if(nutrition_icon)
 			switch(get_nutrition())
@@ -1512,7 +1482,7 @@
 		var/nearsighted = 0
 		var/impaired    = 0
 
-		if(disabilities & NEARSIGHTED || has_trait(TRAIT_NEARSIGHT))
+		if(disabilities & NEARSIGHTED || HAS_TRAIT(src, TRAIT_NEARSIGHT))
 			nearsighted = 1
 
 		if(glasses)

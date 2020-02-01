@@ -6,7 +6,6 @@
 	var/move_speed = 10
 	var/l_move_time = 1
 	var/throwing = 0
-	var/thrower
 	var/turf/throw_source = null
 	var/throw_speed = 2
 	var/throw_range = 7
@@ -115,6 +114,7 @@
 			O.Check()
 	if (orbiting)
 		orbiting.Check()
+	SSdemo.mark_dirty(src)
 	return 1
 
 /atom/movable/proc/setLoc(T, teleported=0)
@@ -167,18 +167,18 @@
 	. = ..()
 	update_canmove()
 
-/mob/dead/observer/forceMove(atom/destination)
+/mob/dead/observer/forceMove(atom/destination, keep_pulling)
 	if(destination)
 		if(loc)
 			loc.Exited(src)
 		loc = destination
 		loc.Entered(src)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //called when src is thrown into hit_atom
-/atom/movable/proc/throw_impact(atom/hit_atom)
-	hit_atom.hitby(src)
+/atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	hit_atom.hitby(src, throwingdatum)
 
 	if(isobj(hit_atom))
 		var/obj/O = hit_atom
@@ -256,7 +256,6 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 
-	src.thrower = thrower
 	throw_source = get_turf(loc)
 	fly_speed = speed
 	throwing = TRUE

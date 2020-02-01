@@ -51,13 +51,13 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
 
 		if(ishuman(body))
-			overlays = body.overlays
+			copy_overlays(body)
 		else
 			icon = body.icon
 			icon_state = body.icon_state
-			overlays = body.overlays
+			copy_overlays(body)
 
-		overlays -= list(body.typing_indicator, body.stat_indicator)
+		cut_overlay(list(body.typing_indicator, body.stat_indicator))
 
 		alpha = 127
 
@@ -242,7 +242,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			robot.toggle_all_components()
 		else
 			resting = 1
-			Sleeping(1) // sleeping does not reduce when there is no client in body for humans and some other mobs.
+			Sleeping(2 SECONDS)
 		var/mob/dead/observer/ghost = ghostize(can_reenter_corpse = FALSE)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 		ghost.timeofdeath = world.time // Because the living mob won't have a time of death and we want the respawn timer to work properly.
 	return

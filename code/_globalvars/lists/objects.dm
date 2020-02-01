@@ -61,5 +61,5 @@ var/global/list/PDAs = list()
 var/global/list/facehuggers_list = list()
 
 var/global/list/all_areas = list()
-var/global/list/areas_by_type = list()
+var/global/list/area/areas_by_type = list()
 var/global/list/machines = list()

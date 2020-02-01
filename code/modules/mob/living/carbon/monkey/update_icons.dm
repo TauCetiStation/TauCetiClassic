@@ -31,17 +31,18 @@
 	..()
 	update_hud()
 	//lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
-	overlays.Cut()
+	cut_overlays()
 	for(var/image/I in overlays_standing)
-		overlays += I
+		add_overlay(I)
 
 
 
 ////////
 /mob/living/carbon/monkey/update_inv_head(update_icons=TRUE)
 	if(head)
-		overlays_standing[M_HEAD_LAYER] = image("icon"= 'icons/mob/head.dmi', "icon_state" = "[head.icon_state]")
-		overlays_standing[M_HEAD_LAYER].pixel_y = -2
+		var/image/head_layer = image("icon"= 'icons/mob/head.dmi', "icon_state" = "[head.icon_state]")
+		head_layer.pixel_y = -2
+		overlays_standing[M_HEAD_LAYER] = head_layer
 	if(update_icons)
 		update_icons()
 
@@ -125,10 +126,10 @@
 	if(update_icons)		update_icons()
 
 /mob/living/carbon/monkey/update_fire()
-	overlays -= overlays_standing[M_FIRE_LAYER]
+	cut_overlay(overlays_standing[M_FIRE_LAYER])
 	if(on_fire)
 		overlays_standing[M_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
-		overlays += overlays_standing[M_FIRE_LAYER]
+		add_overlay(overlays_standing[M_FIRE_LAYER])
 		return
 	else
 		overlays_standing[M_FIRE_LAYER]		= null

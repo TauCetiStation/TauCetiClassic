@@ -1,4 +1,7 @@
 /mob/living/carbon/ian/Life()
+	if (notransform)
+		return
+
 	..()
 
 	if(soap_eaten) //Yeshhh, even dead, as long as body exist or timer runs out, its a chemical reaction after all!
@@ -116,8 +119,6 @@
 		handle_environment(environment)
 
 	handle_fire()
-	if(on_fire && fire_stacks > 0)
-		fire_stacks -= 0.5
 
 	handle_regular_status_updates()
 	update_canmove()
@@ -296,7 +297,7 @@
 		if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 			Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-				Sleeping(5)
+				Sleeping(10 SECONDS)
 		else if(SA_pp > 0.01) // There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			if(prob(20))
 				emote(pick("giggle", "laugh"))
@@ -387,7 +388,7 @@
 		drowsyness--
 		eye_blurry = max(2, eye_blurry)
 		if (prob(5))
-			sleeping += 1
+			Sleeping(2 SECONDS)
 			Paralyse(5)
 
 	if(confused)
@@ -403,19 +404,19 @@
 		jitteriness = max(0, jitteriness - 1)
 
 /mob/living/carbon/ian/proc/handle_disabilities()
-	if (disabilities & EPILEPSY || has_trait(TRAIT_EPILEPSY))
+	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
 		if (prob(1) && paralysis < 10)
 			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
-	if (disabilities & COUGHING || has_trait(TRAIT_COUGH))
+	if (disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
 		if (prob(5) && paralysis <= 1)
 			drop_item()
 			emote("cough")
-	if (disabilities & TOURETTES || has_trait(TRAIT_TOURETTE))
+	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		if (prob(10) && paralysis <= 1)
 			Stun(10)
 			emote("twitch")
-	if (disabilities & NERVOUS || has_trait(TRAIT_NERVOUS))
+	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
 		if (prob(10))
 			stuttering = max(10, stuttering)
 
@@ -505,6 +506,7 @@
 	if(..())
 		return
 	adjustFireLoss(6)
+	return
 
 /mob/living/carbon/ian/calculate_affecting_pressure(pressure)
 	..()
@@ -548,14 +550,8 @@
 			stat = UNCONSCIOUS
 			if(halloss > 0)
 				adjustHalLoss(-3)
-		else if(sleeping)
-			handle_dreams()
-			adjustHalLoss(-3)
-			sleeping = max(sleeping - 1, 0)
+		else if(IsSleeping())
 			blinded = TRUE
-			stat = UNCONSCIOUS
-			if( prob(10) && health && !hal_crit )
-				emote("snore")
 		else if(resting)
 			if(halloss > 0)
 				adjustHalLoss(-3)

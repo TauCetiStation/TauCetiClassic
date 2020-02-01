@@ -38,7 +38,7 @@ Note: Must be placed west/left of and R&D console to function.
 
 	var/max_material_storage = 100000
 	var/efficiency_coeff
-	var/list/loaded_materials = list()
+	var/list/datum/rnd_material/loaded_materials = list()
 	var/list/queue = list()
 
 /obj/machinery/r_n_d/protolathe/atom_init()
@@ -151,9 +151,9 @@ Note: Must be placed west/left of and R&D console to function.
 
 	to_chat(user, "<span class='notice'>You add [amount] sheets to the [name].</span>")
 
-	overlays += "protolathe_[stack.name]"
+	add_overlay("protolathe_[stack.name]")
 	sleep(10)
-	overlays -= "protolathe_[stack.name]"
+	cut_overlay("protolathe_[stack.name]")
 
 	use_power(max(1000, (3750 * amount / 10)))
 

@@ -19,6 +19,10 @@ var/global/list/SOUNDIN_LASERACT      = list('sound/effects/projectiles_acts/las
 var/global/list/SOUNDIN_ACIDACT       = list('sound/effects/projectiles_acts/acid_1.ogg', 'sound/effects/projectiles_acts/acid_2.ogg', 'sound/effects/projectiles_acts/acid_3.ogg')
 var/global/list/SOUNDIN_WEAKBULLETACT = list('sound/effects/projectiles_acts/weakbullet_1.ogg', 'sound/effects/projectiles_acts/weakbullet_2.ogg', 'sound/effects/projectiles_acts/weakbullet_3.ogg')
 var/global/list/SOUNDIN_BULLETMISSACT = list('sound/effects/projectiles_acts/miss_1.ogg', 'sound/effects/projectiles_acts/miss_2.ogg', 'sound/effects/projectiles_acts/miss_3.ogg', 'sound/effects/projectiles_acts/miss_4.ogg')
+// Writing
+var/global/list/SOUNDIN_KEYBOARD = list('sound/effects/writing/keyboard1.ogg', 'sound/effects/writing/keyboard2.ogg', 'sound/effects/writing/keyboard3.ogg', 'sound/effects/writing/keyboard4.ogg', 'sound/effects/writing/keyboard5.ogg')
+var/global/list/SOUNDIN_PDA_TAPS = list('sound/effects/writing/pda1.ogg', 'sound/effects/writing/pda2.ogg', 'sound/effects/writing/pda3.ogg', 'sound/effects/writing/pda4.ogg', 'sound/effects/writing/pda5.ogg')
+var/global/list/SOUNDIN_PEN      = list('sound/effects/writing/pen1.ogg', 'sound/effects/writing/pen2.ogg', 'sound/effects/writing/pen3.ogg')
 
 // ----- Voice -----
 // Human's vomit
@@ -52,12 +56,6 @@ var/global/list/SOUNDIN_SCARYSOUNDS = list('sound/weapons/thudswoosh.ogg', 'soun
 var/global/list/SOUNDIN_RIGBREATH   = list('sound/misc/rigbreath1.ogg', 'sound/misc/rigbreath2.ogg', 'sound/misc/rigbreath3.ogg')
 var/global/list/SOUNDIN_BREATHMASK  = list('sound/misc/breathmask1.ogg', 'sound/misc/breathmask2.ogg')
 var/global/list/SOUNDIN_DESCERATION = list('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
-
-// ----- Machines -----
-// Keystroke
-var/global/list/SOUNDIN_KEYBOARD = list('sound/machines/keyboard/keyboard1.ogg', 'sound/machines/keyboard/keyboard2.ogg', 'sound/machines/keyboard/keyboard3.ogg', 'sound/machines/keyboard/keyboard4.ogg', 'sound/machines/keyboard/keyboard5.ogg')
-// PDA's taps
-var/global/list/SOUNDIN_PDA_TAPS = list('sound/machines/keyboard/pda1.ogg', 'sound/machines/keyboard/pda2.ogg', 'sound/machines/keyboard/pda3.ogg', 'sound/machines/keyboard/pda4.ogg', 'sound/machines/keyboard/pda5.ogg')
 
 // ----- Weapons -----
 // Melee

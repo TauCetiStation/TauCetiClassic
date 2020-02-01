@@ -190,21 +190,21 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(!ispowered || isbroken)
 		icon_state = "newscaster_off"
 		if(isbroken) //If the thing is smashed, add crack overlay on top of the unpowered sprite.
-			src.overlays.Cut()
-			src.overlays += image(src.icon, "crack3")
+			src.cut_overlays()
+			src.add_overlay(image(src.icon, "crack3"))
 		return
 
-	src.overlays.Cut() //reset overlays
+	src.cut_overlays() //reset overlays
 
 	if(news_network.wanted_issue) //wanted icon state, there can be no overlays on it as it's a priority message
 		icon_state = "newscaster_wanted"
 		return
 
 	if(alert) //new message alert overlay
-		src.overlays += "newscaster_alert"
+		src.add_overlay("newscaster_alert")
 
 	if(hitstaken > 0) //Cosmetic damage overlay
-		src.overlays += image(src.icon, "crack[hitstaken]")
+		src.add_overlay(image(src.icon, "crack[hitstaken]"))
 
 	icon_state = "newscaster_normal"
 	return
@@ -288,7 +288,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 						if(CHANNEL.is_admin_channel)
 							dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen '><A href='?src=\ref[src];show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
 						else
-							dat+="<B><A href='?src=\ref[src];show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR></B>"
+							dat+="<B><A href='?src=\ref[src];show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : null]<BR></B>"
 					/*for(var/datum/feed_channel/CHANNEL in src.channel_list)
 						dat+="<B>[CHANNEL.channel_name]: </B> <BR><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[CHANNEL.author]</FONT>\]</FONT><BR><BR>"
 						if( isemptylist(CHANNEL.messages) )
@@ -386,7 +386,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 							dat+="<FONT SIZE=1>[((src.scanned_user in MESSAGE.voters) || (src.scanned_user == "Unknown")) ? ("<img src=like_clck.png>") : ("<A href='?src=\ref[src];setLike=\ref[MESSAGE]'><img src=like.png></A>")]: <FONT SIZE=2>[MESSAGE.likes]</FONT> \
 											   [((src.scanned_user in MESSAGE.voters) || (src.scanned_user == "Unknown")) ? ("<img src=dislike_clck.png>") : ("<A href='?src=\ref[src];setDislike=\ref[MESSAGE]'><img src=dislike.png></A>")]: <FONT SIZE=2>[MESSAGE.dislikes]</FONT></FONT>"
 
-							dat+="<BR><A href='?src=\ref[src];open_pages=\ref[MESSAGE]'><B>Open Comments</B></A><HR>"
+							dat+="<BR><A href='?src=\ref[src];open_pages=\ref[MESSAGE]'><B>Open Comments</B></A> - ([MESSAGE.count_comments])<HR>"
 
 				dat+="<A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
@@ -399,7 +399,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
 					for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
-						dat+="<A href='?src=\ref[src];pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
+						dat+="<A href='?src=\ref[src];pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : null]<BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A>"
 			if(11)
 				dat+="<B>Nanotrasen D-Notice Handler</B><HR>"
@@ -410,7 +410,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
 					for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
-						dat+="<A href='?src=\ref[src];pick_d_notice=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
+						dat+="<A href='?src=\ref[src];pick_d_notice=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : null]<BR>"
 
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Back</A>"
 			if(12)
@@ -850,7 +850,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 			if(size - COMMENTS_ON_PAGE != 0) //Create new page, if comments on the page are equal 
 				FM.pages[lenght].comments += COMMENT
-			else:
+			else
 				var/datum/comment_pages/CP = new /datum/comment_pages
 				FM.pages += CP
 				CP.comments += COMMENT
@@ -893,27 +893,23 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 	if (src.isbroken)
 		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
-		for (var/mob/O in hearers(5, src.loc))
-			O.show_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
+		user.visible_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
 	else
 		if(istype(I, /obj/item/weapon) )
 			user.do_attack_animation(src)
 			user.SetNextMove(CLICK_CD_MELEE)
 			var/obj/item/weapon/W = I
 			if(W.force <15)
-				for (var/mob/O in hearers(5, src.loc))
-					O.show_message("[user.name] hits the [src.name] with the [W.name] with no visible effect." )
-					playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+				user.visible_message("[user.name] hits the [src.name] with the [W.name] with no visible effect.")
+				playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 			else
 				src.hitstaken++
 				if(src.hitstaken==3)
-					for (var/mob/O in hearers(5, src.loc))
-						O.show_message("[user.name] smashes the [src.name]!" )
+					user.visible_message("[user.name] smashes the [src.name]!")
 					src.isbroken=1
 					playsound(src, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER)
 				else
-					for (var/mob/O in hearers(5, src.loc))
-						O.show_message("[user.name] forcefully slams the [src.name] with the [I.name]!" )
+					user.visible_message("[user.name] forcefully slams the [src.name] with the [I.name]!")
 					playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 		else
 			to_chat(user, "<span class='info'>This does nothing.</span>")
@@ -1139,20 +1135,17 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 ///obj/machinery/newscaster/process()       //Was thinking of doing the icon update through process, but multiple iterations per second does not
 //	return                                  //bode well with a newscaster network of 10+ machines. Let's just return it, as it's added in the machines list.
 
-/obj/machinery/newscaster/proc/newsAlert(channel)   //This isn't Agouri's work, for it is ugly and vile.
-	var/turf/T = get_turf(src)                      //Who the fuck uses spawn(600) anyway, jesus christ
+/obj/machinery/newscaster/proc/newsAlert(channel)
 	if(channel)
-		for(var/mob/O in hearers(world.view-1, T))
-			O.show_message("<span class='newscaster'><EM>[src.name]</EM> beeps, \"Breaking news from [channel]!\"</span>",2)
-		src.alert = 1
-		src.update_icon()
+		audible_message("<span class='newscaster'><EM>[name]</EM> beeps, \"Breaking news from [channel]!\"</span>")
+		alert = 1
+		update_icon()
 		spawn(300)
-			src.alert = 0
-			src.update_icon()
+			alert = 0
+			update_icon()
 		playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 	else
-		for(var/mob/O in hearers(world.view-1, T))
-			O.show_message("<span class='newscaster'><EM>[src.name]</EM> beeps, \"Attention! Wanted issue distributed!\"</span>",2)
+		audible_message("<span class='newscaster'><EM>[name]</EM> beeps, \"Attention! Wanted issue distributed!\"</span>")
 		playsound(src, 'sound/machines/warning-buzzer.ogg', VOL_EFFECTS_MASTER)
 	return
 

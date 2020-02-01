@@ -5,7 +5,7 @@
 		return
 
 
-	if(sleeping || stat == 1)
+	if(stat == UNCONSCIOUS)
 		hear_sleep(message)
 		return
 
@@ -61,7 +61,17 @@
 		if(speaker == src)
 			to_chat(src, "<span class='warning'>You cannot hear yourself speak!</span>")
 		else
-			to_chat(src, "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear \him.")
+			var/pronoun = null
+			switch(speaker.gender)
+				if(MALE)
+					pronoun = "him"
+				if(FEMALE)
+					pronoun = "her"
+				if(PLURAL)
+					pronoun = "them"
+				else
+					pronoun = "it"
+			to_chat(src, "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear [pronoun].")
 	else
 		if(language)
 			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][language.format_message(message, verb)]</span>")
@@ -76,7 +86,7 @@
 	if(!client)
 		return
 
-	if(sleeping || stat==1) //If unconscious or sleeping
+	if(stat == UNCONSCIOUS)
 		hear_sleep(message)
 		return
 
@@ -161,13 +171,14 @@
 		else
 			jobname = "Unknown"
 
-		if(changed_voice)
-			if(impersonating)
-				track = "<a href='byond://?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[impersonating]'>[speaker_name] ([jobname])</a>"
+		if(speaker.mouse_opacity && (speaker.alpha > 50))
+			if(changed_voice)
+				if(impersonating)
+					track = "<a href='byond://?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[impersonating]'>[speaker_name] ([jobname])</a>"
+				else
+					track = "[speaker_name] ([jobname])"
 			else
-				track = "[speaker_name] ([jobname])"
-		else
-			track = "<a href='byond://?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[speaker]'>[speaker_name] ([jobname])</a>"
+				track = "<a href='byond://?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[speaker]'>[speaker_name] ([jobname])</a>"
 
 	if(istype(src, /mob/dead/observer))
 		if(speaker_name != speaker.real_name && !isAI(speaker)) //Announce computer and various stuff that broadcasts doesn't use it's real name but AI's can't pretend to be other mobs.
@@ -203,19 +214,18 @@
 
 	if(src.status_flags & PASSEMOTES)
 		for(var/obj/item/weapon/holder/H in src.contents)
-			H.show_message(message)
-
-	if (speaker != src)
-		show_message(message, 1)
-	else
-		show_message(message)
+			H.show_message(message, SHOWMSG_VISUAL)
+	show_message(message, SHOWMSG_VISUAL)
 
 /mob/proc/hear_sleep(message, datum/language/language)
 	var/heard = ""
 	if (language && ((language.flags & NONVERBAL) || (language.flags & SIGNLANG)))
 		return
 
-	else if(prob(15))
+	if (sdisabilities & DEAF || ear_deaf)
+		return
+
+	if(prob(15))
 		var/list/punctuation = list(",", "!", ".", ";", "?")
 		var/list/messages = splittext(message, " ")
 		var/R = rand(1, messages.len)

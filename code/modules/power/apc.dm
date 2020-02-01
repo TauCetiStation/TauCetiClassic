@@ -173,10 +173,10 @@
 	//if area isn't specified use current
 	if(isarea(A) && src.areastring == null)
 		src.area = A
-		name = "\improper [area.name] APC"
+		name = "[area.name] APC"
 	else
 		src.area = get_area_name(areastring)
-		name = "\improper [area.name] APC"
+		name = "[area.name] APC"
 	area.apc = src
 	update_icon()
 
@@ -279,7 +279,7 @@
 
 	if(!(update_state & UPSTATE_ALLGOOD))
 		if(overlays.len)
-			overlays = 0
+			cut_overlays()
 			return
 
 
@@ -287,15 +287,15 @@
 	if(update & 2)
 
 		if(overlays.len)
-			overlays = 0
+			cut_overlays()
 
 		if(!(stat & (BROKEN|MAINT)) && update_state & UPSTATE_ALLGOOD)
-			overlays += status_overlays_lock[locked+1]
-			overlays += status_overlays_charging[charging+1]
+			add_overlay(status_overlays_lock[locked+1])
+			add_overlay(status_overlays_charging[charging+1])
 			if(operating)
-				overlays += status_overlays_equipment[equipment+1]
-				overlays += status_overlays_lighting[lighting+1]
-				overlays += status_overlays_environ[environ+1]
+				add_overlay(status_overlays_equipment[equipment+1])
+				add_overlay(status_overlays_lighting[lighting+1])
+				add_overlay(status_overlays_environ[environ+1])
 
 
 /obj/machinery/power/apc/proc/check_updates()
@@ -616,7 +616,7 @@
 
 /obj/machinery/power/apc/interact(mob/user)
 	//Synthetic human mob goes here.
-	if (user.is_busy()) 
+	if (user.is_busy())
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -647,11 +647,11 @@
 								else if(src.cell.charge < src.cell.maxcharge*0.1)
 									to_chat (user, "<span class='notice'>There is not enough charge to draw from that APC.</span>")
 									break
-											
+
 								else if(src.cell.use(500))
 									H.nutrition += C.maxcharge*0.1
 									to_chat(user, "<span class='notice'>Draining... Battery has [round(100.0*H.nutrition/C.maxcharge)]% of charge.</span>")
-							
+
 							else
 								to_chat (user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
 								break
@@ -700,8 +700,8 @@
 	// do APC interaction
 	..()
 
-/obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
-	user.show_message("You don't want to break these things", 1);
+/obj/machinery/power/apc/attack_alien(mob/living/carbon/xenomorph/humanoid/user)
+	to_chat(user, "You don't want to break these things");
 	return
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)
@@ -993,8 +993,7 @@
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()
-				for(var/mob/M in viewers(src))
-					M.show_message("<span class='warning'>The [src.name] suddenly lets out a blast of smoke and some sparks!</span>", 3, "<span class='warning'>You hear sizzling electronics.</span>", 2)
+				visible_message("<span class='warning'>The [src.name] suddenly lets out a blast of smoke and some sparks!</span>", blind_message = "<span class='warning'>You hear sizzling electronics.</span>")
 
 
 /obj/machinery/power/apc/surplus()
@@ -1285,7 +1284,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if(isalien(user))
+	if(isxeno(user))
 		return 0
 	if (electrocute_mob(user, src, src))
 		return 1

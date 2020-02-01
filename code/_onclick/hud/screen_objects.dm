@@ -189,8 +189,8 @@
 	return 1
 
 /obj/screen/zone_sel/update_icon()
-	overlays.Cut()
-	overlays += image('icons/mob/zone_sel.dmi', "[selecting]")
+	cut_overlays()
+	add_overlay(image('icons/mob/zone_sel.dmi', "[selecting]"))
 
 /obj/screen/pull
 	name = "stop pulling"
@@ -252,7 +252,7 @@
 					if("walk")
 						usr.m_intent = "run"
 						usr.hud_used.move_intent.icon_state = "running"
-				if(istype(usr,/mob/living/carbon/alien/humanoid))
+				if(istype(usr,/mob/living/carbon/xenomorph/humanoid))
 					usr.update_icons()
 		if("m_intent")
 			if(!usr.m_int)

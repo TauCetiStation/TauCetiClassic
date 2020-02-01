@@ -148,7 +148,7 @@
 		switch(text2ascii(text,i))
 			if(62,60,92,47)	return			//rejects the text if it contains these bad characters: <, >, \ or /
 			if(127 to 181)	return			//rejects weird letters like �
-			if(183 to 191)	return			//rejects weird letters like �
+			if(183 to 191)	return			//rejects weird letters like � // todo: JA_PLACEHOLDER
 			if(0 to 31)		return			//more weird stuff
 			if(32)			continue		//whitespace
 			else			non_whitespace = 1
@@ -211,6 +211,18 @@
 	for(var/char in repl_chars)
 		t = replacetext(t, char, repl_chars[char])
 	return t
+
+var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f")
+/proc/random_string(length, list/characters)
+	. = ""
+	for (var/i in 1 to length)
+		. += pick(characters)
+
+/proc/random_short_color()
+	return "#" + random_string(3, global.hex_characters)
+
+/proc/random_color()
+	return "#" + random_string(6, global.hex_characters)
 
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)
@@ -340,6 +352,54 @@
 	for(var/i = length(text); i > 0; i--)
 		new_text += copytext(text, i, i+1)
 	return new_text
+
+/proc/parsebbcode(t, colour = "black")
+	t = replacetext(t, "\[center\]", "<center>")
+	t = replacetext(t, "\[/center\]", "</center>")
+	t = replacetext(t, "\[br\]", "<br>")
+	t = replacetext(t, "\[b\]", "<b>")
+	t = replacetext(t, "\[/b\]", "</b>")
+	t = replacetext(t, "\[i\]", "<i>")
+	t = replacetext(t, "\[/i\]", "</i>")
+	t = replacetext(t, "\[u\]", "<u>")
+	t = replacetext(t, "\[/u\]", "</u>")
+	t = replacetext(t, "\[large\]", "<font size=\"4\">")
+	t = replacetext(t, "\[/large\]", "</font>")
+	t = replacetext(t, "\[*\]", "<li>")
+	t = replacetext(t, "\[small\]", "<font size = \"1\">")
+	t = replacetext(t, "\[/small\]", "</font>")
+	t = replacetext(t, "\[list\]", "<ul>")
+	t = replacetext(t, "\[/list\]", "</ul>")
+	t = replacetext(t, "\[hr\]", "<hr>")
+	t = replacetext(t, "\n", "<br>")
+
+	// tables
+	t = replacetext(t, "\[table\]", "<table border=3px cellpadding=5px bordercolor=\"[colour]\">")
+	t = replacetext(t, "\[/table\]", "</table>")
+	t = replacetext(t, "\[tr\]", "<tr>")
+	t = replacetext(t, "\[/tr\]", "</tr>")
+	t = replacetext(t, "\[td\]", "<td><font color=\"[colour]\">")
+	t = replacetext(t, "\[/td\]", "</font></td>")
+	t = replacetext(t, "\[th\]", "<th><font color=\"[colour]\">")
+	t = replacetext(t, "\[/th\]", "</font></th>")
+
+	// standart head
+	t = replacetext(t, "\[h\]", "<font size=\"4\"><center><b>")
+	t = replacetext(t, "\[/h\]", "</b></center></font>")
+
+	// bordered head;
+	t = replacetext(t, "\[bh\]", "<div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b>")
+	t = replacetext(t, "\[/bh\]", "</b></center></font></div>")
+
+	// blockquote
+	t = replacetext(t, "\[quote\]", "<blockquote style=\"line-height:normal; margin-bottom:10px; font-style:italic; letter-spacing: 1.25px; text-align:right;\">")
+	t = replacetext(t, "\[/quote\]", "</blockquote>")
+
+	// div
+	t = replacetext(t, "\[block\]", "<div style=\"border-width: 4px; border-style: dashed;\">")
+	t = replacetext(t, "\[/block\]", "</div>")
+
+	return t
 
 /*
  * Byond

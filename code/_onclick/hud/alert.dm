@@ -49,7 +49,7 @@
 		var/old_plane = new_master.plane
 		new_master.layer = FLOAT_LAYER
 		new_master.plane = FLOAT_PLANE
-		thealert.overlays += new_master
+		thealert.add_overlay(new_master)
 		new_master.layer = old_layer
 		new_master.plane = old_plane
 		thealert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
@@ -170,11 +170,6 @@
 	desc = "Something got lodged into your flesh and is causing major bleeding. It might fall out with time, but surgery is the safest way. \
 			If you're feeling frisky, click yourself in help intent to pull the object out."
 	icon_state = "embeddedobject"
-
-/obj/screen/alert/asleep
-	name = "Asleep"
-	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
-	icon_state = "asleep"
 
 /obj/screen/alert/weightless
 	name = "Weightless"

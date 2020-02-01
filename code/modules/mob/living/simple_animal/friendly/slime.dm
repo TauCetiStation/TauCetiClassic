@@ -32,7 +32,7 @@
 
 /mob/living/simple_animal/adultslime/atom_init()
 	. = ..()
-	overlays += "aslime-:33"
+	add_overlay("aslime-:33")
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME)
 
 

@@ -9,9 +9,6 @@
 	icon_state = "cave"
 	requires_power = 0
 
-/area/asteroid/mine
-	icon_state = "mining"
-
 /area/asteroid/mine/explored
 	name = "Mine"
 	icon_state = "explored"
@@ -45,12 +42,6 @@
 		'sound/music/dwarf_fortress.ogg'
 	)
 
-/area/asteroid/mine/lobby
-	name = "Mining station"
-
-/area/asteroid/mine/storage
-	name = "Mining station Storage"
-
 /area/asteroid/mine/production
 	name = "Mining Station Starboard Wing"
 	icon_state = "mining_production"
@@ -69,18 +60,6 @@
 
 /area/asteroid/mine/maintenance
 	name = "Mining Station Communications"
-
-/area/asteroid/mine/cafeteria
-	name = "Mining station Cafeteria"
-
-/area/asteroid/mine/hydroponics
-	name = "Mining station Hydroponics"
-
-/area/asteroid/mine/sleeper
-	name = "Mining station Emergency Sleeper"
-
-/area/asteroid/mine/north_outpost
-	name = "North Mining Outpost"
 
 /area/asteroid/mine/west_outpost
 	name = "West Mining Outpost"

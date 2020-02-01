@@ -451,7 +451,7 @@
 					if(isslime(L) || L.stat == DEAD) // Ignore other slimes and dead mobs
 						continue
 
-					if(L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
+					if(HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
 						continue
 
 					if(L in Friends) // No eating friends!
@@ -482,11 +482,11 @@
 					else
 						for(var/mob/living/carbon/C in targets)
 							if(!Discipline && prob(5))
-								if(ishuman(C) || isalienadult(C))
+								if(ishuman(C) || isxenoadult(C))
 									Target = C
 									break
 
-							if(islarva(C) || isfacehugger(C) || ismonkey(C))
+							if(isxenolarva(C) || isfacehugger(C) || ismonkey(C))
 								Target = C
 								break
 

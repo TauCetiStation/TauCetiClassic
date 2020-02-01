@@ -279,8 +279,8 @@
 		if(!choice)
 			return
 		uses -= 5
-		N.overlays -= image('icons/effects/Nuke_sprays.dmi', N.spray_icon_state)
-		N.overlays += image('icons/effects/Nuke_sprays.dmi', choice)
+		N.cut_overlay(image('icons/effects/Nuke_sprays.dmi', N.spray_icon_state))
+		N.add_overlay(image('icons/effects/Nuke_sprays.dmi', choice))
 		N.spray_icon_state = choice
 	if((istype(target, /obj/mecha) || isrobot(target)) && uses >= 10)
 		target.color = normalize_color(colour)
@@ -289,10 +289,10 @@
 	..()
 
 /obj/item/toy/crayon/spraycan/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	var/image/I = image('icons/obj/crayons.dmi',icon_state = "[capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 	I.color = colour
-	overlays += I
+	add_overlay(I)
 
 /obj/item/toy/crayon/spraycan/gang
 	desc = "A modified container containing suspicious paint."
