@@ -367,6 +367,52 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 	var/emagged = FALSE
 
+	var/panel_open = FALSE
+
+	// ML means my laser.
+	var/obj/item/weapon/stock_parts/micro_laser/ML
+	var/my_laser_type = /obj/item/weapon/stock_parts/micro_laser
+
+/obj/item/weapon/gun/energy/pyrometer/atom_init()
+	. = ..()
+	if(my_laser_type)
+		ML = new my_laser_type(src)
+
+/obj/item/weapon/gun/energy/pyrometer/newshot()
+	if(!ML)
+		visible_message("<span class='warning'>[src] clings, as it heats up.</span>")
+		return
+	return ..()
+
+/obj/item/weapon/gun/energy/pyrometer/attack_hand(mob/user)
+	if(panel_open && power_supply)
+		user.put_in_hands(power_supply)
+		power_supply = null
+		to_chat(user, "<span class='notice'>You take \the [power_supply] out of [src].</span>")
+	else
+		..()
+
+/obj/item/weapon/gun/energy/pyrometer/attackby(obj/item/I, mob/user)
+	if(isscrewdriver(I))
+		panel_open = !panel_open
+		user.visible_message("<span class='notice'>[user] [panel_oepn ? "un"]screws [src]'s panel [panel_open ? "open" : "shut"].</span>", "<span class='notice'>You [panel_oepn ? "un"]screw [src]'s panel [panel_open ? "open" : "shut"].</span>")
+	else if(panel_open)
+		if(iscrowbar(I))
+			if(ML)
+				user.put_in_hands(ML)
+				ML = null
+				to_chat(user, "<span class='notice'>You take \the [ML] out of [src].</span>")
+		else if(istype(I, /obj/item/weapon/stock_parts/cell))
+			user.drop_from_inventory(I, src)
+			power_supply = I
+			to_chat(user, "<span class='notice'>You install [I] into [src].</span>")
+		else if(istype(I, /obj/item/weapon/stock_parts/micro_laser))
+			user.drop_from_inventory(I, src)
+			ML = I
+			to_chat(user, "<span class='notice'>You install [I] into [src].</span>")
+
+
+
 /obj/item/weapon/gun/energy/pyrometer/emag_act(mob/user)
 	if(!emagged)
 		ammo_type |= /obj/item/ammo_casing/energy/pyrometer/emagged
