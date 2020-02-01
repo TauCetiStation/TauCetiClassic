@@ -842,10 +842,11 @@ var/list/net_announcer_secret = list()
 	// Comment line can start with # or end with #
 	// If line end with # before # place tab(s) or space(s)
 	var/list/data = list()
+	var/endline_comment = regex(@"\s+#")
 	for(var/L in file2list(filename))
 		if (copytext(L, 1, 2) == "#")
 			continue
-		var/cut_position = findtext(L, regex(@"\s+#"))
+		var/cut_position = findtext(L, endline_comment)
 		if(cut_position)
 			L = trim(copytext(L, 1, cut_position))
 		if (length(L))
@@ -860,12 +861,13 @@ var/list/net_announcer_secret = list()
 	//
 	// In config file ban.txt load settings for ban announcer.
 	// Format key = value
+	var/restricted_chars_regex = regex(@"[;&]","g")
 	for(var/L in load_list_without_comments("[config_path]/serverlist.txt"))
 		var/delimiter_position = findtext(L,"=")
 		var/key = trim(copytext(L, 1, delimiter_position))
 		if(delimiter_position && length(key))
 			// remove restricted chars
-			L=replacetext(L,regex(@"[;&]","g"), "")
+			L=replacetext(L, restricted_chars_regex, "")
 			global.net_announcer_secret[key] = trim(copytext(L, delimiter_position+1))
 	for(var/L in load_list_without_comments("[config_path]/ban.txt"))
 		var/delimiter_position = findtext(L,"=")

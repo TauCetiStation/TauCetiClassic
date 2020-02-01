@@ -596,7 +596,7 @@ var/failed_old_db_connections = 0
 	// actions in proccess_net_announce
 	if (!istext(msg))
 		return
-	var/regex/announce_format = regex(@"^announce&secret=([^&;]+)&type=([^&;]+)&")
+	var/static/regex/announce_format = regex(@"^announce&secret=([^&;]+)&type=([^&;]+)&")
 	announce_format.Find(msg)
 	if (length(announce_format.group) < 2 || !length(global.net_announcer_secret))
 		return   // secret not found in message
@@ -606,7 +606,7 @@ var/failed_old_db_connections = 0
 	var/msg_secret = announce_format.group[1]
 	var/type = announce_format.group[2]
 	if (msg_secret != global.net_announcer_secret[self])
-		// log_debug("Unauthorized connection for net_announce")
+		// log_misc("Unauthorized connection for net_announce")
 		return
 	msg = announce_format.Replace(msg, "")
 	return proccess_net_announce(type, params2list(msg), sender)
@@ -647,7 +647,7 @@ var/failed_old_db_connections = 0
 			// Message queue sometimes slow, send without delay before kick
 			to_chat_immediate(K, "<span class='warning'><BIG><B>You kicked from the server.</B></BIG></span>")
 			to_chat_immediate(K, "<span class='warning'>[to_kick[K]]</span>")
-			del(K.client)
+			qdel(K.client)
 	return length(to_kick)
 
 #undef NET_ANNOUNCE_BAN
