@@ -233,7 +233,7 @@
 	for(i = 1, i <= fields, i++)
 		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
 	for(i = 1, i <= sfields, i++)
-		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];sign=[i]'>sign</A></font>", 1, "sign")
+		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];write=[i];sign=1'>sign</A></font>", 1, "sign")
 	info_links = info_links + " <font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
 
 
@@ -387,7 +387,13 @@
 			usr << "<span class='info'>There isn't enough space left on \the [src] to write anything.</span>"
 			return
 
-		var/t =  sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
+		var/t = ""
+		if(href_list["sign"])
+			if(alert("Are you sure you want to sign this paper?",,"Yes","No") == "No")
+				return
+			t = "\[sign\] "
+		else
+			dt = sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
 
 		if(!t)
 			return
@@ -417,40 +423,13 @@
 		if(isIAN(usr))
 			t = GibberishAll(t)
 
-		if(id!="end")
+		if(href_list["sign"])
+			addtofield(text2num(id), t, type = "sign")
+		else if(id!="end")
 			addtofield(text2num(id), t) // He wants to edit a field, let him.
 		else
 			info += t // Oh, he wants to edit to the end of the file, let him.
 			updateinfolinks()
-
-		playsound(src, pick(SOUNDIN_PEN), VOL_EFFECTS_MASTER, null, FALSE)
-		update_space(t)
-		show_content(usr, forceshow = TRUE, infolinks = TRUE)
-		update_icon()
-	
-	if(href_list["sign"])
-		var/id = href_list["sign"]
-		var/t = "\[sign\] "
-
-		if(alert("Are you sure you want to sign this paper?",,"Yes","No") == "No")
-			return
-
-		var/obj/item/i = usr.get_active_hand() // Check to see if he still got that darn pen, also check if he's using a crayon or pen.
-		var/iscrayon = 0
-		if(!istype(i, /obj/item/weapon/pen))
-			if(!istype(i, /obj/item/toy/crayon))
-				return
-			iscrayon = 1
-
-		if((!in_range(src, usr) && loc != usr && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != usr && usr.get_active_hand() != i)) // Some check to see if he's allowed to write
-			return
-		
-		t = parsepencode(t, i, usr, iscrayon)
-
-		if(isIAN(usr))
-			t = GibberishAll(t)
-		
-		addtofield(text2num(id), t, type = "sign")
 
 		playsound(src, pick(SOUNDIN_PEN), VOL_EFFECTS_MASTER, null, FALSE)
 		update_space(t)
