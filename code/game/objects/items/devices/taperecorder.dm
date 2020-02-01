@@ -22,6 +22,13 @@
 
 	action_button_name = "Toggle Recorder"
 
+/obj/item/device/taperecorder/get_current_temperature()
+	. = 0
+	if(recording || playing)
+		. += 10
+	if(emagged)
+		. += 10
+
 /obj/item/device/taperecorder/hear_talk(mob/living/M, msg, verb="says")
 	if(recording)
 		timestamp+= timerecorded
