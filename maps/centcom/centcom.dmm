@@ -615,6 +615,10 @@
 	name = "plating"
 	},
 /area/custom/wizard_station)
+"abu" = (
+/obj/effect/landmark/blockway,
+/turf/space,
+/area/space)
 "abC" = (
 /obj/structure/window/reinforced{
 	dir = 5;
@@ -1250,8 +1254,7 @@
 	req_access = list(150)
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
 "agj" = (
@@ -3319,7 +3322,10 @@
 	},
 /area/shuttle/syndicate/start)
 "amy" = (
-/obj/random/vending/snack,
+/obj/machinery/vending/snack{
+	name = "hacked Getmore Chocolate Corp";
+	prices = list()
+	},
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
@@ -3450,7 +3456,10 @@
 	},
 /area/custom/syndicate_mothership)
 "amM" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/vending/cigarette{
+	name = "hacked Cigarette machine";
+	prices = list()
+	},
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
@@ -4340,8 +4349,7 @@
 	req_access = list(150)
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
 "aqf" = (
@@ -5203,8 +5211,7 @@
 	req_access = list(150)
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "white"
 	},
 /area/custom/syndicate_mothership)
 "atc" = (
@@ -6322,7 +6329,10 @@
 	},
 /area/velocity)
 "axb" = (
-/obj/random/vending/cola,
+/obj/machinery/vending/cola{
+	name = "hacked Robust Softdrinks";
+	prices = list()
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -8300,7 +8310,10 @@
 	},
 /area/centcom/specops)
 "aDb" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/coffee{
+	name = "hacked Hot Drinks machine";
+	prices = list()
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -12220,8 +12233,7 @@
 	req_access = list(150)
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership)
 "aSc" = (
@@ -77598,7 +77610,7 @@ ahF
 ahF
 ahF
 ahF
-aaM
+abu
 akb
 aih
 akM
@@ -77855,7 +77867,7 @@ ahF
 ahF
 ahF
 ahF
-aaM
+abu
 akc
 akx
 akN
@@ -78112,7 +78124,7 @@ ahF
 ahF
 ahF
 aaM
-aaM
+abu
 akd
 akw
 akM
