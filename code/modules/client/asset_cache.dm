@@ -310,7 +310,6 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		// save flattened version
 		var/fname = "data/spritesheets/[name]_[size_id].png"
 		fcopy(size[SPRSZ_ICON], fname)
-		//shell("[config.python_path] scripts/strip_metadata.py [fname]")
 		world.ext_python("strip_metadata.py", "[fname]")
 		size[SPRSZ_STRIPPED] = icon(fname)
 		fdel(fname)
@@ -329,8 +328,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		var/idx = sprite[SPR_IDX]
 		var/size = sizes[size_id]
 
-		var/icon/tiny = size[SPRSZ_ICON] 
-		var/icon/big = size[SPRSZ_STRIPPED] 
+		var/icon/tiny = size[SPRSZ_ICON]
+		var/icon/big = size[SPRSZ_STRIPPED]
 		var/per_line = big.Width() / tiny.Width()
 		var/x = (idx % per_line) * tiny.Width()
 		var/y = round(idx / per_line) * tiny.Height()
@@ -350,7 +349,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		CRASH("duplicate sprite \"[sprite_name]\" in sheet [name] ([type])")
 
 	if (size)
-		var/position = size[SPRSZ_COUNT]++ 
+		var/position = size[SPRSZ_COUNT]++
 		var/icon/sheet = size[SPRSZ_ICON]
 		size[SPRSZ_STRIPPED] = null
 		sheet.Insert(I, icon_state=sprite_name)
