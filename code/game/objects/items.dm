@@ -360,8 +360,8 @@
 	if (!user || anchored)
 		return
 
-	if(isalien(user)) // -- TLE
-		var/mob/living/carbon/alien/A = user
+	if(isxeno(user)) // -- TLE
+		var/mob/living/carbon/xenomorph/A = user
 
 		if(!A.has_fine_manipulation || w_class >= ITEM_SIZE_LARGE)
 			if(src in A.contents) // To stop Aliens having items stuck in their pockets
@@ -856,9 +856,12 @@
 		to_chat(user, "<span class='warning'>You're going to need to remove the eye covering first.</span>")
 		return
 
-	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
+	if(istype(M, /mob/living/carbon/xenomorph) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
 		to_chat(user, "<span class='warning'>You cannot locate any eyes on this creature!</span>")
 		return
+
+	user.do_attack_animation(M)
+	playsound(M, 'sound/items/tools/screwdriver-stab.ogg', VOL_EFFECTS_MASTER)
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
@@ -904,7 +907,9 @@
 		BP.take_damage(7)
 	else
 		M.take_bodypart_damage(7)
+
 	M.eye_blurry += rand(3,4)
+
 	return
 
 /obj/item/clean_blood()

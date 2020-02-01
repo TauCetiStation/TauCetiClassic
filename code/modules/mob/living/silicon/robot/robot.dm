@@ -401,8 +401,10 @@
 	to_chat(usr, "You [lights_on ? "enable" : "disable"] your integrated light.")
 	if(lights_on)
 		set_light(5)
+		playsound_local(src, 'sound/effects/click_on.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 	else
 		set_light(0)
+		playsound_local(src, 'sound/effects/click_off.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 
 /mob/living/silicon/robot/proc/toggle_component()
 
@@ -513,6 +515,8 @@
 		return 1
 	..()
 	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
+	sleep(100) // a delay of 10 seconds, because queueAlarm() also has a delay of 10 seconds.
+	playsound_local(src, 'sound/effects/triple_beep.ogg', VOL_EFFECTS_MASTER, 40, FALSE)
 
 
 /mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
@@ -781,7 +785,7 @@
 				to_chat(src, "Hack attempt detected.")
 		return TRUE
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/silicon/robot/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -957,8 +961,8 @@
 		add_overlay("eyes-[icon_state]")
 	else
 		cut_overlay("eyes")
-		
-	update_fire()	
+
+	update_fire()
 
 	if(opened && custom_sprite == 1) //Custom borgs also have custom panels, heh
 		if(wiresexposed)
@@ -1191,7 +1195,10 @@
 							to_chat(cleaned_human, "<span class='warning'>[src] cleans your face!</span>")
 
 /mob/living/silicon/robot/proc/self_destruct()
+	playsound(src, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, 95, FALSE)
+	sleep(42)
 	gib()
+	playsound(src, 'sound/effects/Explosion1.ogg', VOL_EFFECTS_MASTER, 75, FALSE)
 	return
 
 /mob/living/silicon/robot/proc/UnlinkSelf()

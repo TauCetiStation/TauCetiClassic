@@ -225,7 +225,7 @@
 					new /obj/item/clothing/mask/facehugger(C)
 			/*else if(prob(50))
 				//something else very much alive and angry
-				var/spawn_type = pick(/mob/living/simple_animal/hostile/alien, /mob/living/simple_animal/hostile/alien/drone, /mob/living/simple_animal/hostile/alien/sentinel)
+				var/spawn_type = pick(/mob/living/simple_animal/hostile/xenomorph, /mob/living/simple_animal/hostile/xenomorph/drone, /mob/living/simple_animal/hostile/xenomorph/sentinel)
 				new spawn_type(C)*/
 
 			//33% chance of nothing

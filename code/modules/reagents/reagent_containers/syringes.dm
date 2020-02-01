@@ -215,6 +215,7 @@
 		var/syringestab_amount_transferred = rand(0, (reagents.total_volume - 5)) //nerfed by popular demand
 		reagents.trans_to(target, syringestab_amount_transferred)
 
+	playsound(target, 'sound/items/tools/screwdriver-stab.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='warning'><B>[user] stabs [target] with [src.name]!</B></span>")
 
 	desc += " It is broken."
