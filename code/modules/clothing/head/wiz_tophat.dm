@@ -108,6 +108,25 @@ var/global/list/tophats_list = list()
 		return
 	if(!loc)
 		return
+	if(AM.flags & ABSTRACT)
+		return
+	if(istype(AM, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = AM
+		AM = G.affecting
+		if(ismob(G.loc))
+			var/mob/M = G.loc
+			M.drop_from_inventory(G)
+
+	. = TRUE
+	if(ismob(AM.loc))
+		var/mob/M = AM.loc
+		. = M.drop_from_inventory(AM)
+	else if(istype(AM.loc, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = AM.loc
+		. = S.remove_from_storage(AM)
+	if(!.)
+		return
+
 	diving_in = TRUE
 
 	var/obj/item/clothing/head/wizard/tophat/TP = pick(global.tophats_list)
@@ -138,7 +157,6 @@ var/global/list/tophats_list = list()
 	diving_in = FALSE
 
 /obj/effect/overlay/tophat_portal/attackby(obj/item/I, mob/user)
-	user.drop_from_inventory(I)
 	tp_to_tophat(I)
 
 /obj/effect/overlay/tophat_portal/Crossed(atom/movable/AM)
@@ -161,8 +179,6 @@ var/global/list/tophats_list = list()
 				tp_to_tophat(user)
 		return
 
-	if(AM in user)
-		user.drop_from_inventory(AM)
 	tp_to_tophat(AM)
 
 /obj/effect/overlay/tophat_portal/examine(mob/living/user)
@@ -325,6 +341,20 @@ var/global/list/tophats_list = list()
 		return
 	if(!global.tophat_portal || !global.tophat_portal.loc)
 		return
+	if(AM.flags & ABSTRACT)
+		return
+	if(istype(AM, /obj/item/weapon/grab))
+		return
+
+	. = TRUE
+	if(AM.loc == user)
+		. = user.drop_from_inventory(AM)
+	else if(istype(AM.loc, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = AM.loc
+		. = S.remove_from_storage(AM)
+	if(!.)
+		return
+
 	diving_in = TRUE
 
 	AM.forceMove(get_turf(src))
@@ -364,6 +394,10 @@ var/global/list/tophats_list = list()
 	if(!global.tophat_portal)
 		to_chat(user, "<span class='warning'>Are you crazy? This hat could never fit [AM] in...</span>")
 		return
+
+	if(istype(AM, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = AM
+		AM = G.affecting
 
 	var/put_in_delay = 0
 	if(user == AM)
@@ -419,11 +453,9 @@ var/global/list/tophats_list = list()
 		if(!global.tophat_portal)
 			to_chat(user, "<span class='warning'>Are you crazy? This hat could never fit [I] in...</span>")
 			return
-		user.drop_from_inventory(I)
 		drop_into(I, user)
 		return
 	if(user.mind && user.mind.special_role == "Wizard")
-		user.drop_from_inventory(I)
 		drop_into(I, user)
 		return
 	..()
