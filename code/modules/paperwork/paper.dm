@@ -393,7 +393,7 @@
 				return
 			t = "\[sign\] "
 		else
-			dt = sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
+			t = sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
 
 		if(!t)
 			return
