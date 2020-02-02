@@ -444,6 +444,9 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		/obj/item/ammo_casing/energy/pyrometer/medical,
 	)
 
+	// Doesn't come with those built-in. Must be manually put.
+	cell_type = null
+	my_laser_type = null
 
 
 /obj/item/weapon/gun/energy/pyrometer/ce

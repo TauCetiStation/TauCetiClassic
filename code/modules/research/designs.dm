@@ -2463,6 +2463,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/airbag
 	category = list("Support")
 
+/datum/design/universal_pyrometer
+	name = "Universal pyrometer"
+	desc = "A pyrometer with all possible modes built-in. Battery and micro-laser component not included!"
+	id = "universal_pyrometer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_SILVER = 100)
+	build_path = /obj/item/weapon/gun/energy/pyrometer/universal
+	category = list("Tools")
+
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
