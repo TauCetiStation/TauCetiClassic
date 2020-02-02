@@ -43,3 +43,6 @@
 
 ///mob/living/carbon/alien/humanoid/bullet_act(obj/item/projectile/Proj) taken care of in living
 
+/mob/living/carbon/alien/humanoid/change_mov_intent()
+	if(..())
+		update_icons()

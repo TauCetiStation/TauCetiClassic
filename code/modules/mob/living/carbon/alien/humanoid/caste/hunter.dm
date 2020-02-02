@@ -19,7 +19,7 @@
 	. = ..()
 
 /mob/living/carbon/alien/humanoid/hunter/handle_environment()
-	if(m_intent == MOVE_INTENT_RUN || resting)
+	if(m_intent != MOVE_INTENT_CREEP || resting)
 		..()
 	else
 		adjustToxLoss(-heal_rate)

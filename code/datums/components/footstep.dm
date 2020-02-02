@@ -51,7 +51,7 @@
 		var/mob/living/carbon/human/H = LM
 		if(!(H.bodyparts_by_name[BP_L_LEG] && H.bodyparts_by_name[BP_L_LEG].is_usable()) && !(H.bodyparts_by_name[BP_R_LEG] && H.bodyparts_by_name[BP_R_LEG].is_usable()))
 			return
-		if(H.m_intent == MOVE_INTENT_WALK)
+		if(H.m_intent == MOVE_INTENT_CREEP)
 			return// stealth
 	steps++
 

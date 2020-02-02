@@ -116,7 +116,7 @@
 	var/losebreath = 0.0//Carbon
 	var/intent = null//Living
 	var/a_intent = "help"//Living
-	var/m_intent = MOVE_INTENT_RUN//Living
+	var/m_intent = MOVE_INTENT_WALK//Living
 	var/lastKnownIP = null
 	var/atom/movable/buckled = null//Living
 	var/obj/item/l_hand = null//Living

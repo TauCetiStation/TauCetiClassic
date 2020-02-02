@@ -21,7 +21,7 @@
 	if (buckled || !yes || now_pushing)
 		return
 	if(!ismovableatom(A) || is_blocked_turf(A))
-		if(confused && stat == CONSCIOUS && m_intent == MOVE_INTENT_RUN)
+		if(confused && stat == CONSCIOUS && m_intent != MOVE_INTENT_CREEP)
 			playsound(get_turf(src), pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
 			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")
 			apply_damage(3, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
@@ -1217,4 +1217,19 @@
 	if(istype(T))
 		T.add_vomit_floor(src, getToxLoss() > 0 ? TRUE : FALSE)
 
+	return TRUE
+
+/mob/living/proc/set_mov_intent(intent)
+	if (!(intent in list(MOVE_INTENT_WALK, MOVE_INTENT_RUN, MOVE_INTENT_CREEP)))
+		return FALSE
+	m_intent = intent
+
+	if(hud_used && hud_used.move_intent)
+		switch(intent)
+			if(MOVE_INTENT_WALK)
+				hud_used.move_intent.icon_state = "walking"
+			if(MOVE_INTENT_RUN)
+				hud_used.move_intent.icon_state = "running"
+			if(MOVE_INTENT_CREEP)
+				hud_used.move_intent.icon_state = "creeping"
 	return TRUE

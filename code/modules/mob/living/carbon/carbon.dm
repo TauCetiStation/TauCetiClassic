@@ -20,12 +20,19 @@
 		if(nutrition && stat != DEAD)
 			var/met_factor = get_metabolism_factor()
 			nutrition -= met_factor * 0.01
-			if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
-				nutrition -= met_factor * getHalLoss() * (m_intent == MOVE_INTENT_RUN ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
-			if(m_intent == MOVE_INTENT_RUN)
-				nutrition -= met_factor * 0.01
-		if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == MOVE_INTENT_RUN && bodytemperature <= 360)
-			bodytemperature += 2
+			switch(m_intent)
+				if(MOVE_INTENT_WALK)
+					nutrition -= HAS_TRAIT(src, TRAIT_STRESS_EATER) ? met_factor * getHalLoss() * 0.02 : 0 // Which is actually a lot if you come to think of it.
+					nutrition -= met_factor * 0.01
+				if(MOVE_INTENT_RUN)
+					nutrition -= HAS_TRAIT(src, TRAIT_STRESS_EATER) ? met_factor * getHalLoss() * 0.03 : 0 // Which is actually a lot if you come to think of it.
+					nutrition -= met_factor * 0.02
+		if(HAS_TRAIT(src, TRAIT_FAT) && bodytemperature <= 360)
+			switch(m_intent)
+				if(MOVE_INTENT_WALK)
+					bodytemperature++
+				if(MOVE_INTENT_RUN)
+					bodytemperature += 2
 
 		// Moving around increases germ_level faster
 		if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))
@@ -899,3 +906,21 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+
+/mob/living/carbon/change_mov_intent()
+	if(legcuffed)
+		to_chat(src, "<span class='notice'>You are legcuffed! You cannot walk normally until you get [legcuffed] removed!</span>")
+		set_mov_intent(MOVE_INTENT_CREEP) // Just incase
+		hud_used.move_intent.icon_state = "creeping"
+		return FALSE
+	switch(m_intent)
+		if(MOVE_INTENT_RUN)
+			set_mov_intent(MOVE_INTENT_CREEP)
+			hud_used.move_intent.icon_state = "creeping"
+		if(MOVE_INTENT_WALK)
+			set_mov_intent(MOVE_INTENT_RUN)
+			hud_used.move_intent.icon_state = "running"
+		if(MOVE_INTENT_CREEP)
+			set_mov_intent(MOVE_INTENT_WALK)
+			hud_used.move_intent.icon_state = "walking"
+	return TRUE

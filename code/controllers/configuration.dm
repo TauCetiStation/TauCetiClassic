@@ -127,8 +127,9 @@
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
-	var/run_speed = 0
-	var/walk_speed = 0
+	var/run_delay = 0
+	var/walk_delay = 0
+	var/creep_delay = 0
 
 	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
 	var/human_delay = 0
@@ -184,7 +185,7 @@
 
 	var/record_replays = FALSE
 
-	
+
 	var/sandbox = FALSE
 
 /datum/configuration/New()
@@ -637,10 +638,12 @@
 					config.revival_cloning = value
 				if("revival_brain_life")
 					config.revival_brain_life = value
-				if("run_speed")
-					config.run_speed = value
-				if("walk_speed")
-					config.walk_speed = value
+				if("run_delay")
+					config.run_delay = value
+				if("walk_delay")
+					config.walk_delay = value
+				if("creep_delay")
+					config.creep_delay = value
 				if("human_delay")
 					config.human_delay = value
 				if("robot_delay")

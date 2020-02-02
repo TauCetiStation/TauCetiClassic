@@ -183,7 +183,7 @@
 /turf/simulated/proc/UpdateSlip()
 	switch(wet)
 		if(WATER_FLOOR)
-			AddComponent(/datum/component/slippery, 5, NO_SLIP_WHEN_WALKING)
+			AddComponent(/datum/component/slippery, 5, NO_SLIP_WHEN_CREEPING)
 		if(LUBE_FLOOR)
 			AddComponent(/datum/component/slippery, 10, SLIDE | GALOSHES_DONT_HELP)
 		else

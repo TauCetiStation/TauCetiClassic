@@ -528,7 +528,7 @@
 		else
 			if((C.lying && !C.crawling) || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
 				return FALSE
-			if(C.m_intent == MOVE_INTENT_WALK && (lube & NO_SLIP_WHEN_WALKING))
+			if(C.m_intent == MOVE_INTENT_CREEP && (lube & NO_SLIP_WHEN_CREEPING))
 				return FALSE
 		if(!(lube & SLIDE_ICE))
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
@@ -559,7 +559,7 @@
 				var/mob/living/carbon/human/H = C
 				if((istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
 					has_NOSLIP = TRUE
-			if (C.m_intent == MOVE_INTENT_RUN && !has_NOSLIP && prob(30))
+			if (C.m_intent != MOVE_INTENT_CREEP && !has_NOSLIP && prob(30))
 				step(C, olddir)
 			else
 				C.inertia_dir = 0

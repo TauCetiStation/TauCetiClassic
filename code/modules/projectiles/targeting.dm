@@ -192,7 +192,7 @@
 					I.lock_time = world.time + 5
 				I.lock_time = world.time + 5
 				I.last_moved_mob = src
-			else if(last_move_intent > I.lock_time + 10 && !T.client.target_can_run && m_intent == MOVE_INTENT_RUN) //If the target ran while targeted
+			else if(last_move_intent > I.lock_time + 10 && !T.client.target_can_run && m_intent != MOVE_INTENT_CREEP) //If the target ran while targeted
 				I.TargetActed(src)
 				if(I.last_moved_mob == src) //If they were the last ones to move, give them more of a grace period, so that an automatic weapon can hold down a room better.
 					I.lock_time = world.time + 5
@@ -310,20 +310,12 @@
 		if(G.target)
 			for(var/mob/living/M in G.target)
 				if(target_can_move)
-					to_chat(M, "Your character may now <b>walk</b> at the discretion of their targeter.")
+					to_chat(M, "Your character may now <b>creep</b> at the discretion of their targeter.")
 					if(!target_can_run)
-						to_chat(M, "<span class='warning'>Your move intent is now set to walk, as your targeter permits it.</span>")
-						M.set_m_intent(MOVE_INTENT_WALK)
+						to_chat(M, "<span class='warning'>Your move intent is now set to creep, as your targeter permits it.</span>")
+						M.set_mov_intent(MOVE_INTENT_CREEP)
 				else
 					to_chat(M, "<span class='warning'><b>Your character will now be shot if they move.</b></span>")
-
-/mob/living/proc/set_m_intent(intent)
-	if (intent != MOVE_INTENT_WALK && intent != MOVE_INTENT_RUN)
-		return 0
-	m_intent = intent
-	if(hud_used)
-		if (hud_used.move_intent)
-			hud_used.move_intent.icon_state = intent == MOVE_INTENT_WALK ? "walking" : "running"
 
 /client/verb/AllowTargetRun()
 	set hidden=1

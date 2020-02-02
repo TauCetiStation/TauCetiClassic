@@ -205,9 +205,11 @@
 			if(MOVE_INTENT_RUN)
 				if(mob.drowsyness > 0)
 					move_delay += 6
-				move_delay += 1+config.run_speed
+				move_delay += 1 + config.run_delay
 			if(MOVE_INTENT_WALK)
-				move_delay += 2.5+config.walk_speed
+				move_delay += 1 + config.walk_delay
+			if(MOVE_INTENT_CREEP)
+				move_delay += 3 + config.creep_delay
 		move_delay += mob.movement_delay()
 
 		if(mob.pulledby || mob.buckled) // Wheelchair driving!
