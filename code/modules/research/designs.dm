@@ -41,6 +41,10 @@ other types of metals and chemistry for reagents).
 	var/reliability = 10            //Increased by each created prototype with formula: reliability += reliability * (RND_RELIABILITY_EXPONENT^created_prototypes)
 	var/created_prototypes = 0
 
+/datum/design/New()
+	if(starts_unlocked)
+		reliability = 100
+
 ///////////////////Computer Boards///////////////////////////////////
 
 /datum/design/seccamera
