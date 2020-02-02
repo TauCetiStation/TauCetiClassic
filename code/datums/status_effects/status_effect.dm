@@ -108,12 +108,7 @@ var/global/list/spawnable_status_effects = list(
 		var/list/params = list(chosen_status_effect)
 		var/list/admin_spawn_requests = global.spawnable_status_effects[chosen_status_effect]
 
-		for(var/argument_name in admin_spawn_requests)
-			var/datum/admin_arguments_request/AAR = admin_spawn_requests[argument_name]
-			if(AAR.arg_named)
-				params[argument_name] = AAR.get_value(admin)
-			else
-				params += AAR.get_value(admin)
+		params += get_arglist_from_requests(admin, admin_spawn_requests)
 
 		return params
 	return null
