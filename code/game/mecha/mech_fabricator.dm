@@ -181,7 +181,7 @@
 	var/I = new D.build_path(location)
 	if(isobj(I))
 		var/obj/O = I
-		O.prototipify(min_reliability=D.reliability + efficiency_coeff * 7.5,  max_reliability=80 + efficiency_coeff * 7.5)
+		O.prototipify(min_reliability=D.reliability + efficiency_coeff * 7.5,  max_reliability=70 + efficiency_coeff * 7.5)
 
 		D.reliability += D.reliability * (RND_RELIABILITY_EXPONENT ^ D.created_prototypes)
 		D.reliability = CLAMP(D.reliability, 1, 100)
