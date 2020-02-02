@@ -230,7 +230,7 @@
 	take_damage(damage)
 
 /obj/machinery/door/window/attack_alien(mob/user)
-	if(islarva(user))
+	if(isxenolarva(user))
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 25)

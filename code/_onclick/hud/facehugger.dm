@@ -38,7 +38,7 @@
 	src.r_hand_hud_object = inv_box
 	src.adding += inv_box
 
-	mymob.nightvisionicon = new /obj/screen/alien/nightvision()
+	mymob.nightvisionicon = new /obj/screen/xenomorph/nightvision()
 	mymob.nightvisionicon.screen_loc = ui_alien_nightvision
 	src.adding += mymob.nightvisionicon
 

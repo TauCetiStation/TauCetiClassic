@@ -1,36 +1,36 @@
-/obj/screen/alien
+/obj/screen/xenomorph
 	icon = 'icons/mob/screen1_xeno.dmi'
 
-/obj/screen/alien/leap
+/obj/screen/xenomorph/leap
 	name = "toggle leap"
 	icon_state = "leap_off"
 
-/obj/screen/alien/leap/Click()
-	if(istype(usr, /mob/living/carbon/alien/humanoid))
-		var/mob/living/carbon/alien/humanoid/hunter/AH = usr
+/obj/screen/xenomorph/leap/Click()
+	if(istype(usr, /mob/living/carbon/xenomorph/humanoid))
+		var/mob/living/carbon/xenomorph/humanoid/hunter/AH = usr
 		AH.toggle_leap()
 
-/obj/screen/alien/nightvision
+/obj/screen/xenomorph/nightvision
 	name = "toggle night-vision"
 	icon_state = "nightvision1"
 
-/obj/screen/alien/nightvision/Click()
-	if(istype(usr, /mob/living/carbon/alien))
-		var/mob/living/carbon/alien/A = usr
+/obj/screen/xenomorph/nightvision/Click()
+	if(istype(usr, /mob/living/carbon/xenomorph))
+		var/mob/living/carbon/xenomorph/A = usr
 		A.toggle_nvg()
 
-/*/obj/screen/alien/nightvision/Click()
-	var/mob/living/carbon/alien/A = usr
+/*/obj/screen/xenomorph/nightvision/Click()
+	var/mob/living/carbon/xenomorph/A = usr
 	var/obj/effect/proc_holder/alien/nightvisiontoggle/T = locate() in A.abilities
 	if(T)
 		T.fire(A)*/
 
-/obj/screen/alien/neurotoxin
+/obj/screen/xenomorph/neurotoxin
 	name = "toggle neurotoxin"
 	icon_state = "neurotoxin0"
 
-/obj/screen/alien/neurotoxin/Click()
-	var/mob/living/carbon/alien/humanoid/AH = usr
+/obj/screen/xenomorph/neurotoxin/Click()
+	var/mob/living/carbon/xenomorph/humanoid/AH = usr
 	AH.toggle_neurotoxin()
 
 /datum/hud/proc/alien_hud()
@@ -173,7 +173,7 @@
 	using.plane = HUD_PLANE
 	src.adding += using
 
-	mymob.nightvisionicon = new /obj/screen/alien/nightvision()
+	mymob.nightvisionicon = new /obj/screen/xenomorph/nightvision()
 	mymob.nightvisionicon.screen_loc = ui_alien_nightvision
 	src.adding += mymob.nightvisionicon
 
@@ -186,13 +186,13 @@
 	using.plane = HUD_PLANE
 	src.adding += using
 
-	if(istype(mymob, /mob/living/carbon/alien/humanoid/hunter))
-		mymob.leap_icon = new /obj/screen/alien/leap()
+	if(istype(mymob, /mob/living/carbon/xenomorph/humanoid/hunter))
+		mymob.leap_icon = new /obj/screen/xenomorph/leap()
 		mymob.leap_icon.screen_loc = ui_storage2
 		src.adding += mymob.leap_icon
 
-	if(locate(/mob/living/carbon/alien/humanoid/proc/neurotoxin) in mymob.verbs)
-		mymob.neurotoxin_icon = new /obj/screen/alien/neurotoxin()
+	if(locate(/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin) in mymob.verbs)
+		mymob.neurotoxin_icon = new /obj/screen/xenomorph/neurotoxin()
 		mymob.neurotoxin_icon.screen_loc = ui_storage1
 		src.adding += mymob.neurotoxin_icon
 
@@ -202,11 +202,11 @@
 	mymob.throw_icon.name = "throw"
 	mymob.throw_icon.screen_loc = ui_drop_throw
 
-	mymob.alien_plasma_display = new /obj/screen()
-	mymob.alien_plasma_display.icon = 'icons/mob/screen1_xeno.dmi'
-	mymob.alien_plasma_display.icon_state = "power_display3"
-	mymob.alien_plasma_display.name = "plasma stored"
-	mymob.alien_plasma_display.screen_loc = ui_alienplasmadisplay
+	mymob.xenomorph_plasma_display = new /obj/screen()
+	mymob.xenomorph_plasma_display.icon = 'icons/mob/screen1_xeno.dmi'
+	mymob.xenomorph_plasma_display.icon_state = "power_display3"
+	mymob.xenomorph_plasma_display.name = "plasma stored"
+	mymob.xenomorph_plasma_display.screen_loc = ui_alienplasmadisplay
 
 	mymob.healths = new /obj/screen()
 	mymob.healths.icon = 'icons/mob/screen1_xeno.dmi'
@@ -226,6 +226,6 @@
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, mymob.alien_plasma_display, mymob.pullin) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, mymob.xenomorph_plasma_display, mymob.pullin) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 	mymob.client.screen += mymob.client.void

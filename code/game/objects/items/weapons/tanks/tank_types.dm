@@ -13,6 +13,7 @@
 /obj/item/weapon/tank/oxygen
 	name = "oxygen tank"
 	desc = "A tank of oxygen."
+	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
 	icon_state = "oxygen"
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 
@@ -35,6 +36,7 @@
 /obj/item/weapon/tank/anesthetic
 	name = "anesthetic tank"
 	desc = "A tank with an N2O/O2 gas mix."
+	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
 	icon_state = "anesthetic"
 	item_state = "an_tank"
 
@@ -51,6 +53,7 @@
 /obj/item/weapon/tank/air
 	name = "air tank"
 	desc = "Mixed anyone?"
+	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
 	icon_state = "oxygen"
 
 /obj/item/weapon/tank/air/atom_init()
@@ -63,6 +66,7 @@
 /obj/item/weapon/tank/phoron
 	name = "phoron tank"
 	desc = "Contains dangerous phoron. Do not inhale. Warning: extremely flammable."
+	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
 	icon_state = "phoron"
 	item_state = "plasma"
 	flags = CONDUCT
@@ -91,11 +95,12 @@
 /obj/item/weapon/tank/emergency_oxygen
 	name = "emergency oxygen tank"
 	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it."
+	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
 	icon_state = "emergency"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	w_class = ITEM_SIZE_SMALL
-	force = 4.0
+	force = 2.0
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
 	volume = 2 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
 
@@ -111,6 +116,7 @@
 
 /obj/item/weapon/tank/emergency_oxygen/double
 	name = "double emergency oxygen tank"
+	force = 3.0
 	icon_state = "emergency_double"
 	volume = 10
 
@@ -120,6 +126,7 @@
 /obj/item/weapon/tank/nitrogen
 	name = "nitrogen tank"
 	desc = "A tank of nitrogen."
+	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
 	icon_state = "oxygen_fr"
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 

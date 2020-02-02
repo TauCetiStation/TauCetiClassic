@@ -12,6 +12,7 @@
 	w_class = ITEM_SIZE_LARGE
 	max_storage_space = DEFAULT_BOX_STORAGE + 2 // fits all tools and around 2 extra items
 	origin_tech = "combat=1"
+	hitsound = list('sound/items/tools/toolbox-hit.ogg')
 	attack_verb = list("robusted")
 
 /obj/item/weapon/storage/toolbox/atom_init()
