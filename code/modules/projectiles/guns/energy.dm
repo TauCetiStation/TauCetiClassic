@@ -94,3 +94,16 @@
 			else
 				icon_state = "[initial(icon_state)][shot.select_name][ratio]"
 	return
+
+/obj/item/weapon/gun/energy/verb/choose_firing_mode()
+	set name = "Choose firing mode"
+	set category = "Object"
+	set src in usr
+
+	select_fire(usr)
+
+/obj/item/weapon/gun/energy/AltClick(mob/user)
+	select_fire(user)
+
+/obj/item/weapon/gun/energy/attack_self(mob/living/user)
+	select_fire(user)

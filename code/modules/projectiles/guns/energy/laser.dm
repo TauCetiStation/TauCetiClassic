@@ -114,7 +114,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
 
 /obj/item/weapon/gun/energy/laser/scatter/attack_self(mob/living/user)
-	select_fire(user)
+	..()
 	update_icon()
 
 /obj/item/weapon/gun/energy/laser/scatter/alien
