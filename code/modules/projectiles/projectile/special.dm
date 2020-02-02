@@ -467,19 +467,21 @@
 	var/term_color
 	var/temp_kelvin = temperature + T0C
 
+	var/datum/species/H = all_species[HUMAN]
+
 	// These temperatures are from species.dm, the human cold, heat level damages as used as
 	// delimeters. Since, these devices were mostly invented for and by humans.
-	if(temp_kelvin < all_species[HUMAN].cold_level_3)
+	if(temp_kelvin < H.cold_level_3)
 		term_color = COLOR_PURPLE
-	else if(temp_kelvin < all_species[HUMAN].cold_level_2)
+	else if(temp_kelvin < H.cold_level_2)
 		term_color = COLOR_BLUE
-	else if(temp_kelvin < all_species[HUMAN].cold_level_1)
+	else if(temp_kelvin < H.cold_level_1)
 		term_color = COLOR_CYAN
-	else if(temp_kelvin < all_species[HUMAN].heat_level_1)
+	else if(temp_kelvin < H.heat_level_1)
 		term_color = COLOR_LIME
-	else if(temp_kelvin < all_species[HUMAN].heat_level_2)
+	else if(temp_kelvin < H.heat_level_2)
 		term_color = COLOR_YELLOW
-	else if(temp_kelvin < all_species[HUMAN].heat_level_3)
+	else if(temp_kelvin < H.heat_level_3)
 		term_color = COLOR_ORANGE
 	else
 		term_color = COLOR_RED
