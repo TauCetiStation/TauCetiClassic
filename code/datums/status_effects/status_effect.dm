@@ -1,11 +1,11 @@
 var/global/list/spawnable_status_effects = list(
 	/datum/status_effect/incapacitating/sleeping = list(
-		set_duration = new /datum/admin_arguments_request/integer("duration", FALSE, arg_def_val=-1, desc="Please enter a duration for the effect. Enter -1 for it to be permanent(May be very hard to remove later)."),
-		updating_canmove = new /datum/admin_arguments_request/bool("update canmove", FALSE, arg_def_val=TRUE, desc="Should the mob's ability to move be updated? (Enter true/false)."),
+		set_duration = new /datum/admin_arguments_request/integer("duration", FALSE, def_arg_val=-1, desc="Please enter a duration for the effect. Enter -1 for it to be permanent(May be very hard to remove later)."),
+		updating_canmove = new /datum/admin_arguments_request/integer("update canmove", FALSE, def_arg_val=TRUE, desc="Should the mob's ability to move be updated? (Enter 1/0)."),
 	),
 	/datum/status_effect/incapacitating/stasis_bag = list(
-		set_duration = new /datum/admin_arguments_request/integer("duration", FALSE, arg_def_val=-1, desc="Please enter a duration for the effect. Enter -1 for it to be permanent(May be very hard to remove later)."),
-		updating_canmove = new /datum/admin_arguments_request/bool("update canmove", FALSE, arg_def_val=TRUE, desc="Should the mob's ability to move be updated? (Enter true/false)."),
+		set_duration = new /datum/admin_arguments_request/integer("duration", FALSE, def_arg_val=-1, desc="Please enter a duration for the effect. Enter -1 for it to be permanent(May be very hard to remove later)."),
+		updating_canmove = new /datum/admin_arguments_request/integer("update canmove", FALSE, def_arg_val=TRUE, desc="Should the mob's ability to move be updated? (Enter 1/0)."),
 	),
 )
 
