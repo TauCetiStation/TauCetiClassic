@@ -376,8 +376,10 @@
 	else
 		temp_celsium = env.temperature - T0C
 
+	var/obj/item/weapon/gun/energy/pyrometer/pyro = shot_from
+
 	var/dist = get_dist(firer, target)
-	var/delta = (dist - 1) * 0.025
+	var/delta = (dist - 1) * 0.05 / pyro.ML.rating
 	to_chat(firer, "Dist: [dist] Delta: [delta]")
 
 	if(delta > 1.0)
@@ -405,7 +407,7 @@
 	nodamage = FALSE
 	fake = FALSE
 
-	damage = 40
+	damage = 10
 	damage_type = BURN
 	sharp = TRUE // concentrated burns
 	flag = "laser"

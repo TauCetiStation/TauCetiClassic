@@ -155,6 +155,11 @@
 	select_name = "pyrometer (overloaded)"
 	e_cost = 100
 
+/obj/item/ammo_casing/energy/pyrometer/emagged/fire(atom/target, mob/living/user, params, distro, quiet)
+	var/obj/item/weapon/gun/energy/pyrometer/pyro = loc
+	BB.damage *= pyro.ML.rating
+	return ..()
+
 /obj/item/ammo_casing/energy/pyrometer/science_phoron
 	projectile_type = /obj/item/projectile/pyrometer/science_phoron
 	select_name = "pyrometer (phoron-oriented)"
