@@ -380,7 +380,6 @@
 
 	var/dist = get_dist(firer, target)
 	var/delta = (dist - 1) * 0.05 / pyro.ML.rating
-	to_chat(firer, "Dist: [dist] Delta: [delta]")
 
 	if(delta > 1.0)
 		firer.visible_message("[bicon(shot_from)]<b>[shot_from]</b> boops, \"<span class='warning'>Measurement impossible: Error too high.</span>\"")

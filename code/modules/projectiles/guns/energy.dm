@@ -19,8 +19,8 @@
 	. = ..()
 	if(cell_type)
 		power_supply = new cell_type(src)
+		power_supply.give(power_supply.maxcharge)
 
-	power_supply.give(power_supply.maxcharge)
 	var/obj/item/ammo_casing/energy/shot
 	for (var/i in 1 to ammo_type.len)
 		var/shottype = ammo_type[i]
