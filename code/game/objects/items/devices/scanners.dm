@@ -739,9 +739,7 @@ BLOODTYPE SCANNER
 
 /obj/item/device/bloodtype_analyzer/atom_init()
 	. = ..()
-	var/datum/reagents/R = new/datum/reagents(5)
-	reagents = R
-	R.my_atom = src
+	create_reagents(5)
 
 /obj/item/device/bloodtype_analyzer/on_reagent_change()
 	cut_overlays()
@@ -774,5 +772,4 @@ BLOODTYPE SCANNER
 /obj/item/device/bloodtype_analyzer/attack_self(mob/user)
 		to_chat(user, "Blood Type: [blood_type]")
 		reagents.clear_reagents()
-		blood_type = null
 		blood_type = null
