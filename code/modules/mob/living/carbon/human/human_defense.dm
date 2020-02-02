@@ -24,7 +24,7 @@
 	. = PROJECTILE_ALL_OK
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
-		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam) || (istype(P, /obj/item/projectile/plasma) && P.damage <= 20))
+		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam) || istype(P, /obj/item/projectile/pyrometer) || (istype(P, /obj/item/projectile/plasma) && P.damage <= 20))
 			if(check_reflect(def_zone, dir, P.dir)) // Checks if you've passed a reflection% check
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
 								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
