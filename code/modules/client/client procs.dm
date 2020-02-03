@@ -289,7 +289,7 @@ var/list/blacklisted_builds = list(
 			else
 				to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
 				log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
-				qdel(src)
+				QDEL_IN(src, 2 SECONDS)
 			return
 
 	if(config.registration_panic_bunker_age)
@@ -297,7 +297,7 @@ var/list/blacklisted_builds = list(
 			to_chat(src, "<span class='danger'>Sorry, but server is currently not accepting new players with registration date after [config.registration_panic_bunker_age]. Try to connect later.</span>")
 			message_admins("<span class='adminnotice'>[key_name(src)] has been blocked by panic bunker. Connection rejected.</span>")
 			log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
-			qdel(src)
+			QDEL_IN(src, 2 SECONDS)
 			return
 		if(holder)
 			to_chat("<span class='adminnotice'>Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]</span>")
@@ -306,7 +306,7 @@ var/list/blacklisted_builds = list(
 		to_chat(src, "<span class='warning bold'>Your version of Byond is too old. Update to the [config.byond_version_min] or later for playing on our server.</span>")
 		log_access("Failed Login: [key] [computer_id] [address] - byond version less that minimal required: [byond_version].[byond_build])")
 		if(!holder)
-			qdel(src)
+			QDEL_IN(src, 2 SECONDS)
 			return
 
 	if(config.byond_version_recommend && byond_version < config.byond_version_recommend)
@@ -317,7 +317,7 @@ var/list/blacklisted_builds = list(
 		message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a inappropriate byond version: [byond_version].[byond_build]. Connection rejected.</span>")
 		log_access("Failed Login: [key] [computer_id] [address] - inappropriate byond version: [byond_version].[byond_build])")
 		if(!holder)
-			qdel(src)
+			QDEL_IN(src, 2 SECONDS)
 			return
 
 
