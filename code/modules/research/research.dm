@@ -360,7 +360,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("space_heater", "gasheater", "gascooler")
+	unlocks_designs = list("space_heater", "gasheater", "gascooler", "universal_pyrometer")
 
 /datum/technology/adv_engineering
 	name = "Advanced Engineering"
