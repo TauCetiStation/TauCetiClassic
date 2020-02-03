@@ -175,8 +175,10 @@ var/world_topic_spam_protect_time = world.timeofday
 
 		return list2params(s)
 	
-	else if (copytext(T,1,length("announce&")+1) == "announce&")
-		return receive_net_announce(T, addr)
+	else if (length(T) && istext(T))
+		var/list/packet_data = params2list(T)
+		if (packet_data && packet_data["announce"] == "")
+			return receive_net_announce(packet_data, addr)
 
 /world/proc/PreShutdown(end_state)
 
@@ -591,30 +593,24 @@ var/failed_old_db_connections = 0
 		return TRUE
 	return FALSE
 
-/world/proc/receive_net_announce(msg, sender)
+/world/proc/receive_net_announce(list/packet_data, sender)
 	// validate message from /world/Topic
 	// actions in proccess_net_announce
-	if (!istext(msg))
+	if (
+		!length(global.net_announcer_secret) || \
+		!islist(packet_data) || \
+		packet_data["announce"] != "" || \
+		!istext(packet_data["secret"]) || !length(packet_data["secret"]) || \
+		!istext(packet_data["type"]) || !length(packet_data["type"])
+	)
 		return
-	var/static/regex/announce_format = regex(@"^announce&secret=([^&;]+)&type=([^&;]+)&")
-	announce_format.Find(msg)
-	if (length(announce_format.group) < 2 || !length(global.net_announcer_secret))
-		return   // secret not found in message
 	var/self = global.net_announcer_secret[1]
-	if (!self)
-		return   // empty secret in config
-	var/msg_secret = announce_format.group[1]
-	var/type = announce_format.group[2]
-	if (msg_secret != global.net_announcer_secret[self])
-		// log_misc("Unauthorized connection for net_announce")
+	if (!self || packet_data["secret"] != global.net_announcer_secret[self])
+		// log_misc("Unauthorized connection for net_announce [sender]")
 		return
-	msg = announce_format.Replace(msg, "")
-	return proccess_net_announce(type, params2list(msg), sender)
+	return proccess_net_announce(packet_data["type"], packet_data, sender)
 
 /world/proc/proccess_net_announce(type, list/data, sender)
-	if (!length(data))
-		// params2list errors
-		return
 	var/self_flag = FALSE
 	if (sender == ("127.0.0.1:[world.port]"))
 		self_flag = TRUE
@@ -644,10 +640,10 @@ var/failed_old_db_connections = 0
 				log_admin(notify)
 	for (var/mob/K in to_kick)
 		if (K.client)
-			// Message queue sometimes slow, send without delay before kick
-			to_chat_immediate(K, "<span class='warning'><BIG><B>You kicked from the server.</B></BIG></span>")
-			to_chat_immediate(K, "<span class='warning'>[to_kick[K]]</span>")
-			qdel(K.client)
+			// Message queue sometimes slow, setup 2 seconds delay
+			to_chat(K, "<span class='warning'><BIG><B>You kicked from the server.</B></BIG></span>")
+			to_chat(K, "<span class='warning'>[to_kick[K]]</span>")
+			QDEL_IN(K.client, 20)
 	return length(to_kick)
 
 #undef NET_ANNOUNCE_BAN
