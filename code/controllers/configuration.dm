@@ -66,6 +66,7 @@ var/list/net_announcer_secret = list()
 	var/automute_on = 0					//enables automuting/spam prevention
 
 	var/registration_panic_bunker_age = null
+	var/allowed_by_bunker_player_age = 60
 	var/client_limit_panic_bunker_count = null
 	var/client_limit_panic_bunker_link = null
 
@@ -603,6 +604,9 @@ var/list/net_announcer_secret = list()
 
 				if("registration_panic_bunker_age")
 					config.registration_panic_bunker_age = value
+
+				if("allowed_by_bunker_player_age")
+					config.allowed_by_bunker_player_age = value
 
 				if("client_limit_panic_bunker_count")
 					config.client_limit_panic_bunker_count = text2num(value)
