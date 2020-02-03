@@ -294,7 +294,7 @@ var/list/blacklisted_builds = list(
 
 	if(config.registration_panic_bunker_age)
 		if(!(ckey in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
-			to_chat(src, "<span class='danger'>Sorry, but server is currently accepting only users with registration date before [config.registration_panic_bunker_age]. Try to connect later.</span>")
+			to_chat(src, "<span class='danger'>Sorry, but server is currently not accepting new players with registration date after [config.registration_panic_bunker_age]. Try to connect later.</span>")
 			message_admins("<span class='adminnotice'>[key_name(src)] has been blocked by panic bunker. Connection rejected.</span>")
 			log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
 			qdel(src)
