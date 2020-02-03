@@ -43,6 +43,9 @@
 
 	noob_notify(src)
 
+	if(config.new_player_harm_restriction && isnum(client.player_ingame_age) && client.player_ingame_age < config.new_player_harm_restriction)
+		harm_restriction_bypass = FALSE
+
 	//Jukebox
 	client.media = new /datum/media_manager(src)
 	client.media.open()

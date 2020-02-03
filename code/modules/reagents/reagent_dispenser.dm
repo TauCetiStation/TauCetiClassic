@@ -151,6 +151,8 @@
 			cut_overlays()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/weapon/W, mob/user)
+	if(user.client.harm_restriction())
+		return
 	if (iswrench(W))
 		user.SetNextMove(CLICK_CD_RAPID)
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \

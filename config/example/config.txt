@@ -239,11 +239,8 @@ REQ_CULT_GHOSTWRITER 6
 ## Media base URL - determines where to pull the jukebox playlist from.
 # MEDIA_BASE_URL http://game2.tauceti.ru/media
 
-## alarms about noobs too close to risk zones
-## 0 - no alarms
-## 1 - alarms only for first round people
-## 2 - for first day
-ANTIGRIEF_ALARM_LEVEL 1
+## Players with player ingame age less than NEW_PLAYER_HARM_RESTRICTION seconds has restrictions on grief things.
+#NEW_PLAYER_HARM_RESTRICTION 900
 
 ## Uncomment for
 #PROXY_AUTOBAN

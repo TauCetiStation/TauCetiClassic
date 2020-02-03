@@ -227,3 +227,5 @@
 	var/busy_with_action = FALSE // do_after() and do_mob() sets this to TRUE while in progress, use is_busy() before anything if you want to prevent user to do multiple actions.
 
 	var/list/weather_immunities = list()
+
+	var/harm_restriction_bypass = TRUE // see config.new_player_harm_restriction

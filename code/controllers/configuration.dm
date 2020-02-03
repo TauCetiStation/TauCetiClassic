@@ -160,7 +160,7 @@
 	var/use_overmap = 0
 
 	var/chat_bridge = 0
-	var/antigrief_alarm_level = 1
+	var/new_player_harm_restriction = 1
 	var/check_randomizer = 0
 	var/proxy_autoban = 0
 
@@ -565,8 +565,8 @@
 				if("chat_bridge")
 					config.chat_bridge = value
 
-				if("antigrief_alarm_level")
-					config.antigrief_alarm_level = value
+				if("new_player_harm_restriction")
+					config.new_player_harm_restriction = value
 
 				if("check_randomizer")
 					config.check_randomizer = value

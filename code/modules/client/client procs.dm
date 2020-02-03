@@ -574,3 +574,13 @@ var/list/blacklisted_builds = list(
 	var/bunker_day = text2num(bunker_date_regex.group[3])
 
 	return (user_year > bunker_year) || (user_year == bunker_year && user_month > bunker_month) || (user_year == bunker_year && user_month == bunker_month && user_day > bunker_day)
+
+/client/proc/harm_restriction()
+	if(config.new_player_harm_restriction && !mob.harm_restriction_bypass)
+		if(isnum(player_ingame_age) &&  player_ingame_age < config.new_player_harm_restriction)
+			to_chat(src, "Sorry, to prevent new players grief we can't allow you do this. Wait [config.new_player_harm_restriction-player_ingame_age] seconds.")
+			return 1
+		else
+			mob.harm_restriction_bypass = TRUE
+
+	return 0
