@@ -141,12 +141,16 @@ var/list/blacklisted_builds = list(
 	//CONNECT//
 	///////////
 /client/New(TopicData)
-	chatOutput = new /datum/chatOutput(src) // Right off the bat.
 	var/tdata = TopicData //save this for later use
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker")					//Invalid connection type.
 		return null
+
+	if(!guard)
+		guard = new(src)
+	
+	chatOutput = new /datum/chatOutput(src) // Right off the bat.
 
 	// Change the way they should download resources.
 	if(config.resource_urls)
@@ -240,9 +244,6 @@ var/list/blacklisted_builds = list(
 	if(prefs.lastchangelog != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
 		winset(src, "rpane.changelog", "font-style=bold;background-color=#B1E477")
-
-	if(!geoip)
-		geoip = new(src, address)
 
 		//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
@@ -345,14 +346,22 @@ var/list/blacklisted_builds = list(
 	query_ip.Execute()
 	related_accounts_ip = ""
 	while(query_ip.NextRow())
-		related_accounts_ip += "[query_ip.item[1]], "
+		if(src.ckey == query_ip.item[1])
+			continue
+		if(length(related_accounts_ip))
+			related_accounts_ip += ", "
+		related_accounts_ip += "[query_ip.item[1]]"
 		break
 
 	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE computerid = '[computer_id]'")
 	query_cid.Execute()
 	related_accounts_cid = ""
 	while(query_cid.NextRow())
-		related_accounts_cid += "[query_cid.item[1]], "
+		if(src.ckey == query_cid.item[1])
+			continue
+		if(length(related_accounts_cid))
+			related_accounts_cid += ", "
+		related_accounts_cid += "[query_cid.item[1]]"
 		break
 
 	var/admin_rank = "Player"
