@@ -70,7 +70,7 @@
 	set name = "Reload Admins"
 	set category = "Debug"
 
-	if(!check_rights(R_SERVER))
+	if(!check_rights(R_DEBUG))
 		return
 
 	message_admins("[usr] manually reloaded admins")
@@ -81,8 +81,18 @@
 	set name = "Reload Mentors"
 	set category = "Debug"
 
-	if(!check_rights(R_SERVER))
+	if(!check_rights(R_DEBUG))
 		return
 
 	message_admins("[usr] manually reloaded Mentors")
 	world.load_mentors()
+
+/client/proc/reload_config()
+	set name = "Reload Configuration"
+	set category = "Debug"
+
+	if (!check_rights(R_DEBUG))
+		return
+
+	message_admins("[usr] manually reloaded configuration")
+	world.load_configuration()
