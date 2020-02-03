@@ -140,14 +140,14 @@
 	note_list << note_keys
 	del(note_list)	// savefile, so NOT qdel
 
-/proc/parse_notes_date_timestamp(datestamp)
+/proc/parse_notes_date_timestamp(note_timestamp_text)
 	// return number of day after 1 Jan 2000
 	// if date before 1 Jan 2000 or errors return 0
 	//
-	// Example of datestamp
+	// Example of note_timestamp_text
 	// Tue, January 28th of 2020
 	// Wed, January 8th of 2020
-	if (!length(datestamp) || !istext(datestamp))
+	if (!length(note_timestamp_text) || !istext(note_timestamp_text))
 		return 0
 	var/list/month_names = list(
 		"January"   = 1,
@@ -165,7 +165,7 @@
 	)
 	var/list/month_days = list(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
 	var/regex/pattern = regex(@"^\l{3},\s(\l+)\s(\d{1,2})\l{2}\sof\s(\d{4})$")
-	if (!pattern.Find(datestamp) || length(pattern.group) < 3)
+	if (!pattern.Find(note_timestamp_text) || length(pattern.group) < 3)
 		return 0
 	var/day = pattern.group[2]
 	var/month = pattern.group[1]
