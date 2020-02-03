@@ -178,6 +178,8 @@
 		pull_debuff += tally
 
 /mob/living/proc/add_ingame_age()
+	if(!isnum(player_ingame_age))
+		return
 	if(client && !client.is_afk()) //5 minutes of inactive time will disable this, until player come back.
 		var/client/C = client
 		if(C.player_next_age_tick == 0) //All clients start with 0, so we need to set next tick for the first time.
