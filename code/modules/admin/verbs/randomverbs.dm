@@ -90,7 +90,7 @@
 			msg += {"
 				[key_name(C, 1)] [ADMIN_PP(C.mob)]:<br>
 				<b>Days on server:</b> [C.player_age]<br>
-				<b>In-game minutes:</b> [C.player_ingame_age]
+				<b>In-game minutes:</b> [isnum(C.player_ingame_age) ? C.player_ingame_age : 0]
 				<hr>
 			"}
 
@@ -1155,6 +1155,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/client/target = input("Select player to increase his in-game age to [config.add_player_age_value] minutes") as null|anything in clients
 
 	if(!target)
+		return
+
+	if(!isnum(target.player_ingame_age))
+		to_chat(src, "Player age not loaded yet.")
 		return
 
 	var/value = config.add_player_age_value
