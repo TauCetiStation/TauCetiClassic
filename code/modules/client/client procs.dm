@@ -294,13 +294,11 @@ var/list/blacklisted_builds = list(
 
 	if(config.registration_panic_bunker_age)
 		if(!(ckey in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
-			to_chat(src, "<span class='danger'>Sorry, but server is currently not accepting new players with registration date after [config.registration_panic_bunker_age]. Try to connect later.</span>")
+			to_chat(src, "<span class='danger'>Sorry, but server is currently not accepting new players. Try to connect later.</span>")
 			message_admins("<span class='adminnotice'>[key_name(src)] has been blocked by panic bunker. Connection rejected.</span>")
 			log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
 			QDEL_IN(src, 2 SECONDS)
 			return
-		if(holder)
-			to_chat("<span class='adminnotice'>Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]</span>")
 
 	if(config.byond_version_min && byond_version < config.byond_version_min)
 		to_chat(src, "<span class='warning bold'>Your version of Byond is too old. Update to the [config.byond_version_min] or later for playing on our server.</span>")
@@ -578,4 +576,9 @@ var/list/blacklisted_builds = list(
 	var/bunker_month = text2num(bunker_date_regex.group[2])
 	var/bunker_day = text2num(bunker_date_regex.group[3])
 
-	return (user_year > bunker_year) || (user_year == bunker_year && user_month > bunker_month) || (user_year == bunker_year && user_month == bunker_month && user_day > bunker_day) || (isnum(player_ingame_age) && player_ingame_age < 60)
+	var/is_invalid_year = user_year > bunker_year
+	var/is_invalid_month = user_year == bunker_year && user_month > bunker_month
+	var/is_invalid_day = user_year == bunker_year && user_month == bunker_month && user_day > bunker_day
+	var/is_invalid_ingame_age = isnum(player_ingame_age) && player_ingame_age < config.allowed_by_bunker_player_age
+
+	return is_invalid_year || is_invalid_month || is_invalid_day || is_invalid_ingame_age
