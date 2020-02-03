@@ -13,8 +13,10 @@
 	var/month = sanitize_integer(input("Registration month", "Minimal registration month (min: 1, max: 12)", 1) as num, 1, 12, 1)
 	var/day = sanitize_integer(input("Registration day", "Minimal registration day (min: 1, max: 31)", 1) as num, 1, 31, 1)
 	var/active_hours = input("Hours from current moment to keep panic bunker active (-1 to enable for current round only)", "Active hours (min: -1 or 1, max: 24)", -1) as num
-
 	var/panic_age = "[year]-[month]-[day]"
+
+	if (alert("Apply registration bunker, age:[panic_age] active hours: [active_hours]", "Are you sure about that?", "Yes!", "No") != "Yes!")
+		return
 
 	config.registration_panic_bunker_age = panic_age
 

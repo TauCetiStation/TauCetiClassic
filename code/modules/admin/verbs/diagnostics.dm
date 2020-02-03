@@ -73,7 +73,8 @@
 	if(!check_rights(R_DEBUG))
 		return
 
-	message_admins("[usr] manually reloaded admins")
+	message_admins("[key_name_admin(usr)] manually reloaded admins")
+	log_debug("[key_name(usr)] manually reloaded admins")
 	load_admins()
 	feedback_add_details("admin_verb","RLDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -84,15 +85,17 @@
 	if(!check_rights(R_DEBUG))
 		return
 
-	message_admins("[usr] manually reloaded Mentors")
+	message_admins("[key_name_admin(usr)] manually reloaded mentors")
+	log_debug("[key_name(usr)] manually reloaded mentors")
 	world.load_mentors()
 
 /client/proc/reload_config()
 	set name = "Reload Configuration"
 	set category = "Debug"
 
-	if (!check_rights(R_DEBUG))
+	if (!check_rights(R_PERMISSIONS))
 		return
 
-	message_admins("[usr] manually reloaded configuration")
+	message_admins("[key_name_admin(usr)] manually reloaded configuration")
+	log_debug("[key_name(usr)] manually reloaded configuration")
 	world.load_configuration()
