@@ -1152,13 +1152,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!config.use_ingame_minutes_restriction_for_jobs)
 		return
 
-	if(!isnum(target.player_ingame_age))
-		to_chat(src, "Player age not loaded yet.")
-		return
-
 	var/client/target = input("Select player to increase his in-game age to [config.add_player_age_value] minutes") as null|anything in clients
 
 	if(!target)
+		return
+
+	if(!isnum(target.player_ingame_age))
+		to_chat(src, "Player age not loaded yet.")
 		return
 
 	var/value = config.add_player_age_value

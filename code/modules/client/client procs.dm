@@ -578,4 +578,4 @@ var/list/blacklisted_builds = list(
 	var/bunker_month = text2num(bunker_date_regex.group[2])
 	var/bunker_day = text2num(bunker_date_regex.group[3])
 
-	return (user_year > bunker_year) || (user_year == bunker_year && user_month > bunker_month) || (user_year == bunker_year && user_month == bunker_month && user_day > bunker_day) || (isnum(player_ingame_age) && player_ingame_age < 60 MINUTES)
+	return (user_year > bunker_year) || (user_year == bunker_year && user_month > bunker_month) || (user_year == bunker_year && user_month == bunker_month && user_day > bunker_day) || (isnum(player_ingame_age) && player_ingame_age < 60)
