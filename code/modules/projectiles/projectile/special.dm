@@ -418,7 +418,7 @@
 	return PHORON_FLASHPOINT
 
 /obj/item/projectile/pyrometer/science_phoron
-	display_celsium = TRUE
+	display_celsium = FALSE
 	display_fahrenheit = FALSE
 	display_kelvin = TRUE
 
