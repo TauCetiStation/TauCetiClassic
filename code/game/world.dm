@@ -260,7 +260,7 @@ var/shutdown_processed = FALSE
 					if(!istype(C.mob, /mob/dead))
 						log_access("AFK: [key_name(C)]")
 						to_chat(C, "<span class='userdanger'>You have been inactive for more than 10 minutes and have been disconnected.</span>")
-						del(C)
+						QDEL_IN(C, 2 SECONDS)
 #undef INACTIVITY_KICK
 
 /world/proc/load_stealth_keys()
