@@ -430,9 +430,12 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		var/description = "([ip_cid.Join(", ")]): [reason]"
 		switch(bantype)
 			if (BANTYPE_JOB_PERMA_STR)
-				notes_record.content = "Permanent JOB BAN [job] [description]"
+				// notes_record.content = "Permanent JOB BAN [job] [description]"
+				// already in notes by Adminbot
+				continue
 			if (BANTYPE_JOB_TEMP_STR)
-				notes_record.content = "Temporal JOB BAN [job] for [duration] [description]"
+				// notes_record.content = "Temporal JOB BAN [job] for [duration] [description]"
+				continue
 			if (BANTYPE_PERMA_STR)
 				notes_record.content = "Permanent BAN [description]"
 			if (BANTYPE_TEMP_STR)
