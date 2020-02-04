@@ -26,11 +26,6 @@
 			IAN.ian_action = IAN_SNIFF
 	icon_state = "ability[IAN.ian_action]"
 
-/obj/screen/corgi/stamina_bar
-	name = "stamina"
-	icon = 'icons/effects/staminabar.dmi'
-	icon_state = "stam_bar_100"
-
 /obj/screen/corgi/sit_lie
 	name = "pose selector"
 	icon_state = "sit_lie"
@@ -91,8 +86,8 @@
 	src.adding += using
 	move_intent = using
 
-	using = new /obj/screen/corgi/stamina_bar()
-	using.icon_state = "stam_bar_[round(((IAN.stamina / 100) * 100), 5)]"
+	using = new /obj/screen/stamina_bar()
+	using.icon_state = "stam_bar_100"
 	using.screen_loc = ui_stamina
 	src.adding += using
 	staminadisplay = using

@@ -129,6 +129,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	verbs += /mob/living/carbon/proc/crawl
 
+	set_stamina_max(100)
+
 	prev_gender = gender // Debug for plural genders
 	make_blood()
 	regenerate_icons()

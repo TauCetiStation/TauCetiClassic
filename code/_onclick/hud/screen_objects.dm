@@ -651,3 +651,8 @@
 /obj/screen/inventory/craft/Click()
 	var/mob/living/M = usr
 	M.OpenCraftingMenu()
+
+/obj/screen/stamina_bar
+	name = "stamina"
+	icon = 'icons/effects/staminabar.dmi'
+	icon_state = "stam_bar_100"

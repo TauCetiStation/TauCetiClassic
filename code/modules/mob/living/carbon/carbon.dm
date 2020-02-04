@@ -6,8 +6,17 @@
 	carbon_list -= src
 	return ..()
 
+/mob/living/carbon/death(gibbed)
+	set_stamina(0)
+	handle_stamina_bar()
+	return ..(gibbed)
+
 /mob/living/carbon/Life()
 	..()
+
+	if(stat != DEAD)
+		handle_stamina()
+		handle_stamina_bar()
 
 	// Increase germ_level regularly
 	if(germ_level < GERM_LEVEL_AMBIENT && prob(80) && !IS_IN_STASIS(src))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
@@ -17,6 +26,8 @@
 	. = ..()
 	if(.)
 		handle_phantom_move(NewLoc, Dir)
+		if(!stat && m_intent == MOVE_INTENT_RUN)
+			adjust_stamina(-1)
 		if(nutrition && stat != DEAD)
 			var/met_factor = get_metabolism_factor()
 			nutrition -= met_factor * 0.01
@@ -918,9 +929,48 @@
 			set_mov_intent(MOVE_INTENT_CREEP)
 			hud_used.move_intent.icon_state = "creeping"
 		if(MOVE_INTENT_WALK)
-			set_mov_intent(MOVE_INTENT_RUN)
-			hud_used.move_intent.icon_state = "running"
+			if(stamina > 10)
+				set_mov_intent(MOVE_INTENT_RUN)
+				hud_used.move_intent.icon_state = "running"
+			else
+				set_mov_intent(MOVE_INTENT_CREEP)
+				hud_used.move_intent.icon_state = "creeping"
 		if(MOVE_INTENT_CREEP)
 			set_mov_intent(MOVE_INTENT_WALK)
 			hud_used.move_intent.icon_state = "walking"
 	return TRUE
+
+/mob/living/carbon/proc/handle_stamina()
+	if(isnull(stamina_max))
+		return
+	adjust_stamina(stamina_max * 0.01)
+	if(stamina <= 10 && !stat)
+		if(m_intent == MOVE_INTENT_RUN)
+			to_chat(src, "<span class='warning'>[pick("Ughh... ", "Oof... ", "Ghah... ", "")][pick("I'm exhausted. ", "I'm so tired. ", "I need a rest. ", "")]I can't run anymore!</span>")
+			set_mov_intent(MOVE_INTENT_WALK) // TODO: set_previous_mov_intent()
+	if(stamina < 0)
+		adjustOxyLoss(stat ? 2 : abs(stamina) * 0.1)
+
+/mob/living/carbon/proc/handle_stamina_bar()
+	if(isnull(stamina_max))
+		return
+	if(hud_used && hud_used.staminadisplay)
+		if(stamina <= 0)
+			hud_used.staminadisplay.icon_state = "stam_bar_0"
+			return
+		hud_used.staminadisplay.icon_state = "stam_bar_[round((stamina / stamina_max) * 100, 5)]"
+
+/mob/living/carbon/proc/adjust_stamina(amount = 0)
+	if(isnull(stamina_max))
+		return
+	stamina = CLAMP(stamina + amount, STAMINA_DEFAULT_MINIMUM, stamina_max)
+
+/mob/living/carbon/proc/set_stamina(amount = 0)
+	if(isnull(stamina_max))
+		return
+	stamina = CLAMP(amount, STAMINA_DEFAULT_MINIMUM, stamina_max)
+
+/mob/living/carbon/proc/set_stamina_max(amount = STAMINA_DEFAULT_MAXIMUM)
+	if(!amount)
+		return
+	stamina_max = amount

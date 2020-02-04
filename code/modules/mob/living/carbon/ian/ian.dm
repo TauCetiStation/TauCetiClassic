@@ -61,6 +61,7 @@
 	. = ..()
 
 	verbs += /mob/living/carbon/proc/crawl
+	set_stamina_max(100)
 
 /mob/living/carbon/ian/UnarmedAttack(atom/A)
 	..()
@@ -283,14 +284,11 @@
 /mob/living/carbon/ian/IsAdvancedToolUser()
 	return FALSE
 
-/mob/living/carbon/ian/movement_delay(tally = 0)
+/mob/living/carbon/ian/movement_delay(tally = -1)
 	if(crawling)
 		tally += 5
 	else if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
 		return -1
-	else if(m_intent != MOVE_INTENT_CREEP && a_intent == "hurt" && stamina >= 10)
-		stamina = max(0, stamina - 10)
-		tally -= 1
 
 	var/health_deficiency = (100 - health)
 	if(health_deficiency >= 45)

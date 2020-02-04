@@ -139,3 +139,7 @@
 // Indicators.
 #define IND_STAT          "stat"
 #define IND_STAT_NOCLIENT "stat_noclient"
+
+// Stamina
+#define STAMINA_DEFAULT_MINIMUM -100
+#define STAMINA_DEFAULT_MAXIMUM 100
