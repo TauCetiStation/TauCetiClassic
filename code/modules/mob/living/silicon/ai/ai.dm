@@ -661,7 +661,7 @@ var/list/ai_verbs_default = list(
 
 	queueAlarm("--- [class] alarm detected in [A.name]! ([(cameratext)? cameratext : "No Camera"])", class)
 	sleep(100) // a delay of 10 seconds, because queueAlarm() also has a delay of 10 seconds.
-	playsound_local(src, 'sound/effects/triple_beep.ogg', VOL_EFFECTS_MASTER, 45, FALSE)
+	playsound_local(src, 'sound/effects/triple_beep.ogg', VOL_EFFECTS_MISC, 40, FALSE)
 
 	if(viewalerts)
 		show_alerts()
