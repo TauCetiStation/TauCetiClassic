@@ -14,18 +14,18 @@
 	var/bantype_str
 	switch(bantype)
 		if(BANTYPE_PERMA)
-			bantype_str = "PERMABAN"
+			bantype_str = BANTYPE_PERMA_STR
 			duration = -1
 			bantype_pass = 1
 		if(BANTYPE_TEMP)
-			bantype_str = "TEMPBAN"
+			bantype_str = BANTYPE_TEMP_STR
 			bantype_pass = 1
 		if(BANTYPE_JOB_PERMA)
-			bantype_str = "JOB_PERMABAN"
+			bantype_str = BANTYPE_JOB_PERMA_STR
 			duration = -1
 			bantype_pass = 1
 		if(BANTYPE_JOB_TEMP)
-			bantype_str = "JOB_TEMPBAN"
+			bantype_str = BANTYPE_JOB_TEMP_STR
 			bantype_pass = 1
 	if( !bantype_pass ) return
 	if( !istext(reason) ) return
@@ -111,22 +111,22 @@
 		var/bantype_pass = 0
 		switch(bantype)
 			if(BANTYPE_PERMA)
-				bantype_str = "PERMABAN"
+				bantype_str = BANTYPE_PERMA_STR
 				bantype_pass = 1
 			if(BANTYPE_TEMP)
-				bantype_str = "TEMPBAN"
+				bantype_str = BANTYPE_TEMP_STR
 				bantype_pass = 1
 			if(BANTYPE_JOB_PERMA)
-				bantype_str = "JOB_PERMABAN"
+				bantype_str = BANTYPE_JOB_PERMA_STR
 				bantype_pass = 1
 			if(BANTYPE_JOB_TEMP)
-				bantype_str = "JOB_TEMPBAN"
+				bantype_str = BANTYPE_JOB_TEMP_STR
 				bantype_pass = 1
 			if(BANTYPE_ANY_FULLBAN)
-				bantype_str = "ANY"
+				bantype_str = BANTYPE_ANY_FULLBAN_STR
 				bantype_pass = 1
 			if(BANTYPE_ANY_JOB)
-				bantype_str = "ANYJOB"
+				bantype_str = BANTYPE_ANY_JOB_STR
 				bantype_pass = 1
 		if( !bantype_pass ) return
 
