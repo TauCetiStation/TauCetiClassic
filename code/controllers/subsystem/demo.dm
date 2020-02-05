@@ -78,7 +78,7 @@ var/datum/subsystem/demo/SSdemo
 	if(!config.record_replays)
 		can_fire = FALSE
 		return ..()
-	demo_file = file("[logs_folder]/demo.txt")
+	demo_file = file("[global.log_directory]/demo.txt")
 	WRITE_FILE(demo_file, "demo version 1") // increment this if you change the format
 	WRITE_FILE(demo_file, "commit [GetGitMasterCommit()]")
 

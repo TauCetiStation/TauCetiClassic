@@ -255,7 +255,7 @@
 	stats["achievements"] = achievements
 	stats["centcomm_communications"] = centcomm_communications
 
-	var/stat_file = file("[logs_folder]/stat.json")
+	var/stat_file = file("[global.log_directory]/stat.json")
 
 	stat_file << list2json(stats)
 
