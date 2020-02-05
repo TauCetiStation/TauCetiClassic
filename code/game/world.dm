@@ -1,6 +1,5 @@
 var/round_id = 0
 var/base_commit_sha = 0
-var/logs_folder
 
 #define RECOMMENDED_VERSION 512
 /world/New()
