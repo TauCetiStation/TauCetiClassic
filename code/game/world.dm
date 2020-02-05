@@ -253,11 +253,10 @@ var/shutdown_processed = FALSE
 
 /world/proc/KickInactiveClients()
 	for (var/client/C in clients)
-		if (C.is_afk())
-			if (!istype(C.mob, /mob/dead))
-				log_access("AFK: [key_name(C)]")
-				to_chat(C, "<span class='userdanger'>You have been inactive for more than [config.afk_time_bracket / 600] minutes and have been disconnected.</span>")
-				QDEL_IN(C, 2 SECONDS)
+		if (!(C.holder || C.supporter) && C.is_afk())
+			log_access("AFK: [key_name(C)]")
+			to_chat(C, "<span class='userdanger'>You have been inactive for more than [config.afk_time_bracket / 600] minutes and have been disconnected.</span>")
+			QDEL_IN(C, 2 SECONDS)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/KickInactiveClients), 5 MINUTES)
 
 /world/proc/load_stealth_keys()
