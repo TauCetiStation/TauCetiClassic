@@ -126,7 +126,7 @@ var/global/list/all_objectives = list()
 
 		// Check if they're converted
 		if(istype(ticker.mode, /datum/game_mode/revolution))
-			if(target in ticker.mode:head_revolutionaries)
+			if(target in ticker.mode:revolutionaries)
 				return OBJECTIVE_WIN
 
 		var/turf/T = get_turf(target.current)
