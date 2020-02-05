@@ -77,13 +77,11 @@ var/base_commit_sha = 0
 	log_unit_test("Unit Tests Enabled. This will destroy the world when testing is complete.")
 #endif
 
-	spawn(3000)		//so we aren't adding to the round-start lag
-		if(config.kick_inactive)
+	if(config.kick_inactive)
+		spawn(15 MINUTES)
 			KickInactiveClients()
 
 #undef RECOMMENDED_VERSION
-
-	return
 
 /world/proc/SetupLogs()
 	var/log_suffix = round_id ? round_id : replacetext(time_stamp(), ":", ".")
@@ -114,17 +112,6 @@ var/base_commit_sha = 0
 	if(length(debug_rev_message))
 		info(debug_rev_message)
 		log_runtime(debug_rev_message)
-
-//world/Topic(href, href_list[])
-//		world << "Received a Topic() call!"
-//		world << "[href]"
-//		for(var/a in href_list)
-//			world << "[a]"
-//		if(href_list["hello"])
-//			world << "Hello world!"
-//			return "Hello world!"
-//		world << "End of Topic() call."
-//		..()
 
 var/world_topic_spam_protect_ip = "0.0.0.0"
 var/world_topic_spam_protect_time = world.timeofday
@@ -264,19 +251,14 @@ var/shutdown_processed = FALSE
 
 	..()
 
-#define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)
 /world/proc/KickInactiveClients()
-	spawn(-1)
-		//set background = 1
-		while(1)
-			sleep(INACTIVITY_KICK)
-			for(var/client/C in clients)
-				if(C.is_afk(INACTIVITY_KICK))
-					if(!istype(C.mob, /mob/dead))
-						log_access("AFK: [key_name(C)]")
-						to_chat(C, "<span class='userdanger'>You have been inactive for more than 10 minutes and have been disconnected.</span>")
-						QDEL_IN(C, 2 SECONDS)
-#undef INACTIVITY_KICK
+	for (var/client/C in clients)
+		if (C.is_afk())
+			if (!istype(C.mob, /mob/dead))
+				log_access("AFK: [key_name(C)]")
+				to_chat(C, "<span class='userdanger'>You have been inactive for more than [config.afk_time_bracket / 600] minutes and have been disconnected.</span>")
+				QDEL_IN(C, 2 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/KickInactiveClients), 5 MINUTES)
 
 /world/proc/load_stealth_keys()
 	var/list/keys_list = file2list("config/stealth_keys.txt")
