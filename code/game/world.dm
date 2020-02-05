@@ -174,6 +174,11 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["admins"] = admins
 
 		return list2params(s)
+	
+	else if (length(T) && istext(T))
+		var/list/packet_data = params2list(T)
+		if (packet_data && packet_data["announce"] == "")
+			return receive_net_announce(packet_data, addr)
 
 /world/proc/PreShutdown(end_state)
 
@@ -384,6 +389,7 @@ var/shutdown_processed = FALSE
 	config.load("config/game_options.txt","game_options")
 	config.loadsql("config/dbconfig.txt")
 	config.loadmaplist("config/maps.txt")
+	config.load_announcer_config("config/announcer")
 	// apply some settings from config..
 	abandon_allowed = config.respawn
 
@@ -550,3 +556,94 @@ var/failed_old_db_connections = 0
 		return no_head ? 0 : "HEAD"
 
 	return text
+
+// Net announce
+#define NET_ANNOUNCE_BAN "ban"
+
+/world/proc/send_net_announce(type, list/msg)
+	// get associated list for message
+	// return associated list with key as server url when receive somthing
+	var/list/response = list()
+	if (length(global.net_announcer_secret) < 2 || !length(msg) || !istext(type) || !length(type))
+		return response
+	var/cargo = list2params(msg)
+	if (!length(cargo))
+		return response
+	for(var/i in 2 to length(global.net_announcer_secret))
+		var/server = global.net_announcer_secret[i]
+		response[server] = world.Export(text("[]?announce&secret=[]&type=[]&[]", server, global.net_announcer_secret[server], type, cargo))
+	return response
+
+/world/proc/send_ban_announce(ckey = null, ip = null, cid = null)
+	if (!config.net_announcers["ban_send"])
+		return FALSE
+	var/list/data = list()
+	if (ckey)
+		data["ckey"] = ckey
+	if (ip)
+		data["ip"] = ip
+	if (cid)
+		data["cid"] = cid
+	if (length(data))
+		var/list/received_data = send_net_announce(NET_ANNOUNCE_BAN, data)
+		for(var/R in received_data)
+			var/number_kicked = text2num(received_data[R])
+			if (number_kicked)
+				message_admins("Kicked [number_kicked] player(s) on [R]")
+		return TRUE
+	return FALSE
+
+/world/proc/receive_net_announce(list/packet_data, sender)
+	// validate message from /world/Topic
+	// actions in proccess_net_announce
+	if (
+		!length(global.net_announcer_secret) || \
+		!islist(packet_data) || \
+		packet_data["announce"] != "" || \
+		!istext(packet_data["secret"]) || !length(packet_data["secret"]) || \
+		!istext(packet_data["type"]) || !length(packet_data["type"])
+	)
+		return
+	var/self = global.net_announcer_secret[1]
+	if (!self || packet_data["secret"] != global.net_announcer_secret[self])
+		// log_misc("Unauthorized connection for net_announce [sender]")
+		return
+	return proccess_net_announce(packet_data["type"], packet_data, sender)
+
+/world/proc/proccess_net_announce(type, list/data, sender)
+	var/self_flag = FALSE
+	if (sender == ("127.0.0.1:[world.port]"))
+		self_flag = TRUE
+	switch(type)
+		if (NET_ANNOUNCE_BAN)
+			// legacy system use files, we need DB for ban check
+			if (config.net_announcers["ban_receive"] && !self_flag && config && !config.ban_legacy_system)
+				return proccess_ban_announce(data, sender)
+	return
+
+/world/proc/proccess_ban_announce(list/data, sender, self)
+	var/list/to_kick = list()
+	for (var/mob/M in global.player_list)
+		var/list/ban_key = list()
+		if (data["ckey"] && M.ckey && M.ckey == data["ckey"])
+			ban_key += "ckey([data["ckey"]])"
+		if (data["cid"] && M.computer_id && M.computer_id == data["cid"])
+			ban_key += "cid([data["cid"]])"
+		if (data["ip"] && M.client && M.client.address && M.client.address == data["ip"])
+			ban_key += "ip([data["ip"]])"
+		if (length(ban_key))
+			var/banned = world.IsBanned(data["ckey"], data["ip"],  data["cid"])
+			if (banned && banned["reason"] && banned["desc"])
+				to_kick[M] = banned["desc"]
+				var/notify = text("Player [] kicked by ban announce from []. Reason: []. Matched [].", M.ckey, sender, banned["reason"], ban_key.Join(", "))
+				// message_admins(notify)
+				log_admin(notify)
+	for (var/mob/K in to_kick)
+		if (K.client)
+			// Message queue sometimes slow, setup 2 seconds delay
+			to_chat(K, "<span class='warning'><BIG><B>You kicked from the server.</B></BIG></span>")
+			to_chat(K, "<span class='warning'>[to_kick[K]]</span>")
+			QDEL_IN(K.client, 20)
+	return length(to_kick)
+
+#undef NET_ANNOUNCE_BAN
