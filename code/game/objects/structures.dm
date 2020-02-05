@@ -97,7 +97,7 @@
 	var/adjusted_climb_time = 50
 	if(user.restrained()) //climbing takes twice as long when restrained.
 		adjusted_climb_time *= 2
-	if(isalien(user))
+	if(isxeno(user))
 		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
 
 	if(!do_after(user, adjusted_climb_time, target = user))

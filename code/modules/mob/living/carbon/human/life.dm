@@ -1158,7 +1158,7 @@
 			stat = UNCONSCIOUS
 			if(halloss > 0)
 				adjustHalLoss(-3)
-		if(IsSleeping())
+		else if(IsSleeping())
 			blinded = TRUE
 		//CONSCIOUS
 		else

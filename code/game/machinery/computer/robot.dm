@@ -107,7 +107,7 @@
 		if(allowed(usr))
 			if (!status)
 				message_admins("<span class='notice'>[key_name_admin(usr)] has initiated the global cyborg killswitch! [ADMIN_JMP(usr)]</span>")
-				log_game("<span class='notice'>[key_name(usr)] has initiated the global cyborg killswitch!</span>")
+				log_game("[key_name(usr)] has initiated the global cyborg killswitch!")
 				src.status = 1
 				src.start_sequence()
 				src.temp = null
@@ -151,7 +151,7 @@
 
 						else
 							message_admins("<span class='notice'>[key_name_admin(usr)] [ADMIN_JMP(usr)] detonated [R.name]! [ADMIN_JMP(R)]</span>")
-							log_game("<span class='notice'>[key_name_admin(usr)] detonated [R.name]!</span>")
+							log_game("[key_name(usr)] detonated [R.name]!")
 							R.self_destruct()
 		else
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
@@ -171,12 +171,13 @@
 						//	R.cell.charge = R.lockcharge
 							R.lockcharge = !R.lockcharge
 							to_chat(R, "Your lockdown has been lifted!")
+							playsound(R, 'sound/effects/robot_unlocked.ogg', VOL_EFFECTS_MASTER, , FALSE)
 						else
 							R.throw_alert("locked", /obj/screen/alert/locked)
 							R.lockcharge = !R.lockcharge
 					//		R.cell.charge = 0
 							to_chat(R, "You have been locked down!")
-
+							playsound(R, 'sound/effects/robot_locked.ogg', VOL_EFFECTS_MASTER, , FALSE)
 		else
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
 

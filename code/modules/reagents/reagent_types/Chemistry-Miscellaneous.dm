@@ -72,7 +72,7 @@
 			blood_prop.viruses += newVirus
 			newVirus.holder = blood_prop
 
-	else if(istype(self.data["donor"], /mob/living/carbon/alien))
+	else if(istype(self.data["donor"], /mob/living/carbon/xenomorph))
 		var/obj/effect/decal/cleanable/blood/xeno/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)

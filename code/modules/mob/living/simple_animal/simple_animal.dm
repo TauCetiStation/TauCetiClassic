@@ -249,7 +249,7 @@
 
 	return
 
-/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/simple_animal/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 
 	switch(M.a_intent)
 
@@ -265,7 +265,7 @@
 
 	return
 
-/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L)
+/mob/living/simple_animal/attack_larva(mob/living/carbon/xenomorph/larva/L)
 
 	switch(L.a_intent)
 		if("help")

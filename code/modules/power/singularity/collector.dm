@@ -27,7 +27,7 @@ var/global/list/rad_collectors = list()
 /obj/machinery/power/rad_collector/process()
 	if(P)
 		if(P.air_contents.gas["phoron"] == 0)
-			investigate_log("<font color='red'>out of fuel</font>.","singulo")
+			log_investigate("<font color='red'>out of fuel</font>.",INVESTIGATE_SINGULO)
 			eject()
 		else
 			P.air_contents.adjust_gas("phoron", -0.001 * drainratio)
@@ -44,7 +44,7 @@ var/global/list/rad_collectors = list()
 			user.visible_message(
 				"[user.name] turns the [name] [active? "on":"off"].",
 				"You turn the [name] [active? "on":"off"].")
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.gas["phoron"]/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
+			log_investigate("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [key_name(user)]. [P?"Fuel: [round(P.air_contents.gas["phoron"]/0.29)]%":"<font color='red'>It is empty</font>"].",INVESTIGATE_SINGULO)
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 			return 1

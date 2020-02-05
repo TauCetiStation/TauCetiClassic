@@ -25,7 +25,7 @@
 	if(mention)
 		json["mention"] = mention
 
-	var/encoded_json = replacetext(list2json(json), "'", "\\`")//todo: replace on json_encode() after unicode update
+	var/encoded_json = replacetext(list2json(json), "'", @"\\`")//todo: replace on json_encode() after unicode update
 	//world.log << "send2bridge json: [encoded_json]"
 
 	spawn()

@@ -83,6 +83,8 @@ var/datum/subsystem/ticker/ticker
 			to_chat(world, "Please, setup your character and select ready. Game will start in [timeLeft/10] seconds")
 			current_state = GAME_STATE_PREGAME
 
+			log_initialization() // need to dump cached log
+
 		if(GAME_STATE_PREGAME)
 			//lobby stats for statpanels
 			totalPlayers = 0

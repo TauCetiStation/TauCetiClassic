@@ -115,7 +115,7 @@
 		var/mob/living/carbon/ian/IAN = M
 		if(src.check_access(IAN.mouth) || src.check_access(IAN.neck))
 			return TRUE
-	else if(ismonkey(M) || isalienadult(M))
+	else if(ismonkey(M) || isxenoadult(M))
 		var/mob/living/carbon/george = M
 		//they can only hold things :(
 		if(src.check_access(george.get_active_hand()))
