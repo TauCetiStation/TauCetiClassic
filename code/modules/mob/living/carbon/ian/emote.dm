@@ -142,7 +142,7 @@
 
 	if(message)
 		if(client)
-			log_emote("[name]/[key] : [message]")
+			log_emote("[key_name(src)] : [message]")
 
 		for(var/mob/M in observer_list)
 			if(!M.client)

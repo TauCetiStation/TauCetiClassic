@@ -85,8 +85,7 @@ var/list/blacklisted_builds = list(
 		return
 
 	//Logs all hrefs
-	if(config && config.log_hrefs && href_logfile)
-		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
+	log_href("[src] (usr:[usr]) || [hsrc ? "[hsrc] " : ""][href]")
 
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
@@ -286,6 +285,7 @@ var/list/blacklisted_builds = list(
 			if (config.client_limit_panic_bunker_link)
 				to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
 				SEND_LINK(src, config.client_limit_panic_bunker_link)
+				log_access("Failed Login: [key] [computer_id] [address] - redirected by limit bunker to [config.client_limit_panic_bunker_link]")
 			else
 				to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
 				log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")

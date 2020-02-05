@@ -21,7 +21,10 @@ var/list/net_announcer_secret = list()
 	var/log_pda = 0						// log pda messages
 	var/log_fax = 0						// log fax messages
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
-	var/log_runtime = 0					// logs world.log to a file
+	var/log_runtime = 0					// logs runtimes to round log folder
+	var/log_sql_error = 0				// same but for sql errors
+	var/log_initialization = 0			// same but for debug init logs
+	var/log_qdel = 0						// same but for debug qdel logs
 	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
@@ -308,6 +311,15 @@ var/list/net_announcer_secret = list()
 
 				if ("log_hrefs")
 					config.log_hrefs = 1
+
+				if ("log_sql_error")
+					config.log_sql_error = 1
+
+				if ("log_initialization")
+					config.log_initialization = 1
+
+				if ("log_qdel")
+					config.log_qdel = 1
 
 				if ("log_runtime")
 					config.log_runtime = 1
