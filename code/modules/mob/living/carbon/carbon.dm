@@ -918,28 +918,6 @@
 		stat = UNCONSCIOUS
 		blinded = TRUE
 
-/mob/living/carbon/change_mov_intent()
-	if(legcuffed)
-		to_chat(src, "<span class='notice'>You are legcuffed! You cannot walk normally until you get [legcuffed] removed!</span>")
-		set_mov_intent(MOVE_INTENT_CREEP) // Just incase
-		hud_used.move_intent.icon_state = "creeping"
-		return FALSE
-	switch(m_intent)
-		if(MOVE_INTENT_RUN)
-			set_mov_intent(MOVE_INTENT_CREEP)
-			hud_used.move_intent.icon_state = "creeping"
-		if(MOVE_INTENT_WALK)
-			if(stamina > 10)
-				set_mov_intent(MOVE_INTENT_RUN)
-				hud_used.move_intent.icon_state = "running"
-			else
-				set_mov_intent(MOVE_INTENT_CREEP)
-				hud_used.move_intent.icon_state = "creeping"
-		if(MOVE_INTENT_CREEP)
-			set_mov_intent(MOVE_INTENT_WALK)
-			hud_used.move_intent.icon_state = "walking"
-	return TRUE
-
 /mob/living/carbon/proc/handle_stamina()
 	if(isnull(stamina_max))
 		return
@@ -974,3 +952,11 @@
 	if(!amount)
 		return
 	stamina_max = amount
+
+/mob/living/carbon/set_mov_intent(intent, show_warning = FALSE)
+	if(legcuffed)
+		if(show_warning)
+			to_chat(src, "<span class='warning'>You are legcuffed! You cannot walk normally until you get [legcuffed] removed!</span>")
+		..(MOVE_INTENT_CREEP, show_warning) // Just incase
+		return FALSE
+	return ..(intent, show_warning)

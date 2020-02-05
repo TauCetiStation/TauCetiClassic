@@ -764,8 +764,6 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(legcuffed)
 		if(m_intent != MOVE_INTENT_CREEP)
 			set_mov_intent(MOVE_INTENT_CREEP)
-			if(hud_used && hud_used.move_intent)
-				hud_used.move_intent.icon_state = "creeping"
 
 		overlays_standing[LEGCUFF_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="legcuff1", "layer"=-LEGCUFF_LAYER)
 

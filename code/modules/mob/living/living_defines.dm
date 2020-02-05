@@ -53,3 +53,6 @@
 	var/list/status_effects // a list of all status effects the mob has
 
 	var/force_remote_viewing = FALSE
+
+	var/stamina = STAMINA_DEFAULT_MAXIMUM // current stamina
+	var/stamina_max // null if the mob doesn't use stamina

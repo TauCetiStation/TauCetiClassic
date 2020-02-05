@@ -62,27 +62,9 @@
 		build_click(src, client.buildmode, params, A)
 		return
 
-	var/list/modifiers = params2list(params)
-
-	if(client.cob && client.cob.in_building_mode)
-		cob_click(client, modifiers)
+	if(is_click_with_modifiers(A, params))
 		return
 
-	if(modifiers["shift"] && modifiers["ctrl"])
-		CtrlShiftClickOn(A)
-		return
-	if(modifiers["middle"])
-		MiddleClickOn(A)
-		return
-	if(modifiers["shift"])
-		ShiftClickOn(A)
-		return
-	if(modifiers["alt"]) // alt and alt-gr (rightalt)
-		AltClickOn(A)
-		return
-	if(modifiers["ctrl"])
-		CtrlClickOn(A)
-		return
 	if(HardsuitClickOn(A))
 		return
 
@@ -201,15 +183,18 @@
 	Only used for swapping hands
 */
 /mob/proc/MiddleClickOn(atom/A)
-	return
-/mob/living/carbon/MiddleClickOn(atom/A)
-	swap_hand()
+	return A.MiddleClick(src)
 
-// In case of use break glass
-/*
+/mob/living/carbon/MiddleClickOn(atom/A)
+	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+		next_click = world.time + 5
+		mind.changeling.chosen_sting.try_to_sting(src, A)
+		return
+	if(!..())
+		swap_hand()
+
 /atom/proc/MiddleClick(mob/M)
-	return
-*/
+	return FALSE
 
 /*
 	Shift click
@@ -353,3 +338,25 @@
 		if(T)
 			T.Click(location, control, params)
 	. = 1
+
+/mob/proc/is_click_with_modifiers(atom/A, params)
+	var/list/modifiers = params2list(params)
+	if(modifiers["shift"] && modifiers["ctrl"])
+		CtrlShiftClickOn(A)
+		return TRUE
+	if(modifiers["middle"])
+		MiddleClickOn(A)
+		return TRUE
+	if(modifiers["shift"])
+		ShiftClickOn(A)
+		return TRUE
+	if(modifiers["alt"]) // alt and alt-gr (rightalt)
+		AltClickOn(A)
+		return TRUE
+	if(modifiers["ctrl"])
+		CtrlClickOn(A)
+		return TRUE
+	if(client.cob && client.cob.in_building_mode)
+		cob_click(client, modifiers)
+		return TRUE
+	return FALSE

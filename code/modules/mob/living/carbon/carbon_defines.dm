@@ -34,7 +34,3 @@
 	var/obj/item/shoes
 	var/obj/item/neck
 	var/obj/item/mouth
-
-	var/stamina = STAMINA_DEFAULT_MAXIMUM // current stamina
-	var/stamina_max // null if the mob doesn't use stamina
-

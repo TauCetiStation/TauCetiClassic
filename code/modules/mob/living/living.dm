@@ -1219,17 +1219,25 @@
 
 	return TRUE
 
-/mob/living/proc/set_mov_intent(intent)
-	if (!(intent in list(MOVE_INTENT_WALK, MOVE_INTENT_RUN, MOVE_INTENT_CREEP)))
-		return FALSE
-	m_intent = intent
-
-	if(hud_used && hud_used.move_intent)
-		switch(intent)
-			if(MOVE_INTENT_WALK)
+/mob/living/set_mov_intent(intent, show_warning = FALSE)
+	switch(intent)
+		if(MOVE_INTENT_WALK)
+			prev_m_intent = MOVE_INTENT_CREEP
+			m_intent = MOVE_INTENT_WALK
+			if(hud_used && hud_used.move_intent)
 				hud_used.move_intent.icon_state = "walking"
-			if(MOVE_INTENT_RUN)
+		if(MOVE_INTENT_RUN)
+			if(!isnull(stamina_max) && stamina < 10)
+				return FALSE
+			prev_m_intent = m_intent
+			m_intent = MOVE_INTENT_RUN
+			if(hud_used && hud_used.move_intent)
 				hud_used.move_intent.icon_state = "running"
-			if(MOVE_INTENT_CREEP)
+		if(MOVE_INTENT_CREEP)
+			prev_m_intent = MOVE_INTENT_WALK
+			m_intent = MOVE_INTENT_CREEP
+			if(hud_used && hud_used.move_intent)
 				hud_used.move_intent.icon_state = "creeping"
+		else
+			return FALSE
 	return TRUE

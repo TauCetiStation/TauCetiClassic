@@ -42,7 +42,3 @@
 	return (move_delay_add + config.alien_delay)
 
 ///mob/living/carbon/xenomorph/humanoid/bullet_act(obj/item/projectile/Proj) taken care of in living
-
-/mob/living/carbon/alien/humanoid/change_mov_intent()
-	if(..())
-		update_icons()
