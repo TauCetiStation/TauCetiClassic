@@ -772,7 +772,7 @@
 			return FALSE
 
 
-/obj/machinery/alarm/attack_alien(mob/living/carbon/alien/humanoid/user)
+/obj/machinery/alarm/attack_alien(mob/living/carbon/xenomorph/humanoid/user)
 	to_chat(user, "You don't want to break these things");
 	return
 

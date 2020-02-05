@@ -457,7 +457,7 @@
 
 		message_admins(adminmsg)
 
-	if((isnum(M.client.player_age) && M.client.player_age < 5) || M.client.player_ingame_age < 600) //less than 5 days on server OR less than 10 hours in game
+	if((isnum(M.client.player_age) && M.client.player_age < 5) || (isnum(M.client.player_ingame_age) && M.client.player_ingame_age < 600)) //less than 5 days on server OR less than 10 hours in game
 		var/mentormsg = {"New player notify
 					Player '[M.key]' joined to the game as [M.mind.name][player_assigned_role] (<a href='byond://?_src_=usr;track=\ref[M]'>FLW</a>)
 					Days on server: [M.client.player_age]; Minutes played: [M.client.player_ingame_age < 120 ? "<span class='alert'>[M.client.player_ingame_age]</span>" : M.client.player_ingame_age]

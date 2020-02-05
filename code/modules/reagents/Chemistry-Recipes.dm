@@ -926,7 +926,7 @@
 		/mob/living/simple_animal/hostile/syndicate/melee/space,
 		/mob/living/simple_animal/hostile/syndicate/ranged,
 		/mob/living/simple_animal/hostile/syndicate/ranged/space,
-		/mob/living/simple_animal/hostile/alien/queen/large,
+		/mob/living/simple_animal/hostile/xenomorph/queen/large,
 		/mob/living/simple_animal/clown
 		)//exclusion list for things you don't want the reaction to create.
 	var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
@@ -1104,7 +1104,7 @@
 		/mob/living/simple_animal/hostile/syndicate/melee/space,
 		/mob/living/simple_animal/hostile/syndicate/ranged,
 		/mob/living/simple_animal/hostile/syndicate/ranged/space,
-		/mob/living/simple_animal/hostile/alien/queen/large,
+		/mob/living/simple_animal/hostile/xenomorph/queen/large,
 		/mob/living/simple_animal/hostile/faithless,
 		/mob/living/simple_animal/hostile/panther,
 		/mob/living/simple_animal/hostile/snake,

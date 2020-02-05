@@ -1571,7 +1571,7 @@ It is possible to destroy the net by the occupant or someone else.
 /obj/effect/energy_net/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if (islarva(user) || isfacehugger(user))
+	if (isxenolarva(user) || isfacehugger(user))
 		return
 	playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 	health -= rand(10, 20)

@@ -5,7 +5,7 @@
 	icon_state = "doorctrl-denied"
 	anchored = TRUE
 	var/list/loot_types = list(
-			/mob/living/simple_animal/hostile/alien,
+			/mob/living/simple_animal/hostile/xenomorph,
 			/mob/living/simple_animal/hostile/faithless,
 			/mob/living/simple_animal/hostile/cyber_horror,
 			/mob/living/simple_animal/hostile/viscerator,

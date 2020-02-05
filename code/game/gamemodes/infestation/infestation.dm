@@ -43,7 +43,7 @@ Infestation:
 
 	if(antag_candidates.len <= recommended_enemies)
 		xenomorphs_num = antag_candidates.len
-	
+
 	while(xenomorphs_num > 0)
 		var/datum/mind/new_xeno = pick(antag_candidates)
 		xenomorphs += new_xeno
@@ -79,7 +79,7 @@ Infestation:
 		for(var/obj/machinery/power/apc/apc in A.apc)
 			apc.overload_lighting()
 
-		var/mob/living/carbon/alien/facehugger/FH = new /mob/living/carbon/alien/facehugger(get_turf(start_point))
+		var/mob/living/carbon/xenomorph/facehugger/FH = new /mob/living/carbon/xenomorph/facehugger(get_turf(start_point))
 		var/mob/original = xeno.current
 
 		xeno.transfer_to(FH)
@@ -107,7 +107,7 @@ Infestation:
 
 /datum/game_mode/proc/check_xeno_queen()
 	var/state = 0 // 0 = no queen
-	for(var/mob/living/carbon/alien/humanoid/queen/Q in queen_list)
+	for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in queen_list)
 		if(Q.stat != DEAD)
 			return 1
 		state = 2
@@ -115,7 +115,7 @@ Infestation:
 
 /datum/game_mode/proc/count_hive_power()
 	var/count = 0
-	for(var/mob/living/carbon/alien/A in alien_list)
+	for(var/mob/living/carbon/xenomorph/A in alien_list)
 		if(A.stat == DEAD)
 			continue
 		count++
@@ -123,7 +123,7 @@ Infestation:
 
 /datum/game_mode/proc/count_hive_looses()
 	var/count = 0
-	for(var/mob/living/carbon/alien/A in alien_list)
+	for(var/mob/living/carbon/xenomorph/A in alien_list)
 		if(A.stat != DEAD)
 			continue
 		count++
@@ -145,9 +145,9 @@ Infestation:
 			text += "<span style='color: red; font-weight: bold;'>All xenomorphs were eradicated.</span>"
 		if(count_hive_looses())
 			text += "<span style='color: red; font-weight: bold;'>[count_hive_looses()] xenomorphs are dead.</span>"
-		
+
 	if(text)
 		antagonists_completion += list(list("mode" = "infestation", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text
