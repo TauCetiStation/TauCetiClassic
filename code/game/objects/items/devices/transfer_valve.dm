@@ -196,7 +196,7 @@
 		log_str += " Last touched by: [src.fingerprintslast][last_touch_info]"
 		bombers += log_str
 		message_admins(log_str)
-		log_game("Bomb valve opened in [A.name] with [attached_device ? attached_device : "no device"] attacher: [attacher_name], last toyched by [mob ? "[key_name(mob)]" : "[src.fingerprintslast][last_touch_info]"]")
+		log_game("Bomb valve opened in [A.name] with [attached_device ? attached_device : "no device"] attacher: [attacher_name], last touched by [mob ? "[key_name(mob)]" : "[src.fingerprintslast][last_touch_info]"]")
 		merge_gases()
 		spawn(20) // In case one tank bursts
 			for (var/i=0,i<5,i++)
