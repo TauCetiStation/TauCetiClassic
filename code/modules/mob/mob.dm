@@ -81,7 +81,7 @@
 			break
 
 		if((type & SHOWMSG_AUDIO) && !(sdisabilities & DEAF) && !ear_deaf) // Hearing related
-			if(stat == UNCONSCIOUS || sleeping > 0)
+			if(stat == UNCONSCIOUS)
 				msg = "<i>... You can almost hear something ...</i>"
 			else
 				msg = args[i]
@@ -93,7 +93,7 @@
 
 	if(!msg)
 		return FALSE
-	
+
 	to_chat(src, msg)
 	return list(msg, type) // should pass args to parasites
 
@@ -647,12 +647,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 			stat(null, "Round ID: #[round_id]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(client)
-			stat(null, "Your in-game age: [client.player_ingame_age]")
+			stat(null, "Your in-game age: [isnum(client.player_ingame_age) ? client.player_ingame_age : 0]")
 			stat(null, "Map: [SSmapping.config?.map_name || "Loading..."]")
 			var/datum/map_config/cached = SSmapping.next_map_config
 			if(cached)
 				stat(null, "Next Map: [cached.map_name]")
 			if(client.holder)
+				if (config.registration_panic_bunker_age)
+					stat(null, "Registration panic bunker age: [config.registration_panic_bunker_age]")
 				if(ticker.mode && ticker.mode.config_tag == "malfunction")
 					var/datum/game_mode/malfunction/GM = ticker.mode
 					if(GM.malf_mode_declared)
@@ -750,7 +752,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	density = !lying
 
-	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isalien(src))
+	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isxeno(src))
 		drop_l_hand()
 		drop_r_hand()
 
@@ -897,25 +899,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		paralysis = max(paralysis + amount, 0)
 	else
 		paralysis = 0
-
-// ========== SLEEPING ==========
-/mob/proc/Sleeping(amount)
-	if(status_flags & CANPARALYSE) // because sleeping and paralysis are very similar statuses and i see no point in separate flags at this time (anyway, golems mostly).
-		sleeping = max(max(sleeping, amount), 0)
-	else
-		sleeping = 0
-
-/mob/proc/SetSleeping(amount)
-	if(status_flags & CANPARALYSE)
-		sleeping = max(amount, 0)
-	else
-		sleeping = 0
-
-/mob/proc/AdjustSleeping(amount)
-	if(status_flags & CANPARALYSE)
-		sleeping = max(sleeping + amount, 0)
-	else
-		sleeping = 0
 
 // ========== RESTING ==========
 /mob/proc/Resting(amount)
@@ -1118,3 +1101,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/can_unbuckle(mob/user)
 	return 1
+
+/mob/proc/update_stat()
+	return

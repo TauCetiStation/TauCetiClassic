@@ -580,7 +580,7 @@ var/list/ai_verbs_default = list(
 	updatehealth()
 	return 2
 
-/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/silicon/ai/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -660,6 +660,8 @@ var/list/ai_verbs_default = list(
 		cameratext += "[(cameratext == "")? "" : "|"]<A HREF=?src=\ref[src];switchcamera=\ref[C]>[C.c_tag]</A>"
 
 	queueAlarm("--- [class] alarm detected in [A.name]! ([(cameratext)? cameratext : "No Camera"])", class)
+	sleep(100) // a delay of 10 seconds, because queueAlarm() also has a delay of 10 seconds.
+	playsound_local(src, 'sound/effects/triple_beep.ogg', VOL_EFFECTS_MASTER, 45, FALSE)
 
 	if(viewalerts)
 		show_alerts()

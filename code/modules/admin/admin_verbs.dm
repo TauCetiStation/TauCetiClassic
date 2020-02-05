@@ -168,6 +168,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/investigate_show,
 	/client/proc/reload_admins,
 	/client/proc/reload_mentors,
+	/client/proc/reload_config,
 	/client/proc/reload_nanoui_resources,
 //	/client/proc/remake_distribution_map,
 //	/client/proc/show_distribution_map,
@@ -490,7 +491,7 @@ var/list/admin_verbs_hideable = list(
 		to_chat(usr, "<span class='warning'>Currently disabled by config.</span>")
 	var/new_aooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
 	if(new_aooccolor)
-		prefs.aooccolor = new_aooccolor
+		prefs.aooccolor = normalize_color(new_aooccolor)
 		prefs.save_preferences()
 	feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

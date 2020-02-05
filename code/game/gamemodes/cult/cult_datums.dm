@@ -753,7 +753,7 @@ var/list/cult_runes = list()
 			victims[target] = 80
 		else if(ismonkey(target))
 			victims[target] = 40
-		else if(isalien(target))
+		else if(isxeno(target))
 			victims[target] = 75
 		else if(isIAN(target))
 			victims[target] = 70

@@ -185,7 +185,7 @@
 	body_parts_covered = HEAD|FACE
 
 /obj/item/clothing/mask/gas/swat
-	name = "\improper SWAT mask"
+	name = "SWAT mask"
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
 	icon_state = "swat"
 	siemens_coefficient = 0.7

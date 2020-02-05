@@ -677,13 +677,13 @@ var/global/list/all_objectives = list()
 		captured_amount+=1
 	for(var/mob/living/carbon/monkey/M in A)//Monkeys are almost worthless, you failure.
 		captured_amount+=0.1
-	for(var/mob/living/carbon/alien/larva/M in A)//Larva are important for research.
+	for(var/mob/living/carbon/xenomorph/larva/M in A)//Larva are important for research.
 		if(M.stat==2)
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
-	for(var/mob/living/carbon/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
-		if(istype(M, /mob/living/carbon/alien/humanoid/queen))//Queens are worth three times as much as humans.
+	for(var/mob/living/carbon/xenomorph/humanoid/M in A)//Aliens are worth twice as much as humans.
+		if(istype(M, /mob/living/carbon/xenomorph/humanoid/queen))//Queens are worth three times as much as humans.
 			if(M.stat==2)
 				captured_amount+=1.5
 			else

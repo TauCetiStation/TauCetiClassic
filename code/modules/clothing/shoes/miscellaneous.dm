@@ -17,7 +17,7 @@
 	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/swat
-	name = "\improper SWAT shoes"
+	name = "SWAT shoes"
 	desc = "When you want to turn up the heat."
 	icon_state = "swat"
 	item_state = "wjboots"

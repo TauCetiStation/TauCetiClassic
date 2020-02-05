@@ -27,34 +27,38 @@ VOX HEIST ROUNDTYPE
 	to_chat(world, "<B>Personnel:</B> Repel the raiders and their low, low prices and/or crossbows.")
 
 /datum/game_mode/heist/can_start()
+	if (!..())
+		return FALSE
+	for(var/obj/effect/landmark/L in landmarks_list)
+		if(L.name == "voxstart")
+			return TRUE
+	return FALSE
 
+/datum/game_mode/heist/assign_outsider_antag_roles()
 	if(!..())
-		return 0
+		return FALSE
 
-	var/raider_num = 0
+	var/raider_num = recommended_enemies
 
 	//Check that we have enough vox.
-	if(antag_candidates.len < required_enemies)
-		return 0
-	else if(antag_candidates.len < recommended_enemies)
+	if(antag_candidates.len < recommended_enemies)
 		raider_num = antag_candidates.len
-	else
-		raider_num = recommended_enemies
 
 	//Grab candidates randomly until we have enough.
 	while(raider_num > 0)
 		var/datum/mind/new_raider = pick(antag_candidates)
 		raiders += new_raider
+		modePlayer += new_raider
 		antag_candidates -= new_raider
 		raider_num--
 
 	for(var/datum/mind/raider in raiders)
 		raider.assigned_role = "MODE"
 		raider.special_role = "Vox Raider"
-	return 1
+	return TRUE
 
 /datum/game_mode/heist/pre_setup()
-	return 1
+	return TRUE
 
 /datum/game_mode/heist/post_setup()
 

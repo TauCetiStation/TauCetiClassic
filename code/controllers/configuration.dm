@@ -1,3 +1,5 @@
+var/list/net_announcer_secret = list()
+
 /datum/configuration
 	var/name = "Configuration"			// datum name
 
@@ -64,6 +66,7 @@
 	var/automute_on = 0					//enables automuting/spam prevention
 
 	var/registration_panic_bunker_age = null
+	var/allowed_by_bunker_player_age = 60
 	var/client_limit_panic_bunker_count = null
 	var/client_limit_panic_bunker_link = null
 
@@ -154,8 +157,6 @@
 	var/gateway_enabled = 0
 	var/ghost_interaction = 0
 
-	var/comms_password = ""
-
 	var/enter_allowed = 1
 
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
@@ -188,6 +189,7 @@
 
 	
 	var/sandbox = FALSE
+	var/list/net_announcers = list() // List of network announcers on
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -531,9 +533,6 @@
 				if("uneducated_mice")
 					config.uneducated_mice = 1
 
-				if("comms_password")
-					config.comms_password = value
-
 				if("python_path")
 					if(value)
 						config.python_path = value
@@ -605,6 +604,9 @@
 
 				if("registration_panic_bunker_age")
 					config.registration_panic_bunker_age = value
+
+				if("allowed_by_bunker_player_age")
+					config.allowed_by_bunker_player_age = value
 
 				if("client_limit_panic_bunker_count")
 					config.client_limit_panic_bunker_count = text2num(value)
@@ -729,52 +731,58 @@
 		qdel(M)
 	return new /datum/game_mode/extended()
 
-/datum/configuration/proc/get_runnable_modes()
+/datum/configuration/proc/is_hidden_gamemode(g_mode)
+	return (g_mode && (g_mode=="secret" || g_mode=="bs12" || g_mode=="tau classic"))
+
+/datum/configuration/proc/is_modeset(g_mode)
+	return (g_mode && (g_mode=="random" || g_mode=="secret" || g_mode=="bs12" || g_mode=="tau classic"))
+
+/datum/configuration/proc/is_custom_modeset(g_mode)
+	return (g_mode && (g_mode=="bs12" || g_mode=="tau classic"))
+
+// As argument accpet config tag of gamemode, not name
+/datum/configuration/proc/is_mode_allowed(g_mode_tag)
+	return (g_mode_tag && (g_mode_tag in modes))
+
+// check_ready - if true only ready players count
+/datum/configuration/proc/get_runnable_modes(modeset="random", check_ready=TRUE)
 	var/list/datum/game_mode/runnable_modes = new
 	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
 		var/datum/game_mode/M = new T()
-		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
-		if (!(M.config_tag in modes))
+		M.modeset = modeset
+		// log_debug("[T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
+		if (!is_mode_allowed(M.config_tag))
 			qdel(M)
 			continue
-		if(master_last_mode)
-			if(secret_force_mode == "secret")
-				if(master_mode=="secret")
-					if(M.name != "AutoTraitor")
-						if(M.name == master_last_mode)
+		if (is_custom_modeset(M.config_tag))
+			qdel(M)
+			continue
+		if(!modeset || modeset == "random" || modeset == "secret")
+			if(global.master_last_mode && global.secret_force_mode == "secret" && modeset == "secret")
+				if(M.name != "AutoTraitor" && M.name == global.master_last_mode)
+					qdel(M)
+					continue
+			if (probabilities[M.config_tag]<=0)
+				qdel(M)
+				continue
+		else if (is_custom_modeset(modeset))
+			switch(modeset)
+				if("bs12")
+					switch(M.config_tag)
+						if("traitorchan","traitor","blob","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
 							qdel(M)
 							continue
-		if (probabilities[M.config_tag]<=0)
-			qdel(M)
-			continue
-		if (M.can_start())
-			runnable_modes[M] = probabilities[M.config_tag]
-			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
-	return runnable_modes
-
-/datum/configuration/proc/get_custom_modes(type_of_selection)
-	var/list/datum/game_mode/runnable_modes = new
-	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
-		var/datum/game_mode/M = new T()
-		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
-		if (!(M.config_tag in modes))
-			qdel(M)
-			continue
-		switch(type_of_selection)
-			if("bs12")
-				switch(M.config_tag)
-					if("traitorchan","traitor","blob","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
-						qdel(M)
-						continue
-			if("tau classic")
-				switch(M.config_tag)
-					if("traitor","blob","extended","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
-						qdel(M)
-						continue
-		if (M.can_start())
-			runnable_modes[M] = probabilities[M.config_tag]
-			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
-
+				if("tau classic")
+					switch(M.config_tag)
+						if("traitor","blob","extended","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
+							qdel(M)
+							continue
+		var/mod_prob = probabilities[M.config_tag]
+		if (is_custom_modeset(modeset))
+			mod_prob = 1
+		if (((!check_ready) && M.potential_runnable()) || (check_ready && M.can_start()))
+			runnable_modes[M] = mod_prob
+			// log_debug("runnable_mode\[[runnable_modes.len]\] = [M.config_tag] [mod_prob]")
 	return runnable_modes
 
 /datum/configuration/proc/stat_entry()
@@ -832,3 +840,48 @@
 				currentmap = null
 			else
 				error("Unknown command in map vote config: '[command]'")
+
+/datum/configuration/proc/load_list_without_comments(filename)
+	// Loading text file to list and removing comments
+	// Comment line can start with # or end with #
+	// If line end with # before # place tab(s) or space(s)
+	var/list/data = list()
+	var/endline_comment = regex(@"\s+#")
+	for(var/L in file2list(filename))
+		if (copytext(L, 1, 2) == "#")
+			continue
+		var/cut_position = findtext(L, endline_comment)
+		if(cut_position)
+			L = trim(copytext(L, 1, cut_position))
+		if (length(L))
+			data += L
+	return data
+
+/datum/configuration/proc/load_announcer_config(config_path)
+	// Loading config of network communication between servers
+	// Server list loaded from serverlist.txt file. It's file with comments. 
+	// One line of file = one server. Format - byond://example.com:2506 = secret
+	// First server must be self link for loading the secret
+	//
+	// In config file ban.txt load settings for ban announcer.
+	// Format key = value
+	var/restricted_chars_regex = regex(@"[;&]","g")
+	for(var/L in load_list_without_comments("[config_path]/serverlist.txt"))
+		var/delimiter_position = findtext(L,"=")
+		var/key = trim(copytext(L, 1, delimiter_position))
+		if(delimiter_position && length(key))
+			// remove restricted chars
+			L=replacetext(L, restricted_chars_regex, "")
+			global.net_announcer_secret[key] = trim(copytext(L, delimiter_position+1))
+	for(var/L in load_list_without_comments("[config_path]/ban.txt"))
+		var/delimiter_position = findtext(L,"=")
+		var/key = trim(copytext(L, 1, delimiter_position))
+		if(delimiter_position && length(key))
+			var/value = trim(copytext(L, delimiter_position+1))
+			switch(lowertext(key))
+				if ("receive")
+					if (value && (lowertext(value) == "true" || lowertext(value) == "on"))
+						net_announcers["ban_receive"] = TRUE
+				if ("send")
+					if (value && (lowertext(value) == "true" || lowertext(value) == "on"))
+						net_announcers["ban_send"] = TRUE

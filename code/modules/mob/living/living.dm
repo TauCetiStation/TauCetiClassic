@@ -21,13 +21,13 @@
 	if (buckled || !yes || now_pushing)
 		return
 	if(!ismovableatom(A) || is_blocked_turf(A))
-		if(confused && stat == CONSCIOUS && m_intent == "run")	
-			playsound(get_turf(src), pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)	
-			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")	
+		if(confused && stat == CONSCIOUS && m_intent == "run")
+			playsound(get_turf(src), pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
+			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")
 			apply_damage(3, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
 			Stun(3)
 			Weaken(2)
-			
+
 	if(ismob(A))
 		var/mob/M = A
 		if(MobBump(M))
@@ -178,7 +178,7 @@
 		pull_debuff += tally
 
 /mob/living/proc/add_ingame_age()
-	if(client && !client.is_afk()) //5 minutes of inactive time will disable this, until player come back.
+	if(client && !isnum(client.player_ingame_age) && !client.is_afk()) //5 minutes of inactive time will disable this, until player come back.
 		var/client/C = client
 		if(C.player_next_age_tick == 0) //All clients start with 0, so we need to set next tick for the first time.
 			C.player_next_age_tick = world.time + 600
@@ -712,7 +712,7 @@
 				START_PROCESSING(SSobj, TH)
 			if((!(newdir in TH.existing_dirs) || trail_type == "trails_1") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 				TH.existing_dirs += newdir
-				TH.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
+				TH.add_overlay(image('icons/effects/blood.dmi',trail_type,dir = newdir))
 			if(M.dna)
 				TH.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 
@@ -860,7 +860,7 @@
 			if(!CM.canmove && !CM.resting)	return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
-			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
+			if(isxenoadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
 				CM.visible_message("<span class='danger'>[CM] is trying to break the handcuffs!</span>", self_message = "<span class='rose'>You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)</span>")
 				spawn(0)
 					if(do_after(CM, 50, target = usr))
@@ -898,7 +898,7 @@
 			if(!CM.canmove && !CM.resting)	return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
-			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
+			if(isxenoadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
 				to_chat(usr, )
 				CM.visible_message("<span class='danger'>[CM] is trying to break the legcuffs!</span>", self_message = "<span class='notice'>You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)</span>")
 				spawn(0)
@@ -944,7 +944,7 @@
 		return
 
 //Already resting and have others debuffs
-	if( resting && (sleeping || weakened || paralysis || stunned) )
+	if( resting && (IsSleeping() || weakened || paralysis || stunned) )
 		to_chat(src, "<span class='rose'>You can't wake up.</span>")
 
 //Restrained and some debuffs
@@ -956,7 +956,7 @@
 		to_chat(src, "<span class='rose'>You can't move.</span>")
 
 //Debuffs check
-	else if(!resting && (sleeping || weakened || paralysis || stunned) )
+	else if(!resting && (IsSleeping() || weakened || paralysis || stunned) )
 		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
 
 	else
