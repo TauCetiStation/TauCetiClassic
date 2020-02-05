@@ -18,26 +18,14 @@
 	set desc = "View/retrieve logfiles for the specific round."
 	set category = "Logs"
 
-	if(!dbcon.IsConnected())
-		to_chat(usr, "<span class='alert'>Database connection required</span>")
-		return
+	browseserverlogs_id()
 
-	var/id = input("Enter round ID", "Round ID") as num|null
+/client/proc/getdebuglogsbyid() // shouldbeunderscored
+	set name = "Get Debug Logs By ID"
+	set desc = "View/retrieve logfiles for the specific round."
+	set category = "Logs"
 
-	if(!id)
-		return
-
-	var/DBQuery/round_query = dbcon.NewQuery("SELECT DATE_FORMAT(initialize_datetime, '%Y/%m/%d') FROM erro_round WHERE id = [id];")
-	round_query.Execute()
-
-	if(round_query.NextRow())
-		var/round_date = round_query.item[1]
-
-		if(!length(round_date) || !fexists("[global.log_directory]/[round_date]"))
-			to_chat(usr, "<span class='alert'>No logs found</span>")
-			return
-
-		browseserverlogs("data/logs/[round_date]/round-[id]/")
+	browseserverlogs_id(subpath = "debug/")
 
 /client/proc/getoldlogs() // todo: remove me someday in 2021
 	set name = "Get Logs (old)"
@@ -67,7 +55,7 @@
 
 /client/proc/browseserverlogs(path = "data/logs/")
 
-	if(!check_rights(R_LOG))
+	if(!check_rights(R_LOG|R_DEBUG))
 		return
 
 	path = browse_files(path)
@@ -92,3 +80,26 @@
 			return
 	to_chat(src, "Attempting to send [path], this may take a fair few minutes if the file is very large.")
 	return
+
+/client/proc/browseserverlogs_id(subpath = "")
+
+	if(!dbcon.IsConnected())
+		to_chat(usr, "<span class='alert'>Database connection required</span>")
+		return
+
+	var/id = input("Enter round ID", "Round ID") as num|null
+
+	if(!id)
+		return
+
+	var/DBQuery/round_query = dbcon.NewQuery("SELECT DATE_FORMAT(initialize_datetime, '%Y/%m/%d') FROM erro_round WHERE id = [id];")
+	round_query.Execute()
+
+	if(round_query.NextRow())
+		var/round_date = round_query.item[1]
+
+		if(!length(round_date) || !fexists("[global.log_directory]/[round_date]"))
+			to_chat(usr, "<span class='alert'>No logs found</span>")
+			return
+
+		browseserverlogs("data/logs/[round_date]/round-[id]/[subpath]")
