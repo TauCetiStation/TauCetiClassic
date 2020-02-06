@@ -2,7 +2,7 @@
 	name = "extinguisher cabinet"
 	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
 	icon = 'icons/obj/closet.dmi'
-	icon_state = "extinguisher_closed"
+	icon_state = "extinguisher_empty_closed"
 	anchored = 1
 	density = 0
 	var/obj/item/weapon/reagent_containers/spray/extinguisher/has_extinguisher
@@ -10,7 +10,13 @@
 
 /obj/structure/extinguisher_cabinet/atom_init()
 	. = ..()
-	has_extinguisher = new/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned(src)
+	if(prob(2))
+		has_extinguisher = new/obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned(src)
+	else if(prob(5))
+		has_extinguisher = new/obj/item/weapon/reagent_containers/spray/extinguisher/golden/station_spawned(src)
+	else
+		has_extinguisher = new/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned(src)
+	update_icon()
 
 /obj/structure/extinguisher_cabinet/attackby(obj/item/O, mob/user)
 	if(isrobot(user) || isxeno(user))
@@ -56,13 +62,16 @@
 
 
 /obj/structure/extinguisher_cabinet/update_icon()
-	if(!opened)
-		icon_state = "extinguisher_closed"
-		return
+	var/FE = "empty"
+
 	if(has_extinguisher)
-		if(istype(has_extinguisher, /obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned))
-			icon_state = "extinguisher_mini"
+		if(istype(has_extinguisher, /obj/item/weapon/reagent_containers/spray/extinguisher/mini))
+			FE = "mini"
+		else if(istype(has_extinguisher, /obj/item/weapon/reagent_containers/spray/extinguisher/golden))
+			FE = "golden"
 		else
-			icon_state = "extinguisher_full"
+			FE = "red"
+	if(opened)
+		icon_state = "extinguisher_[FE]"
 	else
-		icon_state = "extinguisher_empty"
+		icon_state = "extinguisher_[FE]_closed"
