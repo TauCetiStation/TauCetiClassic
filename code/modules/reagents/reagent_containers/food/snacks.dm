@@ -210,12 +210,11 @@
 	var/slices_lost = 0
 	if (inaccurate)
 		if (istype(W, /obj/item/weapon/melee/energy/sword))
-			playsound(user, 'sound/items/esword_cutting.ogg', VOL_EFFECTS_MASTER, , FALSE)
+			playsound(user, 'sound/items/esword_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else
-			playsound(user, 'sound/items/shard_cutting.ogg', VOL_EFFECTS_MASTER, , FALSE)
+			playsound(user, 'sound/items/shard_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else
-		playsound(user, 'sound/items/knife_cutting.ogg', VOL_EFFECTS_MASTER, , FALSE)
-
+		playsound(src, pick(SOUNDIN_KNIFE_CUTTING), VOL_EFFECTS_MASTER, null, FALSE)
 		slices_lost = rand(1,min(1,round(slices_num/2)))
 	if (do_after(user, 35, target = src))
 		if (!inaccurate)
