@@ -1105,3 +1105,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/set_mov_intent(intent, show_warning = FALSE)
 	return
+
+/mob/proc/adjust_stamina(amount)
+	return
+
+/mob/proc/set_stamina_max(amount)
+	return
+
+/mob/proc/set_stamina(amount)
+	return

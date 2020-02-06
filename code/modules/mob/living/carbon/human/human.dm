@@ -1245,7 +1245,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				if(!prob((reagents.total_volume * 9) + 10))
 					H.visible_message("<span class='warning'>[H] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but it gets stuck in your throat!</span>")
 					H.adjustOxyLoss(3)
-					H.adjustHalLoss(5)
+					H.adjust_stamina(-20)
 					return FALSE
 				H.vomit()
 		else

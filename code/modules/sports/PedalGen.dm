@@ -71,15 +71,16 @@
 			src.add_fingerprint(user)
 		else
 			user.SetNextMove(CLICK_CD_INTERACT)
-			if(buckled_mob.nutrition > 10)
+			if(buckled_mob.nutrition > 10 && buckled_mob.stamina > -10)
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER, 20)
 				Generator.Rotated()
 				var/mob/living/carbon/human/pedaler = buckled_mob
 				pedaler.nutrition -= 0.5
-				pedaler.apply_effect(1,AGONY,0)
-				if(pedaler.halloss > 80)
+				pedaler.adjust_stamina(-1)
+				if(buckled_mob.stamina < -5)
 					to_chat(user, "You pushed yourself too hard.")
-					pedaler.apply_effect(24,AGONY,0)
+					pedaler.apply_effect(24, AGONY, 0)
+					pedaler.adjust_stamina(-15)
 					unbuckle_mob()
 				sleep(5)
 				pedaled = 0

@@ -20,6 +20,7 @@
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	hit(user)
+	user.adjust_stamina(-1)
 
 /obj/structure/pbag/ex_act(severity)
 	switch(severity)

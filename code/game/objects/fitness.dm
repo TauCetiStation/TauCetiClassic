@@ -19,7 +19,10 @@
 		to_chat(user, "You should get off the [user.buckled] first.")
 		return
 	if(gymnast.halloss > 80 || gymnast.shock_stage > 80)
-		to_chat(user, "You are too exausted.")
+		to_chat(user, "<span class ='warning'>The pain is too strong!</span>")
+		return
+	if(gymnast.stamina < -10)
+		to_chat(user, "<span class='warning'>You are too exausted.</span>")
 		return
 	else
 		in_use = 1
@@ -44,7 +47,7 @@
 		user.pixel_y = 0
 		gymnast.nutrition -= 6
 		gymnast.overeatduration -= 8
-		gymnast.apply_effect(15,AGONY,0)
+		gymnast.adjust_stamina(-15)
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnesslifter"
 		to_chat(user, "[finishmessage]")
@@ -70,7 +73,10 @@
 		to_chat(user, "You should get off the [user.buckled] first.")
 		return
 	if(gymnast.halloss > 80 || gymnast.shock_stage > 80)
-		to_chat(user, "You are too exausted.")
+		to_chat(user, "<span class ='warning'>The pain is too strong!</span>")
+		return
+	if(gymnast.stamina < -10)
+		to_chat(user, "<span class='warning'>You are too exausted.</span>")
 		return
 	else
 		in_use = 1
@@ -103,7 +109,7 @@
 		animate(user, pixel_y = 0, time = 3)
 		gymnast.nutrition -= 12
 		gymnast.overeatduration -= 16
-		gymnast.apply_effect(25,AGONY,0)
+		gymnast.adjust_stamina(-20)
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnessweight"
 		cut_overlay(W)

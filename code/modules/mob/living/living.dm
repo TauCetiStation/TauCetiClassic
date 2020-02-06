@@ -1243,12 +1243,3 @@
 		else
 			return FALSE
 	return TRUE
-
-/mob/living/proc/adjust_stamina(amount)
-	return
-
-/mob/living/proc/set_stamina_max(amount)
-	return
-
-/mob/living/proc/set_stamina(amount)
-	return
