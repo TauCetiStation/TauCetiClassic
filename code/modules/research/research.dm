@@ -118,7 +118,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	for(var/t in T.unlocks_designs)
 		var/datum/design/D = design_by_id[t]
 
-		reliability_increase += D.reliability * (RND_RELIABILITY_EXPONENT ^ D.created_prototypes)
+		reliability_increase += D.reliability * (RND_RELIABILITY_EXPONENT ** D.created_prototypes)
 		total_reliability += D.reliability
 
 	var/tech_cost_modifier = 1.0
