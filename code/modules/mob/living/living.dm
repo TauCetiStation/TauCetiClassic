@@ -793,6 +793,7 @@
 			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++
+			G.assailant.adjust_stamina(STAMINA_DEFAULT_RESIST_COST)
 			switch(G.state)
 				if(GRAB_PASSIVE)
 					if(G.assailant.shoving_fingers)
@@ -811,6 +812,7 @@
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>")
 						qdel(G)
 		if(resisting)
+			L.adjust_stamina(STAMINA_DEFAULT_RESIST_COST)
 			L.visible_message("<span class='danger'>[L] resists!</span>")
 	//Digging yourself out of a grave
 	if(istype(src.loc, /obj/structure/pit))
@@ -1227,7 +1229,7 @@
 			if(hud_used && hud_used.move_intent)
 				hud_used.move_intent.icon_state = "walking"
 		if(MOVE_INTENT_RUN)
-			if(!isnull(stamina_max) && stamina < 10)
+			if(!isnull(stamina_max) && stamina < STAMINA_DEFAULT_RUN_THRESHOLD)
 				return FALSE
 			prev_m_intent = m_intent
 			m_intent = MOVE_INTENT_RUN
@@ -1241,3 +1243,12 @@
 		else
 			return FALSE
 	return TRUE
+
+/mob/living/proc/adjust_stamina(amount)
+	return
+
+/mob/living/proc/set_stamina_max(amount)
+	return
+
+/mob/living/proc/set_stamina(amount)
+	return

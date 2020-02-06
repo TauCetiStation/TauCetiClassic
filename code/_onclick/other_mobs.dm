@@ -21,7 +21,8 @@
 	//if(!A.can_mob_interact(src)) maybe in future...
 	//	return
 
-	A.attack_hand(src)
+	if(A.attack_hand(src))
+		adjust_stamina(-3)
 
 /atom/proc/attack_hand(mob/user)
 	return

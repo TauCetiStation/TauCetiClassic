@@ -1,12 +1,12 @@
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/M)
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
 		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
+		return FALSE
 	..()
 
 	if((M != src) && check_shields(0, M.name, get_dir(M,src)))
 		visible_message("<span class='warning'><B>[M] attempted to touch [src]!</B></span>")
-		return 0
+		return FALSE
 
 	if(M.wear_suit && istype(M.wear_suit, /obj/item/clothing/suit))
 		var/obj/item/clothing/suit/V = M.wear_suit
@@ -44,11 +44,10 @@
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 					s.set_up(3, 1, target)
 					s.start()
-					return 1
-				else
-					to_chat(M, "<span class='warning'>Not enough charge! </span>")
-					visible_message("<span class='warning'><B>[src] has been touched with the stun gloves by [M]!</B></span>")
-				return
+					return TRUE
+				to_chat(M, "<span class='warning'>Not enough charge! </span>")
+				visible_message("<span class='warning'><B>[src] has been touched with the stun gloves by [M]!</B></span>")
+				return FALSE
 
 		if(istype(M.gloves , /obj/item/clothing/gloves/boxing))
 
@@ -56,7 +55,7 @@
 			if(!damage)
 				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 				visible_message("<span class='warning'><B>[M] has attempted to punch [src]!</B></span>")
-				return 0
+				return FALSE
 			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 			var/armor_block = run_armor_check(BP, "melee")
 
@@ -73,7 +72,7 @@
 				visible_message("<span class='warning'><B>[M] has weakened [src]!</B></span>")
 				apply_effect(4, WEAKEN, armor_block)
 
-			return
+			return TRUE
 	else
 		if(istype(M,/mob/living/carbon))
 //			log_debug("No gloves, [M] is truing to infect [src]")
@@ -84,17 +83,16 @@
 		if("help")
 			if(health > config.health_threshold_dead && health < config.health_threshold_crit)
 				INVOKE_ASYNC(src, .proc/perform_cpr, M)
-				return 1
 			else if(!(M == src && apply_pressure(M, M.zone_sel.selecting)))
 				if(M.zone_sel.selecting == O_MOUTH && M == src)
 					M.force_vomit(src)
 				else
 					help_shake_act(M)
-				return 1
+			return TRUE
 
 		if("grab")
 			M.Grab(src)
-			return 1
+			return TRUE
 
 		if("hurt")
 			M.do_attack_animation(src)
@@ -109,9 +107,7 @@
 			if(!damage)
 				playsound(src, attack.miss_sound, VOL_EFFECTS_MASTER)
 				visible_message("<span class='warning'><B>[M] tried to [pick(attack.attack_verb)] [src]!</B></span>")
-				return 0
-
-
+				return FALSE
 
 			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 			var/armor_block = run_armor_check(BP, "melee")
@@ -130,6 +126,7 @@
 			damage += attack.damage
 			apply_damage(damage, BRUTE, BP, armor_block, attack.damage_flags())
 
+			return TRUE
 
 		if("disarm")
 			M.do_attack_animation(src)
@@ -171,7 +168,7 @@
 					visible_message("<span class='danger'>[M] has pushed [src]!</span>")
 				else
 					visible_message("<span class='warning'>[M] attempted to push [src]!</span>")
-				return
+				return TRUE
 
 			var/talked = 0	// BubbleWrap
 
@@ -197,12 +194,12 @@
 						drop_item()
 						visible_message("<span class='warning'><B>[M] has disarmed [src]!</B></span>")
 				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-				return
+				return TRUE
 
 
 			playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 			visible_message("<span class='warning'><B>[M] attempted to disarm [src]!</B></span>")
-	return
+	return FALSE
 
 /*
 	We want to ensure that a mob may only apply pressure to one bodypart of one mob at any given time. Currently this is done mostly implicitly through

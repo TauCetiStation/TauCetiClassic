@@ -306,6 +306,8 @@
 			BP.sabotaged = 1
 		return TRUE
 
+	user.adjust_stamina(STAMINA_ITEM_ATTACK_COST(I.w_class))
+
 	if(I.attack_verb.len)
 		visible_message("<span class='userdanger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</span>")
 	else

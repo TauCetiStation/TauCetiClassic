@@ -922,33 +922,36 @@
 	if(isnull(stamina_max))
 		return
 	adjust_stamina(stamina_max * 0.01)
-	if(stamina <= 10 && !stat)
+	if(stamina <= STAMINA_DEFAULT_RUN_THRESHOLD && !stat)
 		if(m_intent == MOVE_INTENT_RUN)
 			to_chat(src, "<span class='warning'>[pick("Ughh... ", "Oof... ", "Ghah... ", "")][pick("I'm exhausted. ", "I'm so tired. ", "I need a rest. ", "")]I can't run anymore!</span>")
-			set_mov_intent(MOVE_INTENT_WALK) // TODO: set_previous_mov_intent()
+			set_mov_intent(prev_m_intent)
 	if(stamina < 0)
 		adjustOxyLoss(stat ? 2 : abs(stamina) * 0.1)
 
 /mob/living/carbon/proc/handle_stamina_bar()
-	if(isnull(stamina_max))
+	if(!hud_used || !hud_used.staminadisplay)
 		return
-	if(hud_used && hud_used.staminadisplay)
-		if(stamina <= 0)
-			hud_used.staminadisplay.icon_state = "stam_bar_0"
-			return
-		hud_used.staminadisplay.icon_state = "stam_bar_[round((stamina / stamina_max) * 100, 5)]"
+	if(isnull(stamina_max))
+		hud_used.staminadisplay.invisibility = 101
+		return
 
-/mob/living/carbon/proc/adjust_stamina(amount = 0)
+	if(stamina <= 0)
+		hud_used.staminadisplay.icon_state = "stam_bar_0"
+		return
+	hud_used.staminadisplay.icon_state = "stam_bar_[round((stamina / stamina_max) * 100, 5)]"
+
+/mob/living/carbon/adjust_stamina(amount = 0)
 	if(isnull(stamina_max))
 		return
 	stamina = CLAMP(stamina + amount, STAMINA_DEFAULT_MINIMUM, stamina_max)
 
-/mob/living/carbon/proc/set_stamina(amount = 0)
+/mob/living/carbon/set_stamina(amount = 0)
 	if(isnull(stamina_max))
 		return
 	stamina = CLAMP(amount, STAMINA_DEFAULT_MINIMUM, stamina_max)
 
-/mob/living/carbon/proc/set_stamina_max(amount = STAMINA_DEFAULT_MAXIMUM)
+/mob/living/carbon/set_stamina_max(amount = STAMINA_DEFAULT_MAXIMUM)
 	if(!amount)
 		return
 	stamina_max = amount

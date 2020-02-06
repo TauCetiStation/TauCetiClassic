@@ -239,13 +239,17 @@
 			var/mob/living/L = affecting
 			L.adjustOxyLoss(1)
 
+		affecting.adjust_stamina(-1)
+
 	if(state >= GRAB_KILL)
 		//affecting.apply_effect(STUTTER, 5) //would do this, but affecting isn't declared as mob/living for some stupid reason.
 		affecting.stuttering = max(affecting.stuttering, 5) //It will hamper your voice, being choked and all.
 		affecting.Weaken(5)	//Should keep you down unless you get help.
-		affecting.losebreath = max(affecting.losebreath + 2, 3)
+		affecting.losebreath = max(affecting.losebreath + 1, 2)
+		affecting.adjust_stamina(-10)
 
 	adjust_position()
+	assailant.adjust_stamina(-1)
 
 
 /obj/item/weapon/grab/attack_self()
@@ -322,6 +326,7 @@
 			assailant.set_dir(EAST) //face the victim
 			affecting.set_dir(SOUTH) //face up
 		set_state(GRAB_AGGRESSIVE)
+		assailant.adjust_stamina(-4)
 
 	else if(state < GRAB_NECK)
 		if(isslime(affecting))
@@ -340,6 +345,7 @@
 		msg_admin_attack("[key_name(assailant)] grabbed the neck of [key_name(affecting)]", assailant)
 		affecting.Stun(10) //10 ticks of ensured grab
 		set_state(GRAB_NECK)
+		assailant.adjust_stamina(-5)
 
 	else if(state < GRAB_KILL)
 		if(ishuman(affecting))
@@ -355,6 +361,8 @@
 
 		affecting.losebreath += 1
 		affecting.set_dir(WEST)
+
+		assailant.adjust_stamina(-6)
 
 		set_state(GRAB_KILL)
 
@@ -423,6 +431,7 @@
 					if(!BP)
 						return
 					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [H]'s [BP.name] into a jointlock!</span>")
+					assailant.adjust_stamina(-6)
 					var/armor = H.run_armor_check(H, "melee")
 					if(armor < 2)
 						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
@@ -487,6 +496,7 @@
 						if(affecting.lying)
 							return
 						assailant.visible_message("<span class='danger'>[assailant] thrusts \his head into [affecting]'s skull!</span>")
+						assailant.adjust_stamina(-5)
 						var/damage = 20
 						var/obj/item/clothing/hat = assailant.head
 						if(istype(hat))
