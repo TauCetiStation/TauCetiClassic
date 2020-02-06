@@ -7,4 +7,4 @@
 #define RESEARCH_ILLEGAL       "illegal"
 
 // Is used in calculating reliability increase per prototype created.
-#define RND_RELIABILITY_EXPONENT 0.9
+#define RND_RELIABILITY_EXPONENT 0.75

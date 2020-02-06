@@ -103,6 +103,43 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	return TRUE
 
+/datum/research/proc/CanUpgrade(datum/technology/T)
+	if(T.reliability_upgrade_cost > research_points)
+		return FALSE
+	return TRUE
+
+/datum/research/proc/GetReliabilityUpgradeCost(datum/technology/T)
+	if(!T.unlocks_designs || !T.unlocks_designs.len)
+		return 0
+
+	var/reliability_increase = 0
+	var/total_reliability = 0
+
+	for(var/t in T.unlocks_designs)
+		var/datum/design/D = design_by_id[t]
+
+		reliability_increase += D.reliability * (RND_RELIABILITY_EXPONENT ^ D.created_prototypes)
+		total_reliability += D.reliability
+
+	var/tech_cost_modifier = 1.0
+	if(T.cost > 0.0)
+		tech_cost_modifier = T.cost
+
+	return round((tech_cost_modifier * (total_reliability + reliability_increase)) / (100 * T.unlocks_designs.len))
+
+/datum/research/proc/GetAverageDesignReliability(datum/technology/T)
+	if(!T.unlocks_designs || !T.unlocks_designs.len)
+		return 0
+
+	var/total_reliability = 0
+
+	for(var/t in T.unlocks_designs)
+		var/datum/design/D = design_by_id[t]
+
+		total_reliability += D.reliability
+
+	return round(total_reliability / T.unlocks_designs.len)
+
 /datum/research/proc/UnlockTechology(datum/technology/T, force = FALSE)
 	if(IsResearched(T))
 		return
@@ -118,6 +155,28 @@ The tech datums are the actual "tech trees" that you improve through researching
 		var/datum/design/D = design_by_id[t]
 
 		AddDesign2Known(D)
+
+	T.reliability_upgrade_cost = GetReliabilityUpgradeCost(T)
+	T.avg_reliability = GetAverageDesignReliability(T)
+
+/datum/research/proc/UpgradeTechology(datum/technology/T, force = FALSE)
+	if(!IsResearched(T))
+		return
+	if(!CanUpgrade(T) && !force)
+		return
+
+	if(!force)
+		research_points -= T.reliability_upgrade_cost
+
+	for(var/t in T.unlocks_designs)
+		var/datum/design/D = design_by_id[t]
+
+		D.reliability += D.reliability * (RND_RELIABILITY_EXPONENT ** D.created_prototypes)
+		D.reliability = max(round(D.reliability, 5), 1)
+		D.created_prototypes++ // Since we don't want to be able to increase it infinitely.
+
+	T.reliability_upgrade_cost = GetReliabilityUpgradeCost(T)
+	T.avg_reliability = GetAverageDesignReliability(T)
 
 /datum/research/proc/download_from(datum/research/O)
 	for(var/tech_tree_id in O.tech_trees)
@@ -311,6 +370,9 @@ The tech datums are the actual "tech trees" that you improve through researching
 	var/list/required_technologies = list() // Ids of techologies that are required to be unlocked before this one. Should have same tech_type
 	var/list/required_tech_levels = list()  // list("biotech" = 5, ...) Ids and required levels of tech
 	var/cost = 100                          // How much research points required to unlock this techology
+
+	var/reliability_upgrade_cost = 0        // Is set after researched, updated each time it is upgraded.
+	var/avg_reliability = 0                 // Shows the average reliability of designs in this tech. Is set after researched, updated each time it is upgraded.
 
 	var/list/unlocks_designs = list()       // Ids of designs that this technology unlocks
 

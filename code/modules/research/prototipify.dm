@@ -4,12 +4,25 @@
 #define CRIT_FAIL_ADJECTIVES list("defective", "broken", "borked", "unusable", "useless")
 #define CRIT_FAIL_REMARKS list("Completely unusable.", "Utterly pointless.", "In no possible way useful.", "Broken to the point of no return.", "Defective.", "Doesn't seem to work.")
 
+#define PROTOTYPE_MARK(mark) "Mk. [num2roman(mark)]"
+
 // This is very important. Almost all items constructed via protolathe are unreliable
 // And are deconstructions of items made by deconstructing other items
 // So consider them tests of "new" construction techniques for an item already known
 /obj/proc/prototipify(min_reliability=0, max_reliability=100)
 	origin_tech = null
-	reliability = CLAMP(rand(min_reliability, max_reliability), 0, 100)
+
+	var/rel_val = rand(min_reliability, max_reliability)
+	var/saved_rel_val = rel_val
+	var/mark = 0
+	while(rel_val >= 100)
+		rel_val -= 100
+		mark += 1
+
+	if(rel_val < 0)
+		rel_val = 0
+
+	reliability = mark > 0 ? 100 : rel_val
 
 	if(reliability < 100)
 		if(!prob(reliability))
@@ -20,19 +33,35 @@
 			name = pick(PROTOTYPE_ADJECTIVES) + " " + name
 			desc += " " + pick(PROTOTYPE_DESC_REMARKS)
 	else
-		name = pick(PROTOTYPE_ADJECTIVES) + " " + name + " MK I"
+		name += " " + PROTOTYPE_MARK(mark)
 
 	for(var/obj/sub_obj in contents)
 		sub_obj.prototipify(min_reliability, max_reliability)
 
+	set_prototype_qualities(rel_val=saved_rel_val, mark=mark)
+
 	update_icon()
 
-/obj/item/prototipify(min_reliability=0, max_reliability=100)
+/obj/proc/set_prototype_qualities(rel_val=100, mark=0)
+	for(var/i in 1 to 10)
+		if(prob(300 - rel_val))
+			price *= 1.2
+		else
+			break
+
+	if(crit_fail)
+		price *= 0.75
+	else if(!prob(rel_val))
+		price *= 0.9
+
+/obj/item/set_prototype_qualities(rel_val=100, mark=0)
 	..()
-	if(!prob(reliability))
+	if(!prob(200 - rel_val))
+		w_class = max(ITEM_SIZE_TINY, w_class - 1)
+	else if(!prob(rel_val))
 		w_class += 1
 
-/obj/item/weapon/stock_parts/prototipify(min_reliability=0, max_reliability=100)
+/obj/item/weapon/stock_parts/set_prototype_qualities(rel_val=100, mark=0)
 	..()
 	while(!prob(reliability))
 		if(rating == 0)

@@ -83,7 +83,7 @@
 	T = -1
 	for(var/obj/item/weapon/stock_parts/manipulator/Ml in component_parts)
 		T += Ml.rating
-	efficiency_coeff = max(round(T * 0.3 + 1), 1)
+	efficiency_coeff = max(round(T * 0.3), 1)
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
 /obj/machinery/mecha_part_fabricator/check_access(obj/item/weapon/card/id/I)
@@ -181,10 +181,10 @@
 	var/I = new D.build_path(location)
 	if(isobj(I))
 		var/obj/O = I
-		O.prototipify(min_reliability=D.reliability + efficiency_coeff * 7.5,  max_reliability=70 + efficiency_coeff * 7.5)
+		O.prototipify(min_reliability=D.reliability + efficiency_coeff * 25.0,  max_reliability=70 + efficiency_coeff * 25.0)
 
-		D.reliability += D.reliability * (RND_RELIABILITY_EXPONENT ^ D.created_prototypes)
-		D.reliability = CLAMP(D.reliability, 1, 100)
+		D.reliability += D.reliability * (RND_RELIABILITY_EXPONENT ** D.created_prototypes)
+		D.reliability = max(round(D.reliability, 5), 1)
 		D.created_prototypes++
 	if(istype(I, /obj/item))
 		var/obj/item/Item = I
