@@ -113,7 +113,7 @@
 
 /proc/log_runtime(text)
 	if (config && config.log_runtime)
-		global.runtime_log << "\[[time_stamp()]][text][log_end]"
+		global.runtime_log << "\[[time_stamp()]] [text][log_end]"
 
 /proc/log_initialization(text)
 	var/static/preconfig_init_log = ""

@@ -104,10 +104,10 @@ var/base_commit_sha = 0
 
 	var/debug_rev_message = ""
 	if(base_commit_sha)
-		debug_rev_message += "Base SHA: [base_commit_sha]\n[log_end]"
+		debug_rev_message += "Base SHA: [base_commit_sha][log_end]\n"
 
 	if(fexists("test_merge.txt"))
-		debug_rev_message += "TM: [trim(file2text("test_merge.txt"))]\n[log_end]"
+		debug_rev_message += "TM: [trim(file2text("test_merge.txt"))][log_end]\n"
 
 	if(length(debug_rev_message))
 		info(debug_rev_message)
