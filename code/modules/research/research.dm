@@ -165,6 +165,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 	if(!CanUpgrade(T) && !force)
 		return
 
+	T.reliability_upgrade_cost = GetReliabilityUpgradeCost(T)
+
 	if(!force)
 		research_points -= T.reliability_upgrade_cost
 
