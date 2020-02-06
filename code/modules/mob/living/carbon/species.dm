@@ -229,6 +229,9 @@
 	min_age = 25
 	max_age = 85
 
+/datum/species/human/handle_post_spawn(mob/living/carbon/human/H)
+	H.set_stamina_max(STAMINA_DEFAULT_MAXIMUM)
+
 /datum/species/unathi
 	name = UNATHI
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
@@ -250,7 +253,7 @@
 
 	brute_mod = 0.80
 	burn_mod = 0.90
-	speed_mod = 0.7
+	speed_mod = 0.5
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -266,6 +269,9 @@
 
 	min_age = 25
 	max_age = 85
+
+/datum/species/unathi/handle_post_spawn(mob/living/carbon/human/H)
+	H.set_stamina_max(STAMINA_DEFAULT_MAXIMUM)
 
 /datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	..()
@@ -322,6 +328,9 @@
 	min_age = 25
 	max_age = 85
 
+/datum/species/tajaran/handle_post_spawn(mob/living/carbon/human/H)
+	H.set_stamina_max(STAMINA_DEFAULT_MAXIMUM)
+
 /datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
@@ -364,6 +373,9 @@
 
 	min_age = 25
 	max_age = 150
+
+/datum/species/skrell/handle_post_spawn(mob/living/carbon/human/H)
+	H.set_stamina_max(STAMINA_DEFAULT_MAXIMUM)
 
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
@@ -640,6 +652,7 @@
 
 	brute_mod = 1.5
 	burn_mod = 1
+	speed_mod = 0.7
 	siemens_coefficient = 1.3 // ROBUTT.
 
 	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
@@ -729,6 +742,7 @@
 	oxy_mod = 0
 	tox_mod = 0
 	clone_mod = 0
+	speed_mod = 1
 	siemens_coefficient = 0
 
 	butcher_drops = list()
@@ -979,7 +993,7 @@
 	burn_mod = 1
 	oxy_mod = 0
 	tox_mod = 0
-	speed_mod = -0.2
+	speed_mod = 0.4
 
 	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
 
@@ -1024,7 +1038,7 @@
 
 	brute_mod = 2.2
 	burn_mod = 1.2
-	speed_mod = -0.8
+	speed_mod = 0.2
 
 	tail = "tajaran_zombie"
 
@@ -1066,7 +1080,6 @@
 
 	brute_mod = 1.80
 	burn_mod = 0.90
-	speed_mod = -0.2
 
 	tail = "unathi_zombie"
 
@@ -1099,6 +1112,8 @@
 	cold_level_1 = 280
 	cold_level_2 = 230
 	cold_level_3 = 150
+
+	speed_mod = 1
 
 	flags = list(
 	 NO_BREATHE = TRUE

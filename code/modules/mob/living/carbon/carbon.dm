@@ -26,7 +26,7 @@
 	. = ..()
 	if(.)
 		handle_phantom_move(NewLoc, Dir)
-		if(!stat && m_intent == MOVE_INTENT_RUN)
+		if(canmove && !lying && m_intent == MOVE_INTENT_RUN)
 			adjust_stamina(-1)
 		if(nutrition && stat != DEAD)
 			var/met_factor = get_metabolism_factor()

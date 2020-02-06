@@ -61,7 +61,7 @@
 	. = ..()
 
 	verbs += /mob/living/carbon/proc/crawl
-	set_stamina_max(100)
+	set_stamina_max(STAMINA_DEFAULT_MAXIMUM)
 
 /mob/living/carbon/ian/UnarmedAttack(atom/A)
 	..()
