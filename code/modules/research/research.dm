@@ -162,10 +162,11 @@ The tech datums are the actual "tech trees" that you improve through researching
 /datum/research/proc/UpgradeTechology(datum/technology/T, force = FALSE)
 	if(!IsResearched(T))
 		return
-	if(!CanUpgrade(T) && !force)
-		return
 
 	T.reliability_upgrade_cost = GetReliabilityUpgradeCost(T)
+
+	if(!CanUpgrade(T) && !force)
+		return
 
 	if(!force)
 		research_points -= T.reliability_upgrade_cost
