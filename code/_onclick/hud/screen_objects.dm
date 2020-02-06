@@ -626,7 +626,7 @@
 /obj/screen/CtrlClick(mob/M)
 	if(name == "mov_intent")
 		M.set_mov_intent(M.prev_m_intent, TRUE)
-		return
+		return TRUE
 	..(M)
 
 /obj/screen/inventory/Click()
