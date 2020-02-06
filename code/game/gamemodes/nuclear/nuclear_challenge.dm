@@ -2,10 +2,9 @@
 #define CHALLENGE_TIME_LIMIT 6000
 #define CHALLENGE_MIN_PLAYERS 40
 
-var/global/Challenge
-var/global/Dropod_used
-var/global/Gateway_hack
-var/global/shuttle_moved
+var/global/war_device_activated
+var/global/war_device_activation_forbidden
+
 
 
 /obj/item/device/nuclear_challenge
@@ -57,7 +56,7 @@ var/global/shuttle_moved
 	to_chat(user, "You've attracted the attention of powerful forces within the syndicate. \
 	A bonus bundle of telecrystals has been granted to your team. Great things await you if you complete the mission.")
 
-	Challenge = TRUE
+	war_device_activated = TRUE
 
 	var/obj/item/device/radio/uplink/U = new(get_turf(user))
 	U.hidden_uplink.uses = CHALLENGE_TELECRYSTALS
@@ -82,14 +81,8 @@ var/global/shuttle_moved
 	if(world.time-round_start_time > CHALLENGE_TIME_LIMIT)
 		to_chat(user, "It's too late to declare hostilities. Your benefactors are already busy with other schemes. You'll have to make do with what you have on hand.")
 		return 0
-	if(Dropod_used)
-		to_chat(user, "The Droppod has already been launch! You have forfeited the right to declare war.")
-		return 0
-	if(Gateway_hack)
-		to_chat(user, "The Gateway hack has already been in progress! You have forfeited the right to declare war.")
-		return 0
-	if(shuttle_moved)
-		to_chat(user, "The shuttle has already been moved! You have forfeited the right to declare war.")
+	if(war_device_activation_forbidden)
+		to_chat(user, "The invasion has already begun. War can not be declared at this point.")
 		return 0
 	return 1
 
