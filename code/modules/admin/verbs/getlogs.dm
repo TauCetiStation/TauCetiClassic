@@ -98,7 +98,7 @@
 	if(round_query.NextRow())
 		var/round_date = round_query.item[1]
 
-		if(!length(round_date) || !fexists("[global.log_directory]/[round_date]"))
+		if(!length(round_date))
 			to_chat(usr, "<span class='alert'>No logs found</span>")
 			return
 

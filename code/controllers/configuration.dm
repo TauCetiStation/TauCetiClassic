@@ -65,6 +65,7 @@ var/list/net_announcer_secret = list()
 	var/serverwhitelist_message = "Sorry, you can't play on this server, because we use a whitelist.<br/>Please, visit another our server."
 	var/mods_are_mentors = 0
 	var/kick_inactive = 0				//force disconnect for inactive players
+	var/afk_time_bracket = 6000 // 10 minutes
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 
@@ -452,6 +453,9 @@ var/list/net_announcer_secret = list()
 
 				if("kick_inactive")
 					config.kick_inactive = 1
+
+				if ("afk_time_bracket")
+					config.afk_time_bracket = (text2num(value) MINUTES)
 
 				if("load_jobs_from_txt")
 					load_jobs_from_txt = 1
