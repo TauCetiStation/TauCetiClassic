@@ -55,8 +55,11 @@ LOG_QDEL
 ## sql switching
 # SQL_ENABLED
 
-## disconnect players who did nothing during 10 minutes
+## disconnect players who did nothing during 10 minutes or AFK_TIME_BRACKET time
 # KICK_INACTIVE
+
+## Minutes until user will be kicked for being AFK
+# AFK_TIME_BRACKET 10
 
 ## probablities for game modes chosen in "secret" and "random" modes
 ##
