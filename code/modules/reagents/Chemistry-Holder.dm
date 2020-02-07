@@ -172,8 +172,8 @@ var/const/INGEST = 2
 		if(current_reagent.id == reagent)
 			if(preserve_data)
 				trans_data = copy_data(current_reagent)
-			R.add_reagent(current_reagent.id, amount * multiplier, trans_data, safety = 1)
-			src.remove_reagent(current_reagent.id, amount, 1, safety = 1)
+			R.add_reagent(current_reagent.id, amount * multiplier, trans_data, safety = TRUE)
+			src.remove_reagent(current_reagent.id, amount, 1, safety = TRUE)
 			break
 
 	src.update_total()
