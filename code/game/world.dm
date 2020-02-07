@@ -90,6 +90,7 @@ var/base_commit_sha = 0
 	global.log_directory = "data/logs/[log_date]/round-[log_suffix]"
 	global.log_investigate_directory = "[log_directory]/investigate"
 	global.log_debug_directory = "[log_directory]/debug"
+	global.log_debug_js_directory = "[log_debug_directory]/js_errors"
 
 	global.game_log = file("[log_directory]/game.log")
 	global.hrefs_log = file("[log_directory]/href.log")

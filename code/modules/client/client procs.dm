@@ -53,10 +53,10 @@ var/list/blacklisted_builds = list(
 		completed_asset_jobs += job
 		return
 
-	if (href_list["action"] && href_list["action"] == "debugFileOutput" && href_list["file"] && href_list["message"])
+	if (href_list["action"] && href_list["action"] == "jsErrorCatcher" && href_list["file"] && href_list["message"])
 		var/file = href_list["file"]
 		var/message = href_list["message"]
-		debugFileOutput.error(file, message, src)
+		js_error_manager.log_error(file, message, src)
 		return
 
 	//Admin PM

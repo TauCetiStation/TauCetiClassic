@@ -61,6 +61,11 @@
 		user << browse_rsc(stylesheets[key], filename)
 		head_content += "<link rel='stylesheet' type='text/css' href='[filename]'>"
 
+	//should be first script
+	user << browse_rsc('code/modules/error_handler_js/error_handler.js', "error_handler.js")
+	head_content += "<script type='text/javascript' src='error_handler.js'></script>"
+	head_content += "<script type='text/javascript'>var triggerError = attachErrorHandler('browser', true);</script>"
+
 	for (key in scripts)
 		filename = "[ckey(key)].js"
 		user << browse_rsc(scripts[key], filename)
