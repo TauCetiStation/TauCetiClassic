@@ -192,7 +192,7 @@
 
 /obj/machinery/artifical_ventilation/Destroy()
 	if(attached)
-		REMOVE_TRAIT(attached, TRAIT_AV, LA_TRAIT)
+		REMOVE_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
 		attached = null
 	return ..()
 
@@ -208,7 +208,7 @@
 		return
 	if(attached)
 		visible_message("[attached] is detached from \the [src]")
-		REMOVE_TRAIT(attached, TRAIT_AV, LA_TRAIT)
+		REMOVE_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
 		attached = null
 		update_icon()
 		return
@@ -216,16 +216,16 @@
 	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		attached = over_object
-		ADD_TRAIT(attached, TRAIT_AV, LA_TRAIT)
+		ADD_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
 		update_icon()
 
 /obj/machinery/artifical_ventilation/process()
 	var/soundclatch = FALSE
 	if(attached)
-		if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
+		if(!in_range(src, attached))
 			visible_message("The tube is ripped out of [attached]'s lungs, doesn't that hurt?")
 			attached.apply_damage(10, BRUTE, BP_CHEST)
-			REMOVE_TRAIT(attached, TRAIT_AV, LA_TRAIT)
+			REMOVE_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
 			attached = null
 			update_icon()
 		else
@@ -237,14 +237,14 @@
 						soundclatch = TRUE
 					else
 						soundclatch = FALSE
-					if(!HAS_TRAIT_FROM(attached, TRAIT_AV, LA_TRAIT))
-						ADD_TRAIT(attached, TRAIT_AV, LA_TRAIT)
+					if(!HAS_TRAIT_FROM(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT))
+						ADD_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
 				else
-					if(HAS_TRAIT_FROM(attached, TRAIT_AV, LA_TRAIT))
-						REMOVE_TRAIT(attached, TRAIT_AV, LA_TRAIT)
+					if(HAS_TRAIT_FROM(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT))
+						REMOVE_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
 			else
-				if(HAS_TRAIT_FROM(attached, TRAIT_AV, LA_TRAIT))
-					REMOVE_TRAIT(attached, TRAIT_AV, LA_TRAIT)
+				if(HAS_TRAIT_FROM(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT))
+					REMOVE_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
 		return
 
 
@@ -269,7 +269,7 @@
 
 /obj/machinery/cardiopulmonary_bypass/Destroy()
 	if(attached)
-		REMOVE_TRAIT(attached, TRAIT_CPB, LA_TRAIT)
+		REMOVE_TRAIT(attached, TRAIT_CPB, LIFE_ASSIST_MACHINES_TRAIT)
 		attached = null
 	return ..()
 
@@ -285,7 +285,7 @@
 		return
 	if(attached)
 		visible_message("[attached] is detached from \the [src]")
-		REMOVE_TRAIT(attached, TRAIT_CPB, LA_TRAIT)
+		REMOVE_TRAIT(attached, TRAIT_CPB, LIFE_ASSIST_MACHINES_TRAIT)
 		attached = null
 		update_icon()
 		return
@@ -294,7 +294,7 @@
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		attached = over_object
 		update_icon()
-		ADD_TRAIT(attached, TRAIT_CPB, LA_TRAIT)
+		ADD_TRAIT(attached, TRAIT_CPB, LIFE_ASSIST_MACHINES_TRAIT)
 		return
 
 /obj/machinery/cardiopulmonary_bypass/process()
@@ -305,10 +305,10 @@
 			soundclatch = TRUE
 		else
 			soundclatch = FALSE
-		if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
+		if(!in_range(src, attached))
 			visible_message("The tubes is ripped out of [attached]'s heart, doesn't that hurt?")
 			attached.apply_damage(15, BRUTE, BP_CHEST)
-			REMOVE_TRAIT(attached, TRAIT_CPB, LA_TRAIT)
+			REMOVE_TRAIT(attached, TRAIT_CPB, LIFE_ASSIST_MACHINES_TRAIT)
 			attached = null
 			update_icon()
 

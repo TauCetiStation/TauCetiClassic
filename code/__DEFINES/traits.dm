@@ -80,4 +80,4 @@
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
 #define OBESITY_TRAIT      "obesity"
-#define LA_TRAIT            "life_assist_machines"
+#define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"
