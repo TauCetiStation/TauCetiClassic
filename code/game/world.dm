@@ -101,7 +101,7 @@ var/base_commit_sha = 0
 	global.qdel_log  = file("[log_debug_directory]/qdel.log")
 	global.sql_error_log = file("[log_debug_directory]/sql.log")
 
-	round_log("Server starting up")
+	round_log("Server '[config.server_name]' starting up on [BYOND_SERVER_ADDRESS]")
 
 	var/debug_rev_message = ""
 	if(base_commit_sha)
