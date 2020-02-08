@@ -18,7 +18,7 @@
 	name = "wrench"
 	desc = "A wrench with many common uses. Can be usually found in your hand."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "wrench_map"
+	icon_state = "wrench_blue"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
@@ -68,7 +68,7 @@
 	name = "screwdriver"
 	desc = "You can be totally screwwy with this."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "screwdriver_map"
+	icon_state = "screwdriver_blue"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
@@ -139,7 +139,7 @@
 	name = "wirecutters"
 	desc = "This cuts wires."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "cutters_map"
+	icon_state = "cutters_blue"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 6.0

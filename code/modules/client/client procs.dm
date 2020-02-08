@@ -575,6 +575,8 @@ var/list/blacklisted_builds = list(
 	var/is_invalid_year = user_year > bunker_year
 	var/is_invalid_month = user_year == bunker_year && user_month > bunker_month
 	var/is_invalid_day = user_year == bunker_year && user_month == bunker_month && user_day > bunker_day
+
+	var/is_invalid_date = is_invalid_year || is_invalid_month || is_invalid_day
 	var/is_invalid_ingame_age = isnum(player_ingame_age) && player_ingame_age < config.allowed_by_bunker_player_age
 
-	return is_invalid_year || is_invalid_month || is_invalid_day || is_invalid_ingame_age
+	return is_invalid_date && is_invalid_ingame_age

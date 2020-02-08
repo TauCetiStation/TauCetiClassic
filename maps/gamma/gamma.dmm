@@ -2428,7 +2428,7 @@
 	},
 /area/station/civilian/chapel)
 "adY" = (
-/obj/item/device/radio/beacon/explosion_watcher,
+/obj/item/device/radio/beacon/interaction_watcher,
 /turf/simulated/floor/engine/vacuum,
 /turf/simulated/floor{
 	dir = 4;
