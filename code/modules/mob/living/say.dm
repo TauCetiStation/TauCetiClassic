@@ -192,7 +192,7 @@ var/list/department_radio_keys = list(
 				O.hear_talk(src, message, verb, speaking)
 
 	var/area/A = get_area(src)
-	log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
+	log_say("[key_name(src)] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
 	return 1
 
 /mob/living/proc/say_signlang(var/message, var/verb="gestures", var/datum/language/language)

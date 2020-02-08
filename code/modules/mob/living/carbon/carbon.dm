@@ -33,11 +33,16 @@
 			nutrition -= met_factor * 0.01
 			switch(m_intent)
 				if(MOVE_INTENT_WALK)
-					nutrition -= HAS_TRAIT(src, TRAIT_STRESS_EATER) ? met_factor * getHalLoss() * 0.02 : 0 // Which is actually a lot if you come to think of it.
-					nutrition -= met_factor * 0.01
+					if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
+						var/pain = getHalLoss()
+						if(pain > 0)
+							nutrition -= met_factor * pain * 0.01 // Which is actually a lot if you come to think of it.
 				if(MOVE_INTENT_RUN)
-					nutrition -= HAS_TRAIT(src, TRAIT_STRESS_EATER) ? met_factor * getHalLoss() * 0.03 : 0 // Which is actually a lot if you come to think of it.
-					nutrition -= met_factor * 0.02
+					nutrition -= met_factor * 0.01
+					if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
+						var/pain = getHalLoss()
+						if(pain > 0)
+							nutrition -= met_factor * pain * 0.02 // Which is actually a lot if you come to think of it.
 		if(HAS_TRAIT(src, TRAIT_FAT) && bodytemperature <= 360)
 			switch(m_intent)
 				if(MOVE_INTENT_WALK)

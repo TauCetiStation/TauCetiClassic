@@ -86,7 +86,7 @@
 		emote("waves a spear at [.]")
 
 /mob/living/simple_animal/hostile/tribesman/OpenFire(target_mob)
-	visible_message("<span class='warning'><b>[src]</b> throws a spear at [target_mob]!</span>", 1)
+	visible_message("<span class='warning'><b>[src]</b> throws a spear at [target_mob]!</span>")
 	flick(src, "native[my_type]_act")
 
 	var/tturf = get_turf(target_mob)

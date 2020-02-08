@@ -90,7 +90,7 @@
 			msg += {"
 				[key_name(C, 1)] [ADMIN_PP(C.mob)]:<br>
 				<b>Days on server:</b> [C.player_age]<br>
-				<b>In-game minutes:</b> [C.player_ingame_age]
+				<b>In-game minutes:</b> [isnum(C.player_ingame_age) ? C.player_ingame_age : 0]
 				<hr>
 			"}
 
@@ -140,8 +140,8 @@
 		return
 
 	to_chat(M, msg)
-	log_admin("DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]")
-	message_admins("<span class='notice'><b>DirectNarrate</b>: [key_name(usr)] to ([M.name]/[M.key]): [msg]<BR></span>")
+	log_admin("DirectNarrate: [key_name(usr)] to [key_name(M)]: [msg]")
+	message_admins("<span class='notice'><b>DirectNarrate</b>: [key_name(usr)] to [key_name(M)]: [msg]<BR></span>")
 	feedback_add_details("admin_verb","DIRN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_godmode(mob/M as mob in mob_list)
@@ -470,7 +470,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				G_found.mind.transfer_to(new_xeno)	//be careful when doing stuff like this! I've already checked the mind isn't in use
 				new_xeno.key = G_found.key
 				to_chat(new_xeno, "You have been fully respawned. Enjoy the game.")
-				message_admins("<span class='notice'>[key_name_admin(usr)] has respawned [new_xeno.key] as a filthy xeno.</span>")
+				message_admins("<span class='notice'>[key_name_admin(usr)] has respawned [key_name_admin(new_xeno)] as a filthy xeno.</span>")
 				return	//all done. The ghost is auto-deleted
 
 		//check if they were a monkey
@@ -480,7 +480,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				G_found.mind.transfer_to(new_monkey)	//be careful when doing stuff like this! I've already checked the mind isn't in use
 				new_monkey.key = G_found.key
 				to_chat(new_monkey, "You have been fully respawned. Enjoy the game.")
-				message_admins("<span class='notice'>[key_name_admin(usr)] has respawned [new_monkey.key] as a filthy xeno.</span>")
+				message_admins("<span class='notice'>[key_name_admin(usr)] has respawned [key_name_admin(new_monkey)] as a filthy xeno.</span>")
 				return	//all done. The ghost is auto-deleted
 
 
@@ -1155,6 +1155,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/client/target = input("Select player to increase his in-game age to [config.add_player_age_value] minutes") as null|anything in clients
 
 	if(!target)
+		return
+
+	if(!isnum(target.player_ingame_age))
+		to_chat(src, "Player age not loaded yet.")
 		return
 
 	var/value = config.add_player_age_value

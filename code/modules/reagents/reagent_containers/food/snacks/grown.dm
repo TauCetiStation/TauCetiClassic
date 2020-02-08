@@ -153,7 +153,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	seed = "obj/item/seeds/harebellseed"
 	name = "harebell"
-	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten’d not thy breath.\""
+	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten'd not thy breath.\""
 	icon_state = "harebell"
 	potency = 1
 	filling_color = "#d4b2c9"
@@ -676,10 +676,17 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato/attack_self(mob/user)
 	if(istype(user.loc,/turf/space))
 		return
-	new /mob/living/simple_animal/hostile/tomato(user.loc)
+	new /mob/living/simple_animal/hostile/tomato(user.loc, potency)
 	qdel(src)
-
 	to_chat(user, "<span class='notice'>You plant the killer-tomato.</span>")
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/killertomato/attack_hand(mob/living/carbon/human/user)
+	if(!user.gloves)
+		to_chat(user, "<span class='warning'>You woke the killer-tomato!</span>")
+		new /mob/living/simple_animal/hostile/tomato(user.loc, potency)
+		qdel(src)
+	else
+		..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato
 	seed = "/obj/item/seeds/bloodtomatoseed"

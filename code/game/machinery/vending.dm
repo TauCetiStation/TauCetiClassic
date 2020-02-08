@@ -4,7 +4,6 @@
 	var/amount = 0
 	var/max_amount = 0
 	var/price = 0
-	var/display_color = "blue"
 
 /obj/machinery/vending
 	name = "Vendomat"
@@ -113,12 +112,11 @@
 		if(isnull(amount)) amount = 1
 
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
-
+		global.vending_products[typepath] = 1
 		R.product_path = typepath
 		R.amount = amount
 		R.max_amount = amount
 		R.price = price
-		R.display_color = pick("red","orange","green")
 
 		if(hidden)
 			hidden_records += R
@@ -129,7 +127,6 @@
 
 		var/atom/temp = typepath
 		R.product_name = initial(temp.name)
-//		world << "Added: [R.product_name]] - [R.amount] - [R.product_path]"
 	return
 
 /obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, datum/data/vending_product/machine, mob/user)  //Restocking from TG
@@ -359,17 +356,14 @@
 
 	if (product_records.len == 0)
 		dat += "<font color = 'red'>No product loaded!</font>"
-
 	else
-		dat += "<ul>"
-
+		dat += "<table>"
 		dat += print_recors(product_records)
 		if(extended_inventory)
 			dat += print_recors(hidden_records)
 		if(coin)
 			dat += print_recors(coin_records)
-
-		dat += "</ul>"
+		dat += "</table>"
 	dat += "</div>"
 
 	if (premium.len > 0)
@@ -379,22 +373,26 @@
 		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.worth : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
 
 	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 500)
+	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/vending))
 	popup.set_content(dat)
 	popup.open()
 
 /obj/machinery/vending/proc/print_recors(list/record)
 	var/dat
 	for (var/datum/data/vending_product/R in record)
-		dat += "<li>"
-		if (R.amount > 0)
-			dat += " <a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A>"
-		else
-			dat += " <font color = 'red'>SOLD OUT</font>"
-		dat += "<font color = '[R.display_color]'><B>[R.product_name]</B>:"
-		dat += " <b>[R.amount]</b> </font>"
+		dat += "<tr>"
+		dat += {"<td><span class="vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]"></span></td>"}
+		dat += {"<td><font color = '#c9c9b5'><B>[R.product_name]</B></font></td>"}
+		dat += "<td><font color = '#0c4274'><b>[R.amount]</b> </font></td>"
 		if(R.price)
-			dat += " <b>(Price: [R.price])</b>"
-		dat += "</li>"
+			dat += {"<td align="center"><font color = '#ffd700'><b>$[R.price]</b></font></td>"}
+		else
+			dat += {"<td align="center"><font color = '#32cd32'><b>Free</b></font></td>"}
+		if (R.amount > 0)
+			dat += "<td align='right'><a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A></td>"
+		else
+			dat += "<td nowrap><font color = 'red'>SOLD OUT</font></td>"
+		dat += "</tr>"
 	return dat
 
 /obj/machinery/vending/Topic(href, href_list)
@@ -1338,6 +1336,6 @@
 					/obj/item/device/detective_scanner = 1, /obj/item/weapon/storage/box/evidence = 2,
 					/obj/item/weapon/storage/fancy/cigarettes = 10, /obj/item/weapon/storage/fancy/cigarettes/menthol = 5, /obj/item/weapon/storage/box/matches = 10)
 	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 30, /obj/item/weapon/storage/fancy/cigarettes/menthol = 40, /obj/item/weapon/storage/box/matches = 10)
-	product_slogans = "The cheaper the crook, the gaudier the patter.;Dead men are heavier than broken hearts.;Life is a bucket of shit with a barbed wire handle.;After all, you’re only an immortal until someone manages to kill you. After that, you were just long-lived.;The rain fell like dead bullets.;Though I often run out of courage and good sense, stubbornness keeps me going."
-	product_ads = "Keep your mind too open, and you never know what might walk in.;After all, you’re only an immortal until someone manages to kill you. After that, you were just long-lived.;If you don't trust anyone, they can't let you down.;Wait. You've got principles? We'll have to update your file.;I always feel most alive when everything else is dying all around me."
+	product_slogans = "The cheaper the crook, the gaudier the patter.;Dead men are heavier than broken hearts.;Life is a bucket of shit with a barbed wire handle.;After all, you are only an immortal until someone manages to kill you. After that, you were just long-lived.;The rain fell like dead bullets.;Though I often run out of courage and good sense, stubbornness keeps me going."
+	product_ads = "Keep your mind too open, and you never know what might walk in.;After all, you are only an immortal until someone manages to kill you. After that, you were just long-lived.;If you don't trust anyone, they can't let you down.;Wait. You've got principles? We'll have to update your file.;I always feel most alive when everything else is dying all around me."
 	req_access = list(68)
