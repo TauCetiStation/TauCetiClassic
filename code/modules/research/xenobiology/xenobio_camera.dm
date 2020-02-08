@@ -325,25 +325,27 @@
 
 //Scans slime
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickCtrl(mob/living/user, mob/living/carbon/slime/S)
-	if (!cameranet.checkTurfVis(S.loc))
+	if (!cameranet.checkTurfVis(get_turf(S)))
 		to_chat(user, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 		return
+
 	var/mob/living/C = user
 	var/mob/camera/Eye/remote/xenobio/E = C.remote_control
-	var/area/mobarea = get_area(S.loc)
-	if (istype(mobarea, E.allowed_area_type))
+
+	if (istype(get_area(S), E.allowed_area_type))
 		slime_scan(S, C)
 
 //Picks up slime
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickShift(mob/living/user, mob/living/carbon/slime/S)
-	if(!cameranet.checkTurfVis(S.loc))
+	if(!cameranet.checkTurfVis(get_turf(S)))
 		to_chat(user, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 		return
+
 	var/mob/living/C = user
 	var/mob/camera/Eye/remote/xenobio/E = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
-	var/area/mobarea = get_area(S.loc)
-	if (istype(mobarea, E.allowed_area_type))
+
+	if (istype(get_area(S), E.allowed_area_type))
 		if(S.stat)
 			if(!X.connected_recycler)
 				to_chat(user, "<span class='warning'>There is no connected recycler. Use a multitool to link one.</span>")
@@ -369,6 +371,7 @@
 	if(!cameranet.checkTurfVis(T))
 		to_chat(user, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 		return
+
 	var/mob/living/C = user
 	var/mob/camera/Eye/remote/xenobio/E = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
@@ -384,11 +387,12 @@
 	if(!cameranet.checkTurfVis(T))
 		to_chat(user, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 		return
+
 	var/mob/living/C = user
 	var/mob/camera/Eye/remote/xenobio/E = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
-	var/area/turfarea = get_area(T)
-	if (istype(turfarea, E.allowed_area_type))
+
+	if (istype(get_area(T), E.allowed_area_type))
 		if(X.monkeys >= 1)
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(T, TRUE, C)
 			if (!QDELETED(food))
@@ -412,8 +416,7 @@
 		to_chat(C, "<span class='warning'>There is no connected monkey recycler. Use a multitool to link one.</span>")
 		return
 
-	var/area/mobarea = get_area(M.loc)
-	if (istype(mobarea, E.allowed_area_type))
+	if (istype(get_area(M), E.allowed_area_type))
 		if(!M.stat)
 			return
 		M.visible_message("<span class='notice'>[M] vanishes!</span>")
