@@ -220,7 +220,6 @@
 		update_icon()
 
 /obj/machinery/artifical_ventilation/process()
-	var/soundclatch = FALSE
 	if(attached)
 		if(!in_range(src, attached))
 			visible_message("The tube is ripped out of [attached]'s lungs, doesn't that hurt?")
@@ -232,11 +231,6 @@
 			var/datum/gas_mixture/env = loc.return_air()
 			if(env.return_pressure() > (ONE_ATMOSPHERE - 20))
 				if((env.gas["oxygen"] / env.total_moles) > 0.10)
-					if(!soundclatch)
-						playsound(src, "sound/machines/drip/av.ogg", VOL_EFFECTS_MASTER)
-						soundclatch = TRUE
-					else
-						soundclatch = FALSE
 					if(!HAS_TRAIT_FROM(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT))
 						ADD_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
 				else
@@ -298,13 +292,7 @@
 		return
 
 /obj/machinery/cardiopulmonary_bypass/process()
-	var/soundclatch = FALSE
 	if(attached)
-		if(!soundclatch)
-			playsound(src, "sound/machines/drip/cpb.ogg", VOL_EFFECTS_MASTER)
-			soundclatch = TRUE
-		else
-			soundclatch = FALSE
 		if(!in_range(src, attached))
 			visible_message("The tubes is ripped out of [attached]'s heart, doesn't that hurt?")
 			attached.apply_damage(15, BRUTE, BP_CHEST)
