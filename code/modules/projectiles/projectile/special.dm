@@ -331,23 +331,32 @@
 
 /obj/item/projectile/pyrometer/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	. = ..()
+	if(!firer)
+		return
+
+	if(istype(target, /turf/space))
+		return
+
 	if(iscarbon(target) && def_zone == O_EYES)
 		var/mob/living/carbon/C = target
 		C.apply_effect(3, EYE_BLUR, blocked)
 
-	if(!firer || !istype(target, /turf/space))
-		var/temp = measure_temperature(target)
-		if(temp != "NONE")
-			var/term_col = get_term_color(target, temp)
-			if(term_col)
-				impact_effect(effect_transform)		// generate impact effect
-				if(proj_impact_sound)
-					playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)
+	var/temp = measure_temperature(target)
+	if(temp == "NONE")
+		return
 
-				for(var/atom/A in tracer_list)
-					A.color = term_col
-					A.set_light(1, 1, l_color=term_col)
-					A.alpha = 128
+	var/term_col = get_term_color(target, temp)
+	if(!term_col)
+		return
+
+	impact_effect(effect_transform)		// generate impact effect
+	if(proj_impact_sound)
+		playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)
+
+	for(var/atom/A in tracer_list)
+		A.color = term_col
+		A.set_light(1, 1, l_color=term_col)
+		A.alpha = 128
 
 
 // Return temperature if it was possible to measure,

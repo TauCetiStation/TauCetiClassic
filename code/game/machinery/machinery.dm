@@ -287,12 +287,13 @@ Class Procs:
 	return !((stat & (NOPOWER|BROKEN|MAINT|EMPED)) || (panel_open && !interact_open))
 
 /obj/machinery/get_current_temperature()
-	if(is_operational_topic())
-		var/temp = rand(min_operational_temperature, max_operational_temperature)
-		if(emagged)
-			temp = max_operational_temperature += rand(10, 20)
-		return temp
-	return 0
+	if(!is_operational_topic())
+		return 0
+
+	if(emagged)
+		return max_operational_temperature += rand(10, 20)
+
+	return rand(min_operational_temperature, max_operational_temperature)
 
 /obj/machinery/Topic(href, href_list)
 	..()
