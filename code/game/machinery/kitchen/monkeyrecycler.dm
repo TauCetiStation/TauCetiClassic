@@ -117,7 +117,7 @@
 		if(connected)
 			var/whereto = alert(user, "Where to send recycled monkeys?", "Xenobiology", "Outside", "In management console")
 			switch(whereto)
-				if("Xenobiology")
+				if("Outside")
 					to_chat(user, "<span class='notice'>The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.</span>")
 					for(var/i = 0, i < cube_production, i++)
 						new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(loc)
