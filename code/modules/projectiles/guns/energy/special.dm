@@ -418,7 +418,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 /obj/item/weapon/gun/energy/pyrometer/emag_act(mob/user)
 	if(!emagged)
-		ammo_type |= /obj/item/ammo_casing/energy/pyrometer/emagged
+		ammo_type += new /obj/item/ammo_casing/energy/pyrometer/emagged(src)
 		origin_tech += ";syndicate=1"
 
 		emagged = TRUE
@@ -504,8 +504,8 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		zoomed = FALSE
 	to_chat(user, "<font color='[zoomed ? "blue" : "red"]'>Zoom mode [zoomed ? "en" : "dis"]abled.</font>")
 
-/obj/item/weapon/gun/energy/sniperrifle/equipped(mob/user, slot)
-	if(zoom)
+/obj/item/weapon/gun/energy/pyrometer/ce/equipped(mob/user, slot)
+	if(zoomed)
 		toggle_zoom()
 	..()
 
