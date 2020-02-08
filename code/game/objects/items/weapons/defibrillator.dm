@@ -374,7 +374,7 @@
 	set_cooldown(cooldown_time)
 
 	if(H.stat == DEAD)
-		make_announcement("buzzes, \"Resuscitation failed - patient's heart is not beating.\"")
+		make_announcement("buzzes, \"Defibrillation failed - patient's heart is not beating.\"")
 		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	if(H.stat == UNCONSCIOUS && (world.time - H.timeofdeath) >= DEFIB_TIME_LIMIT)
