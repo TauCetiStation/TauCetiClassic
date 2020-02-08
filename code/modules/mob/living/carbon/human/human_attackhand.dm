@@ -82,7 +82,10 @@
 
 	switch(M.a_intent)
 		if("help")
-			if(health > config.health_threshold_dead && health < config.health_threshold_crit)
+			if(health > config.health_threshold_dead && health < config.health_threshold_crit && M.zone_sel.selecting == O_MOUTH)
+				INVOKE_ASYNC(src, .proc/perform_av, M)
+				return 1
+			else if(stat == DEAD && M.zone_sel.selecting == BP_CHEST)
 				INVOKE_ASYNC(src, .proc/perform_cpr, M)
 				return 1
 			else if(!(M == src && apply_pressure(M, M.zone_sel.selecting)))

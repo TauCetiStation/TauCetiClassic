@@ -1,3 +1,7 @@
+#define DEFIB_TIME_LIMIT (8 MINUTES) //past this many seconds, defib is useless. Currently 8 Minutes
+#define DEFIB_TIME_LOSS  (2 MINUTES) //past this many seconds, brain damage occurs. Currently 2 minutes
+#define MAX_BRAIN_DAMAGE 80
+
 /mob/living/carbon/atom_init()
 	. = ..()
 	carbon_list += src
@@ -758,18 +762,18 @@
 	. = metabolism_factor
 
 
-/mob/living/carbon/proc/perform_cpr(mob/living/carbon/human/user) // don't forget to INVOKE_ASYNC this proc if sleep is a problem.
+/mob/living/carbon/proc/perform_av(mob/living/carbon/human/user) // don't forget to INVOKE_ASYNC this proc if sleep is a problem.
 	if(!ishuman(src) && !isIAN(src))
 		return
 	if(user.is_busy(src))
 		return
 
-	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
+	visible_message("<span class='danger'>[user] is trying perform AV on [src]!</span>")
 
 	if(do_mob(user, src, HUMAN_STRIP_DELAY))
 		 // yes, we check this after the action, allowing player to try this even if it looks wrong (for fun).
 		if(user.species && user.species.flags[NO_BREATHE])
-			to_chat(user, "<span class='notice bold'>Your species can not perform CPR!</span>")
+			to_chat(user, "<span class='notice bold'>Your species can not perform AV!</span>")
 			return
 		if((user.head && (user.head.flags & HEADCOVERSMOUTH)) || (user.wear_mask && (user.wear_mask.flags & MASKCOVERSMOUTH)))
 			to_chat(user, "<span class='notice bold'>Remove your mask!</span>")
@@ -778,7 +782,7 @@
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			if(H.species && H.species.flags[NO_BREATHE])
-				to_chat(user, "<span class='notice bold'>You can not perform CPR on these species!</span>")
+				to_chat(user, "<span class='notice bold'>You can not perform AV on these species!</span>")
 				return
 			if(wear_mask && wear_mask.flags & MASKCOVERSMOUTH)
 				to_chat(user, "<span class='notice bold'>Remove [src] [wear_mask]!</span>")
@@ -792,9 +796,65 @@
 			var/suff = min(getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
 			adjustOxyLoss(-suff)
 			updatehealth()
-			visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
+			visible_message("<span class='warning'>[user] performs AV on [src]!</span>")
 			to_chat(src, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
 			to_chat(user, "<span class='warning'>Repeat at least every 7 seconds.</span>")
+
+/mob/living/carbon/proc/perform_cpr(mob/living/carbon/human/user)
+	if(user.is_busy(src))
+		return
+	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
+	if(do_mob(user, src, HUMAN_STRIP_DELAY))
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.stat == DEAD && (world.time - H.timeofdeath) < DEFIB_TIME_LIMIT)
+				var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+				if(prob(15) && IO.damage < 1)
+					H.stat = UNCONSCIOUS
+					return_to_body_dialog(H)
+					reanimate_body(H)
+					to_chat(user, "<span class='warning'>Resuscitation successful.</span>")
+				else if(prob(5) && IO.damage > 1)
+					H.stat = UNCONSCIOUS
+					return_to_body_dialog(H)
+					reanimate_body(H)
+					to_chat(user, "<span class='warning'>Resuscitation successful.</span>")
+				visible_message("<span class='warning'>[user] performs CPR on [H]!</span>")
+				to_chat(user, "<span class='warning'>Repeat at least every 7 seconds.</span>")
+
+/mob/living/carbon/proc/reanimate_body(mob/living/carbon/human/returnable)
+	var/deadtime = world.time - returnable.timeofdeath
+	returnable.tod = null
+	returnable.timeofdeath = 0
+	dead_mob_list -= returnable
+	returnable.update_health_hud()
+	apply_brain_damage(returnable, deadtime)
+
+/mob/living/carbon/proc/apply_brain_damage(mob/living/carbon/human/H, var/deadtime)
+	if(deadtime < DEFIB_TIME_LOSS)
+		return
+
+	if(!H.should_have_organ(O_BRAIN))
+		return //no brain
+
+	var/obj/item/organ/internal/brain/brain = H.organs_by_name[O_BRAIN]
+	if(!brain)
+		return //no brain
+
+	var/brain_damage = CLAMP((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, H.getBrainLoss(), MAX_BRAIN_DAMAGE)
+	H.setBrainLoss(brain_damage)
+
+/mob/living/carbon/proc/return_to_body_dialog(mob/living/carbon/human/returnable)
+	if (returnable.key) //in body?
+		returnable.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+	else if(returnable.mind)
+		for(var/mob/dead/observer/ghost in player_list)
+			if(ghost.mind == returnable.mind && ghost.can_reenter_corpse)
+				ghost.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+				var/answer = alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate","Yes","No")
+				if(answer == "Yes")
+					ghost.reenter_corpse()
+				break
 
 /mob/living/carbon/Topic(href, href_list)
 	..()
@@ -899,3 +959,7 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+
+#undef DEFIB_TIME_LIMIT
+#undef DEFIB_TIME_LOSS
+#undef MAX_BRAIN_DAMAGE

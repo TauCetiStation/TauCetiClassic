@@ -373,8 +373,12 @@
 	playsound(src, 'sound/items/surgery/defib_zap.ogg', VOL_EFFECTS_MASTER)
 	set_cooldown(cooldown_time)
 
-	if(H.stat == DEAD && (world.time - H.timeofdeath) >= DEFIB_TIME_LIMIT)
-		make_announcement("buzzes, \"Resuscitation failed - Severe neurological decay makes recovery of patient impossible. Further attempts futile.\"")
+	if(H.stat == DEAD)
+		make_announcement("buzzes, \"Resuscitation failed - patient's heart is not beating.\"")
+		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
+	if(H.stat == UNCONSCIOUS && (world.time - H.timeofdeath) >= DEFIB_TIME_LIMIT)
+		make_announcement("buzzes, \"Defibrillation failed - Severe neurological decay makes recovery of patient impossible. Further attempts futile.\"")
 		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
@@ -386,14 +390,12 @@
 	H.updatehealth()
 
 	if(H.health < config.health_threshold_dead)
-		make_announcement("buzzes, \"Resuscitation failed - Patinent's body is too wounded to sustain life.\"")
+		make_announcement("buzzes, \"Defibrillation failed - Patinent's body is too wounded to sustain heart beating.\"")
 		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
-	if(H.stat == DEAD)
-		H.stat = UNCONSCIOUS
-		return_to_body_dialog(H)
-		reanimate_body(H)
+	if(H.stat == UNCONSCIOUS)
+		H.stat = CONSCIOUS
 
 	if(wet)
 		var/turf/T = get_turf(src)
@@ -404,28 +406,8 @@
 		else
 			user.Weaken(6)
 
-	make_announcement("pings, \"Resuscitation successful.\"")
+	make_announcement("pings, \"Defibrillation successful.\"")
 	playsound(src, 'sound/items/surgery/defib_success.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-
-/obj/item/weapon/twohanded/shockpaddles/proc/return_to_body_dialog(mob/living/carbon/human/returnable)
-	if (returnable.key) //in body?
-		returnable.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
-	else if(returnable.mind)
-		for(var/mob/dead/observer/ghost in player_list)
-			if(ghost.mind == returnable.mind && ghost.can_reenter_corpse)
-				ghost.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
-				var/answer = alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate","Yes","No")
-				if(answer == "Yes")
-					ghost.reenter_corpse()
-				break
-
-/obj/item/weapon/twohanded/shockpaddles/proc/reanimate_body(mob/living/carbon/human/returnable)
-	var/deadtime = world.time - returnable.timeofdeath
-	returnable.tod = null
-	returnable.timeofdeath = 0
-	dead_mob_list -= returnable
-	returnable.update_health_hud()
-	apply_brain_damage(returnable, deadtime)
 
 /obj/item/weapon/twohanded/shockpaddles/proc/do_electrocute(mob/living/carbon/human/H, mob/user, var/target_zone)
 	var/obj/item/organ/external/affecting = H.get_bodypart(target_zone)
