@@ -114,25 +114,11 @@
 	if(.)
 		return
 	if(grinded >= required_grind)
-		if(connected)
-			var/whereto = alert(user, "Where to send recycled monkeys?", "Xenobiology", "Outside", "In management console")
-			switch(whereto)
-				if("Outside")
-					to_chat(user, "<span class='notice'>The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.</span>")
-					for(var/i = 0, i < cube_production, i++)
-						new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(loc)
-				if("In management console")
-					connected.monkeys += cube_production
-					to_chat(user, "<span class='notice'>[connected] now has [connected.monkeys] monkeys stored.</span>")
-				else
-					return
-		else
-			to_chat(user, "<span class='notice'>The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.</span>")
-			for(var/i = 0, i < cube_production, i++)
-				new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(loc)
-		grinded -= required_grind
+		to_chat(user, "<span class='notice'>The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.</span>")
 		playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER)
+		grinded -= required_grind
+		for(var/i = 0, i < cube_production, i++)
+			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(loc)
 		to_chat(user, "<span class='notice'>The machine's display flashes that it has [grinded] monkeys worth of material left.</span>")
 	else
 		to_chat(user, "<span class='danger'>The machine needs at least [required_grind] monkey(s) worth of material to produce a monkey cube. It only has [grinded].</span>")
-

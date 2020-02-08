@@ -66,7 +66,7 @@
 		C.remove(eyeobj)
 	if(user.client)
 		user.reset_view(null)
-		if(eyeobj.visible_icon && user.client)
+		if(eyeobj.user_camera_icon && user.client)
 			user.client.images -= eyeobj.user_image
 	eyeobj.master = null
 	user.remote_control = null
@@ -132,7 +132,7 @@
 	user.remote_control = eyeobj
 	user.reset_view(eyeobj)
 	eyeobj.setLoc(eyeobj.loc)
-	if(eyeobj.visible_icon && user.client)
+	if(eyeobj.user_camera_icon && user.client)
 		user.client.images += eyeobj.user_image
 
 /mob/camera/Eye/remote
@@ -142,13 +142,13 @@
 	var/cooldown = 0
 	var/acceleration = FALSE
 	var/eye_initialized = FALSE
-	var/visible_icon = FALSE
+	var/user_camera_icon = null		//How icon appears to user. If you want eye to be invisible to anyone but user, use this instead of "icon" variable.
 	var/image/user_image = null
 	var/allowed_area_type = null
 
 /mob/camera/Eye/remote/atom_init()
-	if(!user_image && visible_icon)
-		user_image = image(icon = icon,loc = src,icon_state = icon_state,layer = LIGHTING_LAYER+1)
+	if(!user_image && user_camera_icon)
+		user_image = image(icon = user_camera_icon,loc = src,icon_state = icon_state,layer = LIGHTING_LAYER+1)
 	. = ..()
 
 /mob/camera/Eye/remote/Destroy()

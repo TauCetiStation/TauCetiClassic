@@ -1,7 +1,6 @@
 //Xenobio control console
 /mob/camera/Eye/remote/xenobio
-	visible_icon = TRUE
-	icon = 'icons/mob/blob.dmi'
+	user_camera_icon = 'icons/mob/blob.dmi'
 	icon_state = "marker"
 	allowed_area_type = /area/station/rnd/xenobiology
 
@@ -9,7 +8,7 @@
 	name = "Slime management console"
 	desc = "A computer used for remotely handling slimes."
 	icon_state = "rdcomp"
-	
+
 	circuit = /obj/item/weapon/circuitboard/camera_advanced/xenobio
 	light_color = "#a97faa"
 
@@ -24,7 +23,7 @@
 	var/list/stored_slimes = list()
 	var/max_slimes = 5
 	var/monkeys = 0
-	
+
 
 /obj/machinery/computer/camera_advanced/xenobio/atom_init()
 	. = ..()
@@ -66,7 +65,6 @@
 /obj/machinery/computer/camera_advanced/xenobio/CreateEye()
 	eyeobj = new /mob/camera/Eye/remote/xenobio(get_turf(src))
 	eyeobj.origin = src
-	eyeobj.visible_icon = TRUE
 
 /obj/machinery/computer/camera_advanced/xenobio/GrantActions(mob/living/user)
 	..()
