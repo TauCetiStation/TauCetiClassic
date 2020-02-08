@@ -10,11 +10,7 @@
 
 /obj/structure/extinguisher_cabinet/atom_init()
 	. = ..()
-	if(prob(2))
-		has_extinguisher = new/obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned(src)
-	else if(prob(5))
-		has_extinguisher = new/obj/item/weapon/reagent_containers/spray/extinguisher/golden/station_spawned(src)
-	else
+	if(!has_extinguisher)
 		has_extinguisher = new/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned(src)
 	update_icon()
 
@@ -63,15 +59,17 @@
 
 /obj/structure/extinguisher_cabinet/update_icon()
 	var/FE = "empty"
-
 	if(has_extinguisher)
-		if(istype(has_extinguisher, /obj/item/weapon/reagent_containers/spray/extinguisher/mini))
-			FE = "mini"
-		else if(istype(has_extinguisher, /obj/item/weapon/reagent_containers/spray/extinguisher/golden))
-			FE = "golden"
-		else
-			FE = "red"
+		FE = has_extinguisher.FE_type
 	if(opened)
 		icon_state = "extinguisher_[FE]"
 	else
 		icon_state = "extinguisher_[FE]_closed"
+
+/obj/structure/extinguisher_cabinet/highrisk
+	name = "expensive extinguisher cabinet"
+	icon_state = "extinguisher_golden_closed"
+
+/obj/structure/extinguisher_cabinet/highrisk/atom_init()
+	. = ..()
+	has_extinguisher = new/obj/item/weapon/reagent_containers/spray/extinguisher/golden(src)

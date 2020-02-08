@@ -56735,6 +56735,9 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "rES" = (
+/obj/structure/extinguisher_cabinet/highrisk{
+	pixel_x = -30
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warndark"

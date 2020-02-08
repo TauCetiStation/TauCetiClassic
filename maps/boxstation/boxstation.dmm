@@ -33098,6 +33098,9 @@
 	},
 /area/station/civilian/locker)
 "bim" = (
+/obj/structure/extinguisher_cabinet/highrisk{
+	pixel_x = 30
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "vault"
