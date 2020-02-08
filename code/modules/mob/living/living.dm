@@ -1222,6 +1222,9 @@
 	return TRUE
 
 /mob/living/set_mov_intent(intent, show_warning = FALSE)
+	if(intent == m_intent)
+		return TRUE
+
 	switch(intent)
 		if(MOVE_INTENT_WALK)
 			prev_m_intent = MOVE_INTENT_CREEP

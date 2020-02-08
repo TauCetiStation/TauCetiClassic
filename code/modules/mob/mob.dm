@@ -268,6 +268,20 @@
 	else
 		to_chat(src, "The game appears to have misplaced your mind datum, so we can't show you your notes.")
 
+/mob/verb/set_run_mov_intent()
+	set name = "Run"
+	set category = "IC"
+	set hidden = TRUE
+
+	set_mov_intent(MOVE_INTENT_RUN)
+
+/mob/verb/set_prev_mov_intent()
+	set name = "Do Not Run"
+	set category = "IC"
+	set hidden = TRUE
+
+	set_mov_intent(prev_m_intent)
+
 /mob/proc/store_memory(msg, popup)
 	msg = sanitize(msg)
 

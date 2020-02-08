@@ -36,6 +36,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \t x = swap-hand
 \t z = click on held object (or y)
 \t b = click on self
+\t SHIFT = run
 \t f = cycle-intents-left
 \t g = cycle-intents-right
 \t 1 = help-intent
@@ -63,6 +64,7 @@ Any-Mode: (hotkey doesn't need to be on)
 \t Ctrl+2 = disarm-intent
 \t Ctrl+3 = grab-intent
 \t Ctrl+4 = harm-intent
+\t SHIFT = run
 \t DEL = pull
 \t INS = cycle-intents-right
 \t HOME = drop
