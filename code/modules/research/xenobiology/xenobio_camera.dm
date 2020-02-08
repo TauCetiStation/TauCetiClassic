@@ -3,23 +3,16 @@
 	visible_icon = TRUE
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "marker"
-	var/allowed_area = null
-
-/mob/camera/Eye/remote/xenobio/atom_init()
-	var/area/A = get_area(loc)
-	allowed_area = A.name
-	. = ..()
-
-/mob/camera/Eye/remote/xenobio/setLoc(t)
-	var/area/new_area = get_area(t)
-	if(new_area && new_area.name == allowed_area)
-		..()
+	allowed_area_type = /area/station/rnd/xenobiology
 
 /obj/machinery/computer/camera_advanced/xenobio
 	name = "Slime management console"
 	desc = "A computer used for remotely handling slimes."
-	networks = list("ss13")
+	icon_state = "rdcomp"
+	
 	circuit = /obj/item/weapon/circuitboard/camera_advanced/xenobio
+	light_color = "#a97faa"
+
 	var/datum/action/slime_place/slime_place_action = new
 	var/datum/action/slime_pick_up/slime_up_action = new
 	var/datum/action/feed_slime/feed_slime_action = new
@@ -31,12 +24,9 @@
 	var/list/stored_slimes = list()
 	var/max_slimes = 5
 	var/monkeys = 0
+	
 
-	icon_state = "rdcomp"
-
-	light_color = "#a97faa"
-
-/obj/machinery/computer/camera_advanced/xenobio/atom_init(mapload)
+/obj/machinery/computer/camera_advanced/xenobio/atom_init()
 	. = ..()
 	actions += slime_up_action
 	actions += slime_place_action
@@ -50,7 +40,6 @@
 			connected_recycler = recycler
 			connected_recycler.connected = src
 			break
-
 
 /obj/machinery/computer/camera_advanced/xenobio/Destroy()
 	for(var/thing in stored_slimes)
@@ -336,13 +325,13 @@
 
 //Scans slime
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickCtrl(mob/living/user, mob/living/carbon/slime/S)
-	if(!cameranet.checkTurfVis(S.loc))
+	if (!cameranet.checkTurfVis(S.loc))
 		to_chat(user, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 		return
 	var/mob/living/C = user
 	var/mob/camera/Eye/remote/xenobio/E = C.remote_control
 	var/area/mobarea = get_area(S.loc)
-	if(mobarea.name == E.allowed_area)
+	if (istype(mobarea, E.allowed_area_type))
 		slime_scan(S, C)
 
 //Picks up slime
@@ -354,7 +343,7 @@
 	var/mob/camera/Eye/remote/xenobio/E = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
 	var/area/mobarea = get_area(S.loc)
-	if(mobarea.name == E.allowed_area)
+	if (istype(mobarea, E.allowed_area_type))
 		if(S.stat)
 			if(!X.connected_recycler)
 				to_chat(user, "<span class='warning'>There is no connected recycler. Use a multitool to link one.</span>")
@@ -384,7 +373,7 @@
 	var/mob/camera/Eye/remote/xenobio/E = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
 	var/area/turfarea = get_area(T)
-	if(turfarea.name == E.allowed_area)
+	if (istype(turfarea, E.allowed_area_type))
 		for(var/mob/living/carbon/slime/S in X.stored_slimes)
 			S.forceMove(T)
 			S.visible_message("<span class='notice'>[S] warps in!</span>")
@@ -399,7 +388,7 @@
 	var/mob/camera/Eye/remote/xenobio/E = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
 	var/area/turfarea = get_area(T)
-	if(turfarea.name == E.allowed_area)
+	if (istype(turfarea, E.allowed_area_type))
 		if(X.monkeys >= 1)
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(T, TRUE, C)
 			if (!QDELETED(food))
@@ -414,14 +403,17 @@
 	if(!isturf(M.loc) || !cameranet.checkTurfVis(M.loc))
 		to_chat(user, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 		return
+
 	var/mob/living/C = user
 	var/mob/camera/Eye/remote/xenobio/E = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
-	var/area/mobarea = get_area(M.loc)
+
 	if(!X.connected_recycler)
 		to_chat(C, "<span class='warning'>There is no connected monkey recycler. Use a multitool to link one.</span>")
 		return
-	if(mobarea.name == E.allowed_area)
+
+	var/area/mobarea = get_area(M.loc)
+	if (istype(mobarea, E.allowed_area_type))
 		if(!M.stat)
 			return
 		M.visible_message("<span class='notice'>[M] vanishes!</span>")

@@ -2,18 +2,21 @@
 	name = "advanced camera console"
 	desc = "Used to access the various cameras on the station."
 	icon_state = "cameras"
-	var/list/z_lock = list() // Lock use to these z levels
-	var/lock_override = NONE
-	var/mob/camera/Eye/remote/eyeobj
-	var/mob/living/current_user = null
-	var/list/networks = list("ss13")
-	var/datum/action/camera_off/off_action = new
-	var/datum/action/camera_jump/jump_action = new
-	var/list/actions = list()
 
 	circuit = /obj/item/weapon/circuitboard/camera_advanced
-
 	light_color = "#a91515"
+
+	var/lock_override = NONE
+	var/list/z_lock = list() // Lock use to these z levels. Do not! set this directly, use lock_override flags
+
+	var/mob/camera/Eye/remote/eyeobj
+	var/mob/living/current_user = null
+
+	var/list/networks = list("SS13")
+
+	var/list/actions = list()
+	var/datum/action/camera_off/off_action = new
+	var/datum/action/camera_jump/jump_action = new
 
 /obj/machinery/computer/camera_advanced/atom_init()
 	. = ..()
@@ -26,6 +29,16 @@
 			z_lock |= SSmapping.levels_by_trait(ZTRAIT_MINING)
 		if(lock_override & CAMERA_LOCK_CENTCOM)
 			z_lock |= SSmapping.levels_by_trait(ZTRAIT_CENTCOM)
+
+/obj/machinery/computer/camera_advanced/Destroy()
+	if(current_user)
+		current_user.unset_machine()
+		current_user = null
+	QDEL_NULL(eyeobj)
+	QDEL_NULL(off_action)
+	QDEL_NULL(jump_action)
+	actions.Cut()
+	return ..()
 
 /obj/machinery/computer/camera_advanced/proc/CreateEye()
 	eyeobj = new()
@@ -67,21 +80,10 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/computer/camera_advanced/Destroy()
-	if(current_user)
-		current_user.unset_machine()
-		current_user = null
-	QDEL_NULL(eyeobj)
-	QDEL_NULL(off_action)
-	QDEL_NULL(jump_action)
-	actions.Cut()
-	return ..()
-
 /obj/machinery/computer/camera_advanced/on_unset_machine(mob/M)
 	if(M == current_user)
 		remove_eye_control(M)
 	..()
-
 
 /obj/machinery/computer/camera_advanced/interact(mob/user)
 	user.machine = src
@@ -135,27 +137,26 @@
 
 /mob/camera/Eye/remote
 	name = "Inactive Camera Eye"
+	var/obj/machinery/computer/camera_advanced/origin
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = FALSE
-	var/obj/machinery/computer/camera_advanced/origin
 	var/eye_initialized = FALSE
 	var/visible_icon = FALSE
 	var/image/user_image = null
-
-
-/mob/camera/Eye/remote/Destroy()
-	if(origin && master)
-		origin.remove_eye_control(master)
-		origin = null
-		master = null
-	. = ..()
+	var/allowed_area_type = null
 
 /mob/camera/Eye/remote/atom_init()
 	if(!user_image && visible_icon)
 		user_image = image(icon = icon,loc = src,icon_state = icon_state,layer = LIGHTING_LAYER+1)
 	. = ..()
 
+/mob/camera/Eye/remote/Destroy()
+	if(origin && master)
+		origin.remove_eye_control(master)
+	origin = null
+	master = null
+	return ..()
 
 /mob/camera/Eye/remote/relaymove(mob/user,direct)
 	var/initial = initial(sprint)
@@ -174,6 +175,11 @@
 		sprint = min(sprint + 0.5, max_sprint)
 	else
 		sprint = initial
+
+/mob/camera/Eye/remote/setLoc(turf/T)
+	if (allowed_area_type != null && !istype(get_area(T), allowed_area_type))
+		return
+	..()
 
 /datum/action/camera_off
 	name = "End Camera View"
@@ -198,6 +204,7 @@
 /datum/action/camera_jump/Activate()
 	if(!target || !isliving(target))
 		return
+
 	var/mob/living/C = target
 	var/mob/camera/Eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin
@@ -214,8 +221,9 @@
 	var/list/T = list()
 
 	for (var/obj/machinery/camera/netcam in L)
-		var/list/tempnetwork = netcam.network & origin.networks
-		if (tempnetwork.len)
+		if (length(netcam.network & origin.networks))
+			if (remote_eye.allowed_area_type != null && !istype(get_area(netcam), remote_eye.allowed_area_type))
+				continue
 			T["[netcam.c_tag][netcam.can_use() ? null : " (Deactivated)"]"] = netcam
 
 	var/camera = input("Choose which camera you want to view", "Cameras") as null|anything in T
