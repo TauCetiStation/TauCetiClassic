@@ -129,6 +129,7 @@
 	name = "heart"
 	organ_tag = O_HEART
 	parent_bodypart = BP_CHEST
+	var/heart_status = HEART_NORMAL
 
 /obj/item/organ/internal/heart/ipc
 	name = "servomotor"

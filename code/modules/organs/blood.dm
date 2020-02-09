@@ -64,7 +64,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		blood_volume *= 0.8
 	else if(IO.damage >= IO.min_bruised_damage && IO.damage < IO.min_broken_damage)
 		blood_volume *= 0.6
-	else if(IO.damage >= IO.min_broken_damage && IO.damage < INFINITY)
+	else if((IO.damage >= IO.min_broken_damage && IO.damage < INFINITY)||IO.heart_status == HEART_FAILURE)
 		blood_volume *= 0.3
 
 	//Effects of bloodloss

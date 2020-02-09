@@ -373,15 +373,27 @@
 	playsound(src, 'sound/items/surgery/defib_zap.ogg', VOL_EFFECTS_MASTER)
 	set_cooldown(cooldown_time)
 
-	if(H.stat == DEAD)
+	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+	if(H.stat == DEAD && IO.status == HEART_FAILURE)
 		make_announcement("buzzes, \"Defibrillation failed - patient's heart is not beating.\"")
 		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		return
 
-	if(H.stat == UNCONSCIOUS && (world.time - H.timeofdeath) >= DEFIB_TIME_LIMIT)
+	if(H.stat == DEAD && (world.time - H.timeofdeath) >= DEFIB_TIME_LIMIT)
 		make_announcement("buzzes, \"Defibrillation failed - Severe neurological decay makes recovery of patient impossible. Further attempts futile.\"")
 		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
+	if(!(H.stat == DEAD) && IO.heart_status == HEART_DEFIB)
+		IO.heart_status = HEART_NORMAL
+	if(H.stat == DEAD && IO.heart_status == HEART_DEFIB)
+		IO.heart_status = HEART_NORMAL
+		reanimate_body(H)
+		H.stat = UNCONSCIOUS
+
+	if(IO.heart_status == HEART_NORMAL && prob(20))
+		IO.heart_status = HEART_FAILURE
+		return
 	if(H.health <= config.health_threshold_crit || prob(10))
 		var/suff = min(H.getOxyLoss(), 20)
 		H.adjustOxyLoss(-suff)
@@ -393,9 +405,6 @@
 		make_announcement("buzzes, \"Defibrillation failed - Patinent's body is too wounded to sustain heart beating.\"")
 		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
-
-	if(H.stat == UNCONSCIOUS)
-		H.stat = CONSCIOUS
 
 	if(wet)
 		var/turf/T = get_turf(src)
@@ -452,6 +461,14 @@
 	user.visible_message("[user] shocks [H] with [src].", "<span class='warning'>You shock [H] with [src].</span>", "You hear electricity zaps flesh.")
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Electrocuted [H.name] ([H.ckey]) with [src.name]</font>"
 	msg_admin_attack("[user.name] ([user.ckey]) used [src.name] to electrocute [H.name] ([H.ckey])", user)
+
+/obj/item/weapon/twohanded/shockpaddles/proc/reanimate_body(mob/living/carbon/human/returnable)
+	var/deadtime = world.time - returnable.timeofdeath
+	returnable.tod = null
+	returnable.timeofdeath = 0
+	dead_mob_list -= returnable
+	returnable.update_health_hud()
+	apply_brain_damage(returnable, deadtime)
 
 /obj/item/weapon/twohanded/shockpaddles/proc/apply_brain_damage(mob/living/carbon/human/H, var/deadtime)
 	if(deadtime < DEFIB_TIME_LOSS)

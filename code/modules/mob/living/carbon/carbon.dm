@@ -1,6 +1,11 @@
-#define DEFIB_TIME_LIMIT (8 MINUTES) //past this many seconds, defib is useless. Currently 8 Minutes
-#define DEFIB_TIME_LOSS  (2 MINUTES) //past this many seconds, brain damage occurs. Currently 2 minutes
-#define MAX_BRAIN_DAMAGE 80
+#define DEFIB_TIME_LIMIT     (8 MINUTES) //past this many seconds, defib is useless. Currently 8 Minutes
+#define DEFIB_TIME_LOSS      (2 MINUTES) //past this many seconds, brain damage occurs. Currently 2 minutes
+#define MAX_BRAIN_DAMAGE      80
+#define MASSAGE_RHYTM_RIGHT   10
+#define MASSAGE_ALLOWED_ERROR 3
+/mob/living/carbon/var/last_massage = 0
+/mob/living/carbon/var/massages_done_right = 0
+
 
 /mob/living/carbon/atom_init()
 	. = ..()
@@ -770,6 +775,11 @@
 
 	visible_message("<span class='danger'>[user] is trying perform AV on [src]!</span>")
 
+	if(health <= (config.health_threshold_dead + 5))
+		var/suff = min(getOxyLoss(), 2) //Pre-merge level, less healing, more prevention of dieing.
+		adjustOxyLoss(-suff)
+		updatehealth()
+
 	if(do_mob(user, src, HUMAN_STRIP_DELAY))
 		 // yes, we check this after the action, allowing player to try this even if it looks wrong (for fun).
 		if(user.species && user.species.flags[NO_BREATHE])
@@ -792,7 +802,7 @@
 			to_chat(user, "<span class='notice bold'>Remove [src] [head]!</span>")
 			return
 
-		if (health > config.health_threshold_dead && health < config.health_threshold_crit)
+		if (health < (config.health_threshold_crit - 30))
 			var/suff = min(getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
 			adjustOxyLoss(-suff)
 			updatehealth()
@@ -804,23 +814,39 @@
 	if(user.is_busy(src))
 		return
 	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
-	if(do_mob(user, src, HUMAN_STRIP_DELAY))
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			if(H.stat == DEAD && (world.time - H.timeofdeath) < DEFIB_TIME_LIMIT)
-				var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
-				if(prob(15) && IO.damage < 1)
-					H.stat = UNCONSCIOUS
-					return_to_body_dialog(H)
-					reanimate_body(H)
-					to_chat(user, "<span class='warning'>Resuscitation successful.</span>")
-				else if(prob(5) && IO.damage > 1)
-					H.stat = UNCONSCIOUS
-					return_to_body_dialog(H)
-					reanimate_body(H)
-					to_chat(user, "<span class='warning'>Resuscitation successful.</span>")
-				visible_message("<span class='warning'>[user] performs CPR on [H]!</span>")
-				to_chat(user, "<span class='warning'>Repeat at least every 7 seconds.</span>")
+	return_to_body_dialog(src)
+	if((world.time - last_massage) > 50)
+		do_mob(user, src, HUMAN_STRIP_DELAY)
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.stat == DEAD && (world.time - H.timeofdeath) < DEFIB_TIME_LIMIT)
+			var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+			if(massages_done_right > 4 || IO.heart_status == HEART_NORMAL)
+				to_chat(user, "<span class='warning'>[src]'s heart start to beat!</span>")
+				reanimate_body(H)
+				H.stat = UNCONSCIOUS
+				massages_done_right = 0
+			else if(massages_done_right < -4)
+				to_chat(user, "<span class='warning'>[src]'s heart stopped!</span>")
+				if(prob(25))
+					IO.damage += 2
+				last_massage = world.time
+				massages_done_right = 0
+				IO.heart_status = HEART_FAILURE
+			else
+				if(last_massage > world.time - MASSAGE_RHYTM_RIGHT - MASSAGE_ALLOWED_ERROR && last_massage < world.time - MASSAGE_RHYTM_RIGHT + MASSAGE_ALLOWED_ERROR)
+					massages_done_right++
+					to_chat(user, "<span class='warning'>You hit the beat.</span>")
+					IO.heart_status = HEART_DEFIB
+				else
+					massages_done_right--
+					to_chat(user, "<span class='warning'>You didn't hit the beat.</span>")
+			last_massage = world.time
+			var/obj/item/organ/external/BP = H.get_bodypart(BP_CHEST)
+			if(!(H.op_stage.ribcage == 2) && prob(10))
+				BP.fracture()
+			visible_message("<span class='warning'>[user] performs CPR on [H]!</span>")
+			to_chat(user, "<span class='warning'>Repeat at least every 2 seconds.</span>")
 
 /mob/living/carbon/proc/reanimate_body(mob/living/carbon/human/returnable)
 	var/deadtime = world.time - returnable.timeofdeath
@@ -960,6 +986,8 @@
 		stat = UNCONSCIOUS
 		blinded = TRUE
 
+#undef MASSAGE_RHYTM_RIGHT
+#undef MASSAGE_ALLOWED_ERROR
 #undef DEFIB_TIME_LIMIT
 #undef DEFIB_TIME_LOSS
 #undef MAX_BRAIN_DAMAGE

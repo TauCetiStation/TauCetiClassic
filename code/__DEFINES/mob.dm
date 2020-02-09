@@ -138,3 +138,8 @@
 // Indicators.
 #define IND_STAT          "stat"
 #define IND_STAT_NOCLIENT "stat_noclient"
+
+// Heart status
+#define HEART_NORMAL      "heart_normal"
+#define HEART_FAILURE     "heart_failure"
+#define HEART_DEFIB       "heart_defibrillation"
