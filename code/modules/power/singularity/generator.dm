@@ -9,12 +9,24 @@
 	use_power = NO_POWER_USE
 	var/energy = 0
 	var/creation_type = /obj/singularity
+	var/process = FALSE
 
 /obj/machinery/the_singularitygen/process()
 	var/turf/T = get_turf(src)
-	if(src.energy >= 200)
+	if(src.energy >= 200 & !process)
+		process = TRUE
+		var/atom/movable/overlay/animation = null
+		animation = new(loc)
+		animation.master = src
+		animation.pixel_x = -32
+		animation.pixel_y = -32
+		animation.layer = 6.1
+		flick('icons/effects/singularity_effect.dmi', animation)
+		sleep(60)
 		new creation_type(T, 50)
 		if(src) qdel(src)
+		spawn(10)
+			if(animation)	qdel(animation)
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
 	if(iswrench(W))
