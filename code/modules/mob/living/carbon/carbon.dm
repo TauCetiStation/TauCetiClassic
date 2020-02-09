@@ -817,7 +817,7 @@
 	return_to_body_dialog(src)
 	if((world.time - last_massage) > 10)
 		do_mob(user, src, HUMAN_STRIP_DELAY)
-		visible_message("<span class='warning'>[user] performs CPR on [H]!</span>")
+		visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
 		to_chat(user, "<span class='warning'>Repeat at least every 1.5 seconds.</span>")
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
