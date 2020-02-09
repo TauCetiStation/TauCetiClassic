@@ -2,7 +2,7 @@
 #define DEFIB_TIME_LOSS      (2 MINUTES) //past this many seconds, brain damage occurs. Currently 2 minutes
 #define MAX_BRAIN_DAMAGE      80
 #define MASSAGE_RHYTM_RIGHT   10
-#define MASSAGE_ALLOWED_ERROR 3
+#define MASSAGE_ALLOWED_ERROR 2
 /mob/living/carbon/var/last_massage = 0
 /mob/living/carbon/var/massages_done_right = 0
 
