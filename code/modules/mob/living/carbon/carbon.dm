@@ -815,17 +815,18 @@
 		return
 	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
 	return_to_body_dialog(src)
-	if((world.time - last_massage) > 50)
+	if((world.time - last_massage) > 10)
 		do_mob(user, src, HUMAN_STRIP_DELAY)
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.stat == DEAD && (world.time - H.timeofdeath) < DEFIB_TIME_LIMIT)
 			var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
-			if(massages_done_right > 4 || IO.heart_status == HEART_NORMAL)
+			if(massages_done_right > 4)
 				to_chat(user, "<span class='warning'>[src]'s heart start to beat!</span>")
 				reanimate_body(H)
 				H.stat = UNCONSCIOUS
 				massages_done_right = 0
+				IO.heart_status = HEART_NORMAL
 			else if(massages_done_right < -4)
 				to_chat(user, "<span class='warning'>[src]'s heart stopped!</span>")
 				if(prob(25))
