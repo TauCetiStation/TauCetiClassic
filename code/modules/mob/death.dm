@@ -21,14 +21,11 @@
 		if(animation)	qdel(animation)
 		if(src)			qdel(src)
 
-
-//This is the proc for turning a mob into ash. Mostly a copy of gib code (above).
-//Originally created for wizard disintegrate. I've removed the virus code since it's irrelevant here.
-//Dusting robots does not eject the MMI, so it's a bit more powerful than gib() /N
-/mob/proc/dust()
-	var/atom/movable/overlay/animation = null
+/mob/proc/dust_process()
 	var/icon/I = new(getFlatIcon(src),,,1)
+	var/atom/movable/overlay/animation = null
 	playsound(src, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER)
+	emote("scream",,, 1)
 	death(1)
 	notransform = TRUE
 	canmove = 0
@@ -38,7 +35,7 @@
 	var/W = I.Width()
 	var/H = I.Height()
 	var/icon/T = icon('icons/effects/effects.dmi',"disappear")
-	if(W != 32 || H != 32)
+	if(W != world.icon_size || H != world.icon_size)
 		T.Scale(W, H)
 	T.BecomeAlphaMask()
 
@@ -47,14 +44,17 @@
 
 	animation = new(loc)
 	animation.master = src
+	sleep(1) //try to fix invisible flick animation
 	flick(I, animation)
-
-	new /obj/effect/decal/cleanable/ash(loc)
-	dead_mob_list -= src
 
 	spawn(20)
 		if(animation)	qdel(animation)
 		if(src)			qdel(src)
+
+/mob/proc/dust()
+	dust_process()
+	new /obj/effect/decal/cleanable/ash(loc)
+	dead_mob_list -= src
 
 /mob/proc/death(gibbed)
 	//Quick fix for corpses kept propped up in chairs. ~Z
