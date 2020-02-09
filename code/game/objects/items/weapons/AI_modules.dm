@@ -85,7 +85,7 @@ AI MODULES
 	lawchanges.Add("[time] <B>:</B> [sender]([sender.key]) used [src] on [target]([target.key])")
 
 	var/turf/T = get_turf(src)
-	message_admins("[key_name(usr)] has uploaded a change to the laws [src] at ([T.x],[T.y],[T.z]) [ADMIN_JMP(T)]")
+	message_admins("[key_name_admin(usr)] has uploaded a change to the laws [src] at ([T.x],[T.y],[T.z]) [ADMIN_JMP(T)]")
 	log_game("[key_name(usr)] has uploaded a change to the laws [src] at ([T.x],[T.y],[T.z])")
 
 /******************** Modules ********************/
@@ -378,7 +378,7 @@ AI MODULES
 	..()
 
 	var/turf/T = get_turf(src)
-	message_admins("[key_name(usr)] has uploaded freeform laws with following text '[newFreeFormLaw]' at ([T.x],[T.y],[T.z]) [ADMIN_JMP(T)]")
+	message_admins("[key_name_admin(usr)] has uploaded freeform laws with following text '[newFreeFormLaw]' at ([T.x],[T.y],[T.z]) [ADMIN_JMP(T)]")
 	log_game("[key_name(usr)] has uploaded a change to freeform laws with following text '[newFreeFormLaw]' at ([T.x],[T.y],[T.z])")
 
 	add_freeform_law(target)

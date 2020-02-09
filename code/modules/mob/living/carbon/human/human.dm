@@ -254,7 +254,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				gain = 100
 			if("Clown")
 				gain = rand(-300, 300)//HONK
-	investigate_log(" has consumed [key_name(src)].","singulo") //Oh that's where the clown ended up!
+	log_investigate(" has consumed [key_name(src)].",INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
 	return(gain)
 

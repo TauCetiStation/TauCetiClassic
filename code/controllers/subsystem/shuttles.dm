@@ -183,6 +183,8 @@ var/datum/subsystem/shuttle/SSshuttle
 				return 0
 
 			else if((fake_recall != 0) && (timeleft <= fake_recall))
+				log_admin("Gamemode fake-recalled the shuttle.")
+				message_admins("<span class='notice'>Gamemode fake-recalled the shuttle.</span>")
 				recall()
 				fake_recall = 0
 				return 0
@@ -524,7 +526,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		E.export_end()
 
 	centcom_message = msg
-	//investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", "cargo")
+	//log_investigate("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
 
 
 //Buyin

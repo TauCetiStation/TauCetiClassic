@@ -135,7 +135,7 @@
 			to_chat(src, text("Invalid Emote: []", act))
 	if ((message && src.stat == CONSCIOUS))
 		if(src.client)
-			log_emote("[name]/[key] : [message]")
+			log_emote("[key_name(src)] : [message]")
 		if (m_type & SHOWMSG_VISUAL)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)

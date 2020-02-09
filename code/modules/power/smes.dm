@@ -79,7 +79,7 @@
 		var/area/area = get_area(src)
 		message_admins("SMES deleted at [area.name] [ADMIN_JMP(src)]")
 		log_game("SMES deleted at ([area.name])")
-		investigate_log("<font color='red'>deleted</font> at ([area.name])","singulo")
+		log_investigate("<font color='red'>deleted</font> at ([area.name])",INVESTIGATE_SINGULO)
 	if(terminal)
 		disconnect_terminal()
 	return ..()
@@ -193,7 +193,7 @@
 	if(default_deconstruction_crowbar(I))
 		message_admins("[src] has been deconstructed by [key_name_admin(user)] [ADMIN_QUE(user)] [ADMIN_FLW(user)] in ([T.x],[T.y],[T.z]) - [ADMIN_JMP(T)]")
 		log_game("[src] has been deconstructed by [key_name(user)]")
-		investigate_log("SMES deconstructed by [key_name(user)]","singulo")
+		log_investigate("SMES deconstructed by [key_name(user)]",INVESTIGATE_SINGULO)
 
 /obj/machinery/power/smes/construction()
 	charge = 0
@@ -408,7 +408,7 @@
 				output = input(usr, "Enter new output level (0-[max_output])", "SMES Output Power Control", output) as num
 		output = max(0, min(max_output, output))	// clamp to range
 
-	investigate_log("input/output; [chargelevel>output ? "<font color='green'>[chargelevel]/[output]</font>" : "<font color='red'>[chargelevel]/[output]</font>"] | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
+	log_investigate("input/output; [chargelevel>output ? "<font color='green'>[chargelevel]/[output]</font>" : "<font color='red'>[chargelevel]/[output]</font>"] | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [key_name(usr)]",INVESTIGATE_SINGULO)
 
 
 /obj/machinery/power/smes/proc/ion_act()

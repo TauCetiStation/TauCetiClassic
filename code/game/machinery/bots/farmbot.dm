@@ -189,7 +189,7 @@
 
 /obj/machinery/bot/farmbot/explode()
 	src.on = 0
-	visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
+	visible_message("<span class='warning'><B>[src] blows apart!</B></span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/minihoe(Tsec)

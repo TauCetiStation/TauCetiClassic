@@ -178,12 +178,12 @@
 		pull_debuff += tally
 
 /mob/living/proc/add_ingame_age()
-	if(client && !client.is_afk()) //5 minutes of inactive time will disable this, until player come back.
+	if(client && isnum(client.player_ingame_age) && !client.is_afk(5 MINUTES)) // 5 minutes of inactive time will disable this, until player come back.
 		var/client/C = client
 		if(C.player_next_age_tick == 0) //All clients start with 0, so we need to set next tick for the first time.
-			C.player_next_age_tick = world.time + 600
+			C.player_next_age_tick = world.time + 1 MINUTE
 		else if(world.time > C.player_next_age_tick) //Every 60 seconds we add +1 to player ingame age.
-			C.player_next_age_tick = world.time + 600
+			C.player_next_age_tick = world.time + 1 MINUTE
 			C.player_ingame_age++
 
 /mob/living/verb/succumb()
@@ -368,7 +368,7 @@
 
 /mob/living/singularity_act()
 	var/gain = 20
-	investigate_log(" has consumed [key_name(src)].","singulo") //Oh that's where the clown ended up!
+	log_investigate(" has consumed [key_name(src)].",INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
 	return(gain)
 
