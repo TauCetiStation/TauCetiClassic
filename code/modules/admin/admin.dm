@@ -604,7 +604,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			<B>Secrets that only people with varedit have access to</B><BR><BR>
 			<A href='?src=\ref[src];secretsadmin=mass_sleep'>Put everyone to sleep.</A><BR>
 			<BR><BR>
-		}"
+		"}
 
 	if(check_rights(R_FUN,0))
 		dat += {"
