@@ -686,10 +686,10 @@
 					send_signal(device_id, list(href_list["command"] = text2num(href_list["val"]) ) )
 					if(href_list["command"] == "adjust_external_pressure")
 						var/new_val = text2num(href_list["val"])
-						investigate_log("[usr.key] has changed adjust_external_pressure > added [new_val], id_tag = [device_id]","atmos")
+						log_investigate("[key_name(usr)] has changed adjust_external_pressure > added [new_val], id_tag = [device_id]",INVESTIGATE_ATMOS)
 					if(href_list["command"] == "checks")
 						var/new_val = text2num(href_list["val"])
-						investigate_log("[usr.key] has changed pressure_checks > now [new_val](1 = ext, 2 = int, 3 = both), id_tag = [device_id]","atmos")
+						log_investigate("[key_name(usr)] has changed pressure_checks > now [new_val](1 = ext, 2 = int, 3 = both), id_tag = [device_id]",INVESTIGATE_ATMOS)
 
 				if("set_threshold")
 					var/env = href_list["env"]

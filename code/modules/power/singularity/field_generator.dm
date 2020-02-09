@@ -96,7 +96,7 @@ field_generator power level display
 					"<span class='notice'>You hear heavy droning.</span>")
 				turn_on()
 				playsound(src, 'sound/machines/cfieldbeforestart.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
+				log_investigate("<font color='green'>activated</font> by [key_name(user)].",INVESTIGATE_SINGULO)
 	else
 		to_chat(user, "<span class='notice'>The [src] needs to be firmly secured to the floor first.</span>")
 		return 1
@@ -211,7 +211,7 @@ field_generator power level display
 		visible_message("<span class='warning'>The [src] shuts down!</span>")
 		turn_off()
 		playsound(src, 'sound/machines/cfieldfail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		investigate_log("ran out of power and <font color='red'>deactivated</font>","singulo")
+		log_investigate("ran out of power and <font color='red'>deactivated</font>",INVESTIGATE_SINGULO)
 		power = 0
 
 // This could likely be better, it tends to start loopin if you have a complex generator loop setup.
@@ -332,7 +332,7 @@ field_generator power level display
 			if((world.time - O.last_warning) > 50) //to stop message-spam
 				temp = FALSE
 				message_admins("<span class='danger'>A singulo exists and a containment field has failed. [ADMIN_JMP(O)]</span>")
-				investigate_log("has <font color='red'>failed</font> whilst a singulo exists.","singulo")
+				log_investigate("has <font color='red'>failed</font> whilst a singulo exists.",INVESTIGATE_SINGULO)
 		O.last_warning = world.time
 
 

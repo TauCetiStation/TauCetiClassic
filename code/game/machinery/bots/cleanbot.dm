@@ -340,7 +340,7 @@
 
 /obj/machinery/bot/cleanbot/explode()
 	on = 0
-	visible_message("<span class='warning bold'>[src] blows apart!</span>", 1)
+	visible_message("<span class='warning bold'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/reagent_containers/glass/bucket(Tsec)

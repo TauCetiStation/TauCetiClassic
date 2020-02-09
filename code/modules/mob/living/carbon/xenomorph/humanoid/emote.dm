@@ -140,7 +140,7 @@
 			else
 				to_chat(src, "<span class='warning'>You notice you make too much noises! You can give out your location to the hosts, you don't want to risk it!</span>")
 				return
-		log_emote("[name]/[key] : [message]")
+		log_emote("[key_name(src)] : [message]")
 
 		for(var/mob/M in observer_list)
 			if(!M.client)
