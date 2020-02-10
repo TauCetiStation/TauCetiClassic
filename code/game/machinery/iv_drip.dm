@@ -231,13 +231,13 @@
 			var/datum/gas_mixture/env = loc.return_air()
 			if(env.return_pressure() > (ONE_ATMOSPHERE - 20))
 				if((env.gas["oxygen"] / env.total_moles) > 0.10)
-					if(!HAS_TRAIT_FROM(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT))
+					if(!HAS_TRAIT(attached, TRAIT_AV))
 						ADD_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
 				else
-					if(HAS_TRAIT_FROM(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT))
+					if(HAS_TRAIT(attached, TRAIT_AV))
 						REMOVE_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
 			else
-				if(HAS_TRAIT_FROM(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT))
+				if(HAS_TRAIT(attached, TRAIT_AV))
 					REMOVE_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
 		return
 
