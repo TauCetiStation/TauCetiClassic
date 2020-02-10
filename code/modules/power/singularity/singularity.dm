@@ -186,6 +186,10 @@
 	else
 		return 0
 
+/obj/singularity/get_current_temperature()
+	// var/total_potential_energy = energy * energy / dissipate_strength
+	return WATTS_2_CELSIUM * energy * energy / dissipate_strength
+
 /obj/singularity/proc/check_energy()
 	if(energy <= 0)
 		qdel(src)

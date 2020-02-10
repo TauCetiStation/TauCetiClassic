@@ -362,8 +362,7 @@
 // Return temperature if it was possible to measure,
 // "NONE" otherwise.
 /obj/item/projectile/pyrometer/proc/measure_temperature(atom/target)
-	var/turf/T = get_turf(target)
-	var/datum/gas_mixture/env = T.return_air()
+	var/datum/gas_mixture/env = target.return_air()
 	var/temp_celsium = 0.0
 
 	if(isobj(target))
