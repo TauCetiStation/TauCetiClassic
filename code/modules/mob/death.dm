@@ -22,8 +22,12 @@
 		if(src)			qdel(src)
 
 /mob/proc/dust_process()
-	var/icon/I = new(getFlatIcon(src),,,1)
+	var/icon/I = build_disappear_icon(src)
 	var/atom/movable/overlay/animation = null
+	animation = new(loc)
+	animation.master = src
+	flick(I, animation)
+
 	playsound(src, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER)
 	emote("scream",,, 1)
 	death(1)
@@ -32,24 +36,8 @@
 	icon = null
 	invisibility = 101
 
-	var/W = I.Width()
-	var/H = I.Height()
-	var/icon/T = icon('icons/effects/effects.dmi',"disappear")
-	if(W != world.icon_size || H != world.icon_size)
-		T.Scale(W, H)
-	T.BecomeAlphaMask()
-
-	I.MapColors(rgb(45,45,45), rgb(70,70,70), rgb(30,30,30), rgb(0,0,0))
-	I.AddAlphaMask(T)
-
-	animation = new(loc)
-	animation.master = src
-	sleep(1) //try to fix invisible flick animation
-	flick(I, animation)
-
-	spawn(20)
-		if(animation)	qdel(animation)
-		if(src)			qdel(src)
+	QDEL_IN(animation, 20)
+	QDEL_IN(src, 20)
 
 /mob/proc/dust()
 	dust_process()
