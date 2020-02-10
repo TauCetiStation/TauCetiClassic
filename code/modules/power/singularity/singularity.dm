@@ -5,7 +5,7 @@
 	icon_state = "singularity_s1"
 	anchored = 1
 	density = 1
-	layer = 6
+	layer = SINGULARITY_LAYER
 	appearance_flags = 0
 	//light_range = 6
 	unacidable = 1 //Don't comment this out.

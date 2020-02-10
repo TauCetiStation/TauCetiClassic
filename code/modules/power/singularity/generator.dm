@@ -20,7 +20,7 @@
 		animation.master = src
 		animation.pixel_x = -32
 		animation.pixel_y = -32
-		animation.layer = 6.1
+		animation.layer = SINGULARITY_EFFECT_LAYER
 		flick('icons/effects/singularity_effect.dmi', animation)
 		sleep(60)
 		new creation_type(T, 50)
