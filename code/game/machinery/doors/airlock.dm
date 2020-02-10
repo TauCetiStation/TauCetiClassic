@@ -547,7 +547,7 @@ var/list/airlock_overlays = list()
 	return ..()
 
 /obj/machinery/door/airlock/attack_paw(mob/user)
-	if(istype(user, /mob/living/carbon/alien/humanoid))
+	if(istype(user, /mob/living/carbon/xenomorph/humanoid))
 		if(welded || locked)
 			to_chat(user, "<span class='warning'>The door is sealed, it cannot be pried open.</span>")
 			return

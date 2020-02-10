@@ -21,6 +21,13 @@
 #define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
 #define BANTYPE_ANY_JOB		9 //used to remove jobbans
 
+#define BANTYPE_PERMA_STR		"PERMABAN"
+#define BANTYPE_TEMP_STR		"TEMPBAN"
+#define BANTYPE_JOB_PERMA_STR	"JOB_PERMABAN"
+#define BANTYPE_JOB_TEMP_STR	"JOB_TEMPBAN"
+#define BANTYPE_ANY_FULLBAN_STR	"ANY"
+#define BANTYPE_ANY_JOB_STR		"ANYJOB"
+
 //Please don't edit these values without speaking to Errorage first	~Carn
 //Admin Permissions
 #define R_BUILDMODE		1

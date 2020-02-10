@@ -123,7 +123,7 @@
 
 		var/turf/T = get_turf(src)
 		message_admins("[key_name_admin(usr)] splashed [reagents.get_reagents()] on [A], location ([T.x],[T.y],[T.z]) [ADMIN_JMP(usr)]")
-		log_game("[usr.ckey]([usr]) splashed [reagents.get_reagents()] on [A], location ([T.x],[T.y],[T.z])")
+		log_game("[key_name(usr)] splashed [reagents.get_reagents()] on [A], location ([T.x],[T.y],[T.z])")
 	return
 
 

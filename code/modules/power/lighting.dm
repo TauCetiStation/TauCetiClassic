@@ -501,7 +501,7 @@
 	flicker(1)
 
 // Aliens smash the bulb but do not get electrocuted./N
-/obj/machinery/light/attack_alien(mob/living/carbon/alien/humanoid/user)//So larva don't go breaking light bulbs.
+/obj/machinery/light/attack_alien(mob/living/carbon/xenomorph/humanoid/user)//So larva don't go breaking light bulbs.
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
 		to_chat(user, "<span class='notice'>That object is useless to you.</span>")
 		return
@@ -776,8 +776,8 @@
 
 		if(S.reagents.has_reagent("phoron", 5))
 
-			log_admin("LOG: [user.name] ([user.ckey]) injected a light with phoron, rigging it to explode.")
-			message_admins("LOG: [user.name] ([user.ckey]) injected a light with phoron, rigging it to explode. [ADMIN_JMP(user)]")
+			log_admin("LOG: [key_name(user)] injected a light with phoron, rigging it to explode.")
+			message_admins("LOG: [key_name_admin(user)] injected a light with phoron, rigging it to explode. [ADMIN_JMP(user)]")
 
 			rigged = 1
 

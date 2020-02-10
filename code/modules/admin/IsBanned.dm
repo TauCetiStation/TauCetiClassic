@@ -1,5 +1,6 @@
 //Blocks an attempt to connect before even creating our client datum thing.
 /world/IsBanned(key,address,computer_id)
+	log_access("ISBANNED: '[args.Join("', '")]'")
 	if(config.serverwhitelist && !check_if_a_new_player(key))
 		return list("reason"="", "desc"="[config.serverwhitelist_message]")
 

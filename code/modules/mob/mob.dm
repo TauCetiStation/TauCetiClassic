@@ -378,22 +378,22 @@
 		else
 			to_chat(usr, "You can respawn now, enjoy your new life!")
 
-	log_game("[usr.name]/[usr.key] used abandon mob.")
+	log_game("[key_name(usr)] used abandon mob.")
 
 	to_chat(usr, "<span class='notice'><B>Make sure to play a different character, and please roleplay correctly!</B></span>")
 
 	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
+		log_game("[key_name(usr)] AM failed due to disconnect.")
 		return
 	client.screen.Cut()
 	client.screen += client.void
 	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
+		log_game("[key_name(usr)] AM failed due to disconnect.")
 		return
 
 	var/mob/dead/new_player/M = new /mob/dead/new_player()
 	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
+		log_game("[key_name(usr)] AM failed due to disconnect.")
 		qdel(M)
 		return
 
@@ -647,12 +647,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 			stat(null, "Round ID: #[round_id]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(client)
-			stat(null, "Your in-game age: [client.player_ingame_age]")
+			stat(null, "Your in-game age: [isnum(client.player_ingame_age) ? client.player_ingame_age : 0]")
 			stat(null, "Map: [SSmapping.config?.map_name || "Loading..."]")
 			var/datum/map_config/cached = SSmapping.next_map_config
 			if(cached)
 				stat(null, "Next Map: [cached.map_name]")
 			if(client.holder)
+				if (config.registration_panic_bunker_age)
+					stat(null, "Registration panic bunker age: [config.registration_panic_bunker_age]")
 				if(ticker.mode && ticker.mode.config_tag == "malfunction")
 					var/datum/game_mode/malfunction/GM = ticker.mode
 					if(GM.malf_mode_declared)
@@ -750,7 +752,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	density = !lying
 
-	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isalien(src))
+	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isxeno(src))
 		drop_l_hand()
 		drop_r_hand()
 

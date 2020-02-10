@@ -39,7 +39,7 @@
 	var/obj/screen/healthdoll = null
 	var/obj/screen/nutrition_icon = null
 
-	var/obj/screen/alien_plasma_display = null
+	var/obj/screen/xenomorph_plasma_display = null
 	var/obj/screen/nightvisionicon = null
 
 	var/use_me = 1 //Allows all mobs to use the me verb by default, will have to manually specify they cannot

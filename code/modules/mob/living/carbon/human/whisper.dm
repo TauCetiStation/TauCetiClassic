@@ -6,7 +6,7 @@
 		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
-	log_whisper("[src.name]/[src.key] : [message]")
+	log_whisper("[key_name(src)]: [message]")
 
 	if(src.client)
 		if (src.client.prefs.muted & MUTE_IC)
