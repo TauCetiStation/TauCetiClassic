@@ -30,7 +30,9 @@
 			var/met_factor = get_metabolism_factor()
 			nutrition -= met_factor * 0.01
 			if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
-				nutrition -= met_factor * getHalLoss() * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
+				var/pain = getHalLoss()
+				if(pain > 0)
+					nutrition -= met_factor * pain * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
 			if(m_intent == "run")
 				nutrition -= met_factor * 0.01
 		if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == "run" && bodytemperature <= 360)

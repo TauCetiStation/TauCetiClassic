@@ -225,6 +225,7 @@
 	icon_state = "Lizard_Boots"
 	item_state = "r_feet"
 	item_color = "Lizard_Boots"
+	species_restricted = list(UNATHI)
 
 /obj/item/clothing/shoes/heels
 	name = "Heels"

@@ -1756,6 +1756,7 @@
 #include "code\modules\research\experiment.dm"
 #include "code\modules\research\message_server.dm"
 #include "code\modules\research\protolathe.dm"
+#include "code\modules\research\prototipify.dm"
 #include "code\modules\research\rd-readme.dm"
 #include "code\modules\research\rdconsole.dm"
 #include "code\modules\research\rdmachines.dm"
