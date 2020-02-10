@@ -80,11 +80,6 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(H), SLOT_L_EAR)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/science(H), SLOT_BELT)
-	switch(H.mind.role_alt_title)
-		if("Scientist")
-			access = list(access_tox, access_research)
-		if("Phoron Researcher")
-			access = list(access_research, access_tox_storage)
 
 	return TRUE
 
