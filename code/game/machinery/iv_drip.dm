@@ -207,7 +207,7 @@
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
 	if(!in_range(src, usr) || !in_range(over_object, src))
-        return
+		return
 	if(attached)
 		visible_message("[attached] is detached from \the [src]")
 		REMOVE_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
@@ -278,7 +278,7 @@
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
 	if(!in_range(src, usr) || !in_range(over_object, src))
-        return
+		return
 	if(attached)
 		visible_message("[attached] is detached from \the [src]")
 		REMOVE_TRAIT(attached, TRAIT_CPB, LIFE_ASSIST_MACHINES_TRAIT)
