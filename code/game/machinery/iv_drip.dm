@@ -206,14 +206,14 @@
 	..()
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
+	if(!in_range(src, usr) || !in_range(over_object, src))
+        return
 	if(attached)
 		visible_message("[attached] is detached from \the [src]")
 		REMOVE_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
 		attached = null
 		update_icon()
-		return
-
-	if(in_range(src, usr) && ishuman(over_object))
+	else if(ishuman(over_object))
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		attached = over_object
 		ADD_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
@@ -277,14 +277,14 @@
 	..()
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
+	if(!in_range(src, usr) || !in_range(over_object, src))
+        return
 	if(attached)
 		visible_message("[attached] is detached from \the [src]")
 		REMOVE_TRAIT(attached, TRAIT_CPB, LIFE_ASSIST_MACHINES_TRAIT)
 		attached = null
 		update_icon()
-		return
-
-	if(in_range(src, usr) && ishuman(over_object))
+	else if(ishuman(over_object))
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		attached = over_object
 		update_icon()
