@@ -513,7 +513,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 /obj/item/weapon/gun/energy/pyrometer/science_phoron
 	name = "phoron-orienter pyrometer"
-	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Is fine-tuned for detecting when your pipe about to burst."
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Is fine-tuned for detecting when your pipe is about to burst."
 	icon_state = "pyrometer_science_phoron"
 	item_state = "pyrometer_science_phoron"
 
