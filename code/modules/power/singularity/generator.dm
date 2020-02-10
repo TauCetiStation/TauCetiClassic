@@ -25,8 +25,7 @@
 		sleep(60)
 		new creation_type(T, 50)
 		if(src) qdel(src)
-		spawn(10)
-			if(animation)	qdel(animation)
+		QDEL_IN(animation, 10)
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
 	if(iswrench(W))
