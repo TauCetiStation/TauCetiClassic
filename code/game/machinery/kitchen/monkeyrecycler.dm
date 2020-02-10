@@ -12,7 +12,7 @@
 	var/grinded = 0
 	var/required_grind = 5
 	var/cube_production = 1
-	var/obj/machinery/computer/camera_advanced/xenobio/connected
+	var/list/connected_consoles = list()
 
 /obj/machinery/monkey_recycler/atom_init()
 	. = ..()
@@ -23,8 +23,9 @@
 	RefreshParts()
 
 /obj/machinery/monkey_recycler/Destroy()
-	connected.connected_recycler = null
-	connected = null
+	for(var/obj/machinery/computer/camera_advanced/xenobio/console in connected_consoles)
+		console?.connected_recycler = null
+	connected_consoles.Cut()
 	return ..()
 
 /obj/machinery/monkey_recycler/proc/grind(atom/movable/P, mob/user)

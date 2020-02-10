@@ -35,9 +35,9 @@
 	actions += hotkey_help
 
 	for(var/obj/machinery/monkey_recycler/recycler in oview(7,src))
-		if(get_area(recycler.loc) == get_area(loc))
+		if(get_area(recycler) == get_area(loc))
 			connected_recycler = recycler
-			connected_recycler.connected = src
+			connected_recycler.connected_consoles += src
 			break
 
 /obj/machinery/computer/camera_advanced/xenobio/Destroy()
@@ -45,8 +45,8 @@
 		var/mob/living/carbon/slime/S = thing
 		S.forceMove(loc)
 	stored_slimes.Cut()
-	if(connected_recycler && connected_recycler.connected)
-		connected_recycler.connected = null
+	if(connected_recycler && locate(src) in connected_recycler.connected_consoles)
+		connected_recycler.connected_consoles -= src
 	connected_recycler = null
 	QDEL_NULL(slime_place_action)
 	QDEL_NULL(slime_up_action)
@@ -113,8 +113,12 @@
 	if(ismultitool(O))
 		var/obj/item/device/multitool/M = O
 		if(M.buffer && istype(M.buffer,/obj/machinery/monkey_recycler))
+			if(connected_recycler == M.buffer)
+				to_chat(user, "<span class='warning'>This machine is already linked to this console</span>")
+				return
+			connected_recycler.connected_consoles -= src
 			connected_recycler = M.buffer
-			connected_recycler.connected = src
+			connected_recycler.connected_consoles += src
 			to_chat(user, "<span class='notice'>You upload the data from the [O.name]'s buffer.</span>")
 
 	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
@@ -150,6 +154,17 @@
 	to_render += "\nGrowth progress: [T.amount_grown]/[T.max_grown]"
 	to_chat(user, to_render + "\n========================")
 
+/mob/living/carbon/slime/proc/animate_teleport()
+	var/atom/movable/overlay/animation = new /atom/movable/overlay(loc)
+	QDEL_IN(animation, 10)		//After flick finishes, animation is invisible. One second in more than enough to finish without artifacts
+	animation.icon = 'icons/mob/slimes.dmi'
+	animation.master = src
+	if(istype(src, /mob/living/carbon/slime/adult))
+		flick("big_jaunt_out", animation)
+	else
+		flick("small_jaunt_out", animation)
+
+
 /datum/action/slime_place
 	name = "Place Slimes"
 	button_icon = 'icons/mob/actions.dmi'
@@ -166,6 +181,10 @@
 	if(cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/carbon/slime/S in X.stored_slimes)
 			S.forceMove(remote_eye.loc)
+			if(istype(S, /mob/living/carbon/slime/adult))
+				flick("big_jaunt_in", S)
+			else
+				flick("small_jaunt_in", S)
 			S.visible_message("<span class='notice'>[S] warps in!</span>")
 			X.stored_slimes -= S
 	else
@@ -193,13 +212,14 @@
 					to_chat(owner, "<span class='warning'>There is no connected recycler. Use a multitool to link one.</span>")
 					return
 				else
-					S.visible_message("<span class='notice'>[S] vanishes in a flash of light!</span>")
+					S.animate_teleport()
+					S.visible_message("<span class='notice'>[S] vanishes!</span>")
 					X.connected_recycler.grind(S,owner)
-					return
-			if(!S.ckey)
+			else if(!S.ckey)
 				if(S.buckled)
 					S.Feedstop()
-				S.visible_message("<span class='notice'>[S] vanishes in a flash of light!</span>")
+				S.animate_teleport()
+				S.visible_message("<span class='notice'>[S] vanishes!</span>")
 				S.forceMove(X)
 				X.stored_slimes += S
 	else
@@ -342,27 +362,25 @@
 	var/mob/living/C = user
 	var/mob/camera/Eye/remote/xenobio/E = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
-
 	if (istype(get_area(S), E.allowed_area_type))
 		if(S.stat)
 			if(!X.connected_recycler)
-				to_chat(user, "<span class='warning'>There is no connected recycler. Use a multitool to link one.</span>")
+				to_chat(C, "<span class='warning'>There is no connected recycler. Use a multitool to link one.</span>")
 				return
 			else
-				S.visible_message("<span class='notice'>[S] vanishes in a flash of light!</span>")
-				X.connected_recycler.grind(S,user)
+				S.animate_teleport()
+				S.visible_message("<span class='notice'>[S] vanishes!</span>")
+				X.connected_recycler.grind(S,C)
+		else if(!S.ckey)
+			if(X.stored_slimes.len >= X.max_slimes)
+				to_chat(C, "<span class='warning'>Slime storage is full.</span>")
 				return
-		if(X.stored_slimes.len >= X.max_slimes)
-			to_chat(C, "<span class='warning'>Slime storage is full.</span>")
-			return
-		if(S.ckey)
-			to_chat(C, "<span class='warning'>The slime wiggled free!</span>")
-			return
-		if(S.buckled)
-			S.Feedstop()
-		S.visible_message("<span class='notice'>[S] vanishes in a flash of light!</span>")
-		S.forceMove(X)
-		X.stored_slimes += S
+			if(S.buckled)
+				S.Feedstop()
+			S.animate_teleport()
+			S.visible_message("<span class='notice'>[S] vanishes!</span>")
+			S.forceMove(X)
+			X.stored_slimes += S
 
 //Place slimes
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoTurfClickShift(mob/living/user, turf/simulated/floor/T)
@@ -377,6 +395,10 @@
 	if (istype(turfarea, E.allowed_area_type))
 		for(var/mob/living/carbon/slime/S in X.stored_slimes)
 			S.forceMove(T)
+			if(istype(S, /mob/living/carbon/slime/adult))
+				flick("big_jaunt_in", S)
+			else
+				flick("small_jaunt_in", S)
 			S.visible_message("<span class='notice'>[S] warps in!</span>")
 			X.stored_slimes -= S
 
