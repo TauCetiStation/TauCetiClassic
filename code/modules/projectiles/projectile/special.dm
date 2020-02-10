@@ -310,7 +310,7 @@
 	nodamage = TRUE
 	fake = TRUE // This thing can't hurt, there's no reason to log it.
 
-	kill_count = 7
+	kill_count = 13
 
 	flag = "laser"
 	hitscan = TRUE
