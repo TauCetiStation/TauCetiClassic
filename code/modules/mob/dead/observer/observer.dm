@@ -210,6 +210,7 @@ Works together with spawning an observer, noted above.
 		ghost.playsound_stop(CHANNEL_AMBIENT_LOOP)
 		if(client && !ghost.client.holder && !config.antag_hud_allowed)		// For new ghosts we remove the verb from even showing up if it's not allowed.
 			ghost.verbs -= /mob/dead/observer/verb/toggle_antagHUD			// Poor guys, don't know what they are missing!
+		pass_memes(ghost)
 		return ghost
 
 /*

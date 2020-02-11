@@ -96,6 +96,8 @@
 
 	QDEL_NULL(light)
 
+	clear_memes()
+
 	return ..()
 
 /atom/proc/CheckParts(list/parts_list)

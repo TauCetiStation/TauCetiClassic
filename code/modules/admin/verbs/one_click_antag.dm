@@ -266,7 +266,11 @@
 
 		if(nuke_spawn)
 			var/obj/item/weapon/paper/P = new(nuke_spawn.loc)
-			P.info = "Sadly, the Syndicate could not get you a nuclear bomb.  We have, however, acquired the arming code for the station's onboard nuke.  The nuclear authorization code is: <b>[nuke_code]</b>"
+
+			create_meme(/datum/meme/memory/password/nuke, "nuke_password_" + nuke_code, nuke_code)
+			var/datum/meme/memory/password/nuke/pass = P.attach_meme("nuke_password_" + nuke_code)
+
+			P.info = "Sadly, the Syndicate could not get you a nuclear bomb.  We have, however, acquired the arming code for the station's onboard nuke.  The nuclear authorization code is: <b>[pass.get_meme_text()]</b>"
 			P.name = "nuclear bomb code and instructions"
 			P.update_icon()
 

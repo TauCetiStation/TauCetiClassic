@@ -193,10 +193,12 @@
 
 /datum/game_mode/proc/prepare_syndicate_leader(datum/mind/synd_mind, nuke_code)
 	if (nuke_code)
-		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0)
-		to_chat(synd_mind.current, "The nuclear authorization code is: <B>[nuke_code]</B>")
+		create_meme(/datum/meme/memory/password/nuke, "nuke_password_" + nuke_code, nuke_code)
+		var/datum/meme/memory/password/nuke/pass = synd_mind.current.attach_meme("nuke_password_" + nuke_code)
+
 		var/obj/item/weapon/paper/P = new
-		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
+		P.attach_meme("nuke_password_" + nuke_code)
+		P.info = "The nuclear authorization code is: <b>[pass.get_meme_text()]</b>"
 		P.name = "nuclear bomb code"
 		P.update_icon()
 		if (ticker.mode.config_tag=="nuclear")

@@ -34,14 +34,34 @@
 
 // /atom signals
 #define COMSIG_ATOM_ENTERED "atom_entered"						//from base of atom/Entered(): (atom/movable/entering, /atom)
+#define COMSIG_PRE_EXAMINE "pre_examine"                        //from base of mob/examinate() : (/mob)
+	#define COMPONENT_CANCEL_EXAMINE 1
+
+#define COMSIG_MEME_ADDED "meme_added"                          //called after a meme is added from base of datum/meme/on_attach(): (/datum/meme)
+#define COMSIG_MEME_REMOVED "meme_removed"                      //called after a meme is removed from base of datum/meme/on_detach(): (/datum/meme)
+
+#define COMSIG_AUTHENTICATE "authenticate"                      //called anywhere where authentification is needed.
+	#define COMPONENT_ACCESS_GRANTED 1
+	#define COMPONENT_ACCESS_DENIED 2
+
+#define AUTHENTICATE(requestee, user) (SEND_SIGNAL(requestee, COMSIG_AUTHENTICATE, user) & COMPONENT_ACCESS_GRANTED)
 
 // /atom/movable signals
 #define COMSIG_MOVABLE_CROSSED "movable_crossed"				//from base of atom/movable/Crossed(): (/atom/movable)
 #define COMSIG_MOVABLE_MOVED "movable_moved"					//from base of atom/movable/Moved(): (/atom, dir)
-
 
 #define COMSIG_XENO_SLIME_CLICK_CTRL "xeno_slime_click_ctrl"				//from slime CtrlClickOn(): (/mob)
 #define COMSIG_XENO_SLIME_CLICK_SHIFT "xeno_slime_click_shift"				//from slime ShiftClickOn(): (/mob)
 #define COMSIG_XENO_TURF_CLICK_SHIFT "xeno_turf_click_shift"				//from turf ShiftClickOn(): (/mob)
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"					//from turf AltClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"				//from monkey CtrlClickOn(): (/mob)
+
+// /mob signals.
+#define COMSIG_MOB_EXAMINATE "examinate"                        //from base of mob/examinate() : (/atom)
+	#define COMPONENT_CANCEL_EXAMINATE 1
+
+// /datum/meme-related signals.
+#define COMSIG_ATOM_WRITE "mob_write"                            //from a bunch of different places which involve writing: (/atom, text)
+
+#define COMSIG_PAPER_READ "paper_read"                          //from a bunch of different places which involve reading: (/mob, text)
+	#define COMPONENT_STAR_TEXT 1                               //makes the text appear starred.

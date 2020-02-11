@@ -337,3 +337,6 @@
 /mob/living/incapacitated(restrained_type = ARMS)
 	if(stat || paralysis || stunned || weakened || restrained(restrained_type))
 		return 1
+
+/mob/living/cognitive()
+	return stat != DEAD

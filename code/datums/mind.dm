@@ -1019,8 +1019,8 @@
 						code = bombue.r_code
 						break
 				if (code)
-					store_memory("<B>Syndicate Nuclear Bomb Code</B>: [code]", 0)
-					to_chat(current, "The nuclear authorization code is: <B>[code]</B>")
+					create_meme(/datum/meme/memory/password/nuke, "nuke_password_" + code, code)
+					current.attach_meme("nuke_password_" + code)
 				else
 					to_chat(usr, "<span class='warning'>No valid nuke found!</span>")
 

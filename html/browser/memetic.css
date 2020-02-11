@@ -1,0 +1,122 @@
+.memeticCategoryContainer{
+    width: 95%;
+    height: 450px;
+    padding: 15px;
+    background: url(header1.jpg);
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y:scroll;
+}
+body{
+    scrollbar-track-color: #252525;
+    scrollbar-color: #0a0a0a;
+    scrollbar-shadow-color: #0a0a0a;
+    scrollbar-arrow-color: #ffffff;
+    scrollbar-base-color: #ffffff;
+    scrollbar-shadow-color: #0a0a0a;
+}
+.memeticCategoriesContainer{
+    width: 95%;
+    height: 35px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    background: url(uiMaskBackground.png);
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x: scroll;
+}
+.memeticItem{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 5px;
+    background-size: cover;
+}
+a.memeticButton{
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    width: 100%;
+    padding:5px 10px 5px 10px;
+    text-align: center;
+    white-space:nowrap;
+}
+a.memeticButton:hover{
+    color: rgb(26, 70, 192);
+}
+a.memeticButton:active{
+    color: rgb(138, 169, 253);
+}
+a.memeticButton.memeticIcon{
+    padding:5px 12px 5px 12px;
+    background-image: url(arrow1.png);
+    background-size: contain;
+    background-position:center;
+}
+a.memeticButton.memeticIcon.select{
+    background-image: url(arrow2.png); 
+}
+a.memeticType-Meme{
+    border: 2px solid #ffffff;
+}
+a.memeticType-Memory{
+    border: 2px solid #3333cc;
+}
+a.memeticType-Countermeme{
+    border: 2px solid #b761cc;
+}
+.memeticType-Meme{
+    border: 1px solid #ffffff;
+}
+.memeticType-Memory{
+    border: 1px solid #3333cc;
+}
+.memeticType-Countermeme{
+    border: 1px solid #b761cc;
+}
+.memeticTypeSelected-Meme{
+    border: 2px solid #ffffff;
+}
+.memeticTypeSelected-Memory{
+    border: 2px solid #3333cc;
+}
+.memeticTypeSelected-Countermeme{
+    border: 2px solid #b761cc;
+}
+.Meme{
+    background: url(memetic1.jpg);
+}
+.Memory{
+    background: url(memetic2.jpg);
+}
+.Countermeme{
+    background: url(memetic3.jpg);
+}
+a.memeticCategorySelected{
+    background-color: rgb(110, 110, 110);
+    width: 100px;
+    height: 26px;
+    padding-right: 20px;
+    padding-left: 20px;
+    margin: 0;
+    text-align: center;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    display:block;
+}
+a.memeticCategorySelected-notSelected{
+    background: url(uiMaskBackground.png);
+    width: 100px;
+    height: 26px;
+    padding-right: 20px;
+    padding-left: 20px;
+    margin: 0;
+    text-align: center;
+    border: 1px solid #111111;
+    color: #ffffff;
+    display:block;
+}
+td{
+    background:url(uiMaskBackground.png);
+    vertical-align: top;
+    padding: 10px;
+}

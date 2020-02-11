@@ -75,14 +75,25 @@
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
 	assets.send(user)
 
+	var/temp_info_links = info_links
+	var/temp_info = info
+
+	var/warped_text = SEND_SIGNAL(src, COMSIG_PAPER_READ, user, temp_info)
+	if(isnum(warped_text))
+		if(warped_text & COMPONENT_STAR_TEXT)
+			forcestars = TRUE
+	else
+		temp_info = warped_text
+		temp_info_links = warped_text
+
 	var/data
-	if((!(ishuman(user) || isobserver(user) || issilicon(user)) && !forceshow) || forcestars)
-		data = "<HTML><HEAD><TITLE>[sanitize(name)]</TITLE></HEAD><BODY>[stars(info)][stamp_text]</BODY></HTML>"
+	if((!user.can_read() && !forceshow) || forcestars)
+		data = "<HTML><HEAD><TITLE>[sanitize(name)]</TITLE></HEAD><BODY>[stars(temp_info)][stamp_text]</BODY></HTML>"
 		if(view)
 			user << browse(entity_ja(data), "window=[name]")
 			onclose(user, "[name]")
 	else
-		data = "<HTML><HEAD><TITLE>[sanitize(name)]</TITLE></HEAD><BODY>[infolinks ? info_links : info][stamp_text]</BODY></HTML>"
+		data = "<HTML><HEAD><TITLE>[sanitize(name)]</TITLE></HEAD><BODY>[infolinks ? temp_info_links : temp_info][stamp_text]</BODY></HTML>"
 		if(view)
 			user << browse(entity_ja(data), "window=[name]")
 			onclose(user, "[name]")
@@ -266,6 +277,8 @@
 
 	P.updateinfolinks()
 	P.update_icon()
+
+	pass_memes(P, pass_flags=list(MEME_SPREAD_READING))
 
 	return P
 

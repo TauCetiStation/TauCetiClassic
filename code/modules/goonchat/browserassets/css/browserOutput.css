@@ -375,6 +375,8 @@ h1.alert, h2.alert	{color: #000000;}
 .modooc					{color: #184880;	font-weight: bold;}
 .adminmod				{color: #402A14;	font-weight: bold;}
 
+.meme       			{color: #ffffff; background-color: #341c3a;}
+
 .admin_announce {display: inline-block; width: 100%; color: #000; background: #bababa;}
 
 /* Languages */

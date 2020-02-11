@@ -74,6 +74,7 @@
 			global.chemical_reactions_list[id] += D
 			break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
+	populate_meme_list()
 	populate_gear_list()
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
