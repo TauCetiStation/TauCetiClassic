@@ -824,6 +824,8 @@
 		to_chat(user, "<span class='warning'>Repeat at least every 1.5 seconds.</span>")
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
+		if(!src.client)
+			return
 		if(H.stat == DEAD && (world.time - H.timeofdeath) < DEFIB_TIME_LIMIT)
 			var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 			if(!IO)
