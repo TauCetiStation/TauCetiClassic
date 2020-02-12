@@ -177,6 +177,8 @@
 			//H.jitteriness = 0
 			H.update_hair()
 	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+	if(!IO)
+		return
 	IO.heart_status = HEART_FAILURE
 	return
 

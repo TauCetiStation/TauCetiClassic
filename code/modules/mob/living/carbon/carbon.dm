@@ -3,8 +3,9 @@
 #define MAX_BRAIN_DAMAGE      80
 #define MASSAGE_RHYTM_RIGHT   10
 #define MASSAGE_ALLOWED_ERROR 2
-/mob/living/carbon/var/last_massage = 0
-/mob/living/carbon/var/massages_done_right = 0
+/mob/living/carbon
+	var/last_massage = 0
+	var/massages_done_right = 0
 
 
 /mob/living/carbon/atom_init()
@@ -825,6 +826,8 @@
 		var/mob/living/carbon/human/H = src
 		if(H.stat == DEAD && (world.time - H.timeofdeath) < DEFIB_TIME_LIMIT)
 			var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+			if(!IO)
+				return
 			if(massages_done_right > 4)
 				to_chat(user, "<span class='warning'>[src]'s heart start to beat!</span>")
 				reanimate_body(H)
@@ -874,7 +877,7 @@
 	H.setBrainLoss(brain_damage)
 
 /mob/living/carbon/proc/return_to_body_dialog(mob/living/carbon/human/returnable)
-	if (returnable.key) //in body?
+	if (returnable.client) //in body?
 		returnable.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 	else if(returnable.mind)
 		for(var/mob/dead/observer/ghost in player_list)
