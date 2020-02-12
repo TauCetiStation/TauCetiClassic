@@ -102,3 +102,6 @@ var/last_round_duration = 0
 	if(hour)
 		hourT = " and [hour] hour[(hour != 1)? "s":""]"
 	return "[day] day[(day != 1)? "s":""][hourT][minuteT][secondT]"
+
+/proc/is_leap_year(year)
+	return (year && isnum(year) && (((year % 400) == 0) || ((year % 100 != 0) && (year % 4 == 0))))

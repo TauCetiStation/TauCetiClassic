@@ -116,7 +116,6 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 				attachment_title = errmsg,
 				attachment_msg = sql_query,
 				attachment_color = BRIDGE_COLOR_ADMINALERT,
-				mention = BRIDGE_MENTION_HERE,
 			)
 
 /DBQuery/proc/NextRow() return _dm_db_next_row(_db_query,item,conversions)

@@ -233,8 +233,8 @@
 						M_job = "slime"
 					else if(ismonkey(M))
 						M_job = "Monkey"
-					else if(isalien(M)) //aliens
-						if(islarva(M))
+					else if(isxeno(M)) //aliens
+						if(isxenolarva(M))
 							M_job = "Alien larva"
 						else if(isfacehugger(M))
 							M_job = "Alien facehugger"
@@ -348,7 +348,7 @@
 			dat += "<td>Ghost</td>"
 		else if(ismonkey(M))
 			dat += "<td>Monkey</td>"
-		else if(isalien(M))
+		else if(isxeno(M))
 			dat += "<td>Alien</td>"
 		else if(istype(M, /mob/living/parasite/meme))
 			dat += "<td>Meme</td>"

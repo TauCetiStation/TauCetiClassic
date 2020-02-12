@@ -26,7 +26,7 @@
 	var/typepath
 	if(ishuman(M))
 		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints
-	else if(isalien(M))
+	else if(isxeno(M))
 		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints/claws
 	else // can shomeone make shlime footprint shprites later pwetty pwease?
 		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints/paws
@@ -138,7 +138,7 @@
 
 		this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 
-	else if( istype(M, /mob/living/carbon/alien ))
+	else if( istype(M, /mob/living/carbon/xenomorph ))
 		var/obj/effect/decal/cleanable/blood/xeno/this = new /obj/effect/decal/cleanable/blood/xeno(src)
 		this.blood_DNA["UNKNOWN BLOOD"] = "X*"
 

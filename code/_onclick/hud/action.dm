@@ -170,7 +170,7 @@
 	usr.update_action_buttons()
 
 /obj/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(mob/living/user)
-	if(isalien(user))
+	if(isxeno(user))
 		icon_state = "bg_alien"
 	else
 		icon_state = "bg_default"

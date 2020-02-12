@@ -409,6 +409,9 @@
 				user.drop_item()	//drop the item to update overlays and such
 				qdel(L)
 
+				playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 25)
+				user.SetNextMove(CLICK_CD_INTERACT)
+
 				if(on && rigged)
 
 					log_admin("LOG: Rigged light explosion, last touched by [fingerprintslast]")
@@ -469,7 +472,7 @@
 			s.start()
 			//if(!user.mutations & COLD_RESISTANCE)
 			if (prob(75))
-				electrocute_mob(user, get_area(src), src, rand(0.7,1.0))
+				electrocute_mob(user, get_area(src), src, rand(70, 100) * 0.01)
 
 
 // returns whether this light has power
@@ -498,7 +501,7 @@
 	flicker(1)
 
 // Aliens smash the bulb but do not get electrocuted./N
-/obj/machinery/light/attack_alien(mob/living/carbon/alien/humanoid/user)//So larva don't go breaking light bulbs.
+/obj/machinery/light/attack_alien(mob/living/carbon/xenomorph/humanoid/user)//So larva don't go breaking light bulbs.
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
 		to_chat(user, "<span class='notice'>That object is useless to you.</span>")
 		return
@@ -562,6 +565,9 @@
 	L.brightness_power = brightness_power
 	L.brightness_color = brightness_color
 
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 25)
+	user.SetNextMove(CLICK_CD_INTERACT)
+
 	// light item inherits the switchcount, then zero it
 	L.switchcount = switchcount
 	switchcount = 0
@@ -609,7 +615,7 @@
 
 	if(!skip_sound_and_sparks)
 		if(status == LIGHT_OK || status == LIGHT_BURNED)
-			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, 'sound/effects/light-break.ogg', VOL_EFFECTS_MASTER)
 		if(on)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
@@ -719,7 +725,7 @@
 	brightness_power = 2
 	brightness_color = "#a0a080"
 
-/obj/item/weapon/light/throw_impact(atom/hit_atom)
+/obj/item/weapon/light/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	shatter()
 
@@ -770,8 +776,8 @@
 
 		if(S.reagents.has_reagent("phoron", 5))
 
-			log_admin("LOG: [user.name] ([user.ckey]) injected a light with phoron, rigging it to explode.")
-			message_admins("LOG: [user.name] ([user.ckey]) injected a light with phoron, rigging it to explode. [ADMIN_JMP(user)]")
+			log_admin("LOG: [key_name(user)] injected a light with phoron, rigging it to explode.")
+			message_admins("LOG: [key_name_admin(user)] injected a light with phoron, rigging it to explode. [ADMIN_JMP(user)]")
 
 			rigged = 1
 
@@ -799,5 +805,5 @@
 		status = LIGHT_BROKEN
 		force = 5
 		sharp = 1
-		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, 'sound/effects/light-break.ogg', VOL_EFFECTS_MASTER)
 		update()

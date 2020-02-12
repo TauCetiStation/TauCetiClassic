@@ -3,7 +3,7 @@
 
 	if(usr.client != src.owner || !check_rights(0))
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
-		message_admins("[usr.key] has attempted to override the admin panel!")
+		message_admins("[key_name_admin(usr)] has attempted to override the admin panel!")
 		return
 
 	if(ticker.mode && ticker.mode.check_antagonists_topic(href, href_list))
@@ -338,11 +338,11 @@
 
 		switch(href_list["simplemake"])
 			if("observer")			M.change_mob_type( /mob/dead/observer , null, null, delmob )
-			if("drone")				M.change_mob_type( /mob/living/carbon/alien/humanoid/drone , null, null, delmob )
-			if("hunter")			M.change_mob_type( /mob/living/carbon/alien/humanoid/hunter , null, null, delmob )
-			if("queen")				M.change_mob_type( /mob/living/carbon/alien/humanoid/queen , null, null, delmob )
-			if("sentinel")			M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob )
-			if("larva")				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
+			if("drone")				M.change_mob_type( /mob/living/carbon/xenomorph/humanoid/drone , null, null, delmob )
+			if("hunter")			M.change_mob_type( /mob/living/carbon/xenomorph/humanoid/hunter , null, null, delmob )
+			if("queen")				M.change_mob_type( /mob/living/carbon/xenomorph/humanoid/queen , null, null, delmob )
+			if("sentinel")			M.change_mob_type( /mob/living/carbon/xenomorph/humanoid/sentinel , null, null, delmob )
+			if("larva")				M.change_mob_type( /mob/living/carbon/xenomorph/larva , null, null, delmob )
 			if("human")				M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
 			if("slime")			M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
 			if("adultslime")		M.change_mob_type( /mob/living/carbon/slime/adult , null, null, delmob )
@@ -1720,8 +1720,9 @@
 
 	else if(href_list["CentcommFaxReply"])
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
+		var/department = locate(href_list["CentcommFaxReplyDestination"])
 
-		var/input = sanitize(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work.", "Outgoing message from Centcomm", "") as message|null, extra = FALSE)
+		var/input = sanitize(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection.", "Outgoing message from Centcomm", "") as message|null, extra = FALSE)
 		if(!input)
 			return
 
@@ -1729,13 +1730,19 @@
 
 		var/obj/item/weapon/paper/P = new
 		P.name = "[command_name()]- [customname]"
-		P.info = input
+		var/parsed_text = parsebbcode(input)
+		parsed_text = replacetext(parsed_text, "\[nt\]", "<img src = bluentlogo.png />")
+		P.info = parsed_text
 		P.update_icon()
 
 		var/obj/item/weapon/stamp/centcomm/S = new
-		S.stamp_paper(P, use_stamp_by_message = TRUE)
+		S.stamp_paper(P)
 
-		send_fax(usr, P, "All")
+		switch(alert("Should this be sended to all fax machines?",,"Yes","No"))
+			if("Yes")
+				send_fax(usr, P, "All")
+			if("No")
+				send_fax(usr, P, "[department]")
 
 		add_communication_log(type = "fax-centcomm", title = customname ? customname : 0, author = "Centcomm Officer", content = input)
 
@@ -2183,7 +2190,7 @@
 				var/range_high = MAX_EXPLOSION_RANGE *0.5
 				var/range_low = MAX_EXPLOSION_RANGE
 				message_admins("<span class='warning'><b> [key_name_admin(usr)] changed the bomb cap to [range_dev], [range_high], [range_low]</b></span>")
-				log_admin("[key_name_admin(usr)] changed the bomb cap to [MAX_EXPLOSION_RANGE]")
+				log_admin("[key_name(usr)] changed the bomb cap to [MAX_EXPLOSION_RANGE]")
 
 			if("flicklights")
 				feedback_inc("admin_secrets_fun_used",1)
@@ -2640,7 +2647,7 @@
 				newChannel.is_admin_channel = 1
 				feedback_inc("newscaster_channels",1)
 				news_network.network_channels += newChannel                        //Adding channel to the global network
-				log_admin("[key_name_admin(usr)] created command feed channel: [src.admincaster_feed_channel.channel_name]!")
+				log_admin("[key_name(usr)] created command feed channel: [src.admincaster_feed_channel.channel_name]!")
 				src.admincaster_screen=5
 		src.access_news_network()
 
@@ -2673,7 +2680,7 @@
 		for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
 			NEWSCASTER.newsAlert(src.admincaster_feed_channel.channel_name)
 
-		log_admin("[key_name_admin(usr)] submitted a feed story to channel: [src.admincaster_feed_channel.channel_name]!")
+		log_admin("[key_name(usr)] submitted a feed story to channel: [src.admincaster_feed_channel.channel_name]!")
 		src.access_news_network()
 
 	else if(href_list["ac_create_channel"])
@@ -2734,7 +2741,7 @@
 					news_network.wanted_issue.body = src.admincaster_feed_message.body
 					news_network.wanted_issue.backup_author = src.admincaster_feed_message.backup_author
 					src.admincaster_screen = 19
-				log_admin("[key_name_admin(usr)] issued a Station-wide Wanted Notification for [src.admincaster_feed_message.author]!")
+				log_admin("[key_name(usr)] issued a Station-wide Wanted Notification for [src.admincaster_feed_message.author]!")
 		src.access_news_network()
 
 	else if(href_list["ac_cancel_wanted"])
@@ -2861,7 +2868,7 @@
 			return
 
 		library_recycle_bin()
-		log_admin("[key_name_admin(usr)] restored [title] from the recycle bin")
+		log_admin("[key_name(usr)] restored [title] from the recycle bin")
 		message_admins("[key_name_admin(usr)] restored [title] from the recycle bin")
 
 	else if(href_list["deletebook"])
@@ -2892,7 +2899,7 @@
 			return
 
 		library_recycle_bin()
-		log_admin("[key_name_admin(usr)] restored [title] from the recycle bin")
+		log_admin("[key_name(usr)] restored [title] from the recycle bin")
 		message_admins("[key_name_admin(usr)] removed [title] from the library database")
 
 	else if(href_list["vsc"])

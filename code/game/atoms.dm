@@ -270,7 +270,7 @@
 /atom/proc/singularity_pull()
 	return
 
-/atom/proc/hitby(atom/movable/AM)
+/atom/proc/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	return
 
 /atom/proc/add_hiddenprint(mob/living/M)

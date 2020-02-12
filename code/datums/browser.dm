@@ -15,13 +15,12 @@
 	var/head_content = ""
 	var/content = ""
 
-
 /datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref, ntheme)
 
 	user = nuser
 	window_id = nwindow_id
 	if (ntitle)
-		title = format_text(ntitle)
+		title = ntitle
 	if (nwidth)
 		width = nwidth
 	if (nheight)
@@ -42,10 +41,18 @@
 	//title_image = ntitle_image
 
 /datum/browser/proc/add_stylesheet(name, file)
-	stylesheets[name] = file
+	if (istype(name, /datum/asset/spritesheet))
+		var/datum/asset/spritesheet/sheet = name
+		stylesheets += "spritesheet_[sheet.name].css"
+	else
+		var/asset_name = "[name].css"
+		stylesheets[asset_name] = file
+		if (!SSasset.cache[asset_name])
+			register_asset(asset_name, file)
 
 /datum/browser/proc/add_script(name, file)
-	scripts[name] = file
+	scripts["[ckey(name)].js"] = file
+	register_asset("[ckey(name)].js", file)
 
 /datum/browser/proc/set_content(ncontent)
 	content = ncontent
@@ -54,17 +61,11 @@
 	content += ncontent
 
 /datum/browser/proc/get_header()
-	var/key
-	var/filename
-	for (key in stylesheets)
-		filename = "[ckey(key)].css"
-		user << browse_rsc(stylesheets[key], filename)
-		head_content += "<link rel='stylesheet' type='text/css' href='[filename]'>"
+	for (var/name in stylesheets)
+		head_content += "<link rel='stylesheet' type='text/css' href='[name]'>"
 
-	for (key in scripts)
-		filename = "[ckey(key)].js"
-		user << browse_rsc(scripts[key], filename)
-		head_content += "<script type='text/javascript' src='[filename]'></script>"
+	for (var/name in scripts)
+		head_content += "<script type='text/javascript' src='[name]'></script>"
 
 	var/title_attributes = "class='uiTitle'"
 	if (title_image)
@@ -88,7 +89,7 @@
 			</div>
 		</div>
 		<script>
-			document.body.innerHTML = document.body.innerHTML.replace(/¶/g, "ÿ");<!-- omg its so weird --!>
+			document.body.innerHTML = document.body.innerHTML.replace(/¶/g, "&#1103;");
 		</script>
 	</body>
 </html>"}
@@ -99,11 +100,15 @@
 	[content]
 	[get_footer()]
 	"}
-//"
+
 /datum/browser/proc/open(use_onclose = 1)
 	var/window_size = ""
 	if (width && height)
 		window_size = "size=[width]x[height];"
+	if (stylesheets.len)
+		send_asset_list(user, stylesheets, verify=FALSE)
+	if (scripts.len)
+		send_asset_list(user, scripts, verify=FALSE)
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
 	if (use_onclose)
 		onclose(user, window_id, ref)

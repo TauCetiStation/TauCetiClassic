@@ -386,7 +386,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 							dat+="<FONT SIZE=1>[((src.scanned_user in MESSAGE.voters) || (src.scanned_user == "Unknown")) ? ("<img src=like_clck.png>") : ("<A href='?src=\ref[src];setLike=\ref[MESSAGE]'><img src=like.png></A>")]: <FONT SIZE=2>[MESSAGE.likes]</FONT> \
 											   [((src.scanned_user in MESSAGE.voters) || (src.scanned_user == "Unknown")) ? ("<img src=dislike_clck.png>") : ("<A href='?src=\ref[src];setDislike=\ref[MESSAGE]'><img src=dislike.png></A>")]: <FONT SIZE=2>[MESSAGE.dislikes]</FONT></FONT>"
 
-							dat+="<BR><A href='?src=\ref[src];open_pages=\ref[MESSAGE]'><B>Open Comments</B></A><HR>"
+							dat+="<BR><A href='?src=\ref[src];open_pages=\ref[MESSAGE]'><B>Open Comments</B></A> - ([MESSAGE.count_comments])<HR>"
 
 				dat+="<A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
