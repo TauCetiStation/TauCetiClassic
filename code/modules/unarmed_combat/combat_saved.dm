@@ -99,6 +99,7 @@
 	if(attacker && attacker.client)
 		for(var/combo_element_icon in combo_elements_icons)
 			attacker.client.images -= combo_element_icon
+		combo_elements_icons.Cut()
 
 		var/i = 1
 		for(var/c_el in combo_elements)
