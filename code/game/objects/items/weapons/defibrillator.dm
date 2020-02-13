@@ -392,6 +392,7 @@
 		IO.heart_status = HEART_NORMAL
 		reanimate_body(H)
 		H.stat = UNCONSCIOUS
+		return_to_body_dialog(src)
 
 	if(IO.heart_status == HEART_NORMAL && prob(20))
 		IO.heart_status = HEART_FAILURE
@@ -419,6 +420,18 @@
 
 	make_announcement("pings, \"Defibrillation successful.\"")
 	playsound(src, 'sound/items/surgery/defib_success.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
+/obj/item/weapon/twohanded/shockpaddles/proc/return_to_body_dialog(mob/living/carbon/human/returnable)
+	if (returnable.client) //in body?
+		returnable.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+	else if(returnable.mind)
+		for(var/mob/dead/observer/ghost in player_list)
+			if(ghost.mind == returnable.mind && ghost.can_reenter_corpse)
+				ghost.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+				var/answer = alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate","Yes","No")
+				if(answer == "Yes")
+					ghost.reenter_corpse()
+				break
 
 /obj/item/weapon/twohanded/shockpaddles/proc/do_electrocute(mob/living/carbon/human/H, mob/user, var/target_zone)
 	var/obj/item/organ/external/affecting = H.get_bodypart(target_zone)
