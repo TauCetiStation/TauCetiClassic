@@ -14847,6 +14847,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
+"azO" = (
+/obj/machinery/portable_atmospherics/canister/hydrogen,
+/turf/simulated/floor{
+	icon_state = "bot"
+	},
+/area/station/rnd/storage)
 "azP" = (
 /obj/structure/grille,
 /turf/simulated/floor/plating,
@@ -117901,7 +117907,7 @@ aHX
 aHX
 aLe
 aMu
-aNL
+azO
 aPa
 aQt
 bFC
