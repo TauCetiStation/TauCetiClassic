@@ -379,7 +379,7 @@
 	return
 
 /obj/structure/computerframe/attackby(obj/item/P, mob/user)
-	if(!ishuman(user))
+	if(!ishuman(user) && !issilicon(user))
 		to_chat(user, "<span class='warning'>It's too complicated for you.</span>")
 		return
 
@@ -503,12 +503,15 @@
 	set name = "Rotate"
 	set src in oview(1)
 
-	if(get_dist(src, usr) > 1 || usr.restrained() || usr.lying || usr.stat || issilicon(usr))
+	// virtual present
+	if (isAI(usr) || ispAI(usr))
 		return
-	if(!ishuman(usr))
+	// state restrict
+	if(!in_range(src, usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
+		return
+	// species restrict
+	if(!ishuman(usr) && !issilicon(usr))
 		to_chat(usr, "<span class='warning'>It's too complicated for you.</span>")
-		return
-	if(usr.is_busy(src))
 		return
 
 	var/obj/item/I = usr.get_active_hand()
