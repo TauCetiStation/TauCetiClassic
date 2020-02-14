@@ -379,7 +379,7 @@
 	return
 
 /obj/structure/computerframe/attackby(obj/item/P, mob/user)
-	if(!ishuman(user) && !issilicon(user))
+	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>It's too complicated for you.</span>")
 		return
 
@@ -510,7 +510,7 @@
 	if(!in_range(src, usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
 		return
 	// species restrict
-	if(!ishuman(usr) && !issilicon(usr))
+	if(!usr.IsAdvancedToolUser())
 		to_chat(usr, "<span class='warning'>It's too complicated for you.</span>")
 		return
 
