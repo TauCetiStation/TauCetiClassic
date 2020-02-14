@@ -1,7 +1,5 @@
 /datum/preferences/proc/ShowGeneral(mob/user)
 	var/datum/species/specie_obj = all_species[species]
-	var/list/flags = specie_obj.flags
-	flags = all_species[species].flags
 	. =  "<table cellspacing='0' width='100%'>"	//Main body table start
 	. += 	"<tr>"
 	. += 		"<td width='340px' height='320px' style='padding-left:25px'>"
@@ -43,9 +41,9 @@
 			. += "Body: <a href='?_src_=prefs;preference=all;task=random'>&reg;</a>"
 			. += "<br>Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a>"
 			. += "<br>Secondary Language: <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a>"
-			if(!flags[NO_BLOOD])
+			if(!specie_obj.flags[NO_BLOOD])
 				. += "<br>Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a>"
-			if(flags[HAS_SKIN_TONE])
+			if(specie_obj.flags[HAS_SKIN_TONE])
 				. += "<br>Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a>"
 
 		//Organs
@@ -102,7 +100,7 @@
 			else
 				. += "<b>Hair</b>"
 			. += "<br>"
-			if(flags[HAS_HAIR_COLOR])
+			if(specie_obj.flags[HAS_HAIR_COLOR])
 				. += "<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td width='20' height='15'></td></tr></table></font>"
 			. += " Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
 			. += "<b>Facial</b>"
@@ -110,14 +108,14 @@
 			. += " Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
 			. += "<b>Eyes</b>"
 			. += "<br><a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td width='20' height='15'></td></tr></table></font><br>"
-			if(flags[HAS_SKIN_COLOR])
+			if(specie_obj.flags[HAS_SKIN_COLOR])
 				. += "<b>Body Color</b>"
 				. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin)]'><tr><td width='20' height='15'></td></tr></table></font>"
 
 		//Gear
 		if("gear")
 			. += "<b>Gear:</b><br>"
-			if(flags[HAS_UNDERWEAR])
+			if(specie_obj.flags[HAS_UNDERWEAR])
 				if(gender == MALE)
 					. += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'>[underwear_m[underwear]]</a><br>"
 				else
