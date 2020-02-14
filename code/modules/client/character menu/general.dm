@@ -1,5 +1,5 @@
 /datum/preferences/proc/ShowGeneral(mob/user)
-	var/list/flags = all_species[species].flags
+	flags = all_species[species].flags
 	. =  "<table cellspacing='0' width='100%'>"	//Main body table start
 	. += 	"<tr>"
 	. += 		"<td width='340px' height='320px' style='padding-left:25px'>"
@@ -294,11 +294,15 @@
 					language = input("Please select a secondary language", "Character Generation", null) in new_languages
 
 				if("b_type")
+					if(specie_obj.flags[NO_BLOOD])
+						return
 					var/new_b_type = input(user, "Choose your character's blood-type:", "Character Preference") as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
 					if(new_b_type)
 						b_type = new_b_type
 
 				if("hair")
+					if(!specie_obj.flags[HAS_HAIR_COLOR])
+						return
 					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
 					if(new_hair)
 						r_hair = hex2num(copytext(new_hair, 2, 4))
@@ -349,6 +353,8 @@
 						f_style = new_f_style
 
 				if("underwear")
+					if(!specie_obj.flags[HAS_UNDERWEAR])
+						return
 					var/list/underwear_options
 					if(gender == MALE)
 						underwear_options = underwear_m
@@ -381,11 +387,15 @@
 						b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
 				if("s_tone")
+					if(!specie_obj.flags[HAS_SKIN_TONE])
+						return
 					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference")  as num|null
 					if(new_s_tone)
 						s_tone = 35 - max(min( round(new_s_tone), 220),1)
 
 				if("skin")
+					if(!specie_obj.flags[HAS_SKIN_COLOR])
+						return
 					var/new_skin = input(user, "Choose your character's skin colour: ", "Character Preference") as color|null
 					if(new_skin)
 						r_skin = hex2num(copytext(new_skin, 2, 4))
