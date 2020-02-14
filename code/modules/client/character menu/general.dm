@@ -299,15 +299,13 @@
 					var/list/valid_hairstyles = list()
 					for(var/hairstyle in hair_styles_list)
 						var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-						if( !(species in S.species_allowed))
-							if(gender == MALE && S.gender == FEMALE)
-								continue
-							if(gender == FEMALE && S.gender == MALE)
-								continue
-							if(!(species in S.species_allowed))
-								continue
+						if(S.gender != NEUTER && gender != S.gender)
+							continue
+						if(!(species in S.species_allowed))
+							continue
 						if(species == IPC && ipc_head != S.ipc_head_compatible )
 							continue
+
 						valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
 
 					var/new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in valid_hairstyles
@@ -325,9 +323,7 @@
 					var/list/valid_facialhairstyles = list()
 					for(var/facialhairstyle in facial_hair_styles_list)
 						var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-						if(gender == MALE && S.gender == FEMALE)
-							continue
-						if(gender == FEMALE && S.gender == MALE)
+						if(S.gender != NEUTER && gender != S.gender)
 							continue
 						if(!(species in S.species_allowed))
 							continue
