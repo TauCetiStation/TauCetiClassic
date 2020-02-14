@@ -78,7 +78,6 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/g_eyes = 0						//Eye color
 	var/b_eyes = 0						//Eye color
 	var/species = HUMAN
-	var/list/flags
 	var/language = "None"				//Secondary language
 
 	//Some faction information.

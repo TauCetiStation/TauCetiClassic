@@ -1,4 +1,6 @@
 /datum/preferences/proc/ShowGeneral(mob/user)
+	var/datum/species/specie_obj = all_species[species]
+	var/list/flags = specie_obj.flags
 	flags = all_species[species].flags
 	. =  "<table cellspacing='0' width='100%'>"	//Main body table start
 	. += 	"<tr>"
