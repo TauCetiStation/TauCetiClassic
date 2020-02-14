@@ -45,7 +45,7 @@
 		var/mob/living/carbon/slime/S = thing
 		S.forceMove(loc)
 	stored_slimes.Cut()
-	if(connected_recycler && locate(src) in connected_recycler.connected_consoles)
+	if(connected_recycler && (locate(src) in connected_recycler.connected_consoles))
 		connected_recycler.connected_consoles -= src
 	connected_recycler = null
 	QDEL_NULL(slime_place_action)
