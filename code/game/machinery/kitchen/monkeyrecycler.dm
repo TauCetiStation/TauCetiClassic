@@ -24,7 +24,7 @@
 
 /obj/machinery/monkey_recycler/Destroy()
 	for(var/obj/machinery/computer/camera_advanced/xenobio/console in connected_consoles)
-		console?.connected_recycler = null
+		console.connected_recycler = null
 	connected_consoles.Cut()
 	return ..()
 
