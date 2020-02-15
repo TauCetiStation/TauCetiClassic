@@ -22,7 +22,7 @@
 	//	return
 
 	if(A.attack_hand(src))
-		adjust_stamina(-3)
+		adjust_stamina(-5)
 
 /atom/proc/attack_hand(mob/user)
 	return

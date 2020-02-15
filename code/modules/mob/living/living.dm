@@ -24,12 +24,14 @@
 		if(m_intent == MOVE_INTENT_RUN || (confused && m_intent != MOVE_INTENT_CREEP))
 			playsound(get_turf(src), pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
 			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")
-			apply_damage(10, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
+			apply_damage(15, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
+			adjust_stamina(-20)
 			Stun(5)
 			Weaken(4)
 			if(iscarbon(A))
 				var/mob/living/carbon/C = A
 				C.apply_damage(10, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
+				C.adjust_stamina(-10)
 				C.Stun(5)
 				C.Weaken(4)
 

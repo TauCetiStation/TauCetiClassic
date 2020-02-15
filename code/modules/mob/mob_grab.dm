@@ -326,7 +326,7 @@
 			assailant.set_dir(EAST) //face the victim
 			affecting.set_dir(SOUTH) //face up
 		set_state(GRAB_AGGRESSIVE)
-		assailant.adjust_stamina(-4)
+		assailant.adjust_stamina(-10)
 
 	else if(state < GRAB_NECK)
 		if(isslime(affecting))
@@ -345,7 +345,7 @@
 		msg_admin_attack("[key_name(assailant)] grabbed the neck of [key_name(affecting)]", assailant)
 		affecting.Stun(10) //10 ticks of ensured grab
 		set_state(GRAB_NECK)
-		assailant.adjust_stamina(-5)
+		assailant.adjust_stamina(-15)
 
 	else if(state < GRAB_KILL)
 		if(ishuman(affecting))
@@ -362,7 +362,7 @@
 		affecting.losebreath += 1
 		affecting.set_dir(WEST)
 
-		assailant.adjust_stamina(-6)
+		assailant.adjust_stamina(-20)
 
 		set_state(GRAB_KILL)
 
