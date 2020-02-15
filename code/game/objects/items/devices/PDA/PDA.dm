@@ -1222,7 +1222,7 @@
 				for(var/datum/disease/D in C.viruses)
 					if(!D.hidden[SCANNER])
 						data_message += "<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>"
-				
+
 				visible_message("<span class='warning'>[user] has analyzed [C]'s vitals!</span>")
 				to_chat(user, data_message)
 
@@ -1280,6 +1280,10 @@
 		note = A:info
 		to_chat(user, "<span class='notice'>Paper scanned.</span>")//concept of scanning paper copyright brainoblivion 2009
 
+/obj/item/device/pda/get_current_temperature()
+	. = 5
+	if(detonate)
+		. += 10
 
 /obj/item/device/pda/proc/explode() //This needs tuning. //Sure did.
 	if(!src.detonate) return

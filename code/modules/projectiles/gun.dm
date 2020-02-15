@@ -63,7 +63,10 @@
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, null, -4)
 	else
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER)
-		user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
+		announce_shot(user)
+
+/obj/item/weapon/gun/proc/announce_shot(mob/living/user)
+	user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a gunshot!")
 
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
@@ -146,7 +149,8 @@
 		return
 	if(chambered)
 		if(point_blank)
-			user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
+			if(!chambered.BB.fake)
+				user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
 			chambered.BB.damage *= 1.3
 		if(!chambered.fire(target, user, params, , silenced))
 			shoot_with_empty_chamber(user)
@@ -209,7 +213,7 @@
 				user.apply_effect(5,WEAKEN,0)
 				return
 
-			chambered.BB.on_hit(M)
+			chambered.BB.on_hit(M, O_MOUTH, 0)
 			if(chambered.BB.damage_type == HALLOSS)
 				to_chat(user, "<span class = 'notice'>Ow...</span>")
 				user.apply_effect(110,AGONY,0)

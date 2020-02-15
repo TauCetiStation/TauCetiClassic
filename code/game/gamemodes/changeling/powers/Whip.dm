@@ -68,7 +68,7 @@
 	tracer_type = /obj/effect/projectile/changeling/tracer
 	impact_type = /obj/effect/projectile/changeling/impact
 
-/obj/item/projectile/changeling_whip/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/changeling_whip/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(isturf(target))
 		return FALSE
 	var/atom/movable/T = target

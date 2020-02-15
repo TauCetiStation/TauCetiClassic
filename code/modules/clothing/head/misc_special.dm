@@ -66,6 +66,11 @@
 	var/processing = 0 //I dont think this is used anywhere.
 	body_parts_covered = EYES
 
+obj/item/clothing/head/cakehat/get_current_temperature()
+	if(onfire)
+		return 700
+	return 0
+
 /obj/item/clothing/head/cakehat/process()
 	if(!onfire)
 		STOP_PROCESSING(SSobj, src)
