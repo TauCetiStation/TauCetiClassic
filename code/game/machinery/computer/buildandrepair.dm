@@ -41,6 +41,14 @@
 	name = "Circuit board (Message Monitor)"
 	build_path = /obj/machinery/computer/message_monitor
 	origin_tech = "programming=3"
+/obj/item/weapon/circuitboard/camera_advanced
+	name = "circuit board (Advanced Camera Console)"
+	build_path = /obj/machinery/computer/camera_advanced
+	req_access = list(access_security)
+/obj/item/weapon/circuitboard/camera_advanced/xenobio
+	name = "circuit board (Slime management console)"
+	build_path = /obj/machinery/computer/camera_advanced/xenobio
+	origin_tech = "biotech=3;bluespace=3"
 /obj/item/weapon/circuitboard/security
 	name = "Circuit board (Security)"
 	build_path = /obj/machinery/computer/security

@@ -1283,7 +1283,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("teleconsole", "tele_station", "tele_hub", "bluespace_crystal", "jaunter")
+	unlocks_designs = list("teleconsole", "tele_station", "tele_hub", "bluespace_crystal", "jaunter", "slime_management")
 
 /datum/technology/bluespace_tools
 	name = "Bluespace Tools"

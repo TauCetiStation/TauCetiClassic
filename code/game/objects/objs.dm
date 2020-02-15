@@ -148,11 +148,10 @@
 /obj/proc/update_icon()
 	return
 
-/mob/proc/unset_machine(obj/O)
-	if(O && O == src.machine)
-		src.machine = null
-	else
-		src.machine = null
+/mob/proc/unset_machine()
+	if(machine)
+		machine.on_unset_machine(src)
+		machine = null
 
 /mob/proc/set_machine(obj/O)
 	if(src.machine)
@@ -160,6 +159,9 @@
 	src.machine = O
 	if(istype(O))
 		O.in_use = 1
+
+/atom/movable/proc/on_unset_machine(mob/user)
+	return
 
 /obj/item/proc/updateSelfDialog()
 	var/mob/M = src.loc
