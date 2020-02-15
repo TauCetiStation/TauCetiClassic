@@ -132,7 +132,7 @@ var/datum/subsystem/ticker/ticker
 
 					world.send2bridge(
 						type = list(BRIDGE_ROUNDSTAT),
-						attachment_title = "Round is over",
+						attachment_title = "Round #[round_id] is over",
 						attachment_color = BRIDGE_COLOR_ANNOUNCE,
 					)
 
@@ -176,7 +176,7 @@ var/datum/subsystem/ticker/ticker
 	var/list/datum/game_mode/runnable_modes
 	if (config.is_modeset(master_mode))
 		runnable_modes = config.get_runnable_modes(master_mode)
-		
+
 		if (runnable_modes.len==0)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")

@@ -1059,7 +1059,9 @@
 		var/met_factor = get_metabolism_factor()
 		nutrition = max(0, nutrition - met_factor * 0.1)
 		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
-			nutrition = max(0, nutrition - met_factor * getHalLoss() * 0.01)
+			var/pain = getHalLoss()
+			if(pain > 0)
+				nutrition = max(0, nutrition - met_factor * pain * 0.01)
 
 	if (nutrition > 450)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
