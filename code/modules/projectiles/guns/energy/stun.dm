@@ -7,9 +7,6 @@
 	can_be_holstered = TRUE
 	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
 
-/obj/item/weapon/gun/energy/taser/attack_self(mob/living/user)
-	select_fire(user)
-
 /obj/item/weapon/gun/energy/taser/cyborg
 	name = "taser gun"
 	desc = "A small, low capacity gun used for non-lethal takedowns."

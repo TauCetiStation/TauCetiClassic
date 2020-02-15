@@ -330,7 +330,7 @@
 			if(nutrition >= 800)
 				if(prob(40)) amount_grown++
 
-	if(amount_grown >= 10 && !Victim && !Target)
+	if(amount_grown >= max_grown && !Victim && !Target)
 		if(istype(src, /mob/living/carbon/slime/adult))
 			if(!client)
 				for(var/i=1,i<=4,i++)

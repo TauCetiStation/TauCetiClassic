@@ -27,7 +27,7 @@
 
 	var/powerlevel = 0 	// 1-10 controls how much electricity they are generating
 	var/amount_grown = 0 // controls how long the slime has been overfed, if 10, grows into an adult
-						 // if adult: if 10: reproduces
+	var/max_grown = 10		// if adult: if 10: reproduces
 
 
 	var/mob/living/Victim = null // the person the slime is currently feeding on
@@ -183,12 +183,12 @@
 		if(isslimeadult(src))
 			stat(null, "Health: [round((health / 200) * 100)]%")
 			stat(null, "Nutrition: [nutrition]/1200")
-			if(amount_grown >= 10)
+			if(amount_grown >= max_grown)
 				stat(null, "You can reproduce!")
 		else
 			stat(null, "Health: [round((health / 150) * 100)]%")
 			stat(null, "Nutrition: [nutrition]/1000")
-			if(amount_grown >= 10)
+			if(amount_grown >= max_grown)
 				stat(null, "You can evolve!")
 
 		stat(null,"Power Level: [powerlevel]")
@@ -572,6 +572,7 @@
 	var/enhanced = 0 // has it been enhanced before?
 
 /obj/item/slime_extract/attackby(obj/item/weapon/O, mob/user)
+	..()
 	if(istype(O, /obj/item/weapon/slimesteroid2))
 		if(enhanced == 1)
 			to_chat(user, "<span class='warning'>This extract has already been enhanced!</span>")

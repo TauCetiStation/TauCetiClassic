@@ -148,7 +148,7 @@ var/const/INGEST = 2
 		src.handle_reactions()
 	return amount
 
-/datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
+/datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, multiplier=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
 	if (!target)
 		return
 	if(src.total_volume<=0 || !src.get_reagent_amount(reagent))
@@ -172,8 +172,8 @@ var/const/INGEST = 2
 		if(current_reagent.id == reagent)
 			if(preserve_data)
 				trans_data = copy_data(current_reagent)
-			R.add_reagent(current_reagent.id, amount, trans_data)
-			src.remove_reagent(current_reagent.id, amount, 1)
+			R.add_reagent(current_reagent.id, amount * multiplier, trans_data, safety = TRUE)
+			src.remove_reagent(current_reagent.id, amount, 1, safety = TRUE)
 			break
 
 	src.update_total()
@@ -412,7 +412,6 @@ var/const/INGEST = 2
 	update_total()
 	if(total_volume + amount > maximum_volume)
 		amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
-
 	for(var/A in reagent_list)
 
 		var/datum/reagent/R = A

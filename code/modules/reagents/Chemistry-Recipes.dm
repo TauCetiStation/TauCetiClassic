@@ -1499,6 +1499,14 @@
 		B.loc = get_turf(holder.my_atom)
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
 
+/datum/chemical_reaction/tea
+	name = "Tea"
+	id = "tea"
+	result = "tea"
+	required_reagents = list("water" = 1)
+	result_amount = 1
+	required_container = /obj/item/weapon/reagent_containers/glass/beaker/fluff/eleanor_stone
+
 /datum/chemical_reaction/tofu
 	name = "Tofu"
 	id = "tofu"
