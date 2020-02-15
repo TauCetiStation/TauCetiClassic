@@ -67774,7 +67774,6 @@
 "cQb" = (
 /obj/machinery/computer/secure_data,
 /obj/machinery/requests_console{
-	announcementConsole = 1;
 	department = "Forensic's Desk";
 	departmentType = 5;
 	name = "Forensic RC";
