@@ -20,13 +20,18 @@
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
 		return
-	if(!ismovableatom(A) || is_blocked_turf(A))
-		if(confused && stat == CONSCIOUS && m_intent != MOVE_INTENT_CREEP)
+	if(A.density && canmove && !lying)
+		if(m_intent == MOVE_INTENT_RUN || (confused && m_intent != MOVE_INTENT_CREEP))
 			playsound(get_turf(src), pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
 			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")
-			apply_damage(3, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
-			Stun(3)
-			Weaken(2)
+			apply_damage(10, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
+			Stun(5)
+			Weaken(4)
+			if(iscarbon(A))
+				var/mob/living/carbon/C = A
+				C.apply_damage(10, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
+				C.Stun(5)
+				C.Weaken(4)
 
 	if(ismob(A))
 		var/mob/M = A
