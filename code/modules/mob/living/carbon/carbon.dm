@@ -159,6 +159,7 @@
 				Stun(8)
 				Weaken(8)
 	else
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		visible_message(
 			"<span class='rose'>[src] was mildly shocked by the [source].</span>", \
 			"<span class='rose'>You feel a mild shock course through your body.</span>", \
