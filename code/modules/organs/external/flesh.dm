@@ -27,7 +27,7 @@
 	if((brute <= 0) && (burn <= 0))
 		return 0
 
-	if(BP.owner.species.flags[NO_LOW_DAMAGE] && (brute + burn < 1))
+	if(BP.damage_threshold > brute + burn)
 		return 0
 
 	if(BP.is_stump)

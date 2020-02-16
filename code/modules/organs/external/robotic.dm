@@ -72,6 +72,7 @@
 	icon = 'icons/mob/human_races/robotic.dmi'
 	icon_state = "chest_m"
 
+	damage_threshold = 1
 	controller_type = /datum/bodypart_controller/robot
 
 /obj/item/organ/external/chest/robot/update_sprite()
@@ -83,6 +84,7 @@
 	icon = 'icons/mob/human_races/robotic.dmi'
 	icon_state = "head_m"
 
+	damage_threshold = 1
 	controller_type = /datum/bodypart_controller/robot
 
 /obj/item/organ/external/head/robot/update_sprite()
@@ -94,6 +96,7 @@
 	icon = 'icons/mob/human_races/robotic.dmi'
 	icon_state = "groin_m"
 
+	damage_threshold = 1
 	controller_type = /datum/bodypart_controller/robot
 
 /obj/item/organ/external/groin/robot/update_sprite()
@@ -102,6 +105,7 @@
 /obj/item/organ/external/l_arm/robot
 	name = "robotic left arm"
 
+	damage_threshold = 1
 	icon = 'icons/mob/human_races/robotic.dmi'
 	icon_state = "l_arm"
 
@@ -116,6 +120,7 @@
 	icon = 'icons/mob/human_races/robotic.dmi'
 	icon_state = "r_arm"
 
+	damage_threshold = 1
 	controller_type = /datum/bodypart_controller/robot
 
 /obj/item/organ/external/r_arm/robot/update_sprite()
@@ -127,6 +132,7 @@
 	icon = 'icons/mob/human_races/robotic.dmi'
 	icon_state = "r_leg"
 
+	damage_threshold = 1
 	controller_type = /datum/bodypart_controller/robot
 
 /obj/item/organ/external/r_leg/robot/update_sprite()
@@ -138,6 +144,7 @@
 	icon = 'icons/mob/human_races/robotic.dmi'
 	icon_state = "l_leg"
 
+	damage_threshold = 1
 	controller_type = /datum/bodypart_controller/robot
 
 /obj/item/organ/external/l_leg/robot/update_sprite()

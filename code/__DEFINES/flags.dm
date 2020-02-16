@@ -55,7 +55,6 @@
 #define HAS_UNDERWEAR      "has_underwear"
 #define HAS_TAIL           "has_tail"
 #define IS_PLANT           "is_plant"
-#define NO_LOW_DAMAGE      "no_low_damage"
 #define IS_WHITELISTED     "is_whitelisted"
 #define RAD_ABSORB         "rad_absorb"
 #define REQUIRE_LIGHT      "require_light"

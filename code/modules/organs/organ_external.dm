@@ -17,6 +17,7 @@
 	var/burn_dam = 0                  // Actual current burn damage.
 	var/last_dam = -1                 // used in healing/processing calculations.
 	var/max_damage = 0                // Damage cap
+	var/damage_threshold = 0          // Min damage for hurt
 
 	var/controller_type = /datum/bodypart_controller
 	var/datum/bodypart_controller/controller
