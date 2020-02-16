@@ -241,10 +241,13 @@
 				L.resist()
 
 		if("mov_intent")
-			if(usr.m_intent == MOVE_INTENT_RUN)
-				usr.set_mov_intent(usr.prev_m_intent, TRUE)
-			else
-				usr.set_mov_intent(MOVE_INTENT_RUN, TRUE)
+			switch(usr.m_intent)
+				if(MOVE_INTENT_RUN)
+					usr.set_mov_intent(MOVE_INTENT_CREEP, TRUE)
+				if(MOVE_INTENT_WALK)
+					usr.set_mov_intent(MOVE_INTENT_RUN, TRUE)
+				if(MOVE_INTENT_CREEP)
+					usr.set_mov_intent(MOVE_INTENT_WALK, TRUE)
 		if("Reset Machine")
 			usr.unset_machine()
 		if("internal")
@@ -616,18 +619,6 @@
 		else
 			return 0
 	return 1
-
-/obj/screen/MiddleClick(mob/M)
-	if(name == "mov_intent")
-		M.set_mov_intent(M.prev_m_intent, TRUE)
-		return TRUE
-	..(M)
-
-/obj/screen/CtrlClick(mob/M)
-	if(name == "mov_intent")
-		M.set_mov_intent(M.prev_m_intent, TRUE)
-		return TRUE
-	..(M)
 
 /obj/screen/inventory/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else

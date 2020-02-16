@@ -268,19 +268,16 @@
 	else
 		to_chat(src, "The game appears to have misplaced your mind datum, so we can't show you your notes.")
 
-/mob/verb/set_run_mov_intent()
-	set name = "Run"
+/mob/verb/toggle_run_mov_intent()
+	set name = "Toggle Run"
 	set category = "IC"
 	set hidden = TRUE
 
-	set_mov_intent(MOVE_INTENT_RUN)
-
-/mob/verb/set_prev_mov_intent()
-	set name = "Do Not Run"
-	set category = "IC"
-	set hidden = TRUE
-
-	set_mov_intent(prev_m_intent)
+	if(m_intent == MOVE_INTENT_RUN)
+		set_mov_intent(prev_m_intent)
+	else
+		prev_m_intent = m_intent
+		set_mov_intent(MOVE_INTENT_RUN)
 
 /mob/proc/store_memory(msg, popup)
 	msg = sanitize(msg)
