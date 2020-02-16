@@ -61,7 +61,7 @@ var/global/list/icon_state_allowed_cache = list()
 			if(global.specie_sprite_sheet_cache[specie_cache])
 				icons_exist = global.specie_sprite_sheet_cache[specie_cache]
 			else
-				var/datum/species/S = all_species[specie]
+				var/datum/species/S = global.all_species[specie]
 				var/icon_path = S.sprite_sheets[sprite_sheet_slot]
 				// If you specified the mob as sprite_sheet_restricted, but
 				// want to use default sprite sheets for some "slots"
@@ -87,7 +87,7 @@ var/global/list/icon_state_allowed_cache = list()
 			else
 				species_restricted -= specie
 
-			icon_state_allowed_cache[cache_key] = TRUE
+			global.icon_state_allowed_cache[cache_key] = TRUE
 
 	if(!species_restricted.len || (species_restricted.len == 1 && exclusive))
 		species_restricted = null
