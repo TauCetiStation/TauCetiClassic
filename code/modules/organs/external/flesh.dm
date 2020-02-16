@@ -3,6 +3,7 @@
 	var/name = "Flesh bodypart controller"
 	var/obj/item/organ/external/BP
 	var/bodypart_type = BODYPART_ORGANIC
+	var/damage_threshold = 0
 
 /datum/bodypart_controller/New(obj/item/organ/external/B)
 	BP = B
@@ -27,7 +28,7 @@
 	if((brute <= 0) && (burn <= 0))
 		return 0
 
-	if(BP.damage_threshold > brute + burn)
+	if(damage_threshold > brute + burn)
 		return 0
 
 	if(BP.is_stump)
