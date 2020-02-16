@@ -196,9 +196,10 @@
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas/coloured(src)
 	new /obj/item/device/flashlight(src)
-	new /obj/item/weapon/tank/oxygen/red(src)
 	new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
+	new /obj/item/weapon/tank/oxygen/red(src)
 	new /obj/item/clothing/head/hardhat/red(src)
+
 
 /*
  * Emergency closet
