@@ -294,7 +294,6 @@
 	gas_transfer_coefficient = 0.10
 	filter = list("phoron", "sleeping_agent", "oxygen")
 	species_restricted = list(VOX , VOX_ARMALIS)
-	sprite_sheets = list(VOX_ARMALIS = 'icons/mob/species/armalis/mask.dmi')
 
 /obj/item/clothing/mask/gas/German
 	name = "German Gas Mask"
