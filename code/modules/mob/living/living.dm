@@ -21,19 +21,17 @@
 	if (buckled || !yes || now_pushing)
 		return
 	if(A.density && canmove && !lying)
-		if(m_intent == MOVE_INTENT_RUN || (confused && m_intent != MOVE_INTENT_CREEP))
+		if((m_intent == MOVE_INTENT_RUN || (confused && m_intent != MOVE_INTENT_CREEP)) && movement_delay() < 2)
 			playsound(get_turf(src), pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
 			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")
-			apply_damage(15, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
-			adjust_stamina(-20)
+			apply_damage(10, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
+			adjust_stamina(-15)
 			Stun(5)
 			Weaken(4)
 			if(iscarbon(A))
 				var/mob/living/carbon/C = A
-				C.apply_damage(10, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
+				C.apply_damage(7, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
 				C.adjust_stamina(-10)
-				C.Stun(5)
-				C.Weaken(4)
 
 	if(ismob(A))
 		var/mob/M = A
@@ -470,6 +468,7 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
+	set_stamina(stamina_max)
 
 	// shut down ongoing problems
 	radiation = 0
@@ -1234,19 +1233,16 @@
 
 	switch(intent)
 		if(MOVE_INTENT_WALK)
-			prev_m_intent = MOVE_INTENT_CREEP
 			m_intent = MOVE_INTENT_WALK
 			if(hud_used && hud_used.move_intent)
 				hud_used.move_intent.icon_state = "walking"
 		if(MOVE_INTENT_RUN)
 			if(!isnull(stamina_max) && stamina < STAMINA_DEFAULT_RUN_THRESHOLD)
 				return FALSE
-			prev_m_intent = m_intent
 			m_intent = MOVE_INTENT_RUN
 			if(hud_used && hud_used.move_intent)
 				hud_used.move_intent.icon_state = "running"
 		if(MOVE_INTENT_CREEP)
-			prev_m_intent = MOVE_INTENT_WALK
 			m_intent = MOVE_INTENT_CREEP
 			if(hud_used && hud_used.move_intent)
 				hud_used.move_intent.icon_state = "creeping"
