@@ -56761,9 +56761,20 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+<<<<<<< HEAD
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/machinery/ai_slipper,
+/turf/simulated/floor/engine,
+=======
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/whitegreed,
+>>>>>>> parent of 045ed95155... Update boxstation.dmm
 /area/station/aisat/ai_chamber)
 "cmE" = (
 /obj/structure/sign/warning/securearea,
@@ -64298,11 +64309,16 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+<<<<<<< HEAD
+/obj/machinery/ai_slipper,
+/turf/simulated/floor/engine,
+=======
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/simulated/wall/r_wall,
+>>>>>>> parent of 045ed95155... Update boxstation.dmm
 /area/station/aisat/ai_chamber)
 "cDX" = (
 /obj/machinery/hologram/holopad,
@@ -64323,6 +64339,10 @@
 /obj/machinery/power/tesla_coil,
 /turf/simulated/floor/plating/airless,
 /area/space)
+"cEb" = (
+/obj/machinery/ai_slipper,
+/turf/simulated/floor/engine,
+/area/station/aisat/ai_chamber)
 "cEc" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -64411,7 +64431,16 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+<<<<<<< HEAD
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_x = -24;
+	pixel_y = -3
+	},
+/turf/simulated/floor/engine,
+=======
 /turf/simulated/wall/r_wall,
+>>>>>>> parent of 045ed95155... Update boxstation.dmm
 /area/station/aisat/ai_chamber)
 "cEm" = (
 /obj/structure/stool/bed/psych,
@@ -64502,10 +64531,24 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "cEz" = (
+<<<<<<< HEAD
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_x = 24;
+	pixel_y = -3
+	},
+/turf/simulated/floor/engine,
+=======
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
 /turf/simulated/floor/whitegreed,
+>>>>>>> parent of 045ed95155... Update boxstation.dmm
 /area/station/aisat/ai_chamber)
 "cEA" = (
 /obj/item/device/radio/intercom/pod{
@@ -64550,12 +64593,15 @@
 	},
 /turf/space,
 /area/space)
+<<<<<<< HEAD
+=======
 "cEF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
+>>>>>>> parent of 045ed95155... Update boxstation.dmm
 "cEG" = (
 /obj/random/vending/cola,
 /turf/simulated/floor{
@@ -65164,7 +65210,26 @@
 /turf/simulated/wall,
 /area/station/cargo/miningoffice)
 "cGa" = (
+<<<<<<< HEAD
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_x = 24;
+	pixel_y = -3
+	},
+/turf/simulated/floor/engine,
+=======
 /turf/simulated/floor/whitegreed,
+>>>>>>> parent of 045ed95155... Update boxstation.dmm
 /area/station/aisat/ai_chamber)
 "cGb" = (
 /obj/structure/transit_tube{
@@ -65244,6 +65309,11 @@
 /turf/simulated/wall,
 /area/station/cargo/miningbreaktime)
 "cGj" = (
+<<<<<<< HEAD
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/ai_slipper,
+/turf/simulated/floor/engine,
+=======
 /obj/effect/landmark{
 	name = "tripai"
 	},
@@ -65267,6 +65337,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/floor/whitegreed,
+>>>>>>> parent of 045ed95155... Update boxstation.dmm
 /area/station/aisat/ai_chamber)
 "cGl" = (
 /obj/structure/cable{
@@ -65309,6 +65380,11 @@
 	},
 /area/station/medical/hallway)
 "cGo" = (
+<<<<<<< HEAD
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/ai_slipper,
+/turf/simulated/floor/engine,
+=======
 /obj/effect/landmark{
 	name = "tripai"
 	},
@@ -65332,6 +65408,7 @@
 	pixel_y = -3
 	},
 /turf/simulated/floor/whitegreed,
+>>>>>>> parent of 045ed95155... Update boxstation.dmm
 /area/station/aisat/ai_chamber)
 "cGq" = (
 /obj/structure/stool/bed/chair,
@@ -75038,6 +75115,24 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+<<<<<<< HEAD
+"qee" = (
+/obj/machinery/camera/motion{
+	c_tag = "AI Chamber South";
+	dir = 1;
+	network = list("MiniSat")
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_y = -24
+	},
+/turf/simulated/floor/engine,
+/area/station/aisat/ai_chamber)
+=======
+>>>>>>> parent of 045ed95155... Update boxstation.dmm
 "qfb" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -120063,10 +120158,17 @@ aaa
 cCW
 cFP
 bHf
+<<<<<<< HEAD
+cEl
+clO
+btz
+cEl
+=======
 cDl
 cDD
 btz
 cDD
+>>>>>>> parent of 045ed95155... Update boxstation.dmm
 clO
 cmg
 cFP
@@ -120833,8 +120935,15 @@ cCW
 cCW
 cCW
 cFP
+<<<<<<< HEAD
+cDE
+hID
+cEb
+cFP
+=======
 cDj
 cDy
+>>>>>>> parent of 045ed95155... Update boxstation.dmm
 cDF
 cDV
 bsv
@@ -121608,8 +121717,13 @@ bHf
 cGa
 cDH
 buU
+<<<<<<< HEAD
+cEz
+clO
+=======
 cDH
 cEF
+>>>>>>> parent of 045ed95155... Update boxstation.dmm
 crV
 cFP
 cFv
