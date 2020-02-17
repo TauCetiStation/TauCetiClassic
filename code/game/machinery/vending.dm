@@ -1227,9 +1227,9 @@
 	name = "Engineering Hardsuit Kits"
 	desc = "Conversion kits for your alien engineering and atmos hardsuits."
 	icon_state = "evaengi"
+	// why the fuck do we have CE modifications here, if we don't have xeno-heads? and why are they not in CE's office or sumthin smh.
 	products = list(/obj/item/device/modkit/engineering/tajaran = 3, /obj/item/device/modkit/engineering/unathi = 3, /obj/item/device/modkit/engineering/skrell = 3, /obj/item/device/modkit/engineering/vox = 3,
 					/obj/item/device/modkit/atmos/tajaran = 3, /obj/item/device/modkit/atmos/unathi = 3, /obj/item/device/modkit/atmos/skrell = 3, /obj/item/device/modkit/atmos/vox = 3,
-					// why the fuck do we have these here, if we don't have xeno-heads? and why are they not in CE's office or sumthin smh.
 					/obj/item/device/modkit/engineering/chief/tajaran = 1, /obj/item/device/modkit/engineering/chief/unathi = 1, /obj/item/device/modkit/engineering/chief/skrell = 1, /obj/item/device/modkit/engineering/chief/vox = 1,
 					/obj/item/device/modkit = 6)
 
