@@ -398,7 +398,7 @@
 
 	sprite_sheets = list(
 		"suit" = 'icons/mob/species/vox/suit.dmi',
-		"head" = 'icons/mob/species/vox/head.dmi',
+		"head" = 'icons/mob/species/vox/helmet.dmi',
 		"mask" = 'icons/mob/species/vox/masks.dmi',
 		"feet" = 'icons/mob/species/vox/shoes.dmi',
 		"gloves" = 'icons/mob/species/vox/gloves.dmi'

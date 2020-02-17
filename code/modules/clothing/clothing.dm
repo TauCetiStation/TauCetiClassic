@@ -77,6 +77,9 @@
 		else
 			species_restricted = list(target_species)
 
+	if(target_species == VOX)
+		flags &= ~BLOCKHAIR
+
 	//Set icon
 	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
 		icon_override = sprite_sheets_refit[target_species]
@@ -216,7 +219,6 @@ BLIND     // can't see anything
 	body_parts_covered = HEAD
 	slot_flags = SLOT_FLAGS_HEAD
 	w_class = ITEM_SIZE_SMALL
-	sprite_sheets = list(VOX = 'icons/mob/species/vox/head.dmi')
 	var/blockTracking = 0
 
 
@@ -313,7 +315,6 @@ BLIND     // can't see anything
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude" , DIONA , VOX)
-	sprite_sheets = list(VOX = 'icons/mob/species/vox/head.dmi')
 
 /obj/item/clothing/suit/space
 	name = "space suit"

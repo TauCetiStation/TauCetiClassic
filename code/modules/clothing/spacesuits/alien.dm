@@ -141,10 +141,6 @@
 	armor = list(melee = 60, bullet = 50, laser = 40, energy = 15, bomb = 30, bio = 30, rad = 30)
 	flags = HEADCOVERSEYES
 	species_restricted = list(VOX , VOX_ARMALIS)
-	sprite_sheets = list(
-		VOX = 'icons/mob/species/vox/head.dmi',
-		VOX_ARMALIS = 'icons/mob/species/armalis/head.dmi',
-		)
 
 /obj/item/clothing/head/helmet/space/vox/pressure
 	name = "alien helmet"
