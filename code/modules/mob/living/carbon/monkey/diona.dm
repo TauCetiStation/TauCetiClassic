@@ -28,6 +28,9 @@
 	blood_datum = /datum/dirt_cover/green_blood
 
 
+/mob/living/carbon/monkey/diona/can_be_infected_by_facehugger()
+	return FALSE
+
 /mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M)
 
 	//Let people pick the little buggers up.

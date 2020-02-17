@@ -905,3 +905,6 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+
+/mob/living/carbon/proc/can_be_infected_by_facehugger()
+	return FALSE

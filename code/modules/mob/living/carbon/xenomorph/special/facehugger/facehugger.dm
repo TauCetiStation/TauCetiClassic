@@ -7,7 +7,6 @@
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
 	item_state = "facehugger"
-	w_class = ITEM_SIZE_TINY //note: can be picked up by aliens unlike most other items of w_class below 4
 	density = 1
 	layer = ABOVE_WINDOW_LAYER
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES
@@ -198,7 +197,7 @@
 		Attach(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/CanHug(mob/living/carbon/C, check = 1)
-	if(!iscarbon(C))
+	if(!C.can_be_infected_by_facehugger())
 		return FALSE
 	if(stat != CONSCIOUS)
 		return FALSE
@@ -216,14 +215,7 @@
 		return FALSE
 	if(loc == C)
 		return FALSE
-	if(ismonkey(C))
-		return TRUE
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		if(H.species.flags[NO_BREATHE]) // so IPCs, dioneae, abductors, skeletons, zombies, shadowlings, golems cannot be infected
-			return FALSE
-		return TRUE
-	return FALSE
+	return TRUE
 
 /mob/living/carbon/human/proc/mouth_is_protected()
 	if(istype(head, /obj/item/clothing/head))

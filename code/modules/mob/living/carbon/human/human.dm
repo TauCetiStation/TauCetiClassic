@@ -2067,3 +2067,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+
+/mob/living/carbon/human/can_be_infected_by_facehugger()
+	return species.flags[INFECTABLE]

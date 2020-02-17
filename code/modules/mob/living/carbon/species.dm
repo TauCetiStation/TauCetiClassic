@@ -168,6 +168,9 @@
 /datum/species/proc/call_digest_proc(mob/living/M, datum/reagent/R) // Humans don't have a seperate proc, but need to return TRUE so general proc is called.
 	return TRUE
 
+/datum/species/proc/can_be_infected_by_facehugger()
+	return FALSE
+
 /datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such nymph spawns).
 	if(flags[IS_SYNTHETIC])
  //H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
@@ -221,6 +224,7 @@
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,HAS_HAIR = TRUE
+	,INFECTABLE = TRUE
 	)
 
 	//If you wanted to add a species-level ability:
@@ -259,6 +263,7 @@
 	,HAS_TAIL = TRUE
 	,HAS_SKIN_COLOR = TRUE
 	,NO_MINORCUTS = TRUE
+	,INFECTABLE = TRUE
 	)
 
 	flesh_color = "#34af10"
@@ -314,6 +319,7 @@
 	,HAS_TAIL = TRUE
 	,HAS_SKIN_COLOR = TRUE
 	,HAS_HAIR = TRUE
+	,INFECTABLE = TRUE
 	)
 
 	flesh_color = "#afa59e"
@@ -347,6 +353,7 @@
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,HAS_SKIN_COLOR = TRUE
+	,INFECTABLE = TRUE
 	)
 
 	has_organ = list(

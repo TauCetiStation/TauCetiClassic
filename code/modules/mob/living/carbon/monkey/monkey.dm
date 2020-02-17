@@ -443,3 +443,6 @@
 
 /mob/living/carbon/monkey/get_species()
 	return race
+
+/mob/living/carbon/monkey/can_be_infected_by_facehugger()
+	return TRUE
