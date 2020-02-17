@@ -36,7 +36,7 @@
 	if(statpanel("Status"))
 		stat(null, "Progress: [amount_grown]/[max_grown]")
 
-/mob/living/carbon/xenomorph/larva/throw_item(aton/target)
+/mob/living/carbon/xenomorph/larva/throw_item(atom/target)
 	return
 
 /mob/living/carbon/xenomorph/larva/start_pulling(atom/movable/AM)//Prevents mouse from pulling things
