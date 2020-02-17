@@ -215,7 +215,7 @@
 
 /obj/item/device/modkit/med/cmo/vox
 	name = "Unathi CMO hardsuit modification kit"
-	target_species = UNATHI
+	target_species = VOX
 
 
 
@@ -238,12 +238,12 @@
 	name = "Unathi security hardsuit modification kit"
 	target_species = UNATHI
 
-/obj/item/device/modkit/sec/vox
-	name = "Vox security hardsuit modification kit"
-	target_species = SKRELL
-
 /obj/item/device/modkit/sec/skrell
 	name = "Skrellian security hardsuit modification kit"
+	target_species = SKRELL
+
+/obj/item/device/modkit/sec/vox
+	name = "Vox security hardsuit modification kit"
 	target_species = VOX
 
 
