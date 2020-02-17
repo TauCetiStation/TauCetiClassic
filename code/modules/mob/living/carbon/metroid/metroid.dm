@@ -892,96 +892,69 @@
 
 /obj/effect/golemrune
 	anchored = 1
-	desc = "A strange rune used to create golems. It glows when spirits are nearby."
+	desc = "A strange rune used to create golems. It glows when a suitable body is placed on top of it"
 	name = "rune"
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "golem"
 	unacidable = 1
 	layer = TURF_LAYER
-	var/last_ghost_click = 0
-	var/mob/dead/observer/spirit
+
 
 /obj/effect/golemrune/atom_init()
 	. = ..()
-	announce_to_ghosts()
+	START_PROCESSING(SSobj, src)
+
+
+/obj/effect/golemrune/process()
+	update_icon()
+
+
+/obj/effect/golemrune/proc/check_body(mob/living/user)
+	var/mob/living/carbon/human/body_to_check = locate(/mob/living/carbon/human) in loc
+	if(!body_to_check)
+		return FALSE
+
+	if(body_to_check.stat != 2)
+		return FALSE
+
+	if((!body_to_check.ckey) || (!body_to_check.client))
+		return FALSE
+	return body_to_check
+
 
 /obj/effect/golemrune/update_icon()
-	if(spirit)
+	if(check_body())
 		icon_state = "golem2"
 	else
 		icon_state = "golem"
 
-/obj/effect/golemrune/process()
-	check_spirit()
-
-/obj/effect/golemrune/attack_ghost(mob/dead/observer/user)
-	if(user.mind && user.mind.current && user.mind.current.stat != DEAD)
-		to_chat(user, "<span class='notice'>Your spirit linked to another body.</span>")
-		return
-	if(user.golem_rune && user.golem_rune != src)
-		to_chat(user, "<span class='notice'>One rune per one poor little spirit.</span>")
-		return
-	if(spirit && spirit != user)
-		to_chat(user, "<span class='warning'>This rune is taken by another spirit, wait or find new one.</span>")
-		return
-	if(last_ghost_click >= world.time)
-		to_chat(user, "<span class='notice'>You cannot do this so often.</span>")
-		return
-	if(user == spirit)
-		for(var/image/I in user.client.images)
-			if(I.loc == src && I.icon_state == "agolem_master")
-				user.client.images -= I
-				break
-		spirit = null
-		user.golem_rune = null
-		to_chat(user, "<span class='notice'>You are no longer queued for golem role.</span>")
-	else
-		START_PROCESSING(SSobj, src)
-		last_ghost_click = world.time + 50
-		var/image/I = image('icons/mob/hud.dmi', src, "agolem_master") //If there is alot activated rune close by, we can see which is ours.
-		user.client.images += I
-		spirit = user
-		user.golem_rune = src
-		to_chat(user, "<span class='notice'>You are now queued for golem role.</span>")
-	check_spirit()
 
 /obj/effect/golemrune/attack_hand(mob/living/user)
-	if(!check_spirit())
-		to_chat(user, "The rune fizzles uselessly. There is no spirit nearby.")
-		return
 	user.SetNextMove(CLICK_CD_INTERACT)
+	var/mob/living/carbon/human/body_to_transform = check_body()
+	if(!body_to_transform)
+		to_chat(user, "The rune fizzles uselessly.")
+		return
 	var/mob/living/carbon/human/golem/G = new(loc)
-	G.attack_log = spirit.attack_log //Preserve attack log, if there is any...
+	G.attack_log = body_to_transform.attack_log //Preserve attack log, if there is any...
 	G.attack_log += "\[[time_stamp()]\]<font color='blue'> ======GOLEM LIFE======</font>"
-	G.key = spirit.key
 	G.my_master = user
+	for(var/obj/item/I in body_to_transform)
+		body_to_transform.drop_from_inventory(I)
+
+	message_admins("[key_name(body_to_transform, body_to_transform.client)] was transformed into admantine golem by [key_name(user, user.client)]. [ADMIN_JMP(src)]")
+
+	body_to_transform.mind.transfer_to(G)
 	G.update_golem_hud_icons()
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		H.my_golems += G
 		H.update_golem_hud_icons()
-	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost.")
+	to_chat(G, "<b><i>You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost.</i></b>")
+	qdel(body_to_transform)
 	qdel(src)
 
-/obj/effect/golemrune/proc/announce_to_ghosts()
-	for(var/mob/dead/observer/O in player_list)
-		if(O.client)
-			var/area/A = get_area(src)
-			if(A)
-				to_chat(O, "<span class='userdanger'>Golem rune created in [A.name] (<A HREF='?src=\ref[O];ghostplayerobservejump=\ref[src]'>JMP</A>).</span>")
 
-/obj/effect/golemrune/proc/check_spirit()
-	var/result = 1
-	if(!spirit)
-		result = 0
-	else if(spirit && (!spirit.client || spirit.mind && spirit.mind.current && spirit.mind.current.stat != DEAD))
-		spirit.golem_rune = null
-		spirit = null
-		result = 0
-	if(!result)
-		STOP_PROCESSING(SSobj, src)
-	update_icon()
-	return result
 
 /mob/living/carbon/human/proc/update_golem_hud_icons()
 	if(client)
