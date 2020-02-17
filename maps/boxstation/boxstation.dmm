@@ -37552,30 +37552,17 @@
 /turf/simulated/floor/plating,
 /area/station/medical/sleeper)
 "bsv" = (
-/obj/item/device/radio/intercom{
-	freerange = 1;
-	frequency = 1447;
-	name = "Private Channel";
-	pixel_x = 28;
-	pixel_y = 5
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "AI Core Blast Door";
+	name = "AI Core Blast Door";
+	opacity = 0
 	},
-/obj/item/device/radio/intercom{
-	freerange = 1;
-	listening = 0;
-	name = "Custom Channel";
-	pixel_x = -27;
-	pixel_y = 4
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/obj/effect/landmark/start{
-	name = "AI"
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	freerange = 1;
-	name = "Common Channel";
-	pixel_y = 25
-	},
-/turf/simulated/floor/whitegreed,
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "bsw" = (
 /obj/machinery/light/small{
@@ -37996,20 +37983,11 @@
 /turf/simulated/wall,
 /area/station/cargo/recycleroffice)
 "btz" = (
-/obj/machinery/door/window{
-	dir = 4;
+/obj/machinery/door/window/brigdoor/westleft{
 	name = "AI Core Door";
 	req_access = list(16)
 	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/whitegreed,
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "btB" = (
 /obj/machinery/camera{
@@ -38605,15 +38583,11 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/Podbay)
 "buU" = (
-/obj/machinery/door/window{
-	dir = 8;
-	name = "AI Core Door";
-	req_access = list(16)
+/obj/machinery/door/window/brigdoor/eastleft{
+	airborne_acceleration = list(16);
+	name = "AI Core Door"
 	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
-/turf/simulated/floor/whitegreed,
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "buZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -43797,10 +43771,13 @@
 	},
 /area/station/civilian/chapel)
 "bHf" = (
-/obj/machinery/porta_turret/station_default,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/machinery/ai_status_display{
+	pixel_x = -32
 	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "bHg" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -56023,22 +56000,18 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "ckQ" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/light/small,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/aisat)
-"ckR" = (
 /obj/structure/window/reinforced,
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
+	},
+/turf/space,
+/area/space)
+"ckR" = (
+/obj/structure/window/reinforced,
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
 	},
 /turf/space,
 /area/space)
@@ -56298,22 +56271,13 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "clD" = (
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/window/reinforced,
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
 	},
-/obj/machinery/camera{
-	c_tag = "MiniSat West North";
-	dir = 8;
-	network = list("MiniSat")
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/aisat)
+/turf/space,
+/area/space)
 "clF" = (
 /obj/machinery/floodlight,
 /turf/simulated/floor/plating/airless,
@@ -56338,21 +56302,12 @@
 /area/station/engineering/atmos)
 "clJ" = (
 /obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/door/window{
-	name = "AI Satellite";
-	req_access = list(66)
-	},
-/obj/machinery/camera{
-	c_tag = "MiniSat East North";
-	dir = 4;
-	network = list("MiniSat")
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -56382,32 +56337,32 @@
 	},
 /area/station/aisat)
 "clM" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/area/station/aisat/ai_chamber)
-"clN" = (
-/obj/machinery/camera{
-	c_tag = "AI Chamber East";
-	dir = 8;
-	network = list("MiniSat","RD")
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/aisat/ai_chamber)
-"clO" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/whitegreed,
+/obj/machinery/porta_turret/stationary,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat)
+"clN" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat)
+"clO" = (
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "clP" = (
 /obj/structure/table/glass,
@@ -56435,41 +56390,21 @@
 	},
 /area/station/bridge/hop_office)
 "clR" = (
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_y = 24
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
-"clS" = (
-/obj/structure/window/reinforced,
-/obj/machinery/door_control{
-	id = "AI Blast Door";
-	name = "AI Blast Door";
-	pixel_x = 10;
-	pixel_y = 28
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/window{
-	dir = 4;
-	name = "AI Core Door";
-	req_access = list(16)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"clS" = (
+/obj/machinery/flasher{
+	id = "AI";
+	name = "Meatbag Pacifier";
+	pixel_y = 24
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "clT" = (
 /obj/item/weapon/paper{
@@ -56489,21 +56424,10 @@
 	},
 /area/station/civilian/garden)
 "clZ" = (
-/obj/machinery/hologram/holopad,
-/obj/machinery/camera/motion{
-	c_tag = "AI Chamber South";
-	network = list("RD","MiniSat");
-	pixel_x = 32
+/obj/machinery/porta_turret/station_default{
+	dir = 1
 	},
-/obj/structure/window/reinforced,
-/obj/machinery/turretid/stun/AI_special{
-	name = "AI Chamber turret control";
-	pixel_x = 26;
-	pixel_y = 24
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cmb" = (
 /obj/machinery/computer/crew,
@@ -56552,22 +56476,20 @@
 	},
 /area/station/civilian/hydroponics)
 "cmf" = (
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_y = 24
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cmg" = (
-/obj/machinery/porta_turret/station_default{
-	dir = 4
+/obj/machinery/ai_status_display{
+	pixel_y = -32
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/obj/machinery/light,
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "cmh" = (
 /obj/structure/cable{
@@ -56575,6 +56497,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/hologram/holopad,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -56583,7 +56506,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/whitegreed,
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "cmi" = (
 /obj/structure/cable{
@@ -56594,35 +56517,33 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/turf/simulated/floor/whitegreed,
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "cmj" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
+/obj/machinery/ai_slipper,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/whitegreed,
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "cmk" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/turf/simulated/floor/whitegreed,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "cml" = (
 /turf/simulated/floor{
@@ -56761,20 +56682,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-<<<<<<< HEAD
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/obj/machinery/ai_slipper,
-/turf/simulated/floor/engine,
-=======
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/whitegreed,
->>>>>>> parent of 045ed95155... Update boxstation.dmm
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "cmE" = (
 /obj/structure/sign/warning/securearea,
@@ -57271,13 +57181,22 @@
 	},
 /area/station/ai_monitored/storage_secure)
 "cnK" = (
-/obj/structure/window/reinforced,
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/space,
-/area/space)
+/obj/machinery/camera{
+	c_tag = "MiniSat North";
+	dir = 1;
+	network = list("MiniSat")
+	},
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat)
 "cnL" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -59337,12 +59256,11 @@
 /turf/simulated/wall,
 /area/station/medical/morgue)
 "crV" = (
-/obj/machinery/porta_turret/station_default{
-	dir = 8
+/obj/machinery/ai_status_display{
+	pixel_y = -32
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/obj/machinery/light,
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "crW" = (
 /obj/item/trash/sosjerky,
@@ -59858,13 +59776,17 @@
 	},
 /area/station/tcommsat/chamber)
 "csY" = (
-/obj/structure/window/reinforced,
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/turf/space,
-/area/space)
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat)
 "csZ" = (
 /obj/machinery/telecomms/broadcaster/preset_left,
 /turf/simulated/floor/bluegrid{
@@ -63751,17 +63673,6 @@
 /turf/space,
 /area/space)
 "cCE" = (
-/obj/machinery/requests_console{
-	department = "AI";
-	departmentType = 5;
-	name = "AI Requests Console";
-	pixel_y = 32
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cCF" = (
@@ -63769,14 +63680,12 @@
 /turf/space,
 /area/space)
 "cCG" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cCH" = (
@@ -63786,13 +63695,6 @@
 /turf/space,
 /area/space)
 "cCI" = (
-/obj/machinery/newscaster/security_unit{
-	pixel_x = -32;
-	pixel_y = 32
-	},
-/obj/machinery/alarm{
-	pixel_y = 28
-	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cCJ" = (
@@ -64005,29 +63907,20 @@
 /turf/space,
 /area/space)
 "cDj" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/machinery/ai_slipper,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cDk" = (
-/obj/machinery/light{
-	dir = 1
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cDl" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/whitegreed,
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "cDm" = (
 /obj/machinery/the_singularitygen/tesla,
@@ -64052,23 +63945,31 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/camera{
+	c_tag = "MiniSat West North";
+	dir = 8;
+	network = list("MiniSat")
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/ai_chamber)
+/area/station/aisat)
 "cDr" = (
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_y = -24
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 2;
+	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cDs" = (
@@ -64121,32 +64022,36 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/door/window{
+	name = "AI Satellite";
+	req_access = list(66)
 	},
-/obj/machinery/camera/motion{
-	c_tag = "AI Chamber North";
-	dir = 1;
-	network = list("RD","MiniSat")
+/obj/machinery/camera{
+	c_tag = "MiniSat East North";
+	dir = 4;
+	network = list("MiniSat")
 	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/ai_chamber)
+/area/station/aisat)
 "cDy" = (
-/obj/machinery/door/window{
-	dir = 1;
-	name = "AI SMES Door";
-	req_access = list(109)
+/obj/machinery/requests_console{
+	department = "AI";
+	departmentType = 5;
+	name = "AI Requests Console";
+	pixel_y = 32
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "cDz" = (
 /obj/structure/cable{
@@ -64166,40 +64071,52 @@
 	},
 /area/station/engineering/atmos)
 "cDC" = (
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_y = -24
-	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
-"cDD" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
-"cDE" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
-/obj/item/weapon/folder/white,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+"cDD" = (
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
-"cDF" = (
+"cDE" = (
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
-/obj/structure/cable,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
+/turf/simulated/floor/engine,
+/area/station/aisat/ai_chamber)
+"cDF" = (
+/obj/item/device/radio/intercom{
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_x = 28;
+	pixel_y = 5
+	},
+/obj/item/device/radio/intercom{
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_x = -27;
+	pixel_y = 4
+	},
+/obj/effect/landmark/start{
+	name = "AI"
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	freerange = 1;
+	name = "Common Channel";
+	pixel_y = 25
+	},
+/turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cDG" = (
 /obj/structure/flora/pottedplant{
@@ -64208,17 +64125,26 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "cDH" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/whitegreed,
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "cDI" = (
-/obj/structure/flora/plant,
-/obj/structure/table/reinforced,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/machinery/newscaster/security_unit{
+	pixel_x = -32;
+	pixel_y = 32
 	},
+/obj/machinery/alarm{
+	pixel_y = 28
+	},
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 1
+	},
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "cDJ" = (
 /obj/structure/window/reinforced,
@@ -64241,15 +64167,29 @@
 	},
 /area/station/maintenance/engineering)
 "cDN" = (
-/obj/machinery/hologram/holopad,
-/obj/machinery/camera{
-	c_tag = "AI Chamber West";
-	dir = 4;
-	network = list("MiniSat","RD")
+/obj/effect/landmark{
+	name = "tripai"
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/item/device/radio/intercom{
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_y = 20
 	},
+/obj/item/device/radio/intercom{
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_y = -26
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	freerange = 1;
+	name = "Common Channel";
+	pixel_x = -25;
+	pixel_y = -4
+	},
+/turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cDO" = (
 /obj/structure/cable{
@@ -64298,33 +64238,72 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
 "cDU" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+/obj/machinery/door/window/brigdoor/eastleft{
+	name = "AI Core Door";
+	req_access = list(16)
 	},
-/turf/simulated/wall/r_wall,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "AI Core Blast Door";
+	name = "AI Core Blast Door";
+	opacity = 0
+	},
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "cDV" = (
-/obj/machinery/power/terminal{
-	dir = 1
+/obj/machinery/door_control{
+	id = "AI Core Blast Door";
+	name = "AI Core Blast Door";
+	pixel_x = -24;
+	pixel_y = 24;
+	req_access = list(16)
 	},
-<<<<<<< HEAD
+/obj/machinery/turretid/stun/AI_special{
+	control_area = "AI Chamber";
+	name = "Core Turret Control";
+	pixel_x = 35;
+	pixel_y = 24
+	},
 /obj/machinery/ai_slipper,
-/turf/simulated/floor/engine,
-=======
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/obj/machinery/flasher{
+	id = "AI";
+	name = "Meatbag Pacifier";
+	pixel_x = 22;
+	pixel_y = 24
 	},
-/turf/simulated/wall/r_wall,
->>>>>>> parent of 045ed95155... Update boxstation.dmm
+/obj/machinery/light,
+/obj/machinery/camera/motion{
+	c_tag = "AI Core";
+	dir = 1;
+	network = list("MiniSat","AI Core")
+	},
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "cDX" = (
-/obj/machinery/hologram/holopad,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/effect/landmark{
+	name = "tripai"
 	},
+/obj/item/device/radio/intercom{
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_y = 19
+	},
+/obj/item/device/radio/intercom{
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_y = -26
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	freerange = 1;
+	name = "Common Channel";
+	pixel_x = 27;
+	pixel_y = -3
+	},
+/turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cDZ" = (
 /obj/machinery/power/tracker,
@@ -64339,10 +64318,6 @@
 /obj/machinery/power/tesla_coil,
 /turf/simulated/floor/plating/airless,
 /area/space)
-"cEb" = (
-/obj/machinery/ai_slipper,
-/turf/simulated/floor/engine,
-/area/station/aisat/ai_chamber)
 "cEc" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -64427,20 +64402,16 @@
 /area/space)
 "cEl" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
-<<<<<<< HEAD
 /obj/machinery/flasher{
 	id = "AI";
-	pixel_x = -24;
-	pixel_y = -3
+	name = "Meatbag Pacifier";
+	pixel_y = 24
 	},
 /turf/simulated/floor/engine,
-=======
-/turf/simulated/wall/r_wall,
->>>>>>> parent of 045ed95155... Update boxstation.dmm
 /area/station/aisat/ai_chamber)
 "cEm" = (
 /obj/structure/stool/bed/psych,
@@ -64531,24 +64502,12 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "cEz" = (
-<<<<<<< HEAD
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_x = 24;
-	pixel_y = -3
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/engine,
-=======
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/turf/simulated/floor/whitegreed,
->>>>>>> parent of 045ed95155... Update boxstation.dmm
 /area/station/aisat/ai_chamber)
 "cEA" = (
 /obj/item/device/radio/intercom/pod{
@@ -64593,15 +64552,9 @@
 	},
 /turf/space,
 /area/space)
-<<<<<<< HEAD
-=======
 "cEF" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor/whitegreed,
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
->>>>>>> parent of 045ed95155... Update boxstation.dmm
 "cEG" = (
 /obj/random/vending/cola,
 /turf/simulated/floor{
@@ -64610,10 +64563,15 @@
 	},
 /area/station/hallway/secondary/entry)
 "cEH" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/turf/simulated/floor/whitegreed,
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "cEI" = (
 /obj/structure/transit_tube{
@@ -64657,7 +64615,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/whitegreed,
+/turf/simulated/floor/engine,
 /area/station/aisat/ai_chamber)
 "cER" = (
 /obj/effect/decal/cleanable/dirt,
@@ -64707,23 +64665,16 @@
 	},
 /area/station/aisat/antechamber)
 "cFb" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "AI Chamber APC";
 	pixel_y = 24
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cFc" = (
 /obj/structure/grille,
@@ -65210,26 +65161,7 @@
 /turf/simulated/wall,
 /area/station/cargo/miningoffice)
 "cGa" = (
-<<<<<<< HEAD
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_x = 24;
-	pixel_y = -3
-	},
 /turf/simulated/floor/engine,
-=======
-/turf/simulated/floor/whitegreed,
->>>>>>> parent of 045ed95155... Update boxstation.dmm
 /area/station/aisat/ai_chamber)
 "cGb" = (
 /obj/structure/transit_tube{
@@ -65309,35 +65241,14 @@
 /turf/simulated/wall,
 /area/station/cargo/miningbreaktime)
 "cGj" = (
-<<<<<<< HEAD
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/ai_slipper,
-/turf/simulated/floor/engine,
-=======
-/obj/effect/landmark{
-	name = "tripai"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/item/device/radio/intercom{
-	freerange = 1;
-	listening = 0;
-	name = "Custom Channel";
-	pixel_y = 20
-	},
-/obj/item/device/radio/intercom{
-	freerange = 1;
-	frequency = 1447;
-	name = "Private Channel";
-	pixel_y = -26
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	freerange = 1;
-	name = "Common Channel";
-	pixel_x = -25;
-	pixel_y = -4
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/whitegreed,
->>>>>>> parent of 045ed95155... Update boxstation.dmm
 /area/station/aisat/ai_chamber)
 "cGl" = (
 /obj/structure/cable{
@@ -65380,35 +65291,22 @@
 	},
 /area/station/medical/hallway)
 "cGo" = (
-<<<<<<< HEAD
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door_control{
+	bound_width = 0;
+	id = "AI Blast Door";
+	name = "AI Blast Door";
+	pixel_x = 24;
+	pixel_y = 24;
+	req_access = list(16)
+	},
 /obj/machinery/ai_slipper,
-/turf/simulated/floor/engine,
-=======
-/obj/effect/landmark{
-	name = "tripai"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/item/device/radio/intercom{
-	freerange = 1;
-	listening = 0;
-	name = "Custom Channel";
-	pixel_y = 19
-	},
-/obj/item/device/radio/intercom{
-	freerange = 1;
-	frequency = 1447;
-	name = "Private Channel";
-	pixel_y = -26
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	freerange = 1;
-	name = "Common Channel";
-	pixel_x = 27;
-	pixel_y = -3
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/whitegreed,
->>>>>>> parent of 045ed95155... Update boxstation.dmm
 /area/station/aisat/ai_chamber)
 "cGq" = (
 /obj/structure/stool/bed/chair,
@@ -65470,10 +65368,9 @@
 	},
 /area/station/cargo/storage)
 "cGx" = (
-/obj/machinery/ai_status_display{
-	pixel_y = -32
+/obj/machinery/porta_turret/station_default{
+	dir = 1
 	},
-/obj/machinery/light,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cGy" = (
@@ -70313,6 +70210,20 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
+"hlK" = (
+/obj/machinery/door/window/brigdoor/westleft{
+	name = "AI Core Door";
+	req_access = list(16)
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "AI Core Blast Door";
+	name = "AI Core Blast Door";
+	opacity = 0
+	},
+/turf/simulated/floor/engine,
+/area/station/aisat/ai_chamber)
 "hmb" = (
 /obj/structure/flora/plant/random,
 /obj/structure/closet/emergency_wall{
@@ -72904,6 +72815,15 @@
 	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
+"mtn" = (
+/obj/machinery/hologram/holopad,
+/obj/machinery/flasher{
+	id = "AI";
+	name = "Meatbag Pacifier";
+	pixel_x = -24
+	},
+/turf/simulated/floor/engine,
+/area/station/aisat/ai_chamber)
 "mub" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -75115,24 +75035,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
-<<<<<<< HEAD
-"qee" = (
-/obj/machinery/camera/motion{
-	c_tag = "AI Chamber South";
-	dir = 1;
-	network = list("MiniSat")
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_y = -24
-	},
-/turf/simulated/floor/engine,
-/area/station/aisat/ai_chamber)
-=======
->>>>>>> parent of 045ed95155... Update boxstation.dmm
 "qfb" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -76707,17 +76609,13 @@
 	},
 /area/station/medical/hallway)
 "sXb" = (
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
-/obj/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/aisat)
+/turf/simulated/floor/engine,
+/area/station/aisat/ai_chamber)
 "sYb" = (
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
@@ -76731,34 +76629,31 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "sZb" = (
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
-/obj/machinery/camera{
-	c_tag = "MiniSat North";
-	dir = 1;
-	network = list("MiniSat")
+/obj/machinery/flasher{
+	id = "AI";
+	name = "Meatbag Pacifier";
+	pixel_y = 24
 	},
-/obj/machinery/light/small,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
+/obj/machinery/camera/motion{
+	c_tag = "AI Chamber North";
+	network = list("MiniSat","AI Core")
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/aisat)
+/turf/simulated/floor/engine,
+/area/station/aisat/ai_chamber)
 "tab" = (
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/ai_status_display{
+	pixel_x = 32
 	},
-/obj/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
+/obj/machinery/light{
+	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/aisat)
+/turf/simulated/floor/engine,
+/area/station/aisat/ai_chamber)
 "tbb" = (
 /obj/machinery/access_button{
 	command = "cycle_exterior";
@@ -77671,6 +77566,19 @@
 	icon_state = "floorgrime"
 	},
 /area/station/cargo/storage)
+"vnH" = (
+/obj/machinery/flasher{
+	id = "AI";
+	name = "Meatbag Pacifier";
+	pixel_y = -24
+	},
+/obj/machinery/camera/motion{
+	c_tag = "AI Chamber South";
+	dir = 1;
+	network = list("MiniSat","AI Core")
+	},
+/turf/simulated/floor/engine,
+/area/station/aisat/ai_chamber)
 "vob" = (
 /obj/structure/closet/secure_closet/cargotech,
 /turf/simulated/floor{
@@ -118092,8 +118000,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 agn
 agm
 agn
@@ -118101,6 +118007,8 @@ agn
 agn
 agn
 agm
+agn
+agn
 agn
 agn
 cym
@@ -118349,8 +118257,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 agn
 aaa
 cEC
@@ -118358,6 +118264,8 @@ cEC
 cEC
 cEC
 cBm
+cEC
+cEC
 cEC
 cEC
 cGX
@@ -118606,15 +118514,15 @@ aah
 aah
 aah
 aah
-aah
-aah
 agm
 cym
 cyr
 cyY
 cyY
 cyY
-clD
+cDq
+cyY
+cyY
 cyY
 cyY
 cyY
@@ -118863,8 +118771,6 @@ aah
 aaa
 aaa
 aaa
-aaa
-aaa
 agn
 cGQ
 cyt
@@ -118872,6 +118778,8 @@ cEd
 cEL
 cEL
 cCW
+cEL
+cEL
 cEL
 cEL
 cEL
@@ -119120,8 +119028,6 @@ aah
 aaa
 aaa
 aaa
-aaa
-aaa
 agn
 cGQ
 cyt
@@ -119129,6 +119035,8 @@ czy
 aaa
 aaa
 cCW
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -119377,14 +119285,14 @@ aah
 aaa
 aaa
 aaa
-aaa
-aaa
 agn
 cGQ
 cyt
 czy
 aaa
 aaa
+cCW
+cCW
 cCW
 cCW
 cCW
@@ -119634,14 +119542,14 @@ aah
 aah
 aah
 aah
-aah
-aah
 agm
 cym
-ckQ
+clJ
 cCW
 cCW
 cCW
+cFP
+cFP
 cFP
 cFP
 cFP
@@ -119891,21 +119799,21 @@ aah
 aaa
 aaa
 aaa
-aaa
-aaa
 agn
 cGQ
-cyt
+clM
 czy
 aaa
 cCW
 cFP
 cFP
-cGa
-cDE
+cFP
+cFP
+cFP
+cFP
 cDN
-clM
-cEz
+cFP
+cFP
 cFP
 cFP
 cEY
@@ -120148,8 +120056,6 @@ aah
 aaa
 aaa
 aaa
-aaa
-aaa
 agn
 cGQ
 cyt
@@ -120157,20 +120063,15 @@ czy
 aaa
 cCW
 cFP
+cFP
+cGx
 bHf
-<<<<<<< HEAD
-cEl
-clO
+cGa
+cGa
 btz
-cEl
-=======
-cDl
-cDD
-btz
-cDD
->>>>>>> parent of 045ed95155... Update boxstation.dmm
-clO
-cmg
+mtn
+cGa
+crV
 cFP
 cFP
 cEY
@@ -120412,8 +120313,6 @@ aah
 aaa
 aaa
 aaa
-aaa
-aaa
 agn
 cGQ
 cyt
@@ -120421,11 +120320,13 @@ czy
 aaa
 cCW
 cFP
+cFP
+cEl
 cCG
 cDr
-cFP
+cDr
 cGo
-cFP
+clR
 clR
 cmi
 cGx
@@ -120669,23 +120570,23 @@ aah
 aaa
 aaa
 aaa
-aaa
-aaa
 agn
-ckR
-sXb
+ckQ
+clN
 czy
 aaa
 cCW
 cFP
-cCE
-cDq
+cDy
+cEz
+cCI
 cFP
 cFP
+hlK
 cFP
 cFb
 cmh
-cGa
+vnH
 cFP
 cFP
 cnA
@@ -120926,28 +120827,21 @@ aah
 aah
 aah
 aah
-aah
-aah
 agm
+ckR
 cnK
-sZb
 cCW
 cCW
 cCW
 cFP
-<<<<<<< HEAD
 cDE
-hID
-cEb
-cFP
-=======
+cDH
 cDj
-cDy
->>>>>>> parent of 045ed95155... Update boxstation.dmm
+cFP
 cDF
 cDV
 bsv
-clZ
+cGx
 cmk
 cmD
 cmG
@@ -121190,20 +121084,20 @@ aah
 aaa
 aaa
 aaa
-aaa
-aaa
 agn
+clD
 csY
-tab
 czy
 aaa
 cCW
 cFP
+cDI
+sXb
 cCI
-cDx
+cFP
 cFP
 cDU
-cEl
+cFP
 clS
 cmj
 cEQ
@@ -121447,8 +121341,6 @@ aah
 aaa
 aaa
 aaa
-aaa
-aaa
 agn
 cGQ
 cyt
@@ -121456,12 +121348,14 @@ czy
 aaa
 cCW
 cFP
+cFP
+sZb
 cDk
 cDC
-cFP
+cDC
 cGj
-cFP
-cmf
+cDC
+cDC
 cEH
 cGx
 cFv
@@ -121704,8 +121598,6 @@ aah
 aaa
 aaa
 aaa
-aaa
-aaa
 agn
 cGQ
 cyt
@@ -121713,17 +121605,14 @@ czy
 aaa
 cCW
 cFP
-bHf
+cFP
+cGx
+tab
 cGa
 cDH
 buU
-<<<<<<< HEAD
-cEz
-clO
-=======
-cDH
-cEF
->>>>>>> parent of 045ed95155... Update boxstation.dmm
+cGa
+cGa
 crV
 cFP
 cFv
@@ -121966,8 +121855,6 @@ aah
 aaa
 aaa
 aaa
-aaa
-aaa
 agm
 cGQ
 cyt
@@ -121976,11 +121863,13 @@ aaa
 cCW
 cFP
 cFP
-cGa
-cDI
+cFP
+cFP
+cFP
+cFP
 cDX
-clN
-cEH
+cFP
+cFP
 cFP
 cFP
 cFS
@@ -122223,14 +122112,14 @@ aah
 aah
 aah
 aah
-aah
-aah
 agm
 cym
-ckQ
+clJ
 cCW
 cCW
 cCW
+cFP
+cFP
 cFP
 cFP
 cFP
@@ -122480,14 +122369,14 @@ aah
 aaa
 aaa
 aaa
-aaa
-aaa
 agn
 cGQ
 cyt
 czy
 aaa
 aaa
+cCW
+cCW
 cCW
 cCW
 cCW
@@ -122737,8 +122626,6 @@ aah
 aaa
 aaa
 aaa
-aaa
-aaa
 agn
 cGQ
 cyt
@@ -122746,6 +122633,8 @@ czy
 aaa
 aaa
 cCW
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -122994,8 +122883,6 @@ brA
 aaa
 aaa
 aaa
-aaa
-aaa
 agn
 cGQ
 cyt
@@ -123003,6 +122890,8 @@ cEE
 cEC
 cEC
 cCW
+cEC
+cEC
 cEC
 cEC
 cEC
@@ -123251,15 +123140,15 @@ aah
 aaa
 aaa
 aaa
-aaa
-aaa
 agn
 cGQ
 cyX
 cyY
 cyY
 cyY
-clJ
+cDx
+cyY
+cyY
 cyY
 cyY
 cyY
@@ -123508,8 +123397,6 @@ aah
 aaa
 aaa
 aaa
-aaa
-aaa
 agn
 aaa
 cEL
@@ -123517,6 +123404,8 @@ cEL
 cEL
 cEL
 cFH
+cEL
+cEL
 cEL
 cEL
 cDJ
@@ -123765,8 +123654,6 @@ aah
 aaa
 aaa
 aaa
-aaa
-aah
 agm
 agm
 agm
@@ -123774,6 +123661,8 @@ agm
 agn
 agn
 agm
+agn
+agn
 agn
 agn
 aaa
