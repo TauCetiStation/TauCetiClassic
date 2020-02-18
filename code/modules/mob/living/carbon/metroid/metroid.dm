@@ -898,41 +898,46 @@
 	icon_state = "golem"
 	unacidable = 1
 	layer = TURF_LAYER
+	var/mob/living/carbon/human/body_to_transform
 
 
 /obj/effect/golemrune/atom_init()
 	. = ..()
-	START_PROCESSING(SSobj, src)
+	RegisterSignal(src, list(COMSIG_MOVABLE_CROSSED, COMSIG_MOVABLE_UNCROSSED), .proc/update_icon)
 
 
-/obj/effect/golemrune/process()
-	update_icon()
-
-
-/obj/effect/golemrune/proc/check_body(mob/living/user)
-	var/mob/living/carbon/human/body_to_check = locate(/mob/living/carbon/human) in loc
+/obj/effect/golemrune/proc/check_body(mob/living/carbon/human/body_to_check)
 	if(!body_to_check)
 		return FALSE
 
-	if(body_to_check.stat != 2)
+	if(body_to_check.stat != DEAD)
 		return FALSE
 
-	if((!body_to_check.ckey) || (!body_to_check.client))
+	if(!body_to_check.client)
 		return FALSE
-	return body_to_check
+	return TRUE
 
 
 /obj/effect/golemrune/update_icon()
-	if(check_body())
-		icon_state = "golem2"
-	else
+	if(!locate(/mob/living/carbon/human) in loc)
+		body_to_transform = null
 		icon_state = "golem"
+		return
+
+	for(var/mob/living/carbon/human/target in loc)
+		if(check_body(target))
+			icon_state = "golem2"
+			body_to_transform = target
+			break
+		else
+			body_to_transform = null
+			icon_state = "golem"
 
 
 /obj/effect/golemrune/attack_hand(mob/living/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	var/mob/living/carbon/human/body_to_transform = check_body()
-	if(!body_to_transform)
+	if(!check_body(body_to_transform))
+		body_to_transform = null
 		to_chat(user, "The rune fizzles uselessly.")
 		return
 	var/mob/living/carbon/human/golem/G = new(loc)

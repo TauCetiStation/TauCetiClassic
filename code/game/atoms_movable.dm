@@ -52,6 +52,9 @@
 /atom/movable/Crossed(atom/movable/AM, oldloc)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
 
+/atom/movable/Uncrossed(atom/movable/AM)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSSED, AM)
+
 /atom/movable/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if(!loc || !NewLoc || freeze_movement)
 		return FALSE
