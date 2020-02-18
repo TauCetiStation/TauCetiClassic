@@ -133,7 +133,7 @@
 
 /obj/machinery/computer/attackby(obj/item/I, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(!ishuman(user))
+	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>It's too complicated for you.</span>")
 		return
 	if(isscrewdriver(I) && circuit && !(flags&NODECONSTRUCT))
@@ -180,12 +180,15 @@
 	set name = "Rotate"
 	set src in oview(1)
 
-	if(get_dist(src, usr) > 1 || usr.restrained() || usr.lying || usr.stat || issilicon(usr))
+	// virtual present
+	if (isAI(usr) || ispAI(usr))
 		return
-	if(!ishuman(usr))
+	// state restrict
+	if(!in_range(src, usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
+		return
+	// species restrict
+	if(!usr.IsAdvancedToolUser())
 		to_chat(usr, "<span class='warning'>It's too complicated for you.</span>")
-		return
-	if(usr.is_busy(src))
 		return
 
 	var/obj/item/I = usr.get_active_hand()
