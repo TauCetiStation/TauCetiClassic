@@ -17,7 +17,7 @@
 	)
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
-	restricted_species = list(UNATHI, TAJARAN, DIONA)
+	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
 
 /datum/job/rd/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

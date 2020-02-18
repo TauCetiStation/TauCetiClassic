@@ -178,28 +178,29 @@
 			H.update_hair()
 	return
 
-/datum/species/proc/before_job_equip(mob/living/carbon/human/H, datum/job/J) // Do we really need this proc? Perhaps.
+/datum/species/proc/before_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE) // Do we really need this proc? Perhaps.
 	return
 
-/datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+/datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	var/obj/item/weapon/storage/box/survival/SK = new(H)
 
-	species_survival_kit_items:
-		for(var/type in survival_kit_items)
-			/*
-			is_type_in_list only work on instantinated objects.
-			*/
-			for(var/type_to_check in J.prevent_survival_kit_items) // So engineers don't spawn with two oxy tanks.
-				if(ispath(type, type_to_check))
-					continue species_survival_kit_items
-			new type(SK)
+	if(!visualsOnly)
+		species_survival_kit_items:
+			for(var/type in survival_kit_items)
+				/*
+				is_type_in_list only work on instantinated objects.
+				*/
+				for(var/type_to_check in J.prevent_survival_kit_items) // So engineers don't spawn with two oxy tanks.
+					if(ispath(type, type_to_check))
+						continue species_survival_kit_items
+				new type(SK)
 
-	job_survival_kit_items:
-		for(var/type in J.survival_kit_items)
-			for(var/type_to_check in prevent_survival_kit_items) // So IPCs don't spawn with oxy tanks from engi kits
-				if(ispath(type, type_to_check))
-					continue job_survival_kit_items
-			new type(SK)
+		job_survival_kit_items:
+			for(var/type in J.survival_kit_items)
+				for(var/type_to_check in prevent_survival_kit_items) // So IPCs don't spawn with oxy tanks from engi kits
+					if(ispath(type, type_to_check))
+						continue job_survival_kit_items
+				new type(SK)
 
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(SK, SLOT_R_HAND)
@@ -394,7 +395,8 @@
 	poison_type = "oxygen"
 
 	flags = list(
-		NO_SCAN = TRUE
+		IS_WHITELISTED = TRUE
+		,NO_SCAN = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
@@ -408,18 +410,31 @@
 		"gloves" = 'icons/mob/species/vox/gloves.dmi'
 		)
 
+	survival_kit_items = list(/obj/item/weapon/tank/emergency_nitrogen
+	                          )
+
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/nitrogen) // So they don't get the big engi oxy tank, since they need no tank.
+
+
 	min_age = 12
 	max_age = 20
 
-/datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+/datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
+	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
-	if(!H.r_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), SLOT_R_HAND)
+	if(!H.r_store)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_R_STORE)
+		H.internal = H.r_store
+	else if(!H.l_store)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_L_STORE)
+		H.internal = H.l_store
+	else if(!H.r_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_R_HAND)
 		H.internal = H.r_hand
 	else if(!H.l_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), SLOT_L_HAND)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_L_HAND)
 		H.internal = H.l_hand
-	H.internals.icon_state = "internal1"
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/magboots/vox(src), SLOT_SHOES)
 
 /datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_vox_digest(M)
