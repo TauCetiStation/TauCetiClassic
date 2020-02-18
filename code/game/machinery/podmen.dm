@@ -95,7 +95,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 			continue
 		if(jobban_isbanned(O, ROLE_PLANT))
 			continue
-		if(role_available_in_minutes(O, ROLE_PLANT))
+		if((!is_alien_whitelisted(O, DIONA) && !role_available_in_minutes(O, ROLE_PLANT)) && config.usealienwhitelist)
 			continue
 		if(O.client)
 			var/client/C = O.client
