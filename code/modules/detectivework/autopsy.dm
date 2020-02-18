@@ -29,8 +29,9 @@
 	var/weapon = null
 	var/pretend_weapon = null
 	var/damage = 0
+	var/type_damage = ""
 	var/hits = 0
-	var/time_inflicted = 0
+	var/time_inflicted = ""
 
 /datum/autopsy_data/proc/copy()
 	var/datum/autopsy_data/W = new()
@@ -101,7 +102,7 @@
 		var/total_hits = 0
 		var/total_score = 0
 		var/list/weapon_chances = list() // maps weapon names to a score
-		var/age = 0
+		var/time = ""
 
 		for(var/wound_idx in D.bodyparts_scanned)
 			var/datum/autopsy_data/W = D.bodyparts_scanned[wound_idx]
@@ -111,11 +112,8 @@
 
 			if(wname in weapon_chances) weapon_chances[wname] += W.damage
 			else weapon_chances[wname] = max(W.damage, 1)
-			total_score+=W.damage
-
-
-			var/wound_age = W.time_inflicted
-			age = max(age, wound_age)
+			total_score += W.damage
+			time = W.time_inflicted
 
 		var/damage_desc
 
@@ -140,7 +138,7 @@
 		if(damaging_weapon)
 			scan_data += "Severity: [damage_desc]<br>"
 			scan_data += "Hits by weapon: [total_hits]<br>"
-		scan_data += "Approximate time of wound infliction: [worldtime2text(age)]<br>"
+		scan_data += "Approximate time of wound infliction: [time]<br>"
 		scan_data += "Affected limbs: [D.organ_names]<br>"
 		scan_data += "Possible weapons:<br>"
 		for(var/weapon_name in weapon_chances)

@@ -84,16 +84,23 @@
 		BP.trace_chemicals[A.name] = 100
 
 //Adds autopsy data for used_weapon.
-/obj/item/organ/proc/add_autopsy_data(used_weapon, damage)
-	var/datum/autopsy_data/W = autopsy_data[used_weapon]
+/obj/item/organ/proc/add_autopsy_data(used_weapon, damage, type_damage = "brute")
+	var/datum/autopsy_data/W = autopsy_data[used_weapon + worldtime2text()]
 	if(!W)
 		W = new()
 		W.weapon = used_weapon
-		autopsy_data[used_weapon] = W
+		autopsy_data[used_weapon + worldtime2text()] = W
+
+	var/time = W.time_inflicted
+	if(time != worldtime2text())
+		W = new()
+		W.weapon = used_weapon
+		autopsy_data[used_weapon + worldtime2text()] = W
 
 	W.hits += 1
 	W.damage += damage
-	W.time_inflicted = world.time
+	W.time_inflicted = worldtime2text()
+	W.type_damage = type_damage
 
 // Takes care of bodypart and their organs related updates, such as broken and missing limbs
 /mob/living/carbon/human/proc/handle_bodyparts()
