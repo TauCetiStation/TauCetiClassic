@@ -27,7 +27,6 @@
 
 /datum/autopsy_data
 	var/weapon = null
-	var/pretend_weapon = null
 	var/damage = 0
 	var/type_damage = ""
 	var/hits = 0
@@ -36,7 +35,6 @@
 /datum/autopsy_data/proc/copy()
 	var/datum/autopsy_data/W = new()
 	W.weapon = weapon
-	W.pretend_weapon = pretend_weapon
 	W.damage = damage
 	W.hits = hits
 	W.time_inflicted = time_inflicted
@@ -48,20 +46,6 @@
 
 	for(var/V in BP.autopsy_data)
 		var/datum/autopsy_data/W = BP.autopsy_data[V]
-
-		if(!W.pretend_weapon)
-			/*
-			// the more hits, the more likely it is that we get the right weapon type
-			if(prob(50 + W.hits * 10 + W.damage))
-			*/
-
-			// Buffing this stuff up for now!
-			if(1)
-				W.pretend_weapon = W.weapon
-			else
-				W.pretend_weapon = pick("mechanical toolbox", "wirecutters", "revolver", "crowbar", "fire extinguisher", "tomato soup", "oxygen tank", "emergency oxygen tank", "laser", "bullet")
-
-
 		var/datum/autopsy_data_scanner/D = wdata[V]
 		if(!D)
 			D = new()
@@ -96,7 +80,6 @@
 	if(timeofdeath)
 		scan_data += "<b>Time of death:</b> [worldtime2text(timeofdeath)]<br><br>"
 
-	var/n = 1
 	for(var/wdata_idx in wdata)
 		var/datum/autopsy_data_scanner/D = wdata[wdata_idx]
 		var/total_hits = 0
@@ -107,11 +90,6 @@
 		for(var/wound_idx in D.bodyparts_scanned)
 			var/datum/autopsy_data/W = D.bodyparts_scanned[wound_idx]
 			total_hits += W.hits
-
-			var/wname = W.pretend_weapon
-
-			if(wname in weapon_chances) weapon_chances[wname] += W.damage
-			else weapon_chances[wname] = max(W.damage, 1)
 			total_score += W.damage
 			time = W.time_inflicted
 
@@ -133,7 +111,7 @@
 				damage_desc = "<font color='red'>severe</font>"
 
 		if(!total_score) total_score = D.bodyparts_scanned.len
-
+/*
 		scan_data += "<b>Weapon #[n]</b><br>"
 		if(damaging_weapon)
 			scan_data += "Severity: [damage_desc]<br>"
@@ -143,10 +121,33 @@
 		scan_data += "Possible weapons:<br>"
 		for(var/weapon_name in weapon_chances)
 			scan_data += "\t[100*weapon_chances[weapon_name]/total_score]% [weapon_name]<br>"
+*/
+
+		scan_data += "<table border=\"3\">"
+		scan_data += "<tr><th colspan=\"4\">[D.organ_names]</th></tr>"
+		scan_data += "<tr>"
+		scan_data += "<th>Severity</th>"
+		scan_data += "<th>Hits by weapon</th>"
+		scan_data += "<th>The approximate time</th>"
+		scan_data += "<th>Possible weapons</th>"
+		scan_data += "</tr>"
+		scan_data += "<tr>"
+		scan_data += "<td>"
+		if(damaging_weapon)
+			scan_data += "[damage_desc]"
+		scan_data += "</td>"
+		scan_data += "<td>"
+		if(damaging_weapon)
+			scan_data += "[total_hits]"
+		scan_data += "</td>"
+		scan_data += "<td>[time]</td>"
+		scan_data += "<td>"
+		for(var/weapon_name in weapon_chances)
+			scan_data += "\t[100*weapon_chances[weapon_name]/total_score]% [weapon_name]<br>"
+		scan_data += "</td>"
+		scan_data += "</tr>"
 
 		scan_data += "<br>"
-
-		n++
 
 	if(chemtraces.len)
 		scan_data += "<b>Trace Chemicals: </b><br>"
