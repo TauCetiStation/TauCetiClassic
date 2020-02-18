@@ -70,12 +70,30 @@
 			target.client.images -= I
 			target.client.eye = target
 		target.status_flags ^= GODMODE	//Turn off this cheat
+		mobloc = get_turf(target.loc)
+		var/can_move_in = 1
+		if(mobloc.density)
+			can_move_in = 0
+		else
+			for(var/atom/on_turf in mobloc.contents)
+				if(on_turf == target)
+					continue
+				if(on_turf in companions)
+					continue
+				if(on_turf.density)
+					if(istype(on_turf, /obj/structure/window))
+						continue
+					if(istype(on_turf, /obj/machinery/door))
+						continue
+					if(istype(on_turf, /obj/structure/table))
+						continue
+					can_move_in = 0
+					break
 		if(companions)
 			for(var/M in companions)
 				var/mob/living/L = M
 				L.status_flags ^= GODMODE
-		mobloc = get_turf(target.loc)
-		if(mobloc.density)
+		if(!can_move_in)
 			do_teleport(target, mobloc, 8, asoundin='sound/effects/phasein.ogg', checkspace = 1)
 		qdel(holder)
 
