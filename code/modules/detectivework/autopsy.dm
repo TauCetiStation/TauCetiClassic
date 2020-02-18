@@ -186,11 +186,9 @@
 		usr:update_inv_r_hand()
 
 /obj/item/weapon/autopsy_scanner/attack(mob/living/carbon/human/M, mob/living/carbon/user, def_zone)
-	if(!istype(M))
+	if(!istype(M) &!can_operate(M))
 		return
 
-	if(!can_operate(M))
-		return
 	if(do_after(user,15,target = M))
 		if(target_name != M.name)
 			target_name = M.name

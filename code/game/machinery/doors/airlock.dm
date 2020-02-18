@@ -648,6 +648,7 @@ var/list/airlock_overlays = list()
 				H.Stun(8)
 				H.Weaken(5)
 				BP.take_damage(10, 0)
+				BP.add_autopsy_data("Hematoma", 10, "bruise")
 			else
 				visible_message("<span class='userdanger'> [user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
 			return
