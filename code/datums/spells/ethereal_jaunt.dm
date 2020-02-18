@@ -74,6 +74,9 @@
 			for(var/M in companions)
 				var/mob/living/L = M
 				L.status_flags ^= GODMODE
+		mobloc = get_turf(target.loc)
+		if(mobloc.density)
+			do_teleport(target, mobloc, 8, asoundin='sound/effects/phasein.ogg', checkspace = 1)
 		qdel(holder)
 
 /obj/effect/dummy/spell_jaunt
