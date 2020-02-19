@@ -100,10 +100,12 @@
 				to_chat(usr, "It isn't ready to use.")
 			else
 				var/mob/living/carbon/R = I.imp_in
-				R.electrocute_act(15, null, 1.0, I.part.body_zone)
+				R.electrocute_act(15, null, 1.0, I.part.body_zone, internal = TRUE)
 				R.Stun(7)
 				playsound(R, 'sound/items/surgery/defib_zap.ogg')
 				I.nextUse = world.time
+				log_game("<span class='notice'> [key_name_admin(R)] was shocked with tracking implant by [key_name_admin(usr)]!</span>")
+				message_admins("[key_name_admin(R)] was shocked with tracking implant by [key_name_admin(usr)] [ADMIN_JMP(R)]")
 
 	src.updateUsrDialog()
 #undef SHOCK_COOLDOWN

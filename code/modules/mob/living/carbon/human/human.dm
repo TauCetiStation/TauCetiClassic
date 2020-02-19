@@ -690,7 +690,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 //Removed the horrible safety parameter. It was only being used by ninja code anyways.
 //Now checks siemens_coefficient of the affected area by default
-/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
+/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0, internal = FALSE)
 	if(status_flags & GODMODE)
 		return 0	//godmode
 	if(NO_SHOCK in src.mutations)
@@ -713,7 +713,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				total_coeff -= 0.95
 		siemens_coeff = total_coeff
 	else
-		siemens_coeff *= get_siemens_coefficient_organ(BP)
+		if(internal)
+			siemens_coeff = 1.0
+		else
+			siemens_coeff *= get_siemens_coefficient_organ(BP)
 
 	if(species)
 		siemens_coeff *= species.siemens_coefficient
