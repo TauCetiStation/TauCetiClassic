@@ -466,19 +466,19 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			icon_state = icon_on
 			item_state = icon_on
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
-				playsound(src, 'sound/items/zippo.ogg', VOL_EFFECTS_MASTER, 20)
-				user.visible_message("<span class='notice'>[user] clicks and lights a [src].</span>")
+				playsound(src, 'sound/items/zippo.ogg', VOL_EFFECTS_MASTER, 25)
+				user.visible_message("<span class='notice''>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
 			else
-				playsound(src, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 20)
+				playsound(src, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
 				if(prob(95))
-					user.visible_message("<span class='notice'>[user] clicks and lights a [src].</span>")
+					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src].</span>")
 				else
 					to_chat(user, "<span class='warning'>You burn yourself while lighting the lighter.</span>")
 					if (user.l_hand == src)
 						user.apply_damage(2, BURN, BP_L_ARM)
 					else
 						user.apply_damage(2, BURN, BP_R_ARM)
-					user.visible_message("<span class='warning'>[user] tries to light [src], but burn their finger!</span>")
+					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
 
 			set_light(2)
 			START_PROCESSING(SSobj, src)
@@ -486,11 +486,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			lit = 0
 			icon_state = icon_off
 			item_state = icon_off
-			user.visible_message("<span class='notice'>[user] clicks and extinguishes [src].</span>")
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
-				playsound(src, 'sound/items/zippo.ogg', VOL_EFFECTS_MASTER, 20)
+				playsound(src, 'sound/items/zippo.ogg', VOL_EFFECTS_MASTER, 25)
+				user.visible_message("<span class='notice'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing.</span>")
 			else
-				playsound(src, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 20)
+				user.visible_message("<span class='notice'>[user] quietly shuts off the [src].</span>")
+				playsound(src, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
 
 			set_light(0)
 			STOP_PROCESSING(SSobj, src)
