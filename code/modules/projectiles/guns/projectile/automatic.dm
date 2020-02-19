@@ -75,18 +75,18 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(magazine)
 		var/image/magazine_icon = image('icons/obj/gun.dmi', "mag-[CEIL(get_ammo(0) / 4) * 4]")
-		overlays += magazine_icon
+		add_overlay(magazine_icon)
 	if(silenced)
 		var/image/silencer_icon = image('icons/obj/gun.dmi', "c20r-silencer")
-		overlays += silencer_icon
+		add_overlay(silencer_icon)
 	icon_state = "c20r[chambered ? "" : "-e"]"
 	return
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
-	name = "\improper L6 SAW"
+	name = "L6 SAW"
 	desc = "A heavily modified light machine gun with a tactical plasteel frame resting on a rather traditionally-made ballistic weapon. Has 'Aussec Armoury - 2531' engraved on the reciever, as well as '7.62x51mm'."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
@@ -298,7 +298,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/colt1911/dungeon
 	desc = "A single-action, semi-automatic, magazine-fed, recoil-operated pistol chambered for the .45 ACP cartridge."
-	name = "\improper Colt M1911"
+	name = "Colt M1911"
 	mag_type = /obj/item/ammo_box/magazine/c45m
 	mag_type2 = /obj/item/ammo_box/magazine/c45r
 
@@ -338,12 +338,12 @@
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/proc/update_magazine()
 	if(magazine)
-		src.overlays = 0
-		overlays += "[magazine.icon_state]_o"
+		cut_overlays()
+		add_overlay("[magazine.icon_state]_o")
 		return
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/update_icon()
-	src.overlays = 0
+	cut_overlays()
 	update_magazine()
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 	return
@@ -371,9 +371,9 @@
 	update_icon()
 
 /obj/item/weapon/gun/projectile/automatic/a28/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(magazine)
-		overlays += "[magazine.icon_state]-o"
+		add_overlay("[magazine.icon_state]-o")
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 	return
 
@@ -393,9 +393,9 @@
 	update_icon()
 
 /obj/item/weapon/gun/projectile/automatic/a74/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(magazine)
-		overlays += mag_icon
+		add_overlay(mag_icon)
 		item_state = "[initial(icon_state)]"
 	else
 		item_state = "[initial(icon_state)]-e"

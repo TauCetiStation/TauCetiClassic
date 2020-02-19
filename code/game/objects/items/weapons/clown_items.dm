@@ -24,6 +24,21 @@
 	. = ..()
 	AddComponent(/datum/component/slippery, 4)
 
+/obj/item/weapon/bananapeel/honk
+	name = "Clowny banana peel"
+	desc = "A peel from a banana for Clown."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "h-banana_peel"
+	item_state = "h-banana_peel"
+	w_class = ITEM_SIZE_SMALL
+	throwforce = 0
+	throw_speed = 4
+	throw_range = 20
+
+/obj/item/weapon/bananapeel/honk/atom_init()
+	. = ..()
+	AddComponent(/datum/component/slippery, 5, SLIDE | GALOSHES_DONT_HELP)
+
 /*
  * Soap
  */

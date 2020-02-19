@@ -117,21 +117,23 @@
 	absorbedcount++ //all that done, let's increment the objective counter.
 
 //Checks if the target DNA is valid and absorbable.
-/datum/changeling/proc/can_absorb_dna(mob/living/carbon/U, mob/living/carbon/T)
-	if(T)
-		if(!ishuman(T))
-			to_chat(U, "<span class='warning'>[T] is too simple for absorption.</span>")
+/datum/changeling/proc/can_absorb_dna(mob/living/carbon/U, mob/living/carbon/C)
+	if(C)
+		if(!ishuman(C))
+			to_chat(U, "<span class='warning'>[C] is too simple for absorption.</span>")
 			return FALSE
+
+		var/mob/living/carbon/human/T = C
 
 		if((NOCLONE in T.mutations) || (HUSK in T.mutations))
 			to_chat(U, "<span class='warning'>DNA of [T] is ruined beyond usability!</span>")
 			return FALSE
 
-		if(T:species.flags[IS_SYNTHETIC] || T:species.flags[IS_PLANT])
+		if(T.species.flags[IS_SYNTHETIC] || T.species.flags[IS_PLANT])
 			to_chat(U, "<span class='warning'>[T] is not compatible with our biology.</span>")
 			return FALSE
 
-		if(T:species.flags[NO_SCAN])
+		if(T.species.flags[NO_SCAN])
 			to_chat(src, "<span class='warning'>We do not know how to parse this creature's DNA!</span>")
 			return FALSE
 

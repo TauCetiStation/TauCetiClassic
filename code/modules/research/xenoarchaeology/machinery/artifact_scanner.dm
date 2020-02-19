@@ -11,4 +11,4 @@
 /obj/machinery/artifact_scanpad/atom_init()
 	. = ..()
 	var/image/I = image(icon, "xenoarch_scanner_bottom", ABOVE_NORMAL_TURF_LAYER)
-	overlays += I
+	add_overlay(I)

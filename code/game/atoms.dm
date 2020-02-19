@@ -22,6 +22,11 @@
 
 	var/initialized = FALSE
 
+	/// a very temporary list of overlays to remove
+	var/list/remove_overlays
+	/// a very temporary list of overlays to add
+	var/list/add_overlays
+
 	///Chemistry.
 	var/datum/reagents/reagents = null
 
@@ -46,6 +51,7 @@
 		if(SSatoms.InitAtom(src, args))
 			//we were deleted
 			return
+	SSdemo.mark_new(src)
 
 	var/list/created = SSatoms.created_atoms
 	if(created)
@@ -176,7 +182,7 @@
 
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
-	P.on_hit(src, 0, def_zone)
+	P.on_hit(src, def_zone, 0)
 	. = 0
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
@@ -264,7 +270,7 @@
 /atom/proc/singularity_pull()
 	return
 
-/atom/proc/hitby(atom/movable/AM)
+/atom/proc/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	return
 
 /atom/proc/add_hiddenprint(mob/living/M)

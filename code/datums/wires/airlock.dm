@@ -135,11 +135,11 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 		if(AIRLOCK_WIRE_DOOR_BOLTS)
 			if(!A.locked)
 				A.bolt()
-				A.audible_message("You hear a click from the bottom of the door.", null,  1)
+				A.audible_message("You hear a click from the bottom of the door.", hearing_distance = 1)
 			else
 				if(A.hasPower())
 					A.unbolt()
-					A.audible_message("You hear a click from the bottom of the door.", null, 1)
+					A.audible_message("You hear a click from the bottom of the door.", hearing_distance = 1)
 
 		if(AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			A.loseBackupPower()

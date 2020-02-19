@@ -30,6 +30,11 @@
 		qdel(ptank)
 	return ..()
 
+/obj/item/weapon/flamethrower/get_current_temperature()
+	if(lit)
+		return 1500
+	return 0
+
 /obj/item/weapon/flamethrower/process()
 	if(!lit)
 		STOP_PROCESSING(SSobj, src)
@@ -44,13 +49,13 @@
 		location.hotspot_expose(700, 2)
 
 /obj/item/weapon/flamethrower/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(igniter)
-		overlays += "+igniter[status]"
+		add_overlay("+igniter[status]")
 	if(ptank)
-		overlays += "+ptank"
+		add_overlay("+ptank")
 	if(lit)
-		overlays += "+lit"
+		add_overlay("+lit")
 		item_state = "flamethrower_1"
 	else
 		item_state = "flamethrower_0"
@@ -242,6 +247,11 @@
 		location.hotspot_expose(700, 2)
 	return
 
+/obj/item/weapon/flamethrower_M2/get_current_temperature()
+	if(lit)
+		return 1500
+	return 0
+
 /obj/item/weapon/flamethrower_M2/proc/unequip(mob/user)
 	if(Connected_tank)
 		if(lit)
@@ -256,7 +266,7 @@
 		Connected_tank = W
 
 /obj/item/weapon/flamethrower_M2/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(lit)
 		icon_state = "M2_Flamethrower_lit"
 	else

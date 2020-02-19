@@ -141,12 +141,9 @@
 	if (user.a_intent == "help" && allowed(user))
 		user.visible_message("<span class='notice'>[user] lifts [src], allowing passage.</span>")
 		density = 0
-		addtimer(CALLBACK(src, .proc/stop_passage), 20 SECONDS)
+		addtimer(VARSET_CALLBACK(src, density, TRUE), 20 SECONDS)
 	else
 		breaktape(null, user, FALSE)
-
-/obj/item/tape/proc/stop_passage()
-	density = 1
 
 /obj/item/tape/attack_paw(mob/user)
 	breaktape(null, user, FALSE)

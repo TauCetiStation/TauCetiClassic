@@ -41,6 +41,14 @@
 	name = "Circuit board (Message Monitor)"
 	build_path = /obj/machinery/computer/message_monitor
 	origin_tech = "programming=3"
+/obj/item/weapon/circuitboard/camera_advanced
+	name = "circuit board (Advanced Camera Console)"
+	build_path = /obj/machinery/computer/camera_advanced
+	req_access = list(access_security)
+/obj/item/weapon/circuitboard/camera_advanced/xenobio
+	name = "circuit board (Slime management console)"
+	build_path = /obj/machinery/computer/camera_advanced/xenobio
+	origin_tech = "biotech=3;bluespace=3"
 /obj/item/weapon/circuitboard/security
 	name = "Circuit board (Security)"
 	build_path = /obj/machinery/computer/security
@@ -379,7 +387,7 @@
 	return
 
 /obj/structure/computerframe/attackby(obj/item/P, mob/user)
-	if(!ishuman(user))
+	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>It's too complicated for you.</span>")
 		return
 
@@ -503,12 +511,15 @@
 	set name = "Rotate"
 	set src in oview(1)
 
-	if(get_dist(src, usr) > 1 || usr.restrained() || usr.lying || usr.stat || issilicon(usr))
+	// virtual present
+	if (isAI(usr) || ispAI(usr))
 		return
-	if(!ishuman(usr))
+	// state restrict
+	if(!in_range(src, usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
+		return
+	// species restrict
+	if(!usr.IsAdvancedToolUser())
 		to_chat(usr, "<span class='warning'>It's too complicated for you.</span>")
-		return
-	if(usr.is_busy(src))
 		return
 
 	var/obj/item/I = usr.get_active_hand()

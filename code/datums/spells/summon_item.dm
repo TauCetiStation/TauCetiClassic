@@ -39,6 +39,24 @@
 		name = initial(name)
 		marked_item = null
 	else	//Getting previously marked item
+		// Preventing a nasty exlpoit where wizard traps himself in the hat with the hat.
+		// Note: probably should've been in area/custom/tophat/Entered(), but it gets called before Moved()
+		// And so the hat is put into wizard's hands *after* it teleports somewhere
+		// which leads to whole bunch of other problems
+		// so it resides here.
+
+		if(istype(marked_item, /obj/item/clothing/head/wizard/tophat) && istype(get_area(user), /area/custom/tophat))
+			var/obj/item/clothing/head/wizard/tophat/TP = marked_item
+			TP.jump_out()
+			var/area/new_area = teleportlocs[pick(teleportlocs)]
+			user.visible_message("<span class='danger'>[TP] becomes unstable as it enters itself, and now resides somewhere in [new_area]!</span>")
+
+			var/list/all_turfs = get_area_turfs(new_area.type)
+			var/turf/T = pick(all_turfs)
+
+			TP.forceMove(T)
+			return
+
 		var/obj/item_to_retrieve = marked_item
 		while(isobj(item_to_retrieve.loc))
 			item_to_retrieve = item_to_retrieve.loc

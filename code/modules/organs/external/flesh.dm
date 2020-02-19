@@ -3,6 +3,7 @@
 	var/name = "Flesh bodypart controller"
 	var/obj/item/organ/external/BP
 	var/bodypart_type = BODYPART_ORGANIC
+	var/damage_threshold = 0
 
 /datum/bodypart_controller/New(obj/item/organ/external/B)
 	BP = B
@@ -25,6 +26,9 @@
 	burn = round(burn * BP.owner.species.burn_mod, 0.1)
 
 	if((brute <= 0) && (burn <= 0))
+		return 0
+
+	if(damage_threshold > brute + burn)
 		return 0
 
 	if(BP.is_stump)
@@ -63,6 +67,10 @@
 
 	var/datum/wound/created_wound
 	if(brute)
+		if(ishuman(BP.owner))
+			var/mob/living/carbon/human/HU = BP.owner
+			if(HU.w_uniform && istype(HU.w_uniform, /obj/item/clothing/under/rank/clown))
+				playsound(HU, 'sound/effects/squeak.ogg', VOL_EFFECTS_MISC, vol = 65)
 		if(can_cut)
 			//need to check sharp again here so that blunt damage that was strong enough to break skin doesn't give puncture wounds
 			if(sharp && !edge)
@@ -96,38 +104,38 @@
 	if(BP.owner.stat == CONSCIOUS)
 		switch(total_weapon_damage)
 			if(1 to 4)
-				if(BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(total_weapon_damage * 15))
+				if(HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD) && prob(total_weapon_damage * 15))
 					previous_pain_emote_name = "moan"
 			if(5 to 19)
-				if(BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(total_weapon_damage * 5))
+				if(HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD) && prob(total_weapon_damage * 5))
 					pain_emote_name = "scream"
-				else if(BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && prob(total_weapon_damage * 5))
+				else if(HAS_TRAIT(BP.owner, TRAIT_HIGH_PAIN_THRESHOLD) && prob(total_weapon_damage * 5))
 					previous_pain_emote_name = "moan"
 				else
 					previous_pain_emote_name = "moan"
 			if(20 to INFINITY)
-				if(BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && !prob(total_weapon_damage))
+				if(HAS_TRAIT(BP.owner, TRAIT_HIGH_PAIN_THRESHOLD) && !prob(total_weapon_damage))
 					pain_emote_name = "moan"
-				else if(BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) || prob(total_weapon_damage * 3))
+				else if(HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD) || prob(total_weapon_damage * 3))
 					previous_pain_emote_name = "scream"
 				else
 					previous_pain_emote_name = "moan"
 		switch(current_bp_damage)
 			if(1 to 15)
-				if((!BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && prob(current_bp_damage * 4)) || (BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(current_bp_damage * 6)))
+				if((!HAS_TRAIT(BP.owner, TRAIT_HIGH_PAIN_THRESHOLD) && prob(current_bp_damage * 4)) || (HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD) && prob(current_bp_damage * 6)))
 					pain_emote_name = "moan"
 			if(15 to 29)
 				if(total_weapon_damage < 20)
-					if(BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(current_bp_damage * 3))
+					if(HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD) && prob(current_bp_damage * 3))
 						pain_emote_name = "scream"
-					else if(BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && prob(current_bp_damage * 3))
+					else if(HAS_TRAIT(BP.owner, TRAIT_HIGH_PAIN_THRESHOLD) && prob(current_bp_damage * 3))
 						pain_emote_name = "moan"
 					else
 						pain_emote_name = "moan"
 			if(30 to INFINITY)
-				if(BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && !prob(current_bp_damage))
+				if(HAS_TRAIT(BP.owner, TRAIT_HIGH_PAIN_THRESHOLD) && !prob(current_bp_damage))
 					pain_emote_name = "moan"
-				else if(prob(current_bp_damage) || BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD))
+				else if(prob(current_bp_damage) || HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD))
 					pain_emote_name = "scream"
 				else
 					pain_emote_name = "moan"
@@ -465,7 +473,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if (W.can_autoheal() && W.wound_damage() < 50)
 			heal_amt += 0.5
 			var/mob/living/carbon/H = BP.owner
-			if(H.sleeping)
+			if(H.IsSleeping())
 				if(istype(H.buckled, /obj/structure/stool/bed))
 					heal_amt += 0.2
 				else if((locate(/obj/structure/table) in H.loc))

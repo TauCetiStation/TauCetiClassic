@@ -31,6 +31,7 @@
 		return
 	if(on)
 		return
+	playsound(user, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='notice'>[user] lits the [src] on.</span>", "<span class='notice'>You had lt on the [src]!</span>")
 	src.force = on_damage
 	src.damtype = "fire"
@@ -115,7 +116,7 @@
 			//	R.use(1)
 			//	grill = TRUE
 			//	to_chat(user, "<i>You add a grill to \the [src].</i>")
-			//	overlays += image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_grill")
+			//	add_overlay(image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_grill"))
 			//else
 			//	return ..()
 	if(W.get_current_temperature())
@@ -167,6 +168,11 @@
 /obj/structure/bonfire/Crossed(atom/movable/AM)
 	if(burning & !grill)
 		Burn()
+
+/obj/structure/bonfire/get_current_temperature()
+	if(burning)
+		return 1000
+	return 0
 
 /obj/structure/bonfire/proc/Burn()
 	var/turf/current_location = get_turf(src)

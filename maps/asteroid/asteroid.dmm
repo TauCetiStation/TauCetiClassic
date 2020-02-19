@@ -443,15 +443,14 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/structure/closet/walllocker/emerglocker/north{
-	dir = 1;
-	pixel_y = -32
-	},
 /obj/structure/table,
 /obj/machinery/cell_charger{
 	pixel_y = 5
 	},
 /obj/item/weapon/stock_parts/cell,
+/obj/structure/closet/emergency_wall{
+	pixel_x = -30
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maintstore1)
 "bm" = (
@@ -963,10 +962,12 @@
 	},
 /area/asteroid/research_outpost/atmos)
 "cm" = (
-/obj/structure/closet/walllocker/emerglocker/west,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/closet/emergency_wall{
+	pixel_x = -30
 	},
 /turf/simulated/floor{
 	icon_state = "whitecorner"
@@ -2041,7 +2042,9 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "eu" = (
-/obj/structure/closet/walllocker/emerglocker/north,
+/obj/structure/closet/emergency_wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitebluecorner"
@@ -3542,6 +3545,8 @@
 "hv" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	dock_tag = "sci_dock";
+	locked = 1;
 	name = "Research Outpost Dock Airlock";
 	req_access = list(65)
 	},
@@ -6842,11 +6847,13 @@
 	},
 /area/asteroid/research_outpost/iso2)
 "oi" = (
-/obj/structure/closet/walllocker/emerglocker/west,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/closet/emergency_wall{
+	pixel_x = -30
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maintstore2)
@@ -11273,6 +11280,7 @@
 /obj/item/clothing/suit/space/globose/mining,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/globose/mining,
+/obj/item/device/suit_cooling_unit,
 /obj/machinery/alarm{
 	dir = 1;
 	locked = 0;
@@ -11677,6 +11685,8 @@
 /area/asteroid/research_outpost/outpost_misc_lab)
 "At" = (
 /obj/machinery/door/airlock/external{
+	dock_tag = "mine_dock";
+	locked = 1;
 	name = "Mining Shuttle Airlock";
 	req_access = list(48)
 	},
@@ -11781,7 +11791,13 @@
 /area/asteroid/research_outpost/hallway)
 "AO" = (
 /obj/structure/table,
-/obj/item/weapon/stamp,
+/obj/item/weapon/stamp{
+	icon_state = "stamp-rd";
+	name = "research outpost rubber stamp";
+	stamp_border = "#7f4ba2";
+	stamp_color = "#9361b5";
+	stamp_message = "Research Outpost"
+	},
 /obj/item/weapon/pen,
 /turf/simulated/floor/wood,
 /area/asteroid/research_outpost/hallway)
@@ -12281,6 +12297,9 @@
 	icon_state = "vault"
 	},
 /area/asteroid/research_outpost/iso1)
+"FB" = (
+/turf/space,
+/area/shuttle/mining/transit)
 "Gb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -14852,11 +14871,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -15109,11 +15128,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -15366,11 +15385,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -15623,11 +15642,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -15880,11 +15899,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -16137,11 +16156,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -16394,11 +16413,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -16651,11 +16670,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -16908,11 +16927,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa

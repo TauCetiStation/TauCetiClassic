@@ -97,10 +97,6 @@
 	if (!firerate) // If firerate is set to lower aim after one shot, untarget the target
 		T.NotTargeted(src)
 
-//Yay, math!
-
-#define SIGN(X) ((X<0)?-1:1)
-
 /proc/GunTrace(X1,Y1,X2,Y2,Z=1,exc_obj,PX1=16,PY1=16,PX2=16,PY2=16)
 	//bluh << "Tracin' [X1],[Y1] to [X2],[Y2] on floor [Z]."
 	var/turf/T
@@ -172,7 +168,7 @@
 			if(ishuman(src)) //Until this part rewrite.
 				update_targeted()
 			else
-				overlays += target_locked
+				add_overlay(target_locked)
 			spawn(0)
 				sleep(20)
 				if(target_locked)

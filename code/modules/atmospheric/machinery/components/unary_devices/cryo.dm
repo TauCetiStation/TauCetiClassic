@@ -13,6 +13,7 @@
 	var/current_heat_capacity = 50
 	var/efficiency
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
+	var/list/cryo_medicine = list("cryoxadone", "clonexadone")
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/atom_init()
 	. = ..()
@@ -61,7 +62,7 @@
 
 		if(air1.gas.len)
 			if(occupant.bodytemperature < T0C && occupant.health < 100)
-				occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
+				occupant.SetSleeping(max(10 / efficiency, (1 / occupant.bodytemperature) * 4000 / efficiency) SECONDS)
 				occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
 
 				if(air1.gas["oxygen"] > 2)
@@ -77,12 +78,18 @@
 					var/heal_fire = occupant.getFireLoss() ? min(efficiency, 20*(efficiency**2) / occupant.getFireLoss()) : 0
 					occupant.heal_bodypart_damage(heal_brute, heal_fire)
 
-			var/has_cryo = occupant.reagents.get_reagent_amount("cryoxadone") >= 1
-			var/has_clonexa = occupant.reagents.get_reagent_amount("clonexadone") >= 1
-			var/has_cryo_medicine = has_cryo || has_clonexa
-
-			if(beaker && !has_cryo_medicine)
-				beaker.reagents.trans_to(occupant, 1, 10)
+			var/has_cryo_medicine = FALSE
+			for(var/M in cryo_medicine)
+				if(occupant.reagents.get_reagent_amount(M) >= 1)
+					has_cryo_medicine = TRUE
+					break
+			var/reagent_count = length(beaker.reagents.reagent_list)
+			if(beaker && !has_cryo_medicine && reagent_count > 0)
+				for(var/datum/reagent/R in beaker.reagents.reagent_list)
+					if(R.id in cryo_medicine)
+						beaker.reagents.trans_id_to(occupant, R.id, 1 / reagent_count, 10)
+					else
+						beaker.reagents.trans_id_to(occupant, R.id, 1 / reagent_count)
 				beaker.reagents.reaction(occupant)
 
 	updateUsrDialog()
@@ -319,7 +326,7 @@
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	var/image/I
 
 	if(panel_open)
@@ -328,7 +335,7 @@
 		I = image(icon, "pod-o_top")
 		I.layer = 5 // this needs to be fairly high so it displays over most things, but it needs to be under lighting (at 10)
 		I.pixel_z = 32
-		overlays += I
+		add_overlay(I)
 
 	else if(state_open)
 		icon_state = "pod-open"
@@ -336,30 +343,30 @@
 		I = image(icon, "pod-open_top")
 		I.layer = 5
 		I.pixel_z = 32
-		overlays += I
+		add_overlay(I)
 	else
 		icon_state = "pod-[on]"
 
 		I = image(icon, "pod-[on]_top")
 		I.layer = 5
 		I.pixel_z = 32
-		overlays += I
+		add_overlay(I)
 
 		if(occupant)
 			var/image/pickle = image(occupant.icon, occupant.icon_state)
-			pickle.overlays = occupant.overlays
+			pickle.copy_overlays(occupant)
 			pickle.pixel_z = 20
 			pickle.layer = 5
-			overlays += pickle
+			add_overlay(pickle)
 
 		I = image(icon, "lid-[on]")
 		I.layer = 5
-		overlays += I
+		add_overlay(I)
 
 		I = image(icon, "lid-[on]_top")
 		I.layer = 5
 		I.pixel_z = 32
-		overlays += I
+		add_overlay(I)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_crawl_through()
 	return //can't ventcrawl in or out of cryo.

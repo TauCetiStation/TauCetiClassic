@@ -166,7 +166,7 @@
 	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/bruise_pack/tajaran
-	name = "\improper S'rendarr's Hand leaf"
+	name = "S'rendarr's Hand leaf"
 	singular_name = "S'rendarr's Hand leaf"
 	desc = "A poultice made of soft leaves that is rubbed on bruises."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
@@ -177,7 +177,7 @@
 	return
 
 /obj/item/stack/medical/ointment/tajaran
-	name = "\improper Messa's Tear petals"
+	name = "Messa's Tear petals"
 	singular_name = "Messa's Tear petals"
 	desc = "A poultice made of cold, blue petals that is rubbed on burns."
 	icon = 'icons/obj/hydroponics/harvest.dmi'

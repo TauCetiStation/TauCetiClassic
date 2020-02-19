@@ -2,7 +2,7 @@
 // GLOBAL MACRO HELPERS
 // ===================================
 
-// A = thing to stop | B = thing to hit. | finialize() calls A.throw_impact(B)
+// A = thing to stop | B = thing to hit. | finialize() calls A.throw_impact(B, throwingdatum)
 #define STOP_THROWING(A, B) if(A.throwing) {var/datum/thrownthing/TT = SSthrowing.processing[A]; if(TT) {TT.finialize(null, B);}}
 
 // ===================================
@@ -421,7 +421,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	ADD_TO_MOBLIST(/mob/living/silicon/robot)
 	ADD_TO_MOBLIST(/mob/living/carbon/human)
 	ADD_TO_MOBLIST(/mob/living/carbon/brain)
-	ADD_TO_MOBLIST(/mob/living/carbon/alien)
+	ADD_TO_MOBLIST(/mob/living/carbon/xenomorph)
 	ADD_TO_MOBLIST(/mob/dead)
 	ADD_TO_MOBLIST(/mob/living/parasite/essence)
 	ADD_TO_MOBLIST(/mob/living/carbon/monkey)
@@ -461,15 +461,18 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(istype(whom, /client))
 		C = whom
 		M = C.mob
-		key = C.key
+		key = C.ckey
 	else if(ismob(whom))
 		M = whom
 		C = M.client
-		key = M.key
-	else if(istype(whom, /datum))
-		var/datum/D = whom
-		return "*invalid:[D.type]*"
+		key = M.ckey
+	else if(istype(whom, /datum/mind))
+		var/datum/mind/mind = whom
+		M = mind.current
+		C = M ? M.client : null
+		key = ckey(mind.key)
 	else
+		//trace
 		return "*invalid*"
 
 	. = ""
@@ -507,6 +510,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return .
 
+// don't use for logs because include_link=1, use key_name
 /proc/key_name_admin(whom, include_name = 1)
 	return key_name(whom, 1, include_name)
 
@@ -573,9 +577,11 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/between(low, middle, high)
 	return max(min(middle, high), low)
 
+#if DM_VERSION < 513
 /proc/arctan(x)
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
+#endif
 
 //returns random gauss number
 /proc/GaussRand(sigma)
@@ -1177,11 +1183,11 @@ var/global/list/common_tools = list(
 /proc/can_operate(mob/living/carbon/M)
 	return (locate(/obj/machinery/optable, M.loc) && M.resting) || \
 	(locate(/obj/structure/stool/bed/roller/roller_surg, M.loc) && 	\
-	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(95) || 	\
+	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.stat)) && prob(95) || 	\
 	(locate(/obj/structure/stool/bed/roller, M.loc) && 	\
-	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(75) || 	\
+	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.stat)) && prob(75) || 	\
 	(locate(/obj/structure/table, M.loc) && 	\
-	(M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(66))
+	(M.lying || M.weakened || M.stunned || M.paralysis || M.stat) && prob(66))
 
 /proc/reverse_direction(dir)
 	switch(dir)
@@ -1241,9 +1247,6 @@ var/list/WALLITEMS = typecacheof(list(
 			if(O.pixel_x == 0 && O.pixel_y == 0)
 				return 1
 	return 0
-
-/proc/format_text(text)
-	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
 
 /proc/params2turf(scr_loc, turf/origin)
 	if(!scr_loc)

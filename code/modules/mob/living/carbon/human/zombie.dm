@@ -170,7 +170,7 @@
 	H.SetStunned(0)
 	H.SetWeakened(0)
 	H.nutrition = 400
-	H.sleeping = 0
+	H.SetSleeping(0)
 	H.radiation = 0
 
 	var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]

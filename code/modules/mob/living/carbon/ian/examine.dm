@@ -86,6 +86,10 @@
 				msg += "It has minor burns.\n"
 			else
 				msg += "<B>It has severe burns!</B>\n"
+		if(fire_stacks > 0)
+			msg += "[t_He] [t_is] covered in something flammable.\n"
+		if(fire_stacks < 0)
+			msg += "[t_He] look[t_is] a little soaked.\n"
 		if (stat)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
 		msg += "</span>"

@@ -432,14 +432,13 @@
 						src.linkedServer.send_pda_message("[customrecepient.owner]", "[customsender]","[custommessage]")
 						if (!customrecepient.message_silent)
 							playsound(customrecepient, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-							for (var/mob/O in hearers(3, customrecepient.loc))
-								O.show_message(text("[bicon(customrecepient)] *[customrecepient.ttone]*"))
+							audible_message("[bicon(customrecepient)] *[customrecepient.ttone]*", hearing_distance = 3)
 							if( customrecepient.loc && ishuman(customrecepient.loc) )
 								var/mob/living/carbon/human/H = customrecepient.loc
 								to_chat(H, "[bicon(customrecepient)] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)")
 							log_pda("[usr] (PDA: [customsender]) sent \"[custommessage]\" to [customrecepient.owner]")
-							customrecepient.overlays.Cut()
-							customrecepient.overlays += image('icons/obj/pda.dmi', "pda-r")
+							customrecepient.cut_overlays()
+							customrecepient.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 					//Sender is faking as someone who exists
 					else
 
@@ -451,14 +450,13 @@
 
 						if (!customrecepient.message_silent)
 							playsound(customrecepient, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-							for (var/mob/O in hearers(3, customrecepient.loc))
-								O.show_message(text("[bicon(customrecepient)] *[customrecepient.ttone]*"))
+							audible_message("[bicon(customrecepient)] *[customrecepient.ttone]*", hearing_distance = 3)
 							if( customrecepient.loc && ishuman(customrecepient.loc) )
 								var/mob/living/carbon/human/H = customrecepient.loc
 								to_chat(H, "[bicon(customrecepient)] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)")
 							log_pda("[usr] (PDA: [PDARec.owner]) sent \"[custommessage]\" to [customrecepient.owner]")
-							customrecepient.overlays.Cut()
-							customrecepient.overlays += image('icons/obj/pda.dmi', "pda-r")
+							customrecepient.cut_overlays()
+							customrecepient.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 					//Finally..
 					ResetMessage()
 

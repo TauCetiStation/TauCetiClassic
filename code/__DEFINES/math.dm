@@ -25,10 +25,14 @@
 
 #define PERCENT(val) (round((val)*100, 0.1))
 
+#if DM_VERSION < 513
 #define CLAMP(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
+#else
+#define CLAMP(CLVALUE,CLMIN,CLMAX) clamp(CLVALUE, CLMIN, CLMAX)
+#endif
 #define CLAMP01(x) (CLAMP(x, 0, 1))
 
-#define SIGN(x) ( (x)!=0 ? (x) / abs(x) : 0 )
+#define SIGN(x) (x < 0 ? -1 : 1)
 
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 
@@ -38,7 +42,11 @@
 #define WRAP(val, min, max) ( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) )
 
 // Tangent
+#if DM_VERSION < 513
 #define TAN(x) (sin(x) / cos(x))
+#else
+#define TAN(x) tan(x)
+#endif
 
 // Cotangent
 #define COT(x) (1 / TAN(x))
@@ -214,3 +222,5 @@ var/normal_next
 #define LORENTZ_CUMULATIVE_DISTRIBUTION(x, y, s) ( (1/PI)*TORADIANS(arctan((x-y)/s)) + 1/2 )
 
 #define RULE_OF_THREE(a, b, x) ((a*x)/b)
+
+#define TRANSLATE_RANGE(x, minx, maxx, miny, maxy) CLAMP((x - minx) * (maxy - miny) / (maxx - minx), miny, maxy)

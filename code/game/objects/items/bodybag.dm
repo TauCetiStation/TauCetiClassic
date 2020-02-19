@@ -33,7 +33,7 @@
 		if (t)
 			src.name = "body bag - "
 			src.name += t
-			src.overlays += image(src.icon, "bodybag_label")
+			src.add_overlay(image(src.icon, "bodybag_label"))
 		else
 			src.name = "body bag"
 	//..() //Doesn't need to run the parent. Since when can fucking bodybags be welded shut? -Agouri
@@ -41,7 +41,7 @@
 	else if(iswirecutter(W))
 		to_chat(user, "You cut the tag off the bodybag")
 		src.name = "body bag"
-		src.overlays.Cut()
+		src.cut_overlays()
 		return
 
 

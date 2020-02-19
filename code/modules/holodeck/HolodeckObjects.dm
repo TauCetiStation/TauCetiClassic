@@ -28,7 +28,7 @@
 
 /turf/simulated/floor/holofloor/space
 	icon = 'icons/turf/space.dmi'
-	name = "\proper space"
+	name = "space"
 	icon_state = "0"
 
 /turf/simulated/floor/holofloor/space/atom_init()
@@ -43,7 +43,7 @@
 /turf/simulated/floor/holofloor/desert/atom_init()
 	. = ..()
 	if(prob(10))
-		overlays += "asteroid[rand(0,9)]"
+		add_overlay("asteroid[rand(0,9)]")
 
 /turf/simulated/floor/holofloor/attackby(obj/item/weapon/W, mob/user)
 	return
