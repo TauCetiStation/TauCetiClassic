@@ -142,8 +142,8 @@
 	if(shock_damage<1)
 		return 0
 	apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
-	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	if(shock_damage > 10)
+		playsound(src, 'sound/effects/electric_shock.ogg', VOL_EFFECTS_MASTER, tesla_shock ? 10 : 50, FALSE) //because Tesla proc causes a lot of sounds
 		visible_message(
 			"<span class='rose'>[src] was shocked by the [source]!</span>", \
 			"<span class='danger'>You feel a powerful shock course through your body!</span>", \
@@ -159,6 +159,7 @@
 				Stun(8)
 				Weaken(8)
 	else
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		visible_message(
 			"<span class='rose'>[src] was mildly shocked by the [source].</span>", \
 			"<span class='rose'>You feel a mild shock course through your body.</span>", \
