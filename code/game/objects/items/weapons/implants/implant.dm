@@ -11,6 +11,7 @@
 	var/allow_reagents = 0
 	var/malfunction = 0
 	var/uses = 0
+	var/nextUse = 0
 
 /obj/item/weapon/implant/atom_init()
 	. = ..()

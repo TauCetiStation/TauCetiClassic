@@ -15,7 +15,6 @@
 	var/timeleft = 60
 	var/stop = 0.0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
-	var/lastUsing = 0
 	light_color = "#B40000"
 
 /obj/machinery/computer/prisoner/ui_interact(mob/user)
@@ -71,15 +70,15 @@
 
 	if(href_list["inject1"])
 		var/obj/item/weapon/implant/I = locate(href_list["inject1"])
-		if(I)	I.activate(1)
+		if(I && istype(I) && I in implant_list)	I.activate(1)
 
 	else if(href_list["inject5"])
 		var/obj/item/weapon/implant/I = locate(href_list["inject5"])
-		if(I)	I.activate(5)
+		if(I && istype(I) && I in implant_list)	I.activate(5)
 
 	else if(href_list["inject10"])
 		var/obj/item/weapon/implant/I = locate(href_list["inject10"])
-		if(I)	I.activate(10)
+		if(I && istype(I) && I in implant_list)	I.activate(10)
 
 	else if(href_list["lock"])
 		if(src.allowed(usr))
@@ -91,21 +90,21 @@
 		var/warning = sanitize(input(usr,"Message:","Enter your message here!",""))
 		if(!warning) return
 		var/obj/item/weapon/implant/I = locate(href_list["warn"])
-		if((I)&&(I.imp_in))
+		if(I && istype(I) && I.imp_in)
 			var/mob/living/carbon/R = I.imp_in
 			to_chat(R, "<span class='notice'>You hear a voice in your head saying: '[warning]'</span>")
 
 	else if(href_list["Shock"])
 		var/obj/item/weapon/implant/I = locate(href_list["Shock"])
-		if((I)&&(I.imp_in))
-			if(lastUsing + SHOCK_COOLDOWN > world.time)
+		if(I && istype(I) && I.imp_in)
+			if(I.nextUse + SHOCK_COOLDOWN > world.time)
 				to_chat(usr, "It isn't ready to use.")
 			else
 				var/mob/living/carbon/R = I.imp_in
-				R.electrocute_act(15, src, 1.0, I.part.body_zone)
+				R.electrocute_act(15, null, 1.0, I.part.body_zone)
 				R.Stun(7)
 				playsound(R, 'sound/items/surgery/defib_zap.ogg', 50, 0)
-				lastUsing = world.time
+				I.nextUse = world.time
 
 /*
 	else if(href_list["Explode"])
@@ -119,11 +118,6 @@
 			playsound(R, 'sound/items/Explosion_Small3.ogg', 75, 1, -3)
 			R.gib()
 */
-	else if(href_list["lock"])
-		if(src.allowed(usr))
-			screen = !screen
-		else
-			to_chat(usr, "Unauthorized Access.")
 
 	src.updateUsrDialog()
-	#undef SHOCK_COOLDOWN
+#undef SHOCK_COOLDOWN
