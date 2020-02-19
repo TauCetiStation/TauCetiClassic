@@ -12,6 +12,7 @@
 	w_class = ITEM_SIZE_SMALL
 	origin_tech = "materials=1;biotech=1"
 	var/list/datum/autopsy_data_scanner/wdata = list()
+	var/list/obj/item/organ/external/organs = list()
 	var/list/datum/autopsy_data_scanner/chemtraces = list()
 	var/target_name = null
 	var/timeofdeath = null
@@ -22,7 +23,7 @@
 /datum/autopsy_data_scanner
 	var/weapon = null // this is the DEFINITE weapon type that was used
 	var/list/bodyparts_scanned = list() // this maps a number of scanned bodyparts to
-									 // the wounds to those bodyparts with this data's weapon type
+                                        // the wounds to those bodyparts with this data's weapon type
 	var/organ_names = ""
 
 /datum/autopsy_data
@@ -43,6 +44,8 @@
 /obj/item/weapon/autopsy_scanner/proc/add_data(obj/item/organ/external/BP)
 	if(!BP.autopsy_data.len && !BP.trace_chemicals.len)
 		return
+	if(!(BP in organs))
+		organs += BP
 
 	for(var/V in BP.autopsy_data)
 		var/datum/autopsy_data/W = BP.autopsy_data[V]
@@ -78,74 +81,77 @@
 	var/scan_data = ""
 
 	if(timeofdeath)
-		scan_data += "<b>Time of death:</b> [worldtime2text(timeofdeath)]<br><br>"
+		scan_data += "<b>Time of death:</b> [worldtime2text(timeofdeath)]<br>"
 
 	for(var/wdata_idx in wdata)
 		var/datum/autopsy_data_scanner/D = wdata[wdata_idx]
 		var/total_hits = 0
 		var/total_score = 0
 		var/list/weapon_chances = list() // maps weapon names to a score
-		var/time = ""
 
 		for(var/wound_idx in D.bodyparts_scanned)
 			var/datum/autopsy_data/W = D.bodyparts_scanned[wound_idx]
 			total_hits += W.hits
 			total_score += W.damage
-			time = W.time_inflicted
+			weapon_chances += W.weapon
 
-		var/damage_desc
-
-		var/damaging_weapon = (total_score != 0)
-
-		// total score happens to be the total damage
-		switch(total_score)
-			if(0)
-				damage_desc = "Unknown"
-			if(1 to 5)
-				damage_desc = "<font color='green'>negligible</font>"
-			if(5 to 15)
-				damage_desc = "<font color='green'>light</font>"
-			if(15 to 30)
-				damage_desc = "<font color='orange'>moderate</font>"
-			if(30 to 1000)
-				damage_desc = "<font color='red'>severe</font>"
-
-		if(!total_score) total_score = D.bodyparts_scanned.len
-/*
-		scan_data += "<b>Weapon #[n]</b><br>"
-		if(damaging_weapon)
-			scan_data += "Severity: [damage_desc]<br>"
-			scan_data += "Hits by weapon: [total_hits]<br>"
-		scan_data += "Approximate time of wound infliction: [time]<br>"
-		scan_data += "Affected limbs: [D.organ_names]<br>"
-		scan_data += "Possible weapons:<br>"
-		for(var/weapon_name in weapon_chances)
-			scan_data += "\t[100*weapon_chances[weapon_name]/total_score]% [weapon_name]<br>"
-*/
-
-		scan_data += "<table border=\"3\">"
-		scan_data += "<tr><th colspan=\"4\">[D.organ_names]</th></tr>"
+	for(var/organ in organs)
+		var/obj/item/organ/external/BP = organ
+		scan_data += "<table border=\"2\">"
+		scan_data += "<tr><th colspan=\"4\">[BP.name]</th></tr>"
 		scan_data += "<tr>"
 		scan_data += "<th>Severity</th>"
 		scan_data += "<th>Hits by weapon</th>"
 		scan_data += "<th>The approximate time</th>"
-		scan_data += "<th>Possible weapons</th>"
+		scan_data += "<th>Weapons</th>"
 		scan_data += "</tr>"
-		scan_data += "<tr>"
-		scan_data += "<td>"
-		if(damaging_weapon)
+		for(var/adata in BP.autopsy_data)
+			var/datum/autopsy_data/W = BP.autopsy_data[adata]
+			var/damage_desc = ""
+			var/type_damage = ""
+			var/hits_desc = ""
+
+			if(W.type_damage == "brute")
+				type_damage = " wound"
+			if(W.type_damage == "burn")
+				type_damage = " burn"
+			if(W.type_damage == "mixed")
+				type_damage = " scorched wound"
+			if(W.type_damage == "bruise")
+				type_damage = " bruise"
+
+			switch(W.damage)
+				if(0)
+					damage_desc = "Unknown"
+				if(1 to 5)
+					damage_desc = "<font color='green'>negligible[type_damage]</font>"
+				if(5 to 15)
+					damage_desc = "<font color='green'>light[type_damage]</font>"
+				if(15 to 30)
+					damage_desc = "<font color='orange'>moderate[type_damage]</font>"
+				if(30 to 10000)
+					damage_desc = "<font color='red'>severe[type_damage]</font>"
+
+			switch(W.hits)
+				if(1 to 3)
+					hits_desc = "<font color='green'>[W.hits]</font>"
+				if(4 to 10)
+					hits_desc = "<font color='orange'>[W.hits]</font>"
+				if(11 to 10000)
+					hits_desc = "<font color='red'>[W.hits]</font>"
+
+			scan_data += "<tr>"
+			scan_data += "<td>"
 			scan_data += "[damage_desc]"
-		scan_data += "</td>"
-		scan_data += "<td>"
-		if(damaging_weapon)
-			scan_data += "[total_hits]"
-		scan_data += "</td>"
-		scan_data += "<td>[time]</td>"
-		scan_data += "<td>"
-		for(var/weapon_name in weapon_chances)
-			scan_data += "\t[100*weapon_chances[weapon_name]/total_score]% [weapon_name]<br>"
-		scan_data += "</td>"
-		scan_data += "</tr>"
+			scan_data += "</td>"
+			scan_data += "<td>"
+			scan_data += "[hits_desc]"
+			scan_data += "</td>"
+			scan_data += "<td>[W.time_inflicted]</td>"
+			scan_data += "<td>"
+			scan_data += "[W.weapon]"
+			scan_data += "</td>"
+			scan_data += "</tr>"
 
 		scan_data += "<br>"
 
@@ -194,6 +200,7 @@
 		if(target_name != M.name)
 			target_name = M.name
 			src.wdata = list()
+			src.organs = list()
 			src.chemtraces = list()
 			src.timeofdeath = null
 			to_chat(user, "<span class='warning'>A new patient has been registered.. Purging data for previous patient.</span>")
