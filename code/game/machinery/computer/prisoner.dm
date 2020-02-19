@@ -15,7 +15,6 @@
 	var/timeleft = 60
 	var/stop = 0.0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
-	light_color = "#B40000"
 
 /obj/machinery/computer/prisoner/ui_interact(mob/user)
 	var/dat
@@ -103,21 +102,8 @@
 				var/mob/living/carbon/R = I.imp_in
 				R.electrocute_act(15, null, 1.0, I.part.body_zone)
 				R.Stun(7)
-				playsound(R, 'sound/items/surgery/defib_zap.ogg', 50, 0)
+				playsound(R, 'sound/items/surgery/defib_zap.ogg')
 				I.nextUse = world.time
-
-/*
-	else if(href_list["Explode"])
-		var/obj/item/weapon/implant/I = locate(href_list["Explode"])
-		if((I)&&(I.imp_in))
-			var/mob/living/carbon/R = I.imp_in
-			message_admins("\blue [key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) detonated [R.name]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)")
-			log_game("\blue [key_name_admin(usr)] detonated [R.name]!")
-			playsound(R, 'sound/items/countdown.ogg', 75, 1, -3)
-			sleep(37)
-			playsound(R, 'sound/items/Explosion_Small3.ogg', 75, 1, -3)
-			R.gib()
-*/
 
 	src.updateUsrDialog()
 #undef SHOCK_COOLDOWN
