@@ -17,7 +17,7 @@
 	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/swat
-	name = "\improper SWAT shoes"
+	name = "SWAT shoes"
 	desc = "When you want to turn up the heat."
 	icon_state = "swat"
 	item_state = "wjboots"
@@ -225,6 +225,7 @@
 	icon_state = "Lizard_Boots"
 	item_state = "r_feet"
 	item_color = "Lizard_Boots"
+	species_restricted = list(UNATHI)
 
 /obj/item/clothing/shoes/heels
 	name = "Heels"

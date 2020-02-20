@@ -18,19 +18,23 @@
 	to_chat(world, "<B>The current game mode is Ninja!</B>")
 
 /datum/game_mode/ninja/can_start()
+	if (!..())
+		return FALSE
+	for(var/obj/effect/landmark/L in landmarks_list)
+		if(L.name == "carpspawn")
+			return TRUE
+	return FALSE
+
+/datum/game_mode/ninja/assign_outsider_antag_roles()
 	if(!..())
-		return 0
-	var/ninja_number = 2
-
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)
-			if(player.assigned_role == job)
-				antag_candidates -= player
-
+		return FALSE
+	var/ninja_number = required_enemies
+	if (antag_candidates.len <= recommended_enemies)
+		ninja_number = antag_candidates.len
 	while(ninja_number > 0)
 		var/datum/mind/ninja = pick(antag_candidates)
 		if(ninja_number == 1)
-			ninja.protector_role = 1
+			ninja.protector_role = TRUE
 		ninjas += ninja
 		modePlayer += ninja
 		ninja.assigned_role = "MODE" //So they aren't chosen for other jobs.
@@ -38,18 +42,13 @@
 		ninja.original = ninja.current
 		antag_candidates -= ninja //So it doesn't pick the same guy each time.
 		ninja_number--
+	return TRUE
 
+/datum/game_mode/ninja/pre_setup()
 	//Until such a time as people want to place ninja spawn points, carpspawn will do fine.
 	for(var/obj/effect/landmark/L in landmarks_list)
 		if(L.name == "carpspawn")
 			ninjastart.Add(L)
-
-	if (ninjastart.len == 0)
-		return 0
-
-	return 1
-
-/datum/game_mode/ninja/pre_setup()
 	for(var/datum/mind/ninja in ninjas)
 		ninja.current << browse(null, "window=playersetup")
 		var/start_point = pick(ninjastart)
@@ -57,7 +56,7 @@
 		//ninja.current = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
 		ninja.current = create_space_ninja(start_point)
 		ninja.current.ckey = ninja.key
-	return 1
+	return TRUE
 
 /datum/game_mode/ninja/post_setup()
 	for(var/datum/mind/ninja in ninjas)

@@ -60,7 +60,7 @@
 	update_parents()
 	var/datum/pipeline/parent1 = PARENT1
 	parent1.reconcile_air()
-	investigate_log("was switched to side by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
+	log_investigate("was switched to side by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
 
 	return TRUE
 
@@ -75,7 +75,7 @@
 	update_parents()
 	var/datum/pipeline/parent1 = PARENT1
 	parent1.reconcile_air()
-	investigate_log("was swiched to straight by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
+	log_investigate("was swiched to straight by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
 
 	return TRUE
 

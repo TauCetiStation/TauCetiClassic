@@ -179,7 +179,7 @@
 		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
 	if(!istype(src, /mob/living/carbon/slime/adult))
-		if(amount_grown >= 10)
+		if(amount_grown >= max_grown)
 			var/mob/living/carbon/slime/adult/new_slime = new adulttype(loc)
 			new_slime.nutrition = nutrition
 			new_slime.powerlevel = max(0, powerlevel-1)
@@ -202,7 +202,7 @@
 		return
 
 	if(istype(src, /mob/living/carbon/slime/adult))
-		if(amount_grown >= 10)
+		if(amount_grown >= max_grown)
 			//if(input("Are you absolutely sure you want to reproduce? Your current body will cease to be, but your consciousness will be transferred into a produced slime.") in list("Yes","No")=="Yes")
 			if(stat)
 				to_chat(src, "<i>I must be conscious to do this...</i>")

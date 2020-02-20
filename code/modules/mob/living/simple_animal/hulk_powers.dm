@@ -493,7 +493,7 @@
 	damage = 5
 	damage_type = TOX
 
-/obj/item/projectile/energy/hulkspit/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/energy/hulkspit/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(istype(target, /mob/living/carbon))
 		var/mob/living/carbon/M = target
 		M.Weaken(2)

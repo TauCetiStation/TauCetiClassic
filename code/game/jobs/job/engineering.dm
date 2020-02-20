@@ -137,8 +137,6 @@
 	selection_color = "#fff5cc"
 	idtype = /obj/item/weapon/card/id/eng
 	access = list(access_engineering_lobby, access_construction, access_maint_tunnels)
-	minimal_player_age = 1
-	minimal_player_ingame_minutes = 200
 
 /datum/job/technical_assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)

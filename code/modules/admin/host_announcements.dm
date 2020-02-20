@@ -18,7 +18,7 @@
 		return
 
 	if(choice == "Edit")
-		edit_path = browse_files("folder")
+		edit_path = browse_files(folder, valid_extensions = list("htm"))
 
 		if(!edit_path)
 			to_chat(usr, "<span class='warning'>No existent announcement or you have not chosen any.</span>")

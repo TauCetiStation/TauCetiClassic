@@ -95,7 +95,7 @@
 	. = ..()
 	proj_act_sound = null
 
-/obj/item/projectile/beam/lasertag/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/lasertag/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(istype(H.wear_suit, /obj/item/clothing/suit/lasertag))

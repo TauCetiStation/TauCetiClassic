@@ -34,50 +34,33 @@ BAN_LEGACY_SYSTEM
 ##Unhash this to use real in-game minutes for certain jobs (USE_AGE_RESTRICTION_FOR_JOBS must be enabled too)
 #USE_INGAME_MINUTES_RESTRICTION_FOR_JOBS
 
-## log OOC channel
+## log stuff, see configuration.dm for descriptions
 LOG_OOC
-
-## log client Say
 LOG_SAY
-
-## log admin actions
 LOG_ADMIN
-
-## log client access (logon/logoff)
 LOG_ACCESS
-
-## log game actions (start of round, results, etc.)
 LOG_GAME
-
-## log player votes
 LOG_VOTE
-
-## log client Whisper
 LOG_WHISPER
-
-## log emotes
 LOG_EMOTE
-
-## log attack messages
 LOG_ATTACK
-
-## log pda messages
 LOG_PDA
-
-## log all Topic() calls (for use by coders in tracking down Topic issues)
+LOG_RUNTIME
+LOG_SQL_ERROR
+LOG_INITIALIZATION
+LOG_QDEL
+# LOG_JS_ERROR
 # LOG_HREFS
-
-## log world.log and runtime errors to a file
-# LOG_RUNTIME
-
-## log admin warning messages
-##LOG_ADMINWARN  ## Also duplicates a bunch of other messages.
+# LOG_ADMINWARN  ## Also duplicates a bunch of other messages.
 
 ## sql switching
 # SQL_ENABLED
 
-## disconnect players who did nothing during 10 minutes
+## disconnect players who did nothing during 10 minutes or AFK_TIME_BRACKET time
 # KICK_INACTIVE
+
+## Minutes until user will be kicked for being AFK
+# AFK_TIME_BRACKET 10
 
 ## probablities for game modes chosen in "secret" and "random" modes
 ##
@@ -282,6 +265,9 @@ REPOSITORY_LINK https://github.com/TauCetiStation/TauCetiClassic
 
 ## Registration panic bunker won't allow user with registration date less than that. (format: year-month-day)
 # REGISTRATION_PANIC_BUNKER_AGE 2000-1-1
+
+## If user played more than this value (in minutes), bunker will let him in
+# ALLOWED_BY_BUNKER_PLAYER_AGE 60
 
 ## Panic bunker configured by players limit. This value is a maximum number of players.
 # CLIENT_LIMIT_PANIC_BUNKER_COUNT 60

@@ -60,7 +60,7 @@
 	var/step_delay = 1	// the delay between iterations if not a hitscan projectile
 
 	// effect types to be used
-	var/list/tracer_list = null // if set to list, it will be gathering all projectile effects into list and delete them after impact
+	var/list/tracer_list = null // if set to list, it will be gathering all projectile effects into list and delete them after impact(unless they ask to not be deleted)
 	var/muzzle_type
 	var/tracer_type
 	var/impact_type
@@ -85,7 +85,10 @@
 		set_light(light_range,light_power,light_color)
 
 /obj/item/projectile/Destroy()
-	QDEL_LIST(tracer_list)
+	for(var/obj/effect/projectile/P in tracer_list)
+		if(!P.deletes_itself)
+			qdel(P)
+	tracer_list = null
 	firer = null
 	starting = null
 	original = null
@@ -106,7 +109,7 @@
 			return grab.affecting
 	return H
 
-/obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(!isliving(target))	return 0
 	if(isanimal(target))	return 0
 	var/mob/living/L = target
@@ -189,7 +192,7 @@
 		if (istype(shot_from,/obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
 			var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
 			if (daddy.target && original in daddy.target) //As opposed to no-delay pew pew
-				miss_modifier += -60
+				miss_modifier -= 60
 		if(distance > 1)
 			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)
 
@@ -220,7 +223,7 @@
 	else if(M)
 		if(silenced)
 			to_chat(M, "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
-		else
+		else if(!fake)
 			M.visible_message("<span class='userdanger'>[M.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
 			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 		if(old_firer)
@@ -361,6 +364,8 @@
 		var/obj/effect/projectile/P = new impact_type(location.loc)
 
 		if(istype(P))
+			if(tracer_list)
+				tracer_list += P
 			P.set_transform(M)
 			P.pixel_x = location.pixel_x
 			P.pixel_y = location.pixel_y

@@ -79,7 +79,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	)
 
 /obj/machinery/autolathe
-	name = "\improper Autolathe"
+	name = "Autolathe"
 	desc = "It produces items using metal and glass."
 	icon_state = "autolathe"
 	density = TRUE

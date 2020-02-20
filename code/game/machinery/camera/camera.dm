@@ -119,7 +119,7 @@
 	src.view_range = num
 	cameranet.updateVisibility(src, 0)
 
-/obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user)
+/obj/machinery/camera/attack_paw(mob/living/carbon/xenomorph/humanoid/user)
 	if(!istype(user))
 		return
 	if(status)

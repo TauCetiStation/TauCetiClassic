@@ -40,25 +40,25 @@
 
 
 /obj/item/borg/sight/xray
-	name = "\proper x-ray Vision"
+	name = "x-ray Vision"
 	sight_mode = BORGXRAY
 
 
 /obj/item/borg/sight/thermal
-	name = "\proper thermal vision"
+	name = "thermal vision"
 	sight_mode = BORGTHERM
 	icon_state = "thermal"
 	icon = 'icons/obj/clothing/glasses.dmi'
 
 
 /obj/item/borg/sight/meson
-	name = "\proper meson vision"
+	name = "meson vision"
 	sight_mode = BORGMESON
 	icon_state = "meson"
 	icon = 'icons/obj/clothing/glasses.dmi'
 
 /obj/item/borg/sight/night
-	name = "\proper night vision"
+	name = "night vision"
 	sight_mode = BORGNIGHT
 	icon_state = "night"
 	icon = 'icons/obj/clothing/glasses.dmi'

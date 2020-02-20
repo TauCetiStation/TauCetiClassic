@@ -190,6 +190,7 @@ BLIND     // can't see anything
 	var/protect_fingers = TRUE // Are we gonna get hurt when searching in the trash piles
 	body_parts_covered = ARMS
 	slot_flags = SLOT_FLAGS_GLOVES
+	hitsound = list('sound/items/misc/glove-slap.ogg')
 	attack_verb = list("challenged")
 	species_restricted = list("exclude" , UNATHI , TAJARAN)
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/gloves.dmi')
