@@ -372,17 +372,15 @@
 		return //don't let you cremate something twice or w/e
 
 	if(contents.len <= 0)
-		for (var/mob/M in viewers(src))
-			M.show_message("<span class='rose'>You hear a hollow crackle.</span>", 1)
-			return
+		audible_message("<span class='rose'>You hear a hollow crackle.</span>")
+		return
 
 	else
 		if(!isemptylist(src.search_contents_for(/obj/item/weapon/disk/nuclear)))
 			to_chat(usr, "<span class='notice'>You get the feeling that you shouldn't cremate one of the items in the cremator.</span>")
 			return
 
-		for (var/mob/M in viewers(src))
-			M.show_message("<span class='rose'>You hear a roar as the crematorium activates.</span>", 1)
+		audible_message("<span class='rose'>You hear a roar as the crematorium activates.</span>")
 
 		cremating = 1
 		locked = 1
@@ -390,10 +388,9 @@
 		for(var/mob/living/M in contents)
 			if (M.stat!=2)
 				M.emote("scream",,, 1)
-			//Logging for this causes runtimes resulting in the cremator locking up. Commenting it out until that's figured out.
-			//M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[user]/[user.ckey]</b>" //No point in this when the mob's about to be deleted
-			//user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
-			//log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
+			M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[key_name(user)]</b>" //No point in this when the mob's about to be deleted
+			user.attack_log +="\[[time_stamp()]\] Cremated <b>[key_name(M)]</b>"
+			log_attack("[key_name(user)] cremated by [key_name(M)]")
 			M.death(1)
 			M.ghostize(bancheck = TRUE)
 			qdel(M)

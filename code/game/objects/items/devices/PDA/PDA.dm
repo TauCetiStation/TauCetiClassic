@@ -2,7 +2,7 @@
 //The advanced pea-green monochrome lcd of tomorrow.
 
 /obj/item/device/pda
-	name = "\improper PDA"
+	name = "PDA"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
@@ -741,7 +741,7 @@
 				if(!isnull(P))
 					if (!P.toff && cartridge.charges > 0)
 						cartridge.charges--
-						U.show_message("<span class='notice'>Virus sent!</span>", 1)
+						to_chat(U, "<span class='notice'>Virus sent!</span>")
 						P.honkamt = (rand(15,20))
 				else
 					to_chat(U, "PDA not found.")
@@ -754,7 +754,7 @@
 				if(!isnull(P))
 					if (!P.toff && cartridge.charges > 0)
 						cartridge.charges--
-						U.show_message("<span class='notice'>Virus sent!</span>", 1)
+						to_chat(U, "<span class='notice'>Virus sent!</span>")
 						P.message_silent = 1
 						P.ttone = "silence"
 				else
@@ -798,10 +798,10 @@
 
 			if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
 				if(!(useMS && useTC))
-					U.show_message("<span class='warning'>An error flashes on your [src]: Connection unavailable</span>", 1)
+					U.show_message("<span class='warning'>An error flashes on your [src]: Connection unavailable</span>", SHOWMSG_VISUAL, "<span class='warning'>You hear a negative *beep*</span>", SHOWMSG_AUDIO)
 					return
 				if(useTC != 2) // Does our recepient have a broadcaster on their level?
-					U.show_message("<span class='warning'>An error flashes on your [src]: Recipient unavailable</span>", 1)
+					U.show_message("<span class='warning'>An error flashes on your [src]: Recipient unavailable</span>", SHOWMSG_VISUAL, "<span class='warning'>You hear a negative *beep*</span>", SHOWMSG_AUDIO)
 					return
 				var/obj/item/device/pda/P = locate(href_list["target"])
 				if(!isnull(P))
@@ -820,15 +820,15 @@
 								difficulty += 3
 
 						if(prob(difficulty))
-							U.show_message("<span class='warning'>An error flashes on your [src].</span>", 1)
+							U.show_message("<span class='warning'>An error flashes on your [src].</span>", SHOWMSG_VISUAL, "<span class='warning'>You hear a negative *beep*</span>", SHOWMSG_AUDIO)
 						else if (prob(difficulty * 7))
-							U.show_message("<span class='warning'>Energy feeds back into your [src]!</span>", 1)
+							U.show_message("<span class='warning'>Energy feeds back into your [src]!</span>", SHOWMSG_VISUAL, "<span class='warning'>You hear a negative *beep*</span>", SHOWMSG_AUDIO)
 							ui.close()
 							detonate_act(src)
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed. [ADMIN_JMP(U)]")
 						else
-							U.show_message("<span class='notice'>Success!</span>", 1)
+							to_chat("<span class='notice'>Success!</span>")
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded. [ADMIN_JMP(U)]")
 							detonate_act(P)
@@ -953,7 +953,7 @@
 
 	if(M && isliving(M))
 		message = "<span class='warning'></span>" + message
-		M.show_message(message, 1)
+		M.show_message(message, SHOWMSG_ALWAYS) //vas visual only before, it's important message so I changed this. You can add more different messages
 
 /obj/item/device/pda/proc/remove_id()
 	if (id)
@@ -1022,7 +1022,7 @@
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
 				if(isnewplayer(M))
 					continue
-				M.show_message("<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message emojify linkify'>[t]</span></span>")
+				to_chat(M, "<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message emojify linkify'>[t]</span></span>")
 
 		if(!conversations.Find("\ref[P]"))
 			conversations.Add("\ref[P]")
@@ -1036,14 +1036,14 @@
 			for(var/mob/living/silicon/ai/ai in ai_list)
 				// Allows other AIs to intercept the message but the AI won't intercept their own message.
 				if(ai.pda != P && ai.pda != src)
-					ai.show_message("<i>Intercepted message from <b>[who]</b>: <span class='emojify linkify'>[t]</span></i>")
+					to_chat(ai, "<i>Intercepted message from <b>[who]</b>: <span class='emojify linkify'>[t]</span></i>")
 
 		nanomanager.update_user_uis(U, src) // Update the sending user's PDA UI so that they can see the new message
 
 		if (!P.message_silent)
 			playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-		for (var/mob/O in hearers(3, P.loc))
-			if(!P.message_silent) O.show_message(text("[bicon(P)] *[P.ttone]*"))
+			audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)
+
 		//Search for holder of the PDA.
 		var/mob/living/L = null
 		if(P.loc && isliving(P.loc))
@@ -1192,66 +1192,68 @@
 			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
 	return
 
-/obj/item/device/pda/attack(mob/living/C, mob/living/user)
-	if (istype(C, /mob/living/carbon))
+/obj/item/device/pda/attack(mob/living/L, mob/living/user)
+	if (istype(L, /mob/living/carbon))
+		var/mob/living/carbon/C = L
+		var/data_message = ""
 		switch(scanmode)
 			if(1)
-
-				for (var/mob/O in viewers(C, null))
-					O.show_message("<span class='warning'>[user] has analyzed [C]'s vitals!</span>", 1)
-
-				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
-				user.show_message("<span class='notice'>&emsp; Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]</span>", 1)
+				data_message += "<span class='notice'>Analyzing Results for [C]:</span>"
+				data_message += "<span class='notice'>&emsp; Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]</span>"
 				var/has_oxy_damage = (C.getOxyLoss() > 50)
 				var/has_tox_damage = (C.getToxLoss() > 50)
 				var/has_fire_damage = (C.getFireLoss() > 50)
 				var/has_brute_damage = (C.getBruteLoss() > 50)
-				user.show_message("<span class='notice'>&emsp; Damage Specifics: <span class='[has_oxy_damage ? "warning" : "notice"]'>[C.getOxyLoss()]</span>-<span class='[has_tox_damage ? "warning" : "notice"]'>[C.getToxLoss()]</span>-<span class='[has_fire_damage ? "warning" : "notice"]'>[C.getFireLoss()]</span>-<span class='[has_brute_damage ? "warning" : "notice"]'>[C.getBruteLoss()]</span></span>", 1)
-				user.show_message("<span class='notice'>&emsp; Key: Suffocation/Toxin/Burns/Brute</span>", 1)
-				user.show_message("<span class='notice'>&emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span>", 1)
+				data_message += "<span class='notice'>&emsp; Damage Specifics: <span class='[has_oxy_damage ? "warning" : "notice"]'>[C.getOxyLoss()]</span>-<span class='[has_tox_damage ? "warning" : "notice"]'>[C.getToxLoss()]</span>-<span class='[has_fire_damage ? "warning" : "notice"]'>[C.getFireLoss()]</span>-<span class='[has_brute_damage ? "warning" : "notice"]'>[C.getBruteLoss()]</span></span>"
+				data_message += "<span class='notice'>&emsp; Key: Suffocation/Toxin/Burns/Brute</span>"
+				data_message += "<span class='notice'>&emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span>"
 				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
-					user.show_message("<span class='notice'>&emsp; Time of Death: [C.tod]</span>")
+					data_message += "<span class='notice'>&emsp; Time of Death: [C.tod]</span>"
 				if(istype(C, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = C
 					var/list/damaged = H.get_damaged_bodyparts(1, 1)
-					user.show_message("<span class='notice'>Localized Damage, Brute/Burn:</span>",1)
+					data_message += "<span class='notice'>Localized Damage, Brute/Burn:</span>"
 					if(length(damaged)>0)
 						for(var/obj/item/organ/external/BP in damaged)
-							user.show_message(text("<span class='notice'>&emsp; []: []-[]</span>",capitalize(BP.name),(BP.brute_dam > 0)?"<span class='warning'>[BP.brute_dam]</span>":0,(BP.burn_dam > 0)?"<span class='warning'>[BP.burn_dam]</span>":0),1)
+							data_message += text("<span class='notice'>&emsp; []: []-[]</span>",capitalize(BP.name),(BP.brute_dam > 0)?"<span class='warning'>[BP.brute_dam]</span>":0,(BP.burn_dam > 0)?"<span class='warning'>[BP.burn_dam]</span>":0)
 					else
-						user.show_message("<span class='notice'>&emsp; Limbs are OK.</span>",1)
+						data_message += "<span class='notice'>&emsp; Limbs are OK.</span>"
 
 				for(var/datum/disease/D in C.viruses)
 					if(!D.hidden[SCANNER])
-						user.show_message(text("<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>"))
+						data_message += "<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>"
+
+				visible_message("<span class='warning'>[user] has analyzed [C]'s vitals!</span>")
+				to_chat(user, data_message)
 
 			if(2)
-				if (!istype(C:dna, /datum/dna))
-					to_chat(user, "<span class='notice'>No fingerprints found on [C]</span>")
-				else if(!istype(C, /mob/living/carbon/monkey))
-					if(!isnull(C:gloves))
-						to_chat(user, "<span class='notice'>No fingerprints found on [C]</span>")
+				if (!istype(C.dna, /datum/dna))
+					data_message += "<span class='notice'>No fingerprints found on [C]</span>"
+				else if(istype(C, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = C
+					if(H.gloves)
+						data_message += "<span class='notice'>No fingerprints found on [C]</span>"
 				else
-					to_chat(user, text("<span class='notice'>[C]'s Fingerprints: [md5(C:dna.uni_identity)]</span>"))
-				if ( !(C:blood_DNA) )
-					to_chat(user, "<span class='notice'>No blood found on [C]</span>")
-					if(C:blood_DNA)
-						C:blood_DNA = null
+					data_message += text("<span class='notice'>[C]'s Fingerprints: [md5(C.dna.uni_identity)]</span>")
+				if ( !(C.blood_DNA) )
+					data_message += "<span class='notice'>No blood found on [C]</span>"
+					if(C.blood_DNA)
+						C.blood_DNA = null
 				else
-					to_chat(user, "<span class='notice'>Blood found on [C]. Analysing...</span>")
+					data_message += "<span class='notice'>Blood found on [C]. Analysing...</span>"
 					spawn(15)
-						for(var/blood in C:blood_DNA)
-							to_chat(user, "<span class='notice'>Blood type: [C:blood_DNA[blood]]\nDNA: [blood]</span>")
+						for(var/blood in C.blood_DNA)
+							data_message += "<span class='notice'>Blood type: [C.blood_DNA[blood]]\nDNA: [blood]</span>"
+				to_chat(user, data_message)
 
 			if(4)
-				for (var/mob/O in viewers(C, null))
-					O.show_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>", 1)
-
-				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
+				data_message += "<span class='notice'>Analyzing Results for [C]:</span>"
 				if(C.radiation)
-					user.show_message("<span class='notice'>Radiation Level:</span> [C.radiation]")
+					data_message += "<span class='notice'>Radiation Level:</span> [C.radiation]"
 				else
-					user.show_message("<span class='notice'>No radiation detected.</span>")
+					data_message += "<span class='notice'>No radiation detected.</span>"
+				visible_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>")
+				to_chat(user, data_message)
 
 /obj/item/device/pda/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
@@ -1278,6 +1280,10 @@
 		note = A:info
 		to_chat(user, "<span class='notice'>Paper scanned.</span>")//concept of scanning paper copyright brainoblivion 2009
 
+/obj/item/device/pda/get_current_temperature()
+	. = 5
+	if(detonate)
+		. += 10
 
 /obj/item/device/pda/proc/explode() //This needs tuning. //Sure did.
 	if(!src.detonate) return

@@ -78,7 +78,7 @@ var/datum/subsystem/demo/SSdemo
 	if(!config.record_replays)
 		can_fire = FALSE
 		return ..()
-	demo_file = file("[logs_folder]/demo.txt")
+	demo_file = file("[global.log_directory]/demo.txt")
 	WRITE_FILE(demo_file, "demo version 1") // increment this if you change the format
 	WRITE_FILE(demo_file, "commit [GetGitMasterCommit()]")
 
@@ -182,7 +182,7 @@ var/datum/subsystem/demo/SSdemo
 		last_completed++
 		var/atom/movable/M = marked_dirty[marked_dirty.len]
 		marked_dirty.len--
-		if(M.gc_destroyed || !M)
+		if(QDELETED(M))
 			continue
 		if(M.loc == M.demo_last_loc && M.appearance == M.demo_last_appearance)
 			continue
@@ -215,7 +215,7 @@ var/datum/subsystem/demo/SSdemo
 		last_completed++
 		var/atom/movable/M = marked_new[marked_new.len]
 		marked_new.len--
-		if(M.gc_destroyed || !M)
+		if(QDELETED(M))
 			continue
 		var/loc_string = "null"
 		if(isturf(M.loc))
@@ -425,7 +425,7 @@ var/datum/subsystem/demo/SSdemo
 /datum/subsystem/demo/proc/mark_new(atom/movable/M)
 	if(!isobj(M) && !ismob(M))
 		return
-	if(M.gc_destroyed)
+	if(QDELETED(M))
 		return
 	marked_new[M] = TRUE
 	if(marked_dirty[M])
@@ -435,7 +435,7 @@ var/datum/subsystem/demo/SSdemo
 /datum/subsystem/demo/proc/mark_dirty(atom/movable/M)
 	if(!isobj(M) && !ismob(M))
 		return
-	if(M.gc_destroyed)
+	if(QDELETED(M))
 		return
 	if(!marked_new[M])
 		marked_dirty[M] = TRUE

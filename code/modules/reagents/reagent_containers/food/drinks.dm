@@ -24,6 +24,9 @@
 	var/datum/reagents/R = reagents
 	var/fillevel = gulp_size
 
+	if (!src.is_open_container())
+		return 0
+
 	if(!R.total_volume || !R)
 		to_chat(user, "<span class='warning'>None of [src] left, oh no!</span>")
 		return 0
@@ -56,11 +59,9 @@
 				to_chat(H, "<span class='warning'>They have a monitor for a head, where do you think you're going to put that?</span>")
 				return
 
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message("<span class='warning'>[user] attempts to feed [M] [src].</span>", 1)
+		user.visible_message("<span class='warning'>[user] attempts to feed [M] [src].</span>")
 		if(!do_mob(user, M)) return
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message("<span class='warning'>[user] feeds [M] [src].</span>", 1)
+		user.visible_message("<span class='warning'>[user] feeds [M] [src].</span>")
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
@@ -94,7 +95,9 @@
 		if(!A.reagents.total_volume)
 			to_chat(user, "<span class='warning'>[A] is empty.</span>")
 			return
-
+		if (!reagents.maximum_volume) // Locked or broken container
+			to_chat(user, "<span class='warning'> [src] can't hold this.</span>")
+			return
 		if(reagents.total_volume >= reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return
@@ -106,7 +109,9 @@
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='warning'>[src] is empty.</span>")
 			return
-
+		if(!A.reagents.maximum_volume)
+			to_chat(user, "<span class='warning'> [A] can't hold this.</span>")
+			return
 		if(A.reagents.total_volume >= A.reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>[A] is full.</span>")
 			return
@@ -135,7 +140,7 @@
 
 		var/turf/T = get_turf(src)
 		message_admins("[key_name_admin(usr)] splashed [reagents.get_reagents()] on [A], location ([T.x],[T.y],[T.z]) [ADMIN_JMP(usr)]")
-		log_game("[usr.ckey]([usr]) splashed [reagents.get_reagents()] on [A], location ([T.x],[T.y],[T.z])")
+		log_game("[key_name(usr)] splashed [reagents.get_reagents()] on [A], location ([T.x],[T.y],[T.z])")
 	update_icon()
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/refill_by_borg(user, refill, trans)
@@ -271,9 +276,9 @@
 	name = "Dosi Ramen"
 	desc = "Just add 10ml water, self heats! Most cheapest and popular noodle in space. Classic ramen with chicken flavor." // Now this is a reference not to original ramen.
 	icon_state = "ramen"
+	flags = 0 // Default - closed container
 
 	var/ramen_reagent = "dry_ramen"
-	var/opened = FALSE
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/atom_init()
 	. = ..()
@@ -281,11 +286,8 @@
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
 
-	if(!opened)
-		flags &= ~OPENCONTAINER
-
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/update_icon()
-	if(!opened)
+	if(!is_open_container())
 		icon_state = initial(icon_state)
 	else if(!reagents.total_volume)
 		icon_state = "ramen_empty"
@@ -293,25 +295,22 @@
 		icon_state = "ramen_open"
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/attack_self(mob/user)
-	if (!opened)
+	if (!is_open_container())
 		flags |= OPENCONTAINER
-		opened = TRUE
 		playsound(src, 'sound/items/crumple.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		to_chat(user, "<span class='notice'>You open the [src].</span>")
 		update_icon()
 
-/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/attack(mob/M, mob/user, def_zone)
-	if(!opened)
-		to_chat(user, "<span class='notice'>You need to open [src] first!</span>")
-		return TRUE // stops afterattack() call.
-	return ..()
-
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/on_reagent_change()
-	if(!reagents.total_volume) // actually its because we only have sprite, which won't look good with any other reagent than ramen.
-		flags &= ~OPENCONTAINER // and also there is no proper way to put the message about this, as it will require to edit all transfer procs in items.
+	// Don't trust total_volume before all reactions end
+	if(!reagents.total_volume && !reagents.is_reaction_in_proccessing())
+		// Ramen can't be refilled. We have only one icon for content of ramen container and it's dohi ramen
+		// If ramen container empty and no reaction proccessing - remove volume 
+		// Locking container return it to initial state and show message to open the container
+		reagents.maximum_volume = 0 
 		update_icon()
 		return
-
+	update_icon()
 	..()
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen

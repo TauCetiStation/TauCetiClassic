@@ -4,6 +4,10 @@
 /obj/item/organ/external
 	name = "external"
 
+	// When measuring bodytemperature,
+	// multiply by this coeff.
+	var/temp_coeff = 1.0
+
 	// Strings
 	var/broken_description            // fracture string if any.
 	var/damage_state = "00"           // Modifier used for generating the on-mob damage overlay for this limb.
@@ -625,6 +629,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "chest"
 	artery_name = "aorta"
 
+	temp_coeff = 1.08
+
 	body_part = UPPER_TORSO
 	body_zone = BP_CHEST
 	limb_layer = LIMB_TORSO_LAYER
@@ -641,6 +647,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/groin
 	name = "groin"
 	artery_name = "iliac artery"
+
+	temp_coeff = 1.06
 
 	body_part = LOWER_TORSO
 	body_zone = BP_GROIN
@@ -659,6 +667,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/head
 	name = "head"
 	artery_name = "cartoid artery"
+
+	temp_coeff = 1.05
 
 	body_part = HEAD
 	body_zone = BP_HEAD
@@ -733,11 +743,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/head/attackby(obj/item/weapon/W, mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(istype(W,/obj/item/weapon/scalpel))
+	if(istype(W, /obj/item/weapon/scalpel) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/shard))
 		switch(brain_op_stage)
 			if(0)
+				//todo: should be replaced with visible_message
 				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("<span class='warning'>[brainmob] is beginning to have \his head cut open with [W] by [user].</span>", 1)
+					O.show_message("<span class='warning'>[brainmob] is beginning to have \his head cut open with [W] by [user].</span>", SHOWMSG_VISUAL)
 				to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [W]!</span>")
 				to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [W]!</span>")
 
@@ -746,18 +757,18 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(2)
 				if(!(species in list(DIONA, IPC)))
 					for(var/mob/O in (oviewers(brainmob) - user))
-						O.show_message("<span class='warning'>[brainmob] is having \his connections to the brain delicately severed with [W] by [user].</span>", 1)
+						O.show_message("<span class='warning'>[brainmob] is having \his connections to the brain delicately severed with [W] by [user].</span>", SHOWMSG_VISUAL)
 					to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [W]!</span>")
 					to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [W]!</span>")
 
 					brain_op_stage = 3.0
 			else
 				..()
-	else if(istype(W,/obj/item/weapon/circular_saw))
+	else if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/crowbar) || istype(W, /obj/item/weapon/hatchet))
 		switch(brain_op_stage)
 			if(1)
 				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("<span class='warning'>[brainmob] has \his head sawed open with [W] by [user].</span>", 1)
+					O.show_message("<span class='warning'>[brainmob] has \his head sawed open with [W] by [user].</span>", SHOWMSG_VISUAL)
 				to_chat(brainmob, "<span class='warning'>[user] begins to saw open your head with [W]!</span>")
 				to_chat(user, "<span class='warning'>You saw [brainmob]'s head open with [W]!</span>")
 
@@ -765,7 +776,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(3)
 				if(!(species in list(DIONA, IPC)))
 					for(var/mob/O in (oviewers(brainmob) - user))
-						O.show_message("<span class='warning'>[brainmob] has \his spine's connection to the brain severed with [W] by [user].</span>", 1)
+						O.show_message("<span class='warning'>[brainmob] has \his spine's connection to the brain severed with [W] by [user].</span>", SHOWMSG_VISUAL)
 					to_chat(brainmob, "<span class='warning'>[user] severs your brain's connection to the spine with [W]!</span>")
 					to_chat(user, "<span class='warning'>You sever [brainmob]'s brain's connection to the spine with [W]!</span>")
 
@@ -799,6 +810,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "left arm"
 	artery_name = "basilic vein"
 
+	temp_coeff = 1.0
+
 	body_part = ARM_LEFT
 	body_zone = BP_L_ARM
 	parent_bodypart = BP_CHEST
@@ -820,6 +833,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "right arm"
 	artery_name = "basilic vein"
 
+	temp_coeff = 1.0
+
 	body_part = ARM_RIGHT
 	body_zone = BP_R_ARM
 	parent_bodypart = BP_CHEST
@@ -840,6 +855,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "left leg"
 	artery_name = "femoral artery"
 
+	temp_coeff = 0.75
+
 	body_part = LEG_LEFT
 	body_zone = BP_L_LEG
 	parent_bodypart = BP_GROIN
@@ -855,6 +872,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/r_leg
 	name = "right leg"
 	artery_name = "femoral artery"
+
+	temp_coeff = 0.75
 
 	body_part = LEG_RIGHT
 	body_zone = BP_R_LEG

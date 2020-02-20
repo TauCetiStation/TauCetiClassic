@@ -86,7 +86,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
-	name = "\improper L6 SAW"
+	name = "L6 SAW"
 	desc = "A heavily modified light machine gun with a tactical plasteel frame resting on a rather traditionally-made ballistic weapon. Has 'Aussec Armoury - 2531' engraved on the reciever, as well as '7.62x51mm'."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
@@ -298,7 +298,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/colt1911/dungeon
 	desc = "A single-action, semi-automatic, magazine-fed, recoil-operated pistol chambered for the .45 ACP cartridge."
-	name = "\improper Colt M1911"
+	name = "Colt M1911"
 	mag_type = /obj/item/ammo_box/magazine/c45m
 	mag_type2 = /obj/item/ammo_box/magazine/c45r
 

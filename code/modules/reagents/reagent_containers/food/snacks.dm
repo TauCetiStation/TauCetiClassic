@@ -77,12 +77,10 @@
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 
 				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
-					for(var/mob/O in viewers(world.view, user))
-						O.show_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", 1)
+					user.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>")
 				else
-					for(var/mob/O in viewers(world.view, user))
-						O.show_message("<span class='rose'>[user] cannot force anymore of [src] down [M]'s throat.</span>", 1)
-						return 0
+					user.visible_message("<span class='rose'>[user] cannot force anymore of [src] down [M]'s throat.</span>")
+					return
 
 				if(!do_mob(user, M)) return
 
@@ -90,8 +88,7 @@
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
 				msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])", user)
 
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message("<span class='rose'>[user] feeds [M] [src].</span>", 1)
+				user.visible_message("<span class='rose'>[user] feeds [M] [src].</span>")
 
 			else
 				to_chat(user, "This creature does not seem to have a mouth!</span>")
@@ -133,6 +130,10 @@
 			to_chat(user, "<span class='info'>\The [src] was bitten multiple times!</span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
+
+	if (user.is_busy(src))
+		return
+
 	if(istype(W,/obj/item/weapon/storage))
 		..() // -> item/attackby()
 	if(istype(W,/obj/item/weapon/kitchen/utensil))
@@ -207,23 +208,25 @@
 		to_chat(user, "<span class='rose'>You cannot slice [src] here! You need a table or at least a tray to do it.</span>")
 		return 1
 	var/slices_lost = 0
-	if (!inaccurate)
-		user.visible_message( \
-			"<span class='info'>[user] slices \the [src]!</span>", \
-			"<span class='notice'>You slice \the [src]!</span>" \
-		)
+	if (inaccurate)
+		if (istype(W, /obj/item/weapon/melee/energy/sword))
+			playsound(user, 'sound/items/esword_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		else
+			playsound(user, 'sound/items/shard_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else
-		user.visible_message( \
-			"<span class='info'>[user] inaccurately slices \the [src] with [W]!</span>", \
-			"<span class='notice'>You inaccurately slice \the [src] with your [W]!</span>" \
-		)
+		playsound(src, pick(SOUNDIN_KNIFE_CUTTING), VOL_EFFECTS_MASTER, null, FALSE)
 		slices_lost = rand(1,min(1,round(slices_num/2)))
-	var/reagents_per_slice = reagents.total_volume/slices_num
-	for(var/i=1 to (slices_num-slices_lost))
-		var/obj/slice = new slice_path (src.loc)
-		reagents.trans_to(slice,reagents_per_slice)
-	qdel(src)
-	return
+	if (do_after(user, 35, target = src))
+		if (!inaccurate)
+			user.visible_message("<span class='info'>[user] slices \the [src]!</span>", "<span class='notice'>You slice \the [src]!</span>")
+		else
+			user.visible_message("<span class='info'>[user] inaccurately slices \the [src] with [W]!</span>", "<span class='notice'>You inaccurately slice \the [src] with your [W]!</span>")
+		var/reagents_per_slice = reagents.total_volume/slices_num
+		for(var/i=1 to (slices_num-slices_lost))
+			var/obj/slice = new slice_path (src.loc)
+			reagents.trans_to(slice,reagents_per_slice)
+		qdel(src)
+		return
 
 /obj/item/weapon/reagent_containers/food/snacks/Destroy()
 	if(contents)
@@ -516,7 +519,7 @@
 	reagents.add_reagent("nutriment", 1)
 	reagents.add_reagent("egg", 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new /obj/effect/decal/cleanable/egg_smudge(loc)
 	if(prob(13))
@@ -999,7 +1002,7 @@
 	reagents.add_reagent("banana",5)
 	reagents.add_reagent("vitamin", 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
 	src.visible_message("<span class='rose'>[src.name] splats.</span>","<span class='rose'>You hear a splat.</span>")
@@ -1168,7 +1171,7 @@
 	. = ..()
 	reagents.add_reagent("protein", 8)
 
-/obj/item/weapon/reagent_containers/food/snacks/monkeykabob
+/obj/item/weapon/reagent_containers/food/snacks/kabob
 	name = "Meat-kabob"
 	icon_state = "kabob"
 	desc = "Delicious meat, on a stick."
@@ -1176,7 +1179,7 @@
 	filling_color = "#a85340"
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/monkeykabob/atom_init()
+/obj/item/weapon/reagent_containers/food/snacks/kabob/atom_init()
 	. = ..()
 	reagents.add_reagent("protein", 8)
 
@@ -3166,10 +3169,19 @@
 
 // Dough + rolling pin = flat dough
 /obj/item/weapon/reagent_containers/food/snacks/dough/attackby(obj/item/weapon/W, mob/user)
+
+	if (user.is_busy(src))
+		return
+
 	if(istype(W,/obj/item/weapon/kitchen/rollingpin))
-		new /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough(src)
-		to_chat(user, "<span class='notice'>You flatten the dough.</span>")
-		qdel(src)
+		if (locate(/obj/structure/table) in src.loc)
+			playsound(user, 'sound/items/rolling_pin.ogg', VOL_EFFECTS_MASTER, , FALSE)
+			if (do_after(user, 35, target = src))
+				new /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough(src)
+				to_chat(user, "<span class='notice'>You flatten the dough.</span>")
+				qdel(src)
+		else
+			to_chat(user, "<span class='rose'>You cannot roll out the dough here! You need a table to do it.</span>")
 
 // slicable into 3xdoughslices
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough

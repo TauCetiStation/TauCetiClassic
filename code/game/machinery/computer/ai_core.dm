@@ -103,6 +103,7 @@
 
 			if(istype(P, /obj/item/weapon/aiModule/nanotrasen))
 				laws.add_inherent_law("Safeguard: Protect your assigned space station to the best of your ability. It is not something we can easily afford to replace.")
+				laws.add_inherent_law("Preserve: Do not by your action, inaction excluded, cause changes to the crew membership status, rank or role of anything, unless asked for by authorized personnel in accordance to their rank and role.")
 				laws.add_inherent_law("Serve: Serve the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
 				laws.add_inherent_law("Protect: Protect the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
 				laws.add_inherent_law("Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
@@ -119,26 +120,28 @@
 				to_chat(usr, "Added a freeform law.")
 
 			if(istype(P, /obj/item/device/mmi) || istype(P, /obj/item/device/mmi/posibrain))
-				if(!P:brainmob)
-					to_chat(user, "<span class='warning'>Sticking an empty [P] into the frame would sort of defeat the purpose.</span>")
+				var/obj/item/device/mmi/M = P
+
+				if(!M.brainmob)
+					to_chat(user, "<span class='warning'>Sticking an empty [M] into the frame would sort of defeat the purpose.</span>")
 					return
-				if(P:brainmob.stat == DEAD)
-					to_chat(user, "<span class='warning'>Sticking a dead [P] into the frame would sort of defeat the purpose.</span>")
+				if(M.brainmob.stat == DEAD)
+					to_chat(user, "<span class='warning'>Sticking a dead [M] into the frame would sort of defeat the purpose.</span>")
 					return
 
-				if(jobban_isbanned(P:brainmob, "AI"))
-					to_chat(user, "<span class='warning'>This [P] does not seem to fit.</span>")
+				if(jobban_isbanned(M.brainmob, "AI"))
+					to_chat(user, "<span class='warning'>This [M] does not seem to fit.</span>")
 					return
 
-				if(P:brainmob.mind)
-					ticker.mode.remove_cultist(P:brainmob.mind, 1)
-					ticker.mode.remove_revolutionary(P:brainmob.mind, 1)
-					ticker.mode.remove_gangster(P:brainmob.mind, 1)
+				if(M.brainmob.mind)
+					ticker.mode.remove_cultist(M.brainmob.mind, 1)
+					ticker.mode.remove_revolutionary(M.brainmob.mind, 1)
+					ticker.mode.remove_gangster(M.brainmob.mind, 1)
 
 				user.drop_item()
-				P.loc = src
-				brain = P
-				to_chat(usr, "Added [P].")
+				M.loc = src
+				brain = M
+				to_chat(usr, "Added [M].")
 				icon_state = "3b"
 
 			if(iscrowbar(P) && brain)

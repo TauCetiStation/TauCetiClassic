@@ -55,7 +55,7 @@ var/global/datum/book_manager/book_mgr = new()
 				to_chat(usr, query.ErrorMsg())
 	else
 		book_mgr.remove(isbn)
-	log_admin("[usr.key] has deleted the book [isbn]")
+	log_admin("[key_name(usr)] has deleted the book [isbn]")
 
 // delete a book
 /datum/book_manager/proc/remove(id)

@@ -15,8 +15,8 @@
 	. = ..()
 	proj_act_sound = SOUNDIN_BULLETACT
 
-/obj/item/projectile/bullet/on_hit(atom/target, blocked = 0)
-	if (..(target, blocked))
+/obj/item/projectile/bullet/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	if (..())
 		var/mob/living/L = target
 		shake_camera(L, 3, 2)
 
@@ -98,7 +98,7 @@
 	. = ..()
 	proj_act_sound = null
 
-/obj/item/projectile/bullet/chem/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/chem/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(beakers != null)
 		var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/Big = new /obj/item/weapon/reagent_containers/glass/beaker/bluespace(src)
 		for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
@@ -198,7 +198,7 @@
 	name = "incendiary bullet"
 	damage = 20
 
-/obj/item/projectile/bullet/incendiary/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/incendiary/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(istype(target, /mob/living/carbon))
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(10)
@@ -226,7 +226,7 @@
 	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
-/obj/item/projectile/bullet/flare/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/flare/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(istype(target, /mob/living/carbon))
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(1)

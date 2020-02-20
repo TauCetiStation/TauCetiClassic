@@ -257,8 +257,15 @@
 		ext.afterattack(target, chassis.occupant)
 	return 1
 
+/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/Topic(href, href_list)
+	..()
+	if (href_list["switch"])
+		ext.safety = !ext.safety
+		occupant_message("The [name] now [ext.safety ? "locked" : "ready"].")
+		update_equip_info()
+
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher/get_equip_info()
-	return "[..()] \[[ext.reagents.total_volume]\]"
+	return "[..()] \[[ext.reagents.total_volume]\]\[<a href='?src=\ref[src];switch=1'>[src.ext.safety ? "Safe" : "Ready"]</a>\]"
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher/on_reagent_change()
 	return
@@ -632,18 +639,18 @@
 	do_after_cooldown()
 	return
 
-/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/dynhitby(atom/movable/A)
-	if(!action_checks(A))
-		return chassis.dynhitby(A)
-	if(prob(chassis.deflect_chance*deflect_coeff) || istype(A, /mob/living) || istype(A, /obj/item/mecha_parts/mecha_tracking))
-		chassis.occupant_message("<span class='notice'>The [A] bounces off the armor.</span>")
-		chassis.visible_message("The [A] bounces off the [chassis] armor")
+/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/dynhitby(atom/movable/AM, datum/thrownthing/throwingdatum)
+	if(!action_checks(AM))
+		return chassis.dynhitby(AM, throwingdatum)
+	if(prob(chassis.deflect_chance*deflect_coeff) || isliving(AM) || istype(AM, /obj/item/mecha_parts/mecha_tracking))
+		chassis.occupant_message("<span class='notice'>The [AM] bounces off the armor.</span>")
+		chassis.visible_message("The [AM] bounces off the [chassis] armor")
 		chassis.log_append_to_last("Armor saved.")
-		if(istype(A, /mob/living))
-			var/mob/living/M = A
+		if(isliving(AM))
+			var/mob/living/M = AM
 			M.take_bodypart_damage(10)
-	else if(istype(A, /obj))
-		var/obj/O = A
+	else if(isobj(AM))
+		var/obj/O = AM
 		if(O.throwforce)
 			chassis.take_damage(round(O.throwforce*damage_coeff))
 			chassis.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
@@ -1134,7 +1141,7 @@
 		chassis.occupant_message("<span class='notice'>Automatic Aim System cannot find an appropriate target!</span>")
 		aiming = FALSE
 		return
-	if(!Challenge)
+	if(war_device_activated)
 		if(world.time < SYNDICATE_CHALLENGE_TIMER)
 			chassis.occupant_message("<span class='warning'>You've issued a combat challenge to the station! \
 			You've got to give them at least [round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
@@ -1142,7 +1149,7 @@
 			aiming = FALSE
 			return
 	else
-		Challenge.Dropod_used = TRUE
+		war_device_activation_forbidden = TRUE
 	chassis.occupant_message("<span class='notice'>You succesfully selected target!</span>")
 	chassis.loc = pick(L)
 	uses--

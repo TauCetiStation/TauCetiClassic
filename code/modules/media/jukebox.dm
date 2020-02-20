@@ -298,6 +298,7 @@ var/global/loopModeNames=list(
 		"eurobeat" = "Eurobeat",
 		"finland" = "Suomi wave",
 		"dreamsofvenus" = "Dreams of Venus",
+		"hiphop" = "Hip-Hop for Space Gangstas",
 	)
 
 // Relaxing elevator music~
@@ -324,6 +325,7 @@ var/global/loopModeNames=list(
 		"eurobeat" = "Eurobeat",
 		"finland" = "Suomi wave",
 		"dreamsofvenus" = "Dreams of Venus",
+		"hiphop" = "Hip-Hop for Space Gangstas",
 	)
 
 /obj/machinery/media/jukebox/techno

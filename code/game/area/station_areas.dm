@@ -556,7 +556,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/station/rnd/lab
 	name = "Research and Development"
-	icon_state = "toxlab"
+	icon_state = "scilab"
 
 /area/station/rnd/hallway
 	name = "Research Division"
@@ -564,7 +564,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/station/rnd/xenobiology
 	name = "Xenobiology Lab"
-	icon_state = "toxlab"
+	icon_state = "scixeno"
 
 /area/station/rnd/storage
 	name = "Toxins Storage"
@@ -580,15 +580,19 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/station/rnd/misc_lab
 	name = "Miscellaneous Research"
-	icon_state = "toxmisc"
+	icon_state = "scimisc"
 
 /area/station/rnd/telesci
 	name = "Telescience Lab"
-	icon_state = "toxmisc"
+	icon_state = "scitele"
+
+/area/station/rnd/tox_launch
+	name = "Toxins Launch Roon"
+	icon_state = "toxlaunch"
 
 /area/station/rnd/scibreak
 	name = "Science Breaktime Room"
-	icon_state = "toxlab"
+	icon_state = "scirest"
 
 /area/station/rnd/hor
 	name = "Research Director's Office"
@@ -604,7 +608,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/station/rnd/robotics
 	name = "Robotics Lab"
-	icon_state = "ass_line"
+	icon_state = "scirobo"
 
 /area/station/rnd/brainstorm_center
 	name = "Brainstorm Center"
