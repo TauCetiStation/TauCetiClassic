@@ -19,7 +19,7 @@
 
 
 	if (message)
-		log_emote("[name]/[key] : [message]")
+		log_emote("[key_name(src)] : [message]")
  		
 		if(findtext(message," snores.") == 0) // Hearing gasp and such every five seconds is not good emotes were not global for a reason.
 			for(var/mob/M in player_list)
@@ -74,7 +74,7 @@
 
 
 	if(message)
-		log_emote("Ghost/[src.key] : [message]")
+		log_emote("Ghost/[key_name(src)] : [message]")
 
 		for(var/mob/M in player_list)
 			if(isnewplayer(M))

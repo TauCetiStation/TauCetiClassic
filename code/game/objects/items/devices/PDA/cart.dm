@@ -228,8 +228,8 @@
 						user = user_client.mob
 
 				if(user)
-					log_admin("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2]")
-					message_admins("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2] [ADMIN_FLW(user)]")
+					log_admin("STATUS: [key_name(user)] set status screen with [PDA]. Message: [data1] [data2]")
+					message_admins("STATUS: [key_name_admin(user)] set status screen with [PDA]. Message: [data1] [data2] [ADMIN_FLW(user)]")
 				else
 					var/turf/PDA_turf = get_turf(PDA)
 					log_admin("STATUS: UNKNOWN set status screen with [PDA]. Message: [data1] [data2]")

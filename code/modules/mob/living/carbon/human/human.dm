@@ -254,7 +254,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				gain = 100
 			if("Clown")
 				gain = rand(-300, 300)//HONK
-	investigate_log(" has consumed [key_name(src)].","singulo") //Oh that's where the clown ended up!
+	log_investigate(" has consumed [key_name(src)].",INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
 	return(gain)
 
@@ -590,7 +590,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/Crossed(atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
-		MB.RunOver(src)	
+		MB.RunOver(src)
 	SpreadFire(AM)
 	. = ..()
 
@@ -1870,14 +1870,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	status_flags &= ~LEAPING
 	a_intent_change(prev_intent)
 
-/mob/living/carbon/human/throw_impact(atom/A)
+/mob/living/carbon/human/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!(status_flags & LEAPING))
 		return ..()
 
-	if(isliving(A))
-		var/mob/living/L = A
+	if(isliving(hit_atom))
+		var/mob/living/L = hit_atom
 		L.visible_message("<span class='danger'>\The [src] leaps at [L]!</span>", "<span class='userdanger'>[src] leaps on you!</span>")
-		if(issilicon(A))
+		if(issilicon(L))
 			L.Weaken(1) //Only brief stun
 			step_towards(src, L)
 		else
@@ -1886,8 +1886,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			step_towards(src, L)
 			Grab(L, GRAB_AGGRESSIVE)
 
-	else if(A.density)
-		visible_message("<span class='danger'>[src] smashes into [A]!</span>", "<span class='danger'>You smashes into [A]!</span>")
+	else if(hit_atom.density)
+		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smash into [hit_atom]!</span>")
 		weakened = 2
 
 	update_canmove()
@@ -2060,3 +2060,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 													// clamped to max 1000
 	if(jitteriness > 30 && !is_jittery)
 		INVOKE_ASYNC(src, /mob.proc/jittery_process)
+
+/mob/living/carbon/update_stat()
+	if(stat == DEAD)
+		return
+	if(IsSleeping())
+		stat = UNCONSCIOUS
+		blinded = TRUE

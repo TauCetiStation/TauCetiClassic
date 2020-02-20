@@ -52,7 +52,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 								//the print must be there for it to be complete.  (Prints are 32 digits)
 
 /obj/machinery/computer/forensic_scanning
-	name = "\improper High-Res Forensic Scanning Computer"
+	name = "High-Res Forensic Scanning Computer"
 	icon_state = "forensic"
 	state_broken_preset = "securityb"
 	state_nopower_preset = "security0"
@@ -253,7 +253,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			if(files)
 				var/obj/item/weapon/paper/P = new(loc)
 				var/list/dossier = files[href_list["identifier"]]
-				P.name = "\improper Database File ([dossier[2]])"
+				P.name = "Database File ([dossier[2]])"
 				P.info = "<b>Criminal Evidence Database</b><br><br>"
 				P.info += "Consolidated data points: [dossier[2]]<br>"
 				var/print_string = "Fingerprints: Print not complete!<br>"
@@ -329,7 +329,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			if(misc)
 				var/obj/item/weapon/paper/P = new(loc)
 				var/list/outputs = misc[href_list["identifier"]]
-				P.name = "\improper Auxiliary Database File ([outputs[3]])"
+				P.name = "Auxiliary Database File ([outputs[3]])"
 				P.info = "<b>Auxiliary Evidence Database</b><br><br>"
 				P.info += "<big><b>Consolidated data points:</b> [outputs[3]]</big><br>"
 				var/list/prints = outputs[4]
@@ -427,7 +427,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			if(scan_data)
 				temp = "Scan Data Printed."
 				var/obj/item/weapon/paper/P = new(loc)
-				P.name = "\improper Scan Data ([scan_name])"
+				P.name = "Scan Data ([scan_name])"
 				P.info = "<tt>[scan_data]</tt>"
 				P.update_icon()
 			else

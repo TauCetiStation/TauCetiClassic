@@ -115,7 +115,7 @@
 		O.Stun(stunned, ignore_canstun = TRUE)
 		O.Weaken(weakened)
 		O.Paralyse(paralysis - 22)
-		O.Sleeping(sleeping)
+		O.SetSleeping(AmountSleeping())
 
 	//transfer reagents
 	if(tr_flags & TR_KEEPREAGENTS)
@@ -255,7 +255,7 @@
 		O.Stun(stunned, ignore_canstun = TRUE)
 		O.Weaken(weakened)
 		O.Paralyse(paralysis - 22)
-		O.Sleeping(sleeping)
+		O.SetSleeping(AmountSleeping())
 
 	//transfer reagents
 	if(tr_flags & TR_KEEPREAGENTS)
@@ -426,14 +426,14 @@
 		qdel(t)
 
 	var/alien_caste = pick("Hunter","Sentinel","Drone")
-	var/mob/living/carbon/alien/humanoid/new_xeno
+	var/mob/living/carbon/xenomorph/humanoid/new_xeno
 	switch(alien_caste)
 		if("Hunter")
-			new_xeno = new /mob/living/carbon/alien/humanoid/hunter(loc)
+			new_xeno = new /mob/living/carbon/xenomorph/humanoid/hunter(loc)
 		if("Sentinel")
-			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(loc)
+			new_xeno = new /mob/living/carbon/xenomorph/humanoid/sentinel(loc)
 		if("Drone")
-			new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
+			new_xeno = new /mob/living/carbon/xenomorph/humanoid/drone(loc)
 
 	new_xeno.a_intent = "hurt"
 	new_xeno.key = key

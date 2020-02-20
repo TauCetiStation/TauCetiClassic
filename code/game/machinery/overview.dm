@@ -7,7 +7,7 @@
 	usr.set_machine(src)
 	if(!mapping)	return
 
-	log_game("[usr]([usr.key]) used station map L[z] in [src.loc.loc]")
+	log_game("[key_name(usr)] used station map L[z] in [get_turf(src)]")
 
 	src.drawmap(usr)
 

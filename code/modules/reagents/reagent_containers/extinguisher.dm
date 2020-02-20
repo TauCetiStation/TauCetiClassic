@@ -30,11 +30,19 @@
 	spray_cloud_move_delay = 2
 	spray_cloud_react_delay = 0
 
+	var/random_overlay = TRUE
+	var/reagent_inside = "aqueous_foam"
+	var/FE_type = "red"
+
 /obj/item/weapon/reagent_containers/spray/extinguisher/atom_init()
 	. = ..()
 	flags ^= OPENCONTAINER|NOBLUDGEON
+	if(random_overlay)
+		cut_overlays()
+		var/image/I = new(icon, "FE_overlay_[pick(1, 2, 3, 4)]")
+		add_overlay(I)
 	icon_state = "[initial(icon_state)][!safety]"
-	reagents.add_reagent("aqueous_foam", volume)
+	reagents.add_reagent(reagent_inside, volume)
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned/atom_init() // Station-spawned, as in, in-cabinets extinguishers shouldn't be full by default.
 	. = ..()
@@ -74,7 +82,24 @@
 
 	volume = 120
 
+	random_overlay = FALSE
+	FE_type = "mini"
+
 /obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned/atom_init() // Station-spawned, as in, in-cabinets extinguishers shouldn't be full by default.
 	. = ..()
 	reagents.clear_reagents()
 	reagents.add_reagent("aqueous_foam", rand(volume * 0.5, volume))
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/golden
+	name = "golden fire extinguisher"
+	desc = "A rare golden extinguisher filled to the top with the finest champagne. Weighs a ton."
+	icon_state = "goldenFE"
+	item_state = "goldenFE"
+	throwforce = 22
+	force = 22
+
+	volume = 800
+
+	random_overlay = FALSE
+	reagent_inside = "champagne"
+	FE_type = "golden"

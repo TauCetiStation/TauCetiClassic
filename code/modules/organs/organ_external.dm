@@ -4,6 +4,10 @@
 /obj/item/organ/external
 	name = "external"
 
+	// When measuring bodytemperature,
+	// multiply by this coeff.
+	var/temp_coeff = 1.0
+
 	// Strings
 	var/broken_description            // fracture string if any.
 	var/damage_state = "00"           // Modifier used for generating the on-mob damage overlay for this limb.
@@ -625,6 +629,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "chest"
 	artery_name = "aorta"
 
+	temp_coeff = 1.08
+
 	body_part = UPPER_TORSO
 	body_zone = BP_CHEST
 	limb_layer = LIMB_TORSO_LAYER
@@ -641,6 +647,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/groin
 	name = "groin"
 	artery_name = "iliac artery"
+
+	temp_coeff = 1.06
 
 	body_part = LOWER_TORSO
 	body_zone = BP_GROIN
@@ -659,6 +667,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/head
 	name = "head"
 	artery_name = "cartoid artery"
+
+	temp_coeff = 1.05
 
 	body_part = HEAD
 	body_zone = BP_HEAD
@@ -800,6 +810,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "left arm"
 	artery_name = "basilic vein"
 
+	temp_coeff = 1.0
+
 	body_part = ARM_LEFT
 	body_zone = BP_L_ARM
 	parent_bodypart = BP_CHEST
@@ -821,6 +833,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "right arm"
 	artery_name = "basilic vein"
 
+	temp_coeff = 1.0
+
 	body_part = ARM_RIGHT
 	body_zone = BP_R_ARM
 	parent_bodypart = BP_CHEST
@@ -841,6 +855,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "left leg"
 	artery_name = "femoral artery"
 
+	temp_coeff = 0.75
+
 	body_part = LEG_LEFT
 	body_zone = BP_L_LEG
 	parent_bodypart = BP_GROIN
@@ -856,6 +872,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/r_leg
 	name = "right leg"
 	artery_name = "femoral artery"
+
+	temp_coeff = 0.75
 
 	body_part = LEG_RIGHT
 	body_zone = BP_R_LEG

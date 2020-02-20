@@ -14,18 +14,18 @@
 	var/bantype_str
 	switch(bantype)
 		if(BANTYPE_PERMA)
-			bantype_str = "PERMABAN"
+			bantype_str = BANTYPE_PERMA_STR
 			duration = -1
 			bantype_pass = 1
 		if(BANTYPE_TEMP)
-			bantype_str = "TEMPBAN"
+			bantype_str = BANTYPE_TEMP_STR
 			bantype_pass = 1
 		if(BANTYPE_JOB_PERMA)
-			bantype_str = "JOB_PERMABAN"
+			bantype_str = BANTYPE_JOB_PERMA_STR
 			duration = -1
 			bantype_pass = 1
 		if(BANTYPE_JOB_TEMP)
-			bantype_str = "JOB_TEMPBAN"
+			bantype_str = BANTYPE_JOB_TEMP_STR
 			bantype_pass = 1
 	if( !bantype_pass ) return
 	if( !istext(reason) ) return
@@ -98,6 +98,9 @@
 		attachment_msg = "**[key_name(usr)]** [text("has added a **[]** for **[] [] []** with the reason: ***[]*** to the ban database.", bantype_str, ckey, (job ? "([job])" : ""), (duration > 0 ? "([duration] minutes)" : ""), text("[sanitize(reason)]"))]",
 		attachment_color = BRIDGE_COLOR_ADMINBAN,
 	)
+	if (bantype == BANTYPE_PERMA || bantype == BANTYPE_TEMP)
+		// servers use data from DB
+		world.send_ban_announce(ckey, ip, computerid)
 
 /datum/admins/proc/DB_ban_unban(ckey, bantype, job = "")
 
@@ -108,22 +111,22 @@
 		var/bantype_pass = 0
 		switch(bantype)
 			if(BANTYPE_PERMA)
-				bantype_str = "PERMABAN"
+				bantype_str = BANTYPE_PERMA_STR
 				bantype_pass = 1
 			if(BANTYPE_TEMP)
-				bantype_str = "TEMPBAN"
+				bantype_str = BANTYPE_TEMP_STR
 				bantype_pass = 1
 			if(BANTYPE_JOB_PERMA)
-				bantype_str = "JOB_PERMABAN"
+				bantype_str = BANTYPE_JOB_PERMA_STR
 				bantype_pass = 1
 			if(BANTYPE_JOB_TEMP)
-				bantype_str = "JOB_TEMPBAN"
+				bantype_str = BANTYPE_JOB_TEMP_STR
 				bantype_pass = 1
 			if(BANTYPE_ANY_FULLBAN)
-				bantype_str = "ANY"
+				bantype_str = BANTYPE_ANY_FULLBAN_STR
 				bantype_pass = 1
 			if(BANTYPE_ANY_JOB)
-				bantype_str = "ANYJOB"
+				bantype_str = BANTYPE_ANY_JOB_STR
 				bantype_pass = 1
 		if( !bantype_pass ) return
 
@@ -584,3 +587,6 @@
 		attachment_msg = "**Tau Kitty** has added a **[bantype_str]** for **[ckey]** **[(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""]** with the reason: ***\"[reason]\"*** to the ban database.",
 		attachment_color = BRIDGE_COLOR_ADMINBAN,
 	)
+	if (bantype == BANTYPE_PERMA || bantype == BANTYPE_TEMP)
+		// servers use data from DB
+		world.send_ban_announce(ckey, ip, computerid)

@@ -348,7 +348,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 	set name = "a-intent"
 	set hidden = 1
 
-	if(ishuman(src) || isalienadult(src) || isbrain(src))
+	if(ishuman(src) || isxenoadult(src) || isbrain(src))
 		switch(input)
 			if("help","disarm","grab","hurt")
 				a_intent = input
@@ -359,7 +359,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "intent_[a_intent]"
 
-	else if(isrobot(src) || ismonkey(src) || islarva(src)|| isfacehugger(src) || isIAN(src))
+	else if(isrobot(src) || ismonkey(src) || isxenolarva(src)|| isfacehugger(src) || isIAN(src))
 		switch(input)
 			if("help")
 				a_intent = "help"

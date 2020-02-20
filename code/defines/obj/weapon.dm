@@ -13,7 +13,7 @@
 	hitsound = list('sound/weapons/ring.ogg')
 
 /obj/item/weapon/rsp
-	name = "\improper Rapid-Seed-Producer (RSP)"
+	name = "Rapid-Seed-Producer (RSP)"
 	desc = "A device used to rapidly deploy seeds."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rcd"
@@ -134,7 +134,7 @@
 	..()
 	playsound(src,'sound/weapons/bolathrow.ogg', VOL_EFFECTS_MASTER)
 
-/obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom)
+/obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return
 	var/mob/living/carbon/C = hit_atom
@@ -403,7 +403,7 @@
 	g_amt = 50
 
 /obj/item/weapon/module/id_auth
-	name = "\improper ID authentication module"
+	name = "ID authentication module"
 	icon_state = "id_mod"
 	desc = "A module allowing secure authorization of ID cards."
 

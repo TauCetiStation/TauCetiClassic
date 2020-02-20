@@ -328,7 +328,7 @@
 		..()
 
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco
-	name = "\improper DromedaryCo packet"
+	name = "DromedaryCo packet"
 	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
 	icon_state = "Dpacket"
 	item_state = "Dpacket"

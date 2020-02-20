@@ -113,7 +113,7 @@
 					nukedpenalty = 10000
 
 	if (ticker.mode.config_tag == "rp-revolution")
-		var/datum/game_mode/revolution/rp_revolution/GM = ticker.mode
+		var/datum/game_mode/rp_revolution/GM = ticker.mode
 		var/foecount = 0
 		for(var/datum/mind/M in GM.head_revolutionaries)
 			foecount++
@@ -316,7 +316,7 @@
 		var/comcount = 0
 		var/revcount = 0
 		var/loycount = 0
-		var/datum/game_mode/revolution/rp_revolution/GM = ticker.mode
+		var/datum/game_mode/rp_revolution/GM = ticker.mode
 		for(var/datum/mind/M in GM.head_revolutionaries)
 			if (M.current && M.current.stat != DEAD) foecount++
 		for(var/datum/mind/M in GM.revolutionaries)

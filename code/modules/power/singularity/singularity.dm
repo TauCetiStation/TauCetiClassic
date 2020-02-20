@@ -67,7 +67,7 @@
 	switch(severity)
 		if(1.0)
 			if(current_size <= 3)
-				investigate_log("has been destroyed by a heavy explosion.","singulo")
+				log_investigate("has been destroyed by a heavy explosion.",INVESTIGATE_SINGULO)
 				qdel(src)
 				return
 			else
@@ -107,7 +107,7 @@
 	var/count = locate(/obj/machinery/containment_field) in orange(30, src)
 	if(!count)
 		message_admins("A singulo has been created without containment fields active ([x],[y],[z]) [ADMIN_JMP(src)]")
-	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
+	log_investigate("was created. [count?"":"<font color='red'>No containment fields were active</font>"]",INVESTIGATE_SINGULO)
 
 /obj/singularity/proc/dissipate()
 	if(!dissipate)
@@ -179,12 +179,16 @@
 			consume_range = 4
 			dissipate = 0 //It cant go smaller due to e loss
 	if(current_size == allowed_size)
-		investigate_log("<font color='red'>grew to size [current_size]</font>","singulo")
+		log_investigate("<font color='red'>grew to size [current_size]</font>",INVESTIGATE_SINGULO)
 		return 1
 	else if(current_size < (--temp_allowed_size))
 		expand(temp_allowed_size)
 	else
 		return 0
+
+/obj/singularity/get_current_temperature()
+	// var/total_potential_energy = energy * energy / dissipate_strength
+	return WATTS_2_CELSIUM * energy * energy / dissipate_strength
 
 /obj/singularity/proc/check_energy()
 	if(energy <= 0)

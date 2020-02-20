@@ -14,7 +14,7 @@
 
 	if(!check_rights(R_DEBUG|R_VAREDIT|R_LOG)) // Since client.holder still doesn't mean we have permissions...
 		return
-	
+
 	var/title = ""
 	var/body = ""
 
@@ -253,6 +253,8 @@
 	if(ismob(D))
 		body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
 		body += "<option value='?_src_=vars;give_disease2=\ref[D]'>Give Disease</option>"
+		if(isliving(D))
+			body += "<option value='?_src_=vars;give_status_effect=\ref[D]'>Give Status Effect</option>"
 		body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give TG-style Disease</option>"
 		body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
 		body += "<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
@@ -528,6 +530,21 @@ body
 
 		src.give_disease2(M)
 		href_list["datumrefresh"] = href_list["give_spell"]
+
+	else if(href_list["give_status_effect"])
+		if(!check_rights(R_ADMIN|R_VAREDIT))
+			return
+
+		var/mob/living/L = locate(href_list["give_status_effect"])
+		if(!isliving(L))
+			to_chat(usr, "This can only be used on instances of type /mob")
+			return
+
+		var/list/params = admin_spawn_status_effect(usr)
+
+		if(params)
+			L.apply_status_effect(arglist(params))
+			href_list["datumrefresh"] = href_list["give_status_effect"]
 
 	else if(href_list["ninja"])
 		if(!check_rights(R_SPAWN))

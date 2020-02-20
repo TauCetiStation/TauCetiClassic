@@ -168,9 +168,7 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/stamp/denied,
-/obj/item/weapon/stamp/centcomm{
-	name = "APPROVED rubber stamp"
-	},
+/obj/item/weapon/stamp/approve,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/item/device/taperecorder,
 /turf/unsimulated/floor{
@@ -205,9 +203,7 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/stamp/denied,
-/obj/item/weapon/stamp/centcomm{
-	name = "APPROVED rubber stamp"
-	},
+/obj/item/weapon/stamp/approve,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/item/device/taperecorder,
 /turf/unsimulated/floor{
@@ -490,6 +486,13 @@
 "abb" = (
 /turf/space,
 /area/shuttle/escape_pod1/transit)
+"abc" = (
+/obj/structure/table/reinforced,
+/obj/item/device/megaphone,
+/turf/unsimulated/floor{
+	icon_state = "bar"
+	},
+/area/custom/syndicate_mothership)
 "abd" = (
 /obj/machinery/computer/arcade,
 /obj/structure/sign/velocity_overlay/reklama{
@@ -612,6 +615,10 @@
 	name = "plating"
 	},
 /area/custom/wizard_station)
+"abu" = (
+/obj/effect/landmark/blockway,
+/turf/space,
+/area/space)
 "abC" = (
 /obj/structure/window/reinforced{
 	dir = 5;
@@ -1247,8 +1254,7 @@
 	req_access = list(150)
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
 "agj" = (
@@ -3316,7 +3322,10 @@
 	},
 /area/shuttle/syndicate/start)
 "amy" = (
-/obj/random/vending/snack,
+/obj/machinery/vending/snack{
+	name = "hacked Getmore Chocolate Corp";
+	prices = list()
+	},
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
@@ -3447,7 +3456,10 @@
 	},
 /area/custom/syndicate_mothership)
 "amM" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/vending/cigarette{
+	name = "hacked Cigarette machine";
+	prices = list()
+	},
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
@@ -4337,8 +4349,7 @@
 	req_access = list(150)
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
 "aqf" = (
@@ -5200,8 +5211,7 @@
 	req_access = list(150)
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "white"
 	},
 /area/custom/syndicate_mothership)
 "atc" = (
@@ -6319,7 +6329,10 @@
 	},
 /area/velocity)
 "axb" = (
-/obj/random/vending/cola,
+/obj/machinery/vending/cola{
+	name = "hacked Robust Softdrinks";
+	prices = list()
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -8297,7 +8310,10 @@
 	},
 /area/centcom/specops)
 "aDb" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/coffee{
+	name = "hacked Hot Drinks machine";
+	prices = list()
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -9843,7 +9859,9 @@
 "aIs" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/stamp,
+/obj/item/weapon/stamp{
+	name = "security rubber stamp"
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -12215,8 +12233,7 @@
 	req_access = list(150)
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership)
 "aSc" = (
@@ -77593,7 +77610,7 @@ ahF
 ahF
 ahF
 ahF
-aaM
+abu
 akb
 aih
 akM
@@ -77850,7 +77867,7 @@ ahF
 ahF
 ahF
 ahF
-aaM
+abu
 akc
 akx
 akN
@@ -78107,7 +78124,7 @@ ahF
 ahF
 ahF
 aaM
-aaM
+abu
 akd
 akw
 akM
@@ -80695,7 +80712,7 @@ amm
 akQ
 akQ
 akQ
-alN
+abc
 akQ
 ame
 aie

@@ -147,6 +147,7 @@
 	var/time = (world.timeofday - start_timeofday) / 10
 	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"
 	world.log << "[msg]"
+	log_initialization(msg)
 	return time
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
