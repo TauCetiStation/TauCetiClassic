@@ -158,7 +158,8 @@
 				"<span class='notice'>[user] has added one of [O] to \the [src].</span>", \
 				"<span class='notice'>You add one of [O] to \the [src].</span>")
 		else
-			user.drop_item(src)
+			user.drop_item()
+			O.loc = src
 			user.visible_message( \
 				"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
 				"<span class='notice'>You add \the [O] to \the [src].</span>")
@@ -177,13 +178,15 @@
 		var/obj/item/weapon/grab/G = O
 		to_chat(user, "<span class='danger'>You can not fit \the [G.affecting] in this [src].</span>")
 		return 1
+	else if(istype(O,/obj/item/weapon/gripper))
+		return // let gripper's afterattack handle this
 	else
 		to_chat(user, "<span class='danger'>You have no idea what you can cook with this [O].</span>")
 		return 1
 	src.updateUsrDialog()
 
 /obj/machinery/kitchen_machine/attack_ai(mob/user)
-	if(IsAdminGhost(user))
+	if(IsAdminGhost(user) || istype(user, /mob/living/silicon/robot)) // let robots cook
 		return ..()
 	return 0
 

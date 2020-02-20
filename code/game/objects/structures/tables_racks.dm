@@ -266,8 +266,9 @@
 			destroy()
 		return
 
-	if(isrobot(user))
-		return
+	var/mob/living/silicon/robot/R = user
+	if(istype(R) && (!R.module || (W in R.module.modules))) // allow putting stuff from grippers
+		return FALSE // to allow gripper's afterattack
 	if(!W.canremove || W.flags & NODROP)
 		return
 
@@ -289,7 +290,7 @@
 			return FALSE
 
 	if(!(W.flags & ABSTRACT))
-		if(user.drop_item())
+		if(user.drop_item() || isrobot(user))
 			W.Move(loc)
 			var/list/click_params = params2list(params)
 			//Center the icon where the user clicked.

@@ -43,7 +43,8 @@
 		/obj/item/weapon/paper_bundle,
 		/obj/item/weapon/card/id,
 		/obj/item/weapon/book,
-		/obj/item/weapon/newspaper
+		/obj/item/weapon/newspaper,
+		/obj/item/weapon/stamp
 		)
 
 /obj/item/weapon/gripper/chemistry
@@ -119,9 +120,9 @@
 
 		wrapped.loc = user
 		//Pass the attack on to the target.
-		var/resolved = target.attackby(wrapped,user)
+		var/resolved = target.attackby(wrapped, user, params)
 		if (!resolved && target && wrapped)
-			wrapped.afterattack(target, user, 1)
+			wrapped.afterattack(target, user, 1, params)
 
 		if(wrapped && src && wrapped.loc == user)
 			wrapped.loc = src
