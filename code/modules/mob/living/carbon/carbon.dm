@@ -128,7 +128,7 @@
 		if(D.spread_by_touch())
 			contract_disease(D, 0, 1, CONTACT_HANDS)
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
+/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = FALSE, internal = FALSE)
 	if(status_flags & GODMODE)	return 0	//godmode
 
 	var/turf/T = get_turf(src)

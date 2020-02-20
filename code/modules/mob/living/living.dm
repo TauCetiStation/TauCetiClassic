@@ -357,7 +357,7 @@
 	return 0
 
 
-/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
+/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0, internal = FALSE)
 	  return 0 //only carbon liveforms have this proc
 
 /mob/living/emp_act(severity)
