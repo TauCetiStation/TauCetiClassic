@@ -119,7 +119,9 @@
 
 		wrapped.loc = user
 		//Pass the attack on to the target.
-		target.attackby(wrapped,user)
+		var/resolved = target.attackby(wrapped,user)
+		if (!resolved && target && wrapped)
+			wrapped.afterattack(target, user, 1)
 
 		if(wrapped && src && wrapped.loc == user)
 			wrapped.loc = src
