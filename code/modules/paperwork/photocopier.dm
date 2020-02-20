@@ -269,10 +269,10 @@
 /obj/machinery/photocopier/proc/print_form(form_name)
 	form_name = replacetext(form_name, "_", " ")
 	var/contents = global.wiki_forms[form_name]
-	if(contents == null)
+	if(!contents)
 		return
 
-	var/obj/item/weapon/paper/P = new(src.loc)
+	var/obj/item/weapon/paper/P = new(loc)
 	P.name = form_name
 	if(toner > 10)
 		P.info = "<font color = #101010>"
