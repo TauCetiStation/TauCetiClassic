@@ -1,6 +1,7 @@
 var/global/log_directory
 var/global/log_investigate_directory
 var/global/log_debug_directory
+var/global/log_debug_js_directory
 
 var/global/game_log
 var/global/hrefs_log
