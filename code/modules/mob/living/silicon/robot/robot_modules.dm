@@ -265,7 +265,6 @@
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/gripper/service(src)
 	modules += new /obj/item/weapon/gripper/paperwork(src)
-	modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 	modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 	
 	modules += new /obj/item/weapon/kitchenknife(src)
@@ -284,7 +283,6 @@
 	modules += L
 
 	modules += new /obj/item/weapon/tray/robotray(src)
-	modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 	modules += new /obj/item/weapon/pen/robopen(src)
 	modules += new /obj/item/weapon/razor(src)
 
