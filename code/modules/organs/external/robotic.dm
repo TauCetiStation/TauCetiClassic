@@ -1,6 +1,7 @@
 /datum/bodypart_controller/robot
 	name = "Robotic bodypart controller"
 	bodypart_type = BODYPART_ROBOTIC
+	damage_threshold = 1
 
 /datum/bodypart_controller/robot/is_damageable(additional_damage = 0)
 	return TRUE // Robot organs don't count towards total damage so no need to cap them.

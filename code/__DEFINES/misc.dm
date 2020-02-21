@@ -198,7 +198,8 @@
 #define CSS_THEME_LIGHT "theme_light"
 #define CSS_THEME_DARK "theme_dark"
 
-#define BYOND_JOIN_LINK config.server ? "byond://[config.server]" : "byond://[world.address]:[world.port]"
+#define BYOND_JOIN_LINK "byond://[BYOND_SERVER_ADDRESS]"
+#define BYOND_SERVER_ADDRESS config.server ? "[config.server]" : "[world.address]:[world.port]"
 
 //Facehugger's control type
 #define FACEHUGGERS_STATIC_AI     0   // don't move by themselves
