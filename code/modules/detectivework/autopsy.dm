@@ -11,20 +11,13 @@
 	flags = CONDUCT
 	w_class = ITEM_SIZE_SMALL
 	origin_tech = "materials=1;biotech=1"
-	var/list/datum/autopsy_data_scanner/wdata = list()
 	var/list/obj/item/organ/external/organs = list()
-	var/list/datum/autopsy_data_scanner/chemtraces = list()
+	var/list/datum/autopsy_data/chemtraces = list()
 	var/target_name = null
 	var/timeofdeath = null
 
 /obj/item/weapon/paper/autopsy_report
 	var/list/autopsy_data
-
-/datum/autopsy_data_scanner
-	var/weapon = null // this is the DEFINITE weapon type that was used
-	var/list/bodyparts_scanned = list() // this maps a number of scanned bodyparts to
-                                        // the wounds to those bodyparts with this data's weapon type
-	var/organ_names = ""
 
 /datum/autopsy_data
 	var/weapon = null
@@ -47,23 +40,6 @@
 	if(!(BP in organs))
 		organs += BP
 
-	for(var/V in BP.autopsy_data)
-		var/datum/autopsy_data/W = BP.autopsy_data[V]
-		var/datum/autopsy_data_scanner/D = wdata[V]
-		if(!D)
-			D = new()
-			D.weapon = W.weapon
-			wdata[V] = D
-
-		if(!D.bodyparts_scanned[BP.body_zone])
-			if(D.organ_names == "")
-				D.organ_names = BP.name
-			else
-				D.organ_names += ", [BP.name]"
-
-		qdel(D.bodyparts_scanned[BP.body_zone])
-		D.bodyparts_scanned[BP.body_zone] = W.copy()
-
 	for(var/V in BP.trace_chemicals)
 		if(BP.trace_chemicals[V] > 0 && !chemtraces.Find(V))
 			chemtraces += V
@@ -82,18 +58,6 @@
 
 	if(timeofdeath)
 		scan_data += "<b>Time of death:</b> [worldtime2text(timeofdeath)]<br>"
-
-	for(var/wdata_idx in wdata)
-		var/datum/autopsy_data_scanner/D = wdata[wdata_idx]
-		var/total_hits = 0
-		var/total_score = 0
-		var/list/weapon_chances = list() // maps weapon names to a score
-
-		for(var/wound_idx in D.bodyparts_scanned)
-			var/datum/autopsy_data/W = D.bodyparts_scanned[wound_idx]
-			total_hits += W.hits
-			total_score += W.damage
-			weapon_chances += W.weapon
 
 	for(var/organ in organs)
 		var/obj/item/organ/external/BP = organ
@@ -121,7 +85,7 @@
 				type_damage = " bruise"
 
 			switch(W.damage)
-				if(0)
+				if(0) //Strangled comes in here
 					damage_desc = "Unknown"
 				if(1 to 5)
 					damage_desc = "<font color='green'>negligible[type_damage]</font>"
@@ -169,9 +133,10 @@
 	P.name = "Autopsy Data ([target_name])"
 	P.info = "<tt>[scan_data]</tt>"
 	P.autopsy_data = list() // Copy autopsy data for science tool
-	for(var/wdata_idx in wdata)
-		for(var/wound_idx in wdata[wdata_idx].bodyparts_scanned)
-			var/datum/autopsy_data/W = wdata[wdata_idx].bodyparts_scanned[wound_idx]
+	for(var/organ in organs)
+		var/obj/item/organ/external/BP = organ
+		for(var/adata in BP.autopsy_data)
+			var/datum/autopsy_data/W = BP.autopsy_data[adata]
 			P.autopsy_data += W.copy()
 	P.update_icon()
 
@@ -189,8 +154,8 @@
 			P.plane = ABOVE_HUD_PLANE
 
 	if(istype(usr,/mob/living/carbon/human))
-		usr:update_inv_l_hand()
-		usr:update_inv_r_hand()
+		usr.update_inv_l_hand()
+		usr.update_inv_r_hand()
 
 /obj/item/weapon/autopsy_scanner/attack(mob/living/carbon/human/M, mob/living/carbon/user, def_zone)
 	if(!istype(M) &!can_operate(M))
@@ -199,7 +164,6 @@
 	if(do_after(user,15,target = M))
 		if(target_name != M.name)
 			target_name = M.name
-			src.wdata = list()
 			src.organs = list()
 			src.chemtraces = list()
 			src.timeofdeath = null
