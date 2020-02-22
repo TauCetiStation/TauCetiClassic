@@ -21,6 +21,7 @@
 
 /datum/autopsy_data
 	var/weapon = null
+	var/pretend_weapon = null
 	var/damage = 0
 	var/type_damage = ""
 	var/hits = 0
@@ -29,6 +30,7 @@
 /datum/autopsy_data/proc/copy()
 	var/datum/autopsy_data/W = new()
 	W.weapon = weapon
+	W.pretend_weapon = pretend_weapon
 	W.damage = damage
 	W.hits = hits
 	W.time_inflicted = time_inflicted
@@ -37,8 +39,24 @@
 /obj/item/weapon/autopsy_scanner/proc/add_data(obj/item/organ/external/BP)
 	if(!BP.autopsy_data.len && !BP.trace_chemicals.len)
 		return
+
 	if(!(BP in organs))
 		organs += BP
+
+	for(var/adata in BP.autopsy_data)
+		var/datum/autopsy_data/W = BP.autopsy_data[adata]
+		if(!W.pretend_weapon)
+			if(prob(50 + (W.hits * 10 + W.damage)))
+				W.pretend_weapon = W.weapon
+			else
+				if(W.type_damage == "brute")
+					W.pretend_weapon = pick("The mechanical toolbox", "The wirecutters", "The revolver", "The crowbar", "The fire extinguisher", "The tomato soup", "The oxygen tank", "The emergency oxygen tank", "The bullet", "The table", "The chair", "The ERROR")
+				if(W.type_damage == "burn")
+					W.pretend_weapon = pick("The laser", "The cigarette", "The lighter", "The ERROR", "The fire", "The hydrogen peroxide")
+				if(W.type_damage == "mixed")
+					W.pretend_weapon = pick("nuclear explosion", "explosion")
+				if(W.type_damage == "bruise")
+					W.pretend_weapon = pick("The paper", "The nail", "The pen", "The shard", "The PDA", "The cat", "The dog", "The door", "The monkey")
 
 	for(var/V in BP.trace_chemicals)
 		if(BP.trace_chemicals[V] > 0 && !chemtraces.Find(V))
@@ -66,8 +84,8 @@
 		scan_data += "<tr>"
 		scan_data += "<th>Severity</th>"
 		scan_data += "<th>Hits by weapon</th>"
-		scan_data += "<th>The approximate time</th>"
-		scan_data += "<th>Weapons</th>"
+		scan_data += "<th>Possible time</th>"
+		scan_data += "<th>Possible weapon</th>"
 		scan_data += "</tr>"
 		for(var/adata in BP.autopsy_data)
 			var/datum/autopsy_data/W = BP.autopsy_data[adata]
@@ -75,8 +93,11 @@
 			var/type_damage = ""
 			var/hits_desc = ""
 
+			if(W.damage < 1)
+				W.damage = 1
+
 			if(W.type_damage == "brute")
-				type_damage = " wound"
+				type_damage = " wound" //this space is really needed that table does not grow
 			if(W.type_damage == "burn")
 				type_damage = " burn"
 			if(W.type_damage == "mixed")
@@ -85,7 +106,7 @@
 				type_damage = " bruise"
 
 			switch(W.damage)
-				if(0) //Strangled comes in here
+				if(0) //strangled comes in here
 					damage_desc = "Unknown"
 				if(1 to 5)
 					damage_desc = "<font color='green'>negligible[type_damage]</font>"
@@ -113,7 +134,7 @@
 			scan_data += "</td>"
 			scan_data += "<td>[W.time_inflicted]</td>"
 			scan_data += "<td>"
-			scan_data += "[W.weapon]"
+			scan_data += "[W.pretend_weapon]"
 			scan_data += "</td>"
 			scan_data += "</tr>"
 
