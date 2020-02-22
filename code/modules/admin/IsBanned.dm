@@ -176,7 +176,7 @@
 		desc += "[byond_ban[BANKEY_MSG]]\n"
 		desc += "This ban was applied by [byond_ban[BANKEY_ADMIN]]\n"
 		desc += "This is a BanEvasion Detection System ban, if you think this ban is a mistake, please wait EXACTLY 6 seconds, then try again before filing an appeal.\n"
-		// . = list("reason" = "Stickyban", "desc" = desc) ~TechCat TODO
+		. = list("reason" = "Stickyban", "desc" = desc)
 		log_access("Failed Login: [key] [computer_id] [address] - StickyBanned [byond_ban[BANKEY_MSG]] Target Username: [banned_ckey] Placed by [byond_ban[BANKEY_ADMIN]]")
 
 

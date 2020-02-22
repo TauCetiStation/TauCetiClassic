@@ -83,12 +83,12 @@
 #define BANKEY_TIME      "time" // The number of seconds remaining in the ban.
 #define BANKEY_WHITELIST "whitelist"
 // Custom ban keys
-#define BANKEY_ADMIN  "admin"   // Ckey on author ban
-#define BANKEY_FROMDB "fromdb" // When ban cached in DB
-#define BANKEY_TIMEOUT "timeout" // Temporary disable (DB require for restore)
+#define BANKEY_ADMIN     "admin"   // Ckey on author ban
+#define BANKEY_FROMDB    "fromdb" // When ban cached in DB
 // Only cache keys
-#define BANKEY_REVERT  "reverting"
-#define BANKEY_MTR    "matches_this_round"
-#define BANKEY_A_MTR  "admin_matches_this_round"
-#define BANKEY_EU_MTR "existing_user_matches_this_round"
-#define BANKEY_PMTR   "pending_matches_this_round"
+#define BANKEY_TIMEOUT   "timeout" // Temporary disable (DB require for restore)
+#define BANKEY_REVERT    "reverting"
+#define BANKEY_MTR       "matches_this_round"
+#define BANKEY_A_MTR     "admin_matches_this_round"
+#define BANKEY_EU_MTR    "existing_user_matches_this_round"
+#define BANKEY_PMTR      "pending_matches_this_round"

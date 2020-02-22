@@ -228,12 +228,12 @@
 	if (!ban)
 		return
 	var/src_href = "_src_=holder"
-	var/disable_link = "<a href='?[src_href];stickyban=revert&ckey=[ckey]'>\[Revert\]</a>"
+	var/disable_link = "<a href='?[src_href];stickyban=revert&ckey=[ckey]'>Revert</a>"
 	establish_db_connection()
 	if(dbcon && dbcon.IsConnected())
-		disable_link = "<a href='?[src_href];stickyban=[(ban[BANKEY_TIMEOUT] ? "untimeout" : "timeout")]&ckey=[ckey]'>\[[ban[BANKEY_TIMEOUT] ? "Untimeout" : "Timeout"]\]</a>"
-	var/remove_link = "<a href='?[src_href];stickyban=remove&ckey=[ckey]'>\[-\]</a>"
-	var/edit_link = "<b><a href='?[src_href];stickyban=edit&ckey=[ckey]'>\[Edit\]</a></b>"
+		disable_link = "<a href='?[src_href];stickyban=[(ban[BANKEY_TIMEOUT] ? "untimeout" : "timeout")]&ckey=[ckey]'>[ban[BANKEY_TIMEOUT] ? "Untimeout" : "Timeout"]</a>"
+	var/remove_link = "<a href='?[src_href];stickyban=remove&ckey=[ckey]'>-</a>"
+	var/edit_link = "<b><a href='?[src_href];stickyban=edit&ckey=[ckey]'>Edit</a></b>"
 	var/owner = "LEGACY"
 	if (!is_stickyban_from_game(ban))
 		owner = "HOST"
@@ -244,8 +244,8 @@
 		if (ckey(key) == ckey)
 			continue
 		var/li = "<li>"
-		li += "<a href='?[src_href];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>\[-\]</a>"
-		li += "<a href='?[src_href];stickyban=exempt&ckey=[ckey]&alt=[ckey(key)]\[E\]</a>"
+		li += "<a href='?[src_href];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>-</a>"
+		li += "<a href='?[src_href];stickyban=exempt&ckey=[ckey]&alt=[ckey(key)]'>E</a>"
 		li += "[key]"
 		li += "</li>"
 		alt_keys_li += li
@@ -253,8 +253,8 @@
 		if (ckey(key) == ckey)
 			continue
 		var/li = "<li>"
-		li += "<a href='?[src_href];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>\[-\]</a>"
-		li += "<a href='?[src_href];stickyban=unexempt&ckey=[ckey]&alt=[ckey(key)]\[UE\]</a>"
+		li += "<a href='?[src_href];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>-</a>"
+		li += "<a href='?[src_href];stickyban=unexempt&ckey=[ckey]&alt=[ckey(key)]'>UE</a>"
 		li += "[key]"
 		li += "</li>"
 		alt_keys_li += li
@@ -263,7 +263,8 @@
 		alt_keys +="Caught keys:<br/><ol>[alt_keys_li.Join("")]</ol>"
 	// Can be easy converted to table or div on stickyban_show
 	return list(
-		"[remove_link][disable_link]<b>[ckey]</b>",
+		"[remove_link][disable_link]",
+		"<b>[ckey]</b>",
 		"[ban[BANKEY_MSG]][edit_link]",
 		"[owner]",
 		"[alt_keys]"
@@ -274,23 +275,20 @@
 	if(!check_rights(R_BAN))
 		return
 	var/list/bans = sticky_banned_ckeys()
+	var/header = "<title>Sticky Bans</title><style> .sign{ font-style: italic;}</style>"
+	var/title = "Sticky Bans <a href='?_src_=holder;stickyban=add'>Add</a>"
 	var/list/html_bans_data = list()
 	for(var/ckey in bans)
-		if (length(html_bans_data)) //no need to do a border above the first ban.
-			html_bans_data += "<br/><hr/>"
 		var/list/ban_html_record = stickyban_gethtml(ckey)
 		if (length(ban_html_record))
-			html_bans_data += ban_html_record.Join("<br/>")
-
-	var/html = {"
-	<head><title>Sticky Bans</title></head>
-	<body>
-		<b>All Sticky Bans:</b> <a href='?_src_=holder;stickyban=add'>\[+\]</a><br/>
-		[html_bans_data.Join("")]
-	</body>
-	"}
-	log_debug("[html]")
-	usr << browse(entity_ja(html), "window=stickybans;size=700x400")
+			html_bans_data += {"<div class="line">[ban_html_record[1]] [ban_html_record[2]]</div>
+					<div class="block">[ban_html_record[3]]</div><div class="sign">By [ban_html_record[4]]</div>
+					<div>[ban_html_record[5]]</div>"}
+	var/content = html_bans_data.Join("<hr/>")
+	var/datum/browser/browser = new(owner.mob, "stickybans", title, 700, 400)
+	browser.add_head_content(header)
+	browser.set_content(entity_ja(content))
+	browser.open()
 
 /client/proc/stickybanpanel()
 	set name = "Sticky Ban Panel"
