@@ -10,7 +10,7 @@ var/datum/subsystem/atoms/SSatoms
 	init_order = SS_INIT_ATOMS
 	flags = SS_NO_FIRE
 
-	var/initialized = INITIALIZATION_INSSATOMS
+	initialized = INITIALIZATION_INSSATOMS
 	var/old_initialized
 
 	var/list/late_loaders

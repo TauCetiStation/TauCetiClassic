@@ -89,8 +89,8 @@ var/list/admin_verbs_variables = list(
 	/client/proc/add_player_age, 		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 	)
 var/list/admin_verbs_ban = list(
-	/client/proc/unban_panel
-//	/client/proc/stickybanpanel,
+	/client/proc/unban_panel,
+	/client/proc/stickybanpanel,
 	)
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
