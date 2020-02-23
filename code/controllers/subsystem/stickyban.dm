@@ -362,21 +362,21 @@ var/datum/subsystem/stickyban/SSstickyban
 		ban = get_stickyban_from_ckey(ckey)
 	if (length(ban) && altckey)
 		var/key = LAZYACCESS(ban[BANKEY_KEYS], altckey)
-		if (!key)
-			return
-		LAZYREMOVE(ban[BANKEY_KEYS], altckey)
-		key["exempt"] = TRUE
-		LAZYSET(ban[BANKEY_WHITELIST], altckey, key)
-		world.SetConfig("ban", ckey, list2stickyban(ban))
-		cache[ckey] = ban
-		// Update DB if can
-		if (establish_db_connection())
-			var/sanitized_ckey = sanitize_sql(ckey)
-			var/sanitized_alt_ckey = sanitize_sql(altckey)
-			if (sanitized_ckey && sanitized_alt_ckey)
-				var/DBQuery/query_exempt_stickyban_alt = dbcon.NewQuery("UPDATE [STICKYBAN_CKEY_MATCHED_TABLENAME] SET exempt = 1 WHERE stickyban = '[sanitized_ckey]' AND matched_ckey = '[sanitized_alt_ckey]'")
-				if (query_exempt_stickyban_alt)
-					query_exempt_stickyban_alt.Execute()
+		if (key)
+			// Rewrite cache and Config
+			LAZYREMOVE(ban[BANKEY_KEYS], altckey)
+			key["exempt"] = TRUE
+			LAZYSET(ban[BANKEY_WHITELIST], altckey, key)
+			world.SetConfig("ban", ckey, list2stickyban(ban))
+			cache[ckey] = ban
+			// Update DB if can
+			if (establish_db_connection())
+				var/sanitized_ckey = sanitize_sql(ckey)
+				var/sanitized_alt_ckey = sanitize_sql(altckey)
+				if (sanitized_ckey && sanitized_alt_ckey)
+					var/DBQuery/query_exempt_stickyban_alt = dbcon.NewQuery("UPDATE [STICKYBAN_CKEY_MATCHED_TABLENAME] SET exempt = 1 WHERE stickyban = '[sanitized_ckey]' AND matched_ckey = '[sanitized_alt_ckey]'")
+					if (query_exempt_stickyban_alt)
+						query_exempt_stickyban_alt.Execute()
 
 /datum/subsystem/stickyban/proc/unexempt_alt_ckey(ckey, altckey, list/ban = null)
 	// Return connection altkey ban for ckey
@@ -386,19 +386,20 @@ var/datum/subsystem/stickyban/SSstickyban
 	if (length(ban))
 		var/key = LAZYACCESS(ban[BANKEY_WHITELIST], altckey)
 		if (key)
-			return
-		LAZYREMOVE(ban[BANKEY_WHITELIST], altckey)
-		key["exempt"] = FALSE
-		LAZYSET(ban[BANKEY_KEYS], altckey, key)
-		world.SetConfig("ban", ckey, list2stickyban(ban))
-		cache[ckey] = ban
-		if (establish_db_connection())
-			var/sanitized_ckey = sanitize_sql(ckey)
-			var/sanitized_alt_ckey = sanitize_sql(altckey)
-			if (sanitized_ckey && sanitized_alt_ckey)
-				var/DBQuery/query_unexmpt_stickyban_alt = dbcon.NewQuery("UPDATE [STICKYBAN_CKEY_MATCHED_TABLENAME] SET exempt = 0 WHERE stickyban = '[sanitized_ckey]' AND matched_ckey = '[sanitized_alt_ckey]'")
-				if (query_unexmpt_stickyban_alt)
-					query_unexmpt_stickyban_alt.Execute()
+			// Rewrite cache and Config
+			LAZYREMOVE(ban[BANKEY_WHITELIST], altckey)
+			key["exempt"] = FALSE
+			LAZYSET(ban[BANKEY_KEYS], altckey, key)
+			world.SetConfig("ban", ckey, list2stickyban(ban))
+			cache[ckey] = ban
+			// Update DB if can
+			if (establish_db_connection())
+				var/sanitized_ckey = sanitize_sql(ckey)
+				var/sanitized_alt_ckey = sanitize_sql(altckey)
+				if (sanitized_ckey && sanitized_alt_ckey)
+					var/DBQuery/query_unexmpt_stickyban_alt = dbcon.NewQuery("UPDATE [STICKYBAN_CKEY_MATCHED_TABLENAME] SET exempt = 0 WHERE stickyban = '[sanitized_ckey]' AND matched_ckey = '[sanitized_alt_ckey]'")
+					if (query_unexmpt_stickyban_alt)
+						query_unexmpt_stickyban_alt.Execute()
 
 /datum/subsystem/stickyban/proc/timeout_before_restart(ckey, list/ban = null)
 	// Exclude stickyban before droping cache(restart)

@@ -179,8 +179,7 @@
 /datum/admins/proc/stickyban_timeout(ckey)
 	if (!ckey)
 		return
-	establish_db_connection()
-	if (!dbcon || !dbcon.IsConnected())
+	if (!establish_db_connection())
 		to_chat(usr, "<span class='adminnotice'>No database connection!</span>")
 		return
 	if (alert("Are you sure you want to put [ckey]'s stickyban on timeout until next round (or removed)?","Are you sure","Yes","No") == "No")

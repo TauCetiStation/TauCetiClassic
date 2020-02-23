@@ -16,9 +16,12 @@
 	var/is_admin = FALSE
 	var/ckey = ckey(key)
 	var/client/C = global.directory[ckey]
+
+	/* Uncomment this for skip connected clients checks. Broke stckybans sometimes
 	// Don't recheck connected clients.
 	if (!real_bans_only && istype(C) && ckey == C.ckey && computer_id == C.computer_id && address == C.address)
 		return
+	*/
 
 	// Whitelist
 	if(!real_bans_only && config.serverwhitelist && !check_if_a_new_player(key))
@@ -93,7 +96,7 @@
 		if (failedip)
 			message_admins("[key] has logged in with a blank ip in the ban check.")
 
-/world/proc/stickyban_check(byond_ban, key, computer_id, address, real_bans_only, is_admin)
+/world/proc/stickyban_check(list/byond_ban, key, computer_id, address, real_bans_only, is_admin)
 	. = byond_ban
 	if (!real_bans_only && byond_ban && islist(byond_ban))
 		// Gather basic data
@@ -168,16 +171,17 @@
 			log_admin("The admin [key] has been allowed to bypass a matching host/sticky ban on [banned_ckey]")
 			return null
 		// Ckey is already connected
+		/* Turn off sticky and host bans for test ~TechCat
 		if (C)
-			to_chat(C, "<span class='redtext'>You are about to get disconnected for matching a sticky ban after you connected. If this turns out to be the ban evasion detection system going haywire, we will automatically detect this and revert the matches. if you feel that this is the case, please wait EXACTLY 6 seconds then reconnect using file -> reconnect to see if the match was automatically reversed.</span>")
+			to_chat(C, "<span class='redtext'>You are about to get disconnected for matching a sticky ban after you connected. If this turns out to be the ban evasion detection system going haywire, we will automatically detect this and revert the matches. if you feel that this is the case, please wait EXACTLY 6 seconds then reconnect using file -> reconnect to see if the match was automatically reversed.</span>")*/
 		var/desc = "\n"
 		desc += "Reason:(StickyBan) You, or another user of this computer or connection ([banned_ckey]) is banned from playing here. The ban reason is:\n"
-		desc += "[byond_ban[BANKEY_MSG]]\n"
-		desc += "This ban was applied by [byond_ban[BANKEY_ADMIN]]\n"
+		desc += "[byond_ban[BANKEY_MSG]].\n"
+		desc += "This ban was applied by [byond_ban[BANKEY_ADMIN]].\n"
 		desc += "This is a BanEvasion Detection System ban, if you think this ban is a mistake, please wait EXACTLY 6 seconds, then try again before filing an appeal.\n"
 		. = list("reason" = "Stickyban", "desc" = desc)
 		log_access("Failed Login: [key] [computer_id] [address] - StickyBanned [byond_ban[BANKEY_MSG]] Target Username: [banned_ckey] Placed by [byond_ban[BANKEY_ADMIN]]")
-	return null // Turn off sticky and host bans for test ~TechCat
+	return null // Turn off sticky and host bans for test. Still user will be ban on first match with other ckey ~TechCat
 
 
 /proc/turnoff_stickybans_temporary(admin_ckey, seconds = 5)
