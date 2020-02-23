@@ -1,8 +1,7 @@
 /obj/item/weapon/gun/projectile/automatic //Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
 	name = "submachine gun"
 	desc = "A lightweight, fast firing gun. Uses 9mm rounds."
-	icon_state = "saber"
-	item_state = "saber"	//ugly
+	icon_state = "saber"	//ugly
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/msmg9mm

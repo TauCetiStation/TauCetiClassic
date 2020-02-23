@@ -144,7 +144,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				#endif
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
-				testing("GC: -- \ref[D] | [type] was unable to be GC'd --")
+				log_qdel("GC: -- \ref[D] | [type] was unable to be GC'd --")
 				I.failures++
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
@@ -211,7 +211,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	if (time > highest_del_time)
 		highest_del_time = time
 	if (time > 10)
-		log_game("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete)")
+		log_qdel("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete)")
 		message_admins("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete).")
 		postpone(time)
 

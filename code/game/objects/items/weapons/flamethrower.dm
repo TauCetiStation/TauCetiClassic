@@ -30,6 +30,11 @@
 		qdel(ptank)
 	return ..()
 
+/obj/item/weapon/flamethrower/get_current_temperature()
+	if(lit)
+		return 1500
+	return 0
+
 /obj/item/weapon/flamethrower/process()
 	if(!lit)
 		STOP_PROCESSING(SSobj, src)
@@ -241,6 +246,11 @@
 	if(isturf(location)) //start a fire if possible
 		location.hotspot_expose(700, 2)
 	return
+
+/obj/item/weapon/flamethrower_M2/get_current_temperature()
+	if(lit)
+		return 1500
+	return 0
 
 /obj/item/weapon/flamethrower_M2/proc/unequip(mob/user)
 	if(Connected_tank)

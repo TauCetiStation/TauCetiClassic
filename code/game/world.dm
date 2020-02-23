@@ -90,6 +90,7 @@ var/base_commit_sha = 0
 	global.log_directory = "data/logs/[log_date]/round-[log_suffix]"
 	global.log_investigate_directory = "[log_directory]/investigate"
 	global.log_debug_directory = "[log_directory]/debug"
+	global.log_debug_js_directory = "[log_debug_directory]/js_errors"
 
 	global.game_log = file("[log_directory]/game.log")
 	global.hrefs_log = file("[log_directory]/href.log")
@@ -100,14 +101,14 @@ var/base_commit_sha = 0
 	global.qdel_log  = file("[log_debug_directory]/qdel.log")
 	global.sql_error_log = file("[log_debug_directory]/sql.log")
 
-	round_log("Server starting up")
+	round_log("Server '[config.server_name]' starting up on [BYOND_SERVER_ADDRESS]")
 
 	var/debug_rev_message = ""
 	if(base_commit_sha)
-		debug_rev_message += "Base SHA: [base_commit_sha]\n[log_end]"
+		debug_rev_message += "Base SHA: [base_commit_sha][log_end]\n"
 
 	if(fexists("test_merge.txt"))
-		debug_rev_message += "TM: [trim(file2text("test_merge.txt"))]\n[log_end]"
+		debug_rev_message += "TM: [trim(file2text("test_merge.txt"))][log_end]\n"
 
 	if(length(debug_rev_message))
 		info(debug_rev_message)
