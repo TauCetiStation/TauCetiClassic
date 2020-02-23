@@ -44,11 +44,10 @@
 	var/ckey = ckey(key)
 	// Legacy ban system
 	if(config.ban_legacy_system)
-		var/ban = CheckBan( ckey, computer_id, address )
-		if(ban)
+		. = CheckBan( ckey, computer_id, address )
+		if(.)
 			log_access("Failed Login: [key] [computer_id] [address] - Banned [.[BANKEY_REASON]]")
 			message_admins("Failed Login: [key] id:[computer_id] ip:[address] - Banned [.[BANKEY_REASON]]")
-			return ban
 
 	// Database ban system
 	else
