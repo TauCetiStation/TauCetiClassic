@@ -3,6 +3,7 @@
 	var/name = "Flesh bodypart controller"
 	var/obj/item/organ/external/BP
 	var/bodypart_type = BODYPART_ORGANIC
+	var/damage_threshold = 0
 
 /datum/bodypart_controller/New(obj/item/organ/external/B)
 	BP = B
@@ -25,6 +26,9 @@
 	burn = round(burn * BP.owner.species.burn_mod, 0.1)
 
 	if((brute <= 0) && (burn <= 0))
+		return 0
+
+	if(damage_threshold > brute + burn)
 		return 0
 
 	if(BP.is_stump)
@@ -63,6 +67,10 @@
 
 	var/datum/wound/created_wound
 	if(brute)
+		if(ishuman(BP.owner))
+			var/mob/living/carbon/human/HU = BP.owner
+			if(HU.w_uniform && istype(HU.w_uniform, /obj/item/clothing/under/rank/clown))
+				playsound(HU, 'sound/effects/squeak.ogg', VOL_EFFECTS_MISC, vol = 65)
 		if(can_cut)
 			//need to check sharp again here so that blunt damage that was strong enough to break skin doesn't give puncture wounds
 			if(sharp && !edge)

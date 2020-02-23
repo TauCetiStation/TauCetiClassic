@@ -141,7 +141,7 @@
 	return 1
 
 
-/obj/structure/window/hitby(AM)
+/obj/structure/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	..()
 	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0
@@ -201,7 +201,7 @@
 
 /obj/structure/window/attack_alien(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(islarva(user) || isfacehugger(user))
+	if(isxenolarva(user) || isfacehugger(user))
 		return
 	attack_generic(user, 15)
 

@@ -156,6 +156,10 @@
 	icon_state = "shuttle"
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 
+/area/shuttle/mining/transit
+	icon_state = "shuttle"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
+
 //Centcom Transport Shuttle
 /area/shuttle/transport1/centcom
 	icon_state = "shuttle"

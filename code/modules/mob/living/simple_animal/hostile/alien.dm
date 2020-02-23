@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/alien
+/mob/living/simple_animal/hostile/xenomorph
 	name = "alien hunter"
 	desc = "Hiss!"
 	icon = 'icons/mob/alien.dmi'
@@ -34,11 +34,11 @@
 	minbodytemp = 0
 	heat_damage_per_tick = 20
 
-/mob/living/simple_animal/hostile/alien/atom_init()
+/mob/living/simple_animal/hostile/xenomorph/atom_init()
 	. = ..()
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW)
 
-/mob/living/simple_animal/hostile/alien/drone
+/mob/living/simple_animal/hostile/xenomorph/drone
 	name = "alien drone"
 	icon_state = "aliend_running"
 	icon_living = "aliend_running"
@@ -47,7 +47,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 
-/mob/living/simple_animal/hostile/alien/sentinel
+/mob/living/simple_animal/hostile/xenomorph/sentinel
 	name = "alien sentinel"
 	icon_state = "aliens_running"
 	icon_living = "aliens_running"
@@ -62,7 +62,7 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 
 
-/mob/living/simple_animal/hostile/alien/queen
+/mob/living/simple_animal/hostile/xenomorph/queen
 	name = "alien queen"
 	icon_state = "alienq_running"
 	icon_living = "alienq_running"
@@ -80,7 +80,7 @@
 	rapid = 1
 	status_flags = 0
 
-/mob/living/simple_animal/hostile/alien/queen/large
+/mob/living/simple_animal/hostile/xenomorph/queen/large
 	name = "alien empress"
 	icon = 'icons/mob/alienqueen.dmi'
 	icon_state = "queen_s"
@@ -94,7 +94,7 @@
 	damage = 30
 	icon_state = "toxin"
 
-/mob/living/simple_animal/hostile/alien/death()
+/mob/living/simple_animal/hostile/xenomorph/death()
 	..()
 	visible_message("[src] lets out a waning guttural screech, green blood bubbling from its maw...")
 	playsound(src, 'sound/voice/xenomorph/death_1.ogg', VOL_EFFECTS_MASTER)

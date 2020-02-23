@@ -2,7 +2,7 @@
 // GLOBAL MACRO HELPERS
 // ===================================
 
-// A = thing to stop | B = thing to hit. | finialize() calls A.throw_impact(B)
+// A = thing to stop | B = thing to hit. | finialize() calls A.throw_impact(B, throwingdatum)
 #define STOP_THROWING(A, B) if(A.throwing) {var/datum/thrownthing/TT = SSthrowing.processing[A]; if(TT) {TT.finialize(null, B);}}
 
 // ===================================
@@ -421,7 +421,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	ADD_TO_MOBLIST(/mob/living/silicon/robot)
 	ADD_TO_MOBLIST(/mob/living/carbon/human)
 	ADD_TO_MOBLIST(/mob/living/carbon/brain)
-	ADD_TO_MOBLIST(/mob/living/carbon/alien)
+	ADD_TO_MOBLIST(/mob/living/carbon/xenomorph)
 	ADD_TO_MOBLIST(/mob/dead)
 	ADD_TO_MOBLIST(/mob/living/parasite/essence)
 	ADD_TO_MOBLIST(/mob/living/carbon/monkey)
@@ -461,15 +461,18 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(istype(whom, /client))
 		C = whom
 		M = C.mob
-		key = C.key
+		key = C.ckey
 	else if(ismob(whom))
 		M = whom
 		C = M.client
-		key = M.key
-	else if(istype(whom, /datum))
-		var/datum/D = whom
-		return "*invalid:[D.type]*"
+		key = M.ckey
+	else if(istype(whom, /datum/mind))
+		var/datum/mind/mind = whom
+		M = mind.current
+		C = M ? M.client : null
+		key = ckey(mind.key)
 	else
+		//trace
 		return "*invalid*"
 
 	. = ""
@@ -507,6 +510,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return .
 
+// don't use for logs because include_link=1, use key_name
 /proc/key_name_admin(whom, include_name = 1)
 	return key_name(whom, 1, include_name)
 

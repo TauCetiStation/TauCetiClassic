@@ -88,7 +88,7 @@
 					clear_fullscreen("high")
 
 		if(machine)
-			if (!( machine.check_eye(src) ))
+			if (!(machine.check_eye(src)))
 				reset_view(null)
 		else
 			if(!client.adminobs)

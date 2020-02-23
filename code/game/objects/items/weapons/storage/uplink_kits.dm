@@ -228,6 +228,16 @@
 		new /obj/item/clothing/head/helmet/syndiassault/alternate(src)
 	make_exact_fit()
 
+
+/obj/item/weapon/storage/box/syndie_kit/light_armor
+	name = "box (L)"
+
+/obj/item/weapon/storage/box/syndie_kit/light_armor/atom_init()
+	. = ..()
+	new /obj/item/clothing/suit/armor/syndilight(src)
+	new /obj/item/clothing/head/helmet/syndiassault/alternate(src)
+	make_exact_fit()
+
 /obj/item/weapon/storage/box/syndie_kit/fake
 	name = "box (B)"
 	desc = "This set allows you to forge various documents at the station."

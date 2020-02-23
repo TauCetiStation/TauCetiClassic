@@ -627,7 +627,7 @@
 			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 
 	if(message)
-		log_emote("[name]/[key] : [message]")
+		log_emote("[key_name(src)] : [message]")
 
  //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
  // Maybe some people are okay with that.

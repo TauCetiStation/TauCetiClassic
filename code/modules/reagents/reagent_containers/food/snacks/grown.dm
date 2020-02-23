@@ -153,7 +153,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	seed = "obj/item/seeds/harebellseed"
 	name = "harebell"
-	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten’d not thy breath.\""
+	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten'd not thy breath.\""
 	icon_state = "harebell"
 	potency = 1
 	filling_color = "#d4b2c9"
@@ -647,7 +647,7 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/tomato_smudge(loc)
 	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
@@ -676,10 +676,17 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato/attack_self(mob/user)
 	if(istype(user.loc,/turf/space))
 		return
-	new /mob/living/simple_animal/hostile/tomato(user.loc)
+	new /mob/living/simple_animal/hostile/tomato(user.loc, potency)
 	qdel(src)
-
 	to_chat(user, "<span class='notice'>You plant the killer-tomato.</span>")
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/killertomato/attack_hand(mob/living/carbon/human/user)
+	if(!user.gloves)
+		to_chat(user, "<span class='warning'>You woke the killer-tomato!</span>")
+		new /mob/living/simple_animal/hostile/tomato(user.loc, potency)
+		qdel(src)
+	else
+		..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato
 	seed = "/obj/item/seeds/bloodtomatoseed"
@@ -695,7 +702,7 @@
 	reagents.add_reagent("blood", 1+round((potency / 5), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/blood/splatter(loc)
 	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
@@ -718,7 +725,7 @@
 	reagents.add_reagent("lube", 1+round((potency / 5), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/blood/oil(loc)
 	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
@@ -1049,7 +1056,7 @@
 	reagents.add_reagent("singulo", 1+round((potency / 5), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	var/mob/M = usr
 	var/outer_teleport_radius = potency / 10 //Plant potency determines radius of teleport.

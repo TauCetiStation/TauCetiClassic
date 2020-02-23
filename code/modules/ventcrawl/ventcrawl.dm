@@ -70,7 +70,7 @@ var/list/ventcrawl_machinery = list(
 				return FALSE
 	return TRUE
 
-/mob/living/carbon/alien/ventcrawl_carry()
+/mob/living/carbon/xenomorph/ventcrawl_carry()
 	return TRUE
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)

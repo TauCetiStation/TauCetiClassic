@@ -206,10 +206,10 @@
 	..()
 
 //When an object is thrown at the window
-/obj/machinery/door/window/hitby(AM)
+/obj/machinery/door/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 
 	..()
-	visible_message("<span class='warning'><B>The glass door was hit by [AM].</B></span>", 1)
+	visible_message("<span class='warning'><B>The glass door was hit by [AM].</B></span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
@@ -230,7 +230,7 @@
 	take_damage(damage)
 
 /obj/machinery/door/window/attack_alien(mob/user)
-	if(islarva(user))
+	if(isxenolarva(user))
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 25)

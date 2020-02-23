@@ -194,10 +194,13 @@ var/list/alldepartments = list("Central Command")
 
 	add_communication_log(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
 
+	for(var/client/X in global.admins)
+		X.mob.playsound_local(null, 'sound/machines/fax_centcomm.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+
 	world.send2bridge(
 		type = list(BRIDGE_ADMINCOM),
 		attachment_title = ":fax: **[key_name(sender)]** sent fax to ***Centcomm***",
-		attachment_msg = strip_html_properly(replacetext((P.info + P.stamp_text), "<br>", "\n")),
+		attachment_msg = strip_html_properly(replacetext((P.info + "\n" + P.stamp_text),"<br>", "\n")),
 		attachment_color = BRIDGE_COLOR_ADMINCOM,
 	)
 
