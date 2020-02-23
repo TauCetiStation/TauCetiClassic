@@ -15,7 +15,7 @@
 			else if(i == "pai candidate")
 				if(jobban_isbanned(user, "pAI"))
 					. +="<tr><td width='45%'>[i]: </td><td><font color=red><b> \[BANNED]</b></font><br></td></tr>"
-			else if(available_in_minutes)
+			else if(available_in_minutes && !(i == ROLE_PLANT && is_alien_whitelisted(user, DIONA)))
 				. += "<tr><td width='45%'><del>[i]</del>: </td><td> \[IN [(available_in_minutes)] MINUTES]</td></tr>"
 			else
 				if(i in be_role)
