@@ -34,7 +34,7 @@ var/global/list/icon_state_allowed_cache = list()
 
 /obj/item/clothing/proc/update_species_restrictions()
 	if(!species_restricted)
-		species_restricted = list()
+		species_restricted = list("excluded", VOX, VOX_ARMALIS)
 
 	var/exclusive = ("excluded" in species_restricted)
 

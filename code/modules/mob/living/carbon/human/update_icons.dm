@@ -140,9 +140,10 @@ Please contact me on #coderbus IRC. ~Carn x
 /obj/item/proc/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
 	var/icon_path = def_icon_path
 
-	var/t_state = item_color
-	if(!t_state && (sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES))
+	var/t_state
+	if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES)
 		t_state = item_state
+
 	if(!t_state)
 		t_state = icon_state
 
@@ -164,9 +165,10 @@ Please contact me on #coderbus IRC. ~Carn x
 	return I
 
 /obj/item/clothing/get_standing_overlay(mob/living/carbon/human/H, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
-	var/t_state = item_color
-	if(!t_state && (sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES))
+	var/t_state
+	if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES)
 		t_state = item_state
+
 	if(!t_state)
 		t_state = icon_state
 
