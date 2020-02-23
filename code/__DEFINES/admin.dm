@@ -88,6 +88,7 @@
 // Only cache keys
 #define BANKEY_TIMEOUT   "timeout" // Temporary disable (DB require for restore)
 #define BANKEY_REVERT    "reverting"
+// Only cache keys. Lists lazy and key may not exists
 #define BANKEY_MTR       "matches_this_round"
 #define BANKEY_A_MTR     "admin_matches_this_round"
 #define BANKEY_EU_MTR    "existing_user_matches_this_round"

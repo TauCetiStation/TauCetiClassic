@@ -119,27 +119,30 @@
 				newmatch = TRUE
 				if (cached_ban[BANKEY_KEYS] && cached_ban[BANKEY_KEYS][ckey])
 					newmatch = FALSE
-				if (cached_ban[BANKEY_MTR][ckey])
+				if (LAZYACCESS(cached_ban[BANKEY_MTR], ckey))
 					newmatch = FALSE
 
 			if (newmatch)
-				var/list/new_matches = cached_ban[BANKEY_MTR]
-				var/list/pending_matches = cached_ban[BANKEY_MTR]
-				var/list/new_matches_connected = cached_ban[BANKEY_EU_MTR]
-				var/list/new_matches_admin = cached_ban[BANKEY_A_MTR]
 
 				if (C)
-					new_matches_connected[ckey] = ckey
-					pending_matches[ckey] = ckey
+					log_debug("add ckey [ckey] to EU_MTR")
+					LAZYSET(cached_ban[BANKEY_EU_MTR], ckey, ckey)
+					log_debug("add ckey [ckey] to PMTR")
+					LAZYSET(cached_ban[BANKEY_PMTR], ckey, ckey)
 					sleep(STICKYBAN_ROGUE_CHECK_TIME)
-					pending_matches -= ckey
+					LAZYREMOVE(cached_ban[BANKEY_PMTR], ckey)
 				if (is_admin)
-					new_matches_admin[ckey] = ckey
-				new_matches[ckey] = ckey
-
-				if (new_matches.len + pending_matches.len > STICKYBAN_MAX_MATCHES || \
-					new_matches_connected.len > STICKYBAN_MAX_EXISTING_USER_MATCHES || \
-					new_matches_admin.len > STICKYBAN_MAX_ADMIN_MATCHES)
+					log_debug("add ckey [ckey] to A_MTR")
+					LAZYSET(cached_ban[BANKEY_A_MTR], ckey, ckey)
+				log_debug("add ckey [ckey] to MTR")
+				LAZYSET(cached_ban[BANKEY_MTR], ckey, ckey)
+				// Checking if we have a lot of matches in already connected clients
+				// Then next ban drop from Config after limit
+				// When ban not in DB clearing matches too
+				// DB restore after sometime rouge bans
+				if (LAZYLEN(cached_ban[BANKEY_MTR]) + LAZYLEN(cached_ban[BANKEY_PMTR]) > STICKYBAN_MAX_MATCHES || \
+					LAZYLEN(cached_ban[BANKEY_EU_MTR]) > STICKYBAN_MAX_EXISTING_USER_MATCHES || \
+					LAZYLEN(cached_ban[BANKEY_A_MTR]) > STICKYBAN_MAX_ADMIN_MATCHES)
 					var/action
 					if (byond_ban[BANKEY_FROMDB])
 						cached_ban[BANKEY_TIMEOUT] = TRUE
@@ -157,9 +160,11 @@
 						world.SetConfig("ban", banned_ckey, null)
 						if (!byond_ban[BANKEY_FROMDB])
 							cached_ban = cached_ban.Copy()
-							cached_ban[BANKEY_MTR] = list()
-							cached_ban[BANKEY_EU_MTR] = list()
-							cached_ban[BANKEY_A_MTR] = list()
+							// clearing all matches
+							cached_ban -= BANKEY_MTR
+							cached_ban -= BANKEY_PMTR
+							cached_ban -= BANKEY_EU_MTR
+							cached_ban -= BANKEY_A_MTR
 							cached_ban -= BANKEY_REVERT
 							SSstickyban.cache[banned_ckey] = cached_ban
 							world.SetConfig("ban", banned_ckey, list2stickyban(cached_ban))
@@ -171,9 +176,8 @@
 			log_admin("The admin [key] has been allowed to bypass a matching host/sticky ban on [banned_ckey]")
 			return null
 		// Ckey is already connected
-		/* Turn off sticky and host bans for test ~TechCat
 		if (C)
-			to_chat(C, "<span class='redtext'>You are about to get disconnected for matching a sticky ban after you connected. If this turns out to be the ban evasion detection system going haywire, we will automatically detect this and revert the matches. if you feel that this is the case, please wait EXACTLY 6 seconds then reconnect using file -> reconnect to see if the match was automatically reversed.</span>")*/
+			to_chat(C, "<span class='warning'>You are about to get disconnected for matching a sticky ban after you connected. If this turns out to be the ban evasion detection system going haywire, we will automatically detect this and revert the matches. if you feel that this is the case, please wait EXACTLY 6 seconds then reconnect to see if the match was automatically reversed.</span>")
 		var/desc = "\n"
 		desc += "Reason:(StickyBan) You, or another user of this computer or connection ([banned_ckey]) is banned from playing here. The ban reason is:\n"
 		desc += "[byond_ban[BANKEY_MSG]].\n"
@@ -181,7 +185,6 @@
 		desc += "This is a BanEvasion Detection System ban, if you think this ban is a mistake, please wait EXACTLY 6 seconds, then try again before filing an appeal.\n"
 		. = list("reason" = "Stickyban", "desc" = desc)
 		log_access("Failed Login: [key] [computer_id] [address] - StickyBanned [byond_ban[BANKEY_MSG]] Target Username: [banned_ckey] Placed by [byond_ban[BANKEY_ADMIN]]")
-	return null // Turn off sticky and host bans for test. Still user will be ban on first match with other ckey ~TechCat
 
 
 /proc/turnoff_stickybans_temporary(admin_ckey, seconds = 5)

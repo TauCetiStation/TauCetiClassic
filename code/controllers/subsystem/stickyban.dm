@@ -78,12 +78,6 @@ var/datum/subsystem/stickyban/SSstickyban
 
 		if (!ban[BANKEY_CKEY])
 			ban[BANKEY_CKEY] = ckey
-
-		ban[BANKEY_MTR] = list()
-		ban[BANKEY_EU_MTR] = list()
-		ban[BANKEY_A_MTR] = list()
-		ban[BANKEY_PMTR] = list()
-
 		cache[ckey] = ban
 		world.SetConfig("ban", ckey, list2stickyban(ban))
 
@@ -95,7 +89,7 @@ var/datum/subsystem/stickyban/SSstickyban
 		if (dbcache_expire)
 			return dbcache.Copy()
 
-/datum/subsystem/stickyban/proc/get_cached_stickyban(ckey)
+/datum/subsystem/stickyban/proc/get_dbcached_stickyban(ckey)
 	// Return stickyban, if have it in DB or DBcache. Update dbcache on timer
 	var/list/stickyban_record = list()
 	if ((establish_db_connection()) || length(dbcache))
@@ -224,11 +218,6 @@ var/datum/subsystem/stickyban/SSstickyban
 	world.SetConfig("ban", ckey, list2stickyban(ban))
 	// Update memory cache
 	ban = stickyban2list(list2stickyban(ban))
-	// Add cache internal data
-	ban[BANKEY_MTR] = list()
-	ban[BANKEY_EU_MTR] = list()
-	ban[BANKEY_A_MTR] = list()
-	ban[BANKEY_PMTR] = list()
 	cache[ckey] = ban
 
 /datum/subsystem/stickyban/proc/import_raw_stickyban_to_db(ckey, list/ban)
@@ -442,7 +431,6 @@ var/datum/subsystem/stickyban/SSstickyban
 	// Updates matches tables
 	// If matched address, ckey or cid found, update last_matched column in DB
 
-	log_debug("Update matches for [ckey]") // TODO Remove debug ~TechCat
 	if(establish_db_connection())
 		var/list/ckey_match_row = list(
 			"stickyban" = "'[sanitize_sql(ckey)]'",
@@ -485,7 +473,7 @@ var/datum/subsystem/stickyban/SSstickyban
 	if (!ckey)
 		return null
 	// Looking in cache
-	var/list/stickyban_record = SSstickyban.get_cached_stickyban(ckey)
+	var/list/stickyban_record = SSstickyban.get_dbcached_stickyban(ckey)
 	if (length(stickyban_record))
 		return stickyban_record
 	// Looking in Config
@@ -544,8 +532,7 @@ var/datum/subsystem/stickyban/SSstickyban
 		buffer[BANKEY_WHITELIST] = jointext(buffer[BANKEY_WHITELIST], ",")
 	if (buffer[BANKEY_TYPE])
 		buffer[BANKEY_TYPE] = jointext(buffer[BANKEY_TYPE], ",")
-	// Remove internal data
-	// TODO defined and check unused ~TechCat
+	// Remove IsBanned matches data from cache
 	buffer -= BANKEY_REVERT
 	buffer -= BANKEY_MTR
 	buffer -= BANKEY_EU_MTR
