@@ -17,8 +17,6 @@ var/datum/subsystem/stickyban/SSstickyban
 	// List of bans loaded from DB.
 	// Updated every STICKYBAN_DB_CACHE_TIME or fail to found dbcache
 	var/list/dbcache = list()
-	//TODO remove ??
-	var/list/confirmed_exempt = list()
 	// Next world.time to update DB cache
 	var/dbcache_expire = 0
 

@@ -125,16 +125,12 @@
 			if (newmatch)
 
 				if (C)
-					log_debug("add ckey [ckey] to EU_MTR")
 					LAZYSET(cached_ban[BANKEY_EU_MTR], ckey, ckey)
-					log_debug("add ckey [ckey] to PMTR")
 					LAZYSET(cached_ban[BANKEY_PMTR], ckey, ckey)
 					sleep(STICKYBAN_ROGUE_CHECK_TIME)
 					LAZYREMOVE(cached_ban[BANKEY_PMTR], ckey)
 				if (is_admin)
-					log_debug("add ckey [ckey] to A_MTR")
 					LAZYSET(cached_ban[BANKEY_A_MTR], ckey, ckey)
-				log_debug("add ckey [ckey] to MTR")
 				LAZYSET(cached_ban[BANKEY_MTR], ckey, ckey)
 				// Checking if we have a lot of matches in already connected clients
 				// Then next ban drop from Config after limit
