@@ -94,7 +94,6 @@
 			message_admins("[key] has logged in with a blank ip in the ban check.")
 
 /world/proc/stickyban_check(byond_ban, key, computer_id, address, real_bans_only, is_admin)
-	// For test pass through  ~TechCat
 	. = byond_ban 
 	if (!real_bans_only && byond_ban && islist(byond_ban))
 		// Gather basic data
@@ -178,6 +177,7 @@
 		desc += "This is a BanEvasion Detection System ban, if you think this ban is a mistake, please wait EXACTLY 6 seconds, then try again before filing an appeal.\n"
 		. = list("reason" = "Stickyban", "desc" = desc)
 		log_access("Failed Login: [key] [computer_id] [address] - StickyBanned [byond_ban[BANKEY_MSG]] Target Username: [banned_ckey] Placed by [byond_ban[BANKEY_ADMIN]]")
+	return null // Turn off sticky and host bans for test ~TechCat
 
 
 /proc/turnoff_stickybans_temporary(admin_ckey, seconds = 5)
