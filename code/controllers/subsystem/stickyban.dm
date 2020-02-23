@@ -324,6 +324,7 @@ var/datum/subsystem/stickyban/SSstickyban
 
 /datum/subsystem/stickyban/proc/remove_altkey(ckey, altckey, list/ban = null)
 	// Remove connected other ckey from stickyban
+	// If ban argument passed don't searching it again
 	if (ckey && altckey)
 		if (!ban) // For optimize passthrough ban optional
 			ban = get_stickyban_from_ckey(ckey)
@@ -339,6 +340,8 @@ var/datum/subsystem/stickyban/SSstickyban
 					query.Execute()
 
 /datum/subsystem/stickyban/proc/update_reason(ckey, reason, list/ban = null)
+	// Update message in stickyban
+	// If ban argument passed don't searching it again
 	if (ckey && reason)
 		if (!ban)
 			ban = get_stickyban_from_ckey(ckey)

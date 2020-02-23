@@ -94,7 +94,7 @@
 			message_admins("[key] has logged in with a blank ip in the ban check.")
 
 /world/proc/stickyban_check(byond_ban, key, computer_id, address, real_bans_only, is_admin)
-	. = byond_ban 
+	. = byond_ban
 	if (!real_bans_only && byond_ban && islist(byond_ban))
 		// Gather basic data
 		var/ckey = ckey(key)
@@ -111,14 +111,14 @@
 			if (cached_ban[BANKEY_REVERT] || cached_ban[BANKEY_TIMEOUT])
 				world.SetConfig("ban", banned_ckey, null)
 				return null
-			
+
 			if (ckey != banned_ckey)
 				newmatch = TRUE
 				if (cached_ban[BANKEY_KEYS] && cached_ban[BANKEY_KEYS][ckey])
 					newmatch = FALSE
 				if (cached_ban[BANKEY_MTR][ckey])
 					newmatch = FALSE
-			
+
 			if (newmatch)
 				var/list/new_matches = cached_ban[BANKEY_MTR]
 				var/list/pending_matches = cached_ban[BANKEY_MTR]
