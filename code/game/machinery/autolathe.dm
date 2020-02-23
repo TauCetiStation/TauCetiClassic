@@ -146,7 +146,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	var/coeff = 2 ** prod_coeff
 	var/dat
 
-	dat = text("<B>Metal Amount:</B> [src.m_amount] cm<sup>3</sup> (MAX: [max_m_amount])<BR>\n<FONT color='#24b6bbff'><B>Glass Amount:</B></FONT> [src.g_amount] cm<sup>3</sup> (MAX: [max_g_amount])<HR>")
+	dat = "<B>Metal Amount:</B> [src.m_amount] cm<sup>3</sup> (MAX: [max_m_amount])<BR>\n<FONT color='#24b6bbff'><B>Glass Amount:</B></FONT> [src.g_amount] cm<sup>3</sup> (MAX: [max_g_amount])<HR>"
 	dat += "<div class='statusDisplay'>"
 	dat += "<table>"
 	var/list/objs = list()
