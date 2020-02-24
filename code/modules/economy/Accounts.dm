@@ -1,5 +1,5 @@
 
-// 2^24 - 1. 24bit. Others lost, sadly
+// float 1-8-23 bits. More then 16777216 lost accuracy in $1
 #define MAX_MONEY_ON_ACCOUNT 16777215
 #define MIN_MONEY_ON_ACCOUNT -16777215
 
