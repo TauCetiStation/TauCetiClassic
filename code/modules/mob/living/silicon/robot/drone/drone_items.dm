@@ -41,6 +41,8 @@
 		/obj/item/weapon/clipboard,
 		/obj/item/weapon/paper,
 		/obj/item/weapon/paper_bundle,
+		/obj/item/weapon/photo,
+		/obj/item/weapon/folder,
 		/obj/item/weapon/card/id,
 		/obj/item/weapon/book,
 		/obj/item/weapon/newspaper,
@@ -76,10 +78,15 @@
 
 /obj/item/weapon/gripper/attack_self(mob/user)
 	if(wrapped)
-		wrapped.attack_self(user)
-
-		if(QDELETED(wrapped))
+		if (QDELETED(wrapped))// in case if wrapped object is already deleted
+			wrapped.loc = null
 			wrapped = null
+		else
+			wrapped.attack_self(user)
+
+			if(QDELETED(wrapped)) // in case if attack_self deleted this object
+				wrapped.loc = null
+				wrapped = null
 
 /obj/item/weapon/gripper/verb/drop_item()
 
@@ -110,11 +117,18 @@
 	if(!target || !flag) //Target is invalid or we are not adjacent.
 		return
 
+	if (wrapped && QDELETED(wrapped))
+		wrapped.loc = null
+		wrapped = null
+
 	//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
 	if(!wrapped)
 		for(var/obj/item/thing in src.contents)
-			wrapped = thing
-			break
+			if (QDELETED(thing)) //double check for deletion
+				thing.loc = null
+			else
+				wrapped = thing
+				break
 
 	if(wrapped) //Already have an item.
 
@@ -129,12 +143,15 @@
 
 		//Sanity/item use checks.
 
-		if(!wrapped || !user)
+		if(!user)
 			return
 
-		if(wrapped.loc != src.loc)
+		if(QDELETED(wrapped) || wrapped.loc != src)
+			if (wrapped && wrapped.loc == src)
+				wrapped.loc = null //handle qdeletion and removing from
 			wrapped = null
-			return
+
+		return
 
 	if(istype(target,/obj/item)) //Check that we're not pocketing a mob.
 

@@ -159,7 +159,7 @@
 				"<span class='notice'>You add one of [O] to \the [src].</span>")
 		else
 			user.drop_item()
-			O.loc = src
+			O.forceMove(src)
 			user.visible_message( \
 				"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
 				"<span class='notice'>You add \the [O] to \the [src].</span>")
@@ -186,7 +186,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/kitchen_machine/attack_ai(mob/user)
-	if(IsAdminGhost(user) || istype(user, /mob/living/silicon/robot)) // let robots cook
+	if(IsAdminGhost(user) || isrobot(user)) // let robots cook
 		return ..()
 	return 0
 
