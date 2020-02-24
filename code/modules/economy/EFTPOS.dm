@@ -229,8 +229,8 @@
 								transaction_paid = 1
 
 								//transfer the money
-								D.money -= transaction_amount
-								linked_account.money += transaction_amount
+								D.remove_money(transaction_amount)
+								linked_account.add_money(transaction_amount)
 
 								//create entries in the two account transaction logs
 								var/datum/transaction/T = new()

@@ -9,7 +9,7 @@
 		var/datum/money_account/D = pick(all_money_accounts)
 		winner_name = D.owner_name
 		if(!D.suspended)
-			D.money += winner_sum
+			D.add_money(winner_sum)
 
 			var/datum/transaction/T = new()
 			T.target_name = "[system_name()] Daily Grand Slam -Stellar- Lottery"

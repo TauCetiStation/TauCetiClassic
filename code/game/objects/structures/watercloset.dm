@@ -321,7 +321,7 @@
 			for (var/atom/movable/G in src.loc)
 				G.clean_blood()
 		else
-			is_payed = 0 // Если игрок выключил раньше времени - принудительное аннулирование платы.
+			is_payed = 0 //      -   .
 	else
 		to_chat(user, "You didn't pay for that. Swipe a card against [src].")
 
@@ -358,8 +358,8 @@
 						var/transaction_amount = cost_per_activation
 						if(transaction_amount <= D.money)
 							//transfer the money
-							D.money -= transaction_amount
-							station_account.money += transaction_amount
+							D.remove_money(transaction_amount)
+							station_account.add_money(transaction_amount)
 
 							//create entries in the two account transaction logs
 							var/datum/transaction/T = new()
