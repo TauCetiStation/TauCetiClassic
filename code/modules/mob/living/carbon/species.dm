@@ -421,6 +421,8 @@
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
+	if(H.wear_mask)
+		qdel(H.wear_mask)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
 	if(!H.r_store)
 		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_R_STORE)
@@ -434,6 +436,8 @@
 	else if(!H.l_hand)
 		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_L_HAND)
 		H.internal = H.l_hand
+	if(H.shoes)
+		qdel(H.shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/magboots/vox(src), SLOT_SHOES)
 
 /datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)

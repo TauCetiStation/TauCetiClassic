@@ -147,7 +147,7 @@
 	desc = "A bastardized hybrid of informal English and elements of Mandarin Chinese; the common language of the Sol system."
 	colour = "rough"
 	key = list("1")
-	allowed_species = list(IPC, DIONA, SKRELL, UNATHI, TAJARAN)
+	allowed_species = list(IPC, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	syllables = list("tao","shi","tzu","yi","com","be","is","i","op","vi","ed","lec","mo","cle","te","dis","e")
 
 /datum/language/ipc
@@ -169,7 +169,7 @@
 	speech_verb = "enunciates"
 	colour = "say_quote"
 	key = list("2")
-	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
+	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	syllables = list("lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit",
 					 "sed", "do", "eiusmod", "tempor", "incididunt", "ut", "labore", "et", "dolore",
 					 "magna", "aliqua", "ut", "enim", "ad", "minim", "veniam", "quis", "nostrud",
@@ -185,7 +185,7 @@
 	speech_verb = "growls"
 	colour = "rough"
 	key = list("3")
-	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
+	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	syllables = list ("gra","ba","ba","breh","bra","rah","dur","ra","ro","gro","go","ber","bar","geh","heh", "gra")
 
 /datum/language/unisign
@@ -193,7 +193,7 @@
 	desc = "Standart language made of gestures. Common language of deaf and muted people."
 	colour = "rough"
 	key = list("4")
-	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
+	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	signlang_verb = list("makes signs with hands", "gestures", "waves hands", "gesticulates")
 	flags = SIGNLANG
 
