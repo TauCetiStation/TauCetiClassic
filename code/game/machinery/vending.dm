@@ -291,8 +291,8 @@
 						if(transaction_amount <= D.money)
 
 							//transfer the money
-							D.remove_money(transaction_amount)
-							vendor_account.add_money(transaction_amount)
+							D.adjust_money(-transaction_amount)
+							vendor_account.adjust_money(transaction_amount)
 
 							//create entries in the two account transaction logs
 							var/datum/transaction/T = new()
