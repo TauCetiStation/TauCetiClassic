@@ -9,14 +9,13 @@
 	use_power = NO_POWER_USE
 	var/energy = 0
 	var/creation_type = /obj/singularity
-	var/process = FALSE
+	var/is_activated = FALSE
 
 /obj/machinery/the_singularitygen/process()
 	var/turf/T = get_turf(src)
-	if(src.energy >= 200 & !process)
-		process = TRUE
-		var/atom/movable/overlay/animation = null
-		animation = new(loc)
+	if(src.energy >= 200 && !is_activated)
+		is_activated = TRUE
+		var/atom/movable/overlay/animation = new(T)
 		animation.master = src
 		animation.pixel_x = -32
 		animation.pixel_y = -32
