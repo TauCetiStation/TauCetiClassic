@@ -60,7 +60,10 @@
 					return
 				F.set_light(0)
 			H.set_light(0) //This is required with the object-based lighting
-
+		for(var/obj/machinery/door/airlock/A in orange(4, usr))
+			if (A.lights && A.hasPower())
+				A.lights = 0
+				A.update_icon()
 
 
 /obj/effect/proc_holder/spell/targeted/shadow_walk

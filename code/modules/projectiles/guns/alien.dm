@@ -78,7 +78,7 @@
 			user.visible_message("<span class='warning'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
 			Fire(M,user)
 			return
-		else if(target && M in target)
+		else if(target && (M in target))
 			Fire(M,user)
 			return
 	else
