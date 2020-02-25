@@ -72,5 +72,5 @@
 /mob/living/carbon/xenomorph/dust()
 	dust_process()
 	new /obj/effect/decal/cleanable/ash(loc)
-	new /obj/effect/decal/remains/xeno(loc)
+	new /obj/effect/decal/remains/xeno/burned(loc)
 	dead_mob_list -= src

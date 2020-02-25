@@ -29,7 +29,7 @@
 /mob/living/carbon/human/dust()
 	dust_process()
 	new /obj/effect/decal/cleanable/ash(loc)
-	new /obj/effect/decal/remains/human(loc)
+	new /obj/effect/decal/remains/human/burned(loc)
 	dead_mob_list -= src
 
 /mob/living/carbon/human/death(gibbed)
