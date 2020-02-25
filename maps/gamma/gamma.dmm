@@ -3268,6 +3268,13 @@
 	icon_state = "warningline"
 	},
 /area/station/rnd/xenobiology)
+"afl" = (
+/obj/machinery/portable_atmospherics/canister/hydrogen,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
+	},
+/area/station/rnd/storage)
 "afm" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -123183,7 +123190,7 @@ ucd
 ucd
 ucd
 ucd
-diF
+afl
 jMG
 jMG
 ksZ
