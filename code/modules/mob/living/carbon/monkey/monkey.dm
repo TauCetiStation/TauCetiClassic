@@ -445,4 +445,4 @@
 	return race
 
 /mob/living/carbon/monkey/is_facehuggable()
-	return TRUE
+	return !stat && !(locate(/obj/item/alien_embryo) in contents)

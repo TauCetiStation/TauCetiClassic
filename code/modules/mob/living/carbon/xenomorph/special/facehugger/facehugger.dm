@@ -197,13 +197,7 @@
 		Attach(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/CanHug(mob/living/carbon/C, check = 1)
-	if(!C.is_facehuggable() \
-	   || stat != CONSCIOUS \
-	   || C.stat == DEAD \
-	   || isxeno(C) \
-	   || (locate(/obj/item/alien_embryo) in C.contents) \
-	   || istype(C.wear_mask, src) \
-	   || loc == C)
+	if(!C.is_facehuggable() || istype(C.wear_mask, src) || loc == C)
 		return FALSE
 	if(check)
 		if(isturf(src.loc))

@@ -2069,4 +2069,4 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		blinded = TRUE
 
 /mob/living/carbon/human/is_facehuggable()
-	return species.flags[FACEHUGGABLE]
+	return species.flags[FACEHUGGABLE] && !stat && !(locate(/obj/item/alien_embryo) in contents)
