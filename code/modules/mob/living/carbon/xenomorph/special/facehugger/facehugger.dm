@@ -197,24 +197,18 @@
 		Attach(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/CanHug(mob/living/carbon/C, check = 1)
-	if(!C.can_be_infected_by_facehugger())
-		return FALSE
-	if(stat != CONSCIOUS)
+	if(!C.is_facehuggable() \
+	   || stat != CONSCIOUS \
+	   || C.stat == DEAD \
+	   || isxeno(C) \
+	   || (locate(/obj/item/alien_embryo) in C.contents) \
+	   || istype(C.wear_mask, src) \
+	   || loc == C)
 		return FALSE
 	if(check)
 		if(isturf(src.loc))
 			if(!(C in view(1, src)))
 				return FALSE
-	if(C.stat == DEAD)
-		return FALSE
-	if(isxeno(C))
-		return FALSE
-	if(locate(/obj/item/alien_embryo) in C.contents)
-		return FALSE
-	if(istype(C.wear_mask, src))
-		return FALSE
-	if(loc == C)
-		return FALSE
 	return TRUE
 
 /mob/living/carbon/human/proc/mouth_is_protected()

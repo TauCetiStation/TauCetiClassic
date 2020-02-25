@@ -67,7 +67,7 @@
 #define NO_FINGERPRINT     "no_fingerprint"
 #define NO_MINORCUTS	   "no_minorcuts"
 #define NO_BLOOD_TRAILS    "no_blood_trails"
-#define INFECTABLE         "infectable"
+#define FACEHUGGABLE       "facehuggable"
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.

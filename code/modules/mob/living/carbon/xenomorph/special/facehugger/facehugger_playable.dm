@@ -84,9 +84,9 @@
 
 // This is modified grab mechanic for facehugger
 /mob/living/carbon/attack_facehugger(mob/living/carbon/xenomorph/facehugger/FH)
-	if(!can_be_infected_by_facehugger())
+	if(!is_facehuggable())
 		to_chat(FH, "<span class='warning'>It is useless to try to infect this!</span>")
-		return FALSE
+		return
 	if(FH.a_intent == I_GRAB)
 		if(src.stat != DEAD)
 			if(FH == src)

@@ -906,5 +906,5 @@
 		stat = UNCONSCIOUS
 		blinded = TRUE
 
-/mob/living/carbon/proc/can_be_infected_by_facehugger()
+/mob/living/carbon/proc/is_facehuggable()
 	return FALSE
