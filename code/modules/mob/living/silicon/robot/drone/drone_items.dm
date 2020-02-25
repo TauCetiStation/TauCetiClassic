@@ -78,14 +78,12 @@
 
 /obj/item/weapon/gripper/attack_self(mob/user)
 	if(wrapped)
-		if (QDELETED(wrapped))// in case if wrapped object is already deleted
-			wrapped.loc = null
+		if (QDELETED(wrapped))// in case if wrapped object is already being deleted
 			wrapped = null
 		else
 			wrapped.attack_self(user)
 
 			if(QDELETED(wrapped)) // in case if attack_self deleted this object
-				wrapped.loc = null
 				wrapped = null
 
 /obj/item/weapon/gripper/verb/drop_item()
@@ -118,15 +116,12 @@
 		return
 
 	if (wrapped && QDELETED(wrapped))
-		wrapped.loc = null
 		wrapped = null
 
 	//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
 	if(!wrapped)
 		for(var/obj/item/thing in src.contents)
-			if (QDELETED(thing)) //double check for deletion
-				thing.loc = null
-			else
+			if (!QDELETED(thing)) //double check for deletion
 				wrapped = thing
 				break
 
@@ -147,8 +142,6 @@
 			return
 
 		if(QDELETED(wrapped) || wrapped.loc != src)
-			if (wrapped && wrapped.loc == src)
-				wrapped.loc = null //handle qdeletion and removing from
 			wrapped = null
 
 		return
