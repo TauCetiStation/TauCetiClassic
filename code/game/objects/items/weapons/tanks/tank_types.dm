@@ -136,7 +136,7 @@
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
 	volume = 2
 
-/obj/item/weapon/tank/emergency_oxygen/atom_init()
+/obj/item/weapon/tank/emergency_nitrogen/atom_init()
 	. = ..()
 	air_contents.adjust_gas("nitrogen", (3 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
