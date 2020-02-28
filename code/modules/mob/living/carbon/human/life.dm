@@ -23,7 +23,7 @@
 	var/prev_gender = null // Debug for plural genders
 
 
-/mob/living/carbon/human/Life()
+/mob/living/carbon/human/Life(seconds)
 	set invisibility = 0
 	set background = 1
 
@@ -345,7 +345,7 @@
 						BP.add_autopsy_data("Radiation Poisoning", damage)
 
 /mob/living/carbon/human/proc/breathe()
-	if(!need_breathe()) 
+	if(!need_breathe())
 		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
@@ -577,7 +577,7 @@
 
 			// Enough to make us sleep as well
 			if(SA_pp > SA_sleep_min)
-				Sleeping(5)
+				Sleeping(10 SECONDS)
 
 		// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 		else if(SA_pp > 0.15)
@@ -1059,7 +1059,9 @@
 		var/met_factor = get_metabolism_factor()
 		nutrition = max(0, nutrition - met_factor * 0.1)
 		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
-			nutrition = max(0, nutrition - met_factor * getHalLoss() * 0.01)
+			var/pain = getHalLoss()
+			if(pain > 0)
+				nutrition = max(0, nutrition - met_factor * pain * 0.01)
 
 	if (nutrition > 450)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
@@ -1074,11 +1076,11 @@
 			traumatic_shock++
 
 	if (drowsyness)
-		drowsyness--
+		drowsyness = max(0, drowsyness - 1)
 		eye_blurry = max(2, eye_blurry)
 		if(prob(5))
 			emote("yawn")
-			sleeping += 1
+			Sleeping(10 SECONDS)
 			Paralyse(5)
 
 	confused = max(0, confused - 1)
@@ -1158,19 +1160,8 @@
 			stat = UNCONSCIOUS
 			if(halloss > 0)
 				adjustHalLoss(-3)
-		else if(sleeping)
-			throw_alert("asleep", /obj/screen/alert/asleep)
-			speech_problem_flag = 1
-			handle_dreams()
-			adjustHalLoss(-3)
-			if (mind)
-				if((mind.active && client != null) || immune_to_ssd) //This also checks whether a client is connected, if not, sleep is not reduced.
-					sleeping = max(sleeping-1, 0)
-			blinded = 1
-			stat = UNCONSCIOUS
-			if( prob(2) && health && !hal_crit )
-				spawn(0)
-					emote("snore")
+		else if(IsSleeping())
+			blinded = TRUE
 		//CONSCIOUS
 		else
 			stat = CONSCIOUS
@@ -1179,8 +1170,6 @@
 					adjustHalLoss(-3)
 				else
 					adjustHalLoss(-1)
-		if(!sleeping) //No refactor - no life!
-			clear_alert("asleep")
 
 		if(stat == UNCONSCIOUS)
 			if(client)

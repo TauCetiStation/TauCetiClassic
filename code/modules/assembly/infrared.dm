@@ -44,7 +44,7 @@
 /obj/item/device/assembly/infra/attach_assembly(obj/item/device/assembly/A, mob/user)
 	. = ..()
 	message_admins("[key_name_admin(user)] attached \the [A] to \the [src]. [ADMIN_JMP(user)]")
-	log_game("[key_name_admin(user)] attached \the [A] to \the [src].")
+	log_game("[key_name(user)] attached \the [A] to \the [src].")
 
 /obj/item/device/assembly/infra/update_icon()
 	cut_overlays()

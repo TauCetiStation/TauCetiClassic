@@ -289,7 +289,7 @@
 	return ..()
 
 /obj/structure/mineral_door/resin/Bumped(atom/M)
-	if(isalien(M) && !isSwitchingStates)
+	if(isxeno(M) && !isSwitchingStates)
 		add_fingerprint(M)
 		Open()
 
@@ -314,7 +314,7 @@
 	CheckHealth()
 
 /obj/structure/mineral_door/resin/attack_hand(mob/user)
-	if(isalienadult(user) && user.a_intent == "hurt")
+	if(isxenoadult(user) && user.a_intent == "hurt")
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		health -= rand(40, 60)
@@ -323,6 +323,6 @@
 		else
 			user.visible_message("<span class='danger'>[user] claws at the resin!</span>")
 		CheckHealth()
-	else if(isalien(user) && !isSwitchingStates)
+	else if(isxeno(user) && !isSwitchingStates)
 		add_fingerprint(user)
 		SwitchState()

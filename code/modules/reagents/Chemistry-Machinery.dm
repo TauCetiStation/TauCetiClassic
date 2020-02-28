@@ -43,7 +43,7 @@
 		nanomanager.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/power_change()
-	if(powered())
+	if(anchored && powered())
 		stat &= ~NOPOWER
 	else
 		spawn(rand(0, 15))
@@ -175,6 +175,7 @@
 //		return
 
 	if(default_unfasten_wrench(user, B))
+		power_change()
 		return
 
 	if(src.beaker)
@@ -354,8 +355,8 @@
 
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	use_power = IDLE_POWER_USE
@@ -397,7 +398,7 @@
 	return
 
 /obj/machinery/chem_master/power_change()
-	if(powered())
+	if(anchored && powered())
 		stat &= ~NOPOWER
 	else
 		spawn(rand(0, 15))
@@ -408,6 +409,7 @@
 /obj/machinery/chem_master/attackby(obj/item/B, mob/user)
 
 	if(default_unfasten_wrench(user, B))
+		power_change()
 		return
 
 	if(istype(B, /obj/item/weapon/reagent_containers/glass))
@@ -1111,11 +1113,9 @@
 
 /obj/machinery/reagentgrinder/attackby(obj/item/O, mob/user)
 
-	if(default_unfasten_wrench(user, O))
-		return
-
 	if(iswrench(O))
 		default_unfasten_wrench(user, O)
+		return
 
 	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
 		istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass) || \

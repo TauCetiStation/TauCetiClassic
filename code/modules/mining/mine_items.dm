@@ -162,6 +162,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "lantern"
 	item_state = "lantern"
 	desc = "A mining lantern."
+	button_sound = 'sound/items/lantern.ogg'
 	brightness_on = 4			// luminosity when on
 
 /*****************************Pickaxe********************************/
@@ -514,7 +515,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		new /obj/item/effect/kinetic_blast(src.loc)
 		qdel(src)
 
-/obj/item/projectile/kinetic/on_hit(atom/target)
+/obj/item/projectile/kinetic/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	. = ..()
 	var/turf/target_turf = get_turf(target)
 	if(istype(target_turf, /turf/simulated/mineral))
@@ -540,7 +541,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 
 /area/custom/survivalpod
-	name = "\improper Emergency Shelter"
+	name = "Emergency Shelter"
 	icon_state = "away"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED

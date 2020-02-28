@@ -6,7 +6,9 @@
     },
     "changelogClasses": {
         "rscadd": "Feature",
+        "add": "Feature",
         "rscdel": "Revert / Removal",
+        "del": "Revert / Removal",
         "performance": "Performance",
         "balance": "Balance",
         "experiment": "Experimental",
@@ -15,6 +17,7 @@
         "sound": "Sound",
         "image": "Sprites",
         "bugfix": "Fix",
+        "fix": "Fix",
         "map": "Map Edit"
     },
     "diffPathsLabels": {

@@ -2428,7 +2428,7 @@
 	},
 /area/station/civilian/chapel)
 "adY" = (
-/obj/item/device/radio/beacon/explosion_watcher,
+/obj/item/device/radio/beacon/interaction_watcher,
 /turf/simulated/floor/engine/vacuum,
 /turf/simulated/floor{
 	dir = 4;
@@ -3268,6 +3268,13 @@
 	icon_state = "warningline"
 	},
 /area/station/rnd/xenobiology)
+"afl" = (
+/obj/machinery/portable_atmospherics/canister/hydrogen,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
+	},
+/area/station/rnd/storage)
 "afm" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -10421,9 +10428,7 @@
 /obj/structure/table,
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/stamp{
-	name = "Quartermaster's stamp"
-	},
+/obj/item/weapon/stamp/qm,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -14385,7 +14390,11 @@
 "dJH" = (
 /obj/structure/closet,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/stamp,
+/obj/item/weapon/stamp{
+	icon_state = "stamp-cmo";
+	name = "medbay rubber stamp";
+	stamp_message = "Medbay"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "dJU" = (
@@ -20110,7 +20119,10 @@
 "fBa" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/stamp,
+/obj/item/weapon/stamp{
+	name = "miner's rubber stamp";
+	stamp_message = "Miner"
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -52403,10 +52415,6 @@
 /area/station/engineering/drone_fabrication)
 "qhy" = (
 /obj/structure/table,
-/obj/item/weapon/stamp{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/item/weapon/storage/firstaid/regular{
 	pixel_x = 6;
 	pixel_y = -5
@@ -52414,6 +52422,12 @@
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 24
+	},
+/obj/item/weapon/stamp{
+	name = "cargo rubber stamp";
+	pixel_x = -3;
+	pixel_y = 3;
+	stamp_message = "Cargo"
 	},
 /obj/item/clothing/head/soft,
 /turf/simulated/floor{
@@ -56728,6 +56742,9 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "rES" = (
+/obj/structure/extinguisher_cabinet/highrisk{
+	pixel_x = -30
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warndark"
@@ -61607,8 +61624,10 @@
 	},
 /obj/item/weapon/clipboard,
 /obj/item/weapon/stamp{
+	name = "cargo rubber stamp";
 	pixel_x = -3;
-	pixel_y = 3
+	pixel_y = 3;
+	stamp_message = "Cargo"
 	},
 /obj/item/weapon/stamp/denied{
 	pixel_x = 4;
@@ -70146,10 +70165,13 @@
 "vOH" = (
 /obj/structure/table,
 /obj/item/weapon/folder/yellow,
-/obj/item/weapon/stamp,
 /obj/machinery/newscaster{
 	dir = 1;
 	pixel_y = 30
+	},
+/obj/item/weapon/stamp{
+	name = "recycler's rubber stamp";
+	stamp_message = "Recycler"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -123168,7 +123190,7 @@ ucd
 ucd
 ucd
 ucd
-diF
+afl
 jMG
 jMG
 ksZ

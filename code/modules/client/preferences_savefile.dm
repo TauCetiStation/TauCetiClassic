@@ -95,7 +95,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/datum/job/assistant/J = new
 
 		if(player_alt_titles && \
-			player_alt_titles[J.title] in list("Technical Assistant", "Medical Intern", "Research Assistant", "Security Cadet"))
+			(player_alt_titles[J.title] in list("Technical Assistant", "Medical Intern", "Research Assistant", "Security Cadet")))
 
 			player_alt_titles -= J.title
 
@@ -157,8 +157,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		update_preferences(needs_update, S) // needs_update = savefile_version if we need an update (positive integer)
 
 	//Sanitize
-	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
-	aooccolor		= sanitize_hexcolor(aooccolor, initial(aooccolor))
+	ooccolor		= normalize_color(sanitize_hexcolor(ooccolor, initial(ooccolor)))
+	aooccolor		= normalize_color(sanitize_hexcolor(aooccolor, initial(aooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, global.available_ui_styles, global.available_ui_styles[1])
 	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))

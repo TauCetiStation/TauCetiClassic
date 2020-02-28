@@ -89,13 +89,7 @@
 		else
 			user.take_bodypart_damage(2 * force)
 		return
-/*this is already called in ..()
-	src.add_fingerprint(user)
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
-	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-*/
 	if (user.a_intent == "hurt")
 		if(!..()) return
 		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)

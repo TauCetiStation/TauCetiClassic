@@ -212,7 +212,7 @@
 	P.info += "</font>"//</font>
 	P.name = copy.name // -- Doohl
 	P.fields = copy.fields
-	P.stamp_text = copy.stamp_text
+	P.stamp_text = replacetext(copy.stamp_text, "color:", "nocolor:") // Russian server? I hope nobody will write this on paper
 	P.stamped = LAZYCOPY(copy.stamped)
 	P.ico = LAZYCOPY(copy.ico)
 	P.offset_x = LAZYCOPY(copy.offset_x)

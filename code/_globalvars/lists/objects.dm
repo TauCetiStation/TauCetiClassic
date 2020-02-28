@@ -31,7 +31,7 @@ var/global/list/communications_list = list()
 var/global/list/station_alert_list = list()
 var/global/list/teleporter_list = list()
 var/global/list/radio_beacon_list = list()
-var/global/list/explosion_watcher_list = list()
+var/global/list/obj/item/device/radio/beacon/interaction_watcher/interaction_watcher_list = list()
 var/global/list/beacon_medical_list = list() // not a child of beacon type :(
 var/global/list/mop_list = list()
 var/global/list/mopbucket_list = list()
@@ -59,7 +59,7 @@ var/global/list/conveyor_switch_list = list()
 var/global/list/rnd_server_list = list()
 var/global/list/PDAs = list()
 var/global/list/facehuggers_list = list()
-
 var/global/list/all_areas = list()
 var/global/list/area/areas_by_type = list()
 var/global/list/machines = list()
+var/global/list/vending_products = list() //this list is used to create product images in the vending machine window

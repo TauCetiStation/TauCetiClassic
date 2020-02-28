@@ -546,7 +546,7 @@
 /area/awaymission/stationcollision/research)
 "bJ" = (
 /obj/item/weapon/shard,
-/mob/living/carbon/alien/larva{
+/mob/living/carbon/xenomorph/larva{
 	bruteloss = 25;
 	fireloss = 175;
 	stat = 2
@@ -676,7 +676,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "cc" = (
-/mob/living/carbon/alien/humanoid/sentinel{
+/mob/living/carbon/xenomorph/humanoid/sentinel{
 	fireloss = 200;
 	stat = 2
 	},
@@ -736,7 +736,7 @@
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
-/mob/living/carbon/alien/larva{
+/mob/living/carbon/xenomorph/larva{
 	bruteloss = 50;
 	fireloss = 150;
 	stat = 2
@@ -922,7 +922,7 @@
 /area/awaymission/stationcollision/research)
 "cH" = (
 /obj/item/clothing/mask/facehugger,
-/mob/living/carbon/alien/humanoid/queen{
+/mob/living/carbon/xenomorph/humanoid/queen{
 	fireloss = 300;
 	stat = 2
 	},
@@ -1027,7 +1027,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "cU" = (
-/mob/living/carbon/alien/humanoid/hunter{
+/mob/living/carbon/xenomorph/humanoid/hunter{
 	fireloss = 200;
 	stat = 2
 	},

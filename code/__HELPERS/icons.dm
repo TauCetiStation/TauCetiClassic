@@ -828,16 +828,6 @@ The _flatIcons list is a cache for generated icon files.
 		composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 	return composite
 
-/proc/adjust_brightness(color, value)
-	if (!color) return "#ffffff"
-	if (!value) return color
-
-	var/list/RGB = ReadRGB(color)
-	RGB[1] = CLAMP(RGB[1]+value,0,255)
-	RGB[2] = CLAMP(RGB[2]+value,0,255)
-	RGB[3] = CLAMP(RGB[3]+value,0,255)
-	return rgb(RGB[1],RGB[2],RGB[3])
-
 /proc/sort_atoms_by_layer(list/atoms)
 	// Comb sort icons based on levels
 	var/list/result = atoms.Copy()

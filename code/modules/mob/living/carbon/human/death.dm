@@ -98,7 +98,7 @@
 
 // Called right after we will lost our head
 /mob/living/carbon/human/proc/handle_decapitation(obj/item/organ/external/head/BP)
-	if(!BP || BP in bodyparts)
+	if(!BP || (BP in bodyparts))
 		return
 
 	//Handle brain slugs.

@@ -371,6 +371,7 @@ var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8
 	t = replacetext(t, "\[list\]", "<ul>")
 	t = replacetext(t, "\[/list\]", "</ul>")
 	t = replacetext(t, "\[hr\]", "<hr>")
+	t = replace_characters(t, list("\[/br\]\n"="", "\n\[/br\]"="", "\[/br\]"="")) // for the tables sake
 	t = replacetext(t, "\n", "<br>")
 
 	// tables
@@ -398,6 +399,10 @@ var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8
 	// div
 	t = replacetext(t, "\[block\]", "<div style=\"border-width: 4px; border-style: dashed;\">")
 	t = replacetext(t, "\[/block\]", "</div>")
+
+	// date & time
+	t = replacetext(t, "\[date\]", "[current_date_string]")
+	t = replacetext(t, "\[time\]", "[worldtime2text()]")
 
 	return t
 

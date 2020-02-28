@@ -143,6 +143,8 @@
 /obj/item/weapon/book
 	name = "book"
 	icon = 'icons/obj/library.dmi'
+	force = 1.0
+	hitsound = list('sound/items/misc/book-slap.ogg')
 	icon_state ="book"
 	throw_speed = 1
 	throw_range = 5

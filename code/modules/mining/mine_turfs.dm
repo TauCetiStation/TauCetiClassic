@@ -39,14 +39,14 @@
 /turf/simulated/mineral/update_overlays()
 	cut_overlays()
 	if(!mineral)
-		name = "\improper Rock"
+		name = "Rock"
 		icon_state = "rock"
 	else
 		if(ore_amount >= 8)
-			name = "\improper [mineral.display_name] rich deposit"
+			name = "[mineral.display_name] rich deposit"
 			add_overlay("rock_[mineral.name]")
 		else
-			name = "\improper Rock"
+			name = "Rock"
 			icon_state = "rock"
 	if(excav_overlay)
 		add_overlay(excav_overlay)
@@ -110,7 +110,7 @@
 
 /turf/simulated/mineral/proc/UpdateMineral()
 	if(!mineral)
-		name = "\improper Rock"
+		name = "Rock"
 		icon_state = "rock"
 		return
 	else
@@ -121,11 +121,11 @@
 		else
 			ore_amount = rand(3,5)
 	if(ore_amount >= 8)
-		name = "\improper [mineral.display_name] rich deposit"
+		name = "[mineral.display_name] rich deposit"
 		cut_overlays()
 		add_overlay("rock_[mineral.name]")
 	else
-		name = "\improper Rock"
+		name = "Rock"
 		icon_state = "rock"
 		return
 
@@ -430,7 +430,7 @@
 		if(!name_to_mineral)
 			SetupMinerals()
 
-		if (mineral_name && mineral_name in name_to_mineral)
+		if (mineral_name && (mineral_name in name_to_mineral))
 			mineral = name_to_mineral[mineral_name]
 			UpdateMineral()
 			CaveSpread()
