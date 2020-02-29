@@ -27,25 +27,10 @@
 		if(src)			qdel(src)
 
 /mob/living/carbon/human/dust()
-	death(1)
-	var/atom/movable/overlay/animation = null
-	notransform = TRUE
-	canmove = 0
-	icon = null
-	invisibility = 101
-
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
-	flick("dust-h", animation)
-	new /obj/effect/decal/remains/human(loc)
-
-	spawn(15)
-		if(animation)	qdel(animation)
-		if(src)			qdel(src)
-
+	dust_process()
+	new /obj/effect/decal/cleanable/ash(loc)
+	new /obj/effect/decal/remains/human/burned(loc)
+	dead_mob_list -= src
 
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)	return
