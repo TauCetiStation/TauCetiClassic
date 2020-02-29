@@ -72,9 +72,13 @@ var/global/list/icon_state_allowed_cache = list()
 					global.specie_sprite_sheet_cache[specie] = sheet_icon_states
 
 			if(icons_exist)
-				var/t_state = item_color
-				if(!t_state && (sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES))
+				var/t_state
+				if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES)
 					t_state = item_state
+
+				if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM)
+					t_state = item_color
+
 				if(!t_state)
 					t_state = icon_state
 

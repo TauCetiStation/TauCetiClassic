@@ -144,6 +144,9 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES)
 		t_state = item_state
 
+	if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM)
+		t_state = item_color
+
 	if(!t_state)
 		t_state = icon_state
 
