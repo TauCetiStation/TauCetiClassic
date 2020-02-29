@@ -70,10 +70,16 @@
 			target.client.images -= I
 			target.client.eye = target
 		target.status_flags ^= GODMODE	//Turn off this cheat
+		mobloc = get_turf(target.loc)
+		var/can_move_in = 1
+		if(!mobloc.is_mob_placeable(target))
+			can_move_in = 0
 		if(companions)
 			for(var/M in companions)
 				var/mob/living/L = M
 				L.status_flags ^= GODMODE
+		if(!can_move_in)
+			do_teleport(target, mobloc, 8, asoundin='sound/effects/phasein.ogg', checkspace = 1)
 		qdel(holder)
 
 /obj/effect/dummy/spell_jaunt
