@@ -143,6 +143,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/t_state
 	if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES)
 		t_state = item_state
+		if(!icon_custom)
+			icon_state_appendix = null
 
 	if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM)
 		t_state = item_color
@@ -152,7 +154,11 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	var/datum/species/S = H.species
 
-	if(icon_override)
+	if(icon_custom)
+		if(sprite_sheet_slot != SPRITE_SHEET_HELD)
+			icon_state_appendix = "_mob"
+		icon_path = icon_custom
+	else if(icon_override)
 		icon_path = icon_override
 	else if(S.sprite_sheets[sprite_sheet_slot])
 		icon_path = S.sprite_sheets[sprite_sheet_slot]
@@ -166,26 +172,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		I.add_overlay(bloodsies)
 
 	return I
-
-/obj/item/clothing/get_standing_overlay(mob/living/carbon/human/H, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
-	var/t_state
-	if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES)
-		t_state = item_state
-
-	if(!t_state)
-		t_state = icon_state
-
-	if(icon_custom)
-		var/image/I = image(icon = icon_custom, icon_state = "[t_state]_mob_[icon_state_appendix]", layer = layer)
-		I.color = color
-
-		if(dirt_overlay && bloodied_icon_state)
-			var/image/bloodsies = image(icon = 'icons/effects/blood.dmi', icon_state = bloodied_icon_state)
-			bloodsies.color = dirt_overlay.color
-			I.add_overlay(bloodsies)
-
-		return I
-	return ..()
 
 /mob/living/carbon/human
 	var/list/overlays_standing[TOTAL_LAYERS]
@@ -752,7 +738,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(client && hud_used)
 			client.screen += r_hand
 
-		var/image/standing = r_hand.get_standing_overlay(src, r_hand.lefthand_file, SPRITE_SHEET_HELD, -R_HAND_LAYER, icon_state_appendix = "_r")
+		var/image/standing = r_hand.get_standing_overlay(src, r_hand.righthand_file, SPRITE_SHEET_HELD, -R_HAND_LAYER, icon_state_appendix = "_r")
 		overlays_standing[R_HAND_LAYER] = standing
 		if(handcuffed)
 			drop_r_hand()
