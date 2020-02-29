@@ -677,6 +677,8 @@
 					"adjust_external_pressure",
 					"set_external_pressure",
 					"checks",
+					"o2_scrub",
+					"n2_scrub",
 					"co2_scrub",
 					"tox_scrub",
 					"n2o_scrub",
