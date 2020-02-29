@@ -115,8 +115,8 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 
 		if(AIRLOCK_WIRE_LIGHT)
 			A.lights = mended
+			A.update_icon()
 
-	A.update_icon()
 
 /datum/wires/airlock/update_pulsed(index)
 	var/obj/machinery/door/airlock/A = holder
@@ -175,5 +175,4 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 
 		if(AIRLOCK_WIRE_LIGHT)
 			A.lights = !A.lights
-
-	A.update_icon()
+			A.update_icon()

@@ -77,6 +77,10 @@
 		else
 			species_restricted = list(target_species)
 
+			if(target_species == VOX)
+
+				flags &= ~BLOCKHAIR
+
 	//Set icon
 	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
 		icon_override = sprite_sheets_refit[target_species]
@@ -312,7 +316,7 @@ BLIND     // can't see anything
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
-	species_restricted = list("exclude" , DIONA , VOX)
+	species_restricted = list("exclude" , DIONA)
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/head.dmi')
 
 /obj/item/clothing/suit/space
@@ -334,7 +338,7 @@ BLIND     // can't see anything
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
-	species_restricted = list("exclude" , DIONA , VOX)
+	species_restricted = list("exclude" , DIONA)
 
 	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.
 
@@ -586,7 +590,7 @@ BLIND     // can't see anything
 
 	if(copytext(item_color,-2) != "_d")
 		basecolor = item_color
-	if((basecolor + "_d_s") in icon_states('icons/mob/uniform.dmi'))
+	if(basecolor + "_d_s" in icon_states('icons/mob/uniform.dmi'))
 		item_color = item_color == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
 		usr.update_inv_w_uniform()
 	else

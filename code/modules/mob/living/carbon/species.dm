@@ -178,28 +178,29 @@
 			H.update_hair()
 	return
 
-/datum/species/proc/before_job_equip(mob/living/carbon/human/H, datum/job/J) // Do we really need this proc? Perhaps.
+/datum/species/proc/before_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE) // Do we really need this proc? Perhaps.
 	return
 
-/datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+/datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	var/obj/item/weapon/storage/box/survival/SK = new(H)
 
-	species_survival_kit_items:
-		for(var/type in survival_kit_items)
-			/*
-			is_type_in_list only work on instantinated objects.
-			*/
-			for(var/type_to_check in J.prevent_survival_kit_items) // So engineers don't spawn with two oxy tanks.
-				if(ispath(type, type_to_check))
-					continue species_survival_kit_items
-			new type(SK)
+	if(!visualsOnly)
+		species_survival_kit_items:
+			for(var/type in survival_kit_items)
+				/*
+				is_type_in_list only work on instantinated objects.
+				*/
+				for(var/type_to_check in J.prevent_survival_kit_items) // So engineers don't spawn with two oxy tanks.
+					if(ispath(type, type_to_check))
+						continue species_survival_kit_items
+				new type(SK)
 
-	job_survival_kit_items:
-		for(var/type in J.survival_kit_items)
-			for(var/type_to_check in prevent_survival_kit_items) // So IPCs don't spawn with oxy tanks from engi kits
-				if(ispath(type, type_to_check))
-					continue job_survival_kit_items
-			new type(SK)
+		job_survival_kit_items:
+			for(var/type in J.survival_kit_items)
+				for(var/type_to_check in prevent_survival_kit_items) // So IPCs don't spawn with oxy tanks from engi kits
+					if(ispath(type, type_to_check))
+						continue job_survival_kit_items
+				new type(SK)
 
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(SK, SLOT_R_HAND)
@@ -392,15 +393,27 @@
 
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
+	exhale_type = "ammonia"
 
 	flags = list(
-		NO_SCAN = TRUE
+		IS_WHITELISTED = TRUE
+		,NO_SCAN = TRUE
 	)
+	has_organ = list(
+		 O_HEART   = /obj/item/organ/internal/heart
+		,O_BRAIN   = /obj/item/organ/internal/brain/vox
+		,O_EYES    = /obj/item/organ/internal/eyes
+		,O_LUNGS   = /obj/item/organ/internal/lungs/vox
+		,O_LIVER   = /obj/item/organ/internal/liver
+		,O_KIDNEYS = /obj/item/organ/internal/kidneys
+		)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
 	flesh_color = "#808d11"
 
 	sprite_sheets = list(
+	    "uniform" = 'icons/mob/species/vox/uniform.dmi',
+		"eyes" = 'icons/mob/species/vox/eyes.dmi',
 		"suit" = 'icons/mob/species/vox/suit.dmi',
 		"head" = 'icons/mob/species/vox/head.dmi',
 		"mask" = 'icons/mob/species/vox/masks.dmi',
@@ -408,18 +421,43 @@
 		"gloves" = 'icons/mob/species/vox/gloves.dmi'
 		)
 
-	min_age = 12
-	max_age = 20
+	survival_kit_items = list(/obj/item/weapon/tank/emergency_nitrogen
+	                          )
 
-/datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/nitrogen) // So they don't get the big engi oxy tank, since they need no tank.
+
+
+	min_age = 5
+	max_age = 35
+
+/datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
+	..()
+	if(H.wear_mask)
+		qdel(H.wear_mask)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
-	if(!H.r_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), SLOT_R_HAND)
+	if(!H.r_store)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_R_STORE)
+		H.internal = H.r_store
+	else if(!H.l_store)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_L_STORE)
+		H.internal = H.l_store
+	else if(!H.r_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_R_HAND)
 		H.internal = H.r_hand
 	else if(!H.l_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), SLOT_L_HAND)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_L_HAND)
 		H.internal = H.l_hand
-	H.internals.icon_state = "internal1"
+	if(!H.r_store)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_anesthesia(src), SLOT_R_STORE)
+	else if(!H.l_store)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_anesthesia(src), SLOT_L_STORE)
+	else if(!H.r_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_anesthesia(src), SLOT_R_HAND)
+	else if(!H.l_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_anesthesia(src), SLOT_L_HAND)
+	if(H.shoes)
+		qdel(H.shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/magboots/vox(src), SLOT_SHOES)
 
 /datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_vox_digest(M)
@@ -481,7 +519,8 @@
 	poison_type = "oxygen"
 
 	flags = list(
-	 NO_SCAN = TRUE
+	,NO_DEF = TRUE
+	,NO_SCAN = TRUE
 	,NO_BLOOD = TRUE
 	,HAS_TAIL = TRUE
 	,NO_PAIN = TRUE
@@ -535,6 +574,7 @@
 	,NO_BREATHE = TRUE
 	,REQUIRE_LIGHT = TRUE
 	,NO_SCAN = TRUE
+	,NO_DEF = TRUE
 	,IS_PLANT = TRUE
 	,RAD_ABSORB = TRUE
 	,NO_BLOOD = TRUE
@@ -651,12 +691,12 @@
 	flags = list(
 	 IS_WHITELISTED = TRUE
 	,NO_BREATHE = TRUE
+	,NO_DEF = TRUE
 	,NO_SCAN = TRUE
 	,NO_BLOOD = TRUE
 	,NO_PAIN = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SYNTHETIC = TRUE
-	,HAS_SKIN_COLOR = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,BIOHAZZARD_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
@@ -706,6 +746,7 @@
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
+	,NO_DEF = TRUE
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_VOMIT = TRUE
@@ -743,6 +784,7 @@
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
 	,NO_SCAN = TRUE
+	,NO_DEF = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
 	,NO_BLOOD_TRAILS = TRUE
@@ -854,6 +896,7 @@
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
+	,NO_DEF = TRUE
 	,NO_EMBED = TRUE
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
@@ -903,6 +946,7 @@
 		NO_SCAN = TRUE,
 		NO_PAIN = TRUE,
 		NO_EMBED = TRUE,
+		NO_DEF = TRUE,
 		RAD_IMMUNE = TRUE,
 		VIRUS_IMMUNE = TRUE,
 		BIOHAZZARD_IMMUNE = TRUE,
@@ -976,6 +1020,7 @@
 	NO_BREATHE = TRUE
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
+	,NO_DEF = TRUE
 	,NO_SCAN = TRUE
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
@@ -1042,6 +1087,7 @@
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,NO_SCAN = TRUE
+	,NO_DEF = TRUE
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
@@ -1084,6 +1130,7 @@
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,NO_SCAN = TRUE
+	,NO_DEF = TRUE
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
@@ -1109,6 +1156,7 @@
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_SCAN = TRUE
+	,NO_DEF = TRUE
 	,NO_PAIN = TRUE
 	,HAS_SKIN_COLOR = TRUE
 	,HAS_UNDERWEAR = TRUE

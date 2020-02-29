@@ -215,3 +215,5 @@
 
 		if(IO.damage > 0 && IO.robotic == 2)
 			IO.take_damage(dam_amt,0)
+
+

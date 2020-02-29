@@ -121,6 +121,44 @@
 	volume = 10
 
 /*
+ * Emergency nitrogen
+ * hi vox people!
+ */
+/obj/item/weapon/tank/emergency_nitrogen
+	name = "emergency nitrogen tank"
+	desc = "Used for Vox-related emergencies. Contains very little nitrogen, so try to conserve it until you actually need it."
+	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
+	icon_state = "emergency_n2"
+	flags = CONDUCT
+	slot_flags = SLOT_FLAGS_BELT
+	w_class = ITEM_SIZE_SMALL
+	force = 2.0
+	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
+	volume = 2
+
+/obj/item/weapon/tank/emergency_nitrogen/atom_init()
+	. = ..()
+	air_contents.adjust_gas("nitrogen", (3 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+
+/obj/item/weapon/tank/emergency_anesthesia
+	name = "emergency anesthesia tank for vox"
+	desc = "Used for Vox-related emergencies. Contains very little N2O, so try to conserve it until you actually need it."
+	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
+	icon_state = "emergency_n2on2"
+	flags = CONDUCT
+	slot_flags = SLOT_FLAGS_BELT
+	w_class = ITEM_SIZE_SMALL
+	force = 2.0
+	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
+	volume = 2
+
+/obj/item/weapon/tank/emergency_anesthesia/atom_init()
+	. = ..()
+	air_contents.gas["nitrogen"] = (3 * ONE_ATMOSPHERE) * 20 / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
+	air_contents.gas["sleeping_agent"] = (3 * ONE_ATMOSPHERE) * 20 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+	air_contents.update_values()
+
+/*
  * Nitrogen
  */
 /obj/item/weapon/tank/nitrogen

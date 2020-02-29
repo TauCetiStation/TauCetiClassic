@@ -44,6 +44,7 @@
 #define OVERLAY_QUEUED_2   (1<<1)
 
 //Species flags.
+#define NO_DEF             "no_def"
 #define NO_BLOOD           "no_blood"
 #define NO_BREATHE         "no_breathe"
 #define NO_SCAN            "no_scan"
