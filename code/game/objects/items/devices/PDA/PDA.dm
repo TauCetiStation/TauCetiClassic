@@ -460,6 +460,19 @@
 		data["cartridge"] = cartdata
 
 	data["stationTime"] = worldtime2text()
+
+	var/secLevelStr
+	switch(get_security_level())
+		if("green")
+			secLevelStr = "<font color='green'><b>&#9899;</b></font>"
+		if("blue")
+			secLevelStr = "<font color='blue'><b>&#9899;</b></font>"
+		if("red")
+			secLevelStr = "<font color='red'><b>&#9899;</b></font>"
+		if("delta")
+			secLevelStr = "<font color='purple'><b>&Delta;</b></font>"
+	data["securityLevel"] = secLevelStr
+
 	data["new_Message"] = newmessage
 	if (SSshuttle.online)
 		data["shuttle_eta"] = shuttleeta2text()
