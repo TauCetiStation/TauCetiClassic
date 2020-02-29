@@ -1439,22 +1439,22 @@
 			if(stat == DEAD)
 				healthdoll.icon_state = "healthdoll_DEAD"
 			else
-				healthdoll.icon_state = "healthdoll_OVERLAY"
+				healthdoll.icon_state = "healthdoll_EMPTY"
 				for(var/obj/item/organ/external/BP in bodyparts)
-					var/damage = BP.burn_dam + BP.brute_dam
-					var/comparison = (BP.max_damage / 5)
-					var/icon_num = 0
-					if(damage)
-						icon_num = 1
-					if(damage > (comparison))
-						icon_num = 2
-					if(damage > (comparison*2))
-						icon_num = 3
-					if(damage > (comparison*3))
-						icon_num = 4
-					if(damage > (comparison*4))
-						icon_num = 5
-					if(icon_num)
+					if(BP && !BP.is_stump)
+						var/damage = BP.burn_dam + BP.brute_dam
+						var/comparison = (BP.max_damage / 5)
+						var/icon_num = 0
+						if(damage)
+							icon_num = 1
+						if(damage > (comparison))
+							icon_num = 2
+						if(damage > (comparison*2))
+							icon_num = 3
+						if(damage > (comparison*3))
+							icon_num = 4
+						if(damage > (comparison*4))
+							icon_num = 5
 						healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
 
 		if(nutrition_icon)
