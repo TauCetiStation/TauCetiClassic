@@ -7,9 +7,10 @@
 /obj/item/device/multitool
 	name = "multitool"
 	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors."
+	hitsound = list('sound/items/tools/device_small-hit.ogg')
 	icon_state = "multitool"
 	flags = CONDUCT
-	force = 5.0
+	force = 1.0
 	w_class = ITEM_SIZE_SMALL
 	throwforce = 5.0
 	throw_range = 15

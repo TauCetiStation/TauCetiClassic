@@ -39,7 +39,7 @@
 	var/obj/screen/healthdoll = null
 	var/obj/screen/nutrition_icon = null
 
-	var/obj/screen/alien_plasma_display = null
+	var/obj/screen/xenomorph_plasma_display = null
 	var/obj/screen/nightvisionicon = null
 
 	var/use_me = 1 //Allows all mobs to use the me verb by default, will have to manually specify they cannot
@@ -206,6 +206,8 @@
 
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
+
+	var/atom/movable/remote_control //Calls relay_move() to whatever this is set to when the mob tries to move
 
 	//Whether or not mobs can understand other mobtypes. These stay in /mob so that ghosts can hear everything.
 	var/universal_speak = 0 // Set to 1 to enable the mob to speak to everyone -- TLE

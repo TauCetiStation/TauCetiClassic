@@ -433,8 +433,8 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 	src.enter_host(target)
 
 	to_chat(usr, "<b>You successfully jumped to [target].</b>")
-	log_admin("[src.key] has jumped to [target]")
-	message_admins("[src.key] has jumped to [target] [ADMIN_JMP(src)]")
+	log_admin("[key_name(src)] has jumped to [target]")
+	message_admins("[key_name_admin(src)] has jumped to [target] [ADMIN_JMP(src)]")
 
 // Jump to a distant target through a shout
 /mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob in human_list)
@@ -472,8 +472,8 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 	src.enter_host(target)
 
 	to_chat(usr, "<b>You successfully jumped to [target].</b>")
-	log_admin("[src.key] has jumped to [target]")
-	message_admins("[src.key] has jumped to [target] [ADMIN_JMP(src)]")
+	log_admin("[key_name(src)] has jumped to [target]")
+	message_admins("[key_name_admin(src)] has jumped to [target] [ADMIN_JMP(src)]")
 
 // Jump to an attuned mob for free
 /mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob in human_list)
@@ -500,8 +500,8 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 
 	to_chat(usr, "<b>You successfully jumped to [target].</b>")
 
-	log_admin("[src.key] has jumped to [target]")
-	message_admins("[src.key] has jumped to [target] [ADMIN_JMP(src)]")
+	log_admin("[key_name(src)] has jumped to [target]")
+	message_admins("[key_name_admin(src)] has jumped to [target] [ADMIN_JMP(src)]")
 
 // ATTUNE a mob, adding it to the indoctrinated list
 /mob/living/parasite/meme/verb/Attune()
@@ -523,8 +523,8 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 	to_chat(usr, "<b>You successfully indoctrinated [host].</b>")
 	to_chat(host, "<span class='warning'>Your head feels a bit roomier..</span>")
 
-	log_admin("[src.key] has attuned [host]")
-	message_admins("[src.key] has attuned [host] [ADMIN_JMP(src)]")
+	log_admin("[key_name(src)] has attuned [host]")
+	message_admins("[key_name_admin(src)] has attuned [host] [ADMIN_JMP(src)]")
 
 // Enables the mob to take a lot more damage
 /mob/living/parasite/meme/verb/Analgesic()
@@ -585,13 +585,13 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 
 		to_chat(dummy, "<span class='notice'>You feel very drowsy.. Your eyelids become heavy...</span>")
 
-		log_admin("[meme_mind.key] has taken possession of [host]([host_mind.key])")
-		message_admins("[meme_mind.key] has taken possession of [host]([host_mind.key]) [ADMIN_JMP(src)]")
+		log_admin("[key_name(src)] has taken possession of [host]([host_mind.key])")
+		message_admins("[key_name_admin(src)] has taken possession of [host]([host_mind.key]) [ADMIN_JMP(src)]")
 
 		sleep(600)
 
-		log_admin("[meme_mind.key] has lost possession of [host]([host_mind.key])")
-		message_admins("[meme_mind.key] has lost possession of [host]([host_mind.key]) [ADMIN_JMP(src)]")
+		log_admin("[key_name(src)] has lost possession of [host]([host_mind.key])")
+		message_admins("[key_name_admin(src)] has lost possession of [host]([host_mind.key]) [ADMIN_JMP(src)]")
 
 		meme_mind.transfer_to(src)
 		host_mind.transfer_to(host)

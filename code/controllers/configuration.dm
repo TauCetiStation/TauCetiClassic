@@ -1,3 +1,5 @@
+var/list/net_announcer_secret = list()
+
 /datum/configuration
 	var/name = "Configuration"			// datum name
 
@@ -19,7 +21,11 @@
 	var/log_pda = 0						// log pda messages
 	var/log_fax = 0						// log fax messages
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
-	var/log_runtime = 0					// logs world.log to a file
+	var/log_runtime = 0					// logs runtimes to round log folder
+	var/log_sql_error = 0				// same but for sql errors
+	var/log_js_error = 0				   // same but for client side js errors
+	var/log_initialization = 0			// same but for debug init logs
+	var/log_qdel = 0						// same but for debug qdel logs
 	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
@@ -60,10 +66,12 @@
 	var/serverwhitelist_message = "Sorry, you can't play on this server, because we use a whitelist.<br/>Please, visit another our server."
 	var/mods_are_mentors = 0
 	var/kick_inactive = 0				//force disconnect for inactive players
+	var/afk_time_bracket = 6000 // 10 minutes
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 
 	var/registration_panic_bunker_age = null
+	var/allowed_by_bunker_player_age = 60
 	var/client_limit_panic_bunker_count = null
 	var/client_limit_panic_bunker_link = null
 
@@ -186,6 +194,7 @@
 
 	
 	var/sandbox = FALSE
+	var/list/net_announcers = list() // List of network announcers on
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -304,6 +313,18 @@
 
 				if ("log_hrefs")
 					config.log_hrefs = 1
+
+				if ("log_sql_error")
+					config.log_sql_error = 1
+				
+				if ("log_js_error")
+					config.log_js_error = 1
+
+				if ("log_initialization")
+					config.log_initialization = 1
+
+				if ("log_qdel")
+					config.log_qdel = 1
 
 				if ("log_runtime")
 					config.log_runtime = 1
@@ -436,6 +457,9 @@
 
 				if("kick_inactive")
 					config.kick_inactive = 1
+
+				if ("afk_time_bracket")
+					config.afk_time_bracket = (text2num(value) MINUTES)
 
 				if("load_jobs_from_txt")
 					load_jobs_from_txt = 1
@@ -600,6 +624,9 @@
 
 				if("registration_panic_bunker_age")
 					config.registration_panic_bunker_age = value
+
+				if("allowed_by_bunker_player_age")
+					config.allowed_by_bunker_player_age = value
 
 				if("client_limit_panic_bunker_count")
 					config.client_limit_panic_bunker_count = text2num(value)
@@ -833,3 +860,48 @@
 				currentmap = null
 			else
 				error("Unknown command in map vote config: '[command]'")
+
+/datum/configuration/proc/load_list_without_comments(filename)
+	// Loading text file to list and removing comments
+	// Comment line can start with # or end with #
+	// If line end with # before # place tab(s) or space(s)
+	var/list/data = list()
+	var/endline_comment = regex(@"\s+#")
+	for(var/L in file2list(filename))
+		if (copytext(L, 1, 2) == "#")
+			continue
+		var/cut_position = findtext(L, endline_comment)
+		if(cut_position)
+			L = trim(copytext(L, 1, cut_position))
+		if (length(L))
+			data += L
+	return data
+
+/datum/configuration/proc/load_announcer_config(config_path)
+	// Loading config of network communication between servers
+	// Server list loaded from serverlist.txt file. It's file with comments. 
+	// One line of file = one server. Format - byond://example.com:2506 = secret
+	// First server must be self link for loading the secret
+	//
+	// In config file ban.txt load settings for ban announcer.
+	// Format key = value
+	var/restricted_chars_regex = regex(@"[;&]","g")
+	for(var/L in load_list_without_comments("[config_path]/serverlist.txt"))
+		var/delimiter_position = findtext(L,"=")
+		var/key = trim(copytext(L, 1, delimiter_position))
+		if(delimiter_position && length(key))
+			// remove restricted chars
+			L=replacetext(L, restricted_chars_regex, "")
+			global.net_announcer_secret[key] = trim(copytext(L, delimiter_position+1))
+	for(var/L in load_list_without_comments("[config_path]/ban.txt"))
+		var/delimiter_position = findtext(L,"=")
+		var/key = trim(copytext(L, 1, delimiter_position))
+		if(delimiter_position && length(key))
+			var/value = trim(copytext(L, delimiter_position+1))
+			switch(lowertext(key))
+				if ("receive")
+					if (value && (lowertext(value) == "true" || lowertext(value) == "on"))
+						net_announcers["ban_receive"] = TRUE
+				if ("send")
+					if (value && (lowertext(value) == "true" || lowertext(value) == "on"))
+						net_announcers["ban_send"] = TRUE

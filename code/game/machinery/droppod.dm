@@ -248,14 +248,14 @@
 	if(!isturf(loc))
 		to_chat(intruder, "<span class='userdanger'>You must be on ground to drop!</span>")
 		return
-	if(!Challenge)
+	if(war_device_activated)
 		if(world.time < SYNDICATE_CHALLENGE_TIMER)
 			to_chat(intruder, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least \
 		 	[round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
 		 	more minutes to allow them to prepare.</span>")
 			return
 	else
-		Challenge.Dropod_used = TRUE
+		war_device_activation_forbidden = TRUE
 	var/area/area_to_deploy = allowed_areas.areas[pick(allowed_areas.areas)]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(area_to_deploy.type))
@@ -693,14 +693,14 @@
 	flags = POOR_AIMING
 
 /obj/structure/droppod/Syndi/Aiming()
-	if(!Challenge)
+	if(war_device_activated)
 		if(world.time < SYNDICATE_CHALLENGE_TIMER)
 			to_chat(intruder, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least \
 		 		[round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
 		 		more minutes to allow them to prepare.</span>")
 			return
 	else
-		Challenge.Dropod_used = TRUE
+		war_device_activation_forbidden = TRUE
 
 	if(droped)
 		if(!(flags & IS_LOCKED))

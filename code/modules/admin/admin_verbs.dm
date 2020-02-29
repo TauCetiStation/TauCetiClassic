@@ -78,17 +78,17 @@ var/list/admin_verbs_admin = list(
 	/client/proc/debug_variables 		//allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify,
 	)
 var/list/admin_verbs_log = list(
-	/datum/admins/proc/view_txt_log,	//shows the server log (diary) for today,
-	/datum/admins/proc/view_atk_log,	//shows the server combat-log, doesn't do anything presently,
-	/client/proc/giveruntimelog,		//allows us to give access to runtime logs to somebody,
-	/client/proc/getserverlog,			//allows us to fetch server logs (diary) for other days,
-	/client/proc/getreplay,				//allows us to fetch replays for other days,
+	/client/proc/getserverlogs,			//allows us to fetch server logs (diary) for other days,
+	/client/proc/getcurrentlogs,			//allows us to fetch logs for other days,
+	/client/proc/getlogsbyid,			   //allows us to fetch logs by round id,
+	/client/proc/getoldlogs,			   //allows us to fetch logs by round id,
 	/client/proc/investigate_show,		//various admintools for investigation. Such as a singulo grief-log,
 	)
 var/list/admin_verbs_variables = list(
 	/client/proc/debug_variables,
-	/client/proc/add_player_age, 		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
-	)
+	/client/proc/add_player_age,
+	/client/proc/mass_apply_status_effect,
+)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel
 //	/client/proc/stickybanpanel,
@@ -153,7 +153,6 @@ var/list/admin_verbs_server = list(
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
-	/client/proc/getruntimelog,                     //allows us to access runtime logs to somebody,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
 	/client/proc/ZASSettings,
@@ -168,6 +167,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/investigate_show,
 	/client/proc/reload_admins,
 	/client/proc/reload_mentors,
+	/client/proc/reload_config,
 	/client/proc/reload_nanoui_resources,
 //	/client/proc/remake_distribution_map,
 //	/client/proc/show_distribution_map,
@@ -176,6 +176,7 @@ var/list/admin_verbs_debug = list(
 //	/proc/machine_upgrade,
 	/client/proc/toggledebuglogs,
 	/client/proc/view_runtimes,
+	/client/proc/getdebuglogsbyid,
 	/client/proc/cmd_display_del_log,
 	/client/proc/cmd_display_init_log,
 	/datum/admins/proc/run_unit_test,
@@ -221,8 +222,13 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/colorooc,
 	/client/proc/admin_ghost,
 	/client/proc/toggle_view_range,
-	/datum/admins/proc/view_txt_log,
-	/datum/admins/proc/view_atk_log,
+	/client/proc/getserverlogs,
+	/client/proc/getcurrentlogs,
+	/client/proc/getlogsbyid,
+	/client/proc/getoldlogs,
+	/client/proc/investigate_show,
+	/client/proc/view_runtimes,
+	/client/proc/getdebuglogsbyid,
 	/client/proc/cmd_admin_subtle_message,
 	/client/proc/cmd_admin_check_contents,
 	/datum/admins/proc/access_news_network,
@@ -541,6 +547,17 @@ var/list/admin_verbs_hideable = list(
 
 	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/mass_apply_status_effect()
+	set category = "Special Verbs"
+	set name = "Mass Apply Status Effect"
+	set desc = "Apply a status effect to every mob."
+
+	var/list/params = admin_spawn_status_effect(usr)
+	if(params)
+		if(alert("Confirm applying the status effect to every mob?", , "Yes", "No") == "Yes")
+			for(var/mob/living/L in global.living_list)
+				L.apply_status_effect(arglist(params))
+
 /client/proc/drop_bomb() // Some admin dickery that can probably be done better -- TLE
 	set category = "Special Verbs"
 	set name = "Drop Bomb"
@@ -705,8 +722,8 @@ var/list/admin_verbs_hideable = list(
 
 	if(deadmin_holder)
 		deadmin_holder.reassociate()
-		log_admin("[src] re-admined themself.")
-		message_admins("[src] re-admined themself.")
+		log_admin("[key_name(usr)] re-admined themself.")
+		message_admins("[key_name_admin(usr)] re-admined themself.")
 		to_chat(src, "<span class='interface'>You now have the keys to control the planet, or at least a small space station.</span>")
 		verbs -= /client/proc/readmin_self
 		feedback_add_details("admin_verb","RAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -717,8 +734,8 @@ var/list/admin_verbs_hideable = list(
 
 	if(holder)
 		if(alert("Confirm self-deadmin for the round?",,"Yes","No") == "Yes")
-			log_admin("[src] deadmined themself.")
-			message_admins("[src] deadmined themself.")
+			log_admin("[key_name(usr)] deadmined themself.")
+			message_admins("[key_name_admin(usr)] deadmined themself.")
 			deadmin()
 			to_chat(src, "<span class='interface'>You are now a normal player.</span>")
 			verbs += /client/proc/readmin_self
@@ -988,7 +1005,7 @@ var/list/admin_verbs_hideable = list(
 		if((M.mind && M.mind.special_role) || (M.client && M.client.holder))
 			to_chat(M, "<font color='#960018'><span class='ooc'><span class='prefix'>Antag-OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
 
-	log_ooc("Antag-OOC: [key] : [msg]")
+	log_ooc("Antag-OOC: [key_name(src)] : [msg]")
 
 /client/proc/toggle_AI_interact()
 	set name = "Toggle Admin AI Interact"
@@ -1043,11 +1060,11 @@ var/list/admin_verbs_hideable = list(
 	if(choice == "--CANCEL--") return
 
 	message_admins("[key_name_admin(src)] started loading event-map [choice]")
-	log_admin("[key_name_admin(src)] started loading event-map [choice]")
+	log_admin("[key_name(src)] started loading event-map [choice]")
 
 	if(maploader.load_new_z_level(choice))//, load_speed = 100)
 		message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
-		log_admin("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
+		log_admin("[key_name(src)] loaded event-map [choice], zlevel [world.maxz]")
 	else
 		message_admins("[key_name_admin(src)] failed to load event-map [choice].")
 

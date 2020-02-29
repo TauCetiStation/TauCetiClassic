@@ -496,7 +496,7 @@ var/list/slot_equipment_priority = list(
 	if(is_busy() || !canmove || !in_range(src, target) || isdrone(src) || incapacitated() || !Adjacent(target))
 		return FALSE
 
-	if(ishuman(src) || isrobot(src) || ismonkey(src) || isIAN(src) || isalienadult(src))
+	if(ishuman(src) || isrobot(src) || ismonkey(src) || isIAN(src) || isxenoadult(src))
 		return TRUE
 
 //Create delay for equipping
