@@ -90,6 +90,9 @@
 		user.visible_message("<span class='warning'>[user] suddenly manifests!</span>", "<span class='shadowling'>The pressure becomes too much and you vacate the interdimensional darkness.</span>")
 		user.incorporeal_move = 0
 		user.alpha = 255
+		var/turf/mobloc = get_turf(user.loc)
+		if(!mobloc.is_mob_placeable(user))
+			do_teleport(user, mobloc, 8, asoundin='sound/effects/phasein.ogg', checkspace = 1)
 
 
 
