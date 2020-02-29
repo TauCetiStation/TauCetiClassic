@@ -773,30 +773,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			show_inv(usr)
 
 	if (href_list["bandages"] && usr.CanUseTopicInventory(src))
-		if(stat == DEAD)
-			to_chat(usr, "<span class='notice'>There is no point in doing so with the dead body.</span>")
-			return
-
-		var/list/wounds
-		var/has_visual_bandages = FALSE // We need this var because wounds might have healed by themselfs
-
-		for(var/obj/item/organ/external/BP in bodyparts)
-			if(BP.bandaged)
-				has_visual_bandages = TRUE
-
-			for(var/datum/wound/W in BP.wounds)
-				if(W.bandaged)
-					LAZYADD(wounds, W)
-
-		if(wounds || has_visual_bandages)
-			visible_message("<span class='danger'>[usr] is trying to remove [src]'s bandages!</span>")
-			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
-				for(var/datum/wound/W in wounds)
-					if(W.bandaged)
-						W.bandaged = 0
-				update_bandage()
-				attack_log += "\[[time_stamp()]\] <font color='orange'>Had their bandages removed by [usr.name] ([usr.ckey]).</font>"
-				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) bandages.</font>"
+		remove_bandages()
 
 	if (href_list["splints"] && usr.CanUseTopicInventory(src))
 		var/list/splints
@@ -2067,3 +2044,34 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+
+/mob/living/carbon/human/verb/remove_bandages()
+	set category = "IC"
+	set name = "Remove bandages"
+	set desc = "Remove your own bandages"
+
+	if(stat == DEAD)
+		to_chat(usr, "<span class='notice'>There is no point in doing so with the dead body.</span>")
+		return
+	if(!ishuman(usr) || usr.incapacitated())
+		return
+	var/list/wounds
+	var/has_visual_bandages = FALSE // We need this var because wounds might have healed by themselfs
+
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.bandaged)
+			has_visual_bandages = TRUE
+			for(var/datum/wound/W in BP.wounds)
+				if(W.bandaged)
+					LAZYADD(wounds, W)
+
+	if(wounds || has_visual_bandages)
+		visible_message("<span class='danger'>[usr] is trying to remove [src == usr ? "their" : "[src]'s"] bandages!</span>")
+		if(do_mob(usr, src, HUMAN_STRIP_DELAY))
+			for(var/datum/wound/W in wounds)
+				if(W.bandaged)
+					W.bandaged = 0
+			update_bandage()
+			attack_log += "\[[time_stamp()]\] <font color='orange'>Had their bandages removed by [usr.name] ([usr.ckey]).</font>"
+			usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) bandages.</font>"
+

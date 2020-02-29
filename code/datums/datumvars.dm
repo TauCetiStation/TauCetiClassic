@@ -285,6 +285,7 @@
 			body += "<option value='?_src_=vars;makezombie=\ref[D]'>Make zombie</option>"
 		body += "<option value>---</option>"
 		body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
+		body += "<option value='?_src_=vars;dust=\ref[D]'>Turn to dust</option>"
 	if(isatom(D))
 		body += "<option value='?_src_=vars;delthis=\ref[D]'>Delete this object</option>"
 	if(isobj(D))
@@ -580,6 +581,17 @@ body
 			return
 
 		src.cmd_admin_gib(M)
+
+	else if(href_list["dust"])
+		if(!check_rights(R_ADMIN|R_FUN))
+			return
+
+		var/mob/M = locate(href_list["dust"])
+		if(!istype(M))
+			to_chat(usr, "This can only be used on instances of type /mob")
+			return
+
+		src.cmd_admin_dust(M)
 
 	else if(href_list["build_mode"])
 		if(!check_rights(R_BUILDMODE))
