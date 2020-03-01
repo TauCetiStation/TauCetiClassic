@@ -10,6 +10,8 @@
 #define DEBUG
 // END_PREFERENCES
 // BEGIN_INCLUDE
+#include "BIO.dmm"
+#include "RND.dmm"
 #include "code\_compile_options.dm"
 #include "code\_compile_options_cyrillic.dm"
 #include "code\hub.dm"

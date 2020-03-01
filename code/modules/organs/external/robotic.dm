@@ -75,6 +75,8 @@
 
 	controller_type = /datum/bodypart_controller/robot
 
+	controller_type = /datum/bodypart_controller/robot
+
 /obj/item/organ/external/chest/robot/update_sprite()
 	return
 

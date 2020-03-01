@@ -1,0 +1,66 @@
+"a" = (/turf/space,/area/space)
+"b" = (/obj/structure/lattice,/turf/simulated/floor/plating{dir = 9; icon_state = "warnplate"},/area/space)
+"c" = (/obj/machinery/door/poddoor{density = 0; icon_state = "pdoor0"; id = "bridge blast"; name = "Bridge Blast Doors"; opacity = 0},/obj/structure/grille,/obj/machinery/door/firedoor,/obj/structure/cable{d2 = 4; icon_state = "0-4"},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/space)
+"d" = (/obj/structure/lattice,/turf/simulated/floor/plating{dir = 1; icon_state = "warnplate"},/area/space)
+"e" = (/obj/structure/lattice,/turf/simulated/floor/plating{dir = 5; icon_state = "warnplate"},/area/space)
+"f" = (/turf/simulated/floor/grass,/area/space)
+"g" = (/obj/structure/flora/ausbushes/fullgrass,/turf/simulated/floor/grass,/area/space)
+"h" = (/obj/structure/flora/tree/jungle,/turf/simulated/floor/grass,/area/space)
+"i" = (/obj/structure/lattice,/turf/simulated/floor/plating{dir = 4; icon_state = "warnplate"},/area/space)
+"j" = (/obj/structure/lattice,/turf/simulated/floor/plating{dir = 6; icon_state = "warnplate"},/area/space)
+"k" = (/obj/structure/lattice,/turf/simulated/floor/plating{dir = 10; icon_state = "warnplate"},/area/space)
+"l" = (/obj/structure/flora/ausbushes/sparsegrass,/turf/simulated/floor/grass,/area/space)
+"m" = (/obj/structure/flora/junglebush/c,/turf/simulated/floor/grass,/area/space)
+"n" = (/mob/living/simple_animal/mouse/brown,/turf/simulated/floor/grass,/area/space)
+"o" = (/mob/living/carbon/monkey/diona,/turf/simulated/floor/grass,/area/space)
+"p" = (/obj/structure/flora/ausbushes/ywflowers,/turf/simulated/floor/grass,/area/space)
+"q" = (/obj/structure/flora/ausbushes/lavendergrass,/turf/simulated/floor/grass,/area/space)
+"r" = (/obj/structure/flora/ausbushes/brflowers,/turf/simulated/floor/grass,/area/space)
+"s" = (/obj/structure/flora/rock/jungle,/turf/simulated/floor/grass,/area/space)
+"t" = (/obj/structure/flora/ausbushes/genericbush,/turf/simulated/floor/grass,/area/space)
+"u" = (/obj/structure/flora/junglebush/b,/turf/simulated/floor/grass,/area/space)
+"v" = (/mob/living/simple_animal/mouse,/turf/simulated/floor/grass,/area/space)
+"w" = (/obj/structure/flora/junglebush,/turf/simulated/floor/grass,/area/space)
+"x" = (/obj/structure/flora/rock/pile/largejungle,/turf/simulated/floor/grass,/area/space)
+"y" = (/mob/living/simple_animal/fox,/turf/simulated/floor/grass,/area/space)
+"z" = (/obj/structure/flora/ausbushes/grassybush,/turf/simulated/floor/grass,/area/space)
+"A" = (/obj/structure/flora/junglebush/large,/turf/simulated/floor/grass,/area/space)
+"B" = (/obj/structure/flora/ausbushes/ppflowers,/turf/simulated/floor/grass,/area/space)
+"C" = (/mob/living/carbon/monkey/tajara,/turf/simulated/floor/grass,/area/space)
+"D" = (/mob/living/simple_animal/shiba,/turf/simulated/floor/grass,/area/space)
+"E" = (/mob/living/simple_animal/chick,/turf/simulated/floor/grass,/area/space)
+"F" = (/mob/living/carbon/monkey/unathi,/turf/simulated/floor/grass,/area/space)
+"G" = (/mob/living/simple_animal/mouse/white,/turf/simulated/floor/grass,/area/space)
+"H" = (/obj/structure/jungle_plant,/turf/simulated/floor/grass,/area/space)
+"I" = (/mob/living/simple_animal/turkey,/turf/simulated/floor/grass,/area/space)
+"J" = (/obj/structure/flora/ausbushes/sunnybush,/turf/simulated/floor/grass,/area/space)
+"K" = (/mob/living/carbon/monkey/skrell,/turf/simulated/floor/grass,/area/space)
+"L" = (/mob/living/simple_animal/lizard,/turf/simulated/floor/grass,/area/space)
+
+(1,1,1) = {"
+aaaaaabddddddddddeaaaaaaa
+aaaaabcccccccccccceaaaaaa
+aaaabcgfflfmfffgnmceaaaaa
+aaabcofffgpqffLrsofceaaaa
+aabcfmffLtfulhffqpggceaaa
+abcLpffhfvwfffffxfwmyceaa
+bcfqtlqrzmfAgffflAqfBmcea
+cfmwfffClfxfBDhfzffflzgce
+cggffffBfwffffgErffffFfci
+cflgfffgfrfffggsfgffgsLci
+cGHyfhfplufffpfzIfhfmgrci
+cmwfBflfAqfhffxmftlfuffci
+cqffJzfsfBmfflfwfzfvAwgci
+cgpGwfgfffpgfAlfqBmpfqfci
+crLffFgfffEfwrfuqgfffCgci
+cfsAlqmfffgffKgfsffffgfci
+czxffffnhffsfmfffrffrflci
+cfffffgffgqfLffffgfhfffci
+cogfffrpltufmffBfgfffgtcj
+kcffhfIfmfwBffhfflfmffcja
+akcfffsffffffgffffxfgcjaa
+aakcgffgffffAfxBGsffcjaaa
+aaakcfgBfffflpfffEgcjaaaa
+aaaakcgfzhqfgfgfwfcjaaaaa
+aaaaakccccccccccccjaaaaaa
+"}
