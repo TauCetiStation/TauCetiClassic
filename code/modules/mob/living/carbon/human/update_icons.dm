@@ -141,7 +141,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/icon_path = def_icon_path
 
 	var/t_state
-	if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES)
+	if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES || sprite_sheet_slot == SPRITE_SHEET_BELT)
 		t_state = item_state
 		if(!icon_custom)
 			icon_state_appendix = null
