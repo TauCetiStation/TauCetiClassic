@@ -158,6 +158,14 @@
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
 
+/obj/item/ammo_box/magazine/g16
+	name = "magazine (16-Gauge Special)"
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "75"
+	ammo_type = /obj/item/ammo_casing/shotgun/weakbuckshot
+	caliber = "shotgun"
+	max_ammo = 6
+
 /obj/item/ammo_box/magazine/m12mm
 	name = "magazine (.45)"
 	icon_state = "12mm"

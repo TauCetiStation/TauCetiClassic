@@ -193,3 +193,19 @@
 		return
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
+
+/obj/item/weapon/gun/projectile/automatic/mozambique
+	name = "SA-3 Mozambique"
+	desc = "Triple barrel shotgun pistol. Uses special 16-Gauge Buckshot ammo "
+	icon_state = "gyropistol"
+	force = 10
+	mag_type = /obj/item/ammo_box/magazine/g16
+	fire_sound = 'sound/weapons/guns/mozambique.ogg'
+
+/obj/item/weapon/gun/projectile/automatic/mozambique/process_chamber(eject_casing = 0, no_casing = 1)
+	..()
+
+/obj/item/weapon/gun/projectile/automatic/mozambique/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][magazine ? "loaded" : ""]"
+	return

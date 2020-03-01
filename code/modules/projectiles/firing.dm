@@ -1,8 +1,8 @@
-/obj/item/ammo_casing/proc/fire(atom/target, mob/living/user, params, distro, quiet)
+/obj/item/ammo_casing/proc/fire(atom/target, mob/living/user, params, distro, quiet, shooting_object)
 	var/boolet_number = 0
 	distro += variance
 
-	BB.shot_from = loc
+	BB.shot_from = shooting_object
 
 	for(var/i = max(1, pellets), i > 0, i--)
 		boolet_number++

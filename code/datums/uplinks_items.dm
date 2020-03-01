@@ -123,6 +123,13 @@
 	cost = 7
 	uplink_types = list("nuclear") */
 
+/datum/uplink_item/dangerous/mozambique
+	name = "SA-3 Mozambique"
+	desc = "A triple-barreled shotgun pistol. Uses 16g ammunition in 6-round magazines."
+	item = /obj/item/weapon/gun/projectile/automatic/mozambique
+	cost = 11
+	uplink_types = list("nuclear")
+
 /datum/uplink_item/dangerous/bulldog
 	name = "V15 Bulldog shotgun"
 	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Uses various 12g magazines."
@@ -273,6 +280,13 @@
 	desc = "A box that contains seven additional rounds for the revolver, made using an automatic lathe."
 	item = /obj/item/ammo_box/a357
 	cost = 3
+
+/datum/uplink_item/ammo/mozambique
+	name = "Ammo-16g Special"
+	desc = "Magazine for use in Mozambique pistol"
+	item = /obj/item/ammo_box/magazine/g16
+	cost = 3
+	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/smg
 	name = "Ammo-.45 ACP"

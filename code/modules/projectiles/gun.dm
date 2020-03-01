@@ -32,15 +32,23 @@
 	var/fire_delay = 6
 	var/last_fired = 0
 
+	var/burst_size = 0
+	var/full_auto = 0
+	var/full_auto_break = FALSE		//If something happens during shooting, it sets to TRUE, allowing shooting loop to break, and set it back to FALSE
+
+	var/full_auto_amount_shot = 0		//For stuff like increasing spread for long shootings, or overheating gun.
+	var/full_auto_spread_coefficient = 0
+
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
+
 
 /obj/item/weapon/gun/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)
 		last_fired = world.time
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
@@ -53,6 +61,8 @@
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)
 	to_chat(user, "<span class='warning'>*click*</span>")
 	playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
+	if(full_auto)
+		full_auto_break = TRUE
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
@@ -66,7 +76,10 @@
 		announce_shot(user)
 
 /obj/item/weapon/gun/proc/announce_shot(mob/living/user)
-	user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a gunshot!")
+	if(!full_auto)
+		user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a gunshot!")
+	else if (!full_auto_amount_shot)
+		user.visible_message("<span class='danger'>[user] starts shooting from [src]!</span>", "<span class='danger'>You start firing [src]!</span>", "You hear a volley of gunshots!")
 
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
@@ -78,8 +91,12 @@
 	return ..()
 
 /obj/item/weapon/gun/afterattack(atom/A, mob/living/user, flag, params)
-	if(flag)	return //It's adjacent, is the user, or is on the user's person
-	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
+	if(flag)
+		return //It's adjacent, is the user, or is on the user's person
+	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))
+		return//Shouldnt flag take care of this?
+	if(full_auto)
+		return
 	if(user && user.client && user.client.gun_mode && !(A in target))
 		PreFire(A,user,params) //They're using the new gun system, locate what they're aiming at.
 	else
@@ -101,8 +118,10 @@
 				return
 	..()
 
-/obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0, point_blank = FALSE)//TODO: go over this
-	//Exclude lasertag guns from the CLUMSY check.
+
+/obj/item/weapon/gun/proc/fire_checks(mob/living/user)
+	if(!user)
+		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
 		return
@@ -138,8 +157,6 @@
 					qdel(src)
 					return
 
-	add_fingerprint(user)
-
 	if(!special_check(user, target))
 		return
 
@@ -147,25 +164,45 @@
 		if (world.time % 3) //to prevent spam
 			to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
 		return
+
+	add_fingerprint(user)
+
+	return TRUE
+
+
+/obj/item/weapon/gun/proc/DoShooting(atom/target, mob/living/user, params, reflex = 0, point_blank = FALSE)
 	if(chambered)
 		if(point_blank)
 			if(!chambered.BB.fake)
 				user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
 			chambered.BB.damage *= 1.3
-		if(!chambered.fire(target, user, params, , silenced))
+		if(!chambered.fire(target, user, params, , silenced, src))
 			shoot_with_empty_chamber(user)
 		else
 			shoot_live_shot(user)
 			user.newtonian_move(get_dir(target, user))
+			if(full_auto)
+				++full_auto_amount_shot
 	else
 		shoot_with_empty_chamber(user)
+
 	process_chamber()
 	update_icon()
-
 	if(user.hand)
 		user.update_inv_l_hand()
 	else
 		user.update_inv_r_hand()
+
+/obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0, point_blank = FALSE)//TODO: go over this
+	if(!fire_checks(user))
+		return
+
+	if(burst_size > 1)
+		for(var/i = 1 to burst_size)
+			addtimer(CALLBACK(src, .proc/DoShooting, target, user, params, reflex, point_blank, 0.3), i-1)
+	else
+		DoShooting(target, user, params, reflex, point_blank)
+
 
 
 /obj/item/weapon/gun/proc/can_fire()
@@ -184,7 +221,7 @@
 
 /obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)
 	//Suicide handling.
-	if (M == user && def_zone == O_MOUTH)
+	if(M == user && def_zone == O_MOUTH)
 		if(user.is_busy())
 			return
 		if(!can_suicide_with)
@@ -229,7 +266,7 @@
 			click_empty(user)
 			return
 
-	if (can_fire())
+	if(can_fire())
 		//Point blank shooting if on harm intent or target we were targeting.
 		if(user.a_intent == "hurt")
 			Fire(M, user, null, null, TRUE)

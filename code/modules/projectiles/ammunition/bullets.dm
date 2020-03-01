@@ -63,6 +63,14 @@
 	projectile_type = /obj/item/projectile/bullet/buckpellet
 	pellets = 7
 
+/obj/item/ammo_casing/shotgun/weakbuckshot
+	name = "16g shell"
+	desc = "A 16 gauge shell"
+	icon_state = "gshell"
+	projectile_type = "/obj/item/projectile/bullet/buckpellet"
+	variance = 0.5
+	pellets = 5
+
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag shell"
 	desc = "A weak beanbag shell."

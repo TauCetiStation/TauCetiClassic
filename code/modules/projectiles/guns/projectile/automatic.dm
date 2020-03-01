@@ -7,16 +7,79 @@
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/msmg9mm
 	can_be_holstered = FALSE
+	fire_delay = 0		//Automatic guns no need this
 	var/alarmed = 0
+	var/burst_amount_when_switch = 3		//0 if no burst fire mode, amount of bullets shot otherwise
+	var/full_auto_speed_when_switch = 0		//0 if no full auto mode, full auto speed otherwise.
+	var/datum/action/switch_fire_mode/mode_switch
+
+/obj/item/weapon/gun/projectile/automatic/atom_init()
+	. = ..()
+	if(!mode_switch && (burst_amount_when_switch || full_auto_speed_when_switch))
+		mode_switch = new()
+		mode_switch.gun = src
+
+/obj/item/weapon/gun/projectile/automatic/Destroy()
+	. = ..()
+	QDEL_NULL(mode_switch)
+
+/obj/item/weapon/gun/projectile/automatic/pickup(mob/user)
+	..()
+	if(mode_switch)
+		mode_switch.Grant(user)
+
+/obj/item/weapon/gun/projectile/automatic/dropped(mob/user)
+	. = ..()
+	if(mode_switch)
+		mode_switch.Remove(user)
+
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"]"
 	return
 
+
 /obj/item/weapon/gun/projectile/automatic/attackby(obj/item/A, mob/user)
 	if(..() && chambered)
 		alarmed = 0
+
+/obj/item/weapon/gun/projectile/automatic/proc/switch_fire_mode(mob/living/user)		//Cycle from semi-auto, to burst, to full auto
+	if(burst_size)
+		if(full_auto_speed_when_switch)
+			full_auto = full_auto_speed_when_switch
+		burst_size = 0
+	else if(full_auto)
+		full_auto = 0
+	else
+		if(burst_amount_when_switch)
+			burst_size = burst_amount_when_switch
+		else if(full_auto_speed_when_switch)
+			full_auto = full_auto_speed_when_switch
+
+
+
+/datum/action/switch_fire_mode
+	name = "Switch Fire Mode"
+	check_flags = AB_CHECK_ALIVE|AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING
+	button_icon = 'icons/mob/actions.dmi'
+	button_icon_state = "semi_auto"
+	var/obj/item/weapon/gun/projectile/automatic/gun = null
+
+
+/datum/action/switch_fire_mode/Trigger()
+	gun.switch_fire_mode(owner)
+	if(gun.full_auto)
+		to_chat(owner, "<span class='notice'>You switch gun to full auto mode.</span>")
+		button_icon_state = "full_auto"
+	else if(gun.burst_size)
+		to_chat(owner, "<span class='notice'>You switch gun to [gun.burst_size]-bullet bursts mode.</span>")
+		button_icon_state = "burst"
+	else
+		to_chat(owner, "<span class='notice'>You switch gun to semi-auto mode.</span>")
+		button_icon_state = "semi_auto"
+	button.UpdateIcon()
+
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Mac-10"
@@ -27,6 +90,7 @@
 	can_be_holstered = TRUE
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
+	full_auto_speed_when_switch = 1
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
@@ -96,85 +160,30 @@
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m762
 	fire_sound = 'sound/weapons/guns/Gunshot2.wav'
+	full_auto_speed_when_switch = 1
+	full_auto_spread_coefficient = 0.05
 	var/cover_open = 0
-	var/wielded = 0
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/proc/unwield()
-	wielded = 0
-	update_icon()
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/proc/wield()
-	wielded = 1
-	update_icon()
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/mob_can_equip(M, slot)
-	//Cannot equip wielded items.
-	if(wielded)
-		to_chat(M, "<span class='warning'>Unwield the [initial(name)] first!</span>")
-		return 0
-
-	return ..()
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/dropped(mob/user)
-	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
-	if(user)
-		var/obj/item/weapon/gun/projectile/automatic/l6_saw/O = user.get_inactive_hand()
-		if(istype(O))
-			O.unwield()
-	return	unwield()
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/pickup(mob/user)
-	unwield()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user)
-	switch(alert("Would you like to [cover_open ? "open" : "close"], or change grip?","Choose.","Toggle cover","Change grip"))
-		if("Toggle cover")
-			if(wielded || user.get_inactive_hand())
-				to_chat(user, "<span class='warning'>You need your other hand to be empty to do this.</span>")
-				return
-			else
-				if(ishuman(user))
-					var/mob/living/carbon/human/H = user
-					if(!H.can_use_two_hands())
-						to_chat(user, "<span class='warning'>You need both of your hands to be intact.</span>")
-						return
-				cover_open = !cover_open
-				to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
-				update_icon()
-				return
-		if("Change grip")
-			if(wielded) //Trying to unwield it
-				unwield()
-				to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
-				if(user.hand)
-					user.update_inv_l_hand()
-				else
-					user.update_inv_r_hand()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(!H.can_use_two_hands())
+			to_chat(user, "<span class='warning'>You need both of your hands to be intact.</span>")
+			return
+		cover_open = !cover_open
+		to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
+		update_icon()
 
-				var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
-				if(O && istype(O))
-					O.unwield()
-				return
-
-			else //Trying to wield it
-				if(ishuman(user))
-					var/mob/living/carbon/human/H = user
-					var/W = H.wield(src, initial(name))
-					if(W)
-						wield()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/living/user, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
-	if(!wielded)
-		to_chat(user, "<span class='notice'>You need wield [src] in both hands before firing!</span>")
-		return
+/obj/item/weapon/gun/projectile/automatic/l6_saw/fire_checks(mob/living/user)
+	. = ..()
 	if(cover_open)
 		to_chat(user, "<span class='notice'>[src]'s cover is open! Close it before firing!</span>")
-	else
-		..()
-		update_icon()
+		return FALSE
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_hand(mob/user)
 	if(loc != user)
@@ -332,6 +341,8 @@
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
+	burst_amount_when_switch = 0
+
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/atom_init()
 	. = ..()
@@ -387,6 +398,8 @@
 	item_state = "a74"
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	fire_sound = 'sound/weapons/guns/gunshot_ak74.ogg'
+	full_auto_speed_when_switch = 1
+	full_auto_spread_coefficient = 0.02
 	var/icon/mag_icon = icon('icons/obj/gun.dmi',"mag-a74")
 
 /obj/item/weapon/gun/projectile/automatic/a74/atom_init()
