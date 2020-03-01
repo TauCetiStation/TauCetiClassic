@@ -73,7 +73,7 @@ var/global/list/icon_state_allowed_cache = list()
 
 			if(icons_exist)
 				var/t_state
-				if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES)
+				if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES || sprite_sheet_slot == SPRITE_SHEET_BELT)
 					t_state = item_state
 
 				if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM)

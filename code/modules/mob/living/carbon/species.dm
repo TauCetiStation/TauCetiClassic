@@ -398,9 +398,15 @@
 	flesh_color = "#808d11"
 
 	sprite_sheets = list(
+		// SPRITE_SHEET_HELD = 'icons/mob/species/vox/held.dmi',
+		SPRITE_SHEET_UNIFORM = 'icons/mob/species/vox/uniform.dmi',
 		SPRITE_SHEET_SUIT = 'icons/mob/species/vox/suit.dmi',
+		SPRITE_SHEET_BELT = 'icons/mob/belt.dmi',
 		SPRITE_SHEET_HEAD = 'icons/mob/species/vox/head.dmi',
+		SPRITE_SHEET_BACK = 'icons/mob/back.dmi',
 		SPRITE_SHEET_MASK = 'icons/mob/species/vox/masks.dmi',
+		SPRITE_SHEET_EARS = 'icons/mob/ears.dmi',
+		SPRITE_SHEET_EYES = 'icons/mob/species/vox/eyes.dmi',
 		SPRITE_SHEET_FEET = 'icons/mob/species/vox/shoes.dmi',
 		SPRITE_SHEET_GLOVES = 'icons/mob/species/vox/gloves.dmi'
 		)
@@ -497,20 +503,6 @@
 		SPRITE_SHEET_HEAD = 'icons/mob/species/armalis/head.dmi',
 		SPRITE_SHEET_HELD = 'icons/mob/species/armalis/held.dmi'
 		)
-
-	sprite_sheets = list(
-		// SPRITE_SHEET_HELD = 'icons/mob/species/vox/held.dmi',
-		SPRITE_SHEET_UNIFORM = 'icons/mob/species/vox/uniform.dmi',
-		SPRITE_SHEET_SUIT = 'icons/mob/species/vox/suit.dmi',
-		SPRITE_SHEET_BELT = 'icons/mob/belt.dmi',
-        SPRITE_SHEET_HEAD = 'icons/mob/species/vox/head.dmi',
-		SPRITE_SHEET_BACK = 'icons/mob/back.dmi',
-		SPRITE_SHEET_MASK = 'icons/mob/species/vox/masks.dmi',
-		SPRITE_SHEET_EARS = 'icons/mob/ears.dmi',
-		SPRITE_SHEET_EYES = 'icons/mob/species/vox/eyes.dmi',
-		SPRITE_SHEET_FEET = 'icons/mob/species/vox/shoes.dmi',
-		SPRITE_SHEET_GLOVES = 'icons/mob/species/vox/gloves.dmi'
-        )
 
 /datum/species/diona
 	name = DIONA
