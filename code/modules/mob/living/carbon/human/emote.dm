@@ -13,7 +13,6 @@
 	var/cloud_emote = ""
 	var/sound_priority = SOUND_PRIORITY_LOW
 	var/emote_sound
-	var/initial_message = message // useful in voiced emotions
 	var/conditions_for_emote = TRUE // special check in special emotions. For example, does a mob have the feeling of pain to scream from the pain?
 
 	var/mute_message = "" // high priority. usuially VISIBLE
@@ -23,6 +22,9 @@
 	var/muted = HAS_TRAIT(src, TRAIT_MUTE)
 	var/muzzled = istype(wear_mask, /obj/item/clothing/mask/muzzle)
 	var/can_make_a_sound = !(muted || muzzled || silent)
+
+	if(findtext(act, "s", -1) && !findtext(act, "_", -2)) // Removes ending s's unless they are prefixed with a '_'
+		act = copytext(act, 1, length(act))
 
 	for (var/obj/item/weapon/implant/I in src)
 		if (I.implanted)
@@ -113,12 +115,10 @@
 			message = "chokes."
 			mute_message = "clutches their throat desperately!"
 			muzzled_message = "makes a weak noise."
-			miming_message = message
 
 		if ("snore")
 			message_type = SHOWMSG_AUDIO
 			message = pick("snores.", "sleeps soundly.")
-			mute_message = message
 			muzzled_message = pick("snores.", "makes a noise.")
 			miming_message = "snores."
 			conditions_for_emote = (!species.flags[NO_BREATHE])
@@ -166,7 +166,6 @@
 		if ("sigh")
 			message_type = SHOWMSG_AUDIO
 			message = "sighs."
-			mute_message = message
 			muzzled_message = "makes a weak noise."
 			miming_message = "sighs."
 			conditions_for_emote = (get_species() != ZOMBIE)
@@ -176,7 +175,6 @@
 			message = pick("grumbles.", "mumbles.")
 			mute_message = "makes an annoyed face!"
 			muzzled_message = "makes a weak noise"
-			miming_message = message
 
 // ========== HYBRID ==========
 
@@ -191,9 +189,7 @@
 		if ("cry")
 			message_type = SHOWMSG_AUDIO | SHOWMSG_VISUAL
 			message = "cries."
-			mute_message = message
 			muzzled_message = "makes a [pick("sad face", "weak noise")] and frowns."
-			miming_message = message
 			conditions_for_emote = (get_species() != SKRELL) && (get_species() != DIONA) && HAS_HEAD && (get_species() != ZOMBIE)
 
 		if ("giggle")
@@ -207,9 +203,6 @@
 		if ("clap")
 			message_type = SHOWMSG_VISUAL | SHOWMSG_AUDIO
 			message = "claps."
-			mute_message = message
-			muzzled_message = message
-			miming_message = message
 			conditions_for_emote = BOTH_HANDS_ARE_USABLE && (get_species() != ZOMBIE)
 
 // ========== VISIBLE ==========
@@ -345,21 +338,20 @@
 	if(!conditions_for_emote) // = if(cant_make_an_emotion)
 		return auto ? FALSE : to_chat(src, "<span class='warning'>And how can I do that? I can't!</span>")
 
-	if(initial_message)
-		message = initial_message
-	if((message_type & SHOWMSG_AUDIO) && !(message_type & SHOWMSG_VISUAL)) // if(the human's mouth makes a sound, not something else). A bit crutchy but what to do
-		if(muted)
-			message = mute_message
-		else if(muzzled || silent)
-			message = muzzled_message
-		else if(miming)
-			message = miming_message
+	if(muted && mute_message)
+		message = mute_message
+	else if((muzzled || silent) && muzzled_message)
+		message = muzzled_message
+	else if(miming && miming_message)
+		message = miming_message
 
 	if(!message || !message_type)
 		return
 
 	if(message_type & SHOWMSG_VISUAL)
 		for(var/mob/M in viewers(src))
+			if(isobserver(M))
+				continue // observers have their own for()
 			M.show_message("<B>[src]</B> [message]", message_type)
 	else if(message_type & SHOWMSG_AUDIO)
 		if(emote_sound && can_make_a_sound && (get_species() in list(HUMAN, SKRELL, TAJARAN, UNATHI))) // sounds of emotions for other species will look absurdly. We need individual sounds for special races(diona, ipc, etc))
@@ -378,6 +370,8 @@
 			else
 				return auto ? FALSE : to_chat(src, "<span class='warning'>You can't make sounds that often, you have to wait a bit.</span>")
 		for(var/mob/M in get_hearers_in_view(world.view, src))
+			if(isobserver(M))
+				continue // observers have their own for()
 			M.show_message("<B>[src]</B> [message]", message_type)
 
 	log_emote("[key_name(src)] : [message]")
@@ -385,8 +379,6 @@
 	for(var/mob/M in observer_list)
 		if(!M.client)
 			continue // skip leavers
-		if(M in viewers(src, null))
-			continue
 		switch(M.client.prefs.chat_ghostsight)
 			if(CHAT_GHOSTSIGHT_ALL)
 				to_chat(M, "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> <B>[src]</B> [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
