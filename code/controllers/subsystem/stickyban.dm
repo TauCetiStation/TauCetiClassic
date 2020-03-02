@@ -532,10 +532,10 @@ var/datum/subsystem/stickyban/SSstickyban
 		buffer[BANKEY_TYPE] = jointext(buffer[BANKEY_TYPE], ",")
 	// Remove IsBanned matches data from cache
 	buffer -= BANKEY_REVERT
-	buffer -= BANKEY_MTR
-	buffer -= BANKEY_EU_MTR
-	buffer -= BANKEY_A_MTR
-	buffer -= BANKEY_PMTR
+	buffer -= BANKEY_MATCHES_THIS_ROUND
+	buffer -= BANKEY_EXISTING_USER_MATCHES
+	buffer -= BANKEY_ADMIN_MATCHES_THIS_ROUND
+	buffer -= BANKEY_PENDING_MATCHES
 	return list2params(buffer)
 
 #undef STICKYBAN_TABLENAME

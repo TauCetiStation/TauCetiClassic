@@ -33,9 +33,10 @@
 		return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
 	// Admin allowed anyway
 	if (ckey in admin_datums)
+		is_admin = TRUE
 		if (!C) // first connect admin
 			turnoff_stickybans_temporary(ckey)
-		return
+		return // remove this for admin checks in bans too
 	// Check bans
 	var/ban = get_ban_blacklist(key, address, computer_id)
 	return ban ? ban : stickyban_check(..(), key, computer_id, address, real_bans_only, is_admin) //default pager ban stuff
@@ -62,12 +63,11 @@
 		var/cidquery = ""
 		if(address)
 			failedip = FALSE
-			ipquery = " OR ip = '[address]' "
+			ipquery = " OR ip = '[sanitize_sql(address)]' "
 		if(computer_id)
 			failedcid = FALSE
-			cidquery = " OR computerid = '[computer_id]' "
-
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM erro_ban WHERE (ckey = '[ckey]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN'  OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+			cidquery = " OR computerid = '[sanitize_sql(computer_id)]' "
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM erro_ban WHERE (ckey = '[sanitize_sql(ckey)]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN'  OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
 		query.Execute()
 		while(query.NextRow())
 			var/pckey = query.item[1]
@@ -118,26 +118,26 @@
 				newmatch = TRUE
 				if (cached_ban[BANKEY_KEYS] && cached_ban[BANKEY_KEYS][ckey])
 					newmatch = FALSE
-				if (LAZYACCESS(cached_ban[BANKEY_MTR], ckey))
+				if (LAZYACCESS(cached_ban[BANKEY_MATCHES_THIS_ROUND], ckey))
 					newmatch = FALSE
 
 			if (newmatch)
 
 				if (C)
-					LAZYSET(cached_ban[BANKEY_EU_MTR], ckey, ckey)
-					LAZYSET(cached_ban[BANKEY_PMTR], ckey, ckey)
+					LAZYSET(cached_ban[BANKEY_EXISTING_USER_MATCHES], ckey, ckey)
+					LAZYSET(cached_ban[BANKEY_PENDING_MATCHES], ckey, ckey)
 					sleep(STICKYBAN_ROGUE_CHECK_TIME)
-					LAZYREMOVE(cached_ban[BANKEY_PMTR], ckey)
+					LAZYREMOVE(cached_ban[BANKEY_PENDING_MATCHES], ckey)
 				if (is_admin)
-					LAZYSET(cached_ban[BANKEY_A_MTR], ckey, ckey)
-				LAZYSET(cached_ban[BANKEY_MTR], ckey, ckey)
+					LAZYSET(cached_ban[BANKEY_ADMIN_MATCHES_THIS_ROUND], ckey, ckey)
+				LAZYSET(cached_ban[BANKEY_MATCHES_THIS_ROUND], ckey, ckey)
 				// Checking if we have a lot of matches in already connected clients
 				// Then next ban drop from Config after limit
 				// When ban not in DB clearing matches too
 				// DB restore after sometime rouge bans
-				if (LAZYLEN(cached_ban[BANKEY_MTR]) + LAZYLEN(cached_ban[BANKEY_PMTR]) > STICKYBAN_MAX_MATCHES || \
-					LAZYLEN(cached_ban[BANKEY_EU_MTR]) > STICKYBAN_MAX_EXISTING_USER_MATCHES || \
-					LAZYLEN(cached_ban[BANKEY_A_MTR]) > STICKYBAN_MAX_ADMIN_MATCHES)
+				if (LAZYLEN(cached_ban[BANKEY_MATCHES_THIS_ROUND]) + LAZYLEN(cached_ban[BANKEY_PENDING_MATCHES]) > STICKYBAN_MAX_MATCHES || \
+					LAZYLEN(cached_ban[BANKEY_EXISTING_USER_MATCHES]) > STICKYBAN_MAX_EXISTING_USER_MATCHES || \
+					LAZYLEN(cached_ban[BANKEY_ADMIN_MATCHES_THIS_ROUND]) > STICKYBAN_MAX_ADMIN_MATCHES)
 					var/action
 					if (byond_ban[BANKEY_FROMDB])
 						cached_ban[BANKEY_TIMEOUT] = TRUE
@@ -156,10 +156,10 @@
 						if (!byond_ban[BANKEY_FROMDB])
 							cached_ban = cached_ban.Copy()
 							// clearing all matches
-							cached_ban -= BANKEY_MTR
-							cached_ban -= BANKEY_PMTR
-							cached_ban -= BANKEY_EU_MTR
-							cached_ban -= BANKEY_A_MTR
+							cached_ban -= BANKEY_MATCHES_THIS_ROUND
+							cached_ban -= BANKEY_PENDING_MATCHES
+							cached_ban -= BANKEY_EXISTING_USER_MATCHES
+							cached_ban -= BANKEY_ADMIN_MATCHES_THIS_ROUND
 							cached_ban -= BANKEY_REVERT
 							SSstickyban.cache[banned_ckey] = cached_ban
 							world.SetConfig("ban", banned_ckey, list2stickyban(cached_ban))
