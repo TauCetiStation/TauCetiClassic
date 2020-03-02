@@ -59,7 +59,7 @@
 			AM.forceMove(src.loc)
 
 /obj/item/smallDelivery/Destroy()
-	dump(null)
+	dump()
 	return ..()
 
 /obj/item/smallDelivery/attack_hand(mob/user)
