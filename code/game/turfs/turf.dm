@@ -116,6 +116,25 @@
 				return 0
 	return 1 //Nothing found to block so return success!
 
+/turf/proc/is_mob_placeable(mob/M)
+	if(density)
+		return FALSE
+	for(var/atom/movable/on_turf in contents)
+		if(on_turf == M)
+			continue
+		if(istype(on_turf, /mob) && !on_turf.anchored)
+			continue
+		if(on_turf.density)
+			if(istype(on_turf, /obj/structure/window))
+				continue
+			if(istype(on_turf, /obj/machinery/door))
+				continue
+			if(istype(on_turf, /obj/structure/table))
+				continue
+			if(istype(on_turf, /obj/structure/grille))
+				continue
+			return FALSE
+	return TRUE
 
 /turf/Entered(atom/movable/AM)
 	if(!istype(AM, /atom/movable))

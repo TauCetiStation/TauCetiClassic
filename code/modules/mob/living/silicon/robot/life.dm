@@ -155,7 +155,7 @@
 	if(!client)
 		return 0
 
-	if (src.stat == DEAD || XRAY in mutations || src.sight_mode & BORGXRAY)
+	if (src.stat == DEAD || (XRAY in mutations) || (src.sight_mode & BORGXRAY))
 		set_EyesVision()
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
