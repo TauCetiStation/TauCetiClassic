@@ -349,10 +349,7 @@
 		return
 
 	if(message_type & SHOWMSG_VISUAL)
-		for(var/mob/M in viewers(src))
-			if(isobserver(M))
-				continue // observers have their own for()
-			M.show_message("<B>[src]</B> [message]", message_type)
+		visible_message("<B>[src]</B> [message]", ignored_mobs = observer_list)
 	else if(message_type & SHOWMSG_AUDIO)
 		if(emote_sound && can_make_a_sound && (get_species() in list(HUMAN, SKRELL, TAJARAN, UNATHI))) // sounds of emotions for other species will look absurdly. We need individual sounds for special races(diona, ipc, etc))
 			if(sound_priority == SOUND_PRIORITY_HIGH && next_high_priority_sound < world.time)
@@ -369,10 +366,7 @@
 				next_low_priority_sound = world.time + 4 SECONDS
 			else
 				return auto ? FALSE : to_chat(src, "<span class='warning'>You can't make sounds that often, you have to wait a bit.</span>")
-		for(var/mob/M in get_hearers_in_view(world.view, src))
-			if(isobserver(M))
-				continue // observers have their own for()
-			M.show_message("<B>[src]</B> [message]", message_type)
+		audible_message("<B>[src]</B> [message]", ignored_mobs = observer_list)
 
 	log_emote("[key_name(src)] : [message]")
 
