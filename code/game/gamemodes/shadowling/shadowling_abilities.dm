@@ -60,7 +60,10 @@
 					return
 				F.set_light(0)
 			H.set_light(0) //This is required with the object-based lighting
-
+		for(var/obj/machinery/door/airlock/A in orange(4, usr))
+			if (A.lights && A.hasPower())
+				A.lights = 0
+				A.update_icon()
 
 
 /obj/effect/proc_holder/spell/targeted/shadow_walk
@@ -87,6 +90,9 @@
 		user.visible_message("<span class='warning'>[user] suddenly manifests!</span>", "<span class='shadowling'>The pressure becomes too much and you vacate the interdimensional darkness.</span>")
 		user.incorporeal_move = 0
 		user.alpha = 255
+		var/turf/mobloc = get_turf(user.loc)
+		if(!mobloc.is_mob_placeable(user))
+			do_teleport(user, mobloc, 8, asoundin='sound/effects/phasein.ogg', checkspace = 1)
 
 
 

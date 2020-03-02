@@ -49,14 +49,18 @@ LOG_RUNTIME
 LOG_SQL_ERROR
 LOG_INITIALIZATION
 LOG_QDEL
+# LOG_JS_ERROR
 # LOG_HREFS
 # LOG_ADMINWARN  ## Also duplicates a bunch of other messages.
 
 ## sql switching
 # SQL_ENABLED
 
-## disconnect players who did nothing during 10 minutes
+## disconnect players who did nothing during 10 minutes or AFK_TIME_BRACKET time
 # KICK_INACTIVE
+
+## Minutes until user will be kicked for being AFK
+# AFK_TIME_BRACKET 10
 
 ## probablities for game modes chosen in "secret" and "random" modes
 ##

@@ -23,6 +23,7 @@ var/list/net_announcer_secret = list()
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/log_runtime = 0					// logs runtimes to round log folder
 	var/log_sql_error = 0				// same but for sql errors
+	var/log_js_error = 0				   // same but for client side js errors
 	var/log_initialization = 0			// same but for debug init logs
 	var/log_qdel = 0						// same but for debug qdel logs
 	var/sql_enabled = 0					// for sql switching
@@ -65,6 +66,7 @@ var/list/net_announcer_secret = list()
 	var/serverwhitelist_message = "Sorry, you can't play on this server, because we use a whitelist.<br/>Please, visit another our server."
 	var/mods_are_mentors = 0
 	var/kick_inactive = 0				//force disconnect for inactive players
+	var/afk_time_bracket = 6000 // 10 minutes
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 
@@ -314,6 +316,9 @@ var/list/net_announcer_secret = list()
 
 				if ("log_sql_error")
 					config.log_sql_error = 1
+				
+				if ("log_js_error")
+					config.log_js_error = 1
 
 				if ("log_initialization")
 					config.log_initialization = 1
@@ -452,6 +457,9 @@ var/list/net_announcer_secret = list()
 
 				if("kick_inactive")
 					config.kick_inactive = 1
+
+				if ("afk_time_bracket")
+					config.afk_time_bracket = (text2num(value) MINUTES)
 
 				if("load_jobs_from_txt")
 					load_jobs_from_txt = 1

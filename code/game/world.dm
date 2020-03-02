@@ -1,6 +1,5 @@
 var/round_id = 0
 var/base_commit_sha = 0
-var/logs_folder
 
 #define RECOMMENDED_VERSION 512
 /world/New()
@@ -78,13 +77,11 @@ var/logs_folder
 	log_unit_test("Unit Tests Enabled. This will destroy the world when testing is complete.")
 #endif
 
-	spawn(3000)		//so we aren't adding to the round-start lag
-		if(config.kick_inactive)
+	if(config.kick_inactive)
+		spawn(15 MINUTES)
 			KickInactiveClients()
 
 #undef RECOMMENDED_VERSION
-
-	return
 
 /world/proc/SetupLogs()
 	var/log_suffix = round_id ? round_id : replacetext(time_stamp(), ":", ".")
@@ -93,6 +90,7 @@ var/logs_folder
 	global.log_directory = "data/logs/[log_date]/round-[log_suffix]"
 	global.log_investigate_directory = "[log_directory]/investigate"
 	global.log_debug_directory = "[log_directory]/debug"
+	global.log_debug_js_directory = "[log_debug_directory]/js_errors"
 
 	global.game_log = file("[log_directory]/game.log")
 	global.hrefs_log = file("[log_directory]/href.log")
@@ -103,29 +101,18 @@ var/logs_folder
 	global.qdel_log  = file("[log_debug_directory]/qdel.log")
 	global.sql_error_log = file("[log_debug_directory]/sql.log")
 
-	round_log("Server starting up")
+	round_log("Server '[config.server_name]' starting up on [BYOND_SERVER_ADDRESS]")
 
 	var/debug_rev_message = ""
 	if(base_commit_sha)
-		debug_rev_message += "Base SHA: [base_commit_sha]\n[log_end]"
+		debug_rev_message += "Base SHA: [base_commit_sha][log_end]\n"
 
 	if(fexists("test_merge.txt"))
-		debug_rev_message += "TM: [trim(file2text("test_merge.txt"))]\n[log_end]"
+		debug_rev_message += "TM: [trim(file2text("test_merge.txt"))][log_end]\n"
 
 	if(length(debug_rev_message))
 		info(debug_rev_message)
 		log_runtime(debug_rev_message)
-
-//world/Topic(href, href_list[])
-//		world << "Received a Topic() call!"
-//		world << "[href]"
-//		for(var/a in href_list)
-//			world << "[a]"
-//		if(href_list["hello"])
-//			world << "Hello world!"
-//			return "Hello world!"
-//		world << "End of Topic() call."
-//		..()
 
 var/world_topic_spam_protect_ip = "0.0.0.0"
 var/world_topic_spam_protect_time = world.timeofday
@@ -265,19 +252,13 @@ var/shutdown_processed = FALSE
 
 	..()
 
-#define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)
 /world/proc/KickInactiveClients()
-	spawn(-1)
-		//set background = 1
-		while(1)
-			sleep(INACTIVITY_KICK)
-			for(var/client/C in clients)
-				if(C.is_afk(INACTIVITY_KICK))
-					if(!istype(C.mob, /mob/dead))
-						log_access("AFK: [key_name(C)]")
-						to_chat(C, "<span class='userdanger'>You have been inactive for more than 10 minutes and have been disconnected.</span>")
-						QDEL_IN(C, 2 SECONDS)
-#undef INACTIVITY_KICK
+	for (var/client/C in clients)
+		if (!(C.holder || C.supporter) && C.is_afk())
+			log_access("AFK: [key_name(C)]")
+			to_chat(C, "<span class='userdanger'>You have been inactive for more than [config.afk_time_bracket / 600] minutes and have been disconnected.</span>")
+			QDEL_IN(C, 2 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/KickInactiveClients), 5 MINUTES)
 
 /world/proc/load_stealth_keys()
 	var/list/keys_list = file2list("config/stealth_keys.txt")

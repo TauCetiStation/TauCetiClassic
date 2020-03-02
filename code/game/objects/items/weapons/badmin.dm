@@ -61,8 +61,12 @@
 /obj/item/clothing/head/collectable/tophat/badmin_magic_hat/atom_init()
 	. = ..()
 	var/turf/T = get_turf(src)
-	log_admin("Badmin [src] spawned on [T.x]:[T.y]:[T.z]")
-	message_admins("<span class='notice'>Badmin [src] spawned on [T.x]:[T.y]:[T.z] [ADMIN_JMP(T)]</span>")
+	if(T)
+		log_admin("Badmin [src] spawned on [T.x]:[T.y]:[T.z]")
+		message_admins("<span class='notice'>Badmin [src] spawned on [T.x]:[T.y]:[T.z] [ADMIN_JMP(T)]</span>")
+	else
+		log_admin("Badmin [src] spawned somewhere")
+		message_admins("<span class='notice'>Badmin [src] spawned somewhere</span>")
 
 /obj/item/clothing/head/collectable/tophat/badmin_magic_hat/attack_self(mob/user)
 	if(user.is_busy(src))

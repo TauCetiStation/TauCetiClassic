@@ -2428,7 +2428,7 @@
 	},
 /area/station/civilian/chapel)
 "adY" = (
-/obj/item/device/radio/beacon/explosion_watcher,
+/obj/item/device/radio/beacon/interaction_watcher,
 /turf/simulated/floor/engine/vacuum,
 /turf/simulated/floor{
 	dir = 4;
@@ -3268,6 +3268,13 @@
 	icon_state = "warningline"
 	},
 /area/station/rnd/xenobiology)
+"afl" = (
+/obj/machinery/portable_atmospherics/canister/hydrogen,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
+	},
+/area/station/rnd/storage)
 "afm" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -56735,6 +56742,9 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "rES" = (
+/obj/structure/extinguisher_cabinet/highrisk{
+	pixel_x = -30
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warndark"
@@ -123180,7 +123190,7 @@ ucd
 ucd
 ucd
 ucd
-diF
+afl
 jMG
 jMG
 ksZ

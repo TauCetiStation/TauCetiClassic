@@ -53,10 +53,10 @@ var/list/blacklisted_builds = list(
 		completed_asset_jobs += job
 		return
 
-	if (href_list["action"] && href_list["action"] == "debugFileOutput" && href_list["file"] && href_list["message"])
+	if (href_list["action"] && href_list["action"] == "jsErrorCatcher" && href_list["file"] && href_list["message"])
 		var/file = href_list["file"]
 		var/message = href_list["message"]
-		debugFileOutput.error(file, message, src)
+		js_error_manager.log_error(file, message, src)
 		return
 
 	//Admin PM
@@ -310,7 +310,7 @@ var/list/blacklisted_builds = list(
 	if(config.byond_version_recommend && byond_version < config.byond_version_recommend)
 		to_chat(src, "<span class='warning bold'>Your version of Byond is less that recommended. Update to the [config.byond_version_recommend] for better experiense.</span>")
 
-	if((byond_version >= 512 && (!byond_build || byond_build < 1421)) || num2text(byond_build) in blacklisted_builds)
+	if((byond_version >= 512 && (!byond_build || byond_build < 1421)) || (num2text(byond_build) in blacklisted_builds))
 		to_chat(src, "<span class='warning bold'>You are using the inappropriate Byond version. Update to the latest Byond version or install another from http://www.byond.com/download/build/ for playing on our server.</span>")
 		message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a inappropriate byond version: [byond_version].[byond_build]. Connection rejected.</span>")
 		log_access("Failed Login: [key] [computer_id] [address] - inappropriate byond version: [byond_version].[byond_build])")
@@ -379,7 +379,7 @@ var/list/blacklisted_builds = list(
 		query_update.Execute()
 	else if(!config.serverwhitelist)
 		//New player!! Need to insert all the stuff
-		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank, ingameage) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]', '[player_ingame_age]')")
+		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank, ingameage) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]', '[sql_player_ingame_age]')")
 		query_insert.Execute()
 
 	player_age = sql_player_age
@@ -503,12 +503,8 @@ var/list/blacklisted_builds = list(
 		return
 	..()
 
-//checks if a client is afk
-//3000 frames = 5 minutes
-/client/proc/is_afk(duration = 3000)
-	if(inactivity > duration)
-		return inactivity
-	return 0
+/client/proc/is_afk(duration = config.afk_time_bracket)
+	return inactivity > duration
 
 // Send resources to the client.
 /client/proc/send_resources()
@@ -579,6 +575,8 @@ var/list/blacklisted_builds = list(
 	var/is_invalid_year = user_year > bunker_year
 	var/is_invalid_month = user_year == bunker_year && user_month > bunker_month
 	var/is_invalid_day = user_year == bunker_year && user_month == bunker_month && user_day > bunker_day
+
+	var/is_invalid_date = is_invalid_year || is_invalid_month || is_invalid_day
 	var/is_invalid_ingame_age = isnum(player_ingame_age) && player_ingame_age < config.allowed_by_bunker_player_age
 
-	return is_invalid_year || is_invalid_month || is_invalid_day || is_invalid_ingame_age
+	return is_invalid_date && is_invalid_ingame_age

@@ -84,10 +84,10 @@ var/global/total_runtimes_skipped = 0
 	if(error_cache)
 		error_cache.log_error(E, desclines)
 
-	world.log << "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]"
+	world.log << "\[[time_stamp()]] Runtime in [E.file]:[E.line] : [E]"
 	for(var/line in desclines)
 		world.log << line
 
-	log_runtime("Runtime error: [E.name] in [E.file],[E.line][log_end][E.desc]")
+	log_runtime("[E.name] in [E.file]:[E.line] :[log_end]\n[E.desc]")
 
 #endif
