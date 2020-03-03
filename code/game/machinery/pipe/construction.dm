@@ -152,9 +152,6 @@ Buildable meters
 		else if (pipe_type == PIPE_UNIVERSAL)
 			connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_SUPPLY|CONNECT_TYPE_SCRUBBER
 
-	if (src.pipe_type in list(PIPE_GAS_FILTER, PIPE_GAS_FILTER_M, PIPE_GAS_MIXER, PIPE_GAS_MIXER_M, PIPE_MTVALVE, PIPE_MTVALVEM, PIPE_DTVALVE, PIPE_DTVALVEM))
-		src.verbs += /obj/item/pipe/proc/mirror
-
 	update()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
@@ -306,7 +303,7 @@ Buildable meters
 	set name = "Rotate Pipe"
 	set src in view(1)
 
-	if ( usr.stat || usr.restrained() )
+	if (usr.incapacitated())
 		return
 
 	set_dir(turn(dir, -90))
@@ -330,37 +327,27 @@ Buildable meters
 			set_dir(EAST)
 
 /obj/item/pipe/proc/mirror()
-	set category = "Object"
-	set name = "Mirror-Rotate Pipe"
-	set src in view(1)
+	var/list/mirrored_devices = list(
+		"[PIPE_GAS_FILTER]" = PIPE_GAS_FILTER_M,
+		"[PIPE_GAS_FILTER_M]" = PIPE_GAS_FILTER,
+		"[PIPE_GAS_MIXER]" = PIPE_GAS_MIXER_M,
+		"[PIPE_GAS_MIXER_M]" = PIPE_GAS_MIXER,
+		"[PIPE_MTVALVE]" = PIPE_MTVALVEM,
+		"[PIPE_MTVALVEM]" = PIPE_MTVALVE,
+		"[PIPE_DTVALVE]" = PIPE_DTVALVEM,
+		"[PIPE_DTVALVEM]" = PIPE_DTVALVE
+	)
 
-	if ( usr.stat || usr.restrained() )
-		return
+	var/new_pipe_type = mirrored_devices["[pipe_type]"]
+	if (new_pipe_type)
+		pipe_type = new_pipe_type
+		update()
 
-	if (pipe_type == PIPE_GAS_FILTER)
-		pipe_type = PIPE_GAS_FILTER_M
-		update()
-	else if (pipe_type == PIPE_GAS_FILTER_M)
-		pipe_type = PIPE_GAS_FILTER
-		update()
-	else if (pipe_type == PIPE_GAS_MIXER)
-		pipe_type = PIPE_GAS_MIXER_M
-		update()
-	else if (pipe_type == PIPE_GAS_MIXER_M)
-		pipe_type = PIPE_GAS_MIXER
-		update()
-	else if (pipe_type == PIPE_MTVALVE)
-		pipe_type = PIPE_MTVALVEM
-		update()
-	else if (pipe_type == PIPE_MTVALVEM)
-		pipe_type = PIPE_MTVALVE
-		update()
-	else if (pipe_type == PIPE_DTVALVE)
-		pipe_type = PIPE_DTVALVEM
-		update()
-	else if (pipe_type == PIPE_DTVALVEM)
-		pipe_type = PIPE_DTVALVE
-		update()
+/obj/item/pipe/CtrlShiftClick(mob/user)
+	..()
+	var/turf/T = get_turf(src)
+	if (T && user && user.TurfAdjacent(T) && !user.incapacitated())
+		mirror()
 
 // returns all pipe's endpoints
 
