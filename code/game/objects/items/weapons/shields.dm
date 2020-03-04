@@ -3,6 +3,7 @@
 	var/block_chance = 65
 
 /obj/item/weapon/shield/riot
+	hitsound = list('sound/weapons/metal_shield_hit.ogg')
 	name = "riot shield"
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
 	icon = 'icons/obj/weapons.dmi'
@@ -141,6 +142,119 @@
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
 	item_state = "roman_shield"
+
+/obj/item/weapon/shield/buckler
+	name = "buckler"
+	desc = "A standard home-made shield, that can protect you from multiple shots. May break."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "buckler"
+	flags = CONDUCT
+	force = 6.0
+	throwforce = 4.0
+	throw_speed = 3
+	throw_range = 5
+	block_chance = 45
+	w_class = ITEM_SIZE_NORMAL
+	m_amt = 1000
+	g_amt = 0
+	origin_tech = "materials=2"
+	attack_verb = list("shoved", "bashed")
+	hitsound = list('sound/weapons/wood_shield_hit.ogg')
+	var/cooldown = 0
+
+/obj/item/weapon/shield/buckler/Get_shield_chance()
+	return block_chance
+
+
+/obj/item/weapon/shield/buckler/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/twohanded/spear))
+		if(cooldown < world.time - 25)
+			user.visible_message("<span class='warning'>[user] hits the buclker with spear!</span>")
+			playsound(user, 'sound/effects/hits_to_w_shield.ogg', VOL_EFFECTS_MASTER)
+			cooldown = world.time
+
+
+// *BUCKLER CRAFT*
+
+/obj/item/weapon/bucklerframe
+	name = "buclker frame"
+	desc = "A half-finished shield."
+	icon_state = "bucklerframe0"
+	var/buildstate = 0
+
+/obj/item/weapon/bucklerframe/update_icon()
+	icon_state = "bucklerframe[buildstate]"
+
+/obj/item/weapon/bucklerframe/examine(mob/user)
+	..()
+	switch(buildstate)
+		if(1)
+			to_chat(user, "Consists of 3 unlinked boards.")
+		if(2)
+			to_chat(user, "Consists of 4 unlinked boards.")
+		if(3)
+			to_chat(user, "Consists of 5 unlinked boards.")
+		if(4)
+			to_chat(user, "Consists of 5 processed unbound boards.")
+		if(5)
+			to_chat(user, "Consists of 5 processed bound by wires boards.")
+		if(6)
+			to_chat(user, "Consists of 5 processed bound by wires boards, coated with strong plasteel.")
+
+/obj/item/weapon/bucklerframe/attackby(obj/item/W, mob/user)
+	if(isrobot(user))
+		return
+
+	if(istype(W, /obj/item/stack))
+		var/obj/item/stack/S = W
+		var/amount_to_use
+		var/fail_msg
+		var/success_msg
+
+		if(istype(W, /obj/item/stack/sheet/wood) && (buildstate == 0 || buildstate == 1 || buildstate == 2))
+			amount_to_use = 1
+			success_msg = "<span class='notice'>You attach the board to the frame.</span>"
+			fail_msg = "<span class='notice'>No more boards needed!</span>"
+
+		if(istype(W, /obj/item/stack/sheet/plasteel) && buildstate == 5)
+			amount_to_use = 4
+			success_msg = "<span class='notice'>You attach plasteel to the frame.</span>"
+			fail_msg = "<span class='notice'>Need 4 sheets of plasteel!</span>"
+
+		if(amount_to_use)
+			if(S.use(amount_to_use))
+				to_chat(user, success_msg)
+				buildstate++
+				update_icon()
+			else
+				to_chat(user, fail_msg)
+
+	else if(istype(W, /obj/item/weapon/wirecutters))
+		if(buildstate == 3)
+			if(do_after(user, 30, target = src))
+				buildstate++
+				update_icon()
+				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER, 50)
+
+	else if(istype(W, /obj/item/weapon/handcuffs/cable) && buildstate == 4)
+		playsound(src, 'sound/weapons/cablecuff.ogg', VOL_EFFECTS_MASTER, 50)
+		if(do_after(user, 30, target = src))
+			to_chat(user, "<span class='notice'>You bound boards with cable.</span>")
+			buildstate++
+			update_icon()
+			qdel(W)
+
+	else if(iswelder(W))
+		if(buildstate == 6)
+			var/obj/item/weapon/weldingtool/T = W
+			if(T.use(0, user))
+				if(!T.isOn())
+					return
+				if(do_after(user, 40, target = src))
+					to_chat(user, "<span class='notice'>You successfully made a shield!</span>")
+					playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER, 50)
+					new /obj/item/weapon/shield/buckler(get_turf(src))
+					qdel(src)
 
 /*
 /obj/item/weapon/cloaking_device
