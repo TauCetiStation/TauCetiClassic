@@ -46,17 +46,17 @@
 	for(var/adata in BP.autopsy_data)
 		var/datum/autopsy_data/W = BP.autopsy_data[adata]
 		if(!W.pretend_weapon)
-			if(prob(50 + (W.hits * 10 + W.damage)))
+			if(prob(40 + (W.hits * 10 + W.damage)))
 				W.pretend_weapon = W.weapon
 			else
-				if(W.type_damage == "brute")
+				if(W.type_damage == "brute" || W.type_damage == null || W.type_damage == "")
 					W.pretend_weapon = pick("The mechanical toolbox", "The wirecutters", "The revolver", "The crowbar", "The fire extinguisher", "The tomato soup", "The oxygen tank", "The emergency oxygen tank", "The bullet", "The table", "The chair", "The ERROR")
 				if(W.type_damage == "burn")
-					W.pretend_weapon = pick("The laser", "The cigarette", "The lighter", "The ERROR", "The fire", "The hydrogen peroxide")
+					W.pretend_weapon = pick("The laser", "The cigarette", "The lighter", "The ERROR", "The fire", "The hydrogen peroxide", "The steam", "The water", "The lava")
 				if(W.type_damage == "mixed")
-					W.pretend_weapon = pick("nuclear explosion", "explosion")
+					W.pretend_weapon = pick("The nuclear explosion", "The explosion")
 				if(W.type_damage == "bruise")
-					W.pretend_weapon = pick("The paper", "The nail", "The pen", "The shard", "The PDA", "The cat", "The dog", "The door", "The monkey")
+					W.pretend_weapon = pick("The paper", "The nail", "The pen", "The shard", "The PDA", "The cat", "The dog", "The door", "The monkey", "The air", "The coin")
 
 	for(var/V in BP.trace_chemicals)
 		if(BP.trace_chemicals[V] > 0 && !chemtraces.Find(V))
