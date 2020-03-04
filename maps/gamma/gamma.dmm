@@ -5768,6 +5768,11 @@
 	icon_state = "white"
 	},
 /area/station/rnd/hallway)
+"aWu" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/execution)
 "aXa" = (
 /obj/structure/flora/plant/random,
 /turf/simulated/floor{
@@ -10142,7 +10147,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/execution)
 "cpP" = (
 /obj/machinery/camera{
 	c_tag = "Starboard Primary Hallway 4";
@@ -15811,7 +15816,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/execution)
 "ehX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -27657,7 +27662,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/execution)
 "ibG" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -35605,7 +35610,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/execution)
 "kIm" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/cobweb,
@@ -35978,7 +35983,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/execution)
 "kOb" = (
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the singularity chamber.";
@@ -36739,7 +36744,7 @@
 "kZa" = (
 /obj/structure/sign/warning/biohazard,
 /turf/simulated/wall/r_wall,
-/area/station/security/brig)
+/area/station/security/execution)
 "kZu" = (
 /obj/structure/plasticflaps/mining,
 /obj/machinery/conveyor{
@@ -37032,7 +37037,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/execution)
 "lem" = (
 /obj/random/foods/food_trash,
 /obj/item/weapon/scrap_lump,
@@ -41835,7 +41840,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/execution)
 "mFM" = (
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken5"
@@ -43073,7 +43078,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/execution)
 "nas" = (
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
@@ -51494,7 +51499,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/station/security/brig)
+/area/station/security/execution)
 "pRo" = (
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -30
@@ -56341,6 +56346,9 @@
 /obj/structure/lattice,
 /turf/space,
 /area/space)
+"ruI" = (
+/turf/simulated/wall/r_wall,
+/area/station/security/execution)
 "ruK" = (
 /obj/machinery/door/airlock/glass{
 	name = "Central Access"
@@ -57930,7 +57938,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/execution)
 "rWf" = (
 /obj/structure/computerframe,
 /turf/simulated/floor{
@@ -61125,7 +61133,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/execution)
 "sXG" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -72558,7 +72566,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/execution)
 "wDi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
@@ -73195,6 +73203,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "wNA" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/bodybags,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 1
+	},
 /obj/machinery/power/apc{
 	cell_type = 2500;
 	dir = 4;
@@ -73202,17 +73217,10 @@
 	pixel_x = 24;
 	pixel_y = -3
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
-	},
-/obj/structure/table,
-/obj/item/weapon/storage/box/bodybags,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/brig)
+/area/station/security/execution)
 "wNL" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/alarm{
@@ -75867,9 +75875,6 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "xIh" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
 /obj/item/weapon/storage/fancy/donut_box,
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -106106,7 +106111,7 @@ tWL
 tWL
 tWL
 tWL
-hUm
+ruI
 tee
 fao
 wEz
@@ -106357,13 +106362,13 @@ mRW
 mRW
 wPF
 esk
-hUm
+ruI
 wCN
 kNR
-lIV
+aWu
 ibu
 cpM
-hUm
+ruI
 bYu
 soc
 qGC
@@ -106614,13 +106619,13 @@ uop
 eOJ
 wPF
 mRW
-hUm
-hUm
+ruI
+ruI
 kZa
-lIV
+aWu
 pRm
 mFl
-hUm
+ruI
 xih
 jeJ
 tQO
@@ -106873,7 +106878,7 @@ wPF
 mRW
 ftG
 ftG
-hUm
+ruI
 sXE
 kHX
 nai
@@ -107130,11 +107135,11 @@ cbg
 eMu
 eXd
 bYW
-hUm
+ruI
 wNA
 rVV
 leg
-hUm
+ruI
 rsP
 wee
 hDg
@@ -107387,11 +107392,11 @@ pWN
 mRW
 dVb
 wPF
-hUm
-hUm
-hUm
-hUm
-hUm
+ruI
+ruI
+ruI
+ruI
+ruI
 lIV
 iql
 lIV
@@ -107648,7 +107653,7 @@ eXd
 eXd
 eXd
 nBv
-hUm
+ruI
 hUm
 hUm
 isW
