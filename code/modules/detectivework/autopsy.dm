@@ -57,13 +57,13 @@
 			if(prob(40 + (W.hits * 10 + W.damage)))
 				W.pretend_weapon = W.weapon
 			else
-				if(W.type_damage == "brute" || W.type_damage == null || W.type_damage == "")
+				if(W.type_damage == BRUTE || W.type_damage == null || W.type_damage == "")
 					W.pretend_weapon = pick("The mechanical toolbox", "The wirecutters", "The revolver", "The crowbar", "The fire extinguisher", "The tomato soup", "The oxygen tank", "The emergency oxygen tank", "The bullet", "The table", "The chair", "The ERROR")
-				if(W.type_damage == "burn")
+				if(W.type_damage == BURN)
 					W.pretend_weapon = pick("The laser", "The cigarette", "The lighter", "The ERROR", "The fire", "The hydrogen peroxide", "The steam", "The water", "The lava")
 				if(W.type_damage == "mixed")
 					W.pretend_weapon = pick("The nuclear explosion", "The explosion")
-				if(W.type_damage == "bruise")
+				if(W.type_damage == BRUISE)
 					W.pretend_weapon = pick("The paper", "The nail", "The pen", "The shard", "The PDA", "The cat", "The dog", "The door", "The monkey", "The air", "The coin")
 
 		if(!D.trauma[tdata])
@@ -108,13 +108,13 @@
 			if(W.damage < 1)
 				W.damage = 1
 
-			if(W.type_damage == "brute")
+			if(W.type_damage == BRUTE)
 				type_damage = " wound" //this space is really needed that table does not grow
-			if(W.type_damage == "burn")
+			if(W.type_damage == BURN)
 				type_damage = " burn"
 			if(W.type_damage == "mixed")
 				type_damage = " scorched wound"
-			if(W.type_damage == "bruise")
+			if(W.type_damage == BRUISE)
 				type_damage = " bruise"
 
 			switch(W.damage)

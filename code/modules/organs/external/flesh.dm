@@ -53,9 +53,9 @@
 
 	if(used_weapon)
 		if(brute > 0 && burn == 0)
-			BP.add_autopsy_data("[used_weapon]", brute, type_damage = "brute")
+			BP.add_autopsy_data("[used_weapon]", brute, type_damage = BRUTE)
 		else if(brute == 0 && burn > 0)
-			BP.add_autopsy_data("[used_weapon]", burn, type_damage = "burn")
+			BP.add_autopsy_data("[used_weapon]", burn, type_damage = BURN)
 		else if(brute > 0 && burn > 0)
 			BP.add_autopsy_data("[used_weapon]", brute + burn, type_damage = "mixed")
 
