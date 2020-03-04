@@ -323,6 +323,7 @@
 			for (var/turf/simulated/floor/F in shuffle(view(7,src)))
 				if(F.floor_type)
 					do_task(F, FLOORBOT_TASK_BREAKTILE)
+					return
 			return
 
 		if(targetdirection)
