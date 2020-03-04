@@ -2680,7 +2680,6 @@
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
-/turf/space,
 /area/station/rnd/xenobiology)
 "aet" = (
 /obj/structure/closet/secure_closet/security,
@@ -2756,7 +2755,6 @@
 	req_access = list(55)
 	},
 /turf/simulated/floor/engine,
-/turf/space,
 /area/station/rnd/xenobiology)
 "aey" = (
 /obj/structure/cable{
@@ -2793,7 +2791,6 @@
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
-/turf/space,
 /area/station/rnd/xenobiology)
 "aeA" = (
 /obj/structure/window/reinforced{
@@ -2831,13 +2828,30 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "aeE" = (
-/obj/machinery/monkey_recycler,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor{
+	icon_state = "whitepurplefull"
+	},
+/area/station/rnd/xenobiology)
+"aeF" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
 /turf/space,
 /area/station/rnd/xenobiology)
-"aeF" = (
+"aeG" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -2850,7 +2864,7 @@
 	icon_state = "warningline"
 	},
 /area/station/medical/virology)
-"aeG" = (
+"aeH" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -2864,18 +2878,6 @@
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
-/turf/space,
-/area/station/rnd/xenobiology)
-"aeH" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/machinery/disposal,
-/obj/structure/window/reinforced,
-/turf/simulated/floor{
-	icon_state = "whitepurplefull"
-	},
-/turf/space,
 /area/station/rnd/xenobiology)
 "aeI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -2896,6 +2898,17 @@
 	},
 /area/station/rnd/robotics)
 "aeK" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal,
+/obj/structure/window/reinforced,
+/turf/simulated/floor{
+	icon_state = "whitepurplefull"
+	},
+/turf/space,
+/area/station/rnd/xenobiology)
+"aeL" = (
 /obj/machinery/door/window/eastleft{
 	name = "Virology";
 	req_access = list(5)
@@ -2915,7 +2928,14 @@
 	icon_state = "warningline"
 	},
 /area/station/medical/virology)
-"aeL" = (
+"aeM" = (
+/obj/machinery/light,
+/turf/simulated/floor{
+	dir = 3;
+	icon_state = "whitegreen"
+	},
+/area/station/medical/virology)
+"aeN" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -2931,14 +2951,7 @@
 	icon_state = "warningline"
 	},
 /area/station/medical/virology)
-"aeM" = (
-/obj/machinery/light,
-/turf/simulated/floor{
-	dir = 3;
-	icon_state = "whitegreen"
-	},
-/area/station/medical/virology)
-"aeN" = (
+"aeO" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -2955,9 +2968,8 @@
 	req_access = list(55)
 	},
 /turf/simulated/floor,
-/turf/space,
 /area/station/rnd/xenobiology)
-"aeO" = (
+"aeP" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -2972,7 +2984,7 @@
 	},
 /turf/space,
 /area/station/rnd/xenobiology)
-"aeP" = (
+"aeQ" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -2990,9 +3002,8 @@
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
-/turf/space,
 /area/station/rnd/xenobiology)
-"aeQ" = (
+"aeR" = (
 /obj/machinery/door_control{
 	desc = "A remote control-switch for a door to space.";
 	id = "xenobioout6";
@@ -3014,7 +3025,7 @@
 	},
 /turf/space,
 /area/station/rnd/xenobiology)
-"aeR" = (
+"aeS" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3028,9 +3039,15 @@
 /turf/simulated/floor{
 	icon_state = "whitepurplefulll"
 	},
+/area/station/rnd/xenobiology)
+"aeT" = (
+/obj/machinery/monkey_recycler,
+/turf/simulated/floor{
+	icon_state = "whitepurplefull"
+	},
 /turf/space,
 /area/station/rnd/xenobiology)
-"aeS" = (
+"aeU" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -3042,44 +3059,6 @@
 	req_access = list(55)
 	},
 /turf/simulated/floor/engine,
-/turf/space,
-/area/station/rnd/xenobiology)
-"aeT" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/table/reinforced,
-/obj/machinery/door_control{
-	id = "xenobio1";
-	name = "Containment Blast Doors";
-	pixel_y = 4;
-	req_access = list(55)
-	},
-/turf/simulated/floor,
-/turf/space,
-/area/station/rnd/xenobiology)
-"aeU" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/table,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -29
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "whitepurplefull"
-	},
-/turf/space,
 /area/station/rnd/xenobiology)
 "aeV" = (
 /obj/machinery/door/airlock/glass{
@@ -3094,14 +3073,17 @@
 	},
 /area/station/civilian/bar)
 "aeW" = (
-/obj/structure/closet/secure_closet/scientist{
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/door_control{
+	id = "xenobio1";
+	name = "Containment Blast Doors";
+	pixel_y = 4;
 	req_access = list(55)
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/simulated/floor,
-/turf/space,
 /area/station/rnd/xenobiology)
 "aeX" = (
 /obj/structure/object_wall/mining{
@@ -3176,14 +3158,22 @@
 /area/station/maintenance/medbay)
 "afi" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/light{
-	dir = 8
+/obj/structure/table,
+/obj/item/weapon/storage/box/monkeycubes,
+/obj/item/weapon/storage/box/monkeycubes,
+/obj/item/weapon/storage/box/monkeycubes,
+/obj/item/weapon/storage/box/monkeycubes,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -29
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
@@ -3194,14 +3184,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "afk" = (
-/obj/machinery/light{
+/obj/structure/closet/secure_closet/scientist{
+	req_access = list(55)
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
-/turf/simulated/floor{
-	icon_state = "whitepurplefull"
-	},
-/turf/space,
+/turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "afl" = (
 /obj/machinery/portable_atmospherics/canister/hydrogen,
@@ -22419,9 +22408,6 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
-"gnW" = (
-/turf/space,
-/area/station/maintenance/science)
 "goh" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -114435,9 +114421,9 @@ uYo
 uYo
 uYo
 xVh
-aeF
-aeK
+aeG
 aeL
+aeN
 xVh
 xVh
 ihX
@@ -118285,8 +118271,8 @@ mPa
 pYX
 pYX
 plf
-gnW
-gnW
+plf
+plf
 kHU
 kHU
 kHU
@@ -119831,15 +119817,15 @@ vNi
 aes
 aex
 aez
-afi
-aeG
+aeE
+aeH
 aex
-aeN
-aeP
-aeR
+aeO
+aeQ
 aeS
-aeT
+aeU
 aeW
+afk
 kqz
 kHU
 kHU
@@ -121373,14 +121359,14 @@ vNi
 aeu
 aey
 aeA
-afk
-aeH
+aeF
+aeK
 aey
-aeO
-aeQ
-aeE
+aeP
+aeR
+aeT
 jEw
-aeU
+afi
 vNi
 pkz
 pkz
