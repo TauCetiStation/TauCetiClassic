@@ -12,7 +12,7 @@
 	w_class = ITEM_SIZE_SMALL
 	origin_tech = "materials=1;biotech=1"
 	var/list/datum/autopsy_body_part/organs = list()
-	var/list/datum/autopsy_data/chemtraces = list()
+	var/list/datum/autopsy_body_part/chemtraces = list()
 	var/target_name = null
 	var/timeofdeath = null
 
