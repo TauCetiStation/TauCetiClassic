@@ -647,8 +647,7 @@ var/list/airlock_overlays = list()
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 				H.Stun(8)
 				H.Weaken(5)
-				BP.take_damage(10, 0)
-				BP.add_autopsy_data("Hematoma", 10, BRUISE)
+				BP.take_damage(10, 0, used_weapon = "Hematoma")
 			else
 				visible_message("<span class='userdanger'> [user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
 			return

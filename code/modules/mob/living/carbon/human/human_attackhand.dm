@@ -72,7 +72,6 @@
 			if(damage >= 9)
 				visible_message("<span class='warning'><B>[M] has weakened [src]!</B></span>")
 				apply_effect(4, WEAKEN, armor_block)
-			BP.add_autopsy_data("Hematoma", damage, BRUISE)
 
 			return
 	else
@@ -129,8 +128,7 @@
 				apply_effect(2, WEAKEN, armor_block)
 
 			damage += attack.damage
-			apply_damage(damage, BRUTE, BP, armor_block, attack.damage_flags())
-			BP.add_autopsy_data("Hematoma", damage, BRUISE)
+			apply_damage(damage, BRUTE, BP, armor_block, attack.damage_flags(), used_weapon = "Hematoma")
 
 
 		if("disarm")
