@@ -185,12 +185,12 @@
 		return TRUE
 
 /obj/machinery/bot/floorbot/proc/is_broken(turf/simulated/floor/t)
-	if(!t || !istype(t, /turf/simulated/floor))
+	if(!istype(t))
 		return FALSE
 	return t.broken || t.burnt
 
 /obj/machinery/bot/floorbot/proc/is_plating(turf/simulated/floor/t)
-	if(!t || !istype(t, /turf/simulated/floor))
+	if(!istype(t))
 		return FALSE
 	return t.is_plating() && !is_broken(t)
 
