@@ -224,16 +224,18 @@
 /obj/item/weapon/crossbowframe/examine(mob/user)
 	..()
 	switch(buildstate)
+		if(0)
+			to_chat(user, "To finish you need: add 3 rods; weld it all; add 5 cable coil; add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver. ")
 		if(1)
-			to_chat(user, "It has a loose rod frame in place.")
+			to_chat(user, "To finish you need: weld it all; add 5 cable coil; add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver.")
 		if(2)
-			to_chat(user, "It has a steel backbone welded in place.")
+			to_chat(user, "To finish you need: add 5 cable coil; add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver.")
 		if(3)
-			to_chat(user, "It has a steel backbone and a cell mount installed.")
+			to_chat(user, "To finish you need: add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver.")
 		if(4)
-			to_chat(user, "It has a steel backbone, plastic lath and a cell mount installed.")
+			to_chat(user, "To finish you need: add 5 cable coil; tighten the bolts by screwdriver.")
 		if(5)
-			to_chat(user, "It has a steel cable loosely strung across the lath.")
+			to_chat(user, "To finish you need: tighten the bolts by screwdriver.")
 
 /obj/item/weapon/crossbowframe/attackby(obj/item/W, mob/user) // its better to implement this in personal crafting later.
 	if(isrobot(user))
@@ -247,7 +249,7 @@
 
 		if(istype(W, /obj/item/stack/rods) && buildstate == 0)
 			amount_to_use = 3
-			fail_msg = "<span class='notice'>You need at least three rods to complete this task.</span>"
+			fail_msg = "<span class='warning'>Need at least 3 rods!</span>"
 			success_msg = "<span class='notice'>You assemble a backbone of rods around the wooden stock.</span>"
 
 		else if(iscoil(W) && (buildstate in list(2, 4)))
@@ -260,7 +262,7 @@
 
 		else if(istype(W, /obj/item/stack/sheet/mineral/plastic) && buildstate == 3)
 			amount_to_use = 3
-			fail_msg = "<span class='notice'>You need at least three plastic sheets to complete this task.</span>"
+			fail_msg = "<span class='warning'>Need 3 plastic sheets!</span>"
 			success_msg = "<span class='notice'>You assemble and install a heavy plastic lath onto the crossbow.</span>"
 
 		if(amount_to_use) // if this is null, then tool we are trying to use is wrong.

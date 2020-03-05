@@ -174,7 +174,7 @@
 			cooldown = world.time
 
 
-// *BUCKLER CRAFT*
+// *BUCKLER CRAFT (in recipes.dm to)*
 
 /obj/item/weapon/bucklerframe
 	name = "buclker frame"
@@ -188,55 +188,27 @@
 /obj/item/weapon/bucklerframe/examine(mob/user)
 	..()
 	switch(buildstate)
+		if(0)
+			to_chat(user, "To finish you need: cut with wirecutters; bound with cable restraints; attach 4 plasteel; weld it all.")
 		if(1)
-			to_chat(user, "Consists of 3 unlinked boards.")
+			to_chat(user, "To finish you need: bound with cable restraints; attach 4 plasteel; weld it all.")
 		if(2)
-			to_chat(user, "Consists of 4 unlinked boards.")
+			to_chat(user, "To finish you need: attach 4 plasteel; weld it all.")
 		if(3)
-			to_chat(user, "Consists of 5 unlinked boards.")
-		if(4)
-			to_chat(user, "Consists of 5 processed unbound boards.")
-		if(5)
-			to_chat(user, "Consists of 5 processed bound by wires boards.")
-		if(6)
-			to_chat(user, "Consists of 5 processed bound by wires boards, coated with strong plasteel.")
+			to_chat(user, "To finish you need: weld it all.")
 
 /obj/item/weapon/bucklerframe/attackby(obj/item/W, mob/user)
 	if(isrobot(user))
 		return
 
-	if(istype(W, /obj/item/stack))
-		var/obj/item/stack/S = W
-		var/amount_to_use
-		var/fail_msg
-		var/success_msg
-
-		if(istype(W, /obj/item/stack/sheet/wood) && (buildstate == 0 || buildstate == 1 || buildstate == 2))
-			amount_to_use = 1
-			success_msg = "<span class='notice'>You attach the board to the frame.</span>"
-			fail_msg = "<span class='notice'>No more boards needed!</span>"
-
-		if(istype(W, /obj/item/stack/sheet/plasteel) && buildstate == 5)
-			amount_to_use = 4
-			success_msg = "<span class='notice'>You attach plasteel to the frame.</span>"
-			fail_msg = "<span class='notice'>Need 4 sheets of plasteel!</span>"
-
-		if(amount_to_use)
-			if(S.use(amount_to_use))
-				to_chat(user, success_msg)
-				buildstate++
-				update_icon()
-			else
-				to_chat(user, fail_msg)
-
-	else if(istype(W, /obj/item/weapon/wirecutters))
-		if(buildstate == 3)
+	else if(istype(W, /obj/item/weapon/wirecutters) && !user.is_busy())
+		if(!user.is_busy() && buildstate == 0)
 			if(do_after(user, 30, target = src))
 				buildstate++
 				update_icon()
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER, 50)
 
-	else if(istype(W, /obj/item/weapon/handcuffs/cable) && buildstate == 4)
+	else if(istype(W, /obj/item/weapon/handcuffs/cable) && buildstate == 1 && !user.is_busy())
 		playsound(src, 'sound/weapons/cablecuff.ogg', VOL_EFFECTS_MASTER, 50)
 		if(do_after(user, 30, target = src))
 			to_chat(user, "<span class='notice'>You bound boards with cable.</span>")
@@ -244,8 +216,23 @@
 			update_icon()
 			qdel(W)
 
-	else if(iswelder(W))
-		if(buildstate == 6)
+	if(istype(W, /obj/item/stack/sheet/plasteel) && buildstate == 2)
+		var/amount_to_use
+		var/fail_msg
+		var/success_msg
+		amount_to_use = 4
+		success_msg = "<span class='notice'>You attach plasteel to the frame.</span>"
+		fail_msg = "<span class='warning'>Need 4 sheets of plasteel!</span>"
+		if(amount_to_use)
+			if(W.use(amount_to_use))
+				to_chat(user, success_msg)
+				buildstate++
+				update_icon()
+			else
+				to_chat(user, fail_msg)
+
+	else if(!user.is_busy() && iswelder(W))
+		if(buildstate == 3)
 			var/obj/item/weapon/weldingtool/T = W
 			if(T.use(0, user))
 				if(!T.isOn())

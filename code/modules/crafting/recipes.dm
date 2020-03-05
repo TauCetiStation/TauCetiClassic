@@ -70,3 +70,21 @@
 	reqs = list(/obj/item/stack/cable_coil = 15)
 	result = /obj/item/weapon/handcuffs/cable
 	parts = list(/obj/item/stack/cable_coil = 1)
+
+/datum/crafting_recipe/bucklerframe
+	name = "Wooden shield frame"
+	reqs = list(/obj/item/stack/sheet/wood = 5)
+	result = /obj/item/weapon/bucklerframe
+	time = 40
+
+/datum/crafting_recipe/crossbowframe
+	name = "Crossbow frame"
+	reqs = list(/obj/item/stack/sheet/wood = 5)
+	result = /obj/item/weapon/crossbowframe
+	time = 40
+
+/datum/crafting_recipe/cannonframe
+	name = "Pneumo-cannon frame"
+	reqs = list(/obj/item/stack/sheet/metal = 10)
+	result = /obj/item/weapon/cannonframe
+	time = 50

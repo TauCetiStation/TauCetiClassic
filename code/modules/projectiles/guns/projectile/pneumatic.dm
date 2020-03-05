@@ -164,16 +164,18 @@
 /obj/item/weapon/cannonframe/examine(mob/user)
 	..()
 	switch(buildstate)
+		if(0)
+			to_chat(user, "To finish you need: attach the pipe; weld it all; add 5 sheets of metal; weld it all; add tank transfer valve; weld it all.")
 		if(1)
-			to_chat(user, "It has a pipe segment installed.")
+			to_chat(user, "To finish you need: weld it all; add 5 sheets of metal; weld it all; add tank transfer valve; weld it all.")
 		if(2)
-			to_chat(user, "It has a pipe segment welded in place.")
+			to_chat(user, "To finish you need: add 5 sheets of metal; weld it all; add tank transfer valve; weld it all.")
 		if(3)
-			to_chat(user, "It has an outer chassis installed.")
+			to_chat(user, "To finish you need: weld it all; add tank transfer valve; weld it all.")
 		if(4)
-			to_chat(user, "It has an outer chassis welded in place.")
+			to_chat(user, "To finish you need: add tank transfer valve; weld it all.")
 		if(5)
-			to_chat(user, "It has a transfer valve installed.")
+			to_chat(user, "To finish you need: weld it all.")
 
 /obj/item/weapon/cannonframe/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/pipe))
@@ -192,7 +194,7 @@
 				buildstate++
 				update_icon()
 			else
-				to_chat(user, "<span class='notice'>You need at least five metal sheets to complete this task.</span>")
+				to_chat(user, "<span class='warning'>Need a 5 metal sheets!</span>")
 			return
 	else if(istype(W,/obj/item/device/transfer_valve))
 		if(buildstate == 4)
