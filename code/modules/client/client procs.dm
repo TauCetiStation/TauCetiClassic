@@ -294,7 +294,7 @@ var/list/blacklisted_builds = list(
 
 	if(config.registration_panic_bunker_age)
 		if(!(ckey in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
-			to_chat(src, "<span class='danger'>В данный момент, сервер не принимает новых игроков. Чтобы получить доступ к этому серверу, вам необходимо отыграть 60 минут на TAU CETI CLASSIC III, после этого Вы сможете подключаться к TAU CETI CLASSIC I и TAU CETI CLASSIC II серверам без ограничений.</span>")
+			to_chat(src, "<span class='danger'>В данный момент, сервер не принимает новых игроков. Чтобы получить доступ к этому серверу, Вам необходимо отыграть 60 минут на TAU CETI CLASSIC III, после этого Вы сможете играть на TAU CETI CLASSIC I и TAU CETI CLASSIC II серверах без ограничений.</span>")
 			message_admins("<span class='adminnotice'>[key_name(src)] has been blocked by panic bunker. Connection rejected.</span>")
 			log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
 			QDEL_IN(src, 2 SECONDS)
