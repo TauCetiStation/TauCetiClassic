@@ -2705,7 +2705,6 @@
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
-/turf/space,
 /area/station/rnd/xenobiology)
 "aev" = (
 /obj/machinery/door_control{
@@ -2770,7 +2769,6 @@
 	req_access = list(55)
 	},
 /turf/simulated/floor/engine,
-/turf/space,
 /area/station/rnd/xenobiology)
 "aez" = (
 /obj/structure/cable{
@@ -2805,7 +2803,6 @@
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
-/turf/space,
 /area/station/rnd/xenobiology)
 "aeB" = (
 /obj/structure/table,
@@ -2849,7 +2846,6 @@
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
-/turf/space,
 /area/station/rnd/xenobiology)
 "aeG" = (
 /obj/structure/window/reinforced{
@@ -2906,7 +2902,6 @@
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
-/turf/space,
 /area/station/rnd/xenobiology)
 "aeL" = (
 /obj/machinery/door/window/eastleft{
@@ -2967,7 +2962,9 @@
 	pixel_y = 4;
 	req_access = list(55)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "whitepurplefull"
+	},
 /area/station/rnd/xenobiology)
 "aeP" = (
 /obj/structure/window/reinforced{
@@ -2982,7 +2979,6 @@
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
-/turf/space,
 /area/station/rnd/xenobiology)
 "aeQ" = (
 /obj/structure/cable{
@@ -3023,7 +3019,6 @@
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
-/turf/space,
 /area/station/rnd/xenobiology)
 "aeS" = (
 /obj/structure/cable{
@@ -3037,7 +3032,7 @@
 	},
 /obj/machinery/disposal,
 /turf/simulated/floor{
-	icon_state = "whitepurplefulll"
+	icon_state = "whitepurplefull"
 	},
 /area/station/rnd/xenobiology)
 "aeT" = (
@@ -3045,7 +3040,6 @@
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
-/turf/space,
 /area/station/rnd/xenobiology)
 "aeU" = (
 /obj/structure/cable{
@@ -3083,7 +3077,9 @@
 	pixel_y = 4;
 	req_access = list(55)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "whitepurplefull"
+	},
 /area/station/rnd/xenobiology)
 "aeX" = (
 /obj/structure/object_wall/mining{
@@ -3177,7 +3173,6 @@
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
-/turf/space,
 /area/station/rnd/xenobiology)
 "afj" = (
 /obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
@@ -3190,7 +3185,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "whitepurplefull"
+	},
 /area/station/rnd/xenobiology)
 "afl" = (
 /obj/machinery/portable_atmospherics/canister/hydrogen,
@@ -32129,12 +32126,6 @@
 	icon_state = "floor"
 	},
 /area/shuttle/escape_pod1/station)
-"jEw" = (
-/turf/simulated/floor{
-	icon_state = "whitepurplefull"
-	},
-/turf/space,
-/area/station/rnd/xenobiology)
 "jEI" = (
 /obj/structure/table/woodentable,
 /obj/item/device/guitar/electric,
@@ -121365,7 +121356,7 @@ aey
 aeP
 aeR
 aeT
-jEw
+afz
 afi
 vNi
 pkz
