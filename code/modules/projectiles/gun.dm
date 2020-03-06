@@ -234,7 +234,7 @@
 		if(user.a_intent == "hurt")
 			Fire(M, user, null, null, TRUE)
 			return
-		else if(target && M in target)
+		else if(target && (M in target))
 			Fire(M,user) ///Otherwise, shoot!
 			return
 	else
