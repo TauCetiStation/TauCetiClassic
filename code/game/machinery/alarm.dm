@@ -1154,6 +1154,20 @@ FIRE ALARM
 		FA.update_icon()
 		playsound(src, 'sound/machines/alarm_fire.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
+/obj/machinery/firealarm/examine(mob/user)
+	. = ..()
+	var/msg
+	switch(get_security_level())
+		if("green")
+			msg = "<font color='green'><b>Green</b></font>"
+		if("blue")
+			msg = "<font color='blue'><b>Blue</b></font>"
+		if("red")
+			msg = "<font color='red'><b>Red</b></font>"
+		if("delta")
+			msg = "<font color='purple'><b>Delta</b></font>"
+	to_chat(user, "The small light indicates [msg] security level.")
+
 /obj/machinery/firealarm/atom_init(mapload, dir, building)
 	. = ..()
 
