@@ -307,7 +307,7 @@
 	if(!on)
 		return
 
-	if(state == FLOORBOT_MOVING_TO_REPAIR && state == FLOORBOT_MOVING_TO_PICKUP)
+	if(state == FLOORBOT_MOVING_TO_REPAIR || state == FLOORBOT_MOVING_TO_PICKUP)
 		boringness += 1
 		if(boringness > 15)
 			visible_message("<span class='warning'>[src] makes an angry beeping noise.</span>")
