@@ -2957,4 +2957,7 @@
 				show_player_info(ckey)
 			if("list")
 				PlayerNotesPage(text2num(href_list["index"]))
+			if("search")
+				var/target = input(usr, "Enter player ckey", "Search", "")
+				PlayerNotesPage(text2num(href_list["index"]), target)
 		return
