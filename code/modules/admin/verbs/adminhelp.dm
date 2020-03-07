@@ -605,10 +605,10 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 			final = "All admins stealthed\[[english_list(stealthmins)]\], AFK\[[english_list(afkmins)]\], or lacks +BAN\[[english_list(powerlessmins)]\]! Total: [allmins.len] "
 
 		world.send2bridge(
-			type = list(BRIDGE_ADMINALERT),
+			type = type,
 			attachment_title = title,
 			attachment_msg = msg,
 			attachment_color = BRIDGE_COLOR_ADMINALERT,
 			attachment_footer = final,
-			mention = BRIDGE_MENTION_HERE,
+			mention = mention,
 		)

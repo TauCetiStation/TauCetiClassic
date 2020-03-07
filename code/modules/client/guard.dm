@@ -1,3 +1,5 @@
+var/global/geoip_exports = 0 // debug, remove me
+
 /datum/guard/
 	var/client/holder
 	var/total_alert_weight = 0
@@ -23,7 +25,7 @@
 
 
 /datum/guard/proc/trigger_init()
-	if(isnum(holder.player_ingame_age) && holder.player_ingame_age < 60)
+	if(holder && isnum(holder.player_ingame_age) && holder.player_ingame_age < 60)
 		load_geoip() // this may takes a few minutes in bad case
 		do_announce()
 
@@ -32,11 +34,12 @@
 		do_tests()
 	if(!total_alert_weight)
 		return
-	message_admins("GUARD: player [key_name_admin(holder)] has [total_alert_weight] suspicious weight (<a href='?_src_=holder;guard=\ref[holder.mob]'>report</a>)", R_LOG)
-	log_admin("GUARD: player [key_name(holder)] has [total_alert_weight] suspicious weight")
+	message_admins("GUARD: new player [key_name_admin(holder)] is suspicious with [total_alert_weight] weight (<a href='?_src_=holder;guard=\ref[holder.mob]'>report</a>)", R_LOG)
+	log_admin("GUARD: new player [key_name(holder)] is suspicious with [total_alert_weight] weight")
+	log_admin("GUARD: DEBUG: [report]") // debug, remove me
 
 	if(!bridge_reported && total_alert_weight > 1)
-		send2bridge_adminless_only("GUARD: player [key_name(holder)] has [total_alert_weight] suspicious weight", type = list(BRIDGE_ADMINIMPORTANT))
+		send2bridge_adminless_only("GUARD: new player [key_name(holder)] (<http://byond.com/members/[holder.ckey]>) is suspicious with **[total_alert_weight]** weight", type = list(BRIDGE_ADMINIMPORTANT))
 		bridge_reported = TRUE
 
 /datum/guard/proc/print_report()
@@ -178,6 +181,7 @@
 
 	while(attempts--)
 		var/list/response = world.Export(url)
+		geoip_exports++
 
 		if(response && text2num(response["STATUS"]) == 200)
 			return json_decode(file2text(response["CONTENT"]))
