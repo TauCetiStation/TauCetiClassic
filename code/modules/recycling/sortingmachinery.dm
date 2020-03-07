@@ -8,32 +8,28 @@
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
-/obj/structure/bigDelivery/Destroy()
-	var/atom/movable/AM = locate() in contents
-	if(AM) //sometimes items can disappear. For example, bombs. --rastaf0
+/obj/structure/bigDelivery/proc/dump()
+	for(var/atom/movable/AM in contents)
 		if(istype(AM, /obj/structure/closet))
 			var/obj/structure/closet/O = AM
 			O.welded = 0
 		AM.forceMove(get_turf(src))
+
+/obj/structure/bigDelivery/Destroy()
+	dump()
 	return ..()
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
-	var/atom/movable/AM = locate() in contents
-	if(AM) //sometimes items can disappear. For example, bombs. --rastaf0
-		if(istype(AM, /obj/structure/closet))
-			var/obj/structure/closet/O = AM
-			O.welded = 0
-		AM.forceMove(get_turf(src))
+	if(contents.len > 0)
+		dump()
 	else
 		to_chat(user, "<span class='notice'>The parcel was empty!</span>")
 	playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
 	qdel(src)
-	return
 
 /obj/structure/bigDelivery/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W
-
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
 			src.sortTag = O.currTag
@@ -47,7 +43,6 @@
 		for(var/mob/M in viewers())
 			to_chat(M, "<span class='notice'>[user] labels [src] as [str].</span>")
 		src.name = "[src.name] ([str])"
-	return
 
 /obj/item/smallDelivery
 	desc = "A small wrapped package."
@@ -56,22 +51,28 @@
 	icon_state = "deliverycrateSmall"
 	var/sortTag = ""
 
-/obj/item/smallDelivery/attack_self(mob/user)
-	user.drop_from_inventory(src)
-	var/atom/movable/AM = locate() in contents
-	if(AM) //sometimes items can disappear. For example, bombs. --rastaf0
-		user.put_in_active_hand(AM)
-		AM.add_fingerprint(user)
+/obj/item/smallDelivery/proc/dump(mob/user)
+	for(var/atom/movable/AM in contents)
+		if(user && user.put_in_active_hand(AM))
+			AM.add_fingerprint(user)
+		else
+			AM.forceMove(src.loc)
+
+/obj/item/smallDelivery/Destroy()
+	dump()
+	return ..()
+
+/obj/item/smallDelivery/attack_hand(mob/user)
+	if(contents.len > 0)
+		dump(user)
 	else
 		to_chat(user, "<span class='notice'>The parcel was empty!</span>")
 	playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
 	qdel(src)
-	return
 
 /obj/item/smallDelivery/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W
-
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
 			src.sortTag = O.currTag
@@ -85,8 +86,6 @@
 		for(var/mob/M in viewers())
 			to_chat(M, "<span class='notice'>[user] labels [src] as [str].</span>")
 		src.name = "[src.name] ([str])"
-	return
-
 
 /obj/item/weapon/packageWrap
 	name = "package wrapper"
