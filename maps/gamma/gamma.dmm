@@ -28459,12 +28459,6 @@
 	icon_state = "white"
 	},
 /area/station/rnd/hallway)
-"iqQ" = (
-/obj/effect/decal/remains/human{
-	name = "Volas"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/eva)
 "irw" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/camera{
@@ -109171,7 +109165,7 @@ deV
 blB
 wze
 pvL
-iqQ
+yaE
 wze
 oFi
 srd
