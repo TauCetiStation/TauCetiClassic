@@ -68,6 +68,7 @@
 #define NO_FINGERPRINT     "no_fingerprint"
 #define NO_MINORCUTS	   "no_minorcuts"
 #define NO_BLOOD_TRAILS    "no_blood_trails"
+#define SPRITE_SHEET_RESTRICTION "sprite_sheet_restriction" // If specie has this flag, all clothing which icon_state is in the sprite sheet will be awearable.
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.

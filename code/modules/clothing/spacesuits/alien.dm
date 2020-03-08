@@ -132,19 +132,11 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = list(VOX , VOX_ARMALIS)
-	sprite_sheets = list(
-		VOX = 'icons/mob/species/vox/suit.dmi',
-		VOX_ARMALIS = 'icons/mob/species/armalis/suit.dmi',
-		)
 
 /obj/item/clothing/head/helmet/space/vox
 	armor = list(melee = 60, bullet = 50, laser = 40, energy = 15, bomb = 30, bio = 30, rad = 30)
 	flags = HEADCOVERSEYES
 	species_restricted = list(VOX , VOX_ARMALIS)
-	sprite_sheets = list(
-		VOX = 'icons/mob/species/vox/head.dmi',
-		VOX_ARMALIS = 'icons/mob/species/armalis/head.dmi',
-		)
 
 /obj/item/clothing/head/helmet/space/vox/pressure
 	name = "alien helmet"
@@ -408,22 +400,14 @@
 	permeability_coefficient = 0.05
 	item_color = "gloves-vox"
 	species_restricted = list(VOX , VOX_ARMALIS)
-	sprite_sheets = list(
-		VOX = 'icons/mob/species/vox/gloves.dmi',
-		VOX_ARMALIS = 'icons/mob/species/armalis/gloves.dmi',
-		)
-/obj/item/clothing/shoes/magboots/vox
 
+/obj/item/clothing/shoes/magboots/vox
 	desc = "A pair of heavy, jagged armoured foot pieces, seemingly suitable for a velociraptor."
 	name = "vox magclaws"
 	item_state = "boots-vox"
 	icon_state = "boots-vox"
 
 	species_restricted = list(VOX , VOX_ARMALIS)
-	sprite_sheets = list(
-		VOX_ARMALIS = 'icons/mob/species/armalis/feet.dmi'
-		)
-
 	action_button_name = "Toggle the magclaws"
 
 /obj/item/clothing/shoes/magboots/vox/attack_self(mob/user)
