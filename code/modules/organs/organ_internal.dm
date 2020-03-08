@@ -151,6 +151,9 @@
 /obj/item/organ/internal/lungs/ipc
 	name = "cooling element"
 
+/obj/item/organ/internal/lungs/vox
+	name = "air capillary pouch"
+
 /obj/item/organ/internal/lungs/process()
 	..()
 	if (owner.species && owner.species.flags[NO_BREATHE])
@@ -299,6 +302,9 @@
 /obj/item/organ/internal/brain/ipc
 	name = "positronic brain"
 	parent_bodypart = BP_CHEST
+
+/obj/item/organ/internal/brain/vox
+	name = "cortical stack"
 
 /obj/item/organ/internal/eyes
 	name = "eyes"

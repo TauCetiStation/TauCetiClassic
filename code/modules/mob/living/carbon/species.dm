@@ -396,6 +396,14 @@
 	flags = list(
 		NO_SCAN = TRUE
 	)
+	has_organ = list(
+		 O_HEART   = /obj/item/organ/internal/heart
+		,O_BRAIN   = /obj/item/organ/internal/brain/vox
+		,O_EYES    = /obj/item/organ/internal/eyes
+		,O_LUNGS   = /obj/item/organ/internal/lungs/vox
+		,O_LIVER   = /obj/item/organ/internal/liver
+		,O_KIDNEYS = /obj/item/organ/internal/kidneys
+		)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
 	flesh_color = "#808d11"
@@ -408,8 +416,8 @@
 		"gloves" = 'icons/mob/species/vox/gloves.dmi'
 		)
 
-	min_age = 12
-	max_age = 20
+	min_age = 5
+	max_age = 35
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
@@ -540,6 +548,7 @@
 	,NO_BLOOD = TRUE
 	,NO_PAIN = TRUE
 	,NO_FINGERPRINT = TRUE
+	,NO_DEF = TRUE
 	)
 
 	has_bodypart = list(
@@ -662,6 +671,7 @@
 	,NO_FINGERPRINT = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
+	,NO_DEF = TRUE
 	)
 
 	has_bodypart = list(
@@ -709,6 +719,7 @@
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_VOMIT = TRUE
+	,NO_DEF = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/gray_blood
@@ -750,6 +761,7 @@
 	,RAD_IMMUNE = TRUE
 	,NO_EMBED = TRUE
 	,NO_MINORCUTS = TRUE
+	,NO_DEF = TRUE
 	)
 
 	has_bodypart = list(
@@ -861,6 +873,7 @@
 	,NO_SCAN = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
+	,NO_DEF = TRUE
 	)
 
 	burn_mod = 2
@@ -908,7 +921,8 @@
 		BIOHAZZARD_IMMUNE = TRUE,
 		NO_VOMIT = TRUE,
 		NO_FINGERPRINT = TRUE,
-		NO_MINORCUTS = TRUE
+		NO_MINORCUTS = TRUE,
+		NO_DEF = TRUE
 		)
 
 	has_organ = list(
@@ -979,6 +993,7 @@
 	,NO_SCAN = TRUE
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,NO_DEF = TRUE
 	)
 
 	brute_mod = 2
@@ -1045,6 +1060,7 @@
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
+	,NO_DEF = TRUE
 	)
 
 	min_age = 25
@@ -1087,6 +1103,7 @@
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
+	,NO_DEF = TRUE
 	)
 
 	min_age = 25
@@ -1114,6 +1131,7 @@
 	,HAS_UNDERWEAR = TRUE
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,NO_DEF = TRUE
 	)
 
 	min_age = 1

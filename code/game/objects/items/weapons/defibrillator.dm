@@ -266,7 +266,7 @@
 
 //Checks for various conditions to see if the mob is revivable
 /obj/item/weapon/twohanded/shockpaddles/proc/can_defib(mob/living/carbon/human/H) //This is checked before doing the defib operation
-	if(H.species.flags[NO_SCAN] || H.isSynthetic() || (NOCLONE in H.mutations))
+	if(H.species.flags[NO_DEF] || H.isSynthetic() || (NOCLONE in H.mutations))
 		return "buzzes, \"Unrecogized physiology. Operation aborted.\""
 
 	if(!check_contact(H))
