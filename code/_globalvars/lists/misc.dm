@@ -13,7 +13,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 var/list/roles_ingame_minute_unlock = list(
 	ROLE_PAI = 0,
-	ROLE_PLANT = 0,
+	ROLE_PLANT = 40000,
 	ROLE_TRAITOR = 720,
 	ROLE_OPERATIVE = 2160,
 	ROLE_CHANGELING = 2160,

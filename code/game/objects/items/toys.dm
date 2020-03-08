@@ -213,7 +213,7 @@
 
 /obj/item/toy/crossbow/examine(mob/user)
 	..()
-	if (bullets && src in view(2, user))
+	if (bullets && (src in view(2, user)))
 		to_chat(user, "<span class='notice'>It is loaded with [bullets] foam darts!</span>")
 
 /obj/item/toy/crossbow/attackby(obj/item/I, mob/user)

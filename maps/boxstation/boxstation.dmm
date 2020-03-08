@@ -18232,6 +18232,12 @@
 	icon_state = "warningline"
 	},
 /area/station/maintenance/incinerator)
+"aFI" = (
+/obj/machinery/portable_atmospherics/canister/hydrogen,
+/turf/simulated/floor{
+	icon_state = "bot"
+	},
+/area/station/rnd/storage)
 "aFK" = (
 /obj/structure/sink{
 	dir = 8;
@@ -117662,7 +117668,7 @@ aHW
 aHW
 aLd
 aMt
-aNL
+aFI
 aPa
 aQp
 aRq

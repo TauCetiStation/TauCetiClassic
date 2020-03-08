@@ -15,6 +15,8 @@
 	var/active = 1
 	var/activation_sound = 'sound/items/buttonclick.ogg'
 
+	sprite_sheet_slot = SPRITE_SHEET_EYES
+
 /obj/item/clothing/glasses/attack_self(mob/user)
 	if(toggleable)
 		if(ishuman(usr))

@@ -45,10 +45,14 @@
 
 /obj/item/ammo_casing/energy/laser/bluetag
 	projectile_type = /obj/item/projectile/beam/lasertag/blue
+	fire_sound = 'sound/weapons/guns/lasertag.ogg'
+	e_cost = 75
 	select_name = "bluetag"
 
 /obj/item/ammo_casing/energy/laser/redtag
 	projectile_type = /obj/item/projectile/beam/lasertag/red
+	fire_sound = 'sound/weapons/guns/lasertag.ogg'
+	e_cost = 75
 	select_name = "redtag"
 
 /obj/item/ammo_casing/energy/bolt
@@ -148,7 +152,7 @@
 	projectile_type = /obj/item/projectile/pyrometer
 	select_name = "pyrometer (hue)"
 	e_cost = 10
-	fire_sound = 'sound/weapons/guns/gunpulse_laser.ogg'
+	fire_sound = 'sound/weapons/pyrometr_shot.ogg'
 
 /obj/item/ammo_casing/energy/pyrometer/emagged
 	projectile_type = /obj/item/projectile/pyrometer/emagged

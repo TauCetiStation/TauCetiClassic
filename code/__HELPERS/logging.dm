@@ -1,9 +1,3 @@
-#define LOG_CLEANING(text) \
-  replace_characters(text, list(JA_ENTITY=JA_PLACEHOLDER, JA_ENTITY_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
-
-//print an error message to world.log
-
-
 // On Linux/Unix systems the line endings are LF, on windows it's CRLF, admins that don't use notepad++
 // will get logs that are one big line if the system is Linux and they are using notepad.  This solves it by adding CR to every line ending
 // in the logs.  ascii character 13 = CR
@@ -113,7 +107,7 @@
 
 /proc/log_runtime(text)
 	if (config && config.log_runtime)
-		global.runtime_log << "\[[time_stamp()]][text][log_end]"
+		global.runtime_log << "\[[time_stamp()]] [text][log_end]"
 
 /proc/log_initialization(text)
 	var/static/preconfig_init_log = ""
@@ -234,8 +228,6 @@
 		text += "no antagonists this moment"
 
 	log_game(text)
-
-#undef LOG_CLEANING
 
 /proc/drop_round_stats()
 	var/list/stats = list()
