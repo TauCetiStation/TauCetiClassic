@@ -125,7 +125,7 @@ var/list/bad_messages = list("Never take me off, please!",
 
 /obj/item/weapon/vampiric/hear_talk(mob/M, text)
 	..()
-	if(world.time - last_bloodcall >= bloodcall_interval && M in view(7, src))
+	if(world.time - last_bloodcall >= bloodcall_interval && (M in view(7, src)))
 		bloodcall(M)
 
 /obj/item/weapon/vampiric/proc/bloodcall(mob/living/carbon/human/M)

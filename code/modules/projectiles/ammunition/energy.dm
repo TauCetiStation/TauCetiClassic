@@ -148,7 +148,7 @@
 	projectile_type = /obj/item/projectile/pyrometer
 	select_name = "pyrometer (hue)"
 	e_cost = 10
-	fire_sound = 'sound/weapons/guns/gunpulse_laser.ogg'
+	fire_sound = 'sound/weapons/pyrometr_shot.ogg'
 
 /obj/item/ammo_casing/energy/pyrometer/emagged
 	projectile_type = /obj/item/projectile/pyrometer/emagged

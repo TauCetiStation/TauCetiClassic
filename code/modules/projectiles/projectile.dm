@@ -191,7 +191,7 @@
 				miss_modifier = - 100 // so sniper rifle and PTR-rifle projectiles cannot miss
 		if (istype(shot_from,/obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
 			var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
-			if (daddy.target && original in daddy.target) //As opposed to no-delay pew pew
+			if (daddy.target && (original in daddy.target)) //As opposed to no-delay pew pew
 				miss_modifier -= 60
 		if(distance > 1)
 			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)

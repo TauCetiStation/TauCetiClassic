@@ -385,3 +385,14 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		var/imgid = replacetext(replacetext("[item]", "/obj/item/", ""), "/", "-")
 		insert_icon_in_list(imgid, I)
 	return ..()
+
+/datum/asset/spritesheet/autolathe
+	name = "autolathe"
+
+/datum/asset/spritesheet/autolathe/register()
+	var/list/recipes = global.autolathe_recipes + global.autolathe_recipes_hidden
+	for (var/obj/item in recipes)
+		var/icon/I = icon(item.icon, item.icon_state) //for some reason, the getFlatIcon(item) function does not create images of objects such as /obj/item/ammo_casing
+		var/imgid = replacetext(replacetext("[item.type]", "/obj/item/", ""), "/", "-")
+		insert_icon_in_list(imgid, I)
+	return ..()

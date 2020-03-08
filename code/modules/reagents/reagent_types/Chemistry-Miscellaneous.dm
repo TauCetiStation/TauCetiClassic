@@ -710,7 +710,7 @@
 				H.facial_painted = TRUE
 				hair_changes_occured = TRUE
 				body_changes_occured = TRUE
-		else if(H.species && H.species.name in list(HUMAN, UNATHI, TAJARAN))
+		else if(H.species && (H.species.name in list(HUMAN, UNATHI, TAJARAN)))
 			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
 				if(!H.hair_painted)
 					H.dyed_r_hair = CLAMP(round(H.r_hair * volume_coefficient + r_tweak), 0, 255)

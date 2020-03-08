@@ -387,7 +387,7 @@
 	var/num_revs = 0
 	for(var/mob/living/carbon/mob in alive_mob_list)
 		if(mob.mind)
-			if(mob.mind in head_revolutionaries || mob.mind in revolutionaries)
+			if((mob.mind in head_revolutionaries) || (mob.mind in revolutionaries))
 				num_revs++
 	completion_text += "<br>[TAB]Command's Approval Rating: <b>[100 - round((num_revs/alive_mob_list.len)*100, 0.1)]%</b>" // % of loyal crew
 	..()
