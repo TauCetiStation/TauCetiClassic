@@ -36,6 +36,9 @@
 	var/full_auto = 0
 	var/full_auto_break = FALSE		//If something happens during shooting, it sets to TRUE, allowing shooting loop to break, and set it back to FALSE
 
+	var/burst_amount_when_switch = 0		//0 if no burst fire mode, amount of bullets shot otherwise
+	var/full_auto_speed_when_switch = 0		//0 if no full auto mode, full auto speed otherwise.
+
 	var/full_auto_amount_shot = 0		//For stuff like increasing spread for long shootings, or overheating gun.
 	var/full_auto_spread_coefficient = 0
 
@@ -176,9 +179,7 @@
 			if(!chambered.BB.fake)
 				user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
 			chambered.BB.damage *= 1.3
-		if(!chambered.fire(target, user, params, , silenced, src))
-			shoot_with_empty_chamber(user)
-		else
+		if(chambered.fire(target, user, params, , silenced, src))
 			shoot_live_shot(user)
 			user.newtonian_move(get_dir(target, user))
 			if(full_auto)

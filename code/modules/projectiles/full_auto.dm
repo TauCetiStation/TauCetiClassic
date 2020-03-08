@@ -27,8 +27,7 @@ client
 
 /client/MouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
 	if(selected_target)
-		if(isatom(over_object))
-			selected_target = over_object
+		selected_target = over_object
 
 /obj/item/weapon/gun/proc/GunFullAutoSpeed()
 	return full_auto

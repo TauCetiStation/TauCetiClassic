@@ -51,7 +51,7 @@
 		else
 			LE.agony = 15
 	LE.host = user
-	LE.Fire(A, user)
+	LE.Fire(A, user, shooting_object = src)
 
 /obj/item/projectile/changeling_whip
 	name = "Whip"

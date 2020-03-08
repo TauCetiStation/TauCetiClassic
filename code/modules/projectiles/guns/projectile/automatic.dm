@@ -9,8 +9,6 @@
 	can_be_holstered = FALSE
 	fire_delay = 0		//Automatic guns no need this
 	var/alarmed = 0
-	var/burst_amount_when_switch = 3		//0 if no burst fire mode, amount of bullets shot otherwise
-	var/full_auto_speed_when_switch = 0		//0 if no full auto mode, full auto speed otherwise.
 	var/datum/action/switch_fire_mode/mode_switch
 
 /obj/item/weapon/gun/projectile/automatic/atom_init()
@@ -105,6 +103,7 @@
 	item_state = "c20r"
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;materials=2;syndicate=8"
+	burst_amount_when_switch = 3
 	mag_type = /obj/item/ammo_box/magazine/m12mm
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 
@@ -160,7 +159,7 @@
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m762
 	fire_sound = 'sound/weapons/guns/Gunshot2.wav'
-	full_auto_speed_when_switch = 1
+	full_auto_speed_when_switch = 2
 	full_auto_spread_coefficient = 0.05
 	var/cover_open = 0
 
@@ -230,7 +229,7 @@
 
 /* Where Ausops failed, I have not. -SirBayer */
 
-//=================NEW GUNS=================\\
+//=================NEW GUNS=================
 
 /obj/item/weapon/gun/projectile/automatic/c5
 	name = "security submachine gun"
@@ -239,6 +238,7 @@
 	item_state = "c5"
 	w_class = ITEM_SIZE_NORMAL
 	can_be_holstered = TRUE
+	burst_amount_when_switch = 3
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/c5_9mm
 	fire_sound = 'sound/weapons/guns/gunshot_c5.wav'
@@ -259,6 +259,7 @@
 	icon_state = "l13"
 	item_state = "l13"
 	w_class = ITEM_SIZE_NORMAL
+	burst_amount_when_switch = 3
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/l13_38
 	fire_sound = 'sound/weapons/guns/gunshot_l13.ogg'
@@ -341,7 +342,6 @@
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
-	burst_amount_when_switch = 0
 
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/atom_init()
@@ -374,6 +374,7 @@
 	icon_state = "a28"
 	item_state = "a28"
 	w_class = ITEM_SIZE_NORMAL
+	burst_amount_when_switch = 3
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m556
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
@@ -396,10 +397,9 @@
 	w_class = ITEM_SIZE_NORMAL
 	icon_state = "a74"
 	item_state = "a74"
+	burst_amount_when_switch = 3
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	fire_sound = 'sound/weapons/guns/gunshot_ak74.ogg'
-	full_auto_speed_when_switch = 1
-	full_auto_spread_coefficient = 0.02
 	var/icon/mag_icon = icon('icons/obj/gun.dmi',"mag-a74")
 
 /obj/item/weapon/gun/projectile/automatic/a74/atom_init()
