@@ -313,7 +313,7 @@ BLIND     // can't see anything
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude" , DIONA , VOX)
-	sprite_sheets = list(VOX = 'icons/mob/species/vox/head.dmi')
+	sprite_sheets = list(VOX = 'icons/mob/species/vox/helmet.dmi')
 
 /obj/item/clothing/suit/space
 	name = "space suit"
