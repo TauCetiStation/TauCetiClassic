@@ -180,7 +180,7 @@
 	/obj/item/weapon/wirecutters = 75,
 	/obj/item/weapon/kitchen/utensil/fork = 50
 	)
-
+	allowed_species = list("exclude", VOX)
 	min_duration = 80
 	max_duration = 100
 
