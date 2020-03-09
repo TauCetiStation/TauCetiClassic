@@ -83,6 +83,7 @@ var/list/admin_verbs_log = list(
 	/client/proc/getlogsbyid,			   //allows us to fetch logs by round id,
 	/client/proc/getoldlogs,			   //allows us to fetch logs by round id,
 	/client/proc/investigate_show,		//various admintools for investigation. Such as a singulo grief-log,
+	/client/proc/view_runtimes
 	)
 var/list/admin_verbs_variables = list(
 	/client/proc/debug_variables,
