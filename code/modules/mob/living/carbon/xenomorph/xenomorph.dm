@@ -14,8 +14,6 @@
 	var/last_sound_emote = 0 // prevents sounds spam
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
-	var/has_fine_manipulation = 0
-
 	var/move_delay_add = 0 // movement delay to add
 
 	status_flags = CANPARALYSE|CANPUSH
@@ -144,9 +142,6 @@
 			if(75 to 100)
 				radiation -= 3
 				adjustToxLoss(3)
-
-/mob/living/carbon/xenomorph/IsAdvancedToolUser()
-	return has_fine_manipulation
 
 /mob/living/carbon/xenomorph/Stat()
 	..()
