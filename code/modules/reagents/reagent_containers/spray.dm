@@ -57,7 +57,7 @@
 		to_chat(user, "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [A].</span>")
 		return
 
-	if(reagents.total_volume < amount_per_transfer_from_this)
+	if(reagents && reagents.total_volume < amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>\The [src] is empty!</span>")
 		return
 
