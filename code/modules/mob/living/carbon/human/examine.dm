@@ -449,7 +449,7 @@
 
 	if(!skipface)
 		var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
-		if(BP && BP.disfigured)
+		if(istype(BP) && BP.disfigured)
 			msg += "<span class='warning'><b>[t_His] face is violently disfigured!</b></span>\n"
 
 	if((!skipface || !skipjumpsuit || !skipgloves) && (HUSK in mutations))

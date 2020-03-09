@@ -19,6 +19,12 @@
 	var/stop = 0.0
 	var/screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
 
+/obj/machinery/computer/robotics/attackby(obj/item/I, mob/user)
+	if(issilicon(user))
+		to_chat(user, "<span class='warning'>It's too complicated for you.</span>")
+		return
+	return ..()
+
 /obj/machinery/computer/robotics/ui_interact(mob/user)
 	if (!SSmapping.has_level(z))
 		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")

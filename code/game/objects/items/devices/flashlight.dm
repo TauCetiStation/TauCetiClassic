@@ -49,6 +49,11 @@
 	action_button_name = null
 	return 1
 
+/obj/item/device/flashlight/get_current_temperature()
+	if(on)
+		return 10
+	return 0
+
 /obj/item/device/flashlight/Destroy()
 	if(on)
 		set_light(0)
@@ -139,6 +144,10 @@
 	g_amt = 0
 	on = 1
 
+/obj/item/device/flashlight/lamp/get_current_temperature()
+	if(on)
+		return 20
+	return 0
 
 // green-shaded desk lamp
 /obj/item/device/flashlight/lamp/green
@@ -185,6 +194,11 @@
 	fuel = max(fuel - 1, 0)
 	if(!fuel || !on)
 		turn_off()
+
+/obj/item/device/flashlight/flare/get_current_temperature()
+	if(on)
+		return 1000
+	return 0
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0

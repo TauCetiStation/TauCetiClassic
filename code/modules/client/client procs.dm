@@ -53,10 +53,10 @@ var/list/blacklisted_builds = list(
 		completed_asset_jobs += job
 		return
 
-	if (href_list["action"] && href_list["action"] == "debugFileOutput" && href_list["file"] && href_list["message"])
+	if (href_list["action"] && href_list["action"] == "jsErrorCatcher" && href_list["file"] && href_list["message"])
 		var/file = href_list["file"]
 		var/message = href_list["message"]
-		debugFileOutput.error(file, message, src)
+		js_error_manager.log_error(file, message, src)
 		return
 
 	//Admin PM
@@ -310,7 +310,7 @@ var/list/blacklisted_builds = list(
 	if(config.byond_version_recommend && byond_version < config.byond_version_recommend)
 		to_chat(src, "<span class='warning bold'>Your version of Byond is less that recommended. Update to the [config.byond_version_recommend] for better experiense.</span>")
 
-	if((byond_version >= 512 && (!byond_build || byond_build < 1421)) || num2text(byond_build) in blacklisted_builds)
+	if((byond_version >= 512 && (!byond_build || byond_build < 1421)) || (num2text(byond_build) in blacklisted_builds))
 		to_chat(src, "<span class='warning bold'>You are using the inappropriate Byond version. Update to the latest Byond version or install another from http://www.byond.com/download/build/ for playing on our server.</span>")
 		message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a inappropriate byond version: [byond_version].[byond_build]. Connection rejected.</span>")
 		log_access("Failed Login: [key] [computer_id] [address] - inappropriate byond version: [byond_version].[byond_build])")

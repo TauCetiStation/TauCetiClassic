@@ -62,14 +62,6 @@
 
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
-	/* Species-specific sprites, concept stolen from Paradise//vg/.
-	ex:
-	sprite_sheets = list(
-		TAJARAN = 'icons/cat/are/bad'
-		)
-	If index term exists and icon_override is not set, this sprite sheet will be used.
-	*/
-	var/list/sprite_sheets = null
 	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
 
 	/* Species-specific sprite sheets for inventory sprites
@@ -975,15 +967,6 @@ var/global/list/items_blood_overlay_by_type = list()
 		return
 	var/mob/M = loc
 	M.update_inv_item(src)
-
-/obj/item/proc/get_current_temperature()
-	/*
-	It actually returns a rise in temperature from the enviroment since I don't know why.
-	Before it was called "is_hot". And it returned 0 if something is not any hotter than it should be.
-
-	Slap me on the wrist if you ever will need this to return a meaningful value. ~Luduk
-	*/
-	return 0
 
 /obj/item/proc/extinguish()
 	return

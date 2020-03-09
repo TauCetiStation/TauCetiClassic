@@ -84,7 +84,7 @@
 
 /datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
 	..()
-	if(ishuman(M) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden", "Captain"))
+	if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Warden", "Captain")))
 		M.heal_bodypart_damage(1, 1)
 
 /datum/reagent/consumable/syndicream
