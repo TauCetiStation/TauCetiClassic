@@ -210,6 +210,6 @@
 					if(!(istype(O, /obj/structure/stool/bed/chair)))
 						do_we_scream = 0
 				if(do_we_scream)
-					emote("scream", auto = TRUE)
+					emote("scream")
 			emote("collapse")
 		Weaken(5) //can't emote while weakened, apparently.
