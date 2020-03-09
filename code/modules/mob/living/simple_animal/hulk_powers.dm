@@ -164,7 +164,7 @@
 		usr.layer = 9
 		var/cur_dir = usr.dir
 		var/turf/simulated/floor/tile = usr.loc
-		if(tile)
+		if(tile && istype(tile,/turf/simulated/floor))
 			tile.break_tile()
 		var/speed = 3
 		for(var/i=0, i<30, i++)
