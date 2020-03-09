@@ -107,14 +107,12 @@
 		fluctuation_counter = 0
 		fluctuate()
 
-/datum/stock/proc/modifyAccount(whose, by, force = 0)
-	if (SSshuttle.points)
-		if (by < 0 && SSshuttle.points + by < 0 && !force)
-			return 0
-		SSshuttle.points += by
-		stockExchange.balanceLog(whose, by)
-		return 1
-	return 0
+/datum/stock/proc/modifyAccount(whose, amount)
+	. = FALSE
+	if (SSshuttle && isnum(SSshuttle.points) && (amount > 0 || SSshuttle.points + amount > 0))
+		SSshuttle.points += amount
+		stockExchange.balanceLog(whose, amount)
+		. = TRUE
 
 /datum/stock/proc/buyShares(who, howmany)
 	if (howmany <= 0)

@@ -1,4 +1,8 @@
 
+// float 1-8-23 bits. More then 16777216 lost accuracy in $1
+#define MAX_MONEY_ON_ACCOUNT 16777215
+#define MIN_MONEY_ON_ACCOUNT -16777215
+
 /datum/money_account
 	var/owner_name = ""
 	var/account_number = 0
@@ -9,6 +13,9 @@
 	var/security_level = 0	//0 - auto-identify from worn ID, require only account number
 							//1 - require manual login / account number and pin
 							//2 - require card and manual login
+
+/datum/money_account/proc/adjust_money(amount)
+	money = CLAMP(money + amount, MIN_MONEY_ON_ACCOUNT, MAX_MONEY_ON_ACCOUNT)
 
 /datum/transaction
 	var/target_name = ""
@@ -38,7 +45,7 @@
 	var/datum/money_account/M = new()
 	M.owner_name = new_owner_name
 	M.remote_access_pin = rand(1111, 111111)
-	M.money = starting_funds
+	M.adjust_money(starting_funds)
 
 	//create an entry in the account transaction log for when it was created
 	var/datum/transaction/T = new()
@@ -88,7 +95,7 @@
 /proc/charge_to_account(attempt_account_number, source_name, purpose, terminal_id, amount)
 	for(var/datum/money_account/D in all_money_accounts)
 		if(D.account_number == attempt_account_number && !D.suspended)
-			D.money += amount
+			D.adjust_money(amount)
 
 			//create a transaction log entry
 			var/datum/transaction/T = new()
@@ -118,3 +125,6 @@
 	for(var/datum/money_account/D in all_money_accounts)
 		if(D.account_number == account_number)
 			return D
+
+#undef MAX_MONEY_ON_ACCOUNT
+#undef MIN_MONEY_ON_ACCOUNT
