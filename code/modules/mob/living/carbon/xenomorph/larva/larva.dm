@@ -36,6 +36,15 @@
 	if(statpanel("Status"))
 		stat(null, "Progress: [amount_grown]/[max_grown]")
 
+/mob/living/carbon/xenomorph/larva/toggle_throw_mode()
+	return
+
+/mob/living/carbon/xenomorph/larva/throw_mode_on()
+	return
+
+/mob/living/carbon/xenomorph/larva/throw_mode_off()
+	return
+
 /mob/living/carbon/xenomorph/larva/throw_item(atom/target)
 	return
 

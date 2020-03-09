@@ -398,7 +398,8 @@
 	poison_type = "oxygen"
 
 	flags = list(
-		NO_SCAN = TRUE
+		 NO_SCAN = TRUE
+		,FACEHUGGABLE = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
