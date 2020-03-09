@@ -9,34 +9,41 @@
 #define NOLIMB           -1    // related to THICKMATERIAL check, thats why this is here.
 //FLAGS BITMASK
 #define NOBLUDGEON        2    // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
+
 #define MASKINTERNALS     4    // Mask allows internals.
+
 //#define USEDELAY          8    // 1 second extra delay on use. (Can be used once every 2s) ~ Kursh, Doesn't used for now.
 #define NOSHIELD         16    // Weapon not affected by shield.
+
 #define CONDUCT          32    // Conducts electricity. (metal etc.)
+
 #define ABSTRACT         64    // For all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way.
 #define NODECONSTRUCT    64    // For machines and structures that should not break into parts, eg, holodeck stuff.
-#define ON_BORDER       128    // Item has priority to check when entering or leaving.
-#define THICKMATERIAL   256    // Prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with NOSLIP for shoes)
-#define NOSLIP          512    // Prevents from slipping on wet floors, in space etc.
-#define NOATTACKANIMATION 512	   // Removes attack animation
 
+#define ON_BORDER       128    // Item has priority to check when entering or leaving.
+
+#define THICKMATERIAL       256    // Prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with NOSLIP for shoes)
 #define GLASSESCOVERSEYES   256
 #define MASKCOVERSEYES      256    // Get rid of some of the other retardation in these flags.
 #define HEADCOVERSEYES      256    // feel free to realloc these numbers for other purposes.
+
 #define MASKCOVERSMOUTH     512    // on other items, these are just for mask/head.
 #define HEADCOVERSMOUTH     512
-
-#define NOBLOODY  512    // Used to items if they don't want to get a blood overlay.
+#define NOBLOODY            512    // Used to items if they don't want to get a blood overlay.
+#define NOSLIP              512    // Prevents from slipping on wet floors, in space etc.
+#define NOATTACKANIMATION   512    // Removes attack animation
 
 #define OPENCONTAINER  1024    // Is an open container for chemistry purposes.
 
 #define BLOCK_GAS_SMOKE_EFFECT  2048    // Blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with ONESIZEFITSALL)
-#define ONESIZEFITSALL          2048
-#define PHORONGUARD             4096    // Does not get contaminated by phoron.
-#define DROPDEL                 8192    // When dropped, it calls qdel on itself
-#define NODROP                 16384    // User can't drop this item
+#define ONESIZEFITSALL          2048    // Cloth acceptable for a fat mob
 
-#define	NOREACT  4096    //Reagents dont' react inside this container.
+#define PHORONGUARD             4096    // Does not get contaminated by phoron.
+#define NOREACT                 4096    //Reagents dont' react inside this container.
+
+#define DROPDEL                 8192    // When dropped, it calls qdel on itself
+
+#define NODROP                 16384    // User can't drop this item
 
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
 #define HOLOGRAM_2         (1<<0)
