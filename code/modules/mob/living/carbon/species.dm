@@ -76,17 +76,17 @@
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
 	sprite_sheets = list(
-		"held" = 'icons/mob/path',
-		"uniform" = 'icons/mob/path',
-		"suit" = 'icons/mob/path',
-		"belt" = 'icons/mob/path'
-		"head" = 'icons/mob/path',
-		"back" = 'icons/mob/path',
-		"mask" = 'icons/mob/path',
-		"ears" = 'icons/mob/path',
-		"eyes" = 'icons/mob/path',
-		"feet" = 'icons/mob/path',
-		"gloves" = 'icons/mob/path'
+		SPRITE_SHEET_HELD = 'icons/mob/path',
+		SPRITE_SHEET_UNIFORM = 'icons/mob/path',
+		SPRITE_SHEET_SUIT = 'icons/mob/path',
+		SPRITE_SHEET_BELT = 'icons/mob/path'
+		SPRITE_SHEET_HEAD = 'icons/mob/path',
+		SPRITE_SHEET_BACK = 'icons/mob/path',
+		SPRITE_SHEET_MASK = 'icons/mob/path',
+		SPRITE_SHEET_EARS = 'icons/mob/path',
+		SPRITE_SHEET_EYES = 'icons/mob/path',
+		SPRITE_SHEET_FEET = 'icons/mob/path',
+		SPRITE_SHEET_GLOVES = 'icons/mob/path'
 		)
 	If index term exists and icon_override is not set, this sprite sheet will be used.
 	*/
@@ -395,17 +395,24 @@
 
 	flags = list(
 		NO_SCAN = TRUE
+		,SPRITE_SHEET_RESTRICTION = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
 	flesh_color = "#808d11"
 
 	sprite_sheets = list(
-		"suit" = 'icons/mob/species/vox/suit.dmi',
-		"head" = 'icons/mob/species/vox/head.dmi',
-		"mask" = 'icons/mob/species/vox/masks.dmi',
-		"feet" = 'icons/mob/species/vox/shoes.dmi',
-		"gloves" = 'icons/mob/species/vox/gloves.dmi'
+		// SPRITE_SHEET_HELD = 'icons/mob/species/vox/held.dmi',
+		SPRITE_SHEET_UNIFORM = 'icons/mob/species/vox/uniform.dmi',
+		SPRITE_SHEET_SUIT = 'icons/mob/species/vox/suit.dmi',
+		SPRITE_SHEET_BELT = 'icons/mob/belt.dmi',
+		SPRITE_SHEET_HEAD = 'icons/mob/species/vox/head.dmi',
+		SPRITE_SHEET_BACK = 'icons/mob/back.dmi',
+		SPRITE_SHEET_MASK = 'icons/mob/species/vox/masks.dmi',
+		SPRITE_SHEET_EARS = 'icons/mob/ears.dmi',
+		SPRITE_SHEET_EYES = 'icons/mob/species/vox/eyes.dmi',
+		SPRITE_SHEET_FEET = 'icons/mob/species/vox/shoes.dmi',
+		SPRITE_SHEET_GLOVES = 'icons/mob/species/vox/gloves.dmi'
 		)
 
 	min_age = 12
@@ -485,6 +492,7 @@
 	,NO_BLOOD = TRUE
 	,HAS_TAIL = TRUE
 	,NO_PAIN = TRUE
+	,SPRITE_SHEET_RESTRICTION = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
@@ -493,11 +501,11 @@
 	icon_template = 'icons/mob/human_races/r_armalis.dmi'
 
 	sprite_sheets = list(
-		"suit" = 'icons/mob/species/armalis/suit.dmi',
-		"gloves" = 'icons/mob/species/armalis/gloves.dmi',
-		"feet" = 'icons/mob/species/armalis/feet.dmi',
-		"head" = 'icons/mob/species/armalis/head.dmi',
-		"held" = 'icons/mob/species/armalis/held.dmi'
+		SPRITE_SHEET_SUIT = 'icons/mob/species/armalis/suit.dmi',
+		SPRITE_SHEET_GLOVES = 'icons/mob/species/armalis/gloves.dmi',
+		SPRITE_SHEET_FEET = 'icons/mob/species/armalis/feet.dmi',
+		SPRITE_SHEET_HEAD = 'icons/mob/species/armalis/head.dmi',
+		SPRITE_SHEET_HELD = 'icons/mob/species/armalis/held.dmi'
 		)
 
 /datum/species/diona

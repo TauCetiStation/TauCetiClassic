@@ -269,8 +269,8 @@
 	cost = 2
 
 /datum/uplink_item/ammo/revolver
-	name = "Ammo-357"
-	desc = "A box that contains seven additional rounds for the revolver, made using an automatic lathe."
+	name = "Speedloader-.357"
+	desc = "A speedloader that contains seven additional rounds for the revolver, made using an automatic lathe."
 	item = /obj/item/ammo_box/a357
 	cost = 3
 
