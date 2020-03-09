@@ -453,7 +453,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			if(65)
 				visible_message("<span class='userdanger'>A new [parse_zone(regenerating_bodypart.body_zone)] has grown from [src]'s [regenerating_bodypart.parent.name]!</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] your [parse_zone(regenerating_bodypart.body_zone)] again!</span>")
 		if(prob(50))
-			emote("scream",1,null,1)
+			emote("scream")
 		if(regenerating_organ_time >= regenerating_capacity_penalty) // recover organ
 			regenerating_bodypart.rejuvenate()
 			regenerating_organ_time = 0
