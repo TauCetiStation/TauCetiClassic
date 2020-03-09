@@ -83,7 +83,7 @@
 				if(occupant.reagents.get_reagent_amount(M) >= 1)
 					has_cryo_medicine = TRUE
 					break
-			if(beaker != null && beaker.reagents)
+			if(beaker && beaker.reagents)
 				var/reagent_count = length(beaker.reagents.reagent_list)
 				if(beaker && !has_cryo_medicine && reagent_count > 0)
 					for(var/datum/reagent/R in beaker.reagents.reagent_list)
