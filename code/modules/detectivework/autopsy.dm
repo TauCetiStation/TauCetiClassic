@@ -90,7 +90,7 @@
 
 	for(var/data in organs)
 		var/datum/autopsy_body_part/D = organs[data]
-		scan_data += "<table border=\"2\">"
+		scan_data += "<table border=\"2\", style=\"text-align:center;\", width=\"100%\", table-layout: fixed;>"
 		scan_data += "<tr><th colspan=\"5\">[D.organ]</th></tr>"
 		scan_data += "<tr>"
 		scan_data += "<th>Severity</th>"
@@ -148,7 +148,7 @@
 			scan_data += "<td>"
 			scan_data += "[W.pretend_weapon]"
 			scan_data += "</td>"
-			scan_data += "<td>"
+			scan_data += "<td style=\"text-align:left;\">"
 			scan_data += "-<font size = \"2\"><span class=\"paper_field\"></span></font>"
 			scan_data += "</td>"
 			scan_data += "</tr>"
