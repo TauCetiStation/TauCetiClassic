@@ -134,19 +134,3 @@
 /obj/item/weapon/tank/nitrogen/atom_init()
 	. = ..()
 	air_contents.adjust_gas("nitrogen", (3 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
-
-
-/obj/item/weapon/tank/anestheticn
-	name = "anesthetic with nitrogen tank"
-	desc = "A tank with an N2O/N2 gas mix."
-	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
-	icon_state = "anestheticn"
-	item_state = "ann_tank"
-
-/obj/item/weapon/tank/anestheticn/atom_init()
-	. = ..()
-
-	air_contents.gas["nitrogen"] = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-	air_contents.gas["sleeping_agent"] = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
-	air_contents.update_values()
-

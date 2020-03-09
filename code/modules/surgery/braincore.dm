@@ -20,7 +20,7 @@
 	/obj/item/weapon/hatchet = 75,
 	/obj/item/weapon/crowbar = 50
 	)
-	allowed_species = list("exclude", VOX, IPC)
+	allowed_species = list("exclude", VOX)
 	min_duration = 50
 	max_duration = 70
 
@@ -180,7 +180,7 @@
 	/obj/item/weapon/wirecutters = 75,
 	/obj/item/weapon/kitchen/utensil/fork = 50
 	)
-	allowed_species = list("exclude", VOX, IPC)
+	allowed_species = list("exclude", VOX)
 	min_duration = 80
 	max_duration = 100
 
@@ -209,7 +209,7 @@
 	/obj/item/weapon/FixOVein = 100,
 	/obj/item/stack/cable_coil = 75
 	)
-	allowed_species = list("exclude", VOX, IPC)
+	allowed_species = list("exclude", VOX)
 	min_duration = 90
 	max_duration = 110
 
@@ -365,7 +365,7 @@
 //						BRAIN SURGERY FOR VOX					//
 //////////////////////////////////////////////////////////////////
 
-/datum/surgery_step/brain/unscrew_skull
+/datum/surgery_step/brain/skull
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100
 	)
@@ -373,20 +373,20 @@
 	min_duration = 50
 	max_duration = 70
 
-/datum/surgery_step/brain/unscrew_skull/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/brain/skull/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return ..() && target.op_stage.skull == 0
 
-/datum/surgery_step/brain/unscrew_skull/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/brain/skull/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts to unscrew the metal plate using the [tool].",
  "You start unscrewing the metal plate with the [tool].")
 	..()
 
-/datum/surgery_step/brain/unscrew_skull/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/brain/skull/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='notice'>[user] unscrewed the plate using the \the [tool].</span>",
 	"<span class='notice'>You unscrewed the plate with \the [tool].</span>")
 	target.op_stage.skull = 1
 
-/datum/surgery_step/brain/unscrew_skull/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/brain/skull/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, cracking cortical stack with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, cracking cortical stack with \the [tool]!</span>" )
@@ -463,7 +463,7 @@
 //				MEND SKULL SURGERY STEP FOR VOX 				//
 //////////////////////////////////////////////////////////////////
 
-/datum/surgery_step/brain/screw_skull
+/datum/surgery_step/brain/mend
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100
 	)
@@ -471,22 +471,22 @@
 	min_duration = 20
 	max_duration = 40
 
-/datum/surgery_step/brain/screw_skull/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/brain/mend/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return ..() && target.op_stage.skull == 1
 
-/datum/surgery_step/brain/screw_skull/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/brain/mend/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts screwing the plate to the cortical stack using [tool].",
 	"You starts screwing the plate to the cortical stack using [tool].")
 	..()
 
-/datum/surgery_step/brain/screw_skull/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/brain/mend/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='notice'>[user] screw the plate to the cortical stack using [tool].</span>",
 	"<span class='notice'>You screw the plate to the cortical stack using [tool].</span>")
 	target.op_stage.skull = 0
 	target.op_stage.brain_cut = 0
 	target.op_stage.brain_fix = 0
 
-/datum/surgery_step/brain/screw_skull/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/brain/mend/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>" ,
 	"<span class='warning'>Your hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>")
