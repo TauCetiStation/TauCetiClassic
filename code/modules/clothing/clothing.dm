@@ -17,6 +17,85 @@
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
 
+	// Which slot should we use on species.sprite_sheets, as for the species specified above.
+	var/sprite_sheet_slot
+
+/obj/item/clothing/atom_init()
+	. = ..()
+	update_species_restrictions()
+
+/*
+	This is for the Vox among you.
+	Finds whether a sprite for this piece of clothing for a Vox exists, and if it does
+	allows Vox to wear this.
+*/
+var/global/list/specie_sprite_sheet_cache = list()
+var/global/list/icon_state_allowed_cache = list()
+
+/obj/item/clothing/proc/update_species_restrictions()
+	if(!species_restricted)
+		species_restricted = list("excluded", VOX, VOX_ARMALIS)
+
+	var/exclusive = ("excluded" in species_restricted)
+
+	for(var/specie in global.sprite_sheet_restricted)
+		if(exclusive)
+			species_restricted -= specie
+		else
+			species_restricted += specie
+
+	if(!sprite_sheet_slot)
+		if(!species_restricted.len || (species_restricted.len == 1 && exclusive))
+			species_restricted = null
+		return
+
+	for(var/specie in global.sprite_sheet_restricted)
+		var/allowed = FALSE
+		var/cache_key = "[specie]|[icon_state]"
+
+		if(global.icon_state_allowed_cache[cache_key])
+			allowed = TRUE
+		else
+			var/specie_cache = "[specie]"
+			var/list/icons_exist
+			if(global.specie_sprite_sheet_cache[specie_cache])
+				icons_exist = global.specie_sprite_sheet_cache[specie_cache]
+			else
+				var/datum/species/S = global.all_species[specie]
+				var/icon_path = S.sprite_sheets[sprite_sheet_slot]
+				// If you specified the mob as sprite_sheet_restricted, but
+				// want to use default sprite sheets for some "slots"
+				// then specify it.
+				if(icon_path)
+					var/list/sheet_icon_states = icon_states(icon_path)
+					icons_exist = sheet_icon_states
+					global.specie_sprite_sheet_cache[specie] = sheet_icon_states
+
+			if(icons_exist)
+				var/t_state
+				if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES || sprite_sheet_slot == SPRITE_SHEET_BELT)
+					t_state = item_state
+
+				if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM)
+					t_state = item_color
+
+				if(!t_state)
+					t_state = icon_state
+
+				if("[t_state]_s" in icons_exist)
+					allowed = TRUE
+
+		if(allowed)
+			if(exclusive)
+				species_restricted |= specie
+			else
+				species_restricted -= specie
+
+			global.icon_state_allowed_cache[cache_key] = TRUE
+
+	if(!species_restricted.len || (species_restricted.len == 1 && exclusive))
+		species_restricted = null
+
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M, slot)
 
@@ -51,7 +130,7 @@
 	//Set species_restricted list
 	switch(target_species)
 		if(HUMAN , SKRELL)	//humanoid bodytypes
-			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX)
+			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX, VOX_ARMALIS)
 		else
 			species_restricted = list(target_species)
 
@@ -71,9 +150,9 @@
 	//Set species_restricted list
 	switch(target_species)
 		if(SKRELL)
-			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX)
+			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX, VOX_ARMALIS)
 		if(HUMAN)
-			species_restricted = list("exclude" , SKRELL , UNATHI , TAJARAN , DIONA , VOX)
+			species_restricted = list("exclude" , SKRELL , UNATHI , TAJARAN , DIONA , VOX, VOX_ARMALIS)
 		else
 			species_restricted = list(target_species)
 
@@ -95,6 +174,8 @@
 	w_class = ITEM_SIZE_NORMAL
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_EARS
+
+	sprite_sheet_slot = SPRITE_SHEET_EARS
 
 /obj/item/clothing/ears/attack_hand(mob/user)
 	if (!user) return
@@ -165,7 +246,6 @@
 	var/vision_flags = 0
 	var/darkness_view = 0//Base human is 2
 	var/invisa_view = 0
-	sprite_sheets = list(VOX = 'icons/mob/species/vox/eyes.dmi')
 /*
 SEE_SELF  // can see self, no matter what
 SEE_MOBS  // can see all mobs, no matter what
@@ -192,8 +272,9 @@ BLIND     // can't see anything
 	slot_flags = SLOT_FLAGS_GLOVES
 	hitsound = list('sound/items/misc/glove-slap.ogg')
 	attack_verb = list("challenged")
-	species_restricted = list("exclude" , UNATHI , TAJARAN)
-	sprite_sheets = list(VOX = 'icons/mob/species/vox/gloves.dmi')
+	species_restricted = list("exclude" , UNATHI , TAJARAN, VOX, VOX_ARMALIS)
+
+	sprite_sheet_slot = SPRITE_SHEET_GLOVES
 
 /obj/item/clothing/gloves/emp_act(severity)
 	if(cell)
@@ -216,9 +297,9 @@ BLIND     // can't see anything
 	body_parts_covered = HEAD
 	slot_flags = SLOT_FLAGS_HEAD
 	w_class = ITEM_SIZE_SMALL
-	sprite_sheets = list(VOX = 'icons/mob/species/vox/head.dmi')
 	var/blockTracking = 0
 
+	sprite_sheet_slot = SPRITE_SHEET_HEAD
 
 //Mask
 /obj/item/clothing/mask
@@ -226,7 +307,8 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/masks.dmi'
 	slot_flags = SLOT_FLAGS_MASK
 	body_parts_covered = FACE|EYES
-	sprite_sheets = list(VOX = 'icons/mob/species/vox/masks.dmi')
+
+	sprite_sheet_slot = SPRITE_SHEET_MASK
 
 /obj/item/clothing/proc/speechModification(message)
 	return message
@@ -244,8 +326,9 @@ BLIND     // can't see anything
 
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
-	species_restricted = list("exclude" , UNATHI , TAJARAN)
-	sprite_sheets = list(VOX = 'icons/mob/species/vox/shoes.dmi')
+	species_restricted = list("exclude" , UNATHI , TAJARAN, VOX, VOX_ARMALIS)
+
+	sprite_sheet_slot = SPRITE_SHEET_FEET
 
 //Cutting shoes
 /obj/item/clothing/shoes/attackby(obj/item/weapon/W, mob/user)
@@ -290,7 +373,8 @@ BLIND     // can't see anything
 	var/blood_overlay_type = "suit"
 	siemens_coefficient = 0.9
 	w_class = ITEM_SIZE_NORMAL
-	sprite_sheets = list(VOX = 'icons/mob/species/vox/suit.dmi')
+
+	sprite_sheet_slot = SPRITE_SHEET_SUIT
 
 /obj/item/clothing/proc/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
 	return
@@ -312,8 +396,7 @@ BLIND     // can't see anything
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
-	species_restricted = list("exclude" , DIONA , VOX)
-	sprite_sheets = list(VOX = 'icons/mob/species/vox/head.dmi')
+	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -334,7 +417,7 @@ BLIND     // can't see anything
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
-	species_restricted = list("exclude" , DIONA , VOX)
+	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
 
 	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.
 
@@ -387,7 +470,8 @@ BLIND     // can't see anything
 	var/displays_id = 1
 	var/rolled_down = 0
 	var/basecolor
-	sprite_sheets = list(VOX = 'icons/mob/species/vox/uniform.dmi')
+
+	sprite_sheet_slot = SPRITE_SHEET_UNIFORM
 
 /obj/item/clothing/under/emp_act(severity)
 	..()

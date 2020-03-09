@@ -190,17 +190,20 @@
 	charge_tick = 0
 	if(!power_supply)
 		return FALSE
-	power_supply.give(100)
+	power_supply.give(130)
 	update_icon()
 	return TRUE
 
 /obj/item/weapon/gun/energy/laser/lasertag/bluetag
+	fire_delay = 5
 	icon_state = "bluetag"
+	item_state = "l_tag_blue"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
 	lasertag_color = "blue"
 
 /obj/item/weapon/gun/energy/laser/lasertag/redtag
+	fire_delay = 5
 	icon_state = "redtag"
+	item_state = "l_tag_red"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
 	lasertag_color = "red"
-
