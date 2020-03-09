@@ -20,7 +20,7 @@
 	/obj/item/weapon/hatchet = 75,
 	/obj/item/weapon/crowbar = 50
 	)
-	allowed_species = list("exclude", VOX)
+	allowed_species = list("exclude", VOX, IPC)
 	min_duration = 50
 	max_duration = 70
 
@@ -180,7 +180,7 @@
 	/obj/item/weapon/wirecutters = 75,
 	/obj/item/weapon/kitchen/utensil/fork = 50
 	)
-	allowed_species = list("exclude", VOX)
+	allowed_species = list("exclude", VOX, IPC)
 	min_duration = 80
 	max_duration = 100
 
@@ -209,7 +209,7 @@
 	/obj/item/weapon/FixOVein = 100,
 	/obj/item/stack/cable_coil = 75
 	)
-	allowed_species = list("exclude", VOX)
+	allowed_species = list("exclude", VOX, IPC)
 	min_duration = 90
 	max_duration = 110
 
