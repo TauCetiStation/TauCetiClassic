@@ -172,6 +172,8 @@ var/global/list/tophats_list = list()
 		return
 	if(!tophats_list.len)
 		return
+	if(user.incapacitated())
+		return
 	if(!user.mind || user.mind.special_role != "Wizard")
 		if(AM == user)
 			to_chat(user, "<span class='notice'>You begin your maddening descent into [src]...</span>")
@@ -388,6 +390,8 @@ var/global/list/tophats_list = list()
 	if(!isturf(AM.loc) && AM.loc != user)
 		return
 	if(AM.anchored)
+		return
+	if(user.incapacitated())
 		return
 	if(!user.mind || user.mind.special_role != "Wizard")
 		return

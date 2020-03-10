@@ -515,9 +515,6 @@
 		return 1
 	..()
 	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
-	sleep(100) // a delay of 10 seconds, because queueAlarm() also has a delay of 10 seconds.
-	playsound_local(src, 'sound/effects/triple_beep.ogg', VOL_EFFECTS_MASTER, 40, FALSE)
-
 
 /mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
 	var/has_alarm = ..()

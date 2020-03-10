@@ -84,7 +84,7 @@
 	item_state = "fingerless_black"
 	item_color="black"
 	clipped = TRUE
-	species_restricted = list("exclude","stunglove")
+	species_restricted = list("exclude", "stunglove", VOX, VOX_ARMALIS)
 
 /obj/item/clothing/gloves/fingerless/red
 	name = "red fingerless gloves"

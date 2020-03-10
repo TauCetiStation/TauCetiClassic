@@ -134,7 +134,7 @@
 	if(iscarbon(L))
 		gib = 0
 		if(L.stat == CONSCIOUS)
-			L.emote("scream",,, 1)
+			L.emote("scream")
 		add_blood(L)
 	if(!blood && !issilicon(L))
 		blood = 1
