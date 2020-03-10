@@ -79,7 +79,8 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                 {{:helper.link('Notekeeper', 'note', {'choice' : "1"}, null, 'fixedLeftWide')}}
                 {{:helper.link('Messenger', data.new_Message ? 'mail-closed' : 'mail-open', {'choice' : "2"}, null, 'fixedLeftWide')}}
                 {{:helper.link('Crew Manifest', 'contact', {'choice' : "41"}, null, 'fixedLeftWide')}}
-				{{:helper.link('News', data.new_News ? 'mail-closed' : 'mail-open', {'choice' : "6"}, null, 'fixedLeftWide')}}
+				<!-- {{:helper.link('News', data.new_News ? 'mail-closed' : 'mail-open', {'choice' : "6"}, null, 'fixedLeftWide')}} -->
+				{{:helper.link('Finance Management', 'note', {'choice' : "7"}, null, 'fixedLeftWide')}}
             </div>
         </div>
         <br>
@@ -308,12 +309,12 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 	    <div class="item">
             <center><table class="pmon"><tbody>
                 {{if data.cached.heads.length}}
-                    <tr><th colspan="3" class="command">Command</th></tr>
+                    <tr><th colspan="4" class="command">Command</th></tr>
                     {{for data.cached["heads"]}}
                         {{if value.rank == "Captain"}}
-                            <tr><td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
+                            <tr><td>{{:value.account}}</td><td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
                         {{else}}
-                            <tr><td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
+                            <tr><td>{{:value.account}}</td><td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
                         {{/if}}
                     {{/for}}
                 {{/if}}
@@ -943,7 +944,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                     {{/if}}
                 {{/for}}
                 
-    {{else data.mode == 6}}
+    <!-- {{else data.mode == 6}}
         <H2><span class="white">InstaNews ED 2.0.9</span></H2>
         
         <div class="item">
@@ -1006,8 +1007,41 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 					{{/if}}
 				</div>
             </div>
-        </div>
-        
+        </div> -->
+	
+	{{else data.mode == 7}} <!-- Money -->
+	<H2>Finance Management</H2>
+	<div class="item">
+		<div class="itemContent" style="width: 100%;"><span class="good"><b>Account balance:</b></span> <span class="average">{{:data.money}}$</span></div>
+		<div class="itemContent">{{:helper.link('Change account security level', 'gear', {'choice' : "71"}, null, null)}}</div>
+		<div class="itemContent">{{:helper.link('Make transfer', 'gear', {'choice' : "72"}, null, null)}}</div>
+		<div class="itemContent">{{:helper.link('View transaction log', 'gear', {'choice' : "73"}, null, null)}}</div>
+	</div>
+	{{else data.mode == 71}} <!-- Change account security level -->
+	<div class="item">
+		<div class="itemContent" style="width: 100%;">
+			No!!!
+		</div>
+	</div>
+	{{else data.mode == 72}} <!-- Make transfer -->
+	<div class="item">
+		<div class="itemContent" style="width: 100%;"><span class="good"><b>Account balance:</b></span> <span class="average">{{:data.money}}$</span></div>
+		<table>
+			<tr><td>Target account number:</td><td><span class="average">{{:data.target_account_number}}</span></td>
+			<td><div class="itemContent">{{:helper.link('change', null, {'choice' : "target_acc_number"}, null, null)}}</div></td></tr>
+			<tr><td>Funds to transfer:</td><td><span class="average">{{:data.funds_amount}}</span></td>
+			<td><div class="itemContent">{{:helper.link('change', null, {'choice' : "funds_amount"}, null, null)}}</div></td></tr>
+			<tr><td>Transaction purpose:</td><td><span class="average">{{:data.purpose}}</span></td>
+			<td><div class="itemContent">{{:helper.link('change', null, {'choice' : "purpose"}, null, null)}}</div></td></tr>
+		</table>
+		<div class="itemContent">{{:helper.link('Transfer funds', 'gear', {'choice' : "make_transfer"}, null, null)}}</div>
+	</div>
+	{{else data.mode == 73}} <!-- View transaction log -->
+	<div class="item">
+		<div class="itemContent" style="width: 100%;">
+			{{:data.trans_log}}
+		</div>
+	</div>
     {{/if}}
 {{else}}
     <div class="wholeScreen">

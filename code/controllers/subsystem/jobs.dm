@@ -589,6 +589,7 @@ var/datum/subsystem/job/SSjob
 		pda.owner = H.real_name
 		pda.ownjob = C.assignment
 		pda.ownrank = C.rank
+		pda.owner_account = get_account(C.associated_account_number)
 		pda.name = "PDA-[H.real_name] ([pda.ownjob])"
 
 	return 1

@@ -51,6 +51,11 @@
 	var/ownjob = null //related to above
 	var/ownrank = null // this one is rank, never alt title
 
+	var/datum/money_account/owner_account = null //??
+	var/target_account_number = 0 //??
+	var/funds_amount = 0 //??
+	var/transfer_purpose = "Funds transfer" //??
+
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
 /obj/item/device/pda/atom_init()
@@ -407,6 +412,11 @@
 	data["owner"] = owner					// Who is your daddy...
 	data["ownjob"] = ownjob					// ...and what does he do?
 
+	data["money"] = owner_account.money
+	data["target_account_number"] = target_account_number
+	data["funds_amount"] = funds_amount
+	data["purpose"] = transfer_purpose
+
 	data["mode"] = mode					// The current view
 	data["scanmode"] = scanmode				// Scanners
 	data["fon"] = fon					// Flashlight on?
@@ -496,7 +506,6 @@
 	if(mode==41)
 		data_core.get_manifest_json()
 
-
 	if(mode==3)
 		var/turf/T = get_turf(user.loc)
 		if(!isnull(T))
@@ -523,6 +532,31 @@
 					)
 		if(isnull(data["aircontents"]))
 			data["aircontents"] = list("reading" = 0)
+//	if(mode==72) //Make transfer
+
+
+	if(mode==73) //Transaction logs
+		var/trans_log = {"<b>Transaction logs</b><br>
+<table border=1 style='width:100%'>
+<tr>
+<td><b>Date</b></td>
+<td><b>Time</b></td>
+<td><b>Target</b></td>
+<td><b>Purpose</b></td>
+<td><b>Value</b></td>
+<td><b>Source terminal ID</b></td>
+</tr>"}
+		for(var/datum/transaction/T in owner_account.transaction_log)
+			trans_log += "<tr>"
+			trans_log += "<td>[T.date]</td>"
+			trans_log += "<td>[T.time]</td>"
+			trans_log += "<td>[T.target_name]</td>"
+			trans_log += "<td>[T.purpose]</td>"
+			trans_log += "<td>$[T.amount]</td>"
+			trans_log += "<td>[T.source_terminal]</td>"
+			trans_log += "</tr>"
+		trans_log += "</table>"
+		data["trans_log"] = trans_log
 
 	nanoUI = data
 	// update the ui if it exists, returns null if no ui is passed/found
@@ -644,7 +678,6 @@
 		if("41") //Manifest
 			mode = 41
 
-
 //MAIN FUNCTIONS===================================
 
 		if("Light")
@@ -763,6 +796,36 @@
 				ui.close()
 				return 0
 
+//Finance Management=============================================================
+
+		if("target_acc_number")
+			target_account_number = input(U, "Enter an account number", name, target_account_number) as num
+		if("funds_amount")
+			funds_amount = input(U, "Enter the amount of funds", name, funds_amount) as num
+		if("purpose")
+			transfer_purpose = sanitize(input(U, "Enter the purpose of the transaction", name, transfer_purpose) as text, 20)
+		if("make_transfer")
+			if(owner_account)
+				if(funds_amount <= 0)
+					alert("That is not a valid amount.")
+				else if(funds_amount <= owner_account.money)
+					if(charge_to_account(target_account_number, owner_account.owner_name, transfer_purpose, name, funds_amount))
+						to_chat(usr, "[bicon(src)]<span class='info'>Funds transfer successful.</span>")
+						owner_account.money -= funds_amount
+
+						//create an entry in the account transaction log
+						var/datum/transaction/T = new()
+						T.target_name = "Account #[target_account_number]"
+						T.purpose = transfer_purpose
+						T.source_terminal = name
+						T.date = current_date_string
+						T.time = worldtime2text()
+						T.amount = "([funds_amount])"
+						owner_account.transaction_log.Add(T)
+					else
+						to_chat(usr, "[bicon(src)]<span class='warning'>Funds transfer failed.</span>")
+				else
+					to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough funds to do that!</span>")
 
 //SYNDICATE FUNCTIONS===================================
 
@@ -1166,6 +1229,7 @@
 			owner = idcard.registered_name
 			ownjob = idcard.assignment
 			ownrank = idcard.rank
+			owner_account = get_account(idcard.associated_account_number)
 			name = "PDA-[owner] ([ownjob])"
 			to_chat(user, "<span class='notice'>Card scanned.</span>")
 		else
