@@ -411,7 +411,7 @@
 		SPRITE_SHEET_UNIFORM = 'icons/mob/species/vox/uniform.dmi',
 		SPRITE_SHEET_SUIT = 'icons/mob/species/vox/suit.dmi',
 		SPRITE_SHEET_BELT = 'icons/mob/belt.dmi',
-		SPRITE_SHEET_HEAD = 'icons/mob/species/vox/head.dmi',
+		SPRITE_SHEET_HEAD = 'icons/mob/species/vox/helmet.dmi',
 		SPRITE_SHEET_BACK = 'icons/mob/back.dmi',
 		SPRITE_SHEET_MASK = 'icons/mob/species/vox/masks.dmi',
 		SPRITE_SHEET_EARS = 'icons/mob/ears.dmi',
