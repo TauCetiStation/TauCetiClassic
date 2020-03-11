@@ -18232,6 +18232,10 @@
 	icon_state = "warningline"
 	},
 /area/station/maintenance/incinerator)
+"aFI" = (
+/obj/structure/reagent_dispensers/cleaner,
+/turf/simulated/wall,
+/area/station/medical/cryo)
 "aFK" = (
 /obj/structure/sink{
 	dir = 8;
@@ -45296,6 +45300,9 @@
 	req_access = list(26)
 	},
 /obj/structure/window/reinforced,
+/obj/structure/reagent_dispensers/cleaner{
+	step_y = 31
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -117959,7 +117966,7 @@ bRO
 bkV
 aHf
 aTf
-bkV
+aFI
 bJo
 bJo
 bJo
