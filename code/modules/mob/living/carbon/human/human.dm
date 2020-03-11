@@ -1976,7 +1976,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/new_h_style = input(src, "Choose your IPC screen style:", "Character Preference")  as null|anything in valid_hairstyles
 	if(new_h_style)
 		h_style = new_h_style
-	else if(h_style == "IPC off screen")
+	if(h_style == "IPC off screen")
 		random_ipc_monitor(BP.ipc_head)
 
 	update_hair()
@@ -1988,6 +1988,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
 	if(!BP || (BP.is_stump))
+		set_light(0)
 		return
 
 	BP.screen_toggle = !BP.screen_toggle

@@ -722,6 +722,11 @@
 	if(BP && BP.screen_toggle)
 		H.set_light(0)
 
+/datum/species/machine/handle_death(mob/living/carbon/human/H)
+	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
+	if(BP && BP.screen_toggle)
+		H.IPC_toggle_screen()
+
 /datum/species/abductor
 	name = ABDUCTOR
 	darksight = 3
