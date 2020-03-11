@@ -708,6 +708,20 @@
 	min_age = 1
 	max_age = 125
 
+/datum/species/machine/on_gain(mob/living/carbon/human/H)
+	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
+	H.verbs += /mob/living/carbon/human/proc/IPC_toggle_screen
+	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
+	if(BP)
+		H.set_light(BP.screen_brightness)
+
+/datum/species/machine/on_loose(mob/living/carbon/human/H)
+	H.verbs -= /mob/living/carbon/human/proc/IPC_change_screen
+	H.verbs -= /mob/living/carbon/human/proc/IPC_toggle_screen
+	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
+	if(BP && BP.screen_toggle)
+		H.set_light(0)
+
 /datum/species/abductor
 	name = ABDUCTOR
 	darksight = 3
