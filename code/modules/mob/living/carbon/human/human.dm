@@ -1957,7 +1957,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return
 
 	if(!BP.screen_toggle)
-		IPC_toggle_screen(1)
+		IPC_toggle_screen(TRUE)
 
 	var/new_hair = input(src, "Choose your IPC screen colour:", "Character Preference") as color|null
 	if(new_hair)
@@ -1982,7 +1982,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	update_hair()
 
-/mob/living/carbon/human/proc/IPC_toggle_screen(var/forced = 0)
+/mob/living/carbon/human/proc/IPC_toggle_screen(forced = FALSE)
 	set category = "IC"
 	set name = "Toggle IPC Screen"
 	set desc = "Allow toggle monitor"
@@ -1995,19 +1995,18 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return
 
 	BP.screen_toggle = !BP.screen_toggle
-	switch(BP.screen_toggle)
-		if(TRUE)
-			if(forced)
-				IPC_change_screen()
-			set_light(BP.screen_brightness)
-		if(FALSE)
-			r_hair = 15
-			g_hair = 15
-			b_hair = 15
-			set_light(0)
-			if(BP.ipc_head == "Default")
-				h_style = "IPC off screen"
-			update_hair()
+	if(TRUE)
+		if(forced)
+			IPC_change_screen()
+		set_light(BP.screen_brightness)
+	else
+		r_hair = 15
+		g_hair = 15
+		b_hair = 15
+		set_light(0)
+		if(BP.ipc_head == "Default")
+			h_style = "IPC off screen"
+		update_hair()
 
 /mob/living/carbon/human/has_brain()
 	if(organs_by_name[O_BRAIN])
