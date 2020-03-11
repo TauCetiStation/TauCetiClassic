@@ -42041,6 +42041,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/structure/reagent_dispensers/cleaner{
+	step_x = 31
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
