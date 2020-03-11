@@ -315,7 +315,7 @@
 	name = "Space Cleaner Dispenser"
 	desc = "A dispenser of cleaner."
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "acidtank"
+	icon_state = "cleanertank"
 	amount_per_transfer_from_this = 10
 	anchored = 1
 
