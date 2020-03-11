@@ -96,6 +96,118 @@
 		to_chat(user, "<span class='notice'>You hit the floor with the [src].</span>")
 		power.action(user, 1)
 
+/obj/item/weapon/nullrod/staff
+	name = "staff"
+	desc = "staff"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "talking_staff"
+	item_state = "talking_staff"
+	w_class = ITEM_SIZE_NORMAL
+
+	var/god_name = "Christ"
+	var/searching = 0
+	var/askDelay = 10 * 60 * 1
+	var/mob/living/carbon/brain/brainmob = null
+	req_access = list(access_chapel_office)
+	var/locked = FALSE
+	var/ping_cd = FALSE//attack_ghost cooldown
+
+
+/obj/item/weapon/nullrod/staff/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
+	if(user.mind.assigned_role == "Chaplain" && istype(W, /obj/item/weapon/storage/bible))
+		if(brainmob && !brainmob.key && searching == 0)
+			//Start the process of searching for a new user.
+			to_chat(user, "<span class='notice'>You attempt to wake the spirit of the staff...</span>")
+			icon_state = "posibrain-searching" //TODO
+			src.searching = 1
+			var/obj/item/weapon/storage/bible/B = W
+			src.god_name = B.deity_name
+			src.request_player()
+			addtimer(CALLBACK(src, .proc/reset_search), 600)
+
+/obj/item/weapon/nullrod/staff/proc/request_player()
+	for(var/mob/dead/observer/O in player_list)
+		if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
+			continue
+		if(jobban_isbanned(O, ROLE_PAI))
+			continue
+		if(role_available_in_minutes(O, ROLE_PAI))
+			continue
+		if(O.client)
+			var/client/C = O.client
+			if(!C.prefs.ignore_question.Find("chstaff") && (ROLE_PAI in C.prefs.be_role))
+				INVOKE_ASYNC(src, .proc/question, C)
+
+/obj/item/weapon/nullrod/staff/proc/question(client/C)
+	if(!C)	return
+	var/response = alert(C, "Someone is requesting a your soul in mysteory staff?", "Staff request", "No", "Oh Yes", "Never for this round")
+	if(!C || brainmob.key || searching == 0)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
+	if(response == "Oh Yes")
+		transfer_personality(C.mob)
+	else if (response == "Never for this round")
+		C.prefs.ignore_question += "chstaff"
+
+/obj/item/weapon/nullrod/staff/proc/transfer_personality(mob/candidate)
+	src.searching = 0
+	src.brainmob.mind = candidate.mind
+	//src.brainmob.key = candidate.key
+	src.brainmob.ckey = candidate.ckey
+	src.name = "staff of [src.god_name]"
+
+	to_chat(src.brainmob, "<b>You are a positronic brain, brought into existence on [station_name()].</b>") //TODO
+	to_chat(src.brainmob, "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>")
+	to_chat(src.brainmob, "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>")
+	to_chat(src.brainmob, "<b>Use say :b to speak to other artificial intelligences.</b>")
+	src.brainmob.mind.assigned_role = "Chaplain`s staff"
+
+	visible_message("<span class='notice'>\The [src] chimes quietly.</span>")
+	icon_state = "posibrain-occupied" //TODO
+
+/obj/item/weapon/nullrod/staff/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
+
+	if(src.brainmob && src.brainmob.key) return
+
+	src.searching = 0
+	icon_state = "talking_staff"
+
+	visible_message("<span class='notice'>\The [src] buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>") //TODO
+
+/obj/item/weapon/nullrod/staff/examine(mob/user)
+	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]</span>\n" //TODO
+
+	if(src.brainmob && src.brainmob.key)
+		switch(src.brainmob.stat)
+			if(CONSCIOUS)
+				if(!src.brainmob.client)
+					msg += "<span class='warning'>It appears to be in stand-by mode.</span>\n" //afk //TODO
+			if(UNCONSCIOUS)
+				msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
+			if(DEAD)
+				msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
+	else
+		msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
+	msg += "<span class='info'>*---------*</span>"
+	to_chat(user, msg)
+
+/obj/item/weapon/nullrod/staff/attack_ghost(mob/dead/observer/O)
+	if(!ping_cd)
+		ping_cd = 1
+		spawn(50)
+			ping_cd = 0
+		audible_message("<span class='notice'>\The [src] pings softly.</span>", deaf_message = "\The [src] indicator blinks.") //TODO
+
+/obj/item/weapon/nullrod/staff/atom_init()
+	brainmob = new(src)
+	brainmob.name = src.god_name
+	brainmob.real_name = brainmob.name
+	brainmob.loc = src
+	brainmob.container = src
+	brainmob.universal_speak = 1
+	brainmob.stat = CONSCIOUS
+	brainmob.reset_view()
+	dead_mob_list -= brainmob
+	. = ..()
+
 /obj/item/weapon/sord/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()

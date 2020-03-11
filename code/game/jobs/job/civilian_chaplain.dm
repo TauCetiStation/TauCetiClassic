@@ -56,6 +56,14 @@
 			//	H.setBrainLoss(100) // starts off retarded as fuck
 			if("science")
 				B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
+			if("technologism")
+				B.name = "The Polyhedron"
+			if("clown")
+				B.name = pick("The Holy Joke Book", "Hymns to the Honkmother", "Prank in the name of Honkmother")
+			if("buddhism")
+				B.name = "The Sutras"
+			if("athiest")
+				B.name = pick("Just book", "Recipes", "Space Laws", "Proof of the absence of God", "Bible: Small Edition", "How to: enlarge penis")
 			else
 				B.name = "The Holy Book of [new_religion]"
 		feedback_set_details("religion_name","[new_religion]")
