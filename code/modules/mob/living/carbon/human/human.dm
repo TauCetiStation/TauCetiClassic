@@ -1995,7 +1995,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return
 
 	BP.screen_toggle = !BP.screen_toggle
-	if(TRUE)
+	if(BP.screen_toggle)
 		if(forced)
 			IPC_change_screen()
 		set_light(BP.screen_brightness)
