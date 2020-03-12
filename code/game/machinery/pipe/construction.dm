@@ -343,12 +343,6 @@ Buildable meters
 		pipe_type = new_pipe_type
 		update()
 
-/obj/item/pipe/CtrlShiftClick(mob/user)
-	..()
-	var/turf/T = get_turf(src)
-	if (T && user && user.TurfAdjacent(T) && !user.incapacitated())
-		mirror()
-
 // returns all pipe's endpoints
 
 /obj/item/pipe/proc/get_pipe_dir()
@@ -422,10 +416,14 @@ Buildable meters
 	return rotate()
 
 /obj/item/pipe/attackby(obj/item/weapon/W, mob/user)
-	..()
+	. = ..()
 	//*
+	if (isscrewdriver(W))
+		mirror()
+		return
+
 	if (!iswrench(W))
-		return ..()
+		return
 	if (!isturf(loc))
 		return TRUE
 	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_SUPPLY_STRAIGHT, PIPE_SCRUBBERS_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE, PIPE_SVALVE, PIPE_FUEL_STRAIGHT))
@@ -813,10 +811,10 @@ Buildable meters
 	w_class = ITEM_SIZE_LARGE
 
 /obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user)
-	..()
+	. = ..()
 
 	if (!iswrench(W))
-		return ..()
+		return
 	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
 		to_chat(user, "<span class='warning'>You need to fasten it to a pipe</span>")
 		return TRUE
