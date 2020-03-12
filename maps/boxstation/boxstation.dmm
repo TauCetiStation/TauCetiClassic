@@ -18238,10 +18238,6 @@
 	icon_state = "bot"
 	},
 /area/station/rnd/storage)
-"aFJ" = (
-/obj/structure/reagent_dispensers/cleaner,
-/turf/simulated/wall,
-/area/station/medical/cryo)
 "aFK" = (
 /obj/structure/sink{
 	dir = 8;
@@ -25037,6 +25033,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_y = -32
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -42050,9 +42049,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/structure/reagent_dispensers/cleaner{
-	step_x = 31
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -45312,9 +45308,6 @@
 	req_access = list(26)
 	},
 /obj/structure/window/reinforced,
-/obj/structure/reagent_dispensers/cleaner{
-	step_y = 31
-	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -46612,6 +46605,9 @@
 "bNK" = (
 /obj/structure/stool/bed/chair/janitorialcart,
 /obj/machinery/light/small,
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_y = -32
+	},
 /turf/simulated/floor,
 /area/station/civilian/janitor)
 "bNL" = (
@@ -117978,7 +117974,7 @@ bRO
 bkV
 aHf
 aTf
-aFJ
+bkV
 bJo
 bJo
 bJo
