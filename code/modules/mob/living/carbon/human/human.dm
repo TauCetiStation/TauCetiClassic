@@ -2046,7 +2046,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		blinded = TRUE
 
 /mob/living/carbon/human/is_facehuggable()
-	return species.flags[FACEHUGGABLE] && !stat && !(locate(/obj/item/alien_embryo) in contents)
+	return species.flags[FACEHUGGABLE] && stat != DEAD && !(locate(/obj/item/alien_embryo) in contents)
 
 /mob/living/carbon/human/verb/remove_bandages()
 	set category = "IC"
