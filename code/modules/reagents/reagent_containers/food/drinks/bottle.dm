@@ -12,8 +12,8 @@
 	var/is_glass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
 	var/stop_spin_bottle = FALSE //Gotta stop the rotation.
-	var/is_molotov = 0
 	var/active = 0
+
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/atom_init()
 	. = ..()
@@ -196,10 +196,10 @@
 		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 		if(reagents && reagents.total_volume)
 			src.reagents.reaction(loc, TOUCH)
-		if(active && is_molotov) //for molotov
+			playsound (src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
+		if(active) //for molotov
 			var/turf/location = get_turf(src)
 			location.hotspot_expose(1000, 500)
-			playsound (src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 	else
 		return
 	qdel(src)
@@ -224,7 +224,8 @@
 	amount_per_transfer_from_this = 10
 	active = 0
 	var/activate_sound = 'sound/items/matchstick_light.ogg'
-	is_molotov = 1
+
+
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/weapon/W, mob/living/user)
 	. = ..()
@@ -250,40 +251,51 @@
 	if(!is_W_lit)
 		return
 	if(is_W_lit == TRUE)
-		if(reagents && reagents.total_volume) //Don't ignite if Molotov empty
-			user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
+		if(reagents && reagents.total_volume && reagents.total_volume && reagents.has_reagent("fuel", 20)) //Don't ignite if Molotov empty
 			active = 1
-			update_icon()
-			addtimer(CALLBACK(src, .proc/detonate), 100)
-			if(user.hand && loc == user)
-				user.update_inv_r_hand()
-			else
-				user.update_inv_l_hand()
-			add_fingerprint(user)
-			var/turf/T = get_turf(src)
-			if(T)
-				log_game("[key_name(usr)] has light up a Molotov Cocktail for burning at [T.loc] [COORD(T)].")
+		else
+			to_chat(user, "<span class='notice'>There's no fuel here. It doesn't burn..</span>")
+			return
+	else
+		return
+	if(active == 1)
+		user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
+		update_icon()
+		addtimer(CALLBACK(src, .proc/detonate), 100)
+		if(user.hand && loc == user)
+			user.update_inv_r_hand()
+		else
+			user.update_inv_l_hand()
+		add_fingerprint(user)
+		var/turf/T = get_turf(src)
+		if(T)
+			log_game("[key_name(usr)] has light up a Molotov Cocktail for burning at [T.loc] [COORD(T)].")
 			if(iscarbon(user) && istype(user.get_active_hand(), src))
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
-			else
-				user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W], but he didn’t succeed!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W], but he didn’t succeed!!</span>")
-			return
 		else
+			user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W], but he didn’t succeed!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W], but he didn’t succeed!!</span>")
 			return
+	else
+		return
+
+
+
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/after_throw(datum/callback/callback)
 	..()
+	message_admins("Player throw [src]  @ location [src.x], [src.y], [src.z] [ADMIN_JMP(src)]")
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/proc/detonate()
-	if(active && is_molotov && reagents && reagents.total_volume)
+	if(active && reagents && reagents.total_volume)
 		src.reagents.reaction(loc, TOUCH)
 		explosion(loc, 0, 0, 1)
 		var/turf/location = get_turf(src)
 		location.hotspot_expose(1000, 500)
 		playsound (src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
+		visible_message("<span class='warning'>You feel a bright flash of fire and a loud Bang!</span>", "<span class='warning'>[bicon(src)] A bright flash and a loud Bang deafened you. The glass of the bottle failed and Molotov exploded, spilling the contents!</span>")
 	else
 		return
 
@@ -575,6 +587,3 @@
 
 obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/atom_init()
 	. = ..()
-	var/datum/reagents/R = new/datum/reagents(100)
-	reagents = R
-	R.my_atom = src
