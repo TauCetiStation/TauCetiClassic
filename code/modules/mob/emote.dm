@@ -1,7 +1,6 @@
-// All mobs should have custom emote, really..
+// All mobs should have custom emote, really. TODO: Put all emotions into one proc. Copy paste is bad, it is everywere in different emote procs
 /mob/proc/custom_emote(m_type = SHOWMSG_VISUAL, message = null)
-
-	if(stat || !use_me && usr == src)
+	if(stat || !me_verb_allowed && usr == src)
 		to_chat(usr, "You are unable to emote.")
 		return
 
@@ -20,12 +19,12 @@
 
 	if (message)
 		log_emote("[key_name(src)] : [message]")
- 		
+
 		if(findtext(message," snores.") == 0) // Hearing gasp and such every five seconds is not good emotes were not global for a reason.
 			for(var/mob/M in player_list)
 				if(isnewplayer(M))
 					continue
-				if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src, null)))
+				if((M.stat == DEAD) && (M.client.prefs.chat_ghostsight in list(CHAT_GHOSTSIGHT_ALL, CHAT_GHOSTSIGHT_ALLMANUAL)) && !(M in viewers(src, null)))
 					to_chat(M, message)
 
 		var/list/to_check

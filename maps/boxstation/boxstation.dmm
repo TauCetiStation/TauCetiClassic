@@ -18233,6 +18233,12 @@
 	},
 /area/station/maintenance/incinerator)
 "aFI" = (
+/obj/machinery/portable_atmospherics/canister/hydrogen,
+/turf/simulated/floor{
+	icon_state = "bot"
+	},
+/area/station/rnd/storage)
+"aFJ" = (
 /obj/structure/reagent_dispensers/cleaner,
 /turf/simulated/wall,
 /area/station/medical/cryo)
@@ -33102,6 +33108,9 @@
 	},
 /area/station/civilian/locker)
 "bim" = (
+/obj/structure/extinguisher_cabinet/highrisk{
+	pixel_x = 30
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "vault"
@@ -117669,7 +117678,7 @@ aHW
 aHW
 aLd
 aMt
-aNL
+aFI
 aPa
 aQp
 aRq
@@ -117969,7 +117978,7 @@ bRO
 bkV
 aHf
 aTf
-aFI
+aFJ
 bJo
 bJo
 bJo

@@ -216,7 +216,7 @@
 	item_state = "zhan_scarf"
 	desc = "White headscarf"
 	body_parts_covered = 0
-	species_restricted = list(UNATHI , TAJARAN , HUMAN , DIONA , IPC)
+	species_restricted = list(UNATHI, TAJARAN, HUMAN, DIONA, IPC)
 
 /obj/item/clothing/head/skrell_headwear
 	name = "skrell yellow headwear"

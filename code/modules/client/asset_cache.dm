@@ -248,6 +248,10 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"nano/templates/"
 	)
 
+	var/assets = list(
+		"error_handler.js" = 'code/modules/error_handler_js/error_handler.js',
+	)
+
 /datum/asset/nanoui/register()
 	// Crawl the directories to find files.
 	for (var/path in common_dirs)
@@ -263,6 +267,9 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 			if(copytext(filename, length(filename)) != "/") // Ignore directories.
 				if(fexists(path + filename))
 					register_asset(filename, fcopy_rsc(path + filename))
+	
+	for(var/asset_name in assets)
+		register_asset(asset_name, assets[asset_name])
 
 /datum/asset/nanoui/send(client, uncommon)
 	if(!islist(uncommon))
@@ -270,6 +277,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 	send_asset_list(client, uncommon)
 	send_asset_list(client, common)
+	send_asset_list(client, assets)
 
 /*Spritesheet implementation - coalesces various icons into a single .png file
  and uses CSS to select icons out of that file - saves on transferring some
@@ -375,5 +383,16 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		var/obj/product = new item
 		var/icon/I = getFlatIcon(product)
 		var/imgid = replacetext(replacetext("[item]", "/obj/item/", ""), "/", "-")
+		insert_icon_in_list(imgid, I)
+	return ..()
+
+/datum/asset/spritesheet/autolathe
+	name = "autolathe"
+
+/datum/asset/spritesheet/autolathe/register()
+	var/list/recipes = global.autolathe_recipes + global.autolathe_recipes_hidden
+	for (var/obj/item in recipes)
+		var/icon/I = icon(item.icon, item.icon_state) //for some reason, the getFlatIcon(item) function does not create images of objects such as /obj/item/ammo_casing
+		var/imgid = replacetext(replacetext("[item.type]", "/obj/item/", ""), "/", "-")
 		insert_icon_in_list(imgid, I)
 	return ..()
