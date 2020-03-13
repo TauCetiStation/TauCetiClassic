@@ -80,42 +80,56 @@
 		to_chat(user, "<span class='notice'>You hit the floor with the [src].</span>")
 		power.action(user, 1)
 
+/obj/item/weapon/nullrod/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
+	if(user.mind.assigned_role == "Chaplain" && istype(W, /obj/item/weapon/storage/bible) && !istype(src, /obj/item/weapon/nullrod/staff))
+		var/obj/item/weapon/storage/bible/B = W
+		var/obj/item/weapon/nullrod/staff/staff = new /obj/item/weapon/nullrod/staff(loc)
+		if(istype(B.loc, /mob/living))
+			var/mob/living/M = B.loc
+			M.drop_from_inventory(staff)
+		staff.god_name = B.deity_name
+		qdel(src)
+
 /obj/item/weapon/nullrod/staff
-	name = "staff"
-	desc = "staff"
+	name = "Divine staff"
+	desc = "On thin gold strings hang 3 stones from a mysterious material. Only one chaplain remembers how to use it."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "talking_staff"
 	item_state = "talking_staff"
 	w_class = ITEM_SIZE_NORMAL
-	var/god_name = "Christ"
-	var/mob/living/simple_animal/shade/brainmob = null
 	req_access = list(access_chapel_office)
 
+	var/god_name = "Space-Jesus"
+	var/mob/living/simple_animal/shade/god/brainmob = null
+	var/soul_inside = FALSE //you need to then remove the afk-god
 	var/searching = FALSE
-	var/askDelay = 10 * 60 * 1
-	var/locked = FALSE
-	var/ping_cd = FALSE//attack_ghost cooldown
-
+	var/ping_cd = FALSE //attack_ghost cooldown
 
 /obj/item/weapon/nullrod/staff/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
-	if(user.mind.assigned_role == "Chaplain" && istype(W, /obj/item/weapon/storage/bible))
-		if(brainmob && !brainmob.key && searching == FALSE)
+	if(istype(W, /obj/item/device/soulstone)) //mb, the only way to pull out god
+		var/obj/item/device/soulstone/S = W
+		if(S.imprinted == "empty")
+			S.imprinted = brainmob.name
+			S.transfer_soul("SHADE", src.brainmob, user)
+
+/obj/item/weapon/nullrod/staff/attack_self(mob/living/carbon/human/user)
+	if(user.mind.assigned_role == "Chaplain")
+		if(brainmob && !brainmob.ckey && !searching && !soul_inside)
 			//Start the process of searching for a new user.
 			to_chat(user, "<span class='notice'>You attempt to wake the spirit of the staff...</span>")
-			icon_state = "posibrain-searching" //TODO
-			src.searching = TRUE
-			var/obj/item/weapon/storage/bible/B = W
-			src.god_name = B.deity_name
-			src.request_player()
+			icon_state = "talking_staffanim"
+			light_power = 5
+			searching = TRUE
+			request_player()
 			addtimer(CALLBACK(src, .proc/reset_search), 600)
+		else if(brainmob && !searching && soul_inside && (brainmob.stat == DEAD || brainmob.stat == UNCONSCIOUS))
+			reset_search() //kick afk-god from staff
 
 /obj/item/weapon/nullrod/staff/proc/request_player()
 	for(var/mob/dead/observer/O in player_list)
 		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 			continue
-		if(jobban_isbanned(O, ROLE_PAI))
-			continue
-		if(role_available_in_minutes(O, ROLE_PAI))
+		if(jobban_isbanned(O, ROLE_PAI) && role_available_in_minutes(O, ROLE_PAI))
 			continue
 		if(O.client)
 			var/client/C = O.client
@@ -124,80 +138,91 @@
 
 /obj/item/weapon/nullrod/staff/proc/question(client/C)
 	if(!C)	return
-	var/response = alert(C, "Someone is requesting a your soul in mysteory staff?", "Staff request", "No", "Yees", "Never for this round")
-	if(!C || brainmob.key || searching == FALSE)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
-	if(response == "Yees")
+	var/response = alert(C, "Someone is requesting a your soul in divine staff?", "Staff request", "No", "Yeeesss", "Never for this round")
+	if(!C || brainmob.ckey || !searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
+	if(response == "Yeeesss")
 		transfer_personality(C.mob)
 	else if (response == "Never for this round")
 		C.prefs.ignore_question += "chstaff"
 
 /obj/item/weapon/nullrod/staff/proc/transfer_personality(mob/candidate)
 	searching = FALSE
+
+	to_chat(brainmob, "<span class='userdanger'>You are no longer our god!</span>")
+	qdel(brainmob) //create new god, otherwise the old mob could not be woken up
+
+	brainmob = new(src)
+	brainmob.mutations.Add(XRAY) //its the god
+	brainmob.status_flags |= GODMODE
+	brainmob.pass_flags = PASSTABLE | PASSMOB | PASSGLASS | PASSGRILLE
+	brainmob.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
+	brainmob.loc = src
+
 	brainmob.mind = candidate.mind
 	brainmob.ckey = candidate.ckey
-	brainmob.name = god_name
-	brainmob.real_name = god_name
-	brainmob.stat = CONSCIOUS
-	brainmob.mutations.Add(XRAY)
+	brainmob.name = "[god_name] [pick("II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX")]"
+	brainmob.real_name = name
 	brainmob.mind.assigned_role = "Chaplain`s staff"
 	candidate.cancel_camera()
 	candidate.reset_view()
 
-	name = "staff of [god_name]"
-	to_chat(brainmob, "<b>You are a positronic brain, brought into existence on [station_name()].</b>") //TODO
-	to_chat(brainmob, "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>")
-	to_chat(brainmob, "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>")
-	to_chat(brainmob, "<b>Use say :b to speak to other artificial intelligences.</b>")
-	visible_message("<span class='notice'>\The [src] chimes quietly.</span>")
-
-	icon_state = "posibrain-occupied" //TODO
+	name = "Staff of [god_name]"
+	desc = "Stones sometimes twitch. Pray for mercy on [god_name]."
+	to_chat(brainmob, "<b>You are a God, brought into existence on [station_name()].</b>")
+	to_chat(brainmob, "<b>The priest has called you, you can command them, because you are his God.</b>")
+	to_chat(brainmob, "<b>All that is required of you is a creative image of the imprisoned god in the staff.</b>")
+	to_chat(brainmob, "<b>You can be both evil Satan thirsting and ordering sacrifices, and a good Jesus who wants more slaves.</b>")
+ 
+	icon_state = "talking_staffsoul"
+	soul_inside = TRUE
 
 /obj/item/weapon/nullrod/staff/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
-	if(src.brainmob && src.brainmob.key) return
+	if(brainmob && brainmob.ckey) return
 
-	src.searching = FALSE
-
+	searching = FALSE
+	soul_inside = FALSE
 	icon_state = "talking_staff"
-	visible_message("<span class='notice'>\The [src] buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>") //TODO
+	visible_message("<span class='notice'>The stones of \the [src] stopped glowing, why didn't you please God?</span>")
 
 /obj/item/weapon/nullrod/staff/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]</span>\n" //TODO
-
-	if(src.brainmob && src.brainmob.key)
-		switch(src.brainmob.stat)
+	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]</span>\n"
+	if(brainmob && brainmob.ckey)
+		switch(brainmob.stat)
 			if(CONSCIOUS)
-				if(!src.brainmob.client)
-					msg += "<span class='warning'>It appears to be in stand-by mode.</span>\n" //afk //TODO
+				if(!brainmob.client)
+					msg += "<span class='warning'>Divine presence is weakened.</span>\n" //afk
 			if(UNCONSCIOUS)
-				msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
+				msg += "<span class='warning'>Divine presence is not tangible.</span>\n"
 			if(DEAD)
-				msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
+				msg += "<span class='deadsay'>Divine presence faded.</span>\n"
 	else
-		msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
-
+		msg += ""
 	msg += "<span class='info'>*---------*</span>"
 	to_chat(user, msg)
 
 /obj/item/weapon/nullrod/staff/attack_ghost(mob/dead/observer/O)
 	//DEBUGG
-	icon_state = "posibrain-searching" //TODO
-	src.searching = TRUE
-	src.request_player()
+	if(brainmob && !brainmob.ckey && !searching && !soul_inside)
+		//Start the process of searching for a new user.
+		to_chat(O, "<span class='notice'>You attempt to wake the spirit of the staff...</span>")
+		icon_state = "talking_staffanim"
+		light_power = 5
+		src.searching = TRUE
+		src.request_player()
+		addtimer(CALLBACK(src, .proc/reset_search), 600)
+	else if((brainmob.stat == DEAD || brainmob.stat == UNCONSCIOUS) && !searching && soul_inside)
+		reset_search()
 
 	if(!ping_cd)
 		ping_cd = TRUE
 		spawn(50)
 			ping_cd = TRUE
-		audible_message("<span class='notice'>\The [src] pings softly.</span>", deaf_message = "\The [src] indicator blinks.") //TODO
+		audible_message("<span class='notice'>\The [src] stones blinked.</span>", deaf_message = "\The [src] stones blinked.") //TODO
 
 /obj/item/weapon/nullrod/staff/atom_init()
 	. = ..()
 	brainmob = new(src)
-	brainmob.desc = "Haaallelujah, Haaaallelujah, you have come!"
-	brainmob.status_flags |= GODMODE
 	brainmob.loc = src
-	brainmob.melee_damage_lower = 0
-	brainmob.melee_damage_upper = 0
 	dead_mob_list -= brainmob
 
 /obj/item/weapon/nullrod/staff/Destroy()
