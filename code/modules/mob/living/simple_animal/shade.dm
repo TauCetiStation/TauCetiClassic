@@ -59,6 +59,8 @@
 	name = "Unbelievable God"
 	real_name = "Unbelievable God"
 	desc = "Strange looking hologram."
+	icon_state = "shade_god"
+	icon_living = "shade_god"
 	stat = CONSCIOUS
 	speak_emote = list("hisses", "bless")
 	maxHealth = 5000
