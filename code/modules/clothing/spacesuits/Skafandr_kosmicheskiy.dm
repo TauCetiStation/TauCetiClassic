@@ -29,3 +29,19 @@
 /obj/item/clothing/suit/space/sk/process()
 	if(istype(get_turf(src), /turf/space) && !istype(loc.loc, /obj/mecha))
 		create_breaches(BRUTE,2.3)
+
+/obj/item/clothing/head/helmet/space/sk/ervos
+	name = "ERVOS helmet"
+	desc = "Emergency Rescue VOid Suit helmet"
+	icon_state = "ervos"
+	item_state = "ervos"
+
+/obj/item/clothing/suit/space/sk/ervos
+	name = "ERVOS"
+	desc = "Emergency Rescue VOid Suit"
+	icon_state = "ervos"
+	item_state = "ervos"
+
+/obj/item/clothing/suit/space/sk/ervos/atom_init()
+	. = ..()
+	flags |= ONESIZEFITSALL

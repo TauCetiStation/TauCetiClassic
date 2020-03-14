@@ -78,7 +78,9 @@
 	sprite_sheets = list(
 		SPRITE_SHEET_HELD = 'icons/mob/path',
 		SPRITE_SHEET_UNIFORM = 'icons/mob/path',
+		SPRITE_SHEET_UNIFORM_FAT = 'icons/mob/path',
 		SPRITE_SHEET_SUIT = 'icons/mob/path',
+		SPRITE_SHEET_SUIT_FAT = 'icons/mob/path',
 		SPRITE_SHEET_BELT = 'icons/mob/path'
 		SPRITE_SHEET_HEAD = 'icons/mob/path',
 		SPRITE_SHEET_BACK = 'icons/mob/path',
@@ -230,6 +232,10 @@
 	min_age = 25
 	max_age = 85
 
+	sprite_sheets = list(
+		SPRITE_SHEET_SUIT_FAT = 'icons/mob/suit_fat.dmi'
+	)
+
 /datum/species/unathi
 	name = UNATHI
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
@@ -268,6 +274,11 @@
 
 	min_age = 25
 	max_age = 85
+
+	sprite_sheets = list(
+		SPRITE_SHEET_SUIT = 'icons/mob/species/unathi/suit.dmi',
+		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/unathi/suit_fat.dmi'
+	)
 
 /datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	..()
@@ -324,6 +335,11 @@
 
 	min_age = 25
 	max_age = 85
+
+	sprite_sheets = list(
+		SPRITE_SHEET_SUIT = 'icons/mob/species/tajaran/suit.dmi',
+		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/tajaran/suit_fat.dmi'
+	)
 
 /datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	..()
