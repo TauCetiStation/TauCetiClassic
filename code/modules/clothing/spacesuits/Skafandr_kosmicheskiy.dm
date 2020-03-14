@@ -34,7 +34,7 @@
 	name = "ERVOS helmet"
 	desc = "Emergency Rescue VOid Suit helmet"
 	icon_state = "ervos"
-	item_state = "ervos"
+	item_state = "ervos_head"
 
 /obj/item/clothing/suit/space/sk/ervos
 	name = "ERVOS"
