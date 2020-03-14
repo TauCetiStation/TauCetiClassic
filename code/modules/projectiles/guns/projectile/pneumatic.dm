@@ -148,90 +148,43 @@
 	QDEL_NULL(tank_container)
 	return ..()
 
-//Constructable pneumatic cannon.
+// *(PNEUMATOIC GUN craft in recipes.dm)*
 
-/obj/item/weapon/cannonframe
+/obj/item/weapon/cannonframe1
 	name = "pneumatic cannon frame"
-	desc = "A half-finished pneumatic cannon."
-	icon_state = "pneumatic0"
+	desc = "To finish you need: attach the pipe; weld it all; add 5 sheets of metal; weld it all; add tank transfer valve; weld it all."
+	icon_state = "pneumaticframe1"
 	item_state = "pneumatic"
 
-	var/buildstate = 0
+/obj/item/weapon/cannonframe2
+	name = "pneumatic cannon frame"
+	desc = "To finish you need: weld it all; add 5 sheets of metal; weld it all; add tank transfer valve; weld it all."
+	icon_state = "pneumaticframe2"
+	item_state = "pneumatic"
 
-/obj/item/weapon/cannonframe/update_icon()
-	icon_state = "pneumatic[buildstate]"
+/obj/item/weapon/cannonframe3
+	name = "pneumatic cannon frame"
+	desc = "To finish you need: add 5 sheets of metal; weld it all; add tank transfer valve; weld it all."
+	icon_state = "pneumaticframe3"
+	item_state = "pneumatic"
 
-/obj/item/weapon/cannonframe/examine(mob/user)
-	..()
-	switch(buildstate)
-		if(0)
-			to_chat(user, "To finish you need: attach the pipe; weld it all; add 5 sheets of metal; weld it all; add tank transfer valve; weld it all.")
-		if(1)
-			to_chat(user, "To finish you need: weld it all; add 5 sheets of metal; weld it all; add tank transfer valve; weld it all.")
-		if(2)
-			to_chat(user, "To finish you need: add 5 sheets of metal; weld it all; add tank transfer valve; weld it all.")
-		if(3)
-			to_chat(user, "To finish you need: weld it all; add tank transfer valve; weld it all.")
-		if(4)
-			to_chat(user, "To finish you need: add tank transfer valve; weld it all.")
-		if(5)
-			to_chat(user, "To finish you need: weld it all.")
+/obj/item/weapon/cannonframe4
+	name = "pneumatic cannon frame"
+	desc = "To finish you need: weld it all; add tank transfer valve; weld it all."
+	icon_state = "pneumaticframe4"
+	item_state = "pneumatic"
 
-/obj/item/weapon/cannonframe/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/pipe))
-		if(buildstate == 0)
-			user.drop_item()
-			qdel(W)
-			to_chat(user, "<span class='notice'>You secure the piping inside the frame.</span>")
-			buildstate++
-			update_icon()
-			return
-	else if(istype(W,/obj/item/stack/sheet/metal))
-		if(buildstate == 2)
-			var/obj/item/stack/sheet/metal/M = W
-			if(M.use(5))
-				to_chat(user, "<span class='notice'>You assemble a chassis around the cannon frame.</span>")
-				buildstate++
-				update_icon()
-			else
-				to_chat(user, "<span class='warning'>Need a 5 metal sheets!</span>")
-			return
-	else if(istype(W,/obj/item/device/transfer_valve))
-		if(buildstate == 4)
-			user.drop_item()
-			qdel(W)
-			to_chat(user, "<span class='notice'>You install the transfer valve and connect it to the piping.</span>")
-			buildstate++
-			update_icon()
-			return
-	else if(iswelder(W))
-		if(buildstate == 1)
-			var/obj/item/weapon/weldingtool/T = W
-			if(T.use(0,user))
-				if(!src || !T.isOn()) return
-				playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
-				to_chat(user, "<span class='notice'>You weld the pipe into place.</span>")
-				buildstate++
-				update_icon()
-		if(buildstate == 3)
-			var/obj/item/weapon/weldingtool/T = W
-			if(T.use(0,user))
-				if(!src || !T.isOn()) return
-				playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
-				to_chat(user, "<span class='notice'>You weld the metal chassis together.</span>")
-				buildstate++
-				update_icon()
-		if(buildstate == 5)
-			var/obj/item/weapon/weldingtool/T = W
-			if(T.use(0,user))
-				if(!src || !T.isOn()) return
-				playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
-				to_chat(user, "<span class='notice'>You weld the valve into place.</span>")
-				new /obj/item/weapon/storage/pneumatic(get_turf(src))
-				qdel(src)
-		return
-	else
-		..()
+/obj/item/weapon/cannonframe5
+	name = "pneumatic cannon frame"
+	desc = "To finish you need: add tank transfer valve; weld it all."
+	icon_state = "pneumaticframe5"
+	item_state = "pneumatic"
+
+/obj/item/weapon/cannonframe6
+	name = "pneumatic cannon frame"
+	desc = "To finish you need: weld it all."
+	icon_state = "pneumaticframe6"
+	item_state = "pneumatic"
 
 #undef PNEUMATIC_SPEED_CAP
 #undef PNEUMATIC_SPEED_DIVISOR

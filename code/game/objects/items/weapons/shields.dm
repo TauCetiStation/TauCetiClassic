@@ -174,74 +174,31 @@
 			cooldown = world.time
 
 
-// *BUCKLER CRAFT (in recipes.dm to)*
+// *(BUCKLER craft in recipes.dm)*
 
-/obj/item/weapon/bucklerframe
-	name = "buclker frame"
-	desc = "A half-finished shield."
-	icon_state = "bucklerframe0"
-	var/buildstate = 0
+/obj/item/weapon/bucklerframe1
+	name = "buckler frame"
+	desc = "To finish you need: cut with wirecutters; bound with cable restraints; attach 4 plasteel; weld it all."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "bucklerframe1"
 
-/obj/item/weapon/bucklerframe/update_icon()
-	icon_state = "bucklerframe[buildstate]"
+/obj/item/weapon/bucklerframe2
+	name = "buckler frame"
+	desc = "To finish you need: bound with cable restraints; attach 4 plasteel; weld it all."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "bucklerframe2"
 
-/obj/item/weapon/bucklerframe/examine(mob/user)
-	..()
-	switch(buildstate)
-		if(0)
-			to_chat(user, "To finish you need: cut with wirecutters; bound with cable restraints; attach 4 plasteel; weld it all.")
-		if(1)
-			to_chat(user, "To finish you need: bound with cable restraints; attach 4 plasteel; weld it all.")
-		if(2)
-			to_chat(user, "To finish you need: attach 4 plasteel; weld it all.")
-		if(3)
-			to_chat(user, "To finish you need: weld it all.")
+/obj/item/weapon/bucklerframe3
+	name = "buckler frame"
+	desc = "To finish you need: attach 4 plasteel; weld it all."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "bucklerframe3"
 
-/obj/item/weapon/bucklerframe/attackby(obj/item/W, mob/user)
-	if(isrobot(user))
-		return
-
-	else if(istype(W, /obj/item/weapon/wirecutters) && !user.is_busy())
-		if(!user.is_busy() && buildstate == 0)
-			if(do_after(user, 30, target = src))
-				buildstate++
-				update_icon()
-				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER, 50)
-
-	else if(istype(W, /obj/item/weapon/handcuffs/cable) && buildstate == 1 && !user.is_busy())
-		playsound(src, 'sound/weapons/cablecuff.ogg', VOL_EFFECTS_MASTER, 50)
-		if(do_after(user, 30, target = src))
-			to_chat(user, "<span class='notice'>You bound boards with cable.</span>")
-			buildstate++
-			update_icon()
-			qdel(W)
-
-	if(istype(W, /obj/item/stack/sheet/plasteel) && buildstate == 2)
-		var/amount_to_use
-		var/fail_msg
-		var/success_msg
-		amount_to_use = 4
-		success_msg = "<span class='notice'>You attach plasteel to the frame.</span>"
-		fail_msg = "<span class='warning'>Need 4 sheets of plasteel!</span>"
-		if(amount_to_use)
-			if(W.use(amount_to_use))
-				to_chat(user, success_msg)
-				buildstate++
-				update_icon()
-			else
-				to_chat(user, fail_msg)
-
-	else if(!user.is_busy() && iswelder(W))
-		if(buildstate == 3)
-			var/obj/item/weapon/weldingtool/T = W
-			if(T.use(0, user))
-				if(!T.isOn())
-					return
-				if(do_after(user, 40, target = src))
-					to_chat(user, "<span class='notice'>You successfully made a shield!</span>")
-					playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER, 50)
-					new /obj/item/weapon/shield/buckler(get_turf(src))
-					qdel(src)
+/obj/item/weapon/bucklerframe4
+	name = "buckler frame"
+	desc = "To finish you need: weld it all."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "bucklerframe4"
 
 /*
 /obj/item/weapon/cloaking_device
