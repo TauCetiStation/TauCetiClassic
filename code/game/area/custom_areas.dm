@@ -61,3 +61,9 @@
 /area/custom/tophat
 	name = "Tophat"
 	icon_state = "tophat-room"
+
+//Vox base
+/area/custom/vox_base
+	name = "Vox base"
+	icon_state = "vox_base"
+	requires_power = 0
