@@ -44724,8 +44724,8 @@
 /turf/simulated/wall,
 /area/station/maintenance/engineering)
 "bJb" = (
-/turf/simulated/wall,
-/area/station/storage/tech)
+/turf/simulated/wall/r_wall,
+/area/station/hallway/primary/aft)
 "bJc" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -107027,15 +107027,15 @@ bra
 bOg
 bxX
 bYc
-aMR
-bJb
+aNU
+bLW
 bLW
 lEb
 bIy
 lRb
 bLW
-bJb
-bJb
+bLW
+bLW
 bVo
 bVo
 bVo
@@ -107284,7 +107284,7 @@ bra
 kOb
 aKz
 bEd
-aMR
+aNU
 bKl
 bLY
 bNz
@@ -107292,7 +107292,7 @@ bLZ
 bQp
 bRy
 bSI
-bJb
+bLW
 bVp
 bWB
 bYf
@@ -107541,7 +107541,7 @@ bMr
 bEK
 aKx
 bfA
-aMR
+aNU
 bKm
 bLZ
 bCI
@@ -107549,7 +107549,7 @@ bDB
 bEE
 bLZ
 bLZ
-bJb
+bLW
 bVq
 bVp
 bVp
@@ -107798,7 +107798,7 @@ bra
 cxb
 aKx
 bfA
-bJb
+bLW
 bKn
 bLZ
 bNA
@@ -107806,7 +107806,7 @@ bDA
 bQq
 bLZ
 bSJ
-bJb
+bLW
 bVr
 bVp
 bVq
@@ -108055,7 +108055,7 @@ byw
 cxe
 aKx
 cxP
-bJb
+bLW
 bKo
 bLZ
 bNB
@@ -108063,7 +108063,7 @@ bDG
 bQr
 bLZ
 bSK
-bJb
+bLW
 bVs
 bVr
 bVp
@@ -108312,15 +108312,15 @@ byw
 cxd
 aKx
 bOS
-bJb
+bLW
 bKp
 bLZ
 bNC
 bDA
 bQs
 bFV
-bJb
-bJb
+bLW
+bLW
 bVr
 bVr
 bVr
@@ -108569,7 +108569,7 @@ byw
 cxe
 aKx
 bfA
-bJb
+bLW
 bKq
 bBK
 bQf
@@ -108577,7 +108577,7 @@ bDI
 bQt
 bFX
 bSL
-bJb
+bLW
 bVt
 bVt
 bYg
@@ -108826,15 +108826,15 @@ byw
 aET
 aKx
 ljb
-aMR
-bKr
-bKr
-bKr
+aNU
+bJb
+bJb
+bJb
 bIA
-bJb
-bJb
-bJb
-bJb
+bLW
+bLW
+bLW
+bLW
 bVo
 bVo
 bVo
