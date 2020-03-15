@@ -180,8 +180,6 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /world/proc/PreShutdown(end_state)
 
-	log_game("GUARD: DEBUG: [geoip_exports] geoip exports for round")
-
 	if(dbcon.IsConnected())
 		end_state = end_state ? end_state : "undefined"
 		var/DBQuery/query_round_shutdown = dbcon.NewQuery("UPDATE erro_round SET shutdown_datetime = Now(), end_state = '[sanitize_sql(end_state)]' WHERE id = [round_id]")

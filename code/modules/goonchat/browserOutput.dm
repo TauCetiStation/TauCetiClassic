@@ -140,7 +140,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 					return
 
 				row["ckey"] = ckey(row["ckey"])
-				row["compid"] = text2num(row["compid"])
+				row["compid"] = num2text(text2num(row["compid"]))
 				row["ip"] = sanitize_ip(row["ip"])
 
 				if(!(row["ckey"] && row["compid"] && row["ip"]))

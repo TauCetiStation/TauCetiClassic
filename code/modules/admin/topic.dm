@@ -984,7 +984,7 @@
 		return 0 //we didn't do anything!
 
 	else if(href_list["guard"])
-		if(!check_rights(R_LOG))
+		if(!(check_rights(R_LOG) && check_rights(R_BAN)))
 			return
 		
 		var/mob/M = locate(href_list["guard"])

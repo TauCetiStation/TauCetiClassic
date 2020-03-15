@@ -232,6 +232,8 @@ ANTIGRIEF_ALARM_LEVEL 1
 #GUARD_EMAIL contact@taucetistation.org
 #GUARD_ENABLED
 #GUARD_AUTOBAN_TRESHHOLD 2
+#GUARD_AUTOBAN_REASON We think you are a bad guy and block you because of this.
+#GUARD_AUTOBAN_STICKY
 # ISO 3166-1 codes for trusted
 #GUARD_WHITELISTED_COUNTRY_CODES RU,UA,BY,KZ
 
