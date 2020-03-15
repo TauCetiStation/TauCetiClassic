@@ -205,6 +205,7 @@
 		if(active) //for molotov
 			var/turf/location = get_turf(src)
 			location.hotspot_expose(1000, 500)
+			message_admins("Player throw Molotov  @ location [src.x], [src.y], [src.z] [ADMIN_JMP(src)]")
 	else
 		return
 	qdel(src)
@@ -264,7 +265,7 @@
 	else
 		return
 	if(active)
-		user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
+		user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the Molotov Cocktail with \the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
 		update_icon()
 		addtimer(CALLBACK(src, .proc/detonate), 100)
 		if(user.hand && loc == user)
@@ -279,18 +280,10 @@
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
 		else
-			user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W], but he didn’t succeed!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W], but he didn’t succeed!!</span>")
+			user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the Molotov Cocktail with \the [W], but he didn’t succeed!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W], but he didn’t succeed!!</span>")
 			return
 	else
 		return
-
-
-
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/after_throw(datum/callback/callback)
-	..()
-	message_admins("Player throw [src]  @ location [src.x], [src.y], [src.z] [ADMIN_JMP(src)]")
-	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/proc/detonate()
 	if(active && reagents && reagents.total_volume)
