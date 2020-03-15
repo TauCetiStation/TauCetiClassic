@@ -1,4 +1,4 @@
-/datum/guard/
+/datum/guard
 	var/client/holder
 	var/total_alert_weight = 0
 	var/bridge_reported = FALSE
