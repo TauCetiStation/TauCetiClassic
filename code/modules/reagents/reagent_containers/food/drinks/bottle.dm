@@ -256,7 +256,7 @@
 			is_W_lit = TRUE
 	if(!is_W_lit)
 		return
-	if(is_W_lit == TRUE)
+	if(is_W_lit)
 		if(reagents && reagents.total_volume && reagents.total_volume && reagents.has_reagent("fuel", 20)) //Don't ignite if Molotov empty
 			active = TRUE
 		else
@@ -265,9 +265,9 @@
 	else
 		return
 	if(active)
-		user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the Molotov Cocktail with \the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
+		user.visible_message("<span class='warning'>[bicon(src)] [user] lights up the Molotov Cocktail with the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
 		update_icon()
-		addtimer(CALLBACK(src, .proc/detonate), 100)
+		addtimer(CALLBACK(src, .proc/detonate), 10 SECONDS)
 		if(user.hand && loc == user)
 			user.update_inv_r_hand()
 		else
@@ -301,7 +301,7 @@
 	..()
 	if (active)
 		item_state = "beer_molotov_act"
-		overlays += image('icons/obj/makeshift.dmi' ,"molotov_active")
+		add_overlay(image('icons/obj/makeshift.dmi' ,"molotov_active"))
 		playsound(src, activate_sound, VOL_EFFECTS_MASTER)
 		set_light(2)
 		START_PROCESSING(SSobj, src)
