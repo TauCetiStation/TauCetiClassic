@@ -39,15 +39,9 @@
 	damage = 0
 
 /obj/item/organ/internal/proc/is_bruised()
-	// If not robotic, and owner has stabyzol in bloodstream, we are considered not bruised.
-	if(!robotic && owner.reagents.has_reagent("stabyzol"))
-		return FALSE
 	return damage >= min_bruised_damage
 
 /obj/item/organ/internal/proc/is_broken()
-	// If not robotic, and owner has stabyzol in bloodstream, we are considered not bruised.
-	if(!robotic && owner.reagents.has_reagent("stabyzol"))
-		return FALSE
 	return damage >= min_broken_damage
 
 
@@ -167,10 +161,10 @@
 
 	if(is_bruised())
 		if(prob(2))
-			owner.emote("gasp", 2, "coughs up blood!", TRUE)
+			owner.emote("cough", message = "coughs up blood!")
 			owner.drip(10)
 		if(prob(4))
-			owner.emote("gasp", 2, "gasps for air!")
+			owner.emote("gasp", message = "gasps for air!")
 			owner.losebreath += 15
 
 /obj/item/organ/internal/lungs/diona/process()

@@ -667,7 +667,6 @@ var/list/cult_runes = list()
 		if(istype(closet.loc, /obj/structure/bigDelivery))
 			var/obj/structure/bigDelivery/D = closet.loc
 			closet.forceMove(get_turf(D.loc))
-			D.wrapped = null
 			qdel(D)
 		if(closet.welded || closet.locked || !closet.opened)
 			closet.welded = FALSE
@@ -754,7 +753,7 @@ var/list/cult_runes = list()
 			victims[target] = 80
 		else if(ismonkey(target))
 			victims[target] = 40
-		else if(isalien(target))
+		else if(isxeno(target))
 			victims[target] = 75
 		else if(isIAN(target))
 			victims[target] = 70
@@ -920,7 +919,7 @@ var/list/cult_runes = list()
 			C.disabilities |= NEARSIGHTED
 			if(prob(10))
 				C.sdisabilities |= BLIND
-		C.show_message("<span class='userdanger'>Suddenly you see red flash that blinds you.</span>", 3)
+		C.show_message("<span class='userdanger'>Suddenly you see red flash that blinds you.</span>", SHOWMSG_VISUAL)
 	qdel(holder)
 
 /datum/cult/bloodboil
@@ -969,7 +968,7 @@ var/list/cult_runes = list()
 			C.stuttering = 1
 			C.Weaken(stun_modifier)
 			C.Stun(stun_modifier)
-			C.show_message("<span class='userdanger'>The rune explodes in a bright flash.</span>", 3)
+			C.show_message("<span class='userdanger'>The rune explodes in a bright flash.</span>", SHOWMSG_VISUAL)
 	qdel(holder)
 
 /datum/cult/stun/talisman_reaction(mob/living/carbon/user, mob/living/affected)

@@ -25,6 +25,7 @@
 	//Mining resource generation stuff.
 	var/has_resources
 	var/list/resources
+	var/slowdown = 0
 
 /turf/atom_init()
 	if(initialized)
@@ -115,6 +116,25 @@
 				return 0
 	return 1 //Nothing found to block so return success!
 
+/turf/proc/is_mob_placeable(mob/M)
+	if(density)
+		return FALSE
+	for(var/atom/movable/on_turf in contents)
+		if(on_turf == M)
+			continue
+		if(istype(on_turf, /mob) && !on_turf.anchored)
+			continue
+		if(on_turf.density)
+			if(istype(on_turf, /obj/structure/window))
+				continue
+			if(istype(on_turf, /obj/machinery/door))
+				continue
+			if(istype(on_turf, /obj/structure/table))
+				continue
+			if(istype(on_turf, /obj/structure/grille))
+				continue
+			return FALSE
+	return TRUE
 
 /turf/Entered(atom/movable/AM)
 	if(!istype(AM, /atom/movable))
@@ -307,6 +327,7 @@
 	if(old_flooded)
 		flooded = 1
 		update_icon()
+	SSdemo.mark_turf(W)
 
 	return W
 
@@ -422,7 +443,7 @@
 	ChangeTurf(/turf/space)
 	return(2)
 
-/turf/hitby(atom/movable/AM)
+/turf/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	if(isliving(AM))
 		var/mob/living/L = AM
 		L.turf_collision(src)

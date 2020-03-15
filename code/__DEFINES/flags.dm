@@ -39,7 +39,9 @@
 #define	NOREACT  4096    //Reagents dont' react inside this container.
 
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
-#define HOLOGRAM_2   1
+#define HOLOGRAM_2         (1<<0)
+/// atom queued to SSoverlay
+#define OVERLAY_QUEUED_2   (1<<1)
 
 //Species flags.
 #define NO_BLOOD           "no_blood"
@@ -49,6 +51,7 @@
 #define NO_EMBED           "no_embed"
 #define HAS_SKIN_TONE      "has_skin_tone"
 #define HAS_SKIN_COLOR     "has_skin_color"
+#define HAS_HAIR_COLOR     "has_hair_color"
 #define HAS_LIPS           "has_lips"
 #define HAS_UNDERWEAR      "has_underwear"
 #define HAS_TAIL           "has_tail"
@@ -65,6 +68,8 @@
 #define NO_FINGERPRINT     "no_fingerprint"
 #define NO_MINORCUTS	   "no_minorcuts"
 #define NO_BLOOD_TRAILS    "no_blood_trails"
+#define FACEHUGGABLE       "facehuggable"
+#define SPRITE_SHEET_RESTRICTION "sprite_sheet_restriction" // If specie has this flag, all clothing which icon_state is in the sprite sheet will be awearable.
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.

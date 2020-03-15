@@ -179,10 +179,10 @@
 	if(result == 1)
 		poof()
 
-/obj/item/weapon/dice/ghost/d20/throw_at(mob/living/target, range, speed, mob/living/thrower)
+/obj/item/weapon/dice/ghost/d20/throw_at(mob/living/target, range, speed, mob/living/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	diceroll()
 	..()
-	if(result == 20)
+	if(result == 20 && istype(target) && istype(thrower))
 		if(thrower.a_intent == "help")
 			to_chat(target, "<span class='notice'>You suddenly feel sligly better because of [thrower]'s luck.</span>")
 			target.adjustBruteLoss(-1)

@@ -146,7 +146,8 @@
 		user = null
 	if(!src.requiresID())
 		user = null
-	user.SetNextMove(CLICK_CD_INTERACT)
+	if(user)
+		user.SetNextMove(CLICK_CD_INTERACT)
 	if(src.allowed(user) || emergency)
 		if(src.density)
 			open()
@@ -318,10 +319,10 @@
 /obj/machinery/door/proc/do_open()
 	playsound(src, door_open_sound, VOL_EFFECTS_MASTER)
 	do_animate("opening")
-	sleep(3)
+	sleep(2)
 	set_opacity(FALSE)
 	density = FALSE
-	sleep(9)
+	sleep(4)
 	layer = base_layer
 	explosion_resistance = 0
 	update_icon()
@@ -330,9 +331,9 @@
 /obj/machinery/door/proc/do_close()
 	playsound(src, door_close_sound, VOL_EFFECTS_MASTER)
 	do_animate("closing")
-	sleep(3)
+	sleep(2)
 	density = TRUE
-	sleep(9)
+	sleep(4)
 	if(visible && !glass)
 		set_opacity(TRUE)
 	layer = base_layer + DOOR_CLOSED_MOD

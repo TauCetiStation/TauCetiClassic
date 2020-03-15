@@ -46,6 +46,14 @@ Class Variables:
    manual (num)
       Currently unused.
 
+    min_operational_temperature (num)
+        The minimal value returned by get_current_temperature() if the machine is currently
+        "running".
+
+    max_operational_temperature (num)
+        The maximum value returned by get_current_temperature() if the machine is currently
+        "running".
+
 Class Procs:
    New()                     'game/machinery/machine.dm'
 
@@ -124,20 +132,34 @@ Class Procs:
 	var/datum/radio_frequency/radio_connection
 	var/radio_filter_out
 	var/radio_filter_in
+	var/speed_process = FALSE  // Process as fast as possible?
+
+	var/min_operational_temperature = 5
+	var/max_operational_temperature = 10
 
 /obj/machinery/atom_init()
 	. = ..()
 	machines += src
-	START_PROCESSING(SSmachine, src)
+
+	if (speed_process)
+		START_PROCESSING(SSfastprocess, src)
+	else
+		START_PROCESSING(SSmachine, src)
+
 	power_change()
 	update_power_use()
 
 /obj/machinery/Destroy()
 	if(frequency)
 		set_frequency(null)
+
 	set_power_use(NO_POWER_USE)
 	machines -= src
-	STOP_PROCESSING(SSmachine, src)
+
+	if (speed_process)
+		STOP_PROCESSING(SSfastprocess, src)
+	else
+		STOP_PROCESSING(SSmachine, src)
 
 	dropContents()
 	return ..()
@@ -264,6 +286,15 @@ Class Procs:
 /obj/machinery/proc/is_operational_topic()
 	return !((stat & (NOPOWER|BROKEN|MAINT|EMPED)) || (panel_open && !interact_open))
 
+/obj/machinery/get_current_temperature()
+	if(!is_operational_topic())
+		return 0
+
+	if(emagged)
+		return max_operational_temperature += rand(10, 20)
+
+	return rand(min_operational_temperature, max_operational_temperature)
+
 /obj/machinery/Topic(href, href_list)
 	..()
 
@@ -333,7 +364,7 @@ Class Procs:
 		return 1
 	if(!is_interactable())
 		return 1
-	if (!(ishuman(user) || issilicon(user) || ismonkey(user) || isalienqueen(user) || IsAdminGhost(user)))
+	if (!(ishuman(user) || issilicon(user) || ismonkey(user) || isxenoqueen(user) || IsAdminGhost(user)))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
 	if (!can_mob_interact(user))
@@ -430,7 +461,7 @@ Class Procs:
 			var/P
 			if(W.works_from_distance)
 				to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
-				for(var/var/obj/item/C in component_parts)
+				for(var/obj/item/C in component_parts)
 					to_chat(user, "<span class='notice'>    [C.name]</span>")
 			for(var/obj/item/weapon/stock_parts/A in component_parts)
 				for(var/D in CB.req_components)
@@ -451,7 +482,7 @@ Class Procs:
 			RefreshParts()
 		else
 			to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
-			for(var/var/obj/item/C in component_parts)
+			for(var/obj/item/C in component_parts)
 				to_chat(user, "<span class='notice'>    [C.name]</span>")
 		if(shouldplaysound)
 			W.play_rped_sound()
@@ -472,8 +503,7 @@ Class Procs:
 	return
 
 /obj/machinery/proc/state(msg)
-	for(var/mob/O in hearers(src, null))
-		O.show_message("[bicon(src)] <span class = 'notice'>[msg]</span>", 2)
+	audible_message("[bicon(src)] <span class = 'notice'>[msg]</span>")
 
 /obj/machinery/proc/ping(text=null)
 	if (!text)

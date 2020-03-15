@@ -403,7 +403,7 @@
 		AM.pixel_y += 9
 		if(AM.layer < layer)
 			AM.layer = layer + 0.1
-		overlays += AM
+		add_overlay(AM)
 
 	load= AM
 	mode = 0
@@ -443,7 +443,7 @@
 
 	mode = 0
 
-	overlays.Cut()
+	cut_overlays()
 
 	if(buckled_mob)
 		unbuckle_mob()
@@ -837,7 +837,7 @@
 
 
 /obj/machinery/bot/mulebot/explode()
-	src.visible_message("<span class='danger'>[src] blows apart!</span>", 1)
+	src.visible_message("<span class='danger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)

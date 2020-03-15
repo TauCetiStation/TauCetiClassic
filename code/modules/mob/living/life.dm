@@ -64,9 +64,9 @@
 
 	if(stat != DEAD)
 		if(blinded)
-			throw_alert("blind")
+			throw_alert("blind", /obj/screen/alert/blind)
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-		else if(is_vision_obstructed())
+		else if(is_vision_obstructed() && !(XRAY in mutations))
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else
 			clear_alert("blind")
@@ -88,7 +88,7 @@
 					clear_fullscreen("high")
 
 		if(machine)
-			if (!( machine.check_eye(src) ))
+			if (!(machine.check_eye(src)))
 				reset_view(null)
 		else
 			if(!client.adminobs)

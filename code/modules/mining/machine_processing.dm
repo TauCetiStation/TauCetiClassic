@@ -161,6 +161,7 @@
 	density = 1
 	anchored = 1
 	light_range = 3
+	speed_process = TRUE
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
 	var/obj/machinery/mineral/processing_unit_console/console = null
@@ -276,5 +277,3 @@
 				new /obj/item/weapon/ore/slag(output.loc)
 		else
 			continue
-
-	console.updateUsrDialog()

@@ -77,12 +77,10 @@
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 
 				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
-					for(var/mob/O in viewers(world.view, user))
-						O.show_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", 1)
+					user.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>")
 				else
-					for(var/mob/O in viewers(world.view, user))
-						O.show_message("<span class='rose'>[user] cannot force anymore of [src] down [M]'s throat.</span>", 1)
-						return 0
+					user.visible_message("<span class='rose'>[user] cannot force anymore of [src] down [M]'s throat.</span>")
+					return
 
 				if(!do_mob(user, M)) return
 
@@ -90,8 +88,7 @@
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
 				msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])", user)
 
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message("<span class='rose'>[user] feeds [M] [src].</span>", 1)
+				user.visible_message("<span class='rose'>[user] feeds [M] [src].</span>")
 
 			else
 				to_chat(user, "This creature does not seem to have a mouth!</span>")
@@ -133,6 +130,10 @@
 			to_chat(user, "<span class='info'>\The [src] was bitten multiple times!</span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
+
+	if (user.is_busy(src))
+		return
+
 	if(istype(W,/obj/item/weapon/storage))
 		..() // -> item/attackby()
 	if(istype(W,/obj/item/weapon/kitchen/utensil))
@@ -149,10 +150,10 @@
 		)
 
 		bitecount++
-		U.overlays.Cut()
+		U.cut_overlays()
 		var/image/I = new(U.icon, "loadedfood")
 		I.color = filling_color
-		U.overlays += I
+		U.add_overlay(I)
 
 		var/obj/item/weapon/reagent_containers/food/snacks/collected = new type
 		collected.loc = U
@@ -207,23 +208,25 @@
 		to_chat(user, "<span class='rose'>You cannot slice [src] here! You need a table or at least a tray to do it.</span>")
 		return 1
 	var/slices_lost = 0
-	if (!inaccurate)
-		user.visible_message( \
-			"<span class='info'>[user] slices \the [src]!</span>", \
-			"<span class='notice'>You slice \the [src]!</span>" \
-		)
+	if (inaccurate)
+		if (istype(W, /obj/item/weapon/melee/energy/sword))
+			playsound(user, 'sound/items/esword_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		else
+			playsound(user, 'sound/items/shard_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else
-		user.visible_message( \
-			"<span class='info'>[user] inaccurately slices \the [src] with [W]!</span>", \
-			"<span class='notice'>You inaccurately slice \the [src] with your [W]!</span>" \
-		)
+		playsound(src, pick(SOUNDIN_KNIFE_CUTTING), VOL_EFFECTS_MASTER, null, FALSE)
 		slices_lost = rand(1,min(1,round(slices_num/2)))
-	var/reagents_per_slice = reagents.total_volume/slices_num
-	for(var/i=1 to (slices_num-slices_lost))
-		var/obj/slice = new slice_path (src.loc)
-		reagents.trans_to(slice,reagents_per_slice)
-	qdel(src)
-	return
+	if (do_after(user, 35, target = src))
+		if (!inaccurate)
+			user.visible_message("<span class='info'>[user] slices \the [src]!</span>", "<span class='notice'>You slice \the [src]!</span>")
+		else
+			user.visible_message("<span class='info'>[user] inaccurately slices \the [src] with [W]!</span>", "<span class='notice'>You inaccurately slice \the [src] with your [W]!</span>")
+		var/reagents_per_slice = reagents.total_volume/slices_num
+		for(var/i=1 to (slices_num-slices_lost))
+			var/obj/slice = new slice_path (src.loc)
+			reagents.trans_to(slice,reagents_per_slice)
+		qdel(src)
+		return
 
 /obj/item/weapon/reagent_containers/food/snacks/Destroy()
 	if(contents)
@@ -516,7 +519,7 @@
 	reagents.add_reagent("nutriment", 1)
 	reagents.add_reagent("egg", 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new /obj/effect/decal/cleanable/egg_smudge(loc)
 	if(prob(13))
@@ -664,7 +667,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("protein", 3)
 	reagents.add_reagent("carpotoxin", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/fishfingers
@@ -926,10 +929,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger
 	name = "Clown Burger"
-	desc = "This tastes funny..."
+	desc = "This tastes funny... And HONKS!"
 	icon_state = "clownburger"
 	filling_color = "#ff00ff"
 	bitesize = 2
+	var/cooldown = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger/atom_init()
 	. = ..()
@@ -940,6 +944,13 @@
 */
 	reagents.add_reagent("nutriment", 6)
 	reagents.add_reagent("vitamin", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/clownburger/attack_self(mob/user)
+	if(cooldown <= world.time)
+		cooldown = world.time + 8
+		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
+		src.add_fingerprint(user)
+	return
 
 /obj/item/weapon/reagent_containers/food/snacks/mimeburger
 	name = "Mime Burger"
@@ -991,7 +1002,7 @@
 	reagents.add_reagent("banana",5)
 	reagents.add_reagent("vitamin", 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
 	src.visible_message("<span class='rose'>[src.name] splats.</span>","<span class='rose'>You hear a splat.</span>")
@@ -1160,7 +1171,7 @@
 	. = ..()
 	reagents.add_reagent("protein", 8)
 
-/obj/item/weapon/reagent_containers/food/snacks/monkeykabob
+/obj/item/weapon/reagent_containers/food/snacks/kabob
 	name = "Meat-kabob"
 	icon_state = "kabob"
 	desc = "Delicious meat, on a stick."
@@ -1168,7 +1179,7 @@
 	filling_color = "#a85340"
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/monkeykabob/atom_init()
+/obj/item/weapon/reagent_containers/food/snacks/kabob/atom_init()
 	. = ..()
 	reagents.add_reagent("protein", 8)
 
@@ -1229,8 +1240,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sosjerky/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 1)
-	reagents.add_reagent("sugar", 3)
+	reagents.add_reagent("protein", 3)
+	reagents.add_reagent("sugar", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin
 	name = "4no Raisins"
@@ -1726,8 +1737,8 @@
 			BP.hidden = surprise
 			BP.cavity = 0
 		else 		//someone is having a bad day
-			BP.createwound(CUT, 30)
 			BP.embed(surprise)
+			BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, "Animal escaping the ribcage")
 	else if (ismonkey(M))
 		M.visible_message("<span class='danger'>[M] suddenly tears in half!</span>")
 		var/mob/living/carbon/monkey/ook = new monkey_type(M.loc)
@@ -2350,6 +2361,20 @@
 	reagents.add_reagent("vitamin", 2)
 	bitesize = 3
 
+/obj/item/weapon/reagent_containers/food/snacks/olivyesalad
+	name = "Olivye salad"
+	desc = "It's a traditional salad dish in Russian cuisine."
+	icon_state = "olivyesalad"
+	trash = /obj/item/trash/snack_bowl
+	filling_color = "#76b87f"
+
+/obj/item/weapon/reagent_containers/food/snacks/olivyesalad/atom_init()
+	. = ..()
+	reagents.add_reagent("plantmatter", 9)
+	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("protein", 5)
+	bitesize = 3
+
 /obj/item/weapon/reagent_containers/food/snacks/appletart
 	name = "golden apple streusel tart"
 	desc = "A tasty dessert that won't make it through a metal detector."
@@ -2912,7 +2937,7 @@
 
 /obj/item/pizzabox/update_icon()
 
-	overlays = list()
+	cut_overlays()
 
 	// Set appropriate description
 	if( open && pizza )
@@ -2940,7 +2965,7 @@
 		if( pizza )
 			var/image/pizzaimg = image("food.dmi", icon_state = pizza.icon_state)
 			pizzaimg.pixel_y = -3
-			overlays += pizzaimg
+			add_overlay(pizzaimg)
 
 		return
 	else
@@ -2957,7 +2982,7 @@
 		if( doimgtag )
 			var/image/tagimg = image("food.dmi", icon_state = "pizzabox_tag")
 			tagimg.pixel_y = boxes.len * 3
-			overlays += tagimg
+			add_overlay(tagimg)
 
 	icon_state = "pizzabox[boxes.len+1]"
 
@@ -3144,10 +3169,19 @@
 
 // Dough + rolling pin = flat dough
 /obj/item/weapon/reagent_containers/food/snacks/dough/attackby(obj/item/weapon/W, mob/user)
+
+	if (user.is_busy(src))
+		return
+
 	if(istype(W,/obj/item/weapon/kitchen/rollingpin))
-		new /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough(src)
-		to_chat(user, "<span class='notice'>You flatten the dough.</span>")
-		qdel(src)
+		if (locate(/obj/structure/table) in src.loc)
+			playsound(user, 'sound/items/rolling_pin.ogg', VOL_EFFECTS_MASTER, , FALSE)
+			if (do_after(user, 35, target = src))
+				new /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough(src)
+				to_chat(user, "<span class='notice'>You flatten the dough.</span>")
+				qdel(src)
+		else
+			to_chat(user, "<span class='rose'>You cannot roll out the dough here! You need a table to do it.</span>")
 
 // slicable into 3xdoughslices
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough

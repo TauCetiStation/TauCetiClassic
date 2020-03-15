@@ -132,7 +132,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 				var/list/row = connectionHistory[i]
 				if(!row || row.len < 3 || !(row["ckey"] && row["compid"] && row["ip"]))
 					return
-				if(world.IsBanned(row["ckey"], row["compid"], row["ip"]))
+				if(world.IsBanned(row["ckey"], row["compid"], row["ip"], real_bans_only = TRUE))
 					found = row
 					break
 
@@ -220,8 +220,6 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	var/original_message = message
 
 	//Some macros remain in the string even after parsing and fuck up the eventual output
-	message = replacetext(message, "\improper", "")
-	message = replacetext(message, "\proper", "")
 	if(handle_whitespace)
 		message = replacetext(message, "\n", "<br>")
 		message = replacetext(message, "\t", ENTITY_TAB)

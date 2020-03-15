@@ -18,7 +18,7 @@
 	if(adj_drowsy)
 		M.drowsyness = max(0,M.drowsyness + adj_drowsy)
 	if(adj_sleepy)
-		M.sleeping = max(0,M.sleeping + adj_sleepy)
+		M.AdjustSleeping(adj_sleepy)
 	if(adj_temp)
 		if(M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
 			M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
@@ -202,7 +202,7 @@
 	color = "#482000" // rgb: 72, 32, 0
 	adj_dizzy = -5
 	adj_drowsy = -3
-	adj_sleepy = -2
+	adj_sleepy = -40
 	adj_temp = 25
 	taste_message = "coffee"
 
@@ -230,7 +230,7 @@
 
 /datum/reagent/consumable/drink/coffee/soy_latte/on_general_digest(mob/living/M)
 	..()
-	M.sleeping = 0
+	M.SetSleeping(0)
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1, 0)
 
@@ -245,7 +245,7 @@
 
 /datum/reagent/consumable/drink/coffee/cafe_latte/on_general_digest(mob/living/M)
 	..()
-	M.sleeping = 0
+	M.SetSleeping(0)
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1, 0)
 
@@ -256,7 +256,7 @@
 	color = "#101000" // rgb: 16, 16, 0
 	adj_dizzy = -2
 	adj_drowsy = -1
-	adj_sleepy = -3
+	adj_sleepy = -60
 	adj_temp = 20
 	taste_message = "tea"
 
@@ -284,7 +284,7 @@
 	color = "#664300" // rgb: 102, 67, 0
 	adj_dizzy = -5
 	adj_drowsy = -3
-	adj_sleepy = -2
+	adj_sleepy = -40
 
 /datum/reagent/consumable/drink/cold/sodawater
 	name = "Soda Water"
@@ -315,7 +315,7 @@
 	id = "nuka_cola"
 	description = "Cola, cola never changes."
 	color = "#100800" // rgb: 16, 8, 0
-	adj_sleepy = -2
+	adj_sleepy = -40
 	taste_message = "cola"
 
 /datum/reagent/consumable/drink/cold/nuka_cola/on_general_digest(mob/living/M)
@@ -331,7 +331,7 @@
 	description = "Blows right through you like a space wind."
 	color = "#102000" // rgb: 16, 32, 0
 	adj_drowsy = -7
-	adj_sleepy = -1
+	adj_sleepy = -20
 	taste_message = "lime soda"
 
 /datum/reagent/consumable/drink/cold/dr_gibb
@@ -510,7 +510,7 @@
 /datum/reagent/consumable/atomicbomb/on_general_digest(mob/living/M)
 	..()
 	M.druggy = max(M.druggy, 50)
-	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.confused = max(M.confused + 2,0)
 		M.make_dizzy(10)
 	if(!M.stuttering)
@@ -521,9 +521,9 @@
 	data++
 	switch(data)
 		if(51 to 200)
-			M.sleeping += 1
+			M.SetSleeping(20 SECONDS)
 		if(201 to INFINITY)
-			M.sleeping += 1
+			M.SetSleeping(20 SECONDS)
 			M.adjustToxLoss(2)
 
 /datum/reagent/consumable/gargle_blaster
@@ -658,14 +658,14 @@
 	taste_message = "liquid fire"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/consumable/ethanol/on_mob_life(mob/living/M, alien) // There's a multiplier for Skrells, which can't be inbuilt in any other reasonable way.
+/datum/reagent/consumable/ethanol/on_mob_life(mob/living/M)
 	if(!..())
 		return
 
 	if(adj_drowsy)
 		M.drowsyness = max(0,M.drowsyness + adj_drowsy)
 	if(adj_sleepy)
-		M.sleeping = max(0,M.sleeping + adj_sleepy)
+		M.SetSleeping(adj_sleepy)
 
 	if(!src.data || (!isnum(src.data) && src.data.len))
 		data = 1   //if it doesn't exist we set it.  if it's a list we're going to set it to 1 as well.  This is to
@@ -678,14 +678,14 @@
 		if(isnum(A.data))
 			d += A.data
 
-	if(M.has_trait(TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
+	if(M.get_species() == SKRELL) //Skrell get very drunk very quickly.
+		d *= 5
+
+	if(HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 		d *= 0.7
 
-	if(M.has_trait(TRAIT_LIGHT_DRINKER))
+	if(HAS_TRAIT(M, TRAIT_LIGHT_DRINKER))
 		d *= 2
-
-	if(alien == SKRELL) //Skrell get very drunk very quickly.
-		d *= 5
 
 	M.dizziness += dizzy_adj
 	if(d >= slur_start && d < pass_out)
@@ -755,7 +755,7 @@
 	boozepwr = 1.5
 	dizzy_adj = -5
 	adj_drowsy = -3
-	adj_sleepy = -2
+	adj_sleepy = -40
 
 /datum/reagent/consumable/ethanol/kahlua/on_general_digest(mob/living/M)
 	..()
@@ -793,7 +793,7 @@
 	M.drowsyness = max(0, M.drowsyness - 7)
 	if(M.bodytemperature > BODYTEMP_NORMAL)
 		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.make_jittery(5)
 
 /datum/reagent/consumable/ethanol/vodka
@@ -1000,7 +1000,7 @@
 
 /datum/reagent/consumable/ethanol/deadrum/on_general_digest(mob/living/M)
 	..()
-	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.dizziness += 5
 
 /datum/reagent/consumable/ethanol/sake
@@ -1144,7 +1144,7 @@
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_general_digest(mob/living/M)
 	..()
-	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.Stun(10)
 
 /datum/reagent/consumable/ethanol/irish_cream

@@ -17,7 +17,7 @@
 	)
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
-	restricted_species = list(UNATHI, TAJARAN, DIONA, IPC)
+	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
 
 /datum/job/rd/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -30,8 +30,10 @@
 		if(2)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
 		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
 		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	if(visualsOnly)
@@ -56,7 +58,6 @@
 	access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 	alt_titles = list("Phoron Researcher")
 	minimal_player_ingame_minutes = 1560
-	restricted_species = list(UNATHI, DIONA)
 
 /datum/job/scientist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -68,8 +69,10 @@
 		if(2)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
 		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
 		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	if(visualsOnly)
@@ -77,11 +80,6 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(H), SLOT_L_EAR)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/science(H), SLOT_BELT)
-	switch(H.mind.role_alt_title)
-		if("Scientist")
-			access = list(access_tox, access_research)
-		if("Phoron Researcher")
-			access = list(access_research, access_tox_storage)
 
 	return TRUE
 
@@ -108,8 +106,10 @@
 		if(2)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
 		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
 		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	if(visualsOnly)
@@ -143,8 +143,10 @@
 		if(2)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
 		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
 		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	if(visualsOnly)
@@ -172,8 +174,10 @@
 
 /datum/job/roboticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), SLOT_BACK)
-	if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
+	if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
+	if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
+	if(H.backbag == 4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+	if(H.backbag == 5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	if(H.gender == FEMALE)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/roboticist_fem(H), SLOT_W_UNIFORM)
 	else
@@ -201,7 +205,6 @@
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research)
-	minimal_player_ingame_minutes = 520
 
 /datum/job/research_assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)
@@ -210,8 +213,10 @@
 		if(2)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
 		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
 		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist_new(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), SLOT_SHOES)

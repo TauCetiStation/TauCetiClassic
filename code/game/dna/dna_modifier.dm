@@ -37,7 +37,7 @@
 
 /////////////////////////// DNA MACHINES
 /obj/machinery/dna_scannernew
-	name = "\improper DNA modifier"
+	name = "DNA modifier"
 	desc = "It scans DNA structures."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "scanner"
@@ -389,7 +389,7 @@
 			occupantData["name"] = connected.occupant.name
 			occupantData["stat"] = connected.occupant.stat
 			occupantData["isViableSubject"] = 1
-			if (!connected.occupant.dna || NOCLONE in connected.occupant.mutations || (connected.scan_level == 3))
+			if (!connected.occupant.dna || (NOCLONE in connected.occupant.mutations) || (connected.scan_level == 3))
 				occupantData["isViableSubject"] = 0
 			occupantData["health"] = connected.occupant.health
 			occupantData["maxHealth"] = connected.occupant.maxHealth

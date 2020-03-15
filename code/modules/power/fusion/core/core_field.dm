@@ -187,7 +187,7 @@
 			if(percent_unstable > 1)
 				percent_unstable = 1
 			if(percent_unstable > 0)
-				percent_unstable = max(0, percent_unstable - rand(0.01, 0.03))
+				percent_unstable = max(0, percent_unstable - rand(10, 30) * 0.001)
 
 	if(percent_unstable >= 1)
 		owned_core.Shutdown(force_rupture = 1)

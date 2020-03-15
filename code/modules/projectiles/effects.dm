@@ -3,7 +3,10 @@
 	icon_state = "bolt"
 	layer = LIGHTING_LAYER + 1
 	plane = LIGHTING_PLANE + 1
+
 	var/time_to_live = 3
+	// If tracer_list is used on projectile, all projectiles without the below being TRUE are qdeled.
+	var/deletes_itself = FALSE
 
 /obj/effect/projectile/atom_init()
 	. = ..()
@@ -165,11 +168,19 @@
 //----------------------------
 // New
 //----------------------------
-/obj/effect/projectile/energy/muzzle
-	icon_state = "muzzle_energy"
+/obj/effect/projectile/plasma/muzzle
+	icon_state = "muzzle_plasma"
 	light_range = 2
 	light_power = 2
-	light_color = "#2be4b8"
+	light_color = LIGHT_COLOR_PLASMA
+
+/obj/effect/projectile/plasma/muzzle/overcharge
+	icon_state = "muzzle_plasma_oc"
+	light_color = LIGHT_COLOR_PLASMA_OC
+
+/obj/effect/projectile/plasma/impact/overcharge
+	icon_state = "impact_plasma"
+	time_to_live = 9
 
 /obj/effect/projectile/rails
 	time_to_live = 15
@@ -179,3 +190,25 @@
 
 /obj/effect/projectile/rails/impact
 	icon_state = "rails_impact"
+
+//----------------------------
+// Pyrometer
+//----------------------------
+/obj/effect/projectile/pyrometer
+	deletes_itself = TRUE
+	time_to_live = 4
+
+/obj/effect/projectile/pyrometer/set_transform(matrix/M)
+	..()
+	// We don't become visible until we impact the target and determine the color
+	// we ought to acquire.
+	alpha = 0
+
+/obj/effect/projectile/pyrometer/tracer
+	icon_state = "pyrometer_beam"
+
+/obj/effect/projectile/pyrometer/muzzle
+	icon_state = "pyrometer_muzzle"
+
+/obj/effect/projectile/pyrometer/impact
+	icon_state = "pyrometer_impact"

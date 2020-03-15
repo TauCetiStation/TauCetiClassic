@@ -1,7 +1,7 @@
-/mob/living/carbon/human/var/list/bodyparts = list()
-/mob/living/carbon/human/var/list/bodyparts_by_name = list()
-/mob/living/carbon/human/var/list/organs = list()
-/mob/living/carbon/human/var/list/organs_by_name = list()
+/mob/living/carbon/human/var/list/obj/item/organ/external/bodyparts = list()
+/mob/living/carbon/human/var/list/obj/item/organ/external/bodyparts_by_name = list()
+/mob/living/carbon/human/var/list/obj/item/organ/internal/organs = list()
+/mob/living/carbon/human/var/list/obj/item/organ/internal/organs_by_name = list()
 
 /obj/item/organ
 	name = "organ"
@@ -210,6 +210,6 @@
 					if(!(istype(O, /obj/structure/stool/bed/chair)))
 						do_we_scream = 0
 				if(do_we_scream)
-					emote("scream", auto = TRUE)
+					emote("scream")
 			emote("collapse")
 		Weaken(5) //can't emote while weakened, apparently.

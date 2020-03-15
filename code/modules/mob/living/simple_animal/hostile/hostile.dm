@@ -111,7 +111,7 @@
 			return FALSE
 		if(L in friends)
 			return FALSE
-		if(animalistic && L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
+		if(animalistic && HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
 			return FALSE
 		return TRUE
 	if(isobj(the_target))
@@ -225,7 +225,7 @@
 /mob/living/simple_animal/hostile/proc/OpenFire(the_target)
 
 	var/target = the_target
-	visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
+	visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>")
 
 	var/tturf = get_turf(target)
 	if(rapid)

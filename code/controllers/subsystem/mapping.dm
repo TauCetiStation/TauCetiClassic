@@ -69,7 +69,7 @@ var/datum/subsystem/mapping/SSmapping
 	var/y2
 
 /datum/subsystem/mapping/proc/spawn_space_structures()
-	if(!levels_by_trait(ZTRAIT_SPACE_RUINS).len)
+	if(!length(levels_by_trait(ZTRAIT_SPACE_RUINS)))
 		return
 
 	// picking structures to spawn
@@ -150,7 +150,6 @@ var/datum/subsystem/mapping/SSmapping
 	next_map_config = SSmapping.next_map_config
 
 #undef SPACE_STRUCTURES_AMMOUNT
-#undef SPACE_STRUCTURES_ZLEVELS
 
 #define INIT_ANNOUNCE(X) info(X)
 /datum/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
@@ -246,8 +245,8 @@ var/datum/subsystem/mapping/SSmapping
 		return
 
 	if(config.system_name)
-		if(areas_by_type[/area/shuttle/arrival/pre_game])
-			areas_by_type[/area/shuttle/arrival/pre_game].name = "[config.system_name] Transfer Station 13"
+		if(areas_by_type[/area/shuttle/arrival/velocity])
+			areas_by_type[/area/shuttle/arrival/velocity].name = "[config.system_name] Transfer Station 13"
 	if(config.station_name)
 		if(areas_by_type[/area/shuttle/arrival/station])
 			areas_by_type[/area/shuttle/arrival/station].name = config.station_name

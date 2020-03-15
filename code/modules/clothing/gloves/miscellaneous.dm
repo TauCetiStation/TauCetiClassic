@@ -18,7 +18,7 @@
 
 /obj/item/clothing/gloves/swat
 	desc = "These tactical gloves are somewhat fire and impact-resistant."
-	name = "\improper SWAT Gloves"
+	name = "SWAT Gloves"
 	icon_state = "black"
 	item_state = "swat_gl"
 	siemens_coefficient = 0.6
@@ -84,7 +84,7 @@
 	item_state = "fingerless_black"
 	item_color="black"
 	clipped = TRUE
-	species_restricted = list("exclude","stunglove")
+	species_restricted = list("exclude", "stunglove", VOX, VOX_ARMALIS)
 
 /obj/item/clothing/gloves/fingerless/red
 	name = "red fingerless gloves"

@@ -176,10 +176,18 @@ cause a ton of data to be lost, an admin can go send it back.
 	if(href_list["select_technology"])
 		var/new_selected_technology = href_list["select_technology"]
 		if(files.all_technologies[selected_tech_tree][new_selected_technology])
+			var/datum/technology/T = files.all_technologies[selected_tech_tree][new_selected_technology]
+
+			T.reliability_upgrade_cost = files.GetReliabilityUpgradeCost(T)
+			T.avg_reliability = files.GetAverageDesignReliability(T)
+
 			selected_technology = new_selected_technology
 	if(href_list["unlock_technology"])
 		var/unlock = href_list["unlock_technology"]
 		files.UnlockTechology(files.all_technologies[selected_tech_tree][unlock])
+	if(href_list["upgrade_technology"])
+		var/upgrade = href_list["upgrade_technology"]
+		files.UpgradeTechology(files.all_technologies[selected_tech_tree][upgrade])
 	if(href_list["go_screen"])
 		var/where = href_list["go_screen"]
 		if(href_list["need_access"])
@@ -467,7 +475,10 @@ cause a ton of data to be lost, an admin can go send it back.
 					))
 
 				// This calculates how much research points we missed because we already researched items with such orig_tech levels
-				var/tech_points_mod = files.experiments.get_object_research_value(linked_destroy.loaded_item) / files.experiments.get_object_research_value(linked_destroy.loaded_item, ignoreRepeat = TRUE)
+				var/research_value = files.experiments.get_object_research_value(linked_destroy.loaded_item, ignoreRepeat = TRUE)
+				var/tech_points_mod = research_value
+				if(research_value)
+					tech_points_mod = files.experiments.get_object_research_value(linked_destroy.loaded_item) / research_value
 
 				var/list/destroy_list = list(
 					"has_item" =              TRUE,
@@ -609,6 +620,8 @@ cause a ton of data to be lost, an admin can go send it back.
 				"id" =             Tech.id,
 				"tech_type" =      Tech.tech_type,
 				"cost" =           Tech.cost,
+				"reliability_upgrade_cost" = Tech.reliability_upgrade_cost,
+				"avg_reliability" = Tech.avg_reliability,
 				"isresearched" =   files.IsResearched(Tech),
 			)
 			data["selected_technology_id"] = Tech.id
@@ -637,7 +650,7 @@ cause a ton of data to be lost, an admin can go send it back.
 			for(var/T in Tech.unlocks_designs)
 				var/datum/design/D = files.design_by_id[T]
 				var/list/unlock_data = list(
-					"text" =           "[D.name]",
+					"text" = "[D.name]"
 				)
 				unlock_list += list(unlock_data)
 			technology_data["unlocks"] = unlock_list

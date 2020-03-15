@@ -24,6 +24,15 @@
 
 
 
+/datum/quirk/high_pain_threshold
+	name = "High pain threshold"
+	desc = "You can take pain more easily. This quirk only affects sounds."
+	mob_trait = TRAIT_HIGH_PAIN_THRESHOLD
+	gain_text = "<span class='danger'>You want to show how strong you are. You will try to ignore any pain.</span>"
+	lose_text = "<span class='notice'>You no longer want to endure pain, it scares you.</span>"
+
+
+
 /datum/quirk/strong_mind
 	name = "Strong mind"
 	desc = "You can distinguish between lies and truth of your consciousness."
@@ -41,3 +50,4 @@
 	mob_trait = TRAIT_ALCOHOL_TOLERANCE
 	gain_text = "<span class='notice'>You feel like you could drink a whole keg!</span>"
 	lose_text = "<span class='danger'>You don't feel as resistant to alcohol anymore. Somehow.</span>"
+  

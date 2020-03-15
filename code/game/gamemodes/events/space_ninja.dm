@@ -219,7 +219,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 		//Xenos and deathsquads take precedence over everything else.
 
 		//Unless the xenos are hiding in a locker somewhere, this'll find em.
-		for(var/mob/living/carbon/alien/humanoid/xeno in player_list)
+		for(var/mob/living/carbon/xenomorph/humanoid/xeno in player_list)
 			if(istype(xeno))
 				xeno_list += xeno
 
@@ -230,11 +230,11 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 			if(xeno_list.len>3)//If there are more than three humanoid xenos on the station, time to get dangerous.
 				//Here we want the ninja to murder all the queens. The other aliens don't really matter.
 				var/xeno_queen_list[] = list()
-				for(var/mob/living/carbon/alien/humanoid/queen/xeno_queen in xeno_list)
+				for(var/mob/living/carbon/xenomorph/humanoid/queen/xeno_queen in xeno_list)
 					if(xeno_queen.mind&&xeno_queen.stat!=2)
 						xeno_queen_list += xeno_queen
 				if(xeno_queen_list.len&&side=="face")//If there are queen about and the probability is 50.
-					for(var/mob/living/carbon/alien/humanoid/queen/xeno_queen in xeno_queen_list)
+					for(var/mob/living/carbon/xenomorph/humanoid/queen/xeno_queen in xeno_queen_list)
 						var/datum/objective/assassinate/ninja_objective = new
 						ninja_objective.owner = ninja_mind
 						//We'll do some manual overrides to properly set it up.
@@ -495,8 +495,8 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 	space_ninja_arrival(input, mission)
 
-	message_admins("<span class='notice'>[key_name_admin(key)] has spawned [input] as a Space Ninja.\nTheir <b>mission</b> is: [mission]</span>")
-	log_admin("[key] used Spawn Space Ninja.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] has spawned [input] as a Space Ninja.\nTheir <b>mission</b> is: [mission]</span>")
+	log_admin("[key_name(usr)] used Spawn Space Ninja.")
 
 	return
 
@@ -569,43 +569,43 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	a_boost = rand(1,7)
 
 //This proc prevents the suit from being taken off.
-/obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/U, X = 0)
+/obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/human/U, X = FALSE)
 	if(X)//If you want to check for icons.
-		if(U.mind.protector_role == 1)
-			icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
-			U:gloves.icon_state = "s-ninjak"
-			U:gloves.item_state = "s-ninjak"
+		if(U.mind.protector_role)
+			icon_state = U.gender == FEMALE ? "s-ninjakf" : "s-ninjak"
+			U.gloves.icon_state = "s-ninjak"
+			U.gloves.item_state = "s-ninjak"
 		else
-			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
-			U:gloves.icon_state = "s-ninjan"
-			U:gloves.item_state = "s-ninjan"
+			icon_state = U.gender == FEMALE ? "s-ninjanf" : "s-ninjan"
+			U.gloves.icon_state = "s-ninjan"
+			U.gloves.item_state = "s-ninjan"
 	else
 		if(U.mind.special_role!="Ninja")
 			to_chat(U, "<span class='warning'><B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAU?HORIZED USÈ DETÈC???eD\nCoMMÈNCING SUB-R0U?IN3 13...\nTÈRMInATING U-U-USÈR...</span>")
 			U.gib()
 			return 0
-		if(!istype(U:head, /obj/item/clothing/head/helmet/space/space_ninja))
+		if(!istype(U.head, /obj/item/clothing/head/helmet/space/space_ninja))
 			to_chat(U, "<span class='warning'><B>ERROR</B>: 100113</span> UNABLE TO LOCATE HEAD GEAR\nABORTING...")
 			return 0
-		if(!istype(U:shoes, /obj/item/clothing/shoes/space_ninja))
+		if(!istype(U.shoes, /obj/item/clothing/shoes/space_ninja))
 			to_chat(U, "<span class='warning'><B>ERROR</B>: 122011</span> UNABLE TO LOCATE FOOT GEAR\nABORTING...")
 			return 0
-		if(!istype(U:gloves, /obj/item/clothing/gloves/space_ninja))
+		if(!istype(U.gloves, /obj/item/clothing/gloves/space_ninja))
 			to_chat(U, "<span class='warning'><B>ERROR</B>: 110223</span> UNABLE TO LOCATE HAND GEAR\nABORTING...")
 			return 0
 
 		affecting = U
 		canremove = 0
 		slowdown = 0
-		n_hood = U:head
+		n_hood = U.head
 		n_hood.canremove=0
-		n_shoes = U:shoes
+		n_shoes = U.shoes
 		n_shoes.canremove=0
 		n_shoes.slowdown--
-		n_gloves = U:gloves
+		n_gloves = U.gloves
 		n_gloves.canremove=0
 
-	return 1
+	return TRUE
 
 //This proc allows the suit to be taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
@@ -645,13 +645,13 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 			if(4)
 				I.pixel_y += 1
 
-		overlays += I//And finally add the overlay.
-	overlays += image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9)
+		add_overlay(I)//And finally add the overlay.
+	add_overlay(image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9))
 
 //When ninja steal malfunctions.
 /mob/proc/NinjaStealthMalf()
 	invisibility = 0//Set ninja invis to 0.
-	overlays += image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9)
+	add_overlay(image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9))
 	playsound(src, 'sound/effects/stealthoff.ogg', VOL_EFFECTS_MASTER)
 
 //=======//GENERIC VERB MODIFIERS//=======//
