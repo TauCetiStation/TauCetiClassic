@@ -1,4 +1,4 @@
-var/color = "#a10808"
+var/color
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
 	icon_state = "grey"
