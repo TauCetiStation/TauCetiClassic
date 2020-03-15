@@ -211,37 +211,37 @@
 // *(CROSSBOW craft in recipes.dm)*
 
 /obj/item/weapon/crossbowframe1
-	name = "crossbow frame"
+	name = "crossbow(1 stage)"
 	desc = "To finish you need: add 3 rods; weld it all; add 5 cable coil; add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver."
 	icon_state = "crossbowframe1"
 	item_state = "crossbow-solid"
 
 /obj/item/weapon/crossbowframe2
-	name = "crossbow frame"
+	name = "crossbow(2 stage)"
 	desc = "To finish you need: weld it all; add 5 cable coil; add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver."
 	icon_state = "crossbowframe2"
 	item_state = "crossbow-solid"
 
 /obj/item/weapon/crossbowframe3
-	name = "crossbow frame"
+	name = "crossbow(3 stage)"
 	desc = "To finish you need: add 5 cable coil; add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver."
 	icon_state = "crossbowframe3"
 	item_state = "crossbow-solid"
 
 /obj/item/weapon/crossbowframe4
-	name = "crossbow frame"
+	name = "crossbow(4 stage)"
 	desc = "To finish you need: add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver."
 	icon_state = "crossbowframe4"
 	item_state = "crossbow-solid"
 
 /obj/item/weapon/crossbowframe5
-	name = "crossbow frame"
+	name = "crossbow(5 stage)"
 	desc = "To finish you need: add 5 cable coil; tighten the bolts by screwdriver."
 	icon_state = "crossbowframe5"
 	item_state = "crossbow-solid"
 
 /obj/item/weapon/crossbowframe6
-	name = "crossbow frame"
+	name = "crossbow(6 stage)"
 	desc = "To finish you need: tighten the bolts by screwdriver."
 	icon_state = "crossbowframe6"
 	item_state = "crossbow-solid"

@@ -151,37 +151,37 @@
 // *(PNEUMATOIC GUN craft in recipes.dm)*
 
 /obj/item/weapon/cannonframe1
-	name = "pneumatic cannon frame"
+	name = "pneumo-gun(1 stage)"
 	desc = "To finish you need: attach the pipe; weld it all; add 5 sheets of metal; weld it all; add tank transfer valve; weld it all."
 	icon_state = "pneumaticframe1"
 	item_state = "pneumatic"
 
 /obj/item/weapon/cannonframe2
-	name = "pneumatic cannon frame"
+	name = "pneumo-gun(2 stage)"
 	desc = "To finish you need: weld it all; add 5 sheets of metal; weld it all; add tank transfer valve; weld it all."
 	icon_state = "pneumaticframe2"
 	item_state = "pneumatic"
 
 /obj/item/weapon/cannonframe3
-	name = "pneumatic cannon frame"
+	name = "pneumo-gun(3 stage)"
 	desc = "To finish you need: add 5 sheets of metal; weld it all; add tank transfer valve; weld it all."
 	icon_state = "pneumaticframe3"
 	item_state = "pneumatic"
 
 /obj/item/weapon/cannonframe4
-	name = "pneumatic cannon frame"
+	name = "pneumo-gun(4 stage)"
 	desc = "To finish you need: weld it all; add tank transfer valve; weld it all."
 	icon_state = "pneumaticframe4"
 	item_state = "pneumatic"
 
 /obj/item/weapon/cannonframe5
-	name = "pneumatic cannon frame"
+	name = "pneumo-gun(5 stage)"
 	desc = "To finish you need: add tank transfer valve; weld it all."
 	icon_state = "pneumaticframe5"
 	item_state = "pneumatic"
 
 /obj/item/weapon/cannonframe6
-	name = "pneumatic cannon frame"
+	name = "pneumo-gun(6 stage)"
 	desc = "To finish you need: weld it all."
 	icon_state = "pneumaticframe6"
 	item_state = "pneumatic"

@@ -151,7 +151,7 @@
 	time = 40
 
 /datum/crafting_recipe/crossbow
-	name = "Crossbow"
+	name = "Combat crossbow"
 	reqs = list(/obj/item/weapon/crossbowframe6 = 1)
 	tools = list(/obj/item/weapon/screwdriver)
 	result = /obj/item/weapon/crossbow

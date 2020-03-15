@@ -177,25 +177,25 @@
 // *(BUCKLER craft in recipes.dm)*
 
 /obj/item/weapon/bucklerframe1
-	name = "buckler frame"
+	name = "shield(1 stage)"
 	desc = "To finish you need: cut with wirecutters; bound with cable restraints; attach 4 plasteel; weld it all."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bucklerframe1"
 
 /obj/item/weapon/bucklerframe2
-	name = "buckler frame"
+	name = "shield(2 stage)"
 	desc = "To finish you need: bound with cable restraints; attach 4 plasteel; weld it all."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bucklerframe2"
 
 /obj/item/weapon/bucklerframe3
-	name = "buckler frame"
+	name = "shield(3 stage)"
 	desc = "To finish you need: attach 4 plasteel; weld it all."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bucklerframe3"
 
 /obj/item/weapon/bucklerframe4
-	name = "buckler frame"
+	name = "shield(4 stage)"
 	desc = "To finish you need: weld it all."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bucklerframe4"
