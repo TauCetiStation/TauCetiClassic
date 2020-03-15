@@ -8616,7 +8616,6 @@
 /obj/structure/stool,
 /obj/machinery/vending/wallmed1{
 	pixel_y = 30;
-	req_access = list(0)
 	},
 /obj/machinery/light{
 	dir = 1
@@ -30141,7 +30140,6 @@
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
 	pixel_x = 28;
-	req_access = list(0)
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurplecorner"
