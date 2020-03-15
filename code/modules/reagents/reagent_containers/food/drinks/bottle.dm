@@ -9,11 +9,11 @@
 	volume = 100
 	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
-	var/is_glass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
-	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
+	var/is_glass = TRUE //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
+	var/is_transparent = TRUE //Determines whether an overlay of liquid should be added to bottle when it fills
 
 	var/stop_spin_bottle = FALSE //Gotta stop the rotation.
-	var/active = 0
+	var/active = FALSE
 
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/atom_init()
@@ -138,7 +138,7 @@
 		//Display an attack message.
 		if(target != user)
 			user.visible_message("<span class='warning'><B>[target] has been hit over the head with a bottle of [src.name], by [user]!</B></span>")
-		else 
+		else
 			user.visible_message("<span class='warning'><B>[target] hit himself with a bottle of [src.name] on the head!</B></span>")
 		//Weaken the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
@@ -170,7 +170,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attackby(obj/item/W, mob/user)
-	if(is_glass == FALSE)
+	if(!is_glass)
 		to_chat(user, "<span class='notice'>That won't work.</span>")
 		..()
 		return
@@ -221,13 +221,13 @@
 	throw_range = 6
 	item_state = "beer_molotov"
 	attack_verb = list("attacked")
-	sharp = 0
-	edge = 0
-	is_transparent = 1
-	is_glass = 1
+	sharp = FALSE
+	edge = FALSE
+	is_transparent = TRUE
+	is_glass = TRUE
 	volume = 100
 	amount_per_transfer_from_this = 10
-	active = 0
+	active = FALSE
 	var/activate_sound = 'sound/items/matchstick_light.ogg'
 
 
@@ -237,7 +237,7 @@
 	if(istype(W, /obj/item/stack/medical/bruise_pack/rags))
 		to_chat(user, "<span class='notice'>This is already molotov.</span>")
 		return
-	if(active == 1)
+	if(active)
 		to_chat(user, "<span class='notice'>This is already burn!.</span>")
 		return
 	var/is_W_lit = FALSE //Igniting
@@ -257,13 +257,13 @@
 		return
 	if(is_W_lit == TRUE)
 		if(reagents && reagents.total_volume && reagents.total_volume && reagents.has_reagent("fuel", 20)) //Don't ignite if Molotov empty
-			active = 1
+			active = TRUE
 		else
 			to_chat(user, "<span class='notice'>There's no fuel here. It doesn't burn..</span>")
 			return
 	else
 		return
-	if(active == 1)
+	if(active)
 		user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
 		update_icon()
 		addtimer(CALLBACK(src, .proc/detonate), 100)
@@ -306,18 +306,13 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/update_icon()
 	..()
-	if (active == TRUE)
+	if (active)
 		item_state = "beer_molotov_act"
 		overlays += image('icons/obj/makeshift.dmi' ,"molotov_active")
 		playsound(src, activate_sound, VOL_EFFECTS_MASTER)
 		set_light(2)
 		START_PROCESSING(SSobj, src)
-	else
-		return
-		new /obj/item/weapon/shard(loc)
-		if(reagents && reagents.total_volume)
-			src.reagents.reaction(loc, TOUCH)
-		qdel(src)
+
 
 
 
