@@ -25050,6 +25050,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -46626,6 +46629,9 @@
 "bNK" = (
 /obj/structure/stool/bed/chair/janitorialcart,
 /obj/machinery/light/small,
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_y = -32
+	},
 /turf/simulated/floor,
 /area/station/civilian/janitor)
 "bNL" = (
