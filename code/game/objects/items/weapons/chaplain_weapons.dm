@@ -50,6 +50,11 @@
 			set_light(3)
 			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
 			return
+	if(istype(src, /obj/item/weapon/nullrod/staff)) //repair blind when re-entering in game
+		var/obj/item/weapon/nullrod/staff/S = src
+		if(S.brainmob.stat != CONSCIOUS)
+			S.brainmob.stat = CONSCIOUS
+			S.brainmob.blinded = FALSE
 
 /obj/item/weapon/nullrod/attack(mob/M, mob/living/user) //Paste from old-code to decult with a null rod.
 	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
@@ -153,9 +158,8 @@
 
 	brainmob = new(src)
 	brainmob.mutations.Add(XRAY) //its the god
-	brainmob.status_flags |= GODMODE
-	brainmob.pass_flags = PASSTABLE | PASSMOB | PASSGLASS | PASSGRILLE
 	brainmob.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
+	brainmob.status_flags |= GODMODE
 	brainmob.loc = src
 
 	brainmob.mind = candidate.mind

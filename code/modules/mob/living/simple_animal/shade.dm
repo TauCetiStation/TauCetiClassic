@@ -70,3 +70,5 @@
 	faction = "Station"
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	universal_understand = TRUE
+	pass_flags = PASSTABLE | PASSMOB | PASSGLASS | PASSGRILLE
