@@ -44,8 +44,7 @@
 	if(!total_alert_weight)
 		return
 	message_admins("GUARD: new player [key_name_admin(holder)] is suspicious with [total_alert_weight] weight (<a href='?_src_=holder;guard=\ref[holder.mob]'>report</a>)", R_LOG)
-	log_admin("GUARD: new player [key_name(holder)] is suspicious with [total_alert_weight] weight")
-	log_admin("GUARD: [short_report]")
+	log_admin("GUARD: new player [key_name(holder)] is suspicious with [total_alert_weight] weight[log_end]\nGUARD: [short_report]")
 
 	if(!bridge_reported && total_alert_weight > 1)
 		bridge_reported = TRUE
@@ -75,7 +74,7 @@
 		var/geoip_weight = 0
 		geoip_weight += geoip_data["proxy"]   ? 0.5 : 0 // low weight because false-positives
 		geoip_weight += geoip_data["mobile"]  ? 0.2 : 0
-		geoip_weight += geoip_data["hosting"] ? 1 : 0
+		geoip_weight += geoip_data["hosting"] ? 0.7 : 0 // same, false-positives on some providers (?)
 
 		geoip_weight += geoip_data["ipintel"]>0 ? geoip_data["ipintel"] : 0
 
@@ -150,7 +149,7 @@
 	if(holder.prefs.cid_list.len > 1)
 		var/multicid_weight = 0
 		
-		multicid_weight += (holder.prefs.cid_list.len - 1) * 0.35 // new account, should not be many. 4 cids in the first hour -> +1 weight
+		multicid_weight += min(((holder.prefs.cid_list.len - 1) * 0.3), 2) // new account, should not be many. 4 cids in the first hour -> +1 weight
 
 		new_report += {"<div class='block'><h3>Differents CID's ([multicid_weight]):</h3>
 		Has [holder.prefs.cid_list.len] different computer_id.</div>"}
@@ -164,6 +163,8 @@
 	// timezone tests
 	// speedrun tests
 
+	/* No more tests, prepare reports (todo: some cleanup needet) */
+
 	var/velocity_text
 	if(time_velocity_spawn && time_velocity_shuttle)
 		var/num_console = 0
@@ -173,16 +174,24 @@
 			num_console++
 		velocity_text = "<b>Velocity run:</b> [round((time_velocity_shuttle - time_velocity_spawn)/10)] seconds[num_console ? "; Triggered [num_console] console(s)" : "" ]"
 
+
+	var/byond_date_text
 	var/list/byond_date = holder.get_byond_registration()
+	if(length(byond_date))
+		byond_date_text = "[byond_date[3]].[byond_date[2]].[byond_date[1]]"
+
+	var/seen_text
+	if(first_entry || isnum(holder.player_age))
+		seen_text = "[first_entry ? "this round" : "[holder.player_age] days ago"]"
 
 	new_report = {"<b>Total Weight:</b> [total_alert_weight]<br>
-	[length(byond_date) ? "<b>Byond registration:</b> [byond_date[3]].[byond_date[2]].[byond_date[1]]<br>" : ""]
-	<b>First seen:</b> [first_entry ? "this round" : "[holder.player_age] days ago"]<br>
-	<b>Player ingame age:</b> [holder.player_ingame_age] minutes<br>
+	[byond_date_text ? "<b>Byond registration:</b> [byond_date_text]<br>" : ""]
+	[seen_text ? "<b>First seen:</b> [seen_text]<br>" : ""]
+	[isnum(holder.player_ingame_age) ? "<b>Player ingame age:</b> [holder.player_ingame_age] minutes<br>" : ""]
 	[velocity_text ? "---<br>[velocity_text]<br>": ""]
 	[new_report]"}
 
-	new_short_report = "TW: [total_alert_weight];[first_entry ? " First visit;" : ""] [new_short_report]"
+	new_short_report = "TW: [total_alert_weight];[byond_date_text ? " Byond reg: [byond_date_text];" : ""][seen_text ? " First seen: [seen_text];" : ""][isnum(holder.player_ingame_age) ? " Ingame: [holder.player_ingame_age] min.;" : ""] [new_short_report]"
 
 	report = new_report
 	short_report = new_short_report
