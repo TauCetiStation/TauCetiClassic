@@ -183,9 +183,9 @@
 		B.icon_state = src.icon_state
 		var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
 		B.icon = I
-		B.overlays += image('icons/obj/makeshift.dmi', "molotov_rag")
+		B.add_overlay(image('icons/obj/makeshift.dmi', "molotov_rag"))
 		item_state = "beer_molotov_act"
-		update_icon(B)
+		B.update_icon()
 		qdel(src)
 		user.put_in_active_hand(B)
 		qdel(W)
