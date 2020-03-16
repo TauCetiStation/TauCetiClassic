@@ -447,7 +447,7 @@
 				var/list/targets = list()
 
 				for(var/mob/living/L in view(7,src))
-					if(L.get_species() == IPC)
+					if(L.get_species() == IPC) //Ignore IPC
 						continue
 
 					if(L.get_species() == SLIME || L.stat == DEAD) // Ignore other slimes and dead mobs
@@ -461,9 +461,6 @@
 
 					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
 						targets += L // Possible target found!
-
-					if(istype(L, /mob/living/carbon/human)) //Ignore slime(wo)men and IPC
-						var/mob/living/carbon/human/H = L
 
 					if(!L.canmove) // Only one slime can latch on at a time.
 						var/notarget = 0
