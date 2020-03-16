@@ -447,8 +447,10 @@
 				var/list/targets = list()
 
 				for(var/mob/living/L in view(7,src))
+					if(L.get_species() == IPC)
+						continue
 
-					if(isslime(L) || L.stat == DEAD) // Ignore other slimes and dead mobs
+					if(L.get_species() == SLIME || L.stat == DEAD) // Ignore other slimes and dead mobs
 						continue
 
 					if(HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
@@ -462,8 +464,6 @@
 
 					if(istype(L, /mob/living/carbon/human)) //Ignore slime(wo)men and IPC
 						var/mob/living/carbon/human/H = L
-						if(H.get_species() == SLIME || H.get_species() == IPC)
-							continue
 
 					if(!L.canmove) // Only one slime can latch on at a time.
 						var/notarget = 0
