@@ -241,22 +241,7 @@
 	if(active)
 		to_chat(user, "<span class='notice'>This is already burn!.</span>")
 		return
-	var/is_W_lit = FALSE //Igniting
-	if(istype(W, /obj/item/weapon/match))
-		var/obj/item/weapon/match/O = W
-		if(O.lit)
-			is_W_lit = TRUE
-	else if(istype(W, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/O = W
-		if(O.lit)
-			is_W_lit = TRUE
-	else if(iswelder(W))
-		var/obj/item/weapon/weldingtool/O = W
-		if(O.welding)
-			is_W_lit = TRUE
-	if(!is_W_lit)
-		return
-	if(is_W_lit)
+	if(W.get_current_temperature(800))
 		if(reagents && reagents.total_volume && reagents.total_volume && reagents.has_reagent("fuel", 20)) //Don't ignite if Molotov empty
 			active = TRUE
 		else
