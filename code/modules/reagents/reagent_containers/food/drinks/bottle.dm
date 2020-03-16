@@ -175,8 +175,7 @@
 		..()
 		return
 	else if(istype(W, /obj/item/stack/medical/bruise_pack/rags)) //Molotov's Craft
-		var/rags = /obj/item/stack/medical/bruise_pack/rags
-		rags = W
+		var/obj/item/stack/medical/bruise_pack/rags/rags = W
 		to_chat(user, "<span class='notice'>You splash liquid onto the floor and attach the [rags] to the [src].</span>")
 		msg_admin_attack("[user.name] ([user.ckey]) crafting \a [src]", user)
 		var/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/B =  new /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov(user.loc)
@@ -234,7 +233,6 @@
 
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/weapon/W, mob/living/user)
-	. = ..()
 	if(istype(W, /obj/item/stack/medical/bruise_pack/rags))
 		to_chat(user, "<span class='notice'>This is already molotov.</span>")
 		return
