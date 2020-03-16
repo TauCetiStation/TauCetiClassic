@@ -18463,10 +18463,9 @@
 	},
 /area/station/civilian/toilet)
 "aGh" = (
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	name = "Dormitory Bathrooms APC";
-	pixel_y = -24
+/obj/machinery/camera{
+	c_tag = "Dormitory Toilets";
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -21033,6 +21032,11 @@
 /obj/structure/sink{
 	dir = 8;
 	pixel_x = -12
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -25049,6 +25053,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_y = -32
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -44721,8 +44728,8 @@
 /turf/simulated/wall,
 /area/station/maintenance/engineering)
 "bJb" = (
-/turf/simulated/wall,
-/area/station/storage/tech)
+/turf/simulated/wall/r_wall,
+/area/station/hallway/primary/aft)
 "bJc" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -46626,6 +46633,9 @@
 "bNK" = (
 /obj/structure/stool/bed/chair/janitorialcart,
 /obj/machinery/light/small,
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_y = -32
+	},
 /turf/simulated/floor,
 /area/station/civilian/janitor)
 "bNL" = (
@@ -77339,6 +77349,16 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
+"uHq" = (
+/obj/machinery/power/apc{
+	name = "Dormitory Bathrooms APC";
+	pixel_y = -24
+	},
+/obj/structure/cable,
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/civilian/toilet)
 "uIb" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -107021,15 +107041,15 @@ bra
 bOg
 bxX
 bYc
-aMR
-bJb
+aNU
+bLW
 bLW
 lEb
 bIy
 lRb
 bLW
-bJb
-bJb
+bLW
+bLW
 bVo
 bVo
 bVo
@@ -107278,7 +107298,7 @@ bra
 kOb
 aKz
 bEd
-aMR
+aNU
 bKl
 bLY
 bNz
@@ -107286,7 +107306,7 @@ bLZ
 bQp
 bRy
 bSI
-bJb
+bLW
 bVp
 bWB
 bYf
@@ -107535,7 +107555,7 @@ bMr
 bEK
 aKx
 bfA
-aMR
+aNU
 bKm
 bLZ
 bCI
@@ -107543,7 +107563,7 @@ bDB
 bEE
 bLZ
 bLZ
-bJb
+bLW
 bVq
 bVp
 bVp
@@ -107792,7 +107812,7 @@ bra
 cxb
 aKx
 bfA
-bJb
+bLW
 bKn
 bLZ
 bNA
@@ -107800,7 +107820,7 @@ bDA
 bQq
 bLZ
 bSJ
-bJb
+bLW
 bVr
 bVp
 bVq
@@ -108049,7 +108069,7 @@ byw
 cxe
 aKx
 cxP
-bJb
+bLW
 bKo
 bLZ
 bNB
@@ -108057,7 +108077,7 @@ bDG
 bQr
 bLZ
 bSK
-bJb
+bLW
 bVs
 bVr
 bVp
@@ -108306,15 +108326,15 @@ byw
 cxd
 aKx
 bOS
-bJb
+bLW
 bKp
 bLZ
 bNC
 bDA
 bQs
 bFV
-bJb
-bJb
+bLW
+bLW
 bVr
 bVr
 bVr
@@ -108563,7 +108583,7 @@ byw
 cxe
 aKx
 bfA
-bJb
+bLW
 bKq
 bBK
 bQf
@@ -108571,7 +108591,7 @@ bDI
 bQt
 bFX
 bSL
-bJb
+bLW
 bVt
 bVt
 bYg
@@ -108820,15 +108840,15 @@ byw
 aET
 aKx
 ljb
-aMR
-bKr
-bKr
-bKr
+aNU
+bJb
+bJb
+bJb
 bIA
-bJb
-bJb
-bJb
-bJb
+bLW
+bLW
+bLW
+bLW
 bVo
 bVo
 bVo
@@ -113155,7 +113175,7 @@ tkb
 aEa
 aGH
 aLr
-thb
+uHq
 aEa
 bfp
 aKx
