@@ -205,18 +205,6 @@
 	to_chat(user, msg)
 
 /obj/item/weapon/nullrod/staff/attack_ghost(mob/dead/observer/O)
-	//DEBUGG
-	if(brainmob && !brainmob.ckey && !searching && !soul_inside)
-		//Start the process of searching for a new user.
-		to_chat(O, "<span class='notice'>You attempt to wake the spirit of the staff...</span>")
-		icon_state = "talking_staffanim"
-		light_power = 5
-		src.searching = TRUE
-		src.request_player()
-		addtimer(CALLBACK(src, .proc/reset_search), 600)
-	else if((brainmob.stat == DEAD || brainmob.stat == UNCONSCIOUS) && !searching && soul_inside)
-		reset_search()
-
 	if(!ping_cd)
 		ping_cd = TRUE
 		spawn(50)
