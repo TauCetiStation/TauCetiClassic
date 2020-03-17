@@ -491,7 +491,7 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>" ,
 	"<span class='warning'>Your hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>")
 
-/datum/surgery_step/brain/saw_spine
+/datum/surgery_step/brain/saw_spine_vox
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100,
 	/obj/item/weapon/hatchet = 75,
@@ -502,15 +502,15 @@
 	min_duration = 50
 	max_duration = 70
 
-/datum/surgery_step/brain/saw_spine/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/brain/saw_spine_vox/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return ..() && target.op_stage.skull == 1 && target.has_brain() && target.op_stage.brain_cut == 1
 
-/datum/surgery_step/brain/saw_spine/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/brain/saw_spine_vox/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts separating [target]'s brain from \his spine with \the [tool].",
 	"You start separating [target]'s brain from spine with \the [tool].")
 	..()
 
-/datum/surgery_step/brain/saw_spine/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/brain/saw_spine_vox/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='notice'>[user] separates [target]'s brain from \his spine with \the [tool].</span>",
 	"<span class='notice'>You separate [target]'s brain from spine with \the [tool].</span>")
 
@@ -532,7 +532,7 @@
 	target.organs_by_name -= O_BRAIN // this is SOOO wrong.
 	target.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
 
-/datum/surgery_step/brain/saw_spine/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/brain/saw_spine_vox/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
@@ -541,7 +541,7 @@
 		user:bloody_body(target)
 		user:bloody_hands(target, 0)
 
-/datum/surgery_step/brain/insert_brain
+/datum/surgery_step/brain/insert_brain_vox
 	allowed_tools = list(
 	/obj/item/cortical_stack = 100
 	)
@@ -550,16 +550,16 @@
 	min_duration = 60
 	max_duration = 80
 
-/datum/surgery_step/brain/insert_brain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/brain/insert_brain_vox/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return ..() && target.op_stage.skull == 1 && !target.has_brain()
 
-/datum/surgery_step/brain/insert_brain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/brain/insert_brain_vox/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] starts inserting [tool] into [target]'s [BP.name].",
 	"You start inserting [tool] into [target]'s [BP.name].")
 	..()
 
-/datum/surgery_step/brain/insert_brain/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/brain/insert_brain_vox/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='notice'>[user] inserts [tool] into [target]'s [BP.name].</span>",
 	"<span class='notice'>You inserts [tool] into [target]'s [BP.name].</span>")
@@ -580,7 +580,7 @@
 	new /obj/item/organ/internal/brain/vox(null, target)
 	qdel(tool)
 
-/datum/surgery_step/brain/insert_brain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/brain/insert_brain_vox/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, damaging [target]'s [BP.name] with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, damaging [target]'s [BP.name] with \the [tool]!</span>")
