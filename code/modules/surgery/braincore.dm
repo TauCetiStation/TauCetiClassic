@@ -80,7 +80,7 @@
 	/obj/item/weapon/hatchet = 75,
 	/obj/item/weapon/crowbar = 50
 	)
-
+	allowed_species = list("exclude", VOX)
 	min_duration = 50
 	max_duration = 70
 
@@ -127,7 +127,7 @@
 	allowed_tools = list(
 	/obj/item/brain = 100
 	)
-	allowed_species = list("exclude", IPC, DIONA)
+	allowed_species = list("exclude", IPC, DIONA, VOX)
 
 	min_duration = 60
 	max_duration = 80
@@ -491,3 +491,97 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>" ,
 	"<span class='warning'>Your hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>")
 
+/datum/surgery_step/brain/saw_spine
+	allowed_tools = list(
+	/obj/item/weapon/circular_saw = 100,
+	/obj/item/weapon/hatchet = 75,
+	/obj/item/weapon/crowbar = 50
+	)
+	allowed_species = list(VOX)
+
+	min_duration = 50
+	max_duration = 70
+
+/datum/surgery_step/brain/saw_spine/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	return ..() && target.op_stage.skull == 1 && target.has_brain() && target.op_stage.brain_cut == 1
+
+/datum/surgery_step/brain/saw_spine/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	user.visible_message("[user] starts separating [target]'s brain from \his spine with \the [tool].",
+	"You start separating [target]'s brain from spine with \the [tool].")
+	..()
+
+/datum/surgery_step/brain/saw_spine/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	user.visible_message("<span class='notice'>[user] separates [target]'s brain from \his spine with \the [tool].</span>",
+	"<span class='notice'>You separate [target]'s brain from spine with \the [tool].</span>")
+
+	var/mob/living/simple_animal/borer/borer = target.has_brain_worms()
+
+	if(borer)
+		borer.detatch() //Should remove borer if the brain is removed - RR
+
+	user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
+	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
+	msg_admin_attack("[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])", user)
+
+	var/obj/item/cortical_stack/B
+	B = new(target.loc)
+	B.transfer_identity(target)
+
+	var/obj/item/organ/internal/brain/IO = target.organs_by_name[O_BRAIN]
+	target.organs -= IO
+	target.organs_by_name -= O_BRAIN // this is SOOO wrong.
+	target.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
+
+/datum/surgery_step/brain/saw_spine/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>",
+	"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
+	BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, tool)
+	if (ishuman(user))
+		user:bloody_body(target)
+		user:bloody_hands(target, 0)
+
+/datum/surgery_step/brain/insert_brain
+	allowed_tools = list(
+	/obj/item/cortical_stack = 100
+	)
+	allowed_species = list(VOX)
+
+	min_duration = 60
+	max_duration = 80
+
+/datum/surgery_step/brain/insert_brain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	return ..() && target.op_stage.skull == 1 && !target.has_brain()
+
+/datum/surgery_step/brain/insert_brain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	user.visible_message("[user] starts inserting [tool] into [target]'s [BP.name].",
+	"You start inserting [tool] into [target]'s [BP.name].")
+	..()
+
+/datum/surgery_step/brain/insert_brain/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	user.visible_message("<span class='notice'>[user] inserts [tool] into [target]'s [BP.name].</span>",
+	"<span class='notice'>You inserts [tool] into [target]'s [BP.name].</span>")
+
+	if(!istype(tool, /obj/item/cortical_stack))
+		return
+
+	//this might actually be outdated since barring badminnery, a debrain'd body will have any client sucked out to the brain's internal mob. Leaving it anyway to be safe. --NEO
+	if(target.key)//Revised. /N
+		target.ghostize()
+	var/obj/item/cortical_stack/B = tool
+	if(B.brainmob)
+		if(B.brainmob.mind)
+			B.brainmob.mind.transfer_to(target)
+		else
+			target.key = B.brainmob.key
+		target.dna = B.brainmob.dna
+	new /obj/item/organ/internal/brain/vox(null, target)
+	qdel(tool)
+
+/datum/surgery_step/brain/insert_brain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	user.visible_message("<span class='warning'>[user]'s hand slips, damaging [target]'s [BP.name] with \the [tool]!</span>",
+	"<span class='warning'>Your hand slips, damaging [target]'s [BP.name] with \the [tool]!</span>")
+	target.apply_damage(5, BRUTE, BP)
