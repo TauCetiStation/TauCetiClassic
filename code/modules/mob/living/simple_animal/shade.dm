@@ -63,6 +63,7 @@
 	icon_living = "shade_god"
 	stat = CONSCIOUS
 	speak_emote = list("hisses", "bless")
+	speak = list()
 	maxHealth = 5000
 	health = 5000
 	melee_damage_lower = 0
@@ -71,4 +72,6 @@
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	universal_understand = TRUE
+	universal_speak = FALSE
 	pass_flags = PASSTABLE | PASSMOB | PASSGLASS | PASSGRILLE
+	var/islam = FALSE

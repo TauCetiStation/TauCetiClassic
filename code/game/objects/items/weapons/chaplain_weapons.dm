@@ -94,6 +94,8 @@
 			M.drop_from_inventory(staff)
 		staff.god_name = B.deity_name
 		qdel(src)
+		if(B.icon_state == "koran")
+			staff.islam = TRUE
 
 /obj/item/weapon/nullrod/staff
 	name = "Divine staff"
@@ -108,7 +110,8 @@
 	var/mob/living/simple_animal/shade/god/brainmob = null
 	var/soul_inside = FALSE //you need to then remove the afk-god
 	var/searching = FALSE
-	var/ping_cd = FALSE //attack_ghost cooldown
+	var/next_ping = 0
+	var/islam = FALSE
 
 /obj/item/weapon/nullrod/staff/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	if(istype(W, /obj/item/device/soulstone)) //mb, the only way to pull out god
@@ -119,7 +122,7 @@
 
 /obj/item/weapon/nullrod/staff/attack_self(mob/living/carbon/human/user)
 	if(user.mind.assigned_role == "Chaplain")
-		if(brainmob && !brainmob.ckey && !searching && !soul_inside)
+		if(!soul_inside && !brainmob && !searching)
 			//Start the process of searching for a new user.
 			to_chat(user, "<span class='notice'>You attempt to wake the spirit of the staff...</span>")
 			icon_state = "talking_staffanim"
@@ -127,7 +130,7 @@
 			searching = TRUE
 			request_player()
 			addtimer(CALLBACK(src, .proc/reset_search), 600)
-		else if(brainmob && !searching && soul_inside && (brainmob.stat == DEAD || brainmob.stat == UNCONSCIOUS))
+		else if(soul_inside && brainmob && !brainmob.ckey && !searching && (brainmob.stat == DEAD || brainmob.stat == UNCONSCIOUS))
 			reset_search() //kick afk-god from staff
 
 /obj/item/weapon/nullrod/staff/proc/request_player()
@@ -142,9 +145,11 @@
 				INVOKE_ASYNC(src, .proc/question, C)
 
 /obj/item/weapon/nullrod/staff/proc/question(client/C)
-	if(!C)	return
+	if(!C)	
+		return
 	var/response = alert(C, "Someone is requesting a your soul in divine staff?", "Staff request", "No", "Yeeesss", "Never for this round")
-	if(!C || brainmob.ckey || !searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
+	if(!C || (soul_inside && brainmob && brainmob.ckey) || !searching)	
+		return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 	if(response == "Yeeesss")
 		transfer_personality(C.mob)
 	else if (response == "Never for this round")
@@ -153,14 +158,14 @@
 /obj/item/weapon/nullrod/staff/proc/transfer_personality(mob/candidate)
 	searching = FALSE
 
-	to_chat(brainmob, "<span class='userdanger'>You are no longer our god!</span>")
-	qdel(brainmob) //create new god, otherwise the old mob could not be woken up
+	if(brainmob)
+		to_chat(brainmob, "<span class='userdanger'>You are no longer our god!</span>")
+		qdel(brainmob) //create new god, otherwise the old mob could not be woken up
 
 	brainmob = new(src)
 	brainmob.mutations.Add(XRAY) //its the god
 	brainmob.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 	brainmob.status_flags |= GODMODE
-	brainmob.loc = src
 
 	brainmob.mind = candidate.mind
 	brainmob.ckey = candidate.ckey
@@ -169,28 +174,36 @@
 	brainmob.mind.assigned_role = "Chaplain`s staff"
 	candidate.cancel_camera()
 	candidate.reset_view()
+	if(islam)
+		brainmob.islam = TRUE
+		brainmob.speak.Add("[god_name] akbar!")
 
 	name = "Staff of [god_name]"
 	desc = "Stones sometimes twitch. Pray for mercy on [god_name]."
-	to_chat(brainmob, "<b>You are a God, brought into existence on [station_name()].</b>")
-	to_chat(brainmob, "<b>The priest has called you, you can command them, because you are his God.</b>")
+	to_chat(brainmob, "<b>You are a god, brought into existence on [station_name()].</b>")
+	to_chat(brainmob, "<b>The priest has called you, you can command them, because you are their god.</b>")
 	to_chat(brainmob, "<b>All that is required of you is a creative image of the imprisoned god in the staff.</b>")
 	to_chat(brainmob, "<b>You can be both evil Satan thirsting and ordering sacrifices, and a good Jesus who wants more slaves.</b>")
+	to_chat(brainmob, "<span class='userdanger'>You do not know everything that happens and happened in the round!</span>")
  
 	icon_state = "talking_staffsoul"
 	soul_inside = TRUE
 
 /obj/item/weapon/nullrod/staff/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
-	if(brainmob && brainmob.ckey) return
+	if(soul_inside && brainmob && brainmob.ckey) 
+		return
+
+	if(brainmob && !brainmob.ckey)
+		qdel(brainmob)
 
 	searching = FALSE
 	soul_inside = FALSE
 	icon_state = "talking_staff"
-	visible_message("<span class='notice'>The stones of \the [src] stopped glowing, why didn't you please God?</span>")
+	visible_message("<span class='notice'>The stones of \the [src] stopped glowing, why didn't you please the god?</span>")
 
 /obj/item/weapon/nullrod/staff/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]</span>\n"
-	if(brainmob && brainmob.ckey)
+	if(soul_inside && brainmob && brainmob.ckey)
 		switch(brainmob.stat)
 			if(CONSCIOUS)
 				if(!brainmob.client)
@@ -205,20 +218,25 @@
 	to_chat(user, msg)
 
 /obj/item/weapon/nullrod/staff/attack_ghost(mob/dead/observer/O)
-	if(!ping_cd)
-		ping_cd = TRUE
-		spawn(50)
-			ping_cd = TRUE
-		audible_message("<span class='notice'>\The [src] stones blinked.</span>", deaf_message = "\The [src] stones blinked.") //TODO
+	//DEBUGG
+	if(!soul_inside && !brainmob && !searching)
+		//Start the process of searching for a new user.
+		to_chat(O, "<span class='notice'>You attempt to wake the spirit of the staff...</span>")
+		icon_state = "talking_staffanim"
+		light_power = 5
+		searching = TRUE
+		request_player()
+		addtimer(CALLBACK(src, .proc/reset_search), 600)
+	else if(soul_inside && brainmob && !brainmob.ckey && !searching && (brainmob.stat == DEAD || brainmob.stat == UNCONSCIOUS))
+		reset_search() //kick afk-god from staff
 
-/obj/item/weapon/nullrod/staff/atom_init()
-	. = ..()
-	brainmob = new(src)
-	brainmob.loc = src
-	dead_mob_list -= brainmob
+	if(next_ping > world.time)
+		return
+	
+	next_ping = world.time + 5 SECONDS
+	audible_message("<span class='notice'>\The [src] stones blinked.</span>", deaf_message = "\The [src] stones blinked.") //TODO
 
 /obj/item/weapon/nullrod/staff/Destroy()
-	for(var/mob/living/simple_animal/shade/brainmob in contents)
-		to_chat(brainmob, "<span class='userdanger'>You were destroyed!</span>")
-		qdel(brainmob)
+	to_chat(brainmob, "<span class='userdanger'>You were destroyed!</span>")
+	qdel(brainmob)
 	return ..()
