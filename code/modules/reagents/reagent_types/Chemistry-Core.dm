@@ -14,7 +14,7 @@
 			var/volume_coefficient = max((10-volume)/10, 0)
 			var/changes_occured = FALSE
 
-			if(H.species && H.species.name in list(HUMAN, UNATHI, TAJARAN))
+			if(H.species && (H.species.name in list(HUMAN, UNATHI, TAJARAN)))
 				if(H.hair_painted && !(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
 					H.dyed_r_hair = CLAMP(round(H.dyed_r_hair * volume_coefficient + ((H.r_hair * volume) / 10)), 0, 255)
 					H.dyed_g_hair = CLAMP(round(H.dyed_g_hair * volume_coefficient + ((H.g_hair * volume) / 10)), 0, 255)

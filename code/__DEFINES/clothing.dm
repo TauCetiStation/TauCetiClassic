@@ -51,6 +51,19 @@
 #define SLOT_TIE           21
 #define SLOT_EARS          22 // Used in obscured checks
 
+//sprite sheet slot types(as also seen in update_icon.dm)
+#define SPRITE_SHEET_HELD "held"
+#define SPRITE_SHEET_UNIFORM "uniform"
+#define SPRITE_SHEET_SUIT "suit"
+#define SPRITE_SHEET_BELT "belt"
+#define SPRITE_SHEET_HEAD "head"
+#define SPRITE_SHEET_BACK "back"
+#define SPRITE_SHEET_MASK "mask"
+#define SPRITE_SHEET_EARS "ears"
+#define SPRITE_SHEET_EYES "eyes"
+#define SPRITE_SHEET_FEET "feet"
+#define SPRITE_SHEET_GLOVES "gloves"
+
 //Sol translation for dog slots.
 #define SLOT_MOUTH SLOT_WEAR_MASK  // 2
 #define SLOT_NECK  SLOT_HANDCUFFED // 3 (Ian actually is a cat! ~if you know what i mean)

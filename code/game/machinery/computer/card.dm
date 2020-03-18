@@ -65,7 +65,7 @@
 	if(!istype(id_card))
 		return ..()
 
-	if(!scan && access_change_ids in id_card.access)
+	if(!scan && (access_change_ids in id_card.access))
 		user.drop_item()
 		id_card.loc = src
 		scan = id_card

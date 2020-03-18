@@ -10,7 +10,7 @@ var/datum/subsystem/atoms/SSatoms
 	init_order = SS_INIT_ATOMS
 	flags = SS_NO_FIRE
 
-	var/initialized = INITIALIZATION_INSSATOMS
+	initialized = INITIALIZATION_INSSATOMS
 	var/old_initialized
 
 	var/list/late_loaders
@@ -27,7 +27,12 @@ var/datum/subsystem/atoms/SSatoms
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
 	color_windows_init()
-	..()
+
+	var/time = (world.timeofday - timeofday) / 10
+	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"
+	world.log << "[msg]"
+	log_initialization(msg)
+	return time
 
 /datum/subsystem/atoms/proc/InitializeAtoms(list/atoms)
 	if(initialized == INITIALIZATION_INSSATOMS)

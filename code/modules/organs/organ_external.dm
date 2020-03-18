@@ -419,14 +419,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 ****************************************************/
 
 /obj/item/organ/external/proc/release_restraints()
-	if (owner.handcuffed && body_part in list(ARM_LEFT, ARM_RIGHT))
+	if (owner.handcuffed && (body_part in list(ARM_LEFT, ARM_RIGHT)))
 		owner.visible_message(\
 			"\The [owner.handcuffed.name] falls off of [owner.name].",\
 			"\The [owner.handcuffed.name] falls off you.")
 
 		owner.drop_from_inventory(owner.handcuffed)
 
-	if (owner.legcuffed && body_part in list(LEG_LEFT, LEG_RIGHT))
+	if (owner.legcuffed && (body_part in list(LEG_LEFT, LEG_RIGHT)))
 		owner.visible_message(\
 			"\The [owner.legcuffed.name] falls off of [owner.name].",\
 			"\The [owner.legcuffed.name] falls off you.")
@@ -576,10 +576,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(is_broken())
 		owner.drop_from_inventory(c_hand)
 		var/emote_scream = pick("screams in pain and", "lets out a sharp cry and", "cries out and")
-		owner.emote("pain", 1, "[(owner.species && owner.species.flags[NO_PAIN]) ? "" : emote_scream ] drops what they were holding in their [hand_name]!")
+		owner.emote("grunt", SHOWMSG_VISUAL, "[(owner.species && owner.species.flags[NO_PAIN]) ? "" : emote_scream ] drops what they were holding in their [hand_name]!")
 	if(is_malfunctioning())
 		owner.drop_from_inventory(c_hand)
-		owner.emote("pain", 1, "drops what they were holding, their [hand_name] malfunctioning!")
+		owner.emote("grunt", SHOWMSG_VISUAL, "drops what they were holding, their [hand_name] malfunctioning!")
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, owner)
 		spark_system.attach(owner)

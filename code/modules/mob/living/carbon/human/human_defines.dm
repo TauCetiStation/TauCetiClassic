@@ -93,8 +93,9 @@
 	var/my_golems = list()
 
 	// Prevent sound emotes spam in some situations
-	var/last_high_priority_sound_emote = 0 // high priority. these sounds can only be overlaid by sounds with the same priority
-	var/lastSoundEmote = 0 // medium priority. these sounds is not overlapped by lower priority sounds. TODO: make a variable of sound with a low priority and refactor emote system
+	var/next_high_priority_sound = 0 // Usually these sounds require high attention, such as the sound of agony. These sounds can only be overlaid by sounds with the same priority.
+	var/next_medium_priority_sound = 0 // Usually these sounds are not so important, but they can't be overlapped by low priority sounds(with auto = FALSE).
+	var/next_low_priority_sound = 0 // There are only those sounds that can be triggered by the user manually(with auto = FALSE). These sounds can be overlapped with sound of any priority.
 	var/last_pain_emote_sound = 0 // don't cry in pain too often
 	var/time_of_last_damage = 0 // don't cry from the pain that just came
 

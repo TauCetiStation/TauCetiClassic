@@ -113,7 +113,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 					if(ishuman(affected_mob))
 						var/mob/living/carbon/human/H = affected_mob
 						H.apply_damage(rand(20, 30), BRUTE, BP_CHEST)
-						H.emote("scream", auto = TRUE)
+						H.emote("scream")
 					else
 						affected_mob.adjustBruteLoss(15)
 			AttemptGrow()
