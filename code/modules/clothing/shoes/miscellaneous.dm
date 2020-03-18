@@ -44,7 +44,7 @@
 	desc = "When you REALLY want to turn up the heat<br>They have the toe caps cut off of them."
 	icon_state = "swat_cut"
 	clipped_status = CLIPPED
-	species_restricted = list("exclude", DIONA, VOX)
+	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
 
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
@@ -225,6 +225,7 @@
 	icon_state = "Lizard_Boots"
 	item_state = "r_feet"
 	item_color = "Lizard_Boots"
+	species_restricted = list(UNATHI)
 
 /obj/item/clothing/shoes/heels
 	name = "Heels"

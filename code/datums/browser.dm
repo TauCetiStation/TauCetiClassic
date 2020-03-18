@@ -15,7 +15,6 @@
 	var/head_content = ""
 	var/content = ""
 
-
 /datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref, ntheme)
 
 	user = nuser
@@ -31,6 +30,7 @@
 	if (ntheme)
 		theme = ntheme
 	add_stylesheet("common", 'html/browser/common.css') // this CSS sheet is common to all UIs
+	register_asset("error_handler.js", 'code/modules/error_handler_js/error_handler.js') // error_handler - same name as in other places, add_script do ckey with names.
 
 /datum/browser/proc/add_head_content(nhead_content)
 	head_content = nhead_content
@@ -42,10 +42,18 @@
 	//title_image = ntitle_image
 
 /datum/browser/proc/add_stylesheet(name, file)
-	stylesheets[name] = file
+	if (istype(name, /datum/asset/spritesheet))
+		var/datum/asset/spritesheet/sheet = name
+		stylesheets += "spritesheet_[sheet.name].css"
+	else
+		var/asset_name = "[name].css"
+		stylesheets[asset_name] = file
+		if (!SSasset.cache[asset_name])
+			register_asset(asset_name, file)
 
 /datum/browser/proc/add_script(name, file)
-	scripts[name] = file
+	scripts["[ckey(name)].js"] = file
+	register_asset("[ckey(name)].js", file)
 
 /datum/browser/proc/set_content(ncontent)
 	content = ncontent
@@ -54,17 +62,16 @@
 	content += ncontent
 
 /datum/browser/proc/get_header()
-	var/key
-	var/filename
-	for (key in stylesheets)
-		filename = "[ckey(key)].css"
-		user << browse_rsc(stylesheets[key], filename)
-		head_content += "<link rel='stylesheet' type='text/css' href='[filename]'>"
 
-	for (key in scripts)
-		filename = "[ckey(key)].js"
-		user << browse_rsc(scripts[key], filename)
-		head_content += "<script type='text/javascript' src='[filename]'></script>"
+	for (var/name in stylesheets)
+		head_content += "<link rel='stylesheet' type='text/css' href='[name]'>"
+
+	//should be first
+	head_content += "<script type='text/javascript' src='error_handler.js'></script>"
+	head_content += "<script type='text/javascript'>var triggerError = attachErrorHandler('browser', true);</script>"	
+
+	for (var/name in scripts)
+		head_content += "<script type='text/javascript' src='[name]'></script>"
 
 	var/title_attributes = "class='uiTitle'"
 	if (title_image)
@@ -88,7 +95,7 @@
 			</div>
 		</div>
 		<script>
-			document.body.innerHTML = document.body.innerHTML.replace(/¶/g, "ÿ");<!-- omg its so weird --!>
+			document.body.innerHTML = document.body.innerHTML.replace(/¶/g, "&#1103;");
 		</script>
 	</body>
 </html>"}
@@ -99,11 +106,16 @@
 	[content]
 	[get_footer()]
 	"}
-//"
+
 /datum/browser/proc/open(use_onclose = 1)
 	var/window_size = ""
 	if (width && height)
 		window_size = "size=[width]x[height];"
+	send_asset(user, "error_handler.js")
+	if (stylesheets.len)
+		send_asset_list(user, stylesheets, verify=FALSE)
+	if (scripts.len)
+		send_asset_list(user, scripts, verify=FALSE)
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
 	if (use_onclose)
 		onclose(user, window_id, ref)

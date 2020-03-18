@@ -115,7 +115,7 @@
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
 // This is handled in the proc below this one.
 
-/client/proc/AIMove(n, direct, mob/living/silicon/ai/user)
+/client/proc/AIMove(n, direct, mob/living/silicon/ai/user)		//Needs to be removed in favor of remote_control and relaymove()
 
 	var/initial = initial(user.sprint)
 	var/max_sprint = 50

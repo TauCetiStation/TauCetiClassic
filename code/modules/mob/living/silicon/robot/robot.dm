@@ -195,7 +195,7 @@
 		if("Science")
 			module = new /obj/item/weapon/robot_module/science(src)
 			module.channels = list("Science" = 1)
-			if(camera && "Robots" in camera.network)
+			if(camera && ("Robots" in camera.network))
 				camera.add_network("Science")
 			module_sprites["Toxin"] = "toxbot"
 			module_sprites["Xenobio"] = "xenobot"
@@ -204,7 +204,7 @@
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
 			module.channels = list("Supply" = 1)
-			if(camera && "Robots" in camera.network)
+			if(camera && ("Robots" in camera.network))
 				camera.add_network("MINE")
 			module_sprites["Basic"] = "Miner_old"
 			module_sprites["Advanced Droid"] = "droid-miner"
@@ -216,7 +216,7 @@
 		if("Crisis")
 			module = new /obj/item/weapon/robot_module/crisis(src)
 			module.channels = list("Medical" = 1)
-			if(camera && "Robots" in camera.network)
+			if(camera && ("Robots" in camera.network))
 				camera.add_network("Medical")
 			module_sprites["Basic"] = "Medbot"
 			module_sprites["Standard"] = "surgeon"
@@ -228,7 +228,7 @@
 		if("Surgeon")
 			module = new /obj/item/weapon/robot_module/surgeon(src)
 			module.channels = list("Medical" = 1)
-			if(camera && "Robots" in camera.network)
+			if(camera && ("Robots" in camera.network))
 				camera.add_network("Medical")
 			module_sprites["Basic"] = "Medbot"
 			module_sprites["Standard"] = "surgeon"
@@ -252,7 +252,7 @@
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			module.channels = list("Engineering" = 1)
-			if(camera && "Robots" in camera.network)
+			if(camera && ("Robots" in camera.network))
 				camera.add_network("Engineering")
 			module_sprites["Basic"] = "Engineering"
 			module_sprites["Antique"] = "engineerrobot"
@@ -401,8 +401,10 @@
 	to_chat(usr, "You [lights_on ? "enable" : "disable"] your integrated light.")
 	if(lights_on)
 		set_light(5)
+		playsound_local(src, 'sound/effects/click_on.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 	else
 		set_light(0)
+		playsound_local(src, 'sound/effects/click_off.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 
 /mob/living/silicon/robot/proc/toggle_component()
 
@@ -513,7 +515,6 @@
 		return 1
 	..()
 	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
-
 
 /mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
 	var/has_alarm = ..()
@@ -781,7 +782,7 @@
 				to_chat(src, "Hack attempt detected.")
 		return TRUE
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/silicon/robot/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -957,8 +958,8 @@
 		add_overlay("eyes-[icon_state]")
 	else
 		cut_overlay("eyes")
-		
-	update_fire()	
+
+	update_fire()
 
 	if(opened && custom_sprite == 1) //Custom borgs also have custom panels, heh
 		if(wiresexposed)
@@ -1191,7 +1192,10 @@
 							to_chat(cleaned_human, "<span class='warning'>[src] cleans your face!</span>")
 
 /mob/living/silicon/robot/proc/self_destruct()
+	playsound(src, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, 95, FALSE)
+	sleep(42)
 	gib()
+	playsound(src, 'sound/effects/Explosion1.ogg', VOL_EFFECTS_MASTER, 75, FALSE)
 	return
 
 /mob/living/silicon/robot/proc/UnlinkSelf()

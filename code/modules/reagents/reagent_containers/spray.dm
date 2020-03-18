@@ -199,7 +199,7 @@
 	name = "hair color spray"
 	desc = "Changes hair colour! Don't forget to read the label!"
 	icon = 'icons/obj/items.dmi'
-	icon_state = "hairspray"
+	icon_state = "hairspraywhite"
 	item_state = "hairspray"
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = list(1,5,10)

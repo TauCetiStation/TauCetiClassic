@@ -245,7 +245,7 @@
 						visible_message("<span class='warning'><B>[M] has disarmed [name]!</B></span>")
 	return
 
-/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/carbon/monkey/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -443,3 +443,6 @@
 
 /mob/living/carbon/monkey/get_species()
 	return race
+
+/mob/living/carbon/monkey/is_facehuggable()
+	return stat != DEAD && !(locate(/obj/item/alien_embryo) in contents)

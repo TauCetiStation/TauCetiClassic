@@ -398,7 +398,7 @@
 							if(!query.Execute())
 								to_chat(usr, query.ErrorMsg())
 							else
-								log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
+								log_game("[key_name(usr)] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
 								alert("Upload Complete.")
 
 	if(href_list["targetid"])

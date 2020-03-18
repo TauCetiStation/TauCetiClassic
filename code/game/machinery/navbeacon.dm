@@ -9,8 +9,9 @@
 	desc = "A radio beacon used for bot navigation."
 	level = 1		// underfloor
 	layer = 2.5
-	anchored = 1
+	anchored = TRUE
 	interact_offline = TRUE
+	can_be_unanchored = TRUE
 
 	var/open = 0		// true if cover is open
 	var/locked = 1		// true if controls are locked
@@ -19,7 +20,7 @@
 	var/list/codes		// assoc. list of transponder codes
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 
-	req_access = list(access_engine)
+	req_one_access = list(access_engine, access_cargo_bot)
 
 /obj/machinery/navbeacon/atom_init()
 	. = ..()
@@ -112,7 +113,7 @@
 
 		updateicon()
 
-	else if (istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
+	else if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 		if(open)
 			if (src.allowed(user))
 				src.locked = !src.locked
@@ -122,6 +123,9 @@
 			updateDialog()
 		else
 			to_chat(user, "You must open the cover first!")
+	else if (default_unfasten_wrench(user, I))
+		anchored = !anchored
+		to_chat(user, "You [anchored ? "" : "un"]fasten [anchored ? "to" : "from"] the plating")
 	return
 
 /obj/machinery/navbeacon/attack_paw()

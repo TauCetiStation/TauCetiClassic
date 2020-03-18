@@ -76,17 +76,17 @@
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
 	sprite_sheets = list(
-		"held" = 'icons/mob/path',
-		"uniform" = 'icons/mob/path',
-		"suit" = 'icons/mob/path',
-		"belt" = 'icons/mob/path'
-		"head" = 'icons/mob/path',
-		"back" = 'icons/mob/path',
-		"mask" = 'icons/mob/path',
-		"ears" = 'icons/mob/path',
-		"eyes" = 'icons/mob/path',
-		"feet" = 'icons/mob/path',
-		"gloves" = 'icons/mob/path'
+		SPRITE_SHEET_HELD = 'icons/mob/path',
+		SPRITE_SHEET_UNIFORM = 'icons/mob/path',
+		SPRITE_SHEET_SUIT = 'icons/mob/path',
+		SPRITE_SHEET_BELT = 'icons/mob/path'
+		SPRITE_SHEET_HEAD = 'icons/mob/path',
+		SPRITE_SHEET_BACK = 'icons/mob/path',
+		SPRITE_SHEET_MASK = 'icons/mob/path',
+		SPRITE_SHEET_EARS = 'icons/mob/path',
+		SPRITE_SHEET_EYES = 'icons/mob/path',
+		SPRITE_SHEET_FEET = 'icons/mob/path',
+		SPRITE_SHEET_GLOVES = 'icons/mob/path'
 		)
 	If index term exists and icon_override is not set, this sprite sheet will be used.
 	*/
@@ -178,10 +178,13 @@
 			H.update_hair()
 	return
 
-/datum/species/proc/before_job_equip(mob/living/carbon/human/H, datum/job/J) // Do we really need this proc? Perhaps.
+/datum/species/proc/before_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE) // Do we really need this proc? Perhaps.
 	return
 
-/datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+/datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
 	var/obj/item/weapon/storage/box/survival/SK = new(H)
 
 	species_survival_kit_items:
@@ -221,6 +224,8 @@
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,HAS_HAIR = TRUE
+	,FACEHUGGABLE = TRUE
+	,HAS_HAIR_COLOR = TRUE
 	)
 
 	//If you wanted to add a species-level ability:
@@ -258,7 +263,9 @@
 	,HAS_UNDERWEAR = TRUE
 	,HAS_TAIL = TRUE
 	,HAS_SKIN_COLOR = TRUE
+	,HAS_HAIR_COLOR = TRUE
 	,NO_MINORCUTS = TRUE
+	,FACEHUGGABLE = TRUE
 	)
 
 	flesh_color = "#34af10"
@@ -267,7 +274,7 @@
 	min_age = 25
 	max_age = 85
 
-/datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+/datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
@@ -313,7 +320,9 @@
 	,HAS_UNDERWEAR = TRUE
 	,HAS_TAIL = TRUE
 	,HAS_SKIN_COLOR = TRUE
+	,HAS_HAIR_COLOR = TRUE
 	,HAS_HAIR = TRUE
+	,FACEHUGGABLE = TRUE
 	)
 
 	flesh_color = "#afa59e"
@@ -322,7 +331,7 @@
 	min_age = 25
 	max_age = 85
 
-/datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+/datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
@@ -347,6 +356,8 @@
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,HAS_SKIN_COLOR = TRUE
+	,FACEHUGGABLE = TRUE
+	,HAS_HAIR_COLOR = TRUE
 	)
 
 	has_organ = list(
@@ -390,32 +401,58 @@
 	poison_type = "oxygen"
 
 	flags = list(
-		NO_SCAN = TRUE
+		IS_WHITELISTED = TRUE
+		,NO_SCAN = TRUE
+		,FACEHUGGABLE = TRUE
+		,SPRITE_SHEET_RESTRICTION = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
 	flesh_color = "#808d11"
 
 	sprite_sheets = list(
-		"suit" = 'icons/mob/species/vox/suit.dmi',
-		"head" = 'icons/mob/species/vox/head.dmi',
-		"mask" = 'icons/mob/species/vox/masks.dmi',
-		"feet" = 'icons/mob/species/vox/shoes.dmi',
-		"gloves" = 'icons/mob/species/vox/gloves.dmi'
+		// SPRITE_SHEET_HELD = 'icons/mob/species/vox/held.dmi',
+		SPRITE_SHEET_UNIFORM = 'icons/mob/species/vox/uniform.dmi',
+		SPRITE_SHEET_SUIT = 'icons/mob/species/vox/suit.dmi',
+		SPRITE_SHEET_BELT = 'icons/mob/belt.dmi',
+		SPRITE_SHEET_HEAD = 'icons/mob/species/vox/helmet.dmi',
+		SPRITE_SHEET_BACK = 'icons/mob/back.dmi',
+		SPRITE_SHEET_MASK = 'icons/mob/species/vox/masks.dmi',
+		SPRITE_SHEET_EARS = 'icons/mob/ears.dmi',
+		SPRITE_SHEET_EYES = 'icons/mob/species/vox/eyes.dmi',
+		SPRITE_SHEET_FEET = 'icons/mob/species/vox/shoes.dmi',
+		SPRITE_SHEET_GLOVES = 'icons/mob/species/vox/gloves.dmi'
 		)
+
+	survival_kit_items = list(/obj/item/weapon/tank/emergency_nitrogen
+	                          )
+
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/nitrogen) // So they don't get the big engi oxy tank, since they need no tank.
+
 
 	min_age = 12
 	max_age = 20
 
-/datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+/datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
+	..()
+	if(H.wear_mask)
+		qdel(H.wear_mask)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
-	if(!H.r_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), SLOT_R_HAND)
+	if(!H.r_store)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_R_STORE)
+		H.internal = H.r_store
+	else if(!H.l_store)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_L_STORE)
+		H.internal = H.l_store
+	else if(!H.r_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_R_HAND)
 		H.internal = H.r_hand
 	else if(!H.l_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), SLOT_L_HAND)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_L_HAND)
 		H.internal = H.l_hand
-	H.internals.icon_state = "internal1"
+	if(H.shoes)
+		qdel(H.shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/magboots/vox(src), SLOT_SHOES)
 
 /datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_vox_digest(M)
@@ -481,6 +518,7 @@
 	,NO_BLOOD = TRUE
 	,HAS_TAIL = TRUE
 	,NO_PAIN = TRUE
+	,SPRITE_SHEET_RESTRICTION = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
@@ -489,11 +527,11 @@
 	icon_template = 'icons/mob/human_races/r_armalis.dmi'
 
 	sprite_sheets = list(
-		"suit" = 'icons/mob/species/armalis/suit.dmi',
-		"gloves" = 'icons/mob/species/armalis/gloves.dmi',
-		"feet" = 'icons/mob/species/armalis/feet.dmi',
-		"head" = 'icons/mob/species/armalis/head.dmi',
-		"held" = 'icons/mob/species/armalis/held.dmi'
+		SPRITE_SHEET_SUIT = 'icons/mob/species/armalis/suit.dmi',
+		SPRITE_SHEET_GLOVES = 'icons/mob/species/armalis/gloves.dmi',
+		SPRITE_SHEET_FEET = 'icons/mob/species/armalis/feet.dmi',
+		SPRITE_SHEET_HEAD = 'icons/mob/species/armalis/head.dmi',
+		SPRITE_SHEET_HELD = 'icons/mob/species/armalis/held.dmi'
 		)
 
 /datum/species/diona
@@ -650,7 +688,9 @@
 	,NO_SCAN = TRUE
 	,NO_BLOOD = TRUE
 	,NO_PAIN = TRUE
+	,HAS_HAIR_COLOR = TRUE
 	,IS_SYNTHETIC = TRUE
+	,HAS_SKIN_COLOR = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,BIOHAZZARD_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
