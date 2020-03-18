@@ -453,7 +453,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			if(65)
 				visible_message("<span class='userdanger'>A new [parse_zone(regenerating_bodypart.body_zone)] has grown from [src]'s [regenerating_bodypart.parent.name]!</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] your [parse_zone(regenerating_bodypart.body_zone)] again!</span>")
 		if(prob(50))
-			emote("scream",1,null,1)
+			emote("scream")
 		if(regenerating_organ_time >= regenerating_capacity_penalty) // recover organ
 			regenerating_bodypart.rejuvenate()
 			regenerating_organ_time = 0
@@ -2045,6 +2045,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		stat = UNCONSCIOUS
 		blinded = TRUE
 
+/mob/living/carbon/human/is_facehuggable()
+	return species.flags[FACEHUGGABLE] && stat != DEAD && !(locate(/obj/item/alien_embryo) in contents)
+
 /mob/living/carbon/human/verb/remove_bandages()
 	set category = "IC"
 	set name = "Remove bandages"
@@ -2074,4 +2077,3 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			update_bandage()
 			attack_log += "\[[time_stamp()]\] <font color='orange'>Had their bandages removed by [usr.name] ([usr.ckey]).</font>"
 			usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) bandages.</font>"
-

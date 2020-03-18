@@ -624,7 +624,7 @@ var/failed_old_db_connections = 0
 		if (data["ip"] && M.client && M.client.address && M.client.address == data["ip"])
 			ban_key += "ip([data["ip"]])"
 		if (length(ban_key))
-			var/banned = world.IsBanned(data["ckey"], data["ip"],  data["cid"])
+			var/banned = world.IsBanned(data["ckey"], data["ip"],  data["cid"], real_bans_only = TRUE)
 			if (banned && banned["reason"] && banned["desc"])
 				to_kick[M] = banned["desc"]
 				var/notify = text("Player [] kicked by ban announce from []. Reason: []. Matched [].", M.ckey, sender, banned["reason"], ban_key.Join(", "))

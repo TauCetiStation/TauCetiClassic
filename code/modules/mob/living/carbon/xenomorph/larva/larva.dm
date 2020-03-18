@@ -11,7 +11,6 @@
 
 	density = 0
 	small = 1
-
 	var/amount_grown = 0
 	var/max_grown = 200
 	var/time_of_birth
@@ -37,6 +36,18 @@
 	if(statpanel("Status"))
 		stat(null, "Progress: [amount_grown]/[max_grown]")
 
+/mob/living/carbon/xenomorph/larva/toggle_throw_mode()
+	return
+
+/mob/living/carbon/xenomorph/larva/throw_mode_on()
+	return
+
+/mob/living/carbon/xenomorph/larva/throw_mode_off()
+	return
+
+/mob/living/carbon/xenomorph/larva/throw_item(atom/target)
+	return
+
 /mob/living/carbon/xenomorph/larva/start_pulling(atom/movable/AM)//Prevents mouse from pulling things
 	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
 	return
@@ -45,7 +56,7 @@
 	return
 
 /mob/living/carbon/xenomorph/larva/movement_delay()
-	var/tally = 0
-	if (istype(src, /mob/living/carbon/xenomorph/larva)) //just in case
-		tally = -1
-	return (tally + move_delay_add + config.alien_delay)
+	return (move_delay_add + config.alien_delay - 1)
+
+/mob/living/carbon/xenomorph/larva/can_pickup(obj/O)
+	return FALSE

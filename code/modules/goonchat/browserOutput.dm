@@ -132,7 +132,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 				var/list/row = connectionHistory[i]
 				if(!row || row.len < 3 || !(row["ckey"] && row["compid"] && row["ip"]))
 					return
-				if(world.IsBanned(row["ckey"], row["compid"], row["ip"]))
+				if(world.IsBanned(row["ckey"], row["compid"], row["ip"], real_bans_only = TRUE))
 					found = row
 					break
 
