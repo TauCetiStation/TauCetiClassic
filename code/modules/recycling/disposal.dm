@@ -360,10 +360,6 @@
 		flush = 0
 		return
 
-	// flush handle
-	if(flush)
-		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-handle"))
-
 	// only handle is shown if no power
 	if(stat & NOPOWER || mode == -1)
 		return
