@@ -228,8 +228,14 @@ REQ_CULT_GHOSTWRITER 6
 ## 2 - for first day
 ANTIGRIEF_ALARM_LEVEL 1
 
-## Uncomment for
-#PROXY_AUTOBAN
+## guard (geoip and stuff)
+#GUARD_EMAIL contact@taucetistation.org
+#GUARD_ENABLED
+#GUARD_AUTOBAN_TRESHHOLD 2
+#GUARD_AUTOBAN_REASON We think you are a bad guy and block you because of this.
+#GUARD_AUTOBAN_STICKY
+# ISO 3166-1 codes for trusted
+#GUARD_WHITELISTED_COUNTRY_CODES RU,UA,BY,KZ
 
 ## Uncomment to provide special actions for people from /config/donators.txt
 #ALLOW_DONATORS

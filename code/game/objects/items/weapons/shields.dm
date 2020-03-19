@@ -3,6 +3,7 @@
 	var/block_chance = 65
 
 /obj/item/weapon/shield/riot
+	hitsound = list('sound/weapons/metal_shield_hit.ogg')
 	name = "riot shield"
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
 	icon = 'icons/obj/weapons.dmi'
@@ -141,6 +142,63 @@
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
 	item_state = "roman_shield"
+
+/obj/item/weapon/shield/buckler
+	name = "buckler"
+	desc = "A standard home-made shield, that can protect you from multiple shots. May break."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "buckler"
+	flags = CONDUCT
+	force = 6.0
+	throwforce = 4.0
+	throw_speed = 3
+	throw_range = 5
+	block_chance = 45
+	w_class = ITEM_SIZE_NORMAL
+	m_amt = 1000
+	g_amt = 0
+	origin_tech = "materials=2"
+	attack_verb = list("shoved", "bashed")
+	hitsound = list('sound/weapons/wood_shield_hit.ogg')
+	var/cooldown = 0
+
+/obj/item/weapon/shield/buckler/Get_shield_chance()
+	return block_chance
+
+
+/obj/item/weapon/shield/buckler/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/twohanded/spear))
+		if(cooldown < world.time - 25)
+			user.visible_message("<span class='warning'>[user] hits the buclker with spear!</span>")
+			playsound(user, 'sound/effects/hits_to_w_shield.ogg', VOL_EFFECTS_MASTER)
+			cooldown = world.time
+
+
+// *(BUCKLER craft in recipes.dm)*
+
+/obj/item/weapon/bucklerframe1
+	name = "shield(1 stage)"
+	desc = "To finish you need: cut with wirecutters; bound with cable restraints; attach 4 plasteel; weld it all."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "bucklerframe1"
+
+/obj/item/weapon/bucklerframe2
+	name = "shield(2 stage)"
+	desc = "To finish you need: bound with cable restraints; attach 4 plasteel; weld it all."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "bucklerframe2"
+
+/obj/item/weapon/bucklerframe3
+	name = "shield(3 stage)"
+	desc = "To finish you need: attach 4 plasteel; weld it all."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "bucklerframe3"
+
+/obj/item/weapon/bucklerframe4
+	name = "shield(4 stage)"
+	desc = "To finish you need: weld it all."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "bucklerframe4"
 
 /*
 /obj/item/weapon/cloaking_device
