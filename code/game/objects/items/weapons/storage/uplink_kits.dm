@@ -109,11 +109,8 @@
 /obj/item/weapon/storage/box/syndie_kit/bonepen
 	name = "Prototype Bone Repair Kit"
 /obj/item/weapon/storage/box/syndie_kit/bonepen/atom_init()
-new /obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen(src)
-	/obj/item/weapon/paper/bonepen_instruction
-	name = "How to use PBRK"
-	info = "Congratulations! Usage: This is a highly experimental prototype chemical designed to repair damaged bones of soldiers in the field, use only as a last resort. The autoinjector contains prototype nanites bearing a calcium based payload. The nanites will simultaneously shut down body systems whilst aiding bone repair Warning: Side effects can cause temporary paralysis, loss of co-ordination and sickness. Do not use with any kind of stimulant or drugs. Serious damage can occur!</B><BR><BR><BR>To apply, hold the injector a short distance away from the outer thigh before applying firmly to the skin surface. Bones should begin repair after a short time, during which you are advised to remain still. After use you are advised to see a doctor at the next available opportunity. Mild scarring and tissue damage may occur after use. This is a prototype."
-	. = ..()
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen(src)
+
 	
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	name = "boxed freedom implant (with injector)"
