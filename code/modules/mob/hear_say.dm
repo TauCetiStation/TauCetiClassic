@@ -19,7 +19,7 @@
 			var/messagebef = message
 			var/mob/living/simple_animal/S = speaker
 			message = pick(S.speak)
-			if(ishuman(src) && isgod(speaker))
+			if(isgod(speaker) && ishuman(src))
 				var/mob/living/carbon/human/H = src
 				var/mob/living/simple_animal/shade/god/G = speaker
 				if(H.mind.assigned_role == "Chaplain" && G.islam)
