@@ -1858,8 +1858,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			L.Weaken(1) //Only brief stun
 			step_towards(src, L)
 		else
-			L.Weaken(2)
+			L.Weaken(5)
+			sleep(2) // Runtime prevention (infinite bump() calls on hulks)
 			step_towards(src, L)
+			Grab(L, GRAB_AGGRESSIVE)
 
 	else if(hit_atom.density)
 		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smash into [hit_atom]!</span>")
@@ -2044,7 +2046,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		blinded = TRUE
 
 /mob/living/carbon/human/is_facehuggable()
-	return species.flags[FACEHUGGABLE] && stat != DEAD && !(locate(/obj/item/alien_embryo) in contents)
+	return species.flags[FACEHUGGABLE] && !stat && !(locate(/obj/item/alien_embryo) in contents)
 
 /mob/living/carbon/human/verb/remove_bandages()
 	set category = "IC"

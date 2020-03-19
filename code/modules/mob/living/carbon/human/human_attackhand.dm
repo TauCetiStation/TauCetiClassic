@@ -128,7 +128,7 @@
 				apply_effect(2, WEAKEN, armor_block)
 
 			damage += attack.damage
-			apply_damage(damage, BRUTE, BP, armor_block, attack.damage_flags(), used_weapon = "Hematoma")
+			apply_damage(damage, BRUTE, BP, armor_block, attack.damage_flags())
 
 
 		if("disarm")

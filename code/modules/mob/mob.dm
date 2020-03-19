@@ -1105,6 +1105,3 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/can_pickup(obj/O)
 	return TRUE
-
-/atom/movable/proc/is_facehuggable()
-	return FALSE

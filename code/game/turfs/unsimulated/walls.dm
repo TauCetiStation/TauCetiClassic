@@ -6,8 +6,6 @@
 	density = 1
 	smooth = SMOOTH_TRUE
 
-/turf/unsimulated/wall/iron
-	icon = 'icons/turf/walls/iron.dmi'
 
 /turf/unsimulated/wall/fakeglass
 	name = "window"

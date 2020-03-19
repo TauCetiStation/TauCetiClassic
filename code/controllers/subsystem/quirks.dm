@@ -34,18 +34,13 @@ var/datum/subsystem/quirks/SSquirks
 		)
 
 	quirk_blacklist_species = list(
-		"Fatness" = list(DIONA, IPC, VOX),
-		"Child of Nature" = list(HUMAN, SKRELL, TAJARAN, UNATHI, IPC, VOX),
+		"Fatness" = list(DIONA, IPC),
+		"Child of Nature" = list(HUMAN, SKRELL, TAJARAN, UNATHI, IPC),
 		"Stress Eater" = list(DIONA, IPC),
 		"High pain threshold" = list(DIONA, IPC),
 		"Low pain threshold" = list(DIONA, IPC),
 		"Alcohol Tolerance" = list(DIONA, IPC),
-		"Light Drinker" = list(DIONA, IPC),
-		"Coughing" = list(DIONA, IPC),
-		"Seizures" = list(DIONA, IPC),
-		"Tourette" = list(DIONA, VOX),
-		"Nervous" = list(DIONA),
-		"Strong mind" = list(DIONA, IPC)
+		"Light Drinker" = list(DIONA, IPC)
 		)
 
 	..()

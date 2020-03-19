@@ -471,7 +471,11 @@
 /turf/unsimulated/wall/fakeglass,
 /area/custom/wizard_station)
 "aaZ" = (
-/turf/unsimulated/wall/iron,
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron6";
+	smooth = 0
+	},
 /area/custom/tophat)
 "aba" = (
 /obj/machinery/abductor/gland_dispenser{
@@ -572,6 +576,27 @@
 /obj/item/weapon/reagent_containers/glass/rag,
 /turf/unsimulated/floor{
 	icon_state = "wooden-2"
+	},
+/area/custom/tophat)
+"abp" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron12";
+	smooth = 0
+	},
+/area/custom/tophat)
+"abq" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron10";
+	smooth = 0
+	},
+/area/custom/tophat)
+"abr" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron3";
+	smooth = 0
 	},
 /area/custom/tophat)
 "abs" = (
@@ -15875,6 +15900,20 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
+"beG" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron9";
+	smooth = 0
+	},
+/area/custom/tophat)
+"beH" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron5";
+	smooth = 0
+	},
+/area/custom/tophat)
 "beI" = (
 /obj/effect/landmark/abductor/agent{
 	team = 3
@@ -25344,13 +25383,13 @@ aaM
 aaM
 aaM
 aaM
-aaZ
-aaZ
-aaZ
-aaZ
-aaZ
-aaZ
-aaZ
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -25602,12 +25641,12 @@ aaM
 aaM
 aaM
 aaZ
-abd
-abe
-abh
-abk
-abm
-aaZ
+abr
+abr
+abr
+abr
+abr
+beH
 aaM
 aaM
 aaM
@@ -25858,13 +25897,13 @@ aaM
 aaM
 aaM
 aaM
-aaZ
+abp
+abd
 abe
-abe
-abe
-abe
-abe
-aaZ
+abh
+abk
+abm
+abp
 aaM
 aaM
 aaM
@@ -26115,13 +26154,13 @@ aaM
 aaM
 aaM
 aaM
-aaZ
-abf
+abp
 abe
-abi
-abl
-abo
-aaZ
+abe
+abe
+abe
+abe
+abp
 aaM
 aaM
 aaM
@@ -26372,13 +26411,13 @@ aaM
 aaM
 aaM
 aaM
-aaZ
+abp
+abf
 abe
-abe
-abj
-abj
-abj
-aaZ
+abi
+abl
+abo
+abp
 aaM
 aaM
 aaM
@@ -26629,13 +26668,13 @@ aaM
 aaM
 aaM
 aaM
-aaZ
-abg
+abp
 abe
 abe
-abe
-abe
-aaZ
+abj
+abj
+abj
+abp
 aaM
 aaM
 aaM
@@ -26886,13 +26925,13 @@ aaM
 aaM
 aaM
 aaM
-aaZ
-aaZ
-aaZ
-aaZ
-aaZ
-aaZ
-aaZ
+abp
+abg
+abe
+abe
+abe
+abe
+abp
 aaM
 aaM
 aaM
@@ -27143,13 +27182,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abq
+abr
+abr
+abr
+abr
+abr
+beG
 aaM
 aaM
 aaM

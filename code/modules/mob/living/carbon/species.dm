@@ -178,13 +178,10 @@
 			H.update_hair()
 	return
 
-/datum/species/proc/before_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE) // Do we really need this proc? Perhaps.
+/datum/species/proc/before_job_equip(mob/living/carbon/human/H, datum/job/J) // Do we really need this proc? Perhaps.
 	return
 
-/datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
-	if(visualsOnly)
-		return
-
+/datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	var/obj/item/weapon/storage/box/survival/SK = new(H)
 
 	species_survival_kit_items:
@@ -274,7 +271,7 @@
 	min_age = 25
 	max_age = 85
 
-/datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
+/datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
@@ -331,7 +328,7 @@
 	min_age = 25
 	max_age = 85
 
-/datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
+/datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
@@ -401,8 +398,7 @@
 	poison_type = "oxygen"
 
 	flags = list(
-		IS_WHITELISTED = TRUE
-		,NO_SCAN = TRUE
+		NO_SCAN = TRUE
 		,FACEHUGGABLE = TRUE
 		,SPRITE_SHEET_RESTRICTION = TRUE
 	)
@@ -415,7 +411,7 @@
 		SPRITE_SHEET_UNIFORM = 'icons/mob/species/vox/uniform.dmi',
 		SPRITE_SHEET_SUIT = 'icons/mob/species/vox/suit.dmi',
 		SPRITE_SHEET_BELT = 'icons/mob/belt.dmi',
-		SPRITE_SHEET_HEAD = 'icons/mob/species/vox/helmet.dmi',
+		SPRITE_SHEET_HEAD = 'icons/mob/species/vox/head.dmi',
 		SPRITE_SHEET_BACK = 'icons/mob/back.dmi',
 		SPRITE_SHEET_MASK = 'icons/mob/species/vox/masks.dmi',
 		SPRITE_SHEET_EARS = 'icons/mob/ears.dmi',
@@ -424,35 +420,18 @@
 		SPRITE_SHEET_GLOVES = 'icons/mob/species/vox/gloves.dmi'
 		)
 
-	survival_kit_items = list(/obj/item/weapon/tank/emergency_nitrogen
-	                          )
-
-	prevent_survival_kit_items = list(/obj/item/weapon/tank/nitrogen) // So they don't get the big engi oxy tank, since they need no tank.
-
-
 	min_age = 12
 	max_age = 20
 
-/datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
-	..()
-	if(H.wear_mask)
-		qdel(H.wear_mask)
+/datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
-	if(!H.r_store)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_R_STORE)
-		H.internal = H.r_store
-	else if(!H.l_store)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_L_STORE)
-		H.internal = H.l_store
-	else if(!H.r_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_R_HAND)
+	if(!H.r_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), SLOT_R_HAND)
 		H.internal = H.r_hand
 	else if(!H.l_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_L_HAND)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), SLOT_L_HAND)
 		H.internal = H.l_hand
-	if(H.shoes)
-		qdel(H.shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/magboots/vox(src), SLOT_SHOES)
+	H.internals.icon_state = "internal1"
 
 /datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_vox_digest(M)
