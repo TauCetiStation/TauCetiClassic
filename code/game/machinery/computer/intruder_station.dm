@@ -168,7 +168,7 @@
 
 /datum/intruder_tools/heavy_rig
 	name = "Heavy Syndi Rig"
-	desc = "Combat rig, fitted with additional armor plates.\
+	desc = "Combat rig fitted with heavy armor plates made to endure even the greatest damage.\
 	 Developed off existing 'Striker' space suit."
 	item = /obj/item/weapon/storage/box/syndie_kit/heavy_rig
 	cost = 12
