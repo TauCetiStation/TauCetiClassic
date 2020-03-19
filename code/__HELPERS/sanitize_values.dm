@@ -51,12 +51,12 @@
 	addr = ""
 
 	if(L.len != 4)
-		return 0
+		return FALSE
 
 	for(var/s in L)
 		var/n = text2num(s)
 		if(n && n < 0 && n > 255)
-			return 0
+			return FALSE
 		else
 			if(length(addr))
 				addr += ".[n]"
@@ -64,3 +64,9 @@
 				addr += "[n]"
 
 	return addr
+
+/proc/sanitize_cid(cid)
+	var/static/regex/cid_regex = regex(@"^[0-9]*$")
+	if(!istext(cid) || !cid_regex.Find(cid))
+		return FALSE
+	return cid

@@ -140,12 +140,10 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 					return
 
 				row["ckey"] = ckey(row["ckey"])
-				row["compid"] = num2text(text2num(row["compid"]))
+				row["compid"] = sanitize_cid(row["compid"])
 				row["ip"] = sanitize_ip(row["ip"])
 
 				if(!(row["ckey"] && row["compid"] && row["ip"]))
-					message_admins("[key_name(src.owner)] has an invalid account cookie!")
-					log_admin("[key_name(src.owner)] has an invalid account cookie!")
 					owner.guard.chat_processed = TRUE
 					return
 				if(world.IsBanned(row["ckey"], row["compid"], row["ip"], real_bans_only = TRUE))
