@@ -93,3 +93,5 @@
 #define BANKEY_ADMIN_MATCHES_THIS_ROUND     "admin_matches_this_round"
 #define BANKEY_EXISTING_USER_MATCHES    "existing_user_matches_this_round"
 #define BANKEY_PENDING_MATCHES      "pending_matches_this_round"
+
+#define GUARD_CHECK_AGE 60
