@@ -353,9 +353,9 @@ var/const/MAX_SAVE_SLOTS = 10
 		var/obj/item/organ/internal/IO = character.organs_by_name[name]
 		var/status = organ_data[name]
 
-		if(status == "amputated")
+		if(status == "amputated" && BP)
 			qdel(BP) // Destroy will handle everything
-		if(status == "cyborg")
+		if(status == "cyborg" && BP)
 			var/zone = BP.body_zone
 			qdel(BP)
 			switch(zone)
@@ -367,9 +367,9 @@ var/const/MAX_SAVE_SLOTS = 10
 					new /obj/item/organ/external/l_leg/robot(null, character)
 				if(BP_R_LEG)
 					new /obj/item/organ/external/r_leg/robot(null, character)
-		if(status == "assisted")
+		if(status == "assisted" && IO)
 			IO.mechassist()
-		else if(status == "mechanical")
+		else if(status == "mechanical" && IO)
 			IO.mechanize()
 
 		else continue
