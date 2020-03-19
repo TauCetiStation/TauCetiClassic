@@ -62,7 +62,7 @@
 				B.name = pick("The Holy Joke Book", "Hymns to the Honkmother", "Prank in the name of Honkmother")
 			if("buddhism")
 				B.name = "The Tripitaka"
-			if("athiest")
+			if("atheism")
 				B.name = pick("Just book", "Recipes", "Space Laws", "Proof of the absence of God", "Bible: Small Edition", "How to: enlarge penis")
 			else
 				B.name = "The Holy Book of [new_religion]"
