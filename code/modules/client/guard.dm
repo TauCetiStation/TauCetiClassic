@@ -29,7 +29,7 @@
 	addtimer(CALLBACK(src, .proc/trigger_init), 20 SECONDS) // time for other systems to collect data
 
 /datum/guard/proc/trigger_init()
-	if(holder && isnum(holder.player_ingame_age) && holder.player_ingame_age < 60)
+	if(holder && isnum(holder.player_ingame_age) && holder.player_ingame_age < GUARD_CHECK_AGE)
 		load_geoip() // this may takes a few minutes in bad case
 		
 		if(!tests_processed)
@@ -41,12 +41,13 @@
 			process_autoban()
 
 /datum/guard/proc/do_announce()
-	if(!total_alert_weight)
+	if(!total_alert_weight || total_alert_weight < 1)
 		return
+
 	message_admins("GUARD: new player [key_name_admin(holder)] is suspicious with [total_alert_weight] weight (<a href='?_src_=holder;guard=\ref[holder.mob]'>report</a>)", R_LOG)
 	log_admin("GUARD: new player [key_name(holder)] is suspicious with [total_alert_weight] weight[log_end]\nGUARD: [short_report]")
 
-	if(!bridge_reported && total_alert_weight > 1)
+	if(!bridge_reported)
 		bridge_reported = TRUE
 		send2bridge_adminless_only("GUARD: [key_name(holder)]", short_report, type = list(BRIDGE_ADMINIMPORTANT))
 
@@ -72,9 +73,17 @@
 
 	if(geoip_processed)
 		var/geoip_weight = 0
-		geoip_weight += geoip_data["proxy"]   ? 0.5 : 0 // low weight because false-positives
+
+		// country cross-factor
+		if(geoip_data["countryCode"] && length(config.guard_whitelisted_country_codes) && !(geoip_data["countryCode"] in config.guard_whitelisted_country_codes))
+			geoip_weight += geoip_data["proxy"]   ? 1 : 0
+			geoip_weight += geoip_data["hosting"] ? 1 : 0
+		else
+			geoip_weight += geoip_data["proxy"]   ? 0.5 : 0 // low weight because false-positives
+			geoip_weight += geoip_data["hosting"] ? 0.5 : 0 // same
+
+
 		geoip_weight += geoip_data["mobile"]  ? 0.2 : 0
-		geoip_weight += geoip_data["hosting"] ? 0.7 : 0 // same, false-positives on some providers (?)
 
 		geoip_weight += geoip_data["ipintel"]>0 ? geoip_data["ipintel"] : 0
 
@@ -135,7 +144,9 @@
 	if((length(holder.related_accounts_cid) && holder.related_accounts_cid != "Requires database") || (length(holder.related_accounts_ip) && holder.related_accounts_ip != "Requires database"))
 		var/related_db_weight = 0
 		// todo: check jobs/bans on related
-		related_db_weight += holder.related_accounts_ip ? 0.3 : 0
+		if(!(geoip_processed && geoip_data["mobile"])) // geoip cross-factor
+			related_db_weight += holder.related_accounts_ip ? 0.2 : 0
+
 		related_db_weight += holder.related_accounts_cid ? 0.5 : 0
 
 		new_report += {"<div class='block'><h3>Related accounts ([related_db_weight]):</h3>
@@ -148,8 +159,12 @@
 
 	if(holder.prefs.cid_list.len > 1)
 		var/multicid_weight = 0
+		var/allowed_amount = 1
+
+		if(isnum(holder.player_age) && holder.player_age > 60)
+			allowed_amount++
 		
-		multicid_weight += min(((holder.prefs.cid_list.len - 1) * 0.3), 2) // new account, should not be many. 4 cids in the first hour -> +1 weight
+		multicid_weight += min(((holder.prefs.cid_list.len - allowed_amount) * 0.35), 2) // new account, should not be many. 4 cids in the first hour -> +1 weight
 
 		new_report += {"<div class='block'><h3>Differents CID's ([multicid_weight]):</h3>
 		Has [holder.prefs.cid_list.len] different computer_id.</div>"}
@@ -260,7 +275,7 @@
 
 	AddBan(holder.ckey, holder.computer_id, reason, "taukitty", 0, 0, holder.mob.lastKnownIP) // legacy bans base
 
-	DB_ban_record_2(BANTYPE_PERMA, holder.mob, -1, reason)
+	DB_ban_record_2(BANTYPE_PERMA, holder.mob, -1, reason) // copypaste, bans refactoring needed
 	feedback_inc("ban_perma",1)
 
 	ban_unban_log_save("Tau Kitty has permabanned [holder.ckey]. - Reason: [reason] - This is a permanent ban.")
@@ -275,6 +290,14 @@
 	message_admins("Tau Kitty has banned [holder.ckey].\nReason: [reason]\nThis is a permanent ban.")
 
 	if(config.guard_autoban_sticky)
-		SSstickyban.add(holder.ckey, reason)
+		var/list/ban = list()
+		ban[BANKEY_ADMIN] = "Tau Kitty"
+		ban[BANKEY_TYPE] = list("sticky")
+		ban[BANKEY_REASON] = "(AutoBan)(GUARD)"
+		ban[BANKEY_CKEY] = holder.ckey
+		ban[BANKEY_MSG] = "[reason]"
+		
+		if(!get_stickyban_from_ckey(holder.ckey))
+			SSstickyban.add(holder.ckey, ban)
 
 	QDEL_IN(holder, 2 SECONDS)
