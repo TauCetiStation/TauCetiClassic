@@ -628,3 +628,27 @@
 	var/mob/living/carbon/human/H = M
 	H.adjustHalLoss(-30)
 	H.shock_stage -= 20
+
+/datum/reagent/nanocalcium
+	name = "Nano-Calcium"
+	id = "nanocalcium"
+	description = "Highly advanced nanites equipped with calcium payloads designed to repair bones. Nanomachines son."
+	reagent_state = LIQUID
+	color = "#9b3401"
+	overdose = REAGENTS_OVERDOSE
+	custom_metabolism = 0.5
+	taste_message = "wholeness"
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/nanocalcium/on_general_digest(mob/living/M)
+	..()
+	if(!ishuman(M) || volume > overdose)
+		return
+	var/mob/living/carbon/human/H = M
+	H.jitteriness = max(0,H.jitteriness - 100)
+	H.apply_effect(3, AGONY)
+	M.vomit()
+	if(M.bodytemperature < BODYTEMP_NORMAL + 20)
+		M.bodytemperature = min(BODYTEMP_NORMAL + 20, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if(!H.regenerating_bodypart)
+		H.regenerating_bodypart = H.find_damaged_bodypart()

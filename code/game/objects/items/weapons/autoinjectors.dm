@@ -114,3 +114,15 @@
 	reagents.clear_reagents()
 	reagents.add_reagent("nutriment", 10)
 	update_icon()
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen
+	name = "BoneR"
+	desc = "Getting your bones repaired. Use carefully."
+	icon_state = "bonepen"
+	volume = 30
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen/atom_init()
+	. = ..()
+	reagents.clear_reagents()
+	reagents.add_reagent("nanocalcium", 30)
+	update_icon()
