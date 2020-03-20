@@ -589,7 +589,8 @@ var/datum/subsystem/job/SSjob
 		pda.owner = H.real_name
 		pda.ownjob = C.assignment
 		pda.ownrank = C.rank
-		pda.owner_account = get_account(C.associated_account_number)
+		pda.owner_account = get_account(C.associated_account_number)	//bind the account to the pda
+		pda.owner_fingerprints += C.fingerprint_hash	//save fingerprints in pda from ID card
 		pda.name = "PDA-[H.real_name] ([pda.ownjob])"
 
 	return 1

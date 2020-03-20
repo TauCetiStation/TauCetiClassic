@@ -101,10 +101,7 @@
 			var/datum/transaction/T = new()
 			T.target_name = source_name
 			T.purpose = purpose
-			if(amount < 0)
-				T.amount = "([amount])"
-			else
-				T.amount = "[amount]"
+			T.amount = "[amount]"
 			T.date = current_date_string
 			T.time = worldtime2text()
 			T.source_terminal = terminal_id
