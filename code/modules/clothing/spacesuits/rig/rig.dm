@@ -632,7 +632,7 @@
 	item_state = "syndie_helm"
 	armor = list(melee = 60, bullet = 55, laser = 30,energy = 30, bomb = 50, bio = 100, rad = 60)
 	var/space_armor = list(melee = 60, bullet = 55, laser = 30,energy = 30, bomb = 50, bio = 100, rad = 60)
-	var/combat_armor = list(melee = 60, bullet = 55, laser = 30,energy = 30, bomb = 50, bio = 100, rad = 60)
+	var/combat_armor = list(melee = 60, bullet = 65, laser = 55,energy = 45, bomb = 50, bio = 100, rad = 60)
 	var/obj/machinery/camera/camera
 	var/combat_mode = FALSE
 	species_restricted = list("exclude" , SKRELL , DIONA, VOX)
@@ -790,8 +790,8 @@
 	icon_state = "rig0-heavy"
 	item_state = "syndie_helm"
 	armor = list(melee = 60, bullet = 65, laser = 65,energy = 30, bomb = 50, bio = 100, rad = 60)
-	combat_armor = list(melee = 70, bullet = 70, laser = 70,energy = 30, bomb = 50, bio = 100, rad = 60)
-	space_armor = list(melee = 60, bullet = 65, laser = 65,energy = 30, bomb = 50, bio = 100, rad = 60)
+	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
+	space_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	rig_type = "heavy"
 
 /obj/item/clothing/suit/space/rig/syndi/heavy
@@ -803,8 +803,8 @@
 	slowdown = 1.4
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 55, bomb = 50, bio = 100, rad = 60)
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/chem_dispenser/combat)
-	combat_armor = list(melee = 75, bullet = 75, laser = 70,energy = 50, bomb = 50, bio = 100, rad = 30)
-	space_armor = list(melee = 60, bullet = 65, laser = 55, energy = 40, bomb = 50, bio = 100, rad = 60)
+	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
+	space_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	combat_slowdown = 0.5
 
 //Wizard Rig
