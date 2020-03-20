@@ -116,7 +116,7 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen
-	name = "BoneR"
+	name = "Bone-R"
 	desc = "Getting your bones repaired. Use carefully."
 	icon_state = "bonepen"
 	volume = 30

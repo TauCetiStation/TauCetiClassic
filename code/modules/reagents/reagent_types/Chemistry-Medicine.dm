@@ -636,19 +636,49 @@
 	reagent_state = LIQUID
 	color = "#9b3401"
 	overdose = REAGENTS_OVERDOSE
-	custom_metabolism = 0.5
+	custom_metabolism = 2
 	taste_message = "wholeness"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/nanocalcium/on_general_digest(mob/living/M)
 	..()
-	if(!ishuman(M) || volume > overdose)
-		return
 	var/mob/living/carbon/human/H = M
-	H.jitteriness = max(0,H.jitteriness - 100)
-	H.apply_effect(3, AGONY)
-	M.vomit()
-	if(M.bodytemperature < BODYTEMP_NORMAL + 20)
-		M.bodytemperature = min(BODYTEMP_NORMAL + 20, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
-	if(!H.regenerating_bodypart)
-		H.regenerating_bodypart = H.find_damaged_bodypart()
+	var/obj/item/organ/external/BP = H.bodyparts_by_name
+	if(!data)
+		data = 1
+	data++
+	switch(data)
+
+		if(1 to 10)
+			H.make_dizzy(1)
+			if(prob(10))
+				to_chat(M, "<span class='warning'>Your skin feels hot and your veins are on fire!</span>")
+		if(20 to 35)
+			if(M.reagents.has_reagent("tramadol") || M.reagents.has_reagent("oxycodone"))
+				H.adjustToxLoss(10, FALSE)
+			else
+				if(prob(75))
+					H.confused += 2
+				else
+					H.AdjustWeakened(2)
+		if(35)
+			to_chat(M, "<span class='warning'>Your body goes rigid, you cannot move at all!</span>")
+			H.AdjustWeakened(15, FALSE)
+		if(35 to INFINITY)
+			if(M.reagents.has_reagent("tramadol") || M.reagents.has_reagent("oxycodone"))
+				return ..()
+		else
+			if(BP.is_broken())
+				if(prob(70)) // Each tick has a 50% chance of repearing a bone.
+					to_chat(M, "<span class='notice'>You feel a burning sensation!</span>")
+					BP.status &= ~(ORGAN_BROKEN | ORGAN_SPLINTED)
+					BP.stage = 0
+					BP.perma_injury = 0
+					if(!H.regenerating_bodypart)
+						H.regenerating_bodypart = H.find_damaged_bodypart()
+					if(H.regenerating_bodypart)
+						H.nutrition -= 3
+						H.apply_effect(3, WEAKEN)
+						H.regen_bodyparts(4, FALSE)
+	return ..()
+
