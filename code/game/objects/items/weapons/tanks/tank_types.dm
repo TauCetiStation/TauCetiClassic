@@ -121,6 +121,26 @@
 	volume = 10
 
 /*
+ * Emergency nitrogen
+ * hi vox people!
+ */
+/obj/item/weapon/tank/emergency_nitrogen
+	name = "emergency nitrogen tank"
+	desc = "Used for Vox-related emergencies. Contains very little nitrogen, so try to conserve it until you actually need it."
+	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
+	icon_state = "emergency"
+	flags = CONDUCT
+	slot_flags = SLOT_FLAGS_BELT
+	w_class = ITEM_SIZE_SMALL
+	force = 2.0
+	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
+	volume = 2
+
+/obj/item/weapon/tank/emergency_nitrogen/atom_init()
+	. = ..()
+	air_contents.adjust_gas("nitrogen", (3 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+
+/*
  * Nitrogen
  */
 /obj/item/weapon/tank/nitrogen

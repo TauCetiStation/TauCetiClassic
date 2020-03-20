@@ -44,3 +44,29 @@
 			if(65 to 70)	. += ascii2text(ascii+32)	//letters A to F - translates to lowercase
 			else			return default
 	return .
+
+//dumb way, should be regex but im lazy to test
+/proc/sanitize_ip(addr)
+	var/list/L = splittext(addr, ".")
+	addr = ""
+
+	if(L.len != 4)
+		return FALSE
+
+	for(var/s in L)
+		var/n = text2num(s)
+		if(n && n < 0 && n > 255)
+			return FALSE
+		else
+			if(length(addr))
+				addr += ".[n]"
+			else
+				addr += "[n]"
+
+	return addr
+
+/proc/sanitize_cid(cid)
+	var/static/regex/cid_regex = regex(@"^[0-9]*$")
+	if(!istext(cid) || !cid_regex.Find(cid))
+		return FALSE
+	return cid
