@@ -99,8 +99,8 @@
 	icon_state = "seed-chili"
 	mypath = "/obj/item/seeds/chiliseed"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
-	species = "chilie"
-	plantname = "Chili plants"
+	species = "chili"
+	plantname = "Chili Plants"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/chili"
 	lifespan = 20
 	endurance = 15
@@ -886,8 +886,6 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
-
-
 
 /obj/item/seeds/goldappleseed
 	name = "pack of golden apple seeds"
