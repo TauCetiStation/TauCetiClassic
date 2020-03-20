@@ -906,6 +906,3 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
-
-/mob/living/carbon/proc/is_facehuggable()
-	return FALSE
