@@ -664,7 +664,6 @@
 				if(E.is_broken())
 					if(prob(50)) // Each tick has a 50% chance of repearing a bone.
 						to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
-						E.rejuvenate() //Repair it completely.
 						E.fix_bone()
 
 	return ..()
