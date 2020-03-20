@@ -99,7 +99,7 @@
 
 /obj/item/weapon/nullrod/staff
 	name = "Divine staff"
-	desc = "On thin gold strings hang 3 stones from a mysterious material. Only one chaplain remembers how to use it."
+	desc = "A mystical and frightening staff with ancient magic. Only one chaplain remembers how to use it."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "talking_staff"
 	item_state = "talking_staff"
@@ -179,12 +179,12 @@
 		brainmob.speak.Add("[god_name] akbar!")
 
 	name = "Staff of [god_name]"
-	desc = "Stones sometimes twitch. Pray for mercy on [god_name]."
+	desc = "Stone sometimes glow. Pray for mercy on [god_name]."
 	to_chat(brainmob, "<b>You are a god, brought into existence on [station_name()].</b>")
 	to_chat(brainmob, "<b>The priest has called you, you can command them, because you are their god.</b>")
 	to_chat(brainmob, "<b>All that is required of you is a creative image of the imprisoned god in the staff.</b>")
 	to_chat(brainmob, "<b>You can be both evil Satan thirsting and ordering sacrifices, and a good Jesus who wants more slaves.</b>")
-	to_chat(brainmob, "<span class='userdanger'>You do not know everything that happens and happened in the round!</span>")
+	to_chat(brainmob, "<span class='userdanger'><font size =3><b>You do not know everything that happens and happened in the round!</b></font></span>")
  
 	icon_state = "talking_staffsoul"
 	soul_inside = TRUE
@@ -199,7 +199,7 @@
 	searching = FALSE
 	soul_inside = FALSE
 	icon_state = "talking_staff"
-	visible_message("<span class='notice'>The stones of \the [src] stopped glowing, why didn't you please the god?</span>")
+	visible_message("<span class='notice'>The stone of \the [src] stopped glowing, why didn't you please the god?</span>")
 
 /obj/item/weapon/nullrod/staff/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]</span>\n"
@@ -218,23 +218,11 @@
 	to_chat(user, msg)
 
 /obj/item/weapon/nullrod/staff/attack_ghost(mob/dead/observer/O)
-	//DEBUGG
-	if(!soul_inside && !brainmob && !searching)
-		//Start the process of searching for a new user.
-		to_chat(O, "<span class='notice'>You attempt to wake the spirit of the staff...</span>")
-		icon_state = "talking_staffanim"
-		light_power = 5
-		searching = TRUE
-		request_player()
-		addtimer(CALLBACK(src, .proc/reset_search), 600)
-	else if(soul_inside && brainmob && !brainmob.ckey && !searching && (brainmob.stat == DEAD || brainmob.stat == UNCONSCIOUS))
-		reset_search() //kick afk-god from staff
-
 	if(next_ping > world.time)
 		return
 	
 	next_ping = world.time + 5 SECONDS
-	audible_message("<span class='notice'>\The [src] stones blinked.</span>", deaf_message = "\The [src] stones blinked.") //TODO
+	audible_message("<span class='notice'>\The [src] stone blinked.</span>", deaf_message = "\The [src] stone blinked.")
 
 /obj/item/weapon/nullrod/staff/Destroy()
 	to_chat(brainmob, "<span class='userdanger'>You were destroyed!</span>")
