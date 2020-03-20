@@ -128,6 +128,7 @@
 	item_state = "black_candlebox5"
 	storage_slots = 5
 	throwforce = 2
+	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	var/cooldown = 0
 	var/teleporter_delay = 0
