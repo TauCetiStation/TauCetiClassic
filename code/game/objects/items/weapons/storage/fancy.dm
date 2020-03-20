@@ -85,6 +85,7 @@
 	item_state = "candlebox"
 	storage_slots = 5
 	throwforce = 2
+	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	var/candle_type = "white"
 
