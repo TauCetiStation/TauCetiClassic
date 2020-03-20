@@ -58,6 +58,8 @@
 	var/player_ingame_age = null
 	var/player_next_age_tick = 0
 
+	var/list/byond_registration // on demand get_byond_registration()
+
 	preload_rsc = 0 // This is 0 so we can set it to an URL once the player logs in and have them download the resources from a different server.
 	var/static/obj/screen/click_catcher/void
 
@@ -65,7 +67,7 @@
 	// Set on login.
 	var/datum/media_manager/media = null
 
-	var/datum/geoip_data/geoip = null
+	var/datum/guard/guard = null
 
 	var/datum/tooltip/tooltips
 

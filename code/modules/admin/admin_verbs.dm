@@ -88,6 +88,7 @@ var/list/admin_verbs_log = list(
 var/list/admin_verbs_variables = list(
 	/client/proc/debug_variables,
 	/client/proc/add_player_age,
+	/client/proc/grand_guard_pass,
 	/client/proc/mass_apply_status_effect,
 )
 var/list/admin_verbs_ban = list(
@@ -283,6 +284,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_debug_tog_vcounter,
 	/client/proc/enable_debug_verbs,
 	/client/proc/add_player_age,
+	/client/proc/grand_guard_pass,
 	/proc/possess,
 	/proc/release
 	)
