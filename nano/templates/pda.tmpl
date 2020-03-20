@@ -22,7 +22,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 			<b>Station Time</b>:
 		</div>
 		<div class="itemContent">
-			<span class="average">{{:data.stationTime}}</span>
+			<span class="average">{{:data.stationTime}}&emsp;[{{:data.securityLevel}}]</span>
 		</div>
 	</div>
     {{if data.shuttle_eta}}
@@ -1027,7 +1027,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
         <div class="item">
             <H2>Finance Management</H2>
             <div class="itemLabelNarrow"><b>Money:</b></div>
-            <div class="itemContent"><span class="good">{{:data.money}}$</span></div> <!--<font color = '#32cd32' ></font></H2>-->
+            <div class="itemContent"><span class="good">{{:data.money}}$</span></div>
         </div>
         <div class="item">
             <div class="itemLabelNarrow">
@@ -1042,15 +1042,15 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
             <div class="item"> 
                 <div class="statusDisplayRecords">
                     <table>
-                        <tr><td><span class="good">Target account number:</span></td><!--<td><span class="average">{{:data.target_account_number}}</span></td>-->
+                        <tr><td><span class="good">Target account number:</span></td>
                         <td><div class="itemContent">{{:helper.link(data.target_account_number, null, {'choice' : "target_acc_number"}, null, null)}}</div></td>
                         <td><div class="itemContent">{{:helper.link('Manifest', null, {'choice' : "Show Manifest"}, null, null)}}</div></td>
                         <td><div class="itemContent">{{:helper.link('Click', null, {'choice' : "Look for"}, null, null)}}</div></td></tr>
 
-                        <tr><td><span class="good">Funds to transfer($):</span></td><!--<td><span class="average">{{:data.funds_amount}}$</span></td>-->
+                        <tr><td><span class="good">Funds to transfer($):</span></td>
                         <td><div class="itemContent">{{:helper.link(data.funds_amount, null, {'choice' : "funds_amount"}, null, null)}}</div></td></tr>
 
-                        <tr><td><span class="good">Transaction purpose:</span></td><!--<td><span class="average">{{:data.purpose}}</span></td>-->
+                        <tr><td><span class="good">Transaction purpose:</span></td>
                         <td><div class="itemContent">{{:helper.link(data.purpose, null, {'choice' : "purpose"}, null, null)}}</div></td></tr>
                     </table>
                     <div class="itemContent">{{:helper.link('Transfer funds', 'transferthick-e-w', {'choice' : "make_transfer"}, null, null)}}</div>
