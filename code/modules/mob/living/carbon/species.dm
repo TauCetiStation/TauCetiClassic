@@ -271,7 +271,7 @@
 	flesh_color = "#34af10"
 	base_color = "#066000"
 	sprite_sheets = list(
-		SPRITE_SHEET_MASK = 'icons/mob/species/unathi/mask',
+		SPRITE_SHEET_MASK = 'icons/mob/species/unathi/mask.dmi',
 		)
 
 	min_age = 25
@@ -332,7 +332,7 @@
 	base_color = "#333333"
 
 	sprite_sheets = list(
-		SPRITE_SHEET_MASK = 'icons/mob/species/tajaran/mask',
+		SPRITE_SHEET_MASK = 'icons/mob/species/tajaran/mask.dmi',
 		)
 
 	min_age = 25
