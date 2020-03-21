@@ -844,7 +844,7 @@
 	icon_deny = "med-deny"
 	light_color = "#e6fff2"
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
-	//req_access = list(5)
+	req_access = list(5)
 	products = list(/obj/item/weapon/reagent_containers/glass/bottle/antitoxin = 4,/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline = 4,
 					/obj/item/weapon/reagent_containers/glass/bottle/stoxin = 4,/obj/item/weapon/reagent_containers/glass/bottle/toxin = 4,
 					/obj/item/weapon/reagent_containers/syringe/antiviral = 4,/obj/item/weapon/reagent_containers/syringe = 12,
@@ -879,7 +879,7 @@
 	light_power_on = 1
 	light_color = "#e6fff2"
 	icon_deny = "wallmed-deny"
-	req_access = list(5)
+	//req_access = list(5)
 	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
 	products = list(/obj/item/weapon/reagent_containers/hypospray/autoinjector = 5,/obj/item/weapon/reagent_containers/syringe/antitoxin = 3,/obj/item/stack/medical/bruise_pack = 3,
 					/obj/item/stack/medical/ointment =3,/obj/item/device/healthanalyzer = 3)
