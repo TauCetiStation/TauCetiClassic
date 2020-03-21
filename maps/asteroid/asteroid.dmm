@@ -696,14 +696,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/atmos)
-"bK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/space)
 "bL" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -12686,6 +12678,9 @@
 	id = "isolationsparker";
 	pixel_x = -23
 	},
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/iso2)
 "Nb" = (
@@ -12738,7 +12733,7 @@
 	},
 /area/asteroid/mine/production)
 "Ng" = (
-/obj/machinery/light/small,
+/obj/machinery/artifact_scanpad,
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/iso2)
 "Ob" = (
@@ -12938,11 +12933,19 @@
 	},
 /area/asteroid/mine/production)
 "Sb" = (
-/obj/machinery/artifact_scanpad,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/engine,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
 /area/asteroid/research_outpost/iso2)
 "Sc" = (
 /obj/machinery/alarm{
@@ -58112,7 +58115,7 @@ Sb
 Hg
 Mg
 pl
-ac
+lj
 qL
 ac
 qP
@@ -58367,9 +58370,9 @@ lq
 og
 Bg
 Ig
+Hg
 Ng
 lj
-ac
 qL
 Fc
 an
@@ -58626,7 +58629,7 @@ Cg
 Jg
 Og
 pl
-ac
+lj
 qM
 re
 pC
@@ -58883,7 +58886,7 @@ lj
 lj
 lj
 lj
-qP
+ac
 qN
 rf
 an
@@ -59634,7 +59637,7 @@ aE
 aE
 aE
 aE
-bK
+aE
 ee
 eI
 ee
