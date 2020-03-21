@@ -29,6 +29,23 @@
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0)
 
+/obj/item/clothing/mask/surgical/attack_self()
+
+	if(usr.canmove && !usr.stat && !usr.restrained())
+		if(!src.hanging)
+			src.hanging = !src.hanging
+			flags &= ~(MASKCOVERSMOUTH)
+			icon_state = "steriledown"
+			to_chat(usr, "Your mask is now hanging on your neck.")
+
+		else
+			src.hanging = !src.hanging
+			gas_transfer_coefficient = 0.90
+			flags |= MASKCOVERSMOUTH 
+			icon_state = "sterile"
+			to_chat(usr, "You pull the mask up to cover your face.")
+		usr.update_inv_wear_mask()
+
 /obj/item/clothing/mask/fakemoustache
 	name = "fake moustache"
 	desc = "Warning: moustache is fake."
