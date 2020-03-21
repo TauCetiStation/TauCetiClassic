@@ -9,6 +9,7 @@
 	var/remote_access_pin = 0
 	var/money = 0
 	var/list/transaction_log = list()
+	var/obj/item/device/pda/owner_PDA = null	//??
 	var/suspended = 0
 	var/security_level = 0	//0 - auto-identify from worn ID, require only account number
 							//1 - require manual login / account number and pin
@@ -106,6 +107,9 @@
 			T.time = worldtime2text()
 			T.source_terminal = terminal_id
 			D.transaction_log.Add(T)
+
+			if(D.owner_PDA)
+				D.owner_PDA.transaction_inform(source_name, terminal_id, amount)
 
 			return TRUE
 	return FALSE

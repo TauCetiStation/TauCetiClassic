@@ -100,7 +100,7 @@
 		if(H.mind.initial_account)
 			G.fields["acc_number"]	= H.mind.initial_account.account_number
 		else
-			G.fields["acc_number"]	= null
+			G.fields["acc_number"]	= 0
 		general += G
 
 		//Medical Record

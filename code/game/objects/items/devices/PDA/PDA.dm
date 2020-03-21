@@ -585,6 +585,8 @@
 	if(active_uplink_check(user))
 		return
 
+	if(mode == 7)
+		mode = 0	//for safety
 	ui_interact(user) //NanoUI requires this proc
 	return
 
@@ -849,7 +851,6 @@
 				return
 			if(charge_to_account(target_account_number, target_account_number, transfer_purpose, name, funds_amount))
 				charge_to_account(owner_account.account_number, target_account_number, transfer_purpose, name, -funds_amount)
-				to_chat(U, "[bicon(src)]<span class='info'>You have successfully transferred [funds_amount]$ to [target_account_number] account number.</span>")
 			else
 				to_chat(U, "[bicon(src)]<span class='warning'>Funds transfer failed. Target account is suspended.</span>")
 
@@ -1251,11 +1252,14 @@
 		if(!idcard.registered_name)
 			to_chat(user, "<span class='notice'>\The [src] rejects the ID.</span>")
 			return
-		if(!owner)
+		if(!owner || !owner_account)
 			owner = idcard.registered_name
 			ownjob = idcard.assignment
 			ownrank = idcard.rank
-			owner_account = get_account(idcard.associated_account_number)	//bind the account to the pda
+			var/datum/money_account/account = get_account(idcard.associated_account_number)
+			if(account)
+				account.owner_PDA = src		//add PDA in /datum/money_account
+				owner_account = account		//bind the account to the pda
 			owner_fingerprints += idcard.fingerprint_hash	//save fingerprints in pda
 			name = "PDA-[owner] ([ownjob])"
 			to_chat(user, "<span class='notice'>Card scanned.</span>")
@@ -1438,7 +1442,7 @@
 		pda_paymod = FALSE
 		return 
 
-obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
+/obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
 	if(!owner_account)
 		alert("Eror! Account information not saved in this PDA, please swipe your ID card.")
 		return FALSE
@@ -1457,3 +1461,18 @@ obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
 		else
 			alert("Invalid Password!")
 			return FALSE
+
+/obj/item/device/pda/proc/transaction_inform(target, source, amount)
+	if(!can_use())
+		return
+	//Search for holder of the PDA. (some copy-paste from /obj/item/device/pda/proc/create_message)
+	var/mob/living/L = null
+	if(src.loc && isliving(src.loc))
+		L = src.loc
+	if(L)
+		if(amount > 0)
+			to_chat(L, "[bicon(src)]<span class='notice'>[owner], the amount of [amount]$ from [source] was transferred to your account.</span>")
+		else
+			to_chat(L, "[bicon(src)]<span class='notice'>You have successfully transferred [amount]$ to [target] account number.</span>")
+		if(!src.message_silent)
+			playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)

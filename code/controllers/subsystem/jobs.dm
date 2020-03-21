@@ -580,6 +580,7 @@ var/datum/subsystem/job/SSjob
 		//put the player's account number onto the ID
 		if(H.mind && H.mind.initial_account)
 			C.associated_account_number = H.mind.initial_account.account_number
+			H.mind.initial_account.owner_PDA = locate(/obj/item/device/pda,H)	//add PDA in /datum/money_account
 
 		H.equip_to_slot_or_del(C, SLOT_WEAR_ID)
 
