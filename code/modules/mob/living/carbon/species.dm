@@ -266,12 +266,13 @@
 	,HAS_HAIR_COLOR = TRUE
 	,NO_MINORCUTS = TRUE
 	,FACEHUGGABLE = TRUE
+	,SPRITE_SHEET_RESTRICTION = TRUE
 	)
 
 	flesh_color = "#34af10"
 	base_color = "#066000"
 	sprite_sheets = list(
-		SPRITE_SHEET_MASK = 'icons/mob/species/unathi/mask.dmi',
+		SPRITE_SHEET_MASK = 'icons/mob/species/unathi/masks.dmi',
 		)
 
 	min_age = 25
@@ -326,13 +327,14 @@
 	,HAS_HAIR_COLOR = TRUE
 	,HAS_HAIR = TRUE
 	,FACEHUGGABLE = TRUE
+	,SPRITE_SHEET_RESTRICTION = TRUE
 	)
 
 	flesh_color = "#afa59e"
 	base_color = "#333333"
 
 	sprite_sheets = list(
-		SPRITE_SHEET_MASK = 'icons/mob/species/tajaran/mask.dmi',
+		SPRITE_SHEET_MASK = 'icons/mob/species/tajaran/masks.dmi',
 		)
 
 	min_age = 25
@@ -365,6 +367,7 @@
 	,HAS_SKIN_COLOR = TRUE
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
+	,SPRITE_SHEET_RESTRICTION = TRUE
 	)
 
 	has_organ = list(
