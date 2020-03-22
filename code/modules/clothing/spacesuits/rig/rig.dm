@@ -667,12 +667,12 @@
 /obj/item/clothing/head/helmet/space/rig/syndi/update_icon(mob/user)
 	icon_state = "rig[on]-[rig_type][combat_mode ? "-combat" : ""]"
 	if(user)
-		user.overlays -= lamp
+		user.cut_overlay(lamp)
 		if(equipped_on_head && camera && (on || combat_mode))
 			lamp = image(icon = 'icons/mob/nuclear_helm_overlays.dmi', icon_state = "terror[combat_mode ? "_combat" : ""]_glow", layer = ABOVE_LIGHTING_LAYER)
 			lamp.plane = LIGHTING_PLANE + 1
 			lamp.alpha = on ? 255 : 127
-			user.overlays += lamp
+			user.add_overlay(lamp)
 		user.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
