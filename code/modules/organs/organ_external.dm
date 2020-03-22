@@ -159,10 +159,6 @@ This function completely restores a damaged organ to perfect condition.
 /obj/item/organ/external/proc/rejuvenate()
 	controller.rejuvenate()
 
-/obj/item/organ/external/proc/fix_bone()
-	status = 0
-	owner.updatehealth()
-
 /obj/item/organ/external/proc/createwound(type = CUT, damage)
 	return controller.createwound(type, damage)
 

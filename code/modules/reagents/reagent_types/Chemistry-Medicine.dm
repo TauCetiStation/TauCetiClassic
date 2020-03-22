@@ -646,7 +646,6 @@
 		data = 1
 	data++
 	switch(data)
-
 		if(1 to 10)
 			M.make_dizzy(1)
 			if(prob(10))
@@ -662,9 +661,11 @@
 		if(20 to INFINITY)
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_broken())
-					if(prob(50)) // Each tick has a 50% chance of repearing a bone.
+					if(prob(50))
 						to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
-						E.fix_bone()
+						E.status = 0
+						E.brute_dam = 0
+
 
 	return ..()
 

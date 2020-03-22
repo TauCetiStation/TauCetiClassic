@@ -108,11 +108,11 @@
 
 /obj/item/weapon/storage/box/syndie_kit/bonepen
 	name = "Prototype Bone Repair Kit"
+	desc = "Bonehurting feeling erupts you."
 /obj/item/weapon/storage/box/syndie_kit/bonepen/atom_init()
-	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen(src)
-	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen(src)
-
-
+	for(var/i in 0 to 3)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen(src)
+	
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	name = "boxed freedom implant (with injector)"
 
