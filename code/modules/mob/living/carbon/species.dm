@@ -405,6 +405,8 @@
 		,NO_SCAN = TRUE
 		,FACEHUGGABLE = TRUE
 		,SPRITE_SHEET_RESTRICTION = TRUE
+		,HAS_HAIR_COLOR = TRUE
+		,HAS_SKIN_COLOR = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
