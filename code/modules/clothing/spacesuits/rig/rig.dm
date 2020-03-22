@@ -639,8 +639,6 @@
 	var/image/lamp = null
 	var/equipped_on_head = FALSE
 	var/rig_type = "syndie"
-	var/engage_text = " moves faceplate of their helmet into combat position, covering their visor and extending cameras."
-	var/disengage_text = " pulls up faceplate from helmet's visor, retracting cameras."
 	flags = BLOCKHAIR | THICKMATERIAL | PHORONGUARD
 	light_color = "#00f397"
 
@@ -698,12 +696,12 @@
 			armor = combat_armor
 			canremove = FALSE
 			flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
-			usr.visible_message("<span class='notice'>[usr][engage_text]</span>")
+			usr.visible_message("<span class='notice'>[usr] moves faceplate of their helmet into combat position, covering their visor and extending cameras.</span>")
 		else
 			armor = space_armor
 			canremove = TRUE
 			flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
-			usr.visible_message("<span class='notice'>[usr][disengage_text]</span>")
+			usr.visible_message("<span class='notice'>[usr] pulls up faceplate from helmet's visor, retracting cameras</span>")
 		checklight()
 		update_icon(usr)
 
