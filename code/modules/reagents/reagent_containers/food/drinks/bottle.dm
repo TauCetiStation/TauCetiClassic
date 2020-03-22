@@ -210,24 +210,13 @@
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov
-	name = "Molotov Cocktail"
+	name = "molotov cocktail"
 	desc = "Throw and run!"
 	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "molotov_preview"
-	force = 9.0
-	throwforce = 6.0
-	throw_speed = 4
-	throw_range = 6
 	item_state = "beer_molotov"
 	attack_verb = list("attacked")
-	sharp = FALSE
-	edge = FALSE
-	is_transparent = TRUE
-	is_glass = TRUE
-	volume = 100
-	amount_per_transfer_from_this = 10
-	active = FALSE
 	var/activate_sound = 'sound/items/matchstick_light.ogg'
 
 
@@ -237,36 +226,29 @@
 		to_chat(user, "<span class='notice'>This is already molotov.</span>")
 		return
 	if(active)
-		to_chat(user, "<span class='notice'>This is already burn!.</span>")
+		to_chat(user, "<span class='notice'>This is already burn!</span>")
 		return
 	if(W.get_current_temperature(800))
 		if(reagents && reagents.total_volume && reagents.total_volume && reagents.has_reagent("fuel", 20)) //Don't ignite if Molotov empty
 			active = TRUE
 		else
-			to_chat(user, "<span class='notice'>There's no fuel here. It doesn't burn..</span>")
+			to_chat(user, "<span class='notice'>There's no fuel here. It doesn't burn.</span>")
 			return
-	else
-		return
 	if(active)
-		user.visible_message("<span class='warning'>[bicon(src)] [user] lights up the Molotov Cocktail with the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
+		user.visible_message("<span class='warning'>[bicon(src)] [user] lights up the molotov cocktail with the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
 		update_icon()
 		addtimer(CALLBACK(src, .proc/detonate), 10 SECONDS)
-		if(user.hand && loc == user)
-			user.update_inv_r_hand()
-		else
-			user.update_inv_l_hand()
 		add_fingerprint(user)
 		var/turf/T = get_turf(src)
 		if(T)
-			log_game("[key_name(usr)] has light up a Molotov Cocktail for burning at [T.loc] [COORD(T)].")
+			log_game("[key_name(usr)] has light up a molotov cocktail for burning at [T.loc] [COORD(T)].")
 			if(iscarbon(user) && istype(user.get_active_hand(), src))
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
 		else
 			user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the Molotov Cocktail with \the [W], but he didn’t succeed!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W], but he didn’t succeed!!</span>")
 			return
-	else
-		return
+
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/proc/detonate()
 	if(active && reagents && reagents.total_volume)
@@ -275,10 +257,9 @@
 		var/turf/location = get_turf(src)
 		location.hotspot_expose(1000, 500)
 		playsound (src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
-		qdel(src)
 		visible_message("<span class='warning'>You feel a bright flash of fire and a loud Bang!</span>", "<span class='warning'>[bicon(src)] A bright flash and a loud Bang deafened you. The glass of the bottle failed and Molotov exploded, spilling the contents!</span>")
-	else
-		return
+		qdel(src)
+
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/update_icon()
 	..()
