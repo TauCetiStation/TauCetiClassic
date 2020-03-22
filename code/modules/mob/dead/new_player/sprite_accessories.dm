@@ -1137,13 +1137,75 @@
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
+
+/datum/sprite_accessory/hair/una_small_horns
+	name = "Small Horny"
+	icon_state = "una_small_horns"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/una_ram2_horns
+	name = "Ramming Horns"
+	icon_state = "una_ram2_horns"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/una_chin_horns
+	name = "Chin Horns"
+	icon_state = "una_chin_horns"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/una_drac_horns
+	name = "Drac Horns"
+	icon_state = "una_drac_horns"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/una_lower_horns
+	name = "Lower Horns"
+	icon_state = "una_lower_horns"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/una_adorns_horns
+	name = "Adorns"
+	icon_state = "una_adorns_horns"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/una_spikes_horn
+	name = "Spikes"
+	icon_state = "una_spikes_horns"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/una_big_horns
+	name = "Big Horns"
+	icon_state = "una_big_horns"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/una_simple_horns
+	name = "Simple Horns"
+	icon_state = "una_simple_horns"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/una_cobra_hood
+	name = "Cobra Hood"
+	icon_state = "una_cobra_hood"
+	species_allowed = list(UNATHI)
+
+
+/datum/sprite_accessory/hair/una_cobrahood_webbing
+	name = "Cobra Webbed"
+	icon_state = "una_cobrahood_webbing"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/una_cobrahood_webbing
+	name = "Cobra Webbed"
+	icon_state = "una_cobrahood_webbing"
+	species_allowed = list(UNATHI)
+
 /datum/sprite_accessory/hair/unathi_warrior_horns
 	name = "Warrior Horns"
 	icon_state = "una_warrior_horns"
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/hair/unathi_smallhorns
-	name = "Small Horns"
+	name = "Smaller Horns"
 	icon_state = "una_smallhorns"
 	species_allowed = list(UNATHI)
 
@@ -1206,6 +1268,58 @@
 	name = "Unathi Horns"
 	icon_state = "una_horns"
 	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/skr_gradient_m
+	name = "Skrell Male Gradient"
+	icon_state = "skr_gradient_m"
+	species_allowed = list(SKRELL)
+	gender = MALE
+
+/datum/sprite_accessory/hair/skr_gradient2_m
+	name = "Skrell Male Gradient 2"
+	icon_state = "skr_gradient2_m"
+	species_allowed = list(SKRELL)
+	gender = MALE
+
+/datum/sprite_accessory/hair/skr_shortgradient_m
+	name = "Short Male Gradient"
+	icon_state = "skr_shortgradient_m"
+	species_allowed = list(SKRELL)
+	gender = MALE
+
+/datum/sprite_accessory/hair/skr_longgradient_f
+	name = "Long Female Gradient"
+	icon_state = "skr_longgradient_f"
+	species_allowed = list(SKRELL)
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/skr_veryshort_m
+	name = "Skrell Very Short Male Tentacles"
+	icon_state = "skr_veryshort_m"
+	species_allowed = list(SKRELL)
+	gender = MALE
+
+
+/datum/sprite_accessory/hair/skr_long_f
+	name = "Skrell Long Female Tentacles"
+	icon_state = "skr_long_f"
+	species_allowed = list(SKRELL)
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/skr_verylong_f
+	name = "Skrell Very Long Female Tentacles"
+	icon_state = "skr_verylong_f"
+	species_allowed = list(SKRELL)
+	gender = FEMALE
+
+
+/datum/sprite_accessory/hair/skr_zeke_f
+	name = "Skrell Zeke Female Tentacles"
+	icon_state = "skr_zeke_f"
+	species_allowed = list(SKRELL)
+	gender = FEMALE
+
+
 
 /datum/sprite_accessory/hair/skr_tentacle_m
 	name = "Skrell Male Tentacles"
@@ -1397,6 +1511,62 @@
 	name = "Short Vox Quills"
 	icon_state = "vox_shortquills"
 	species_allowed = list(VOX)
+
+
+/datum/sprite_accessory/facial_hair/una_facial_aquaticfrill
+	name = "Aquatic Frills"
+	icon_state = "una_facial_aquaticfrills"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_aquaticfrills_webbing
+	name = "Aquatic Frills Webbed"
+	icon_state = "una_facial_aquaticfrills_webbing"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_shortfrills_webbing
+	name = "Short Frills"
+	icon_state = "una_facial_shortfrills_webbing"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_dracfrills
+	name = "Drac Frills"
+	icon_state = "una_facial_dracfrills"
+	species_allowed = list(UNATHI)
+
+
+/datum/sprite_accessory/facial_hair/una_facial_dracfrills_webbing
+	name = "Drac Frills Webbed"
+	icon_state = "una_facial_dracfrills_webbing"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_sidefrills_s
+	name = "Side Frills"
+	icon_state = "una_facial_sidefrills"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_sidefrills_webbing
+	name = "Side Frills Webbed"
+	icon_state = "una_facial_sidefrills_webbing"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_dorsalfrills
+	name = "Dorsa Frills"
+	icon_state = "una_facial_dorsalfrills"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_dorsalfrills_webbing
+	name = "Dorsa Frills Webbed"
+	icon_state = "una_facial_dorsalfrills_webbing"
+	species_allowed = list(UNATHI)
+
+
+/datum/sprite_accessory/facial_hair/una_hipbraid_beads
+	name = "Bead"
+	icon_state = "una_facial_hipbraid_beads"
+	species_allowed = list(UNATHI)
+
+
+
 
 /datum/sprite_accessory/facial_hair/taj_sideburns
 	name = "Tajara Sideburns"
