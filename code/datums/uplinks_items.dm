@@ -537,7 +537,7 @@
 
 /datum/uplink_item/device_tools/bonepen
     name = "Prototype Bone Repair Kit"
-    desc = "Stolen prototype bone repair nanites.Contains two nanocalcium autoinjectors."
+    desc = "Stolen prototype bone repair nanites. Contains three nanocalcium autoinjectors."
     item = /obj/item/weapon/storage/box/syndie_kit/bonepen
     cost = 4
 
