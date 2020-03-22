@@ -405,6 +405,8 @@
 		,NO_SCAN = TRUE
 		,FACEHUGGABLE = TRUE
 		,SPRITE_SHEET_RESTRICTION = TRUE
+		,HAS_HAIR_COLOR = TRUE
+		,HAS_SKIN_COLOR = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
@@ -678,6 +680,10 @@
 
 	brute_mod = 1.5
 	burn_mod = 1
+	oxy_mod = 0
+	tox_mod = 0
+	clone_mod = 0
+
 	siemens_coefficient = 1.3 // ROBUTT.
 
 	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
