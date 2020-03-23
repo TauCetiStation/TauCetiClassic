@@ -110,7 +110,6 @@
 	var/god_name = "Space-Jesus"
 	var/god_lore = ""
 	var/mob/living/simple_animal/shade/god/brainmob = null
-	var/soul_inside = FALSE //you need to then remove the afk-god
 	var/searching = FALSE
 	var/next_ping = 0
 	var/islam = FALSE
@@ -121,12 +120,16 @@
 		if(S.imprinted == "empty")
 			S.imprinted = brainmob.name
 			S.transfer_soul("SHADE", src.brainmob, user)
-	if(istype(W, /obj/item/weapon/storage/bible))
-		reset_search() //force kick god from staff
+	if(istype(W, /obj/item/weapon/storage/bible)) //force kick god from staff
+		if(brainmob)
+			qdel(brainmob)
+			searching = FALSE
+			icon_state = "talking_staff"
+			visible_message("<span class='notice'>The energy of \the [src] was dispelled.</span>")
 
 /obj/item/weapon/nullrod/staff/attack_self(mob/living/carbon/human/user)
 	if(user.mind.assigned_role == "Chaplain")
-		if(!soul_inside && !brainmob && !searching)
+		if(!brainmob && !searching)
 			//Start the process of searching for a new user.
 			to_chat(user, "<span class='notice'>You attempt to wake the spirit of the staff...</span>")
 			icon_state = "talking_staffanim"
@@ -150,7 +153,7 @@
 	if(!C)	
 		return
 	var/response = alert(C, "Someone is requesting a your soul in divine staff?", "Staff request", "No", "Yeeesss", "Never for this round")
-	if(!C || (soul_inside && brainmob && brainmob.ckey) || !searching)	
+	if(!C || (brainmob && brainmob.ckey) || !searching)	
 		return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 	if(response == "Yeeesss")
 		transfer_personality(C.mob)
@@ -179,6 +182,7 @@
 	candidate.reset_view()
 	if(islam)
 		brainmob.islam = TRUE
+		brainmob.universal_speak = FALSE
 		brainmob.speak.Add("[god_name] akbar!")
 
 	name = "Staff of [god_name]"
@@ -196,20 +200,18 @@
 	to_chat(brainmob, "<span class='userdanger'><font size =3><b>You do not know everything that happens and happened in the round!</b></font></span>")
  
 	icon_state = "talking_staffsoul"
-	soul_inside = TRUE
 
 /obj/item/weapon/nullrod/staff/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
-	if(brainmob)
-		qdel(brainmob)
+	if(brainmob && brainmob.ckey) 
+		return
 
 	searching = FALSE
-	soul_inside = FALSE
 	icon_state = "talking_staff"
 	visible_message("<span class='notice'>The stone of \the [src] stopped glowing, why didn't you please the god?</span>")
 
 /obj/item/weapon/nullrod/staff/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]</span>\n"
-	if(soul_inside && brainmob && brainmob.ckey)
+	if(brainmob && brainmob.ckey)
 		switch(brainmob.stat)
 			if(CONSCIOUS)
 				if(!brainmob.client)

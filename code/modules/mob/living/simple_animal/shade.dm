@@ -72,6 +72,5 @@
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	universal_understand = TRUE
-	universal_speak = FALSE
 	pass_flags = PASSTABLE | PASSMOB | PASSGLASS | PASSGRILLE
 	var/islam = FALSE
