@@ -1301,16 +1301,13 @@
 	icon_state = "una_shortspines"
 	species_allowed = list(UNATHI)
 
-/datum/sprite_accessory/hair/una_longfrillslong
+/datum/sprite_accessory/facial_hair/una_facial_long_frills
 	name = "Long Unathi Frills"
-	icon_state = "una_longfrills"
+	icon_state = "una_facial_long_frills"
 	species_allowed = list(UNATHI)
 
 
-/datum/sprite_accessory/facialhair/una_facial_longfrills
-	name = "Long Unathi Frills"
-	icon_state = "una_facial_longfrills"
-	species_allowed = list(UNATHI)
+
 
 /datum/sprite_accessory/hair/una_frills_short
 	name = "Short Unathi Frills"
@@ -1553,9 +1550,9 @@
 	icon_state = "una_facial_aquaticfrills_webbing"
 	species_allowed = list(UNATHI)
 
-/datum/sprite_accessory/facial_hair/una_facial_shortfrills_webbing
-	name = "Short Frills"
-	icon_state = "una_facial_shortfrills_webbing"
+/datum/sprite_accessory/facial_hair/una_facial_shortfrills2
+	name = "Short Frills 2"
+	icon_state = "una_facial_shortfrills2"
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/facial_hair/una_facial_dracfrills
