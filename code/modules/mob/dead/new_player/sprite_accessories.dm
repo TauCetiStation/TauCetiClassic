@@ -1143,6 +1143,18 @@
 	icon_state = "una_small_horns"
 	species_allowed = list(UNATHI)
 
+/datum/sprite_accessory/hair/una_faun
+	name = "Faunus"
+	icon_state = "una_faun"
+	species_allowed = list(UNATHI)
+
+	
+
+/datum/sprite_accessory/hair/una_bullhorns
+	name = "Bully"
+	icon_state = "una_bullhorns"
+	species_allowed = list(UNATHI)
+
 /datum/sprite_accessory/hair/una_ram2_horns
 	name = "Ramming Horns"
 	icon_state = "una_ram2_horns"
@@ -1156,11 +1168,6 @@
 /datum/sprite_accessory/hair/una_drac_horns
 	name = "Drac Horns"
 	icon_state = "una_drac_horns"
-	species_allowed = list(UNATHI)
-
-/datum/sprite_accessory/hair/una_lower_horns
-	name = "Lower Horns"
-	icon_state = "una_lower_horns"
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/hair/una_adorns_horns
@@ -1183,20 +1190,66 @@
 	icon_state = "una_simple_horns"
 	species_allowed = list(UNATHI)
 
-/datum/sprite_accessory/hair/una_cobra_hood
+/datum/sprite_accessory/hair/una_facial_cobrahood
 	name = "Cobra Hood"
-	icon_state = "una_cobra_hood"
+	icon_state = "una_cobrahood"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facialhair/una_facial_aquaticfrills
+	name = "Aquatic Frills Full"
+	icon_state = "una_facial_aquaticfrills"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/una_dorsalfrill
+	name = "Dorsal Frills Full"
+	icon_state = "una_dorsalfrill"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/una_longdorsal
+	name = "Long Dorsal"
+	icon_state = "una_longdorsal"
 	species_allowed = list(UNATHI)
 
 
-/datum/sprite_accessory/hair/una_cobrahood_webbing
-	name = "Cobra Webbed"
-	icon_state = "una_cobrahood_webbing"
+/datum/sprite_accessory/hair/una_ramhorn2
+	name = "Ram Horns 2"
+	icon_state = "una_ramhorn2"
 	species_allowed = list(UNATHI)
 
-/datum/sprite_accessory/hair/una_cobrahood_webbing
-	name = "Cobra Webbed"
-	icon_state = "una_cobrahood_webbing"
+/datum/sprite_accessory/hair/una_demonforward"
+	name = "Demon Horns"
+	icon_state = "una_demonforward"
+	species_allowed = list(UNATHI)
+
+
+/datum/sprite_accessory/hair/una_chameleon"
+	name = "Chameleon"
+	icon_state = "una_chameleon"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/una_dubhorns"
+	name = "Dub Horn"
+	icon_state = "una_dubhorns"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/una_faun"
+	name = "Faun"
+	icon_state = "una_faun
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_hood
+	name = "Hood"
+	icon_state = "una_facial_hood"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/una_facial_shortfrills2
+	name = "Short Frills 2"
+	icon_state = "una_facial_shortfrills2"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/una_facial_dracfrills
+	name = "Drac Frills Full"
+	icon_state = "una_facial_dracfrills"
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/hair/unathi_warrior_horns
@@ -1254,9 +1307,15 @@
 	icon_state = "una_shortspines"
 	species_allowed = list(UNATHI)
 
-/datum/sprite_accessory/hair/una_frills_long
+/datum/sprite_accessory/hair/una_longfrillslong
 	name = "Long Unathi Frills"
 	icon_state = "una_longfrills"
+	species_allowed = list(UNATHI)
+
+
+/datum/sprite_accessory/facialhair/una_facial_longfrills
+	name = "Long Unathi Frills"
+	icon_state = "una_facial_longfrills"
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/hair/una_frills_short
@@ -1269,29 +1328,6 @@
 	icon_state = "una_horns"
 	species_allowed = list(UNATHI)
 
-/datum/sprite_accessory/hair/skr_gradient_m
-	name = "Skrell Male Gradient"
-	icon_state = "skr_gradient_m"
-	species_allowed = list(SKRELL)
-	gender = MALE
-
-/datum/sprite_accessory/hair/skr_gradient2_m
-	name = "Skrell Male Gradient 2"
-	icon_state = "skr_gradient2_m"
-	species_allowed = list(SKRELL)
-	gender = MALE
-
-/datum/sprite_accessory/hair/skr_shortgradient_m
-	name = "Short Male Gradient"
-	icon_state = "skr_shortgradient_m"
-	species_allowed = list(SKRELL)
-	gender = MALE
-
-/datum/sprite_accessory/hair/skr_longgradient_f
-	name = "Long Female Gradient"
-	icon_state = "skr_longgradient_f"
-	species_allowed = list(SKRELL)
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/skr_veryshort_m
 	name = "Skrell Very Short Male Tentacles"
@@ -1539,15 +1575,17 @@
 	icon_state = "una_facial_dracfrills_webbing"
 	species_allowed = list(UNATHI)
 
-/datum/sprite_accessory/facial_hair/una_facial_sidefrills_s
+/datum/sprite_accessory/facial_hair/una_facial_sidefrills
 	name = "Side Frills"
 	icon_state = "una_facial_sidefrills"
 	species_allowed = list(UNATHI)
 
-/datum/sprite_accessory/facial_hair/una_facial_sidefrills_webbing
-	name = "Side Frills Webbed"
-	icon_state = "una_facial_sidefrills_webbing"
+
+/datum/sprite_accessory/hair/una_demonforward
+	name = "Demon Forward"
+	icon_state = "una_demonforward"
 	species_allowed = list(UNATHI)
+
 
 /datum/sprite_accessory/facial_hair/una_facial_dorsalfrills
 	name = "Dorsa Frills"
@@ -1558,6 +1596,12 @@
 	name = "Dorsa Frills Webbed"
 	icon_state = "una_facial_dorsalfrills_webbing"
 	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_dorsalfrill3
+	name = "Dorsa Frills 3"
+	icon_state = "una_facial_dorsalfrill3"
+	species_allowed = list(UNATHI)
+
 
 
 /datum/sprite_accessory/facial_hair/una_hipbraid_beads
@@ -1597,6 +1641,87 @@
 	name = "Tajara Smallsatche"
 	icon_state = "taj_facial_smallstache"
 	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/dio_rosey
+	name = "Diona Rosey"
+	icon_state = "dio_rosey"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_oak
+	name = "Diona Oak"
+	icon_state = "dio_oak"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+
+/datum/sprite_accessory/hair/dio_sprout
+	name = "Diona Sprout"
+	icon_state = "dio_sprout"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+
+/datum/sprite_accessory/hair/dio_leafy
+	name = "Diona Leafy"
+	icon_state = "dio_leafy"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+
+/datum/sprite_accessory/hair/dio_meadow
+	name = "Diona Meadow"
+	icon_state = "dio_meadow"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_laurel
+	name = "Diona Laurel"
+	icon_state = "dio_laurel"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_root
+	name = "Diona Root"
+	icon_state = "dio_root"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_spinner
+	name = "Diona Spinner"
+	icon_state = "dio_spinner"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_bracket
+	name = "Diona Bracket"
+	icon_state = "dio_bracket"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_vine
+	name = "Diona Vines"
+	icon_state = "dio_vine"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_wildflower
+	name = "Diona Wild Flowers"
+	icon_state = "dio_wildflower"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_cornflower
+	name = "Diona Cornflowers"
+	icon_state = "dio_cornflower"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_brush
+	name = "Diona Brush"
+	icon_state = "dio_brush"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
 
 /datum/sprite_accessory/hair/dio_bloom
 	name = "Diona Everbloom"
