@@ -1137,6 +1137,8 @@
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
+	//UNATHI HAIRS
+
 /datum/sprite_accessory/hair/una_small_horns
 	name = "Small Horny"
 	icon_state = "una_small_horns"
@@ -1248,7 +1250,7 @@
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/hair/unathi_smallhorns
-	name = "Smaller Horns"
+	name = "Small Horns"
 	icon_state = "una_smallhorns"
 	species_allowed = list(UNATHI)
 
@@ -1311,6 +1313,64 @@
 	name = "Unathi Horns"
 	icon_state = "una_horns"
 	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_aquaticfrill
+	name = "Aquatic Frills"
+	icon_state = "una_facial_aquaticfrills"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_aquaticfrills_webbing
+	name = "Aquatic Frills Webbed"
+	icon_state = "una_facial_aquaticfrills_webbing"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_shortfrills2
+	name = "Short Frills 2"
+	icon_state = "una_facial_shortfrills2"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_dracfrills
+	name = "Drac Frills"
+	icon_state = "una_facial_dracfrills"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_dracfrills_webbing
+	name = "Drac Frills Webbed"
+	icon_state = "una_facial_dracfrills_webbing"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_sidefrills
+	name = "Side Frills"
+	icon_state = "una_facial_sidefrills"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/hair/una_demonforward
+	name = "Demon Forward"
+	icon_state = "una_demonforward"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_dorsalfrills
+	name = "Dorsa Frills"
+	icon_state = "una_facial_dorsalfrills"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_dorsalfrills_webbing
+	name = "Dorsa Frills Webbed"
+	icon_state = "una_facial_dorsalfrills_webbing"
+	species_allowed = list(UNATHI)
+
+/datum/sprite_accessory/facial_hair/una_facial_dorsalfrill3
+	name = "Dorsa Frills 3"
+	icon_state = "una_facial_dorsalfrill3"
+	species_allowed = list(UNATHI)
+
+
+/datum/sprite_accessory/facial_hair/una_hipbraid_beads
+	name = "Bead"
+	icon_state = "una_facial_hipbraid_beads"
+	species_allowed = list(UNATHI)
+
+//SKRELL HAIRS
 
 /datum/sprite_accessory/hair/skr_veryshort_m
 	name = "Skrell Very Short Male Tentacles"
@@ -1527,60 +1587,25 @@
 	icon_state = "vox_shortquills"
 	species_allowed = list(VOX)
 
-/datum/sprite_accessory/facial_hair/una_facial_aquaticfrill
-	name = "Aquatic Frills"
-	icon_state = "una_facial_aquaticfrills"
-	species_allowed = list(UNATHI)
+/datum/sprite_accessory/hair/vox_yasu
+	name = "Yasu"
+	icon_state = "vox_yasu"
+	species_allowed = list(VOX)
 
-/datum/sprite_accessory/facial_hair/una_facial_aquaticfrills_webbing
-	name = "Aquatic Frills Webbed"
-	icon_state = "una_facial_aquaticfrills_webbing"
-	species_allowed = list(UNATHI)
+/datum/sprite_accessory/hair/vox_razor
+	name = "Razor"
+	icon_state = "vox_razor"
+	species_allowed = list(VOX)
 
-/datum/sprite_accessory/facial_hair/una_facial_shortfrills2
-	name = "Short Frills 2"
-	icon_state = "una_facial_shortfrills2"
-	species_allowed = list(UNATHI)
+/datum/sprite_accessory/hair/vox_kingly
+	name = "Kingly"
+	icon_state = "vox_kingly"
+	species_allowed = list(VOX)
 
-/datum/sprite_accessory/facial_hair/una_facial_dracfrills
-	name = "Drac Frills"
-	icon_state = "una_facial_dracfrills"
-	species_allowed = list(UNATHI)
-
-/datum/sprite_accessory/facial_hair/una_facial_dracfrills_webbing
-	name = "Drac Frills Webbed"
-	icon_state = "una_facial_dracfrills_webbing"
-	species_allowed = list(UNATHI)
-
-/datum/sprite_accessory/facial_hair/una_facial_sidefrills
-	name = "Side Frills"
-	icon_state = "una_facial_sidefrills"
-	species_allowed = list(UNATHI)
-
-/datum/sprite_accessory/hair/una_demonforward
-	name = "Demon Forward"
-	icon_state = "una_demonforward"
-	species_allowed = list(UNATHI)
-
-/datum/sprite_accessory/facial_hair/una_facial_dorsalfrills
-	name = "Dorsa Frills"
-	icon_state = "una_facial_dorsalfrills"
-	species_allowed = list(UNATHI)
-
-/datum/sprite_accessory/facial_hair/una_facial_dorsalfrills_webbing
-	name = "Dorsa Frills Webbed"
-	icon_state = "una_facial_dorsalfrills_webbing"
-	species_allowed = list(UNATHI)
-
-/datum/sprite_accessory/facial_hair/una_facial_dorsalfrill3
-	name = "Dorsa Frills 3"
-	icon_state = "una_facial_dorsalfrill3"
-	species_allowed = list(UNATHI)
-
-/datum/sprite_accessory/facial_hair/una_hipbraid_beads
-	name = "Bead"
-	icon_state = "una_facial_hipbraid_beads"
-	species_allowed = list(UNATHI)
+/datum/sprite_accessory/hair/vox_badhead
+	name = "Badhead"
+	icon_state = "vox_badhead"
+	species_allowed = list(VOX)
 
 /datum/sprite_accessory/facial_hair/taj_sideburns
 	name = "Tajara Sideburns"
@@ -1611,85 +1636,6 @@
 	name = "Tajara Smallsatche"
 	icon_state = "taj_facial_smallstache"
 	species_allowed = list(TAJARAN)
-
-/datum/sprite_accessory/hair/dio_rosey
-	name = "Diona Rosey"
-	icon_state = "dio_rosey"
-	do_colouration = FALSE
-	species_allowed = list(DIONA)
-
-/datum/sprite_accessory/hair/dio_oak
-	name = "Diona Oak"
-	icon_state = "dio_oak"
-	do_colouration = FALSE
-	species_allowed = list(DIONA)
-
-
-/datum/sprite_accessory/hair/dio_sprout
-	name = "Diona Sprout"
-	icon_state = "dio_sprout"
-	do_colouration = FALSE
-	species_allowed = list(DIONA)
-
-/datum/sprite_accessory/hair/dio_leafy
-	name = "Diona Leafy"
-	icon_state = "dio_leafy"
-	do_colouration = FALSE
-	species_allowed = list(DIONA)
-
-/datum/sprite_accessory/hair/dio_meadow
-	name = "Diona Meadow"
-	icon_state = "dio_meadow"
-	do_colouration = FALSE
-	species_allowed = list(DIONA)
-
-/datum/sprite_accessory/hair/dio_laurel
-	name = "Diona Laurel"
-	icon_state = "dio_laurel"
-	do_colouration = FALSE
-	species_allowed = list(DIONA)
-
-/datum/sprite_accessory/hair/dio_root
-	name = "Diona Root"
-	icon_state = "dio_root"
-	do_colouration = FALSE
-	species_allowed = list(DIONA)
-
-/datum/sprite_accessory/hair/dio_spinner
-	name = "Diona Spinner"
-	icon_state = "dio_spinner"
-	do_colouration = FALSE
-	species_allowed = list(DIONA)
-
-/datum/sprite_accessory/hair/dio_bracket
-	name = "Diona Bracket"
-	icon_state = "dio_bracket"
-	do_colouration = FALSE
-	species_allowed = list(DIONA)
-
-/datum/sprite_accessory/hair/dio_vine
-	name = "Diona Vines"
-	icon_state = "dio_vine"
-	do_colouration = FALSE
-	species_allowed = list(DIONA)
-
-/datum/sprite_accessory/hair/dio_wildflower
-	name = "Diona Wild Flowers"
-	icon_state = "dio_wildflower"
-	do_colouration = FALSE
-	species_allowed = list(DIONA)
-
-/datum/sprite_accessory/hair/dio_cornflower
-	name = "Diona Cornflowers"
-	icon_state = "dio_cornflower"
-	do_colouration = FALSE
-	species_allowed = list(DIONA)
-
-/datum/sprite_accessory/hair/dio_brush
-	name = "Diona Brush"
-	icon_state = "dio_brush"
-	do_colouration = FALSE
-	species_allowed = list(DIONA)
 
 /datum/sprite_accessory/hair/dio_bloom
 	name = "Diona Everbloom"
@@ -1748,5 +1694,86 @@
 /datum/sprite_accessory/hair/dio_ficus
 	name = "Diona Ficus"
 	icon_state = "dio_ficus"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_rosey
+	name = "Diona Rosey"
+	icon_state = "dio_rosey"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_oak
+	name = "Diona Oak"
+	icon_state = "dio_oak"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+
+/datum/sprite_accessory/hair/dio_sprout
+	name = "Diona Sprout"
+	icon_state = "dio_sprout"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+
+/datum/sprite_accessory/hair/dio_leafy
+	name = "Diona Leafy"
+	icon_state = "dio_leafy"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+
+/datum/sprite_accessory/hair/dio_meadow
+	name = "Diona Meadow"
+	icon_state = "dio_meadow"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_laurel
+	name = "Diona Laurel"
+	icon_state = "dio_laurel"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_root
+	name = "Diona Root"
+	icon_state = "dio_root"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_spinner
+	name = "Diona Spinner"
+	icon_state = "dio_spinner"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_bracket
+	name = "Diona Bracket"
+	icon_state = "dio_bracket"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_vine
+	name = "Diona Vines"
+	icon_state = "dio_vine"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_wildflower
+	name = "Diona Wild Flowers"
+	icon_state = "dio_wildflower"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_cornflower
+	name = "Diona Cornflowers"
+	icon_state = "dio_cornflower"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_brush
+	name = "Diona Brush"
+	icon_state = "dio_brush"
 	do_colouration = FALSE
 	species_allowed = list(DIONA)
