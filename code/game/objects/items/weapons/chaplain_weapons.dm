@@ -52,7 +52,7 @@
 			return
 	if(istype(src, /obj/item/weapon/nullrod/staff)) //repair blind when re-entering in game
 		var/obj/item/weapon/nullrod/staff/S = src
-		if(S.brainmob.stat != CONSCIOUS)
+		if(S.brainmob && S.brainmob.ckey && S.brainmob.stat != CONSCIOUS)
 			S.brainmob.stat = CONSCIOUS
 			S.brainmob.blinded = FALSE
 
@@ -93,6 +93,7 @@
 			var/mob/living/M = B.loc
 			M.drop_from_inventory(staff)
 		staff.god_name = B.deity_name
+		staff.god_lore = B.god_lore
 		qdel(src)
 		if(B.icon_state == "koran")
 			staff.islam = TRUE
@@ -107,6 +108,7 @@
 	req_access = list(access_chapel_office)
 
 	var/god_name = "Space-Jesus"
+	var/god_lore = ""
 	var/mob/living/simple_animal/shade/god/brainmob = null
 	var/soul_inside = FALSE //you need to then remove the afk-god
 	var/searching = FALSE
@@ -119,6 +121,8 @@
 		if(S.imprinted == "empty")
 			S.imprinted = brainmob.name
 			S.transfer_soul("SHADE", src.brainmob, user)
+	if(istype(W, /obj/item/weapon/storage/bible))
+		reset_search() //force kick god from staff
 
 /obj/item/weapon/nullrod/staff/attack_self(mob/living/carbon/human/user)
 	if(user.mind.assigned_role == "Chaplain")
@@ -130,8 +134,6 @@
 			searching = TRUE
 			request_player()
 			addtimer(CALLBACK(src, .proc/reset_search), 600)
-		else if(soul_inside && brainmob && !brainmob.ckey && !searching && (brainmob.stat == DEAD || brainmob.stat == UNCONSCIOUS))
-			reset_search() //kick afk-god from staff
 
 /obj/item/weapon/nullrod/staff/proc/request_player()
 	for(var/mob/dead/observer/O in player_list)
@@ -172,6 +174,7 @@
 	brainmob.name = "[god_name] [pick("II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX")]"
 	brainmob.real_name = name
 	brainmob.mind.assigned_role = "Chaplain`s staff"
+	brainmob.mind.memory = god_lore
 	candidate.cancel_camera()
 	candidate.reset_view()
 	if(islam)
@@ -179,11 +182,17 @@
 		brainmob.speak.Add("[god_name] akbar!")
 
 	name = "Staff of [god_name]"
+	if(god_name == "Aghanim") //sprite is very similar
+		name = "Aghanim's Scepter"
+
 	desc = "Stone sometimes glow. Pray for mercy on [god_name]."
 	to_chat(brainmob, "<b>You are a god, brought into existence on [station_name()].</b>")
 	to_chat(brainmob, "<b>The priest has called you, you can command them, because you are their god.</b>")
 	to_chat(brainmob, "<b>All that is required of you is a creative image of the imprisoned god in the staff.</b>")
-	to_chat(brainmob, "<b>You can be both evil Satan thirsting and ordering sacrifices, and a good Jesus who wants more slaves.</b>")
+	if(god_lore == "")
+		to_chat(brainmob, "<b>You can be both evil Satan thirsting and ordering sacrifices, and a good Jesus who wants more slaves.</b>")
+	else
+		to_chat(brainmob, "<b>Check your lore in notes.</b>")
 	to_chat(brainmob, "<span class='userdanger'><font size =3><b>You do not know everything that happens and happened in the round!</b></font></span>")
  
 	icon_state = "talking_staffsoul"

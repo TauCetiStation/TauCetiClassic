@@ -66,6 +66,7 @@
 				B.name = pick("Just book", "Recipes", "Space Laws", "Proof of the absence of God", "Bible: Small Edition", "How to: enlarge penis")
 			else
 				B.name = "The Holy Book of [new_religion]"
+				B.god_lore = sanitize_safe(input(H, "You can come up with the lore of your god in [new_religion] religion.", "Lore for new god", ""), MAX_MESSAGE_LEN)
 		feedback_set_details("religion_name","[new_religion]")
 
 	spawn(1)
