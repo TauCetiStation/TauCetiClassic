@@ -1137,7 +1137,6 @@
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
-
 /datum/sprite_accessory/hair/una_small_horns
 	name = "Small Horny"
 	icon_state = "una_small_horns"
@@ -1198,12 +1197,10 @@
 	icon_state = "una_facial_aquaticfrills"
 	species_allowed = list(UNATHI)
 
-
 /datum/sprite_accessory/facial_hair/una_facial_longdorsal
 	name = "Long Dorsal 4"
 	icon_state = "una_facial_longdorsal"
 	species_allowed = list(UNATHI)
-
 
 /datum/sprite_accessory/hair/una_ramhorn2
 	name = "Ram Horns 2"
@@ -1214,7 +1211,6 @@
 	name = "Demon Horns"
 	icon_state = "una_demonforward"
 	species_allowed = list(UNATHI)
-
 
 /datum/sprite_accessory/hair/una_chameleon
 	name = "Chameleon"
@@ -1306,9 +1302,6 @@
 	icon_state = "una_facial_long_frills"
 	species_allowed = list(UNATHI)
 
-
-
-
 /datum/sprite_accessory/hair/una_frills_short
 	name = "Short Unathi Frills"
 	icon_state = "una_shortfrills"
@@ -1319,13 +1312,11 @@
 	icon_state = "una_horns"
 	species_allowed = list(UNATHI)
 
-
 /datum/sprite_accessory/hair/skr_veryshort_m
 	name = "Skrell Very Short Male Tentacles"
 	icon_state = "skr_veryshort_m"
 	species_allowed = list(SKRELL)
 	gender = MALE
-
 
 /datum/sprite_accessory/hair/skr_long_f
 	name = "Skrell Long Female Tentacles"
@@ -1339,14 +1330,11 @@
 	species_allowed = list(SKRELL)
 	gender = FEMALE
 
-
 /datum/sprite_accessory/hair/skr_zeke_f
 	name = "Skrell Zeke Female Tentacles"
 	icon_state = "skr_zeke_f"
 	species_allowed = list(SKRELL)
 	gender = FEMALE
-
-
 
 /datum/sprite_accessory/hair/skr_tentacle_m
 	name = "Skrell Male Tentacles"
@@ -1539,7 +1527,6 @@
 	icon_state = "vox_shortquills"
 	species_allowed = list(VOX)
 
-
 /datum/sprite_accessory/facial_hair/una_facial_aquaticfrill
 	name = "Aquatic Frills"
 	icon_state = "una_facial_aquaticfrills"
@@ -1560,7 +1547,6 @@
 	icon_state = "una_facial_dracfrills"
 	species_allowed = list(UNATHI)
 
-
 /datum/sprite_accessory/facial_hair/una_facial_dracfrills_webbing
 	name = "Drac Frills Webbed"
 	icon_state = "una_facial_dracfrills_webbing"
@@ -1571,12 +1557,10 @@
 	icon_state = "una_facial_sidefrills"
 	species_allowed = list(UNATHI)
 
-
 /datum/sprite_accessory/hair/una_demonforward
 	name = "Demon Forward"
 	icon_state = "una_demonforward"
 	species_allowed = list(UNATHI)
-
 
 /datum/sprite_accessory/facial_hair/una_facial_dorsalfrills
 	name = "Dorsa Frills"
@@ -1593,15 +1577,10 @@
 	icon_state = "una_facial_dorsalfrill3"
 	species_allowed = list(UNATHI)
 
-
-
 /datum/sprite_accessory/facial_hair/una_hipbraid_beads
 	name = "Bead"
 	icon_state = "una_facial_hipbraid_beads"
 	species_allowed = list(UNATHI)
-
-
-
 
 /datum/sprite_accessory/facial_hair/taj_sideburns
 	name = "Tajara Sideburns"
@@ -1652,13 +1631,11 @@
 	do_colouration = FALSE
 	species_allowed = list(DIONA)
 
-
 /datum/sprite_accessory/hair/dio_leafy
 	name = "Diona Leafy"
 	icon_state = "dio_leafy"
 	do_colouration = FALSE
 	species_allowed = list(DIONA)
-
 
 /datum/sprite_accessory/hair/dio_meadow
 	name = "Diona Meadow"
