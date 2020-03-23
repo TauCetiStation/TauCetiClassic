@@ -64,9 +64,7 @@
 			clipped = TRUE
 			name = "mangled [name]"
 			desc = "[desc]<br>They have had the fingertips cut off of them."
-			if("exclude" in species_restricted)
-				species_restricted -= UNATHI
-				species_restricted -= TAJARAN
+			species_restricted = null
 		else
 			to_chat(user, "<span class='notice'>The [src] have already been clipped!</span>")
 		return
