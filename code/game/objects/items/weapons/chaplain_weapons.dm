@@ -199,10 +199,7 @@
 	soul_inside = TRUE
 
 /obj/item/weapon/nullrod/staff/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
-	if(soul_inside && brainmob && brainmob.ckey) 
-		return
-
-	if(brainmob && !brainmob.ckey)
+	if(brainmob)
 		qdel(brainmob)
 
 	searching = FALSE
