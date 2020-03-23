@@ -1148,11 +1148,9 @@
 	icon_state = "una_faun"
 	species_allowed = list(UNATHI)
 
-
-
-/datum/sprite_accessory/hair/una_bullhorns
+/datum/sprite_accessory/hair/una_bullhorn
 	name = "Bully"
-	icon_state = "una_bullhorns"
+	icon_state = "una_bullhorn"
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/hair/una_ram2_horns
@@ -1190,9 +1188,9 @@
 	icon_state = "una_simple_horns"
 	species_allowed = list(UNATHI)
 
-/datum/sprite_accessory/hair/una_facial_cobrahood
+/datum/sprite_accessory/facial_hair/una_facial_cobrahood
 	name = "Cobra Hood"
-	icon_state = "una_cobrahood"
+	icon_state = "una_facial_cobrahood"
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/facialhair/una_facial_aquaticfrills
@@ -1200,14 +1198,10 @@
 	icon_state = "una_facial_aquaticfrills"
 	species_allowed = list(UNATHI)
 
-/datum/sprite_accessory/hair/una_dorsalfrill
-	name = "Dorsal Frills Full"
-	icon_state = "una_dorsalfrill"
-	species_allowed = list(UNATHI)
 
-/datum/sprite_accessory/hair/una_longdorsal
-	name = "Long Dorsal"
-	icon_state = "una_longdorsal"
+/datum/sprite_accessory/facial_hair/una_facial_longdorsal
+	name = "Long Dorsal 4"
+	icon_state = "una_facial_longdorsal"
 	species_allowed = list(UNATHI)
 
 
@@ -1242,12 +1236,12 @@
 	icon_state = "una_facial_hood"
 	species_allowed = list(UNATHI)
 
-/datum/sprite_accessory/hair/una_facial_shortfrills2
+/datum/sprite_accessory/facial_hair/una_facial_shortfrills2
 	name = "Short Frills 2"
 	icon_state = "una_facial_shortfrills2"
 	species_allowed = list(UNATHI)
 
-/datum/sprite_accessory/hair/una_facial_dracfrills
+/datum/sprite_accessory/facial_hair/una_facial_dracfrills
 	name = "Drac Frills Full"
 	icon_state = "una_facial_dracfrills"
 	species_allowed = list(UNATHI)
