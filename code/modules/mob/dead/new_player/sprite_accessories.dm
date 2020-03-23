@@ -1148,7 +1148,7 @@
 	icon_state = "una_faun"
 	species_allowed = list(UNATHI)
 
-	
+
 
 /datum/sprite_accessory/hair/una_bullhorns
 	name = "Bully"
@@ -1216,25 +1216,25 @@
 	icon_state = "una_ramhorn2"
 	species_allowed = list(UNATHI)
 
-/datum/sprite_accessory/hair/una_demonforward"
+/datum/sprite_accessory/hair/una_demonforward
 	name = "Demon Horns"
 	icon_state = "una_demonforward"
 	species_allowed = list(UNATHI)
 
 
-/datum/sprite_accessory/hair/una_chameleon"
+/datum/sprite_accessory/hair/una_chameleon
 	name = "Chameleon"
 	icon_state = "una_chameleon"
 	species_allowed = list(UNATHI)
 
-/datum/sprite_accessory/hair/una_dubhorns"
+/datum/sprite_accessory/hair/una_dubhorns
 	name = "Dub Horn"
 	icon_state = "una_dubhorns"
 	species_allowed = list(UNATHI)
 
-/datum/sprite_accessory/hair/una_faun"
+/datum/sprite_accessory/hair/una_faun
 	name = "Faun"
-	icon_state = "una_faun
+	icon_state = "una_faun"
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/facial_hair/una_facial_hood
