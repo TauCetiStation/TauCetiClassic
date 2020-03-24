@@ -27,7 +27,6 @@ var/base_commit_sha = 0
 		load_whitelist()
 	if(config.usealienwhitelist)
 		load_whitelistSQL()
-	load_proxy_whitelist()
 	LoadBans()
 
 	spawn
@@ -361,19 +360,6 @@ var/shutdown_processed = FALSE
 /client/proc/update_supporter_status()
 	if(ckey in donators || config.allow_byond_membership && IsByondMember())
 		supporter = 1
-
-
-/world/proc/load_proxy_whitelist()
-	if(!fexists("config/proxy_whitelist.txt"))
-		return
-	var/L = file2list("config/proxy_whitelist.txt")
-	for(var/line in L)
-		if(!length(line))
-			continue
-		if(copytext(line,1,2) == "#")
-			continue
-		proxy_whitelist.Add(ckey(line))
-
 
 /world/proc/load_configuration()
 	config = new /datum/configuration()

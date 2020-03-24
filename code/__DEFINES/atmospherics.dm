@@ -69,6 +69,9 @@
 //#define PIPE_FUEL_DOWN              50
 // Z-Level stuff
 #define PIPE_FUEL_CAP               51
+// Digital T-valves
+#define PIPE_DTVALVE                52
+#define PIPE_DTVALVEM               53
 
 #define CONNECT_TYPE_REGULAR    1
 #define CONNECT_TYPE_SUPPLY     2

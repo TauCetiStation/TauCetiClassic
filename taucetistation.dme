@@ -1103,7 +1103,7 @@
 #include "code\modules\client\asset_cache.dm"
 #include "code\modules\client\client defines.dm"
 #include "code\modules\client\client procs.dm"
-#include "code\modules\client\geoip.dm"
+#include "code\modules\client\guard.dm"
 #include "code\modules\client\preferences.dm"
 #include "code\modules\client\preferences_faction.dm"
 #include "code\modules\client\preferences_savefile.dm"
