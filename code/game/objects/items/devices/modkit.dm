@@ -80,6 +80,11 @@
 	name = "Skrellian hardsuit modification kit"
 	target_species = SKRELL
 
+/obj/item/device/modkit/vox
+	name = "Vox hardsuit modification kit"
+	target_species = VOX
+
+
 
 /obj/item/device/modkit/engineering
 	name = "Engineering hardsuit modification kit"
@@ -104,6 +109,11 @@
 	name = "Skrellian engineering hardsuit modification kit"
 	target_species = SKRELL
 
+/obj/item/device/modkit/engineering/vox
+	name = "Vox engineering hardsuit modification kit"
+	target_species = VOX
+
+
 
 /obj/item/device/modkit/engineering/chief
 	name = "Chief-engineers hardsuit modification kit"
@@ -127,6 +137,11 @@
 	name = "Unathi chief-engineers hardsuit modification kit"
 	target_species = UNATHI
 
+/obj/item/device/modkit/engineering/chief/vox
+	name = "Vox chief-engineers hardsuit modification kit"
+	target_species = VOX
+
+
 
 /obj/item/device/modkit/atmos
 	name = "Atmospherics hardsuit modification kit"
@@ -146,6 +161,11 @@
 /obj/item/device/modkit/atmos/skrell
 	name = "Skrellian atmospherics hardsuit modification kit"
 	target_species = SKRELL
+
+/obj/item/device/modkit/atmos/vox
+	name = "Vox atmospherics hardsuit modification kit"
+	target_species = VOX
+
 
 
 /obj/item/device/modkit/med
@@ -171,6 +191,11 @@
 	name = "Skrellian medical hardsuit modification kit"
 	target_species = SKRELL
 
+/obj/item/device/modkit/med/vox
+	name = "Vox medical hardsuit modification kit"
+	target_species = VOX
+
+
 
 /obj/item/device/modkit/med/cmo
 	name = "CMO hardsuit modification kit"
@@ -187,6 +212,11 @@
 /obj/item/device/modkit/med/cmo/unathi
 	name = "Unathi CMO hardsuit modification kit"
 	target_species = UNATHI
+
+/obj/item/device/modkit/med/cmo/vox
+	name = "Unathi CMO hardsuit modification kit"
+	target_species = VOX
+
 
 
 /obj/item/device/modkit/sec
@@ -212,6 +242,11 @@
 	name = "Skrellian security hardsuit modification kit"
 	target_species = SKRELL
 
+/obj/item/device/modkit/sec/vox
+	name = "Vox security hardsuit modification kit"
+	target_species = VOX
+
+
 
 /obj/item/device/modkit/sec/hos
 	name = "HoS hardsuit modification kit"
@@ -228,6 +263,11 @@
 /obj/item/device/modkit/sec/hos/unathi
 	name = "Unathi HoS hardsuit modification kit"
 	target_species = UNATHI
+
+/obj/item/device/modkit/sec/hos/vox
+	name = "Vox HoS hardsuit modification kit"
+	target_species = VOX
+
 
 
 /obj/item/device/modkit/mining
@@ -248,6 +288,11 @@
 /obj/item/device/modkit/mining/skrell
 	name = "Skrellian mining hardsuit modification kit"
 	target_species = SKRELL
+
+/obj/item/device/modkit/mining/vox
+	name = "Vox mining hardsuit modification kit"
+	target_species = VOX
+
 
 
 /obj/item/device/modkit/syndie
@@ -272,6 +317,11 @@
 	target_species = SKRELL
 	parts = MODKIT_HELMET
 
+/obj/item/device/modkit/syndie/vox
+	name = "Vox gorlex hardsuit modification kit"
+	target_species = VOX
+
+
 
 /obj/item/device/modkit/wizard
 	name = "Magical hardsuit modification kit"
@@ -291,3 +341,7 @@
 /obj/item/device/modkit/wizard/skrell
 	name = "Skrellian magical hardsuit modification kit"
 	target_species = SKRELL
+
+/obj/item/device/modkit/wizard/vox
+	name = "Vox magical hardsuit modification kit"
+	target_species = VOX

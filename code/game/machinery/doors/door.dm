@@ -146,7 +146,8 @@
 		user = null
 	if(!src.requiresID())
 		user = null
-	user.SetNextMove(CLICK_CD_INTERACT)
+	if(user)
+		user.SetNextMove(CLICK_CD_INTERACT)
 	if(src.allowed(user) || emergency)
 		if(src.density)
 			open()

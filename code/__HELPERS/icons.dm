@@ -867,8 +867,13 @@ var/global/list/humanoid_icon_cache = list()
 
 		if(prefs)
 			prefs.copy_to(body)
+		var/datum/species/S = all_species[prefs.species]
+		if(S)
+			S.before_job_equip(body, J, TRUE)
 		if(J)
 			J.equip(body, TRUE)
+		if(S)
+			S.after_job_equip(body, J, TRUE)
 
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 

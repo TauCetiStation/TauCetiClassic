@@ -44,11 +44,11 @@
 
 //current round runtimes
 /client/proc/view_runtimes()
-	set category = "Debug"
+	set category = "Logs"
 	set name = "View Runtimes"
 	set desc = "Open the runtime Viewer"
 
-	if(!check_rights(R_DEBUG))
+	if(!check_rights(R_LOG|R_DEBUG))
 		return
 
 	error_cache.show_to(src)
