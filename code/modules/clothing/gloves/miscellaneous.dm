@@ -83,7 +83,8 @@
 	icon_state = "fingerless_black"
 	item_state = "fingerless_black"
 	item_color="black"
-	species_restricted = list("exclude", "stunglove", VOX, VOX_ARMALIS)
+	species_restricted = list("exclude", VOX_ARMALIS)
+	species_restricted_locked = FALSE
 	clipped = TRUE
 
 /obj/item/clothing/gloves/fingerless/red
