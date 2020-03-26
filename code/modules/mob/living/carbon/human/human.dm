@@ -1957,7 +1957,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return
 
 	if(!BP.screen_toggle)
-		IPC_toggle_screen(TRUE)
+		set_light(BP.screen_brightness)
+		BP.screen_toggle = TRUE
 
 	var/new_hair = input(src, "Choose your IPC screen colour:", "Character Preference") as color|null
 	if(new_hair)
@@ -1982,12 +1983,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	update_hair()
 
-/mob/living/carbon/human/proc/IPC_toggle_screen(forced = FALSE)
+/mob/living/carbon/human/proc/IPC_toggle_screen()
 	set category = "IC"
 	set name = "Toggle IPC Screen"
 	set desc = "Allow toggle monitor"
 
-	if(stat && !forced)
+	if(stat)
 		return
 	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
 	if(!BP || (BP.is_stump))
@@ -1996,8 +1997,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	BP.screen_toggle = !BP.screen_toggle
 	if(BP.screen_toggle)
-		if(!forced)
-			IPC_change_screen()
+		IPC_change_screen()
 		set_light(BP.screen_brightness)
 	else
 		r_hair = 15

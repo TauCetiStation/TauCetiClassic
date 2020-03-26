@@ -725,7 +725,13 @@
 /datum/species/machine/handle_death(mob/living/carbon/human/H)
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP && BP.screen_toggle)
-		H.IPC_toggle_screen(TRUE)
+		H.r_hair = 15
+		H.g_hair = 15
+		H.b_hair = 15
+		H.set_light(0)
+		if(BP.ipc_head == "Default")
+			H.h_style = "IPC off screen"
+		H.update_hair()
 
 /datum/species/abductor
 	name = ABDUCTOR
