@@ -343,7 +343,11 @@ BLIND     // can't see anything
 
 				name = "mangled [name]"
 				desc = "[desc]<br>They have the toe caps cut off of them."
-				species_restricted = null
+				if("exclude" in species_restricted)
+					species_restricted -= UNATHI
+					species_restricted -= TAJARAN
+					species_restricted -= VOX
+					species_restricted -= VOX
 				src.icon_state += "_cut"
 				user.update_inv_shoes()
 				clipped_status = CLIPPED
@@ -397,8 +401,7 @@ BLIND     // can't see anything
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
-	species_restricted = list("exclude", DIONA, VOX_ARMALIS)
-
+	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
 /obj/item/clothing/suit/space
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. \"NSS EXODUS\" is written in large block letters on the back."
@@ -418,8 +421,7 @@ BLIND     // can't see anything
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
-	species_restricted = list("exclude", DIONA, VOX_ARMALIS)
-
+	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
 	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.
 
 /obj/item/clothing/suit/space/equipped(mob/M)
