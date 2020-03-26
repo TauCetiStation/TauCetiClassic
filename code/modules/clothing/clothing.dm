@@ -84,7 +84,10 @@ var/global/list/icon_state_allowed_cache = list()
 				if(!t_state)
 					t_state = icon_state
 
-				if("[t_state]_s" in icons_exist)
+				if (sprite_sheet_slot == SPRITE_SHEET_UNIFORM)
+					t_state = "[t_state]_s"
+
+				if("[t_state]" in icons_exist)
 					allowed = TRUE
 
 		if(allowed)
