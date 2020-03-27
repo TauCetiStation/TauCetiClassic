@@ -63,7 +63,6 @@
 	icon_living = "shade_god"
 	stat = CONSCIOUS
 	speak_emote = list("hisses", "bless")
-	speak = list()
 	maxHealth = 5000
 	health = 5000
 	melee_damage_lower = 0
