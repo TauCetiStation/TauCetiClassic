@@ -75,6 +75,24 @@
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
+/obj/item/seeds/blackpepper
+	name = "pack of piper nigrum seeds"
+	desc = "These seeds grow into black pepper plants. Spicy."
+	icon_state = "seed-blackpepper"
+	mypath = "/obj/item/seeds/blackpepperseed"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	species = "blackpepper"
+	plantname = "Black Pepper"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/blackpepper"
+	lifespan = 55
+	endurance = 35
+	maturation = 10
+	production = 10
+	yield = 3
+	potency = 10
+	plant_type = 0
+	growthstages = 5
+
 /obj/item/seeds/chiliseed
 	name = "pack of chili seeds"
 	desc = "These seeds grow into chili plants. HOT! HOT! HOT!"

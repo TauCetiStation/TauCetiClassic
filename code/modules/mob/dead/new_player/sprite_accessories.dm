@@ -1398,6 +1398,26 @@
 	icon_state = "vox_shortquills"
 	species_allowed = list(VOX)
 
+/datum/sprite_accessory/hair/vox_yasu
+	name = "Yasu"
+	icon_state = "vox_yasu"
+	species_allowed = list(VOX)
+
+/datum/sprite_accessory/hair/vox_razor
+	name = "Razor"
+	icon_state = "vox_razor"
+	species_allowed = list(VOX)
+
+/datum/sprite_accessory/hair/vox_kingly
+	name = "Kingly"
+	icon_state = "vox_kingly"
+	species_allowed = list(VOX)
+
+/datum/sprite_accessory/hair/vox_badhead
+	name = "Badhead"
+	icon_state = "vox_badhead"
+	species_allowed = list(VOX)
+
 /datum/sprite_accessory/facial_hair/taj_sideburns
 	name = "Tajara Sideburns"
 	icon_state = "taj_facial_sideburns"
