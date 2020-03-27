@@ -358,7 +358,7 @@ var/shutdown_processed = FALSE
 		C.update_supporter_status()
 
 /client/proc/update_supporter_status()
-	if(ckey in donators || config.allow_byond_membership && IsByondMember())
+	if((ckey in donators) || config.allow_byond_membership && IsByondMember())
 		supporter = 1
 
 /world/proc/load_configuration()
