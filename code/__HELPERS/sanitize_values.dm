@@ -45,25 +45,13 @@
 			else			return default
 	return .
 
-//dumb way, should be regex but im lazy to test
+var/global/regex/IP_pattern = regex(@"^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\.(?!$)|$)){4}$")
+
 /proc/sanitize_ip(addr)
-	var/list/L = splittext(addr, ".")
-	addr = ""
-
-	if(L.len != 4)
-		return FALSE
-
-	for(var/s in L)
-		var/n = text2num(s)
-		if(n && n < 0 && n > 255)
-			return FALSE
-		else
-			if(length(addr))
-				addr += ".[n]"
-			else
-				addr += "[n]"
-
-	return addr
+	// Return null if IP is invalid, return a valid IP otherwwise.
+	if(IP_pattern.Find(addr))
+		return addr
+	return null
 
 /proc/sanitize_cid(cid)
 	var/static/regex/cid_regex = regex(@"^[0-9]*$")
