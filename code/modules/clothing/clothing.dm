@@ -352,7 +352,6 @@ BLIND     // can't see anything
 					species_restricted -= UNATHI
 					species_restricted -= TAJARAN
 					species_restricted -= VOX
-					species_restricted -= VOX
 				src.icon_state += "_cut"
 				user.update_inv_shoes()
 				clipped_status = CLIPPED
