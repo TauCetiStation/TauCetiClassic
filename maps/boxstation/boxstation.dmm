@@ -18463,10 +18463,9 @@
 	},
 /area/station/civilian/toilet)
 "aGh" = (
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	name = "Dormitory Bathrooms APC";
-	pixel_y = -24
+/obj/machinery/camera{
+	c_tag = "Dormitory Toilets";
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -21033,6 +21032,11 @@
 /obj/structure/sink{
 	dir = 8;
 	pixel_x = -12
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -77345,6 +77349,16 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
+"uHq" = (
+/obj/machinery/power/apc{
+	name = "Dormitory Bathrooms APC";
+	pixel_y = -24
+	},
+/obj/structure/cable,
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/civilian/toilet)
 "uIb" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -113161,7 +113175,7 @@ tkb
 aEa
 aGH
 aLr
-thb
+uHq
 aEa
 bfp
 aKx
