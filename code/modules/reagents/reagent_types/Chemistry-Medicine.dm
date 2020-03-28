@@ -663,8 +663,8 @@
 				if(E.is_broken())
 					if(prob(50))
 						to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
-						E.status = 0
 						E.brute_dam = 0
+						E.status &= ~BROKEN && ~ORGAN_ARTERY_CUT
 
 
 	return ..()
