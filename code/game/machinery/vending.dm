@@ -924,7 +924,7 @@
 						/obj/item/seeds/limeseed = 3,/obj/item/seeds/orangeseed = 3,/obj/item/seeds/plastiseed = 3,/obj/item/seeds/potatoseed = 3,
 						/obj/item/seeds/poppyseed = 3,/obj/item/seeds/pumpkinseed = 3,/obj/item/seeds/riceseed= 3,/obj/item/seeds/soyaseed = 3,
 						/obj/item/seeds/sunflowerseed = 3,/obj/item/seeds/tomatoseed = 3,/obj/item/seeds/towermycelium = 3,/obj/item/seeds/watermelonseed = 3,
-						/obj/item/seeds/wheatseed = 3,/obj/item/seeds/whitebeetseed = 3)
+						/obj/item/seeds/wheatseed = 3,/obj/item/seeds/whitebeetseed = 3, /obj/item/seeds/blackpepper = 5)
 	contraband = list(/obj/item/seeds/amanitamycelium = 2,/obj/item/seeds/glowshroom = 2,/obj/item/seeds/libertymycelium = 2,/obj/item/seeds/mtearseed = 2,
 					  /obj/item/seeds/nettleseed = 2,/obj/item/seeds/reishimycelium = 2,/obj/item/seeds/reishimycelium = 2,/obj/item/seeds/shandseed = 2,)
 	premium = list(/obj/item/toy/waterflower = 1)
