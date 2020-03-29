@@ -280,16 +280,12 @@
 	min_age = 25
 	max_age = 85
 
-<<<<<<< HEAD
 	sprite_sheets = list(
 		SPRITE_SHEET_SUIT = 'icons/mob/species/unathi/suit.dmi',
 		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/unathi/suit_fat.dmi'
 	)
 
-/datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-=======
 /datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
->>>>>>> master
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
@@ -346,16 +342,12 @@
 	min_age = 25
 	max_age = 85
 
-<<<<<<< HEAD
 	sprite_sheets = list(
 		SPRITE_SHEET_SUIT = 'icons/mob/species/tajaran/suit.dmi',
 		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/tajaran/suit_fat.dmi'
 	)
 
-/datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-=======
 /datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
->>>>>>> master
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
