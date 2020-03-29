@@ -435,6 +435,9 @@
 	min_age = 12
 	max_age = 20
 
+/datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
+	H.add_overlay(image("icon" = 'icons/mob/human_races/r_vox.dmi', "icon_state" = "over", "layer" = -26))
+
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
 	if(H.wear_mask)
