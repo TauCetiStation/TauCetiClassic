@@ -3258,10 +3258,10 @@
 	dir = 1;
 	name = "Weapons locker"
 	},
-/obj/item/weapon/gun/projectile/shotgun{
+/obj/item/weapon/gun/projectile/shotgun/combat{
 	pixel_y = 4
 	},
-/obj/item/weapon/gun/projectile/shotgun,
+/obj/item/weapon/gun/projectile/shotgun/combat,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
