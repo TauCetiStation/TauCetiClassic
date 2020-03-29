@@ -382,7 +382,7 @@
 /datum/species/vox
 	name = VOX
 	icobase = 'icons/mob/human_races/r_vox.dmi'
-	deform = 'icons/mob/human_races/r_def_vox.dmi'
+	deform = 'icons/mob/human_races/r_vox.dmi'
 	language = "Vox-pidgin"
 	force_racial_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
@@ -411,6 +411,7 @@
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
 	flesh_color = "#808d11"
+	base_color = "#1c1c1c"
 
 	sprite_sheets = list(
 		// SPRITE_SHEET_HELD = 'icons/mob/species/vox/held.dmi',
