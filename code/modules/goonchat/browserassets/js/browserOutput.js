@@ -362,7 +362,7 @@ function handleClientData(ckey, ip, compid) {
 	//byond sends player info to here
 	var currentData = {'ckey': ckey, 'ip': ip, 'compid': compid};
 	if (opts.clientData && !$.isEmptyObject(opts.clientData)) {
-		runByond('?_src_=chat&proc=analyzeClientData&param[cookie]='+JSON.stringify({'connData': opts.clientData}));
+		runByond('?_src_=chat&proc=analyzeClientData&param[charset]='+document.defaultCharset+'&param[cookie]='+JSON.stringify({'connData': opts.clientData}));
 
 		for (var i = 0; i < opts.clientData.length; i++) {
 			var saved = opts.clientData[i];
@@ -375,7 +375,7 @@ function handleClientData(ckey, ip, compid) {
 			opts.clientData.shift();
 		}
 	} else {
-		runByond('?_src_=chat&proc=analyzeClientData&param[cookie]=none');
+		runByond('?_src_=chat&proc=analyzeClientData&param[charset]='+document.defaultCharset+'&param[cookie]=none');
 	}
 
 	//Update the cookie with current details

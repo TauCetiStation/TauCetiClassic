@@ -1198,3 +1198,25 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		target.player_ingame_age = value
 	else
 		to_chat(src, "This player already has more minutes than [value]!")
+
+/client/proc/grand_guard_pass()
+	set name = "Guard pass"
+	set desc = "Allow a new player to skip the guard checks"
+
+	if(!check_rights(R_VAREDIT))
+		return
+
+	if(!dbcon.IsConnected())
+		return
+
+	var/ckey = ckey(input("Enter player ckey") as null|text)
+
+	if(!ckey)
+		return
+
+	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[GUARD_CHECK_AGE]' WHERE ckey = '[sanitize_sql(ckey)]' AND cast(ingameage as unsigned integer) < [GUARD_CHECK_AGE]")
+	query_update.Execute()
+
+	to_chat(src, "Guard pass granted (probably)")
+	log_admin("GUARD: [key_name(usr)] granted to [ckey] guard pass ([GUARD_CHECK_AGE] minutes)")
+	message_admins("GUARD: [key_name_admin(usr)] [key_name(usr)] granted to [ckey] guard pass ([GUARD_CHECK_AGE] minutes)")
