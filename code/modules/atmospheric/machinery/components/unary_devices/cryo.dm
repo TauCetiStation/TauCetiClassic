@@ -83,14 +83,15 @@
 				if(occupant.reagents.get_reagent_amount(M) >= 1)
 					has_cryo_medicine = TRUE
 					break
-			var/reagent_count = length(beaker.reagents.reagent_list)
-			if(beaker && !has_cryo_medicine && reagent_count > 0)
-				for(var/datum/reagent/R in beaker.reagents.reagent_list)
-					if(R.id in cryo_medicine)
-						beaker.reagents.trans_id_to(occupant, R.id, 1 / reagent_count, 10)
-					else
-						beaker.reagents.trans_id_to(occupant, R.id, 1 / reagent_count)
-				beaker.reagents.reaction(occupant)
+			if(beaker && beaker.reagents)
+				var/reagent_count = length(beaker.reagents.reagent_list)
+				if(beaker && !has_cryo_medicine && reagent_count > 0)
+					for(var/datum/reagent/R in beaker.reagents.reagent_list)
+						if(R.id in cryo_medicine)
+							beaker.reagents.trans_id_to(occupant, R.id, 1 / reagent_count, 10)
+						else
+							beaker.reagents.trans_id_to(occupant, R.id, 1 / reagent_count)
+					beaker.reagents.reaction(occupant)
 
 	updateUsrDialog()
 	return 1

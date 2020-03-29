@@ -68,3 +68,30 @@
 
 #define AHELP_REPLY 1 // actually not used anywhere, remove this comment otherwise.
 #define MHELP_REPLY 2
+
+#define STICKYBAN_DB_CACHE_TIME    10 SECONDS // DB update cache
+#define STICKYBAN_ROGUE_CHECK_TIME 5 // Timeout for rogue check
+
+// Byond ban system list keys
+#define BANKEY_TYPE      "type" //The ban's type, if any. It can be "sticky", "session", or "time"
+#define BANKEY_CKEY      "ckey" // Ckey of banned user
+#define BANKEY_REASON    "reason" // The reason the ban was implemented; Admin only
+#define BANKEY_MSG       "message" // A message to display to the user. 
+#define BANKEY_KEYS      "keys" // Other keys caught in a sticky ban. 
+#define BANKEY_IP        "IP" // Other IP addresses caught in a sticky ban.
+#define BANKEY_CID       "computer_id" // Other computer_id values caught in a sticky ban.
+#define BANKEY_TIME      "time" // The number of seconds remaining in the ban.
+#define BANKEY_WHITELIST "whitelist"
+// Custom ban keys
+#define BANKEY_ADMIN     "admin"   // Ckey on author ban
+#define BANKEY_FROMDB    "fromdb" // When ban cached in DB
+// Only cache keys
+#define BANKEY_TIMEOUT   "timeout" // Temporary disable (DB require for restore)
+#define BANKEY_REVERT    "reverting"
+// Only cache keys. Lists lazy and key may not exists
+#define BANKEY_MATCHES_THIS_ROUND       "matches_this_round"
+#define BANKEY_ADMIN_MATCHES_THIS_ROUND     "admin_matches_this_round"
+#define BANKEY_EXISTING_USER_MATCHES    "existing_user_matches_this_round"
+#define BANKEY_PENDING_MATCHES      "pending_matches_this_round"
+
+#define GUARD_CHECK_AGE 60

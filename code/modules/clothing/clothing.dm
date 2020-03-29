@@ -156,6 +156,9 @@ var/global/list/icon_state_allowed_cache = list()
 		else
 			species_restricted = list(target_species)
 
+	if(target_species == VOX)
+		flags &= ~BLOCKHAIR
+
 	//Set icon
 	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
 		icon_override = sprite_sheets_refit[target_species]
