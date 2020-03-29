@@ -5244,15 +5244,15 @@
 	dir = 8
 	},
 /obj/machinery/light/small,
-/obj/item/weapon/gun/projectile/shotgun/combat{
+/obj/item/weapon/gun/projectile/shotgun/combat/nonlethal{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/projectile/shotgun/combat{
+/obj/item/weapon/gun/projectile/shotgun/combat/nonlethal{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/projectile/shotgun/combat{
+/obj/item/weapon/gun/projectile/shotgun/combat/nonlethal{
 	pixel_x = -3;
 	pixel_y = 3
 	},

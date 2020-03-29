@@ -67,6 +67,9 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom
 	w_class = ITEM_SIZE_HUGE
 
+/obj/item/weapon/gun/projectile/shotgun/combat/nonlethal
+	mag_type = /obj/item/ammo_box/magazine/internal/shotcom/nonlethal
+
 /obj/item/weapon/gun/projectile/revolver/doublebarrel
 	name = "double-barreled shotgun"
 	desc = "A true classic."
