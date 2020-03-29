@@ -61,6 +61,7 @@
 #define NO_SCAN            "no_scan"
 #define NO_PAIN            "no_pain"
 #define NO_EMBED           "no_embed"
+#define NO_FAT             "no_fatness"
 #define HAS_SKIN_TONE      "has_skin_tone"
 #define HAS_SKIN_COLOR     "has_skin_color"
 #define HAS_HAIR_COLOR     "has_hair_color"

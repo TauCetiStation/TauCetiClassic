@@ -34,6 +34,26 @@
 var/global/list/specie_sprite_sheet_cache = list()
 var/global/list/icon_state_allowed_cache = list()
 
+/obj/item/clothing/proc/get_sprite_sheet_icon_list(specie, overwrite_slot = null)
+	// Return list of icon states of current spirte_sheet_slot or null
+	if(!specie || !(specie in global.all_species))
+		return
+	var/slot = sprite_sheet_slot
+	if(overwrite_slot)
+		slot = overwrite_slot
+	var/sprite_sheet_cache_key = "[specie]|[slot]"
+	if(global.specie_sprite_sheet_cache[sprite_sheet_cache_key])
+		. = global.specie_sprite_sheet_cache[sprite_sheet_cache_key]
+	else
+		var/datum/species/S = global.all_species[specie]
+		var/i_path = S.sprite_sheets[slot]
+		// If you specified the mob as sprite_sheet_restricted, but
+		// want to use default sprite sheets for some "slots"
+		// then specify it.
+		if(i_path)
+			global.specie_sprite_sheet_cache[sprite_sheet_cache_key] = icon_states(i_path)
+			. = global.specie_sprite_sheet_cache[sprite_sheet_cache_key]
+
 /obj/item/clothing/proc/update_species_restrictions()
 	if(!species_restricted)
 		species_restricted = list("exclude")
@@ -58,21 +78,7 @@ var/global/list/icon_state_allowed_cache = list()
 		if(global.icon_state_allowed_cache[cache_key])
 			allowed = TRUE
 		else
-			var/specie_cache = "[specie]|[sprite_sheet_slot]"
-			var/list/icons_exist
-			if(global.specie_sprite_sheet_cache[specie_cache])
-				icons_exist = global.specie_sprite_sheet_cache[specie_cache]
-			else
-				var/datum/species/S = global.all_species[specie]
-				var/icon_path = S.sprite_sheets[sprite_sheet_slot]
-				// If you specified the mob as sprite_sheet_restricted, but
-				// want to use default sprite sheets for some "slots"
-				// then specify it.
-				if(icon_path)
-					var/list/sheet_icon_states = icon_states(icon_path)
-					icons_exist = sheet_icon_states
-					global.specie_sprite_sheet_cache[specie_cache] = sheet_icon_states
-
+			var/list/icons_exist = get_sprite_sheet_icon_list(specie)
 			if(icons_exist)
 				var/t_state
 				if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES || sprite_sheet_slot == SPRITE_SHEET_BELT)

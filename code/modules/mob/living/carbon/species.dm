@@ -236,10 +236,6 @@
 	min_age = 25
 	max_age = 85
 
-	sprite_sheets = list(
-		SPRITE_SHEET_SUIT_FAT = 'icons/mob/suit_fat.dmi'
-	)
-
 /datum/species/unathi
 	name = UNATHI
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
@@ -423,6 +419,7 @@
 		,SPRITE_SHEET_RESTRICTION = TRUE
 		,HAS_HAIR_COLOR = TRUE
 		,HAS_SKIN_COLOR = TRUE
+		,NO_FAT=  TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
@@ -537,6 +534,7 @@
 	,HAS_TAIL = TRUE
 	,NO_PAIN = TRUE
 	,SPRITE_SHEET_RESTRICTION = TRUE
+	,NO_FAT = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
