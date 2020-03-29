@@ -358,6 +358,9 @@ commented cause polls are kinda broken now, needs refactoring */
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
 
+	if(character.client)
+		character.client.guard.time_velocity_spawn = world.timeofday
+
 	qdel(src)
 
 /mob/dead/new_player/proc/AnnounceArrival(mob/living/carbon/human/character, rank)

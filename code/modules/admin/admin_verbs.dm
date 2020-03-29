@@ -83,15 +83,17 @@ var/list/admin_verbs_log = list(
 	/client/proc/getlogsbyid,			   //allows us to fetch logs by round id,
 	/client/proc/getoldlogs,			   //allows us to fetch logs by round id,
 	/client/proc/investigate_show,		//various admintools for investigation. Such as a singulo grief-log,
+	/client/proc/view_runtimes
 	)
 var/list/admin_verbs_variables = list(
 	/client/proc/debug_variables,
 	/client/proc/add_player_age,
+	/client/proc/grand_guard_pass,
 	/client/proc/mass_apply_status_effect,
 )
 var/list/admin_verbs_ban = list(
-	/client/proc/unban_panel
-//	/client/proc/stickybanpanel,
+	/client/proc/unban_panel,
+	/client/proc/stickybanpanel,
 	)
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
@@ -282,6 +284,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_debug_tog_vcounter,
 	/client/proc/enable_debug_verbs,
 	/client/proc/add_player_age,
+	/client/proc/grand_guard_pass,
 	/proc/possess,
 	/proc/release
 	)

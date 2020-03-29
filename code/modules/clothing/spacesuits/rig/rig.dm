@@ -20,11 +20,13 @@
 		UNATHI = 'icons/mob/species/unathi/helmet.dmi',
 		TAJARAN = 'icons/mob/species/tajaran/helmet.dmi',
 		SKRELL = 'icons/mob/species/skrell/helmet.dmi',
+		VOX = 'icons/mob/species/vox/helmet.dmi',
 		)
 	sprite_sheets_obj = list(
 		UNATHI = 'icons/obj/clothing/species/unathi/hats.dmi',
 		TAJARAN = 'icons/obj/clothing/species/tajaran/hats.dmi',
 		SKRELL = 'icons/obj/clothing/species/skrell/hats.dmi',
+		VOX = 'icons/obj/clothing/species/vox/hats.dmi',
 		)
 
 /obj/item/clothing/head/helmet/space/rig/attack_self(mob/user)
@@ -60,11 +62,13 @@
 		UNATHI = 'icons/mob/species/unathi/suit.dmi',
 		TAJARAN = 'icons/mob/species/tajaran/suit.dmi',
 		SKRELL = 'icons/mob/species/skrell/suit.dmi',
+		VOX = 'icons/mob/species/vox/suit.dmi',
 		)
 	sprite_sheets_obj = list(
 		UNATHI = 'icons/obj/clothing/species/unathi/suits.dmi',
 		TAJARAN = 'icons/obj/clothing/species/tajaran/suits.dmi',
 		SKRELL = 'icons/obj/clothing/species/skrell/suits.dmi',
+		VOX = 'icons/obj/clothing/species/vox/suits.dmi',
 		)
 	var/magpulse = 0
 

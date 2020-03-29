@@ -178,7 +178,7 @@
 #define ERROR_USEFUL_LEN 2
 
 //Filters
-#define AMBIENT_OCCLUSION filter(type = "drop_shadow", x = 0, y = -2, size = 4, border = 4, color = "#04080FAA")
+#define AMBIENT_OCCLUSION filter(type = "drop_shadow", x = 0, y = -2, size = 4, color = "#04080FAA")
 
 #define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))
 

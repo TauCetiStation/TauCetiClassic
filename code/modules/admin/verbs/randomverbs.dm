@@ -813,6 +813,27 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		log_admin("[key_name(usr)] used gibself.")
 		message_admins("<span class='notice'>[key_name_admin(usr)] used gibself.</span>")
 		feedback_add_details("admin_verb","GIBS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/cmd_admin_dust(mob/M as mob in mob_list)
+	set category = "Special Verbs"
+	set name = "Turn to dust"
+
+	if(!check_rights(R_ADMIN|R_FUN))
+		return
+
+	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
+	if(confirm != "Yes") return
+	//Due to the delay here its easy for something to have happened to the mob
+	if(!M)	return
+
+	log_admin("[key_name(usr)] has annihilate [key_name(M)]")
+	message_admins("[key_name_admin(usr)] has annihilate [key_name_admin(M)]")
+
+	if(istype(M, /mob/dead/observer))
+		return
+
+	M.dust()
+	feedback_add_details("admin_verb","DUST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /*
 /client/proc/cmd_manual_ban()
 	set name = "Manual Ban"
@@ -1177,3 +1198,25 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		target.player_ingame_age = value
 	else
 		to_chat(src, "This player already has more minutes than [value]!")
+
+/client/proc/grand_guard_pass()
+	set name = "Guard pass"
+	set desc = "Allow a new player to skip the guard checks"
+
+	if(!check_rights(R_VAREDIT))
+		return
+
+	if(!dbcon.IsConnected())
+		return
+
+	var/ckey = ckey(input("Enter player ckey") as null|text)
+
+	if(!ckey)
+		return
+
+	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[GUARD_CHECK_AGE]' WHERE ckey = '[sanitize_sql(ckey)]' AND cast(ingameage as unsigned integer) < [GUARD_CHECK_AGE]")
+	query_update.Execute()
+
+	to_chat(src, "Guard pass granted (probably)")
+	log_admin("GUARD: [key_name(usr)] granted to [ckey] guard pass ([GUARD_CHECK_AGE] minutes)")
+	message_admins("GUARD: [key_name_admin(usr)] [key_name(usr)] granted to [ckey] guard pass ([GUARD_CHECK_AGE] minutes)")

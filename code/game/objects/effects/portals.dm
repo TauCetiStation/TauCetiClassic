@@ -48,9 +48,9 @@
 	if (istype(M, /atom/movable))
 		if(prob(failchance)) //oh dear a problem, put em in deep space
 			src.icon_state = "portal1"
-			return do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy -5), 3), 0, use_forceMove, adest_checkdensity = density_check, arespect_entrydir = respect_entrydir, aentrydir = get_dir(M, src))
+			return do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy -5), 3), 0, use_forceMove, arespect_entrydir = respect_entrydir, aentrydir = get_dir(M, src))
 		else
-			return do_teleport(M, target, 1, use_forceMove, adest_checkdensity = density_check, arespect_entrydir = respect_entrydir, aentrydir = get_dir(M, src))
+			return do_teleport(M, target, 1, use_forceMove, arespect_entrydir = respect_entrydir, aentrydir = get_dir(M, src))
 
 //Telescience wormhole
 /obj/effect/portal/tsci_wormhole

@@ -435,7 +435,7 @@
 				if(BP)
 					BP.take_damage(4 * toxpwr, 2 * toxpwr)
 					if(prob(meltprob)) //Applies disfigurement
-						H.emote("scream",,, 1)
+						H.emote("scream")
 						BP.disfigured = TRUE
 			else
 				M.take_bodypart_damage(min(6 * toxpwr, volume * toxpwr)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
@@ -608,14 +608,14 @@
 					BP.take_damage(10)
 					if(prob(25))
 						to_chat(H, "<span class='warning'>Your flesh is starting to melt!</span>")
-						H.emote("scream",,, 1)
+						H.emote("scream")
 						BP.sever_artery()
 			if(12 to 21)
 				var/obj/item/organ/internal/BP = H.organs_by_name[pick(H.species.has_organ)]
 				BP.take_damage(5)
 				if(prob(25))
 					to_chat(H, "<span class='warning'>You feel unbearable pain inside you!</span>")
-					H.emote("scream",,, 1)
+					H.emote("scream")
 			if(30)
 				if(H.set_species(SLIME))
 					to_chat(H, "<span class='warning'>Your flesh mutates and you feel free!</span>")
