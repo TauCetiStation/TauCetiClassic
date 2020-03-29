@@ -117,8 +117,7 @@
 
 	if (!pda.message_silent)
 		playsound(pda, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-		for (var/mob/O in hearers(3, pda.loc))
-			O.show_message(text("[bicon(pda)] *[pda.ttone]*"))
+		pda.audible_message("[bicon(pda)] *[pda.ttone]*", hearing_distance = 3)
 
 	to_chat(head_mutineer.current, fluff.get_pda_body())
 	return 1
@@ -137,7 +136,7 @@
 /datum/game_mode/mutiny/proc/equip_head_mutineer()
 	equip_head(head_mutineer, "mutineer", /mob/living/carbon/human/proc/recruit_mutineer)
 
-/datum/game_mode/mutiny/proc/equip_head(datum/mind/head, faction, proc/recruitment_verb)
+/datum/game_mode/mutiny/proc/equip_head(datum/mind/head, faction, recruitment_verb)
 	var/mob/living/carbon/human/H = head.current
 	to_chat(H, "You are the Head [capitalize(faction)]!")
 	head.special_role = "head_[faction]"
@@ -422,8 +421,8 @@
 
 	if (M)
 		to_chat(src, "Attempting to recruit [M]...")
-		log_admin("[src]([src.ckey]) attempted to recruit [M] as a loyalist.")
-		message_admins("<span class='warning'>[src]([src.ckey]) attempted to recruit [M] as a loyalist. [ADMIN_JMP(src)]</span>")
+		log_admin("[key_name(src)] attempted to recruit [M] as a loyalist.")
+		message_admins("<span class='warning'>[key_name_admin(src)] attempted to recruit [M] as a loyalist. [ADMIN_JMP(src)]</span>")
 
 		var/choice = alert(M, "Asked by [src]: Will you help me complete Directive X?", "Loyalist recruitment", "No", "Yes")
 		if(choice == "Yes")
@@ -459,8 +458,8 @@
 
 	if (M)
 		to_chat(src, "Attempting to recruit [M]...")
-		log_admin("[src]([src.ckey]) attempted to recruit [M] as a mutineer.")
-		message_admins("<span class='warning'>[src]([src.ckey]) attempted to recruit [M] as a mutineer. [ADMIN_JMP(src)]</span>")
+		log_admin("[key_name(src)]) attempted to recruit [M] as a mutineer.")
+		message_admins("<span class='warning'>[key_name_admin(src)] attempted to recruit [M] as a mutineer. [ADMIN_JMP(src)]</span>")
 
 		var/choice = alert(M, "Asked by [src]: Will you help me stop Directive X?", "Mutineer recruitment", "No", "Yes")
 		if(choice == "Yes")

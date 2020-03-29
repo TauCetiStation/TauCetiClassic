@@ -168,7 +168,7 @@
 	update_icon()
 
 /obj/vehicle/proc/explode()
-	src.visible_message("<span class='danger'>[src] blows apart!</span>", 1)
+	src.visible_message("<span class='danger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/stack/rods(Tsec)

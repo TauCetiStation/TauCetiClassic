@@ -2,9 +2,9 @@ var/datum/subsystem/objects/SSobj
 
 /datum/var/isprocessing = 0
 /datum/proc/process()
-	set waitfor = 0
+	set waitfor = FALSE
 	STOP_PROCESSING(SSobj, src)
-	return 0
+	return FALSE
 
 /datum/subsystem/objects
 	name = "Objects"

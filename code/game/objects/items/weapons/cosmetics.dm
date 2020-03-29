@@ -284,6 +284,7 @@
 
 	mannequin.update_body()
 	mannequin.update_hair()
+	COMPILE_OVERLAYS(mannequin)
 	return mannequin
 
 /obj/item/weapon/scissors/Topic(href, href_list)

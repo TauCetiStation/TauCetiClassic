@@ -90,7 +90,7 @@ var/list/department_radio_keys = list(
 			return 1
 
 /mob/living/proc/hivecheck()
-	if (isalien(src))
+	if (isxeno(src))
 		return 1
 	if (!ishuman(src))
 		return
@@ -137,7 +137,7 @@ var/list/department_radio_keys = list(
 		if (!istype(src, /mob/living/silicon/ai)) // Atlantis: Prevents nearby people from hearing the AI when it talks using it's integrated radio.
 			for(var/mob/living/M in hearers(5, src))
 				if(M != src)
-					M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>")
+					M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>", SHOWMSG_VISUAL|SHOWMSG_AUDIO)
 				if (speech_sound)
 					playsound_local(src, speech_sound, VOL_EFFECTS_MASTER, sound_vol * 0.5)
 
@@ -192,7 +192,7 @@ var/list/department_radio_keys = list(
 				O.hear_talk(src, message, verb, speaking)
 
 	var/area/A = get_area(src)
-	log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
+	log_say("[key_name(src)] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
 	return 1
 
 /mob/living/proc/say_signlang(var/message, var/verb="gestures", var/datum/language/language)

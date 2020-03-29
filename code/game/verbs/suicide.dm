@@ -184,14 +184,12 @@
 	if(answer == "Yes")
 		var/obj/item/device/paicard/card = loc
 		card.removePersonality()
-		var/turf/T = get_turf_or_move(card.loc)
-		for (var/mob/M in viewers(T))
-			M.show_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", 3, "<span class='notice'>[src] bleeps electronically.</span>", 2)
+		card.visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", blind_message = "<span class='notice'>[src] bleeps electronically.</span>")
 		death(0)
 	else
 		to_chat(src, "Aborting suicide attempt.")
 
-/mob/living/carbon/alien/humanoid/verb/suicide()
+/mob/living/carbon/xenomorph/humanoid/verb/suicide()
 	set hidden = 1
 
 	if (stat == DEAD)

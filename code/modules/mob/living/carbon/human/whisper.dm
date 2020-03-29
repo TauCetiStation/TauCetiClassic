@@ -6,7 +6,7 @@
 		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
-	log_whisper("[src.name]/[src.key] : [message]")
+	log_whisper("[key_name(src)]: [message]")
 
 	if(src.client)
 		if (src.client.prefs.muted & MUTE_IC)
@@ -58,7 +58,7 @@
 	message = capitalize(trim(message))
 
 	//TODO: handle_speech_problems for silent
-	if(!message || silent || miming || has_trait(TRAIT_MUTE))
+	if(!message || silent || miming || HAS_TRAIT(src, TRAIT_MUTE))
 		return
 
 	// Mute disability
@@ -132,4 +132,4 @@
 	if(watching.len)
 		var/rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers something.</span>"
 		for (var/mob/M in watching)
-			M.show_message(rendered, 2)
+			M.show_message(rendered, SHOWMSG_VISUAL|SHOWMSG_AUDIO)

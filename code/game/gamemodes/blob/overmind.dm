@@ -62,14 +62,14 @@
 		return
 
 	//var/message_a = say_quote(message)
-	var/message_a = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
-	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i></font>"
+	message = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
+	message = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></font>"
 
 	for (var/mob/M in mob_list)
 		if(isovermind(M) || isobserver(M))
-			M.show_message(rendered, 2)
+			to_chat(M, message)
 
-/mob/camera/blob/emote(act,m_type=1,message = null)
+/mob/camera/blob/emote(act,m_type=SHOWMSG_VISUAL,message = null)
 	return
 
 /mob/camera/blob/blob_act()

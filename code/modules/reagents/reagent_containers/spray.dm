@@ -134,6 +134,10 @@
 			step(buckled_to, movementdirection)
 			sleep(3)
 			step(buckled_to, movementdirection)
+	else if (loc && istype(loc, /obj/item/mecha_parts/mecha_equipment/tool/extinguisher))
+		var/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/ext = loc
+		if (ext.chassis)
+			ext.chassis.newtonian_move(movementdirection)
 	else
 		user.newtonian_move(movementdirection)
 
@@ -195,7 +199,7 @@
 	name = "hair color spray"
 	desc = "Changes hair colour! Don't forget to read the label!"
 	icon = 'icons/obj/items.dmi'
-	icon_state = "hairspray"
+	icon_state = "hairspraywhite"
 	item_state = "hairspray"
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = list(1,5,10)
@@ -467,3 +471,6 @@
 	origin_tech = "combat=1;materials=1"
 	spray_size = 4
 	spray_sizes = list(4)
+
+	spray_cloud_move_delay = 1
+	spray_cloud_react_delay = 0

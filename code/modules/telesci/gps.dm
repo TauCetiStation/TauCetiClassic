@@ -15,7 +15,7 @@ var/list/GPS_list = list()
 	. = ..()
 	GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
-	overlays += "working"
+	add_overlay("working")
 
 /obj/item/device/gps/Destroy()
 	GPS_list.Remove(src)
@@ -23,12 +23,12 @@ var/list/GPS_list = list()
 
 /obj/item/device/gps/emp_act(severity)
 	emped = 1
-	overlays -= "working"
-	overlays += "emp"
+	cut_overlay("working")
+	add_overlay("emp")
 	spawn(300)
 		emped = 0
-		overlays -= "emp"
-		overlays += "working"
+		cut_overlay("emp")
+		add_overlay("working")
 
 /obj/item/device/gps/attack_self(mob/user)
 
@@ -48,7 +48,7 @@ var/list/GPS_list = list()
 			if(G.emped == 1)
 				t += "<BR>[tracked_gpstag]: ERROR"
 			else
-				t += "<BR>[tracked_gpstag]: [format_text(gps_area.name)] ([pos.x], [pos.y], [pos.z])"
+				t += "<BR>[tracked_gpstag]: [gps_area.name] ([pos.x], [pos.y], [pos.z])"
 
 	var/datum/browser/popup = new(user, "GPS", name, 600, 450)
 	popup.set_content(t)

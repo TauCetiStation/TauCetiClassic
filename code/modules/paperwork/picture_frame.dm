@@ -112,7 +112,7 @@
 		..()
 
 /obj/item/weapon/picture_frame/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(displayed)
 		overlays |= image(displayed.icon, "photo")
 	if(frame_glass)
@@ -333,7 +333,7 @@
 	return
 
 /obj/structure/picture_frame/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(screwed)
 		icon_state = "[initial(icon_state)]_screwed"
 	else

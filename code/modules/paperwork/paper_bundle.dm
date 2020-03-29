@@ -112,7 +112,7 @@
 			human_user << browse(entity_ja(dat) + "<html><head><title>[sanitize(P.name)]</title></head>" \
 			+ "<body style='overflow:hidden'>" \
 			+ "<div> <img src='tmp_photo.png' width = '180'" \
-			+ "[P.scribble ? "<div> Written on the back:<br><i>[P.scribble]</i>" : ]"\
+			+ "[P.scribble ? "<div> Written on the back:<br><i>[P.scribble]</i>" : null]"\
 			+ "</body></html>", "window=[name]")
 			P.add_fingerprint(usr)
 		add_fingerprint(usr)
@@ -195,9 +195,11 @@
 
 
 /obj/item/weapon/paper_bundle/update_icon()
-	var/obj/item/weapon/paper/P = src.contents
-	icon_state = P.icon_state
-	overlays = P.overlays
+	cut_overlays()
+	if(contents.len)
+		var/obj/item/weapon/paper/P = contents[1]
+		icon_state = P.icon_state
+		copy_overlays(P)
 	underlays = 0
 	var/i = 0
 	var/photo
@@ -215,12 +217,12 @@
 			var/obj/item/weapon/photo/Ph = O
 			img = Ph.tiny
 			photo = 1
-			overlays += img
+			add_overlay(img)
 	if(i>1)
 		desc =  "[i] papers clipped to each other."
 	else
 		desc = "A single sheet of paper."
 	if(photo)
 		desc += "\nThere is a photo attached to it."
-	overlays += image('icons/obj/bureaucracy.dmi', "clip")
+	add_overlay(image('icons/obj/bureaucracy.dmi', "clip"))
 	return

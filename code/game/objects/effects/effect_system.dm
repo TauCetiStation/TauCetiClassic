@@ -149,6 +149,9 @@ steam.start() -- spawns the effect
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
 
+/obj/effect/effect/sparks/get_current_temperature()
+	return 1000
+
 /datum/effect/effect/system/spark_spread
 	var/total_sparks = 0 // To stop it being spammed and lagging!
 
@@ -270,7 +273,7 @@ steam.start() -- spawns the effect
 		return 0
 
 	M.drop_item()
-	M:sleeping += 1
+	M.Sleeping(1 SECOND)
 	if (M.coughedtime != 1)
 		M.coughedtime = 1
 		M.emote("cough")

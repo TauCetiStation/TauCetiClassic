@@ -25,6 +25,7 @@
 	//Mining resource generation stuff.
 	var/has_resources
 	var/list/resources
+	var/slowdown = 0
 
 /turf/atom_init()
 	if(initialized)
@@ -307,6 +308,7 @@
 	if(old_flooded)
 		flooded = 1
 		update_icon()
+	SSdemo.mark_turf(W)
 
 	return W
 
@@ -422,7 +424,7 @@
 	ChangeTurf(/turf/space)
 	return(2)
 
-/turf/hitby(atom/movable/AM)
+/turf/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	if(isliving(AM))
 		var/mob/living/L = AM
 		L.turf_collision(src)

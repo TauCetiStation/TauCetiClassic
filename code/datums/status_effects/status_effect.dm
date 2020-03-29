@@ -1,3 +1,14 @@
+var/global/list/spawnable_status_effects = list(
+	/datum/status_effect/incapacitating/sleeping = list(
+		set_duration = new /datum/admin_arguments_request/integer("duration", FALSE, def_arg_val=-1, desc="Please enter a duration for the effect. Enter -1 for it to be permanent(May be very hard to remove later)."),
+		updating_canmove = new /datum/admin_arguments_request/integer("update canmove", FALSE, def_arg_val=TRUE, desc="Should the mob's ability to move be updated? (Enter 1/0)."),
+	),
+	/datum/status_effect/incapacitating/stasis_bag = list(
+		set_duration = new /datum/admin_arguments_request/integer("duration", FALSE, def_arg_val=-1, desc="Please enter a duration for the effect. Enter -1 for it to be permanent(May be very hard to remove later)."),
+		updating_canmove = new /datum/admin_arguments_request/integer("update canmove", FALSE, def_arg_val=TRUE, desc="Should the mob's ability to move be updated? (Enter 1/0)."),
+	),
+)
+
 //Status effects are used to apply temporary or permanent effects to mobs. Mobs are aware of their status effects at all times.
 //This file contains their code, plus code for applying and removing them.
 //When making a new status effect, add a define to status_effects.dm in __DEFINES for ease of use!
@@ -90,6 +101,17 @@
 //////////////////
 // HELPER PROCS //
 //////////////////
+
+/proc/admin_spawn_status_effect(client/admin)
+	var/datum/status_effect/chosen_status_effect = input(admin, "Choose a status effect to apply.", "Status effect.") as null|anything in global.spawnable_status_effects
+	if(chosen_status_effect)
+		var/list/params = list(chosen_status_effect)
+		var/list/admin_spawn_requests = global.spawnable_status_effects[chosen_status_effect]
+
+		params += get_arglist_from_requests(admin, admin_spawn_requests)
+
+		return params
+	return null
 
 /mob/living/proc/apply_status_effect(effect, ...) //applies a given status effect to this mob, returning the effect if it was successful
 	. = FALSE
@@ -189,7 +211,7 @@
 /datum/status_effect/stacking/proc/add_stacks(stacks_added)
 	if(stacks_added > 0 && !can_gain_stacks())
 		return FALSE
-	owner.overlays -= status_overlay
+	owner.cut_overlay(status_overlay)
 	owner.underlays -= status_underlay
 	stacks += stacks_added
 	if(stacks > 0)
@@ -204,7 +226,7 @@
 		stacks = min(stacks, max_stacks)
 		status_overlay.icon_state = "[overlay_state][stacks]"
 		status_underlay.icon_state = "[underlay_state][stacks]"
-		owner.overlays += status_overlay
+		owner.add_overlay(status_overlay)
 		owner.underlays += status_underlay
 	else
 		fadeout_effect()
@@ -227,13 +249,13 @@
 	status_underlay.pixel_x = -owner.pixel_x
 	status_underlay.transform = matrix() * (icon_height/world.icon_size) * 3
 	status_underlay.alpha = 40
-	owner.overlays += status_overlay
+	owner.add_overlay(status_overlay)
 	owner.underlays += status_underlay
 	return ..()
 
 /datum/status_effect/stacking/Destroy()
 	if(owner)
-		owner.overlays -= status_overlay
+		owner.cut_overlay(status_overlay)
 		owner.underlays -= status_underlay
 	QDEL_NULL(status_overlay)
 	return ..()

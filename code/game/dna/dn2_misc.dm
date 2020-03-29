@@ -101,7 +101,7 @@
 							if(i < 3) M.pixel_y += 8
 							else M.pixel_y -= 8
 
-		if ((FAT in usr.mutations) && prob(66))
+		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
 			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
 			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 			usr.weakened += 10
@@ -283,7 +283,7 @@
 				step(usr, cur_dir)
 			sleep(1)
 
-		if ((FAT in usr.mutations) && prob(66))
+		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
 			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
 			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 			usr.weakened += 10
@@ -365,7 +365,7 @@
 				if(istype(H,/mob/living/carbon/human))
 					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)]
-					if(FAT in usr.mutations)
+					if(HAS_TRAIT(usr, TRAIT_FAT))
 						BP.take_damage(100, null, null, "Hulk Fat Arm")
 						H.Stun(10)
 						H.Weaken(10)
@@ -376,7 +376,7 @@
 					BP.fracture()
 				else
 					playsound(M, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-					if(FAT in usr.mutations)
+					if(HAS_TRAIT(usr, TRAIT_FAT))
 						M.Stun(10)
 						M.Weaken(10)
 						M.take_overall_damage(130, used_weapon = "Hulk Fat Arm")

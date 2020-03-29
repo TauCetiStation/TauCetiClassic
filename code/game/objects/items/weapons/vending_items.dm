@@ -16,7 +16,7 @@
 
 /obj/item/weapon/vending_refill/atom_init()
 	. = ..()
-	name = "\improper [machine_name] restocking unit"
+	name = "[machine_name] restocking unit"
 
 /obj/item/weapon/vending_refill/examine(mob/user)
 	..()
@@ -81,7 +81,7 @@
 	charges =  17// of 51
 
 /obj/item/weapon/vending_refill/chinese
-	machine_name = "\improper Mr. Chang"
+	machine_name = "Mr. Chang"
 	icon_state = "refill_snack"
 	charges =  16// of 48
 

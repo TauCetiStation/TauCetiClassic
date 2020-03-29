@@ -177,8 +177,7 @@
 	if(user)
 		to_chat(user, "<span class='warning'>You short out [src]'s plant identifier circuits.</span>")
 	spawn(0)
-		for(var/mob/O in hearers(src, null))
-			O.show_message("<span class='warning'><B>[src] buzzes oddly!</B></span>", 1)
+		audible_message("<span class='warning'><B>[src] buzzes oddly!</B></span>")
 	flick("farmbot_broke", src)
 	src.emagged = 1
 	src.on = 1
@@ -190,7 +189,7 @@
 
 /obj/machinery/bot/farmbot/explode()
 	src.on = 0
-	visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
+	visible_message("<span class='warning'><B>[src] blows apart!</B></span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/minihoe(Tsec)

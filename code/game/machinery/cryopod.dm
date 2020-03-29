@@ -94,7 +94,7 @@ var/global/list/frozen_items = list()
 //Decorative structures to go alongside cryopods.
 /obj/structure/cryofeed
 
-	name = "\improper cryogenic feed"
+	name = "cryogenic feed"
 	desc = "A bewildering tangle of machinery and pipes."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "cryo_rear"
@@ -117,7 +117,7 @@ var/global/list/frozen_items = list()
 
 //Cryopods themselves.
 /obj/machinery/cryopod
-	name = "\improper cryogenic freezer"
+	name = "cryogenic freezer"
 	desc = "A man-sized pod for entering suspended animation."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "cryosleeper_left"
@@ -300,7 +300,7 @@ var/global/list/frozen_items = list()
 					return
 				insert(M)
 				// Book keeping!
-				log_admin("[key_name_admin(M)] has entered a stasis pod.")
+				log_admin("[key_name(M)] has entered a stasis pod.")
 				message_admins("<span class='notice'>[key_name_admin(M)] has entered a stasis pod.</span>")
 
 				//Despawning occurs when process() is called with an occupant without a client.

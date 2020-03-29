@@ -46,8 +46,8 @@
 	T.purpose = "Account creation"
 	T.amount = starting_funds
 	if(!source_db)
-		//set a random date, time and location some time over the past few decades
-		T.date = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], 25[rand(10,56)]"
+		//set a random date, time and location some time over the past decade
+		T.date = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year-rand(1,10)]"
 		T.time = "[rand(0,23)]:[rand(11,59)]"
 		T.source_terminal = "NTGalaxyNet Terminal #[rand(111,1111)]"
 
@@ -77,7 +77,7 @@
 
 		//stamp the paper
 		var/obj/item/weapon/stamp/centcomm/S = new
-		S.stamp_paper(R, "This paper has been stamped by the Accounts Database.")
+		S.stamp_paper(R, "Accounts Database")
 
 	//add the account
 	M.transaction_log.Add(T)
@@ -103,10 +103,8 @@
 			T.source_terminal = terminal_id
 			D.transaction_log.Add(T)
 
-			return 1
-		break
-
-	return 0
+			return TRUE
+	return FALSE
 
 //this returns the first account datum that matches the supplied accnum/pin combination, it returns null if the combination did not match any account
 /proc/attempt_account_access(attempt_account_number, attempt_pin_number, security_level_passed = 0)

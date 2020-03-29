@@ -13,7 +13,7 @@
 	icon_state = "s01"
 
 /obj/structure/sign/monorail_map
-	name = "\improper Velocity monorail map"
+	name = "Velocity monorail map"
 	desc = "A monorail plan. You are in there somewhere."
 	icon = 'code/modules/locations/centcomm/velocity_signs.dmi'
 	icon_state = "map"

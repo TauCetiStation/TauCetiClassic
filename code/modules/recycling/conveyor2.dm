@@ -9,6 +9,7 @@
 	anchored = 1
 	interact_offline = TRUE
 	layer = BELOW_CONTAINERS_LAYER
+	speed_process = TRUE
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir

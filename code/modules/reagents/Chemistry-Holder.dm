@@ -10,6 +10,7 @@ var/const/INGEST = 2
 	var/total_volume = 0
 	var/maximum_volume = 100
 	var/atom/my_atom = null
+	var/proccessing_reaction_count = 0
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
@@ -147,7 +148,7 @@ var/const/INGEST = 2
 		src.handle_reactions()
 	return amount
 
-/datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
+/datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, multiplier=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
 	if (!target)
 		return
 	if(src.total_volume<=0 || !src.get_reagent_amount(reagent))
@@ -171,8 +172,8 @@ var/const/INGEST = 2
 		if(current_reagent.id == reagent)
 			if(preserve_data)
 				trans_data = copy_data(current_reagent)
-			R.add_reagent(current_reagent.id, amount, trans_data)
-			src.remove_reagent(current_reagent.id, amount, 1)
+			R.add_reagent(current_reagent.id, amount * multiplier, trans_data, safety = TRUE)
+			src.remove_reagent(current_reagent.id, amount, 1, safety = TRUE)
 			break
 
 	src.update_total()
@@ -212,6 +213,8 @@ var/const/INGEST = 2
 	if(my_atom.flags & NOREACT) return //Yup, no reactions here. No siree.
 
 
+	// Carefull, next while cycle are async
+	proccessing_reaction_count += 1
 	var/reaction_occured = 0
 	do
 		reaction_occured = 0
@@ -306,8 +309,9 @@ var/const/INGEST = 2
 						if(ME2.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in seen)
 								to_chat(M, "<span class='notice'>[bicon(my_atom)] The [my_atom]'s power is consumed in the reaction.</span>")
-								ME2.name = "used slime extract"
-								ME2.desc = "This extract has been used up."
+							ME2.name = "used slime extract"
+							ME2.desc = "This extract has been used up."
+							ME2.origin_tech = null
 
 					playsound(my_atom, 'sound/effects/bubbles.ogg', VOL_EFFECTS_MASTER)
 
@@ -317,7 +321,14 @@ var/const/INGEST = 2
 
 	while(reaction_occured)
 	update_total()
+	if (proccessing_reaction_count > 0)
+		proccessing_reaction_count -= 1
 	return 0
+
+/datum/reagents/proc/is_reaction_in_proccessing()
+	if (proccessing_reaction_count > 0)
+		return TRUE
+	return FALSE
 
 /datum/reagents/proc/isolate_reagent(reagent)
 	for(var/A in reagent_list)
@@ -392,12 +403,15 @@ var/const/INGEST = 2
 	return
 
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, safety = 0)
-	if(!isnum(amount)) return 1
-	if(amount < 0) return 0
-	if(amount > 2000) return
+	if(!isnum(amount))
+		return 1
+	if(amount < 0)
+		return 0
+	if(amount > 2000)
+		return
 	update_total()
-	if(total_volume + amount > maximum_volume) amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
-
+	if(total_volume + amount > maximum_volume)
+		amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 	for(var/A in reagent_list)
 
 		var/datum/reagent/R = A
