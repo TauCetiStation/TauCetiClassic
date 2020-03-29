@@ -15,7 +15,6 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	var/obj/effect/statclick/ticket_list/cstatclick = new(null, null, AHELP_CLOSED)
 	var/obj/effect/statclick/ticket_list/rstatclick = new(null, null, AHELP_RESOLVED)
 
-	var/next_slap_mention_time = 0 // This acts as cooldown for sending @here to discord.
 	var/list/ckey_cooldown_holder = list()
 
 /datum/admin_help_tickets/Destroy()
@@ -188,7 +187,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		MessageNoRecipient(msg)
 
 		//send it to chat bridge if nobody is on and tell us how many were on
-		var/admin_number_present = send2bridge_adminless_only("**Ticket #[id]** created by **[key_name(initiator)]**", name)
+		var/admin_number_present = send2bridge_adminless_only("**Ticket #[id]** created by **[key_name(initiator)]**", name, type = list(BRIDGE_ADMINALERT), mention = BRIDGE_MENTION_HERE)
 
 		log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 		
@@ -590,7 +589,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		else
 			.["present"] += X
 
-/proc/send2bridge_adminless_only(title, msg, requiredflags = R_BAN)
+/proc/send2bridge_adminless_only(title, msg, requiredflags = R_BAN, type, mention)
 	var/list/adm = get_admin_counts(requiredflags)
 	var/list/activemins = adm["present"]
 	. = activemins.len
@@ -605,21 +604,11 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		else
 			final = "All admins stealthed\[[english_list(stealthmins)]\], AFK\[[english_list(afkmins)]\], or lacks +BAN\[[english_list(powerlessmins)]\]! Total: [allmins.len] "
 
-		if(world.time > ahelp_tickets.next_slap_mention_time)
-			ahelp_tickets.next_slap_mention_time = world.time + 30 MINUTES
-			world.send2bridge(
-				type = list(BRIDGE_ADMINALERT),
-				attachment_title = title,
-				attachment_msg = msg,
-				attachment_color = BRIDGE_COLOR_ADMINALERT,
-				attachment_footer = final,
-				mention = BRIDGE_MENTION_HERE,
-			)
-		else
-			world.send2bridge(
-				type = list(BRIDGE_ADMINALERT),
-				attachment_title = title,
-				attachment_msg = msg,
-				attachment_color = BRIDGE_COLOR_ADMINALERT,
-				attachment_footer = final,
-			)
+		world.send2bridge(
+			type = type,
+			attachment_title = title,
+			attachment_msg = msg,
+			attachment_color = BRIDGE_COLOR_ADMINALERT,
+			attachment_footer = final,
+			mention = mention,
+		)

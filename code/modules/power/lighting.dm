@@ -501,7 +501,9 @@
 	flicker(1)
 
 // Aliens smash the bulb but do not get electrocuted./N
-/obj/machinery/light/attack_alien(mob/living/carbon/xenomorph/humanoid/user)//So larva don't go breaking light bulbs.
+/obj/machinery/light/attack_alien(mob/living/carbon/xenomorph/humanoid/user)
+	if(!isxenoadult(user))
+		return
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
 		to_chat(user, "<span class='notice'>That object is useless to you.</span>")
 		return

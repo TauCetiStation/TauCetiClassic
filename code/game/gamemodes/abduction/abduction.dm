@@ -10,8 +10,8 @@
 	role_type = ROLE_ABDUCTOR
 	required_enemies = 2
 	recommended_enemies = 2
-	required_players = 15
-	required_players_secret = 15
+	required_players = 25
+	required_players_secret = 25
 	var/max_teams = 4
 	abductor_teams = 1
 	var/list/datum/mind/scientists = list()

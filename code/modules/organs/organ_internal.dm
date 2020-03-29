@@ -161,10 +161,10 @@
 
 	if(is_bruised())
 		if(prob(2))
-			owner.emote("gasp", 2, "coughs up blood!", TRUE)
+			owner.emote("cough", message = "coughs up blood!")
 			owner.drip(10)
 		if(prob(4))
-			owner.emote("gasp", 2, "gasps for air!")
+			owner.emote("gasp", message = "gasps for air!")
 			owner.losebreath += 15
 
 /obj/item/organ/internal/lungs/diona/process()
@@ -271,10 +271,6 @@
 	name = "vacuole"
 	parent_bodypart = BP_GROIN
 
-/obj/item/organ/internal/kidneys/ipc
-	name = "self-diagnosis unit"
-	parent_bodypart = BP_GROIN
-
 /obj/item/organ/internal/kidneys/diona/process()
 	if(damage)
 		if(prob(10))
@@ -282,10 +278,29 @@
 		if(prob(2))
 			to_chat(owner, "<span class='warning'>You notice slight discomfort in your groin.</span>")
 
+/obj/item/organ/internal/kidneys/ipc
+	name = "self-diagnosis unit"
+	parent_bodypart = BP_GROIN
+
+	var/next_warning = 0
+
 /obj/item/organ/internal/kidneys/ipc/process()
+	if(next_warning > world.time)
+		return
+	next_warning = world.time + 10 SECONDS
+
+	var/damage_report = ""
+	var/first = TRUE
+
 	for(var/obj/item/organ/internal/IO in owner.organs)
-		if(IO.is_bruised() && prob(4))
-			to_chat(owner, "<span class='warning bold'>%[uppertext_(IO)]% INJURY DETECTED. CEASE DAMAGE TO %ACCUMULATOR%. REQUEST ASSISTANCE.</span>")
+		if(IO.is_bruised())
+			if(!first)
+				damage_report += "\n"
+			first = FALSE
+			damage_report += "<span class='warning'><b>%[uppertext_(IO.name)]%</b> INJURY DETECTED. CEASE DAMAGE TO <b>%[uppertext_(IO.name)]%</b>. REQUEST ASSISTANCE.</span>"
+
+	if(damage_report != "")
+		to_chat(owner, damage_report)
 
 /obj/item/organ/internal/brain
 	name = "brain"

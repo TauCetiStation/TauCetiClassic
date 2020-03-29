@@ -27,7 +27,6 @@ var/base_commit_sha = 0
 		load_whitelist()
 	if(config.usealienwhitelist)
 		load_whitelistSQL()
-	load_proxy_whitelist()
 	LoadBans()
 
 	spawn
@@ -359,21 +358,8 @@ var/shutdown_processed = FALSE
 		C.update_supporter_status()
 
 /client/proc/update_supporter_status()
-	if(ckey in donators || config.allow_byond_membership && IsByondMember())
+	if((ckey in donators) || config.allow_byond_membership && IsByondMember())
 		supporter = 1
-
-
-/world/proc/load_proxy_whitelist()
-	if(!fexists("config/proxy_whitelist.txt"))
-		return
-	var/L = file2list("config/proxy_whitelist.txt")
-	for(var/line in L)
-		if(!length(line))
-			continue
-		if(copytext(line,1,2) == "#")
-			continue
-		proxy_whitelist.Add(ckey(line))
-
 
 /world/proc/load_configuration()
 	config = new /datum/configuration()
@@ -624,7 +610,7 @@ var/failed_old_db_connections = 0
 		if (data["ip"] && M.client && M.client.address && M.client.address == data["ip"])
 			ban_key += "ip([data["ip"]])"
 		if (length(ban_key))
-			var/banned = world.IsBanned(data["ckey"], data["ip"],  data["cid"])
+			var/banned = world.IsBanned(data["ckey"], data["ip"],  data["cid"], real_bans_only = TRUE)
 			if (banned && banned["reason"] && banned["desc"])
 				to_kick[M] = banned["desc"]
 				var/notify = text("Player [] kicked by ban announce from []. Reason: []. Matched [].", M.ckey, sender, banned["reason"], ban_key.Join(", "))

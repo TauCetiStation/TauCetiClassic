@@ -217,9 +217,14 @@
 				previewJob = job
 				break
 
+	var/datum/species/S = all_species[species]
+	if(S)
+		S.before_job_equip(mannequin, previewJob, TRUE)
 	if(previewJob)
 		mannequin.job = previewJob.title
 		previewJob.equip(mannequin, TRUE)
+	if(S)
+		S.after_job_equip(mannequin, previewJob, TRUE)
 
 	COMPILE_OVERLAYS(mannequin)
 	parent.show_character_previews(new /mutable_appearance(mannequin))
