@@ -210,7 +210,7 @@ var/const/MAX_SAVE_SLOTS = 10
 		return
 
 	if(href_list["preference"] == "close")
-		user << browse(null, "window=preferences_window")
+		winshow(user, "preferences_window", FALSE)
 		var/client/C = user.client
 		if(C)
 			C.clear_character_previews()
