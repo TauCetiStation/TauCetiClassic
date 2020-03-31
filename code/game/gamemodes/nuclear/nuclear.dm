@@ -282,9 +282,9 @@
 			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat/cut(synd_mob), SLOT_SHOES)
 		if(SKRELL)
 			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/skrell(synd_mob), SLOT_IN_BACKPACK)
-			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), SLOT_SHOES)
+			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat(synd_mob), SLOT_SHOES)
 		else
-			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), SLOT_SHOES)
+			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat(synd_mob), SLOT_SHOES)
 
 	var/obj/item/weapon/implant/dexplosive/E = new/obj/item/weapon/implant/dexplosive(synd_mob)
 	E.imp_in = synd_mob

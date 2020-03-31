@@ -92,7 +92,7 @@
 	name = "Syndicate Operative"
 	corpseuniform = /obj/item/clothing/under/syndicate
 	corpsesuit = /obj/item/clothing/suit/armor/vest
-	corpseshoes = /obj/item/clothing/shoes/swat
+	corpseshoes = /obj/item/clothing/shoes/boots/swat
 	corpsegloves = /obj/item/clothing/gloves/swat
 	corpseradio = /obj/item/device/radio/headset
 	corpsemask = /obj/item/clothing/mask/gas/coloured
@@ -108,7 +108,7 @@
 	name = "Syndicate Commando"
 	corpseuniform = /obj/item/clothing/under/syndicate
 	corpsesuit = /obj/item/clothing/suit/space/rig/syndi
-	corpseshoes = /obj/item/clothing/shoes/swat
+	corpseshoes = /obj/item/clothing/shoes/boots/swat
 	corpsegloves = /obj/item/clothing/gloves/swat
 	corpseradio = /obj/item/device/radio/headset
 	corpsemask = /obj/item/clothing/mask/gas/syndicate
@@ -227,7 +227,7 @@
 	corpsemask = /obj/item/clothing/mask/cigarette/cigar/cohiba
 	corpsehelmet = /obj/item/clothing/head/centhat
 	corpsegloves = /obj/item/clothing/gloves/swat
-	corpseshoes = /obj/item/clothing/shoes/swat
+	corpseshoes = /obj/item/clothing/shoes/boots/swat
 	corpsepocket1 = /obj/item/weapon/lighter/zippo
 	corpseid = 1
 	corpseidjob = "Commander"
