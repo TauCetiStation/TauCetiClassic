@@ -89,7 +89,7 @@
 			new /obj/item/clothing/under/gimmick/rank/captain/suit(src)
 			new /obj/item/clothing/head/flatcap(src)
 			new /obj/item/clothing/mask/cigarette/cigar/havana(src)
-			new /obj/item/clothing/shoes/jackboots(src)
+			new /obj/item/clothing/shoes/boots(src)
 		if (5)
 			new /obj/item/clothing/under/schoolgirl(src)
 			new /obj/item/clothing/head/kitty(src)

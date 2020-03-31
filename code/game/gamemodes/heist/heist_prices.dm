@@ -105,7 +105,7 @@
 
 /obj/item/clothing/shoes/combat/price = 2000
 /obj/item/clothing/shoes/galoshes/price = 660
-/obj/item/clothing/shoes/jackboots/price = 440
+/obj/item/clothing/shoes/boots/price = 440
 /obj/item/clothing/shoes/magboots/price = 5550
 /obj/item/clothing/shoes/rainbow/price = 176
 /obj/item/clothing/shoes/slippers/price = 333

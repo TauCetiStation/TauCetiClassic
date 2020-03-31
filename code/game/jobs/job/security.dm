@@ -30,7 +30,7 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security_fem(H), SLOT_W_UNIFORM)
 	else
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), SLOT_GLOVES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), SLOT_GLASSES)
 	H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(H), SLOT_S_STORE)
@@ -77,7 +77,7 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden_fem(H), SLOT_W_UNIFORM)
 	else
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), SLOT_GLOVES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), SLOT_GLASSES)
 	H.equip_to_slot_or_del(new /obj/item/device/flash(H), SLOT_L_STORE)
@@ -166,7 +166,7 @@
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), SLOT_BACK)
 		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), SLOT_S_STORE)
 	H.equip_to_slot_or_del(new /obj/item/device/flash(H), SLOT_L_STORE)
 
@@ -251,7 +251,7 @@
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), SLOT_BACK)
 		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cadet(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/weapon/book/manual/wiki/security_space_law, SLOT_R_HAND)
 
 	if(visualsOnly)

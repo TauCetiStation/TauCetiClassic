@@ -148,7 +148,7 @@
 	new /obj/item/clothing/under/gimmick/rank/captain/suit(loc)
 	new /obj/item/clothing/head/flatcap(loc)
 	new /obj/item/clothing/mask/cigarette/cigar/havana(loc)
-	new /obj/item/clothing/shoes/jackboots(loc)
+	new /obj/item/clothing/shoes/boots(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/costume/nyangirl/atom_init()

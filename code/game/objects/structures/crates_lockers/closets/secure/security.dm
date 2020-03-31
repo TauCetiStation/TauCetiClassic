@@ -182,7 +182,7 @@
 	new /obj/item/weapon/melee/baton(src)
 	new /obj/item/weapon/storage/box/holobadge(src)
 	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/clothing/shoes/jackboots(src)
+	new /obj/item/clothing/shoes/boots(src)
 	new /obj/item/device/hailer(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)

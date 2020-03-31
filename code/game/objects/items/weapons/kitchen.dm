@@ -149,7 +149,6 @@
 	desc = "The bluntest of blades."
 	icon_state = "pknife"
 	force = 0
-	w_class = ITEM_SIZE_SMALL
 	throwforce = 0
 
 /obj/item/weapon/kitchenknife/ritual
@@ -158,6 +157,14 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
 
+/obj/item/weapon/kitchenknife/combat
+	name = "combat knife"
+	desc = "It's a combat knife, used galaxywide by military, mercenaries and wannabe survivialists."
+	force = 13
+	throwforce = 10
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "combat_knife"
+	origin_tech = "materials=1;combat=1"
 /*
  * Bucher's cleaver
  */
