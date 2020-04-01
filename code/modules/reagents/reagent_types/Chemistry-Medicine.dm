@@ -479,7 +479,7 @@
 /datum/reagent/hyperizine/on_general_digest(mob/living/M)
 	..()
 	if(prob(5))
-		M.emote(pick("twitch","blink_r","shiver"))
+		M.emote(pick("twitch","blink","shiver"))
 
 /datum/reagent/cryoxadone
 	name = "Cryoxadone"

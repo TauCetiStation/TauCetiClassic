@@ -186,7 +186,7 @@
 		else if(isliving(A))
 			var/mob/living/L = A
 			if(prob(20))
-				L.emote("scream",,, 1)
+				L.emote("scream")
 			L.adjust_fire_stacks(fire_stack_strength)
 			L.IgniteMob()
 

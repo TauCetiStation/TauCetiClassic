@@ -141,12 +141,16 @@ var/list/blacklisted_builds = list(
 	//CONNECT//
 	///////////
 /client/New(TopicData)
-	chatOutput = new /datum/chatOutput(src) // Right off the bat.
 	var/tdata = TopicData //save this for later use
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker")					//Invalid connection type.
 		return null
+
+	if(!guard)
+		guard = new(src)
+	
+	chatOutput = new /datum/chatOutput(src) // Right off the bat.
 
 	// Change the way they should download resources.
 	if(config.resource_urls)
@@ -240,9 +244,6 @@ var/list/blacklisted_builds = list(
 	if(prefs.lastchangelog != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
 		winset(src, "rpane.changelog", "font-style=bold;background-color=#B1E477")
-
-	if(!geoip)
-		geoip = new(src, address)
 
 		//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
@@ -345,14 +346,22 @@ var/list/blacklisted_builds = list(
 	query_ip.Execute()
 	related_accounts_ip = ""
 	while(query_ip.NextRow())
-		related_accounts_ip += "[query_ip.item[1]], "
+		if(src.ckey == query_ip.item[1])
+			continue
+		if(length(related_accounts_ip))
+			related_accounts_ip += ", "
+		related_accounts_ip += "[query_ip.item[1]]"
 		break
 
 	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE computerid = '[computer_id]'")
 	query_cid.Execute()
 	related_accounts_cid = ""
 	while(query_cid.NextRow())
-		related_accounts_cid += "[query_cid.item[1]], "
+		if(src.ckey == query_cid.item[1])
+			continue
+		if(length(related_accounts_cid))
+			related_accounts_cid += ", "
+		related_accounts_cid += "[query_cid.item[1]]"
 		break
 
 	var/admin_rank = "Player"
@@ -379,6 +388,7 @@ var/list/blacklisted_builds = list(
 		query_update.Execute()
 	else if(!config.serverwhitelist)
 		//New player!! Need to insert all the stuff
+		guard.first_entry = TRUE
 		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank, ingameage) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]', '[sql_player_ingame_age]')")
 		query_insert.Execute()
 
@@ -554,19 +564,18 @@ var/list/blacklisted_builds = list(
 	char_render_holders = null
 
 /client/proc/is_blocked_by_regisration_panic_bunker()
-	var/regex/joined_date_regex = regex("joined = \"(\\d+)-(\\d+)-(\\d+)\"")
 	var/regex/bunker_date_regex = regex("(\\d+)-(\\d+)-(\\d+)")
-	var/user_page = get_webpage("http://www.byond.com/members/[ckey]?format=text")
 
-	if (!user_page)
+	var/list/byond_date = get_byond_registration()
+
+	if (!length(byond_date))
 		return
 
-	joined_date_regex.Find(user_page)
 	bunker_date_regex.Find(config.registration_panic_bunker_age)
 
-	var/user_year = text2num(joined_date_regex.group[1])
-	var/user_month = text2num(joined_date_regex.group[2])
-	var/user_day = text2num(joined_date_regex.group[3])
+	var/user_year = byond_date[1]
+	var/user_month = byond_date[2]
+	var/user_day = byond_date[3]
 
 	var/bunker_year = text2num(bunker_date_regex.group[1])
 	var/bunker_month = text2num(bunker_date_regex.group[2])
@@ -580,3 +589,19 @@ var/list/blacklisted_builds = list(
 	var/is_invalid_ingame_age = isnum(player_ingame_age) && player_ingame_age < config.allowed_by_bunker_player_age
 
 	return is_invalid_date && is_invalid_ingame_age
+
+/client/proc/get_byond_registration()
+	if(byond_registration)
+		return byond_registration
+
+	var/user_page = get_webpage("http://www.byond.com/members/[ckey]?format=text")
+	
+	if (!user_page)
+		return
+
+	var/regex/joined_date_regex = regex("joined = \"(\\d+)-(\\d+)-(\\d+)\"")
+	joined_date_regex.Find(user_page)
+
+	byond_registration = list(text2num(joined_date_regex.group[1]), text2num(joined_date_regex.group[2]), text2num(joined_date_regex.group[3]))
+
+	return byond_registration

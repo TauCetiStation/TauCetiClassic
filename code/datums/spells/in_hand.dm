@@ -249,7 +249,7 @@
 	. = ..() // spell cast has been succeeded, we must call parent right now to subtract uses and what ever it wants to do, especially before sleep().
 
 	user.adjustHalLoss(101) // much power, such spell, wow!
-	user.emote("scream",,, 1)
+	user.emote("scream")
 
 	var/old_loc = L.loc
 

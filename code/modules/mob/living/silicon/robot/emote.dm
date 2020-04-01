@@ -1,4 +1,4 @@
-/mob/living/silicon/robot/emote(act,m_type=SHOWMSG_VISUAL,message = null)
+/mob/living/silicon/robot/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 	var/param = null
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
@@ -42,6 +42,7 @@
 				else
 					message = "<B>[src]</b> salutes."
 			m_type = SHOWMSG_VISUAL
+
 		if ("bow")
 			if (!src.buckled)
 				var/M = null
@@ -52,7 +53,6 @@
 							break
 				if (!M)
 					param = null
-
 				if (param)
 					message = "<B>[src]</B> bows to [param]."
 				else
@@ -63,22 +63,9 @@
 			if (!src.restrained())
 				message = "<B>[src]</B> claps."
 				m_type = SHOWMSG_AUDIO
-		if ("flap")
-			if (!src.restrained())
-				message = "<B>[src]</B> flaps his wings."
-				m_type = SHOWMSG_AUDIO
-
-		if ("aflap")
-			if (!src.restrained())
-				message = "<B>[src]</B> flaps his wings ANGRILY!"
-				m_type = SHOWMSG_AUDIO
 
 		if ("twitch")
-			message = "<B>[src]</B> twitches violently."
-			m_type = SHOWMSG_VISUAL
-
-		if ("twitch_s")
-			message = "<B>[src]</B> twitches."
+			message = "<B>[src]</B> [pick("twitches violently", "twitches")]."
 			m_type = SHOWMSG_VISUAL
 
 		if ("nod")

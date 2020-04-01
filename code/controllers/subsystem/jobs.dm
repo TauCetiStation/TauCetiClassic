@@ -580,6 +580,7 @@ var/datum/subsystem/job/SSjob
 		//put the player's account number onto the ID
 		if(H.mind && H.mind.initial_account)
 			C.associated_account_number = H.mind.initial_account.account_number
+			H.mind.initial_account.owner_PDA = locate(/obj/item/device/pda,H)	//add PDA in /datum/money_account
 
 		H.equip_to_slot_or_del(C, SLOT_WEAR_ID)
 
@@ -589,6 +590,8 @@ var/datum/subsystem/job/SSjob
 		pda.owner = H.real_name
 		pda.ownjob = C.assignment
 		pda.ownrank = C.rank
+		pda.owner_account = get_account(C.associated_account_number)	//bind the account to the pda
+		pda.owner_fingerprints += C.fingerprint_hash	//save fingerprints in pda from ID card
 		pda.name = "PDA-[H.real_name] ([pda.ownjob])"
 
 	return 1
