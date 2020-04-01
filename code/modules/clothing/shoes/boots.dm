@@ -98,7 +98,7 @@
 	desc = "When you REALLY want to turn up the heat<br>They have the toe caps cut off of them."
 	icon_state = "swat_cut"
 	clipped_status = CLIPPED
-	species_restricted = list("exclude", DIONA, VOX)
+	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
 
 /obj/item/clothing/shoes/boots/cult
 	name = "boots"
