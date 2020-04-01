@@ -631,12 +631,14 @@
 	icon_state = "rig0-syndie"
 	item_state = "syndie_helm"
 	armor = list(melee = 60, bullet = 55, laser = 30,energy = 30, bomb = 50, bio = 100, rad = 60)
+	var/space_armor = list(melee = 60, bullet = 55, laser = 30,energy = 30, bomb = 50, bio = 100, rad = 60)
+	var/combat_armor = list(melee = 60, bullet = 65, laser = 55,energy = 45, bomb = 50, bio = 100, rad = 60)
 	var/obj/machinery/camera/camera
-	action_button_name = "Toggle Helmet Mode"
 	var/combat_mode = FALSE
 	species_restricted = list("exclude" , SKRELL , DIONA, VOX)
 	var/image/lamp = null
 	var/equipped_on_head = FALSE
+	var/rig_type = "syndie"
 	flags = BLOCKHAIR | THICKMATERIAL | PHORONGUARD
 	light_color = "#00f397"
 
@@ -661,7 +663,7 @@
 		set_light(0)
 
 /obj/item/clothing/head/helmet/space/rig/syndi/update_icon(mob/user)
-	icon_state = "rig[on]-syndie[combat_mode ? "-combat" : ""]"
+	icon_state = "rig[on]-[rig_type][combat_mode ? "-combat" : ""]"
 	if(user)
 		user.cut_overlay(lamp)
 		if(equipped_on_head && camera && (on || combat_mode))
@@ -671,11 +673,7 @@
 			user.add_overlay(lamp)
 		user.update_inv_head()
 
-/obj/item/clothing/head/helmet/space/rig/syndi/verb/toggle_light(mob/user)
-	set category = "Object"
-	set name = "Toggle helmet light"
-	set src in usr
-
+/obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
 	if(camera)
 		on = !on
 	else
@@ -687,10 +685,7 @@
 	checklight()
 	update_icon(user)
 
-/obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
-	toggle_light(user)
-
-/obj/item/clothing/head/helmet/space/rig/syndi/verb/toggle_mode()
+/obj/item/clothing/head/helmet/space/rig/syndi/verb/toggle()
 	set category = "Object"
 	set name = "Adjust helmet"
 	set src in usr
@@ -698,12 +693,12 @@
 	if(usr.canmove && !usr.stat && !usr.restrained())
 		combat_mode = !combat_mode
 		if(combat_mode)
-			armor = list(melee = 60, bullet = 65, laser = 55,energy = 45, bomb = 50, bio = 100, rad = 60)
+			armor = combat_armor
 			canremove = FALSE
 			flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
 			usr.visible_message("<span class='notice'>[usr] moves faceplate of their helmet into combat position, covering their visor and extending cameras.</span>")
 		else
-			armor = list(melee = 60, bullet = 55, laser = 30,energy = 30, bomb = 50, bio = 100, rad = 60)
+			armor = space_armor
 			canremove = TRUE
 			flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			usr.visible_message("<span class='notice'>[usr] pulls up faceplate from helmet's visor, retracting cameras</span>")
@@ -724,20 +719,17 @@
 		user.SetNextMove(CLICK_CD_RAPID)
 		var/obj/item/weapon/reagent_containers/pill/P = W
 		P.reagents.trans_to_ingest(user, W.reagents.total_volume)
-		to_chat(user, "<span class='notice'>[src] consumes [W] and injected reagents to you!</span>")
+		to_chat(user, "<span class='notice'>[src] consumes [W] and injects reagents to you!</span>")
 		qdel(W)
-
-/obj/item/clothing/head/helmet/space/rig/syndi/ui_action_click()
-	toggle_mode()
-
 
 /obj/item/clothing/suit/space/rig/syndi
 	name = "blood-red hybrid suit"
 	desc = "An advanced suit that protects against injuries during special operations. Property of Gorlex Marauders."
-	icon_state = "rig-syndie"
+	icon_state = "rig-syndie-space"
 	item_state = "syndie_hardsuit"
+	item_color = "rig-syndie"
 	slowdown = 1.4
-	armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
+	armor = list(melee = 60, bullet = 55, laser = 45, energy = 30, bomb = 50, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,
 	               /obj/item/weapon/tank,
 	               /obj/item/device/suit_cooling_unit,
@@ -749,14 +741,17 @@
 	               /obj/item/weapon/handcuffs)
 	species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA, VOX)
 	action_button_name = "Toggle space suit mode"
-	var/combat_mode = FALSE
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair)
 	cell_type = /obj/item/weapon/stock_parts/cell/super
+	var/combat_mode = FALSE
+	var/combat_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
+	var/space_armor = list(melee = 60, bullet = 55, laser = 45, energy = 30, bomb = 50, bio = 100, rad = 60)
+	var/combat_slowdown = 0
 
 /obj/item/clothing/suit/space/rig/syndi/update_icon(mob/user)
 	..()
-	icon_state = "rig-syndie[combat_mode ? "-combat" : ""]"
+	icon_state = "[item_color]-[combat_mode ? "combat" : "space"]"
 	user.update_inv_wear_suit()
 
 /obj/item/clothing/suit/space/rig/syndi/ui_action_click()
@@ -774,17 +769,41 @@
 			can_breach = FALSE
 			flags_pressure &= ~STOPS_PRESSUREDMAGE
 			playsound(usr, 'sound/effects/air_release.ogg', VOL_EFFECTS_MASTER)
-			slowdown = 0
+			slowdown = combat_slowdown
 			usr.visible_message("<span class='notice'>[usr]'s suit depressurizes, exposing armor plates.</span>")
+			armor = combat_armor
 		else
 			canremove = TRUE
 			can_breach = TRUE
 			flags_pressure |= STOPS_PRESSUREDMAGE
 			playsound(usr, 'sound/effects/inflate.ogg', VOL_EFFECTS_MASTER, 30)
-			slowdown = 1.4
+			slowdown = initial(slowdown)
 			usr.visible_message("<span class='notice'>[usr]'s suit inflates and pressurizes.</span>")
+			armor = space_armor
 		update_icon(usr)
 
+/obj/item/clothing/head/helmet/space/rig/syndi/heavy
+	name = "heavy hybrid helmet"
+	desc = "An advanced helmet designed for work in special operations. Created using older design of armored hardsuits."
+	icon_state = "rig0-heavy"
+	item_state = "syndie_helm"
+	armor = list(melee = 60, bullet = 65, laser = 65,energy = 30, bomb = 50, bio = 100, rad = 60)
+	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
+	space_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
+	rig_type = "heavy"
+
+/obj/item/clothing/suit/space/rig/syndi/heavy
+	name = "heavy hybrid suit"
+	desc = "An advanced suit that protects against injuries during special operations. Heavily armored and rarely used aside from open combat conflicts."
+	icon_state = "rig-heavy-space"
+	item_state = "syndie_hardsuit"
+	item_color = "rig-heavy"
+	slowdown = 1.4
+	armor = list(melee = 60, bullet = 65, laser = 55, energy = 55, bomb = 50, bio = 100, rad = 60)
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/chem_dispenser/combat)
+	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
+	space_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
+	combat_slowdown = 0.5
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard
