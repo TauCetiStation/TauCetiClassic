@@ -23,7 +23,7 @@
 
 /obj/item/clothing/atom_init()
 	. = ..()
-	if (species_restricted_locked == FALSE)
+	if (!species_restricted_locked)
 		update_species_restrictions()
 
 /*
