@@ -16,6 +16,7 @@
 
 	//Species-specific stuff.
 	species_restricted = list("exclude", UNATHI, TAJARAN, SKRELL, DIONA, VOX)
+	species_restricted_locked = TRUE
 	sprite_sheets_refit = list(
 		UNATHI = 'icons/mob/species/unathi/helmet.dmi',
 		TAJARAN = 'icons/mob/species/tajaran/helmet.dmi',
@@ -56,7 +57,7 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-
+	species_restricted_locked = TRUE
 	species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX)
 	sprite_sheets_refit = list(
 		UNATHI = 'icons/mob/species/unathi/suit.dmi',
