@@ -28,7 +28,7 @@
 		return
 
 	if(copytext(message,1,2) == "*")
-		return emote(copytext(message,2))
+		return emote(copytext(message, 2), auto = FALSE)
 
 	//check if we are miming
 	if (miming && !(message_mode == "changeling" || message_mode == "alientalk"))
@@ -86,7 +86,7 @@
 					//return - technically you can add more aliens to a team
 				for(var/mob/M in observer_list)
 					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
-				log_say("Abductor: [name]/[key] : [sm]")
+				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
 
 	message = capitalize(trim(message))

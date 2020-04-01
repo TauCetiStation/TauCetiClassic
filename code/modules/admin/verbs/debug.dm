@@ -225,7 +225,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
-		log_admin("[key_name(src)] has alienized [M.key].")
+		log_admin("[key_name(src)] has alienized [key_name(M)].")
 		spawn(10)
 			M:Alienize()
 			feedback_add_details("admin_verb","MKAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -242,7 +242,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
-		log_admin("[key_name(src)] has slimeized [M.key].")
+		log_admin("[key_name(src)] has slimeized [key_name(M)].")
 		spawn(10)
 			M:slimeize()
 			feedback_add_details("admin_verb","MKMET") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -259,7 +259,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("Wait until the game starts")
 		return
 	if(istype(M, /mob/living/carbon/human))
-		log_admin("[key_name(src)] has blobized [M.key].")
+		log_admin("[key_name(src)] has blobized [key_name(M)].")
 		var/mob/living/carbon/human/H = M
 		spawn(10)
 			H.Blobize()
@@ -455,8 +455,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		alert("Invalid mob")
 	feedback_add_details("admin_verb","GFA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(src)] has granted [M.key] full access.")
-	message_admins("<span class='notice'>[key_name_admin(usr)] has granted [M.key] full access.</span>")
+	log_admin("[key_name(src)] has granted [key_name(M)] full access.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] has granted [key_name_admin(M)] full access.</span>")
 
 /client/proc/cmd_assume_direct_control(mob/M in mob_list)
 	set category = "Admin"
@@ -2062,8 +2062,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.update_mutations()
 			var/state="[M.dna.GetSEState(block)?"on":"off"]"
 			var/blockname=assigned_blocks[block]
-			message_admins("[key_name_admin(src)] has toggled [M.key]'s [blockname] block [state]!")
-			log_admin("[key_name(src)] has toggled [M.key]'s [blockname] block [state]!")
+			message_admins("[key_name_admin(src)] has toggled [key_name_admin(M)]'s [blockname] block [state]!")
+			log_admin("[key_name(src)] has toggled [key_name(M)]'s [blockname] block [state]!")
 		else
 			message_admins("[key_name_admin(src)] has toggled [saved_key]'s HULK block on!")
 			log_admin("[key_name(src)] has toggled [saved_key]'s HULK block on!")
@@ -2086,13 +2086,3 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	usr.client.cache = list()
 
 	to_chat(usr, "Your NanoUI Resource files have been refreshed")
-
-/client/proc/view_runtimes()
-	set category = "Debug"
-	set name = "View Runtimes"
-	set desc = "Open the runtime Viewer"
-
-	if(!check_rights(R_DEBUG))
-		return
-
-	error_cache.show_to(src)

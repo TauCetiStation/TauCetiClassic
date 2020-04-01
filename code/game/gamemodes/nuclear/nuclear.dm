@@ -283,6 +283,12 @@
 		if(SKRELL)
 			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/skrell(synd_mob), SLOT_IN_BACKPACK)
 			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat(synd_mob), SLOT_SHOES)
+			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), SLOT_SHOES)
+		if(VOX)
+			synd_mob.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(synd_mob), SLOT_L_HAND)
+			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(synd_mob), SLOT_WEAR_MASK)
+			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/vox(synd_mob), SLOT_IN_BACKPACK)
+			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/magboots/vox(synd_mob), SLOT_SHOES)
 		else
 			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat(synd_mob), SLOT_SHOES)
 

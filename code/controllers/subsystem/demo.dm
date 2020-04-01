@@ -7,8 +7,6 @@ var/datum/subsystem/demo/SSdemo
 	priority = SS_PRIORITY_DEMO
 	init_order = SS_INIT_DEMO
 
-	var/initialized = FALSE
-
 	var/demo_file
 	var/list/pre_init_lines = list() // stuff like chat before the init
 	var/list/icon_cache = list()
@@ -78,7 +76,7 @@ var/datum/subsystem/demo/SSdemo
 	if(!config.record_replays)
 		can_fire = FALSE
 		return ..()
-	demo_file = file("[logs_folder]/demo.txt")
+	demo_file = file("[global.log_directory]/demo.txt")
 	WRITE_FILE(demo_file, "demo version 1") // increment this if you change the format
 	WRITE_FILE(demo_file, "commit [GetGitMasterCommit()]")
 

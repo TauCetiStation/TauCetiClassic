@@ -17,7 +17,7 @@
 	. = src.say_dead(message)
 
 
-/mob/dead/observer/emote(act, type, message)
+/mob/dead/observer/emote(act, type, message, auto)
 	message = sanitize(message)
 
 	if(!message)
@@ -26,7 +26,7 @@
 	if(act != "me")
 		return
 
-	log_emote("Ghost/[src.key] : [message]")
+	log_emote("Ghost/[key_name(src)] : [message]")
 
 	if(src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)

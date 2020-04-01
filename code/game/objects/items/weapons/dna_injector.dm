@@ -115,9 +115,9 @@
 		if(block)// Isolated injector
 			//testing("Isolated block [block] injector with contents: [GetValue()]")
 			if (GetState() && block == MONKEYBLOCK)
-				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY) [ADMIN_JMP(user)]")
+				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] (MONKEY) [ADMIN_JMP(user)]")
 				log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
-				log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
+				log_game("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
 			else
 				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] ([assigned_blocks[block]]) [ADMIN_JMP(user)]")
 				log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] ([assigned_blocks[block]])")
@@ -125,9 +125,9 @@
 		else
 			//testing("DNA injector with contents: [english_list(buf.dna.SE)]")
 			if (GetState(MONKEYBLOCK))
-				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY) [ADMIN_JMP(user)]")
+				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] (MONKEY) [ADMIN_JMP(user)]")
 				log_attack("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
-				log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
+				log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
 			else
 				//message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
 				log_attack("[key_name(user)] injected [key_name(M)] with the [name]")

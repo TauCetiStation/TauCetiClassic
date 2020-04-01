@@ -218,8 +218,17 @@ Note: Must be placed west/left of and R&D console to function.
 	var/amount = RNDD.amount
 	for(var/i = 1 to amount)
 		var/obj/new_item = new D.build_path(loc)
+		// This is very important. Almost all items constructed via protolathe are unreliable
+		// And are deconstructions of items made by deconstructing other items
+		// So consider them tests of "new" construction techniques for an item already known
+		// #define MAGIC_2_MANIPULATORS_MAX_OUTPUT_CONSIDERING_IT_SHOULD_ROUND_UP_TO_30_PERCENT_COEFFICIENT 3.75
+		new_item.prototipify(min_reliability=D.reliability + efficiency_coeff * 12.5,  max_reliability=70 + efficiency_coeff * 12.5)
 		new_item.m_amt /= efficiency_coeff
 		new_item.g_amt /= efficiency_coeff
+
+		D.reliability += D.reliability * (RND_RELIABILITY_EXPONENT ** D.created_prototypes)
+		D.reliability = max(round(D.reliability, 5), 1)
+		D.created_prototypes++
 	busy = FALSE
 	queue -= RNDD
 

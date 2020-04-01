@@ -126,6 +126,7 @@
 		spawn(50)
 			ping_cd = 0
 		audible_message("<span class='notice'>\The [src] pings softly.</span>", deaf_message = "\The [src] indicator blinks.")
+		playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, 10, FALSE)
 
 /obj/item/device/mmi/posibrain/atom_init()
 
