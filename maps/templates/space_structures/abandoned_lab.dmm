@@ -158,7 +158,7 @@
 	},
 /area/space_structures/derelict_lab)
 "az" = (
-/obj/item/clothing/shoes/combat,
+/obj/item/clothing/shoes/boots/combat,
 /obj/effect/decal/cleanable/blood,
 /obj/item/ammo_casing/c9mm,
 /obj/item/ammo_casing/c9mm,
