@@ -31,6 +31,7 @@ var/const/PARAMEDIC			=(1<<10)
 var/const/XENOARCHAEOLOGIST	=(1<<11)
 var/const/INTERN			=(1<<12)
 var/const/RESEARCHASSISTANT	=(1<<13)
+var/const/NURSE				=(1<<14)
 
 
 var/const/CIVILIAN			=(1<<2)
@@ -77,6 +78,7 @@ var/list/engineering_positions = list(
 var/list/medical_positions = list(
 	"Chief Medical Officer",
 	"Medical Doctor",
+	"Nurse",
 	"Geneticist",
 	"Psychiatrist",
 	"Chemist",

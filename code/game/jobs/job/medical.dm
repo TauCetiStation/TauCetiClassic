@@ -84,20 +84,48 @@
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), SLOT_W_UNIFORM)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), SLOT_WEAR_SUIT)
 
-			if("Nurse")
-				if(H.gender == FEMALE)
-					if(prob(50))
-						H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/nursesuit(H), SLOT_W_UNIFORM)
-					else
-						H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/nurse(H), SLOT_W_UNIFORM)
-					H.equip_to_slot_or_del(new /obj/item/clothing/head/nursehat(H), SLOT_HEAD)
-				else
-					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/purple(H), SLOT_W_UNIFORM)
-
 	else
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), SLOT_W_UNIFORM)
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), SLOT_WEAR_SUIT)
 
+	H.equip_to_slot_or_del(new /obj/item/device/pda/medical(H), SLOT_BELT)
+
+	return TRUE
+
+/datum/job/nurse
+	title = "Nurse"
+	flag = NURSE
+	department_flag = MEDSCI
+	faction = "Station"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "the chief medical officer"
+	selection_color = "#ffeef0"
+	idtype = /obj/item/weapon/card/id/med
+	access = list(access_medical, access_morgue, access_surgery, access_medbay_storage)
+	minimal_player_ingame_minutes = 720
+	restricted_species = list(DIONA)
+
+/datum/job/nurse/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!H)	return 0
+	switch(H.backbag)
+		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/medic(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/med(H), SLOT_BACK)
+		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/adv(H), SLOT_L_HAND)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_med(H), SLOT_L_EAR)
+	if(H.gender == FEMALE)
+		if(prob(50))
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/nursesuit(H), SLOT_W_UNIFORM)
+		else
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/nurse(H), SLOT_W_UNIFORM)
+		H.equip_to_slot_or_del(new /obj/item/clothing/head/nursehat(H), SLOT_HEAD)
+	else
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/purple(H), SLOT_W_UNIFORM)
+	if(visualsOnly)
+		return
 	H.equip_to_slot_or_del(new /obj/item/device/pda/medical(H), SLOT_BELT)
 
 	return TRUE
