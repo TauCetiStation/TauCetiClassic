@@ -5,6 +5,7 @@
 	armor = list(melee = 20, bullet = 20, laser = 25,energy = 50, bomb = 50, bio = 100, rad = 100)
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = list(SKRELL , HUMAN)
+	species_restricted_locked = TRUE
 
 
 	action_button_name = "Toggle Helmet Light" //this copypaste everywhere!
@@ -46,6 +47,7 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = list(SKRELL , HUMAN)
+	species_restricted_locked = TRUE
 
 /obj/item/clothing/suit/space/skrell/white
 	icon_state = "skrell_suit_white"
@@ -64,6 +66,7 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	var/up = 1 //So Unathi helmets play nicely with the weldervision check.
 	species_restricted = list(UNATHI)
+	species_restricted_locked = TRUE
 
 /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
 	name = "NT breacher helmet"
@@ -99,6 +102,7 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = list(UNATHI)
+	species_restricted_locked = TRUE
 
 /obj/item/clothing/suit/space/unathi/rig_cheap
 	name = "NT breacher chassis"
@@ -132,11 +136,13 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = list(VOX , VOX_ARMALIS)
+	species_restricted_locked = TRUE
 
 /obj/item/clothing/head/helmet/space/vox
 	armor = list(melee = 60, bullet = 50, laser = 40, energy = 15, bomb = 30, bio = 30, rad = 30)
 	flags = HEADCOVERSEYES
 	species_restricted = list(VOX , VOX_ARMALIS)
+	species_restricted_locked = TRUE
 
 /obj/item/clothing/head/helmet/space/vox/pressure
 	name = "alien helmet"
@@ -375,6 +381,7 @@
 /obj/item/clothing/under/vox
 	has_sensor = 0
 	species_restricted = list(VOX)
+	species_restricted_locked = TRUE
 
 /obj/item/clothing/under/vox/vox_casual
 	name = "alien clothing"
@@ -400,6 +407,7 @@
 	permeability_coefficient = 0.05
 	item_color = "gloves-vox"
 	species_restricted = list(VOX , VOX_ARMALIS)
+	species_restricted_locked = TRUE
 
 /obj/item/clothing/shoes/magboots/vox
 	desc = "A pair of heavy, jagged armoured foot pieces, seemingly suitable for a velociraptor."
@@ -408,6 +416,7 @@
 	icon_state = "boots-vox"
 
 	species_restricted = list(VOX , VOX_ARMALIS)
+	species_restricted_locked = TRUE
 	action_button_name = "Toggle the magclaws"
 
 /obj/item/clothing/shoes/magboots/vox/attack_self(mob/user)
