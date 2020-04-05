@@ -23,7 +23,7 @@
 	while(!prob(reliability))
 		if(maxcharge == 0)
 			break
-		maxcharge = max(maxcharge - 1000, 0)
+		maxcharge = max(maxcharge - 3000, 0)
 		charge = min(charge, maxcharge)
 
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
