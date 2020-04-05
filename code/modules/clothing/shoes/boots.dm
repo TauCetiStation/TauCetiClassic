@@ -37,7 +37,7 @@
 	return ..()
 
 /obj/item/clothing/shoes/boots/attack_hand(mob/living/user)
-	if(knife && src.loc == user && !user.incapacitated())
+	if(knife && loc == user && !user.incapacitated())
 		if(user.put_in_active_hand(knife))
 			playsound(user, 'sound/effects/throat_cutting.ogg', VOL_EFFECTS_MASTER, 25)
 			to_chat(user, "<span class='notice'>You slide [knife] out of [src].</span>")
