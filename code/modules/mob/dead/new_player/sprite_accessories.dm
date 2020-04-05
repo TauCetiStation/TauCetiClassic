@@ -1299,9 +1299,9 @@
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/facial_hair/una_facial_longfrills
-    name = "Long Unathi Frills"
-    icon_state = "una_facial_longfrills"
-    species_allowed = list(UNATHI)
+	name = "Long Unathi Frills"
+	icon_state = "una_facial_longfrills"
+	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/hair/una_frills_short
 	name = "Short Unathi Frills"
