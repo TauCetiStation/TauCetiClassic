@@ -41,7 +41,7 @@
 		if(user.put_in_active_hand(knife))
 			playsound(user, 'sound/effects/throat_cutting.ogg', VOL_EFFECTS_MASTER, 25)
 			to_chat(user, "<span class='notice'>You slide [knife] out of [src].</span>")
-			knife = 0
+			knife = null
 			update_icon()
 	else
 		return ..()
