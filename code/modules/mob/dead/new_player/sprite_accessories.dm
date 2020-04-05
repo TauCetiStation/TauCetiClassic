@@ -218,6 +218,22 @@
 	name = "Crewcut"
 	icon_state = "hair_crewcut"
 
+/datum/sprite_accessory/hair/cottonhair
+	name = "Cotton Hair"
+	icon_state = "hair_cotton_hair"
+
+/datum/sprite_accessory/hair/braidedhair
+	name = "Braided Hair"
+	icon_state = "hair_braided_hair"
+
+/datum/sprite_accessory/hair/africanpigtails
+	name = "African Pigtails"
+	icon_state = "hair_african_pigtails"
+
+/datum/sprite_accessory/hair/square
+	name = "Square"
+	icon_state = "hair_square"
+
 /datum/sprite_accessory/hair/combover
 	name = "Combover"
 	icon_state = "hair_combover"
@@ -1391,6 +1407,16 @@
 /datum/sprite_accessory/hair/taj_dreadlocks
 	name = "Tajara Dreadlocks"
 	icon_state = "taj_hair_dreadlocks"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/tajbun
+	name = "Tajara Bun."
+	icon_state = "taj_hair_bun"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/tajtail
+	name = "Tajara Tail."
+	icon_state = "taj_hair_tail"
 	species_allowed = list(TAJARAN)
 
 /datum/sprite_accessory/hair/vox_quills_short
