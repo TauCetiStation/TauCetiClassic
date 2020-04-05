@@ -291,13 +291,13 @@ var/global/list/frozen_items = list()
 			preserve = TRUE
 			break
 
-	if (!preserve || !storage)
+	if (preserve && storage)
+		frozen_items += O
+	else
 		if (O.contents.len)
 			for (var/obj/item/object in O.contents)
 				preserve_item(object)
 		qdel(O)
-	else
-		frozen_items += O
 
 
 /obj/machinery/cryopod/proc/insert(mob/M)
