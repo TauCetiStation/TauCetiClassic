@@ -63,7 +63,7 @@
 	icon_state = "galoshes"
 	permeability_coefficient = 0.05
 	flags = NOSLIP
-	slowdown = SHOES_SLOWDOWN+1
+	slowdown = SHOES_SLOWDOWN + 1
 	species_restricted = null
 	clipped_status = NO_CLIPPING
 
