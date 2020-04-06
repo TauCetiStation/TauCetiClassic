@@ -234,5 +234,5 @@
 
 /obj/item/weapon/nullrod/staff/Destroy()
 	to_chat(brainmob, "<span class='userdanger'>You were destroyed!</span>")
-	qdel(brainmob)
+	QDEL_NULL(brainmob)
 	return ..()
