@@ -9,31 +9,28 @@
 	var/obj/item/knife
 
 /obj/item/clothing/shoes/boots/MouseDrop(obj/over_object)
-	if (ishuman(usr) || ismonkey(usr))
-		var/mob/M = usr
-		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
-		if (!(src.loc == usr))
-			return
-		if (!over_object)
-			return
+	if(!iscarbon(usr))
+		return
+	if(!over_object)
+		return
+	if(!usr.incapacitated())
+		return
 
-		if (!( usr.restrained() ) && !( usr.stat ))
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
-			src.add_fingerprint(usr)
-			return
+	var/mob/M = usr
+	switch(over_object.name)
+		if("r_hand")
+			if(!M.unEquip(src))
+				return
+			M.put_in_r_hand(src)
+		if("l_hand")
+			if(!M.unEquip(src))
+				return
+			M.put_in_l_hand(src)
+	src.add_fingerprint(usr)
 	return
 
 /obj/item/clothing/shoes/boots/Destroy()
-	if(knife)
-		QDEL_NULL(knife)
+	QDEL_NULL(knife)
 	return ..()
 
 /obj/item/clothing/shoes/boots/attack_hand(mob/living/user)
@@ -48,9 +45,9 @@
 
 /obj/item/clothing/shoes/boots/attackby(obj/item/I, mob/user, params)
 	. = ..()
+	if(knife)
+		return
 	if(istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/pen/edagger))
-		if(knife)
-			return
 		user.drop_item()
 		knife = I
 		I.forceMove(src)
@@ -63,7 +60,7 @@
 	icon_state = "galoshes"
 	permeability_coefficient = 0.05
 	flags = NOSLIP
-	slowdown = SHOES_SLOWDOWN+1
+	slowdown = SHOES_SLOWDOWN + 1
 	species_restricted = null
 	clipped_status = NO_CLIPPING
 
@@ -98,7 +95,7 @@
 	desc = "When you REALLY want to turn up the heat<br>They have the toe caps cut off of them."
 	icon_state = "swat_cut"
 	clipped_status = CLIPPED
-	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
+	species_restricted = list("exclude", DIONA)
 
 /obj/item/clothing/shoes/boots/cult
 	name = "boots"
