@@ -15,6 +15,11 @@
 	anchored = 1
 	density = 1
 	var/icon_base
+	var/list/allowed_movables = list(
+                                        /obj/mecha,
+                                        /mob/living/simple_animal/construct,
+                                        /mob/living/silicon/robot/syndicate
+                                    )
 
 /obj/item/taperoll/police
 	name = "police tape"
@@ -131,7 +136,7 @@
 		return TRUE
 	if(istype(mover, /mob/living/carbon))
 		var/mob/living/carbon/M = mover
-		if(M.m_intent == MOVE_INTENT_WALK || M.lying || M.crawling)
+		if(M.lying || M.crawling)
 			return TRUE
 	else
 		return FALSE
@@ -159,10 +164,11 @@
 	breaktape(W = null, user = null, forced = TRUE)
 
 /obj/item/tape/Bumped(atom/movable/AM)
-	var/obj/item/tape/T = locate() in AM.loc
-	if(T)
-		return
-	if(!istype(AM, /obj/mecha))
+	if(istype(AM, /mob/living/carbon))
+		var/mob/living/carbon/M = AM
+		if(M.a_intent == "hurt")
+			breaktape(W = null, user = M, forced = TRUE)
+	if(!is_type_in_list(AM, allowed_movables))
 		return
 	breaktape(W = null, user = null, forced = TRUE)	
 
