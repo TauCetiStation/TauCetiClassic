@@ -51,6 +51,17 @@
 	var/ownjob = null //related to above
 	var/ownrank = null // this one is rank, never alt title
 
+	//Variables for Finance Management
+	var/datum/money_account/owner_account = null
+	var/target_account_number = 0 
+	var/funds_amount = 0 
+	var/transfer_purpose = "Funds transfer" 
+	var/pda_paymod = FALSE // if TRUE, click on someone to pay
+	var/trans_menu = 0	// 1 or 0 --> show/hide transaction menu; nanoUI doesn’t understand “FALSE” or I don’t understand something :)
+	var/list/trans_log = list()
+	var/trans_log_spoiler = 0	// 1 or 0 --> show/hide transaction log
+	var/list/owner_fingerprints = list()	//fingerprint information is taken from the ID card
+
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
 /obj/item/device/pda/atom_init()
@@ -407,6 +418,15 @@
 	data["owner"] = owner					// Who is your daddy...
 	data["ownjob"] = ownjob					// ...and what does he do?
 
+	if(owner_account) //this check is needed because we can open the PDA without an account
+		data["money"] = owner_account.money
+	data["target_account_number"] = target_account_number	
+	data["funds_amount"] = funds_amount	
+	data["purpose"] = transfer_purpose	
+	data["trans_menu"] = trans_menu	// show/hide transaction menu
+	data["trans_log"] = trans_log
+	data["trans_log_spoiler"] = trans_log_spoiler	// show/hide transaction log
+
 	data["mode"] = mode					// The current view
 	data["scanmode"] = scanmode				// Scanners
 	data["fon"] = fon					// Flashlight on?
@@ -509,7 +529,6 @@
 	if(mode==41)
 		data_core.get_manifest_json()
 
-
 	if(mode==3)
 		var/turf/T = get_turf(user.loc)
 		if(!isnull(T))
@@ -566,6 +585,8 @@
 	if(active_uplink_check(user))
 		return
 
+	if(mode == 7)
+		mode = 0	//for safety
 	ui_interact(user) //NanoUI requires this proc
 	return
 
@@ -656,7 +677,6 @@
 			mode = 5
 		if("41") //Manifest
 			mode = 41
-
 
 //MAIN FUNCTIONS===================================
 
@@ -776,6 +796,63 @@
 				ui.close()
 				return 0
 
+//Finance Management=============================================================
+
+		if("Finance")
+			if(check_owner_fingerprints(U))
+				mode = 7
+
+		if("Transaction Menu")
+			if(trans_menu)
+				trans_menu = 0
+			else 
+				trans_menu = 1
+
+		if("Transaction Log")
+			if(trans_log_spoiler)
+				trans_log_spoiler = 0
+			else
+				trans_log = null
+				for(var/datum/transaction/T in owner_account.transaction_log)
+					trans_log += list(list("data"="[T.date]", "time"="[T.time]", "name"="[T.target_name]", "purpose"="[T.purpose]", "amount"="[T.amount]", "source"="[T.source_terminal]"))
+				trans_log_spoiler = 1
+
+		if("Send Money")
+			if(check_owner_fingerprints(U))
+				target_account_number = text2num(href_list["account"])
+				mode = 7
+
+		if("Look for")
+			ui.close()
+			to_chat(U, "[bicon(src)]<span class='notice'>Select transfer recipient.</span>")
+			pda_paymod = TRUE
+
+		if("Show Manifest")
+			mode = 41
+
+		if("target_acc_number")
+			target_account_number = text2num(input(U, "Enter an account number", name, target_account_number) as text)	//If "as num" I can't copy text from the buffer
+		if("funds_amount")
+			funds_amount =  text2num(input(U, "Enter the amount of funds", name, funds_amount) as text)
+		if("purpose")
+			transfer_purpose = sanitize(input(U, "Enter the purpose of the transaction", name, transfer_purpose) as text, 20)
+		if("make_transfer")
+			if(owner_account.suspended)
+				to_chat(U, "[bicon(src)]<span class='warning'>Your account is suspended!</span>")
+				return
+			if(funds_amount <= 0)
+				to_chat(U, "[bicon(src)]<span class='warning'>That is not a valid amount!</span>")
+				return
+			if(funds_amount > owner_account.money)
+				to_chat(U, "[bicon(src)]<span class='warning'>You don't have enough funds to do that!</span>")
+				return
+			if(target_account_number == owner_account.account_number)
+				to_chat(U, "[bicon(src)]<span class='warning'>Eror! [target_account_number] is your account number, [owner].</span>")
+				return
+			if(charge_to_account(target_account_number, target_account_number, transfer_purpose, name, funds_amount))
+				charge_to_account(owner_account.account_number, target_account_number, transfer_purpose, name, -funds_amount)
+			else
+				to_chat(U, "[bicon(src)]<span class='warning'>Funds transfer failed. Target account is suspended.</span>")
 
 //SYNDICATE FUNCTIONS===================================
 
@@ -1175,10 +1252,15 @@
 		if(!idcard.registered_name)
 			to_chat(user, "<span class='notice'>\The [src] rejects the ID.</span>")
 			return
-		if(!owner)
+		if(!owner || !owner_account)
 			owner = idcard.registered_name
 			ownjob = idcard.assignment
 			ownrank = idcard.rank
+			var/datum/money_account/account = get_account(idcard.associated_account_number)
+			if(account)
+				account.owner_PDA = src		//add PDA in /datum/money_account
+				owner_account = account		//bind the account to the pda
+			owner_fingerprints += idcard.fingerprint_hash	//save fingerprints in pda
 			name = "PDA-[owner] ([ownjob])"
 			to_chat(user, "<span class='notice'>Card scanned.</span>")
 		else
@@ -1340,3 +1422,57 @@
 /obj/item/device/pda/emp_act(severity)
 	for(var/atom/A in src)
 		A.emp_act(severity)
+
+/obj/item/device/pda/proc/click_to_pay(atom/target)
+	if(istype(target, /mob/living/carbon/human))
+		var/mob/living/carbon/human/receiver = target
+		if(receiver.mind.initial_account)
+			target_account_number = text2num(receiver.mind.initial_account.account_number)
+			mode = 7
+			pda_paymod = FALSE
+			ui_interact(usr)
+			to_chat(usr, "[bicon(src)]<span class='info'>Target account is [target_account_number]</span>")
+			return 
+		else
+			to_chat(usr, "[bicon(src)]<span class='warning'>Target haven't account.</span>")
+			pda_paymod = FALSE
+			return 
+	else
+		to_chat(usr, "[bicon(src)]<span class='warning'>Incorrect target.</span>")
+		pda_paymod = FALSE
+		return 
+
+/obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
+	if(!owner_account)
+		alert("Eror! Account information not saved in this PDA, please swipe your ID card.")
+		return FALSE
+	if(!user.dna)	//just in case
+		alert("Eror! PDA can't read your fingerprints.")
+		return FALSE
+	var/fingerprints = md5(user.dna.uni_identity)
+	if(fingerprints in owner_fingerprints)
+		return TRUE
+	else
+		var/tried_pin =  text2num(input(user, "[owner] please enter your account password", name) as text)
+		if(tried_pin == owner_account.remote_access_pin)
+			owner_fingerprints += fingerprints	//add new owner’s fingerprints to the list
+			to_chat(user, "[bicon(src)]<span class='info'>Password is correct</span>")
+			return TRUE
+		else
+			alert("Invalid Password!")
+			return FALSE
+
+/obj/item/device/pda/proc/transaction_inform(target, source, amount)
+	if(!can_use())
+		return
+	//Search for holder of the PDA. (some copy-paste from /obj/item/device/pda/proc/create_message)
+	var/mob/living/L = null
+	if(src.loc && isliving(src.loc))
+		L = src.loc
+	if(L)
+		if(amount > 0)
+			to_chat(L, "[bicon(src)]<span class='notice'>[owner], the amount of [amount]$ from [source] was transferred to your account.</span>")
+		else
+			to_chat(L, "[bicon(src)]<span class='notice'>You have successfully transferred [amount]$ to [target] account number.</span>")
+		if(!src.message_silent)
+			playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
