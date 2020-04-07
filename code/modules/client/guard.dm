@@ -85,7 +85,7 @@
 
 		geoip_weight += geoip_data["mobile"]  ? 0.2 : 0
 
-		geoip_weight += geoip_data["ipintel"]>0 ? geoip_data["ipintel"] : 0
+		geoip_weight += geoip_data["ipintel"]>=0.9 ? geoip_data["ipintel"] : 0
 
 		// todo: button to force new geoip
 		new_report += {"<div class='block'><h3>GeoIP ([geoip_weight]):</h3>
@@ -131,7 +131,7 @@
 			charset_weight += 1
 
 			if(first_entry)
-				charset_weight += 1 // how he know
+				charset_weight += 0.5 // how he know
 			
 			new_report += {"<div class='block'><h3>Charset ([charset_weight]):</h3>
 			Charset not ordinary for country[first_entry ? " <b>in the first entry</b>" : ""].</div>"}
