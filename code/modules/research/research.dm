@@ -491,7 +491,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("ore_redemption", "mining_equipment_vendor", "mining_fabricator", "drill", "excavation_drill", "scaner_imp", "mining_hud", "pick_diamond", "space_suit_mining", "space_suit_helmet_mining", "space_suit_engineering", "space_suit_helmet_engineering", "space_suit_atmospherics", "space_suit_helmet_atmospherics", "stimpack_imp")
+	unlocks_designs = list("ore_redemption", "mining_equipment_vendor", "mining_fabricator", "drill", "excavation_drill", "scaner_imp", "mining_hud", "pick_diamond", "space_suit_science", "space_suit_helmet_science", "space_suit_recycler", "space_suit_helmet_recycler", "space_suit_mining", "space_suit_helmet_mining", "space_suit_engineering", "space_suit_helmet_engineering", "space_suit_atmospherics", "space_suit_helmet_atmospherics", "stimpack_imp")
 
 /datum/technology/advanced_mining
 	name = "Advanced Mining"

@@ -291,8 +291,8 @@
 						if(transaction_amount <= D.money)
 
 							//transfer the money
-							D.money -= transaction_amount
-							vendor_account.money += transaction_amount
+							D.adjust_money(-transaction_amount)
+							vendor_account.adjust_money(transaction_amount)
 
 							//create entries in the two account transaction logs
 							var/datum/transaction/T = new()
@@ -924,7 +924,7 @@
 						/obj/item/seeds/limeseed = 3,/obj/item/seeds/orangeseed = 3,/obj/item/seeds/plastiseed = 3,/obj/item/seeds/potatoseed = 3,
 						/obj/item/seeds/poppyseed = 3,/obj/item/seeds/pumpkinseed = 3,/obj/item/seeds/riceseed= 3,/obj/item/seeds/soyaseed = 3,
 						/obj/item/seeds/sunflowerseed = 3,/obj/item/seeds/tomatoseed = 3,/obj/item/seeds/towermycelium = 3,/obj/item/seeds/watermelonseed = 3,
-						/obj/item/seeds/wheatseed = 3,/obj/item/seeds/whitebeetseed = 3)
+						/obj/item/seeds/wheatseed = 3,/obj/item/seeds/whitebeetseed = 3, /obj/item/seeds/blackpepper = 5)
 	contraband = list(/obj/item/seeds/amanitamycelium = 2,/obj/item/seeds/glowshroom = 2,/obj/item/seeds/libertymycelium = 2,/obj/item/seeds/mtearseed = 2,
 					  /obj/item/seeds/nettleseed = 2,/obj/item/seeds/reishimycelium = 2,/obj/item/seeds/reishimycelium = 2,/obj/item/seeds/shandseed = 2,)
 	premium = list(/obj/item/toy/waterflower = 1)
@@ -941,7 +941,7 @@
 	product_ads = "FJKLFJSD;AJKFLBJAKL;1234 LOONIES LOL!;>MFW;Kill them fuckers!;GET DAT FUKKEN DISK;HONK!;EI NATH;Destroy the station!;Admin conspiracies since forever!;Space-time bending hardware!"
 	products = list(/obj/item/clothing/head/wizard = 1,/obj/item/clothing/suit/wizrobe = 1,/obj/item/clothing/head/wizard/red = 1,
 	/obj/item/clothing/suit/wizrobe/red = 1,/obj/item/clothing/shoes/sandal = 1,/obj/item/weapon/staff = 2, /obj/item/device/modkit/wizard/skrell = 1,
-	 /obj/item/device/modkit/wizard/unathi = 1, /obj/item/device/modkit/wizard/tajaran = 1, /obj/item/clothing/head/wizard/redhood = 1, /obj/item/clothing/head/wizard/bluehood = 1,
+	 /obj/item/device/modkit/wizard/unathi = 1, /obj/item/device/modkit/wizard/tajaran = 1, /obj/item/device/modkit/wizard/vox = 1, /obj/item/clothing/head/wizard/redhood = 1, /obj/item/clothing/head/wizard/bluehood = 1,
 	 /obj/item/clothing/suit/wizrobe/wiz_blue = 1, /obj/item/clothing/suit/wizrobe/wiz_red = 1)
 	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/wizarditis = 1)	//No one can get to the machine to hack it anyways; for the lulz - Microwave
 
@@ -1207,29 +1207,30 @@
 /obj/machinery/vending/eva
 	name = "Hardsuit Kits"
 	desc = "Conversion kits for your alien hardsuit needs."
-	products = list(/obj/item/device/modkit/engineering/tajaran = 5, /obj/item/device/modkit/engineering/unathi = 5, /obj/item/device/modkit/engineering/skrell = 5,
-					/obj/item/device/modkit/atmos/tajaran = 5, /obj/item/device/modkit/atmos/unathi = 5, /obj/item/device/modkit/atmos/skrell = 5,
-					/obj/item/device/modkit/med/tajaran = 5, /obj/item/device/modkit/med/unathi = 5, /obj/item/device/modkit/med/skrell = 5,
-					/obj/item/device/modkit/sec/tajaran = 5, /obj/item/device/modkit/sec/unathi = 5, /obj/item/device/modkit/sec/skrell = 5,
-					/obj/item/device/modkit/mining/tajaran = 5, /obj/item/device/modkit/mining/unathi = 5, /obj/item/device/modkit/mining/skrell = 5,
-					/obj/item/device/modkit/engineering/chief/tajaran = 1, /obj/item/device/modkit/engineering/chief/unathi = 1, /obj/item/device/modkit/engineering/chief/skrell = 1,
-					/obj/item/device/modkit/med/cmo/tajaran = 1, /obj/item/device/modkit/med/cmo/unathi = 1, /obj/item/device/modkit/med/cmo/skrell = 1,
-					/obj/item/device/modkit/sec/hos/tajaran = 1, /obj/item/device/modkit/sec/hos/unathi = 1, /obj/item/device/modkit/sec/hos/skrell = 1,
+	products = list(/obj/item/device/modkit/engineering/tajaran = 5, /obj/item/device/modkit/engineering/unathi = 5, /obj/item/device/modkit/engineering/skrell = 5, /obj/item/device/modkit/engineering/vox = 5,
+					/obj/item/device/modkit/atmos/tajaran = 5, /obj/item/device/modkit/atmos/unathi = 5, /obj/item/device/modkit/atmos/skrell = 5, /obj/item/device/modkit/atmos/vox = 5,
+					/obj/item/device/modkit/med/tajaran = 5, /obj/item/device/modkit/med/unathi = 5, /obj/item/device/modkit/med/skrell = 5, /obj/item/device/modkit/med/vox = 5,
+					/obj/item/device/modkit/sec/tajaran = 5, /obj/item/device/modkit/sec/unathi = 5, /obj/item/device/modkit/sec/skrell = 5, /obj/item/device/modkit/sec/vox = 5,
+					/obj/item/device/modkit/mining/tajaran = 5, /obj/item/device/modkit/mining/unathi = 5, /obj/item/device/modkit/mining/skrell = 5, /obj/item/device/modkit/mining/vox = 5,
+					/obj/item/device/modkit/engineering/chief/tajaran = 1, /obj/item/device/modkit/engineering/chief/unathi = 1, /obj/item/device/modkit/engineering/chief/skrell = 1, /obj/item/device/modkit/engineering/chief/vox = 1,
+					/obj/item/device/modkit/med/cmo/tajaran = 1, /obj/item/device/modkit/med/cmo/unathi = 1, /obj/item/device/modkit/med/cmo/skrell = 1, /obj/item/device/modkit/med/cmo/vox = 1,
+					/obj/item/device/modkit/sec/hos/tajaran = 1, /obj/item/device/modkit/sec/hos/unathi = 1, /obj/item/device/modkit/sec/hos/skrell = 1, /obj/item/device/modkit/sec/hos/vox = 1,
 					/obj/item/device/modkit = 10)
 
 /obj/machinery/vending/eva/mining
 	name = "Mining Hardsuit Kits"
 	desc = "Conversion kits for your alien mining hardsuits."
 	icon_state = "evamine"
-	products = list(/obj/item/device/modkit/mining/tajaran = 3, /obj/item/device/modkit/mining/unathi = 3, /obj/item/device/modkit/mining/skrell = 3, /obj/item/device/modkit = 5)
+	products = list(/obj/item/device/modkit/mining/tajaran = 3, /obj/item/device/modkit/mining/unathi = 3, /obj/item/device/modkit/mining/skrell = 3, /obj/item/device/modkit/mining/vox = 3, /obj/item/device/modkit = 5)
 
 /obj/machinery/vending/eva/engineering
 	name = "Engineering Hardsuit Kits"
 	desc = "Conversion kits for your alien engineering and atmos hardsuits."
 	icon_state = "evaengi"
-	products = list(/obj/item/device/modkit/engineering/tajaran = 3, /obj/item/device/modkit/engineering/unathi = 3, /obj/item/device/modkit/engineering/skrell = 3,
-					/obj/item/device/modkit/atmos/tajaran = 3, /obj/item/device/modkit/atmos/unathi = 3, /obj/item/device/modkit/atmos/skrell = 3,
-					/obj/item/device/modkit/engineering/chief/tajaran = 1, /obj/item/device/modkit/engineering/chief/unathi = 1, /obj/item/device/modkit/engineering/chief/skrell = 1,
+	// why the fuck do we have CE modifications here, if we don't have xeno-heads? and why are they not in CE's office or sumthin smh.
+	products = list(/obj/item/device/modkit/engineering/tajaran = 3, /obj/item/device/modkit/engineering/unathi = 3, /obj/item/device/modkit/engineering/skrell = 3, /obj/item/device/modkit/engineering/vox = 3,
+					/obj/item/device/modkit/atmos/tajaran = 3, /obj/item/device/modkit/atmos/unathi = 3, /obj/item/device/modkit/atmos/skrell = 3, /obj/item/device/modkit/atmos/vox = 3,
+					/obj/item/device/modkit/engineering/chief/tajaran = 1, /obj/item/device/modkit/engineering/chief/unathi = 1, /obj/item/device/modkit/engineering/chief/skrell = 1, /obj/item/device/modkit/engineering/chief/vox = 1,
 					/obj/item/device/modkit = 6)
 
 
@@ -1282,7 +1283,7 @@
 	products = list(/obj/item/clothing/head/xenos = 5, /obj/item/clothing/suit/xenos = 5, /obj/item/clothing/suit/monkeysuit = 5, /obj/item/clothing/suit/syndicatefake = 5, /obj/item/clothing/head/syndicatefake = 5,
 					/obj/item/clothing/head/collectable/slime = 5, /obj/item/clothing/head/collectable/xenom = 5, /obj/item/clothing/head/collectable/petehat = 5, /obj/item/clothing/head/kitty = 5,
 					/obj/item/clothing/head/pumpkinhead = 5, /obj/item/clothing/head/ushanka = 5, /obj/item/clothing/head/cardborg = 5, /obj/item/clothing/suit/cardborg = 5, /obj/item/clothing/head/bearpelt = 5,
-					/obj/item/clothing/suit/space/santa = 5, /obj/item/clothing/head/helmet/space/santahat = 5, /obj/item/weapon/storage/backpack/santabag = 5, /obj/item/clothing/mask/fakemoustache = 5,
+					/obj/item/clothing/mask/fakemoustache = 5, /obj/item/clothing/head/santahat = 5, /obj/item/clothing/suit/santa = 5, /obj/item/weapon/storage/backpack/santabag = 5,
 					/obj/item/clothing/mask/gas/sexyclown = 5, /obj/item/clothing/mask/gas/sexymime = 5, /obj/item/clothing/mask/horsehead = 5, /obj/item/clothing/suit/apron = 5, /obj/item/clothing/suit/apron/overalls = 5,
 					/obj/item/clothing/suit/chickensuit = 5, /obj/item/clothing/head/chicken = 5, /obj/item/clothing/under/fluff/tian_dress = 5, /obj/item/clothing/under/fluff/wyatt_1 = 5,
 					/obj/item/clothing/under/fluff/olddressuniform = 5, /obj/item/clothing/under/fluff/jumpsuitdown = 5, /obj/item/clothing/under/fluff/jane_sidsuit = 5, /obj/item/clothing/under/sundress = 5,

@@ -199,10 +199,10 @@
 				new path(loc)
 	..()
 
-/mob/living/simple_animal/emote(act, type, desc)
+/mob/living/simple_animal/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 	if(act)
 		if(act == "scream")	act = "whimper" //ugly hack to stop animals screaming when crushed :P
-		..(act, type, desc)
+		..(act, m_type)
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
 	if(src == M)

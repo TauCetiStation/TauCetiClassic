@@ -387,7 +387,7 @@
 
 		for(var/mob/living/M in contents)
 			if (M.stat!=2)
-				M.emote("scream",,, 1)
+				M.emote("scream")
 			M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[key_name(user)]</b>" //No point in this when the mob's about to be deleted
 			user.attack_log +="\[[time_stamp()]\] Cremated <b>[key_name(M)]</b>"
 			log_attack("[key_name(user)] cremated by [key_name(M)]")

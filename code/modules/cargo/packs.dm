@@ -239,8 +239,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/clothing/suit/storage/flak/bulletproof,
 					/obj/item/clothing/head/helmet/bulletproof,
 					/obj/item/clothing/head/helmet/bulletproof,
-					/obj/item/weapon/gun/projectile/shotgun/combat,
-					/obj/item/weapon/gun/projectile/shotgun/combat)
+					/obj/item/weapon/gun/projectile/shotgun,
+					/obj/item/weapon/gun/projectile/shotgun)
 	cost = 5000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Ballistic gear crate"

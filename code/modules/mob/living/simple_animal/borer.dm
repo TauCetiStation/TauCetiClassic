@@ -24,7 +24,7 @@
 			else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 				to_chat(M, "The captive mind of [src] whispers, \"[message]\"")
 
-/mob/living/captive_brain/emote(message)
+/mob/living/captive_brain/emote(act, m_type = SHOWMSG_VISUAL, message, auto)
 	return
 
 /mob/living/simple_animal/borer
@@ -100,7 +100,7 @@
 					host.adjustBrainLoss(rand(1,2))
 
 				if(prob(host.brainloss/20))
-					host.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
+					host.say("*[pick(list("blink", "choke", "aflap", "drool", "twitch", "gasp"))]")
 
 /mob/living/simple_animal/borer/say(var/message)
 
