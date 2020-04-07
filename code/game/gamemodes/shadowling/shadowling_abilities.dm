@@ -401,7 +401,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech/cast(list/targets)
 	//usr.audible_message("<span class='warning'><b>[usr] lets out a horrible scream!</b></span>")
-	usr.emote("scream", 1, "<span class='warning'><b>lets out a horrible scream!</b></span>")
+	usr.emote("scream", SHOWMSG_AUDIO, message = "<span class='warning'><b>lets out a horrible scream!</b></span>", auto = FALSE)
 	playsound(usr, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/turf/T in targets)
@@ -535,7 +535,7 @@
 		to_chat(boom, "<span class='userdanger'><font size=3>You feel an immense pressure building all across your body!</span></font>")
 		boom.Stun(10)
 		//boom.audible_message("<b>[boom]</b> screams!")
-		boom.emote("scream",,, 1)
+		boom.emote("scream")
 		sleep(20)
 		if(istype(boom,/mob/living/simple_animal/hostile/carp/dog))
 			to_chat(SHA,"<span class='shadowling'>Probably, trying to explode [boom] wasn't good idea....</span>")

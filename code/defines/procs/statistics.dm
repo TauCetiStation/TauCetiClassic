@@ -11,10 +11,7 @@
 	else
 		var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
 		var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO population (playercount, time) VALUES ([playercount], '[sqltime]')")
-		if(!query.Execute())
-			var/err = query.ErrorMsg()
-			log_game("SQL ERROR during player polling. Error : \[[err]\]\n")
-
+		query.Execute()
 
 /proc/sql_poll_admins()
 	if(!config.sql_enabled)
@@ -26,9 +23,7 @@
 	else
 		var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
 		var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO population (admincount, time) VALUES ([admincount], '[sqltime]')")
-		if(!query.Execute())
-			var/err = query.ErrorMsg()
-			log_game("SQL ERROR during admin polling. Error : \[[err]\]\n")
+		query.Execute()
 
 /proc/sql_report_round_start()
 	// TODO
@@ -69,10 +64,7 @@
 		log_game("SQL ERROR during death reporting. Failed to connect.")
 	else
 		var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO death (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, coord) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[H.gender]', [H.getBruteLoss()], [H.getFireLoss()], [H.brainloss], [H.getOxyLoss()], '[coord]')")
-		if(!query.Execute())
-			var/err = query.ErrorMsg()
-			log_game("SQL ERROR during death reporting. Error : \[[err]\]\n")
-
+		query.Execute()
 
 /proc/sql_report_cyborg_death(mob/living/silicon/robot/H)
 	if(!config.sql_enabled)
@@ -104,10 +96,7 @@
 		log_game("SQL ERROR during death reporting. Failed to connect.")
 	else
 		var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO death (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, coord) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[H.gender]', [H.getBruteLoss()], [H.getFireLoss()], [H.brainloss], [H.getOxyLoss()], '[coord]')")
-		if(!query.Execute())
-			var/err = query.ErrorMsg()
-			log_game("SQL ERROR during death reporting. Error : \[[err]\]\n")
-
+		query.Execute()
 
 /proc/statistic_cycle()
 	if(!config.sql_enabled)
@@ -140,6 +129,4 @@
 			var/value = item.get_value()
 
 			var/DBQuery/query = dbcon.NewQuery("INSERT INTO erro_feedback (id, roundid, time, variable, value) VALUES (null, [round_id], Now(), '[sanitize_sql(variable)]', '[sanitize_sql(value)]')")
-			if(!query.Execute())
-				var/err = query.ErrorMsg()
-				log_game("SQL ERROR during death reporting. Error : \[[err]\]\n")
+			query.Execute()

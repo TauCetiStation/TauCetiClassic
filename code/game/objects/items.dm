@@ -342,6 +342,10 @@
 	if(QDELETED(src) || freeze_movement) // remove_from_mob() may remove DROPDEL items, so...
 		return
 
+	if(!user.can_pickup(src))
+		to_chat(user, "<span class='notice'>Your claws aren't capable of such fine manipulation!</span>")
+		return
+
 	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
@@ -351,15 +355,6 @@
 /obj/item/attack_paw(mob/user)
 	if (!user || anchored)
 		return
-
-	if(isxeno(user)) // -- TLE
-		var/mob/living/carbon/xenomorph/A = user
-
-		if(!A.has_fine_manipulation || w_class >= ITEM_SIZE_LARGE)
-			if(src in A.contents) // To stop Aliens having items stuck in their pockets
-				A.drop_from_inventory(src)
-			to_chat(user, "Your claws aren't capable of such fine manipulation.")
-			return
 
 	if (istype(src.loc, /obj/item/weapon/storage))
 		for(var/mob/M in range(1, src.loc))
@@ -380,6 +375,10 @@
 		user.next_move = max(user.next_move+2,world.time + 2)
 
 	if(QDELETED(src) || freeze_movement) // no item - no pickup, you dummy!
+		return
+
+	if (!user.can_pickup(src))
+		to_chat(user, "<span class='notice'>Your claws aren't capable of such fine manipulation!</span>")
 		return
 
 	src.pickup(user)

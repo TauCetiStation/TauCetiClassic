@@ -218,6 +218,22 @@
 	name = "Crewcut"
 	icon_state = "hair_crewcut"
 
+/datum/sprite_accessory/hair/cottonhair
+	name = "Cotton Hair"
+	icon_state = "hair_cotton_hair"
+
+/datum/sprite_accessory/hair/braidedhair
+	name = "Braided Hair"
+	icon_state = "hair_braided_hair"
+
+/datum/sprite_accessory/hair/africanpigtails
+	name = "African Pigtails"
+	icon_state = "hair_african_pigtails"
+
+/datum/sprite_accessory/hair/square
+	name = "Square"
+	icon_state = "hair_square"
+
 /datum/sprite_accessory/hair/combover
 	name = "Combover"
 	icon_state = "hair_combover"
@@ -1393,9 +1409,39 @@
 	icon_state = "taj_hair_dreadlocks"
 	species_allowed = list(TAJARAN)
 
+/datum/sprite_accessory/hair/tajbun
+	name = "Tajara Bun."
+	icon_state = "taj_hair_bun"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/tajtail
+	name = "Tajara Tail."
+	icon_state = "taj_hair_tail"
+	species_allowed = list(TAJARAN)
+
 /datum/sprite_accessory/hair/vox_quills_short
 	name = "Short Vox Quills"
 	icon_state = "vox_shortquills"
+	species_allowed = list(VOX)
+
+/datum/sprite_accessory/hair/vox_yasu
+	name = "Yasu"
+	icon_state = "vox_yasu"
+	species_allowed = list(VOX)
+
+/datum/sprite_accessory/hair/vox_razor
+	name = "Razor"
+	icon_state = "vox_razor"
+	species_allowed = list(VOX)
+
+/datum/sprite_accessory/hair/vox_kingly
+	name = "Kingly"
+	icon_state = "vox_kingly"
+	species_allowed = list(VOX)
+
+/datum/sprite_accessory/hair/vox_badhead
+	name = "Badhead"
+	icon_state = "vox_badhead"
 	species_allowed = list(VOX)
 
 /datum/sprite_accessory/facial_hair/taj_sideburns
