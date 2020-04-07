@@ -18,7 +18,8 @@
 	var/list/allowed_movables = list(
                                         /obj/mecha,
                                         /mob/living/simple_animal/construct,
-                                        /mob/living/silicon/robot/syndicate
+                                        /mob/living/silicon/robot/syndicate,
+										/mob/living/simple_animal/hulk
                                     )
 
 /obj/item/taperoll/police
@@ -156,6 +157,12 @@
 
 /obj/item/tape/attack_paw(mob/user)
 	breaktape(null, user, FALSE)
+
+/obj/item/tape/attack_alien(mob/user)
+	breaktape(W = null, user = null, forced = FALSE)
+
+/obj/item/tape/attack_animal(mob/living/simple_animal/M)
+	breaktape(W = null, user = null, forced = FALSE)
 
 /obj/item/tape/blob_act()
 	breaktape(W = null, user = null, forced = TRUE)
