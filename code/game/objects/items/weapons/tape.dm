@@ -127,8 +127,12 @@
 		return TRUE
 	if(allowed(mover))
 		return TRUE
-	if (mover.pass_flags & PASSTABLE || istype(mover, /obj/effect/meteor) || mover.throwing)
+	if (mover.pass_flags & PASSTABLE || istype(mover, /obj/effect/meteor) ||  istype(mover, /mob/living/simple_animal/headcrab) || mover.throwing)
 		return TRUE
+	if(istype(mover, /mob/living/carbon))
+		var/mob/living/carbon/M = mover
+		if(M.m_intent == MOVE_INTENT_WALK || M.lying || M.crawling)
+			return TRUE
 	else
 		return FALSE
 
@@ -153,6 +157,14 @@
 
 /obj/item/tape/ex_act()
 	breaktape(W = null, user = null, forced = TRUE)
+
+/obj/item/tape/Bumped(atom/movable/AM)
+	var/obj/item/tape/T = locate() in AM.loc
+	if(T)
+		return
+	if(!istype(AM, /obj/mecha))
+		return
+	breaktape(W = null, user = null, forced = TRUE)	
 
 /obj/item/tape/proc/breaktape(obj/item/weapon/W, mob/user, forced = FALSE)
 	if((user && user.a_intent == "help") && (W && !W.can_puncture() && allowed(user)) && !forced)
