@@ -159,10 +159,10 @@
 	breaktape(null, user, FALSE)
 
 /obj/item/tape/attack_alien(mob/user)
-	breaktape(W = null, user = null, forced = FALSE)
+	breaktape(W = null, user, forced = FALSE)
 
 /obj/item/tape/attack_animal(mob/living/simple_animal/M)
-	breaktape(W = null, user = null, forced = FALSE)
+	breaktape(W = null, user = M, forced = FALSE)
 
 /obj/item/tape/blob_act()
 	breaktape(W = null, user = null, forced = TRUE)
