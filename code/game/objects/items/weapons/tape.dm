@@ -16,11 +16,11 @@
 	density = 1
 	var/icon_base
 	var/list/allowed_movables = list(
-                                        /obj/mecha,
-                                        /mob/living/simple_animal/construct,
-                                        /mob/living/silicon/robot/syndicate,
-										/mob/living/simple_animal/hulk
-                                    )
+		/obj/mecha,
+		/mob/living/simple_animal/construct,
+		/mob/living/silicon/robot/syndicate,
+		/mob/living/simple_animal/hulk
+		)
 
 /obj/item/taperoll/police
 	name = "police tape"
