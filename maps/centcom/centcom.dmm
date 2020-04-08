@@ -854,19 +854,19 @@
 "adg" = (
 /obj/structure/table/glass{
 	pixel_x = -6;
-	pixel_y = 5
+	pixel_y = 2
 	},
 /obj/item/clothing/suit/plaid{
 	pixel_x = -3;
-	pixel_y = 7
+	pixel_y = 4
 	},
 /obj/item/weapon/storage/fancy/crayons{
 	pixel_x = -9;
-	pixel_y = 14
+	pixel_y = 8
 	},
 /obj/item/clothing/head/soft/grey{
-	pixel_x = -2;
-	pixel_y = 10
+	pixel_x = -1;
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -16994,7 +16994,7 @@
 	dir = 4
 	},
 /obj/structure/stool{
-	pixel_y = 7
+	pixel_y = 3
 	},
 /turf/unsimulated/floor{
 	icon_state = "purplechecker"
@@ -17503,7 +17503,7 @@
 "dRQ" = (
 /obj/structure/stool{
 	pixel_x = -2;
-	pixel_y = 7
+	pixel_y = 3
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -18718,7 +18718,7 @@
 /obj/structure/stool{
 	airflow_speed = 2;
 	pixel_x = -5;
-	pixel_y = 7
+	pixel_y = 3
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -22923,7 +22923,7 @@
 /area/velocity)
 "rkK" = (
 /obj/structure/flora/pottedplant/tropicalfern{
-	pixel_y = 10
+	pixel_y = 5
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
