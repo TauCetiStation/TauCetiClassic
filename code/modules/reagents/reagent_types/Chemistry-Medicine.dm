@@ -409,16 +409,24 @@
 	overdose = 10
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
+	var/healing_amt = 5 // damage per units
 
 /datum/reagent/peridaxon/on_general_digest(mob/living/M)
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-
+		var/damaged_organs = 0
 		//Peridaxon is hard enough to get, it's probably fair to make this all organs
 		for(var/obj/item/organ/internal/IO in H.organs)
 			if(IO.damage > 0 && IO.robotic < 2)
-				IO.damage = max(IO.damage - 0.20, 0)
+				damaged_organs++
+
+		if(!damaged_organs)
+			return
+
+		for(var/obj/item/organ/internal/IO in H.organs)
+			if(IO.damage > 0 && IO.robotic < 2)
+				IO.damage = max(IO.damage - custom_metabolism * healing_amt / damaged_organs, 0)
 
 /datum/reagent/kyphotorin
 	name = "Kyphotorin"
