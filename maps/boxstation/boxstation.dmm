@@ -11225,8 +11225,15 @@
 	},
 /area/station/hallway/secondary/exit)
 "asT" = (
-/turf/simulated,
-/area/station/civilian/bar)
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "green"
+	},
+/area/station/civilian/hydroponics)
 "asU" = (
 /obj/structure/table,
 /obj/item/bodybag/cryobag,
@@ -74390,15 +74397,13 @@
 	},
 /area/station/engineering/atmos)
 "myC" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = 12
-	},
+/obj/item/weapon/book/manual/wiki/supply_crates,
+/obj/structure/table,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "green"
+	dir = 1;
+	icon_state = "brown"
 	},
-/area/station/civilian/hydroponics)
+/area/station/cargo/storage)
 "myS" = (
 /obj/structure/sign/warning/docking,
 /turf/simulated/wall,
@@ -78550,14 +78555,6 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
-"sNk" = (
-/obj/item/weapon/book/manual/wiki/supply_crates,
-/obj/structure/table,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "brown"
-	},
-/area/station/cargo/storage)
 "sNO" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -94682,7 +94679,7 @@ aRp
 aWV
 aXz
 aFg
-sNk
+myC
 bFS
 bFS
 vBO
@@ -99554,7 +99551,7 @@ awg
 cox
 dra
 ncT
-myC
+asT
 oGL
 aVg
 aNi
@@ -105973,7 +105970,7 @@ aCq
 iib
 aFE
 iEb
-asT
+aGn
 aDz
 aDQ
 aDQ
