@@ -33005,7 +33005,8 @@
 /area/station/tcommsat/computer)
 "bie" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -40034,19 +40035,14 @@
 	name = "Recycler office";
 	req_access = list(67)
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -73763,8 +73759,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -79979,6 +79979,10 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "xwm" = (
+/obj/structure/table,
+/obj/item/weapon/storage/belt,
+/obj/item/weapon/storage/belt,
+/obj/item/weapon/storage/belt,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -93141,7 +93145,7 @@ ivL
 lac
 bpZ
 bsK
-pwb
+bHe
 bvQ
 bio
 bJI
