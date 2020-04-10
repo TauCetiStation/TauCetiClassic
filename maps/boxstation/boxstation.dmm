@@ -32737,7 +32737,7 @@
 	icon_state = "plant-22"
 	},
 /obj/machinery/door_control{
-	id = bar;
+	id = "bar";
 	name = "Privacy shutter";
 	pixel_x = 8;
 	pixel_y = -24
@@ -44926,6 +44926,10 @@
 /area/station/civilian/theatre)
 "bEM" = (
 /obj/structure/cable,
+/obj/machinery/power/apc{
+	name = "Honk Office APC";
+	pixel_y = -30
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "bEN" = (
@@ -79001,7 +79005,7 @@
 /area/station/hallway/secondary/exit)
 "tze" = (
 /obj/machinery/door_control{
-	id = bar;
+	id = "bar";
 	name = "Privacy shutter";
 	pixel_x = 8;
 	pixel_y = 24
