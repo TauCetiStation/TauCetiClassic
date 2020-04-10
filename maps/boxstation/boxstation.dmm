@@ -44716,8 +44716,6 @@
 /area/station/rnd/hor)
 "bEp" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/airlock/maintenance{
 	name = "Kitchen Cold Room Maintenance";
 	req_access = list(28)
@@ -72550,14 +72548,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
-"jpt" = (
-/obj/item/weapon/book/manual/wiki/supply_crates,
-/obj/structure/table,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "brown"
-	},
-/area/station/cargo/storage)
 "jpM" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -74396,10 +74386,15 @@
 	},
 /area/station/engineering/atmos)
 "myC" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/space,
-/area/space)
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "green"
+	},
+/area/station/civilian/hydroponics)
 "myS" = (
 /obj/structure/sign/warning/docking,
 /turf/simulated/wall,
@@ -78552,15 +78547,13 @@
 	},
 /area/station/medical/virology)
 "sNk" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = 12
-	},
+/obj/item/weapon/book/manual/wiki/supply_crates,
+/obj/structure/table,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "green"
+	dir = 1;
+	icon_state = "brown"
 	},
-/area/station/civilian/hydroponics)
+/area/station/cargo/storage)
 "sNO" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -94681,7 +94674,7 @@ aRp
 aWV
 aXz
 aFg
-jpt
+sNk
 bFS
 bFS
 vBO
@@ -97779,7 +97772,7 @@ bWt
 bWt
 bWt
 bWt
-myC
+aah
 aah
 aah
 aaa
@@ -99553,7 +99546,7 @@ awg
 cox
 dra
 ncT
-sNk
+myC
 oGL
 aVg
 aNi
