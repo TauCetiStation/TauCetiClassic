@@ -36065,7 +36065,7 @@
 	dir = 1;
 	id = "packageSort1"
 	},
-/obj/structure/plasticflaps,
+/obj/structure/plasticflaps/mining,
 /turf/simulated/floor/plating{
 	dir = 4;
 	icon_state = "warnplate"
@@ -40250,11 +40250,11 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/office)
 "bvM" = (
-/obj/structure/plasticflaps/mining,
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "packageSort2"
 	},
+/obj/structure/plasticflaps/mining,
 /turf/simulated/floor/plating{
 	dir = 1;
 	icon_state = "warnplate"
