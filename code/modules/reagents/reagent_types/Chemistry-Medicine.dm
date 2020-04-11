@@ -400,6 +400,43 @@
 			if(IO.damage > 0 && IO.robotic < 2)
 				IO.damage = max(IO.damage - 1, 0)
 
+/datum/reagent/dxm
+	name = "Dextromethorphan"
+	id = "dxm"
+	description = "Analgesic chemical that heals lung damage and coughing."
+	reagent_state = LIQUID
+	color = "#ffc0cb" // rgb: 255, 192, 203
+	overdose = 10
+	custom_metabolism = 0.1
+	taste_message = "sickening bitterness"
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/dxm/on_general_digest(mob/living/M)
+	..()
+	if(!data)
+		data = 1
+	M.adjustOxyLoss(-M.getOxyLoss())
+	if(holder.has_reagent("lexorin"))
+		holder.remove_reagent("lexorin", 2 * REM)
+
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/obj/item/organ/internal/lungs/IO = H.organs_by_name[O_LUNGS]
+		if(istype(IO))
+			if(IO.damage > 0 && IO.robotic < 2)
+				IO.damage = max(IO.damage - 0.7, 0)
+		switch(data)
+			if(50 to 100)
+				H.disabilities -= COUGHING
+			if(100 to INFINITY)
+				H.hallucination = max(H.hallucination, 7)
+	data++
+
+/datum/reagent/dexalinp/on_vox_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(7 * REM) // Let's just say it's thrice as poisonous.
+	return FALSE
+
 /datum/reagent/peridaxon
 	name = "Peridaxon"
 	id = "peridaxon"
@@ -409,7 +446,6 @@
 	overdose = 10
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
-	var/healing_amt = 5 // damage per units
 
 /datum/reagent/peridaxon/on_general_digest(mob/living/M)
 	..()
@@ -426,7 +462,7 @@
 
 		for(var/obj/item/organ/internal/IO in H.organs)
 			if(IO.damage > 0 && IO.robotic < 2)
-				IO.damage = max(IO.damage - custom_metabolism * healing_amt / damaged_organs, 0)
+				IO.damage = max(IO.damage - (3 * custom_metabolism / damaged_organs), 0)
 
 /datum/reagent/kyphotorin
 	name = "Kyphotorin"

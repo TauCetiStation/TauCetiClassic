@@ -13,6 +13,8 @@
 
 	if(reagents.has_reagent("alkysine"))
 		src.traumatic_shock -= 10
+	if(reagents.has_reagent("dxm"))
+		src.traumatic_shock -= 10
 	if(reagents.has_reagent("inaprovaline"))
 		src.traumatic_shock -= 25
 	if(reagents.has_reagent("synaptizine"))
