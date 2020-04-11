@@ -21098,6 +21098,18 @@
 /obj/machinery/light,
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
+"aLK" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/closet/crate,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/cargo/storage)
 "aLL" = (
 /obj/effect/decal/cleanable/spiderling_remains,
 /turf/simulated/floor/plating,
@@ -21162,6 +21174,16 @@
 	icon_state = "wooden-2"
 	},
 /area/station/civilian/gym)
+"aLT" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "qm_warehouse";
+	name = "Warehouse Shutters"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/cargo/storage)
 "aLU" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
@@ -26986,6 +27008,7 @@
 /area/station/bridge/captain_quarters)
 "aXz" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -28820,8 +28843,12 @@
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "bba" = (
-/obj/machinery/light/small,
-/obj/structure/closet/crate,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -34989,6 +35016,9 @@
 /area/station/maintenance/engineering)
 "bnp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "bnq" = (
@@ -35335,16 +35365,6 @@
 	icon_state = "bot"
 	},
 /area/station/medical/chemistry)
-"boi" = (
-/obj/machinery/door_control{
-	name = "Warehouse Door Control";
-	pixel_y = 32;
-	id = "qm_warehouse";
-	req_access = list(31);
-	pixel_x = 3
-	},
-/turf/simulated/floor,
-/area/station/cargo/storage)
 "boj" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -43286,16 +43306,6 @@
 	icon_state = "floor"
 	},
 /area/shuttle/escape_pod2/station)
-"bFw" = (
-/obj/machinery/firealarm{
-	pixel_y = 28
-	},
-/obj/structure/rack,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "brown"
-	},
-/area/station/cargo/storage)
 "bFx" = (
 /obj/structure/reagent_dispensers/acid{
 	density = 0;
@@ -73460,6 +73470,7 @@
 	name = "Warehouse Shutters"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -74814,6 +74825,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/table,
+/obj/machinery/cell_charger,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
@@ -75009,6 +75022,12 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/door_control{
+	name = "Warehouse Door Control";
+	pixel_y = 32;
+	id = "qm_warehouse";
+	req_access = list(31)
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "qKb" = (
@@ -75199,20 +75218,11 @@
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "qYi" = (
-/obj/machinery/camera{
-	c_tag = "Robotics";
-	network = list("SS13","Research");
-	pixel_x = 22
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 20
 	},
-/obj/structure/rack,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "brown"
-	},
+/turf/simulated/wall,
 /area/station/cargo/storage)
 "qZb" = (
 /obj/structure/sign/departments/medbay,
@@ -92755,7 +92765,7 @@ aWX
 baK
 aFg
 qYi
-bFS
+aFg
 bnp
 brb
 brG
@@ -93010,9 +93020,9 @@ aFg
 bsy
 bxv
 bBm
-aFg
-bFw
-bFS
+bxz
+bxz
+aLT
 bFS
 vBO
 bGI
@@ -93265,11 +93275,11 @@ qAF
 bEW
 aFg
 aSa
-aXJ
-bba
-aFg
-aFg
-aFg
+aLK
+bxz
+bxz
+bxz
+aLT
 bFS
 vBO
 bsC
@@ -93524,9 +93534,9 @@ aFg
 aSc
 aXJ
 bxz
-bcf
-bcf
-aFg
+bxz
+bxz
+aLT
 bFS
 vBO
 sox
@@ -93779,12 +93789,12 @@ qAF
 bEW
 rFw
 bxz
-aXJ
+aLK
 bxz
 bxz
 bxz
-aFg
-boi
+aLT
+bFS
 vBO
 bsC
 tHV
@@ -94037,7 +94047,7 @@ vdm
 aFg
 bcf
 dWf
-eTT
+bba
 eTT
 wht
 ooW
