@@ -673,11 +673,18 @@ BLIND     // can't see anything
 
 	if(copytext(item_color,-2) != "_d")
 		basecolor = item_color
-	if((basecolor + "_d_s") in icon_states('icons/mob/uniform.dmi'))
-		item_color = item_color == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
-		usr.update_inv_w_uniform()
+	if(HAS_TRAIT(src, TRAIT_FAT))
+		if((basecolor + "_d_s") in icon_states('icons/mob/uniform_fat.dmi'))
+			item_color = item_color == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
+			usr.update_inv_w_uniform()
+		else
+			to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
 	else
-		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
+		if((basecolor + "_d_s") in icon_states('icons/mob/uniform.dmi'))
+			item_color = item_color == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
+			usr.update_inv_w_uniform()
+		else
+			to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
 
 /obj/item/clothing/under/rank/atom_init()
 	sensor_mode = pick(0,1,2,3)
