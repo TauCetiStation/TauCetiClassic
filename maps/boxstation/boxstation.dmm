@@ -76256,7 +76256,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "sCW" = (
-/obj/structure/disposalpipe/tagger,
+/obj/structure/disposalpipe/tagger/partial,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "sDb" = (
