@@ -76255,10 +76255,6 @@
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"sCW" = (
-/obj/structure/disposalpipe/tagger/partial,
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "sDb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -88904,7 +88900,7 @@ kYI
 kYI
 vmU
 bkQ
-sCW
+kYI
 kQm
 bpc
 snu
