@@ -334,7 +334,6 @@ var/bomb_set
 		return
 	else
 		return ..()
-	return
 
 #define NUKERANGE 80
 /obj/machinery/nuclearbomb/proc/explode()
