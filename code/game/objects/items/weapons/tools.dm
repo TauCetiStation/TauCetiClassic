@@ -37,7 +37,7 @@
 		if(!param_color)
 			param_color = pick("black","red","green","blue","default")
 		icon_state = "wrench_[param_color]"
-		item_state = "wrench"
+		item_state = "wrench_[param_color]"
 
 /obj/item/weapon/wrench/power
 	name = "Hand Drill"
@@ -93,7 +93,7 @@
 	. = ..()
 	if(random_color)
 		if(!param_color)
-			param_color = pick("red", "blue", "purple", "brown", "green", "cyan", "yellow")
+			param_color = pick("red", "blue", "purple", "brown", "green", "yellow")
 		icon_state = "screwdriver_[param_color]"
 		item_state = "screwdriver_[param_color]"
 
@@ -159,7 +159,7 @@
 	. = ..()
 	if(random_color)
 		if(!param_color)
-			param_color = pick("yellow","red","green","black","blue")
+			param_color = pick("yellow","red","green","brown","blue")
 		icon_state = "cutters_[param_color]"
 		item_state = "cutters_[param_color]"
 
