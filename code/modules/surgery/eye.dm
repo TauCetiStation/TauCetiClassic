@@ -247,11 +247,14 @@
 	min_duration = 70
 	max_duration = 100
 
+/datum/surgery_step/ipc_eye/close_shut/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	return ..() && target.op_stage.eyes != 0
+
 /datum/surgery_step/ipc_eye/close_shut/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] is beginning to lock [target]'s camera panels with \the [tool]." ,
 	"You are beginning to lock [target]'s camera panels with \the [tool].")
 
-/datum/surgery_step/ipc_eye/closet_shut/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc_eye/close_shut/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/internal/eyes/eyes = target.organs_by_name[O_EYES]
 	user.visible_message("<span class='notice'>[user] locks [target]'s camera panels with \the [tool].</span>",
 	"<span class='notice'>You lock [target]'s camera panels with \the [tool].</span>")

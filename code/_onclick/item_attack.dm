@@ -53,7 +53,7 @@
 /obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
 	var/mob/messagesource = M
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
-		if (do_surgery(M,user,src))
+		if (do_surgery(M, user, src))
 			return 0
 
 	// Knifing
@@ -197,17 +197,16 @@
 					M.adjustBrainLoss(power)
 
 				else
-
+					if(prob(33)) // Added blood for whacking non-humans too
+						var/turf/simulated/T = M.loc
+						if(istype(T))
+							T.add_blood_floor(M)
 					M.take_bodypart_damage(power)
-					if (prob(33)) // Added blood for whacking non-humans too
-						var/turf/location = M.loc
-						if (istype(location, /turf/simulated))
-							location:add_blood_floor(M)
 			if("fire")
 				if (!(COLD_RESISTANCE in M.mutations))
-					M.take_bodypart_damage(0, power)
 					to_chat(M, "Aargh it burns!")
-		M.updatehealth()
+					M.take_bodypart_damage(0, power)
+
 	add_fingerprint(user)
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(M)

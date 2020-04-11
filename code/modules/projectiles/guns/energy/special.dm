@@ -81,7 +81,7 @@
 	return 1
 
 /obj/item/weapon/gun/energy/floragun/attack_self(mob/living/user)
-	select_fire(user)
+	..()
 	update_icon()
 
 /obj/item/weapon/gun/energy/meteorgun
@@ -352,3 +352,204 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = null
 	toolspeed = 0.5
+
+/*
+	Pyrometers and stuff.
+*/
+/obj/item/weapon/gun/energy/pyrometer
+	name = "pyrometer"
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact."
+
+	w_class = ITEM_SIZE_SMALL
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "pyrometer"
+	item_state = "pyrometer"
+	origin_tech = "engineering=3;magnets=3"
+
+	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer)
+
+	var/emagged = FALSE
+
+	var/panel_open = FALSE
+
+	// ML means my laser.
+	var/obj/item/weapon/stock_parts/micro_laser/ML
+	var/my_laser_type = /obj/item/weapon/stock_parts/micro_laser
+
+/obj/item/weapon/gun/energy/pyrometer/atom_init()
+	. = ..()
+	if(my_laser_type)
+		ML = new my_laser_type(src)
+
+/obj/item/weapon/gun/energy/pyrometer/newshot()
+	if(!ML)
+		visible_message("<span class='warning'>[src] clings, as it heats up.</span>")
+		return
+	return ..()
+
+/obj/item/weapon/gun/energy/pyrometer/attack_hand(mob/user)
+	if(panel_open && power_supply)
+		user.put_in_hands(power_supply)
+		power_supply = null
+		to_chat(user, "<span class='notice'>You take \the [power_supply] out of \the [src].</span>")
+	else
+		..()
+
+/obj/item/weapon/gun/energy/pyrometer/attackby(obj/item/I, mob/user)
+	if(isscrewdriver(I))
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		panel_open = !panel_open
+		user.visible_message("<span class='notice'>[user] [panel_open ? "un" : ""]screws [src]'s panel [panel_open ? "open" : "shut"].</span>", "<span class='notice'>You [panel_open ? "un" : ""]screw [src]'s panel [panel_open ? "open" : "shut"].</span>")
+	else if(panel_open)
+		if(iscrowbar(I))
+			if(ML)
+				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
+				user.put_in_hands(ML)
+				ML = null
+				to_chat(user, "<span class='notice'>You take \the [ML] out of \the [src].</span>")
+		else if(istype(I, /obj/item/weapon/stock_parts/cell))
+			user.drop_from_inventory(I, src)
+			power_supply = I
+			to_chat(user, "<span class='notice'>You install [I] into \the [src].</span>")
+		else if(istype(I, /obj/item/weapon/stock_parts/micro_laser))
+			user.drop_from_inventory(I, src)
+			ML = I
+			to_chat(user, "<span class='notice'>You install [I] into \the [src].</span>")
+
+/obj/item/weapon/gun/energy/pyrometer/emag_act(mob/user)
+	if(!emagged)
+		ammo_type += new /obj/item/ammo_casing/energy/pyrometer/emagged(src)
+		origin_tech += ";syndicate=1"
+
+		emagged = TRUE
+
+/obj/item/weapon/gun/energy/pyrometer/update_icon()
+	return
+
+/obj/item/weapon/gun/energy/pyrometer/announce_shot(mob/living/user)
+	return
+
+
+
+/obj/item/weapon/gun/energy/pyrometer/universal
+	name = "universal pyrometer"
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct use physical contact. Comes with built-in multi-color laser pointer. And all possible pyrometer modes!"
+	icon_state = "pyrometer_robotics"
+	item_state = "pyrometer_robotics"
+
+	ammo_type = list(
+		/obj/item/ammo_casing/energy/pyrometer/science_phoron,
+		/obj/item/ammo_casing/energy/pyrometer/engineering,
+		/obj/item/ammo_casing/energy/pyrometer/atmospherics,
+		/obj/item/ammo_casing/energy/pyrometer/medical,
+	)
+
+	// Doesn't come with those built-in. Must be manually put.
+	cell_type = null
+	my_laser_type = null
+
+
+/obj/item/weapon/gun/energy/pyrometer/ce
+	name = "chief engineer's tactical pyrometer"
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Comes with a neat sniper-scope!"
+	icon_state = "pyrometer_ce"
+	item_state = "pyrometer_ce"
+
+	ammo_type = list(
+		/obj/item/ammo_casing/energy/pyrometer/science_phoron,
+		/obj/item/ammo_casing/energy/pyrometer/engineering,
+		/obj/item/ammo_casing/energy/pyrometer/atmospherics,
+	)
+
+	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/quadultra
+
+	var/zoomed = FALSE
+
+/obj/item/weapon/gun/energy/pyrometer/ce/dropped(mob/user)
+	if(zoomed)
+		if(user.client)
+			user.client.view = world.view
+		if(user.hud_used)
+			user.hud_used.show_hud(HUD_STYLE_STANDARD)
+		zoomed = FALSE
+	..()
+
+/obj/item/weapon/gun/energy/pyrometer/ce/attack_self()
+	toggle_zoom()
+
+/obj/item/weapon/gun/energy/pyrometer/ce/verb/toggle_zoom()
+	set category = "Object"
+	set name = "Use Sniper Scope"
+	set src in usr
+
+	if(!ishuman(usr) || usr.incapacitated())
+		to_chat(usr, "You are unable to focus down the scope of the rifle.")
+		return
+
+	var/mob/living/carbon/human/user = usr
+
+	if(!zoomed && user.get_active_hand() != src)
+		to_chat(usr, "You are too distracted to look down the scope, perhaps if it was in your active hand this might work better")
+		return
+
+	if(user.client.view == world.view)
+		if(user.hud_used)
+			user.hud_used.show_hud(HUD_STYLE_REDUCED)
+		user.client.view = 12
+		zoomed = TRUE
+	else
+		usr.client.view = world.view
+		if(usr.hud_used)
+			usr.hud_used.show_hud(HUD_STYLE_STANDARD)
+		zoomed = FALSE
+	to_chat(user, "<font color='[zoomed ? "blue" : "red"]'>Zoom mode [zoomed ? "en" : "dis"]abled.</font>")
+
+/obj/item/weapon/gun/energy/pyrometer/ce/equipped(mob/user, slot)
+	if(zoomed)
+		toggle_zoom()
+	..()
+
+
+
+/obj/item/weapon/gun/energy/pyrometer/science_phoron
+	name = "phoron-orienter pyrometer"
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Is fine-tuned for detecting when your pipe is about to burst."
+	icon_state = "pyrometer_science_phoron"
+	item_state = "pyrometer_science_phoron"
+
+	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/science_phoron)
+
+
+
+/obj/item/weapon/gun/energy/pyrometer/engineering
+	name = "machinery pyrometer"
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Detects overheated machinery."
+	icon_state = "pyrometer_engineering"
+	item_state = "pyrometer_engineering"
+
+	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/engineering)
+
+/obj/item/weapon/gun/energy/pyrometer/engineering/robotics
+	icon_state = "pyrometer_robotics"
+	item_state = "pyrometer_robotics"
+
+
+
+/obj/item/weapon/gun/energy/pyrometer/atmospherics
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Is used to determine how much a living human would be screwed if he was to breath the air in the room you \"scan\"."
+	icon_state = "pyrometer_atmospherics"
+	item_state = "pyrometer_atmospherics"
+
+	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/atmospherics)
+
+
+
+/obj/item/weapon/gun/energy/pyrometer/medical
+	name = "NC thermometer"
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Is used to determine the temperature of your skeleton in the closet."
+	icon_state = "pyrometer_medical"
+	item_state = "pyrometer_medical"
+
+	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/medical)
+
+	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/ultra

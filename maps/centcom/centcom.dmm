@@ -168,9 +168,7 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/stamp/denied,
-/obj/item/weapon/stamp/centcomm{
-	name = "APPROVED rubber stamp"
-	},
+/obj/item/weapon/stamp/approve,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/item/device/taperecorder,
 /turf/unsimulated/floor{
@@ -205,9 +203,7 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/stamp/denied,
-/obj/item/weapon/stamp/centcomm{
-	name = "APPROVED rubber stamp"
-	},
+/obj/item/weapon/stamp/approve,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/item/device/taperecorder,
 /turf/unsimulated/floor{
@@ -475,11 +471,7 @@
 /turf/unsimulated/wall/fakeglass,
 /area/custom/wizard_station)
 "aaZ" = (
-/turf/unsimulated/wall{
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "iron6";
-	smooth = 0
-	},
+/turf/unsimulated/wall/iron,
 /area/custom/tophat)
 "aba" = (
 /obj/machinery/abductor/gland_dispenser{
@@ -490,6 +482,13 @@
 "abb" = (
 /turf/space,
 /area/shuttle/escape_pod1/transit)
+"abc" = (
+/obj/structure/table/reinforced,
+/obj/item/device/megaphone,
+/turf/unsimulated/floor{
+	icon_state = "bar"
+	},
+/area/custom/syndicate_mothership)
 "abd" = (
 /obj/machinery/computer/arcade,
 /obj/structure/sign/velocity_overlay/reklama{
@@ -575,27 +574,6 @@
 	icon_state = "wooden-2"
 	},
 /area/custom/tophat)
-"abp" = (
-/turf/unsimulated/wall{
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "iron12";
-	smooth = 0
-	},
-/area/custom/tophat)
-"abq" = (
-/turf/unsimulated/wall{
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "iron10";
-	smooth = 0
-	},
-/area/custom/tophat)
-"abr" = (
-/turf/unsimulated/wall{
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "iron3";
-	smooth = 0
-	},
-/area/custom/tophat)
 "abs" = (
 /turf/unsimulated/floor{
 	icon_state = "asteroid10";
@@ -612,6 +590,10 @@
 	name = "plating"
 	},
 /area/custom/wizard_station)
+"abu" = (
+/obj/effect/landmark/blockway,
+/turf/space,
+/area/space)
 "abC" = (
 /obj/structure/window/reinforced{
 	dir = 5;
@@ -1247,8 +1229,7 @@
 	req_access = list(150)
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
 "agj" = (
@@ -3316,7 +3297,10 @@
 	},
 /area/shuttle/syndicate/start)
 "amy" = (
-/obj/random/vending/snack,
+/obj/machinery/vending/snack{
+	name = "hacked Getmore Chocolate Corp";
+	prices = list()
+	},
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
@@ -3447,7 +3431,10 @@
 	},
 /area/custom/syndicate_mothership)
 "amM" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/vending/cigarette{
+	name = "hacked Cigarette machine";
+	prices = list()
+	},
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
@@ -4337,8 +4324,7 @@
 	req_access = list(150)
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
 "aqf" = (
@@ -5200,8 +5186,7 @@
 	req_access = list(150)
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "white"
 	},
 /area/custom/syndicate_mothership)
 "atc" = (
@@ -6319,7 +6304,10 @@
 	},
 /area/velocity)
 "axb" = (
-/obj/random/vending/cola,
+/obj/machinery/vending/cola{
+	name = "hacked Robust Softdrinks";
+	prices = list()
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -7020,10 +7008,6 @@
 /turf/simulated/shuttle/plating,
 /area/shuttle/officer/velocity)
 "azu" = (
-/obj/structure/closet/walllocker/emerglocker/north{
-	pixel_x = -32;
-	pixel_y = 0
-	},
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	icon_state = "chair_c03";
 	name = "shuttle chair"
@@ -8301,7 +8285,10 @@
 	},
 /area/centcom/specops)
 "aDb" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/coffee{
+	name = "hacked Hot Drinks machine";
+	prices = list()
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -9847,7 +9834,9 @@
 "aIs" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/stamp,
+/obj/item/weapon/stamp{
+	name = "security rubber stamp"
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -12219,8 +12208,7 @@
 	req_access = list(150)
 	},
 /turf/unsimulated/floor{
-	icon_state = "cult";
-	name = "plating"
+	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership)
 "aSc" = (
@@ -15887,20 +15875,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
-"beG" = (
-/turf/unsimulated/wall{
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "iron9";
-	smooth = 0
-	},
-/area/custom/tophat)
-"beH" = (
-/turf/unsimulated/wall{
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "iron5";
-	smooth = 0
-	},
-/area/custom/tophat)
 "beI" = (
 /obj/effect/landmark/abductor/agent{
 	team = 3
@@ -22145,7 +22119,6 @@
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "oAb" = (
-/obj/structure/closet/walllocker/emerglocker/north,
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "oBb" = (
@@ -22662,10 +22635,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/control)
-"pRb" = (
-/obj/structure/closet/walllocker/emerglocker/south,
-/turf/simulated/shuttle/floor,
-/area/shuttle/escape/centcom)
 "pSb" = (
 /obj/structure/closet/medical_wall,
 /obj/item/weapon/reagent_containers/blood/OMinus,
@@ -25375,13 +25344,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aaZ
+aaZ
+aaZ
+aaZ
+aaZ
+aaZ
+aaZ
 aaM
 aaM
 aaM
@@ -25633,12 +25602,12 @@ aaM
 aaM
 aaM
 aaZ
-abr
-abr
-abr
-abr
-abr
-beH
+abd
+abe
+abh
+abk
+abm
+aaZ
 aaM
 aaM
 aaM
@@ -25889,13 +25858,13 @@ aaM
 aaM
 aaM
 aaM
-abp
-abd
+aaZ
 abe
-abh
-abk
-abm
-abp
+abe
+abe
+abe
+abe
+aaZ
 aaM
 aaM
 aaM
@@ -26146,13 +26115,13 @@ aaM
 aaM
 aaM
 aaM
-abp
+aaZ
+abf
 abe
-abe
-abe
-abe
-abe
-abp
+abi
+abl
+abo
+aaZ
 aaM
 aaM
 aaM
@@ -26403,13 +26372,13 @@ aaM
 aaM
 aaM
 aaM
-abp
-abf
+aaZ
 abe
-abi
-abl
-abo
-abp
+abe
+abj
+abj
+abj
+aaZ
 aaM
 aaM
 aaM
@@ -26660,13 +26629,13 @@ aaM
 aaM
 aaM
 aaM
-abp
+aaZ
+abg
 abe
 abe
-abj
-abj
-abj
-abp
+abe
+abe
+aaZ
 aaM
 aaM
 aaM
@@ -26917,13 +26886,13 @@ aaM
 aaM
 aaM
 aaM
-abp
-abg
-abe
-abe
-abe
-abe
-abp
+aaZ
+aaZ
+aaZ
+aaZ
+aaZ
+aaZ
+aaZ
 aaM
 aaM
 aaM
@@ -27174,13 +27143,13 @@ aaM
 aaM
 aaM
 aaM
-abq
-abr
-abr
-abr
-abr
-abr
-beG
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -37661,7 +37630,7 @@ aVy
 aVy
 aVy
 aVy
-pRb
+oAb
 aUE
 aaM
 aaM
@@ -77602,7 +77571,7 @@ ahF
 ahF
 ahF
 ahF
-aaM
+abu
 akb
 aih
 akM
@@ -77859,7 +77828,7 @@ ahF
 ahF
 ahF
 ahF
-aaM
+abu
 akc
 akx
 akN
@@ -78116,7 +78085,7 @@ ahF
 ahF
 ahF
 aaM
-aaM
+abu
 akd
 akw
 akM
@@ -80704,7 +80673,7 @@ amm
 akQ
 akQ
 akQ
-alN
+abc
 akQ
 ame
 aie

@@ -17,7 +17,7 @@
 	)
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
-	restricted_species = list(UNATHI, TAJARAN, DIONA)
+	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
 
 /datum/job/rd/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -80,11 +80,6 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(H), SLOT_L_EAR)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/science(H), SLOT_BELT)
-	switch(H.mind.role_alt_title)
-		if("Scientist")
-			access = list(access_tox, access_research)
-		if("Phoron Researcher")
-			access = list(access_research, access_tox_storage)
 
 	return TRUE
 
@@ -210,7 +205,6 @@
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research)
-	minimal_player_ingame_minutes = 520
 
 /datum/job/research_assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)

@@ -106,7 +106,7 @@
 /obj/item/weapon/folder/blue/fluff/matthew_riebhardt/atom_init()
 	. = ..()
 	desc = "An academic journal, seemingly pertaining to medical genetics. This issue is for the second quarter of [gamestory_start_year]. Paper flags demarcate some articles the owner finds interesting."
-	
+
 /obj/item/weapon/pen/fluff/multi //spaceman96: Trenna Seber
 	name = "multicolor pen"
 	desc = "It's a cool looking pen. Lots of colors!"
@@ -413,9 +413,8 @@
 /obj/item/weapon/crowbar/fluff/zelda_creedy_1 //daaneesh: Zelda Creedy
 	name = "Zelda's Crowbar"
 	desc = "A pink crow bar that has an engraving that reads, 'To Zelda. Love always, Dawn'."
-	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "zeldacrowbar"
-	item_state = "crowbar"
+	item_state = "zeldacrowbar"
 
 ////// Ripley customisation kit - Butchery Royce - MayeDay
 
@@ -505,7 +504,7 @@
 //////////// Hats ////////////
 
 /obj/item/clothing/head/secsoft/fluff/swatcap //deusdactyl: James Girard
-	name = "\improper SWAT hat"
+	name = "SWAT hat"
 	desc = "A black hat.  The inside has the words, \"Lieutenant James Girard, LPD SWAT Team Four.\""
 	icon_state = "swatcap"
 	body_parts_covered = 0
@@ -827,7 +826,7 @@
 
 /*
 /obj/item/clothing/mask/fluff/flagmask //searif: Tsiokeriio Tarbell
-	name = "\improper First Nations facemask"
+	name = "First Nations facemask"
 	desc = "A simple cloth rag that bears the flag of the first nations."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "flagmask"
@@ -934,7 +933,7 @@
 
 /*
 /obj/item/clothing/suit/storage/labcoat/fluff/cdc_labcoat
-	name = "\improper CDC labcoat"
+	name = "CDC labcoat"
 	desc = "A standard-issue CDC labcoat that protects against minor chemical spills.  It has the name \"Wiles\" sewn on to the breast pocket."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "labcoat_cdc_open"

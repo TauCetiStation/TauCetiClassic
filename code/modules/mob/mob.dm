@@ -17,6 +17,7 @@
 	global.alive_mob_list -= src
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
+	remote_control = null
 	qdel(hud_used)
 	ghostize(bancheck = TRUE)
 	..()
@@ -81,7 +82,7 @@
 			break
 
 		if((type & SHOWMSG_AUDIO) && !(sdisabilities & DEAF) && !ear_deaf) // Hearing related
-			if(stat == UNCONSCIOUS || sleeping > 0)
+			if(stat == UNCONSCIOUS)
 				msg = "<i>... You can almost hear something ...</i>"
 			else
 				msg = args[i]
@@ -93,7 +94,7 @@
 
 	if(!msg)
 		return FALSE
-	
+
 	to_chat(src, msg)
 	return list(msg, type) // should pass args to parasites
 
@@ -116,13 +117,11 @@
 // message is the message output to anyone who can see e.g. "[src] does something!"
 // self_message (optional) is what the src mob sees  e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
-
 // WHY this self_message/blind_message/deaf_message so inconsistent as positional args!
 // todo:
 // * need to combine visible_message/audible_message to one proc (something like show_message) (maybe it will be a mess because of *_distance ?)
 // * replace show_message in /emote()'s & custom_emote()
 // * need some version combined with playsound (one cycle for audio message and sound)
-
 /mob/visible_message(message, self_message, blind_message, viewing_distance = world.view, list/ignored_mobs)
 	for(var/mob/M in (viewers(get_turf(src), viewing_distance) - ignored_mobs)) //todo: get_hearers_in_view() (tg)
 
@@ -136,7 +135,6 @@
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
-
 /atom/proc/visible_message(message, blind_message, viewing_distance = world.view, list/ignored_mobs)
 	//todo: for range<=1 combine SHOWMSG_FEEL with SHOWMSG_VISUAL like in custom_emote?
 	for(var/mob/M in (viewers(get_turf(src), viewing_distance) - ignored_mobs)) //todo: get_hearers_in_view() (tg)
@@ -378,22 +376,22 @@
 		else
 			to_chat(usr, "You can respawn now, enjoy your new life!")
 
-	log_game("[usr.name]/[usr.key] used abandon mob.")
+	log_game("[key_name(usr)] used abandon mob.")
 
 	to_chat(usr, "<span class='notice'><B>Make sure to play a different character, and please roleplay correctly!</B></span>")
 
 	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
+		log_game("[key_name(usr)] AM failed due to disconnect.")
 		return
 	client.screen.Cut()
 	client.screen += client.void
 	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
+		log_game("[key_name(usr)] AM failed due to disconnect.")
 		return
 
 	var/mob/dead/new_player/M = new /mob/dead/new_player()
 	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
+		log_game("[key_name(usr)] AM failed due to disconnect.")
 		qdel(M)
 		return
 
@@ -647,12 +645,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 			stat(null, "Round ID: #[round_id]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(client)
-			stat(null, "Your in-game age: [client.player_ingame_age]")
+			stat(null, "Your in-game age: [isnum(client.player_ingame_age) ? client.player_ingame_age : 0]")
 			stat(null, "Map: [SSmapping.config?.map_name || "Loading..."]")
 			var/datum/map_config/cached = SSmapping.next_map_config
 			if(cached)
 				stat(null, "Next Map: [cached.map_name]")
 			if(client.holder)
+				if (config.registration_panic_bunker_age)
+					stat(null, "Registration panic bunker age: [config.registration_panic_bunker_age]")
 				if(ticker.mode && ticker.mode.config_tag == "malfunction")
 					var/datum/game_mode/malfunction/GM = ticker.mode
 					if(GM.malf_mode_declared)
@@ -750,7 +750,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	density = !lying
 
-	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isalien(src))
+	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isxeno(src))
 		drop_l_hand()
 		drop_r_hand()
 
@@ -897,25 +897,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		paralysis = max(paralysis + amount, 0)
 	else
 		paralysis = 0
-
-// ========== SLEEPING ==========
-/mob/proc/Sleeping(amount)
-	if(status_flags & CANPARALYSE) // because sleeping and paralysis are very similar statuses and i see no point in separate flags at this time (anyway, golems mostly).
-		sleeping = max(max(sleeping, amount), 0)
-	else
-		sleeping = 0
-
-/mob/proc/SetSleeping(amount)
-	if(status_flags & CANPARALYSE)
-		sleeping = max(amount, 0)
-	else
-		sleeping = 0
-
-/mob/proc/AdjustSleeping(amount)
-	if(status_flags & CANPARALYSE)
-		sleeping = max(sleeping + amount, 0)
-	else
-		sleeping = 0
 
 // ========== RESTING ==========
 /mob/proc/Resting(amount)
@@ -1118,3 +1099,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/can_unbuckle(mob/user)
 	return 1
+
+/mob/proc/update_stat()
+	return
+
+/mob/proc/can_pickup(obj/O)
+	return TRUE
+
+/atom/movable/proc/is_facehuggable()
+	return FALSE

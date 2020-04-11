@@ -14,7 +14,7 @@
 			var/volume_coefficient = max((10-volume)/10, 0)
 			var/changes_occured = FALSE
 
-			if(H.species && H.species.name in list(HUMAN, UNATHI, TAJARAN))
+			if(H.species && (H.species.name in list(HUMAN, UNATHI, TAJARAN)))
 				if(H.hair_painted && !(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
 					H.dyed_r_hair = CLAMP(round(H.dyed_r_hair * volume_coefficient + ((H.r_hair * volume) / 10)), 0, 255)
 					H.dyed_g_hair = CLAMP(round(H.dyed_g_hair * volume_coefficient + ((H.g_hair * volume) / 10)), 0, 255)
@@ -165,13 +165,13 @@
 			if(20 to 40)
 				M.make_jittery(6)
 				if(prob(15))
-					M.sleeping += 1
+					M.SetSleeping(20 SECONDS)
 			if(40 to 80)
 				M.make_jittery(12)
 				if(prob(30))
-					M.sleeping += 1
+					M.SetSleeping(20 SECONDS)
 			if(80 to INFINITY)
-				M.sleeping += 1
+				M.SetSleeping(20 SECONDS)
 	data++
 
 /datum/reagent/water/unholywater/reaction_obj(obj/O, volume)

@@ -211,8 +211,20 @@
 
 /obj/item/weapon/storage/box/syndie_kit/rig/atom_init()
 	. = ..()
-	new /obj/item/clothing/suit/space/rig/syndi(src)
+
 	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
+	new /obj/item/clothing/suit/space/rig/syndi(src)
+	new /obj/item/clothing/shoes/magboots/syndie(src)
+	make_exact_fit()
+
+/obj/item/weapon/storage/box/syndie_kit/heavy_rig
+	name = "box (H)"
+
+/obj/item/weapon/storage/box/syndie_kit/heavy_rig/atom_init()
+	. = ..()
+
+	new /obj/item/clothing/head/helmet/space/rig/syndi/heavy(src)
+	new /obj/item/clothing/suit/space/rig/syndi/heavy(src)
 	new /obj/item/clothing/shoes/magboots/syndie(src)
 	make_exact_fit()
 
@@ -226,6 +238,16 @@
 		new /obj/item/clothing/head/helmet/syndiassault(src)
 	else
 		new /obj/item/clothing/head/helmet/syndiassault/alternate(src)
+	make_exact_fit()
+
+
+/obj/item/weapon/storage/box/syndie_kit/light_armor
+	name = "box (L)"
+
+/obj/item/weapon/storage/box/syndie_kit/light_armor/atom_init()
+	. = ..()
+	new /obj/item/clothing/suit/armor/syndilight(src)
+	new /obj/item/clothing/head/helmet/syndiassault/alternate(src)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/fake

@@ -28,13 +28,6 @@
 	var/next_harm_time = 0
 
 	var/mode = 0
-#define SECBOT_IDLE 		0		// idle
-#define SECBOT_HUNT 		1		// found target, hunting
-#define SECBOT_PREP_ARREST 	2		// at target, preparing to arrest
-#define SECBOT_ARREST		3		// arresting target
-#define SECBOT_START_PATROL	4		// start patrol
-#define SECBOT_PATROL		5		// patrolling
-#define SECBOT_SUMMON		6		// summoned by PDA
 
 	var/auto_patrol = 0		// set to make bot automatically patrol
 
@@ -608,7 +601,7 @@
 
 /obj/machinery/bot/secbot/explode()
 	walk_to(src,0)
-	visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
+	visible_message("<span class='warning'><B>[src] blows apart!</B></span>")
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)
@@ -630,9 +623,9 @@
 	new /obj/effect/decal/cleanable/blood/oil(loc)
 	qdel(src)
 
-/obj/machinery/bot/secbot/attack_alien(mob/living/carbon/alien/user)
+/obj/machinery/bot/secbot/attack_alien(mob/living/carbon/xenomorph/user)
 	..()
-	if(!isalien(target))
+	if(!isxeno(target))
 		target = user
 		mode = SECBOT_HUNT
 

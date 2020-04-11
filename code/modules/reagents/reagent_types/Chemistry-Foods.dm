@@ -84,7 +84,7 @@
 
 /datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
 	..()
-	if(ishuman(M) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden", "Captain"))
+	if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Warden", "Captain")))
 		M.heal_bodypart_damage(1, 1)
 
 /datum/reagent/consumable/syndicream
@@ -209,11 +209,11 @@
 				return
 			else if (eyes_covered) // Eye cover is better than mouth cover
 				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protects your eyes from the pepperspray!</span>")
-				victim.emote("scream",,, 1)
+				victim.emote("scream")
 				victim.eye_blurry = max(M.eye_blurry, 5)
 				return
 			else // Oh dear :D
-				victim.emote("scream",,, 1)
+				victim.emote("scream")
 				to_chat(victim, "<span class='userdanger'> You're sprayed directly in the eyes with pepperspray!</span>")
 				victim.eye_blurry = max(M.eye_blurry, 25)
 				victim.eye_blind = max(M.eye_blind, 10)

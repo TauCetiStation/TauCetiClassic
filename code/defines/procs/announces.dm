@@ -34,8 +34,6 @@ var/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/transit,
 
 				M.playsound_local(null, announce_sound, VOL_EFFECTS_VOICE_ANNOUNCEMENT, null, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
 
-#undef IS_ON_ESCPAE_SHUTTLE
-
 //station announces: communication console, shuttle(?), departaments
 /proc/captain_announce(message, title = "Priority Announcement", announcer, sound = "announce", subtitle)
 	

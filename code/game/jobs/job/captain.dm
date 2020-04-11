@@ -12,7 +12,7 @@
 	access = list() 			//See get_access()
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 3900
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, IPC)
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
 
 /datum/job/captain/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -48,7 +48,7 @@
 	START_PROCESSING(SSobj, L)
 	to_chat(world, "<b>[H.real_name] is the captain!</b>")//maybe should be announcment, not OOC notification?
 
-	score["captain"].Add(H.real_name)
+	score["captain"] += H.real_name
 
 	return TRUE
 
@@ -77,7 +77,7 @@
 		access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
 		access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_recycler, access_detective, access_barber
 	)
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, IPC)
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
 
 
 /datum/job/hop/equip(mob/living/carbon/human/H, visualsOnly = FALSE)

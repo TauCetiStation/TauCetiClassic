@@ -1,5 +1,5 @@
 /obj/item/clothing/head/centhat
-	name = "\improper CentComm. hat"
+	name = "CentComm. hat"
 	icon_state = "centcom"
 	desc = "It's good to be emperor."
 	item_state = "centhat"
@@ -172,13 +172,13 @@
 //stylish bs12 hats
 
 /obj/item/clothing/head/feathertrilby
-	name = "\improper feather trilby"
+	name = "feather trilby"
 	icon_state = "feather_trilby"
 	item_state = "feather_trilby"
 	desc = "A sharp, stylish hat with a feather."
 
 /obj/item/clothing/head/fez
-	name = "\improper fez"
+	name = "fez"
 	icon_state = "fez"
 	item_state = "fez"
 	desc = "You should wear a fez. Fezzes are cool."
@@ -216,7 +216,7 @@
 	item_state = "zhan_scarf"
 	desc = "White headscarf"
 	body_parts_covered = 0
-	species_restricted = list(UNATHI , TAJARAN , HUMAN , DIONA , IPC)
+	species_restricted = list(UNATHI, TAJARAN, HUMAN, DIONA, IPC)
 
 /obj/item/clothing/head/skrell_headwear
 	name = "skrell yellow headwear"

@@ -125,7 +125,7 @@ var/list/bad_messages = list("Never take me off, please!",
 
 /obj/item/weapon/vampiric/hear_talk(mob/M, text)
 	..()
-	if(world.time - last_bloodcall >= bloodcall_interval && M in view(7, src))
+	if(world.time - last_bloodcall >= bloodcall_interval && (M in view(7, src)))
 		bloodcall(M)
 
 /obj/item/weapon/vampiric/proc/bloodcall(mob/living/carbon/human/M)
@@ -202,7 +202,7 @@ var/list/bad_messages = list("Never take me off, please!",
 			                          'sound/hallucinations/turn_around1.ogg',
 			                          'sound/hallucinations/turn_around2.ogg')
 			playsound(src, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE, -3)
-			M.sleeping = max(M.sleeping,rand(5,10))
+			M.SetSleeping(max(M.AmountSleeping(), rand(5 SECONDS, 10 SECONDS)))
 			src.loc = null
 	else
 		STOP_PROCESSING(SSobj, src)

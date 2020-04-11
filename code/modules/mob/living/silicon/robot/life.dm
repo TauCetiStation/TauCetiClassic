@@ -28,7 +28,7 @@
 //	SetStunned(min(stunned, 30))
 	SetParalysis(min(paralysis, 30))
 //	SetWeakened(min(weakened, 20))
-	sleeping = 0
+	SetSleeping(0)
 	adjustBruteLoss(0)
 	adjustToxLoss(0)
 	adjustOxyLoss(0)
@@ -71,9 +71,8 @@
 
 	updatehealth()
 
-	if(src.sleeping)
+	if(IsSleeping())
 		Paralyse(3)
-		src.sleeping--
 
 	if(src.resting)
 		Weaken(5)
@@ -156,7 +155,7 @@
 	if(!client)
 		return 0
 
-	if (src.stat == DEAD || XRAY in mutations || src.sight_mode & BORGXRAY)
+	if (src.stat == DEAD || (XRAY in mutations) || (src.sight_mode & BORGXRAY))
 		set_EyesVision()
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
@@ -327,5 +326,6 @@
 
 /mob/living/silicon/robot/update_fire()
 	if(on_fire)
-		overlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning")
-	else overlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning")
+		add_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning"))
+	else
+		cut_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning"))

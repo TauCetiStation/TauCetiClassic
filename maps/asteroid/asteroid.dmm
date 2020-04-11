@@ -443,15 +443,14 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/structure/closet/walllocker/emerglocker/north{
-	dir = 1;
-	pixel_y = -32
-	},
 /obj/structure/table,
 /obj/machinery/cell_charger{
 	pixel_y = 5
 	},
 /obj/item/weapon/stock_parts/cell,
+/obj/structure/closet/emergency_wall{
+	pixel_x = -30
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maintstore1)
 "bm" = (
@@ -697,14 +696,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/atmos)
-"bK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/space)
 "bL" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -963,10 +954,12 @@
 	},
 /area/asteroid/research_outpost/atmos)
 "cm" = (
-/obj/structure/closet/walllocker/emerglocker/west,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/closet/emergency_wall{
+	pixel_x = -30
 	},
 /turf/simulated/floor{
 	icon_state = "whitecorner"
@@ -2041,7 +2034,9 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "eu" = (
-/obj/structure/closet/walllocker/emerglocker/north,
+/obj/structure/closet/emergency_wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitebluecorner"
@@ -3542,6 +3537,8 @@
 "hv" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	dock_tag = "sci_dock";
+	locked = 1;
 	name = "Research Outpost Dock Airlock";
 	req_access = list(65)
 	},
@@ -6842,11 +6839,13 @@
 	},
 /area/asteroid/research_outpost/iso2)
 "oi" = (
-/obj/structure/closet/walllocker/emerglocker/west,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/closet/emergency_wall{
+	pixel_x = -30
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maintstore2)
@@ -10494,12 +10493,7 @@
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
 "wS" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 6
-	},
+/obj/machinery/atmospherics/components/unary/tank/air,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "wT" = (
@@ -10603,9 +10597,10 @@
 	},
 /area/asteroid/mine/west_outpost)
 "xc" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 5
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 8
 	},
+/obj/machinery/meter,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "xd" = (
@@ -10654,7 +10649,6 @@
 	},
 /area/asteroid/mine/west_outpost)
 "xi" = (
-/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
@@ -10743,7 +10737,10 @@
 	},
 /area/asteroid/mine/living_quarters)
 "xt" = (
-/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "xu" = (
@@ -10771,10 +10768,10 @@
 /turf/space,
 /area/asteroid/mine/production)
 "xx" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 5
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "xy" = (
@@ -11314,12 +11311,6 @@
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
-"zw" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/living_quarters)
 "zz" = (
 /obj/structure/ore_box,
 /obj/machinery/airlock_sensor{
@@ -11407,6 +11398,7 @@
 	},
 /area/asteroid/mine/explored)
 "zL" = (
+/obj/item/weapon/wrench,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "zN" = (
@@ -11495,23 +11487,23 @@
 /area/asteroid/mine/unexplored)
 "zY" = (
 /obj/structure/cable,
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
-	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "zZ" = (
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
@@ -11678,6 +11670,8 @@
 /area/asteroid/research_outpost/outpost_misc_lab)
 "At" = (
 /obj/machinery/door/airlock/external{
+	dock_tag = "mine_dock";
+	locked = 1;
 	name = "Mining Shuttle Airlock";
 	req_access = list(48)
 	},
@@ -11782,7 +11776,13 @@
 /area/asteroid/research_outpost/hallway)
 "AO" = (
 /obj/structure/table,
-/obj/item/weapon/stamp,
+/obj/item/weapon/stamp{
+	icon_state = "stamp-rd";
+	name = "research outpost rubber stamp";
+	stamp_border = "#7f4ba2";
+	stamp_color = "#9361b5";
+	stamp_message = "Research Outpost"
+	},
 /obj/item/weapon/pen,
 /turf/simulated/floor/wood,
 /area/asteroid/research_outpost/hallway)
@@ -12174,6 +12174,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/longtermstorage)
+"DT" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/living_quarters)
 "Eb" = (
 /turf/simulated/floor{
 	icon_state = "greencorner"
@@ -12282,6 +12288,9 @@
 	icon_state = "vault"
 	},
 /area/asteroid/research_outpost/iso1)
+"FB" = (
+/turf/space,
+/area/shuttle/mining/transit)
 "Gb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -12668,6 +12677,9 @@
 	id = "isolationsparker";
 	pixel_x = -23
 	},
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/iso2)
 "Nb" = (
@@ -12720,7 +12732,7 @@
 	},
 /area/asteroid/mine/production)
 "Ng" = (
-/obj/machinery/light/small,
+/obj/machinery/artifact_scanpad,
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/iso2)
 "Ob" = (
@@ -12920,11 +12932,19 @@
 	},
 /area/asteroid/mine/production)
 "Sb" = (
-/obj/machinery/artifact_scanpad,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/engine,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
 /area/asteroid/research_outpost/iso2)
 "Sc" = (
 /obj/machinery/alarm{
@@ -13106,6 +13126,15 @@
 /obj/machinery/light,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
+"VK" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/living_quarters)
 "Wb" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = 32
@@ -14853,11 +14882,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -15110,11 +15139,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -15367,11 +15396,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -15624,11 +15653,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -15881,11 +15910,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -16138,11 +16167,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -16395,11 +16424,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -16652,11 +16681,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -16909,11 +16938,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+FB
+FB
+FB
+FB
+FB
 aa
 aa
 aa
@@ -48954,9 +48983,9 @@ xq
 tp
 Sc
 uo
-zw
-zw
-zw
+wS
+VK
+DT
 uo
 yr
 lA
@@ -58094,7 +58123,7 @@ Sb
 Hg
 Mg
 pl
-ac
+lj
 qL
 ac
 qP
@@ -58349,9 +58378,9 @@ lq
 og
 Bg
 Ig
+Hg
 Ng
 lj
-ac
 qL
 Fc
 an
@@ -58608,7 +58637,7 @@ Cg
 Jg
 Og
 pl
-ac
+lj
 qM
 re
 pC
@@ -58865,7 +58894,7 @@ lj
 lj
 lj
 lj
-qP
+ac
 qN
 rf
 an
@@ -59616,7 +59645,7 @@ aE
 aE
 aE
 aE
-bK
+aE
 ee
 eI
 ee

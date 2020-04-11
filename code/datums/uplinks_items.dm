@@ -53,8 +53,6 @@
 		return new item(loc)
 
 /datum/uplink_item/proc/buy(obj/item/device/uplink/U, mob/user)
-
-	..()
 	if(!istype(U))
 		return 0
 
@@ -245,6 +243,12 @@
 	if(istype(T))
 		T.TC_cost = cost
 
+/datum/uplink_item/dangerous/light_armor
+	name = "Armor Set"
+	desc = "A set of personal armor that includes armored vest and a helmet, designed to ensure survival of gone wild agent."
+	item = /obj/item/weapon/storage/box/syndie_kit/light_armor
+	cost = 10
+	uplink_types = list("traitor")
 
 // AMMUNITION
 
@@ -265,8 +269,8 @@
 	cost = 2
 
 /datum/uplink_item/ammo/revolver
-	name = "Ammo-357"
-	desc = "A box that contains seven additional rounds for the revolver, made using an automatic lathe."
+	name = "Speedloader-.357"
+	desc = "A speedloader that contains seven additional rounds for the revolver, made using an automatic lathe."
 	item = /obj/item/ammo_box/a357
 	cost = 3
 

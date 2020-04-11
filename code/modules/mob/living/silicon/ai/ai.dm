@@ -13,6 +13,7 @@ var/list/ai_verbs_default = list(
 	/mob/living/silicon/ai/proc/pick_icon,
 	/mob/living/silicon/ai/proc/show_laws_verb,
 	/mob/living/silicon/ai/proc/toggle_acceleration,
+	/mob/living/silicon/ai/proc/toggle_retransmit,
 	/mob/living/silicon/ai/proc/change_floor,
 	/mob/living/silicon/ai/proc/ai_emergency_message
 )
@@ -53,6 +54,7 @@ var/list/ai_verbs_default = list(
 	var/obj/item/device/radio/headset/heads/ai_integrated/aiRadio = null
 	var/custom_sprite = 0 //For our custom sprites
 	var/next_emergency_message_time = 0
+	var/allow_auto_broadcast_messages = TRUE // For disabling retransmiting
 //Hud stuff
 
 	//MALFUNCTION
@@ -333,6 +335,22 @@ var/list/ai_verbs_default = list(
 	viewalerts = 1
 	src << browse(entity_ja(dat), "window=aialerts&can_close=0")
 
+/mob/living/silicon/ai/proc/can_retransmit_messages()
+	return (stat != DEAD && !control_disabled && aiRadio && !aiRadio.disabledAi && allow_auto_broadcast_messages)
+
+/mob/living/silicon/ai/proc/retransmit_message(message)
+	if (aiRadio)
+		aiRadio.talk_into(src, message)
+
+/mob/living/silicon/ai/proc/toggle_retransmit()
+	set category = "AI Commands"
+	set name = "Toggle Auto Messages"
+	if (allow_auto_broadcast_messages)
+		to_chat(usr, "Your core is <b>disconnected</b> from station information module.")
+	else
+		to_chat(usr, "Your core is <b>connected</b> to station information module.")
+	allow_auto_broadcast_messages = !allow_auto_broadcast_messages
+
 /mob/living/silicon/ai/var/message_cooldown = 0
 /mob/living/silicon/ai/proc/ai_announcement()
 
@@ -388,7 +406,6 @@ var/list/ai_verbs_default = list(
 		F.color = f_color
 
 	to_chat(usr, "Floor color was change to [f_color]")
-
 
 /mob/living/silicon/ai/proc/ai_emergency_message()
 	set category = "AI Commands"
@@ -563,7 +580,7 @@ var/list/ai_verbs_default = list(
 	updatehealth()
 	return 2
 
-/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/silicon/ai/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return

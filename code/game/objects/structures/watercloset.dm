@@ -287,6 +287,7 @@
 	density = 0
 	anchored = 1
 	use_power = NO_POWER_USE
+	layer = MOB_LAYER + 1.1
 	var/on = 0
 	var/obj/effect/mist/mymist = null
 	var/ismist = 0				//needs a var so we can make it linger~
@@ -357,8 +358,8 @@
 						var/transaction_amount = cost_per_activation
 						if(transaction_amount <= D.money)
 							//transfer the money
-							D.money -= transaction_amount
-							station_account.money += transaction_amount
+							D.adjust_money(-transaction_amount)
+							station_account.adjust_money(transaction_amount)
 
 							//create entries in the two account transaction logs
 							var/datum/transaction/T = new()

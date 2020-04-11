@@ -464,26 +464,26 @@
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	return
 
-/obj/mecha/hitby(atom/movable/A) //wrapper
+/obj/mecha/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //wrapper
 	..()
-	src.log_message("Hit by [A].",1)
-	call((proc_res["dynhitby"]||src), "dynhitby")(A)
+	src.log_message("Hit by [AM].",1)
+	call((proc_res["dynhitby"]||src), "dynhitby")(AM, throwingdatum)
 	return
 
-/obj/mecha/proc/dynhitby(atom/movable/A)
-	if(istype(A, /obj/item/mecha_parts/mecha_tracking))
-		A.forceMove(src)
-		src.visible_message("The [A] fastens firmly to [src].")
+/obj/mecha/proc/dynhitby(atom/movable/AM, datum/thrownthing/throwingdatum)
+	if(istype(AM, /obj/item/mecha_parts/mecha_tracking))
+		AM.forceMove(src)
+		src.visible_message("The [AM] fastens firmly to [src].")
 		return
-	if(prob(src.deflect_chance) || istype(A, /mob))
-		src.occupant_message("<span class='notice'>The [A] bounces off the armor.</span>")
-		src.visible_message("The [A] bounces off the [src.name] armor")
+	if(prob(src.deflect_chance) || ismob(AM))
+		src.occupant_message("<span class='notice'>The [AM] bounces off the armor.</span>")
+		src.visible_message("The [AM] bounces off the [src.name] armor")
 		src.log_append_to_last("Armor saved.")
-		if(istype(A, /mob/living))
-			var/mob/living/M = A
+		if(isliving(AM))
+			var/mob/living/M = AM
 			M.take_bodypart_damage(10)
-	else if(istype(A, /obj))
-		var/obj/O = A
+	else if(isobj(AM))
+		var/obj/O = AM
 		if(O.throwforce)
 			src.take_damage(O.throwforce)
 			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
@@ -1006,7 +1006,7 @@
 	return
 
 /obj/mecha/proc/moved_inside(mob/living/carbon/human/H)
-	if(H && H.client && H in range(1))
+	if(H && H.client && (H in range(1)))
 		H.reset_view(src)
 		H.forceMove(src)
 		if(H.hud_used)
@@ -1055,7 +1055,7 @@
 	return 0
 
 /obj/mecha/proc/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
-	if(mmi_as_oc && user in range(1))
+	if(mmi_as_oc && (user in range(1)))
 		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 			to_chat(user, "Consciousness matrix not detected.")
 			return 0

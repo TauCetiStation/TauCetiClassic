@@ -29,6 +29,7 @@
 				return
 
 		to_chat(M, "<span class='notice'>You swallow [src].</span>")
+		M.attack_log += text("\[[time_stamp()]\] <font color='red'>Swallow [src.name]. Reagents: [reagentlist(src)]</font>")
 		M.drop_from_inventory(src) //icon update
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, reagents.total_volume)
@@ -52,7 +53,7 @@
 		user.visible_message("<span class='warning'>[user] forces [M] to swallow [src].</span>")
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] to [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
 		msg_admin_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])", user)
 
 		if(reagents.total_volume)
