@@ -240,7 +240,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				src.isbroken=1
 			src.update_icon()
 			return
-	return
 
 /obj/machinery/newscaster/ui_interact(mob/user)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
 	if(isbroken)

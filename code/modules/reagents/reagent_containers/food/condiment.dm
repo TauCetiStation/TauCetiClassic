@@ -80,7 +80,6 @@
 
 		playsound(M,'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
-	return 0
 
 /obj/item/weapon/reagent_containers/food/condiment/afterattack(obj/target, mob/user , flag)
 	if(get_dist(src, target) > 1)

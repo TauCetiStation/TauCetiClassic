@@ -16,7 +16,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 /proc/playsound(atom/source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, extrarange = 0, falloff, channel, wait, ignore_environment = FALSE, voluminosity = TRUE)
 	if(isarea(source))
 		CRASH("[source] is an area and is trying to make the sound: [soundin]")
-		return
 
 	var/turf/turf_source = get_turf(source)
 	if(!turf_source) // In null space, no one can hear you scream.

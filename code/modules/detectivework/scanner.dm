@@ -142,7 +142,6 @@
 		"You hear a faint hum of electrical equipment, and someone making a thoughtful noise.")
 		flick("forensic2",src)
 		return 0
-	return
 
 /obj/item/device/detective_scanner/proc/add_data(atom/A)
 	//I love associative lists.
