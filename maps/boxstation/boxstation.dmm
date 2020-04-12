@@ -67,6 +67,9 @@
 /area/station/security/range)
 "aam" = (
 /obj/structure/target_stake,
+/obj/item/cardboard_cutout{
+	icon_state = "cutout_clown"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -126,7 +129,6 @@
 	},
 /obj/structure/table,
 /obj/machinery/recharger,
-/obj/item/weapon/paper/firing_range,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -178,9 +180,9 @@
 	icon_state = "1-2"
 	},
 /obj/structure/closet/crate,
-/obj/item/target,
-/obj/item/target,
-/obj/item/target,
+/obj/item/cardboard_cutout,
+/obj/item/cardboard_cutout,
+/obj/item/weapon/storage/fancy/crayons,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
