@@ -81,6 +81,7 @@
 		)
 
 /obj/item/weapon/storage/briefcase/surgery/atom_init()
+	. = ..()
 	use_sound = "sound/items/surgery_tray.ogg"
 
 /obj/item/weapon/storage/briefcase/surgery/full
