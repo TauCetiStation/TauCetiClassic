@@ -307,7 +307,7 @@
 		handled = 1
 
 	if((HULK in mutations) && health >= 25 && length(message) && !HAS_TRAIT(src, TRAIT_STRONGMIND))
-		message = "[uppertext_(message)]!!!"
+		message = "[uppertext(message)]!!!"
 		verb = pick("yells","roars","hollers")
 		handled = 1
 	if(slurring)
@@ -326,7 +326,7 @@
 			message = stutter(message)
 			verb = pick("stammers", "stutters")
 		if(prob(braindam))
-			message = uppertext_(message)
+			message = uppertext(message)
 			verb = pick("yells like an idiot","says rather loudly")
 
 	returns[1] = message

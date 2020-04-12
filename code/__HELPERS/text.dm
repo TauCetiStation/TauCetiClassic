@@ -261,7 +261,7 @@ var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8
 
 //Returns a string with the first element of the string capitalized.
 /proc/capitalize(t)
-	return uppertext_(copytext(t, 1, 2)) + copytext(t, 2)
+	return uppertext(copytext(t, 1, 2)) + copytext(t, 2)
 
 //This proc strips html properly, remove < > and all text between
 //for complete text sanitizing should be used sanitize()
@@ -403,50 +403,3 @@ var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8
 	t = replacetext(t, "\[time\]", "[worldtime2text()]")
 
 	return t
-
-/*
- * Byond
- * (remove this when byond lern unicode)
- */
-
-/proc/lowertext_(var/text)
-	var/lenght = length(text)
-	var/new_text = null
-	var/lcase_letter
-	var/letter_ascii
-
-	var/p = 1
-	while(p <= lenght)
-		lcase_letter = copytext(text, p, p + 1)
-		letter_ascii = text2ascii(lcase_letter)
-
-		if((letter_ascii >= 65 && letter_ascii <= 90) || (letter_ascii >= 192 && letter_ascii < 223))
-			lcase_letter = ascii2text(letter_ascii + 32)
-		else if(letter_ascii == 223)
-			lcase_letter = JA_PLACEHOLDER
-
-		new_text += lcase_letter
-		p++
-
-	return new_text
-
-/proc/uppertext_(var/text)
-	var/lenght = length(text)
-	var/new_text = null
-	var/ucase_letter
-	var/letter_ascii
-
-	var/p = 1
-	while(p <= lenght)
-		ucase_letter = copytext(text, p, p + 1)
-		letter_ascii = text2ascii(ucase_letter)
-
-		if((letter_ascii >= 97 && letter_ascii <= 122) || (letter_ascii >= 224 && letter_ascii < 255))
-			ucase_letter = ascii2text(letter_ascii - 32)
-		else if(letter_ascii == JA_PLACEHOLDER_CODE)
-			ucase_letter = JA_UPPERCHARACTER
-
-		new_text += ucase_letter
-		p++
-
-	return new_text

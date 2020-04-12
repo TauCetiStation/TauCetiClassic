@@ -196,12 +196,12 @@
 			if(lowertext(newletter)=="s")	newletter="ch"
 			if(lowertext(newletter)=="a")	newletter="ah"
 			if(lowertext(newletter)=="c")	newletter="k"
-			if(lowertext_(newletter)=="ч")	newletter="щ" //247 -> 249
-			if(lowertext_(newletter)=="е")	newletter="и" //229 -> 232
-			if(lowertext_(newletter)=="з")	newletter="с" //231 -> 241
+			if(lowertext(newletter)=="ч")	newletter="щ" //247 -> 249
+			if(lowertext(newletter)=="е")	newletter="и" //229 -> 232
+			if(lowertext(newletter)=="з")	newletter="с" //231 -> 241
 		switch(rand(1,15))
-			if(1,3,5,8)	newletter="[lowertext_(newletter)]"
-			if(2,4,6,15)	newletter="[uppertext_(newletter)]"
+			if(1,3,5,8)	newletter="[lowertext(newletter)]"
+			if(2,4,6,15)	newletter="[uppertext(newletter)]"
 			if(7)	newletter+="'"
 		newphrase+="[newletter]";counter-=1
 	return newphrase
@@ -222,7 +222,7 @@
 	p = 1//1 is the start of any word
 	while(p <= n)//while P, which starts at 1 is less or equal to N which is the length.
 		var/n_letter = copytext(te, p, p + 1)//copies text from a certain distance. In this case, only one letter at a time.
-		if (prob(80) && (text2ascii(lowertext_(n_letter)) in alphabet))
+		if (prob(80) && (text2ascii(lowertext(n_letter)) in alphabet))
 			if (prob(10))
 				n_letter = text("[n_letter]-[n_letter]-[n_letter]-[n_letter]")//replaces the current letter with this instead.
 			else
