@@ -48,3 +48,38 @@
 /obj/item/weapon/storage/briefcase/centcomm
 	icon_state = "briefcase-centcomm"
 	item_state = "briefcase-centcomm"
+
+
+/obj/item/weapon/storage/briefcase/surgery
+	name = "surgeon tray"
+	icon_state = "case-surgery"
+	item_state = "case-surgery"
+	use_sound = "sound/items/surgery_tray.ogg"
+	max_storage_space = 18
+	max_w_class = 18
+	can_hold = list(
+		/obj/item/device/healthanalyzer,
+		/obj/item/weapon/reagent_containers/glass/beaker,
+		/obj/item/weapon/reagent_containers/glass/bottle,
+		/obj/item/weapon/reagent_containers/pill,
+		/obj/item/weapon/reagent_containers/syringe,
+		/obj/item/weapon/storage/pill_bottle,
+		/obj/item/stack/medical,
+		/obj/item/device/flashlight/pen,
+		/obj/item/clothing/mask/surgical,
+		/obj/item/clothing/gloves/latex,
+		/obj/item/weapon/reagent_containers/hypospray,
+		/obj/item/weapon/retractor,
+		/obj/item/weapon/hemostat,
+		/obj/item/weapon/cautery,
+		/obj/item/weapon/surgicaldrill,
+		/obj/item/weapon/scalpel,
+		/obj/item/weapon/circular_saw,
+		/obj/item/weapon/bonegel,
+		/obj/item/weapon/FixOVein,
+		/obj/item/weapon/bonesetter
+		)
+
+	/obj/item/weapon/storage/briefcase/surgery/attackby(obj/item/weapon/W, mob/user)
+	if (length(use_sound))
+		playsound(src, , VOL_EFFECTS_MASTER, null, null, -5)
