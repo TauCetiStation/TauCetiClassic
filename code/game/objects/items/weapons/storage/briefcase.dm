@@ -54,6 +54,7 @@
 	name = "surgeon tray"
 	icon_state = "case-surgery"
 	item_state = "case-surgery"
+	desc = "This is a surgical tray made of stainless steel, the label on the lid reads: <Made by Vey Med Corp. 2189 year>."
 	max_storage_space = 18
 	max_w_class = ITEM_SIZE_NORMAL
 	can_hold = list(
@@ -80,10 +81,18 @@
 		)
 
 /obj/item/weapon/storage/briefcase/surgery/atom_init()
-	. = ..()
 	use_sound = "sound/items/surgery_tray.ogg"
 
-/obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user)
-	if (length(use_sound))
-		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
-	return ..()
+/obj/item/weapon/storage/briefcase/surgery/full
+
+/obj/item/weapon/storage/briefcase/surgery/full/atom_init()
+	. = ..()
+	new /obj/item/weapon/scalpel(src)
+	new /obj/item/weapon/hemostat(src)
+	new /obj/item/weapon/retractor(src)
+	new /obj/item/weapon/circular_saw(src)
+	new /obj/item/weapon/surgicaldrill(src)
+	new /obj/item/weapon/cautery(src)
+	new /obj/item/weapon/bonesetter(src)
+	new /obj/item/weapon/bonegel(src)
+	new /obj/item/weapon/FixOVein(src)
