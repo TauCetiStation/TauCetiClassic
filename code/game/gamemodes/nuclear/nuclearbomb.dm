@@ -178,7 +178,7 @@ var/bomb_set
 		if((!current_location || is_centcom_level(current_location.z)) && user.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
 			to_chat(user, "<span class = 'red'>It's not the best idea to plant a bomb on your own base.</span>")
 			return
-		if (istype(get_area(src), /area/space)) // If outside of station
+		if (!istype(get_area(src), /area/station)) // If outside of station
 			to_chat(user, "<span class = 'red'>Bomb cannot be deployed here.</span>")
 			return
 	if (deployable)
