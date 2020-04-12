@@ -54,9 +54,8 @@
 	name = "surgeon tray"
 	icon_state = "case-surgery"
 	item_state = "case-surgery"
-	use_sound = "sound/items/surgery_tray.ogg"
 	max_storage_space = 18
-	max_w_class = 18
+	max_w_class = ITEM_SIZE_NORMAL
 	can_hold = list(
 		/obj/item/device/healthanalyzer,
 		/obj/item/weapon/reagent_containers/glass/beaker,
@@ -80,6 +79,11 @@
 		/obj/item/weapon/bonesetter
 		)
 
-	/obj/item/weapon/storage/briefcase/surgery/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/storage/briefcase/surgery/atom_init()
+	. = ..()
+	use_sound = "sound/items/surgery_tray.ogg"
+
+/obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user)
 	if (length(use_sound))
-		playsound(src, , VOL_EFFECTS_MASTER, null, null, -5)
+		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
+	return ..()
