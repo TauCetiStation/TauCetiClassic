@@ -211,22 +211,6 @@ function output(message, flag) {
 	var scrollPos = $('body,html').scrollTop();
 	var compensateScroll = 0;
 
-	//fix cyrillic characters displaying for most non-CP1251 clients (breaks some other things, but for russian server not so important)
-	var message2 = "";
-	for (var i = 0; i < message.length; i++) {
-		var code = message.charCodeAt(i);
-		if( code >= 192 && code <= 255 ) {
-			message2 += String.fromCharCode(code + 848);
-			continue;
-		}
-		message2 += message.charAt(i);
-	}
-
-	message = message2
-
-	//also replace for 0xFF char
-	message = message.replace(/¶/g, "я");
-
 	// Create the element - if combining is off, we use it, and if it's on, we
 	// might discard it bug need to check its text content. Some messages vary
 	// only in HTML markup, have the same text content, and should combine.
