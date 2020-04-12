@@ -56,7 +56,7 @@
 	var/book = "<HEAD><TITLE>[title], [author]</TITLE></HEAD><BODY>\n"
 	book += content
 
-	usr << browse(entity_ja(content), "window=content")
+	usr << browse(content, "window=content")
 
 /datum/admins/proc/library_recycle_bin()
 	set category = "Admin"
@@ -90,5 +90,5 @@
 	catalog += "</table>"
 
 
-	usr << browse(entity_ja(catalog), "window=librecyclebin;size=500x500")
+	usr << browse(catalog, "window=librecyclebin;size=500x500")
 	onclose(usr, "librecyclebin")

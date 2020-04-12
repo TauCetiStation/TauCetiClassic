@@ -114,7 +114,7 @@ var/datum/report_topic_handler/report_topic_handler
 	else
 		output += "Whoops, no reports!"
 
-	usr << browse(entity_ja(output), "window=news;size=600x400")
+	usr << browse(output, "window=news;size=600x400")
 
 
 /client/proc/Report(mob/M as mob in not_world)

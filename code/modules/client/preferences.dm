@@ -203,7 +203,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	dat += "</body></html>"
 
 	winshow(user, "preferences_window", TRUE)
-	user << browse(entity_ja(dat), "window=preferences_browser")
+	user << browse(dat, "window=preferences_browser")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)

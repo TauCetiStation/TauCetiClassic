@@ -249,7 +249,7 @@
 				dat+="<FONT COLOR='maroon'>•Invalid details text.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];setScreen=[MAIN_SCREEN]'>Return</A><BR>"
 
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
+	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
 
 //Function for using door_timer dialog input, checks if user has permission

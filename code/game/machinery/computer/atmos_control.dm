@@ -37,7 +37,7 @@
 				if (2)
 					dat += "<font color=red>[alarm]</font>"
 			dat += "</a><br/>"
-	user << browse(entity_ja(dat), "window=atmoscontrol")
+	user << browse(dat, "window=atmoscontrol")
 
 /obj/machinery/computer/atmoscontrol/emag_act(mob/user)
 	if(emagged)

@@ -253,7 +253,7 @@
 	setup_menu += "<b><a href='?src=\ref[src];load=1'>Load data from the multitool</a></b><br>"
 	setup_menu += "<b><a href='?src=\ref[src];copy=1'>Copy data to the multitool</a></b><br>"
 	setup_menu += "<b><a href='?src=\ref[src];clear=1'>Clear data</a></b><br>"
-	user << browse("<head><title>[src]</title></head><tt>[entity_ja(setup_menu)]</tt>", "window=door_control")
+	user << browse("<head><title>[src]</title></head><tt>[setup_menu]</tt>", "window=door_control")
 	onclose(user, "door_control")
 
 /obj/machinery/door_control/Topic(href, href_list)

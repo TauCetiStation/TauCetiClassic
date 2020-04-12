@@ -299,7 +299,7 @@
 
 
 	user.set_machine(src)
-	user << browse(entity_ja(dat), "window=disposal;size=360x170")
+	user << browse(dat, "window=disposal;size=360x170")
 	onclose(user, "disposal")
 
 // handle machine interaction

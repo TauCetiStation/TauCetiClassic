@@ -214,7 +214,7 @@ var/req_console_information = list()
 				else
 					dat += text("Speaker <A href='?src=\ref[src];setSilent=1'>ON</A>")
 
-		user << browse("[entity_ja(dat)]", "window=request_console")
+		user << browse("[dat]", "window=request_console")
 		onclose(user, "req_console")
 
 /obj/machinery/requests_console/Topic(href, href_list)

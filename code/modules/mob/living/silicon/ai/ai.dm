@@ -333,7 +333,7 @@ var/list/ai_verbs_default = list(
 		dat += "<BR>\n"
 
 	viewalerts = 1
-	src << browse(entity_ja(dat), "window=aialerts&can_close=0")
+	src << browse(dat, "window=aialerts&can_close=0")
 
 /mob/living/silicon/ai/proc/can_retransmit_messages()
 	return (stat != DEAD && !control_disabled && aiRadio && !aiRadio.disabledAi && allow_auto_broadcast_messages)

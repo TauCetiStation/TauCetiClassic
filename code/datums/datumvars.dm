@@ -346,7 +346,7 @@ body
 
 	html += "</body></html>"
 
-	usr << browse(entity_ja(html), "window=variables\ref[D];size=475x650")
+	usr << browse(html, "window=variables\ref[D];size=475x650")
 
 	return
 

@@ -271,7 +271,7 @@ var/list/cult_datums = list()
 	[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
 	[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 	"}
-	usr << browse("[entity_ja(notedat)]", "window=notes")
+	usr << browse(notedat, "window=notes")
 
 /obj/item/weapon/book/tome/attack(mob/living/M, mob/living/user)
 
@@ -329,7 +329,7 @@ var/list/cult_datums = list()
 		if("Read it")
 			if(usr.get_active_hand() != src)
 				return
-			user << browse("[entity_ja(tomedat)]", "window=Arcane Tome")
+			user << browse(tomedat, "window=Arcane Tome")
 			return
 		if("Notes")
 			if(usr.get_active_hand() != src)
@@ -347,7 +347,7 @@ var/list/cult_datums = list()
 			[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
 			[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 			"}
-			user << browse("[entity_ja(notedat)]", "window=notes")
+			user << browse(notedat, "window=notes")
 			return
 	if(usr.get_active_hand() != src)
 		return

@@ -183,7 +183,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		</body></html>
 	"}
 
-	usr << browse(entity_ja(body), "window=adminplayeropts;size=550x515")
+	usr << browse(body, "window=adminplayeropts;size=550x515")
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -271,7 +271,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			if(index == page)
 				dat += "</b>"
 
-	usr << browse(entity_ja(dat), "window=player_notes;size=400x400")
+	usr << browse(dat, "window=player_notes;size=400x400")
 #undef PLAYER_NOTES_ENTRIES_PER_PAGE
 
 /datum/admins/proc/player_has_info(key)
@@ -320,7 +320,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	dat += "<br>"
 	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>"
 	dat += "</body></html>"
-	usr << browse(entity_ja(dat), "window=adminplayerinfo;size=480x480")
+	usr << browse(dat, "window=adminplayerinfo;size=480x480")
 
 /datum/admins/proc/generalized_players_info(list/file_notes, list/db_notes)
 	var/list/datum/player_info/merged = list()
@@ -714,7 +714,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 
 	//world << "Channelname: [src.admincaster_feed_channel.channel_name] [src.admincaster_feed_channel.author]"
 	//world << "Msg: [src.admincaster_feed_message.author] [src.admincaster_feed_message.body]"
-	usr << browse(entity_ja(dat), "window=admincaster_main;size=400x600")
+	usr << browse(dat, "window=admincaster_main;size=400x600")
 	onclose(usr, "admincaster_main")
 
 /datum/admins/proc/Game()
@@ -738,7 +738,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		<A href='?src=\ref[src];vsc=default'>Choose a default ZAS setting</A><br>
 		"}
 
-	usr << browse(entity_ja(dat), "window=admin2;size=210x280")
+	usr << browse(dat, "window=admin2;size=210x280")
 	return
 
 /datum/admins/proc/Secrets()
@@ -857,7 +857,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			<BR>
 			"}
 
-	usr << browse(entity_ja(dat), "window=secrets")
+	usr << browse(dat, "window=secrets")
 	return
 
 

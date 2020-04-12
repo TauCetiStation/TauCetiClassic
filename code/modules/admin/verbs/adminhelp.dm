@@ -436,7 +436,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	popup.open()
 
 //takes msg which was sanitized with sanitize() proc, returns correct text for stat display.
-/datum/admin_help/proc/sanitize_stat(msg)
+/datum/admin_help/proc/sanitize_stat(msg)//todo: 513
 	msg = replacetext(msg, JA_PLACEHOLDER, JA_CHARACTER)
 	var/string = ""
 	for (var/i in 1 to length(msg))

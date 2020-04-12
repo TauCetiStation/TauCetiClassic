@@ -77,7 +77,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	dat += src.generate_menu()
 	dat += "<A href='byond://?src=\ref[src];lock=1'>Lock</a>"
 	dat += "</font></body>"
-	user << browse(entity_ja(dat), "window=hidden")
+	user << browse(dat, "window=hidden")
 	onclose(user, "hidden")
 	return
 

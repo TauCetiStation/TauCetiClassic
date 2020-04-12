@@ -505,7 +505,7 @@
 		dat += "       <A href='?src=\ref[src];clear=1'>\[Clear Memory\]</A><BR>"
 	else
 		dat += "<BR>"
-	user << browse(entity_ja(dat), "window=scanner")
+	user << browse(dat, "window=scanner")
 	onclose(user, "scanner")
 
 /obj/machinery/libraryscanner/Topic(href, href_list)

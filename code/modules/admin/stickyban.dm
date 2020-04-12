@@ -286,7 +286,7 @@
 	var/content = html_bans_data.Join("<hr/>")
 	var/datum/browser/browser = new(owner.mob, "stickybans", title, 700, 400)
 	browser.add_head_content(header)
-	browser.set_content(entity_ja(content))
+	browser.set_content(content)
 	browser.open()
 
 /client/proc/stickybanpanel()

@@ -124,7 +124,7 @@ var/list/editing_item_oldname_list = list()
 		dat += " <a class='small' href='?_src_=prefs;preference=fluff;download=1'>Download icon</a>"
 
 	dat += "</body></html>"
-	user << browse(entity_ja(dat), "window=edit_custom_item;size=400x600;can_minimize=0;can_maximize=0;can_resize=0")
+	user << browse(dat, "window=edit_custom_item;size=400x600;can_minimize=0;can_maximize=0;can_resize=0")
 
 /datum/preferences/proc/process_link_fluff(mob/user, list/href_list)
 	var/datum/custom_item/editing_item = editing_item_list[user.client.ckey]
@@ -381,7 +381,7 @@ var/list/editing_item_oldname_list = list()
 </body>
 </html>"}
 
-	usr << browse(entity_ja(output),"window=customitems;size=600x500")
+	usr << browse(output,"window=customitems;size=600x500")
 
 /datum/admins/proc/customs_items_add(target_ckey = null)
 	if(!check_rights(R_PERMISSIONS))
@@ -448,7 +448,7 @@ var/list/editing_item_oldname_list = list()
 </body>
 </html>"}
 
-	usr << browse(entity_ja(output),"window=customitems_history;size=600x500")
+	usr << browse(output,"window=customitems_history;size=600x500")
 
 /datum/admins/proc/customs_items_remove(target_ckey, index)
 	if(!check_rights(R_PERMISSIONS))

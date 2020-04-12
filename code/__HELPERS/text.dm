@@ -29,8 +29,6 @@
 	if(max_length)
 		input = copytext(input,1,max_length)
 
-	input = replacetext(input, JA_CHARACTER, JA_PLACEHOLDER)
-
 	if(extra)
 		input = replace_characters(input, list("\n"=" ","\t"=" "))
 
@@ -68,7 +66,7 @@
 
 	for(var/i=1, i<=length(input), i++)
 		var/ascii_char = text2ascii(input,i)
-		switch(ascii_char)
+		switch(ascii_char) //todo: 513
 			// A  .. Z
 			if(65 to 90)			//Uppercase Letters
 				output += ascii2text(ascii_char)
@@ -154,18 +152,18 @@
 			else			non_whitespace = 1
 	if(non_whitespace)		return text		//only accepts the text if it has some non-spaces
 
-
+//todo: 513
 //reset to placeholder for inputs, logs
 /proc/reset_ja(text)
 	return replace_characters(text, list(JA_ENTITY=JA_PLACEHOLDER, JA_ENTITY_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
 
 //replace ja with entity for chat/popup
-/proc/entity_ja(text)
-	return replace_characters(text, list(JA_PLACEHOLDER=JA_ENTITY, JA_ENTITY_ASCII=JA_ENTITY))
+/*/proc/entity_ja(text)
+	return replace_characters(text, list(JA_PLACEHOLDER=JA_ENTITY, JA_ENTITY_ASCII=JA_ENTITY))*/
 
 //Reset ja to cp1251. Only needed for loading screen ban messages.
-/proc/initial_ja(text)
-	return replace_characters(text, list(JA_ENTITY=JA_CHARACTER, JA_ENTITY_ASCII=JA_CHARACTER, JA_PLACEHOLDER=JA_CHARACTER))
+/*/proc/initial_ja(text)
+	return replace_characters(text, list(JA_ENTITY=JA_CHARACTER, JA_ENTITY_ASCII=JA_CHARACTER, JA_PLACEHOLDER=JA_CHARACTER))*/
 
 
 /proc/input_default(text)

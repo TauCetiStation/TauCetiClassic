@@ -239,8 +239,6 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 		message = replacetext(message, "\n", "<br>")
 		message = replacetext(message, "\t", ENTITY_TAB)
 
-	//message = entity_ja(message)//moved to js
-
 	if(islist(target))
 		var/encoded = url_encode(message)
 		for(var/I in target)

@@ -35,7 +35,7 @@
 		else
 			dat += "-- All Systems Nominal<BR>\n"
 		dat += "<BR>\n"
-	user << browse(entity_ja(dat), "window=alerts")
+	user << browse(dat, "window=alerts")
 	onclose(user, "alerts")
 
 /obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, alarmsource)

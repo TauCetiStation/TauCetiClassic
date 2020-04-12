@@ -41,7 +41,7 @@
 		dat += {"<A href='byond://?src=\ref[src];choice=Summon'>Summon Shade</A>"}
 		dat += "<br>"
 		dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
-	user << browse(entity_ja(dat), "window=aicard")
+	user << browse(dat, "window=aicard")
 	onclose(user, "aicard")
 	return
 

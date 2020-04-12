@@ -40,7 +40,7 @@
 	if(src.occupant)
 		dat += "[src.ready ? "<A href='?src=\ref[src];implant=1'>Implant</A>" : "Recharging"]<BR>"
 	user.set_machine(src)
-	user << browse(entity_ja(dat), "window=implant")
+	user << browse(dat, "window=implant")
 	onclose(user, "implant")
 
 

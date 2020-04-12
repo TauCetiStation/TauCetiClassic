@@ -215,7 +215,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 	<body>
 	"}
 
-	M << browse(entity_ja(dat), "window=paiRecruit;size=580x580;")
+	M << browse(dat, "window=paiRecruit;size=580x580;")
 
 /datum/paiController/proc/findPAI(obj/item/device/paicard/p, mob/user)
 	requestRecruits()
@@ -331,7 +331,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		</html>
 	"}
 
-	user << browse(entity_ja(dat), "window=findPai")
+	user << browse(dat, "window=findPai")
 
 /datum/paiController/proc/requestRecruits()
 	for(var/mob/dead/observer/O in player_list)

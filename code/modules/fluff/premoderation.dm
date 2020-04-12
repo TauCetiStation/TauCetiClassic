@@ -123,4 +123,4 @@
 </body>
 </html>"}
 
-	usr << browse(entity_ja(output),"window=customitems_moderation;size=600x500")
+	usr << browse(output,"window=customitems_moderation;size=600x500")

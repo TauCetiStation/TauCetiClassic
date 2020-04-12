@@ -78,7 +78,7 @@
 			<i>[zone]</i>
 		</body>
 	</html>"}
-	user << browse("[entity_ja(dat)]", "window=miningshuttle;size=400x400")
+	user << browse("[dat]", "window=miningshuttle;size=400x400")
 	status = ""
 
 /obj/machinery/computer/area_atmos/Topic(href, href_list)

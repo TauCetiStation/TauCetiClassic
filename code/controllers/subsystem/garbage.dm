@@ -458,5 +458,5 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	for(var/path in tmplist)
 		dat += "[path] - [tmplist[path]] times<BR>"
 
-	usr << browse(entity_ja(dat), "window=qdeletedlog")
+	usr << browse(dat, "window=qdeletedlog")
 #endif

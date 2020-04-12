@@ -233,5 +233,5 @@
 			dat += "(:[l_key])"
 		dat += " </b><br/>[L.desc]<br/><br/>"
 
-	src << browse(entity_ja(dat), "window=checklanguage")
+	src << browse(dat, "window=checklanguage")
 	return
