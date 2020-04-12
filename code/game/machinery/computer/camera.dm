@@ -55,7 +55,7 @@
 				data["current"] = cam
 
 		var/list/camera_list = list("cameras" = cameras)
-		camera_cache = replacetext(list2json(camera_list), "'", "`")
+		camera_cache = replacetext(json_encode(camera_list), "'", "`")
 	else
 		if(current)
 			data["current"] = current.nano_structure()

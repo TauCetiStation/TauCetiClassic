@@ -249,7 +249,7 @@
 
 	var/stat_file = file("[global.log_directory]/stat.json")
 
-	stat_file << list2json(stats)
+	stat_file << json_encode(stats)
 
 /proc/add_communication_log(type = 0, title = 0, author = 0, content = 0, time = roundduration2text())
 	centcomm_communications += list(list("type" = type, "title" = title, "time" = time, "content" = content))
