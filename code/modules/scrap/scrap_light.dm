@@ -273,7 +273,7 @@
 		current_location.assume_gas("carbon_dioxide", 0.4, (current_location.air.temperature + 200))
 	current_location.hotspot_expose(1000, 500)
 	if ((world.time - last_time_smoke) > 100 && current_location.return_air().gas["carbon_dioxide"]) //It's time to make some smoke
-		if (current_location.return_air().gas["carbon_dioxide"] > 5)
+		if (current_location.air.gas["carbon_dioxide"] > 5)
 			MakeSmoke()
 	return ..()
 
