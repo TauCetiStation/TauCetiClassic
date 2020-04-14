@@ -169,6 +169,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	send_asset_list(client,assets,verify)
 
 /datum/asset/simple/goonchat
+	_abstract = /datum/asset/simple/goonchat
 	assets = list(
 		"jquery.min.js" = 'code/modules/goonchat/browserassets/js/jquery.min.js',
 		"jquery.mark.min.js" = 'code/modules/goonchat/browserassets/js/jquery.mark.min.js',
