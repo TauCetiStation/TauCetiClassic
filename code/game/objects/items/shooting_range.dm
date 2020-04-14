@@ -80,7 +80,6 @@
 	desc = "A shooting target with a threatening silhouette."
 	hp = 2350 // alium onest too kinda
 
-/obj/item/target/bullet_act(obj/item/projectile/Proj)
 	var/p_x = Proj.p_x + pick(0,0,0,0,0,-1,1) // really ugly way of coding "sometimes offset Proj.p_x!"
 	var/p_y = Proj.p_y + pick(0,0,0,0,0,-1,1)
 	var/decaltype = 1 // 1 - scorch, 2 - bullet
@@ -180,3 +179,4 @@
 	b2y2 = pixel_y - pick(1,1,1,1,2,2,3,3,4)
 
 	Target.bulletholes.Add(src)
+*/
