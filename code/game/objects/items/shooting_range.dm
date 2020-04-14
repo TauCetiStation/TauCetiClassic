@@ -6,9 +6,10 @@
 	icon_state = "target_h"
 	density = 0
 	var/hp = 1800
+/*
 	var/icon/virtualIcon
 	var/list/bulletholes = list()
-
+*/
 /obj/item/target/Destroy()
 	// if a target is deleted and associated with a stake, force stake to forget
 	for(var/obj/structure/target_stake/T in view(3,src))
@@ -79,7 +80,7 @@
 	icon_state = "target_q"
 	desc = "A shooting target with a threatening silhouette."
 	hp = 2350 // alium onest too kinda
-
+/*
 	var/p_x = Proj.p_x + pick(0,0,0,0,0,-1,1) // really ugly way of coding "sometimes offset Proj.p_x!"
 	var/p_y = Proj.p_y + pick(0,0,0,0,0,-1,1)
 	var/decaltype = 1 // 1 - scorch, 2 - bullet
