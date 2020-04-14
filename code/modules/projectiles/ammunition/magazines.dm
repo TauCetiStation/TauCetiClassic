@@ -1,10 +1,34 @@
 ////////////////INTERNAL MAGAZINES//////////////////////
-/obj/item/ammo_box/magazine/internal/cylinder
-	name = "revolver cylinder"
+/obj/item/ammo_box/magazine/internal
+	name = "internal magazine"
 	desc = "Oh god, this shouldn't be here!"
 	ammo_type = /obj/item/ammo_casing/a357
 	caliber = "357"
 	max_ammo = 7
+	eject_casing = FALSE
+	empty_chamber = TRUE
+	no_casing = FALSE
+	isinternal = TRUE
+	var/open = FALSE
+
+/obj/item/ammo_box/magazine/internal/eject_ammos(mob/user, var/obj/item/weapon/gun_modular/module/magazine/bullet/magazine_holder)
+	var/num_unloaded = 0
+	while (ammo_count() > 0)
+		var/obj/item/ammo_casing/CB
+		CB = get_round(0)
+		CB.loc = get_turf(src.loc)
+		CB.SpinAnimation(10, 1)
+		CB.update_icon()
+		num_unloaded++
+	if (num_unloaded)
+		to_chat(user, "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>")
+	else
+		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+	update_icon()
+	return TRUE
+
+/obj/item/ammo_box/magazine/internal/cylinder
+	name = "revolver cylinder"
 
 /obj/item/ammo_box/magazine/internal/cylinder/ammo_count(countempties = 1)
 	if (!countempties)
@@ -51,6 +75,9 @@
 	caliber = "14.5mm"
 	max_ammo = 1
 	multiload = 0
+	eject_casing = FALSE
+	empty_chamber = TRUE
+	no_casing = FALSE
 
 /obj/item/ammo_box/magazine/internal/m79
 	name = "m79 grenade launcher internal magazine"
@@ -59,6 +86,9 @@
 	caliber = "40x46"
 	max_ammo = 1
 	multiload = 0
+	eject_casing = FALSE
+	empty_chamber = TRUE
+	no_casing = FALSE
 
 /obj/item/ammo_box/magazine/internal/shotcom
 	name = "combat shotgun internal magazine"

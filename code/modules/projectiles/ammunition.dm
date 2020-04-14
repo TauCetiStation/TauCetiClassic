@@ -74,6 +74,10 @@
 	var/multiple_sprites = 0
 	var/caliber
 	var/multiload = 1
+	var/isinternal = FALSE
+	var/eject_casing = TRUE
+	var/empty_chamber = TRUE
+	var/no_casing = FALSE
 
 /obj/item/ammo_box/atom_init()
 	. = ..()
@@ -91,14 +95,16 @@
 			stored_ammo.Insert(1,b)
 		return b
 
-/obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/r)
+/obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/r, mob/user = null)
 	var/obj/item/ammo_casing/rb = r
 	if (rb)
 		if (stored_ammo.len < max_ammo && rb.caliber == caliber)
 			stored_ammo += rb
+			if(user)
+				user.drop_item()
 			rb.loc = src
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/ammo_box/attackby(obj/item/A, mob/user, silent = 0)
 	var/num_loaded = 0
@@ -144,3 +150,12 @@
 //Behavior for magazines
 /obj/item/ammo_box/magazine/proc/ammo_count()
 	return stored_ammo.len
+
+/obj/item/ammo_box/magazine/proc/eject_ammos(mob/user, var/obj/item/weapon/gun_modular/module/magazine/bullet/magazine_holder)
+	src.loc = get_turf(src.loc)
+	user.put_in_hands(src)
+	magazine_holder.magazine = null
+	update_icon()
+	playsound(user, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
+	to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
+	return TRUE
