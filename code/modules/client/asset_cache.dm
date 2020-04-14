@@ -213,6 +213,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	)
 
 /datum/asset/simple/newscaster
+	_abstract = /datum/asset/simple/newscaster
 	assets = list(
 		"like.png" = 'icons/newscaster_icons/like.png',
 		"like_clck.png" = 'icons/newscaster_icons/like_clck.png',

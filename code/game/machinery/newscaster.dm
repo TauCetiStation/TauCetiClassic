@@ -544,7 +544,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<A href='?src=\ref[src];setScreen=[10]'>Return</A>"
 			else
 				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com | If (break (likes/dislikes) or (system of commenting)) then report this bug in tauceti github "
-
+		
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/newscaster)		//Sending pictures to the client
+		assets.register()
+		assets.send(human_or_robot_user)
 
 		human_or_robot_user << browse(entity_ja(dat), "window=newscaster_main;size=400x600")
 		onclose(human_or_robot_user, "newscaster_main")
