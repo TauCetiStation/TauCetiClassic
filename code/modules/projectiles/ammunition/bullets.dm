@@ -55,6 +55,7 @@
 	caliber = "shotgun"
 	projectile_type = "/obj/item/projectile/bullet"
 	m_amt = 12500
+	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
 
 /obj/item/ammo_casing/shotgun/buckshot
 	name = "shotgun shell"
@@ -101,6 +102,7 @@
 	icon_state = "lcasing"
 	caliber = "14.5mm"
 	projectile_type = /obj/item/projectile/bullet/heavy/a145
+	fire_sound = 'sound/weapons/guns/gunshot_cannon.ogg'
 
 
 /obj/item/ammo_casing/r4046

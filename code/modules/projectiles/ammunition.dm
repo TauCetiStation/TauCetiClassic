@@ -8,6 +8,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 1
 	w_class = ITEM_SIZE_TINY
+	var/fire_sound = 'sound/weapons/guns/Gunshot.ogg'
 	var/caliber = null							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
 	var/obj/item/projectile/BB = null 			//The loaded bullet
@@ -102,6 +103,7 @@
 			stored_ammo += rb
 			if(user)
 				user.drop_item()
+				to_chat(user, "<span class='notice'>You load shell into [src]!</span>")
 			rb.loc = src
 			return TRUE
 	return FALSE

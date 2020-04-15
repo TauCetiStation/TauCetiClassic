@@ -97,6 +97,9 @@
 	caliber = "shotgun"
 	max_ammo = 8
 	multiload = 0
+	eject_casing = FALSE
+	empty_chamber = FALSE
+	no_casing = FALSE
 
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	name = "double-barrel shotgun internal magazine"

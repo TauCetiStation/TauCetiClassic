@@ -33,10 +33,16 @@
         return FALSE
     return magazine.give_round(ammo)
 
-/obj/item/weapon/gun_modular/module/magazine/bullet/Give_Round(var/obj/item/ammo_casing/ammo, mob/user = null)
+/obj/item/weapon/gun_modular/module/magazine/bullet/Give_Round(var/obj/item/ammo, mob/user = null)
     if(!magazine)
         return FALSE
-    return magazine.give_round(ammo, user)
+    if(!isinternal)
+        return FALSE
+    if(istype(ammo, /obj/item/ammo_casing))
+        return magazine.give_round(ammo, user)
+    if(istype(ammo, /obj/item/ammo_box))
+        return magazine.attackby(ammo, user)
+    return FALSE
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/Ammo_Count(var/obj/item/ammo_casing/ammo = null)
     if(magazine)
@@ -54,7 +60,7 @@
         if(magazine)
             remove_item_in_module(magazine)
     else if(magazine)
-        if(istype(W, /obj/item/ammo_casing))
+        if(istype(W, /obj/item/ammo_casing) || istype(W, /obj/item/ammo_box))
             Give_Round(W, user)
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/activate(mob/user)
@@ -79,7 +85,7 @@
     ..()
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/remove_item_in_module(var/obj/item/ammo_box/magazine/mag)
-    mag.loc = get_turf(frame_parent)
+    mag.loc = get_turf(src)
     magazine = null
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/attach_item_in_module(var/obj/item/ammo_box/magazine/mag, mob/user)
@@ -93,10 +99,6 @@
     empty_chamber = mag.empty_chamber
     no_casing = mag.no_casing
     isinternal = mag.isinternal
-    if(isinternal)
-        icon_overlay_name = "magazine_internal"
-    else
-        icon_overlay_name = "magazine_external"
     update_icon()
     return TRUE
 
@@ -114,6 +116,8 @@
 /obj/item/weapon/gun_modular/module/magazine/energy
     name = "gun energy magazine"
     caliber = "energy"
+    icon_state = "magazine_charge_icon"
+    icon_overlay_name = "magazine_charge"
     lessdamage = 0
     lessdispersion = 0
     size_gun = 1
@@ -159,7 +163,7 @@
     return ammo
 
 /obj/item/weapon/gun_modular/module/magazine/energy/remove_item_in_module(var/obj/item/weapon/stock_parts/cell/cell)
-    cell.loc = get_turf(frame_parent)
+    cell.loc = get_turf(src)
     magazine = null
 
 /obj/item/weapon/gun_modular/module/magazine/energy/attach_item_in_module(var/obj/item/weapon/stock_parts/cell/cell, mob/user)
@@ -197,8 +201,6 @@
         if(..())
             playsound(src, 'sound/weapons/guns/heavybolt_in.ogg', VOL_EFFECTS_MASTER)
             to_chat(user, "<span class='notice'>You load shell into [src]!</span>")
-            if(frame_parent.chamber)
-                frame_parent.chamber.chamber_round()
             return TRUE
     return FALSE
 
@@ -213,6 +215,33 @@
     else
         playsound(src, 'sound/weapons/guns/heavybolt_reload.ogg', VOL_EFFECTS_MASTER)
         to_chat(user, "<span class='notice'>You work the bolt closed.</span>")
-        
-            
+        if(frame_parent.chamber)
+            frame_parent.chamber.chamber_round()
+
+/obj/item/weapon/gun_modular/module/magazine/bullet/shotgun
+    name = "shotgun magazine holder"
+    lessdamage = 0
+    lessdispersion = 10
+    size_gun = 2
+    caliber = "shotgun"
+    var/pumped = TRUE
+
+/obj/item/weapon/gun_modular/module/magazine/bullet/shotgun/activate(mob/user)
+    if(!pumped)
+        return FALSE
+    pumped = FALSE
+    playsound(user, pick('sound/weapons/guns/shotgun_pump1.ogg', 'sound/weapons/guns/shotgun_pump2.ogg', 'sound/weapons/guns/shotgun_pump3.ogg'), VOL_EFFECTS_MASTER, null, FALSE)
+    var/obj/item/ammo_casing/chambered = frame_parent.chamber.chambered
+    if(chambered)
+        chambered.loc = get_turf(src)
+        chambered.SpinAnimation(5, 1)
+        frame_parent.chamber.chambered = null
+    frame_parent.chamber.process_chamber(TRUE)
+    update_icon()
+    spawn(10)
+        pumped = TRUE
+    return TRUE
+
+/obj/item/weapon/gun_modular/module/magazine/bullet/shotgun/Return_Round()
+    return FALSE
     

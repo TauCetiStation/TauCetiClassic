@@ -58,6 +58,7 @@ obj/item/weapon/gun_modular/module/proc/attach(var/obj/item/weapon/gun_modular/m
     if(!frame.can_attach(src))
         return FALSE
     frame_parent = frame
+    LAZYINITLIST(frame.modules)
     LAZYADD(frame.modules, src)
     frame.change_state(src, TRUE)
     if(user)

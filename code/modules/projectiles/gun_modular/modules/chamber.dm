@@ -14,6 +14,7 @@ obj/item/weapon/gun_modular/module/chamber
     var/fire_sound = 'sound/weapons/guns/Gunshot.ogg'
     var/bolt_slide_sound = 'sound/weapons/guns/TargetOn.ogg'
     var/fire_delay = 6
+    var/fire_delay_default = 6
     var/last_fired = 0
     var/recoil_chamber = 0
     var/pellets
@@ -24,11 +25,11 @@ obj/item/weapon/gun_modular/module/chamber/activate(mob/user)
         process_chamber()
 
 obj/item/weapon/gun_modular/module/chamber/proc/ready_to_fire()
-	if(world.time >= last_fired + fire_delay)
-		last_fired = world.time
-		return TRUE
-	else
-		return FALSE
+    if(world.time >= last_fired + fire_delay)
+        last_fired = world.time
+        return TRUE
+    else
+        return FALSE
 
 obj/item/weapon/gun_modular/module/chamber/proc/shoot_with_empty_chamber(mob/living/user)
     to_chat(user, "<span class='warning'>*click*</span>")
@@ -51,13 +52,17 @@ obj/item/weapon/gun_modular/module/chamber/proc/shoot_live_shot(mob/living/user)
 obj/item/weapon/gun_modular/module/chamber/proc/Fire(atom/target, mob/living/user, params)
     if(!ready_to_fire())
         return
+    fire_delay = fire_delay_default 
+    if(!chambered)
+        process_chamber()
     if(chambered)
+        fire_sound = chambered.fire_sound
         if(chambered.BB)
             chambered.BB.damage -= frame_parent.lessdamage
             chambered.BB.dispersion -= frame_parent.lessdispersion
             chambered.BB.dispersion = max(chambered.BB.dispersion, 0)
             chambered.BB.dispersion = min(chambered.BB.dispersion, 5)
-
+            fire_delay = fire_delay_default + chambered.BB.damage/2
         var/silensed = FALSE
         if(frame_parent.barrel)
             silensed = frame_parent.barrel.get_silensed_shoot()
@@ -154,6 +159,8 @@ obj/item/weapon/gun_modular/module/chamber/energy/proc/select_fire(mob/living/us
         lens_select = 1
     else
         lens_select += 1
+    if (lenses[lens_select].select_name)
+        to_chat(user, "<span class='warning'>[src] is now set to [lenses[lens_select].select_name].</span>")
 
 obj/item/weapon/gun_modular/module/chamber/energy/Fire(atom/target, mob/living/user, params)
     chamber_round()
@@ -177,11 +184,11 @@ obj/item/weapon/gun_modular/module/chamber/energy/chamber_round()
             chambered.loc = src.loc
 
 obj/item/weapon/gun_modular/module/chamber/energy/attackby(obj/item/weapon/W, mob/user, params)
-    . = ..()
     if(isscrewdriver(W))
         if(lenses)
             for(var/obj/item/ammo_casing/energy/I in lenses)
                 remove_item_in_module(I)
+    ..()
 
 obj/item/weapon/gun_modular/module/chamber/energy/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
     if(!..())
@@ -191,14 +198,15 @@ obj/item/weapon/gun_modular/module/chamber/energy/checking_to_attach(var/obj/ite
     return TRUE
 
 obj/item/weapon/gun_modular/module/chamber/energy/remove_item_in_module(var/obj/item/ammo_casing/energy/I)
+    I.loc = get_turf(src)
     LAZYREMOVE(lenses, I)
-    I.loc = get_turf(frame_parent)
 
 obj/item/weapon/gun_modular/module/chamber/energy/attach_item_in_module(var/obj/item/ammo_casing/energy/I, mob/user)
     if(!..())
         return FALSE
     if(I.caliber != caliber)
         return FALSE
+    LAZYINITLIST(lenses)
     LAZYADD(lenses, I)
     if(user)
         user.drop_item()
@@ -208,6 +216,7 @@ obj/item/weapon/gun_modular/module/chamber/energy/attach_item_in_module(var/obj/
 obj/item/weapon/gun_modular/module/chamber/energy/can_attach(var/obj/item/ammo_casing/energy/I)
     if(!istype(I, /obj/item/ammo_casing/energy))
         return FALSE
+    LAZYINITLIST(lenses)
     if(lenses.len >= max_lens)
         return FALSE
     return TRUE
@@ -219,20 +228,28 @@ obj/item/weapon/gun_modular/module/chamber/energy/shotgun
     icon_overlay_name = "chamber_laser1"
     caliber = "energy"
     lessdamage = 0
-    lessdispersion = -8
+    lessdispersion = -0.8
     size_gun = 4
     gun_type = ENERGY_GUN
     pellets = 5
     max_lens = 2
-    fire_delay = 10
+    fire_delay_default = 15
 
 
 obj/item/weapon/gun_modular/module/chamber/heavyrifle
     name = "PTR-7 rifle chamber"
     lessdamage = 0
-    lessdispersion = 0
+    lessdispersion = 0.8
     size_gun = 2
     caliber = "14.5mm"
-    fire_delay = 0
-    fire_sound = 'sound/weapons/guns/gunshot_cannon.ogg'
+    fire_delay_default = 0
     recoil_chamber = 5
+
+obj/item/weapon/gun_modular/module/chamber/shotgun
+    name = "gun shotgun chamber"
+    caliber = "shotgun"
+    lessdamage = 0
+    lessdispersion = -0.8
+    size_gun = 4
+    gun_type = BULLET_GUN
+    fire_delay_default = 15

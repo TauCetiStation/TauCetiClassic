@@ -82,6 +82,10 @@ obj/item/weapon/gun_modular/module/frame/attackby(obj/item/weapon/W, mob/user, p
             M.attackby(W, user, params)
 
 obj/item/weapon/gun_modular/module/frame/afterattack(atom/A, mob/living/user, flag, params)
+    if(!handle)
+        return FALSE
+    if(!handle.Special_Check(user))
+        return FALSE
     if(chamber)
         chamber.Fire(A, user, params)
 
@@ -96,11 +100,11 @@ obj/item/weapon/gun_modular/module/frame/proc/change_state(var/obj/item/weapon/g
         return FALSE
     var/obj/item/weapon/gun_modular/module/module = M
     if(attach)
-        lessdamage -= module.lessdamage
-        lessdispersion -= module.lessdispersion
-        size_gun += module.size_gun
-    else
         lessdamage += module.lessdamage
         lessdispersion += module.lessdispersion
+        size_gun += module.size_gun
+    else
+        lessdamage -= module.lessdamage
+        lessdispersion -= module.lessdispersion
         size_gun -= module.size_gun
     return TRUE
