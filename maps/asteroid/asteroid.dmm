@@ -10493,12 +10493,7 @@
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
 "wS" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 6
-	},
+/obj/machinery/atmospherics/components/unary/tank/air,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "wT" = (
@@ -10602,9 +10597,10 @@
 	},
 /area/asteroid/mine/west_outpost)
 "xc" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 5
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 8
 	},
+/obj/machinery/meter,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "xd" = (
@@ -10653,7 +10649,6 @@
 	},
 /area/asteroid/mine/west_outpost)
 "xi" = (
-/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
@@ -10742,7 +10737,10 @@
 	},
 /area/asteroid/mine/living_quarters)
 "xt" = (
-/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "xu" = (
@@ -10770,10 +10768,10 @@
 /turf/space,
 /area/asteroid/mine/production)
 "xx" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 5
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "xy" = (
@@ -11313,12 +11311,6 @@
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
-"zw" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/living_quarters)
 "zz" = (
 /obj/structure/ore_box,
 /obj/machinery/airlock_sensor{
@@ -11406,6 +11398,7 @@
 	},
 /area/asteroid/mine/explored)
 "zL" = (
+/obj/item/weapon/wrench,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "zN" = (
@@ -11494,23 +11487,23 @@
 /area/asteroid/mine/unexplored)
 "zY" = (
 /obj/structure/cable,
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
-	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "zZ" = (
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
@@ -12181,6 +12174,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/longtermstorage)
+"DT" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/living_quarters)
 "Eb" = (
 /turf/simulated/floor{
 	icon_state = "greencorner"
@@ -13127,6 +13126,15 @@
 /obj/machinery/light,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
+"VK" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/living_quarters)
 "Wb" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = 32
@@ -48975,9 +48983,9 @@ xq
 tp
 Sc
 uo
-zw
-zw
-zw
+wS
+VK
+DT
 uo
 yr
 lA

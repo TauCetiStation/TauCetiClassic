@@ -218,7 +218,7 @@
 /obj/structure/mineral_door/transparent/Close()
 	..()
 	opacity = FALSE
-
+  
 /obj/structure/mineral_door/transparent/diamond
 	name = "diamond door"
 	icon_state = "diamond"
