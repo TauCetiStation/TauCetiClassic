@@ -219,33 +219,6 @@
 	..()
 	opacity = FALSE
 
-/obj/structure/mineral_door/transparent/phoron
-	name = "phoron door"
-	icon_state = "phoron"
-	sheetType = /obj/item/stack/sheet/mineral/phoron
-
-/obj/structure/mineral_door/transparent/phoron/attackby(obj/item/weapon/W, mob/user)
-	if(iswelder(W))
-		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.use(0, user))
-			TemperatureAct(100)
-	..()
-
-/obj/structure/mineral_door/transparent/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		TemperatureAct(exposed_temperature)
-
-/obj/structure/mineral_door/transparent/phoron/proc/TemperatureAct(temperature)
-	for(var/turf/simulated/floor/target_tile in range(2, loc))
-
-		var/phoronToDeduce = temperature * 0.1
-
-		target_tile.assume_gas("phoron", phoronToDeduce)
-		target_tile.hotspot_expose(temperature, 400)
-
-		health -= phoronToDeduce * 0.01
-		CheckHealth()
-
 /obj/structure/mineral_door/transparent/diamond
 	name = "diamond door"
 	icon_state = "diamond"
