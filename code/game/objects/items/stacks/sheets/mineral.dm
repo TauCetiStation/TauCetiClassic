@@ -140,11 +140,6 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	sheettype = "phoron"
 	is_fusion_fuel = TRUE
 
-
-/obj/item/stack/sheet/mineral/phoron/atom_init()
-	. = ..()
-	recipes = phoron_recipes
-
 /*
  * Plastic
  */
