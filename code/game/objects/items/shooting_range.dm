@@ -6,10 +6,7 @@
 	icon_state = "target_h"
 	density = 0
 	var/hp = 1800
-/*
-	var/icon/virtualIcon
-	var/list/bulletholes = list()
-*/
+
 /obj/item/target/Destroy()
 	// if a target is deleted and associated with a stake, force stake to forget
 	for(var/obj/structure/target_stake/T in view(3,src))
