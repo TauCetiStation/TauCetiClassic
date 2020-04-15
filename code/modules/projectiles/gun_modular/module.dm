@@ -15,6 +15,7 @@ obj/item/weapon/gun_modular/module
     var/size_gun = 1
     var/gun_type
     var/obj/item/weapon/gun_modular/module/frame/frame_parent = null
+    var/parent_module_type = /obj/item/weapon/gun_modular/module
 
 obj/item/weapon/gun_modular/module/atom_init()
     . = ..()
@@ -27,7 +28,7 @@ obj/item/weapon/gun_modular/module/attackby(obj/item/weapon/W, mob/user, params)
 obj/item/weapon/gun_modular/module/proc/activate(mob/user, var/argument="")
     return FALSE
 
-obj/item/weapon/gun_modular/module/proc/deactivate(mob/user)
+obj/item/weapon/gun_modular/module/proc/deactivate(mob/user, var/argument="")
     return FALSE
 
 obj/item/weapon/gun_modular/module/proc/remove_item_in_module(var/obj/item/I)
@@ -53,8 +54,9 @@ obj/item/weapon/gun_modular/module/proc/attach(var/obj/item/weapon/gun_modular/m
     if(!istype(I, /obj/item/weapon/gun_modular/module/frame))
         return FALSE
     var/obj/item/weapon/gun_modular/module/frame/frame = I
-    if(is_type_in_list(src, frame.modules))
-        return FALSE
+    for(var/obj/item/weapon/gun_modular/module/module in frame.modules)
+        if(parent_module_type == module.parent_module_type)
+            return FALSE
     if(!frame.can_attach(src))
         return FALSE
     frame_parent = frame

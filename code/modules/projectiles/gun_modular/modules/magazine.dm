@@ -10,6 +10,7 @@
     var/eject_casing = TRUE
     var/empty_chamber = TRUE
     var/no_casing = FALSE
+    parent_module_type = /obj/item/weapon/gun_modular/module/magazine
 
 /obj/item/weapon/gun_modular/module/magazine/proc/Return_Round(var/obj/item/ammo_casing/ammo)
     return FALSE
@@ -190,7 +191,14 @@
     lessdispersion = 10
     size_gun = 2
     caliber = "14.5mm"
-    var/open = TRUE
+    var/open = FALSE
+
+/obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/attach(obj/item/weapon/gun_modular/module/frame/I)
+    if(!..())
+        return FALSE
+    open = FALSE
+    return TRUE
+    
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/Get_Ammo()
     if(!open)
@@ -209,12 +217,14 @@
     if(open)
         playsound(src, 'sound/weapons/guns/heavybolt_out.ogg', VOL_EFFECTS_MASTER)
         to_chat(user, "<span class='notice'>You work the bolt open.</span>")
+        frame_parent.add_overlay(image(icon, "magazine_open"))
         if(frame_parent.chamber)
             frame_parent.chamber.process_chamber(TRUE)
         return ..()
     else
         playsound(src, 'sound/weapons/guns/heavybolt_reload.ogg', VOL_EFFECTS_MASTER)
         to_chat(user, "<span class='notice'>You work the bolt closed.</span>")
+        frame_parent.cut_overlay(image(icon, "magazine_open"))
         if(frame_parent.chamber)
             frame_parent.chamber.chamber_round()
 

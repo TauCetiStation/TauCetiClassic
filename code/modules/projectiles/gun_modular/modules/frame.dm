@@ -28,6 +28,19 @@ obj/item/weapon/gun_modular/module/frame/verb/eject_magazine()
     if(magazine)
         magazine.activate(usr)
 
+obj/item/weapon/gun_modular/module/frame/dropped(mob/user)
+    . = ..()
+    if(accessories)
+        for(var/obj/item/weapon/gun_modular/module/accessory/A in accessories)
+            A.loc = src
+            A.deactivate(user)
+
+obj/item/weapon/gun_modular/module/frame/attack_hand(mob/user)
+    . = ..()
+    if(accessories)
+        for(var/obj/item/weapon/gun_modular/module/accessory/A in accessories)
+            A.loc = user
+
 obj/item/weapon/gun_modular/module/frame/attack_self(mob/user)
     . = ..()
     if(magazine)

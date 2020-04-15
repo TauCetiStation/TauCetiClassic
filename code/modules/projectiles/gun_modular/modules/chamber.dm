@@ -7,14 +7,15 @@ obj/item/weapon/gun_modular/module/chamber
     lessdispersion = 0
     size_gun = 1
     gun_type = BULLET_GUN
+    parent_module_type = /obj/item/weapon/gun_modular/module/chamber
     var/obj/item/ammo_casing/chambered = null
     var/eject_casing = TRUE
     var/empty_chamber = TRUE
     var/no_casing = FALSE
     var/fire_sound = 'sound/weapons/guns/Gunshot.ogg'
     var/bolt_slide_sound = 'sound/weapons/guns/TargetOn.ogg'
-    var/fire_delay = 6
-    var/fire_delay_default = 6
+    var/fire_delay = 3
+    var/fire_delay_default = 3
     var/last_fired = 0
     var/recoil_chamber = 0
     var/pellets
@@ -238,6 +239,8 @@ obj/item/weapon/gun_modular/module/chamber/energy/shotgun
 
 obj/item/weapon/gun_modular/module/chamber/heavyrifle
     name = "PTR-7 rifle chamber"
+    icon_state = "chamber_bullet_PTR_icon"
+    icon_overlay_name = "chamber_bullet_PTR"
     lessdamage = 0
     lessdispersion = 0.8
     size_gun = 2

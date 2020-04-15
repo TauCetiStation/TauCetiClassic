@@ -8,6 +8,7 @@
     size_gun = 1
     gun_type = ALL_GUN_TYPE
     var/silensed = FALSE
+    parent_module_type = /obj/item/weapon/gun_modular/module/barrel
 
 /obj/item/weapon/gun_modular/module/barrel/proc/get_silensed_shoot()
     return silensed

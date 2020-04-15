@@ -7,6 +7,7 @@
     lessdispersion = 0
     size_gun = 1
     gun_type = ALL_GUN_TYPE
+    parent_module_type = /obj/item/weapon/gun_modular/module/handle
     var/lessrecoil = 0
     var/clumsy_check = TRUE
 
@@ -59,6 +60,16 @@
         frame_parent.handle = null
     ..()
 
+/obj/item/weapon/gun_modular/module/handle/weighted
+    name = "gun handle weighted"
+    icon_state = "grip_weighted"
+    icon_overlay_name = "grip_weighted"
+    caliber = ALL_CALIBER
+    lessdamage = 0
+    lessdispersion = 1.5
+    size_gun = 1
+    gun_type = ALL_GUN_TYPE
+    lessrecoil = 1
 
 /obj/item/weapon/gun_modular/module/handle/resilient
     name = "gun handle resilient"
