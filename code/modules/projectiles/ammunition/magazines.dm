@@ -101,6 +101,9 @@
 	empty_chamber = FALSE
 	no_casing = FALSE
 
+/obj/item/ammo_box/magazine/internal/shotcom/nonlethal
+	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
+
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	name = "double-barrel shotgun internal magazine"
 	desc = "This doesn't even exist!"

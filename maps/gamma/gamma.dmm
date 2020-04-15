@@ -5240,22 +5240,22 @@
 	dir = 1;
 	name = "Weapons locker"
 	},
-/obj/item/weapon/gun/projectile/shotgun{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/projectile/shotgun{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/gun/projectile/shotgun{
+/obj/machinery/light/small,
+/obj/item/weapon/gun/projectile/shotgun/combat/nonlethal{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/machinery/light/small,
+/obj/item/weapon/gun/projectile/shotgun/combat/nonlethal{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/weapon/gun/projectile/shotgun/combat/nonlethal{
+	pixel_x = -3;
+	pixel_y = 3
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
