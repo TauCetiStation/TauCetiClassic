@@ -58283,11 +58283,9 @@
 /area/station/engineering/atmos)
 "cqH" = (
 /obj/machinery/computer/general_air_control/large_tank_control{
-	frequency = 1443;
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "air_out";
-	pressure_setting = 2000;
 	sensors = list("air_sensor" = "Tank")
 	},
 /turf/simulated/floor{
