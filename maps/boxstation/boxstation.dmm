@@ -18062,6 +18062,9 @@
 /area/station/maintenance/eva)
 "aFQ" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/effect/landmark/start{
+	name = "Waiter"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -68348,16 +68351,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
-"gcu" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/camera{
-	c_tag = "Arrival Dock's South 1";
-	dir = 8
-	},
-/turf/simulated/floor{
-	icon_state = "browncorner"
-	},
-/area/station/hallway/secondary/entry)
 "gdb" = (
 /obj/structure/morgue,
 /obj/structure/disposalpipe/segment{
@@ -70753,6 +70746,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
+"jOv" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/camera{
+	c_tag = "Arrival Dock's South 1";
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "browncorner"
+	},
+/area/station/hallway/secondary/entry)
 "jPb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/bell{
@@ -89196,7 +89199,7 @@ nMw
 bDq
 bQB
 glT
-gcu
+jOv
 xIW
 bHe
 bHe
