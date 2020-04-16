@@ -266,11 +266,11 @@
 
 /obj/structure/bonfire/dynamic/Burn()
 	var/turf/current_location = get_turf(src)
-	current_location.assume_gas("oxygen", -0.4)
+	current_location.assume_gas("oxygen", -0.5)
 	if (current_location.air.temperature >= 393)
-		current_location.assume_gas("carbon_dioxide", 0.4)
+		current_location.assume_gas("carbon_dioxide", 0.5)
 	else
-		current_location.assume_gas("carbon_dioxide", 0.4, (current_location.air.temperature + 200))
+		current_location.assume_gas("carbon_dioxide", 0.5, (current_location.air.temperature + 200))
 	current_location.hotspot_expose(1000, 500)
 	if ((world.time - last_time_smoke) > 100 && current_location.air.gas["carbon_dioxide"]) //It's time to make some smoke
 		if (current_location.air.gas["carbon_dioxide"] > 5)
@@ -280,6 +280,7 @@
 /obj/structure/bonfire/dynamic/extinguish()
 	..()
 	if(logs == 0)
+		new /obj/effect/decal/cleanable/ash(loc)
 		qdel(src)
 
 /obj/structure/bonfire/dynamic/process()
@@ -293,7 +294,6 @@
 				new /obj/effect/decal/cleanable/ash(loc)
 			time_log_burned_out = world.time
 		else
-			new /obj/effect/decal/cleanable/ash(loc)
 			extinguish()
 
 /obj/structure/bonfire/dynamic/examine(mob/user)
