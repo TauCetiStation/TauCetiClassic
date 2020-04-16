@@ -32310,15 +32310,13 @@
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "bhH" = (
-/obj/structure/flora/pottedplant{
-	icon_state = "plant-22"
-	},
 /obj/machinery/door_control{
 	id = "bar";
 	name = "Privacy shutter";
 	pixel_x = 8;
 	pixel_y = -24
 	},
+/obj/machinery/vending/cigarette,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -39226,15 +39224,16 @@
 	},
 /area/station/civilian/bar)
 "bxg" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/camera{
-	c_tag = "Arrival Dock's South 1";
-	dir = 8
+/obj/machinery/door/airlock/maintenance{
+	name = "Bar Maintenance";
+	req_one_access = list(12,25,28)
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "browncorner"
+	dir = 4;
+	icon_state = "dark"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/bar)
 "bxi" = (
 /turf/simulated/wall,
 /area/station/medical/hallway)
@@ -41057,9 +41056,18 @@
 	},
 /area/station/medical/cryo)
 "bAY" = (
-/obj/machinery/vending/cigarette,
-/obj/machinery/light,
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	req_access = list(72)
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
 /turf/simulated/floor{
+	dir = 4;
 	icon_state = "dark"
 	},
 /area/station/civilian/bar)
@@ -41210,7 +41218,7 @@
 "bBq" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Bar Maintenance";
-	req_one_access = list(12,25,28)
+	req_one_access = list(25)
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -41805,8 +41813,15 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "bCD" = (
-/obj/machinery/vending/coffee,
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	req_access = list(72)
+	},
 /turf/simulated/floor{
+	dir = 4;
 	icon_state = "dark"
 	},
 /area/station/civilian/bar)
@@ -41947,13 +41962,7 @@
 /turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "bCP" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
+/obj/structure/table/woodentable/fancy/black,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -41993,7 +42002,12 @@
 /turf/simulated/floor,
 /area/station/civilian/janitor)
 "bCT" = (
-/obj/structure/table/woodentable/fancy/black,
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -42081,14 +42095,15 @@
 	},
 /area/station/hallway/secondary/entry)
 "bDd" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/disposalpipe/segment,
+/obj/machinery/camera{
+	c_tag = "Arrival Dock's South 1";
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	icon_state = "browncorner"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/secondary/entry)
 "bDe" = (
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
@@ -72646,6 +72661,7 @@
 /obj/machinery/camera{
 	c_tag = "Bar North"
 	},
+/obj/structure/flora/pottedplant/stoutbush,
 /turf/simulated/floor/light,
 /area/station/civilian/bar)
 "nfb" = (
@@ -73213,20 +73229,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "nZG" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 4
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -3
 	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
-/obj/machinery/camera{
-	c_tag = "Bar South";
-	dir = 1
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
+/obj/item/weapon/reagent_containers/food/condiment/peppermill,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -73487,6 +73494,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "orb" = (
@@ -77494,11 +77502,16 @@
 	},
 /area/station/hallway/primary/port)
 "vTP" = (
-/obj/structure/table/woodentable/fancy/black,
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -3
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 8
 	},
-/obj/item/weapon/reagent_containers/food/condiment/peppermill,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Bar South";
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -77704,8 +77717,7 @@
 	},
 /mob/living/simple_animal/cow,
 /obj/machinery/vending/wallmed1{
-	pixel_x = 28;
-	req_access = list(0)
+	pixel_x = 28
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
@@ -89161,7 +89173,7 @@ nMw
 bDq
 bQB
 glT
-bxg
+bDd
 xIW
 bHe
 bHe
@@ -103543,9 +103555,9 @@ beF
 bhv
 aAG
 pIL
-bDd
-bDd
-aGn
+avN
+avN
+bxg
 bDk
 bEW
 bEW
