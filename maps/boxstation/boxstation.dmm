@@ -5840,16 +5840,17 @@
 	},
 /area/station/security/brig)
 "ajV" = (
-/obj/structure/sign/directions/supply{
-	buildable_sign = 0;
-	dir = 8;
-	pixel_y = -24
+/obj/structure/table,
+/obj/machinery/requests_console{
+	department = "Kitchen";
+	name = "Kitchen RC";
+	pixel_y = -30
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "redcorner"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/kitchen)
 "ajW" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -32314,7 +32315,8 @@
 	id = "bar";
 	name = "Privacy shutter";
 	pixel_x = 8;
-	pixel_y = -24
+	pixel_y = -24;
+	req_access = list(25)
 	},
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor{
@@ -38567,23 +38569,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bvJ" = (
-/obj/machinery/light{
-	dir = 4
+/obj/machinery/door/airlock/maintenance{
+	name = "Bar Maintenance";
+	req_one_access = list(12,25,28)
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
 	},
-/area/station/cargo/recycleroffice)
+/area/station/civilian/bar)
 "bvL" = (
 /obj/structure/disposaloutlet{
 	dir = 4
@@ -39224,15 +39219,26 @@
 	},
 /area/station/civilian/bar)
 "bxg" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Bar Maintenance";
-	req_one_access = list(12,25,28)
-	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "bar";
+	name = "Bar Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "bxi" = (
 /turf/simulated/wall,
@@ -40327,7 +40333,7 @@
 	pixel_y = 25
 	},
 /obj/machinery/camera{
-	c_tag = "Laundry"
+	c_tag = "Locker Room"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -42095,15 +42101,14 @@
 	},
 /area/station/hallway/secondary/entry)
 "bDd" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/camera{
-	c_tag = "Arrival Dock's South 1";
-	dir = 8
+/obj/machinery/newscaster{
+	pixel_x = 30
 	},
 /turf/simulated/floor{
-	icon_state = "browncorner"
+	dir = 4;
+	icon_state = "dark"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/bar)
 "bDe" = (
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
@@ -42990,6 +42995,9 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
 	},
+/obj/structure/sign/poster{
+	pixel_x = -32
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "bEU" = (
@@ -42999,9 +43007,6 @@
 /obj/item/weapon/lighter/zippo{
 	pixel_x = -5;
 	pixel_y = 5
-	},
-/obj/structure/sign/poster{
-	pixel_y = -32
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
@@ -67686,6 +67691,13 @@
 /obj/structure/closet/firecloset,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"eZS" = (
+/obj/machinery/camera{
+	c_tag = "Cargo Office South";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/cargo/office)
 "fab" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_admin";
@@ -68336,6 +68348,16 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
+"gcu" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/camera{
+	c_tag = "Arrival Dock's South 1";
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "browncorner"
+	},
+/area/station/hallway/secondary/entry)
 "gdb" = (
 /obj/structure/morgue,
 /obj/structure/disposalpipe/segment{
@@ -69595,6 +69617,11 @@
 "hTE" = (
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/machinery/requests_console{
+	department = "Hydroponics";
+	name = "Hydroponics RC";
+	pixel_x = -30
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -77855,10 +77882,6 @@
 	dir = 8;
 	name = "Delivery Office APC";
 	pixel_x = -28
-	},
-/obj/machinery/camera{
-	c_tag = "Cargo Office South";
-	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
@@ -89173,7 +89196,7 @@ nMw
 bDq
 bQB
 glT
-bDd
+gcu
 xIW
 bHe
 bHe
@@ -89671,7 +89694,7 @@ aon
 aCn
 apk
 aEs
-pwb
+bHe
 bHe
 bHe
 bHe
@@ -90200,7 +90223,7 @@ bkW
 bkW
 xGD
 kyH
-bkW
+eZS
 bpU
 bkW
 buY
@@ -93007,7 +93030,7 @@ aEb
 aEb
 bbs
 aGj
-ajV
+bma
 aWW
 aAH
 aMl
@@ -97913,7 +97936,7 @@ bEW
 bDk
 bNk
 buA
-bvJ
+mtS
 fRZ
 bNk
 aBd
@@ -99951,7 +99974,7 @@ awu
 auL
 slc
 nAY
-aBi
+ajV
 aGn
 aFO
 aTp
@@ -102532,7 +102555,7 @@ avN
 bDY
 aEh
 bEU
-aGn
+bxg
 nNV
 bDk
 bFW
@@ -103555,9 +103578,9 @@ beF
 bhv
 aAG
 pIL
+bDd
 avN
-avN
-bxg
+bvJ
 bDk
 bEW
 bEW
