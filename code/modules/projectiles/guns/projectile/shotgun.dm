@@ -63,6 +63,7 @@
 /obj/item/weapon/gun/projectile/shotgun/combat
 	name = "combat shotgun"
 	icon_state = "cshotgun"
+	item_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom
 	w_class = ITEM_SIZE_HUGE
