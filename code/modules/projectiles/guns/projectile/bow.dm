@@ -156,7 +156,7 @@
 		user.visible_message("[usr] draws back the string of [src]!","You continue drawing back the string of [src]!")
 		spawn(25) increase_tension(user)
 
-/obj/item/weapon/crossbow/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/weapon/crossbow/afterattack(atom/target, mob/user, proximity, params)
 	if (target.loc == user.loc)
 		return
 

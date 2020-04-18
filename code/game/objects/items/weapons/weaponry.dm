@@ -91,8 +91,8 @@
 			to_chat(user, "<span class='danger'>The rod appears to do nothing.</span>")
 		M.visible_message("<span class='danger'>[user] waves [src] over [M.name]'s head</span>")
 
-/obj/item/weapon/nullrod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if (proximity_flag && istype(target, /turf/simulated/floor) && user.mind && user.mind.assigned_role == "Chaplain")
+/obj/item/weapon/nullrod/afterattack(atom/target, mob/user, proximity, params)
+	if (proximity && istype(target, /turf/simulated/floor) && user.mind && user.mind.assigned_role == "Chaplain")
 		to_chat(user, "<span class='notice'>You hit the floor with the [src].</span>")
 		power.action(user, 1)
 
