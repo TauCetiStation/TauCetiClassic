@@ -69,7 +69,7 @@
 	var/uses = 10
 
 /obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity, params)
-	if(target.emag_act(user))
+	if(proximity && target.emag_act(user))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		uses--
 
