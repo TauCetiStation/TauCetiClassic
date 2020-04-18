@@ -17664,11 +17664,10 @@
 	},
 /area/station/hallway/primary/port)
 "aFf" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/wall,
-/area/station/cargo/recycleroffice)
+/obj/structure/window/reinforced,
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "aFg" = (
 /turf/simulated/wall,
 /area/station/cargo/storage)
@@ -71177,6 +71176,12 @@
 	icon_state = "blue"
 	},
 /area/station/medical/reception)
+"ktv" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/station/cargo/storage)
 "kub" = (
 /obj/machinery/light{
 	dir = 4
@@ -71385,15 +71390,11 @@
 	},
 /area/station/maintenance/medbay)
 "kNq" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor,
-/area/station/cargo/storage)
+/turf/simulated/wall,
+/area/station/cargo/recycleroffice)
 "kOb" = (
 /obj/structure/sign/warning/securearea{
 	pixel_y = 32
@@ -71600,6 +71601,10 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/genetics)
+"lmX" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/wall,
+/area/station/maintenance/cargo)
 "lnm" = (
 /obj/machinery/light,
 /obj/machinery/power/apc{
@@ -73518,12 +73523,6 @@
 /obj/item/device/multitool,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"onD" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	icon_state = "brown"
-	},
-/area/station/cargo/storage)
 "oob" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
@@ -73687,7 +73686,8 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -74574,6 +74574,10 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
+"pOH" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/wall,
+/area/station/cargo/storage)
 "pQb" = (
 /obj/machinery/door_control{
 	id = "HoP_queue";
@@ -76085,8 +76089,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -76228,23 +76231,15 @@
 	},
 /area/station/medical/virology)
 "sqc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/station/cargo/recycleroffice)
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "sqt" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -77526,9 +77521,23 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "uRB" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/wall,
-/area/station/maintenance/cargo)
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/cargo/recycleroffice)
 "uYg" = (
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -78079,10 +78088,6 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/cargo/storage)
-"yju" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/wall,
 /area/station/cargo/storage)
 
 (1,1,1) = {"
@@ -94929,10 +94934,10 @@ gvg
 gvg
 ofu
 gKG
-kNq
+owL
 hne
-onD
-yju
+ktv
+pOH
 bzj
 aFg
 aah
@@ -95186,7 +95191,7 @@ brd
 brd
 brd
 jaX
-owL
+shv
 ofm
 uYg
 aFg
@@ -95443,7 +95448,7 @@ bGc
 bop
 brd
 nws
-owL
+shv
 ofm
 eQZ
 myS
@@ -95957,7 +95962,7 @@ bGt
 bot
 aYC
 bsD
-owL
+shv
 ofm
 qsv
 bcM
@@ -96214,7 +96219,7 @@ bGv
 boB
 brd
 bsO
-shv
+sqc
 ofm
 bwW
 bcM
@@ -98271,7 +98276,7 @@ bDk
 bNk
 bsS
 bvw
-sqc
+uRB
 bNk
 bNk
 aaa
@@ -99554,7 +99559,7 @@ aMZ
 bEW
 fDx
 bNk
-aFf
+kNq
 kLo
 sNO
 bNk
@@ -99806,8 +99811,8 @@ aSM
 gYZ
 aSM
 onu
-bEW
-bEW
+dLO
+aFf
 bEW
 bDk
 bNk
@@ -100064,7 +100069,7 @@ aSM
 aSM
 bEW
 bEW
-bEW
+aFf
 bEW
 fDx
 bNk
@@ -100325,7 +100330,7 @@ vWx
 ice
 pAG
 bNk
-aFf
+kNq
 bvE
 bNk
 bNk
@@ -100584,7 +100589,7 @@ rlZ
 oUI
 qSg
 rhj
-uRB
+lmX
 jjN
 bNk
 bNk
