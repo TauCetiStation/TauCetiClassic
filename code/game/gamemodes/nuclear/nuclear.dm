@@ -291,6 +291,8 @@
 		else
 			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), SLOT_SHOES)
 
+	synd_mob.add_language("Sy-Code")
+
 	var/obj/item/weapon/implant/dexplosive/E = new/obj/item/weapon/implant/dexplosive(synd_mob)
 	E.imp_in = synd_mob
 	E.implanted = 1
