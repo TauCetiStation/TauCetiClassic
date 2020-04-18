@@ -13,7 +13,7 @@
 		return
 	if(!over_object)
 		return
-	if(!usr.incapacitated())
+	if(usr.incapacitated())
 		return
 
 	var/mob/M = usr
