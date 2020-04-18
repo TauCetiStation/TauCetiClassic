@@ -17,7 +17,7 @@
 	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/swat
-	name = "\improper SWAT shoes"
+	name = "SWAT shoes"
 	desc = "When you want to turn up the heat."
 	icon_state = "swat"
 	item_state = "wjboots"
@@ -44,7 +44,7 @@
 	desc = "When you REALLY want to turn up the heat<br>They have the toe caps cut off of them."
 	icon_state = "swat_cut"
 	clipped_status = CLIPPED
-	species_restricted = list("exclude", DIONA, VOX)
+	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
 
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
@@ -111,6 +111,10 @@
 	item_color = "clown"
 //	var/footstep = 1	//used for squeeks whilst walking
 	species_restricted = null
+
+/obj/item/clothing/shoes/clown_shoes/play_unique_footstep_sound()
+	..()
+	playsound(src, pick(SOUNDIN_CLOWNSTEP), VOL_EFFECTS_MASTER)
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
@@ -221,6 +225,7 @@
 	icon_state = "Lizard_Boots"
 	item_state = "r_feet"
 	item_color = "Lizard_Boots"
+	species_restricted = list(UNATHI)
 
 /obj/item/clothing/shoes/heels
 	name = "Heels"

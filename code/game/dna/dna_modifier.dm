@@ -37,13 +37,13 @@
 
 /////////////////////////// DNA MACHINES
 /obj/machinery/dna_scannernew
-	name = "\improper DNA modifier"
+	name = "DNA modifier"
 	desc = "It scans DNA structures."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "scanner"
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 300
 	var/damage_coeff
@@ -272,7 +272,7 @@
 	var/obj/item/weapon/disk/data/disk = null
 	var/selected_menu_key = null
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 400
 	var/waiting_for_user_input=0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
@@ -389,7 +389,7 @@
 			occupantData["name"] = connected.occupant.name
 			occupantData["stat"] = connected.occupant.stat
 			occupantData["isViableSubject"] = 1
-			if (!connected.occupant.dna || NOCLONE in connected.occupant.mutations || (connected.scan_level == 3))
+			if (!connected.occupant.dna || (NOCLONE in connected.occupant.mutations) || (connected.scan_level == 3))
 				occupantData["isViableSubject"] = 0
 			occupantData["health"] = connected.occupant.health
 			occupantData["maxHealth"] = connected.occupant.maxHealth

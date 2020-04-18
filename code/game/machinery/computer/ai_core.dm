@@ -103,6 +103,7 @@
 
 			if(istype(P, /obj/item/weapon/aiModule/nanotrasen))
 				laws.add_inherent_law("Safeguard: Protect your assigned space station to the best of your ability. It is not something we can easily afford to replace.")
+				laws.add_inherent_law("Preserve: Do not by your action, inaction excluded, cause changes to the crew membership status, rank or role of anything, unless asked for by authorized personnel in accordance to their rank and role.")
 				laws.add_inherent_law("Serve: Serve the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
 				laws.add_inherent_law("Protect: Protect the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
 				laws.add_inherent_law("Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
@@ -119,26 +120,28 @@
 				to_chat(usr, "Added a freeform law.")
 
 			if(istype(P, /obj/item/device/mmi) || istype(P, /obj/item/device/mmi/posibrain))
-				if(!P:brainmob)
-					to_chat(user, "<span class='warning'>Sticking an empty [P] into the frame would sort of defeat the purpose.</span>")
+				var/obj/item/device/mmi/M = P
+
+				if(!M.brainmob)
+					to_chat(user, "<span class='warning'>Sticking an empty [M] into the frame would sort of defeat the purpose.</span>")
 					return
-				if(P:brainmob.stat == DEAD)
-					to_chat(user, "<span class='warning'>Sticking a dead [P] into the frame would sort of defeat the purpose.</span>")
+				if(M.brainmob.stat == DEAD)
+					to_chat(user, "<span class='warning'>Sticking a dead [M] into the frame would sort of defeat the purpose.</span>")
 					return
 
-				if(jobban_isbanned(P:brainmob, "AI"))
-					to_chat(user, "<span class='warning'>This [P] does not seem to fit.</span>")
+				if(jobban_isbanned(M.brainmob, "AI"))
+					to_chat(user, "<span class='warning'>This [M] does not seem to fit.</span>")
 					return
 
-				if(P:brainmob.mind)
-					ticker.mode.remove_cultist(P:brainmob.mind, 1)
-					ticker.mode.remove_revolutionary(P:brainmob.mind, 1)
-					ticker.mode.remove_gangster(P:brainmob.mind, 1)
+				if(M.brainmob.mind)
+					ticker.mode.remove_cultist(M.brainmob.mind, 1)
+					ticker.mode.remove_revolutionary(M.brainmob.mind, 1)
+					ticker.mode.remove_gangster(M.brainmob.mind, 1)
 
 				user.drop_item()
-				P.loc = src
-				brain = P
-				to_chat(usr, "Added [P].")
+				M.loc = src
+				brain = M
+				to_chat(usr, "Added [M].")
 				icon_state = "3b"
 
 			if(iscrowbar(P) && brain)
@@ -270,7 +273,7 @@ That prevents a few funky behaviors.
 							A.loc = T.loc//To replace the terminal.
 							C.icon_state = "aicard"
 							C.name = "inteliCard"
-							C.overlays.Cut()
+							C.cut_overlays()
 							A.cancel_camera()
 							to_chat(A, "You have been uploaded to a stationary terminal. Remote device connection restored.")
 							to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed.")
@@ -297,28 +300,28 @@ That prevents a few funky behaviors.
 							else for(var/mob/living/silicon/ai/A in C)
 								C.icon_state = "aicard"
 								C.name = "inteliCard"
-								C.overlays.Cut()
+								C.cut_overlays()
 								A.loc = T
 								T.occupier = A
 								A.control_disabled = 1
 								if (A.stat == DEAD)
-									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-404")
+									T.add_overlay(image('icons/obj/computer.dmi', "ai-fixer-404"))
 								else
-									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
-								T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-empty")
+									T.add_overlay(image('icons/obj/computer.dmi', "ai-fixer-full"))
+								T.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-empty"))
 								A.cancel_camera()
 								to_chat(A, "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.")
 								to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 						else
 							if(!C.contents.len && T.occupier && !T.active)
 								C.name = "inteliCard - [T.occupier.name]"
-								T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
+								T.add_overlay(image('icons/obj/computer.dmi', "ai-fixer-empty"))
 								if (T.occupier.stat == DEAD)
 									C.icon_state = "aicard-404"
-									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
+									T.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-404"))
 								else
 									C.icon_state = "aicard-full"
-									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
+									T.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-full"))
 								to_chat(T.occupier, "You have been downloaded to a mobile storage device. Still no remote access.")
 								to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [T.occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 								T.occupier.loc = C
@@ -341,8 +344,8 @@ That prevents a few funky behaviors.
 								T.occupant = A
 								C.AI = null
 								A.control_disabled = 1
-								T.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
-								T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-empty")
+								T.add_overlay(image('icons/obj/computer.dmi', "ai-fixer-full"))
+								T.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-empty"))
 								A.cancel_camera()
 								to_chat(A, "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.")
 								to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
@@ -351,8 +354,8 @@ That prevents a few funky behaviors.
 								if (T.occupant.stat)
 									to_chat(U, "<span class='warning'><b>ERROR</b>:</span> [T.occupant.name] data core is corrupted. Unable to install.")
 								else
-									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
-									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
+									T.add_overlay(image('icons/obj/computer.dmi', "ai-fixer-empty"))
+									T.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-full"))
 									to_chat(T.occupant, "You have been downloaded to a mobile storage device. Still no remote access.")
 									to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [T.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 									T.occupant.loc = C
@@ -393,7 +396,7 @@ That prevents a few funky behaviors.
 										A_T.loc = T//Throw them into suit.
 										C.icon_state = "aicard"
 										C.name = "inteliCard"
-										C.overlays.Cut()
+										C.cut_overlays()
 										T.AI = A_T
 										A_T.cancel_camera()
 										to_chat(A_T, "You have been uploaded to a mobile storage device.")

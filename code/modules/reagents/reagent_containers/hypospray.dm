@@ -33,7 +33,7 @@
 			var/contained = english_list(injected)
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.key]). Reagents: [contained]</font>")
-			msg_admin_attack("[user.name] ([user.ckey]) injected [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
+			msg_admin_attack("[key_name(user)] injected [key_name(M)] with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
 
 			playsound(src, 'sound/effects/hypospray.ogg', VOL_EFFECTS_MASTER, 25)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
@@ -81,5 +81,5 @@
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/update_icon()
 	if(reagents.total_volume > 0)
 		icon_state = "[initial(icon_state)]1"
-	else
+	else	
 		icon_state = "[initial(icon_state)]0"

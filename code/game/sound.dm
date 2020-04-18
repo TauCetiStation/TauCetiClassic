@@ -287,6 +287,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 				. = 'sound/AI/vortex.ogg'
 			if("bluspaceanom")
 				. = 'sound/AI/blusp_anomalies.ogg'
+			if("bluspacetrans")
+				. = 'sound/AI/mas-blu-spa_anomalies.ogg'
 			if("pyroanom")
 				. = 'sound/AI/pyr_anomalies.ogg'
 			if("wormholes")

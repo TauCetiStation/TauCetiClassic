@@ -75,14 +75,14 @@
 
 /obj/item/clothing/under/rank/centcom_officer
 	desc = "It's a jumpsuit worn by CentCom Officers."
-	name = "\improper CentCom officer's jumpsuit"
+	name = "CentCom officer's jumpsuit"
 	icon_state = "officer"
 	item_state = "g_suit"
 	item_color = "officer"
 
 /obj/item/clothing/under/rank/centcom_commander
 	desc = "It's a jumpsuit worn by CentCom's highest-tier Commanders."
-	name = "\improper CentCom officer's jumpsuit"
+	name = "CentCom officer's jumpsuit"
 	icon_state = "centcom"
 	item_state = "dg_suit"
 	item_color = "centcom"
@@ -95,7 +95,7 @@
 	item_color = "ert_uniform"
 
 /obj/item/clothing/under/space
-	name = "\improper NASA jumpsuit"
+	name = "NASA jumpsuit"
 	desc = "It has a NASA logo on it and is made of space-proofed materials."
 	icon_state = "black"
 	item_state = "bl_suit"
@@ -577,14 +577,14 @@
 
 /obj/item/clothing/under/rank/centcom_officer_old
 	desc = "It's a jumpsuit worn by Centcom Officers."
-	name = "\improper Centcom officer's jumpsuit"
+	name = "Centcom officer's jumpsuit"
 	icon_state = "officer_old"
 	item_state = "g_suit"
 	item_color = "officer_old"
 
 /obj/item/clothing/under/rank/centcom_commander_old
 	desc = "It's a jumpsuit worn by Centcom's highest-tier Commanders."
-	name = "\improper Centcom officer's jumpsuit"
+	name = "Centcom officer's jumpsuit"
 	icon_state = "centcom_old"
 	item_state = "dg_suit"
 	item_color = "centcom_old"
@@ -648,7 +648,7 @@
 
 /obj/item/clothing/under/rank/centcom/representative
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Ensign\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."
-	name = "\improper NanoTrasen navy uniform"
+	name = "NanoTrasen navy uniform"
 	icon_state = "officer"
 	item_state = "g_suit"
 	item_color = "officer"
@@ -656,7 +656,7 @@
 
 /obj/item/clothing/under/rank/centcom/officer
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Lieutenant Commander\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."
-	name = "\improper NanoTrasen officers uniform"
+	name = "NanoTrasen officers uniform"
 	icon_state = "officer"
 	item_state = "g_suit"
 	item_color = "officer"
@@ -664,7 +664,7 @@
 
 /obj/item/clothing/under/rank/centcom/captain
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Captain\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."
-	name = "\improper NanoTrasen captains uniform"
+	name = "NanoTrasen captains uniform"
 	icon_state = "centcom"
 	item_state = "dg_suit"
 	item_color = "centcom"
@@ -682,6 +682,7 @@
 	desc = "A long loose piece of clothing worn in a hospital by someone doing or having an operation. It can be used as clothing for bedridden patients."
 	icon_state = "patient_gown"
 	item_color = "patient_gown"
+	body_parts_covered = 0
 
 /obj/item/clothing/under/pretty_dress
 	name = "pretty dress"

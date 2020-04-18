@@ -94,7 +94,7 @@
 	qdel(src)
 
 
-/obj/machinery/shield/hitby(AM)
+/obj/machinery/shield/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	//Let everyone know we've been hit!
 	visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
 
@@ -317,7 +317,7 @@
 	density = TRUE
 	req_access = list(access_research)
 	flags = CONDUCT
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/active = FALSE
 	var/power = 0
 	var/state = 0

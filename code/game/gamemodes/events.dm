@@ -197,7 +197,7 @@
 		var/obj/vent = pick(vents)
 		var/candidate = pick(candidates)
 
-		var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
+		var/mob/living/carbon/xenomorph/larva/new_xeno = new(vent.loc)
 		new_xeno.key = candidate
 
 		candidates -= candidate
@@ -239,7 +239,7 @@
 
 	var/list/area/areas = list()
 	for(var/area/A in all_areas)
-		if(istype(A, /area/security/prison) || istype(A, /area/security/brig))
+		if(istype(A, /area/station/security/prison) || istype(A, /area/station/security/brig))
 			areas += A
 
 	if(areas && areas.len > 0)

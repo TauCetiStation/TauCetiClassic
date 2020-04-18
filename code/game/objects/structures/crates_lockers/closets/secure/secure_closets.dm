@@ -28,6 +28,11 @@
 	else
 		return 0
 
+/obj/structure/closet/secure_closet/AltClick(mob/user)
+	if(!user.incapacitated() && in_range(user, src))
+		src.togglelock(user)
+	..()
+
 /obj/structure/closet/secure_closet/emp_act(severity)
 	for(var/obj/O in src)
 		O.emp_act(severity)
@@ -87,8 +92,7 @@
 		spark_system.start()
 		playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-		for(var/mob/O in viewers(user, 3))
-			O.show_message("<span class='warning'>The locker has been sliced open by [user] with an [W.name]!</span>", 1, "You hear metal being sliced and sparks flying.", 2)
+		visible_message("<span class='notice'>The locker has been sliced open by [user] with an [W.name]!</span>", blind_message = "<span class='warning'>You hear metal being sliced and sparks flying.</span>", viewing_distance = 3)
 
 	else if(istype(W,/obj/item/weapon/packageWrap) || iswelder(W))
 		return ..(W,user)
@@ -104,8 +108,7 @@
 	desc = "It appears to be broken."
 	icon_state = icon_off
 	flick(icon_broken, src)
-	for(var/mob/O in viewers(user, 3))
-		O.show_message("<span class='warning'>The locker has been broken by [user] with an electromagnetic card!</span>", 1, "You hear a faint electrical spark.", 2)
+	visible_message("<span class='notice'>The locker has been sliced open by [user] with an electromagnetic card!</span>", blind_message = "<span class='warning'>You hear a faint electrical spark.</span>", viewing_distance = 3)
 	return TRUE
 
 /obj/structure/closet/secure_closet/attack_hand(mob/user)
@@ -134,13 +137,13 @@
 		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 
 /obj/structure/closet/secure_closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
-	overlays.Cut()
+	cut_overlays()
 	if(!opened)
 		if(locked)
 			icon_state = icon_locked
 		else
 			icon_state = icon_closed
 		if(welded)
-			overlays += "welded"
+			add_overlay("welded")
 	else
 		icon_state = icon_opened

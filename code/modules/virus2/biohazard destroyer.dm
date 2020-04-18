@@ -11,10 +11,9 @@
 		if(I.type in typesof(path))
 			user.drop_item()
 			qdel(I)
-			overlays += image('icons/obj/pipes/disposal.dmi', "dispover-handle")
+			add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-handle"))
 			return
 	user.drop_item()
 	I.loc = src.loc
 
-	for(var/mob/O in hearers(src, null))
-		O.show_message("[bicon(src)] <span class='notice'>The [src.name] beeps</span>", 2)
+	audible_message("[bicon(src)] <span class='notice'>The [src.name] beeps</span>")

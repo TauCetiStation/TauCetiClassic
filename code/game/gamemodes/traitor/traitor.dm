@@ -158,8 +158,10 @@
 /datum/game_mode/proc/finalize_traitor(datum/mind/traitor)
 	if (istype(traitor.current, /mob/living/silicon))
 		add_law_zero(traitor.current)
+		traitor.current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else
 		equip_traitor(traitor.current)
+		traitor.current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	return
 
 /datum/game_mode/proc/remove_traitor(datum/mind/M)
@@ -173,14 +175,6 @@
 /datum/game_mode/traitor/declare_completion()
 	..()
 	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.//WHERE IS check_extra_completion?!?!
-
-/datum/game_mode/traitor/process()
-	// Make sure all objectives are processed regularly, so that objectives
-	// which can be checked mid-round are checked mid-round.
-	for(var/datum/mind/traitor_mind in traitors)
-		for(var/datum/objective/objective in traitor_mind.objectives)
-			objective.check_completion()
-	return 0
 
 /datum/game_mode/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs. You may ignore all other laws."

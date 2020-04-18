@@ -142,10 +142,15 @@
 		return currentSpirit.Spirit_Move(direct) */
 
 	// handle possible AI movement
+
+	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
+		return mob.remote_control.relaymove(mob, direct)
+
 	if(isAI(mob))
 		return AIMove(n,direct,mob)
 
-	if(mob.monkeyizing)	return//This is sota the goto stop mobs from moving var
+	if(mob.notransform)
+		return//This is sota the goto stop mobs from moving var
 
 	if(isliving(mob))
 		var/mob/living/L = mob
@@ -157,7 +162,7 @@
 				if(locate(/obj/item/weapon/gun/energy/sniperrifle, mob.contents))		// If mob moves while zoomed in with sniper rifle, unzoom them.
 					var/obj/item/weapon/gun/energy/sniperrifle/s = locate() in mob
 					if(s.zoom)
-						s.zoom()
+						s.toggle_zoom()
 
 	Process_Grab()
 
@@ -206,7 +211,7 @@
 					move_delay += 6
 				move_delay += 1+config.run_speed
 			if("walk")
-				move_delay += 7+config.walk_speed
+				move_delay += 2.5+config.walk_speed
 		move_delay += mob.movement_delay()
 
 		if(mob.pulledby || mob.buckled) // Wheelchair driving!
@@ -260,7 +265,14 @@
 							return
 
 		else if(mob.confused)
-			step(mob, pick(cardinal))
+			var/newdir = direct
+			if(mob.confused > 40)
+				newdir = pick(alldirs)
+			else if(prob(mob.confused * 1.5))
+				newdir = angle2dir(dir2angle(direct) + 180)
+			else if(prob(mob.confused * 3))
+				newdir = angle2dir(dir2angle(direct) + pick(90, -90))
+			step(mob, newdir)
 		else
 			. = mob.SelfMove(n, direct)
 
@@ -416,7 +428,7 @@
 
 /mob/living/carbon/human/slip(weaken_duration, obj/slipped_on, lube)
 	if(!(lube & GALOSHES_DONT_HELP))
-		if(shoes && (shoes.flags & NOSLIP))
+		if((shoes && (shoes.flags & NOSLIP)) || (wear_suit && (wear_suit.flags & NOSLIP)))
 			return FALSE
 	return ..()
 

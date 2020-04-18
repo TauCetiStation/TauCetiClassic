@@ -5,7 +5,7 @@
 	icon_state = "igniter1"
 	plane = FLOOR_PLANE
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 	var/id = null
@@ -19,6 +19,11 @@
 	use_power(50)
 	on = !on
 	icon_state = text("igniter[]", on)
+
+/obj/machinery/igniter/get_current_temperature()
+	if(on)
+		return 1000
+	return ..()
 
 /obj/machinery/igniter/process()	//ugh why is this even in process()?
 	if (on && !(stat & NOPOWER))
@@ -36,6 +41,7 @@
 		icon_state = "igniter[src.on]"
 	else
 		icon_state = "igniter0"
+	update_power_use()
 
 // Wall mounted remote-control igniter.
 
@@ -57,6 +63,7 @@
 	else
 		stat |= ~NOPOWER
 		icon_state = "[base_state]-p"
+	update_power_use()
 
 /obj/machinery/sparker/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/detective_scanner))

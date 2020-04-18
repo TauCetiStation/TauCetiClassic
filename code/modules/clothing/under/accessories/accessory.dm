@@ -23,7 +23,7 @@
 		return
 	has_suit = S
 	loc = has_suit
-	has_suit.overlays += inv_overlay
+	has_suit.add_overlay(inv_overlay)
 
 	if(!silent)
 		to_chat(user, "<span class='notice'>You attach [src] to [has_suit].</span>")
@@ -32,7 +32,7 @@
 /obj/item/clothing/accessory/proc/on_removed(mob/user)
 	if(!has_suit)
 		return
-	has_suit.overlays -= inv_overlay
+	has_suit.cut_overlay(inv_overlay)
 	has_suit = null
 	usr.put_in_hands(src)
 	add_fingerprint(user)
@@ -87,6 +87,18 @@
 					their = "your"
 				user.visible_message("<span class='notice'>[user] places [src] against [M]'s [target_zone] and starts listen attentively.</span>",
 									"<span class='notice'>You place [src] against [their] [target_zone] and start to listen attentively.</span>")
+				if(M.stat != DEAD && !(M.status_flags & FAKEDEATH))
+					if(target_zone == BP_CHEST)
+						if(M.oxyloss < 50)
+							user.playsound_local(null, 'sound/machines/cardio/pulse.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+						var/obj/item/organ/internal/lungs/L = M.organs_by_name[O_LUNGS]
+						if(L)
+							if(L.is_bruised())
+								user.playsound_local(null, 'sound/machines/cardio/wheezes.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+							else if(L.germ_level > INFECTION_LEVEL_ONE)
+								user.playsound_local(null, 'sound/machines/cardio/crackles.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+							else
+								user.playsound_local(null, 'sound/machines/cardio/normal.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 				if(do_after(user, 25, target = M) && src)
 					var/pulse_status = "pulse"
 					var/pulse_strength = "hear a weak"

@@ -170,7 +170,7 @@
 
 	return hear
 
-
+// todo: tg
 /proc/get_hearers_in_view(R, atom/source)
 	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
@@ -244,8 +244,6 @@
 
 	return mobs
 
-#define SIGN(X) ((X<0)?-1:1)
-
 /proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
 	var/turf/T
 	if(X1==X2)
@@ -275,7 +273,6 @@
 			if(T.opacity)
 				return 0
 	return 1
-#undef SIGN
 
 /proc/isInSight(atom/A, atom/B)
 	var/turf/Aturf = get_turf(A)
@@ -444,10 +441,6 @@
 	var/b = mixOneColor(weights, blues)
 	return rgb(r,g,b)
 
-/proc/random_color()
-	var/list/rand = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f")
-	return "#" + pick(rand) + pick(rand) + pick(rand) + pick(rand) + pick(rand) + pick(rand)
-
 /proc/noob_notify(mob/M)
 	//todo: check db before
 	if(!M.client)
@@ -460,11 +453,12 @@
 	if(M.client.player_age == 0)
 		var/adminmsg = {"New player notify
 					Player '[M.ckey]' joined to the game as [M.mind.name][player_assigned_role] [ADMIN_FLW(M)] [ADMIN_PP(M)] [ADMIN_VV(M)]
-					Byond profile: <a href='[player_byond_profile]'>open</a>"}
+					Byond profile: <a href='[player_byond_profile]'>open</a>
+					Guard report: <a href='?_src_=holder;guard=\ref[M]'>show</a>"}
 
 		message_admins(adminmsg)
 
-	if((isnum(M.client.player_age) && M.client.player_age < 5) || M.client.player_ingame_age < 600) //less than 5 days on server OR less than 10 hours in game
+	if((isnum(M.client.player_age) && M.client.player_age < 5) || (isnum(M.client.player_ingame_age) && M.client.player_ingame_age < 600)) //less than 5 days on server OR less than 10 hours in game
 		var/mentormsg = {"New player notify
 					Player '[M.key]' joined to the game as [M.mind.name][player_assigned_role] (<a href='byond://?_src_=usr;track=\ref[M]'>FLW</a>)
 					Days on server: [M.client.player_age]; Minutes played: [M.client.player_ingame_age < 120 ? "<span class='alert'>[M.client.player_ingame_age]</span>" : M.client.player_ingame_age]

@@ -17,7 +17,7 @@ Pipelines + Other Objects -> Pipe network
 	anchored = TRUE
 	idle_power_usage = 0
 	active_power_usage = 0
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	layer = GAS_PIPE_HIDDEN_LAYER // under wires
 
 	var/nodealert = FALSE
@@ -177,7 +177,7 @@ Pipelines + Other Objects -> Pipe network
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src].</span>",
 					"<span class='italics'>You hear ratchet.</span>")
-				investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", INVESTIGATE_ATMOS)
+				log_investigate("was <span class='warning'>REMOVED</span> by [key_name(usr)]", INVESTIGATE_ATMOS)
 
 				//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 				if(unsafe_wrenching)

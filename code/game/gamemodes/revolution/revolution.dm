@@ -372,6 +372,8 @@
 //Announces the end of the game with all relavent information stated//
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/declare_completion()
+	if(name == "rp-revolution") // hack, we should move game_mode/revolution/rp_revolution to game_mode/rp_revolution
+		return ..()
 	completion_text += "<h3>Revolution mode resume:</h3>"
 	if(!config.objectives_disabled)
 		if(finished == 1)
@@ -385,7 +387,7 @@
 	var/num_revs = 0
 	for(var/mob/living/carbon/mob in alive_mob_list)
 		if(mob.mind)
-			if(mob.mind in head_revolutionaries || mob.mind in revolutionaries)
+			if((mob.mind in head_revolutionaries) || (mob.mind in revolutionaries))
 				num_revs++
 	completion_text += "<br>[TAB]Command's Approval Rating: <b>[100 - round((num_revs/alive_mob_list.len)*100, 0.1)]%</b>" // % of loyal crew
 	..()

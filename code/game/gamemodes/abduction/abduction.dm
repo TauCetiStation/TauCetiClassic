@@ -10,8 +10,8 @@
 	role_type = ROLE_ABDUCTOR
 	required_enemies = 2
 	recommended_enemies = 2
-	required_players = 15
-	required_players_secret = 15
+	required_players = 25
+	required_players_secret = 25
 	var/max_teams = 4
 	abductor_teams = 1
 	var/list/datum/mind/scientists = list()
@@ -65,11 +65,11 @@
 
 		scientist.assigned_role = "MODE"
 		scientist.special_role = "Abductor scientist"
-		log_game("[scientist.key] (ckey) has been selected as an abductor team [team_number] scientist.")
+		log_game("[key_name(scientist)] has been selected as an abductor team [team_number] scientist.")
 
 		agent.assigned_role = "MODE"
 		agent.special_role = "Abductor agent"
-		log_game("[agent.key] (ckey) has been selected as an abductor team [team_number] agent.")
+		log_game("[key_name(agent)] has been selected as an abductor team [team_number] agent.")
 
 		abductors |= agent
 		abductors |= scientist
@@ -381,12 +381,12 @@
 	explanation_text = "Experiment on [target_amount] humans."
 
 /datum/objective/experiment/check_completion()
-	. = 0
+	. = OBJECTIVE_LOSS
 	var/ab_team = team
 	for(var/obj/machinery/abductor/experiment/E in abductor_machinery_list)
 		if(E.team == ab_team)
 			if(E.points >= target_amount)
-				return 1
+				return OBJECTIVE_WIN
 
 /datum/objective/abductee
 //	dangerrating = 5

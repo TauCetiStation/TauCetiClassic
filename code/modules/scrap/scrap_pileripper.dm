@@ -13,7 +13,7 @@
 	layer = MOB_LAYER+1 // Overhead
 	anchored = 1
 	density = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 300
 
 	var/safety_mode = 0 // Temporality stops the machine if it detects a mob
@@ -134,7 +134,7 @@
 	if(iscarbon(L))
 		gib = 0
 		if(L.stat == CONSCIOUS)
-			L.emote("scream",,, 1)
+			L.emote("scream")
 		add_blood(L)
 	if(!blood && !issilicon(L))
 		blood = 1

@@ -1,5 +1,5 @@
 /obj/machinery/computer/telescience
-	name = "\improper Telepad Control Console"
+	name = "Telepad Control Console"
 	desc = "Used to teleport objects to and from the telescience telepad."
 	icon_state = "teleport"
 	circuit = /obj/item/weapon/circuitboard/telesci_console
@@ -187,7 +187,7 @@
 
 /obj/machinery/computer/telescience/proc/close_wormhole()
 	if(active_wormhole)
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 		qdel(active_wormhole)
 		active_wormhole = null
 
@@ -239,7 +239,7 @@
 
 				// use a lot of power
 				use_power(power * 1500)
-				use_power = 2
+				set_power_use(ACTIVE_POWER_USE)
 
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, get_turf(telepad))
@@ -250,7 +250,7 @@
 					temp_msg += "<BR>Calibration required soon."
 				else
 					temp_msg += "<BR>Data printed below."
-				investigate_log("[key_name(usr)]/[user] has teleported with Telescience at [trueX],[trueY],[z_co], in [A ? A.name : "null area"].","telesci")
+				log_investigate("[key_name(usr)]/[user] has teleported with Telescience at [trueX],[trueY],[z_co], in [A ? A.name : "null area"].",INVESTIGATE_TELESCI)
 
 				var/datum/effect/effect/system/spark_spread/SS = new /datum/effect/effect/system/spark_spread
 				SS.set_up(5, 1, target)

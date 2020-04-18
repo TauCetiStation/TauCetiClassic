@@ -22,26 +22,25 @@
 	to_chat(world, "<B>The current game mode is - Wizard!</B>")
 	to_chat(world, "<B>There is a <span class='warning'>SPACE WIZARD</span> on the station. You can't let him achieve his objective!</B>")
 
+/datum/game_mode/wizard/can_start()
+	return (..() && wizardstart.len != 0)
 
-/datum/game_mode/wizard/can_start()//This could be better, will likely have to recode it later
-	if(!..())
-		return 0
+/datum/game_mode/wizard/assign_outsider_antag_roles()
+	if (!..())
+		return FALSE
 	var/datum/mind/wizard = pick(antag_candidates)
 	wizards += wizard
 	modePlayer += wizard
 	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
 	wizard.special_role = "Wizard"
 	wizard.original = wizard.current
-	if(wizardstart.len == 0)
-		to_chat(wizard.current, "<span class='danger'>A starting location for you could not be found, please report this bug!</span>")
-		return 0
-	return 1
-
+	return TRUE
+	
 
 /datum/game_mode/wizard/pre_setup()
 	for(var/datum/mind/wizard in wizards)
 		wizard.current.loc = pick(wizardstart)
-	return 1
+	return TRUE
 
 
 /datum/game_mode/wizard/post_setup()
@@ -171,8 +170,9 @@
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(wizard_mob), SLOT_WEAR_SUIT)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(wizard_mob), SLOT_HEAD)
 	if(wizard_mob.backbag == 2) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(wizard_mob), SLOT_BACK)
-	if(wizard_mob.backbag == 3) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(wizard_mob), SLOT_BACK)
-	if(wizard_mob.backbag == 4) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(wizard_mob), SLOT_BACK)
+	if(wizard_mob.backbag == 3) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(wizard_mob), SLOT_BACK)
+	if(wizard_mob.backbag == 4) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(wizard_mob), SLOT_BACK)
+	if(wizard_mob.backbag == 5) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(wizard_mob), SLOT_BACK)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box(wizard_mob), SLOT_IN_BACKPACK)
 //	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/scrying_gem(wizard_mob), SLOT_L_STORE) For scrying gem.
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), SLOT_R_STORE)
@@ -280,7 +280,7 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "wizard", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text
 
 //OTHER PROCS

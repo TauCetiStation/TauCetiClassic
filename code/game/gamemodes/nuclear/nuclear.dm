@@ -9,15 +9,13 @@
 	role_type = ROLE_OPERATIVE
 	required_players = 15
 	required_players_secret = 25
-	required_enemies = 1
-	recommended_enemies = 5
+	required_enemies = 2
+	recommended_enemies = 6
 
 	votable = 0
 
 	uplink_welcome = "Corporate Backed Uplink Console:"
 	uplink_uses = 20
-
-	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
@@ -29,25 +27,29 @@
 	to_chat(world, "<B>Gorlex Maradeurs are approaching [station_name()]!</B>")
 	to_chat(world, "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!")
 
-/datum/game_mode/nuclear/can_start()//This could be better, will likely have to recode it later
+/datum/game_mode/nuclear/can_start()
+	if (!..())
+		return FALSE
+	// Looking for map to nuclear spawn points
+	var/spwn_synd = FALSE
+	var/spwn_comm = FALSE
+	for(var/obj/effect/landmark/A in landmarks_list)
+		if(A.name == "Syndicate-Commander")
+			spwn_comm = TRUE
+		else if (A.name == "Syndicate-Spawn")
+			spwn_synd = TRUE
+		if (spwn_synd && spwn_comm)
+			return TRUE
+	return FALSE
+
+/datum/game_mode/nuclear/assign_outsider_antag_roles()
 	if(!..())
-		return 0
-
+		return FALSE
 	var/agent_number = 0
-
-    /*
-	 * if(antag_candidates.len > agents_possible)
-	 * 	agent_number = agents_possible
-	 * else
-	 * 	agent_number = antag_candidates.len
-	 *
-	 * if(agent_number > n_players)
-	 *	agent_number = n_players/2
-	 */
 
 	//Antag number should scale to active crew.
 	var/n_players = num_players()
-	agent_number = CLAMP((n_players/5), 2, 6)
+	agent_number = CLAMP((n_players/5), required_enemies, recommended_enemies)
 
 	if(antag_candidates.len < agent_number)
 		agent_number = antag_candidates.len
@@ -63,8 +65,7 @@
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 	//	log_game("[synd_mind.key] with age [synd_mind.current.client.player_age] has been selected as a nuclear operative")
 	//	message_admins("[synd_mind.key] with age [synd_mind.current.client.player_age] has been selected as a nuclear operative",0,1)
-	return 1
-
+	return TRUE
 
 /datum/game_mode/nuclear/pre_setup()
 	return 1
@@ -225,6 +226,7 @@
 	if(boss)
 		to_chat(syndicate.current, "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs Commander</font>!</span>")
 	var/obj_count = 1
+	syndicate.current.playsound_local(null, 'sound/antag/ops.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in syndicate.objectives)
@@ -256,8 +258,10 @@
 	if(synd_mob.backbag == 2)
 		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), SLOT_BACK)
 	if(synd_mob.backbag == 3)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(synd_mob), SLOT_BACK)
+		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(synd_mob), SLOT_BACK)
 	if(synd_mob.backbag == 4)
+		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(synd_mob), SLOT_BACK)
+	if(synd_mob.backbag == 5)
 		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(synd_mob), SLOT_BACK)
 	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m12mm(synd_mob), SLOT_IN_BACKPACK)
 	synd_mob.equip_to_slot_or_del(new /obj/item/device/radio/uplink(synd_mob), SLOT_IN_BACKPACK)
@@ -279,6 +283,11 @@
 		if(SKRELL)
 			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/skrell(synd_mob), SLOT_IN_BACKPACK)
 			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), SLOT_SHOES)
+		if(VOX)
+			synd_mob.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(synd_mob), SLOT_L_HAND)
+			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(synd_mob), SLOT_WEAR_MASK)
+			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/vox(synd_mob), SLOT_IN_BACKPACK)
+			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/magboots/vox(synd_mob), SLOT_SHOES)
 		else
 			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), SLOT_SHOES)
 
@@ -305,14 +314,13 @@
 					return 0
 	return 1
 
-
 /datum/game_mode/nuclear/declare_completion()
 	if(config.objectives_disabled)
 		return
 	var/disk_rescued = 1
 	for(var/obj/item/weapon/disk/nuclear/D in poi_list)
 		var/disk_area = get_area(D)
-		if(!is_type_in_list(disk_area, centcom_areas))
+		if(!is_type_in_typecache(disk_area, centcom_areas_typecache))
 			disk_rescued = 0
 			break
 	var/crew_evacuated = (SSshuttle.location==2)

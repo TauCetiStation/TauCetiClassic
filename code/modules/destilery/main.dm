@@ -16,12 +16,12 @@
 	var/busy = 0
 	var/progress = 0
 	var/error = 0
-	name = "\improper Mill"
+	name = "Mill"
 	desc = "It is a machine that grinds produce."
 	icon_state = "autolathe"
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 1000
 
@@ -30,13 +30,13 @@
 		return
 
 	if(!busy)
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 		if(input.len)
 			milled_item = input[1]
 			input -= milled_item
 			progress = 0
 			busy = 1
-			use_power = 2
+			set_power_use(ACTIVE_POWER_USE)
 		return
 
 	progress++
@@ -88,12 +88,12 @@
 	var/busy = 0
 	var/progress = 0
 	var/error = 0
-	name = "\improper Fermenter"
+	name = "Fermenter"
 	desc = "It is a machine that ferments produce into alcoholic drinks."
 	icon_state = "autolathe"
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 500
 
@@ -102,13 +102,13 @@
 		return
 
 	if(!busy)
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 		if(input.len)
 			fermenting_item = input[1]
 			input -= fermenting_item
 			progress = 0
 			busy = 1
-			use_power = 2
+			set_power_use(ACTIVE_POWER_USE)
 		return
 
 	if(!water_level)
@@ -158,12 +158,12 @@
 	var/busy = 0
 	var/progress = 0
 	var/error = 0
-	name = "\improper Still"
+	name = "Still"
 	desc = "It is a machine that produces hard liquor from alcoholic drinks."
 	icon_state = "autolathe"
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 10000
 
@@ -172,13 +172,13 @@
 		return
 
 	if(!busy)
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 		if(input.len)
 			destilling_item = input[1]
 			input -= destilling_item
 			progress = 0
 			busy = 1
-			use_power = 2
+			set_power_use(ACTIVE_POWER_USE)
 		return
 
 	progress++
@@ -224,12 +224,12 @@
 	var/busy = 0
 	var/progress = 0
 	var/error = 0
-	name = "\improper Squeezer"
+	name = "Squeezer"
 	desc = "It is a machine that squeezes extracts from produce."
 	icon_state = "autolathe"
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 500
 
@@ -248,12 +248,12 @@
 	var/error = 0
 	var/enzymes = 0
 	var/water = 0
-	name = "\improper Centrifuge"
+	name = "Centrifuge"
 	desc = "It is a machine that spins produce."
 	icon_state = "autolathe"
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 10000
 
@@ -262,13 +262,13 @@
 		return
 
 	if(!busy)
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 		if(input.len)
 			spinning_item = input[1]
 			input -= spinning_item
 			progress = 0
 			busy = 1
-			use_power = 2
+			set_power_use(ACTIVE_POWER_USE)
 		return
 
 	progress++

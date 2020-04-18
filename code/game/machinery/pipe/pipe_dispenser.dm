@@ -4,7 +4,7 @@
 	icon_state = "pipe_d"
 	density = TRUE
 	anchored = TRUE
-	use_power = 0 // i see no point in that, better implement battery feature.
+	use_power = NO_POWER_USE // i see no point in that, better implement battery feature.
 	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/unwrenched = 0
 	var/wait = 0
@@ -22,6 +22,8 @@
 		<A href='?src=\ref[src];make=19;dir=1'>4-Way Manifold</A><BR>
 		<A href='?src=\ref[src];make=18;dir=1'>Manual T-Valve</A><BR>
 		<A href='?src=\ref[src];make=43;dir=1'>Manual T-Valve - Mirrored</A><BR>
+		<A href='?src=\ref[src];make=52;dir=1'>Digital T-Valve</A><BR>
+		<A href='?src=\ref[src];make=53;dir=1'>Digital T-Valve - Mirrored</A><BR>
 		<b>Supply pipes:</b><BR>
 		<A href='?src=\ref[src];make=29;dir=1'>Pipe</A><BR>
 		<A href='?src=\ref[src];make=30;dir=5'>Bent Pipe</A><BR>
@@ -137,7 +139,7 @@
 	icon_state = "pipe_d"
 	density = TRUE
 	anchored = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 
 /*
 //Allow you to push disposal pipes into it (for those with density 1)

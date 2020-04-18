@@ -9,7 +9,7 @@
 	var/ghost_name = "Unknown"
 	var/creating_blob = 0
 	faction = "blob"
-	use_me = 0 //Blobs can't emote
+	me_verb_allowed = FALSE //Blobs can't emote
 
 
 /mob/living/blob/atom_init()
@@ -22,7 +22,7 @@
 	return//No talking for you
 
 
-/mob/living/blob/emote(act,m_type=1,message = null)
+/mob/living/blob/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 	return
 
 
@@ -40,7 +40,7 @@
 	AdjustStunned(0)
 	AdjustParalysis(0)
 	AdjustWeakened(0)
-	sleeping = 0
+	SetSleeping(0)
 	if(stat)
 		stat = CONSCIOUS
 	return

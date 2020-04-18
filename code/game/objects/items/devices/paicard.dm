@@ -13,7 +13,7 @@
 /obj/item/device/paicard/atom_init()
 	. = ..()
 	paicard_list += src
-	overlays += "pai-off"
+	add_overlay("pai-off")
 
 /obj/item/device/paicard/Destroy()
 	paicard_list -= src
@@ -284,31 +284,29 @@
 
 /obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	src.pai = personality
-	src.overlays += "pai-happy"
+	src.add_overlay("pai-happy")
 
 /obj/item/device/paicard/proc/removePersonality()
 	src.pai = null
-	src.overlays.Cut()
-	src.overlays += "pai-off"
+	src.cut_overlays()
+	src.add_overlay("pai-off")
 
 /obj/item/device/paicard/proc/setEmotion(emotion)
 	if(pai)
-		src.overlays.Cut()
+		src.cut_overlays()
 		switch(emotion)
-			if(1) src.overlays += "pai-happy"
-			if(2) src.overlays += "pai-cat"
-			if(3) src.overlays += "pai-extremely-happy"
-			if(4) src.overlays += "pai-face"
-			if(5) src.overlays += "pai-laugh"
-			if(6) src.overlays += "pai-off"
-			if(7) src.overlays += "pai-sad"
-			if(8) src.overlays += "pai-angry"
-			if(9) src.overlays += "pai-what"
+			if(1) src.add_overlay("pai-happy")
+			if(2) src.add_overlay("pai-cat")
+			if(3) src.add_overlay("pai-extremely-happy")
+			if(4) src.add_overlay("pai-face")
+			if(5) src.add_overlay("pai-laugh")
+			if(6) src.add_overlay("pai-off")
+			if(7) src.add_overlay("pai-sad")
+			if(8) src.add_overlay("pai-angry")
+			if(9) src.add_overlay("pai-what")
 
 /obj/item/device/paicard/proc/alertUpdate()
-	var/turf/T = get_turf_or_move(src.loc)
-	for (var/mob/M in viewers(T))
-		M.show_message("<span class='notice'>[src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", 3, "<span class='notice'>[src] bleeps electronically.</span>", 2)
+	visible_message("<span class='notice'>[src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", "<span class='notice'>[src] bleeps electronically.</span>")
 
 /obj/item/device/paicard/emp_act(severity)
 	for(var/mob/M in src)

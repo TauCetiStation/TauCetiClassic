@@ -78,7 +78,7 @@ commented cause polls are kinda broken now, needs refactoring */
 	if(statpanel("Lobby"))
 		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
 
-		if(ticker.current_state == GAME_STATE_PREGAME)
+		if(world.is_round_preparing())
 			stat("Time To Start:", (ticker.timeLeft >= 0) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
 
 			stat("Players:", "[ticker.totalPlayers]")
@@ -357,6 +357,9 @@ commented cause polls are kinda broken now, needs refactoring */
 
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
+
+	if(character.client)
+		character.client.guard.time_velocity_spawn = world.timeofday
 
 	qdel(src)
 

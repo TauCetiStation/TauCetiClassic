@@ -60,7 +60,7 @@
 
 	//Tail
 	if(H.species.tail && H.species.flags[HAS_TAIL])
-		temp = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[H.species.tail]_s")
+		temp = new/icon("icon" = 'icons/mob/species/tail.dmi', "icon_state" = H.species.tail)
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
 	// Skin tone
@@ -202,7 +202,7 @@
 	return "<span class='bad'>ERROR</span>"
 
 /obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
-	H.Sleeping(8)
+	H.Sleeping(16 SECONDS)
 	var/area/A
 	if(console && console.pad && console.pad.teleport_target)
 		A = console.pad.teleport_target
@@ -220,5 +220,5 @@
 	else
 		icon_state = "experiment"
 
-/obj/machinery/abductor/experiment/visible_message(text)
+/obj/machinery/abductor/experiment/visible_message(text, blind_message, viewing_distance, list/ignored_mobs)
 	return "beeps, \"[text]\""

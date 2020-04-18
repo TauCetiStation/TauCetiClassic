@@ -22,6 +22,13 @@
 
 	action_button_name = "Toggle Recorder"
 
+/obj/item/device/taperecorder/get_current_temperature()
+	. = 0
+	if(recording || playing)
+		. += 10
+	if(emagged)
+		. += 10
+
 /obj/item/device/taperecorder/hear_talk(mob/living/M, msg, verb="says")
 	if(recording)
 		timestamp+= timerecorded
@@ -248,9 +255,7 @@
 			return
 		else if(playing == 1)
 			playing = 0
-			var/turf/T = get_turf(src)
-			for(var/mob/O in hearers(world.view-1, T))
-				O.show_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>",2)
+			audible_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>")
 			icon_state = "taperecorderidle"
 			return
 		else

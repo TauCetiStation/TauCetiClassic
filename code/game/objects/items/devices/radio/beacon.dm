@@ -98,7 +98,7 @@
 		if(medical)
 			if(isturf(medical.loc))
 				var/area/A = get_area(medical)
-				if(istype(A, /area/medical/sleeper))
+				if(istype(A, /area/station/medical/sleeper))
 					target_beacon = medical
 					found = 1
 					break
@@ -125,7 +125,7 @@
 		playsound(H, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 5, FALSE)
 		user.visible_message("<span class='warning'>[user.name] finished planting an [name] on [H.name]!</span>")
 		var/I = image('icons/obj/device.dmi', "medicon")
-		H.overlays += I
+		H.add_overlay(I)
 		to_chat(user, "<span class='notice'>Device has been planted. Timer counting down from [timer].</span>")
 		addtimer(CALLBACK(src, .proc/teleport, H, target_beacon, I), timer * 10)
 
@@ -144,7 +144,7 @@
 			H.loc = get_turf(beacon)
 		if (src)
 			qdel(src)
-		H.overlays -= I
+		H.cut_overlay(I)
 		qdel(I)
 
 

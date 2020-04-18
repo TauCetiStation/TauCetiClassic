@@ -26,3 +26,5 @@
 				..(sanitize(message), sanitize = 0)
 			else
 				return
+		if(istype(container, /obj/item/organ/external/head/skeleton)) // Why not, talking skeleton heads are funny
+			..(sanitize(message), sanitize = 0)

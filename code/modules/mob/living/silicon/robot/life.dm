@@ -2,13 +2,14 @@
 	set invisibility = 0
 	//set background = 1
 
-	if (src.monkeyizing)
+	if (notransform)
 		return
 
 	src.blinded = null
 
 	//Status updates, death etc.
 	clamp_values()
+	handle_fire()
 	handle_regular_status_updates()
 	handle_actions()
 
@@ -27,7 +28,7 @@
 //	SetStunned(min(stunned, 30))
 	SetParalysis(min(paralysis, 30))
 //	SetWeakened(min(weakened, 20))
-	sleeping = 0
+	SetSleeping(0)
 	adjustBruteLoss(0)
 	adjustToxLoss(0)
 	adjustOxyLoss(0)
@@ -70,9 +71,8 @@
 
 	updatehealth()
 
-	if(src.sleeping)
+	if(IsSleeping())
 		Paralyse(3)
-		src.sleeping--
 
 	if(src.resting)
 		Weaken(5)
@@ -155,7 +155,7 @@
 	if(!client)
 		return 0
 
-	if (src.stat == DEAD || XRAY in mutations || src.sight_mode & BORGXRAY)
+	if (src.stat == DEAD || (XRAY in mutations) || (src.sight_mode & BORGXRAY))
 		set_EyesVision()
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
@@ -252,15 +252,15 @@
 			if(0.75 to INFINITY)
 				clear_alert("charge")
 			if(0.5 to 0.75)
-				throw_alert("charge","lowcell",1)
+				throw_alert("charge", /obj/screen/alert/lowcell, 1)
 			if(0.25 to 0.5)
-				throw_alert("charge","lowcell",2)
+				throw_alert("charge", /obj/screen/alert/lowcell, 2)
 			if(0.01 to 0.25)
-				throw_alert("charge","lowcell",3)
+				throw_alert("charge", /obj/screen/alert/lowcell, 3)
 			else
-				throw_alert("charge","emptycell")
+				throw_alert("charge", /obj/screen/alert/emptycell)
 	else
-		throw_alert("charge","nocell")
+		throw_alert("charge", /obj/screen/alert/nocell)
 
 	if(pullin)
 		if(pulling)
@@ -312,3 +312,20 @@
 	else
 		canmove = TRUE
 	return canmove
+
+//Robots on fire
+/mob/living/silicon/robot/handle_fire()
+	if(..())
+		return
+	if(fire_stacks > 0)
+		fire_stacks--
+		fire_stacks = max(0, fire_stacks)
+	else
+		ExtinguishMob()
+		return TRUE
+
+/mob/living/silicon/robot/update_fire()
+	if(on_fire)
+		add_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning"))
+	else
+		cut_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning"))

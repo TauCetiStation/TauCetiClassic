@@ -16,6 +16,7 @@
 	var/ammo_type = /obj/item/ammo_casing/magic
 	var/global_access = FALSE
 	origin_tech = null
+	action_button_name = null
 	clumsy_check = 0
 	can_suicide_with = FALSE
 	can_be_holstered = FALSE
@@ -29,7 +30,7 @@
 
 /obj/item/weapon/gun/magic/special_check(mob/M, atom/target)
 	var/area/A = get_area(M)
-	if(istype(A, /area/wizard_station))
+	if(istype(A, /area/custom/wizard_station))
 		to_chat(M, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].</span>")
 		return FALSE
 	if(M.mind.special_role != "Wizard" && !global_access)

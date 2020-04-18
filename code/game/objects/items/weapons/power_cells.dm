@@ -1,11 +1,12 @@
 /obj/item/weapon/stock_parts/cell
 	name = "power cell"
 	desc = "A rechargable electrochemical power cell."
+	hitsound = list('sound/items/tools/device_big-hit.ogg')
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	item_state = "cell"
 	origin_tech = "powerstorage=1"
-	force = 5.0
+	force = 3.0
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -22,9 +23,9 @@
 	return (FIRELOSS)
 
 /obj/item/weapon/stock_parts/cell/crap
-	name = "\improper Nanotrasen brand rechargable AA battery"
+	name = "Nanotrasen brand rechargable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
-	origin_tech = "powerstorage=0"
+	origin_tech = "powerstorage=1"
 	maxcharge = 500
 	g_amt = 40
 	rating = 2
@@ -35,7 +36,7 @@
 
 /obj/item/weapon/stock_parts/cell/secborg
 	name = "security borg rechargable D battery"
-	origin_tech = "powerstorage=0"
+	origin_tech = "powerstorage=1"
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
 	g_amt = 40
 	rating = 2.5

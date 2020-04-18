@@ -2,7 +2,7 @@ var/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/transit,
                                                 /area/shuttle/escape_pod1/transit,
                                                 /area/shuttle/escape_pod2/transit,
                                                 /area/shuttle/escape_pod3/transit,
-                                                /area/shuttle/escape_pod5/transit))
+                                                /area/shuttle/escape_pod4/transit))
 
 #define IS_ON_ESCAPE_SHUTTLE is_type_in_typecache(get_area(M), escape_area_transit)
 
@@ -33,8 +33,6 @@ var/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/transit,
 					continue
 
 				M.playsound_local(null, announce_sound, VOL_EFFECTS_VOICE_ANNOUNCEMENT, null, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
-
-#undef IS_ON_ESCPAE_SHUTTLE
 
 //station announces: communication console, shuttle(?), departaments
 /proc/captain_announce(message, title = "Priority Announcement", announcer, sound = "announce", subtitle)

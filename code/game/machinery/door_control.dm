@@ -14,9 +14,9 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
 	desc = "A remote control-switch for a door."
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 	allowed_checks = ALLOWED_CHECK_A_HAND
@@ -70,7 +70,7 @@
 	return ..()
 
 /obj/machinery/door_control/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	switch(buildstage)
 		if(DOOR_CONTROL_COMPLETE)
 			if(!wiresexposed)
@@ -85,12 +85,12 @@
 				if(stat & NOPOWER)
 					return
 				else if(emagged)
-					overlays += image('icons/obj/stationobjs.dmi', "doorctrl_assembly-emagged")
+					add_overlay(image('icons/obj/stationobjs.dmi', "doorctrl_assembly-emagged"))
 				else if(connected_poddoors.len || connected_airlocks.len)
-					overlays += image('icons/obj/stationobjs.dmi', "doorctrl_assembly-is_id")
+					add_overlay(image('icons/obj/stationobjs.dmi', "doorctrl_assembly-is_id"))
 					return
 				else
-					overlays += image('icons/obj/stationobjs.dmi', "doorctrl_assembly-no_id")
+					add_overlay(image('icons/obj/stationobjs.dmi', "doorctrl_assembly-no_id"))
 					return
 		if(DOOR_CONTROL_WITHOUT_WIRES)
 			icon_state = "doorctrl_assembly0"
@@ -348,10 +348,10 @@
 	use_power(5)
 	icon_state = "doorctrl1"
 	for(var/obj/machinery/door/airlock/A in connected_airlocks)
-		INVOKE_ASYNC(src, .obj/machinery/door_control/proc/toggle_airlock, A)
+		INVOKE_ASYNC(src, .proc/toggle_airlock, A)
 	for(var/obj/machinery/door/poddoor/P in connected_poddoors)
-		INVOKE_ASYNC(src, .obj/machinery/door_control/proc/toggle_poddoor, P)
-	addtimer(CALLBACK(src, .update_icon), 15)
+		INVOKE_ASYNC(src, .proc/toggle_poddoor, P)
+	addtimer(CALLBACK(src, /obj.proc/update_icon), 15)
 
 /obj/machinery/door_control/proc/toggle_airlock(obj/machinery/door/airlock/A)
 	if(!A.isAllPowerCut() && A.hasPower())
@@ -513,7 +513,6 @@
 #undef DOOR_CONTROL_WITHOUT_WIRES
 
 #undef OPEN_BOLTS
-#undef BOLTS_SHOCKS
 #undef OPEN_BOLTS_SHOCK
 
 #undef ON_WALL

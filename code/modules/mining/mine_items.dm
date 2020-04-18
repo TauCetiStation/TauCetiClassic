@@ -162,6 +162,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "lantern"
 	item_state = "lantern"
 	desc = "A mining lantern."
+	button_sound = 'sound/items/lantern.ogg'
 	brightness_on = 4			// luminosity when on
 
 /*****************************Pickaxe********************************/
@@ -216,6 +217,9 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	origin_tech = "materials=4;phorontech=3;engineering=3"
 	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	drill_verb = "cutting"
+
+/obj/item/weapon/pickaxe/plasmacutter/get_current_temperature()
+	return 3800
 
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond pickaxe"
@@ -428,7 +432,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		loc = null
 		var/location
 		location = target
-		target.overlays += image('icons/obj/mining/explosives.dmi', "charge_basic_armed")
+		target.add_overlay(image('icons/obj/mining/explosives.dmi', "charge_basic_armed"))
 		to_chat(user, "<span class='notice'>Charge has been planted. Timer counting down from </span>[timer]")
 		spawn(timer*10)
 			for(var/turf/simulated/mineral/M in view(get_turf(target), blast_range))
@@ -467,15 +471,15 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(mob/living/user/L)
+/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(mob/user)
 	if(overheat || recent_reload)
 		return
 	power_supply.give(500)
 	if(!silenced)
 		playsound(src, 'sound/weapons/guns/kenetic_reload.ogg', VOL_EFFECTS_MASTER)
 	else
-		to_chat(usr, "<span class='warning'>You silently charge [src].</span>")
-	recent_reload = 1
+		to_chat(user, "<span class='warning'>You silently charge [src].</span>")
+	recent_reload = TRUE
 	update_icon()
 	return
 
@@ -511,7 +515,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		new /obj/item/effect/kinetic_blast(src.loc)
 		qdel(src)
 
-/obj/item/projectile/kinetic/on_hit(atom/target)
+/obj/item/projectile/kinetic/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	. = ..()
 	var/turf/target_turf = get_turf(target)
 	if(istype(target_turf, /turf/simulated/mineral))
@@ -536,8 +540,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /*****************************Survival Pod********************************/
 
 
-/area/survivalpod
-	name = "\improper Emergency Shelter"
+/area/custom/survivalpod
+	name = "Emergency Shelter"
 	icon_state = "away"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED

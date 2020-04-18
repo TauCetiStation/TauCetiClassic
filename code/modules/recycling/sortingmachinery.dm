@@ -3,36 +3,33 @@
 	name = "large parcel"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycloset"
-	var/obj/wrapped = null
 	density = 1
 	var/sortTag = ""
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
-/obj/structure/bigDelivery/Destroy()
-	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
-		wrapped.loc = (get_turf(loc))
-		if(istype(wrapped, /obj/structure/closet))
-			var/obj/structure/closet/O = wrapped
-			O.welded = 0
-	var/turf/T = get_turf(src)
+/obj/structure/bigDelivery/proc/dump()
 	for(var/atom/movable/AM in contents)
-		AM.loc = T
+		if(istype(AM, /obj/structure/closet))
+			var/obj/structure/closet/O = AM
+			O.welded = 0
+		AM.forceMove(get_turf(src))
+
+/obj/structure/bigDelivery/Destroy()
+	dump()
 	return ..()
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
-	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
-		wrapped.loc = (get_turf(src.loc))
-		if(istype(wrapped, /obj/structure/closet))
-			var/obj/structure/closet/O = wrapped
-			O.welded = 0
+	if(contents.len > 0)
+		dump()
+	else
+		to_chat(user, "<span class='notice'>The parcel was empty!</span>")
+	playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
 	qdel(src)
-	return
 
 /obj/structure/bigDelivery/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W
-
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
 			src.sortTag = O.currTag
@@ -46,31 +43,36 @@
 		for(var/mob/M in viewers())
 			to_chat(M, "<span class='notice'>[user] labels [src] as [str].</span>")
 		src.name = "[src.name] ([str])"
-	return
 
 /obj/item/smallDelivery
 	desc = "A small wrapped package."
 	name = "small parcel"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycrateSmall"
-	var/obj/item/wrapped = null
 	var/sortTag = ""
 
-/obj/item/smallDelivery/attack_self(mob/user)
-	if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
-		wrapped.loc = user.loc
-		if(ishuman(user))
-			user.put_in_hands(wrapped)
+/obj/item/smallDelivery/proc/dump(mob/user)
+	for(var/atom/movable/AM in contents)
+		if(user && user.put_in_active_hand(AM))
+			AM.add_fingerprint(user)
 		else
-			wrapped.loc = get_turf_loc(src)
+			AM.forceMove(src.loc)
 
+/obj/item/smallDelivery/Destroy()
+	dump()
+	return ..()
+
+/obj/item/smallDelivery/attack_hand(mob/user)
+	if(contents.len > 0)
+		dump(user)
+	else
+		to_chat(user, "<span class='notice'>The parcel was empty!</span>")
+	playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
 	qdel(src)
-	return
 
 /obj/item/smallDelivery/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W
-
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
 			src.sortTag = O.currTag
@@ -84,8 +86,6 @@
 		for(var/mob/M in viewers())
 			to_chat(M, "<span class='notice'>[user] labels [src] as [str].</span>")
 		src.name = "[src.name] ([str])"
-	return
-
 
 /obj/item/weapon/packageWrap
 	name = "package wrapper"
@@ -128,7 +128,6 @@
 				P.icon_state = "deliverycrate3"
 			else
 				P.icon_state = "deliverycrate4"
-			P.wrapped = O
 			O.loc = P
 			var/i = round(O.w_class)
 			if(i in list(1,2,3,4,5))
@@ -142,21 +141,23 @@
 		if (src.amount > 3 && !O.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 			P.icon_state = "deliverycrate"
-			P.wrapped = O
 			O.loc = P
 			src.amount -= 3
 		else if(src.amount < 3)
 			to_chat(user, "<span class='notice'>You need more paper.</span>")
 	else if (istype (target, /obj/structure/closet))
 		var/obj/structure/closet/O = target
-		if (src.amount > 3 && !O.opened)
+		if(src.amount < 3)
+			to_chat(user, "<span class='notice'>You need more paper.</span>")
+			return
+		else if(O.welded)
+			to_chat(user, "<span class='notice'>You cannot wrap a welded closet.</span>")
+			return
+		else if (!O.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
-			P.wrapped = O
 			O.welded = 1
 			O.loc = P
 			src.amount -= 3
-		else if(src.amount < 3)
-			to_chat(user, "<span class='notice'>You need more paper.</span>")
 	else
 		to_chat(user, "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>")
 	if (src.amount <= 0)
@@ -206,7 +207,7 @@
 
 /obj/item/device/destTagger/Topic(href, href_list)
 	src.add_fingerprint(usr)
-	if(href_list["nextTag"] && href_list["nextTag"] in tagger_locations)
+	if(href_list["nextTag"] && (href_list["nextTag"] in tagger_locations))
 		src.currTag = href_list["nextTag"]
 	openwindow(usr)
 

@@ -1,4 +1,4 @@
-/*
+j/*
 	Datum based languages. Easily editable and modular.
 */
 
@@ -142,15 +142,12 @@
 	signlang_verb = list("emits a series of short beeps", "screeches in boops", "eminates short pings", "projects a series of screeches")
 	flags = SIGNLANG // For all intents and purposes, this is basically a sign language.
 
-/datum/language/diona_space/format_message(message, verb)
-	return "<span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
-
 /datum/language/human
 	name = "Sol Common"
 	desc = "A bastardized hybrid of informal English and elements of Mandarin Chinese; the common language of the Sol system."
 	colour = "rough"
 	key = list("1")
-	allowed_species = list(IPC, DIONA, SKRELL, UNATHI, TAJARAN)
+	allowed_species = list(IPC, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	syllables = list("tao","shi","tzu","yi","com","be","is","i","op","vi","ed","lec","mo","cle","te","dis","e")
 
 /datum/language/ipc
@@ -172,7 +169,7 @@
 	speech_verb = "enunciates"
 	colour = "say_quote"
 	key = list("2")
-	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
+	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	syllables = list("lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit",
 					 "sed", "do", "eiusmod", "tempor", "incididunt", "ut", "labore", "et", "dolore",
 					 "magna", "aliqua", "ut", "enim", "ad", "minim", "veniam", "quis", "nostrud",
@@ -188,8 +185,9 @@
 	speech_verb = "growls"
 	colour = "rough"
 	key = list("3")
-	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
+	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	syllables = list ("gra","ba","ba","breh","bra","rah","dur","ra","ro","gro","go","ber","bar","geh","heh", "gra")
+
 
 /datum/language/syndi
 	name = "Sy-Code"
@@ -203,12 +201,22 @@
 					  "ale", "cognac", "kahlua", "soda", "tequila", "vermouth", "whiskey", "beer", "gin", "rum", "lemon lime", "vodka", "wine")
 	flags = RESTRICTED
 
+/datum/language/unisign
+	name = "Universal Sign Language"
+	desc = "Standart language made of gestures. Common language of deaf and muted people."
+	colour = "rough"
+	key = list("4")
+	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
+	signlang_verb = list("makes signs with hands", "gestures", "waves hands", "gesticulates")
+	flags = SIGNLANG
+
+
 // Language handling.
 /mob/proc/add_language(language)
 
 	var/datum/language/new_language = all_languages[language]
 
-	if(!istype(new_language) || new_language in languages)
+	if(!istype(new_language) || (new_language in languages))
 		return 0
 
 	languages.Add(new_language)
@@ -223,7 +231,7 @@
 // Can we speak this language, as opposed to just understanding it?
 /mob/proc/can_speak(datum/language/speaking)
 
-	return (universal_speak || speaking in src.languages)
+	return (universal_speak || (speaking in src.languages))
 
 //TBD
 /mob/verb/check_languages()
