@@ -170,15 +170,18 @@ var/bomb_set
 	if(.)
 		return
 
-	if (extended)
+	if (!extended)
 		if (!ishuman(user) && !isobserver(user))
 			to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
 			return 1
-		var/turf/current_location = get_turf(usr)//What turf is the user on?
-		if(is_centcom_level(current_location.z) && user.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
-			to_chat(user, "<span class = 'red'>It's not the best idea to plant a bomb on your own base</span>")
+		var/turf/current_location = get_turf(user)//What turf is the user on?
+		if((!current_location || is_centcom_level(current_location.z)) && user.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
+			to_chat(user, "<span class = 'red'>It's not the best idea to plant a bomb on your own base.</span>")
 			return
-	else if (deployable)
+		if (!istype(get_area(src), /area/station)) // If outside of station
+			to_chat(user, "<span class = 'red'>Bomb cannot be deployed here.</span>")
+			return
+	if (deployable)
 		if(removal_stage < 5)
 			anchored = TRUE
 			visible_message("<span class = 'red'>With a steely snap, bolts slide out of [src] and anchor it to the flooring!</span>")

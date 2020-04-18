@@ -189,7 +189,9 @@
 	if(storage.display_contents_with_number)
 		numbered_contents = list()
 		adjusted_contents = 0
+		var/obj_index = 0
 		for(var/obj/item/I in storage.contents)
+			obj_index++
 			var/found = 0
 			for(var/datum/numbered_display/ND in numbered_contents)
 				if(ND.sample_object.type == I.type)
@@ -198,7 +200,7 @@
 					break
 			if(!found)
 				adjusted_contents++
-				numbered_contents.Add( new/datum/numbered_display(I) )
+				numbered_contents.Add( new/datum/numbered_display(I, obj_index) )
 
 	var/row_num = 0
 	var/col_count = min(7,storage.storage_slots) -1
@@ -213,11 +215,15 @@
 	boxes.screen_loc = "4:16,2:16 to [4+cols]:16,[2+rows]:16"
 
 	if(storage.display_contents_with_number)
+		click_border_start.len = storage.contents.len
+		click_border_end.len = storage.contents.len
 		for(var/datum/numbered_display/ND in display_contents)
 			ND.sample_object.screen_loc = "[cx]:16,[cy]:16"
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
 			ND.sample_object.layer = ABOVE_HUD_LAYER
 			ND.sample_object.plane = ABOVE_HUD_PLANE
+			click_border_start[ND.sample_object_index] = (cx-4)*32
+			click_border_end[ND.sample_object_index] = (cx-4)*32+32
 			cx++
 			if (cx > (4+cols))
 				cx = 4
@@ -228,6 +234,8 @@
 			O.maptext = ""
 			O.layer = ABOVE_HUD_LAYER
 			O.plane = ABOVE_HUD_PLANE
+			click_border_start += (cx-4)*32
+			click_border_end += (cx-4)*32+32
 			cx++
 			if (cx > (4+cols))
 				cx = 4
@@ -237,12 +245,14 @@
 
 /datum/numbered_display
 	var/obj/item/sample_object
+	var/sample_object_index = 1
 	var/number
 
-/datum/numbered_display/New(obj/item/sample)
+/datum/numbered_display/New(obj/item/sample, soi)
 	if(!istype(sample))
 		qdel(src)
 	sample_object = sample
+	sample_object_index = soi
 	number = 1
 
 /datum/storage_ui/default/proc/space_orient_objs()
