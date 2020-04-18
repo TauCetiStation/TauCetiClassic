@@ -47,6 +47,11 @@
 
 	//parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
+	var/has_lang_prefix = !!speaking
+	if(!has_lang_prefix && HAS_TRAIT(src, TRAIT_MUTE))
+		var/datum/language/USL = all_languages["Universal Sign Language"]
+		if(can_speak(USL))
+			speaking = USL
 
 	//check if we're muted and not using gestures
 	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk"))
@@ -61,7 +66,7 @@
 			to_chat(usr, "<span class='userdanger'>You tried to make a gesture, but your hands are not responding.</span>")
 			return
 
-	if (speaking)
+	if (has_lang_prefix)
 		message = copytext(message,2+length(speaking.key))
 	else if(species.force_racial_language)
 		speaking = all_languages[species.language]

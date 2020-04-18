@@ -614,6 +614,14 @@
 	item = /obj/item/device/powersink
 	cost = 12
 
+/datum/uplink_item/device_tools/syndcodebook
+	name = "Sy-Code Book"
+	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which sounds like random letters and drinks to anyone listening. \
+	This manual teaches you Sy-Code. Limited uses. Use :0 before saying something to speak in Sy-Code."
+	item = /obj/item/weapon/syndcodebook
+	cost = 1
+	uplink_types = list("traitor")
+
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"
 	desc = "When screwed to wiring attached to an electric grid, then activated, this large device pulls the singularity towards it. \
