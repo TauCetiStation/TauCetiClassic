@@ -371,7 +371,7 @@
 					text += "<br>Objectives are empty! <a href='?src=\ref[src];traitor=autoobjectives'>Randomize</a>!"
 			else
 				text += "<a href='?src=\ref[src];traitor=traitor'>traitor</a>|<b>Employee</b>"
-	if(isAI(current))
+	else if(isAI(current))
 		if (src in ticker.mode.traitors)
 			text += "<b>SYNDICATE AI</b>|<a href='?src=\ref[src];traitor=clear'>nt ai</a>"
 		else
