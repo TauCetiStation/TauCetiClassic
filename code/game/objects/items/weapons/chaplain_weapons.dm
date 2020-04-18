@@ -50,11 +50,6 @@
 			set_light(3)
 			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
 			return
-	if(istype(src, /obj/item/weapon/nullrod/staff)) //repair blind when re-entering in game
-		var/obj/item/weapon/nullrod/staff/S = src
-		if(S.brainmob && S.brainmob.ckey && S.brainmob.stat != CONSCIOUS)
-			S.brainmob.stat = CONSCIOUS
-			S.brainmob.blinded = FALSE
 
 /obj/item/weapon/nullrod/attack(mob/M, mob/living/user) //Paste from old-code to decult with a null rod.
 	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
@@ -113,6 +108,14 @@
 	var/searching = FALSE
 	var/next_ping = 0
 	var/islam = FALSE
+
+/obj/item/weapon/nullrod/staff/process()
+	..()
+	if(istype(src, /obj/item/weapon/nullrod/staff)) //repair blind when re-entering in game
+		var/obj/item/weapon/nullrod/staff/S = src
+		if(S.brainmob && S.brainmob.ckey && S.brainmob.stat != CONSCIOUS)
+			S.brainmob.stat = CONSCIOUS
+			S.brainmob.blinded = FALSE
 
 /obj/item/weapon/nullrod/staff/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	if(istype(W, /obj/item/device/soulstone)) //mb, the only way to pull out god
@@ -210,7 +213,8 @@
 	visible_message("<span class='notice'>The stone of \the [src] stopped glowing, why didn't you please the god?</span>")
 
 /obj/item/weapon/nullrod/staff/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]</span>\n"
+	..()
+	var/msg = ""
 	if(brainmob && brainmob.ckey)
 		switch(brainmob.stat)
 			if(CONSCIOUS)
@@ -222,7 +226,6 @@
 				msg += "<span class='deadsay'>Divine presence faded.</span>\n"
 	else
 		msg += ""
-	msg += "<span class='info'>*---------*</span>"
 	to_chat(user, msg)
 
 /obj/item/weapon/nullrod/staff/attack_ghost(mob/dead/observer/O)
