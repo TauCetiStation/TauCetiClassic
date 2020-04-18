@@ -70,7 +70,7 @@
 	ask_verb = "hisses"
 	exclaim_verb = "roars"
 	colour = "soghun"
-	key = list("o", "ù")
+	key = list("o", "Ã¹")
 	allowed_species = list(IPC)
 	syllables = list("ss","ss","ss","ss","skak","seeki","resh","las","esi","kor","sh")
 
@@ -82,7 +82,7 @@
 	exclaim_verb = "yowls"
 	colour = "tajaran"
 	allowed_species = list(IPC)
-	key = list("j", "î")
+	key = list("j", "Ã®")
 	syllables = list("rr","rr","tajr","kir","raj","kii","mir","kra","ahk","nal","vah","khaz","jri","ran","darr", \
 	"mi","jri","dynh","manq","rhe","zar","rrhaz","kal","chur","eech","thaa","dra","jurl","mah","sanu","dra","ii'r", \
 	"ka","aasi","far","wa","baq","ara","qara","zir","sam","mak","hrar","nja","rir","khan","jun","dar","rik","kah", \
@@ -95,7 +95,7 @@
 	ask_verb = "mrowls"
 	exclaim_verb = "yowls"
 	colour = "tajaran_signlang"
-	key = list("y", "í")
+	key = list("y", "Ã­")
 	signlang_verb = list("flicks their left ear", "flicks their right ear", "swivels their ears", "twitches their tail", "curls the end of their tail", "arches their tail", "wiggles the end of their tail", "waves their tail about", "holds up a claw", "gestures with their left hand", "gestures with their right hand", "gestures with their tail", "gestures with their ears")
 	flags = NONVERBAL
 
@@ -106,7 +106,7 @@
 	ask_verb = "warbles"
 	exclaim_verb = "warbles"
 	colour = "skrell"
-	key = list("k", "ë")
+	key = list("k", "Ã«")
 	allowed_species = list(IPC)
 	syllables = list("qr","qrr","xuq","qil","quum","xuqm","vol","xrim","zaoo","qu-uu","qix","qoo","zix","*","!")
 
@@ -117,7 +117,7 @@
 	ask_verb = "creels"
 	exclaim_verb = "SHRIEKS"
 	colour = "vox"
-	key = list("v", "ì")
+	key = list("v", "Ã¬")
 	flags = RESTRICTED
 	syllables = list("ti","ti","ti","hi","hi","ki","ki","ki","ki","ya","ta","ha","ka","ya","chi","cha","kah", \
 	"SKRE","AHK","EHK","RAWK","KRA","AAA","EEE","KI","II","KRI","KA")
@@ -130,7 +130,7 @@
 	exclaim_verb = "rustles"
 	allowed_species = list(IPC)
 	colour = "soghun"
-	key = list("q", "é")
+	key = list("q", "Ã©")
 	syllables = list("hs","zt","kr","st","sh")
 
 /datum/language/diona_space
@@ -138,7 +138,7 @@
 	desc = "A language represented by series of high frequency waves, similiar to those of radio waves. Can not be picked up without advanced equipment, but waves do spread in space."
 	allowed_species = list(IPC, DIONA)
 	colour = "soghun"
-	key = list("f", "à")
+	key = list("f", "Ã ")
 	signlang_verb = list("emits a series of short beeps", "screeches in boops", "eminates short pings", "projects a series of screeches")
 	flags = SIGNLANG // For all intents and purposes, this is basically a sign language.
 
@@ -157,7 +157,7 @@
 	ask_verb = "beeps"
 	exclaim_verb = "boops"
 	colour = "ipc"
-	key = list("x", "÷") //only "dpz" left.
+	key = list("x", "Ã·") //only "dpz" left.
 	//need to find a way to resolve possesive macros
 	allowed_species = list(IPC)
 	syllables = list("000", "111", "222", "001", "010", "100", "002", "020", "200", "011", "101", "110", "022", "202", "220", "112", "121", "211", "122", "212", "221", "012", "021", "120", "210", "102", "201")
@@ -188,6 +188,19 @@
 	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	syllables = list ("gra","ba","ba","breh","bra","rah","dur","ra","ro","gro","go","ber","bar","geh","heh", "gra")
 
+
+/datum/language/syndi
+	name = "Sy-Code"
+	desc = "Constructed language, used by syndicate agents and operatives. Consists of NATO alphabet and booze. The definition of each syllable is predetermined by current operation."
+	speech_verb = "signals"
+	colour = "syndcode"
+	key = list("0")
+	syllables = list ("alpha","bravo","charlie","delta","echo","foxtrot","golf","hotel","india","juliett","kilo","lima","mike","november","oscar",
+					  "papa", "quebec", "romeo", "sierra", "tango", "uniform", "victor", "whiskey", "xray", "yankee", "zulu",
+					  "nadazero", "unaone", "bissatwo", "terrathree", "kartefour", "pantafive", "soxisix", "setteseven", "oktoeight", "novenine",
+					  "ale", "cognac", "kahlua", "soda", "tequila", "vermouth", "whiskey", "beer", "gin", "rum", "lemon lime", "vodka", "wine")
+	flags = RESTRICTED
+
 /datum/language/unisign
 	name = "Universal Sign Language"
 	desc = "Standart language made of gestures. Common language of deaf and muted people."
@@ -196,6 +209,7 @@
 	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	signlang_verb = list("makes signs with hands", "gestures", "waves hands", "gesticulates")
 	flags = SIGNLANG
+
 
 // Language handling.
 /mob/proc/add_language(language)
