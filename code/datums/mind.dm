@@ -361,22 +361,21 @@
 	if (ticker.mode.config_tag=="traitor" || ticker.mode.config_tag=="traitorchan")
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
-	if(ishuman(current) || isAI(current))
-		if(ishuman(current))
-			if (isloyal(H))
-				text +="traitor|<b>LOYAL EMPLOYEE</b>"
-			else
-				if (src in ticker.mode.traitors)
-					text += "<b>TRAITOR</b>|<a href='?src=\ref[src];traitor=clear'>Employee</a>"
-					if (objectives.len==0)
-						text += "<br>Objectives are empty! <a href='?src=\ref[src];traitor=autoobjectives'>Randomize</a>!"
-				else
-					text += "<a href='?src=\ref[src];traitor=traitor'>traitor</a>|<b>Employee</b>"
-		else if(isAI(current))
+	if(ishuman(current))
+		if (isloyal(H))
+			text +="traitor|<b>LOYAL EMPLOYEE</b>"
+		else
 			if (src in ticker.mode.traitors)
-				text += "<b>SYNDICATE AI</b>|<a href='?src=\ref[src];traitor=clear'>nt ai</a>"
+				text += "<b>TRAITOR</b>|<a href='?src=\ref[src];traitor=clear'>Employee</a>"
+				if (objectives.len==0)
+					text += "<br>Objectives are empty! <a href='?src=\ref[src];traitor=autoobjectives'>Randomize</a>!"
 			else
-				text += "<a href='?src=\ref[src];traitor=traitor'>syndicate AI</a>|<b>NT AI</b>"
+				text += "<a href='?src=\ref[src];traitor=traitor'>traitor</a>|<b>Employee</b>"
+	if(isAI(current))
+		if (src in ticker.mode.traitors)
+			text += "<b>SYNDICATE AI</b>|<a href='?src=\ref[src];traitor=clear'>nt ai</a>"
+		else
+			text += "<a href='?src=\ref[src];traitor=traitor'>syndicate AI</a>|<b>NT AI</b>"
 
 	if(current && current.client && (ROLE_TRAITOR in current.client.prefs.be_role))
 		text += "|Enabled in Prefs"
