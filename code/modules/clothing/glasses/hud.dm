@@ -60,7 +60,7 @@
 
 /obj/item/clothing/glasses/hud/security/process_hud(mob/M)
 	check_integrity()
-	process_sec_hud(M, 1, crit_fail = src.crit_fail)
+	process_sec_hud(M, 1, crit_fail = crit_fail)
 
 /obj/item/clothing/glasses/hud/broken/process_hud(mob/M)
 	process_broken_hud(M, 1)
