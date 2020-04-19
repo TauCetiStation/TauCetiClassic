@@ -8,6 +8,8 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
+	data = list()
+
 /datum/reagent/srejuvenate/on_general_digest(mob/living/M)
 	..()
 	if(M.losebreath >= 10)
@@ -60,6 +62,8 @@
 	color = "#004000" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = 2 * REAGENTS_METABOLISM
+
+	data = list()
 
 /datum/reagent/ryetalyn/on_general_digest(mob/living/M)
 	..()
@@ -275,6 +279,8 @@
 	color = "#a0a000"
 	taste_message = "vomit"
 	restrict_species = list(IPC, DIONA)
+
+	data = list()
 
 /datum/reagent/thermopsis/on_general_digest(mob/living/M)
 	..()
@@ -532,6 +538,8 @@
 	color = "#669900" // rgb: 102, 153, 0
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
+
+	data = list()
 
 /datum/reagent/rezadone/on_general_digest(mob/living/M)
 	..()
