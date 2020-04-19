@@ -10,7 +10,7 @@ var/datum/subsystem/assets/SSasset
 	NEW_SS_GLOBAL(SSasset)
 
 /datum/subsystem/assets/Initialize(timeofday)
-	for(var/type in typesof(/datum/asset))
+	for(var/type in subtypesof(/datum/asset))
 		var/datum/asset/A = new type()
 		if (type != initial(A._abstract)) //no need to register an abstract asset
 			A.register()
