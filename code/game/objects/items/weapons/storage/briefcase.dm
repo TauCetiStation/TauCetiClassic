@@ -54,7 +54,7 @@
 	name = "surgeon tray"
 	icon_state = "case-surgery"
 	item_state = "case-surgery"
-	desc = "This is a surgical tray made of stainless steel, the label on the lid reads: <Made by Vey Med Corp. 2189 year>."
+	desc = "This is a surgical tray made of stainless steel, the label on the lid reads: Made by Vey Med Corp. 2189 year."
 	max_storage_space = 18
 	max_w_class = ITEM_SIZE_NORMAL
 	can_hold = list(
