@@ -5,6 +5,8 @@
 	fullness_lose_on_execute = 15
 	combo_elements = list(I_DISARM, I_DISARM, I_DISARM, I_DISARM)
 
+	ignore_size = TRUE
+
 	allowed_target_zones = TARGET_ZONE_ALL
 
 /datum/combat_combo/disarm/execute(mob/living/victim, mob/living/attacker)
@@ -31,12 +33,12 @@
 	fullness_lose_on_execute = 40
 	combo_elements = list("Weapon Disarm", I_DISARM, I_DISARM, I_DISARM)
 
+	check_bodyarmor = TRUE
+
 	allowed_target_zones = list(BP_CHEST)
 
 /datum/combat_combo/push/execute(mob/living/victim, mob/living/attacker)
-	var/armor_check = victim.run_armor_check(null, "melee")
-
-	victim.apply_effect(3, WEAKEN, blocked = armor_check)
+	apply_effect(3, WEAKEN, victim, attacker, min_value=1)
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	victim.visible_message("<span class='danger'>[attacker] has pushed [victim] to the ground!</span>")
 
@@ -48,6 +50,8 @@
 	combo_icon_state = "slide_kick"
 	fullness_lose_on_execute = 40
 	combo_elements = list("Weapon Disarm", I_DISARM, I_DISARM, I_DISARM)
+
+	ignore_size = TRUE
 
 	allowed_target_zones = list(BP_L_LEG, BP_R_LEG)
 
@@ -94,8 +98,8 @@
 				if(L.is_bigger_than(attacker))
 					continue slide_kick_loop
 
-				var/armor_check = victim.run_armor_check(attacker.get_targetzone(), "melee")
-				L.apply_effect(2, WEAKEN, blocked = armor_check)
+				if(!apply_effect(2, WEAKEN, L, attacker, min_value=1))
+					continue slide_kick_loop
 
 				var/end_string = "to the ground!"
 				if(CLUMSY in attacker.mutations) // Make a funny
@@ -150,6 +154,8 @@
 	fullness_lose_on_execute = 75
 	combo_elements = list(I_DISARM, I_DISARM, I_DISARM, I_GRAB)
 
+	scale_size_exponent = 0.0
+
 	allowed_target_zones = list(BP_L_ARM, BP_R_ARM)
 
 	require_arm = TRUE
@@ -184,7 +190,7 @@
 				victim.adjustHalLoss(CLAMP(0, 40 - victim.halloss, 40)) // up to 40 halloss
 
 		victim_G.force_down = TRUE
-		victim.apply_effect(3, WEAKEN, blocked = armor_check)
+		apply_effect(3, WEAKEN, victim, attacker, min_value=1)
 		victim.visible_message("<span class='danger'>[attacker] presses [victim] to the ground!</span>")
 
 		step_to(attacker, victim)
@@ -199,6 +205,12 @@
 	combo_icon_state = "uppercut"
 	fullness_lose_on_execute = 60
 	combo_elements = list(I_HURT, I_HURT, I_HURT, I_HURT)
+
+	ignore_size = TRUE
+
+	scale_damage_coeff = 1.0
+
+	apply_dam_flags = TRUE
 
 	allowed_target_zones = list(BP_HEAD)
 
@@ -283,10 +295,8 @@
 	victim.transform = prev_victim_M
 	victim.layer = prev_victim_layer
 
-	var/armor_check = victim.run_armor_check(BP_HEAD, "melee")
-
-	victim.apply_effect(1, WEAKEN, blocked = armor_check)
-	victim.apply_damage(20, BRUTE, BP_HEAD, blocked = armor_check)
+	apply_effect(1, WEAKEN,  victim, attacker, min_value=1)
+	apply_damage(18, victim, attacker, zone=BP_HEAD)
 	victim.visible_message("<span class='danger'>[attacker] has performed an uppercut on [victim]!</span>")
 
 	if(iscarbon(victim))
@@ -314,6 +324,10 @@
 	combo_icon_state = "suplex"
 	fullness_lose_on_execute = 75
 	combo_elements = list(I_HURT, I_HURT, I_HURT, I_GRAB)
+
+	check_bodyarmor = TRUE
+
+	scale_size_exponent = 1.0
 
 	allowed_target_zones = list(BP_GROIN)
 
@@ -383,10 +397,8 @@
 	victim.anchored = prev_victim_anchored
 	attacker.anchored = prev_attacker_anchored
 
-	var/armor_check = victim.run_armor_check(null, "melee")
-
-	victim.apply_effect(5, WEAKEN, blocked = armor_check)
-	victim.apply_damage(25, BRUTE, blocked = armor_check)
+	apply_effect(4, WEAKEN, victim, attacker, min_value=1)
+	apply_damage(23, victim, attacker)
 
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	victim.visible_message("<span class='danger'>[attacker] has thrown [victim] over their shoulder!</span>")
@@ -406,7 +418,10 @@
 	fullness_lose_on_execute = 50
 	combo_elements = list("Suplex", I_HURT, I_DISARM, I_HURT)
 
+	// A body dropped on us! Armor ain't helping.
 	armor_pierce = TRUE
+
+	scale_size_exponent = 1.5
 
 	allowed_target_zones = list(BP_CHEST)
 
@@ -475,8 +490,8 @@
 		if(L == attacker)
 			continue
 		if(L.lying || L.resting || L.crawling)
-			L.apply_damage(30, BRUTE, blocked = 0) // A body dropped on us! Armor ain't helping.
-		L.apply_effect(6, WEAKEN, blocked = 0)
+			apply_damage(28, L, attacker)
+		apply_effect(6, WEAKEN, L, attacker, min_value = 1)
 
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	attacker.visible_message("<span class='danger'>[attacker] falls elbow first onto [attacker.loc] with a loud thud!</span>")
@@ -500,6 +515,10 @@
 	combo_elements = list(I_DISARM, I_HURT, I_DISARM, I_HURT)
 
 	armor_pierce = TRUE
+
+	ignore_size = TRUE
+
+	scale_size_exponent = 1.5
 
 	allowed_target_zones = list(BP_GROIN)
 
@@ -612,7 +631,7 @@
 					L.pixel_x = prev_info_el["pix_x"]
 					L.pixel_y = prev_info_el["pix_y"]
 					L.pass_flags = prev_info_el["pass_flags"]
-					L.apply_effect(5, WEAKEN, blocked = 0)
+					apply_effect(5, WEAKEN, L, attacker, min_value=1)
 
 				after_animation(victim, attacker)
 				return
@@ -623,7 +642,7 @@
 		L.pixel_x = prev_info_el["pix_x"]
 		L.pixel_y = prev_info_el["pix_y"]
 		L.pass_flags = prev_info_el["pass_flags"]
-		L.apply_effect(5, WEAKEN, blocked = 0)
+		apply_effect(5, WEAKEN, L, attacker, min_value=1)
 
 	after_animation(victim, attacker)
 
@@ -639,6 +658,8 @@
 	combo_icon_state = "charge"
 	fullness_lose_on_execute = 75
 	combo_elements = list(I_GRAB, I_HURT, I_HURT, I_GRAB)
+
+	check_bodyarmor = TRUE
 
 	allowed_target_zones = list(BP_CHEST)
 
@@ -689,8 +710,6 @@
 						if(L.is_bigger_than(victim))
 							continue
 
-						var/armor_check = victim.run_armor_check(null, "melee")
-
 						var/obj/structure/table/facetable = locate() in T
 						if(facetable)
 							facetable.attackby(victim_G, attacker)
@@ -700,8 +719,8 @@
 							playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 							victim.visible_message("<span class='danger'>[attacker] slams [victim] into an obstacle!</span>")
 
-						L.apply_effect(6, WEAKEN, blocked = armor_check)
-						L.apply_damage(35, BRUTE, blocked = armor_check)
+						apply_effect(6, WEAKEN, L, attacker, min_value=1)
+						apply_damage(33, L, attacker)
 					break try_steps_loop
 
 				if(!do_after(attacker, attacker.movement_delay() * 0.5, can_move = TRUE, target = victim, progress = FALSE))
@@ -727,7 +746,10 @@
 	fullness_lose_on_execute = 50
 	combo_elements = list(I_GRAB, I_GRAB, I_GRAB, I_HURT)
 
+	// We threw a guy over 7 tiles distance. Armor probably ain't helping.
 	armor_pierce = TRUE
+
+	scale_size_exponent = 1.0
 
 	allowed_target_zones = list(BP_CHEST)
 
@@ -807,8 +829,8 @@
 					msg_admin_attack("[attacker.name] ([attacker.ckey]) has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]", attacker)
 
 					M.throw_at(target, 7, 10, attacker)
-					M.apply_damage(30, BRUTE, blocked = 0) // We threw a guy over 7 tiles distance. Armor probably ain't helping.
-					M.apply_effect(6, WEAKEN, blocked = 0)
+					apply_damage(28, M, attacker)
+					apply_effect(6, WEAKEN, M, attacker, min_value=1)
 
 					if(ishuman(src))
 						var/mob/living/carbon/human/H = src

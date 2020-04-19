@@ -13,6 +13,26 @@ var/global/list/combat_combos_by_name = list()
 	var/combo_icon_state = "combo"
 
 	var/armor_pierce = FALSE
+	// If true, checks the entire body, not just targetzone.
+	var/check_bodyarmor = FALSE
+
+	// If TRUE, this combo can be performed on enemies bigger than you.
+	var/ignore_size = FALSE
+
+	// Attacker's damage are multiplied with these to determine how much
+	// damage/stun should be added from their base attack.
+	var/scale_damage_coeff = 0.0
+	var/scale_effect_coeff = 0.0
+	// Determines exponential growth of size ratio when multiplying with base damage.
+	var/scale_size_exponent = 1.0
+
+	// TOTAL FORMULA FOR STUN/DAMAGE GOES SOMETHING LIKE THIS:
+	// val = (base_damage * (size_ratio ** scale_size_exponent)) + attacker.damage * scale_damage_coeff
+
+	// Whether damage flags of unarmed attack should be applied by this combo. (Unath uppercut making a cut)
+	var/apply_dam_flags = FALSE
+	// If set to any value, will force damType of applied damage to be this
+	var/force_dam_type
 
 	var/list/allowed_target_zones = TARGET_ZONE_ALL
 	var/require_head = FALSE
@@ -63,7 +83,7 @@ var/global/list/combat_combos_by_name = list()
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while [CS.victim] is performing something.</span>")
 		return FALSE
-	if(CS.victim.is_bigger_than(CS.attacker))
+	if(!ignore_size && CS.victim.is_bigger_than(CS.attacker))
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>[CS.victim] is too big for you to perform <b>[name]</b> on them.</span>")
 		return FALSE
@@ -85,7 +105,7 @@ var/global/list/combat_combos_by_name = list()
 
 	if(!(target_zone in allowed_target_zones))
 		if(show_warning)
-			to_chat(CS.attacker, "<span class='notice'>You can't perform <b>[name]</b> on [CS.victim]'s [target_zone].</span>")
+			to_chat(CS.attacker, "<span class='notice'>You can't perform <b>[name]</b> on [CS.victim]'s [parse_zone(target_zone)].</span>")
 		return FALSE
 
 	if(require_head && !CS.victim.has_bodypart(target_zone))
@@ -117,6 +137,47 @@ var/global/list/combat_combos_by_name = list()
 		return FALSE
 
 	return TRUE
+
+// This proc scales damage/stun based on size/damage/whatever relevant to this combo.
+// base_dam - base damage to scale. min_value - how much damage should there be for it to be applied in the first place(if set to -1, ignores this arg)
+// Returns TRUE if damage was dealt.
+/datum/combat_combo/proc/apply_damage(base_dam, mob/living/victim, mob/living/attacker, zone = null, min_value = -1)
+	var/val = base_dam
+	if(scale_size_exponent != 0.0)
+		val *= get_size_ratio(attacker, victim) ** scale_size_exponent
+
+	var/list/attack_obj = attacker.get_unarmed_attack()
+	val += attack_obj["damage"] * scale_damage_coeff
+
+	if(min_value < 0 || val >= min_value)
+		var/armor_check = 0
+		if(!armor_pierce)
+			armor_check = victim.run_armor_check(check_bodyarmor ? null : zone, "melee")
+		return victim.apply_damage(val, force_dam_type ? force_dam_type : attack_obj["type"],
+			def_zone = zone,
+			blocked = armor_check,
+			damage_flags = apply_dam_flags ? attack_obj["flags"] : 0,
+			used_weapon = name
+		)
+	return FALSE
+
+// effect - effect to apply, duration - base duration to scale. min_value - how much damage should there be for it to be applied in the first place(if set to -1, ignores this arg)
+// Returns TRUE if effect was applied.
+/datum/combat_combo/proc/apply_effect(duration, effect, mob/living/victim, mob/living/attacker, min_value = -1)
+	var/val = duration
+	if(scale_size_exponent != 0.0)
+		val *= get_size_ratio(attacker, victim) ** scale_size_exponent
+
+	var/list/attack_obj = attacker.get_unarmed_attack()
+	val += attack_obj["damage"] * scale_effect_coeff
+
+	to_chat(attacker, "YOU DEALT [val] OUT OF [min_value] DAMAGE")
+	if(min_value < 0 || val >= min_value)
+		var/armor_check = 0
+		if(!armor_pierce)
+			armor_check = victim.run_armor_check(check_bodyarmor ? null : attacker.get_targetzone(), "melee")
+		return victim.apply_effect(duration, effect, blocked = armor_check)
+	return FALSE
 
 /datum/combat_combo/proc/do_combo(mob/living/victim, mob/living/attacker, delay)
 	var/endtime = world.time + delay

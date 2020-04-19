@@ -15,6 +15,9 @@
 	if(HULK in mutations)
 		retDam += 4
 
+	if(istype(gloves, /obj/item/clothing/gloves/boxing))
+		retDamType = HALLOSS
+
 	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
 				"miss_sound" = retMissSound)
 

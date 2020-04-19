@@ -374,3 +374,11 @@
 	if(maxHealth > target.maxHealth)
 		return TRUE
 	return FALSE
+
+/proc/get_size_ratio(mob/living/dividend, mob/living/divisor)
+	var/ratio = dividend.maxHealth / divisor.maxHealth
+	if(dividend.small && !divisor.small)
+		ratio *= 0.5
+	else if(!dividend.small && divisor.small)
+		ratio *= 2.0
+	return ratio

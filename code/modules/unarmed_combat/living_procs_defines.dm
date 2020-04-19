@@ -67,7 +67,13 @@ var/global/combos_cheat_sheet = ""
 				combo_txt += c_el + " "
 
 			dat += "<b>Combo required:</b> [combo_txt]<br>"
-			dat += CC.armor_pierce ? "<br><font color='red'><i>* Ignores armor.</i></font><br>" : ""
+			var/notes = ""
+			notes += CC.ignore_size ? "<font color='blue'><i>* Ignores opponent's size.</i></font><br>" : ""
+			notes += CC.scale_damage_coeff != 0.0 || CC.scale_effect_coeff != 0.0 ? "<font color='red'><i>* Modified by your attack's base damage.</i></font><br>" : ""
+			notes += CC.scale_size_exponent != 0.0 ? "<font color='red'><i>* Damage is amplified by difference in size.</i></font><br>" : ""
+			notes += CC.armor_pierce ? "<font color='red'><i>* Ignores armor.</i></font><br>" : ""
+			if(notes)
+				dat += "<br>" + notes
 			dat += "</p></hr>"
 
 		global.combos_cheat_sheet = dat

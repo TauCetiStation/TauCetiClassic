@@ -137,7 +137,6 @@
 		next_combo = global.combat_combos[combo_hash]
 		set_combo_icon(next_combo.get_combo_icon())
 		next_combo.on_ready(victim, attacker)
-		combo_elements.Cut()
 
 		return TRUE
 	return FALSE
@@ -147,11 +146,6 @@
 /datum/combo_saved/proc/activate_combo()
 	if(!attacker)
 		return FALSE
-
-	if(!next_combo) // A little feature, which allows us to reset the combo bar.
-		combo_elements.Cut()
-		update_combo_elements()
-		return TRUE
 
 	var/datum/combat_combo/CC = next_combo
 	if(CC.can_execute(src, show_warning = TRUE))
@@ -170,8 +164,6 @@
 	else
 		set_combo_icon(null)
 		next_combo = null
-		combo_elements.Cut()
-		update_combo_elements()
 	return TRUE
 
 /datum/combo_saved/proc/register_attack(combo_element, combo_value)
