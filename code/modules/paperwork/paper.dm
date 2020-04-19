@@ -21,6 +21,7 @@
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
 	var/stamp_text		//The (text for the) stamp_text on the paper.
 	var/fields		//Amount of user created fields
+	var/sfields
 	var/free_space = MAX_PAPER_MESSAGE_LEN
 	var/list/stamped
 	var/list/ico      //Icons and
@@ -189,16 +190,16 @@
 					H.lip_style = null
 					H.update_body()
 
-/obj/item/weapon/paper/proc/addtofield(id, text, links = 0)
+/obj/item/weapon/paper/proc/addtofield(id, text, links = 0, type = "paper")
 	var/locid = 0
 	var/laststart = 1
 	var/textindex = 1
 	while(1) // I know this can cause infinite loops and fuck up the whole server, but the if(istart==0) should be safe as fuck
 		var/istart = 0
 		if(links)
-			istart = findtext(info_links, "<span class=\"paper_field\">", laststart)
+			istart = findtext(info_links, "<span class=\"[type]_field\">", laststart)
 		else
-			istart = findtext(info, "<span class=\"paper_field\">", laststart)
+			istart = findtext(info, "<span class=\"[type]_field\">", laststart)
 
 		if(istart==0)
 			return // No field found with matching id
@@ -229,8 +230,10 @@
 /obj/item/weapon/paper/proc/updateinfolinks()
 	info_links = info
 	var/i = 0
-	for(i=1,i<=fields,i++)
+	for(i = 1, i <= fields, i++)
 		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
+	for(i = 1, i <= sfields, i++)
+		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];write=[i];sign=1'>sign</A></font>", 1, "sign")
 	info_links = info_links + " <font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
 
 
@@ -254,6 +257,7 @@
 	P.info_links = info_links
 	P.stamp_text = stamp_text
 	P.fields     = fields
+	P.sfields    = sfields
 	P.stamped    = LAZYCOPY(stamped)
 	P.ico        = LAZYCOPY(ico)
 	P.offset_x   = LAZYCOPY(offset_x)
@@ -290,6 +294,7 @@
 
 	t = parsebbcode(t, P.colour)
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
+	t = replacetext(t, "\[sfield\]", "<span class=\"sign_field\"></span>")
 	t = "<font face=\"[font]\" color=\"[P.colour]\">[t]</font>"
 //	t = replacetext(t, "#", "") // Junk converted to nothing!
 
@@ -301,6 +306,14 @@
 			break
 		laststart = i+1
 		fields++
+
+	laststart = 1
+	while(1)
+		var/i = findtext(t, "<span class=\"sign_field\">", laststart) //</span>
+		if(i==0)
+			break
+		laststart = i+1
+		sfields++
 
 	return t
 
@@ -374,7 +387,13 @@
 			usr << "<span class='info'>There isn't enough space left on \the [src] to write anything.</span>"
 			return
 
-		var/t =  sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
+		var/t = ""
+		if(href_list["sign"])
+			if(alert("Are you sure you want to sign this paper?",,"Yes","No") == "No")
+				return
+			t = "\[sign\] "
+		else
+			t = sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
 
 		if(!t)
 			return
@@ -391,30 +410,30 @@
 			return
 
 		var/last_fields_value = fields
+		var/last_sfields_value = sfields
 
-		t = replacetext(t, "\n", "<BR>")
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
 
-		if(fields > 50)
+		if((fields + sfields) > 50)
 			to_chat(usr, "<span class='warning'>Too many fields. Sorry, you can't do this.</span>")
 			fields = last_fields_value
+			sfields = last_sfields_value
 			return
 
 		if(isIAN(usr))
 			t = GibberishAll(t)
 
-		if(id!="end")
+		if(href_list["sign"])
+			addtofield(text2num(id), t, type = "sign")
+		else if(id!="end")
 			addtofield(text2num(id), t) // He wants to edit a field, let him.
 		else
 			info += t // Oh, he wants to edit to the end of the file, let him.
 			updateinfolinks()
 
 		playsound(src, pick(SOUNDIN_PEN), VOL_EFFECTS_MASTER, null, FALSE)
-
 		update_space(t)
-
 		show_content(usr, forceshow = TRUE, infolinks = TRUE)
-
 		update_icon()
 
 

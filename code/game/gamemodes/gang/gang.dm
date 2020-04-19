@@ -98,13 +98,13 @@
 	A_bosses += boss
 	antag_candidates -= boss
 	boss.special_role = "[gang_name("A")] Gang (A) Boss"
-	log_game("[boss.key] has been selected as the boss for the [gang_name("A")] Gang (A)")
+	log_game("[key_name(boss)] has been selected as the boss for the [gang_name("A")] Gang (A)")
 
 	boss = pick(antag_candidates)
 	B_bosses += boss
 	antag_candidates -= boss
 	boss.special_role = "[gang_name("B")] Gang (B) Boss"
-	log_game("[boss.key] has been selected as the boss for the [gang_name("B")] Gang (B)")
+	log_game("[key_name(boss)] has been selected as the boss for the [gang_name("B")] Gang (B)")
 
 /datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
 	if(istype(ticker.mode, /datum/game_mode/gang))

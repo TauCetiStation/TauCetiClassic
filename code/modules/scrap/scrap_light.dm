@@ -169,6 +169,11 @@
 	if(burning & !grill)
 		Burn()
 
+/obj/structure/bonfire/get_current_temperature()
+	if(burning)
+		return 1000
+	return 0
+
 /obj/structure/bonfire/proc/Burn()
 	var/turf/current_location = get_turf(src)
 	current_location.hotspot_expose(1000, 500)
@@ -181,7 +186,7 @@
 		else if(isliving(A))
 			var/mob/living/L = A
 			if(prob(20))
-				L.emote("scream",,, 1)
+				L.emote("scream")
 			L.adjust_fire_stacks(fire_stack_strength)
 			L.IgniteMob()
 

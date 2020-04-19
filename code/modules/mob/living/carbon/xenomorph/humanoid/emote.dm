@@ -1,6 +1,6 @@
 #define CAN_MAKE_A_SOUND !muzzled && (last_sound_emote < world.time)
-/mob/living/carbon/xenomorph/humanoid/emote(act, m_type = SHOWMSG_VISUAL, message = null)
 
+/mob/living/carbon/xenomorph/humanoid/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 	if(stat == DEAD && (act != "deathgasp"))
 		return
 	if(stat == UNCONSCIOUS)
@@ -140,13 +140,13 @@
 			else
 				to_chat(src, "<span class='warning'>You notice you make too much noises! You can give out your location to the hosts, you don't want to risk it!</span>")
 				return
-		log_emote("[name]/[key] : [message]")
+		log_emote("[key_name(src)] : [message]")
 
 		for(var/mob/M in observer_list)
 			if(!M.client)
 				continue //skip leavers
-			if((M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
-				to_chat(M, message)
+			if((M.client.prefs.chat_ghostsight != CHAT_GHOSTSIGHT_NEARBYMOBS) && !(M in viewers(src, null)))
+				to_chat(M, "<a href='byond://?src=\ref[src];track=\ref[src]'>(F)</a> [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
 
 		if(m_type & SHOWMSG_VISUAL)
 			for(var/mob/O in viewers(src, null))

@@ -69,7 +69,7 @@
 	return IO
 
 /mob/living/carbon/human/proc/specie_has_slot(slot)
-	if(species && slot in species.restricted_inventory_slots)
+	if(species && (slot in species.restricted_inventory_slots))
 		return FALSE
 	return TRUE
 

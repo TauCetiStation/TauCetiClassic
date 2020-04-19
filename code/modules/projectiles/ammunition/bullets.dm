@@ -175,7 +175,7 @@
 	projectile_type = /obj/item/projectile/bullet/midbullet2
 
 /obj/item/ammo_box/c38m
-	name = "speed loader (.38)"
+	name = "speedloader (.38)"
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c38m
 	max_ammo = 6

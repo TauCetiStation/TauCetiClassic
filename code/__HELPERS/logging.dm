@@ -1,9 +1,3 @@
-#define LOG_CLEANING(text) \
-  replace_characters(text, list(JA_ENTITY=JA_PLACEHOLDER, JA_ENTITY_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
-
-//print an error message to world.log
-
-
 // On Linux/Unix systems the line endings are LF, on windows it's CRLF, admins that don't use notepad++
 // will get logs that are one big line if the system is Linux and they are using notepad.  This solves it by adding CR to every line ending
 // in the logs.  ascii character 13 = CR
@@ -28,21 +22,26 @@
 	world.log << "## INFO: [msg][log_end]"
 
 /proc/round_log(msg)
-	world.log << "\[[time_stamp()]][round_id ? " #[round_id]:" : ""] [msg][log_end]"
+	world.log << "\[[time_stamp()]][round_id ? "Round #[round_id]:" : ""] [msg][log_end]"
+	game_log << "\[[time_stamp()]][round_id ? "Round #[round_id]:" : ""] [msg][log_end]"
+
+/proc/log_href(text, say_type)
+	if (config && config.log_hrefs)
+		global.hrefs_log << "\[[time_stamp()]]: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_admin(text)
 	admin_log.Add(text)
 	if (config.log_admin)
-		diary << "\[[time_stamp()]]ADMIN: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]ADMIN: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_admin_private(text)
 	admin_log.Add(text)
 	if (config.log_admin)
-		diary << "\[[time_stamp()]]ADMINPRIVATE: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]ADMINPRIVATE: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_debug(text)
 	if (config.log_debug)
-		diary << "\[[time_stamp()]]DEBUG: [text][log_end]"
+		global.game_log << "\[[time_stamp()]]DEBUG: [text][log_end]"
 
 	for(var/client/C in admins)
 		if(C.prefs.chat_toggles & CHAT_DEBUGLOGS)
@@ -51,58 +50,87 @@
 
 /proc/log_game(text)
 	if (config.log_game)
-		diary << "\[[time_stamp()]]GAME: [text][log_end]"
+		global.game_log << "\[[time_stamp()]]GAME: [text][log_end]"
 
 /proc/log_vote(text)
 	if (config.log_vote)
-		diary << "\[[time_stamp()]]VOTE: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]VOTE: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_access(text)
-	if (config.log_access)
-		diary << "\[[time_stamp()]]ACCESS: [text][log_end]"
+	if (config && config.log_access)
+		global.access_log << "\[[time_stamp()]]ACCESS: [text][log_end]"
 
 /proc/log_say(text)
 	if (config.log_say)
-		diary << "\[[time_stamp()]]SAY: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]SAY: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_ooc(text)
 	if (config.log_ooc)
-		diary << "\[[time_stamp()]]OOC: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]OOC: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_whisper(text)
 	if (config.log_whisper)
-		diary << "\[[time_stamp()]]WHISPER: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]WHISPER: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_emote(text)
 	if (config.log_emote)
-		diary << "\[[time_stamp()]]EMOTE: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]EMOTE: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_attack(text)
 	if (config.log_attack)
-		diary << "\[[time_stamp()]]ATTACK: [text][log_end]" //Seperate attack logs? Why?  FOR THE GLORY OF SATAN!
+		global.game_log << "\[[time_stamp()]]ATTACK: [text][log_end]"
 
 /proc/log_adminsay(text, say_type)
 	admin_log.Add(text)
 	if (config.log_adminchat)
-		diary << "\[[time_stamp()]][say_type]: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]][say_type]: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_adminwarn(text)
 	if (config.log_adminwarn)
-		diary << "\[[time_stamp()]]ADMINWARN: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]ADMINWARN: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_pda(text)
 	if (config.log_pda)
-		diary << "\[[time_stamp()]]PDA: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]PDA: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_misc(text)
-	diary << "\[[time_stamp()]]MISC: [text][log_end]"
+	global.game_log << "\[[time_stamp()]]MISC: [text][log_end]"
 
 /proc/log_sql(text)
 	world.log << "\[[time_stamp()]]SQL: [text][log_end]"
+	if(config.log_sql_error)
+		global.sql_error_log << "\[[time_stamp()]]SQL: [text][log_end]"
 
 /proc/log_unit_test(text)
 	world.log << "## UNIT_TEST ##: [text]"
 	log_debug(text)
+
+/proc/log_runtime(text)
+	if (config && config.log_runtime)
+		global.runtime_log << "\[[time_stamp()]] [text][log_end]"
+
+/proc/log_initialization(text)
+	var/static/preconfig_init_log = ""
+	if (!ticker || ticker.current_state == GAME_STATE_STARTUP)
+		preconfig_init_log += "[text][log_end]"
+		return
+
+	if(config.log_initialization)
+		if(length(preconfig_init_log))
+			global.initialization_log << preconfig_init_log
+			preconfig_init_log = null
+
+		global.initialization_log << "[text][log_end]"
+
+/proc/log_qdel(text)
+	if (config.log_qdel)
+		global.qdel_log << "[text][log_end]"
+
+/atom/proc/log_investigate(message, subject)
+	if(!message || !subject)
+		return
+	var/F = file("[global.log_investigate_directory]/[subject].html")
+	F << "[time_stamp()] \ref[src] ([x],[y],[z]) || [src] [LOG_CLEANING(strip_html_properly(message))]<br>[log_end]"
 
 // Helper procs for building detailed log lines
 /datum/proc/get_log_info_line()
@@ -149,7 +177,7 @@
 
 /proc/log_fax(text)
 	if (config.log_fax)
-		diary << "\[[time_stamp()]]FAX: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]FAX: [LOG_CLEANING(text)][log_end]"
 
 /proc/datum_info_line(datum/D)
 	if(!istype(D))
@@ -201,8 +229,6 @@
 
 	log_game(text)
 
-#undef LOG_CLEANING
-
 /proc/drop_round_stats()
 	var/list/stats = list()
 
@@ -221,7 +247,7 @@
 	stats["achievements"] = achievements
 	stats["centcomm_communications"] = centcomm_communications
 
-	var/stat_file = file("[logs_folder]/stat.json")
+	var/stat_file = file("[global.log_directory]/stat.json")
 
 	stat_file << list2json(stats)
 

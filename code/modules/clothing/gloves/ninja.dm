@@ -40,7 +40,7 @@ var/global/list/drain_atoms = list(
 	For the drain proc, see events/ninja.dm
 */
 /obj/item/clothing/gloves/space_ninja/Touch(atom/A, proximity)
-	if(!candrain || draining || !proximity)
+	if(!candrain || draining || isturf(A) || !proximity)
 		return FALSE
 
 	var/mob/living/carbon/human/H = loc

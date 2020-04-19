@@ -209,7 +209,7 @@
 /obj/machinery/door/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 
 	..()
-	visible_message("<span class='warning'><B>The glass door was hit by [AM].</B></span>", 1)
+	visible_message("<span class='warning'><B>The glass door was hit by [AM].</B></span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40

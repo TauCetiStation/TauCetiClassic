@@ -28,7 +28,7 @@
 		return
 
 	if(copytext(message,1,2) == "*")
-		return emote(copytext(message,2))
+		return emote(copytext(message, 2), auto = FALSE)
 
 	//check if we are miming
 	if (miming && !(message_mode == "changeling" || message_mode == "alientalk"))
@@ -47,6 +47,11 @@
 
 	//parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
+	var/has_lang_prefix = !!speaking
+	if(!has_lang_prefix && HAS_TRAIT(src, TRAIT_MUTE))
+		var/datum/language/USL = all_languages["Universal Sign Language"]
+		if(can_speak(USL))
+			speaking = USL
 
 	//check if we're muted and not using gestures
 	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk"))
@@ -61,7 +66,7 @@
 			to_chat(usr, "<span class='userdanger'>You tried to make a gesture, but your hands are not responding.</span>")
 			return
 
-	if (speaking)
+	if (has_lang_prefix)
 		message = copytext(message,2+length(speaking.key))
 	else if(species.force_racial_language)
 		speaking = all_languages[species.language]
@@ -86,7 +91,7 @@
 					//return - technically you can add more aliens to a team
 				for(var/mob/M in observer_list)
 					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
-				log_say("Abductor: [name]/[key] : [sm]")
+				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
 
 	message = capitalize(trim(message))

@@ -677,6 +677,8 @@
 					"adjust_external_pressure",
 					"set_external_pressure",
 					"checks",
+					"o2_scrub",
+					"n2_scrub",
 					"co2_scrub",
 					"tox_scrub",
 					"n2o_scrub",
@@ -686,10 +688,10 @@
 					send_signal(device_id, list(href_list["command"] = text2num(href_list["val"]) ) )
 					if(href_list["command"] == "adjust_external_pressure")
 						var/new_val = text2num(href_list["val"])
-						investigate_log("[usr.key] has changed adjust_external_pressure > added [new_val], id_tag = [device_id]","atmos")
+						log_investigate("[key_name(usr)] has changed adjust_external_pressure > added [new_val], id_tag = [device_id]",INVESTIGATE_ATMOS)
 					if(href_list["command"] == "checks")
 						var/new_val = text2num(href_list["val"])
-						investigate_log("[usr.key] has changed pressure_checks > now [new_val](1 = ext, 2 = int, 3 = both), id_tag = [device_id]","atmos")
+						log_investigate("[key_name(usr)] has changed pressure_checks > now [new_val](1 = ext, 2 = int, 3 = both), id_tag = [device_id]",INVESTIGATE_ATMOS)
 
 				if("set_threshold")
 					var/env = href_list["env"]
@@ -1153,6 +1155,20 @@ FIRE ALARM
 		FA.detecting = FALSE
 		FA.update_icon()
 		playsound(src, 'sound/machines/alarm_fire.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
+/obj/machinery/firealarm/examine(mob/user)
+	. = ..()
+	var/msg
+	switch(get_security_level())
+		if("green")
+			msg = "<font color='green'><b>Green</b></font>"
+		if("blue")
+			msg = "<font color='blue'><b>Blue</b></font>"
+		if("red")
+			msg = "<font color='red'><b>Red</b></font>"
+		if("delta")
+			msg = "<font color='purple'><b>Delta</b></font>"
+	to_chat(user, "The small light indicates [msg] security level.")
 
 /obj/machinery/firealarm/atom_init(mapload, dir, building)
 	. = ..()

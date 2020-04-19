@@ -18,7 +18,7 @@
 	name = "wrench"
 	desc = "A wrench with many common uses. Can be usually found in your hand."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "wrench_map"
+	icon_state = "wrench_blue"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
@@ -37,7 +37,7 @@
 		if(!param_color)
 			param_color = pick("black","red","green","blue","default")
 		icon_state = "wrench_[param_color]"
-		item_state = "wrench"
+		item_state = "wrench_[param_color]"
 
 /obj/item/weapon/wrench/power
 	name = "Hand Drill"
@@ -68,7 +68,7 @@
 	name = "screwdriver"
 	desc = "You can be totally screwwy with this."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "screwdriver_map"
+	icon_state = "screwdriver_blue"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
@@ -93,7 +93,7 @@
 	. = ..()
 	if(random_color)
 		if(!param_color)
-			param_color = pick("red", "blue", "purple", "brown", "green", "cyan", "yellow")
+			param_color = pick("red", "blue", "purple", "brown", "green", "yellow")
 		icon_state = "screwdriver_[param_color]"
 		item_state = "screwdriver_[param_color]"
 
@@ -139,7 +139,7 @@
 	name = "wirecutters"
 	desc = "This cuts wires."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "cutters_map"
+	icon_state = "cutters_blue"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 6.0
@@ -159,7 +159,7 @@
 	. = ..()
 	if(random_color)
 		if(!param_color)
-			param_color = pick("yellow","red","green","black","blue")
+			param_color = pick("yellow","red","green","brown","blue")
 		icon_state = "cutters_[param_color]"
 		item_state = "cutters_[param_color]"
 

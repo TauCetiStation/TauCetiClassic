@@ -208,88 +208,43 @@
 		tension = 0
 		icon_state = "crossbow"
 
-// Crossbow construction.
+// *(CROSSBOW craft in recipes.dm)*
 
-/obj/item/weapon/crossbowframe
-	name = "crossbow frame"
-	desc = "A half-finished crossbow."
-	icon_state = "crossbowframe0"
+/obj/item/weapon/crossbowframe1
+	name = "crossbow(1 stage)"
+	desc = "To finish you need: add 3 rods; weld it all; add 5 cable coil; add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver."
+	icon_state = "crossbowframe1"
 	item_state = "crossbow-solid"
 
-	var/buildstate = 0
+/obj/item/weapon/crossbowframe2
+	name = "crossbow(2 stage)"
+	desc = "To finish you need: weld it all; add 5 cable coil; add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver."
+	icon_state = "crossbowframe2"
+	item_state = "crossbow-solid"
 
-/obj/item/weapon/crossbowframe/update_icon()
-	icon_state = "crossbowframe[buildstate]"
+/obj/item/weapon/crossbowframe3
+	name = "crossbow(3 stage)"
+	desc = "To finish you need: add 5 cable coil; add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver."
+	icon_state = "crossbowframe3"
+	item_state = "crossbow-solid"
 
-/obj/item/weapon/crossbowframe/examine(mob/user)
-	..()
-	switch(buildstate)
-		if(1)
-			to_chat(user, "It has a loose rod frame in place.")
-		if(2)
-			to_chat(user, "It has a steel backbone welded in place.")
-		if(3)
-			to_chat(user, "It has a steel backbone and a cell mount installed.")
-		if(4)
-			to_chat(user, "It has a steel backbone, plastic lath and a cell mount installed.")
-		if(5)
-			to_chat(user, "It has a steel cable loosely strung across the lath.")
+/obj/item/weapon/crossbowframe4
+	name = "crossbow(4 stage)"
+	desc = "To finish you need: add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver."
+	icon_state = "crossbowframe4"
+	item_state = "crossbow-solid"
 
-/obj/item/weapon/crossbowframe/attackby(obj/item/W, mob/user) // its better to implement this in personal crafting later.
-	if(isrobot(user))
-		return
+/obj/item/weapon/crossbowframe5
+	name = "crossbow(5 stage)"
+	desc = "To finish you need: add 5 cable coil; tighten the bolts by screwdriver."
+	icon_state = "crossbowframe5"
+	item_state = "crossbow-solid"
 
-	if(istype(W, /obj/item/stack))
-		var/obj/item/stack/S = W
-		var/amount_to_use
-		var/fail_msg
-		var/success_msg
-
-		if(istype(W, /obj/item/stack/rods) && buildstate == 0)
-			amount_to_use = 3
-			fail_msg = "<span class='notice'>You need at least three rods to complete this task.</span>"
-			success_msg = "<span class='notice'>You assemble a backbone of rods around the wooden stock.</span>"
-
-		else if(iscoil(W) && (buildstate in list(2, 4)))
-			amount_to_use = 5
-			fail_msg = "<span class='notice'>You need at least five segments of cable coil to complete this task.</span>"
-			if(buildstate == 2)
-				success_msg = "<span class='notice'>You wire a crude cell mount into the top of the crossbow.</span>"
-			else
-				success_msg = "<span class='notice'>You string a steel cable across the crossbow's lath.</span>"
-
-		else if(istype(W, /obj/item/stack/sheet/mineral/plastic) && buildstate == 3)
-			amount_to_use = 3
-			fail_msg = "<span class='notice'>You need at least three plastic sheets to complete this task.</span>"
-			success_msg = "<span class='notice'>You assemble and install a heavy plastic lath onto the crossbow.</span>"
-
-		if(amount_to_use) // if this is null, then tool we are trying to use is wrong.
-			if(S.use(amount_to_use))
-				to_chat(user, success_msg)
-				buildstate++
-				update_icon()
-			else
-				to_chat(user, fail_msg)
-
-	else if(iswelder(W))
-		if(buildstate == 1)
-			var/obj/item/weapon/weldingtool/T = W
-			if(T.use(0, user))
-				if(!T.isOn())
-					return
-				playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
-				to_chat(user, "<span class='notice'>You weld the rods into place.</span>")
-			buildstate++
-			update_icon()
-
-	else if(isscrewdriver(W))
-		if(buildstate == 5)
-			to_chat(user, "<span class='notice'>You secure the crossbow's various parts.</span>")
-			new /obj/item/weapon/crossbow(get_turf(src))
-			qdel(src)
-
-	else
-		..()
+/obj/item/weapon/crossbowframe6
+	name = "crossbow(6 stage)"
+	desc = "To finish you need: tighten the bolts by screwdriver."
+	icon_state = "crossbowframe6"
+	item_state = "crossbow-solid"
 
 /obj/item/weapon/crossbow/vox
 	max_tension = 5

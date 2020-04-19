@@ -181,7 +181,10 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/create_design(datum/rnd_queue_design/RNDD)
 	var/datum/design/D = RNDD.design
-	new D.build_path(loc)
+	var/atom/A = new D.build_path(loc)
+	if(isobj(A))
+		var/obj/O = A
+		O.origin_tech = null
 	busy = FALSE
 	queue -= RNDD
 

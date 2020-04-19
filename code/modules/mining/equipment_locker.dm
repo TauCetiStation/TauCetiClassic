@@ -812,7 +812,7 @@
 				if(istype(target, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
 					H.friends += user
-					log_game("[user] has revived hostile mob [target] with a lazarus injector")
+					log_game("[key_name(user)] has revived hostile mob [target] with a lazarus injector")
 				loaded = 0
 				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
 				playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)

@@ -1245,7 +1245,7 @@
 		spawn (0)
 			target_tile.hotspot_expose(700, 400)
 	message_admins("Orange slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
-	log_game("Orange slime extract activated by [usr.ckey]([usr])")
+	log_game("Orange slime extract activated by [key_name(usr)]")
 
 //Yellow
 /datum/chemical_reaction/slimeoverload
@@ -1260,7 +1260,7 @@
 /datum/chemical_reaction/slimeoverload/on_reaction(datum/reagents/holder, created_volume)
 	empulse(get_turf_loc(holder.my_atom), 3, 7)
 	message_admins("Yellow slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
-	log_game("Yellow slime extract activated by [usr.ckey]([usr])")
+	log_game("Yellow slime extract activated by [key_name(usr)]")
 
 /datum/chemical_reaction/slimecell
 	name = "Slime Powercell"
@@ -1395,7 +1395,7 @@
 	sleep(50)
 	explosion(get_turf_loc(holder.my_atom), 1 ,3, 6)
 	message_admins("Oil slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
-	log_game("Oil slime extract activated by [usr.ckey]([usr])")
+	log_game("Oil slime extract activated by [key_name(usr)]")
 
 //Light Pink
 /datum/chemical_reaction/slimepotion2
@@ -1498,6 +1498,14 @@
 	if(B)
 		B.loc = get_turf(holder.my_atom)
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
+
+/datum/chemical_reaction/tea
+	name = "Tea"
+	id = "tea"
+	result = "tea"
+	required_reagents = list("water" = 1)
+	result_amount = 1
+	required_container = /obj/item/weapon/reagent_containers/glass/beaker/fluff/eleanor_stone
 
 /datum/chemical_reaction/tofu
 	name = "Tofu"
