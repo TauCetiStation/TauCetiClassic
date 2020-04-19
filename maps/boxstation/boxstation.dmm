@@ -35577,6 +35577,10 @@
 /obj/item/weapon/packageWrap,
 /obj/machinery/light,
 /obj/structure/cable,
+/obj/machinery/power/apc{
+	name = "Mining Office APC";
+	pixel_y = -30
+	},
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
