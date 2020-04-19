@@ -366,7 +366,6 @@
 			return has_bodypart(targetzone)
 		else
 			return TRUE
-	return FALSE // This is probably unused.
 
 // This proc guarantees no mouse vs queen tomfuckery.
 /mob/living/proc/is_bigger_than(mob/living/target)
