@@ -12706,7 +12706,7 @@
 	},
 /area/station/rnd/xenobiology)
 "avM" = (
-/obj/structure/device/piano/royal,
+/obj/structure/flora/pottedplant/stoutbush,
 /turf/simulated/floor/light,
 /area/station/civilian/bar)
 "avN" = (
@@ -37384,10 +37384,6 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/hop_office)
 "bsZ" = (
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -38526,6 +38522,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -38728,6 +38729,11 @@
 	},
 /area/station/cargo/recycleroffice)
 "bwb" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -39588,6 +39594,11 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -41617,7 +41628,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "bCd" = (
-/obj/structure/stool/bar,
+/obj/structure/device/piano/royal,
 /turf/simulated/floor/light,
 /area/station/civilian/bar)
 "bCe" = (
@@ -49756,6 +49767,12 @@
 /obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/wall/r_wall,
 /area/station/rnd/mixing)
+"bTT" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/station/cargo/storage)
 "bTU" = (
 /obj/machinery/sparker{
 	id = "Xenobio";
@@ -70639,6 +70656,10 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
+"jzM" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/wall,
+/area/station/cargo/storage)
 "jAb" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/directions/medical{
@@ -71176,12 +71197,6 @@
 	icon_state = "blue"
 	},
 /area/station/medical/reception)
-"ktv" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	icon_state = "brown"
-	},
-/area/station/cargo/storage)
 "kub" = (
 /obj/machinery/light{
 	dir = 4
@@ -71601,10 +71616,6 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/genetics)
-"lmX" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/wall,
-/area/station/maintenance/cargo)
 "lnm" = (
 /obj/machinery/light,
 /obj/machinery/power/apc{
@@ -72736,7 +72747,7 @@
 /obj/machinery/camera{
 	c_tag = "Bar North"
 	},
-/obj/structure/flora/pottedplant/stoutbush,
+/obj/structure/stool/bar,
 /turf/simulated/floor/light,
 /area/station/civilian/bar)
 "nfb" = (
@@ -74574,10 +74585,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
-"pOH" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/wall,
-/area/station/cargo/storage)
 "pQb" = (
 /obj/machinery/door_control{
 	id = "HoP_queue";
@@ -77808,6 +77815,10 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
+"wFY" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/wall,
+/area/station/maintenance/cargo)
 "wJk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -94936,8 +94947,8 @@ ofu
 gKG
 owL
 hne
-ktv
-pOH
+bTT
+jzM
 bzj
 aFg
 aah
@@ -100589,7 +100600,7 @@ rlZ
 oUI
 qSg
 rhj
-lmX
+wFY
 jjN
 bNk
 bNk
