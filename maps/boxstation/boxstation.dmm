@@ -16070,19 +16070,20 @@
 /turf/simulated/floor,
 /area/station/cargo/office)
 "aCe" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/turf/simulated/floor,
-/area/station/hallway/primary/port)
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/cargo/office)
 "aCf" = (
 /obj/effect/landmark{
 	name = "Holodeck Base"
@@ -27469,17 +27470,19 @@
 /turf/simulated/floor/plating,
 /area/station/aisat)
 "aYv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/cargo/office)
+/turf/simulated/floor,
+/area/station/hallway/primary/port)
 "aYw" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -66760,6 +66763,15 @@
 	icon_state = "red"
 	},
 /area/station/security/main)
+"doc" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "loadingarea"
+	},
+/area/station/cargo/storage)
 "dpb" = (
 /obj/structure/sign/warning/secure_area/armory,
 /turf/simulated/wall/r_wall,
@@ -69168,15 +69180,6 @@
 	icon_state = "2-4,5,6"
 	},
 /area/shuttle/mining/station)
-"hcH" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "loadingarea"
-	},
-/area/station/cargo/storage)
 "hdb" = (
 /obj/structure/stool/bed/chair{
 	dir = 8
@@ -90881,8 +90884,8 @@ aHC
 bbt
 aGj
 bis
-aYv
-buD
+apk
+bkW
 bkW
 dxv
 aGQ
@@ -91138,7 +91141,7 @@ aEb
 bbt
 aGj
 bis
-aXW
+aCe
 aEL
 bDo
 iob
@@ -92188,7 +92191,7 @@ rXf
 bmA
 rQV
 brF
-hcH
+doc
 pjk
 bio
 uek
@@ -98336,7 +98339,7 @@ fXV
 lwE
 dNB
 tiJ
-aCe
+aYv
 aFn
 woS
 oMQ
