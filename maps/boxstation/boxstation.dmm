@@ -3108,7 +3108,8 @@
 	opacity = 0
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "afj" = (
@@ -17582,7 +17583,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "aEZ" = (
@@ -20073,7 +20075,8 @@
 /area/station/hallway/secondary/exit)
 "aJM" = (
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel/office)
 "aJN" = (
@@ -20451,7 +20454,8 @@
 	req_access = list(22)
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "aKC" = (
@@ -20487,11 +20491,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/civilian/gym)
-"aKF" = (
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/civilian/chapel)
 "aKG" = (
 /obj/machinery/door/window{
 	dir = 8;
@@ -21240,7 +21239,8 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "aMa" = (
@@ -21261,7 +21261,8 @@
 	pixel_x = 25
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "aMe" = (
@@ -23406,7 +23407,8 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel/office)
 "aQE" = (
@@ -23417,7 +23419,8 @@
 	pixel_y = 23
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel/office)
 "aQF" = (
@@ -23428,7 +23431,8 @@
 	dir = 5
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel/office)
 "aQG" = (
@@ -23449,7 +23453,8 @@
 	},
 /obj/structure/table/glass,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel/office)
 "aQI" = (
@@ -23987,7 +23992,8 @@
 	pixel_x = -25
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel/office)
 "aRG" = (
@@ -24014,7 +24020,8 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel/office)
 "aRI" = (
@@ -24804,7 +24811,8 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel/office)
 "aTp" = (
@@ -25515,7 +25523,8 @@
 	c_tag = "Chapel North"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "aUN" = (
@@ -27119,7 +27128,8 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "aXM" = (
@@ -27127,7 +27137,8 @@
 	dir = 10
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "aXN" = (
@@ -28533,7 +28544,8 @@
 "bax" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bay" = (
@@ -30082,7 +30094,8 @@
 "bdq" = (
 /obj/machinery/vending/holy,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bdr" = (
@@ -30090,7 +30103,8 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bdu" = (
@@ -30122,7 +30136,8 @@
 	dir = 10
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bdx" = (
@@ -31795,7 +31810,8 @@
 "bgx" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bgy" = (
@@ -33123,7 +33139,8 @@
 	},
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bjs" = (
@@ -33184,7 +33201,8 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bjy" = (
@@ -33230,35 +33248,12 @@
 	},
 /turf/space,
 /area/shuttle/mining/station)
-"bjD" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/civilian/chapel)
 "bjE" = (
 /obj/structure/object_wall/mining{
 	icon_state = "5-9"
 	},
 /turf/space,
 /area/shuttle/mining/station)
-"bjF" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "chapel"
-	},
-/area/station/civilian/chapel)
 "bjG" = (
 /obj/machinery/light_switch{
 	pixel_x = 27
@@ -33302,8 +33297,8 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "chapel"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bjL" = (
@@ -33314,7 +33309,8 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bjM" = (
@@ -34462,7 +34458,8 @@
 "blN" = (
 /obj/structure/table/woodentable/fancy,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "blO" = (
@@ -34479,12 +34476,8 @@
 /obj/item/weapon/storage/fancy/candle_box,
 /obj/structure/table/woodentable/fancy,
 /turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/civilian/chapel)
-"blQ" = (
-/turf/simulated/floor{
-	icon_state = "chapel"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "blR" = (
@@ -35882,7 +35875,8 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bps" = (
@@ -36049,8 +36043,8 @@
 /area/station/cargo/office)
 "bpN" = (
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "chapel"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bpO" = (
@@ -36965,7 +36959,8 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bse" = (
@@ -37025,7 +37020,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bsl" = (
@@ -38190,7 +38186,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "buR" = (
@@ -39920,7 +39917,8 @@
 	pixel_x = -26
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "byC" = (
@@ -39984,7 +39982,8 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "byJ" = (
@@ -39995,7 +39994,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "byK" = (
@@ -44258,7 +44258,8 @@
 	pixel_x = -26
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bHd" = (
@@ -44267,7 +44268,8 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bHe" = (
@@ -45554,7 +45556,8 @@
 "bJA" = (
 /obj/structure/flora/plant/random,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bJB" = (
@@ -45573,7 +45576,8 @@
 /obj/structure/flora/plant/random,
 /obj/machinery/light,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bJE" = (
@@ -48249,7 +48253,8 @@
 	opacity = 0
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "bPQ" = (
@@ -67315,15 +67320,6 @@
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
-"eqX" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "loadingarea"
-	},
-/area/station/cargo/storage)
 "erb" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -69843,20 +69839,12 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "ice" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
+/obj/structure/stool,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
+/area/station/civilian/chapel)
 "idb" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/pill_bottle/dice,
@@ -73607,23 +73595,20 @@
 	},
 /area/station/engineering/engine)
 "oqz" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
+/obj/machinery/door/airlock/maintenance{
+	req_access = list(12)
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "orb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
 	dir = 4
@@ -74859,16 +74844,6 @@
 	icon_state = "white"
 	},
 /area/station/medical/hallway)
-"qjq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "loadingarea"
-	},
-/area/station/cargo/storage)
 "qkb" = (
 /obj/item/weapon/storage/box/beakers{
 	pixel_x = 2;
@@ -75222,6 +75197,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
+"qOT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "loadingarea"
+	},
+/area/station/cargo/storage)
 "qPb" = (
 /turf/simulated/floor{
 	dir = 6;
@@ -75622,6 +75607,23 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"rqp" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "rrb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -77239,6 +77241,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"tWY" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "loadingarea"
+	},
+/area/station/cargo/storage)
 "tXb" = (
 /obj/structure/stool/bed/chair/metal,
 /turf/simulated/floor{
@@ -77551,6 +77562,24 @@
 	icon_state = "green"
 	},
 /area/station/civilian/hydroponics)
+"uNU" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "uOD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
@@ -77899,23 +77928,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"wPD" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "wQY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -92188,9 +92200,9 @@ qlZ
 xoX
 rXf
 bmA
-qjq
+qOT
 brF
-eqX
+tWY
 pjk
 bio
 uek
@@ -104004,7 +104016,7 @@ aGn
 aGn
 aGn
 aSM
-ice
+oqz
 aSM
 aSM
 aSM
@@ -104261,7 +104273,7 @@ bmQ
 bmp
 bmZ
 btQ
-oqz
+uNU
 bmC
 aGK
 aGK
@@ -104518,7 +104530,7 @@ blR
 blR
 blR
 bhJ
-wPD
+rqp
 blR
 boW
 aIP
@@ -124293,11 +124305,11 @@ bao
 bdm
 aKv
 bjr
-aKF
+bpN
 bpr
 bsd
-aKF
-aKF
+bpN
+bpN
 aVp
 aVp
 bJD
@@ -124557,7 +124569,7 @@ buK
 aWJ
 aVp
 aVp
-aKF
+bpN
 aIU
 bIx
 bPV
@@ -125320,7 +125332,7 @@ bPP
 aIU
 aIU
 aIU
-bjD
+bjK
 blP
 aVp
 aVp
@@ -125577,12 +125589,12 @@ aLZ
 aIU
 bdq
 bgx
-bjF
-aTP
-bjs
-aWJ
-buK
-aWJ
+bjK
+bpN
+bpN
+ice
+ice
+ice
 bCO
 aUc
 bdE
@@ -125829,20 +125841,20 @@ aLx
 aOS
 aup
 aUM
-aKF
-aXL
-aKF
-bdr
-aKF
-bjK
-blQ
 bpN
-bsj
-buL
-bsj
+aXL
+bpN
+bdr
+bpN
+bjK
+bpN
+bpN
+ice
+ice
+ice
 aVp
 aUc
-aKF
+bpN
 aIU
 bIx
 bPO
@@ -126085,8 +126097,8 @@ axj
 axj
 aOS
 aVY
-aKF
-aKF
+bpN
+bpN
 aXM
 bax
 bdw
@@ -126342,13 +126354,13 @@ aSX
 aup
 aRh
 aup
-aKF
-aKF
+bpN
+bpN
 aMd
-aKF
-aKF
-aKF
-aKF
+bpN
+bpN
+bpN
+bpN
 aUb
 aUb
 aUb
