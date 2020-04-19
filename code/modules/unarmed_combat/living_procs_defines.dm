@@ -21,7 +21,6 @@ var/global/combos_cheat_sheet = ""
 			dat += "<hr><p>"
 			dat += "<b>Name:</b> <i>[CC.name]</i><br>"
 			dat += "<b>Desc:</b> [CC.desc]<br>"
-			dat += CC.armor_pierce ? "<font color='red'><i>* Ignores armor.</i></font>" : ""
 			dat += "<b>Combopoints cost:</b> [CC.fullness_lose_on_execute]%<br>"
 
 			var/tz_txt = ""
@@ -68,6 +67,7 @@ var/global/combos_cheat_sheet = ""
 				combo_txt += c_el + " "
 
 			dat += "<b>Combo required:</b> [combo_txt]<br>"
+			dat += CC.armor_pierce ? "<br><font color='red'><i>* Ignores armor.</i></font><br>" : ""
 			dat += "</p></hr>"
 
 		global.combos_cheat_sheet = dat
