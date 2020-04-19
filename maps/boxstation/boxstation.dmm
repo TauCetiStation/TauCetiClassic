@@ -15829,6 +15829,7 @@
 	name = "Kitchen APC";
 	pixel_y = -26
 	},
+/obj/structure/cable,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -16852,6 +16853,11 @@
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/civilian/kitchen)
@@ -43127,6 +43133,11 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "bluecorner"
 	},
@@ -43561,6 +43572,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -44642,6 +44658,11 @@
 /area/station/maintenance/engineering)
 "bHO" = (
 /obj/machinery/hologram/holopad,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -66654,15 +66675,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
-"dhC" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "loadingarea"
-	},
-/area/station/cargo/storage)
 "dib" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -67806,6 +67818,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -68044,6 +68061,16 @@
 	icon_state = "warning"
 	},
 /area/station/civilian/gym)
+"fzD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "loadingarea"
+	},
+/area/station/cargo/storage)
 "fAb" = (
 /obj/machinery/camera{
 	c_tag = "Recycler External South";
@@ -68934,6 +68961,11 @@
 /area/station/maintenance/auxsolarstarboard)
 "gQi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -69826,15 +69858,19 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "ice" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "loadingarea"
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
-/area/station/cargo/storage)
+/turf/simulated/floor,
+/area/station/hallway/primary/port)
 "idb" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/pill_bottle/dice,
@@ -76167,6 +76203,11 @@
 /obj/effect/landmark/start{
 	name = "Chef"
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -77316,6 +77357,15 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/storage)
+"uhW" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "loadingarea"
+	},
+/area/station/cargo/storage)
 "ujL" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -77867,6 +77917,19 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/office)
+"wRX" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/station/civilian/kitchen)
 "wYU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -77902,6 +77965,11 @@
 /area/station/civilian/hydroponics)
 "xiQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -92126,9 +92194,9 @@ qlZ
 xoX
 rXf
 bmA
-ice
+fzD
 brF
-dhC
+uhW
 pjk
 bio
 uek
@@ -98276,7 +98344,7 @@ fXV
 lwE
 dNB
 tiJ
-tiJ
+ice
 aFn
 woS
 oMQ
@@ -99304,7 +99372,7 @@ bes
 bns
 apr
 auq
-kss
+wRX
 hho
 kss
 kss
