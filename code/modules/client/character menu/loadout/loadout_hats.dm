@@ -77,6 +77,10 @@
 	display_name = "Beret selection"
 	path = /obj/item/clothing/head/beret
 
+/datum/gear/head/kitty_ears
+	display_name = "Kitty ears"
+	path = /obj/item/clothing/head/kitty
+
 /datum/gear/head/beret/New()
 	..()
 	var/berets = list()
