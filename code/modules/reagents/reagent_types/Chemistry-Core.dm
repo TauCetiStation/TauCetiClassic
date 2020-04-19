@@ -147,6 +147,8 @@
 	description = "A corpsen-ectoplasmic-water mix, this solution could alter concepts of reality itself."
 	color = "#c80064" // rgb: 200,0, 100
 
+	data = list()
+
 /datum/reagent/water/unholywater/on_general_digest(mob/living/M)
 	..()
 	if(!data["ticks"])
