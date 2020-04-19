@@ -21,7 +21,7 @@
 /obj/item/weapon/stock_parts/cell/set_prototype_qualities(rel_val=100, mark=0)
 	..()
 	while(!prob(reliability))
-		if(maxcharge <= 1000)
+		if(maxcharge =< 1000)
 			break
 		if(maxcharge < 10000)
 			maxcharge = max(maxcharge - 2000, 1000)
