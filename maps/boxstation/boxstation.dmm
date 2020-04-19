@@ -11949,6 +11949,9 @@
 	pixel_y = 24
 	},
 /obj/structure/disposalpipe/trunk,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -13289,6 +13292,9 @@
 	pixel_y = 3
 	},
 /obj/item/device/multitool,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -32036,6 +32042,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 30
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -33355,6 +33364,9 @@
 "bjG" = (
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
 	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
@@ -38860,6 +38872,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -53424,6 +53439,9 @@
 /area/station/maintenance/engineering)
 "ceI" = (
 /obj/machinery/door/firedoor,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
 /turf/simulated/floor{
 	icon_state = "browncorner"
 	},
@@ -67685,6 +67703,15 @@
 	icon_state = "red"
 	},
 /area/station/medical/reception)
+"eKs" = (
+/obj/machinery/door/firedoor,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/port)
 "eLb" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -73583,6 +73610,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -73921,6 +73951,12 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
+"oEO" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
+/turf/simulated/floor,
+/area/station/civilian/hydroponics)
 "oGL" = (
 /obj/machinery/light{
 	dir = 4
@@ -77045,6 +77081,16 @@
 "tpb" = (
 /turf/simulated/wall/r_wall,
 /area/station/medical/patients_rooms)
+"tpw" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/station/civilian/kitchen)
 "tqb" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -77226,6 +77272,12 @@
 	icon_state = "warning"
 	},
 /area/station/hallway/secondary/exit)
+"tMk" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
+/turf/simulated/floor,
+/area/station/civilian/locker)
 "tNb" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
@@ -77706,6 +77758,15 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"vnw" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
+/turf/simulated/floor{
+	icon_state = "browncorner"
+	},
+/area/station/hallway/secondary/entry)
 "vsv" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -78030,6 +78091,9 @@
 	},
 /area/station/civilian/kitchen)
 "xoX" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -89668,7 +89732,7 @@ bOA
 aNw
 bQB
 baq
-bQB
+vnw
 biV
 bkB
 bmq
@@ -90179,7 +90243,7 @@ aJW
 ajb
 aXW
 apE
-bsG
+bkW
 bfh
 bHe
 bfi
@@ -94809,7 +94873,7 @@ bEm
 beY
 beY
 beY
-arB
+tMk
 aSM
 dDJ
 sJr
@@ -96087,7 +96151,7 @@ aWD
 agO
 bdf
 aTd
-bgb
+eKs
 aNi
 aNi
 aNi
@@ -97638,7 +97702,7 @@ dra
 ncT
 asT
 oGL
-aVg
+oEO
 aNi
 aNi
 aSM
@@ -99441,7 +99505,7 @@ jQu
 jQu
 gWo
 bIp
-bIM
+tpw
 bHI
 bJa
 bJO
