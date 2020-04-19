@@ -45,6 +45,7 @@
 	var/kill_count = 50 //This will de-increment every process(). When 0, it will delete the projectile.
 	var/paused = FALSE //for suspending the projectile midair
 		//Effects
+	var/lesseffect = 1
 	var/stun = 0
 	var/weaken = 0
 	var/paralyze = 0
@@ -113,7 +114,7 @@
 	if(!isliving(target))	return 0
 	if(isanimal(target))	return 0
 	var/mob/living/L = target
-	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
+	return L.apply_effects(stun/lesseffect, weaken/lesseffect, paralyze/lesseffect, irradiate/lesseffect, stutter/lesseffect, eyeblur/lesseffect, drowsy/lesseffect, agony/lesseffect, blocked) // add in AGONY!
 
 	//called when the projectile stops flying because it collided with something
 /obj/item/projectile/proc/on_impact(atom/A)

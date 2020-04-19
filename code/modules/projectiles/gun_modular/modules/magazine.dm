@@ -124,6 +124,9 @@
     size_gun = 1
     gun_type = ENERGY_GUN
     isinternal = FALSE
+    eject_casing = FALSE
+    empty_chamber = FALSE
+    no_casing = FALSE
     var/obj/item/weapon/stock_parts/cell/magazine = null
 
 /obj/item/weapon/gun_modular/module/magazine/energy/attackby(obj/item/weapon/W, mob/user, params)
@@ -162,6 +165,13 @@
     var/obj/item/ammo_casing/energy/ammo = new lens_type(src)
     magazine.use(ammo.e_cost * frame_parent.chamber.pellets * 5)
     return ammo
+
+/obj/item/weapon/gun_modular/module/magazine/energy/Give_Round(obj/item/ammo_casing/ammo, mob/user, var/charge = 0)
+    if(!magazine)
+        return FALSE
+    magazine.charge += charge
+    magazine.charge = min(magazine.charge, magazine.maxcharge)
+    return TRUE
 
 /obj/item/weapon/gun_modular/module/magazine/energy/remove_item_in_module(var/obj/item/weapon/stock_parts/cell/cell)
     cell.loc = get_turf(src)

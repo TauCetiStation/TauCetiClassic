@@ -167,7 +167,9 @@ obj/item/weapon/gun_modular/module/chamber/energy/Fire(atom/target, mob/living/u
     chamber_round()
     if(chambered)
         chambered.pellets = pellets
-        chambered.BB.damage /= pellets
+        if(chambered.BB)
+            chambered.BB.damage /= pellets
+            chambered.BB.lesseffect = pellets
     ..()
 
 obj/item/weapon/gun_modular/module/chamber/energy/process_chamber()
@@ -178,11 +180,13 @@ obj/item/weapon/gun_modular/module/chamber/energy/process_chamber()
 obj/item/weapon/gun_modular/module/chamber/energy/chamber_round()
     if(!frame_parent.magazine)
         return FALSE
+    if(chambered)
+        return FALSE
     var/obj/item/ammo_casing/energy/lens = lenses[lens_select]
     if(frame_parent.magazine.Ammo_Count(lens))
         chambered = frame_parent.magazine.Get_Ammo(lens.type)
         if(chambered)
-            chambered.loc = src.loc
+            chambered.loc = src
 
 obj/item/weapon/gun_modular/module/chamber/energy/attackby(obj/item/weapon/W, mob/user, params)
     if(isscrewdriver(W))
