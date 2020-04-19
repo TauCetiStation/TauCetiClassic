@@ -26,7 +26,7 @@
 		if(maxcharge < 10000)
 			maxcharge = max(maxcharge - 2000, 1000)
 		else
-			maxcharge = max(maxcharge - maxcharge/10, 1000)
+			maxcharge = max(maxcharge * 0.9, 1000)
 		charge = min(charge, maxcharge)
 
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
