@@ -61,6 +61,8 @@
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = 2 * REAGENTS_METABOLISM
 
+	data = list("ticks" = 0)
+
 /datum/reagent/ryetalyn/on_general_digest(mob/living/M)
 	..()
 	if(!data["ticks"])
