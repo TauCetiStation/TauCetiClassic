@@ -84,8 +84,7 @@
 
 
 /obj/item/weapon/paper_bundle/attack_self(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
+	if (ishuman(user) || isrobot(user))
 		var/dat
 		var/obj/item/weapon/W = src[page]
 		switch(screen)
@@ -103,13 +102,13 @@
 				dat+= "<DIV STYLE='float;left; text-align:right; with:33.33333%'></DIV>"
 		if(istype(src[page], /obj/item/weapon/paper))
 			var/obj/item/weapon/paper/P = W
-			dat += P.show_content(human_user, view = FALSE)
-			human_user << browse(entity_ja(dat), "window=[name]")
+			dat += P.show_content(user, view = FALSE)
+			user << browse(entity_ja(dat), "window=[name]")
 			P.add_fingerprint(usr)
 		else if(istype(src[page], /obj/item/weapon/photo))
 			var/obj/item/weapon/photo/P = W
-			human_user << browse_rsc(P.img, "tmp_photo.png")
-			human_user << browse(entity_ja(dat) + "<html><head><title>[sanitize(P.name)]</title></head>" \
+			user << browse_rsc(P.img, "tmp_photo.png")
+			user << browse(entity_ja(dat) + "<html><head><title>[sanitize(P.name)]</title></head>" \
 			+ "<body style='overflow:hidden'>" \
 			+ "<div> <img src='tmp_photo.png' width = '180'" \
 			+ "[P.scribble ? "<div> Written on the back:<br><i>[P.scribble]</i>" : null]"\
@@ -122,7 +121,7 @@
 
 /obj/item/weapon/paper_bundle/Topic(href, href_list)
 	..()
-	if((src in usr.contents) || (istype(src.loc, /obj/item/weapon/folder) && (src.loc in usr.contents)))
+	if(((src in usr.contents) || (isrobot(usr) && (src.loc in usr.contents))) || (istype(src.loc, /obj/item/weapon/folder) && ((src.loc in usr.contents) || (isrobot(usr) && (src.loc.loc in usr.contents)))))
 		usr.set_machine(src)
 		if(href_list["next_page"])
 			if(page == amount)
@@ -144,12 +143,18 @@
 			playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
 		if(href_list["remove"])
 			var/obj/item/weapon/W = src[page]
-			usr.put_in_hands(W)
+			if (ishuman(usr))
+				usr.put_in_hands(W)
+			else
+				W.forceMove(get_turf(W))
 			to_chat(usr, "<span class='notice'>You remove the [W.name] from the bundle.</span>")
 			if(amount == 1)
 				var/obj/item/weapon/paper/P = src[1]
 				usr.drop_from_inventory(src)
-				usr.put_in_hands(P)
+				if (ishuman(usr))
+					usr.put_in_hands(P)
+				else
+					P.forceMove(get_turf(P))
 				qdel(src)
 			else if(page == amount)
 				screen = 2
@@ -158,11 +163,12 @@
 
 			amount--
 			update_icon()
+		if (!QDELETED(src))
+			attack_self(usr)
+			updateUsrDialog()
+
 	else
 		to_chat(usr, "<span class='notice'>You need to hold it in hands!</span>")
-	if (istype(src.loc, /mob))
-		src.attack_self(src.loc)
-		updateUsrDialog()
 
 
 

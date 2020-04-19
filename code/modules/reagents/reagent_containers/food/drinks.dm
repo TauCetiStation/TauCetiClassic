@@ -124,9 +124,8 @@
 
 		var/trans = src.reagents.trans_to(A, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [A].</span>")
-
-		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
-			var/mob/living/silicon/robot/bro = user
+		var/mob/living/silicon/robot/bro = user
+		if(istype(bro) && bro.module && (src in bro.module.modules)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/chargeAmount = max(30,4*trans)
 			bro.cell.use(chargeAmount)
 			to_chat(user, "Now synthesizing [trans] units of [refillName]...")
@@ -206,7 +205,6 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "flour"
 	item_state = "flour"
-
 /obj/item/weapon/reagent_containers/food/drinks/flour/atom_init()
 	. = ..()
 	reagents.add_reagent("flour", 30)

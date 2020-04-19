@@ -265,8 +265,10 @@
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/gripper/service(src)
 	modules += new /obj/item/weapon/gripper/paperwork(src)
-	modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 	modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
+	
+	modules += new /obj/item/weapon/kitchenknife(src)
+	modules += new /obj/item/weapon/kitchen/rollingpin(src)
 
 	var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
 	M.matter = 30
@@ -276,10 +278,11 @@
 
 	var/obj/item/weapon/lighter/zippo/L = new /obj/item/weapon/lighter/zippo(src)
 	L.lit = 1
+	L.icon_state = L.icon_on
+	L.item_state = L.icon_on
 	modules += L
 
 	modules += new /obj/item/weapon/tray/robotray(src)
-	modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 	modules += new /obj/item/weapon/pen/robopen(src)
 	modules += new /obj/item/weapon/razor(src)
 

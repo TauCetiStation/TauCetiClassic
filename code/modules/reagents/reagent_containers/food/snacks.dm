@@ -189,6 +189,8 @@
 			istype(W, /obj/item/weapon/shard) \
 		)
 		inaccurate = 1
+	else if(istype(W, /obj/item/weapon/gripper))
+		return
 	else if(W.w_class <= ITEM_SIZE_SMALL && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
 		if(!iscarbon(user))
 			return 1

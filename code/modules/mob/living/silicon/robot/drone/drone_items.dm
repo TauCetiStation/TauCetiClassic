@@ -41,9 +41,12 @@
 		/obj/item/weapon/clipboard,
 		/obj/item/weapon/paper,
 		/obj/item/weapon/paper_bundle,
+		/obj/item/weapon/photo,
+		/obj/item/weapon/folder,
 		/obj/item/weapon/card/id,
 		/obj/item/weapon/book,
-		/obj/item/weapon/newspaper
+		/obj/item/weapon/newspaper,
+		/obj/item/weapon/stamp
 		)
 
 /obj/item/weapon/gripper/chemistry
@@ -74,11 +77,8 @@
 		to_chat(user, "It is holding \a [wrapped].")
 
 /obj/item/weapon/gripper/attack_self(mob/user)
-	if(wrapped)
+	if(!QDELETED(wrapped))
 		wrapped.attack_self(user)
-
-		if(QDELETED(wrapped))
-			wrapped = null
 
 /obj/item/weapon/gripper/verb/drop_item()
 
@@ -89,7 +89,7 @@
 	if(!wrapped)
 		//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
 		for(var/obj/item/thing in src.contents)
-			thing.loc = get_turf(src)
+			thing.forceMove(get_turf(src))
 		return
 
 	if(wrapped.loc != src)
@@ -97,7 +97,7 @@
 		return
 
 	to_chat(src.loc, "<span class='warning'>You drop \the [wrapped].</span>")
-	wrapped.loc = get_turf(src)
+	wrapped.forceMove(get_turf(src))
 	wrapped = null
 	//update_icon()
 
@@ -110,28 +110,32 @@
 		return
 
 	//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
-	if(!wrapped)
+	if(QDELETED(wrapped))
+		wrapped = null
 		for(var/obj/item/thing in src.contents)
 			wrapped = thing
 			break
 
 	if(wrapped) //Already have an item.
 
-		wrapped.loc = user
+		wrapped.forceMove(user)
 		//Pass the attack on to the target.
-		target.attackby(wrapped,user)
+		var/resolved = target.attackby(wrapped, user, params)
+		if (!resolved && target && wrapped)
+			wrapped.afterattack(target, user, 1, params)
 
 		if(wrapped && src && wrapped.loc == user)
-			wrapped.loc = src
+			wrapped.forceMove(src)
 
 		//Sanity/item use checks.
 
-		if(!wrapped || !user)
+		if(!user)
 			return
 
-		if(wrapped.loc != src.loc)
+		if(QDELETED(wrapped) || wrapped.loc != src)
 			wrapped = null
-			return
+
+		return
 
 	if(istype(target,/obj/item)) //Check that we're not pocketing a mob.
 
@@ -151,7 +155,7 @@
 		//We can grab the item, finally.
 		if(grab)
 			to_chat(user, "You collect \the [I].")
-			I.loc = src
+			I.forceMove(src)
 			wrapped = I
 			return
 		else
@@ -166,7 +170,7 @@
 
 				A.cell.add_fingerprint(user)
 				A.cell.updateicon()
-				A.cell.loc = src
+				A.cell.forceMove(src)
 				A.cell = null
 
 				A.charging = 0

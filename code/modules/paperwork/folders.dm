@@ -63,7 +63,7 @@
 	if((usr.stat || usr.restrained()))
 		return
 
-	if(usr.contents.Find(src))
+	if(usr.contents.Find(src) || (isrobot(usr) && (src.loc in usr.contents)))
 
 		if(href_list["remove"])
 			var/obj/item/P = locate(href_list["remove"])
