@@ -12,6 +12,8 @@ var/global/list/combat_combos_by_name = list()
 
 	var/combo_icon_state = "combo"
 
+	var/armor_pierce = FALSE
+
 	var/list/allowed_target_zones = TARGET_ZONE_ALL
 	var/require_head = FALSE
 	var/require_arm = FALSE

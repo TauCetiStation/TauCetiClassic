@@ -285,7 +285,7 @@
 
 	var/armor_check = victim.run_armor_check(BP_HEAD, "melee")
 
-	victim.apply_effect(2, WEAKEN, blocked = armor_check)
+	victim.apply_effect(1, WEAKEN, blocked = armor_check)
 	victim.apply_damage(20, BRUTE, BP_HEAD, blocked = armor_check)
 	victim.visible_message("<span class='danger'>[attacker] has performed an uppercut on [victim]!</span>")
 
@@ -386,7 +386,7 @@
 	var/armor_check = victim.run_armor_check(null, "melee")
 
 	victim.apply_effect(5, WEAKEN, blocked = armor_check)
-	victim.apply_damage(30, BRUTE, blocked = armor_check)
+	victim.apply_damage(25, BRUTE, blocked = armor_check)
 
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	victim.visible_message("<span class='danger'>[attacker] has thrown [victim] over their shoulder!</span>")
@@ -405,6 +405,8 @@
 	combo_icon_state = "diving_elbow_drop"
 	fullness_lose_on_execute = 50
 	combo_elements = list("Suplex", I_HURT, I_DISARM, I_HURT)
+
+	armor_pierce = TRUE
 
 	allowed_target_zones = list(BP_CHEST)
 
@@ -496,6 +498,8 @@
 	combo_icon_state = "dropkick"
 	fullness_lose_on_execute = 25
 	combo_elements = list(I_DISARM, I_HURT, I_DISARM, I_HURT)
+
+	armor_pierce = TRUE
 
 	allowed_target_zones = list(BP_GROIN)
 
@@ -697,7 +701,7 @@
 							victim.visible_message("<span class='danger'>[attacker] slams [victim] into an obstacle!</span>")
 
 						L.apply_effect(6, WEAKEN, blocked = armor_check)
-						L.apply_damage(40, BRUTE, blocked = armor_check)
+						L.apply_damage(35, BRUTE, blocked = armor_check)
 					break try_steps_loop
 
 				if(!do_after(attacker, attacker.movement_delay() * 0.5, can_move = TRUE, target = victim, progress = FALSE))
@@ -722,6 +726,8 @@
 	combo_icon_state = "spin_throw"
 	fullness_lose_on_execute = 50
 	combo_elements = list(I_GRAB, I_GRAB, I_GRAB, I_HURT)
+
+	armor_pierce = TRUE
 
 	allowed_target_zones = list(BP_CHEST)
 
