@@ -36287,6 +36287,9 @@
 	home_destination = "QM #2";
 	suffix = "#2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -36753,6 +36756,7 @@
 	c_tag = "Cargo Bay West";
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -38321,6 +38325,10 @@
 	codes_txt = "delivery;dir=8";
 	freq = 1400;
 	location = "QM #4"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -66646,6 +66654,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
+"dhC" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "loadingarea"
+	},
+/area/station/cargo/storage)
 "dib" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -69350,10 +69367,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "hwb" = (
@@ -69811,16 +69826,15 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "ice" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/wall,
-/area/station/maintenance/cargo)
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "loadingarea"
+	},
+/area/station/cargo/storage)
 "idb" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/pill_bottle/dice,
@@ -71121,12 +71135,6 @@
 	},
 /area/station/medical/genetics)
 "kpu" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -71136,6 +71144,12 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -71336,6 +71350,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/station/maintenance/disposal)
 "kGb" = (
@@ -76256,6 +76272,8 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -76759,9 +76777,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "tcb" = (
@@ -77261,12 +77277,6 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "uek" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "ufb" = (
@@ -92116,9 +92126,9 @@ qlZ
 xoX
 rXf
 bmA
-bmA
+ice
 brF
-brF
+dhC
 pjk
 bio
 uek
@@ -100338,7 +100348,7 @@ eUl
 oUI
 oUI
 vWx
-ice
+oUI
 pAG
 bNk
 kNq
