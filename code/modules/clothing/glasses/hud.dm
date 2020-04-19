@@ -41,7 +41,7 @@
 
 /obj/item/clothing/glasses/hud/health/process_hud(mob/M)
 	check_integrity()
-	process_med_hud(M, 1, crit_fail = src.crit_fail)
+	process_med_hud(M, 1, crit_fail = crit_fail)
 
 /obj/item/clothing/glasses/hud/security
 	name = "security HUD"
