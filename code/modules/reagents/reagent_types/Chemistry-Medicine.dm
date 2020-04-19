@@ -60,22 +60,21 @@
 	color = "#004000" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = 2 * REAGENTS_METABOLISM
-	data = 0
 
 /datum/reagent/ryetalyn/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
+	if(!data["ticks"])
+		data["ticks"] = 1
 
 	for(var/datum/dna/gene/gene in dna_genes)
 		if(!gene.block)
 			continue
-		if(!prob(REM * data))
+		if(!prob(REM * data["ticks"]))
 			continue
 		M.dna.SetSEValue(gene.block, rand(1,2048))
 		genemutcheck(M, gene.block, null, MUTCHK_FORCED)
 
-	data++
+	data["ticks"]++
 
 /datum/reagent/paracetamol
 	name = "Paracetamol"
