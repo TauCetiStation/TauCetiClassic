@@ -340,7 +340,7 @@ BLIND     // can't see anything
 
 //Cutting shoes
 /obj/item/clothing/shoes/attackby(obj/item/weapon/W, mob/user)
-	if(iswirecutter(W) || istype(W, /obj/item/weapon/scalpel))
+	if(iswirecutter(W))
 		switch(clipped_status)
 			if(CLIPPABLE)
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
