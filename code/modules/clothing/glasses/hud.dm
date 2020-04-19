@@ -24,8 +24,8 @@
 /obj/item/clothing/glasses/sunglasses/hud/secmed/proc/process_hud(mob/M)
 	if(fixtime != -1 && crit_fail && fixtime < world.time)
 		crit_fail = 0
-	process_med_hud(M, 1, crit_fail = src.crit_fail)
-	process_sec_hud(M, 1, crit_fail = src.crit_fail)
+	process_med_hud(M, 1, crit_fail = crit_fail)
+	process_sec_hud(M, 1, crit_fail = crit_fail)
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
 	if(!crit_fail)
