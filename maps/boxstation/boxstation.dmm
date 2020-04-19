@@ -36795,9 +36795,6 @@
 	freq = 1400;
 	location = "QM #3"
 	},
-/obj/structure/disposalpipe/junction{
-	dir = 8
-	},
 /obj/machinery/camera{
 	c_tag = "Cargo Bay West";
 	dir = 4
@@ -67809,6 +67806,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "eXz" = (
@@ -77829,10 +77827,6 @@
 /obj/structure/closet/crate,
 /obj/item/weapon/screwdriver,
 /obj/item/weapon/crowbar,
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "wET" = (
