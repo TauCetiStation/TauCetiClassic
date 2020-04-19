@@ -49,7 +49,6 @@
 		if(iscultist(A) || is_type_in_typecache(A, scum))
 			set_light(3)
 			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
-			return
 
 /obj/item/weapon/nullrod/attack(mob/M, mob/living/user) //Paste from old-code to decult with a null rod.
 	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
@@ -109,13 +108,10 @@
 	var/next_ping = 0
 	var/islam = FALSE
 
-/obj/item/weapon/nullrod/staff/process()
+/mob/living/simple_animal/shade/god/Login()
 	..()
-	if(istype(src, /obj/item/weapon/nullrod/staff)) //repair blind when re-entering in game
-		var/obj/item/weapon/nullrod/staff/S = src
-		if(S.brainmob && S.brainmob.ckey && S.brainmob.stat != CONSCIOUS)
-			S.brainmob.stat = CONSCIOUS
-			S.brainmob.blinded = FALSE
+	stat = CONSCIOUS
+	blinded = FALSE
 
 /obj/item/weapon/nullrod/staff/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	if(istype(W, /obj/item/device/soulstone)) //mb, the only way to pull out god
@@ -145,11 +141,11 @@
 	for(var/mob/dead/observer/O in player_list)
 		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 			continue
-		if(jobban_isbanned(O, ROLE_PAI) && role_available_in_minutes(O, ROLE_PAI))
+		if(jobban_isbanned(O, ROLE_TSTAFF) && role_available_in_minutes(O, ROLE_TSTAFF))
 			continue
 		if(O.client)
 			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find("chstaff") && (ROLE_PAI in C.prefs.be_role))
+			if(!C.prefs.ignore_question.Find("chstaff") && (ROLE_TSTAFF in C.prefs.be_role))
 				INVOKE_ASYNC(src, .proc/question, C)
 
 /obj/item/weapon/nullrod/staff/proc/question(client/C)
@@ -211,6 +207,8 @@
 	searching = FALSE
 	icon_state = "talking_staff"
 	visible_message("<span class='notice'>The stone of \the [src] stopped glowing, why didn't you please the god?</span>")
+	if(brainmob)
+		qdel(brainmob)
 
 /obj/item/weapon/nullrod/staff/examine(mob/user)
 	..()
@@ -224,9 +222,8 @@
 				msg += "<span class='warning'>Divine presence is not tangible.</span>\n"
 			if(DEAD)
 				msg += "<span class='deadsay'>Divine presence faded.</span>\n"
-	else
-		msg += ""
-	to_chat(user, msg)
+		if(msg)
+			to_chat(user, msg)
 
 /obj/item/weapon/nullrod/staff/attack_ghost(mob/dead/observer/O)
 	if(next_ping > world.time)
