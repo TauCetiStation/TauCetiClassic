@@ -80,11 +80,11 @@
 		power.action(user, 1)
 
 /obj/item/weapon/nullrod/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
-	if(user.mind.assigned_role == "Chaplain" && istype(W, /obj/item/weapon/storage/bible) && !istype(src, /obj/item/weapon/nullrod/staff))
+	if(user.mind.assigned_role == "Chaplain" && istype(W, /obj/item/weapon/storage/bible))
 		var/obj/item/weapon/storage/bible/B = W
-		var/obj/item/weapon/nullrod/staff/staff = new /obj/item/weapon/nullrod/staff(loc)
-		if(istype(B.loc, /mob/living))
-			var/mob/living/M = B.loc
+		var/obj/item/weapon/nullrod/staff/staff = new /obj/item/weapon/nullrod/staff(src.loc)
+		if(istype(staff.loc, /mob/living))
+			var/mob/living/M = staff.loc
 			M.drop_from_inventory(staff)
 		staff.god_name = B.deity_name
 		staff.god_lore = B.god_lore
@@ -119,7 +119,7 @@
 		if(S.imprinted == "empty")
 			S.imprinted = brainmob.name
 			S.transfer_soul("SHADE", src.brainmob, user)
-	if(istype(W, /obj/item/weapon/storage/bible)) //force kick god from staff
+	else if(istype(W, /obj/item/weapon/storage/bible)) //force kick god from staff
 		if(brainmob)
 			qdel(brainmob)
 			searching = FALSE
