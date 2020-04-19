@@ -34463,6 +34463,10 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 8
 	},
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_y = -28
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
