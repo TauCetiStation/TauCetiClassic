@@ -35207,6 +35207,9 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/security/vacantoffice)
 "bnL" = (
@@ -38676,7 +38679,6 @@
 /obj/structure/disposaloutlet{
 	dir = 4
 	},
-/obj/structure/disposalpipe/trunk,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
@@ -43452,18 +43454,14 @@
 	},
 /area/station/rnd/lab)
 "bFy" = (
-/obj/structure/stool,
-/obj/effect/landmark/start{
-	name = "Shaft Miner"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "bar"
+	dir = 4;
+	icon_state = "loadingarea"
 	},
-/area/station/cargo/miningoffice)
+/area/station/cargo/storage)
 "bFz" = (
 /obj/structure/object_wall/pod{
 	icon_state = "3,1";
@@ -67813,15 +67811,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"eXz" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "loadingarea"
-	},
-/area/station/cargo/storage)
 "eZb" = (
 /obj/structure/closet/firecloset,
 /turf/simulated/floor/plating,
@@ -92164,7 +92153,7 @@ rXf
 bmA
 bDo
 brF
-eXz
+bFy
 pjk
 bio
 uek
@@ -96528,7 +96517,7 @@ aSM
 bDk
 aSM
 aYl
-bFy
+bEl
 bGQ
 boK
 brd
