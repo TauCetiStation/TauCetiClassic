@@ -80,8 +80,6 @@
 		update_icon()
 		return 1
 
-	return 0
-
 
 /obj/item/weapon/reagent_containers/food/drinks/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
