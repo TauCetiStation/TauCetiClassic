@@ -82,7 +82,7 @@
 /obj/item/weapon/nullrod/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	if(user.mind.assigned_role == "Chaplain" && istype(W, /obj/item/weapon/storage/bible))
 		var/obj/item/weapon/storage/bible/B = W
-		var/obj/item/weapon/nullrod/staff/staff = new /obj/item/weapon/nullrod/staff(src.loc)
+		var/obj/item/weapon/nullrod/staff/staff = new /obj/item/weapon/nullrod/staff(loc)
 		if(istype(staff.loc, /mob/living))
 			var/mob/living/M = staff.loc
 			M.drop_from_inventory(staff)
@@ -118,7 +118,7 @@
 		var/obj/item/device/soulstone/S = W
 		if(S.imprinted == "empty")
 			S.imprinted = brainmob.name
-			S.transfer_soul("SHADE", src.brainmob, user)
+			S.transfer_soul("SHADE", brainmob, user)
 	else if(istype(W, /obj/item/weapon/storage/bible)) //force kick god from staff
 		if(brainmob)
 			qdel(brainmob)
