@@ -47,7 +47,7 @@
 	. = ..()
 	if(knife)
 		return
-	if(istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/pen/edagger))
+	if(I.tools[TOOL_KNIFE] >= 1)
 		user.drop_item()
 		knife = I
 		I.forceMove(src)
