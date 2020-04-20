@@ -129,10 +129,6 @@
 		return TRUE
 	if (mover.pass_flags & (PASSTABLE | PASSCRAWL) || istype(mover, /obj/effect/meteor) || mover.throwing)
 		return TRUE
-	if(istype(mover, /mob/living/carbon))
-		var/mob/living/carbon/M = mover
-		if(M.lying || M.crawling)
-			return TRUE
 	else
 		return FALSE
 
@@ -169,9 +165,8 @@
 		var/mob/living/carbon/M = AM
 		if(M.a_intent == I_HURT)
 			breaktape(W = null, user = M, forced = FALSE)
-	if(!istype(AM, /obj/mecha))
-		return
-	breaktape(W = null, user = null, forced = TRUE)	
+	else if(istype(AM, /obj/mecha))
+		breaktape(W = null, user = null, forced = TRUE)	
 
 /obj/item/tape/proc/breaktape(obj/item/weapon/W, mob/user, forced = FALSE)
 	if((user && user.a_intent == "help") && (W && !W.can_puncture() && allowed(user)) && !forced)
