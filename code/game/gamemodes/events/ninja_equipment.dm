@@ -247,6 +247,7 @@ ________________________________________________________________________________
 	var/display_to = s_control ? U : A//Who do we want to display certain messages to?
 
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/spider_os)
+	assets.register()
 	assets.send(U)
 
 	var/dat = "<html><head><title>SpiderOS</title></head><body bgcolor=\"#3D5B43\" text=\"#B65B5B\"><style>a, a:link, a:visited, a:active, a:hover { color: #B65B5B; }img {border-style:none;}</style>"
@@ -1105,11 +1106,11 @@ ________________________________________________________________________________
 
 	else if (istype(target, /obj/machinery/computer/rdconsole) || istype(target, /obj/machinery/r_n_d/server))
 		to_chat(U, "<span class='notice'>Hacking \the [target]...</span>")
-		
+
 		var/turf/location = get_turf(U)
 		for(var/mob/living/silicon/ai/AI in ai_list)
 			to_chat(AI, "<span class='warning'><b>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</b>.</span>")
-		
+
 		var/datum/research/files = null
 
 		if (istype(target, /obj/machinery/computer/rdconsole))
@@ -1122,7 +1123,7 @@ ________________________________________________________________________________
 		if(files && files.tech_trees.len)
 			for(var/datum/tech/current_data in S.stored_research)
 				to_chat(U, "<span class='notice'>Checking \the [current_data.name] database.</span>")
-				
+
 				if(do_after(U, S.s_delay, target = target) && G.candrain && !isnull(target))
 					var/datum/tech/analyzing_data = files.tech_trees[current_data.id]
 					if(analyzing_data && analyzing_data.level > current_data.level)
@@ -1170,7 +1171,7 @@ ________________________________________________________________________________
 	else if (istype(target, /obj/mecha))
 		var/obj/mecha/A = target
 		A.occupant_message("<span class='warning'>Warning: Unauthorized access through sub-route 4, block H, detected.</span>")
-		
+
 		if (A.get_charge())
 			G.draining = TRUE
 			while (G.candrain && A.cell.charge > 0 && !maxcapacity)
@@ -1197,7 +1198,7 @@ ________________________________________________________________________________
 	else if (istype(target, /mob/living/silicon/robot))
 		var/mob/living/silicon/robot/A = target
 		to_chat(A, "<span class='warning'>Warning: Unauthorized access through sub-route 12, block C, detected.</span>")
-		
+
 		if(A.cell && A.cell.charge)
 			G.draining = TRUE
 			while(G.candrain && A.cell.charge > 0 && !maxcapacity)
@@ -1242,7 +1243,7 @@ ________________________________________________________________________________
 			return
 
 		var/datum/powernet/PN = B.terminal.powernet
-		
+
 		G.draining = TRUE
 		while(G.candrain && !maxcapacity && !isnull(A)) //And start a proc similar to drain from wire.
 			drain = rand(G.mindrain,G.maxdrain)
@@ -1543,7 +1544,7 @@ It is possible to destroy the net by the occupant or someone else.
 	healthcheck()
 	return
 
-/obj/effect/energy_net/hitby(AM)
+/obj/effect/energy_net/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	..()
 	src.visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
 	var/tforce = 0
@@ -1571,7 +1572,7 @@ It is possible to destroy the net by the occupant or someone else.
 /obj/effect/energy_net/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if (islarva(user) || isfacehugger(user))
+	if (isxenolarva(user) || isfacehugger(user))
 		return
 	playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 	health -= rand(10, 20)

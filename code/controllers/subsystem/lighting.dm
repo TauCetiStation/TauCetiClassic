@@ -13,7 +13,6 @@ var/datum/subsystem/lighting/SSlighting
 
 	flags = SS_TICKER
 
-	var/initialized = FALSE
 
 /datum/subsystem/lighting/New()
 	NEW_SS_GLOBAL(SSlighting)

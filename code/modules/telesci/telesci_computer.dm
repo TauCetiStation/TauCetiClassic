@@ -250,7 +250,7 @@
 					temp_msg += "<BR>Calibration required soon."
 				else
 					temp_msg += "<BR>Data printed below."
-				investigate_log("[key_name(usr)]/[user] has teleported with Telescience at [trueX],[trueY],[z_co], in [A ? A.name : "null area"].","telesci")
+				log_investigate("[key_name(usr)]/[user] has teleported with Telescience at [trueX],[trueY],[z_co], in [A ? A.name : "null area"].",INVESTIGATE_TELESCI)
 
 				var/datum/effect/effect/system/spark_spread/SS = new /datum/effect/effect/system/spark_spread
 				SS.set_up(5, 1, target)

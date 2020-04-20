@@ -199,10 +199,10 @@
 				new path(loc)
 	..()
 
-/mob/living/simple_animal/emote(act, type, desc)
+/mob/living/simple_animal/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 	if(act)
 		if(act == "scream")	act = "whimper" //ugly hack to stop animals screaming when crushed :P
-		..(act, type, desc)
+		..(act, m_type)
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
 	if(src == M)
@@ -220,7 +220,6 @@
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
 		return TRUE
-	return FALSE
 
 /mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
@@ -249,7 +248,7 @@
 
 	return
 
-/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/simple_animal/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 
 	switch(M.a_intent)
 
@@ -265,7 +264,7 @@
 
 	return
 
-/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L)
+/mob/living/simple_animal/attack_larva(mob/living/carbon/xenomorph/larva/L)
 
 	switch(L.a_intent)
 		if("help")

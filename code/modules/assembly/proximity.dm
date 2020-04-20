@@ -37,7 +37,7 @@
 /obj/item/device/assembly/prox_sensor/attach_assembly(obj/item/device/assembly/A, mob/user)
 	. = ..()
 	message_admins("[key_name_admin(user)] attached \the [A] to \the [src]. [ADMIN_JMP(user)]")
-	log_game("[key_name_admin(user)] attached \the [A] to \the [src].")
+	log_game("[key_name(user)] attached \the [A] to \the [src].")
 
 /obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM)
 	if (istype(AM, /obj/effect/beam))	return
@@ -139,7 +139,7 @@
 		if(usr)
 			lastsignalers.Add("[time_scan] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
 			message_admins("[key_name_admin(usr)] used [src] , location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time] [ADMIN_JMP(usr)]")
-			log_game("[usr.ckey]([usr]) used [src], location ([T.x],[T.y],[T.z]),time set: [time]")
+			log_game("[key_name(usr)] used [src], location ([T.x],[T.y],[T.z]),time set: [time]")
 		else
 			lastsignalers.Add("[time_scan] <B>:</B> (NO USER FOUND) set [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
 			message_admins("( NO USER FOUND) used [src], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
@@ -153,7 +153,7 @@
 		if(usr)
 			lastsignalers.Add("[time_start] <B>:</B> [usr.key] set [src] [timing?"On":"Off"] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
 			message_admins("[key_name_admin(usr)] set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time] [ADMIN_JMP(usr)]")
-			log_game("[usr.ckey]([usr]) set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]),time set: [time]")
+			log_game("[key_name(usr)] set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]),time set: [time]")
 		else
 			lastsignalers.Add("[time_start] <B>:</B> (NO USER FOUND) set [src] [timing?"On":"Off"] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
 			message_admins("( NO USER FOUND) set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")

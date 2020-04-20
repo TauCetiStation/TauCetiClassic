@@ -30,20 +30,20 @@
 /obj/item/weapon/pedalbag/attack()
 	return
 
-/obj/item/weapon/pedalbag/afterattack(mob/target, mob/user, proximity)
+/obj/item/weapon/pedalbag/afterattack(atom/target, mob/user, proximity, params)
 	if((!proximity) || (!ismob(target)) || (user in src))
 		return
-
-	if(target == user)
+	var/mob/M = target
+	if(M == user)
 		to_chat(user, "<font class='warning'>You don't want to do that.</font>")
 		return
 
 	user.do_attack_animation(target)
-	user.visible_message("<font class='artefact'>[user] put \the [src] on [target]!</font>")
+	user.visible_message("<font class='artefact'>[user] put \the [src] on [M]!</font>")
 	playsound(user, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 
-	target.forceMove(src)
-	target.status_flags ^= GODMODE
+	M.forceMove(src)
+	M.status_flags ^= GODMODE
 
 
 /obj/item/weapon/pedalbag/santabag
@@ -60,8 +60,13 @@
 
 /obj/item/clothing/head/collectable/tophat/badmin_magic_hat/atom_init()
 	. = ..()
-	log_admin("Badmin [src] spawned on [x]:[y]:[z]")
-	message_admins("<span class='notice'>Badmin [src] spawned on [x]:[y]:[z]</span>")
+	var/turf/T = get_turf(src)
+	if(T)
+		log_admin("Badmin [src] spawned on [T.x]:[T.y]:[T.z]")
+		message_admins("<span class='notice'>Badmin [src] spawned on [T.x]:[T.y]:[T.z] [ADMIN_JMP(T)]</span>")
+	else
+		log_admin("Badmin [src] spawned somewhere")
+		message_admins("<span class='notice'>Badmin [src] spawned somewhere</span>")
 
 /obj/item/clothing/head/collectable/tophat/badmin_magic_hat/attack_self(mob/user)
 	if(user.is_busy(src))
@@ -79,7 +84,7 @@
 			to_chat(user, "<span class='italic'>Nothing. Try again.</span>")
 			return
 
-		
+
 		user.visible_message("<span class='notice'>\the [user] takes <span class='bold'>\a [A]</span> from \a [src]!</span>")
 
 		if (istype(A, /obj/item))
@@ -96,7 +101,7 @@
 
 		entity = pick(world.contents)
 
-		if(QDELETED(entity)) // not a really problem I think, can we comment out this? 
+		if(QDELETED(entity)) // not a really problem I think, can we comment out this?
 			continue
 
 		if(!istype(entity)) // turfs
@@ -111,5 +116,5 @@
 			continue
 		if(istype(entity, /obj/structure/cable) && entity.anchored) // same
 			continue
-		
+
 		return entity

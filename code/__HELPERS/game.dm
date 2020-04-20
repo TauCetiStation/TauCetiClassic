@@ -453,11 +453,12 @@
 	if(M.client.player_age == 0)
 		var/adminmsg = {"New player notify
 					Player '[M.ckey]' joined to the game as [M.mind.name][player_assigned_role] [ADMIN_FLW(M)] [ADMIN_PP(M)] [ADMIN_VV(M)]
-					Byond profile: <a href='[player_byond_profile]'>open</a>"}
+					Byond profile: <a href='[player_byond_profile]'>open</a>
+					Guard report: <a href='?_src_=holder;guard=\ref[M]'>show</a>"}
 
 		message_admins(adminmsg)
 
-	if((isnum(M.client.player_age) && M.client.player_age < 5) || M.client.player_ingame_age < 600) //less than 5 days on server OR less than 10 hours in game
+	if((isnum(M.client.player_age) && M.client.player_age < 5) || (isnum(M.client.player_ingame_age) && M.client.player_ingame_age < 600)) //less than 5 days on server OR less than 10 hours in game
 		var/mentormsg = {"New player notify
 					Player '[M.key]' joined to the game as [M.mind.name][player_assigned_role] (<a href='byond://?_src_=usr;track=\ref[M]'>FLW</a>)
 					Days on server: [M.client.player_age]; Minutes played: [M.client.player_ingame_age < 120 ? "<span class='alert'>[M.client.player_ingame_age]</span>" : M.client.player_ingame_age]

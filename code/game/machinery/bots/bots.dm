@@ -73,7 +73,7 @@
 		else
 			to_chat(user, "<span class='danger'>[src]'s parts look very loose!</span>")
 
-/obj/machinery/bot/attack_alien(mob/living/carbon/alien/user)
+/obj/machinery/bot/attack_alien(mob/living/carbon/xenomorph/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	src.health -= rand(15,30)*brute_dam_coeff

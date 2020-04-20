@@ -99,8 +99,6 @@
 			return
 		else
 			return
-	return
-
 
 /obj/machinery/suit_storage_unit/ui_interact(mob/user)
 	var/dat
@@ -322,11 +320,11 @@
 			if(src.issuperUV)
 				var/burndamage = rand(28,35)
 				OCCUPANT.take_bodypart_damage(0, burndamage)
-				OCCUPANT.emote("scream",,, 1)
+				OCCUPANT.emote("scream")
 			else
 				var/burndamage = rand(6,10)
 				OCCUPANT.take_bodypart_damage(0, burndamage)
-				OCCUPANT.emote("scream",,, 1)
+				OCCUPANT.emote("scream")
 		if(i==3) //End of the cycle
 			if(!src.issuperUV)
 				if(src.HELMET)

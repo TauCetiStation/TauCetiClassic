@@ -71,6 +71,7 @@
 				R.key = ghost.key
 
 	R.stat = CONSCIOUS
+	playsound(src, 'sound/misc/robot_restart.ogg', VOL_EFFECTS_MASTER, 70, FALSE)
 	return 1
 
 

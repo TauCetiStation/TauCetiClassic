@@ -30,6 +30,11 @@
 		qdel(ptank)
 	return ..()
 
+/obj/item/weapon/flamethrower/get_current_temperature()
+	if(lit)
+		return 1500
+	return 0
+
 /obj/item/weapon/flamethrower/process()
 	if(!lit)
 		STOP_PROCESSING(SSobj, src)
@@ -55,7 +60,7 @@
 	else
 		item_state = "flamethrower_0"
 
-/obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, proximity, params)
 	// Make sure our user is still holding us
 	if(user && user.get_active_hand() == src)
 		var/turf/target_turf = get_turf(target)
@@ -242,6 +247,11 @@
 		location.hotspot_expose(700, 2)
 	return
 
+/obj/item/weapon/flamethrower_M2/get_current_temperature()
+	if(lit)
+		return 1500
+	return 0
+
 /obj/item/weapon/flamethrower_M2/proc/unequip(mob/user)
 	if(Connected_tank)
 		if(lit)
@@ -263,7 +273,7 @@
 		icon_state = "M2_Flamethrower"
 	return
 
-/obj/item/weapon/flamethrower_M2/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/flamethrower_M2/afterattack(atom/target, mob/user, proximity, params)
 	// Make sure our user is still holding us
 	if(user && user.get_active_hand() == src)
 		var/turf/target_turf = get_turf(target)

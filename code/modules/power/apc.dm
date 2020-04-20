@@ -604,19 +604,19 @@
 			update_icon()
 
 	else if(!opened && wiresexposed && is_wire_tool(W))
-		return wires.interact(user)
 		if (istype(user, /mob/living/silicon))
 			return attack_hand(user)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.visible_message("<span class='warning'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", \
 			"<span class='warning'>You hit the [src.name] with your [W.name]!</span>", \
 			"You hear bang")
+		return wires.interact(user)
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
 /obj/machinery/power/apc/interact(mob/user)
 	//Synthetic human mob goes here.
-	if (user.is_busy()) 
+	if (user.is_busy())
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -647,11 +647,11 @@
 								else if(src.cell.charge < src.cell.maxcharge*0.1)
 									to_chat (user, "<span class='notice'>There is not enough charge to draw from that APC.</span>")
 									break
-											
+
 								else if(src.cell.use(500))
 									H.nutrition += C.maxcharge*0.1
 									to_chat(user, "<span class='notice'>Draining... Battery has [round(100.0*H.nutrition/C.maxcharge)]% of charge.</span>")
-							
+
 							else
 								to_chat (user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
 								break
@@ -700,7 +700,7 @@
 	// do APC interaction
 	..()
 
-/obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
+/obj/machinery/power/apc/attack_alien(mob/living/carbon/xenomorph/humanoid/user)
 	to_chat(user, "You don't want to break these things");
 	return
 
@@ -1284,7 +1284,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if(isalien(user))
+	if(isxeno(user))
 		return 0
 	if (electrocute_mob(user, src, src))
 		return 1

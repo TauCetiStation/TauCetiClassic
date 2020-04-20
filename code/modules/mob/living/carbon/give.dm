@@ -5,7 +5,7 @@
 
 	if(src.stat == DEAD || usr.stat == DEAD || src.client == null)
 		return
-	if(src == usr || isalien(src) || isslime(src))
+	if(src == usr || isxeno(src) || isslime(src))
 		to_chat(usr, "<span class='red'>I feel stupider, suddenly.</span>")
 		return
 	if(ishuman(src))

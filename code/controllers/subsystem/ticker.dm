@@ -83,6 +83,8 @@ var/datum/subsystem/ticker/ticker
 			to_chat(world, "Please, setup your character and select ready. Game will start in [timeLeft/10] seconds")
 			current_state = GAME_STATE_PREGAME
 
+			log_initialization() // need to dump cached log
+
 		if(GAME_STATE_PREGAME)
 			//lobby stats for statpanels
 			totalPlayers = 0
@@ -130,7 +132,7 @@ var/datum/subsystem/ticker/ticker
 
 					world.send2bridge(
 						type = list(BRIDGE_ROUNDSTAT),
-						attachment_title = "Round is over",
+						attachment_title = "Round #[round_id] is over",
 						attachment_color = BRIDGE_COLOR_ANNOUNCE,
 					)
 
@@ -174,7 +176,7 @@ var/datum/subsystem/ticker/ticker
 	var/list/datum/game_mode/runnable_modes
 	if (config.is_modeset(master_mode))
 		runnable_modes = config.get_runnable_modes(master_mode)
-		
+
 		if (runnable_modes.len==0)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
@@ -269,8 +271,9 @@ var/datum/subsystem/ticker/ticker
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				qdel(S)
-
-		SSvote.started_time = world.time
+		if (length(SSvote.delay_after_start))
+			for (var/DT in SSvote.delay_after_start)
+				SSvote.last_vote_time[DT] = world.time
 
 		//Print a list of antagonists to the server log
 		antagonist_announce()
@@ -545,19 +548,10 @@ var/datum/subsystem/ticker/ticker
 	return TRUE
 
 /world/proc/has_round_started()
-	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
-		return TRUE
-	return FALSE
+	return (ticker && ticker.current_state >= GAME_STATE_PLAYING)
 
 /world/proc/has_round_finished()
-	if (ticker && ticker.current_state >= GAME_STATE_FINISHED)
-		return TRUE
-	return FALSE
+	return (ticker && ticker.current_state >= GAME_STATE_FINISHED)
 
-/world/proc/has_round_preparing()
-	if (ticker && ticker.current_state <= GAME_STATE_SETTING_UP)
-		return TRUE
-	// Still no intialized?
-	else if(!ticker)
-		return TRUE
-	return FALSE
+/world/proc/is_round_preparing()
+	return (ticker && ticker.current_state == GAME_STATE_PREGAME)

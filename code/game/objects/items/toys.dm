@@ -39,11 +39,11 @@
 /obj/item/toy/balloon/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/toy/balloon/afterattack(atom/A, mob/user, proximity)
+/obj/item/toy/balloon/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
-		A.reagents.trans_to(src, 10)
-		to_chat(user, "<span class='notice'>You fill the balloon with the contents of [A].</span>")
+	if (istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
+		target.reagents.trans_to(src, 10)
+		to_chat(user, "<span class='notice'>You fill the balloon with the contents of [target].</span>")
 		src.desc = "A translucent balloon with some form of liquid sloshing around in it."
 		src.update_icon()
 	return
@@ -65,7 +65,7 @@
 	src.update_icon()
 	return
 
-/obj/item/toy/balloon/throw_impact(atom/hit_atom)
+/obj/item/toy/balloon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(src.reagents.total_volume >= 1)
 		src.visible_message("<span class='warning'>The [src] bursts!</span>","You hear a pop and a splash.")
 		src.reagents.reaction(get_turf(hit_atom))
@@ -162,8 +162,8 @@
 		return 1
 	return
 
-/obj/item/toy/gun/afterattack(atom/target, mob/user, flag)
-	if (flag)
+/obj/item/toy/gun/afterattack(atom/target, mob/user, proximity, params)
+	if (proximity)
 		return
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
@@ -213,7 +213,7 @@
 
 /obj/item/toy/crossbow/examine(mob/user)
 	..()
-	if (bullets && src in view(2, user))
+	if (bullets && (src in view(2, user)))
 		to_chat(user, "<span class='notice'>It is loaded with [bullets] foam darts!</span>")
 
 /obj/item/toy/crossbow/attackby(obj/item/I, mob/user)
@@ -227,9 +227,9 @@
 			to_chat(usr, "<span class='warning'>It's already fully loaded.</span>")
 
 
-/obj/item/toy/crossbow/afterattack(atom/target, mob/user, flag)
+/obj/item/toy/crossbow/afterattack(atom/target, mob/user, proximity, params)
 	if(!isturf(target.loc) || target == user) return
-	if(flag) return
+	if(proximity) return
 
 	if (locate (/obj/structure/table, src.loc))
 		return
@@ -366,7 +366,7 @@
 	icon_state = "snappop"
 	w_class = ITEM_SIZE_TINY
 
-/obj/item/toy/snappop/throw_impact(atom/hit_atom)
+/obj/item/toy/snappop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
@@ -411,12 +411,12 @@
 /obj/item/toy/waterflower/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/toy/waterflower/afterattack(atom/A, mob/user)
+/obj/item/toy/waterflower/afterattack(atom/target, mob/user, proximity, params)
 	if(locate(/obj/structure/table, loc))
 		return
 
-	else if(istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
-		A.reagents.trans_to(src, 10)
+	else if(istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
+		target.reagents.trans_to(src, 10)
 		to_chat(user, "<span class='notice'>You refill your flower!</span>")
 		return
 
@@ -439,7 +439,7 @@
 
 		spawn(0)
 			for(var/i=0, i<1, i++)
-				step_towards(D,A)
+				step_towards(D,target)
 				D.reagents.reaction(get_turf(D))
 				for(var/atom/T in get_turf(D))
 					D.reagents.reaction(T)
@@ -858,7 +858,7 @@ Owl & Griffin toys
 	icon_state = "minimeteor"
 	w_class = ITEM_SIZE_SMALL
 
-/obj/item/toy/minimeteor/throw_impact(atom/hit_atom)
+/obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER)
 		for(var/mob/M in orange(10, src))

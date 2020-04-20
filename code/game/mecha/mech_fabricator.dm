@@ -14,6 +14,7 @@
 	var/time_coeff_tech = 1
 	var/resource_coeff = 1
 	var/resource_coeff_tech = 1
+	var/efficiency_coeff = 0
 	var/list/resources = list(
 								MAT_METAL=0,
 								MAT_GLASS=0,
@@ -82,6 +83,7 @@
 	T = -1
 	for(var/obj/item/weapon/stock_parts/manipulator/Ml in component_parts)
 		T += Ml.rating
+	efficiency_coeff = max(round(T * 0.3), 1)
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
 /obj/machinery/mecha_part_fabricator/check_access(obj/item/weapon/card/id/I)
@@ -177,6 +179,13 @@
 
 	var/location = get_step(src,(dir))
 	var/I = new D.build_path(location)
+	if(isobj(I))
+		var/obj/O = I
+		O.prototipify(min_reliability=files.design_reliabilities[D.id] + efficiency_coeff * 25.0,  max_reliability=70 + efficiency_coeff * 25.0)
+
+		files.design_reliabilities[D.id] += files.design_reliabilities[D.id] * (RND_RELIABILITY_EXPONENT ** files.design_created_prototypes[D.id])
+		files.design_reliabilities[D.id] = max(round(files.design_reliabilities[D.id], 5), 1)
+		files.design_created_prototypes[D.id]++
 	if(istype(I, /obj/item))
 		var/obj/item/Item = I
 		Item.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)

@@ -6,9 +6,10 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	var/client/owner = null
 	var/loaded = 0
 	var/list/messageQueue = list()
-	var/cookieSent = 0
 	var/list/connectionHistory = list()
 	var/broken = FALSE
+
+	var/charset
 
 /datum/chatOutput/New(client/C)
 	. = ..()
@@ -66,7 +67,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 			data = ping(arglist(params))
 
 		if("analyzeClientData")
-			data = analyzeClientData(arglist(params))
+			analyzeClientData(arglist(params))
 
 	if(data)
 		ehjax_send(data = data)
@@ -119,11 +120,15 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	var/data = json_encode(deets)
 	ehjax_send(data = data)
 
-/datum/chatOutput/proc/analyzeClientData(cookie = "")
-	if(!cookie)
+/datum/chatOutput/proc/analyzeClientData(cookie = "", charset = "")
+	if(owner.guard.chat_processed)
 		return
 
-	if(cookie != "none")
+	if(charset && istext(charset))
+		src.charset = ckey(charset)
+		owner.guard.chat_data["charset"] = src.charset
+
+	if(cookie && cookie != "none")
 		var/list/connData = json_decode(cookie)
 		if(connData && islist(connData) && connData.len > 0 && connData["connData"])
 			connectionHistory = connData["connData"]
@@ -131,18 +136,28 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 			for(var/i in connectionHistory.len to 1 step -1)
 				var/list/row = connectionHistory[i]
 				if(!row || row.len < 3 || !(row["ckey"] && row["compid"] && row["ip"]))
+					owner.guard.chat_processed = TRUE
 					return
-				if(world.IsBanned(row["ckey"], row["compid"], row["ip"]))
+
+				row["ckey"] = ckey(row["ckey"])
+				row["compid"] = sanitize_cid(row["compid"])
+				row["ip"] = sanitize_ip(row["ip"])
+
+				if(!(row["ckey"] && row["compid"] && row["ip"]))
+					owner.guard.chat_processed = TRUE
+					return
+				if(world.IsBanned(row["ckey"], row["compid"], row["ip"], real_bans_only = TRUE))
 					found = row
 					break
 
 			//Uh oh this fucker has a history of playing on a banned account!!
 			if (found.len > 0)
+				owner.guard.chat_data["cookie_match"] = found
 				//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
 				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 				log_admin("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 
-	cookieSent = 1
+	owner.guard.chat_processed = TRUE
 
 /datum/chatOutput/proc/ping()
 	return "pong"
@@ -212,7 +227,6 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	//if(istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !(ismob(target) || islist(target) || isclient(target) || target == world))
 	if(istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !istext(message))
 		CRASH("DEBUG: to_chat called with invalid message: [message]")
-		return
 
 	if(target == world)
 		target = clients

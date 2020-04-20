@@ -114,7 +114,7 @@
 
 	return 0
 
-/obj/item/weapon/reagent_containers/food/snacks/afterattack(obj/target, mob/user, proximity)
+/obj/item/weapon/reagent_containers/food/snacks/afterattack(atom/target, mob/user, proximity, params)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/examine(mob/user)
@@ -130,6 +130,10 @@
 			to_chat(user, "<span class='info'>\The [src] was bitten multiple times!</span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
+
+	if (user.is_busy(src))
+		return
+
 	if(istype(W,/obj/item/weapon/storage))
 		..() // -> item/attackby()
 	if(istype(W,/obj/item/weapon/kitchen/utensil))
@@ -204,23 +208,25 @@
 		to_chat(user, "<span class='rose'>You cannot slice [src] here! You need a table or at least a tray to do it.</span>")
 		return 1
 	var/slices_lost = 0
-	if (!inaccurate)
-		user.visible_message( \
-			"<span class='info'>[user] slices \the [src]!</span>", \
-			"<span class='notice'>You slice \the [src]!</span>" \
-		)
+	if (inaccurate)
+		if (istype(W, /obj/item/weapon/melee/energy/sword))
+			playsound(user, 'sound/items/esword_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		else
+			playsound(user, 'sound/items/shard_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else
-		user.visible_message( \
-			"<span class='info'>[user] inaccurately slices \the [src] with [W]!</span>", \
-			"<span class='notice'>You inaccurately slice \the [src] with your [W]!</span>" \
-		)
+		playsound(src, pick(SOUNDIN_KNIFE_CUTTING), VOL_EFFECTS_MASTER, null, FALSE)
 		slices_lost = rand(1,min(1,round(slices_num/2)))
-	var/reagents_per_slice = reagents.total_volume/slices_num
-	for(var/i=1 to (slices_num-slices_lost))
-		var/obj/slice = new slice_path (src.loc)
-		reagents.trans_to(slice,reagents_per_slice)
-	qdel(src)
-	return
+	if (do_after(user, 35, target = src))
+		if (!inaccurate)
+			user.visible_message("<span class='info'>[user] slices \the [src]!</span>", "<span class='notice'>You slice \the [src]!</span>")
+		else
+			user.visible_message("<span class='info'>[user] inaccurately slices \the [src] with [W]!</span>", "<span class='notice'>You inaccurately slice \the [src] with your [W]!</span>")
+		var/reagents_per_slice = reagents.total_volume/slices_num
+		for(var/i=1 to (slices_num-slices_lost))
+			var/obj/slice = new slice_path (src.loc)
+			reagents.trans_to(slice,reagents_per_slice)
+		qdel(src)
+		return
 
 /obj/item/weapon/reagent_containers/food/snacks/Destroy()
 	if(contents)
@@ -513,7 +519,7 @@
 	reagents.add_reagent("nutriment", 1)
 	reagents.add_reagent("egg", 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new /obj/effect/decal/cleanable/egg_smudge(loc)
 	if(prob(13))
@@ -996,7 +1002,7 @@
 	reagents.add_reagent("banana",5)
 	reagents.add_reagent("vitamin", 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
 	src.visible_message("<span class='rose'>[src.name] splats.</span>","<span class='rose'>You hear a splat.</span>")
@@ -1694,12 +1700,12 @@
 	. = ..()
 	reagents.add_reagent("nutriment",10)
 
-/obj/item/weapon/reagent_containers/food/snacks/monkeycube/afterattack(obj/O, mob/user, proximity)
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(istype(O,/obj/structure/sink) && !wrapped)
+	if(istype(target,/obj/structure/sink) && !wrapped)
 		to_chat(user, "<span class='notice'>You place \the [name] under a stream of water...</span>")
 		user.drop_item()
-		loc = get_turf(O)
+		loc = get_turf(target)
 		return Expand()
 	..()
 
@@ -3163,10 +3169,19 @@
 
 // Dough + rolling pin = flat dough
 /obj/item/weapon/reagent_containers/food/snacks/dough/attackby(obj/item/weapon/W, mob/user)
+
+	if (user.is_busy(src))
+		return
+
 	if(istype(W,/obj/item/weapon/kitchen/rollingpin))
-		new /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough(src)
-		to_chat(user, "<span class='notice'>You flatten the dough.</span>")
-		qdel(src)
+		if (locate(/obj/structure/table) in src.loc)
+			playsound(user, 'sound/items/rolling_pin.ogg', VOL_EFFECTS_MASTER, , FALSE)
+			if (do_after(user, 35, target = src))
+				new /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough(src)
+				to_chat(user, "<span class='notice'>You flatten the dough.</span>")
+				qdel(src)
+		else
+			to_chat(user, "<span class='rose'>You cannot roll out the dough here! You need a table to do it.</span>")
 
 // slicable into 3xdoughslices
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough

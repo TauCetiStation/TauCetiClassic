@@ -8,14 +8,16 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
+	data = list()
+
 /datum/reagent/srejuvenate/on_general_digest(mob/living/M)
 	..()
 	if(M.losebreath >= 10)
 		M.losebreath = max(10, M.losebreath-10)
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	switch(data["ticks"])
 		if(1 to 15)
 			M.eye_blurry = max(M.eye_blurry, 10)
 		if(15 to 25)
@@ -59,12 +61,24 @@
 	reagent_state = SOLID
 	color = "#004000" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
-	custom_metabolism = 0
+	custom_metabolism = 2 * REAGENTS_METABOLISM
+
+	data = list()
 
 /datum/reagent/ryetalyn/on_general_digest(mob/living/M)
 	..()
-	M.remove_any_mutations()
-	holder.del_reagent(id)
+	if(!data["ticks"])
+		data["ticks"] = 1
+
+	for(var/datum/dna/gene/gene in dna_genes)
+		if(!gene.block)
+			continue
+		if(!prob(REM * data["ticks"]))
+			continue
+		M.dna.SetSEValue(gene.block, rand(1,2048))
+		genemutcheck(M, gene.block, null, MUTCHK_FORCED)
+
+	data["ticks"]++
 
 /datum/reagent/paracetamol
 	name = "Paracetamol"
@@ -265,14 +279,17 @@
 	color = "#a0a000"
 	taste_message = "vomit"
 	restrict_species = list(IPC, DIONA)
-	data = 1
+
+	data = list()
 
 /datum/reagent/thermopsis/on_general_digest(mob/living/M)
 	..()
-	data++
-	if(data > 10)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	if(data["ticks"] > 10)
 		M.vomit()
-		data -= rand(0, 10)
+		data["ticks"] -= rand(0, 10)
 
 /datum/reagent/adminordrazine //An OP chemical for admins
 	name = "Adminordrazine"
@@ -448,6 +465,8 @@
 		H.apply_effect(3, WEAKEN)
 		H.apply_damages(0,0,1,4,0,5)
 		H.regen_bodyparts(4, FALSE)
+	else
+		volume += 0.07
 
 /datum/reagent/bicaridine
 	name = "Bicaridine"
@@ -477,7 +496,7 @@
 /datum/reagent/hyperizine/on_general_digest(mob/living/M)
 	..()
 	if(prob(5))
-		M.emote(pick("twitch","blink_r","shiver"))
+		M.emote(pick("twitch","blink","shiver"))
 
 /datum/reagent/cryoxadone
 	name = "Cryoxadone"
@@ -520,19 +539,26 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
+	data = list()
+
 /datum/reagent/rezadone/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	switch(data["ticks"])
 		if(1 to 15)
 			M.adjustCloneLoss(-1)
 			M.heal_bodypart_damage(1, 1)
 		if(15 to 35)
 			M.adjustCloneLoss(-2)
 			M.heal_bodypart_damage(2, 1)
-			M.status_flags &= ~DISFIGURED
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				var/obj/item/organ/external/head/BP = H.bodyparts_by_name[BP_HEAD]
+				if(BP && BP.disfigured)
+					BP.disfigured = FALSE
+					to_chat(M, "Your face is shaped normally again.")
 		if(35 to INFINITY)
 			M.adjustToxLoss(1)
 			M.make_dizzy(5)

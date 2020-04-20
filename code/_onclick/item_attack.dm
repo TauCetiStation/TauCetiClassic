@@ -48,7 +48,7 @@
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
-/obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/proc/afterattack(atom/target, mob/user, proximity, params)
 	return
 
 
@@ -202,17 +202,16 @@
 					M.adjustBrainLoss(power)
 
 				else
-
+					if(prob(33)) // Added blood for whacking non-humans too
+						var/turf/simulated/T = M.loc
+						if(istype(T))
+							T.add_blood_floor(M)
 					M.take_bodypart_damage(power)
-					if (prob(33)) // Added blood for whacking non-humans too
-						var/turf/location = M.loc
-						if (istype(location, /turf/simulated))
-							location:add_blood_floor(M)
 			if("fire")
 				if (!(COLD_RESISTANCE in M.mutations))
-					M.take_bodypart_damage(0, power)
 					to_chat(M, "Aargh it burns!")
-		M.updatehealth()
+					M.take_bodypart_damage(0, power)
+
 	add_fingerprint(user)
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(M)

@@ -44,7 +44,7 @@
 	desc = "When you REALLY want to turn up the heat<br>They have the toe caps cut off of them."
 	icon_state = "swat_cut"
 	clipped_status = CLIPPED
-	species_restricted = list("exclude", DIONA, VOX)
+	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
 
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
@@ -107,10 +107,15 @@
 	name = "clown shoes"
 	icon_state = "clown"
 	item_state = "clown_shoes"
-	slowdown = SHOES_SLOWDOWN+1
+	slowdown = SHOES_SLOWDOWN + 0.5
 	item_color = "clown"
-//	var/footstep = 1	//used for squeeks whilst walking
 	species_restricted = null
+
+/obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
+	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED))
+
+/obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
+	qdel(user.GetComponent(/datum/component/waddle))
 
 /obj/item/clothing/shoes/clown_shoes/play_unique_footstep_sound()
 	..()
@@ -225,6 +230,7 @@
 	icon_state = "Lizard_Boots"
 	item_state = "r_feet"
 	item_color = "Lizard_Boots"
+	species_restricted = list(UNATHI)
 
 /obj/item/clothing/shoes/heels
 	name = "Heels"

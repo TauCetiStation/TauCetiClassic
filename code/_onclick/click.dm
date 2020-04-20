@@ -47,7 +47,7 @@
 	The most common are:
 	* mob/UnarmedAttack(atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
 	* atom/attackby(item,user,params) - used only when adjacent
-	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
+	* item/afterattack(atom,user,proximity,params) - used both ranged and adjacent
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
 /mob/proc/ClickOn( atom/A, params )
@@ -116,6 +116,12 @@
 		W.update_inv_mob()
 		return
 
+	if(istype(W, /obj/item/device/pda))
+		var/obj/item/device/pda/P = W
+		if(P.pda_paymod)
+			P.click_to_pay(A) //Click on someone to pay
+			return
+
 	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	var/sdepth = A.storage_depth(src)
 	if(A == loc || (A in loc) || (sdepth != -1 && sdepth <= 1))
@@ -132,8 +138,7 @@
 	if(!isturf(loc)) // (This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that.) Not anymore
 		if((TK in mutations) && (XRAY in mutations))//Now telekinesing from inside a closet is possible
 			ranged_attack_tk(A)
-		else
-			return
+		return
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
 	sdepth = A.storage_depth_turf()

@@ -498,7 +498,7 @@
 		var/obj/item/weapon/shard/S = new
 		BP.embed(S)
 		H.apply_damage(15, def_zone = BP_HEAD, damage_flags = DAM_SHARP|DAM_EDGE, used_weapon = S)
-		H.emote("scream",,, 1)
+		H.emote("scream")
 	else
 		M.apply_damage(15, def_zone = BP_HEAD)
 	shatter()

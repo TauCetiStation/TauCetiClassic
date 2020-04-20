@@ -522,10 +522,10 @@
 	CreateResonance(src, user)
 	..()
 
-/obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity, params)
 	if(target in user.contents)
 		return
-	if(proximity_flag)
+	if(proximity)
 		CreateResonance(target, user)
 
 /obj/effect/resonance
@@ -800,10 +800,10 @@
 	throw_range = 5
 	var/loaded = 1
 
-/obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity, params)
 	if(!loaded)
 		return
-	if(istype(target, /mob/living) && proximity_flag)
+	if(istype(target, /mob/living) && proximity)
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
 			if(M.stat == DEAD)
@@ -812,7 +812,7 @@
 				if(istype(target, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
 					H.friends += user
-					log_game("[user] has revived hostile mob [target] with a lazarus injector")
+					log_game("[key_name(user)] has revived hostile mob [target] with a lazarus injector")
 				loaded = 0
 				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
 				playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
@@ -844,11 +844,11 @@
 	throw_range = 5
 	var/loaded = 1
 
-/obj/item/weapon/patcher/afterattack(obj/O, mob/user)
+/obj/item/weapon/patcher/afterattack(atom/target, mob/user, proximity, params)
 	if(!loaded)
 		return
-	if(istype(O, /obj/item/clothing/suit/space))
-		var/obj/item/clothing/suit/space/C = O
+	if(istype(target, /obj/item/clothing/suit/space))
+		var/obj/item/clothing/suit/space/C = target
 		fix_spacesuit(C, user)
 	else
 		..()

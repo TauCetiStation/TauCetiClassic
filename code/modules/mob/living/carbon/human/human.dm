@@ -254,7 +254,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				gain = 100
 			if("Clown")
 				gain = rand(-300, 300)//HONK
-	investigate_log(" has consumed [key_name(src)].","singulo") //Oh that's where the clown ended up!
+	log_investigate(" has consumed [key_name(src)].",INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
 	return(gain)
 
@@ -453,7 +453,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			if(65)
 				visible_message("<span class='userdanger'>A new [parse_zone(regenerating_bodypart.body_zone)] has grown from [src]'s [regenerating_bodypart.parent.name]!</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] your [parse_zone(regenerating_bodypart.body_zone)] again!</span>")
 		if(prob(50))
-			emote("scream",1,null,1)
+			emote("scream")
 		if(regenerating_organ_time >= regenerating_capacity_penalty) // recover organ
 			regenerating_bodypart.rejuvenate()
 			regenerating_organ_time = 0
@@ -773,30 +773,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			show_inv(usr)
 
 	if (href_list["bandages"] && usr.CanUseTopicInventory(src))
-		if(stat == DEAD)
-			to_chat(usr, "<span class='notice'>There is no point in doing so with the dead body.</span>")
-			return
-
-		var/list/wounds
-		var/has_visual_bandages = FALSE // We need this var because wounds might have healed by themselfs
-
-		for(var/obj/item/organ/external/BP in bodyparts)
-			if(BP.bandaged)
-				has_visual_bandages = TRUE
-
-			for(var/datum/wound/W in BP.wounds)
-				if(W.bandaged)
-					LAZYADD(wounds, W)
-
-		if(wounds || has_visual_bandages)
-			visible_message("<span class='danger'>[usr] is trying to remove [src]'s bandages!</span>")
-			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
-				for(var/datum/wound/W in wounds)
-					if(W.bandaged)
-						W.bandaged = 0
-				update_bandage()
-				attack_log += "\[[time_stamp()]\] <font color='orange'>Had their bandages removed by [usr.name] ([usr.ckey]).</font>"
-				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) bandages.</font>"
+		remove_bandages()
 
 	if (href_list["splints"] && usr.CanUseTopicInventory(src))
 		var/list/splints
@@ -1428,13 +1405,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/list/names = list()
 	var/list/creatures = list()
 	var/list/namecounts = list()
+	var/count = 0
 	var/target = null	   //Chosen target.
 
 	for(var/mob/living/carbon/human/M in human_list) //#Z2 only carbon/human for now
 		var/name = M.real_name
 		if(!(REMOTE_TALK in src.mutations))
-			namecounts++
-			name = "([namecounts])"
+			count++
+			name = "([count])"
 		else
 			if(name in names)
 				namecounts[name]++
@@ -1870,24 +1848,22 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	status_flags &= ~LEAPING
 	a_intent_change(prev_intent)
 
-/mob/living/carbon/human/throw_impact(atom/A)
+/mob/living/carbon/human/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!(status_flags & LEAPING))
 		return ..()
 
-	if(isliving(A))
-		var/mob/living/L = A
+	if(isliving(hit_atom))
+		var/mob/living/L = hit_atom
 		L.visible_message("<span class='danger'>\The [src] leaps at [L]!</span>", "<span class='userdanger'>[src] leaps on you!</span>")
-		if(issilicon(A))
+		if(issilicon(L))
 			L.Weaken(1) //Only brief stun
 			step_towards(src, L)
 		else
-			L.Weaken(5)
-			sleep(2) // Runtime prevention (infinite bump() calls on hulks)
+			L.Weaken(2)
 			step_towards(src, L)
-			Grab(L, GRAB_AGGRESSIVE)
 
-	else if(A.density)
-		visible_message("<span class='danger'>[src] smashes into [A]!</span>", "<span class='danger'>You smashes into [A]!</span>")
+	else if(hit_atom.density)
+		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smash into [hit_atom]!</span>")
 		weakened = 2
 
 	update_canmove()
@@ -2067,3 +2043,36 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+
+/mob/living/carbon/human/is_facehuggable()
+	return species.flags[FACEHUGGABLE] && stat != DEAD && !(locate(/obj/item/alien_embryo) in contents)
+
+/mob/living/carbon/human/verb/remove_bandages()
+	set category = "IC"
+	set name = "Remove bandages"
+	set desc = "Remove your own bandages"
+
+	if(stat == DEAD)
+		to_chat(usr, "<span class='notice'>There is no point in doing so with the dead body.</span>")
+		return
+	if(!ishuman(usr) || usr.incapacitated())
+		return
+	var/list/wounds
+	var/has_visual_bandages = FALSE // We need this var because wounds might have healed by themselfs
+
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.bandaged)
+			has_visual_bandages = TRUE
+			for(var/datum/wound/W in BP.wounds)
+				if(W.bandaged)
+					LAZYADD(wounds, W)
+
+	if(wounds || has_visual_bandages)
+		visible_message("<span class='danger'>[usr] is trying to remove [src == usr ? "their" : "[src]'s"] bandages!</span>")
+		if(do_mob(usr, src, HUMAN_STRIP_DELAY))
+			for(var/datum/wound/W in wounds)
+				if(W.bandaged)
+					W.bandaged = 0
+			update_bandage()
+			attack_log += "\[[time_stamp()]\] <font color='orange'>Had their bandages removed by [usr.name] ([usr.ckey]).</font>"
+			usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) bandages.</font>"

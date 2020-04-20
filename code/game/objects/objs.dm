@@ -32,6 +32,15 @@
 	nanomanager.close_uis(src)
 	return ..()
 
+/obj/proc/get_current_temperature()
+	/*
+	It actually returns a rise in temperature from the enviroment since I don't know why.
+	Before it was called "is_hot". And it returned 0 if something is not any hotter than it should be.
+
+	Slap me on the wrist if you ever will need this to return a meaningful value. ~Luduk
+	*/
+	return 0
+
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)
 		return loc.assume_air(giver)
@@ -148,11 +157,10 @@
 /obj/proc/update_icon()
 	return
 
-/mob/proc/unset_machine(obj/O)
-	if(O && O == src.machine)
-		src.machine = null
-	else
-		src.machine = null
+/mob/proc/unset_machine()
+	if(machine)
+		machine.on_unset_machine(src)
+		machine = null
 
 /mob/proc/set_machine(obj/O)
 	if(src.machine)
@@ -160,6 +168,9 @@
 	src.machine = O
 	if(istype(O))
 		O.in_use = 1
+
+/atom/movable/proc/on_unset_machine(mob/user)
+	return
 
 /obj/item/proc/updateSelfDialog()
 	var/mob/M = src.loc

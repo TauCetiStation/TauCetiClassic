@@ -141,7 +141,7 @@
 	..()
 	playsound(src,'sound/weapons/bolathrow.ogg', VOL_EFFECTS_MASTER)
 
-/obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom)
+/obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return
 	var/mob/living/carbon/C = hit_atom
@@ -212,10 +212,10 @@
 	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
-/obj/item/weapon/shard/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/shard/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(isturf(A))
+	if(isturf(target))
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -514,13 +514,13 @@
 	SCB.can_spin = TRUE
 	AddComponent(/datum/component/swiping, SCB)
 
-/obj/item/weapon/scythe/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/scythe/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(istype(A, /obj/effect/spacevine))
-		for(var/obj/effect/spacevine/B in orange(A, 1))
+	if(istype(target, /obj/effect/spacevine))
+		for(var/obj/effect/spacevine/B in orange(target, 1))
 			if(prob(80))
 				qdel(B)
-		qdel(A)
+		qdel(target)
 
 /*
 /obj/item/weapon/cigarpacket
@@ -577,10 +577,13 @@
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
 
-/obj/item/weapon/storage/part_replacer/afterattack(obj/machinery/T, mob/living/carbon/human/user, flag)
-	if(flag)
+/obj/item/weapon/storage/part_replacer/afterattack(atom/target, mob/user, proximity, params)
+	if(proximity)
 		return
-	if(works_from_distance && istype(T) && T.component_parts)
+	if(!istype(target, /obj/machinery))
+		return
+	var/obj/machinery/T = target
+	if(works_from_distance && T.component_parts)
 		T.exchange_parts(user, src)
 		user.Beam(T,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
 
