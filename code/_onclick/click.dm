@@ -115,7 +115,7 @@
 		W.attack_self(src)
 		W.update_inv_mob()
 		return
-	
+
 	if(istype(W, /obj/item/device/pda))
 		var/obj/item/device/pda/P = W
 		if(P.pda_paymod)
@@ -269,7 +269,7 @@
 			user.listed_turf = null
 		else
 			user.listed_turf = T
-			// user.client.statpanel = T.name // This was very awkward because it would move us from the current statpanel. Crucial for wizards, genestealers, combo-fighters.
+			user.client.statpanel = T.name
 
 /mob/living/AltClick(mob/living/user)
 	/*
