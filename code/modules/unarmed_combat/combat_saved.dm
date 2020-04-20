@@ -175,6 +175,9 @@
 	if(combo_elements.len >= 1)
 		combo_elements.Cut(1, 2)
 		update_combo_elements()
+		set_combo_icon(null)
+		next_combo = null
+		get_next_combo()
 
 /datum/combo_saved/proc/register_attack(combo_element, combo_value)
 	if(!attacker)
