@@ -407,14 +407,14 @@
 	reagent_state = LIQUID
 	color = "#ffc0cb" // rgb: 255, 192, 203
 	overdose = 10
-	custom_metabolism = 0.1
+	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	taste_message = "sickening bitterness"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/dxm/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
+	if(!data["ticks"])
+		data["ticks"] = 1
 	M.adjustOxyLoss(-M.getOxyLoss())
 	if(holder.has_reagent("lexorin"))
 		holder.remove_reagent("lexorin", 2 * REM)
@@ -425,12 +425,12 @@
 		if(istype(IO))
 			if(IO.damage > 0 && IO.robotic < 2)
 				IO.damage = max(IO.damage - 0.7, 0)
-		switch(data)
+		switch(data["ticks"])
 			if(50 to 100)
 				H.disabilities -= COUGHING
 			if(100 to INFINITY)
 				H.hallucination = max(H.hallucination, 7)
-	data++
+	data["ticks"]++
 
 /datum/reagent/dexalinp/on_vox_digest(mob/living/M)
 	..()
