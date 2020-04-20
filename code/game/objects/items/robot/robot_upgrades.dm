@@ -12,7 +12,7 @@
 
 /obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/R)
 	if(R.stat == DEAD)
-		to_chat(usr, "\red The [src] will not function on a deceased robot.")
+		to_chat(usr, "<span class='warning'>The [src] will not function on a deceased robot.</span>")
 		return 1
 	return 0
 
@@ -71,6 +71,7 @@
 				R.key = ghost.key
 
 	R.stat = CONSCIOUS
+	playsound(src, 'sound/misc/robot_restart.ogg', VOL_EFFECTS_MASTER, 70, FALSE)
 	return 1
 
 
@@ -161,6 +162,6 @@
 	if(R.emagged == 1)
 		return 0
 
-	R.throw_alert("hacked")
+	R.throw_alert("hacked", /obj/screen/alert/hacked)
 	R.emagged = 1
 	return 1

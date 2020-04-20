@@ -15,7 +15,8 @@
 		return INITIALIZE_HINT_QDEL
 	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT != src)
-			qdel(LAT)
+			warning("Found stacked lattice at [COORD(src)] while initializing map.")
+			QDEL_IN(LAT, 0)
 	icon = 'icons/obj/smoothlattice.dmi'
 	icon_state = "latticeblank"
 	updateOverlays()
@@ -54,10 +55,10 @@
 		var/turf/T = get_turf(src)
 		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead
 		return
-	if (istype(C, /obj/item/weapon/weldingtool))
+	if (iswelder(C))
 		var/obj/item/weapon/weldingtool/WT = C
-		if(WT.remove_fuel(0, user))
-			to_chat(user, "\blue Slicing lattice joints ...")
+		if(WT.use(0, user))
+			to_chat(user, "<span class='notice'>Slicing lattice joints ...</span>")
 			new /obj/item/stack/rods(loc)
 			qdel(src)
 
@@ -67,7 +68,7 @@
 	//if(!(istype(src.loc, /turf/space)))
 	//	qdel(src)
 	spawn(1)
-		overlays = list()
+		cut_overlays()
 
 		var/dir_sum = 0
 

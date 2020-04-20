@@ -79,7 +79,7 @@ var/datum/subsystem/throwing/SSthrowing
 	var/atom/step
 
 	//calculate how many tiles to move, making up for any missed ticks.
-	var/tilestomove = round(min(((((world.time + world.tick_lag) - start_time) * speed) - (dist_travelled ? dist_travelled : -1)), speed * MAX_TICKS_TO_MAKE_UP) * (world.tick_lag * SSthrowing.wait))
+	var/tilestomove = CEIL(min(((((world.time + world.tick_lag) - start_time) * speed) - (dist_travelled ? dist_travelled : -1)), speed * MAX_TICKS_TO_MAKE_UP) * (world.tick_lag * SSthrowing.wait))
 	while (tilestomove-- > 0)
 		if ((dist_travelled >= maxrange || AM.loc == target_turf) && has_gravity(AM, AM.loc))
 			finialize()
@@ -122,17 +122,17 @@ var/datum/subsystem/throwing/SSthrowing
 			early_callback.Invoke()
 
 		if(AM)
-			thrownthing.throw_impact(AM)
+			thrownthing.throw_impact(AM, src)
 		else
 			if (!hit)
 				for (var/thing in get_turf(thrownthing)) //looking for our target on the turf we land on.
 					var/atom/A = thing
 					if (A == target)
 						hit = TRUE
-						thrownthing.throw_impact(A)
+						thrownthing.throw_impact(A, src)
 						break
 				if (!hit)
-					thrownthing.throw_impact(get_turf(thrownthing))  // we haven't hit something yet and we still must, let's hit the ground.
+					thrownthing.throw_impact(get_turf(thrownthing), src)  // we haven't hit something yet and we still must, let's hit the ground.
 					thrownthing.newtonian_move(init_dir)
 			else
 				thrownthing.newtonian_move(init_dir)

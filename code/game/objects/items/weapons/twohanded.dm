@@ -75,7 +75,7 @@
 			user.update_inv_r_hand()
 
 		if (src.unwieldsound)
-			playsound(src.loc, unwieldsound, 50, 1)
+			playsound(src, unwieldsound, VOL_EFFECTS_MASTER)
 
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 		if(istype(O))
@@ -91,7 +91,7 @@
 
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	icon_state = "offhand"
 	name = "offhand"
 	flags = ABSTRACT
@@ -112,11 +112,15 @@
 	force = 5
 	sharp = 1
 	edge = 1
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	slot_flags = SLOT_FLAGS_BACK
 	force_unwielded = 10
 	force_wielded = 40
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
+
+/obj/item/weapon/twohanded/fireaxe/atom_init()
+	. = ..()
+	hitsound = SOUNDIN_DESCERATION
 
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
@@ -147,7 +151,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	item_color = "green"
 	force_unwielded = 3
 	force_wielded = 45
@@ -212,7 +216,7 @@
 	return !slicing && wielded && prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir)
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/device/multitool))
+	if(ismultitool(W))
 		if(!hacked)
 			hacked = 1
 			to_chat(user,"<span class='warning'>2XRNBW_ENGAGE</span>")
@@ -229,7 +233,7 @@
 		return
 	if(O.density && wielded && proximity && in_range(user, O))
 		user.visible_message("<span class='danger'>[user] start slicing the [O] </span>")
-		playsound(user.loc, 'sound/items/Welder2.ogg', 100, 1, -1)
+		playsound(user, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
 		slicing = TRUE
 		var/obj/machinery/door/airlock/D = O
 		var/obj/effect/I = new /obj/effect/overlay/slice(D.loc)
@@ -245,7 +249,7 @@
 			S.name += " remains"
 			qdel(D)
 			qdel(IC)
-			playsound(user.loc, 'sound/weapons/blade1.ogg', 100, 1, -1)
+			playsound(user, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 		slicing = FALSE
 		qdel(I)
 
@@ -261,12 +265,14 @@
 
 /obj/item/weapon/twohanded/dualsaber/unwield()
 	set_light(0)
+	hitsound = initial(hitsound)
 	w_class = initial(w_class)
 	return ..()
 
 /obj/item/weapon/twohanded/dualsaber/wield()
 	set_light(2)
-	w_class = 5
+	hitsound = list('sound/weapons/blade1.ogg')
+	w_class = ITEM_SIZE_HUGE
 	return ..()
 
 #undef DUALSABER_BLOCK_CHANCE_MODIFIER

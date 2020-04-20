@@ -4,11 +4,6 @@ var/list/preferences_datums = list()
 
 var/const/MAX_SAVE_SLOTS = 10
 
-//used for alternate_option
-#define GET_RANDOM_JOB 0
-#define BE_ASSISTANT 1
-#define RETURN_TO_LOBBY 2
-
 #define MAX_GEAR_COST 5
 #define MAX_GEAR_COST_SUPPORTER MAX_GEAR_COST+3
 /datum/preferences
@@ -32,15 +27,27 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/ignore_cid_warning = 0
 
 	//game-preferences
-	var/UI_style = "White"
+	var/UI_style = null
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
 	var/aooccolor = "#b82e00"
 	var/ooccolor = "#002eb8"
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
+	var/chat_ghostsight = CHAT_GHOSTSIGHT_ALL
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
+
+	//sound volume preferences
+	var/snd_music_vol = 100
+	var/snd_ambient_vol = 100
+	var/snd_effects_master_vol = 100
+	var/snd_effects_voice_announcement_vol = 100
+	var/snd_effects_misc_vol = 100
+	var/snd_effects_instrument_vol = 100
+	var/snd_notifications_vol = 100
+	var/snd_admin_vol = 100
+	var/snd_jukebox_vol = 100
 
 	//antag preferences
 	var/list/be_role = list()
@@ -95,11 +102,12 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/job_engsec_low = 0
 
 	//Keeps track of preferrence for not getting any wanted jobs
-	var/alternate_option = 0
+	var/alternate_option = RETURN_TO_LOBBY
 
 	// maps each organ to either null(intact), "cyborg" or "amputated"
 	// will probably not be able to do this for head and torso ;)
 	var/list/organ_data = list()
+	var/ipc_head = "Default"
 
 	var/list/player_alt_titles = new()		// the default name of a job like "Medical Doctor"
 
@@ -134,7 +142,8 @@ var/const/MAX_SAVE_SLOTS = 10
 
 /datum/preferences/New(client/C)
 	parent = C
-	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
+	UI_style = global.available_ui_styles[1]
+	b_type = random_blood_type()
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -299,6 +308,18 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.age = age
 	character.b_type = b_type
 
+	if(species == IPC)
+		qdel(character.bodyparts_by_name[BP_HEAD])
+		switch(ipc_head)
+			if("Default")
+				new /obj/item/organ/external/head/robot/ipc(null, character)
+			if("Alien")
+				new /obj/item/organ/external/head/robot/ipc/alien(null, character)
+			if("Double")
+				new /obj/item/organ/external/head/robot/ipc/double(null, character)
+			if("Pillar")
+				new /obj/item/organ/external/head/robot/ipc/pillar(null, character)
+
 	character.r_eyes = r_eyes
 	character.g_eyes = g_eyes
 	character.b_eyes = b_eyes
@@ -332,23 +353,34 @@ var/const/MAX_SAVE_SLOTS = 10
 		var/obj/item/organ/internal/IO = character.organs_by_name[name]
 		var/status = organ_data[name]
 
-		if(status == "amputated")
-			BP.amputated = 1
-			BP.status |= ORGAN_DESTROYED
-			BP.destspawn = 1
-		if(status == "cyborg")
-			BP.status |= ORGAN_ROBOT
-		if(status == "assisted")
+		if(status == "amputated" && BP)
+			qdel(BP) // Destroy will handle everything
+		if(status == "cyborg" && BP)
+			var/zone = BP.body_zone
+			qdel(BP)
+			switch(zone)
+				if(BP_L_ARM)
+					new /obj/item/organ/external/l_arm/robot(null, character)
+				if(BP_R_ARM)
+					new /obj/item/organ/external/r_arm/robot(null, character)
+				if(BP_L_LEG)
+					new /obj/item/organ/external/l_leg/robot(null, character)
+				if(BP_R_LEG)
+					new /obj/item/organ/external/r_leg/robot(null, character)
+		if(status == "assisted" && IO)
 			IO.mechassist()
-		else if(status == "mechanical")
+		else if(status == "mechanical" && IO)
 			IO.mechanize()
 
 		else continue
 
+	// Apply skin color
+	character.apply_recolor()
+
 	// Wheelchair necessary?
 	var/obj/item/organ/external/l_leg = character.bodyparts_by_name[BP_L_LEG]
 	var/obj/item/organ/external/r_leg = character.bodyparts_by_name[BP_R_LEG]
-	if((!l_leg || l_leg.status & ORGAN_DESTROYED) && (!r_leg || r_leg.status & ORGAN_DESTROYED)) // TODO cane if its only single leg.
+	if(!l_leg && !r_leg) // TODO cane if its only single leg.
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
 		character.buckled = W
 		character.update_canmove()
@@ -369,7 +401,7 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	character.socks = socks
 
-	if(backbag > 4 || backbag < 1)
+	if(backbag > 5 || backbag < 1)
 		backbag = 1 //Same as above
 	character.backbag = backbag
 

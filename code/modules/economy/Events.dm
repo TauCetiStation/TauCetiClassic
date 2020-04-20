@@ -26,16 +26,16 @@
 			if(INDUSTRIAL_ACCIDENT)
 				dearer_goods = list(EMERGENCY, BIOMEDICAL, ROBOTICS)
 			if(BIOHAZARD_OUTBREAK)
-				dearer_goods = list(BIOMEDICAL, GAS)
+				dearer_goods = list(BIOMEDICAL, VESPENE_GAS)
 			if(PIRATES)
 				dearer_goods = list(SECURITY, MINERALS)
 			if(CORPORATE_ATTACK)
 				dearer_goods = list(SECURITY, MAINTENANCE)
 			if(ALIEN_RAIDERS)
 				dearer_goods = list(BIOMEDICAL, ANIMALS)
-				cheaper_goods = list(GAS, MINERALS)
+				cheaper_goods = list(VESPENE_GAS, MINERALS)
 			if(AI_LIBERATION)
-				dearer_goods = list(EMERGENCY, GAS, MAINTENANCE)
+				dearer_goods = list(EMERGENCY, VESPENE_GAS, MAINTENANCE)
 			if(MOURNING)
 				cheaper_goods = list(MINERALS, MAINTENANCE)
 			if(CULT_CELL_REVEALED)
@@ -54,7 +54,7 @@
 /datum/event/economic_event/announce()
 	//copy-pasted from the admin verbs to submit new newscaster messages
 	var/datum/feed_message/newMsg = new /datum/feed_message
-	newMsg.author = "Tau Ceti Daily"
+	newMsg.author = "[system_name()] Daily"
 	newMsg.is_admin_message = 1
 
 	//see if our location has custom event info for this event
@@ -92,11 +92,11 @@
 				newMsg.body = "A [pick("festival","week long celebration","day of revelry","planet-wide holiday")] has been declared on [affected_dest.name] by [pick("Governor","Commissioner","General","Commandant","Administrator")] [random_name(pick(MALE,FEMALE))] to celebrate [pick("the birth of their [pick("son","daughter")]","coming of age of their [pick("son","daughter")]","the pacification of rogue military cell","the apprehension of a violent criminal who had been terrorising the planet")]. Massive stocks of food and meat have been bought driving up prices across the planet."
 
 	for(var/datum/feed_channel/FC in news_network.network_channels)
-		if(FC.channel_name == "Tau Ceti Daily")
+		if(FC.channel_name == "[system_name()] Daily")
 			FC.messages += newMsg
 			break
 	for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
-		NEWSCASTER.newsAlert("Tau Ceti Daily")
+		NEWSCASTER.newsAlert("[system_name()] Daily")
 
 /datum/event/economic_event/end()
 	for(var/good_type in dearer_goods)

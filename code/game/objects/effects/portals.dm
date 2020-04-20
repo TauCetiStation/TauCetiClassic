@@ -48,9 +48,9 @@
 	if (istype(M, /atom/movable))
 		if(prob(failchance)) //oh dear a problem, put em in deep space
 			src.icon_state = "portal1"
-			return do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy -5), 3), 0, use_forceMove, adest_checkdensity = density_check, arespect_entrydir = respect_entrydir, aentrydir = get_dir(M, src))
+			return do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy -5), 3), 0, use_forceMove, arespect_entrydir = respect_entrydir, aentrydir = get_dir(M, src))
 		else
-			return do_teleport(M, target, 1, use_forceMove, adest_checkdensity = density_check, arespect_entrydir = respect_entrydir, aentrydir = get_dir(M, src))
+			return do_teleport(M, target, 1, use_forceMove, arespect_entrydir = respect_entrydir, aentrydir = get_dir(M, src))
 
 //Telescience wormhole
 /obj/effect/portal/tsci_wormhole
@@ -75,11 +75,11 @@
 	target = null
 	if(linked_console)
 		linked_console.active_wormhole = null
-		linked_console.use_power = 1
+		linked_console.set_power_use(IDLE_POWER_USE)
 		linked_console = null
 	if(linked_portal)
-		playsound(src, 'sound/effects/phasein.ogg', 25, 1)
-		playsound(linked_portal, 'sound/effects/phasein.ogg', 25, 1)
+		playsound(src, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER, 25)
+		playsound(linked_portal, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER, 25)
 		var/obj/effect/portal/tsci_wormhole/LP = linked_portal
 		linked_portal = null
 		LP.linked_portal = null
@@ -109,6 +109,6 @@
 			to_chat(H, "<span class='warning'>[msg]</span>")
 		if(prob(20))
 			bad_effects += 1
-			H.vomit() //No msg required, since vomit() will handle this.
+			H.invoke_vomit_async() //No msg required, since vomit() will handle this.
 		if(bad_effects == 2)
 			H.Paralyse(3)

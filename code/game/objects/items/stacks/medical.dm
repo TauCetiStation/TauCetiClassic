@@ -42,7 +42,7 @@
 				to_chat(user, "<span class='warning'>You can't apply [src] through [H.wear_suit]!</span>")
 				return 1
 
-		if(BP.status & ORGAN_ROBOT)
+		if(BP.is_robotic())
 			to_chat(user, "<span class='warning'>This isn't useful at all on a robotic limb..</span>")
 			return 1
 	else
@@ -72,6 +72,7 @@
 				to_chat(user, "<span class='warning'>The wounds on [M]'s [BP.name] have already been bandaged.</span>")
 				return 1
 			else
+				playsound(src, pick(SOUNDIN_BANDAGE), VOL_EFFECTS_MASTER, 15)
 				user.visible_message("<span class='notice'>\The [user] starts treating [M]'s [BP.name].</span>", \
 									"<span class='notice'>You start treating [M]'s [BP.name].</span>")
 
@@ -115,7 +116,8 @@
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
 
 /obj/item/stack/medical/bruise_pack/update_icon()
-	icon_state = "[initial(icon_state)][amount]"
+	var/icon_amount = min(amount, max_amount)
+	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/ointment
 	name = "ointment"
@@ -160,13 +162,14 @@
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
 
 /obj/item/stack/medical/ointment/update_icon()
-	icon_state = "[initial(icon_state)][amount]"
+	var/icon_amount = min(amount, max_amount)
+	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/bruise_pack/tajaran
-	name = "\improper S'rendarr's Hand leaf"
+	name = "S'rendarr's Hand leaf"
 	singular_name = "S'rendarr's Hand leaf"
 	desc = "A poultice made of soft leaves that is rubbed on bruises."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "shandp"
 	heal_brute = 7
 
@@ -174,10 +177,10 @@
 	return
 
 /obj/item/stack/medical/ointment/tajaran
-	name = "\improper Messa's Tear petals"
+	name = "Messa's Tear petals"
 	singular_name = "Messa's Tear petals"
 	desc = "A poultice made of cold, blue petals that is rubbed on burns."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "mtearp"
 	heal_burn = 7
 
@@ -210,6 +213,7 @@
 				to_chat(user, "<span class='warning'>The wounds on [M]'s [BP.name] have already been treated.</span>")
 				return 1
 			else
+				playsound(src, pick(SOUNDIN_BANDAGE), VOL_EFFECTS_MASTER, 15)
 				user.visible_message("<span class='notice'>\The [user] starts treating [M]'s [BP.name].</span>", \
 									"<span class='notice'>You start treating [M]'s [BP.name].</span>")
 
@@ -349,7 +353,7 @@
 										"<span class='danger'>You successfully apply \the [src] to your [limb].</span>", \
 										"<span class='danger'>You hear something being wrapped.</span>")
 				else
-					user.visible_message("<span class='danger'>[user] fumbles \the [src].", \
+					user.visible_message("<span class='danger'>[user] fumbles \the [src].</span>", \
 										"<span class='danger'>You fumble \the [src].</span>", \
 										"<span class='danger'>You hear something being wrapped.</span>")
 					return

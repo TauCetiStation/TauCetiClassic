@@ -8,20 +8,22 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
+	data = list()
+
 /datum/reagent/srejuvenate/on_general_digest(mob/living/M)
 	..()
 	if(M.losebreath >= 10)
 		M.losebreath = max(10, M.losebreath-10)
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	switch(data["ticks"])
 		if(1 to 15)
 			M.eye_blurry = max(M.eye_blurry, 10)
 		if(15 to 25)
 			M.drowsyness  = max(M.drowsyness, 20)
 		if(25 to INFINITY)
-			M.sleeping += 1
+			M.SetSleeping(20 SECONDS)
 			M.adjustOxyLoss(-M.getOxyLoss())
 			M.SetWeakened(0)
 			M.SetStunned(0)
@@ -59,12 +61,24 @@
 	reagent_state = SOLID
 	color = "#004000" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
-	custom_metabolism = 0
+	custom_metabolism = 2 * REAGENTS_METABOLISM
+
+	data = list()
 
 /datum/reagent/ryetalyn/on_general_digest(mob/living/M)
 	..()
-	M.remove_any_mutations()
-	holder.del_reagent(id)
+	if(!data["ticks"])
+		data["ticks"] = 1
+
+	for(var/datum/dna/gene/gene in dna_genes)
+		if(!gene.block)
+			continue
+		if(!prob(REM * data["ticks"]))
+			continue
+		M.dna.SetSEValue(gene.block, rand(1,2048))
+		genemutcheck(M, gene.block, null, MUTCHK_FORCED)
+
+	data["ticks"]++
 
 /datum/reagent/paracetamol
 	name = "Paracetamol"
@@ -116,7 +130,7 @@
 	id = "sterilizine"
 	description = "Sterilizes wounds in preparation for surgery."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c8a5dc" // rgb: 200, 165, 220
 
 	//makes you squeaky clean
 /datum/reagent/sterilizine/reaction_mob(mob/living/M, method=TOUCH, volume)
@@ -134,7 +148,7 @@
 	id = "leporazine"
 	description = "Leporazine can be use to stabilize an individuals body temperature."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c8a5dc" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
@@ -172,6 +186,10 @@
 /datum/reagent/dermaline/on_general_digest(mob/living/M)
 	..()
 	M.heal_bodypart_damage(0,3 * REM)
+	if(volume >= overdose && (HUSK in M.mutations) && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.mutations.Remove(HUSK)
+		H.update_body()
 
 /datum/reagent/dexalin
 	name = "Dexalin"
@@ -253,12 +271,32 @@
 	M.hallucination = max(0, M.hallucination - 5 * REM)
 	M.adjustToxLoss(-2 * REM)
 
+/datum/reagent/thermopsis
+	name = "Thermopsis"
+	id = "thermopsis"
+	description = "Irritates stomach receptors, that leads to reflex rise of vomiting."
+	reagent_state = LIQUID
+	color = "#a0a000"
+	taste_message = "vomit"
+	restrict_species = list(IPC, DIONA)
+
+	data = list()
+
+/datum/reagent/thermopsis/on_general_digest(mob/living/M)
+	..()
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	if(data["ticks"] > 10)
+		M.vomit()
+		data["ticks"] -= rand(0, 10)
+
 /datum/reagent/adminordrazine //An OP chemical for admins
 	name = "Adminordrazine"
 	id = "adminordrazine"
 	description = "It's magic. We don't have to explain it."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c8a5dc" // rgb: 200, 165, 220
 	taste_message = "admin abuse"
 
 /datum/reagent/adminordrazine/on_general_digest(mob/living/M)
@@ -283,7 +321,7 @@
 	M.drowsyness = 0
 	M.stuttering = 0
 	M.confused = 0
-	M.sleeping = 0
+	M.SetSleeping(0)
 	M.jitteriness = 0
 	for(var/datum/disease/D in M.viruses)
 		D.spread = "Remissive"
@@ -376,7 +414,7 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		if(istype(IO))
-			if(IO.damage > 0)
+			if(IO.damage > 0 && IO.robotic < 2)
 				IO.damage = max(IO.damage - 1, 0)
 
 /datum/reagent/peridaxon
@@ -396,7 +434,7 @@
 
 		//Peridaxon is hard enough to get, it's probably fair to make this all organs
 		for(var/obj/item/organ/internal/IO in H.organs)
-			if(IO.damage > 0)
+			if(IO.damage > 0 && IO.robotic < 2)
 				IO.damage = max(IO.damage - 0.20, 0)
 
 /datum/reagent/kyphotorin
@@ -427,6 +465,8 @@
 		H.apply_effect(3, WEAKEN)
 		H.apply_damages(0,0,1,4,0,5)
 		H.regen_bodyparts(4, FALSE)
+	else
+		volume += 0.07
 
 /datum/reagent/bicaridine
 	name = "Bicaridine"
@@ -456,7 +496,7 @@
 /datum/reagent/hyperizine/on_general_digest(mob/living/M)
 	..()
 	if(prob(5))
-		M.emote(pick("twitch","blink_r","shiver"))
+		M.emote(pick("twitch","blink","shiver"))
 
 /datum/reagent/cryoxadone
 	name = "Cryoxadone"
@@ -499,19 +539,26 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
+	data = list()
+
 /datum/reagent/rezadone/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	switch(data["ticks"])
 		if(1 to 15)
 			M.adjustCloneLoss(-1)
 			M.heal_bodypart_damage(1, 1)
 		if(15 to 35)
 			M.adjustCloneLoss(-2)
 			M.heal_bodypart_damage(2, 1)
-			M.status_flags &= ~DISFIGURED
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				var/obj/item/organ/external/head/BP = H.bodyparts_by_name[BP_HEAD]
+				if(BP && BP.disfigured)
+					BP.disfigured = FALSE
+					to_chat(M, "Your face is shaped normally again.")
 		if(35 to INFINITY)
 			M.adjustToxLoss(1)
 			M.make_dizzy(5)
@@ -522,7 +569,7 @@
 	id = "spaceacillin"
 	description = "An all-purpose antiviral agent."
 	reagent_state = LIQUID
-	color = "#FFFFFF" // rgb: 200, 165, 220
+	color = "#ffffff" // rgb: 200, 165, 220
 	custom_metabolism = 0.01
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
@@ -573,10 +620,30 @@
 	description = "A chemical compound that causes a powerful fat-burning reaction."
 	reagent_state = LIQUID
 	nutriment_factor = 10 * REAGENTS_METABOLISM
-	color = "#BBEDA4" // rgb: 187, 237, 164
+	color = "#bbeda4" // rgb: 187, 237, 164
 	overdose = REAGENTS_OVERDOSE
 
 /datum/reagent/lipozine/on_general_digest(mob/living/M)
 	..()
 	M.nutrition = max(M.nutrition - nutriment_factor, 0)
 	M.overeatduration = 0
+
+/datum/reagent/stimulants
+	name = "Stimulants"
+	id = "stimulants"
+	description = "Stimulants to keep you up in a critical moment"
+	reagent_state = LIQUID
+	color = "#99ccff" // rgb: 200, 165, 220
+	custom_metabolism = 0.5
+	overdose = REAGENTS_OVERDOSE
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/stimulants/on_general_digest(mob/living/M)
+	..()
+	M.drowsyness = max(M.drowsyness - 5, 0)
+	M.AdjustParalysis(-3)
+	M.AdjustStunned(-3)
+	M.AdjustWeakened(-3)
+	var/mob/living/carbon/human/H = M
+	H.adjustHalLoss(-30)
+	H.shock_stage -= 20

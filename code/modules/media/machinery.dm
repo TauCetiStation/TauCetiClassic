@@ -46,7 +46,7 @@
 			L.update_music()
 
 /obj/machinery/media/proc/update_media_source()
-	var/area/A = get_area_master(src)
+	var/area/A = get_area(src)
 
 	// Check if there's a media source already.
 	if(A.media_source && A.media_source!=src)
@@ -60,7 +60,7 @@
 	master_area=A
 
 /obj/machinery/media/proc/disconnect_media_source()
-	var/area/A = get_area_master(src)
+	var/area/A = get_area(src)
 
 	// Sanity
 	if(!A)

@@ -8,25 +8,33 @@
 /*
  * Lasertag
  */
-/obj/item/clothing/suit/bluetag
-	name = "blue laser tag armour"
-	desc = "Blue Pride, Station Wide."
+/obj/item/clothing/suit/lasertag
+	name = "laser tag armour"
+	desc = "Be none's man, shoot everybody!"
 	icon_state = "bluetag"
 	item_state = "bluetag"
 	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO
-	allowed = list (/obj/item/weapon/gun/energy/laser/bluetag)
+	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag)
 	siemens_coefficient = 3.0
 
-/obj/item/clothing/suit/redtag
+	var/lasertag_color = "none"
+
+/obj/item/clothing/suit/lasertag/bluetag
+	name = "blue laser tag armour"
+	desc = "Blue Pride, Station Wide."
+	icon_state = "bluetag"
+	item_state = "bluetag"
+	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag/bluetag)
+	lasertag_color = "blue"
+
+/obj/item/clothing/suit/lasertag/redtag
 	name = "red laser tag armour"
 	desc = "Reputed to go faster."
 	icon_state = "redtag"
 	item_state = "redtag"
-	blood_overlay_type = "armor"
-	body_parts_covered = UPPER_TORSO
-	allowed = list (/obj/item/weapon/gun/energy/laser/redtag)
-	siemens_coefficient = 3.0
+	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag/redtag)
+	lasertag_color = "red"
 
 /*
  * Costume
@@ -113,7 +121,7 @@
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
 	desc = "A plastic replica of the syndicate space suit, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -173,6 +181,13 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags_inv = HIDEJUMPSUIT
 
+/obj/item/clothing/suit/byzantine_dress
+	name = "Byzantine dress"
+	desc = "Fancy expensive clothes from Space Byzantium"
+	icon_state = "Byzantine_dress"
+	item_state = "Byzantine_dress"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
 /*
  * Misc
  */
@@ -222,6 +237,42 @@
 	icon_state = "catshirt"
 	item_state = "catshirt"
 
+/obj/item/clothing/suit/engishirt
+	name = "engineer shirt"
+	desc = "Loose t-shirt made of insulating material. Trust me i'm an engineer"
+	icon_state = "engishirt"
+	item_state = "engishirt"
+
+/obj/item/clothing/suit/badengishirt
+	name = "bad engineer shirt"
+	desc = "A loose T-shirt made of insulating material with a picture of gravitational singularity on it. Don't trust me i'm a bad engineer"
+	icon_state = "badengishirt"
+	item_state = "badengishirt"
+
+/obj/item/clothing/suit/docshirt
+	name = "doc shirt"
+	desc = "Nice white T-shirt, designed to show that you are a fashionable doctor. Blood stains are not included"
+	icon_state = "docshirt"
+	item_state = "docshirt"
+
+/obj/item/clothing/suit/battonshirt
+	name = "stunning shirt"
+	desc = "A red T-shirt made from durable Rip-Stop material with a picture of bloody stun batton on it. It makes you stunned"
+	icon_state = "battonshirt"
+	item_state = "battonshirt"
+
+/obj/item/clothing/suit/arstotzkashirt
+	name = "dictator shirt"
+	desc = "Grim-looking T-shirt with a picture of red eagle. A good banner for creating your own state in a single department"
+	icon_state = "arstotzkashirt"
+	item_state = "arstotzkashirt"
+
+/obj/item/clothing/suit/toxicshirt
+	name = "toxic shirt"
+	desc = "Acidic-green t-shirt in order to show who is the biggest asshole here"
+	icon_state = "toxicshirt"
+	item_state = "toxicshirt"
+
 /obj/item/clothing/suit/jacket
 	name = "bomber jacket"
 	desc = "Aviators not included."
@@ -259,6 +310,13 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	cold_protection = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
+
+/obj/item/clothing/suit/storage/postal_dude_coat
+	name = "black trenchcoat"
+	desc = "A black trenchcoat."
+	icon_state = "dude_coat"
+	item_state = "jensensuit"
+	item_color = "dude_coat"
 
 //pyjamas
 //originally intended to be pinstripes >.>
@@ -479,10 +537,6 @@
 	desc = "That shade of black just makes you look a bit more evil. Good for those mafia types."
 	icon_state = "trenchcoat_black"
 	item_state = "trenchcoat_black"
-
-/obj/item/clothing/suit/storage/det_suit/max_payne
-	desc = "An 20th-century multi-purpose trenchcoat. Someone who wears this means serious business."
-	icon_state = "maxcoat"
 
 /obj/item/clothing/suit/necromancer_hoodie
 	name = "necromancer hoodie"

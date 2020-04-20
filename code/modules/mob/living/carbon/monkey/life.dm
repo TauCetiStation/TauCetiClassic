@@ -1,7 +1,8 @@
 /mob/living/carbon/monkey/Life()
 	set invisibility = 0
 	//set background = 1
-	if (monkeyizing)	return
+	if (notransform)
+		return
 	if (update_muts)
 		update_muts=0
 		domutcheck(src,null,MUTCHK_FORCED)
@@ -11,7 +12,7 @@
 	if(loc)
 		environment = loc.return_air()
 
-	if (stat != DEAD)
+	if (stat != DEAD && !IS_IN_STASIS(src))
 		if(!istype(src,/mob/living/carbon/monkey/diona))
 			//First, resolve location and get a breath
 			if(SSmob.times_fired%4==2)
@@ -49,9 +50,6 @@
 
 	//Check if we're on fire
 	handle_fire()
-	if(on_fire && fire_stacks > 0)
-		fire_stacks -= 0.5
-
 
 	//Status updates, death etc.
 	handle_regular_status_updates()
@@ -59,10 +57,6 @@
 
 	if(client)
 		handle_regular_hud_updates()
-
-	// Grabbing
-	for(var/obj/item/weapon/grab/G in src)
-		G.process()
 
 	if(!client && stat == CONSCIOUS)
 
@@ -81,23 +75,23 @@
 
 /mob/living/carbon/monkey/proc/handle_disabilities()
 
-	if (disabilities & EPILEPSY || has_trait(TRAIT_EPILEPSY))
+	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
 		if ((prob(1) && paralysis < 10))
-			to_chat(src, "\red You have a seizure!")
+			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
-	if (disabilities & COUGHING || has_trait(TRAIT_COUGH))
+	if (disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
 		if ((prob(5) && paralysis <= 1))
 			drop_item()
 			spawn( 0 )
 				emote("cough")
 				return
-	if (disabilities & TOURETTES || has_trait(TRAIT_TOURETTE))
+	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		if ((prob(10) && paralysis <= 1))
 			Stun(10)
 			spawn( 0 )
 				emote("twitch")
 				return
-	if (disabilities & NERVOUS || has_trait(TRAIT_NERVOUS))
+	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
 		if (prob(10))
 			stuttering = max(10, stuttering)
 
@@ -113,7 +107,7 @@
 
 	if ((HULK in mutations) && health <= 25)
 		mutations.Remove(HULK)
-		to_chat(src, "\red You suddenly feel very weak.")
+		to_chat(src, "<span class='warning'>You suddenly feel very weak.</span>")
 		Weaken(3)
 		emote("collapse")
 
@@ -132,7 +126,7 @@
 			radiation = 100
 			Weaken(10)
 			if(!lying)
-				to_chat(src, "\red You feel weak.")
+				to_chat(src, "<span class='warning'>You feel weak.</span>")
 				emote("collapse")
 
 		switch(radiation)
@@ -148,14 +142,14 @@
 					radiation -= 5
 					Weaken(3)
 					if(!lying)
-						to_chat(src, "\red You feel weak.")
+						to_chat(src, "<span class='warning'>You feel weak.</span>")
 						emote("collapse")
 
 			if(75 to 100)
 				radiation -= 3
 				adjustToxLoss(3)
 				if(prob(1))
-					to_chat(src, "\red You mutate!")
+					to_chat(src, "<span class='warning'>You mutate!</span>")
 					randmutb(src)
 					domutcheck(src,null)
 					emote("gasp")
@@ -353,9 +347,9 @@
 
 	if(Toxins_pp > safe_phoron_max) // Too much phoron
 		var/ratio = (breath.gas["phoron"] / safe_phoron_max) * 10
-		//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
+		//adjustToxLoss(CLAMP(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 		if(reagents)
-			reagents.add_reagent("toxin", Clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
+			reagents.add_reagent("toxin", CLAMP(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 		phoron_alert = max(phoron_alert, 1)
 	else
 		phoron_alert = 0
@@ -365,7 +359,7 @@
 		if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 			Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-				Sleeping(5)
+				Sleeping(10 SECONDS)
 		else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			if(prob(20))
 				spawn(0) emote(pick("giggle", "laugh"))
@@ -374,7 +368,7 @@
 
 	if(breath.temperature > (T0C + 66)) // Hot air hurts :(
 		if(prob(20))
-			to_chat(src, "\red You feel a searing heat in your lungs!")
+			to_chat(src, "<span class='warning'>You feel a searing heat in your lungs!</span>")
 		fire_alert = max(fire_alert, 2)
 	else
 		fire_alert = 0
@@ -418,19 +412,19 @@
 	switch(adjusted_pressure)
 		if(hazard_high_pressure to INFINITY)
 			adjustBruteLoss( min( ( (adjusted_pressure / hazard_high_pressure) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-			throw_alert("pressure","highpressure",2)
+			throw_alert("pressure", /obj/screen/alert/highpressure, 2)
 		if(warning_high_pressure to hazard_high_pressure)
-			throw_alert("pressure","highpressure",1)
+			throw_alert("pressure", /obj/screen/alert/highpressure, 1)
 		if(warning_low_pressure to warning_high_pressure)
 			clear_alert("pressure")
 		if(hazard_low_pressure to warning_low_pressure)
-			throw_alert("pressure","lowpressure",1)
+			throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 		else
 			if( !(COLD_RESISTANCE in mutations) )
 				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				throw_alert("pressure","lowpressure",2)
+				throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 			else
-				throw_alert("pressure","lowpressure",1)
+				throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 
 	return
 
@@ -448,13 +442,13 @@
 /mob/living/carbon/monkey/proc/handle_chemicals_in_body()
 
 	if(reagents && reagents.reagent_list.len)
-		reagents.metabolize(src,race)
+		reagents.metabolize(src)
 
 	if (drowsyness)
 		drowsyness--
 		eye_blurry = max(2, eye_blurry)
 		if (prob(5))
-			sleeping += 1
+			Sleeping(2 SECONDS)
 			Paralyse(5)
 
 	if(confused)
@@ -474,7 +468,7 @@
 		silent = 0
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()
-		if(health < config.health_threshold_dead || brain_op_stage == 4.0)
+		if(health < config.health_threshold_dead || !has_brain())
 			death()
 			blinded = 1
 			stat = DEAD
@@ -490,9 +484,7 @@
 				adjustOxyLoss(1)
 			Paralyse(3)
 		if(halloss > 100)
-			to_chat(src, "<span class='notice'>You're in too much pain to keep going...</span>")
-			for(var/mob/O in oviewers(src, null))
-				O.show_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
+			visible_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", self_message = "<span class='notice'>You're in too much pain to keep going...</span>")
 			Paralyse(10)
 			setHalLoss(99)
 
@@ -502,15 +494,8 @@
 			stat = UNCONSCIOUS
 			if(halloss > 0)
 				adjustHalLoss(-3)
-		else if(sleeping)
-			handle_dreams()
-			adjustHalLoss(-3)
-			sleeping = max(sleeping-1, 0)
-			blinded = 1
-			stat = UNCONSCIOUS
-			if( prob(10) && health && !hal_crit )
-				spawn(0)
-					emote("snore")
+		else if(IsSleeping())
+			blinded = TRUE
 		else if(resting)
 			if(halloss > 0)
 				adjustHalLoss(-3)

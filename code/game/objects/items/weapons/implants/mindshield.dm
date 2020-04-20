@@ -22,15 +22,15 @@
 		M.visible_message("<span class='warning'>[M] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 		return FALSE
 
-	if(H.mind && H.mind in ticker.mode.revolutionaries)
+	if(H.mind && (H.mind in ticker.mode.revolutionaries))
 		ticker.mode.remove_revolutionary(H.mind)
 
-	if(H.mind && H.mind in (ticker.mode.A_gang | ticker.mode.B_gang))
+	if(H.mind && (H.mind in (ticker.mode.A_gang | ticker.mode.B_gang)))
 		ticker.mode.remove_gangster(H.mind, exclude_bosses=1)
 		H.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='userdanger'>You feel a surge of loyalty towards Nanotrasen.</span>")
 		return FALSE
 
-	if(H.mind &&  H.mind in ticker.mode.cult)
+	if(H.mind && (H.mind in ticker.mode.cult))
 		to_chat(H, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 		return FALSE
 	else
@@ -66,7 +66,24 @@
 /obj/item/weapon/implant/mindshield/loyalty/implanted(mob/M)
 	. = ..()
 	if(.)
+		if(M.mind)
+			var/cleared_role = TRUE
+			switch(M.mind.special_role)
+				if("traitor")
+					ticker.mode.remove_traitor(M.mind)
+					M.mind.remove_objectives()
+				if("Syndicate")
+					ticker.mode.remove_nuclear(M.mind)
+					M.mind.remove_objectives()
+				else
+					cleared_role = FALSE
+			if(cleared_role)
+				// M.mind.remove_objectives() Uncomment this if you're feeling suicidal, and inable to see player's objectives.
+				to_chat(M, "<span class='danger'>You were implanted with [src] and now you must serve NT. Your old mission doesn't matter now.</span>")
+				ticker.reconverted_antags[M.key] = M.mind
+
 		START_PROCESSING(SSobj, src)
+		to_chat(M, "NanoTrasen - is the best corporation in the whole Universe!")
 
 /obj/item/weapon/implant/mindshield/loyalty/process()
 	if (!implanted || !imp_in)

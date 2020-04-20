@@ -21,7 +21,7 @@
 			if(!shattered && prob(20))
 				shatter()
 			else
-				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
 		else
 			H.visible_message("[user] stares into \the [src].")
 	..()
@@ -31,7 +31,7 @@
 		return
 	shattered = 1
 	icon_state = "mirror_broke"
-	playsound(src, "shatter", 70, 1)
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	desc = "Oh no, seven years of bad luck!"
 
 
@@ -40,7 +40,7 @@
 		if(!shattered)
 			shatter()
 		else
-			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
 	..()
 
 
@@ -48,7 +48,7 @@
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
 		return
 
 	if(prob(I.force * 2))
@@ -56,16 +56,16 @@
 		shatter()
 	else
 		visible_message("<span class='warning'>[user] hits [src] with [I]!</span>")
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 70, 1)
+		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 
 
 /obj/structure/mirror/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(islarva(user) || isfacehugger(user))
+	if(isxenolarva(user) || isfacehugger(user))
 		return
 	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
 		return
 	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
 	shatter()
@@ -80,7 +80,7 @@
 	if(M.melee_damage_upper <= 0)
 		return
 	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
 		return
 	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
 	shatter()
@@ -92,7 +92,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
 		return
 	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
 	shatter()
@@ -143,6 +143,7 @@
 				H.r_skin = hex2num(copytext(new_skin, 2, 4))
 				H.g_skin = hex2num(copytext(new_skin, 4, 6))
 				H.b_skin = hex2num(copytext(new_skin, 6, 8))
+			H.apply_recolor()
 			H.update_hair()
 			H.update_body()
 			H.check_dna(H)
@@ -168,7 +169,7 @@
 				if(new_mutantcolor)
 					var/temp_hsv = RGBtoHSV(new_mutantcolor)
 
-					if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
+					if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7f7f7f")[3]) // mutantcolors must be bright
 						H.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 
 					else

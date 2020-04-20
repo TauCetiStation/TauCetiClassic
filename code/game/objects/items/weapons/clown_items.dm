@@ -20,9 +20,24 @@
 	throw_speed = 4
 	throw_range = 20
 
-/obj/item/weapon/bananapeel/Crossed(mob/living/carbon/C)
-	if(istype(C))
-		C.slip("the [src]", 4, 2)
+/obj/item/weapon/bananapeel/atom_init()
+	. = ..()
+	AddComponent(/datum/component/slippery, 4)
+
+/obj/item/weapon/bananapeel/honk
+	name = "Clowny banana peel"
+	desc = "A peel from a banana for Clown."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "h-banana_peel"
+	item_state = "h-banana_peel"
+	w_class = ITEM_SIZE_SMALL
+	throwforce = 0
+	throw_speed = 4
+	throw_range = 20
+
+/obj/item/weapon/bananapeel/honk/atom_init()
+	. = ..()
+	AddComponent(/datum/component/slippery, 5, SLIDE | GALOSHES_DONT_HELP)
 
 /*
  * Soap
@@ -38,6 +53,10 @@
 	throw_speed = 4
 	throw_range = 20
 
+/obj/item/weapon/soap/atom_init()
+	. = ..()
+	AddComponent(/datum/component/slippery, 4)
+
 /obj/item/weapon/soap/nanotrasen
 	desc = "A Nanotrasen brand bar of soap. Smells of phoron."
 	icon_state = "soapnt"
@@ -49,10 +68,6 @@
 /obj/item/weapon/soap/syndie
 	desc = "An untrustworthy bar of soap. Smells of fear."
 	icon_state = "soapsyndie"
-
-/obj/item/weapon/soap/Crossed(mob/living/carbon/C) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
-	if(istype(C))
-		C.slip("the [src]", 4, 2)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity)
 	if(!proximity) return
@@ -130,7 +145,7 @@
 					var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
 					var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
 					var/no_legs = FALSE
-					if((!l_foot || (l_foot && (l_foot.status & ORGAN_DESTROYED))) && (!r_foot || (r_foot && (r_foot.status & ORGAN_DESTROYED))))
+					if((!l_foot || (l_foot && (l_foot.is_stump))) && (!r_foot || (r_foot && (r_foot.is_stump))))
 						no_legs = TRUE
 					if(!no_legs)
 						if(H.shoes && H.shoes.clean_blood())
@@ -145,7 +160,7 @@
 				if("arms")
 					var/obj/item/organ/external/r_hand = H.bodyparts_by_name[BP_L_ARM]
 					var/obj/item/organ/external/l_hand = H.bodyparts_by_name[BP_R_ARM]
-					if((l_hand && !(l_hand.status & ORGAN_DESTROYED)) && (r_hand && !(r_hand.status & ORGAN_DESTROYED)))
+					if((l_hand && !(l_hand.is_stump)) && (r_hand && !(r_hand.is_stump)))
 						if(H.gloves && H.gloves.clean_blood())
 							H.update_inv_gloves()
 							H.gloves.germ_level = 0
@@ -159,7 +174,7 @@
 				user.visible_message("<span class='notice'>\the [user] cleans \his [body_part_name] out with soap.</span>")
 			else
 				user.visible_message("<span class='notice'>\the [user] cleans \the [target]'s [body_part_name] out with soap.</span>")
-			playsound(src.loc, 'sound/misc/slip.ogg', 50, 1)
+			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 			return
 		else
 			user.visible_message("<span class='red'>\the [user] fails to clean \the [target]'s [body_part_name] out with soap.</span>")
@@ -185,12 +200,12 @@
 
 /obj/item/weapon/bikehorn/attack(mob/target, mob/user, def_zone)
 	. = ..()
-	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+	playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
 
 /obj/item/weapon/bikehorn/attack_self(mob/user)
 	if(cooldown <= world.time)
 		cooldown = world.time + 8
-		playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
+		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
 		src.add_fingerprint(user)
 		animate(user, pixel_z = rand(2, 6), time = 0)
 		animate(pixel_z = 0, transform = turn(matrix(), pick(-8, 0, 8)), time=2)
@@ -225,13 +240,13 @@
 /obj/item/toy/laugh_button/attack_self(mob/user)
 	if(!cooldown)
 		user.visible_message("<span class='notice'>[bicon(src)] \the [user] presses \the [src]</span>")
-		playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
+		playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 		var/laugh = pick(
 			'sound/voice/fake_laugh/laugh1.ogg',
 			'sound/voice/fake_laugh/laugh2.ogg',
 			'sound/voice/fake_laugh/laugh3.ogg',
 			)
-		playsound(src, laugh, 50, 1)
+		playsound(src, laugh, VOL_EFFECTS_MISC)
 		flick("laugh_button_down",src)
 		icon_state = "laugh_button_off"
 		cooldown = TRUE
@@ -243,5 +258,5 @@
 	flick("laugh_button_up",src)
 	icon_state = "laugh_button_on"
 	cooldown = FALSE
-	playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 	return

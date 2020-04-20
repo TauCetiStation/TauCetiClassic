@@ -14,19 +14,17 @@
 	..()
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
-
 	def_zone = check_zone(def_zone)
 	if(!has_bodypart(def_zone))
 		return PROJECTILE_FORCE_MISS //if they don't have the body part in question then the projectile just passes by.
 
-	if(P.impact_force)
-		for(var/i=1, i<=P.impact_force, i++)
-			step_to(src, get_step(loc, P.dir))
-			if(istype(src.loc, /turf/simulated))
-				src.loc.add_blood(src)
+	return ..()
+
+/mob/living/carbon/human/mob_bullet_act(obj/item/projectile/P, def_zone)
+	. = PROJECTILE_ALL_OK
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
-		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
+		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam) || istype(P, /obj/item/projectile/pyrometer) || (istype(P, /obj/item/projectile/plasma) && P.damage <= 20))
 			if(check_reflect(def_zone, dir, P.dir)) // Checks if you've passed a reflection% check
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
 								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
@@ -39,11 +37,11 @@
 					// redirect the projectile
 					P.redirect(new_x, new_y, curloc, src)
 
-				return -1 // complete projectile permutation
+				return PROJECTILE_FORCE_MISS // complete projectile permutation
 
 	if(check_shields(P.damage, "the [P.name]", P.dir))
-		P.on_hit(src, 100, def_zone)
-		return 2
+		P.on_hit(src, def_zone, 100)
+		return 2 // i have no idea what is 2 and in projectile.dm it seems unused, haven't checked any other places in code.
 
 	if(istype(P, /obj/item/projectile/bullet/weakbullet))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
@@ -55,7 +53,7 @@
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
-		return
+		return PROJECTILE_ACTED
 
 	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
@@ -76,7 +74,7 @@
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
-		return
+		return PROJECTILE_ACTED
 
 	if(istype(P, /obj/item/projectile/energy/bolt))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
@@ -88,9 +86,9 @@
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
 				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
 					if(C.flags & THICKMATERIAL )
-						visible_message("<span class='userdanger'> <B>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
+						visible_message("<span class='userdanger'>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
 						qdel(P)
-						return
+						return PROJECTILE_ACTED
 
 		BP = bodyparts_by_name[check_zone(def_zone)]
 		var/armorblock = run_armor_check(BP, "energy")
@@ -102,7 +100,7 @@
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
-		return
+		return PROJECTILE_ACTED
 
 	if(istype(P, /obj/item/projectile/bullet))
 		var/obj/item/projectile/bullet/B = P
@@ -113,7 +111,7 @@
 		var/delta = max(0, P.damage - (P.damage * (armor/100)))
 		if(delta)
 			apply_effect(delta,AGONY,armor)
-			P.on_hit(src, armor, def_zone)
+			P.on_hit(src, def_zone, armor)
 			//return Nope! ~Zve
 		if(delta < 10)
 			P.sharp = 0
@@ -145,8 +143,6 @@
 	if(istype(wear_suit, /obj/item/clothing/suit))
 		var/obj/item/clothing/suit/V = wear_suit
 		V.attack_reaction(src, REACTION_HIT_BY_BULLET)
-
-	return (..(P , def_zone))
 
 /mob/living/carbon/human/proc/check_reflect(def_zone, hol_dir, hit_dir) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 	if(head && head.IsReflect(def_zone, hol_dir, hit_dir))
@@ -264,7 +260,7 @@
 			continue
 		O.emp_act(severity)
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.status & ORGAN_DESTROYED)
+		if(BP.is_stump)
 			continue
 		BP.emp_act(severity)
 		for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
@@ -288,9 +284,7 @@
 
 	var/obj/item/organ/external/BP = get_bodypart(target_zone)
 	if (!BP)
-		return FALSE
-	if(BP.status & ORGAN_DESTROYED)
-		to_chat(user, "What [BP.name]?")
+		to_chat(user, "What [parse_zone(target_zone)]?")
 		return FALSE
 	var/hit_area = BP.name
 
@@ -300,7 +294,7 @@
 			return 0
 
 	if(istype(I,/obj/item/weapon/card/emag))
-		if(!(BP.status & ORGAN_ROBOT))
+		if(!BP.is_robotic())
 			to_chat(user, "<span class='userdanger'>That limb isn't robotic.</span>")
 			return
 		if(BP.sabotaged)
@@ -385,6 +379,12 @@
 					apply_effect(5, WEAKEN, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked down!</span>")
 
+				if(!(damage_flags & (DAM_SHARP|DAM_EDGE)) && prob(I.force + 10)) // A chance to force puke with a blunt hit.
+					for(var/obj/item/weapon/grab/G in grabbed_by)
+						if(G.state >= GRAB_AGGRESSIVE && G.assailant == user)
+							vomit(punched=TRUE)
+							return
+
 				if(bloody)
 					bloody_body(src)
 	return TRUE
@@ -447,10 +447,10 @@
 	if(target_zone)
 		BP = get_bodypart(target_zone)
 
-	if(!BP || (BP.status & ORGAN_DESTROYED))
+	if(!BP || (BP.is_stump))
 		return NOLIMB
 
-	var/list/items = get_equipped_items()
+	var/list/items = get_equipped_items() - list(l_hand, r_hand)
 	for(var/obj/item/clothing/C in items)
 		if((C.flags & THICKMATERIAL) && (C.body_parts_covered & BP.body_part))
 			if(C.flags & PHORONGUARD) // this means, clothes has injection port or smthing like that.
@@ -468,5 +468,9 @@
 	var/obj/item/clothing/suit/space/SS = wear_suit
 	var/reduction_dam = (100 - SS.breach_threshold) / 100
 	var/penetrated_dam = max(0, min(50, (damage * reduction_dam) / 1.5)) // - SS.damage)) - Consider uncommenting this if suits seem too hardy on dev.
+
+	if(istype(SS, /obj/item/clothing/suit/space/rig))
+		var/obj/item/clothing/suit/space/rig/rig = SS
+		rig.take_hit(damage)
 
 	if(penetrated_dam) SS.create_breaches(damtype, penetrated_dam)

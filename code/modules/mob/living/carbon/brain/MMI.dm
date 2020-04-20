@@ -5,7 +5,7 @@
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_empty"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "biotech=3"
 
 	req_access = list(access_robotics)
@@ -171,7 +171,7 @@
 		to_chat(brainmob, "Can't do that while incapacitated or dead.")
 
 	radio.broadcasting = radio.broadcasting==1 ? 0 : 1
-	to_chat(brainmob, "\blue Radio is [radio.broadcasting==1 ? "now" : "no longer"] broadcasting.")
+	to_chat(brainmob, "<span class='notice'>Radio is [radio.broadcasting==1 ? "now" : "no longer"] broadcasting.</span>")
 
 /obj/item/device/mmi/radio_enabled/verb/Toggle_Listening()
 	set name = "Toggle Listening"
@@ -184,7 +184,7 @@
 		to_chat(brainmob, "Can't do that while incapacitated or dead.")
 
 	radio.listening = radio.listening==1 ? 0 : 1
-	to_chat(brainmob, "\blue Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.")
+	to_chat(brainmob, "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>")
 
 /obj/item/device/mmi/emp_act(severity)
 	if(!brainmob)

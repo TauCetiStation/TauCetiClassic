@@ -1,9 +1,9 @@
 /obj/item/weapon/circuitboard/atmoscontrol
-	name = "\improper Central Atmospherics Computer Circuitboard"
+	name = "Central Atmospherics Computer Circuitboard"
 	build_path = /obj/machinery/computer/atmoscontrol
 
 /obj/machinery/computer/atmoscontrol
-	name = "\improper Central Atmospherics Computer"
+	name = "Central Atmospherics Computer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	light_color = "#00b000"
@@ -31,27 +31,24 @@
 			dat += "<a href='?src=\ref[src]&alarm=\ref[alarm]'>"
 			switch(max(alarm.danger_level, alarm.alarm_area.atmosalm))
 				if (0)
-					dat += "<font color=green>"
+					dat += "<font color=green>[alarm]</font>"
 				if (1)
-					dat += "<font color=blue>"
+					dat += "<font color=blue>[alarm]</font>"
 				if (2)
-					dat += "<font color=red>"
-			dat += "[alarm]</font></a><br/>"
+					dat += "<font color=red>[alarm]</font>"
+			dat += "</a><br/>"
 	user << browse(entity_ja(dat), "window=atmoscontrol")
 
-/obj/machinery/computer/atmoscontrol/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
-		user.visible_message("<span class='red'>\The [user] swipes \a [I] through \the [src], causing the screen to flash!</span>",
-			                 "<span class='red'>You swipe your [I] through \the [src], the screen flashing as you gain full control.</span>",
-			                 "You hear the swipe of a card through a reader, and an electronic warble.")
+/obj/machinery/computer/atmoscontrol/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	user.visible_message("<span class='red'>\The [user] swipes \a suspicious card through \the [src], causing the screen to flash!</span>",
+			             "<span class='red'>You swipe your card through \the [src], the screen flashing as you gain full control.</span>",
+			             "You hear the swipe of a card through a reader, and an electronic warble.")
 
-		emagged = TRUE
-		overridden = TRUE
-		return
-
-	return ..()
-
-// This is here for non nano support which this computer is actually uses for now.
+	emagged = TRUE
+	overridden = TRUE
+	return TRUE
 
 /obj/machinery/alarm/proc/return_status()
 	var/turf/location = get_turf(src)

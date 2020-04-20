@@ -6,7 +6,7 @@
 	item_state = "render"
 	force = 15
 	throwforce = 10
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	var/charged = 1
 
 
@@ -33,7 +33,7 @@
 	if(charged == 1)
 		new /obj/effect/rend(get_turf(usr))
 		charged = 0
-		visible_message("\red <B>[src] hums with power as [usr] deals a blow to reality itself!</B>")
+		visible_message("<span class='warning'><B>[src] hums with power as [usr] deals a blow to reality itself!</B></span>")
 	else
-		to_chat(user, "\red The unearthly energies that powered the blade are now dormant")
+		to_chat(user, "<span class='warning'>The unearthly energies that powered the blade are now dormant</span>")
 

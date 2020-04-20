@@ -38,10 +38,6 @@
 	for(var/mob/M in src.contents)
 		M.attackby(W,user)
 
-/obj/item/weapon/holder/proc/show_message(message, m_type)
-	for(var/mob/living/M in contents)
-		M.show_message(message,m_type)
-
 // Mob procs and vars for scooping up
 /mob/living/var/holder_type
 
@@ -83,7 +79,7 @@
 	name = "mouse"
 	desc = "It's a small rodent."
 	icon_state = "mouse_gray"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 /obj/item/weapon/holder/mouse/gray
 	icon_state = "mouse_gray"
@@ -93,6 +89,12 @@
 
 /obj/item/weapon/holder/mouse/brown
 	icon_state = "mouse_brown"
+
+/obj/item/weapon/holder/lizard
+	name = "lizard"
+	desc = "A cute tiny lizard."
+	icon_state = "lizard"
+	w_class = ITEM_SIZE_TINY
 
 /obj/item/weapon/holder/monkey
 	name = "monkey"

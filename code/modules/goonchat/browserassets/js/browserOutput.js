@@ -11,7 +11,7 @@ var decoder = decodeURIComponent || unescape;
 
 //Globals
 window.status = 'Output';
-var $messages, $subOptions, $subAudio, $selectedSub, $contextMenu, $filterMessages, $last_message;
+var $messages, $subOptions, $selectedSub, $contextMenu, $filterMessages, $last_message;
 var opts = {
 	//General
 	'messageCount': 0, //A count...of messages...
@@ -19,7 +19,7 @@ var opts = {
 	'scrollSnapTolerance': 10, //If within x pixels of bottom
 	'clickTolerance': 10, //Keep focus if outside x pixels of mousedown position on mouseup
 	'imageRetryDelay': 50, //how long between attempts to reload images (in ms)
-	'imageRetryLimit': 5, //how many attempts should we make? 
+	'imageRetryLimit': 5, //how many attempts should we make?
 	'popups': 0, //Amount of popups opened ever
 	'wasd': false, //Is the user in wasd mode?
 	'priorChatHeight': 0, //Thing for height-resizing detection
@@ -204,6 +204,13 @@ function output(message, flag) {
 		opts.lastPang = Date.now();
 	}
 
+	var atBottom = false;
+
+	var bodyHeight = $('body').height();
+	var messagesHeight = $messages.outerHeight();
+	var scrollPos = $('body,html').scrollTop();
+	var compensateScroll = 0;
+
 	//fix cyrillic characters displaying for most non-CP1251 clients (breaks some other things, but for russian server not so important)
 	var message2 = "";
 	for (var i = 0; i < message.length; i++) {
@@ -219,42 +226,6 @@ function output(message, flag) {
 
 	//also replace for 0xFF char
 	message = message.replace(/¶/g, "я");
-
-	//Scroll stuff (todo: why we handle this before messageCombining?)
-	var atBottom = false;
-
-	var bodyHeight = $('body').height();
-	var messagesHeight = $messages.outerHeight();
-	var scrollPos = $('body,html').scrollTop();
-
-	//Should we snap the output to the bottom?
-	if (bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance) {
-		atBottom = true;
-		if ($('#newMessages').length) {
-			$('#newMessages').remove();
-		}
-	//If not, put the new messages box in
-	} else {
-		if ($('#newMessages').length) {
-			var messages = $('#newMessages .number').text();
-			messages = parseInt(messages);
-			messages++;
-			$('#newMessages .number').text(messages);
-			if (messages == 2) {
-				$('#newMessages .messageWord').append('s');
-			}
-		} else {
-			$messages.after('<a href="#" id="newMessages"><span class="number">1</span> new <span class="messageWord">message</span> <i class="icon-double-angle-down"></i></a>');
-		}
-	}
-
-	opts.messageCount++;
-
-	//Pop the top message off if history limit reached
-	if (opts.messageCount >= opts.messageLimit) {
-		$messages.children('div.entry:first-child').remove();
-		opts.messageCount--; //I guess the count should only ever equal the limit
-	}
 
 	// Create the element - if combining is off, we use it, and if it's on, we
 	// might discard it bug need to check its text content. Some messages vary
@@ -283,7 +254,6 @@ function output(message, flag) {
 					"font-size": "0.7em"
 				}, 100);
 			});
-			opts.messageCount--;
 			handled = true;
 		}
 	}
@@ -294,6 +264,9 @@ function output(message, flag) {
 
 		$last_message = trimmed_message;
 		$messages[0].appendChild(entry);
+
+		opts.messageCount++;
+
 		$(entry).find("img.icon").error(iconError);
 
 		var to_linkify = $(entry).find(".linkify");
@@ -315,8 +288,39 @@ function output(message, flag) {
 		}
 	}
 
+	//Should we snap the output to the bottom?
+	if (bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance) {
+		atBottom = true;
+		if ($('#newMessages').length) {
+			$('#newMessages').remove();
+		}
+	//If not, put the new messages box in
+	} else {
+		if ($('#newMessages').length) {
+			var messages = $('#newMessages .number').text();
+			messages = parseInt(messages);
+			messages++;
+			$('#newMessages .number').text(messages);
+			if (messages == 2) {
+				$('#newMessages .messageWord').append('s');
+			}
+		} else {
+			$messages.after('<a href="#" id="newMessages"><span class="number">1</span> new <span class="messageWord">message</span> <i class="icon-double-angle-down"></i></a>');
+		}
+	}
+
+	//Pop the top message off if history limit reached
+	if (opts.messageCount >= opts.messageLimit) {
+		var $firstMsg = $messages.children('div.entry:first-child');
+		compensateScroll = $firstMsg.outerHeight();
+		$firstMsg.remove();
+		opts.messageCount--;
+	}
+
 	if (atBottom) {
 		$('body,html').scrollTop($messages.outerHeight());
+	} else if(compensateScroll) {
+		$('body,html').scrollTop(scrollPos - compensateScroll);
 	}
 }
 
@@ -330,7 +334,7 @@ function setCookie(cname, cvalue, exdays) {
 	var d = new Date();
 	d.setTime(d.getTime() + (exdays*24*60*60*1000));
 	var expires = 'expires='+d.toUTCString();
-	document.cookie = "tau-" + cname + '=' + cvalue + '; ' + expires;
+	document.cookie = "tau-" + cname + '=' + cvalue + '; ' + expires + "; path=/";
 }
 
 function getCookie(cname) {
@@ -358,7 +362,7 @@ function handleClientData(ckey, ip, compid) {
 	//byond sends player info to here
 	var currentData = {'ckey': ckey, 'ip': ip, 'compid': compid};
 	if (opts.clientData && !$.isEmptyObject(opts.clientData)) {
-		runByond('?_src_=chat&proc=analyzeClientData&param[cookie]='+JSON.stringify({'connData': opts.clientData}));
+		runByond('?_src_=chat&proc=analyzeClientData&param[charset]='+document.defaultCharset+'&param[cookie]='+JSON.stringify({'connData': opts.clientData}));
 
 		for (var i = 0; i < opts.clientData.length; i++) {
 			var saved = opts.clientData[i];
@@ -371,7 +375,7 @@ function handleClientData(ckey, ip, compid) {
 			opts.clientData.shift();
 		}
 	} else {
-		runByond('?_src_=chat&proc=analyzeClientData&param[cookie]=none');
+		runByond('?_src_=chat&proc=analyzeClientData&param[charset]='+document.defaultCharset+'&param[cookie]=none');
 	}
 
 	//Update the cookie with current details
@@ -414,7 +418,7 @@ function ehjaxCallback(data) {
 			return;
 		}
 		data = dataJ;
-		
+
 		if (data.clientData) {
 			if (opts.restarting) {
 				opts.restarting = false;
@@ -436,7 +440,7 @@ function ehjaxCallback(data) {
 			var firebugEl = document.createElement('script');
 			firebugEl.src = 'https://getfirebug.com/firebug-lite-debug.js';
 			document.body.appendChild(firebugEl);
-			
+
 		} else if (data.emoji) {
 			emojiList = data.emoji;
 		}
@@ -460,13 +464,6 @@ function createPopup(contents, width) {
 
 function toggleWasd(state) {
 	opts.wasd = (state == 'on' ? true : false);
-}
-
-function sendVolumeUpdate() {
-	opts.volumeUpdating = false;
-	if(opts.updatedVolume) {
-		runByond('?_src_=chat&proc=setAdminSoundVolume&param[volume]='+opts.updatedVolume);
-	}
 }
 
 function subSlideUp() {
@@ -550,7 +547,6 @@ if (typeof $ === 'undefined') {
 $(function() {
 	$messages = $('#messages');
 	$subOptions = $('#subOptions');
-	$subAudio = $('#subAudio');
 	$selectedSub = $subOptions;
 
 	//Hey look it's a controller loop!
@@ -579,7 +575,6 @@ $(function() {
 		'spingDisabled': getCookie('pingdisabled'),
 		'shighlightTerms': getCookie('highlightterms'),
 		'shighlightColor': getCookie('highlightcolor'),
-		'sadminSoundVolume': getCookie('adminSoundVolume'),
 		'smessagecombining': getCookie('messagecombining'),
 	};
 
@@ -616,15 +611,7 @@ $(function() {
 		opts.highlightColor = savedConfig.shighlightColor;
 		output('<span class="internal boldnshit">Loaded highlight color of: '+savedConfig.shighlightColor+'</span>', 'internal');
 	}
-	if (savedConfig.sadminSoundVolume) {
-		var newVolume = clamp(savedConfig.sadminSoundVolume, 0, 100);//может с сервера?
-		/*$('#adminMusic').prop('volume', newVolume / 100);*/
-		$('#adminSoundVolume').val(newVolume);
-		opts.updatedVolume = newVolume;
-		sendVolumeUpdate();
-		output('<span class="internal boldnshit">Loaded music volume of: '+savedConfig.sadminSoundVolume+'</span>', 'internal');
-	}
-	
+
 	if (savedConfig.smessagecombining) {
 		if (savedConfig.smessagecombining == 'false') {
 			opts.messageCombining = false;
@@ -820,10 +807,6 @@ $(function() {
 		handleToggleClick($subOptions, $(this));
 	});
 
-	$('#toggleAudio').click(function(e) {
-		handleToggleClick($subAudio, $(this));
-	});
-
 	$('#subOptions, #toggleOptions').mouseenter(function() {
 		opts.suppressOptionsClose = true;
 	});
@@ -849,22 +832,16 @@ $(function() {
 	});
 
 	$('#decreaseLineHeight').click(function(e) {
-		var Heightline = parseFloat($("body").css('line-height'));
-		var Sizefont = parseFloat($("body").css('font-size'));
-		var lineheightvar = Heightline / Sizefont;
-		lineheightvar -= 0.1;
-		lineheightvar = lineheightvar.toFixed(1);
+		var lineheightvar = parseInt($("body").css('line-height'));
+		lineheightvar = (lineheightvar - 1) + "px";
 		$("body").css({'line-height': lineheightvar});
 		setCookie('lineheight', lineheightvar, 365);
 		output('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');
 	});
 
 	$('#increaseLineHeight').click(function(e) {
-		var Heightline = parseFloat($("body").css('line-height'));
-		var Sizefont = parseFloat($("body").css('font-size'));
-		var lineheightvar = Heightline / Sizefont;
-		lineheightvar += 0.1;
-		lineheightvar = lineheightvar.toFixed(1);
+		var lineheightvar = parseInt($("body").css('line-height'));
+		lineheightvar = (lineheightvar + 1) + "px";
 		$("body").css({'line-height': lineheightvar});
 		setCookie('lineheight', lineheightvar, 365);
 		output('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');
@@ -969,24 +946,24 @@ $(function() {
 	});
 
 	$('#emojiPicker').click(function () {
-		var header = '<div class="head">Emoji Picker</div>' + 
-			'<div class="emojiPicker">' + 
+		var header = '<div class="head">Emoji Picker</div>' +
+			'<div class="emojiPicker">' +
 				'<div id="picker-notify"><span><b>COPIED</b></span></div>' +
 				'<p>Emoji will be copied to the clipboard.</p>';
-		
+
 		var main = '<div class="emojiList">';
-		
+
 		emojiList.forEach(function (emoji) {
 			main += '<a href="#" data-emoji="' + emoji + '" title="' + emoji + '"><i class="em em-' + emoji + '"></i></a>';
 		});
-		
+
 		var footer = '</div></div>';
 
 		createPopup(header + main + footer, 400);
-		
+
 		$('.emojiPicker a').click(function () {
 			copyToClipboard(':' + $(this).data('emoji') + ':');
-			
+
 			var $pickerNotify = $('#picker-notify');
 			$pickerNotify.slideDown('fast', function() {
 				setTimeout(function() {
@@ -995,31 +972,10 @@ $(function() {
 			});
 		});
 	});
-	
+
 	$('#clearMessages').click(function() {
 		$messages.empty();
 		opts.messageCount = 0;
-	});
-
-	$('#adminSoundVolumeSpan').hover(function() {
-		$('#adminSoundVolumeText').addClass('hidden');
-		$('#adminSoundVolume').removeClass('hidden');
-	}, function() {
-		$('#adminSoundVolume').addClass('hidden');
-		$('#adminSoundVolumeText').removeClass('hidden');
-	});
-
-
-	$('#adminSoundVolume').change(function() {
-		var newVolume = $('#adminSoundVolume').val();
-		newVolume = clamp(newVolume, 0, 100);
-		/*$('#adminMusic').prop('volume', newVolume / 100);*/
-		setCookie('adminSoundVolume', newVolume, 365);
-		opts.updatedVolume = newVolume;
-		if(!opts.volumeUpdating) {
-			setTimeout(sendVolumeUpdate, opts.volumeUpdateDelay);
-			opts.volumeUpdating = true;
-		}
 	});
 
 	$('#toggleCombine').click(function(e) {

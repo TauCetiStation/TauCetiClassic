@@ -11,6 +11,7 @@
 /obj/item/stack
 	gender = PLURAL
 	origin_tech = "materials=1"
+	usesound = 'sound/items/Deconstruct.ogg'
 
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
@@ -47,9 +48,9 @@
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1 / 3)))
-		w_class = Clamp(full_w_class - 2, ITEM_SIZE_TINY, full_w_class)
+		w_class = CLAMP(full_w_class - 2, ITEM_SIZE_TINY, full_w_class)
 	else if (amount <= (max_amount * (2 / 3)))
-		w_class = Clamp(full_w_class - 1, ITEM_SIZE_TINY, full_w_class)
+		w_class = CLAMP(full_w_class - 1, ITEM_SIZE_TINY, full_w_class)
 	else
 		w_class = full_w_class
 
@@ -103,7 +104,7 @@
 		if (istype(E, /datum/stack_recipe))
 			var/datum/stack_recipe/R = E
 			var/max_multiplier = round(src.amount / R.req_amount)
-			var/title as text
+			var/title
 			var/can_build = 1
 			can_build = can_build && (max_multiplier>0)
 			/*
@@ -155,20 +156,21 @@
 		if (!multiplier) multiplier = 1
 		if(src.amount < (R.req_amount*multiplier))
 			if (R.req_amount*multiplier>1)
-				to_chat(usr, "\red You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!")
+				to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
 			else
-				to_chat(usr, "\red You haven't got enough [src] to build \the [R.title]!")
+				to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 			return
 		if (R.one_per_turf && (locate(R.result_type) in usr.loc))
-			to_chat(usr, "\red There is another [R.title] here!")
+			to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
 			return
 		if (R.on_floor)
 			usr.client.cob.turn_on_build_overlay(usr.client, R, src)
 			usr << browse(null, "window=stack")
 			return
 		if (R.time)
-			if(usr.is_busy()) return
-			to_chat(usr, "\blue Building [R.title] ...")
+			if(usr.is_busy())
+				return
+			to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
 			if (!do_after(usr, R.time, target = usr))
 				return
 		if(!src.use(R.req_amount*multiplier))
@@ -195,7 +197,10 @@
 /obj/item/stack/proc/is_cyborg()
 	return istype(loc, /obj/item/weapon/robot_module) || istype(loc, /mob/living/silicon)
 
-/obj/item/stack/proc/use(used, transfer = FALSE)
+/obj/item/stack/use(used, transfer = FALSE)
+	if(used < 0)
+		stack_trace("[src.type]/use() called with a negative parameter [used]")
+		return FALSE
 	if(zero_amount())
 		return FALSE
 	if(amount < used)
@@ -206,6 +211,20 @@
 	if(!zero_amount())
 		update_weight()
 		update_icon()
+
+	return TRUE
+
+/obj/item/stack/tool_use_check(mob/living/user, amount)
+	if(get_amount() < amount)
+		if(singular_name)
+			if(amount > 1)
+				to_chat(user, "<span class='warning'>You need at least [amount] [singular_name]\s to do this!</span>")
+			else
+				to_chat(user, "<span class='warning'>You need at least [amount] [singular_name] to do this!</span>")
+		else
+			to_chat(user, "<span class='warning'>You need at least [amount] to do this!</span>")
+
+		return FALSE
 
 	return TRUE
 
@@ -229,6 +248,9 @@
 	return FALSE
 
 /obj/item/stack/proc/add(_amount)
+	if(_amount < 0)
+		stack_trace("[src.type]/add() called with a negative parameter [_amount]")
+		return
 	amount += _amount
 	update_icon()
 	update_weight()

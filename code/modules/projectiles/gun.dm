@@ -7,7 +7,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 2000
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 5
@@ -15,8 +15,9 @@
 	origin_tech = "combat=1"
 	attack_verb = list("struck", "hit", "bashed")
 	action_button_name = "Switch Gun"
+	can_be_holstered = TRUE
 	var/obj/item/ammo_casing/chambered = null
-	var/fire_sound = 'sound/weapons/Gunshot.ogg'
+	var/fire_sound = 'sound/weapons/guns/Gunshot.ogg'
 	var/silenced = 0
 	var/recoil = 0
 	var/clumsy_check = 1
@@ -51,7 +52,7 @@
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)
 	to_chat(user, "<span class='warning'>*click*</span>")
-	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
@@ -59,10 +60,13 @@
 		shake_camera(user, recoil + 1, recoil)
 
 	if(silenced)
-		playsound(user, fire_sound, 10, 1)
+		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, null, -4)
 	else
-		playsound(user, fire_sound, 50, 0)
-		user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
+		playsound(user, fire_sound, VOL_EFFECTS_MASTER)
+		announce_shot(user)
+
+/obj/item/weapon/gun/proc/announce_shot(mob/living/user)
+	user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a gunshot!")
 
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
@@ -80,6 +84,22 @@
 		PreFire(A,user,params) //They're using the new gun system, locate what they're aiming at.
 	else
 		Fire(A,user,params) //Otherwise, fire normally.
+
+/mob/living/carbon/AltClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(istype(I, /obj/item/weapon/gun))
+		var/obj/item/weapon/gun/G = I
+		if(src.client.gun_mode)
+			G.Fire(A, src)
+		else
+			if(isliving(A))
+				var/mob/living/M = A
+				if(M in G.target)
+					M.NotTargeted(G)
+				else
+					G.PreFire(M, src)
+				return
+	..()
 
 /obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0, point_blank = FALSE)//TODO: go over this
 	//Exclude lasertag guns from the CLUMSY check.
@@ -129,16 +149,17 @@
 		return
 	if(chambered)
 		if(point_blank)
-			user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
+			if(!chambered.BB.fake)
+				user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
 			chambered.BB.damage *= 1.3
 		if(!chambered.fire(target, user, params, , silenced))
 			shoot_with_empty_chamber(user)
 		else
 			shoot_live_shot(user)
+			user.newtonian_move(get_dir(target, user))
 	else
 		shoot_with_empty_chamber(user)
 	process_chamber()
-	user.newtonian_move(get_dir(target, user))
 	update_icon()
 
 	if(user.hand)
@@ -156,13 +177,10 @@
 /obj/item/weapon/gun/proc/click_empty(mob/user = null)
 	if (user)
 		user.visible_message("*click click*", "<span class='red'><b>*click*</b></span>")
-		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+		playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	else
 		src.visible_message("*click click*")
-		playsound(src.loc, 'sound/weapons/empty.ogg', 100, 1)
-
-/obj/item/weapon/gun/proc/isHandgun()
-	return 1
+		playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)
 	//Suicide handling.
@@ -176,16 +194,16 @@
 			to_chat(user, "<span class='notice'>You have tried to commit suicide, but couldn't do it.</span>")
 			return
 		M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger...</span>")
-		if(!do_after(user, 40, target = user))
+		if(!use_tool(user, user, 40))
 			M.visible_message("<span class='notice'>[user] decided life was worth living.</span>")
 			return
 		if (can_fire())
 			user.visible_message("<span class = 'warning'>[user] pulls the trigger.</span>")
 			if(silenced)
-				playsound(user, fire_sound, 10, 1)
+				playsound(user, fire_sound, VOL_EFFECTS_MASTER, 10)
 			else
-				playsound(user, fire_sound, 50, 1)
-			if(istype(chambered.BB, /obj/item/projectile/beam/lastertag) || istype(chambered.BB, /obj/item/projectile/beam/practice))
+				playsound(user, fire_sound, VOL_EFFECTS_MASTER)
+			if(istype(chambered.BB, /obj/item/projectile/beam/lasertag) || istype(chambered.BB, /obj/item/projectile/beam/practice))
 				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
 									"<span class = 'notice'>You feel rather silly, trying to commit suicide with a toy.</span>")
 				return
@@ -195,13 +213,13 @@
 				user.apply_effect(5,WEAKEN,0)
 				return
 
-			chambered.BB.on_hit(M)
-			if (chambered.BB.damage_type != HALLOSS)
-				user.apply_damage(chambered.BB.damage * 2.5, chambered.BB.damage_type, BP_HEAD, null, chambered.BB.damage_flags(), "Point blank shot in the mouth with \a [chambered.BB]")
-				user.death()
-			else
+			chambered.BB.on_hit(M, O_MOUTH, 0)
+			if(chambered.BB.damage_type == HALLOSS)
 				to_chat(user, "<span class = 'notice'>Ow...</span>")
 				user.apply_effect(110,AGONY,0)
+			else if(!chambered.BB.nodamage)
+				user.apply_damage(chambered.BB.damage * 2.5, chambered.BB.damage_type, BP_HEAD, null, chambered.BB.damage_flags(), "Point blank shot in the mouth with \a [chambered.BB]")
+				user.death()
 			chambered.BB = null
 			chambered.update_icon()
 			update_icon()
@@ -216,7 +234,7 @@
 		if(user.a_intent == "hurt")
 			Fire(M, user, null, null, TRUE)
 			return
-		else if(target && M in target)
+		else if(target && (M in target))
 			Fire(M,user) ///Otherwise, shoot!
 			return
 	else

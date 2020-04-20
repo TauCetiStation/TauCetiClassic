@@ -13,8 +13,7 @@
 	sent_spiders_to_station = 0
 
 /datum/event/spider_infestation/announce()
-	command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
-	world << sound('sound/AI/aliens.ogg')
+	command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", "lifesigns")
 
 
 /datum/event/spider_infestation/start()
@@ -22,7 +21,7 @@
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
 		if(QDELETED(temp_vent))
 			continue
-		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
+		if(is_station_level(temp_vent.loc.z) && !temp_vent.welded)
 			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
 			if(temp_vent_parent.other_atmosmch.len > 50)
 				vents += temp_vent

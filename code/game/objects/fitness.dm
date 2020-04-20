@@ -38,8 +38,8 @@
 			sleep(3)
 			animate(user, pixel_y = -4, time = 3)
 			sleep(3)
-			playsound(user, 'sound/machines/spring.ogg', 60, 1)
-		playsound(user, 'sound/machines/click.ogg', 60, 1)
+			playsound(user, 'sound/machines/spring.ogg', VOL_EFFECTS_MASTER)
+		playsound(user, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		in_use = 0
 		user.pixel_y = 0
 		gymnast.nutrition -= 6
@@ -80,7 +80,7 @@
 		user.loc = src.loc
 		var/image/W = image('icons/obj/fitness.dmi',"fitnessweight-w")
 		W.layer = MOB_LAYER + 1
-		overlays += W
+		add_overlay(W)
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 		user.visible_message("<B>[user] is [bragmessage]!</B>")
 		var/reps = 0
@@ -93,12 +93,12 @@
 				sleep(3)
 				animate(user, pixel_y = (user.pixel_y == 3) ? 5 : 3, time = 3)
 
-			playsound(user, 'sound/machines/spring.ogg', 60, 1)
+			playsound(user, 'sound/machines/spring.ogg', VOL_EFFECTS_MASTER)
 
 		sleep(3)
 		animate(user, pixel_y = 2, time = 3)
 		sleep(3)
-		playsound(user, 'sound/machines/click.ogg', 60, 1)
+		playsound(user, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		in_use = 0
 		animate(user, pixel_y = 0, time = 3)
 		gymnast.nutrition -= 12
@@ -106,5 +106,5 @@
 		gymnast.apply_effect(25,AGONY,0)
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnessweight"
-		overlays -= W
+		cut_overlay(W)
 		to_chat(user, "[finishmessage]")

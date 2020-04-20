@@ -7,7 +7,7 @@
 	item_state = "implantcase"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	var/obj/item/weapon/implant/imp = null
 
 /obj/item/weapon/implantcase/proc/update()
@@ -18,48 +18,46 @@
 	return
 
 
-/obj/item/weapon/implantcase/attackby(obj/item/weapon/I, mob/user)
+/obj/item/weapon/implantcase/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if (istype(I, /obj/item/weapon/pen))
-		var/t = sanitize_safe(input(user, "What would you like the label to be?", input_default(src.name), null)  as text, MAX_NAME_LEN)
-		if (user.get_active_hand() != I)
+	if (istype(W, /obj/item/weapon/pen))
+		var/t = sanitize_safe(input(user, "What would you like the label to be?", input_default(name), null)  as text, MAX_NAME_LEN)
+
+		if (user.get_active_hand() != W || (!in_range(src, usr) && loc != user))
 			return
-		if((!in_range(src, usr) && src.loc != user))
+
+		name = "Glass Case"
+		if (t)
+			name += " - '[t]'"
+
+	else if (istype(W, /obj/item/weapon/reagent_containers/syringe))
+		if(!imp || !src.imp.allow_reagents)
 			return
-		if(t)
-			src.name = text("Glass Case- '[]'", t)
+
+		if(imp.reagents.total_volume >= imp.reagents.maximum_volume)
+			to_chat(user, "<span class='warning'>[src] is full.</span>")
 		else
-			src.name = "Glass Case"
-	else if(istype(I, /obj/item/weapon/reagent_containers/syringe))
-		if(!src.imp)	return
-		if(!src.imp.allow_reagents)	return
-		if(src.imp.reagents.total_volume >= src.imp.reagents.maximum_volume)
-			to_chat(user, "\red [src] is full.")
-		else
-			spawn(5)
-				I.reagents.trans_to(src.imp, 5)
-				to_chat(user, "\blue You inject 5 units of the solution. The syringe now contains [I.reagents.total_volume] units.")
-	else if (istype(I, /obj/item/weapon/implanter))
-		if (I:imp)
-			if ((src.imp || I:imp.implanted))
+			W.reagents.trans_to(src.imp, 5)
+			to_chat(user, "<span class='notice'>You inject 5 units of the solution. The syringe now contains [W.reagents.total_volume] units.</span>")
+
+	else if (istype(W, /obj/item/weapon/implanter))
+		var/obj/item/weapon/implanter/I = W
+		if (I.imp)
+			if (imp || I.imp.implanted)
 				return
-			I:imp.loc = src
+			I.imp.loc = src
 			src.imp = I:imp
-			I:imp = null
-			src.update()
-			I:update()
-		else
-			if (src.imp)
-				if (I:imp)
-					return
-				src.imp.loc = I
-				I:imp = src.imp
-				src.imp = null
-				update()
-			I:update()
-	return
-
-
+			I.imp = null
+			update()
+			I.update()
+		else if (imp)
+			if (I.imp)
+				return
+			imp.loc = I
+			I.imp = src.imp
+			imp = null
+			update()
+		I.update()
 
 /obj/item/weapon/implantcase/tracking
 	name = "Glass Case- 'Tracking'"

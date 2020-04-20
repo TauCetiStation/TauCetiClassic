@@ -5,7 +5,7 @@
 	item_state = "assembly"
 	flags = CONDUCT
 	throwforce = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3
 	throw_range = 10
 
@@ -59,15 +59,15 @@
 
 
 /obj/item/device/assembly_holder/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(a_left)
-		overlays += "[a_left.icon_state]_left"
+		add_overlay("[a_left.icon_state]_left")
 		for(var/O in a_left.attached_overlays)
-			overlays += "[O]_l"
+			add_overlay("[O]_l")
 	if(a_right)
-		src.overlays += "[a_right.icon_state]_right"
+		src.add_overlay("[a_right.icon_state]_right")
 		for(var/O in a_right.attached_overlays)
-			overlays += "[O]_r"
+			add_overlay("[O]_r")
 	if(master)
 		master.update_icon()
 
@@ -135,15 +135,15 @@
 /obj/item/device/assembly_holder/attackby(obj/item/weapon/W, mob/user)
 	if(isscrewdriver(W))
 		if(!a_left || !a_right)
-			to_chat(user, "\red BUG:Assembly part missing, please report this!")
+			to_chat(user, "<span class='warning'>BUG:Assembly part missing, please report this!</span>")
 			return
 		a_left.toggle_secure()
 		a_right.toggle_secure()
 		secured = !secured
 		if(secured)
-			to_chat(user, "\blue \The [src] is ready!")
+			to_chat(user, "<span class='notice'>\The [src] is ready!</span>")
 		else
-			to_chat(user, "\blue \The [src] can now be taken apart!")
+			to_chat(user, "<span class='notice'>\The [src] can now be taken apart!</span>")
 		update_icon()
 		return
 	else if(W.IsSpecialAssembly())
@@ -157,7 +157,7 @@
 	src.add_fingerprint(user)
 	if(src.secured)
 		if(!a_left || !a_right)
-			to_chat(user, "\red Assembly part missing!")
+			to_chat(user, "<span class='warning'>Assembly part missing!</span>")
 			return
 		if(istype(a_left,a_right.type))//If they are the same type it causes issues due to window code
 			switch(alert("Which side would you like to use?",,"Left","Right"))

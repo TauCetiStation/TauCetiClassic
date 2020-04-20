@@ -3,6 +3,19 @@
 	var/climbable
 	var/list/climbers = list()
 
+/obj/structure/atom_init()
+	. = ..()
+	if(smooth)
+		queue_smooth(src)
+		queue_smooth_neighbors(src)
+	if(climbable)
+		verbs += /obj/structure/proc/climb_on
+
+/obj/structure/Destroy()
+	if(smooth)
+		queue_smooth_neighbors(src)
+	return ..()
+
 /obj/structure/blob_act()
 	if(prob(50))
 		qdel(src)
@@ -28,11 +41,6 @@
 /obj/structure/meteorhit(obj/O)
 	qdel(src)
 
-/obj/structure/atom_init()
-	. = ..()
-	if(climbable)
-		verbs += /obj/structure/proc/climb_on
-
 /obj/structure/proc/climb_on()
 
 	set name = "Climb structure"
@@ -52,7 +60,7 @@
 		return ..()
 
 /obj/structure/proc/can_climb(mob/living/user, post_climb_check=0)
-	if (!can_touch(user) || !climbable || (!post_climb_check && (user in climbers)))
+	if (!climbable || !can_touch(user) || (!post_climb_check && (user in climbers)))
 		return 0
 
 	if (!user.Adjacent(src))
@@ -89,7 +97,7 @@
 	var/adjusted_climb_time = 50
 	if(user.restrained()) //climbing takes twice as long when restrained.
 		adjusted_climb_time *= 2
-	if(isalien(user))
+	if(isxeno(user))
 		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
 
 	if(!do_after(user, adjusted_climb_time, target = user))
@@ -159,7 +167,7 @@
 	if(user.buckled)
 		to_chat(user, "<span class='notice'>You need your hands and legs free for this.</span>")
 		return 0
-	if(user.stat || user.paralysis || user.sleeping || user.lying || user.weakened)
+	if(user.stat || user.paralysis || user.lying || user.weakened)
 		return 0
 	if(issilicon(user))
 		to_chat(user, "<span class='notice'>You need hands for this.</span>")

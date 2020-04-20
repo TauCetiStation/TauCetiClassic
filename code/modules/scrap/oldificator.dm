@@ -126,14 +126,14 @@
 	if(prob(35))
 		contaminate()
 	if(prob(75))
-		generate_dirt_cover()
-		add_dirt_cover(pick(subtypesof(/datum/dirt_cover)))
+		generate_blood_overlay()
+		add_dirt_cover(pick(global.all_dirt_covers))
 	..()
 
 
 
 /obj/item/weapon/aiModule/broken // -- TLE
-	name = "\improper broken core AI module"
+	name = "broken core AI module"
 	desc = "broken Core AI Module: 'Reconfigures the AI's core laws.'"
 
 /obj/machinery/broken/atom_init()
@@ -212,26 +212,7 @@
 /obj/machinery/vending/make_old()
 	..()
 	if(prob(60))
-		seconds_electrified = -1
-	if(prob(60))
-		shut_up = 0
-	if(prob(60))
-		shoot_inventory = 1
-	if(prob(75))
-		var/del_count = rand(0,product_records.len)
-		for(var/i = 1 to del_count)
-			var/removed_item = pick(contents)
-			contents -= removed_item
-
-/obj/structure/closet/critter/make_old()
-	..()
-	if(prob(50))
-		content_mob = /mob/living/simple_animal/hostile/giant_spider
-
-/obj/machinery/vending/make_old()
-	..()
-	if(prob(60))
-		seconds_electrified = -1
+		electrified_until = -1
 	if(prob(60))
 		shut_up = 0
 	if(prob(60))
@@ -241,7 +222,13 @@
 		for(var/i = 1 to del_count)
 			var/removed_item = pick(product_records)
 			product_records -= removed_item
+			qdel(removed_item)
+	update_wires_check()
 
+/obj/structure/closet/critter/make_old()
+	..()
+	if(prob(50))
+		content_mob = /mob/living/simple_animal/hostile/giant_spider
 
 /obj/item/clothing/glasses/sunglasses/sechud/make_old()
 	..()

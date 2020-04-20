@@ -12,7 +12,6 @@
 		. +=			"<tr><td><br><b>OOC Notes: </b><a href='?_src_=prefs;preference=metadata;task=input'>[length(metadata)>0?"[copytext(metadata, 1, 3)]...":"\[...\]"]</a></td></tr>"
 	//if(user.client) TG
 	//	if(user.client.holder)
-	//		. += "<b>Adminhelp Sound:</b> <a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
 	//		. += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"On":"Off"]</a><br>"
 
 	//	if(unlock_content || check_rights_for(user.client, R_ADMIN))
@@ -28,18 +27,6 @@
 	. += 			"<table width='100%'>"
 	. += 				"<tr><td colspan='2'><b>Preferences:</b></td></tr>"
 	. += 				"<tr>"
-	. += 					"<td width='45%'>Play admin midis:</td>"
-	. += 					"<td><a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</b></a></td>"
-	. += 				"</tr>"
-	. += 				"<tr>"
-	. += 					"<td width='45%'>Play lobby music:</td>"
-	. += 					"<td><a href='?_src_=prefs;preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</b></a></td>"
-	. += 				"</tr>"
-	. += 				"<tr>"
-	. += 					"<td width='45%'>Play ambience:</td>"
-	. += 					"<td><a href='?_src_=prefs;preference=hear_ambience'><b>[(toggles & SOUND_AMBIENCE) ? "Yes" : "No"]</b></a></td>"
-	. += 				"</tr>"
-	. += 				"<tr>"
 	. += 					"<td width='45%'>Ghost ears:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=ghost_ears'><b>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</b></a></td>"
 	. += 				"</tr>"
@@ -49,7 +36,7 @@
 	. += 				"</tr>"
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Ghost sight:</td>"
-	. += 					"<td><a href='?_src_=prefs;preference=ghost_sight'><b>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</b></a></td>"
+	. += 					"<td><a href='?_src_=prefs;preference=ghost_sight'><b>[(chat_ghostsight == CHAT_GHOSTSIGHT_ALL) ? "All Emotes" : ((chat_ghostsight == CHAT_GHOSTSIGHT_ALLMANUAL) ? "All manual-only emotes" : "Nearest Creatures")]</b></a></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Ghost radio:</td>"
@@ -77,7 +64,7 @@
 			. += "Disabled"
 		else
 			. += "High"
-	. += 					"</a></td>"
+	. += 					"</a></b></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Ambient Occlusion:</td>"
@@ -129,25 +116,17 @@
 			UI_style_alpha = UI_style_alpha_new
 
 		if("ui")
-			switch(UI_style)
-				if("White")
-					UI_style = "Midnight"
-				if("Midnight")
-					UI_style = "Orange"
-				if("Orange")
-					UI_style = "old"
-				if("old")
-					UI_style = "White"
-				else
-					UI_style = "White"
+			var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style) as null|anything in sortList(global.available_ui_styles)
+			if(pickedui)
+				UI_style = pickedui
 
 		if("parallaxup")
-			parallax = Wrap(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
+			parallax = WRAP(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
 			if (parent && parent.mob && parent.mob.hud_used)
 				parent.mob.hud_used.update_parallax_pref()
 
 		if("parallaxdown")
-			parallax = Wrap(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
+			parallax = WRAP(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
 			if (parent && parent.mob && parent.mob.hud_used)
 				parent.mob.hud_used.update_parallax_pref()
 
@@ -164,27 +143,20 @@
 				if(PARALLAX_THEME_TG)
 					parallax_theme = PARALLAX_THEME_CLASSIC
 
-		if("hear_midis")
-			toggles ^= SOUND_MIDI
-
-		if("lobby_music")
-			toggles ^= SOUND_LOBBY
-			if(toggles & SOUND_LOBBY)
-				user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
-			else
-				user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
-
-		if("hear_ambience")
-			toggles ^= SOUND_AMBIENCE
+		if("ghost_sight")
+			switch(chat_ghostsight)
+				if(CHAT_GHOSTSIGHT_ALL)
+					chat_ghostsight = CHAT_GHOSTSIGHT_ALLMANUAL
+				if(CHAT_GHOSTSIGHT_ALLMANUAL)
+					chat_ghostsight = CHAT_GHOSTSIGHT_NEARBYMOBS
+				if(CHAT_GHOSTSIGHT_NEARBYMOBS)
+					chat_ghostsight = CHAT_GHOSTSIGHT_ALL
 
 		if("ghost_ears")
 			chat_toggles ^= CHAT_GHOSTEARS
 
 		if("npc_ghost_ears")
 			chat_toggles ^= CHAT_GHOSTNPC
-
-		if("ghost_sight")
-			chat_toggles ^= CHAT_GHOSTSIGHT
 
 		if("ghost_radio")
 			chat_toggles ^= CHAT_GHOSTRADIO

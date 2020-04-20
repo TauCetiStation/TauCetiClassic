@@ -46,14 +46,27 @@
 
 	return 1
 
+/mob/living/proc/is_vision_obstructed()
+	if(istype(loc, /obj/item/weapon/holder))
+		if(ishuman(loc.loc))
+			var/mob/living/H = loc.loc
+			return H.is_vision_obstructed()
+		else
+			return TRUE
+	if(istype(src, /mob/living/carbon/monkey/diona) && ishuman(loc))
+		var/mob/living/H = loc
+		if(H.get_species() == DIONA)
+			return FALSE
+	return loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside)
+
 /mob/living/proc/handle_vision()
 	update_sight()
 
 	if(stat != DEAD)
 		if(blinded)
-			throw_alert("blind")
+			throw_alert("blind", /obj/screen/alert/blind)
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-		else if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
+		else if(is_vision_obstructed() && !(XRAY in mutations))
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else
 			clear_alert("blind")
@@ -75,7 +88,7 @@
 					clear_fullscreen("high")
 
 		if(machine)
-			if (!( machine.check_eye(src) ))
+			if (!(machine.check_eye(src)))
 				reset_view(null)
 		else
 			if(!client.adminobs)

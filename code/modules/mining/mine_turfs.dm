@@ -1,11 +1,8 @@
 /**********************Mineral deposits**************************/
-
-
-
 /turf/simulated/mineral
 	name = "Rock"
 	icon = 'icons/turf/asteroid.dmi'
-	icon_state = "rock_nochance"
+	icon_state = "rock"
 	oxygen = 0
 	nitrogen = 0
 	opacity = 1
@@ -40,21 +37,21 @@
 	update_overlays()
 
 /turf/simulated/mineral/update_overlays()
-	overlays.Cut()
+	cut_overlays()
 	if(!mineral)
-		name = "\improper Rock"
+		name = "Rock"
 		icon_state = "rock"
 	else
 		if(ore_amount >= 8)
-			name = "\improper [mineral.display_name] rich deposit"
-			overlays += "rock_[mineral.name]"
+			name = "[mineral.display_name] rich deposit"
+			add_overlay("rock_[mineral.name]")
 		else
-			name = "\improper Rock"
+			name = "Rock"
 			icon_state = "rock"
 	if(excav_overlay)
-		overlays += excav_overlay
+		add_overlay(excav_overlay)
 	if(archaeo_overlay)
-		overlays += archaeo_overlay
+		add_overlay(archaeo_overlay)
 	var/turf/T
 	for(var/direction_to_check in cardinal)
 		if((istype(get_step(src, direction_to_check), /turf/simulated/floor)) || (istype(get_step(src, direction_to_check), /turf/space)) || (istype(get_step(src, direction_to_check), /turf/simulated/shuttle/floor)))
@@ -62,7 +59,7 @@
 			if (T)
 				var/image/I = image('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", layer=6)
 				I.plane = 6
-				T.overlays += I
+				T.add_overlay(I)
 
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
@@ -113,7 +110,7 @@
 
 /turf/simulated/mineral/proc/UpdateMineral()
 	if(!mineral)
-		name = "\improper Rock"
+		name = "Rock"
 		icon_state = "rock"
 		return
 	else
@@ -124,11 +121,11 @@
 		else
 			ore_amount = rand(3,5)
 	if(ore_amount >= 8)
-		name = "\improper [mineral.display_name] rich deposit"
-		overlays.Cut()
-		overlays += "rock_[mineral.name]"
+		name = "[mineral.display_name] rich deposit"
+		cut_overlays()
+		add_overlay("rock_[mineral.name]")
 	else
-		name = "\improper Rock"
+		name = "Rock"
 		icon_state = "rock"
 		return
 
@@ -163,10 +160,11 @@
 		return
 
 	if (istype(W, /obj/item/device/measuring_tape))
-		if(user.is_busy()) return
+		if(user.is_busy(src))
+			return
 		var/obj/item/device/measuring_tape/P = W
 		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'>You extend [P] towards [src].</span>")
-		if(do_after(user,25, target = src))
+		if(W.use_tool(src, user, 25, volume = 50))
 			to_chat(user, "<span class='notice'>[bicon(P)] [src] has been excavated to a depth of [2*excavation_level]cm.</span>")
 		return
 
@@ -176,7 +174,7 @@
 			return
 
 		var/obj/item/weapon/pickaxe/P = W
-		if(last_act + P.digspeed > world.time)//prevents message spam
+		if(last_act + 50 * P.toolspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
 
@@ -193,8 +191,6 @@
 					if(mineral)
 						mined_ore = mineral.ore_loss
 				D.power_supply.use(D.drill_cost)
-
-		playsound(user, P.drill_sound, 70, 0)
 
 		// handle any archaeological finds we might uncover
 		var/fail_message
@@ -214,7 +210,7 @@
 				if(prob(50))
 					artifact_debris()
 
-		if(!user.is_busy() && do_after(user,P.digspeed, target = src))
+		if(!user.is_busy(src) && P.use_tool(src, user, 50, volume = 70))
 			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 
 			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
@@ -265,7 +261,7 @@
 				var/datum/find/F = finds[1]
 				if(F.excavation_required <= excavation_level + F.view_range)
 					archaeo_overlay = "overlay_archaeo[rand(1,3)]"
-					overlays += archaeo_overlay
+					add_overlay(archaeo_overlay)
 
 			// there's got to be a better way to do this
 			var/update_excav_overlay = 0
@@ -283,7 +279,7 @@
 			if( !(excav_overlay && excavation_level > 0) || update_excav_overlay )
 				var/excav_quadrant = round(excavation_level / 25) + 1
 				excav_overlay = "overlay_excv[excav_quadrant]_[rand(1,3)]"
-				overlays += excav_overlay
+				add_overlay(excav_overlay)
 
 			/* Nope.
 			//extract pesky minerals while we're excavating
@@ -434,7 +430,7 @@
 		if(!name_to_mineral)
 			SetupMinerals()
 
-		if (mineral_name && mineral_name in name_to_mineral)
+		if (mineral_name && (mineral_name in name_to_mineral))
 			mineral = name_to_mineral[mineral_name]
 			UpdateMineral()
 			CaveSpread()
@@ -518,7 +514,7 @@
 			break
 
 		var/list/L = list(45)
-		if(IsOdd(dir2angle(dir))) // We're going at an angle and we want thick angled tunnels.
+		if(IS_ODD(dir2angle(dir))) // We're going at an angle and we want thick angled tunnels.
 			L += -45
 
 		// Expand the edges of our tunnel
@@ -551,7 +547,7 @@
 
 /turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnFloor(turf/T)
 	for(var/turf/S in range(2,T))
-		if(istype(S, /turf/space) || istype(S.loc, /area/mine/explored))
+		if(istype(S, /turf/space) || istype(S.loc, /area/asteroid/mine/explored))
 			sanity = 0
 			break
 	if(!sanity)
@@ -568,7 +564,7 @@
 
 /turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))
-		if(istype(loc, /area/mine/explored))
+		if(istype(loc, /area/asteroid/mine/explored))
 			return
 		for(var/atom/A in range(15,T))//Lowers chance of mob clumps
 			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
@@ -616,7 +612,7 @@
 
 /turf/proc/update_overlays()
 
-	overlays.Cut()
+	cut_overlays()
 
 	for(var/direction_to_check in cardinal)
 		if(istype(get_step(src, direction_to_check), /turf/simulated/mineral))
@@ -630,7 +626,7 @@
 					overlay_name = "rock_side_8"
 				if(8)
 					overlay_name = "rock_side_4"
-			overlays += image('icons/turf/asteroid.dmi', "[overlay_name]", layer=6)
+			add_overlay(image('icons/turf/asteroid.dmi', "[overlay_name]", layer=6))
 
 /turf/simulated/floor/plating/airless/asteroid/update_overlays()
 	..()
@@ -644,7 +640,7 @@
 					lattice = 1
 			if(!lattice)
 				var/image/I = image('icons/turf/asteroid.dmi', "asteroid_edge_[direction_to_check]")
-				src.overlays += I
+				src.add_overlay(I)
 
 /turf/proc/update_overlays_full()
 	var/turf/A
@@ -680,11 +676,10 @@
 		if (dug)
 			to_chat(user, "<span class='danger'>This area has already been dug.</span>")
 			return
-		if(user.is_busy()) return
+		if(user.is_busy(src))
+			return
 		to_chat(user, "<span class='warning'>You start digging.</span>")
-		playsound(user.loc, 'sound/effects/digging.ogg', 50, 1)
-
-		if(do_after(user,40,target = src))
+		if(W.use_tool(src, user, 40, volume = 50))
 			if((user.loc == T && user.get_active_hand() == W))
 				to_chat(user, "<span class='notice'>You dug a hole.</span>")
 				gets_dug()

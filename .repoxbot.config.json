@@ -6,20 +6,24 @@
     },
     "changelogClasses": {
         "rscadd": "Feature",
+        "add": "Feature",
         "rscdel": "Revert / Removal",
+        "del": "Revert / Removal",
         "performance": "Performance",
         "balance": "Balance",
         "experiment": "Experimental",
         "spellcheck": "",
         "tweak": "Tweak",
-        "sound": "",
+        "sound": "Sound",
         "image": "Sprites",
         "bugfix": "Fix",
+        "fix": "Fix",
         "map": "Map Edit"
     },
     "diffPathsLabels": {
         "^diff.+/icons/.+\\.dmi$": "Sprites",
         "^diff.+/maps/.+\\.dmm$": "Map Edit",
-        "^diff --git a/tools/.+$": "Tools"
+        "^diff --git a/tools/.+$": "Tools",
+        "^diff --git a/sound/.+$": "Sound"
     }
 }

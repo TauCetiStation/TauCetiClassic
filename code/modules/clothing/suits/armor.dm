@@ -15,7 +15,6 @@
 	icon_state = "armor"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	flags = THICKMATERIAL
 	armor = list(melee = 50, bullet = 45, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/vest/security
@@ -32,7 +31,6 @@
 	blood_overlay_type = "armor"
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
-	flags = THICKMATERIAL
 	cold_protection = UPPER_TORSO|LOWER_TORSO
 	min_cold_protection_temperature = ARMOR_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = UPPER_TORSO|LOWER_TORSO
@@ -93,7 +91,7 @@
 	item_state = "swat_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 1
-	armor = list(melee = 70, bullet = 10, laser = 5, energy = 10, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 80, bullet = 10, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/suit/armor/bulletproof
@@ -140,7 +138,6 @@
 	item_state = "swat_suit"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
-	flags = THICKMATERIAL
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 1
@@ -153,7 +150,7 @@
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
 	desc = "An armored jacket used in special operations."
-	icon_state = "detective"
+	icon_state = "detective_brown"
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
 	flags_inv = 0
@@ -191,11 +188,11 @@
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
 	src.active = !( src.active )
 	if (src.active)
-		to_chat(user, "\blue The reactive armor is now active.")
+		to_chat(user, "<span class='notice'>The reactive armor is now active.</span>")
 		src.icon_state = "reactive"
 		src.item_state = "reactive"
 	else
-		to_chat(user, "\blue The reactive armor is now inactive.")
+		to_chat(user, "<span class='notice'>The reactive armor is now inactive.</span>")
 		src.icon_state = "reactiveoff"
 		src.item_state = "reactiveoff"
 		src.add_fingerprint(user)
@@ -216,7 +213,7 @@
 	desc = "A suit that protects against some damage."
 	icon_state = "centcom"
 	item_state = "centcom"
-	w_class = 4//bulky item
+	w_class = ITEM_SIZE_LARGE//bulky item
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -229,7 +226,7 @@
 	desc = "A heavily armored suit that protects against moderate damage."
 	icon_state = "heavy"
 	item_state = "swat_suit"
-	w_class = 4//bulky item
+	w_class = ITEM_SIZE_LARGE//bulky item
 	gas_transfer_coefficient = 0.90
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 3
@@ -272,39 +269,57 @@
 	if(usr.stat) return
 
 	if(!holstered)
-		if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
-			to_chat(usr, "\blue You need your gun equiped to holster it.")
+		var/obj/item/I = usr.get_active_hand()
+		if(!istype(I, /obj/item/weapon/gun) && !I.can_be_holstered)
+			to_chat(usr, "<span class='notice'>You need your gun equiped to holster it.</span>")
 			return
-		var/obj/item/weapon/gun/W = usr.get_active_hand()
-		if (!W.isHandgun())
-			to_chat(usr, "\red This gun won't fit in \the belt!")
+		if(!I.can_be_holstered)
+			to_chat(usr, "<span class='warning'>This gun won't fit in \the belt!</span>")
 			return
 		holstered = usr.get_active_hand()
 		usr.drop_item()
 		holstered.loc = src
-		usr.visible_message("\blue \The [usr] holsters \the [holstered].", "You holster \the [holstered].")
+		usr.visible_message("<span class='notice'>\The [usr] holsters \the [holstered].</span>", "You holster \the [holstered].")
 	else
 		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
-			to_chat(usr, "\red You need an empty hand to draw the gun!")
+			to_chat(usr, "<span class='warning'>You need an empty hand to draw the gun!</span>")
 		else
 			if(usr.a_intent == "hurt")
-				usr.visible_message("\red \The [usr] draws \the [holstered], ready to shoot!", \
-				"\red You draw \the [holstered], ready to shoot!")
+				usr.visible_message("<span class='warning'>\The [usr] draws \the [holstered], ready to shoot!</span>", \
+				"<span class='warning'>You draw \the [holstered], ready to shoot!</span>")
 			else
-				usr.visible_message("\blue \The [usr] draws \the [holstered], pointing it at the ground.", \
-				"\blue You draw \the [holstered], pointing it at the ground.")
+				usr.visible_message("<span class='notice'>\The [usr] draws \the [holstered], pointing it at the ground.</span>", \
+				"<span class='notice'>You draw \the [holstered], pointing it at the ground.</span>")
 			usr.put_in_hands(holstered)
 		holstered = null
 
 /obj/item/clothing/suit/armor/syndiassault
 	name = "assault armor"
+	desc = "Heavy armored suit designed to endure all types of damage, from punches to heavy lasers."
 	icon_state = "assaultarmor"
 	item_state = "assaultarmor"
-	flags = THICKMATERIAL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	slowdown = 0.5
-	armor = list(melee = 50, bullet = 60, laser = 40, energy = 70, bomb = 50, bio = 0, rad = 50)
+	armor = list(melee = 60, bullet = 60, laser = 50, energy = 70, bomb = 50, bio = 0, rad = 50)
 	siemens_coefficient = 0.2
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+
+/obj/item/clothing/suit/armor/syndilight
+	name = "assault vest"
+	desc = "Light-weight armored vest designed for scouting and recon missions. Provides solid protection, despite all the lightness."
+	icon_state = "lightarmor"
+	item_state = "lightarmor"
+	armor = list(melee = 50, bullet = 40, laser = 40, energy = 70, bomb = 50, bio = 0, rad = 50)
+	siemens_coefficient = 0.2
+	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/armor/m66_kevlarvest
+	name = "M66 Tactical Vest"
+	desc = "Black tactical kevlar vest, used by private security coropation. So tactics."
+	icon_state = "M66_KevlarVest"
+	item_state = "armor"
+	item_color = "M66_KevlarVest"
+	blood_overlay_type = "armor"
+	armor = list(melee = 60, bullet = 80, laser = 40, energy = 50, bomb = 25, bio = 0, rad = 0)
+	siemens_coefficient = 0.7

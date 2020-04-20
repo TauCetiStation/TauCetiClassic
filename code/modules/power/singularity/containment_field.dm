@@ -8,7 +8,7 @@
 	anchored = 1
 	density = 0
 	unacidable = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	light_range = 4
 
 	var/obj/machinery/field_generator/FG1 = null

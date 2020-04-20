@@ -6,7 +6,7 @@
 	icon_state = "grinder"
 	density = TRUE
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 500
 	var/operating = FALSE //Is it on?
@@ -49,7 +49,7 @@
 
 /obj/machinery/gibber/atom_init()
 	. = ..()
-	overlays += image('icons/obj/kitchen.dmi', "grjam")
+	add_overlay(image('icons/obj/kitchen.dmi', "grjam"))
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/gibber(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -67,17 +67,17 @@
 			ignore_clothing = 1
 
 /obj/machinery/gibber/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if (dirty)
-		src.overlays += image('icons/obj/kitchen.dmi', "grbloody")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "grbloody"))
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!occupant)
-		src.overlays += image('icons/obj/kitchen.dmi', "grjam")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "grjam"))
 	else if (operating)
-		src.overlays += image('icons/obj/kitchen.dmi', "gruse")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "gruse"))
 	else
-		src.overlays += image('icons/obj/kitchen.dmi', "gridle")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "gridle"))
 
 /obj/machinery/gibber/container_resist()
 	go_out()
@@ -138,10 +138,10 @@
 		to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
 		return
 	if(user.is_busy(src)) return
-	user.visible_message("\red [user] starts to put [victim] into the gibber!")
+	user.visible_message("<span class='warning'>[user] starts to put [victim] into the gibber!</span>")
 	src.add_fingerprint(user)
 	if(do_after(user, 30, target = src) && victim.Adjacent(src) && user.Adjacent(src) && victim.Adjacent(user) && !occupant)
-		user.visible_message("\red [user] stuffs [victim] into the gibber!")
+		user.visible_message("<span class='warning'>[user] stuffs [victim] into the gibber!</span>")
 		if(victim.client)
 			victim.client.perspective = EYE_PERSPECTIVE
 			victim.client.eye = src
@@ -186,7 +186,7 @@
 	update_icon()
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = gibtime / 100, loop = gibtime) //start shaking
-	playsound(src.loc, 'sound/effects/gibber.ogg', 100, 1)
+	playsound(src, 'sound/effects/gibber.ogg', VOL_EFFECTS_MASTER)
 
 	var/slab_name = occupant.name
 	var/slab_count = 3
@@ -217,7 +217,7 @@
 
 		occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[user]/[user.ckey]</b>" //One shall not simply gib a mob unnoticed!
 		user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
-		msg_admin_attack("[user.name] ([user.ckey]) gibbed [src.occupant] ([src.occupant.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		msg_admin_attack("[user.name] ([user.ckey]) gibbed [src.occupant] ([src.occupant.ckey])", user)
 
 		occupant.ghostize(bancheck = TRUE)
 
@@ -226,7 +226,7 @@
 		qdel(src.occupant)
 		occupant = null
 
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 		operating = 0
 		for (var/obj/item/thing in contents)
 			thing.loc = get_turf(thing) // Drop it onto the turf for throwing.

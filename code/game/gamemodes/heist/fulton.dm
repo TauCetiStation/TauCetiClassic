@@ -31,7 +31,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 		to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
 		if(istype(A, /obj/item))
 			var/obj/item/I = A
-			if(I.w_class <= 2)
+			if(I.w_class <= ITEM_SIZE_SMALL)
 				extract_time = 50
 			else
 				extract_time = w_class * 20 // 3 = 6 seconds, 4 = 8 seconds, 5 = 10 seconds.
@@ -54,8 +54,8 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			balloon = image(icon,"extraction_balloon")
 			balloon.pixel_y = 10
 			balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-			holder_obj.overlays += balloon
-			playsound(holder_obj.loc, 'sound/effects/fulext_deploy.ogg', 50, 1, -3)
+			holder_obj.add_overlay(balloon)
+			playsound(holder_obj, 'sound/effects/fulext_deploy.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 			animate(holder_obj, pixel_z = 10, time = 20)
 			sleep(20)
 			animate(holder_obj, pixel_z = 15, time = 10)
@@ -76,7 +76,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			sleep(10)
 			if(!A)
 				return
-			playsound(holder_obj.loc, 'sound/effects/fultext_launch.ogg', 50, 1, -3)
+			playsound(holder_obj, 'sound/effects/fultext_launch.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 			//animate(holder_obj, pixel_z = 1000, time = 30)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, holder_obj.loc)
@@ -84,10 +84,10 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			if(istype(A, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = A
 				H.say(pick(extraction_appends))
-				playsound(get_turf(H), 'sound/misc/wilhelm.ogg', 50, 0)
+				playsound(H, pick(SOUNDIN_MALE_HEAVY_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 				H.SetParalysis(0) // wakey wakey
 				H.drowsyness = 0
-				H.sleeping = 0
+				H.SetSleeping(0)
 			//sleep(30)
 			holder_obj.loc = extraction_point
 			s = new /datum/effect/effect/system/spark_spread
@@ -99,7 +99,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			sleep(10)
 			animate(holder_obj, pixel_z = 10, time = 10)
 			sleep(10)
-			holder_obj.overlays -= balloon
+			holder_obj.cut_overlay(balloon)
 			if(!A)
 				return
 			A.anchored = 0 // An item has to be unanchored to be extracted in the first place.

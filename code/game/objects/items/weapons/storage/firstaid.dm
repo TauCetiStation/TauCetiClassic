@@ -116,10 +116,9 @@
 	flags = NOBLUDGEON
 	w_class = ITEM_SIZE_SMALL
 	max_storage_space = 21
-	can_hold = list("/obj/item/weapon/reagent_containers/pill","/obj/item/weapon/dice","/obj/item/weapon/paper")
+	can_hold = list(/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/dice,/obj/item/weapon/paper)
 	allow_quick_gather = 1
 	use_to_pickup = 1
-	use_sound = 'sound/effects/pillbottle.ogg'
 	var/wrapper_color
 	var/label
 
@@ -132,7 +131,7 @@
 	var/zone = user.zone_sel.selecting
 	if(zone == O_MOUTH && CanEat(user, target, src, "eat"))
 		user.visible_message("<span class='notice'>[user] pops a pill from \the [src].</span>")
-		playsound(get_turf(src), 'sound/effects/peelz.ogg', 50)
+		playsound(src, 'sound/effects/peelz.ogg', VOL_EFFECTS_MASTER)
 		var/list/peelz = filter_list(contents,/obj/item/weapon/reagent_containers/pill)
 		if(peelz.len)
 			var/obj/item/weapon/reagent_containers/pill/P = pick(peelz)
@@ -142,14 +141,15 @@
 
 /obj/item/weapon/storage/pill_bottle/atom_init()
 	. = ..()
+	use_sound = list('sound/effects/pillbottle.ogg')
 	update_icon()
 
 /obj/item/weapon/storage/pill_bottle/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(wrapper_color)
 		var/image/I = image(icon, "pillbottle_wrap")
 		I.color = wrapper_color
-		overlays += I
+		add_overlay(I)
 
 /obj/item/weapon/storage/pill_bottle/bicaridine
 	name = "pill bottle (Bicaridine)"

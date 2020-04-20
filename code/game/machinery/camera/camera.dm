@@ -3,7 +3,7 @@
 	desc = "It's used to monitor rooms."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "camera"
-	use_power = 2
+	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 10
 	layer = 5
@@ -119,14 +119,14 @@
 	src.view_range = num
 	cameranet.updateVisibility(src, 0)
 
-/obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user)
+/obj/machinery/camera/attack_paw(mob/living/carbon/xenomorph/humanoid/user)
 	if(!istype(user))
 		return
 	if(status)
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
-		playsound(src, 'sound/weapons/slash.ogg', 100, 1)
+		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 		toggle_cam(FALSE, user)
 
 /obj/machinery/camera/attackby(W, mob/living/user)
@@ -140,7 +140,7 @@
 		panel_open = !panel_open
 		user.visible_message("<span class='warning'>[user] screws the camera's panel [panel_open ? "open" : "closed"]!</span>",
 		"<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
 	else if(is_wire_tool(W) && panel_open)
 		wires.interact(user)
@@ -173,7 +173,7 @@
 			to_chat(user, "[msg2]")
 
 	// OTHER
-	else if ((istype(W, /obj/item/weapon/paper) && !(W:crumpled==1) || istype(W, /obj/item/device/pda)) && isliving(user))
+	else if ((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
 		var/mob/living/U = user
 		var/obj/item/weapon/paper/X = null
 		var/obj/item/device/pda/P = null
@@ -182,21 +182,24 @@
 		var/info = ""
 		if(istype(W, /obj/item/weapon/paper))
 			X = W
+			if(X.crumpled)
+				to_chat(usr, "Paper to crumpled for anything.")
+				return
 			itemname = X.name
 			info = X.info
 		else
 			P = W
 			itemname = P.name
 			info = P.notehtml
-		to_chat(U, "You hold \the [itemname] up to the camera ...")
+		to_chat(U, "You hold \the [itemname] up to the camera...")
 		for(var/mob/living/silicon/ai/O in ai_list)
 			if(!O.client || O.stat == DEAD)
 				continue
-			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U.name]</a></b> holds \a [itemname] up to one of your cameras ...")
+			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U];trackname=[U.name]'>[U.name]</a></b> holds \a [itemname] up to one of your cameras...")
 			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, entity_ja(info)), text("window=[]", itemname))
 		for(var/mob/O in player_list)
 			if (O.client && O.client.eye == src)
-				to_chat(O, "[U] holds \a [itemname] up to one of the cameras ...")
+				to_chat(O, "[U] holds \a [itemname] up to one of the cameras...")
 				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, entity_ja(info)), text("window=[]", itemname))
 	else if (istype(W, /obj/item/device/camera_bug))
 		if(!src.can_use())
@@ -217,8 +220,8 @@
 			var/datum/effect/effect/system/spark_spread/spark_system = new()
 			spark_system.set_up(5, 0, loc)
 			spark_system.start()
-			playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(loc, "sparks", 50, 1)
+			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>The camera has been sliced apart by [user] with [W]!</span>")
 			drop_assembly()
 			new /obj/item/stack/cable_coil/cut/red(loc)
@@ -251,7 +254,7 @@
 			visible_message("[bicon(src)] <span class='danger'>[user] [status_message] [src]!</span>")
 		else
 			visible_message("[bicon(src)] <span class='danger'>\The [src] [status_message]!</span>")
-		playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
+		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 
 	update_icon()
 
@@ -318,7 +321,6 @@
 	for(var/obj/machinery/camera/C in oview(4, M))
 		if(C.can_use())	// check if camera disabled
 			return C
-			break
 	return null
 
 /proc/near_range_camera(mob/M)
@@ -326,7 +328,6 @@
 	for(var/obj/machinery/camera/C in range(4, M))
 		if(C.can_use())	// check if camera disabled
 			return C
-			break
 
 	return null
 
@@ -337,11 +338,8 @@
 	if(user.is_busy(src)) return
 	// Do after stuff here
 	to_chat(user, "<span class='notice'>You start to weld the [src]..</span>")
-	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
-	if(do_after(user, 100, target = src))
-		if(!WT.isOn())
-			return 0
+	if(WT.use_tool(src, user, 100, volume = 50))
 		return 1
 	return 0
 
@@ -398,4 +396,5 @@
 	cam["x"] = x
 	cam["y"] = y
 	cam["z"] = z
+	cam["isonstation"] = is_station_level(z)
 	return cam

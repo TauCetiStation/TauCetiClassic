@@ -2,8 +2,9 @@
 	name = "folder"
 	desc = "A folder."
 	icon = 'icons/obj/bureaucracy.dmi'
+	hitsound = list('sound/items/misc/folder-slap.ogg')
 	icon_state = "folder"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/weapon/folder/blue
 	desc = "A blue folder."
@@ -26,9 +27,9 @@
 	icon_state = "folder_purple"
 
 /obj/item/weapon/folder/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(contents.len)
-		overlays += "folder_paper"
+		add_overlay("folder_paper")
 	return
 
 /obj/item/weapon/folder/attackby(obj/item/weapon/W, mob/user)

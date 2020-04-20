@@ -35,33 +35,34 @@
 	var/custommessage 	= "This is a test, please ignore."
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/weapon/O, mob/living/user)
-	if(..())
-		return
-	if(istype(O,/obj/item/weapon/card/emag))
-		// Will create sparks and print out the console's password. You will then have to wait a while for the console to be back online.
-		// It'll take more time if there's more characters in the password..
-		if(!emag)
-			if(!isnull(src.linkedServer))
-				icon_state = hack_icon // An error screen I made in the computers.dmi
-				emag = 1
-				screen = 2
-				spark_system.set_up(5, 0, src)
-				src.spark_system.start()
-				var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey(loc)
-				// Will help make emagging the console not so easy to get away with.
-				MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
-				MK.update_icon()
-				spawn(100*length(src.linkedServer.decryptkey)) UnmagConsole()
-				message = rebootmsg
-			else
-				to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
 	if(isscrewdriver(O) && emag)
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		to_chat(user, "<span class='warning'>It is too hot to mess with!</span>")
 		return
 
 	..()
-	return
+
+/obj/machinery/computer/message_monitor/emag_act(mob/living/user)
+	// Will create sparks and print out the console's password. You will then have to wait a while for the console to be back online.
+	// It'll take more time if there's more characters in the password..
+	if(emag)
+		return FALSE
+	if(!isnull(src.linkedServer))
+		icon_state = hack_icon // An error screen I made in the computers.dmi
+		emag = 1
+		screen = 2
+		spark_system.set_up(5, 0, src)
+		src.spark_system.start()
+		var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey(loc)
+		// Will help make emagging the console not so easy to get away with.
+		MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
+		MK.update_icon()
+		spawn(100*length(src.linkedServer.decryptkey)) UnmagConsole()
+		message = rebootmsg
+		return TRUE
+	else
+		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
+		return FALSE
 
 /obj/machinery/computer/message_monitor/update_icon()
 	..()
@@ -206,7 +207,7 @@
 			<td width='20%'>[customjob]</td>
 			<td width='20%'>[customrecepient ? customrecepient.owner : "NONE"]</td>
 			<td width='300px'>[custommessage]</td></tr>"}
-			dat += "</table><br><center><A href='?src=\ref[src];select=Send'>Send</a>"
+			dat += "</table><br><center><A href='?src=\ref[src];select=Send'>Send</a></center>"
 
 		//Request Console Logs
 		if(4)
@@ -430,15 +431,14 @@
 					if(isnull(PDARec))
 						src.linkedServer.send_pda_message("[customrecepient.owner]", "[customsender]","[custommessage]")
 						if (!customrecepient.message_silent)
-							playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
-							for (var/mob/O in hearers(3, customrecepient.loc))
-								O.show_message(text("[bicon(customrecepient)] *[customrecepient.ttone]*"))
+							playsound(customrecepient, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+							audible_message("[bicon(customrecepient)] *[customrecepient.ttone]*", hearing_distance = 3)
 							if( customrecepient.loc && ishuman(customrecepient.loc) )
 								var/mob/living/carbon/human/H = customrecepient.loc
 								to_chat(H, "[bicon(customrecepient)] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)")
 							log_pda("[usr] (PDA: [customsender]) sent \"[custommessage]\" to [customrecepient.owner]")
-							customrecepient.overlays.Cut()
-							customrecepient.overlays += image('icons/obj/pda.dmi', "pda-r")
+							customrecepient.cut_overlays()
+							customrecepient.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 					//Sender is faking as someone who exists
 					else
 
@@ -449,15 +449,14 @@
 							customrecepient.conversations.Add("\ref[PDARec]")
 
 						if (!customrecepient.message_silent)
-							playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
-							for (var/mob/O in hearers(3, customrecepient.loc))
-								O.show_message(text("[bicon(customrecepient)] *[customrecepient.ttone]*"))
+							playsound(customrecepient, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+							audible_message("[bicon(customrecepient)] *[customrecepient.ttone]*", hearing_distance = 3)
 							if( customrecepient.loc && ishuman(customrecepient.loc) )
 								var/mob/living/carbon/human/H = customrecepient.loc
 								to_chat(H, "[bicon(customrecepient)] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)")
 							log_pda("[usr] (PDA: [PDARec.owner]) sent \"[custommessage]\" to [customrecepient.owner]")
-							customrecepient.overlays.Cut()
-							customrecepient.overlays += image('icons/obj/pda.dmi', "pda-r")
+							customrecepient.cut_overlays()
+							customrecepient.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 					//Finally..
 					ResetMessage()
 

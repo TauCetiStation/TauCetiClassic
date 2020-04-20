@@ -28,7 +28,7 @@
 		var/mob/living/carbon/human/H = target
 		switch(type)
 			if("feet")
-				if(!H.shoes)
+				if(!H.shoes && !H.buckled)
 					BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 					H.Weaken(3)
 			if(BP_L_ARM, BP_R_ARM)
@@ -40,9 +40,9 @@
 			H.updatehealth()
 	else if(ismouse(target))
 		var/mob/living/simple_animal/mouse/M = target
-		visible_message("\red <b>SPLAT!</b>")
+		visible_message("<span class='warning'><b>SPLAT!</b></span>")
 		M.splat()
-	playsound(target.loc, 'sound/effects/snap.ogg', 50, 1)
+	playsound(target, 'sound/effects/snap.ogg', VOL_EFFECTS_MASTER)
 	layer = MOB_LAYER - 0.2
 	armed = 0
 	update_icon()
@@ -52,7 +52,7 @@
 	if(!armed)
 		to_chat(user, "<span class='notice'>You arm [src].</span>")
 	else
-		if(((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50)))
+		if((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50))
 			triggered(user, user.hand ? BP_L_ARM : BP_R_ARM)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 								 "<span class='warning'>You accidentally trigger [src]!</span>")
@@ -60,11 +60,11 @@
 		to_chat(user, "<span class='notice'>You disarm [src].</span>")
 	armed = !armed
 	update_icon()
-	playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
+	playsound(user, 'sound/weapons/handcuffs.ogg', VOL_EFFECTS_MASTER, 30, null, -3)
 
 /obj/item/device/assembly/mousetrap/attack_hand(mob/living/user)
 	if(armed)
-		if(((user.getBrainLoss() >= 60 || CLUMSY in user.mutations)) && prob(50))
+		if((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50))
 			user.SetNextMove(CLICK_CD_INTERACT)
 			triggered(user, user.hand ? BP_L_ARM : BP_R_ARM)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
@@ -92,10 +92,10 @@
 		return 1	//end the search!
 	return 0
 
-/obj/item/device/assembly/mousetrap/hitby(A)
+/obj/item/device/assembly/mousetrap/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	if(!armed)
 		return ..()
-	visible_message("<span class='warning'>[src] is triggered by [A].</span>")
+	visible_message("<span class='warning'>[src] is triggered by [AM].</span>")
 	triggered(null)
 
 /obj/item/device/assembly/mousetrap/armed

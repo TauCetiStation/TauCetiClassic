@@ -1,7 +1,7 @@
 /obj/item/clothing/accessory
 	name = "tie"
 	desc = "A neosilk clip-on tie."
-	icon = 'icons/obj/clothing/ties.dmi'
+	icon = 'icons/obj/clothing/accessory.dmi'
 	icon_state = "bluetie"
 	item_state = "" // no inhands
 	item_color = "bluetie"
@@ -15,7 +15,7 @@
 
 /obj/item/clothing/accessory/atom_init()
 	. = ..()
-	inv_overlay = image("icon" = 'icons/obj/clothing/ties_overlay.dmi', "icon_state" = "[item_color ? "[item_color]" : "[icon_state]"]")
+	inv_overlay = image("icon" = 'icons/obj/clothing/accessory_overlay.dmi', "icon_state" = "[item_color ? "[item_color]" : "[icon_state]"]")
 
 //when user attached an accessory to S
 /obj/item/clothing/accessory/proc/on_attached(obj/item/clothing/under/S, mob/user, silent)
@@ -23,7 +23,7 @@
 		return
 	has_suit = S
 	loc = has_suit
-	has_suit.overlays += inv_overlay
+	has_suit.add_overlay(inv_overlay)
 
 	if(!silent)
 		to_chat(user, "<span class='notice'>You attach [src] to [has_suit].</span>")
@@ -32,7 +32,7 @@
 /obj/item/clothing/accessory/proc/on_removed(mob/user)
 	if(!has_suit)
 		return
-	has_suit.overlays -= inv_overlay
+	has_suit.cut_overlay(inv_overlay)
 	has_suit = null
 	usr.put_in_hands(src)
 	add_fingerprint(user)
@@ -56,6 +56,11 @@
 	icon_state = "redtie"
 	item_color = "redtie"
 
+/obj/item/clothing/accessory/tie/black
+	name = "black tie"
+	icon_state = "blacktie"
+	item_color = "blacktie"
+
 /obj/item/clothing/accessory/tie/horrible
 	name = "horrible tie"
 	desc = "A neosilk clip-on tie. This one is disgusting."
@@ -78,27 +83,60 @@
 				switch(M.gender)
 					if(MALE)	their = "his"
 					if(FEMALE)	their = "her"
+				if(M == user)
+					their = "your"
+				user.visible_message("<span class='notice'>[user] places [src] against [M]'s [target_zone] and starts listen attentively.</span>",
+									"<span class='notice'>You place [src] against [their] [target_zone] and start to listen attentively.</span>")
+				if(M.stat != DEAD && !(M.status_flags & FAKEDEATH))
+					if(target_zone == BP_CHEST)
+						if(M.oxyloss < 50)
+							user.playsound_local(null, 'sound/machines/cardio/pulse.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+						var/obj/item/organ/internal/lungs/L = M.organs_by_name[O_LUNGS]
+						if(L)
+							if(L.is_bruised())
+								user.playsound_local(null, 'sound/machines/cardio/wheezes.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+							else if(L.germ_level > INFECTION_LEVEL_ONE)
+								user.playsound_local(null, 'sound/machines/cardio/crackles.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+							else
+								user.playsound_local(null, 'sound/machines/cardio/normal.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+				if(do_after(user, 25, target = M) && src)
+					var/pulse_status = "pulse"
+					var/pulse_strength = "hear a weak"
+					var/chest_inspected = FALSE
 
-				var/sound = "pulse"
-				var/sound_strength
-
-				if(M.stat == DEAD || (M.status_flags & FAKEDEATH))
-					sound_strength = "cannot hear"
-					sound = "anything"
-				else
-					sound_strength = "hear a weak"
-					switch(target_zone)
-						if(BP_CHEST)
-							if(M.oxyloss < 50)
-								sound_strength = "hear a healthy"
-							sound = "pulse and respiration"
-						if(O_EYES, O_MOUTH)
-							sound_strength = "cannot hear"
-							sound = "anything"
-						else
-							sound_strength = "hear a weak"
-
-				user.visible_message("[user] places [src] against [M]'s [target_zone] and listens attentively.", "You place [src] against [their] [target_zone]. You [sound_strength] [sound].")
+					if(M.stat == DEAD || (M.status_flags & FAKEDEATH))
+						pulse_strength = "cannot hear"
+						pulse_status = "anything"
+					else
+						switch(target_zone)
+							if(BP_CHEST)
+								pulse_status = "pulse"
+								if(M.oxyloss < 50)
+									pulse_strength = "hear a healthy"
+								var/obj/item/organ/internal/lungs/L = M.organs_by_name[O_LUNGS]
+								if(L)
+									if(L.is_bruised())
+										chest_inspected = "<span class='warning'>You can hear noises and wheezing, \the [M]'s [L.name] may be bruised!</span>"
+									else if(L.germ_level > INFECTION_LEVEL_ONE)
+										chest_inspected = "<span class='warning'>\The [M]'s [L.name] sound like he got respitory tract infection!</span>"
+									else
+										chest_inspected = "<span class='notice'>\The [M]'s [L.name] sound normal.</span>"
+								else
+									chest_inspected = "<span class='notice'>You don't hear [M] breathing.</span>"
+							if(O_EYES, O_MOUTH)
+								pulse_strength = "cannot hear"
+								pulse_status = "anything"
+					if(!M.pulse)
+						pulse_strength = "cannot hear"
+						pulse_status = "anything"
+					user.visible_message("<span class='notice'>[user] ends up listening to [M]'s [target_zone].</span>",
+										"<span class='notice'>You finish listening to [M]'s [target_zone].</span>")
+					if(!chest_inspected)
+						to_chat(user, "<span class='notice'> You [pulse_strength] [pulse_status].</span>")
+					else if(pulse_strength == "hear a healthy")
+						to_chat(user, "<span class='notice'> You [pulse_strength] [pulse_status].</span> [chest_inspected]")
+					else
+						to_chat(user, "<span class='warning'> You [pulse_strength] [pulse_status].</span> [chest_inspected]")
 				return
 	return ..(M, user)
 
@@ -110,12 +148,12 @@
 	icon_state = "bronze"
 	item_color = "bronze"
 	layer_priority = 0.1
-	
+
 /obj/item/clothing/accessory/holy
     name = "holy cross"
     desc = "Time to take the Jerusalem!"
     icon_state = "holycross"
-    item_color = "holycross1"
+    item_color = "holycross"
 
 /obj/item/clothing/accessory/medal/conduct
 	name = "distinguished conduct medal"
@@ -192,16 +230,8 @@
 
 /obj/item/clothing/accessory/holobadge/attackby(obj/item/O, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if (istype(O, /obj/item/weapon/card/emag))
-		if (emagged)
-			to_chat(user, "<span class='warning'>[src] is already cracked.</span>")
-			return
-		else
-			emagged = TRUE
-			to_chat(user, "<span class='warning'>You swipe [O] and crack the holobadge security checks.</span>")
-			return
 
-	else if(istype(O, /obj/item/weapon/card/id) || istype(O, /obj/item/device/pda))
+	if(istype(O, /obj/item/weapon/card/id) || istype(O, /obj/item/device/pda))
 
 		var/obj/item/weapon/card/id/id_card = null
 
@@ -226,3 +256,11 @@
 		user.visible_message(
 			"<span class='warning'>[user] invades [M]'s personal space, thrusting [src] into their face insistently.</span>",
 			"<span class='warning'>You invade [M]'s personal space, thrusting [src] into their face insistently. You are the law.</span>")
+
+/obj/item/clothing/accessory/holobadge/emag_act(mob/user)
+	if(emagged)
+		to_chat(user, "<span class='warning'>[src] is already cracked.</span>")
+		return FALSE
+	emagged = TRUE
+	to_chat(user, "<span class='warning'>You swipe card and crack the holobadge security checks.</span>")
+	return TRUE

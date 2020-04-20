@@ -60,9 +60,8 @@
 	name = "shotgun shell"
 	desc = "A 12 gauge shell."
 	icon_state = "gshell"
-	projectile_type = /obj/item/projectile/bullet/pellet
-	pellets = 5
-	variance = 0.8
+	projectile_type = /obj/item/projectile/bullet/buckpellet
+	pellets = 7
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag shell"
@@ -164,10 +163,6 @@
 	caliber = "a3006"
 	projectile_type = "/obj/item/projectile/bullet/midbullet3"
 
-/obj/item/ammo_casing/l10
-	caliber = "energy"
-	projectile_type = "/obj/item/projectile/l10"
-
 /obj/item/ammo_casing/flare
 	desc = "A flare for flare gun."
 	caliber = "flare"
@@ -180,7 +175,7 @@
 	projectile_type = /obj/item/projectile/bullet/midbullet2
 
 /obj/item/ammo_box/c38m
-	name = "speed loader (.38)"
+	name = "speedloader (.38)"
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c38m
 	max_ammo = 6

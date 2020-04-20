@@ -4,8 +4,8 @@
 
 	icon = 'icons/obj/machines/broadcast.dmi'
 	icon_state = "broadcaster"
-	light_color="#4285F4"
-	use_power = 1
+	light_color="#4285f4"
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 1000
 
@@ -50,7 +50,7 @@
 	broadcast() // Bzzt
 /*
 /obj/machinery/media/transmitter/broadcast/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
+	if(ismultitool(W))
 		attack_hand(user)
 		return 1
 
@@ -58,7 +58,7 @@
 	// You need a multitool to use this, or be silicon
 	if(!issilicon(user) && !isobserver(user))
 		// istype returns false if the value is null
-		if(!istype(user.get_active_hand(), /obj/item/device/multitool))
+		if(!ismultitool(user.get_active_hand()))
 			return
 
 	if(stat & (BROKEN|NOPOWER))
@@ -83,18 +83,18 @@
 */
 
 /obj/machinery/media/transmitter/broadcast/update_icon()
-	overlays = 0
+	cut_overlays()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(on)
-		overlays+="broadcaster on"
+		add_overlay("broadcaster on")
 		set_light(3) // OH FUUUUCK
-		use_power = 2
+		set_power_use(ACTIVE_POWER_USE)
 	else
 		set_light(1) // Only the tile we're on.
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 	if(sources.len)
-		overlays+="broadcaster linked"
+		add_overlay("broadcaster linked")
 
 /obj/machinery/media/transmitter/broadcast/proc/update_on()
 	if(on)
@@ -130,7 +130,7 @@
 				media_frequency = newfreq
 				connect_frequency()
 			else
-				to_chat(usr, "\red Invalid FM frequency. (90.0, 200.0)")
+				to_chat(usr, "<span class='warning'>Invalid FM frequency. (90.0, 200.0)</span>")
 
 	updateUsrDialog()
 

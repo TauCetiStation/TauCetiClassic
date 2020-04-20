@@ -10,9 +10,10 @@
 	var/health = null
 	var/burn_point = null
 	var/burning = null
-	var/hitsound = null
+	var/list/hitsound = list()
+	var/usesound = null
 	var/wet = 0
-	var/w_class = 3.0
+	var/w_class = ITEM_SIZE_NORMAL
 	var/can_embed = 1
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
@@ -28,6 +29,8 @@
 	var/datum/action/item_action/action = null
 	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
 	var/action_button_is_hands_free = 0 //If 1, bypass the restrained, lying, and stunned checks action buttons normally test for
+
+	var/slot_equipped = 0 // Where this item currently equipped in player inventory (slot_id) (should not be manually edited ever).
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -53,19 +56,12 @@
 //		/obj/machinery/r_n_d/experimentor,
 		/obj/machinery/autolathe
 	)
+	var/can_be_holstered = FALSE
 	var/uncleanable = 0
 	var/toolspeed = 1
 
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
-	/* Species-specific sprites, concept stolen from Paradise//vg/.
-	ex:
-	sprite_sheets = list(
-		TAJARAN = 'icons/cat/are/bad'
-		)
-	If index term exists and icon_override is not set, this sprite sheet will be used.
-	*/
-	var/list/sprite_sheets = null
 	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
 
 	/* Species-specific sprite sheets for inventory sprites
@@ -82,20 +78,24 @@
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
-/obj/item/proc/health_analyze(mob/living/M, mob/living/user, mode)
-	var/message
+/obj/item/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat)
+	var/message = ""
+	if(!output_to_chat)
+		message += "<HTML><head><title>[M.name]'s scan results</title></head><BODY>"
+
 	if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class = 'warning'>You try to analyze the floor's vitals!</span>")
 		message += "<span class='notice'>Analyzing Results for The floor:\n&emsp; Overall Status: Healthy</span><br>"
 		message += "<span class='notice'>&emsp; Damage Specifics: [0]-[0]-[0]-[0]</span><br>"
 		message += "<span class='notice'>Key: Suffocation/Toxin/Burns/Brute</span><br>"
 		message += "<span class='notice'>Body Temperature: ???</span>"
-		user.show_message(message)
-		return
+		if(!output_to_chat)
+			message += "</BODY></HTML>"
+		return message
 	if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return
-	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.","<span class='notice'>You have analyzed [M]'s vitals.")
+		return ""
+	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>","<span class='notice'>You have analyzed [M]'s vitals.</span>")
 
 	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
 	var/OX = M.getOxyLoss() > 50 	? 	"<b>[M.getOxyLoss()]</b>" 		: M.getOxyLoss()
@@ -127,8 +127,8 @@
 	BU = M.getFireLoss() > 50 ? "<font color='#FFA500'><b>Severe burn damage detected</b></font>" : "Subject burn injury status O.K"
 	BR = M.getBruteLoss() > 50 ? "<font color='red'><b>Severe anatomical damage detected</b></font>" : "Subject brute-force injury status O.K"
 	if(M.status_flags & FAKEDEATH)
-		OX = fake_oxy > 50 ? 		"<span class='warning'>Severe oxygen deprivation detected<span class='notice'>" : "Subject bloodstream oxygen level normal"
-	message += "[OX] | [TX] | [BU] | [BR]<br>"
+		OX = fake_oxy > 50 ? 		"<span class='warning'>Severe oxygen deprivation detected</span>" : "Subject bloodstream oxygen level normal"
+	message += "[OX]<br>[TX]<br>[BU]<br>[BR]<br>"
 	if(istype(M, /mob/living/carbon))
 		var/mob/living/carbon/C = M
 		if(C.reagents.total_volume || C.is_infected_with_zombie_virus())
@@ -138,11 +138,11 @@
 				if (ID in virusDB)
 					var/datum/data/record/V = virusDB[ID]
 					message += "<span class='warning'>Warning: Pathogen [V.fields["name"]] detected in subject's blood. Known antigen : [V.fields["antigen"]]</span><br>"
-//			user.show_message(text("\red Warning: Unknown pathogen detected in subject's blood."))
+//			user.oldshow_message(text("<span class='warning'>Warning: Unknown pathogen detected in subject's blood.</span>"))
 		if(C.roundstart_quirks.len)
 			message += "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span><br>"
 	if(M.getCloneLoss())
-		user.show_message("<span class='warning'>Subject appears to have been imperfectly cloned.</span>")
+		to_chat(user, "<span class='warning'>Subject appears to have been imperfectly cloned.</span>")
 	for(var/datum/disease/D in M.viruses)
 		if(!D.hidden[SCANNER])
 			message += "<span class = 'warning bold'>Warning: [D.form] Detected</span>\n<span class = 'warning'>Name: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span><br>"
@@ -150,7 +150,7 @@
 		message += "<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span><br>"
 	if(M.has_brain_worms())
 		message += "<span class='warning'>Subject suffering from aberrant brain activity. Recommend further scanning.</span><br>"
-	else if(M.getBrainLoss() >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)
+	else if(M.getBrainLoss() >= 100 || (istype(M, /mob/living/carbon/human) && !M:has_brain() && M:should_have_organ(O_BRAIN)))
 		message += "<span class='warning'>Subject is brain dead.</span>"
 	else if(M.getBrainLoss() >= 60)
 		message += "<span class='warning'>Severe brain damage detected. Subject likely to have mental retardation.</span><br>"
@@ -191,11 +191,13 @@
 			else
 				message += "<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span><br>"
 		message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
-	add_fingerprint(user)
-	user.show_message(message)
-	return
+
+	if(!output_to_chat)
+		message += "</BODY></HTML>"
+	return message
 
 /obj/item/Destroy()
+	QDEL_NULL(action)
 	flags &= ~DROPDEL // prevent recursive dels
 	if(ismob(loc))
 		var/mob/m = loc
@@ -246,7 +248,7 @@
 	src.loc = T
 
 /obj/item/examine(mob/user)
-	..()
+	. = ..()
 	var/size
 	switch(src.w_class)
 		if(1.0)
@@ -273,29 +275,29 @@
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
 		if(istype(src, /obj/item/weapon/melee))
-			if(src.w_class < 4)
-				to_chat(user, "\red \The [src] is far too small for you to pick up.")
+			if(src.w_class < ITEM_SIZE_LARGE)
+				to_chat(user, "<span class='warning'>\The [src] is far too small for you to pick up.</span>")
 				return
 		else if(istype(src, /obj/item/weapon/gun))
 			if(prob(20))
 				user.say(pick(";RAAAAAAAARGH! WEAPON!", ";HNNNNNNNNNGGGGGGH! I HATE WEAPONS!!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGUUUUUNNNNHH!", ";AAAAAAARRRGH!" ))
-			user.visible_message("\blue [user] crushes \a [src] with hands.", "\blue You crush the [src].")
+			user.visible_message("<span class='notice'>[user] crushes \a [src] with hands.</span>", "<span class='notice'>You crush the [src].</span>")
 			qdel(src)
-			//user << "\red \The [src] is far too small for you to pick up."
+			//user << "<span class='warning'>\The [src] is far too small for you to pick up.</span>"
 			return
 		else if(istype(src, /obj/item/clothing))
 			if(prob(20))
-				to_chat(user, "\red [pick("You are not interested in [src].", "This is nothing.", "Humans stuff...", "A cat? A scary cat...",
+				to_chat(user, "<span class='warning'>[pick("You are not interested in [src].", "This is nothing.", "Humans stuff...", "A cat? A scary cat...",
 				"A Captain? Let's smash his skull! I don't like Captains!",
-				"Awww! Such lovely doggy! BUT I HATE DOGGIES!!", "A woman... A lying woman! I love womans! Fuck womans...")]")
+				"Awww! Such lovely doggy! BUT I HATE DOGGIES!!", "A woman... A lying woman! I love womans! Fuck womans...")]</span>")
 			return
 		else if(istype(src, /obj/item/weapon/book))
-			to_chat(user, "\red A book! I LOVE BOOKS!!")
+			to_chat(user, "<span class='warning'>A book! I LOVE BOOKS!!</span>")
 		else if(istype(src, /obj/item/weapon/reagent_containers/food))
 			if(prob(20))
-				to_chat(user, "\red I LOVE FOOD!!")
-		else if(src.w_class < 4)
-			to_chat(user, "\red \The [src] is far too small for you to pick up.")
+				to_chat(user, "<span class='warning'>I LOVE FOOD!!</span>")
+		else if(src.w_class < ITEM_SIZE_LARGE)
+			to_chat(user, "<span class='warning'>\The [src] is far too small for you to pick up.</span>")
 			return
 
 	if(istype(src.loc, /obj/item/weapon/storage))
@@ -307,19 +309,25 @@
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
 		if(!src.canremove)
 			return
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
-				var/obj/item/clothing/suit/V = H.wear_suit
-				V.attack_reaction(H, REACTION_ITEM_TAKEOFF)
-			if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
-				if(!user.delay_clothing_u_equip(src))
-					return 0
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			if(slot_equipped && (slot_equipped in C.check_obscured_slots()))
+				to_chat(C, "<span class='warning'>You can't reach that! Something is covering it.</span>")
+				return
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+					var/obj/item/clothing/suit/V = H.wear_suit
+					V.attack_reaction(H, REACTION_ITEM_TAKEOFF)
+				if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
+					if(!user.delay_clothing_u_equip(src))
+						return 0
+				else
+					user.remove_from_mob(src)
 			else
 				user.remove_from_mob(src)
 		else
 			user.remove_from_mob(src)
-
 	else
 		if(isliving(src.loc))
 			return
@@ -334,6 +342,10 @@
 	if(QDELETED(src) || freeze_movement) // remove_from_mob() may remove DROPDEL items, so...
 		return
 
+	if(!user.can_pickup(src))
+		to_chat(user, "<span class='notice'>Your claws aren't capable of such fine manipulation!</span>")
+		return
+
 	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
@@ -343,15 +355,6 @@
 /obj/item/attack_paw(mob/user)
 	if (!user || anchored)
 		return
-
-	if(isalien(user)) // -- TLE
-		var/mob/living/carbon/alien/A = user
-
-		if(!A.has_fine_manipulation || w_class >= 4)
-			if(src in A.contents) // To stop Aliens having items stuck in their pockets
-				A.drop_from_inventory(src)
-			to_chat(user, "Your claws aren't capable of such fine manipulation.")
-			return
 
 	if (istype(src.loc, /obj/item/weapon/storage))
 		for(var/mob/M in range(1, src.loc))
@@ -372,6 +375,10 @@
 		user.next_move = max(user.next_move+2,world.time + 2)
 
 	if(QDELETED(src) || freeze_movement) // no item - no pickup, you dummy!
+		return
+
+	if (!user.can_pickup(src))
+		to_chat(user, "<span class='notice'>Your claws aren't capable of such fine manipulation!</span>")
 		return
 
 	src.pickup(user)
@@ -447,10 +454,10 @@
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to 1 if you wish it to not give you outputs.
-/obj/item/proc/mob_can_equip(M, slot, disable_warning = 0)
+/obj/item/proc/mob_can_equip(mob/M, slot, disable_warning = 0)
 	if(!slot)
 		return FALSE
-	if(!M)
+	if(QDELETED(M))
 		return FALSE
 
 	if(ishuman(M))
@@ -464,11 +471,11 @@
 			return FALSE
 		//fat mutation
 		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
-			if(FAT in H.mutations)
+			if(HAS_TRAIT(H, TRAIT_FAT))
 				//testing("[M] TOO FAT TO WEAR [src]!")
 				if(!(flags & ONESIZEFITSALL))
 					if(!disable_warning)
-						to_chat(H, "\red You're too fat to wear the [name].")
+						to_chat(H, "<span class='warning'>You're too fat to wear the [name].</span>")
 					return 0
 
 		switch(slot)
@@ -515,7 +522,7 @@
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if( !(slot_flags & SLOT_FLAGS_BELT) )
 					return
@@ -535,21 +542,21 @@
 			if(SLOT_L_EAR)
 				if(H.l_ear)
 					return 0
-				if( w_class < 2	)
+				if( (slot_flags & SLOT_FLAGS_TWOEARS) && H.r_ear )
+					return 0
+				if( w_class < ITEM_SIZE_SMALL	)
 					return 1
 				if( !(slot_flags & SLOT_FLAGS_EARS) )
-					return 0
-				if( (slot_flags & SLOT_FLAGS_TWOEARS) && H.r_ear )
 					return 0
 				return 1
 			if(SLOT_R_EAR)
 				if(H.r_ear)
 					return 0
-				if( w_class < 2 )
+				if( (slot_flags & SLOT_FLAGS_TWOEARS) && H.l_ear )
+					return 0
+				if( w_class < ITEM_SIZE_SMALL )
 					return 1
 				if( !(slot_flags & SLOT_FLAGS_EARS) )
-					return 0
-				if( (slot_flags & SLOT_FLAGS_TWOEARS) && H.l_ear )
 					return 0
 				return 1
 			if(SLOT_W_UNIFORM)
@@ -563,7 +570,7 @@
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if( !(slot_flags & SLOT_FLAGS_ID) )
 					return 0
@@ -573,22 +580,22 @@
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if(slot_flags & SLOT_FLAGS_DENYPOCKET)
 					return 0
-				if( w_class <= 2 || (slot_flags & SLOT_FLAGS_POCKET) )
+				if( w_class <= ITEM_SIZE_SMALL || (slot_flags & SLOT_FLAGS_POCKET) )
 					return 1
 			if(SLOT_R_STORE)
 				if(H.r_store)
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if(slot_flags & SLOT_FLAGS_DENYPOCKET)
 					return 0
-				if( w_class <= 2 || (slot_flags & SLOT_FLAGS_POCKET) )
+				if( w_class <= ITEM_SIZE_SMALL || (slot_flags & SLOT_FLAGS_POCKET) )
 					return 1
 				return 0
 			if(SLOT_S_STORE)
@@ -596,7 +603,7 @@
 					return 0
 				if(!H.wear_suit)
 					if(!disable_warning)
-						to_chat(H, "\red You need a suit before you can attach this [name].")
+						to_chat(H, "<span class='warning'>You need a suit before you can attach this [name].</span>")
 					return 0
 				if(!H.wear_suit.allowed)
 					if(!disable_warning)
@@ -663,6 +670,12 @@
 				if( !(slot_flags & SLOT_FLAGS_BACK) )
 					return 0
 				return 1
+			if(SLOT_HANDCUFFED)
+				if(MO.handcuffed)
+					return 0
+				if(!istype(src, /obj/item/weapon/handcuffs))
+					return 0
+				return 1
 		return 0 //Unsupported slot
 
 		//END MONKEY
@@ -709,27 +722,95 @@
 	if(!usr.canmove || usr.stat || usr.restrained() || !Adjacent(usr))
 		return
 	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
-		to_chat(usr, "\red You can't pick things up!")
+		to_chat(usr, "<span class='warning'>You can't pick things up!</span>")
 		return
 	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
-		to_chat(usr, "\red You can't pick things up!")
+		to_chat(usr, "<span class='warning'>You can't pick things up!</span>")
 		return
 	if(src.anchored) //Object isn't anchored
-		to_chat(usr, "\red You can't pick that up!")
+		to_chat(usr, "<span class='warning'>You can't pick that up!</span>")
 		return
 	if(!usr.hand && usr.r_hand) //Right hand is not full
-		to_chat(usr, "\red Your right hand is full.")
+		to_chat(usr, "<span class='warning'>Your right hand is full.</span>")
 		return
 	if(usr.hand && usr.l_hand) //Left hand is not full
-		to_chat(usr, "\red Your left hand is full.")
+		to_chat(usr, "<span class='warning'>Your left hand is full.</span>")
 		return
 	if(!istype(src.loc, /turf)) //Object is on a turf
-		to_chat(usr, "\red You can't pick that up!")
+		to_chat(usr, "<span class='warning'>You can't pick that up!</span>")
 		return
 	//All checks are done, time to pick it up!
 	usr.UnarmedAttack(src)
 	return
 
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, datum/callback/extra_checks)
+	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
+	// Run the start check here so we wouldn't have to call it manually.
+	if(user.is_busy())
+		return
+
+	if(!delay && !tool_start_check(user, amount))
+		return
+
+	delay *= toolspeed
+
+	// Play tool sound at the beginning of tool usage.
+	play_tool_sound(target, volume)
+
+	if(delay)
+		// Create a callback with checks that would be called every tick by do_after.
+		var/datum/callback/tool_check = CALLBACK(src, .proc/tool_check_callback, user, amount, extra_checks)
+
+		if(ismob(target))
+			if(!do_mob(user, target, delay, extra_checks = tool_check))
+				return
+
+		else
+			if(!do_after(user, delay, target=target, extra_checks = tool_check))
+				return
+	else
+		// Invoke the extra checks once, just in case.
+		if(extra_checks && !extra_checks.Invoke())
+			return
+
+	// Use tool's fuel, stack sheets or charges if amount is set.
+	if(amount && !use(amount))
+		return
+
+	// Play tool sound at the end of tool usage,
+	// but only if the delay between the beginning and the end is not too small
+	if(delay >= MIN_TOOL_SOUND_DELAY)
+		play_tool_sound(target, volume)
+
+	return TRUE
+
+// Called before use_tool if there is a delay, or by use_tool if there isn't.
+// Only ever used by welding tools and stacks, so it's not added on any other use_tool checks.
+/obj/item/proc/tool_start_check(mob/living/user, amount=0)
+	return tool_use_check(user, amount)
+
+// A check called by tool_start_check once, and by use_tool on every tick of delay.
+/obj/item/proc/tool_use_check(mob/living/user, amount)
+	return TRUE
+
+// Plays item's usesound, if any.
+/obj/item/proc/play_tool_sound(atom/target, volume=null) // null, so default value of this proc won't override default value of the playsound.
+	if(target && usesound && volume)
+		var/played_sound = usesound
+
+		if(islist(usesound))
+			played_sound = pick(usesound)
+
+		playsound(target, played_sound, VOL_EFFECTS_MASTER, volume)
+
+// Generic use proc. Depending on the item, it uses up fuel, charges, sheets, etc.
+// Returns TRUE on success, FALSE on failure.
+/obj/item/proc/use(used, mob/M = null)
+	return !used
+
+// Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
+/obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
+	return tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
 
 //This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'icon_action_button' to the icon_state of the image of the button in screen1_action.dmi
 //The default action is attack_self().
@@ -755,7 +836,7 @@
 		var/mob/living/carbon/human/H = M
 		if(((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
 			// you can't stab someone in the eyes wearing a mask!
-			to_chat(user, "\red You're going to need to remove the eye covering first.")
+			to_chat(user, "<span class='warning'>You're going to need to remove the eye covering first.</span>")
 			return
 
 	var/mob/living/carbon/monkey/Mo = M
@@ -763,35 +844,37 @@
 			(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
 		))
 		// you can't stab someone in the eyes wearing a mask!
-		to_chat(user, "\red You're going to need to remove the eye covering first.")
+		to_chat(user, "<span class='warning'>You're going to need to remove the eye covering first.</span>")
 		return
 
-	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
-		to_chat(user, "\red You cannot locate any eyes on this creature!")
+	if(istype(M, /mob/living/carbon/xenomorph) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
+		to_chat(user, "<span class='warning'>You cannot locate any eyes on this creature!</span>")
 		return
+
+	user.do_attack_animation(M)
+	playsound(M, 'sound/items/tools/screwdriver-stab.ogg', VOL_EFFECTS_MASTER)
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)") //BS12 EDIT ALG
+	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])", user) //BS12 EDIT ALG
 
 	src.add_fingerprint(user)
 	//if((CLUMSY in user.mutations) && prob(50))
 	//	M = user
 		/*
-		to_chat(M, "\red You stab yourself in the eye.")
+		to_chat(M, "<span class='warning'>You stab yourself in the eye.</span>")
 		M.sdisabilities |= BLIND
 		M.weakened += 4
 		M.adjustBruteLoss(10)
 		*/
 	if(M != user)
-		for(var/mob/O in (viewers(M) - user - M))
-			O.show_message("\red [M] has been stabbed in the eye with [src] by [user].", 1)
-		to_chat(M, "\red [user] stabs you in the eye with [src]!")
-		to_chat(user, "\red You stab [M] in the eye with [src]!")
+		visible_message("<span class='warning'>[M] has been stabbed in the eye with [src] by [user].</span>", ignored_mobs = list(user, M))
+		to_chat(M, "<span class='warning'>[user] stabs you in the eye with [src]!</span>")
+		to_chat(user, "<span class='warning'>You stab [M] in the eye with [src]!</span>")
 	else
 		user.visible_message( \
-			"\red [user] has stabbed themself with [src]!", \
-			"\red You stab yourself in the eyes with [src]!" \
+			"<span class='warning'>[user] has stabbed themself with [src]!</span>", \
+			"<span class='warning'>You stab yourself in the eyes with [src]!</span>" \
 		)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -800,50 +883,51 @@
 		if(IO.damage >= IO.min_bruised_damage)
 			if(H.stat != DEAD)
 				if(IO.robotic <= 1) //robot eyes bleeding might be a bit silly
-					to_chat(H, "\red Your eyes start to bleed profusely!")
+					to_chat(H, "<span class='warning'>Your eyes start to bleed profusely!</span>")
 			if(prob(50))
 				if(H.stat != DEAD)
-					to_chat(H, "\red You drop what you're holding and clutch at your eyes!")
+					to_chat(H, "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>")
 					H.drop_item()
 				H.eye_blurry += 10
 				H.Paralyse(1)
 				H.Weaken(4)
 			if (IO.damage >= IO.min_broken_damage)
 				if(H.stat != DEAD)
-					to_chat(H, "\red You go blind!")
+					to_chat(H, "<span class='warning'>You go blind!</span>")
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 		BP.take_damage(7)
 	else
 		M.take_bodypart_damage(7)
+
 	M.eye_blurry += rand(3,4)
+
 	return
 
 /obj/item/clean_blood()
-	. = ..()
+	. = ..() // FIX: If item is `uncleanable` we shouldn't nullify `dirt_overlay`
 	if(uncleanable)
 		return
 	if(blood_overlay)
-		overlays.Remove(blood_overlay)
+		cut_overlay(blood_overlay)
+		blood_overlay.color = null
+		blood_overlay = null
 	if(istype(src, /obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = src
 		G.transfer_blood = 0
 
 /obj/item/add_dirt_cover()
 	if(!blood_overlay)
-		generate_dirt_cover()
+		generate_blood_overlay()
 	..()
 	if(dirt_overlay)
 		if(blood_overlay.color != dirt_overlay.color)
-			overlays.Remove(blood_overlay)
+			cut_overlay(blood_overlay)
 			blood_overlay.color = dirt_overlay.color
-			overlays += blood_overlay
+			add_overlay(blood_overlay)
 
 /obj/item/add_blood(mob/living/carbon/human/M)
 	if (!..())
 		return 0
-
-	//if we haven't made our blood_overlay already
-	//add_dirt_cover(new M.species.blood_color)
 
 	if(blood_DNA[M.dna.unique_enzymes])
 		return 0 //already bloodied with this blood. Cannot add more.
@@ -851,7 +935,7 @@
 	return 1 //we applied blood to the item
 
 var/global/list/items_blood_overlay_by_type = list()
-/obj/item/proc/generate_dirt_cover()
+/obj/item/proc/generate_blood_overlay()
 	if(blood_overlay)
 		return
 
@@ -867,8 +951,7 @@ var/global/list/items_blood_overlay_by_type = list()
 		blood_overlay = IMG
 
 /obj/item/proc/showoff(mob/user)
-	for (var/mob/M in view(user))
-		M.show_message("[user] holds up [src]. <a HREF=?src=\ref[M];lookitem=\ref[src]>Take a closer look.</a>",1)
+	user.visible_message("[user] holds up [src]. <a HREF=?_src_=usr;lookitem=\ref[src]>Take a closer look.</a>")
 
 /mob/living/carbon/verb/showoff()
 	set name = "Show Held Item"
@@ -877,3 +960,36 @@ var/global/list/items_blood_overlay_by_type = list()
 	var/obj/item/I = get_active_hand()
 	if(I && !I.abstract)
 		I.showoff(src)
+
+/obj/item/proc/update_inv_mob()
+	if(!slot_equipped || !ismob(loc))
+		return
+	var/mob/M = loc
+	M.update_inv_item(src)
+
+/obj/item/proc/extinguish()
+	return
+
+// Whether or not the given item counts as sharp in terms of dealing damage
+/obj/item/proc/is_sharp()
+	return sharp || edge
+
+// Whether or not the given item counts as cutting with an edge in terms of removing limbs
+/obj/item/proc/has_edge()
+	return edge
+
+/obj/item/damage_flags()
+	. = FALSE
+	if(has_edge())
+		. |= DAM_EDGE
+	if(is_sharp())
+		. |= DAM_SHARP
+		if(damtype == BURN)
+			. |= DAM_LASER
+
+// Is called when somebody is stripping us using the panel. Return TRUE to allow the strip, FALSE to disallow.
+/obj/item/proc/onStripPanelUnEquip(mob/living/who, strip_gloves = FALSE)
+	return TRUE
+
+/obj/item/proc/play_unique_footstep_sound() // TODO: port https://github.com/tgstation/tgstation/blob/master/code/datums/components/squeak.dm
+	return

@@ -46,15 +46,13 @@
 	var/list/uplink_types = list() //Empty list means that the object will be available in all types of uplinks. Alias you will need to state its type.
 
 
-/datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
+/datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U, mob/user)
 	if(item)
 		U.uses -= max(cost, 0)
 		feedback_add_details("traitor_uplink_items_bought", "[item]")
 		return new item(loc)
 
 /datum/uplink_item/proc/buy(obj/item/device/uplink/U, mob/user)
-
-	..()
 	if(!istype(U))
 		return 0
 
@@ -70,7 +68,7 @@
 		if(cost > U.uses)
 			return 0
 
-		var/obj/I = spawn_item(get_turf(user), U)
+		var/obj/I = spawn_item(get_turf(user), U, user)
 		if(!I)
 			return 0
 		var/icon/tempimage = icon(I.icon, I.icon_state)
@@ -245,6 +243,12 @@
 	if(istype(T))
 		T.TC_cost = cost
 
+/datum/uplink_item/dangerous/light_armor
+	name = "Armor Set"
+	desc = "A set of personal armor that includes armored vest and a helmet, designed to ensure survival of gone wild agent."
+	item = /obj/item/weapon/storage/box/syndie_kit/light_armor
+	cost = 10
+	uplink_types = list("traitor")
 
 // AMMUNITION
 
@@ -265,8 +269,8 @@
 	cost = 2
 
 /datum/uplink_item/ammo/revolver
-	name = "Ammo-357"
-	desc = "A box that contains seven additional rounds for the revolver, made using an automatic lathe."
+	name = "Speedloader-.357"
+	desc = "A speedloader that contains seven additional rounds for the revolver, made using an automatic lathe."
 	item = /obj/item/ammo_box/a357
 	cost = 3
 
@@ -593,7 +597,7 @@
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Law Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. Be careful with their wording, as artificial intelligences may look for loopholes to exploit."
-	item = /obj/item/weapon/aiModule/syndicate
+	item = /obj/item/weapon/aiModule/freeform/syndicate
 	cost = 12
 
 /datum/uplink_item/device_tools/plastic_explosives
@@ -609,6 +613,14 @@
 	Ordering this sends you a small beacon that will teleport the power sink to your location on activation."
 	item = /obj/item/device/powersink
 	cost = 12
+
+/datum/uplink_item/device_tools/syndcodebook
+	name = "Sy-Code Book"
+	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which sounds like random letters and drinks to anyone listening. \
+	This manual teaches you Sy-Code. Limited uses. Use :0 before saying something to speak in Sy-Code."
+	item = /obj/item/weapon/syndcodebook
+	cost = 1
+	uplink_types = list("traitor")
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"
@@ -673,12 +685,17 @@
 	item = /obj/item/weapon/implanter/storage
 	cost = 7
 
-/*
-/datum/uplink_item/implants/adrenal
-	name = "Adrenal Implant"
-	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a chemical cocktail, which has a mild healing effect along with removing all stuns and increasing his speed."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
-	cost = 4 */
+/datum/uplink_item/implants/adrenaline
+	name = "Adrenaline Implant"
+	desc = "An implant, that will inject a chemical cocktail, which has a mild healing effect along with removing all stuns and increasing his speed can be activated at the user's will."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenaline
+	cost = 6
+
+/datum/uplink_item/implants/emp
+	name = "EMP Implant"
+	desc = "An implant, that contains power of three emp grenades, can be activated at the user's will."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
+	cost = 3
 
 // POINTLESS BADASSERY
 
@@ -716,7 +733,7 @@
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 0
 
-/datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U)
+/datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U, mob/user)
 
 	var/list/buyable_items = get_uplink_items(U)
 	var/list/possible_items = list()
@@ -734,3 +751,5 @@
 		U.uses -= max(0, I.cost)
 		feedback_add_details("traitor_uplink_items_bought","RN")
 		return new I.item(loc)
+	else
+		to_chat(user, "<span class='warning'>There is no available items you could buy for [U.uses] TK.</span>")

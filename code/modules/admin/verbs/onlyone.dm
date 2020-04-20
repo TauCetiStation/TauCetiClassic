@@ -32,7 +32,7 @@
 
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt(H), SLOT_W_UNIFORM)
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(H), SLOT_L_EAR)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/beret(H), SLOT_HEAD)
+		H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/red(H), SLOT_HEAD)
 		H.equip_to_slot_or_del(new /obj/item/weapon/claymore(H), SLOT_L_HAND)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), SLOT_SHOES)
 		H.equip_to_slot_or_del(new /obj/item/weapon/pinpointer(H.loc), SLOT_L_STORE)
@@ -46,5 +46,5 @@
 		W.registered_name = H.real_name
 		H.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
-	message_admins("\blue [key_name_admin(usr)] used THERE CAN BE ONLY ONE!")
+	message_admins("<span class='notice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>")
 	log_admin("[key_name(usr)] used there can be only one.")

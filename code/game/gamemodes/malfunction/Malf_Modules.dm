@@ -54,7 +54,7 @@ robot_fabricator
 	if(temp)
 		dat = "[temp]<BR><BR><A href='byond://?src=\ref[src];clear=1'>Clear</A>"
 	else if(processing_time <= 0)
-		dat = "<B> No processing time is left available. No more modules are able to be chosen at this time."
+		dat = "<B> No processing time is left available. No more modules are able to be chosen at this time.</B>"
 	else
 		dat = "<B>Select use of processing time: (currently [processing_time] left.)</B><BR>"
 		dat += "<HR>"
@@ -128,7 +128,7 @@ robot_fabricator
 	if(cur_malf.AI_malf_revealed < 4)
 		if(alert(src, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [ticker.mode:apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
 			return
-		captain_announce("We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>", "Network Monitoring")
+		captain_announce("We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>", "Network Monitoring", sound = "malf4")
 
 	cur_malf.takeover()
 

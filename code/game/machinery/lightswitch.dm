@@ -8,12 +8,11 @@
 	icon_state = "light1"
 	anchored = TRUE
 	idle_power_usage = 20
-	power_channel = LIGHT
+	power_channel = STATIC_LIGHT
 	var/on = TRUE
 	var/area/area = null
 	var/otherarea = null
 	var/static/image/overlay
-	//	luminosity = 1
 
 /obj/machinery/light_switch/atom_init()
 	..()
@@ -39,14 +38,14 @@
 		overlay = image(icon, "light1-overlay")
 		overlay.plane = LIGHTING_PLANE + 1
 
-	overlays.Cut()
+	cut_overlays()
 	if(stat & (NOPOWER|BROKEN))
 		icon_state = "light-p"
 		set_light(0)
 	else
 		icon_state = "light[on]"
 		overlay.icon_state = "light[on]-overlay"
-		overlays += overlay
+		add_overlay(overlay)
 
 /obj/machinery/light_switch/examine(mob/user)
 	..()
@@ -60,27 +59,27 @@
 
 	on = !on
 	user.SetNextMove(CLICK_CD_INTERACT)
-	playsound(src, 'sound/items/buttonclick.ogg', 20, 1, 1)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 20)
 
-	for(var/area/A in area.master.related)
-		A.lightswitch = on
-		A.updateicon()
+	area.lightswitch = on
+	area.updateicon()
 
-		for(var/obj/machinery/light_switch/L in A)
-			L.on = on
-			L.updateicon()
+	for(var/obj/machinery/light_switch/L in area)
+		L.on = on
+		L.updateicon()
 
-	area.master.power_change()
+	area.power_change()
 
 /obj/machinery/light_switch/power_change()
 
 	if(!otherarea)
-		if(powered(LIGHT))
+		if(powered(power_channel))
 			stat &= ~NOPOWER
 		else
 			stat |= NOPOWER
 
 		updateicon()
+	update_power_use()
 
 /obj/machinery/light_switch/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))

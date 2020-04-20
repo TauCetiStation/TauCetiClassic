@@ -37,7 +37,7 @@
 	density = TRUE
 	icon_state = "offcenter"
 
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 5000
 
@@ -101,22 +101,22 @@
 	for(var/obj/machinery/gateway/G in linked)
 		G.active = TRUE
 		G.update_icon()
-	playsound(src, 'sound/machines/gateway/gateway_open.ogg', 100, 2)
+	playsound(src, 'sound/machines/gateway/gateway_open.ogg', VOL_EFFECTS_MASTER)
 	active = TRUE
 	update_icon()
 
-	use_power = 2
+	set_power_use(ACTIVE_POWER_USE)
 	START_PROCESSING(SSmachine, src)
 
 /obj/machinery/gateway/center/proc/toggleoff()
 	for(var/obj/machinery/gateway/G in linked)
 		G.active = FALSE
 		G.update_icon()
-	playsound(src, 'sound/machines/gateway/gateway_close.ogg', 100, 2)
+	playsound(src, 'sound/machines/gateway/gateway_close.ogg', VOL_EFFECTS_MASTER)
 	active = FALSE
 	update_icon()
 
-	use_power = 1
+	set_power_use(IDLE_POWER_USE)
 	STOP_PROCESSING(SSmachine, src)
 
 /obj/machinery/gateway/center/proc/calibrate(user)
@@ -182,13 +182,13 @@
 	use_power(1000)
 
 /obj/machinery/gateway/center/attackby(obj/item/device/W, mob/user)
-	if(istype(W,/obj/item/device/multitool))
+	if(ismultitool(W))
 		calibrate(user)
 	else
 		..()
 
 /obj/machinery/gateway/proc/enter_to_transit(atom/movable/entered, turf/target)
-	playsound(src, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)
+	playsound(src, 'sound/machines/gateway/gateway_enter.ogg', VOL_EFFECTS_MASTER)
 	entered.freeze_movement = TRUE
 	entered.forceMove(transit_loc.loc)
 	if(isliving(entered))
@@ -197,7 +197,7 @@
 		var/obj/screen/cinematic = new /obj/screen{icon='icons/effects/gateway_entry.dmi'; icon_state="entry"; layer=21; mouse_opacity=0; screen_loc="1,0"; } (src)
 		if(M.client)
 			M.client.screen += cinematic
-			M.playsound_local(M.loc, 'sound/machines/gateway/gateway_transit.ogg', 100, 2)
+			M.playsound_local(M.loc, 'sound/machines/gateway/gateway_transit.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		addtimer(CALLBACK(src, .proc/exit_from_transit, entered, target, cinematic), 100)
 	else
 		addtimer(CALLBACK(src, .proc/exit_from_transit, entered, target), 100)
@@ -214,7 +214,7 @@
 		M.AdjustStunned(-10, 1, 1, 0)
 	entered.freeze_movement = FALSE
 	entered.forceMove(target)
-	playsound(target, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)
+	playsound(target, 'sound/machines/gateway/gateway_enter.ogg', VOL_EFFECTS_MASTER)
 
 /obj/effect/landmark/gateway_transit
 
@@ -226,6 +226,10 @@
 /obj/machinery/gateway/center/station
 	name = "NSS Exodus Gateway"
 	block_exile_implant = FALSE
+
+/obj/machinery/gateway/center/station/atom_init()
+	. = ..()
+	name = "[station_name()] Gateway"
 
 /obj/machinery/gateway/center/station/process()
 	..()

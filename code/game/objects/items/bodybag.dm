@@ -5,7 +5,7 @@
 	desc = "A folded bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_folded"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/bodybag/attack_self(mob/user)
 	var/obj/structure/closet/body_bag/R = new /obj/structure/closet/body_bag(user.loc)
@@ -33,15 +33,15 @@
 		if (t)
 			src.name = "body bag - "
 			src.name += t
-			src.overlays += image(src.icon, "bodybag_label")
+			src.add_overlay(image(src.icon, "bodybag_label"))
 		else
 			src.name = "body bag"
 	//..() //Doesn't need to run the parent. Since when can fucking bodybags be welded shut? -Agouri
 		return
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(W))
 		to_chat(user, "You cut the tag off the bodybag")
 		src.name = "body bag"
-		src.overlays.Cut()
+		src.cut_overlays()
 		return
 
 
@@ -101,9 +101,22 @@
 		O.desc = "Pretty useless now.."
 		qdel(src)
 
+/obj/structure/closet/body_bag/cryobag/Entered(atom/movable/AM, atom/oldLoc)
+	if(isliving(AM))
+		var/mob/living/M = AM
+		M.ExtinguishMob()
+		M.apply_status_effect(STATUS_EFFECT_STASIS_BAG, null, TRUE)
+		used++
+	..()
+
+/obj/structure/closet/body_bag/cryobag/dump_contents()
+	for(var/mob/living/M in contents)
+		M.remove_status_effect(STATUS_EFFECT_STASIS_BAG)
+	..()
+
 /obj/structure/closet/body_bag/cryobag/MouseDrop(over_object, src_location, over_location)
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
 	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
-		to_chat(usr, "\red You can't fold that up anymore..")
+		to_chat(usr, "<span class='warning'>You can't fold that up anymore..</span>")
 	..()

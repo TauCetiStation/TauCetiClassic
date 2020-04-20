@@ -75,14 +75,14 @@
 
 /obj/item/clothing/under/rank/centcom_officer
 	desc = "It's a jumpsuit worn by CentCom Officers."
-	name = "\improper CentCom officer's jumpsuit"
+	name = "CentCom officer's jumpsuit"
 	icon_state = "officer"
 	item_state = "g_suit"
 	item_color = "officer"
 
 /obj/item/clothing/under/rank/centcom_commander
 	desc = "It's a jumpsuit worn by CentCom's highest-tier Commanders."
-	name = "\improper CentCom officer's jumpsuit"
+	name = "CentCom officer's jumpsuit"
 	icon_state = "centcom"
 	item_state = "dg_suit"
 	item_color = "centcom"
@@ -95,12 +95,12 @@
 	item_color = "ert_uniform"
 
 /obj/item/clothing/under/space
-	name = "\improper NASA jumpsuit"
+	name = "NASA jumpsuit"
 	desc = "It has a NASA logo on it and is made of space-proofed materials."
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
-	w_class = 4//bulky item
+	w_class = ITEM_SIZE_LARGE//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -577,14 +577,14 @@
 
 /obj/item/clothing/under/rank/centcom_officer_old
 	desc = "It's a jumpsuit worn by Centcom Officers."
-	name = "\improper Centcom officer's jumpsuit"
+	name = "Centcom officer's jumpsuit"
 	icon_state = "officer_old"
 	item_state = "g_suit"
 	item_color = "officer_old"
 
 /obj/item/clothing/under/rank/centcom_commander_old
 	desc = "It's a jumpsuit worn by Centcom's highest-tier Commanders."
-	name = "\improper Centcom officer's jumpsuit"
+	name = "Centcom officer's jumpsuit"
 	icon_state = "centcom_old"
 	item_state = "dg_suit"
 	item_color = "centcom_old"
@@ -632,10 +632,6 @@
 	item_state = "flapper"
 	item_color = "flapper"
 
-/obj/item/clothing/under/det/max_payne
-	icon_state = "max"
-	item_color = "max"
-
 /obj/item/clothing/under/rank/capcamsole
 	desc = "It's a blue feminine camisole with some gold markings denoting the rank of \"Captain\" and gold aquila on it."
 	name = "captain's camisole"
@@ -652,7 +648,7 @@
 
 /obj/item/clothing/under/rank/centcom/representative
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Ensign\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."
-	name = "\improper NanoTrasen navy uniform"
+	name = "NanoTrasen navy uniform"
 	icon_state = "officer"
 	item_state = "g_suit"
 	item_color = "officer"
@@ -660,7 +656,7 @@
 
 /obj/item/clothing/under/rank/centcom/officer
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Lieutenant Commander\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."
-	name = "\improper NanoTrasen officers uniform"
+	name = "NanoTrasen officers uniform"
 	icon_state = "officer"
 	item_state = "g_suit"
 	item_color = "officer"
@@ -668,7 +664,7 @@
 
 /obj/item/clothing/under/rank/centcom/captain
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Captain\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."
-	name = "\improper NanoTrasen captains uniform"
+	name = "NanoTrasen captains uniform"
 	icon_state = "centcom"
 	item_state = "dg_suit"
 	item_color = "centcom"
@@ -686,6 +682,7 @@
 	desc = "A long loose piece of clothing worn in a hospital by someone doing or having an operation. It can be used as clothing for bedridden patients."
 	icon_state = "patient_gown"
 	item_color = "patient_gown"
+	body_parts_covered = 0
 
 /obj/item/clothing/under/pretty_dress
 	name = "pretty dress"
@@ -748,4 +745,70 @@
 		body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	else if(slot == SLOT_HEAD)
 		body_parts_covered = HEAD
+
+/obj/item/clothing/under/nt_pmc_uniform
+	name = "NT PCM Uniform"
+	desc = "Uniform used by the private security corporation."
+	icon_state = "nt_pmc_uniform"
+	item_state = "bl_suit"
+	item_color = "nt_pmc_uniform"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/under/nt_pmc_uniform_light
+	name = "NT PCM Light Uniform"
+	desc = "Uniform used by the private security corporation. This one without sleeves."
+	icon_state = "nt_pmc_uniform"
+	item_state = "bl_suit"
+	item_color = "nt_pmc_uniform_light"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/under/rank/postal_dude_shirt
+	name = "blue shirt"
+	desc = "A blue shirt with image of alien in front."
+	icon_state = "dude_shirt"
+	item_state = "b_suit"
+	item_color = "dude_shirt"
+
+/obj/item/clothing/under/sport
+	name = "white and black sport uniform"
+	desc = "No pain - no gain."
+	icon_state = "DDR_sport"
+	item_state = "gy_suit"
+	item_color = "DDR_sport"
+
+/obj/item/clothing/under/sport/blue
+	name = "blue sport uniform"
+	icon_state = "blue_sport"
+	item_state = "b_suit"
+	item_color = "blue_sport"
+
+/obj/item/clothing/under/sport/black
+	name = "black sport uniform"
+	icon_state = "black_sport"
+	item_state = "bl_suit"
+	item_color = "black_sport"
+
+/obj/item/clothing/under/M35_Jacket
+	name = "M35 Filde Jacket"
+	desc = "Standart wehrmacht field uniform."
+	icon_state = "M35_Filde_Jacket"
+	item_state = "g_suit"
+	item_color = "M35_Filde_Jacket"
+	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
+
+/obj/item/clothing/under/M35_Jacket_Oficer
+	name = "M35 Filde Oficer Jacket"
+	desc = "Werhmacht officer jacket uniform."
+	icon_state = "M35_Filde_Jacket_Officer"
+	item_state = "g_suit"
+	item_color = "M35_Filde_Jacket_Officer"
+	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
+
+/obj/item/clothing/under/Waffen_SS_Form
+	name = "Waffen SS Form"
+	desc = "A special uniform for the SS."
+	icon_state = "SS_Form"
+	item_state = "bl_suit"
+	item_color = "SS_Form"
+	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
 

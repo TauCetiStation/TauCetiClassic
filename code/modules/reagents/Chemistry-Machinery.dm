@@ -1,28 +1,37 @@
-#define SOLID 1
-#define LIQUID 2
-#define GAS 3
 #define MAX_PILL_SPRITE 24
 #define MAX_BOTTLE_SPRITE 3
+
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 40
 	var/ui_title = "Chem Dispenser 5000"
 	var/energy = 100
 	var/max_energy = 100
 	var/amount = 30
 	var/accept_glass = 0
-	var/beaker = null
+	var/obj/item/weapon/reagent_containers/beaker = null
 	var/recharged = 0
 	var/recharge_delay = 15
 	var/hackedcheck = 0
-	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
-	"sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron",
-	"copper","mercury","radium","water","ethanol","sugar","sacid","tungsten")
+	var/list/dispensable_reagents = list(
+		"hydrogen", "lithium", "carbon", "nitrogen", "oxygen", "fluorine",
+		"sodium", "aluminum", "silicon", "phosphorus", "sulfur", "chlorine", "potassium", "iron",
+		"copper", "mercury", "radium", "water", "ethanol", "sugar", "sacid", "tungsten"
+	)
+
+/obj/machinery/chem_dispenser/atom_init()
+	. = ..()
+	recharge()
+	dispensable_reagents = sortList(dispensable_reagents)
+
+/obj/machinery/chem_dispenser/Destroy()
+	QDEL_NULL(beaker)
+	return ..()
 
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER)) return
@@ -34,25 +43,21 @@
 		nanomanager.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/power_change()
-	if(powered())
+	if(anchored && powered())
 		stat &= ~NOPOWER
 	else
 		spawn(rand(0, 15))
 			stat |= NOPOWER
+			update_power_use()
 	nanomanager.update_uis(src) // update all UIs attached to src
+	update_power_use()
 
 /obj/machinery/chem_dispenser/process()
-
 	if(recharged <= 0)
 		recharge()
 		recharged = recharge_delay
 	else
 		recharged -= 1
-
-/obj/machinery/chem_dispenser/atom_init()
-	. = ..()
-	recharge()
-	dispensable_reagents = sortList(dispensable_reagents)
 
 /obj/machinery/chem_dispenser/ex_act(severity)
 	switch(severity)
@@ -95,15 +100,15 @@
 	data["glass"] = accept_glass
 	var/beakerContents[0]
 	var/beakerCurrentVolume = 0
-	if(beaker && beaker:reagents && beaker:reagents.reagent_list.len)
-		for(var/datum/reagent/R in beaker:reagents.reagent_list)
+	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
+		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 			beakerCurrentVolume += R.volume
 	data["beakerContents"] = beakerContents
 
 	if (beaker)
 		data["beakerCurrentVolume"] = beakerCurrentVolume
-		data["beakerMaxVolume"] = beaker:volume
+		data["beakerMaxVolume"] = beaker.volume
 	else
 		data["beakerCurrentVolume"] = null
 		data["beakerMaxVolume"] = null
@@ -133,13 +138,23 @@
 
 	if(href_list["amount"])
 		amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
-		amount = Clamp(amount, 0, 100) // Since the user can actually type the commands himself, some sanity checking
+		amount = CLAMP(amount, 0, 100) // Since the user can actually type the commands himself, some sanity checking
+
+		if(iscarbon(usr))
+			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
 
 	if(href_list["dispense"])
 		if (dispensable_reagents.Find(href_list["dispense"]) && beaker != null)
 			var/obj/item/weapon/reagent_containers/B = src.beaker
 			var/datum/reagents/R = B.reagents
 			var/space = R.maximum_volume - R.total_volume
+
+			if(iscarbon(usr))
+				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
+
+			if ((space > 0) && (energy * 10 >= min(amount, space)))
+				playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 40) // 15 isn't enough
+
 			R.add_reagent(href_list["dispense"], min(amount, energy * 10, space))
 			energy = max(energy - min(amount, energy * 10, space) / 10, 0)
 
@@ -149,10 +164,19 @@
 			B.loc = loc
 			beaker = null
 
+			if(iscarbon(usr))
+				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
+
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+
 
 /obj/machinery/chem_dispenser/attackby(obj/item/weapon/reagent_containers/B, mob/user)
 //	if(isrobot(user))
 //		return
+
+	if(default_unfasten_wrench(user, B))
+		power_change()
+		return
 
 	if(src.beaker)
 		to_chat(user, "Something is already loaded into the machine.")
@@ -170,6 +194,7 @@
 		user.drop_item()
 		B.loc = src
 		to_chat(user, "You set [B] on the machine.")
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		nanomanager.update_uis(src) // update all UIs attached to src
 		return
 
@@ -259,7 +284,7 @@
 		return
 
 	if(panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
+		if(iscrowbar(I))
 			if(beaker)
 				var/obj/item/weapon/reagent_containers/glass/B = beaker
 				B.loc = loc
@@ -279,26 +304,24 @@
 	max_energy = 100
 	dispensable_reagents = list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","watermelonjuice")
 
-	/obj/machinery/chem_dispenser/soda/attackby(obj/item/weapon/B, mob/user)
-		..()
-		if(istype(B, /obj/item/device/multitool))
-			if(hackedcheck == 0)
-				to_chat(user, "You change the mode from 'McNano' to 'Pizza King'.")
-				dispensable_reagents += list("thirteenloko","grapesoda")
-				hackedcheck = 1
-				return
+/obj/machinery/chem_dispenser/soda/attackby(obj/item/weapon/B, mob/user)
+	..()
+	if(ismultitool(B))
+		if(hackedcheck == 0)
+			to_chat(user, "You change the mode from 'McNano' to 'Pizza King'.")
+			dispensable_reagents += list("thirteenloko","grapesoda")
+			hackedcheck = 1
+			return
 
-			else
-				to_chat(user, "You change the mode from 'Pizza King' to 'McNano'.")
-				dispensable_reagents -= list("thirteenloko")
-				hackedcheck = 0
-				return
+		else
+			to_chat(user, "You change the mode from 'Pizza King' to 'McNano'.")
+			dispensable_reagents -= list("thirteenloko")
+			hackedcheck = 0
+			return
 
-		else if(istype(B, /obj/item/weapon/wrench))
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = !anchored
-			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-		return
+	else if(iswrench(B))
+		default_unfasten_wrench(user, B)
+
 /obj/machinery/chem_dispenser/beer
 	icon_state = "booze_dispenser"
 	name = "booze dispenser"
@@ -309,37 +332,34 @@
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead")
 
-	/obj/machinery/chem_dispenser/beer/attackby(obj/item/weapon/B, mob/user)
-		..()
+/obj/machinery/chem_dispenser/beer/attackby(obj/item/weapon/B, mob/user)
+	..()
 
-		if(istype(B, /obj/item/device/multitool))
-			if(hackedcheck == 0)
-				to_chat(user, "You disable the 'nanotrasen-are-cheap-bastards' lock, enabling hidden and very expensive boozes.")
-				dispensable_reagents += list("goldschlager","patron","watermelonjuice","berryjuice")
-				hackedcheck = 1
-				return
+	if(ismultitool(B))
+		if(hackedcheck == 0)
+			to_chat(user, "You disable the 'nanotrasen-are-cheap-bastards' lock, enabling hidden and very expensive boozes.")
+			dispensable_reagents += list("goldschlager","patron","watermelonjuice","berryjuice")
+			hackedcheck = 1
+			return
 
-			else
-				to_chat(user, "You re-enable the 'nanotrasen-are-cheap-bastards' lock, disabling hidden and very expensive boozes.")
-				dispensable_reagents -= list("goldschlager","patron","watermelonjuice","berryjuice")
-				hackedcheck = 0
-				return
+		else
+			to_chat(user, "You re-enable the 'nanotrasen-are-cheap-bastards' lock, disabling hidden and very expensive boozes.")
+			dispensable_reagents -= list("goldschlager","patron","watermelonjuice","berryjuice")
+			hackedcheck = 0
+			return
 
-		else if(istype(B, /obj/item/weapon/wrench))
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = !anchored
-			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-		return
+	else if(iswrench(B))
+		default_unfasten_wrench(user, B)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/obj/item/weapon/storage/pill_bottle/loaded_pill_bottle = null
@@ -378,15 +398,18 @@
 	return
 
 /obj/machinery/chem_master/power_change()
-	if(powered())
+	if(anchored && powered())
 		stat &= ~NOPOWER
 	else
 		spawn(rand(0, 15))
 			stat |= NOPOWER
+			update_power_use()
+	update_power_use()
 
 /obj/machinery/chem_master/attackby(obj/item/B, mob/user)
 
 	if(default_unfasten_wrench(user, B))
+		power_change()
 		return
 
 	if(istype(B, /obj/item/weapon/reagent_containers/glass))
@@ -548,7 +571,7 @@
 				return FALSE
 			useramount = amt_temp
 			if(useramount < 0)
-				message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [useramount]</a> ! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+				message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [useramount]</a>! [ADMIN_JMP(src)]")
 				log_admin("EXPLOIT : [key_name(usr)] tried to exploit a chemistry by entering a negative value: [useramount] !")
 				return FALSE
 			if(useramount > 300)
@@ -572,7 +595,7 @@
 				return FALSE
 			useramount = amt_temp
 			if(useramount < 0)
-				message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [useramount]</a> ! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+				message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [useramount]</a>! [ADMIN_JMP(src)]")
 				log_admin("EXPLOIT : [key_name(usr)] tried to exploit a chemistry by entering a negative value: [useramount] !")
 				return FALSE
 			if(useramount > 300)
@@ -699,7 +722,7 @@
 
 /obj/machinery/chem_master/proc/isgoodnumber(num)
 	if(isnum(num))
-		return Clamp(round(num), 0, 200)
+		return CLAMP(round(num), 0, 200)
 	else
 		return 0
 
@@ -739,7 +762,7 @@
 		return
 
 	if(panel_open)
-		if(istype(B, /obj/item/weapon/crowbar))
+		if(iscrowbar(B))
 			default_deconstruction_crowbar(B)
 			return 1
 		else
@@ -779,7 +802,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	circuit = /obj/item/weapon/circuitboard/pandemic
-	//use_power = 1
+	//use_power = IDLE_POWER_USE
 	//idle_power_usage = 20		//defaults make more sense.
 	var/temphtml = ""
 	var/wait = null
@@ -804,6 +827,8 @@
 		spawn(rand(0, 15))
 			src.icon_state = (src.beaker?"mixer1_nopower":"mixer0_nopower")
 			stat |= NOPOWER
+			update_power_use()
+	update_power_use()
 
 
 /obj/machinery/computer/pandemic/Topic(href, href_list)
@@ -872,7 +897,7 @@
 	else if (href_list["empty_beaker"])
 		beaker.reagents.clear_reagents()
 	else if (href_list["eject"])
-		beaker:loc = src.loc
+		beaker.loc = src.loc
 		beaker = null
 		icon_state = "mixer0"
 	else if(href_list["clear"])
@@ -1001,7 +1026,7 @@
 		src.updateUsrDialog()
 		icon_state = "mixer1"
 
-	else if(istype(I, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(I))
 		if(src.beaker)
 			beaker.loc = get_turf(src)
 		..()
@@ -1020,7 +1045,7 @@
 	layer = 2.9
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
 	pass_flags = PASSTABLE
@@ -1028,8 +1053,7 @@
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/limit = 10
 	var/list/blend_items = list (
-
-		//Sheets
+		//Sheets,
 		/obj/item/stack/sheet/mineral/phoron = list("phoron" = 20),
 		/obj/item/stack/sheet/mineral/uranium = list("uranium" = 20),
 		/obj/item/stack/sheet/mineral/clown = list("banana" = 20),
@@ -1038,7 +1062,7 @@
 		/obj/item/weapon/grown/nettle = list("sacid" = 0),
 		/obj/item/weapon/grown/deathnettle = list("pacid" = 0),
 
-		//Blender Stuff
+		//Blender Stuff,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("cornoil" = 0),
@@ -1049,19 +1073,20 @@
 		/obj/item/weapon/reagent_containers/food/snacks/egg = list("egg" = -5),
 
 
-		//archaeology!
+		//archaeology,
 		/obj/item/weapon/rocksliver = list("ground_rock" = 50),
 
 
 
-		//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
+		//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this!,
 		/obj/item/weapon/reagent_containers/pill = list(),
-		/obj/item/weapon/reagent_containers/food = list()
+		/obj/item/weapon/reagent_containers/food = list(),
+		/obj/item/weapon/coin = list()
 	)
 
 	var/list/juice_items = list (
 
-		//Juicer Stuff
+		//Juicer Stuff,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("tomatojuice" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = list("carrotjuice" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = list("berryjuice" = 0),
@@ -1072,6 +1097,8 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/lime = list("limejuice" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = list("watermelonjuice" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = list("poisonberryjuice" = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/greengrapes = list("grapejuice" = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/grapes = list("grapejuice" = 0),
 	)
 
 
@@ -1088,13 +1115,8 @@
 
 /obj/machinery/reagentgrinder/attackby(obj/item/O, mob/user)
 
-	if(default_unfasten_wrench(user, O))
-		return
-
-	if(istype(O, /obj/item/weapon/wrench))
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		anchored = !anchored
-		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
+	if(iswrench(O))
+		default_unfasten_wrench(user, O)
 		return
 
 	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
@@ -1278,7 +1300,7 @@
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(src.loc, 'sound/machines/juicer.ogg', 20, 1)
+	playsound(src, 'sound/machines/juicer.ogg', VOL_EFFECTS_MASTER, 20)
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	inuse = 1
@@ -1314,7 +1336,7 @@
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(src.loc, 'sound/machines/blender.ogg', 35, 1)
+	playsound(src, 'sound/machines/blender.ogg', VOL_EFFECTS_MASTER, 35)
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	inuse = 1
@@ -1403,6 +1425,15 @@
 
 	//Everything else - Transfers reagents from it into beaker
 	for (var/obj/item/weapon/reagent_containers/O in holdingitems)
+		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+			break
+		var/amount = O.reagents.total_volume
+		O.reagents.trans_to(beaker, amount)
+		if(!O.reagents.total_volume)
+			remove_object(O)
+
+//Coin
+	for (var/obj/item/weapon/coin/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
 		var/amount = O.reagents.total_volume

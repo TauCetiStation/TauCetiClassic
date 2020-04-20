@@ -1,36 +1,35 @@
-/mob/var/typing = 0
+/mob/var/typing = FALSE
 
-/mob/var/obj/effect/decal/typing_indicator
+/mob/var/image/typing_indicator
 
-/mob/proc/set_typing_indicator(state)
-
+/mob/proc/set_typing_indicator(state, indi_icon = "typing")
 	if(!typing_indicator)
-		typing_indicator = new
-		typing_indicator.icon = 'icons/mob/talk.dmi'
-		typing_indicator.icon_state = "typing"
+		typing_indicator = image('icons/mob/talk.dmi', indi_icon)
 		typing_indicator.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+		typing_indicator.layer = MOB_LAYER + 1
 
-	if(client && !stat)
-		typing_indicator.invisibility = invisibility
-		if(state)
-			if(!typing)
-				overlays += typing_indicator
-				typing = 1
-		else
-			if(typing)
-				overlays -= typing_indicator
-				typing = 0
-		return state
+	if(typing_indicator.icon_state != indi_icon)
+		if(typing && state)
+			cut_overlay(typing_indicator)
+		typing_indicator.icon_state = indi_icon
+
+	if(state)
+		if(client && !stat)
+			add_overlay(typing_indicator)
+			typing = TRUE
+	else
+		cut_overlay(typing_indicator)
+		typing = FALSE
 
 /mob/verb/say_wrapper()
 	set name = ".Say"
-	set hidden = 1
+	set hidden = TRUE
 
-	set_typing_indicator(1)
+	set_typing_indicator(TRUE)
 	var/message = input("","say (text)") as text|null
 	if(message)
 		say_verb(message)
-	set_typing_indicator(0)
+	set_typing_indicator(FALSE)
 
 /mob/verb/me_wrapper()
 	set name = ".Me"

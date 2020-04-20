@@ -11,17 +11,18 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.3
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/clothing/head/helmet/warden
-	name = "warden's hat"
+	name = "warden's helmet"
 	desc = "It's a special helmet issued to the Warden of a security force. Protects the head from impacts."
 	icon_state = "helmet_warden"
 
 /obj/item/clothing/head/helmet/HoS
-	name = "head of security hat"
+	name = "head of security's hat"
 	desc = "The hat of the Head of Security. For showing the officers who's in charge."
-	icon_state = "hoscap"
+	icon_state = "hoshat"
+	item_state = "hoshat"
 	flags = HEADCOVERSEYES
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 	flags_inv = HIDEEARS
@@ -73,12 +74,14 @@
 	name = "bulletproof helmet"
 	desc = "A bulletproof security helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
 	icon_state = "bulletproof"
+	flags = HEADCOVERSEYES | THICKMATERIAL | HEADCOVERSMOUTH	// cause sprite has a drawn mask
 
 /obj/item/clothing/head/helmet/laserproof
 	name = "ablative helmet"
 	desc = "A ablative security helmet that excels in protecting the wearer against energy and laser projectiles."
 	icon_state = "laserproof"
 	armor = list(melee = 10, bullet = 10, laser = 45,energy = 55, bomb = 0, bio = 0, rad = 0)
+	flags = HEADCOVERSEYES | THICKMATERIAL | HEADCOVERSMOUTH	// cause sprite has a drawn mask
 	siemens_coefficient = 0
 
 	var/hit_reflect_chance = 40
@@ -88,7 +91,7 @@
 		return TRUE
 
 /obj/item/clothing/head/helmet/swat
-	name = "\improper SWAT helmet"
+	name = "SWAT helmet"
 	desc = "They're often used by highly trained Swat Members."
 	icon_state = "swat"
 	flags = HEADCOVERSEYES | THICKMATERIAL
@@ -100,7 +103,7 @@
 	siemens_coefficient = 0.3
 
 /obj/item/clothing/head/helmet/thunderdome
-	name = "\improper thunderdome helmet"
+	name = "thunderdome helmet"
 	desc = "<i>'Let the battle commence!'</i>"
 	icon_state = "thunderdome"
 	flags = HEADCOVERSEYES
@@ -167,3 +170,25 @@
 	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
 	icon_state = "roman_c"
 	item_state = "roman_c"
+
+/obj/item/clothing/head/helmet/M89_Helmet
+	name = "M89 Helmet"
+	desc = "Combat helmet used by the private security corporation."
+	icon_state = "m89_helmet"
+	item_state = "helmet"
+	item_color = "m89_helmet"
+
+/obj/item/clothing/head/helmet/M35_Helmet
+	name = "M35 Helmet"
+	desc = "The Basic werhmacht army helmet."
+	icon_state = "M35_Helmet"
+	item_state = "helmet"
+	item_color = "M35_Helmet"
+
+/obj/item/clothing/head/helmet/Waffen_SS_Helmet
+	name = "Waffen SS Helmet"
+	desc = "A helmet from SS uniform set."
+
+	icon_state = "SS_Helmet"
+	item_state = "helmet"
+	item_color = "SS_Helmet"

@@ -1,7 +1,7 @@
 /obj/item/device/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some rags and a plank."
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	icon_state = "torch"
 	item_state = "torch"
 	light_color = LIGHT_COLOR_FIRE
@@ -12,8 +12,17 @@
 /obj/item/device/flashlight/flare/torch/attackby(obj/item/W, mob/user, params) // ravioli ravioli here comes stupid copypastoli
 	..()
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(is_hot(W))
+	if(W.get_current_temperature())
 		light(user)
+
+/obj/item/device/flashlight/flare/torch/get_current_temperature()
+	if(on)
+		return 1500
+	else
+		return 0
+
+/obj/item/device/flashlight/flare/torch/extinguish()
+	turn_off()
 
 /obj/item/device/flashlight/flare/torch/proc/light(mob/user)
 	// Usual checks
@@ -22,6 +31,7 @@
 		return
 	if(on)
 		return
+	playsound(user, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='notice'>[user] lits the [src] on.</span>", "<span class='notice'>You had lt on the [src]!</span>")
 	src.force = on_damage
 	src.damtype = "fire"
@@ -58,6 +68,8 @@
 	if(prob(33) || old)
 		make_old()
 
+/obj/item/stack/medical/bruise_pack/rags/update_icon()
+	return
 
 //////SHITTY BONFIRE PORT///////
 
@@ -94,7 +106,7 @@
 		R.use(1)
 		can_buckle = TRUE
 		buckle_require_restraints = TRUE
-		to_chat(user, "<span class='italics'>You add a rod to \the [src].")
+		to_chat(user, "<i>You add a rod to \the [src].</i>")
 		var/image/stake = image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_rod")
 		stake.pixel_y = 16
 		stake.layer = 5
@@ -103,11 +115,11 @@
 			//if("Grill")
 			//	R.use(1)
 			//	grill = TRUE
-			//	to_chat(user, "<span class='italics'>You add a grill to \the [src].")
-			//	overlays += image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_grill")
+			//	to_chat(user, "<i>You add a grill to \the [src].</i>")
+			//	add_overlay(image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_grill"))
 			//else
 			//	return ..()
-	if(is_hot(W))
+	if(W.get_current_temperature())
 		StartBurning()
 /*	if(grill)
 		if(user.a_intent != "hurt" && !(W.flags_1 & ABSTRACT_1))
@@ -118,8 +130,8 @@
 				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 					return
 				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-				W.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-				W.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_x = CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_y = CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 		else */
 	return ..()
 
@@ -157,6 +169,11 @@
 	if(burning & !grill)
 		Burn()
 
+/obj/structure/bonfire/get_current_temperature()
+	if(burning)
+		return 1000
+	return 0
+
 /obj/structure/bonfire/proc/Burn()
 	var/turf/current_location = get_turf(src)
 	current_location.hotspot_expose(1000, 500)
@@ -169,7 +186,7 @@
 		else if(isliving(A))
 			var/mob/living/L = A
 			if(prob(20))
-				L.emote("scream",,, 1)
+				L.emote("scream")
 			L.adjust_fire_stacks(fire_stack_strength)
 			L.IgniteMob()
 

@@ -5,7 +5,7 @@
 	desc = "A glowing bluespace crystal, not much is known about how they work. It looks very delicate."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "bluespace_crystal"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	origin_tech = "bluespace=4;materials=3"
 	var/blink_range = 8 // The teleport range when crushed/thrown at someone.
 
@@ -21,12 +21,12 @@
 		qdel(src)
 
 /obj/item/bluespace_crystal/proc/blink_mob(mob/living/L)
-	if(istype(L) && L.z != ZLEVEL_CENTCOMM)
+	if(istype(L) && !is_centcom_level(L.z))
 		do_teleport(L, get_turf(L), blink_range, asoundin = 'sound/effects/phasein.ogg')
 		return TRUE
 	return FALSE
 
-/obj/item/bluespace_crystal/throw_impact(atom/hit_atom)
+/obj/item/bluespace_crystal/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(blink_mob(hit_atom))
 		qdel(src)

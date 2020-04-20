@@ -23,7 +23,7 @@ var/timestop_count = 0
 /obj/effect/timestop/atom_init()
 	. = ..()
 	timestop_count++
-	playsound(src, 'sound/magic/TIMEPARADOX2.ogg', 100, 1, -1)
+	playsound(src, 'sound/magic/TIMEPARADOX2.ogg', VOL_EFFECTS_MASTER)
 	timestop()
 	QDEL_IN(src, duration)
 

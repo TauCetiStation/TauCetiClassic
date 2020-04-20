@@ -273,7 +273,7 @@
 		if(closet_spawn)
 			new /obj/structure/closet/syndicate/nuclear(closet_spawn.loc)
 
-		for (var/obj/effect/landmark/A in /area/syndicate_station/start)//Because that's the only place it can BE -Sieve
+		for (var/obj/effect/landmark/A in /area/shuttle/syndicate/start)//Because that's the only place it can BE -Sieve
 			if (A.name == "Syndicate-Gear-Closet")
 				new /obj/structure/closet/syndicate/personal(A.loc)
 				qdel(A)
@@ -347,7 +347,7 @@
 	if(candidates.len)
 		var/numagents = 6
 		//Spawns commandos and equips them.
-		for (var/obj/effect/landmark/L in /area/syndicate_mothership/elite_squad)
+		for (var/obj/effect/landmark/L in /area/custom/syndicate_mothership/elite_squad)
 			if(numagents<=0)
 				break
 			if (L.name == "Syndicate-Commando")
@@ -371,7 +371,7 @@
 				//So they don't forget their code or mission.
 
 
-				to_chat(new_syndicate_commando, "\blue You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: \red<B> [input]</B>")
+				to_chat(new_syndicate_commando, "<span class='notice'>You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: <span class='warning'><B> [input]</B></span></span>")
 
 				numagents--
 		if(numagents >= 6)
@@ -428,7 +428,7 @@
 	else
 		new_character.real_name = "[pick(first_names_female)] [pick(last_names)]"
 	new_character.name = new_character.real_name
-	new_character.age = rand(17,45)
+	new_character.age = rand(new_character.species.min_age, new_character.species.min_age * 1.5)
 
 	new_character.dna.ready_dna(new_character)
 	new_character.key = G_found.key
@@ -448,7 +448,7 @@
 
 	new_syndicate_commando.real_name = "[!syndicate_leader_selected ? syndicate_commando_rank : syndicate_commando_leader_rank] [syndicate_commando_name]"
 	new_syndicate_commando.name = new_syndicate_commando.real_name
-	new_syndicate_commando.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
+	new_syndicate_commando.age = !syndicate_leader_selected ? rand(new_syndicate_commando.species.min_age, new_syndicate_commando.species.min_age * 1.5) : rand(new_syndicate_commando.species.min_age * 1.25, new_syndicate_commando.species.min_age * 1.75)
 
 	new_syndicate_commando.dna.ready_dna(new_syndicate_commando)//Creates DNA.
 
@@ -511,8 +511,8 @@
 					break
 
 				new_vox.key = theghost.key
-				to_chat(new_vox, "\blue You are a Vox Primalis, fresh out of the Shoal. Your ship has arrived at the Tau Ceti system hosting the NSV Exodus... or was it the Luna? NSS? Utopia? Nobody is really sure, but everyong is raring to start pillaging! Your current goal is: \red<B> [input]</B>")
-				to_chat(new_vox, "\red Don't forget to turn on your nitrogen internals!")
+				to_chat(new_vox, "<span class='notice'>You are a Vox Primalis, fresh out of the Shoal. Your ship has arrived at the [system_name()] system hosting the NSV Exodus... or was it the Luna? NSS? Utopia? Nobody is really sure, but everyong is raring to start pillaging! Your current goal is: <span class='warning'><B> [input]</B></span></span>")
+				to_chat(new_vox, "<span class='warning'>Don't forget to turn on your nitrogen internals!</span>")
 
 				raiders--
 			if(raiders > max_raiders)
@@ -539,7 +539,7 @@
 
 	new_vox.real_name = capitalize(newname)
 	new_vox.name = new_vox.real_name
-	new_vox.age = rand(12,20)
+	new_vox.age = rand(new_vox.species.min_age, new_vox.species.max_age)
 
 	new_vox.dna.ready_dna(new_vox) // Creates DNA.
 	new_vox.dna.mutantrace = "vox"

@@ -18,6 +18,7 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "donutbox6"
 	name = "donut box"
+	desc = "Very tasty donuts. Security staff will rate them."
 	var/icon_type = "donut"
 
 /obj/item/weapon/storage/fancy/update_icon(itemremoved = 0)
@@ -46,7 +47,7 @@
 	icon_type = "donut"
 	name = "donut box"
 	storage_slots = 6
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/donut")
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/donut)
 
 
 /obj/item/weapon/storage/fancy/donut_box/atom_init()
@@ -64,7 +65,7 @@
 	icon_type = "egg"
 	name = "egg box"
 	storage_slots = 12
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/egg")
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/egg)
 
 /obj/item/weapon/storage/fancy/egg_box/atom_init()
 	. = ..()
@@ -84,6 +85,7 @@
 	item_state = "candlebox"
 	storage_slots = 5
 	throwforce = 2
+	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	var/candle_type = "white"
 
@@ -108,7 +110,8 @@
 		if(C.name == "black candle")
 			candle_color = "black_"
 		candle_overlays += image('icons/obj/candle.dmi', "[candle_color][candle_position]")
-	overlays = candle_overlays
+	cut_overlays()
+	add_overlay(candle_overlays)
 	return
 
 /obj/item/weapon/storage/fancy/candle_box/red
@@ -125,6 +128,7 @@
 	item_state = "black_candlebox5"
 	storage_slots = 5
 	throwforce = 2
+	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	var/cooldown = 0
 	var/teleporter_delay = 0
@@ -162,10 +166,10 @@
 			for(var/obj/item/candle/ghost/target in ghost_candles)
 				if(istype(target.loc, /turf))
 					loc.visible_message("<span class='warning'>You hear a loud pop, as [src] poofs out of existence.</span>")
-					playsound(loc, 'sound/effects/bubble_pop.ogg', 50, 1)
+					playsound(src, 'sound/effects/bubble_pop.ogg', VOL_EFFECTS_MASTER)
 					forceMove(get_turf(target))
 					visible_message("<span class='warning'>You hear a loud pop, as [src] poofs into existence.</span>")
-					playsound(loc, 'sound/effects/bubble_pop.ogg', 50, 1)
+					playsound(src, 'sound/effects/bubble_pop.ogg', VOL_EFFECTS_MASTER)
 					for(var/mob/living/A in viewers(3, loc))
 						A.confused += 10
 						A.make_jittery(150)
@@ -186,12 +190,12 @@
 	name = "box of crayons"
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
-	icon_state = "crayonbox"
-	w_class = 2.0
+	icon_state = "crayonbox_preview"
+	w_class = ITEM_SIZE_SMALL
 	storage_slots = 6
 	icon_type = "crayon"
 	can_hold = list(
-		"/obj/item/toy/crayon"
+		/obj/item/toy/crayon
 	)
 
 /obj/item/weapon/storage/fancy/crayons/atom_init()
@@ -205,20 +209,27 @@
 	update_icon()
 
 /obj/item/weapon/storage/fancy/crayons/update_icon()
-	overlays = list() //resets list
-	overlays += image('icons/obj/crayons.dmi',"crayonbox")
+	cut_overlays() //resets list
+	add_overlay(image('icons/obj/crayons.dmi',"crayonbox"))
 	for(var/obj/item/toy/crayon/crayon in contents)
-		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
+		add_overlay(image('icons/obj/crayons.dmi',crayon.colourName))
+
+/obj/item/weapon/storage/fancy/crayons/update_icon()
+	var/list/crayon_overlays = list()
+	var/crayon_position = 0
+	for(var/obj/item/toy/crayon/C in contents)
+		var/mutable_appearance/I = mutable_appearance('icons/obj/crayons.dmi', "[C.colourName]")
+		I.pixel_x += crayon_position * 2
+		crayon_position++
+		crayon_overlays += I
+	cut_overlays()
+	add_overlay(crayon_overlays)
+	return
 
 /obj/item/weapon/storage/fancy/crayons/attackby(obj/item/toy/crayon/W, mob/user)
-	if(istype(W))
-		switch(W.colourName)
-			if("mime")
-				to_chat(user, "This crayon is too sad to be contained in this box.")
-				return
-			if("rainbow")
-				to_chat(user, "This crayon is too powerful to be contained in this box.")
-				return
+	if(istype(W, /obj/item/toy/crayon/chalk) || istype(W, /obj/item/toy/crayon/spraycan))
+		to_chat(user, "\The [W] is too bulky to be contained in [src].")
+		return
 	..()
 
 /*
@@ -230,11 +241,11 @@
 	desc = "A box of glowsticks (Do not eat)."
 	icon = 'icons/obj/glowsticks.dmi'
 	icon_state = "sticksbox"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	storage_slots = 5
 	icon_type = "glowstick"
 	can_hold = list(
-		"/obj/item/weapon/reagent_containers/food/snacks/glowstick"
+		/obj/item/weapon/reagent_containers/food/snacks/glowstick
 	)
 
 /obj/item/weapon/storage/fancy/glowsticks/atom_init()
@@ -250,10 +261,10 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/orange(src)
 
 /obj/item/weapon/storage/fancy/glowsticks/update_icon()
-	overlays = list() //resets list
-	overlays += image('icons/obj/glowsticks.dmi',"sticksbox")
+	cut_overlays() //resets list
+	add_overlay(image('icons/obj/glowsticks.dmi',"sticksbox"))
 	for(var/obj/item/weapon/reagent_containers/food/snacks/glowstick/glowstick in contents)
-		overlays += image('icons/obj/glowsticks.dmi',glowstick.colourName)
+		add_overlay(image('icons/obj/glowsticks.dmi',glowstick.colourName))
 
 /obj/item/weapon/storage/fancy/glowsticks/adv
 	name = "box of advanced glowsticks"
@@ -274,11 +285,11 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigpacket"
 	item_state = "cigpacket"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_BELT
 	storage_slots = 6
-	can_hold = list("/obj/item/clothing/mask/cigarette","/obj/item/weapon/lighter")
+	can_hold = list(/obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
 	icon_type = "cigarette"
 
 /obj/item/weapon/storage/fancy/cigarettes/atom_init()
@@ -292,7 +303,7 @@
 	icon_state = "[initial(icon_state)][contents.len]"
 	return
 
-/obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)
+/obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
 	if(istype(W, /obj/item/clothing/mask/cigarette))
 		if(reagents)
 			reagents.trans_to(W, (reagents.total_volume/contents.len))
@@ -319,7 +330,7 @@
 		..()
 
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco
-	name = "\improper DromedaryCo packet"
+	name = "DromedaryCo packet"
 	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
 	icon_state = "Dpacket"
 	item_state = "Dpacket"
@@ -350,7 +361,7 @@
 	icon_type = "vial"
 	name = "vial storage box"
 	storage_slots = 6
-	can_hold = list("/obj/item/weapon/reagent_containers/glass/beaker/vial")
+	can_hold = list(/obj/item/weapon/reagent_containers/glass/beaker/vial)
 
 
 /obj/item/weapon/storage/fancy/vials/atom_init()
@@ -364,8 +375,8 @@
 	icon = 'icons/obj/vialbox.dmi'
 	icon_state = "vialbox0"
 	item_state = "syringe_kit"
-	max_w_class = 3
-	can_hold = list("/obj/item/weapon/reagent_containers/glass/beaker/vial")
+	max_w_class = ITEM_SIZE_NORMAL
+	can_hold = list(/obj/item/weapon/reagent_containers/glass/beaker/vial)
 	storage_slots = 6
 	req_access = list(access_virology)
 
@@ -376,13 +387,13 @@
 /obj/item/weapon/storage/lockbox/vials/update_icon(itemremoved = 0)
 	var/total_contents = src.contents.len - itemremoved
 	src.icon_state = "vialbox[total_contents]"
-	src.overlays.Cut()
+	src.cut_overlays()
 	if (!broken)
-		overlays += image(icon, src, "led[locked]")
+		add_overlay(image(icon, src, "led[locked]"))
 		if(locked)
-			overlays += image(icon, src, "cover")
+			add_overlay(image(icon, src, "cover"))
 	else
-		overlays += image(icon, src, "ledb")
+		add_overlay(image(icon, src, "ledb"))
 	return
 
 /obj/item/weapon/storage/lockbox/vials/attackby(obj/item/weapon/W, mob/user)

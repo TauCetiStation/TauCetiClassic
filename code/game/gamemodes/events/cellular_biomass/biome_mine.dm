@@ -23,7 +23,7 @@
 
 /obj/structure/cellular_biomass/core/mine
 	icon = 'code/game/gamemodes/events/cellular_biomass/alien.dmi'
-	light_color = "#710F8C"
+	light_color = "#710f8c"
 
 /obj/effect/cellular_biomass_controller/mine/alive() //die only if all walls are removed
 	if(!growth_queue)
@@ -50,7 +50,6 @@
 /obj/structure/cellular_biomass/core/mine/atom_init()
 	. = ..()
 	icon_state = "core"
-	set_light(luminosity)
 
 /obj/structure/cellular_biomass/lair/mine/atom_init(mapload)
 	icon_state = "lair"

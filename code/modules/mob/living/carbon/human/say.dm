@@ -3,14 +3,16 @@
 	var/message_range = world.view
 	var/italics = 0
 	var/alt_name = ""
+	var/sound/speech_sound
+	var/sound_vol
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "<span class='userdange'>You cannot speak in IC (Muted).</span>")
+			to_chat(src, "<span class='userdanger'>You cannot speak in IC (Muted).</span>")
 			return
 
 	//Meme stuff
-	if((!speech_allowed && usr == src) || miming)
-		to_chat(usr, "<span class='userdange'>You can't speak.</span>")
+	if(!speech_allowed && usr == src)
+		to_chat(usr, "<span class='userdanger'>You can't speak.</span>")
 		return
 
 	message =  sanitize(message)
@@ -26,7 +28,12 @@
 		return
 
 	if(copytext(message,1,2) == "*")
-		return emote(copytext(message,2))
+		return emote(copytext(message, 2), auto = FALSE)
+
+	//check if we are miming
+	if (miming && !(message_mode == "changeling" || message_mode == "alientalk"))
+		to_chat(usr, "<span class='userdanger'>You are mute.</span>")
+		return
 
 	if(!ignore_appearance && name != GetVoice())
 		alt_name = "(as [get_id_name("Unknown")])"
@@ -40,7 +47,26 @@
 
 	//parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
-	if (speaking)
+	var/has_lang_prefix = !!speaking
+	if(!has_lang_prefix && HAS_TRAIT(src, TRAIT_MUTE))
+		var/datum/language/USL = all_languages["Universal Sign Language"]
+		if(can_speak(USL))
+			speaking = USL
+
+	//check if we're muted and not using gestures
+	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk"))
+		if (!(speaking && (speaking.flags & SIGNLANG)))
+			to_chat(usr, "<span class='userdanger'>You are mute.</span>")
+			return
+
+	if (speaking && (speaking.flags & SIGNLANG))
+		var/obj/item/organ/external/LH = src.get_bodypart(BP_L_ARM)
+		var/obj/item/organ/external/RH = src.get_bodypart(BP_R_ARM)
+		if (!(LH && LH.is_usable() && RH && RH.is_usable()))
+			to_chat(usr, "<span class='userdanger'>You tried to make a gesture, but your hands are not responding.</span>")
+			return
+
+	if (has_lang_prefix)
 		message = copytext(message,2+length(speaking.key))
 	else if(species.force_racial_language)
 		speaking = all_languages[species.language]
@@ -65,7 +91,7 @@
 					//return - technically you can add more aliens to a team
 				for(var/mob/M in observer_list)
 					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
-				log_say("Abductor: [name]/[key] : [sm]")
+				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
 
 	message = capitalize(trim(message))
@@ -88,6 +114,9 @@
 		message = handle_r[1]
 		verb = handle_r[2]
 		speech_problem_flag = handle_r[3]
+		if(handle_r[4]) // speech sound management
+			speech_sound = handle_r[4]
+			sound_vol = handle_r[5]
 
 	if(!message || stat)
 		return
@@ -181,8 +210,6 @@
 						r_ear.talk_into(src,message, message_mode, verb, speaking)
 						used_radios += r_ear
 
-	var/sound/speech_sound
-	var/sound_vol
 	if((species.name == VOX || species.name == VOX_ARMALIS) && prob(20))
 		speech_sound = sound('sound/voice/shriek1.ogg')
 		sound_vol = 50
@@ -195,16 +222,20 @@
 		return 1
 
 	//These only pertain to common. Languages are handled by mob/say_understands()
-	if (!speaking)
-		if (istype(other, /mob/living/carbon/monkey/diona))
+	if(!speaking)
+		if(istype(other, /mob/living/carbon/monkey/diona))
 			if(other.languages.len >= 2)			//They've sucked down some blood and can speak common now.
 				return 1
-		if (istype(other, /mob/living/silicon))
+		if(issilicon(other))
 			return 1
-		if (istype(other, /mob/living/carbon/brain))
+		if(isbrain(other))
 			return 1
-		if (istype(other, /mob/living/carbon/slime))
+		if(isslime(other))
 			return 1
+		if(isgod(other) && mind.assigned_role == "Chaplain")
+			var/mob/living/simple_animal/shade/god/G = other
+			if(G.islam)
+				return 1
 
 	//This is already covered by mob/say_understands()
 	//if (istype(other, /mob/living/simple_animal))
@@ -255,9 +286,11 @@
 
 //mob/living/carbon/human/proc/handle_speech_problems(message)
 /mob/living/carbon/human/proc/handle_speech_problems(message, message_mode)
-	var/list/returns[3]
+	var/list/returns[5]
 	var/verb = "says"
 	var/handled = 0
+	var/sound/speech_sound = null
+	var/sound_vol = 50
 	if(silent)
 		if(message_mode != "changeling")
 			message = ""
@@ -265,12 +298,24 @@
 	if(sdisabilities & MUTE)
 		message = ""
 		handled = 1
+	if(gnomed)
+		handled = 1
+		if((message_mode != "changeling") && prob(40))
+			if(prob(80))
+				message = pick("A-HA-HA-HA!", "U-HU-HU-HU!", "I'm a GN-NOME!", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!")
+			else if(config.rus_language)
+				message =  "[message]... Íî ÿ ÃÍÎÌ!"
+			else
+				message =  "[message]... But i'm A GNOME!"
+			verb = pick("yells like an idiot", "says rather loudly")
+			speech_sound = 'sound/magic/GNOMED.ogg'
+
 	if(wear_mask)
 		if(message_mode != "changeling")
 			message = wear_mask.speechModification(message)
 		handled = 1
 
-	if((HULK in mutations) && health >= 25 && length(message))
+	if((HULK in mutations) && health >= 25 && length(message) && !HAS_TRAIT(src, TRAIT_STRONGMIND))
 		message = "[uppertext_(message)]!!!"
 		verb = pick("yells","roars","hollers")
 		handled = 1
@@ -284,7 +329,7 @@
 		handled = 1
 
 	var/braindam = getBrainLoss()
-	if(braindam >= 60)
+	if(braindam >= 60 && !HAS_TRAIT(src, TRAIT_STRONGMIND))
 		handled = 1
 		if(prob(braindam/4))
 			message = stutter(message)
@@ -296,5 +341,7 @@
 	returns[1] = message
 	returns[2] = verb
 	returns[3] = handled
+	returns[4] = speech_sound
+	returns[5] = sound_vol
 
 	return returns

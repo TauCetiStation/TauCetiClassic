@@ -35,9 +35,9 @@
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || usr.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
 		return
 
-	if(istype(M,/mob/living/carbon/alien))
+	if(istype(M,/mob/living/carbon/xenomorph))
 		return
-	if(!istype(user,/mob/living/carbon/alien/humanoid))
+	if(!istype(user,/mob/living/carbon/xenomorph/humanoid))
 		return
 
 	if(M == usr)
@@ -55,7 +55,7 @@
 	var/aforce = W.force
 	health = max(0, health - aforce)
 	user.SetNextMove(CLICK_CD_MELEE)
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	visible_message("<span class='warning'>[user] hits [src] with [W]!</span>")
 	healthcheck()
 

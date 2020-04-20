@@ -27,7 +27,7 @@
 
 	var/powerlevel = 0 	// 1-10 controls how much electricity they are generating
 	var/amount_grown = 0 // controls how long the slime has been overfed, if 10, grows into an adult
-						 // if adult: if 10: reproduces
+	var/max_grown = 10		// if adult: if 10: reproduces
 
 
 	var/mob/living/Victim = null // the person the slime is currently feeding on
@@ -99,14 +99,14 @@
 	return ..()
 
 /mob/living/carbon/slime/regenerate_icons()
-	overlays.len = 0
+	cut_overlays()
 	//var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
 	//icon_dead = "[icon_text] dead"
 	//if(stat != DEAD)
 		//icon_state = icon_text
 	if(stat != DEAD)
 		if(mood)
-			overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
+			add_overlay(image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]"))
 	//else
 		//icon_state = icon_dead
 	..()
@@ -183,12 +183,12 @@
 		if(isslimeadult(src))
 			stat(null, "Health: [round((health / 200) * 100)]%")
 			stat(null, "Nutrition: [nutrition]/1200")
-			if(amount_grown >= 10)
+			if(amount_grown >= max_grown)
 				stat(null, "You can reproduce!")
 		else
 			stat(null, "Health: [round((health / 150) * 100)]%")
 			stat(null, "Nutrition: [nutrition]/1000")
-			if(amount_grown >= 10)
+			if(amount_grown >= max_grown)
 				stat(null, "You can evolve!")
 
 		stat(null,"Power Level: [powerlevel]")
@@ -253,7 +253,7 @@
 
 		//paralysis += 1
 
-	show_message("\red The blob attacks you!")
+	to_chat("<span class='warning'>The blob attacks you!</span>")
 
 	adjustFireLoss(damage)
 
@@ -269,9 +269,7 @@
 	return
 
 /mob/living/carbon/slime/meteorhit(O)
-	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
-			M.show_message(text("\red [] has been hit by []", src, O), 1)
+	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
 	if (health > 0)
 		adjustBruteLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
 		adjustFireLoss(30)
@@ -288,10 +286,7 @@
 	if(Victim) return // can't attack while eating!
 
 	if (health > -100)
-
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>The [M.name] has glomped []!</B>", src), 1)
+		visible_message("<span class='warning'><B>The [M.name] has glomped [src]!</B></span>")
 
 		var/damage = rand(1, 3)
 		attacked += 5
@@ -315,8 +310,8 @@
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
-		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
+		if(length(M.attack_sound))
+			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
 		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
@@ -345,10 +340,7 @@
 				return
 			if (health > 0)
 				attacked += 10
-				//playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[M.name] has attacked [src]!</B>"), 1)
+				visible_message("<span class='warning'><B>[M.name] has attacked [src]!</B></span>")
 				adjustBruteLoss(rand(1, 3))
 				updatehealth()
 	return
@@ -368,16 +360,12 @@
 	if(Victim)
 		if(Victim == M)
 			if(prob(60))
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("\red [M] attempts to wrestle \the [name] off!", 1)
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>")
+				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 
 			else
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("\red [M] manages to wrestle \the [name] off!", 1)
-				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off!</span>")
+				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 
 				if(prob(90) && !client)
 					Discipline++
@@ -397,16 +385,12 @@
 		else
 			M.do_attack_animation(src)
 			if(prob(30))
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("\red [M] attempts to wrestle \the [name] off of [Victim]!", 1)
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [Victim]!</span>")
+				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 
 			else
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("\red [M] manages to wrestle \the [name] off of [Victim]!", 1)
-				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off of [Victim]!</span>")
+				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 
 				if(prob(80) && !client)
 					Discipline++
@@ -436,12 +420,10 @@
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall.", 2)
+					visible_message("<span class='warning'><B>[src] has been touched with the stun gloves by [M]!</B></span>", blind_message = "<span class='warning'>You hear someone fall.</span>")
 					return
 				else
-					to_chat(M, "\red Not enough charge! ")
+					to_chat(M, "<span class='warning'>Not enough charge! </span>")
 					return
 
 	switch(M.a_intent)
@@ -450,21 +432,7 @@
 			help_shake_act(M)
 
 		if ("grab")
-			if (M == src || M.lying)
-				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
-
-			M.put_in_active_hand(G)
-
-			grabbed_by += G
-			G.synch()
-
-			LAssailant = M
-
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+			M.Grab(src)
 
 		else
 
@@ -486,23 +454,19 @@
 						step_away(src,M,15)
 
 
-				playsound(loc, "punch", 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
+				playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
+				visible_message("<span class='warning'><B>[M] has punched [src]!</B></span>")
 
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has attempted to punch []!</B>", M, src), 1)
+				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+				visible_message("<span class='warning'><B>[M] has attempted to punch [src]!</B></span>")
 	return
 
 
 
-/mob/living/carbon/slime/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/carbon/slime/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -513,58 +477,35 @@
 
 	switch(M.a_intent)
 		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
+			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
 
 		if ("hurt")
 
 			if ((prob(95) && health > 0))
 				attacked += 10
-				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+				playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
 				var/damage = rand(15, 30)
 				if (damage >= 25)
 					damage = rand(20, 40)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has attacked [name]!</B>", M), 1)
+					visible_message("<span class='warning'><B>[M] has attacked [name]!</B></span>")
 				else
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has wounded [name]!</B>", M), 1)
+					visible_message("<span class='warning'><B>[M] has wounded [name]!</B></span>")
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has attempted to lunge at [name]!</B>", M), 1)
+				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
+				visible_message("<span class='warning'><B>[M] has attempted to lunge at [name]!</B></span>")
 
 		if ("grab")
-			if (M == src || M.lying)
-				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
-
-			M.put_in_active_hand(G)
-
-			grabbed_by += G
-			G.synch()
-
-			LAssailant = M
-
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red [] has grabbed [name] passively!", M), 1)
+			M.Grab(src)
 
 		if ("disarm")
-			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+			playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
 			var/damage = 5
 			attacked += 10
 
 			if(prob(95))
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has tackled [name]!</B>", M), 1)
+				visible_message("<span class='warning'><B>[M] has tackled [name]!</B></span>")
 
 				if(Victim)
 					Victim = null
@@ -588,9 +529,7 @@
 
 			else
 				drop_item()
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
+				visible_message("<span class='warning'><B>[M] has disarmed [name]!</B></span>")
 			adjustBruteLoss(damage)
 			updatehealth()
 	return
@@ -601,15 +540,6 @@
 
 
 /mob/living/carbon/slime/show_inv(mob/user)
-
-	user.set_machine(src)
-	var/dat = {"
-	<B><HR><FONT size=3>[name]</FONT></B>
-	<BR><HR><BR>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
-	<BR>"}
-	user << browse(entity_ja(dat), text("window=mob[name];size=340x480"))
-	onclose(user, "mob[name]")
 	return
 
 /mob/living/carbon/slime/updatehealth()
@@ -633,21 +563,22 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey slime extract"
 	force = 1.0
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 6
-	origin_tech = "biotech=4"
+	origin_tech = "biotech=6"
 	var/Uses = 1 // uses before it goes inert
 	var/enhanced = 0 // has it been enhanced before?
 
 /obj/item/slime_extract/attackby(obj/item/weapon/O, mob/user)
+	..()
 	if(istype(O, /obj/item/weapon/slimesteroid2))
 		if(enhanced == 1)
-			to_chat(user, "\red This extract has already been enhanced!")
+			to_chat(user, "<span class='warning'>This extract has already been enhanced!</span>")
 			return ..()
 		if(Uses == 0)
-			to_chat(user, "\red You can't enhance a used extract!")
+			to_chat(user, "<span class='warning'>You can't enhance a used extract!</span>")
 			return ..()
 		to_chat(user, "You apply the enhancer. It now has triple the amount of uses.")
 		Uses = 3
@@ -663,91 +594,113 @@
 /obj/item/slime_extract/grey
 	name = "grey slime extract"
 	icon_state = "grey slime extract"
+	origin_tech = "biotech=2"
 
 /obj/item/slime_extract/gold
 	name = "gold slime extract"
 	icon_state = "gold slime extract"
+	origin_tech = "biotech=8"
 
 /obj/item/slime_extract/silver
 	name = "silver slime extract"
 	icon_state = "silver slime extract"
+	origin_tech = "biotech=7"
 
 /obj/item/slime_extract/metal
 	name = "metal slime extract"
 	icon_state = "metal slime extract"
+	origin_tech = "biotech=6;engineering=3;materials=3"
 
 /obj/item/slime_extract/purple
 	name = "purple slime extract"
 	icon_state = "purple slime extract"
+	origin_tech = "biotech=6;materials=3"
 
 /obj/item/slime_extract/darkpurple
 	name = "dark purple slime extract"
 	icon_state = "dark purple slime extract"
+	origin_tech = "biotech=7;engineering=4;materials=4;phorontech=4"
 
 /obj/item/slime_extract/orange
 	name = "orange slime extract"
 	icon_state = "orange slime extract"
+	origin_tech = "biotech=6;combat=3;materials=3"
 
 /obj/item/slime_extract/yellow
 	name = "yellow slime extract"
 	icon_state = "yellow slime extract"
+	origin_tech = "biotech=7;powerstorage=4;magnets=4"
 
 /obj/item/slime_extract/red
 	name = "red slime extract"
 	icon_state = "red slime extract"
+	origin_tech = "biotech=8;combat=5;materials=5"
 
 /obj/item/slime_extract/blue
 	name = "blue slime extract"
 	icon_state = "blue slime extract"
+	origin_tech = "biotech=6;materials=3"
 
 /obj/item/slime_extract/darkblue
 	name = "dark blue slime extract"
 	icon_state = "dark blue slime extract"
+	origin_tech = "biotech=7"
 
 /obj/item/slime_extract/pink
 	name = "pink slime extract"
 	icon_state = "pink slime extract"
+	origin_tech = "biotech=8;materials=5"
 
 /obj/item/slime_extract/green
 	name = "green slime extract"
 	icon_state = "green slime extract"
+	origin_tech = "biotech=8;materials=5"
 
 /obj/item/slime_extract/lightpink
 	name = "light pink slime extract"
 	icon_state = "light pink slime extract"
+	origin_tech = "biotech=9;materials=6"
 
 /obj/item/slime_extract/black
 	name = "black slime extract"
 	icon_state = "black slime extract"
+	origin_tech = "biotech=9;materials=6"
 
 /obj/item/slime_extract/oil
 	name = "oil slime extract"
 	icon_state = "oil slime extract"
+	origin_tech = "biotech=9;combat=6"
 
 /obj/item/slime_extract/adamantine
 	name = "adamantine slime extract"
 	icon_state = "adamantine slime extract"
+	origin_tech = "biotech=9;robotics=6;combat=6"
 
 //Zve added
 /obj/item/slime_extract/bluespace
 	name = "bluespace slime extract"
 	icon_state = "bluespace slime extract"
+	origin_tech = "biotech=9;bluespace=6"
 
 /obj/item/slime_extract/pyrite
 	name = "pyrite slime extract"
 	icon_state = "pyrite slime extract"
+	origin_tech = "biotech=9"
 
 /obj/item/slime_extract/cerulean
 	name = "cerulean slime extract"
 	icon_state = "cerulean slime extract"
+	origin_tech = "biotech=9;materials=6"
 
 /obj/item/slime_extract/sepia
 	name = "sepia slime extract"
 	icon_state = "sepia slime extract"
+	origin_tech = "biotech=9;engineering=6"
 
 /obj/item/slime_extract/rainbow
 	name = "rainbow slime extract"
 	icon_state = "rainbow slime extract"
+	origin_tech = "biotech=9;bluespace=3"
 
 ////Pet Slime Creation///
 
@@ -759,13 +712,13 @@
 
 /obj/item/weapon/slimepotion/attack(mob/living/carbon/slime/M, mob/user)
 	if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
-		to_chat(user, "\red The potion only works on baby slimes!")
+		to_chat(user, "<span class='warning'>The potion only works on baby slimes!</span>")
 		return ..()
 	if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
-		to_chat(user, "\red Only baby slimes can be tamed!")
+		to_chat(user, "<span class='warning'>Only baby slimes can be tamed!</span>")
 		return..()
 	if(M.stat)
-		to_chat(user, "\red The slime is dead!")
+		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	var/mob/living/simple_animal/slime/pet = new /mob/living/simple_animal/slime(M.loc)
 	pet.icon_state = "[M.colour] baby slime"
@@ -790,10 +743,10 @@
 
 /obj/item/weapon/slimepotion2/attack(mob/living/carbon/slime/adult/M, mob/user)
 	if(!istype(M, /mob/living/carbon/slime/adult))//If target is not a slime.
-		to_chat(user, "\red The potion only works on adult slimes!")
+		to_chat(user, "<span class='warning'>The potion only works on adult slimes!</span>")
 		return ..()
 	if(M.stat)
-		to_chat(user, "\red The slime is dead!")
+		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	var/mob/living/simple_animal/adultslime/pet = new /mob/living/simple_animal/adultslime(M.loc)
 	pet.icon_state = "[M.colour] adult slime"
@@ -819,16 +772,16 @@
 
 /obj/item/weapon/slimesteroid/attack(mob/living/carbon/slime/M, mob/user)
 	if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
-		to_chat(user, "\red The steroid only works on baby slimes!")
+		to_chat(user, "<span class='warning'>The steroid only works on baby slimes!</span>")
 		return ..()
 	if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
-		to_chat(user, "\red Only baby slimes can use the steroid!")
+		to_chat(user, "<span class='warning'>Only baby slimes can use the steroid!</span>")
 		return..()
 	if(M.stat)
-		to_chat(user, "\red The slime is dead!")
+		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	if(M.cores == 3)
-		to_chat(user, "\red The slime already has the maximum amount of extract!")
+		to_chat(user, "<span class='warning'>The slime already has the maximum amount of extract!</span>")
 		return..()
 
 	to_chat(user, "You feed the slime the steroid. It now has triple the amount of extract.")
@@ -918,7 +871,7 @@
 	desc = "A golem's thick outter shell."
 	icon_state = "golem"
 	item_state = "golem"
-	w_class = 4//bulky item
+	w_class = ITEM_SIZE_LARGE//bulky item
 	allowed = null
 
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -1046,6 +999,9 @@
 /mob/living/carbon/slime/getTrail()
 	return null
 
+/mob/living/carbon/slime/get_species()
+	return SLIME
+
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*
@@ -1056,7 +1012,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "slime extract"
 	force = 1.0
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 6
@@ -1112,9 +1068,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
 	STOP_PROCESSING(SSobj, src)
 	var/turf/T = get_turf(src)
-	src.visible_message("\blue The [name] pulsates and quivers!")
+	src.visible_message("<span class='notice'>The [name] pulsates and quivers!</span>")
 	spawn(rand(50,100))
-		src.visible_message("\blue The [name] bursts open!")
+		src.visible_message("<span class='notice'>The [name] bursts open!</span>")
 		new/mob/living/carbon/slime(T)
 		qdel(src)
 

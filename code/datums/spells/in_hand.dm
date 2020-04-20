@@ -58,7 +58,7 @@
 			return FALSE
 
 	if(s_fire)
-		playsound(user, s_fire, 100, 1)
+		playsound(user, s_fire, VOL_EFFECTS_MASTER)
 	if(invoke)
 		user.say(invoke)
 
@@ -131,7 +131,7 @@
 	damage_type = BRUTE
 	nodamage = 0
 
-/obj/item/projectile/magic/fireball/on_hit(atom/target)
+/obj/item/projectile/magic/fireball/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(isliving(target))
 		var/mob/living/M = target
 		M.fire_act()
@@ -164,7 +164,7 @@
 	damage_type = BURN
 	nodamage = 0
 
-/obj/item/projectile/magic/lightning/on_hit(atom/target)
+/obj/item/projectile/magic/lightning/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	..()
 	tesla_zap(src, 5, 15000)
 	qdel(src)
@@ -182,7 +182,7 @@
 /obj/item/weapon/magic/arcane_barrage
 	name = "arcane barrage"
 	desc = "Pew Pew Pew"
-	s_fire = 'sound/weapons/emitter.ogg'
+	s_fire = 'sound/weapons/guns/gunpulse_emitter.ogg'
 	icon_state = "arcane_barrage"
 	item_state = "arcane_barrage"
 	uses = 30
@@ -249,7 +249,7 @@
 	. = ..() // spell cast has been succeeded, we must call parent right now to subtract uses and what ever it wants to do, especially before sleep().
 
 	user.adjustHalLoss(101) // much power, such spell, wow!
-	user.emote("scream",,, 1)
+	user.emote("scream")
 
 	var/old_loc = L.loc
 
@@ -264,11 +264,11 @@
 	animate(animation, alpha = 255, time = 10)
 	sleep(10)
 
-	playsound(animation, 'sound/magic/resurrection_cast.ogg', 100, 1)
+	playsound(animation, 'sound/magic/resurrection_cast.ogg', VOL_EFFECTS_MASTER)
 	animate(animation, pixel_y = -5, time = 25, easing = SINE_EASING)
 	sleep(25)
 
-	playsound(animation, 'sound/magic/resurrection_end.ogg', 100, 1)
+	playsound(animation, 'sound/magic/resurrection_end.ogg', VOL_EFFECTS_MASTER)
 	var/matrix/Mx = matrix()
 	Mx.Scale(0)
 	animate(animation, transform = Mx, time = 5)
@@ -325,23 +325,23 @@
 
 	Spell.charge_max = initial(Spell.charge_max) * power_of_spell // 20 - 140 (2:20)
 
-	var/level_info = "<span class='notice'><b>level [power_of_spell]</b> [src] now"
+	var/level_info = "<b>level [power_of_spell]</b> [src] now"
 	switch(power_of_spell)
 		if(2 to 3)
-			to_chat(user, "[level_info] <b>heals</b>.</span>")
+			to_chat(user, "<span class='notice'>[level_info] <b>heals</b>.</span>")
 		if(4)
-			to_chat(user, "[level_info] <b>cures</b> any <b>virus</b>.</span>")
+			to_chat(user, "<span class='notice'>[level_info] <b>cures</b> any <b>virus</b>.</span>")
 		if(5)
-			to_chat(user, "[level_info] <b>cleans</b> from any <b>mutations</b>.</span>")
+			to_chat(user, "<span class='notice'>[level_info] <b>cleans</b> from any <b>mutations</b>.</span>")
 		if(6)
 			touch_spell = FALSE
 			name = "healing ball"
 			invoke = "In Vas Mani"
-			to_chat(user, "[level_info] <b>heals</b> and can be <b>thrown</b></span>")
+			to_chat(user, "<span class='notice'>[level_info] <b>heals</b> and can be <b>thrown</b></span>")
 		if(7)
 			name = "regeneration healing ball"
 			invoke = "In Vas An Mani"
-			to_chat(user, "[level_info] <b>regenerates limbs</b> but heals a lot less and can be <b>thrown</b></span>")
+			to_chat(user, "<span class='notice'>[level_info] <b>regenerates limbs</b> but heals a lot less and can be <b>thrown</b></span>")
 
 /obj/item/weapon/magic/heal_touch/update_icon()
 	icon_state = initial(icon_state) + "[power_of_spell]"
@@ -389,16 +389,19 @@
 	. = ..()
 	icon_state = initial(icon_state) + "[power_of_spell]"
 
-/obj/item/projectile/magic/healing_ball/on_hit(mob/living/target)
-	if(!istype(target) || target.stat == DEAD || issilicon(target))
+/obj/item/projectile/magic/healing_ball/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	if(!isliving(target) || issilicon(target))
+		return
+	var/mob/living/L = target
+	if(L.stat == DEAD)
 		return
 
 	var/hamt = -30 * power_of_spell // level 6 = 180 || level 7 = 31.5 (cause of reduction)
 	var/reduced_heal = (power_of_spell == 7)
 	if(reduced_heal)
 		hamt *= 0.15 // healing everything 85% less, because most of healing power goes into regeneration of limbs which also full heals them.
-		target.restore_all_bodyparts()
-		target.regenerate_icons()
+		L.restore_all_bodyparts()
+		L.regenerate_icons()
 
-	target.apply_damages(reduced_heal ? 0 : hamt, reduced_heal ? 0 : hamt, hamt, hamt, hamt, hamt) // zero is for brute and burn in case of restoring bodyparts, because no point to heal them, since body parts restoration does that.
-	target.apply_effects(hamt, hamt, hamt, hamt, hamt, hamt, hamt, hamt)
+	L.apply_damages(reduced_heal ? 0 : hamt, reduced_heal ? 0 : hamt, hamt, hamt, hamt, hamt) // zero is for brute and burn in case of restoring bodyparts, because no point to heal them, since body parts restoration does that.
+	L.apply_effects(hamt, hamt, hamt, hamt, hamt, hamt, hamt, hamt)

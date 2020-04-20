@@ -3,7 +3,7 @@
 	icon = 'icons/obj/mining/geoscanner.dmi'
 	icon_state = "geoscanner"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5
@@ -19,18 +19,23 @@
 	if(!in_range(user, A))
 		return
 	var/turf/simulated/mineral/M = A
-	user.visible_message("\blue [user] scans [A], the air around them humming gently.")
-	user.show_message("\blue <B>Results:</B>", 1)
+	var/data_message = ""
+	
+	user.visible_message("<span class='notice'>[user] scans [A], the air around them humming gently.</span>")
+
+	data_message +="<span class='notice'><B>Results:</B></span>"
 	if(M.mineral)
-		user.show_message("\green Mineral found", 1)
-		user.show_message("\blue Ore class: [M.mineral.ore_type]", 1)
-		user.show_message("\blue Mineral type: [M.mineral]", 1)
-		user.show_message("\blue Ore amount: [M.ore_amount]", 1)
+		data_message +="<span class='notice'>Mineral found</span>"
+		data_message +="<span class='notice'>Ore class: [M.mineral.ore_type]</span>"
+		data_message +="<span class='notice'>Mineral type: [M.mineral]</span>"
+		data_message +="<span class='notice'>Ore amount: [M.ore_amount]</span>"
 	else
-		user.show_message("\red No minerals found in [M]", 1)
+		data_message +="<span class='warning'>No minerals found in [M]</span>"
 
 	if(M.finds && M.finds.len || M.artifact_find)
-		user.show_message("\red Unidentified signature in [M]. Report to nearby xenoarchaeologist/anomalist.", 1)
+		data_message +="<span class='warning'>Unidentified signature in [M]. Report to nearby xenoarchaeologist/anomalist.</span>"
+
+	to_chat(user, data_message)
 
 //	user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
 //	user << "[M.mineral], [M.toughness], [M.ore_amount]"
@@ -62,3 +67,12 @@
 			C.images += image(hudMineral,rock,"hudanomaly")
 		else if (rock.mineral)
 			C.images += image(hudMineral,rock,"hud[rock.mineral.ore_type]")
+
+/obj/item/clothing/glasses/hud/mining/ancient
+	name = "Ancient Mining Hud MK II"
+	desc = "This hud for mine work in hostile territory, with builded bioscanner inside."
+	icon = 'icons/obj/xenoarchaeology/finds.dmi'
+	icon_custom = 'icons/mob/eyes.dmi'
+	icon_state = "HUDmining"
+	item_state = "HUDmining"
+	vision_flags = SEE_MOBS

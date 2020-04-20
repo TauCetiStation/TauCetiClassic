@@ -1,0 +1,1368 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/space,
+/area/space)
+"ab" = (
+/obj/structure/grille,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"ac" = (
+/obj/machinery/power/solar/fake,
+/turf/simulated/floor{
+	icon_state = "solarpanel"
+	},
+/area/space_structures/djstation/solars)
+"ad" = (
+/turf/simulated/floor/plating/airless,
+/area/space_structures/djstation/solars)
+"ae" = (
+/obj/structure/lattice,
+/turf/space,
+/area/space)
+"af" = (
+/turf/simulated/wall,
+/area/space_structures/djstation)
+"ag" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"ah" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"ai" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"aj" = (
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"ak" = (
+/obj/machinery/telecomms/relay/preset/ruskie,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"al" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"am" = (
+/obj/machinery/power/terminal,
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"an" = (
+/obj/item/device/multitool,
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"ao" = (
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"ap" = (
+/obj/item/weapon/reagent_containers/spray/extinguisher,
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"aq" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/smes/magical{
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
+	name = "power storage unit"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"ar" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"as" = (
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	name = "Worn-out APC";
+	pixel_y = -24
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"at" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/weapon/storage/box/lights/mixed,
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'HIGH VOLTAGE'";
+	icon_state = "shock";
+	name = "HIGH VOLTAGE";
+	pixel_y = -32
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"au" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"av" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate,
+/obj/item/clothing/head/helmet/space/syndicate,
+/obj/item/clothing/mask/breath,
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"aw" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access = list(0)
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"ax" = (
+/obj/structure/closet/emcloset,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"ay" = (
+/obj/random/vending/snack,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"az" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"aA" = (
+/obj/machinery/light_switch{
+	pixel_y = 28
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"aB" = (
+/obj/machinery/newscaster{
+	pixel_y = 32
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"aC" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"aD" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/space_structures/djstation)
+"aE" = (
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/space_structures/djstation)
+"aF" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/space_structures/djstation)
+"aG" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"aH" = (
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/space_structures/djstation)
+"aI" = (
+/obj/machinery/light_switch{
+	pixel_y = 28
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/space_structures/djstation)
+"aJ" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/space_structures/djstation)
+"aK" = (
+/obj/structure/table,
+/obj/item/device/flashlight/lamp,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/space_structures/djstation)
+"aL" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"aM" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"aN" = (
+/obj/structure/table,
+/obj/machinery/kitchen_machine/microwave{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/space_structures/djstation)
+"aO" = (
+/obj/machinery/door/airlock/glass{
+	name = "Kitchen"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"aP" = (
+/obj/structure/table,
+/obj/item/device/radio/intercom{
+	dir = 8;
+	freerange = 1;
+	name = "Pirate Radio Listening Channel"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"aQ" = (
+/obj/structure/stool/bed/chair/office/light,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"aR" = (
+/obj/machinery/door/airlock/glass{
+	name = "Cabin"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"aS" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/space_structures/djstation)
+"aT" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"aU" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"aV" = (
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk,
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/space_structures/djstation)
+"aW" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/space_structures/djstation)
+"aX" = (
+/obj/structure/table,
+/obj/item/weapon/disk/research_points,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"aY" = (
+/obj/structure/table,
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 8;
+	freerange = 1;
+	listening = 0;
+	name = "Pirate Radio Broadcast Channel"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"aZ" = (
+/obj/structure/table,
+/obj/item/weapon/paper/djstation{
+	info = "<B>Welcome new owner!</B><BR><BR>You have purchased the latest in listening equipment. The telecommunication setup we created is the best in listening to common and private radio fequencies. Here is a step by step guide to start listening in on those saucy radio channels:<br><ol><li>Equip yourself with a multi-tool</li><li>Use the multitool on each machine, that is the broadcaster, receiver and the relay.</li><li>Turn all the machines on, it has already been configured for you to listen on.</li></ol> Simple as that. Now to listen to the private channels, you'll have to configure the intercoms, located on the front desk. Here is a list of frequencies for you to listen on.<br><ul><li>145.7 - Common Channel</li><li>144.7 - Private AI Channel</li><li>135.9 - Security Channel</li><li>135.7 - Engineering Channel</li><li>135.5 - Medical Channel</li><li>135.3 - Command Channel</li><li>135.1 - Science Channel</li><li>134.7 - Supply Channel</li>"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"ba" = (
+/obj/structure/computerframe{
+	anchored = 1;
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/space_structures/djstation)
+"bb" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/space_structures/djstation)
+"bc" = (
+/obj/machinery/light,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/space_structures/djstation)
+"bd" = (
+/obj/structure/closet,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/space_structures/djstation)
+"be" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/wall,
+/area/space_structures/djstation)
+"bf" = (
+/obj/machinery/door/airlock{
+	name = "Restroom";
+	req_access = list(0)
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/space_structures/djstation)
+"bg" = (
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"bh" = (
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_x = 32
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"bi" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"bj" = (
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/space_structures/djstation)
+"bk" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"bl" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/space_heater,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"bm" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/rack{
+	dir = 4
+	},
+/obj/item/clothing/under/soviet,
+/obj/item/clothing/head/ushanka,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"bn" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/space_structures/djstation)
+"bo" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/space_structures/djstation)
+"bp" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin{
+	pixel_x = 1;
+	pixel_y = 9
+	},
+/obj/item/weapon/pen,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"bq" = (
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"br" = (
+/obj/machinery/door/airlock/external{
+	name = "Ruskie DJ Station";
+	req_access = list(0)
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/djstation)
+"bs" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/structure/disposaloutlet,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"bt" = (
+/obj/structure/grille,
+/turf/space,
+/area/space)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+af
+aC
+aM
+aU
+af
+aa
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+ad
+ac
+ad
+ac
+ab
+aa
+af
+aD
+aN
+aV
+be
+bi
+bi
+bi
+bs
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+ad
+ac
+ad
+ac
+ab
+aa
+af
+aE
+aE
+aE
+af
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+ae
+ab
+ac
+ad
+ac
+ad
+ac
+ab
+aa
+af
+aF
+aE
+aW
+af
+af
+af
+af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+ae
+ae
+ab
+ac
+ad
+ac
+ad
+ac
+ab
+aa
+af
+aE
+aE
+aE
+bf
+bj
+bn
+af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+af
+ai
+al
+af
+ai
+al
+af
+af
+af
+aG
+aO
+aG
+af
+af
+bo
+af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+ab
+ac
+ac
+ac
+ac
+ag
+aj
+aj
+aj
+ap
+aj
+as
+af
+ax
+az
+az
+az
+bg
+af
+af
+af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+ab
+ad
+ad
+ad
+ad
+ah
+aj
+aj
+aj
+aj
+aj
+at
+af
+ay
+az
+aP
+aX
+az
+bk
+bp
+af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(9,1,1) = {"
+ab
+ac
+ac
+ac
+ac
+af
+ak
+aj
+am
+aq
+ar
+au
+aw
+az
+az
+aQ
+aY
+az
+az
+az
+af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(10,1,1) = {"
+ab
+ad
+ad
+ad
+ad
+ag
+aj
+aj
+an
+aj
+aj
+aj
+af
+aA
+az
+aP
+aZ
+az
+bl
+bq
+af
+af
+af
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(11,1,1) = {"
+ab
+ac
+ac
+ac
+ac
+ah
+aj
+aj
+ao
+aj
+aj
+av
+af
+aB
+az
+az
+az
+bh
+bm
+az
+br
+aj
+br
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(12,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+af
+ai
+al
+af
+ai
+al
+af
+af
+af
+aG
+aR
+aG
+af
+af
+af
+af
+af
+af
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+ae
+ae
+ae
+ab
+ac
+ad
+ac
+ad
+ac
+ab
+aa
+af
+aH
+aH
+ba
+af
+aa
+aa
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+ae
+ab
+ac
+ad
+ac
+ad
+ac
+ab
+aa
+af
+aI
+aH
+bb
+af
+ae
+aa
+aa
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+aa
+ae
+ab
+ac
+ad
+ac
+ad
+ac
+ab
+aa
+af
+aJ
+aH
+bc
+af
+ae
+ae
+ae
+ae
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+ad
+ac
+ad
+ac
+ab
+aa
+af
+aK
+aS
+bd
+af
+ae
+ae
+ae
+aa
+aa
+ae
+ae
+aa
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+af
+aL
+aT
+al
+af
+aa
+ae
+ae
+ae
+ae
+ae
+ae
+bt
+bt
+ae
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ae
+aa
+ae
+aa
+aa
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ae
+bt
+bt
+ae
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ae
+bt
+bt
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ae
+bt
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+bt
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bt
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bt
+bt
+bt
+"}
+(24,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bt
+bt
+aa
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bt
+aa
+aa
+aa
+"}

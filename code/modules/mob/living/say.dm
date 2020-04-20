@@ -35,39 +35,39 @@ var/list/department_radio_keys = list(
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
-	  ":ê" = "right ear",	"#ê" = "right ear",		".ê" = "right ear",
-	  ":ä" = "left ear",	"#ä" = "left ear",		".ä" = "left ear",
-	  ":ø" = "intercom",	"#ø" = "intercom",		".ø" = "intercom",
-	  ":ğ" = "department",	"#ğ" = "department",	".ğ" = "department",
-	  ":ñ" = "Command",		"#ñ" = "Command",		".ñ" = "Command",
-	  ":ò" = "Science",		"#ò" = "Science",		".ò" = "Science",
-	  ":ü" = "Medical",		"#ü" = "Medical",		".ü" = "Medical",
-	  ":ó" = "Engineering",	"#ó" = "Engineering",	".ó" = "Engineering",
-	  ":û" = "Security",	"#û" = "Security",		".û" = "Security",
-	  ":ö" = "whisper",		"#ö" = "whisper",		".ö" = "whisper",
-	  ":è" = "binary",		"#è" = "binary",		".è" = "binary",
-	  ":ô" = "alientalk",	"#ô" = "alientalk",		".ô" = "alientalk",
-	  ":å" = "Syndicate",	"#å" = "Syndicate",		".å" = "Syndicate",
-	  ":ã" = "Supply",		"#ã" = "Supply",		".ã" = "Supply",
-	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling",
-	  ":â" = "dronechat",	"#â" = "dronechat",		".â" = "dronechat",
+	  ":Ğº" = "right ear",	"#Ğº" = "right ear",		".Ğº" = "right ear",
+	  ":Ğ´" = "left ear",	"#Ğ´" = "left ear",		".Ğ´" = "left ear",
+	  ":Ñˆ" = "intercom",	"#Ñˆ" = "intercom",		".Ñˆ" = "intercom",
+	  ":Ñ€" = "department",	"#Ñ€" = "department",	".Ñ€" = "department",
+	  ":Ñ" = "Command",		"#Ñ" = "Command",		".Ñ" = "Command",
+	  ":Ñ‚" = "Science",		"#Ñ‚" = "Science",		".Ñ‚" = "Science",
+	  ":ÑŒ" = "Medical",		"#ÑŒ" = "Medical",		".ÑŒ" = "Medical",
+	  ":Ñƒ" = "Engineering",	"#Ñƒ" = "Engineering",	".Ñƒ" = "Engineering",
+	  ":Ñ‹" = "Security",	"#Ñ‹" = "Security",		".Ñ‹" = "Security",
+	  ":Ñ†" = "whisper",		"#Ñ†" = "whisper",		".Ñ†" = "whisper",
+	  ":Ğ¸" = "binary",		"#Ğ¸" = "binary",		".Ğ¸" = "binary",
+	  ":Ñ„" = "alientalk",	"#Ñ„" = "alientalk",		".Ñ„" = "alientalk",
+	  ":Ğµ" = "Syndicate",	"#Ğµ" = "Syndicate",		".Ğµ" = "Syndicate",
+	  ":Ğ³" = "Supply",		"#Ğ³" = "Supply",		".Ğ³" = "Supply",
+	  ":Ğ¿" = "changeling",	"#Ğ¿" = "changeling",	".Ğ¿" = "changeling",
+	  ":Ğ²" = "dronechat",	"#Ğ²" = "dronechat",		".Ğ²" = "dronechat",
 
-	  ":Ê" = "right ear",	"#Ê" = "right ear",		".Ê" = "right ear",
-	  ":Ä" = "left ear",	"#Ä" = "left ear",		".Ä" = "left ear",
-	  ":Ø" = "intercom",	"#Ø" = "intercom",		".Ø" = "intercom",
-	  ":Ğ" = "department",	"#Ğ" = "department",	".Ğ" = "department",
-	  ":Ñ" = "Command",		"#Ñ" = "Command",		".Ñ" = "Command",
-	  ":Ò" = "Science",		"#Ò" = "Science",		".Ò" = "Science",
-	  ":Ü" = "Medical",		"#Ü" = "Medical",		".Ü" = "Medical",
-	  ":Ó" = "Engineering",	"#Ó" = "Engineering",	".Ó" = "Engineering",
-	  ":Û" = "Security",	"#Û" = "Security",		".Û" = "Security",
-	  ":Ö" = "whisper",		"#Ö" = "whisper",		".Ö" = "whisper",
-	  ":È" = "binary",		"#È" = "binary",		".È" = "binary",
-	  ":Ô" = "alientalk",	"#Ô" = "alientalk",		".Ô" = "alientalk",
-	  ":Å" = "Syndicate",	"#Å" = "Syndicate",		".Å" = "Syndicate",
-	  ":Ã" = "Supply",		"#Ã" = "Supply",		".Ã" = "Supply",
-	  ":Ï" = "changeling",	"#Ï" = "changeling",	".Ï" = "changeling",
-	  ":Â" = "dronechat",	"#Â" = "dronechat",		".Â" = "dronechat"
+	  ":Ğš" = "right ear",	"#Ğš" = "right ear",		".Ğš" = "right ear",
+	  ":Ğ”" = "left ear",	"#Ğ”" = "left ear",		".Ğ”" = "left ear",
+	  ":Ğ¨" = "intercom",	"#Ğ¨" = "intercom",		".Ğ¨" = "intercom",
+	  ":Ğ " = "department",	"#Ğ " = "department",	".Ğ " = "department",
+	  ":Ğ¡" = "Command",		"#Ğ¡" = "Command",		".Ğ¡" = "Command",
+	  ":Ğ¢" = "Science",		"#Ğ¢" = "Science",		".Ğ¢" = "Science",
+	  ":Ğ¬" = "Medical",		"#Ğ¬" = "Medical",		".Ğ¬" = "Medical",
+	  ":Ğ£" = "Engineering",	"#Ğ£" = "Engineering",	".Ğ£" = "Engineering",
+	  ":Ğ«" = "Security",	"#Ğ«" = "Security",		".Ğ«" = "Security",
+	  ":Ğ¦" = "whisper",		"#Ğ¦" = "whisper",		".Ğ¦" = "whisper",
+	  ":Ğ˜" = "binary",		"#Ğ˜" = "binary",		".Ğ˜" = "binary",
+	  ":Ğ¤" = "alientalk",	"#Ğ¤" = "alientalk",		".Ğ¤" = "alientalk",
+	  ":Ğ«" = "Syndicate",	"#Ğ«" = "Syndicate",		".Ğ«" = "Syndicate",
+	  ":Ğ“" = "Supply",		"#Ğ“" = "Supply",		".Ğ“" = "Supply",
+	  ":ĞŸ" = "changeling",	"#ĞŸ" = "changeling",	".ĞŸ" = "changeling",
+	  ":Ğ’" = "dronechat",	"#Ğ’" = "dronechat",		".Ğ’" = "dronechat"
 )
 
 /mob/living/proc/binarycheck()
@@ -90,7 +90,7 @@ var/list/department_radio_keys = list(
 			return 1
 
 /mob/living/proc/hivecheck()
-	if (isalien(src))
+	if (isxeno(src))
 		return 1
 	if (!ishuman(src))
 		return
@@ -137,9 +137,9 @@ var/list/department_radio_keys = list(
 		if (!istype(src, /mob/living/silicon/ai)) // Atlantis: Prevents nearby people from hearing the AI when it talks using it's integrated radio.
 			for(var/mob/living/M in hearers(5, src))
 				if(M != src)
-					M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>")
+					M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>", SHOWMSG_VISUAL|SHOWMSG_AUDIO)
 				if (speech_sound)
-					src.playsound_local(get_turf(src), speech_sound, sound_vol * 0.5, 1)
+					playsound_local(src, speech_sound, VOL_EFFECTS_MASTER, sound_vol * 0.5)
 
 		speech_sound = null	//so we don't play it twice.
 
@@ -161,23 +161,16 @@ var/list/department_radio_keys = list(
 		var/list/hear = hear(message_range, T)
 		var/list/hearturfs = list()
 
-		for(var/I in hear)
-			if(istype(I, /mob))
-				var/mob/M = I
-				listening += M
-				hearturfs += M.locs[1]
-				for(var/obj/O in M.contents)
-					listening_obj |= O
-			else if(istype(I, /obj))
-				var/obj/O = I
-				hearturfs += O.locs[1]
-				listening_obj |= O
+		for(var/atom/movable/AM in hear)
+			listening |= AM.get_listeners()
+			listening_obj |= AM.get_listening_objs()
+			hearturfs += AM.locs[1]
 
 		for(var/mob/M in player_list)
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 				listening |= M
 				continue
-			if(M.loc && M.locs[1] in hearturfs)
+			if(M.loc && (M.locs[1] in hearturfs))
 				listening |= M
 
 	//speech bubble
@@ -199,7 +192,7 @@ var/list/department_radio_keys = list(
 				O.hear_talk(src, message, verb, speaking)
 
 	var/area/A = get_area(src)
-	log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
+	log_say("[key_name(src)] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
 	return 1
 
 /mob/living/proc/say_signlang(var/message, var/verb="gestures", var/datum/language/language)

@@ -6,7 +6,7 @@
 	if(!summon_type)
 		gunslist = typecacheof(list(/obj/item/weapon/gun/energy, /obj/item/weapon/gun/projectile))
 	else
-		magiclist = list(/obj/effect/proc_holder/spell/targeted/area_teleport/teleport, /obj/effect/proc_holder/spell/targeted/barnyardcurse, /obj/effect/proc_holder/spell/targeted/lighting_shock, /obj/effect/proc_holder/spell/targeted/charge,
+		magiclist = list(/obj/effect/proc_holder/spell/targeted/area_teleport/teleport, /obj/effect/proc_holder/spell/targeted/gnomecurse, /obj/effect/proc_holder/spell/targeted/barnyardcurse, /obj/effect/proc_holder/spell/targeted/lighting_shock, /obj/effect/proc_holder/spell/targeted/charge,
 	/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke, /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech, /obj/effect/proc_holder/spell/targeted/ethereal_jaunt,
 	/obj/effect/proc_holder/spell/in_hand/fireball, /obj/effect/proc_holder/spell/in_hand/tesla, /obj/effect/proc_holder/spell/in_hand/arcane_barrage,
 	/obj/effect/proc_holder/spell/aoe_turf/knock, /obj/effect/proc_holder/spell/targeted/mind_transfer, /obj/effect/proc_holder/spell/aoe_turf/repulse,
@@ -29,6 +29,8 @@
 				if(istype(S, randomizemagic))
 					S.clothes_req = 0
 	if(!summon_type)
-		player_list << sound('sound/magic/Summon_guns.ogg')
+		for(var/mob/M in player_list)
+			M.playsound_local(null, 'sound/magic/Summon_guns.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 	else
-		player_list << sound('sound/magic/Summon_Magic.ogg')
+		for(var/mob/M in player_list)
+			M.playsound_local(null, 'sound/magic/Summon_Magic.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)

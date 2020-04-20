@@ -3,17 +3,15 @@
 	desc = "The Goliath is a single-shot shoulder-fired multipurpose missile launcher."
 	icon_state = "rocket"
 	item_state = "rocket"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	force = 5
 	flags =  CONDUCT
 	origin_tech = "combat=8;materials=5"
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rocket
 	var/wielded = 0
+	can_be_holstered = FALSE
 	fire_sound = 'sound/effects/bang.ogg'
-
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/isHandgun()
-	return 0
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/proc/unwield()
 	wielded = 0

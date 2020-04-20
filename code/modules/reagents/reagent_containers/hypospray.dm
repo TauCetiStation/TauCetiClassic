@@ -14,12 +14,16 @@
 	flags = OPENCONTAINER
 	slot_flags = SLOT_FLAGS_BELT
 
+/obj/item/weapon/reagent_containers/hypospray/atom_init()
+	. = ..()
+	update_icon()
+
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
-		to_chat(user, "\red [src] is empty.")
+		to_chat(user, "<span class='warning'>[src] is empty.</span>")
 		return
 	if(!istype(M))
 		return
@@ -33,18 +37,16 @@
 			var/contained = english_list(injected)
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.key]). Reagents: [contained]</font>")
-			msg_admin_attack("[user.name] ([user.ckey]) injected [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			msg_admin_attack("[key_name(user)] injected [key_name(M)] with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
 
+			playsound(src, 'sound/effects/hypospray.ogg', VOL_EFFECTS_MASTER, 25)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			to_chat(user, "\blue [trans] units injected. [reagents.total_volume] units remaining in [src].")
+			to_chat(user, "<span class='notice'>[trans] units injected. [reagents.total_volume] units remaining in [src].</span>")
 
 	return
 
-/obj/item/weapon/reagent_containers/hypospray/cmo //We need "another" hypo for CMO
-
-/obj/item/weapon/reagent_containers/hypospray/cmo/atom_init()
-	. = ..()
-	reagents.add_reagent("tricordrazine", 30)
+/obj/item/weapon/reagent_containers/hypospray/cmo
+	list_reagents = list("tricordrazine" = 30)
 
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector
@@ -53,25 +55,19 @@
 	icon_state = "autoinjector"
 	item_state = "autoinjector"
 	volume = 5
-
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/atom_init()
-	. = ..()
-	reagents.add_reagent("inaprovaline", 5)
-	flags &= ~OPENCONTAINER
-	amount_per_transfer_from_this = volume
-	update_icon()
+	list_reagents = list("inaprovaline" = 5)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack //goliath kiting
 	name = "stimpack"
 	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."
 	icon_state = "stimpen"
 	volume = 20
+	list_reagents = list("inaprovaline" = 5, "coffee" = 13, "hyperzine" = 2)
 
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack/atom_init()
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/atom_init()
+	flags &= ~OPENCONTAINER
+	amount_per_transfer_from_this = volume
 	. = ..()
-	reagents.add_reagent("coffee", 13)
-	reagents.add_reagent("hyperzine", 2)
-	update_icon()
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/attack(mob/M, mob/user)
 	..()

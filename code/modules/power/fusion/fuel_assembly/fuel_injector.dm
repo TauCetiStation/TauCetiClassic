@@ -72,7 +72,7 @@ var/list/fuel_injectors = list()
 			to_chat(user, "<span class='warning'>Shut \the [src] off first!</span>")
 			return
 		anchored = !anchored
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		if(anchored)
 			user.visible_message("\The [user] secures \the [src] to the floor.")
 		else
@@ -101,13 +101,13 @@ var/list/fuel_injectors = list()
 	if(!injecting && cur_assembly)
 		icon_state = "injector1"
 		injecting = 1
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 
 /obj/machinery/fusion_fuel_injector/proc/StopInjecting()
 	if(injecting)
 		injecting = 0
 		icon_state = "injector0"
-		use_power = 0
+		set_power_use(NO_POWER_USE)
 
 /obj/machinery/fusion_fuel_injector/proc/Inject()
 	if(!injecting)

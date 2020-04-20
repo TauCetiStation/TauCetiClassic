@@ -17,13 +17,14 @@
 	name = "status display"
 	anchored = 1
 	density = 0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
-	var/mode = 1	// 0 = Blank
+	var/mode = 5	// 0 = Blank
 					// 1 = Shuttle timer
 					// 2 = Arbitrary message(s)
 					// 3 = alert picture
 					// 4 = Supply shuttle timer
+					// 5 = default N picture
 
 	var/picture_state	// icon_state of alert picture
 	var/message1 = ""	// message line 1
@@ -36,7 +37,7 @@
 
 	var/friendc = 0      // track if Friend Computer mode
 
-	maptext_height = 26
+	maptext_height = 28
 	maptext_width = 32
 
 	// new display
@@ -46,6 +47,8 @@
 	. = ..()
 	status_display_list += src
 	radio_controller.add_object(src, frequency)
+	update()
+
 
 /obj/machinery/status_display/Destroy()
 	status_display_list -= src
@@ -77,7 +80,7 @@
 		return
 
 	if(overlays.len && !friendc || mode == 4)
-		overlays.Cut()
+		cut_overlays()
 
 	switch(mode)
 		if(0)				//blank
@@ -130,6 +133,8 @@
 				else
 					line1 = ""
 			update_display(line1, line2)
+		if(5)				// default picture
+			set_picture("default")
 
 /obj/machinery/status_display/examine(mob/user)
 	..()
@@ -156,7 +161,7 @@
 /obj/machinery/status_display/proc/set_picture(state)
 	picture_state = state
 	remove_display()
-	overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
+	add_overlay(image('icons/obj/status_display.dmi', icon_state=picture_state))
 
 /obj/machinery/status_display/proc/update_display(line1, line2)
 	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
@@ -179,7 +184,7 @@
 
 /obj/machinery/status_display/proc/remove_display()
 	if(overlays.len)
-		overlays.Cut()
+		cut_overlays()
 	if(maptext)
 		maptext = ""
 
@@ -204,6 +209,10 @@
 		if("supply")
 			if(supply_display)
 				mode = 4
+
+		if("default")
+			mode = 5
+
 
 	update()
 
@@ -233,7 +242,7 @@
 
 /obj/machinery/ai_status_display/process()
 	if(stat & NOPOWER)
-		overlays.Cut()
+		cut_overlays()
 		return
 
 	update()
@@ -248,7 +257,7 @@
 /obj/machinery/ai_status_display/proc/update()
 
 	if(mode==0) //Blank
-		overlays.Cut()
+		cut_overlays()
 		return
 
 	if(mode==1)	// AI emoticon
@@ -292,8 +301,8 @@
 /obj/machinery/ai_status_display/proc/set_picture(state)
 	picture_state = state
 	if(overlays.len)
-		overlays.Cut()
-	overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
+		cut_overlays()
+	add_overlay(image('icons/obj/status_display.dmi', icon_state=picture_state))
 
 #undef CHARS_PER_LINE
 #undef FONT_SIZE

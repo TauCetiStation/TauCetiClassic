@@ -43,7 +43,7 @@
 	return 0
 
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) //return point value or -1 for failure
-	if(!istype(get_area(user), /area/wizard_station))
+	if(!istype(get_area(user), /area/custom/wizard_station))
 		to_chat(user, "<span clas=='warning'>You can only refund spells at the wizard lair</span>")
 		return -1
 	if(!S)
@@ -199,6 +199,11 @@
 	spell_type = /obj/effect/proc_holder/spell/targeted/barnyardcurse
 	log_name = "BC"
 
+/datum/spellbook_entry/gnomecurse
+	name = "Gift of the Gnome"
+	spell_type = /obj/effect/proc_holder/spell/targeted/gnomecurse
+	log_name = "GC"
+
 /datum/spellbook_entry/lighting_shock
 	name = "Lighting Shock"
 	spell_type = /obj/effect/proc_holder/spell/targeted/lighting_shock
@@ -230,7 +235,14 @@
 	buy_word = "Summon"
 	var/item_path= null
 
+/datum/spellbook_entry/item/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) // Specific circumstances
+	. = ..()
+	if(.)
+		return surplus != 0
+
 /datum/spellbook_entry/item/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	if(surplus > 0)
+		surplus = max(surplus - 1, 0)
 	new item_path (get_turf(user))
 	feedback_add_details("wizard_spell_learned", log_name)
 	return 1
@@ -244,17 +256,19 @@
 		dat += "[surplus] left.<br>"
 	return dat
 
+/* Commented because admins ban everyone who uses this staff... Somebody should rebalance this thing
 /datum/spellbook_entry/item/staffchange
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
-	item_path = /obj/item/weapon/gun/magic/staff/change
+	item_path = /obj/item/weapon/gun/magic/change
 	log_name = "ST"
 	cost = 4
+*/
 
 /datum/spellbook_entry/item/staffanimation
 	name = "Staff of Animation"
 	desc = "An arcane staff capable of shooting bolts of eldritch energy which cause inanimate objects to come to life. This magic doesn't affect machines."
-	item_path = /obj/item/weapon/gun/magic/staff/animate
+	item_path = /obj/item/weapon/gun/magic/animate
 	log_name = "SA"
 	category = "Assistance"
 	cost = 3
@@ -262,7 +276,7 @@
 /datum/spellbook_entry/item/staffdoor
 	name = "Staff of Door Creation"
 	desc = "A particular staff that can mold solid metal into ornate doors. Useful for getting around in the absence of other transportation. Does not work on glass."
-	item_path = /obj/item/weapon/gun/magic/staff/doorcreation
+	item_path = /obj/item/weapon/gun/magic/doorcreation
 	log_name = "SD"
 	category = "Mobility"
 	cost = 3
@@ -270,7 +284,7 @@
 /datum/spellbook_entry/item/staffhealing
 	name = "Staff of Healing"
 	desc = "An altruistic staff that can heal the lame and raise the dead."
-	item_path = /obj/item/weapon/gun/magic/staff/healing
+	item_path = /obj/item/weapon/gun/magic/healing
 	log_name = "SH"
 	category = "Defensive"
 	cost = 4
@@ -323,6 +337,15 @@
 	feedback_add_details("wizard_spell_learned",log_name)
 	return 1
 
+/datum/spellbook_entry/item/tophat
+	name = "The Wabbajack Hat"
+	desc = "A magical hat that comes with it's own pocket dimension."
+	item_path = /obj/item/clothing/head/wizard/tophat
+	log_name = "TH"
+	category = "Assistance"
+	refundable = FALSE
+	cost = 1
+	surplus = 1
 
 /*datum/spellbook_entry/item/battlemage
 	name = "Battlemage Armour"
@@ -368,7 +391,7 @@
 /obj/item/weapon/spellbook
 	name = "spell book"
 	desc = "An unearthly tome that glows with power."
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
 	var/uses = 10

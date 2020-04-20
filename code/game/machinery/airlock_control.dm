@@ -69,15 +69,15 @@
 	if(ishuman(AM) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = AM
 		if(H.getBrainLoss() >= 60)
-			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
+			playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
-				visible_message("\red [H] headbutts the airlock.")
+				visible_message("<span class='warning'>[H] headbutts the airlock.</span>")
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 				H.Stun(8)
 				H.Weaken(5)
 				BP.take_damage(10, 0)
 			else
-				visible_message("\red [H] headbutts the airlock. Good thing they're wearing a helmet.")
+				visible_message("<span class='warning'>[H] headbutts the airlock. Good thing they're wearing a helmet.</span>")
 				H.Stun(8)
 				H.Weaken(5)
 			return
@@ -130,7 +130,7 @@
 	name = "airlock sensor"
 
 	anchored = TRUE
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	interact_offline = TRUE // this is very strange that power_channel is defined, use_power = 1 (parent), when this element has no unpowered features and sprites.
 
 	var/id_tag
@@ -210,7 +210,7 @@
 
 	layer = 3.3	//Above windows
 	anchored = TRUE
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	interact_offline = TRUE
 
 	var/master_tag

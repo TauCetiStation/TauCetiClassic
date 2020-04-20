@@ -4,7 +4,7 @@
 	desc = "A generic brand of lipstick."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "lipstick"
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	var/colour = "red"
 	var/open = 0
 
@@ -97,7 +97,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "razor"
 	flags = CONDUCT
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 
 /obj/item/weapon/razor/proc/shave(mob/living/carbon/human/H, location = O_MOUTH, mob/living/carbon/human/AH = null)
@@ -109,7 +109,7 @@
 		H.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has been shaved with [src.name] by [AH.name] ([AH.ckey])</font>")
 		AH.attack_log += text("\[[time_stamp()]\] <font color='blue'>Used the [src.name] to shave [H.name] ([H.ckey])</font>")
 	H.update_hair()
-	playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
+	playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER, 20)
 
 
 /obj/item/weapon/razor/attack(mob/M, mob/user, def_zone)
@@ -181,14 +181,14 @@
 /obj/item/weapon/haircomb //sparklysheep's comb
 	name = "purple comb"
 	desc = "A pristine purple comb made from flexible plastic."
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	icon = 'icons/obj/items.dmi'
 	icon_state = "purplecomb"
 	item_state = "purplecomb"
 
 /obj/item/weapon/haircomb/attack_self(mob/user)
 	if(user.r_hand == src || user.l_hand == src)
-		user.visible_message(text("\red [] uses [] to comb their hair with incredible style and sophistication. What a [].", user, src, user.gender == FEMALE ? "lady" : "guy"))
+		user.visible_message(text("<span class='warning'>[] uses [] to comb their hair with incredible style and sophistication. What a [].</span>", user, src, user.gender == FEMALE ? "lady" : "guy"))
 	return
 
 /obj/item/weapon/scissors
@@ -202,7 +202,7 @@
 	force = 6.0
 	throw_speed = 2
 	throw_range = 9
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	m_amt = 80
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("cut", "stabbed", "chipped")
@@ -284,6 +284,7 @@
 
 	mannequin.update_body()
 	mannequin.update_hair()
+	COMPILE_OVERLAYS(mannequin)
 	return mannequin
 
 /obj/item/weapon/scissors/Topic(href, href_list)

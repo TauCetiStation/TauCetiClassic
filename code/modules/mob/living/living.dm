@@ -3,9 +3,15 @@
 	living_list += src
 
 /mob/living/Destroy()
+	if(LAZYLEN(status_effects))
+		for(var/s in status_effects)
+			var/datum/status_effect/S = s
+			if(S.on_remove_on_mob_delete) //the status effect calls on_remove when its mob is deleted
+				qdel(S)
+			else
+				S.be_replaced()
 	living_list -= src
-	..()
-	return QDEL_HINT_HARDDEL_NOW
+	return ..()
 
 /mob/living/proc/OpenCraftingMenu()
 	return
@@ -14,6 +20,14 @@
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
 		return
+	if(!ismovableatom(A) || is_blocked_turf(A))
+		if(confused && stat == CONSCIOUS && m_intent == "run")
+			playsound(get_turf(src), pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
+			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")
+			apply_damage(3, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
+			Stun(3)
+			Weaken(2)
+
 	if(ismob(A))
 		var/mob/M = A
 		if(MobBump(M))
@@ -30,6 +44,9 @@
 
 //Called when we bump onto a mob
 /mob/living/proc/MobBump(mob/M)
+	//Even if we don't push/swap places, we "touched" them, so spread fire
+	SpreadFire(M)
+
 	if(now_pushing)
 		return 1
 
@@ -53,7 +70,7 @@
 				return 1
 
 		//Fat
-		if(FAT in M.mutations)
+		if(HAS_TRAIT(src, TRAIT_FAT))
 			var/ran = 40
 			if(isrobot(src))
 				ran = 20
@@ -161,12 +178,12 @@
 		pull_debuff += tally
 
 /mob/living/proc/add_ingame_age()
-	if(client && !client.is_afk()) //5 minutes of inactive time will disable this, until player come back.
+	if(client && isnum(client.player_ingame_age) && !client.is_afk(5 MINUTES)) // 5 minutes of inactive time will disable this, until player come back.
 		var/client/C = client
 		if(C.player_next_age_tick == 0) //All clients start with 0, so we need to set next tick for the first time.
-			C.player_next_age_tick = world.time + 600
+			C.player_next_age_tick = world.time + 1 MINUTE
 		else if(world.time > C.player_next_age_tick) //Every 60 seconds we add +1 to player ingame age.
-			C.player_next_age_tick = world.time + 600
+			C.player_next_age_tick = world.time + 1 MINUTE
 			C.player_ingame_age++
 
 /mob/living/verb/succumb()
@@ -248,7 +265,7 @@
 /mob/living/proc/adjustBruteLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	bruteloss = Clamp(bruteloss + amount, 0, maxHealth * 2)
+	bruteloss = CLAMP(bruteloss + amount, 0, maxHealth * 2)
 
 // ========== OXY ==========
 /mob/living/proc/getOxyLoss()
@@ -257,12 +274,12 @@
 /mob/living/proc/adjustOxyLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	oxyloss = Clamp(oxyloss + amount, 0, maxHealth * 2)
+	oxyloss = CLAMP(oxyloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setOxyLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	oxyloss = Clamp(amount, 0, maxHealth * 2)
+	oxyloss = CLAMP(amount, 0, maxHealth * 2)
 
 // ========== TOX ==========
 /mob/living/proc/getToxLoss()
@@ -271,12 +288,12 @@
 /mob/living/proc/adjustToxLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	toxloss = Clamp(toxloss + amount, 0, maxHealth * 2)
+	toxloss = CLAMP(toxloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setToxLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	toxloss = Clamp(amount, 0, maxHealth * 2)
+	toxloss = CLAMP(amount, 0, maxHealth * 2)
 
 // ========== FIRE ==========
 /mob/living/proc/getFireLoss()
@@ -285,7 +302,7 @@
 /mob/living/proc/adjustFireLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	fireloss = Clamp(fireloss + amount, 0, maxHealth * 2)
+	fireloss = CLAMP(fireloss + amount, 0, maxHealth * 2)
 
 // ========== CLONE ==========
 /mob/living/proc/getCloneLoss()
@@ -294,12 +311,12 @@
 /mob/living/proc/adjustCloneLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	cloneloss = Clamp(cloneloss + amount, 0, maxHealth * 2)
+	cloneloss = CLAMP(cloneloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setCloneLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	cloneloss = Clamp(amount, 0, maxHealth * 2)
+	cloneloss = CLAMP(amount, 0, maxHealth * 2)
 
 // ========== BRAIN ==========
 /mob/living/proc/getBrainLoss()
@@ -308,12 +325,12 @@
 /mob/living/proc/adjustBrainLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	brainloss = Clamp(brainloss + amount, 0, maxHealth * 2)
+	brainloss = CLAMP(brainloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setBrainLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	brainloss = Clamp(amount, 0, maxHealth * 2)
+	brainloss = CLAMP(amount, 0, maxHealth * 2)
 
 // ========== PAIN ==========
 /mob/living/proc/getHalLoss()
@@ -322,57 +339,14 @@
 /mob/living/proc/adjustHalLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	halloss = Clamp(halloss + amount, 0, maxHealth * 2)
+	halloss = CLAMP(halloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setHalLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	halloss = Clamp(amount, 0, maxHealth * 2)
+	halloss = CLAMP(amount, 0, maxHealth * 2)
 
 // ============================================================
-
-
-/mob/proc/get_contents()
-
-
-//Recursive function to find everything a mob is holding.
-/mob/living/get_contents(var/obj/item/weapon/storage/Storage = null)
-	var/list/L = list()
-
-	if(Storage) //If it called itself
-		L += Storage.return_inv()
-
-		//Leave this commented out, it will cause storage items to exponentially add duplicate to the list
-		//for(var/obj/item/weapon/storage/S in Storage.return_inv()) //Check for storage items
-		//	L += get_contents(S)
-
-		for(var/obj/item/weapon/gift/G in Storage.return_inv()) //Check for gift-wrapped items
-			L += G.gift
-			if(istype(G.gift, /obj/item/weapon/storage))
-				L += get_contents(G.gift)
-
-		for(var/obj/item/smallDelivery/D in Storage.return_inv()) //Check for package wrapped items
-			L += D.wrapped
-			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
-				L += get_contents(D.wrapped)
-		return L
-
-	else
-
-		L += src.contents
-		for(var/obj/item/weapon/storage/S in src.contents)	//Check for storage items
-			L += get_contents(S)
-
-		for(var/obj/item/weapon/gift/G in src.contents) //Check for gift-wrapped items
-			L += G.gift
-			if(istype(G.gift, /obj/item/weapon/storage))
-				L += get_contents(G.gift)
-
-		for(var/obj/item/smallDelivery/D in src.contents) //Check for package wrapped items
-			L += D.wrapped
-			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
-				L += get_contents(D.wrapped)
-		return L
 
 /mob/living/proc/check_contents_for(A)
 	var/list/L = src.get_contents()
@@ -394,7 +368,7 @@
 
 /mob/living/singularity_act()
 	var/gain = 20
-	investigate_log(" has consumed [key_name(src)].","singulo") //Oh that's where the clown ended up!
+	log_investigate(" has consumed [key_name(src)].",INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
 	return(gain)
 
@@ -547,11 +521,12 @@
 
 /mob/living/carbon/human/rejuvenate()
 	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
-	BP.disfigured = FALSE
+	if(istype(BP))
+		BP.disfigured = FALSE
 
-	for (var/obj/item/weapon/organ/head/H in organ_head_list) // damn son, where'd you get this?
+	for (var/obj/item/organ/external/head/H in organ_head_list) // damn son, where'd you get this?
 		if(H.brainmob)
-			if(H.brainmob.real_name == src.real_name)
+			if(H.brainmob.real_name == real_name)
 				if(H.brainmob.mind)
 					H.brainmob.mind.transfer_to(src)
 					qdel(H)
@@ -653,8 +628,7 @@
 						if (prob(75))
 							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
 							if (istype(G, /obj/item/weapon/grab))
-								for(var/mob/O in viewers(M, null))
-									O.show_message(text("<span class='warning'>[] has been pulled from []'s grip by [].</span>", G.affecting, G.assailant, src), 1)
+								M.visible_message("<span class='warning'>[G.affecting] has been pulled from [G.assailant]'s grip by [src].</span>")
 								//G = null
 								qdel(G)
 						else
@@ -675,10 +649,10 @@
 								var/turf/location = M.loc
 								if (istype(location, /turf/simulated))
 									if(ishuman(M))
-										var/mob/living/carbon/H = M
-										var/blood_volume = round(H:vessel.get_reagent_amount("blood"))
+										var/mob/living/carbon/human/H = M
+										var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
 										if(blood_volume > 0)
-											H:vessel.remove_reagent("blood",1)
+											H.vessel.remove_reagent("blood",1)
 
 
 						pulling.Move(T, get_dir(pulling, T))
@@ -717,7 +691,7 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.species)
-				new_cover = new H.species.blood_color
+				new_cover = new(H.species.blood_datum)
 		if(!new_cover)
 			new_cover = new/datum/dirt_cover/red_blood
 		if(!blood_exists)
@@ -738,7 +712,7 @@
 				START_PROCESSING(SSobj, TH)
 			if((!(newdir in TH.existing_dirs) || trail_type == "trails_1") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 				TH.existing_dirs += newdir
-				TH.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
+				TH.add_overlay(image('icons/effects/blood.dmi',trail_type,dir = newdir))
 			if(M.dna)
 				TH.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 
@@ -821,6 +795,12 @@
 			resisting++
 			switch(G.state)
 				if(GRAB_PASSIVE)
+					if(G.assailant.shoving_fingers)
+						if(iscarbon(src))
+							var/mob/living/carbon/C_ = src
+							if(!istype(C_.wear_mask, /obj/item/clothing/mask/muzzle))
+								G.assailant.adjustBruteLoss(5) // We bit them.
+								G.assailant.shoving_fingers = FALSE
 					qdel(G)
 				if(GRAB_AGGRESSIVE)
 					if(prob(50 - (L.lying ? 35 : 0)))
@@ -846,16 +826,12 @@
 			if( C.handcuffed )
 				C.next_move = world.time + 100
 				C.last_special = world.time + 100
-				to_chat(C, "<span class='rose'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)</span>")
-				for(var/mob/O in viewers(L))
-					O.show_message("<span class='danger'>[usr] attempts to unbuckle themself!</span>", 1)
+				C.visible_message("<span class='danger'>[usr] attempts to unbuckle themself!</span>", self_message = "<span class='rose'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)</span>")
 				spawn(0)
 					if(do_after(usr, 1200, target = usr))
 						if(!C.buckled)
 							return
-						for(var/mob/O in viewers(C))
-							O.show_message("<span class='danger'>[usr] manages to unbuckle themself!</span>", 1)
-						to_chat(C, "<span class='notice'>You successfully unbuckle yourself.</span>")
+						C.visible_message("<span class='danger'>[usr] manages to unbuckle themself!</span>", self_message = "<span class='notice'>You successfully unbuckle yourself.</span>")
 						C.buckled.user_unbuckle_mob(C)
 		else
 			L.buckled.user_unbuckle_mob(L)
@@ -884,17 +860,13 @@
 			if(!CM.canmove && !CM.resting)	return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
-			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
-				to_chat(usr, "<span class='rose'>You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)</span>")
-				for(var/mob/O in viewers(CM))
-					O.show_message(text("<span class='danger'>[] is trying to break the handcuffs!</span>", CM), 1)
+			if(isxenoadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
+				CM.visible_message("<span class='danger'>[CM] is trying to break the handcuffs!</span>", self_message = "<span class='rose'>You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)</span>")
 				spawn(0)
 					if(do_after(CM, 50, target = usr))
 						if(!CM.handcuffed || CM.buckled)
 							return
-						for(var/mob/O in viewers(CM))
-							O.show_message(text("<span class='danger'>[] manages to break the handcuffs!</span>", CM), 1)
-						to_chat(CM, "<span class='notice'>You successfully break your handcuffs.</span>")
+						CM.visible_message("<span class='danger'>[CM] manages to break the handcuffs!</span>", self_message = "<span class='notice'>You successfully break your handcuffs.</span>")
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						qdel(CM.handcuffed)
 						CM.handcuffed = null
@@ -906,9 +878,7 @@
 				if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
 					displaytime = breakouttime / 600 //Minutes
-				to_chat(CM, "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
-				for(var/mob/O in viewers(CM))
-					O.show_message( "<span class='danger'>[usr] attempts to remove \the [HC]!</span>", 1)
+				CM.visible_message("<span class='danger'>[usr] attempts to remove \the [HC]!</span>", self_message = "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
 				spawn(0)
 					if(do_after(CM, breakouttime, target = usr))
 						if(!CM.handcuffed || CM.buckled)
@@ -928,17 +898,14 @@
 			if(!CM.canmove && !CM.resting)	return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
-			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
-				to_chat(usr, "<span class='notice'>You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)</span>")
-				for(var/mob/O in viewers(CM))
-					O.show_message(text("<span class='danger'>[] is trying to break the legcuffs!</span>", CM), 1)
+			if(isxenoadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
+				to_chat(usr, )
+				CM.visible_message("<span class='danger'>[CM] is trying to break the legcuffs!</span>", self_message = "<span class='notice'>You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)</span>")
 				spawn(0)
 					if(do_after(CM, 50, target = usr))
 						if(!CM.legcuffed || CM.buckled)
 							return
-						for(var/mob/O in viewers(CM))
-							O.show_message(text("<span class='danger'>[] manages to break the legcuffs!</span>", CM), 1)
-						to_chat(CM, "<span class='notice'>You successfully break your legcuffs.")
+						CM.visible_message("<span class='danger'>[CM] manages to break the legcuffs!</span>", self_message = "<span class='notice'>You successfully break your legcuffs.</span>")
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						qdel(CM.legcuffed)
 						CM.legcuffed = null
@@ -950,9 +917,7 @@
 				if(istype(HC)) //If you are legcuffed with actual legcuffs... Well what do I know, maybe someone will want to legcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
 					displaytime = breakouttime / 600 //Minutes
-				to_chat(CM, "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
-				for(var/mob/O in viewers(CM))
-					O.show_message( "<span class='danger'>[usr] attempts to remove \the [HC]!</span>", 1)
+				CM.visible_message("<span class='danger'>[usr] attempts to remove \the [HC]!</span>", self_message = "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
 				spawn(0)
 					if(do_after(CM, breakouttime, target = usr))
 						if(!CM.legcuffed || CM.buckled)
@@ -979,7 +944,7 @@
 		return
 
 //Already resting and have others debuffs
-	if( resting && (sleeping || weakened || paralysis || stunned) )
+	if( resting && (IsSleeping() || weakened || paralysis || stunned) )
 		to_chat(src, "<span class='rose'>You can't wake up.</span>")
 
 //Restrained and some debuffs
@@ -991,7 +956,7 @@
 		to_chat(src, "<span class='rose'>You can't move.</span>")
 
 //Debuffs check
-	else if(!resting && (sleeping || weakened || paralysis || stunned) )
+	else if(!resting && (IsSleeping() || weakened || paralysis || stunned) )
 		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
 
 	else
@@ -1008,11 +973,11 @@
 				clear_fullscreen("flash", 25)
 		return 1
 
-/mob/living/proc/has_eyes()
-	return 1
+/mob/living/proc/has_brain()
+	return TRUE
 
-/mob/living/proc/slip(slipped_on, stun_duration=4, weaken_duration=2)
-	return FALSE
+/mob/living/proc/has_eyes()
+	return TRUE
 
 //-TG Port for smooth standing/lying animations
 /mob/living/proc/get_standard_pixel_x_offset(lying_current = 0)
@@ -1124,7 +1089,7 @@
 		if(user.is_busy())
 			return
 		to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
-		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
 		if(do_mob(user, src, 80))
 			harvest(user)
 		return TRUE
@@ -1200,3 +1165,56 @@
 
 /mob/living/proc/get_metabolism_factor()
 	return METABOLISM_FACTOR
+
+/mob/living/proc/CanObtainCentcommMessage()
+	return FALSE
+
+/mob/living/proc/vomit(punched = FALSE, masked = FALSE)
+	if(stat == DEAD && !punched)
+		return FALSE
+
+	Stun(3)
+
+	if(nutrition < 50)
+		visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but there is nothing!</span>")
+		adjustOxyLoss(3)
+		adjustHalLoss(5)
+		return FALSE
+
+	nutrition -= 50
+	eye_blurry = max(5, eye_blurry)
+
+	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
+		var/list/vomitsound = list()
+		// The main reason why this is here, and not made into a polymorphized proc, is because we need to know from the subclasses that could cover their face, that they do.
+		if(masked)
+			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>","<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
+			if(gender == FEMALE)
+				vomitsound = SOUNDIN_FRIGVOMIT
+			else
+				vomitsound = SOUNDIN_MRIGVOMIT
+			eye_blurry = max(10, eye_blurry)
+			losebreath += 20
+		else
+			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")
+			if(gender == FEMALE)
+				vomitsound = SOUNDIN_FEMALEVOMIT
+			else
+				vomitsound = SOUNDIN_MALEVOMIT
+		make_jittery(max(35 - jitteriness, 0))
+		playsound(src, pick(vomitsound), VOL_EFFECTS_MASTER, null, FALSE)
+	else
+		visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")
+		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
+
+	var/turf/simulated/T = loc
+	var/obj/structure/toilet/WC = locate(/obj/structure/toilet) in T
+	if(WC && WC.open)
+		return TRUE
+	if(locate(/obj/structure/sink) in T)
+		return TRUE
+
+	if(istype(T))
+		T.add_vomit_floor(src, getToxLoss() > 0 ? TRUE : FALSE)
+
+	return TRUE

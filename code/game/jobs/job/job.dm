@@ -47,6 +47,10 @@
 
 	var/list/restricted_species = list()
 
+	var/list/survival_kit_items = list()
+
+	var/list/prevent_survival_kit_items = list()
+
 /datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return TRUE
 
@@ -156,3 +160,6 @@
 
 /datum/job/proc/is_position_available()
 	return (current_positions < total_positions) || (total_positions == -1)
+
+/datum/job/proc/map_check()
+	return TRUE

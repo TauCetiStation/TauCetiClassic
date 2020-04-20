@@ -16,7 +16,7 @@
 	prob(6);/obj/item/weapon/gun/projectile/automatic/bulldog,\
 	prob(7);/obj/item/device/radio/beacon/syndicate,\
 	prob(7);/obj/item/ammo_box/magazine/m762,\
-	prob(8);/obj/item/weapon/aiModule/syndicate,\
+	prob(8);/obj/item/weapon/aiModule/freeform/syndicate,\
 	prob(8);/obj/item/device/powersink,\
 	prob(8);/obj/item/device/radio/beacon/syndicate_bomb,\
 	prob(10);/obj/item/weapon/storage/firstaid/tactical,\
@@ -43,6 +43,7 @@
 	prob(20);/obj/item/clothing/glasses/thermal/syndi,\
 	prob(20);/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,\
 	prob(20);/obj/item/weapon/pen/edagger,\
+	prob(20);/obj/item/device/encryptionkey/binary,\
 	prob(25);/obj/item/weapon/storage/backpack/dufflebag/surgery,\
 	prob(25);/obj/item/weapon/storage/backpack/dufflebag/c4,\
 	prob(25);/obj/item/weapon/reagent_containers/syringe/mulligan,\

@@ -39,7 +39,7 @@ function SetVolume(volume) {
 
 #ifdef DEBUG_MEDIAPLAYER
 #define MP_DEBUG(x) owner << x
-#warning Please comment out #define DEBUG_MEDIAPLAYER before committing.
+#warn Please comment out #define DEBUG_MEDIAPLAYER before committing.
 #else
 #define MP_DEBUG(x)
 #endif
@@ -61,6 +61,7 @@ function SetVolume(volume) {
 		return
 	mob = holder
 	owner = mob.client
+	volume = owner.get_sound_volume(VOL_JUKEBOX)
 
 // Actually pop open the player in the background.
 /datum/media_manager/proc/open()
@@ -69,7 +70,7 @@ function SetVolume(volume) {
 
 // Tell the player to play something via JS.
 /datum/media_manager/proc/send_update()
-	if(!(owner.prefs.toggles & SOUND_STREAMING) && url != "")
+	if(!owner.get_sound_volume(VOL_JUKEBOX) && url != "")
 		return // Nope.
 	var/playtime = round((world.time - start_time) / 10)
 	owner << output(list2params(list(url, playtime, volume)), "[window]:SetMusic")
@@ -90,7 +91,7 @@ function SetVolume(volume) {
 		return
 	if(!isliving(mob))
 		return
-	var/area/A = get_area_master(mob)
+	var/area/A = get_area(mob)
 	if(!A)
 		//testing("[owner] in [mob.loc].  Aborting.")
 		stop_music()
@@ -108,21 +109,7 @@ function SetVolume(volume) {
 		//volume = targetVolume
 		send_update()
 
-/datum/media_manager/proc/update_volume(value)
-	volume = value
+/datum/media_manager/proc/update_volume()
+	volume = owner.prefs.snd_jukebox_vol
 	owner << output(list2params(list(volume)), "[window]:SetVolume")
 	//send_update()
-
-/client/verb/change_volume()
-	set name = "Set Volume"
-	set category = "Preferences"
-	set desc = "Set jukebox volume"
-	if(!media || !istype(media))
-		to_chat(usr, "You have no media datum to change, if you're not in the lobby tell an admin.")
-		return
-	var/value = input("Choose your Jukebox volume.", "Jukebox volume", media.volume) as num
-	value = round(max(0, min(100, value)))
-	media.update_volume(value)
-	if(prefs)
-		prefs.volume = value
-		prefs.save_preferences(src)

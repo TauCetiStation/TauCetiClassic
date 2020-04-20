@@ -47,7 +47,7 @@ var/global/raider_tick = 1
 	item_state = "a28w"
 	silenced = 1
 	mag_type = /obj/item/ammo_box/magazine/m556/nonlethal
-	fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/silenced/nonlethal
 	name = "Silenced pistol NL"
@@ -81,7 +81,7 @@ var/global/raider_tick = 1
 	stutter = 10
 	agony = 55
 
-/obj/item/projectile/bullet/weakbullet/nl_rifle/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/weakbullet/nl_rifle/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_bodypart_damage(20)//+10=30
@@ -95,7 +95,7 @@ var/global/raider_tick = 1
 	stutter = 10
 	agony = 30
 
-/obj/item/projectile/bullet/weakbullet/nl_pistol/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/weakbullet/nl_pistol/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_bodypart_damage(10)//+10=20
@@ -108,7 +108,7 @@ var/global/raider_tick = 1
 /obj/item/weapon/storage/backpack/santabag/pirate
 	name = "Loot bag"
 	desc = "Just another ordinary bag."
-	max_w_class = 3
+	max_w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/grenade/monsternade
 	name = "pocketnade"
@@ -119,7 +119,7 @@ var/global/raider_tick = 1
 
 /obj/item/weapon/grenade/monsternade/prime()
 	..()
-	playsound(src.loc, 'sound/effects/bang.ogg', 50, 1, 5)
+	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 	switch(rand(1,4))
 		if(1)
 			for(var/i=0,i<2,i++)
@@ -143,7 +143,7 @@ var/global/raider_tick = 1
 	icon_state = "hacktool"
 	flags = CONDUCT
 	force = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 5.0
 	throw_range = 15
 	throw_speed = 3

@@ -24,8 +24,8 @@
 
 	alpha = 255
 
-	overlays.Cut()
-	overlays += icon_manager.get_atmos_icon("pipe", , pipe_color, "cap")
+	cut_overlays()
+	add_overlay(icon_manager.get_atmos_icon("pipe", , pipe_color, "cap[icon_connect_type]"))
 
 /obj/machinery/atmospherics/pipe/cap/visible
 	level = PIPE_VISIBLE_LEVEL
@@ -64,6 +64,7 @@
 	connect_types = CONNECT_TYPE_SCRUBBER
 	icon_connect_type = "-scrubbers"
 	color = PIPE_COLOR_RED
+	layer = GAS_PIPE_HIDDEN_SCRUBBER_LAYER
 
 /obj/machinery/atmospherics/pipe/cap/hidden/supply
 	name = "supply pipe endcap"
@@ -72,6 +73,7 @@
 	connect_types = CONNECT_TYPE_SUPPLY
 	icon_connect_type = "-supply"
 	color = PIPE_COLOR_BLUE
+	layer = GAS_PIPE_HIDDEN_SUPPLY_LAYER
 
 /obj/machinery/atmospherics/pipe/cap/hidden/fuel
 	name = "fuel pipe endcap"

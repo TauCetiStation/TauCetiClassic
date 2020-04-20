@@ -28,14 +28,14 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 /obj/item/seeds/replicapod/attackby(obj/item/weapon/W, mob/user)
 
-	if(istype(W,/obj/item/weapon/reagent_containers))
-
+	if(istype(W, /obj/item/weapon/reagent_containers))
 		to_chat(user, "You inject the contents of the syringe into the seeds.")
 
 		var/datum/reagent/blood/B
 
 		//Find a blood sample to inject.
-		for(var/datum/reagent/R in W:reagents.reagent_list)
+		var/obj/item/weapon/reagent_containers/RC = W
+		for(var/datum/reagent/R in RC.reagents.reagent_list)
 			if(istype(R,/datum/reagent/blood))
 				B = R
 				break
@@ -45,7 +45,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 			if(!source.client && source.mind)
 				for(var/mob/dead/observer/O in player_list)
 					if(O.mind == source.mind && config.revival_pod_plants)
-						to_chat(O, "<b><font color = #330033><font size = 3>Your blood has been placed into a replica pod seed. Return to your body if you want to be returned to life as a pod person!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>")
+						to_chat(O, "<font color='#330033'><font size = 3><b>Your blood has been placed into a replica pod seed. Return to your body if you want to be returned to life as a pod person!</b> (Verbs -> Ghost -> Re-enter corpse)</font></font>")
 						break
 		else
 			to_chat(user, "Nothing happens.")
@@ -58,17 +58,16 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 			realName = source.real_name
 			ckey = source.ckey
 
-		W:reagents.clear_reagents()
+		RC.reagents.clear_reagents()
 		return
 
 	return ..()
 
 /obj/item/seeds/replicapod/harvest(mob/user = usr)
-
 	parent = loc
 	var/found_player = 0
 
-	user.visible_message("\blue [user] carefully begins to open the pod...","\blue You carefully begin to open the pod...")
+	user.visible_message("<span class='notice'>[user] carefully begins to open the pod...</span>","<span class='notice'>You carefully begin to open the pod...</span>")
 
 	//If a sample is injected (and revival is allowed) the plant will be controlled by the original donor.
 	if(source && source.stat == DEAD && source.client && source.ckey && config.revival_pod_plants)
@@ -94,9 +93,9 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	for(var/mob/dead/observer/O in observer_list)
 		if(O.has_enabled_antagHUD && config.antag_hud_restricted)
 			continue
-		if(jobban_isbanned(O, ROLE_PLANT))
+		if(jobban_isbanned(O, ROLE_PLANT) || is_alien_whitelisted_banned(O, DIONA))
 			continue
-		if(role_available_in_minutes(O, ROLE_PLANT))
+		if(!is_alien_whitelisted(O, DIONA) && !role_available_in_minutes(O, ROLE_PLANT))
 			continue
 		if(O.client)
 			var/client/C = O.client
@@ -152,7 +151,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 				ticker.mode:update_all_cult_icons() //So the icon actually appears
 		// -- End mode specific stuff
 
-	to_chat(podman, "\green <B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B>")
+	to_chat(podman, "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span>")
 	if(source && ckey && podman.ckey == ckey)
 		to_chat(podman, "<B>Memories of a life as [source] drift oddly through a mind unsuited for them, like a skin of oil over a fathomless lake.</B>")
 	to_chat(podman, "<B>You are now one of the Dionaea, a race of drifting interstellar plantlike creatures that sometimes share their seeds with human traders.</B>")
@@ -162,5 +161,5 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 		if (newname != "")
 			podman.real_name = newname
 
-	parent.visible_message("\blue The pod disgorges a fully-formed plant creature!")
+	parent.visible_message("<span class='notice'>The pod disgorges a fully-formed plant creature!</span>")
 	parent.update_tray()

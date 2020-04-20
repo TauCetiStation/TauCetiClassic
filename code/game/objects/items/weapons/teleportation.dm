@@ -17,7 +17,7 @@
 	var/broadcasting = null
 	var/listening = 1.0
 	flags = CONDUCT
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
@@ -48,7 +48,7 @@ Frequency:
 	if (usr.stat || usr.restrained())
 		return
 	var/turf/current_location = get_turf(usr)//What turf is the user on?
-	if(!current_location||current_location.z==2)//If turf was not found or they're on z level 2.
+	if(!current_location || !SSmapping.has_level(current_location.z) || is_centcom_level(current_location.z) || is_junkyard_level(current_location.z))//If turf was not found or they're on centcom z level.
 		to_chat(usr, "The [src] is malfunctioning.")
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
@@ -129,7 +129,7 @@ Frequency:
 	icon_state = "hand_tele"
 	item_state = "electronic"
 	throwforce = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
@@ -140,13 +140,13 @@ Frequency:
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
 		return
 	var/turf/current_location = get_turf(user)//What turf is the user on?
-	if(!current_location||current_location.z==2||current_location.z>=7)//If turf was not found or they're on z level 2 or >7 which does not currently exist.
+	if(!current_location || !SSmapping.has_level(current_location.z) || is_centcom_level(current_location.z) || is_junkyard_level(current_location.z))//If turf was not found or they're on z level 2 or >7 which does not currently exist.
 		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
 	var/list/L = list(  )
 	for(var/obj/machinery/computer/teleporter/com in teleporter_list)
 		if(com.target)
-			if(com.target.z == ZLEVEL_CENTCOMM)
+			if(is_centcom_level(com.target.z))
 				continue
 			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
 				L["[com.id] (Active)"] = com.target
@@ -166,11 +166,12 @@ Frequency:
 	for(var/obj/effect/portal/PO in portal_list)
 		if(PO.creator == src)	count++
 	if(count >= 3)
-		user.show_message("<span class='notice'>\The [src] is recharging!</span>")
+		to_chat(user, "<span class='notice'>\The [src] is recharging!</span>")
 		return
 	var/T = L[t1]
-	for(var/mob/O in hearers(user, null))
-		O.show_message("<span class='notice'>Locked In.</span>", 2)
+
+	user.audible_message("<span class='notice'>Locked In.</span>") //why not personal audible message?
+
 	var/obj/effect/portal/P = new /obj/effect/portal( get_turf(src) )
 	P.target = T
 	P.creator = src

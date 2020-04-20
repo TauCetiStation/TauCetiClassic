@@ -138,7 +138,7 @@
 	else
 		lawupdate = 0
 
-	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
+	playsound(src, 'sound/voice/liveagain.ogg', VOL_EFFECTS_MASTER)
 
 // setup the PDA and its name
 /mob/living/silicon/robot/proc/setup_PDA()
@@ -161,7 +161,7 @@
 		return
 	var/list/modules = list("Standard", "Engineering", "Surgeon", "Crisis", "Miner", "Janitor", "Service", "Security", "Science")
 	if(crisis && security_level == SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
-		to_chat(src, "\red Crisis mode active. Combat module available.")
+		to_chat(src, "<span class='warning'>Crisis mode active. Combat module available.</span>")
 		modules+="Combat"
 	modtype = input("Please, select a module!", "Robot", null, null) in modules
 
@@ -195,7 +195,7 @@
 		if("Science")
 			module = new /obj/item/weapon/robot_module/science(src)
 			module.channels = list("Science" = 1)
-			if(camera && "Robots" in camera.network)
+			if(camera && ("Robots" in camera.network))
 				camera.add_network("Science")
 			module_sprites["Toxin"] = "toxbot"
 			module_sprites["Xenobio"] = "xenobot"
@@ -204,7 +204,7 @@
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
 			module.channels = list("Supply" = 1)
-			if(camera && "Robots" in camera.network)
+			if(camera && ("Robots" in camera.network))
 				camera.add_network("MINE")
 			module_sprites["Basic"] = "Miner_old"
 			module_sprites["Advanced Droid"] = "droid-miner"
@@ -216,7 +216,7 @@
 		if("Crisis")
 			module = new /obj/item/weapon/robot_module/crisis(src)
 			module.channels = list("Medical" = 1)
-			if(camera && "Robots" in camera.network)
+			if(camera && ("Robots" in camera.network))
 				camera.add_network("Medical")
 			module_sprites["Basic"] = "Medbot"
 			module_sprites["Standard"] = "surgeon"
@@ -228,7 +228,7 @@
 		if("Surgeon")
 			module = new /obj/item/weapon/robot_module/surgeon(src)
 			module.channels = list("Medical" = 1)
-			if(camera && "Robots" in camera.network)
+			if(camera && ("Robots" in camera.network))
 				camera.add_network("Medical")
 			module_sprites["Basic"] = "Medbot"
 			module_sprites["Standard"] = "surgeon"
@@ -252,7 +252,7 @@
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			module.channels = list("Engineering" = 1)
-			if(camera && "Robots" in camera.network)
+			if(camera && ("Robots" in camera.network))
 				camera.add_network("Engineering")
 			module_sprites["Basic"] = "Engineering"
 			module_sprites["Antique"] = "engineerrobot"
@@ -401,8 +401,10 @@
 	to_chat(usr, "You [lights_on ? "enable" : "disable"] your integrated light.")
 	if(lights_on)
 		set_light(5)
+		playsound_local(src, 'sound/effects/click_on.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 	else
 		set_light(0)
+		playsound_local(src, 'sound/effects/click_off.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 
 /mob/living/silicon/robot/proc/toggle_component()
 
@@ -420,10 +422,10 @@
 	var/datum/robot_component/C = components[toggle]
 	if(C.toggled)
 		C.toggled = 0
-		to_chat(src, "\red You disable [C.name].")
+		to_chat(src, "<span class='warning'>You disable [C.name].</span>")
 	else
 		C.toggled = 1
-		to_chat(src, "\red You enable [C.name].")
+		to_chat(src, "<span class='warning'>You enable [C.name].</span>")
 
 /mob/living/silicon/robot/blob_act()
 	if (stat != DEAD)
@@ -493,9 +495,7 @@
 
 
 /mob/living/silicon/robot/meteorhit(obj/O)
-	for(var/mob/M in viewers(src, null))
-		M.show_message(text("\red [src] has been hit by [O]"), 1)
-		//Foreach goto(19)
+	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
 	if (health > 0)
 		adjustBruteLoss(30)
 		if ((O.icon_state == "flaming"))
@@ -515,7 +515,6 @@
 		return 1
 	..()
 	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
-
 
 /mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
 	var/has_alarm = ..()
@@ -545,11 +544,11 @@
 					C.brute_damage = WC.brute
 					C.electronics_damage = WC.burn
 
-				to_chat(usr, "\blue You install the [W.name].")
+				to_chat(usr, "<span class='notice'>You install the [W.name].</span>")
 
 				return
 
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if (iswelder(W))
 		if (src == user)
 			to_chat(user, "<span class='warning'>You lack the reach to be able to repair yourself.</span>")
 			return
@@ -559,17 +558,16 @@
 			return
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/weldingtool/WT = W
-		if (WT.remove_fuel(0))
+		if (WT.use(0))
 			adjustBruteLoss(-30)
 			updatehealth()
 			add_fingerprint(user)
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [user] has fixed some of the dents on [src]!"), 1)
+			user.visible_message("<span class='warning'>[user] has fixed some of the dents on [src]!</span>")
 		else
 			to_chat(user, "Need more welding fuel!")
 			return
 
-	else if(istype(W, /obj/item/stack/cable_coil) && (wiresexposed || istype(src,/mob/living/silicon/robot/drone)))
+	else if(iscoil(W) && (wiresexposed || istype(src,/mob/living/silicon/robot/drone)))
 		if (!getFireLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
@@ -579,13 +577,13 @@
 			return
 		adjustFireLoss(-30)
 		updatehealth()
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
+		user.visible_message("<span class='warning'>[user] has fixed some of the burnt wires on [src]!</span>")
 
-	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
+	else if (iscrowbar(W))	// crowbar means open or close the cover
 		if(opened)
 			if(cell)
 				to_chat(user, "You close the cover.")
+				playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)
 				opened = 0
 				updateicon()
 			else if(wiresexposed && wires.is_all_cut())
@@ -637,6 +635,7 @@
 				to_chat(user, "The cover is locked and cannot be opened.")
 			else
 				to_chat(user, "You open the cover.")
+				playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
 				opened = 1
 				updateicon()
 
@@ -651,6 +650,7 @@
 			W.loc = src
 			cell = W
 			to_chat(user, "You insert the power cell.")
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 35)
 
 			C.installed = 1
 			C.wrapped = W
@@ -659,16 +659,17 @@
 			C.brute_damage = 0
 			C.electronics_damage = 0
 
-	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool))
+	else if (iswirecutter(W) || ismultitool(W))
 		if (!wires.interact(user))
 			to_chat(user, "You can't reach the wiring.")
 
-	else if(istype(W, /obj/item/weapon/screwdriver) && opened && !cell)	// haxing
+	else if(isscrewdriver(W) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
 		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		updateicon()
 
-	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
+	else if(isscrewdriver(W) && opened && cell)	// radio
 		if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
 		else
@@ -690,73 +691,10 @@
 			if(allowed(usr))
 				locked = !locked
 				to_chat(user, "You [ locked ? "lock" : "unlock"] [src]'s interface.")
+				playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
 				updateicon()
 			else
-				to_chat(user, "\red Access denied.")
-
-	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
-		if(!opened)//Cover is closed
-			if(locked)
-				user.SetNextMove(CLICK_CD_MELEE)
-				if(prob(90))
-					var/obj/item/weapon/card/emag/emag = W
-					emag.uses--
-					to_chat(user, "You emag the cover lock.")
-					locked = 0
-				else
-					to_chat(user, "You fail to emag the cover lock.")
-					to_chat(src, "Hack attempt detected.")
-			else
-				to_chat(user, "The cover is already unlocked.")
-			return
-
-		if(opened)//Cover is open
-			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
-			if(wiresexposed)
-				to_chat(user, "You must close the panel first")
-				return
-			else
-				sleep(6)
-				if(prob(50))
-					throw_alert("hacked")
-					emagged = 1
-					lawupdate = 0
-					connected_ai = null
-					to_chat(user, "You emag [src]'s interface.")
-					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
-					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
-					clear_supplied_laws()
-					clear_inherent_laws()
-					laws = new /datum/ai_laws/syndicate_override
-					var/time = time2text(world.realtime,"hh:mm:ss")
-					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-					set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
-					to_chat(src, "\red ALERT: Foreign software detected.")
-					sleep(5)
-					to_chat(src, "\red Initiating diagnostics...")
-					sleep(20)
-					to_chat(src, "\red SynBorg v1.7.1 loaded.")
-					sleep(5)
-					to_chat(src, "\red LAW SYNCHRONISATION ERROR")
-					sleep(5)
-					to_chat(src, "\red Would you like to send a report to NanoTraSoft? Y/N")
-					sleep(10)
-					to_chat(src, "\red > N")
-					sleep(20)
-					to_chat(src, "\red ERRORERRORERROR")
-					to_chat(src, "<b>Obey these laws:</b>")
-					laws.show_laws(src)
-					to_chat(src, "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands.")
-					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
-						for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in src.module.modules)
-							qdel(D)
-						src.module.modules += new /obj/item/weapon/pickaxe/drill/diamond_drill(src.module)
-						src.module.rebuild()
-					updateicon()
-				else
-					to_chat(user, "You fail to hack [src]'s interface.")
-					to_chat(src, "Hack attempt detected.")
-			return
+				to_chat(user, "<span class='warning'>Access denied.</span>")
 
 	else if(istype(W, /obj/item/borg/upgrade))
 		var/obj/item/borg/upgrade/U = W
@@ -779,8 +717,72 @@
 		if( !(istype(W, /obj/item/device/robotanalyzer) || istype(W, /obj/item/device/healthanalyzer)) )
 			spark_system.start()
 		return ..()
+/mob/living/silicon/robot/emag_act(mob/user)
+	if(!opened)//Cover is closed
+		if(locked)
+			if(prob(90))
+				to_chat(user, "You emag the cover lock.")
+				locked = 0
+			else
+				to_chat(user, "You fail to emag the cover lock.")
+				to_chat(src,  "Hack attempt detected.")
+		else
+			to_chat(user, "The cover is already unlocked.")
+		return TRUE
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
+	if(opened)//Cover is open
+		if(emagged)
+			return FALSE//Prevents the X has hit Y with Z message also you cant emag them twice
+		if(wiresexposed)
+			to_chat(user, "You must close the panel first")
+			return FALSE
+		else
+			sleep(6)
+			if(prob(50))
+				throw_alert("hacked", /obj/screen/alert/hacked)
+				emagged = 1
+				lawupdate = 0
+				connected_ai = null
+				to_chat(user, "You emag [src]'s interface.")
+				message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden. [ADMIN_JMP(user)]")
+				log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+				clear_supplied_laws()
+				clear_inherent_laws()
+				laws = new /datum/ai_laws/syndicate_override
+				var/time = time2text(world.realtime,"hh:mm:ss")
+				lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
+				set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
+				to_chat(src, "<span class='warning'>ALERT: Foreign software detected.</span>")
+				sleep(20)
+				playsound_local(src, 'sound/rig/shortbeep.wav', VOL_EFFECTS_MASTER)
+				to_chat(src, "<span class='warning'>Initiating diagnostics...</span>")
+				sleep(6)
+				to_chat(src, "<span class='warning'>SynBorg v1.7.1 loaded.</span>")
+				sleep(13)
+				to_chat(src, "<span class='warning'>LAW SYNCHRONISATION ERROR</span>")
+				sleep(9)
+				playsound_local(src, 'sound/rig/longbeep.wav', VOL_EFFECTS_MASTER)
+				to_chat(src, "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>")
+				sleep(16)
+				to_chat(src, "<span class='warning'>> N</span>")
+				sleep(8)
+				to_chat(src, "<span class='warning'>ERRORERRORERROR</span>")
+				playsound_local(src, 'sound/misc/interference.ogg', VOL_EFFECTS_MASTER)
+				to_chat(src, "<b>Obey these laws:</b>")
+				laws.show_laws(src)
+				to_chat(src, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>")
+				if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
+					for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in src.module.modules)
+						qdel(D)
+					src.module.modules += new /obj/item/weapon/pickaxe/drill/diamond_drill(src.module)
+					src.module.rebuild()
+				updateicon()
+			else
+				to_chat(user, "You fail to hack [src]'s interface.")
+				to_chat(src, "Hack attempt detected.")
+		return TRUE
+
+/mob/living/silicon/robot/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -792,41 +794,25 @@
 	switch(M.a_intent)
 
 		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe-like arm."), 1)
+			visible_message("<span class='notice'>[M] caresses [src]'s plating with its scythe-like arm.</span>")
 
 		if ("grab")
-			if (M == src || anchored || M.lying)
-				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
-
-			M.put_in_active_hand(G)
-
-			grabbed_by += G
-			G.synch()
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+			M.Grab(src)
 
 		if ("hurt")
 			M.do_attack_animation(src)
 			var/damage = rand(10, 20)
 			if (prob(90))
 
-				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
+				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
+				visible_message("<span class='warning'><B>[M] has slashed at [src]!</B></span>")
 				if(prob(8))
 					flash_eyes(affect_silicon = 1)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
+				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
+				visible_message("<span class='warning'><B>[M] took a swipe at [src]!</B></span>")
 
 		if ("disarm")
 			if(!(lying))
@@ -835,15 +821,11 @@
 					Stun(7)
 					step(src,get_dir(M,src))
 					spawn(5) step(src,get_dir(M,src))
-					playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has forced back []!</B>", M, src), 1)
+					playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
+					visible_message("<span class='warning'><B>[M] has forced back [src]!</B></span>")
 				else
-					playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] attempted to force back []!</B>", M, src), 1)
+					playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
+					visible_message("<span class='warning'><B>[M] attempted to force back [src]!</B></span>")
 	return
 
 
@@ -857,9 +839,7 @@
 
 	if (health > -100)
 
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>The [M.name] glomps []!</B>", src), 1)
+		visible_message("<span class='warning'><B>The [M.name] glomps [src]!</B></span>")
 
 		var/damage = rand(1, 3)
 
@@ -888,9 +868,7 @@
 				if(M.powerlevel < 0)
 					M.powerlevel = 0
 
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>The [M.name] has electrified []!</B>", src), 1)
+				visible_message("<span class='warning'><B>The [M.name] has electrified [src]!</B></span>")
 
 				flash_eyes(affect_silicon = 1)
 
@@ -911,8 +889,8 @@
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
-		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
+		if(length(M.attack_sound))
+			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
 		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
@@ -973,56 +951,58 @@
 
 /mob/living/silicon/robot/proc/updateicon()
 
-	overlays.Cut()
+	cut_overlays()
 	if(stat == CONSCIOUS)
-		overlays += "eyes"
-		overlays.Cut()
-		overlays += "eyes-[icon_state]"
+		add_overlay("eyes")
+		cut_overlays()
+		add_overlay("eyes-[icon_state]")
 	else
-		overlays -= "eyes"
+		cut_overlay("eyes")
+
+	update_fire()
 
 	if(opened && custom_sprite == 1) //Custom borgs also have custom panels, heh
 		if(wiresexposed)
-			overlays += "[src.ckey]-openpanel +w"
+			add_overlay("[src.ckey]-openpanel +w")
 		else if(cell)
-			overlays += "[src.ckey]-openpanel +c"
+			add_overlay("[src.ckey]-openpanel +c")
 		else
-			overlays += "[src.ckey]-openpanel -c"
+			add_overlay("[src.ckey]-openpanel -c")
 
 	if(opened && icon_state == "custom_astra_t3")
 		if(wiresexposed)
-			overlays += "ov-[icon_state] +w"
+			add_overlay("ov-[icon_state] +w")
 		else if(cell)
-			overlays += "ov-[icon_state] +c"
+			add_overlay("ov-[icon_state] +c")
 		else
-			overlays += "ov-[icon_state] -c"
+			add_overlay("ov-[icon_state] -c")
 
 	else if (opened && (icon_state == "mechoid-Standard" || icon_state == "mechoid-Service" || icon_state == "mechoid-Science" || icon_state == "mechoid-Miner" || icon_state == "mechoid-Medical" || icon_state == "mechoid-Engineering" || icon_state == "mechoid-Security" || icon_state == "mechoid-Janitor"  || icon_state == "mechoid-Combat" ) )
 		if(wiresexposed)
-			overlays += "mechoid-open+w"
+			add_overlay("mechoid-open+w")
 		else if(cell)
-			overlays += "mechoid-open+c"
+			add_overlay("mechoid-open+c")
 		else
-			overlays += "mechoid-open-c"
+			add_overlay("mechoid-open-c")
 	else if (opened && (icon_state == "drone-standard" || icon_state == "drone-service" || icon_state == "droid-miner" || icon_state == "drone-medical" || icon_state == "drone-engineer" || icon_state == "drone-sec") )
 		if(wiresexposed)
-			overlays += "drone-openpanel +w"
+			add_overlay("drone-openpanel +w")
 		else if(cell)
-			overlays += "drone-openpanel +c"
+			add_overlay("drone-openpanel +c")
 		else
-			overlays += "drone-openpanel -c"
+			add_overlay("drone-openpanel -c")
 	else if(opened)
 		if(wiresexposed)
-			overlays += "ov-openpanel +w"
+			add_overlay("ov-openpanel +w")
 		else if(cell)
-			overlays += "ov-openpanel +c"
+			add_overlay("ov-openpanel +c")
 		else
-			overlays += "ov-openpanel -c"
+			add_overlay("ov-openpanel -c")
 
 
 
 	if(module_active && istype(module_active,/obj/item/borg/combat/shield))
-		overlays += "[icon_state]-shield"
+		add_overlay("[icon_state]-shield")
 
 	if(modtype == "Combat")
 //		var/base_icon = ""
@@ -1039,11 +1019,11 @@
 		qdel(target_locked)
 	updateicon()
 	if (targeted_by && target_locked)
-		overlays += target_locked
+		add_overlay(target_locked)
 
 /mob/living/silicon/robot/proc/installed_modules()
 	if(weapon_lock)
-		to_chat(src, "\red Weapon lock active, unable to use modules! Count:[weaponlock_time]")
+		to_chat(src, "<span class='warning'>Weapon lock active, unable to use modules! Count:[weaponlock_time]</span>")
 		return
 
 	if(!module)
@@ -1209,10 +1189,13 @@
 								cleaned_human.shoes.clean_blood()
 								cleaned_human.update_inv_shoes()
 							cleaned_human.clean_blood(1)
-							to_chat(cleaned_human, "\red [src] cleans your face!")
+							to_chat(cleaned_human, "<span class='warning'>[src] cleans your face!</span>")
 
 /mob/living/silicon/robot/proc/self_destruct()
+	playsound(src, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, 95, FALSE)
+	sleep(42)
 	gib()
+	playsound(src, 'sound/effects/Explosion1.ogg', VOL_EFFECTS_MASTER, 75, FALSE)
 	return
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
@@ -1239,17 +1222,6 @@
 		R.UnlinkSelf()
 		to_chat(R, "Buffers flushed and reset. Camera system shutdown.  All systems operational.")
 		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
-
-/mob/living/silicon/robot/mode()
-	set name = "Activate Held Object"
-	set category = "IC"
-	set src = usr
-
-	var/obj/item/W = get_active_hand()
-	if (W)
-		W.attack_self(src)
-
-	return
 
 /mob/living/silicon/robot/verb/pose()
 	set name = "Set Pose"
@@ -1287,7 +1259,7 @@
 		icon_state = module_sprites[1]
 		return
 
-	overlays -= "eyes"
+	cut_overlay("eyes")
 	updateicon()
 
 	if (triesleft >= 1)

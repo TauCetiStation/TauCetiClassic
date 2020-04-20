@@ -16,7 +16,7 @@
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
 	desc = "Has a tag on it: Totally not property of of a hostile corporation, honest!"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	allowed = list(/obj/item/weapon/gun,
 	               /obj/item/ammo_box/magazine,
 	               /obj/item/ammo_casing,
@@ -31,7 +31,8 @@
 /obj/item/clothing/head/helmet/space/syndicate/update_icon(mob/user)
 	. = ..()
 	icon_state = "[initial(icon_state)][lit ? "-lit" : ""]"
-	user.update_inv_head()
+	if(user)
+		user.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/syndicate/attack_self(mob/user)
 	. = ..()

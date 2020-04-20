@@ -12,6 +12,7 @@
 	w_class = ITEM_SIZE_LARGE
 	max_storage_space = DEFAULT_BOX_STORAGE + 2 // fits all tools and around 2 extra items
 	origin_tech = "combat=1"
+	hitsound = list('sound/items/tools/toolbox-hit.ogg')
 	attack_verb = list("robusted")
 
 /obj/item/weapon/storage/toolbox/atom_init()
@@ -28,7 +29,7 @@
 /obj/item/weapon/storage/toolbox/emergency/atom_init()
 	. = ..()
 	new /obj/item/weapon/crowbar/red(src)
-	new /obj/item/weapon/extinguisher/mini(src)
+	new /obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned(src)
 	if(prob(50))
 		new /obj/item/device/flashlight(src)
 	else

@@ -87,7 +87,7 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 	var/goal = locate(endx, endy, 1)
 	x = startx
 	y = starty
-	z = ZLEVEL_STATION
+	z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	walk_towards(src, goal, 1)
 
 /obj/effect/space_dust/Bump(atom/A)
@@ -96,7 +96,7 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 			if(!M.stat && !istype(M, /mob/living/silicon/ai))
 				shake_camera(M, 3, 1)
 	if (A)
-		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
+		playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER)
 
 		if(ismob(A))
 			A.meteorhit(src)//This should work for now I guess

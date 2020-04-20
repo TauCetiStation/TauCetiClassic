@@ -73,6 +73,8 @@
 	name = "Computer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tank"
+	state_broken_preset = "atmosb"
+	state_nopower_preset = "atmos0"
 	light_color = "#78eeea"
 	circuit = /obj/item/weapon/circuitboard/air_management
 
@@ -152,6 +154,8 @@
 /obj/machinery/computer/general_air_control/large_tank_control
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tank"
+	state_broken_preset = "atmosb"
+	state_nopower_preset = "atmos0"
 
 	frequency = 1441
 	var/input_tag

@@ -18,18 +18,15 @@
 			spore.factory = null
 	return ..()
 
-/obj/effect/blob/factory/PulseAnimation(var/activate = 0)
-	if(activate)
-		..()
-	return
-
 /obj/effect/blob/factory/run_action()
 	if(spores.len >= max_spores)
 		return 0
 	if(spore_delay > world.time)
 		return 0
+
 	spore_delay = world.time + 100 // 10 seconds
-	PulseAnimation(1)
+	PulseAnimation()
+
 	new/mob/living/simple_animal/hostile/blobspore(src.loc, src)
 	return 0
 
@@ -46,7 +43,7 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 4
 	attacktext = "hits"
-	attack_sound = 'sound/weapons/genhit1.ogg'
+	attack_sound = list('sound/weapons/genhit1.ogg')
 	var/obj/effect/blob/factory/factory = null
 	var/is_zombie = 0
 	faction = "blob"
@@ -63,7 +60,7 @@
 
 /mob/living/simple_animal/hostile/blobspore/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
-	adjustBruteLoss(Clamp(0.01 * exposed_temperature, 1, 5))
+	adjustBruteLoss(CLAMP(0.01 * exposed_temperature, 1, 5))
 
 /mob/living/simple_animal/hostile/blobspore/blob_act()
 	return
@@ -103,8 +100,8 @@
 	icon_state = "husk_s"
 	H.h_style = null
 	H.update_hair()
-	overlays = H.overlays
-	overlays += image('icons/mob/blob.dmi', icon_state = "blob_head")
+	copy_overlays(H, TRUE)
+	add_overlay(image('icons/mob/blob.dmi', icon_state = "blob_head"))
 	H.loc = src
 	is_zombie = 1
 	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")
@@ -137,7 +134,7 @@
 	name = "Spore Toxin"
 	id = "spore"
 	description = "A toxic spore cloud which blocks vision when ingested."
-	color = "#9ACD32"
+	color = "#9acd32"
 	toxpwr = 0.5
 
 /datum/reagent/toxin/spore/on_general_digest(mob/living/M)

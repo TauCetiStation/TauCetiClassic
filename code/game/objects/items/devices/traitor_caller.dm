@@ -1,7 +1,7 @@
 /obj/item/device/traitor_caller
 	name = "Suspicious phone"
 	desc = "Make a call for to attract an extra agent at station"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = "programming=4;materials=4"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_phone"
@@ -14,7 +14,7 @@
 	if(SSshuttle.departed || SSshuttle.online)
 		to_chat(user, "<span class='userdanger'>All rats have worked their shift</span>")
 		return
-	playsound(user,'sound/weapons/ring.ogg',100,1)
+	playsound(user, 'sound/weapons/ring.ogg', VOL_EFFECTS_MASTER)
 	uses--
 	var/list/possible_traitors = list()
 	for(var/mob/living/carbon/human/player in player_list)

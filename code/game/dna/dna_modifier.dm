@@ -37,13 +37,13 @@
 
 /////////////////////////// DNA MACHINES
 /obj/machinery/dna_scannernew
-	name = "\improper DNA modifier"
+	name = "DNA modifier"
 	desc = "It scans DNA structures."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "scanner"
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 300
 	var/damage_coeff
@@ -61,8 +61,8 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
 	RefreshParts()
 
 /obj/machinery/dna_scannernew/RefreshParts()
@@ -129,12 +129,12 @@
 
 				if (occupant.stat == DEAD)
 					if (occupant.client) //Ghost in body?
-						occupant << 'sound/machines/chime.ogg'	//probably not the best sound but I think it's reasonable
+						occupant.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
 					else
 						for(var/mob/dead/observer/ghost in player_list)
 							if(ghost.mind == occupant.mind)
 								if(ghost.can_reenter_corpse)
-									ghost << 'sound/machines/chime.ogg'	//probably not the best sound but I think it's reasonable
+									ghost.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
 									var/answer = alert(ghost,"Do you want to return to corpse for cloning?","Cloning","Yes","No")
 									if(answer == "Yes")
 										ghost.reenter_corpse()
@@ -177,7 +177,7 @@
 	if(exchange_parts(user, I))
 		return
 
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(iscrowbar(I))
 		if(panel_open)
 			for(var/obj/O in contents) // in case there is something in the scanner
 				O.loc = loc
@@ -251,7 +251,9 @@
 	name = "DNA Modifier Access Console"
 	desc = "Scand DNA."
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "scanner"
+	icon_state = "dna"
+	state_broken_preset = "crewb"
+	state_nopower_preset = "crew0"
 	light_color = "#315ab4"
 	density = 1
 	circuit = /obj/item/weapon/circuitboard/scan_consolenew
@@ -270,7 +272,7 @@
 	var/obj/item/weapon/disk/data/disk = null
 	var/selected_menu_key = null
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 400
 	var/waiting_for_user_input=0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
@@ -294,8 +296,8 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/scan_consolenew/atom_init_late()
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+	for(var/newdir in cardinal)
+		connected = locate(/obj/machinery/dna_scannernew, get_step(src, newdir))
 		if(!isnull(connected))
 			break
 	spawn(250)
@@ -387,7 +389,7 @@
 			occupantData["name"] = connected.occupant.name
 			occupantData["stat"] = connected.occupant.stat
 			occupantData["isViableSubject"] = 1
-			if (!connected.occupant.dna || NOCLONE in connected.occupant.mutations || (connected.scan_level == 3))
+			if (!connected.occupant.dna || (NOCLONE in connected.occupant.mutations) || (connected.scan_level == 3))
 				occupantData["isViableSubject"] = 0
 			occupantData["health"] = connected.occupant.health
 			occupantData["maxHealth"] = connected.occupant.maxHealth

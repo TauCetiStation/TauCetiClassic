@@ -37,7 +37,6 @@ var/global/list/scrap_base_cache = list()
 
 
 
-
 /obj/structure/scrap/proc/make_cube()
 	var/obj/container = new /obj/structure/scrap_cube(loc, loot_max)
 	forceMove(container)
@@ -92,9 +91,10 @@ var/global/list/scrap_base_cache = list()
 	if(prob(big_item_chance))
 		var/obj/randomcatcher/CATCH = new /obj/randomcatcher(src)
 		big_item = CATCH.get_item(/obj/random/structures/structure_pack)
-		big_item.forceMove(src)
-		if(prob(66))
-			big_item.make_old()
+		if(big_item)
+			big_item.forceMove(src)
+			if(prob(66))
+				big_item.make_old()
 		qdel(CATCH)
 
 
@@ -108,8 +108,9 @@ var/global/list/scrap_base_cache = list()
 	for(var/x = 1 to amt)
 		var/loot_path = pick(loot_list)
 		new loot_path(src)
-	for(var/obj/item/loot in contents)
-		if(prob(66)) loot.make_old()
+	for(var/obj/item/I in contents)
+		if(prob(66))
+			I.make_old()
 	loot = new(src)
 	loot.set_slots(slots = 7, slot_size = ITEM_SIZE_HUGE)
 	shuffle_loot()
@@ -125,14 +126,14 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/Crossed(atom/movable/AM)
 	if(ismob(AM))
 		var/mob/M = AM
-		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
-		if(ishuman(M))
+		playsound(src, 'sound/effects/glass_step.ogg', VOL_EFFECTS_MASTER)
+		if(ishuman(M) && !M.buckled)
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags[IS_SYNTHETIC])
 				return
 			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & LEGS) ) )
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
-				if(BP.status & ORGAN_ROBOT)
+				if(BP.is_robotic())
 					return
 				to_chat(M, "<span class='danger'>You step on the sharp debris!</span>")
 				H.Weaken(3)
@@ -175,9 +176,9 @@ var/global/list/scrap_base_cache = list()
 			for(var/i=1 to num)
 				var/image/I = image(parts_icon,pick(icon_states(parts_icon)))
 				I.color = pick("#996633", "#663300", "#666666", "")
-				base_icon.overlays += randomize_image(I)
+				base_icon.add_overlay(randomize_image(I))
 			scrap_base_cache["[icontype][icon_state][ID]"] = base_icon
-		overlays += scrap_base_cache["[icontype][icon_state][ID]"]
+		add_overlay(scrap_base_cache["[icontype][icon_state][ID]"])
 	if(loot_generated)
 		underlays.Cut()
 		for(var/obj/O in loot.contents)
@@ -204,7 +205,7 @@ var/global/list/scrap_base_cache = list()
 		var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
 		if(!BP)
 			return 0
-		if(BP.status & ORGAN_ROBOT)
+		if(BP.is_robotic())
 			return 0
 		if(victim.species.flags[NO_MINORCUTS])
 			return 0
@@ -253,7 +254,7 @@ var/global/list/scrap_base_cache = list()
 		do_dig = 50
 	if(do_dig  && !user.is_busy())
 		user.do_attack_animation(src)
-		if(do_after(user, do_dig, target = src))
+		if(W.use_tool(src, user, do_dig))
 			visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
 			shuffle_loot()
 			dig_out_lump(user.loc, 0)
@@ -535,6 +536,6 @@ var/global/list/scrap_base_cache = list()
 	if(master_item)
 		master_item.update_icon()
 
-/obj/item/weapon/storage/internal/updating/remove_from_storage(obj/item/W, atom/new_location)
+/obj/item/weapon/storage/internal/updating/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
 	if(..())
 		SSjunkyard.add_junk_to_stats("[W.type]")

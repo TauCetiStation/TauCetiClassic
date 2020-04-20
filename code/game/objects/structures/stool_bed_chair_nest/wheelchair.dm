@@ -4,6 +4,7 @@
 	icon_state = "wheelchair"
 	anchored = 0
 	buckle_movable = 1
+	flags = NODECONSTRUCT
 
 	var/driving = 0
 	var/mob/living/pulling = null
@@ -12,9 +13,9 @@
 	var/alert = 0
 
 /obj/structure/stool/bed/chair/wheelchair/handle_rotation()
-	overlays = null
+	cut_overlays()
 	var/image/O = image(icon = 'icons/obj/objects.dmi', icon_state = "w_overlay", layer = FLY_LAYER, dir = src.dir)
-	overlays += O
+	add_overlay(O)
 	if(buckled_mob)
 		buckled_mob.dir = dir
 
@@ -35,7 +36,7 @@
 		var/mob/living/M = usr
 		if(buckled_mob == M)
 			if(brake)
-				M.throw_alert("brake")
+				M.throw_alert("brake", /obj/screen/alert/brake)
 				alert = 1
 			else
 				M.clear_alert("brake")
@@ -67,7 +68,7 @@
 		if(user==pulling)
 			return
 	if(pulling && (get_dir(src.loc, pulling.loc) == direction))
-		to_chat(user, "<span class='red'>You cannot go there.")
+		to_chat(user, "<span class='red'>You cannot go there.</span>")
 		return
 	if(pulling && buckled_mob && (buckled_mob == user))
 		to_chat(user, "<span class='red'>You cannot drive while being pushed.</span>")
@@ -129,6 +130,8 @@
 		else
 			if (occupant && (src.loc != occupant.loc))
 				src.loc = occupant.loc // Failsafe to make sure the wheelchair stays beneath the occupant after driving
+	else if(has_gravity(src))
+		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER)
 	handle_rotation()
 
 /obj/structure/stool/bed/chair/wheelchair/attack_hand(mob/living/user)
@@ -154,8 +157,7 @@
 			to_chat(usr, "You grip \the [name]'s handles.")
 		else
 			if(usr != pulling)
-				for(var/mob/O in viewers(pulling, null))
-					O.show_message("<span class='red'>[usr] breaks [pulling]'s grip on the wheelchair.</span>", 1)
+				visible_message("<span class='red'>[usr] breaks [pulling]'s grip on the wheelchair.</span>")
 			else
 				to_chat(usr, "You let go of \the [name]'s handles.")
 			pulling.pulledby = null
@@ -177,7 +179,7 @@
 		occupant.apply_effect(6, STUN, 0)
 		occupant.apply_effect(6, WEAKEN, 0)
 		occupant.apply_effect(6, STUTTER, 0)
-		playsound(src.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/punch1.ogg', VOL_EFFECTS_MASTER)
 		if(istype(A, /mob/living))
 			var/mob/living/victim = A
 			victim.apply_effect(6, STUN, 0)
@@ -189,7 +191,7 @@
 
 			pulling.attack_log += "\[[time_stamp()]\]<font color='red'> Crashed [occupant.name]'s ([occupant.ckey]) [name] into \a [A]</font>"
 			occupant.attack_log += "\[[time_stamp()]\]<font color='orange'> Thrusted into \a [A] by [pulling.name] ([pulling.ckey]) with \the [name]</font>"
-			msg_admin_attack("[pulling.name] ([pulling.ckey]) has thrusted [occupant.name]'s ([occupant.ckey]) [name] into \a [A] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[pulling.x];Y=[pulling.y];Z=[pulling.z]'>JMP</a>)")
+			msg_admin_attack("[pulling.name] ([pulling.ckey]) has thrusted [occupant.name]'s ([occupant.ckey]) [name] into \a [A]", pulling)
 		else
 			occupant.visible_message("<span class='danger'>[occupant] crashed into \the [A]!</span>")
 

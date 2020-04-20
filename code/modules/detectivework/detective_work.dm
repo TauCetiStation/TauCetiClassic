@@ -52,8 +52,10 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 								//the print must be there for it to be complete.  (Prints are 32 digits)
 
 /obj/machinery/computer/forensic_scanning
-	name = "\improper High-Res Forensic Scanning Computer"
+	name = "High-Res Forensic Scanning Computer"
 	icon_state = "forensic"
+	state_broken_preset = "securityb"
+	state_nopower_preset = "security0"
 	light_color = "#a91515"
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/scanning
@@ -144,7 +146,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				if(istype(I, /obj/item/weapon/evidencebag))
 					scanning = I.contents[1]
 					scanning.loc = src
-					I.overlays.Cut()
+					I.underlays.Cut()
 					I.w_class = initial(I.w_class)
 					I.icon_state = "evidenceobj"
 				else
@@ -163,7 +165,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				if(!card.fingerprints)
 					card.fingerprints = list()
 				if(card.amount > 1 || !card.fingerprints.len)
-					to_chat(usr, "\red ERROR: No prints/too many cards.")
+					to_chat(usr, "<span class='warning'>ERROR: No prints/too many cards.</span>")
 					if(card.loc == src)
 						card.loc = src.loc
 					card = null
@@ -172,7 +174,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				I.loc = src
 				process_card()
 			else
-				to_chat(usr, "\red Invalid Object Rejected.")
+				to_chat(usr, "<span class='warning'>Invalid Object Rejected.</span>")
 		if("database") //Viewing all records in each database
 			canclear = 1
 			if(href_list["delete_record"])
@@ -251,7 +253,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			if(files)
 				var/obj/item/weapon/paper/P = new(loc)
 				var/list/dossier = files[href_list["identifier"]]
-				P.name = "\improper Database File ([dossier[2]])"
+				P.name = "Database File ([dossier[2]])"
 				P.info = "<b>Criminal Evidence Database</b><br><br>"
 				P.info += "Consolidated data points: [dossier[2]]<br>"
 				var/print_string = "Fingerprints: Print not complete!<br>"
@@ -327,7 +329,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			if(misc)
 				var/obj/item/weapon/paper/P = new(loc)
 				var/list/outputs = misc[href_list["identifier"]]
-				P.name = "\improper Auxiliary Database File ([outputs[3]])"
+				P.name = "Auxiliary Database File ([outputs[3]])"
 				P.info = "<b>Auxiliary Evidence Database</b><br><br>"
 				P.info += "<big><b>Consolidated data points:</b> [outputs[3]]</big><br>"
 				var/list/prints = outputs[4]
@@ -408,10 +410,15 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 						scan_data += "Fibers/Materials Found:<br>"
 						for(var/data in scanning.suit_fibers)
 							scan_data += "- [data]<br>"
-					if(istype(scanning,/obj/item/device/detective_scanner) || (istype(scanning, /obj/item/device/pda) && scanning:cartridge && scanning:cartridge.access_security))
+					if (istype(scanning, /obj/item/device/detective_scanner))
 						scan_data += "<br><b>Data transfered from \the [scanning] to Database.</b><br>"
 						add_data_scanner(scanning)
-					else if(!scanning.fingerprints)
+					if (istype(scanning, /obj/item/device/pda))
+						var/obj/item/device/pda/PDA = scanning
+						if (PDA?.cartridge?.access_security)
+							scan_data += "<br><b>Data transfered from \the [scanning] to Database.</b><br>"
+							add_data_scanner(scanning)
+					else if (!scanning.fingerprints)
 						scan_data += "<br><b><a href='?src=\ref[src];operation=add'>Add to Database?</a></b><br>"
 			else
 				temp = "Scan Failed: No Object"
@@ -420,7 +427,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			if(scan_data)
 				temp = "Scan Data Printed."
 				var/obj/item/weapon/paper/P = new(loc)
-				P.name = "\improper Scan Data ([scan_name])"
+				P.name = "Scan Data ([scan_name])"
 				P.info = "<tt>[scan_data]</tt>"
 				P.update_icon()
 			else
@@ -456,19 +463,16 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				var/list/data = D.stored[atom]
 				add_data_master(atom,data[1],data[2],data[3],data[4])
 		D.stored = list()
-	else if(istype(W, /obj/item/device/pda) && W:cartridge && W:cartridge.access_security)
-		if(W:cartridge.stored_data)
-			for(var/atom in W:cartridge.stored_data)
-				var/list/data = W:cartridge.stored_data[atom]
-				add_data_master(atom,data[1],data[2],data[3],data[4])
-		W:cartridge.stored_data = list()
-	return
+	else if (istype(W, /obj/item/device/pda))
+		var/obj/item/device/pda/PDA = W
+		if (PDA?.cartridge?.access_security && PDA?.cartridge?.stored_data)
+			for(var/atom in PDA.cartridge.stored_data)
+				var/list/data = PDA.cartridge.stored_data[atom]
+				add_data_master(atom, data[1], data[2], data[3], data[4])
+			PDA.cartridge.stored_data = list()
 
 /obj/machinery/computer/forensic_scanning/proc/add_data(atom/scanned_atom)
-	return add_data_master("\ref [scanned_atom]", scanned_atom.fingerprints,\
-	scanned_atom.suit_fibers, scanned_atom.blood_DNA, "[scanned_atom.name] (Direct Scan)")
-
-
+	return add_data_master("\ref [scanned_atom]", scanned_atom.fingerprints, scanned_atom.suit_fibers, scanned_atom.blood_DNA, "[scanned_atom.name] (Direct Scan)")
 
 /********************************
 *****DO NOT DIRECTLY CALL ME*****
@@ -596,7 +600,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			to_chat(usr, "No match found.")
 		qdel(card)
 	else
-		to_chat(usr, "\red ERROR: No prints/too many cards.")
+		to_chat(usr, "<span class='warning'>ERROR: No prints/too many cards.</span>")
 		if(card.loc == src)
 			card.loc = src.loc
 		card = null
@@ -614,6 +618,9 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 	return
 
 /obj/machinery/computer/forensic_scanning/detective
-	icon_state = "library"
+	icon_state = "computer_old"
+	req_access = list()
 	name = "PowerScan Mk.I"
 	light_color = "#3550b6"
+	state_broken_preset = null
+	state_nopower_preset = null

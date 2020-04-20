@@ -53,10 +53,9 @@ var/global/datum/book_manager/book_mgr = new()
 			var/DBQuery/query = dbcon.NewQuery("DELETE FROM library WHERE id=[isbn]")
 			if(!query.Execute())
 				to_chat(usr, query.ErrorMsg())
-			dbcon.Disconnect()
 	else
 		book_mgr.remove(isbn)
-	log_admin("[usr.key] has deleted the book [isbn]")
+	log_admin("[key_name(usr)] has deleted the book [isbn]")
 
 // delete a book
 /datum/book_manager/proc/remove(id)

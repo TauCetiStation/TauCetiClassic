@@ -4,9 +4,9 @@
 /mob/living/silicon/ai/proc/InvalidTurf(turf/T)
 	if(!T)
 		return 1
-	if(T.z == ZLEVEL_CENTCOMM)
+	if(is_centcom_level(T.z))
 		return 1
-	if(T.z > ZLEVEL_EMPTY)
+	if(!SSmapping.has_level(T.z))
 		return 1
 	return 0
 
@@ -54,21 +54,21 @@
 	set desc = "Stores your current camera location by the given name."
 
 	if(stored_locations.len >= max_locations)
-		to_chat(src, "\red Cannot store additional locations. Remove one first")
+		to_chat(src, "<span class='warning'>Cannot store additional locations. Remove one first</span>")
 		return
 
 	loc = trim(loc)
 	if(!loc)
-		to_chat(src, "\red Must supply a location name")
+		to_chat(src, "<span class='warning'>Must supply a location name</span>")
 		return
 
 	if(loc in stored_locations)
-		to_chat(src, "\red There is already a stored location by this name")
+		to_chat(src, "<span class='warning'>There is already a stored location by this name</span>")
 		return
 
 	var/L = src.eyeobj.getLoc()
 	if (InvalidTurf(get_turf(L)))
-		to_chat(src, "\red Unable to store this location")
+		to_chat(src, "<span class='warning'>Unable to store this location</span>")
 		return
 
 	stored_locations[loc] = L
@@ -83,7 +83,7 @@
 	set desc = "Returns to the selected camera location."
 
 	if (!(loc in stored_locations))
-		to_chat(src, "\red Location [loc] not found")
+		to_chat(src, "<span class='warning'>Location [loc] not found</span>")
 		return
 
 	var/L = stored_locations[loc]
@@ -95,7 +95,7 @@
 	set desc = "Deletes the selected camera location."
 
 	if (!(loc in stored_locations))
-		to_chat(src, "\red Location [loc] not found")
+		to_chat(src, "<span class='warning'>Location [loc] not found</span>")
 		return
 
 	stored_locations.Remove(loc)

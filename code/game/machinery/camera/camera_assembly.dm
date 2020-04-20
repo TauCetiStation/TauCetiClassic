@@ -3,7 +3,7 @@
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "cameracase"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	anchored = 0
 
 	m_amt = 700
@@ -28,7 +28,6 @@
 		if(0)
 			// State 0
 			if(iswrench(W) && isturf(src.loc))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				to_chat(user, "You wrench the assembly into place.")
 				anchored = 1
 				state = 1
@@ -46,7 +45,6 @@
 				return
 
 			else if(iswrench(W))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				to_chat(user, "You unattach the assembly from it's place.")
 				anchored = 0
 				update_icon()
@@ -74,7 +72,7 @@
 		if(3)
 			// State 3
 			if(isscrewdriver(W))
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
 				var/input = sanitize_safe(input(usr, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13"), MAX_LNAME_LEN)
 				if(!input)
@@ -116,7 +114,7 @@
 			else if(iswirecutter(W))
 
 				new /obj/item/stack/cable_coil/red(get_turf(src), 2)
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "You cut the wires from the circuits.")
 				state = 2
 				return
@@ -134,7 +132,7 @@
 		var/obj/U = locate(/obj) in upgrades
 		if(U)
 			to_chat(user, "You unattach an upgrade from the assembly.")
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 			U.loc = get_turf(src)
 			upgrades -= U
 		return
@@ -156,9 +154,8 @@
 		return 0
 	if(user.is_busy(src)) return
 	to_chat(user, "<span class='notice'>You start to weld the [src]..</span>")
-	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
-	if(do_after(user, 20, target = src))
+	if(WT.use_tool(src, user, 20, volume = 50))
 		if(!WT.isOn())
 			return 0
 		return 1

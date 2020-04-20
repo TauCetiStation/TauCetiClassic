@@ -53,9 +53,9 @@
 	else
 		icon_state = "sheater-off"
 
-	overlays.Cut()
+	cut_overlays()
 	if(panel_open)
-		overlays += "sheater-open"
+		add_overlay("sheater-open")
 
 /obj/machinery/space_heater/examine(mob/user)
 	..()
@@ -109,7 +109,7 @@
 		else
 			to_chat(user, "The hatch must be open to insert a power cell.")
 			return
-	else if(istype(I, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(I))
 		panel_open = !panel_open
 		user.visible_message("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src].", "<span class='notice'>You [panel_open ? "open" : "close"] the hatch on \the [src].</span>")
 		update_icon()

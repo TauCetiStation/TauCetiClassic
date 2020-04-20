@@ -15,8 +15,7 @@
 
 /datum/event/alien_infestation/announce()
 	if(successSpawn)
-		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
-		world << sound('sound/AI/aliens.ogg')
+		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", "lifesigns")
 
 
 /datum/event/alien_infestation/start()
@@ -24,7 +23,7 @@
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
 		if(QDELETED(temp_vent))
 			continue
-		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
+		if(is_station_level(temp_vent.loc.z) && !temp_vent.welded)
 			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
 			//Stops Aliens getting stuck in small networks.
 			//See: Security, Virology
@@ -35,13 +34,13 @@
 		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
 		return
 
-	var/list/candidates = get_alien_candidates()
+	var/list/candidates = get_larva_candidates()
 
 	while(spawncount > 0 && candidates.len)
 		var/obj/vent = pick(vents)
 		var/candidate = pick(candidates)
 
-		var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
+		var/mob/living/carbon/xenomorph/larva/new_xeno = new(vent.loc)
 		new_xeno.key = candidate
 
 		candidates -= candidate

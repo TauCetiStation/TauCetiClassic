@@ -35,6 +35,8 @@
 
 	animalistic = FALSE
 
+	footstep_type = FOOTSTEP_MOB_SHOE
+
 /mob/living/simple_animal/hostile/russian/ranged
 	icon_state = "russianranged"
 	icon_living = "russianranged"
@@ -42,7 +44,7 @@
 	weapon1 = /obj/item/weapon/gun/projectile/revolver/mateba
 	ranged = 1
 	projectiletype = /obj/item/projectile/bullet
-	projectilesound = 'sound/weapons/Gunshot.ogg'
+	projectilesound = 'sound/weapons/guns/Gunshot.ogg'
 	casingtype = /obj/item/ammo_casing/a357
 
 

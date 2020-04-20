@@ -3,7 +3,7 @@
 	singular_name = "light floor tile"
 	desc = "A floor tile, made out off glass. It produces light."
 	icon_state = "tile_e"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	force = 3.0
 	throwforce = 5.0
 	throw_speed = 5
@@ -28,7 +28,7 @@
 
 /obj/item/stack/tile/light/attackby(obj/item/O, mob/user)
 	..()
-	if(istype(O,/obj/item/weapon/crowbar))
+	if(iscrowbar(O))
 		if(!use(1))
 			return
 		new/obj/item/stack/sheet/metal(user.loc)

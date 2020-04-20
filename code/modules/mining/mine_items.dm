@@ -162,6 +162,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "lantern"
 	item_state = "lantern"
 	desc = "A mining lantern."
+	button_sound = 'sound/items/lantern.ogg'
 	brightness_on = 4			// luminosity when on
 
 /*****************************Pickaxe********************************/
@@ -174,12 +175,12 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	force = 15.0
 	throwforce = 4.0
 	item_state = "pickaxe"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	m_amt = 3750 //one sheet, but where can you make them?
-	var/digspeed = 50 //moving the delay to an item var so R&D can make improved picks. --NEO
+	toolspeed = 1 //moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
-	var/drill_sound = 'sound/weapons/Genhit.ogg'
+	usesound = 'sound/weapons/Genhit.ogg'
 	var/drill_verb = "picking"
 	sharp = 1
 
@@ -194,7 +195,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "silver pickaxe"
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
-	digspeed = 45
+	toolspeed = 0.9
 	origin_tech = "materials=3"
 	desc = "This makes no metallurgic sense."
 
@@ -202,7 +203,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "golden pickaxe"
 	icon_state = "gpickaxe"
 	item_state = "gpickaxe"
-	digspeed = 45
+	toolspeed = 0.9
 	origin_tech = "materials=4"
 	desc = "This makes no metallurgic sense."
 
@@ -210,18 +211,21 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "plasma cutter"
 	icon_state = "plasmacutter"
 	item_state = "plasmacutter"
-	w_class = 3.0 //it is smaller than the pickaxe
+	w_class = ITEM_SIZE_NORMAL //it is smaller than the pickaxe
 	damtype = "fire"
-	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
+	toolspeed = 0.4 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
 	origin_tech = "materials=4;phorontech=3;engineering=3"
 	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	drill_verb = "cutting"
+
+/obj/item/weapon/pickaxe/plasmacutter/get_current_temperature()
+	return 3800
 
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
-	digspeed = 10
+	toolspeed = 0.2
 	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
 
@@ -237,7 +241,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	force = 8.0
 	throwforce = 4.0
 	item_state = "shovel"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	m_amt = 50
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
@@ -249,7 +253,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "spade"
 	force = 5.0
 	throwforce = 7.0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
@@ -276,12 +280,13 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	slot_flags = null
 	force = 15.0
 	throwforce = 4.0
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	m_amt = 3750
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
-	drill_sound = 'sound/items/drill.ogg'
+	usesound = 'sound/items/drill.ogg'
+	hitsound = list('sound/items/drill_hit.ogg')
 	drill_verb = "drill"
-	digspeed = 30
+	toolspeed = 0.6
 	var/drill_cost = 15
 	var/state = 0
 	var/obj/item/weapon/stock_parts/cell/power_supply
@@ -306,7 +311,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	return
 
 /obj/item/weapon/pickaxe/drill/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		if(state==0)
 			state = 1
 			to_chat(user, "<span class='notice'>You open maintenance panel.</span>")
@@ -358,7 +363,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
-	digspeed = 40 //Drills 3 tiles in front of user
+	toolspeed = 0.8 //Drills 3 tiles in front of user
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	drill_verb = "hammering"
@@ -369,7 +374,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/pickaxe/drill/diamond_drill //When people ask about the badass leader of the mining tools, they are talking about ME!
 	name = "diamond mining drill"
 	icon_state = "diamond_drill"
-	digspeed = 15 //Digs through walls, girders, and can dig up sand
+	toolspeed = 0.3 //Digs through walls, girders, and can dig up sand
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
 	drill_verb = "drilling"
@@ -379,7 +384,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "cyborg mining drill"
 	icon_state = "diamond_drill"
 	item_state = "jackhammer"
-	digspeed = 20
+	toolspeed = 0.4
 	desc = ""
 	drill_verb = "drilling"
 
@@ -397,7 +402,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "charge_basic"
 	item_state = "flashbang"
 	flags = NOBLUDGEON
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	var/timer = 10
 	var/atom/target = null
 	var/blast_range = 1
@@ -417,7 +422,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if (!istype(target, /turf/simulated/mineral))
 		to_chat(user, "<span class='notice'>You can't plant [src] on [target.name].</span>")
 		return
-	if(user.is_busy()) return
+	if(user.is_busy(src))
+		return
 	to_chat(user, "<span class='notice'>Planting explosives...</span>")
 
 	if(do_after(user, 50, target = target) && in_range(user, target))
@@ -426,7 +432,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		loc = null
 		var/location
 		location = target
-		target.overlays += image('icons/obj/mining/explosives.dmi', "charge_basic_armed")
+		target.add_overlay(image('icons/obj/mining/explosives.dmi', "charge_basic_armed"))
 		to_chat(user, "<span class='notice'>Charge has been planted. Timer counting down from </span>[timer]")
 		spawn(timer*10)
 			for(var/turf/simulated/mineral/M in view(get_turf(target), blast_range))
@@ -465,15 +471,15 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(mob/living/user/L)
+/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(mob/user)
 	if(overheat || recent_reload)
 		return
 	power_supply.give(500)
 	if(!silenced)
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+		playsound(src, 'sound/weapons/guns/kenetic_reload.ogg', VOL_EFFECTS_MASTER)
 	else
-		to_chat(usr, "<span class='warning'>You silently charge [src].<span>")
-	recent_reload = 1
+		to_chat(user, "<span class='warning'>You silently charge [src].</span>")
+	recent_reload = TRUE
 	update_icon()
 	return
 
@@ -481,7 +487,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	projectile_type = /obj/item/projectile/kinetic
 	select_name = "kinetic"
 	e_cost = 500
-	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
+	fire_sound = 'sound/weapons/guns/Kenetic_accel.ogg'
 
 /obj/item/projectile/kinetic
 	name = "kinetic force"
@@ -493,15 +499,15 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/power = 4
 
 /obj/item/projectile/kinetic/atom_init()
+	. = ..()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
-		return
+		return INITIALIZE_HINT_QDEL
 	var/datum/gas_mixture/environment = proj_turf.return_air()
 	var/pressure = environment.return_pressure()
 	if(pressure < 50)
 		name = "full strength kinetic force"
 		damage *= 4
-	. = ..()
 
 /obj/item/projectile/kinetic/Range()
 	range--
@@ -509,7 +515,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		new /obj/item/effect/kinetic_blast(src.loc)
 		qdel(src)
 
-/obj/item/projectile/kinetic/on_hit(atom/target)
+/obj/item/projectile/kinetic/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	. = ..()
 	var/turf/target_turf = get_turf(target)
 	if(istype(target_turf, /turf/simulated/mineral))
@@ -534,10 +540,11 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /*****************************Survival Pod********************************/
 
 
-/area/survivalpod
-	name = "\improper Emergency Shelter"
+/area/custom/survivalpod
+	name = "Emergency Shelter"
 	icon_state = "away"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	has_gravity = 1
 
 /obj/item/weapon/survivalcapsule
@@ -545,7 +552,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "An emergency shelter stored within a pocket of bluespace."
 	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	origin_tech = "engineering=3;bluespace=2"
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
@@ -573,7 +580,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	get_template()
 	if(!used)
 		var/turf/T = get_turf(src)
-		if((T.z != ZLEVEL_ASTEROID) && (T.z != ZLEVEL_JUNKYARD) && !istype(T.loc, /area/space)  && !istype(T.loc, /area/shuttle)) //we don't need complete all checks
+		if(!is_mining_level(T.z) && !is_junkyard_level(T.z) && !istype(T.loc, /area/space)  && !istype(T.loc, /area/shuttle)) //we don't need complete all checks
 			src.loc.visible_message("<span class='warning'>You must use shelter at asteroid or in space! Grab this shit \
 			and shut up!</span>")
 			used = TRUE
@@ -582,7 +589,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			new /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian(T)
 			new /obj/item/clothing/suit/space/cheap(T)
 			new /obj/item/clothing/head/helmet/space/cheap(T)
-			playsound(T, 'sound/effects/sparks2.ogg', 100, 1)
+			playsound(T, 'sound/effects/sparks2.ogg', VOL_EFFECTS_MASTER)
 		else
 			src.loc.visible_message("<span class='warning'>\The [src] begins \
 				to shake. Stand back!</span>")
@@ -606,9 +613,9 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 				used = FALSE
 				return
 
-			playsound(T, 'sound/effects/phasein.ogg', 100, 1)
+			playsound(T, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
-			if(T.z != ZLEVEL_ASTEROID)//only report capsules away from the mining level
+			if(!is_mining_level(T.z))//only report capsules away from the mining level
 				message_admins("[key_name_admin(usr)] [ADMIN_QUE(usr)] [ADMIN_FLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_JMP(T)]")
 				log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
 			template.load(T, centered = TRUE)
@@ -641,7 +648,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/inflatable/survival
 	name = "inflatable pod wall"
 	desc = "A folded membrane which rapidly expands into a large cubical shape on activation."
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/structure/inflatable/survival
 	name = "pod wall"
@@ -712,12 +719,12 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	pixel_y = -32
 
 /obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		if(user.is_busy()) return
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	if(iswrench(W) && !(flags&NODECONSTRUCT))
+		if(user.is_busy(src))
+			return
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
 						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
-		if(do_after(user, 20/W.toolspeed, target = src))
+		if(W.use_tool(src, user, 20, volume = 50))
 			new /obj/item/device/gps(src.loc)
 			qdel(src)
 			return ..()
@@ -739,7 +746,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_on = "donkvendor"
 	icon_off = "donkvendor"
 	icon_panel = "donkvendor-panel"
-	luminosity = 5
+	light_range = 5
 	max_n_of_items = 10
 	pixel_y = -4
 	active_power_usage = 0
@@ -762,7 +769,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/machinery/smartfridge/survival_pod/atom_init()
 	..()
-	set_light(luminosity)
+	set_light(light_range)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/smartfridge/survival_pod/atom_init_late()
@@ -792,12 +799,11 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/machinery/smartfridge/survival_pod/attackby(obj/item/O, mob/user)
 	if(is_type_in_typecache(O,forbidden_tools))
-		if(istype(O,/obj/item/weapon/wrench))
-			if(user.is_busy()) return
-			to_chat(user, "\blue You start to disassemble the storage unit...")
-			if(do_after(user,20,target = src))
-				if(!src)
-					return
+		if(iswrench(O))
+			if(user.is_busy(src))
+				return
+			to_chat(user, "<span class='notice'>You start to disassemble the storage unit...</span>")
+			if(O.use_tool(src, user, 20, volume = 50))
 				qdel(src)
 			return
 		if(accept_check(O))
@@ -811,8 +817,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 					item_quants[O.name]++
 				else
 					item_quants[O.name] = 1
-				user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].", \
-									 "<span class='notice'>You add \the [O] to \the [src].")
+				user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
+									 "<span class='notice'>You add \the [O] to \the [src].</span>")
 				nanomanager.update_uis(src)
 				return
 
@@ -828,12 +834,13 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	density = 1
 
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		if(user.is_busy()) return
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	if(iswrench(W) && !(flags&NODECONSTRUCT))
+		if(user.is_busy(src))
+			return
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
 						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
-		if(do_after(user, 20/W.toolspeed, target = src))
+		if(W.use_tool(src, user, 20, volume = 50))
 			if(src.name == "environmental regulation system")
 				new /obj/item/weapon/tank/air(src.loc)
 			qdel(src)

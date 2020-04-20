@@ -39,9 +39,8 @@
 					Console.newmessagepriority = 2
 					Console.icon_state = "req_comp2"
 				if(!Console.silent)
-					playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
-					for (var/mob/O in hearers(5, Console.loc))
-						O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [my_department]'"))
+					playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+					Console.audible_message("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [my_department]'")
 				Console.messages += "<B><FONT color='red'>High Priority message from [my_department]</FONT></B><BR>[sending]"
 
 /datum/event/money_hacker/tick()
@@ -58,7 +57,7 @@
 
 		//subtract the money
 		var/lost = affected_account.money * 0.8 + (rand(2,4) - 2) / 10
-		affected_account.money -= lost
+		affected_account.adjust_money(-lost)
 
 		//create a taunting log entry
 		var/datum/transaction/T = new()
@@ -100,7 +99,6 @@
 					Console.newmessagepriority = 2
 					Console.icon_state = "req_comp2"
 				if(!Console.silent)
-					playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
-					for (var/mob/O in hearers(5, Console.loc))
-						O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [my_department]'"))
+					playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+					Console.audible_message("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [my_department]'")
 				Console.messages += "<B><FONT color='red'>High Priority message from [my_department]</FONT></B><BR>[sending]"

@@ -2,7 +2,7 @@
 // GLOBAL MACRO HELPERS
 // ===================================
 
-// A = thing to stop | B = thing to hit. | finialize() calls A.throw_impact(B)
+// A = thing to stop | B = thing to hit. | finialize() calls A.throw_impact(B, throwingdatum)
 #define STOP_THROWING(A, B) if(A.throwing) {var/datum/thrownthing/TT = SSthrowing.processing[A]; if(TT) {TT.finialize(null, B);}}
 
 // ===================================
@@ -19,11 +19,9 @@
 
 	if (!( istext(HTMLstring) ))
 		CRASH("Given non-text argument!")
-		return
 	else
 		if (length(HTMLstring) != 7)
 			CRASH("Given non-HTML argument!")
-			return
 	var/textr = copytext(HTMLstring, 2, 4)
 	var/textg = copytext(HTMLstring, 4, 6)
 	var/textb = copytext(HTMLstring, 6, 8)
@@ -40,7 +38,6 @@
 	if (length(textb) < 2)
 		textr = text("0[]", textb)
 	return text("#[][][]", textr, textg, textb)
-	return
 
 //Returns the middle-most value
 /proc/dd_range(low, high, num)
@@ -298,8 +295,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(isAI(src))
 				var/mob/living/silicon/ai/A = src
 				oldname = null//don't bother with the records update crap
-				//world << "<b>[newname] is the AI!</b>"
-				//world << sound('sound/AI/newAI.ogg')
 				// Set eyeobj name
 				if(A.eyeobj)
 					A.eyeobj.name = "[newname] (AI Eye)"
@@ -423,7 +418,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	ADD_TO_MOBLIST(/mob/living/silicon/robot)
 	ADD_TO_MOBLIST(/mob/living/carbon/human)
 	ADD_TO_MOBLIST(/mob/living/carbon/brain)
-	ADD_TO_MOBLIST(/mob/living/carbon/alien)
+	ADD_TO_MOBLIST(/mob/living/carbon/xenomorph)
 	ADD_TO_MOBLIST(/mob/dead)
 	ADD_TO_MOBLIST(/mob/living/parasite/essence)
 	ADD_TO_MOBLIST(/mob/living/carbon/monkey)
@@ -453,7 +448,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		return -M
 
 
-/proc/key_name(whom, include_link = null, include_name = 1, highlight_special_characters = 1, reply = null)
+/proc/key_name(whom, include_link = null, include_name = 1, highlight_special_characters = 1, reply = null, mentor_pm = FALSE)
 	var/mob/M
 	var/client/C
 	var/key
@@ -463,22 +458,25 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(istype(whom, /client))
 		C = whom
 		M = C.mob
-		key = C.key
+		key = C.ckey
 	else if(ismob(whom))
 		M = whom
 		C = M.client
-		key = M.key
-	else if(istype(whom, /datum))
-		var/datum/D = whom
-		return "*invalid:[D.type]*"
+		key = M.ckey
+	else if(istype(whom, /datum/mind))
+		var/datum/mind/mind = whom
+		M = mind.current
+		C = M ? M.client : null
+		key = ckey(mind.key)
 	else
+		//trace
 		return "*invalid*"
 
 	. = ""
 
 	if(key)
 		if(include_link && C)
-			. += "<a href='?priv_msg=\ref[C];ahelp_reply=[reply]'>"
+			. += "<a href='?priv_msg=\ref[C][reply ? ";ahelp_reply=[reply]" : ""][mentor_pm ? ";mentor_pm=1" : ""]'>"
 
 		if(C && C.holder && C.holder.fakekey && !include_name)
 			. += "Administrator"
@@ -509,6 +507,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return .
 
+// don't use for logs because include_link=1, use key_name
 /proc/key_name_admin(whom, include_name = 1)
 	return key_name(whom, 1, include_name)
 
@@ -575,9 +574,11 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/between(low, middle, high)
 	return max(min(middle, high), low)
 
+#if DM_VERSION < 513
 /proc/arctan(x)
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
+#endif
 
 //returns random gauss number
 /proc/GaussRand(sigma)
@@ -838,7 +839,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 							X.name = "wall"
 							qdel(O) // prevents multiple shuttle corners from stacking
 							continue
-						if(!istype(O,/obj)) continue
+						if(!istype(O,/obj) || !O.simulated)
+							continue
 						O.loc = X
 						if (length(O.client_mobs_in_contents))
 							O.update_parallax_contents()
@@ -1069,6 +1071,49 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		else
 			return zone
 
+/*
+ Gets the turf this atom's *ICON* appears to inhabit
+ It takes into account:
+ * Pixel_x/y
+ * Matrix x/y
+ NOTE: if your atom has non-standard bounds then this proc
+ will handle it, but:
+ * if the bounds are even, then there are an even amount of "middle" turfs, the one to the EAST, NORTH, or BOTH is picked
+ (this may seem bad, but you're atleast as close to the center of the atom as possible, better than byond's default loc being all the way off)
+ * if the bounds are odd, the true middle turf of the atom is returned
+*/
+/proc/get_turf_pixel(atom/AM)
+	if(!istype(AM))
+		return
+
+	//Find AM's matrix so we can use it's X/Y pixel shifts
+	var/matrix/M = matrix(AM.transform)
+
+	var/pixel_x_offset = AM.pixel_x + M.get_x_shift()
+	var/pixel_y_offset = AM.pixel_y + M.get_y_shift()
+
+	//Irregular objects
+	var/icon/AMicon = icon(AM.icon, AM.icon_state)
+	var/AMiconheight = AMicon.Height()
+	var/AMiconwidth = AMicon.Width()
+	if(AMiconheight != world.icon_size || AMiconwidth != world.icon_size)
+		pixel_x_offset += ((AMiconwidth / world.icon_size) - 1) * (world.icon_size * 0.5)
+		pixel_y_offset += ((AMiconheight / world.icon_size) - 1) * (world.icon_size * 0.5)
+
+	//DY and DX
+	var/rough_x = round(round(pixel_x_offset, world.icon_size) / world.icon_size)
+	var/rough_y = round(round(pixel_y_offset, world.icon_size) / world.icon_size)
+
+	//Find coordinates
+	var/turf/T = get_turf(AM) //use AM's turfs, as it's coords are the same as AM's AND AM's coords are lost if it is inside another atom
+	if(!T)
+		return null
+	var/final_x = T.x + rough_x
+	var/final_y = T.y + rough_y
+
+	if(final_x || final_y)
+		return locate(final_x, final_y, T.z)
+
 /proc/get(atom/loc, type)
 	while(loc)
 		if(istype(loc, type))
@@ -1092,109 +1137,6 @@ var/global/list/common_tools = list(
 
 /proc/istool(O)
 	if(O && is_type_in_list(O, common_tools))
-		return 1
-	return 0
-
-/proc/iswrench(O)
-	if(istype(O, /obj/item/weapon/wrench))
-		return 1
-	return 0
-
-/proc/iswelder(O)
-	if(istype(O, /obj/item/weapon/weldingtool))
-		return 1
-	return 0
-
-/proc/iscoil(O)
-	if(istype(O, /obj/item/stack/cable_coil))
-		return 1
-	return 0
-
-/proc/iswirecutter(O)
-	if(istype(O, /obj/item/weapon/wirecutters))
-		return 1
-	return 0
-
-/proc/isscrewdriver(O)
-	if(istype(O, /obj/item/weapon/screwdriver))
-		return 1
-	return 0
-
-/proc/ismultitool(O)
-	if(istype(O, /obj/item/device/multitool))
-		return 1
-	return 0
-
-/proc/iscrowbar(O)
-	if(istype(O, /obj/item/weapon/crowbar))
-		return 1
-	return 0
-
-/proc/iswire(O) // coil, wire... whats the difference here?
-	if(istype(O, /obj/item/stack/cable_coil))
-		return 1
-	return 0
-
-/proc/is_hot(obj/item/W)
-	if(istype(W,/obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.isOn())
-			return 3800
-		else
-			return 0
-	if(istype(W,/obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/LT = W
-		if(LT.lit)
-			return 1500
-		else
-			return 0
-	if(istype(W,/obj/item/weapon/match))
-		var/obj/item/weapon/match/MT = W
-		if(MT.lit)
-			return 1000
-		else
-			return 0
-	if(istype(W,/obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/CG = W
-		if(CG.lit)
-			return 1000
-		else
-			return 0
-	if(istype(W,/obj/item/weapon/pickaxe/plasmacutter))
-		return 3800
-	if(istype(W,/obj/item/candle))
-		var/obj/item/candle/CD = W
-		if(CD.lit)
-			return 1000
-		else
-			return 0
-	if(istype(W,/obj/item/device/flashlight/flare/torch))
-		var/obj/item/device/flashlight/flare/torch/TCH = W
-		if(TCH.on)
-			return 1500
-		else
-			return 0
-	if(istype(W,/obj/item/weapon/melee/energy))
-		return 3500
-	else
-		return 0
-	return 0
-
-// Whether or not the given item counts as sharp in terms of dealing damage
-/proc/is_sharp(obj/O)
-	if(!O)
-		return 0
-	if(O.sharp)
-		return 1
-	if(O.edge)
-		return 1
-	return 0
-
-// Whether or not the given item counts as cutting with an edge in terms of removing limbs
-/proc/has_edge(obj/O)
-	if(!O)
-		return 0
-	if(O.edge)
 		return 1
 	return 0
 
@@ -1238,11 +1180,11 @@ var/global/list/common_tools = list(
 /proc/can_operate(mob/living/carbon/M)
 	return (locate(/obj/machinery/optable, M.loc) && M.resting) || \
 	(locate(/obj/structure/stool/bed/roller/roller_surg, M.loc) && 	\
-	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(95) || 	\
+	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.stat)) && prob(95) || 	\
 	(locate(/obj/structure/stool/bed/roller, M.loc) && 	\
-	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(75) || 	\
+	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.stat)) && prob(75) || 	\
 	(locate(/obj/structure/table, M.loc) && 	\
-	(M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(66))
+	(M.lying || M.weakened || M.stunned || M.paralysis || M.stat) && prob(66))
 
 /proc/reverse_direction(dir)
 	switch(dir)
@@ -1303,9 +1245,6 @@ var/list/WALLITEMS = typecacheof(list(
 				return 1
 	return 0
 
-/proc/format_text(text)
-	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
-
 /proc/params2turf(scr_loc, turf/origin)
 	if(!scr_loc)
 		return null
@@ -1315,8 +1254,8 @@ var/list/WALLITEMS = typecacheof(list(
 	tY = tY[1]
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
-	tX = Clamp(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
-	tY = Clamp(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
+	tX = CLAMP(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
+	tY = CLAMP(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/screen_loc2turf(text, turf/origin)
@@ -1328,8 +1267,8 @@ var/list/WALLITEMS = typecacheof(list(
 	tX = splittext(tZ[2], "-")
 	tX = text2num(tX[2])
 	tZ = origin.z
-	tX = Clamp(origin.x + 7 - tX, 1, world.maxx)
-	tY = Clamp(origin.y + 7 - tY, 1, world.maxy)
+	tX = CLAMP(origin.x + 7 - tX, 1, world.maxx)
+	tY = CLAMP(origin.y + 7 - tY, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/iscatwalk(atom/A)

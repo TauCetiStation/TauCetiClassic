@@ -2,7 +2,7 @@
 	name = "0 credit chip"
 	desc = "It's worth 0 credits."
 	gender = PLURAL
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/economy.dmi'
 	icon_state = "spacecash"
 	opacity = 0
 	density = 0
@@ -11,7 +11,7 @@
 	throwforce = 1.0
 	throw_speed = 1
 	throw_range = 2
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	var/access = list()
 	access = access_crate_cash
 	var/worth = 0

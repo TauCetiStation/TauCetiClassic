@@ -12,8 +12,8 @@ html, body {
 body {
 	background: #fff;
 	font-family: Verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 9pt;
-	line-height: 1.2;
+	font-size: 14px;
+	line-height: 18px;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	word-wrap: break-word;
@@ -22,7 +22,6 @@ body {
 img {
 	margin: 0;
 	padding: 0;
-	line-height: 1;
 	/* -ms-interpolation-mode: nearest-neighbor; */
 	/* image-rendering: pixelated; */
 }
@@ -87,7 +86,7 @@ a.popt {text-decoration: none;}
 	background: #ddd;
 	text-decoration: none;
 	font-variant: small-caps;
-	font-size: 1.1em;
+	font-size: 16px;
 	font-weight: bold;
 	color: #333;
 }
@@ -96,7 +95,7 @@ a.popt {text-decoration: none;}
 #ping {
 	position: fixed;
 	top: 0;
-	right: 120px;
+	right: 80px;
 	width: 45px;
 	background: #ddd;
 	height: 30px;
@@ -106,7 +105,7 @@ a.popt {text-decoration: none;}
 #ping .ms {
 	display: block;
 	text-align: center;
-	font-size: 8pt;
+	font-size: 10px;
 	padding-top: 2px;
 }
 #userBar {
@@ -145,6 +144,7 @@ a.popt {text-decoration: none;}
 	line-height: 30px;
 	float: left;
 	margin-left: 5px;
+	font-size: 0.85em;
 }
 
 #userBar .sub i {
@@ -253,9 +253,40 @@ a.popt {text-decoration: none;}
 ******************************************/
 
 /* MOTD */
-.motd {color: #470062;}
+.motd {
+	color: #470062;
+	border-left: 3px solid #470062;
+	padding-left: 8px;
+	margin-bottom: 4px;
+}
 .motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {/* color: #08457e; */ color: inherit; text-decoration: underline;}
 .motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover {color: #1560bd;}
+
+/* ANNOUNCEMENTS */
+.host_announcements {
+	border-left: 3px solid #800000;
+	color: #800000;
+	padding-left: 8px;
+	margin-bottom: 4px;
+}
+.host_announcements h1, .host_announcements h2, .host_announcements h3, .host_announcements h4, .host_announcements h5, .host_announcements h6 {
+	color: #800000;
+	text-decoration: underline;
+}
+.host_announcements hr {
+	margin: 8px auto;
+	width: 60%;
+	border: 0;
+	border-top: 1px dashed #800000;
+}
+
+/* TEST MERGES */
+.test_merges {
+	border-left: 3px solid #000; /* #013220 */
+	padding-left: 8px;
+	margin-bottom: 4px;
+}
+
 
 /* ADD HERE FOR BOLD */
 .bold, .name, .prefix, .ooc, .adminooc, .adminlooc, .admin, .adminobserverooc, .adminooc, .adminobserver, .adminsay, .wet {font-weight: bold;}
@@ -267,9 +298,6 @@ a.popt {text-decoration: none;}
 .highlight {background: yellow;}
 h1, h2, h3, h4, h5, h6	{display: inline-block; font-family: Georgia, Verdana, sans-serif;}
 em						{font-style: normal;	font-weight: bold;}
-
-/* TABULATED */
-.tabulated {display: block; margin-left: 4em;}
 
 /* OOC */
 .adminobserverooc		{color: #0099cc;}
@@ -288,6 +316,7 @@ h1.alert, h2.alert	{color: #000000;}
 .emote					{font-style: italic;}
 .selecteddna			{color: #FFFFFF; 	background-color: #001B1B}
 .artefact				{color: #ffa500;}
+.electronicblue		{color: #00BFFF; background-color: #414141}
 
 /* Radio Channels */
 .comradio				{color: #193A7A;}
@@ -305,6 +334,10 @@ h1.alert, h2.alert	{color: #000000;}
 .deptradio				{color: #993399;}
 .deadsay				{color: #5c00e6;}
 .newscaster				{color: #800000;}
+
+.binarysay    			{color: #20c20e; background-color: #414141; display: block;}
+.binarysay a  			{color: #00ff00;}
+.binarysay a:active, .binarysay a:visited {color: #88ff88;}
 
 /* Game Messages */
 .attack					{color: #ff0000;}
@@ -342,15 +375,18 @@ h1.alert, h2.alert	{color: #000000;}
 .modooc					{color: #184880;	font-weight: bold;}
 .adminmod				{color: #402A14;	font-weight: bold;}
 
+.admin_announce {display: inline-block; width: 100%; color: #000; background: #bababa;}
+
 /* Languages */
 .tajaran				{color: #803B56;}
 .tajaran_signlang		{color: #941C1C;}
 .skrell					{color: #00CED1;}
-.soghun					{color: #228B22;}
+.soghun					{color: #73a800;}
 .vox					{color: #AA00AA;}
 .rough					{font-family: "Trebuchet MS", cursive, sans-serif;}
 .say_quote				{font-family: Georgia, Verdana, sans-serif;}
 .ipc					{color: #505050;	font-weight: bold;	font-family: "Times New Roman", Times, serif;}
+.syndcode				{color: #C21B1B;}
 
 .interface				{color: #330033;}
 

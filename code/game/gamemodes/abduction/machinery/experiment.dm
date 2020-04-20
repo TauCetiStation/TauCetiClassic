@@ -51,16 +51,16 @@
 	preview_icon.Blend(temp, ICON_OVERLAY)
 
 	for(var/obj/item/organ/external/BP in H.bodyparts)
-		if((BP.status & ORGAN_CUT_AWAY) || (BP.status & ORGAN_DESTROYED))
+		if((BP.status & ORGAN_CUT_AWAY) || (BP.is_stump))
 			continue
 		temp = new /icon(icobase, "[BP.body_zone]")
-		if(BP.status & ORGAN_ROBOT)
+		if(BP.is_robotic())
 			temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
 	//Tail
 	if(H.species.tail && H.species.flags[HAS_TAIL])
-		temp = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[H.species.tail]_s")
+		temp = new/icon("icon" = 'icons/mob/species/tail.dmi', "icon_state" = H.species.tail)
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
 	// Skin tone
@@ -188,21 +188,20 @@
 		if(point_reward > 0)
 			open_machine()
 			SendBack(H)
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+			playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 			points += point_reward
 			return "<span class='good'>Experiment successfull! [point_reward] new data-points collected.</span>"
 		else
-			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
 			return "<span class='bad'>Experiment failed! No replacement organ detected.</span>"
 	else
 		src.visible_message("Brain activity nonexistant - disposing Sample...")
 		open_machine()
 		SendBack(H)
 		return "<span class='bad'>Specimen braindead - disposed</span>"
-	return "<span class='bad'>ERROR</span>"
 
 /obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
-	H.Sleeping(8)
+	H.Sleeping(16 SECONDS)
 	var/area/A
 	if(console && console.pad && console.pad.teleport_target)
 		A = console.pad.teleport_target
@@ -220,5 +219,5 @@
 	else
 		icon_state = "experiment"
 
-/obj/machinery/abductor/experiment/visible_message(text)
+/obj/machinery/abductor/experiment/visible_message(text, blind_message, viewing_distance, list/ignored_mobs)
 	return "beeps, \"[text]\""

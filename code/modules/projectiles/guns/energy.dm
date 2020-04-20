@@ -2,6 +2,7 @@
 	icon_state = "energy"
 	name = "energy gun"
 	desc = "A basic energy-based gun."
+	can_be_holstered = FALSE
 
 	var/obj/item/weapon/stock_parts/cell/power_supply //What type of power cell this uses
 	var/cell_type = /obj/item/weapon/stock_parts/cell
@@ -18,9 +19,8 @@
 	. = ..()
 	if(cell_type)
 		power_supply = new cell_type(src)
-	else
-		power_supply = new(src)
-	power_supply.give(power_supply.maxcharge)
+		power_supply.give(power_supply.maxcharge)
+
 	var/obj/item/ammo_casing/energy/shot
 	for (var/i in 1 to ammo_type.len)
 		var/shottype = ammo_type[i]
@@ -33,6 +33,9 @@
 /obj/item/weapon/gun/energy/Fire(atom/target, mob/living/user, params, reflex = 0)
 	newshot()
 	..()
+
+/obj/item/weapon/gun/energy/announce_shot(mob/living/user)
+	user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a laser blast!")
 
 /obj/item/weapon/gun/energy/proc/newshot()
 	if (!ammo_type || !power_supply)
@@ -57,19 +60,37 @@
 		return 1
 
 /obj/item/weapon/gun/energy/proc/select_fire(mob/living/user)
-	select++
-	if (select > ammo_type.len)
-		select = 1
+	if(ammo_type.len <= 1)
+		return
+
+	if(ammo_type.len == 2)
+		select++
+		if(select > ammo_type.len)
+			select = 1
+	else
+		var/list/pos_selections = list()
+		for(var/i in 1 to ammo_type.len)
+			var/obj/item/ammo_casing/energy/E = ammo_type[i]
+			pos_selections[E.select_name] = i
+
+		var/choice = input("Please choose firing mode", "Firing Mode Selection") as null|anything in pos_selections
+		if(user.get_active_hand() != src)
+			return
+
+		if(choice)
+			select = pos_selections[choice]
+
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	if (shot.select_name)
-		to_chat(user, "\red [src] is now set to [shot.select_name].")
+		to_chat(user, "<span class='warning'>[src] is now set to [shot.select_name].</span>")
 	update_icon()
-	return
 
 /obj/item/weapon/gun/energy/update_icon()
-	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = ceil(ratio * 4) * 25
+	var/ratio = 0
+	if(power_supply.maxcharge)
+		ratio = power_supply.charge / power_supply.maxcharge
+		ratio = CEIL(ratio * 4) * 25
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	switch(modifystate)
 		if (0)
@@ -88,3 +109,16 @@
 			else
 				icon_state = "[initial(icon_state)][shot.select_name][ratio]"
 	return
+
+/obj/item/weapon/gun/energy/verb/choose_firing_mode()
+	set name = "Choose firing mode"
+	set category = "Object"
+	set src in usr
+
+	select_fire(usr)
+
+/obj/item/weapon/gun/energy/AltClick(mob/user)
+	select_fire(user)
+
+/obj/item/weapon/gun/energy/attack_self(mob/living/user)
+	select_fire(user)

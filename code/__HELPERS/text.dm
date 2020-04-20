@@ -14,16 +14,8 @@
 
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
 /proc/sanitize_sql(t)
-	var/sanitized_text = replacetext(t, "'", "\\'")
-	sanitized_text = replacetext(sanitized_text, "\"", "\\\"")
-	return sanitized_text
-
-// Sanitize inputs to avoid SQL injection attacks
-/proc/sql_sanitize_text(text)
-	text = replacetext(text, "'", "''")
-	text = replacetext(text, ";", "")
-	text = replacetext(text, "&", "")
-	return text
+	var/sqltext = dbcon.Quote("[t]") // http://www.byond.com/forum/post/2218538
+	return copytext(sqltext, 2, lentext(sqltext))
 
 /*
  * Text sanitization
@@ -131,8 +123,22 @@
 
 	return output
 
-/proc/sanitize_slack(t)
-	return replacetext(html_decode(reset_ja(t)), "\"", "'")
+/proc/shelleo_url_scrub(url)
+	var/static/regex/bad_chars_regex = regex("\[^#%&./:=?\\w]*", "g")
+	var/scrubbed_url = ""
+	var/bad_match = ""
+	var/last_good = 1
+	var/bad_chars = 1
+	do
+		bad_chars = bad_chars_regex.Find(url)
+		scrubbed_url += copytext(url, last_good, bad_chars)
+		if(bad_chars)
+			bad_match = url_encode(bad_chars_regex.match)
+			scrubbed_url += bad_match
+			last_good = bad_chars + length(bad_match)
+	while(bad_chars)
+	. = scrubbed_url
+
 
 //Returns null if there is any bad text in the string
 /proc/reject_bad_text(text, max_length=512)
@@ -142,7 +148,7 @@
 		switch(text2ascii(text,i))
 			if(62,60,92,47)	return			//rejects the text if it contains these bad characters: <, >, \ or /
 			if(127 to 181)	return			//rejects weird letters like �
-			if(183 to 191)	return			//rejects weird letters like �
+			if(183 to 191)	return			//rejects weird letters like � // todo: JA_PLACEHOLDER
 			if(0 to 31)		return			//more weird stuff
 			if(32)			continue		//whitespace
 			else			non_whitespace = 1
@@ -151,11 +157,16 @@
 
 //reset to placeholder for inputs, logs
 /proc/reset_ja(text)
-	return replace_characters(text, list(JA_CODE=JA_PLACEHOLDER, JA_CODE_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
+	return replace_characters(text, list(JA_ENTITY=JA_PLACEHOLDER, JA_ENTITY_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
 
 //replace ja with entity for chat/popup
 /proc/entity_ja(text)
 	return replace_characters(text, list(JA_PLACEHOLDER=JA_ENTITY, JA_ENTITY_ASCII=JA_ENTITY))
+
+//Reset ja to cp1251. Only needed for loading screen ban messages.
+/proc/initial_ja(text)
+	return replace_characters(text, list(JA_ENTITY=JA_CHARACTER, JA_ENTITY_ASCII=JA_CHARACTER, JA_PLACEHOLDER=JA_CHARACTER))
+
 
 /proc/input_default(text)
 	return html_decode(reset_ja(text))//replace br with \n?
@@ -200,6 +211,18 @@
 	for(var/char in repl_chars)
 		t = replacetext(t, char, repl_chars[char])
 	return t
+
+var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f")
+/proc/random_string(length, list/characters)
+	. = ""
+	for (var/i in 1 to length)
+		. += pick(characters)
+
+/proc/random_short_color()
+	return "#" + random_string(3, global.hex_characters)
+
+/proc/random_color()
+	return "#" + random_string(6, global.hex_characters)
 
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)
@@ -330,22 +353,58 @@
 		new_text += copytext(text, i, i+1)
 	return new_text
 
-//Replaces \red \blue \green \b etc with span classes for to_chat
-/proc/replace_text_macro(match, code, rest)
-	var/regex/text_macro = new("(\\xFF.)(.*)$")
-	switch(code)
-		if("\red")
-			return "<span class='warning'>[text_macro.Replace(rest, /proc/replace_text_macro)]</span>"
-		if("\blue", "\green")
-			return "<span class='notice'>[text_macro.Replace(rest, /proc/replace_text_macro)]</span>"
-		if("\b")
-			return "<b>[text_macro.Replace(rest, /proc/replace_text_macro)]</b>"
-		else
-			return text_macro.Replace(rest, /proc/replace_text_macro)
+/proc/parsebbcode(t, colour = "black")
+	t = replacetext(t, "\[center\]", "<center>")
+	t = replacetext(t, "\[/center\]", "</center>")
+	t = replacetext(t, "\[br\]", "<br>")
+	t = replacetext(t, "\[b\]", "<b>")
+	t = replacetext(t, "\[/b\]", "</b>")
+	t = replacetext(t, "\[i\]", "<i>")
+	t = replacetext(t, "\[/i\]", "</i>")
+	t = replacetext(t, "\[u\]", "<u>")
+	t = replacetext(t, "\[/u\]", "</u>")
+	t = replacetext(t, "\[large\]", "<font size=\"4\">")
+	t = replacetext(t, "\[/large\]", "</font>")
+	t = replacetext(t, "\[*\]", "<li>")
+	t = replacetext(t, "\[small\]", "<font size = \"1\">")
+	t = replacetext(t, "\[/small\]", "</font>")
+	t = replacetext(t, "\[list\]", "<ul>")
+	t = replacetext(t, "\[/list\]", "</ul>")
+	t = replacetext(t, "\[hr\]", "<hr>")
+	t = replace_characters(t, list("\[/br\]\n"="", "\n\[/br\]"="", "\[/br\]"="")) // for the tables sake
+	t = replacetext(t, "\n", "<br>")
 
-/proc/macro2html(text)
-	var/static/regex/text_macro = new("(\\xFF.)(.*)$")
-	return text_macro.Replace(text, /proc/replace_text_macro)
+	// tables
+	t = replacetext(t, "\[table\]", "<table border=3px cellpadding=5px bordercolor=\"[colour]\">")
+	t = replacetext(t, "\[/table\]", "</table>")
+	t = replacetext(t, "\[tr\]", "<tr>")
+	t = replacetext(t, "\[/tr\]", "</tr>")
+	t = replacetext(t, "\[td\]", "<td><font color=\"[colour]\">")
+	t = replacetext(t, "\[/td\]", "</font></td>")
+	t = replacetext(t, "\[th\]", "<th><font color=\"[colour]\">")
+	t = replacetext(t, "\[/th\]", "</font></th>")
+
+	// standart head
+	t = replacetext(t, "\[h\]", "<font size=\"4\"><center><b>")
+	t = replacetext(t, "\[/h\]", "</b></center></font>")
+
+	// bordered head;
+	t = replacetext(t, "\[bh\]", "<div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b>")
+	t = replacetext(t, "\[/bh\]", "</b></center></font></div>")
+
+	// blockquote
+	t = replacetext(t, "\[quote\]", "<blockquote style=\"line-height:normal; margin-bottom:10px; font-style:italic; letter-spacing: 1.25px; text-align:right;\">")
+	t = replacetext(t, "\[/quote\]", "</blockquote>")
+
+	// div
+	t = replacetext(t, "\[block\]", "<div style=\"border-width: 4px; border-style: dashed;\">")
+	t = replacetext(t, "\[/block\]", "</div>")
+
+	// date & time
+	t = replacetext(t, "\[date\]", "[current_date_string]")
+	t = replacetext(t, "\[time\]", "[worldtime2text()]")
+
+	return t
 
 /*
  * Byond

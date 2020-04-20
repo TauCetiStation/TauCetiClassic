@@ -1,3 +1,6 @@
+#define ALL (~0) //For convenience.
+#define NONE 0
+
 //PREASSURE_FLAGS BITMASK
 #define STOPS_HIGHPRESSUREDMAGE 1    //These flags is used on the flags_pressure variable for SUIT and HEAD items which stop (high/low/all) pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_FLAGS_BACK) if you see it anywhere
 #define STOPS_LOWPRESSUREDMAGE  2    //To successfully stop you taking all pressure damage you must have both a suit and head item with STOPS_PRESSUREDMAGE flag.
@@ -14,7 +17,8 @@
 #define NODECONSTRUCT    64    // For machines and structures that should not break into parts, eg, holodeck stuff.
 #define ON_BORDER       128    // Item has priority to check when entering or leaving.
 #define THICKMATERIAL   256    // Prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with NOSLIP for shoes)
-#define NOSLIP          256    // Prevents from slipping on wet floors, in space etc.
+#define NOSLIP          512    // Prevents from slipping on wet floors, in space etc.
+#define NOATTACKANIMATION 512	   // Removes attack animation
 
 #define GLASSESCOVERSEYES   256
 #define MASKCOVERSEYES      256    // Get rid of some of the other retardation in these flags.
@@ -35,7 +39,9 @@
 #define	NOREACT  4096    //Reagents dont' react inside this container.
 
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
-#define HOLOGRAM_2   1
+#define HOLOGRAM_2         (1<<0)
+/// atom queued to SSoverlay
+#define OVERLAY_QUEUED_2   (1<<1)
 
 //Species flags.
 #define NO_BLOOD           "no_blood"
@@ -45,6 +51,7 @@
 #define NO_EMBED           "no_embed"
 #define HAS_SKIN_TONE      "has_skin_tone"
 #define HAS_SKIN_COLOR     "has_skin_color"
+#define HAS_HAIR_COLOR     "has_hair_color"
 #define HAS_LIPS           "has_lips"
 #define HAS_UNDERWEAR      "has_underwear"
 #define HAS_TAIL           "has_tail"
@@ -56,9 +63,13 @@
 #define RAD_IMMUNE         "rad_immune"
 #define VIRUS_IMMUNE       "virus_immune"
 #define BIOHAZZARD_IMMUNE  "biohazzard_immune"
+#define NO_VOMIT           "no_vomit"
 #define HAS_HAIR           "has_hair"
 #define NO_FINGERPRINT     "no_fingerprint"
 #define NO_MINORCUTS	   "no_minorcuts"
+#define NO_BLOOD_TRAILS    "no_blood_trails"
+#define FACEHUGGABLE       "facehuggable"
+#define SPRITE_SHEET_RESTRICTION "sprite_sheet_restriction" // If specie has this flag, all clothing which icon_state is in the sprite sheet will be awearable.
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.

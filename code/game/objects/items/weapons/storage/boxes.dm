@@ -42,31 +42,7 @@
 //Survival boxes, given by NanoTrasen
 /obj/item/weapon/storage/box/survival
 	name = "emergency box"
-	desc = "It's a box, issued to every employee of NanoTrasen, contains a mask and a spare air tank. It has a ton of ads all over its back."
-
-/obj/item/weapon/storage/box/survival/atom_init()
-	. = ..()
-	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/weapon/tank/emergency_oxygen(src)
-	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
-
-/obj/item/weapon/storage/box/diona_survival
-	name = "emergency box"
-	desc = "It's a box, issued to every diona working for NanoTrasen, contains a flare and a plant analyzer. It has a ton of ads all over its back."
-
-/obj/item/weapon/storage/box/diona_survival/atom_init()
-	. = ..()
-	new /obj/item/device/flashlight/flare(src)
-	new /obj/item/device/plant_analyzer(src)
-
-/obj/item/weapon/storage/box/ipc_survival
-	name = "emergency box"
-	desc = "It's a box, issued to every IPC working for NanoTrasen, contains a flare and a plant analyzer. It has a ton of ads all over its back."
-
-/obj/item/weapon/storage/box/ipc_survival/atom_init()
-	. = ..()
-	new /obj/item/weapon/stock_parts/cell/crap(src)
-	new /obj/item/device/robotanalyzer(src)
+	desc = "It's a box, issued to every employee of NanoTrasen, contains essential items for employee's survival incase of an emergency. It has a ton of ads all over its back."
 
 //Engineer
 /obj/item/weapon/storage/box/engineer
@@ -316,7 +292,7 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "monkeycubebox"
 	storage_slots = 7
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/monkeycube")
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/monkeycube)
 
 /obj/item/weapon/storage/box/monkeycubes/atom_init()
 	. = ..()
@@ -426,7 +402,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "spbox"
 	storage_slots = 8
-	can_hold = list("/obj/item/toy/snappop")
+	can_hold = list(/obj/item/toy/snappop)
 
 /obj/item/weapon/storage/box/snappops/atom_init()
 	. = ..()
@@ -441,9 +417,9 @@
 	icon_state = "matchbox"
 	item_state = "zippo"
 	storage_slots = 10
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
-	can_hold = list("/obj/item/weapon/match")
+	can_hold = list(/obj/item/weapon/match)
 
 /obj/item/weapon/storage/box/matches/atom_init()
 	. = ..()
@@ -453,9 +429,9 @@
 /obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W, mob/user)
 	if(istype(W) && !W.lit && !W.burnt)
 		if (prob (20))
-			playsound(src, 'sound/items/matchstick_hit.ogg', 20, 1, 1)
+			playsound(src, 'sound/items/matchstick_hit.ogg', VOL_EFFECTS_MASTER, 20)
 			return
-		playsound(src, 'sound/items/matchstick_light.ogg', 20, 1, 1)
+		playsound(src, 'sound/items/matchstick_light.ogg', VOL_EFFECTS_MASTER, 20)
 		W.lit = 1
 		W.damtype = "burn"
 		W.icon_state = "match_lit"
@@ -483,7 +459,7 @@
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
 	storage_slots = 21
 	max_storage_space = 42
-	can_hold = list("/obj/item/weapon/light/tube", "/obj/item/weapon/light/bulb")
+	can_hold = list(/obj/item/weapon/light/tube, /obj/item/weapon/light/bulb)
 	use_to_pickup = 1 // for picking up broken bulbs, not that most people will try
 
 /obj/item/weapon/storage/box/lights/bulbs/atom_init()
@@ -582,7 +558,7 @@
 	name = "box of shotgun shell"
 	icon_state = "shotgun_ammo_slug"
 	foldable = /obj/item/stack/sheet/cardboard
-	can_hold = list("/obj/item/ammo_casing/shotgun")
+	can_hold = list(/obj/item/ammo_casing/shotgun)
 
 /obj/item/weapon/storage/box/shotgun/slug
 	name = "box of shotgun shell (slug)"

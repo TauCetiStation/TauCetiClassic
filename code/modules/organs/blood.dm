@@ -10,7 +10,7 @@ var/const/BLOOD_VOLUME_BAD = 224
 var/const/BLOOD_VOLUME_SURVIVE = 122
 
 /mob/living/carbon/human/var/datum/reagents/vessel	//Container for blood and BLOOD ONLY. Do not transfer other chems here.
-/mob/living/carbon/human/var/var/pale = 0			//Should affect how mob sprite is drawn, but currently doesn't.
+/mob/living/carbon/human/var/pale = 0			//Should affect how mob sprite is drawn, but currently doesn't.
 
 //Initializes blood vessels
 /mob/living/carbon/human/proc/make_blood()
@@ -78,10 +78,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				pale = 1
 				update_body()
 				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "\red You feel [word]")
+				to_chat(src, "<span class='warning'>You feel [word]</span>")
 			if(prob(1))
 				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "\red You feel [word]")
+				to_chat(src, "<span class='warning'>You feel [word]</span>")
 			if(oxyloss < 20)
 				oxyloss += 3
 		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
@@ -95,13 +95,13 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			if(prob(15))
 				Paralyse(rand(1,3))
 				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "\red You feel extremely [word]")
+				to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
 		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 			oxyloss += 5
 			toxloss += 3
 			if(prob(15))
 				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "\red You feel extremely [word]")
+				to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
 		if(0 to BLOOD_VOLUME_SURVIVE)
 			// There currently is a strange bug here. If the mob is not below -100 health
 			// when death() is called, apparently they will be just fine, and this way it'll
@@ -121,7 +121,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	var/blood_max = 0
 	var/list/do_spray = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.status & ORGAN_ROBOT)
+		if(BP.is_robotic())
 			continue
 
 		var/open_wound
@@ -146,13 +146,14 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 						blood_max += W.damage / 40
 
 		if(BP.status & ORGAN_ARTERY_CUT)
-			var/bleed_amount = Floor((vessel.total_volume / (BP.applied_pressure ? 400 : 250)) * BP.arterial_bleed_severity)
+			var/bleed_amount = FLOOR((vessel.total_volume / (BP.applied_pressure ? 400 : 250)) * BP.arterial_bleed_severity, 1)
 			if(bleed_amount)
 				if(open_wound)
 					blood_max += bleed_amount
 					do_spray += "the [BP.artery_name] in \the [src]'s [BP.name]"
 				else
 					vessel.remove_reagent("blood", bleed_amount)
+				playsound(src, 'sound/effects/ArterialBleed.ogg', VOL_EFFECTS_MASTER)
 
 	if(blood_max == 0) // so... there is no blood loss, lets stop right here.
 		return
@@ -177,7 +178,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			visible_message("<span class='danger'>Blood squirts from [pick(do_spray)]!</span>")
 		next_blood_squirt = world.time + 50
 		var/turf/sprayloc = get_turf(src)
-		blood_max -= drip(ceil(blood_max / 3), sprayloc)
+		blood_max -= drip(CEIL(blood_max / 3), sprayloc)
 		if(blood_max > 0)
 			blood_max -= blood_squirt(blood_max, sprayloc)
 			if(blood_max > 0)
@@ -188,7 +189,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 //Makes a blood drop, leaking certain amount of blood from the mob
 /mob/living/carbon/human/proc/drip(amt, tar = src, ddir)
 	if(remove_blood(amt))
-		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = species.blood_color)
+		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = species.blood_datum)
 		return amt
 	return 0
 
@@ -225,7 +226,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		return B
 
 	// Update appearance.
-	B.basedatum = new basedatum() // source.data["blood_colour"] <- leaving this pointer, could be important for later.
+	B.basedatum = new(basedatum) // source.data["blood_colour"] <- leaving this pointer, could be important for later.
 	B.update_icon()
 	if(spray_dir)
 		B.icon_state = "squirt"
@@ -255,7 +256,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		return
 
 	var/spraydir = pick(alldirs)
-	amt = ceil(amt / BLOOD_SPRAY_DISTANCE)
+	amt = CEIL(amt / BLOOD_SPRAY_DISTANCE)
 	var/bled = 0
 
 	var/turf/old_sprayloc = sprayloc

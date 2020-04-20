@@ -10,22 +10,23 @@ var/global/list/cached_icons = list()
 	item_state = "paintcan"
 	m_amt = 200
 	g_amt = 0
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10,20,30,50,70)
 	volume = 70
 	flags = OPENCONTAINER
 	var/paint_type = ""
 
-/obj/item/weapon/reagent_containers/glass/paint/afterattack(turf/simulated/target, mob/user, proximity)
+/obj/item/weapon/reagent_containers/glass/paint/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
-	if(istype(target) && reagents.total_volume > 5)
-		visible_message("<span class='notice'>[target] has been splashed by [user] with [src].</span>")
+	if(istype(target, /turf/simulated) && reagents.total_volume > 0)
+		user.visible_message("<span class='notice'>[target] has been splashed by [user] with [src].</span>", "<span class='notice'>You splash [target] with [src].</span>")
 		reagents.reaction(target, TOUCH)
 		reagents.remove_any(5)
-	else
-		return ..()
+		log_game("[key_name(usr)] splashed [src.reagents.get_reagents()] on [target], location ([target.x],[target.y],[target.z])")
+	else 
+		..()
 
 /obj/item/weapon/reagent_containers/glass/paint/atom_init()
 	if(paint_type == "remover")
@@ -83,7 +84,7 @@ var/global/list/cached_icons = list()
 	icon_state = "paint_neutral"
 	color = "FFFFFF"
 	item_state = "paintcan"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/paint/red
 	name = "red paint"

@@ -30,6 +30,12 @@
 #define MAX_TEMPO_RATE   600
 #define MAX_DIONATEMPO_RATE 200
 
+// Cache holder for sound() instances.
+var/global/datum/notes_storage/note_cache_storage = new
+
+/datum/notes_storage
+	var/list/instrument_sound_notes = list() // associative list.
+
 /**
  * Method called before playing of every note, so it's some kinde of
  * 'process-like' check to stop, for example, playing song
@@ -114,7 +120,7 @@
 					Notes are played by the names of the note, and optionally, the accidental, and/or the octave number.<br>
 					By default, every note is natural and in octave 3. Defining otherwise is remembered for each note.<br>
 					Example: <i>C,D,E,F,G,A,B</i> will play a C major scale.<br>
-					After a note has an accidental placed, it will be remembered: <i>C,C4,C,C3</i> is C3,C4,C4,C3</i><br>
+					After a note has an accidental placed, it will be remembered: <i>C,C4,C,C3</i> is <i>C3,C4,C4,C3</i><br>
 					Chords can be played simply by seperating each note with a hyphon: <i>A-C#,Cn-E,E-G#,Gn-B</i><br>
 					A pause may be denoted by an empty chord: <i>C,E,,C,G</i><br>
 					To make a chord be a different time, end it with /x, where the chord length will be length<br>
@@ -156,7 +162,7 @@
 			if(!in_range(instrument, usr))
 				return
 
-			repeat = Clamp(repeat_num, 0, MAX_REPEAT_COUNT)
+			repeat = CLAMP(repeat_num, 0, MAX_REPEAT_COUNT)
 
 		else if(href_list["change_tempo"])
 			var/new_tempo = input("Enter new tempo: ", "Change tempo", song_tempo) as num|null
@@ -164,7 +170,7 @@
 			if(!in_range(instrument, usr))
 				return
 
-			song_tempo = Clamp(new_tempo, 1, usr.get_species() == DIONA ?  MAX_DIONATEMPO_RATE : MAX_TEMPO_RATE )
+			song_tempo = CLAMP(new_tempo, 1, usr.get_species() == DIONA ?  MAX_DIONATEMPO_RATE : MAX_TEMPO_RATE )
 
 		else if(href_list["play"])
 			playing = TRUE
@@ -259,7 +265,18 @@
 							cur_oct[cur_note] = ni
 
 					var/current_note = uppertext(copytext(note, 1, 2)) + cur_acc[cur_note] + cur_oct[cur_note]
-					playsound(instrument, "[sound_path]/[current_note].ogg", volume, falloff = 5)
+
+					if(fexists("[sound_path]/[current_note].ogg"))
+						// ^ Since this is dynamic path, no point in running playsound without file (since it will play even "no file" and eat cpu for nothing)
+						// and no point in integrating this into playsound itself,
+						// because this is the only case where we use dynamic path for sounds, as they should be avoided normally.
+						// Without cache dynamic paths eat 10~ times more CPU than doing same with hardcoded paths, so cache is required.
+
+						var/sound/S = global.note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"]
+						if(!S)
+							S = global.note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"] = sound("[sound_path]/[current_note].ogg")
+
+						playsound(instrument, S, VOL_EFFECTS_INSTRUMENT, volume, FALSE, falloff = 5)
 
 				var/pause_time = COUNT_PAUSE(song_tempo)
 
@@ -280,7 +297,7 @@
 	var/list/lines = splittext(song_text, "\n")
 
 	if(copytext(lines[1], 1, 5) == "BPM:")
-		song_tempo = Clamp(text2num(copytext(lines[1], 5)), 1, usr.get_species() == DIONA ?  MAX_DIONATEMPO_RATE : MAX_TEMPO_RATE )
+		song_tempo = CLAMP(text2num(copytext(lines[1], 5)), 1, usr.get_species() == DIONA ?  MAX_DIONATEMPO_RATE : MAX_TEMPO_RATE )
 		lines.Cut(1, 2)
 
 	if(lines.len > MAX_LINES_COUNT)

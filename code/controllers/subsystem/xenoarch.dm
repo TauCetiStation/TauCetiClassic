@@ -20,9 +20,9 @@ var/datum/subsystem/xenoarch/SSxenoarch
 
 	var/list/spawn_types_animal = list(
 		/mob/living/carbon/slime,
-		/mob/living/simple_animal/hostile/alien,
-		/mob/living/simple_animal/hostile/alien/drone,
-		/mob/living/simple_animal/hostile/alien/sentinel,
+		/mob/living/simple_animal/hostile/xenomorph,
+		/mob/living/simple_animal/hostile/xenomorph/drone,
+		/mob/living/simple_animal/hostile/xenomorph/sentinel,
 		/mob/living/simple_animal/hostile/giant_spider,
 		/mob/living/simple_animal/hostile/giant_spider/hunter,
 		/mob/living/simple_animal/hostile/giant_spider/nurse,
@@ -59,7 +59,11 @@ var/datum/subsystem/xenoarch/SSxenoarch
 	var/list/artifact_spawning_turfs = list()
 	var/list/digsite_spawning_turfs  = list()
 
-	for(var/turf/simulated/mineral/M in block(locate(1, 1, ZLEVEL_ASTEROID), locate(world.maxx, world.maxy, ZLEVEL_ASTEROID)))
+	var/asteroid_zlevel = SSmapping.level_by_trait(ZTRAIT_MINING)
+	if(!asteroid_zlevel)
+		return
+
+	for(var/turf/simulated/mineral/M in block(locate(1, 1, asteroid_zlevel), locate(world.maxx, world.maxy, asteroid_zlevel)))
 		if(!prob(XENOARCH_SPAWN_CHANCE))
 			continue
 
@@ -104,7 +108,7 @@ var/datum/subsystem/xenoarch/SSxenoarch
 			var/datum/find/F = archeo_turf.finds[1]
 			if(F.excavation_required <= F.view_range)
 				archeo_turf.archaeo_overlay = "overlay_archaeo[rand(1,3)]"
-				archeo_turf.overlays += archeo_turf.archaeo_overlay
+				archeo_turf.add_overlay(archeo_turf.archaeo_overlay)
 
 		// Have a chance for an artifact to spawn here, but not in animal or plant digsites
 		if(isnull(archeo_turf.artifact_find) && digsite != 1 && digsite != 2)

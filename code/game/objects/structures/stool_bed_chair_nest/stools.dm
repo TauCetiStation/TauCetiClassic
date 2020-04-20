@@ -31,8 +31,8 @@
 		qdel(src)
 
 /obj/structure/stool/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench) && !(flags & NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	if(iswrench(W) && !(flags & NODECONSTRUCT))
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		new /obj/item/stack/sheet/metal(loc)
 		qdel(src)
 		return
@@ -43,8 +43,8 @@
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(src.loc, "sparks", 50, 1)
+			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
 			if(!(flags & NODECONSTRUCT))
 				new /obj/item/stack/sheet/metal(loc)
@@ -70,12 +70,17 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
 	force = 10
+	hitsound = list('sound/items/chair_fall.ogg')
 	throwforce = 10
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	var/obj/structure/stool/origin_stool = null
 
-/obj/item/weapon/stool/throw_at()
+/obj/item/weapon/stool/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	return
+
+/obj/item/weapon/stool/atom_init()
+	. = ..()
+	flags |= DROPDEL
 
 /obj/item/weapon/stool/Destroy()
 	if(origin_stool)
@@ -91,7 +96,7 @@
 	if(origin_stool)
 		origin_stool.loc = src.loc
 		origin_stool = null
-	qdel(src)
+	..()
 
 /obj/item/weapon/stool/attack(mob/M, mob/user)
 	if (prob(5) && isliving(M))

@@ -109,7 +109,7 @@ var/list/cult_datums = list()
 	for(var/obj/effect/rune/R in cult_runes)
 		if(!istype(R.power, power.type) || R == src)
 			continue
-		if(R.power.word3 == power.word3 && R.loc.z != ZLEVEL_CENTCOMM)
+		if(R.power.word3 == power.word3 && !is_centcom_level(R.loc.z))
 			allrunes += R
 	if(length(allrunes) > 0)
 		user.forceMove(get_turf(pick(allrunes)))
@@ -134,7 +134,7 @@ var/list/cult_datums = list()
 	icon_state ="book"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	unique = 1
 	var/unlocked = FALSE
 	var/notedat = ""
@@ -277,7 +277,7 @@ var/list/cult_datums = list()
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had the [name] used on him by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	msg_admin_attack("[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])", user)
 
 	if(istype(M, /mob/dead))
 		M.invisibility = 0
@@ -316,7 +316,10 @@ var/list/cult_datums = list()
 	if (!isturf(user.loc))
 		to_chat(user, "<span class='userdanger'>You do not have enough space to write a proper rune.</span>")
 		return
-
+	for(var/obj/structure/obj_to_check in user.loc)
+		if(obj_to_check.density)
+			to_chat(user, "<span class='warning'>There is not enough space to write a proper rune.</span>")
+			return
 	if (length(cult_runes) >= CULT_RUNES_LIMIT + length(ticker.mode.cult)) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
 		alert("The cloth of reality can't take that much of a strain. Remove some runes first!")
 		return

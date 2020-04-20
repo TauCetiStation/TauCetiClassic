@@ -32,7 +32,10 @@
 			AM.ex_act(1)
 	for(var/mob/living/M in oviewers(6, src))
 		shake_camera(M, 2, 2)
-	playsound(loc, 'sound/effects/meteorimpact.ogg', 50, 1)
+	if(istype(src, /obj/structure/scrap))
+		playsound(src, 'sound/effects/scrap_fall.ogg', VOL_EFFECTS_MASTER)
+	else
+		playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER)
 	density = initial(density)
 	opacity = initial(opacity)
 	plane = initial(plane)

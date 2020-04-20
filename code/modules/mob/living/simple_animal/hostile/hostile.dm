@@ -111,7 +111,7 @@
 			return FALSE
 		if(L in friends)
 			return FALSE
-		if(animalistic && L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
+		if(animalistic && HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
 			return FALSE
 		return TRUE
 	if(isobj(the_target))
@@ -163,10 +163,10 @@
 	LostTarget()
 
 /mob/living/simple_animal/hostile/proc/Goto(target, delay, minimum_distance)
-        walk_to(src, target, minimum_distance, delay)
+	walk_to(src, target, minimum_distance, delay)
 
 /mob/living/simple_animal/hostile/adjustBruteLoss(damage)
-	..(damage)
+	..()
 	if(!stat && search_objects < 3)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
 			search_objects = 0
@@ -225,7 +225,7 @@
 /mob/living/simple_animal/hostile/proc/OpenFire(the_target)
 
 	var/target = the_target
-	visible_message("\red <b>[src]</b> [ranged_message] at [target]!", 1)
+	visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>")
 
 	var/tturf = get_turf(target)
 	if(rapid)
@@ -253,7 +253,7 @@
 		return
 
 	var/obj/item/projectile/A = new projectiletype(user:loc)
-	playsound(user, projectilesound, 100, 1)
+	playsound(user, projectilesound, VOL_EFFECTS_MASTER)
 	if(!A)	return
 
 	if (!istype(target, /turf))

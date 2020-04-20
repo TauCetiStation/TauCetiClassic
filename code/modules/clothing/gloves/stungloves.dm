@@ -5,7 +5,7 @@
 		return
 
 	//add wires
-	if(istype(W, /obj/item/stack/cable_coil))
+	if(iscoil(W))
 		var/obj/item/stack/cable_coil/C = W
 		if (clipped)
 			to_chat(user, "<span class='notice'>The [src] are too badly mangled for wiring.</span>")
@@ -39,7 +39,7 @@
 			to_chat(user, "<span class='notice'>A [cell] is already attached to the [src].</span>")
 		return
 
-	else if(istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/scalpel))
+	else if(iswirecutter(W) || istype(W, /obj/item/weapon/scalpel))
 
 		//stunglove stuff
 		if(cell)
@@ -58,8 +58,8 @@
 
 		//clipping fingertips
 		if(!clipped)
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			user.visible_message("\red [user] cuts the fingertips off of the [src].","\red You cut the fingertips off of the [src].")
+			playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
+			user.visible_message("<span class='warning'>[user] cuts the fingertips off of the [src].</span>","<span class='warning'>You cut the fingertips off of the [src].</span>")
 
 			clipped = TRUE
 			name = "mangled [name]"
@@ -67,6 +67,7 @@
 			if("exclude" in species_restricted)
 				species_restricted -= UNATHI
 				species_restricted -= TAJARAN
+				species_restricted -= VOX
 		else
 			to_chat(user, "<span class='notice'>The [src] have already been clipped!</span>")
 		return
@@ -74,11 +75,11 @@
 
 /obj/item/clothing/gloves/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(wired)
-		overlays += image(icon = icon, icon_state = "gloves_wire")
+		add_overlay(image(icon = icon, icon_state = "gloves_wire"))
 	if(cell)
-		overlays += image(icon = icon, icon_state = "gloves_cell")
+		add_overlay(image(icon = icon, icon_state = "gloves_cell"))
 	if(wired && cell)
 		var/obj/item/weapon/stock_parts/cell/C = cell
 		if(!C.charge)

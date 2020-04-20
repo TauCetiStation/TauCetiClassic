@@ -3,7 +3,7 @@
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "engineering=4;materials=4;bluespace=2;programming=4"
 
 	var/searching = 0
@@ -19,7 +19,7 @@
 /obj/item/device/mmi/posibrain/attack_self(mob/user)
 	if(brainmob && !brainmob.key && searching == 0)
 		//Start the process of searching for a new user.
-		to_chat(user, "\blue You carefully locate the manual activation switch and start the positronic brain's boot process.")
+		to_chat(user, "<span class='notice'>You carefully locate the manual activation switch and start the positronic brain's boot process.</span>")
 		icon_state = "posibrain-searching"
 		src.searching = 1
 		src.request_player()
@@ -49,17 +49,18 @@
 
 
 /obj/item/device/mmi/posibrain/transfer_identity(mob/living/carbon/H)
-	name = "positronic brain ([H])"
-	brainmob.name = H.real_name
-	brainmob.real_name = H.real_name
+	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","CHRI","CDB","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","JRD","CHOC","ANCL","JLLO","JNLG","KOS","TKRG","XAL","STLP","CBOS","DUNC","FXMC","DRSD","XHS","BOB","EXAD","JMAD"))]-[rand(100, 999)]"
+	brainmob.real_name = brainmob.name
 	brainmob.dna = H.dna
 	brainmob.timeofhostdeath = H.timeofdeath
 	brainmob.stat = CONSCIOUS
+	brainmob.robot_talk_understand = 1
+	name = "positronic brain ([brainmob.name])"
 	if(brainmob.mind)
 		brainmob.mind.assigned_role = "Positronic Brain"
 	if(H.mind)
 		H.mind.transfer_to(brainmob)
-	to_chat(brainmob, "\blue You feel slightly disoriented. That's normal when you're just a metal cube.")
+	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a metal cube.</span>")
 	icon_state = "posibrain-occupied"
 	return
 
@@ -77,9 +78,7 @@
 	to_chat(src.brainmob, "<b>Use say :b to speak to other artificial intelligences.</b>")
 	src.brainmob.mind.assigned_role = "Positronic Brain"
 
-	var/turf/T = get_turf_or_move(src.loc)
-	for (var/mob/M in viewers(T))
-		M.show_message("\blue The positronic brain chimes quietly.")
+	visible_message("<span class='notice'>\The [src] chimes quietly.</span>")
 	icon_state = "posibrain-occupied"
 
 /obj/item/device/mmi/posibrain/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
@@ -89,19 +88,16 @@
 	src.searching = 0
 	icon_state = "posibrain"
 
-	var/turf/T = get_turf_or_move(src.loc)
-	for (var/mob/M in viewers(T))
-		M.show_message("\blue The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?")
+	visible_message("<span class='notice'>\The [src] buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>")
 
 /obj/item/device/mmi/posibrain/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]\n"
-	msg += "<span class='warning'>"
+	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]</span>\n"
 
 	if(src.brainmob && src.brainmob.key)
 		switch(src.brainmob.stat)
 			if(CONSCIOUS)
 				if(!src.brainmob.client)
-					msg += "It appears to be in stand-by mode.\n" //afk
+					msg += "<span class='warning'>It appears to be in stand-by mode.</span>\n" //afk
 			if(UNCONSCIOUS)
 				msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
 			if(DEAD)
@@ -129,9 +125,8 @@
 		ping_cd = 1
 		spawn(50)
 			ping_cd = 0
-		var/turf/T = get_turf(src.loc)
-		for (var/mob/M in viewers(T))
-			M.show_message("<span class='notice'>\The [src] pings softly.</span>")
+		audible_message("<span class='notice'>\The [src] pings softly.</span>", deaf_message = "\The [src] indicator blinks.")
+		playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, 10, FALSE)
 
 /obj/item/device/mmi/posibrain/atom_init()
 
@@ -143,7 +138,6 @@
 	brainmob.robot_talk_understand = 1
 	brainmob.stat = CONSCIOUS
 	brainmob.silent = 0
-	brainmob.brain_op_stage = 4.0
 	dead_mob_list -= brainmob
 
 	. = ..()

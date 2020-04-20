@@ -1,0 +1,370 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/space)
+"b" = (
+/obj/structure/lattice,
+/turf/space,
+/area/space)
+"c" = (
+/turf/simulated/floor/plating/airless,
+/area/space)
+"d" = (
+/turf/simulated/wall/r_wall,
+/area/space_structures/teleporter)
+"e" = (
+/turf/simulated/floor/plating/airless,
+/area/space_structures/teleporter)
+"f" = (
+/turf/simulated/floor/airless,
+/area/space_structures/teleporter)
+"g" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/teleporter)
+"h" = (
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space_structures/teleporter)
+"i" = (
+/obj/machinery/computer/teleporter,
+/turf/simulated/floor/airless,
+/area/space_structures/teleporter)
+"j" = (
+/obj/machinery/teleport/station,
+/turf/simulated/floor/airless,
+/area/space_structures/teleporter)
+"k" = (
+/obj/machinery/teleport/hub,
+/turf/simulated/floor/airless,
+/area/space_structures/teleporter)
+"l" = (
+/obj/machinery/light_construct/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/teleporter)
+"m" = (
+/obj/structure/table,
+/obj/item/weapon/stock_parts/cell{
+	charge = 100;
+	maxcharge = 15000
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/teleporter)
+"n" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged4"
+	},
+/area/space_structures/teleporter)
+"o" = (
+/obj/machinery/power/apc{
+	name = "Worn-out APC";
+	pixel_y = -24
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/teleporter)
+"p" = (
+/obj/item/weapon/disk/research_points,
+/turf/simulated/floor/airless,
+/area/space_structures/teleporter)
+
+(1,1,1) = {"
+a
+a
+a
+a
+b
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+b
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+b
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+b
+b
+b
+d
+d
+d
+d
+d
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+b
+b
+d
+d
+h
+p
+m
+d
+d
+"}
+(7,1,1) = {"
+a
+a
+a
+b
+b
+d
+e
+f
+f
+n
+f
+d
+"}
+(8,1,1) = {"
+a
+a
+a
+b
+c
+d
+e
+f
+i
+e
+o
+d
+"}
+(9,1,1) = {"
+a
+a
+b
+b
+c
+e
+f
+f
+j
+f
+f
+d
+"}
+(10,1,1) = {"
+a
+a
+b
+b
+c
+d
+g
+f
+k
+f
+f
+d
+"}
+(11,1,1) = {"
+b
+b
+b
+b
+c
+d
+f
+f
+f
+f
+e
+e
+"}
+(12,1,1) = {"
+a
+b
+a
+b
+b
+d
+e
+f
+l
+g
+d
+e
+"}
+(13,1,1) = {"
+b
+b
+b
+b
+b
+c
+e
+d
+d
+d
+d
+a
+"}
+(14,1,1) = {"
+b
+b
+b
+b
+b
+c
+b
+b
+b
+a
+a
+a
+"}
+(15,1,1) = {"
+b
+b
+b
+b
+b
+c
+b
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+"}
+(18,1,1) = {"
+a
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+b
+b
+b
+a
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(21,1,1) = {"
+a
+b
+a
+a
+b
+b
+a
+a
+a
+a
+a
+a
+"}

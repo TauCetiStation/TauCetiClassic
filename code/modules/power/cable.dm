@@ -9,12 +9,11 @@
 
 /* Cable directions (d1 and d2)
 
-
-  9   1   5
-	\ | /
-  8 - 0 - 4
-	/ | \
-  10  2   6
+>  9   1   5
+>    \ | /
+>  8 - 0 - 4
+>    / | \
+>  10  2   6
 
 If d1 = 0 and d2 = 0, there's no cable
 If d1 = 0 and d2 = dir, it's a O-X cable, getting from the center of the tile to dir (knot cable)
@@ -115,7 +114,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(T.intact)
 		return
 
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(iswirecutter(W))
 
 		if (shock(user, 50))
 			return
@@ -135,11 +134,11 @@ By design, d1 is the smallest direction and d2 is the highest
 		return	// not needed, but for clarity
 
 
-	else if(istype(W, /obj/item/stack/cable_coil))
+	else if(iscoil(W))
 		var/obj/item/stack/cable_coil/coil = W
 		coil.cable_join(src, user)
 
-	else if(istype(W, /obj/item/device/multitool))
+	else if(ismultitool(W))
 
 		if(powernet && (powernet.avail > 0))		// is it powered?
 			to_chat(user, "<span class='alert'>[powernet.avail]W in power network.</span>")
@@ -383,6 +382,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/cable_coil
 	name = "cable coil"
 	icon = 'icons/obj/power.dmi'
+	force = 1.0
 	icon_state = "coil"
 	amount = MAXCOIL
 	max_amount = MAXCOIL
@@ -397,13 +397,14 @@ By design, d1 is the smallest direction and d2 is the highest
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	item_state = "coil"
+	hitsound = list('sound/items/tools/cable-slap.ogg')
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
 	full_w_class = ITEM_SIZE_SMALL
+	merge_type = /obj/item/stack/cable_coil
 
 /obj/item/stack/cable_coil/cyborg
-	merge_type = /obj/item/stack/cable_coil
-	max_amount = 50
+	max_amount = 90
 	m_amt = 0
 	g_amt = 0
 
@@ -430,7 +431,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		var/mob/living/carbon/human/H = M
 
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
-		if(!(BP.status & ORGAN_ROBOT) || user.a_intent != "help")
+		if(!BP.is_robotic() || user.a_intent != "help")
 			return ..()
 
 		if(H.species.flags[IS_SYNTHETIC])
@@ -657,6 +658,19 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/cable_coil/red
 	color = COLOR_RED
 
-/obj/item/stack/cable_coil/random/atom_init()
-	color = pick(COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_CYAN, COLOR_PINK, COLOR_YELLOW, COLOR_ORANGE, COLOR_WHITE, COLOR_GRAY)
-	. = ..()
+/obj/item/stack/cable_coil/gray
+	color = COLOR_GRAY
+
+/obj/item/stack/cable_coil/random/atom_init(mapload, new_amount = null)
+	..()
+	var/new_type = pick(/obj/item/stack/cable_coil/yellow,
+						/obj/item/stack/cable_coil/blue,
+						/obj/item/stack/cable_coil/green,
+						/obj/item/stack/cable_coil/pink,
+						/obj/item/stack/cable_coil/orange,
+						/obj/item/stack/cable_coil/cyan,
+						/obj/item/stack/cable_coil/red,
+						/obj/item/stack/cable_coil/gray,
+						/obj/item/stack/cable_coil)
+	new new_type(loc, new_amount)
+	return INITIALIZE_HINT_QDEL

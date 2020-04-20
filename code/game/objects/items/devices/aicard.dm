@@ -3,7 +3,7 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "aicard" // aicard-full
 	item_state = "electronic"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	var/flush = null
 	origin_tech = "programming=4;materials=4"
@@ -15,7 +15,7 @@
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been carded with [src.name] by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to card [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to card [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to card [M.name] ([M.ckey])", user)
 
 	transfer_ai("AICORE", "AICARD", M, user)
 	return
@@ -124,9 +124,9 @@
 				A.control_disabled = !A.control_disabled
 				to_chat(A, "The intelicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!")
 				if (A.control_disabled)
-					overlays -= image('icons/obj/pda.dmi', "aicard-on")
+					cut_overlay(image('icons/obj/pda.dmi', "aicard-on"))
 				else
-					overlays += image('icons/obj/pda.dmi', "aicard-on")
+					add_overlay(image('icons/obj/pda.dmi', "aicard-on"))
 	attack_self(U)
 
 

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
 	item_state = "electronic"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 	var/obj/item/radio/integrated/radio = null
 	var/access_security = 0
@@ -228,8 +228,8 @@
 						user = user_client.mob
 
 				if(user)
-					log_admin("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2]")
-					message_admins("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2] [ADMIN_FLW(user)]")
+					log_admin("STATUS: [key_name(user)] set status screen with [PDA]. Message: [data1] [data2]")
+					message_admins("STATUS: [key_name_admin(user)] set status screen with [PDA]. Message: [data1] [data2] [ADMIN_FLW(user)]")
 				else
 					var/turf/PDA_turf = get_turf(PDA)
 					log_admin("STATUS: UNKNOWN set status screen with [PDA]. Message: [data1] [data2]")
@@ -505,13 +505,13 @@
 		if(!CbotData.len)
 			CbotData[++CbotData.len] = list("x" = 0, "y" = 0, dir=null, status = null)
 		var/CartData[0]
-		for(var/obj/structure/janitorialcart/B in janitorialcart_list)
+		for(var/obj/structure/stool/bed/chair/janitorialcart/B in janitorialcart_list)
 			var/turf/bl = get_turf(B)
 			if(bl)
 				if(bl.z != cl.z)
 					continue
 				var/direction = get_dir(src,B)
-				CartData[++CartData.len] = list("x" = bl.x, "y" = bl.y, "dir" = uppertext(dir2text(direction)), "status" = B.reagents.total_volume/100)
+				CartData[++CartData.len] = list("x" = bl.x, "y" = bl.y, "dir" = uppertext(dir2text(direction)), "status" = B.mybucket ? B.mybucket.reagents.total_volume / 100 : "No bucket.")
 		if(!CartData.len)
 			CartData[++CartData.len] = list("x" = 0, "y" = 0, dir=null, status = null)
 

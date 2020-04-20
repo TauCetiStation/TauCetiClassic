@@ -26,13 +26,22 @@
 /obj/machinery/computer/libraryconsole
 	name = "visitor computer"
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "library"
+	icon_state = "computer_regular_library"
 	circuit = /obj/item/weapon/circuitboard/libraryconsole
+
+	state_broken_preset = "computer_regularb"
+	state_nopower_preset = "computer_regular0"
+
 	var/screenstate = 0
 	var/title
 	var/category = "Any"
 	var/author
 	var/page = 0
+
+/obj/machinery/computer/libraryconsole/old // an older-looking version, looks fancy
+	icon_state = "computer_old"
+	state_broken_preset = "computer_oldb"
+	state_nopower_preset = "computer_old0"
 
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user)
 	var/dat = "<HEAD><TITLE>Library Visitor</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
@@ -145,6 +154,11 @@
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 
 	var/bibledelay = 0
+
+/obj/machinery/computer/libraryconsole/bookmanagement/old // an older-looking version, looks fancy
+	icon_state = "computer_old"
+	state_broken_preset = "computer_oldb"
+	state_nopower_preset = "computer_old0"
 
 /obj/machinery/computer/libraryconsole/bookmanagement/atom_init()
 	. = ..()
@@ -270,17 +284,19 @@
 	popup.open()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W, mob/user)
-	if (src.density && istype(W, /obj/item/weapon/card/emag))
-		src.emagged = 1
-		user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/barcodescanner))
 		var/obj/item/weapon/barcodescanner/scanner = W
 		scanner.computer = src
 		to_chat(user, "[scanner]'s associated machine has been set to [src].")
-		for (var/mob/V in hearers(src))
-			V.show_message("[src] lets out a low, short blip.", 2)
+		audible_message("[src] lets out a low, short blip.")
 	else
 		..()
+
+/obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	emagged = 1
+	return TRUE
 
 /obj/machinery/computer/libraryconsole/bookmanagement/Topic(href, href_list)
 	. = ..()
@@ -316,8 +332,7 @@
 						bibledelay = 0
 
 				else
-					for (var/mob/V in hearers(src))
-						V.show_message("<b>[src]</b>'s monitor flashes, \"Bible printer currently unavailable, please wait a moment.\"")
+					visible_message("<b>[src]</b>'s monitor flashes, \"Bible printer currently unavailable, please wait a moment.\"")
 
 			if("7")
 				screenstate = 7
@@ -383,7 +398,7 @@
 							if(!query.Execute())
 								to_chat(usr, query.ErrorMsg())
 							else
-								log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
+								log_game("[key_name(usr)] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
 								alert("Upload Complete.")
 
 	if(href_list["targetid"])
@@ -395,8 +410,7 @@
 		if(!dbcon_old.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
 		if(bibledelay)
-			for (var/mob/V in hearers(src))
-				V.show_message("<b>[src]</b>'s monitor flashes, \"Printer unavailable. Please allow a short time before attempting to print.\"")
+			visible_message("<b>[src]</b>'s monitor flashes, \"Printer unavailable. Please allow a short time before attempting to print.\"")
 		else
 			bibledelay = 1
 			spawn(60)

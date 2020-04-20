@@ -26,7 +26,7 @@
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly hammer.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 
 /obj/item/weapon/changeling_hammer/dropped(mob/user)
-	visible_message("<span class='warning'>With a sickening crunch, [user] reforms his hammer into an arm!</span>", "<span class='notice'>We assimilate the hammer back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
+	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his hammer into an arm!</span>", "<span class='notice'>We assimilate the hammer back into our body.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 	..()
 
 
@@ -41,7 +41,7 @@
 
 /obj/item/weapon/changeling_hammer/attack(atom/target, mob/living/carbon/human/user, def_zone)
 	if(user.a_intent == "hurt" && use_charge(user, 4))
-		playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+		playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/obj/item/organ/external/BP = H.get_bodypart(def_zone)

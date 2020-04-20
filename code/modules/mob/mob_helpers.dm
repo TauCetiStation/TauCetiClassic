@@ -30,14 +30,14 @@
 	if(isnull(full_prosthetic))
 		robolimb_count = 0
 		for(var/obj/item/organ/external/BP in bodyparts)
-			if(BP.status & ORGAN_ROBOT)
+			if(BP.is_robotic())
 				robolimb_count++
 		full_prosthetic = (robolimb_count == bodyparts.len)
 
 	if(!full_prosthetic && target_zone)
 		var/obj/item/organ/external/BP = get_bodypart(target_zone)
 		if(BP)
-			return BP.status & ORGAN_ROBOT
+			return BP.is_robotic()
 
 	return full_prosthetic
 
@@ -348,7 +348,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 	set name = "a-intent"
 	set hidden = 1
 
-	if(ishuman(src) || isalienadult(src) || isbrain(src))
+	if(ishuman(src) || isxenoadult(src) || isbrain(src))
 		switch(input)
 			if("help","disarm","grab","hurt")
 				a_intent = input
@@ -359,7 +359,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "intent_[a_intent]"
 
-	else if(isrobot(src) || ismonkey(src) || islarva(src)|| isfacehugger(src) || isIAN(src))
+	else if(isrobot(src) || ismonkey(src) || isxenolarva(src)|| isfacehugger(src) || isIAN(src))
 		switch(input)
 			if("help")
 				a_intent = "help"
@@ -384,9 +384,9 @@ var/list/intents = list("help","disarm","grab","hurt")
 	for(var/mob/M in targets)
 		var/turf/targetturf = get_turf(M)
 		if((targetturf.z == sourceturf.z))
-			M.show_message("<span class='info'>[bicon(broadcast_source)] [message]</span>", 1)
+			to_chat(M, "<span class='info'>[bicon(broadcast_source)] [message]</span>")
 	for(var/mob/dead/observer/G in player_list) //Ghosts? Why not.
-		G.show_message("<span class='info'>[bicon(broadcast_source)] [message]</span>", 1)
+		to_chat(G, "<span class='info'>[bicon(broadcast_source)] [message]</span>")
 
 /mob/living/proc/assess_perp(obj/access_obj, check_access, auth_weapons, check_records, check_arrest)
 	if(stat == DEAD)
@@ -454,14 +454,14 @@ var/list/intents = list("help","disarm","grab","hurt")
 	if(threatcount == SAFE_PERP)
 		return SAFE_PERP
 
-	if(!istype(src, /mob/living/simple_animal/hostile/retaliate/goat))
+	if(!istype(src, /mob/living/simple_animal/hostile/retaliate/goat) && !istype(src, /mob/living/simple_animal/hostile/mining_drone))
 		threatcount += 4
 	return threatcount
 
 #undef SAFE_PERP
 
 /proc/IsAdminGhost(mob/user)
-	if(!user) // Are they a mob? Auto interface updates call this with a null src
+	if(!istype(user)) // Are they a mob? Auto interface updates call this with a null src
 		return
 	if(!user.client) // Do they have a client?
 		return

@@ -37,6 +37,8 @@
 
 	animalistic = FALSE
 
+	footstep_type = FOOTSTEP_MOB_SHOE
+
 /mob/living/simple_animal/hostile/syndicate/death()
 	..()
 	if(corpse)
@@ -68,12 +70,12 @@
 			if (O.damtype == HALLOSS)
 				damage = 0
 			health -= damage
-			visible_message("\red \b [src] has been attacked with the [O] by [user]. ")
+			visible_message("<span class='warning'><b>[src] has been attacked with the [O] by [user].</b></span>")
 		else
-			visible_message("\red \b [src] blocks the [O] with its shield! ")
+			visible_message("<span class='warning'><b>[src] blocks the [O] with its shield!</b></span>")
 	else
-		to_chat(usr, "\red This weapon is ineffective, it does no damage.")
-		visible_message("\red [user] gently taps [src] with the [O]. ")
+		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
+		visible_message("<span class='warning'>[user] gently taps [src] with the [O]. </span>")
 
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
@@ -81,7 +83,7 @@
 	if(prob(65))
 		src.health -= Proj.damage
 	else
-		visible_message("\red <B>[src] blocks [Proj] with its shield!</B>")
+		visible_message("<span class='warning'><B>[src] blocks [Proj] with its shield!</B></span>")
 	return 0
 
 
@@ -110,7 +112,7 @@
 	icon_state = "syndicateranged"
 	icon_living = "syndicateranged"
 	casingtype = /obj/item/ammo_casing/a12mm
-	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
+	projectilesound = 'sound/weapons/guns/gunshot_light.ogg'
 	projectiletype = /obj/item/projectile/bullet/midbullet2
 	retreat_distance = 5
 	minimum_distance = 5
@@ -133,15 +135,34 @@
 	corpse = /obj/effect/landmark/mobcorpse/syndicatecommando
 	speed = 0
 
+/mob/living/simple_animal/hostile/syndicate/ranged/space/elite
+	icon_state = "elitesyndicaterangedpsace"
+	icon_living = "elitesyndicaterangedpsace"
+	name = "Elite Syndicate Commando"
+	maxHealth = 220
+	health = 220
+	projectiletype = /obj/item/projectile/bullet/rifle3
+	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 0
+	min_co2 = 0
+	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
+	minbodytemp = 0
+	corpse = /obj/effect/landmark/mobcorpse/syndicatecommando
+	speed = 0
+
+	weapon1 = /obj/item/weapon/gun/projectile/automatic/c20r
+	weapon2 = /obj/item/weapon/shield/energy
+
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(movement_dir = 0)
 	return
-
-
 
 /mob/living/simple_animal/hostile/viscerator
 	name = "viscerator"
 	desc = "A small, twin-bladed machine capable of inflicting very deadly lacerations."
-	icon = 'icons/mob/critter.dmi'
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE
@@ -150,7 +171,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "cuts"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = list('sound/weapons/bladeslice.ogg')
 	faction = "syndicate"
 	min_oxy = 0
 	max_oxy = 0
@@ -164,6 +185,6 @@
 
 /mob/living/simple_animal/hostile/viscerator/death()
 	..()
-	visible_message("\red <b>[src]</b> is smashed into pieces!")
+	visible_message("<span class='warning'><b>[src]</b> is smashed into pieces!</span>")
 	qdel(src)
 	return

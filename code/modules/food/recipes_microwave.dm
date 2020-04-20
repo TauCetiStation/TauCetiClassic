@@ -118,13 +118,14 @@
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/bun,
 		/obj/item/clothing/mask/gas/clown_hat,
+		/obj/item/weapon/bikehorn,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/clownburger
 
 /datum/recipe/microwave/mimeburger
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/bun,
-		/obj/item/clothing/head/beret
+		/obj/item/clothing/head/beret/red
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/mimeburger
 
@@ -611,6 +612,15 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/validsalad
+
+/datum/recipe/microwave/olivyesalad
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sausage,
+		/obj/item/weapon/reagent_containers/food/snacks/boiledegg,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/potato
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/olivyesalad
 
 ////////////////////////////FOOD ADDITTIONS///////////////////////////////
 

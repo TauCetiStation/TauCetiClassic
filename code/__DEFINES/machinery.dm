@@ -2,13 +2,15 @@
 #define TAUCETI_POWER_DRAW_MOD /10 // at the moment, we don't use Bay's machinery power drain rebalance, so for us atmos uses too much power and we need to devide return value
 
 // channel numbers for power
-#define EQUIP			1
-#define LIGHT			2
-#define ENVIRON			3
-#define TOTAL			4	//for total power used only
-#define STATIC_EQUIP	5
-#define STATIC_LIGHT	6
-#define STATIC_ENVIRON	7
+#define TOTAL           1	//for total power used only
+#define STATIC_EQUIP    2
+#define STATIC_LIGHT    3
+#define STATIC_ENVIRON  4
+
+//Power use
+#define NO_POWER_USE 0
+#define IDLE_POWER_USE 1
+#define ACTIVE_POWER_USE 2
 
 //used in design to specify which machine can build it
 #define IMPRINTER	1	//For circuits. Uses glass/chemicals.

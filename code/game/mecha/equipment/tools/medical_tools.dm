@@ -46,7 +46,7 @@
 	if(occupant)
 		occupant_message("The sleeper is already occupied")
 		return
-	if(istype(target, /mob/living/carbon/alien))
+	if(istype(target, /mob/living/carbon/xenomorph))
 		occupant_message("Warning! Unauthorized life form detected!")
 		return
 	for(var/mob/living/carbon/slime/M in range(1,target))
@@ -466,7 +466,7 @@
 	syringes -= S
 	S.icon = 'icons/obj/chemical.dmi'
 	S.icon_state = "syringeproj"
-	playsound(chassis, 'sound/items/syringeproj.ogg', 50, 1)
+	playsound(chassis, 'sound/items/syringeproj.ogg', VOL_EFFECTS_MASTER)
 	log_message("Launched [S] from [src], targeting [target].")
 	spawn(-1)
 		src = null //if src is deleted, still process the syringe
@@ -664,7 +664,7 @@
 		return stop()
 	var/energy_drain = S.energy_drain*10
 	if(!S.processed_reagents.len || S.reagents.total_volume >= S.reagents.maximum_volume || !S.chassis.has_charge(energy_drain))
-		S.occupant_message("<span class=\"alert\">Reagent processing stopped.</a>")
+		S.occupant_message("<span class='alert'>Reagent processing stopped.</span>")
 		S.log_message("Reagent processing stopped.")
 		return stop()
 	if(anyprob(S.reliability))

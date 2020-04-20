@@ -23,13 +23,13 @@
 	opened = !opened
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user)
-	if (src.use_sound)
-		playsound(src.loc, src.use_sound, 50, 1, -5)
+	if (length(use_sound))
+		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
 	return ..()
 
 /obj/item/weapon/storage/backpack/equipped(mob/user, slot)
-	if (slot == SLOT_BACK && src.use_sound)
-		playsound(src.loc, src.use_sound, 50, 1, -5)
+	if (slot == SLOT_BACK && length(use_sound))
+		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
 	..(user, slot)
 
 /*
@@ -46,10 +46,10 @@
 
 /obj/item/weapon/storage/backpack/holding/attackby(obj/item/weapon/W, mob/user)
 	if(crit_fail)
-		to_chat(user, "<spam class='red'>The Bluespace generator isn't working.</span>")
+		to_chat(user, "<span class='red'>The Bluespace generator isn't working.</span>")
 		return
 	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
-		to_chat(user, "<spam class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
+		to_chat(user, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
 		qdel(W)
 		return
 	..()
@@ -58,9 +58,9 @@
 	if (prob(src.reliability))
 		return 1 //No failure
 	if (prob(src.reliability))
-		to_chat(user, "<spam class='red'>The Bluespace portal resists your attempt to add another item.</span>")//light failure
+		to_chat(user, "<span class='red'>The Bluespace portal resists your attempt to add another item.</span>")//light failure
 	else
-		to_chat(user, "<spam class='red'>The Bluespace generator malfunctions!</span>")
+		to_chat(user, "<span class='red'>The Bluespace generator malfunctions!</span>")
 		for (var/obj/O in src.contents) //it broke, delete what was in it
 			qdel(O)
 		crit_fail = 1
@@ -216,6 +216,12 @@
 	desc = "A spacious backpack with lots of pockets, worn by medical members of a Nanotrasen Emergency Response Team."
 	icon_state = "ert_medical"
 
+//Stealth
+/obj/item/weapon/storage/backpack/ert/stealth
+	name = "emergency response team stealth backpack"
+	desc = "A backpack worn by stealth members of a NanoTrasen Emergency Response Team"
+	icon_state = "ert_stealth"
+
 /obj/item/weapon/storage/backpack/kitbag
 	name = "kitbag"
 	icon_state = "kitbag"
@@ -225,8 +231,41 @@
 	icon_state = "medbag"
 
 /obj/item/weapon/storage/backpack/alt
+	name = "sporty backpack"
+	desc = "Smaller and more comfortable version of an old boring backpack."
 	icon_state = "backpack-alt"
 	item_state = "backpack"
+
+/obj/item/weapon/storage/backpack/alt/vir
+	name = "virologist sporty backpack"
+	desc = "A sterile backpack with virologist colours."
+	icon_state = "backpack-vir-alt"
+	item_state = "backpack-vir"
+
+/obj/item/weapon/storage/backpack/alt/chem
+	name = "chemist sporty backpack"
+	desc = "A sterile backpack with chemist colours."
+	icon_state = "backpack-chem-alt"
+	item_state = "backpack-chem"
+
+/obj/item/weapon/storage/backpack/alt/gen
+	name = "geneticist sporty backpack"
+	desc = "A sterile backpack with geneticist colours."
+	icon_state = "backpack-gen-alt"
+	item_state = "backpack-gen"
+
+/obj/item/weapon/storage/backpack/alt/tox
+	name = "scientist sporty backpack"
+	desc = "Useful for holding research materials."
+	icon_state = "backpack-tox-alt"
+	item_state = "backpack-tox"
+
+/obj/item/weapon/storage/backpack/alt/hyd
+	name = "hydroponics sporty backpack"
+	desc = "A green backpack for plant related work."
+	icon_state = "backpack-hyd-alt"
+	item_state = "backpack-hyd"
+
 
 /obj/item/weapon/storage/backpack/backpack_vir
 	name = "virologist backpack"

@@ -30,7 +30,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	slot_flags = SLOT_FLAGS_BELT
 	throw_speed = 2
 	throw_range = 9
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	g_amt = 25
 	m_amt = 75
 	var/const/FREQ_LISTENING = 1
@@ -182,7 +182,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			updateDialog()
 	add_fingerprint(usr)
 
-/obj/item/device/radio/proc/autosay(message, from, channel) //BS12 EDIT
+/obj/item/device/radio/proc/autosay(message, from, channel, freq = 1459) //BS12 EDIT
 	var/datum/radio_frequency/connection = null
 	if(channel && channels && channels.len > 0)
 		if (channel == "department")
@@ -201,7 +201,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	Broadcast_Message(connection, A,
 						0, "*garbled automated announcement*", src,
 						message, from, "Automated Announcement", from, "synthesized voice",
-						4, 0, list(1), 1459)
+						4, 0, SSmapping.levels_by_trait(ZTRAIT_STATION), freq)
 	qdel(A)
 	return
 
@@ -402,7 +402,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		sleep(rand(10,25)) // wait a little...
 
-		if(signal.data["done"] && position.z in signal.data["level"])
+		if(signal.data["done"] && (position.z in signal.data["level"]))
 			// we're done here.
 			return
 
@@ -478,7 +478,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				heard_voice += R
 
 		if (length(heard_masked) || length(heard_normal) || length(heard_voice) || length(heard_garbled))
-			var/part_a = "<span class='radio'><span class='name'>"
+
 			//var/part_b = "</span><b> [bicon(src)]\[[format_frequency(frequency)]\]</b> <span class='message'>"
 			var/freq_text
 			switch(display_freq)
@@ -501,15 +501,18 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			if(!freq_text)
 				freq_text = format_frequency(display_freq)
 
-			var/part_b = "</span><b> [bicon(src)]\[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
-			var/part_c = "</span></span>"
+			var/part_a_span = "radio"
 
 			if (display_freq==SYND_FREQ)
-				part_a = "<span class='syndradio'><span class='name'>"
+				part_a_span = "syndradio"
 			else if (display_freq==COMM_FREQ)
-				part_a = "<span class='comradio'><span class='name'>"
+				part_a_span = "comradio"
 			else if (display_freq in DEPT_FREQS)
-				part_a = "<span class='deptradio'><span class='name'>"
+				part_a_span = "deptradio"
+
+			var/part_a = "<span class='[part_a_span]'><span class='name'>"
+			var/part_b = "</span><b> [bicon(src)]\[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+			var/part_c = "</span></span>"
 
 			var/quotedmsg = M.say_quote(message)
 
@@ -555,27 +558,27 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				var/rendered = "[part_a][N][part_b][quotedmsg][part_c]"
 				for (var/mob/R in heard_masked)
 					if(istype(R, /mob/living/silicon/ai))
-						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[N] ([J]) </a>[part_b][quotedmsg][part_c]", 2)
+						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[N] ([J]) </a>[part_b][quotedmsg][part_c]", SHOWMSG_AUDIO)
 					else
-						R.show_message(rendered, 2)
+						R.show_message(rendered, SHOWMSG_AUDIO)
 
 			if (length(heard_normal))
 				var/rendered = "[part_a][M.real_name][part_b][quotedmsg][part_c]"
 
 				for (var/mob/R in heard_normal)
 					if(istype(R, /mob/living/silicon/ai))
-						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.real_name] ([eqjobname]) </a>[part_b][quotedmsg][part_c]", 2)
+						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.real_name] ([eqjobname]) </a>[part_b][quotedmsg][part_c]", SHOWMSG_AUDIO)
 					else
-						R.show_message(rendered, 2)
+						R.show_message(rendered, SHOWMSG_AUDIO)
 
 			if (length(heard_voice))
 				var/rendered = "[part_a][M.voice_name][part_b][pick(M.speak_emote)][part_c]"
 
 				for (var/mob/R in heard_voice)
 					if(istype(R, /mob/living/silicon/ai))
-						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name] ([eqjobname]) </a>[part_b][pick(M.speak_emote)][part_c]", 2)
+						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name] ([eqjobname]) </a>[part_b][pick(M.speak_emote)][part_c]", SHOWMSG_AUDIO)
 					else
-						R.show_message(rendered, 2)
+						R.show_message(rendered, SHOWMSG_AUDIO)
 
 			if (length(heard_garbled))
 				quotedmsg = M.say_quote(stars(message))
@@ -583,9 +586,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 				for (var/mob/R in heard_voice)
 					if(istype(R, /mob/living/silicon/ai))
-						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name]</a>[part_b][quotedmsg][part_c]", 2)
+						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name]</a>[part_b][quotedmsg][part_c]", SHOWMSG_AUDIO)
 					else
-						R.show_message(rendered, 2)
+						R.show_message(rendered, SHOWMSG_AUDIO)
 
 /obj/item/device/radio/hear_talk(mob/M, msg, verb = "says", datum/language/speaking = null)
 
@@ -661,17 +664,17 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		user.drop_item()
 		var/obj/item/device/radio_grid/new_grid = W
 		new_grid.attach(src)
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(W))
 		if(!grid)
 			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
 			return
 		to_chat(user, "<span class='notice'>You pop out Shielded grid from [src]!</span>")
 		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
 		new_grid.dettach(src)
-	else if (istype(W, /obj/item/weapon/screwdriver))
+	else if (isscrewdriver(W))
 		b_stat = !b_stat
 		add_fingerprint(user)
-		playsound(user, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(!istype(src, /obj/item/device/radio/beacon))
 			to_chat(user, "<span class='notice'>The radio can [b_stat ? "now" : "no longer"] be attached and modified!</span>")
 	else
@@ -702,10 +705,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W, mob/user)
 //	..()
 	user.set_machine(src)
-	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey))))
+	if (!( isscrewdriver(W) || (istype(W, /obj/item/device/encryptionkey))))
 		return
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		if(keyslot)
 
 
@@ -830,7 +833,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio_grid
 	name = "Shielded grid"
 	desc = "A metal grid, attached to circuit to protect it from emitting."
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio_grid"
 
@@ -840,7 +843,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	qdel(src)
 
 /obj/item/device/radio_grid/proc/dettach(obj/item/device/radio/radio)
-	playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
+	playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 	if(prob(30))
 		radio.on = FALSE
 	radio.grid = FALSE

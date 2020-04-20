@@ -26,11 +26,11 @@
 /obj/mecha/working/ripley/update_icon()
 	..()
 	if(hides)
-		overlays = null
+		cut_overlays()
 		if(hides < 3)
-			overlays += image("icon" = "mecha.dmi", "icon_state" = occupant ? "ripley-g" : "ripley-g-open")
+			add_overlay(image("icon" = "mecha.dmi", "icon_state" = occupant ? "ripley-g" : "ripley-g-open"))
 		else
-			overlays += image("icon" = "mecha.dmi", "icon_state" = occupant ? "ripley-g-full" : "ripley-g-full-open")
+			add_overlay(image("icon" = "mecha.dmi", "icon_state" = occupant ? "ripley-g-full" : "ripley-g-full-open"))
 
 /obj/mecha/working/ripley/firefighter
 	desc = "Standart APLU chassis was refitted with additional thermal protection and cistern."
@@ -114,8 +114,8 @@
 	..()
 	if(href_list["drop_from_cargo"])
 		var/obj/O = locate(href_list["drop_from_cargo"])
-		if(O && O in src.cargo)
-			src.occupant_message("\blue You unload [O].")
+		if(O && (O in src.cargo))
+			src.occupant_message("<span class='notice'>You unload [O].</span>")
 			O.loc = get_turf(src)
 			src.cargo -= O
 			var/turf/T = get_turf(O)

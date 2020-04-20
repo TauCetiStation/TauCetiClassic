@@ -28,7 +28,7 @@
 			apcs += apc
 			// Greatly increase the chance for APCs in maintenance areas to be selected
 			var/area/A = get_area(apc)
-			if(istype(A,/area/maintenance))
+			if(istype(A,/area/station/maintenance))
 				apcs += apc
 				apcs += apc
 
@@ -44,4 +44,4 @@
 		return 0
 
 	var/turf/T = get_turf(apc)
-	return !apc.emagged && T && (T.z in config.player_levels)
+	return !apc.emagged && T && (T.z in SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING)))

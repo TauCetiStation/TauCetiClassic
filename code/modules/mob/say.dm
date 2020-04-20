@@ -10,7 +10,7 @@
 	set name = "Say"
 	set category = "IC"
 	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "\red Speech is currently admin-disabled.")
+		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
 	usr.say(message)
@@ -20,15 +20,16 @@
 	set category = "IC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "\red Speech is currently admin-disabled.")
+		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
 	message = sanitize(message)
 
-	if(use_me)
-		usr.emote("me",usr.emote_type,message)
+	if(me_verb_allowed)
+		usr.emote("me", usr.emote_type, message, FALSE)
 	else
-		usr.emote(message)
+		to_chat(usr, "You are unable to emote.")
+		return
 
 /mob/proc/say_dead(message)
 	var/name = src.real_name

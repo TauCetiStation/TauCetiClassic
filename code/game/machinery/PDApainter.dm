@@ -11,14 +11,14 @@
 
 
 /obj/machinery/pdapainter/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
 		return
 
 	if(storedpda)
-		overlays += "[initial(icon_state)]-closed"
+		add_overlay("[initial(icon_state)]-closed")
 
 	if(powered())
 		icon_state = initial(icon_state)
@@ -61,8 +61,8 @@
 				P.add_fingerprint(usr)
 				update_icon()
 	else
-		if(istype(O, /obj/item/weapon/wrench))
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(iswrench(O))
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 

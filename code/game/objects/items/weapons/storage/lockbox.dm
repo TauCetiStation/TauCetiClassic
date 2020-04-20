@@ -33,22 +33,18 @@
 				return
 		else
 			to_chat(user, "<span class='warning'>Access Denied</span>")
-	else if((istype(W, /obj/item/weapon/card/emag) || istype(W, /obj/item/weapon/melee/energy/blade)) && !broken)
+	else if(istype(W, /obj/item/weapon/melee/energy/blade) && !broken)
 		broken = TRUE
 		locked = FALSE
 		desc = "It appears to be broken."
 		icon_state = icon_broken
-		if(istype(W, /obj/item/weapon/melee/energy/blade))
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, loc)
-			spark_system.start()
-			playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(loc, "sparks", 50, 1)
-			for(var/mob/O in viewers(user, 3))
-				O.show_message(text("<span class='warning'>The locker has been sliced open by [] with an energy blade!</span>", user), 1, text("<span class='warning'>You hear metal being sliced and sparks flying.</span>"), 2)
-		else
-			for(var/mob/O in viewers(user, 3))
-				O.show_message(text("<span class='warning'>The locker has been broken by [] with an electromagnetic card!</span>", user), 1, text("<span class='warning'>You hear a faint electrical spark.</span>"), 2)
+		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		spark_system.set_up(5, 0, loc)
+		spark_system.start()
+		playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+
+		user.visible_message("<span class='warning'>The locker has been sliced open by [user] with an energy blade!</span>", blind_message = "<span class='warning'>You hear metal being sliced and sparks flying.</span>", viewing_distance = 3)
 
 	if(!locked)
 		..()
@@ -56,6 +52,15 @@
 		to_chat(user, "<span class='warning'>Its locked!</span>")
 	return
 
+/obj/item/weapon/storage/lockbox/emag_act(mob/user)
+	if(broken)
+		return FALSE
+	broken = TRUE
+	locked = FALSE
+	desc = "It appears to be broken."
+	icon_state = icon_broken
+	user.visible_message("<span class='warning'>The locker has been broken by [] with an electromagnetic card!</span>", blind_message = "<span class='warning'>You hear a faint electrical spark.</span>", viewing_distance = 3)
+	return TRUE
 
 /obj/item/weapon/storage/lockbox/open(mob/user)
 	if(locked)

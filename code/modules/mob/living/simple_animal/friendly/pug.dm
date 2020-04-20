@@ -1,6 +1,6 @@
 //Corgi
 /mob/living/simple_animal/pug
-	name = "\improper pug"
+	name = "pug"
 	real_name = "pug"
 	desc = "It's a pug."
 	icon_state = "pug"
@@ -33,7 +33,7 @@
 	if(istype(O, /obj/item/weapon/newspaper))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!stat)
-			user.visible_message("\blue [user] baps [name] on the nose with the rolled up [O]")
+			user.visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
 					dir = i
