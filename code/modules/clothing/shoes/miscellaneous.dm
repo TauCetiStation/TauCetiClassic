@@ -112,6 +112,12 @@
 //	var/footstep = 1	//used for squeeks whilst walking
 	species_restricted = null
 
+/obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
+	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED))
+
+/obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
+	qdel(user.GetComponent(/datum/component/waddle))
+
 /obj/item/clothing/shoes/clown_shoes/play_unique_footstep_sound()
 	..()
 	playsound(src, pick(SOUNDIN_CLOWNSTEP), VOL_EFFECTS_MASTER)
