@@ -136,17 +136,18 @@
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
-	max_ammo = 12
+	max_ammo = 17
 
 /obj/item/ammo_box/magazine/m9mm_2/rubber
 	name = "magazine (9mm rubber)"
-	icon_state = "9mmr_mag"
 	ammo_type = /obj/item/ammo_casing/c9mmr
-	caliber = "9mmr"
 
 /obj/item/ammo_box/magazine/m9mm_2/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
+	if(ammo_count() == 1)
+		icon_state = "[initial(icon_state)]-1"
+	else
+		icon_state = "[initial(icon_state)]-[round(ammo_count(),max_ammo*0.5)]"
 
 /obj/item/ammo_box/magazine/msmg9mm
 	name = "SMG magazine (9mm)"
@@ -172,56 +173,6 @@
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),2)]"
 
-/obj/item/ammo_box/magazine/m12mm/hp
-	name = "magazine (.45 HP)"
-	desc = "Magazine, full of high power submachinegun ammo."
-	icon_state = "12mmhp"
-	origin_tech = "combat=3"
-	ammo_type = /obj/item/ammo_casing/c45hp
-	caliber = ".45S"
-	max_ammo = 15
-
-/obj/item/ammo_box/magazine/m12mm/hp/update_icon()
-	..()
-	if(ammo_count() == 1)
-		icon_state = "[initial(icon_state)]-1"
-	else
-		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
-
-/obj/item/ammo_box/magazine/m12mm/hv
-	name = "magazine (.45 HV)"
-	desc = "Magazine, full of high velocity submachinegun ammo."
-	icon_state = "12mmhv"
-	origin_tech = "combat=3"
-	ammo_type = /obj/item/ammo_casing/c45hv
-	caliber = ".45S"
-	max_ammo = 15
-
-/obj/item/ammo_box/magazine/m12mm/hv/update_icon()
-	..()
-	if(ammo_count() == 1)
-		icon_state = "[initial(icon_state)]-1"
-	else
-		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
-
-
-/obj/item/ammo_box/magazine/m12mm/imp
-	name = "magazine (.45 IMP)"
-	desc = "Magazine, full of impact submachinegun ammo."
-	icon_state = "12mmimp"
-	origin_tech = "combat=3"
-	ammo_type = /obj/item/ammo_casing/c45imp
-	caliber = ".45S"
-	max_ammo = 15
-
-/obj/item/ammo_box/magazine/m12mm/imp/update_icon()
-	..()
-	if(ammo_count() == 1)
-		icon_state = "[initial(icon_state)]-1"
-	else
-		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
-
-
 /obj/item/ammo_box/magazine/sm45
 	name = "magazine (.45)"
 	icon_state = "9x19p"
@@ -242,30 +193,30 @@
 
 /obj/item/ammo_box/magazine/c45m/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[ammo_count()]"
+	icon_state = "[initial(icon_state)]-[ammo_count() ? "7" : "0"]"
 
 /obj/item/ammo_box/magazine/c45r
 	name = "magazine (.45 rubber)"
-	icon_state = "45r"
+	icon_state = "45"
 	ammo_type = /obj/item/ammo_casing/c45r
-	caliber = ".45r"
+	caliber = ".45"
 	max_ammo = 7
 
 /obj/item/ammo_box/magazine/c45r/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[ammo_count()]"
+	icon_state = "[initial(icon_state)]-[ammo_count() ? "7" : "0"]"
 
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "Mac-10 magazine (9mm)"
 	icon = 'icons/obj/ammo.dmi'
-	icon_state = "uzi9mm"
+	icon_state = "uzi9mm-32"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
 	max_ammo = 32
 
 /obj/item/ammo_box/magazine/uzim9mm/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
+	icon_state = "uzi9mm-[round(ammo_count(),4)]"
 
 /obj/item/ammo_box/magazine/uzim45
 	name = "Uzi magazine (.45)"
