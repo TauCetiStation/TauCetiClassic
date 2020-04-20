@@ -34,10 +34,8 @@
 	..()
 	if(stat == DEAD)
 		new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(loc)
-		for(var/mob/M in viewers(src, null))
-			if((M.client && !( M.blinded )))
-				M.show_message("<span class='warning'>[src] lets out a contented sigh as their form unwinds. </span>")
-				ghostize(bancheck = TRUE)
+		visible_message("<span class='warning'>[src] lets out a contented sigh as their form unwinds.</span>")
+		ghostize(bancheck = TRUE)
 		qdel(src)
 		return
 
@@ -51,12 +49,27 @@
 			if (O.damtype == HALLOSS)
 				damage = 0
 			health -= damage
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='warning'><b>[src] has been attacked with the [O] by [user].</b></span>")
+			visible_message("<span class='warning'><b>[src] has been attacked with the [O] by [user].</b></span>")
 		else
 			to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='warning'>[user] gently taps [src] with the [O]. </span>")
+			visible_message("<span class='warning'>[user] gently taps [src] with the [O].</span>")
 	return
+
+/mob/living/simple_animal/shade/god
+	name = "Unbelievable God"
+	real_name = "Unbelievable God"
+	desc = "Strange looking hologram."
+	icon_state = "shade_god"
+	icon_living = "shade_god"
+	stat = CONSCIOUS
+	speak_emote = list("hisses", "bless")
+	maxHealth = 5000
+	health = 5000
+	melee_damage_lower = 0
+	melee_damage_upper = 0
+	faction = "Station"
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	universal_understand = TRUE
+	pass_flags = PASSTABLE | PASSMOB | PASSGLASS | PASSGRILLE
+	var/islam = FALSE

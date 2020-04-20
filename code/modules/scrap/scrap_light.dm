@@ -12,8 +12,17 @@
 /obj/item/device/flashlight/flare/torch/attackby(obj/item/W, mob/user, params) // ravioli ravioli here comes stupid copypastoli
 	..()
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(is_hot(W))
+	if(W.get_current_temperature())
 		light(user)
+
+/obj/item/device/flashlight/flare/torch/get_current_temperature()
+	if(on)
+		return 1500
+	else
+		return 0
+
+/obj/item/device/flashlight/flare/torch/extinguish()
+	turn_off()
 
 /obj/item/device/flashlight/flare/torch/proc/light(mob/user)
 	// Usual checks
@@ -22,6 +31,7 @@
 		return
 	if(on)
 		return
+	playsound(user, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='notice'>[user] lits the [src] on.</span>", "<span class='notice'>You had lt on the [src]!</span>")
 	src.force = on_damage
 	src.damtype = "fire"
@@ -106,10 +116,10 @@
 			//	R.use(1)
 			//	grill = TRUE
 			//	to_chat(user, "<i>You add a grill to \the [src].</i>")
-			//	overlays += image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_grill")
+			//	add_overlay(image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_grill"))
 			//else
 			//	return ..()
-	if(is_hot(W))
+	if(W.get_current_temperature())
 		StartBurning()
 /*	if(grill)
 		if(user.a_intent != "hurt" && !(W.flags_1 & ABSTRACT_1))
@@ -159,6 +169,11 @@
 	if(burning & !grill)
 		Burn()
 
+/obj/structure/bonfire/get_current_temperature()
+	if(burning)
+		return 1000
+	return 0
+
 /obj/structure/bonfire/proc/Burn()
 	var/turf/current_location = get_turf(src)
 	current_location.hotspot_expose(1000, 500)
@@ -171,7 +186,7 @@
 		else if(isliving(A))
 			var/mob/living/L = A
 			if(prob(20))
-				L.emote("scream",,, 1)
+				L.emote("scream")
 			L.adjust_fire_stacks(fire_stack_strength)
 			L.IgniteMob()
 

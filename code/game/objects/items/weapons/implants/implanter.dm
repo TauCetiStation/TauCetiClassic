@@ -60,11 +60,19 @@
 	. = ..()
 	update()
 
-/obj/item/weapon/implanter/adrenalin
-	name = "implanter-adrenalin"
+/obj/item/weapon/implanter/adrenaline
+	name = "implanter (A)"
 
-/obj/item/weapon/implanter/adrenalin/atom_init()
-	imp = new /obj/item/weapon/implant/adrenalin(src)
+/obj/item/weapon/implanter/adrenaline/atom_init()
+	imp = new /obj/item/weapon/implant/adrenaline(src)
+	. = ..()
+	update()
+
+/obj/item/weapon/implanter/emp
+	name = "implanter (M)"
+
+/obj/item/weapon/implanter/emp/atom_init()
+	imp = new /obj/item/weapon/implant/emp(src)
 	. = ..()
 	update()
 
@@ -96,20 +104,20 @@
 		return
 	..()
 
-/obj/item/weapon/implanter/compressed/afterattack(atom/A, mob/user)
-	if(istype(A,/obj/item) && imp)
+/obj/item/weapon/implanter/compressed/afterattack(atom/target, mob/user, proximity, params)
+	if(istype(target,/obj/item) && imp)
 		var/obj/item/weapon/implant/compressed/c = imp
 		if (c.scanned)
 			to_chat(user, "<span class='warning'>Something is already scanned inside the implant!</span>")
 			return
-		c.scanned = A
-		if(istype(A.loc,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = A.loc
-			H.remove_from_mob(A)
-		else if(istype(A.loc,/obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = A.loc
-			S.remove_from_storage(A)
-		A.loc.contents.Remove(A)
+		c.scanned = target
+		if(istype(target.loc,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = target.loc
+			H.remove_from_mob(target)
+		else if(istype(target.loc,/obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = target.loc
+			S.remove_from_storage(target)
+		target.loc.contents.Remove(target)
 		update()
 
 /obj/item/weapon/implanter/storage

@@ -337,6 +337,14 @@
 	required_reagents = list("carbon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
 	result_amount = 2
 
+/datum/chemical_reaction/dextromethorphan
+	name = "Dextromethorphan"
+	id = "dextromethorphan"
+	result = "dextromethorphan"
+	required_reagents = list("dexalinp" = 1, "oxycodone" = 1)
+	required_catalysts = list("phoron" = 5)
+	result_amount = 2
+
 /datum/chemical_reaction/ethylredoxrazine
 	name = "Ethylredoxrazine"
 	id = "ethylredoxrazine"
@@ -926,7 +934,7 @@
 		/mob/living/simple_animal/hostile/syndicate/melee/space,
 		/mob/living/simple_animal/hostile/syndicate/ranged,
 		/mob/living/simple_animal/hostile/syndicate/ranged/space,
-		/mob/living/simple_animal/hostile/alien/queen/large,
+		/mob/living/simple_animal/hostile/xenomorph/queen/large,
 		/mob/living/simple_animal/clown
 		)//exclusion list for things you don't want the reaction to create.
 	var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
@@ -1040,8 +1048,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slimespawn/on_reaction(datum/reagents/holder)
-	for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
-		O.show_message(text("<span class='warning'>Infused with phoron, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>"), 1)
+	holder.my_atom.visible_message("<span class='warning'>Infused with phoron, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>")
 	var/mob/living/carbon/slime/S = new /mob/living/carbon/slime
 	S.loc = get_turf_loc(holder.my_atom)
 
@@ -1105,7 +1112,7 @@
 		/mob/living/simple_animal/hostile/syndicate/melee/space,
 		/mob/living/simple_animal/hostile/syndicate/ranged,
 		/mob/living/simple_animal/hostile/syndicate/ranged/space,
-		/mob/living/simple_animal/hostile/alien/queen/large,
+		/mob/living/simple_animal/hostile/xenomorph/queen/large,
 		/mob/living/simple_animal/hostile/faithless,
 		/mob/living/simple_animal/hostile/panther,
 		/mob/living/simple_animal/hostile/snake,
@@ -1128,8 +1135,7 @@
 		if(prob(50))
 			for(var/j = 1, j <= rand(1, 3), j++)
 				step(C, pick(NORTH,SOUTH,EAST,WEST))*/
-	for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
-		O.show_message(text("<span class='warning'>The slime core fizzles disappointingly,</span>"), 1)
+	holder.my_atom.visible_message("<span class='warning'>The slime core fizzles disappointingly,</span>")
 
 //Silver
 /datum/chemical_reaction/slimebork
@@ -1209,8 +1215,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slimefreeze/on_reaction(datum/reagents/holder)
-	for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
-		O.show_message(text("<span class='warning'>The slime extract begins to vibrate violently !</span>"), 1)
+	holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
 	sleep(50)
 	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 	for(var/mob/living/M in range(get_turf_loc(holder.my_atom), 7))
@@ -1237,8 +1242,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slimefire/on_reaction(datum/reagents/holder)
-	for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
-		O.show_message(text("<span class='warning'>The slime extract begins to vibrate violently !</span>"), 1)
+	holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
 	sleep(50)
 	if(!(holder.my_atom && holder.my_atom.loc))
 		return
@@ -1249,7 +1253,7 @@
 		spawn (0)
 			target_tile.hotspot_expose(700, 400)
 	message_admins("Orange slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
-	log_game("Orange slime extract activated by [usr.ckey]([usr])")
+	log_game("Orange slime extract activated by [key_name(usr)]")
 
 //Yellow
 /datum/chemical_reaction/slimeoverload
@@ -1264,7 +1268,7 @@
 /datum/chemical_reaction/slimeoverload/on_reaction(datum/reagents/holder, created_volume)
 	empulse(get_turf_loc(holder.my_atom), 3, 7)
 	message_admins("Yellow slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
-	log_game("Yellow slime extract activated by [usr.ckey]([usr])")
+	log_game("Yellow slime extract activated by [key_name(usr)]")
 
 /datum/chemical_reaction/slimecell
 	name = "Slime Powercell"
@@ -1289,8 +1293,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slimeglow/on_reaction(datum/reagents/holder)
-	for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
-		O.show_message(text("<span class='warning'>The contents of the slime core harden and begin to emit a warm, bright light.</span>"), 1)
+	holder.my_atom.visible_message("<span class='warning'>The contents of the slime core harden and begin to emit a warm, bright light.</span>")
 	var/obj/item/device/flashlight/slime/F = new /obj/item/device/flashlight/slime
 	F.loc = get_turf(holder.my_atom)
 
@@ -1358,8 +1361,7 @@
 	for(var/mob/living/carbon/slime/slime in viewers(get_turf_loc(holder.my_atom), null))
 		slime.tame = 0
 		slime.rabid = 1
-		for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
-			O.show_message(text("<span class='warning'>The [slime] is driven into a frenzy!.</span>"), 1)
+		holder.my_atom.visible_message("<span class='warning'>The [slime] is driven into a frenzy!.</span>")
 
 //Pink
 /datum/chemical_reaction/slimeppotion
@@ -1397,12 +1399,11 @@
 	required_other = 1
 
 /datum/chemical_reaction/slimeexplosion/on_reaction(datum/reagents/holder)
-	for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
-		O.show_message(text("<span class='warning'>The slime extract begins to vibrate violently !</span>"), 1)
+	holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
 	sleep(50)
 	explosion(get_turf_loc(holder.my_atom), 1 ,3, 6)
 	message_admins("Oil slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
-	log_game("Oil slime extract activated by [usr.ckey]([usr])")
+	log_game("Oil slime extract activated by [key_name(usr)]")
 
 //Light Pink
 /datum/chemical_reaction/slimepotion2
@@ -1443,8 +1444,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slimecrystal/on_reaction(datum/reagents/holder)
-	for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-		O.show_message(text("<span class='warning'>The bluespace crystal appears out of thin air!</span>"), 1)
+	holder.my_atom.visible_message("<span class='warning'>The bluespace crystal appears out of thin air!</span>")
 	var/obj/item/bluespace_crystal/I = new /obj/item/bluespace_crystal
 	I.loc = get_turf(holder.my_atom)
 
@@ -1506,6 +1506,14 @@
 	if(B)
 		B.loc = get_turf(holder.my_atom)
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
+
+/datum/chemical_reaction/tea
+	name = "Tea"
+	id = "tea"
+	result = "tea"
+	required_reagents = list("water" = 1)
+	result_amount = 1
+	required_container = /obj/item/weapon/reagent_containers/glass/beaker/fluff/eleanor_stone
 
 /datum/chemical_reaction/tofu
 	name = "Tofu"
@@ -1600,6 +1608,12 @@
 	required_reagents = list("capsaicin" = 1, "hot_ramen" = 6)
 	result_amount = 6
 
+/datum/chemical_reaction/hot_hell_ramen
+	name = "Hot Spicy Ramen"
+	id = "hot_hell_ramen"
+	result = "hot_hell_ramen"
+	required_reagents = list("water" = 1, "hell_ramen" = 3)
+	result_amount = 3
 
 ////////////////////////////////////////// COCKTAILS //////////////////////////////////////
 
@@ -2316,6 +2330,13 @@
 	if(istype(T))
 		new /obj/item/stack/sheet/mineral/deuterium(T, created_volume)
 
+/datum/chemical_reaction/aqueous_foam
+	name = "Aqueous Film Forming Foam"
+	id = "aqueous_foam"
+	result = "aqueous_foam"
+	required_reagents = list("fluorosurfactant" = 1, "silicon" = 1)
+	result_amount = 10
+
 /datum/chemical_reaction/hair_dye
 	name = "Hair Dye"
 	id = "whitehairdye"
@@ -2488,25 +2509,3 @@ TODO: Convert everything to custom hair dye,
 	if(new_color_weight >= 10)
 		chd.color_weight = new_color_weight
 		holder.remove_reagent("water", modifier)
-
-/datum/chemical_reaction/metatrombine
-	name = "Metatrombine"
-	id = "metatrombine"
-	result = "metatrombine"
-	required_reagents = list("chlorine" = 1, "nitrogen" = 1, "potassium" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/stabyzol
-	name = "Stabyzol"
-	id = "stabyzol"
-	result = "stabyzol"
-	required_reagents = list("mutagen" = 1, "ethanol" = 1, "sugar" = 1)
-	result_amount = 2
-
-// This reagent completely stops mob's metabolism. It should be very rare, and by no chance acquired by accident.
-/datum/chemical_reaction/aclometasone
-	name = "Aclometasone"
-	id = "aclometasone"
-	result = "aclometasone"
-	required_reagents = list("mindbreaker" = 3, "hyperzine" = 1, "coffee" = 1, "phoron" = 1)
-	result_amount = 1

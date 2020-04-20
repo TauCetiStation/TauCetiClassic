@@ -240,9 +240,9 @@
 	name = general_state_text + glass_state_text + mineral_state_text + initial(name)
 
 /obj/structure/door_assembly/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(!glass_material)
-		overlays += get_airlock_overlay("fill_construction", icon)
+		add_overlay(get_airlock_overlay("fill_construction", icon))
 	else
-		overlays += get_airlock_overlay("[glass_material]_construction", overlays_file)
-	overlays += get_airlock_overlay("panel_c[state + 1]", overlays_file)
+		add_overlay(get_airlock_overlay("[glass_material]_construction", overlays_file))
+	add_overlay(get_airlock_overlay("panel_c[state + 1]", overlays_file))

@@ -1,15 +1,16 @@
 /mob/living/carbon/human/gib()
 	death(1)
 	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
+	notransform = TRUE
 	canmove = 0
 	icon = null
 	invisibility = 101
 
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
+	if(!species.flags[NO_BLOOD_TRAILS])
+		animation = new(loc)
+		animation.icon_state = "blank"
+		animation.icon = 'icons/mob/mob.dmi'
+		animation.master = src
 
 	for(var/obj/item/organ/external/BP in bodyparts)
 		// Only make the limb drop if it's not too damaged
@@ -17,36 +18,19 @@
 			// Override the current limb status and don't cause an explosion
 			BP.droplimb(TRUE, null, DROPLIMB_EDGE)
 
-	flick("gibbed-h", animation)
-	if(species)
+	if(!species.flags[NO_BLOOD_TRAILS])
+		flick("gibbed-h", animation)
 		hgibs(loc, viruses, dna, species.flesh_color, species.blood_datum)
-	else
-		hgibs(loc, viruses, dna)
 
 	spawn(15)
 		if(animation)	qdel(animation)
 		if(src)			qdel(src)
 
 /mob/living/carbon/human/dust()
-	death(1)
-	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
-	canmove = 0
-	icon = null
-	invisibility = 101
-
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
-	flick("dust-h", animation)
-	new /obj/effect/decal/remains/human(loc)
-
-	spawn(15)
-		if(animation)	qdel(animation)
-		if(src)			qdel(src)
-
+	dust_process()
+	new /obj/effect/decal/cleanable/ash(loc)
+	new /obj/effect/decal/remains/human/burned(loc)
+	dead_mob_list -= src
 
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)	return
@@ -99,7 +83,7 @@
 
 // Called right after we will lost our head
 /mob/living/carbon/human/proc/handle_decapitation(obj/item/organ/external/head/BP)
-	if(!BP || BP in bodyparts)
+	if(!BP || (BP in bodyparts))
 		return
 
 	//Handle brain slugs.
@@ -129,11 +113,12 @@
 
 		BP.name = "[real_name]'s head"
 
-		death()
-		BP.brainmob.death()
+		if(BP.vital)
+			death()
+			BP.brainmob.death()
 
-		tod = null // These lines prevent reanimation if head was cut and then sewn back, you can only clone these bodies
-		timeofdeath = 0
+			tod = null // These lines prevent reanimation if head was cut and then sewn back, you can only clone these bodies
+			timeofdeath = 0
 
 		if(BP.brainmob && BP.brainmob.mind && BP.brainmob.mind.changeling) //cuz fuck runtimes
 			var/datum/changeling/Host = BP.brainmob.mind.changeling

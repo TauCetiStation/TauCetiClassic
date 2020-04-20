@@ -9,7 +9,7 @@
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "telriis"
 	plantname = "Telriis grass"
-	productname = "/obj/item/weapon/telriis_clump"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/telriis_clump"
 	lifespan = 50    //number of ticks
 	endurance = 50
 	maturation = 5   //ticks to full growth stage
@@ -246,7 +246,7 @@
 	reagents.add_reagent("nutriment", 5)
 	bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/blackberry/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/grown/blackberry/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	var/obj/effect/decal/cleanable/new_smudge
 	new_smudge = new /obj/effect/decal/cleanable/egg_smudge(loc)

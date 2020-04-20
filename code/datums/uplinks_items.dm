@@ -53,8 +53,6 @@
 		return new item(loc)
 
 /datum/uplink_item/proc/buy(obj/item/device/uplink/U, mob/user)
-
-	..()
 	if(!istype(U))
 		return 0
 
@@ -245,6 +243,12 @@
 	if(istype(T))
 		T.TC_cost = cost
 
+/datum/uplink_item/dangerous/light_armor
+	name = "Armor Set"
+	desc = "A set of personal armor that includes armored vest and a helmet, designed to ensure survival of gone wild agent."
+	item = /obj/item/weapon/storage/box/syndie_kit/light_armor
+	cost = 10
+	uplink_types = list("traitor")
 
 // AMMUNITION
 
@@ -265,8 +269,8 @@
 	cost = 2
 
 /datum/uplink_item/ammo/revolver
-	name = "Ammo-357"
-	desc = "A box that contains seven additional rounds for the revolver, made using an automatic lathe."
+	name = "Speedloader-.357"
+	desc = "A speedloader that contains seven additional rounds for the revolver, made using an automatic lathe."
 	item = /obj/item/ammo_box/a357
 	cost = 3
 
@@ -631,6 +635,14 @@
 	item = /obj/item/device/powersink
 	cost = 12
 
+/datum/uplink_item/device_tools/syndcodebook
+	name = "Sy-Code Book"
+	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which sounds like random letters and drinks to anyone listening. \
+	This manual teaches you Sy-Code. Limited uses. Use :0 before saying something to speak in Sy-Code."
+	item = /obj/item/weapon/syndcodebook
+	cost = 1
+	uplink_types = list("traitor")
+
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"
 	desc = "When screwed to wiring attached to an electric grid, then activated, this large device pulls the singularity towards it. \
@@ -694,12 +706,17 @@
 	item = /obj/item/weapon/implanter/storage
 	cost = 7
 
-/*
-/datum/uplink_item/implants/adrenal
-	name = "Adrenal Implant"
-	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a chemical cocktail, which has a mild healing effect along with removing all stuns and increasing his speed."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
-	cost = 4 */
+/datum/uplink_item/implants/adrenaline
+	name = "Adrenaline Implant"
+	desc = "An implant, that will inject a chemical cocktail, which has a mild healing effect along with removing all stuns and increasing his speed can be activated at the user's will."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenaline
+	cost = 6
+
+/datum/uplink_item/implants/emp
+	name = "EMP Implant"
+	desc = "An implant, that contains power of three emp grenades, can be activated at the user's will."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
+	cost = 3
 
 // POINTLESS BADASSERY
 

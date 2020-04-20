@@ -25,7 +25,7 @@
 	var/time_since_fail = 100
 	var/energy_conversion_rate = 0.01	//how many renwicks per watt?
 	//
-	use_power = 1			//0 use nothing
+	use_power = IDLE_POWER_USE			//0 use nothing
 							//1 use idle power
 							//2 use active power
 	idle_power_usage = 20
@@ -50,7 +50,7 @@
 /obj/machinery/shield_gen/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = W
-		if(access_captain in C.access || access_security in C.access || access_engine in C.access)
+		if((access_captain in C.access) || (access_security in C.access) || (access_engine in C.access))
 			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			updateDialog()
@@ -213,8 +213,10 @@
 			spawn(rand(0, 15))
 				src.icon_state = "generator0"
 				stat |= NOPOWER
+				update_power_use()
 			if (src.active)
 				toggle()
+	update_power_use()
 
 /obj/machinery/shield_gen/ex_act(var/severity)
 

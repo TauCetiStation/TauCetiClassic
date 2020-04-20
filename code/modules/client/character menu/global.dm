@@ -36,7 +36,7 @@
 	. += 				"</tr>"
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Ghost sight:</td>"
-	. += 					"<td><a href='?_src_=prefs;preference=ghost_sight'><b>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</b></a></td>"
+	. += 					"<td><a href='?_src_=prefs;preference=ghost_sight'><b>[(chat_ghostsight == CHAT_GHOSTSIGHT_ALL) ? "All Emotes" : ((chat_ghostsight == CHAT_GHOSTSIGHT_ALLMANUAL) ? "All manual-only emotes" : "Nearest Creatures")]</b></a></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Ghost radio:</td>"
@@ -116,17 +116,9 @@
 			UI_style_alpha = UI_style_alpha_new
 
 		if("ui")
-			switch(UI_style)
-				if("White")
-					UI_style = "Midnight"
-				if("Midnight")
-					UI_style = "Orange"
-				if("Orange")
-					UI_style = "old"
-				if("old")
-					UI_style = "White"
-				else
-					UI_style = "White"
+			var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style) as null|anything in sortList(global.available_ui_styles)
+			if(pickedui)
+				UI_style = pickedui
 
 		if("parallaxup")
 			parallax = WRAP(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
@@ -151,14 +143,20 @@
 				if(PARALLAX_THEME_TG)
 					parallax_theme = PARALLAX_THEME_CLASSIC
 
+		if("ghost_sight")
+			switch(chat_ghostsight)
+				if(CHAT_GHOSTSIGHT_ALL)
+					chat_ghostsight = CHAT_GHOSTSIGHT_ALLMANUAL
+				if(CHAT_GHOSTSIGHT_ALLMANUAL)
+					chat_ghostsight = CHAT_GHOSTSIGHT_NEARBYMOBS
+				if(CHAT_GHOSTSIGHT_NEARBYMOBS)
+					chat_ghostsight = CHAT_GHOSTSIGHT_ALL
+
 		if("ghost_ears")
 			chat_toggles ^= CHAT_GHOSTEARS
 
 		if("npc_ghost_ears")
 			chat_toggles ^= CHAT_GHOSTNPC
-
-		if("ghost_sight")
-			chat_toggles ^= CHAT_GHOSTSIGHT
 
 		if("ghost_radio")
 			chat_toggles ^= CHAT_GHOSTRADIO

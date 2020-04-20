@@ -12,6 +12,9 @@
 	var/can_use = TRUE
 	var/toggled = FALSE
 	var/obj/effect/dummy/chameleon/active_dummy = null
+	var/recharge = FALSE
+	var/last_used = 0
+	var/cooldown = 20
 
 /obj/item/device/chameleon/atom_init()
 	..()
@@ -48,10 +51,17 @@
 /obj/item/device/chameleon/equipped()
 	disrupt()
 
-/obj/item/device/chameleon/attack_self()
-	toggle()
+/obj/item/device/chameleon/attack_self(mob/living/user)
+	if(last_used + cooldown < world.time)
+		recharge = FALSE
+		last_used = world.time
 
-/obj/item/device/chameleon/afterattack(atom/target, mob/user, proximity)
+	if(recharge)
+		to_chat(user, "<span class='warning'>[src.name] is still recharging. </span>")
+	else
+		toggle()
+
+/obj/item/device/chameleon/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 	if(!active_dummy)
@@ -109,6 +119,7 @@
 			M.reset_view(null)
 	C.loc = master
 	toggled = FALSE
+	recharge = TRUE
 
 /obj/item/device/chameleon/proc/disrupt()
 	if(toggled)

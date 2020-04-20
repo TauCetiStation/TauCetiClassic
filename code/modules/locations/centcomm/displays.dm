@@ -39,7 +39,7 @@
 /obj/machinery/information_display
 	anchored = 1
 	density = 0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 25
 	var/mode = 1//1 - on
 				//2 - off
@@ -79,12 +79,12 @@
 		if(1)//on
 			if(stat & (NOPOWER|BROKEN))
 				return
-			use_power = 1
+			set_power_use(IDLE_POWER_USE)
 			icon_state = icon_state_on
 			mode = new_mode
 
 		if(2)//off
-			use_power = 0
+			set_power_use(NO_POWER_USE)
 			icon_state = "monitor_off"
 			mode = new_mode
 

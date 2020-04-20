@@ -1,5 +1,4 @@
 /mob/living/proc/handle_environment(datum/gas_mixture/environment)
-	. = ..(environment)
 	if(loc && loc.check_fluid_depth(30))
 		var/total_depth = loc.get_fluid_depth()
 		water_act(total_depth)
@@ -7,9 +6,9 @@
 			I.water_act(total_depth)
 
 /obj/effect/fluid/Crossed(mob/living/carbon/C)
-	if(fluid_amount > FLUID_SHALLOW)
-		return
 	if(!istype(C))
+		return
+	if(fluid_amount > FLUID_SHALLOW)
 		return
 
 	if(prob(2))
@@ -35,8 +34,6 @@
 			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 			C.Stun(5)
 			C.Weaken(2)
-	else
-		playsound(src, 'sound/effects/waterstep.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 
 	if(prob(5))
 		if(ishuman(C))

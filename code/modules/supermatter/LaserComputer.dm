@@ -123,4 +123,6 @@
 			spawn(rand(0, 15))
 				src.icon_state = "c_unpowered"
 				stat |= NOPOWER
+				update_power_use()
+	update_power_use()
 */

@@ -74,7 +74,9 @@
 /obj/item/clothing/head/chameleon/atom_init()
 	. = ..()
 	var/blocked = list(/obj/item/clothing/head/chameleon,
-		/obj/item/clothing/head/helmet/space/golem, /obj/item/clothing/head/justice,)//Prevent infinite loops and bad hats.
+		/obj/item/clothing/head/helmet/space/golem, 
+		/obj/item/clothing/head/justice, 
+		/obj/item/clothing/head/collectable/tophat/badmin_magic_hat, )//Prevent infinite loops and bad hats.
 	for(var/U in typesof(/obj/item/clothing/head)-blocked)
 		var/obj/item/clothing/head/V = new U
 		clothing_choices[V.name] = U

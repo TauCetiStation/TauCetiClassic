@@ -42,7 +42,7 @@
 	id = rand(1,1000)
 	key = new(src)
 	key.id = id
-	overlays += image('icons/obj/vehicles.dmi', "[icon_state]_off_overlay", MOB_LAYER + 1)
+	add_overlay(image('icons/obj/vehicles.dmi', "[icon_state]_off_overlay", MOB_LAYER + 1))
 	icon_state = "[bike_icon]_off"
 
 /obj/vehicle/space/spacebike/examine(mob/user)
@@ -250,13 +250,13 @@
 	..()
 
 /obj/vehicle/space/spacebike/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(on)
-		overlays += image('icons/obj/vehicles.dmi', "[bike_icon]_on_overlay", MOB_LAYER + 1)
+		add_overlay(image('icons/obj/vehicles.dmi', "[bike_icon]_on_overlay", MOB_LAYER + 1))
 		icon_state = "[bike_icon]_on"
 	else
-		overlays += image('icons/obj/vehicles.dmi', "[bike_icon]_off_overlay", MOB_LAYER + 1)
+		add_overlay(image('icons/obj/vehicles.dmi', "[bike_icon]_off_overlay", MOB_LAYER + 1))
 		icon_state = "[bike_icon]_off"
 
 	..()

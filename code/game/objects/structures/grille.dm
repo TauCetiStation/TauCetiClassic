@@ -12,6 +12,13 @@
 	var/destroyed = 0
 	var/damaged = FALSE
 
+/obj/structure/grille/atom_init()
+	. = ..()
+	if(destroyed)
+		icon_state = "brokengrille"
+		density = FALSE
+		health = 0
+
 /obj/structure/grille/ex_act(severity)
 	qdel(src)
 
@@ -48,7 +55,7 @@
 /obj/structure/grille/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(istype(user, /mob/living/carbon/alien/larva))	return
+	if(istype(user, /mob/living/carbon/xenomorph/larva))	return
 
 	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='warning'>[user] mangles [src].</span>", \
@@ -113,7 +120,10 @@
 	if(iswirecutter(W))
 		if(!shock(user, 100))
 			playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
-			new /obj/item/stack/rods(get_turf(src), 2)
+			if(destroyed)
+				new /obj/item/stack/rods(get_turf(src), 1)
+			else
+				new /obj/item/stack/rods(get_turf(src), 2)
 			qdel(src)
 	else if((isscrewdriver(W)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))

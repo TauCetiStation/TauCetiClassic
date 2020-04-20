@@ -49,8 +49,11 @@
 		mode = REMOTE_BOLT
 	to_chat(user, "Now in mode: [mode].")
 
-/obj/item/device/remote_device/afterattack(obj/machinery/door/airlock/D, mob/user)
-	if(!istype(D) || disabled || user.client.eye != user.client.mob)
+/obj/item/device/remote_device/afterattack(atom/target, mob/user, proximity, params)
+	if(!istype(target, /obj/machinery/door/airlock))
+		return
+	var/obj/machinery/door/airlock/D = target
+	if(disabled || user.client.eye != user.client.mob)
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
@@ -84,6 +87,7 @@
 					D.secondsElectrified = 0
 				else
 					D.secondsElectrified = 10
+		D.add_hiddenprint(user)
 	else
 		to_chat(user, "<span class='danger'>[src] does not have access to this door.</span>")
 

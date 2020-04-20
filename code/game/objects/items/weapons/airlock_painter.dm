@@ -29,6 +29,9 @@
 	//This proc doesn't just check if the painter can be used, but also uses it.
 	//Only call this if you are certain that the painter will be used right after this check!
 /obj/item/weapon/airlock_painter/use(cost)
+	if(cost < 0)
+		stack_trace("[src.type]/use() called with a negative parameter [cost]")
+		return 0
 	if(can_use(usr, cost))
 		ink.charges -= cost
 		playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER)
@@ -85,19 +88,19 @@
 		to_chat(user, "<span class='notice'>You remove \the [ink] from \the [name].</span>")
 		ink = null
 
-/obj/item/weapon/airlock_painter/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/airlock_painter/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 
-	if(!istype(A, /obj/machinery/atmospherics/pipe) || \
-		istype(A, /obj/machinery/atmospherics/components/unary/tank) || \
-		istype(A, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) || \
-		!in_range(user, A))
+	if(!istype(target, /obj/machinery/atmospherics/pipe) || \
+		istype(target, /obj/machinery/atmospherics/components/unary/tank) || \
+		istype(target, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) || \
+		!in_range(user, target))
 	{
 		return
 	}
 
-	var/obj/machinery/atmospherics/pipe/P = A
+	var/obj/machinery/atmospherics/pipe/P = target
 
 	var/selected_color = input("Which colour do you want to use?", "Universal painter") in modes
 	if(!selected_color)

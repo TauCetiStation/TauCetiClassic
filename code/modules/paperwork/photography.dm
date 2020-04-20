@@ -110,7 +110,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "album"
 	item_state = "briefcase"
-	can_hold = list("/obj/item/weapon/photo",)
+	can_hold = list(/obj/item/weapon/photo)
 	max_storage_space = DEFAULT_BOX_STORAGE
 
 /obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
@@ -290,13 +290,13 @@
 
 	return list("mob_detail" = mob_detail, "names_detail" = names_detail)
 
-/obj/item/device/camera/afterattack(atom/target, mob/user, flag)
+/obj/item/device/camera/afterattack(atom/target, mob/user, proximity, params)
 	if(!on || ismob(target.loc))
 		return
 	if(!pictures_left)
 		to_chat(user, "<span class='warning'>There is no photos left. Insert more camera film.</span>")
 		return
-	captureimage(target, user, flag)
+	captureimage(target, user, proximity)
 
 	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), VOL_EFFECTS_MASTER, null, null, -3)
 

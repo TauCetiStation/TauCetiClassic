@@ -8,7 +8,7 @@
 	light_color = "#ffcc33"
 	density = 1
 	anchored = 1
-	use_power = 2
+	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 80
 	circuit = /obj/item/weapon/circuitboard/powermonitor

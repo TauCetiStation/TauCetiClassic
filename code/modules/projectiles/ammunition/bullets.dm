@@ -179,10 +179,6 @@
 	caliber = "a3006"
 	projectile_type = "/obj/item/projectile/bullet/midbullet3"
 
-/obj/item/ammo_casing/l10
-	caliber = "energy"
-	projectile_type = "/obj/item/projectile/l10"
-
 /obj/item/ammo_casing/flare
 	desc = "A flare for flare gun."
 	caliber = "flare"
@@ -195,7 +191,7 @@
 	projectile_type = /obj/item/projectile/bullet/midbullet2
 
 /obj/item/ammo_box/c38m
-	name = "speed loader (.38)"
+	name = "speedloader (.38)"
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c38m
 	max_ammo = 6

@@ -108,12 +108,12 @@
 			cur = get_step_towards(cur,end)
 		to_chat(usr, "<span class='notice'>You finish placing the [src].</span>")
 
-/obj/item/taperoll/afterattack(atom/A, mob/user)
-	if (istype(A, /obj/machinery/door/airlock))
-		if(!user.Adjacent(A))
-			to_chat(user, "<span class='notice'>You're too far away from \the [A]!</span>")
+/obj/item/taperoll/afterattack(atom/target, mob/user, proximity, params)
+	if (istype(target, /obj/machinery/door/airlock))
+		if(!user.Adjacent(target))
+			to_chat(user, "<span class='notice'>You're too far away from \the [target]!</span>")
 			return
-		var/turf/T = get_turf(A)
+		var/turf/T = get_turf(target)
 		var/obj/item/tape/P = new tape_type(T.x,T.y,T.z)
 		P.loc = locate(T.x,T.y,T.z)
 		P.icon_state = "[icon_base]_door"
@@ -141,12 +141,9 @@
 	if (user.a_intent == "help" && allowed(user))
 		user.visible_message("<span class='notice'>[user] lifts [src], allowing passage.</span>")
 		density = 0
-		addtimer(CALLBACK(src, .proc/stop_passage), 20 SECONDS)
+		addtimer(VARSET_CALLBACK(src, density, TRUE), 20 SECONDS)
 	else
 		breaktape(null, user, FALSE)
-
-/obj/item/tape/proc/stop_passage()
-	density = 1
 
 /obj/item/tape/attack_paw(mob/user)
 	breaktape(null, user, FALSE)

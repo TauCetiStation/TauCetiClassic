@@ -19,6 +19,12 @@
 	var/stop = 0.0
 	var/screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
 
+/obj/machinery/computer/robotics/attackby(obj/item/I, mob/user)
+	if(issilicon(user))
+		to_chat(user, "<span class='warning'>It's too complicated for you.</span>")
+		return
+	return ..()
+
 /obj/machinery/computer/robotics/ui_interact(mob/user)
 	if (!SSmapping.has_level(z))
 		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
@@ -107,7 +113,7 @@
 		if(allowed(usr))
 			if (!status)
 				message_admins("<span class='notice'>[key_name_admin(usr)] has initiated the global cyborg killswitch! [ADMIN_JMP(usr)]</span>")
-				log_game("<span class='notice'>[key_name(usr)] has initiated the global cyborg killswitch!</span>")
+				log_game("[key_name(usr)] has initiated the global cyborg killswitch!")
 				src.status = 1
 				src.start_sequence()
 				src.temp = null
@@ -151,7 +157,7 @@
 
 						else
 							message_admins("<span class='notice'>[key_name_admin(usr)] [ADMIN_JMP(usr)] detonated [R.name]! [ADMIN_JMP(R)]</span>")
-							log_game("<span class='notice'>[key_name_admin(usr)] detonated [R.name]!</span>")
+							log_game("[key_name(usr)] detonated [R.name]!")
 							R.self_destruct()
 		else
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
@@ -171,12 +177,13 @@
 						//	R.cell.charge = R.lockcharge
 							R.lockcharge = !R.lockcharge
 							to_chat(R, "Your lockdown has been lifted!")
+							playsound(R, 'sound/effects/robot_unlocked.ogg', VOL_EFFECTS_MASTER, , FALSE)
 						else
-							R.throw_alert("locked")
+							R.throw_alert("locked", /obj/screen/alert/locked)
 							R.lockcharge = !R.lockcharge
 					//		R.cell.charge = 0
 							to_chat(R, "You have been locked down!")
-
+							playsound(R, 'sound/effects/robot_locked.ogg', VOL_EFFECTS_MASTER, , FALSE)
 		else
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
 
@@ -190,6 +197,8 @@
 //							message_admins("<span class='notice'>[key_name_admin(usr)] emagged [R.name] using robotic console!</span>")
 						log_game("[key_name(usr)] emagged [R.name] using robotic console!")
 						R.emagged = 1
+						var/mob/living/silicon/ai/AI = R.connected_ai
+						R.set_zeroth_law(AI.laws.zeroth_borg)
 						if(R.mind.special_role)
 							R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
 

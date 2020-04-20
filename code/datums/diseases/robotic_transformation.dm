@@ -48,6 +48,10 @@
 			if (prob(8))
 				to_chat(affected_mob, "<span class='warning'>You can feel... something...inside you.</span>")
 		if(5)
+			if(QDELETED(affected_mob))
+				return
+			if(affected_mob.notransform)
+				return
 			to_chat(affected_mob, "<span class='warning'>Your skin feels as if it's about to burst off...</span>")
 			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()

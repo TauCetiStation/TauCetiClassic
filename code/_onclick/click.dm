@@ -4,7 +4,21 @@
 */
 
 // 1 decisecond click delay (above and beyond mob/next_move)
-/mob/var/next_click	= 0
+// This is mainly modified by click code, to modify click delays elsewhere, use next_move and SetNextMove()
+/mob/var/next_click = 0
+
+// THESE DO NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
+/mob/var/next_move_adjust = 0   // Amount to adjust action/click delays by, + or -
+/mob/var/next_move_modifier = 1 // Value to multiply action/click delays by
+
+
+//Delays the mob's next click/action by num deciseconds
+// eg: 10-3 = 7 deciseconds of delay
+// eg: 10*0.5 = 5 deciseconds of delay
+// DOES NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
+
+/mob/proc/SetNextMove(num)
+	next_move = world.time + ((num + next_move_adjust) * next_move_modifier)
 
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
@@ -33,19 +47,16 @@
 	The most common are:
 	* mob/UnarmedAttack(atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
 	* atom/attackby(item,user,params) - used only when adjacent
-	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
+	* item/afterattack(atom,user,proximity,params) - used both ranged and adjacent
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
-/mob/var/next_move_modifier = 0 // for now just used for species
-
-
-/mob/proc/SetNextMove(num)
-	next_move = world.time + num + next_move_modifier
-
 /mob/proc/ClickOn( atom/A, params )
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
+
+	if(notransform)
+		return
 
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
@@ -79,11 +90,10 @@
 		return
 
 	face_atom(A) // change direction to face what you clicked on
-
 	if(next_move > world.time) // in the year 2000...
 		return
 
-	if(istype(loc,/obj/mecha))
+	if(istype(loc, /obj/mecha))
 		if(!locate(/turf) in list(A, A.loc)) // Prevents inventory from being drilled
 			return
 		var/obj/mecha/M = loc
@@ -97,18 +107,20 @@
 		throw_item(A)
 		return
 
-	if(!istype(A,/obj/item/weapon/gun) && !isturf(A) && !istype(A,/obj/screen))
+	if(!istype(A, /obj/item/weapon/gun) && !isturf(A) && !istype(A, /obj/screen))
 		last_target_click = world.time
 
 	var/obj/item/W = get_active_hand()
-
 	if(W == A)
 		W.attack_self(src)
-		if(hand)
-			update_inv_l_hand()
-		else
-			update_inv_r_hand()
+		W.update_inv_mob()
 		return
+
+	if(istype(W, /obj/item/device/pda))
+		var/obj/item/device/pda/P = W
+		if(P.pda_paymod)
+			P.click_to_pay(A) //Click on someone to pay
+			return
 
 	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	var/sdepth = A.storage_depth(src)
@@ -116,15 +128,16 @@
 
 		// No adjacency needed
 		if(W)
-
-			var/resolved = A.attackby(W,src,params)
+			var/resolved = A.attackby(W, src, params)
 			if(!resolved && A && W)
 				W.afterattack(A, src, 1, params) // 1 indicates adjacency
 		else
 			UnarmedAttack(A)
 		return
 
-	if(!isturf(loc)) // This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that
+	if(!isturf(loc)) // (This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that.) Not anymore
+		if((TK in mutations) && (XRAY in mutations))//Now telekinesing from inside a closet is possible
+			ranged_attack_tk(A)
 		return
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
@@ -170,11 +183,14 @@
 	if(a_intent == "hurt" && (LASEREYES in mutations))
 		LaserEyes(A) // moved into a proc below
 	else if(TK in mutations)
-		var/dist = get_dist(src, A)
-		if(dist > tk_maxrange)
-			return
-		SetNextMove(max(dist, CLICK_CD_MELEE))
-		A.attack_tk(src)
+		ranged_attack_tk(A)
+
+/mob/proc/ranged_attack_tk(atom/A)
+	var/dist = get_dist(src, A)
+	if(dist > tk_maxrange)
+		return
+	SetNextMove(max(dist, CLICK_CD_MELEE))
+	A.attack_tk(src)
 
 /*
 	Restrained ClickOn

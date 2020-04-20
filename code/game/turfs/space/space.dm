@@ -1,6 +1,6 @@
 /turf/space
 	icon = 'icons/turf/space.dmi'
-	name = "\proper space"
+	name = "space"
 	icon_state = "0"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
@@ -13,9 +13,7 @@
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
-
-	if(!istype(src, /turf/space/transit))
-		icon_state = SPACE_ICON_STATE
+	icon_state = SPACE_ICON_STATE
 
 	if(light_power && light_range)
 		update_light()
@@ -157,7 +155,7 @@
 			if(ismob(A))
 				var/mob/M = A
 				if(M.pulling)
-					M.pulling.forceMove(get_turf(M), keep_pulling = TRUE)
+					M.pulling.forceMove(get_turf(M), TRUE)
 
 
 			stoplag()//Let a diagonal move finish, if necessary

@@ -6,7 +6,7 @@
 	name = "RoboTray"
 	desc = "An autoloading tray specialized for carrying refreshments."
 
-/obj/item/weapon/tray/robotray/afterattack(atom/target, mob/user)
+/obj/item/weapon/tray/robotray/afterattack(atom/target, mob/user, proximity, params)
 	if ( !target )
 		return
 	// pick up items, mostly copied from base tray pickup proc
@@ -34,7 +34,7 @@
 
 				I.loc = src
 				carrying.Add(I)
-				overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer)
+				add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
 				addedSomething = 1
 		if ( addedSomething )
 			user.visible_message("<span class='notice'>[user] load some items onto their service tray.</span>")
@@ -60,7 +60,7 @@
 			dropspot = target.loc
 
 
-		overlays = null
+		cut_overlays()
 
 		var/droppedSomething = 0
 
@@ -141,9 +141,9 @@
 /obj/item/weapon/form_printer/attack(mob/living/carbon/M, mob/living/carbon/user)
 	return
 
-/obj/item/weapon/form_printer/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/weapon/form_printer/afterattack(atom/target, mob/user, proximity, params)
 
-	if(!target || !flag)
+	if(!target || !proximity)
 		return
 
 	if(istype(target,/obj/structure/table))
@@ -193,8 +193,7 @@
 		for(var/mob/living/carbon/slime/slime in viewers(get_turf_loc(user), null))
 			slime.tame = 0
 			slime.rabid = 1
-			for(var/mob/O in viewers(get_turf_loc(user), null))
-				O.show_message(text("<span class='warning'>The [slime] is driven into a frenzy!.</span>"), 1)
+			user.visible_message("<span class='warning'>The [slime] is driven into a frenzy!.</span>")
 		uses -= 1
 		to_chat(user, "Bloodlust emitter sends a pulse.")
 	else

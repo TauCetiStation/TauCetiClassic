@@ -80,6 +80,7 @@
 	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/clothing/gloves/latex/nitrile(src)
 	new /obj/item/clothing/suit/surgicalapron(src)
+	new /obj/item/weapon/gun/energy/pyrometer/medical(src)
 
 /obj/structure/closet/secure_closet/CMO
 	name = "Chief Medical Officer's Locker"
