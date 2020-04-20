@@ -71,7 +71,7 @@ var/global/list/datum/money_account/department_accounts = list()
 var/global/num_financial_terminals = 1
 var/global/next_account_number = 0
 var/global/list/all_money_accounts = list()
-var/global/economy_init = 0
+var/global/economy_init = FALSE
 
 /proc/setup_economy()
 	if(economy_init)
@@ -105,7 +105,7 @@ var/global/economy_init = 0
 
 	current_date_string = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year]"
 
-	economy_init = 1
+	economy_init = TRUE
 	return 1
 
 /proc/create_station_account()

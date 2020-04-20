@@ -10,6 +10,7 @@
 	idtype = /obj/item/weapon/card/id/gold
 	req_admin_notify = 1
 	access = list() 			//See get_access()
+	salary = 300
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 3900
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)

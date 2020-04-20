@@ -45,6 +45,8 @@
 	//Should we spawn and give him his selected loadout items
 	var/give_loadout_items = TRUE
 
+	var/salary = 0
+
 	var/list/restricted_species = list()
 
 	var/list/survival_kit_items = list()

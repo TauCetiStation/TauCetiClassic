@@ -426,6 +426,7 @@
 	data["trans_menu"] = trans_menu	// show/hide transaction menu
 	data["trans_log"] = trans_log
 	data["trans_log_spoiler"] = trans_log_spoiler	// show/hide transaction log
+	data["time_to_next_pay"] = SSeconomy.endtime - world.timeofday
 
 	data["mode"] = mode					// The current view
 	data["scanmode"] = scanmode				// Scanners
