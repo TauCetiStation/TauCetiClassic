@@ -77,13 +77,13 @@
 	chambered = null
 	return ..()
 
-/obj/item/weapon/gun/afterattack(atom/A, mob/living/user, flag, params)
-	if(flag)	return //It's adjacent, is the user, or is on the user's person
+/obj/item/weapon/gun/afterattack(atom/target, mob/user, proximity, params)
+	if(proximity)	return //It's adjacent, is the user, or is on the user's person
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
-	if(user && user.client && user.client.gun_mode && !(A in target))
-		PreFire(A,user,params) //They're using the new gun system, locate what they're aiming at.
+	if(user && user.client && user.client.gun_mode && !(target in target))
+		PreFire(target,user,params) //They're using the new gun system, locate what they're aiming at.
 	else
-		Fire(A,user,params) //Otherwise, fire normally.
+		Fire(target,user,params) //Otherwise, fire normally.
 
 /mob/living/carbon/AltClickOn(atom/A)
 	var/obj/item/I = get_active_hand()

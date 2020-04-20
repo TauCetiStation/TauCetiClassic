@@ -416,8 +416,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	timer = newtime
 	to_chat(user, "<span class='notice'>Timer set for </span>[timer]<span class='notice'> seconds.</span>")
 
-/obj/item/weapon/mining_charge/afterattack(turf/simulated/mineral/target, mob/user, flag)
-	if (!flag)
+/obj/item/weapon/mining_charge/afterattack(atom/target, mob/user, proximity, params)
+	if (!proximity)
 		return
 	if (!istype(target, /turf/simulated/mineral))
 		to_chat(user, "<span class='notice'>You can't plant [src] on [target.name].</span>")

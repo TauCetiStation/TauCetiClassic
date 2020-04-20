@@ -8,14 +8,16 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
+	data = list()
+
 /datum/reagent/srejuvenate/on_general_digest(mob/living/M)
 	..()
 	if(M.losebreath >= 10)
 		M.losebreath = max(10, M.losebreath-10)
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	switch(data["ticks"])
 		if(1 to 15)
 			M.eye_blurry = max(M.eye_blurry, 10)
 		if(15 to 25)
@@ -60,22 +62,23 @@
 	color = "#004000" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = 2 * REAGENTS_METABOLISM
-	data = 0
+
+	data = list()
 
 /datum/reagent/ryetalyn/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
+	if(!data["ticks"])
+		data["ticks"] = 1
 
 	for(var/datum/dna/gene/gene in dna_genes)
 		if(!gene.block)
 			continue
-		if(!prob(REM * data))
+		if(!prob(REM * data["ticks"]))
 			continue
 		M.dna.SetSEValue(gene.block, rand(1,2048))
 		genemutcheck(M, gene.block, null, MUTCHK_FORCED)
 
-	data++
+	data["ticks"]++
 
 /datum/reagent/paracetamol
 	name = "Paracetamol"
@@ -276,14 +279,17 @@
 	color = "#a0a000"
 	taste_message = "vomit"
 	restrict_species = list(IPC, DIONA)
-	data = 1
+
+	data = list()
 
 /datum/reagent/thermopsis/on_general_digest(mob/living/M)
 	..()
-	data++
-	if(data > 10)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	if(data["ticks"] > 10)
 		M.vomit()
-		data -= rand(0, 10)
+		data["ticks"] -= rand(0, 10)
 
 /datum/reagent/adminordrazine //An OP chemical for admins
 	name = "Adminordrazine"
@@ -533,12 +539,14 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
+	data = list()
+
 /datum/reagent/rezadone/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	switch(data["ticks"])
 		if(1 to 15)
 			M.adjustCloneLoss(-1)
 			M.heal_bodypart_damage(1, 1)
