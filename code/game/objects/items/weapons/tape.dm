@@ -15,12 +15,6 @@
 	anchored = 1
 	density = 1
 	var/icon_base
-	var/list/allowed_movables = list(
-		/obj/mecha,
-		/mob/living/simple_animal/construct,
-		/mob/living/silicon/robot/syndicate,
-		/mob/living/simple_animal/hulk
-		)
 
 /obj/item/taperoll/police
 	name = "police tape"
@@ -133,7 +127,7 @@
 		return TRUE
 	if(allowed(mover))
 		return TRUE
-	if (mover.pass_flags & PASSTABLE || istype(mover, /obj/effect/meteor) ||  istype(mover, /mob/living/simple_animal/headcrab) || mover.throwing)
+	if (mover.pass_flags & (PASSTABLE | PASSCRAWL) || istype(mover, /obj/effect/meteor) || mover.throwing)
 		return TRUE
 	if(istype(mover, /mob/living/carbon))
 		var/mob/living/carbon/M = mover
@@ -171,11 +165,11 @@
 	breaktape(W = null, user = null, forced = TRUE)
 
 /obj/item/tape/Bumped(atom/movable/AM)
-	if(istype(AM, /mob/living/carbon))
+	if(iscarbon(AM))
 		var/mob/living/carbon/M = AM
 		if(M.a_intent == "hurt")
-			breaktape(W = null, user = M, forced = TRUE)
-	if(!is_type_in_list(AM, allowed_movables))
+			breaktape(W = null, user = M, forced = FALSE)
+	if(!istype(AM, /obj/mecha))
 		return
 	breaktape(W = null, user = null, forced = TRUE)	
 
