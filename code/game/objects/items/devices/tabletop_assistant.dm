@@ -208,13 +208,14 @@
 		return
 	interact(user)
 
-/obj/item/device/tabletop_assistant/afterattack(obj/O, mob/user, proximity)
+/obj/item/device/tabletop_assistant/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 	if(user.stat)
 		return
-	if(!istype(O))
+	if(!isobj(target))
 		return
+	var/obj/O = target
 	if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return

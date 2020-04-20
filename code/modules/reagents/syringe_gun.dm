@@ -37,7 +37,7 @@
 			to_chat(usr, "<span class='warning'>This syringe is broken!</span>")
 
 
-/obj/item/weapon/gun/syringe/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/gun/syringe/afterattack(atom/target, mob/user, proximity, params)
 	if(target == user)
 		return
 	..()

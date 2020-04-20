@@ -69,7 +69,7 @@
 	desc = "An untrustworthy bar of soap. Smells of fear."
 	icon_state = "soapsyndie"
 
-/obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	// I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	// So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
