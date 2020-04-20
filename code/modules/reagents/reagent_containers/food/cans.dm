@@ -68,8 +68,6 @@
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
 
-	return 0
-
 /obj/item/weapon/reagent_containers/food/drinks/cans/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 

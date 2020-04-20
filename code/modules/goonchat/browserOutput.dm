@@ -227,7 +227,6 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	//if(istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !(ismob(target) || islist(target) || isclient(target) || target == world))
 	if(istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !istext(message))
 		CRASH("DEBUG: to_chat called with invalid message: [message]")
-		return
 
 	if(target == world)
 		target = clients

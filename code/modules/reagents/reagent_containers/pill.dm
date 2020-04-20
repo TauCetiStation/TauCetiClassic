@@ -64,8 +64,6 @@
 
 		return 1
 
-	return 0
-
 /obj/item/weapon/reagent_containers/pill/afterattack(obj/target, mob/user, proximity)
 	if(!proximity)
 		return
