@@ -13,8 +13,8 @@
 	var/list/signs = list()
 	var/max_signs = 10
 
-/obj/item/weapon/holosign_creator/afterattack(atom/target, mob/user, flag)
-	if(flag)
+/obj/item/weapon/holosign_creator/afterattack(atom/target, mob/user, proximity, params)
+	if(proximity)
 		if(!check_allowed_items(target, 1)) return
 		var/turf/T = get_turf(target)
 		var/obj/effect/overlay/holograph/H = locate() in T

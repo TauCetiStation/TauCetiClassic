@@ -126,17 +126,17 @@
 	icon_state = "fireaxe[wielded]"
 	return
 
-/obj/item/weapon/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/twohanded/fireaxe/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	..()
-	if(A && wielded) //destroys windows and grilles in one hit
-		if(istype(A,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
-			var/obj/structure/window/W = A
+	if(target && wielded) //destroys windows and grilles in one hit
+		if(istype(target,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
+			var/obj/structure/window/W = target
 			W.shatter()
-		else if(istype(A,/obj/structure/grille))
-			var/obj/structure/grille/G = A
+		else if(istype(target,/obj/structure/grille))
+			var/obj/structure/grille/G = target
 			new /obj/item/stack/rods(G.loc)
-			qdel(A)
+			qdel(target)
 
 
 /*
@@ -228,16 +228,16 @@
 	else
 		return ..()
 
-/obj/item/weapon/twohanded/dualsaber/afterattack(obj/O, mob/user, proximity)
-	if(!istype(O,/obj/machinery/door/airlock) || slicing)
+/obj/item/weapon/twohanded/dualsaber/afterattack(atom/target, mob/user, proximity, params)
+	if(!istype(target,/obj/machinery/door/airlock) || slicing)
 		return
-	if(O.density && wielded && proximity && in_range(user, O))
-		user.visible_message("<span class='danger'>[user] start slicing the [O] </span>")
+	if(target.density && wielded && proximity && in_range(user, target))
+		user.visible_message("<span class='danger'>[user] start slicing the [target] </span>")
 		playsound(user, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
 		slicing = TRUE
-		var/obj/machinery/door/airlock/D = O
+		var/obj/machinery/door/airlock/D = target
 		var/obj/effect/I = new /obj/effect/overlay/slice(D.loc)
-		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1) && in_range(user, O))
+		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1) && in_range(user, D))
 			sleep(6)
 			var/obj/structure/door_scrap/S = new /obj/structure/door_scrap(D.loc)
 			var/iconpath = D.icon

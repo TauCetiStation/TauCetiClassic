@@ -197,7 +197,7 @@
 		to_chat(killer, "Unfortunately, the Syndicate did not provide you with a code response.")
 	to_chat(killer, "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
 	//End code phrase.
-
+	killer.add_language("Sy-Code", 1)
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	var/text = ""

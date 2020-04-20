@@ -143,9 +143,9 @@
 
 /datum/reagent/consumable/capsaicin/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	switch(data["ticks"])
 		if(1 to 15)
 			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("frostoil"))
@@ -160,7 +160,7 @@
 			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
 				M.bodytemperature += rand(15,20)
-	data++
+	data["ticks"]++
 
 /datum/reagent/consumable/condensedcapsaicin
 	name = "Condensed Capsaicin"
@@ -303,9 +303,9 @@
 /datum/reagent/consumable/psilocybin/on_general_digest(mob/living/M)
 	..()
 	M.druggy = max(M.druggy, 30)
-	if(!data)
-		data = 1
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	switch(data["ticks"])
 		if(1 to 5)
 			if(!M.stuttering)
 				M.stuttering = 1
@@ -328,7 +328,7 @@
 			M.druggy = max(M.druggy, 40)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
-	data++
+	data["ticks"]++
 
 /datum/reagent/consumable/cornoil
 	name = "Corn Oil"

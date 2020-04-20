@@ -47,7 +47,7 @@
 	The most common are:
 	* mob/UnarmedAttack(atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
 	* atom/attackby(item,user,params) - used only when adjacent
-	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
+	* item/afterattack(atom,user,proximity,params) - used both ranged and adjacent
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
 /mob/proc/ClickOn( atom/A, params )
@@ -115,7 +115,7 @@
 		W.attack_self(src)
 		W.update_inv_mob()
 		return
-	
+
 	if(istype(W, /obj/item/device/pda))
 		var/obj/item/device/pda/P = W
 		if(P.pda_paymod)
