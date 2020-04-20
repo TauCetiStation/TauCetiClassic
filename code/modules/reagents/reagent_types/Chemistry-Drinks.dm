@@ -11,6 +11,10 @@
 	var/adj_sleepy = 0
 	var/adj_temp = 0
 
+	// Most consumables use a "ticks"-based effect system, which employs a list.
+	// So we put this here.
+	data = list()
+
 /datum/reagent/consumable/drink/on_general_digest(mob/living/M)
 	..()
 	if(adj_dizzy)

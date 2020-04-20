@@ -8,6 +8,9 @@
 	custom_metabolism = 0.1
 	taste_message = "bitterness"
 
+	// Most toxins use "ticks" to determine their effect. The list is initialized here to be used there later.
+	data = list()
+
 /datum/reagent/toxin/on_general_digest(mob/living/M)
 	..()
 	if(toxpwr)
