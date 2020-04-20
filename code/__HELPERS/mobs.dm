@@ -143,7 +143,6 @@
 			return "health-85"
 		else
 			return "health-100"
-	return "0"
 
 //helper for inverting armor blocked values into a multiplier
 #define blocked_mult(blocked) max(1 - (blocked / 100), 0)

@@ -6,6 +6,7 @@
 	var/equipping = 0
 	var/rig_restrict_helmet = 0 // Stops the user from equipping a rig helmet without attaching it to the suit first.
 	var/gang //Is this a gang outfit?
+	var/species_restricted_locked = FALSE
 
 	/*
 		Sprites used when the clothing item is refit. This is done by setting icon_override.
@@ -22,7 +23,8 @@
 
 /obj/item/clothing/atom_init()
 	. = ..()
-	update_species_restrictions()
+	if (species_restricted_locked == FALSE)
+		update_species_restrictions()
 
 /*
 	This is for the Vox among you.
@@ -34,15 +36,15 @@ var/global/list/icon_state_allowed_cache = list()
 
 /obj/item/clothing/proc/update_species_restrictions()
 	if(!species_restricted)
-		species_restricted = list("excluded", VOX, VOX_ARMALIS)
+		species_restricted = list("exclude")
 
-	var/exclusive = ("excluded" in species_restricted)
+	var/exclusive = !("exclude" in species_restricted)
 
 	for(var/specie in global.sprite_sheet_restricted)
 		if(exclusive)
 			species_restricted -= specie
 		else
-			species_restricted += specie
+			species_restricted |= specie
 
 	if(!sprite_sheet_slot)
 		if(!species_restricted.len || (species_restricted.len == 1 && exclusive))
@@ -56,7 +58,7 @@ var/global/list/icon_state_allowed_cache = list()
 		if(global.icon_state_allowed_cache[cache_key])
 			allowed = TRUE
 		else
-			var/specie_cache = "[specie]"
+			var/specie_cache = "[specie]|[sprite_sheet_slot]"
 			var/list/icons_exist
 			if(global.specie_sprite_sheet_cache[specie_cache])
 				icons_exist = global.specie_sprite_sheet_cache[specie_cache]
@@ -69,7 +71,7 @@ var/global/list/icon_state_allowed_cache = list()
 				if(icon_path)
 					var/list/sheet_icon_states = icon_states(icon_path)
 					icons_exist = sheet_icon_states
-					global.specie_sprite_sheet_cache[specie] = sheet_icon_states
+					global.specie_sprite_sheet_cache[specie_cache] = sheet_icon_states
 
 			if(icons_exist)
 				var/t_state
@@ -82,7 +84,10 @@ var/global/list/icon_state_allowed_cache = list()
 				if(!t_state)
 					t_state = icon_state
 
-				if("[t_state]_s" in icons_exist)
+				if (sprite_sheet_slot == SPRITE_SHEET_UNIFORM)
+					t_state = "[t_state]_s"
+
+				if("[t_state]" in icons_exist)
 					allowed = TRUE
 
 		if(allowed)
@@ -276,7 +281,7 @@ BLIND     // can't see anything
 	hitsound = list('sound/items/misc/glove-slap.ogg')
 	attack_verb = list("challenged")
 	species_restricted = list("exclude" , UNATHI , TAJARAN, VOX, VOX_ARMALIS)
-
+	species_restricted_locked = TRUE
 	sprite_sheet_slot = SPRITE_SHEET_GLOVES
 
 /obj/item/clothing/gloves/emp_act(severity)
@@ -346,6 +351,7 @@ BLIND     // can't see anything
 				if("exclude" in species_restricted)
 					species_restricted -= UNATHI
 					species_restricted -= TAJARAN
+					species_restricted -= VOX
 				src.icon_state += "_cut"
 				user.update_inv_shoes()
 				clipped_status = CLIPPED
@@ -400,7 +406,6 @@ BLIND     // can't see anything
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
-
 /obj/item/clothing/suit/space
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. \"NSS EXODUS\" is written in large block letters on the back."
@@ -421,7 +426,6 @@ BLIND     // can't see anything
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
-
 	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.
 
 /obj/item/clothing/suit/space/equipped(mob/M)

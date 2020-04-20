@@ -115,6 +115,12 @@
 		W.attack_self(src)
 		W.update_inv_mob()
 		return
+	
+	if(istype(W, /obj/item/device/pda))
+		var/obj/item/device/pda/P = W
+		if(P.pda_paymod)
+			P.click_to_pay(A) //Click on someone to pay
+			return
 
 	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	var/sdepth = A.storage_depth(src)

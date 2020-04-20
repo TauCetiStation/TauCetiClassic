@@ -73,6 +73,7 @@
 
 /obj/item/weapon/paper/proc/show_content(mob/user, forceshow = FALSE, forcestars = FALSE, infolinks = FALSE, view = TRUE)
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
+	assets.register()
 	assets.send(user)
 
 	var/data

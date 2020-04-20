@@ -801,6 +801,12 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_PLANT];jobban4=\ref[M]'>[ROLE_PLANT]</a></td>"
 
+		//chaplain talking staff
+		if(jobban_isbanned(M, ROLE_TSTAFF))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_TSTAFF];jobban4=\ref[M]'><font color=red>[ROLE_TSTAFF]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_TSTAFF];jobban4=\ref[M]'>[ROLE_TSTAFF]</a></td>"
+
 		if(jobban_isbanned(M, "Mouse"))
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mouse;jobban4=\ref[M]'><font color=red>Mouse</font></a></td>"
 		else
@@ -983,31 +989,15 @@
 			return 1
 		return 0 //we didn't do anything!
 
-	else if(href_list["geoip"])
-		if(!check_rights(R_LOG))
+	else if(href_list["guard"])
+		if(!(check_rights(R_LOG) && check_rights(R_BAN)))
 			return
-		else
-			var/mob/M = locate(href_list["geoip"])
-			if (ismob(M))
-				if(!M.client)
-					return
-				var/dat = "<html><head><title>GeoIP info</title></head>"
-				var/client/C = M.client
-				if(C.geoip.status != "updated" || C.geoip.status != "admin")
-					C.geoip.try_update_geoip(C, C.address)
-				dat += "<center><b>Ckey:</b> [M.ckey]</center>"
-				dat += "<b>Country:</b> [C.geoip.country]<br>"
-				dat += "<b>CountryCode:</b> [C.geoip.countryCode]<br>"
-				dat += "<b>Region:</b> [C.geoip.region]<br>"
-				dat += "<b>Region Name:</b> [C.geoip.regionName]<br>"
-				dat += "<b>City:</b> [C.geoip.city]<br>"
-				dat += "<b>Timezone:</b> [C.geoip.timezone]<br>"
-				dat += "<b>ISP:</b> [C.geoip.isp]<br>"
-				dat += "<b>Mobile:</b> [C.geoip.mobile]<br>"
-				dat += "<b>Proxy:</b> [C.geoip.proxy]<br>"
-				dat += "<b>IP:</b> [C.geoip.ip]<br>"
-				dat += "<hr><b>Status:</b> [C.geoip.status]"
-				usr << browse(entity_ja(dat), "window=geoip")
+		
+		var/mob/M = locate(href_list["guard"])
+		if (ismob(M))
+			if(!M.client)
+				return
+			M.client.guard.print_report()
 
 	else if(href_list["cid_list"])
 		if(!check_rights(R_LOG))

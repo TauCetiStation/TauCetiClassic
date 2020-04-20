@@ -299,7 +299,9 @@
 	name = "Gorlex hardsuit modification kit"
 	permitted_types = list(
 		/obj/item/clothing/head/helmet/space/rig/syndi,
-		/obj/item/clothing/suit/space/rig/syndi
+		/obj/item/clothing/suit/space/rig/syndi,
+		/obj/item/clothing/head/helmet/space/rig/syndi/heavy,
+		/obj/item/clothing/suit/space/rig/syndi/heavy
 		)
 
 /obj/item/device/modkit/syndie/tajaran
