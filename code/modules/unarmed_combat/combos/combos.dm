@@ -863,7 +863,7 @@
 					attacker.attack_log += text("\[[time_stamp()]\] <font color='red'>Has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
 					msg_admin_attack("[attacker.name] ([attacker.ckey]) has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]", attacker)
 
-					M.throw_at(target, 6, 10, attacker)
+					M.throw_at(target, 6, 8, attacker)
 					apply_effect(7, WEAKEN, M, attacker, min_value=1)
 
 					if(ishuman(src))
