@@ -1405,13 +1405,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/list/names = list()
 	var/list/creatures = list()
 	var/list/namecounts = list()
+	var/count = 0
 	var/target = null	   //Chosen target.
 
 	for(var/mob/living/carbon/human/M in human_list) //#Z2 only carbon/human for now
 		var/name = M.real_name
 		if(!(REMOTE_TALK in src.mutations))
-			namecounts++
-			name = "([namecounts])"
+			count++
+			name = "([count])"
 		else
 			if(name in names)
 				namecounts[name]++
