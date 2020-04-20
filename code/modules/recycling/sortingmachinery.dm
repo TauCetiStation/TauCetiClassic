@@ -62,8 +62,9 @@
 	dump()
 	return ..()
 
-/obj/item/smallDelivery/attack_hand(mob/user)
+/obj/item/smallDelivery/attack_self(mob/user)
 	if(contents.len > 0)
+		user.drop_from_inventory(src)
 		dump(user)
 	else
 		to_chat(user, "<span class='notice'>The parcel was empty!</span>")
