@@ -26005,6 +26005,13 @@
 	icon_state = "delivery"
 	},
 /area/station/maintenance/science)
+"aVG" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "aVH" = (
 /obj/machinery/camera{
 	c_tag = "Chief Engineer's Office";
@@ -39181,9 +39188,6 @@
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -39273,6 +39277,9 @@
 	dir = 8
 	},
 /obj/item/weapon/storage/firstaid/regular,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "bwR" = (
@@ -74075,7 +74082,7 @@
 	pixel_x = -32
 	},
 /turf/simulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
@@ -74246,7 +74253,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
@@ -77212,6 +77219,13 @@
 	icon_state = "warning"
 	},
 /area/station/hallway/secondary/exit)
+"tIy" = (
+/obj/structure/flora/pottedplant/minitree,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "tIJ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -103866,9 +103880,9 @@ avN
 bvJ
 bEW
 bDk
-bEW
-qcd
-nNV
+aSM
+aSM
+aSM
 bFW
 bGr
 bGC
@@ -104124,8 +104138,8 @@ aGn
 aSM
 bDo
 aSM
-aSM
-aSM
+aVG
+tIy
 bFW
 bGs
 bFW
@@ -104381,8 +104395,8 @@ bmZ
 btQ
 bFy
 bmC
-aGK
-aGK
+aMM
+aMM
 oQb
 oXb
 pOb
