@@ -200,6 +200,7 @@
 					  "nadazero", "unaone", "bissatwo", "terrathree", "kartefour", "pantafive", "soxisix", "setteseven", "oktoeight", "novenine",
 					  "ale", "cognac", "kahlua", "soda", "tequila", "vermouth", "whiskey", "beer", "gin", "rum", "lemon lime", "vodka", "wine")
 	flags = RESTRICTED
+	space_chance = 100
 
 /datum/language/unisign
 	name = "Universal Sign Language"
