@@ -13,7 +13,7 @@
 
 	if(reagents.has_reagent("alkysine"))
 		src.traumatic_shock -= 10
-	if(reagents.has_reagent("dxm"))
+	if(reagents.has_reagent("dextromethorphan"))
 		src.traumatic_shock -= 10
 	if(reagents.has_reagent("inaprovaline"))
 		src.traumatic_shock -= 25

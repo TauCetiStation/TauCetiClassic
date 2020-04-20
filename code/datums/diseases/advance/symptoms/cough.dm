@@ -28,7 +28,7 @@ BONUS
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
-		if(M.reagents.has_reagent("dxm"))
+		if(M.reagents.has_reagent("dextromethorphan"))
 			return
 		switch(A.stage)
 			if(1, 2, 3)
