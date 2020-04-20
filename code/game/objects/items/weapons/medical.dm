@@ -5,15 +5,11 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "combat_hypo"
 	volume = 60
-
+	list_reagents = list("synaptizine" = 5, "hyperzine" = 15, "oxycodone" = 15, "anti_toxin" = 25)
 /obj/item/weapon/reagent_containers/hypospray/combat/atom_init()
 	. = ..()
 	if (!possible_transfer_amounts)
 		src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
-	reagents.add_reagent("synaptizine", 5)
-	reagents.add_reagent("hyperzine", 15)
-	reagents.add_reagent("oxycodone", 15)
-	reagents.add_reagent("anti_toxin", 25)
 
 //FIRST-AID KIT
 /obj/item/weapon/storage/firstaid/tactical
