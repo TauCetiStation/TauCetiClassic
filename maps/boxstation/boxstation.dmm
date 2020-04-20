@@ -26006,12 +26006,9 @@
 	},
 /area/station/maintenance/science)
 "aVG" = (
-/obj/structure/reagent_dispensers/water_cooler,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
+/obj/item/weapon/cigbutt,
+/turf/simulated/floor/wood,
+/area/station/maintenance/cargo)
 "aVH" = (
 /obj/machinery/camera{
 	c_tag = "Chief Engineer's Office";
@@ -29735,8 +29732,6 @@
 	},
 /area/station/rnd/hallway)
 "bcy" = (
-/obj/structure/table/woodentable,
-/obj/item/device/flashlight/lamp/green,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -32213,9 +32208,6 @@
 	},
 /area/station/hallway/secondary/entry)
 "bhg" = (
-/obj/structure/stool/bed/chair/office/dark{
-	dir = 4
-	},
 /turf/simulated/floor/carpet/black,
 /area/station/security/vacantoffice)
 "bhh" = (
@@ -42948,6 +42940,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "bEy" = (
@@ -67093,6 +67086,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "dEb" = (
@@ -67241,6 +67235,13 @@
 	icon_state = "warning"
 	},
 /area/station/rnd/xenobiology)
+"dUr" = (
+/obj/structure/flora/pottedplant/minitree,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "dVb" = (
 /obj/structure/sink{
 	dir = 8;
@@ -67890,7 +67891,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "eXz" = (
@@ -68140,6 +68140,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/recycleroffice)
+"fxO" = (
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/station/maintenance/cargo)
 "fyb" = (
 /obj/machinery/flasher{
 	id = "solitary2"
@@ -70614,6 +70619,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"jgP" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "jhb" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
@@ -72765,6 +72777,10 @@
 	icon_state = "whitebluefull"
 	},
 /area/station/medical/sleeper)
+"mQH" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "mSb" = (
 /obj/structure/sign/warning/securearea,
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -74832,6 +74848,9 @@
 /area/station/security/lobby)
 "pVE" = (
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/effect/decal/cleanable/vomit{
+	icon_state = "vomit_4"
+	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/cargo)
 "qab" = (
@@ -75318,6 +75337,10 @@
 	icon_state = "bot"
 	},
 /area/station/cargo/storage)
+"qLN" = (
+/obj/item/weapon/cigbutt,
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "qMb" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -76538,9 +76561,12 @@
 	},
 /area/station/medical/virology)
 "sCd" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "sDb" = (
@@ -77219,13 +77245,6 @@
 	icon_state = "warning"
 	},
 /area/station/hallway/secondary/exit)
-"tIy" = (
-/obj/structure/flora/pottedplant/minitree,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "tIJ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -78081,6 +78100,12 @@
 	icon_state = "green"
 	},
 /area/station/civilian/hydroponics)
+"xeQ" = (
+/obj/effect/decal/cleanable/vomit{
+	icon_state = "vomit_4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "xiQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/cable{
@@ -92824,7 +92849,7 @@ bks
 blO
 kdV
 bBa
-hBN
+sCd
 dLO
 aFg
 aRp
@@ -94108,7 +94133,7 @@ arB
 qoN
 aSM
 dLO
-sCd
+ixO
 qAF
 bEW
 rFw
@@ -95137,7 +95162,7 @@ aSM
 aSM
 eho
 aSM
-bEW
+fxO
 bEW
 uof
 kgz
@@ -95392,7 +95417,7 @@ bfg
 biP
 aSM
 xDN
-oxa
+aVG
 aSM
 nUQ
 bEW
@@ -97453,7 +97478,7 @@ bmU
 aNi
 uru
 bEW
-bEW
+mQH
 bDk
 bEW
 kGX
@@ -98229,7 +98254,7 @@ ixO
 bEW
 bEW
 bEW
-bEW
+qLN
 bDk
 bNk
 buA
@@ -100285,7 +100310,7 @@ aSM
 bEW
 bEW
 aFf
-bEW
+fxO
 fDx
 bNk
 btN
@@ -102342,7 +102367,7 @@ bDn
 wol
 bDk
 bEW
-bEW
+mQH
 bEW
 aSM
 aSM
@@ -102603,7 +102628,7 @@ nNV
 nNV
 aSM
 sIv
-bEW
+xeQ
 usn
 btC
 bxl
@@ -104138,8 +104163,8 @@ aGn
 aSM
 bDo
 aSM
-aVG
-tIy
+jgP
+dUr
 bFW
 bGs
 bFW
