@@ -26005,12 +26005,6 @@
 	icon_state = "delivery"
 	},
 /area/station/maintenance/science)
-"aVG" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "aVH" = (
 /obj/machinery/camera{
 	c_tag = "Chief Engineer's Office";
@@ -28736,14 +28730,11 @@
 /area/station/civilian/library)
 "baI" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutralcorner"
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "baJ" = (
 /obj/structure/table/glass,
@@ -29427,12 +29418,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "browncorner"
@@ -38698,9 +38689,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/plating,
 /area/station/cargo/recycleroffice)
 "bvF" = (
 /obj/structure/disposalpipe/segment,
@@ -73568,7 +73557,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated,
+/turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "oeb" = (
 /obj/structure/sign/warning/nosmoking{
@@ -89484,7 +89473,7 @@ bOy
 blU
 bTo
 baI
-aVG
+atE
 atE
 bis
 bDq
@@ -89741,7 +89730,7 @@ bOA
 bQB
 bTp
 bbT
-ajb
+bis
 bis
 bHe
 bll
