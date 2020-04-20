@@ -148,6 +148,9 @@
 		return FALSE
 
 	var/datum/combat_combo/CC = next_combo
+	if(!CC)
+		return FALSE
+
 	if(CC.can_execute(src, show_warning = TRUE))
 		next_combo = null
 		CC.pre_execute(victim, attacker)
@@ -164,6 +167,7 @@
 	else
 		set_combo_icon(null)
 		next_combo = null
+		get_next_combo()
 	return TRUE
 
 // Is used to remove the first combo element, so users can perform combos with elements lower than max.

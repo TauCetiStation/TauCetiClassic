@@ -274,7 +274,7 @@
 	if(!I || !user)
 		return FALSE
 
-	var/target_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.zone_sel.selecting, src)
+	var/target_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.get_targetzone(), src)
 
 	if(user == src) // Attacking yourself can't miss
 		target_zone = user.zone_sel.selecting

@@ -24,7 +24,42 @@
 	victim.drop_item()
 	victim.visible_message("<span class='warning'><B>[attacker] has disarmed [victim]!</B></span>")
 
+	if(CLUMSY in attacker.mutations) // Make a funny
+		if(iscarbon(attacker))
+			var/mob/living/carbon/C = attacker
+			var/obj/item/to_give = attacker.get_active_hand() || attacker.get_inactive_hand()
+			if(to_give)
+				if(to_give.flags & (ABSTRACT | DROPDEL))
+					to_give = null
+				else if(to_give.w_class < ITEM_SIZE_LARGE && (HULK in victim.mutations))
+					to_give = null
 
+			if(!to_give && istype(C.back, /obj/item/weapon/storage) && C.back.contents.len > 0)
+				var/obj/item/weapon/storage/S = C.back
+				var/obj/item/I = S.contents[S.contents.len]
+
+				if(I.flags & (ABSTRACT | DROPDEL))
+					return
+				if(I.w_class < ITEM_SIZE_LARGE && (HULK in victim.mutations))
+					return
+
+				if(!S.remove_from_storage(I, C))
+					return
+				attacker.put_in_hands(I)
+				to_give = I
+
+			if(to_give)
+				attacker.drop_from_inventory(to_give)
+				if(victim.put_in_hands(to_give))
+					victim.visible_message("<span class='notice'>[attacker] handed \the [to_give] to [victim]!</span>")
+					to_give.add_fingerprint(victim)
+					// Extra ! ! ! F U N ! ! !
+					if(attacker.a_intent != I_HURT)
+						to_give.attack_self(victim)
+					else
+						var/resolved = victim.attackby(to_give, victim)
+						if(!resolved && victim && to_give)
+							to_give.afterattack(victim, victim, TRUE)
 
 /datum/combat_combo/push
 	name = "Push"
