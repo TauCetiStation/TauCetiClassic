@@ -9,6 +9,9 @@
 /obj/item/clothing/glasses/hud/proc/process_hud(mob/M)
 	return
 
+/obj/item/clothing/glasses/hud/set_prototype_qualities(rel_val=100, mark=0)
+	..()
+	fixtime = -1
 
 /obj/item/clothing/glasses/sunglasses/hud/secmed
 	name = "mixed HUD"
@@ -19,9 +22,8 @@
 
 
 /obj/item/clothing/glasses/sunglasses/hud/secmed/proc/process_hud(mob/M)
-	if(crit_fail)
-		if(fixtime < world.time)
-			crit_fail=0
+	if(fixtime != -1 && crit_fail && fixtime < world.time)
+		crit_fail = 0
 	process_med_hud(M, 1, crit_fail = crit_fail)
 	process_sec_hud(M, 1, crit_fail = crit_fail)
 
@@ -64,9 +66,12 @@
 	process_broken_hud(M, 1)
 
 /obj/item/clothing/glasses/hud/proc/check_integrity()
-	if(crit_fail)
-		if(fixtime < world.time)
-			crit_fail=0
+	if(!crit_fail)
+		return
+	if(fixtime == -1)
+		return
+	if(fixtime < world.time)
+		crit_fail = 0
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
 	if(!crit_fail)
