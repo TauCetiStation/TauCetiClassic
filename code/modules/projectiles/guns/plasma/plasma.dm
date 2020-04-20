@@ -120,7 +120,7 @@
 		magazine.power_supply.use(PLASMA_SHOT_ENERGY_COST)
 		chambered = null
 
-/obj/item/weapon/gun/plasma/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/plasma/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	update_icon()
 

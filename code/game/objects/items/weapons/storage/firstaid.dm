@@ -122,8 +122,8 @@
 	var/wrapper_color
 	var/label
 
-/obj/item/weapon/storage/pill_bottle/afterattack(mob/living/target, mob/living/user, proximity_flag)
-	if(!proximity_flag || !istype(target) || target != user)
+/obj/item/weapon/storage/pill_bottle/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity || !istype(target) || target != user)
 		return 1
 	if(!contents.len)
 		to_chat(user, "<span class='warning'>It's empty!</span>")
