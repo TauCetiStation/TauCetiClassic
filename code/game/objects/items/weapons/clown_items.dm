@@ -192,7 +192,7 @@
 		cooldown = world.time + 8
 		playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 		src.add_fingerprint(user)
-		animate(user, pixel_z = pick(2, 3, 4, 6), time = 0)
+		animate(user, pixel_z = rand(2, 6), time = 0)
 		animate(pixel_z = 0, transform = turn(matrix(), pick(-8, 0, 8)), time=2)
 		animate(pixel_z = 0, transform = matrix(), time = 0)
 	return
