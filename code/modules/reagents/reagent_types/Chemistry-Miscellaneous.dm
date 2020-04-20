@@ -484,6 +484,8 @@
 	taste_message = "nanomachines, son"
 	restrict_species = list(IPC, DIONA)
 
+	data = list()
+
 /datum/reagent/mednanobots/on_general_digest(mob/living/M)
 	..()
 	if(!data["ticks"])
@@ -902,6 +904,8 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	reagent_state = LIQUID
 	taste_message = "spooky ghosts"
 	color = "#ffa8e4" // rgb: 255, 168, 228
+
+	data = list()
 
 /datum/reagent/ectoplasm/on_general_digest(mob/living/M)
 	..()

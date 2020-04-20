@@ -8,6 +8,8 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
+	data = list()
+
 /datum/reagent/srejuvenate/on_general_digest(mob/living/M)
 	..()
 	if(M.losebreath >= 10)
@@ -60,22 +62,23 @@
 	color = "#004000" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = 2 * REAGENTS_METABOLISM
-	data = 0
+
+	data = list()
 
 /datum/reagent/ryetalyn/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
+	if(!data["ticks"])
+		data["ticks"] = 1
 
 	for(var/datum/dna/gene/gene in dna_genes)
 		if(!gene.block)
 			continue
-		if(!prob(REM * data))
+		if(!prob(REM * data["ticks"]))
 			continue
 		M.dna.SetSEValue(gene.block, rand(1,2048))
 		genemutcheck(M, gene.block, null, MUTCHK_FORCED)
 
-	data++
+	data["ticks"]++
 
 /datum/reagent/paracetamol
 	name = "Paracetamol"
@@ -276,6 +279,8 @@
 	color = "#a0a000"
 	taste_message = "vomit"
 	restrict_species = list(IPC, DIONA)
+
+	data = list()
 
 /datum/reagent/thermopsis/on_general_digest(mob/living/M)
 	..()
@@ -533,6 +538,8 @@
 	color = "#669900" // rgb: 102, 153, 0
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
+
+	data = list()
 
 /datum/reagent/rezadone/on_general_digest(mob/living/M)
 	..()
