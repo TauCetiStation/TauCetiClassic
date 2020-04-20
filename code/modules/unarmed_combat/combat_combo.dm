@@ -171,7 +171,6 @@ var/global/list/combat_combos_by_name = list()
 	var/list/attack_obj = attacker.get_unarmed_attack()
 	val += attack_obj["damage"] * scale_effect_coeff
 
-	to_chat(attacker, "YOU DEALT [val] OUT OF [min_value] DAMAGE")
 	if(min_value < 0 || val >= min_value)
 		var/armor_check = 0
 		if(!armor_pierce)
