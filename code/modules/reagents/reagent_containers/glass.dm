@@ -66,9 +66,9 @@
 		flags |= OPENCONTAINER
 	update_icon()
 
-/obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/glass/afterattack(atom/target, mob/user, proximity, params)
 
-	if (!is_open_container() || !flag)
+	if (!is_open_container() || !proximity)
 		return
 
 	for(var/type in src.can_be_placed_into)
@@ -136,9 +136,9 @@
 			if(CM.beakers[CM.filling_tank_id])
 				if(user.a_intent == I_GRAB)
 					var/obj/item/weapon/reagent_containers/glass/GB = CM.beakers[CM.filling_tank_id]
-					GB.afterattack(src, user, flag)
+					GB.afterattack(src, user, proximity)
 				else
-					afterattack(CM.beakers[CM.filling_tank_id], user, flag)
+					afterattack(CM.beakers[CM.filling_tank_id], user, proximity)
 				CM.updateUsrDialog()
 				CM.update_icon()
 				return

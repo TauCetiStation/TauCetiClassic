@@ -17,7 +17,7 @@ var/global/list/cached_icons = list()
 	flags = OPENCONTAINER
 	var/paint_type = ""
 
-/obj/item/weapon/reagent_containers/glass/paint/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/reagent_containers/glass/paint/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 	if(istype(target, /turf/simulated) && reagents.total_volume > 0)
@@ -25,7 +25,7 @@ var/global/list/cached_icons = list()
 		reagents.reaction(target, TOUCH)
 		reagents.remove_any(5)
 		log_game("[key_name(usr)] splashed [src.reagents.get_reagents()] on [target], location ([target.x],[target.y],[target.z])")
-	else 
+	else
 		..()
 
 /obj/item/weapon/reagent_containers/glass/paint/atom_init()

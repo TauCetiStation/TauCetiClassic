@@ -22,22 +22,22 @@
 	for (var/i in 1 to 3)
 		new /obj/item/weapon/spacecash(src)
 
-/obj/item/weapon/storage/bible/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/storage/bible/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
-		if(A.reagents && A.reagents.has_reagent("water")) //blesses/curses all the water in the holder
-			var/water2convert = A.reagents.get_reagent_amount("water")
-			A.reagents.del_reagent("water")
+		if(target.reagents && target.reagents.has_reagent("water")) //blesses/curses all the water in the holder
+			var/water2convert = target.reagents.get_reagent_amount("water")
+			target.reagents.del_reagent("water")
 			if(icon_state == "necronomicon")
-				to_chat(user, "<span class='warning'>You curse [A].</span>")
-				A.reagents.add_reagent("unholywater",water2convert)
+				to_chat(user, "<span class='warning'>You curse [target].</span>")
+				target.reagents.add_reagent("unholywater",water2convert)
 			else if(icon_state == "bible" && prob(10))
 				to_chat(user, "<span clas='notice'>You have just created wine!</span>")
-				A.reagents.add_reagent("wine",water2convert)
+				target.reagents.add_reagent("wine",water2convert)
 			else
-				to_chat(user, "<span class='notice'>You bless [A].</span>")
-				A.reagents.add_reagent("holywater",water2convert)
+				to_chat(user, "<span class='notice'>You bless [target].</span>")
+				target.reagents.add_reagent("holywater",water2convert)
 
 /obj/item/weapon/storage/bible/attackby(obj/item/weapon/W, mob/user)
 	if (length(use_sound))
