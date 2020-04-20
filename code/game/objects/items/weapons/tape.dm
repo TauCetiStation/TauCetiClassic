@@ -167,7 +167,7 @@
 /obj/item/tape/Bumped(atom/movable/AM)
 	if(iscarbon(AM))
 		var/mob/living/carbon/M = AM
-		if(M.a_intent == "hurt")
+		if(M.a_intent == I_HURT)
 			breaktape(W = null, user = M, forced = FALSE)
 	if(!istype(AM, /obj/mecha))
 		return
