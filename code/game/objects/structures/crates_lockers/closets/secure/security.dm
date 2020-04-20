@@ -141,6 +141,7 @@
 	new /obj/item/clothing/head/santa(src)
 	#endif
 
+
 /obj/structure/closet/secure_closet/warden
 	name = "Warden's Locker"
 	req_access = list(access_armory)
