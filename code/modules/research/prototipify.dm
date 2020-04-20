@@ -60,9 +60,17 @@
 		w_class = max(ITEM_SIZE_TINY, w_class - 1)
 	else if(!prob(rel_val))
 		w_class += 1
+	if(mark > 0)
+		toolspeed -= 0.2 * (mark - 1)
+	while(!prob(reliability))
+		if(toolspeed > 3)
+			break
+		toolspeed += 0.2
 
 /obj/item/weapon/stock_parts/set_prototype_qualities(rel_val=100, mark=0)
 	..()
+	if(mark)
+		rating += mark - 1
 	while(!prob(reliability))
 		if(rating == 0)
 			break
