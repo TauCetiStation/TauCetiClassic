@@ -2,8 +2,8 @@
 	name = "Weapon Disarm"
 	desc = "A move that knocks anything out of your opponent's hands."
 	combo_icon_state = "weapon_disarm"
-	fullness_lose_on_execute = 15
-	combo_elements = list(I_DISARM, I_DISARM, I_DISARM, I_DISARM)
+	fullness_lose_on_execute = 10
+	combo_elements = list(I_DISARM, I_DISARM, I_DISARM)
 
 	ignore_size = TRUE
 

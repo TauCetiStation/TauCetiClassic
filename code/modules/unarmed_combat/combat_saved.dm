@@ -166,6 +166,12 @@
 		next_combo = null
 	return TRUE
 
+// Is used to remove the first combo element, so users can perform combos with elements lower than max.
+/datum/combo_saved/proc/drop_combo_element()
+	if(combo_elements.len >= 1)
+		combo_elements.Cut(1, 2)
+		update_combo_elements()
+
 /datum/combo_saved/proc/register_attack(combo_element, combo_value)
 	if(!attacker)
 		return

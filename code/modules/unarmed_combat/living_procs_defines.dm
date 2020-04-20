@@ -251,6 +251,13 @@ var/global/combos_cheat_sheet = ""
 			return CS.activate_combo()
 	return FALSE
 
+// Is used to more precisely pick a combo, removes first combo element.
+/mob/living/proc/drop_combo_element()
+	. = FALSE
+	for(var/datum/combo_saved/CS in combos_performed)
+		. = TRUE
+		CS.drop_combo_element()
+
 // Returns TRUE if a combo was used, so you can prevent grabbing/disarming/etc.
 /mob/living/proc/engage_combat(mob/living/target, combo_element, combo_value)
 	if(!updates_combat)
