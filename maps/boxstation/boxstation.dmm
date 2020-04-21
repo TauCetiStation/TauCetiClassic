@@ -25029,6 +25029,9 @@
 /obj/machinery/chem_dispenser/soda{
 	dir = 4
 	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "aTI" = (
@@ -41243,14 +41246,9 @@
 	},
 /area/station/medical/cryo)
 "bAY" = (
-/obj/machinery/door_control{
-	id = "bar";
-	name = "Privacy shutter";
-	pixel_x = 8;
-	pixel_y = -24;
-	req_access = list(25,1)
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
-/obj/machinery/computer/arcade,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -42716,7 +42714,14 @@
 	},
 /area/station/cargo/miningoffice)
 "bDY" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/door_control{
+	id = "bar";
+	name = "Privacy shutter";
+	pixel_x = 8;
+	pixel_y = -24;
+	req_access = list(25,1)
+	},
+/obj/machinery/computer/arcade,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -43187,8 +43192,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "bEU" = (
-/obj/structure/table/woodentable/fancy/black,
-/obj/item/ashtray/plastic,
+/obj/machinery/vending/cigarette,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -69381,6 +69385,12 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
+"hlP" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/station/civilian/bar)
 "hlV" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -73613,12 +73623,6 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/station/engineering/engine)
-"ogE" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 8
-	},
-/turf/simulated/floor/wood,
-/area/station/civilian/bar)
 "ohb" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 9
@@ -74885,28 +74889,6 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"qcu" = (
-/obj/machinery/door/firedoor,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "bar";
-	name = "Bar Shutters";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/civilian/bar)
 "qdb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -75467,6 +75449,15 @@
 /obj/effect/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"qUX" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 4
+	},
+/obj/structure/sign/poster{
+	pixel_x = -32
+	},
+/turf/simulated/floor/wood,
+/area/station/civilian/bar)
 "qVb" = (
 /obj/random/meds/chemical_bottle,
 /turf/simulated/floor/plating{
@@ -77135,17 +77126,8 @@
 	},
 /area/station/hallway/secondary/exit)
 "tze" = (
-/obj/machinery/door/airlock/glass{
-	name = "Private Room"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "bar";
-	name = "Bar Shutters";
-	opacity = 0
-	},
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/ashtray/plastic,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -77307,6 +77289,28 @@
 	},
 /turf/simulated/floor,
 /area/station/civilian/locker)
+"tMI" = (
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "bar";
+	name = "Bar Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/bar)
 "tNb" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
@@ -77958,13 +77962,21 @@
 /turf/simulated/wall,
 /area/station/maintenance/disposal)
 "wol" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 4
+/obj/machinery/door/airlock/glass{
+	name = "Private Room"
 	},
-/obj/structure/sign/poster{
-	pixel_x = -32
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "bar";
+	name = "Bar Shutters";
+	opacity = 0
 	},
-/turf/simulated/floor/wood,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
 /area/station/civilian/bar)
 "woS" = (
 /obj/structure/cable{
@@ -102629,10 +102641,10 @@ aUu
 aUu
 bhp
 bzi
-bAY
+bDY
 aGn
 bET
-wol
+qUX
 aGn
 bDk
 bEW
@@ -102887,10 +102899,10 @@ bzi
 bzi
 avN
 avN
-tze
+wol
 aEh
 bxg
-qcu
+tMI
 bDk
 bFW
 bFW
@@ -103143,10 +103155,10 @@ bzi
 bzi
 avN
 avN
-bDY
+bEU
 aGn
 bEV
-ogE
+hlP
 aGn
 tgJ
 bFW
@@ -103400,7 +103412,7 @@ bxf
 avN
 avN
 nZG
-bEU
+tze
 aGn
 aGn
 aGn
@@ -103913,7 +103925,7 @@ bhv
 bCD
 pIL
 bDd
-avN
+bAY
 bvJ
 bEW
 bDk
