@@ -1905,10 +1905,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -23
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "redyellowfull"
@@ -17328,14 +17324,6 @@
 /obj/structure/stool,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
-"eGf" = (
-/obj/structure/sign/poster{
-	pixel_y = 32
-	},
-/turf/simulated/floor{
-	icon_state = "freezerfloor"
-	},
-/area/station/civilian/toilet)
 "eGh" = (
 /obj/structure/table/woodentable,
 /obj/machinery/power/apc{
@@ -26641,6 +26629,9 @@
 /obj/item/weapon/grenade/chem_grenade/cleaner,
 /obj/item/weapon/grenade/chem_grenade/cleaner,
 /obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_y = -32
+	},
 /turf/simulated/floor,
 /area/station/civilian/janitor)
 "hDL" = (
@@ -64473,6 +64464,15 @@
 	icon_state = "warnwhite"
 	},
 /area/station/medical/virology)
+"tRC" = (
+/obj/machinery/door/firedoor,
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/station/medical/sleeper)
 "tRN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -101818,9 +101818,9 @@ xUK
 fBm
 tOx
 ats
-eGf
+cwT
 ats
-eGf
+cwT
 ats
 fqA
 fVW
@@ -112097,7 +112097,7 @@ iOm
 pjs
 pjs
 hfx
-dAm
+tRC
 pjs
 pjs
 hOs
