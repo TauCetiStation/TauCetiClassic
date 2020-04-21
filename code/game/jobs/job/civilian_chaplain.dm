@@ -23,6 +23,8 @@
 	if(visualsOnly)
 		return
 
+	if(H.mind)
+		H.mind.holy_role = HOLY_ROLE_HIGHPRIEST
 	H.equip_to_slot_or_del(new /obj/item/device/pda/chaplain(H), SLOT_BELT)
 
 	spawn(0)

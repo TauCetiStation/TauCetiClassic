@@ -26,7 +26,7 @@
 	power = new(src)
 
 /obj/item/weapon/nullrod/equipped(mob/user, slot)
-	if(user.mind && user.mind.assigned_role == "Chaplain")
+	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		START_PROCESSING(SSobj, src)
 	..()
 
@@ -66,7 +66,7 @@
 		return
 
 	if (M.stat != DEAD)
-		if((M.mind in ticker.mode.cult) && user.mind && user.mind.assigned_role == "Chaplain" && prob(33))
+		if((M.mind in ticker.mode.cult) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && prob(33))
 			to_chat(M, "<span class='danger'>The power of [src] clears your mind of the cult's influence!</span>")
 			to_chat(user, "<span class='danger'>You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.</span>")
 			ticker.mode.remove_cultist(M.mind)
@@ -75,12 +75,12 @@
 		M.visible_message("<span class='danger'>[user] waves [src] over [M.name]'s head</span>")
 
 /obj/item/weapon/nullrod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if (proximity_flag && istype(target, /turf/simulated/floor) && user.mind && user.mind.assigned_role == "Chaplain")
+	if (proximity_flag && istype(target, /turf/simulated/floor) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='notice'>You hit the floor with the [src].</span>")
 		power.action(user, 1)
 
 /obj/item/weapon/nullrod/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
-	if(user.mind.assigned_role == "Chaplain" && istype(W, /obj/item/weapon/storage/bible))
+	if(user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && istype(W, /obj/item/weapon/storage/bible))
 		var/obj/item/weapon/storage/bible/B = W
 		var/obj/item/weapon/nullrod/staff/staff = new /obj/item/weapon/nullrod/staff(loc)
 		if(istype(staff.loc, /mob/living))
@@ -127,7 +127,7 @@
 			visible_message("<span class='notice'>The energy of \the [src] was dispelled.</span>")
 
 /obj/item/weapon/nullrod/staff/attack_self(mob/living/carbon/human/user)
-	if(user.mind.assigned_role == "Chaplain")
+	if(user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		if(!brainmob && !searching)
 			//Start the process of searching for a new user.
 			to_chat(user, "<span class='notice'>You attempt to wake the spirit of the staff...</span>")

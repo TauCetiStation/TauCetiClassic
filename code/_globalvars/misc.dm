@@ -95,3 +95,6 @@ var/list/ignore_vision_inside = list(
 	/obj/structure/droppod,
 	/obj/item/organ/external/head/skeleton,
 	)
+
+var/global/datum/religion_sect/religious_sect
+var/global/favor

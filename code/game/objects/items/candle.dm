@@ -165,7 +165,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	if(istype(W, /obj/item/weapon/book/tome))
 		spook()
 		light()
-	if(user.getBrainLoss() >= 60 || user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")
+	if(user.getBrainLoss() >= 60 || user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")
 		if(!lit && istype(W, /obj/item/weapon/storage/bible))
 			var/obj/item/weapon/storage/bible/B = W
 			if(B.icon_state == "necronomicon")
