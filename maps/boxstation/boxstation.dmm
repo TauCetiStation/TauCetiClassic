@@ -12037,6 +12037,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -32437,19 +32441,20 @@
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "bhH" = (
-/obj/machinery/door_control{
-	id = "bar";
-	name = "Privacy shutter";
-	pixel_x = 8;
-	pixel_y = -24;
-	req_access = list(25,1)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/obj/machinery/computer/arcade,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/noticeboard{
+	pixel_y = 28
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "neutralcorner"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/central)
 "bhI" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -39391,6 +39396,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/newscaster{
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -41235,10 +41243,14 @@
 	},
 /area/station/medical/cryo)
 "bAY" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
+/obj/machinery/door_control{
+	id = "bar";
+	name = "Privacy shutter";
+	pixel_x = 8;
+	pixel_y = -24;
+	req_access = list(25,1)
 	},
-/obj/machinery/vending/cigarette,
+/obj/machinery/computer/arcade,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -42704,8 +42716,7 @@
 	},
 /area/station/cargo/miningoffice)
 "bDY" = (
-/obj/structure/table/woodentable/fancy/black,
-/obj/item/ashtray/plastic,
+/obj/machinery/vending/cigarette,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -42747,7 +42758,7 @@
 	pixel_y = -22
 	},
 /turf/simulated/floor/carpet/purple,
-/area/station/civilian/locker)
+/area/station/civilian/theatre)
 "bEd" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -43176,28 +43187,17 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "bEU" = (
-/obj/machinery/door/airlock/glass{
-	name = "Private Room"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "bar";
-	name = "Bar Shutters";
-	opacity = 0
-	},
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/ashtray/plastic,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
 	},
 /area/station/civilian/bar)
 "bEV" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 4
-	},
-/obj/structure/sign/poster{
-	pixel_x = -32
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 30
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
@@ -43738,7 +43738,7 @@
 /obj/structure/closet/theatrecloset,
 /obj/item/device/guitar/electric,
 /turf/simulated/floor/carpet/purple,
-/area/station/civilian/locker)
+/area/station/civilian/theatre)
 "bFS" = (
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -73613,6 +73613,12 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/station/engineering/engine)
+"ogE" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/station/civilian/bar)
 "ohb" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 9
@@ -74879,6 +74885,28 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"qcu" = (
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "bar";
+	name = "Bar Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/bar)
 "qdb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -76055,28 +76083,6 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
-"rQq" = (
-/obj/machinery/door/firedoor,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "bar";
-	name = "Bar Shutters";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/civilian/bar)
 "rQH" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -77129,10 +77135,21 @@
 	},
 /area/station/hallway/secondary/exit)
 "tze" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 8
+/obj/machinery/door/airlock/glass{
+	name = "Private Room"
 	},
-/turf/simulated/floor/wood,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "bar";
+	name = "Bar Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
 /area/station/civilian/bar)
 "tAb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -77823,6 +77840,9 @@
 	c_tag = "Bar South";
 	dir = 1
 	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -77938,11 +77958,14 @@
 /turf/simulated/wall,
 /area/station/maintenance/disposal)
 "wol" = (
-/obj/structure/closet/crate,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 4
+	},
+/obj/structure/sign/poster{
+	pixel_x = -32
+	},
+/turf/simulated/floor/wood,
+/area/station/civilian/bar)
 "woS" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -101581,7 +101604,7 @@ bDn
 bDR
 bEg
 bEc
-aSP
+bDn
 bFJ
 bEO
 bDn
@@ -101838,7 +101861,7 @@ bDr
 bDO
 bEs
 bFR
-aSP
+bDn
 bDn
 bDn
 bDn
@@ -102353,7 +102376,7 @@ bDn
 bDn
 bDn
 bDn
-wol
+aSM
 bDk
 bEW
 sCd
@@ -102606,10 +102629,10 @@ aUu
 aUu
 bhp
 bzi
-bhH
+bAY
 aGn
 bET
-bEV
+wol
 aGn
 bDk
 bEW
@@ -102864,10 +102887,10 @@ bzi
 bzi
 avN
 avN
-bEU
+tze
 aEh
 bxg
-rQq
+qcu
 bDk
 bFW
 bFW
@@ -103120,10 +103143,10 @@ bzi
 bzi
 avN
 avN
-bAY
+bDY
 aGn
-aEh
-tze
+bEV
+ogE
 aGn
 tgJ
 bFW
@@ -103377,7 +103400,7 @@ bxf
 avN
 avN
 nZG
-bDY
+bEU
 aGn
 aGn
 aGn
@@ -103884,7 +103907,7 @@ avP
 cdD
 azO
 aGn
-aRj
+bhH
 beF
 bhv
 bCD
