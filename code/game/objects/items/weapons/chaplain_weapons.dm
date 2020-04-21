@@ -113,11 +113,11 @@
 	qdel(brainmob.GetComponent(/datum/component/bounded))
 	brainmob = null
 
-	QDEL_NULL(god_image)
-
 	if((slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND) && ismob(loc))
 		var/mob/M = loc
 		hide_god(M)
+
+	QDEL_NULL(god_image)
 
 	return ..()
 
