@@ -4957,12 +4957,6 @@
 	pixel_x = 26;
 	pixel_y = 1
 	},
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"
