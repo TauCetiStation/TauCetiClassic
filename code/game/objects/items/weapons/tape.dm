@@ -127,7 +127,7 @@
 		return TRUE
 	if(allowed(mover))
 		return TRUE
-	if (mover.pass_flags & PASSTABLE || istype(mover, /obj/effect/meteor) || mover.throwing)
+	if (mover.pass_flags & (PASSTABLE | PASSCRAWL) || istype(mover, /obj/effect/meteor) || mover.throwing)
 		return TRUE
 	else
 		return FALSE
@@ -148,12 +148,24 @@
 /obj/item/tape/attack_paw(mob/user)
 	breaktape(null, user, FALSE)
 
+/obj/item/tape/attack_alien(mob/user)
+	breaktape(W = null, user = user, forced = FALSE)
+
+/obj/item/tape/attack_animal(mob/living/simple_animal/M)
+	breaktape(W = null, user = M, forced = FALSE)
+
 /obj/item/tape/blob_act()
 	breaktape(W = null, user = null, forced = TRUE)
 
 /obj/item/tape/ex_act()
 	breaktape(W = null, user = null, forced = TRUE)
 
+/obj/item/tape/Bumped(mob/user)
+	if(istype(user, /obj/mecha))
+		breaktape(W = null, user = null, forced = TRUE)	
+	else if(user.a_intent == I_HURT)
+		breaktape(W = null, user = user, forced = FALSE)
+	
 /obj/item/tape/proc/breaktape(obj/item/weapon/W, mob/user, forced = FALSE)
 	if((user && user.a_intent == "help") && (W && !W.can_puncture() && allowed(user)) && !forced)
 		to_chat(user, "<span class='warning'>You can't break the [src] with that!</span>")
