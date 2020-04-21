@@ -74,6 +74,15 @@
 	density = FALSE
 	var/islam = FALSE
 
+	var/obj/item/weapon/nullrod/staff/container
+
+/mob/living/simple_animal/shade/god/Destroy()
+	if(container)
+		container.brainmob = null
+		QDEL_NULL(container.god_image)
+		container = null
+	return ..()
+
 /mob/living/simple_animal/shade/god/Login()
 	..()
 	stat = CONSCIOUS
@@ -83,7 +92,7 @@
 	if(ismob(A))
 		var/mob/M = A
 		var/obj/item/weapon/nullrod/staff/S = M.is_in_hands(/obj/item/weapon/nullrod/staff)
-		if(S)
+		if(S && S.brainmob == src)
 			// Pull them in closer...
 			step_towards(A, src)
 			SetNextMove(CLICK_CD_RAPID)

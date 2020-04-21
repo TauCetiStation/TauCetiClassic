@@ -111,6 +111,7 @@
 	// Damn... He's free now.
 	brainmob.invisibility = 0
 	qdel(brainmob.GetComponent(/datum/component/bounded))
+	brainmob.container = null
 	brainmob = null
 
 	if((slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND) && ismob(loc))
@@ -239,6 +240,7 @@
 	I.appearance = brainmob
 	god_image = I
 
+	brainmob.container = src
 	brainmob.AddComponent(/datum/component/bounded, src, 0, 3)
 
 	if((slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND) && ismob(loc))
