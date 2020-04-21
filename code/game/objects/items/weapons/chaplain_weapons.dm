@@ -200,7 +200,6 @@
 	brainmob = new(get_turf(src))
 	brainmob.mutations.Add(XRAY) //its the god
 	brainmob.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-	// Currently doesn't work on simple mobs.
 	brainmob.status_flags |= GODMODE
 
 	brainmob.invisibility = INVISIBILITY_OBSERVER
