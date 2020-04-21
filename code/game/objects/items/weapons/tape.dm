@@ -160,12 +160,14 @@
 /obj/item/tape/ex_act()
 	breaktape(W = null, user = null, forced = TRUE)
 
-/obj/item/tape/Bumped(mob/user)
-	if(istype(user, /obj/mecha))
-		breaktape(W = null, user = null, forced = TRUE)	
-	else if(user.a_intent == I_HURT)
-		breaktape(W = null, user = user, forced = FALSE)
-	
+/obj/item/tape/Bumped(atom/movable/AM)
+	if(istype(AM, /obj/mecha))
+		breaktape(W = null, user = null, forced = TRUE)
+	else if(isliving(AM))
+		var/mob/living/L = AM
+		if(L.a_intent == I_HURT)
+			breaktape(W = null, user = L, forced = FALSE)
+
 /obj/item/tape/proc/breaktape(obj/item/weapon/W, mob/user, forced = FALSE)
 	if((user && user.a_intent == "help") && (W && !W.can_puncture() && allowed(user)) && !forced)
 		to_chat(user, "<span class='warning'>You can't break the [src] with that!</span>")
