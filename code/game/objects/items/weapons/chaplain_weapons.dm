@@ -177,12 +177,18 @@
 	brainmob.real_name = name
 	brainmob.mind.assigned_role = "Chaplain`s staff"
 	brainmob.mind.memory = god_lore
+	brainmob.mind.holy_role = HOLY_ROLE_HIGHPRIEST
 	candidate.cancel_camera()
 	candidate.reset_view()
+
 	if(islam)
 		brainmob.islam = TRUE
 		brainmob.universal_speak = FALSE
 		brainmob.speak.Add("[god_name] akbar!")
+	
+	if(religious_sect)
+		religious_sect.god = brainmob
+		religious_sect.give_god_spells()
 
 	name = "Staff of [god_name]"
 	if(god_name == "Aghanim") //sprite is very similar

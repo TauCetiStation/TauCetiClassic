@@ -67,6 +67,16 @@
 		sect_to_altar.on_sacrifice(C, user)
 		return TRUE
 	//everything below is assumed you're bibling it up
+	if(istype(C, /obj/item/weapon/nullrod/staff))
+		if(!religious_sect)
+			to_chat(user, "<span class='notice'>First create a sect.</span>")
+			return
+		if(!religious_sect.god)
+			var/obj/item/weapon/nullrod/staff/S = C
+			religious_sect.god = S.brainmob
+			to_chat(user, "<span class='notice'>You binding your god to sect!")
+			religious_sect.give_god_spells()
+			return
 	if(!istype(C, /obj/item/weapon/storage/bible))
 		return
 	if(sect_to_altar)
@@ -99,8 +109,13 @@
 	if(!sect_select)
 		to_chat(user,"<span class ='warning'>You cannot select a sect at this time.</span>")
 		return
+	
 	var/type_selected = available_options[sect_select]
 	religious_sect = new type_selected()
+
+	if(istype(religious_sect, /datum/religion_sect/custom))
+		religious_sect.name = ticker.Bible_religion_name
+
 	for(var/i in player_list)
 		if(!isliving(i))
 			continue
@@ -108,13 +123,12 @@
 		if(am_i_holy_living.mind && !am_i_holy_living.mind.holy_role)
 			continue
 		religious_sect.on_conversion(am_i_holy_living)
+
 	sect_to_altar = religious_sect
 	if(sect_to_altar.altar_icon)
 		icon = sect_to_altar.altar_icon
 	if(sect_to_altar.altar_icon_state)
 		icon_state = sect_to_altar.altar_icon_state
-
-
 
 /obj/structure/altar_of_gods/proc/generate_available_sects(mob/user) //eventually want to add sects you get from unlocking certain achievements
 	. = list()

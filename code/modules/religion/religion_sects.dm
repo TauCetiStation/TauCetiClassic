@@ -32,6 +32,10 @@
 	var/altar_icon
 /// Changes the Altar of Gods icon_state
 	var/altar_icon_state
+/// God in sect
+	var/mob/living/simple_animal/shade/god/god = null
+/// Add your god spells
+	var/list/spells
 
 /datum/religion_sect/New()
 	if(desired_items)
@@ -80,7 +84,7 @@
 		. = favor //if favor = 5 and we want to subtract 10, we'll only be able to subtract 5
 	if((favor + amount > max_favor))
 		. = (max_favor-favor) //if favor = 5 and we want to add 10 with a max of 10, we'll only be able to add 5
-	favor = between(0, favor+amount,  max_favor)
+	favor = between(0, favor + amount,  max_favor)
 
 /// Sets favor to a specific amount. Can provide optional features based on a user.
 /datum/religion_sect/proc/set_favor(amount = 0, mob/living/L)
@@ -90,30 +94,13 @@
 /// Activates when an individual uses a rite. Can provide different/additional benefits depending on the user.
 /datum/religion_sect/proc/on_riteuse(mob/living/user, obj/structure/altar_of_gods/AOG)
 
-/// Replaces the bible's bless mechanic. Return TRUE if you want to not do the brain hit.
-/datum/religion_sect/proc/sect_bless(mob/living/L, mob/living/user)
-	if(!ishuman(L))
-		return FALSE
-	var/mob/living/carbon/human/H = L
-	for(var/X in H.bodyparts)
-		var/obj/item/organ/external/BP = X
-		if(BP.status == BODYPART_ROBOTIC)
-			to_chat(user, "<span class='warning'>[ticker.Bible_deity_name] refuses to heal this metallic taint!</span>")
-			return TRUE
-
-	var/heal_amt = 10
-	var/list/hurt_limbs = H.get_damaged_bodyparts(1, 1, null, BODYPART_ORGANIC)
-
-	if(hurt_limbs.len)
-		for(var/X in hurt_limbs)
-			var/obj/item/organ/external/affecting = X
-			if(affecting.heal_damage(heal_amt, heal_amt, null, BODYPART_ORGANIC))
-				H.UpdateDamageIcon(affecting)
-		H.visible_message("<span class='notice'>[user] heals [H] with the power of [ticker.Bible_deity_name]!</span>")
-		to_chat(H, "<span class='boldnotice'>May the power of [ticker.Bible_deity_name] compel you to be healed!</span>")
-		playsound(user, "punch", 25, TRUE, -1)
-		to_chat(H, "<span class='nicegreen'>I've been blessed.</span>\n")
-	return TRUE
+/datum/religion_sect/proc/give_god_spells()
+	if(!spells || !god)
+		return
+	var/obj/effect/proc_holder/spell/S
+	for(var/spell in spells)
+		S = new spell()
+		god.AddSpell(S)
 
 /datum/religion_sect/puritanism
 	name = "Puritanism (Default)"
@@ -128,41 +115,6 @@
 	rites_list = list(/datum/religion_rites/synthconversion)
 	altar_icon_state = "tomealtar" //TODO
 
-/datum/religion_sect/technophile/sect_bless(mob/living/L, mob/living/user)
-	if(isrobot(L))
-		var/mob/living/silicon/robot/R = L
-		var/charge_amt = 50
-		if(L.mind && L.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-			charge_amt *= 2
-		if(R.cell)
-			R.cell.charge += charge_amt
-		R.visible_message("<span class='notice'>[user] charges [R] with the power of [ticker.Bible_deity_name]!</span>")
-		to_chat(R, "<span class='boldnotice'>You are charged by the power of [ticker.Bible_deity_name]!</span>")
-		to_chat(R, "<span class='nicegreen'>I've been blessed.</span>\n")
-		playsound(user, 'sound/effects/bang.ogg', 25, TRUE, -1)
-		return TRUE
-	if(!ishuman(L))
-		return
-	var/mob/living/carbon/human/H = L
-
-	//if we're not targetting a robot part we stop early
-	var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel)
-	if(BP.status != BODYPART_ROBOTIC)
-		H.visible_message("<span class='notice'>[user] charges [H] with the power of [ticker.Bible_deity_name]!</span>")
-		to_chat(H, "<span class='boldnotice'>You feel charged by the power of [ticker.Bible_deity_name]!</span>")
-		to_chat(H, "<span class='nicegreen'>I've been blessed.</span>\n")
-		return TRUE
-
-	//charge(?) and go
-	if(BP.heal_damage(5, 5, null, BODYPART_ROBOTIC))
-		H.UpdateDamageIcon(BP)
-
-	H.visible_message("<span class='notice'>[user] repairs [H] with the power of [ticker.Bible_deity_name]!</span>")
-	to_chat(H, "<span class='boldnotice'>The inner machinations of [ticker.Bible_deity_name] repairs you!</span>")
-	playsound(user, 'sound/effects/bang.ogg', 25, TRUE, -1)
-	to_chat(H, "<span class='nicegreen'>I've been blessed.</span>\n")
-	return TRUE
-
 /datum/religion_sect/technophile/can_sacrifice(obj/item/I, mob/living/L)
 	if(!..())
 		return FALSE
@@ -172,7 +124,6 @@
 		return FALSE
 	return TRUE
 
-
 /datum/religion_sect/technophile/on_sacrifice(obj/item/I, mob/living/L)
 	if(!is_type_in_typecache(I, desired_items_typecache))
 		return
@@ -180,3 +131,14 @@
 	adjust_favor(round(the_cell.charge/500), L) //BALANCE
 	to_chat(L, "<span class='notice'>You offer [the_cell]'s power to [ticker.Bible_deity_name], pleasing them.</span>")
 	qdel(I)
+
+/datum/religion_sect/custom
+	name = "Your sect"
+	desc = "Follow the orders of your god."
+	convert_opener = "I am the first to enter here.."
+	desired_items = list() //TODO
+	rites_list = list() //TODO
+	altar_icon_state = "tomealtar" //TODO
+	//spells = list(/obj/effect/proc_holder/spell/pickdesire)
+	spells = list(/obj/effect/proc_holder/spell/targeted/smoke, 
+                  /obj/effect/proc_holder/spell/aoe_turf/conjure/creature)

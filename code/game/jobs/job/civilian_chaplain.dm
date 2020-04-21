@@ -25,13 +25,14 @@
 
 	if(H.mind)
 		H.mind.holy_role = HOLY_ROLE_HIGHPRIEST
+
 	H.equip_to_slot_or_del(new /obj/item/device/pda/chaplain(H), SLOT_BELT)
 
 	spawn(0)
 		var/religion_name = "Christianity"
 		var/new_religion = sanitize_safe(input(H, "You are the crew services officer. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name), MAX_NAME_LEN)
 
-		if (!new_religion)
+		if(!new_religion)
 			new_religion = religion_name
 
 		switch(lowertext(new_religion))
@@ -69,6 +70,8 @@
 			else
 				B.name = "The Holy Book of [new_religion]"
 				B.god_lore = sanitize_safe(input(H, "You can come up with the lore of your god in [new_religion] religion.", "Lore for new god", ""), MAX_MESSAGE_LEN)
+		if(ticker)
+			ticker.Bible_religion_name = new_religion
 		feedback_set_details("religion_name","[new_religion]")
 
 	spawn(1)

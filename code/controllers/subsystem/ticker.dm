@@ -27,6 +27,7 @@ var/datum/subsystem/ticker/ticker
 	var/Bible_item_state					//item_state the chaplain has chosen for his bible
 	var/Bible_name							//name of the bible
 	var/Bible_deity_name					//name of chaplin's deity
+	var/Bible_religion_name                 //name of new chaplain religion
 
 	var/random_players = 0					// if set to nonzero, ALL players who latejoin or declare-ready join will have random appearances/genders
 

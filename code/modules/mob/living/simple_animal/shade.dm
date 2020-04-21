@@ -73,3 +73,9 @@
 	universal_understand = TRUE
 	pass_flags = PASSTABLE | PASSMOB | PASSGLASS | PASSGRILLE
 	var/islam = FALSE
+
+/mob/living/simple_animal/shade/god/Stat()
+	..()
+	if(statpanel("Status"))
+		if(religious_sect)
+			stat(null, "Favor: [religious_sect.favor]/[religious_sect.max_favor]")
