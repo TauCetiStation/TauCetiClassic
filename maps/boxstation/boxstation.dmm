@@ -17395,9 +17395,8 @@
 "aEM" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /obj/machinery/camera{
-	c_tag = "Research Director's Office";
-	dir = 1;
-	network = list("SS13","Research")
+	c_tag = "Hydroponics Lobby";
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "green"
@@ -69260,7 +69259,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "gYZ" = (
-/obj/item/clothing/suit/nerdshirt,
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/device/multitool,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "gZb" = (
@@ -70966,7 +70967,7 @@
 "jOv" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
-	c_tag = "Arrival Dock's South 1";
+	c_tag = "Arrival Dock's South 2";
 	dir = 8
 	},
 /obj/machinery/firealarm{
@@ -73708,9 +73709,7 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "onu" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/toolbox/electrical,
-/obj/item/device/multitool,
+/obj/item/clothing/suit/nerdshirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "oob" = (
@@ -75486,7 +75485,7 @@
 	pixel_x = -22
 	},
 /obj/machinery/camera{
-	c_tag = "First Escape Pod";
+	c_tag = "Locker Room";
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -100031,10 +100030,10 @@ aGn
 aGn
 aGn
 aSM
-aSM
 gYZ
 aSM
 onu
+aSM
 dLO
 aFf
 bEW
@@ -100288,10 +100287,10 @@ bwJ
 owK
 byR
 bEW
-aSM
-aSM
-aSM
 bEW
+aSM
+aSM
+aSM
 bEW
 aFf
 moP
