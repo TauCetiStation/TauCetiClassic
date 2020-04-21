@@ -701,15 +701,16 @@
 	custom_metabolism = 0.1
 	taste_message = "wholeness"
 	restrict_species = list(IPC, DIONA)
+	data = list()
 
 /datum/reagent/nanocalcium/on_general_digest(mob/living/carbon/human/M)
 	..()
 	if(!ishuman(M))
 		return
 
-	if(!data)
-		data = 1
-	data++
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
 	switch(data)
 		if(1 to 10)
 			M.make_dizzy(1)
@@ -728,5 +729,3 @@
 						E.brute_dam = 0
 						E.status &= ~BROKEN
 						holder.remove_reagent("nanocalcium", 10)
-
-	return ..()
