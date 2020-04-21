@@ -114,7 +114,7 @@
 
 	return 0
 
-/obj/item/weapon/reagent_containers/food/snacks/afterattack(obj/target, mob/user, proximity)
+/obj/item/weapon/reagent_containers/food/snacks/afterattack(atom/target, mob/user, proximity, params)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/examine(mob/user)
@@ -1700,12 +1700,12 @@
 	. = ..()
 	reagents.add_reagent("nutriment",10)
 
-/obj/item/weapon/reagent_containers/food/snacks/monkeycube/afterattack(obj/O, mob/user, proximity)
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(istype(O,/obj/structure/sink) && !wrapped)
+	if(istype(target,/obj/structure/sink) && !wrapped)
 		to_chat(user, "<span class='notice'>You place \the [name] under a stream of water...</span>")
 		user.drop_item()
-		loc = get_turf(O)
+		loc = get_turf(target)
 		return Expand()
 	..()
 

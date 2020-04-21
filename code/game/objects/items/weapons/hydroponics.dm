@@ -142,7 +142,7 @@
 		else
 			user.take_bodypart_damage(0, force)
 
-/obj/item/weapon/grown/nettle/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/grown/nettle/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if(force > 0)
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
@@ -187,7 +187,7 @@
 			M.Weaken(force/15)
 		M.drop_item()
 
-/obj/item/weapon/grown/deathnettle/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/grown/deathnettle/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if (force > 0)
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off

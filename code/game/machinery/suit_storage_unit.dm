@@ -99,8 +99,6 @@
 			return
 		else
 			return
-	return
-
 
 /obj/machinery/suit_storage_unit/ui_interact(mob/user)
 	var/dat
