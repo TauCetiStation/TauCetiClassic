@@ -704,6 +704,9 @@
 
 /datum/reagent/nanocalcium/on_general_digest(mob/living/carbon/human/M)
 	..()
+	if(!ishuman(M))
+		return
+
 	if(!data)
 		data = 1
 	data++
@@ -714,19 +717,16 @@
 				to_chat(M, "<span class='warning'>Your skin feels hot and your veins are on fire!</span>")
 		if(10 to 20)
 			if(M.reagents.has_reagent("tramadol") || M.reagents.has_reagent("oxycodone"))
-				M.adjustToxLoss(5, FALSE)
+				M.adjustToxLoss(5)
 			else
-				if(prob(75))
-					M.confused += 2
-				else
-					M.AdjustWeakened(2)
-		if(20 to INFINITY)
+				M.confused += 2
+		if(20 to 60)
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_broken())
 					if(prob(50))
 						to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
 						E.brute_dam = 0
 						E.status &= ~BROKEN
-
+						holder.remove_reagent("nanocalcium", 10)
 
 	return ..()
