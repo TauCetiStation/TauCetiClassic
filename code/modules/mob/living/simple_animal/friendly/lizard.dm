@@ -30,12 +30,12 @@
 	. = ..()
 	desc = "It doesn't hiss anymore."
 
-/mob/living/simple_animal/lizard/Crossed(AM)
+/mob/living/simple_animal/lizard/Crossed(atom/movable/AM)
 	if(ishuman(AM))
 		if(!stat)
 			var/mob/M = AM
 			to_chat(M, "<span class='notice'>[bicon(src)] Hiss!</span>")
-	..()
+	. = ..()
 
 /mob/living/simple_animal/lizard/MouseDrop(atom/over_object)
 	var/mob/living/carbon/H = over_object
