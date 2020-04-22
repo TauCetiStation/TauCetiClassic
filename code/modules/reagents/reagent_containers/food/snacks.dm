@@ -97,10 +97,7 @@
 
 
 		if(reagents)								//Handle ingestion of the reagent.
-			if(liquid_food)
-				playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(20, 50))
-			else
-				playsound(M, 'sound/items/eatfood.ogg', VOL_EFFECTS_MASTER, rand(20, 50))
+			playsound(M, liquid_food ? 'sound/items/drink.ogg' : 'sound/items/eatfood.ogg', VOL_EFFECTS_MASTER, rand(20, 50))
 			if(reagents.total_volume)
 				if(reagents.total_volume > bitesize)
 					/*
