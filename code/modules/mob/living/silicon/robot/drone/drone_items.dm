@@ -104,9 +104,9 @@
 /obj/item/weapon/gripper/attack(mob/living/carbon/M, mob/living/carbon/user)
 	return
 
-/obj/item/weapon/gripper/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/weapon/gripper/afterattack(atom/target, mob/user, proximity, params)
 
-	if(!target || !flag) //Target is invalid or we are not adjacent.
+	if(!target || !proximity) //Target is invalid or we are not adjacent.
 		return
 
 	//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
@@ -193,9 +193,9 @@
 /obj/item/weapon/matter_decompiler/attack(mob/living/carbon/M, mob/living/carbon/user)
 	return
 
-/obj/item/weapon/matter_decompiler/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/weapon/matter_decompiler/afterattack(atom/target, mob/user, proximity, params)
 
-	if(!flag) return //Not adjacent.
+	if(!proximity) return //Not adjacent.
 
 	//We only want to deal with using this on turfs. Specific items aren't important.
 	var/turf/T = get_turf(target)

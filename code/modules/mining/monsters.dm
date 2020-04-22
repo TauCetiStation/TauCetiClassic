@@ -463,8 +463,8 @@
 	w_class = ITEM_SIZE_NORMAL
 	layer = 4
 
-/obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
-	if(proximity_flag)
+/obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity, params)
+	if(proximity)
 		if(istype(target, /obj/item/clothing/suit/space) || istype(target, /obj/item/clothing/head/helmet/space))
 			var/obj/item/clothing/C = target
 			var/list/current_armor = C.armor

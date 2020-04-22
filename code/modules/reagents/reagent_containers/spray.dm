@@ -32,29 +32,30 @@
 	. = ..()
 	verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
 
-/obj/item/weapon/reagent_containers/spray/afterattack(atom/A, mob/user)
-	if(istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
-	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/stool/bed/chair/janitorialcart))
+/obj/item/weapon/reagent_containers/spray/afterattack(atom/target, mob/user, proximity, params)
+	if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) || istype(target, /obj/structure/closet) \
+	|| istype(target, /obj/item/weapon/reagent_containers) || istype(target, /obj/structure/sink) || istype(target, /obj/structure/stool/bed/chair/janitorialcart))
 		return
 
-	if(istype(A, /obj/effect/proc_holder/spell))
+	if(istype(target, /obj/effect/proc_holder/spell))
 		return
 
-	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
+	if(istype(target, /obj/structure/reagent_dispensers) && get_dist(src,target) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
+		var/obj/structure/reagent_dispensers/RD = target
 		if(!is_open_container())
 			to_chat(user, "<span class='notice'>[src] can't be filled right now.</span>")
 			return
 
-		if(!A.reagents.total_volume && A.reagents)
-			to_chat(user, "<span class='notice'>[A] does not have enough liquids.</span>")
+		if(!RD.reagents.total_volume && RD.reagents)
+			to_chat(user, "<span class='notice'>[RD] does not have enough liquids.</span>")
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
 			to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 			return
 
-		var/trans = A.reagents.trans_to(src, A:amount_per_transfer_from_this)
-		to_chat(user, "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [A].</span>")
+		var/trans = RD.reagents.trans_to(src, RD.amount_per_transfer_from_this)
+		to_chat(user, "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [RD].</span>")
 		return
 
 	if(reagents.total_volume < amount_per_transfer_from_this)
@@ -79,7 +80,7 @@
 
 	user.SetNextMove(CLICK_CD_INTERACT * 2)
 
-	var/turf/T = get_turf(A) // BS12 edit, with the wall spraying.
+	var/turf/T = get_turf(target) // BS12 edit, with the wall spraying.
 	var/turf/T_start = get_turf(src)
 
 	if(triple_shot && reagents.total_volume >= amount_per_transfer_from_this * 3) // If it doesn't have triple the amount of reagents, but it passed the previous check, make it shoot just one tiny spray.

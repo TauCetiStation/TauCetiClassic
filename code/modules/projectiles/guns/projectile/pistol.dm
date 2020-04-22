@@ -64,7 +64,7 @@
 	can_be_holstered = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
 
-/obj/item/weapon/gun/projectile/automatic/deagle/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/projectile/automatic/deagle/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	update_icon()
 	return
@@ -90,7 +90,7 @@
 	origin_tech = "combat=3"
 	mag_type = /obj/item/ammo_box/magazine/m75
 
-/obj/item/weapon/gun/projectile/automatic/gyropistol/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/projectile/automatic/gyropistol/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
 		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)
@@ -140,7 +140,7 @@
 	can_be_holstered = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_colt1911.ogg'
 
-/obj/item/weapon/gun/projectile/automatic/colt1911/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/projectile/automatic/colt1911/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	update_icon()
 	return

@@ -255,8 +255,6 @@
 	held_item = null
 	return 1
 
-	return
-
 /mob/living/simple_animal/spiderbot/verb/get_item()
 	set name = "Pick up item"
 	set category = "Spiderbot"

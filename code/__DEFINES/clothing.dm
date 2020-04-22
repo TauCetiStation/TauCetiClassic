@@ -54,7 +54,9 @@
 //sprite sheet slot types(as also seen in update_icon.dm)
 #define SPRITE_SHEET_HELD "held"
 #define SPRITE_SHEET_UNIFORM "uniform"
+#define SPRITE_SHEET_UNIFORM_FAT "uniform_fat"
 #define SPRITE_SHEET_SUIT "suit"
+#define SPRITE_SHEET_SUIT_FAT "suit_fat"
 #define SPRITE_SHEET_BELT "belt"
 #define SPRITE_SHEET_HEAD "head"
 #define SPRITE_SHEET_BACK "back"
@@ -111,9 +113,6 @@
 #define SUIT_SENSOR_BINARY   1
 #define SUIT_SENSOR_VITAL    2
 #define SUIT_SENSOR_TRACKING 3
-
-#define BLOCKHEADHAIR 4             // temporarily removes the user's hair overlay. Leaves facial hair.
-#define BLOCKHAIR	32768			// temporarily removes the user's hair, facial and otherwise.
 
 // Cutting shoes flags
 
