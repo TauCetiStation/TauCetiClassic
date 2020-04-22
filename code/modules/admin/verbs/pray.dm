@@ -24,13 +24,13 @@
 
 	var/mutable_appearance/cross = mutable_appearance('icons/obj/storage.dmi', "bible")
 	var/font_color = "purple"
-	var/prayer_type = "PRAYER"
+	var/prayer_type = "prayer"
 	var/deity
 
 	if(usr.job == "Chaplain")
 		cross.icon_state = "kingyellow"
 		font_color = "blue"
-		prayer_type = "CHAPLAIN PRAYER"
+		prayer_type = "chaplain prayer"
 
 		if(ticker.Bible_deity_name)
 			deity = ticker.Bible_deity_name
@@ -38,7 +38,7 @@
 	else if(iscultist(usr))
 		cross.icon_state = "tome"
 		font_color = "red"
-		prayer_type = "CULTIST PRAYER"
+		prayer_type = "cultist prayer"
 		deity = "Nar'Sie"
 
 	//parse the language code and consume it

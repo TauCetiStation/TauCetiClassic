@@ -297,7 +297,7 @@
 		if ("pray")
 			message_type = SHOWMSG_VISUAL
 			message = "prays."
-			conditions_for_emote = ONE_HAND_IS_USABLE && (get_species() != ZOMBIE)
+			conditions_for_emote = BOTH_HANDS_ARE_USABLE
 			INVOKE_ASYNC(src, /mob.proc/pray_animation)
 
 // ========== SPECIAL ==========
