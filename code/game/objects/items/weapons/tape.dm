@@ -127,7 +127,7 @@
 		return TRUE
 	if(allowed(mover))
 		return TRUE
-	if (mover.pass_flags & PASSTABLE || istype(mover, /obj/effect/meteor) || mover.throwing)
+	if (mover.pass_flags & (PASSTABLE | PASSCRAWL) || istype(mover, /obj/effect/meteor) || mover.throwing)
 		return TRUE
 	else
 		return FALSE
@@ -148,11 +148,25 @@
 /obj/item/tape/attack_paw(mob/user)
 	breaktape(null, user, FALSE)
 
+/obj/item/tape/attack_alien(mob/user)
+	breaktape(W = null, user = user, forced = FALSE)
+
+/obj/item/tape/attack_animal(mob/living/simple_animal/M)
+	breaktape(W = null, user = M, forced = FALSE)
+
 /obj/item/tape/blob_act()
 	breaktape(W = null, user = null, forced = TRUE)
 
 /obj/item/tape/ex_act()
 	breaktape(W = null, user = null, forced = TRUE)
+
+/obj/item/tape/Bumped(atom/movable/AM)
+	if(istype(AM, /obj/mecha))
+		breaktape(W = null, user = null, forced = TRUE)
+	else if(isliving(AM))
+		var/mob/living/L = AM
+		if(L.a_intent == I_HURT)
+			breaktape(W = null, user = L, forced = FALSE)
 
 /obj/item/tape/proc/breaktape(obj/item/weapon/W, mob/user, forced = FALSE)
 	if((user && user.a_intent == "help") && (W && !W.can_puncture() && allowed(user)) && !forced)
