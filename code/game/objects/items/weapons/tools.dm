@@ -326,18 +326,18 @@
 		location.hotspot_expose(700, 5, src)
 
 
-/obj/item/weapon/weldingtool/afterattack(obj/O, mob/user, proximity)
+/obj/item/weapon/weldingtool/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && !src.welding)
-		O.reagents.trans_to(src, max_fuel)
+	if (istype(target, /obj/structure/reagent_dispensers/fueltank) && get_dist(src, target) <= 1 && !src.welding)
+		target.reagents.trans_to(src, max_fuel)
 		to_chat(user, "<span class='notice'>Welder refueled</span>")
 		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 		return
-	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
+	else if (istype(target, /obj/structure/reagent_dispensers/fueltank) && get_dist(src, target) <= 1 && src.welding)
 		message_admins("[key_name_admin(user)] triggered a fueltank explosion. [ADMIN_JMP(user)]")
 		log_game("[key_name(user)] triggered a fueltank explosion.")
 		to_chat(user, "<span class='rose'>That was stupid of you.</span>")
-		var/obj/structure/reagent_dispensers/fueltank/tank = O
+		var/obj/structure/reagent_dispensers/fueltank/tank = target
 		tank.explode()
 		return
 	if (src.welding)
@@ -346,16 +346,16 @@
 		if (istype(location, /turf))
 			location.hotspot_expose(700, 50, src)
 
-			if(isliving(O))				//Welding can ignite mobs, splashed with fuel
-				var/mob/living/L = O
+			if(isliving(target))				//Welding can ignite mobs, splashed with fuel
+				var/mob/living/L = target
 				L.IgniteMob()
-		if(isturf(O))
+		if(isturf(target))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
-			s.set_up(3, 1, O)
+			s.set_up(3, 1, target)
 			s.start()
-		else if(isobj(O))
+		else if(isobj(target))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
-			s.set_up(3, 1, O)
+			s.set_up(3, 1, target)
 			s.start()
 	return
 

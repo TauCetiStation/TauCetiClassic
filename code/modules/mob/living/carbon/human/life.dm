@@ -168,7 +168,7 @@
 			visible_message("<span class='danger'>[src] starts having a seizure!</span>", self_message = "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
 			make_jittery(1000)
-	if (disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
+	if ((disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH)) && !reagents.has_reagent("dextromethorphan"))
 		if ((prob(5) && paralysis <= 1))
 			drop_item()
 			spawn( 0 )

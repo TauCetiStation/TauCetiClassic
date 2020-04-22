@@ -148,7 +148,7 @@
 	icon = 'icons/atmos/clamp.dmi'
 	icon_state = "pclamp0"
 
-/obj/item/clamp/afterattack(var/atom/A, mob/user as mob, proximity)
+/obj/item/clamp/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 
