@@ -17,6 +17,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	var/charge_max = 100 //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
 	var/charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
+	var/favor_cost = 0 //cost for religious sect
 
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
@@ -147,7 +148,10 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(prob(critfailchance))
 		critfail(targets)
 	else
-		cast(targets)
+		if(favor_cost > 0)
+			cast_with_favor(targets)
+		else
+			cast(targets)
 	after_cast(targets)
 
 /obj/effect/proc_holder/spell/proc/before_cast(list/targets)
@@ -190,6 +194,13 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 /obj/effect/proc_holder/spell/proc/cast(list/targets)
 	return
+
+//Casting spells behind favor
+/obj/effect/proc_holder/spell/proc/cast_with_favor(list/targets)
+	if(religious_sect.favor <= favor_cost)
+		to_chat(religious_sect.god, "You need [favor_cost - religious_sect.favor] more favors.")
+		return
+	religious_sect.favor -= favor_cost 
 
 /obj/effect/proc_holder/spell/proc/critfail(list/targets)
 	return

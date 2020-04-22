@@ -97,6 +97,7 @@
 /datum/religion_sect/proc/give_god_spells()
 	if(!spells || !god)
 		return
+
 	var/obj/effect/proc_holder/spell/S
 	for(var/spell in spells)
 		S = new spell()
@@ -110,7 +111,7 @@
 /datum/religion_sect/technophile
 	name = "Technophile"
 	desc = "A sect oriented around technology."
-	convert_opener = "May you find peace in a metal shell, acolyte.<br>Bibles now recharge cyborgs and heal robotic limbs if targeted, but they do not heal organic limbs. You can now sacrifice cells, with favor depending on their charge."
+	convert_opener = "May you find peace in a metal shell, acolyte.<br>You can now sacrifice cells, with favor depending on their charge."
 	desired_items = list(/obj/item/weapon/stock_parts/cell)
 	rites_list = list(/datum/religion_rites/synthconversion)
 	altar_icon_state = "tomealtar" //TODO
@@ -141,4 +142,5 @@
 	altar_icon_state = "tomealtar" //TODO
 	//spells = list(/obj/effect/proc_holder/spell/pickdesire)
 	spells = list(/obj/effect/proc_holder/spell/targeted/smoke, 
-                  /obj/effect/proc_holder/spell/aoe_turf/conjure/creature)
+				  /obj/effect/proc_holder/spell/aoe_turf/conjure/creature,
+				  /obj/effect/proc_holder/spell/pickdesire)
