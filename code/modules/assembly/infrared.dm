@@ -231,7 +231,8 @@
 /obj/effect/beam/i_beam/Bumped()
 	hit()
 
-/obj/effect/beam/i_beam/Crossed(atom/movable/AM as mob|obj)
+/obj/effect/beam/i_beam/Crossed(atom/movable/AM)
+	. = ..()
 	if(istype(AM, /obj/effect/beam))
 		return
 	hit()

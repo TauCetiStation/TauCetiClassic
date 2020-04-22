@@ -36,6 +36,7 @@ var/timestop_count = 0
 	return ..()
 
 /obj/effect/timestop/Crossed(atom/movable/AM)
+	. = ..()
 	if(!isliving(AM) && !isobj(AM))
 		return
 	timestop(AM)

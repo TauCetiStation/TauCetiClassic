@@ -79,7 +79,7 @@
 	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
 	icon_state = "fork"
 
-/obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
 	if(!proximity) return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
@@ -103,7 +103,7 @@
 	force = 0
 
 
-/obj/item/weapon/kitchen/utensil/pfork/afterattack(atom/target, mob/user, proximity)  //make them useful or some slow soap for plastic. Just copy-paste from usual fork
+/obj/item/weapon/kitchen/utensil/pfork/afterattack(atom/target, mob/user, proximity, params)  //make them useful or some slow soap for plastic. Just copy-paste from usual fork
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
 	if(!proximity) return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
