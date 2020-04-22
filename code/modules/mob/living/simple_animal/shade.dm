@@ -85,7 +85,12 @@
 	// So the god can't use procs and stuff like that.
 	return TRUE
 
+/mob/living/simple_animal/shade/god/atom_init()
+	. = ..()
+	gods_list += src
+
 /mob/living/simple_animal/shade/god/Destroy()
+	gods_list -= src
 	if(container)
 		container.brainmob = null
 		QDEL_NULL(container.god_image)
