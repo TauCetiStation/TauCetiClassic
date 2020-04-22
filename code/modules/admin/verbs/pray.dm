@@ -93,7 +93,7 @@
 /mob/living/carbon/human/var/next_pray_anim = 0
 
 /mob/living/carbon/human/pray_animation()
-	if(next_pray_anim < world.time)
+	if(next_pray_anim > world.time)
 		return
 	next_pray_anim = world.time + 1 SECOND
 
