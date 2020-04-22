@@ -56,7 +56,7 @@
 		if (do_surgery(M, user, src))
 			return 0
 
-	if(user.a_intent != I_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))
+	if(stab_eyes && user.a_intent != I_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))
 		if((CLUMSY in user.mutations) && prob(50))
 			M = user
 		return eyestab(M,user)
