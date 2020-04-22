@@ -82,15 +82,12 @@
 /obj/item/weapon/nullrod/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	if(user.mind.assigned_role == "Chaplain" && istype(W, /obj/item/weapon/storage/bible))
 		var/obj/item/weapon/storage/bible/B = W
-		var/obj/item/weapon/nullrod/staff/staff = new /obj/item/weapon/nullrod/staff(loc)
-		if(istype(staff.loc, /mob/living))
-			var/mob/living/M = staff.loc
-			M.drop_from_inventory(staff)
+		var/obj/item/weapon/nullrod/staff/staff = new /obj/item/weapon/nullrod/staff(user.loc)
 		staff.god_name = B.deity_name
 		staff.god_lore = B.god_lore
-		qdel(src)
 		if(B.icon_state == "koran")
 			staff.islam = TRUE
+		qdel(src)
 
 /obj/item/weapon/nullrod/staff
 	name = "Divine staff"
@@ -108,10 +105,41 @@
 	var/next_ping = 0
 	var/islam = FALSE
 
-/mob/living/simple_animal/shade/god/Login()
+	var/image/god_image
+
+/obj/item/weapon/nullrod/staff/Destroy()
+	// Damn... He's free now.
+	brainmob.invisibility = 0
+	qdel(brainmob.GetComponent(/datum/component/bounded))
+	brainmob.container = null
+	brainmob = null
+
+	if((slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND) && ismob(loc))
+		var/mob/M = loc
+		hide_god(M)
+
+	QDEL_NULL(god_image)
+
+	return ..()
+
+/obj/item/weapon/nullrod/staff/proc/show_god(mob/M)
+	if(M.client && god_image)
+		M.client.images += god_image
+
+/obj/item/weapon/nullrod/staff/proc/hide_god(mob/M)
+	if(M.client && god_image)
+		M.client.images -= god_image
+
+/obj/item/weapon/nullrod/staff/equipped(mob/user, slot)
 	..()
-	stat = CONSCIOUS
-	blinded = FALSE
+	if(slot != SLOT_L_HAND && slot != SLOT_R_HAND)
+		hide_god(user)
+	else
+		show_god(user)
+
+/obj/item/weapon/nullrod/staff/dropped(mob/user)
+	..()
+	hide_god(user)
 
 /obj/item/weapon/nullrod/staff/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	if(istype(W, /obj/item/device/soulstone)) //mb, the only way to pull out god
@@ -149,10 +177,10 @@
 				INVOKE_ASYNC(src, .proc/question, C)
 
 /obj/item/weapon/nullrod/staff/proc/question(client/C)
-	if(!C)	
+	if(!C)
 		return
 	var/response = alert(C, "Someone is requesting a your soul in divine staff?", "Staff request", "No", "Yeeesss", "Never for this round")
-	if(!C || (brainmob && brainmob.ckey) || !searching)	
+	if(!C || (brainmob && brainmob.ckey) || !searching)
 		return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 	if(response == "Yeeesss")
 		transfer_personality(C.mob)
@@ -166,10 +194,16 @@
 		to_chat(brainmob, "<span class='userdanger'>You are no longer our god!</span>")
 		qdel(brainmob) //create new god, otherwise the old mob could not be woken up
 
-	brainmob = new(src)
+	QDEL_NULL(god_image)
+
+	// All of this could be made religion-dependant.
+	brainmob = new(get_turf(src))
 	brainmob.mutations.Add(XRAY) //its the god
 	brainmob.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 	brainmob.status_flags |= GODMODE
+
+	brainmob.invisibility = INVISIBILITY_OBSERVER
+	brainmob.see_invisible = SEE_INVISIBLE_OBSERVER
 
 	brainmob.mind = candidate.mind
 	brainmob.ckey = candidate.ckey
@@ -195,13 +229,25 @@
 	if(god_lore == "")
 		to_chat(brainmob, "<b>You can be both evil Satan thirsting and ordering sacrifices, and a good Jesus who wants more slaves.</b>")
 	else
-		to_chat(brainmob, "<b>Check your lore in notes.</b>")
+		to_chat(brainmob, "<b>Check your lore in the notes.</b>")
 	to_chat(brainmob, "<span class='userdanger'><font size =3><b>You do not know everything that happens and happened in the round!</b></font></span>")
- 
+
 	icon_state = "talking_staffsoul"
 
+	var/image/I = image(brainmob.icon, brainmob.icon_state)
+	I.loc = brainmob
+	I.appearance = brainmob
+	god_image = I
+
+	brainmob.container = src
+	brainmob.AddComponent(/datum/component/bounded, src, 0, 3)
+
+	if((slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND) && ismob(loc))
+		var/mob/M = loc
+		show_god(M)
+
 /obj/item/weapon/nullrod/staff/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
-	if(brainmob && brainmob.ckey) 
+	if(brainmob && brainmob.ckey)
 		return
 
 	searching = FALSE
@@ -228,7 +274,7 @@
 /obj/item/weapon/nullrod/staff/attack_ghost(mob/dead/observer/O)
 	if(next_ping > world.time)
 		return
-	
+
 	next_ping = world.time + 5 SECONDS
 	audible_message("<span class='notice'>\The [src] stone blinked.</span>", deaf_message = "\The [src] stone blinked.")
 
