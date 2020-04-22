@@ -5,9 +5,11 @@
 		for(var/obj/item/I in contents)
 			I.water_act(total_depth)
 
-/obj/effect/fluid/Crossed(mob/living/carbon/C)
-	if(!istype(C))
+/obj/effect/fluid/Crossed(atom/movable/AM)
+	. = ..()
+	if(!iscarbon(AM))
 		return
+	var/mob/living/carbon/C = AM
 	if(fluid_amount > FLUID_SHALLOW)
 		return
 
