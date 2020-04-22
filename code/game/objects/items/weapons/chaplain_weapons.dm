@@ -183,7 +183,7 @@
 	if(!C || (brainmob && brainmob.ckey) || !searching)
 		return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 	if(response == "Yeeesss")
-		transfer_personality(C.mob)
+		transfer_personality(C.mob, user)
 	else if (response == "Never for this round")
 		C.prefs.ignore_question += "chstaff"
 
