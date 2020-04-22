@@ -41335,7 +41335,7 @@
 "bBi" = (
 /obj/machinery/door/airlock/glass{
 	name = "Hydroponics Pasture";
-	req_access = list(28,35)
+	req_access = list(35)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
@@ -67909,14 +67909,6 @@
 /obj/structure/closet/firecloset,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"eZQ" = (
-/obj/machinery/status_display{
-	pixel_y = -32
-	},
-/turf/simulated/floor{
-	icon_state = "bluecorner"
-	},
-/area/station/hallway/primary/port)
 "eZS" = (
 /obj/machinery/camera{
 	c_tag = "Cargo Office South";
@@ -69194,7 +69186,9 @@
 "gWo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/mob/living/simple_animal/chicken,
+/mob/living/simple_animal/chicken{
+	name = "Commander Clucky"
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
 "gWp" = (
@@ -72083,6 +72077,10 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
+"lLD" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/simulated/floor/grass,
+/area/station/civilian/kitchen)
 "lMb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -73032,6 +73030,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/playroom)
+"npd" = (
+/obj/machinery/status_display{
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "bluecorner"
+	},
+/area/station/hallway/primary/port)
 "nqb" = (
 /obj/structure/mineral_door/wood,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -73876,6 +73882,9 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "oxa" = (
+/mob/living/simple_animal/lizard{
+	name = "Lizzy"
+	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/cargo)
 "oxb" = (
@@ -74723,6 +74732,15 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
+"pEt" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/hydroponics)
 "pGd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -77152,7 +77170,7 @@
 /area/station/hallway/secondary/exit)
 "tze" = (
 /obj/structure/table/woodentable/fancy/black,
-/obj/item/ashtray/plastic,
+/obj/item/ashtray/glass,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -77202,6 +77220,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"tEw" = (
+/obj/effect/decal/remains/robot,
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "tFb" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
@@ -77591,18 +77613,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/station/engineering/engine)
-"upJ" = (
-/obj/structure/closet/secure_closet/recycler,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/cargo/recycleroffice)
 "uqD" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -77806,15 +77816,6 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"viY" = (
-/obj/machinery/hydroponics/constructable,
-/obj/machinery/status_display{
-	pixel_x = -32
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/civilian/hydroponics)
 "vnw" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/extinguisher_cabinet{
@@ -78060,6 +78061,18 @@
 /obj/item/weapon/crowbar,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"wER" = (
+/obj/structure/closet/secure_closet/recycler,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_y = 32
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/cargo/recycleroffice)
 "wET" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -78080,6 +78093,7 @@
 	c_tag = "Garden";
 	dir = 8
 	},
+/obj/structure/flora/ausbushes/grassybush,
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
 "wFY" = (
@@ -78102,7 +78116,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/mob/living/simple_animal/cow,
+/mob/living/simple_animal/cow{
+	name = "Betsy"
+	},
 /obj/machinery/vending/wallmed1{
 	pixel_x = 28
 	},
@@ -96500,7 +96516,7 @@ aVf
 uwT
 xRb
 ayy
-viY
+pEt
 ayy
 hTE
 bmR
@@ -99329,9 +99345,9 @@ aAN
 aWw
 aFH
 vsv
+lLD
 gLt
-gLt
-gLt
+lLD
 aMZ
 bIK
 bHC
@@ -100113,7 +100129,7 @@ aFf
 bEW
 bDk
 bNk
-upJ
+wER
 bvB
 qTO
 bNk
@@ -100365,7 +100381,7 @@ bEW
 aSM
 aSM
 aSM
-bEW
+tEw
 aFf
 moP
 fDx
@@ -101376,7 +101392,7 @@ aOz
 aOz
 bKb
 bdZ
-eZQ
+npd
 aMZ
 aMZ
 awO
