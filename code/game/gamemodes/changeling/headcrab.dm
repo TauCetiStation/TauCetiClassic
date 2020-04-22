@@ -53,6 +53,7 @@
 	icon_living = "headcrab"
 	icon_dead = "headcrab_dead"
 	gender = NEUTER
+	pass_flags = PASSTABLE
 	health = 50
 	maxHealth = 50
 	melee_damage_lower = 5

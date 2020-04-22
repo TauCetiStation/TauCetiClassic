@@ -56,6 +56,9 @@
 	if(!loc || !NewLoc || freeze_movement)
 		return FALSE
 
+	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, dir) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+		return
+
 	var/atom/oldloc = loc
 
 	if(loc != NewLoc)
@@ -102,6 +105,9 @@
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
+	for(var/atom/movable/AM in contents)
+		AM.locMoved(OldLoc, Dir)
+
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
@@ -116,6 +122,11 @@
 		orbiting.Check()
 	SSdemo.mark_dirty(src)
 	return 1
+
+/atom/movable/proc/locMoved(atom/OldLoc, Dir)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_LOC_MOVED, OldLoc, Dir)
+	for(var/atom/movable/AM in contents)
+		AM.locMoved(OldLoc, Dir)
 
 /atom/movable/proc/setLoc(T, teleported=0)
 	loc = T

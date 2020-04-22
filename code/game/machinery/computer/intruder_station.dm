@@ -166,6 +166,12 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/rig
 	cost = 8
 
+/datum/intruder_tools/heavy_rig
+	name = "Heavy Syndi Rig"
+	desc = "Combat rig fitted with heavy armor plates made to endure even the greatest damage, developed off existing 'Striker' space suit."
+	item = /obj/item/weapon/storage/box/syndie_kit/heavy_rig
+	cost = 12
+
 /datum/intruder_tools/armor
 	name = "Syndi Assault Armor"
 	desc = "The red syndicate heavy armor with additional armor plating and helmet to it."

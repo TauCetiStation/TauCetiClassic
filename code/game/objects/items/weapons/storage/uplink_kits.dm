@@ -106,6 +106,14 @@
 	desc = "A sleek, sturdy box."
 	icon_state = "doom_box"
 
+/obj/item/weapon/storage/box/syndie_kit/bonepen
+	name = "Prototype Bone Repair Kit"
+	desc = "Bonehurting feeling erupts you."
+/obj/item/weapon/storage/box/syndie_kit/bonepen/atom_init()
+	. = ..()
+	for(var/i in 0 to 3)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen(src)
+	
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	name = "boxed freedom implant (with injector)"
 
@@ -211,8 +219,20 @@
 
 /obj/item/weapon/storage/box/syndie_kit/rig/atom_init()
 	. = ..()
-	new /obj/item/clothing/suit/space/rig/syndi(src)
+
 	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
+	new /obj/item/clothing/suit/space/rig/syndi(src)
+	new /obj/item/clothing/shoes/magboots/syndie(src)
+	make_exact_fit()
+
+/obj/item/weapon/storage/box/syndie_kit/heavy_rig
+	name = "box (H)"
+
+/obj/item/weapon/storage/box/syndie_kit/heavy_rig/atom_init()
+	. = ..()
+
+	new /obj/item/clothing/head/helmet/space/rig/syndi/heavy(src)
+	new /obj/item/clothing/suit/space/rig/syndi/heavy(src)
 	new /obj/item/clothing/shoes/magboots/syndie(src)
 	make_exact_fit()
 
