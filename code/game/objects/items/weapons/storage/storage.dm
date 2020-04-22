@@ -129,7 +129,7 @@
 
 	prepare_ui()
 	storage_ui.on_open(user)
-	storage_ui.show_to(user)
+	show_to(user)
 
 /obj/item/weapon/storage/proc/prepare_ui()
 	if(!storage_ui)

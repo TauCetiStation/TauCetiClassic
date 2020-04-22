@@ -58,17 +58,6 @@
 	max_storage_space = 18
 	max_w_class = ITEM_SIZE_NORMAL
 	can_hold = list(
-		/obj/item/device/healthanalyzer,
-		/obj/item/weapon/reagent_containers/glass/beaker,
-		/obj/item/weapon/reagent_containers/glass/bottle,
-		/obj/item/weapon/reagent_containers/pill,
-		/obj/item/weapon/reagent_containers/syringe,
-		/obj/item/weapon/storage/pill_bottle,
-		/obj/item/stack/medical,
-		/obj/item/device/flashlight/pen,
-		/obj/item/clothing/mask/surgical,
-		/obj/item/clothing/gloves/latex,
-		/obj/item/weapon/reagent_containers/hypospray,
 		/obj/item/weapon/retractor,
 		/obj/item/weapon/hemostat,
 		/obj/item/weapon/cautery,
@@ -79,10 +68,70 @@
 		/obj/item/weapon/FixOVein,
 		/obj/item/weapon/bonesetter
 		)
+	var/open = FALSE
+
+obj/item/weapon/storage/briefcase/surgery/attack_self(mob/user)
+	if(open)
+		open = FALSE
+		update_icon()
+	else
+		open = TRUE
+		update_icon()
+
+/obj/item/weapon/storage/briefcase/surgery/show_to(mob/user as mob)
+	. = ..()
+	open = TRUE
+	update_icon()
+
+
+/obj/item/weapon/storage/briefcase/surgery/hide_from(mob/user as mob)
+	. = ..()
+	open = FALSE
+	update_icon()
+
+
+obj/item/weapon/storage/briefcase/surgery/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
+	if(!open)
+		return
+	else
+		. = ..()
 
 /obj/item/weapon/storage/briefcase/surgery/atom_init()
 	. = ..()
-	use_sound = "sound/items/surgery_tray.ogg"
+	use_sound = "sound/items/surgery_tray_use.ogg"
+
+/obj/item/weapon/storage/briefcase/surgery/update_icon()
+	. = ..()
+	if(open)
+		icon_state = "case-surgery-open"
+		item_state = "case-surgery-open"
+		for(var/obj/item/I in contents)
+			if(istype(I, /obj/item/weapon/retractor))
+				add_overlay(image('icons/obj/storage.dmi',"retract"))
+			else if(istype (I, /obj/item/weapon/hemostat))
+				add_overlay(image('icons/obj/storage.dmi',"hemo"))
+			else if(istype (I, /obj/item/weapon/cautery))
+				add_overlay(image('icons/obj/storage.dmi',"cauter"))
+			else if(istype (I, /obj/item/weapon/surgicaldrill))
+				add_overlay(image('icons/obj/storage.dmi',"drill"))
+			else if(istype (I, /obj/item/weapon/scalpel))
+				add_overlay(image('icons/obj/storage.dmi',"scalp"))
+			else if(istype (I, /obj/item/weapon/circular_saw))
+				add_overlay(image('icons/obj/storage.dmi',"saw"))
+			else if(istype (I, /obj/item/weapon/bonegel))
+				add_overlay(image('icons/obj/storage.dmi',"bone"))
+			else if(istype (I, /obj/item/weapon/FixOVein))
+				add_overlay(image('icons/obj/storage.dmi',"fix"))
+			else if(istype (I, /obj/item/weapon/bonesetter))
+				add_overlay(image('icons/obj/storage.dmi',"boneset"))
+	else
+		icon_state = "case-surgery"
+		item_state = "case-surgery"
+		cut_overlays()
+	playsound(src, 'sound/items/surgery_tray.ogg', VOL_EFFECTS_MASTER)
+
+
+
 
 /obj/item/weapon/storage/briefcase/surgery/full
 
