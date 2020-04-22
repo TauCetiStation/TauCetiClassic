@@ -18069,6 +18069,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/mob/living/carbon/monkey/punpun,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "aFP" = (
@@ -67052,28 +67053,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
-"dAl" = (
-/obj/machinery/door/firedoor,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "bar";
-	name = "Bar Shutters";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/civilian/bar)
 "dBb" = (
 /obj/machinery/camera{
 	c_tag = "Arrival Auxillar Dock's South";
@@ -69928,15 +69907,6 @@
 	icon_state = "blue"
 	},
 /area/station/hallway/primary/central)
-"hYm" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 4
-	},
-/obj/structure/sign/poster{
-	pixel_x = -32
-	},
-/turf/simulated/floor/wood,
-/area/station/civilian/bar)
 "hZb" = (
 /obj/machinery/camera{
 	c_tag = "Central Hallway North"
@@ -73333,12 +73303,6 @@
 	icon_state = "warnwhite"
 	},
 /area/station/medical/virology)
-"nJQ" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 8
-	},
-/turf/simulated/floor/wood,
-/area/station/civilian/bar)
 "nKb" = (
 /obj/random/scrap/moderate_weighted,
 /turf/simulated/floor/plating,
@@ -73774,6 +73738,15 @@
 	oxygen = 0.01
 	},
 /area/station/engineering/engine)
+"opR" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 4
+	},
+/obj/structure/sign/poster{
+	pixel_x = -32
+	},
+/turf/simulated/floor/wood,
+/area/station/civilian/bar)
 "orb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
 	dir = 4
@@ -73928,6 +73901,28 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/station/engineering/singularity)
+"oyg" = (
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "bar";
+	name = "Bar Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/bar)
 "ozb" = (
 /obj/structure/sign/warning/lethal_turrets,
 /turf/simulated/wall/r_wall,
@@ -78338,6 +78333,12 @@
 /obj/structure/lattice,
 /turf/space,
 /area/space)
+"yaV" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/station/civilian/bar)
 "ybN" = (
 /obj/structure/sign/warning/moving_parts,
 /turf/simulated/wall,
@@ -102643,7 +102644,7 @@ bzi
 bDY
 aGn
 bET
-hYm
+opR
 aGn
 bDk
 bEW
@@ -102901,7 +102902,7 @@ avN
 wol
 aEh
 bxg
-dAl
+oyg
 bDk
 bFW
 bFW
@@ -103157,7 +103158,7 @@ avN
 bEU
 aGn
 bEV
-nJQ
+yaV
 aGn
 tgJ
 bFW
