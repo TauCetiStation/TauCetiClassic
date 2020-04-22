@@ -54,14 +54,29 @@
 		msg = speaking.color_message(msg)
 
 	var/admin_msg = "<span class='notice'>[bicon(cross)] <b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""] PRAY: </font>[key_name(src, 1)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]</span>"
-	var/gods_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]</b></font>: [msg]</span>"
+	var/ghost_msg = "<span class='notice'>[bicon(cross)] <b>[real_name]'s ([GetVoice()]'s)</b> <b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]:</font></span> <span class='game say'>\"[msg]\"</span>"
+	var/gods_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]</b>:</font></span> <span class='game say'>\"[msg]\"</span>"
 
 	var/scrambled_msg = get_scrambled_message(speaking, msg)
-	var/god_not_understand_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]</b></font>: [scrambled_msg]</span>"
+	var/god_not_understand_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]</b>:</font> \"[scrambled_msg]\"</span>"
 
-	for(var/client/C in admins)
-		if(C.prefs.chat_toggles & CHAT_PRAYER)
-			to_chat(C, admin_msg)
+	for(var/mob/M in player_list)
+		if(isnewplayer(M))
+			continue
+		if(!M.client)
+			continue
+
+		if(M.client.holder && (M.client.prefs.chat_toggles & CHAT_PRAYER)) // Show the message to admins with prayer toggled on
+			to_chat(M, admin_msg)//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
+			continue
+
+		if( M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD))
+			if(M.fake_death) //Our changeling with fake_death status must not hear dead chat!!
+				continue
+			var/tracker = "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> "
+			to_chat(M, tracker + ghost_msg)
+			continue
+
 
 	for(var/mob/living/simple_animal/shade/god/G in gods_list)
 		if(G.client && (G.client.prefs.chat_toggles & CHAT_PRAYER))
