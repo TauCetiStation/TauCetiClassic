@@ -72,7 +72,7 @@
 			to_chat(M, admin_msg)//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
 			continue
 
-		if( M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD))
+		if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD))
 			if(M.fake_death) //Our changeling with fake_death status must not hear dead chat!!
 				continue
 			var/tracker = "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> "
