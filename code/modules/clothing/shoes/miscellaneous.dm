@@ -235,6 +235,7 @@
 /obj/item/clothing/shoes/heels
 	name = "Heels"
 	icon_state = "high_shoes"
+	slowdown = SHOES_SLOWDOWN + 0.5
 
 /obj/item/clothing/shoes/heels/alternate
 	icon_state = "high_shoes2"
