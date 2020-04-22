@@ -385,7 +385,6 @@
 				playsound(M, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 				M.Weaken(2)
 		for(var/obj/structure/S in range(2, T))
-			tile.Shake(4, 4, 2 SECONDS)
 			if(prob(40))
 				if(istype(S,/obj/structure/window))
 					S.ex_act(2)
