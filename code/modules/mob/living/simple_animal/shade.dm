@@ -72,8 +72,18 @@
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	universal_understand = TRUE
 	density = FALSE
+
+	min_oxy = 0
+	max_tox = 0
+	max_co2 = 0
+	unsuitable_atoms_damage = 0
+
 	var/islam = FALSE
 	var/obj/item/weapon/nullrod/staff/container
+
+/mob/living/simple_animal/shade/god/incapacitated()
+	// So the god can't use procs and stuff like that.
+	return TRUE
 
 /mob/living/simple_animal/shade/god/atom_init()
 	. = ..()
