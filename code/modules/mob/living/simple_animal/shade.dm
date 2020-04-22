@@ -73,13 +73,13 @@
 	universal_understand = TRUE
 	density = FALSE
 	var/islam = FALSE
+	var/obj/item/weapon/nullrod/staff/container
 
 /mob/living/simple_animal/shade/god/Stat()
 	..()
 	if(statpanel("Status"))
 		if(religious_sect)
 			stat(null, "Favor: [religious_sect.favor]/[religious_sect.max_favor]")
-	var/obj/item/weapon/nullrod/staff/container
 
 /mob/living/simple_animal/shade/god/Destroy()
 	if(container)
@@ -92,6 +92,13 @@
 	..()
 	stat = CONSCIOUS
 	blinded = FALSE
+
+/mob/living/simple_animal/shade/god/Life()
+	set invisibility = 0
+	set background = BACKGROUND_ENABLED
+
+	if(religious_sect)
+		religious_sect.favor += 1
 
 /mob/living/simple_animal/shade/god/proc/god_attack(atom/A)
 	if(ismob(A))

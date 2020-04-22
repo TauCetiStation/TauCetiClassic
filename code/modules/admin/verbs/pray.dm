@@ -35,13 +35,10 @@
 
 	var/msg_tmp = msg
 	msg = "<span class='notice'>[bicon(cross)] <b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""] PRAY: </font>[key_name(src, 1)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]</span>"
-	var/god_msg = "<span class='notice'><b><font color=[font_color]>[deity ? " (to [deity])" : ""]</b> [msg]</span>"
 
 	for(var/client/C in admins)
 		if(C.prefs.chat_toggles & CHAT_PRAYER)
 			to_chat(C, msg)
-	if(religious_sect && religious_sect.god)
-		to_chat(religious_sect.god, god_msg)
 	to_chat(usr,"<span class='info'>You pray to the gods: \"[msg_tmp]\"</span>")
 
 	feedback_add_details("admin_verb","PR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

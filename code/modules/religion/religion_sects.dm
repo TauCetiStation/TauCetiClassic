@@ -17,7 +17,7 @@
 /// Does this require something before being available as an option?
 	var/starter = TRUE
 /// The Sect's 'Mana'
-	var/favor = 0 //MANA!
+	var/favor = 500 //MANA!
 /// The max amount of favor the sect can have
 	var/max_favor = 1000
 /// The default value for an item that can be sacrificed
@@ -70,12 +70,12 @@
 /// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering.
 /datum/religion_sect/proc/can_sacrifice(obj/item/I, mob/living/L)
 	. = TRUE
-	if(!is_type_in_typecache(I,desired_items_typecache))
+	if(!is_type_in_typecache(I, desired_items_typecache))
 		return FALSE
 
 /// Activates when the sect sacrifices an item. Can provide additional benefits to the sacrificer, which can also be dependent on their holy role! If the item is suppose to be eaten, here is where to do it. NOTE INHER WILL NOT DELETE ITEM FOR YOU!!!!
 /datum/religion_sect/proc/on_sacrifice(obj/item/I, mob/living/L)
-	return adjust_favor(default_item_favor,L)
+	return adjust_favor(default_item_favor, L)
 
 /// Adjust Favor by a certain amount. Can provide optional features based on a user. Returns actual amount added/removed
 /datum/religion_sect/proc/adjust_favor(amount = 0, mob/living/L)
@@ -107,6 +107,7 @@
 	name = "Puritanism (Default)"
 	desc = "Nothing special."
 	convert_opener = "Your run-of-the-mill sect, there are no benefits or boons associated. Praise normalcy!"
+	altar_icon_state = "christianaltar"
 
 /datum/religion_sect/technophile
 	name = "Technophile"
@@ -114,7 +115,7 @@
 	convert_opener = "May you find peace in a metal shell, acolyte.<br>You can now sacrifice cells, with favor depending on their charge."
 	desired_items = list(/obj/item/weapon/stock_parts/cell)
 	rites_list = list(/datum/religion_rites/synthconversion)
-	altar_icon_state = "tomealtar" //TODO
+	altar_icon_state = "technoaltar" //TODO
 
 /datum/religion_sect/technophile/can_sacrifice(obj/item/I, mob/living/L)
 	if(!..())
@@ -143,4 +144,33 @@
 	//spells = list(/obj/effect/proc_holder/spell/pickdesire)
 	spells = list(/obj/effect/proc_holder/spell/targeted/smoke, 
 				  /obj/effect/proc_holder/spell/aoe_turf/conjure/creature,
-				  /obj/effect/proc_holder/spell/pickdesire)
+				  /obj/effect/proc_holder/spell/targeted/pickdesire)
+
+/datum/religion_sect/technophile/can_sacrifice(obj/item/I, mob/living/L)
+	if(!..())
+		return FALSE
+	if(istype(I, /obj/item/weapon/gun/projectile))
+		var/obj/item/weapon/gun/projectile/gun = I
+		if(!gun.magazine)
+			to_chat("<span class='notice'>[ticker.Bible_deity_name] does not accept pity [i] without magazine.</span>")
+			return FALSE
+	return TRUE
+
+/datum/religion_sect/custom/on_sacrifice(obj/item/I, mob/living/L)
+	if(!is_type_in_typecache(I, desired_items_typecache))
+		return
+	
+	if(istype(I, /obj/item/weapon/stock_parts/cell))
+		var/obj/item/weapon/stock_parts/cell/cell = I
+		adjust_favor(round(cell.charge/500), L) //BALANCE
+	
+	if(istype(I, /obj/item/weapon/gun/energy))
+		var/obj/item/weapon/gun/energy/energy = I
+		adjust_favor(default_item_favor * energy.w_class * energy.w_class, L) //BALANCE
+
+	if(istype(I, /obj/item/weapon/gun/projectile))
+		var/obj/item/weapon/gun/projectile/gun = I
+		adjust_favor(gun.magazine.ammo_count() * gun.chambered.BB.damage, L) //BALANCE
+
+	to_chat(L, "<span class='notice'>You offer [I]'s power to [ticker.Bible_deity_name], pleasing them.</span>")
+	qdel(I)

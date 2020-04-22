@@ -69,6 +69,14 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 					to_chat(usr, "[name] has no charges left.")
 					return 0
 
+	if(!skipcharge)
+		if(favor_cost > 0 && !religious_sect)
+			to_chat(usr, "First create a sect.")
+			return 0
+		if(favor_cost > 0 && religious_sect.favor < favor_cost)
+			to_chat(usr, "You need [favor_cost - religious_sect.favor] more favors.")
+			return 0
+
 	if(usr.stat && !stat_allowed)
 		to_chat(usr, "Not when you're incapacitated.")
 		return 0
@@ -197,10 +205,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 //Casting spells behind favor
 /obj/effect/proc_holder/spell/proc/cast_with_favor(list/targets)
-	if(religious_sect.favor <= favor_cost)
-		to_chat(religious_sect.god, "You need [favor_cost - religious_sect.favor] more favors.")
-		return
-	religious_sect.favor -= favor_cost 
+	religious_sect.favor -= favor_cost
 
 /obj/effect/proc_holder/spell/proc/critfail(list/targets)
 	return

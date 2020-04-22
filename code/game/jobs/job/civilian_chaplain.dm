@@ -20,6 +20,15 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
 
+	//DEBUG
+	var/list/spells = list(/obj/effect/proc_holder/spell/targeted/smoke, 
+				  /obj/effect/proc_holder/spell/aoe_turf/conjure/creature,
+				  /obj/effect/proc_holder/spell/targeted/pickdesire)
+	var/obj/effect/proc_holder/spell/S
+	for(var/spell in spells)
+		S = new spell()
+		H.AddSpell(S)
+
 	if(visualsOnly)
 		return
 
