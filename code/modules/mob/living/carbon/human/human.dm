@@ -1952,7 +1952,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(stat)
 		return
 	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
-	if(!BP || (BP.is_stump))
+	if(!BP || BP.is_stump)
 		return
 
 	if(!BP.screen_toggle)
