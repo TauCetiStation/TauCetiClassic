@@ -77361,15 +77361,6 @@
 /obj/machinery/status_display,
 /turf/simulated/wall,
 /area/station/hallway/secondary/exit)
-"tPI" = (
-/obj/structure/grille,
-/obj/structure/grille,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
 "tQb" = (
 /obj/effect/landmark{
 	name = "carpspawn"
@@ -93437,7 +93428,7 @@ bil
 blV
 aWW
 bmw
-tPI
+eXg
 aFg
 bsy
 bxv
