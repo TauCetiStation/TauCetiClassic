@@ -1561,3 +1561,30 @@ var/list/WALLITEMS = typecacheof(list(
 	animate(src, pixel_x = pixel_x + shiftx, pixel_y = pixel_y + shifty, time = 0.2, loop = duration)
 	pixel_x = initialpixelx
 	pixel_y = initialpixely
+
+/atom/proc/shake_animation(pixelshiftx = 15, pixelshifty = 15, duration = 250)
+	var/image/I = image(icon, icon_state)
+	I.appearance = src.appearance
+	I.plane = plane
+	I.layer = layer
+	I.loc = src
+	var/old_invisibility = invisibility
+	invisibility = 101
+
+	var/list/viewers = list()
+	for(var/mob/M in viewers(src))
+		if(M.client)
+			viewers += M.client
+
+	flick_overlay(I, viewers, duration)
+	var/initialpixelx = pixel_x
+	var/initialpixely = pixel_y
+	var/shiftx = rand(-pixelshiftx,pixelshiftx)
+	var/shifty = rand(-pixelshifty,pixelshifty)
+	animate(I, pixel_x = pixel_x + shiftx, pixel_y = pixel_y + shifty, time = 0.2, loop = duration)
+	pixel_x = initialpixelx
+	pixel_y = initialpixely
+
+
+	sleep(duration)
+	invisibility = old_invisibility

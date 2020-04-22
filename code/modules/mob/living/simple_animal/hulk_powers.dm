@@ -38,7 +38,7 @@
 		var/cur_dir = usr.dir
 		var/turf/simulated/floor/tile = usr.loc
 		if(tile)
-			tile.Shake(4, 4, 2 SECONDS)
+			INVOKE_ASYNC(tile, /atom.proc/shake_animation, 4, 4, 2 SECONDS)
 			tile.break_tile()
 		var/o=3
 		for(var/i=0, i<14, i++)
@@ -53,7 +53,7 @@
 			sleep(1)
 		playsound(usr, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER)
 		for(tile in range(1, usr))
-			tile.Shake(4, 4, 2 SECONDS)
+			INVOKE_ASYNC(tile, /atom.proc/shake_animation, 4, 4, 2 SECONDS)
 			if(prob(50))
 				tile.break_tile()
 		for(var/mob/living/M in usr.loc.contents)
@@ -324,7 +324,7 @@
 		var/turf/simulated/floor/tile = T
 		var/turf/simulated/wall/W = T
 		if(istype(tile))
-			tile.Shake(4, 4, 2 SECONDS)
+			INVOKE_ASYNC(tile, /atom.proc/shake_animation, 4, 4, 2 SECONDS)
 			tile.break_tile()
 		if(istype(W,/turf/simulated/wall/r_wall))
 			to_chat(usr, "<span class='warning'><B>Ouch!</B> This wall is too strong.</span>")
@@ -363,7 +363,7 @@
 						M.take_overall_damage(65, used_weapon = "Hulk Arm")
 		sleep(2)
 		for(tile in range(1, T))
-			tile.Shake(4, 4, 2 SECONDS)
+			INVOKE_ASYNC(tile, /atom.proc/shake_animation, 4, 4, 2 SECONDS)
 			if(prob(75))
 				tile.break_tile()
 		for(var/mob/living/M in range(1, T))
@@ -377,7 +377,7 @@
 				qdel(S)
 		sleep(3)
 		for(tile in range(2, T))
-			tile.Shake(4, 4, 2 SECONDS)
+			INVOKE_ASYNC(tile, /atom.proc/shake_animation, 4, 4, 2 SECONDS)
 			if(prob(40))
 				tile.break_tile()
 		for(var/mob/living/M in range(2, T))
@@ -385,7 +385,7 @@
 				playsound(M, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 				M.Weaken(2)
 		for(var/obj/structure/S in range(2, T))
-			tile.Shake(4, 4, 2 SECONDS)
+			INVOKE_ASYNC(tile, /atom.proc/shake_animation, 4, 4, 2 SECONDS)
 			if(prob(40))
 				if(istype(S,/obj/structure/window))
 					S.ex_act(2)
