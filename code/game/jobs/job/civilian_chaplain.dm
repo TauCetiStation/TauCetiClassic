@@ -56,8 +56,17 @@
 			//	H.setBrainLoss(100) // starts off retarded as fuck
 			if("science")
 				B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
+			if("technologism")
+				B.name = "The Polyhedron"
+			if("clown")
+				B.name = pick("The Holy Joke Book", "Hymns to the Honkmother", "Prank in the name of Honkmother")
+			if("buddhism")
+				B.name = "The Tripitaka"
+			if("atheism")
+				B.name = pick("Just book", "Recipes", "Space Laws", "Proof of the absence of God", "Bible: Small Edition", "How to: enlarge penis")
 			else
 				B.name = "The Holy Book of [new_religion]"
+				B.god_lore = sanitize_safe(input(H, "You can come up with the lore of your god in [new_religion] religion.", "Lore for new god", ""), MAX_MESSAGE_LEN)
 		feedback_set_details("religion_name","[new_religion]")
 
 	spawn(1)

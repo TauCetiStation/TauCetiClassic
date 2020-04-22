@@ -62,8 +62,6 @@ var/syndicate_elite_shuttle_timeleft = 0
 		to_chat(usr, "<span class='warning'>The Syndicate Elite shuttle is unable to leave.</span>")
 		return
 
-		sleep(600)
-
 	var/area/start_location = locate(/area/shuttle/syndicate_elite/mothership)
 	var/area/end_location = locate(/area/shuttle/syndicate_elite/station)
 

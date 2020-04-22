@@ -395,3 +395,26 @@
 				</body>
 			</html>
 			"}
+
+/obj/item/weapon/syndcodebook
+	name = "black-red book"
+	desc = "Ominous book with some gabblery written on yellow pages."
+	icon = 'icons/obj/library.dmi'
+	icon_state ="syndicate"
+	item_state ="book"
+
+/obj/item/weapon/syndcodebook/attack_self(mob/user)
+	if(user.is_busy())
+		return
+	user.visible_message(
+		"<span class='notice'>[user] starts reading \the [src] intently...</span>",
+		"<span class='notice'>You start reading \the [src]...</span>"
+	)
+	if(do_after(user, 40, target = user))
+		user.visible_message(
+			"<span class='warning'>[user] perks at \the [src] and nods. Suddenly, \the [src] burns to ashes!</span>",
+			"<span class='warning'>As soon as you finish reading \the [src], you become the speaker of Sy-Code and [src] burns to ashes.</span>"
+		)
+		user.add_language("Sy-Code")
+		new /obj/effect/decal/cleanable/ash(user.loc)
+		qdel(src)

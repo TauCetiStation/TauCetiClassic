@@ -174,7 +174,7 @@ var/global/ManifestJSON
 	if (OOC)
 		for (var/mob/M in player_list)
 			if (M.real_name && M.job && M.client && M.client.inactivity > 10 * 60 * 10)
-				inactive_players_namejob.Add("[M.real_name]/[M.job]")		
+				inactive_players_namejob.Add("[M.real_name]/[M.job]")
 	// render crew manifest
 	var/list/person = new() // buffer for employ record
 	for (var/dep in departments_list)
@@ -248,7 +248,7 @@ var/global/ManifestJSON
 	throw_range = 20
 	flags = CONDUCT
 
-/obj/item/weapon/beach_ball/afterattack(atom/target, mob/user)
+/obj/item/weapon/beach_ball/afterattack(atom/target, mob/user, proximity, params)
 	user.drop_item()
 	src.throw_at(target, throw_range, throw_speed, user)
 
