@@ -53,8 +53,10 @@
 	if(speaking)
 		msg = speaking.color_message(msg)
 
+	var/alt_name = get_alt_name()
+
 	var/admin_msg = "<span class='notice'>[bicon(cross)] <b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""] PRAY: </font>[key_name(src, 1)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]</span>"
-	var/ghost_msg = "<span class='notice'>[bicon(cross)] <b>[real_name]'s ([GetVoice()]'s)</b> <b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]:</font></span> <span class='game say'>\"[msg]\"</span>"
+	var/ghost_msg = "<span class='notice'>[bicon(cross)] <b>[real_name]'s[alt_name ? " " + alt_name : ""]</b> <b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]:</font></span> <span class='game say'>\"[msg]\"</span>"
 	var/gods_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]</b>:</font></span> <span class='game say'>\"[msg]\"</span>"
 
 	var/scrambled_msg = get_scrambled_message(speaking, msg)
@@ -84,8 +86,6 @@
 				to_chat(G, god_not_understand_msg)
 			else
 				to_chat(G, gods_msg)
-
-	var/alt_name = get_alt_name()
 
 	pray_act(msg, speaking, alt_name, "prays")
 
