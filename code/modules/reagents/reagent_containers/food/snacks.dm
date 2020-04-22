@@ -1,6 +1,6 @@
 //Food items that are eaten normally and don't leave anything behind.
 /obj/item/weapon/reagent_containers/food/snacks
-	var/liquid_food = FALSE
+	var/eat_sound = 'sound/items/eatfood.ogg'
 	name = "snack"
 	desc = "Yummy!"
 	icon = 'icons/obj/food.dmi'
@@ -97,7 +97,10 @@
 
 
 		if(reagents)								//Handle ingestion of the reagent.
-			playsound(M, liquid_food ? 'sound/items/drink.ogg' : 'sound/items/eatfood.ogg', VOL_EFFECTS_MASTER, rand(20, 50))
+			if(istype(src,/obj/item/weapon/reagent_containers/food/snacks/soup))
+				playsound(M, eat_sound, VOL_EFFECTS_MASTER, rand(20, 50))
+			else
+				playsound(M, eat_sound, VOL_EFFECTS_MASTER, rand(20, 50))
 			if(reagents.total_volume)
 				if(reagents.total_volume > bitesize)
 					/*
@@ -1490,7 +1493,7 @@
 //SOUPS
 
 /obj/item/weapon/reagent_containers/food/snacks/soup
-	liquid_food = TRUE
+	eat_sound = 'sound/items/drink.ogg'
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/beetsoup
 	name = "beet soup"
