@@ -97,10 +97,7 @@
 
 
 		if(reagents)								//Handle ingestion of the reagent.
-			if(istype(src,/obj/item/weapon/reagent_containers/food/snacks/soup))
-				playsound(M, eat_sound, VOL_EFFECTS_MASTER, rand(20, 50))
-			else
-				playsound(M, eat_sound, VOL_EFFECTS_MASTER, rand(20, 50))
+			playsound(M, eat_sound, VOL_EFFECTS_MASTER, rand(20, 50))
 			if(reagents.total_volume)
 				if(reagents.total_volume > bitesize)
 					/*
