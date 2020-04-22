@@ -1236,9 +1236,6 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -3572,9 +3569,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/cyan{
-	dir = 6
-	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "aks" = (
@@ -4481,9 +4475,6 @@
 	},
 /obj/effect/landmark/start{
 	name = "Technical Assistant"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 5
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
@@ -6923,9 +6914,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "box" = (
@@ -7553,9 +7541,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -8457,9 +8442,6 @@
 /area/station/rnd/xenobiology)
 "bNP" = (
 /obj/machinery/computer/atmos_alert,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -9999,7 +9981,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan,
 /turf/simulated/floor,
 /area/station/engineering/monitoring)
 "cmN" = (
@@ -10039,9 +10020,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -11384,9 +11362,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -11927,9 +11902,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/station/engineering/monitoring)
 "cRn" = (
@@ -12012,9 +11984,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "yellow"
@@ -16922,9 +16891,6 @@
 /obj/item/weapon/airlock_electronics,
 /obj/item/weapon/airlock_electronics,
 /obj/item/weapon/module/power_control,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -16982,9 +16948,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -17791,9 +17754,6 @@
 /area/station/engineering/engine)
 "eOS" = (
 /obj/structure/closet/secure_closet/engineering_welding,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -18635,9 +18595,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 9
 	},
 /turf/simulated/floor,
 /area/station/engineering/monitoring)
@@ -22682,9 +22639,6 @@
 "gqz" = (
 /obj/structure/table,
 /obj/item/weapon/airlock_painter,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -22869,9 +22823,6 @@
 /area/station/civilian/dormitories/theater)
 "guL" = (
 /obj/machinery/space_heater,
-/obj/machinery/atmospherics/pipe/simple/visible/cyan{
-	dir = 9
-	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "guO" = (
@@ -24062,9 +24013,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 10
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -24314,15 +24262,6 @@
 	icon_state = "vault"
 	},
 /area/station/security/armoury)
-"gRq" = (
-/obj/machinery/computer/station_alert,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "yellow"
-	},
-/area/station/engineering/engine)
 "gRy" = (
 /obj/item/weapon/storage/secure/safe{
 	pixel_x = 5;
@@ -25180,13 +25119,6 @@
 	icon_state = "warning"
 	},
 /area/station/rnd/robotics)
-"hgg" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 3
-	},
-/obj/machinery/portable_atmospherics/powered/scrubber,
-/turf/simulated/floor,
-/area/station/engineering/atmos)
 "hgw" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -26320,9 +26252,6 @@
 "hyO" = (
 /obj/structure/table,
 /obj/item/toy/cards,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -31267,9 +31196,6 @@
 /area/station/engineering/break_room)
 "jjY" = (
 /obj/machinery/recharge_station,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 5
-	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "yellow"
@@ -32825,6 +32751,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 28
 	},
+/obj/machinery/portable_atmospherics/powered/pump,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -34417,9 +34344,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 10
-	},
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "kkh" = (
@@ -34503,7 +34427,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan,
 /turf/simulated/floor,
 /area/station/engineering/monitoring)
 "kmk" = (
@@ -34820,9 +34743,6 @@
 /area/station/rnd/chargebay)
 "krX" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -35847,9 +35767,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
@@ -37221,9 +37138,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/station/engineering/equip)
 "ldB" = (
@@ -37392,9 +37306,6 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
 	dir = 9
 	},
 /turf/simulated/floor,
@@ -37896,9 +37807,6 @@
 /area/station/medical/cmo)
 "lnD" = (
 /obj/structure/closet/firecloset,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -38373,9 +38281,6 @@
 "lyl" = (
 /obj/structure/closet/firecloset,
 /obj/machinery/light,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -38454,7 +38359,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan,
 /turf/simulated/floor,
 /area/station/engineering/monitoring)
 "lzR" = (
@@ -40132,9 +40036,6 @@
 "lZb" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/toxin,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -40241,10 +40142,7 @@
 /area/station/rnd/misc_lab)
 "maN" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 3
-	},
-/obj/machinery/portable_atmospherics/powered/pump,
+/obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "maO" = (
@@ -41366,9 +41264,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/station/engineering/monitoring)
 "mqk" = (
@@ -42429,7 +42324,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/visible/cyan,
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 5
+	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "mKG" = (
@@ -43856,9 +43753,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 5
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
@@ -45805,7 +45699,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/cyan,
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "nMS" = (
@@ -46938,7 +46831,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/cyan,
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "ofa" = (
@@ -47137,6 +47029,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -51365,7 +51258,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowfull"
@@ -53218,9 +53110,6 @@
 "qlw" = (
 /obj/machinery/alarm{
 	pixel_y = 23
-	},
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 3
 	},
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor,
@@ -55874,9 +55763,6 @@
 "rdf" = (
 /obj/machinery/light,
 /obj/structure/stool,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -56698,9 +56584,6 @@
 	},
 /obj/effect/landmark/start{
 	name = "Station Engineer"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/engineering/equip)
@@ -58800,9 +58683,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -60519,9 +60399,6 @@
 	maxcharge = 15000
 	},
 /obj/item/weapon/screwdriver,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -62879,9 +62756,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/station/engineering/equip)
 "tsD" = (
@@ -64070,9 +63944,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 6
-	},
 /turf/simulated/floor,
 /area/station/engineering/monitoring)
 "tLg" = (
@@ -64667,9 +64538,6 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -66156,9 +66024,6 @@
 /area/station/civilian/dormitories/theater)
 "usx" = (
 /obj/machinery/constructable_frame/machine_frame,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -66303,7 +66168,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan,
 /turf/simulated/floor,
 /area/station/engineering/monitoring)
 "uuy" = (
@@ -67808,9 +67672,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/station/engineering/equip)
 "uUE" = (
@@ -68574,9 +68435,6 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/engineering/equip)
@@ -74144,7 +74002,6 @@
 	codes_txt = "patrol;next_patrol=N-MB";
 	location = "NNW-B"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan,
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "wWK" = (
@@ -74249,9 +74106,6 @@
 /area/station/rnd/hallway)
 "wYb" = (
 /obj/structure/stool,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -74428,7 +74282,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan,
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -75031,9 +74884,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 6
 	},
 /turf/simulated/floor,
 /area/station/engineering/equip)
@@ -111999,7 +111849,7 @@ jHX
 bbz
 jVX
 qlw
-nfO
+nMF
 dKv
 mkf
 hcq
@@ -112512,7 +112362,7 @@ fMQ
 fMQ
 chS
 jVX
-hgg
+rom
 oeT
 dKv
 dKv
@@ -118162,7 +118012,7 @@ wCr
 osX
 jAk
 nVK
-gRq
+lub
 hDL
 hDL
 nny
