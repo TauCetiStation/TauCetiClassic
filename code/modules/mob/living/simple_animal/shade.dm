@@ -73,3 +73,11 @@
 	universal_understand = TRUE
 	pass_flags = PASSTABLE | PASSMOB | PASSGLASS | PASSGRILLE
 	var/islam = FALSE
+
+/mob/living/simple_animal/shade/god/atom_init()
+	. = ..()
+	gods_list += src
+
+/mob/living/simple_animal/shade/god/Destroy()
+	gods_list -= src
+	return ..()
