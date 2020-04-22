@@ -535,10 +535,15 @@
 	item = /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
 	cost = 5
 
+/datum/uplink_item/device_tools/bonepen
+	name = "Prototype Bone Repair Kit"
+	desc = "Stolen prototype bone repair nanites. Contains three nanocalcium autoinjectors."
+	item = /obj/item/weapon/storage/box/syndie_kit/bonepen
+	cost = 4
+
 /datum/uplink_item/stealthy_tools/mulligan
 	name = "Mulligan"
-	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity \
-			and appearance."
+	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity and appearance."
 	item = /obj/item/weapon/reagent_containers/syringe/mulligan
 	cost = 4
 

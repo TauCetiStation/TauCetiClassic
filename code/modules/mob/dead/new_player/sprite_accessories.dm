@@ -970,6 +970,12 @@
 /  =---------------------------=  /
 ///////////////////////////////////
 */
+/datum/sprite_accessory/hair/ipc_screen_off
+	name = "IPC off screen"
+	icon_state = "ipc_off"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = null
 
 /datum/sprite_accessory/hair/ipc_screen_pink
 	name = "pink IPC screen"
