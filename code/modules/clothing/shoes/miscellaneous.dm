@@ -236,6 +236,12 @@
 	name = "Heels"
 	icon_state = "high_shoes"
 	slowdown = SHOES_SLOWDOWN + 0.5
+	force = 3.5
+	attack_verb = list("stabbed")
+	// It's a stab sound.
+	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
+
+	stab_eyes = TRUE
 
 /obj/item/clothing/shoes/heels/alternate
 	icon_state = "high_shoes2"
