@@ -32238,6 +32238,9 @@
 	c_tag = "Arrival East";
 	dir = 1
 	},
+/obj/machinery/status_display{
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
@@ -32779,6 +32782,9 @@
 /obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
@@ -67903,6 +67909,14 @@
 /obj/structure/closet/firecloset,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"eZQ" = (
+/obj/machinery/status_display{
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "bluecorner"
+	},
+/area/station/hallway/primary/port)
 "eZS" = (
 /obj/machinery/camera{
 	c_tag = "Cargo Office South";
@@ -69629,11 +69643,6 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-	},
-/obj/machinery/status_display{
-	layer = 3.3;
-	pixel_y = -30;
-	supply_display = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
@@ -77582,6 +77591,18 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"upJ" = (
+/obj/structure/closet/secure_closet/recycler,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_y = 32
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/cargo/recycleroffice)
 "uqD" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -77785,6 +77806,15 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"viY" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/hydroponics)
 "vnw" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/extinguisher_cabinet{
@@ -77909,6 +77939,9 @@
 "wfm" = (
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/machinery/status_display{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -96467,7 +96500,7 @@ aVf
 uwT
 xRb
 ayy
-ayy
+viY
 ayy
 hTE
 bmR
@@ -100080,7 +100113,7 @@ aFf
 bEW
 bDk
 bNk
-btN
+upJ
 bvB
 qTO
 bNk
@@ -101343,7 +101376,7 @@ aOz
 aOz
 bKb
 bdZ
-iyb
+eZQ
 aMZ
 aMZ
 awO
