@@ -23281,11 +23281,11 @@
 /area/station/rnd/hor)
 "aQq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/mob/living/simple_animal/walle,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/mob/living/simple_animal/walle,
 /turf/simulated/floor,
 /area/station/cargo/qm)
 "aQr" = (
@@ -58491,6 +58491,7 @@
 /area/station/engineering/atmos)
 "cqH" = (
 /obj/machinery/computer/general_air_control/large_tank_control{
+	frequency = 1443;
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "air_out";
@@ -78084,11 +78085,11 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/mob/living/simple_animal/cow{
-	name = "Betsy"
-	},
 /obj/machinery/vending/wallmed1{
 	pixel_x = 28
+	},
+/mob/living/simple_animal/cow{
+	name = "Betsy"
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
