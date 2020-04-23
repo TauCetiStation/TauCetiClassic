@@ -125,10 +125,10 @@
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/mob/living/carbon/human/M in viewers(get_turf_loc(AOG), null))
-		if(M:eyecheck() <= 0)
+		if(M.eyecheck() <= 0)
 			M.flash_eyes()
 
-	for(var/i = 1, i <= 4 + rand(1,2), i++)
+	for(var/i = 1, i <= 4 + rand(1,5), i++)
 		var/chosen = pick(borks)
 		var/obj/B = new chosen
 		if(B)

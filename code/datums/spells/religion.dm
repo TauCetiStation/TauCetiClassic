@@ -7,6 +7,7 @@
 	invocation = "none"
 	range = -1
 	include_user = 1
+	action_icon_state = "god_default"
 	sound = 'sound/magic/Smoke.ogg' //TODO
 	var/list/desire
 
@@ -40,6 +41,7 @@
 	clothes_req = 0
 	invocation = "none"
 	range = -1
+	action_icon_state = "god_default"
 	include_user = 1
 	sound = 'sound/magic/Smoke.ogg' //TODO
 	var/presets = list("Good", "Evil")
@@ -76,7 +78,6 @@
 	range = 0
 	summon_amt = 0
 
-	action_icon = 'icons/obj/storage.dmi'
 	action_icon_state = "bible"
 
 	summon_type = list(/obj/item/weapon/storage/bible)
@@ -124,5 +125,5 @@
 	sound = 'sound/magic/Repulse.ogg'
 
 	action_icon_state = "gib"
-
+	action_icon_state = "god_default"
 	hamt = 5
