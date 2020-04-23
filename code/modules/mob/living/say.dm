@@ -201,6 +201,3 @@ var/list/department_radio_keys = list(
 
 /obj/effect/speech_bubble
 	var/mob/parent
-
-/mob/living/proc/GetVoice()
-	return name
