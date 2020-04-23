@@ -46,7 +46,7 @@
 /obj/item/weapon/reagent_containers/attackby(obj/item/I, mob/user)
 	return
 */
-/obj/item/weapon/reagent_containers/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/afterattack(atom/target, mob/user, proximity, params)
 	return
 
 /obj/item/weapon/reagent_containers/proc/reagentlist(obj/item/weapon/reagent_containers/snack) //Attack logs for regents in pills

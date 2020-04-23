@@ -161,9 +161,10 @@ var/global/raider_tick = 1
 		to_chat(user, "<span class='notice'>This [issilicon(M) ? "silicon thing" : "living being"] will bring us approximately <span class='danger'>[issilicon(M) ? "DESTROYED:" : "DEAD:"]</span> $[price_check ? price_check / 50 : 0]$ or <span class='danger'>[issilicon(M) ? "WORKING:" : "ALIVE:"]</span>$[price_check]$</span>")
 	return 1
 
-/obj/item/device/price_tool/afterattack(obj/O, mob/user, proximity)
+/obj/item/device/price_tool/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(!istype(O))
+	if(!isobj(target))
 		return
+	var/obj/O = target
 	to_chat(user, "<span class='notice'>This object will bring us approximately $[num2text(O.get_price(),9)]$</span>")
 	return

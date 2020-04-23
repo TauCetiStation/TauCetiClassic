@@ -156,7 +156,7 @@
 	if (owner.species && owner.species.flags[NO_BREATHE])
 		return
 	if (germ_level > INFECTION_LEVEL_ONE)
-		if(prob(5))
+		if(!owner.reagents.has_reagent("dextromethorphan") && prob(5))
 			owner.emote("cough")		//respitory tract infection
 
 	if(is_bruised())
