@@ -150,7 +150,7 @@
 						to_chat(usr, "<span class='warning'>Invalid duration.</span>")
 			if ("access")
 				var/A = text2num(href_list["access"])
-				if (A in giver.access)
+				if (giver && (A in giver.access))
 					if (A in accesses)
 						accesses.Remove(A)
 					else
