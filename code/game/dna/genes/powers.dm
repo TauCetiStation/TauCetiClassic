@@ -209,9 +209,9 @@
 
 /datum/dna/gene/basic/hulk
 	name                = "Hulk"
-	activation_messages = list("Your muscles hurt.")
+	activation_messages = list("Your muscles hurt and feel strange..")
 	mutation            = HULK
-	activation_prob     = 15
+	activation_prob     = 20
 
 /datum/dna/gene/basic/hulk/New()
 	block=HULKBLOCK
@@ -222,25 +222,29 @@
 		return 0
 	return ..(M,flags)*/
 
-/datum/dna/gene/basic/hulk/activate(mob/M, connected, flags)
+/datum/dna/gene/basic/hulk/activate(mob/living/carbon/human/M, connected, flags)
 	if(!M.mind)
 		return
 	if(M.mind.hulkizing)
 		return
-	M.mind.hulkizing = 1
 
 	..(M,connected,flags)
 
-	addtimer(CALLBACK(src, .proc/mutate_user, M), rand(600, 900), TIMER_UNIQUE)
-
-/datum/dna/gene/basic/hulk/proc/mutate_user(mob/M)
+/mob/living/carbon/human/proc/mutate_to_hulk(mob/M)
 	if(!M)
 		return
 	if(!(HULK in M.mutations)) //If user cleans hulk mutation before timer runs out, then there is no mutation.
-		M.mind.hulkizing = 0   //We don't want to waste user's try, so user can mutate once later.
+		return
+	if(M.get_species() == DIONA || M.get_species() == IPC || M.get_species() == GOLEM)
+		to_chat(M, "<span class='warning'>Your species cannot take the Hulk form!</span>")
+		return
+	if(M.mind.hulkizing == TRUE)
+		to_chat(M, "<span class='warning'>You have no longer strength to transform!</span>") // Hulk transformation at most 1 time.
 		return
 
+	M.mind.hulkizing = TRUE
 	message_admins("[M.name] ([M.ckey]) is a <span class='warning'>Monster</span> [ADMIN_JMP(M)]")
+	to_chat(M, "<span class='bold notice'>You can feel real rage and POWER.</span>")
 	if(istype(M.loc, /obj/machinery/dna_scannernew))
 		var/obj/machinery/dna_scannernew/DSN = M.loc
 		DSN.occupant = null
@@ -248,7 +252,7 @@
 	var/mob/living/simple_animal/hulk/Monster
 	if(CLUMSY in M.mutations)
 		Monster = new /mob/living/simple_animal/hulk/Clowan(get_turf(M))
-	else if(M.get_species() == UNATHI || prob(19))
+	else if(M.get_species() == UNATHI || prob(23))
 		Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(M))
 	else
 		Monster = new /mob/living/simple_animal/hulk/human(get_turf(M))

@@ -16,6 +16,7 @@
 	var/metadata
 	var/seer = 0 // used in cult datum /cult/seer
 	var/gnomed = 0 // timer used by gnomecurse.dm
+	var/hulk_activator = null
 
 	throw_range = 2
 
@@ -90,6 +91,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
+	hulk_activator = pick("heavy muscle load", "electric shock", "vomiting")
 
 	if(!species)
 		if(new_species)
@@ -695,6 +697,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return 0	//godmode
 	if(NO_SHOCK in src.mutations)
 		return 0 //#Z2 no shock with that mutation.
+
+	if((HULK in src.mutations) && src.hulk_activator == "electric shock") //for check to transformation Hulk.
+		to_chat(src, "<span class='notice'>You feel pain, but you like it!</span>")
+		mutate_to_hulk(src)
 
 	if(!def_zone)
 		def_zone = pick(BP_L_ARM , BP_R_ARM)
