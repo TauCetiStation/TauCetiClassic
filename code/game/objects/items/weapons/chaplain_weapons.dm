@@ -149,7 +149,8 @@
 			S.transfer_soul("SHADE", brainmob, user)
 	else if(istype(W, /obj/item/weapon/storage/bible)) //force kick god from staff
 		if(brainmob)
-			brainmob.client.prefs.ignore_question += "chstaff"
+			if(brainmob.client)
+				brainmob.client.prefs.ignore_question += "chstaff"
 			qdel(brainmob)
 			searching = FALSE
 			icon_state = "talking_staff"
