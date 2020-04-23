@@ -14,7 +14,7 @@
 /obj/effect/proc_holder/spell/targeted/pickdesire/atom_init()
 	. = ..()
 	desire = list("Cells" = /obj/item/weapon/stock_parts/cell,
-				  "Resourses(Glass, minerals, metalls" = /obj/item/stack/sheet,
+				  "Resourses(glass, minerals, metalls)" = /obj/item/stack/sheet,
 				  "Foods" = /obj/item/weapon/reagent_containers/food/snacks,
 				  "Drinks" = /obj/item/weapon/reagent_containers/food/drinks,
 				  "Energy guns" = /obj/item/weapon/gun/energy,
