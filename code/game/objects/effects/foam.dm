@@ -107,6 +107,8 @@
 	shaking = FALSE
 
 /obj/effect/effect/aqueous_foam/Crossed(atom/movable/AM)
+	. = ..()
+
 	if(istype(AM, /obj/effect/decal/chempuff))
 		return
 

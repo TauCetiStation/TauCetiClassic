@@ -101,7 +101,8 @@
 		icon_state = "beartrap[armed]"
 		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"].</span>")
 
-/obj/item/weapon/legcuffs/beartrap/Crossed(AM as mob|obj)
+/obj/item/weapon/legcuffs/beartrap/Crossed(atom/movable/AM)
+	. = ..()
 	if(armed)
 		if(ishuman(AM))
 			if(isturf(src.loc))
@@ -119,7 +120,6 @@
 			SA.health -= 20
 
 		icon_state = "beartrap[armed]"
-	..()
 
 /obj/item/weapon/legcuffs/bola
 	name = "bola"

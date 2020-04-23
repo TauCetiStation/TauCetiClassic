@@ -748,7 +748,8 @@
 		reagents.reaction(A)
 	qdel(src)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(AM)
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(atom/movable/AM)
+	. = ..()
 	if (iscarbon(AM))
 		var/mob/living/carbon/C = AM
 
