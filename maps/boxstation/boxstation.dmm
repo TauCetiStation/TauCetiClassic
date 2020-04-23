@@ -10703,6 +10703,11 @@
 	name = "Station Intercom (General)";
 	pixel_x = -28
 	},
+/obj/machinery/camera{
+	c_tag = "Xenobiology Module North";
+	dir = 4;
+	network = list("SS13","Research")
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurplecorner"
@@ -11986,11 +11991,6 @@
 	pixel_y = 4;
 	req_access = list(55)
 	},
-/obj/machinery/camera{
-	c_tag = "Xenobiology Module Middle";
-	dir = 8;
-	network = list("SS13","Research")
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -12693,11 +12693,6 @@
 	pixel_y = 4;
 	req_access = list(55)
 	},
-/obj/machinery/camera{
-	c_tag = "Xenobiology Module Middle";
-	dir = 8;
-	network = list("SS13","Research")
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -13070,11 +13065,6 @@
 	name = "Containment Blast Doors";
 	pixel_y = 4;
 	req_access = list(55)
-	},
-/obj/machinery/camera{
-	c_tag = "Xenobiology Module Middle";
-	dir = 8;
-	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -14194,17 +14184,13 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "ayW" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
+/obj/structure/closet/l3closet/scientist,
 /obj/machinery/camera{
-	c_tag = "Holodeck West";
-	dir = 4
+	c_tag = "Miscellaneous Research";
+	dir = 8
 	},
-/turf/simulated/floor/plating,
-/area/station/civilian/fitness)
+/turf/simulated/floor,
+/area/station/rnd/misc_lab)
 "ayX" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -14215,17 +14201,16 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "ayY" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
+/obj/structure/table,
+/obj/machinery/cell_charger,
 /obj/machinery/camera{
-	c_tag = "Holodeck East";
-	dir = 8
+	c_tag = "Engineering Foyer"
 	},
-/turf/simulated/floor/plating,
-/area/station/civilian/fitness)
+/obj/structure/noticeboard{
+	pixel_y = 28
+	},
+/turf/simulated/floor,
+/area/station/engineering/break_room)
 "ayZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
@@ -14822,25 +14807,14 @@
 	},
 /area/station/storage/tech/north)
 "aAc" = (
-/obj/structure/closet/emcloset,
 /obj/machinery/camera{
-	c_tag = "Xenobiology Access";
-	network = list("SS13","Research")
+	c_tag = "Holodeck East";
+	dir = 8
 	},
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1379;
-	master_tag = "xeno_airlock_control";
-	name = "Xenobiology Access Button";
-	pixel_x = -8;
-	pixel_y = 28;
-	req_access = list(55)
+/turf/simulated/floor/engine{
+	name = "Holodeck Projector Floor"
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "warnwhite"
-	},
-/area/station/rnd/xenobiology)
+/area/station/civilian/holodeck/alphadeck)
 "aAd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -27126,13 +27100,25 @@
 /turf/simulated/floor,
 /area/station/gateway)
 "aXD" = (
-/obj/structure/closet/l3closet/scientist,
+/obj/structure/closet/emcloset,
 /obj/machinery/camera{
-	c_tag = "Disposals";
-	dir = 8
+	c_tag = "Xenobiology Access Control";
+	network = list("SS13","Research")
 	},
-/turf/simulated/floor,
-/area/station/rnd/misc_lab)
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "xeno_airlock_control";
+	name = "Xenobiology Access Button";
+	pixel_x = -8;
+	pixel_y = 28;
+	req_access = list(55)
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "warnwhite"
+	},
+/area/station/rnd/xenobiology)
 "aXE" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -51894,6 +51880,9 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/machinery/atm{
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "yellow"
@@ -55309,11 +55298,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/camera{
-	c_tag = "Xenobiology Module South";
-	dir = 4;
-	network = list("SS13","Research")
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warning"
@@ -57166,11 +57150,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/camera{
-	c_tag = "Xenobiology Module South";
-	dir = 4;
-	network = list("SS13","Research")
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
@@ -58378,17 +58357,21 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cqu" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/machinery/camera{
-	c_tag = "Engineering Storage";
+/obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/engineering_personal,
-/turf/simulated/floor,
-/area/station/engineering/break_room)
+/obj/structure/window/reinforced,
+/obj/machinery/disposal,
+/obj/machinery/camera{
+	c_tag = "Xenobiology Module South";
+	dir = 8;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warning"
+	},
+/area/station/rnd/xenobiology)
 "cqv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
 	dir = 4
@@ -61745,19 +61728,14 @@
 	},
 /area/station/hallway/primary/aft)
 "czx" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
 /obj/machinery/camera{
-	c_tag = "Engineering Foyer"
+	c_tag = "Holodeck West";
+	dir = 4
 	},
-/obj/structure/noticeboard{
-	pixel_y = 28
+/turf/simulated/floor/engine{
+	name = "Holodeck Projector Floor"
 	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/engineering/break_room)
+/area/station/civilian/holodeck/alphadeck)
 "czy" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -64845,14 +64823,13 @@
 	},
 /area/station/ai_monitored/storage_secure)
 "cHa" = (
-/obj/machinery/atm{
-	pixel_x = 32
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "yellowcorner"
-	},
-/area/station/hallway/primary/aft)
+/obj/structure/closet/secure_closet/engineering_personal,
+/turf/simulated/floor,
+/area/station/engineering/break_room)
 "cHb" = (
 /obj/machinery/airlock_sensor{
 	id_tag = "virology_sensor";
@@ -75341,9 +75318,9 @@
 	dir = 1
 	},
 /obj/machinery/door_control{
+	id = "qm_warehouse";
 	name = "Warehouse Door Control";
 	pixel_y = 32;
-	id = "qm_warehouse";
 	req_access = list(31)
 	},
 /turf/simulated/floor,
@@ -98018,7 +97995,7 @@ awz
 awz
 awz
 awz
-ayW
+awz
 awz
 avp
 avp
@@ -98277,7 +98254,7 @@ awh
 awh
 awh
 awh
-awh
+czx
 awh
 awh
 aCf
@@ -100590,7 +100567,7 @@ awh
 awh
 awh
 awh
-awh
+aAc
 ada
 awh
 awh
@@ -100845,7 +100822,7 @@ awz
 awz
 awz
 awz
-ayY
+awz
 awz
 avp
 avp
@@ -109147,7 +109124,7 @@ bXy
 clt
 cos
 cGJ
-cHa
+cAl
 bZu
 bIZ
 cqt
@@ -109664,7 +109641,7 @@ clx
 ckT
 reb
 nEb
-cqu
+cHa
 crP
 ctc
 crP
@@ -110427,7 +110404,7 @@ bQM
 avv
 bSV
 bSP
-czx
+ayY
 bVK
 bUd
 bXA
@@ -121923,7 +121900,7 @@ bcv
 bcz
 hzb
 cbD
-aAc
+aXD
 bVu
 aBF
 mCb
@@ -123454,7 +123431,7 @@ avl
 atM
 avK
 arr
-avl
+cqu
 atM
 awy
 cbD
@@ -123477,7 +123454,7 @@ aup
 aNQ
 aPp
 bJC
-aXD
+ayW
 aVZ
 aXu
 alq
