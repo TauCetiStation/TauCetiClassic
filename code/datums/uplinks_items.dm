@@ -278,7 +278,7 @@
 	name = "Ammo-.45 ACP"
 	desc = "A 20-round .45 ACP magazine for use in the C-20r submachine gun."
 	item = /obj/item/ammo_box/magazine/m12mm
-	cost = 4
+	cost = 3
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/smg_hp
