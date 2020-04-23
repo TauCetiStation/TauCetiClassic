@@ -116,13 +116,13 @@ var/global/economy_init = FALSE
 		station_account.owner_name = "[station_name()] Station Account"
 		station_account.account_number = rand(111111, 999999)
 		station_account.remote_access_pin = rand(1111, 111111)
-		station_account.money = 75000
+		station_account.money = 7500
 
 		//create an entry in the account transaction log for when it was created
 		var/datum/transaction/T = new()
 		T.target_name = station_account.owner_name
 		T.purpose = "Account creation"
-		T.amount = 75000
+		T.amount = station_account.money
 		T.date = "2nd April, [gamestory_start_year]"
 		T.time = "11:24"
 		T.source_terminal = "Biesel GalaxyNet Terminal #277"
@@ -138,7 +138,7 @@ var/global/economy_init = FALSE
 	department_account.owner_name = "[department] Account"
 	department_account.account_number = rand(111111, 999999)
 	department_account.remote_access_pin = rand(1111, 111111)
-	department_account.money = 5000
+	department_account.money = 500
 
 	//create an entry in the account transaction log for when it was created
 	var/datum/transaction/T = new()

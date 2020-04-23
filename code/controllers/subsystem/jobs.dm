@@ -461,7 +461,10 @@ var/datum/subsystem/job/SSjob
 			H.buckled.dir = H.dir
 
 	//give them an account in the station database
-	var/datum/money_account/M = create_random_account_and_store_in_mind(H)
+	var/start_money = rand(50,200)*10	//just in case
+	if(job)
+		start_money = job.salary
+	var/datum/money_account/M = create_random_account_and_store_in_mind(H, start_money)
 
 	// If they're head, give them the account info for their department
 	if(H.mind && job.head_position)
