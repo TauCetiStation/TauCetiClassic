@@ -666,7 +666,7 @@
 					L.pixel_x = prev_info_el["pix_x"]
 					L.pixel_y = prev_info_el["pix_y"]
 					L.pass_flags = prev_info_el["pass_flags"]
-					apply_effect(5, WEAKEN, L, attacker, min_value=1)
+					apply_effect(4, WEAKEN, L, attacker, min_value=1)
 
 				after_animation(victim, attacker)
 				return
@@ -677,7 +677,7 @@
 		L.pixel_x = prev_info_el["pix_x"]
 		L.pixel_y = prev_info_el["pix_y"]
 		L.pass_flags = prev_info_el["pass_flags"]
-		apply_effect(5, WEAKEN, L, attacker, min_value=1)
+		apply_effect(4, WEAKEN, L, attacker, min_value=1)
 
 	after_animation(victim, attacker)
 
