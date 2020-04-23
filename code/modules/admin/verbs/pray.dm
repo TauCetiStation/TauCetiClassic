@@ -7,7 +7,7 @@
 		return
 
 	// No more praying ghosts! ~Luduk
-	if(stat == DEAD)
+	if(stat == DEAD && !fake_death)
 		to_chat(usr, "<span class='warning'>There's nobody that can save you now.</span>")
 		return
 
