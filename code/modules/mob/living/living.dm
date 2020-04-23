@@ -1189,7 +1189,7 @@
 		var/mob/living/carbon/human/H = src
 
 		if((HULK in H.mutations) && H.hulk_activator == "vomiting")
-			H.mutate_to_hulk(H)
+			H.try_mutate_to_hulk(H)
 
 		// The main reason why this is here, and not made into a polymorphized proc, is because we need to know from the subclasses that could cover their face, that they do.
 		if(masked)

@@ -700,7 +700,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	if((HULK in src.mutations) && src.hulk_activator == "electric shock") //for check to transformation Hulk.
 		to_chat(src, "<span class='notice'>You feel pain, but you like it!</span>")
-		mutate_to_hulk(src)
+		try_mutate_to_hulk(src)
 
 	if(!def_zone)
 		def_zone = pick(BP_L_ARM , BP_R_ARM)

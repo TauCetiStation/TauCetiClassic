@@ -116,16 +116,16 @@
 		return
 
 	var/matrix/Mx = matrix()
-	if(health <= 35)
+	if(health < maxHealth * 0.2)
 		Mx.Scale(0.75)
 		Mx.Translate(0,-5)
-	else if(health <= 75)
+	else if(health < maxHealth * 0.4)
 		Mx.Scale(0.8)
 		Mx.Translate(0,-4)
-	else if(health <= 135)
+	else if(health < maxHealth * 0.6)
 		Mx.Scale(0.85)
 		Mx.Translate(0,-3)
-	else if(health <= 225)
+	else if(health < maxHealth * 0.8)
 		Mx.Scale(0.9)
 		Mx.Translate(0,-2)
 	else

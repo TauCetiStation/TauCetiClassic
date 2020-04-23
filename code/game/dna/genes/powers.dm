@@ -230,43 +230,43 @@
 
 	..(M,connected,flags)
 
-/mob/living/carbon/human/proc/mutate_to_hulk(mob/M)
-	if(!M)
+/mob/living/carbon/human/proc/try_mutate_to_hulk(mob/M)
+	if(!src)
 		return
-	if(!(HULK in M.mutations)) //If user cleans hulk mutation before timer runs out, then there is no mutation.
+	if(!(HULK in mutations)) //If user cleans hulk mutation before timer runs out, then there is no mutation.
 		return
 	if(M.get_species() == DIONA || M.get_species() == IPC || M.get_species() == GOLEM)
-		to_chat(M, "<span class='warning'>Your species cannot take the Hulk form!</span>")
+		to_chat(M, "<span class='warning'>Your hulk gene is not dominant!</span>")
 		return
-	if(M.mind.hulkizing == TRUE)
-		to_chat(M, "<span class='warning'>You have no longer strength to transform!</span>") // Hulk transformation at most 1 time.
+	if(mind.hulkizing)
+		to_chat(src, "<span class='warning'>You no longer strength to transform!</span>") // Hulk transformation at most 1 time.
 		return
 
-	M.mind.hulkizing = TRUE
-	message_admins("[M.name] ([M.ckey]) is a <span class='warning'>Monster</span> [ADMIN_JMP(M)]")
-	to_chat(M, "<span class='bold notice'>You can feel real rage and POWER.</span>")
-	if(istype(M.loc, /obj/machinery/dna_scannernew))
-		var/obj/machinery/dna_scannernew/DSN = M.loc
+	mind.hulkizing = TRUE
+	message_admins("[M.name] ([src.ckey]) is a <span class='warning'>Monster</span> [ADMIN_JMP(src)]")
+	to_chat(src, "<span class='bold notice'>You can feel real POWER.</span>")
+	if(istype(loc, /obj/machinery/dna_scannernew))
+		var/obj/machinery/dna_scannernew/DSN = loc
 		DSN.occupant = null
 		DSN.icon_state = "scanner_0"
 	var/mob/living/simple_animal/hulk/Monster
-	if(CLUMSY in M.mutations)
+	if(CLUMSY in mutations)
 		Monster = new /mob/living/simple_animal/hulk/Clowan(get_turf(M))
-	else if(M.get_species() == UNATHI || prob(23))
+	else if(get_species() == UNATHI || prob(23))
 		Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(M))
 	else
 		Monster = new /mob/living/simple_animal/hulk/human(get_turf(M))
 
 	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
-	smoke.set_up(10, 0, M.loc)
+	smoke.set_up(10, 0, loc)
 	smoke.start()
-	playsound(M, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 
-	Monster.original_body = M
-	M.forceMove(Monster)
-	M.mind.transfer_to(Monster)
+	Monster.original_body = src
+	src.forceMove(Monster)
+	src.mind.transfer_to(Monster)
 
-	Monster.attack_log = M.attack_log
+	Monster.attack_log = src.attack_log
 	Monster.attack_log += "\[[time_stamp()]\]<font color='blue'> ======MONSTER LIFE======</font>"
 	Monster.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
 	return
