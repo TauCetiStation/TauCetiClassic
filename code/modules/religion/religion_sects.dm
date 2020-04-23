@@ -94,7 +94,7 @@
 /// Activates when an individual uses a rite. Can provide different/additional benefits depending on the user.
 /datum/religion_sect/proc/on_riteuse(mob/living/user, obj/structure/altar_of_gods/AOG)
 
-/datum/religion_sect/proc/give_god_spells()
+/datum/religion_sect/proc/give_god_spells(list/spells)
 	if(!spells || !god)
 		return
 
@@ -138,13 +138,20 @@
 	name = "Your sect"
 	desc = "Follow the orders of your god."
 	convert_opener = "I am the first to enter here.."
-	desired_items = list() //TODO
+	desired_items = list()
 	rites_list = list() //TODO
-	altar_icon_state = "tomealtar" //TODO
-	//spells = list(/obj/effect/proc_holder/spell/pickdesire)
 	spells = list(/obj/effect/proc_holder/spell/targeted/smoke, 
 				  /obj/effect/proc_holder/spell/aoe_turf/conjure/creature,
 				  /obj/effect/proc_holder/spell/targeted/pickdesire)
+	
+	var/list/spell_preset = list(
+		"Heal" = list(/obj/effect/proc_holder/spell/targeted/smoke),
+		"Spawn" = list(),
+		"Zlo" = list(),
+		"Aoe effect" = list(), 
+		"Dobro" = list(), 
+		"Neutral" = list(),
+	)
 
 /datum/religion_sect/technophile/can_sacrifice(obj/item/I, mob/living/L)
 	if(!..())
@@ -152,14 +159,44 @@
 	if(istype(I, /obj/item/weapon/gun/projectile))
 		var/obj/item/weapon/gun/projectile/gun = I
 		if(!gun.magazine)
-			to_chat("<span class='notice'>[ticker.Bible_deity_name] does not accept pity [i] without magazine.</span>")
+			to_chat("<span class='notice'>[ticker.Bible_deity_name] does not accept pity [I] without magazine.</span>")
+			return FALSE
+		if(gun.magazine && gun.magazine.ammo_count() == 0)
+			to_chat("<span class='notice'>[ticker.Bible_deity_name] does not accept pity [I] without bullet in magazine.</span>")
+			return FALSE
+
+	if(istype(I, /obj/item/clothing/suit/armor))
+		var/obj/item/clothing/suit/armor/arm = I
+		var/all_armor = 0
+		for(var/i in arm.armor)
+			all_armor += i
+		if(all_armor == 0)
+			to_chat("<span class='notice'>[ticker.Bible_deity_name] does not accept pity [I] without armor.</span>")
+			return FALSE
+
+	if(istype(I, /obj/item/weapon/melee))
+		var/obj/item/weapon/melee/mel = I
+		if(mel.force == 0)
+			to_chat("<span class='notice'>[ticker.Bible_deity_name] does not accept pity [I] without damage.</span>")
+			return FALSE
+
+	if(istype(I, /obj/item/weapon/reagent_containers/food/drinks))
+		var/obj/item/weapon/reagent_containers/food/drinks/drink = I
+		if(drink.reagents.total_volume == 0)
+			to_chat("<span class='notice'>[ticker.Bible_deity_name] does not accept pity [I] without liquid.</span>")
+			return FALSE
+
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks))
+		var/obj/item/weapon/reagent_containers/food/snacks/food = I
+		if(food.reagents.total_volume == 0)
+			to_chat("<span class='notice'>[ticker.Bible_deity_name] does not accept pity [I] without useful material.</span>")
 			return FALSE
 	return TRUE
 
 /datum/religion_sect/custom/on_sacrifice(obj/item/I, mob/living/L)
 	if(!is_type_in_typecache(I, desired_items_typecache))
 		return
-	
+
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/cell = I
 		adjust_favor(round(cell.charge/500), L) //BALANCE
@@ -171,6 +208,29 @@
 	if(istype(I, /obj/item/weapon/gun/projectile))
 		var/obj/item/weapon/gun/projectile/gun = I
 		adjust_favor(gun.magazine.ammo_count() * gun.chambered.BB.damage, L) //BALANCE
+
+	if(istype(I, /obj/item/clothing/suit/armor))
+		var/obj/item/clothing/suit/armor/arm = I
+		var/all_armor = 0
+		for(var/i in arm.armor)
+			all_armor += i
+		adjust_favor(arm * 3, L) //BALANCE
+
+	if(istype(I, /obj/item/weapon/melee))
+		var/obj/item/weapon/melee/mel = I
+		adjust_favor(mel.force * 7, L) //BALANCE
+	
+	if(istype(I, /obj/item/weapon/reagent_containers/food/drinks))
+		var/obj/item/weapon/reagent_containers/food/drinks/drink = I
+		adjust_favor(drink.reagents.total_volume * drink.reagents.reagent_list.len, L) //BALANCE
+		
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks))
+		var/obj/item/weapon/reagent_containers/food/snacks/food = I
+		adjust_favor(food.reagents.total_volume * food.reagents.reagent_list.len, L) //BALANCE
+
+	if(istype(I, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/material = I
+		adjust_favor(material.amount * 5, L) //BALANCE
 
 	to_chat(L, "<span class='notice'>You offer [I]'s power to [ticker.Bible_deity_name], pleasing them.</span>")
 	qdel(I)

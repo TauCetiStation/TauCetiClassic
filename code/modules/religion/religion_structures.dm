@@ -75,7 +75,7 @@
 			var/obj/item/weapon/nullrod/staff/S = C
 			religious_sect.god = S.brainmob
 			to_chat(user, "<span class='notice'>You binding your god to sect!")
-			religious_sect.give_god_spells()
+			religious_sect.give_god_spells(religious_sect.spells)
 			return
 	if(!istype(C, /obj/item/weapon/storage/bible))
 		return
@@ -105,7 +105,7 @@
 	if(!available_options)
 		return
 
-	var/sect_select = input(user,"Select a sect (You CANNOT revert this decision!)","Select a Sect",null) in available_options
+	var/sect_select = input(user, "Select a sect (You CANNOT revert this decision!)", "Select a Sect", null) in available_options
 	if(!sect_select)
 		to_chat(user,"<span class ='warning'>You cannot select a sect at this time.</span>")
 		return

@@ -222,7 +222,7 @@
 	
 	if(religious_sect)
 		religious_sect.god = brainmob
-		religious_sect.give_god_spells()
+		religious_sect.give_god_spells(religious_sect.spells)
 
 	name = "Staff of [god_name]"
 	if(god_name == "Aghanim") //sprite is very similar
