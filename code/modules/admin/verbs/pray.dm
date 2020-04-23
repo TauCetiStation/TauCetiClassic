@@ -125,6 +125,7 @@
 	I.invisibility = invisibility
 	I.loc = src
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	var/list/viewing = list()
 	for(var/mob/M in viewers(src))

@@ -124,6 +124,7 @@
 	var/speech_bubble_test = say_test(message)
 	var/image/I = image('icons/mob/talk.dmi', src, "h[speech_bubble_test]", MOB_LAYER+1)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	spawn(0)
 		flick_overlay(I, speech_bubble_recipients, 30)
 
