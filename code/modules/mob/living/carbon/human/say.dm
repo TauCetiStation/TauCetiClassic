@@ -258,6 +258,11 @@
 		return special_voice
 	return real_name
 
+/mob/living/carbon/human/get_alt_name()
+	if(name != GetVoice())
+		return " (as [get_id_name("Unknown")])"
+	return ""
+
 /*
    ***Deprecated***
    let this be handled at the hear_say or hear_radio proc

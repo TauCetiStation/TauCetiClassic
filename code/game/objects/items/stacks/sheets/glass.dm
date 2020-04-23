@@ -360,7 +360,7 @@
 				if(!H.species.flags[NO_PAIN])
 					H.Weaken(3)
 				H.updatehealth()
-	..()
+	. = ..()
 
 /*
  * Phoron Glass sheets

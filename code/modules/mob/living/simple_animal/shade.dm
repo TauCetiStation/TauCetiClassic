@@ -72,6 +72,12 @@
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	universal_understand = TRUE
 	density = FALSE
+
+	min_oxy = 0
+	max_tox = 0
+	max_co2 = 0
+	unsuitable_atoms_damage = 0
+
 	var/islam = FALSE
 	var/obj/item/weapon/nullrod/staff/container
 
@@ -81,7 +87,16 @@
 		if(religious_sect)
 			stat(null, "Favor: [religious_sect.favor]/[religious_sect.max_favor]")
 
+/mob/living/simple_animal/shade/god/incapacitated()
+	// So the god can't use procs and stuff like that.
+	return TRUE
+
+/mob/living/simple_animal/shade/god/atom_init()
+	. = ..()
+	gods_list += src
+
 /mob/living/simple_animal/shade/god/Destroy()
+	gods_list -= src
 	if(container)
 		container.brainmob = null
 		QDEL_NULL(container.god_image)
