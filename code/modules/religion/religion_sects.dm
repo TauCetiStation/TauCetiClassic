@@ -143,7 +143,7 @@
 				  /obj/effect/proc_holder/spell/targeted/pickdesire)
 	
 	var/list/spell_preset = list(
-		"Heal" = list(/obj/effect/proc_holder/spell/targeted/smoke),
+		"Heal" = list(/obj/effect/proc_holder/spell/targeted/spawn_bible,),
 		"Spawn" = list(),
 		"Zlo" = list(),
 		"Aoe effect" = list(), 
