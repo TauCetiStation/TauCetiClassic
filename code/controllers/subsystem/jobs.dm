@@ -581,7 +581,7 @@ var/datum/subsystem/job/SSjob
 		if(H.mind && H.mind.initial_account)
 			C.associated_account_number = H.mind.initial_account.account_number
 			H.mind.initial_account.owner_PDA = locate(/obj/item/device/pda,H)	//add PDA in /datum/money_account
-			H.mind.initial_account.owner_job = job //add Job in /datum/money_account
+			H.mind.initial_account.owner_salary = job.salary //add salary in /datum/money_account
 
 		H.equip_to_slot_or_del(C, SLOT_WEAR_ID)
 

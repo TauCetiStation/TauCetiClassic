@@ -110,6 +110,15 @@
           </div>
         </form>
 
+		<div class='item'>
+        	<div class='itemLabel'>Salary:</div>
+			{{if data.salary == "not_found"}}
+				<div class="itemContent"><span class="bad">Account not found</span></div>
+        	{{else}}
+				<div class="itemContent"><span class="good">{{:data.salary}}$</span></div>
+			{{/if}}
+        </div>
+
         <div class='item'>
           <div class='itemLabel'>
             Terminations:

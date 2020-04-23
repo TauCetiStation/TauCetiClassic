@@ -5,7 +5,7 @@
 
 /datum/money_account
 	var/owner_name = ""
-	var/owner_job = null
+	var/owner_salary = 0
 	var/account_number = 0
 	var/remote_access_pin = 0
 	var/money = 0
