@@ -71,12 +71,6 @@
 		if(!religious_sect)
 			to_chat(user, "<span class='notice'>First create a sect.</span>")
 			return
-		if(!religious_sect.god)
-			var/obj/item/weapon/nullrod/staff/S = C
-			religious_sect.god = S.brainmob
-			to_chat(user, "<span class='notice'>You binding your god to sect!")
-			religious_sect.give_god_spells(religious_sect.spells)
-			return
 	if(!istype(C, /obj/item/weapon/storage/bible))
 		return
 	if(sect_to_altar)

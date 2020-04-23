@@ -32,8 +32,6 @@
 	var/altar_icon
 /// Changes the Altar of Gods icon_state
 	var/altar_icon_state
-/// God in sect
-	var/mob/living/simple_animal/shade/god/god = null
 /// Add your god spells
 	var/list/spells
 
@@ -94,14 +92,14 @@
 /// Activates when an individual uses a rite. Can provide different/additional benefits depending on the user.
 /datum/religion_sect/proc/on_riteuse(mob/living/user, obj/structure/altar_of_gods/AOG)
 
-/datum/religion_sect/proc/give_god_spells(list/spells)
-	if(!spells || !god)
+/datum/religion_sect/proc/give_god_spells(list/spells, mob/living/simple_animal/shade/god/G)
+	if(!spells || gods_list.len == 0)
 		return
 
 	var/obj/effect/proc_holder/spell/S
 	for(var/spell in spells)
 		S = new spell()
-		god.AddSpell(S)
+		G.AddSpell(S)
 
 /datum/religion_sect/puritanism
 	name = "Puritanism (Default)"

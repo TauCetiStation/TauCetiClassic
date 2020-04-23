@@ -156,6 +156,8 @@
 
 /obj/item/weapon/nullrod/staff/attack_self(mob/living/carbon/human/user)
 	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+		if(!religious_sect)
+			to_chat(user, "<span class='notice'>First create sect!</span>")
 		if(!brainmob && !searching)
 			//Start the process of searching for a new user.
 			to_chat(user, "<span class='notice'>You attempt to wake the spirit of the staff...</span>")
@@ -220,9 +222,7 @@
 		brainmob.islam = TRUE
 		brainmob.speak.Add("[god_name] akbar!")
 	
-	if(religious_sect)
-		religious_sect.god = brainmob
-		religious_sect.give_god_spells(religious_sect.spells)
+	religious_sect.give_god_spells(religious_sect.spells, brainmob)
 
 	for(var/datum/language/L in summoner.languages)
 		brainmob.add_language(L.name)
