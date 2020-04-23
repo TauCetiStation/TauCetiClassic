@@ -75,9 +75,11 @@
 //		world.log << "k"
 		sql_report_death(src)
 		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
-	if(my_golems)
-		for(var/mob/living/carbon/human/golem in my_golems)
-			golem.death(0)
+	if(my_golem)
+		my_golem.death()
+	if(my_master)
+		my_master.my_golem = null
+		my_master = null
 
 	return ..(gibbed)
 

@@ -128,6 +128,7 @@
 
 	var/min_age = 25 // The default, for Humans.
 	var/max_age = 85
+	var/can_summon_golem = TRUE
 
 /datum/species/New()
 	blood_datum = new blood_datum_path
@@ -748,6 +749,7 @@
 
 	min_age = 1
 	max_age = 125
+	can_summon_golem = FALSE
 
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
@@ -794,6 +796,7 @@
 
 	min_age = 100
 	max_age = 500
+	can_summon_golem = FALSE
 
 /datum/species/abductor/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -848,6 +851,7 @@
 
 	min_age = 1
 	max_age = 1000
+	can_summon_golem = FALSE
 
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -949,6 +953,7 @@
 
 	min_age = 1
 	max_age = 10000
+	can_summon_golem = FALSE
 
 /datum/species/shadowling/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -998,6 +1003,7 @@
 
 	min_age = 1
 	max_age = 1000
+	can_summon_golem = FALSE
 
 /datum/species/golem/on_gain(mob/living/carbon/human/H)
 	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
@@ -1070,6 +1076,7 @@
 
 	min_age = 25
 	max_age = 85
+	can_summon_golem = FALSE
 
 /datum/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
 	return ..()
@@ -1197,6 +1204,7 @@
 
 	min_age = 1
 	max_age = 85
+	can_summon_golem = FALSE
 
 /datum/species/slime/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_slime_digest(M)

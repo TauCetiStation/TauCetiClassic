@@ -863,7 +863,7 @@
 	canremove = 0
 	siemens_coefficient = 0
 
-	armor = list(melee = 77, bullet = 66, laser = 44, energy = 44, bomb = 80, bio = 100, rad = 80)
+	armor = list(melee = 80, bullet = 70, laser = 80, energy = 66, bomb = 80, bio = 100, rad = 100)
 
 
 /obj/item/clothing/suit/space/golem
@@ -888,7 +888,7 @@
 	siemens_coefficient = 0
 	can_breach = 0
 
-	armor = list(melee = 77, bullet = 66, laser = 44, energy = 44, bomb = 80, bio = 100, rad = 80)
+	armor = list(melee = 80, bullet = 70, laser = 80, energy = 66, bomb = 80, bio = 100, rad = 100)
 
 /obj/effect/golemrune
 	anchored = 1
@@ -946,6 +946,11 @@
 	check_spirit()
 
 /obj/effect/golemrune/attack_hand(mob/living/user)
+	if(!istype(user, /mob/living/carbon/human))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.my_golem || !H.species.can_summon_golem)
+		return
 	if(!check_spirit())
 		to_chat(user, "The rune fizzles uselessly. There is no spirit nearby.")
 		return
@@ -956,10 +961,8 @@
 	G.key = spirit.key
 	G.my_master = user
 	G.update_golem_hud_icons()
-	if(istype(user, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.my_golems += G
-		H.update_golem_hud_icons()
+	H.my_golem = G
+	H.update_golem_hud_icons()
 	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost.")
 	qdel(src)
 
@@ -990,10 +993,9 @@
 				var/I = image('icons/mob/hud.dmi', loc = my_master, icon_state = "agolem_master")
 				client.images += I
 		else
-			if(my_golems)
-				for(var/mob/living/carbon/human/G in my_golems)
-					var/I = image('icons/mob/hud.dmi', loc = G, icon_state = "agolem_master")
-					client.images += I
+			if(my_golem)
+				var/I = image('icons/mob/hud.dmi', loc = my_golem, icon_state = "agolem_master")
+				client.images += I
 
 
 /mob/living/carbon/slime/getTrail()
