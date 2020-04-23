@@ -107,6 +107,8 @@
 
 	var/image/god_image
 
+	var/list/next_apply = list()
+
 /obj/item/weapon/nullrod/staff/Destroy()
 	// Damn... He's free now.
 	brainmob.invisibility = 0
@@ -149,8 +151,6 @@
 			S.transfer_soul("SHADE", brainmob, user)
 	else if(istype(W, /obj/item/weapon/storage/bible)) //force kick god from staff
 		if(brainmob)
-			if(brainmob.client)
-				brainmob.client.prefs.ignore_question += "chstaff"
 			qdel(brainmob)
 			searching = FALSE
 			icon_state = "talking_staff"
@@ -184,6 +184,9 @@
 	var/response = alert(C, "Someone is requesting a your soul in divine staff?", "Staff request", "No", "Yeeesss", "Never for this round")
 	if(!C || (brainmob && brainmob.ckey) || !searching)
 		return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
+	if(next_apply[C.ckey] > world.time)
+		to_chat(C.mob, "You were forcibly kicked from staff, left [round((next_apply[C.ckey] - world.time) / 600)] minutes")
+		return
 	if(response == "Yeeesss")
 		transfer_personality(C.mob, user)
 	else if (response == "Never for this round")
@@ -209,6 +212,7 @@
 
 	brainmob.mind = candidate.mind
 	brainmob.ckey = candidate.ckey
+	next_apply[brainmob.ckey] = world.time + 10 MINUTES
 	brainmob.name = "[god_name] [pick("II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX")]"
 	brainmob.real_name = name
 	brainmob.mind.assigned_role = "Chaplain`s staff"
