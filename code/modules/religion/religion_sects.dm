@@ -56,7 +56,7 @@
 		if(initial(RI.favor_cost))
 			name_entry += " ([initial(RI.favor_cost)] favor)"
 
-		. += list("[name_entry]" = i)
+		. += list("[name_entry]\n" = i)
 
 /// Activates once selected
 /datum/religion_sect/proc/on_select()
@@ -113,7 +113,7 @@
 	convert_opener = "May you find peace in a metal shell, acolyte.<br>You can now sacrifice cells, with favor depending on their charge."
 	desired_items = list(/obj/item/weapon/stock_parts/cell)
 	rites_list = list(/datum/religion_rites/synthconversion)
-	altar_icon_state = "technoaltar" //TODO
+	altar_icon_state = "technoaltar"
 
 /datum/religion_sect/technophile/can_sacrifice(obj/item/I, mob/living/L)
 	if(!..())
@@ -137,18 +137,20 @@
 	desc = "Follow the orders of your god."
 	convert_opener = "I am the first to enter here.."
 	desired_items = list()
-	rites_list = list() //TODO
-	spells = list(/obj/effect/proc_holder/spell/targeted/smoke, 
-				  /obj/effect/proc_holder/spell/aoe_turf/conjure/creature,
-				  /obj/effect/proc_holder/spell/targeted/pickdesire)
+	rites_list = list(/datum/religion_rites/sacrifice, /datum/religion_rites/food) //TODO
+	spells = list(/obj/effect/proc_holder/spell/targeted/pickpreset)
 	
 	var/list/spell_preset = list(
-		"Heal" = list(/obj/effect/proc_holder/spell/targeted/spawn_bible,),
-		"Spawn" = list(),
-		"Zlo" = list(),
-		"Aoe effect" = list(), 
-		"Dobro" = list(), 
-		"Neutral" = list(),
+		"Good" = list(
+					  /obj/effect/proc_holder/spell/targeted/pickdesire,
+					  /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_bible,
+					  /obj/effect/proc_holder/spell/targeted/heal,
+					  ),
+		"Evil" = list(
+					  /obj/effect/proc_holder/spell/targeted/pickdesire,
+					  /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_bible,
+					  /obj/effect/proc_holder/spell/targeted/heal/damage,
+					  ),
 	)
 
 /datum/religion_sect/technophile/can_sacrifice(obj/item/I, mob/living/L)

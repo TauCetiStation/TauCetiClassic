@@ -74,3 +74,68 @@
 	human2borg.Robotize()
 	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [name]!</span>")
 	return TRUE
+
+/*********CUSTOM**********/
+
+/datum/religion_rites/sacrifice
+	name = "Sacrifice"
+	desc = "Convert living energy in favor."
+	ritual_length = 0.5 MINUTES //BALANCE
+	ritual_invocations = list("By the inner workings of our god...",
+						"... We call upon you, in the face of adversity...",
+						"... to complete us, removing that which is undesirable...")
+	invoke_msg = "... gege!!"
+	favor_cost = 0
+
+/datum/religion_rites/sacrifice/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(AOG && !AOG.buckled_mob)
+		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [AOG].</span>")
+		return FALSE
+	return ..()
+
+/datum/religion_rites/sacrifice/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(AOG && !AOG.buckled_mob)
+		return FALSE
+	var/mob/living/L
+	if(istype(AOG.buckled_mob, /mob/living))
+		L = AOG.buckled_mob
+	if(!L)
+		return FALSE
+	religious_sect.favor += 200
+	L.gib()
+	L.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
+	return TRUE
+
+/datum/religion_rites/food
+	name = "Create food"
+	desc = "Create more and more food!"
+	ritual_length = 0.2 MINUTES //BALANCE
+	ritual_invocations = list("By the inner workings of our god...",
+						"... We call upon you, in the face of adversity...",
+						"... to complete us, removing that which is undesirable...")
+	invoke_msg = "... gege!!"
+	favor_cost = 300
+
+/datum/religion_rites/food/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+	return ..()
+
+/datum/religion_rites/food/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - /obj/item/weapon/reagent_containers/food/snacks
+
+	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
+
+	for(var/mob/living/carbon/human/M in viewers(get_turf_loc(AOG), null))
+		if(M:eyecheck() <= 0)
+			M.flash_eyes()
+
+	for(var/i = 1, i <= 4 + rand(1,2), i++)
+		var/chosen = pick(borks)
+		var/obj/B = new chosen
+		if(B)
+			B.loc = get_turf_loc(AOG)
+			if(prob(50))
+				for(var/j = 1, j <= rand(1, 3), j++)
+					step(B, pick(NORTH,SOUTH,EAST,WEST))
+
+	user.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
+	return TRUE

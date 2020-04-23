@@ -15,6 +15,7 @@
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
+	cast_with_favor()
 	for(var/turf/T in targets) //Done this way so things don't get thrown all around hilariously.
 		for(var/atom/movable/AM in T)
 			thrownatoms += AM

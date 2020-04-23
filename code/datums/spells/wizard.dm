@@ -161,6 +161,7 @@
 	var/summon_path = /obj/effect/forcefield/magic
 
 /obj/effect/proc_holder/spell/targeted/forcewall/cast(list/targets, mob/living/user = usr)
+	cast_with_favor()
 	new summon_path(get_turf(user), user)
 	if(user.dir == SOUTH || user.dir == NORTH)
 		new summon_path(get_step(user, EAST), user)
@@ -261,6 +262,7 @@
 	proj_step_delay = 1
 
 /obj/effect/proc_holder/spell/turf/fireball/cast(turf/T)
+	cast_with_favor()
 	explosion(T, -1, 1, 2, 3)
 
 

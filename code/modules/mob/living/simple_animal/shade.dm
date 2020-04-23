@@ -113,7 +113,7 @@
 	set background = BACKGROUND_ENABLED
 
 	if(religious_sect)
-		religious_sect.favor += 1
+		religious_sect.favor += 0.5
 
 /mob/living/simple_animal/shade/god/proc/god_attack(atom/A)
 	if(ismob(A))

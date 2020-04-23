@@ -55,3 +55,4 @@
 
 	sleep(50)
 	target.cut_overlay(image(icon = 'icons/effects/effects.dmi', icon_state = "electricity"))
+	cast_with_favor()

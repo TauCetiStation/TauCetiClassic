@@ -10,6 +10,13 @@
 	var/god_lore = ""
 	max_storage_space = DEFAULT_BOX_STORAGE
 
+/obj/item/weapon/storage/bible/atom_init()
+	. = ..()
+	name = ticker.Bible_name
+	icon_state = ticker.Bible_icon_state
+	item_state = ticker.Bible_item_state
+	deity_name = ticker.Bible_deity_name
+
 /obj/item/weapon/storage/bible/booze
 	name = "bible"
 	desc = "To be applied to the head repeatedly."

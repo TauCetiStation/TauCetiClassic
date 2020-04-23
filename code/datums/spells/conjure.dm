@@ -18,7 +18,6 @@
 	sound = 'sound/items/welder.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/cast(list/targets)
-
 	for(var/turf/T in targets)
 		if(T.density && !summon_ignore_density)
 			targets -= T
@@ -52,15 +51,13 @@
 					QDEL_IN(summoned_object, summon_lifespan)
 				if(deleting_previous)
 					previous_objects += summoned_object
-
+				cast_with_favor()
 	else
 		switch(charge_type)
 			if("recharge")
 				charge_counter = charge_max - 5//So you don't lose charge for a failed spell(Also prevents most over-fill)
 			if("charges")
 				charge_counter++//Ditto, just for different spell types
-
-
 	return
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/summonEdSwarm //test purposes
@@ -122,6 +119,7 @@
 	reagents.add_reagent("harvester", 80)
 	S.attach(location)
 	S.set_up(reagents, 5, 0, location, 15, 5)
+	cast_with_favor()
 	S.start()
 
 /datum/reagent/toxin/harvester
