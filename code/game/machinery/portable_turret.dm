@@ -168,9 +168,6 @@
 			reqpower = 75
 			iconholder = TRUE
 
-		if(/obj/item/weapon/gun/energy/taser)
-			reqpower = 200
-
 		if(/obj/item/weapon/gun/energy/taser/stunrevolver)
 			reqpower = 200
 
