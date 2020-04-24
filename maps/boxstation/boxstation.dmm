@@ -35187,17 +35187,6 @@
 	icon_state = "warning"
 	},
 /area/station/medical/chemistry)
-"bmQ" = (
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_x = -32
-	},
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "bmR" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/newscaster{
@@ -36051,6 +36040,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/item/clothing/head/cakehat,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -39118,7 +39108,6 @@
 /area/station/civilian/bar)
 "bwf" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/head/cakehat,
 /obj/structure/window/reinforced,
 /obj/structure/flora/pottedplant/shoot{
 	pixel_x = -8;
@@ -39370,6 +39359,10 @@
 "bwB" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_x = -32
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -42494,6 +42487,9 @@
 /obj/item/weapon/lighter/zippo{
 	pixel_x = -5;
 	pixel_y = 5
+	},
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = 32
 	},
 /turf/simulated/floor/carpet,
 /area/station/civilian/bar)
@@ -61346,7 +61342,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/camera{
-	c_tag = "MiniSat Exterior";
+	c_tag = "MiniSat Interior";
 	network = list("MiniSat")
 	},
 /obj/machinery/light/small{
@@ -78244,9 +78240,6 @@
 "wJm" = (
 /obj/machinery/light{
 	dir = 4
-	},
-/obj/machinery/vending/wallmed1{
-	pixel_x = 28
 	},
 /mob/living/simple_animal/cow{
 	name = "Betsy"
@@ -104616,7 +104609,7 @@ bav
 bpt
 bwB
 bmu
-bmQ
+bmp
 bmp
 bmZ
 btQ
