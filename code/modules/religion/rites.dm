@@ -71,7 +71,10 @@
 		human2borg = AOG.buckled_mob
 	if(!human2borg)
 		return FALSE
+
+	hgibs(AOG.loc, human2borg.viruses, human2borg.dna, human2borg.species.flesh_color, human2borg.species.blood_datum)
 	human2borg.Robotize()
+	AOG.add_overlay(image('icons/obj/religion.dmi', "blood_overlay"))
 	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [name]!</span>")
 	return TRUE
 
@@ -80,8 +83,8 @@
 /datum/religion_rites/sacrifice
 	name = "Sacrifice"
 	desc = "Convert living energy in favor."
-	ritual_length = 0.5 MINUTES //BALANCE
-	ritual_invocations = list("By the inner workings of our god...",
+	ritual_length = 0.1 MINUTES //BALANCE
+	ritual_invocations = list("By the inner workings of our god...", //TODO
 						"... We call upon you, in the face of adversity...",
 						"... to complete us, removing that which is undesirable...")
 	invoke_msg = "... gege!!"
@@ -99,25 +102,35 @@
 	var/mob/living/L
 	if(istype(AOG.buckled_mob, /mob/living))
 		L = AOG.buckled_mob
+
 	if(!L)
 		return FALSE
-	religious_sect.favor += 200
+	
+	if(L.stat == DEAD)
+		usr.visible_message("<span class='notice'>[L] must be alive!</span>")
+		return FALSE
+
+	if(isanimal(L))
+		religious_sect.favor += 200
+	if(ismonkey(L))
+		religious_sect.favor += 300
+	if(ishuman(L))
+		religious_sect.favor += 400
+
 	L.gib()
-	L.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
+	AOG.add_overlay(image('icons/obj/religion.dmi', "blood_overlay"))
+	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
 /datum/religion_rites/food
 	name = "Create food"
 	desc = "Create more and more food!"
 	ritual_length = 0.2 MINUTES //BALANCE
-	ritual_invocations = list("By the inner workings of our god...",
+	ritual_invocations = list("By the inner workings of our god...", //TODO
 						"... We call upon you, in the face of adversity...",
 						"... to complete us, removing that which is undesirable...")
 	invoke_msg = "... gege!!"
 	favor_cost = 300
-
-/datum/religion_rites/food/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
-	return ..()
 
 /datum/religion_rites/food/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - /obj/item/weapon/reagent_containers/food/snacks
@@ -137,5 +150,27 @@
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(B, pick(NORTH,SOUTH,EAST,WEST))
 
-	user.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
+	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
+	return TRUE
+
+/datum/religion_rites/pray
+	name = "Prayer to god"
+	desc = "Very long pray for favor"
+	ritual_length = 5 MINUTES //BALANCE
+	ritual_invocations = list("Have mercy on us, O Lord, have mercy on us...",
+							  "...for at a loss for any defense, this prayer do we sinners offer Thee as Master...",
+							  "...have mercy on us...",
+							  "...Lord have mercy on us, for we have hoped in Thee, be not angry with us greatly, neither remember our iniquities...",
+							  "...but look upon us now as Thou art compassionate, and deliver us from our enemies...",
+							  "...for Thou art our God, and we, Thy people; all are the works of Thy hands, and we call upon Thy name...",
+							  "...Both now and ever, and unto the ages of ages...",
+							  "...The door of compassion open unto us 0 blessed Theotokos, for hoping in thee...",
+							  "...let us not perish; through thee may we be delivered from adversities, for thou art the salvation of the Christian race...")
+	invoke_msg = "Lord have mercy. Twelve times."
+	favor_cost = 0
+
+/datum/religion_rites/pray/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	religious_sect.favor += 200
+	AOG.cut_overlay(image('icons/obj/religion.dmi', "blood_overlay"))
+	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE

@@ -95,6 +95,7 @@
 		to_chat(user, "<span class='warning'>You are not the high priest, and therefore cannot select a religious sect.")
 		return
 
+	//choose sect
 	var/list/available_options = generate_available_sects(user)
 	if(!available_options)
 		return
@@ -109,6 +110,27 @@
 
 	if(istype(religious_sect, /datum/religion_sect/custom))
 		religious_sect.name = ticker.Bible_religion_name
+		//choose aspects for the gods and his desire
+		var/list/aspects = generate_aspect(user)
+		if(!aspects)
+			return
+
+		for(var/i in 1 to 2)
+			var/aspect_select = input(user, "Select a aspect of god (You CANNOT revert this decision!)", "Select a aspect of god", null) in aspects
+			type_selected = aspects[aspect_select]
+			if(!istype(religious_sect.sect_aspects[aspect_select], type_selected))
+				religious_sect.sect_aspects[aspect_select] = new type_selected
+			else
+				var/datum/aspect/asp = religious_sect.sect_aspects[aspect_select]
+				asp.power += 1
+		
+		//add desire and rites
+		for(var/i in religious_sect.sect_aspects)
+			var/datum/aspect/asp = religious_sect.sect_aspects[i]
+			if(asp.rite)
+				religious_sect.rites_list += asp.rite
+			for(var/j in 1 to asp.power)
+				religious_sect.desired_items += asp.desire[j]
 
 	for(var/i in player_list)
 		if(!isliving(i))
@@ -124,9 +146,18 @@
 	if(sect_to_altar.altar_icon_state)
 		icon_state = sect_to_altar.altar_icon_state
 
+	religious_sect.update_rites()
+	religious_sect.update_desire()
+
 /obj/structure/altar_of_gods/proc/generate_available_sects(mob/user) //eventually want to add sects you get from unlocking certain achievements
 	. = list()
 	for(var/i in subtypesof(/datum/religion_sect))
 		var/datum/religion_sect/not_a_real_instance_rs = i
 		if(initial(not_a_real_instance_rs.starter))
 			. += list(initial(not_a_real_instance_rs.name) = i)
+
+/obj/structure/altar_of_gods/proc/generate_aspect(mob/user)
+	. = list()
+	for(var/i in subtypesof(/datum/aspect))
+		var/datum/aspect/asp = i
+		. += list(initial(asp.name) = i)

@@ -1760,6 +1760,7 @@
 #include "code\modules\recycling\disposal-construction.dm"
 #include "code\modules\recycling\disposal.dm"
 #include "code\modules\recycling\sortingmachinery.dm"
+#include "code\modules\religion\aspect.dm"
 #include "code\modules\religion\religion_sects.dm"
 #include "code\modules\religion\religion_structures.dm"
 #include "code\modules\religion\rites.dm"

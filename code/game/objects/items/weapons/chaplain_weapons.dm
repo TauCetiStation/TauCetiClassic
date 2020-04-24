@@ -222,7 +222,7 @@
 		brainmob.islam = TRUE
 		brainmob.speak.Add("[god_name] akbar!")
 	
-	religious_sect.give_god_spells(religious_sect.spells, brainmob)
+	religious_sect.give_god_spells(brainmob)
 
 	for(var/datum/language/L in summoner.languages)
 		brainmob.add_language(L.name)

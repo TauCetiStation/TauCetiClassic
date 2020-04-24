@@ -17,7 +17,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	var/charge_max = 100 //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
 	var/charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
-	var/favor_cost = 0 //cost for religious sect
+
+	/****RELIGIOUS SECT****/
+	var/favor_cost = 0 //cost
+	var/divine_power = 0 //control of spell power depending on the aspect
+	/****RELIGIOUS SECT****/
 
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used

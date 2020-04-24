@@ -1,70 +1,3 @@
-//God pick new desire for custom sect
-/obj/effect/proc_holder/spell/targeted/pickdesire
-	name = "Choose an item to desire"
-	favor_cost = 10 //TODO
-	charge_max = 120 //TODO
-	clothes_req = 0
-	invocation = "none"
-	range = -1
-	include_user = 1
-	action_icon_state = "god_default"
-	sound = 'sound/magic/Smoke.ogg' //TODO
-	var/list/desire
-
-/obj/effect/proc_holder/spell/targeted/pickdesire/atom_init()
-	. = ..()
-	desire = list("Cells" = /obj/item/weapon/stock_parts/cell,
-				  "Resourses(glass, minerals, metalls)" = /obj/item/stack/sheet,
-				  "Foods" = /obj/item/weapon/reagent_containers/food/snacks,
-				  "Drinks" = /obj/item/weapon/reagent_containers/food/drinks,
-				  "Energy guns" = /obj/item/weapon/gun/energy,
-				  "Bullet guns" = /obj/item/weapon/gun/projectile,
-				  "Melee weapons" = /obj/item/weapon/melee,
-				  "Armor" = /obj/item/clothing/suit/armor)
-
-/obj/effect/proc_holder/spell/targeted/pickdesire/cast()
-	cast_with_favor()
-	var/new_desire = input(usr, "Select a desire for you", "Select a desire", null) in desire
-
-	var/type_selected = desire[new_desire]
-	religious_sect.desired_items += new type_selected()
-	religious_sect.desired_items_typecache = typecacheof(religious_sect.desired_items)
-
-	desire -= new_desire
-
-	to_chat(usr, "<span class ='warning'>You chose for your desire the [new_desire].</span>")
-
-/obj/effect/proc_holder/spell/targeted/pickpreset
-	name = "Choose spell preset"
-	favor_cost = 10 //TODO
-	charge_max = 120 //TODO
-	clothes_req = 0
-	invocation = "none"
-	range = -1
-	action_icon_state = "god_default"
-	include_user = 1
-	sound = 'sound/magic/Smoke.ogg' //TODO
-	var/presets = list("Good", "Evil")
-
-/obj/effect/proc_holder/spell/targeted/pickpreset/cast()
-	cast_with_favor()
-	for(var/obj/effect/proc_holder/spell/spell_to_remove in usr.spell_list)
-		qdel(spell_to_remove)
-		usr.spell_list -= spell_to_remove
-		usr.mind.spell_list -= spell_to_remove
-
-	var/chosed_presets = input(usr, "Select a preset for you", "Select a preset", null) in presets
-
-	var/datum/religion_sect/custom/sect = religious_sect
-	var/preset = sect.spell_preset[chosed_presets]
-	sect.give_god_spells(preset)
-
-	//DEBUG
-	var/obj/effect/proc_holder/spell/S
-	for(var/spell in preset)
-		S = new spell()
-		usr.AddSpell(S)
-
 /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_bible
 	name = "Create bible"
 	desc = "Bible"
@@ -94,7 +27,7 @@
 
 	action_icon_state = "heal"
 
-	var/hamt = -10
+	divine_power = -10 //power
 
 /obj/effect/proc_holder/spell/targeted/heal/cast(list/targets, mob/user = usr)
 	if(!targets.len)
@@ -117,13 +50,42 @@
 		to_chat(user, "<span class='warning'>They are too far away!</span>")
 		return
 
-	H.apply_damages(hamt, hamt, hamt)
+	H.apply_damages(divine_power, divine_power, divine_power)
 	cast_with_favor()
 
 /obj/effect/proc_holder/spell/targeted/heal/damage
 	name = "Damage"
 	sound = 'sound/magic/Repulse.ogg'
 
-	action_icon_state = "gib"
 	action_icon_state = "god_default"
-	hamt = 5
+	divine_power = 5 //power
+
+/obj/effect/proc_holder/spell/targeted/blessing //TODO
+	name = "Blessing"
+
+	divine_power = 5 //power
+	action_icon_state = "god_default"
+
+/obj/effect/proc_holder/spell/targeted/charge //TODO
+	name = "Charge electricity"
+
+	divine_power = 5 //range
+	action_icon_state = "god_default"
+
+/obj/effect/proc_holder/spell/targeted/food //TODO
+	name = "Spawn food"
+
+	divine_power = 5 //count
+	action_icon_state = "god_default"
+
+/obj/effect/proc_holder/spell/targeted/forcewall/religion //TODO
+	name = "Create energy wall"
+
+	divine_power = 5 //CD
+	action_icon_state = "god_default"
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal
+	name = "Create random friendly animal"
+
+	divine_power = 5 //count
+	action_icon_state = "god_default"

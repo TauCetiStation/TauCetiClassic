@@ -23,8 +23,6 @@
 	//DEBUG
 	var/list/spells = list(/obj/effect/proc_holder/spell/targeted/smoke, 
 				  /obj/effect/proc_holder/spell/aoe_turf/conjure/creature,
-				  /obj/effect/proc_holder/spell/targeted/pickdesire,
-				  /obj/effect/proc_holder/spell/targeted/pickpreset,
 				  /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_bible)
 	var/obj/effect/proc_holder/spell/S
 	for(var/spell in spells)
