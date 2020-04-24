@@ -535,10 +535,15 @@
 	item = /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
 	cost = 5
 
+/datum/uplink_item/device_tools/bonepen
+	name = "Prototype Bone Repair Kit"
+	desc = "Stolen prototype bone repair nanites. Contains three nanocalcium autoinjectors."
+	item = /obj/item/weapon/storage/box/syndie_kit/bonepen
+	cost = 4
+
 /datum/uplink_item/stealthy_tools/mulligan
 	name = "Mulligan"
-	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity \
-			and appearance."
+	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity and appearance."
 	item = /obj/item/weapon/reagent_containers/syringe/mulligan
 	cost = 4
 
@@ -613,6 +618,14 @@
 	Ordering this sends you a small beacon that will teleport the power sink to your location on activation."
 	item = /obj/item/device/powersink
 	cost = 12
+
+/datum/uplink_item/device_tools/syndcodebook
+	name = "Sy-Code Book"
+	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which sounds like random letters and drinks to anyone listening. \
+	This manual teaches you Sy-Code. Limited uses. Use :0 before saying something to speak in Sy-Code."
+	item = /obj/item/weapon/syndcodebook
+	cost = 1
+	uplink_types = list("traitor")
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"

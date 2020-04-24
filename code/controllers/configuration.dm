@@ -170,7 +170,13 @@ var/list/net_announcer_secret = list()
 	var/chat_bridge = 0
 	var/antigrief_alarm_level = 1
 	var/check_randomizer = 0
-	var/proxy_autoban = 0
+	
+	var/guard_email = null
+	var/guard_enabled = FALSE
+	var/guard_autoban_treshhold = null
+	var/guard_autoban_reason = "We think you are a bad guy and block you because of this."
+	var/guard_autoban_sticky = FALSE
+	var/guard_whitelisted_country_codes = list()
 
 	var/allow_donators = 0
 	var/allow_tauceti_patrons = 0
@@ -595,8 +601,23 @@ var/list/net_announcer_secret = list()
 				if("check_randomizer")
 					config.check_randomizer = value
 
-				if("proxy_autoban")
-					config.proxy_autoban = 1
+				if("guard_email")
+					config.guard_email = value
+
+				if("guard_enabled")
+					config.guard_enabled = TRUE
+
+				if("guard_autoban_treshhold")
+					config.guard_autoban_treshhold = text2num(value)
+
+				if("guard_autoban_reason")
+					config.guard_autoban_reason = value
+
+				if("guard_autoban_sticky")
+					config.guard_autoban_sticky = TRUE
+
+				if("guard_whitelisted_country_codes")
+					config.guard_whitelisted_country_codes = splittext(value, ",")
 
 				if("allow_donators")
 					config.allow_donators = 1

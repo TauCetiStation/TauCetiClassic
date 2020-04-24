@@ -188,6 +188,20 @@
 			qdel(src)
 			return
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/blackpepper
+	seed = "/obj/item/seeds/blackpepper"
+	name = "black pepper"
+	desc = "Lil' spicy!"
+	icon_state = "blackpepper"
+	potency = 25
+	filling_color = "#020108"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/blackpepper/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
+	reagents.add_reagent("blackpepper", 4+round((potency / 5), 1))
+	bitesize = reagents.total_volume
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/grapes
 	seed = "/obj/item/seeds/grapeseed"
 	name = "bunch of grapes"
@@ -734,7 +748,8 @@
 		reagents.reaction(A)
 	qdel(src)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(AM)
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(atom/movable/AM)
+	. = ..()
 	if (iscarbon(AM))
 		var/mob/living/carbon/C = AM
 

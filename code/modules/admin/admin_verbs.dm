@@ -88,6 +88,7 @@ var/list/admin_verbs_log = list(
 var/list/admin_verbs_variables = list(
 	/client/proc/debug_variables,
 	/client/proc/add_player_age,
+	/client/proc/grand_guard_pass,
 	/client/proc/mass_apply_status_effect,
 )
 var/list/admin_verbs_ban = list(
@@ -283,6 +284,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_debug_tog_vcounter,
 	/client/proc/enable_debug_verbs,
 	/client/proc/add_player_age,
+	/client/proc/grand_guard_pass,
 	/proc/possess,
 	/proc/release
 	)
@@ -1138,7 +1140,8 @@ var/centcom_barriers_stat = 1
 	var/active = 1
 	var/lchannel = 999
 
-/obj/effect/landmark/trololo/Crossed(mob/M)
+/obj/effect/landmark/trololo/Crossed(atom/movable/AM)
+	. = ..()
 	if(!active) return
 	/*if(istype(M, /mob/living/carbon))
 		M.playsound_local(null, melody, VOL_EFFECTS_MASTER, 20, FALSE, channel = lchannel, wait = TRUE, ignore_environment = TRUE)*/

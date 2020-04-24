@@ -19,7 +19,7 @@
 /obj/item/weapon/melee/zombie_hand/right
 	icon_state = "bloodhand_right"
 
-/obj/item/weapon/melee/zombie_hand/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/melee/zombie_hand/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 

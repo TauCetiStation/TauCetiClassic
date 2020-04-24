@@ -89,6 +89,7 @@
 	busy = FALSE
 
 /obj/effect/cross_action/spacetime_dist/Crossed(atom/movable/AM)
+	. = ..()
 	if(!busy)
 		walk_link(AM)
 

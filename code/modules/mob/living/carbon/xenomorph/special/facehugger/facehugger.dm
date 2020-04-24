@@ -162,8 +162,9 @@
 /obj/item/clothing/mask/facehugger/equipped(mob/living/carbon/C)
 	Attach(C)
 
-/obj/item/clothing/mask/facehugger/Crossed(mob/living/carbon/C)
-	return HasProximity(C)
+/obj/item/clothing/mask/facehugger/Crossed(atom/movable/AM)
+	..()
+	return HasProximity(AM)
 
 /obj/item/clothing/mask/facehugger/HasProximity(mob/living/carbon/C)
 	if(!current_hugger)
