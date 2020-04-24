@@ -151,6 +151,7 @@
 			S.transfer_soul("SHADE", brainmob, user)
 	else if(istype(W, /obj/item/weapon/storage/bible)) //force kick god from staff
 		if(brainmob)
+			next_apply[brainmob.ckey] = world.time + 10 MINUTES
 			qdel(brainmob)
 			searching = FALSE
 			icon_state = "talking_staff"
@@ -212,7 +213,6 @@
 
 	brainmob.mind = candidate.mind
 	brainmob.ckey = candidate.ckey
-	next_apply[brainmob.ckey] = world.time + 10 MINUTES
 	brainmob.name = "[god_name] [pick("II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX")]"
 	brainmob.real_name = name
 	brainmob.mind.assigned_role = "Chaplain`s staff"
