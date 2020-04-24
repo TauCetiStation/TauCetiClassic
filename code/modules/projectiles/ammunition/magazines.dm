@@ -182,6 +182,13 @@
 	caliber = ".45S"
 	max_ammo = 15
 
+/obj/item/ammo_box/magazine/m12mm/hp/update_icon()
+	..()
+	if(ammo_count() == 1)
+		icon_state = "[initial(icon_state)]-1"
+	else
+		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
+
 /obj/item/ammo_box/magazine/m12mm/hv
 	name = "magazine (.45 HV)"
 	desc = "Magazine, full of high velocity submachinegun ammo."
@@ -191,6 +198,14 @@
 	caliber = ".45S"
 	max_ammo = 15
 
+/obj/item/ammo_box/magazine/m12mm/hv/update_icon()
+	..()
+	if(ammo_count() == 1)
+		icon_state = "[initial(icon_state)]-1"
+	else
+		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
+
+
 /obj/item/ammo_box/magazine/m12mm/imp
 	name = "magazine (.45 IMP)"
 	desc = "Magazine, full of impact submachinegun ammo."
@@ -199,6 +214,14 @@
 	ammo_type = /obj/item/ammo_casing/c45imp
 	caliber = ".45S"
 	max_ammo = 15
+
+/obj/item/ammo_box/magazine/m12mm/imp/update_icon()
+	..()
+	if(ammo_count() == 1)
+		icon_state = "[initial(icon_state)]-1"
+	else
+		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
+
 
 /obj/item/ammo_box/magazine/sm45
 	name = "magazine (.45)"
