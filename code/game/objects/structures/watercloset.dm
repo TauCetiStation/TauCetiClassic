@@ -321,7 +321,7 @@
 			for (var/atom/movable/G in src.loc)
 				G.clean_blood()
 		else
-			is_payed = 0 // ���� ����� �������� ������ ������� - �������������� ������������� �����.
+			is_payed = 0 // If the player closes ahead of time - force cancel the fee
 	else
 		to_chat(user, "You didn't pay for that. Swipe a card against [src].")
 
