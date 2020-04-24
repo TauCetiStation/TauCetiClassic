@@ -107,6 +107,8 @@
 
 	var/image/god_image
 
+	var/list/next_apply = list()
+
 /obj/item/weapon/nullrod/staff/Destroy()
 	// Damn... He's free now.
 	brainmob.invisibility = 0
@@ -149,6 +151,7 @@
 			S.transfer_soul("SHADE", brainmob, user)
 	else if(istype(W, /obj/item/weapon/storage/bible)) //force kick god from staff
 		if(brainmob)
+			next_apply[brainmob.ckey] = world.time + 10 MINUTES
 			qdel(brainmob)
 			searching = FALSE
 			icon_state = "talking_staff"
@@ -183,6 +186,9 @@
 	if(!C || (brainmob && brainmob.ckey) || !searching)
 		return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 	if(response == "Yeeesss")
+		if(next_apply[C.ckey] > world.time)
+			to_chat(C.mob, "You were forcibly kicked from staff, left [round((next_apply[C.ckey] - world.time) / 600)] minutes")
+			return
 		transfer_personality(C.mob, user)
 	else if (response == "Never for this round")
 		C.prefs.ignore_question += "chstaff"
