@@ -91,7 +91,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
-	hulk_activator = pick("heavy muscle load", "electric shock", "vomiting")
+	hulk_activator = pick(HULK_ACTIVATION_OPTIONS) //in __DEFINES/geneticts.dm
 
 	if(!species)
 		if(new_species)

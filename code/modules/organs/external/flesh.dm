@@ -565,6 +565,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(BP.owner.species && !BP.owner.species.flags[NO_PAIN])
 		BP.owner.emote("scream")
 
+	if((HULK in BP.owner.mutations) && BP.owner.hulk_activator == "broken bone")
+		BP.owner.try_mutate_to_hulk(BP.owner)
+
 	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, null, -2)
 	BP.status |= ORGAN_BROKEN
 	BP.broken_description = pick("broken", "fracture", "hairline fracture")

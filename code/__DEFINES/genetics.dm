@@ -51,6 +51,8 @@
 #define SMALLSIZE		110 	// table climbing
 #define RESIST_HEAT		111 	// Heat-resistance #Z2
 
+#define HULK_ACTIVATION_OPTIONS		list("heavy muscle load", "electric shock", "vomiting", "broken bone")
+
 //disabilities
 #define NEARSIGHTED		1
 #define EPILEPSY		2
