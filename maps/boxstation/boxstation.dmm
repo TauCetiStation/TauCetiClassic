@@ -10688,6 +10688,11 @@
 	name = "Station Intercom (General)";
 	pixel_x = -28
 	},
+/obj/machinery/camera{
+	c_tag = "Xenobiology Module North";
+	dir = 4;
+	network = list("SS13","Research")
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurplecorner"
@@ -12008,11 +12013,6 @@
 	pixel_y = 4;
 	req_access = list(55)
 	},
-/obj/machinery/camera{
-	c_tag = "Xenobiology Module Middle";
-	dir = 8;
-	network = list("SS13","Research")
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -12722,11 +12722,6 @@
 	pixel_y = 4;
 	req_access = list(55)
 	},
-/obj/machinery/camera{
-	c_tag = "Xenobiology Module Middle";
-	dir = 8;
-	network = list("SS13","Research")
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -13103,11 +13098,6 @@
 	name = "Containment Blast Doors";
 	pixel_y = 4;
 	req_access = list(55)
-	},
-/obj/machinery/camera{
-	c_tag = "Xenobiology Module Middle";
-	dir = 8;
-	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -14245,17 +14235,13 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "ayW" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
+/obj/structure/closet/l3closet/scientist,
 /obj/machinery/camera{
-	c_tag = "Holodeck West";
-	dir = 4
+	c_tag = "Miscellaneous Research";
+	dir = 8
 	},
-/turf/simulated/floor/plating,
-/area/station/civilian/fitness)
+/turf/simulated/floor,
+/area/station/rnd/misc_lab)
 "ayX" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -14270,17 +14256,16 @@
 	},
 /area/station/cargo/miningoffice)
 "ayY" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
+/obj/structure/table,
+/obj/machinery/cell_charger,
 /obj/machinery/camera{
-	c_tag = "Holodeck East";
-	dir = 8
+	c_tag = "Engineering Foyer"
 	},
-/turf/simulated/floor/plating,
-/area/station/civilian/fitness)
+/obj/structure/noticeboard{
+	pixel_y = 28
+	},
+/turf/simulated/floor,
+/area/station/engineering/break_room)
 "ayZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
@@ -14876,25 +14861,14 @@
 	},
 /area/station/storage/tech/north)
 "aAc" = (
-/obj/structure/closet/emcloset,
 /obj/machinery/camera{
-	c_tag = "Xenobiology Access";
-	network = list("SS13","Research")
+	c_tag = "Holodeck East";
+	dir = 8
 	},
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1379;
-	master_tag = "xeno_airlock_control";
-	name = "Xenobiology Access Button";
-	pixel_x = -8;
-	pixel_y = 28;
-	req_access = list(55)
+/turf/simulated/floor/engine{
+	name = "Holodeck Projector Floor"
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "warnwhite"
-	},
-/area/station/rnd/xenobiology)
+/area/station/civilian/holodeck/alphadeck)
 "aAd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -21779,6 +21753,15 @@
 	icon_state = "blue"
 	},
 /area/station/hallway/primary/central)
+"aMQ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "green"
+	},
+/area/station/civilian/hydroponics)
 "aMR" = (
 /turf/simulated/wall,
 /area/station/hallway/primary/central)
@@ -23471,11 +23454,11 @@
 /area/station/rnd/hor)
 "aQq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/mob/living/simple_animal/walle,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/mob/living/simple_animal/walle,
 /turf/simulated/floor,
 /area/station/cargo/qm)
 "aQr" = (
@@ -27299,13 +27282,25 @@
 /turf/simulated/floor,
 /area/station/gateway)
 "aXD" = (
-/obj/structure/closet/l3closet/scientist,
+/obj/structure/closet/emcloset,
 /obj/machinery/camera{
-	c_tag = "Disposals";
-	dir = 8
+	c_tag = "Xenobiology Access Control";
+	network = list("SS13","Research")
 	},
-/turf/simulated/floor,
-/area/station/rnd/misc_lab)
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "xeno_airlock_control";
+	name = "Xenobiology Access Button";
+	pixel_x = -8;
+	pixel_y = 28;
+	req_access = list(55)
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "warnwhite"
+	},
+/area/station/rnd/xenobiology)
 "aXE" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -52118,6 +52113,9 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/machinery/atm{
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "yellow"
@@ -55544,11 +55542,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/camera{
-	c_tag = "Xenobiology Module South";
-	dir = 4;
-	network = list("SS13","Research")
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warning"
@@ -57405,11 +57398,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/camera{
-	c_tag = "Xenobiology Module South";
-	dir = 4;
-	network = list("SS13","Research")
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
@@ -58632,17 +58620,21 @@
 	},
 /area/station/civilian/kitchen)
 "cqu" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/machinery/camera{
-	c_tag = "Engineering Storage";
+/obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/engineering_personal,
-/turf/simulated/floor,
-/area/station/engineering/break_room)
+/obj/structure/window/reinforced,
+/obj/machinery/disposal,
+/obj/machinery/camera{
+	c_tag = "Xenobiology Module South";
+	dir = 8;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warning"
+	},
+/area/station/rnd/xenobiology)
 "cqv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
 	dir = 4
@@ -58762,6 +58754,7 @@
 /area/station/engineering/atmos)
 "cqH" = (
 /obj/machinery/computer/general_air_control/large_tank_control{
+	frequency = 1443;
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "air_out";
@@ -61999,19 +61992,14 @@
 	},
 /area/station/hallway/primary/aft)
 "czx" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
 /obj/machinery/camera{
-	c_tag = "Engineering Foyer"
+	c_tag = "Holodeck West";
+	dir = 4
 	},
-/obj/structure/noticeboard{
-	pixel_y = 28
+/turf/simulated/floor/engine{
+	name = "Holodeck Projector Floor"
 	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/engineering/break_room)
+/area/station/civilian/holodeck/alphadeck)
 "czy" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -65099,14 +65087,13 @@
 	},
 /area/station/ai_monitored/storage_secure)
 "cHa" = (
-/obj/machinery/atm{
-	pixel_x = 32
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "yellowcorner"
-	},
-/area/station/hallway/primary/aft)
+/obj/structure/closet/secure_closet/engineering_personal,
+/turf/simulated/floor,
+/area/station/engineering/break_room)
 "cHb" = (
 /obj/machinery/airlock_sensor{
 	id_tag = "virology_sensor";
@@ -73641,16 +73628,6 @@
 	icon_state = "warnwhite"
 	},
 /area/station/medical/virology)
-"nUQ" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/mob/living/simple_animal/cow{
-	name = "Betsy"
-	},
-/obj/structure/flora/ausbushes/grassybush,
-/turf/simulated/floor/grass,
-/area/station/civilian/kitchen)
 "nVb" = (
 /obj/structure/toilet{
 	dir = 1
@@ -78265,14 +78242,17 @@
 	},
 /area/station/hallway/secondary/entry)
 "wJm" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
+/obj/machinery/light{
+	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "green"
+/obj/machinery/vending/wallmed1{
+	pixel_x = 28
 	},
-/area/station/civilian/hydroponics)
+/mob/living/simple_animal/cow{
+	name = "Betsy"
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/kitchen)
 "wNf" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -98176,7 +98156,7 @@ awz
 awz
 awz
 awz
-ayW
+awz
 awz
 avp
 avp
@@ -98205,7 +98185,7 @@ bod
 avT
 eHa
 aVh
-wJm
+aMQ
 aVh
 aVh
 hTE
@@ -98435,7 +98415,7 @@ awh
 awh
 awh
 awh
-awh
+czx
 awh
 awh
 aCf
@@ -100009,7 +99989,7 @@ aDT
 aFH
 aOJ
 gLt
-nUQ
+wJm
 aAf
 bIp
 tpw
@@ -100748,7 +100728,7 @@ awh
 awh
 awh
 awh
-awh
+aAc
 ada
 awh
 awh
@@ -101003,7 +100983,7 @@ awz
 awz
 awz
 awz
-ayY
+awz
 awz
 avp
 avp
@@ -109305,7 +109285,7 @@ bXy
 clt
 cos
 cGJ
-cHa
+cAl
 bZu
 bIZ
 aMq
@@ -109822,7 +109802,7 @@ clx
 ckT
 reb
 nEb
-cqu
+cHa
 crP
 ctc
 crP
@@ -110585,7 +110565,7 @@ bQM
 avv
 bSV
 bSP
-czx
+ayY
 bVK
 bUd
 bXA
@@ -122081,7 +122061,7 @@ bcv
 bcz
 hzb
 cbD
-aAc
+aXD
 bVu
 aBF
 mCb
@@ -123612,7 +123592,7 @@ avl
 atM
 avK
 arr
-avl
+cqu
 atM
 awy
 cbD
@@ -123635,7 +123615,7 @@ aup
 aNQ
 aPp
 bJC
-aXD
+ayW
 aVZ
 aXu
 alq

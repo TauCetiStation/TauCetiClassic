@@ -69,6 +69,9 @@
 	*/
 	var/list/sprite_sheets_obj = null
 
+	// This thing can be used to stab eyes out.
+	var/stab_eyes = FALSE
+
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0
@@ -879,12 +882,12 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
-		IO.damage += rand(3,4)
+		IO.damage += rand(force * 0.5, force)
 		if(IO.damage >= IO.min_bruised_damage)
 			if(H.stat != DEAD)
 				if(IO.robotic <= 1) //robot eyes bleeding might be a bit silly
 					to_chat(H, "<span class='warning'>Your eyes start to bleed profusely!</span>")
-			if(prob(50))
+			if(prob(10 * force))
 				if(H.stat != DEAD)
 					to_chat(H, "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>")
 					H.drop_item()
@@ -895,13 +898,11 @@
 				if(H.stat != DEAD)
 					to_chat(H, "<span class='warning'>You go blind!</span>")
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-		BP.take_damage(7)
+		BP.take_damage(force)
 	else
-		M.take_bodypart_damage(7)
+		M.take_bodypart_damage(force)
 
-	M.eye_blurry += rand(3,4)
-
-	return
+	M.eye_blurry += rand(force * 0.5, force)
 
 /obj/item/clean_blood()
 	. = ..() // FIX: If item is `uncleanable` we shouldn't nullify `dirt_overlay`

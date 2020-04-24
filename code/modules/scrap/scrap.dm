@@ -140,7 +140,7 @@ var/global/list/scrap_base_cache = list()
 				BP.take_damage(5, 0)
 				H.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
 				H.updatehealth()
-	..()
+	. = ..()
 
 /obj/structure/scrap/proc/shuffle_loot()
 	try_make_loot()
