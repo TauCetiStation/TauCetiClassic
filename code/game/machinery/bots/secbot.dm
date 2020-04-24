@@ -68,8 +68,8 @@
 /obj/machinery/bot/secbot/atom_init()
 	. = ..()
 	botcard = new /obj/item/weapon/card/id(src)
-	var/datum/job/detective/J = new/datum/job/detective
-	botcard.access = J.get_access()
+	var/datum/job/cadet/C = new/datum/job/cadet
+	botcard.access = C.get_access()
 	if(radio_controller)
 		radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
