@@ -184,10 +184,10 @@
 	var/response = alert(C, "Someone is requesting a your soul in divine staff?", "Staff request", "No", "Yeeesss", "Never for this round")
 	if(!C || (brainmob && brainmob.ckey) || !searching)
 		return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
-	if(next_apply[C.ckey] > world.time)
-		to_chat(C.mob, "You were forcibly kicked from staff, left [round((next_apply[C.ckey] - world.time) / 600)] minutes")
-		return
 	if(response == "Yeeesss")
+		if(next_apply[C.ckey] > world.time)
+			to_chat(C.mob, "You were forcibly kicked from staff, left [round((next_apply[C.ckey] - world.time) / 600)] minutes")
+			return
 		transfer_personality(C.mob, user)
 	else if (response == "Never for this round")
 		C.prefs.ignore_question += "chstaff"
