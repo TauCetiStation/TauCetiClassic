@@ -691,7 +691,7 @@
 	vend_delay = 34
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 25,/obj/item/weapon/reagent_containers/food/drinks/tea = 25,/obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 25)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/ice = 10)
-	prices = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 25, /obj/item/weapon/reagent_containers/food/drinks/tea = 25, /obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 25)
+	prices = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 15, /obj/item/weapon/reagent_containers/food/drinks/tea = 15, /obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 15)
 	refill_canister = /obj/item/weapon/vending_refill/coffee
 
 
@@ -708,9 +708,9 @@
 					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 6,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
-	prices = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 5,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 20,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 25,
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 5,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 25,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 25,
 					/obj/item/weapon/reagent_containers/food/snacks/chips = 10,
-					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 12,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 10,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 10,
+					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 14,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 10,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 10,
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 10)
 	refill_canister = /obj/item/weapon/vending_refill/snack
 
@@ -746,8 +746,8 @@
 	light_color = "#d00023"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein = 6, /obj/item/weapon/reagent_containers/food/snacks/chinese/tao = 6, /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball = 6, /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/chinese/rice = 6, /obj/item/weapon/kitchen/utensil/fork/sticks = 18)
-	prices = list(/obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein = 50, /obj/item/weapon/reagent_containers/food/snacks/chinese/tao = 50, /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball = 50, /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles = 50,
-					/obj/item/weapon/reagent_containers/food/snacks/chinese/rice = 50, /obj/item/weapon/kitchen/utensil/fork/sticks = 1)
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein = 25, /obj/item/weapon/reagent_containers/food/snacks/chinese/tao = 25, /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball = 25, /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles = 25,
+					/obj/item/weapon/reagent_containers/food/snacks/chinese/rice = 25, /obj/item/weapon/kitchen/utensil/fork/sticks = 1)
 	refill_canister = /obj/item/weapon/vending_refill/chinese
 
 /obj/machinery/vending/cola

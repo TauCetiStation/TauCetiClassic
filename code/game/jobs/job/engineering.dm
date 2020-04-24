@@ -15,7 +15,7 @@
 		access_heads, access_construction, access_sec_doors, access_minisat,
 		access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload, access_engineering_lobby
 	)
-	salary = 220
+	salary = 250
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)

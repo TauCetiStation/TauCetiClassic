@@ -27,7 +27,7 @@
 	var/time = ""
 	var/source_terminal = ""
 
-/proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H, start_money = rand(50,200)*10)
+/proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H, start_money = rand(50, 200) * 10)
 	var/datum/money_account/M = create_account(H.real_name, start_money, null)
 	if(H.mind)
 		var/remembered_info = ""
