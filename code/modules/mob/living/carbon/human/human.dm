@@ -698,7 +698,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(NO_SHOCK in src.mutations)
 		return 0 //#Z2 no shock with that mutation.
 
-	if((HULK in src.mutations) && src.hulk_activator == "electric shock") //for check to transformation Hulk.
+	if((HULK in mutations) && hulk_activator == "electric shock") //for check to transformation Hulk.
 		to_chat(src, "<span class='notice'>You feel pain, but you like it!</span>")
 		try_mutate_to_hulk(src)
 

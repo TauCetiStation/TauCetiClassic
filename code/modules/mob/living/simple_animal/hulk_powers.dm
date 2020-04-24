@@ -483,7 +483,7 @@
 	clown.health += 50
 
 	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
-	smoke.set_up(10, 0, src.loc)
+	smoke.set_up(10, 0, loc)
 	smoke.start()
 	playsound(src, 'sound/effects/scary_honk.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 

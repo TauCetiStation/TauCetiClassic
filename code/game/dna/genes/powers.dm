@@ -230,20 +230,20 @@
 
 	..(M,connected,flags)
 
-/mob/living/carbon/human/proc/try_mutate_to_hulk(mob/M)
+/mob/living/carbon/human/proc/try_mutate_to_hulk()
 	if(!src)
 		return
 	if(!(HULK in mutations)) //If user cleans hulk mutation before timer runs out, then there is no mutation.
 		return
-	if(M.get_species() == DIONA || M.get_species() == IPC || M.get_species() == GOLEM)
-		to_chat(M, "<span class='warning'>Your hulk gene is not dominant!</span>")
+	if(species.flags[NO_PAIN]) // hulk mechanic is revolving around pain, and also all the species that don't have hulk form have this flag.
+		to_chat(src, "<span class='warning'>Your hulk gene is not dominant!</span>")
 		return
 	if(mind.hulkizing)
 		to_chat(src, "<span class='warning'>You no longer strength to transform!</span>") // Hulk transformation at most 1 time.
 		return
 
 	mind.hulkizing = TRUE
-	message_admins("[M.name] ([src.ckey]) is a <span class='warning'>Monster</span> [ADMIN_JMP(src)]")
+	message_admins("[key_name(src)] is a <span class='warning'>Monster</span> [ADMIN_JMP(src)]")
 	to_chat(src, "<span class='bold notice'>You can feel real POWER.</span>")
 	if(istype(loc, /obj/machinery/dna_scannernew))
 		var/obj/machinery/dna_scannernew/DSN = loc
@@ -251,11 +251,11 @@
 		DSN.icon_state = "scanner_0"
 	var/mob/living/simple_animal/hulk/Monster
 	if(CLUMSY in mutations)
-		Monster = new /mob/living/simple_animal/hulk/Clowan(get_turf(M))
+		Monster = new /mob/living/simple_animal/hulk/Clowan(get_turf(src))
 	else if(get_species() == UNATHI || prob(23))
-		Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(M))
+		Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(src))
 	else
-		Monster = new /mob/living/simple_animal/hulk/human(get_turf(M))
+		Monster = new /mob/living/simple_animal/hulk/human(get_turf(src))
 
 	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
 	smoke.set_up(10, 0, loc)
@@ -263,10 +263,10 @@
 	playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 
 	Monster.original_body = src
-	src.forceMove(Monster)
-	src.mind.transfer_to(Monster)
+	forceMove(Monster)
+	mind.transfer_to(Monster)
 
-	Monster.attack_log = src.attack_log
+	Monster.attack_log = attack_log
 	Monster.attack_log += "\[[time_stamp()]\]<font color='blue'> ======MONSTER LIFE======</font>"
 	Monster.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
 	return
