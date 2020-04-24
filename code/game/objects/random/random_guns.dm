@@ -28,7 +28,7 @@
 	icon_state = "laser"
 /obj/random/guns/energy_weapon/item_to_spawn()
 		return pick(\
-						prob(25);/obj/item/weapon/gun/energy/taser,\
+						prob(25);/obj/item/weapon/gun/energy/taser/stunrevolver,\
 						prob(15);/obj/item/weapon/gun/energy/laser/retro,\
 						prob(15);/obj/item/weapon/gun/energy/laser/practice,\
 						prob(10);/obj/item/weapon/gun/energy/toxgun,\
