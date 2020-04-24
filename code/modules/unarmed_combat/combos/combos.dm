@@ -245,7 +245,8 @@
 
 	scale_damage_coeff = 1.0
 
-	apply_dam_flags = TRUE
+	// Unathi cut people's heads off.
+	// apply_dam_flags = TRUE
 
 	allowed_target_zones = list(BP_HEAD)
 
