@@ -8550,8 +8550,7 @@
 "anS" = (
 /obj/structure/stool,
 /obj/machinery/vending/wallmed1{
-	pixel_y = 30;
-	req_access = list(0)
+	pixel_y = 30
 	},
 /obj/machinery/light{
 	dir = 1
@@ -17718,9 +17717,16 @@
 	},
 /area/station/gateway)
 "aFe" = (
-/obj/item/weapon/reagent_containers/glass/bucket,
-/turf/simulated/floor/grass,
-/area/station/civilian/hydroponics)
+/obj/structure/disposalpipe/sortjunction{
+	dir = 4;
+	name = "Hydroponics";
+	sortType = "Hydroponics"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/port)
 "aFf" = (
 /obj/structure/flora/ausbushes/ppflowers{
 	pixel_x = 11
@@ -21803,6 +21809,10 @@
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
+"aMX" = (
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/simulated/floor/grass,
+/area/station/civilian/hydroponics)
 "aMY" = (
 /obj/structure/closet/toolcloset,
 /obj/machinery/light{
@@ -21883,6 +21893,21 @@
 	icon_state = "neutral"
 	},
 /area/station/civilian/fitness)
+"aNg" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated,
+/area/station/civilian/kitchen)
 "aNh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
@@ -21897,6 +21922,31 @@
 	icon_state = "neutral"
 	},
 /area/station/civilian/fitness)
+"aNk" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/eastright{
+	name = "Kitchen";
+	req_access = list(28)
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/station/civilian/bar)
+"aNl" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/station/civilian/kitchen)
 "aNm" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -22016,6 +22066,9 @@
 	icon_state = "white"
 	},
 /area/station/rnd/brainstorm_center)
+"aNv" = (
+/turf/simulated/floor/grass,
+/area/station/civilian/hydroponics)
 "aNw" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -22049,6 +22102,15 @@
 /obj/item/weapon/scrap_lump,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"aNA" = (
+/obj/machinery/atm{
+	pixel_x = -30
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "aNB" = (
 /obj/machinery/ignition_switch{
 	id = "mixingsparker";
@@ -22141,6 +22203,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
+"aNK" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/hydroponics)
 "aNL" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor{
@@ -22594,6 +22667,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
+"aOD" = (
+/turf/simulated/floor{
+	icon_state = "greencorner"
+	},
+/area/station/hallway/primary/port)
 "aOE" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -28155,13 +28233,6 @@
 	icon_state = "dark"
 	},
 /area/station/medical/morgue)
-"aZq" = (
-/obj/structure/bookcase{
-	name = "Forbidden Knowledge"
-	},
-/obj/item/weapon/book/manual/nuclear,
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
 "aZr" = (
 /obj/structure/closet/wardrobe/mixed,
 /obj/structure/window/reinforced{
@@ -29986,8 +30057,7 @@
 "bcG" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_x = 28;
-	req_access = list(0)
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurplecorner"
@@ -41540,10 +41610,6 @@
 	icon_state = "darkblue"
 	},
 /area/station/bridge)
-"bBi" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated,
-/area/station/maintenance/cargo)
 "bBk" = (
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor2";
@@ -41822,12 +41888,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
-"bBM" = (
-/obj/structure/flora/pottedplant{
-	icon_state = "plant-21"
-	},
-/turf/simulated/floor/wood,
-/area/station/maintenance/cargo)
 "bBN" = (
 /obj/machinery/r_n_d/destructive_analyzer,
 /turf/simulated/floor{
@@ -42670,14 +42730,6 @@
 	icon_state = "vault"
 	},
 /area/station/hallway/primary/central)
-"bDz" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 4
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken5"
-	},
-/area/station/maintenance/cargo)
 "bDA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -43852,13 +43904,6 @@
 /obj/structure/disposalpipe/junction,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
-"bFJ" = (
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/effect/decal/cleanable/vomit{
-	icon_state = "vomit_4"
-	},
-/turf/simulated/floor/wood,
-/area/station/maintenance/cargo)
 "bFK" = (
 /obj/item/device/radio/intercom/pod{
 	dir = 4;
@@ -68691,14 +68736,13 @@
 	},
 /area/station/medical/morgue)
 "fVd" = (
-/obj/machinery/atm{
-	pixel_x = -30
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutralcorner"
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken5"
 	},
-/area/station/hallway/primary/central)
+/area/station/maintenance/cargo)
 "fWb" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
@@ -69392,16 +69436,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "gWz" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/eastright{
-	name = "Kitchen";
-	req_access = list(28)
+/obj/structure/flora/pottedplant{
+	icon_state = "plant-21"
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
-	},
-/area/station/civilian/bar)
+/turf/simulated/floor/wood,
+/area/station/maintenance/cargo)
 "gXb" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
@@ -69892,16 +69931,6 @@
 	icon_state = "white"
 	},
 /area/station/medical/hallway)
-"hKH" = (
-/obj/machinery/hydroponics/constructable,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = -30
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/civilian/hydroponics)
 "hLb" = (
 /obj/machinery/gateway/center/station,
 /turf/simulated/floor{
@@ -70284,6 +70313,7 @@
 /area/station/cargo/storage)
 "ipb" = (
 /turf/simulated/floor{
+	dir = 8;
 	icon_state = "greencorner"
 	},
 /area/station/hallway/primary/port)
@@ -73973,20 +74003,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
 "osT" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/bookcase{
+	name = "Forbidden Knowledge"
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated,
-/area/station/civilian/kitchen)
+/obj/item/weapon/book/manual/nuclear,
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "osZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -75025,8 +75047,12 @@
 	},
 /area/station/security/lobby)
 "pVE" = (
-/turf/simulated/floor/grass,
-/area/station/civilian/hydroponics)
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/effect/decal/cleanable/vomit{
+	icon_state = "vomit_4"
+	},
+/turf/simulated/floor/wood,
+/area/station/maintenance/cargo)
 "qab" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -77164,17 +77190,6 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/civilian/toilet)
-"tiJ" = (
-/obj/structure/disposalpipe/sortjunction{
-	dir = 4;
-	name = "Hydroponics";
-	sortType = "Hydroponics"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/port)
 "tkb" = (
 /obj/machinery/shower{
 	dir = 1
@@ -77729,16 +77744,9 @@
 	},
 /area/station/hallway/secondary/entry)
 "uru" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/civilian/hydroponics)
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated,
+/area/station/maintenance/cargo)
 "urA" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -78416,19 +78424,15 @@
 	},
 /area/station/cargo/storage)
 "xRb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+/obj/machinery/hydroponics/constructable,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -30
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
+	icon_state = "dark"
 	},
-/area/station/civilian/kitchen)
+/area/station/civilian/hydroponics)
 "xRx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -96630,7 +96634,7 @@ aNi
 ata
 aVf
 wFY
-hKH
+xRb
 ivb
 pEt
 oXb
@@ -96894,8 +96898,8 @@ sfk
 gni
 rFw
 aNi
-aZq
-bDz
+osT
+fVd
 aSM
 bDk
 brd
@@ -97151,8 +97155,8 @@ aVg
 aZs
 ayy
 aNi
-bBM
-bFJ
+gWz
+pVE
 aSM
 bDk
 brd
@@ -97665,7 +97669,7 @@ aVg
 aZs
 lFQ
 aNi
-bBi
+uru
 bEW
 sCd
 bDk
@@ -98169,7 +98173,7 @@ cdD
 bdZ
 bmV
 bod
-uru
+aNK
 wFQ
 gKG
 aVg
@@ -98422,7 +98426,7 @@ aTN
 aVm
 aWK
 aYY
-tiJ
+aFe
 cml
 tpw
 tpw
@@ -98433,7 +98437,7 @@ yaV
 kss
 aEK
 aAB
-pVE
+aNv
 qex
 aMQ
 bEI
@@ -98682,7 +98686,7 @@ aYZ
 alz
 bdZ
 cjM
-ipb
+aOD
 dra
 aNi
 fkD
@@ -98948,7 +98952,7 @@ oMQ
 oGL
 aMZ
 pgZ
-pVE
+aNv
 byQ
 bDp
 bDp
@@ -99203,9 +99207,9 @@ gLt
 jQu
 aWw
 aWw
-osT
+aNg
 pvI
-aFe
+aMX
 aOJ
 bDp
 bEp
@@ -99717,7 +99721,7 @@ hho
 aWw
 aWw
 aWw
-osT
+aNg
 qab
 aFn
 aYv
@@ -100741,7 +100745,7 @@ bnt
 awu
 auN
 gQi
-xRb
+aNl
 aBN
 aMZ
 blX
@@ -102283,7 +102287,7 @@ bgE
 aGn
 vWz
 ujL
-gWz
+aNk
 aGn
 aEr
 boS
@@ -104597,7 +104601,7 @@ bhP
 bjv
 bmC
 bht
-fVd
+aNA
 aKx
 bav
 bpt
