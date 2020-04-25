@@ -231,22 +231,22 @@
 	sleep(delay)
 	mop_image.forceMove(target)
 
-/obj/item/weapon/mop/afterattack(atom/A, mob/living/user, proximity)
+/obj/item/weapon/mop/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(istype(A, /turf/simulated) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay) || istype(A, /obj/effect/rune))
+	if(istype(target, /turf/simulated) || istype(target, /obj/effect/decal/cleanable) || istype(target, /obj/effect/overlay) || istype(target, /obj/effect/rune))
 		if(reagents.total_volume < 1)
 			to_chat(user, "<span class='notice'>Your mop is dry!</span>")
 			return
-		if(user.is_busy(A))
+		if(user.is_busy(target))
 			return
 
-		INVOKE_ASYNC(user, /atom/movable.proc/do_attack_animation, A)
-		user.visible_message("<span class='warning'>[user] begins to clean \the [get_turf(A)].</span>")
+		INVOKE_ASYNC(user, /atom/movable.proc/do_attack_animation, target)
+		user.visible_message("<span class='warning'>[user] begins to clean \the [get_turf(target)].</span>")
 
-		if(do_after(user, sweep_step SECONDS, target = A))
-			if(A)
-				clean(get_turf(A), 10)
+		if(do_after(user, sweep_step SECONDS, target = target))
+			if(target)
+				clean(get_turf(target), 10)
 			to_chat(user, "<span class='notice'>You have finished mopping!</span>")
 
 /obj/item/weapon/mop/advanced

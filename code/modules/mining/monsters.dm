@@ -443,11 +443,11 @@
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
 	qdel(src)
 
-/obj/effect/goliath_tentacle/Crossed(AM as mob|obj)
+/obj/effect/goliath_tentacle/Crossed(atom/movable/AM)
 	if(isliving(AM))
 		Trip()
 		return
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
 	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)
@@ -463,8 +463,8 @@
 	w_class = ITEM_SIZE_NORMAL
 	layer = 4
 
-/obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
-	if(proximity_flag)
+/obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity, params)
+	if(proximity)
 		if(istype(target, /obj/item/clothing/suit/space) || istype(target, /obj/item/clothing/head/helmet/space))
 			var/obj/item/clothing/C = target
 			var/list/current_armor = C.armor

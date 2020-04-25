@@ -86,8 +86,8 @@
 	var/timer = 10
 	var/atom/target = null
 
-/obj/item/weapon/medical/teleporter/afterattack(atom/target, mob/user, flag)
-	if (!flag)
+/obj/item/weapon/medical/teleporter/afterattack(atom/target, mob/user, proximity, params)
+	if (!proximity)
 		return
 	if (!ishuman(target))
 		to_chat(user, "<span class='notice'>Can only be planted on human.</span>")
