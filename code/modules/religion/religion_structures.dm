@@ -110,6 +110,8 @@
 
 	if(istype(religious_sect, /datum/religion_sect/custom))
 		religious_sect.name = ticker.Bible_religion_name
+
+	if(religious_sect.allow_aspect)
 		//choose aspects for the gods and his desire
 		var/list/aspects = generate_aspect(user)
 		if(!aspects)
@@ -123,7 +125,6 @@
 			else
 				var/datum/aspect/asp = religious_sect.sect_aspects[aspect_select]
 				asp.power += 1
-		
 		//add desire and rites
 		for(var/i in religious_sect.sect_aspects)
 			var/datum/aspect/asp = religious_sect.sect_aspects[i]

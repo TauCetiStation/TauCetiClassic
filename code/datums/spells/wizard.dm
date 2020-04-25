@@ -161,7 +161,6 @@
 	var/summon_path = /obj/effect/forcefield/magic
 
 /obj/effect/proc_holder/spell/targeted/forcewall/cast(list/targets, mob/living/user = usr)
-	cast_with_favor()
 	new summon_path(get_turf(user), user)
 	if(user.dir == SOUTH || user.dir == NORTH)
 		new summon_path(get_step(user, EAST), user)

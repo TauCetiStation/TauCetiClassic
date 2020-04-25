@@ -35,7 +35,7 @@
 
 	not_in_desire = /obj/item/weapon/stock_parts/cell
 
-	spells = list(/obj/effect/proc_holder/spell/targeted/charge)
+	spells = list(/obj/effect/proc_holder/spell/targeted/charge/religion,)
 
 /datum/aspect/messis
 	name = "Messis" //farm
@@ -45,7 +45,7 @@
 		list(/obj/item/seeds,)
 	)
 
-	spells = list(/obj/effect/proc_holder/spell/targeted/heal)
+	spells = list(/obj/effect/proc_holder/spell/targeted/heal,)
 
 	rite = /datum/religion_rites/food
 
@@ -57,7 +57,7 @@
 		list(/obj/item/weapon/reagent_containers/food/drinks,)
 	)
 
-	spells = list(/obj/effect/proc_holder/spell/targeted/food)//TODO
+	spells = list(/obj/effect/proc_holder/spell/targeted/food,)
 
 	rite = /datum/religion_rites/food
 
@@ -69,7 +69,7 @@
 		list(/obj/item/weapon/melee,)
 	)
 
-	spells = list(/obj/effect/proc_holder/spell/targeted/blessing)
+	spells = list(/obj/effect/proc_holder/spell/targeted/blessing,)
 
 /datum/aspect/metallum
 	name = "Metallum" //resurces

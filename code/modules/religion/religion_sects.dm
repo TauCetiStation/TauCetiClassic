@@ -36,6 +36,8 @@
 	var/list/spells
 /// Choosed aspects
 	var/list/sect_aspects = list()
+/// Allow choose aspect in sect
+	var/allow_aspect = FALSE
 
 /datum/religion_sect/New()
 	on_select()
@@ -121,6 +123,7 @@
 	name = "Puritanism (Default)"
 	desc = "Nothing special."
 	convert_opener = "Your run-of-the-mill sect, there are no benefits or boons associated. Praise normalcy!"
+	allow_aspect = TRUE
 	rites_list = list(/datum/religion_rites/pray)
 	spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_bible)
 	altar_icon_state = "christianaltar"
@@ -154,6 +157,7 @@
 	name = "Your sect"
 	desc = "Follow the orders of your god."
 	convert_opener = "I am the first to enter here.."
+	allow_aspect = TRUE
 	desired_items = list()
 	rites_list = list(/datum/religion_rites/pray)
 	spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_bible)	

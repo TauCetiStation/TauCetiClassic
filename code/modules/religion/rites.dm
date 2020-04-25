@@ -133,7 +133,7 @@
 	favor_cost = 300
 
 /datum/religion_rites/food/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - /obj/item/weapon/reagent_containers/food/snacks
+	var/list/borks = subtypesof(/obj/item/weapon/reagent_containers/food/snacks)
 
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
@@ -141,13 +141,13 @@
 		if(M.eyecheck() <= 0)
 			M.flash_eyes()
 
-	for(var/i = 1, i <= 4 + rand(1,5), i++)
+	for(var/i in 1 to 4 + rand(1, 5))
 		var/chosen = pick(borks)
 		var/obj/B = new chosen
 		if(B)
 			B.loc = get_turf_loc(AOG)
 			if(prob(50))
-				for(var/j = 1, j <= rand(1, 3), j++)
+				for(var/j in 1 to rand(1, 3))
 					step(B, pick(NORTH,SOUTH,EAST,WEST))
 
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")

@@ -90,7 +90,7 @@
 		qdel(src)
 
 /obj/item/weapon/nullrod/staff
-	name = "Divine staff"
+	name = "divine staff"
 	desc = "A mystical and frightening staff with ancient magic. Only one chaplain remembers how to use it."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "talking_staff"
@@ -227,7 +227,7 @@
 	for(var/datum/language/L in summoner.languages)
 		brainmob.add_language(L.name)
 
-	name = "Staff of [god_name]"
+	name = "staff of the [god_name]"
 	if(god_name == "Aghanim") //sprite is very similar
 		name = "Aghanim's Scepter"
 

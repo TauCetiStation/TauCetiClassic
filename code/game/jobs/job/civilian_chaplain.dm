@@ -21,9 +21,15 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
 
 	//DEBUG
-	var/list/spells = list(/obj/effect/proc_holder/spell/targeted/smoke, 
-				  /obj/effect/proc_holder/spell/aoe_turf/conjure/creature,
-				  /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_bible)
+	var/list/spells = list(
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_bible,
+							/obj/effect/proc_holder/spell/targeted/heal/damage,
+							/obj/effect/proc_holder/spell/targeted/charge/religion,
+							/obj/effect/proc_holder/spell/targeted/heal,
+							/obj/effect/proc_holder/spell/targeted/food,
+							/obj/effect/proc_holder/spell/targeted/blessing,
+							/obj/effect/proc_holder/spell/targeted/forcewall/religion,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal,)
 	var/obj/effect/proc_holder/spell/S
 	for(var/spell in spells)
 		S = new spell()
