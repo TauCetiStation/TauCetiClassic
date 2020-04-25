@@ -32,8 +32,8 @@
 		font_color = "blue"
 		prayer_type = "chaplain prayer"
 
-		if(ticker.Bible_deity_name)
-			deity = ticker.Bible_deity_name
+		if(global.chaplain_religion)
+			deity = pick(global.chaplain_religion.deity_names)
 
 	else if(iscultist(usr))
 		cross.icon_state = "tome"

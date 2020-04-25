@@ -22,12 +22,6 @@ var/datum/subsystem/ticker/ticker
 
 	var/list/datum/mind/minds = list()//The people in the game. Used for objective tracking.
 
-	//These bible variables should be a preference
-	var/Bible_icon_state					//icon_state the chaplain has chosen for his bible
-	var/Bible_item_state					//item_state the chaplain has chosen for his bible
-	var/Bible_name							//name of the bible
-	var/Bible_deity_name					//name of chaplin's deity
-
 	var/random_players = 0					// if set to nonzero, ALL players who latejoin or declare-ready join will have random appearances/genders
 
 	var/list/syndicate_coalition = list()	// list of traitor-compatible factions
@@ -237,6 +231,7 @@ var/datum/subsystem/ticker/ticker
 		query_round_game_mode.Execute()
 
 	setup_economy()
+	setup_religions()
 
 	//start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
