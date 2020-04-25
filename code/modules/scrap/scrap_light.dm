@@ -135,17 +135,17 @@
 		else */
 	return ..()
 
+/obj/structure/bonfire/proc/onDismantle()
+	if(can_buckle || grill)
+		new /obj/item/stack/rods(loc, 1)
+
 
 /obj/structure/bonfire/attack_hand(mob/user)
 	if(burning)
 		to_chat(user, "<span class='warning'>You need to extinguish [src] before removing it!</span>")
 		return
 	if(!has_buckled_mobs()&& !user.is_busy() && do_after(user, 50, target = src))
-		if(can_buckle || grill)
-			new /obj/item/stack/rods(loc, 1)
-		if(istype(src, /obj/structure/bonfire/dynamic))
-			var/obj/structure/bonfire/dynamic/G = src
-			new /obj/item/stack/sheet/wood(loc, G.logs)
+		onDismantle()
 		qdel(src)
 		return
 	..()
@@ -241,6 +241,7 @@
 			M.pixel_y = 0
 		M.layer = initial(M.layer)
 
+#define ONE_LOG_BURN_TIME 1200
 /obj/structure/bonfire/dynamic
 	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things."
 	var/last_time_smoke = 0
@@ -254,12 +255,12 @@
 		to_chat(user, "You have added log to the bonfire. Now it has [logs] logs.")
 		if(logs > 0 && burning && icon_state != "bonfire_on_fire")
 			icon_state = "bonfire_on_fire"
-		return	
+		return
 	return ..()
 
 /obj/structure/bonfire/dynamic/proc/MakeSmoke()
 	var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
-	smoke.set_up(1, 0, src.loc)
+	smoke.set_up(1, 0, loc)
 	smoke.attach(src)
 	smoke.start()
 	last_time_smoke = world.time
@@ -277,6 +278,10 @@
 			MakeSmoke()
 	return ..()
 
+/obj/structure/bonfire/dynamic/onDismantle()
+	..()
+	new /obj/item/stack/sheet/wood(loc, src.logs)
+
 /obj/structure/bonfire/dynamic/extinguish()
 	..()
 	if(logs == 0)
@@ -286,8 +291,8 @@
 /obj/structure/bonfire/dynamic/process()
 	..()
 	if (logs < 1 && icon_state != "bonfire_warm")
-		icon_state = "bonfire_warm"		
-	if ((world.time - time_log_burned_out) > 1200)
+		icon_state = "bonfire_warm"
+	if ((world.time - time_log_burned_out) > ONE_LOG_BURN_TIME)
 		if (logs > 0)
 			logs--
 			if(prob(40))
@@ -298,5 +303,5 @@
 
 /obj/structure/bonfire/dynamic/examine(mob/user)
 	..()
-	if (src in view(2, user))
-		to_chat(user, "<span class='notice'>There are [logs] logs in [src]</span>")
+	if (get_dist(src, user) <= 2)
+		to_chat(user, "<span class='notice'>There [logs == 1 ? "is" : "are"] [logs] log[logs == 1 ? "" : "s"] in [src]</span>")
