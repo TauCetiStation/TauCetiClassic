@@ -1,3 +1,5 @@
+#define ONE_LOG_BURN_TIME 1200
+
 /obj/item/device/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some rags and a plank."
@@ -241,7 +243,6 @@
 			M.pixel_y = 0
 		M.layer = initial(M.layer)
 
-#define ONE_LOG_BURN_TIME 1200
 /obj/structure/bonfire/dynamic
 	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things."
 	var/last_time_smoke = 0
@@ -250,11 +251,13 @@
 
 /obj/structure/bonfire/dynamic/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/sheet/wood))
-		W.use(1)
-		logs++
-		to_chat(user, "You have added log to the bonfire. Now it has [logs] logs.")
-		if(logs > 0 && burning && icon_state != "bonfire_on_fire")
-			icon_state = "bonfire_on_fire"
+		var/obj/item/stack/sheet/wood/G = W
+		if(G.amount > 0)
+			G.use(1)
+			logs++
+			to_chat(user, "You have added log to the bonfire. Now it has [logs] logs.")
+			if(logs > 0 && burning && icon_state != "bonfire_on_fire")
+				icon_state = "bonfire_on_fire"
 		return
 	return ..()
 
@@ -263,7 +266,7 @@
 	smoke.set_up(1, 0, loc)
 	smoke.attach(src)
 	smoke.start()
-	last_time_smoke = world.time
+	last_time_smoke = world.time + 100
 
 /obj/structure/bonfire/dynamic/Burn()
 	var/turf/current_location = get_turf(src)
@@ -273,7 +276,7 @@
 	else
 		current_location.assume_gas("carbon_dioxide", 0.5, (current_location.air.temperature + 200))
 	current_location.hotspot_expose(1000, 500)
-	if ((world.time - last_time_smoke) > 100 && current_location.air.gas["carbon_dioxide"]) //It's time to make some smoke
+	if ((world.time > last_time_smoke) && current_location.air.gas["carbon_dioxide"]) //It's time to make some smoke
 		if (current_location.air.gas["carbon_dioxide"] > 5)
 			MakeSmoke()
 	return ..()
@@ -292,12 +295,12 @@
 	..()
 	if (logs < 1 && icon_state != "bonfire_warm")
 		icon_state = "bonfire_warm"
-	if ((world.time - time_log_burned_out) > ONE_LOG_BURN_TIME)
+	if (world.time > time_log_burned_out)
 		if (logs > 0)
 			logs--
 			if(prob(40))
 				new /obj/effect/decal/cleanable/ash(loc)
-			time_log_burned_out = world.time
+			time_log_burned_out = world.time + ONE_LOG_BURN_TIME
 		else
 			extinguish()
 
@@ -305,3 +308,5 @@
 	..()
 	if (get_dist(src, user) <= 2)
 		to_chat(user, "<span class='notice'>There [logs == 1 ? "is" : "are"] [logs] log[logs == 1 ? "" : "s"] in [src]</span>")
+		
+#undef ONE_LOG_BURN_TIME
