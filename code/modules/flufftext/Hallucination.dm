@@ -319,8 +319,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 	return
 
-/obj/effect/fake_attacker/Crossed(var/mob/M, somenumber)
-	if(M == my_target)
+/obj/effect/fake_attacker/Crossed(atom/movable/AM)
+	. = ..()
+	if(AM == my_target)
 		step_away(src,my_target,2)
 		if(prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))

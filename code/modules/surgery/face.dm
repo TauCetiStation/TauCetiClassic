@@ -221,42 +221,6 @@
 	"<span class='warning'>Your hand slips, damaging [target]'s screen with \the [tool]!</span>")
 	BP.take_damage(12, 0, used_weapon = tool)
 
-/datum/surgery_step/ipc_face/hack_face
-	allowed_tools = list(
-	/obj/item/device/multitool = 100,
-	/obj/item/device/assembly/signaler = 75
-	)
-
-	min_duration = 80
-	max_duration = 100
-
-/datum/surgery_step/ipc_face/hack_face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.face == 2
-
-/datum/surgery_step/ipc_face/hack_face/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts adjusting coloration on [target]'s screen with \the [tool].",
-	"You start adjusting coloration on [target]'s screen with \the [tool].")
-	..()
-
-/datum/surgery_step/ipc_face/hack_face/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] changes coloration on [target]'s screen with \the [tool].</span>",
-	"<span class='notice'>You change coloration on [target]'s screen with \the [tool].</span>")
-	var/list/species_hair = list()
-	for(var/i in hair_styles_list)
-		var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
-		if(target.species.name in tmp_hair.species_allowed)
-			species_hair += i
-	var/new_style = input(user, "Select a screen color scheme", "Changing")  as null|anything in species_hair
-	if(new_style)
-		target.h_style = new_style
-		target.update_hair()
-
-/datum/surgery_step/ipc_face/hack_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s screen with \the [tool]!</span>",
-	"<span class='warning'>Your hand slips, scratching [target]'s screen with \the [tool]!</span>")
-	BP.take_damage(10, 0, used_weapon = tool)
-
 /datum/surgery_step/ipc_face/fix_screen
 	allowed_tools = list(
 	/obj/item/stack/nanopaste = 100,
