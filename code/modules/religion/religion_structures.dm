@@ -1,5 +1,5 @@
 /obj/structure/altar_of_gods
-	name = "\improper Altar of the Gods"
+	name = "Altar of the Gods"
 	desc = "An altar which allows the head of the church to choose a sect of religious teachings as well as provide sacrifices to earn favor."
 	icon = 'icons/obj/religion.dmi'
 	icon_state = "altar"

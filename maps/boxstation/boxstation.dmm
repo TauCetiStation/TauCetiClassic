@@ -34576,7 +34576,7 @@
 	},
 /area/station/civilian/chapel)
 "blN" = (
-/obj/structure/table/woodentable/fancy,
+/obj/structure/altar_of_gods,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -75341,9 +75341,9 @@
 	dir = 1
 	},
 /obj/machinery/door_control{
+	id = "qm_warehouse";
 	name = "Warehouse Door Control";
 	pixel_y = 32;
-	id = "qm_warehouse";
 	req_access = list(31)
 	},
 /turf/simulated/floor,
@@ -125285,7 +125285,7 @@ baw
 bdp
 aKv
 bjx
-blN
+blP
 aVp
 bsi
 buN
@@ -125542,7 +125542,7 @@ aIU
 aIU
 aIU
 bjK
-blP
+blN
 aVp
 aVp
 aVp
