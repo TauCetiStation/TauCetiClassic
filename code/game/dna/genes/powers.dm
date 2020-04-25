@@ -231,8 +231,6 @@
 	..(M,connected,flags)
 
 /mob/living/carbon/human/proc/try_mutate_to_hulk()
-	if(!src)
-		return
 	if(!(HULK in mutations)) //If user cleans hulk mutation before timer runs out, then there is no mutation.
 		return
 	if(species.flags[NO_PAIN]) // hulk mechanic is revolving around pain, and also all the species that don't have hulk form have this flag.
