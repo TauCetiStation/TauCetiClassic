@@ -1,5 +1,5 @@
 var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
-#define INITIAL_NUCLEAR_TELECRYSTALS 30
+#define INITIAL_NUCLEAR_TELECRYSTALS 60
 #define TELECRYSTALS_PER_ONE_OPERATIVE 9
 
 /obj/machinery/computer/telecrystals
