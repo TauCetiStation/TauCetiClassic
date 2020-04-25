@@ -8550,8 +8550,7 @@
 "anS" = (
 /obj/structure/stool,
 /obj/machinery/vending/wallmed1{
-	pixel_y = 30;
-	req_access = list(0)
+	pixel_y = 30
 	},
 /obj/machinery/light{
 	dir = 1
@@ -29808,8 +29807,7 @@
 "bcG" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_x = 28;
-	req_access = list(0)
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurplecorner"
