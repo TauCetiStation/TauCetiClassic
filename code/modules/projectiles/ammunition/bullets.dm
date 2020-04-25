@@ -49,8 +49,7 @@
 	projectile_type = "/obj/item/projectile/bullet/smg_hv"
 
 /obj/item/ammo_casing/c45imp
-	icon_state = "ap-casing"
-	desc = "A .45 AP bullet casing."
+	desc = "A .45 IMP bullet casing."
 	caliber = ".45S"
 	projectile_type = "/obj/item/projectile/bullet/smg_imp"
 

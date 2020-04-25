@@ -176,7 +176,7 @@
 /obj/item/ammo_box/magazine/m12mm/hp
 	name = "magazine (.45 HP)"
 	desc = "Magazine, full of high power submachinegun ammo."
-	icon_state = "12mmap"
+	icon_state = "12mmhp"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45hp
 	caliber = ".45S"
@@ -209,7 +209,7 @@
 /obj/item/ammo_box/magazine/m12mm/imp
 	name = "magazine (.45 IMP)"
 	desc = "Magazine, full of impact submachinegun ammo."
-	icon_state = "12mmap"
+	icon_state = "12mmimp"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45imp
 	caliber = ".45S"
