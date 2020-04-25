@@ -261,6 +261,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Kitchen"
 	icon_state = "kitchen"
 
+/area/station/civilian/cold_room
+	name = "Cold Room"
+	icon_state = "coldroom"
+
 /area/station/civilian/barbershop
 	name = "Barbershop"
 	icon_state = "barbershop"
