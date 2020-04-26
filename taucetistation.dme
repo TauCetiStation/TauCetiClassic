@@ -859,6 +859,7 @@
 #include "code\game\objects\structures\bedsheet_bin.dm"
 #include "code\game\objects\structures\bobross.dm"
 #include "code\game\objects\structures\chalkboard.dm"
+#include "code\game\objects\structures\chapel.dm"
 #include "code\game\objects\structures\coathanger.dm"
 #include "code\game\objects\structures\curtains.dm"
 #include "code\game\objects\structures\displaycase.dm"
