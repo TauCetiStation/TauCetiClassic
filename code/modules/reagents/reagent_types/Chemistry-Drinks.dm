@@ -671,16 +671,16 @@
 	if(adj_sleepy)
 		M.SetSleeping(adj_sleepy)
 
-	if(!src.data || (!isnum(src.data) && src.data.len))
-		data = 1   //if it doesn't exist we set it.  if it's a list we're going to set it to 1 as well.  This is to
-	src.data += boozepwr						//avoid a runtime error associated with drinking blood mixed in drinks (demon's blood).
+	if(!data["ticks"])
+		data["ticks"] = 1   //if it doesn't exist we set it.
+	src.data["ticks"] += boozepwr						//avoid a runtime error associated with drinking blood mixed in drinks (demon's blood).
 
 	var/d = 0
 
 	// make all the beverages work together
 	for(var/datum/reagent/consumable/ethanol/A in holder.reagent_list)
-		if(isnum(A.data))
-			d += A.data
+		if(A.data["ticks"])
+			d += A.data["ticks"]
 
 	if(M.get_species() == SKRELL) //Skrell get very drunk very quickly.
 		d *= 5
