@@ -20,7 +20,7 @@
 	// There is no "default" deity, please specify one for your religion here.
 	var/list/deity_names = list()
 	var/static/list/deity_names_by_name = list(
-		"Christianity" = list("Lord", "God", "Saviour", "Yahweh", "Jehovah", "Father"),
+		"Christianity" = list("Lord", "God", "Saviour", "Yahweh", "Jehovah", "Father", "Space-Jesus"),
 		"Satanism" = list("Satana", "Lucifer", "Baphomet", "Leviathan"),
 		"Yog'Sotherie" = list("Cthulhu", "Katuluu", "Kachoochoo", "Kutulu", "The Great Dreamer", "The Sleeper of R'lyeh"),
 		"Islam" = list("Allah"),
@@ -47,7 +47,7 @@
 		"Imperium" = /datum/bible_info/book_of_lorgar/imperial_truth,
 		"Toolboxia" = /datum/bible_info/toolbox,
 		"Science" = /datum/bible_info/science,
-		"Tecnologism" = /datum/bible_info/science/techno,
+		"Tecnologism" = /datum/bible_info/techno,
 		"Clownism" = /datum/bible_info/scrapbook,
 		"Buddhism" = /datum/bible_info/bible/buddhism,
 		"Atheism" = /datum/bible_info/atheist,
