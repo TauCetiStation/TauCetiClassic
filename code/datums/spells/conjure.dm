@@ -40,6 +40,7 @@
 				var/turf/O = spawn_place
 				var/turf/N = summoned_object_type
 				O.ChangeTurf(N)
+				cast_with_favor()
 			else
 				var/atom/summoned_object = new summoned_object_type(spawn_place)
 

@@ -180,7 +180,6 @@
 	invocation = "none"
 	invocation_type = "none"
 	clothes_req = 0
-	action_icon_state = "god_default"
 
 	summon_path = /obj/effect/forcefield/magic/religion
 

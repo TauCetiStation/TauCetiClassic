@@ -10,7 +10,6 @@
 	pass_flags = PASSTABLE
 	can_buckle = TRUE
 	buckle_lying = 90 //we turn to you!
-	var/datum/religion_sect/sect_to_altar // easy access!
 	var/datum/religion_rites/performing_rite
 
 /obj/structure/altar_of_gods/examine(mob/user)
@@ -24,14 +23,14 @@
 		if(L.mind && L.mind.holy_role)
 			can_i_see = TRUE
 
-	if(!can_i_see || !sect_to_altar)
+	if(!can_i_see || !religious_sect)
 		return
 
-	msg += "<span class='notice'>The sect currently has [round(sect_to_altar.favor)] favor with [ticker.Bible_deity_name].\n</span>"
-	if(!sect_to_altar.rites_list)
+	msg += "<span class='notice'>The sect currently has [round(religious_sect.favor)] favor with [ticker.Bible_deity_name].\n</span>"
+	if(!religious_sect.rites_list)
 		return
 	msg += "List of available Rites:\n"
-	for(var/i in sect_to_altar.rites_list)
+	for(var/i in religious_sect.rites_list)
 		msg += i
 	if(msg)
 		to_chat(user, msg)
@@ -40,11 +39,11 @@
 /obj/structure/altar_of_gods/atom_init()
 	. = ..()
 	if(religious_sect)
-		sect_to_altar = religious_sect
-		if(sect_to_altar.altar_icon)
-			icon = sect_to_altar.altar_icon
-		if(sect_to_altar.altar_icon_state)
-			icon_state = sect_to_altar.altar_icon_state
+		religious_sect = religious_sect
+		if(religious_sect.altar_icon)
+			icon = religious_sect.altar_icon
+		if(religious_sect.altar_icon_state)
+			icon_state = religious_sect.altar_icon_state
 
 /obj/structure/altar_of_gods/attack_hand(mob/living/user)
 	if(!Adjacent(user) || !user.pulling)
@@ -63,8 +62,8 @@
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
 	//If we can sac, we do nothing but the sacrifice instead of typical attackby behavior (IE damage the structure)
-	if(sect_to_altar && sect_to_altar.can_sacrifice(C, user))
-		sect_to_altar.on_sacrifice(C, user)
+	if(religious_sect && religious_sect.can_sacrifice(C, user))
+		religious_sect.on_sacrifice(C, user)
 		return TRUE
 	//everything below is assumed you're bibling it up
 	if(istype(C, /obj/item/weapon/nullrod/staff))
@@ -73,21 +72,21 @@
 			return
 	if(!istype(C, /obj/item/weapon/storage/bible))
 		return
-	if(sect_to_altar)
-		if(!sect_to_altar.rites_list)
+	if(religious_sect)
+		if(!religious_sect.rites_list)
 			to_chat(user, "<span class='notice'>Your sect doesn't have any rites to perform!")
 			return
-		var/rite_select = input(user,"Select a rite to perform!", "Select a rite", null) in sect_to_altar.rites_list
+		var/rite_select = input(user,"Select a rite to perform!", "Select a rite", null) in religious_sect.rites_list
 		if(!rite_select)
 			to_chat(user,"<span class ='warning'>You cannot perform the rite at this time.</span>")
 			return
-		var/selection2type = sect_to_altar.rites_list[rite_select]
+		var/selection2type = religious_sect.rites_list[rite_select]
 		performing_rite = new selection2type(src)
 		if(!performing_rite.perform_rite(user, src))
 			QDEL_NULL(performing_rite)
 		else
 			performing_rite.invoke_effect(user, src)
-			sect_to_altar.adjust_favor(-performing_rite.favor_cost)
+			religious_sect.adjust_favor(-performing_rite.favor_cost)
 			QDEL_NULL(performing_rite)
 		return
 
@@ -141,11 +140,10 @@
 			continue
 		religious_sect.on_conversion(am_i_holy_living)
 
-	sect_to_altar = religious_sect
-	if(sect_to_altar.altar_icon)
-		icon = sect_to_altar.altar_icon
-	if(sect_to_altar.altar_icon_state)
-		icon_state = sect_to_altar.altar_icon_state
+	if(religious_sect.altar_icon)
+		icon = religious_sect.altar_icon
+	if(religious_sect.altar_icon_state)
+		icon_state = religious_sect.altar_icon_state
 
 	religious_sect.update_rites()
 	religious_sect.update_desire()
