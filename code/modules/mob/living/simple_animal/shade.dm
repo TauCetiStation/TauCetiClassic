@@ -81,7 +81,7 @@
 	var/islam = FALSE
 	var/obj/item/weapon/nullrod/staff/container
 
-/mob/living/simple_animal/shade/god/incapacitated()
+/mob/living/simple_animal/shade/god/incapacitated(restrained_type = ARMS)
 	// So the god can't use procs and stuff like that.
 	return TRUE
 

@@ -180,7 +180,7 @@
 	return
 
 /mob/proc/incapacitated(restrained_type = ARMS)
-	return
+	return FALSE
 
 /mob/proc/restrained()
 	return
