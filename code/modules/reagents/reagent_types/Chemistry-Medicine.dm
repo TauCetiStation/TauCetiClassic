@@ -224,6 +224,8 @@
 	taste_message = "sickening bitterness"
 	restrict_species = list(IPC, DIONA)
 
+	data = list()
+
 /datum/reagent/dextromethorphan/on_general_digest(mob/living/M)
 	..()
 	if(!data["ticks"])
