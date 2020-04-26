@@ -22948,6 +22948,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/port)
+"aOY" = (
+/obj/item/weapon/cigbutt,
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/lizard{
+	name = "Lizzy"
+	},
+/turf/simulated/floor/wood,
+/area/station/maintenance/cargo)
 "aOZ" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -26916,7 +26924,7 @@
 	},
 /area/station/storage/primary)
 "aWJ" = (
-/obj/structure/stool,
+/obj/structure/stool/bed/chair/pew/left,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "chapel"
@@ -31395,7 +31403,7 @@
 	},
 /area/station/cargo/office)
 "bfj" = (
-/obj/structure/stool,
+/obj/structure/stool/bed/chair/pew/left,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -35298,12 +35306,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics)
-"bmV" = (
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "greencorner"
-	},
-/area/station/hallway/primary/port)
 "bmW" = (
 /obj/structure/table/woodentable,
 /obj/item/device/taperecorder,
@@ -37401,19 +37403,18 @@
 	},
 /area/station/civilian/chapel)
 "bse" = (
-/obj/structure/stool,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/stool/bed/chair/pew/left,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "chapel"
 	},
 /area/station/civilian/chapel)
 "bsf" = (
-/obj/structure/stool,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -37424,6 +37425,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/structure/stool/bed/chair/pew/right,
 /turf/simulated/floor{
 	icon_state = "chapel"
 	},
@@ -37444,7 +37446,7 @@
 /turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "bsj" = (
-/obj/structure/stool,
+/obj/structure/stool/bed/chair/pew/right,
 /turf/simulated/floor{
 	icon_state = "chapel"
 	},
@@ -38594,14 +38596,14 @@
 	},
 /area/station/rnd/telesci)
 "buK" = (
-/obj/structure/stool,
+/obj/structure/stool/bed/chair/pew/left,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "chapel"
 	},
 /area/station/civilian/chapel)
 "buL" = (
-/obj/structure/stool,
+/obj/structure/stool/bed/chair/pew/right,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "chapel"
@@ -74093,13 +74095,12 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "oxa" = (
-/mob/living/simple_animal/lizard{
-	name = "Lizzy"
+/obj/structure/stool/bed/chair/pew/right,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
-/obj/item/weapon/cigbutt,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/wood,
-/area/station/maintenance/cargo)
+/area/station/civilian/chapel)
 "oxb" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
@@ -95867,7 +95868,7 @@ aZK
 lkl
 aSP
 itt
-oxa
+aOY
 aSM
 dLO
 sCd
@@ -96886,7 +96887,7 @@ aFL
 aFL
 bbJ
 bdM
-bmV
+ipb
 aqD
 wEg
 tIJ
@@ -97143,7 +97144,7 @@ aWF
 aNF
 bdv
 bes
-bmV
+ipb
 arh
 fmh
 nHV
@@ -97400,7 +97401,7 @@ aWG
 aHQ
 bdv
 bdM
-bmV
+ipb
 ari
 wld
 nHV
@@ -97914,7 +97915,7 @@ aWH
 aFL
 bbK
 bdZ
-bmV
+ipb
 vGq
 atZ
 gNe
@@ -98171,7 +98172,7 @@ aWI
 aYX
 cdD
 bdZ
-bmV
+ipb
 bod
 aNK
 wFQ
@@ -126187,9 +126188,9 @@ bpN
 bjK
 bpN
 bpN
-bfj
-bfj
-bfj
+oxa
+oxa
+oxa
 aVp
 aUc
 bpN

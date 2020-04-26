@@ -59,7 +59,7 @@
 	var/static/list/lecturn_info_by_name = list(
 	)
 	*/
-	/*
+
 	var/pews_icon_state
 	// Default one is "general".
 	var/static/list/pews_info_by_name = list(
@@ -73,8 +73,9 @@
 		"Technologism" = "singulo",
 		"Clownism" = "clown",
 		"Atheism" = "void",
+		"Slime" = "slime",
+		"NanoTrasen" = "nanotrasen",
 	)
-	*/
 
 	// Default is "0" TO-DO: convert this to icon_states. ~Luduk
 	var/carpet_dir
@@ -124,26 +125,24 @@
 		lecturn_icon_state = lecturn_info
 	else
 		lecturn_info_state = "general"
+	*/
 
 	var/pews_info = pews_info_by_name[name]
 	if(pews_info)
 		pews_icon_state = pews_info
 	else
 		pews_icon_state = "general"
-	*/
 
 /datum/religion/proc/religify(areatype)
 	var/list/to_religify = get_area_all_atoms(areatype)
 
 	for(var/atom/A in to_religify)
-		if(istype(A, /turf/simulated/floor) && A.icon_state == "carpentsymbol")
+		if(istype(A, /turf/simulated/floor) && A.icon_state == "carpetsymbol")
 			A.dir = carpet_dir
-		/*
 		else if(istype(A, /obj/structure/stool/bed/chair/pew))
 			var/obj/structure/stool/bed/chair/pew/P = A
 			P.pew_icon = pews_icon_state
 			P.update_icon()
-		*/
 
 // This proc returns a bible object of this religion, spawning it at a given location.
 /datum/religion/proc/spawn_bible(atom/location)
@@ -171,6 +170,9 @@
 	var/new_religion = sanitize_safe(input(chaplain, "You are the crew services officer. Would you like to change your religion? Default is [name], in SPACE.", "Name change", name), MAX_NAME_LEN)
 	if(!new_religion)
 		new_religion = name
+	else
+		name = new_religion
+		deity_names = deity_names_by_name[name] ? deity_names_by_name[name] : list("Space-Jesus")
 
 	feedback_set_details("religion_name","[new_religion]")
 
@@ -218,10 +220,9 @@
 					to_chat(chaplain, "Welp, out of time, buddy. You're stuck. Next time choose faster.")
 					accepted = TRUE
 
-	update_structure_info()
-
 	feedback_set_details("religion_deity","[new_deity]")
 	feedback_set_details("religion_book","[new_book_style]")
 
 	// Update the looks of the chapel.
+	update_structure_info()
 	religify(/area/station/civilian/chapel)
