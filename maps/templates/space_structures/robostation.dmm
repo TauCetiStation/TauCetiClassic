@@ -717,7 +717,7 @@
 	},
 /area/space_structures/robostatoin)
 "cI" = (
-/obj/structure/sign/poster,
+/obj/structure/sign/poster/random,
 /turf/simulated/wall/r_wall,
 /area/space_structures/robostatoin)
 "cJ" = (
