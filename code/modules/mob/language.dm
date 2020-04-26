@@ -17,6 +17,8 @@
 	var/list/space_chance = 55 // Likelihood of getting a space in the random scramble string.
 	var/list/allowed_species	 // A name of species, Which can use this lang as secondary.
 
+/datum/language/proc/color_message(message)
+	return "<span class='message'><span class='[colour]'>[capitalize(message)]</span></span>"
 
 /datum/language/proc/format_message(message, verb)
 	return "[verb], <span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"

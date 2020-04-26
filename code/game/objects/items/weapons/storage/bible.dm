@@ -10,6 +10,8 @@
 	var/god_lore = ""
 	max_storage_space = DEFAULT_BOX_STORAGE
 
+	var/religify_next = list()
+
 /obj/item/weapon/storage/bible/booze
 	name = "bible"
 	desc = "To be applied to the head repeatedly."
@@ -43,3 +45,54 @@
 	if (length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
 	..()
+
+/obj/item/weapon/storage/bible/attack_self(mob/user)
+	if(user.mind && (user.mind.assigned_role == "Chaplain"))
+		if(religify_next[user.ckey] > world.time)
+			to_chat(user, "<span class='warning'>You can't be changing the look of your entire church so often! Please wait about [round((religify_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
+			return
+		else if(global.chaplain_religion)
+			change_chapel_looks(user)
+			return
+
+	return ..()
+
+/obj/item/weapon/storage/bible/proc/change_chapel_looks(mob/user)
+	var/done = FALSE
+	var/changes = FALSE
+
+	var/list/choices = list("Mat symbol")
+
+	while(!done)
+		if(!choices.len)
+			done = TRUE
+			break
+
+		var/looks = input(user, "Would you like to change something about how your chapel looks?") as null|anything in choices
+		if(!looks)
+			done = TRUE
+			break
+
+		switch(looks)
+			/*
+			if("Pews")
+				var/new_look = input(user, "Which pews style would you like?")  as null|anything in global.chaplain_religion.pews_info_by_name
+				if(!new_look)
+					continue
+
+				global.chaplain_religion.pews_icon_state = global.chaplain_religion.pews_info_by_name[new_look]
+				changes = TRUE
+				choices -= "Pews"
+			*/
+			if("Mat symbol")
+				var/new_mat = input(user, "Which mat symbol would you like?")  as null|anything in global.chaplain_religion.carpet_dir_by_name
+				if(!new_mat)
+					continue
+
+				global.chaplain_religion.carpet_dir = global.chaplain_religion.carpet_dir_by_name[new_mat]
+				changes = TRUE
+				choices -= "Mat symbol"
+
+	if(changes)
+		religify_next[user.ckey] = world.time + 3 MINUTE
+		global.chaplain_religion.religify(/area/station/civilian/chapel)

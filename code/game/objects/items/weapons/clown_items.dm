@@ -218,10 +218,11 @@
 		honk(user)
 		src.add_fingerprint(user)
 
-/obj/item/weapon/bikehorn/Crossed(mob/living/carbon/C)
-	if(cooldown <= world.time)
+/obj/item/weapon/bikehorn/Crossed(atom/movable/AM)
+	. = ..()
+	if(isliving(AM) && cooldown <= world.time)
 		cooldown = world.time + 8
-		honk(C)
+		honk(AM)
 
 /obj/item/weapon/bikehorn/dogtoy
 	name = "dog toy"

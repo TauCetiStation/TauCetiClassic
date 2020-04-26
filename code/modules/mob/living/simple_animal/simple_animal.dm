@@ -443,3 +443,6 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+
+/mob/living/simple_animal/get_scrambled_message(datum/language/speaking, message)
+	return pick(speak)
