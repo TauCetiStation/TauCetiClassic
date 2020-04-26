@@ -7,7 +7,7 @@
 		return
 
 	// No more praying ghosts! ~Luduk
-	if(stat == DEAD)
+	if(stat == DEAD && !fake_death)
 		to_chat(usr, "<span class='warning'>There's nobody that can save you now.</span>")
 		return
 
@@ -32,8 +32,8 @@
 		font_color = "blue"
 		prayer_type = "chaplain prayer"
 
-		if(ticker.Bible_deity_name)
-			deity = ticker.Bible_deity_name
+		if(global.chaplain_religion)
+			deity = pick(global.chaplain_religion.deity_names)
 
 	else if(iscultist(usr))
 		cross.icon_state = "tome"
@@ -125,6 +125,7 @@
 	I.invisibility = invisibility
 	I.loc = src
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	var/list/viewing = list()
 	for(var/mob/M in viewers(src))

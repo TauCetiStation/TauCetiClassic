@@ -1034,6 +1034,7 @@
 			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
 	if(I)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+		I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		var/list/viewing = list()
 		for(var/mob/M in viewers(A))
 			if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))

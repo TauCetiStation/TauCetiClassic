@@ -97,3 +97,5 @@ var/list/ignore_vision_inside = list(
 	)
 
 var/global/datum/religion_sect/religious_sect
+// Is initiated in setup_religions(). Used to save all info about chaplain's religion.
+var/global/datum/religion/chaplain/chaplain_religion

@@ -388,6 +388,7 @@
 
 	if(cloud_emote)
 		var/image/emote_bubble = image('icons/mob/emote.dmi', src, cloud_emote, EMOTE_LAYER)
+		emote_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		flick_overlay(emote_bubble, clients, 30)
 		QDEL_IN(emote_bubble, 3 SECONDS)
 
