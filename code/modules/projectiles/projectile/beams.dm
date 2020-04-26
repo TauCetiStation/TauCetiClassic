@@ -81,6 +81,12 @@
 /obj/item/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss
 
+/obj/item/projectile/beam/emitter/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if((HULK in H.mutations) && H.hulk_activator == "emitter beam")
+			H.try_mutate_to_hulk(H)
+
 /obj/item/projectile/beam/lasertag
 	name = "lasertag beam"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
