@@ -5,6 +5,7 @@
 
 /datum/money_account
 	var/owner_name = ""
+	var/owner_salary = 0
 	var/account_number = 0
 	var/remote_access_pin = 0
 	var/money = 0
@@ -26,8 +27,8 @@
 	var/time = ""
 	var/source_terminal = ""
 
-/proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H)
-	var/datum/money_account/M = create_account(H.real_name, rand(50,500)*10, null)
+/proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H, start_money = rand(50, 200) * 10)
+	var/datum/money_account/M = create_account(H.real_name, start_money, null)
 	if(H.mind)
 		var/remembered_info = ""
 		remembered_info += "<b>Your account number is:</b> #[M.account_number]<br>"

@@ -1026,8 +1026,11 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
     {{else data.mode == 7}} <!-- Finance Management -->
         <div class="item">
             <H2>Finance Management</H2>
-            <div class="itemLabelNarrow"><b>Money:</b></div>
-            <div class="itemContent"><span class="good">{{:data.money}}$</span></div>
+			<table>
+				<tr><th><font color="#e9c183">Money:</font></th><td><span class="good">{{:data.money}}$</span></td>
+				<th><font color="#e9c183">Salary:</font></th><td><span class="good">{{:data.salary}}$</span></td>
+				<th><font color="#e9c183">Next Payment:</font></th><td><span class="average">{{:data.time_to_next_pay}}</span></td></tr>
+			</table>
         </div>
         <div class="item">
             <div class="itemLabelNarrow">
