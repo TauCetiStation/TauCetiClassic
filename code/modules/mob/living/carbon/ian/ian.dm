@@ -687,4 +687,6 @@
 	..(message, null, verb, sanitize = 0)
 
 /mob/living/carbon/ian/get_scrambled_message(datum/language/speaking, message)
+	if(!speak.len)
+		return null
 	return pick(speak)
