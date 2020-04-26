@@ -41,6 +41,12 @@
 		prayer_type = "cultist prayer"
 		deity = "Nar'Sie"
 
+	else if(isgod(usr))
+		cross.icon_state = "necronomicon"
+		font_color = "purple"
+		prayer_type = "god's call"
+		deity = "their progenitor"
+
 	//parse the language code and consume it
 	var/datum/language/speaking = parse_language(msg)
 	if(speaking)
@@ -60,7 +66,9 @@
 	var/gods_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]:</b></font></span> <span class='game say'>\"[msg]\"</span>"
 
 	var/scrambled_msg = get_scrambled_message(speaking, msg)
-	var/god_not_understand_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]</b>:</font> \"[scrambled_msg]\"</span>"
+	var/god_not_understand_msg = ""
+	if(scrambled_msg)
+		god_not_understand_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]</b>:</font> \"[scrambled_msg]\"</span>"
 
 	for(var/mob/M in player_list)
 		if(isnewplayer(M))
@@ -82,10 +90,12 @@
 
 	for(var/mob/living/simple_animal/shade/god/G in gods_list)
 		if(G.client && (G.client.prefs.chat_toggles & CHAT_PRAYER))
-			if(!G.say_understands(src, speaking))
-				to_chat(G, god_not_understand_msg)
-			else
+			if(G == src) // Don't hear your own prayer.
+				continue
+			if(G.say_understands(src, speaking))
 				to_chat(G, gods_msg)
+			else if(god_not_understand_msg)
+				to_chat(G, god_not_understand_msg)
 
 	pray_act(msg, speaking, alt_name, "prays")
 
