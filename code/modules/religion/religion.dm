@@ -207,7 +207,7 @@
 
 		var/datum/bible_info/BB = bible_variants[new_book_style]
 		if(BB)
-			BB.apply_to(B)
+			BB.apply_visuals_to(B)
 			bible_info = BB
 
 			chaplain.update_inv_l_hand() // so that it updates the bible's item_state in his hand
