@@ -49,7 +49,7 @@
 /obj/item/weapon/storage/bible/attack_self(mob/user)
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
 		if(religify_next[user.ckey] > world.time)
-			to_chat(user, "<span class='warning'>You can't be changing the look of your entire church so often! Please wait about [round((world.time - religify_next[user.ckey]) * 0.1)] seconds to try again.</span>")
+			to_chat(user, "<span class='warning'>You can't be changing the look of your entire church so often! Please wait about [round((religify_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
 			return
 		else if(global.chaplain_religion)
 			change_chapel_looks(user)
