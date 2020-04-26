@@ -10,9 +10,15 @@
 	range = 0
 	summon_amt = 0
 
-	action_icon_state = "bible"
+	action_icon_state = "spawn_bible"
 
 	summon_type = list(/obj/item/weapon/storage/bible)
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_bible/cast()
+	for(var/mob/living/carbon/human/M in viewers(get_turf_loc(usr), null))
+		if(M.eyecheck() <= 0)
+			M.flash_eyes()
+	..()
 
 /obj/effect/proc_holder/spell/targeted/heal
 	name = "Heal"
@@ -69,7 +75,7 @@
 	range = 0
 	invocation = "none"
 	clothes_req = 0
-	action_icon_state = "god_default"
+	action_icon_state = "blessing"
 
 	var/list/blessed = list()
 
@@ -105,7 +111,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	clothes_req = 0
-	action_icon_state = "god_default"
+	action_icon_state = "charge"
 
 /obj/effect/proc_holder/spell/targeted/charge/religion/cast()
 	var/charged = FALSE
@@ -150,7 +156,7 @@
 	range = 0
 	invocation = "none"
 	clothes_req = 0
-	action_icon_state = "god_default"
+	action_icon_state = "spawn_food"
 
 /obj/effect/proc_holder/spell/targeted/food/cast()
 	var/list/borks = subtypesof(/obj/item/weapon/reagent_containers/food/snacks)
@@ -211,9 +217,12 @@
 	summon_amt = 0
 	invocation = "none"
 	clothes_req = 0
-	action_icon_state = "god_default"
+	action_icon_state = "spawn_animal"
 	summon_type = list(/mob/living/simple_animal/corgi/puppy, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/corgi, /mob/living/simple_animal/cat, /mob/living/simple_animal/parrot, /mob/living/simple_animal/crab, /mob/living/simple_animal/cow, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken, /mob/living/simple_animal/pig, /mob/living/simple_animal/turkey, /mob/living/simple_animal/goose, /mob/living/simple_animal/seal, /mob/living/simple_animal/walrus, /mob/living/simple_animal/fox, /mob/living/simple_animal/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/mushroom, /mob/living/simple_animal/pug, /mob/living/simple_animal/shiba, /mob/living/simple_animal/slime, /mob/living/simple_animal/yithian, /mob/living/simple_animal/tindalos)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal/cast()
 	summon_amt += divine_power
+	for(var/mob/living/carbon/human/M in viewers(get_turf_loc(usr), null))
+		if(M.eyecheck() <= 0)
+			M.flash_eyes()
 	..()

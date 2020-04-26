@@ -141,7 +141,7 @@
 		return FALSE
 	var/obj/item/weapon/stock_parts/cell/the_cell = I
 	if(the_cell.charge < 3000) //BALANCE
-		to_chat("<span class='notice'>[ticker.Bible_deity_name] does not accept pity amounts of power.</span>")
+		to_chat("<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity amounts of power.</span>")
 		return FALSE
 	return TRUE
 
@@ -150,7 +150,7 @@
 		return
 	var/obj/item/weapon/stock_parts/cell/the_cell = I
 	adjust_favor(round(the_cell.charge/500), L) //BALANCE
-	to_chat(L, "<span class='notice'>You offer [the_cell]'s power to [ticker.Bible_deity_name], pleasing them.</span>")
+	to_chat(L, "<span class='notice'>You offer [the_cell]'s power to [pick(global.chaplain_religion.deity_names)], pleasing them.</span>")
 	qdel(I)
 
 /datum/religion_sect/custom
@@ -169,10 +169,10 @@
 	if(istype(I, /obj/item/weapon/gun/projectile))
 		var/obj/item/weapon/gun/projectile/gun = I
 		if(!gun.magazine)
-			to_chat("<span class='notice'>[ticker.Bible_deity_name] does not accept pity [I] without magazine.</span>")
+			to_chat("<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity [I] without magazine.</span>")
 			return FALSE
 		if(gun.magazine && gun.magazine.ammo_count() == 0)
-			to_chat("<span class='notice'>[ticker.Bible_deity_name] does not accept pity [I] without bullet in magazine.</span>")
+			to_chat("<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity [I] without bullet in magazine.</span>")
 			return FALSE
 
 	if(istype(I, /obj/item/clothing/suit/armor))
@@ -181,31 +181,31 @@
 		for(var/i in arm.armor)
 			all_armor += i
 		if(all_armor == 0)
-			to_chat("<span class='notice'>[ticker.Bible_deity_name] does not accept pity [I] without armor.</span>")
+			to_chat("<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity [I] without armor.</span>")
 			return FALSE
 
 	if(istype(I, /obj/item/weapon/melee))
 		var/obj/item/weapon/melee/mel = I
 		if(mel.force == 0)
-			to_chat("<span class='notice'>[ticker.Bible_deity_name] does not accept pity [I] without damage.</span>")
+			to_chat("<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity [I] without damage.</span>")
 			return FALSE
 
 	if(istype(I, /obj/item/weapon/reagent_containers/food))
 		var/obj/item/weapon/reagent_containers/food = I
 		if(food.reagents.total_volume == 0)
-			to_chat("<span class='notice'>[ticker.Bible_deity_name] does not accept pity [I] without useful material.</span>")
+			to_chat("<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity [I] without useful material.</span>")
 			return FALSE
 
 	if(istype(I, /obj/item/weapon/reagent_containers/blood))
 		var/obj/item/weapon/reagent_containers/blood/blood = I
 		if(blood.reagents.total_volume == 0)
-			to_chat("<span class='notice'>[ticker.Bible_deity_name] does not accept pity [I] without useful material.</span>")
+			to_chat("<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity [I] without useful material.</span>")
 			return FALSE
 
 	if(istype(I, /obj/item/seeds))
 		var/obj/item/seeds/seed = I
 		if(seed.potency < 0)
-			to_chat("<span class='notice'>[ticker.Bible_deity_name] does not accept pity [I] without useful material.</span>")
+			to_chat("<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity [I] without useful material.</span>")
 			return FALSE
 
 	return TRUE
@@ -272,5 +272,5 @@
 	if(istype(I, /obj/structure/cult))
 		adjust_favor(100, L) //BALANCE
 
-	to_chat(L, "<span class='notice'>You offer [I]'s power to [ticker.Bible_deity_name], pleasing them.</span>")
+	to_chat(L, "<span class='notice'>You offer [I]'s power to [pick(global.chaplain_religion.deity_names)], pleasing them.</span>")
 	qdel(I)

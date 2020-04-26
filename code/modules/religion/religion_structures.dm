@@ -23,14 +23,14 @@
 		if(L.mind && L.mind.holy_role)
 			can_i_see = TRUE
 
-	if(!can_i_see || !religious_sect)
+	if(!can_i_see || !global.religious_sect)
 		return
 
-	msg += "<span class='notice'>The sect currently has [round(religious_sect.favor)] favor with [ticker.Bible_deity_name].\n</span>"
-	if(!religious_sect.rites_list)
+	msg += "<span class='notice'>The sect currently has [round(global.religious_sect.favor)] favor with [pick(global.chaplain_religion.deity_names)].\n</span>"
+	if(!global.religious_sect.rites_list)
 		return
 	msg += "List of available Rites:\n"
-	for(var/i in religious_sect.rites_list)
+	for(var/i in global.religious_sect.rites_list)
 		msg += i
 	if(msg)
 		to_chat(user, msg)
@@ -38,12 +38,11 @@
 
 /obj/structure/altar_of_gods/atom_init()
 	. = ..()
-	if(religious_sect)
-		religious_sect = religious_sect
-		if(religious_sect.altar_icon)
-			icon = religious_sect.altar_icon
-		if(religious_sect.altar_icon_state)
-			icon_state = religious_sect.altar_icon_state
+	if(global.religious_sect)
+		if(global.religious_sect.altar_icon)
+			icon = global.religious_sect.altar_icon
+		if(global.religious_sect.altar_icon_state)
+			icon_state = global.religious_sect.altar_icon_state
 
 /obj/structure/altar_of_gods/attack_hand(mob/living/user)
 	if(!Adjacent(user) || !user.pulling)
@@ -62,31 +61,31 @@
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
 	//If we can sac, we do nothing but the sacrifice instead of typical attackby behavior (IE damage the structure)
-	if(religious_sect && religious_sect.can_sacrifice(C, user))
-		religious_sect.on_sacrifice(C, user)
+	if(global.religious_sect && global.religious_sect.can_sacrifice(C, user))
+		global.religious_sect.on_sacrifice(C, user)
 		return TRUE
 	//everything below is assumed you're bibling it up
 	if(istype(C, /obj/item/weapon/nullrod/staff))
-		if(!religious_sect)
+		if(!global.religious_sect)
 			to_chat(user, "<span class='notice'>First create a sect.</span>")
 			return
 	if(!istype(C, /obj/item/weapon/storage/bible))
 		return
-	if(religious_sect)
-		if(!religious_sect.rites_list)
+	if(global.religious_sect)
+		if(!global.religious_sect.rites_list)
 			to_chat(user, "<span class='notice'>Your sect doesn't have any rites to perform!")
 			return
-		var/rite_select = input(user,"Select a rite to perform!", "Select a rite", null) in religious_sect.rites_list
+		var/rite_select = input(user,"Select a rite to perform!", "Select a rite", null) in global.religious_sect.rites_list
 		if(!rite_select)
 			to_chat(user,"<span class ='warning'>You cannot perform the rite at this time.</span>")
 			return
-		var/selection2type = religious_sect.rites_list[rite_select]
+		var/selection2type = global.religious_sect.rites_list[rite_select]
 		performing_rite = new selection2type(src)
 		if(!performing_rite.perform_rite(user, src))
 			QDEL_NULL(performing_rite)
 		else
 			performing_rite.invoke_effect(user, src)
-			religious_sect.adjust_favor(-performing_rite.favor_cost)
+			global.religious_sect.adjust_favor(-performing_rite.favor_cost)
 			QDEL_NULL(performing_rite)
 		return
 
@@ -105,12 +104,12 @@
 		return
 	
 	var/type_selected = available_options[sect_select]
-	religious_sect = new type_selected()
+	global.religious_sect = new type_selected()
 
-	if(istype(religious_sect, /datum/religion_sect/custom))
-		religious_sect.name = ticker.Bible_religion_name
+	if(istype(global.religious_sect, /datum/religion_sect/custom))
+		global.religious_sect.name = global.chaplain_religion.name
 
-	if(religious_sect.allow_aspect)
+	if(global.religious_sect.allow_aspect)
 		//choose aspects for the gods and his desire
 		var/list/aspects = generate_aspect(user)
 		if(!aspects)
@@ -119,18 +118,18 @@
 		for(var/i in 1 to 2)
 			var/aspect_select = input(user, "Select a aspect of god (You CANNOT revert this decision!)", "Select a aspect of god", null) in aspects
 			type_selected = aspects[aspect_select]
-			if(!istype(religious_sect.sect_aspects[aspect_select], type_selected))
-				religious_sect.sect_aspects[aspect_select] = new type_selected
+			if(!istype(global.religious_sect.sect_aspects[aspect_select], type_selected))
+				global.religious_sect.sect_aspects[aspect_select] = new type_selected
 			else
-				var/datum/aspect/asp = religious_sect.sect_aspects[aspect_select]
+				var/datum/aspect/asp = global.religious_sect.sect_aspects[aspect_select]
 				asp.power += 1
 		//add desire and rites
-		for(var/i in religious_sect.sect_aspects)
-			var/datum/aspect/asp = religious_sect.sect_aspects[i]
+		for(var/i in global.religious_sect.sect_aspects)
+			var/datum/aspect/asp = global.religious_sect.sect_aspects[i]
 			if(asp.rite)
-				religious_sect.rites_list += asp.rite
+				global.religious_sect.rites_list += asp.rite
 			for(var/j in 1 to asp.power)
-				religious_sect.desired_items += asp.desire[j]
+				global.religious_sect.desired_items += asp.desire[j]
 
 	for(var/i in player_list)
 		if(!isliving(i))
@@ -138,15 +137,15 @@
 		var/mob/living/am_i_holy_living = i
 		if(am_i_holy_living.mind && !am_i_holy_living.mind.holy_role)
 			continue
-		religious_sect.on_conversion(am_i_holy_living)
+		global.religious_sect.on_conversion(am_i_holy_living)
 
-	if(religious_sect.altar_icon)
-		icon = religious_sect.altar_icon
-	if(religious_sect.altar_icon_state)
-		icon_state = religious_sect.altar_icon_state
+	if(global.religious_sect.altar_icon)
+		icon = global.religious_sect.altar_icon
+	if(global.religious_sect.altar_icon_state)
+		icon_state = global.religious_sect.altar_icon_state
 
-	religious_sect.update_rites()
-	religious_sect.update_desire()
+	global.religious_sect.update_rites()
+	global.religious_sect.update_desire()
 
 /obj/structure/altar_of_gods/proc/generate_available_sects(mob/user) //eventually want to add sects you get from unlocking certain achievements
 	. = list()
