@@ -1,9 +1,7 @@
+// This is synced up to the poster placing animation.
+#define PLACE_SPEED 30
 
-//########################## CONTRABAND ;3333333333333333333 -Agouri ###################################################
-
-#define POSTERNAME "name"
-
-#define POSTERDESC "desc"
+// The poster item
 
 /obj/item/weapon/poster
 	name = "rolled-up poster"
@@ -39,7 +37,7 @@
 		name = "[name] - [resulting_poster.original_name]"
 
 
-//############################## THE ACTUAL DECALS ###########################
+// The poster sign/structure
 
 /obj/structure/sign/poster
 	name = "poster"
@@ -48,7 +46,6 @@
 	icon = 'icons/obj/contraband.dmi'
 	anchored = TRUE
 	var/ruined = FALSE
-	var/placespeed = 30 // don't change this, otherwise the animation will not sync to the progress bar
 
 	var/random_basetype
 	var/never_random = FALSE // used for the 'random' subclasses.
@@ -150,7 +147,7 @@
 	qdel(P)	//delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway
 	playsound(D, 'sound/items/poster_being_created.ogg', VOL_EFFECTS_MASTER)
 
-	if(do_after(user, D.placespeed, target=src))
+	if(do_after(user, PLACE_SPEED, target=src))
 		to_chat(user, "<span class='notice'>You placed the poster!</span>")
 	else
 		D.roll_and_drop(temp_loc)
@@ -597,3 +594,5 @@
 	name = "Carbon Dioxide"
 	desc = "This informational poster teaches the viewer what carbon dioxide is."
 	icon_state = "poster35_legit"
+
+#undef PLACE_SPEED
