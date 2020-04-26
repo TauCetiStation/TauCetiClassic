@@ -118,7 +118,7 @@
 	if(frame_glass)
 		overlays |= icon('icons/obj/bureaucracy.dmi',"glass_frame_item")
 
-/obj/item/weapon/picture_frame/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/picture_frame/afterattack(atom/target, mob/user, proximity, params)
 	var/turf/T = target
 	if(get_dist(T, user) > 1)
 		return

@@ -107,10 +107,15 @@
 	name = "clown shoes"
 	icon_state = "clown"
 	item_state = "clown_shoes"
-	slowdown = SHOES_SLOWDOWN+1
+	slowdown = SHOES_SLOWDOWN + 0.5
 	item_color = "clown"
-//	var/footstep = 1	//used for squeeks whilst walking
 	species_restricted = null
+
+/obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
+	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED))
+
+/obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
+	qdel(user.GetComponent(/datum/component/waddle))
 
 /obj/item/clothing/shoes/clown_shoes/play_unique_footstep_sound()
 	..()
@@ -230,6 +235,13 @@
 /obj/item/clothing/shoes/heels
 	name = "Heels"
 	icon_state = "high_shoes"
+	slowdown = SHOES_SLOWDOWN + 0.5
+	force = 3.5
+	attack_verb = list("stabbed")
+	// It's a stab sound.
+	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
+
+	stab_eyes = TRUE
 
 /obj/item/clothing/shoes/heels/alternate
 	icon_state = "high_shoes2"

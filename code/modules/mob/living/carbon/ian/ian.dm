@@ -685,3 +685,6 @@
 	message = capitalize(trim_left(message))
 
 	..(message, null, verb, sanitize = 0)
+
+/mob/living/carbon/ian/get_scrambled_message(datum/language/speaking, message)
+	return pick(speak)

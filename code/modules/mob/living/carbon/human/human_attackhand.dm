@@ -247,5 +247,5 @@
 	else
 		user.visible_message("\The [user] stops applying pressure to [src]'s [BP.name]!", "You stop applying pressure to [src]'s [BP.name]!")
 
-/mob/living/carbon/human/proc/afterattack(atom/target, mob/living/user, inrange, params)
+/mob/living/carbon/human/proc/afterattack(atom/target, mob/user, proximity, params)
 	return

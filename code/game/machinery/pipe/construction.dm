@@ -287,7 +287,7 @@ Buildable meters
 //called when a turf is attacked with a pipe item
 
 //called when a turf is attacked with a pipe item
-/obj/item/pipe/afterattack(turf/simulated/floor/target, mob/user, proximity)
+/obj/item/pipe/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 

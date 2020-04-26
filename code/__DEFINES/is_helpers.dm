@@ -67,6 +67,8 @@
 
 #define isessence(A) (istype(A, /mob/living/parasite/essence))
 
+#define isgod(A) (istype(A, /mob/living/simple_animal/shade/god))
+
 // MOB
 
 #define isobserver(A) (istype(A, /mob/dead/observer))

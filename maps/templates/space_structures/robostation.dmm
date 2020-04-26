@@ -172,7 +172,7 @@
 /area/space_structures/robostatoin)
 "aI" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/snacks/clownstears,
+/obj/item/weapon/reagent_containers/food/snacks/soup/clownstears,
 /turf/simulated/floor/carpet,
 /area/space_structures/robostatoin)
 "aJ" = (

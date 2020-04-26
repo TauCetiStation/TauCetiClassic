@@ -102,6 +102,7 @@
 /obj/item/weapon/game_kit/interact(mob/user)
 	user.machine = src
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/chess)		//Sending pictures to the client
+	assets.register()
 	assets.send(user)
 	if (!( data ))
 		update()

@@ -80,9 +80,8 @@
 
 		playsound(M,'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
-	return 0
 
-/obj/item/weapon/reagent_containers/food/condiment/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/food/condiment/afterattack(atom/target, mob/user, proximity, params)
 	if(get_dist(src, target) > 1)
 		return
 	if(istype(target, /obj/structure/reagent_dispensers)) // A dispenser. Transfer FROM it TO us.
@@ -151,7 +150,7 @@
 	else
 		..()
 
-/obj/item/weapon/condiment_shelf/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/condiment_shelf/afterattack(atom/target, mob/user, proximity, params)
 	var/turf/T = target
 	if(get_dist(T, user) > 1)
 		return

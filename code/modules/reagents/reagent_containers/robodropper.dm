@@ -9,7 +9,7 @@
 	volume = 10
 	var/filled = 0
 
-/obj/item/weapon/reagent_containers/robodropper/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/robodropper/afterattack(atom/target, mob/user, proximity, params)
 	if(!target.reagents) return
 
 	if(filled)

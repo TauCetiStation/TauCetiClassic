@@ -5986,7 +5986,7 @@
 /area/velocity)
 "avG" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/snacks/milosoup,
+/obj/item/weapon/reagent_containers/food/snacks/soup/milosoup,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"

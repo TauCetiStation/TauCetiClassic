@@ -145,13 +145,16 @@
 	name = "Unholy Water"
 	id = "unholywater"
 	description = "A corpsen-ectoplasmic-water mix, this solution could alter concepts of reality itself."
-	data = 1
 	color = "#c80064" // rgb: 200,0, 100
+
+	data = list()
 
 /datum/reagent/water/unholywater/on_general_digest(mob/living/M)
 	..()
+	if(!data["ticks"])
+		data["ticks"] = 1
 	if(iscultist(M) && prob(10))
-		switch(data)
+		switch(data["ticks"])
 			if(1 to 30)
 				M.heal_bodypart_damage(REM, REM)
 			if(30 to 60)
@@ -159,7 +162,7 @@
 			if(60 to INFINITY)
 				M.heal_bodypart_damage(3 * REM, 3 * REM)
 	else if(!iscultist(M))
-		switch(data)
+		switch(data["ticks"])
 			if(1 to 20)
 				M.make_jittery(3)
 			if(20 to 40)
@@ -172,7 +175,7 @@
 					M.SetSleeping(20 SECONDS)
 			if(80 to INFINITY)
 				M.SetSleeping(20 SECONDS)
-	data++
+	data["ticks"]++
 
 /datum/reagent/water/unholywater/reaction_obj(obj/O, volume)
 	src = null

@@ -60,7 +60,7 @@
 	else
 		item_state = "flamethrower_0"
 
-/obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, proximity, params)
 	// Make sure our user is still holding us
 	if(user && user.get_active_hand() == src)
 		var/turf/target_turf = get_turf(target)
@@ -273,7 +273,7 @@
 		icon_state = "M2_Flamethrower"
 	return
 
-/obj/item/weapon/flamethrower_M2/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/flamethrower_M2/afterattack(atom/target, mob/user, proximity, params)
 	// Make sure our user is still holding us
 	if(user && user.get_active_hand() == src)
 		var/turf/target_turf = get_turf(target)

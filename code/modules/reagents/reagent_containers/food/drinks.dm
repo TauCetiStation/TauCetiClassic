@@ -80,20 +80,19 @@
 		update_icon()
 		return 1
 
-	return 0
 
-
-/obj/item/weapon/reagent_containers/food/drinks/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/reagent_containers/food/drinks/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 
 	if (!is_open_container())
 		to_chat(user, "<span class='notice'>You need to open [src]!</span>")
 		return
 
-	if(istype(A, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+		var/obj/structure/reagent_dispensers/RD = target
 
-		if(!A.reagents.total_volume)
-			to_chat(user, "<span class='warning'>[A] is empty.</span>")
+		if(!RD.reagents.total_volume)
+			to_chat(user, "<span class='warning'>[RD] is empty.</span>")
 			return
 		if (!reagents.maximum_volume) // Locked or broken container
 			to_chat(user, "<span class='warning'> [src] can't hold this.</span>")
@@ -102,18 +101,18 @@
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return
 
-		var/trans = A.reagents.trans_to(src, A:amount_per_transfer_from_this)
-		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [A].</span>")
+		var/trans = RD.reagents.trans_to(src, RD.amount_per_transfer_from_this)
+		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
-	else if(A.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
+	else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='warning'>[src] is empty.</span>")
 			return
-		if(!A.reagents.maximum_volume)
-			to_chat(user, "<span class='warning'> [A] can't hold this.</span>")
+		if(!target.reagents.maximum_volume)
+			to_chat(user, "<span class='warning'> [target] can't hold this.</span>")
 			return
-		if(A.reagents.total_volume >= A.reagents.maximum_volume)
-			to_chat(user, "<span class='warning'>[A] is full.</span>")
+		if(target.reagents.total_volume >= target.reagents.maximum_volume)
+			to_chat(user, "<span class='warning'>[target] is full.</span>")
 			return
 
 		var/datum/reagent/refill
@@ -122,8 +121,8 @@
 			refill = reagents.get_master_reagent_id()
 			refillName = reagents.get_master_reagent_name()
 
-		var/trans = src.reagents.trans_to(A, amount_per_transfer_from_this)
-		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [A].</span>")
+		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
@@ -132,15 +131,15 @@
 			to_chat(user, "Now synthesizing [trans] units of [refillName]...")
 			addtimer(CALLBACK(src, .proc/refill_by_borg, user, refill, trans), 300)
 
-	else if((user.a_intent == I_HURT) && reagents.total_volume && istype(A, /turf/simulated))
-		to_chat(user, "<span class = 'notice'>You splash the solution onto [A].</span>")
+	else if((user.a_intent == I_HURT) && reagents.total_volume && istype(target, /turf/simulated))
+		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 
-		reagents.reaction(A, TOUCH)
+		reagents.reaction(target, TOUCH)
 		reagents.clear_reagents()
 
 		var/turf/T = get_turf(src)
-		message_admins("[key_name_admin(usr)] splashed [reagents.get_reagents()] on [A], location ([T.x],[T.y],[T.z]) [ADMIN_JMP(usr)]")
-		log_game("[key_name(usr)] splashed [reagents.get_reagents()] on [A], location ([T.x],[T.y],[T.z])")
+		message_admins("[key_name_admin(usr)] splashed [reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z]) [ADMIN_JMP(usr)]")
+		log_game("[key_name(usr)] splashed [reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z])")
 	update_icon()
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/refill_by_borg(user, refill, trans)
@@ -305,9 +304,9 @@
 	// Don't trust total_volume before all reactions end
 	if(!reagents.total_volume && !reagents.is_reaction_in_proccessing())
 		// Ramen can't be refilled. We have only one icon for content of ramen container and it's dohi ramen
-		// If ramen container empty and no reaction proccessing - remove volume 
+		// If ramen container empty and no reaction proccessing - remove volume
 		// Locking container return it to initial state and show message to open the container
-		reagents.maximum_volume = 0 
+		reagents.maximum_volume = 0
 		update_icon()
 		return
 	update_icon()

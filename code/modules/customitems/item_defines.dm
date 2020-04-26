@@ -352,12 +352,7 @@
 	icon_state = "asher_spock_1"
 	amount_per_transfer_from_this = 5
 	volume = 15
-
-/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/atom_init()
-	. = ..()
-	reagents.remove_reagent("tricordrazine", 30)
-	reagents.add_reagent("oxycodone", 15)
-	update_icon()
+	list_reagents = list("oxycodone" = 15)
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>")

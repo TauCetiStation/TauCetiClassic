@@ -30,7 +30,7 @@
 	icon_state = "fountainpen" //paththegreat: Eli Stevens
 	var/entity = ""
 
-/obj/item/weapon/pen/ghost/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/pen/ghost/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	if(!proximity || !entity)
 		return

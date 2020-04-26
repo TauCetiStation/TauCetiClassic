@@ -7,8 +7,9 @@
 
 /obj/effect/proc_holder/spell/targeted/glare/cast(list/targets)
 	for(var/mob/living/carbon/human/target in targets)
-		if(!ishuman(target))
+		if(!ishuman(target) || target.get_species() == IPC)
 			charge_counter = charge_max
+			to_chat(usr, "<span class='warning'>You can use this ability only on humans.</span>")
 			return
 		if(target.stat)
 			charge_counter = charge_max
@@ -161,7 +162,7 @@
 			to_chat(usr, "<span class='warning'>You can not enthrall allies.</span>")
 			charge_counter = charge_max
 			return
-		if(!ishuman(target))
+		if(!ishuman(target) || target.get_species() == IPC)
 			to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
 			charge_counter = charge_max
 			return
@@ -574,7 +575,7 @@
 			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
 			charge_counter = charge_max
 			return
-		if(!ishuman(target))
+		if(!ishuman(target) || target.get_species() == IPC)
 			to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
 			charge_counter = charge_max
 			return

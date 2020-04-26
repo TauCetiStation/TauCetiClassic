@@ -166,10 +166,10 @@
 	var/obj/machinery/mineral/output = null
 	var/obj/machinery/mineral/processing_unit_console/console = null
 	var/sheets_per_tick = 10
-	var/list/ores_processing[0]
-	var/list/ores_stored[0]
-	var/list/ore_data[0]
-	var/list/alloy_data[0]
+	var/list/ores_processing = list()
+	var/list/ores_stored = list()
+	var/list/ore_data = list()
+	var/list/alloy_data = list()
 	var/active = 0
 
 /obj/machinery/mineral/processing_unit/atom_init()

@@ -13,7 +13,6 @@ var/list/cult_runes = list()
 	if(!holder)
 		qdel(src)
 		CRASH("someone stupid tried to create datum without holder")
-		return
 	src.holder = holder
 
 /datum/cult/Destroy()

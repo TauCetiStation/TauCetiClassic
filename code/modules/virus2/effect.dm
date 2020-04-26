@@ -1125,6 +1125,8 @@
 	var/couthing_fit_chance = 5
 
 /datum/disease2/effect/cough/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+	if(mob.reagents.has_reagent("dextromethorphan"))
+		return
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class = 'notice'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>")
 	else if(prob(20) || holder.stage == 2)

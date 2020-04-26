@@ -88,19 +88,19 @@
 		to_chat(user, "<span class='notice'>You remove \the [ink] from \the [name].</span>")
 		ink = null
 
-/obj/item/weapon/airlock_painter/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/airlock_painter/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 
-	if(!istype(A, /obj/machinery/atmospherics/pipe) || \
-		istype(A, /obj/machinery/atmospherics/components/unary/tank) || \
-		istype(A, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) || \
-		!in_range(user, A))
+	if(!istype(target, /obj/machinery/atmospherics/pipe) || \
+		istype(target, /obj/machinery/atmospherics/components/unary/tank) || \
+		istype(target, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) || \
+		!in_range(user, target))
 	{
 		return
 	}
 
-	var/obj/machinery/atmospherics/pipe/P = A
+	var/obj/machinery/atmospherics/pipe/P = target
 
 	var/selected_color = input("Which colour do you want to use?", "Universal painter") in modes
 	if(!selected_color)

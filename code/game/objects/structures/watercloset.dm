@@ -415,12 +415,12 @@
 				qdel(mymist)
 				ismist = 0
 
-/obj/machinery/shower/Crossed(atom/movable/O)
-	..()
-	wash(O)
-	if(ismob(O))
+/obj/machinery/shower/Crossed(atom/movable/AM)
+	. = ..()
+	wash(AM)
+	if(ismob(AM))
 		mobpresent += 1
-		check_heat(O)
+		check_heat(AM)
 
 /obj/machinery/shower/Uncrossed(atom/movable/O)
 	if(ismob(O))

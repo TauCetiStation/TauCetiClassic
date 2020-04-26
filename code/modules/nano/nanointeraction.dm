@@ -117,7 +117,7 @@
 			. = loc.contents_nano_distance(src_object, src)
 		else
 			. = shared_living_nano_distance(src_object)
-	if(STATUS_INTERACTIVE)
+	if(. == STATUS_INTERACTIVE)
 		return STATUS_UPDATE
 
 /mob/living/carbon/human/can_use_topic(src_object, datum/topic_state/custom_state)
