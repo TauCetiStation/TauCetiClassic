@@ -103,19 +103,19 @@
 /datum/uplink_item/dangerous
 	category = "Conspicuous and Dangerous Weapons"
 
-/datum/uplink_item/dangerous/revolver/traitor
-	name = "TR-8-R Revolver"
-	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers. This one looks like toy"
-	item = /obj/item/weapon/gun/projectile/revolver/traitor
-	cost = 8
-	uplink_types = list("traitor")
-
 /datum/uplink_item/dangerous/revolver
 	name = "TR-7 Revolver"
 	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile/revolver
 	cost = 8
 	uplink_types = list("nuclear")
+
+/datum/uplink_item/dangerous/revolver/traitor
+	name = "TR-8-R Revolver"
+	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers. This one looks like toy"
+	item = /obj/item/weapon/gun/projectile/revolver/traitor
+	uplink_types = list("traitor")
+
 
 /datum/uplink_item/dangerous/pistol
 	name = "Stechkin Pistol"
@@ -201,7 +201,6 @@
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be pocketed when inactive. Activating it produces a loud, distinctive noise. This one looks like toy"
 	item = /obj/item/weapon/melee/energy/sword/traitor
-	cost = 7
 	uplink_types = list("traitor")	
 
 /datum/uplink_item/dangerous/emp
