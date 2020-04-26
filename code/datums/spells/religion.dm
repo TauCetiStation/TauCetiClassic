@@ -3,8 +3,8 @@
 	desc = "Bible"
 
 	school = "conjuration"
-	charge_max = 120 //BALANCE
-	favor_cost = 10 //BALANCE
+	charge_max = 2 MINUTES
+	favor_cost = 100
 	clothes_req = 0
 	invocation = "none"
 	range = 0
@@ -23,8 +23,8 @@
 /obj/effect/proc_holder/spell/targeted/heal
 	name = "Heal"
 
-	favor_cost = 10 //BALANCE
-	charge_max = 120 //BALANCE
+	favor_cost = 300
+	charge_max = 1.5 MINUTES
 	clothes_req = 0
 	invocation = "none"
 	range = 6
@@ -63,15 +63,18 @@
 	name = "Damage"
 	sound = 'sound/magic/Repulse.ogg'
 
+	favor_cost = 300
+	charge_max = 1.5 MINUTES
+
 	action_icon_state = "god_default"
 	divine_power = 5 //power
 
 /obj/effect/proc_holder/spell/targeted/blessing
 	name = "Blessing"
 
-	favor_cost = 10  //BALANCE
-	charge_max = 120 //BALANCE
-	divine_power = 5  //power
+	favor_cost = 200
+	charge_max = 1 MINUTES
+	divine_power = 5 //power
 	range = 0
 	invocation = "none"
 	clothes_req = 0
@@ -104,8 +107,8 @@
 /obj/effect/proc_holder/spell/targeted/charge/religion
 	name = "Charge electricity"
 
-	favor_cost = 10  //BALANCE
-	charge_max = 120 //BALANCE
+	favor_cost = 400
+	charge_max = 4 MINUTES
 	divine_power = 1 //range
 	range = 0
 	invocation = "none"
@@ -150,8 +153,8 @@
 /obj/effect/proc_holder/spell/targeted/food
 	name = "Spawn food"
 
-	favor_cost = 10  //BALANCE
-	charge_max = 120 //BALANCE
+	favor_cost = 250
+	charge_max = 3 MINUTES
 	divine_power = 2 //count
 	range = 0
 	invocation = "none"
@@ -180,8 +183,8 @@
 /obj/effect/proc_holder/spell/targeted/forcewall/religion
 	name = "Create energy wall"
 
-	favor_cost = 10  //BALANCE
-	charge_max = 120 //BALANCE
+	favor_cost = 150
+	charge_max = 1 MINUTES
 	divine_power = 1 //CD
 	invocation = "none"
 	invocation_type = "none"
@@ -211,14 +214,14 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal
 	name = "Create random friendly animal"
 
-	favor_cost = 10  //BALANCE
+	favor_cost = 10 //BALANCE
 	charge_max = 120 //BALANCE
 	divine_power = 0 //count
 	summon_amt = 0
 	invocation = "none"
 	clothes_req = 0
 	action_icon_state = "spawn_animal"
-	summon_type = list(/mob/living/simple_animal/corgi/puppy, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/corgi, /mob/living/simple_animal/cat, /mob/living/simple_animal/parrot, /mob/living/simple_animal/crab, /mob/living/simple_animal/cow, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken, /mob/living/simple_animal/pig, /mob/living/simple_animal/turkey, /mob/living/simple_animal/goose, /mob/living/simple_animal/seal, /mob/living/simple_animal/walrus, /mob/living/simple_animal/fox, /mob/living/simple_animal/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/mushroom, /mob/living/simple_animal/pug, /mob/living/simple_animal/shiba, /mob/living/simple_animal/slime, /mob/living/simple_animal/yithian, /mob/living/simple_animal/tindalos)
+	summon_type = list(/mob/living/simple_animal/corgi/puppy, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/corgi, /mob/living/simple_animal/cat, /mob/living/simple_animal/parrot, /mob/living/simple_animal/crab, /mob/living/simple_animal/cow, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken, /mob/living/simple_animal/pig, /mob/living/simple_animal/turkey, /mob/living/simple_animal/goose, /mob/living/simple_animal/seal, /mob/living/simple_animal/walrus, /mob/living/simple_animal/fox, /mob/living/simple_animal/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/mushroom, /mob/living/simple_animal/pug, /mob/living/simple_animal/shiba, /mob/living/simple_animal/yithian, /mob/living/simple_animal/tindalos, /mob/living/carbon/monkey, /mob/living/carbon/monkey/skrell, /mob/living/carbon/monkey/tajara, /mob/living/carbon/monkey/unathi, /mob/living/simple_animal/slime)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal/cast()
 	summon_amt += divine_power

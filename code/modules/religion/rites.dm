@@ -50,12 +50,12 @@
 /datum/religion_rites/synthconversion
 	name = "Synthetic Conversion"
 	desc = "Convert a human-esque individual into a (superior) Android."
-	ritual_length = 0.5 MINUTES //BALANCE
+	ritual_length = 1 MINUTES
 	ritual_invocations = list("By the inner workings of our god...",
-						"... We call upon you, in the face of adversity...",
-						"... to complete us, removing that which is undesirable...")
-	invoke_msg = "... Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
-	favor_cost = 500 //BALANCE
+						"...We call upon you, in the face of adversity...",
+						"...to complete us, removing that which is undesirable...")
+	invoke_msg = "...Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
+	favor_cost = 700
 
 /datum/religion_rites/synthconversion/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(AOG && !AOG.buckled_mob)
@@ -83,11 +83,15 @@
 /datum/religion_rites/sacrifice
 	name = "Sacrifice"
 	desc = "Convert living energy in favor."
-	ritual_length = 0.1 MINUTES //BALANCE
-	ritual_invocations = list("By the inner workings of our god...", //TODO
-						"... We call upon you, in the face of adversity...",
-						"... to complete us, removing that which is undesirable...")
-	invoke_msg = "... gege!!"
+	ritual_length = 1 MINUTES
+	ritual_invocations = list("Hallowed be thy name...",
+							  "...Thy kingdom come...",
+							  "...Thy will be done in earth as it is in heaven...",
+							  "...Give us this day our daily bread...",
+							  "...and forgive us our trespasses...",
+							  "...as we forgive them who trespass against us...",
+							  "...and lead us not into temptation...")
+	invoke_msg = "...but deliver us from the evil one!!"
 	favor_cost = 0
 
 /datum/religion_rites/sacrifice/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
@@ -113,7 +117,7 @@
 	if(isanimal(L))
 		religious_sect.favor += 200
 	if(ismonkey(L))
-		religious_sect.favor += 300
+		religious_sect.favor += 250
 	if(ishuman(L))
 		religious_sect.favor += 400
 
@@ -125,11 +129,13 @@
 /datum/religion_rites/food
 	name = "Create food"
 	desc = "Create more and more food!"
-	ritual_length = 0.2 MINUTES //BALANCE
-	ritual_invocations = list("By the inner workings of our god...", //TODO
-						"... We call upon you, in the face of adversity...",
-						"... to complete us, removing that which is undesirable...")
-	invoke_msg = "... gege!!"
+	ritual_length = 1.5 MINUTES
+	ritual_invocations = list("O Lord, we pray to you: hear our prayer, that they may be delivered by thy mercy, for the glory of thy name...", //TODO
+						"...our crops and gardens, now it’s fair for our sins that are destroyed and a real disaster is suffered, from birds, worms, mice, moles and other animals...",
+						"...and driven far away from this place by Your authority, may they not harm anyone, but these fields and waters...",
+						"...and the gardens will be left completely at rest so that all that is growing and born in them will serve for thy glory...",
+						"...and our needs helped, for we praise you...")
+	invoke_msg = "...and bring glory to you!!"
 	favor_cost = 300
 
 /datum/religion_rites/food/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
@@ -156,7 +162,7 @@
 /datum/religion_rites/pray
 	name = "Prayer to god"
 	desc = "Very long pray for favor"
-	ritual_length = 5 MINUTES //BALANCE
+	ritual_length = 4 MINUTES
 	ritual_invocations = list("Have mercy on us, O Lord, have mercy on us...",
 							  "...for at a loss for any defense, this prayer do we sinners offer Thee as Master...",
 							  "...have mercy on us...",

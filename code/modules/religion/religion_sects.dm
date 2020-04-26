@@ -17,9 +17,9 @@
 /// Does this require something before being available as an option?
 	var/starter = TRUE
 /// The Sect's 'Mana'
-	var/favor = 500 //MANA!
+	var/favor = 0 //MANA!
 /// The max amount of favor the sect can have
-	var/max_favor = 1000
+	var/max_favor = 3000
 /// The default value for an item that can be sacrificed
 	var/default_item_favor = 5
 /// Turns into 'desired_items_typecache', lists the types that can be sacrificed barring optional features in can_sacrifice()
@@ -216,61 +216,55 @@
 
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/cell = I
-		adjust_favor(round(cell.charge/500), L) //BALANCE
+		adjust_favor(round(cell.charge / 200), L)
 	
 	if(istype(I, /obj/item/weapon/gun/energy))
 		var/obj/item/weapon/gun/energy/energy = I
-		adjust_favor(default_item_favor * energy.w_class * energy.w_class, L) //BALANCE
+		adjust_favor(25 * energy.w_class * energy.w_class, L)
 
 	if(istype(I, /obj/item/weapon/gun/projectile))
 		var/obj/item/weapon/gun/projectile/gun = I
-		adjust_favor(gun.magazine.ammo_count() * gun.chambered.BB.damage, L) //BALANCE
+		adjust_favor(gun.magazine.ammo_count() * gun.chambered.BB.damage * 1.5, L)
 
 	if(istype(I, /obj/item/clothing/suit/armor))
 		var/obj/item/clothing/suit/armor/arm = I
 		var/all_armor = 0
 		for(var/i in arm.armor)
 			all_armor += i
-		adjust_favor(arm * 3, L) //BALANCE
+		adjust_favor(all_armor * 0.6, L)
 
 	if(istype(I, /obj/item/weapon/melee))
 		var/obj/item/weapon/melee/mel = I
-		adjust_favor(mel.force * 7, L) //BALANCE
+		adjust_favor(mel.force * 5, L)
 
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/food = I
-		adjust_favor(round(food.reagents.reagent_list.len/2) * food.reagents.total_volume, L) //BALANCE
+		adjust_favor(round((food.reagents.reagent_list.len / 2) + 1) * food.reagents.total_volume, L)
 
 	if(istype(I, /obj/item/stack/sheet))
 		var/obj/item/stack/sheet/material = I
-		adjust_favor(material.amount * 5, L) //BALANCE
+		adjust_favor(material.amount * 5, L)
 
 	if(istype(I, /obj/item/organ/external) || istype(I, /obj/item/brain))
-		adjust_favor(30, L) //BALANCE
+		adjust_favor(50, L)
 
 	if(istype(I, /obj/item/weapon/reagent_containers/blood))
-		adjust_favor(50, L) //BALANCE
+		adjust_favor(25, L)
 
 	if(istype(I, /obj/item/weapon/stock_parts))
 		var/obj/item/weapon/stock_parts/part = I
-		adjust_favor(25 * part.rating, L) //BALANCE
+		adjust_favor(25 * part.rating, L)
 
 	if(istype(I, /obj/item/weapon/circuitboard))
-		adjust_favor(10, L) //BALANCE
+		adjust_favor(30, L)
 
 	if(istype(I, /obj/item/device/assembly))
 		var/obj/item/device/assembly/ass = I
-		adjust_favor(10 * ass.w_class, L) //BALANCE
+		adjust_favor(10 * ass.w_class, L)
 
 	if(istype(I, /obj/item/seeds))
 		var/obj/item/seeds/seed = I
-		adjust_favor(seed.potency * 1.5, L) //BALANCE
-
-	if(istype(I, /obj/item/candle/ghost) || istype(I, /obj/item/weapon/dice/ghost) ||istype(I, /obj/item/weapon/pen/ghost) ||istype(I, /datum/gear/ghostcamera) ||istype(I, /obj/item/weapon/game_kit/chaplain))
-		adjust_favor(25, L) //BALANCE
-
-	if(istype(I, /obj/structure/cult))
-		adjust_favor(100, L) //BALANCE
+		adjust_favor(seed.potency * 1.5, L)
 
 	to_chat(L, "<span class='notice'>You offer [I]'s power to [pick(global.chaplain_religion.deity_names)], pleasing them.</span>")
 	qdel(I)
