@@ -197,7 +197,7 @@
 	cost = 7
 	uplink_types = list("nuclear")
 
-/datum/uplink_item/dangerous/sword/tator
+/datum/uplink_item/dangerous/sword/traitor
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/weapon/melee/energy/sword/tator
