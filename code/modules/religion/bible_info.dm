@@ -76,7 +76,7 @@
 	item_state = "scientology"
 
 /datum/bible_info/scrapbook
-	name = list("The Holy Joke Book", "Hymns to the Honkmother", "Prank in the name of Honkmother", "Scrapbook")
+	pos_names = list("The Holy Joke Book", "Hymns to the Honkmother", "Prank in the name of Honkmother", "Scrapbook")
 	icon_state = "scrapbook"
 	item_state = "scrapbook"
 
