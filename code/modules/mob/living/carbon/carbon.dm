@@ -323,7 +323,7 @@
 	set name = "Crawl"
 	set category = "IC"
 
-	if( stat || weakened || stunned || paralysis || resting || (status_flags & FAKEDEATH) || buckled)
+	if(incapacitated() || (status_flags & FAKEDEATH) || buckled)
 		return
 	if(crawl_getup)
 		return

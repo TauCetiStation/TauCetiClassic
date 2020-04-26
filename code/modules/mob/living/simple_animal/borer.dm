@@ -245,8 +245,9 @@
 		to_chat(src, "You are not inside a host body.")
 		return
 
-	if(stat)
+	if(incapacitated())
 		to_chat(src, "You cannot secrete chemicals in your current state.")
+		return
 
 	if(docile)
 		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
@@ -273,8 +274,9 @@
 		to_chat(src, "You are not inside a host body.")
 		return
 
-	if(stat)
+	if(incapacitated())
 		to_chat(src, "You cannot leave your host in your current state.")
+		return
 
 	if(docile)
 		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
@@ -341,7 +343,7 @@
 		to_chat(src, "You are already within a host.")
 		return
 
-	if(stat)
+	if(incapacitated())
 		to_chat(src, "You cannot infest a target in your current state.")
 		return
 
