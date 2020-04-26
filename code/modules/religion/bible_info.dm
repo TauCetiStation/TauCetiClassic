@@ -12,6 +12,9 @@
 
 /datum/bible_info/proc/apply_to(obj/item/weapon/storage/bible/B)
 	B.name = name
+	apply_visuals_to(B)
+
+/datum/bible_info/proc/apply_visuals_to(obj/item/weapon/storage/bible/B)
 	B.icon_state = icon_state
 	B.item_state = item_state
 
