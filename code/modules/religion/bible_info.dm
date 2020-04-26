@@ -118,6 +118,9 @@
 	// icon_state = "holdingpack"
 	// item_state = "backpack"
 
-/datum/bible_info/science/techno
+/datum/bible_info/techno
+	name = "The Polyhedron"
+	icon_state = "bible"
+	item_state = "bible"
 	// icon_state = "circuit_box"
 	// item_state = "syringe_kit"
