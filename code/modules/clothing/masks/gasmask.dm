@@ -97,7 +97,8 @@
 	set name = "HALT"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
+	if(usr.incapacitated())
+		return
 
 	var/phrase = 0	//selects which phrase to use
 	var/phrase_text = null

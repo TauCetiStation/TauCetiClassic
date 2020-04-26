@@ -908,7 +908,7 @@
 		var/new_name = sanitize_safe(input(usr, "Name the Disease", "New Name") as text|null, MAX_NAME_LEN)
 		if(!new_name)
 			return
-		if(usr.stat || usr.restrained())
+		if(usr.incapacitated())
 			return
 		if(!in_range(src, usr))
 			return
@@ -1235,7 +1235,7 @@
 
 /obj/machinery/reagentgrinder/proc/detach()
 
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 	if (!beaker)
 		return
@@ -1245,7 +1245,7 @@
 
 /obj/machinery/reagentgrinder/proc/eject()
 
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 	if (holdingitems && holdingitems.len == 0)
 		return

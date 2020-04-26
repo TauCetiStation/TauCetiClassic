@@ -312,7 +312,7 @@
 
 	if(!usr || !isturf(usr.loc))
 		return
-	if(usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return
 	if(usr.status_flags & FAKEDEATH)
 		return
@@ -936,12 +936,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		return
 	usr.next_move = world.time + 20
 
-	if(usr.stat == UNCONSCIOUS)
-		to_chat(usr, "You are unconcious and cannot do that!")
-		return
-
-	if(usr.restrained())
-		to_chat(usr, "You are restrained and cannot do that!")
+	if(usr.incapacitated())
+		to_chat(usr, "You can not do this while being incapacitated!")
 		return
 
 	var/mob/S = src

@@ -238,7 +238,7 @@
 		return
 	if(O.loc == user)
 		return
-	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis)
+	if(user.incapacitated())
 		return
 	if((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)))
 		return
@@ -266,7 +266,7 @@
 		attack_hand(user)
 
 /obj/structure/closet/relaymove(mob/user)
-	if(user.stat || !isturf(src.loc))
+	if(user.incapacitated() || !isturf(src.loc))
 		return
 
 	if(!src.open())
@@ -340,7 +340,7 @@
 		to_chat(O, "<span class='warning'>[src] begins to shake violently!</span>")
 
 	if(do_after(user,(breakout_time*60*10),target=src)) //minutes * 60seconds * 10deciseconds
-		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded))
+		if(!user || user.loc != src || opened || (!locked && !welded))
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
 

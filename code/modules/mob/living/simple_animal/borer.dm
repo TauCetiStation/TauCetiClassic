@@ -170,7 +170,7 @@
 		to_chat(src, "You cannot do that from within a host body.")
 		return
 
-	if(src.stat)
+	if(incapacitated())
 		to_chat(src, "You cannot do that in your current state.")
 		return
 
@@ -206,7 +206,7 @@
 		to_chat(src, "You are not inside a host body.")
 		return
 
-	if(src.stat)
+	if(incapacitated())
 		to_chat(src, "You cannot do that in your current state.")
 		return
 
@@ -293,7 +293,7 @@
 
 		if(!host || !src) return
 
-		if(src.stat)
+		if(incapacitated())
 			to_chat(src, "You cannot infest a target in your current state.")
 			return
 
@@ -377,7 +377,7 @@
 
 	if(!M || !src) return
 
-	if(src.stat)
+	if(incapacitated())
 		to_chat(src, "You cannot infest a target in your current state.")
 		return
 

@@ -412,7 +412,8 @@
 	var/mob/living/carbon/human/H = usr
 
 	if(!istype(H)) return
-	if(H.stat) return
+	if(H.incapacitated())
+		return
 	if(H.wear_suit != src) return
 
 	if(H.head == helmet)
@@ -441,7 +442,8 @@
 	var/mob/living/carbon/human/H = usr
 
 	if(!istype(H)) return
-	if(H.stat) return
+	if(H.incapacitated())
+		return
 	if(H.wear_suit != src) return
 
 	if(magpulse)

@@ -54,7 +54,7 @@
 	interact(user)
 
 /obj/item/device/camera_bug/check_eye(mob/user)
-	if (user.stat || loc != user || user.blinded || !current)
+	if (user.incapacitated() || loc != user || user.blinded || !current)
 		user.reset_view(null)
 		user.unset_machine()
 		return 0

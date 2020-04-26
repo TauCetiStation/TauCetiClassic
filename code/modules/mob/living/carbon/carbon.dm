@@ -416,7 +416,7 @@
 
 /mob/living/carbon/throw_item(atom/target)
 	throw_mode_off()
-	if(usr.stat || !target)
+	if(usr.incapacitated() || !target)
 		return
 	if(target.type == /obj/screen)
 		return

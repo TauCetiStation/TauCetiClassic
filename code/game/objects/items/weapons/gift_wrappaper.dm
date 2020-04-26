@@ -42,7 +42,7 @@
 	return
 
 /obj/effect/spresent/relaymove(mob/user)
-	if (user.stat)
+	if (user.incapacitated())
 		return
 	to_chat(user, "<span class='notice'>You cant move.</span>")
 
@@ -184,7 +184,7 @@
 	if (!istype(target, /mob/living/carbon/human)) return
 	var/mob/living/carbon/human/H = target
 
-	if (istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket) || H.stat)
+	if (H.incapacitated())
 		if (src.amount > 2)
 			var/obj/effect/spresent/present = new /obj/effect/spresent (H.loc)
 			src.amount -= 2

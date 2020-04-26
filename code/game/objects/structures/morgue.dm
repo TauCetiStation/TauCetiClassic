@@ -167,7 +167,7 @@
 		..()
 
 /obj/structure/morgue/relaymove(mob/user)
-	if (user.stat)
+	if (user.incapacitated())
 		return
 	connected = new /obj/structure/m_tray( loc )
 	step(connected, dir)
@@ -218,7 +218,7 @@
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return
-	if (!ismob(user) || user.stat || user.lying || user.stunned)
+	if (!ismob(user) || user.incapacitated())
 		return
 	O.loc = src.loc
 	if (user != O)
@@ -347,7 +347,7 @@
 		..()
 
 /obj/structure/crematorium/relaymove(mob/user)
-	if (user.stat || locked)
+	if (user.incapacitated() || locked)
 		return
 	src.connected = new /obj/structure/c_tray( src.loc )
 	step(src.connected, SOUTH)
@@ -439,7 +439,7 @@
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return
-	if (!ismob(user) || user.stat || user.lying || user.stunned)
+	if (!ismob(user) || user.incapacitated())
 		return
 	O.loc = src.loc
 	if (user != O)

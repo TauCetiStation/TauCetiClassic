@@ -202,7 +202,7 @@
 	else if(istype(A, /obj/structure/closet/body_bag))
 		var/obj/structure/closet/body_bag/target = A
 
-		if(get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai)) return
+		if(get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.incapacitated() || istype(user, /mob/living/silicon/ai)) return
 		if(isanimal(user)) return
 		if(isessence(user))
 			return
@@ -211,14 +211,16 @@
 		var/msg
 		var/self_msg
 
-		if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis) return
+		if(user.incapacitated())
+			return
 		user.visible_message("<span class='notice'>[user] starts stuffing [target.name] into the disposal.</span>")
 		if(user.is_busy() || !do_after(usr, 20, target = src))
 			return
 		if(target_loc != target.loc)
 			return
 
-		if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis) return
+		if(user.incapacitated())
+			return
 		msg = "<span class='notice'>[user.name] stuffs [target.name] into the [src]!</span>"
 		self_msg = "<span class='notice'>You stuff [target.name] into the [src]!</span>"
 
