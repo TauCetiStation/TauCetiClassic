@@ -673,7 +673,7 @@
 
 	if(!data["ticks"])
 		data["ticks"] = 1   //if it doesn't exist we set it.
-	src.data["ticks"] += boozepwr						//avoid a runtime error associated with drinking blood mixed in drinks (demon's blood).
+	data["ticks"] += boozepwr						//avoid a runtime error associated with drinking blood mixed in drinks (demon's blood).
 
 	var/d = 0
 
