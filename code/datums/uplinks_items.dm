@@ -103,7 +103,7 @@
 /datum/uplink_item/dangerous
 	category = "Conspicuous and Dangerous Weapons"
 
-/datum/uplink_item/dangerous/revolver/tator
+/datum/uplink_item/dangerous/revolver/traitor
 	name = "TR-7 Revolver"
 	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile/revolver
