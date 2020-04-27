@@ -249,8 +249,8 @@
 		if(M.layer == MOB_LAYER)
 			N.visible_message("<span class ='notice'><b>[N]</b> nibbles away at [src].</span>", "<span class='notice'>You nibble away at [src].</span>")
 			N.health = min(N.health + 1, N.maxHealth)
-			bitecount += 0.1
-			if(bitecount >= 5)
+			reagents.remove_any(0.5 * bitesize)
+			if(reagents.total_volume <= 0)
 				N.visible_message("<span class='notice'><b>[N]</b> just ate the [src]!</span>", "<span class='notice'>You just ate [src], [pick("delicious", "wonderful", "smooth", "disgusting")]!</span>")
 				qdel(src)
 		else
