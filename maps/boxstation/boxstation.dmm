@@ -21482,6 +21482,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/sign/poster/official/space_cops{
+	pixel_x = 32
+	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "aMm" = (
@@ -30324,9 +30327,6 @@
 /obj/item/device/taperecorder,
 /obj/item/weapon/storage/box/evidence,
 /obj/item/clothing/under/fluff/terezi_suit,
-/obj/structure/sign/poster/official/space_cops{
-	pixel_x = 32
-	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bcG" = (
@@ -68006,20 +68006,6 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/auxsolarport)
-"exX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/civilian/bar)
 "eyb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -70509,21 +70495,6 @@
 /obj/item/clothing/under/boxing/pink,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
-"inh" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/polarized{
-	dir = 4;
-	id = "privateoffice"
-	},
-/obj/structure/window/reinforced/polarized{
-	dir = 1;
-	id = "privateoffice"
-	},
-/obj/structure/window/reinforced/polarized{
-	id = "privateoffice"
-	},
-/turf/simulated/floor/plating,
-/area/station/security/vacantoffice)
 "iob" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -70933,6 +70904,21 @@
 	},
 /turf/simulated/wall,
 /area/station/maintenance/engineering)
+"iTI" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized{
+	dir = 4;
+	id = "privateoffice"
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "privateoffice"
+	},
+/obj/structure/window/reinforced/polarized{
+	id = "privateoffice"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/vacantoffice)
 "iUb" = (
 /obj/structure/morgue{
 	dir = 8
@@ -75909,6 +75895,20 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/office)
+"rbR" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/bar)
 "rcb" = (
 /obj/item/weapon/storage/briefcase/inflatable{
 	pixel_x = 5;
@@ -76157,6 +76157,21 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
+"rpQ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized{
+	dir = 8;
+	id = "privateoffice"
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "privateoffice"
+	},
+/obj/structure/window/reinforced/polarized{
+	id = "privateoffice"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/vacantoffice)
 "rqb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -78095,21 +78110,6 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/civilian/toilet)
-"uPM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/polarized{
-	dir = 8;
-	id = "privateoffice"
-	},
-/obj/structure/window/reinforced/polarized{
-	dir = 1;
-	id = "privateoffice"
-	},
-/obj/structure/window/reinforced/polarized{
-	id = "privateoffice"
-	},
-/turf/simulated/floor/plating,
-/area/station/security/vacantoffice)
 "uRb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -92756,7 +92756,7 @@ aYA
 bbt
 aGj
 bhj
-uPM
+rpQ
 aHM
 aZw
 aZw
@@ -93013,7 +93013,7 @@ aYP
 bbt
 aGj
 bhj
-inh
+iTI
 aIr
 aZw
 bqN
@@ -102269,7 +102269,7 @@ ayv
 dyy
 awS
 awS
-exX
+rbR
 aWy
 bmx
 avN
