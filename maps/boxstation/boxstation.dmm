@@ -9726,7 +9726,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated,
+/turf/simulated/floor/plating,
 /area/station/civilian/locker)
 "aqh" = (
 /obj/machinery/light,
@@ -10012,7 +10012,7 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated,
+/turf/simulated/floor/plating,
 /area/station/civilian/hydroponics)
 "aqE" = (
 /obj/structure/cable{
@@ -10328,7 +10328,7 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated,
+/turf/simulated/floor/plating,
 /area/station/civilian/hydroponics)
 "arj" = (
 /obj/effect/decal/cleanable/cobweb,
@@ -18164,7 +18164,7 @@
 	opacity = 0
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated,
+/turf/simulated/floor/plating,
 /area/station/rnd/lab)
 "aFW" = (
 /obj/structure/rack,
@@ -19071,7 +19071,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/cargo/office)
+/area/station/cargo/qm)
 "aHL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
@@ -21898,21 +21898,6 @@
 	icon_state = "neutral"
 	},
 /area/station/civilian/fitness)
-"aNg" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated,
-/area/station/civilian/kitchen)
 "aNh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
@@ -23427,7 +23412,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
-/area/station/cargo/office)
+/area/station/cargo/qm)
 "aPW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
@@ -28163,7 +28148,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/cargo/office)
+/area/station/cargo/qm)
 "aYE" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -34065,7 +34050,7 @@
 	id = "Captain_private"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated,
+/turf/simulated/floor/plating,
 /area/station/bridge/captain_quarters)
 "bjX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -34192,7 +34177,7 @@
 	id = "Captain_private"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated,
+/turf/simulated/floor/plating,
 /area/station/bridge/captain_quarters)
 "bkj" = (
 /obj/machinery/camera{
@@ -35264,7 +35249,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
-/turf/simulated,
+/turf/simulated/floor/plating,
 /area/station/bridge/captain_quarters)
 "bmf" = (
 /obj/structure/stool/bed/chair/office/light{
@@ -39711,6 +39696,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bwA" = (
@@ -40345,9 +40333,6 @@
 	id_tag = "arrival_dock_pump";
 	name = "Arrival Dock Large Air Vent"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bxT" = (
@@ -40760,6 +40745,7 @@
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "byP" = (
@@ -40839,9 +40825,6 @@
 	dir = 9
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "byW" = (
@@ -41831,7 +41814,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated,
+/turf/simulated/floor/plating,
 /area/station/security/vacantoffice)
 "bBb" = (
 /obj/machinery/door/airlock/maintenance{
@@ -41983,7 +41966,7 @@
 	opacity = 0
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated,
+/turf/simulated/floor/plating,
 /area/station/rnd/lab)
 "bBt" = (
 /obj/machinery/door/poddoor{
@@ -46393,7 +46376,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated,
+/turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bJU" = (
 /obj/structure/cable{
@@ -68662,13 +68645,6 @@
 	oxygen = 0.01
 	},
 /area/station/security/brig)
-"fza" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated,
-/area/station/maintenance/cargo)
 "fzb" = (
 /obj/structure/sign/warning/securearea{
 	pixel_y = 32
@@ -71936,7 +71912,7 @@
 	},
 /obj/structure/barricade/wooden,
 /obj/machinery/door/firedoor,
-/turf/simulated,
+/turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "kGb" = (
 /obj/effect/landmark/start{
@@ -77017,10 +76993,6 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/medical/virology)
-"sIv" = (
-/obj/random/scrap/moderate_weighted,
-/turf/simulated,
-/area/station/maintenance/cargo)
 "sJb" = (
 /obj/structure/stool/bed/chair/comfy/teal{
 	dir = 1
@@ -77959,7 +77931,7 @@
 /area/station/hallway/secondary/entry)
 "uru" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/simulated,
+/turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "urA" = (
 /obj/structure/grille,
@@ -91716,14 +91688,14 @@ bgM
 bkW
 bkW
 jOv
-bHe
-bHe
-bHe
+qlZ
+qlZ
+qlZ
 aHK
 aPV
-bHe
+qlZ
 aYD
-bHe
+qlZ
 buD
 ivL
 lac
@@ -93004,11 +92976,11 @@ aZw
 qlZ
 qlZ
 qlZ
-aFg
-aFg
-aFg
-aFg
-aFg
+qlZ
+qlZ
+qlZ
+qlZ
+qlZ
 wfm
 udR
 iRH
@@ -96090,7 +96062,7 @@ dLO
 sCd
 bDk
 eXg
-fza
+eXg
 brd
 bfB
 bDX
@@ -99424,7 +99396,7 @@ gLt
 jQu
 aWw
 aWw
-aNg
+haq
 pvI
 aMX
 aOJ
@@ -99938,7 +99910,7 @@ hho
 aWw
 aWw
 aWw
-aNg
+haq
 qab
 aFn
 aYv
@@ -101497,7 +101469,7 @@ bEW
 bqM
 bvH
 bEW
-aSM
+fFe
 bxQ
 qla
 xYb
@@ -102011,8 +101983,8 @@ bEW
 mNg
 wZc
 aMT
-aSM
 fFe
+aSM
 aSM
 cbS
 bZZ
@@ -103037,7 +103009,7 @@ bEW
 bEW
 tKI
 aSM
-sIv
+dLO
 nSy
 usn
 btC
