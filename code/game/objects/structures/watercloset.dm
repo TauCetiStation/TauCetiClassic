@@ -294,7 +294,7 @@
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
 	var/is_payed = 0
-	var/cost_per_activation = 150
+	var/cost_per_activation = 10
 
 //add heat controls? when emagged, you can freeze to death in it?
 
@@ -321,7 +321,7 @@
 			for (var/atom/movable/G in src.loc)
 				G.clean_blood()
 		else
-			is_payed = 0 // ≈сли игрок выключил раньше времени - принудительное аннулирование платы.
+			is_payed = 0 // If the player closes ahead of time - force cancel the fee
 	else
 		to_chat(user, "You didn't pay for that. Swipe a card against [src].")
 
