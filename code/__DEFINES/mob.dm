@@ -102,7 +102,7 @@
 
 // Factor of how fast mob nutrition decreases
 #define METABOLISM_FACTOR 1 // standart (for humans, other)
-#define SKRELL_METABOLISM_FACTOR 2 // Twice the speed for half the sense!
+#define SKRELL_METABOLISM_FACTOR 1.2
 
 // Taste sensitivity - the more the more reagents you'll taste
 #define TASTE_SENSITIVITY_NORMAL 1

@@ -682,14 +682,17 @@
 		if(isnum(A.data))
 			d += A.data
 
-	if(M.get_species() == SKRELL) //Skrell get very drunk very quickly.
-		d *= 5
+	if(M.get_species() == SKRELL) //Skrell do not get drunk
+		d *= 0
 
 	if(HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 		d *= 0.7
 
 	if(HAS_TRAIT(M, TRAIT_LIGHT_DRINKER))
 		d *= 2
+
+	if(M.get_species() == SKRELL) //Skrell do not get drunk
+		d *= 0
 
 	M.dizziness += dizzy_adj
 	if(d >= slur_start && d < pass_out)
