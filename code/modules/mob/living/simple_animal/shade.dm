@@ -154,3 +154,16 @@
 	y = new_y
 
 	Moved(oldLoc, 0)
+
+/mob/living/simple_animal/shade/god/Process_Spacemove(movement_dir = 0)
+	return TRUE
+
+/mob/living/simple_animal/shade/god/verb/view_manfiest()
+	set name = "View Crew Manifest"
+	set category = "Deity"
+
+	var/dat
+	dat += "<h4>Crew Manifest</h4>"
+	dat += data_core.get_manifest()
+
+	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")
