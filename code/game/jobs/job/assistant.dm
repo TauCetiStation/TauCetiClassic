@@ -8,6 +8,7 @@
 	supervisors = "absolutely everyone"
 	selection_color = "#dddddd"
 	access = list()			//See /datum/job/assistant/get_access()
+	salary = 20
 	alt_titles = list("Lawyer","Mecha Operator","Private Eye","Reporter","Waiter","Vice Officer","Paranormal Investigator")
 
 /datum/job/assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)

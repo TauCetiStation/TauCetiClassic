@@ -96,7 +96,7 @@
 	return ((current_internal_charge / max_internal_charge) * 100)
 
 /obj/machinery/recharge_station/relaymove(mob/user)
-	if(user.stat)
+	if(user.incapacitated())
 		return
 	open_machine()
 

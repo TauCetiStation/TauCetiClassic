@@ -431,9 +431,6 @@
 	if(copytext(message,1,2) == "*")
 		return emote(copytext(message,2))
 
-	if(stat)
-		return
-
 	if(speak_emote.len)
 		verb = pick(speak_emote)
 

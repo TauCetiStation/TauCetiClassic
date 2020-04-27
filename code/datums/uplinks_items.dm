@@ -56,7 +56,7 @@
 	if(!istype(U))
 		return 0
 
-	if (!user || user.stat || user.restrained())
+	if (!user || user.incapacitated())
 		return 0
 
 	if (!( istype(user, /mob/living/carbon/human)))
@@ -108,6 +108,14 @@
 	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile/revolver
 	cost = 8
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/dangerous/revolver/traitor
+	name = "TR-8-R Revolver"
+	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers. This one looks like toy."
+	item = /obj/item/weapon/gun/projectile/revolver/traitor
+	uplink_types = list("traitor")
+
 
 /datum/uplink_item/dangerous/pistol
 	name = "Stechkin Pistol"
@@ -161,7 +169,7 @@
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
 	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with toxin, a poison collected from an organism. \
-	Its bolts stun enemies for short periods, and replenish automatically."
+	Its bolts stun enemies for short periods, and replenish automatically. This one looks like toy."
 	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 7
 	uplink_types = list("traitor")
@@ -187,6 +195,12 @@
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/weapon/melee/energy/sword
 	cost = 7
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/dangerous/sword/traitor
+	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be pocketed when inactive. Activating it produces a loud, distinctive noise. This one looks like toy."
+	item = /obj/item/weapon/melee/energy/sword/traitor
+	uplink_types = list("traitor")
 
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades"

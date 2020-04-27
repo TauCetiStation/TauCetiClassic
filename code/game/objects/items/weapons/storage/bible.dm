@@ -61,7 +61,7 @@
 	var/done = FALSE
 	var/changes = FALSE
 
-	var/list/choices = list("Mat symbol")
+	var/list/choices = list("Pews", "Mat symbol")
 
 	while(!done)
 		if(!choices.len)
@@ -74,7 +74,6 @@
 			break
 
 		switch(looks)
-			/*
 			if("Pews")
 				var/new_look = input(user, "Which pews style would you like?")  as null|anything in global.chaplain_religion.pews_info_by_name
 				if(!new_look)
@@ -83,7 +82,7 @@
 				global.chaplain_religion.pews_icon_state = global.chaplain_religion.pews_info_by_name[new_look]
 				changes = TRUE
 				choices -= "Pews"
-			*/
+
 			if("Mat symbol")
 				var/new_mat = input(user, "Which mat symbol would you like?")  as null|anything in global.chaplain_religion.carpet_dir_by_name
 				if(!new_mat)

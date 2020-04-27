@@ -941,7 +941,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 						if (R.fields["id"] == E.fields["id"])
 							if(hasHUD(usr,"security"))
 								var/t1 = sanitize(input("Add Comment:", "Sec. records", null, null)  as message)
-								if ( !(t1) || usr.stat || usr.restrained() || !(hasHUD(usr,"security")) )
+								if ( !(t1) || usr.incapacitated() || !(hasHUD(usr,"security")) )
 									return
 								var/counter = 1
 								while(R.fields[text("com_[]", counter)])
@@ -1070,7 +1070,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 						if (R.fields["id"] == E.fields["id"])
 							if(hasHUD(usr,"medical"))
 								var/t1 = sanitize(input("Add Comment:", "Med. records", null, null)  as message)
-								if ( !(t1) || usr.stat || usr.restrained() || !(hasHUD(usr,"medical")) )
+								if ( !(t1) || usr.incapacitated() || !(hasHUD(usr,"medical")) )
 									return
 								var/counter = 1
 								while(R.fields[text("com_[]", counter)])
@@ -1548,7 +1548,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	set src in view(1)
 	var/self = 0
 
-	if(usr.stat == 1 || usr.restrained() || !isliving(usr)) return
+	if(usr.incapacitated())
+		return
 
 	if(usr == src)
 		self = 1
@@ -1648,7 +1649,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	set name = "Write in blood"
 	set desc = "Use blood on your hands to write a short message on the floor or a wall, murder mystery style."
 
-	if (src.stat)
+	if (incapacitated())
 		return
 
 	if (usr != src)
@@ -1878,7 +1879,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(last_special > world.time)
 		return
 
-	if(stat || paralysis || stunned || weakened || lying)
+	if(incapacitated())
 		to_chat(src, "<span class='warning'>You cannot do that in your current state.</span>")
 		return
 
@@ -1912,7 +1913,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	set name = "Air sample"
 	set desc = "pull out the tongue and understand the approximate state of the air"
 
-	if(stat)
+	if(incapacitated())
+		to_chat(src, "<span class='notice'>You can not do this in your current state.</span>")
 		return
 	if(wear_mask && wear_mask.flags & HEADCOVERSMOUTH || head && head.flags & MASKCOVERSMOUTH)
 		to_chat(usr,"<span class='notice'>I can't get my tongue out.</span>")

@@ -62,7 +62,6 @@
 	icon_state = "shade_god"
 	icon_living = "shade_god"
 	stat = CONSCIOUS
-	speak_emote = list("hisses", "bless")
 	maxHealth = 5000
 	health = 5000
 	melee_damage_lower = 0
@@ -88,6 +87,8 @@
 			stat(null, "Favor: [religious_sect.favor]/[religious_sect.max_favor]")
 
 /mob/living/simple_animal/shade/god/incapacitated()
+
+/mob/living/simple_animal/shade/god/incapacitated(restrained_type = ARMS)
 	// So the god can't use procs and stuff like that.
 	return TRUE
 
@@ -113,7 +114,7 @@
 	set background = BACKGROUND_ENABLED
 
 	if(religious_sect)
-		religious_sect.favor += 0.5
+		religious_sect.favor += 0.2
 
 /mob/living/simple_animal/shade/god/proc/god_attack(atom/A)
 	if(ismob(A))
