@@ -111,15 +111,10 @@
 
 /obj/item/weapon/game_kit/Topic(href, href_list)
 	..()
-	if(!istype(src, /obj/item/weapon/game_kit/chaplain))
-		if(usr.stat)
-			return
-	else
-		if(usr.stat == UNCONSCIOUS)
-			return
 
-	if (usr.restrained())
-		return
+	if (usr.incapacitated())
+		if(!istype(usr, /mob/dead/observer) || !istype(src, /obj/item/weapon/game_kit/chaplain))
+			return
 
 	if (usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf)))
 		if (href_list["s_piece"])

@@ -56,7 +56,7 @@
 	if(!istype(U))
 		return 0
 
-	if (!user || user.stat || user.restrained())
+	if (!user || user.incapacitated())
 		return 0
 
 	if (!( istype(user, /mob/living/carbon/human)))
@@ -200,7 +200,7 @@
 /datum/uplink_item/dangerous/sword/traitor
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be pocketed when inactive. Activating it produces a loud, distinctive noise. This one looks like toy."
 	item = /obj/item/weapon/melee/energy/sword/traitor
-	uplink_types = list("traitor")	
+	uplink_types = list("traitor")
 
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades"

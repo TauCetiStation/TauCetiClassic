@@ -693,7 +693,7 @@
 	..()
 	M.druggy = max(M.druggy, 15)
 	if(isturf(M.loc) && !istype(M.loc, /turf/space))
-		if(M.canmove && !M.restrained())
+		if(M.canmove && !M.incapacitated())
 			if(prob(10))
 				step(M, pick(cardinal))
 	if(prob(7))
