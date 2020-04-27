@@ -14,9 +14,9 @@
 
 /datum/reagent/toxin/on_general_digest(mob/living/M)
 	..()
-	if(toxpwr)
-		if(M.get_species() == SKRELL && flags[IS_ORGANIC])
+	if(M.get_species() == SKRELL && flags[IS_ORGANIC])
 			return
+	if(toxpwr)
 		M.adjustToxLoss(toxpwr * REM)
 
 /datum/reagent/toxin/amatoxin

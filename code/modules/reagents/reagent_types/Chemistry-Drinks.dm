@@ -682,9 +682,6 @@
 		if(isnum(A.data))
 			d += A.data
 
-	if(M.get_species() == SKRELL) //Skrell do not get drunk
-		d *= 0
-
 	if(HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 		d *= 0.7
 
