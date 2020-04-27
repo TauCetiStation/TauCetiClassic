@@ -62,7 +62,6 @@
 	icon_state = "shade_god"
 	icon_living = "shade_god"
 	stat = CONSCIOUS
-	speak_emote = list("hisses", "bless")
 	maxHealth = 5000
 	health = 5000
 	melee_damage_lower = 0
@@ -72,11 +71,25 @@
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	universal_understand = TRUE
 	density = FALSE
-	var/islam = FALSE
 
+	min_oxy = 0
+	max_tox = 0
+	max_co2 = 0
+	unsuitable_atoms_damage = 0
+
+	var/islam = FALSE
 	var/obj/item/weapon/nullrod/staff/container
 
+/mob/living/simple_animal/shade/god/incapacitated()
+	// So the god can't use procs and stuff like that.
+	return TRUE
+
+/mob/living/simple_animal/shade/god/atom_init()
+	. = ..()
+	gods_list += src
+
 /mob/living/simple_animal/shade/god/Destroy()
+	gods_list -= src
 	if(container)
 		container.brainmob = null
 		QDEL_NULL(container.god_image)

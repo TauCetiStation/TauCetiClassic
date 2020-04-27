@@ -443,11 +443,11 @@
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
 	qdel(src)
 
-/obj/effect/goliath_tentacle/Crossed(AM as mob|obj)
+/obj/effect/goliath_tentacle/Crossed(atom/movable/AM)
 	if(isliving(AM))
 		Trip()
 		return
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
 	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)

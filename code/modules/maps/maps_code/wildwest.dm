@@ -116,7 +116,8 @@
 	. = ..()
 	icon_state = "blob"
 
-/obj/effect/meatgrinder/Crossed(AM as mob|obj)
+/obj/effect/meatgrinder/Crossed(atom/movable/AM)
+	. = ..()
 	Bumped(AM)
 
 /obj/effect/meatgrinder/Bumped(mob/M)

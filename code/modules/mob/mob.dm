@@ -1108,3 +1108,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /atom/movable/proc/is_facehuggable()
 	return FALSE
+
+// Return null if mob of this type can not scramble messages.
+/mob/proc/get_scrambled_message(datum/language/speaking, message)
+	return speaking ? speaking.scramble(message) : stars(message)

@@ -35,6 +35,7 @@
 	last_trigger = world.time
 
 /obj/structure/trap/Crossed(atom/movable/AM)
+	. = ..()
 	if(last_trigger + time_between_triggers > world.time)
 		return
 	// Don't want the traps triggered by sparks, ghosts or projectiles.
