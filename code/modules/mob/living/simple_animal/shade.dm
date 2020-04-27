@@ -109,6 +109,11 @@
 			// Pull them in closer...
 			step_towards(A, src)
 			SetNextMove(CLICK_CD_RAPID)
+	else if(istype(A, /obj/item/weapon/nullrod/staff))
+		var/obj/item/weapon/nullrod/staff/S = A
+		if(S.brainmob == src)
+			step_towards(A, src)
+			SetNextMove(CLICK_CD_RAPID)
 	else
 		A.attack_ghost(src)
 		SetNextMove(CLICK_CD_MELEE)
