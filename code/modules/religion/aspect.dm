@@ -6,89 +6,74 @@
 	var/list/desire
 	//path for items which dont enter in desire list
 	var/not_in_desire
-	//add the spell in a sect
-	var/list/spells
 	//add the rite in a sect
 	var/rite
 
 /datum/aspect/mortem
 	name = "Mortem" //death
 
-	desire = list(
-		list(/obj/item/organ/external, /obj/item/brain,),
-		list(/obj/item/weapon/reagent_containers/food/snacks/grown, /obj/item/weapon/reagent_containers/blood)
-	)
-
-	spells = list(
-		/obj/effect/proc_holder/spell/targeted/heal/damage,
-	)
+	desire = list(/obj/item/organ/external, /obj/item/brain, /obj/item/weapon/reagent_containers/blood)
 
 	rite = /datum/religion_rites/sacrifice
 
 /datum/aspect/progressus
 	name = "Progressus" //science
 
-	desire = list(
-		list(/obj/item/weapon/stock_parts,),
-		list(/obj/item/weapon/circuitboard, /obj/item/device/assembly,)
-	)
+	desire = list(/obj/item/weapon/stock_parts, /obj/item/weapon/circuitboard, /obj/item/device/assembly,)
 
 	not_in_desire = /obj/item/weapon/stock_parts/cell
 
-	spells = list(/obj/effect/proc_holder/spell/targeted/charge/religion,)
-
-/datum/aspect/messis
-	name = "Messis" //farm
-
-	desire = list(
-		list(/obj/item/weapon/reagent_containers/food/snacks/grown,),
-		list(/obj/item/seeds,)
-	)
-
-	spells = list(/obj/effect/proc_holder/spell/targeted/heal,)
-
-	rite = /datum/religion_rites/food
+	rite = /datum/religion_rites/synthconversion
 
 /datum/aspect/fames
 	name = "Fames" //hungry
 
-	desire = list(
-		list(/obj/item/weapon/reagent_containers/food/snacks,),
-		list(/obj/item/weapon/reagent_containers/food/drinks,)
-	)
-
-	spells = list(/obj/effect/proc_holder/spell/targeted/food,)
+	desire = list(/obj/item/weapon/reagent_containers/food)
 
 	rite = /datum/religion_rites/food
 
 /datum/aspect/telum
 	name = "Telum" //weapon
 
-	desire = list(
-		list(/obj/item/weapon/gun,),
-		list(/obj/item/weapon/melee,)
-	)
-
-	spells = list(/obj/effect/proc_holder/spell/targeted/blessing,)
+	//rite = /datum/religion_rites/create_weapons
 
 /datum/aspect/metallum
 	name = "Metallum" //resurces
 
-	desire = list(
-		list(/obj/item/stack/sheet/glass, /obj/item/stack/sheet/metal, /obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/rglass, /obj/item/stack/sheet/wood),
-		list(/obj/item/stack/sheet/mineral,)
-	)
+	desire = list(/obj/item/stack/sheet/glass, /obj/item/stack/sheet/metal, /obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/rglass, /obj/item/stack/sheet/wood, /obj/item/stack/sheet/mineral, /obj/item/weapon/spacecash)
 
-	spells = list(/obj/effect/proc_holder/spell/targeted/forcewall/religion)
+	//rite = /datum/religion_rites/create_materials
 
 /datum/aspect/partum
-	name = "Partum" //weapon
+	name = "Partum" //spawn
 
-	desire = list(
-		list(/obj/item/weapon/reagent_containers/food/snacks/meat, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat, /obj/item/weapon/reagent_containers/food/drinks/milk, /obj/item/weapon/reagent_containers/food/drinks/soymilk),
-		list(/obj/item/weapon/reagent_containers/food/snacks/grown,)
-	)
+/datum/aspect/cruciatu
+	name = "Cruciatu" //self-flagellation
 
-	spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal)
+/datum/aspect/salutis
+	name = "Salutis" //salvations
 
-	rite = /datum/religion_rites/sacrifice
+	rite = /datum/religion_rites/pray
+
+/datum/aspect/spiritus
+	name = "Spiritus" //Mistic
+
+/datum/aspect/technology
+	name = "Technology" //Techonogis
+
+	rite = /datum/religion_rites/synthconversion
+
+/datum/aspect/chao
+	name = "Chao" //chaos
+
+/datum/aspect/wacky
+	name = "Wacky" //wacky
+
+/datum/aspect/absentia
+	name = "Absentia" //absence
+
+/datum/aspect/obscurum
+	name = "Obscurum" //obscure
+
+/datum/aspect/lux
+	name = "Lux" //light

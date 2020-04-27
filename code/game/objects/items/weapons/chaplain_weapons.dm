@@ -161,6 +161,7 @@
 	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		if(!religious_sect)
 			to_chat(user, "<span class='notice'>First create sect!</span>")
+			return
 		if(!brainmob && !searching)
 			//Start the process of searching for a new user.
 			to_chat(user, "<span class='notice'>You attempt to wake the spirit of the staff...</span>")

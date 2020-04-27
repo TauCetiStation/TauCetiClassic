@@ -5,6 +5,7 @@
 	school = "conjuration"
 	charge_max = 2 MINUTES
 	favor_cost = 100
+	needed_aspect = list("Partum" = 1, "Salutis" = 1) //Capitalize aspects!!!
 	clothes_req = 0
 	invocation = "none"
 	range = 0
@@ -25,6 +26,7 @@
 
 	favor_cost = 300
 	charge_max = 1.5 MINUTES
+	needed_aspect = list("Salutis" = 1, "Chaos" = 1)
 	clothes_req = 0
 	invocation = "none"
 	range = 6
@@ -33,7 +35,7 @@
 
 	action_icon_state = "heal"
 
-	divine_power = -10 //power
+	divine_power = -2 //power
 
 /obj/effect/proc_holder/spell/targeted/heal/cast(list/targets, mob/user = usr)
 	if(!targets.len)
@@ -56,7 +58,7 @@
 		to_chat(user, "<span class='warning'>They are too far away!</span>")
 		return
 
-	H.apply_damages(divine_power, divine_power, divine_power)
+	H.apply_damages(-rand(-5, 3) - divine_power, -rand(-5, 3) - divine_power, -rand(-5, 3) - divine_power)
 	cast_with_favor()
 
 /obj/effect/proc_holder/spell/targeted/heal/damage
@@ -65,9 +67,10 @@
 
 	favor_cost = 300
 	charge_max = 1.5 MINUTES
+	needed_aspect = list("Obscurum" = 1, "s" = 1)
 
 	action_icon_state = "god_default"
-	divine_power = 5 //power
+	divine_power = 2 //power
 
 /obj/effect/proc_holder/spell/targeted/blessing
 	name = "Blessing"
@@ -75,6 +78,7 @@
 	favor_cost = 200
 	charge_max = 1 MINUTES
 	divine_power = 5 //power
+	needed_aspect = list("Telum" = 1, "Spiritus" = 1)
 	range = 0
 	invocation = "none"
 	clothes_req = 0
@@ -110,6 +114,7 @@
 	favor_cost = 400
 	charge_max = 4 MINUTES
 	divine_power = 1 //range
+	needed_aspect = list("Progressus" = 1, "Technology" = 1)
 	range = 0
 	invocation = "none"
 	invocation_type = "none"
@@ -147,6 +152,7 @@
 		to_chat(usr, "<span class='notice'>You have charged cell in a radiuse!</span>")
 		cast_with_favor()
 	else
+		to_chat(usr, "<span class='notice'>There is nothing to charge in the radius!</span>")
 		revert_cast()
 		return
 
@@ -156,6 +162,7 @@
 	favor_cost = 250
 	charge_max = 3 MINUTES
 	divine_power = 2 //count
+	needed_aspect = list("Partum" = 1 , "Fames" = 1)
 	range = 0
 	invocation = "none"
 	clothes_req = 0
@@ -180,43 +187,13 @@
 				for(var/j in 1 to rand(1, 3))
 					step(B, pick(NORTH,SOUTH,EAST,WEST))
 
-/obj/effect/proc_holder/spell/targeted/forcewall/religion
-	name = "Create energy wall"
-
-	favor_cost = 150
-	charge_max = 1 MINUTES
-	divine_power = 1 //CD
-	invocation = "none"
-	invocation_type = "none"
-	clothes_req = 0
-
-	summon_path = /obj/effect/forcefield/magic/religion
-
-/obj/effect/forcefield/magic/religion
-	name = "magic wall"
-	desc = "Strange energy field."
-	var/mob/chaplain
-
-/obj/effect/forcefield/magic/religion/CanPass(atom/movable/mover, turf/target, height=0)
-	if(mover == chaplain)
-		return 1
-	return 0
-
-/obj/effect/proc_holder/spell/targeted/forcewall/religion/cast()
-	cast_with_favor()
-	charge_max = charge_max / divine_power
-
-	var/obj/effect/forcefield/magic/religion/wall = new summon_path(get_turf(usr), usr)
-	for(var/mob/living/carbon/human/H in range(6))
-		if(H.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-			wall.chaplain = H
-
 /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal
 	name = "Create random friendly animal"
 
-	favor_cost = 10 //BALANCE
-	charge_max = 120 //BALANCE
+	favor_cost = 250
+	charge_max = 2 MINUTES
 	divine_power = 0 //count
+	needed_aspect = list("Partum" = 1, "Mortem" = 1,)
 	summon_amt = 0
 	invocation = "none"
 	clothes_req = 0

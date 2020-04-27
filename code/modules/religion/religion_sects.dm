@@ -23,21 +23,34 @@
 /// The default value for an item that can be sacrificed
 	var/default_item_favor = 5
 /// Turns into 'desired_items_typecache', lists the types that can be sacrificed barring optional features in can_sacrifice()
-	var/list/desired_items
+	var/list/desired_items = list()
 /// Autopopulated by `desired_items`
 	var/list/desired_items_typecache
 /// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
-	var/list/rites_list
+	var/list/rites_list = list()
 /// Changes the Altar of Gods icon
 	var/altar_icon
 /// Changes the Altar of Gods icon_state
 	var/altar_icon_state
-/// Add your god spells
-	var/list/spells
+/// Determines which spells God can use.
+	var/list/allow_spell = list(
+	/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_bible,
+	/obj/effect/proc_holder/spell/targeted/heal,
+	/obj/effect/proc_holder/spell/targeted/heal/damage,
+	/obj/effect/proc_holder/spell/targeted/blessing,
+	/obj/effect/proc_holder/spell/targeted/charge/religion,
+	/obj/effect/proc_holder/spell/targeted/food,
+	/obj/effect/proc_holder/spell/targeted/forcewall/religion,
+	/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal,
+	)
+/// Spells that combine with aspects and cast to God
+	var/list/spells = list()
 /// Choosed aspects
 	var/list/sect_aspects = list()
 /// Allow choose aspect in sect
 	var/allow_aspect = FALSE
+/// Fast choose aspects
+	var/list/datum/aspect/aspect_preset
 
 /datum/religion_sect/New()
 	on_select()
@@ -90,32 +103,52 @@
 /// Activates when an individual uses a rite. Can provide different/additional benefits depending on the user.
 /datum/religion_sect/proc/on_riteuse(mob/living/user, obj/structure/altar_of_gods/AOG)
 
-/datum/religion_sect/proc/give_god_spells(mob/living/simple_animal/shade/god/G)
-	if(!spells || gods_list.len == 0)
+// Checks whether sub has all keys of main,
+// and if those keys have the same values.
+/datum/religion_sect/proc/is_sublist_assoc(list/sub, list/main, datum/callback/predicate)
+	for(var/key in sub)
+		if(!main[key] && sub[key])
+			return FALSE
+		if(!predicate.Invoke(sub[key], main[key]))
+			return FALSE
+	return TRUE
+
+/datum/religion_sect/proc/greater_or_equal(element, datum/aspect/A)
+	return element >= A.power
+
+/datum/religion_sect/proc/give_god_spells(mob/living/simple_animal/shade/god/G) //TODO
+	if(gods_list.len == 0)
 		return
 
-	var/obj/effect/proc_holder/spell/S
-	for(var/i in sect_aspects)
-		var/datum/aspect/aspect = sect_aspects[i]
-		for(var/spell in aspect.spells)
-			S = new spell()
-			S.divine_power *= aspect.power
-			G.AddSpell(S)
+	var/datum/callback/pred = CALLBACK(GLOBAL_PROC, .proc/greater_or_equal)
+	for(var/spell in allow_spell)
+		var/obj/effect/proc_holder/spell/S = new spell()
+		var/list/spell_aspects = S.needed_aspect
+
+		if(is_sublist_assoc(spell_aspects, sect_aspects, pred))
+			spells |= spell
+
+		QDEL_NULL(S)
+
+	for(var/spell in spells)
+		var/obj/effect/proc_holder/spell/S = new spell()
+		G.AddSpell(S)
 
 /datum/religion_sect/proc/update_desire(ignore_path)
-	if(desired_items)
+	if(desired_items.len != 0)
 		desired_items_typecache = typecacheof(desired_items)
 		if(ignore_path)
 			desired_items_typecache -= subtypesof(ignore_path)
 	else 
 		for(var/i in sect_aspects)
-			var/datum/aspect/asp = i
-			desired_items_typecache = typecacheof(asp.desire)
-			if(asp.not_in_desire)
-				desired_items_typecache -= subtypesof(asp.not_in_desire)
+			var/datum/aspect/asp = sect_aspects[i]
+			if(asp.desire)
+				desired_items_typecache = typecacheof(asp.desire)
+				if(asp.not_in_desire)
+					desired_items_typecache -= subtypesof(asp.not_in_desire)
 	
 /datum/religion_sect/proc/update_rites()
-	if(rites_list)
+	if(rites_list.len != 0)
 		var/listylist = generate_rites_list()
 		rites_list = listylist
 
@@ -123,18 +156,19 @@
 	name = "Puritanism (Default)"
 	desc = "Nothing special."
 	convert_opener = "Your run-of-the-mill sect, there are no benefits or boons associated. Praise normalcy!"
-	allow_aspect = TRUE
-	rites_list = list(/datum/religion_rites/pray)
-	spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_bible)
 	altar_icon_state = "christianaltar"
+	aspect_preset = list(/datum/aspect/salutis, /datum/aspect/lux, /datum/aspect/spiritus)
+	rites_list = list()
+	desired_items = list()
 
 /datum/religion_sect/technophile
 	name = "Technophile"
 	desc = "A sect oriented around technology."
 	convert_opener = "May you find peace in a metal shell, acolyte.<br>You can now sacrifice cells, with favor depending on their charge."
-	desired_items = list(/obj/item/weapon/stock_parts/cell)
-	rites_list = list(/datum/religion_rites/synthconversion)
 	altar_icon_state = "technoaltar"
+	aspect_preset = list(/datum/aspect/technology, /datum/aspect/progressus, /datum/aspect/metallum)
+	rites_list = list()
+	desired_items = list()
 
 /datum/religion_sect/technophile/can_sacrifice(obj/item/I, mob/living/L)
 	if(!..())
@@ -158,11 +192,8 @@
 	desc = "Follow the orders of your god."
 	convert_opener = "I am the first to enter here.."
 	allow_aspect = TRUE
-	desired_items = list()
-	rites_list = list(/datum/religion_rites/pray)
-	spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_bible)	
 
-/datum/religion_sect/technophile/can_sacrifice(obj/item/I, mob/living/L)
+/datum/religion_sect/custom/can_sacrifice(obj/item/I, mob/living/L)
 	if(!..())
 		return FALSE
 

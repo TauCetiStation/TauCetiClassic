@@ -11,6 +11,7 @@
 	can_buckle = TRUE
 	buckle_lying = 90 //we turn to you!
 	var/datum/religion_rites/performing_rite
+	var/datum/religion_sect/sect_to_altar
 
 /obj/structure/altar_of_gods/examine(mob/user)
 	. = ..()
@@ -105,31 +106,39 @@
 	
 	var/type_selected = available_options[sect_select]
 	global.religious_sect = new type_selected()
+	sect_to_altar = global.religious_sect
 
 	if(istype(global.religious_sect, /datum/religion_sect/custom))
 		global.religious_sect.name = global.chaplain_religion.name
 
 	if(global.religious_sect.allow_aspect)
-		//choose aspects for the gods and his desire
+		//choose aspects for the god and his desire
 		var/list/aspects = generate_aspect(user)
 		if(!aspects)
 			return
 
-		for(var/i in 1 to 2)
+		for(var/i in 1 to 3)
 			var/aspect_select = input(user, "Select a aspect of god (You CANNOT revert this decision!)", "Select a aspect of god", null) in aspects
 			type_selected = aspects[aspect_select]
 			if(!istype(global.religious_sect.sect_aspects[aspect_select], type_selected))
-				global.religious_sect.sect_aspects[aspect_select] = new type_selected
+				global.religious_sect.sect_aspects[aspect_select] = new type_selected()
 			else
 				var/datum/aspect/asp = global.religious_sect.sect_aspects[aspect_select]
 				asp.power += 1
-		//add desire and rites
+
+		//add rites
 		for(var/i in global.religious_sect.sect_aspects)
 			var/datum/aspect/asp = global.religious_sect.sect_aspects[i]
 			if(asp.rite)
 				global.religious_sect.rites_list += asp.rite
-			for(var/j in 1 to asp.power)
-				global.religious_sect.desired_items += asp.desire[j]
+			if(asp.desire)
+				global.religious_sect.desired_items += asp.desire
+	else
+		if(global.religious_sect.aspect_preset.len != 0)
+			for(var/i in global.religious_sect.aspect_preset)
+				var/datum/aspect/asp = i
+				type_selected = asp
+				global.religious_sect.sect_aspects[initial(asp.name)] = new type_selected()	
 
 	for(var/i in player_list)
 		if(!isliving(i))
