@@ -28,7 +28,6 @@
 							/obj/effect/proc_holder/spell/targeted/heal,
 							/obj/effect/proc_holder/spell/targeted/food,
 							/obj/effect/proc_holder/spell/targeted/blessing,
-							/obj/effect/proc_holder/spell/targeted/forcewall/religion,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal,)
 	var/obj/effect/proc_holder/spell/S
 	for(var/spell in spells)

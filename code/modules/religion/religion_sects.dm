@@ -40,7 +40,6 @@
 	/obj/effect/proc_holder/spell/targeted/blessing,
 	/obj/effect/proc_holder/spell/targeted/charge/religion,
 	/obj/effect/proc_holder/spell/targeted/food,
-	/obj/effect/proc_holder/spell/targeted/forcewall/religion,
 	/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal,
 	)
 /// Spells that combine with aspects and cast to God
