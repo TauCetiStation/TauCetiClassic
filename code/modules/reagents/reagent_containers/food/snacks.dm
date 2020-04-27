@@ -254,7 +254,7 @@
 				N.visible_message("<span class='notice'><b>[N]</b> just ate \the [src]!</span>", "<span class='notice'>You just ate \the [src], [pick("delicious", "wonderful", "smooth", "disgusting")]!</span>")
 				qdel(src)
 		else
-			to_chat(N, text("<span class='notice'>You are unable to nibble away at the [src] while being hidden.</span>"))
+			to_chat(N, text("<span class='notice'>You are unable to nibble away at \the [src] while being hidden.</span>"))
 		
 
 
