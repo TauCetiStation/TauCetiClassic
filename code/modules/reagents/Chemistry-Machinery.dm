@@ -455,7 +455,7 @@
 
 	else if(href_list["createbottle"])
 		if(!condi)
-			var/name = sanitize_safe(input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " ")), MAX_NAME_LEN)
+			var/name = sanitize_safe(input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " ")) as text|null, MAX_NAME_LEN)
 			if(!name)
 				return FALSE
 			var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
@@ -620,7 +620,7 @@
 					if(!amount)
 						return FALSE
 					vol_each = min(reagents.total_volume / amount, 50)
-				var/name = sanitize_safe(input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)"), MAX_NAME_LEN)
+				var/name = sanitize_safe(input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)") as text|null, MAX_NAME_LEN)
 				if(!name || !reagents.total_volume)
 					return FALSE
 				var/obj/item/weapon/reagent_containers/pill/P
@@ -883,7 +883,7 @@
 				if(type in diseases) // Make sure this is a disease
 					D = new type(0, null)
 			var/list/data = list("viruses"=list(D))
-			var/name = sanitize_safe(input(usr,"Name:","Name the culture",input_default(D.name)), MAX_NAME_LEN)
+			var/name = sanitize_safe(input(usr,"Name:","Name the culture",input_default(D.name)) as text|null, MAX_NAME_LEN)
 			if(!name || name == " ") name = D.name
 			B.name = "[name] culture bottle"
 			B.desc = "A small bottle. Contains [D.agent] culture in synthblood medium."
@@ -903,10 +903,12 @@
 	else if(href_list["clear"])
 		src.temphtml = ""
 	else if(href_list["name_disease"])
-		var/new_name = sanitize_safe(input(usr, "Name the Disease", "New Name"), MAX_NAME_LEN)
 		if(stat & (NOPOWER|BROKEN))
 			return
-		if(usr.stat || usr.restrained())
+		var/new_name = sanitize_safe(input(usr, "Name the Disease", "New Name") as text|null, MAX_NAME_LEN)
+		if(!new_name)
+			return
+		if(usr.incapacitated())
 			return
 		if(!in_range(src, usr))
 			return
@@ -1233,7 +1235,7 @@
 
 /obj/machinery/reagentgrinder/proc/detach()
 
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 	if (!beaker)
 		return
@@ -1243,7 +1245,7 @@
 
 /obj/machinery/reagentgrinder/proc/eject()
 
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 	if (holdingitems && holdingitems.len == 0)
 		return

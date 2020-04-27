@@ -337,8 +337,7 @@
 		client.screen += hud_used.hide_actions_toggle
 
 /mob/living/incapacitated(restrained_type = ARMS)
-	if(stat || paralysis || stunned || weakened || restrained(restrained_type))
-		return 1
+	return stat || paralysis || stunned || weakened || restrained(restrained_type)
 
 // These procs define whether this mob has a usable limb at a given targetzone. Heavily used in combo-combat.
 // If targetzone is not specified, returns TRUE if the mob has the bodypart in general.

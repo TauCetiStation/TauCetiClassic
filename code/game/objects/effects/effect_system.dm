@@ -216,10 +216,10 @@ steam.start() -- spawns the effect
 	set_opacity(TRUE)
 	QDEL_IN(src, time_to_live)
 
-/obj/effect/effect/smoke/Crossed(mob/living/carbon/M as mob )
-	..()
-	if(istype(M))
-		affect(M)
+/obj/effect/effect/smoke/Crossed(atom/movable/AM)
+	. = ..()
+	if(iscarbon(AM))
+		affect(AM)
 
 /obj/effect/effect/smoke/proc/affect(mob/living/carbon/M)
 	if (istype(M))

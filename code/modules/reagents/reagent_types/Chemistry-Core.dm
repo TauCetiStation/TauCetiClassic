@@ -297,7 +297,7 @@
 
 /datum/reagent/mercury/on_general_digest(mob/living/M)
 	..()
-	if(M.canmove && !M.restrained() && istype(M.loc, /turf/space))
+	if(M.canmove && !M.incapacitated() && istype(M.loc, /turf/space))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -396,7 +396,7 @@
 
 /datum/reagent/lithium/on_general_digest(mob/living/M)
 	..()
-	if(M.canmove && !M.restrained() && istype(M.loc, /turf/space))
+	if(M.canmove && !M.incapacitated() && istype(M.loc, /turf/space))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))

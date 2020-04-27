@@ -81,8 +81,10 @@
 	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
 	attack_verb = list("stabbed")
 	usesound = 'sound/items/Screwdriver.ogg'
-	var/random_color = TRUE
 
+	stab_eyes = TRUE
+
+	var/random_color = TRUE
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
@@ -99,15 +101,6 @@
 
 	pixel_y = rand(-6, 6)
 	pixel_x = rand(-4, 4)
-
-/obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
-	if(!istype(M) || user.a_intent == "help")
-		return ..()
-	if(def_zone != O_EYES && def_zone != BP_HEAD)
-		return ..()
-	if((CLUMSY in user.mutations) && prob(50))
-		M = user
-	return eyestab(M,user)
 
 /obj/item/weapon/screwdriver/power
 	name = "Hand Drill"

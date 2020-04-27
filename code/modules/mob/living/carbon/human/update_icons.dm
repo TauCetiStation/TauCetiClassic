@@ -146,7 +146,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!icon_custom)
 			icon_state_appendix = null
 
-	if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM)
+	if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM || sprite_sheet_slot == SPRITE_SHEET_UNIFORM_FAT)
 		t_state = item_color
 
 	if(!t_state)
@@ -161,7 +161,13 @@ Please contact me on #coderbus IRC. ~Carn x
 	else if(icon_override)
 		icon_path = icon_override
 	else if(S.sprite_sheets[sprite_sheet_slot])
-		icon_path = S.sprite_sheets[sprite_sheet_slot]
+		if (istype(src, /obj/item/clothing) && H.species)
+			var/obj/item/clothing/C = src
+			var/list/avaiable_icon_states = C.get_sprite_sheet_icon_list(H.species.name, sprite_sheet_slot)
+			if("[t_state][icon_state_appendix]" in avaiable_icon_states)
+				icon_path = S.sprite_sheets[sprite_sheet_slot]
+		else
+			icon_path = S.sprite_sheets[sprite_sheet_slot]
 
 	var/image/I = image(icon = icon_path, icon_state = "[t_state][icon_state_appendix]", layer = layer)
 	I.color = color
@@ -429,6 +435,8 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/update_inv_w_uniform()
 	remove_overlay(UNIFORM_LAYER)
 
+	var/default_path = 'icons/mob/uniform.dmi'
+	var/uniform_sheet = SPRITE_SHEET_UNIFORM
 	if(istype(w_uniform, /obj/item/clothing/under))
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open ...
@@ -436,7 +444,18 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += w_uniform				//Either way, add the item to the HUD
 
 		var/obj/item/clothing/under/U = w_uniform
-		var/image/standing = U.get_standing_overlay(src, 'icons/mob/uniform.dmi', SPRITE_SHEET_UNIFORM, -UNIFORM_LAYER, "uniformblood", "_s")
+		if (wear_suit && (wear_suit.flags & BLOCKUNIFORM)) // Skip uniform overlay on suit full cover
+			return
+
+		if(HAS_TRAIT(src, TRAIT_FAT))
+			if(U.flags & ONESIZEFITSALL)
+				default_path = 'icons/mob/uniform_fat.dmi'
+				uniform_sheet = SPRITE_SHEET_UNIFORM_FAT
+			else
+				to_chat(src, "<span class='warning'>You burst out of \the [U]!</span>")
+				drop_from_inventory(U)
+				return
+		var/image/standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood", "_s")
 		overlays_standing[UNIFORM_LAYER] = standing
 
 		if(U.accessories.len)
@@ -451,15 +470,6 @@ Please contact me on #coderbus IRC. ~Carn x
 					tie = image("icon" = 'icons/mob/accessory.dmi', "icon_state" = "[tie_color]", "layer" = -UNIFORM_LAYER + A.layer_priority)
 				tie.color = A.color
 				standing.add_overlay(tie)
-
-		if(HAS_TRAIT(src, TRAIT_FAT))
-			if(U.flags & ONESIZEFITSALL)
-				standing.icon	= 'icons/mob/uniform_fat.dmi'
-			else
-				to_chat(src, "<span class='warning'>You burst out of \the [U]!</span>")
-				drop_from_inventory(U)
-				return
-
 	else
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
@@ -621,6 +631,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_wear_suit()
 	remove_overlay(SUIT_LAYER)
+	var/default_path = 'icons/mob/suit.dmi'
 
 	if(istype(wear_suit, /obj/item/clothing/suit))
 		if(client && hud_used && hud_used.hud_shown)
@@ -630,7 +641,17 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		var/obj/item/clothing/suit/S = wear_suit
 
-		var/image/standing = S.get_standing_overlay(src, 'icons/mob/suit.dmi', SPRITE_SHEET_SUIT, -SUIT_LAYER, "[S.blood_overlay_type]blood")
+		var/suit_sheet = SPRITE_SHEET_SUIT
+		if(HAS_TRAIT(src, TRAIT_FAT))
+			if(wear_suit.flags & ONESIZEFITSALL)
+				suit_sheet = SPRITE_SHEET_SUIT_FAT
+				default_path = 'icons/mob/suit_fat.dmi'
+			else
+				to_chat(src, "<span class='warning'>You burst out of \the [wear_suit]!</span>")
+				drop_from_inventory(wear_suit)
+				return
+
+		var/image/standing = S.get_standing_overlay(src, default_path, suit_sheet, -SUIT_LAYER, "[S.blood_overlay_type]blood")
 		overlays_standing[SUIT_LAYER] = standing
 
 		if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
@@ -638,20 +659,14 @@ Please contact me on #coderbus IRC. ~Carn x
 			drop_l_hand()
 			drop_r_hand()
 
-		if(HAS_TRAIT(src, TRAIT_FAT))
-			if(!(wear_suit.flags & ONESIZEFITSALL))
-				to_chat(src, "<span class='warning'>You burst out of \the [wear_suit]!</span>")
-				drop_from_inventory(wear_suit)
-				return
-
 		if(istype(wear_suit,/obj/item/clothing/suit/wintercoat))
 			var/obj/item/clothing/suit/wintercoat/W = wear_suit
 			if(W.hooded) //used for coat hood due to hair layer viewed over the suit
-				overlays_standing[HAIR_LAYER]   = null
-				overlays_standing[HEAD_LAYER]	= null
-
+				overlays_standing[HAIR_LAYER] = null
+				overlays_standing[HEAD_LAYER] = null
 		update_inv_shoes()
 
+	update_inv_w_uniform()
 	update_tail_showing()
 	update_collar()
 

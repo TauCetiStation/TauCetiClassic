@@ -376,11 +376,12 @@
 	playsound(src, 'sound/effects/snap.ogg', VOL_EFFECTS_MASTER)
 	qdel(src)
 
-/obj/item/toy/snappop/Crossed(H as mob|obj)
-	if((ishuman(H))) //i guess carp and shit shouldn't set them off
-		var/mob/living/carbon/M = H
-		if(M.m_intent == "run")
-			to_chat(M, "<span class='warning'>You step on the snap pop!</span>")
+/obj/item/toy/snappop/Crossed(atom/movable/AM)
+	. = ..()
+	if((ishuman(AM))) //i guess carp and shit shouldn't set them off
+		var/mob/living/carbon/H = AM
+		if(H.m_intent == "run")
+			to_chat(H, "<span class='warning'>You step on the snap pop!</span>")
 
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(2, 0, src)
@@ -968,7 +969,7 @@ Owl & Griffin toys
 
 /obj/item/toy/cards/MouseDrop(atom/over_object)
 	var/mob/M = usr
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!ishuman(usr) || usr.incapacitated())
 		return
 	if(Adjacent(usr))
 		if(over_object == M)
@@ -1021,7 +1022,7 @@ Owl & Griffin toys
 /obj/item/toy/cardhand/Topic(href, href_list)
 	if(..())
 		return
-	if(usr.stat || !ishuman(usr) || !usr.canmove)
+	if(!ishuman(usr) || usr.incapacitated())
 		return
 	var/mob/living/carbon/human/cardUser = usr
 	if(href_list["pick"])
@@ -1102,7 +1103,7 @@ Owl & Griffin toys
 	set name = "Flip Card"
 	set category = "Object"
 	set src in range(1)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!ishuman(usr) || usr.incapacitated())
 		return
 	if(!flipped)
 		src.flipped = 1
@@ -1155,7 +1156,7 @@ Owl & Griffin toys
 
 
 /obj/item/toy/singlecard/attack_self(mob/user)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!ishuman(usr) || usr.incapacitated())
 		return
 	Flip()
 

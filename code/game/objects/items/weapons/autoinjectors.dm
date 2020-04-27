@@ -69,3 +69,10 @@
 	icon_state = "auto_nutriment"
 	volume = 10
 	list_reagents = list("nutriment" = 10)
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen
+	name = "Bone-R"
+	desc = "Getting your bones repaired. Use carefully."
+	icon_state = "bonepen"
+	volume = 30
+	list_reagents = list("nanocalcium" = 30)

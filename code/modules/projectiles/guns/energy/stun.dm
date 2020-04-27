@@ -52,8 +52,8 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell"
 
 /obj/item/weapon/gun/energy/crossbow
-	name = "mini energy-crossbow"
-	desc = "A weapon favored by many of the syndicates stealth specialists."
+	name = "foam dart crossbow"
+	desc = "A weapon favored by many overactive children. Ages 8 and up."
 	icon_state = "crossbow"
 	w_class = ITEM_SIZE_SMALL
 	item_state = "crossbow"

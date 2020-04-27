@@ -151,9 +151,11 @@
 	update_icon()
 	return 0
 
-/obj/effect/blob/Crossed(var/mob/living/L)
-	..()
-	L.blob_act()
+/obj/effect/blob/Crossed(atom/movable/AM)
+	. = ..()
+	if(isliving(AM))
+		var/mob/living/L = AM
+		L.blob_act()
 
 
 /obj/effect/blob/attackby(obj/item/weapon/W, mob/user)

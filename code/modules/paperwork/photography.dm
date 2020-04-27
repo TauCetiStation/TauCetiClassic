@@ -89,10 +89,15 @@
 	set category = "Object"
 	set src in usr
 
+	if(usr.incapacitated())
+		return
+
 	var/n_name = sanitize_safe(input(usr, "What would you like to label the photo?", "Photo Labelling", null) as text, MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
-	if(( (loc == usr || (loc.loc && loc.loc == usr)) && usr.stat == CONSCIOUS))
-		name = "[(n_name ? text("[n_name]") : "photo")]"
+	if(usr.incapacitated())
+		return
+
+	name = "[(n_name ? text("[n_name]") : "photo")]"
 	add_fingerprint(usr)
 	return
 
@@ -120,7 +125,7 @@
 		if(!( istype(over_object, /obj/screen) ))
 			return ..()
 		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, null, -5)
-		if((!( M.restrained() ) && !( M.stat ) && M.back == src))
+		if(!M.incapacitated() && M.back == src)
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))

@@ -387,7 +387,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath/proc/handle_preattack()
 	if(ranged_cooldown <= 2 && !pre_attack)
 		pre_attack++
-	if(!pre_attack || stat || stance == HOSTILE_STANCE_IDLE)
+	if(!pre_attack || incapacitated() || stance == HOSTILE_STANCE_IDLE)
 		return
 	icon_state = "Goliath_preattack"
 
@@ -443,11 +443,11 @@
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
 	qdel(src)
 
-/obj/effect/goliath_tentacle/Crossed(AM as mob|obj)
+/obj/effect/goliath_tentacle/Crossed(atom/movable/AM)
 	if(isliving(AM))
 		Trip()
 		return
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
 	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)

@@ -342,7 +342,7 @@
 		return
 	if(assailant.next_move > world.time)
 		return
-	if(!assailant.canmove || assailant.lying)
+	if(assailant.incapacitated())
 		qdel(src)
 		return
 

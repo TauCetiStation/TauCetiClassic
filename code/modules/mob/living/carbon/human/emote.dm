@@ -298,6 +298,12 @@
 			message = "salutes."
 			conditions_for_emote = ONE_HAND_IS_USABLE && (get_species() != ZOMBIE)
 
+		if ("pray")
+			message_type = SHOWMSG_VISUAL
+			message = "prays."
+			conditions_for_emote = BOTH_HANDS_ARE_USABLE
+			INVOKE_ASYNC(src, /mob.proc/pray_animation)
+
 // ========== SPECIAL ==========
 
 		if ("custom")
@@ -386,6 +392,7 @@
 
 	if(cloud_emote)
 		var/image/emote_bubble = image('icons/mob/emote.dmi', src, cloud_emote, EMOTE_LAYER)
+		emote_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		flick_overlay(emote_bubble, clients, 30)
 		QDEL_IN(emote_bubble, 3 SECONDS)
 

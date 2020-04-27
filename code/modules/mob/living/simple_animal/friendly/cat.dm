@@ -83,7 +83,7 @@
 		return ..()
 
 /mob/living/simple_animal/cat/show_inv(mob/user)
-	if(user.stat)
+	if(user.incapacitated())
 		return
 
 	user.set_machine(src)
@@ -101,7 +101,7 @@
 	popup.open()
 
 /mob/living/simple_animal/cat/Topic(href, href_list)
-	if(usr.stat || stat || !Adjacent(usr) || !(ishuman(usr) || ismonkey(usr)))
+	if(usr.incapacitated() || !Adjacent(usr) || !(ishuman(usr) || ismonkey(usr)))
 		return
 
 	//Removing from inventory

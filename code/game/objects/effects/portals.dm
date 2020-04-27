@@ -22,16 +22,11 @@
 	return ..()
 
 /obj/effect/portal/Bumped(mob/M)
-	spawn(0)
-		src.teleport(M)
-		return
-	return
+	INVOKE_ASYNC(src, .proc/teleport, M)
 
-/obj/effect/portal/Crossed(AM as mob|obj)
-	spawn(0)
-		src.teleport(AM)
-		return
-	return
+/obj/effect/portal/Crossed(atom/movable/AM)
+	. = ..()
+	INVOKE_ASYNC(src, .proc/teleport, AM)
 
 
 
@@ -91,8 +86,10 @@
 	if(teleport(M, TELE_CHECK_ALL, TRUE, FALSE))
 		handle_special_effects(M)
 
-/obj/effect/portal/tsci_wormhole/Crossed(AM)
+/obj/effect/portal/tsci_wormhole/Crossed(atom/movable/AM)
 	set waitfor = 0
+
+	. = .()
 	if(teleport(AM, TELE_CHECK_ALL, TRUE, FALSE))
 		handle_special_effects(AM)
 

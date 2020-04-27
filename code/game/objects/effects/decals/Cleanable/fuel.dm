@@ -39,13 +39,15 @@
 					new/obj/effect/decal/cleanable/liquid_fuel(target, amount * 0.25)
 					amount *= 0.75
 
-/obj/effect/decal/cleanable/liquid_fuel/Crossed(mob/living/M)
-	if (!istype(M))
+/obj/effect/decal/cleanable/liquid_fuel/Crossed(atom/movable/AM)
+	. = ..()
+	if(!isliving(AM))
 		return
-	if(M.crawling)
-		M.adjust_fire_stacks(10)
-	if(M.fire_stacks <= 5)
-		M.adjust_fire_stacks(5)
+	var/mob/living/L = AM
+	if(L.crawling)
+		L.adjust_fire_stacks(10)
+	if(L.fire_stacks <= 5)
+		L.adjust_fire_stacks(5)
 
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel
@@ -77,5 +79,8 @@
 
 	amount *= 0.25
 
-/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/Crossed(mob/living/M)
-	M.adjust_fire_stacks(5)
+/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/Crossed(atom/movable/AM)
+	. = ..()
+	if(isliving(AM))
+		var/mob/living/L = AM
+		L.adjust_fire_stacks(5)

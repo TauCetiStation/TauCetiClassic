@@ -319,8 +319,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 	return
 
-/obj/effect/fake_attacker/Crossed(var/mob/M, somenumber)
-	if(M == my_target)
+/obj/effect/fake_attacker/Crossed(atom/movable/AM)
+	. = ..()
+	if(AM == my_target)
 		step_away(src,my_target,2)
 		if(prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
@@ -429,7 +430,8 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	var/clone_weapon = null
 
 	for(var/mob/living/carbon/human/H in human_list)
-		if(H.stat || H.lying) continue
+		if(H.incapacitated())
+			continue
 //		possible_clones += H
 		clone = H
 		break	//changed the code a bit. Less randomised, but less work to do. Should be ok, world.contents aren't stored in any particular order.

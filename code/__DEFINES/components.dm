@@ -36,8 +36,11 @@
 #define COMSIG_ATOM_ENTERED "atom_entered"						//from base of atom/Entered(): (atom/movable/entering, /atom)
 
 // /atom/movable signals
+#define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"					///from base of atom/movable/Move(): (/atom/newLoc)
+	#define COMPONENT_MOVABLE_BLOCK_PRE_MOVE 1
 #define COMSIG_MOVABLE_CROSSED "movable_crossed"				//from base of atom/movable/Crossed(): (/atom/movable)
-#define COMSIG_MOVABLE_MOVED "movable_moved"					//from base of atom/movable/Moved(): (/atom, dir)
+#define COMSIG_MOVABLE_MOVED "movable_moved"					//from base of atom/movable/Moved(): (/atom/oldLoc, dir)
+#define COMSIG_MOVABLE_LOC_MOVED "movable_loc_moved"					//from base of atom/movable/locMoved(): (/atom/oldLoc, dir)
 
 
 #define COMSIG_XENO_SLIME_CLICK_CTRL "xeno_slime_click_ctrl"				//from slime CtrlClickOn(): (/mob)
@@ -45,3 +48,8 @@
 #define COMSIG_XENO_TURF_CLICK_SHIFT "xeno_turf_click_shift"				//from turf ShiftClickOn(): (/mob)
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"					//from turf AltClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"				//from monkey CtrlClickOn(): (/mob)
+
+// special signals, used by components for other components
+#define COMSIG_BOUND_MOVED "bound_moved"			// from component/bound/on_move(): (atom/newLoc)
+#define COMSIG_BOUND_UNBOUND "bound_unbound"		// when something is unbounded from component/bounded/release(): (atom/bounded)
+#define COMSIG_BOUND_SHIFT "bound_shift"            // when there is a temporary re-bounding(perhaps item is put in storage, so now storage defines bounds)
