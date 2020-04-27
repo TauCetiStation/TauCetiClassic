@@ -247,7 +247,7 @@
 	if(ismouse(M))
 		var/mob/living/simple_animal/mouse/N = M
 		if(M.layer == MOB_LAYER)
-			N.visible_message("<b>[N]</b> nibbles away at the [src].", "")
+			N.visible_message("<span class ='notice'><b>[N]</b> nibbles away at [src].</span>", "<span class='notice'>You nibble away at [src].</span>")
 			N.health = min(N.health + 1, N.maxHealth)
 			bitecount += 0.1
 			if(bitecount >= 5)
