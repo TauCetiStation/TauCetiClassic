@@ -14,10 +14,13 @@
 
 /datum/reagent/toxin/on_general_digest(mob/living/M)
 	..()
-	if(M.get_species() == SKRELL && flags[IS_ORGANIC])
-			return
 	if(toxpwr)
 		M.adjustToxLoss(toxpwr * REM)
+
+/datum/reagent/toxin/on_skrell_digest(mob/living/M)
+	..()
+	if(flags[IS_ORGANIC])
+		return FALSE
 
 /datum/reagent/toxin/amatoxin
 	name = "Amatoxin"
@@ -494,7 +497,6 @@
 	description = "Deadly rapidly degrading toxin derived from certain species of mushrooms."
 	color = "#792300" //rgb: 121, 35, 0
 	custom_metabolism = 0.5
-	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/alphaamanitin/on_general_digest(mob/living/M)
 	..()
@@ -510,7 +512,6 @@
 	reagent_state = LIQUID
 	color = "#792300" //rgb: 59, 8, 5
 	custom_metabolism = 0.05
-	flags = list(IS_INORGANIC = TRUE)
 
 /datum/reagent/aflatoxin/on_general_digest(mob/living/M)
 	..()
@@ -532,7 +533,6 @@
 	custom_metabolism = 0.01
 	taste_message = "DEATH"
 	restrict_species = list(IPC, DIONA)
-	flags = list(IS_INORGANIC = TRUE)
 
 /datum/reagent/chefspecial/on_general_digest(mob/living/M)
 	..()
@@ -591,7 +591,6 @@
 	reagent_state = LIQUID
 	color = "#5eff3b" //RGB: 94, 255, 59
 	custom_metabolism = 1000
-	flags = list(IS_INORGANIC = TRUE)
 
 /datum/reagent/mulligan/on_general_digest(mob/living/carbon/human/H)
 	..()
@@ -617,7 +616,6 @@
 	color = "#13bc5e" // rgb: 19, 188, 94
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = 0.02
-	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/slimetoxin/on_general_digest(mob/living/M)
 	..()
@@ -663,7 +661,6 @@
 	reagent_state = LIQUID
 	color = "#13bc5e" // rgb: 19, 188, 94
 	overdose = REAGENTS_OVERDOSE
-	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/aslimetoxin/on_general_digest(mob/living/M)
 	..()
@@ -704,7 +701,6 @@
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
-	flags = list(IS_INORGANIC = TRUE)
 
 /datum/reagent/space_drugs/on_general_digest(mob/living/M)
 	..()
@@ -742,7 +738,6 @@
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
-	flags = list(IS_INORGANIC = TRUE)
 
 /datum/reagent/cryptobiolin/on_general_digest(mob/living/M)
 	..()
@@ -759,7 +754,6 @@
 	color = "#c8a5dc" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
-	flags = list(IS_INORGANIC = TRUE)
 
 /datum/reagent/impedrezene/on_general_digest(mob/living/M)
 	..()

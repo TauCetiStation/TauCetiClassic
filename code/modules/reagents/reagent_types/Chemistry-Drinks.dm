@@ -662,7 +662,7 @@
 	taste_message = "liquid fire"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/consumable/ethanol/on_mob_life(mob/living/M)
+/datum/reagent/consumable/ethanol/on_general_digest(mob/living/M)
 	if(!..())
 		return
 
@@ -688,9 +688,6 @@
 	if(HAS_TRAIT(M, TRAIT_LIGHT_DRINKER))
 		d *= 2
 
-	if(M.get_species() == SKRELL) //Skrell do not get drunk
-		d *= 0
-
 	M.dizziness += dizzy_adj
 	if(d >= slur_start && d < pass_out)
 		if(!M.slurring)
@@ -713,6 +710,10 @@
 				IO.take_damage(0.1, 1)
 			H.adjustToxLoss(0.1)
 	return TRUE
+
+/datum/reagent/consumable/ethanol/on_skrell_digest(mob/living/M)
+	..()
+	return FALSE
 
 /datum/reagent/consumable/ethanol/reaction_obj(var/obj/O, var/volume)
 	if(istype(O,/obj/item/weapon/paper))
