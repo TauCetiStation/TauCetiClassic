@@ -251,7 +251,7 @@
 			N.health = min(N.health + 1, N.maxHealth)
 			bitecount += 0.1
 			if(bitecount >= 5)
-				N.visible_message("<b>[N]</b> just stole the [src]!")
+				N.visible_message("<b>[N]</b> just ate the [src]!")
 				qdel(src)
 		else
 			to_chat(N, text("<span class='notice'>You are unable to nibble away at the [src] while being hidden.</span>"))
