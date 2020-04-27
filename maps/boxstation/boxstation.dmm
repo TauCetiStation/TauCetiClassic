@@ -19071,7 +19071,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/cargo/office)
+/area/station/cargo/qm)
 "aHL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
@@ -23412,7 +23412,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
-/area/station/cargo/office)
+/area/station/cargo/qm)
 "aPW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
@@ -28148,7 +28148,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/cargo/office)
+/area/station/cargo/qm)
 "aYE" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -39696,6 +39696,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bwA" = (
@@ -40330,9 +40333,6 @@
 	id_tag = "arrival_dock_pump";
 	name = "Arrival Dock Large Air Vent"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bxT" = (
@@ -40745,6 +40745,7 @@
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "byP" = (
@@ -40824,9 +40825,6 @@
 	dir = 9
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "byW" = (
@@ -91690,14 +91688,14 @@ bgM
 bkW
 bkW
 jOv
-bHe
-bHe
-bHe
+qlZ
+qlZ
+qlZ
 aHK
 aPV
-bHe
+qlZ
 aYD
-bHe
+qlZ
 buD
 ivL
 lac
@@ -92978,11 +92976,11 @@ aZw
 qlZ
 qlZ
 qlZ
-aFg
-aFg
-aFg
-aFg
-aFg
+qlZ
+qlZ
+qlZ
+qlZ
+qlZ
 wfm
 udR
 iRH
@@ -101471,7 +101469,7 @@ bEW
 bqM
 bvH
 bEW
-aSM
+fFe
 bxQ
 qla
 xYb
@@ -101985,8 +101983,8 @@ bEW
 mNg
 wZc
 aMT
-aSM
 fFe
+aSM
 aSM
 cbS
 bZZ
