@@ -12717,6 +12717,9 @@
 /area/station/rnd/xenobiology)
 "avM" = (
 /obj/structure/flora/plant/floorleaf,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "avN" = (
@@ -67209,6 +67212,12 @@
 	icon_state = "vault"
 	},
 /area/station/security/forensic_office)
+"dbM" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/station/civilian/bar)
 "dcb" = (
 /obj/structure/stool,
 /obj/structure/window/reinforced{
@@ -70904,21 +70913,6 @@
 	},
 /turf/simulated/wall,
 /area/station/maintenance/engineering)
-"iTI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/polarized{
-	dir = 4;
-	id = "privateoffice"
-	},
-/obj/structure/window/reinforced/polarized{
-	dir = 1;
-	id = "privateoffice"
-	},
-/obj/structure/window/reinforced/polarized{
-	id = "privateoffice"
-	},
-/turf/simulated/floor/plating,
-/area/station/security/vacantoffice)
 "iUb" = (
 /obj/structure/morgue{
 	dir = 8
@@ -73339,6 +73333,9 @@
 	c_tag = "Bar North"
 	},
 /obj/structure/stool/bar,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "nfb" = (
@@ -73633,6 +73630,12 @@
 	icon_state = "yellow"
 	},
 /area/station/engineering/break_room)
+"nCQ" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/station/civilian/bar)
 "nDb" = (
 /obj/structure/window/reinforced,
 /obj/structure/stool/bed/roller,
@@ -73837,6 +73840,21 @@
 	icon_state = "white"
 	},
 /area/station/medical/virology)
+"nQR" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized{
+	dir = 4;
+	id = "privateoffice"
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "privateoffice"
+	},
+/obj/structure/window/reinforced/polarized{
+	id = "privateoffice"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/vacantoffice)
 "nSy" = (
 /obj/effect/decal/cleanable/vomit{
 	icon_state = "vomit_4"
@@ -74978,6 +74996,20 @@
 /obj/structure/sign/warning/mail_delivery,
 /turf/simulated/wall,
 /area/station/cargo/office)
+"pwX" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/bar)
 "pxb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -75895,20 +75927,6 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/office)
-"rbR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/civilian/bar)
 "rcb" = (
 /obj/item/weapon/storage/briefcase/inflatable{
 	pixel_x = 5;
@@ -76157,21 +76175,6 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
-"rpQ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/polarized{
-	dir = 8;
-	id = "privateoffice"
-	},
-/obj/structure/window/reinforced/polarized{
-	dir = 1;
-	id = "privateoffice"
-	},
-/obj/structure/window/reinforced/polarized{
-	id = "privateoffice"
-	},
-/turf/simulated/floor/plating,
-/area/station/security/vacantoffice)
 "rqb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -78166,6 +78169,21 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"vhl" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized{
+	dir = 8;
+	id = "privateoffice"
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "privateoffice"
+	},
+/obj/structure/window/reinforced/polarized{
+	id = "privateoffice"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/vacantoffice)
 "vnw" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/extinguisher_cabinet{
@@ -92756,7 +92774,7 @@ aYA
 bbt
 aGj
 bhj
-rpQ
+vhl
 aHM
 aZw
 aZw
@@ -93013,7 +93031,7 @@ aYP
 bbt
 aGj
 bhj
-iTI
+nQR
 aIr
 aZw
 bqN
@@ -102269,7 +102287,7 @@ ayv
 dyy
 awS
 awS
-rbR
+pwX
 aWy
 bmx
 avN
@@ -103038,7 +103056,7 @@ bfx
 izb
 arZ
 avM
-aEh
+nCQ
 avN
 dWf
 aEz
@@ -103552,7 +103570,7 @@ aQC
 bgE
 aGn
 neo
-aEh
+dbM
 avN
 dWf
 aFS
