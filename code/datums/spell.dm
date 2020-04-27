@@ -76,7 +76,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	if(!skipcharge)
 		if(favor_cost > 0 && !religious_sect)
-			to_chat(usr, "First create a sect.")
+			to_chat(usr, "First choose aspects in your religion!")
 			return 0
 		if(favor_cost > 0 && religious_sect.favor < favor_cost)
 			to_chat(usr, "You need [favor_cost - religious_sect.favor] more favors.")

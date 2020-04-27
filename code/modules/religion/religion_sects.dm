@@ -188,7 +188,7 @@
 	qdel(I)
 
 /datum/religion_sect/custom
-	name = "Your sect"
+	name = "Custom religion"
 	desc = "Follow the orders of your god."
 	convert_opener = "I am the first to enter here.."
 	allow_aspect = TRUE

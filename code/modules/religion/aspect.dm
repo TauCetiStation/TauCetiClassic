@@ -56,15 +56,15 @@
 	rite = /datum/religion_rites/pray
 
 /datum/aspect/spiritus
-	name = "Spiritus" //Mistic
+	name = "Spiritus" //mistic
 
 /datum/aspect/technology
-	name = "Technology" //Techonogis
+	name = "Technology" //techonogis
 
 	rite = /datum/religion_rites/synthconversion
 
-/datum/aspect/chao
-	name = "Chao" //chaos
+/datum/aspect/chaos
+	name = "Chaos" //random
 
 /datum/aspect/wacky
 	name = "Wacky" //wacky

@@ -68,13 +68,13 @@
 	//everything below is assumed you're bibling it up
 	if(istype(C, /obj/item/weapon/nullrod/staff))
 		if(!global.religious_sect)
-			to_chat(user, "<span class='notice'>First create a sect.</span>")
+			to_chat(user, "<span class='notice'>First choose aspects in your religion!</span>")
 			return
 	if(!istype(C, /obj/item/weapon/storage/bible))
 		return
 	if(global.religious_sect)
 		if(!global.religious_sect.rites_list)
-			to_chat(user, "<span class='notice'>Your sect doesn't have any rites to perform!")
+			to_chat(user, "<span class='notice'>Your religion doesn't have any rites to perform!")
 			return
 		var/rite_select = input(user,"Select a rite to perform!", "Select a rite", null) in global.religious_sect.rites_list
 		if(!rite_select)
@@ -91,7 +91,7 @@
 		return
 
 	if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
-		to_chat(user, "<span class='warning'>You are not the high priest, and therefore cannot select a religious sect.")
+		to_chat(user, "<span class='warning'>You don't know how to use this.")
 		return
 
 	//choose sect
@@ -99,7 +99,7 @@
 	if(!available_options)
 		return
 
-	var/sect_select = input(user, "Select a sect (You CANNOT revert this decision!)", "Select a Sect", null) in available_options
+	var/sect_select = input(user, "Select a aspects preset", "Select a preset", null) in available_options
 	if(!sect_select)
 		to_chat(user,"<span class ='warning'>You cannot select a sect at this time.</span>")
 		return
