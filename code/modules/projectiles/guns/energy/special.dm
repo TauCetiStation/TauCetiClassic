@@ -195,7 +195,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	set category = "Object"
 	set name = "Use Sniper Scope"
 	set popup_menu = 0
-	if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
+	if(usr.incapacitated() || !(istype(usr,/mob/living/carbon/human)))
 		to_chat(usr, "You are unable to focus down the scope of the rifle.")
 		return
 	//if(!zoom && global_hud.darkMask[1] in usr.client.screen)

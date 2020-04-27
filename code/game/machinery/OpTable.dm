@@ -83,7 +83,7 @@
 			M.buckled.user_unbuckle_mob(user)
 		take_victim(M, user)
 		return
-	
+
 	if(isrobot(user) || isessence(user))
 		return
 
@@ -138,7 +138,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat || !ishuman(usr) || usr.buckled || usr.restrained())
+	if(usr.incapacitated() || !ishuman(usr) || !usr.canmove)
 		return
 
 	if(src.victim)

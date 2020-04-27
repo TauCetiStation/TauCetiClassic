@@ -302,7 +302,7 @@
 	range = 5
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_smash/cast(list/targets)
-	if (usr.lying || usr.stunned || usr.stat)
+	if (usr.lying || usr.incapacitated())
 		to_chat(usr, "<span class='warning'>You can't smash right now!</span>")
 		return
 
@@ -436,8 +436,8 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_mill/cast(list/targets)
-	if (usr.lying || usr.stunned || usr.stat)
-		to_chat(usr, "<span class='warning'>You can't right now!</span>")
+	if (usr.lying || usr.incapacitated())
+		to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 		return
 
 	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_mill</font>"
@@ -475,8 +475,8 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_gas/cast(list/targets)
-	if (usr.lying || usr.stunned || usr.stat)
-		to_chat(usr, "<span class='warning'>You can't right now!</span>")
+	if (usr.lying || usr.incapacitated())
+		to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 		return
 
 	//Some weird magic
@@ -509,8 +509,8 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_spit/cast(list/targets)
-	if (usr.lying || usr.stunned || usr.stat)
-		to_chat(usr, "<span class='warning'>You can't right now!</span>")
+	if (usr.lying || usr.incapacitated())
+		to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 		return
 
 	var/turf/T = usr.loc
@@ -611,7 +611,7 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_lazor/cast(list/targets)
-	if (usr.lying || usr.stunned || usr.stat)
+	if (usr.lying || usr.incapacitated())
 		to_chat(usr, "<span class='warning'>You can't right now!</span>")
 		return
 
@@ -642,7 +642,7 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/HulkHONK/cast(list/target)
-	if (usr.lying || usr.stunned || usr.stat)
+	if (usr.lying || usr.incapacitated())
 		to_chat(usr, "<span class='red'>You can't right now!</span>")
 		return
 	playsound(usr, 'sound/items/AirHorn.ogg', VOL_EFFECTS_MASTER)

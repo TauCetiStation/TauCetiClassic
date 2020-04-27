@@ -174,7 +174,7 @@
 	set name = "Adjust welding goggles"
 	set src in usr
 
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	if(!usr.incapacitated())
 		if(up)
 			up = !up
 			flags |= GLASSESCOVERSEYES

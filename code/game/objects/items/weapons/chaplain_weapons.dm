@@ -107,6 +107,8 @@
 
 	var/image/god_image
 
+	var/list/next_apply = list()
+
 /obj/item/weapon/nullrod/staff/Destroy()
 	// Damn... He's free now.
 	brainmob.invisibility = 0
@@ -149,23 +151,24 @@
 			S.transfer_soul("SHADE", brainmob, user)
 	else if(istype(W, /obj/item/weapon/storage/bible)) //force kick god from staff
 		if(brainmob)
+			next_apply[brainmob.ckey] = world.time + 10 MINUTES
 			qdel(brainmob)
 			searching = FALSE
 			icon_state = "talking_staff"
 			visible_message("<span class='notice'>The energy of \the [src] was dispelled.</span>")
 
-/obj/item/weapon/nullrod/staff/attack_self(mob/living/carbon/human/user)
-	if(user.mind.assigned_role == "Chaplain")
+/obj/item/weapon/nullrod/staff/attack_self(mob/living/user)
+	if(user.mind && user.mind.assigned_role == "Chaplain")
 		if(!brainmob && !searching)
 			//Start the process of searching for a new user.
 			to_chat(user, "<span class='notice'>You attempt to wake the spirit of the staff...</span>")
 			icon_state = "talking_staffanim"
 			light_power = 5
 			searching = TRUE
-			request_player()
+			request_player(user)
 			addtimer(CALLBACK(src, .proc/reset_search), 600)
 
-/obj/item/weapon/nullrod/staff/proc/request_player()
+/obj/item/weapon/nullrod/staff/proc/request_player(mob/living/user)
 	for(var/mob/dead/observer/O in player_list)
 		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 			continue
@@ -174,20 +177,23 @@
 		if(O.client)
 			var/client/C = O.client
 			if(!C.prefs.ignore_question.Find("chstaff") && (ROLE_TSTAFF in C.prefs.be_role))
-				INVOKE_ASYNC(src, .proc/question, C)
+				INVOKE_ASYNC(src, .proc/question, C, user)
 
-/obj/item/weapon/nullrod/staff/proc/question(client/C)
+/obj/item/weapon/nullrod/staff/proc/question(client/C, mob/living/user)
 	if(!C)
 		return
 	var/response = alert(C, "Someone is requesting a your soul in divine staff?", "Staff request", "No", "Yeeesss", "Never for this round")
 	if(!C || (brainmob && brainmob.ckey) || !searching)
 		return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 	if(response == "Yeeesss")
-		transfer_personality(C.mob)
+		if(next_apply[C.ckey] > world.time)
+			to_chat(C.mob, "You were forcibly kicked from staff, left [round((next_apply[C.ckey] - world.time) / 600)] minutes")
+			return
+		transfer_personality(C.mob, user)
 	else if (response == "Never for this round")
 		C.prefs.ignore_question += "chstaff"
 
-/obj/item/weapon/nullrod/staff/proc/transfer_personality(mob/candidate)
+/obj/item/weapon/nullrod/staff/proc/transfer_personality(mob/candidate, mob/living/summoner)
 	searching = FALSE
 
 	if(brainmob)
@@ -213,19 +219,23 @@
 	brainmob.mind.memory = god_lore
 	candidate.cancel_camera()
 	candidate.reset_view()
+
 	if(islam)
-		brainmob.islam = TRUE
 		brainmob.universal_speak = FALSE
+		brainmob.islam = TRUE
 		brainmob.speak.Add("[god_name] akbar!")
+
+	for(var/datum/language/L in summoner.languages)
+		brainmob.add_language(L.name)
 
 	name = "Staff of [god_name]"
 	if(god_name == "Aghanim") //sprite is very similar
 		name = "Aghanim's Scepter"
 
 	desc = "Stone sometimes glow. Pray for mercy on [god_name]."
-	to_chat(brainmob, "<b>You are a god, brought into existence on [station_name()].</b>")
-	to_chat(brainmob, "<b>The priest has called you, you can command them, because you are their god.</b>")
-	to_chat(brainmob, "<b>All that is required of you is a creative image of the imprisoned god in the staff.</b>")
+	to_chat(brainmob, "<b>You are an avatar of god, brought into existence on [station_name()].</b>")
+	to_chat(brainmob, "<b>[capitalize(summoner.name)], the priest has called you, you can command them, because you are their god.</b>")
+	to_chat(brainmob, "<b>All that is required of you is a creative image of god impriosioned in the staff.</b>")
 	if(god_lore == "")
 		to_chat(brainmob, "<b>You can be both evil Satan thirsting and ordering sacrifices, and a good Jesus who wants more slaves.</b>")
 	else

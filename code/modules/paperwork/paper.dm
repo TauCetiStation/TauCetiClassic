@@ -378,7 +378,7 @@
 
 /obj/item/weapon/paper/Topic(href, href_list)
 	..()
-	if(!usr || (usr.stat || usr.restrained()))
+	if(!usr || usr.incapacitated())
 		return
 
 	if(href_list["write"])

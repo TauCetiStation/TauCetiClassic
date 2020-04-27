@@ -79,7 +79,7 @@
 	cut_overlays()
 	if(stat == DEAD)
 		icon_state = "queen_dead"
-	else if(stat == UNCONSCIOUS || lying || resting)
+	else if(incapacitated())
 		icon_state = "queen_sleep"
 	else
 		icon_state = "queen_s"
@@ -99,7 +99,7 @@
 	cut_overlays()
 	if(stat == DEAD)
 		icon_state = "queen_dead-old"
-	else if(stat == UNCONSCIOUS || lying || resting)
+	else if(incapacitated())
 		icon_state = "queen_sleep-old"
 	else
 		icon_state = "queen_s-old"
