@@ -54,7 +54,7 @@
 		to_chat(user, "[finishmessage]")
 
 		if((HULK in user.mutations) && user.hulk_activator == "heavy muscle load" && prob(60))
-			user.try_mutate_to_hulk(user)
+			user.try_mutate_to_hulk()
 
 /obj/structure/weightlifter
 	name = "Weight Machine"
@@ -121,4 +121,4 @@
 		to_chat(user, "[finishmessage]")
 
 		if((HULK in user.mutations) && user.hulk_activator == "heavy muscle load" && prob(60))
-			user.try_mutate_to_hulk(user)
+			user.try_mutate_to_hulk()
