@@ -29,6 +29,9 @@
 	M.set_dir(dir)
 	buckled_mob = M
 	post_buckle_mob(M)
+
+	SEND_SIGNAL(src, COMSIG_MOVABLE_BUCKLE, M)
+
 	M.throw_alert("buckled", /obj/screen/alert/buckled, new_master = src)
 	correct_pixel_shift(M)
 	M.update_canmove()
@@ -43,6 +46,7 @@
 		buckled_mob.clear_alert("buckled")
 		correct_pixel_shift(buckled_mob)
 		buckled_mob = null
+		SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob)
 
 		post_buckle_mob(.)
 
