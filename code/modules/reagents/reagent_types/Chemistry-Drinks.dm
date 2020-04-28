@@ -661,6 +661,7 @@
 	var/pass_out = 400	//amount absorbed after which mob starts passing out
 	taste_message = "liquid fire"
 	restrict_species = list(IPC, DIONA)
+	flags = list(IS_ORGANIC)
 
 /datum/reagent/consumable/ethanol/on_general_digest(mob/living/M)
 	if(!..())
@@ -713,7 +714,8 @@
 
 /datum/reagent/consumable/ethanol/on_skrell_digest(mob/living/M)
 	..()
-	return FALSE
+	if(flags[IS_ORGANIC])
+		return FALSE
 
 /datum/reagent/consumable/ethanol/reaction_obj(var/obj/O, var/volume)
 	if(istype(O,/obj/item/weapon/paper))
