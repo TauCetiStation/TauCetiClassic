@@ -93,7 +93,6 @@
 
 //Reagent Flags
 #define IS_ORGANIC         "is_organic"
-#define IS_INORGANIC       "is_inorganic"
 
 //bitflags for door switches.
 #define OPEN     1

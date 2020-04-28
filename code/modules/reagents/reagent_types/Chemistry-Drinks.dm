@@ -714,8 +714,7 @@
 
 /datum/reagent/consumable/ethanol/on_skrell_digest(mob/living/M)
 	..()
-	if(flags[IS_ORGANIC])
-		return FALSE
+	return !flags[IS_ORGANIC]
 
 /datum/reagent/consumable/ethanol/reaction_obj(var/obj/O, var/volume)
 	if(istype(O,/obj/item/weapon/paper))
