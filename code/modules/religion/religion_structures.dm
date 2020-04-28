@@ -36,15 +36,6 @@
 	if(msg)
 		to_chat(user, msg)
 
-
-/obj/structure/altar_of_gods/atom_init()
-	. = ..()
-	if(global.religious_sect)
-		if(global.religious_sect.altar_icon)
-			icon = global.religious_sect.altar_icon
-		if(global.religious_sect.altar_icon_state)
-			icon_state = global.religious_sect.altar_icon_state
-
 /obj/structure/altar_of_gods/attack_hand(mob/living/user)
 	if(!Adjacent(user) || !user.pulling)
 		return ..()
@@ -74,7 +65,7 @@
 		return
 	if(global.religious_sect)
 		if(!global.religious_sect.rites_list)
-			to_chat(user, "<span class='notice'>Your religion doesn't have any rites to perform!")
+			to_chat(user, "<span class='notice'>Your religion doesn't have any rites to perform!</span>")
 			return
 		var/rite_select = input(user,"Select a rite to perform!", "Select a rite", null) in global.religious_sect.rites_list
 		if(!rite_select)
@@ -91,7 +82,7 @@
 		return
 
 	if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
-		to_chat(user, "<span class='warning'>You don't know how to use this.")
+		to_chat(user, "<span class='warning'>You don't know how to use this.</span>")
 		return
 
 	//choose sect
@@ -135,23 +126,14 @@
 				global.religious_sect.desired_items += asp.desire
 	else
 		if(global.religious_sect.aspect_preset.len != 0)
-			for(var/i in global.religious_sect.aspect_preset)
-				var/datum/aspect/asp = i
-				type_selected = asp
-				global.religious_sect.sect_aspects[initial(asp.name)] = new type_selected()	
+			for(var/aspect in global.religious_sect.aspect_preset)
+				var/datum/aspect/asp = new aspect()
+				asp.power = global.religious_sect.aspect_preset[aspect]
+				global.religious_sect.sect_aspects[asp.name] = asp
 
-	for(var/i in player_list)
-		if(!isliving(i))
-			continue
-		var/mob/living/am_i_holy_living = i
-		if(am_i_holy_living.mind && !am_i_holy_living.mind.holy_role)
-			continue
-		global.religious_sect.on_conversion(am_i_holy_living)
-
-	if(global.religious_sect.altar_icon)
-		icon = global.religious_sect.altar_icon
-	if(global.religious_sect.altar_icon_state)
-		icon_state = global.religious_sect.altar_icon_state
+	if(isliving(user))
+		if(user.mind && user.mind.holy_role >= HOLY_ROLE_PRIEST)
+			global.religious_sect.on_conversion(user)
 
 	global.religious_sect.update_rites()
 	global.religious_sect.update_desire()

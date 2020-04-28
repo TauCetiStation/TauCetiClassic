@@ -86,8 +86,6 @@
 		if(religious_sect)
 			stat(null, "Favor: [religious_sect.favor]/[religious_sect.max_favor]")
 
-/mob/living/simple_animal/shade/god/incapacitated()
-
 /mob/living/simple_animal/shade/god/incapacitated(restrained_type = ARMS)
 	// So the god can't use procs and stuff like that.
 	return TRUE
@@ -110,8 +108,7 @@
 	blinded = FALSE
 
 /mob/living/simple_animal/shade/god/Life()
-	set invisibility = 0
-	set background = BACKGROUND_ENABLED
+	..()
 
 	if(religious_sect)
 		religious_sect.favor += 0.2

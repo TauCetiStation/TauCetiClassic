@@ -143,6 +143,12 @@
 			var/obj/structure/stool/bed/chair/pew/P = A
 			P.pew_icon = pews_icon_state
 			P.update_icon()
+		/*
+		else if(istype(A, /obj/structure/altar_of_gods))
+			var/obj/structure/altar_of_gods/G = A
+			G.icon = global.religious_sect.altar_icon 
+			G.icon_state = global.religious_sect.altar_icon_state
+		*/
 
 // This proc returns a bible object of this religion, spawning it at a given location.
 /datum/religion/proc/spawn_bible(atom/location)

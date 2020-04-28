@@ -6,7 +6,6 @@
 	var/emp_light = 3
 
 /obj/effect/proc_holder/spell/targeted/emplosion/cast(list/targets)
-	cast_with_favor()
 	for(var/mob/living/target in targets)
 		empulse(target.loc, emp_heavy, emp_light)
 

@@ -1,76 +1,70 @@
-/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_bible
+/obj/effect/proc_holder/spell/targeted/spawn_bible
 	name = "Create bible"
 	desc = "Bible"
 
-	school = "conjuration"
 	charge_max = 2 MINUTES
 	favor_cost = 100
-	needed_aspect = list("Partum" = 1, "Salutis" = 1) //Capitalize aspects!!!
-	clothes_req = 0
-	invocation = "none"
+	divine_power = 1 //count
+	needed_aspect = list(ASPECT_RESURCES = 1, ASPECT_RESCUE = 1)
+
 	range = 0
-	summon_amt = 0
+	invocation = "none"
+	clothes_req = 0
 
 	action_icon_state = "spawn_bible"
+	sound = 'sound/effects/phasein.ogg'
 
-	summon_type = list(/obj/item/weapon/storage/bible)
-
-/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_bible/cast()
-	for(var/mob/living/carbon/human/M in viewers(get_turf_loc(usr), null))
+/obj/effect/proc_holder/spell/targeted/spawn_bible/cast()
+	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
 		if(M.eyecheck() <= 0)
 			M.flash_eyes()
-	..()
+
+	for(var/i in 1 to divine_power)
+		global.chaplain_religion.spawn_bible(usr.loc)
 
 /obj/effect/proc_holder/spell/targeted/heal
 	name = "Heal"
 
 	favor_cost = 300
 	charge_max = 1.5 MINUTES
-	needed_aspect = list("Salutis" = 1, "Chaos" = 1)
+	divine_power = -5 //power
+	needed_aspect = list(ASPECT_RESCUE = 1, ASPECT_CHAOS = 1)
+
 	clothes_req = 0
 	invocation = "none"
 	range = 6
-	sound = 'sound/magic/heal.ogg'
 	selection_type = "range"
 
 	action_icon_state = "heal"
+	sound = 'sound/magic/heal.ogg'
 
-	divine_power = -2 //power
 
 /obj/effect/proc_holder/spell/targeted/heal/cast(list/targets, mob/user = usr)
 	if(!targets.len)
 		to_chat(user, "<span class='notice'>No target found in range.</span>")
+		revert_cast()
 		return
 
-	var/mob/living/carbon/target
-	while(targets.len)
-		target = targets[targets.len]
-		targets -= target
-		if(istype(target))
-			break
-
-	if(!ishuman(target))
-		to_chat(user, "<span class='notice'>It'd be stupid to give [target] such a life improvement!</span>")
-		return
+	var/mob/living/carbon/target = locate() in targets
 
 	var/mob/living/carbon/human/H = target
 	if(!(H in oview(range))) // If they are not in overview after selection.
 		to_chat(user, "<span class='warning'>They are too far away!</span>")
+		revert_cast()
 		return
 
 	H.apply_damages(-rand(-5, 3) - divine_power, -rand(-5, 3) - divine_power, -rand(-5, 3) - divine_power)
-	cast_with_favor()
 
 /obj/effect/proc_holder/spell/targeted/heal/damage
 	name = "Damage"
-	sound = 'sound/magic/Repulse.ogg'
 
 	favor_cost = 300
 	charge_max = 1.5 MINUTES
-	needed_aspect = list("Obscurum" = 1, "s" = 1)
+	divine_power = 2 //power
+	needed_aspect = list(ASPECT_OBSCURE = 1, ASPECT_CHAOS = 1)
 
 	action_icon_state = "god_default"
-	divine_power = 2 //power
+	sound = 'sound/magic/Repulse.ogg'
 
 /obj/effect/proc_holder/spell/targeted/blessing
 	name = "Blessing"
@@ -78,11 +72,14 @@
 	favor_cost = 200
 	charge_max = 1 MINUTES
 	divine_power = 5 //power
-	needed_aspect = list("Telum" = 1, "Spiritus" = 1)
+	needed_aspect = list(ASPECT_WEAPON = 1, ASPECT_MYSTIC = 1)
+
 	range = 0
 	invocation = "none"
 	clothes_req = 0
+
 	action_icon_state = "blessing"
+	sound = 'sound/magic/heal.ogg'
 
 	var/list/blessed = list()
 
@@ -98,8 +95,6 @@
 		revert_cast()
 		return
 
-	cast_with_favor()
-
 	target = input("Choose the target for the spell.", "Targeting") in possible_targets
 
 	to_chat(usr, "[usr] blessed [target.name]")
@@ -114,12 +109,15 @@
 	favor_cost = 400
 	charge_max = 4 MINUTES
 	divine_power = 1 //range
-	needed_aspect = list("Progressus" = 1, "Technology" = 1)
+	needed_aspect = list(ASPECT_SCIENCE = 1, ASPECT_TECH = 1)
+
 	range = 0
 	invocation = "none"
 	invocation_type = "none"
 	clothes_req = 0
+
 	action_icon_state = "charge"
+	sound = 'sound/magic/Charge.ogg'
 
 /obj/effect/proc_holder/spell/targeted/charge/religion/cast()
 	var/charged = FALSE
@@ -148,9 +146,8 @@
 				cell_charge(Cell)
 
 	if(charged)
-		playsound(usr, 'sound/magic/Charge.ogg', VOL_EFFECTS_MASTER)
+		//playsound(usr, 'sound/magic/Charge.ogg', VOL_EFFECTS_MASTER)
 		to_chat(usr, "<span class='notice'>You have charged cell in a radiuse!</span>")
-		cast_with_favor()
 	else
 		to_chat(usr, "<span class='notice'>There is nothing to charge in the radius!</span>")
 		revert_cast()
@@ -162,19 +159,19 @@
 	favor_cost = 250
 	charge_max = 3 MINUTES
 	divine_power = 2 //count
-	needed_aspect = list("Partum" = 1 , "Fames" = 1)
+	needed_aspect = list(ASPECT_SPAWN = 1 , ASPECT_FOOD = 1)
+
 	range = 0
 	invocation = "none"
 	clothes_req = 0
+
 	action_icon_state = "spawn_food"
+	sound = 'sound/effects/phasein.ogg'
 
 /obj/effect/proc_holder/spell/targeted/food/cast()
 	var/list/borks = subtypesof(/obj/item/weapon/reagent_containers/food/snacks)
-	cast_with_favor()
 
-	playsound(usr, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
-
-	for(var/mob/living/carbon/human/M in viewers(get_turf_loc(usr), null))
+	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
 		if(M.eyecheck() <= 0)
 			M.flash_eyes()
 
@@ -182,7 +179,7 @@
 		var/chosen = pick(borks)
 		var/obj/B = new chosen
 		if(B)
-			B.loc = get_turf_loc(usr)
+			B.loc = usr.loc
 			if(prob(50))
 				for(var/j in 1 to rand(1, 3))
 					step(B, pick(NORTH,SOUTH,EAST,WEST))
@@ -193,16 +190,20 @@
 	favor_cost = 250
 	charge_max = 2 MINUTES
 	divine_power = 0 //count
-	needed_aspect = list("Partum" = 1, "Mortem" = 1,)
+
+	needed_aspect = list(ASPECT_SPAWN = 1, ASPECT_DEATH = 1,)
 	summon_amt = 0
 	invocation = "none"
+
 	clothes_req = 0
 	action_icon_state = "spawn_animal"
+	sound = 'sound/effects/phasein.ogg'
+
 	summon_type = list(/mob/living/simple_animal/corgi/puppy, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/corgi, /mob/living/simple_animal/cat, /mob/living/simple_animal/parrot, /mob/living/simple_animal/crab, /mob/living/simple_animal/cow, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken, /mob/living/simple_animal/pig, /mob/living/simple_animal/turkey, /mob/living/simple_animal/goose, /mob/living/simple_animal/seal, /mob/living/simple_animal/walrus, /mob/living/simple_animal/fox, /mob/living/simple_animal/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/mushroom, /mob/living/simple_animal/pug, /mob/living/simple_animal/shiba, /mob/living/simple_animal/yithian, /mob/living/simple_animal/tindalos, /mob/living/carbon/monkey, /mob/living/carbon/monkey/skrell, /mob/living/carbon/monkey/tajara, /mob/living/carbon/monkey/unathi, /mob/living/simple_animal/slime)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal/cast()
 	summon_amt += divine_power
-	for(var/mob/living/carbon/human/M in viewers(get_turf_loc(usr), null))
+	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
 		if(M.eyecheck() <= 0)
 			M.flash_eyes()
 	..()

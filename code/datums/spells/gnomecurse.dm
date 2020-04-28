@@ -40,7 +40,6 @@
 		to_chat(user, "<span class='warning'>They are too far away!</span>")
 		return
 
-	cast_with_favor()
 
 	H.speech_problem_flag = 1
 	H.gnomed = rand(300, 600)

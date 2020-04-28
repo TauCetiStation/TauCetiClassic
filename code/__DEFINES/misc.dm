@@ -214,10 +214,6 @@
 
 #define PLASMAGUN_OVERCHARGE 30100
 
-//Religion
-#define HOLY_ROLE_PRIEST 1 //default priestly role
-#define HOLY_ROLE_HIGHPRIEST 2 //the one who designates the religion
-
 //! ## Overlays subsystem
 
 ///Compile all the overlays for an atom from the cache lists

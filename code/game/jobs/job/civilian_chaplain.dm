@@ -22,7 +22,7 @@
 
 	//DEBUG
 	var/list/spells = list(
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_bible,
+							/obj/effect/proc_holder/spell/targeted/spawn_bible,
 							/obj/effect/proc_holder/spell/targeted/heal/damage,
 							/obj/effect/proc_holder/spell/targeted/charge/religion,
 							/obj/effect/proc_holder/spell/targeted/heal,

@@ -12,7 +12,6 @@
 	action_icon_state = "knock"
 
 /obj/effect/proc_holder/spell/aoe_turf/knock/cast(list/targets)
-	cast_with_favor()
 	for(var/turf/T in targets)
 		for(var/obj/machinery/door/door in T.contents)
 			if(istype(door, /obj/machinery/door/airlock))

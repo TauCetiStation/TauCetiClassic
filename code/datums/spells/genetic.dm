@@ -16,7 +16,6 @@
 	*/
 
 /obj/effect/proc_holder/spell/targeted/genetic/cast(list/targets)
-	cast_with_favor()
 	for(var/mob/living/target in targets)
 		for(var/x in mutations)
 			target.mutations.Add(x)

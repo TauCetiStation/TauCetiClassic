@@ -161,7 +161,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(prob(critfailchance))
 		critfail(targets)
 	else
-		cast(targets)
+		cast_with_favor(targets)
 	after_cast(targets)
 
 /obj/effect/proc_holder/spell/proc/before_cast(list/targets)
@@ -206,9 +206,10 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	return
 
 //Casting spells behind favor
-/obj/effect/proc_holder/spell/proc/cast_with_favor()
+/obj/effect/proc_holder/spell/proc/cast_with_favor(list/targets, area/thearea)
 	if(favor_cost > 0)
 		religious_sect.favor -= favor_cost
+	cast(targets, thearea)
 
 /obj/effect/proc_holder/spell/proc/critfail(list/targets)
 	return
@@ -221,6 +222,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			charge_counter++
 		if("holdervar")
 			adjust_var(user, holder_var_type, -holder_var_amount)
+	
+	if(favor_cost > 0)
+		global.religious_sect.favor += favor_cost
 
 	return
 

@@ -261,7 +261,6 @@
 	proj_step_delay = 1
 
 /obj/effect/proc_holder/spell/turf/fireball/cast(turf/T)
-	cast_with_favor()
 	explosion(T, -1, 1, 2, 3)
 
 

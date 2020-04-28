@@ -30,7 +30,6 @@
 	addtimer(CALLBACK(src, .proc/clean_turfs), duration)
 
 /obj/effect/proc_holder/spell/targeted/spacetime_dist/cast(list/targets, mob/user = usr)
-	cast_with_favor()
 	effects = list()
 	for(var/turf/V in targets)
 		var/turf/T0 = V

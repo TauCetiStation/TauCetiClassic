@@ -39,7 +39,6 @@
 		to_chat(user, "<span class='notice'>They are too far away!</span>")
 		return
 
-	cast_with_favor()
 	var/list/masks = list(/obj/item/clothing/mask/pig, /obj/item/clothing/mask/cowmask, /obj/item/clothing/mask/horsehead, /obj/item/clothing/mask/chicken)
 	var/list/mSounds = list('sound/magic/PigHead_curse.ogg', 'sound/magic/CowHead_Curse.ogg', 'sound/magic/HorseHead_curse.ogg', 'sound/magic/ChickenHead_curse.ogg')
 	var/randM = rand(1, 4)

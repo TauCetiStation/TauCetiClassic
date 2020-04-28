@@ -34,7 +34,7 @@
 	var/altar_icon_state
 /// Determines which spells God can use.
 	var/list/allow_spell = list(
-	/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_bible,
+	/obj/effect/proc_holder/spell/targeted/spawn_bible,
 	/obj/effect/proc_holder/spell/targeted/heal,
 	/obj/effect/proc_holder/spell/targeted/heal/damage,
 	/obj/effect/proc_holder/spell/targeted/blessing,
@@ -102,16 +102,6 @@
 /// Activates when an individual uses a rite. Can provide different/additional benefits depending on the user.
 /datum/religion_sect/proc/on_riteuse(mob/living/user, obj/structure/altar_of_gods/AOG)
 
-// Checks whether sub has all keys of main,
-// and if those keys have the same values.
-/datum/religion_sect/proc/is_sublist_assoc(list/sub, list/main, datum/callback/predicate)
-	for(var/key in sub)
-		if(!main[key] && sub[key])
-			return FALSE
-		if(!predicate.Invoke(sub[key], main[key]))
-			return FALSE
-	return TRUE
-
 /datum/religion_sect/proc/greater_or_equal(element, datum/aspect/A)
 	return element >= A.power
 
@@ -119,7 +109,7 @@
 	if(gods_list.len == 0)
 		return
 
-	var/datum/callback/pred = CALLBACK(GLOBAL_PROC, .proc/greater_or_equal)
+	var/datum/callback/pred = CALLBACK(src, .proc/greater_or_equal)
 	for(var/spell in allow_spell)
 		var/obj/effect/proc_holder/spell/S = new spell()
 		var/list/spell_aspects = S.needed_aspect
@@ -155,7 +145,7 @@
 	name = "Puritanism (Default)"
 	desc = "Nothing special."
 	convert_opener = "Your run-of-the-mill sect, there are no benefits or boons associated. Praise normalcy!"
-	altar_icon_state = "christianaltar"
+	//altar_icon_state = "christianaltar"
 	aspect_preset = list(/datum/aspect/salutis, /datum/aspect/lux, /datum/aspect/spiritus)
 	rites_list = list()
 	desired_items = list()
@@ -164,7 +154,7 @@
 	name = "Technophile"
 	desc = "A sect oriented around technology."
 	convert_opener = "May you find peace in a metal shell, acolyte.<br>You can now sacrifice cells, with favor depending on their charge."
-	altar_icon_state = "technoaltar"
+	//altar_icon_state = "technoaltar"
 	aspect_preset = list(/datum/aspect/technology, /datum/aspect/progressus, /datum/aspect/metallum)
 	rites_list = list()
 	desired_items = list()

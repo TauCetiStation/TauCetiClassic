@@ -20,7 +20,6 @@
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
 	set waitfor = FALSE
-	cast_with_favor()
 	for(var/mob/living/target in targets)
 		var/turf/mobloc = get_turf(target.loc)
 		var/obj/effect/dummy/spell_jaunt/holder = new(mobloc)

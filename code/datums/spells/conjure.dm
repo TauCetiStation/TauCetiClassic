@@ -40,7 +40,6 @@
 				var/turf/O = spawn_place
 				var/turf/N = summoned_object_type
 				O.ChangeTurf(N)
-				cast_with_favor()
 			else
 				var/atom/summoned_object = new summoned_object_type(spawn_place)
 
@@ -52,7 +51,6 @@
 					QDEL_IN(summoned_object, summon_lifespan)
 				if(deleting_previous)
 					previous_objects += summoned_object
-				cast_with_favor()
 	else
 		switch(charge_type)
 			if("recharge")
@@ -120,7 +118,6 @@
 	reagents.add_reagent("harvester", 80)
 	S.attach(location)
 	S.set_up(reagents, 5, 0, location, 15, 5)
-	cast_with_favor()
 	S.start()
 
 /datum/reagent/toxin/harvester

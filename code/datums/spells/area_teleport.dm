@@ -12,7 +12,7 @@
 		return
 	if(charge_type == "recharge" && recharge)
 		INVOKE_ASYNC(src, .proc/start_recharge)
-	cast(targets,thearea)
+	cast_with_favor(targets, thearea)
 	invocation()
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/before_cast(list/targets)
@@ -34,7 +34,6 @@
 		return FALSE
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/cast(list/targets, area/thearea)
-	cast_with_favor()
 	for(var/mob/living/target in targets)
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))
