@@ -33,6 +33,9 @@
 /obj/item/organ/external/head/robot/ipc/pillar
 	ipc_head = "pillar"
 
+/obj/item/organ/external/head/robot/ipc/human
+	ipc_head = "human"
+
 /obj/item/organ/external/groin/robot/ipc
 	name = "ipc groin"
 

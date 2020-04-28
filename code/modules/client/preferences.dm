@@ -319,6 +319,8 @@ var/const/MAX_SAVE_SLOTS = 10
 				new /obj/item/organ/external/head/robot/ipc/double(null, character)
 			if("Pillar")
 				new /obj/item/organ/external/head/robot/ipc/pillar(null, character)
+			if("Human")
+				new /obj/item/organ/external/head/robot/ipc/human(null, character)
 
 	character.r_eyes = r_eyes
 	character.g_eyes = g_eyes
