@@ -294,6 +294,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Chapel Office"
 	icon_state = "chapeloffice"
 
+/area/station/civilian/chapel/altar
+	name = "Altar"
+	icon_state = "altar"
+
 /area/station/civilian/garden
 	name = "Garden"
 	icon_state = "garden"
