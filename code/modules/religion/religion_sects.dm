@@ -73,7 +73,7 @@
 
 /// Activates once selected and on newjoins, oriented around people who become holy.
 /datum/religion_sect/proc/on_conversion(mob/living/L)
-	to_chat(L, "<span class='notice'>[convert_opener]</span")
+	to_chat(L, "<span class='notice'>[convert_opener]</span>")
 
 /// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering.
 /datum/religion_sect/proc/can_sacrifice(obj/item/I, mob/living/L)
@@ -153,7 +153,7 @@
 /datum/religion_sect/technophile
 	name = "Technophile"
 	desc = "A sect oriented around technology."
-	convert_opener = "May you find peace in a metal shell, acolyte.<br>You can now sacrifice cells, with favor depending on their charge."
+	convert_opener = "May you find peace in a metal shell, acolyte."
 	//altar_icon_state = "technoaltar"
 	aspect_preset = list(/datum/aspect/technology, /datum/aspect/progressus, /datum/aspect/metallum)
 	rites_list = list()
@@ -163,7 +163,7 @@
 	if(!..())
 		return FALSE
 	var/obj/item/weapon/stock_parts/cell/the_cell = I
-	if(the_cell.charge < 3000) //BALANCE
+	if(the_cell.charge < 3000)
 		to_chat("<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity amounts of power.</span>")
 		return FALSE
 	return TRUE
@@ -172,7 +172,7 @@
 	if(!is_type_in_typecache(I, desired_items_typecache))
 		return
 	var/obj/item/weapon/stock_parts/cell/the_cell = I
-	adjust_favor(round(the_cell.charge/500), L) //BALANCE
+	adjust_favor(round(the_cell.charge/500), L)
 	to_chat(L, "<span class='notice'>You offer [the_cell]'s power to [pick(global.chaplain_religion.deity_names)], pleasing them.</span>")
 	qdel(I)
 
