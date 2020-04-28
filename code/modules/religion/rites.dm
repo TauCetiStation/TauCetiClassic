@@ -74,7 +74,7 @@
 
 	hgibs(AOG.loc, human2borg.viruses, human2borg.dna, human2borg.species.flesh_color, human2borg.species.blood_datum)
 	human2borg.Robotize()
-	AOG.add_overlay(image('icons/obj/religion.dmi', "blood_overlay"))
+	AOG.add_overlay(image('icons/obj/structures/chapel.dmi', "blood_overlay"))
 	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [name]!</span>")
 	return TRUE
 
@@ -122,7 +122,7 @@
 		religious_sect.favor += 400
 
 	L.gib()
-	AOG.add_overlay(image('icons/obj/religion.dmi', "blood_overlay"))
+	AOG.add_overlay(image('icons/obj/structures/chapel.dmi', "blood_overlay"))
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
@@ -177,6 +177,6 @@
 
 /datum/religion_rites/pray/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	religious_sect.favor += 200
-	AOG.cut_overlay(image('icons/obj/religion.dmi', "blood_overlay"))
+	AOG.cut_overlay(image('icons/obj/structures/chapel.dmi', "blood_overlay"))
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE

@@ -1,7 +1,7 @@
 /obj/structure/altar_of_gods
 	name = "Altar of the Gods"
 	desc = "An altar which allows the head of the church to choose a sect of religious teachings as well as provide sacrifices to earn favor."
-	icon = 'icons/obj/religion.dmi'
+	icon = 'icons/obj/structures/chapel.dmi'
 	icon_state = "altar"
 	density = TRUE
 	anchored = TRUE
@@ -11,7 +11,7 @@
 	can_buckle = TRUE
 	buckle_lying = 90 //we turn to you!
 	var/datum/religion_rites/performing_rite
-	var/datum/religion_sect/sect_to_altar
+	var/datum/religion/religion_sect/sect_to_altar
 
 /obj/structure/altar_of_gods/examine(mob/user)
 	. = ..()
@@ -94,12 +94,11 @@
 	if(!sect_select)
 		to_chat(user,"<span class ='warning'>You cannot select a sect at this time.</span>")
 		return
-	
-	var/type_selected = available_options[sect_select]
-	global.religious_sect = new type_selected()
+
+	global.religious_sect = available_options[sect_select]
 	sect_to_altar = global.religious_sect
 
-	if(istype(global.religious_sect, /datum/religion_sect/custom))
+	if(istype(global.religious_sect, /datum/religion/religion_sect/custom))
 		global.religious_sect.name = global.chaplain_religion.name
 
 	if(global.religious_sect.allow_aspect)
@@ -110,7 +109,7 @@
 
 		for(var/i in 1 to 3)
 			var/aspect_select = input(user, "Select a aspect of god (You CANNOT revert this decision!)", "Select a aspect of god", null) in aspects
-			type_selected = aspects[aspect_select]
+			var/type_selected = aspects[aspect_select]
 			if(!istype(global.religious_sect.sect_aspects[aspect_select], type_selected))
 				global.religious_sect.sect_aspects[aspect_select] = new type_selected()
 			else
@@ -139,11 +138,15 @@
 	global.religious_sect.update_desire()
 
 /obj/structure/altar_of_gods/proc/generate_available_sects(mob/user) //eventually want to add sects you get from unlocking certain achievements
-	. = list()
-	for(var/i in subtypesof(/datum/religion_sect))
-		var/datum/religion_sect/not_a_real_instance_rs = i
-		if(initial(not_a_real_instance_rs.starter))
-			. += list(initial(not_a_real_instance_rs.name) = i)
+	var/list/variants = list()
+	for(var/type in subtypesof(/datum/religion/religion_sect))
+		var/datum/religion/religion_sect/sect = new type(src)
+		if(!sect.name)
+			continue
+		if(istype(sect, /datum/religion/religion_sect/custom))
+			sect.name = global.chaplain_religion.bible_info
+		variants[sect.name] = sect
+	return variants
 
 /obj/structure/altar_of_gods/proc/generate_aspect(mob/user)
 	. = list()

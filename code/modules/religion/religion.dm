@@ -77,6 +77,23 @@
 		"NanoTrasen" = "nanotrasen",
 	)
 
+	var/altar_icon_state
+	// Default one is "general".
+	var/static/list/altar_info_by_name = list(
+		"Default" = "altar",
+		"Christianity" = "christianaltar",
+		"Satanism" = "altar",
+		"Yog'Sotherie" = "altar",
+		"Islam" = "altar",
+		"Toolboxia" = "altar",
+		"Science" = "technoaltar",
+		"Technologism" = "technoaltar",
+		"Clownism" = "altar",
+		"Atheism" = "altar",
+		"Slime" = "altar",
+		"NanoTrasen" = "altar",
+	)
+
 	// Default is "0" TO-DO: convert this to icon_states. ~Luduk
 	var/carpet_dir
 	var/static/list/carpet_dir_by_name = list(
@@ -132,6 +149,12 @@
 		pews_icon_state = pews_info
 	else
 		pews_icon_state = "general"
+	
+	var/altar_info = altar_info_by_name[name]
+	if(altar_info)
+		altar_icon_state = altar_info
+	else
+		altar_icon_state = "general"
 
 /datum/religion/proc/religify(areatype)
 	var/list/to_religify = get_area_all_atoms(areatype)
@@ -143,12 +166,10 @@
 			var/obj/structure/stool/bed/chair/pew/P = A
 			P.pew_icon = pews_icon_state
 			P.update_icon()
-		/*
 		else if(istype(A, /obj/structure/altar_of_gods))
 			var/obj/structure/altar_of_gods/G = A
-			G.icon = global.religious_sect.altar_icon 
-			G.icon_state = global.religious_sect.altar_icon_state
-		*/
+			G.icon_state = altar_icon_state
+			G.update_icon()
 
 // This proc returns a bible object of this religion, spawning it at a given location.
 /datum/religion/proc/spawn_bible(atom/location)
