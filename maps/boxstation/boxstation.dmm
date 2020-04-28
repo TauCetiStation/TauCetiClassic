@@ -21906,6 +21906,14 @@
 	icon_state = "neutral"
 	},
 /area/station/civilian/fitness)
+"aNg" = (
+/obj/machinery/camera{
+	c_tag = "Containment Cell 2";
+	dir = 4;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "aNh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
@@ -28207,6 +28215,14 @@
 	icon_state = "warndark"
 	},
 /area/station/hallway/secondary/entry)
+"aYM" = (
+/obj/machinery/camera{
+	c_tag = "Containment Cell 6";
+	dir = 8;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "aYN" = (
 /obj/machinery/camera{
 	c_tag = "Bridge East Entrance"
@@ -28522,6 +28538,14 @@
 	icon_state = "dark"
 	},
 /area/station/medical/morgue)
+"aZq" = (
+/obj/machinery/camera{
+	c_tag = "Containment Cell 1";
+	dir = 4;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "aZr" = (
 /obj/structure/closet/wardrobe/mixed,
 /obj/structure/window/reinforced{
@@ -28704,6 +28728,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/hor)
+"aZE" = (
+/obj/machinery/camera{
+	c_tag = "Containment Cell 7";
+	dir = 8;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
+"aZF" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/wall,
+/area/station/rnd/xenobiology)
 "aZG" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
@@ -28877,6 +28916,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"aZU" = (
+/obj/structure/flora/plant/random,
+/obj/machinery/camera{
+	c_tag = "Xenobiology Module SW";
+	dir = 4;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitepurple"
+	},
+/area/station/rnd/xenobiology)
 "aZV" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -28895,6 +28946,14 @@
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
+"aZX" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/cups,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitepurple"
+	},
+/area/station/rnd/xenobiology)
 "aZY" = (
 /obj/structure/table,
 /obj/item/weapon/aiModule/protectStation,
@@ -53812,11 +53871,12 @@
 	},
 /area/station/rnd/xenobiology)
 "ceC" = (
-/obj/structure/disposalpipe/segment{
+/obj/machinery/camera{
+	c_tag = "Containment Cell 4";
 	dir = 4;
-	icon_state = "pipe-c"
+	network = list("SS13","Research")
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "ceD" = (
 /obj/structure/cable{
@@ -55977,11 +56037,12 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "cjT" = (
-/obj/structure/flora/plant/random,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "whitepurple"
+/obj/machinery/camera{
+	c_tag = "Containment Cell 3";
+	dir = 4;
+	network = list("SS13","Research")
 	},
+/turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "cjU" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
@@ -70807,17 +70868,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "iNb" = (
-/obj/structure/table,
 /obj/machinery/camera{
-	c_tag = "Xenobiology Module SW";
-	dir = 4;
+	c_tag = "Containment Cell 5";
+	dir = 8;
 	network = list("SS13","Research")
 	},
-/obj/item/weapon/storage/box/cups,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "whitepurple"
-	},
+/turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "iPb" = (
 /obj/structure/sign/warning/securearea{
@@ -121274,10 +121330,10 @@ aaa
 aaa
 cbD
 axp
-cjT
+aZU
 axZ
 ayB
-iNb
+aZX
 azg
 cbD
 aBm
@@ -121776,17 +121832,17 @@ aah
 aah
 cbD
 cjq
+cjT
 ckC
-ckC
-cbD
+cjv
 cjq
+aNg
 ckC
-ckC
-cbD
+cjv
 cjq
+aZq
 ckC
-ckC
-cbD
+cjv
 cgq
 cey
 czY
@@ -122035,15 +122091,15 @@ cbD
 cjr
 ckD
 ckC
-cbD
+cjv
 cjr
 ckC
 ckC
-cbD
+cjv
 cjr
 ckD
 ckC
-cbD
+cjv
 axv
 cey
 fLb
@@ -122300,7 +122356,7 @@ cjv
 cjr
 ckC
 ckC
-cbD
+cjv
 aus
 cnk
 bQz
@@ -122557,7 +122613,7 @@ nub
 aVV
 avZ
 aWr
-cbD
+cjv
 avL
 cey
 bSl
@@ -122814,7 +122870,7 @@ cqU
 cnU
 ckF
 cuF
-cbD
+cjv
 asQ
 coY
 ayE
@@ -123054,7 +123110,7 @@ aaa
 aah
 czC
 ckC
-ckC
+ceC
 ckC
 aqv
 ara
@@ -123842,7 +123898,7 @@ arr
 cqu
 atM
 awy
-cbD
+cjv
 cpR
 cey
 bdd
@@ -124099,7 +124155,7 @@ nub
 aWp
 awa
 aWM
-cbD
+cjv
 ayj
 cey
 cMz
@@ -124356,7 +124412,7 @@ cjv
 cjr
 ckC
 ckC
-cbD
+cjv
 cpT
 cey
 aqF
@@ -124605,15 +124661,15 @@ cbD
 ckC
 ckC
 ckC
-cbD
+cjv
 cjr
 ckC
 ckC
-cbD
+cjv
 cjr
 ckC
 ckC
-cbD
+cjv
 cuL
 cey
 bkG
@@ -124860,17 +124916,17 @@ aaa
 aaa
 cbD
 ckC
+iNb
 ckC
-ckC
-cbD
+cjv
 avx
+aYM
 ckC
-ckC
-cbD
+cjv
 avx
+aZE
 ckC
-ckC
-ceC
+aZF
 ayS
 ayT
 bkM
