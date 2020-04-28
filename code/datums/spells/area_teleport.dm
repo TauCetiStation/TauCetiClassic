@@ -12,7 +12,7 @@
 		return
 	if(charge_type == "recharge" && recharge)
 		INVOKE_ASYNC(src, .proc/start_recharge)
-	cast_with_favor(targets, thearea)
+	cast(targets, thearea)
 	invocation()
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/before_cast(list/targets)

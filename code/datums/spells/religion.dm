@@ -16,8 +16,9 @@
 
 /obj/effect/proc_holder/spell/targeted/spawn_bible/cast()
 	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
-		if(M.eyecheck() <= 0)
-			M.flash_eyes()
+		if(!M.mind.holy_role >= HOLY_ROLE_PRIEST)
+			if(M.eyecheck() <= 0)
+				M.flash_eyes()
 
 	for(var/i in 1 to divine_power)
 		global.chaplain_religion.spawn_bible(usr.loc)
@@ -53,14 +54,14 @@
 		revert_cast()
 		return
 
-	H.apply_damages(-rand(-5, 3) - divine_power, -rand(-5, 3) - divine_power, -rand(-5, 3) - divine_power)
+	H.apply_damages(divine_power * rand(-2, 10) * 0.1, divine_power * rand(-2, 10) * 0.1, divine_power * rand(-2, 10) * 0.1)
 
 /obj/effect/proc_holder/spell/targeted/heal/damage
 	name = "Damage"
 
 	favor_cost = 300
 	charge_max = 1.5 MINUTES
-	divine_power = 2 //power
+	divine_power = 5 //power
 	needed_aspect = list(ASPECT_OBSCURE = 1, ASPECT_CHAOS = 1)
 
 	action_icon_state = "god_default"
@@ -169,20 +170,17 @@
 	sound = 'sound/effects/phasein.ogg'
 
 /obj/effect/proc_holder/spell/targeted/food/cast()
-	var/list/borks = subtypesof(/obj/item/weapon/reagent_containers/food/snacks)
-
 	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
-		if(M.eyecheck() <= 0)
-			M.flash_eyes()
+		if(!M.mind.holy_role >= HOLY_ROLE_PRIEST)
+			if(M.eyecheck() <= 0)
+				M.flash_eyes()
 
 	for(var/i in 1 to 4 + rand(1, divine_power))
-		var/chosen = pick(borks)
-		var/obj/B = new chosen
-		if(B)
-			B.loc = usr.loc
-			if(prob(50))
-				for(var/j in 1 to rand(1, 3))
-					step(B, pick(NORTH,SOUTH,EAST,WEST))
+		var/chosen = pick(/obj/random/foods/drink_can, /obj/random/foods/drink_bottle, /obj/random/foods/food_snack, /obj/random/foods/food_without_garbage)
+		var/obj/B = new chosen(usr.loc)
+		if(B && prob(50))
+			for(var/j in 1 to rand(1, 3))
+				step(B, pick(NORTH,SOUTH,EAST,WEST))
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal
 	name = "Create random friendly animal"
@@ -204,6 +202,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal/cast()
 	summon_amt += divine_power
 	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
-		if(M.eyecheck() <= 0)
-			M.flash_eyes()
+		if(!M.mind.holy_role >= HOLY_ROLE_PRIEST)
+			if(M.eyecheck() <= 0)
+				M.flash_eyes()
 	..()

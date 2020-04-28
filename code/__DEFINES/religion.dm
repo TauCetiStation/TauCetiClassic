@@ -20,6 +20,7 @@
 #define HOLY_ROLE_HIGHPRIEST 2 //the one who designates the religion
 
 //Apect defines
+//Other informations about aspect in aspect.dm
 #define ASPECT_DEATH        "Mortem"
 #define ASPECT_SCIENCE      "Progressus"
 #define ASPECT_FOOD         "Fames"

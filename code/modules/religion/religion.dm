@@ -78,20 +78,12 @@
 	)
 
 	var/altar_icon_state
-	// Default one is "general".
+
 	var/static/list/altar_info_by_name = list(
 		"Default" = "altar",
 		"Christianity" = "christianaltar",
-		"Satanism" = "altar",
-		"Yog'Sotherie" = "altar",
-		"Islam" = "altar",
-		"Toolboxia" = "altar",
 		"Science" = "technoaltar",
 		"Technologism" = "technoaltar",
-		"Clownism" = "altar",
-		"Atheism" = "altar",
-		"Slime" = "altar",
-		"NanoTrasen" = "altar",
 	)
 
 	// Default is "0" TO-DO: convert this to icon_states. ~Luduk
@@ -154,7 +146,7 @@
 	if(altar_info)
 		altar_icon_state = altar_info
 	else
-		altar_icon_state = "general"
+		altar_icon_state = "altar"
 
 /datum/religion/proc/religify(areatype)
 	var/list/to_religify = get_area_all_atoms(areatype)

@@ -75,12 +75,13 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 					return 0
 
 	if(!skipcharge)
-		if(favor_cost > 0 && !religious_sect)
-			to_chat(usr, "First choose aspects in your religion!")
-			return 0
-		if(favor_cost > 0 && religious_sect.favor < favor_cost)
-			to_chat(usr, "You need [favor_cost - religious_sect.favor] more favors.")
-			return 0
+		if(usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+			if(favor_cost > 0 && !religious_sect)
+				to_chat(usr, "First choose aspects in your religion!")
+				return 0
+			if(favor_cost > 0 && religious_sect.favor < favor_cost)
+				to_chat(usr, "You need [favor_cost - religious_sect.favor] more favors.")
+				return 0
 
 	if(usr.stat && !stat_allowed)
 		to_chat(usr, "Not when you're incapacitated.")
@@ -114,6 +115,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				charge_counter-- //returns the charge if the targets selecting fails
 			if("holdervar")
 				adjust_var(user, holder_var_type, holder_var_amount)
+
+		if(favor_cost > 0)
+			global.religious_sect.favor -= favor_cost //steals favor from spells per favor
 
 	return 1
 
@@ -161,7 +165,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(prob(critfailchance))
 		critfail(targets)
 	else
-		cast_with_favor(targets)
+		cast(targets)
 	after_cast(targets)
 
 /obj/effect/proc_holder/spell/proc/before_cast(list/targets)
@@ -204,12 +208,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 /obj/effect/proc_holder/spell/proc/cast(list/targets)
 	return
-
-//Casting spells behind favor
-/obj/effect/proc_holder/spell/proc/cast_with_favor(list/targets, area/thearea)
-	if(favor_cost > 0)
-		religious_sect.favor -= favor_cost
-	cast(targets, thearea)
 
 /obj/effect/proc_holder/spell/proc/critfail(list/targets)
 	return

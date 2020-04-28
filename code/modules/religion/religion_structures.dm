@@ -53,89 +53,93 @@
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
 	//If we can sac, we do nothing but the sacrifice instead of typical attackby behavior (IE damage the structure)
-	if(global.religious_sect && global.religious_sect.can_sacrifice(C, user))
-		global.religious_sect.on_sacrifice(C, user)
-		return TRUE
-	//everything below is assumed you're bibling it up
-	if(istype(C, /obj/item/weapon/nullrod/staff))
+	if(global.religious_sect && global.religious_sect.sect_aspects)
+		for(var/aspect in global.religious_sect.sect_aspects)
+			var/datum/aspect/asp = global.religious_sect.sect_aspects[aspect]
+			asp.sacrifice(C, user)
+
+	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
+		to_chat(user, "<span class='warning'>You don't know how to use this.</span>")
+		return
+
+	//start ritual
+	if(istype(C, /obj/item/weapon/nullrod))
 		if(!global.religious_sect)
 			to_chat(user, "<span class='notice'>First choose aspects in your religion!</span>")
 			return
-	if(!istype(C, /obj/item/weapon/storage/bible))
-		return
-	if(global.religious_sect)
+
 		if(!global.religious_sect.rites_list)
 			to_chat(user, "<span class='notice'>Your religion doesn't have any rites to perform!</span>")
 			return
-		var/rite_select = input(user,"Select a rite to perform!", "Select a rite", null) in global.religious_sect.rites_list
+
+		if(user.is_busy() || user.incapacitated())
+			return
+
+		var/rite_select = input(user, "Select a rite to perform!", "Select a rite", null) in global.religious_sect.rites_list
 		if(!rite_select)
 			to_chat(user,"<span class ='warning'>You cannot perform the rite at this time.</span>")
 			return
+
 		var/selection2type = global.religious_sect.rites_list[rite_select]
 		performing_rite = new selection2type(src)
+
 		if(!performing_rite.perform_rite(user, src))
 			QDEL_NULL(performing_rite)
 		else
 			performing_rite.invoke_effect(user, src)
 			global.religious_sect.adjust_favor(-performing_rite.favor_cost)
 			QDEL_NULL(performing_rite)
-		return
 
-	if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
-		to_chat(user, "<span class='warning'>You don't know how to use this.</span>")
-		return
+	//choose aspect preset
+	if(istype(C, /obj/item/weapon/storage/bible))
+		if(!global.religious_sect)
+			var/list/available_options = generate_available_sects(user)
+			if(!available_options)
+				return
 
-	//choose sect
-	var/list/available_options = generate_available_sects(user)
-	if(!available_options)
-		return
+			var/sect_select = input(user, "Select a aspects preset", "Select a preset", null) in available_options
+			if(!sect_select)
+				to_chat(user,"<span class ='warning'>You cannot select a sect at this time.</span>")
+				return
 
-	var/sect_select = input(user, "Select a aspects preset", "Select a preset", null) in available_options
-	if(!sect_select)
-		to_chat(user,"<span class ='warning'>You cannot select a sect at this time.</span>")
-		return
+			global.religious_sect = available_options[sect_select]
+			sect_to_altar = global.religious_sect
 
-	global.religious_sect = available_options[sect_select]
-	sect_to_altar = global.religious_sect
+			if(istype(global.religious_sect, /datum/religion/religion_sect/custom))
+				global.religious_sect.name = global.chaplain_religion.name
 
-	if(istype(global.religious_sect, /datum/religion/religion_sect/custom))
-		global.religious_sect.name = global.chaplain_religion.name
+			if(global.religious_sect.allow_aspect)
+				//choose aspects for the god and his desire
+				var/list/aspects = generate_aspect(user)
+				if(!aspects)
+					return
 
-	if(global.religious_sect.allow_aspect)
-		//choose aspects for the god and his desire
-		var/list/aspects = generate_aspect(user)
-		if(!aspects)
-			return
+				for(var/i in 1 to 3)
+					var/aspect_select = input(user, "Select a aspect of god (You CANNOT revert this decision!)", "Select a aspect of god", null) in aspects
+					var/type_selected = aspects[aspect_select]
+					if(!istype(global.religious_sect.sect_aspects[aspect_select], type_selected))
+						global.religious_sect.sect_aspects[aspect_select] = new type_selected()
+					else
+						var/datum/aspect/asp = global.religious_sect.sect_aspects[aspect_select]
+						asp.power += 1
 
-		for(var/i in 1 to 3)
-			var/aspect_select = input(user, "Select a aspect of god (You CANNOT revert this decision!)", "Select a aspect of god", null) in aspects
-			var/type_selected = aspects[aspect_select]
-			if(!istype(global.religious_sect.sect_aspects[aspect_select], type_selected))
-				global.religious_sect.sect_aspects[aspect_select] = new type_selected()
+				//add rites
+				for(var/i in global.religious_sect.sect_aspects)
+					var/datum/aspect/asp = global.religious_sect.sect_aspects[i]
+					if(asp.rite)
+						global.religious_sect.rites_list += asp.rite
 			else
-				var/datum/aspect/asp = global.religious_sect.sect_aspects[aspect_select]
-				asp.power += 1
+				if(global.religious_sect.aspect_preset.len != 0)
+					for(var/aspect in global.religious_sect.aspect_preset)
+						var/datum/aspect/asp = new aspect()
+						asp.power = global.religious_sect.aspect_preset[aspect]
+						global.religious_sect.sect_aspects[asp.name] = asp
 
-		//add rites
-		for(var/i in global.religious_sect.sect_aspects)
-			var/datum/aspect/asp = global.religious_sect.sect_aspects[i]
-			if(asp.rite)
-				global.religious_sect.rites_list += asp.rite
-			if(asp.desire)
-				global.religious_sect.desired_items += asp.desire
-	else
-		if(global.religious_sect.aspect_preset.len != 0)
-			for(var/aspect in global.religious_sect.aspect_preset)
-				var/datum/aspect/asp = new aspect()
-				asp.power = global.religious_sect.aspect_preset[aspect]
-				global.religious_sect.sect_aspects[asp.name] = asp
+			if(isliving(user))
+				if(user.mind && user.mind.holy_role >= HOLY_ROLE_PRIEST)
+					global.religious_sect.on_conversion(user)
 
-	if(isliving(user))
-		if(user.mind && user.mind.holy_role >= HOLY_ROLE_PRIEST)
-			global.religious_sect.on_conversion(user)
-
-	global.religious_sect.update_rites()
-	global.religious_sect.update_desire()
+			global.religious_sect.update_rites()
 
 /obj/structure/altar_of_gods/proc/generate_available_sects(mob/user) //eventually want to add sects you get from unlocking certain achievements
 	var/list/variants = list()
@@ -143,8 +147,7 @@
 		var/datum/religion/religion_sect/sect = new type(src)
 		if(!sect.name)
 			continue
-		if(istype(sect, /datum/religion/religion_sect/custom))
-			sect.name = global.chaplain_religion.bible_info
+		sect.name += global.chaplain_religion.name
 		variants[sect.name] = sect
 	return variants
 
