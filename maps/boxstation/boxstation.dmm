@@ -16780,10 +16780,20 @@
 /area/station/civilian/gym)
 "aDv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/turf/simulated/floor/carpet,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
 /area/station/civilian/chapel)
 "aDw" = (
 /obj/structure/stool/bed/chair/comfy/brown{
@@ -21907,12 +21917,21 @@
 	},
 /area/station/civilian/fitness)
 "aNg" = (
-/obj/machinery/alarm{
-	dir = 1;
-	pixel_y = -24
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
 "aNh" = (
@@ -23438,11 +23457,12 @@
 	},
 /area/station/cargo/qm)
 "aPX" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -23466,26 +23486,30 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/station/civilian/chapel)
 "aQa" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/civilian/chapel)
+/turf/simulated/wall,
+/area/station/civilian/chapel/altar)
 "aQb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/stool/bed/chair/pew/right,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "chapel"
 	},
 /area/station/civilian/chapel)
 "aQc" = (
@@ -23572,13 +23596,16 @@
 /area/station/civilian/chapel)
 "aQl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
-	d1 = 2;
+	d1 = 1;
 	d2 = 8;
-	icon_state = "2-8"
+	icon_state = "1-8"
 	},
-/turf/simulated/floor/carpet,
-/area/station/civilian/chapel)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/chapel/altar)
 "aQm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -24516,13 +24543,16 @@
 /turf/simulated/floor/plating,
 /area/station/medical/storage)
 "aRT" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+	dir = 5
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/chapel)
+/area/station/civilian/chapel/altar)
 "aRU" = (
 /obj/item/device/radio/off{
 	pixel_x = -6;
@@ -25659,14 +25689,13 @@
 	},
 /area/station/civilian/chapel/office)
 "aUc" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/carpet,
-/area/station/civilian/chapel)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/chapel/altar)
 "aUd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -28223,21 +28252,15 @@
 	},
 /area/station/hallway/secondary/entry)
 "aYM" = (
-/obj/machinery/light/small{
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = 28
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/camera{
-	c_tag = "Chapel Altar";
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "aYN" = (
 /obj/machinery/camera{
@@ -28554,6 +28577,12 @@
 	icon_state = "dark"
 	},
 /area/station/medical/morgue)
+"aZq" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/civilian/chapel/altar)
 "aZr" = (
 /obj/structure/closet/wardrobe/mixed,
 /obj/structure/window/reinforced{
@@ -28736,6 +28765,29 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/hor)
+"aZE" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet,
+/area/station/civilian/chapel)
+"aZF" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/civilian/chapel/altar)
 "aZG" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
@@ -28909,6 +28961,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"aZU" = (
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/chapel/altar)
 "aZV" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -28927,6 +28988,23 @@
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
+"aZX" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 28
+	},
+/obj/machinery/camera{
+	c_tag = "Chapel Altar";
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/civilian/chapel/altar)
 "aZY" = (
 /obj/structure/table,
 /obj/item/weapon/aiModule/protectStation,
@@ -29160,12 +29238,8 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel)
 "bax" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -30206,17 +30280,18 @@
 	},
 /area/station/hallway/secondary/entry)
 "bcq" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "bcr" = (
 /obj/machinery/light{
@@ -30572,12 +30647,10 @@
 	},
 /area/station/rnd/xenobiology)
 "bdb" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "chapel"
@@ -30714,9 +30787,18 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel)
 "bdq" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/stool/bed/chair/pew/right,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "chapel"
@@ -30726,7 +30808,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/chapel)
+/area/station/civilian/chapel/altar)
 "bdu" = (
 /obj/structure/girder,
 /turf/simulated/floor/plating,
@@ -33486,11 +33568,20 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Altar APC";
+	pixel_y = 28
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/station/civilian/chapel)
+/area/station/civilian/chapel/altar)
 "biG" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -33500,10 +33591,15 @@
 	req_access = list(22)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/chapel)
+/area/station/civilian/chapel/altar)
 "biH" = (
 /obj/machinery/light/small,
 /obj/structure/stool/bed/chair/schair/wagon{
@@ -33942,15 +34038,15 @@
 /area/station/maintenance/engineering)
 "bjK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
+/turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "bjL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -35120,16 +35216,21 @@
 "blM" = (
 /obj/machinery/windowtint{
 	id = "Chapel";
+	pixel_x = 4;
 	pixel_y = 28
 	},
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/light_switch{
+	pixel_x = -4;
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/station/civilian/chapel)
+/area/station/civilian/chapel/altar)
 "blN" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -35158,7 +35259,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/chapel)
+/area/station/civilian/chapel/altar)
 "blR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -35890,11 +35991,12 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/station/civilian/chapel)
+/area/station/civilian/chapel/altar)
 "bnM" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -36823,7 +36925,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/station/civilian/chapel)
+/area/station/civilian/chapel/altar)
 "bpU" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -37741,7 +37843,7 @@
 	id = "chapel"
 	},
 /turf/simulated/floor/plating,
-/area/station/civilian/chapel)
+/area/station/civilian/chapel/altar)
 "bsh" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/lights/mixed,
@@ -37754,7 +37856,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/chapel)
+/area/station/civilian/chapel/altar)
 "bsj" = (
 /obj/structure/stool/bed/chair/pew/right,
 /turf/simulated/floor{
@@ -37765,6 +37867,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/stool/bed/chair/pew/right,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "chapel"
 	},
@@ -37953,6 +38060,11 @@
 "bsE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "bsF" = (
@@ -37970,7 +38082,7 @@
 	id = "chapel"
 	},
 /turf/simulated/floor/plating,
-/area/station/civilian/chapel)
+/area/station/civilian/chapel/altar)
 "bsG" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -38953,7 +39065,7 @@
 	id = "chapel"
 	},
 /turf/simulated/floor/plating,
-/area/station/civilian/chapel)
+/area/station/civilian/chapel/altar)
 "buU" = (
 /obj/machinery/door/window{
 	dir = 8;
@@ -39032,6 +39144,11 @@
 "bvd" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
@@ -40750,6 +40867,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "byK" = (
@@ -40760,7 +40882,7 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/station/civilian/chapel)
+/area/station/civilian/chapel/altar)
 "byM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -125750,7 +125872,7 @@ aVp
 aVp
 aVp
 bvd
-aQl
+aZE
 aSd
 aTu
 aUj
@@ -126006,7 +126128,7 @@ aVp
 aVp
 aVp
 aVp
-buQ
+aYM
 aVp
 bMb
 byZ
@@ -126520,7 +126642,7 @@ aWJ
 buK
 aWJ
 aVp
-aUc
+bcq
 bdE
 bMb
 byZ
@@ -126774,10 +126896,10 @@ bjL
 bax
 bdq
 bsk
-bdq
+aQb
 bsk
 bsE
-aDv
+bjK
 aRK
 aIU
 bam
@@ -127028,8 +127150,8 @@ aIU
 bQn
 azS
 bao
-bjK
 bpN
+aDv
 aPY
 bgv
 bpN
@@ -127285,14 +127407,14 @@ aIU
 aIU
 aIU
 aIU
-bcq
 bpO
+aNg
 aIU
-aIU
+aQa
 buR
 bsf
 bsF
-aIU
+aQa
 aIU
 byZ
 bcb
@@ -127544,13 +127666,13 @@ bgX
 bjR
 bdb
 aPX
-aIU
-aIU
+aQa
+aQa
 byK
 bdr
-bpN
-aIU
-aIU
+aZq
+aQa
+aQa
 aTX
 bQA
 bSW
@@ -127800,14 +127922,14 @@ bJE
 bgx
 bCN
 bdg
-bjK
-aIU
+aDv
+aQa
 biF
 blP
 bdr
 bdr
-biF
-aIU
+aZF
+aQa
 bOw
 bOw
 bOw
@@ -128059,12 +128181,12 @@ bQy
 bdn
 aPZ
 biG
-aQa
-aQb
+aQl
+aRT
 bsi
 bdr
-aNg
-aIU
+aZU
+aQa
 aaa
 aaa
 aaa
@@ -128315,13 +128437,13 @@ baN
 baN
 aIU
 aIU
-aIU
+aQa
 blM
-aRT
+aUc
 bdr
 bdr
-aYM
-aIU
+aZX
+aQa
 aaa
 aaa
 aaa
@@ -128572,13 +128694,13 @@ aaa
 aaa
 aaa
 aaa
-aIU
-aIU
+aQa
+aQa
 bnL
 bdr
-bpN
-aIU
-aIU
+aZq
+aQa
+aQa
 aaa
 aaa
 aaa
@@ -128830,11 +128952,11 @@ aaa
 aaa
 aaa
 aaa
-aIU
+aQa
 bpT
 bpT
 bpT
-aIU
+aQa
 aaa
 aaa
 aaa
