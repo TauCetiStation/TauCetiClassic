@@ -130,6 +130,48 @@
 	..()
 	playsound(src, pick(SOUNDIN_CLOWNSTEP), VOL_EFFECTS_MASTER)
 
+/obj/item/clothing/shoes/jolly_gravedigger
+	name = "jolly gravedigger shoes"
+	desc = "Traditional funereal ceremony shoes originating from poor areas."
+	icon_state = "laceups"
+	clipped_status = CLIPPABLE
+
+	var/waddling = FALSE
+
+/obj/item/clothing/shoes/jolly_gravedigger/Destroy()
+	if(waddling)
+		stop_waddling(loc)
+	return ..()
+
+/obj/item/clothing/shoes/jolly_gravedigger/proc/start_waddling(mob/user)
+	RegisterSignal(user, list(COMSIG_LIVING_STOP_PULL), .proc/stop_waddling)
+	UnregisterSignal(user, list(COMSIG_LIVING_START_PULL))
+
+	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED))
+	waddling = TRUE
+
+/obj/item/clothing/shoes/jolly_gravedigger/proc/stop_waddling(mob/user)
+	UnregisterSignal(user, list(COMSIG_LIVING_STOP_PULL))
+	if(slot_equipped == SLOT_SHOES)
+		RegisterSignal(user, list(COMSIG_LIVING_START_PULL), .proc/check_coffin)
+	qdel(user.GetComponent(/datum/component/waddle))
+	waddling = FALSE
+
+/obj/item/clothing/shoes/jolly_gravedigger/equipped(mob/user, slot)
+	if(slot == SLOT_SHOES)
+		RegisterSignal(user, list(COMSIG_LIVING_START_PULL), .proc/check_coffin)
+	else if(waddling)
+		stop_waddling(user)
+
+/obj/item/clothing/shoes/jolly_gravedigger/dropped(mob/user)
+	if(waddling)
+		stop_waddling(user)
+
+/obj/item/clothing/shoes/jolly_gravedigger/proc/check_coffin(datum/source, atom/movable/target)
+	if(!istype(target, /obj/structure/closet/coffin))
+		return
+	start_waddling(source)
+
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
