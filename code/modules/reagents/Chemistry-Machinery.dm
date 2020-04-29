@@ -23,6 +23,8 @@
 		"sodium", "aluminum", "silicon", "phosphorus", "sulfur", "chlorine", "potassium", "iron",
 		"copper", "mercury", "radium", "water", "ethanol", "sugar", "sacid", "tungsten"
 	)
+	var/list/premium_reagents = list()
+	
 
 /obj/machinery/chem_dispenser/atom_init()
 	. = ..()
@@ -303,7 +305,7 @@
 	accept_glass = 1
 	max_energy = 100
 	dispensable_reagents = list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","watermelonjuice")
-	var/list/premium_reagents = list("thirteenloko","grapesoda")
+	premium_reagents = list("thirteenloko","grapesoda")
 /obj/machinery/chem_dispenser/soda/attackby(obj/item/weapon/B, mob/user)
 	..()
 	if(ismultitool(B))
@@ -331,7 +333,7 @@
 	max_energy = 100
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead")
-	var/list/premium_reagents = list("goldschlager","patron","watermelonjuice","berryjuice")
+	premium_reagents = list("goldschlager","patron","watermelonjuice","berryjuice")
 /obj/machinery/chem_dispenser/beer/attackby(obj/item/weapon/B, mob/user)
 	..()
 
