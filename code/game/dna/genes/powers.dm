@@ -231,8 +231,6 @@
 	..(M,connected,flags)
 
 /mob/living/carbon/human/proc/try_mutate_to_hulk()
-	if(!(HULK in mutations))
-		return
 	if(species.flags[NO_PAIN]) // hulk mechanic is revolving around pain, and also all the species that don't have hulk form have this flag.
 		to_chat(src, "<span class='warning'>Your hulk gene is not dominant!</span>")
 		return
