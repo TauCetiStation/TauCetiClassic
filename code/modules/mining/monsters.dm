@@ -473,7 +473,7 @@
 				if(istype(C, /obj/item/clothing/suit/space))
 					var/obj/item/clothing/suit/space/S = C
 					S.breach_threshold = min(S.breach_threshold + 2, 24)
-				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
+				to_chat(user, "<span class='info'>You strengthen [target], improving its armor.</span>")
 				qdel(src)
 			else
 				to_chat(user, "<span class='warning'>You can't improve [C] any further!</span>")
@@ -487,7 +487,7 @@
 				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
 				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
 				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
-				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
+				to_chat(user, "<span class='info'>You strengthen [target], improving its armor.</span>")
 				D.update_icon()
 				if(D.hides == 3)
 					D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - its pilot must be an experienced monster hunter."
