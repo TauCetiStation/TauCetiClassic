@@ -468,7 +468,7 @@
 		if(istype(target, /obj/item/clothing/suit/space) || istype(target, /obj/item/clothing/head/helmet/space))
 			var/obj/item/clothing/C = target
 			var/list/current_armor = C.armor
-			if((current_armor["melee"]) || (current_armor["bullet"]) || (current_armor["laser"] < 80))
+			if((current_armor["melee"])+(current_armor["bullet"])+(current_armor["laser"] < 240))
 				current_armor["melee"] = min(current_armor["melee"] + 10, 80)
 				current_armor["bullet"] = min(current_armor["bullet"] + 10, 80)
 				current_armor["laser"] = min(current_armor["laser"] + 10, 80)
@@ -489,7 +489,7 @@
 				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
 				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
 				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
-				to_chat(user, "<span class='info'>You strengthen [target], improving its armor.</span>")
+				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				D.update_icon()
 				if(D.hides == 3)
 					D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - its pilot must be an experienced monster hunter."
@@ -499,4 +499,3 @@
 			else
 				to_chat(user, "<span class='warning'>You can't improve [D] any further!</span>")
 				return
-
