@@ -428,6 +428,17 @@
 	. = ..()
 	reagents.add_reagent("limejuice", 100)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/lemonjuice
+	name = "Lemon Juice"
+	desc = "Phew, very sour."
+	icon_state = "lemonjuice"
+	item_state = "carton"
+	is_glass = 0
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/lemonjuice/atom_init()
+	. = ..()
+	reagents.add_reagent("lemonjuice", 100)
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/ale
 	name = "Magm-Ale"
 	desc = "A true dorf's drink of choice."
