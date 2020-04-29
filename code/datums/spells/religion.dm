@@ -16,9 +16,8 @@
 
 /obj/effect/proc_holder/spell/targeted/spawn_bible/cast()
 	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
-		if(!M.mind.holy_role >= HOLY_ROLE_PRIEST)
-			if(M.eyecheck() <= 0)
-				M.flash_eyes()
+		if(!M.mind.holy_role && M.eyecheck() <= 0)
+			M.flash_eyes()
 
 	for(var/i in 1 to divine_power)
 		global.chaplain_religion.spawn_bible(usr.loc)
@@ -118,7 +117,6 @@
 	clothes_req = 0
 
 	action_icon_state = "charge"
-	sound = 'sound/magic/Charge.ogg'
 
 /obj/effect/proc_holder/spell/targeted/charge/religion/cast()
 	var/charged = FALSE
@@ -147,7 +145,7 @@
 				cell_charge(Cell)
 
 	if(charged)
-		//playsound(usr, 'sound/magic/Charge.ogg', VOL_EFFECTS_MASTER)
+		playsound(usr, 'sound/magic/Charge.ogg', VOL_EFFECTS_MASTER)
 		to_chat(usr, "<span class='notice'>You have charged cell in a radiuse!</span>")
 	else
 		to_chat(usr, "<span class='notice'>There is nothing to charge in the radius!</span>")
@@ -171,16 +169,17 @@
 
 /obj/effect/proc_holder/spell/targeted/food/cast()
 	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
-		if(!M.mind.holy_role >= HOLY_ROLE_PRIEST)
-			if(M.eyecheck() <= 0)
-				M.flash_eyes()
+		if(!M.mind.holy_role && M.eyecheck() <= 0)
+			M.flash_eyes()
 
 	for(var/i in 1 to 4 + rand(1, divine_power))
 		var/chosen = pick(/obj/random/foods/drink_can, /obj/random/foods/drink_bottle, /obj/random/foods/food_snack, /obj/random/foods/food_without_garbage)
-		var/obj/B = new chosen(usr.loc)
+		var/obj/randomcatcher/CATCH = new /obj/randomcatcher(usr.loc)
+		var/obj/B = CATCH.get_item(chosen)
 		if(B && prob(50))
 			for(var/j in 1 to rand(1, 3))
 				step(B, pick(NORTH,SOUTH,EAST,WEST))
+		qdel(CATCH)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal
 	name = "Create random friendly animal"
@@ -202,7 +201,6 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal/cast()
 	summon_amt += divine_power
 	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
-		if(!M.mind.holy_role >= HOLY_ROLE_PRIEST)
-			if(M.eyecheck() <= 0)
-				M.flash_eyes()
+		if(!M.mind.holy_role && M.eyecheck() <= 0)
+			M.flash_eyes()
 	..()

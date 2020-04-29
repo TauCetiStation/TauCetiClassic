@@ -29,7 +29,7 @@
 		OS.scanned_type = src.type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 	if(istype(W, /obj/item/weapon/nullrod))
-		if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.holy_role >= HOLY_ROLE_PRIEST || user.mind.role_alt_title == "Paranormal Investigator")))
+		if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")))
 			poof()
 
 /obj/item/weapon/dice/ghost/proc/poof()

@@ -74,14 +74,13 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 					to_chat(usr, "[name] has no charges left.")
 					return 0
 
-	if(!skipcharge)
-		if(usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-			if(favor_cost > 0 && !religious_sect)
-				to_chat(usr, "First choose aspects in your religion!")
-				return 0
-			if(favor_cost > 0 && religious_sect.favor < favor_cost)
-				to_chat(usr, "You need [favor_cost - religious_sect.favor] more favors.")
-				return 0
+	if(!skipcharge && usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+		if(favor_cost > 0 && !religious_sect)
+			to_chat(usr, "First choose aspects in your religion!")
+			return 0
+		if(favor_cost > 0 && religious_sect.favor < favor_cost)
+			to_chat(usr, "You need [favor_cost - religious_sect.favor] more favors.")
+			return 0
 
 	if(usr.stat && !stat_allowed)
 		to_chat(usr, "Not when you're incapacitated.")
@@ -116,7 +115,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			if("holdervar")
 				adjust_var(user, holder_var_type, holder_var_amount)
 
-		if(favor_cost > 0)
+		if(favor_cost > 0 && usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 			global.religious_sect.favor -= favor_cost //steals favor from spells per favor
 
 	return 1

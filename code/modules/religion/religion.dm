@@ -78,7 +78,7 @@
 	)
 
 	var/altar_icon_state
-
+	// Default one is "altar"
 	var/static/list/altar_info_by_name = list(
 		"Default" = "altar",
 		"Christianity" = "christianaltar",
@@ -146,7 +146,7 @@
 	if(altar_info)
 		altar_icon_state = altar_info
 	else
-		altar_icon_state = "altar"
+		altar_icon_state = altar_info_by_name["Default"]
 
 /datum/religion/proc/religify(areatype)
 	var/list/to_religify = get_area_all_atoms(areatype)

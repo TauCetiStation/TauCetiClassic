@@ -3,24 +3,11 @@
 	var/desc = "This aspect not used in game"
 	//can only be increased if you select one aspect twice and more times
 	var/power = 1
-	//items for desire
-	var/list/desire
-	//stores all possible types of desire item
-	var/list/desired_items_typecache
-	//path for items which dont enter in desire list
-	var/not_in_desire
 	//add the rite in a sect
 	var/rite
 
-/datum/aspect/New()
-	if(desire)
-		desired_items_typecache = typecacheof(desire)
-		if(not_in_desire)
-			desired_items_typecache -= subtypesof(not_in_desire)
-
 /datum/aspect/proc/sacrifice(obj/item/I, mob/living/L)
-	if(!is_type_in_typecache(I, desired_items_typecache))
-		return
+	return
 
 //Gives mana from: any external organs, limbs, dead body and other meat
 //Needed for: spells and rituals related to the theme of death, interaction with dead body, necromancy
@@ -28,26 +15,22 @@
 	name = "Mortem" //death
 	desc = "You can consider it necromancy"
 
-	desire = list(/obj/item/organ/external, /obj/item/brain, /obj/item/weapon/reagent_containers/blood)
-
 	rite = /datum/religion_rites/sacrifice
 
 /datum/aspect/mortem/sacrifice(obj/item/I, mob/living/L)
-	if(!is_type_in_typecache(I, desired_items_typecache))
-		return
-
 	if(istype(I, /obj/item/weapon/reagent_containers/blood))
 		var/obj/item/weapon/reagent_containers/blood/blood = I
 		if(!blood.reagents || blood.reagents && blood.reagents.total_volume <= 0)
 			to_chat(L, "<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity [I] without useful material.</span>")
-			return
+			return FALSE
 		religious_sect.adjust_favor(25, L)
+		return TRUE
 
-	if(istype(I, /obj/item/organ/external) || istype(I, /obj/item/brain))
+	else if(istype(I, /obj/item/organ/external) || istype(I, /obj/item/brain))
 		religious_sect.adjust_favor(50, I)
+		return TRUE
 	
-	to_chat(L, "<span class='notice'>You offer [I]'s power to [pick(global.chaplain_religion.deity_names)], pleasing them.</span>")
-	qdel(I)
+	return FALSE
 
 //Gives mana from: sci-fi things, scientist points
 //Needed for: spells and rituals related to the theme of sci-fi, future
@@ -55,29 +38,24 @@
 	name = "Progressus" //science
 	desc = "Sci-fi items and other science"
 
-	desire = list(/obj/item/weapon/stock_parts, /obj/item/weapon/circuitboard, /obj/item/device/assembly,)
-
-	not_in_desire = /obj/item/weapon/stock_parts/cell
-
 	rite = /datum/religion_rites/synthconversion
 
 /datum/aspect/progressus/sacrifice(obj/item/I, mob/living/L)
-	if(!is_type_in_typecache(I, desired_items_typecache))
-		return
-
 	if(istype(I, /obj/item/weapon/stock_parts))
 		var/obj/item/weapon/stock_parts/part = I
 		religious_sect.adjust_favor(25 * part.rating, L)
+		return TRUE
 
-	if(istype(I, /obj/item/weapon/circuitboard))
+	else if(istype(I, /obj/item/weapon/circuitboard))
 		religious_sect.adjust_favor(30, L)
+		return TRUE
 
-	if(istype(I, /obj/item/device/assembly))
+	else if(istype(I, /obj/item/device/assembly))
 		var/obj/item/device/assembly/ass = I
 		religious_sect.adjust_favor(10 * ass.w_class, L)
+		return TRUE
 
-	to_chat(L, "<span class='notice'>You offer [I]'s power to [pick(global.chaplain_religion.deity_names)], pleasing them.</span>")
-	qdel(I)
+	return FALSE
 
 //Gives mana from: any food
 //Needed for: spells and rituals related to the theme of food
@@ -85,23 +63,17 @@
 	name = "Fames" //hungry
 	desc = "Can be considered it greed"
 
-	desire = list(/obj/item/weapon/reagent_containers/food)
-
 	rite = /datum/religion_rites/food
 
 /datum/aspect/fames/sacrifice(obj/item/I, mob/living/L)
-	if(!is_type_in_typecache(I, desired_items_typecache))
-		return
-
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/food = I
 		if(!food.reagents || food.reagents && food.reagents.total_volume <= 0)
 			to_chat(L, "<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity [I] without useful material.</span>")
-			return
+			return FALSE
 		religious_sect.adjust_favor(round((food.reagents.reagent_list.len / 2) + 1) * food.reagents.total_volume, L)
-
-	to_chat(L, "<span class='notice'>You offer [I]'s power to [pick(global.chaplain_religion.deity_names)], pleasing them.</span>")
-	qdel(I)
+		return TRUE
+	return FALSE
 
 //Gives mana from: does not affect mana accumulation
 //Needed for: spells and rituals related to the theme of weapon, his damage, buff etc
@@ -117,20 +89,14 @@
 	name = "Metallum" //resurces
 	desc = "Manipulated on minerals, metallic, glass and others"
 
-	desire = list(/obj/item/stack/sheet/glass, /obj/item/stack/sheet/metal, /obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/rglass, /obj/item/stack/sheet/wood, /obj/item/stack/sheet/mineral, /obj/item/weapon/spacecash)
-
 	//rite = /datum/religion_rites/create_materials
 
 /datum/aspect/metallum/sacrifice(obj/item/I, mob/living/L)
-	if(!is_type_in_typecache(I, desired_items_typecache))
-		return
-
 	if(istype(I, /obj/item/stack/sheet))
 		var/obj/item/stack/sheet/material = I
 		religious_sect.adjust_favor(material.amount * 5, L)
-
-	to_chat(L, "<span class='notice'>You offer [I]'s power to [pick(global.chaplain_religion.deity_names)], pleasing them.</span>")
-	qdel(I)
+		return TRUE
+	return FALSE
 
 //Gives mana from: does not affect mana accumulation
 //Needed for: spells and rituals related to the theme of spawn animal, creatures

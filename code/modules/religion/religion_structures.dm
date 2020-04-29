@@ -53,10 +53,13 @@
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
 	//If we can sac, we do nothing but the sacrifice instead of typical attackby behavior (IE damage the structure)
-	if(global.religious_sect && global.religious_sect.sect_aspects)
+	if(global.religious_sect)
 		for(var/aspect in global.religious_sect.sect_aspects)
 			var/datum/aspect/asp = global.religious_sect.sect_aspects[aspect]
-			asp.sacrifice(C, user)
+			if(asp.sacrifice(C, user))
+				to_chat(user, "<span class='notice'>You offer [C]'s power to [pick(global.chaplain_religion.deity_names)], pleasing them.</span>")
+				qdel(C)
+				break
 
 	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
 		to_chat(user, "<span class='warning'>You don't know how to use this.</span>")
@@ -72,12 +75,11 @@
 			to_chat(user, "<span class='notice'>Your religion doesn't have any rites to perform!</span>")
 			return
 
-		if(user.is_busy() || user.incapacitated())
-			return
-
 		var/rite_select = input(user, "Select a rite to perform!", "Select a rite", null) in global.religious_sect.rites_list
 		if(!rite_select)
-			to_chat(user,"<span class ='warning'>You cannot perform the rite at this time.</span>")
+			return
+		if(!(src in oview(2)))
+			to_chat(user, "<span class='warning'>You are too far away!</span>")
 			return
 
 		var/selection2type = global.religious_sect.rites_list[rite_select]
@@ -98,8 +100,10 @@
 				return
 
 			var/sect_select = input(user, "Select a aspects preset", "Select a preset", null) in available_options
+			if(!(src in oview(2)))
+				to_chat(user, "<span class='warning'>You are too far away!</span>")
+				return
 			if(!sect_select)
-				to_chat(user,"<span class ='warning'>You cannot select a sect at this time.</span>")
 				return
 
 			global.religious_sect = available_options[sect_select]
@@ -136,7 +140,7 @@
 						global.religious_sect.sect_aspects[asp.name] = asp
 
 			if(isliving(user))
-				if(user.mind && user.mind.holy_role >= HOLY_ROLE_PRIEST)
+				if(user.mind && user.mind.holy_role)
 					global.religious_sect.on_conversion(user)
 
 			global.religious_sect.update_rites()

@@ -129,5 +129,5 @@
 /datum/religion/religion_sect/custom
 	name = "Custom "
 	desc = "Follow the orders of your god."
-	convert_opener = "I am the first to enter here.."
+	convert_opener = "I am the first to enter here..."
 	allow_aspect = TRUE

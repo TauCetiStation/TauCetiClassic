@@ -47,7 +47,7 @@
 	..()
 
 /obj/item/weapon/storage/bible/attack_self(mob/user)
-	if(user.mind && (user.mind.holy_role >= HOLY_ROLE_PRIEST))
+	if(user.mind && (user.mind.holy_role))
 		if(religify_next[user.ckey] > world.time)
 			to_chat(user, "<span class='warning'>You can't be changing the look of your entire church so often! Please wait about [round((religify_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
 			return
