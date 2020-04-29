@@ -315,7 +315,7 @@
 
 		else
 			to_chat(user, "You change the mode from 'Pizza King' to 'McNano'.")
-			dispensable_reagents -= list("thirteenloko")
+			dispensable_reagents -= list("thirteenloko","grapesoda")
 			hackedcheck = 0
 			return
 
