@@ -62,7 +62,6 @@
 	icon_state = "shade_god"
 	icon_living = "shade_god"
 	stat = CONSCIOUS
-	speak_emote = list("hisses", "bless")
 	maxHealth = 5000
 	health = 5000
 	melee_damage_lower = 0
@@ -81,7 +80,7 @@
 	var/islam = FALSE
 	var/obj/item/weapon/nullrod/staff/container
 
-/mob/living/simple_animal/shade/god/incapacitated()
+/mob/living/simple_animal/shade/god/incapacitated(restrained_type = ARMS)
 	// So the god can't use procs and stuff like that.
 	return TRUE
 
@@ -108,6 +107,11 @@
 		var/obj/item/weapon/nullrod/staff/S = M.is_in_hands(/obj/item/weapon/nullrod/staff)
 		if(S && S.brainmob == src)
 			// Pull them in closer...
+			step_towards(A, src)
+			SetNextMove(CLICK_CD_RAPID)
+	else if(istype(A, /obj/item/weapon/nullrod/staff))
+		var/obj/item/weapon/nullrod/staff/S = A
+		if(S.brainmob == src)
 			step_towards(A, src)
 			SetNextMove(CLICK_CD_RAPID)
 	else
@@ -155,3 +159,16 @@
 	y = new_y
 
 	Moved(oldLoc, 0)
+
+/mob/living/simple_animal/shade/god/Process_Spacemove(movement_dir = 0)
+	return TRUE
+
+/mob/living/simple_animal/shade/god/verb/view_manfiest()
+	set name = "View Crew Manifest"
+	set category = "Deity"
+
+	var/dat
+	dat += "<h4>Crew Manifest</h4>"
+	dat += data_core.get_manifest()
+
+	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")

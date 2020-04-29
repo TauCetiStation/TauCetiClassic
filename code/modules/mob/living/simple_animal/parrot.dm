@@ -118,7 +118,7 @@
  */
 /mob/living/simple_animal/parrot/show_inv(mob/user)
 	user.set_machine(src)
-	if(user.stat) return
+	if(user.incapacitated()) return
 
 	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
 	if(ears)
@@ -133,7 +133,7 @@
 /mob/living/simple_animal/parrot/Topic(href, href_list)
 
 	//Can the usr physically do this?
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(usr.incapacitated() || !in_range(loc, usr))
 		return
 
 	//Is the usr's mob type able to do this? (lolaliens)
@@ -298,8 +298,8 @@
 	if(client || stat)
 		return //Lets not force players or dead/incap parrots to move
 
-	if(!isturf(src.loc) || !canmove || buckled)
-		return //If it can't move, dont let it move. (The buckled check probably isn't necessary thanks to canmove)
+	if(!isturf(src.loc) || !canmove)
+		return //If it can't move, dont let it move.
 
 
 //-----SPEECH
@@ -583,7 +583,7 @@
 	set category = "Parrot"
 	set desc = "Grabs a nearby item."
 
-	if(stat)
+	if(incapacitated())
 		return -1
 
 	if(held_item)
@@ -611,7 +611,7 @@
 	set category = "Parrot"
 	set desc = "Steals an item right out of a person's hand!"
 
-	if(stat)
+	if(incapacitated())
 		return -1
 
 	if(held_item)
@@ -642,7 +642,7 @@
 	set category = "Parrot"
 	set desc = "Drop the item you're holding."
 
-	if(stat)
+	if(incapacitated())
 		return
 
 	src.drop_held_item()
@@ -654,7 +654,7 @@
 	set category = "Parrot"
 	set desc = "Drop the item you're holding."
 
-	if(stat)
+	if(incapacitated())
 		return -1
 
 	if(!held_item)
@@ -681,7 +681,7 @@
 	set category = "Parrot"
 	set desc = "Sit on a nice comfy perch."
 
-	if(stat || !client)
+	if(incapacitated() || !client)
 		return
 
 	if(icon_state == "parrot_fly")

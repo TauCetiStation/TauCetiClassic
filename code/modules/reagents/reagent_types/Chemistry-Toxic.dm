@@ -512,6 +512,8 @@
 	color = "#792300" //rgb: 59, 8, 5
 	custom_metabolism = 0.05
 
+	data = list()
+
 /datum/reagent/aflatoxin/on_general_digest(mob/living/M)
 	..()
 
@@ -533,6 +535,8 @@
 	taste_message = "DEATH"
 	restrict_species = list(IPC, DIONA)
 
+	data = list()
+
 /datum/reagent/chefspecial/on_general_digest(mob/living/M)
 	..()
 
@@ -551,6 +555,8 @@
 	reagent_state = LIQUID
 	color = "#792300" //rgb: 207, 54, 0
 	custom_metabolism = 0 //No metabolism
+
+	data = list()
 
 /datum/reagent/dioxin/on_general_digest(mob/living/M)
 	..()
@@ -616,12 +622,16 @@
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = 0.02
 
+	data = list()
+
 /datum/reagent/slimetoxin/on_general_digest(mob/living/M)
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.species.name == SLIME)
 			return
+		if(!data["ticks"])
+			data["ticks"] = 1
 		data["ticks"]++
 		switch(data["ticks"])
 			if(1)
@@ -705,7 +715,7 @@
 	..()
 	M.druggy = max(M.druggy, 15)
 	if(isturf(M.loc) && !istype(M.loc, /turf/space))
-		if(M.canmove && !M.restrained())
+		if(M.canmove && !M.incapacitated())
 			if(prob(10))
 				step(M, pick(cardinal))
 	if(prob(7))

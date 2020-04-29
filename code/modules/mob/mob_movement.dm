@@ -193,8 +193,8 @@
 		if(mob.restrained())//Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
-					if(!M.restrained() && M.stat == CONSCIOUS && M.canmove && mob.Adjacent(M))
-						to_chat(src, "<span class='notice'>You're restrained! You can't move!</span>")
+					if(!M.incapacitated() && M.canmove && mob.Adjacent(M))
+						to_chat(src, "<span class='notice'>You're incapacitated! You can't move!</span>")
 						return 0
 					else
 						M.stop_pulling()

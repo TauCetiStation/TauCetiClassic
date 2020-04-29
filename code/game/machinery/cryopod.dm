@@ -320,7 +320,7 @@ var/global/list/frozen_items = list()
 	set name = "Eject Pod"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.stat != CONSCIOUS || !occupant)
+	if(usr.incapacitated() || !occupant)
 		return
 
 	if(usr != occupant && \
@@ -339,7 +339,7 @@ var/global/list/frozen_items = list()
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat != CONSCIOUS || !(ishuman(usr) || ismonkey(usr)))
+	if(usr.incapacitated() || !(ishuman(usr) || ismonkey(usr)))
 		return
 
 	if(occupant)
