@@ -433,7 +433,7 @@
 	desc = "Phew, very sour."
 	icon_state = "lemonjuice"
 	item_state = "carton"
-	is_glass = 0
+	is_glass = FALSE
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/lemonjuice/atom_init()
 	. = ..()
@@ -460,5 +460,4 @@
 	reagents.add_reagent("beer", 100)
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
-
 
