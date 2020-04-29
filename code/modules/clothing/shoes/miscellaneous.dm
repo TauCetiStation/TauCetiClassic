@@ -111,11 +111,20 @@
 	item_color = "clown"
 	species_restricted = null
 
+/obj/item/clothing/shoes/clown_shoes/Destroy()
+	if(slot_equipped == SLOT_SHOES)
+		qdel(loc.GetComponent(/datum/component/waddle))
+	return ..()
+
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
-	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED))
+	if(slot == SLOT_SHOES)
+		user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED))
+	else if(slot_equipped == SLOT_SHOES)
+		qdel(user.GetComponent(/datum/component/waddle))
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
-	qdel(user.GetComponent(/datum/component/waddle))
+	if(slot_equipped == SLOT_SHOES)
+		qdel(user.GetComponent(/datum/component/waddle))
 
 /obj/item/clothing/shoes/clown_shoes/play_unique_footstep_sound()
 	..()
