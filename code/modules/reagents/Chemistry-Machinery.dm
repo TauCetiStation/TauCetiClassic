@@ -303,19 +303,19 @@
 	accept_glass = 1
 	max_energy = 100
 	dispensable_reagents = list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","watermelonjuice")
-
+	premium_reagents = list("thirteenloko","grapesoda")
 /obj/machinery/chem_dispenser/soda/attackby(obj/item/weapon/B, mob/user)
 	..()
 	if(ismultitool(B))
 		if(hackedcheck == 0)
 			to_chat(user, "You change the mode from 'McNano' to 'Pizza King'.")
-			dispensable_reagents += list("thirteenloko","grapesoda")
+			dispensable_reagents += premium_reagents
 			hackedcheck = 1
 			return
 
 		else
 			to_chat(user, "You change the mode from 'Pizza King' to 'McNano'.")
-			dispensable_reagents -= list("thirteenloko","grapesoda")
+			dispensable_reagents -= premium_reagents
 			hackedcheck = 0
 			return
 
@@ -331,20 +331,20 @@
 	max_energy = 100
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead")
-
+	premium_reagents = list("goldschlager","patron","watermelonjuice","berryjuice")
 /obj/machinery/chem_dispenser/beer/attackby(obj/item/weapon/B, mob/user)
 	..()
 
 	if(ismultitool(B))
 		if(hackedcheck == 0)
 			to_chat(user, "You disable the 'nanotrasen-are-cheap-bastards' lock, enabling hidden and very expensive boozes.")
-			dispensable_reagents += list("goldschlager","patron","watermelonjuice","berryjuice")
+			dispensable_reagents += premium_reagents
 			hackedcheck = 1
 			return
 
 		else
 			to_chat(user, "You re-enable the 'nanotrasen-are-cheap-bastards' lock, disabling hidden and very expensive boozes.")
-			dispensable_reagents -= list("goldschlager","patron","watermelonjuice","berryjuice")
+			dispensable_reagents -= premium_reagents
 			hackedcheck = 0
 			return
 
