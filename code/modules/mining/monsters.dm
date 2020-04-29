@@ -467,9 +467,11 @@
 	if(proximity)
 		if(istype(target, /obj/item/clothing/suit/space) || istype(target, /obj/item/clothing/head/helmet/space))
 			var/obj/item/clothing/C = target
+			var/list/current_armor = C.armor
+			if((current_armor["melee"]) || (current_armor["bullet"]) || (current_armor["laser"] < 80))
 				current_armor["melee"] = min(current_armor["melee"] + 10, 80)
-				current_armor["bullet"] = min(current_armor["bullet"] + 10, 75)
-				current_armor["laser"] = min(current_armor["laser"] + 10, 75)
+				current_armor["bullet"] = min(current_armor["bullet"] + 10, 80)
+				current_armor["laser"] = min(current_armor["laser"] + 10, 80)
 				if(istype(C, /obj/item/clothing/suit/space))
 					var/obj/item/clothing/suit/space/S = C
 					S.breach_threshold = min(S.breach_threshold + 2, 24)
@@ -497,3 +499,4 @@
 			else
 				to_chat(user, "<span class='warning'>You can't improve [D] any further!</span>")
 				return
+
