@@ -188,6 +188,7 @@
 	if(default_unfasten_wrench(user, B))
 		power_change()
 		return
+
 	if(src.beaker)
 		to_chat(user, "Something is already loaded into the machine.")
 		return
