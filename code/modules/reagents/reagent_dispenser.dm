@@ -12,13 +12,8 @@
 
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
 	if(isscrewdriver(W))
-		switch(reagents_transfer_mode)
-			if("In")
-				reagents_transfer_mode = "Out"
-				to_chat(user, "<span class = 'notice'>You changed transfer mod to \"Out\".</span>")
-			if("Out")
-				reagents_transfer_mode = "In"
-				to_chat(user, "<span class = 'notice'>You changed transfer mod to \"In\".</span>")
+		reagents_transfer_from ? to_chat("You transfer from [W]") : to_chat("You transfer into [W]")
+		reagents_transfer_from = !reagents_transfer_from
 	return
 
 /obj/structure/reagent_dispensers/atom_init()
