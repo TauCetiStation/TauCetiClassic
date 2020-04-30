@@ -222,7 +222,7 @@
 		return 0
 	return ..(M,flags)*/
 
-/datum/dna/gene/basic/hulk/activate(mob/living/carbon/human/M, connected, flags)
+/datum/dna/gene/basic/hulk/activate(mob/living/M, connected, flags)
 	if(!M.mind)
 		return
 	if(M.mind.hulkizing)
