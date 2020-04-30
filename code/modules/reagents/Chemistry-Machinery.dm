@@ -188,26 +188,24 @@
 	if(default_unfasten_wrench(user, B))
 		power_change()
 		return
-	if(istype(B, /obj/item/weapon/reagent_containers/))
-		if(src.beaker)
-			to_chat(user, "Something is already loaded into the machine.")
+	if(src.beaker)
+		to_chat(user, "Something is already loaded into the machine.")
+		return
+	if(istype(B, /obj/item/weapon/reagent_containers/glass) || istype(B, /obj/item/weapon/reagent_containers/food))
+		if(!accept_glass && istype(B,/obj/item/weapon/reagent_containers/food))
+			to_chat(user, "<span class='notice'>This machine only accepts beakers</span>")
 			return
-		if(istype(B, /obj/item/weapon/reagent_containers/glass) || istype(B, /obj/item/weapon/reagent_containers/food))
-			if(!accept_glass && istype(B,/obj/item/weapon/reagent_containers/food))
-				to_chat(user, "<span class='notice'>This machine only accepts beakers</span>")
+		if(istype(B, /obj/item/weapon/reagent_containers/food/drinks/cans))
+			var/obj/item/weapon/reagent_containers/food/drinks/cans/C = B
+			if(!C.canopened)
+				to_chat(user, "<span class='notice'>You need to open the drink!</span>")
 				return
-			if(istype(B, /obj/item/weapon/reagent_containers/food/drinks/cans))
-				var/obj/item/weapon/reagent_containers/food/drinks/cans/C = B
-				if(!C.canopened)
-					to_chat(user, "<span class='notice'>You need to open the drink!</span>")
-					return
-			src.beaker =  B
-			user.drop_item()
-			B.loc = src
-			to_chat(user, "You set [B] on the machine.")
-			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
-			nanomanager.update_uis(src) // update all UIs attached to src
-			return
+		src.beaker =  B
+		user.drop_item()
+		B.loc = src
+		to_chat(user, "You set [B] on the machine.")
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+		nanomanager.update_uis(src) // update all UIs attached to src
 		return
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
