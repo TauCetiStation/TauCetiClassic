@@ -103,6 +103,8 @@
 		harvest(I, user)
 	else if(istype(I, /obj/item/weapon/kitchenknife))
 		harvest(I, user)
+	else
+		..()
 
 /obj/item/organ/external/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
 	..()
