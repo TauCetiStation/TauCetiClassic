@@ -696,17 +696,17 @@
 		if(istype(src, /obj/item/organ/external/head))
 			to_chat(usr, "<span class='notice'>Head? Ewww..</span>")
 			return
-		var/mob/living/simple_animal/hulk/unathi = user
+		var/mob/living/simple_animal/hulk/unathi/U = user
 		playsound(user, 'sound/weapons/zilla_eat.ogg', VOL_EFFECTS_MASTER)
-		unathi.health += 10
+		U.health += 10
 		usr.visible_message("<span class='warning'><b>[usr.name]</b> eats [src.name]!</span>")
 		qdel(src)
 
 /obj/effect/decal/cleanable/blood/gibs/attack_animal(mob/user)
 	..()
 	if(istype(user, /mob/living/simple_animal/hulk/unathi))
-		var/mob/living/simple_animal/hulk/unathi = user
+		var/mob/living/simple_animal/hulk/unathi/U = user
 		playsound(user, 'sound/weapons/zilla_eat.ogg', VOL_EFFECTS_MASTER)
-		unathi.health += 20
+		U.health += 20
 		usr.visible_message("<span class='warning'><b>[usr.name]</b> eats gibs!</span>")
 		qdel(src)
