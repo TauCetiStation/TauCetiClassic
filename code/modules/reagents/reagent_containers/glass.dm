@@ -104,7 +104,7 @@
 			to_chat(user, "<span class = 'rose'>[src] is full.</span>")
 			return
 		if(T.reagents_transfer_mode == "Out")
-			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
+			var/trans = target.reagents.trans_to(src, target.amount_per_transfer_from_this)
 			to_chat(user, "<span class = 'notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
