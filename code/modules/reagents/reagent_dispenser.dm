@@ -6,11 +6,19 @@
 	density = 1
 	anchored = 0
 	flags = OPENCONTAINER
-
+	var/reagents_transfer_mode = "Out"
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
 
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
+	if(isscrewdriver(W))
+		switch(reagents_transfer_mode)
+			if("In")
+				reagents_transfer_mode = "Out"
+				to_chat(user, "<span class = 'notice'>You changed transfer mod to \"Out\".</span>")
+			if("Out")
+				reagents_transfer_mode = "In"
+				to_chat(user, "<span class = 'notice'>You changed transfer mod to \"In\".</span>")
 	return
 
 /obj/structure/reagent_dispensers/atom_init()

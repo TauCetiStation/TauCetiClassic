@@ -12,9 +12,7 @@
 	possible_transfer_amounts = list(5,10,15,25,30,50)
 	volume = 50
 	flags = OPENCONTAINER
-
 	action_button_name = "Switch Lid"
-
 	var/label_text = ""
 
 	//var/list/
@@ -91,7 +89,12 @@
 		src.reagents.reaction(target, TOUCH)
 		spawn(5) src.reagents.clear_reagents()
 		return
-	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us. Or FROM us TO it.
+		var/obj/structure/reagent_dispensers/T = target
+		if(target.reagents.total_volume >= reagents.maximum_volume && (T.reagents_transfer_mode == "In"))
+			var/trans = src.reagents.trans_to(target, src:amount_per_transfer_from_this)
+			to_chat(user, "<span class = 'notice'>You fill [target] with [trans] units of the contents of [src]. </span>")
+			return
 
 		if(!target.reagents.total_volume && target.reagents)
 			to_chat(user, "<span class = 'rose'>[target] is empty.</span>")
@@ -100,9 +103,9 @@
 		if(reagents.total_volume >= reagents.maximum_volume)
 			to_chat(user, "<span class = 'rose'>[src] is full.</span>")
 			return
-
-		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-		to_chat(user, "<span class = 'notice'>You fill [src] with [trans] units of the contents of [target].</span>")
+		if(T.reagents_transfer_mode == "Out")
+			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
+			to_chat(user, "<span class = 'notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
