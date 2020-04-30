@@ -6,14 +6,14 @@
 	density = 1
 	anchored = 0
 	flags = OPENCONTAINER
-	var/reagents_transfer_from = TRUE
+	var/transfer_from = TRUE
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
 
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
 	if(isscrewdriver(W))
-		reagents_transfer_from = !reagents_transfer_from
-		to_chat(user, "<span class = 'notice'>You transfer [reagent_transfer_from ? "from" : "into"] [src]</span>")
+		transfer_from = !transfer_from
+		to_chat(user, "<span class = 'notice'>You transfer [transfer_from ? "from" : "into"] [src]</span>")
 	return
 
 /obj/structure/reagent_dispensers/atom_init()
@@ -31,6 +31,26 @@
 	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
 	if (N)
 		amount_per_transfer_from_this = N
+		
+/obj/structure/reagent_dispensers/proc/try_transfer(atom/from, atom/t_to)
+	var/transfer_amount = 0
+	if(istype(from, /obj/item/weapon/reagent_containers/glass))
+		var/obj/item/weapon/reagent_containers/glass/G = from
+		transfer_amount = G.amount_per_transfer_from_this
+	else if(istype(from, /obj/structure/reagent_dispensers))
+		var/obj/structure/reagent_dispensers/RD = from
+		transfer_amount = RD.amount_per_transfer_from_this
+
+	if(transfer_amount == 0)
+		return
+	if(t_to.reagents.total_volume >= t_to.reagents.maximum_volume)
+		to_chat(usr, "<span class = 'rose'>[t_to] is full.</span>")
+		return
+	if(!from.reagents.total_volume && from.reagents)
+		to_chat(usr, "<span class = 'rose'>[from] is empty.</span>")
+		return
+	var/trans = from.reagents.trans_to(t_to, transfer_amount)
+	to_chat(usr, "<span class = 'notice'>You fill [t_to] with [trans] units of the contents of [from]. </span>")
 
 /obj/structure/reagent_dispensers/ex_act(severity)
 	switch(severity)
