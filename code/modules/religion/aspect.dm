@@ -23,11 +23,11 @@
 		if(!blood.reagents || blood.reagents && blood.reagents.total_volume <= 0)
 			to_chat(L, "<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity [I] without useful material.</span>")
 			return FALSE
-		religious_sect.adjust_favor(25, L)
+		global.chaplain_religion.adjust_favor(25, L)
 		return TRUE
 
 	else if(istype(I, /obj/item/organ/external) || istype(I, /obj/item/brain))
-		religious_sect.adjust_favor(50, I)
+		global.chaplain_religion.adjust_favor(50, I)
 		return TRUE
 	
 	return FALSE
@@ -43,16 +43,16 @@
 /datum/aspect/progressus/sacrifice(obj/item/I, mob/living/L)
 	if(istype(I, /obj/item/weapon/stock_parts))
 		var/obj/item/weapon/stock_parts/part = I
-		religious_sect.adjust_favor(25 * part.rating, L)
+		global.chaplain_religion.adjust_favor(25 * part.rating, L)
 		return TRUE
 
 	else if(istype(I, /obj/item/weapon/circuitboard))
-		religious_sect.adjust_favor(30, L)
+		global.chaplain_religion.adjust_favor(30, L)
 		return TRUE
 
 	else if(istype(I, /obj/item/device/assembly))
 		var/obj/item/device/assembly/ass = I
-		religious_sect.adjust_favor(10 * ass.w_class, L)
+		global.chaplain_religion.adjust_favor(10 * ass.w_class, L)
 		return TRUE
 
 	return FALSE
@@ -71,7 +71,7 @@
 		if(!food.reagents || food.reagents && food.reagents.total_volume <= 0)
 			to_chat(L, "<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity [I] without useful material.</span>")
 			return FALSE
-		religious_sect.adjust_favor(round((food.reagents.reagent_list.len / 2) + 1) * food.reagents.total_volume, L)
+		global.chaplain_religion.adjust_favor(round((food.reagents.reagent_list.len / 2) + 1) * food.reagents.total_volume, L)
 		return TRUE
 	return FALSE
 
@@ -94,7 +94,7 @@
 /datum/aspect/metallum/sacrifice(obj/item/I, mob/living/L)
 	if(istype(I, /obj/item/stack/sheet))
 		var/obj/item/stack/sheet/material = I
-		religious_sect.adjust_favor(material.amount * 5, L)
+		global.chaplain_religion.adjust_favor(material.amount * 5, L)
 		return TRUE
 	return FALSE
 

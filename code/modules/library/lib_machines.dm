@@ -319,10 +319,11 @@
 			if("5")
 				screenstate = 5
 			if("6")
-				if(count_bible > 0)
+				if(count_bible > 0 && world.time > next_print)
 					if(global.chaplain_religion)
 						global.chaplain_religion.spawn_bible(loc)
-						count_bible += 1
+						count_bible -= 1
+						next_print = world.time + 6 SECONDS
 					else
 						visible_message("<b>[src]</b>'s monitor flashes,  \"Could not connect to station's religion database at this moment, please try again later.\"")
 

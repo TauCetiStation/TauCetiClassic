@@ -84,7 +84,7 @@
 	..()
 	if(statpanel("Status"))
 		if(religious_sect)
-			stat(null, "Favor: [round(religious_sect.favor)]/[religious_sect.max_favor]")
+			stat(null, "Favor: [round(global.chaplain_religion.favor)]/[global.chaplain_religion.max_favor]")
 
 /mob/living/simple_animal/shade/god/incapacitated(restrained_type = ARMS)
 	// So the god can't use procs and stuff like that.
@@ -110,7 +110,7 @@
 /mob/living/simple_animal/shade/god/Life()
 	..()
 	if(religious_sect)
-		religious_sect.favor += 0.2
+		global.chaplain_religion.favor += 0.2
 
 /mob/living/simple_animal/shade/god/proc/god_attack(atom/A)
 	if(ismob(A))

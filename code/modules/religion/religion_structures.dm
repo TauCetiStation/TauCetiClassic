@@ -11,7 +11,8 @@
 	can_buckle = TRUE
 	buckle_lying = 90 //we turn to you!
 	var/datum/religion_rites/performing_rite
-	var/datum/religion/religion_sect/sect_to_altar
+	var/datum/religion_sect/sect_to_altar //easy access
+	var/datum/religion/chaplain/religion_to_altar //easy access
 
 /obj/structure/altar_of_gods/examine(mob/user)
 	. = ..()
@@ -24,14 +25,12 @@
 		if(L.mind && L.mind.holy_role)
 			can_i_see = TRUE
 
-	if(!can_i_see || !global.religious_sect)
+	if(!can_i_see || global.chaplain_religion.sect_aspects.len == 0)
 		return
 
-	msg += "<span class='notice'>The sect currently has [round(global.religious_sect.favor)] favor with [pick(global.chaplain_religion.deity_names)].\n</span>"
-	if(!global.religious_sect.rites_list)
-		return
+	msg += "<span class='notice'>The sect currently has [round(global.chaplain_religion.favor)] favor with [pick(global.chaplain_religion.deity_names)].\n</span>"
 	msg += "List of available Rites:\n"
-	for(var/i in global.religious_sect.rites_list)
+	for(var/i in global.chaplain_religion.rites_list)
 		msg += i
 	if(msg)
 		to_chat(user, msg)
@@ -53,11 +52,11 @@
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
 	//If we can sac, we do nothing but the sacrifice instead of typical attackby behavior (IE damage the structure)
-	if(global.religious_sect)
-		for(var/aspect in global.religious_sect.sect_aspects)
-			var/datum/aspect/asp = global.religious_sect.sect_aspects[aspect]
+	if(religion_to_altar)
+		for(var/aspect in religion_to_altar.sect_aspects)
+			var/datum/aspect/asp = religion_to_altar.sect_aspects[aspect]
 			if(asp.sacrifice(C, user))
-				to_chat(user, "<span class='notice'>You offer [C]'s power to [pick(global.chaplain_religion.deity_names)], pleasing them.</span>")
+				to_chat(user, "<span class='notice'>You offer [C]'s power to [pick(religion_to_altar.deity_names)], pleasing them.</span>")
 				qdel(C)
 				break
 
@@ -67,29 +66,23 @@
 
 	//start ritual
 	if(istype(C, /obj/item/weapon/nullrod))
-		if(!global.religious_sect)
-			to_chat(user, "<span class='notice'>First choose aspects in your religion!</span>")
-			return
-
-		if(!global.religious_sect.rites_list)
+		if(religion_to_altar.rites_list.len == 0)
 			to_chat(user, "<span class='notice'>Your religion doesn't have any rites to perform!</span>")
 			return
 
-		var/rite_select = input(user, "Select a rite to perform!", "Select a rite", null) in global.religious_sect.rites_list
-		if(!rite_select)
-			return
+		var/rite_select = input(user, "Select a rite to perform!", "Select a rite", null) in religion_to_altar.rites_list
 		if(!(src in oview(2)))
 			to_chat(user, "<span class='warning'>You are too far away!</span>")
 			return
 
-		var/selection2type = global.religious_sect.rites_list[rite_select]
+		var/selection2type = religion_to_altar.rites_list[rite_select]
 		performing_rite = new selection2type(src)
 
 		if(!performing_rite.perform_rite(user, src))
 			QDEL_NULL(performing_rite)
 		else
 			performing_rite.invoke_effect(user, src)
-			global.religious_sect.adjust_favor(-performing_rite.favor_cost)
+			religion_to_altar.adjust_favor(-performing_rite.favor_cost)
 			QDEL_NULL(performing_rite)
 
 	//choose aspect preset
@@ -103,16 +96,12 @@
 			if(!(src in oview(2)))
 				to_chat(user, "<span class='warning'>You are too far away!</span>")
 				return
-			if(!sect_select)
-				return
 
 			global.religious_sect = available_options[sect_select]
 			sect_to_altar = global.religious_sect
+			religion_to_altar = global.chaplain_religion
 
-			if(istype(global.religious_sect, /datum/religion/religion_sect/custom))
-				global.religious_sect.name = global.chaplain_religion.name
-
-			if(global.religious_sect.allow_aspect)
+			if(sect_to_altar.allow_aspect)
 				//choose aspects for the god and his desire
 				var/list/aspects = generate_aspect(user)
 				if(!aspects)
@@ -121,34 +110,33 @@
 				for(var/i in 1 to 3)
 					var/aspect_select = input(user, "Select a aspect of god (You CANNOT revert this decision!)", "Select a aspect of god", null) in aspects
 					var/type_selected = aspects[aspect_select]
-					if(!istype(global.religious_sect.sect_aspects[aspect_select], type_selected))
-						global.religious_sect.sect_aspects[aspect_select] = new type_selected()
+					if(!istype(religion_to_altar.sect_aspects[aspect_select], type_selected))
+						religion_to_altar.sect_aspects[aspect_select] = new type_selected()
 					else
-						var/datum/aspect/asp = global.religious_sect.sect_aspects[aspect_select]
+						var/datum/aspect/asp = religion_to_altar.sect_aspects[aspect_select]
 						asp.power += 1
 
 				//add rites
-				for(var/i in global.religious_sect.sect_aspects)
-					var/datum/aspect/asp = global.religious_sect.sect_aspects[i]
+				for(var/i in religion_to_altar.sect_aspects)
+					var/datum/aspect/asp = religion_to_altar.sect_aspects[i]
 					if(asp.rite)
-						global.religious_sect.rites_list += asp.rite
+						religion_to_altar.rites_list += asp.rite
 			else
-				if(global.religious_sect.aspect_preset.len != 0)
-					for(var/aspect in global.religious_sect.aspect_preset)
+				if(sect_to_altar.aspect_preset.len != 0)
+					for(var/aspect in sect_to_altar.aspect_preset)
 						var/datum/aspect/asp = new aspect()
-						asp.power = global.religious_sect.aspect_preset[aspect]
-						global.religious_sect.sect_aspects[asp.name] = asp
+						asp.power = sect_to_altar.aspect_preset[aspect]
+						religion_to_altar.sect_aspects[asp.name] = asp
 
-			if(isliving(user))
-				if(user.mind && user.mind.holy_role)
-					global.religious_sect.on_conversion(user)
+			if(isliving(user) && user.mind && user.mind.holy_role)
+				sect_to_altar.on_conversion(user)
 
-			global.religious_sect.update_rites()
+			religion_to_altar.update_rites()
 
 /obj/structure/altar_of_gods/proc/generate_available_sects(mob/user) //eventually want to add sects you get from unlocking certain achievements
 	var/list/variants = list()
-	for(var/type in subtypesof(/datum/religion/religion_sect))
-		var/datum/religion/religion_sect/sect = new type(src)
+	for(var/type in subtypesof(/datum/religion_sect))
+		var/datum/religion_sect/sect = new type(src)
 		if(!sect.name)
 			continue
 		sect.name += global.chaplain_religion.name

@@ -15,7 +15,7 @@
 /datum/religion_rites/proc/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(user.is_busy())
 		return FALSE
-	if(religious_sect && religious_sect.favor < favor_cost)
+	if(global.chaplain_religion && global.chaplain_religion.favor < favor_cost)
 		to_chat(user, "<span class='warning'>This rite requires more favor!</span>")
 		return FALSE
 	to_chat(user, "<span class='notice'>You begin to perform the rite of [name]...</span>")
@@ -43,7 +43,7 @@
 
 ///Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
 /datum/religion_rites/proc/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	religious_sect.on_riteuse(user,AOG)
+	global.chaplain_religion.on_riteuse(user,AOG)
 	return TRUE
 
 
@@ -76,7 +76,7 @@
 
 	hgibs(AOG.loc, human2borg.viruses, human2borg.dna, human2borg.species.flesh_color, human2borg.species.blood_datum)
 	human2borg.Robotize()
-	AOG.add_overlay(image('icons/obj/structures/chapel.dmi', "blood_overlay"))
+	//AOG.add_overlay(image('icons/obj/structures/chapel.dmi', "blood_overlay")) //I dont have needed sprite
 	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [name]!</span>")
 	return TRUE
 
@@ -117,14 +117,14 @@
 		return FALSE
 
 	if(isanimal(L))
-		religious_sect.favor += 200
+		global.chaplain_religion.favor += 200
 	if(ismonkey(L))
-		religious_sect.favor += 250
+		global.chaplain_religion.favor += 250
 	if(ishuman(L))
-		religious_sect.favor += 400
+		global.chaplain_religion.favor += 400
 
 	L.gib()
-	AOG.add_overlay(image('icons/obj/structures/chapel.dmi', "blood_overlay"))
+	//AOG.add_overlay(image('icons/obj/structures/chapel.dmi', "blood_overlay"))
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
@@ -141,22 +141,20 @@
 	favor_cost = 300
 
 /datum/religion_rites/food/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	var/list/borks = subtypesof(/obj/item/weapon/reagent_containers/food/snacks)
-
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
-	for(var/mob/living/carbon/human/M in viewers(get_turf_loc(AOG), null))
-		if(M.eyecheck() <= 0)
+	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
+		if(!M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
 
-	for(var/i in 1 to 4 + rand(1, 5))
-		var/chosen = pick(borks)
-		var/obj/B = new chosen
-		if(B)
-			B.loc = get_turf_loc(AOG)
-			if(prob(50))
-				for(var/j in 1 to rand(1, 3))
-					step(B, pick(NORTH,SOUTH,EAST,WEST))
+	for(var/i in 1 to 4 + rand(2, 5))
+		var/chosen = pick(/obj/random/foods/drink_can, /obj/random/foods/drink_bottle, /obj/random/foods/food_snack, /obj/random/foods/food_without_garbage)
+		var/obj/randomcatcher/CATCH = new /obj/randomcatcher(usr.loc)
+		var/obj/B = CATCH.get_item(chosen)
+		if(B && prob(50))
+			for(var/j in 1 to rand(1, 3))
+				step(B, pick(NORTH,SOUTH,EAST,WEST))
+		qdel(CATCH)
 
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
@@ -178,7 +176,11 @@
 	favor_cost = 0
 
 /datum/religion_rites/pray/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	religious_sect.favor += 200
-	AOG.cut_overlay(image('icons/obj/structures/chapel.dmi', "blood_overlay"))
+	global.chaplain_religion.favor += 200
+	var/heal_num = -15
+	for(var/mob/living/L in range(2, src))
+		L.apply_damages(heal_num, heal_num, heal_num, heal_num, heal_num, heal_num)
+
+	//AOG.cut_overlay(image('icons/obj/structures/chapel.dmi', "blood_overlay"))
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE

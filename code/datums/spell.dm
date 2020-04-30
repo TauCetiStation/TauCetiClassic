@@ -18,11 +18,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/charge_max = 100 //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
 	var/charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
 
-	/****RELIGIOUS SECT****/
+	/****RELIGIOUS ASPECT****/
 	var/favor_cost = 0 //cost
 	var/divine_power = 0 //control of spell power depending on the aspect
 	var/list/needed_aspect
-	/****RELIGIOUS SECT****/
+	/****RELIGIOUS ASPECT****/
 
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
@@ -75,11 +75,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 					return 0
 
 	if(!skipcharge && usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		if(favor_cost > 0 && !religious_sect)
+		if(favor_cost > 0 && global.chaplain_religion.sect_aspects.len == 0)
 			to_chat(usr, "First choose aspects in your religion!")
 			return 0
-		if(favor_cost > 0 && religious_sect.favor < favor_cost)
-			to_chat(usr, "You need [favor_cost - religious_sect.favor] more favors.")
+		if(favor_cost > 0 && global.chaplain_religion.favor < favor_cost)
+			to_chat(usr, "You need [favor_cost - global.chaplain_religion.favor] more favors.")
 			return 0
 
 	if(usr.stat && !stat_allowed)
@@ -116,7 +116,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				adjust_var(user, holder_var_type, holder_var_amount)
 
 		if(favor_cost > 0 && usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-			global.religious_sect.favor -= favor_cost //steals favor from spells per favor
+			global.chaplain_religion.favor -= favor_cost //steals favor from spells per favor
 
 	return 1
 
@@ -221,7 +221,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			adjust_var(user, holder_var_type, -holder_var_amount)
 	
 	if(favor_cost > 0)
-		global.religious_sect.favor += favor_cost
+		global.chaplain_religion.favor += favor_cost
 
 	return
 

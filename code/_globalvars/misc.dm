@@ -96,6 +96,7 @@ var/list/ignore_vision_inside = list(
 	/obj/item/organ/external/head/skeleton,
 	)
 
-var/global/datum/religion/religion_sect/religious_sect
+// Contains all possible aspect presets for religion, used in religion_structures.dm
+var/global/datum/religion_sect/religious_sect
 // Is initiated in setup_religions(). Used to save all info about chaplain's religion.
 var/global/datum/religion/chaplain/chaplain_religion

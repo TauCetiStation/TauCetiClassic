@@ -159,7 +159,7 @@
 
 /obj/item/weapon/nullrod/staff/attack_self(mob/living/carbon/human/user)
 	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		if(!religious_sect)
+		if(global.chaplain_religion.sect_aspects.len == 0)
 			to_chat(user, "<span class='notice'>First choose aspects in your religion!</span>")
 			return
 		if(!brainmob && !searching)
@@ -229,7 +229,7 @@
 		brainmob.islam = TRUE
 		brainmob.speak.Add("[god_name] akbar!")
 	
-	religious_sect.give_god_spells(brainmob)
+	global.chaplain_religion.give_god_spells(brainmob)
 
 	for(var/datum/language/L in summoner.languages)
 		brainmob.add_language(L.name)
