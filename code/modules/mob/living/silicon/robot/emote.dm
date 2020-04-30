@@ -192,6 +192,11 @@
 			else
 				to_chat(src, "You are not security.")
 
+		if ("pray")
+			m_type = SHOWMSG_VISUAL
+			message = "<b>[src]</b> prays."
+			INVOKE_ASYNC(src, /mob.proc/pray_animation)
+
 		if ("help")
 			to_chat(src, "salute, bow-(none)/mob, clap, flap, aflap, twitch, twitch_s, nod, deathgasp, glare-(none)/mob, stare-(none)/mob, look, beep, ping, \nbuzz, law, halt")
 		else
