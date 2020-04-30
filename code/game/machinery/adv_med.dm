@@ -19,7 +19,7 @@
 		set_light(0)
 
 /obj/machinery/bodyscanner/relaymove(mob/user)
-	if(!user.stat)
+	if(!user.incapacitated())
 		open_machine()
 
 /obj/machinery/bodyscanner/verb/eject()
@@ -27,7 +27,7 @@
 	set category = "Object"
 	set name = "Eject Body Scanner"
 
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 	open_machine()
 	add_fingerprint(usr)
@@ -38,7 +38,7 @@
 	set category = "Object"
 	set name = "Enter Body Scanner"
 
-	if (usr.stat != CONSCIOUS || usr.lying)
+	if (usr.incapacitated())
 		return
 	if(!move_inside_checks(usr, usr))
 		return
@@ -69,7 +69,7 @@
 	icon_state = "body_scanner_[occupant ? "1" : "0"]"
 
 /obj/machinery/bodyscanner/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user))
+	if(user.incapacitated() || !Adjacent(user) || !target.Adjacent(user))
 		return
 	if(!iscarbon(user) && !isrobot(user))
 		return

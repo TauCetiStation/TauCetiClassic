@@ -220,7 +220,6 @@
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
 		return TRUE
-	return FALSE
 
 /mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
@@ -421,17 +420,18 @@
 	if(copytext(message,1,2) == "*")
 		return emote(copytext(message,2))
 
-	if(stat)
-		return
-
 	var/verb = "says"
-
-	if(speak_emote.len)
+	var/ending = copytext(message, length(message))
+	var/datum/language/speaking = parse_language(message)
+	if (speaking)
+		verb = speaking.get_spoken_verb(ending)
+		message = copytext(message,2 + length(speaking.key))
+	else
 		verb = pick(speak_emote)
 
 	message = capitalize(trim_left(message))
 
-	..(message, null, verb, sanitize = 0)
+	..(message, speaking, verb, sanitize = 0)
 
 /mob/living/simple_animal/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
@@ -444,3 +444,8 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+
+/mob/living/simple_animal/get_scrambled_message(datum/language/speaking, message)
+	if(!speak.len)
+		return null
+	return pick(speak)

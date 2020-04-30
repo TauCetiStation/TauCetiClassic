@@ -48,7 +48,7 @@
 	. = ..()
 	update_icon()
 
-/obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
 		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)
@@ -165,7 +165,7 @@
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/living/user, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
+/obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(!wielded)
 		to_chat(user, "<span class='notice'>You need wield [src] in both hands before firing!</span>")
 		return
@@ -348,7 +348,7 @@
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/bulldog/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/projectile/automatic/bulldog/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
 		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)

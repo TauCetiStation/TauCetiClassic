@@ -368,7 +368,7 @@
 
 	if(!usr)
 		return
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -412,7 +412,7 @@
 	return
 
 /obj/machinery/clonepod/relaymove(mob/user)
-	if (user.stat)
+	if (user.incapacitated())
 		return
 	src.go_out()
 	return

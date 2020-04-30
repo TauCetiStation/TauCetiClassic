@@ -947,7 +947,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 						if (R.fields["id"] == E.fields["id"])
 							if(hasHUD(usr,"security"))
 								var/t1 = sanitize(input("Add Comment:", "Sec. records", null, null)  as message)
-								if ( !(t1) || usr.stat || usr.restrained() || !(hasHUD(usr,"security")) )
+								if ( !(t1) || usr.incapacitated() || !(hasHUD(usr,"security")) )
 									return
 								var/counter = 1
 								while(R.fields[text("com_[]", counter)])
@@ -1076,7 +1076,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 						if (R.fields["id"] == E.fields["id"])
 							if(hasHUD(usr,"medical"))
 								var/t1 = sanitize(input("Add Comment:", "Med. records", null, null)  as message)
-								if ( !(t1) || usr.stat || usr.restrained() || !(hasHUD(usr,"medical")) )
+								if ( !(t1) || usr.incapacitated() || !(hasHUD(usr,"medical")) )
 									return
 								var/counter = 1
 								while(R.fields[text("com_[]", counter)])
@@ -1411,13 +1411,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/list/names = list()
 	var/list/creatures = list()
 	var/list/namecounts = list()
+	var/count = 0
 	var/target = null	   //Chosen target.
 
 	for(var/mob/living/carbon/human/M in human_list) //#Z2 only carbon/human for now
 		var/name = M.real_name
 		if(!(REMOTE_TALK in src.mutations))
-			namecounts++
-			name = "([namecounts])"
+			count++
+			name = "([count])"
 		else
 			if(name in names)
 				namecounts[name]++
@@ -1553,7 +1554,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	set src in view(1)
 	var/self = 0
 
-	if(usr.stat == 1 || usr.restrained() || !isliving(usr)) return
+	if(usr.incapacitated())
+		return
 
 	if(usr == src)
 		self = 1
@@ -1653,7 +1655,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	set name = "Write in blood"
 	set desc = "Use blood on your hands to write a short message on the floor or a wall, murder mystery style."
 
-	if (src.stat)
+	if (incapacitated())
 		return
 
 	if (usr != src)
@@ -1883,7 +1885,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(last_special > world.time)
 		return
 
-	if(stat || paralysis || stunned || weakened || lying)
+	if(incapacitated())
 		to_chat(src, "<span class='warning'>You cannot do that in your current state.</span>")
 		return
 
@@ -1917,7 +1919,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	set name = "Air sample"
 	set desc = "pull out the tongue and understand the approximate state of the air"
 
-	if(stat)
+	if(incapacitated())
+		to_chat(src, "<span class='notice'>You can not do this in your current state.</span>")
 		return
 	if(wear_mask && wear_mask.flags & HEADCOVERSMOUTH || head && head.flags & MASKCOVERSMOUTH)
 		to_chat(usr,"<span class='notice'>I can't get my tongue out.</span>")
@@ -1949,6 +1952,68 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		to_chat(src,"<span class='notice'>Temperature around [round(mixture.temperature-T0C, 5)]&deg;C.</span>")
 		return
 	to_chat(src,"<span class='warning'>Well... I need my mask back.</span>")
+
+/mob/living/carbon/human/proc/IPC_change_screen()
+	set category = "IC"
+	set name = "Change IPC Screen"
+	set desc = "Allow change monitor type"
+	if(stat)
+		return
+	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
+	if(!BP || BP.is_stump)
+		return
+
+	if(!BP.screen_toggle)
+		set_light(BP.screen_brightness)
+		BP.screen_toggle = TRUE
+
+	var/new_hair = input(src, "Choose your IPC screen colour:", "Character Preference") as color|null
+	if(new_hair)
+		r_hair = hex2num(copytext(new_hair, 2, 4))
+		g_hair = hex2num(copytext(new_hair, 4, 6))
+		b_hair = hex2num(copytext(new_hair, 6, 8))
+
+	var/list/valid_hairstyles = list()
+	for(var/hairstyle in hair_styles_list)
+		var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
+		if(!(species.name in S.species_allowed))
+			continue
+		if(BP.ipc_head != S.ipc_head_compatible)
+			continue
+		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
+
+	var/new_h_style = input(src, "Choose your IPC screen style:", "Character Preference")  as null|anything in valid_hairstyles
+	if(new_h_style)
+		h_style = new_h_style
+	if(h_style == "IPC off screen")
+		random_ipc_monitor(BP.ipc_head)
+
+	update_hair()
+
+/mob/living/carbon/human/proc/IPC_toggle_screen()
+	set category = "IC"
+	set name = "Toggle IPC Screen"
+	set desc = "Allow toggle monitor"
+
+	if(stat)
+		return
+	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
+	if(!BP || (BP.is_stump))
+		set_light(0)
+		return
+
+	BP.screen_toggle = !BP.screen_toggle
+	if(BP.screen_toggle)
+		IPC_change_screen()
+		set_light(BP.screen_brightness)
+	else
+		r_hair = 15
+		g_hair = 15
+		b_hair = 15
+		set_light(0)
+		if(BP.ipc_head == "Default")
+			h_style = "IPC off screen"
+		update_hair()
 
 /mob/living/carbon/human/has_brain()
 	if(organs_by_name[O_BRAIN])

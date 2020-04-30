@@ -318,14 +318,14 @@
 		var/obj/item/conveyor_switch_construct/C = I
 		id = C.id
 
-/obj/item/conveyor_construct/afterattack(atom/A, mob/user, proximity)
-	if(!proximity || user.stat || !istype(A, /turf/simulated/floor) || istype(A, /area/shuttle))
+/obj/item/conveyor_construct/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity || !istype(target, /turf/simulated/floor) || istype(target, /area/shuttle))
 		return
-	var/cdir = get_dir(A, user)
-	if(A == user.loc)
+	var/cdir = get_dir(target, user)
+	if(target == user.loc)
 		to_chat(user, "<span class='notice'>You cannot place a conveyor belt under yourself.</span>")
 		return
-	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A,cdir)
+	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(target,cdir)
 	C.id = id
 	transfer_fingerprints_to(C)
 	qdel(src)
@@ -342,8 +342,8 @@
 	. = ..()
 	id = rand() //this couldn't possibly go wrong
 
-/obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
-	if(!proximity || user.stat || !istype(A, /turf/simulated/floor) || istype(A, /area/shuttle))
+/obj/item/conveyor_switch_construct/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity || !istype(target, /turf/simulated/floor) || istype(target, /area/shuttle))
 		return
 	var/found = 0
 	for(var/obj/machinery/conveyor/C in view())
@@ -353,7 +353,7 @@
 	if(!found)
 		to_chat(user, "[bicon(src)]<span class=notice>The conveyor switch did not detect any linked conveyor belts in range.</span>")
 		return
-	var/obj/machinery/conveyor_switch/NC = new/obj/machinery/conveyor_switch(A, id)
+	var/obj/machinery/conveyor_switch/NC = new/obj/machinery/conveyor_switch(target, id)
 	transfer_fingerprints_to(NC)
 	qdel(src)
 

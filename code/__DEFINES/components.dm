@@ -36,9 +36,21 @@
 #define COMSIG_ATOM_ENTERED "atom_entered"						//from base of atom/Entered(): (atom/movable/entering, /atom)
 
 // /atom/movable signals
+#define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"					///from base of atom/movable/Move(): (/atom/newLoc)
+	#define COMPONENT_MOVABLE_BLOCK_PRE_MOVE 1
 #define COMSIG_MOVABLE_CROSSED "movable_crossed"				//from base of atom/movable/Crossed(): (/atom/movable)
-#define COMSIG_MOVABLE_MOVED "movable_moved"					//from base of atom/movable/Moved(): (/atom, dir)
+#define COMSIG_MOVABLE_MOVED "movable_moved"					//from base of atom/movable/Moved(): (/atom/oldLoc, dir)
+#define COMSIG_MOVABLE_LOC_MOVED "movable_loc_moved"					//from base of atom/movable/locMoved(): (/atom/oldLoc, dir)
 
+#define COMSIG_ATOM_START_PULL "atom_start_pull"				//from base of /mob/start_pulling(): (/mob/puller)
+	#define COMPONENT_PREVENT_PULL 1
+#define COMSIG_ATOM_STOP_PULL  "atom_stop_pull"					//from base of /mob/stop_pulling(): (/mob/puller)
+
+#define COMSIG_MOVABLE_WADDLE "movable_waddle"		//from atom/movable/proc/waddle(): (waddle_angle, waddle_height)
+
+// living signals
+#define COMSIG_LIVING_START_PULL "living_start_pull"			//from base of /mob/start_pulling(): (/atom/movable/target)
+#define COMSIG_LIVING_STOP_PULL "living_stop_pull"				//from base of /mob/stop_pulling(): (/atom/movable/target)
 
 #define COMSIG_XENO_SLIME_CLICK_CTRL "xeno_slime_click_ctrl"				//from slime CtrlClickOn(): (/mob)
 #define COMSIG_XENO_SLIME_CLICK_SHIFT "xeno_slime_click_shift"				//from slime ShiftClickOn(): (/mob)

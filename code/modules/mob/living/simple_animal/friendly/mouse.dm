@@ -149,13 +149,13 @@
 	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
 	return
 
-/mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
+/mob/living/simple_animal/mouse/Crossed(atom/movable/AM)
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
 			to_chat(M, "<span class='notice'>[bicon(src)] Squeek!</span>")
 			playsound(src, 'sound/effects/mousesqueek.ogg', VOL_EFFECTS_MASTER)
-	..()
+	. = ..()
 
 /mob/living/simple_animal/mouse/death()
 	layer = MOB_LAYER

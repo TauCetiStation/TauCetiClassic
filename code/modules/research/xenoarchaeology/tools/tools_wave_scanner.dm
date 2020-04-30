@@ -178,7 +178,7 @@
 		playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 
-/obj/item/device/searcher/afterattack(obj/target, mob/user, proximity)
+/obj/item/device/searcher/afterattack(atom/target, mob/user, proximity, params)
 	if(target.loc == loc || target == wavescanner)
 		return
 	..()

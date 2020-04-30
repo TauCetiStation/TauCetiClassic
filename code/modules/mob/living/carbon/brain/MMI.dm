@@ -167,8 +167,9 @@
 	set src = usr.loc//In user location, or in MMI in this case.
 	set popup_menu = 0//Will not appear when right clicking.
 
-	if(brainmob.stat)//Only the brainmob will trigger these so no further check is necessary.
+	if(brainmob.incapacitated())//Only the brainmob will trigger these so no further check is necessary.
 		to_chat(brainmob, "Can't do that while incapacitated or dead.")
+		return
 
 	radio.broadcasting = radio.broadcasting==1 ? 0 : 1
 	to_chat(brainmob, "<span class='notice'>Radio is [radio.broadcasting==1 ? "now" : "no longer"] broadcasting.</span>")
@@ -180,8 +181,9 @@
 	set src = usr.loc
 	set popup_menu = 0
 
-	if(brainmob.stat)
+	if(brainmob.incapacitated())
 		to_chat(brainmob, "Can't do that while incapacitated or dead.")
+		return
 
 	radio.listening = radio.listening==1 ? 0 : 1
 	to_chat(brainmob, "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>")

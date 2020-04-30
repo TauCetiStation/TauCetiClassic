@@ -89,7 +89,8 @@
 		special_assembly.HasProximity(AM)
 
 
-/obj/item/device/assembly_holder/Crossed(atom/movable/AM as mob|obj)
+/obj/item/device/assembly_holder/Crossed(atom/movable/AM)
+	. = ..()
 	if(a_left)
 		a_left.Crossed(AM)
 	if(a_right)
@@ -227,7 +228,7 @@
 	set category = "Object"
 	set src in usr
 
-	if ( !(usr.stat || usr.restrained()) )
+	if (!usr.incapacitated())
 		var/obj/item/device/assembly_holder/holder
 		if(istype(src,/obj/item/weapon/grenade/chem_grenade))
 			var/obj/item/weapon/grenade/chem_grenade/gren = src

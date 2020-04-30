@@ -118,7 +118,7 @@
 	set category = "Object"
 	set name = "Detach Beaker from the juicer"
 	set src in oview(1)
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 	if (!beaker)
 		return

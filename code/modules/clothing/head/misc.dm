@@ -263,7 +263,7 @@
 	fedoraproc(user)
 
 /obj/item/clothing/head/fedora/proc/fedoraproc(mob/user)
-	if(user.canmove && !user.stat && !user.restrained())
+	if(!usr.incapacitated())
 		user.visible_message("[user] tips their fedora.")
 
 

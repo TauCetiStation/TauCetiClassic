@@ -221,7 +221,7 @@ var/bomb_set
 	set name = "Make Deployable"
 	set src in oview(1)
 
-	if (!usr.canmove || usr.stat || usr.restrained())
+	if (usr.incapacitated())
 		return
 	if (!ishuman(usr))
 		to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
@@ -337,7 +337,6 @@ var/bomb_set
 		return
 	else
 		return ..()
-	return
 
 #define NUKERANGE 80
 /obj/machinery/nuclearbomb/proc/explode()

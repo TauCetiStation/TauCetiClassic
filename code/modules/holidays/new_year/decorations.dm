@@ -10,7 +10,7 @@
 	if(choice == "Yes" && get_dist(src, user) <= 1)
 		..()
 
-/obj/item/decoration/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/decoration/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target,/turf/simulated/wall))
 		usr.remove_from_mob(src)
 		src.forceMove(target)

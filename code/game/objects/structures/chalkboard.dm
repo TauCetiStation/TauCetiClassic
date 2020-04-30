@@ -19,7 +19,7 @@
 	set desc = "Make HONK!"
 	set category = "Object"
 
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 
 	if(!ishuman(usr))
@@ -40,7 +40,7 @@
 	set desc = "Don't stare, just write."
 	set category = "Object"
 
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 
 
@@ -92,7 +92,7 @@
 	set category = "Object"
 //	set src in usr
 
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 
 	if(!ishuman(usr))
