@@ -89,7 +89,7 @@
 	set name = "Eject PDA"
 	set category = "Object"
 	set src in oview(1)
-	if(!usr.incapacitated())
+	if(usr.incapacitated())
 		return
 
 	if(storedpda)
