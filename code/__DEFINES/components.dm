@@ -46,6 +46,8 @@
 	#define COMPONENT_PREVENT_PULL 1
 #define COMSIG_ATOM_STOP_PULL  "atom_stop_pull"					//from base of /mob/stop_pulling(): (/mob/puller)
 
+#define COMSIG_MOVABLE_WADDLE "movable_waddle"		//from atom/movable/proc/waddle(): (waddle_angle, waddle_height)
+
 // living signals
 #define COMSIG_LIVING_START_PULL "living_start_pull"			//from base of /mob/start_pulling(): (/atom/movable/target)
 #define COMSIG_LIVING_STOP_PULL "living_stop_pull"				//from base of /mob/stop_pulling(): (/atom/movable/target)
