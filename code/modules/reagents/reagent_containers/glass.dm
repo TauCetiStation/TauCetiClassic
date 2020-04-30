@@ -92,7 +92,7 @@
 	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us. Or FROM us TO it.
 		var/obj/structure/reagent_dispensers/T = target
 		if(target.reagents.total_volume >= reagents.maximum_volume && (T.reagents_transfer_mode == "In"))
-			var/trans = src.reagents.trans_to(target, src:amount_per_transfer_from_this)
+			var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 			to_chat(user, "<span class = 'notice'>You fill [target] with [trans] units of the contents of [src]. </span>")
 			return
 
