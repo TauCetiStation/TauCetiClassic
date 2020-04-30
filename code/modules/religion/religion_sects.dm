@@ -32,7 +32,7 @@
 	to_chat(L, "<span class='notice'>[convert_opener]</span>")
 
 /datum/religion_sect/puritanism
-	name = "The Puritan of "
+	name = "The Puritans of "
 	desc = "Nothing special."
 	convert_opener = "Your run-of-the-mill sect, there are no benefits or boons associated. Praise normalcy!"
 	aspect_preset = list(/datum/aspect/salutis, /datum/aspect/lux, /datum/aspect/spiritus)
