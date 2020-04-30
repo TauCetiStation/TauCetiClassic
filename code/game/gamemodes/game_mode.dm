@@ -82,6 +82,12 @@ Implants;
 (Pointless) Badassery;
 /obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);"}
 
+//Distress call variables.
+	var/list/datum/emergency_call/all_calls = list() //initialized at round start and stores the datums.
+	var/datum/emergency_call/picked_call = null //Which distress call is currently active
+	var/on_distress_cooldown = FALSE
+	var/waiting_for_candidates = FALSE
+
 /datum/game_mode/proc/announce() //to be calles when round starts
 	to_chat(world, "<B>Notice</B>: [src] did not define announce()")
 

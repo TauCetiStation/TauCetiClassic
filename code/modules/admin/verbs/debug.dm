@@ -2087,3 +2087,65 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	usr.client.cache = list()
 
 	to_chat(usr, "Your NanoUI Resource files have been refreshed")
+
+/client/proc/force_distress()
+	set category = "Fun"
+	set name = "Distress Beacon"
+	set desc = "Call a distress beacon manually."
+
+	if(!check_rights(R_DEBUG))
+		return
+
+	if(!ticker?.mode)
+		to_chat(src, "<span class='warning'>Please wait for the round to begin first.</span>")
+
+	if(ticker.mode.waiting_for_candidates)
+		to_chat(src, "<span class='warning'>Please wait for the current beacon to be finalized.</span>")
+		return
+
+	if(ticker.mode.picked_call)
+		ticker.mode.picked_call.reset()
+		ticker.mode.picked_call = null
+
+	var/list/list_of_calls = list()
+	for(var/datum/emergency_call/L in ticker.mode.all_calls)
+		if(L.name)
+			list_of_calls += L.name
+
+	list_of_calls += "Randomize"
+
+	var/choice = input("Which distress do you want to call?") as null|anything in list_of_calls
+	if(!choice)
+		return
+
+	if(choice == "Randomize")
+		ticker.mode.picked_call	= ticker.mode.get_random_call()
+	else
+		for(var/datum/emergency_call/C in ticker.mode.all_calls)
+			if(C.name == choice)
+				ticker.mode.picked_call = C
+				break
+
+	if(!istype(ticker.mode.picked_call))
+		return
+
+	var/max = input("What should the maximum amount of mobs be?", "Max Mobs", ticker.mode.picked_call.mob_max) as null|num
+	if(!max || max < 1)
+		return
+
+	ticker.mode.picked_call.mob_max = max
+
+	var/min = input("What should the minimum amount of mobs be?", "Min Mobs", ticker.mode.picked_call.mob_min) as null|num
+	if(!min || min < 1)
+		return
+
+	ticker.mode.picked_call.mob_min = min
+
+	var/is_announcing = TRUE
+	if(alert(usr, "Would you like to announce the distress beacon to the server population? This will reveal the distress beacon to all players.", "Announce distress beacon?", "Yes", "No") != "Yes")
+		is_announcing = FALSE
+
+	ticker.mode.picked_call.activate(is_announcing)
+
+	log_admin("[key_name(usr)] called a [choice == "Randomize" ? "randomized ":""]distress beacon: [ticker.mode.picked_call.name]. Min: [min], Max: [max].")
+	message_admins("[key_name(usr)] called a [choice == "Randomize" ? "randomized ":""]distress beacon: [ticker.mode.picked_call.name] Min: [min], Max: [max].")

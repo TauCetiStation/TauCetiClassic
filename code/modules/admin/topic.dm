@@ -604,7 +604,7 @@
 			if(counter >= 5) //So things dont get squiiiiished!
 				jobs += "</tr><tr align='center'>"
 				counter = 0
-		
+
 		if(jobban_isbanned(M, ROLE_SURVIVOR))
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_SURVIVOR];jobban4=\ref[M]'><font color=red>[ROLE_SURVIVOR]</font></a></td>"
 		else
@@ -987,7 +987,7 @@
 	else if(href_list["guard"])
 		if(!(check_rights(R_LOG) && check_rights(R_BAN)))
 			return
-		
+
 		var/mob/M = locate(href_list["guard"])
 		if (ismob(M))
 			if(!M.client)
@@ -1742,6 +1742,32 @@
 			attachment_msg = input,
 			attachment_color = BRIDGE_COLOR_ADMINCOM,
 		)
+
+	if(href_list["distress"])
+		var/mob/M = locate(href_list["distress"])
+
+		if(!istype(M))
+			return
+
+		if(!ticker?.mode || ticker.mode.waiting_for_candidates)
+			return
+
+		var/list/valid_calls = list("Random")
+		for(var/datum/emergency_call/E in ticker.mode.all_calls) //Loop through all potential candidates
+			if(E.probability < 1) //Those that are meant to be admin-only
+				continue
+
+			valid_calls.Add(E)
+
+		var/chosen_call = input(usr, "Select a distress to send", "Emergency Response") as null|anything in valid_calls
+
+		if(chosen_call == "Random")
+			ticker.mode.activate_distress()
+		else
+			ticker.mode.activate_distress(chosen_call)
+
+		log_admin("[key_name(usr)] has sent a [chosen_call] distress beacon early, requested by [key_name(M)]")
+		message_admins("[key_name(usr)] has sent a [chosen_call] distress beacon early, requested by [key_name(M)]")
 
 	else if(href_list["jumpto"])
 		if(!check_rights(R_ADMIN))
