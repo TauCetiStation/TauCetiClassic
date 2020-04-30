@@ -17,7 +17,7 @@
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/recharged = 0
 	var/recharge_delay = 15
-	var/hackedcheck = 0
+	var/hackedcheck = FALSE
 	var/hackable = FALSE
 	var/msg_hack_enable = ""
 	var/msg_hack_disable = ""
@@ -178,16 +178,15 @@
 //	if(isrobot(user))
 //		return
 	if(ismultitool(B) && hackable)
-		if(hackedcheck == 0)
+		hackedcheck = !hackedcheck
+		if(hackedcheck)
 			to_chat(user, msg_hack_enable)
 			dispensable_reagents += premium_reagents
-			hackedcheck = 1
 			return
 
 		else
 			to_chat(user, msg_hack_disable)
 			dispensable_reagents -= premium_reagents
-			hackedcheck = 0
 			return
 	if(default_unfasten_wrench(user, B))
 		power_change()
