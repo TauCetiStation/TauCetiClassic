@@ -94,7 +94,7 @@
 		if(T.reagents.total_volume >= T.reagents.maximum_volume)
 			to_chat("<span class = 'rose'>[T] is full.</span>")
 			return
-		if(!(T.reagents_transfer_from))
+		else if(!(T.reagents_transfer_from))
 			var/trans = reagents.trans_to(T, amount_per_transfer_from_this)
 			to_chat(user, "<span class = 'notice'>You fill [T] with [trans] units of the contents of [src]. </span>")
 			return
