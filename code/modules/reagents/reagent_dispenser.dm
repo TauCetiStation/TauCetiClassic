@@ -319,7 +319,6 @@
 	amount_per_transfer_from_this = 10
 	anchored = 1
 	density = 0
-	
 /obj/structure/reagent_dispensers/cleaner/atom_init()
 	. = ..()
 	reagents.add_reagent("cleaner", 1000)
