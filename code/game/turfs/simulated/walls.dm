@@ -282,7 +282,7 @@
 			var/mob/living/simple_animal/hulk/Hulk = M
 			playsound(Hulk, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 			Hulk.health -= rand(4,10)
-		playsound(M, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+		playsound(M, 'sound/effects/hulk_hit_wall.ogg', VOL_EFFECTS_MASTER)
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash == 3)
 				take_damage(rand(25, 75))

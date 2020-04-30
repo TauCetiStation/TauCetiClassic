@@ -517,6 +517,11 @@
 				return
 			stop_pulling()
 
+		if(SEND_SIGNAL(src, COMSIG_LIVING_START_PULL, AM) & COMPONENT_PREVENT_PULL)
+			return
+		if(SEND_SIGNAL(AM, COMSIG_ATOM_START_PULL, src) & COMPONENT_PREVENT_PULL)
+			return
+
 		src.pulling = AM
 		AM.pulledby = src
 		if(pullin)
@@ -543,6 +548,9 @@
 	set category = "IC"
 
 	if(pulling)
+		SEND_SIGNAL(src, COMSIG_LIVING_STOP_PULL, pulling)
+		SEND_SIGNAL(pulling, COMSIG_ATOM_STOP_PULL, src)
+
 		pulling.pulledby = null
 		pulling = null
 		if(pullin)

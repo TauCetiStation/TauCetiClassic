@@ -109,6 +109,11 @@
 			// Pull them in closer...
 			step_towards(A, src)
 			SetNextMove(CLICK_CD_RAPID)
+	else if(istype(A, /obj/item/weapon/nullrod/staff))
+		var/obj/item/weapon/nullrod/staff/S = A
+		if(S.brainmob == src)
+			step_towards(A, src)
+			SetNextMove(CLICK_CD_RAPID)
 	else
 		A.attack_ghost(src)
 		SetNextMove(CLICK_CD_MELEE)
@@ -154,3 +159,16 @@
 	y = new_y
 
 	Moved(oldLoc, 0)
+
+/mob/living/simple_animal/shade/god/Process_Spacemove(movement_dir = 0)
+	return TRUE
+
+/mob/living/simple_animal/shade/god/verb/view_manfiest()
+	set name = "View Crew Manifest"
+	set category = "Deity"
+
+	var/dat
+	dat += "<h4>Crew Manifest</h4>"
+	dat += data_core.get_manifest()
+
+	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")
