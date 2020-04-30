@@ -31,7 +31,6 @@ var/global/list/trash_loot = list(
 		/obj/item/trash/chinese4 = 1,
 		/obj/item/trash/fries = 1,
 		/obj/item/trash/semki = 1,
-
 		/obj/item/weapon/poster/contraband = 1,
 		/obj/item/weapon/poster/legit = 1,
 		/obj/item/weapon/folder/yellow = 1,
@@ -42,7 +41,6 @@ var/global/list/trash_loot = list(
 		/obj/item/weapon/disk/data = 1,
 		/obj/item/stack/sheet/cardboard{amount = 5} = 1,
 		/obj/item/weapon/storage/box = 1,
-
 		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 1,
 		/obj/item/weapon/coin/silver = 1,
 		/obj/effect/decal/cleanable/ash = 1,
@@ -51,7 +49,6 @@ var/global/list/trash_loot = list(
 		/obj/item/device/camera_film = 1,
 		/obj/item/weapon/light/bulb = 1,
 		/obj/item/weapon/light/tube = 1,
-
 		/obj/item/weapon/airlock_painter = 1,
 		/obj/item/weapon/rack_parts = 1,
 		/obj/item/clothing/mask/breath = 1,
@@ -104,14 +101,12 @@ var/global/list/common_loot = list(
 		/obj/item/stack/rods{amount = 25} = 1,
 		/obj/item/stack/sheet/metal{amount = 20} = 1,
 		/obj/item/stack/sheet/mineral/phoron = 1,
-
 		/obj/item/device/assembly/infra = 1,
 		/obj/item/device/assembly/signaler = 1,
 		/obj/item/device/assembly/mousetrap = 1,
 		/obj/item/device/assembly/prox_sensor = 1,
 		/obj/item/device/assembly/timer = 1,
 		/obj/item/device/assembly/igniter = 1,
-
 		/obj/item/weapon/packageWrap = 1,
 		) = 1,
 
@@ -136,7 +131,6 @@ var/global/list/common_loot = list(
 		/obj/item/bodybag = 1,
 		/obj/item/weapon/grenade/smokebomb = 1,
 		/obj/item/weapon/spacecash/c10 = 1,
-
 		/obj/item/device/flashlight = 1,
 		/obj/effect/spawner/lootdrop/glowstick = 1,
 		/obj/item/clothing/head/hardhat/red = 1,
@@ -167,7 +161,6 @@ var/global/list/uncommon_loot = list(
 		/obj/item/clothing/glasses/hud/health = 1,
 		/obj/item/weapon/storage/belt/utility = 1,
 		/obj/item/weapon/storage/belt/medical = 1,
-
 		/obj/item/clothing/suit/armor/vest = 1,
 		/obj/item/clothing/head/helmet = 1,
 		/obj/item/clothing/mask/muzzle = 1,
