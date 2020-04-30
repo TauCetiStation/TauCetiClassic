@@ -17,9 +17,7 @@
 
 	resolve_callback = _resolve_callback
 
-	bound_to.AddComponent(/datum/component/bound, list(parent))
-
-	RegisterSignal(parent, list(COMSIG_BOUND_MOVED), .proc/check_bounds)
+	RegisterSignal(bound_to, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED), .proc/check_bounds)
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), .proc/check_bounds)
 	RegisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE), .proc/on_try_move)
 
@@ -27,7 +25,8 @@
 	check_bounds()
 
 /datum/component/bounded/_RemoveFromParent()
-	SEND_SIGNAL(parent, COMSIG_BOUND_UNBOUND, parent)
+	UnregisterSignal(bound_to, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED))
+	bound_to = null
 
 // This proc is called when we are for some reason out of bounds.
 // The default bounds resolution does not take in count density, or etc.
@@ -105,35 +104,3 @@
 	if(dist < min_dist || dist > max_dist)
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	return NONE
-
-
-
-// A component that keeps track of what's bound to us.
-/datum/component/bound
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	var/list/bounded
-
-/datum/component/bound/Initialize(list/_bounded)
-	bounded = list()
-	add_bounded_things(_bounded)
-
-	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED), .proc/on_move)
-
-/datum/component/bound/InheritComponent(datum/component/C, i_am_original, list/new_bounded)
-	add_bounded_things(new_bounded)
-
-/datum/component/bound/proc/add_bounded_things(list/_bounded)
-	for(var/atom/bounded_thing in _bounded)
-		RegisterSignal(bounded_thing, list(COMSIG_BOUND_UNBOUND), .proc/release)
-		bounded += bounded_thing
-
-/datum/component/bound/proc/release(datum/source, atom/bounded_thing)
-	bounded -= bounded_thing
-	UnregisterSignal(bounded_thing, list(COMSIG_BOUND_UNBOUND))
-
-	if(bounded.len == 0)
-		qdel(src)
-
-/datum/component/bound/proc/on_move(datum/source, atom/oldLoc, dir)
-	for(var/atom/bounded_thing in bounded)
-		SEND_SIGNAL(bounded_thing, COMSIG_BOUND_MOVED, oldLoc, dir)
