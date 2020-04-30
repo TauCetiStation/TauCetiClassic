@@ -126,9 +126,9 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_pack/pistol
 	name = "9mm pistol crate"
-	contains = list(/obj/item/weapon/gun/projectile/wjpp,
-					/obj/item/weapon/gun/projectile/wjpp,
-					/obj/item/weapon/gun/projectile/wjpp)
+	contains = list(/obj/item/weapon/gun/projectile/glock,
+					/obj/item/weapon/gun/projectile/glock,
+					/obj/item/weapon/gun/projectile/glock)
 	cost = 4500
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "9mm pistol crate"
