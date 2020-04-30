@@ -310,6 +310,7 @@
 /obj/structure/reagent_dispensers/kvasstank/atom_init()
 	. = ..()
 	reagents.add_reagent("kvass",1000)
+
 /obj/structure/reagent_dispensers/cleaner
 	name = "Space Cleaner Dispenser"
 	desc = "A dispenser of cleaner."
