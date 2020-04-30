@@ -1228,7 +1228,7 @@
 
 /obj/machinery/reagentgrinder/proc/detach()
 
-	if (usr.stat != CONSCIOUS)
+	if(usr.incapacitated())
 		return
 	if (!beaker)
 		return
@@ -1238,7 +1238,7 @@
 
 /obj/machinery/reagentgrinder/proc/eject()
 
-	if (usr.stat != CONSCIOUS)
+	if(usr.incapacitated())
 		return
 	if (holdingitems && holdingitems.len == 0)
 		return
