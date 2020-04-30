@@ -93,7 +93,7 @@
 		var/obj/structure/reagent_dispensers/T = target
 		if(T.reagents.total_volume >= reagents.maximum_volume && !(T.reagents_transfer_from))
 			var/trans = reagents.trans_to(T, amount_per_transfer_from_this)
-			to_chat(user, "<span class = 'notice'>You fill [target] with [trans] units of the contents of [src]. </span>")
+			to_chat(user, "<span class = 'notice'>You fill [T] with [trans] units of the contents of [src]. </span>")
 			return
 
 		if(!T.reagents.total_volume && T.reagents)
