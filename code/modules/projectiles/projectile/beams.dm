@@ -84,7 +84,7 @@
 /obj/item/projectile/beam/emitter/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		if((HULK in H.mutations) && H.hulk_activator == "emitter beam")
+		if((HULK in H.mutations) && H.hulk_activator == ACTIVATOR_EMITTER_BEAM)
 			H.try_mutate_to_hulk(H)
 
 /obj/item/projectile/beam/lasertag

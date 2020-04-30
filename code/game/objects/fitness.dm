@@ -31,7 +31,7 @@
 		user.visible_message("<B>[user] is [bragmessage]!</B>")
 		var/lifts = 0
 
-		if((HULK in user.mutations) && user.hulk_activator == "heavy muscle load")
+		if((HULK in user.mutations) && user.hulk_activator == ACTIVATOR_HEAVY_MUSCLE_LOAD)
 			to_chat(user, "<span class='notice'>You feel unbearable muscle pain, but you like it!</span>")
 
 		while (lifts++ < 6)

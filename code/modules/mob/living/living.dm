@@ -1188,7 +1188,7 @@
 		var/list/vomitsound = list()
 		var/mob/living/carbon/human/H = src
 
-		if((HULK in H.mutations) && H.hulk_activator == "vomiting")
+		if((HULK in H.mutations) && H.hulk_activator == ACTIVATOR_VOMITING)
 			H.try_mutate_to_hulk()
 
 		// The main reason why this is here, and not made into a polymorphized proc, is because we need to know from the subclasses that could cover their face, that they do.
