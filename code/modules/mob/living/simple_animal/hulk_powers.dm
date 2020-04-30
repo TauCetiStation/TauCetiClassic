@@ -475,7 +475,7 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/clown_joke/cast(list/targets)
-	if (usr.lying || usr.stunned || usr.stat)
+	if (usr.incapacitated())
 		to_chat(usr, "<span class='warning'>You can't right now!</span>")
 		return
 
