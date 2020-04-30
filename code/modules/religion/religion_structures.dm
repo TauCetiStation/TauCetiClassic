@@ -87,7 +87,7 @@
 
 	//choose aspect preset
 	if(istype(C, /obj/item/weapon/storage/bible))
-		if(!global.religious_sect)
+		if(!sect_to_altar)
 			var/list/available_options = generate_available_sects(user)
 			if(!available_options)
 				return
@@ -97,8 +97,7 @@
 				to_chat(user, "<span class='warning'>You are too far away!</span>")
 				return
 
-			global.religious_sect = available_options[sect_select]
-			sect_to_altar = global.religious_sect
+			sect_to_altar = available_options[sect_select]
 			religion_to_altar = global.chaplain_religion
 
 			if(sect_to_altar.allow_aspect)
@@ -106,27 +105,15 @@
 				var/list/aspects = generate_aspect(user)
 				if(!aspects)
 					return
-
-				for(var/i in 1 to 3)
-					var/aspect_select = input(user, "Select a aspect of god (You CANNOT revert this decision!)", "Select a aspect of god", null) in aspects
-					var/type_selected = aspects[aspect_select]
-					if(!istype(religion_to_altar.sect_aspects[aspect_select], type_selected))
-						religion_to_altar.sect_aspects[aspect_select] = new type_selected()
-					else
-						var/datum/aspect/asp = religion_to_altar.sect_aspects[aspect_select]
-						asp.power += 1
-
-				//add rites
-				for(var/i in religion_to_altar.sect_aspects)
-					var/datum/aspect/asp = religion_to_altar.sect_aspects[i]
-					if(asp.rite)
-						religion_to_altar.rites_list += asp.rite
+				sect_to_altar.on_select(aspects, 3)
 			else
-				if(sect_to_altar.aspect_preset.len != 0)
-					for(var/aspect in sect_to_altar.aspect_preset)
-						var/datum/aspect/asp = new aspect()
-						asp.power = sect_to_altar.aspect_preset[aspect]
-						religion_to_altar.sect_aspects[asp.name] = asp
+				sect_to_altar.on_select(sect_to_altar.aspect_preset)
+
+			//add rites
+			for(var/i in religion_to_altar.sect_aspects)
+				var/datum/aspect/asp = religion_to_altar.sect_aspects[i]
+				if(asp.rite)
+					religion_to_altar.rites_list += asp.rite
 
 			if(isliving(user) && user.mind && user.mind.holy_role)
 				sect_to_altar.on_conversion(user)
