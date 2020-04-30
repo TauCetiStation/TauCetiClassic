@@ -13,7 +13,7 @@
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
 	if(isscrewdriver(W))
 		reagents_transfer_from = !reagents_transfer_from
-		reagents_transfer_from ? to_chat(user, "<span class = 'notice'>You transfer from [src]</span>") : to_chat(user, "<span class = 'notice'>You transfer into [src]</span>")
+		to_chat(user, "<span class = 'notice'>You transfer [reagent_transfer_from ? "from" : "into"] [src]</span>")
 	return
 
 /obj/structure/reagent_dispensers/atom_init()
