@@ -46332,10 +46332,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"bJL" = (
-/obj/random/scrap/moderate_weighted,
-/turf/simulated/wall,
-/area/station/maintenance/cargo)
 "bJM" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -100811,7 +100807,7 @@ byR
 bEW
 bEW
 tEw
-bJL
+dLO
 aSM
 aSM
 bEW
