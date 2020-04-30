@@ -255,3 +255,14 @@
 	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with \his claws.</span>",
 	"<span class='danger'>You smash against the [src.name] with your claws.</span>",
 	"<span class='danger'>You hear a clicking sound.</span>")
+
+/obj/machinery/computer/attack_animal(mob/living/simple_animal/M)
+	if(istype(M, /mob/living/simple_animal/hulk))
+		var/mob/living/simple_animal/hulk/Hulk = M
+		playsound(Hulk, 'sound/effects/hulk_hit_computer.ogg', VOL_EFFECTS_MASTER)
+		to_chat(M, "<span class='warning'>You hit the computer, glass fragments hurt you!</span>")
+		Hulk.health -= rand(2,4)
+		if(prob(40))
+			set_broken()
+			to_chat(M, "<span class='warning'>You broke the computer.</span>")
+			return
