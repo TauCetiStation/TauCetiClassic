@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 0
 	flags = OPENCONTAINER
-	var/reagents_transfer_mode = "Out"
+	var/reagents_transfer_from = TRUE
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
 
