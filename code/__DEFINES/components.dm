@@ -55,8 +55,3 @@
 #define COMSIG_XENO_TURF_CLICK_SHIFT "xeno_turf_click_shift"				//from turf ShiftClickOn(): (/mob)
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"					//from turf AltClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"				//from monkey CtrlClickOn(): (/mob)
-
-// special signals, used by components for other components
-#define COMSIG_BOUND_MOVED "bound_moved"			//from component/bound/on_move(): (atom/newLoc)
-#define COMSIG_BOUND_UNBOUND "bound_unbound"		//when something is unbounded from component/bounded/release(): (atom/bounded)
-#define COMSIG_BOUND_SHIFT "bound_shift"            //when there is a temporary re-bounding(perhaps item is put in storage, so now storage defines bounds)
