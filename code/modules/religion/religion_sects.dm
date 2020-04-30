@@ -21,21 +21,11 @@
 	var/list/datum/aspect/aspect_preset
 
 /// Activates once selected
-/datum/religion_sect/proc/on_select(list/aspects, count_aspects)
-	if(!aspect_preset)
-		for(var/i in 1 to count_aspects)
-			var/aspect_select = input(usr, "Select a aspect of god (You CANNOT revert this decision!)", "Select a aspect of god", null) in aspects
-			var/type_selected = aspects[aspect_select]
-			if(!istype(global.chaplain_religion.sect_aspects[aspect_select], type_selected))
-				global.chaplain_religion.sect_aspects[aspect_select] = new type_selected()
-			else
-				var/datum/aspect/asp = global.chaplain_religion.sect_aspects[aspect_select]
-				asp.power += 1
-	else
-		for(var/aspect in aspects)
-			var/datum/aspect/asp = new aspect()
-			asp.power = aspects[aspect]
-			global.chaplain_religion.sect_aspects[asp.name] = asp
+/datum/religion_sect/proc/on_select(list/aspects)
+	for(var/aspect in aspects)
+		var/datum/aspect/asp = new aspect()
+		asp.power = aspects[aspect]
+		global.chaplain_religion.aspects[asp.name] = asp
 
 /// Activates once selected and on newjoins, oriented around people who become holy.
 /datum/religion_sect/proc/on_conversion(mob/living/L)
@@ -58,3 +48,13 @@
 	desc = "Follow the orders of your god."
 	convert_opener = "I am the first to enter here..."
 	allow_aspect = TRUE
+
+/datum/religion_sect/custom/on_select(list/aspects, count_aspects)
+	for(var/i in 1 to count_aspects)
+		var/aspect_select = input(usr, "Select a aspect of god (You CANNOT revert this decision!)", "Select a aspect of god", null) in aspects
+		var/type_selected = aspects[aspect_select]
+		if(!istype(global.chaplain_religion.aspects[aspect_select], type_selected))
+			global.chaplain_religion.aspects[aspect_select] = new type_selected()
+		else
+			var/datum/aspect/asp = global.chaplain_religion.aspects[aspect_select]
+			asp.power += 1

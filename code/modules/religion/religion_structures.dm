@@ -11,8 +11,8 @@
 	can_buckle = TRUE
 	buckle_lying = 90 //we turn to you!
 	var/datum/religion_rites/performing_rite
-	var/datum/religion_sect/sect_to_altar //easy access
-	var/datum/religion/chaplain/religion_to_altar //easy access
+	var/datum/religion_sect/sect //easy access
+	var/datum/religion/chaplain/religion //easy access
 
 /obj/structure/altar_of_gods/examine(mob/user)
 	. = ..()
@@ -25,7 +25,7 @@
 		if(L.mind && L.mind.holy_role)
 			can_i_see = TRUE
 
-	if(!can_i_see || global.chaplain_religion.sect_aspects.len == 0)
+	if(!can_i_see || global.chaplain_religion.aspects.len == 0)
 		return
 
 	msg += "<span class='notice'>The sect currently has [round(global.chaplain_religion.favor)] favor with [pick(global.chaplain_religion.deity_names)].\n</span>"
@@ -52,11 +52,11 @@
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
 	//If we can sac, we do nothing but the sacrifice instead of typical attackby behavior (IE damage the structure)
-	if(religion_to_altar)
-		for(var/aspect in religion_to_altar.sect_aspects)
-			var/datum/aspect/asp = religion_to_altar.sect_aspects[aspect]
+	if(religion)
+		for(var/aspect in religion.aspects)
+			var/datum/aspect/asp = religion.aspects[aspect]
 			if(asp.sacrifice(C, user))
-				to_chat(user, "<span class='notice'>You offer [C]'s power to [pick(religion_to_altar.deity_names)], pleasing them.</span>")
+				to_chat(user, "<span class='notice'>You offer [C]'s power to [pick(religion.deity_names)], pleasing them.</span>")
 				qdel(C)
 				break
 
@@ -66,28 +66,28 @@
 
 	//start ritual
 	if(istype(C, /obj/item/weapon/nullrod))
-		if(religion_to_altar.rites_list.len == 0)
+		if(religion.rites_list.len == 0)
 			to_chat(user, "<span class='notice'>Your religion doesn't have any rites to perform!</span>")
 			return
 
-		var/rite_select = input(user, "Select a rite to perform!", "Select a rite", null) in religion_to_altar.rites_list
+		var/rite_select = input(user, "Select a rite to perform!", "Select a rite", null) in religion.rites_list
 		if(!(src in oview(2)))
 			to_chat(user, "<span class='warning'>You are too far away!</span>")
 			return
 
-		var/selection2type = religion_to_altar.rites_list[rite_select]
+		var/selection2type = religion.rites_list[rite_select]
 		performing_rite = new selection2type(src)
 
 		if(!performing_rite.perform_rite(user, src))
 			QDEL_NULL(performing_rite)
 		else
 			performing_rite.invoke_effect(user, src)
-			religion_to_altar.adjust_favor(-performing_rite.favor_cost)
+			religion.adjust_favor(-performing_rite.favor_cost)
 			QDEL_NULL(performing_rite)
 
 	//choose aspect preset
 	if(istype(C, /obj/item/weapon/storage/bible))
-		if(!sect_to_altar)
+		if(!sect)
 			var/list/available_options = generate_available_sects(user)
 			if(!available_options)
 				return
@@ -97,28 +97,28 @@
 				to_chat(user, "<span class='warning'>You are too far away!</span>")
 				return
 
-			sect_to_altar = available_options[sect_select]
-			religion_to_altar = global.chaplain_religion
+			sect = available_options[sect_select]
+			religion = global.chaplain_religion
 
-			if(sect_to_altar.allow_aspect)
+			if(sect.allow_aspect)
 				//choose aspects for the god and his desire
 				var/list/aspects = generate_aspect(user)
 				if(!aspects)
 					return
-				sect_to_altar.on_select(aspects, 3)
+				sect.on_select(aspects, 3)
 			else
-				sect_to_altar.on_select(sect_to_altar.aspect_preset)
+				sect.on_select(sect.aspect_preset)
 
 			//add rites
-			for(var/i in religion_to_altar.sect_aspects)
-				var/datum/aspect/asp = religion_to_altar.sect_aspects[i]
+			for(var/i in religion.aspects)
+				var/datum/aspect/asp = religion.aspects[i]
 				if(asp.rite)
-					religion_to_altar.rites_list += asp.rite
+					religion.rites_list += asp.rite
 
 			if(isliving(user) && user.mind && user.mind.holy_role)
-				sect_to_altar.on_conversion(user)
+				sect.on_conversion(user)
 
-			religion_to_altar.update_rites()
+			religion.update_rites()
 
 /obj/structure/altar_of_gods/proc/generate_available_sects(mob/user) //eventually want to add sects you get from unlocking certain achievements
 	var/list/variants = list()

@@ -34,7 +34,7 @@
 	// Spells that combine with aspects and cast to God
 	var/list/spells = list()
 	// Choosed aspects
-	var/list/sect_aspects = list()
+	var/list/aspects = list()
 	// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
 	var/list/rites_list = list()
 	/****ASPECTS****/
@@ -299,7 +299,7 @@
 		var/obj/effect/proc_holder/spell/S = new spell()
 		var/list/spell_aspects = S.needed_aspect
 
-		if(is_sublist_assoc(spell_aspects, sect_aspects, pred))
+		if(is_sublist_assoc(spell_aspects, aspects, pred))
 			spells |= spell
 
 		QDEL_NULL(S)

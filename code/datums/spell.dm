@@ -75,7 +75,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 					return 0
 
 	if(!skipcharge && usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		if(favor_cost > 0 && global.chaplain_religion.sect_aspects.len == 0)
+		if(favor_cost > 0 && global.chaplain_religion.aspects.len == 0)
 			to_chat(usr, "First choose aspects in your religion!")
 			return 0
 		if(favor_cost > 0 && global.chaplain_religion.favor < favor_cost)
