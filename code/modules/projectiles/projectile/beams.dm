@@ -85,7 +85,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if((HULK in H.mutations) && H.hulk_activator == "emitter beam")
-			H.try_mutate_to_hulk(H)
+			H.try_mutate_to_hulk()
 
 /obj/item/projectile/beam/lasertag
 	name = "lasertag beam"
