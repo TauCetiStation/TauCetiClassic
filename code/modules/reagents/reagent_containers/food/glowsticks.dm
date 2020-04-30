@@ -209,6 +209,14 @@
 	light_color = "#ff9318"
 	filling_color = "#ff9318"
 
+/obj/effect/spawner/lootdrop/glowstick
+	name = "random colored glowstick"
+	icon = 'icons/obj/glowsticks.dmi'
+	icon_state = "random_glowstick"
+
+/obj/effect/spawner/lootdrop/glowstick/atom_init()
+	loot = typesof(/obj/item/weapon/reagent_containers/food/snacks/glowstick)
+	. = ..()
 
 ///////////////////// POWER GLOWSTICK //////////////////////
 
