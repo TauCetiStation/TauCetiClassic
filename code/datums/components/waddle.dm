@@ -11,7 +11,7 @@
 	return !anchored
 
 /mob/can_waddle()
-	return !lying && !notransform && !anchored && !incapacitated()
+	return !notransform && !anchored && !incapacitated()
 
 
 /*
