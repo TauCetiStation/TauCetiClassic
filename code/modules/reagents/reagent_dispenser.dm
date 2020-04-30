@@ -11,10 +11,11 @@
 	var/possible_transfer_amounts = list(10,25,50,100)
 
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewdriver(W))
-		transfer_from = !transfer_from
-		to_chat(user, "<span class = 'notice'>You transfer [transfer_from ? "from" : "into"] [src]</span>")
 	return
+
+/obj/structure/reagent_dispensers/AltClick(mob/user)
+	transfer_from = !transfer_from
+	to_chat(user, "<span class = 'notice'>You transfer [transfer_from ? "from" : "into"] [src]</span>")
 
 /obj/structure/reagent_dispensers/atom_init()
 	var/datum/reagents/R = new/datum/reagents(1000)
