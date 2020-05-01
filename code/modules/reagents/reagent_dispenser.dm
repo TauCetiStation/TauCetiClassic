@@ -225,13 +225,13 @@
 
 /obj/structure/reagent_dispensers/proc/explode()
 	var/mob/user = usr
-	if(reagents.has_reagent("fuel"))
-		var/datum/reagent/fuel/F = locate(/datum/reagent/fuel) in reagents.reagent_list
-		if (F.volume > 500)
+	var/fuel_am = reagents.get_reagent_amount("fuel") + reagents.get_reagent_amount("phoron") * 5
+	if(fuel_am)
+		if (fuel_am > 500)
 			explosion(src.loc,1,2,4)
-		else if (F.volume > 100)
+		else if (fuel_am > 100)
 			explosion(src.loc,0,1,3)
-		else if(F.volume > 0)
+		else if(fuel_am > 0)
 			explosion(src.loc,-1,1,2)
 		message_admins("[key_name_admin(user)] triggered a [src] explosion. [ADMIN_JMP(user)]")
 		log_game("[key_name(user)] triggered a fueltank explosion.")
