@@ -321,7 +321,7 @@
 
 /obj/item/weapon/weldingtool/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(istype(target, /obj/structure/reagent_dispensers) && get_dist(src, target) <= 1 && locate(/datum/reagent/fuel) in target.reagents.reagent_list)
+	if(istype(target, /obj/structure/reagent_dispensers) && get_dist(src, target) <= 1 && target.reagents.has_reagent("fuel"))
 		if (welding)
 			target.reagents.trans_to(src, max_fuel)
 			to_chat(user, "<span class='notice'>Welder refueled</span>")
