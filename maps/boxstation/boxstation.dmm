@@ -684,10 +684,6 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "warninglinecorners"
-	},
 /area/station/security/armoury)
 "abk" = (
 /obj/structure/grille,
@@ -1296,7 +1292,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "warndark"
+	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "ack" = (
@@ -1720,6 +1716,9 @@
 /obj/item/clothing/suit/armor/riot,
 /obj/item/clothing/head/helmet/riot,
 /obj/item/weapon/shield/riot,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -1823,41 +1822,39 @@
 /area/station/rnd/tox_launch)
 "adf" = (
 /obj/structure/rack,
-/obj/structure/window/reinforced,
+/obj/machinery/light/small/emergency{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
-	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
-/obj/item/weapon/melee/baton,
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/weapon/shield/riot,
+/obj/item/weapon/gun/plasma/p104sass{
+	pixel_y = 2
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "delivery"
 	},
-/area/station/security/armoury)
+/area/station/security/warden)
 "adg" = (
-/obj/structure/rack,
-/obj/structure/window/reinforced,
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/item/weapon/melee/baton,
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/weapon/shield/riot,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/area/station/security/armoury)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/chapel)
 "adh" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2172,31 +2169,19 @@
 	},
 /area/station/security/main)
 "adG" = (
-/obj/machinery/camera{
-	c_tag = "Armory";
-	dir = 4
+/obj/machinery/power/apc{
+	name = "Armory APC";
+	pixel_y = -28
 	},
-/obj/structure/rack,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
-	},
-/obj/item/weapon/gun/energy/gun{
-	pixel_y = 4
-	},
-/obj/item/weapon/gun/energy/gun,
-/obj/item/weapon/gun/energy/gun{
-	pixel_y = -4
-	},
+/obj/machinery/light/small/emergency,
 /turf/simulated/floor{
-	icon_state = "delivery"
+	icon_state = "warndark"
 	},
-/area/station/security/warden)
+/area/station/security/armoury)
 "adH" = (
 /turf/simulated/wall/r_wall,
 /area/station/security/warden)
@@ -2237,21 +2222,30 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "adL" = (
+/obj/machinery/camera{
+	c_tag = "Armory";
+	dir = 4
+	},
 /obj/structure/rack,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker"
 	},
-/obj/item/weapon/gun/energy/ionrifle{
-	pixel_y = 3
+/obj/item/weapon/gun/energy/gun{
+	pixel_y = 4
 	},
-/obj/item/weapon/gun/energy/ionrifle{
-	pixel_y = -3
+/obj/item/weapon/gun/energy/gun,
+/obj/item/weapon/gun/energy/gun{
+	pixel_y = -4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/item/weapon/gun/energy/gun{
+	step_x = 0;
+	step_y = 0
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -2368,24 +2362,14 @@
 /area/station/maintenance/eva)
 "adX" = (
 /obj/structure/rack,
-/obj/machinery/light/small/emergency{
-	dir = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker"
 	},
-/obj/item/weapon/gun/plasma/p104sass{
-	pixel_y = 2
-	},
-/obj/item/weapon/gun/plasma/p104sass,
-/obj/item/weapon/gun/plasma{
-	pixel_y = -2
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /obj/item/weapon/gun/plasma{
 	pixel_y = -4
@@ -2402,15 +2386,11 @@
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker"
 	},
-/obj/item/weapon/gun/energy/laser{
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser{
-	pixel_y = -3
-	},
 /obj/structure/window/reinforced{
 	dir = 4
+	},
+/obj/item/weapon/gun/energy/ionrifle{
+	pixel_y = -3
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -3225,7 +3205,6 @@
 /obj/item/weapon/gun/projectile/m79{
 	pixel_y = 6
 	},
-/obj/item/weapon/gun/grenadelauncher,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -12411,6 +12390,11 @@
 	icon_state = "warning"
 	},
 /area/station/rnd/xenobiology)
+"avm" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/station/civilian/chapel)
 "avn" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor{
@@ -18776,6 +18760,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
+"aHf" = (
+/obj/structure/closet/emcloset,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/starboard)
 "aHg" = (
 /obj/structure/table/woodentable,
 /obj/item/device/camera_film,
@@ -21394,19 +21385,10 @@
 	},
 /area/station/civilian/gym)
 "aLY" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/turf/simulated/floor{
+	icon_state = "grimy"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/chapel)
+/area/station/civilian/chapel/office)
 "aLZ" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 1
@@ -27693,6 +27675,13 @@
 /obj/item/weapon/wrench,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
+"aXI" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/civilian/chapel/office)
 "aXJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -47724,9 +47713,7 @@
 	},
 /area/station/civilian/chapel)
 "bMe" = (
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken6"
-	},
+/turf/simulated/floor/wood,
 /area/station/civilian/chapel)
 "bMf" = (
 /obj/structure/grille,
@@ -49354,10 +49341,7 @@
 /area/station/rnd/xenobiology)
 "bQA" = (
 /obj/structure/closet/emcloset,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
+/turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "bQB" = (
 /obj/structure/disposalpipe/segment,
@@ -68175,18 +68159,12 @@
 	},
 /area/station/security/armoury)
 "enb" = (
-/obj/machinery/power/apc{
-	name = "Armory APC";
-	pixel_y = -28
-	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/light/small/emergency,
 /turf/simulated/floor{
-	dir = 10;
-	icon_state = "warndark"
+	icon_state = "dark"
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "warninglinecorners"
 	},
 /area/station/security/armoury)
 "enu" = (
@@ -73609,10 +73587,6 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/xenobiology)
-"mDl" = (
-/obj/structure/closet/emcloset,
-/turf/simulated/floor,
-/area/station/hallway/primary/starboard)
 "mEb" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -77162,13 +77136,6 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
-"rNs" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
-/turf/simulated/floor{
-	icon_state = "grimy"
-	},
-/area/station/civilian/chapel/office)
 "rOb" = (
 /obj/structure/table/glass,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -109183,7 +109150,7 @@ dFb
 ctH
 acW
 abl
-adG
+adL
 aem
 aeS
 afu
@@ -109437,8 +109404,8 @@ aaX
 abl
 abR
 dFb
-ctH
-adg
+enb
+acg
 abl
 adY
 aer
@@ -109695,9 +109662,9 @@ abl
 abN
 dFb
 acj
-adf
+ctH
 abl
-adL
+adX
 aep
 afj
 afv
@@ -109952,9 +109919,9 @@ abl
 abT
 dPb
 abj
-enb
+adG
 abl
-adX
+adf
 aep
 afr
 afR
@@ -127216,7 +127183,7 @@ bHk
 bIF
 bIF
 aKv
-bMe
+avm
 ePF
 bsw
 bjx
@@ -127469,7 +127436,7 @@ aOS
 aKv
 aOi
 aWn
-rNs
+aXI
 dOK
 bHm
 aKv
@@ -128495,7 +128462,7 @@ hHb
 aup
 aJc
 bax
-aLY
+adg
 aKv
 aXL
 aKv
@@ -128514,8 +128481,8 @@ rDM
 bnd
 fUg
 aQa
+aHf
 bQA
-mDl
 bSW
 bWu
 bZb
