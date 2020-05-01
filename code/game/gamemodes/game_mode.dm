@@ -396,6 +396,7 @@ Implants;
 
 /datum/game_mode/New()
 	newscaster_announcements = pick(newscaster_standard_feeds)
+	initialize_emergency_calls()
 
 //////////////////////////
 //Reports player logouts//

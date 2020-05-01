@@ -11,9 +11,8 @@
 	to_chat(H, "<B>Make sure the Corporate Liaison is safe.</b>")
 	to_chat(H, "<B>If there is no Liaison, eliminate the threat and cooperate with the Captain before returning back home.</b>")
 
-/datum/emergency_call/nt_ert/create_member(datum/mind/M)
+/datum/emergency_call/nt_ert/create_member(mob/dead/observer/M)
 	var/turf/spawn_loc = get_spawn_point()
-	var/mob/original = M.current
 
 	if(!istype(spawn_loc))
 		return
@@ -23,10 +22,13 @@
 	H.name = "[pick(first_names_male)] [pick(last_names)]"
 	H.real_name = H.name
 
-	M.transfer_to(H, TRUE)
+	H.mind = M.mind
+	to_chat(world, "[H] is here")
+	H.ckey = M.ckey
+	to_chat(world, "Transfering [M.ckey] to [H]")
 
-	if(original)
-		qdel(original)
+	if(M)
+		qdel(M)
 
 	print_backstory(H)
 

@@ -10,12 +10,10 @@
 	var/dispatch_message = "An encrypted signal has been received from a nearby vessel. Stand by." //Message displayed to marines once the signal is finalized.
 	var/objectives = "" //Objectives to display to the members.
 	var/probability = 0 //So we can give different ERTs a different probability.
-	var/list/datum/mind/members = list() //Currently-joined members.
-	var/list/datum/mind/candidates = list() //Potential candidates for enlisting.
+	var/list/mob/dead/observer/members = list() //Currently-joined members.
+	var/list/mob/dead/observer/candidates = list() //Potential candidates for enlisting.
 	var/mob/living/carbon/leader = null
 	var/shuttle_id = "distress"
-	var/obj/docking_port/mobile/ert/shuttle
-	var/auto_shuttle_launch = FALSE //Useful for xenos that can't interact with the shuttle console.
 	var/medics = 0
 	var/max_medics = 1
 	var/candidate_timer
@@ -91,14 +89,14 @@
 	if(!istype(distress) || !ticker.mode.waiting_for_candidates || distress.mob_max < 1)
 		to_chat(usr, "<span class='warning'>No distress beacons that need candidates are active. You will be notified if that changes.</span>")
 		return
-
+/*
 	var/deathtime = world.time - usr.timeofdeath
 
 	if(deathtime < 600) //They have ghosted after the announcement.
 		to_chat(usr, "<span class='warning'>You ghosted too recently. Try again later.</span>")
 		return
-
-	if(usr.mind in distress.candidates)
+*/
+	if(usr in distress.candidates)
 		to_chat(usr, "<span class='warning'>You are already a candidate for this emergency response team.</span>")
 		return
 
@@ -149,13 +147,9 @@
 	var/list/valid_candidates = list()
 
 	for(var/i in candidates)
-		var/datum/mind/M = i
+		var/mob/dead/observer/M = i
 		if(!istype(M)) // invalid
-			continue
-		if(M.current) //If they still have a body
-			if(!isobserver(M.current) && M.current.stat != DEAD) // and not dead or admin ghosting,
-				to_chat(M.current, "<span class='warning'>You didn't get selected to join the distress team because you aren't dead.</span>")
-				continue
+			return
 		valid_candidates += M
 
 	message_admins("Distress beacon: [name] got [length(candidates)] candidates, [length(valid_candidates)] of them were valid.")
@@ -166,24 +160,24 @@
 		members = list() //Empty the members list.
 		candidates = list()
 
-	if(announce)
-		captain_announce("The distress signal has not received a response, the launch tubes are now recalibrating.", "Distress Beacon")
+		if(announce)
+			captain_announce("The distress signal has not received a response, the launch tubes are now recalibrating.", "Distress Beacon")
 
 		ticker.mode.picked_call = null
 		ticker.mode.on_distress_cooldown = TRUE
 
 		return
 
-	var/datum/mind/picked_candidates = list()
+	var/mob/dead/observer/picked_candidates = list()
 	if(length(valid_candidates) > mob_max)
 		for(var/i in 1 to mob_max)
 			if(!length(valid_candidates)) //We ran out of candidates.
 				break
 			picked_candidates += pick_n_take(valid_candidates) //Get a random candidate, then remove it from the candidates list.
 
-		for(var/datum/mind/M in valid_candidates)
-			if(M.current)
-				to_chat(M.current, "<span class='warning'>You didn't get selected to join the distress team. Better luck next time!</span>")
+		for(var/mob/dead/observer/M in valid_candidates)
+			if(!M)
+				to_chat(M, "<span class='warning'>You didn't get selected to join the distress team. Better luck next time!</span>")
 		message_admins("Distress beacon: [length(valid_candidates)] valid candidates were not selected.")
 	else
 		picked_candidates = valid_candidates // save some time
@@ -194,14 +188,12 @@
 */
 	message_admins("Distress beacon: [name] finalized, starting spawns.")
 
-	// begin loading the shuttle
 
-	spawn_items()
 
 	if(length(picked_candidates) && mob_min > 0)
 		max_medics = max(round(length(picked_candidates) * 0.25), 1)
 		for(var/i in picked_candidates)
-			var/datum/mind/M = i
+			var/mob/dead/observer/M = i
 			members += M
 			create_member(M)
 	else
@@ -218,7 +210,7 @@
 	if(!M.client)
 		return FALSE  //Not connected
 
-	if(M.mind && M.mind in candidates)
+	if(M && M in candidates)
 		return FALSE  //Already there.
 
 	if(M.stat != DEAD)
@@ -227,7 +219,7 @@
 	if(!M.mind) //They don't have a mind
 		return FALSE
 
-	candidates += M.mind
+	candidates += M
 	return TRUE
 
 /obj/effect/landmark/ertspawn
@@ -238,13 +230,8 @@
 		return get_turf(O)
 
 
-/datum/emergency_call/proc/create_member(datum/mind/M) //Overriden in each distress call file.
+/datum/emergency_call/proc/create_member(mob/dead/observer/M) //Overriden in each distress call file.
 	return
-
-
-/datum/emergency_call/proc/spawn_items() //Allows us to spawn various things around the shuttle.
-	return
-
 
 /datum/emergency_call/proc/print_backstory(mob/living/carbon/human/M)
 	return
