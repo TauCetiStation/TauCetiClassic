@@ -107,7 +107,7 @@
 	set name = "Hide"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 
 	layer = TURF_LAYER+0.2

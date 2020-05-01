@@ -58,7 +58,7 @@
 
 /obj/item/weapon/airlock_electronics/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained() || (!ishuman(usr) && !istype(usr,/mob/living/silicon)))
+	if (usr.incapacitated() || (!ishuman(usr) && !istype(usr,/mob/living/silicon)))
 		return
 	if (href_list["close"])
 		usr << browse(null, "window=airlock")

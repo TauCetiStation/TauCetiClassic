@@ -17,12 +17,16 @@
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/recharged = 0
 	var/recharge_delay = 15
-	var/hackedcheck = 0
+	var/hackedcheck = FALSE
+	var/hackable = FALSE
+	var/msg_hack_enable = ""
+	var/msg_hack_disable = ""
 	var/list/dispensable_reagents = list(
 		"hydrogen", "lithium", "carbon", "nitrogen", "oxygen", "fluorine",
 		"sodium", "aluminum", "silicon", "phosphorus", "sulfur", "chlorine", "potassium", "iron",
 		"copper", "mercury", "radium", "water", "ethanol", "sugar", "sacid", "tungsten"
 	)
+	var/list/premium_reagents = list()
 
 /obj/machinery/chem_dispenser/atom_init()
 	. = ..()
@@ -170,10 +174,17 @@
 			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 
 
-/obj/machinery/chem_dispenser/attackby(obj/item/weapon/reagent_containers/B, mob/user)
+/obj/machinery/chem_dispenser/attackby(obj/item/weapon/B, mob/user)
 //	if(isrobot(user))
 //		return
-
+	if(ismultitool(B) && hackable)
+		hackedcheck = !hackedcheck
+		if(hackedcheck)
+			to_chat(user, msg_hack_enable)
+			dispensable_reagents += premium_reagents
+		else
+			to_chat(user, msg_hack_disable)
+			dispensable_reagents -= premium_reagents
 	if(default_unfasten_wrench(user, B))
 		power_change()
 		return
@@ -303,24 +314,10 @@
 	accept_glass = 1
 	max_energy = 100
 	dispensable_reagents = list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","watermelonjuice")
-
-/obj/machinery/chem_dispenser/soda/attackby(obj/item/weapon/B, mob/user)
-	..()
-	if(ismultitool(B))
-		if(hackedcheck == 0)
-			to_chat(user, "You change the mode from 'McNano' to 'Pizza King'.")
-			dispensable_reagents += list("thirteenloko","grapesoda")
-			hackedcheck = 1
-			return
-
-		else
-			to_chat(user, "You change the mode from 'Pizza King' to 'McNano'.")
-			dispensable_reagents -= list("thirteenloko")
-			hackedcheck = 0
-			return
-
-	else if(iswrench(B))
-		default_unfasten_wrench(user, B)
+	premium_reagents = list("thirteenloko","grapesoda")
+	hackable = TRUE
+	msg_hack_enable = "You change the mode from 'McNano' to 'Pizza King'."
+	msg_hack_disable = "You change the mode from 'Pizza King' to 'McNano'."
 
 /obj/machinery/chem_dispenser/beer
 	icon_state = "booze_dispenser"
@@ -331,25 +328,12 @@
 	max_energy = 100
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead")
+	premium_reagents = list("goldschlager","patron","watermelonjuice","berryjuice")
+	hackable = TRUE
+	msg_hack_enable = "You disable the 'nanotrasen-are-cheap-bastards' lock, enabling hidden and very expensive boozes."
+	msg_hack_disable = "You re-enable the 'nanotrasen-are-cheap-bastards' lock, disabling hidden and very expensive boozes."
 
-/obj/machinery/chem_dispenser/beer/attackby(obj/item/weapon/B, mob/user)
-	..()
 
-	if(ismultitool(B))
-		if(hackedcheck == 0)
-			to_chat(user, "You disable the 'nanotrasen-are-cheap-bastards' lock, enabling hidden and very expensive boozes.")
-			dispensable_reagents += list("goldschlager","patron","watermelonjuice","berryjuice")
-			hackedcheck = 1
-			return
-
-		else
-			to_chat(user, "You re-enable the 'nanotrasen-are-cheap-bastards' lock, disabling hidden and very expensive boozes.")
-			dispensable_reagents -= list("goldschlager","patron","watermelonjuice","berryjuice")
-			hackedcheck = 0
-			return
-
-	else if(iswrench(B))
-		default_unfasten_wrench(user, B)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -908,7 +892,7 @@
 		var/new_name = sanitize_safe(input(usr, "Name the Disease", "New Name") as text|null, MAX_NAME_LEN)
 		if(!new_name)
 			return
-		if(usr.stat || usr.restrained())
+		if(usr.incapacitated())
 			return
 		if(!in_range(src, usr))
 			return
@@ -1235,7 +1219,7 @@
 
 /obj/machinery/reagentgrinder/proc/detach()
 
-	if (usr.stat != CONSCIOUS)
+	if(usr.incapacitated())
 		return
 	if (!beaker)
 		return
@@ -1245,7 +1229,7 @@
 
 /obj/machinery/reagentgrinder/proc/eject()
 
-	if (usr.stat != CONSCIOUS)
+	if(usr.incapacitated())
 		return
 	if (holdingitems && holdingitems.len == 0)
 		return

@@ -11,10 +11,6 @@
 	var/adj_sleepy = 0
 	var/adj_temp = 0
 
-	// Most consumables use a "ticks"-based effect system, which employs a list.
-	// So we put this here.
-	data = list()
-
 /datum/reagent/consumable/drink/on_general_digest(mob/living/M)
 	..()
 	if(adj_dizzy)
@@ -661,8 +657,9 @@
 	var/pass_out = 400	//amount absorbed after which mob starts passing out
 	taste_message = "liquid fire"
 	restrict_species = list(IPC, DIONA)
+	flags = list(IS_ORGANIC)
 
-/datum/reagent/consumable/ethanol/on_mob_life(mob/living/M)
+/datum/reagent/consumable/ethanol/on_general_digest(mob/living/M)
 	if(!..())
 		return
 
@@ -681,9 +678,6 @@
 	for(var/datum/reagent/consumable/ethanol/A in holder.reagent_list)
 		if(A.data["ticks"])
 			d += A.data["ticks"]
-
-	if(M.get_species() == SKRELL) //Skrell get very drunk very quickly.
-		d *= 5
 
 	if(HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 		d *= 0.7
@@ -713,6 +707,10 @@
 				IO.take_damage(0.1, 1)
 			H.adjustToxLoss(0.1)
 	return TRUE
+
+/datum/reagent/consumable/ethanol/on_skrell_digest(mob/living/M)
+	..()
+	return !flags[IS_ORGANIC]
 
 /datum/reagent/consumable/ethanol/reaction_obj(var/obj/O, var/volume)
 	if(istype(O,/obj/item/weapon/paper))

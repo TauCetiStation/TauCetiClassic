@@ -305,7 +305,7 @@ var/list/cult_datums = list()
 		target.reagents.add_reagent("unholywater",water2convert)
 
 /obj/item/weapon/book/tome/attack_self(mob/living/carbon/human/user)
-	if(!istype(user) || !user.canmove || user.stat || user.incapacitated())
+	if(!istype(user) || user.incapacitated())
 		return
 
 	if(!cultwords["travel"])
