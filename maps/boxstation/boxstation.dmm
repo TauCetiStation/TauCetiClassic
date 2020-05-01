@@ -1693,8 +1693,26 @@
 	},
 /area/station/security/armoury)
 "acW" = (
+/obj/structure/rack,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	name = "Weapons locker";
+	req_access = list(3)
+	},
+/obj/item/weapon/melee/baton,
+/obj/item/clothing/suit/armor/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/weapon/shield/riot,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/security/armoury)
 "acX" = (
@@ -1810,7 +1828,6 @@
 /obj/item/weapon/gun/plasma/p104sass{
 	pixel_y = 2
 	},
-/obj/item/ammo_box/magazine/plasma,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -2217,7 +2234,10 @@
 /obj/item/weapon/gun/energy/gun{
 	pixel_y = -4
 	},
-/obj/item/weapon/gun/energy/gun,
+/obj/item/weapon/gun/energy/gun{
+	step_x = 0;
+	step_y = 0
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -2345,7 +2365,6 @@
 /obj/item/weapon/gun/plasma{
 	pixel_y = -4
 	},
-/obj/item/ammo_box/magazine/plasma,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -109124,7 +109143,7 @@ abl
 abK
 dFb
 enb
-acg
+acW
 abl
 adL
 aem
@@ -109380,8 +109399,8 @@ aaX
 abl
 abR
 dFb
-acW
-ctH
+enb
+acg
 abl
 adY
 aer
