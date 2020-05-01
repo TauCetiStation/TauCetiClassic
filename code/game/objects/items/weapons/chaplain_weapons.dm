@@ -219,8 +219,16 @@
 	brainmob.name = "[god_name] [pick("II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX")]"
 	brainmob.real_name = name
 	brainmob.mind.assigned_role = "Chaplain`s staff"
-	brainmob.mind.memory = god_lore
+	if(god_lore != "")
+		brainmob.mind.memory = "<B>YOUR LORE</B><BR>"
+	brainmob.mind.memory += god_lore
 	brainmob.mind.holy_role = HOLY_ROLE_HIGHPRIEST
+
+	for(var/aspect in global.chaplain_religion.aspects)
+		var/datum/aspect/asp = global.chaplain_religion.aspects[aspect]
+		if(asp.god_desc)
+			brainmob.mind.memory += "<BR><BR><B>Aspect [aspect]</B><BR>[asp.god_desc]"
+
 	candidate.cancel_camera()
 	candidate.reset_view()
 

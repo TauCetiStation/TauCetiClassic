@@ -1,6 +1,8 @@
 /datum/aspect
 	var/name = "Basic aspect"
 	var/desc = "This aspect not used in game"
+	//used for give a god the information about aspect and desire items
+	var/god_desc
 	//can only be increased if you select one aspect twice and more times
 	var/power = 1
 	//add the rite in a sect
@@ -14,6 +16,8 @@
 /datum/aspect/mortem
 	name = "Mortem" //death
 	desc = "You can consider it necromancy"
+
+	god_desc = "Mortal humans can donate to increase your strength: blood bags, brains, internal organs and limbs."
 
 	rite = /datum/religion_rites/sacrifice
 
@@ -37,6 +41,8 @@
 /datum/aspect/progressus
 	name = "Progressus" //science
 	desc = "Sci-fi items and other science"
+
+	god_desc = "Homosapiens and other xenos races can present all sorts of scientific things, cuircuitboards and small electronic devices."
 
 	rite = /datum/religion_rites/synthconversion
 
@@ -63,6 +69,8 @@
 	name = "Fames" //hungry
 	desc = "Can be considered it greed"
 
+	god_desc = "Peasants are required to pay you food."
+
 	rite = /datum/religion_rites/food
 
 /datum/aspect/fames/sacrifice(obj/item/I, mob/living/L)
@@ -76,9 +84,9 @@
 	return FALSE
 
 //Gives mana from: does not affect mana accumulation
-//Needed for: spells and rituals related to the theme of weapon, his damage, buff etc
+//Needed for: spells and rituals related to the theme of weapon and armor, their damage, buff etc
 /datum/aspect/telum
-	name = "Telum" //weapon
+	name = "Telum" //weapon and armor
 	desc = "Weapons and related things, war"
 
 	//rite = /datum/religion_rites/create_weapons
@@ -88,6 +96,8 @@
 /datum/aspect/metallum
 	name = "Metallum" //resurces
 	desc = "Manipulated on minerals, metallic, glass and others"
+
+	god_desc = "May the workers bring diverse resources to your mercy."
 
 	//rite = /datum/religion_rites/create_materials
 

@@ -104,9 +104,6 @@
 	// Default one is "altar"
 	var/static/list/altar_info_by_name = list(
 		"Default" = "altar",
-		"Christianity" = "christianaltar",
-		"Science" = "technoaltar",
-		"Technologism" = "technoaltar",
 	)
 
 	// Default is "0" TO-DO: convert this to icon_states. ~Luduk
@@ -287,7 +284,7 @@
 /datum/religion/chaplain/proc/on_riteuse(mob/living/user, obj/structure/altar_of_gods/AOG)
 
 /datum/religion/chaplain/proc/satisfy_requirements(element, datum/aspect/A)
-	return element >= A.power
+	return element <= A.power
 
 // Give our gods all needed spells which in /list/spells
 /datum/religion/chaplain/proc/give_god_spells(mob/living/simple_animal/shade/god/G)
@@ -306,6 +303,9 @@
 
 	for(var/spell in spells)
 		var/obj/effect/proc_holder/spell/S = new spell()
+		for(var/datum/aspect/aspect in global.chaplain_religion.aspects)
+			if(S.needed_aspect[aspect])
+				S.divine_power *= aspect.power
 		G.AddSpell(S)
 
 // Generate new rite_list

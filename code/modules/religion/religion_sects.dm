@@ -53,7 +53,7 @@
 	for(var/i in 1 to count_aspects)
 		var/aspect_select = input(usr, "Select a aspect of god (You CANNOT revert this decision!)", "Select a aspect of god", null) in aspects
 		var/type_selected = aspects[aspect_select]
-		if(!istype(global.chaplain_religion.aspects[aspect_select], type_selected))
+		if(!global.chaplain_religion.aspects[aspect_select])
 			global.chaplain_religion.aspects[aspect_select] = new type_selected()
 		else
 			var/datum/aspect/asp = global.chaplain_religion.aspects[aspect_select]

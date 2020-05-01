@@ -56,7 +56,7 @@
 	H.apply_damages(divine_power * rand(-2, 10) * 0.1, divine_power * rand(-2, 10) * 0.1, divine_power * rand(-2, 10) * 0.1)
 
 /obj/effect/proc_holder/spell/targeted/heal/damage
-	name = "Damage"
+	name = "Punishment"
 
 	favor_cost = 300
 	charge_max = 1.5 MINUTES
@@ -186,7 +186,7 @@
 
 	favor_cost = 250
 	charge_max = 2 MINUTES
-	divine_power = 0 //count
+	divine_power = 1 //count
 
 	needed_aspect = list(ASPECT_SPAWN = 1, ASPECT_DEATH = 1,)
 	summon_amt = 0
@@ -199,7 +199,9 @@
 	summon_type = list(/mob/living/simple_animal/corgi/puppy, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/corgi, /mob/living/simple_animal/cat, /mob/living/simple_animal/parrot, /mob/living/simple_animal/crab, /mob/living/simple_animal/cow, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken, /mob/living/simple_animal/pig, /mob/living/simple_animal/turkey, /mob/living/simple_animal/goose, /mob/living/simple_animal/seal, /mob/living/simple_animal/walrus, /mob/living/simple_animal/fox, /mob/living/simple_animal/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/mushroom, /mob/living/simple_animal/pug, /mob/living/simple_animal/shiba, /mob/living/simple_animal/yithian, /mob/living/simple_animal/tindalos, /mob/living/carbon/monkey, /mob/living/carbon/monkey/skrell, /mob/living/carbon/monkey/tajara, /mob/living/carbon/monkey/unathi, /mob/living/simple_animal/slime)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal/cast()
-	summon_amt += divine_power
+	// if you write 0, then the variable will not change, because '*=' used to increase the divine_power
+	if(divine_power != 1)
+		summon_amt += divine_power
 	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
 		if(!M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
