@@ -6,6 +6,7 @@
 	density = 1
 	anchored = 0
 	flags = OPENCONTAINER
+	var/modded = FALSE
 	var/transfer_from = TRUE
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
@@ -15,7 +16,7 @@
 
 /obj/structure/reagent_dispensers/AltClick(mob/user)
 	transfer_from = !transfer_from
-	to_chat(user, "<span class='notice'>You transfer [transfer_from ? "from" : "into"] [src]</span>")
+	to_chat(user, "<span class = 'notice'>You transfer [transfer_from ? "from" : "into"] [src]</span>")
 
 /obj/structure/reagent_dispensers/atom_init()
 	var/datum/reagents/R = new/datum/reagents(1000)
@@ -76,6 +77,18 @@
 		new /obj/effect/effect/water(src.loc)
 		qdel(src)
 
+/obj/structure/reagent_dispensers/proc/leak(amount)
+	if (reagents.total_volume == 0)
+		return
+	if(locate(/datum/reagent/fuel) in reagents.reagent_list)
+		amount = min(amount, reagents.total_volume)
+		reagents.remove_reagent("fuel",amount)
+		new /obj/effect/decal/cleanable/liquid_fuel(src.loc, amount)
+	else
+		amount = min(amount, reagents.total_volume)
+		var/datum/reagents/R = new/datum/reagents(amount * 50)
+		reagents.trans_to(R, amount * 50)
+		R.reaction(loc)	
 
 // "Tanks".
 /obj/structure/reagent_dispensers/watertank
@@ -84,7 +97,6 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
 	amount_per_transfer_from_this = 10
-	var/modded = 0
 
 /obj/structure/reagent_dispensers/watertank/atom_init()
 	. = ..()
@@ -110,7 +122,7 @@
 	if (iswrench(W))
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
-		modded = modded ? 0 : 1
+		modded = !modded
 		if (modded)
 			START_PROCESSING(SSobj, src)
 			leak(amount_per_transfer_from_this)
@@ -130,22 +142,12 @@
 	if (. && modded)
 		leak(1)
 
-/obj/structure/reagent_dispensers/watertank/proc/leak(amount)
-	if (reagents.total_volume == 0)
-		return
-
-	amount = min(amount, reagents.total_volume)
-	var/datum/reagents/R = new/datum/reagents(amount * 50)
-	reagents.trans_to(R, amount * 50)
-	R.reaction(loc)
-
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
 	desc = "A fueltank."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
 	amount_per_transfer_from_this = 10
-	var/modded = 0
 	var/obj/item/device/assembly_holder/rig = null
 
 /obj/structure/reagent_dispensers/fueltank/atom_init()
@@ -181,7 +183,7 @@
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
 		modded = !modded
 		if (modded)
-			leak_fuel(amount_per_transfer_from_this)
+			leak(amount_per_transfer_from_this)
 		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [src.x], [src.y], [src.z] [ADMIN_JMP(src)]")
 	if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
@@ -243,17 +245,7 @@
 /obj/structure/reagent_dispensers/fueltank/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
 	if (. && modded)
-		leak_fuel(amount_per_transfer_from_this/10.0)
-
-/obj/structure/reagent_dispensers/fueltank/proc/leak_fuel(amount)
-	if (reagents.total_volume == 0)
-		return
-
-	amount = min(amount, reagents.total_volume)
-	reagents.remove_reagent("fuel",amount)
-	new /obj/effect/decal/cleanable/liquid_fuel(src.loc, amount)
-
-
+		leak(amount_per_transfer_from_this/10.0)
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
