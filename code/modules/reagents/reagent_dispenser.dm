@@ -212,33 +212,37 @@
 	return ..()
 
 
-/obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/Proj)
+/obj/structure/reagent_dispensers/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
 		if(!istype(Proj ,/obj/item/projectile/beam/lasertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
 			explode()
 
-/obj/structure/reagent_dispensers/fueltank/blob_act()
+/obj/structure/reagent_dispensers/blob_act()
 	explode()
 
-/obj/structure/reagent_dispensers/fueltank/ex_act()
+/obj/structure/reagent_dispensers/ex_act()
 	explode()
 
-/obj/structure/reagent_dispensers/fueltank/proc/explode()
-	if (reagents.total_volume > 500)
+/obj/structure/reagent_dispensers/proc/explode()
+	var/datum/reagent/fuel/F = locate(/datum/reagent/fuel) in reagents.reagent_list
+	if (F.volume > 500)
 		explosion(src.loc,1,2,4)
-	else if (reagents.total_volume > 100)
+	else if (F.volume > 100)
 		explosion(src.loc,0,1,3)
-	else
+	else if(F.volume > 0)
 		explosion(src.loc,-1,1,2)
+	else
+		return
 	if(src)
 		qdel(src)
 
-/obj/structure/reagent_dispensers/fueltank/fire_act(datum/gas_mixture/air, temperature, volume)
+
+/obj/structure/reagent_dispensers/fire_act(datum/gas_mixture/air, temperature, volume)
 	if(temperature > T0C+500)
 		explode()
 	return ..()
 
-/obj/structure/reagent_dispensers/fueltank/tesla_act()
+/obj/structure/reagent_dispensers/tesla_act()
 	..() //extend the zap
 	explode()
 
