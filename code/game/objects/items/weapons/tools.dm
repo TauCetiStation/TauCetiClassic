@@ -329,10 +329,7 @@
 			return
 		else
 			var/obj/structure/reagent_dispensers/tank = target
-			if(tank.explode())
-				message_admins("[key_name_admin(user)] triggered a [target] explosion. [ADMIN_JMP(user)]")
-				log_game("[key_name(user)] triggered a fueltank explosion.")
-				to_chat(user, "<span class='rose'>That was stupid of you.</span>")
+			tank.explode()
 			return
 	if (src.welding)
 		use(1)
