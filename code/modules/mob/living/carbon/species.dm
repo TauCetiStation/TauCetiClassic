@@ -32,6 +32,9 @@
 	var/punch_damage = 0              // Extra empty hand attack damage.
 	var/mutantrace                    // Safeguard due to old code.
 	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
+	// Perhaps one day make this an assoc list of BODYPART_NAME = list(drops) ? ~Luduk
+	// Is used when a bodypart of this race is butchered. Otherwise there are overrides for flesh, robot, and bone bodyparts.
+	var/list/bodypart_butcher_results
 
 	var/list/restricted_inventory_slots = list() // Slots that the race does not have due to biological differences.
 
@@ -578,6 +581,7 @@
 
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
 	butcher_drops = list(/obj/item/stack/sheet/wood = 5)
+	bodypart_butcher_results = list(/obj/item/stack/sheet/wood = 1)
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -816,6 +820,7 @@
 	siemens_coefficient = 0
 
 	butcher_drops = list()
+	bodypart_butcher_results = list()
 
 	flags = list(
 	 NO_BREATHE = TRUE
@@ -924,6 +929,7 @@
 	darksight = 8
 
 	butcher_drops = list() // They are just shadows. Why should they drop anything?
+	bodypart_butcher_results = list()
 
 	restricted_inventory_slots = list(SLOT_BELT, SLOT_WEAR_ID, SLOT_L_EAR, SLOT_R_EAR, SLOT_BACK, SLOT_L_STORE, SLOT_R_STORE)
 
@@ -974,6 +980,7 @@
 	flesh_color = "#137e8f"
 
 	butcher_drops = list(/obj/item/weapon/ore/diamond = 1, /obj/item/weapon/ore/slag = 3)
+	bodypart_butcher_results = list(/obj/item/weapon/ore/slag = 1)
 
 	flags = list(
 		NO_BLOOD = TRUE,
