@@ -92,9 +92,9 @@
 	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us. Or FROM us TO it.
 		var/obj/structure/reagent_dispensers/T = target
 		if(T.transfer_from)
-			T.try_transfer(T, src)
+			T.try_transfer(T, src, user)
 		else
-			T.try_transfer(src, T)
+			T.try_transfer(src, T, user)
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
 			to_chat(user, "<span class = 'rose'>[src] is empty.</span>")
