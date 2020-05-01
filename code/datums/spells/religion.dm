@@ -187,12 +187,12 @@
 	favor_cost = 250
 	charge_max = 2 MINUTES
 	divine_power = 1 //count
-
 	needed_aspect = list(ASPECT_SPAWN = 1, ASPECT_DEATH = 1,)
 	summon_amt = 0
-	invocation = "none"
 
+	invocation = "none"
 	clothes_req = 0
+
 	action_icon_state = "spawn_animal"
 	sound = 'sound/effects/phasein.ogg'
 
@@ -206,3 +206,22 @@
 		if(!M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
 	..()
+
+/obj/effect/proc_holder/spell/targeted/grease
+	name = "Spill grease"
+
+	favor_cost = 500
+	charge_max = 5 MINUTES
+	divine_power = 1 //range
+	needed_aspect = list(ASPECT_WACKY = 3)
+
+	invocation = "none"
+	range = 0
+	clothes_req = 0
+
+	action_icon_state = "grease"
+	sound = 'sound/magic/ForceWall.ogg'
+
+/obj/effect/proc_holder/spell/targeted/grease/cast()
+	for(var/turf/simulated/floor/F in range(divine_power))
+		F.make_wet_floor(LUBE_FLOOR)

@@ -102,7 +102,7 @@
 	//rite = /datum/religion_rites/create_materials
 
 /datum/aspect/metallum/sacrifice(obj/item/I, mob/living/L)
-	if(istype(I, /obj/item/stack/sheet))
+	if(istype(I, /obj/item/stack/sheet) && !istype(I, /obj/item/stack/sheet/mineral/clown))
 		var/obj/item/stack/sheet/material = I
 		global.chaplain_religion.adjust_favor(material.amount * 5, L)
 		return TRUE
@@ -153,6 +153,24 @@
 /datum/aspect/wacky
 	name = "Rabidus" //wacky
 	desc = "Clownism"
+
+	god_desc = "The Family urgently needs a lot of BANANAS and BANANIUM!!!"
+
+/datum/aspect/wacky/sacrifice(obj/item/I, mob/living/L)
+	if(istype(I, /obj/item/weapon/bananapeel/honk))
+		global.chaplain_religion.adjust_favor(40, L)
+		return TRUE
+	if(istype(I, /obj/item/weapon/bananapeel))
+		global.chaplain_religion.adjust_favor(30, L)
+		return TRUE
+	if(istype(I, /obj/item/stack/sheet/mineral/clown))
+		var/obj/item/stack/sheet/mineral/clown/banan = I
+		global.chaplain_religion.adjust_favor(banan.amount * 60, L)
+		return TRUE
+	if(istype(I, /obj/item/weapon/ore/clown))
+		global.chaplain_religion.adjust_favor(50, L)
+		return TRUE
+	return FALSE
 
 //Gives mana from: "silenced" spells at wizard/cult
 //Needed for: spells and rituals related to the theme of muffle the magical abilities of the wizard/cult
