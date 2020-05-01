@@ -99,9 +99,7 @@
 	qdel(src)
 
 /obj/item/organ/external/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/butch))
-		harvest(I, user)
-	else if(istype(I, /obj/item/weapon/kitchenknife))
+	if(istype(I, /obj/item/weapon/butch) || istype(I, /obj/item/weapon/kitchenknife))
 		harvest(I, user)
 	else
 		..()
