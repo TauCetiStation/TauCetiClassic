@@ -24,7 +24,7 @@
 	damage = 10
 	stun = 0
 	weaken = 0
-	agony = 40
+	agony = 75
 	embed = 0
 	sharp = 0
 
