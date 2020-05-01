@@ -2234,10 +2234,7 @@
 /obj/item/weapon/gun/energy/gun{
 	pixel_y = -4
 	},
-/obj/item/weapon/gun/energy/gun{
-	step_x = 0;
-	step_y = 0
-	},
+/obj/item/weapon/gun/energy/gun,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
