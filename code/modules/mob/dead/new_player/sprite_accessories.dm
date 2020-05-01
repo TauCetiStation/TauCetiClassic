@@ -30,7 +30,7 @@
 	var/list/species_allowed = list(HUMAN)
 
 	// Whether or not the accessory can be affected by colouration
-	var/do_colouration = 1
+	var/do_colouration = TRUE
 
 	var/ipc_head_compatible
 
@@ -975,6 +975,12 @@
 	icon_state = "ipc_off"
 	species_allowed = list(IPC)
 	do_colouration = FALSE
+	ipc_head_compatible = null
+
+/datum/sprite_accessory/hair/ipc_screen_text
+	name = "IPC text screen"
+	icon_state = "ipc_text"
+	species_allowed = list(IPC)
 	ipc_head_compatible = null
 
 /datum/sprite_accessory/hair/ipc_screen_pink

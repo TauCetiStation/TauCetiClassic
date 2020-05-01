@@ -454,7 +454,12 @@
 
 	if((!skipface || !skipjumpsuit || !skipgloves) && (HUSK in mutations))
 		msg += "<span class='warning'><b>[t_His] skin is looking cadaveric!</b></span>\n"
-
+	if(species.name == IPC && display_text)
+		var/bg_color = "white"
+		if(r_hair + g_hair + b_hair > 381)
+			bg_color = "#0F0F0F"
+		var/style = "color: rgb([r_hair], [g_hair], [b_hair]); background-color: [bg_color]"
+		msg += "<span style='[style]'>[display_text]</span>"
 	if(hasHUD(user,"security"))
 		var/perpname = "wot"
 		var/criminal = "None"

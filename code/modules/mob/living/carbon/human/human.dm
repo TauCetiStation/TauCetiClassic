@@ -18,6 +18,8 @@
 	var/gnomed = 0 // timer used by gnomecurse.dm
 	var/hulk_activator = null
 
+	var/display_text = null // used by IPC display
+
 	throw_range = 2
 
 /mob/living/carbon/human/dummy
@@ -1966,7 +1968,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(!BP.screen_toggle)
 		set_light(BP.screen_brightness)
 		BP.screen_toggle = TRUE
-
+	display_text = null
 	var/new_hair = input(src, "Choose your IPC screen colour:", "Character Preference") as color|null
 	if(new_hair)
 		r_hair = hex2num(copytext(new_hair, 2, 4))
@@ -2001,7 +2003,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(!BP || (BP.is_stump))
 		set_light(0)
 		return
-
+	display_text = null
 	BP.screen_toggle = !BP.screen_toggle
 	if(BP.screen_toggle)
 		IPC_change_screen()
@@ -2014,6 +2016,32 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(BP.ipc_head == "Default")
 			h_style = "IPC off screen"
 		update_hair()
+
+/mob/living/carbon/human/proc/IPC_show_text(data as text)
+	set category = "IC"
+	set name = "Set IPC Display Text"
+	set desc = "Set custom text to display on screen"
+	if(stat)
+		return
+	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
+	if(!BP || (BP.is_stump))
+		return
+
+	if(BP.ipc_head != "Default")
+		return
+	if(!BP.screen_toggle)
+		set_light(BP.screen_brightness)
+		BP.screen_toggle = TRUE
+	if(data == "")
+		display_text = null
+		random_ipc_monitor(BP.ipc_head)
+	else
+		display_text = sanitize(data)
+		h_style = "IPC text screen"
+		custom_emote(message = "displays on their screen, \"[display_text]\"")
+
+	update_hair()
+
 
 /mob/living/carbon/human/has_brain()
 	if(organs_by_name[O_BRAIN])
