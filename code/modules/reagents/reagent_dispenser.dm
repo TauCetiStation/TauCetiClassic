@@ -80,7 +80,7 @@
 /obj/structure/reagent_dispensers/proc/leak(amount)
 	if (reagents.total_volume == 0)
 		return
-	if(locate(/datum/reagent/fuel) in reagents.reagent_list)
+	if(reagents.has_reagent("fuel"))
 		amount = min(amount, reagents.total_volume)
 		reagents.remove_reagent("fuel",amount)
 		new /obj/effect/decal/cleanable/liquid_fuel(src.loc, amount)
