@@ -33,7 +33,7 @@
 	if (N)
 		amount_per_transfer_from_this = N
 		
-/obj/structure/reagent_dispensers/proc/try_transfer(atom/t_from, atom/t_to)
+/obj/structure/reagent_dispensers/proc/try_transfer(atom/t_from, atom/t_to, mob/user)
 	var/transfer_amount = 0
 	if(istype(t_from, /obj/item/weapon/reagent_containers/glass))
 		var/obj/item/weapon/reagent_containers/glass/G = t_from
@@ -45,13 +45,13 @@
 	if(transfer_amount == 0)
 		return
 	if(t_to.reagents.total_volume >= t_to.reagents.maximum_volume)
-		to_chat(usr, "<span class = 'rose'>[t_to] is full.</span>")
+		to_chat(user, "<span class = 'rose'>[t_to] is full.</span>")
 		return
 	if(!t_from.reagents.total_volume && t_from.reagents)
-		to_chat(usr, "<span class = 'rose'>[t_from] is empty.</span>")
+		to_chat(user, "<span class = 'rose'>[t_from] is empty.</span>")
 		return
 	var/trans = t_from.reagents.trans_to(t_to, transfer_amount)
-	to_chat(usr, "<span class = 'notice'>You fill [t_to] with [trans] units of the contents of [t_from]. </span>")
+	to_chat(user, "<span class = 'notice'>You fill [t_to] with [trans] units of the contents of [t_from]. </span>")
 
 /obj/structure/reagent_dispensers/ex_act(severity)
 	switch(severity)
