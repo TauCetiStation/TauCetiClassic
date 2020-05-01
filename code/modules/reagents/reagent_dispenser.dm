@@ -15,7 +15,7 @@
 
 /obj/structure/reagent_dispensers/AltClick(mob/user)
 	transfer_from = !transfer_from
-	to_chat(user, "<span class = 'notice'>You transfer [transfer_from ? "from" : "into"] [src]</span>")
+	to_chat(user, "<span class='notice'>You transfer [transfer_from ? "from" : "into"] [src]</span>")
 
 /obj/structure/reagent_dispensers/atom_init()
 	var/datum/reagents/R = new/datum/reagents(1000)
@@ -51,7 +51,7 @@
 		to_chat(user, "<span class = 'rose'>[t_from] is empty.</span>")
 		return
 	var/trans = t_from.reagents.trans_to(t_to, transfer_amount)
-	to_chat(user, "<span class = 'notice'>You fill [t_to] with [trans] units of the contents of [t_from]. </span>")
+	to_chat(user, "<span class = 'notice'>You fill [t_to] with [transfer_amount] units of the contents of [t_from]. </span>")
 
 /obj/structure/reagent_dispensers/ex_act(severity)
 	switch(severity)
