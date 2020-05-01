@@ -44,8 +44,6 @@
 
 	god_desc = "Homosapiens and other xenos races can present all sorts of scientific things, cuircuitboards and small electronic devices."
 
-	rite = /datum/religion_rites/synthconversion
-
 /datum/aspect/progressus/sacrifice(obj/item/I, mob/living/L)
 	if(istype(I, /obj/item/weapon/stock_parts))
 		var/obj/item/weapon/stock_parts/part = I

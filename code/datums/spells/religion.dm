@@ -143,6 +143,16 @@
 			charged = TRUE
 			for(var/obj/item/weapon/stock_parts/cell/Cell in I)
 				cell_charge(Cell)
+		
+		if(istype(I, /obj/mecha))
+			var/obj/mecha/M = I
+			cell_charge(M.cell)
+			charged = TRUE
+
+		if(istype(I, /obj/machinery/power/apc))
+			var/obj/machinery/power/apc/A = I
+			cell_charge(A.cell)
+			charged = TRUE
 
 	if(charged)
 		playsound(usr, 'sound/magic/Charge.ogg', VOL_EFFECTS_MASTER)
