@@ -35407,7 +35407,7 @@
 /area/station/civilian/bar)
 "blM" = (
 /obj/machinery/windowtint{
-	id = "Chapel";
+	id = "chapel";
 	pixel_x = 4;
 	pixel_y = 28
 	},
