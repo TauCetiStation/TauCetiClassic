@@ -326,7 +326,7 @@
 		to_chat(user, "<span class='notice'>Welder refueled</span>")
 		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 		return
-	else if (istype(target, /obj/structure/reagent_dispensers/) && get_dist(src, target) <= 1 && src.welding)
+	else if (istype(target, /obj/structure/reagent_dispensers) && get_dist(src, target) <= 1 && src.welding)
 		var/obj/structure/reagent_dispensers/tank = target
 		if(tank.explode())
 			message_admins("[key_name_admin(user)] triggered a [target] explosion. [ADMIN_JMP(user)]")
