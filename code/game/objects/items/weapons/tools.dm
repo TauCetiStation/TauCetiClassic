@@ -321,17 +321,18 @@
 
 /obj/item/weapon/weldingtool/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if (istype(target, /obj/structure/reagent_dispensers/fueltank) && get_dist(src, target) <= 1 && !src.welding)
+	if (istype(target, /obj/structure/reagent_dispensers/) && get_dist(src, target) <= 1 && !src.welding && locate(/datum/reagent/fuel) in target.reagents.reagent_list)
 		target.reagents.trans_to(src, max_fuel)
 		to_chat(user, "<span class='notice'>Welder refueled</span>")
 		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 		return
-	else if (istype(target, /obj/structure/reagent_dispensers/fueltank) && get_dist(src, target) <= 1 && src.welding)
-		message_admins("[key_name_admin(user)] triggered a fueltank explosion. [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] triggered a fueltank explosion.")
-		to_chat(user, "<span class='rose'>That was stupid of you.</span>")
-		var/obj/structure/reagent_dispensers/fueltank/tank = target
-		tank.explode()
+	else if (istype(target, /obj/structure/reagent_dispensers/) && get_dist(src, target) <= 1 && src.welding)
+		var/obj/structure/reagent_dispensers/tank = target
+		if(tank.explode())
+			message_admins("[key_name_admin(user)] triggered a [target] explosion. [ADMIN_JMP(user)]")
+			log_game("[key_name(user)] triggered a fueltank explosion.")
+			to_chat(user, "<span class='rose'>That was stupid of you.</span>")
+			tank.explode()
 		return
 	if (src.welding)
 		use(1)
