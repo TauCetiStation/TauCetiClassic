@@ -18,6 +18,7 @@
 	resolve_callback = _resolve_callback
 
 	RegisterSignal(bound_to, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED), .proc/check_bounds)
+	RegisterSignal(bound_to, list(COMSIG_PARENT_QDELETED), .proc/on_bound_destroyed)
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), .proc/check_bounds)
 	RegisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE), .proc/on_try_move)
 
@@ -104,3 +105,7 @@
 	if(dist < min_dist || dist > max_dist)
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	return NONE
+
+/datum/component/bounded/proc/on_bound_destroyed(force, qdel_hint)
+	// Perhaps add an abilities to resolve this situation with a callback? ~Luduk
+	qdel(src)
