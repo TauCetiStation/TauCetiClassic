@@ -221,7 +221,7 @@
 	var/fuel_am = reagents.get_reagent_amount("fuel") + reagents.get_reagent_amount("phoron") * 5
 	if(fuel_am > 0)
 		if (fuel_am > 500)
-			explosion(src.loc,1,2,4)
+			explosion(loc, 1, 2, 4)
 		else if (fuel_am > 100)
 			explosion(src.loc,0,1,3)
 		else
