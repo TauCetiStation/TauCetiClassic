@@ -177,7 +177,7 @@
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/food/event_perform(obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/food/event_perform(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(prob(50))
 		var/list/borks = subtypesof(/obj/item/weapon/reagent_containers/food)
 
@@ -217,6 +217,6 @@
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/pray/event_perform()
+/datum/religion_rites/pray/event_perform(mob/living/user, obj/structure/altar_of_gods/AOG)
 	global.chaplain_religion.favor += 20
 	return TRUE
