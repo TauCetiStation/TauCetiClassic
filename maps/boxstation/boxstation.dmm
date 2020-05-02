@@ -17642,7 +17642,7 @@
 "aEY" = (
 /obj/item/weapon/scrap_lump,
 /turf/simulated/floor/plating,
-/area/station/maintenance/science)
+/area/station/maintenance/chapel)
 "aEZ" = (
 /obj/machinery/camera{
 	c_tag = "Fore Primary Hallway";
@@ -77279,18 +77279,6 @@
 /obj/structure/sign/warning/moving_parts,
 /turf/simulated/wall,
 /area/station/cargo/recycler)
-"sOC" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/entry)
 "sPb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -90631,7 +90619,7 @@ bpe
 bll
 bvM
 bio
-sOC
+bJI
 eZb
 bgp
 aaa
@@ -108570,7 +108558,7 @@ anZ
 aob
 afp
 afp
-adJ
+aCr
 gob
 arx
 asE
@@ -124774,7 +124762,7 @@ aEc
 aup
 aup
 aup
-bFH
+aup
 aOS
 aKv
 aKv
