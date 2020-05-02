@@ -156,3 +156,72 @@ var/list/nonhuman_positions = list(
 			titles = J.alt_titles
 
 	return titles
+
+/proc/my_subordinate_staff(head_rank)
+	
+	var/all_staff = data_core.get_manifest_json()	//crew manifest
+	var/list/data = list()	//it will be returned
+	var/list/own_department = list()
+	var/list/QM_staff = list("Cargo Technician", "Shaft Miner", "Recycler")	//QM's boys
+	var/list/excluded_rank = list("Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
+	var/list/list_for_check = list("Admin", "Captain", "Quartermaster")	//Why if(head_rank != "Admin" || "Captain" || "Quartermaster") don't work?
+
+	switch(head_rank)	//What departments do we manage?
+		if("Admin")
+			own_department = list("heads", "sec", "eng", "med", "sci", "civ", "misc")	//all except bots
+		if("Captain")
+			own_department = list("sec", "eng", "med", "sci", "civ", "misc")	//exept "heads", repetitions we don't need
+		if("Head of Personnel")
+			own_department = list("civ", "misc")
+		if("Head of Security")
+			own_department = list("sec")
+		if("Chief Engineer")
+			own_department = list("eng")
+		if("Research Director")
+			own_department = list("sci")
+		if("Chief Medical Officer")
+			own_department = list("med")
+		if("Quartermaster")
+			own_department = list("civ")
+
+	for(var/department in own_department)
+		for(var/person in all_staff[department])
+			if(!list_for_check.Find(head_rank) && excluded_rank.Find(person["rank"]))	//we will not change the salary for yourself
+			//	to_chat(world, "<span class='warning'>Boolin 1")
+				continue
+			if(department == "heads" && person["rank"] != "Captain")	//in "heads" we need only Captain
+			//	to_chat(world, "<span class='warning'>Boolin 2")
+				continue
+			if(department == "sci" && person["rank"] == "Geneticist")	//Geneticist should have one boss - CMO
+			//	to_chat(world, "<span class='warning'>Boolin 3")
+				continue
+			if(department == "civ")
+				if(head_rank != "Admin" && person["rank"] == "Internal Affairs Agent")	//only CentCom can change IAA's salary
+					//to_chat(world, "<span class='warning'>Boolin 4")
+					continue
+				if(head_rank == "Quartermaster" && (person["rank"] == "Quartermaster" || !QM_staff.Find(person["rank"])))	//QM only rules his boys
+					//to_chat(world, "<span class='warning'>Boolin 5")
+					continue
+				if(head_rank == "Head of Personnel" && QM_staff.Find(person["rank"]))	//HoP don't rules QM's boys, but rules QM
+					//to_chat(world, "<span class='warning'>Boolin 6")
+					continue
+			data[++data.len] = list("name" = person["name"], "rank" = person["rank"], "acc_datum" = person["acc_datum"])
+
+	return data	// --> list(real_name, assignment, /datum/money_account/)
+	
+/client/verb/verb_staff()	//for test
+	set category = "IC"
+	set name = "Staff"
+
+	var/list/input_rank = list("Admin", "Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Quartermaster")
+	var/head_rank = input("Please, select a rank!", "Rank", null, null) as null|anything in input_rank
+
+	var/list/data = my_subordinate_staff(head_rank)
+
+	if(data.len)
+		for(var/D in data)
+			var/datum/money_account/account = D["acc_datum"]
+			var/salary = account.owner_salary
+			to_chat(world, "<span class='warning'> [D["name"]], [D["rank"]], [salary].")
+	else
+		to_chat(world, "<span class='warning'> data list is empty")

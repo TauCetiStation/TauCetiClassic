@@ -61,6 +61,7 @@
 	var/list/trans_log = list()
 	var/trans_log_spoiler = 0	// 1 or 0 --> show/hide transaction log
 	var/list/owner_fingerprints = list()	//fingerprint information is taken from the ID card
+	var/boss_PDA = 0	//the PDA belongs to the heads or not	(can I change the salary?)
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
@@ -427,6 +428,7 @@
 	data["trans_log"] = trans_log
 	data["trans_log_spoiler"] = trans_log_spoiler	// show/hide transaction log
 	data["time_to_next_pay"] = time_stamp(format = "mm:ss", wtime = (SSeconomy.endtime - world.timeofday))
+	data["boss"] = boss_PDA
 
 	data["mode"] = mode					// The current view
 	data["scanmode"] = scanmode				// Scanners
@@ -647,6 +649,7 @@
 		if("UpdateInfo")
 			ownjob = id.assignment
 			ownrank = id.rank
+			check_rank(id.rank)
 			name = "PDA-[owner] ([ownjob])"
 		if("Eject")//Ejects the cart, only done from hub.
 			if (!isnull(cartridge))
@@ -854,6 +857,9 @@
 				charge_to_account(owner_account.account_number, target_account_number, transfer_purpose, name, -funds_amount)
 			else
 				to_chat(U, "[bicon(src)]<span class='warning'>Funds transfer failed. Target account is suspended.</span>")
+
+		if("Staff Salary")
+			mode = 73
 
 //SYNDICATE FUNCTIONS===================================
 
@@ -1257,6 +1263,7 @@
 			owner = idcard.registered_name
 			ownjob = idcard.assignment
 			ownrank = idcard.rank
+			check_rank(idcard.rank)
 			var/datum/money_account/account = get_account(idcard.associated_account_number)
 			if(account)
 				account.owner_PDA = src		//add PDA in /datum/money_account
@@ -1478,3 +1485,7 @@
 			to_chat(L, "[bicon(src)]<span class='notice'>You have successfully transferred [amount]$ to [target] account number.</span>")
 		if(!src.message_silent)
 			playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+
+/obj/item/device/pda/proc/check_rank(rank)
+	if(rank in command_positions)
+		boss_PDA = 1

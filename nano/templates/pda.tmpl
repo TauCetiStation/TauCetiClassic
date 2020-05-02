@@ -1039,6 +1039,9 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
             <div class="itemContent">
                 {{:helper.link('Transaction Menu', data.trans_menu == 1 ? 'circle-arrow-n' : 'circle-arrow-s', {'choice' : "Transaction Menu"}, null, 'fixedLeftWide')}}
                 {{:helper.link('Transaction Log', data.trans_log_spoiler == 1 ? 'circle-arrow-n' : 'circle-arrow-s', {'choice' : "Transaction Log"}, null, 'null')}}
+                {{if data.boss}}
+                    {{:helper.link('Staff Salary', 'null', {'choice' : "Staff Salary"}, null, 'null')}}
+                {{/if}}
             </div>
         </div>
         {{if data.trans_menu == 1}} <!-- Show Transaction Menu -->
@@ -1072,6 +1075,8 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                 </div>
             </div>
         {{/if}}
+    {{else data.mode == 73}}
+            Nooo
     {{/if}}
 {{else}}
     <div class="wholeScreen">
