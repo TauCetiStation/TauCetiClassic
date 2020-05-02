@@ -72,13 +72,26 @@
 	rite = /datum/religion_rites/food
 
 /datum/aspect/fames/sacrifice(obj/item/I, mob/living/L)
-	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks))
-		var/obj/item/weapon/reagent_containers/food/food = I
-		if(!food.reagents || food.reagents && food.reagents.total_volume <= 0)
-			to_chat(L, "<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity [I] without useful material.</span>")
-			return FALSE
-		global.chaplain_religion.adjust_favor(round((food.reagents.reagent_list.len / 2) + 1) * food.reagents.total_volume, L)
-		return TRUE
+	if(I.reagents)
+		var/favour_amount = 0
+		for(var/datum/reagent/R in I.reagents.reagent_list)
+			if(istype(R, /datum/reagent/consumable) || istype(R, /datum/reagent/nutriment) || istype(R, /datum/reagent/vitamin))
+				favour_amount += R.nutriment_factor * R.volume
+
+		if(favour_amount > 0 && favour_amount < 100)
+			global.chaplain_religion.adjust_favor(favour_amount, L)
+			return TRUE
+		if(favour_amount >= 100 && favour_amount < 200) // balance
+			global.chaplain_religion.adjust_favor(favour_amount/2, L)
+			return TRUE
+		if(favour_amount >= 200 && favour_amount < 300)
+			global.chaplain_religion.adjust_favor(favour_amount/3, L)
+			return TRUE
+		if(favour_amount >= 300)
+			global.chaplain_religion.adjust_favor(favour_amount/4, L)
+			return TRUE
+
+	to_chat(L, "<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity [I] without useful material.</span>")
 	return FALSE
 
 //Gives mana from: does not affect mana accumulation

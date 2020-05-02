@@ -178,18 +178,26 @@
 	sound = 'sound/effects/phasein.ogg'
 
 /obj/effect/proc_holder/spell/targeted/food/cast()
-	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
+	var/list/borks = subtypesof(/obj/item/weapon/reagent_containers/food)
+
+	playsound(usr, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
+
+	for(var/mob/living/carbon/human/M in viewers(usr.loc))
 		if(!M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
 
 	for(var/i in 1 to 4 + rand(1, divine_power))
-		var/chosen = pick(/obj/random/foods/drink_can, /obj/random/foods/drink_bottle, /obj/random/foods/food_snack, /obj/random/foods/food_without_garbage)
-		var/obj/randomcatcher/CATCH = new /obj/randomcatcher(usr.loc)
-		var/obj/B = CATCH.get_item(chosen)
+		var/obj/item/weapon/reagent_containers/food/chosen = pick(borks)
+		var/obj/B = new chosen(usr.loc)
+		var/obj/randomcatcher/CATCH
+		if(!B.icon_state)
+			QDEL_NULL(B)
+			CATCH = new /obj/randomcatcher(usr.loc)
+			B = CATCH.get_item(pick(/obj/random/foods/drink_can, /obj/random/foods/drink_bottle, /obj/random/foods/food_snack, /obj/random/foods/food_without_garbage))
+			QDEL_NULL(CATCH)
 		if(B && prob(50))
 			for(var/j in 1 to rand(1, 3))
-				step(B, pick(NORTH,SOUTH,EAST,WEST))
-		qdel(CATCH)
+				step(B, pick(NORTH, SOUTH, EAST, WEST))
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal
 	name = "Create random friendly animal"

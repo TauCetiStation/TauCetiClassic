@@ -160,7 +160,7 @@
 /obj/item/weapon/nullrod/staff/attack_self(mob/living/carbon/human/user)
 	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		if(global.chaplain_religion.aspects.len == 0)
-			to_chat(user, "<span class='notice'>First choose aspects in your religion!</span>")
+			to_chat(user, "<span class ='warning'>First choose aspects in your religion!</span>")
 			return
 		if(!brainmob && !searching)
 			//Start the process of searching for a new user.

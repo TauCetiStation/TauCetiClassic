@@ -35,20 +35,19 @@
 	if(msg)
 		to_chat(user, msg)
 
-/obj/structure/altar_of_gods/attack_hand(mob/living/user)
-	if(!Adjacent(user) || !user.pulling)
-		return ..()
-	if(!isliving(user.pulling))
-		return ..()
-	var/mob/living/pushed_mob = user.pulling
-	if(pushed_mob.buckled)
-		to_chat(user, "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>")
-		return ..()
-	to_chat(user,"<span class='notice'>You try to coax [pushed_mob] onto [src]...</span>")
-	if(!do_after(user, (5 SECONDS), target = pushed_mob))
-		return ..()
-	pushed_mob.forceMove(loc)
-	return ..()
+/obj/structure/altar_of_gods/MouseDrop_T(mob/target, mob/user)
+	if(isliving(target))
+		if(can_climb(target) && !buckled_mob && target.loc != loc)
+			if(user.incapacitated())
+				return
+			if(iscarbon(target))
+				target.loc = loc
+				for(var/obj/O in src)
+					O.loc = loc
+				src.add_fingerprint(target)
+		else
+			if(can_buckle && istype(target) && !buckled_mob && istype(user))
+				user_buckle_mob(target, user)
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
 	//If we can sac, we do nothing but the sacrifice instead of typical attackby behavior (IE damage the structure)
@@ -66,6 +65,10 @@
 
 	//start ritual
 	if(istype(C, /obj/item/weapon/nullrod))
+		if(!religion)
+			to_chat(user, "<span class ='warning'>First choose aspects in your religion!</span>")
+			return
+
 		if(religion.rites_list.len == 0)
 			to_chat(user, "<span class='notice'>Your religion doesn't have any rites to perform!</span>")
 			return
