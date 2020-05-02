@@ -6,7 +6,7 @@
 	//can only be increased if you select one aspect twice and more times
 	var/power = 1
 	//add the rite in a sect
-	var/list/rite
+	var/list/rite = list()
 
 /datum/aspect/proc/sacrifice(obj/item/I, mob/living/L)
 	return
@@ -14,7 +14,7 @@
 //Gives mana from: any external organs, limbs, dead body and other meat
 //Needed for: spells and rituals related to the theme of death, interaction with dead body, necromancy
 /datum/aspect/mortem
-	name = "Mortem" //death
+	name = ASPECT_DEATH
 	desc = "You can consider it necromancy"
 
 	god_desc = "Mortal humans can donate to increase your strength: blood bags, brains, internal organs and limbs."
@@ -41,7 +41,7 @@
 //Gives mana from: sci-fi things, scientist points
 //Needed for: spells and rituals related to the theme of sci-fi, future
 /datum/aspect/progressus
-	name = "Progressus" //science
+	name = ASPECT_SCIENCE
 	desc = "Sci-fi items and other science"
 
 	god_desc = "Homosapiens and other xenos races can present all sorts of scientific things, cuircuitboards and small electronic devices."
@@ -66,7 +66,7 @@
 //Gives mana from: any food
 //Needed for: spells and rituals related to the theme of food
 /datum/aspect/fames
-	name = "Fames" //hungry
+	name = ASPECT_FOOD
 	desc = "Can be considered it greed"
 
 	god_desc = "Peasants are required to pay you food."
@@ -101,13 +101,13 @@
 //Gives mana from: does not affect mana accumulation
 //Needed for: spells and rituals related to the theme of weapon and armor, their damage, buff etc
 /datum/aspect/telum
-	name = "Telum" //weapon and armor
+	name = ASPECT_WEAPON //with armor
 	desc = "Weapons and related things, war"
 
 //Gives mana from: minerals, sheet, steel, money etc
 //Needed for: spells and rituals related to the theme of materials, his shell, manipulation of the molecular composition of the resource
 /datum/aspect/metallum
-	name = "Metallum" //resurces
+	name = ASPECT_RESURCES
 	desc = "Manipulated on minerals, metallic, glass and others"
 
 	god_desc = "May the workers bring diverse resources to your mercy."
@@ -122,19 +122,19 @@
 //Gives mana from: does not affect mana accumulation
 //Needed for: spells and rituals related to the theme of spawn animal, creatures
 /datum/aspect/partum
-	name = "Partum" //spawn
+	name = ASPECT_SPAWN
 	desc = "Create any bio-materials"
 
 //Gives mana from: allows you to accumulate mana when you beat yourself near the altar
 //Needed for: any spell in which there is damage to the chaplain or people around the altar should have this aspect.
 /datum/aspect/cruciatu
-	name = "Cruciatu" //self-flagellation
+	name = ASPECT_FLAGELLATION
 	desc = "Self-flagellation, transformation of life energy into a magic"
 
 //Gives mana from: any heal near the altar
 //Needed for: spells and rituals related to the theme of heal, buff
 /datum/aspect/salutis
-	name = "Salutis" //rescue
+	name = ASPECT_RESCUE
 	desc = "Any heal, buff"
 
 	rite = list(
@@ -144,13 +144,13 @@
 //Gives mana from: ghosts staying near the altar
 //Needed for: spells and rituals related to the theme of ghosts
 /datum/aspect/spiritus
-	name = "Spiritus" //mystic
+	name = ASPECT_MYSTIC
 	desc = "Any interaction with ghosts"
 
 //Gives mana from: sacrificed charge
 //Needed for: spells and rituals related to the theme of electrical equipment, electrical energy
 /datum/aspect/technology
-	name = "Arsus" //techonogies
+	name = ASPECT_TECH
 	desc = "Accepts electrical energy, also manipulates any electrical equipment"
 
 	rite = list(
@@ -160,13 +160,13 @@
 //Gives mana from: does not affect mana accumulation
 //Needed for: spells and rituals related to the theme of random, eg random heal
 /datum/aspect/chaos
-	name = "Chaos" //random
+	name = ASPECT_CHAOS
 	desc = "The meaning of the aspect is that its rituals and spells are random"
 
 //Gives mana from: fools, how clowns
 //Needed for: spells and rituals related to the theme of clown equipments, items
 /datum/aspect/wacky
-	name = "Rabidus" //wacky
+	name = ASPECT_WACKY
 	desc = "Clownism"
 
 	god_desc = "The Family urgently needs a lot of BANANAS and BANANIUM!!!"
@@ -190,17 +190,17 @@
 //Gives mana from: "silenced" spells at wizard/cult
 //Needed for: spells and rituals related to the theme of muffle the magical abilities of the wizard/cult
 /datum/aspect/absentia
-	name = "Absentia" //absence
+	name = ASPECT_ABSENCE
 	desc = "Silence, allows you to use the power of the magician or cult as you want"
 
 //Gives mana from: does not affect mana accumulation
 //Needed for: spells and rituals related to the theme of dark, eviv, obcurse
 /datum/aspect/obscurum
-	name = "Obscurum" //obscure
+	name = ASPECT_OBSCURE
 	desc = "Dark, darkness, obcurse, evil"
 
 //Gives mana from: does not affect mana accumulation
 //Needed for: spells and rituals related to the theme of receiving light
 /datum/aspect/lux
-	name = "Lux" //light
+	name = ASPECT_LIGHT
 	desc = "Light interaction"
