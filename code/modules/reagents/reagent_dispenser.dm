@@ -226,11 +226,12 @@
 			explosion(src.loc,0,1,3)
 		else
 			explosion(src.loc,-1,1,2)
+		if(src)
+			qdel(src)
 		return TRUE
 	else
 		return FALSE
-	if(src)
-		qdel(src)
+
 
 
 /obj/structure/reagent_dispensers/fire_act(datum/gas_mixture/air, temperature, volume)
