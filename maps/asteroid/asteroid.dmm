@@ -9444,7 +9444,7 @@
 /area/asteroid/mine/living_quarters)
 "uv" = (
 /obj/machinery/door_control{
-	id = mining_toilet;
+	id = "mining_toilet";
 	name = "Door bolt control";
 	pixel_y = 28;
 	specialfunctions = 4
@@ -10778,7 +10778,7 @@
 /area/asteroid/mine/living_quarters)
 "xl" = (
 /obj/machinery/door/airlock{
-	id_tag = mining_toilet;
+	id_tag = "mining_toilet";
 	name = "Toilet"
 	},
 /turf/simulated/floor{
@@ -13055,10 +13055,6 @@
 	icon_state = "delivery"
 	},
 /area/asteroid/mine/living_quarters)
-"Jd" = (
-/obj/machinery/vending/wallmed1,
-/turf/simulated/wall,
-/area/asteroid/mine/living_quarters)
 "Je" = (
 /obj/machinery/conveyor{
 	id = "mining_internal"
@@ -13173,6 +13169,9 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/entry)
 "Kd" = (
+/obj/machinery/vending/wallmed1{
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	icon_state = "warnwhite"
 	},
@@ -47920,7 +47919,7 @@ wv
 yh
 yr
 uo
-Jd
+uo
 uo
 uo
 uo
@@ -62048,12 +62047,12 @@ ac
 ac
 ac
 ac
-LG
+iG
 Zz
 HP
 HP
 KA
-LG
+iG
 ac
 ac
 ac
@@ -62305,12 +62304,12 @@ ac
 ac
 ac
 ac
-LG
+iG
 bK
 Tg
 Tg
 CC
-LG
+iG
 ac
 ac
 px
@@ -62562,12 +62561,12 @@ px
 px
 px
 px
-CK
-CK
-CK
-CK
-LG
-LG
+iG
+iG
+iG
+iG
+iG
+iG
 ac
 px
 px
