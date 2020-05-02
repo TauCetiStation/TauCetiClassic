@@ -245,7 +245,7 @@
 /obj/structure/reagent_dispensers/fueltank/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
 	if (. && modded)
-		leak(amount_per_transfer_from_this/10.0)
+		leak(amount_per_transfer_from_this * 0.1)
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
