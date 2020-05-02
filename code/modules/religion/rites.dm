@@ -10,8 +10,6 @@
 /// message when you invoke
 	var/invoke_msg
 	var/favor_cost = 0
-/// long rituals in which something happens during their casting
-	var/long = FALSE
 
 ///Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed. Maybe you want it to check for something else?
 /datum/religion_rites/proc/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
@@ -36,8 +34,8 @@
 		if(!do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
 			return FALSE
 		user.say(i)
-		if(long)
-			event_perform(AOG)
+		if(!event_perform(user, AOG))
+			break
 	if(!do_after(user, target = user, delay = ritual_length/ritual_invocations.len)) //because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
 		return FALSE
 	if(invoke_msg)
@@ -50,8 +48,7 @@
 	global.chaplain_religion.on_riteuse(user,AOG)
 	return TRUE
 
-/datum/religion_rites/proc/event_perform()
-	return
+/datum/religion_rites/proc/event_perform(mob/living/user, obj/structure/altar_of_gods/AOG)
 
 /*********Technophiles**********/
 
@@ -118,6 +115,7 @@
 /datum/religion_rites/sacrifice/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(AOG && !AOG.buckled_mob)
 		return FALSE
+
 	var/mob/living/L
 	if(istype(AOG.buckled_mob, /mob/living))
 		L = AOG.buckled_mob
@@ -153,7 +151,6 @@
 						"...and our needs helped, for we praise you...")
 	invoke_msg = "...and bring glory to you!!"
 	favor_cost = 300
-	long = TRUE
 
 /datum/religion_rites/food/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	var/list/borks = subtypesof(/obj/item/weapon/reagent_containers/food)
@@ -194,6 +191,7 @@
 			CATCH = new /obj/randomcatcher(AOG.loc)
 			B = CATCH.get_item(pick(/obj/random/foods/drink_can, /obj/random/foods/drink_bottle, /obj/random/foods/food_snack, /obj/random/foods/food_without_garbage))
 			QDEL_NULL(CATCH)
+	return TRUE
 
 /datum/religion_rites/pray
 	name = "Prayer to god"
@@ -210,7 +208,6 @@
 							  "...let us not perish; through thee may we be delivered from adversities, for thou art the salvation of the Our race...")
 	invoke_msg = "Lord have mercy. Twelve times."
 	favor_cost = 0
-	long = TRUE
 
 /datum/religion_rites/pray/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	var/heal_num = -15
@@ -221,4 +218,5 @@
 	return TRUE
 
 /datum/religion_rites/pray/event_perform()
-	global.chaplain_religion.favor += 50
+	global.chaplain_religion.favor += 20
+	return TRUE
