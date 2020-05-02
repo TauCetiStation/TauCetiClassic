@@ -217,21 +217,18 @@
 /obj/structure/reagent_dispensers/ex_act()
 	explode()
 
-/obj/structure/reagent_dispensers/proc/explode()
-	var/mob/user = usr
+/obj/structure/reagent_dispensers/proc/explode(mob/user)
 	var/fuel_am = reagents.get_reagent_amount("fuel") + reagents.get_reagent_amount("phoron") * 5
-	if(fuel_am)
+	if(fuel_am > 0)
 		if (fuel_am > 500)
 			explosion(src.loc,1,2,4)
 		else if (fuel_am > 100)
 			explosion(src.loc,0,1,3)
-		else if(fuel_am > 0)
+		else
 			explosion(src.loc,-1,1,2)
-		message_admins("[key_name_admin(user)] triggered a [src] explosion. [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] triggered a fueltank explosion.")
-		to_chat(user, "<span class='rose'>That was stupid of you.</span>")
+		return TRUE
 	else
-		return
+		return FALSE
 	if(src)
 		qdel(src)
 
