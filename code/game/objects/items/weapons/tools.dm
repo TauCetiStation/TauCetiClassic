@@ -324,8 +324,8 @@
 	if(istype(target, /obj/structure/reagent_dispensers) && get_dist(src, target) <= 1 && target.reagents.has_reagent("fuel"))
 		var/obj/structure/reagent_dispensers/tank = target
 		if (!welding)
-			tank.reagents.remove_reagent("fuel",max_fuel-reagents.get_reagent_amount("fuel"))
-			reagents.add_reagent("fuel", max_fuel)
+			var/datum/reagent/R = tank.reagents.has_reagent("fuel")
+			tank.reagents.trans_id_to(src, R.id, max_fuel)
 			to_chat(user, "<span class='notice'>Welder refueled</span>")
 			playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 			return
