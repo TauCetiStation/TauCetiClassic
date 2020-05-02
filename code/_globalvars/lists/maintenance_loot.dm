@@ -1,6 +1,6 @@
-//as of:хх/хх/2020:
-//boxstation: ~ loot items spawned
-//gammastation: ~ loot items spawned
+//as of:01/05/2020:
+//boxstation: 174 loot items spawned
+//gammastation: 84 loot items spawned
 
 //how to balance maint loot spawns:
 // 1) Ensure each category has items of approximately the same power level
@@ -25,12 +25,6 @@ var/global/list/trash_loot = list(
 		/obj/item/trash/sosjerky = 1,
 		/obj/item/trash/plate = 1,
 		/obj/item/trash/pistachios = 1,
-		/obj/item/trash/chinese1 = 1,
-		/obj/item/trash/chinese2 = 1,
-		/obj/item/trash/chinese3 = 1,
-		/obj/item/trash/chinese4 = 1,
-		/obj/item/trash/fries = 1,
-		/obj/item/trash/semki = 1,
 		/obj/item/weapon/poster/contraband = 1,
 		/obj/item/weapon/poster/legit = 1,
 		/obj/item/weapon/folder/yellow = 1,
@@ -53,6 +47,7 @@ var/global/list/trash_loot = list(
 		/obj/item/weapon/rack_parts = 1,
 		/obj/item/clothing/mask/breath = 1,
 		/obj/item/weapon/shard = 1,
+		/obj/item/toy/eight_ball = 1,
 		) = 8,
 
 	list(
@@ -212,13 +207,15 @@ var/global/list/oddity_loot = list(
 		/obj/item/clothing/head/helmet/helmet_of_justice = 1,
 		/obj/item/clothing/suit/space/clown = 1,
 		/obj/item/clothing/suit/armor/reactive = 1,
+		/obj/item/weapon/storage/pouch/medium_generic = 1,
+		/obj/item/weapon/storage/pouch/small_generic = 1,
 	)
 
 //Maintenance loot spawner pools
 #define maint_trash_weight 4499
 #define maint_common_weight 4500
 #define maint_uncommon_weight 1000
-#define maint_oddity_weight 1 //1 out of 10,000 would give boxstation (N spawns) a N in N chance of spawning an oddity per round
+#define maint_oddity_weight 1 //1 out of 10,000 would give boxstation (174 spawns) a 1 in 52 chance of spawning an oddity per round
 
 //Loot pool used by default maintenance loot spawners
 var/global/list/maintenance_loot = list(
