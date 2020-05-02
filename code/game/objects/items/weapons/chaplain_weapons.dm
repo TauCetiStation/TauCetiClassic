@@ -144,18 +144,19 @@
 	hide_god(user)
 
 /obj/item/weapon/nullrod/staff/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
-	if(istype(W, /obj/item/device/soulstone)) //mb, the only way to pull out god
-		var/obj/item/device/soulstone/S = W
-		if(S.imprinted == "empty")
-			S.imprinted = brainmob.name
-			S.transfer_soul("SHADE", brainmob, user)
-	else if(istype(W, /obj/item/weapon/storage/bible)) //force kick god from staff
-		if(brainmob)
-			next_apply[brainmob.ckey] = world.time + 10 MINUTES
-			qdel(brainmob)
-			searching = FALSE
-			icon_state = "talking_staff"
-			visible_message("<span class='notice'>The energy of \the [src] was dispelled.</span>")
+	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+		if(istype(W, /obj/item/device/soulstone)) //mb, the only way to pull out god
+			var/obj/item/device/soulstone/S = W
+			if(S.imprinted == "empty")
+				S.imprinted = brainmob.name
+				S.transfer_soul("SHADE", brainmob, user)
+		else if(istype(W, /obj/item/weapon/storage/bible)) //force kick god from staff
+			if(brainmob)
+				next_apply[brainmob.ckey] = world.time + 10 MINUTES
+				qdel(brainmob)
+				searching = FALSE
+				icon_state = "talking_staff"
+				visible_message("<span class='notice'>The energy of \the [src] was dispelled.</span>")
 
 /obj/item/weapon/nullrod/staff/attack_self(mob/living/carbon/human/user)
 	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
