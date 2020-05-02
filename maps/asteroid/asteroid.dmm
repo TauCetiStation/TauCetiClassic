@@ -11130,7 +11130,7 @@
 	pixel_y = -24
 	},
 /obj/machinery/door_control{
-	id = mining_window;
+	id = "mining_window";
 	pixel_x = -9;
 	pixel_y = -24
 	},
@@ -11468,7 +11468,7 @@
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
-	id = mining_window;
+	id = "mining_window";
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
