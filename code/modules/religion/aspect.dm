@@ -6,7 +6,7 @@
 	//can only be increased if you select one aspect twice and more times
 	var/power = 1
 	//add the rite in a sect
-	var/rite
+	var/list/rite
 
 /datum/aspect/proc/sacrifice(obj/item/I, mob/living/L)
 	return
@@ -19,7 +19,9 @@
 
 	god_desc = "Mortal humans can donate to increase your strength: blood bags, brains, internal organs and limbs."
 
-	rite = /datum/religion_rites/sacrifice
+	rite = list(
+		1 = list(/datum/religion_rites/sacrifice,),
+		)
 
 /datum/aspect/mortem/sacrifice(obj/item/I, mob/living/L)
 	if(istype(I, /obj/item/weapon/reagent_containers/blood))
@@ -69,7 +71,9 @@
 
 	god_desc = "Peasants are required to pay you food."
 
-	rite = /datum/religion_rites/food
+	rite = list(
+		1 = list(/datum/religion_rites/food,),
+		)
 
 /datum/aspect/fames/sacrifice(obj/item/I, mob/living/L)
 	if(I.reagents)
@@ -100,8 +104,6 @@
 	name = "Telum" //weapon and armor
 	desc = "Weapons and related things, war"
 
-	//rite = /datum/religion_rites/create_weapons
-
 //Gives mana from: minerals, sheet, steel, money etc
 //Needed for: spells and rituals related to the theme of materials, his shell, manipulation of the molecular composition of the resource
 /datum/aspect/metallum
@@ -109,8 +111,6 @@
 	desc = "Manipulated on minerals, metallic, glass and others"
 
 	god_desc = "May the workers bring diverse resources to your mercy."
-
-	//rite = /datum/religion_rites/create_materials
 
 /datum/aspect/metallum/sacrifice(obj/item/I, mob/living/L)
 	if(istype(I, /obj/item/stack/sheet) && !istype(I, /obj/item/stack/sheet/mineral/clown))
@@ -137,7 +137,9 @@
 	name = "Salutis" //rescue
 	desc = "Any heal, buff"
 
-	rite = /datum/religion_rites/pray
+	rite = list(
+		1 = list(/datum/religion_rites/pray,),
+		)
 
 //Gives mana from: ghosts staying near the altar
 //Needed for: spells and rituals related to the theme of ghosts
@@ -151,7 +153,9 @@
 	name = "Arsus" //techonogies
 	desc = "Accepts electrical energy, also manipulates any electrical equipment"
 
-	rite = /datum/religion_rites/synthconversion
+	rite = list(
+		1 = list(/datum/religion_rites/synthconversion,),
+		)
 
 //Gives mana from: does not affect mana accumulation
 //Needed for: spells and rituals related to the theme of random, eg random heal

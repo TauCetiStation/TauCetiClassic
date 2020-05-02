@@ -115,8 +115,9 @@
 			//add rites
 			for(var/i in religion.aspects)
 				var/datum/aspect/asp = religion.aspects[i]
-				if(asp.rite)
-					religion.rites_list += asp.rite
+				for(var/rite_list in 1 to asp.power)
+					for(var/rite in asp.rite[rite_list])
+						religion.rites_list += rite
 
 			if(isliving(user) && user.mind && user.mind.holy_role)
 				sect.on_conversion(user)
