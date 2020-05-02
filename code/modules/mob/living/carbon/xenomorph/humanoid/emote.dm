@@ -72,6 +72,11 @@
 			message = "<B>The [src.name]</B>[pick(" happily", " joyfully", "")] jumps!"
 			m_type = SHOWMSG_VISUAL
 
+		if ("pray")
+			m_type = SHOWMSG_VISUAL
+			message = "<b>[src]</b> prays."
+			INVOKE_ASYNC(src, /mob.proc/pray_animation)
+
 //  ========== EXTENDED ==========
 
 		if("dance")
