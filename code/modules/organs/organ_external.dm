@@ -52,6 +52,9 @@
 	var/cavity = 0
 	var/atom/movable/applied_pressure
 
+	// Misc
+	var/list/butcher_results
+
 	// Will be removed, moved or refactored.
 	var/obj/item/hidden = null // relation with cavity
 	var/tmp/perma_injury = 0
@@ -87,6 +90,24 @@
 			owner.bodyparts_by_name -= body_zone
 		owner.bad_bodyparts -= src
 	return ..()
+
+/obj/item/organ/external/proc/harvest(obj/item/I, mob/user)
+	if(!locate(/obj/structure/table) in loc)
+		return
+	if(!butcher_results)
+		return
+
+	for(var/path in butcher_results)
+		for(var/i in 1 to butcher_results[path])
+			new path(loc)
+	visible_message("<span class='notice'>[user] butchers [src].</span>")
+	qdel(src)
+
+/obj/item/organ/external/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/butch) || istype(I, /obj/item/weapon/kitchenknife))
+		harvest(I, user)
+	else
+		..()
 
 /obj/item/organ/external/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
 	..()

@@ -8,6 +8,13 @@
 /datum/bodypart_controller/New(obj/item/organ/external/B)
 	BP = B
 
+	if(BP.species && BP.species.bodypart_butcher_results)
+		BP.butcher_results = BP.species.bodypart_butcher_results
+	else if(bodypart_type == BODYPART_ORGANIC)
+		BP.butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 1)
+	else if(bodypart_type == BODYPART_ROBOTIC)
+		BP.butcher_results = list(/obj/item/stack/sheet/plasteel = 1)
+
 /datum/bodypart_controller/Destroy()
 	BP = null
 

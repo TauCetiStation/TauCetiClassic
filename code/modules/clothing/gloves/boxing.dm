@@ -4,6 +4,8 @@
 	icon_state = "boxing"
 	item_state = "boxing"
 
+	species_restricted = null
+
 /obj/item/clothing/gloves/boxing/Touch(mob/living/carbon/human/attacker, atom/A, proximity)
 	. = ..()
 	if(!. && ishuman(A))
