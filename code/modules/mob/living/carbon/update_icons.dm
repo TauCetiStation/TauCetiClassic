@@ -39,10 +39,12 @@
 /mob/living/carbon/proc/get_lying_angle()
 	. = lying_current
 
-	if(buckled && istype(buckled, /obj/structure/stool/bed/chair))
+	if(istype(buckled, /obj/structure/stool/bed/chair))
 		var/obj/structure/stool/bed/chair/C = buckled
 		if(C.flipped)
 			lying_current = C.flip_angle
+	else if(istype(buckled, /obj/structure/closet/coffin))
+		lying_current = 90
 	else if(locate(/obj/machinery/optable, loc) || locate(/obj/structure/stool/bed, loc))
 		lying_current = 90
 	else

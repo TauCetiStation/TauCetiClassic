@@ -40,8 +40,9 @@
 	return get_turf(src)
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0 || wall_mounted)) return 1
-	return (!density)
+	if(wall_mounted)
+		return TRUE
+	return ..()
 
 /obj/structure/closet/proc/can_open()
 	if(src.welded)
@@ -66,31 +67,7 @@
 		M.forceMove(src.loc)
 		M.instant_vision_update(0)
 
-/obj/structure/closet/proc/open()
-	if(src.opened)
-		return 0
-
-	if(!src.can_open())
-		return 0
-
-	src.dump_contents()
-
-	src.icon_state = src.icon_opened
-	src.opened = 1
-	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
-	else
-		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
-	density = 0
-	SSdemo.mark_dirty(src)
-	return 1
-
-/obj/structure/closet/proc/close()
-	if(!src.opened)
-		return 0
-	if(!src.can_close())
-		return 0
-
+/obj/structure/closet/proc/collect_contents()
 	var/itemcount = 0
 
 	//Cham Projector Exception
@@ -118,6 +95,33 @@
 		M.forceMove(src)
 		M.instant_vision_update(1,src)
 		itemcount++
+
+/obj/structure/closet/proc/open()
+	if(src.opened)
+		return 0
+
+	if(!src.can_open())
+		return 0
+
+	src.dump_contents()
+
+	src.icon_state = src.icon_opened
+	src.opened = 1
+	if(istype(src, /obj/structure/closet/body_bag))
+		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
+	else
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
+	density = 0
+	SSdemo.mark_dirty(src)
+	return 1
+
+/obj/structure/closet/proc/close()
+	if(!src.opened)
+		return 0
+	if(!src.can_close())
+		return 0
+
+	collect_contents()
 
 	src.icon_state = src.icon_closed
 	src.opened = 0
@@ -188,6 +192,7 @@
 
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user)
 	if(tools_interact(W, user))
+		add_fingerprint(user)
 		return
 
 	else if(src.opened)
