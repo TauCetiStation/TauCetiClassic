@@ -51,6 +51,15 @@
 #define SMALLSIZE		110 	// table climbing
 #define RESIST_HEAT		111 	// Heat-resistance #Z2
 
+//Hulk activators
+#define ACTIVATOR_HEAVY_MUSCLE_LOAD "heavy muscle load"
+#define ACTIVATOR_ELECTRIC_SHOCK "electric shock"
+#define ACTIVATOR_VOMITING "vomiting"
+#define ACTIVATOR_BROKEN_BONE "broken bone"
+#define ACTIVATOR_EMITTER_BEAM "emitter beam"
+
+#define HULK_ACTIVATION_OPTIONS list(ACTIVATOR_HEAVY_MUSCLE_LOAD, ACTIVATOR_ELECTRIC_SHOCK, ACTIVATOR_VOMITING, ACTIVATOR_BROKEN_BONE, ACTIVATOR_EMITTER_BEAM)
+
 //disabilities
 #define NEARSIGHTED		1
 #define EPILEPSY		2

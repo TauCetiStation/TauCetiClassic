@@ -123,3 +123,20 @@
 
 /obj/item/clothing/gloves/brown/cargo
 	item_color = "cargo"				//Exists for washing machines. Is not different from brown gloves in any way.
+
+/obj/effect/spawner/lootdrop/gloves
+	name = "random gloves"
+	desc = "These gloves are supposed to be a random color..."
+	icon = 'icons/obj/clothing/gloves.dmi'
+	icon_state = "random_gloves"
+	loot = list(
+		/obj/item/clothing/gloves/orange = 1,
+		/obj/item/clothing/gloves/red = 1,
+		/obj/item/clothing/gloves/blue = 1,
+		/obj/item/clothing/gloves/purple = 1,
+		/obj/item/clothing/gloves/green = 1,
+		/obj/item/clothing/gloves/grey = 1,
+		/obj/item/clothing/gloves/light_brown = 1,
+		/obj/item/clothing/gloves/brown = 1,
+		/obj/item/clothing/gloves/white = 1,
+		/obj/item/clothing/gloves/rainbow = 1)
