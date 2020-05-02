@@ -322,6 +322,7 @@
 /obj/item/weapon/weldingtool/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if(istype(target, /obj/structure/reagent_dispensers) && get_dist(src, target) <= 1 && target.reagents.has_reagent("fuel"))
+		var/obj/structure/reagent_dispensers/tank = target
 		if (!welding)
 			target.reagents.remove_reagent("fuel",max_fuel-reagents.get_reagent_amount("fuel"))
 			reagents.add_reagent("fuel", max_fuel)
