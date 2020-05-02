@@ -1976,7 +1976,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			continue
 		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
 
-	var/new_h_style = input(src, "Choose your IPC screen style:", "Character Preference")  as null|anything in valid_hairstyles
+	var/new_h_style = ""
+	if(valid_hairstyles.len == 1)
+		new_h_style = valid_hairstyles[1]
+	else
+		new_h_style = input(src, "Choose your IPC screen style:", "Character Preference")  as null|anything in valid_hairstyles
+
 	if(new_h_style)
 		var/datum/sprite_accessory/SA = valid_hairstyles[new_h_style]
 		if(SA.do_colouration)
