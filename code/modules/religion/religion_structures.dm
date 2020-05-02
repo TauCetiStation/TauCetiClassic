@@ -13,6 +13,7 @@
 	var/datum/religion_rites/performing_rite
 	var/datum/religion_sect/sect //easy access
 	var/datum/religion/chaplain/religion //easy access
+	var/choosed_aspect = FALSE //fix multiple clicks with the bible
 
 /obj/structure/altar_of_gods/examine(mob/user)
 	. = ..()
@@ -88,9 +89,9 @@
 			religion.adjust_favor(-performing_rite.favor_cost)
 			QDEL_NULL(performing_rite)
 
-	//choose aspect preset
-	if(istype(C, /obj/item/weapon/storage/bible))
+	if(istype(C, /obj/item/weapon/storage/bible) && !choosed_aspect)
 		if(!sect)
+			choosed_aspect = TRUE
 			var/list/available_options = generate_available_sects(user)
 			if(!available_options)
 				return

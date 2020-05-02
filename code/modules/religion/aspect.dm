@@ -76,7 +76,7 @@
 		)
 
 /datum/aspect/fames/sacrifice(obj/item/I, mob/living/L)
-	if(I.reagents)
+	if(istype(I, /obj/item/weapon/reagent_containers/food) && I.reagents)
 		var/favour_amount = 0
 		for(var/datum/reagent/R in I.reagents.reagent_list)
 			if(istype(R, /datum/reagent/consumable) || istype(R, /datum/reagent/nutriment) || istype(R, /datum/reagent/vitamin))
