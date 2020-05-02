@@ -20,7 +20,7 @@
 	god_desc = "Mortal humans can donate to increase your strength: blood bags, brains, internal organs and limbs."
 
 	rite = list(
-		1 = list(/datum/religion_rites/sacrifice,),
+		"1" = list(/datum/religion_rites/sacrifice,),
 		)
 
 /datum/aspect/mortem/sacrifice(obj/item/I, mob/living/L)
@@ -72,7 +72,7 @@
 	god_desc = "Peasants are required to pay you food."
 
 	rite = list(
-		1 = list(/datum/religion_rites/food,),
+		"1" = list(/datum/religion_rites/food,),
 		)
 
 /datum/aspect/fames/sacrifice(obj/item/I, mob/living/L)
@@ -138,7 +138,7 @@
 	desc = "Any heal, buff"
 
 	rite = list(
-		1 = list(/datum/religion_rites/pray,),
+		"1" = list(/datum/religion_rites/pray,),
 		)
 
 //Gives mana from: ghosts staying near the altar
@@ -154,7 +154,7 @@
 	desc = "Accepts electrical energy, also manipulates any electrical equipment"
 
 	rite = list(
-		1 = list(/datum/religion_rites/synthconversion,),
+		"1" = list(/datum/religion_rites/synthconversion,),
 		)
 
 //Gives mana from: does not affect mana accumulation
