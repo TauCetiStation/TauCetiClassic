@@ -223,7 +223,7 @@
 		if (fuel_am > 500)
 			explosion(loc, 1, 2, 4)
 		else if (fuel_am > 100)
-			explosion(src.loc,0,1,3)
+			explosion(loc, 0, 1, 3)
 		else
 			explosion(src.loc,-1,1,2)
 		if(src)
