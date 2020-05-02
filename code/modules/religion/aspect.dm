@@ -94,8 +94,7 @@
 		if(favour_amount >= 300)
 			global.chaplain_religion.adjust_favor(favour_amount/4, L)
 			return TRUE
-
-	to_chat(L, "<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity [I] without useful material.</span>")
+		to_chat(L, "<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity [I] without useful material.</span>")
 	return FALSE
 
 //Gives mana from: does not affect mana accumulation
