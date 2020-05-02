@@ -225,7 +225,7 @@
 		else if (fuel_am > 100)
 			explosion(loc, 0, 1, 3)
 		else
-			explosion(src.loc,-1,1,2)
+			explosion(loc, -1, 1, 2)
 		if(src)
 			qdel(src)
 		return TRUE
