@@ -229,8 +229,7 @@
 		if(src)
 			qdel(src)
 		return TRUE
-	else
-		return FALSE
+	return FALSE
 
 
 
