@@ -369,7 +369,7 @@
 	<B>AI Destroyed:</B> [score["deadaipenalty"] ? "Yes" : "No"] (-[score["deadaipenalty"] * 250] Points)<BR><BR>
 	<U>THE WEIRD</U><BR>
 	<B>Final Station Budget:</B> $[num2text(totalfunds,50)]<BR>"}
-	var/profit = totalfunds - 75000
+	var/profit = totalfunds - global.initial_station_money
 	if (profit > 0)
 		dat += "<B>Station Profit:</B> +[num2text(profit,50)]<BR>"
 	else if (profit < 0)
