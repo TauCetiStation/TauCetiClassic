@@ -12,7 +12,7 @@
 			playsound(src, pick(SOUNDIN_BODYFALL), VOL_EFFECTS_MASTER)
 			changed++
 			ntransform.TurnTo(0,lying_current)
-			final_layer = 3.9
+			final_layer = layer - 0.1
 			pixel_y = get_standard_pixel_y_offset()
 			pixel_x = get_standard_pixel_x_offset()
 			final_pixel_y = get_standard_pixel_y_offset(lying_current)
@@ -33,7 +33,7 @@
 			ntransform.Scale(resize)
 			resize = RESIZE_DEFAULT_SIZE
 	if(changed)
-		animate(src, transform = ntransform, time = 2, pixel_y = final_pixel_y, pixel_x = final_pixel_x, dir = final_dir, easing = EASE_IN|EASE_OUT, layer = final_layer)
+		animate(src, transform = ntransform, time = buckled ? buckled.buckle_delay : 2, pixel_y = final_pixel_y, pixel_x = final_pixel_x, dir = final_dir, easing = EASE_IN|EASE_OUT, layer = final_layer)
 		floating = 0
 
 /mob/living/carbon/proc/get_lying_angle()

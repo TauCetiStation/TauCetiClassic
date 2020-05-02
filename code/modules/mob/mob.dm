@@ -554,9 +554,9 @@
 		// What if the signals above somehow deleted pulledby?
 		if(pulling)
 			pulling.pulledby = null
-			if(pullin)
-				pullin.update_icon(src)
 			pulling = null
+		if(pullin)
+			pullin.update_icon(src)
 		count_pull_debuff()
 
 /mob/proc/count_pull_debuff()

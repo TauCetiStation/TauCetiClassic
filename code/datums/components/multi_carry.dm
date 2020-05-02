@@ -1,18 +1,3 @@
-/proc/pixel_offset_2_dir(pixel_x, pixel_y, pixel_x_new, pixel_y_new)
-	var/x_sign = sign(pixel_x - pixel_x_new)
-	var/y_sign = sign(pixel_y - pixel_y_new)
-
-	. = 0
-	if(x_sign > 0)
-		. |= EAST
-	else if(x_sign < 0)
-		. |= WEST
-
-	if(y_sign > 0)
-		. |= NORTH
-	else if(y_sign < 0)
-		. |= SOUTH
-
 // This proc is needed to update layers, offsets and etc when a buckled mob is being carried with us.
 // TO-DO: Replace with getters setters for: layer, pixel_x, pixel_y
 /atom/movable/proc/update_buckle_mob(mob/living/L)
@@ -70,9 +55,10 @@
 	*/
 	for(var/dir_ in cardinal)
 		// Carefully crafted precision MAGIC NUMBERS to aid in B E A U T Y.
+		// FLY_LAYER + 0.5 is to make sure they are above coffin_side, and the mob in coffin
 		positions_by_dir["[dir_]"] = list(
-		list("px"=13, "py"=-6, "layer"=FLY_LAYER + 0.1),
-		list("px"=-12, "py"=-6, "layer"=FLY_LAYER + 0.1),
+		list("px"=13, "py"=-6, "layer"=FLY_LAYER + 0.5),
+		list("px"=-12, "py"=-6, "layer"=FLY_LAYER + 0.5),
 		list("px"=-14, "py"=6, "layer"=MOB_LAYER),
 		list("px"=15, "py"=6, "layer"=MOB_LAYER),
 	)
@@ -103,6 +89,7 @@
 
 	// The pixel_z carry_obj will get, when it starts being carried.
 	var/carry_pixel_z = 0
+	// Whether a buckled mob's dir should stay the same when carried.
 	// The layer carry_obj will get, when it starts being carried. Commented out due to lack of need.
 	// var/carry_layer = FLY_LAYER
 	// The positions in which carriers should stand, when carrying carry_obj.
@@ -250,8 +237,7 @@
 	carry_obj.pixel_z = carry_obj.pixel_z + carry_pixel_z
 	carry_obj.layer = FLY_LAYER
 	if(carry_obj.buckled_mob)
-		on_buckle(carry_obj.buckled_mob)
-		carry_obj.update_buckle_mob(carry_obj.buckled_mob)
+		on_buckle(carry_obj, carry_obj.buckled_mob)
 
 	RegisterSignal(carry_obj, list(COMSIG_ATOM_CANPASS), .proc/check_canpass)
 	RegisterSignal(carry_obj, list(COMSIG_MOVABLE_MOVED), .proc/check_carriers)
@@ -298,7 +284,7 @@
 	carry_obj.layer = pos_obj["layer"]
 	LAZYREMOVE(carrier_default_pos, carry_obj)
 	if(carry_obj.buckled_mob)
-		on_unbuckle(carry_obj.buckled_mob)
+		on_unbuckle(carry_obj, carry_obj.buckled_mob)
 
 	carriers = null
 
@@ -338,7 +324,10 @@
 	return NONE
 
 /datum/component/multi_carry/proc/carrier_postmove(datum/source, atom/NewLoc, direction)
+	if(!moving)
+		return
 	moving = FALSE
+	check_carriers()
 
 /datum/component/multi_carry/proc/carrier_waddle(datum/source, waddle_strength, pz_raise)
 	if(next_waddle > world.time)
@@ -348,8 +337,10 @@
 	can_move = FALSE
 	if(carry_obj.can_waddle())
 		carry_obj.waddle(pick(-waddle_strength, 0, waddle_strength), pz_raise)
-		if(carry_obj.buckled_mob)
-			carry_obj.buckled_mob.dir = pick(WEST, EAST)
+		var/mob/M = carry_obj.buckled_mob
+		if(M && M.can_waddle())
+			M.waddle(pick(-waddle_strength, 0, waddle_strength), pz_raise)
+			M.dir = pick(WEST, EAST)
 	can_move = TRUE
 
 /datum/component/multi_carry/proc/check_proximity(datum/source)
@@ -378,19 +369,21 @@
 		return COMPONENT_CANPASS
 	return NONE
 
-/datum/component/multi_carry/proc/on_buckle(mob/buckled)
+/datum/component/multi_carry/proc/on_buckle(datum/source, mob/buckled)
 	LAZYSET(carrier_default_pos, buckled, list(
 		"pz"=buckled.pixel_z,
 		"layer"=buckled.layer
 	))
-	buckled.pixel_z = buckled.pixel_z + carry_pixel_z
+	buckled.pixel_z = carry_pixel_z
 	buckled.layer = FLY_LAYER + 0.1
+	carry_obj.update_buckle_mob(buckled)
 
-/datum/component/multi_carry/proc/on_unbuckle(mob/buckled)
+/datum/component/multi_carry/proc/on_unbuckle(datum/source, mob/buckled)
 	var/list/pos = carrier_default_pos[buckled]
 	buckled.pixel_z = pos["pz"]
 	buckled.layer = pos["layer"]
 	LAZYREMOVE(carrier_default_pos, buckled)
+	carry_obj.update_buckle_mob(buckled)
 
 /datum/component/multi_carry/proc/on_ctrl_click(datum/source, atom/target)
 	if(target == carry_obj)

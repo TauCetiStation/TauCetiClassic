@@ -351,7 +351,6 @@
 		if(!crawl_can_use())
 			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
 			return
-		layer = 3.9
 
 	pass_flags ^= PASSCRAWL
 	crawling = !crawling

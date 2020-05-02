@@ -1,8 +1,12 @@
 /atom/movable
 	var/can_buckle = 0
 	var/buckle_movable = 0
-	var/buckle_lying = -1 //bed-like behavior, forces mob.lying = buckle_lying if != -1
-	var/buckle_require_restraints = 0 //require people to be handcuffed before being able to buckle. eg: pipes
+	//bed-like behavior, forces mob.lying = buckle_lying if != -1
+	var/buckle_lying = -1
+	// Delay in ticks for the lying anim on buckle_lying objs.
+	var/buckle_delay = 2
+	//require people to be handcuffed before being able to buckle. eg: pipes
+	var/buckle_require_restraints = 0
 	var/mob/living/buckled_mob = null
 
 /atom/movable/attack_hand(mob/living/user)
@@ -45,8 +49,8 @@
 		buckled_mob.update_canmove()
 		buckled_mob.clear_alert("buckled")
 		correct_pixel_shift(buckled_mob)
-		buckled_mob = null
 		SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob)
+		buckled_mob = null
 
 		post_buckle_mob(.)
 
