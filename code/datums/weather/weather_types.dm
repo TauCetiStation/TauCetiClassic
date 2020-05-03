@@ -174,6 +174,10 @@
 	if(prob(40))
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
+
+			if(HULK in H.mutations)
+				H.try_mutate_to_hulk()
+
 			if(H.dna && H.dna.species && !H.species.flags[IS_SYNTHETIC])
 				if(prob(max(0,100-resist)) && prob(10))
 					if (prob(75))

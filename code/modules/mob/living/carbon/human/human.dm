@@ -16,6 +16,7 @@
 	var/metadata
 	var/seer = 0 // used in cult datum /cult/seer
 	var/gnomed = 0 // timer used by gnomecurse.dm
+	var/hulk_activator = null
 
 	throw_range = 2
 
@@ -90,6 +91,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
+	hulk_activator = pick(HULK_ACTIVATION_OPTIONS) //in __DEFINES/geneticts.dm
 
 	if(!species)
 		if(new_species)
@@ -695,6 +697,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return 0	//godmode
 	if(NO_SHOCK in src.mutations)
 		return 0 //#Z2 no shock with that mutation.
+
+	if((HULK in mutations) && hulk_activator == ACTIVATOR_ELECTRIC_SHOCK) //for check to transformation Hulk.
+		to_chat(src, "<span class='notice'>You feel pain, but you like it!</span>")
+		try_mutate_to_hulk()
 
 	if(!def_zone)
 		def_zone = pick(BP_L_ARM , BP_R_ARM)
@@ -1961,12 +1967,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		set_light(BP.screen_brightness)
 		BP.screen_toggle = TRUE
 
-	var/new_hair = input(src, "Choose your IPC screen colour:", "Character Preference") as color|null
-	if(new_hair)
-		r_hair = hex2num(copytext(new_hair, 2, 4))
-		g_hair = hex2num(copytext(new_hair, 4, 6))
-		b_hair = hex2num(copytext(new_hair, 6, 8))
-
 	var/list/valid_hairstyles = list()
 	for(var/hairstyle in hair_styles_list)
 		var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
@@ -1976,8 +1976,21 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			continue
 		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
 
-	var/new_h_style = input(src, "Choose your IPC screen style:", "Character Preference")  as null|anything in valid_hairstyles
+	var/new_h_style = ""
+	if(valid_hairstyles.len == 1)
+		new_h_style = valid_hairstyles[1]
+	else
+		new_h_style = input(src, "Choose your IPC screen style:", "Character Preference")  as null|anything in valid_hairstyles
+
 	if(new_h_style)
+		var/datum/sprite_accessory/SA = valid_hairstyles[new_h_style]
+		if(SA.do_colouration)
+			var/new_hair = input(src, "Choose your IPC screen colour:", "Character Preference") as color|null
+			if(new_hair)
+				r_hair = hex2num(copytext(new_hair, 2, 4))
+				g_hair = hex2num(copytext(new_hair, 4, 6))
+				b_hair = hex2num(copytext(new_hair, 6, 8))
+
 		h_style = new_h_style
 	if(h_style == "IPC off screen")
 		random_ipc_monitor(BP.ipc_head)

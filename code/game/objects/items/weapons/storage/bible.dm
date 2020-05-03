@@ -27,7 +27,7 @@
 /obj/item/weapon/storage/bible/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(user.mind && (user.mind.assigned_role == "Chaplain"))
+	if(user.mind && (user.mind.holy_role))
 		if(target.reagents && target.reagents.has_reagent("water")) //blesses/curses all the water in the holder
 			var/water2convert = target.reagents.get_reagent_amount("water")
 			target.reagents.del_reagent("water")
@@ -47,7 +47,7 @@
 	..()
 
 /obj/item/weapon/storage/bible/attack_self(mob/user)
-	if(user.mind && (user.mind.assigned_role == "Chaplain"))
+	if(user.mind && (user.mind.holy_role))
 		if(religify_next[user.ckey] > world.time)
 			to_chat(user, "<span class='warning'>You can't be changing the look of your entire church so often! Please wait about [round((religify_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
 			return

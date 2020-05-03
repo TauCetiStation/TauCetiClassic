@@ -54,6 +54,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "EVA Maintenance"
 	icon_state = "fpmaint"
 
+/area/station/maintenance/escape
+	name = "Escape Shuttle Maintenance"
+	icon_state = "fmaint"	
+
 /area/station/maintenance/dormitory
 	name = "Dormitory Maintenance"
 	icon_state = "fsmaint"
@@ -293,6 +297,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/civilian/chapel/office
 	name = "Chapel Office"
 	icon_state = "chapeloffice"
+
+/area/station/civilian/chapel/altar
+	name = "Altar"
+	icon_state = "altar"
 
 /area/station/civilian/garden
 	name = "Garden"

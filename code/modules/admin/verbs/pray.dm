@@ -115,18 +115,15 @@
 /mob/proc/pray_animation()
 	return
 
-/mob/living/carbon/human/var/next_pray_anim = 0
+/mob/living/var/next_pray_anim = 0
 
-/mob/living/carbon/human/pray_animation()
+/mob/living/pray_animation()
 	if(next_pray_anim > world.time)
 		return
 	next_pray_anim = world.time + 1 SECOND
 
-	if(incapacitated())
-		return
-	if(!bodyparts_by_name[BP_L_ARM] || !bodyparts_by_name[BP_L_ARM].is_usable())
-		return
-	if(!bodyparts_by_name[BP_R_ARM] || !bodyparts_by_name[BP_R_ARM].is_usable())
+	// So restrained people can also pray.
+	if(stat)
 		return
 
 	//Show an image of the wielded weapon over the person who got dunked.
