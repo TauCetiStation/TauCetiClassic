@@ -105,6 +105,14 @@
 	// Default one is "altar"
 	var/static/list/altar_info_by_name = list(
 		"Default" = "altar",
+		"Christianity" = "chirstianaltar",
+		"Satanism" = "satanaltar",
+		"Toolboxia" = "toolboxaltar	",
+		"Science" = "technologyaltar",
+		"NanoTrasen" = "altar",
+		"Chaos" = "chaosaltar",
+		"Imperium" = "imperialaltar",
+		"Druid" = "druidaltar"
 	)
 
 	// Default is "0" TO-DO: convert this to icon_states. ~Luduk
