@@ -1,10 +1,10 @@
 /obj/item/device/saxophone
-	name = "harmonica"
-	desc = "Much blues. So amaze. Wow."
+	name = "saxophone"
+	desc = "It's made of copper and covered with shinning gold paint. Jazz for your soul."
 	icon = 'icons/obj/musician.dmi'
 	icon_state = "saxophone"
 	item_state = "saxophone"
-	force = 5
+	force = 10
 	w_class = ITEM_SIZE_NORMAL
 	m_amt = 2500
   hitsound = 'code/modules/musical_instruments/sound/saxophone/Saxhit.ogg'
@@ -13,7 +13,7 @@
 	var/cooldown = 70
 	var/last_played = 0
 
-/obj/item/device/harmonica/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+/obj/item/device/saxophone/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(!istype(M) || M != user)
 		return ..()
 	if(def_zone == O_MOUTH && last_played <= world.time)
