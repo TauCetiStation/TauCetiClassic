@@ -9795,13 +9795,13 @@
 	},
 /area/asteroid/mine/living_quarters)
 "vr" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
@@ -10009,12 +10009,12 @@
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "vO" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "vP" = (
@@ -10678,6 +10678,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -10966,10 +10967,14 @@
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "yi" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+/obj/machinery/camera{
+	c_tag = "Crew Area Hallway East";
+	network = list("MINE");
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
 /area/asteroid/mine/living_quarters)
 "ym" = (
 /obj/structure/cable{
@@ -10996,12 +11001,9 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/west_outpost)
 "yr" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Infirmary"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
 "ys" = (
@@ -11312,15 +11314,14 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/eva)
 "zv" = (
-/obj/machinery/camera{
-	c_tag = "Crew Area Hallway East";
-	network = list("MINE")
+/obj/machinery/conveyor_switch{
+	id = "mining_external"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	dir = 1;
-	icon_state = "brown"
+	icon_state = "asteroidwarning"
 	},
-/area/asteroid/mine/living_quarters)
+/area/asteroid/mine/explored)
 "zz" = (
 /obj/machinery/airlock_sensor{
 	id_tag = "mining_east_sensor";
@@ -11607,11 +11608,11 @@
 "Ai" = (
 /obj/structure/rack,
 /obj/item/weapon/pickaxe{
-	pixel_x = -3
+	pixel_y = 3
 	},
 /obj/item/weapon/pickaxe,
 /obj/item/weapon/pickaxe{
-	pixel_x = 3
+	pixel_y = -3
 	},
 /turf/simulated/floor/airless{
 	dir = 5;
@@ -12488,8 +12489,8 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless{
-	dir = 4;
-	icon_state = "asteroidwarning"
+	dir = 5;
+	icon_state = "asteroidfloor"
 	},
 /area/asteroid/mine/explored)
 "Je" = (
@@ -12778,6 +12779,9 @@
 	},
 /area/asteroid/mine/living_quarters)
 "Od" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
 /turf/simulated/floor{
 	icon_state = "warnwhite"
 	},
@@ -12816,7 +12820,7 @@
 /area/asteroid/mine/living_quarters)
 "Pd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -12848,9 +12852,12 @@
 	},
 /area/asteroid/research_outpost/maintstore1)
 "Qc" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Infirmary"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
-	icon_state = "brown"
+	icon_state = "white"
 	},
 /area/asteroid/mine/living_quarters)
 "Qd" = (
@@ -12897,7 +12904,13 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/airless{
+	dir = 5;
+	icon_state = "asteroidfloor"
+	},
 /area/asteroid/mine/explored)
 "Rd" = (
 /obj/machinery/firealarm{
@@ -12946,21 +12959,16 @@
 /area/asteroid/research_outpost/iso2)
 "Sc" = (
 /obj/structure/rack,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/item/weapon/storage/bag/ore{
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_y = 3
 	},
 /obj/item/weapon/storage/bag/ore,
 /obj/item/weapon/storage/bag/ore{
-	pixel_x = -2;
-	pixel_y = -2
+	pixel_y = -3
 	},
 /turf/simulated/floor/airless{
-	dir = 8;
-	icon_state = "asteroidwarning"
+	dir = 5;
+	icon_state = "asteroidfloor"
 	},
 /area/asteroid/mine/explored)
 "Sd" = (
@@ -13100,10 +13108,9 @@
 	},
 /area/asteroid/mine/living_quarters)
 "Vd" = (
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/machinery/light/small{
+	dir = 1
 	},
-/obj/structure/ore_box,
 /turf/simulated/floor/airless{
 	dir = 4;
 	icon_state = "asteroidwarning"
@@ -13308,15 +13315,6 @@
 	icon_state = "barber"
 	},
 /area/asteroid/research_outpost/hallway)
-"Zc" = (
-/obj/machinery/conveyor_switch{
-	id = "mining_external"
-	},
-/turf/simulated/floor/airless{
-	dir = 1;
-	icon_state = "asteroidwarning"
-	},
-/area/asteroid/mine/explored)
 "Zd" = (
 /obj/machinery/sleeper{
 	dir = 4
@@ -47186,8 +47184,8 @@ pj
 qb
 uo
 wx
-yi
-Qc
+yv
+Pc
 yX
 Ld
 Xd
@@ -48215,7 +48213,7 @@ uo
 uo
 ww
 vN
-Pc
+yi
 uo
 uo
 uo
@@ -48992,7 +48990,7 @@ zL
 VK
 ia
 Jd
-qZ
+tL
 lA
 rH
 lA
@@ -49249,7 +49247,7 @@ uo
 uo
 uo
 Rc
-lA
+tL
 lA
 rH
 lA
@@ -49506,7 +49504,7 @@ Nd
 Zd
 uo
 Sc
-qX
+tL
 lA
 rH
 lA
@@ -49757,8 +49755,8 @@ wT
 vy
 wm
 vO
-Pc
-zb
+yr
+Qc
 Od
 ze
 uo
@@ -50012,10 +50010,10 @@ tb
 xr
 wU
 uo
-zv
+wn
 vN
 Pc
-yr
+zb
 Pd
 Ce
 uo
@@ -59023,7 +59021,7 @@ ws
 ws
 lA
 lA
-nG
+rI
 lA
 kO
 kO
@@ -59523,7 +59521,7 @@ lA
 lA
 lA
 lA
-uS
+zv
 Id
 tL
 lA
@@ -59536,7 +59534,7 @@ lA
 lA
 lA
 lA
-kO
+lA
 kO
 ac
 ac
@@ -59780,9 +59778,10 @@ lA
 lA
 lA
 lA
-Zc
-Id
-tL
+oE
+oE
+oE
+lA
 lA
 lA
 lA
@@ -59794,7 +59793,6 @@ kO
 kO
 kO
 kO
-ac
 ac
 px
 px
@@ -60037,9 +60035,9 @@ lA
 lA
 lA
 lA
-uS
-Id
-tL
+lA
+lA
+lA
 lA
 lA
 lA
@@ -60048,7 +60046,7 @@ rI
 lA
 lA
 kO
-ac
+kO
 ac
 ac
 ac
@@ -60294,9 +60292,9 @@ nd
 lA
 nG
 lA
-oE
-oE
-oE
+lA
+lA
+lA
 lA
 lA
 kO
