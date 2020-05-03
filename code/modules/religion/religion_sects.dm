@@ -35,13 +35,13 @@
 	name = "The Puritans of "
 	desc = "Nothing special."
 	convert_opener = "Your run-of-the-mill sect, there are no benefits or boons associated. Praise normalcy!"
-	aspect_preset = list(/datum/aspect/salutis, /datum/aspect/lux, /datum/aspect/spiritus)
+	aspect_preset = list(/datum/aspect/salutis = 1, /datum/aspect/lux = 1, /datum/aspect/spiritus = 1)
 
 /datum/religion_sect/technophile
 	name = "The Technomancers of "
 	desc = "A sect oriented around technology."
 	convert_opener = "May you find peace in a metal shell, acolyte."
-	aspect_preset = list(/datum/aspect/technology, /datum/aspect/progressus, /datum/aspect/metallum)
+	aspect_preset = list(/datum/aspect/technology = 1, /datum/aspect/progressus = 1, /datum/aspect/metallum = 1)
 
 /datum/religion_sect/custom
 	name = "Custom "
