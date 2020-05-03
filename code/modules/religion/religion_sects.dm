@@ -36,7 +36,7 @@
 /datum/religion_sect/preset/puritanism
 	name = "The Puritans of "
 	desc = "Nothing special."
-	convert_opener = "Your run-of-the-mill sect, converse the purity. Praise normalcy!"
+	convert_opener = "Your run-of-the-mill sect, conserve the purity. Praise normalcy!"
 	aspect_preset = list(
 		/datum/aspect/salutis = 1,
 		/datum/aspect/lux = 1,
