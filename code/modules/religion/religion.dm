@@ -107,7 +107,7 @@
 		"Default" = "altar",
 		"Christianity" = "chirstianaltar",
 		"Satanism" = "satanaltar",
-		"Toolboxia" = "toolboxaltar	",
+		"Toolboxia" = "toolboxaltar",
 		"Science" = "technologyaltar",
 		"NanoTrasen" = "altar",
 		"Chaos" = "chaosaltar",
