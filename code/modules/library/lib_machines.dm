@@ -153,6 +153,7 @@
 	var/checkoutperiod = 5 // In minutes
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 
+	var/count_bible = 4
 	var/next_print = 0
 
 /obj/machinery/computer/libraryconsole/bookmanagement/old // an older-looking version, looks fancy
@@ -318,9 +319,10 @@
 			if("5")
 				screenstate = 5
 			if("6")
-				if(next_print > world.time)
+				if(count_bible > 0 && world.time > next_print)
 					if(global.chaplain_religion)
 						global.chaplain_religion.spawn_bible(loc)
+						count_bible -= 1
 						next_print = world.time + 6 SECONDS
 					else
 						visible_message("<b>[src]</b>'s monitor flashes,  \"Could not connect to station's religion database at this moment, please try again later.\"")

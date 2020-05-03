@@ -254,11 +254,11 @@
 	update_icon()
 
 /obj/item/weapon/storage/fancy/glowsticks/proc/add_stick()
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/green(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/red(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/blue(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/orange(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/green(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/red(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/blue(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/yellow(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/orange(src)
 
 /obj/item/weapon/storage/fancy/glowsticks/update_icon()
 	cut_overlays() //resets list
