@@ -7,7 +7,7 @@
 	force = 10
 	w_class = ITEM_SIZE_NORMAL
 	m_amt = 2500
-	hitsound = 'code/modules/musical_instruments/sound/saxophone/Saxhit.ogg'
+	hitsound = 'sound/musical_instruments/saxophone/Saxhit.ogg'
 	attack_verb = list("tubed", "made concert", "saxed", "smashed")
 	var/channel
 	var/cooldown = 70
