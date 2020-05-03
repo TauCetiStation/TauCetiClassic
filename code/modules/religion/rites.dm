@@ -162,7 +162,7 @@
 			M.flash_eyes()
 
 	for(var/i in 1 to 4 + rand(2, 5))
-		var/obj/item/weapon/reagent_containers/food/chosen = pick(borks)
+		var/chosen = pick(borks)
 		var/obj/B = new chosen(AOG.loc)
 		var/obj/randomcatcher/CATCH
 		if(!B.icon_state)
@@ -183,7 +183,7 @@
 
 		playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
-		var/obj/item/weapon/reagent_containers/food/chosen = pick(borks)
+		var/chosen = pick(borks)
 		var/obj/B = new chosen(AOG.loc)
 		var/obj/randomcatcher/CATCH
 		if(!B.icon_state)

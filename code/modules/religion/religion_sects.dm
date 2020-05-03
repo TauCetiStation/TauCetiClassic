@@ -21,10 +21,10 @@
 	var/list/datum/aspect/aspect_preset
 
 /// Activates once selected
-/datum/religion_sect/proc/on_select(list/aspects)
-	for(var/aspect in aspects)
+/datum/religion_sect/proc/on_select()
+	for(var/aspect in aspect_preset)
 		var/datum/aspect/asp = new aspect()
-		asp.power = aspects[aspect]
+		asp.power = aspect_preset[aspect]
 		global.chaplain_religion.aspects[asp.name] = asp
 
 /// Activates once selected and on newjoins, oriented around people who become holy.

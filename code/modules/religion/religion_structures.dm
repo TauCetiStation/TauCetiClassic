@@ -89,7 +89,7 @@
 			religion.adjust_favor(-performing_rite.favor_cost)
 			QDEL_NULL(performing_rite)
 
-	if(istype(C, /obj/item/weapon/storage/bible) && !choosed_aspect)
+	else if(istype(C, /obj/item/weapon/storage/bible) && !choosed_aspect)
 		if(!sect)
 			choosed_aspect = TRUE
 			var/list/available_options = generate_available_sects(user)
@@ -111,7 +111,7 @@
 					return
 				sect.on_select(aspects, 3)
 			else
-				sect.on_select(sect.aspect_preset)
+				sect.on_select()
 
 			//add rites
 			for(var/i in religion.aspects)

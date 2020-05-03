@@ -87,7 +87,7 @@
 	var/list/possible_targets = list()
 	var/obj/item/weapon/target
 
-	for(var/obj/item/weapon/W in range(3))
+	for(var/obj/item/W in orange(3))
 		if(!(W in blessed))
 			possible_targets += W
 
@@ -97,7 +97,7 @@
 
 	target = input("Choose the target for the spell.", "Targeting") in possible_targets
 
-	to_chat(usr, "[usr] blessed [target.name]")
+	target.visible_message("<span class='notice'>[target] has been blessed by [src]!</span>")
 	target.name = "blessed [target.name]"
 	target.force += divine_power
 
@@ -128,28 +128,28 @@
 				cell_charge(R.cell)
 				charged = TRUE
 
-		if(istype(I, /obj/item/weapon/stock_parts/cell))
+		else if(istype(I, /obj/item/weapon/stock_parts/cell))
 			cell_charge(I)
 			charged = TRUE
 
-		if(istype(I, /obj/item/weapon/melee/baton))
+		else if(istype(I, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = I
 			B.charges = initial(B.charges)
 			B.status = 1
 			B.update_icon()
 			charged = TRUE
 
-		if(istype(I, /obj/machinery/power/smes))
+		else if(istype(I, /obj/machinery/power/smes))
 			charged = TRUE
 			for(var/obj/item/weapon/stock_parts/cell/Cell in I)
 				cell_charge(Cell)
 		
-		if(istype(I, /obj/mecha))
+		else if(istype(I, /obj/mecha))
 			var/obj/mecha/M = I
 			cell_charge(M.cell)
 			charged = TRUE
 
-		if(istype(I, /obj/machinery/power/apc))
+		else if(istype(I, /obj/machinery/power/apc))
 			var/obj/machinery/power/apc/A = I
 			cell_charge(A.cell)
 			charged = TRUE
@@ -187,7 +187,7 @@
 			M.flash_eyes()
 
 	for(var/i in 1 to 4 + rand(1, divine_power))
-		var/obj/item/weapon/reagent_containers/food/chosen = pick(borks)
+		var/chosen = pick(borks)
 		var/obj/B = new chosen(usr.loc)
 		var/obj/randomcatcher/CATCH
 		if(!B.icon_state)
@@ -241,5 +241,5 @@
 	sound = 'sound/magic/ForceWall.ogg'
 
 /obj/effect/proc_holder/spell/targeted/grease/cast()
-	for(var/turf/simulated/floor/F in range(divine_power))
+	for(var/turf/simulated/floor/F in RANGE_TURFS(divine_power, usr))
 		F.make_wet_floor(LUBE_FLOOR)
