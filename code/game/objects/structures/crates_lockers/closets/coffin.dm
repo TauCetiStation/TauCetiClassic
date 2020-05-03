@@ -66,6 +66,7 @@
 /obj/structure/closet/coffin/open()
 	. = ..()
 	if(.)
+		// so nobody sees/bugs the body falling out of the coffin(lying "animation")
 		next_open = world.time + LYING_ANIM_COOLDOWN
 
 /obj/structure/closet/coffin/tools_interact(obj/item/I, mob/user)
@@ -94,13 +95,12 @@
 		M.pixel_x = 1
 		M.pixel_y = -1
 		update_buckle_mob(M)
-		cut_overlay(coffin_side)
 		add_overlay(coffin_side)
 
 /obj/structure/closet/coffin/update_buckle_mob(mob/living/M)
 	coffin_side.layer = M.layer + 0.05
 	M.dir = WEST
-	// Is needed to update the overlay.
+	// why tf do I need to cut overlay to update a layer?
 	cut_overlay(coffin_side)
 	add_overlay(coffin_side)
 
@@ -115,6 +115,8 @@
 	var/saved_dir = buckled_mob.dir
 	. = ..()
 	if(.)
+		// so the body doesn't spin in it's grave
+		// unless required to!
 		buckled_mob.dir = saved_dir
 
 #undef LYING_ANIM_COOLDOWN

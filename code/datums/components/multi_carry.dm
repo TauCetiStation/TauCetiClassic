@@ -3,6 +3,8 @@
 /atom/movable/proc/update_buckle_mob(mob/living/L)
 	return
 
+// The datum to contain any information about carry positions for
+// /datum/component/multi_carry
 /datum/carry_positions
 	// Assoc list of form: dir = list(list(px,py,addlayer), list(px,py,layer), ...)
 	var/pos_count
@@ -132,6 +134,7 @@
 		COMSIG_LIVING_CLICK_CTRL_SHIFT,
 	))
 
+// This proc prevents move_pulling - cause that would break the carry apart.
 /datum/component/multi_carry/proc/on_pull(datum/source, atom/movable/target)
 	if(carried)
 		return COMPONENT_PREVENT_MOVE_PULLED
@@ -181,6 +184,7 @@
 	can_move = TRUE
 	INVOKE_ASYNC(src, .proc/rotate_dir, prev_dir)
 
+// All checks before start_carry()
 /datum/component/multi_carry/proc/can_carry()
 	var/lying_am = 0
 
@@ -389,7 +393,7 @@
 	if(target == carry_obj)
 		return NONE
 
-	if(target != source && target in carriers)
+	if(target != source && (target in carriers))
 		INVOKE_ASYNC(src, .proc/swap_positions, source, target)
 		return COMPONENT_CANCEL_CLICK
 	// So carrier doesn't get an idea that they can pull something else.

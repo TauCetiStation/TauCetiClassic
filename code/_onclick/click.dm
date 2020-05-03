@@ -332,6 +332,7 @@
 		else		usr.dir = WEST
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
+// This proc is currently only used in multi_carry.dm (/datum/component/multi_carry)
 /mob/proc/face_pixeldiff(pixel_x, pixel_y, pixel_x_new, pixel_y_new)
 	if( stat || buckled)
 		return
