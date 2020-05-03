@@ -40,6 +40,7 @@
 
 	var/assigned_role
 	var/special_role
+	var/holy_role = NONE
 
 	var/protector_role = 0 //If we want force player to protect the station
 	var/hulkizing = FALSE //Hulk before? If TRUE - cannot activate hulk mutation anymore.

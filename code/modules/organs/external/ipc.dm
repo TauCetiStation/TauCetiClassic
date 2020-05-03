@@ -25,13 +25,16 @@
 	color = original_color
 
 /obj/item/organ/external/head/robot/ipc/alien
-	ipc_head = "alien"
+	ipc_head = "Alien"
 
 /obj/item/organ/external/head/robot/ipc/double
-	ipc_head = "double"
+	ipc_head = "Double"
 
 /obj/item/organ/external/head/robot/ipc/pillar
-	ipc_head = "pillar"
+	ipc_head = "Pillar"
+
+/obj/item/organ/external/head/robot/ipc/human
+	ipc_head = "Human"
 
 /obj/item/organ/external/groin/robot/ipc
 	name = "ipc groin"

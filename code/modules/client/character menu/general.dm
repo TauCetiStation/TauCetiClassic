@@ -512,7 +512,7 @@
 									organ_data[organ] = "mechanical"
 				// Choosing a head for an IPC
 				if("ipc_head")
-					var/list/ipc_heads = list("Default", "Alien", "Double", "Pillar")
+					var/list/ipc_heads = list("Default", "Alien", "Double", "Pillar", "Human")
 					ipc_head = input("Please select a head type", "Character Generation", null) in ipc_heads
 					h_style = random_ipc_monitor(ipc_head)
 
