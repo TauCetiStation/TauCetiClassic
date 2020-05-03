@@ -24,7 +24,6 @@
 /obj/structure/closet/coffin/atom_init()
 	. = ..()
 	coffin_side = image(icon, "coffin_side")
-	coffin_side.appearance_flags |= KEEP_APART
 	coffin_side.layer = MOB_LAYER + 0.1
 	coffin_side.loc = src
 
@@ -39,9 +38,9 @@
 	if(user.incapacitated())
 		return
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
-	src.toggle(user)
+	toggle(user)
 
 /obj/structure/closet/coffin/attack_hand(mob/user)
 	user_unbuckle_mob(user)

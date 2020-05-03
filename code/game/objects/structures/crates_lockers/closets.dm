@@ -143,28 +143,27 @@
 	switch(severity)
 		if(1)
 			for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
-				A.forceMove(src.loc)
 				A.ex_act(severity++)
+			dump_contents()
 			qdel(src)
 		if(2)
 			if(prob(50))
 				for (var/atom/movable/A as mob|obj in src)
-					A.forceMove(src.loc)
 					A.ex_act(severity++)
+				dump_contents()
 				qdel(src)
 		if(3)
 			if(prob(5))
 				for(var/atom/movable/A as mob|obj in src)
-					A.forceMove(src.loc)
 					A.ex_act(severity++)
+				dump_contents()
 				qdel(src)
 
 /obj/structure/closet/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	if(health <= 0)
-		for(var/atom/movable/A as mob|obj in src)
-			A.forceMove(src.loc)
+		dump_contents()
 		qdel(src)
 
 	return
