@@ -1,0 +1,44 @@
+/obj/item/device/saxophone
+	name = "harmonica"
+	desc = "Much blues. So amaze. Wow."
+	icon = 'icons/obj/musician.dmi'
+	icon_state = "saxophone"
+	item_state = "saxophone"
+	force = 5
+	w_class = ITEM_SIZE_NORMAL
+	m_amt = 2500
+  hitsound = 'code/modules/musical_instruments/sound/saxophone/Saxhit.ogg'
+  attack_verb = list("tubed", "made concert", "saxed", "smashed")
+	var/channel
+	var/cooldown = 70
+	var/last_played = 0
+
+/obj/item/device/harmonica/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+	if(!istype(M) || M != user)
+		return ..()
+	if(def_zone == O_MOUTH && last_played <= world.time)
+		play(user)
+
+/obj/item/device/saxophone/atom_init()
+	. = ..()
+	channel = rand(1000, 1024)
+
+/obj/item/device/saxophone/proc/play(mob/living/carbon/user)
+	var/static/list/tunes = list(
+		'sound/musical_instruments/saxophone/sax1.ogg'
+  )
+	var/static/list/message = list(
+		"plays a sexy",
+		"plays a delightful",
+		"plays a chilling",
+		"plays a upbeat"
+		)
+	last_played = world.time + cooldown
+	playsound(src, pick(tunes), VOL_EFFECTS_INSTRUMENT, null, FALSE, falloff = 5, channel = channel)
+	user.visible_message("<span class='notice'>[user] [pick(message)] tune with his tube!</span>")
+
+/obj/item/device/saxophone/dropped(mob/user)
+	var/sound/melody = sound()
+	melody.channel = channel
+	hearers(20, get_turf(src)) << melody
+	return ..()
