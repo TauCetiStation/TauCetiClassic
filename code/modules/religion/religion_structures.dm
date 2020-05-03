@@ -52,20 +52,35 @@
 				user_buckle_mob(target, user)
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
-	//If we can sac, we do nothing but the sacrifice instead of typical attackby behavior (IE damage the structure)
-	if(religion)
-		for(var/aspect in religion.aspects)
-			var/datum/aspect/asp = religion.aspects[aspect]
-			if(asp.sacrifice(C, user))
-				to_chat(user, "<span class='notice'>You offer [C]'s power to [pick(religion.deity_names)], pleasing them.</span>")
-				qdel(C)
-				break
-
 	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
 		to_chat(user, "<span class='warning'>You don't know how to use this.</span>")
 		return
 
-	//start ritual
+	if(iswrench(C))
+		anchored = !anchored
+		visible_message("<span class='warning'>[src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].</span>")
+		return
+
+	if(!anchored)
+		return ..()
+
+	//If we can sacrifice, we do nothing but the sacrifice instead of typical attackby behavior
+	if(religion && !(C.flags & ABSTRACT))
+		var/max_points = 0
+
+		for(var/aspect in religion.aspects)
+			var/datum/aspect/asp = religion.aspects[aspect]
+			var/points = asp.sacrifice(C, user)
+			if(points > max_points)
+				max_points = points
+
+		if(max_points > 0)
+			global.chaplain_religion.adjust_favor(max_points, user)
+			to_chat(user, "<span class='notice'>You offer [C]'s power to [pick(religion.deity_names)], pleasing them.</span>")
+			user.drop_from_inventory(C)
+			qdel(C)
+			return
+
 	if(istype(C, /obj/item/weapon/nullrod))
 		if(!religion)
 			to_chat(user, "<span class ='warning'>First choose aspects in your religion!</span>")
@@ -93,6 +108,7 @@
 			performing_rite.invoke_effect(user, src)
 			religion.adjust_favor(-performing_rite.favor_cost)
 			QDEL_NULL(performing_rite)
+		return
 
 	else if(istype(C, /obj/item/weapon/storage/bible) && !chosen_aspect)
 		chosen_aspect = TRUE
@@ -108,13 +124,10 @@
 		sect = available_options[sect_select]
 		religion = global.chaplain_religion
 
-		sect.on_select(user)
+		sect.on_select(user, religion)
 
 		if(isliving(user) && user.mind && user.mind.holy_role)
 			sect.on_conversion(user)
-
-		// This proc handles all rites, spells, and etc a religion has.
-		religion.update_aspects()
 
 /obj/structure/altar_of_gods/proc/generate_available_sects(mob/user) //eventually want to add sects you get from unlocking certain achievements
 	var/list/variants = list()

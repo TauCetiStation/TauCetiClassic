@@ -104,26 +104,17 @@
 	/*
 		Aspects and Rites related
 	*/
+	var/list/active_deities = list()
+
 	// The religion's 'Mana'
 	var/favor = 0
 	// The max amount of favor the religion can have
 	var/max_favor = 3000
-	// Determines which spells God can use.
-	var/list/allow_spell = list(
-		/obj/effect/proc_holder/spell/targeted/spawn_bible,
-		/obj/effect/proc_holder/spell/targeted/heal,
-		/obj/effect/proc_holder/spell/targeted/heal/damage,
-		/obj/effect/proc_holder/spell/targeted/blessing,
-		/obj/effect/proc_holder/spell/targeted/charge/religion,
-		/obj/effect/proc_holder/spell/targeted/food,
-		/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal,
-		/obj/effect/proc_holder/spell/targeted/grease,
-	)
 
-	// Spells that combine with aspects and cast to God
-	var/list/spells = list()
-	// Choosed aspects
+	// Chosen aspects.
 	var/list/aspects = list()
+	// Spells that are determined by aspect combinations, are given to God.
+	var/list/god_spells = list()
 	// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
 	var/list/rites = list()
 
@@ -219,47 +210,89 @@
 /datum/religion/proc/satisfy_requirements(element, datum/aspect/A)
 	return element <= A.power
 
+/datum/religion/proc/affect_divine_power(obj/effect/proc_holder/spell/S)
+	var/divine_power = initial(S.divine_power)
+
+	var/diff = 0
+
+	for(var/datum/aspect/aspect in global.chaplain_religion.aspects)
+		if(S.needed_aspect[aspect.type])
+			diff += aspect.power - S.needed_aspect[aspect.type]
+
+	S.divine_power = divine_power * (diff / S.needed_aspect.len + 1)
+
 // Give our gods all needed spells which in /list/spells
-/datum/religion/proc/give_god_spells(mob/living/simple_animal/shade/god/G)
-	if(gods_list.len == 0)
-		return
-
-	var/datum/callback/pred = CALLBACK(src, .proc/satisfy_requirements)
-	for(var/spell in allow_spell)
-		var/obj/effect/proc_holder/spell/S = new spell()
-		var/list/spell_aspects = S.needed_aspect
-
-		if(is_sublist_assoc(spell_aspects, aspects, pred))
-			spells |= spell
-
-		QDEL_NULL(S)
-
+/datum/religion/proc/give_god_spells(mob/G)
 	for(var/spell in spells)
-		var/obj/effect/proc_holder/spell/S = new spell()
-		for(var/datum/aspect/aspect in global.chaplain_religion.aspects)
-			if(S.needed_aspect[aspect])
-				S.divine_power *= aspect.power
-		G.AddSpell(S)
+		var/obj/effect/proc_holder/spell/S = G.GetSpell(spell)
+		if(S)
+			affect_divine_power(S)
+			continue
+		else
+			S = new spell
+			affect_divine_power(S)
+			G.AddSpell(S)
 
-/datum/religion/proc/update_aspects()
-	//add rites
-	for(var/i in aspects)
-		var/datum/aspect/asp = aspects[i]
-		for(var/rite_list in 1 to asp.power)
-			for(var/rite in asp.rite["[rite_list]"])
-				rites += rite
-	update_rites()
+/datum/religion/proc/update_deities()
+	for(var/mob/deity in active_deities)
+		give_god_spells(deity)
 
 // Generate new rite_list
 /datum/religion/proc/update_rites()
 	if(rites.len != 0)
-		var/listylist = generate_rites_list()
+		var/list/listylist = generate_rites_list()
 		rites = listylist
+
+// Adds all spells related to asp.
+/datum/religion/proc/add_aspect_spells(datum/aspect/asp, datum/callback/aspect_pred)
+	for(var/spell_type in global.spells_by_aspects[asp.type])
+		var/obj/effect/proc_holder/spell/S = new spell_type
+
+		if(is_sublist_assoc(S.needed_aspect, aspects, aspect_pred))
+			spells |= spell_type
+
+		QDEL_NULL(S)
+
+// Adds all rites related to asp.
+/datum/religion/proc/add_aspect_rites(datum/aspect/asp, datum/callback/aspect_pred)
+	for(var/rite_type in global.spells_by_aspects[asp.type])
+		var/datum/religion_rites/RR = new rite_type
+
+		if(is_sublist_assoc(RR.needed_aspects, aspects, aspect_pred))
+			rites |= rite_type
+
+		QDEL_NULL(RR)
+
+// Is called after any addition of new aspects.
+// Manages new spells and rites, gained by adding the new aspects.
+/datum/religion/proc/update_aspects()
+	var/datum/callback/aspect_pred = CALLBACK(src, .proc/satisfy_requirements)
+
+	for(var/datum/aspect/asp in aspects)
+		add_aspect_spells(asp, aspect_pred)
+		add_aspect_rites(asp, aspect_pred)
+
+	update_deities()
+	update_rites()
+
+// This proc is used to handle addition of aspects properly.
+// It expects aspect_list to be of form list(aspect_type = aspect power)
+/datum/religion/proc/add_aspects(list/aspect_list)
+	for(var/aspect_type in aspect_list)
+		var/datum/aspect/asp = aspect_type
+		if(aspects[initial(asp.name)])
+			aspects[initial(asp.name)] += aspect_list[aspect_type]
+		else
+			asp = new aspect_type
+			aspects[asp.name] = asp
+
+	update_aspects()
 
 ///Generates a list of rites with 'name' = 'type', used for examine altar_of_god
 /datum/religion/proc/generate_rites_list()
 	for(var/i in rites)
 		if(!ispath(i))
+			. += list(i = rites[i])
 			continue
 		var/datum/religion_rites/RI = i
 		var/name_entry = "[initial(RI.name)]"
@@ -269,3 +302,10 @@
 			name_entry += " ([initial(RI.favor_cost)] favor)"
 
 		. += list("[name_entry]\n" = i)
+
+/datum/religion/proc/add_deity(mob/M)
+	active_deities += M
+	give_god_spells(M)
+
+/datum/religion/proc/remove_deity(mob/M)
+	active_deities -= M

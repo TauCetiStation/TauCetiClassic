@@ -15,9 +15,11 @@
 	var/invoke_msg
 	var/favor_cost = 0
 
+	var/list/needed_aspects
+
 ///Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed. Maybe you want it to check for something else?
 /datum/religion_rites/proc/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(user.is_busy())
+	if(user.is_busy(AOG))
 		return FALSE
 	if(global.chaplain_religion && global.chaplain_religion.favor < favor_cost)
 		to_chat(user, "<span class='warning'>This rite requires more favor!</span>")
@@ -25,7 +27,7 @@
 	to_chat(user, "<span class='notice'>You begin performing the rite of [name]...</span>")
 
 	if(!ritual_invocations)
-		if(do_after(user, target = user, delay = ritual_length))
+		if(!user.is_busy(AOG) && do_after(user, target = AOG, delay = ritual_length))
 			return TRUE
 		return FALSE
 
@@ -37,14 +39,14 @@
 			continue
 		if(!ritual_invocations.len) //we divide so we gotta protect
 			return FALSE
-		if(!do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
+		if(user.is_busy(AOG) || !do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
 			return FALSE
 		user.say(i)
 		if(!on_invocation(user, AOG))
 			return FALSE
 
 	// Because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
-	if(!do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
+	if(user.is_busy(AOG) || !do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
 		return FALSE
 	if(invoke_msg)
 		user.say(invoke_msg)
@@ -72,6 +74,10 @@
 						"...to complete us, removing that which is undesirable...")
 	invoke_msg = "...Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
 	favor_cost = 700
+
+	needed_aspects = list(
+		/datum/aspect/technology = 1,
+	)
 
 /datum/religion_rites/synthconversion/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(AOG && !AOG.buckled_mob)
@@ -117,6 +123,10 @@
 							  "...and lead us not into temptation...")
 	invoke_msg = "...but deliver us from the evil one!!"
 	favor_cost = 0
+
+	needed_aspects = list(
+		/datum/aspect/mortem = 1,
+	)
 
 /datum/religion_rites/sacrifice/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(AOG && !AOG.buckled_mob)
@@ -170,6 +180,10 @@
 						"...and our needs helped, for we praise you...")
 	invoke_msg = "...and bring glory to you!!"
 	favor_cost = 300
+
+	needed_aspects = list(
+		/datum/aspect/fames = 1,
+	)
 
 // This proc is also used by spells/religion.dm "spawn food". Stupid architecture, gotta deal with it some time ~Luduk
 // Perhaps allow God to do rituals instead? ~Luduk
@@ -227,6 +241,10 @@
 							  "...let us not perish; through thee may we be delivered from adversities, for thou art the salvation of the Our race...")
 	invoke_msg = "Lord have mercy. Twelve times."
 	favor_cost = 0
+
+	needed_aspects = list(
+		/datum/aspect/salutis = 1,
+	)
 
 /datum/religion_rites/pray/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	var/heal_num = -15

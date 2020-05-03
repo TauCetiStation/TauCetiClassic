@@ -237,8 +237,8 @@
 		brainmob.universal_speak = FALSE
 		brainmob.islam = TRUE
 		brainmob.speak.Add("[god_name] akbar!")
-	
-	global.chaplain_religion.give_god_spells(brainmob)
+
+	global.chaplain_religion.add_deity(brainmob)
 
 	for(var/datum/language/L in summoner.languages)
 		brainmob.add_language(L.name)

@@ -80,6 +80,8 @@
 	var/islam = FALSE
 	var/obj/item/weapon/nullrod/staff/container
 
+	var/datum/religion/my_religion
+
 /mob/living/simple_animal/shade/god/Stat()
 	..()
 	if(statpanel("Status"))
@@ -100,6 +102,9 @@
 		container.brainmob = null
 		QDEL_NULL(container.god_image)
 		container = null
+
+	my_religion.remove_deity(src)
+
 	return ..()
 
 /mob/living/simple_animal/shade/god/Login()

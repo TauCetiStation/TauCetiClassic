@@ -10,18 +10,19 @@
 	var/convert_opener
 	/// Does this require something before being available as an option?
 	var/starter = TRUE
-	/// Fast choose aspects
+	/// An assoc list of form aspect_type = aspect power
 	var/list/datum/aspect/aspect_preset
 
 /// Activates once selected
-/datum/religion_sect/proc/on_select(mob/living/L)
-	for(var/aspect in aspect_preset)
-		var/datum/aspect/asp = new aspect()
-		asp.power = aspect_preset[aspect]
-		global.chaplain_religion.aspects[asp.name] = asp
+/datum/religion_sect/proc/on_select(mob/living/L, datum/religion/R)
+	give_aspects(L, R)
 
 	// I mean, they did choose the sect.
 	on_conversion(L)
+
+// This proc is used to give the religion it's aspects.
+/datum/religion_sect/proc/give_aspects(mob/living/L, datum/religion/R)
+	R.add_aspects(aspect_preset)
 
 /// Activates once selected and on newjoins, oriented around people who become holy.
 /datum/religion_sect/proc/on_conversion(mob/living/L)
@@ -58,21 +59,26 @@
 /datum/religion_sect/custom/proc/aspectlist2msg(list/aspect_list)
 	. = aspect_list.len ? "" : "None"
 	var/first = TRUE
-	for(var/aspect in aspect_list)
-		var/datum/aspect/asp = aspect_list[aspect]
+	for(var/aspect_type in aspect_list)
+		var/datum/aspect/asp = aspect_type
 		if(!first)
 			. += ", "
-		. += "[asp.name] [num2roman(asp.power)]"
+		. += "[initial(asp.name)] [num2roman(aspect_list[aspect_type])]"
 		first = FALSE
 
-/datum/religion_sect/custom/on_select(mob/living/L)
-	var/static/list/aspects = get_allowed_aspects()
+/datum/religion_sect/custom/give_aspects(mob/living/L, datum/religion/R)
+	var/list/aspects = get_allowed_aspects()
+
+	var/list/aspects_to_add = list()
 
 	for(var/i in 1 to aspects_count)
 		var/aspect_select = input(L, "Select aspects of your religion (You CANNOT revert this decision!)", aspectlist2msg(global.chaplain_religion.aspects), null) in aspects
 		var/type_selected = aspects[aspect_select]
+
 		if(!global.chaplain_religion.aspects[aspect_select])
 			global.chaplain_religion.aspects[aspect_select] = new type_selected()
 		else
 			var/datum/aspect/asp = global.chaplain_religion.aspects[aspect_select]
 			asp.power += 1
+
+	R.add_aspects(aspects_to_add)
