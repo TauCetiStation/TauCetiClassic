@@ -5,12 +5,14 @@
 	var/god_desc
 	//can only be increased if you select one aspect twice and more times
 	var/power = 1
+	// Whether this aspect is allowed roundstart.
+	var/starter = TRUE
 
 // Return the amount of favour this item will give, if succesfully sacrificed.
 /datum/aspect/proc/sacrifice(obj/item/I, mob/living/L)
 	return 0
 
-//Gives mana from: any external organs, limbs, dead body and other meat
+//Gives mana from: any organs, limbs, and blood
 //Needed for: spells and rituals related to the theme of death, interaction with dead body, necromancy
 /datum/aspect/mortem
 	name = ASPECT_DEATH

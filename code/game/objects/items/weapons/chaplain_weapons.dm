@@ -222,7 +222,7 @@
 	brainmob.mind.assigned_role = "Chaplain`s staff"
 	if(god_lore != "")
 		brainmob.mind.memory = "<B>YOUR LORE</B><BR>"
-	brainmob.mind.memory += god_lore
+		brainmob.mind.memory += god_lore
 	brainmob.mind.holy_role = HOLY_ROLE_HIGHPRIEST
 
 	for(var/aspect in global.chaplain_religion.aspects)

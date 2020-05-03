@@ -76,7 +76,7 @@
 	favor_cost = 700
 
 	needed_aspects = list(
-		/datum/aspect/technology = 1,
+		ASPECT_TECH = 1,
 	)
 
 /datum/religion_rites/synthconversion/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
@@ -125,7 +125,7 @@
 	favor_cost = 0
 
 	needed_aspects = list(
-		/datum/aspect/mortem = 1,
+		ASPECT_DEATH = 1,
 	)
 
 /datum/religion_rites/sacrifice/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
@@ -182,7 +182,7 @@
 	favor_cost = 300
 
 	needed_aspects = list(
-		/datum/aspect/fames = 1,
+		ASPECT_FOOD = 1,
 	)
 
 // This proc is also used by spells/religion.dm "spawn food". Stupid architecture, gotta deal with it some time ~Luduk
@@ -243,7 +243,7 @@
 	favor_cost = 0
 
 	needed_aspects = list(
-		/datum/aspect/salutis = 1,
+		ASPECT_RESCUE = 1,
 	)
 
 /datum/religion_rites/pray/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)

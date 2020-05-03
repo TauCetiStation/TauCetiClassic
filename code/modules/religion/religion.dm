@@ -215,15 +215,16 @@
 
 	var/diff = 0
 
-	for(var/datum/aspect/aspect in global.chaplain_religion.aspects)
-		if(S.needed_aspect[aspect.type])
-			diff += aspect.power - S.needed_aspect[aspect.type]
+	for(var/aspect_name in aspects)
+		var/datum/aspect/asp = aspects[aspect_name]
+		if(S.needed_aspect[asp.name])
+			diff += asp.power - S.needed_aspect[asp.name]
 
 	S.divine_power = divine_power * (diff / S.needed_aspect.len + 1)
 
 // Give our gods all needed spells which in /list/spells
 /datum/religion/proc/give_god_spells(mob/G)
-	for(var/spell in spells)
+	for(var/spell in god_spells)
 		var/obj/effect/proc_holder/spell/S = G.GetSpell(spell)
 		if(S)
 			affect_divine_power(S)
@@ -245,17 +246,17 @@
 
 // Adds all spells related to asp.
 /datum/religion/proc/add_aspect_spells(datum/aspect/asp, datum/callback/aspect_pred)
-	for(var/spell_type in global.spells_by_aspects[asp.type])
+	for(var/spell_type in global.spells_by_aspects[asp.name])
 		var/obj/effect/proc_holder/spell/S = new spell_type
 
 		if(is_sublist_assoc(S.needed_aspect, aspects, aspect_pred))
-			spells |= spell_type
+			god_spells |= spell_type
 
 		QDEL_NULL(S)
 
 // Adds all rites related to asp.
 /datum/religion/proc/add_aspect_rites(datum/aspect/asp, datum/callback/aspect_pred)
-	for(var/rite_type in global.spells_by_aspects[asp.type])
+	for(var/rite_type in global.rites_by_aspects[asp.name])
 		var/datum/religion_rites/RR = new rite_type
 
 		if(is_sublist_assoc(RR.needed_aspects, aspects, aspect_pred))
@@ -268,7 +269,8 @@
 /datum/religion/proc/update_aspects()
 	var/datum/callback/aspect_pred = CALLBACK(src, .proc/satisfy_requirements)
 
-	for(var/datum/aspect/asp in aspects)
+	for(var/aspect_name in aspects)
+		var/datum/aspect/asp = aspects[aspect_name]
 		add_aspect_spells(asp, aspect_pred)
 		add_aspect_rites(asp, aspect_pred)
 

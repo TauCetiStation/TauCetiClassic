@@ -101,9 +101,9 @@
 		// Don't bother adding ourselves to other aspects, it is redundant.
 		var/aspect_type = RR.needed_aspects[1]
 
-		if(!global.spells_by_aspects[aspect_type])
-			global.spells_by_aspects[aspect_type] = list()
-		global.spells_by_aspects[aspect_type] += path
+		if(!global.rites_by_aspects[aspect_type])
+			global.rites_by_aspects[aspect_type] = list()
+		global.rites_by_aspects[aspect_type] += path
 
 	populate_gear_list()
 

@@ -52,10 +52,6 @@
 				user_buckle_mob(target, user)
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
-	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
-		to_chat(user, "<span class='warning'>You don't know how to use this.</span>")
-		return
-
 	if(iswrench(C))
 		anchored = !anchored
 		visible_message("<span class='warning'>[src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].</span>")
@@ -63,6 +59,13 @@
 
 	if(!anchored)
 		return ..()
+
+	if(!user.mind)
+		return
+
+	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
+		to_chat(user, "<span class='warning'>You don't know how to use this.</span>")
+		return
 
 	//If we can sacrifice, we do nothing but the sacrifice instead of typical attackby behavior
 	if(religion && !(C.flags & ABSTRACT))
@@ -111,6 +114,10 @@
 		return
 
 	else if(istype(C, /obj/item/weapon/storage/bible) && !chosen_aspect)
+		if(!global.chaplain_religion)
+			to_chat(user, "<span class='warning'>It appears the game hasn't even started! Stop right there!</span>")
+			return
+
 		chosen_aspect = TRUE
 		var/list/available_options = generate_available_sects(user)
 		if(!available_options)
@@ -125,9 +132,6 @@
 		religion = global.chaplain_religion
 
 		sect.on_select(user, religion)
-
-		if(isliving(user) && user.mind && user.mind.holy_role)
-			sect.on_conversion(user)
 
 /obj/structure/altar_of_gods/proc/generate_available_sects(mob/user) //eventually want to add sects you get from unlocking certain achievements
 	var/list/variants = list()
