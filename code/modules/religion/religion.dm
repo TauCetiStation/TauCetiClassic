@@ -16,6 +16,30 @@
 	var/static/list/lore_by_name = list(
 	)
 
+	/****ASPECTS****/
+	// The religion 'Mana'
+	var/favor = 0 //MANA!
+	// The max amount of favor the religion can have
+	var/max_favor = 3000
+	// Determines which spells God can use.
+	var/list/allow_spell = list(
+	/obj/effect/proc_holder/spell/targeted/spawn_bible,
+	/obj/effect/proc_holder/spell/targeted/heal,
+	/obj/effect/proc_holder/spell/targeted/heal/damage,
+	/obj/effect/proc_holder/spell/targeted/blessing,
+	/obj/effect/proc_holder/spell/targeted/charge/religion,
+	/obj/effect/proc_holder/spell/targeted/food,
+	/obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal,
+	/obj/effect/proc_holder/spell/targeted/grease,
+	)
+	// Spells that combine with aspects and cast to God
+	var/list/spells = list()
+	// Choosed aspects
+	var/list/aspects = list()
+	// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
+	var/list/rites_list = list()
+	/****ASPECTS****/
+
 	// List of names of deities of this religion.
 	// There is no "default" deity, please specify one for your religion here.
 	var/list/deity_names = list()
@@ -77,6 +101,20 @@
 		"NanoTrasen" = "nanotrasen",
 	)
 
+	var/altar_icon_state
+	// Default one is "altar"
+	var/static/list/altar_info_by_name = list(
+		"Default" = "altar",
+		"Christianity" = "chirstianaltar",
+		"Satanism" = "satanaltar",
+		"Toolboxia" = "toolboxaltar	",
+		"Science" = "technologyaltar",
+		"NanoTrasen" = "altar",
+		"Chaos" = "chaosaltar",
+		"Imperium" = "imperialaltar",
+		"Druid" = "druidaltar"
+	)
+
 	// Default is "0" TO-DO: convert this to icon_states. ~Luduk
 	var/carpet_dir
 	var/static/list/carpet_dir_by_name = list(
@@ -132,6 +170,12 @@
 		pews_icon_state = pews_info
 	else
 		pews_icon_state = "general"
+	
+	var/altar_info = altar_info_by_name[name]
+	if(altar_info)
+		altar_icon_state = altar_info
+	else
+		altar_icon_state = altar_info_by_name["Default"]
 
 /datum/religion/proc/religify(areatype)
 	var/list/to_religify = get_area_all_atoms(areatype)
@@ -143,6 +187,10 @@
 			var/obj/structure/stool/bed/chair/pew/P = A
 			P.pew_icon = pews_icon_state
 			P.update_icon()
+		else if(istype(A, /obj/structure/altar_of_gods))
+			var/obj/structure/altar_of_gods/G = A
+			G.icon_state = altar_icon_state
+			G.update_icon()
 
 // This proc returns a bible object of this religion, spawning it at a given location.
 /datum/religion/proc/spawn_bible(atom/location)
@@ -226,3 +274,65 @@
 	// Update the looks of the chapel.
 	update_structure_info()
 	religify(/area/station/civilian/chapel)
+
+// Adjust Favor by a certain amount. Can provide optional features based on a user. Returns actual amount added/removed
+/datum/religion/chaplain/proc/adjust_favor(amount = 0, mob/living/L)
+	. = amount
+	if(favor + amount < 0)
+		. = favor //if favor = 5 and we want to subtract 10, we'll only be able to subtract 5
+	if(favor + amount > max_favor)
+		. = (max_favor - favor) //if favor = 5 and we want to add 10 with a max of 10, we'll only be able to add 5
+	favor = between(0, favor + amount,  max_favor)
+
+// Sets favor to a specific amount. Can provide optional features based on a user.
+/datum/religion/chaplain/proc/set_favor(amount = 0, mob/living/L)
+	favor = between(0, amount, max_favor)
+	return favor
+
+// Activates when an individual uses a rite. Can provide different/additional benefits depending on the user.
+/datum/religion/chaplain/proc/on_riteuse(mob/living/user, obj/structure/altar_of_gods/AOG)
+
+/datum/religion/chaplain/proc/satisfy_requirements(element, datum/aspect/A)
+	return element <= A.power
+
+// Give our gods all needed spells which in /list/spells
+/datum/religion/chaplain/proc/give_god_spells(mob/living/simple_animal/shade/god/G)
+	if(gods_list.len == 0)
+		return
+
+	var/datum/callback/pred = CALLBACK(src, .proc/satisfy_requirements)
+	for(var/spell in allow_spell)
+		var/obj/effect/proc_holder/spell/S = new spell()
+		var/list/spell_aspects = S.needed_aspect
+
+		if(is_sublist_assoc(spell_aspects, aspects, pred))
+			spells |= spell
+
+		QDEL_NULL(S)
+
+	for(var/spell in spells)
+		var/obj/effect/proc_holder/spell/S = new spell()
+		for(var/datum/aspect/aspect in global.chaplain_religion.aspects)
+			if(S.needed_aspect[aspect])
+				S.divine_power *= aspect.power
+		G.AddSpell(S)
+
+// Generate new rite_list
+/datum/religion/chaplain/proc/update_rites()
+	if(rites_list.len != 0)
+		var/listylist = generate_rites_list()
+		rites_list = listylist
+
+///Generates a list of rites with 'name' = 'type', used for examine altar_of_god
+/datum/religion/chaplain/proc/generate_rites_list()
+	for(var/i in rites_list)
+		if(!ispath(i))
+			continue
+		var/datum/religion_rites/RI = i
+		var/name_entry = "[initial(RI.name)]"
+		if(initial(RI.desc))
+			name_entry += " - [initial(RI.desc)]"
+		if(initial(RI.favor_cost))
+			name_entry += " ([initial(RI.favor_cost)] favor)"
+
+		. += list("[name_entry]\n" = i)

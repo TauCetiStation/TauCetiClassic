@@ -97,6 +97,16 @@
 		result = first - second
 	return result
 
+// Checks whether sub has all keys of main,
+// and if those keys have the same values.
+/proc/is_sublist_assoc(list/sub, list/main, datum/callback/predicate)
+	for(var/key in sub)
+		if(!main[key] && sub[key])
+			return FALSE
+		if(!predicate.Invoke(sub[key], main[key]))
+			return FALSE
+	return TRUE
+
 /*
  * Returns list containing entries that are in either list but not both.
  * If skipref = 1, repeated elements are treated as one.
