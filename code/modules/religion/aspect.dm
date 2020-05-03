@@ -60,6 +60,7 @@
 		var/favour_amount = 0
 		for(var/datum/reagent/R in I.reagents.reagent_list)
 			favour_amount += R.nutriment_factor * R.volume * 0.25
+
 		return favour_amount
 
 	return 0

@@ -84,11 +84,14 @@
 			if(points > max_points)
 				max_points = points
 
-		if(max_points > 0)
+		if(max_points > MIN_FAVOUR_GAIN)
 			global.chaplain_religion.adjust_favor(max_points, user)
 			to_chat(user, "<span class='notice'>You offer [C]'s power to [pick(religion.deity_names)], pleasing them.</span>")
 			user.drop_from_inventory(C)
 			qdel(C)
+			return
+		else if(max_points > 0)
+			to_chat(user, "<span class='warning'>You offer [C] to [pick(religion.deity_names)], but they would not accept such pityful offering.</span>")
 			return
 
 	if(istype(C, /obj/item/weapon/nullrod))
