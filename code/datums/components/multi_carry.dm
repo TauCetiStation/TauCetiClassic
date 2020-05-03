@@ -332,7 +332,7 @@
 /datum/component/multi_carry/proc/carrier_waddle(datum/source, waddle_strength, pz_raise)
 	if(next_waddle > world.time)
 		return
-	next_waddle = world.time + 1
+	next_waddle = world.time + 2
 
 	can_move = FALSE
 	if(carry_obj.can_waddle())
