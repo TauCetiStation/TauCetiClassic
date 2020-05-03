@@ -36,3 +36,4 @@
 #define ASPECT_ABSENCE        "Absentia"
 #define ASPECT_OBSCURE        "Obscurum"
 #define ASPECT_LIGHT          "Lux"
+#define ASPECT_GREED          "Lucrum"

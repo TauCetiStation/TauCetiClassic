@@ -16,6 +16,13 @@
 	var/datum/religion/chaplain/religion //easy access
 	var/chosen_aspect = FALSE
 
+	// It's fucking science! I ain't gotta explain this.
+	var/datum/experiment_data/experiments
+
+/obj/structure/altar_of_gods/atom_init()
+	experiments = new
+	experiments.init_known_tech()
+
 /obj/structure/altar_of_gods/examine(mob/user)
 	. = ..()
 	var/can_i_see = FALSE
@@ -73,7 +80,7 @@
 
 		for(var/aspect in religion.aspects)
 			var/datum/aspect/asp = religion.aspects[aspect]
-			var/points = asp.sacrifice(C, user)
+			var/points = asp.sacrifice(C, user, src) * (round(log(asp.power, 10), 0.01) + 1)
 			if(points > max_points)
 				max_points = points
 
