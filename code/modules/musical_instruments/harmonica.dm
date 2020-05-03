@@ -48,3 +48,32 @@
 	melody.channel = channel
 	hearers(20, get_turf(src)) << melody
 	return ..()
+
+/obj/item/device/harmonica/saxophone
+	name = "saxophone"
+	desc = "It's made of copper and covered with shinning gold paint. Jazz for your soul."
+	icon = 'icons/obj/musician.dmi'
+	icon_state = "saxophone"
+	item_state = "saxophone"
+	force = 10
+	hitsound = 'sound/musical_instruments/harmonica/Saxhit.ogg'
+	attack_verb = list("tubed", "made concert", "saxed", "smashed")
+	w_class = ITEM_SIZE_NORMAL
+	m_amt = 2500
+	var/channel
+	var/cooldown = 70
+	var/last_played = 0
+
+/obj/item/device/saxophone/proc/play(mob/living/carbon/user)
+	var/static/list/tunes = list(
+		'sound/musical_instruments/harmonica/sax1.ogg'
+  )
+	var/static/list/message = list(
+		"plays a sexy",
+		"plays a delightful",
+		"plays a chilling",
+		"plays a upbeat"
+		)
+	last_played = world.time + cooldown
+	playsound(src, pick(tunes), VOL_EFFECTS_INSTRUMENT, null, FALSE, falloff = 5, channel = channel)
+	user.visible_message("<span class='notice'>[user] [pick(message)] tune with his tube!</span>")
