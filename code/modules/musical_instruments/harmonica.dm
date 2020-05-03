@@ -64,7 +64,7 @@
 	var/cooldown = 70
 	var/last_played = 0
 
-/obj/item/device/saxophone/proc/play(mob/living/carbon/user)
+/obj/item/device/harmonica/saxophone/proc/play(mob/living/carbon/user)
 	var/static/list/tunes = list(
 		'sound/musical_instruments/harmonica/sax1.ogg'
   )
