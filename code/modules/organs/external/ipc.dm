@@ -34,7 +34,7 @@
 	ipc_head = "Pillar"
 
 /obj/item/organ/external/head/robot/ipc/human
-	ipc_head = "human"
+	ipc_head = "Human"
 
 /obj/item/organ/external/groin/robot/ipc
 	name = "ipc groin"
