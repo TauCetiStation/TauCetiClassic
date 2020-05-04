@@ -1300,5 +1300,5 @@
 
 /mob/living/silicon/robot/faith/atom_init()
 	. = ..()
-	updatename("Blessed Unit")
+	updatename("blessed")
 	laws = new /datum/ai_laws/commandments()
