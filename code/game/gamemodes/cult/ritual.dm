@@ -98,7 +98,7 @@ var/list/cult_datums = list()
 	if(istype(I, /obj/item/weapon/book/tome) && iscultist(user))
 		to_chat(user, "<span class='cult'>You retrace your steps, carefully undoing the lines of the rune.</span>")
 		qdel(src)
-	else if(istype(I, /obj/item/weapon/nullrod) && user.mind.assigned_role == "Chaplain")
+	else if(istype(I, /obj/item/weapon/nullrod) && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>")
 		qdel(src)
 
