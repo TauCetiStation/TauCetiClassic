@@ -20,6 +20,7 @@
 	var/datum/experiment_data/experiments
 
 /obj/structure/altar_of_gods/atom_init()
+	. = ..()
 	experiments = new
 	experiments.init_known_tech()
 
