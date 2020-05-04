@@ -5,13 +5,14 @@
 	var/god_desc
 	//can only be increased if you select one aspect twice and more times
 	var/power = 1
-	//add the rite in a sect
-	var/list/rite = list()
+	// Whether this aspect is allowed roundstart.
+	var/starter = TRUE
 
+// Return the amount of favour this item will give, if succesfully sacrificed.
 /datum/aspect/proc/sacrifice(obj/item/I, mob/living/L)
-	return
+	return 0
 
-//Gives mana from: any external organs, limbs, dead body and other meat
+//Gives mana from: any organs, limbs, and blood
 //Needed for: spells and rituals related to the theme of death, interaction with dead body, necromancy
 /datum/aspect/mortem
 	name = ASPECT_DEATH
@@ -19,24 +20,20 @@
 
 	god_desc = "Mortal humans can donate to increase your strength: blood bags, brains, internal organs and limbs."
 
-	rite = list(
-		"1" = list(/datum/religion_rites/sacrifice,),
-		)
-
 /datum/aspect/mortem/sacrifice(obj/item/I, mob/living/L)
 	if(istype(I, /obj/item/weapon/reagent_containers/blood))
-		var/obj/item/weapon/reagent_containers/blood/blood = I
-		if(!blood.reagents || blood.reagents && blood.reagents.total_volume <= 0)
-			to_chat(L, "<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity [I] without useful material.</span>")
-			return FALSE
-		global.chaplain_religion.adjust_favor(25, L)
-		return TRUE
+		var/blood_am = 0
+		if(I.reagents)
+			blood_am = I.reagents.get_reagent_amount("blood")
+		return blood_am
 
-	else if(istype(I, /obj/item/organ/external) || istype(I, /obj/item/brain))
-		global.chaplain_religion.adjust_favor(50, I)
-		return TRUE
-	
-	return FALSE
+	else if(istype(I, /obj/item/organ/external))
+		return 50
+
+	else if(istype(I, /obj/item/brain))
+		return 100
+
+	return 0
 
 //Gives mana from: sci-fi things, scientist points
 //Needed for: spells and rituals related to the theme of sci-fi, future
@@ -49,17 +46,13 @@
 /datum/aspect/progressus/sacrifice(obj/item/I, mob/living/L)
 	if(istype(I, /obj/item/weapon/stock_parts))
 		var/obj/item/weapon/stock_parts/part = I
-		global.chaplain_religion.adjust_favor(25 * part.rating, L)
-		return TRUE
+		return 25 * part.rating
 
 	else if(istype(I, /obj/item/weapon/circuitboard))
-		global.chaplain_religion.adjust_favor(30, L)
-		return TRUE
+		return 30
 
 	else if(istype(I, /obj/item/device/assembly))
-		var/obj/item/device/assembly/ass = I
-		global.chaplain_religion.adjust_favor(10 * ass.w_class, L)
-		return TRUE
+		return 10 * I.w_class
 
 	return FALSE
 
@@ -71,31 +64,14 @@
 
 	god_desc = "Peasants are required to pay you food."
 
-	rite = list(
-		"1" = list(/datum/religion_rites/food,),
-		)
-
 /datum/aspect/fames/sacrifice(obj/item/I, mob/living/L)
 	if(istype(I, /obj/item/weapon/reagent_containers/food) && I.reagents)
 		var/favour_amount = 0
 		for(var/datum/reagent/R in I.reagents.reagent_list)
-			if(istype(R, /datum/reagent/consumable) || istype(R, /datum/reagent/nutriment) || istype(R, /datum/reagent/vitamin))
-				favour_amount += R.nutriment_factor * R.volume
+			favour_amount += R.nutriment_factor * R.volume * 0.25
+		return favour_amount
 
-		if(favour_amount > 0 && favour_amount < 100)
-			global.chaplain_religion.adjust_favor(favour_amount, L)
-			return TRUE
-		if(favour_amount >= 100 && favour_amount < 200) // balance
-			global.chaplain_religion.adjust_favor(favour_amount/2, L)
-			return TRUE
-		if(favour_amount >= 200 && favour_amount < 300)
-			global.chaplain_religion.adjust_favor(favour_amount/3, L)
-			return TRUE
-		if(favour_amount >= 300)
-			global.chaplain_religion.adjust_favor(favour_amount/4, L)
-			return TRUE
-		to_chat(L, "<span class='notice'>[pick(global.chaplain_religion.deity_names)] does not accept pity [I] without useful material.</span>")
-	return FALSE
+	return 0
 
 //Gives mana from: does not affect mana accumulation
 //Needed for: spells and rituals related to the theme of weapon and armor, their damage, buff etc
@@ -112,11 +88,10 @@
 	god_desc = "May the workers bring diverse resources to your mercy."
 
 /datum/aspect/metallum/sacrifice(obj/item/I, mob/living/L)
-	if(istype(I, /obj/item/stack/sheet) && !istype(I, /obj/item/stack/sheet/mineral/clown))
+	if(istype(I, /obj/item/stack/sheet))
 		var/obj/item/stack/sheet/material = I
-		global.chaplain_religion.adjust_favor(material.amount * 5, L)
-		return TRUE
-	return FALSE
+		return material.amount * 5
+	return 0
 
 //Gives mana from: does not affect mana accumulation
 //Needed for: spells and rituals related to the theme of spawn animal, creatures
@@ -136,10 +111,6 @@
 	name = ASPECT_RESCUE
 	desc = "Any heal, buff"
 
-	rite = list(
-		"1" = list(/datum/religion_rites/pray,),
-		)
-
 //Gives mana from: ghosts staying near the altar
 //Needed for: spells and rituals related to the theme of ghosts
 /datum/aspect/spiritus
@@ -151,10 +122,6 @@
 /datum/aspect/technology
 	name = ASPECT_TECH
 	desc = "Accepts electrical energy, also manipulates any electrical equipment"
-
-	rite = list(
-		"1" = list(/datum/religion_rites/synthconversion,),
-		)
 
 //Gives mana from: does not affect mana accumulation
 //Needed for: spells and rituals related to the theme of random, eg random heal
@@ -172,18 +139,14 @@
 
 /datum/aspect/wacky/sacrifice(obj/item/I, mob/living/L)
 	if(istype(I, /obj/item/weapon/bananapeel/honk))
-		global.chaplain_religion.adjust_favor(40, L)
-		return TRUE
+		return 40
 	if(istype(I, /obj/item/weapon/bananapeel))
-		global.chaplain_religion.adjust_favor(30, L)
-		return TRUE
+		return 30
 	if(istype(I, /obj/item/stack/sheet/mineral/clown))
 		var/obj/item/stack/sheet/mineral/clown/banan = I
-		global.chaplain_religion.adjust_favor(banan.amount * 60, L)
-		return TRUE
+		return banan.amount * 60
 	if(istype(I, /obj/item/weapon/ore/clown))
-		global.chaplain_religion.adjust_favor(50, L)
-		return TRUE
+		return 50
 	return FALSE
 
 //Gives mana from: "silenced" spells at wizard/cult
