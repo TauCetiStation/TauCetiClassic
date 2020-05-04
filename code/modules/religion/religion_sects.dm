@@ -38,9 +38,9 @@
 	desc = "Nothing special."
 	convert_opener = "Your run-of-the-mill sect, conserve the purity. Praise normalcy!"
 	aspect_preset = list(
-		/datum/aspect/salutis = 1,
-		/datum/aspect/lux = 1,
-		/datum/aspect/spiritus = 1,
+		/datum/aspect/rescue = 1,
+		/datum/aspect/light = 1,
+		/datum/aspect/mystic = 1,
 	)
 
 /datum/religion_sect/preset/technophile
@@ -49,8 +49,8 @@
 	convert_opener = "May you find peace in a metal shell, acolyte."
 	aspect_preset = list(
 		/datum/aspect/technology = 1,
-		/datum/aspect/progressus = 1,
-		/datum/aspect/metallum = 1,
+		/datum/aspect/science = 1,
+		/datum/aspect/resources = 1,
 	)
 
 // This sect type allows user to select their aspects.

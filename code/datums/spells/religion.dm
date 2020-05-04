@@ -5,7 +5,7 @@
 	charge_max = 2 MINUTES
 	favor_cost = 100
 	divine_power = 1 //count
-	needed_aspect = list(ASPECT_RESURCES = 1, ASPECT_RESCUE = 1)
+	needed_aspect = list(ASPECT_RESOURCES = 1, ASPECT_RESCUE = 1)
 
 	range = 0
 	invocation = "none"
