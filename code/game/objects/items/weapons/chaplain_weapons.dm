@@ -111,10 +111,11 @@
 
 /obj/item/weapon/nullrod/staff/Destroy()
 	// Damn... He's free now.
-	brainmob.invisibility = 0
-	qdel(brainmob.GetComponent(/datum/component/bounded))
-	brainmob.container = null
-	brainmob = null
+	if(brainmob)
+		brainmob.invisibility = 0
+		qdel(brainmob.GetComponent(/datum/component/bounded))
+		brainmob.container = null
+		brainmob = null
 
 	if((slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND) && ismob(loc))
 		var/mob/M = loc
