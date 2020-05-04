@@ -303,8 +303,3 @@
 
 	next_ping = world.time + 5 SECONDS
 	audible_message("<span class='notice'>\The [src] stone blinked.</span>", deaf_message = "\The [src] stone blinked.")
-
-/obj/item/weapon/nullrod/staff/Destroy()
-	to_chat(brainmob, "<span class='userdanger'>You were destroyed!</span>")
-	QDEL_NULL(brainmob)
-	return ..()
