@@ -122,7 +122,7 @@
 	var/obj/effect/effect/sparks/blue/B = new /obj/effect/effect/sparks/blue(AM.loc)
 	QDEL_IN(B, 6)
 
-/obj/effect/proc_holder/spell/targeted/charge/religion/cast()
+/obj/effect/proc_holder/spell/targeted/charge/religion/cast(mob/user = usr)
 	var/charged = FALSE
 
 	for(var/I in range(divine_power))
@@ -165,10 +165,9 @@
 			charged = TRUE
 
 	if(charged)
-		playsound(usr, 'sound/magic/Charge.ogg', VOL_EFFECTS_MASTER)
-		to_chat(usr, "<span class='notice'>You have charged cell in a radiuse!</span>")
+		playsound(user, 'sound/magic/Charge.ogg', VOL_EFFECTS_MASTER)
 	else
-		to_chat(usr, "<span class='notice'>There is nothing to charge in the radius!</span>")
+		to_chat(user, "<span class='notice'>There is nothing to charge in the radius!</span>")
 		revert_cast()
 		return
 
