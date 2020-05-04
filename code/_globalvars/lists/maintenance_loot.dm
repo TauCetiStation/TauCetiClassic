@@ -146,7 +146,7 @@ var/global/list/uncommon_loot = list(
 		/obj/item/weapon/twohanded/spear = 1,
 		/obj/item/weapon/shield/riot = 1,
 		/obj/item/weapon/grenade/cancasing = 1,
-		/obj/item/weapon/melee/baton = 1,
+		/obj/item/weapon/melee/cattleprod = 1,
 		/obj/item/weapon/throwing_star = 1,
 		) = 8,
 

@@ -1124,6 +1124,12 @@
 	species_allowed = list(IPC)
 	ipc_head_compatible = "Pillar"
 
+/datum/sprite_accessory/hair/ipc_screen_human
+	name = "human IPC screen"
+	icon_state = "ipc_human"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Human"
+
 /datum/sprite_accessory/hair/ipc_color_array
 	name = "colored IPC screen with an eye"
 	icon_state = "ipc_color_array"

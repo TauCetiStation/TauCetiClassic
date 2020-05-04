@@ -5,7 +5,7 @@
 	charge_max = 2 MINUTES
 	favor_cost = 100
 	divine_power = 1 //count
-	needed_aspect = list(ASPECT_RESURCES = 1, ASPECT_RESCUE = 1)
+	needed_aspect = list(ASPECT_RESOURCES = 1, ASPECT_RESCUE = 1)
 
 	range = 0
 	invocation = "none"
@@ -143,7 +143,7 @@
 			charged = TRUE
 			for(var/obj/item/weapon/stock_parts/cell/Cell in I)
 				cell_charge(Cell)
-		
+
 		else if(istype(I, /obj/mecha))
 			var/obj/mecha/M = I
 			cell_charge(M.cell)
@@ -178,26 +178,11 @@
 	sound = 'sound/effects/phasein.ogg'
 
 /obj/effect/proc_holder/spell/targeted/food/cast()
-	var/list/borks = subtypesof(/obj/item/weapon/reagent_containers/food)
-
-	playsound(usr, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
-
 	for(var/mob/living/carbon/human/M in viewers(usr.loc))
 		if(!M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
 
-	for(var/i in 1 to 4 + rand(1, divine_power))
-		var/chosen = pick(borks)
-		var/obj/B = new chosen(usr.loc)
-		var/obj/randomcatcher/CATCH
-		if(!B.icon_state)
-			QDEL_NULL(B)
-			CATCH = new /obj/randomcatcher(usr.loc)
-			B = CATCH.get_item(pick(/obj/random/foods/drink_can, /obj/random/foods/drink_bottle, /obj/random/foods/food_snack, /obj/random/foods/food_without_garbage))
-			QDEL_NULL(CATCH)
-		if(B && prob(50))
-			for(var/j in 1 to rand(1, 3))
-				step(B, pick(NORTH, SOUTH, EAST, WEST))
+	spawn_food(usr.loc, 4 + rand(1, divine_power))
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal
 	name = "Create random friendly animal"
