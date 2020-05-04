@@ -48,8 +48,24 @@
 /obj/item/projectile/bullet/weakbullet/rubber
 	name = "rubber bullet"
 
-/obj/item/projectile/bullet/midbullet //.45 ACP
+/obj/item/projectile/bullet/smg //.45 ACP
+	name = "submachinegun bullet"
 	damage = 20
+
+/obj/item/projectile/bullet/smg_hp
+	name = "high power bullet"
+	damage = 35
+
+/obj/item/projectile/bullet/smg_imp
+	name = "impact bullet"
+	damage = 20
+	impact_force = 1
+	stoping_power = 4
+
+/obj/item/projectile/bullet/smg_hv
+	name = "high velocity bullet"
+	damage = 20
+	hitscan = 1
 
 /obj/item/projectile/bullet/midbullet2 // 9x19
 	damage = 25

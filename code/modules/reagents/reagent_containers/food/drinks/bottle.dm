@@ -26,7 +26,7 @@
 
 	if(!ishuman(usr))  //Checking human and status
 		return
-	if(usr.incapacitated() || usr.stat || usr.lying)
+	if(usr.incapacitated())
 		return
 	if(usr.is_busy())
 		return
@@ -136,7 +136,7 @@
 		//Display an attack message.
 		if(target != user)
 			user.visible_message("<span class='warning'><B>[target] has been hit over the head with a bottle of [src.name], by [user]!</B></span>")
-		else 
+		else
 			user.visible_message("<span class='warning'><B>[target] hit himself with a bottle of [src.name] on the head!</B></span>")
 		//Weaken the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)

@@ -99,9 +99,6 @@
 /obj/item/device/tabletop_assistant/Topic(href, href_list)
 	..()
 
-	if(usr.stat)
-		return
-
 	if(usr.incapacitated())
 		return
 
@@ -210,8 +207,6 @@
 
 /obj/item/device/tabletop_assistant/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
-		return
-	if(user.stat)
 		return
 	if(!isobj(target))
 		return

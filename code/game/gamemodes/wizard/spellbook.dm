@@ -527,7 +527,7 @@
 		return 1
 	var/mob/living/carbon/human/H = usr
 
-	if(H.stat || H.restrained())
+	if(H.incapacitated())
 		return
 
 	var/datum/spellbook_entry/E = null

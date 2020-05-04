@@ -93,7 +93,7 @@
 	user.visible_message("<span class='warning'>You hear a metallic creaking from [src]!</span>")
 
 	if(do_after(user,(breakout_time*60*10),target=src)) //minutes * 60seconds * 10deciseconds
-		if(!user || user.stat != CONSCIOUS || user.loc != src || open || !locked)
+		if(!user || user.incapacitated() || user.loc != src || open || !locked)
 			return
 
 		locked = 0
@@ -164,7 +164,7 @@
 		return 1
 
 /obj/machinery/dna_scannernew/relaymove(mob/user)
-	if(user.stat)
+	if(user.incapacitated())
 		return
 	open(user)
 	return

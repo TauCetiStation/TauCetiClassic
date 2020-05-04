@@ -232,7 +232,7 @@
 			return 1
 		if(isslime(other))
 			return 1
-		if(isgod(other) && mind.assigned_role == "Chaplain")
+		if(isgod(other) && mind.holy_role)
 			var/mob/living/simple_animal/shade/god/G = other
 			if(G.islam)
 				return 1
@@ -257,6 +257,11 @@
 	if(special_voice)
 		return special_voice
 	return real_name
+
+/mob/living/carbon/human/get_alt_name()
+	if(name != GetVoice())
+		return " (as [get_id_name("Unknown")])"
+	return ""
 
 /*
    ***Deprecated***

@@ -1034,6 +1034,7 @@
 			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
 	if(I)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+		I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		var/list/viewing = list()
 		for(var/mob/M in viewers(A))
 			if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
@@ -1186,6 +1187,11 @@
 
 	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
 		var/list/vomitsound = list()
+		var/mob/living/carbon/human/H = src
+
+		if((HULK in H.mutations) && H.hulk_activator == ACTIVATOR_VOMITING)
+			H.try_mutate_to_hulk()
+
 		// The main reason why this is here, and not made into a polymorphized proc, is because we need to know from the subclasses that could cover their face, that they do.
 		if(masked)
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>","<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")

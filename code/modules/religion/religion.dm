@@ -1,0 +1,313 @@
+/*
+	This datum is used to neatly package all of chaplain's choices and etc
+	and save them somewhere for future reference.
+*/
+
+// This proc is called from tickers setup, right after economy is done, but before any characters are spawned.
+// TO-DO: make cultists, and other antags use this in some way? ~Luduk
+/proc/setup_religions()
+	global.chaplain_religion = new /datum/religion/chaplain
+
+/datum/religion
+	// The name of this religion.
+	var/name = ""
+	// Lore of this religion. Is displayed to "God(s)". If none is set, chaplain will be prompted to set up their own lore.
+	var/lore = ""
+	var/static/list/lore_by_name = list(
+	)
+
+	// List of names of deities of this religion.
+	// There is no "default" deity, please specify one for your religion here.
+	var/list/deity_names = list()
+	var/static/list/deity_names_by_name = list(
+		"Christianity" = list("Lord", "God", "Saviour", "Yahweh", "Jehovah", "Father", "Space-Jesus"),
+		"Satanism" = list("Satana", "Lucifer", "Baphomet", "Leviathan"),
+		"Yog'Sotherie" = list("Cthulhu", "Katuluu", "Kachoochoo", "Kutulu", "The Great Dreamer", "The Sleeper of R'lyeh"),
+		"Islam" = list("Allah"),
+		"Scientology" = list("Xenu", "Xemu"),
+		"Chaos" = list("Chaos", "Khorne", "Slaanesh", "Nurlge", "Tzeentch", "Malal"),
+		"Imperium" = list("God Emperor of Mankind"),
+		"Toolboxia" = list("The Toolbox"),
+		"Science" = list("The Scientific Method"),
+		"Technologism" = list("Omnissiah", "Machine God", "Broken God"),
+		"Clownism" = list("Honkmother", "The Harlequin", "Laughing God", "First fool"),
+		"Buddhism" = list("Vairocana", "Aksobhya", "Ratnasambhava", "Amoghasiddhi", "Bhaisajyaguru", "Vajradhara", "Samanthabhadra", "Tara"),
+		"Atheism" = list("Self", "I"),
+	)
+
+	var/datum/bible_info/bible_info
+	// Default is /datum/bible_info/custom, if one is not specified here.
+	var/static/list/bible_info_by_name = list(
+		"Christianity" = /datum/bible_info/bible,
+		"Satanism" = /datum/bible_info/satanism,
+		"Yog'Sotherie" = /datum/bible_info/necronomicon,
+		"Islam" = /datum/bible_info/islam,
+		"Scientology" = /datum/bible_info/scientology,
+		"Chaos" = /datum/bible_info/book_of_lorgar,
+		"Imperium" = /datum/bible_info/book_of_lorgar/imperial_truth,
+		"Toolboxia" = /datum/bible_info/toolbox,
+		"Science" = /datum/bible_info/science,
+		"Tecnologism" = /datum/bible_info/techno,
+		"Clownism" = /datum/bible_info/scrapbook,
+		"Buddhism" = /datum/bible_info/bible/buddhism,
+		"Atheism" = /datum/bible_info/atheist,
+	)
+
+	/*
+	var/lecturn_icon_state
+	// Is required to have a "Default" as a fallback.
+	var/static/list/lecturn_info_by_name = list(
+	)
+	*/
+
+	var/pews_icon_state
+	// Is required to have a "Default" as a fallback.
+	var/static/list/pews_info_by_name = list(
+		"Default" = "general",
+		"Christianity" = "christianity",
+		"Satanism" = "dead",
+		"Yog'Sotherie" = "cthulhu",
+		"Islam" = "islam",
+		"Toolboxia" = "toolbox",
+		"Science" = "science",
+		"Technologism" = "singulo",
+		"Clownism" = "clown",
+		"Atheism" = "void",
+		"Slime" = "slime",
+		"NanoTrasen" = "nanotrasen",
+	)
+
+	var/altar_icon_state
+	// Is required to have a "Default" as a fallback.
+	var/static/list/altar_info_by_name = list(
+		"Default" = "altar",
+		"Christianity" = "chirstianaltar",
+		"Satanism" = "satanaltar",
+		"Toolboxia" = "toolboxaltar",
+		"Science" = "technologyaltar",
+		"NanoTrasen" = "altar",
+		"Chaos" = "chaosaltar",
+		"Imperium" = "imperialaltar",
+		"Druid" = "druidaltar"
+	)
+
+	// Default is "0" TO-DO: convert this to icon_states. ~Luduk
+	var/carpet_dir
+	var/static/list/carpet_dir_by_name = list(
+		"Default" = 0,
+		"Scientology" = 8,
+		"Christianity" = 2,
+		"Atheism" = 10,
+		"Islam" = 4,
+	)
+
+	/*
+		Aspects and Rites related
+	*/
+	var/list/active_deities = list()
+
+	// The religion's 'Mana'
+	var/favor = 0
+	// The max amount of favor the religion can have
+	var/max_favor = 3000
+
+	// Chosen aspects.
+	var/list/aspects = list()
+	// Spells that are determined by aspect combinations, are given to God.
+	var/list/god_spells = list()
+	// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
+	var/list/rites = list()
+
+/datum/religion/New()
+	create_default()
+	religify(/area/station/civilian/chapel)
+
+/datum/religion/proc/gen_bible_info()
+	if(bible_info_by_name[name])
+		var/info_type = bible_info_by_name[name]
+		bible_info = new info_type(src)
+	else
+		bible_info = new /datum/bible_info/custom(src)
+
+/datum/religion/proc/create_default()
+	name = pick(DEFAULT_RELIGION_NAMES)
+
+	lore = lore_by_name[name]
+	if(!lore)
+		lore = ""
+
+	deity_names = deity_names_by_name[name]
+	if(!deity_names)
+		world.log << "ERROR IN SETTING UP RELIGION: [name] HAS NO DEITIES WHATSOVER. HAVE YOU SET UP RELIGIONS CORRECTLY?"
+		deity_names = list("Error")
+
+	gen_bible_info()
+
+	update_structure_info()
+
+/datum/religion/proc/update_structure_info()
+	var/carpet_dir = carpet_dir_by_name[name]
+	if(!carpet_dir)
+		carpet_dir = 0
+
+	/*
+	var/lecturn_info = lecturn_info_by_name[name]
+	if(lecturn_info)
+		lecturn_icon_state = lecturn_info
+	else
+		lecturn_info_state = lecturn_info_by_name["Default"]
+	*/
+
+	var/pews_info = pews_info_by_name[name]
+	if(pews_info)
+		pews_icon_state = pews_info
+	else
+		pews_icon_state = pews_info_by_name["Default"]
+
+	var/altar_info = altar_info_by_name[name]
+	if(altar_info)
+		altar_icon_state = altar_info
+	else
+		altar_icon_state = altar_info_by_name["Default"]
+
+/datum/religion/proc/religify(areatype)
+	var/list/to_religify = get_area_all_atoms(areatype)
+
+	for(var/atom/A in to_religify)
+		if(istype(A, /turf/simulated/floor) && A.icon_state == "carpetsymbol")
+			A.dir = carpet_dir
+		else if(istype(A, /obj/structure/stool/bed/chair/pew))
+			var/obj/structure/stool/bed/chair/pew/P = A
+			P.pew_icon = pews_icon_state
+			P.update_icon()
+		else if(istype(A, /obj/structure/altar_of_gods))
+			var/obj/structure/altar_of_gods/G = A
+			G.icon_state = altar_icon_state
+			G.update_icon()
+
+// This proc returns a bible object of this religion, spawning it at a given location.
+/datum/religion/proc/spawn_bible(atom/location)
+	var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(location)
+	bible_info.apply_to(B)
+	B.deity_name = pick(deity_names)
+	B.god_lore = lore
+	return B
+
+// Adjust Favor by a certain amount. Can provide optional features based on a user. Returns actual amount added/removed
+/datum/religion/proc/adjust_favor(amount = 0, mob/living/L)
+	. = amount
+	if(favor + amount < 0)
+		. = favor //if favor = 5 and we want to subtract 10, we'll only be able to subtract 5
+	if(favor + amount > max_favor)
+		. = (max_favor - favor) //if favor = 5 and we want to add 10 with a max of 10, we'll only be able to add 5
+	favor = between(0, favor + amount,  max_favor)
+
+// Sets favor to a specific amount. Can provide optional features based on a user.
+/datum/religion/proc/set_favor(amount = 0, mob/living/L)
+	favor = between(0, amount, max_favor)
+	return favor
+
+/datum/religion/proc/satisfy_requirements(element, datum/aspect/A)
+	return element <= A.power
+
+/datum/religion/proc/affect_divine_power(obj/effect/proc_holder/spell/S)
+	var/divine_power = initial(S.divine_power)
+
+	var/diff = 0
+
+	for(var/aspect_name in aspects)
+		var/datum/aspect/asp = aspects[aspect_name]
+		if(S.needed_aspect[asp.name])
+			diff += asp.power - S.needed_aspect[asp.name]
+
+	S.divine_power = divine_power * (diff / S.needed_aspect.len + 1)
+
+// Give our gods all needed spells which in /list/spells
+/datum/religion/proc/give_god_spells(mob/G)
+	for(var/spell in god_spells)
+		var/obj/effect/proc_holder/spell/S = G.GetSpell(spell)
+		if(S)
+			affect_divine_power(S)
+			continue
+		else
+			S = new spell
+			affect_divine_power(S)
+			G.AddSpell(S)
+
+/datum/religion/proc/update_deities()
+	for(var/mob/deity in active_deities)
+		give_god_spells(deity)
+
+// Generate new rite_list
+/datum/religion/proc/update_rites()
+	if(rites.len != 0)
+		var/list/listylist = generate_rites_list()
+		rites = listylist
+
+// Adds all spells related to asp.
+/datum/religion/proc/add_aspect_spells(datum/aspect/asp, datum/callback/aspect_pred)
+	for(var/spell_type in global.spells_by_aspects[asp.name])
+		var/obj/effect/proc_holder/spell/S = new spell_type
+
+		if(is_sublist_assoc(S.needed_aspect, aspects, aspect_pred))
+			god_spells |= spell_type
+
+		QDEL_NULL(S)
+
+// Adds all rites related to asp.
+/datum/religion/proc/add_aspect_rites(datum/aspect/asp, datum/callback/aspect_pred)
+	for(var/rite_type in global.rites_by_aspects[asp.name])
+		var/datum/religion_rites/RR = new rite_type
+
+		if(is_sublist_assoc(RR.needed_aspects, aspects, aspect_pred))
+			rites |= rite_type
+
+		QDEL_NULL(RR)
+
+// Is called after any addition of new aspects.
+// Manages new spells and rites, gained by adding the new aspects.
+/datum/religion/proc/update_aspects()
+	var/datum/callback/aspect_pred = CALLBACK(src, .proc/satisfy_requirements)
+
+	for(var/aspect_name in aspects)
+		var/datum/aspect/asp = aspects[aspect_name]
+		add_aspect_spells(asp, aspect_pred)
+		add_aspect_rites(asp, aspect_pred)
+
+	update_deities()
+	update_rites()
+
+// This proc is used to handle addition of aspects properly.
+// It expects aspect_list to be of form list(aspect_type = aspect power)
+/datum/religion/proc/add_aspects(list/aspect_list)
+	for(var/aspect_type in aspect_list)
+		var/datum/aspect/asp = aspect_type
+		if(aspects[initial(asp.name)])
+			aspects[initial(asp.name)] += aspect_list[aspect_type]
+		else
+			asp = new aspect_type
+			aspects[asp.name] = asp
+
+	update_aspects()
+
+///Generates a list of rites with 'name' = 'type', used for examine altar_of_god
+/datum/religion/proc/generate_rites_list()
+	for(var/i in rites)
+		if(!ispath(i))
+			. += list(i = rites[i])
+			continue
+		var/datum/religion_rites/RI = i
+		var/name_entry = "[initial(RI.name)]"
+		if(initial(RI.desc))
+			name_entry += " - [initial(RI.desc)]"
+		if(initial(RI.favor_cost))
+			name_entry += " ([initial(RI.favor_cost)] favor)"
+
+		. += list("[name_entry]\n" = i)
+
+/datum/religion/proc/add_deity(mob/M)
+	active_deities += M
+	give_god_spells(M)
+
+/datum/religion/proc/remove_deity(mob/M)
+	active_deities -= M
