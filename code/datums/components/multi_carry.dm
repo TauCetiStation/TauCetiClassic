@@ -59,11 +59,11 @@
 		// Carefully crafted precision MAGIC NUMBERS to aid in B E A U T Y.
 		// FLY_LAYER + 0.5 is to make sure they are above coffin_side, and the mob in coffin
 		positions_by_dir["[dir_]"] = list(
-		list("px"=13, "py"=-6, "layer"=FLY_LAYER + 0.5),
-		list("px"=-12, "py"=-6, "layer"=FLY_LAYER + 0.5),
-		list("px"=-14, "py"=6, "layer"=MOB_LAYER),
-		list("px"=15, "py"=6, "layer"=MOB_LAYER),
-	)
+			list("px"=13, "py"=-6, "layer"=FLY_LAYER + 0.5),
+			list("px"=-12, "py"=-6, "layer"=FLY_LAYER + 0.5),
+			list("px"=-14, "py"=6, "layer"=MOB_LAYER),
+			list("px"=15, "py"=6, "layer"=MOB_LAYER),
+		)
 
 // A component you put on things you want to be bounded to other things.
 // Warning! Can only be bounded to one thing at once.
