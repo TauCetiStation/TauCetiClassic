@@ -44,7 +44,7 @@
 	god_desc = "Homosapiens and other xenos races can present all sorts of scientific things to gain your favour."
 
 /datum/aspect/science/sacrifice(obj/item/I, mob/living/L, obj/structure/altar_of_gods/AOG)
-	. = AOG.experiments.get_object_research_value(I) * 0.05
+	. = AOG.experiments.get_object_research_value(I) * 0.01
 	AOG.experiments.do_research_object(I)
 
 //Gives mana from: any food
