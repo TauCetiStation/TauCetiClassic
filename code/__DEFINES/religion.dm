@@ -25,7 +25,7 @@
 #define ASPECT_SCIENCE        "Progressus"
 #define ASPECT_FOOD           "Fames"
 #define ASPECT_WEAPON         "Telum"
-#define ASPECT_RESURCES       "Metallum"
+#define ASPECT_RESOURCES      "Metallum"
 #define ASPECT_SPAWN          "Partum"
 #define ASPECT_FLAGELLATION   "Cruciatu"
 #define ASPECT_RESCUE         "Salutis"

@@ -73,7 +73,7 @@
 //Gives mana from: minerals, sheet, steel, money etc
 //Needed for: spells and rituals related to the theme of materials, his shell, manipulation of the molecular composition of the resource
 /datum/aspect/resources
-	name = ASPECT_RESURCES
+	name = ASPECT_RESOURCES
 	desc = "Manipulated on minerals, metallic, glass and others"
 
 	god_desc = "May the workers bring diverse resources to your mercy."
