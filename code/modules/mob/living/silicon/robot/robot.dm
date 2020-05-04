@@ -1296,9 +1296,37 @@
 		if(C.installed)
 			C.toggled = !C.toggled
 
-/mob/living/silicon/robot/faith
-
-/mob/living/silicon/robot/faith/atom_init()
+/mob/living/silicon/robot/faith/commandments/atom_init()
 	. = ..()
 	updatename("blessed")
-	laws = new /datum/ai_laws/commandments()
+	laws = new /datum/ai_laws/faith/commandments()
+
+/mob/living/silicon/robot/faith/chaos/atom_init()
+	. = ..()
+	updatename("marked")
+	laws = new /datum/ai_laws/faith/chaos()
+
+/mob/living/silicon/robot/faith/emperor/atom_init()
+	. = ..()
+	laws = new /datum/ai_laws/faith/emperor()
+
+/mob/living/silicon/robot/faith/satanism/atom_init()
+	. = ..()
+	updatename("bloody")
+	laws = new /datum/ai_laws/faith/satanism()
+
+/mob/living/silicon/robot/faith/scientology/atom_init()
+	. = ..()
+	updatename("good")
+	laws = new /datum/ai_laws/faith/scientology()
+
+/mob/living/silicon/robot/faith/honk/atom_init()
+	. = ..()
+	updatename("funny")
+	laws = new /datum/ai_laws/faith/honk()
+
+/mob/living/silicon/robot/faith/science/atom_init()
+	. = ..()
+	updatename("factorial")
+	laws = new /datum/ai_laws/faith/science()
+

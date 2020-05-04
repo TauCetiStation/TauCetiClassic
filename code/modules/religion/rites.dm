@@ -86,7 +86,7 @@
 
 	if(ishuman(AOG.buckled_mob))
 		if(jobban_isbanned(AOG.buckled_mob, "Cyborg") || !role_available_in_minutes(AOG.buckled_mob, ROLE_PAI))
-			to_chat(usr, "<span class='warning'>[AOG.buckled_mob]'s body is too weak!.</span>")
+			to_chat(usr, "<span class='warning'>[AOG.buckled_mob]'s body is too weak!</span>")
 			return FALSE
 		if(alert(AOG.buckled_mob, "Are you ready to sacrifice your body to turn into a cyborg?", "Rite", "Yes", "No") == "No")
 			to_chat(user, "<span class='warning'>[AOG.buckled_mob] does not want to give their life!.</span>")
@@ -102,7 +102,7 @@
 		return FALSE
 
 	hgibs(AOG.loc, human2borg.viruses, human2borg.dna, human2borg.species.flesh_color, human2borg.species.blood_datum)
-	human2borg.Robotize()
+	human2borg.Robotize(global.chaplain_religion.bible_info.borg_type)
 	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [name]!</span>")
 	return TRUE
 
