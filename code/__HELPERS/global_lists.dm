@@ -76,6 +76,35 @@
 			global.chemical_reactions_list[id] += D
 			break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
+	/*
+		Chaplain related: Spells and Rites
+	*/
+	global.spells_by_aspects = list()
+	for(var/path in subtypesof(/obj/effect/proc_holder/spell))
+		var/obj/effect/proc_holder/spell/S = new path()
+		if(!S.needed_aspect)
+			continue
+
+		// Don't bother adding ourselves to other aspects, it is redundant.
+		var/aspect_type = S.needed_aspect[1]
+
+		if(!global.spells_by_aspects[aspect_type])
+			global.spells_by_aspects[aspect_type] = list()
+		global.spells_by_aspects[aspect_type] += path
+
+	global.rites_by_aspects  = list()
+	for(var/path in subtypesof(/datum/religion_rites))
+		var/datum/religion_rites/RR = new path()
+		if(!RR.needed_aspects)
+			continue
+
+		// Don't bother adding ourselves to other aspects, it is redundant.
+		var/aspect_type = RR.needed_aspects[1]
+
+		if(!global.rites_by_aspects[aspect_type])
+			global.rites_by_aspects[aspect_type] = list()
+		global.rites_by_aspects[aspect_type] += path
+
 	global.combat_combos = list()
 	for(var/path in subtypesof(/datum/combat_combo))
 		var/datum/combat_combo/CC = new path()

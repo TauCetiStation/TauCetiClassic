@@ -1967,12 +1967,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		set_light(BP.screen_brightness)
 		BP.screen_toggle = TRUE
 
-	var/new_hair = input(src, "Choose your IPC screen colour:", "Character Preference") as color|null
-	if(new_hair)
-		r_hair = hex2num(copytext(new_hair, 2, 4))
-		g_hair = hex2num(copytext(new_hair, 4, 6))
-		b_hair = hex2num(copytext(new_hair, 6, 8))
-
 	var/list/valid_hairstyles = list()
 	for(var/hairstyle in hair_styles_list)
 		var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
@@ -1982,8 +1976,21 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			continue
 		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
 
-	var/new_h_style = input(src, "Choose your IPC screen style:", "Character Preference")  as null|anything in valid_hairstyles
+	var/new_h_style = ""
+	if(valid_hairstyles.len == 1)
+		new_h_style = valid_hairstyles[1]
+	else
+		new_h_style = input(src, "Choose your IPC screen style:", "Character Preference")  as null|anything in valid_hairstyles
+
 	if(new_h_style)
+		var/datum/sprite_accessory/SA = valid_hairstyles[new_h_style]
+		if(SA.do_colouration)
+			var/new_hair = input(src, "Choose your IPC screen colour:", "Character Preference") as color|null
+			if(new_hair)
+				r_hair = hex2num(copytext(new_hair, 2, 4))
+				g_hair = hex2num(copytext(new_hair, 4, 6))
+				b_hair = hex2num(copytext(new_hair, 6, 8))
+
 		h_style = new_h_style
 	if(h_style == "IPC off screen")
 		random_ipc_monitor(BP.ipc_head)
