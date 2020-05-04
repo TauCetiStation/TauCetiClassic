@@ -66,6 +66,7 @@ var/global/list/SOUNDIN_PUNCH  = list('sound/weapons/punch1.ogg', 'sound/weapons
 // Medical
 var/global/list/SOUNDIN_BANDAGE = list('sound/items/bandage.ogg', 'sound/items/bandage2.ogg', 'sound/items/bandage3.ogg')
 var/global/list/SOUNDIN_KNIFE_CUTTING = list('sound/items/knife_cutting1.ogg', 'sound/items/knife_cutting2.ogg', 'sound/items/knife_cutting3.ogg')
+var/global/list/SOUNDIN_PICKAXE = list('sound/items/pickaxe1.ogg', 'sound/items/pickaxe2.ogg')
 
 // ----- Footsteps -----
 /*

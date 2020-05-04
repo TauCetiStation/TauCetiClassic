@@ -191,22 +191,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	//icon_state = "sledgehammer" Waiting on sprite
 	desc = "A mining hammer made of reinforced metal. You feel like smashing your boss in the face with this."
 
-/obj/item/weapon/pickaxe/silver
-	name = "silver pickaxe"
-	icon_state = "spickaxe"
-	item_state = "spickaxe"
-	toolspeed = 0.9
-	origin_tech = "materials=3"
-	desc = "This makes no metallurgic sense."
-
-/obj/item/weapon/pickaxe/gold
-	name = "golden pickaxe"
-	icon_state = "gpickaxe"
-	item_state = "gpickaxe"
-	toolspeed = 0.9
-	origin_tech = "materials=4"
-	desc = "This makes no metallurgic sense."
-
 /obj/item/weapon/pickaxe/plasmacutter
 	name = "plasma cutter"
 	icon_state = "plasmacutter"
@@ -221,14 +205,44 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/pickaxe/plasmacutter/get_current_temperature()
 	return 3800
 
-/obj/item/weapon/pickaxe/diamond
+/**********************Pickaxe_only_for_ore*************************/
+/obj/item/weapon/pickaxe/pickaxe_for_ore
+	name = "pickaxe"
+	icon = 'icons/obj/mining/hand_tools.dmi'
+	icon_state = "pickaxe"
+	flags = CONDUCT
+	force = 15
+	throwforce = 4
+	item_state = "pickaxe"
+	w_class = ITEM_SIZE_LARGE
+	m_amt = 3750
+	var/pickaxe_power = 65 //for picking rock
+	attack_verb = list("hit", "pierced", "sliced", "attacked")
+
+/obj/item/weapon/pickaxe/pickaxe_for_ore/silver
+	name = "silver pickaxe"
+	icon_state = "spickaxe"
+	item_state = "spickaxe"
+	origin_tech = "materials=3"
+	desc = "This makes no metallurgic sense."
+	pickaxe_power = 85
+
+/obj/item/weapon/pickaxe/pickaxe_for_ore/gold
+	name = "golden pickaxe"
+	icon_state = "gpickaxe"
+	item_state = "gpickaxe"
+	origin_tech = "materials=4"
+	desc = "This makes no metallurgic sense."
+	pickaxe_power = 85
+
+/obj/item/weapon/pickaxe/pickaxe_for_ore/diamond
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
-	toolspeed = 0.2
 	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
-
+	force = 20
+	pickaxe_power = 100
 
 /*****************************Shovel********************************/
 /obj/item/weapon/shovel

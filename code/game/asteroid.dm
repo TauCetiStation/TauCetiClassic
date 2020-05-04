@@ -1,10 +1,10 @@
 
-var/global/list/space_surprises = list(		/obj/item/weapon/pickaxe/silver					=4,
+var/global/list/space_surprises = list(		/obj/item/weapon/pickaxe/pickaxe_for_ore/silver	=4,
 											/obj/item/weapon/pickaxe/drill					=4,
 											/obj/item/weapon/pickaxe/drill/jackhammer		=4,
-											/obj/item/weapon/pickaxe/diamond				=3,
+											/obj/item/weapon/pickaxe/pickaxe_for_ore/diamond=3,
 											/obj/item/weapon/pickaxe/drill/diamond_drill	=3,
-											/obj/item/weapon/pickaxe/gold					=3,
+											/obj/item/weapon/pickaxe/pickaxe_for_ore/gold	=3,
 											/obj/item/weapon/pickaxe/plasmacutter			=2,
 											/obj/structure/closet/syndicate/resources		=2,
 											/obj/item/weapon/melee/energy/sword/pirate		=1,

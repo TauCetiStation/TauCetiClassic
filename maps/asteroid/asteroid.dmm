@@ -8678,10 +8678,10 @@
 /area/asteroid/mine/dwarf)
 "sI" = (
 /obj/structure/rack,
-/obj/item/weapon/pickaxe,
 /obj/item/weapon/storage/belt/utility/full,
 /obj/item/weapon/storage/belt/utility/full,
 /obj/item/weapon/shovel,
+/obj/item/weapon/pickaxe/pickaxe_for_ore,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "sJ" = (
@@ -11607,12 +11607,12 @@
 /area/asteroid/research_outpost/entry)
 "Ai" = (
 /obj/structure/rack,
-/obj/item/weapon/pickaxe{
-	pixel_y = 3
-	},
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/pickaxe{
+/obj/item/weapon/pickaxe/pickaxe_for_ore{
 	pixel_y = -3
+	},
+/obj/item/weapon/pickaxe/pickaxe_for_ore,
+/obj/item/weapon/pickaxe/pickaxe_for_ore{
+	pixel_y = 3
 	},
 /turf/simulated/floor/airless{
 	dir = 5;
