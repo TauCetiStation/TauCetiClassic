@@ -7,7 +7,7 @@
 	name = "AI malfunction"
 	config_tag = "malfunction"
 	role_type = ROLE_MALF
-	required_players = 1
+	required_players = 20
 	required_players_secret = 20
 	required_enemies = 1
 	recommended_enemies = 1

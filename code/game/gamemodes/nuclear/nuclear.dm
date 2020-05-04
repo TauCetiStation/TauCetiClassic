@@ -7,7 +7,7 @@
 	name = "nuclear emergency"
 	config_tag = "nuclear"
 	role_type = ROLE_OPERATIVE
-	required_players = 15
+	required_players = 25
 	required_players_secret = 25
 	required_enemies = 2
 	recommended_enemies = 6
