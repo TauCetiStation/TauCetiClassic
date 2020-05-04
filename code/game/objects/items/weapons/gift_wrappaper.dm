@@ -72,7 +72,7 @@
 		/obj/item/weapon/storage/backpack/holding,
 		/obj/item/weapon/storage/belt/champion,
 		/obj/item/weapon/soap/deluxe,
-		/obj/item/weapon/pickaxe/pickaxe_for_ore/silver,
+		/obj/item/weapon/pickaxe/ore/silver,
 		/obj/item/weapon/pen/invisible,
 		/obj/item/weapon/lipstick/random,
 		/obj/item/weapon/grenade/smokebomb,

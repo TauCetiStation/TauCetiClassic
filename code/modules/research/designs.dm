@@ -2024,7 +2024,7 @@ other types of metals and chemistry for reagents).
 	id = "pick_diamond"
 	build_type = PROTOLATHE
 	materials = list(MAT_DIAMOND = 3000)
-	build_path = /obj/item/weapon/pickaxe/pickaxe_for_ore/diamond
+	build_path = /obj/item/weapon/pickaxe/ore/diamond
 	category = list("Tools")
 
 /datum/design/drill_diamond

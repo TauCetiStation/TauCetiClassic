@@ -205,8 +205,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/pickaxe/plasmacutter/get_current_temperature()
 	return 3800
 
-/**********************Pickaxe_only_for_ore*************************/
-/obj/item/weapon/pickaxe/pickaxe_for_ore
+/**********************Pickaxe(for ore)*************************/
+/obj/item/weapon/pickaxe/ore
 	name = "pickaxe"
 	icon = 'icons/obj/mining/hand_tools.dmi'
 	icon_state = "pickaxe"
@@ -219,7 +219,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/pickaxe_power = 65 //for picking rock
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 
-/obj/item/weapon/pickaxe/pickaxe_for_ore/silver
+/obj/item/weapon/pickaxe/ore/silver
 	name = "silver pickaxe"
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
@@ -227,7 +227,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "This makes no metallurgic sense."
 	pickaxe_power = 85
 
-/obj/item/weapon/pickaxe/pickaxe_for_ore/gold
+/obj/item/weapon/pickaxe/ore/gold
 	name = "golden pickaxe"
 	icon_state = "gpickaxe"
 	item_state = "gpickaxe"
@@ -235,13 +235,12 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "This makes no metallurgic sense."
 	pickaxe_power = 85
 
-/obj/item/weapon/pickaxe/pickaxe_for_ore/diamond
+/obj/item/weapon/pickaxe/ore/diamond
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
 	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
-	force = 20
 	pickaxe_power = 100
 
 /*****************************Shovel********************************/

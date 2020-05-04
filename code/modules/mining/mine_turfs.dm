@@ -64,16 +64,6 @@
 				I.plane = 6
 				T.add_overlay(I)
 
-	if(integrity < max_integrity)
-		if(integrity < max_integrity * 0.9)
-			crack_overlay = "overlay_crack_low"
-		if(integrity < max_integrity * 0.6)
-			crack_overlay = "overlay_crack_medium"
-		if(integrity < max_integrity * 0.3)
-			crack_overlay = "overlay_crack_hight"
-		var/image/I = image('icons/turf/asteroid.dmi', "[crack_overlay]", layer=7)
-		add_overlay(I)
-
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
 		if(2.0)
@@ -186,14 +176,22 @@
 		if (!( istype(T, /turf) ))
 			return
 
-		if (istype(W, /obj/item/weapon/pickaxe/pickaxe_for_ore))
-			var/obj/item/weapon/pickaxe/pickaxe_for_ore/O = W
+		if (istype(W, /obj/item/weapon/pickaxe/ore))
+			var/obj/item/weapon/pickaxe/ore/O = W
 			if(integrity > 0)
 				integrity -= O.pickaxe_power
 				playsound(user, pick(SOUNDIN_PICKAXE), VOL_EFFECTS_MASTER)
-				update_overlays()
-				to_chat(user, "<span class='notice'>You hit the Rock with a pickaxe.</span>")
-				return
+				if(integrity < max_integrity)
+					if(integrity < max_integrity * 0.9)
+						crack_overlay = "overlay_crack_low"
+					if(integrity < max_integrity * 0.6)
+						crack_overlay = "overlay_crack_medium"
+					if(integrity < max_integrity * 0.3)
+						crack_overlay = "overlay_crack_hight"
+					var/image/I = image('icons/turf/asteroid.dmi', "[crack_overlay]", layer=7)
+					add_overlay(I)
+					to_chat(user, "<span class='notice'>You hit the [name] with a pickaxe.</span>")
+					return
 			else
 				GetDrilled()
 				playsound(src, 'sound/effects/rockfall.ogg', VOL_EFFECTS_MASTER)

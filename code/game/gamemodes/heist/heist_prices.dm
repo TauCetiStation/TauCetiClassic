@@ -260,11 +260,11 @@
 /obj/item/weapon/melee/telebaton/price = 1000
 /obj/item/weapon/pen/price = 5
 /obj/item/weapon/pickaxe/price = 35
-/obj/item/weapon/pickaxe/pickaxe_for_ore/diamond/price = 8000
+/obj/item/weapon/pickaxe/ore/diamond/price = 8000
 /obj/item/weapon/pickaxe/drill/diamond_drill/price = 19000
 /obj/item/weapon/pickaxe/drill/jackhammer/price = 13000
-/obj/item/weapon/pickaxe/pickaxe_for_ore/gold/price = 5000
-/obj/item/weapon/pickaxe/pickaxe_for_ore/silver/price = 2770
+/obj/item/weapon/pickaxe/ore/gold/price = 5000
+/obj/item/weapon/pickaxe/ore/silver/price = 2770
 /obj/item/weapon/pinpointer/price = 8000
 /obj/item/weapon/rcd/price = 19000
 /obj/item/weapon/rcd_ammo/price = 1700
