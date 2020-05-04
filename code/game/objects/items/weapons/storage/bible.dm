@@ -61,7 +61,7 @@
 	var/done = FALSE
 	var/changes = FALSE
 
-	var/list/choices = list("Pews", "Mat symbol")
+	var/list/choices = list("Altar", "Pews", "Mat symbol")
 
 	while(!done)
 		if(!choices.len)
@@ -74,6 +74,15 @@
 			break
 
 		switch(looks)
+			if("Altar")
+				var/new_look = input(user, "Which pews style would you like?")  as null|anything in global.chaplain_religion.altar_info_by_name
+				if(!new_look)
+					continue
+
+				global.chaplain_religion.altar_icon_state = global.chaplain_religion.altar_info_by_name[new_look]
+				changes = TRUE
+				choices -= "Altar"
+
 			if("Pews")
 				var/new_look = input(user, "Which pews style would you like?")  as null|anything in global.chaplain_religion.pews_info_by_name
 				if(!new_look)
@@ -94,4 +103,4 @@
 
 	if(changes)
 		religify_next[user.ckey] = world.time + 3 MINUTE
-		global.chaplain_religion.religify(/area/station/civilian/chapel)
+		global.chaplain_religion.religify_chapel()
