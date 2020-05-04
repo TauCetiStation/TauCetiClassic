@@ -80,8 +80,6 @@
 
 	// Whether this entire "structure" is moving due to carrier.
 	var/moving = FALSE
-	// Block any movement due to animations or something.
-	var/can_move = FALSE
 	// This var is used to prevent unnecessary position updates.
 	var/prev_dir = NORTH
 	// When the next move can occur.
@@ -109,6 +107,10 @@
 	if(carried)
 		stop_carry()
 	carry_obj = null
+
+// Whether the carry structure can indeed move.
+/datum/component/multi_carry/proc/can_carry_move()
+	return next_move <= world.time
 
 // This proc is used to register all required signals on carrier.
 /datum/component/multi_carry/proc/register_carrier(mob/carrier)
@@ -142,9 +144,9 @@
 
 // This proc is used to change the positions of carriers when carry_obj is rotated.
 /datum/component/multi_carry/proc/rotate_dir(dir_)
-	if(!can_move)
+	if(!can_carry_move())
 		return
-	can_move = FALSE
+	next_move = world.time + 3
 
 	var/i = 1
 	for(var/mob/carrier in carriers)
@@ -154,35 +156,30 @@
 		carrier.face_pixeldiff(carrier.pixel_x, carrier.pixel_y, pos["px"], pos["py"])
 
 		animate(carrier, pixel_x=pos["px"], pixel_y=pos["py"], layer=pos["layer"], time=3)
-	sleep(3)
-	can_move = TRUE
 
 // This proc is used to swap positions of two carriers.
 /datum/component/multi_carry/proc/swap_positions(mob/carrier1, mob/carrier2)
-	if(!can_move)
+	if(!can_carry_move())
 		return
-	can_move = FALSE
 	var/pos1 = carriers.Find(carrier1)
 	var/pos2 = carriers.Find(carrier2)
 
 	carriers[pos1] = carrier2
 	carriers[pos2] = carrier1
-	can_move = TRUE
-	INVOKE_ASYNC(src, .proc/rotate_dir, prev_dir)
+	rotate_dir(prev_dir)
 
 // This proc is used to swap positions of all carriers by a full rotation.
 /datum/component/multi_carry/proc/rotate_positions()
-	if(!can_move)
+	if(!can_carry_move())
 		return
-	can_move = FALSE
+
 	var/list/new_carriers = list()
 	// "multi_carry" implies that there are at least 2 carriers.
 	for(var/i in 2 to carriers.len)
 		new_carriers += carriers[i]
 	new_carriers += carriers[1]
 	carriers = new_carriers
-	can_move = TRUE
-	INVOKE_ASYNC(src, .proc/rotate_dir, prev_dir)
+	rotate_dir(prev_dir)
 
 // All checks before start_carry()
 /datum/component/multi_carry/proc/can_carry()
@@ -249,7 +246,6 @@
 	RegisterSignal(carry_obj, list(COMSIG_MOVABLE_UNBUCKLE), .proc/on_unbuckle)
 
 	carried = TRUE
-	can_move = TRUE
 
 /datum/component/multi_carry/proc/carrier_leave(datum/source, mob/carrier)
 	if(carried)
@@ -262,7 +258,6 @@
 	if(!carried)
 		return
 	carried = FALSE
-	can_move = FALSE
 
 	for(var/mob/carrier in carriers)
 		var/list/pos = carrier_default_pos[carrier]
@@ -296,8 +291,6 @@
 	INVOKE_ASYNC(GLOBAL_PROC, .proc/_step, walker, direction)
 
 /datum/component/multi_carry/proc/carrier_move(datum/source, atom/NewLoc, direction)
-	if(!can_move)
-		return COMPONENT_CLIENTMOB_BLOCK_MOVE
 	if(next_move > world.time)
 		return COMPONENT_CLIENTMOB_BLOCK_MOVE
 
@@ -338,14 +331,12 @@
 		return
 	next_waddle = world.time + 2
 
-	can_move = FALSE
 	if(carry_obj.can_waddle())
 		carry_obj.waddle(pick(-waddle_strength, 0, waddle_strength), pz_raise)
 		var/mob/M = carry_obj.buckled_mob
 		if(M && M.can_waddle())
 			M.waddle(pick(-waddle_strength, 0, waddle_strength), pz_raise)
 			M.dir = pick(WEST, EAST)
-	can_move = TRUE
 
 /datum/component/multi_carry/proc/check_proximity(datum/source)
 	var/mob/carrier = source
@@ -394,7 +385,7 @@
 		return NONE
 
 	if(target != source && (target in carriers))
-		INVOKE_ASYNC(src, .proc/swap_positions, source, target)
+		swap_positions(source, target)
 		return COMPONENT_CANCEL_CLICK
 	// So carrier doesn't get an idea that they can pull something else.
 	return COMPONENT_CANCEL_CLICK
@@ -405,6 +396,6 @@
 		return COMPONENT_CANCEL_CLICK
 
 	if(target in carriers)
-		INVOKE_ASYNC(src, .proc/rotate_positions)
+		rotate_positions()
 		return COMPONENT_CANCEL_CLICK
 	return NONE

@@ -24,7 +24,7 @@
 /obj/structure/closet/coffin/atom_init()
 	. = ..()
 	coffin_side = image(icon, "coffin_side")
-	coffin_side.layer = MOB_LAYER + 0.1
+	coffin_side.layer = 3.95
 	coffin_side.loc = src
 
 	AddComponent(/datum/component/multi_carry, 12, /datum/carry_positions/coffin_four_man)
@@ -34,8 +34,16 @@
 		return FALSE
 	return ..()
 
+/obj/structure/closet/coffin/can_buckle(mob/living/M)
+	if(!opened)
+		return FALSE
+	return ..()
+
 /obj/structure/closet/coffin/AltClick(mob/user)
 	if(user.incapacitated())
+		return
+
+	if(!Adjacent(user))
 		return
 
 	add_fingerprint(user)
@@ -68,6 +76,13 @@
 	if(.)
 		// so nobody sees/bugs the body falling out of the coffin(lying "animation")
 		next_open = world.time + LYING_ANIM_COOLDOWN
+		cut_overlay(coffin_side)
+		add_overlay(coffin_side)
+
+/obj/structure/closet/coffin/close()
+	. = ..()
+	if(.)
+		cut_overlay(coffin_side)
 
 /obj/structure/closet/coffin/tools_interact(obj/item/I, mob/user)
 	if(opened && iscrowbar(I))
@@ -87,18 +102,24 @@
 	return
 
 /obj/structure/closet/coffin/post_buckle_mob(mob/living/M)
-	if(M != buckled_mob)
-		M.pixel_x = 0
-		M.pixel_y = 0
-		cut_overlay(coffin_side)
-	else
+	if(M == buckled_mob)
 		M.pixel_x = 1
 		M.pixel_y = -1
 		update_buckle_mob(M)
-		add_overlay(coffin_side)
+	else
+		M.pixel_x = 0
+		M.pixel_y = 0
 
 /obj/structure/closet/coffin/update_buckle_mob(mob/living/M)
-	coffin_side.layer = M.layer + 0.05
+	// When mob layering will properly work:
+	// - mob layer won't be reset to MOB_LAYER after crawling under table, rollerbed
+	// - mob layer won't be reset to MOB_LAYER after pressing rest
+	// replace the 4 lines below with coffin_side.layer = M.layer + 0.05
+	if(M.layer >= FLY_LAYER)
+		coffin_side.layer = M.layer + 0.05
+	else
+		coffin_side.layer = 3.95
+
 	M.dir = WEST
 	// why tf do I need to cut overlay to update a layer?
 	cut_overlay(coffin_side)

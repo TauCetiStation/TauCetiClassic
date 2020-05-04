@@ -19,9 +19,22 @@
 	if(can_buckle && istype(M) && !buckled_mob && istype(user))
 		user_buckle_mob(M, user)
 
+/atom/movable/proc/can_buckle(mob/living/M)
+	if(!can_buckle)
+		return FALSE
+	if(!istype(M) || (M.loc != loc))
+		return FALSE
+	if(M.buckled || buckled_mob)
+		return FALSE
+	if(M.pinned.len)
+		return FALSE
+	if(buckle_require_restraints && !M.restrained())
+		return FALSE
+	return M != src
+
 /atom/movable/proc/buckle_mob(mob/living/M)
-	if(!can_buckle || !istype(M) || (M.loc != loc) || M.buckled || src.buckled_mob || M.pinned.len || (buckle_require_restraints && !M.restrained()) || M == src)
-		return 0
+	if(can_buckle(M))
+		return FALSE
 
 	//reset pulling
 	if(M.pulledby)
@@ -39,7 +52,7 @@
 	M.throw_alert("buckled", /obj/screen/alert/buckled, new_master = src)
 	correct_pixel_shift(M)
 	M.update_canmove()
-	return 1
+	return TRUE
 
 /atom/movable/proc/unbuckle_mob()
 	if(buckled_mob && buckled_mob.buckled == src && buckled_mob.can_unbuckle(usr))
