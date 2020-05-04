@@ -283,18 +283,21 @@
 	for(var/aspect_type in aspect_list)
 		var/datum/aspect/asp = aspect_type
 		if(aspects[initial(asp.name)])
-			aspects[initial(asp.name)] += aspect_list[aspect_type]
+			var/datum/aspect/aspect = aspects[initial(asp.name)]
+			aspect.power += aspect_list[aspect_type]
 		else
-			asp = new aspect_type
-			aspects[asp.name] = asp
+			var/datum/aspect/aspect = new aspect_type
+			aspect.power = aspect_list[aspect_type]
+			aspects[aspect.name] = aspect
 
 	update_aspects()
 
 ///Generates a list of rites with 'name' = 'type', used for examine altar_of_god
 /datum/religion/proc/generate_rites_list()
+	var/list/retVal = list()
 	for(var/i in rites)
 		if(!ispath(i))
-			. += list(i = rites[i])
+			retVal[i] = rites[i]
 			continue
 		var/datum/religion_rites/RI = i
 		var/name_entry = "[initial(RI.name)]"
@@ -303,7 +306,8 @@
 		if(initial(RI.favor_cost))
 			name_entry += " ([initial(RI.favor_cost)] favor)"
 
-		. += list("[name_entry]\n" = i)
+		retVal["[name_entry]\n"] = i
+	return retVal
 
 /datum/religion/proc/add_deity(mob/M)
 	active_deities += M
