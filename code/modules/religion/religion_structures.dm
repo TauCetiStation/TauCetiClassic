@@ -94,6 +94,7 @@
 			user.drop_from_inventory(C)
 			qdel(C)
 			return
+
 		else if(max_points > 0)
 			to_chat(user, "<span class='warning'>You offer [C] to [pick(religion.deity_names)], but they would not accept such pityful offering.</span>")
 			return

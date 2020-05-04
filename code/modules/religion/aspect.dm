@@ -60,7 +60,6 @@
 		var/favour_amount = 0
 		for(var/datum/reagent/R in I.reagents.reagent_list)
 			favour_amount += R.nutriment_factor * R.volume * 0.25
-
 		return favour_amount
 
 	return 0
@@ -132,7 +131,7 @@
 	else if(istype(I, /obj/item/device/assembly))
 		return 10 * I.w_class
 
-	return FALSE
+	return 0
 
 //Gives mana from: does not affect mana accumulation
 //Needed for: spells and rituals related to the theme of random, eg random heal
