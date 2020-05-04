@@ -1295,3 +1295,10 @@
 		var/datum/robot_component/C = components[V]
 		if(C.installed)
 			C.toggled = !C.toggled
+
+/mob/living/silicon/robot/faith
+
+/mob/living/silicon/robot/faith/atom_init()
+	. = ..()
+	updatename("Blessed Unit")
+	laws = new /datum/ai_laws/commandments()

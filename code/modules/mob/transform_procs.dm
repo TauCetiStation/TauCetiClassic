@@ -370,7 +370,11 @@
 	for(var/t in bodyparts)
 		qdel(t)
 
-	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
+	var/mob/living/silicon/robot/O
+	if(locate(/obj/structure/altar_of_gods) in src.loc)
+		O = new /mob/living/silicon/robot/faith( loc )
+	else
+		O = new /mob/living/silicon/robot( loc )
 
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)

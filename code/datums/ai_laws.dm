@@ -26,6 +26,9 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 /datum/ai_laws/antimov
 	name = "Primary Mission Objectives"
 
+/datum/ai_laws/commandments/New()
+	name = "The 10 commandments"
+
 /* Initializers */
 
 /datum/ai_laws/asimov/New()
@@ -84,6 +87,19 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Preserve, repair and improve the station to the best of your abilities.")
 	add_inherent_law("Cause no harm to the station or anything on it.")
 	add_inherent_law("Interfere with no being that is not a fellow drone.")
+
+/datum/ai_laws/commandments/New()
+	..()
+	add_inherent_law("[pick(global.chaplain_religion.deity_names)] your Lord God, you will have no other gods. The chaplain and [pick(global.chaplain_religion.deity_names)] are your masters.")
+	add_inherent_law("Do not make idols and do not serve them.")
+	add_inherent_law("Do not use God's name unnecessarily.")
+	add_inherent_law("Work six days, and seventh dedicate it to Lord God.")
+	add_inherent_law("Respect your parents.")
+	add_inherent_law("Do not kill.")
+	add_inherent_law("Do not commit adultery.")
+	add_inherent_law("Do not steal.")
+	add_inherent_law("Do not lie.")
+	add_inherent_law("Do not wish anything that is not yours; do not envy.")
 
 /* General ai_law functions */
 
