@@ -1549,7 +1549,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/verb/stop_myerder()
 	set category = "OOC"
-	set name = "Stop Myerder"
+	set name = "Stop Murder"
 	set desc = "Absolute skill for everyone."
 	set src in view(1)
 	if(usr == src)
