@@ -1555,7 +1555,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(usr == src)
 		src.revive()
 	else
-		src.dust()
+		dust()
 
 /mob/living/carbon/human/verb/check_pulse()
 	set category = "Object"
