@@ -33,7 +33,7 @@
 	return M != src
 
 /atom/movable/proc/buckle_mob(mob/living/M)
-	if(can_buckle(M))
+	if(!can_buckle(M))
 		return FALSE
 
 	//reset pulling
