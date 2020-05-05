@@ -44,7 +44,7 @@
 	var/newmessage = 0			//To remove hackish overlay check
 
 	var/list/cartmodes = list(40, 42, 43, 433, 44, 441, 45, 451, 46, 48, 47, 49) // If you add more cartridge modes add them to this list as well.
-	var/list/no_auto_update = list(1, 40, 43, 44, 441, 45, 451)		     // These modes we turn off autoupdate
+	var/list/no_auto_update = list(1, 40, 43, 44, 441, 45, 451, 73)		     // These modes we turn off autoupdate
 	var/list/update_every_five = list(3, 41, 433, 46, 47, 48, 49)			     // These we update every 5 ticks
 
 	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
@@ -62,6 +62,7 @@
 	var/trans_log_spoiler = 0	// 1 or 0 --> show/hide transaction log
 	var/list/owner_fingerprints = list()	//fingerprint information is taken from the ID card
 	var/boss_PDA = 0	//the PDA belongs to the heads or not	(can I change the salary?)
+	var/list/subordinate_staff = list()
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
@@ -429,6 +430,7 @@
 	data["trans_log_spoiler"] = trans_log_spoiler	// show/hide transaction log
 	data["time_to_next_pay"] = time_stamp(format = "mm:ss", wtime = (SSeconomy.endtime - world.timeofday))
 	data["boss"] = boss_PDA
+	data["subordinate_staff"] = subordinate_staff
 
 	data["mode"] = mode					// The current view
 	data["scanmode"] = scanmode				// Scanners
@@ -860,6 +862,16 @@
 
 		if("Staff Salary")
 			mode = 73
+			subordinate_staff = my_subordinate_staff("Admin")
+		
+		if("Change Salary")
+			var/account_number = text2num(href_list["account"])
+			for(var/person in subordinate_staff)
+				if(account_number == person["acc_number"])
+					var/datum/money_account/account = person["acc_datum"]
+					account.change_salary(U, owner, name, ownrank)
+					nanomanager.update_uis(src) // update all UIs attached to src
+					break
 
 //SYNDICATE FUNCTIONS===================================
 
@@ -1471,7 +1483,7 @@
 			alert("Invalid Password!")
 			return FALSE
 
-/obj/item/device/pda/proc/transaction_inform(target, source, amount)
+/obj/item/device/pda/proc/transaction_inform(target, source, amount, salary_change = FALSE)
 	if(!can_use())
 		return
 	//Search for holder of the PDA. (some copy-paste from /obj/item/device/pda/proc/create_message)
@@ -1479,10 +1491,16 @@
 	if(src.loc && isliving(src.loc))
 		L = src.loc
 	if(L)
-		if(amount > 0)
-			to_chat(L, "[bicon(src)]<span class='notice'>[owner], the amount of [amount]$ from [source] was transferred to your account.</span>")
+		if(salary_change)
+			if(amount > 0)
+				to_chat(L, "[bicon(src)]<font color='#579914'><b>[owner], your salary was increased by [source] by [amount]%! This change is valid until the next payment.</b></font>")
+			else
+				to_chat(L, "[bicon(src)]<span class='red'>[owner], your salary was reduced by [source] by [amount]%! This change is valid until the next payment.</span>")
 		else
-			to_chat(L, "[bicon(src)]<span class='notice'>You have successfully transferred [amount]$ to [target] account number.</span>")
+			if(amount > 0)
+				to_chat(L, "[bicon(src)]<span class='notice'>[owner], the amount of [amount]$ from [source] was transferred to your account.</span>")
+			else
+				to_chat(L, "[bicon(src)]<span class='notice'>You have successfully transferred [amount]$ to [target] account number.</span>")
 		if(!src.message_silent)
 			playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 

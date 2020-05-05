@@ -157,7 +157,7 @@ var/list/nonhuman_positions = list(
 
 	return titles
 
-/proc/my_subordinate_staff(head_rank)
+/proc/my_subordinate_staff(head_rank)	//the function takes a rank, returns a list of subordinate personnel
 	
 	var/all_staff = data_core.get_manifest_json()	//crew manifest
 	var/list/data = list()	//it will be returned
@@ -205,9 +205,10 @@ var/list/nonhuman_positions = list(
 				if(head_rank == "Head of Personnel" && QM_staff.Find(person["rank"]))	//HoP don't rules QM's boys, but rules QM
 					//to_chat(world, "<span class='warning'>Boolin 6")
 					continue
-			data[++data.len] = list("name" = person["name"], "rank" = person["rank"], "acc_datum" = person["acc_datum"])
+			var/datum/money_account/account = person["acc_datum"]
+			data[++data.len] = list("name" = person["name"], "rank" = person["rank"], "salary" = account.owner_salary, "acc_datum" = person["acc_datum"], "acc_number" = person["account"])
 
-	return data	// --> list(real_name, assignment, /datum/money_account/)
+	return data	// --> list(real_name, assignment, salary, /datum/money_account/, account_number)
 	
 /client/verb/verb_staff()	//for test
 	set category = "IC"
@@ -220,8 +221,6 @@ var/list/nonhuman_positions = list(
 
 	if(data.len)
 		for(var/D in data)
-			var/datum/money_account/account = D["acc_datum"]
-			var/salary = account.owner_salary
-			to_chat(world, "<span class='warning'> [D["name"]], [D["rank"]], [salary].")
+			to_chat(world, "<span class='warning'> [D["name"]], [D["rank"]], [D["salary"]].")
 	else
 		to_chat(world, "<span class='warning'> data list is empty")

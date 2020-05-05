@@ -234,7 +234,7 @@
 					modify.rank = t1
 
 					if(datum_account)
-						datum_account.owner_salary = new_salary //set the new salary equal to job
+						datum_account.set_salary(new_salary)	//set the new salary equal to job
 
 				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
 				if(mode)

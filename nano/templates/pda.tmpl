@@ -1040,7 +1040,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                 {{:helper.link('Transaction Menu', data.trans_menu == 1 ? 'circle-arrow-n' : 'circle-arrow-s', {'choice' : "Transaction Menu"}, null, 'fixedLeftWide')}}
                 {{:helper.link('Transaction Log', data.trans_log_spoiler == 1 ? 'circle-arrow-n' : 'circle-arrow-s', {'choice' : "Transaction Log"}, null, 'null')}}
                 {{if data.boss}}
-                    {{:helper.link('Staff Salary', 'null', {'choice' : "Staff Salary"}, null, 'null')}}
+                    {{:helper.link('Staff Salary', 'comment', {'choice' : "Staff Salary"}, null, 'null')}}
                 {{/if}}
             </div>
         </div>
@@ -1075,8 +1075,18 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                 </div>
             </div>
         {{/if}}
-    {{else data.mode == 73}}
-            Nooo
+    {{else data.mode == 73}}   <!-- Change Staff Salary -->
+        <div class="item">
+            <div class="statusDisplayRecords">
+                <center><table class="pmon">
+                    <tr><th>Name</th><th>Rank</th><th>Salary</th></tr>
+                    {{for data.subordinate_staff}}
+                        <tr><td>{{:value.name}}</td><td>{{:value.rank}}</td><td>{{:value.salary}}</td>
+                        <td>{{:helper.link('Change', null, {'choice' : "Change Salary", 'account' : value.acc_number}, null, null)}}</td></tr>
+                    {{/for}}
+                </table></center>
+            </div>
+        </div>
     {{/if}}
 {{else}}
     <div class="wholeScreen">

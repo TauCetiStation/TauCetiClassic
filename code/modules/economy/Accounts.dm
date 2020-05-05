@@ -5,7 +5,9 @@
 
 /datum/money_account
 	var/owner_name = ""
-	var/owner_salary = 0
+	var/owner_salary = 0	//used for payments
+	var/base_salary = 0		//used to changes owner_salary
+	var/reset_salary = FALSE
 	var/account_number = 0
 	var/remote_access_pin = 0
 	var/money = 0
@@ -18,6 +20,39 @@
 
 /datum/money_account/proc/adjust_money(amount)
 	money = CLAMP(money + amount, MIN_MONEY_ON_ACCOUNT, MAX_MONEY_ON_ACCOUNT)
+
+/datum/money_account/proc/set_salary(amount)
+	owner_salary = amount
+	base_salary = amount
+	reset_salary = FALSE
+
+/datum/money_account/proc/change_salary(user, user_name, terminal, user_rank)
+	var/list/rate = list("+100%", "+50%", "+25%", "-25%", "-50%", "-100%")
+	if(reset_salary)
+		alert(user, "The salary of [owner_name] has already changed, try after the next payment.")
+		return
+	if(user_rank != "Admin")
+		rate = rate.Copy(2,6)
+	var/input_rate = input(user, "Please, select a rank!", "Salary Rate", null) as null|anything in rate
+	var/salary_rate = text2num(replacetext(replacetext(input_rate, "+", ""), "%", ""))
+	var/new_salary = round(base_salary + (base_salary * (salary_rate/100)))
+	if(alert(user, "Now [owner_name] will start receiving a salary of [new_salary] credits. Are you sure?", "Confirm", "Yes", "No") != "Yes")
+		return
+	owner_salary = new_salary
+	reset_salary = TRUE
+	//create a transaction log entry
+	var/datum/transaction/T = new()
+	T.target_name = owner_name
+	T.purpose = "Salary change"
+	T.amount = input_rate
+	T.date = current_date_string
+	T.time = worldtime2text()
+	T.source_terminal = terminal
+	transaction_log.Add(T)
+
+	if(owner_PDA)
+		owner_PDA.transaction_inform(null, user_name, salary_rate, TRUE)
+
 
 /datum/transaction
 	var/target_name = ""
