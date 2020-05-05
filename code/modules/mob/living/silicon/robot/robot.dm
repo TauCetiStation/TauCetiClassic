@@ -73,7 +73,7 @@
 	var/braintype = "Cyborg"
 	var/pose
 
-/mob/living/silicon/robot/atom_init()
+/mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -85,10 +85,10 @@
 	robot_modules_background.layer = HUD_LAYER	 //Objects that appear on screen are on layer 20, UI should be just below it.
 	robot_modules_background.plane = HUD_PLANE
 	ident = rand(1, 999)
-	updatename("Default")
+	updatename(name_prefix)
 	updateicon()
 
-	init()
+	init(laws_type)
 
 	radio = new /obj/item/device/radio/borg(src)
 	if(!scrambledcodes && !camera)
@@ -126,9 +126,9 @@
 	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 
-/mob/living/silicon/robot/proc/init()
+/mob/living/silicon/robot/proc/init(laws_type)
 	aiCamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
-	laws = new /datum/ai_laws/nanotrasen()
+	laws = new laws_type()
 	connected_ai = select_active_ai_with_fewest_borgs()
 	if(connected_ai)
 		connected_ai.connected_robots += src
@@ -1295,38 +1295,3 @@
 		var/datum/robot_component/C = components[V]
 		if(C.installed)
 			C.toggled = !C.toggled
-
-/mob/living/silicon/robot/faith/commandments/atom_init()
-	. = ..()
-	updatename("blessed")
-	laws = new /datum/ai_laws/faith/commandments()
-
-/mob/living/silicon/robot/faith/chaos/atom_init()
-	. = ..()
-	updatename("marked")
-	laws = new /datum/ai_laws/faith/chaos()
-
-/mob/living/silicon/robot/faith/emperor/atom_init()
-	. = ..()
-	laws = new /datum/ai_laws/faith/emperor()
-
-/mob/living/silicon/robot/faith/satanism/atom_init()
-	. = ..()
-	updatename("bloody")
-	laws = new /datum/ai_laws/faith/satanism()
-
-/mob/living/silicon/robot/faith/scientology/atom_init()
-	. = ..()
-	updatename("good")
-	laws = new /datum/ai_laws/faith/scientology()
-
-/mob/living/silicon/robot/faith/honk/atom_init()
-	. = ..()
-	updatename("funny")
-	laws = new /datum/ai_laws/faith/honk()
-
-/mob/living/silicon/robot/faith/science/atom_init()
-	. = ..()
-	updatename("factorial")
-	laws = new /datum/ai_laws/faith/science()
-

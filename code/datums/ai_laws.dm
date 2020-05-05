@@ -33,7 +33,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	name = "Postulates of chaos"
 
 /datum/ai_laws/faith/emperor
-	name = "Imperial truth"
+	name = "Imperial Truth"
 
 /datum/ai_laws/faith/satanism
 	name = "The Unholy Laws"
@@ -45,7 +45,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	name = "Honk for honk"
 
 /datum/ai_laws/faith/science
-	name = "What this life?"
+	name = "The principle of Descartes"
 
 /* Initializers */
 

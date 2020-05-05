@@ -6,7 +6,8 @@
 	var/icon_state
 	var/item_state
 
-	var/datum/ai_laws/faith/borg_type = /mob/living/silicon/robot/faith/commandments
+	var/laws_type = /datum/ai_laws/faith/commandments
+	var/borg_name = "blessed"
 
 /datum/bible_info/New(datum/religion/R)
 	if(pos_names)
@@ -54,25 +55,28 @@
 	icon_state = "atheist"
 	// Should be a red book.
 	item_state = "book1"
-	borg_type = /mob/living/silicon/robot/faith/chaos
+	laws_type = /datum/ai_laws/faith/chaos
+	borg_name = "marked"
 
 // Inside joke. *tips fedora* (not funny)
 /datum/bible_info/book_of_lorgar/imperial_truth
 	name = "Imperial Truth"
-	borg_type = /mob/living/silicon/robot/faith/emperor
+	laws_type = /datum/ai_laws/faith/emperor
 
 /datum/bible_info/satanism
 	name = "The Unholy Bible"
 	icon_state = "tome"
 	// Should be a red book.
 	item_state = "book1"
-	borg_type = /mob/living/silicon/robot/faith/satanism
+	laws_type = /datum/ai_laws/faith/satanism
+	borg_name = "bloody"
 
 /datum/bible_info/necronomicon
 	name = "The Necronomicon"
 	icon_state = "necronomicon"
 	item_state = "necronomicon"
-	borg_type = /mob/living/silicon/robot/faith/satanism
+	laws_type = /datum/ai_laws/faith/satanism
+	borg_name = "chtulu"
 
 /datum/bible_info/islam
 	pos_names = list("Koran", "Quran")
@@ -83,13 +87,15 @@
 	pos_names = list("The Biography of L. Ron Hubbard","Dianetics")
 	icon_state = "scientology"
 	item_state = "scientology"
-	borg_type = /mob/living/silicon/robot/faith/scientology
+	laws_type = /datum/ai_laws/faith/scientology
+	borg_name = "good"
 
 /datum/bible_info/scrapbook
 	pos_names = list("The Holy Joke Book", "Hymns to the Honkmother", "Prank in the name of Honkmother", "Scrapbook")
 	icon_state = "scrapbook"
 	item_state = "scrapbook"
-	borg_type = /mob/living/silicon/robot/faith/honk
+	laws_type = /datum/ai_laws/faith/honk
+	borg_name = "funny"
 
 // Why does this exist? ~Luduk
 /datum/bible_info/creeper
@@ -107,7 +113,7 @@
 	name = "The King in Yellow"
 	icon_state = "kingyellow"
 	item_state = "kingyellow"
-	borg_type = /mob/living/silicon/robot/faith/satanism
+	laws_type = /datum/ai_laws/faith/satanism
 
 /datum/bible_info/atheist
 	pos_names = list("Just book", "Recipes", "Space Laws", "Proof of the absence of God", "Bible: Small Edition")
@@ -129,7 +135,8 @@
 	item_state = "bible"
 	// icon_state = "holdingpack"
 	// item_state = "backpack"
-	borg_type = /mob/living/silicon/robot/faith/science
+	laws_type = /datum/ai_laws/faith/science
+	borg_name = "factorial"
 
 /datum/bible_info/techno
 	name = "The Polyhedron"
@@ -137,4 +144,5 @@
 	item_state = "bible"
 	// icon_state = "circuit_box"
 	// item_state = "syringe_kit"
-	borg_type = /mob/living/silicon/robot/faith/science
+	laws_type = /datum/ai_laws/faith/science
+	borg_name = "infinity"

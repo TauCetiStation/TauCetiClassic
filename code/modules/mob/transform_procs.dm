@@ -357,7 +357,7 @@
 	return O
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize(borg_type = /mob/living/silicon/robot)
+/mob/living/carbon/human/proc/Robotize(name, laws)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
@@ -370,7 +370,7 @@
 	for(var/t in bodyparts)
 		qdel(t)
 
-	var/mob/living/silicon/robot/O = new borg_type(loc)
+	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(loc, name, laws)
 
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)
