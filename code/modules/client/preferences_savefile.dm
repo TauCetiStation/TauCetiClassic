@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 25
+#define SAVEFILE_VERSION_MAX 26
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -58,6 +58,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		toggles &= ~(SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SOUND_STREAMING)
 		S["toggles"] << toggles
+
+	if(current_version < 26)
+		// We no longer have LOOC.
+		var/const/CHAT_LOOC = 256
+
+		chat_toggles &= ~CHAT_LOOC
+		S["chat_toggles"] << chat_toggles
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 17)

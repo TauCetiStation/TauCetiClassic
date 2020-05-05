@@ -68,16 +68,6 @@
 	to_chat(src, "You will [(prefs.chat_toggles & CHAT_OOC) ? "now" : "no longer"] see messages on the OOC channel.")
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/verb/listen_looc()
-	set name = "Show/Hide LOOC"
-	set category = "Preferences"
-	set desc = "Toggles seeing Local OutOfCharacter chat."
-	prefs.chat_toggles ^= CHAT_LOOC
-	prefs.save_preferences()
-
-	to_chat(src, "You will [(prefs.chat_toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel.")
-	feedback_add_details("admin_verb","TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/verb/toggle_be_role(role in special_roles)
 	set name = "Toggle SpecialRole Candidacy"
 	set category = "Preferences"

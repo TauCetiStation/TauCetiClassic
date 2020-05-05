@@ -47,10 +47,6 @@
 	. += 					"<td><a href='?_src_=prefs;preference=see_ooc'><b>[(chat_toggles & CHAT_OOC) ? "Shown" : "Hidden"]</b></a></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
-	. += 					"<td width='45%'>LOOC:</td>"
-	. += 					"<td><a href='?_src_=prefs;preference=see_looc'><b>[(chat_toggles & CHAT_LOOC) ? "Shown" : "Hidden"]</b></a></td>"
-	. += 				"</tr>"
-	. += 				"<tr>"
 	. += 					"<td width='45%'>Parallax (Fancy Space)</td>"
 	. += 					"<td><b><a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
 	switch (parallax)
@@ -163,9 +159,6 @@
 
 		if("see_ooc")
 			chat_toggles ^= CHAT_OOC
-
-		if("see_looc")
-			chat_toggles ^= CHAT_LOOC
 
 		if("see_animations")
 			toggles ^= SHOW_ANIMATIONS
