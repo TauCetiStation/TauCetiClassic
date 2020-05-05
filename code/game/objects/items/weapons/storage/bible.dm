@@ -75,7 +75,7 @@
 
 		switch(looks)
 			if("Altar")
-				var/new_look = input(user, "Which pews style would you like?")  as null|anything in global.chaplain_religion.altar_info_by_name
+				var/new_look = input(user, "Which altar style would you like?")  as null|anything in global.chaplain_religion.altar_info_by_name
 				if(!new_look)
 					continue
 
