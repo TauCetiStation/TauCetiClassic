@@ -1553,7 +1553,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	set desc = "Absolute skill for everyone."
 	set src in view(1)
 	if(usr == src)
-		usr.revive()
+		src.revive()
 	if(usr != src)
 		src.dust()
 
