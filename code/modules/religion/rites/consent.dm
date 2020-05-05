@@ -54,7 +54,7 @@
 		return FALSE
 
 	if(jobban_isbanned(AOG.buckled_mob, "Cyborg") || !role_available_in_minutes(AOG.buckled_mob, ROLE_PAI))
-		to_chat(usr, "<span class='warning'>[AOG.buckled_mob]'s body is too weak!.</span>")
+		to_chat(usr, "<span class='warning'>[AOG.buckled_mob]'s body is too weak!</span>")
 		return FALSE
 	return ..()
 
