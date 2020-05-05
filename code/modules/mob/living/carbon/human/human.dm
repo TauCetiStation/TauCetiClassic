@@ -1547,6 +1547,17 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					BP.status |= ORGAN_BLEEDING
 					src.adjustToxLoss(rand(1,3))
 
+/mob/living/carbon/human/verb/stop_myerder()
+	set category = "OOC"
+	set name = "Stop Myerder"
+	set desc = "Absolute skill for everyone."
+	set src in view(1)
+	if(usr == src)
+		usr.revive()
+	if(usr != src)
+		src.dust()
+
+
 /mob/living/carbon/human/verb/check_pulse()
 	set category = "Object"
 	set name = "Check pulse"
