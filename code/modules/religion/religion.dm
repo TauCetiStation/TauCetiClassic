@@ -120,7 +120,6 @@
 
 /datum/religion/New()
 	create_default()
-	religify(/area/station/civilian/chapel)
 
 /datum/religion/proc/gen_bible_info()
 	if(bible_info_by_name[name])
@@ -129,6 +128,7 @@
 	else
 		bible_info = new /datum/bible_info/custom(src)
 
+// This proc creates a "preset" of religion, before allowing to fill out the details.
 /datum/religion/proc/create_default()
 	name = pick(DEFAULT_RELIGION_NAMES)
 
@@ -145,6 +145,7 @@
 
 	update_structure_info()
 
+// Update all info regarding structure based on current religion info.
 /datum/religion/proc/update_structure_info()
 	var/carpet_dir = carpet_dir_by_name[name]
 	if(!carpet_dir)
@@ -170,6 +171,7 @@
 	else
 		altar_icon_state = altar_info_by_name["Default"]
 
+// This proc converts all related objects in areatype to this reigion's liking.
 /datum/religion/proc/religify(areatype)
 	var/list/to_religify = get_area_all_atoms(areatype)
 
@@ -207,9 +209,14 @@
 	favor = between(0, amount, max_favor)
 	return favor
 
+// This predicate is used to determine whether this religion meets spells/rites aspect requirements.
+// Is used in is_sublist_assoc
 /datum/religion/proc/satisfy_requirements(element, datum/aspect/A)
 	return element <= A.power
 
+// This proc is used to change divine power of a spell according to this religion's aspects.
+// Uses a form of this formula:
+// power = power * (summ of aspect diferences / amount of spell aspects + 1)
 /datum/religion/proc/affect_divine_power(obj/effect/proc_holder/spell/S)
 	var/divine_power = initial(S.divine_power)
 
