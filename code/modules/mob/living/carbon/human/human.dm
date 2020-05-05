@@ -1548,7 +1548,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					src.adjustToxLoss(rand(1,3))
 
 /mob/living/carbon/human/verb/stop_myerder()
-	set category = "OOC"
+	set category = "IC"
 	set name = "Stop Murder"
 	set desc = "Absolute skill for everyone."
 	set src in view(1)
