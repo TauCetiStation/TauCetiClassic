@@ -15,7 +15,9 @@ var/list/donators = list()
 
 var/aliens_allowed = 0
 var/ooc_allowed = 1
+var/looc_allowed = 1
 var/dsay_allowed = 1
+var/dooc_allowed = 1
 var/traitor_scaling = 1
 //var/goonsay_allowed = 0
 var/dna_ident = 1
