@@ -207,6 +207,7 @@
 #include "code\datums\uplinks_items.dm"
 #include "code\datums\components\_component.dm"
 #include "code\datums\components\bound.dm"
+#include "code\datums\components\clickplace.dm"
 #include "code\datums\components\footstep.dm"
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\waddle.dm"
