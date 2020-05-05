@@ -50,6 +50,8 @@
 #define SLOT_LEGCUFFED     20
 #define SLOT_TIE           21
 #define SLOT_EARS          22 // Used in obscured checks
+#define SLOT_IN_L_POUCH    23
+#define SLOT_IN_R_POUCH    24
 
 //sprite sheet slot types(as also seen in update_icon.dm)
 #define SPRITE_SHEET_HELD "held"

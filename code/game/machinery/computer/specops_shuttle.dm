@@ -14,7 +14,7 @@ var/specops_shuttle_timeleft = 0
 /obj/machinery/computer/specops_shuttle
 	name = "special operations shuttle control console"
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "shuttle"
+	icon_state = "ert_shuttle"
 	light_color = "#00ffff"
 	req_access = list(access_cent_specops)
 	var/temp = null
@@ -27,9 +27,9 @@ var/specops_shuttle_timeleft = 0
 	announcer.config(list("Response Team" = 0))
 
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
-	var/message = "THE SPECIAL OPERATIONS SHUTTLE IS PREPARING TO RETURN"//Initial message shown.
+	var/message = "Possible rescue shuttle is preparing to undock"//Initial message shown.
 	if(announcer)
-		announcer.autosay(message, "A.L.I.C.E.", "Response Team")
+		announcer.autosay(message, "Automatic Docking Control System.", "Response Team")
 
 	while(specops_shuttle_time - world.timeofday > 0)
 		var/ticksleft = specops_shuttle_time - world.timeofday
@@ -42,10 +42,10 @@ var/specops_shuttle_timeleft = 0
 		if(announcer)
 			var/rounded_time_left = round(specops_shuttle_timeleft)//Round time so that it will report only once, not in fractions.
 			if(rounded_time_left in message_tracker)//If that time is in the list for message announce.
-				message = "ALERT: [rounded_time_left] SECOND[(rounded_time_left!=1)?"S":""] REMAIN"
+				message = "[rounded_time_left] seconds[(rounded_time_left!=1)?"S":""] to dock."
 				if(rounded_time_left==0)
-					message = "ALERT: TAKEOFF"
-				announcer.autosay(message, "A.L.I.C.E.", "Response Team")
+					message = "Docking."
+				announcer.autosay(message, "Automatic Docking Control System", "Response Team")
 				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 
@@ -109,9 +109,9 @@ var/specops_shuttle_timeleft = 0
 	announcer.config(list("Response Team" = 0))
 
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
-	var/message = "\"THE SPECIAL OPERATIONS SHUTTLE IS PREPARING FOR LAUNCH\""//Initial message shown.
+	var/message = "\"Possible rescue shuttle is preparing to dock.\""//Initial message shown.
 	if(announcer)
-		announcer.autosay(message, "A.L.I.C.E.", "Response Team")
+		announcer.autosay(message, "Automatic Docking Control System", "Response Team")
 //		message = "ARMORED SQUAD TAKE YOUR POSITION ON GRAVITY LAUNCH PAD"
 //		announcer.autosay(message, "A.L.I.C.E.", "Response Team")
 
@@ -126,10 +126,10 @@ var/specops_shuttle_timeleft = 0
 		if(announcer)
 			var/rounded_time_left = round(specops_shuttle_timeleft)//Round time so that it will report only once, not in fractions.
 			if(rounded_time_left in message_tracker)//If that time is in the list for message announce.
-				message = "\"ALERT: [rounded_time_left] SECOND[(rounded_time_left!=1)?"S":""] REMAIN\""
+				message = "[rounded_time_left] seconds[(rounded_time_left!=1)?"S":""] to undock."
 				if(rounded_time_left==0)
-					message = "\"ALERT: TAKEOFF\""
-				announcer.autosay(message, "A.L.I.C.E.", "Response Team")
+					message = "Undocking."
+				announcer.autosay(message, "Automatic Docking Control System", "Response Team")
 				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 
@@ -243,10 +243,10 @@ var/specops_shuttle_timeleft = 0
 		if(specops_shuttle_at_station || specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
 		if (!specops_can_move())
-			to_chat(usr, "<span class='warning'>The Special Operations shuttle is unable to leave.</span>")
+			to_chat(usr, "<span class='warning'>The shuttle is unable to leave.</span>")
 			return FALSE
 
-		to_chat(usr, "<span class='notice'>The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds.</span>")
+		to_chat(usr, "<span class='notice'>The shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds.</span>")
 
 		temp += "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 

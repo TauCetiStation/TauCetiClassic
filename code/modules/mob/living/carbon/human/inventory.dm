@@ -367,3 +367,17 @@
 	if(!has_bodypart(BP_R_ARM))
 		return FALSE
 	return ..()
+
+/mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
+	var/datum/outfit/O = null
+
+	if(ispath(outfit))
+		O = new outfit
+	else
+		O = outfit
+		if(!istype(O))
+			return FALSE
+	if(!O)
+		return FALSE
+
+	return O.equip(src, visualsOnly)

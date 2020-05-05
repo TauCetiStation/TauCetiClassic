@@ -81,6 +81,17 @@
 	    /obj/item/device/mass_spectrometer,
 	    /obj/item/device/reagent_scanner
 	    )
+
+/obj/item/weapon/storage/belt/medical/full/atom_init()
+	. = ..()
+	new /obj/item/weapon/reagent_containers/glass/bottle/bicaridine(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/dermaline(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/dexalinp(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/alkysine(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/imidazoline(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/peridaxon(src)
+
 /obj/item/weapon/storage/belt/medical/surg
 	name = "Surgery belt"
 	desc = "Can hold various medical equipment."
@@ -153,6 +164,16 @@
 		/obj/item/weapon/shield/riot/tele,
 		/obj/item/device/flashlight/seclite
 		)
+
+/obj/item/weapon/storage/belt/security/full/atom_init()
+	. = ..()
+	new /obj/item/weapon/grenade/flashbang(src)
+	new /obj/item/weapon/reagent_containers/spray/pepper(src)
+	new /obj/item/weapon/melee/baton(src)
+	new /obj/item/device/flash(src)
+	new /obj/item/weapon/gun/energy/taser(src)
+	new /obj/item/weapon/handcuffs(src)
+	new /obj/item/weapon/handcuffs(src)
 
 /obj/item/weapon/storage/belt/security/German
 	name = "German Belt"

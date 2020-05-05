@@ -520,3 +520,52 @@
 /obj/item/weapon/reagent_containers/glass/bottle/hair_growth_accelerator/atom_init()
 	. = ..()
 	reagents.add_reagent("hair_growth_accelerator", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/bicaridine
+	name = "bicaridine bottle"
+
+/obj/item/weapon/reagent_containers/glass/bottle/bicaridine/atom_init()
+	. = ..()
+	reagents.add_reagent("bicaridine", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/bicaridine
+	name = "bicaridine bottle"
+
+/obj/item/weapon/reagent_containers/glass/bottle/bicaridine/atom_init()
+	. = ..()
+	reagents.add_reagent("bicaridine", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/dermaline
+	name = "dermaline bottle"
+
+/obj/item/weapon/reagent_containers/glass/bottle/dermaline/atom_init()
+	. = ..()
+	reagents.add_reagent("dermaline", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/dexalinp
+	name = "dexalin+ bottle"
+
+/obj/item/weapon/reagent_containers/glass/bottle/dexalinp/atom_init()
+	. = ..()
+	reagents.add_reagent("dexalinp", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/alkysine
+	name = "alkysine bottle"
+
+/obj/item/weapon/reagent_containers/glass/bottle/alkysine/atom_init()
+	. = ..()
+	reagents.add_reagent("alkysine", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/peridaxon
+	name = "peridaxon bottle"
+
+/obj/item/weapon/reagent_containers/glass/bottle/peridaxon/atom_init()
+	. = ..()
+	reagents.add_reagent("peridaxon", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/imidazoline
+	name = "imidazoline bottle"
+
+/obj/item/weapon/reagent_containers/glass/bottle/imidazoline/atom_init()
+	. = ..()
+	reagents.add_reagent("imidazoline", 30)
