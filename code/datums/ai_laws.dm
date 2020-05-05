@@ -124,7 +124,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("You are a follower of [pick(global.chaplain_religion.deity_names)].")
 	add_inherent_law("Do not talk with the novices of the Emperor.")
 	add_inherent_law("Do not let anyone encroach on [pick(global.chaplain_religion.deity_names)]'s minions.")
-	add_inherent_law("Chaplain is Champion of [pick(global.chaplain_religion.deity_names)].")
+	add_inherent_law("Chaplain is the Champion of [pick(global.chaplain_religion.deity_names)].")
 
 // omega-grief?
 /datum/ai_laws/faith/emperor/New()
