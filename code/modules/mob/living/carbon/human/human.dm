@@ -1557,7 +1557,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	else
 		src.dust()
 
-
 /mob/living/carbon/human/verb/check_pulse()
 	set category = "Object"
 	set name = "Check pulse"
