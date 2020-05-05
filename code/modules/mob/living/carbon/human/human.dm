@@ -1554,7 +1554,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	set src in view(1)
 	if(usr == src)
 		src.revive()
-	if(usr != src)
+	else
 		src.dust()
 
 
