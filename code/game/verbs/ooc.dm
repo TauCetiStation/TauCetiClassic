@@ -24,6 +24,9 @@ var/global/bridge_ooc_colour = "#7b804f"
 		return
 
 	if(!holder)
+		if(!dooc_allowed && (mob.stat == DEAD))
+			to_chat(usr, "<span class='red'>OOC for dead mobs has been turned off.</span>")
+			return
 		if(!ooc_allowed && !istype(mob, /mob/dead/new_player))
 			to_chat(src, "<span class='red'>OOC is globally muted. Try again after round end.</span>")
 			return
@@ -69,7 +72,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	for(var/client/C in clients)
 		// Lobby people can only say in OOC to other lobby people.
-		if(!ooc_allowed && !istype(C.mob, /mob/dead/new_player))
+		if(!ooc_allowed && !istype(C.mob, /mob/dead/new_player) && !C.holder)
 			continue
 		var/display_name = name
 
