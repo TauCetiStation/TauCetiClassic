@@ -357,7 +357,7 @@
 	return O
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize(name, laws)
+/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/nanotrasen)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
@@ -602,6 +602,5 @@
 
 	//Not in here? Must be untested!
 	return 1
-
 
 
