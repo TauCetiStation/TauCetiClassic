@@ -9,7 +9,7 @@
 	climbable = TRUE
 	pass_flags = PASSTABLE
 	can_buckle = TRUE
-	buckle_lying = 90 //we turn to you!
+	buckle_lying = TRUE
 
 	var/datum/religion_rites/performing_rite
 	var/datum/religion_sect/sect //easy access
@@ -49,8 +49,8 @@
 
 /obj/structure/altar_of_gods/MouseDrop_T(mob/target, mob/user)
 	if(isliving(target))
-		if(can_climb(target) && !buckled_mob && target.loc != loc)
-			if(user.incapacitated())
+		if(!target.buckled && !buckled_mob && target.loc != loc)
+			if(user.incapacitated() || user.lying)
 				return
 			if(iscarbon(target))
 				target.loc = loc
