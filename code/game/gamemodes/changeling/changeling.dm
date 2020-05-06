@@ -15,7 +15,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	required_enemies = 1
 	recommended_enemies = 4
 
-	restricted_specie_flags = list(IS_PLANT, IS_SYNTHETIC, NO_SCAN)
+	restricted_species_flags = list(IS_PLANT, IS_SYNTHETIC, NO_SCAN)
 
 	votable = 0
 

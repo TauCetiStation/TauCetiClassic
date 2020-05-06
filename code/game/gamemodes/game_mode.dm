@@ -30,7 +30,7 @@
 
 	// Specie flags that for any amount of reasons can cause this role to not be available.
 	// TO-DO: use traits? ~Luduk
-	var/list/restricted_specie_flags = list()
+	var/list/restricted_species_flags = list()
 
 	var/required_players = 0
 	var/required_players_secret = 0 //Minimum number of players for that game mode to be chose in Secret
@@ -331,7 +331,7 @@ Implants;
 	if(!S.can_be_role(role))
 		return FALSE
 
-	for(var/specie_flag in restricted_specie_flags)
+	for(var/specie_flag in restricted_species_flags)
 		if(S.flags[specie_flag])
 			return FALSE
 
