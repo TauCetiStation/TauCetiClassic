@@ -59,10 +59,11 @@ The tech datums are the actual "tech trees" that you improve through researching
 		var/datum/design/d = new D(src)
 		design_by_id[d.id] = d
 		if(d.starts_unlocked)
-			design_reliabilities[d.id] = 100
+			design_reliabilities[d.id] = 120
+			design_created_prototypes[d.id] = 15
 		else
 			design_reliabilities[d.id] = 10
-		design_created_prototypes[d.id] = 0
+			design_created_prototypes[d.id] = 0
 
 	for(var/T in subtypesof(/datum/tech))
 		var/datum/tech/Tech_Tree = new T
