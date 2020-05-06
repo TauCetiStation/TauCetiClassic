@@ -68,12 +68,6 @@
 	if (config.log_ooc)
 		global.game_log << "\[[time_stamp()]]OOC: [LOG_CLEANING(text)][log_end]"
 
-// Basically log_ooc(), but works only in lobby.
-/proc/log_lobby(text)
-	// I don't see a point in seperating these, since they behave in the same way. ~Luduk
-	if (config.log_ooc)
-		global.game_log << "\[[time_stamp()]]LOBBY: [LOG_CLEANING(text)][log_end]"
-
 /proc/log_whisper(text)
 	if (config.log_whisper)
 		global.game_log << "\[[time_stamp()]]WHISPER: [LOG_CLEANING(text)][log_end]"
