@@ -242,7 +242,7 @@
 	name = "Spread a good infection"
 	desc = "Good infection with viruses weight even and mind restoration"
 
-	//favor_cost = 300
+	favor_cost = 300
 	charge_max = 3 MINUTES
 	divine_power = 1 //count
 	needed_aspect = list(ASPECT_DEATH = 1, ASPECT_OBSCURE = 1, ASPECT_RESCUE = 1)
@@ -336,7 +336,7 @@
 	name = "The smell of rot"
 	desc = "Spread smoke with Thermopsis"
 
-	//favor_cost = 100
+	favor_cost = 100
 	charge_max = 3 MINUTES
 	divine_power = 1 //count
 	needed_aspect = list(ASPECT_FOOD = 1, ASPECT_OBSCURE = 1)
