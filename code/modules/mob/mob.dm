@@ -551,8 +551,10 @@
 		SEND_SIGNAL(src, COMSIG_LIVING_STOP_PULL, pulling)
 		SEND_SIGNAL(pulling, COMSIG_ATOM_STOP_PULL, src)
 
-		pulling.pulledby = null
-		pulling = null
+		// What if the signals above somehow deleted pulledby?
+		if(pulling)
+			pulling.pulledby = null
+			pulling = null
 		if(pullin)
 			pullin.update_icon(src)
 		count_pull_debuff()

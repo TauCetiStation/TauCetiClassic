@@ -209,6 +209,7 @@
 #include "code\datums\components\bound.dm"
 #include "code\datums\components\clickplace.dm"
 #include "code\datums\components\footstep.dm"
+#include "code\datums\components\multi_carry.dm"
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\waddle.dm"
 #include "code\datums\diseases\appendicitis.dm"
