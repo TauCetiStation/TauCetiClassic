@@ -7,7 +7,7 @@
 	var/item_state
 
 	var/laws_type = /datum/ai_laws/faith/commandments
-	var/borg_name = "blessed"
+	var/borg_name = "Blessed"
 
 /datum/bible_info/New(datum/religion/R)
 	if(pos_names)
@@ -56,12 +56,13 @@
 	// Should be a red book.
 	item_state = "book1"
 	laws_type = /datum/ai_laws/faith/chaos
-	borg_name = "marked"
+	borg_name = "Marked"
 
 // Inside joke. *tips fedora* (not funny)
 /datum/bible_info/book_of_lorgar/imperial_truth
 	name = "Imperial Truth"
 	laws_type = /datum/ai_laws/faith/emperor
+	borg_name = "Imperial"
 
 /datum/bible_info/satanism
 	name = "The Unholy Bible"
@@ -69,14 +70,14 @@
 	// Should be a red book.
 	item_state = "book1"
 	laws_type = /datum/ai_laws/faith/satanism
-	borg_name = "bloody"
+	borg_name = "Bloody"
 
 /datum/bible_info/necronomicon
 	name = "The Necronomicon"
 	icon_state = "necronomicon"
 	item_state = "necronomicon"
 	laws_type = /datum/ai_laws/faith/satanism
-	borg_name = "chtulu"
+	borg_name = "Cthulhu"
 
 /datum/bible_info/islam
 	pos_names = list("Koran", "Quran")
@@ -88,14 +89,14 @@
 	icon_state = "scientology"
 	item_state = "scientology"
 	laws_type = /datum/ai_laws/faith/scientology
-	borg_name = "good"
+	borg_name = "Good"
 
 /datum/bible_info/scrapbook
 	pos_names = list("The Holy Joke Book", "Hymns to the Honkmother", "Prank in the name of Honkmother", "Scrapbook")
 	icon_state = "scrapbook"
 	item_state = "scrapbook"
 	laws_type = /datum/ai_laws/faith/honk
-	borg_name = "funny"
+	borg_name = "Funny"
 
 // Why does this exist? ~Luduk
 /datum/bible_info/creeper
@@ -136,7 +137,7 @@
 	// icon_state = "holdingpack"
 	// item_state = "backpack"
 	laws_type = /datum/ai_laws/faith/science
-	borg_name = "factorial"
+	borg_name = "Factorial"
 
 /datum/bible_info/techno
 	name = "The Polyhedron"
@@ -145,4 +146,4 @@
 	// icon_state = "circuit_box"
 	// item_state = "syringe_kit"
 	laws_type = /datum/ai_laws/faith/science
-	borg_name = "infinity"
+	borg_name = "Infinity"
