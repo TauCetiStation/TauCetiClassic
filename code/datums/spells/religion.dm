@@ -244,7 +244,7 @@
 
 	favor_cost = 300
 	charge_max = 3 MINUTES
-	divine_power = 1 //count
+	divine_power = 1 //range
 	needed_aspect = list(ASPECT_DEATH = 1, ASPECT_OBSCURE = 1, ASPECT_RESCUE = 1)
 
 	range = 0
@@ -338,7 +338,7 @@
 
 	favor_cost = 100
 	charge_max = 3 MINUTES
-	divine_power = 1 //count
+	divine_power = 1 //power of reagent
 	needed_aspect = list(ASPECT_FOOD = 1, ASPECT_OBSCURE = 1)
 
 	range = 0
