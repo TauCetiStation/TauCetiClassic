@@ -9,7 +9,7 @@
 	climbable = TRUE
 	pass_flags = PASSTABLE
 	can_buckle = TRUE
-	buckle_lying = 90 //we turn to you!
+	buckle_lying = TRUE
 
 	var/datum/religion_rites/performing_rite
 	var/datum/religion_sect/sect //easy access
@@ -23,6 +23,8 @@
 	. = ..()
 	experiments = new
 	experiments.init_known_tech()
+
+	AddComponent(/datum/component/clickplace)
 
 /obj/structure/altar_of_gods/examine(mob/user)
 	. = ..()
@@ -47,8 +49,8 @@
 
 /obj/structure/altar_of_gods/MouseDrop_T(mob/target, mob/user)
 	if(isliving(target))
-		if(can_climb(target) && !buckled_mob && target.loc != loc)
-			if(user.incapacitated())
+		if(!target.buckled && !buckled_mob && target.loc != loc)
+			if(user.incapacitated() || user.lying)
 				return
 			if(iscarbon(target))
 				target.loc = loc
@@ -59,29 +61,58 @@
 			if(can_buckle && istype(target) && !buckled_mob && istype(user))
 				user_buckle_mob(target, user)
 
-/obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
-	if(iswrench(C))
-		anchored = !anchored
-		visible_message("<span class='warning'>[src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].</span>")
+// This proc handles an animation of item being sacrified and stuff.
+/obj/structure/altar_of_gods/proc/sacrifice_item(obj/item/I)
+	I.mouse_opacity =  MOUSE_OPACITY_TRANSPARENT
+	I.layer = FLY_LAYER
+
+	sleep(rand(1, 3))
+	if(QDELING(I))
 		return
 
-	if(!anchored)
-		return ..()
+	var/static/list/waddle_angles = list(-28, -14, 0, 14, 28)
 
-	if(!user.mind)
+	I.waddle(pick(waddle_angles), 0)
+	sleep(2)
+	if(QDELING(I))
 		return
 
-	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
-		to_chat(user, "<span class='warning'>You don't know how to use this.</span>")
+	var/matrix/M = I.transform
+	M.Turn(pick(waddle_angles))
+
+	var/fly_height = rand(20, 40)
+
+	animate(I, transform = M, pixel_z = I.pixel_z + fly_height, alpha = 0, time = 1.5 SECONDS)
+
+	sleep(2 SECONDS)
+	if(QDELING(I))
 		return
 
-	//If we can sacrifice, we do nothing but the sacrifice instead of typical attackby behavior
-	if(religion && !(C.flags & ABSTRACT))
+	qdel(I)
+
+// This proc is used to sacrifice all items on altar. Returns TRUE if at least something was sacrificed.
+/obj/structure/altar_of_gods/proc/sacrifice(mob/user)
+	if(!religion)
+		to_chat(user, "<span class ='warning'>First choose aspects in your religion!</span>")
+		return FALSE
+
+	if(user.is_busy(src))
+		return FALSE
+
+	user.visible_message("<span class='notice'>[user]'s hand moves across [src].</span>", "<span class='notice'>You begin sacrificing items atop [src].</span>")
+	if(!do_after(user, target = src, delay = 20))
+		return FALSE
+
+	var/sacrificed = FALSE
+	for(var/obj/item/I in loc)
+		if(I.flags & ABSTRACT)
+			continue
+
 		var/max_points = 0
 
 		for(var/aspect in religion.aspects)
 			var/datum/aspect/asp = religion.aspects[aspect]
-			var/points = asp.sacrifice(C, user, src)
+			var/points = asp.sacrifice(I, user, src)
 			var/mult = asp.power > 1 ? round(log(asp.power, 10), 0.01) : 0
 			mult += 1
 			points *= mult
@@ -90,16 +121,39 @@
 
 		if(max_points > MIN_FAVOUR_GAIN)
 			global.chaplain_religion.adjust_favor(max_points, user)
-			to_chat(user, "<span class='notice'>You offer [C]'s power to [pick(religion.deity_names)], pleasing them.</span>")
-			user.drop_from_inventory(C)
-			qdel(C)
-			return
+			INVOKE_ASYNC(src, .proc/sacrifice_item, I)
+			sacrificed = TRUE
 
 		else if(max_points > 0)
-			to_chat(user, "<span class='warning'>You offer [C] to [pick(religion.deity_names)], but they would not accept such pityful offering.</span>")
-			return
+			to_chat(user, "<span class='warning'>You offer [I] to [pick(religion.deity_names)], but they would not accept such pityful offering.</span>")
 
-	if(istype(C, /obj/item/weapon/nullrod))
+	if(sacrificed)
+		to_chat(user, "<span class='notice'>[pick(religion.deity_names)] accepted your offering.</span>")
+		return TRUE
+	return FALSE
+
+/obj/structure/altar_of_gods/attack_hand(mob/living/carbon/human/user)
+	if(can_buckle && buckled_mob && istype(user))
+		user_unbuckle_mob(user)
+		return
+
+	user.SetNextMove(CLICK_CD_INTERACT)
+	if(user.mind && user.mind.holy_role >= HOLY_ROLE_PRIEST)
+		sacrifice(user)
+	else
+		to_chat(user, "<span class='warning'>You don't know how to use this.</span>")
+
+// This proc should handle sect choice, and ritual execution.
+/obj/structure/altar_of_gods/proc/use_religion_tools(obj/item/I, mob/user)
+	if(!user.mind)
+		return
+
+	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
+		return
+
+	// Assume, that if we've gotten this far, it's a succesful tool use.
+	. = TRUE
+	if(istype(I, /obj/item/weapon/nullrod))
 		if(!religion)
 			to_chat(user, "<span class ='warning'>First choose aspects in your religion!</span>")
 			return
@@ -128,7 +182,7 @@
 			QDEL_NULL(performing_rite)
 		return
 
-	else if(istype(C, /obj/item/weapon/storage/bible) && !chosen_aspect)
+	else if(istype(I, /obj/item/weapon/storage/bible) && !chosen_aspect)
 		if(!global.chaplain_religion)
 			to_chat(user, "<span class='warning'>It appears the game hasn't even started! Stop right there!</span>")
 			return
@@ -147,6 +201,23 @@
 		religion = global.chaplain_religion
 
 		sect.on_select(user, religion)
+		return
+
+	// Except when it is not.
+	return FALSE
+
+/obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
+	if(iswrench(C))
+		if(!user.is_busy(src) && C.use_tool(src, user, 40, volume = 50))
+			anchored = !anchored
+			visible_message("<span class='warning'>[src] has been [anchored ? "secured to the floor" : "unsecured from the floor"] by [user].</span>")
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
+			return
+
+	if(anchored && use_religion_tools(C, user))
+		return
+
+	return ..()
 
 /obj/structure/altar_of_gods/proc/generate_available_sects(mob/user) //eventually want to add sects you get from unlocking certain achievements
 	var/list/variants = list()
@@ -160,3 +231,13 @@
 		variants[sect.name] = sect
 
 	return variants
+
+/obj/structure/altar_of_gods/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	if(istype(mover) && mover.checkpass(PASSTABLE))
+		return TRUE
+	return ..()
+
+/obj/structure/altar_of_gods/CheckExit(atom/movable/AM, target)
+	if(istype(AM) && AM.checkpass(PASSTABLE))
+		return TRUE
+	return ..()

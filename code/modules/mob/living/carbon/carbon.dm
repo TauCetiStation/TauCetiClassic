@@ -358,7 +358,6 @@
 		if(!crawl_can_use())
 			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
 			return
-		layer = 3.9
 
 	pass_flags ^= PASSCRAWL
 	crawling = !crawling
@@ -671,7 +670,7 @@
 			return 1
 		else if(locate(/obj/structure/stool/bed/roller, src.loc))
 			return -5
-		else if(locate(/obj/machinery/optable, src.loc)||locate(/obj/structure/stool/bed, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
+		else if(locate(/obj/machinery/optable, src.loc) || locate(/obj/structure/stool/bed, src.loc) || locate(/obj/structure/altar_of_gods, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
 			return -4
 		else
 			return -6
@@ -680,7 +679,7 @@
 
 /mob/living/carbon/get_pixel_x_offset(lying_current = FALSE)
 	if(lying)
-		if(locate(/obj/machinery/optable, src.loc)||locate(/obj/structure/stool/bed, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
+		if(locate(/obj/machinery/optable, src.loc) || locate(/obj/structure/stool/bed, src.loc) || locate(/obj/structure/altar_of_gods, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
 			switch(src.lying_current)
 				if(90)	return 2
 				if(270)	return -2

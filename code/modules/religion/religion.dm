@@ -120,7 +120,6 @@
 
 /datum/religion/New()
 	create_default()
-	religify(/area/station/civilian/chapel)
 
 /datum/religion/proc/gen_bible_info()
 	if(bible_info_by_name[name])
@@ -129,6 +128,7 @@
 	else
 		bible_info = new /datum/bible_info/custom(src)
 
+// This proc creates a "preset" of religion, before allowing to fill out the details.
 /datum/religion/proc/create_default()
 	name = pick(DEFAULT_RELIGION_NAMES)
 
@@ -145,6 +145,7 @@
 
 	update_structure_info()
 
+// Update all info regarding structure based on current religion info.
 /datum/religion/proc/update_structure_info()
 	var/carpet_dir = carpet_dir_by_name[name]
 	if(!carpet_dir)
@@ -170,6 +171,7 @@
 	else
 		altar_icon_state = altar_info_by_name["Default"]
 
+// This proc converts all related objects in areatype to this reigion's liking.
 /datum/religion/proc/religify(areatype)
 	var/list/to_religify = get_area_all_atoms(areatype)
 
@@ -207,9 +209,14 @@
 	favor = between(0, amount, max_favor)
 	return favor
 
+// This predicate is used to determine whether this religion meets spells/rites aspect requirements.
+// Is used in is_sublist_assoc
 /datum/religion/proc/satisfy_requirements(element, datum/aspect/A)
 	return element <= A.power
 
+// This proc is used to change divine power of a spell according to this religion's aspects.
+// Uses a form of this formula:
+// power = power * (summ of aspect diferences / amount of spell aspects + 1)
 /datum/religion/proc/affect_divine_power(obj/effect/proc_holder/spell/S)
 	var/divine_power = initial(S.divine_power)
 
@@ -283,18 +290,21 @@
 	for(var/aspect_type in aspect_list)
 		var/datum/aspect/asp = aspect_type
 		if(aspects[initial(asp.name)])
-			aspects[initial(asp.name)] += aspect_list[aspect_type]
+			var/datum/aspect/aspect = aspects[initial(asp.name)]
+			aspect.power += aspect_list[aspect_type]
 		else
-			asp = new aspect_type
-			aspects[asp.name] = asp
+			var/datum/aspect/aspect = new aspect_type
+			aspect.power = aspect_list[aspect_type]
+			aspects[aspect.name] = aspect
 
 	update_aspects()
 
 ///Generates a list of rites with 'name' = 'type', used for examine altar_of_god
 /datum/religion/proc/generate_rites_list()
+	var/list/retVal = list()
 	for(var/i in rites)
 		if(!ispath(i))
-			. += list(i = rites[i])
+			retVal[i] = rites[i]
 			continue
 		var/datum/religion_rites/RI = i
 		var/name_entry = "[initial(RI.name)]"
@@ -303,7 +313,8 @@
 		if(initial(RI.favor_cost))
 			name_entry += " ([initial(RI.favor_cost)] favor)"
 
-		. += list("[name_entry]\n" = i)
+		retVal["[name_entry]\n"] = i
+	return retVal
 
 /datum/religion/proc/add_deity(mob/M)
 	active_deities += M

@@ -870,7 +870,6 @@
 				ExtinguishMob()
 			return
 		if(CM.handcuffed && (CM.last_special <= world.time))
-			if(!CM.canmove && !CM.resting)	return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
 			if(isxenoadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
