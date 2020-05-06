@@ -244,7 +244,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/twohanded/sledgehammer/attack(target, mob/living/user)
 	..()
 	if((CLUMSY in user.mutations) && prob(40))
-		playsound(user, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
+		playsound(target, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
 		return
 	if(wielded)
 		INVOKE_ASYNC(src, .proc/spin, user)
