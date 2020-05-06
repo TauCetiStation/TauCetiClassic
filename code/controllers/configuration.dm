@@ -70,8 +70,8 @@ var/list/net_announcer_secret = list()
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 
-	// Disable OOC for the duration of a round.
-	var/ooc_round_only = TRUE
+	// If true - disable OOC for the duration of a round.
+	var/ooc_round_only = FALSE
 
 	var/registration_panic_bunker_age = null
 	var/allowed_by_bunker_player_age = 60
@@ -667,8 +667,8 @@ var/list/net_announcer_secret = list()
 				if("sandbox")
 					config.sandbox = TRUE
 
-				if("ooc_always")
-					config.ooc_round_only = FALSE
+				if("ooc_round_only")
+					config.ooc_round_only = TRUE
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")

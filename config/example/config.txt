@@ -292,6 +292,6 @@ REPOSITORY_LINK https://github.com/TauCetiStation/TauCetiClassic
 ## not recommended if you host server without virt box/docker/etc. and do not restrict clients access to server
 # SANDBOX
 
-## This config option is used to disable toggling OOC on-off during round. If it is enabled - OOC is available throughout
-## the round, else - OOC turns off on round start and turns back on on round end.
-# OOC_ALWAYS
+## This config option disables OOC after round start, and enables it back after round end.
+## Comment it out to disable such behaviour.
+OOC_ROUND_ONLY
