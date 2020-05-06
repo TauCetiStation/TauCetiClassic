@@ -55,8 +55,10 @@
 					to_give.add_fingerprint(victim)
 					// Extra ! ! ! F U N ! ! !
 					if(attacker.a_intent != I_HURT)
+						event_log("Forced in-hand use of [to_give]")
 						to_give.attack_self(victim)
 					else
+						event_log("Forced self-attack by [to_give]")
 						var/resolved = victim.attackby(to_give, victim)
 						if(!resolved && victim && to_give)
 							to_give.afterattack(victim, victim, TRUE)
@@ -157,6 +159,7 @@
 								else
 									end_string += ", [I]"
 								end_string += "!"
+								event_log("Taking off [I]")
 								L.drop_from_inventory(I, L.loc)
 								// attacker is crawling, so they can't anyway.
 								// attacker.put_in_hands(I)
