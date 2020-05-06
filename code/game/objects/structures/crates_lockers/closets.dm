@@ -339,11 +339,12 @@
 	//okay, so the closet is either welded or locked... resist!!!
 	user.SetNextMove(100)
 	user.last_special = world.time + 100
-	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>")
-	for(var/mob/O in viewers(src))
-		to_chat(O, "<span class='warning'>[src] begins to shake violently!</span>")
+	user.visible_message(
+		"<span class='warning'>[src] begins to shake violently!</span>",
+		"<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
+	)
 
-	if(do_after(user,(breakout_time*60*10),target=src)) //minutes * 60seconds * 10deciseconds
+	if(do_after(user, (breakout_time MINUTES), target=src))
 		if(!user || user.loc != src || opened || (!locked && !welded))
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
