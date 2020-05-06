@@ -239,6 +239,9 @@
 
 
 /mob/proc/CtrlClickOn(atom/A)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CLICK_CTRL, A) & COMPONENT_CANCEL_CLICK)
+		return
+
 	var/obj/item/I = get_active_hand()
 	if(I && next_move <= world.time && !incapacitated() && I.CtrlClickAction(A, src))
 		return
@@ -279,6 +282,9 @@
 	Unused except for AI
 */
 /mob/proc/CtrlShiftClickOn(atom/A)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CLICK_CTRL_SHIFT, A) & COMPONENT_CANCEL_CLICK)
+		return
+
 	var/obj/item/I = get_active_hand()
 	if(I && next_move <= world.time && !incapacitated() && I.CtrlShiftClickAction(A, src))
 		return
@@ -324,6 +330,29 @@
 	else
 		if(dx > 0)	usr.dir = EAST
 		else		usr.dir = WEST
+
+// Simple helper to face what you clicked on, in case it should be needed in more than one place
+// This proc is currently only used in multi_carry.dm (/datum/component/multi_carry)
+/mob/proc/face_pixeldiff(pixel_x, pixel_y, pixel_x_new, pixel_y_new)
+	if( stat || buckled)
+		return
+
+	var/dx = pixel_x_new - pixel_x
+	var/dy = pixel_y_new - pixel_y
+
+	if(dx == 0 && dy == 0)
+		return
+
+	if(abs(dx) < abs(dy))
+		if(dy > 0)
+			dir = NORTH
+		else
+			dir = SOUTH
+	else
+		if(dx > 0)
+			dir = EAST
+		else
+			dir = WEST
 
 // Craft or Build helper (main file can be found here: code/datums/cob_highlight.dm)
 /mob/proc/cob_click(client/C, list/modifiers)
