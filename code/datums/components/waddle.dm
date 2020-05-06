@@ -32,7 +32,7 @@
 
 	RegisterSignal(parent, waddle_on, .proc/try_waddle)
 
-/datum/component/waddle/proc/try_waddle(atom/movable/AM, dir)
+/datum/component/waddle/proc/try_waddle()
 	var/atom/movable/waddler = parent
 	if(waddler.can_waddle())
 		var/waddle_angle = pick(waddle_angles)
