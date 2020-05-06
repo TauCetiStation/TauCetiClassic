@@ -70,6 +70,9 @@ var/list/net_announcer_secret = list()
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 
+	// Disable OOC for the duration of a round.
+	var/ooc_round_only = TRUE
+
 	var/registration_panic_bunker_age = null
 	var/allowed_by_bunker_player_age = 60
 	var/client_limit_panic_bunker_count = null
@@ -170,7 +173,7 @@ var/list/net_announcer_secret = list()
 	var/chat_bridge = 0
 	var/antigrief_alarm_level = 1
 	var/check_randomizer = 0
-	
+
 	var/guard_email = null
 	var/guard_enabled = FALSE
 	var/guard_autoban_treshhold = null
@@ -198,7 +201,7 @@ var/list/net_announcer_secret = list()
 
 	var/record_replays = FALSE
 
-	
+
 	var/sandbox = FALSE
 	var/list/net_announcers = list() // List of network announcers on
 
@@ -322,7 +325,7 @@ var/list/net_announcer_secret = list()
 
 				if ("log_sql_error")
 					config.log_sql_error = 1
-				
+
 				if ("log_js_error")
 					config.log_js_error = 1
 
@@ -664,6 +667,9 @@ var/list/net_announcer_secret = list()
 				if("sandbox")
 					config.sandbox = TRUE
 
+				if("ooc_always")
+					config.ooc_round_only = FALSE
+
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 
@@ -900,7 +906,7 @@ var/list/net_announcer_secret = list()
 
 /datum/configuration/proc/load_announcer_config(config_path)
 	// Loading config of network communication between servers
-	// Server list loaded from serverlist.txt file. It's file with comments. 
+	// Server list loaded from serverlist.txt file. It's file with comments.
 	// One line of file = one server. Format - byond://example.com:2506 = secret
 	// First server must be self link for loading the secret
 	//

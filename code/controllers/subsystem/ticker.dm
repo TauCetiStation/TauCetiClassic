@@ -164,7 +164,8 @@ var/datum/subsystem/ticker/ticker
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
 
 	// Discuss your stuff after the round ends.
-	ooc_allowed = FALSE
+	if(config.ooc_round_only)
+		ooc_allowed = FALSE
 
 	var/init_start = world.timeofday
 	//Create and announce mode
@@ -419,7 +420,8 @@ var/datum/subsystem/ticker/ticker
 //cursed code
 /datum/subsystem/ticker/proc/declare_completion()
 	// Now you all can discuss the game.
-	ooc_allowed = TRUE
+	if(config.ooc_round_only)
+		ooc_allowed = TRUE
 
 	var/station_evacuated
 	if(SSshuttle.location > 0)

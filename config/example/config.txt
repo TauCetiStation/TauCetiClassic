@@ -291,3 +291,7 @@ REPOSITORY_LINK https://github.com/TauCetiStation/TauCetiClassic
 ## Run server in sandbox mode - everyone has admin permissions without logs, bans
 ## not recommended if you host server without virt box/docker/etc. and do not restrict clients access to server
 # SANDBOX
+
+## This config option is used to disable toggling OOC on-off during round. If it is enabled - OOC is available throughout
+## the round, else - OOC turns off on round start and turns back on on round end.
+# OOC_ALWAYS
