@@ -59,7 +59,6 @@
 /obj/structure/closet/coffin/dump_contents()
 	var/mob/M = locate() in src
 	if(M)
-		// So nobody sees M slowly rotate into the coffin.
 		M.forceMove(loc)
 		buckle_mob(M)
 		M.instant_vision_update(0)
@@ -129,6 +128,9 @@
 	add_overlay(coffin_side)
 
 /obj/structure/closet/coffin/MouseDrop_T(mob/living/M, mob/living/user)
+	if(layer >= FLY_LAYER) // We're flying, nothing's gonna buckle to us.
+		return
+
 	if(M.loc == loc && can_buckle && istype(M) && !buckled_mob && istype(user))
 		user_buckle_mob(M, user)
 	else
