@@ -322,7 +322,7 @@
 				good_spell = O
 
 	for(var/mob/living/carbon/human/H in orange(divine_power))
-		if(H.mind.holy_role >= HOLY_ROLE_RIEST)
+		if(H.mind.holy_role >= HOLY_ROLE_PRIEST)
 			continue
 		if(good_spell)
 			if(H in good_spell.infected)
