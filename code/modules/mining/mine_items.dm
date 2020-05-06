@@ -241,6 +241,19 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/twohanded/sledgehammer/update_icon()
 	icon_state = "sledgehammer[wielded]"
 
+/obj/item/weapon/twohanded/sledgehammer/attack(target, mob/living/user)
+	..()
+	if((CLUMSY in user.mutations) && prob(40))
+		playsound(user, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
+		return
+	if(wielded)
+		INVOKE_ASYNC(src, .proc/spin, user)
+
+/obj/item/weapon/twohanded/sledgehammer/proc/spin(mob/living/user)
+	for(var/i in list(2,8,1,4,2,8,1,4,2))
+		user.dir = i
+		sleep(1)
+
 /*****************************Shovel********************************/
 /obj/item/weapon/shovel
 	name = "shovel"

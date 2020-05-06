@@ -496,6 +496,13 @@ var/list/wood_icons = list("wood","wood-broken")
 		return 0
 	user.SetNextMove(CLICK_CD_INTERACT)
 
+	if(istype(C, /obj/item/weapon/twohanded/sledgehammer))
+		var/obj/item/weapon/twohanded/sledgehammer/S = C
+		if(S.wielded)
+			playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
+			shake_camera(user, 1, 1)
+			break_tile()
+
 	if(istype(C,/obj/item/weapon/light/bulb)) //only for light tiles
 		if(is_light_floor())
 			if(get_lightfloor_state())
