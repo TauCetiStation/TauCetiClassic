@@ -48,13 +48,47 @@ var/global/bridge_ooc_colour = "#7b804f"
 			else
 				display_colour = "#b82e00"	//orange
 
-	send2ooc(msg, display_name, display_colour, src)
+	if(istype(mob, /mob/dead/new_player))
+		send2lobby(msg, display_name, display_colour, src)
+	else
+		send2ooc(msg, display_name, display_colour, src)
 
 	world.send2bridge(
 		type = list(BRIDGE_OOC),
 		attachment_msg = "OOC: **[(holder && holder.fakekey)? holder.fakekey : display_name ]**: [msg]",
 		attachment_color = (supporter && prefs.ooccolor) ? prefs.ooccolor : display_colour,
 	)
+
+// This is basically send2ooc but works only in lobby.
+/proc/send2lobby(msg, name, colour, client/sender)
+	msg = sanitize(msg)
+
+	if(!msg)
+		return
+
+	if(sender)
+		log_lobby("[key_name(sender)] : [msg]")
+	else
+		log_lobby("[name]: [msg]")
+
+	for(var/client/C in clients)
+		if(!istype(C.mob, /mob/dead/new_player))
+			continue
+
+		var/display_name = name
+
+		if(sender)
+			if(sender.supporter && sender.prefs.ooccolor)
+				display_name = "<span style='color: [sender.prefs.ooccolor]'>[display_name]</span>"
+
+			if(sender.holder && sender.holder.fakekey)
+				if(C.holder)
+					display_name = "[sender.holder.fakekey]/([sender.key])"
+				else
+					display_name = sender.holder.fakekey
+
+		if(C.prefs.chat_toggles & CHAT_OOC)
+			to_chat(C, "<font color='[colour]'><span class='ooc'><span class='prefix'>LOBBY:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></span></font>")
 
 /proc/send2ooc(msg, name, colour, client/sender)
 	msg = sanitize(msg)
