@@ -180,16 +180,11 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	toolspeed = 1 //moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
-	usesound = 'sound/weapons/Genhit.ogg'
+	usesound = 'sound/items/pickaxe.ogg'
 	var/drill_verb = "picking"
 	sharp = 1
 
 	var/excavation_amount = 100
-
-/obj/item/weapon/pickaxe/hammer		//DEAD ITEM
-	name = "sledgehammer"
-	//icon_state = "sledgehammer" Waiting on sprite
-	desc = "A mining hammer made of reinforced metal. You feel like smashing your boss in the face with this."
 
 /obj/item/weapon/pickaxe/silver
 	name = "silver pickaxe"
@@ -229,6 +224,22 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
 
+/*****************************Sledgehammer********************************/
+/obj/item/weapon/twohanded/sledgehammer
+	name = "Sledgehammer"
+	icon_state = "sledgehammer0"
+	force = 15
+	origin_tech = "materials=3"
+	desc = "This thing breaks skulls pretty well, right?"
+	hitsound = 'sound/items/sledgehammer_hit.ogg'
+	w_class = ITEM_SIZE_LARGE
+	slot_flags = SLOT_FLAGS_BACK
+	force_unwielded = 15
+	force_wielded = 40
+	attack_verb = list("attacked", "chopped", "cleaved", "torn")
+
+/obj/item/weapon/twohanded/sledgehammer/update_icon()
+	icon_state = "sledgehammer[wielded]"
 
 /*****************************Shovel********************************/
 /obj/item/weapon/shovel
