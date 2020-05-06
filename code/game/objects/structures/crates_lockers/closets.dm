@@ -103,10 +103,11 @@
 	if(!src.can_open())
 		return 0
 
-	src.dump_contents()
-
 	src.icon_state = src.icon_opened
 	src.opened = 1
+
+	src.dump_contents()
+
 	if(istype(src, /obj/structure/closet/body_bag))
 		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
 	else
