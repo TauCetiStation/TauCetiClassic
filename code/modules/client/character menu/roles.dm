@@ -1,4 +1,4 @@
-/datum/preferences/proc/CanBeRole(mob/user, role)
+/datum/preferences/proc/CanBeRole(role)
 	if(!species)
 		return FALSE
 
@@ -24,7 +24,7 @@
 					. +="<tr><td width='45%'>[i]: </td><td><font color=red><b> \[BANNED]</b></font><br></td></tr>"
 			else if(available_in_minutes && !(i == ROLE_PLANT && is_alien_whitelisted(user, DIONA)))
 				. += "<tr><td width='45%'><del>[i]</del>: </td><td> \[IN [(available_in_minutes)] MINUTES]</td></tr>"
-			else if(!CanBeRole(user, i))
+			else if(!CanBeRole(i))
 				. +="<tr><td width='45%'>[i]: </td><td><font color=red><b> \[RESTRICTED]</b></font><br></td></tr>"
 			else
 				if(i in be_role)
@@ -61,6 +61,9 @@
 
 		if("be_role")
 			var/be_role_type = href_list["be_role_type"]
+			if(!CanBeRole(be_role_type))
+				return
+
 			if(be_role_type in be_role)
 				be_role -= be_role_type
 			else
