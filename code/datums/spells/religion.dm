@@ -104,12 +104,12 @@
 	blessed += target
 
 /obj/effect/proc_holder/spell/targeted/charge/religion
-	name = "Charge electricity"
+	name = "Electric Charge Pulse"
 
 	favor_cost = 400
 	charge_max = 4 MINUTES
 	divine_power = 1 //range
-	needed_aspect = list(ASPECT_SCIENCE = 1, ASPECT_TECH = 1)
+	needed_aspect = list(ASPECT_RESCUE = 1, ASPECT_TECH = 1)
 
 	range = 0
 	invocation = "none"
@@ -118,47 +118,56 @@
 
 	action_icon_state = "charge"
 
-/obj/effect/proc_holder/spell/targeted/charge/religion/cast()
+/obj/effect/proc_holder/spell/targeted/charge/religion/proc/flick_sparks(atom/movable/AM)
+	var/obj/effect/effect/sparks/blue/B = new /obj/effect/effect/sparks/blue(AM.loc)
+	QDEL_IN(B, 6)
+
+/obj/effect/proc_holder/spell/targeted/charge/religion/cast(mob/user = usr)
 	var/charged = FALSE
 
 	for(var/I in range(divine_power))
 		if(isrobot(I))
 			var/mob/living/silicon/robot/R = I
+			flick_sparks(R)
 			if(R.cell)
 				cell_charge(R.cell)
 				charged = TRUE
 
 		else if(istype(I, /obj/item/weapon/stock_parts/cell))
+			flick_sparks(I)
 			cell_charge(I)
 			charged = TRUE
 
 		else if(istype(I, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = I
+			flick_sparks(B)
 			B.charges = initial(B.charges)
 			B.status = 1
 			B.update_icon()
 			charged = TRUE
 
 		else if(istype(I, /obj/machinery/power/smes))
+			flick_sparks(I)
 			charged = TRUE
 			for(var/obj/item/weapon/stock_parts/cell/Cell in I)
 				cell_charge(Cell)
 
 		else if(istype(I, /obj/mecha))
 			var/obj/mecha/M = I
+			flick_sparks(M)
 			cell_charge(M.cell)
 			charged = TRUE
 
 		else if(istype(I, /obj/machinery/power/apc))
 			var/obj/machinery/power/apc/A = I
+			flick_sparks(A)
 			cell_charge(A.cell)
 			charged = TRUE
 
 	if(charged)
-		playsound(usr, 'sound/magic/Charge.ogg', VOL_EFFECTS_MASTER)
-		to_chat(usr, "<span class='notice'>You have charged cell in a radiuse!</span>")
+		playsound(user, 'sound/magic/Charge.ogg', VOL_EFFECTS_MASTER)
 	else
-		to_chat(usr, "<span class='notice'>There is nothing to charge in the radius!</span>")
+		to_chat(user, "<span class='notice'>There is nothing to charge in the radius!</span>")
 		revert_cast()
 		return
 
