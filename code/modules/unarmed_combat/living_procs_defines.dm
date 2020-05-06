@@ -251,6 +251,11 @@ var/global/combos_cheat_sheet = ""
 			return CS.activate_combo()
 	return FALSE
 
+// Try getting next combo, called on targetzone change.
+/mob/living/proc/update_combos()
+	for(var/datum/combo_saved/CS in combos_performed)
+		CS.get_next_combo()
+
 // Is used to more precisely pick a combo, removes first combo element.
 /mob/living/proc/drop_combo_element()
 	. = FALSE

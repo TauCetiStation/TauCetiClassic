@@ -225,14 +225,23 @@
 	if(combo_icon && (SSmob.times_fired % 3) == 0)
 		INVOKE_ASYNC(src, .proc/shake_combo_icon)
 
-	if(!next_combo && get_next_combo())
-		update_combo_elements()
-
 	progbar.update(fullness)
 
 	var/fullness_to_remove = COMBOPOINTS_LOSE_PER_TICK
 	fullness_to_remove = max(MIN_COMBOPOINTS_LOSE_PER_TICK, fullness_to_remove - length(attacker.combos_performed) * 0.1)
 	fullness -= fullness_to_remove
+
+	if(next_combo)
+		// Lose combo since we lost the thing.
+		if(next_combo.fullness_lose_on_execute > fullness)
+			set_combo_icon(null)
+			next_combo = null
+			// Perhaps a less powerful combo is there?
+			get_next_combo()
+
+	else if(get_next_combo())
+		update_combo_elements()
+
 	if(fullness < 0 || last_hit_registered + delete_after_no_hits < world.time)
 		qdel(src)
 
