@@ -353,7 +353,7 @@
 	next_move = carrier.client.move_delay
 
 	var/lying_am = 0
-	for(var/mob/walker in carriers.len)
+	for(var/mob/walker in carriers)
 		if(!walker.canmove) // Buckled or something stupid like that.
 			stop_carry()
 			return NONE
