@@ -55,12 +55,12 @@
 	if(istype(W, /obj/item/weapon/twohanded/sledgehammer))
 		var/obj/item/weapon/twohanded/sledgehammer/S = W
 		if(S.wielded)
-			playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
-			shake_camera(user, 1, 1)
 			if(!(flags & NODECONSTRUCT))
 				new /obj/item/stack/sheet/metal(loc)
-			qdel(src)
-			return
+				playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
+				shake_camera(user, 1, 1)
+				qdel(src)
+				return
 
 
 /obj/structure/stool/MouseDrop(atom/over_object)
