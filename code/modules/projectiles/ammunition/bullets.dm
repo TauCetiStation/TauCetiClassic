@@ -56,7 +56,7 @@
 /obj/item/ammo_casing/c45r
 	desc = "A .45 rubber bullet casing."
 	caliber = ".45"
-	projectile_type = "/obj/item/projectile/bullet/weakbullet/rubber"
+	projectile_type = "/obj/item/projectile/bullet/weakbullet/rubber45"
 
 /obj/item/ammo_casing/a12mm
 	desc = "A 12mm bullet casing."

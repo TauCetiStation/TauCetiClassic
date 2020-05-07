@@ -24,7 +24,7 @@
 	damage = 10
 	stun = 0
 	weaken = 0
-	agony = 75
+	agony = 40
 	embed = 0
 	sharp = 0
 
@@ -47,6 +47,10 @@
 
 /obj/item/projectile/bullet/weakbullet/rubber
 	name = "rubber bullet"
+
+/obj/item/projectile/bullet/weakbullet/rubber45 //to manage .45 pain damage
+	name = "rubber bullet"
+	agony = 55
 
 /obj/item/projectile/bullet/smg //.45 ACP
 	name = "submachinegun bullet"
