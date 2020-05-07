@@ -5,8 +5,7 @@
 	name = "Memetic Anomaly"
 	config_tag = "meme"
 	role_type = ROLE_MEME
-	required_players = 6
-	required_players_secret = 15
+	required_players = 15
 	restricted_jobs = list("AI", "Cyborg")
 	required_enemies = 1
 	recommended_enemies = 3 // need at least a meme and a host

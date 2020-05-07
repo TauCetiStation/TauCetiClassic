@@ -16,8 +16,7 @@
 	config_tag = "revolution"
 	role_type = ROLE_REV
 	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
-	required_players = 4
-	required_players_secret = 20
+	required_players = 20
 	required_enemies = 3
 	recommended_enemies = 3
 

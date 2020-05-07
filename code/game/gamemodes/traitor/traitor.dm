@@ -10,7 +10,6 @@
 	protected_jobs = list("Security Cadet", "Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor")//AI", Currently out of the list as malf does not work for shit
 	required_players = 1
 	required_enemies = 1
-	required_players_secret = 1
 	recommended_enemies = 4
 
 	votable = 0

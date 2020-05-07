@@ -16,7 +16,6 @@ Infestation:
 	config_tag = "infestation"
 	role_type = ROLE_ALIEN
 	required_players = 20
-	required_players_secret = 15
 	required_enemies = 2
 	recommended_enemies = 4
 

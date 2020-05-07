@@ -28,7 +28,6 @@
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor")	// Jobs that can't be traitors because
 	var/required_players = 0
-	var/required_players_secret = 0 //Minimum number of players for that game mode to be chose in Secret
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
@@ -97,7 +96,7 @@ Implants;
 	if (playerC == 0 && required_players == 0)
 		return TRUE
 	// check for minimal player on server
-	if((modeset && modeset == "secret" && playerC < required_players_secret) || playerC < required_players)
+	if(playerC < required_players)
 		return FALSE
 	// get list of all antags possiable
 	antag_candidates = get_players_for_role(role_type)

@@ -19,9 +19,8 @@
 	name = "mutiny"
 	config_tag = "mutiny"
 	role_type = ROLE_MUTINEER
-	required_players = 7
+	required_players = 10
 	recommended_enemies = 2
-	required_players_secret = 10
 
 	votable = 0
 

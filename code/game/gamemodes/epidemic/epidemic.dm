@@ -1,8 +1,7 @@
 /datum/game_mode/epidemic
 	name = "epidemic"
 	config_tag = "epidemic"
-	required_players = 1
-	required_players_secret = 15
+	required_players = 15
 
 	var/checkwin_counter =0
 	var/finished = 0
