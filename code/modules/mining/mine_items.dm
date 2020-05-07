@@ -1,3 +1,4 @@
+#define COUNTER_COOLDOWN (20 SECONDS)
 /**********************Light************************/
 //this item is intended to give the effect of entering the mine, so that light gradually fades
 /obj/effect/light_emitter
@@ -238,22 +239,27 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	force_wielded = 40
 	attack_verb = list("attacked", "smashed", "hit", "space assholed")
 	var/asshole_counter = 0
+	var/next_hit = 0
 
 /obj/item/weapon/twohanded/sledgehammer/update_icon()
 	icon_state = "sledgehammer[wielded]"
 
-/obj/item/weapon/twohanded/sledgehammer/attack(target, mob/living/user)
-	asshole_counter += 1
+/obj/item/weapon/twohanded/sledgehammer/attack(mob/living/target, mob/living/user)
 	..()
+	if(next_hit < world.time)
+		asshole_counter = 0
+	next_hit = world.time + COUNTER_COOLDOWN
+	asshole_counter += 1
 
 	var/target_zone = user.zone_sel.selecting
 	if(target_zone == BP_HEAD)
 		shake_camera(target, 2, 2)
 
-	if((CLUMSY in user.mutations) && (asshole_counter >= 5))
+	if((CLUMSY in user.mutations) && (asshole_counter >= 5) && (target.stat != DEAD))
+		playsound(user, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+		target.emote("scream")
+		user.say("Space asshole!")
 		asshole_counter = 0
-		playsound(target, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
-		return
 	if(wielded)
 		INVOKE_ASYNC(src, .proc/spin, user)
 
@@ -934,3 +940,5 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	anchored = 1
 	layer = BELOW_MOB_LAYER
 	density = 0
+
+#undef COUNTER_COOLDOWN
