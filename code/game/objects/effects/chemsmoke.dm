@@ -20,6 +20,7 @@
 	var/list/targetTurfs
 	var/list/wallList
 	var/density
+	var/color
 
 
 /datum/effect/effect/system/smoke_spread/chem/New()
@@ -142,7 +143,8 @@
 
 
 	//build smoke icon
-	var/color = mix_color_from_reagents(chemholder.reagents.reagent_list)
+	if(!color)
+		color = mix_color_from_reagents(chemholder.reagents.reagent_list)
 	var/icon/I
 	if(color)
 		I = icon('icons/effects/chemsmoke.dmi')
@@ -250,3 +252,11 @@
 	targetTurfs = complete
 
 	return
+
+//------------------------------------------
+// Sets a specific color of smoke. 
+// Accepts color only in hex.
+//------------------------------------------
+/datum/effect/effect/system/smoke_spread/chem/proc/set_color(color_hex)
+	color = color_hex
+	

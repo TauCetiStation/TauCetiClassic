@@ -245,7 +245,7 @@
 	favor_cost = 300
 	charge_max = 3 MINUTES
 	divine_power = 1 //range
-	needed_aspect = list(ASPECT_DEATH = 1, ASPECT_OBSCURE = 1, ASPECT_RESCUE = 1)
+	needed_aspect = list(ASPECT_RESCUE = 1, ASPECT_OBSCURE = 1)
 
 	range = 0
 	invocation = "none"
@@ -280,7 +280,7 @@
 		for(var/obj/effect/proc_holder/spell/targeted/infection/obcurse/O in usr.spell_list)
 			evil_spell = O
 
-	for(var/mob/living/carbon/human/H in orange(divine_power))
+	for(var/mob/living/carbon/human/H in range(divine_power))
 		if(evil_spell)
 			if(H in evil_spell.infected)
 				continue
@@ -293,14 +293,17 @@
 	name = "Spread a evil infection"
 	desc = "Evil infection with viruses cough and headache"
 
+	needed_aspect = list(ASPECT_DEATH = 1, ASPECT_OBSCURE = 1)
+
 	var/obj/effect/proc_holder/spell/targeted/infection/good_spell
 
 /obj/effect/proc_holder/spell/targeted/infection/obcurse/cast()
 	var/datum/effect/effect/system/smoke_spread/chem/S = new
 	create_reagents(10)
-	reagents.add_reagent("grapesoda", 10) //grapesoda used to get needed color of smoke
+	reagents.add_reagent("harvester", 10)
 	S.attach(usr.loc)
 	S.set_up(reagents, 5, 0, usr.loc)
+	S.set_color("#421c52") //dark purple
 	S.start()
 
 	var/datum/disease2/effectholder/cough_holder = new
@@ -321,8 +324,8 @@
 			if(istype(O, /obj/effect/proc_holder/spell/targeted/infection))
 				good_spell = O
 
-	for(var/mob/living/carbon/human/H in orange(divine_power))
-		if(H.mind.holy_role >= HOLY_ROLE_PRIEST)
+	for(var/mob/living/carbon/human/H in range(divine_power))
+		if(H.mind && H.mind.holy_role >= HOLY_ROLE_PRIEST)
 			continue
 		if(good_spell)
 			if(H in good_spell.infected)
@@ -338,8 +341,8 @@
 
 	favor_cost = 100
 	charge_max = 3 MINUTES
-	divine_power = 1 //power of reagent
-	needed_aspect = list(ASPECT_FOOD = 1, ASPECT_OBSCURE = 1)
+	divine_power = 1 //count gibs
+	needed_aspect = list(ASPECT_FOOD = 1, ASPECT_OBSCURE = 2)
 
 	range = 0
 	invocation = "none"
@@ -349,8 +352,14 @@
 
 /obj/effect/proc_holder/spell/targeted/rot/cast()
 	var/datum/effect/effect/system/smoke_spread/chem/S = new
-	create_reagents(30 * divine_power)
-	reagents.add_reagent("thermopsis", 30 * divine_power)
+	create_reagents(30)
+	reagents.add_reagent("thermopsis", 30)
 	S.attach(usr.loc)
-	S.set_up(reagents, divine_power * 2 + 1, 0, usr.loc)
+	S.set_up(reagents, 2, 0, usr.loc)
+	S.set_color("#3d0606") //dark red
 	S.start()
+
+	if(divine_power >= 1)
+		gibs(usr.loc)
+		if(divine_power >= 2)
+			hgibs(usr.loc)
