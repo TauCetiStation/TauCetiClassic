@@ -9,7 +9,6 @@
 	var/modded = FALSE
 	var/transfer_from = TRUE
 	var/obj/item/device/assembly_holder/rig
-	var/datum/reagents/R = new/datum/reagents(1000)
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
 
@@ -127,8 +126,6 @@
 
 /obj/structure/reagent_dispensers/fueltank/atom_init()
 	. = ..()
-	reagents = R
-	R.my_atom = src
 	if(!possible_transfer_amounts)
 		src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
 	reagents.add_reagent("fuel",300)
