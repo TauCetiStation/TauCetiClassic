@@ -237,14 +237,16 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	force_unwielded = 15
 	force_wielded = 40
 	attack_verb = list("attacked", "chopped", "cleaved", "torn")
+	var/asshole_counter = 0
 
 /obj/item/weapon/twohanded/sledgehammer/update_icon()
 	icon_state = "sledgehammer[wielded]"
 
 /obj/item/weapon/twohanded/sledgehammer/attack(target, mob/living/user)
+	asshole_counter += 1
 	..()
-	if((CLUMSY in user.mutations) && prob(40))
-		playsound(target, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
+	if((CLUMSY in user.mutations) && (asshole_counter % 5 == 0))
+		playsound(target, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		return
 	if(wielded)
 		INVOKE_ASYNC(src, .proc/spin, user)
