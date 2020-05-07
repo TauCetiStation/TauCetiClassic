@@ -1,10 +1,4 @@
-/mob/living/carbon/human/say(message, ignore_appearance)
-	var/verb = "says"
-	var/message_range = world.view
-	var/italics = 0
-	var/alt_name = ""
-	var/sound/speech_sound
-	var/sound_vol
+/mob/living/carbon/human/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=FALSE, message_range = world.view, list/used_radios = list(), sound/speech_sound, sound_vol, sanitize = TRUE, message_mode = FALSE)
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "<span class='userdanger'>You cannot speak in IC (Muted).</span>")
@@ -22,7 +16,7 @@
 			return
 		return say_dead(message)
 
-	var/message_mode = parse_message_mode(message, "headset")
+	message_mode = parse_message_mode(message, "headset")
 
 	if (istype(wear_mask, /obj/item/clothing/mask/muzzle) && !(message_mode == "changeling" || message_mode == "alientalk"))  //Todo:  Add this to speech_problem_flag checks.
 		return
@@ -35,7 +29,7 @@
 		to_chat(usr, "<span class='userdanger'>You are mute.</span>")
 		return
 
-	if(!ignore_appearance && name != GetVoice())
+	if(name != GetVoice())
 		alt_name = "(as [get_id_name("Unknown")])"
 
 	//parse the radio code and consume it
@@ -46,7 +40,7 @@
 			message = copytext(message,3)
 
 	//parse the language code and consume it or use default racial language if forced.
-	var/datum/language/speaking = parse_language(message)
+	speaking = parse_language(message)
 
 	//check if we're muted and not using gestures
 	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk"))
@@ -115,8 +109,6 @@
 
 	if(!message || stat)
 		return
-
-	var/list/obj/item/used_radios = new
 
 	switch (message_mode)
 		if("headset")
@@ -209,7 +201,7 @@
 		speech_sound = sound('sound/voice/shriek1.ogg')
 		sound_vol = 50
 
-	..(message, speaking, verb, alt_name, italics, message_range, used_radios, speech_sound, sound_vol, sanitize = FALSE, message_mode = message_mode)	//ohgod we should really be passing a datum here.
+	..() //ohgod we should really be passing a datum here.
 
 /mob/living/carbon/human/say_understands(mob/other,datum/language/speaking = null)
 

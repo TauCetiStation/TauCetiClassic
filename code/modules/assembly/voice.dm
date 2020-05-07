@@ -11,9 +11,9 @@
 	var/recorded = "" //the activation message
 
 
-/obj/item/device/assembly/voice/hear_talk(mob/living/M, msg)
+/obj/item/device/assembly/voice/hear_talk(mob/living/M, text, verb, datum/language/speaking, list/heard_memes)
 
-	msg = lowertext_(sanitize(msg))
+	var/msg = lowertext_(sanitize(text))
 
 	if(listening)
 		recorded = msg

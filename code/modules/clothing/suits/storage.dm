@@ -29,7 +29,7 @@
 		pockets.emp_act(severity)
 	..()
 
-/obj/item/clothing/suit/storage/hear_talk(mob/M, msg, verb, datum/language/speaking)
+/obj/item/clothing/suit/storage/hear_talk(mob/living/M, text, verb, datum/language/speaking, list/heard_memes)
 	if(pockets)
-		pockets.hear_talk(M, msg, verb, speaking)
+		pockets.hear_talk(M, text, verb, speaking, heard_memes)
 	..()

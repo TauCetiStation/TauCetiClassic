@@ -56,22 +56,32 @@
 	if(client.prefs.chat_toggles & CHAT_CKEY)
 		name += " ([key])"
 
-	var/rendered = "<span class='game deadsay linkify emojify'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] [pick("complains","moans","whines","laments","blubbers")], <span class='message'>\"[message]\"</span></span>"
+	var/say_verb = pick("complains","moans","whines","laments","blubbers")
+
+	var/list/spoken_memes = sharing_memes && sharing_memes[MEME_SPREAD_VERBALLY] ? sharing_memes[MEME_SPREAD_VERBALLY].Copy() : null
+	var/datum/spoken_info/SI = process_spoken_memes(message, say_verb, null, alt_name, world.view)
+
+	var/pre_rendered = "<span class='game deadsay linkify emojify'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[SI.alt_name] [SI.spoken_verb], <span class='message'>\"[SI.message]\"</span></span>"
 
 	for(var/mob/M in player_list)
 		if(isnewplayer(M))
 			continue
+
 		if(M.client && M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD))
 			if(M.fake_death) //Our changeling with fake_death status must not hear dead chat!!
 				continue
+
+			var/datum/spoken_info/hear_SI = process_heard_memes(spoken_memes, SI.message, SI.speaker, SI.spoken_verb, SI.spoken, SI.alt_name)
+
+			var/rendered = "<span class='game deadsay linkify emojify'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[hear_SI.alt_name] [hear_SI.spoken_verb], <span class='message'>\"[hear_SI.message]\"</span></span>"
 			to_chat(M, rendered)
+			qdel(hear_SI)
 			continue
 
 		if(M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD) ) // Show the message to admins with deadchat toggled on
-			to_chat(M, rendered)//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
+			to_chat(M, pre_rendered)//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
 
-
-	return
+	qdel(SI)
 
 /mob/proc/say_understands(mob/other,datum/language/speaking = null)
 

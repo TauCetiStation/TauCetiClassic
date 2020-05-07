@@ -154,6 +154,16 @@ var/list/department_radio_keys = list(
 			if (speech_sound)
 				sound_vol *= 0.5	//muffle the sound a bit, so it's like we're actually talking through contact
 
+	var/list/spoken_memes = sharing_memes && sharing_memes && sharing_memes[MEME_SPREAD_VERBALLY] ? sharing_memes[MEME_SPREAD_VERBALLY].Copy() : null
+	var/datum/spoken_info/SI = process_spoken_memes(message, verb, speaking, alt_name, message_range)
+
+	message = SI.message
+	verb = SI.spoken_verb
+	speaking = SI.spoken
+	alt_name = SI.alt_name
+	message_range = SI.message_range
+	qdel(SI)
+
 	var/list/listening = list()
 	var/list/listening_obj = list()
 
@@ -184,12 +194,12 @@ var/list/department_radio_keys = list(
 	spawn(0)
 		flick_overlay(I, speech_bubble_recipients, 30)
 	for(var/mob/M in listening)
-		M.hear_say(message, verb, speaking, alt_name, italics, src, used_radios.len, speech_sound, sound_vol)
+		M.hear_say(message, verb, speaking, alt_name, italics, src, used_radios.len, speech_sound, sound_vol, heard_memes = spoken_memes)
 
 	for(var/obj/O in listening_obj)
 		spawn(0)
 			if(O) //It's possible that it could be deleted in the meantime.
-				O.hear_talk(src, message, verb, speaking)
+				O.hear_talk(src, message, verb, speaking, spoken_memes)
 
 	var/area/A = get_area(src)
 	log_say("[key_name(src)] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")

@@ -205,7 +205,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	qdel(A)
 	return
 
-/obj/item/device/radio/talk_into(mob/living/M, message, channel, verb = "says", datum/language/speaking = null)
+/obj/item/device/radio/talk_into(mob/living/M, message, channel, verb = "says", datum/language/speaking = null, list/heard_memes = null)
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
@@ -337,7 +337,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				"reject" = 0,	// if nonzero, the signal will not be accepted by any broadcasting machinery
 				"level" = position.z, // The source's z level
 				"language" = speaking,
-				"verb" = verb
+				"verb" = verb,
+				"heard_memes" = heard_memes
 			)
 			signal.frequency = connection.frequency // Quick frequency set
 
@@ -392,7 +393,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			"reject" = 0,
 			"level" = position.z,
 			"language" = speaking,
-			"verb" = verb
+			"verb" = verb,
+			"heard_memes" = heard_memes
 		)
 		signal.frequency = connection.frequency // Quick frequency set
 
@@ -414,7 +416,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		Broadcast_Message(connection, M, voicemask, pick(M.speak_emote),
 						  src, message, displayname, jobname, real_name, M.voice_name,
-		                  filter_type, signal.data["compression"], list(position.z), connection.frequency,verb,speaking)
+		                  filter_type, signal.data["compression"], list(position.z), connection.frequency,verb,speaking, heard_memes)
 
 
 
@@ -590,11 +592,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					else
 						R.show_message(rendered, SHOWMSG_AUDIO)
 
-/obj/item/device/radio/hear_talk(mob/M, msg, verb = "says", datum/language/speaking = null)
+/obj/item/device/radio/hear_talk(mob/living/M, text, verb, datum/language/speaking, list/heard_memes)
 
 	if (broadcasting)
 		if(get_dist(src, M) <= canhear_range)
-			talk_into(M, msg,null,verb,speaking)
+			talk_into(M, text, null, verb, speaking, heard_memes)
 
 
 /*

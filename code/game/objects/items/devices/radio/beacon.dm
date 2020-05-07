@@ -14,7 +14,7 @@
 	radio_beacon_list -= src
 	return ..()
 
-/obj/item/device/radio/beacon/hear_talk()
+/obj/item/device/radio/beacon/hear_talk(mob/living/M, text, verb, datum/language/speaking, list/heard_memes)
 	return
 
 

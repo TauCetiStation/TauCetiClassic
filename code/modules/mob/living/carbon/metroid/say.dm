@@ -1,4 +1,4 @@
-/mob/living/carbon/slime/hear_say(message, verb = "says", datum/language/language = null, alt_name = "", italics = 0, mob/speaker = null, sound/speech_sound, sound_vol)
+/mob/living/carbon/slime/hear_say(message, verb = "says", datum/language/language = null, alt_name = "", italics = 0, mob/speaker = null, sound/speech_sound, sound_vol, list/heard_memes = null)
 	if (speaker in Friends)
 		speech_buffer = list()
 		speech_buffer.Add(speaker)

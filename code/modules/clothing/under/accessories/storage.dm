@@ -35,8 +35,8 @@
 	hold.emp_act(severity)
 	..()
 
-/obj/item/clothing/accessory/storage/hear_talk(mob/M, msg, verb, datum/language/speaking)
-	hold.hear_talk(M, msg, verb, speaking)
+/obj/item/clothing/accessory/storage/hear_talk(mob/living/M, text, verb, datum/language/speaking, list/heard_memes)
+	hold.hear_talk(M, text, verb, speaking, heard_memes)
 	..()
 
 /obj/item/clothing/accessory/storage/attack_self(mob/user)

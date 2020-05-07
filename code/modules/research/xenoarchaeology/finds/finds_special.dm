@@ -36,7 +36,7 @@ var/list/bad_messages = list("Never take me off, please!",
 		var/mob/living/M = src.loc
 		to_chat(M, "A strange voice goes through your head: <font color='red' size='[num2text(rand(1,3))]'><b>[pick(bad_messages)]</b></font>")
 
-/obj/item/clothing/mask/gas/poltergeist/hear_talk(mob/M, text)
+/obj/item/clothing/mask/gas/poltergeist/hear_talk(mob/living/M, text, verb, datum/language/speaking, list/heard_memes)
 	..()
 	if(heard_talk.len > max_stored_messages)
 		heard_talk.Remove(pick(heard_talk))
@@ -123,7 +123,7 @@ var/list/bad_messages = list("Never take me off, please!",
 		else if(get_dist(W, src) > 10)
 			shadow_wights.Remove(wight_check_index)
 
-/obj/item/weapon/vampiric/hear_talk(mob/M, text)
+/obj/item/weapon/vampiric/hear_talk(mob/living/M, text, verb, datum/language/speaking, list/heard_memes)
 	..()
 	if(world.time - last_bloodcall >= bloodcall_interval && M in view(7, src))
 		bloodcall(M)

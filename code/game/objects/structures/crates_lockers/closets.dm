@@ -317,11 +317,11 @@
 		icon_state = icon_opened
 	SSdemo.mark_dirty(src)
 
-/obj/structure/closet/hear_talk(mob/M, text, verb, datum/language/speaking)
+/obj/structure/closet/hear_talk(mob/living/M, text, verb, datum/language/speaking, list/heard_memes)
 	for (var/atom/A in src)
 		if(istype(A,/obj))
 			var/obj/O = A
-			O.hear_talk(M, text, verb, speaking)
+			O.hear_talk(M, text, verb, speaking, heard_memes)
 
 /obj/structure/closet/container_resist()
 	var/mob/living/user = usr

@@ -49,7 +49,7 @@
 /obj/item/device/assembly/interact(mob/user)	//Called when attack_self is called
 	return
 
-/obj/item/device/assembly/hear_talk(mob/living/M, msg) //Called when someone speak
+/obj/item/device/assembly/hear_talk(mob/living/M, text, verb, datum/language/speaking, list/heard_memes) //Called when someone speak
 	return
 
 /obj/item/device/assembly/proc/is_secured(mob/user)

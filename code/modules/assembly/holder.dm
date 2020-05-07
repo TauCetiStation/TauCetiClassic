@@ -115,14 +115,11 @@
 		a_left.holder_movement()
 		a_right.holder_movement()
 
-/obj/item/device/assembly_holder/hear_talk(mob/living/M, msg, verb, datum/language/speaking)
+/obj/item/device/assembly_holder/hear_talk(mob/living/M, text, verb, datum/language/speaking, list/heard_memes)
 	if(a_left)
-		a_left.hear_talk(M,msg,verb,speaking)
+		a_left.hear_talk(M, text, verb, speaking, heard_memes)
 	if(a_right)
-		a_right.hear_talk(M,msg,verb,speaking)
-
-	return
-
+		a_right.hear_talk(M, text, verb, speaking, heard_memes)
 
 /obj/item/device/assembly_holder/attack_hand()//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
 	if(a_left && a_right)

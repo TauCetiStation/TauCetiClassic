@@ -203,7 +203,7 @@
 	for(var/atom/movable/AM in contents)
 		. |= AM.get_listening_objs()
 
-/obj/proc/hear_talk(mob/M, text, verb, datum/language/speaking)
+/obj/proc/hear_talk(mob/living/M, text, verb, datum/language/speaking, list/heard_memes)
 	if(talking_atom)
 		talking_atom.catchMessage(text, M)
 /*

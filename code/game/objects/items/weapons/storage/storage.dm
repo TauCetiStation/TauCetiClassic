@@ -430,11 +430,11 @@
 	qdel(src)
 //BubbleWrap END
 
-/obj/item/weapon/storage/hear_talk(mob/M, text, verb, datum/language/speaking)
+/obj/item/weapon/storage/hear_talk(mob/living/M, text, verb, datum/language/speaking, list/heard_memes)
 	for (var/atom/A in src)
 		if(istype(A,/obj))
 			var/obj/O = A
-			O.hear_talk(M, text, verb, speaking)
+			O.hear_talk(M, text, verb, speaking, heard_memes)
 
 /obj/item/weapon/storage/proc/make_exact_fit(use_slots = FALSE)
 	if(use_slots)

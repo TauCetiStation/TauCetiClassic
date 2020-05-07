@@ -29,17 +29,17 @@
 	if(emagged)
 		. += 10
 
-/obj/item/device/taperecorder/hear_talk(mob/living/M, msg, verb="says")
+/obj/item/device/taperecorder/hear_talk(mob/living/M, text, verb, datum/language/speaking, list/heard_memes)
 	if(recording)
 		timestamp+= timerecorded
 		if(isanimal(M)) // Taken from say(). Temporary fix before refactor. Needs to actually pass languages or something like that here and when we see paper or hear audioplayback it depends whenever we can actually understand that language.
 			var/mob/living/simple_animal/S = M
-			msg = pick(S.speak)
+			text = pick(S.speak)
 		else if(isIAN(M))
 			var/mob/living/carbon/ian/IAN = M
-			msg = pick(IAN.speak)
+			text = pick(IAN.speak)
 
-		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] [verb], \"[msg]\""
+		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] [verb], \"[text]\""
 		return
 
 /obj/item/device/taperecorder/emag_act(mob/user)

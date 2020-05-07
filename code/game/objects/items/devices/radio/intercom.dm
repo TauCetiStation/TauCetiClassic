@@ -41,7 +41,7 @@
 	return canhear_range
 
 
-/obj/item/device/radio/intercom/hear_talk(mob/M, msg)
+/obj/item/device/radio/intercom/hear_talk(mob/living/M, text, verb, datum/language/speaking, list/heard_memes)
 	if(!src.anyai && !(M in src.ai))
 		return
 	..()

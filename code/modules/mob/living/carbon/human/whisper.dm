@@ -91,11 +91,20 @@
 			if(istype(C,/mob/living))
 				listening += C
 
+	var/list/spoken_memes = sharing_memes && sharing_memes[MEME_SPREAD_VERBALLY] ? sharing_memes[MEME_SPREAD_VERBALLY].Copy() : null
+	var/datum/spoken_info/SI = process_spoken_memes(message, verb, speaking, alt_name, 1)
+
+	message = SI.message
+	verb = SI.spoken_verb
+	speaking = SI.spoken
+	alt_name = SI.alt_name
+	qdel(SI)
+
 	//pass on the message to objects that can hear us.
 	for(var/obj/O in view(message_range, src))
 		spawn (0)
 			if (O)
-				O.hear_talk(src, message, verb, speaking)
+				O.hear_talk(src, message, verb, speaking, spoken_memes)
 
 	var/list/eavesdropping = hearers(eavesdropping_range, src)
 	eavesdropping -= src
@@ -122,12 +131,12 @@
 		flick_overlay(I, speech_bubble_recipients, 30)
 
 	for(var/mob/M in listening)
-		M.hear_say(message, verb, speaking, alt_name, italics, src)
+		M.hear_say(message, verb, speaking, alt_name, italics, src, heard_memes = spoken_memes)
 
 	if(eavesdropping.len)
 		var/new_message = stars(message)	//hopefully passing the message twice through stars() won't hurt... I guess if you already don't understand the language, when they speak it too quietly to hear normally you would be able to catch even less.
 		for(var/mob/M in eavesdropping)
-			M.hear_say(new_message, verb, speaking, alt_name, italics, src)
+			M.hear_say(new_message, verb, speaking, alt_name, italics, src, heard_memes = spoken_memes)
 
 	if(watching.len)
 		var/rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers something.</span>"

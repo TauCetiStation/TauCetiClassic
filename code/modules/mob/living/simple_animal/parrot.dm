@@ -820,10 +820,10 @@
 	..(message)
 
 
-/mob/living/simple_animal/parrot/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null)
+/mob/living/simple_animal/parrot/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, sound/speech_sound, sound_vol, list/heard_memes = null)
 	if(speaker != src)
 		parrot_hear(message)
-	..(message,verb,language,alt_name,italics,speaker)
+	..()
 
 
 

@@ -1,13 +1,43 @@
 // At minimum every mob has a hear_say proc.
 
-/mob/proc/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
+/mob/proc/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol, list/heard_memes = null)
 	if(!client)
 		return
-
 
 	if(stat == UNCONSCIOUS)
 		hear_sleep(message)
 		return
+
+	var/speaker_name = speaker.name
+	if(istype(speaker, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = speaker
+		speaker_name = H.GetVoice()
+
+	if(sdisabilities & DEAF || ear_deaf)
+		if(speaker == src)
+			to_chat(src, "<span class='warning'>You cannot hear yourself speak!</span>")
+		else
+			var/pronoun = null
+			switch(speaker.gender)
+				if(MALE)
+					pronoun = "him"
+				if(FEMALE)
+					pronoun = "her"
+				if(PLURAL)
+					pronoun = "them"
+				else
+					pronoun = "it"
+			to_chat(src, "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear [pronoun].")
+		return
+
+	var/datum/spoken_info/SI = process_heard_memes(heard_memes, message, speaker, verb, language, alt_name)
+
+	message = SI.message
+	verb = SI.spoken_verb
+	language = SI.spoken
+	alt_name = SI.alt_name
+	speaker = SI.speaker
+	qdel(SI)
 
 	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
 	if (language && (language.flags & NONVERBAL))
@@ -26,11 +56,6 @@
 				message = language.scramble(message)
 			else
 				message = stars(message)
-
-	var/speaker_name = speaker.name
-	if(istype(speaker, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = speaker
-		speaker_name = H.GetVoice()
 
 	if(ishuman(src)) //zombie logic
 		var/mob/living/carbon/human/ME = src
@@ -57,34 +82,26 @@
 		if((client.prefs.chat_toggles & CHAT_GHOSTEARS) && speaker in view(src))
 			message = "<b>[message]</b>"
 
-	if(sdisabilities & DEAF || ear_deaf)
-		if(speaker == src)
-			to_chat(src, "<span class='warning'>You cannot hear yourself speak!</span>")
-		else
-			var/pronoun = null
-			switch(speaker.gender)
-				if(MALE)
-					pronoun = "him"
-				if(FEMALE)
-					pronoun = "her"
-				if(PLURAL)
-					pronoun = "them"
-				else
-					pronoun = "it"
-			to_chat(src, "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear [pronoun].")
+	if(language)
+		to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][language.format_message(message, verb)]</span>")
 	else
-		if(language)
-			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][language.format_message(message, verb)]</span>")
-		else
-			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>")
-		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
-			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
-			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
+		to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>")
+	if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
+		var/turf/source = speaker? get_turf(speaker) : get_turf(src)
+		playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
 
-/mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
-
+/mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="", list/heard_memes = null)
 	if(!client)
 		return
+
+	var/datum/spoken_info/SI = process_heard_memes(heard_memes, message, speaker, verb, language, vname)
+
+	message = SI.message
+	verb = SI.spoken_verb
+	language = SI.spoken
+	vname = SI.alt_name
+	speaker = SI.speaker
+	qdel(SI)
 
 	if(stat == UNCONSCIOUS)
 		hear_sleep(message)

@@ -64,9 +64,9 @@
 	attached_device.HasProximity(AM)
 	return
 
-/obj/item/device/transfer_valve/hear_talk(mob/living/M, msg)
+/obj/item/device/transfer_valve/hear_talk(mob/living/M, text, verb, datum/language/speaking, list/heard_memes)
 	if(!attached_device)	return
-	attached_device.hear_talk(M,msg)
+	attached_device.hear_talk(M, text, verb, speaking, heard_memes)
 	return
 
 /obj/item/device/transfer_valve/attack_self(mob/user)
