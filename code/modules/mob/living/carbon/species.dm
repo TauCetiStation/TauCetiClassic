@@ -457,7 +457,7 @@
 	min_age = 12
 	max_age = 20
 
-	prohibit_roles = list(ROLE_CHANGELING)
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
