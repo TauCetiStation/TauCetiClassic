@@ -11,7 +11,6 @@
 	var/obj/item/device/assembly_holder/rig
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
-	var/leak_amount = 1
 
 /obj/structure/reagent_dispensers/AltClick(mob/user)
 	transfer_from = !transfer_from
@@ -182,7 +181,7 @@
 /obj/structure/reagent_dispensers/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
 	if (. && modded)
-		leak(leak_amount)
+		leak(amount_per_transfer_from_this * 0.1)
 
 
 // "Tanks".
@@ -191,7 +190,6 @@
 	desc = "A watertank."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
-	amount_per_transfer_from_this = 10
 
 /obj/structure/reagent_dispensers/watertank/atom_init()
 	. = ..()
@@ -213,7 +211,6 @@
 	desc = "A fueltank."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
-	amount_per_transfer_from_this = 10
 	
 /obj/structure/reagent_dispensers/fueltank/atom_init()
 	. = ..()
@@ -255,7 +252,6 @@
 	desc = "A beer keg."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "beertankTEMP"
-	amount_per_transfer_from_this = 10
 
 /obj/structure/reagent_dispensers/beerkeg/atom_init()
 	. = ..()
@@ -270,7 +266,6 @@
 	desc = "A dispenser of virus food."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "virusfoodtank"
-	amount_per_transfer_from_this = 10
 	anchored = 1
 
 /obj/structure/reagent_dispensers/virusfood/atom_init()
@@ -282,7 +277,6 @@
 	desc = "A dispenser of acid for industrial processes."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "acidtank"
-	amount_per_transfer_from_this = 10
 	anchored = 1
 
 /obj/structure/reagent_dispensers/acid/atom_init()
@@ -306,7 +300,6 @@
 	desc = "A dispenser of cleaner."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "cleanertank"
-	amount_per_transfer_from_this = 10
 	anchored = 1
 	density = 0
 
