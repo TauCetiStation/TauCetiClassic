@@ -111,10 +111,11 @@
 
 /obj/item/weapon/nullrod/staff/Destroy()
 	// Damn... He's free now.
-	brainmob.invisibility = 0
-	qdel(brainmob.GetComponent(/datum/component/bounded))
-	brainmob.container = null
-	brainmob = null
+	if(brainmob)
+		brainmob.invisibility = 0
+		qdel(brainmob.GetComponent(/datum/component/bounded))
+		brainmob.container = null
+		brainmob = null
 
 	if((slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND) && ismob(loc))
 		var/mob/M = loc
@@ -222,7 +223,7 @@
 	brainmob.mind.assigned_role = "Chaplain`s staff"
 	if(god_lore != "")
 		brainmob.mind.memory = "<B>YOUR LORE</B><BR>"
-	brainmob.mind.memory += god_lore
+		brainmob.mind.memory += god_lore
 	brainmob.mind.holy_role = HOLY_ROLE_HIGHPRIEST
 
 	for(var/aspect in global.chaplain_religion.aspects)
@@ -237,8 +238,8 @@
 		brainmob.universal_speak = FALSE
 		brainmob.islam = TRUE
 		brainmob.speak.Add("[god_name] akbar!")
-	
-	global.chaplain_religion.give_god_spells(brainmob)
+
+	global.chaplain_religion.add_deity(brainmob)
 
 	for(var/datum/language/L in summoner.languages)
 		brainmob.add_language(L.name)
@@ -302,8 +303,3 @@
 
 	next_ping = world.time + 5 SECONDS
 	audible_message("<span class='notice'>\The [src] stone blinked.</span>", deaf_message = "\The [src] stone blinked.")
-
-/obj/item/weapon/nullrod/staff/Destroy()
-	to_chat(brainmob, "<span class='userdanger'>You were destroyed!</span>")
-	QDEL_NULL(brainmob)
-	return ..()

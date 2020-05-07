@@ -551,8 +551,10 @@
 		SEND_SIGNAL(src, COMSIG_LIVING_STOP_PULL, pulling)
 		SEND_SIGNAL(pulling, COMSIG_ATOM_STOP_PULL, src)
 
-		pulling.pulledby = null
-		pulling = null
+		// What if the signals above somehow deleted pulledby?
+		if(pulling)
+			pulling.pulledby = null
+			pulling = null
 		if(pullin)
 			pullin.update_icon(src)
 		count_pull_debuff()
@@ -1027,6 +1029,17 @@ note dizziness decrements automatically in the mob's Life() proc.
 				if(G.can_reenter_corpse || even_if_they_cant_reenter)
 					return G
 				break
+
+/mob/proc/GetSpell(spell_type)
+	for(var/obj/effect/proc_holder/spell/spell in spell_list)
+		if(spell == spell_type)
+			return spell
+
+	if(mind)
+		for(var/obj/effect/proc_holder/spell/spell in mind.spell_list)
+			if(spell == spell_type)
+				return spell
+	return FALSE
 
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/spell)
 	spell_list += spell

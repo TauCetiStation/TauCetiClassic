@@ -32,8 +32,19 @@
 #define COMSIG_PARENT_PREQDELETED "parent_preqdeleted"			//before a datum's Destroy() is called: (force), returning a nonzero value will cancel the qdel operation
 #define COMSIG_PARENT_QDELETED "parent_qdeleted"				//after a datum's Destroy() is called: (force, qdel_hint), at this point none of the other components chose to interrupt qdel and Destroy has been called
 
+// /client signals
+#define COMSIG_CLIENTMOB_MOVE "client_move"		//from base of client/Move(): (atom/NewLoc, direction)
+	#define COMPONENT_CLIENTMOB_BLOCK_MOVE 1
+#define COMSIG_CLIENTMOB_POSTMOVE "client_postmove" //from base of client/Move, after all movement is finished(): (atom/NewLoc, direction)
 // /atom signals
 #define COMSIG_ATOM_ENTERED "atom_entered"						//from base of atom/Entered(): (atom/movable/entering, /atom)
+
+#define COMSIG_ATOM_CANPASS "movable_canpass"	//from base of atom/movable/CanPass() & mob/CanPass(): (atom/movable/mover, atom/target, height, air_group)
+	#define COMPONENT_CANPASS  "canpass"
+	#define COMPONENT_CANTPASS "cantpass"
+
+#define COMSIG_PARENT_ATTACKBY "atom_attackby"			        ///from base of atom/attackby(): (/obj/item, /mob/living, params)
+	#define COMPONENT_NO_AFTERATTACK 1								//Return this in response if you don't want afterattack to be called
 
 // /atom/movable signals
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"					///from base of atom/movable/Move(): (/atom/newLoc)
@@ -51,6 +62,16 @@
 // living signals
 #define COMSIG_LIVING_START_PULL "living_start_pull"			//from base of /mob/start_pulling(): (/atom/movable/target)
 #define COMSIG_LIVING_STOP_PULL "living_stop_pull"				//from base of /mob/stop_pulling(): (/atom/movable/target)
+
+#define COMSIG_MOVABLE_BUCKLE "buckle"							///from base of atom/movable/buckle_mob(): (mob/buckled)
+#define COMSIG_MOVABLE_UNBUCKLE "unbuckle"						///from base of atom/movable/unbuckle_mob(): (mob/buckled)
+
+#define COMSIG_LIVING_MOVE_PULLED "living_move_pulled"			//from base of /mob/Move_Pulled(): (atom/target)
+	#define COMPONENT_PREVENT_MOVE_PULLED 1
+
+#define COMSIG_LIVING_CLICK_CTRL "living_click_ctrl"				//from base of mob/CtrlClickOn(): (atom/target)
+#define COMSIG_LIVING_CLICK_CTRL_SHIFT "living_click_ctrl_shift"	//from base of mob/CtrlShiftClickOn(): (atom/target)
+	#define COMPONENT_CANCEL_CLICK 1
 
 #define COMSIG_XENO_SLIME_CLICK_CTRL "xeno_slime_click_ctrl"				//from slime CtrlClickOn(): (/mob)
 #define COMSIG_XENO_SLIME_CLICK_SHIFT "xeno_slime_click_shift"				//from slime ShiftClickOn(): (/mob)

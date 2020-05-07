@@ -80,6 +80,8 @@
 	var/islam = FALSE
 	var/obj/item/weapon/nullrod/staff/container
 
+	var/datum/religion/my_religion
+
 /mob/living/simple_animal/shade/god/Stat()
 	..()
 	if(statpanel("Status"))
@@ -87,7 +89,7 @@
 			stat(null, "Favor: [round(global.chaplain_religion.favor)]/[global.chaplain_religion.max_favor]")
 
 /mob/living/simple_animal/shade/god/incapacitated(restrained_type = ARMS)
-	// So the god can't use procs and stuff like that.
+	// So the god can't use verbs and stuff like that.
 	return TRUE
 
 /mob/living/simple_animal/shade/god/atom_init()
@@ -100,6 +102,10 @@
 		container.brainmob = null
 		QDEL_NULL(container.god_image)
 		container = null
+
+	if(my_religion)
+		my_religion.remove_deity(src)
+
 	return ..()
 
 /mob/living/simple_animal/shade/god/Login()
