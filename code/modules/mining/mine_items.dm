@@ -245,6 +245,11 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/twohanded/sledgehammer/attack(target, mob/living/user)
 	asshole_counter += 1
 	..()
+
+	var/target_zone = user.zone_sel.selecting
+	if(target_zone == BP_HEAD)
+		shake_camera(target, 2, 2)
+
 	if((CLUMSY in user.mutations) && (asshole_counter >= 5))
 		asshole_counter = 0
 		playsound(target, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
