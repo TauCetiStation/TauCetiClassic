@@ -50,7 +50,6 @@
 				new /obj/item/stack/sheet/metal(loc)
 			qdel(src)
 			return
-	..()
 
 	if(istype(W, /obj/item/weapon/twohanded/sledgehammer))
 		var/obj/item/weapon/twohanded/sledgehammer/S = W
@@ -61,7 +60,7 @@
 				shake_camera(user, 1, 1)
 				qdel(src)
 				return
-
+	..()
 
 /obj/structure/stool/MouseDrop(atom/over_object)
 	if(ishuman(over_object) && type == /obj/structure/stool)
