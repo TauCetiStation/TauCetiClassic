@@ -256,6 +256,10 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		user.dir = i
 		sleep(1)
 
+/obj/item/weapon/twohanded/sledgehammer/dropped(mob/living/carbon/user)
+	..()
+	asshole_counter = 0
+
 /*****************************Shovel********************************/
 /obj/item/weapon/shovel
 	name = "shovel"
