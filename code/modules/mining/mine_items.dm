@@ -236,7 +236,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	slot_flags = SLOT_FLAGS_BACK
 	force_unwielded = 15
 	force_wielded = 40
-	attack_verb = list("attacked", "chopped", "cleaved", "torn")
+	attack_verb = list("attacked", "smashed", "hit", "space assholed")
 	var/asshole_counter = 0
 
 /obj/item/weapon/twohanded/sledgehammer/update_icon()
