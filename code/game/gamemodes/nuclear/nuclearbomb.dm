@@ -11,14 +11,19 @@ var/bomb_set
 	density = TRUE
 	can_buckle = 1
 	use_power = NO_POWER_USE
+
 	var/deployable = 0.0
 	var/extended = 0.0
 	var/lighthack = 0
 	var/opened = 0.0
 	var/timeleft = TIMER_MAX
 	var/timing = 0.0
+	// What is the nuke code.
 	var/r_code = "ADMIN"
+	// What the player sees (*****)
 	var/code = ""
+	// The code actually entered.
+	var/e_code = ""
 	var/yes_code = 0.0
 	var/safety = 1.0
 	var/obj/item/weapon/disk/nuclear/auth = null
@@ -34,6 +39,12 @@ var/bomb_set
 	poi_list += src
 	r_code = "[rand(10000, 99999.0)]"//Creates a random code upon object spawn.
 	wires = new(src)
+
+	// I used 10 since you crack each digit, not the whole password itself.
+	AddComponent(/datum/component/authentication, "nuke_password", 10, CALLBACK(src, .proc/get_password))
+
+/obj/machinery/nuclearbomb/proc/get_password()
+	return r_code
 
 /obj/machinery/nuclearbomb/Destroy()
 	poi_list -= src
@@ -206,7 +217,7 @@ var/bomb_set
 			dat += text("\n<B>Status</B>: Auth. S1-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\n[] Safety: Toggle<BR>\nAnchor: [] Toggle<BR>\n", (safety ? "Safe" : "Engaged"), timeleft, (timing ? "On" : "Off"), timeleft, (safety ? "On" : "Off"), (anchored ? "Engaged" : "Off"))
 	var/message = "AUTH"
 	if (auth)
-		message = text("[]", code)
+		message = code
 		if (yes_code)
 			message = "*****"
 	dat += text("<HR>\n>[]<BR>\n<A href='?src=\ref[];type=1'>1</A>-<A href='?src=\ref[];type=2'>2</A>-<A href='?src=\ref[];type=3'>3</A><BR>\n<A href='?src=\ref[];type=4'>4</A>-<A href='?src=\ref[];type=5'>5</A>-<A href='?src=\ref[];type=6'>6</A><BR>\n<A href='?src=\ref[];type=7'>7</A>-<A href='?src=\ref[];type=8'>8</A>-<A href='?src=\ref[];type=9'>9</A><BR>\n<A href='?src=\ref[];type=R'>R</A>-<A href='?src=\ref[];type=0'>0</A>-<A href='?src=\ref[];type=E'>E</A><BR>\n</TT>", message, src, src, src, src, src, src, src, src, src, src, src, src)
@@ -255,27 +266,32 @@ var/bomb_set
 				I.loc = src
 				src.auth = I
 	if (src.auth)
-		if (href_list["type"])
-			if (href_list["type"] == "E")
-				if (src.code == src.r_code)
-					src.yes_code = 1
-					src.code = null
-				else
-					src.code = "ERROR"
-			else
-				if (href_list["type"] == "R")
-					src.yes_code = 0
-					src.code = null
-				else
-					lastentered = text("[]", href_list["type"])
-					if (text2num(lastentered) == null)
-						var/turf/LOC = get_turf(usr)
-						message_admins("[key_name_admin(usr)] tried to exploit a nuclear bomb by entering non-numerical codes: <a href='?_src_=vars;Vars=\ref[src]'>[lastentered]</a> ! ([LOC ? "[ADMIN_JMP(LOC)]" : "null"])", 0)
-						log_admin("EXPLOIT : [key_name(usr)] tried to exploit a nuclear bomb by entering non-numerical codes: [lastentered] !")
+		if(href_list["type"])
+			switch(href_list["type"])
+				if("E")
+					if(e_code == r_code)
+						yes_code = 1
+						code = null
+						e_code = ""
 					else
-						src.code += lastentered
-						if (length(src.code) > 5)
-							src.code = "ERROR"
+						code = "ERROR"
+						e_code = ""
+				if("R")
+					src.yes_code = 0
+					code = null
+					e_code = ""
+				else
+					if(length(code) >= 5)
+						code = "ERROR"
+						e_code = ""
+					else
+						code += "*"
+
+						if(AUTHENTICATE(src, usr))
+							e_code += r_code[length(e_code) + 1]
+						else
+							e_code += "[rand(0, 9)]"
+
 		if (src.yes_code)
 			if (href_list["time"])
 				var/time = text2num(href_list["time"])

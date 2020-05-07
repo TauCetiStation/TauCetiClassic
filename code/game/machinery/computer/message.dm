@@ -9,6 +9,7 @@
 	desc = "Used to Monitor the crew's messages, that are sent via PDA. Can also be used to view Request Console messages."
 	icon_state = "comm_logs"
 	light_color = "#00b000"
+
 	var/hack_icon = "comm_logsc"
 	var/normal_icon = "comm_logs"
 	circuit = /obj/item/weapon/circuitboard/message_monitor
@@ -57,7 +58,7 @@
 		// Will help make emagging the console not so easy to get away with.
 		MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
 		MK.update_icon()
-		spawn(100*length(src.linkedServer.decryptkey)) UnmagConsole()
+		spawn(100*length(get_password())) UnmagConsole()
 		message = rebootmsg
 		return TRUE
 	else
@@ -79,6 +80,12 @@
 	if(!linkedServer)
 		if(message_servers && message_servers.len > 0)
 			linkedServer = message_servers[1]
+
+	// 3420 is the total num of possible password combos. See message_server.dm GenerateKey()
+	AddComponent(/datum/component/authentication, "PDA_password", 3420, CALLBACK(src, .proc/get_password))
+
+/obj/machinery/computer/message_monitor/proc/get_password()
+	return linkedServer.decryptkey
 
 /obj/machinery/computer/message_monitor/ui_interact(mob/user)
 	//If the computer is being hacked or is emagged, display the reboot message.
@@ -272,12 +279,10 @@
 			auth = 0
 			screen = 0
 		else
-			var/dkey = sanitize(input(usr, "Please enter the decryption key.") as text|null)
-			if(dkey && dkey != "")
-				if(src.linkedServer.decryptkey == dkey)
-					auth = 1
-				else
-					message = incorrectkey
+			if(AUTHENTICATE(src, usr))
+				auth = 1
+			else
+				message = incorrectkey
 
 	//Turn the server on/off.
 	if (href_list["active"])
@@ -323,19 +328,14 @@
 			message = noserver
 		else
 			if(auth)
-				var/dkey = sanitize(input(usr, "Please enter the decryption key.") as text|null)
-				if(dkey && dkey != "")
-					if(src.linkedServer.decryptkey == dkey)
-						var/newkey = sanitize(input(usr,"Please enter the new key (3 - 16 characters max):"))
-						if(length(newkey) <= 3)
-							message = "<span class='notice'>NOTICE: Decryption key too short!</span>"
-						else if(length(newkey) > 16)
-							message = "<span class='notice'>NOTICE: Decryption key too long!</span>"
-						else if(newkey && newkey != "")
-							src.linkedServer.decryptkey = newkey
-						message = "<span class='notice'>NOTICE: Decryption key set.</span>"
-					else
-						message = incorrectkey
+				if(AUTHENTICATE(src, usr))
+					// Should we perhaps allow the player to tediously manage this themselves?
+					usr.remove_meme("PDA_password_" + linkedServer.decryptkey)
+					linkedServer.decryptkey = linkedServer.GenerateKey()
+					usr.attach_meme("PDA_password_" + linkedServer.decryptkey)
+					message = "<span class='notice'>NOTICE: Decryption key set.</span>"
+				else
+					message = incorrectkey
 
 	//Hack the Console to get the password
 	if (href_list["hack"])
@@ -490,7 +490,10 @@
 		for(var/obj/machinery/message_server/server in message_servers)
 			if(!isnull(server))
 				if(!isnull(server.decryptkey))
-					info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
+					create_meme(/datum/meme/memory/password/PDA, "PDA_password_" + server.decryptkey, server.decryptkey)
+					var/datum/meme/memory/password/PDA/pass = attach_meme("PDA_password_" + server.decryptkey)
+
+					info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is [pass.get_meme_text()].<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
 					info_links = info
 					icon_state = "paper_words"
 					break
