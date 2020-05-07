@@ -9,6 +9,7 @@
 	var/modded = FALSE
 	var/transfer_from = TRUE
 	var/obj/item/device/assembly_holder/rig
+	var/datum/reagents/R = new/datum/reagents(1000)
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
 
