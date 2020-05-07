@@ -256,6 +256,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		shake_camera(target, 2, 2)
 
 	if((CLUMSY in user.mutations) && (asshole_counter >= 5) && (target.stat != DEAD))
+		if(HAS_TRAIT(user, TRAIT_MUTE))
+			return
 		playsound(user, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		target.emote("scream")
 		user.say("Space asshole!")
