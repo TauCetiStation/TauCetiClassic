@@ -137,7 +137,7 @@
 	..()
 	if(src in oview(2, user))
 		if (modded)
-			to_chat(user, "<span class='red'>Fuel faucet is wrenched open, leaking the fuel!</span>")
+			to_chat(user, "<span class='red'>Faucet is wrenched open, leaking the contents of [src]!</span>")
 		if(rig)
 			to_chat(user, "<span class='notice'>There is some kind of device rigged to the tank.</span>")
 
