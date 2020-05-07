@@ -40,6 +40,10 @@
 		if(!ritual_invocations.len) //we divide so we gotta protect
 			return FALSE
 		if(user.is_busy(AOG) || !do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
+			var/obj/item/fake/F = locate() in AOG.loc
+			if(F)
+				user.visible_message("[F] vanished.")
+				QDEL_NULL(F)
 			return FALSE
 		user.say(i)
 		if(!on_invocation(user, AOG))
