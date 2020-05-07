@@ -162,7 +162,7 @@
 			leak(amount_per_transfer_from_this)
 
 		return
-	if (istype(W,/obj/item/device/assembly_holder))
+	else if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
 			to_chat(user, "<span class='warning'>There is another device in the way.</span>")
 			return ..()
