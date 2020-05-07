@@ -8,11 +8,9 @@
 	flags = OPENCONTAINER
 	var/modded = FALSE
 	var/transfer_from = TRUE
+	var/obj/item/device/assembly_holder/rig = null
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
-
-/obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
-	return
 
 /obj/structure/reagent_dispensers/AltClick(mob/user)
 	transfer_from = !transfer_from
@@ -33,7 +31,7 @@
 	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
 	if (N)
 		amount_per_transfer_from_this = N
-		
+
 /obj/structure/reagent_dispensers/proc/try_transfer(atom/t_from, atom/t_to, mob/user)
 	var/transfer_amount = 0
 	if(istype(t_from, /obj/item/weapon/reagent_containers/glass))
@@ -106,25 +104,8 @@
 	reagents.clear_reagents()
 	reagents.add_reagent("aqueous_foam", 1000)
 
-/obj/structure/reagent_dispensers/watertank/examine(mob/user)
-	..()
-	if(src in oview(2, user) && modded)
-		to_chat(user, "<span class='warning'>Faucet is wrenched open, [src] is leaking!</span>")
 
-/obj/structure/reagent_dispensers/watertank/attackby(obj/item/weapon/W, mob/user)
-	user.SetNextMove(CLICK_CD_INTERACT)
-	if (iswrench(W))
-		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
-			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
-		modded = !modded
-		if (modded)
-			START_PROCESSING(SSobj, src)
-			leak(amount_per_transfer_from_this)
-
-	add_fingerprint(usr)
-	return ..()
-
-/obj/structure/reagent_dispensers/watertank/process()
+/obj/structure/reagent_dispensers/process()
 	if(!src) return
 	if(modded)
 		leak(2)
@@ -142,18 +123,17 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
 	amount_per_transfer_from_this = 10
-	var/obj/item/device/assembly_holder/rig = null
 
 /obj/structure/reagent_dispensers/fueltank/atom_init()
 	. = ..()
-	var/datum/reagents/R = new/datum/reagents(300)
+	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
 	if(!possible_transfer_amounts)
 		src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
 	reagents.add_reagent("fuel",300)
 
-/obj/structure/reagent_dispensers/fueltank/examine(mob/user)
+/obj/structure/reagent_dispensers/examine(mob/user)
 	..()
 	if(src in oview(2, user))
 		if (modded)
@@ -161,7 +141,7 @@
 		if(rig)
 			to_chat(user, "<span class='notice'>There is some kind of device rigged to the tank.</span>")
 
-/obj/structure/reagent_dispensers/fueltank/attack_hand(mob/user)
+/obj/structure/reagent_dispensers/attack_hand(mob/user)
 	if (rig && !user.is_busy())
 		user.visible_message("[user] begins to detach [rig] from \the [src].", "You begin to detach [rig] from \the [src]")
 		if(do_after(user, 20, target = src))
@@ -170,15 +150,18 @@
 			rig = null
 			cut_overlays()
 
-/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
 	if (iswrench(W))
 		user.SetNextMove(CLICK_CD_RAPID)
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
+		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [src.x], [src.y], [src.z] [ADMIN_JMP(src)]")
 		modded = !modded
 		if (modded)
+			START_PROCESSING(SSobj, src)
 			leak(amount_per_transfer_from_this)
-		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [src.x], [src.y], [src.z] [ADMIN_JMP(src)]")
+
+		return
 	if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
 			to_chat(user, "<span class='warning'>There is another device in the way.</span>")
@@ -190,8 +173,8 @@
 
 			var/obj/item/device/assembly_holder/H = W
 			if (istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))
-				message_admins("[key_name_admin(user)] rigged fueltank at ([loc.x],[loc.y],[loc.z]) for explosion. [ADMIN_JMP(user)]")
-				log_game("[key_name(user)] rigged fueltank at ([loc.x],[loc.y],[loc.z]) for explosion.")
+				message_admins("[key_name_admin(user)] rigged [src] at ([loc.x],[loc.y],[loc.z]) for explosion. [ADMIN_JMP(user)]")
+				log_game("[key_name(user)] rigged [src] at ([loc.x],[loc.y],[loc.z]) for explosion.")
 
 			rig = W
 			user.drop_item()
