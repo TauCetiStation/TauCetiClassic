@@ -99,6 +99,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 			player_alt_titles -= J.title
 
+	if(current_version < 26)
+		if(species != HUMAN)
+			job_loop:
+				for(var/datum/job/job in SSjob.occupations)
+					if(!job.is_species_permitted(parent))
+						for(var/level in 1 to 3)
+							if(GetJobDepartment(job, level) & job.flag)
+								// Disable the job if it is unavailable
+								SetJobDepartment(job, 4)
+								continue job_loop
+
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
 		return
