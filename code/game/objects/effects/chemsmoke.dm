@@ -20,7 +20,7 @@
 	var/list/targetTurfs
 	var/list/wallList
 	var/density
-	var/color
+	var/color //it is used to give color to smoke, despite the reagents in it
 
 
 /datum/effect/effect/system/smoke_spread/chem/New()

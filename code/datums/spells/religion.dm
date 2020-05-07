@@ -238,7 +238,7 @@
 	for(var/turf/simulated/floor/F in RANGE_TURFS(divine_power, usr))
 		F.make_wet_floor(LUBE_FLOOR)
 
-/obj/effect/proc_holder/spell/targeted/infection
+/obj/effect/proc_holder/spell/dumbfire/infection
 	name = "Spread a good infection"
 	desc = "Good infection with viruses weight even and mind restoration"
 
@@ -252,10 +252,12 @@
 	clothes_req = 0
 
 	action_icon_state = "god_default"
-	var/list/infected = list()
-	var/obj/effect/proc_holder/spell/targeted/infection/obcurse/evil_spell
+	sound = 'sound/magic/Smoke.ogg'
 
-/obj/effect/proc_holder/spell/targeted/infection/cast()
+	var/list/infected = list()
+	var/obj/effect/proc_holder/spell/dumbfire/infection/obcurse/evil_spell
+
+/obj/effect/proc_holder/spell/dumbfire/infection/cast()
 	var/datum/effect/effect/system/smoke_spread/chem/S = new
 	create_reagents(10)
 	reagents.add_reagent("tricordrazine", 10)
@@ -277,7 +279,7 @@
 
 	// That would not infect infected.
 	if(!evil_spell)
-		for(var/obj/effect/proc_holder/spell/targeted/infection/obcurse/O in usr.spell_list)
+		for(var/obj/effect/proc_holder/spell/dumbfire/infection/obcurse/O in usr.spell_list)
 			evil_spell = O
 
 	for(var/mob/living/carbon/human/H in range(divine_power))
@@ -289,15 +291,15 @@
 		infect_virus2(H, mind)
 		infect_virus2(H, hungry)
 
-/obj/effect/proc_holder/spell/targeted/infection/obcurse
+/obj/effect/proc_holder/spell/dumbfire/infection/obcurse
 	name = "Spread a evil infection"
 	desc = "Evil infection with viruses cough and headache"
 
 	needed_aspect = list(ASPECT_DEATH = 1, ASPECT_OBSCURE = 1)
 
-	var/obj/effect/proc_holder/spell/targeted/infection/good_spell
+	var/obj/effect/proc_holder/spell/dumbfire/infection/good_spell
 
-/obj/effect/proc_holder/spell/targeted/infection/obcurse/cast()
+/obj/effect/proc_holder/spell/dumbfire/infection/obcurse/cast()
 	var/datum/effect/effect/system/smoke_spread/chem/S = new
 	create_reagents(10)
 	reagents.add_reagent("harvester", 10)
@@ -320,8 +322,8 @@
 
 	// That would not infect infected.
 	if(!good_spell)
-		for(var/obj/effect/proc_holder/spell/targeted/infection/O in usr.spell_list)
-			if(istype(O, /obj/effect/proc_holder/spell/targeted/infection))
+		for(var/obj/effect/proc_holder/spell/dumbfire/infection/O in usr.spell_list)
+			if(istype(O, /obj/effect/proc_holder/spell/dumbfire/infection))
 				good_spell = O
 
 	for(var/mob/living/carbon/human/H in range(divine_power))
@@ -335,11 +337,11 @@
 		infect_virus2(H, cough)
 		infect_virus2(H, headache)
 
-/obj/effect/proc_holder/spell/targeted/rot
+/obj/effect/proc_holder/spell/dumbfire/rot
 	name = "The smell of rot"
 	desc = "Spread smoke with Thermopsis"
 
-	favor_cost = 100
+	favor_cost = 150
 	charge_max = 3 MINUTES
 	divine_power = 1 //count gibs
 	needed_aspect = list(ASPECT_FOOD = 1, ASPECT_OBSCURE = 2)
@@ -349,8 +351,9 @@
 	clothes_req = 0
 
 	action_icon_state = "god_default"
+	sound = 'sound/magic/Smoke.ogg'
 
-/obj/effect/proc_holder/spell/targeted/rot/cast()
+/obj/effect/proc_holder/spell/dumbfire/rot/cast()
 	var/datum/effect/effect/system/smoke_spread/chem/S = new
 	create_reagents(30)
 	reagents.add_reagent("thermopsis", 30)
