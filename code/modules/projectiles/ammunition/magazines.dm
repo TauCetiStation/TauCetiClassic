@@ -142,6 +142,7 @@
 	name = "magazine (9mm rubber)"
 	icon_state = "9mmr_mag"
 	ammo_type = /obj/item/ammo_casing/c9mmr
+	caliber = "9mmr"
 
 /obj/item/ammo_box/magazine/m9mm_2/update_icon()
 	..()
