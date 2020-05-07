@@ -121,7 +121,7 @@
 /obj/item/clothing/shoes/clown_shoes/proc/start_waddling(mob/user)
 	if(CLUMSY in user.mutations)
 		slowdown = SHOES_SLOWDOWN
-	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED))
+	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_PIXELMOVE))
 
 /obj/item/clothing/shoes/clown_shoes/proc/stop_waddling(mob/user)
 	slowdown = SHOES_SLOWDOWN + 1.0
@@ -158,7 +158,7 @@
 	RegisterSignal(user, list(COMSIG_LIVING_STOP_PULL), .proc/stop_waddling)
 	UnregisterSignal(user, list(COMSIG_LIVING_START_PULL))
 
-	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED))
+	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_PIXELMOVE))
 	waddling = TRUE
 
 /obj/item/clothing/shoes/jolly_gravedigger/proc/stop_waddling(mob/user)
