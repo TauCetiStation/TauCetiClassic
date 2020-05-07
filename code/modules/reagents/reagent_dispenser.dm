@@ -214,8 +214,6 @@
 	
 /obj/structure/reagent_dispensers/fueltank/atom_init()
 	. = ..()
-	if(!possible_transfer_amounts)
-		src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
 	reagents.add_reagent("fuel",300)
 
 /obj/structure/reagent_dispensers/peppertank
