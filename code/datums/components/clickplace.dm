@@ -26,6 +26,10 @@
 /datum/component/clickplace/proc/try_place(datum/source, obj/item/I, mob/user, params)
 	if(user.a_intent == I_HURT)
 		return NONE
+	// Apperantly robots currently don't use
+	// NODROP/ABSTRACT flags. Oh well, refactor it some day please ~Luduk
+	if(isrobot(user))
+		return NONE
 	if(!I.canremove)
 		return NONE
 	if(I.flags & ABSTRACT)

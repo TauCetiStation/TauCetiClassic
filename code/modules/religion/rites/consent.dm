@@ -53,8 +53,8 @@
 		to_chat(user, "<span class='warning'>Only humanoid bodies can be accepted.</span>")
 		return FALSE
 
-	if(jobban_isbanned(AOG.buckled_mob, "Cyborg") || !role_available_in_minutes(AOG.buckled_mob, ROLE_PAI))
-		to_chat(usr, "<span class='warning'>[AOG.buckled_mob]'s body is too weak!.</span>")
+	if(jobban_isbanned(AOG.buckled_mob, "Cyborg") || role_available_in_minutes(AOG.buckled_mob, ROLE_PAI))
+		to_chat(usr, "<span class='warning'>[AOG.buckled_mob]'s body is too weak!</span>")
 		return FALSE
 	return ..()
 
@@ -68,8 +68,8 @@
 		return FALSE
 
 	hgibs(AOG.loc, human2borg.viruses, human2borg.dna, human2borg.species.flesh_color, human2borg.species.blood_datum)
-	human2borg.Robotize()
 	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [name]!</span>")
+	human2borg.Robotize(global.chaplain_religion.bible_info.borg_name, global.chaplain_religion.bible_info.laws_type)
 	return TRUE
 
 /*
