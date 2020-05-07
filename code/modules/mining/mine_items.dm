@@ -260,7 +260,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			return
 		playsound(user, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		target.emote("scream")
-		user.say("Space asshole!")
+		user.say(pick("Spa-a-ace assho-o-o-o-ole!", "Spaaace asshoooole!", "Space assho-o-ole!"))
 		asshole_counter = 0
 	if(wielded)
 		INVOKE_ASYNC(src, .proc/spin, user)
