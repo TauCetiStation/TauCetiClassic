@@ -252,11 +252,3 @@
 	targetTurfs = complete
 
 	return
-
-//------------------------------------------
-// Sets a specific color of smoke. 
-// Accepts color only in hex.
-//------------------------------------------
-/datum/effect/effect/system/smoke_spread/chem/proc/set_color(color_hex)
-	color = color_hex
-	

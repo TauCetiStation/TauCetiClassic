@@ -303,7 +303,7 @@
 	reagents.add_reagent("harvester", 10)
 	S.attach(usr.loc)
 	S.set_up(reagents, 5, 0, usr.loc)
-	S.set_color("#421c52") //dark purple
+	S.color = "#421c52" //dark purple
 	S.start()
 
 	var/datum/disease2/effectholder/cough_holder = new
@@ -356,7 +356,7 @@
 	reagents.add_reagent("thermopsis", 30)
 	S.attach(usr.loc)
 	S.set_up(reagents, 2, 0, usr.loc)
-	S.set_color("#3d0606") //dark red
+	S.color = "#3d0606" //dark red
 	S.start()
 
 	if(divine_power >= 1)
