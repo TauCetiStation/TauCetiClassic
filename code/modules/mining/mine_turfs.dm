@@ -172,7 +172,7 @@
 		var/obj/item/weapon/twohanded/sledgehammer/S = W
 		if(S.wielded)
 			to_chat(user, "<span class='notice'>You successfully break [name].</span>")
-			GetDrilled()
+			GetDrilled(artifact_fail = 1)
 		else
 			to_chat(user, "<span class='warning'>You need to take it with both hands to break it!</span>")
 
