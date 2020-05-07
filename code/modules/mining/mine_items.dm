@@ -233,10 +233,10 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	origin_tech = "materials=3"
 	desc = "This thing breaks skulls pretty well, right?"
 	hitsound = 'sound/items/sledgehammer_hit.ogg'
-	w_class = ITEM_SIZE_LARGE
+	w_class = ITEM_SIZE_HUGE
 	slot_flags = SLOT_FLAGS_BACK
 	force_unwielded = 15
-	force_wielded = 40
+	force_wielded = 35
 	attack_verb = list("attacked", "smashed", "hit", "space assholed")
 	var/asshole_counter = 0
 	var/next_hit = 0
