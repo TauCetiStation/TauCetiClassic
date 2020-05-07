@@ -245,14 +245,15 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/twohanded/sledgehammer/attack(target, mob/living/user)
 	asshole_counter += 1
 	..()
-	if((CLUMSY in user.mutations) && (asshole_counter % 5 == 0))
+	if((CLUMSY in user.mutations) && (asshole_counter >= 5))
+		asshole_counter = 0
 		playsound(target, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		return
 	if(wielded)
 		INVOKE_ASYNC(src, .proc/spin, user)
 
 /obj/item/weapon/twohanded/sledgehammer/proc/spin(mob/living/user)
-	for(var/i in list(2,8,1,4,2,8,1,4,2))
+	for(var/i in list(SOUTH, WEST, NORTH, EAST, SOUTH))
 		user.dir = i
 		sleep(1)
 
