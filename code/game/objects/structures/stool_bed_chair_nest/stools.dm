@@ -51,7 +51,7 @@
 			qdel(src)
 			return
 
-	if(istype(W, /obj/item/weapon/twohanded/sledgehammer))
+	else if(istype(W, /obj/item/weapon/twohanded/sledgehammer))
 		var/obj/item/weapon/twohanded/sledgehammer/S = W
 		if(S.wielded)
 			if(!(flags & NODECONSTRUCT))
@@ -60,7 +60,8 @@
 				shake_camera(user, 1, 1)
 				qdel(src)
 				return
-	..()
+	else
+		..()
 
 /obj/structure/stool/MouseDrop(atom/over_object)
 	if(ishuman(over_object) && type == /obj/structure/stool)
