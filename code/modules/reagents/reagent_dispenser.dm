@@ -82,53 +82,12 @@
 	reagents.trans_to(R, amount)
 	R.reaction(loc)
 
-// "Tanks".
-/obj/structure/reagent_dispensers/watertank
-	name = "watertank"
-	desc = "A watertank."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "watertank"
-	amount_per_transfer_from_this = 10
-
-/obj/structure/reagent_dispensers/watertank/atom_init()
-	. = ..()
-	reagents.add_reagent("water", 1000)
-
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank
-	name = "AFFF tank"
-	desc = "A tank containing Aqueous Film Forming Foam(AFFF)."
-	icon_state = "affftank"
-
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank/atom_init()
-	. = ..()
-	reagents.clear_reagents()
-	reagents.add_reagent("aqueous_foam", 1000)
-
-
 /obj/structure/reagent_dispensers/process()
 	if(!src) return
 	if(modded)
 		leak(2)
 	else
 		STOP_PROCESSING(SSobj, src)
-
-/obj/structure/reagent_dispensers/watertank/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	. = ..()
-	if (. && modded)
-		leak(1)
-
-/obj/structure/reagent_dispensers/fueltank
-	name = "fueltank"
-	desc = "A fueltank."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "weldtank"
-	amount_per_transfer_from_this = 10
-
-/obj/structure/reagent_dispensers/fueltank/atom_init()
-	. = ..()
-	if(!possible_transfer_amounts)
-		src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
-	reagents.add_reagent("fuel",300)
 
 /obj/structure/reagent_dispensers/examine(mob/user)
 	..()
@@ -185,7 +144,6 @@
 	add_fingerprint(usr)
 	return ..()
 
-
 /obj/structure/reagent_dispensers/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
 		if(!istype(Proj ,/obj/item/projectile/beam/lasertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
@@ -211,8 +169,6 @@
 		return TRUE
 	return FALSE
 
-
-
 /obj/structure/reagent_dispensers/fire_act(datum/gas_mixture/air, temperature, volume)
 	if(temperature > T0C+500)
 		explode()
@@ -221,6 +177,46 @@
 /obj/structure/reagent_dispensers/tesla_act()
 	..() //extend the zap
 	explode()
+
+// "Tanks".
+/obj/structure/reagent_dispensers/watertank
+	name = "watertank"
+	desc = "A watertank."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "watertank"
+	amount_per_transfer_from_this = 10
+
+/obj/structure/reagent_dispensers/watertank/atom_init()
+	. = ..()
+	reagents.add_reagent("water", 1000)
+
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank
+	name = "AFFF tank"
+	desc = "A tank containing Aqueous Film Forming Foam(AFFF)."
+	icon_state = "affftank"
+
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank/atom_init()
+	. = ..()
+	reagents.clear_reagents()
+	reagents.add_reagent("aqueous_foam", 1000)
+
+/obj/structure/reagent_dispensers/watertank/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
+	if (. && modded)
+		leak(1)
+
+/obj/structure/reagent_dispensers/fueltank
+	name = "fueltank"
+	desc = "A fueltank."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "weldtank"
+	amount_per_transfer_from_this = 10
+
+/obj/structure/reagent_dispensers/fueltank/atom_init()
+	. = ..()
+	if(!possible_transfer_amounts)
+		src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
+	reagents.add_reagent("fuel",300)
 
 /obj/structure/reagent_dispensers/fueltank/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
