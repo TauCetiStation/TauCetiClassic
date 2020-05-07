@@ -126,7 +126,6 @@
 
 /obj/structure/reagent_dispensers/fueltank/atom_init()
 	. = ..()
-	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
 	if(!possible_transfer_amounts)
