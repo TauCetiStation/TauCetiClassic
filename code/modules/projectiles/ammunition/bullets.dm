@@ -30,8 +30,7 @@
 
 /obj/item/ammo_casing/c9mmr
 	desc = "A 9mm rubber bullet casing."
-	icon_state = "st-casing"
-	caliber = "9mmr"
+	caliber = "9mm"
 	projectile_type = "/obj/item/projectile/bullet/weakbullet/rubber"
 
 /obj/item/ammo_casing/c45
@@ -56,8 +55,7 @@
 
 /obj/item/ammo_casing/c45r
 	desc = "A .45 rubber bullet casing."
-	icon_state = "st-casing"
-	caliber = ".45r"
+	caliber = ".45"
 	projectile_type = "/obj/item/projectile/bullet/weakbullet/rubber45"
 
 /obj/item/ammo_casing/a12mm
@@ -122,14 +120,10 @@
 
 /obj/item/ammo_casing/r4046
 	name = "A 40x46mm grenade"
-	desc = "A 40x46mm grenade."
+	desc = "A 40x46mm grenade (rubber)."
 	icon_state = "40x46"
 	caliber = "40x46"
 	projectile_type = /obj/item/projectile/bullet/grenade/r4046
-
-/obj/item/ammo_casing/r4046/rubber
-	desc = "A 40x46mm grenade (rubber)."
-	projectile_type = /obj/item/projectile/bullet/grenade/r4046/rubber
 
 /obj/item/ammo_casing/r4046/chem/teargas
 	desc = "A 40x46mm grenade (teargas)."
