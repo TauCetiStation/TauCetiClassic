@@ -763,7 +763,7 @@
 	min_age = 1
 	max_age = 125
 
-	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST)
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST, ROLE_BLOB)
 
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
