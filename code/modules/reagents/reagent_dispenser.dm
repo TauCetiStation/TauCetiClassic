@@ -214,7 +214,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
 	amount_per_transfer_from_this = 10
-	leak_amount = 1
+	
 /obj/structure/reagent_dispensers/fueltank/atom_init()
 	. = ..()
 	if(!possible_transfer_amounts)
