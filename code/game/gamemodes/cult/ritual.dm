@@ -352,6 +352,10 @@ var/list/cult_datums = list()
 	if(usr.get_active_hand() != src)
 		return
 
+	if(user.species.flags[NO_BLOOD])
+		to_chat(user, "<span class='warning'>You don't have any blood, how do you suppose to write a blood rune?</span>")
+		return
+
 	var/w1
 	var/w2
 	var/w3

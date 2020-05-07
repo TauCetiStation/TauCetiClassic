@@ -33,6 +33,8 @@
 	uplink_welcome = "Nar-Sie Uplink Console:"
 	uplink_uses = 20
 
+	restricted_species_flags = list(NO_BLOOD)
+
 	var/datum/mind/sacrifice_target = null
 	var/finished = 0
 
