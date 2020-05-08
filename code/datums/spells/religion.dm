@@ -237,3 +237,132 @@
 /obj/effect/proc_holder/spell/targeted/grease/cast()
 	for(var/turf/simulated/floor/F in RANGE_TURFS(divine_power, usr))
 		F.make_wet_floor(LUBE_FLOOR)
+
+/obj/effect/proc_holder/spell/dumbfire/infection
+	name = "Spread a good infection"
+	desc = "Good infection with viruses weight even and mind restoration"
+
+	favor_cost = 300
+	charge_max = 3 MINUTES
+	divine_power = 1 //range
+	needed_aspect = list(ASPECT_RESCUE = 1, ASPECT_OBSCURE = 1)
+
+	range = 0
+	invocation = "none"
+	clothes_req = 0
+
+	action_icon_state = "god_default"
+	sound = 'sound/magic/Smoke.ogg'
+
+	var/list/infected = list()
+	var/obj/effect/proc_holder/spell/dumbfire/infection/obcurse/evil_spell
+
+/obj/effect/proc_holder/spell/dumbfire/infection/cast()
+	var/datum/effect/effect/system/smoke_spread/chem/S = new
+	create_reagents(10)
+	reagents.add_reagent("tricordrazine", 10)
+	S.attach(usr.loc)
+	S.set_up(reagents, 5, 0, usr.loc)
+	S.start()
+
+	var/datum/disease2/effectholder/hungry_holder = new
+	hungry_holder.effect = new /datum/disease2/effect/weight_even()
+	hungry_holder.chance = rand(hungry_holder.effect.chance_minm, hungry_holder.effect.chance_maxm)
+	var/datum/disease2/disease/hungry = new
+	hungry.addeffect(hungry_holder)
+
+	var/datum/disease2/effectholder/mind_holder = new
+	mind_holder.effect = new /datum/disease2/effect/mind_restoration()
+	mind_holder.chance = rand(mind_holder.effect.chance_minm, mind_holder.effect.chance_maxm)
+	var/datum/disease2/disease/mind = new
+	mind.addeffect(mind_holder)
+
+	// That would not infect infected.
+	if(!evil_spell)
+		for(var/obj/effect/proc_holder/spell/dumbfire/infection/obcurse/O in usr.spell_list)
+			evil_spell = O
+
+	for(var/mob/living/carbon/human/H in range(divine_power))
+		if(evil_spell)
+			if(H in evil_spell.infected)
+				continue
+			infected += H
+
+		infect_virus2(H, mind)
+		infect_virus2(H, hungry)
+
+/obj/effect/proc_holder/spell/dumbfire/infection/obcurse
+	name = "Spread a evil infection"
+	desc = "Evil infection with viruses cough and headache"
+
+	needed_aspect = list(ASPECT_DEATH = 1, ASPECT_OBSCURE = 1)
+
+	var/obj/effect/proc_holder/spell/dumbfire/infection/good_spell
+
+/obj/effect/proc_holder/spell/dumbfire/infection/obcurse/cast()
+	var/datum/effect/effect/system/smoke_spread/chem/S = new
+	create_reagents(10)
+	reagents.add_reagent("harvester", 10)
+	S.attach(usr.loc)
+	S.set_up(reagents, 5, 0, usr.loc)
+	S.color = "#421c52" //dark purple
+	S.start()
+
+	var/datum/disease2/effectholder/cough_holder = new
+	cough_holder.effect = new /datum/disease2/effect/cough()
+	cough_holder.chance = rand(cough_holder.effect.chance_minm, cough_holder.effect.chance_maxm)
+	var/datum/disease2/disease/cough = new
+	cough.addeffect(cough_holder)
+
+	var/datum/disease2/effectholder/headache_holder = new
+	headache_holder.effect = new /datum/disease2/effect/headache()
+	headache_holder.chance = rand(headache_holder.effect.chance_minm, headache_holder.effect.chance_maxm)
+	var/datum/disease2/disease/headache = new
+	headache.addeffect(headache_holder)
+
+	// That would not infect infected.
+	if(!good_spell)
+		for(var/obj/effect/proc_holder/spell/dumbfire/infection/O in usr.spell_list)
+			if(istype(O, /obj/effect/proc_holder/spell/dumbfire/infection))
+				good_spell = O
+
+	for(var/mob/living/carbon/human/H in range(divine_power))
+		if(H.mind && H.mind.holy_role >= HOLY_ROLE_PRIEST)
+			continue
+		if(good_spell)
+			if(H in good_spell.infected)
+				continue
+			infected += H
+
+		infect_virus2(H, cough)
+		infect_virus2(H, headache)
+
+/obj/effect/proc_holder/spell/dumbfire/rot
+	name = "The smell of rot"
+	desc = "Spread smoke with Thermopsis"
+
+	favor_cost = 150
+	charge_max = 3 MINUTES
+	divine_power = 1 //count gibs
+	needed_aspect = list(ASPECT_FOOD = 1, ASPECT_OBSCURE = 2)
+
+	range = 0
+	invocation = "none"
+	clothes_req = 0
+
+	action_icon_state = "god_default"
+	sound = 'sound/magic/Smoke.ogg'
+
+/obj/effect/proc_holder/spell/dumbfire/rot/cast()
+	var/datum/effect/effect/system/smoke_spread/chem/S = new
+	create_reagents(30)
+	reagents.add_reagent("thermopsis", 30)
+	S.attach(usr.loc)
+	S.set_up(reagents, 2, 0, usr.loc)
+	S.color = "#3d0606" //dark red
+	S.start()
+
+	if(divine_power >= 1)
+		gibs(usr.loc)
+		if(divine_power >= 2)
+			hgibs(usr.loc)
