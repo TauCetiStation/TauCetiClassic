@@ -39,18 +39,14 @@
 			continue
 		if(!ritual_invocations.len) //we divide so we gotta protect
 			return FALSE
-		if(user.is_busy(AOG) || !do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
-			var/obj/item/fake/F = locate() in AOG.loc
-			if(F)
-				user.visible_message("[F] vanished.")
-				QDEL_NULL(F)
+		if(!can_invocate(user, AOG))
 			return FALSE
 		user.say(i)
 		if(!on_invocation(user, AOG))
 			return FALSE
 
 	// Because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
-	if(user.is_busy(AOG) || !do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
+	if(!can_invocate(user, AOG))
 		return FALSE
 	if(invoke_msg)
 		user.say(invoke_msg)
@@ -63,4 +59,9 @@
 // Does a thing on each invocation, return FALSE to cancel ritual performance.
 // Will not work if ritual_invocations is null.
 /datum/religion_rites/proc/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
+	return TRUE
+
+/datum/religion_rites/proc/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(user.is_busy(AOG) || !do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
+		return FALSE
 	return TRUE
