@@ -1375,7 +1375,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
@@ -10347,7 +10347,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurplecorner"
@@ -10373,7 +10373,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -21599,7 +21599,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -23375,7 +23375,7 @@
 	},
 /area/station/storage/tools)
 "aPM" = (
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -34446,11 +34446,11 @@
 	},
 /area/station/hallway/secondary/entry)
 "bko" = (
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "bkp" = (
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "bkq" = (
@@ -55035,7 +55035,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -55828,7 +55828,7 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "cil" = (
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "cim" = (
@@ -61131,7 +61131,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "cuS" = (
@@ -63518,7 +63518,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "cBv" = (
@@ -69299,7 +69299,7 @@
 /area/station/cargo/office)
 "fQb" = (
 /obj/item/clothing/mask/breath,
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/plating,
