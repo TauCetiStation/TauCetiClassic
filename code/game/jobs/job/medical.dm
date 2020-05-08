@@ -18,13 +18,6 @@
 	salary = 250
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
-	/*
-		HEY YOU!
-		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
-		~Luduk
-	*/
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
 
 /datum/job/cmo/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -63,13 +56,6 @@
 	salary = 160
 	alt_titles = list("Surgeon", "Nurse")
 	minimal_player_ingame_minutes = 960
-	/*
-		HEY YOU!
-		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
-		~Luduk
-	*/
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/doctor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -131,13 +117,6 @@
 	access = list(access_medical, access_morgue, access_paramedic, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_research, access_mailsorting, access_medbay_storage, access_engineering_lobby)
 	salary = 120
 	minimal_player_ingame_minutes = 1500 //they have too much access, so you have to play more to unlock it
-	/*
-		HEY YOU!
-		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
-		~Luduk
-	*/
 	restricted_species = list(IPC, DIONA)
 
 /datum/job/paramedic/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -262,13 +241,6 @@
 	alt_titles = list("Pathologist","Microbiologist")
 	minimal_player_ingame_minutes = 960
 	salary = 180
-	/*
-		HEY YOU!
-		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
-		~Luduk
-	*/
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/virologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
