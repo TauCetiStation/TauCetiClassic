@@ -12,13 +12,6 @@
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
 	salary = 160
 	minimal_player_ingame_minutes = 960
-	/*
-		HEY YOU!
-		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
-		~Luduk
-	*/
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
 
 /datum/job/qm/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -115,13 +108,6 @@
 	access = list(access_mining, access_mint, access_mailsorting, access_recycler)
 	salary = 60
 	minimal_player_ingame_minutes = 480
-	/*
-		HEY YOU!
-		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
-		~Luduk
-	*/
 	restricted_species = list(DIONA)
 
 /datum/job/recycler/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -152,13 +138,6 @@
 	access = list(access_bar)
 	salary = 40
 	minimal_player_ingame_minutes = 240
-	/*
-		HEY YOU!
-		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
-		~Luduk
-	*/
 	restricted_species = list(TAJARAN)
 
 	survival_kit_items = list(/obj/item/ammo_casing/shotgun/beanbag,
@@ -202,13 +181,6 @@
 	salary = 40
 	alt_titles = list("Cook")
 	minimal_player_ingame_minutes = 240
-	/*
-		HEY YOU!
-		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
-		~Luduk
-	*/
 	restricted_species = list(TAJARAN)
 
 /datum/job/chef/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -368,13 +340,6 @@
 	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engine, access_engineering_lobby)
 	salary = 200
 	minimal_player_ingame_minutes = 1560
-	/*
-		HEY YOU!
-		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
-		~Luduk
-	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX)
 
 /datum/job/lawyer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)

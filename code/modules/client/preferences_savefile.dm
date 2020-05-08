@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 27
+#define SAVEFILE_VERSION_MAX 26
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -59,11 +59,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		toggles &= ~(SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SOUND_STREAMING)
 		S["toggles"] << toggles
 
-	if(current_version < 27)
+	if(current_version < 26)
 		for(var/role in be_role)
 			if(!CanBeRole(role))
 				be_role -= role
-		S["be_role"] << be_role
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 17)
@@ -104,28 +103,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			(player_alt_titles[J.title] in list("Technical Assistant", "Medical Intern", "Research Assistant", "Security Cadet")))
 
 			player_alt_titles -= J.title
-
-	if(current_version < 27)
-		if(species != HUMAN)
-			job_loop:
-				for(var/datum/job/job in SSjob.occupations)
-					if(!job.is_species_permitted(parent))
-						for(var/level in 1 to 3)
-							if(GetJobDepartment(job, level) & job.flag)
-								// Disable the job if it is unavailable
-								SetJobDepartment(job, 4)
-								continue job_loop
-
-			// WHY THE HECK DO WE DO IT LIKE THIS?! ~Luduk
-			S["job_civilian_high"]	<< job_civilian_high
-			S["job_civilian_med"]	<< job_civilian_med
-			S["job_civilian_low"]	<< job_civilian_low
-			S["job_medsci_high"]	<< job_medsci_high
-			S["job_medsci_med"]		<< job_medsci_med
-			S["job_medsci_low"]		<< job_medsci_low
-			S["job_engsec_high"]	<< job_engsec_high
-			S["job_engsec_med"]		<< job_engsec_med
-			S["job_engsec_low"]		<< job_engsec_low
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
