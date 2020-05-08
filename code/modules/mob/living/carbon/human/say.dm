@@ -232,7 +232,7 @@
 			return 1
 		if(isslime(other))
 			return 1
-		if(isgod(other) && mind.assigned_role == "Chaplain")
+		if(isgod(other) && mind.holy_role)
 			var/mob/living/simple_animal/shade/god/G = other
 			if(G.islam)
 				return 1
