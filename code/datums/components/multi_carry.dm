@@ -1,3 +1,5 @@
+#define MOVE_TO_POS_DELAY 3
+
 // Is called on carry_obj Ctrl+Shift click. Does a waddle.
 #define DANCE_MOVE_CARRYWADDLE "carrywaddle"
 // Is called on Ctrl+Shift click on fellow carrier. Rotates everybody's positions. TO-DO: Make the rotation direction depend on clicker's direction?
@@ -55,6 +57,9 @@
 	// If set to true will never rotate dirs.
 	var/one_dir = FALSE
 	var/list/positions_by_dir
+
+/datum/carry_positions/proc/get_pos(dir, i)
+	return positions_by_dir["[dir]"][i]
 
 /datum/carry_positions/coffin_four_man
 	pos_count = 4
@@ -171,6 +176,8 @@
 	RegisterSignal(carrier, list(COMSIG_CLIENTMOB_POSTMOVE), .proc/carrier_postmove)
 	RegisterSignal(carrier, list(COMSIG_MOVABLE_MOVED), .proc/check_proximity)
 	RegisterSignal(carrier, list(COMSIG_ATOM_CANPASS), .proc/check_canpass)
+	// Prevents funny bugs from occuring.
+	RegisterSignal(carrier, list(COMSIG_MOVABLE_GRABBED), .proc/on_grabbed)
 	RegisterSignal(carrier, list(COMSIG_MOVABLE_WADDLE), .proc/carrier_waddle)
 	RegisterSignal(carrier, list(COMSIG_LIVING_CLICK_CTRL), .proc/on_ctrl_click)
 	RegisterSignal(carrier, list(COMSIG_LIVING_CLICK_CTRL_SHIFT), .proc/on_ctrl_shift_click)
@@ -183,6 +190,7 @@
 		COMSIG_CLIENTMOB_POSTMOVE,
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_ATOM_CANPASS,
+		COMSIG_MOVABLE_GRABBED,
 		COMSIG_MOVABLE_WADDLE,
 		COMSIG_LIVING_CLICK_CTRL,
 		COMSIG_LIVING_CLICK_CTRL_SHIFT,
@@ -194,20 +202,27 @@
 		return COMPONENT_PREVENT_MOVE_PULLED
 	return NONE
 
+// Animates movement for carrier to pos.
+/datum/component/multi_carry/proc/move_to_pos(mob/carrier, list/pos)
+	carrier.face_pixeldiff(carrier.pixel_x, carrier.pixel_y, pos["px"], pos["py"])
+
+	animate(carrier, pixel_x=pos["px"], pixel_y=pos["py"], layer=pos["layer"], time=MOVE_TO_POS_DELAY)
+	sleep(MOVE_TO_POS_DELAY)
+
+	SEND_SIGNAL(carrier, COMSIG_MOVABLE_PIXELMOVE)
+
 // This proc is used to change the positions of carriers when carry_obj is rotated.
 /datum/component/multi_carry/proc/rotate_dir(dir_)
 	if(!can_carry_move())
 		return
-	next_move = world.time + 3
+	next_move = world.time + MOVE_TO_POS_DELAY
 
 	var/i = 1
 	for(var/mob/carrier in carriers)
-		var/list/pos = positions.positions_by_dir["[carry_obj.dir]"][i]
+		var/list/pos = positions.get_pos(carry_obj.dir, i)
 		i++
 
-		carrier.face_pixeldiff(carrier.pixel_x, carrier.pixel_y, pos["px"], pos["py"])
-
-		animate(carrier, pixel_x=pos["px"], pixel_y=pos["py"], layer=pos["layer"], time=3)
+		INVOKE_ASYNC(src, .proc/move_to_pos, carrier, pos)
 
 // This proc is used to swap positions of two carriers.
 /datum/component/multi_carry/proc/swap_positions(mob/carrier1, mob/carrier2)
@@ -218,18 +233,26 @@
 
 	carriers[pos1] = carrier2
 	carriers[pos2] = carrier1
-	rotate_dir(prev_dir)
+
+	INVOKE_ASYNC(src, .proc/move_to_pos, carrier1, positions.get_pos(prev_dir, pos2))
+	INVOKE_ASYNC(src, .proc/move_to_pos, carrier2, positions.get_pos(prev_dir, pos1))
 
 // This proc is used to swap positions of all carriers by a full rotation.
-/datum/component/multi_carry/proc/rotate_positions()
+/datum/component/multi_carry/proc/rotate_positions(clockwise=TRUE)
 	if(!can_carry_move())
 		return
 
 	var/list/new_carriers = list()
-	// "multi_carry" implies that there are at least 2 carriers.
-	for(var/i in 2 to carriers.len)
-		new_carriers += carriers[i]
-	new_carriers += carriers[1]
+	if(clockwise)
+		new_carriers += carriers[carriers.len]
+		for(var/i in 1 to carriers.len - 1)
+			new_carriers += carriers[i]
+	else
+		// "multi_carry" implies that there are at least 2 carriers.
+		for(var/i in 2 to carriers.len)
+			new_carriers += carriers[i]
+		new_carriers += carriers[1]
+
 	carriers = new_carriers
 	rotate_dir(prev_dir)
 
@@ -268,7 +291,7 @@
 	var/i = 1
 	prev_dir = carry_obj.dir
 	for(var/mob/carrier in carriers)
-		var/list/pos = positions.positions_by_dir["[carry_obj.dir]"][i]
+		var/list/pos = positions.get_pos(carry_obj.dir, i)
 		i++
 
 		LAZYSET(carrier_default_pos, carrier, list(
@@ -416,6 +439,10 @@
 		return COMPONENT_CANPASS
 	return NONE
 
+/datum/component/multi_carry/proc/on_grabbed(datum/source, mob/grabber, force_state, show_warnings)
+	stop_carry()
+	return COMPONENT_PREVENT_GRAB
+
 /datum/component/multi_carry/proc/on_buckle(datum/source, mob/buckled)
 	LAZYSET(carrier_default_pos, buckled, list(
 		"pz"=buckled.pixel_z,
@@ -473,9 +500,11 @@
 
 		var/mob/M = source
 		M.SetNextMove(CLICK_CD_RAPID)
-		rotate_positions()
+		rotate_positions(clockwise=!M.hand)
 		return COMPONENT_CANCEL_CLICK
 	return NONE
+
+#undef MOVE_TO_POS_DELAY
 
 #undef DANCE_MOVE_CARRYWADDLE
 #undef DANCE_MOVE_ROTATE
