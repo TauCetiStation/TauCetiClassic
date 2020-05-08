@@ -195,7 +195,6 @@
 	. = ..()
 	reagents.add_reagent("water", 1000)
 
-
 /obj/structure/reagent_dispensers/aqueous_foam_tank
 	name = "AFFF tank"
 	desc = "A tank containing Aqueous Film Forming Foam(AFFF)."
