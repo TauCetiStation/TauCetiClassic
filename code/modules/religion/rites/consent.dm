@@ -123,3 +123,64 @@
 	L.gib()
 	usr.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE
+
+/*
+ * Clownconvertation
+ * Adds mob clumsy and changes his clothes
+ */
+/datum/religion_rites/consent/clownconvertation
+	name = "Clownconvertation"
+	desc = "Convert a just person into a clown."
+	ritual_length = (2 MINUTES)
+	ritual_invocations = list("By the inner workings of our god...", //TODO
+						"...We call upon you, in the face of adversity...",
+						"...to complete us, removing that which is undesirable...")
+	invoke_msg = "...Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
+	favor_cost = 500
+
+	consent_msg = "Do you want to gain power that your father never dreamed of?"
+
+	needed_aspects = list(
+		ASPECT_WACKY = 1,
+		ASPECT_CLOTH = 1
+	)
+
+/datum/religion_rites/consent/clownconvertation/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!ishuman(AOG.buckled_mob))
+		to_chat(user, "<span class='warning'>Only a human can go through the ritual.</span>")
+		return FALSE
+
+	if(jobban_isbanned(AOG.buckled_mob, "Clown"))
+		to_chat(usr, "<span class='warning'>Lord don't accept this person!</span>")
+		return FALSE
+	return ..()
+
+/datum/religion_rites/consent/clownconvertation/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	var/mob/living/carbon/human/H = AOG.buckled_mob
+	if(!istype(H))
+		return FALSE
+
+	H.mutations.Add(CLUMSY)
+
+	H.remove_from_mob(H.wear_mask)
+	H.remove_from_mob(H.w_uniform)
+	H.remove_from_mob(H.head)
+	H.remove_from_mob(H.wear_suit)
+	H.remove_from_mob(H.back)
+
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/clown(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_WEAR_MASK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H), SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), SLOT_IN_BACKPACK)
+
+	H.mind.holy_role = HOLY_ROLE_PRIEST
+	AOG.sect.on_conversion(H)
+
+	H.visible_message("<span class='notice'>[H] has been converted by the rite of [name]!</span>")
+	return TRUE

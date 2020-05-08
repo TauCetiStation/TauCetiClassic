@@ -187,3 +187,9 @@
 
 /datum/aspect/greed/sacrifice(obj/item/I, mob/living/L, obj/structure/altar_of_gods/AOG)
 	return I.get_price() * 0.05
+
+//Gives mana from: does not affect mana accumulation
+//Needed for: create clothes, dress people, interact with helpers
+/datum/aspect/clothes
+	name = ASPECT_CLOTH
+	desc = "Clothes"

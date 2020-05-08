@@ -31,6 +31,7 @@
 			for(var/i in replacement_item)
 				var/obj/item/real_item = i
 				item = new item_path(AOG.loc)
+				item.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 				if(spawning_item)
 					spawning_item += item
 					//set same coordinate
@@ -42,6 +43,7 @@
 		else
 			//spawn one illusion of item
 			item = new item_path(AOG.loc)
+			item.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			spawning_item += item
 			item.pixel_x = rand(-10, 10)
 			item.pixel_y = rand(0, 13)
@@ -55,7 +57,7 @@
 	var/stage = 255 / (ritual_invocations.len - 1) - 20
 	if(replacement_item)
 		for(var/obj/item/item in replacement_item)
-			animate(item, time = (ritual_invocations.len + rand(0, 3)) SECONDS, alpha = item.alpha - stage - rand(0, 10))
+			animate(item, time = (ritual_invocations.len + rand(0, 3)) SECONDS, alpha = item.alpha - stage - rand(0, 10) - 10)
 		for(var/obj/item/item in spawning_item)
 			animate(item, time = (ritual_invocations.len + rand(0, 3)) SECONDS, alpha = item.alpha + stage + rand(0, 10))
 	else
@@ -119,8 +121,9 @@
 	for(var/obj/item/item in spawning_item)
 		banana.pixel_x = item.pixel_x
 		banana.pixel_y = item.pixel_y
-	banana.name = "blessed [banana.name]"
 
+	banana.name = "blessed [banana.name]"
+	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
 /*
@@ -138,15 +141,15 @@
 
 /datum/religion_rites/spawn_item/banana_ore
 	name = "Enrichment of oxygen molecules with banana atoms"
-	desc = "BANANAS!"
+	desc = "Empire recovery!"
 	ritual_length = (1 MINUTES)
 	ritual_invocations = list("Oh great mother!...",
-							"...May your power descend to us and bestow upon your part....",
-							"...Rising from sleep, in the middle of the night I bring you a song...",
-							"...and falling at Your feet, I appeal to Thee...",
-							"...take pity on me, and over all the clowns of the world!...",
-							"...pick me up lying carelessly and save me...")
-	invoke_msg = "..and send me strength!!!"
+							"...Help us in this difficult moment!...",
+							"...Please pray send us strength!...",
+							"...Put these bananas with your energy...",
+							"...And may they gain your mighty power in order to help us!...",
+							"...Now is the time for your help, so come on!...")
+	invoke_msg = "..We believe in you!!!"
 	favor_cost = 150
 	spawning_item = list()
 	replacement_item = list()
@@ -172,4 +175,6 @@
 
 		QDEL_LIST(replacement_item)
 		QDEL_LIST(spawning_item)
+
+	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE

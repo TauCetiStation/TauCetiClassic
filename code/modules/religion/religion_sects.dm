@@ -53,6 +53,18 @@
 		/datum/aspect/resources = 1,
 	)
 
+/datum/religion_sect/preset/clown
+	name = "The Jesters of "
+	desc = "All that a real clown needs!"
+	convert_opener = "Honk to the glory!"
+	aspect_preset = list(
+		/datum/aspect/wacky = 1,
+		/datum/aspect/food = 1,
+		/datum/aspect/resources = 1,
+		/datum/aspect/clothes = 1,
+	)
+
+
 // This sect type allows user to select their aspects.
 /datum/religion_sect/custom
 	name = "Custom "
