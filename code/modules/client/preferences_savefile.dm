@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 26
+#define SAVEFILE_VERSION_MAX 27
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -99,7 +99,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 			player_alt_titles -= J.title
 
-	if(current_version < 26)
+	if(current_version < 27)
 		if(species != HUMAN)
 			job_loop:
 				for(var/datum/job/job in SSjob.occupations)
