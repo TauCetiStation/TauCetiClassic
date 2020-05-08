@@ -105,8 +105,6 @@
 	)
 
 /datum/religion_rites/spawn_item/banana/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	QDEL_LIST(spawning_item)
-	
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/mob/living/carbon/human/M in viewers(AOG.loc))
@@ -118,11 +116,15 @@
 		banana = new /obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk(AOG.loc)
 	else
 		banana = new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(AOG.loc)
+
+	banana.name = "blessed [banana.name]"
+
 	for(var/obj/item/item in spawning_item)
 		banana.pixel_x = item.pixel_x
 		banana.pixel_y = item.pixel_y
 
-	banana.name = "blessed [banana.name]"
+	QDEL_LIST(spawning_item)
+
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 

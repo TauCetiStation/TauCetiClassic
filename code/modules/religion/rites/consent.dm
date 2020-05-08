@@ -151,7 +151,7 @@
 		return FALSE
 
 	if(jobban_isbanned(AOG.buckled_mob, "Clown"))
-		to_chat(usr, "<span class='warning'>Lord don't accept this person!</span>")
+		to_chat(usr, "<span class='warning'>[pick(global.chaplain_religion.deity_names)] don't accept this person!</span>")
 		return FALSE
 	return ..()
 
@@ -164,13 +164,12 @@
 	if(!istype(H))
 		return FALSE
 
-	H.mutations.Add(CLUMSY)
-
 	H.remove_from_mob(H.wear_mask)
 	H.remove_from_mob(H.w_uniform)
 	H.remove_from_mob(H.head)
 	H.remove_from_mob(H.wear_suit)
 	H.remove_from_mob(H.back)
+	H.remove_from_mob(H.shoes)
 
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/clown(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(H), SLOT_W_UNIFORM)
@@ -179,6 +178,7 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H), SLOT_IN_BACKPACK)
 	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), SLOT_IN_BACKPACK)
 
+	H.mutations.Add(CLUMSY)
 	H.mind.holy_role = HOLY_ROLE_PRIEST
 	AOG.sect.on_conversion(H)
 
