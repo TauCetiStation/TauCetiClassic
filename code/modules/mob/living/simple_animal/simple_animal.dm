@@ -445,7 +445,7 @@
 		stat = UNCONSCIOUS
 		blinded = TRUE
 
-/mob/living/simple_animal/get_scrambled_message(datum/language/speaking, message)
+/mob/living/simple_animal/get_scrambled_message(message, datum/language/speaking = null)
 	if(!speak.len)
 		return null
 	return pick(speak)
