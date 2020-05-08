@@ -52,7 +52,7 @@
 
 /datum/religion_rites/food/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(prob(50))
-		spawn_food(AOG.loc)
+		spawn_food(AOG.loc, 1)
 	return TRUE
 
 /*

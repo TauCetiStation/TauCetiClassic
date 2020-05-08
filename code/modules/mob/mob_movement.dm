@@ -1,4 +1,10 @@
 /mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	var/retVal = SEND_SIGNAL(src, COMSIG_ATOM_CANPASS, mover, target, height, air_group)
+	if(retVal == COMPONENT_CANPASS)
+		return TRUE
+	else if(retVal == COMPONENT_CANTPASS)
+		return FALSE
+
 	if(air_group || (height==0))
 		return 1
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
@@ -231,6 +237,9 @@
 
 		//We are now going to move
 		moving = 1
+		if(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
+			moving = FALSE
+			return
 		//Something with pulling things
 		if(locate(/obj/item/weapon/grab, mob))
 			move_delay = max(move_delay, world.time + 7)
@@ -286,6 +295,8 @@
 		moving = 0
 		if(mob && .)
 			mob.throwing = 0
+
+		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_POSTMOVE, n, direct)
 
 		return .
 
@@ -439,6 +450,10 @@
 /mob/proc/Move_Pulled(atom/A)
 	if (!canmove || restrained() || !pulling)
 		return
+
+	if(SEND_SIGNAL(src, COMSIG_LIVING_MOVE_PULLED, A) & COMPONENT_PREVENT_MOVE_PULLED)
+		return
+
 	if (pulling.anchored)
 		return
 	if (!pulling.Adjacent(src))
