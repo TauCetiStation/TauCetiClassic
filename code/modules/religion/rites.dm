@@ -32,6 +32,7 @@
 		return FALSE
 
 	var/first_invoke = TRUE
+	var/stage = ritual_invocations.len
 	for(var/i in ritual_invocations)
 		if(first_invoke) //instant invoke
 			user.say(i)
@@ -42,7 +43,8 @@
 		if(!can_invocate(user, AOG))
 			return FALSE
 		user.say(i)
-		if(!on_invocation(user, AOG))
+		stage -= 1
+		if(!on_invocation(user, AOG, stage))
 			return FALSE
 
 	// Because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
@@ -58,7 +60,7 @@
 
 // Does a thing on each invocation, return FALSE to cancel ritual performance.
 // Will not work if ritual_invocations is null.
-/datum/religion_rites/proc/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/proc/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
 	return TRUE
 
 /datum/religion_rites/proc/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)

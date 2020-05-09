@@ -105,7 +105,7 @@
 							  "...let your joke be funny...",
 							  "...and the soul is pure!...",
 							  "...This screech will be devoted to all jokes and jokes....",)
-	invoke_msg = "..So hear him!!!"
+	invoke_msg = "...So hear him!!!"
 	favor_cost = 200
 
 	needed_aspects = list(
@@ -114,12 +114,12 @@
 
 /datum/religion_rites/honk/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	for(var/mob/M in player_list)
-		if(locate(/area/station) in M.loc)
-			M.playsound_local(null, 'sound/items/AirHorn.ogg', VOL_EFFECTS_MASTER, null, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
+		M.playsound_local(null, 'sound/items/AirHorn.ogg', VOL_EFFECTS_MASTER, null, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
 
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/honk/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
-	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
+/datum/religion_rites/honk/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
+	var/ratio = 100 / stage + 10
+	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
 	return TRUE

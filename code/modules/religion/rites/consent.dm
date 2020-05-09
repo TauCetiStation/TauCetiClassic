@@ -125,27 +125,27 @@
 	return TRUE
 
 /*
- * Clownconvertation
+ * clownconversion
  * Adds mob clumsy and changes his clothes
  */
-/datum/religion_rites/consent/clownconvertation
-	name = "Clownconvertation"
+/datum/religion_rites/consent/clownconversion
+	name = "Clownconversion"
 	desc = "Convert a just person into a clown."
 	ritual_length = (2 MINUTES)
-	ritual_invocations = list("By the inner workings of our god...", //TODO
-						"...We call upon you, in the face of adversity...",
-						"...to complete us, removing that which is undesirable...")
-	invoke_msg = "...Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
+	ritual_invocations = list("From our mother to our soil we got the gift of bananas...",
+						"...From our mother to our ears we got the gift of horns...",
+						"...From our mother to our feet we walk on we got the shoes of length...")
+	invoke_msg = "...And from our mothers gift to you, we grant you the power of HONK!"
 	favor_cost = 500
 
-	consent_msg = "Do you want to gain power that your father never dreamed of?"
+	consent_msg = "Do you feel the honk, growing, from within your body?"
 
 	needed_aspects = list(
 		ASPECT_WACKY = 1,
-		ASPECT_CLOTH = 1
+		ASPECT_HERD = 1
 	)
 
-/datum/religion_rites/consent/clownconvertation/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/consent/clownconversion/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!ishuman(AOG.buckled_mob))
 		to_chat(user, "<span class='warning'>Only a human can go through the ritual.</span>")
 		return FALSE
@@ -155,7 +155,7 @@
 		return FALSE
 	return ..()
 
-/datum/religion_rites/consent/clownconvertation/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/consent/clownconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -181,6 +181,4 @@
 	H.mutations.Add(CLUMSY)
 	H.mind.holy_role = HOLY_ROLE_PRIEST
 	AOG.sect.on_conversion(H)
-
-	H.visible_message("<span class='notice'>[H] has been converted by the rite of [name]!</span>")
 	return TRUE
