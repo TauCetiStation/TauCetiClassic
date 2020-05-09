@@ -185,6 +185,7 @@
 		else
 			to_chat(user, msg_hack_disable)
 			dispensable_reagents -= premium_reagents
+		return
 	if(default_unfasten_wrench(user, B))
 		power_change()
 		return
