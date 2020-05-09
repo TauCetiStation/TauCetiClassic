@@ -121,7 +121,7 @@
 	else if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
 			to_chat(user, "<span class='warning'>There is another device in the way.</span>")
-			return ..()
+			return
 		if(user.is_busy()) return
 		user.visible_message("[user] begins rigging [W] to \the [src].", "You begin rigging [W] to \the [src]")
 		if(W.use_tool(src, user, 20))
@@ -142,7 +142,7 @@
 			add_overlay(test)
 
 	add_fingerprint(usr)
-	return ..()
+	return
 
 /obj/structure/reagent_dispensers/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
