@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 30
+#define SAVEFILE_VERSION_MAX 27
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -104,7 +104,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 			player_alt_titles -= J.title
 
-	if(current_version < 30)
+	if(current_version < 27)
 		job_preferences = list() //It loaded null from nonexistant savefile field.
 		var/job_civilian_high = 0
 		var/job_civilian_med = 0
