@@ -170,5 +170,8 @@
 			if(job_preferences[j] == JP_HIGH)
 				job_preferences[j] = JP_MEDIUM
 
-	job_preferences[job.title] = level
+	if(level)
+		job_preferences[job.title] = level
+	else
+		job_preferences -= job.title
 	return TRUE
