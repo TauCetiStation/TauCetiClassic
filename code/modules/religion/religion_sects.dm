@@ -59,9 +59,9 @@
 	convert_opener = "Honk to the glory!"
 	aspect_preset = list(
 		/datum/aspect/wacky = 1,
-		/datum/aspect/food = 1,
+		/datum/aspect/chaos = 1,
 		/datum/aspect/resources = 1,
-		/datum/aspect/clothes = 1,
+		/datum/aspect/herd = 1,
 	)
 
 

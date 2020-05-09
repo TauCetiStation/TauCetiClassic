@@ -109,7 +109,7 @@
 
 	needed_aspects = list(
 		ASPECT_WACKY = 1,
-		ASPECT_FOOD = 1,
+		ASPECT_CHAOS = 1,
 	)
 
 /datum/religion_rites/spawn_item/banana/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)

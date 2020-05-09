@@ -157,12 +157,12 @@
 			to_chat(user, "<span class ='warning'>First choose aspects in your religion!</span>")
 			return
 
-		if(religion.rites.len == 0)
-			to_chat(user, "<span class='notice'>Your religion doesn't have any rites to perform!</span>")
-			return
-		
 		if(performing_rite)
 			to_chat(user, "<span class='notice'>You are already performing [performing_rite.name]!</span>")
+			return
+
+		if(religion.rites.len == 0)
+			to_chat(user, "<span class='notice'>Your religion doesn't have any rites to perform!</span>")
 			return
 
 		var/rite_select = input(user, "Select a rite to perform!", "Select a rite", null) in religion.rites

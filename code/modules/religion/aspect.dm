@@ -190,6 +190,6 @@
 
 //Gives mana from: does not affect mana accumulation
 //Needed for: create clothes, dress people, interact with helpers
-/datum/aspect/clothes
+/datum/aspect/herd
 	name = ASPECT_HERD
-	desc = "Clothes"
+	desc = "Herd, consure"
