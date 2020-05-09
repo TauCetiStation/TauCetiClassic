@@ -5,9 +5,9 @@
 
 	var/list/access = list()
 
-	//Bitflags for the job
-	var/flag = 0
-	var/department_flag = 0
+	//Bitflags for the job  (Ha-ha we no longer use bitflags this is useless)
+	var/flag = 0 // Deprecated (is here only for savefile compatibility)
+	var/department_flag = 0 // Deprecated (is here only for savefile compatibility)
 
 	//Players will be allowed to spawn in as jobs that are set to "Station"
 	var/faction = "None"
