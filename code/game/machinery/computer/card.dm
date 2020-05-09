@@ -206,6 +206,7 @@
 			if (is_authenticated() && modify)
 				var/t1 = href_list["assign_target"]
 				var/new_salary = 0
+				var/datum/job/jobdatum
 				if(t1 == "Custom")
 					var/temp_t = sanitize(input("Enter a custom job assignment.","Assignment"), 45)
 					//let custom jobs function as an impromptu alt title, mainly for sechuds
@@ -216,7 +217,6 @@
 					if(is_centcom())
 						access = get_centcom_access(t1)
 					else
-						var/datum/job/jobdatum
 						for(var/jobtype in typesof(/datum/job))
 							var/datum/job/J = new jobtype
 							if(ckey(J.title) == ckey(t1))
@@ -234,7 +234,7 @@
 					modify.rank = t1
 
 					if(datum_account)
-						datum_account.set_salary(new_salary)	//set the new salary equal to job
+						datum_account.set_salary(new_salary, jobdatum.salary_ratio)	//set the new salary equal to job
 
 				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
 				if(mode)

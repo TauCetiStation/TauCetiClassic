@@ -461,7 +461,7 @@ var/datum/subsystem/job/SSjob
 			H.buckled.dir = H.dir
 
 	//give them an account in the station database
-	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)
+	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)	//starting funds = salary
 
 	// If they're head, give them the account info for their department
 	if(H.mind && job.head_position)
@@ -580,7 +580,7 @@ var/datum/subsystem/job/SSjob
 		//put the player's account number onto the ID
 		if(H.mind && H.mind.initial_account)
 			C.associated_account_number = H.mind.initial_account.account_number
-			H.mind.initial_account.set_salary(job.salary)	//set the salary equal to job
+			H.mind.initial_account.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
 
 		H.equip_to_slot_or_del(C, SLOT_WEAR_ID)
 

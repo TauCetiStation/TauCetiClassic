@@ -1020,6 +1020,14 @@ var/list/admin_verbs_hideable = list(
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
 
+/client/verb/admin_crew_salary()
+	set name = "Salary"
+	set category = "Event"
+	if(holder)
+		holder.change_crew_salary()
+	feedback_add_details("admin_verb","Salary") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return
+
 //////////////////////////////
 // Map loader
 //////////////////////////////

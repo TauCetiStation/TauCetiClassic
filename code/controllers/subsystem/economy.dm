@@ -20,7 +20,7 @@ var/datum/subsystem/economy/SSeconomy
 		for(var/datum/money_account/D in all_money_accounts)
 			if(D.owner_salary && !D.suspended)
 				charge_to_account(D.account_number, D.account_number, "Salary payment", "CentCom", D.owner_salary)
-				if(D.reset_salary)
+				if(D.change == "temp")
 					D.set_salary(D.base_salary)
 	payment_counter += 1
 

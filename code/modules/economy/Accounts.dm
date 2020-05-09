@@ -7,7 +7,7 @@
 	var/owner_name = ""
 	var/owner_salary = 0	//used for payments
 	var/base_salary = 0		//used to changes owner_salary
-	var/reset_salary = FALSE
+	var/change = "def"		//type of salary change: "perm"-Permanent, "temp"-Temporarily or "def"-Default
 	var/account_number = 0
 	var/remote_access_pin = 0
 	var/money = 0
@@ -21,25 +21,44 @@
 /datum/money_account/proc/adjust_money(amount)
 	money = CLAMP(money + amount, MIN_MONEY_ON_ACCOUNT, MAX_MONEY_ON_ACCOUNT)
 
-/datum/money_account/proc/set_salary(amount)
-	owner_salary = amount
+/datum/money_account/proc/set_salary(amount, ratio = 1)
+	owner_salary = amount * ratio
 	base_salary = amount
-	reset_salary = FALSE
+	change = "def"
 
-/datum/money_account/proc/change_salary(user, user_name, terminal, user_rank)
-	var/list/rate = list("+100%", "+50%", "+25%", "-25%", "-50%", "-100%")
-	if(reset_salary)
-		alert(user, "The salary of [owner_name] has already changed, try after the next payment.")
-		return
-	if(user_rank != "Admin")
-		rate = rate.Copy(2,6)
-	var/input_rate = input(user, "Please, select a rank!", "Salary Rate", null) as null|anything in rate
-	var/salary_rate = text2num(replacetext(replacetext(input_rate, "+", ""), "%", ""))
-	var/new_salary = round(base_salary + (base_salary * (salary_rate/100)))
-	if(alert(user, "Now [owner_name] will start receiving a salary of [new_salary] credits. Are you sure?", "Confirm", "Yes", "No") != "Yes")
-		return
+/datum/money_account/proc/change_salary(user, user_name, terminal, user_rank, force_rate = null)
+	var/new_salary = 0
+	var/salary_rate = 0
+	var/input_rate = ""
+	var/type_change = "temp"	//permanent or temporary change?
+	if(!force_rate)
+		if(change == "temp")
+			alert(user, "The salary of [owner_name] has already changed, try after the next payment.")
+			return
+		if(change == "perm")
+			alert(user, "Central Command blocked salary change!")
+			return
+		var/list/rate = list("+100%", "+50%", "+25%", "-25%", "-50%", "-100%")
+		if(user_rank != "Admin")
+			rate = rate.Copy(2,6)
+		else
+			if(alert(user, "Permanent - changes will be valid until canceled.\
+			Temporarily - changes will be valid until the next payment.", "Choose type of salary change.", "Permanent", "Temporarily") == "Permanent")
+				type_change = "perm"
+		input_rate = input(user, "Please, select a rate!", "Salary Rate", null) as null|anything in rate
+		if(!input_rate)
+			return
+		salary_rate = text2num(replacetext(replacetext(input_rate, "+", ""), "%", ""))
+		new_salary = round(base_salary + (base_salary * (salary_rate/100)))
+		if(alert(user, "Now [owner_name] will start receiving a salary of [new_salary] credits. Are you sure?", "Confirm", "Yes", "No") != "Yes")
+			return
+	else
+		new_salary = round(base_salary + (base_salary * (force_rate/100)))
+		type_change = "perm"
+		input_rate = force_rate > 0 ? "+[force_rate]%" : "[force_rate]%"
+		salary_rate = force_rate
 	owner_salary = new_salary
-	reset_salary = TRUE
+	change = type_change
 	//create a transaction log entry
 	var/datum/transaction/T = new()
 	T.target_name = owner_name
@@ -162,6 +181,10 @@
 	for(var/datum/money_account/D in all_money_accounts)
 		if(D.account_number == account_number)
 			return D
+
+/*proc/set_datum_salary(rank)
+	for(var/datum/job/J in typesof(/datum/job))
+		if(J.)*/
 
 #undef MAX_MONEY_ON_ACCOUNT
 #undef MIN_MONEY_ON_ACCOUNT
