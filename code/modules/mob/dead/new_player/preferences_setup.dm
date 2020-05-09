@@ -183,27 +183,30 @@
 
 
 /datum/preferences/proc/update_preview_icon()		//seriously. This is horrendous.
-	// Silicons only need a very basic preview since there is no customization for them.
-	var/datum/job/J = SSjob.GetJobType(/datum/job/ai)
-	if(job_preferences[J.title] == JP_HIGH)
-		parent.show_character_previews(image('icons/mob/AI.dmi', "AI", dir = SOUTH))
-		return
-	J = SSjob.GetJobType(/datum/job/cyborg)
-	if(job_preferences[J.title] == JP_HIGH)
-		parent.show_character_previews(image('icons/mob/robots.dmi', "robot", dir = SOUTH))
-		return
+	// Determine what job is marked as 'High' priority, and dress them up as such.
+	var/datum/job/previewJob
+
+	if(job_preferences["Test Subject"] == JP_LOW)
+		previewJob = SSjob.GetJob("Test Subject")
+
+	if(!previewJob)
+		var/highest_pref = 0
+		for(var/job in job_preferences)
+			if(job_preferences[job] > highest_pref)
+				previewJob = SSjob.GetJob(job)
+				highest_pref = job_preferences[job]
+
+	if(previewJob)
+		if(istype(previewJob, /datum/job/ai))
+			parent.show_character_previews(image('icons/mob/AI.dmi', "AI", dir = SOUTH))
+			return
+		if(istype(previewJob, /datum/job/cyborg))
+			parent.show_character_previews(image('icons/mob/robots.dmi', "robot", dir = SOUTH))
+			return
 
 	// Set up the dummy for its photoshoot
 	var/mob/living/carbon/human/dummy/mannequin = new(null, species)
 	copy_to(mannequin)
-
-	// Determine what job is marked as 'High' priority, and dress them up as such.
-	var/datum/job/previewJob
-	var/highest_pref = 0
-	for(var/job in job_preferences)
-		if(job_preferences[job] > highest_pref)
-			previewJob = SSjob.GetJob(job)
-			highest_pref = job_preferences[job]
 
 	var/datum/species/S = all_species[species]
 	if(S)
