@@ -116,7 +116,7 @@
 	for(var/mob/M in player_list)
 		M.playsound_local(null, 'sound/items/AirHorn.ogg', VOL_EFFECTS_MASTER, null, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
 
-	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
+	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE
 
 /datum/religion_rites/honk/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)

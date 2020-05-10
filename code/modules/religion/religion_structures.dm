@@ -19,9 +19,6 @@
 	// It's fucking science! I ain't gotta explain this.
 	var/datum/experiment_data/experiments
 
-	// Used to temporarily store sacrificial items. Used on /spawn_item/perform_rite()
-	var/list/obj/item/sacrifice_items
-
 /obj/structure/altar_of_gods/atom_init()
 	. = ..()
 	experiments = new
