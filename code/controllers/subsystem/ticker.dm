@@ -165,6 +165,7 @@ var/datum/subsystem/ticker/ticker
 
 	// Discuss your stuff after the round ends.
 	if(config.ooc_round_only)
+		to_chat(world, "<span class='warning bold'>The OOC channel has been globally disabled for the duration of the round!</B>")
 		ooc_allowed = FALSE
 
 	var/init_start = world.timeofday
@@ -421,6 +422,7 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/proc/declare_completion()
 	// Now you all can discuss the game.
 	if(config.ooc_round_only)
+		to_chat(world, "<span class='notice bold'>The OOC channel has been globally enabled!</B>")
 		ooc_allowed = TRUE
 
 	var/station_evacuated
