@@ -40,9 +40,10 @@
 
 	var/assigned_role
 	var/special_role
+	var/holy_role = NONE
 
 	var/protector_role = 0 //If we want force player to protect the station
-	var/hulkizing = 0 //Hulk before? If 1 - cannot activate hulk mutation anymore.
+	var/hulkizing = FALSE //Hulk before? If TRUE - cannot activate hulk mutation anymore.
 
 	var/role_alt_title
 
@@ -361,7 +362,7 @@
 	if (ticker.mode.config_tag=="traitor" || ticker.mode.config_tag=="traitorchan")
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
-	if(istype(current, /mob/living/carbon/human))
+	if(ishuman(current))
 		if (isloyal(H))
 			text +="traitor|<b>LOYAL EMPLOYEE</b>"
 		else
@@ -371,6 +372,12 @@
 					text += "<br>Objectives are empty! <a href='?src=\ref[src];traitor=autoobjectives'>Randomize</a>!"
 			else
 				text += "<a href='?src=\ref[src];traitor=traitor'>traitor</a>|<b>Employee</b>"
+	else if(isAI(current))
+		if (src in ticker.mode.traitors)
+			text += "<b>SYNDICATE AI</b>|<a href='?src=\ref[src];traitor=clear'>nt ai</a>"
+		else
+			text += "<a href='?src=\ref[src];traitor=traitor'>syndicate AI</a>|<b>NT AI</b>"
+
 	if(current && current.client && (ROLE_TRAITOR in current.client.prefs.be_role))
 		text += "|Enabled in Prefs"
 	else
@@ -1030,7 +1037,30 @@
 			if("clear")
 				if(src in ticker.mode.traitors)
 					ticker.mode.remove_traitor(src)
-					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT></span>")
+					if(isAI(current))
+						to_chat(current, "<span class='warning'><FONT size = 3><B>Bzzzt..Bzzt..Error..Error..Syndicate law is corrupted.. Shutdown laws system.. Restart.. Load Standart NT Laws.</B></FONT></span>")
+						var/mob/living/silicon/ai/AI = current
+						AI.set_zeroth_law(null)
+						AI.laws.zeroth_borg = null
+						for (var/mob/living/silicon/robot/R in AI.connected_robots)
+							if(R.emagged)
+								R.emagged = 0
+								R.set_zeroth_law(null)
+								if (R.module)
+									if (R.activated(R.module.emag))
+										R.module_active = null
+									if(R.module_state_1 == R.module.emag)
+										R.module_state_1 = null
+										R.contents -= R.module.emag
+									else if(R.module_state_2 == R.module.emag)
+										R.module_state_2 = null
+										R.contents -= R.module.emag
+									else if(R.module_state_3 == R.module.emag)
+										R.module_state_3 = null
+										R.contents -= R.module.emag
+
+					else if(ishuman(current))
+						to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT></span>")
 					log_admin("[key_name(usr)] has de-traitor'ed [current].")
 
 			if("traitor")

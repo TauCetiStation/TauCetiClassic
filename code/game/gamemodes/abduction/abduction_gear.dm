@@ -194,8 +194,8 @@
 			mark(M, user)
 
 
-/obj/item/device/abductor/gizmo/afterattack(atom/target, mob/living/user, flag, params)
-	if(flag)
+/obj/item/device/abductor/gizmo/afterattack(atom/target, mob/user, proximity, params)
+	if(proximity)
 		return
 	if(!AbductorCheck(user))
 		return
@@ -253,8 +253,8 @@
 		return
 	radio_off(M, user)
 
-/obj/item/device/abductor/silencer/afterattack(atom/target, mob/living/user, flag, params)
-	if(flag)
+/obj/item/device/abductor/silencer/afterattack(atom/target, mob/user, proximity, params)
+	if(proximity)
 		return
 	if(!AbductorCheck(user))
 		return
@@ -721,7 +721,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "abductor_hypo"
 
-/obj/item/weapon/lazarus_injector/alien/afterattack(atom/target, mob/user)
+/obj/item/weapon/lazarus_injector/alien/afterattack(atom/target, mob/user, proximity, params)
 	if(!loaded)
 		return
 	if(isliving(target))

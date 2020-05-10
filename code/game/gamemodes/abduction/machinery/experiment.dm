@@ -14,7 +14,7 @@
 	var/obj/machinery/abductor/console/console
 
 /obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
+	if(user.incapacitated() || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
 		return
 	if(IsAbductor(target))
 		return
@@ -199,7 +199,6 @@
 		open_machine()
 		SendBack(H)
 		return "<span class='bad'>Specimen braindead - disposed</span>"
-	return "<span class='bad'>ERROR</span>"
 
 /obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
 	H.Sleeping(16 SECONDS)

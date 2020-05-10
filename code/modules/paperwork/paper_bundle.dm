@@ -171,17 +171,25 @@
 	set category = "Object"
 	set src in usr
 
+	if(usr.incapacitated())
+		return
+
 	var/n_name = sanitize_safe(input(usr, "What would you like to label the bundle?", "Bundle Labelling", null)  as text, MAX_NAME_LEN)
-	if((loc == usr && usr.stat == CONSCIOUS))
+	if(usr.incapacitated())
+		return
+
+	if(loc == usr)
 		name = "[(n_name ? text("[n_name]") : "paper")]"
-	add_fingerprint(usr)
-	return
+		add_fingerprint(usr)
 
 
 /obj/item/weapon/paper_bundle/verb/remove_all()
 	set name = "Loose bundle"
 	set category = "Object"
 	set src in usr
+
+	if(usr.incapacitated())
+		return
 
 	to_chat(usr, "<span class='notice'>You loosen the bundle.</span>")
 	for(var/obj/O in src)

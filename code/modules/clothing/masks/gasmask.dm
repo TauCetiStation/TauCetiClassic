@@ -38,7 +38,7 @@
 	set name = "Adjust welding mask"
 	set src in usr
 
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	if(!usr.incapacitated())
 		if(src.up)
 			src.up = !src.up
 			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
@@ -97,7 +97,8 @@
 	set name = "HALT"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
+	if(usr.incapacitated())
+		return
 
 	var/phrase = 0	//selects which phrase to use
 	var/phrase_text = null

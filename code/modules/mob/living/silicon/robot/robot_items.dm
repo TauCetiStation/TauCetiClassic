@@ -6,7 +6,7 @@
 	name = "RoboTray"
 	desc = "An autoloading tray specialized for carrying refreshments."
 
-/obj/item/weapon/tray/robotray/afterattack(atom/target, mob/user)
+/obj/item/weapon/tray/robotray/afterattack(atom/target, mob/user, proximity, params)
 	if ( !target )
 		return
 	// pick up items, mostly copied from base tray pickup proc
@@ -141,9 +141,9 @@
 /obj/item/weapon/form_printer/attack(mob/living/carbon/M, mob/living/carbon/user)
 	return
 
-/obj/item/weapon/form_printer/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/weapon/form_printer/afterattack(atom/target, mob/user, proximity, params)
 
-	if(!target || !flag)
+	if(!target || !proximity)
 		return
 
 	if(istype(target,/obj/structure/table))

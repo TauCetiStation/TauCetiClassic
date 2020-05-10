@@ -197,6 +197,8 @@
 //							message_admins("<span class='notice'>[key_name_admin(usr)] emagged [R.name] using robotic console!</span>")
 						log_game("[key_name(usr)] emagged [R.name] using robotic console!")
 						R.emagged = 1
+						var/mob/living/silicon/ai/AI = R.connected_ai
+						R.set_zeroth_law(AI.laws.zeroth_borg)
 						if(R.mind.special_role)
 							R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
 

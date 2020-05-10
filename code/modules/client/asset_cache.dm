@@ -145,7 +145,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	return asset_datums[type]
 
 /datum/asset
-	var/_abstract
+	var/_abstract = /datum/asset	//assets with this variable will not be loaded into the cache automatically when the game starts
 
 /datum/asset/New()
 	asset_datums[type] = src
@@ -158,6 +158,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //If you don't need anything complicated.
 /datum/asset/simple
+	_abstract = /datum/asset/simple
 	var/assets = list()
 	var/verify = FALSE
 
@@ -168,6 +169,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	send_asset_list(client,assets,verify)
 
 /datum/asset/simple/goonchat
+	_abstract = /datum/asset/simple/goonchat
 	assets = list(
 		"jquery.min.js" = 'code/modules/goonchat/browserassets/js/jquery.min.js',
 		"jquery.mark.min.js" = 'code/modules/goonchat/browserassets/js/jquery.mark.min.js',
@@ -185,6 +187,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 /datum/asset/simple/spider_os
+	_abstract = /datum/asset/simple/spider_os
 	assets = list(
 		"sos_1.png" = 'icons/spideros_icons/sos_1.png',
 		"sos_2.png" = 'icons/spideros_icons/sos_2.png',
@@ -203,12 +206,14 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	)
 
 /datum/asset/simple/paper
+	_abstract = /datum/asset/simple/paper
 	assets = list(
 		"paper_dickbutt.png" = 'icons/paper_icons/dickbutt.png',
 		"bluentlogo.png" = 'icons/paper_icons/bluentlogo.png'
 	)
 
 /datum/asset/simple/newscaster
+	_abstract = /datum/asset/simple/newscaster
 	assets = list(
 		"like.png" = 'icons/newscaster_icons/like.png',
 		"like_clck.png" = 'icons/newscaster_icons/like_clck.png',
@@ -217,6 +222,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	)
 
 /datum/asset/simple/chess
+	_abstract = /datum/asset/simple/chess
 	assets = list(
 		"BR.png" = 'icons/obj/chess/board_BR.png',
 		"BN.png" = 'icons/obj/chess/board_BN.png',

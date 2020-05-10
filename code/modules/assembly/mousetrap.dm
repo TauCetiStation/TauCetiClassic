@@ -72,7 +72,7 @@
 			return
 	..()
 
-/obj/item/device/assembly/mousetrap/Crossed(AM as mob|obj)
+/obj/item/device/assembly/mousetrap/Crossed(atom/movable/AM)
 	if(armed)
 		if(ishuman(AM))
 			var/mob/living/carbon/H = AM
@@ -82,7 +82,7 @@
 								  "<span class='warning'>You accidentally step on [src]</span>")
 		if(ismouse(AM))
 			triggered(AM)
-	..()
+	. = ..()
 
 /obj/item/device/assembly/mousetrap/on_found(mob/finder)
 	if(armed)
@@ -107,7 +107,7 @@
 	set name = "Hide"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 
 	layer = TURF_LAYER+0.2

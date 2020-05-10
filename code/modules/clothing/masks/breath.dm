@@ -13,7 +13,7 @@
 
 /obj/item/clothing/mask/breath/attack_self()
 
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	if(!usr.incapacitated())
 		if(!src.hanging)
 			src.hanging = !src.hanging
 			gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa

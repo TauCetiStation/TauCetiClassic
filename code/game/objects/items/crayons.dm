@@ -50,7 +50,7 @@
 	return FALSE
 
 
-/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity)
+/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if(!uses)
 		to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
@@ -255,7 +255,7 @@
 			colour = input(user,"Choose Color") as color
 			update_icon()
 
-/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity)
+/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 	if(capped)

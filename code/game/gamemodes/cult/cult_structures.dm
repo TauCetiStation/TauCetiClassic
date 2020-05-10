@@ -48,13 +48,3 @@
 	density = 1
 	unacidable = 1
 	anchored = 1.0
-
-/obj/effect/gateway/Bumped(mob/M)
-	spawn(0)
-		return
-	return
-
-/obj/effect/gateway/Crossed(AM as mob|obj)
-	spawn(0)
-		return
-	return

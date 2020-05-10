@@ -412,7 +412,8 @@
 	var/mob/living/carbon/human/H = usr
 
 	if(!istype(H)) return
-	if(H.stat) return
+	if(H.incapacitated())
+		return
 	if(H.wear_suit != src) return
 
 	if(H.head == helmet)
@@ -441,7 +442,8 @@
 	var/mob/living/carbon/human/H = usr
 
 	if(!istype(H)) return
-	if(H.stat) return
+	if(H.incapacitated())
+		return
 	if(H.wear_suit != src) return
 
 	if(magpulse)
@@ -691,7 +693,7 @@
 	set name = "Adjust helmet"
 	set src in usr
 
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	if(!usr.incapacitated())
 		combat_mode = !combat_mode
 		if(combat_mode)
 			armor = combat_armor
@@ -763,7 +765,7 @@
 	set name = "Adjust space suit"
 	set src in usr
 
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	if(!usr.incapacitated())
 		combat_mode = !combat_mode
 		if(combat_mode)
 			canremove = FALSE

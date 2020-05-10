@@ -53,9 +53,9 @@
 
 	//Variables for Finance Management
 	var/datum/money_account/owner_account = null
-	var/target_account_number = 0 
-	var/funds_amount = 0 
-	var/transfer_purpose = "Funds transfer" 
+	var/target_account_number = 0
+	var/funds_amount = 0
+	var/transfer_purpose = "Funds transfer"
 	var/pda_paymod = FALSE // if TRUE, click on someone to pay
 	var/trans_menu = 0	// 1 or 0 --> show/hide transaction menu; nanoUI doesn’t understand “FALSE” or I don’t understand something :)
 	var/list/trans_log = list()
@@ -418,14 +418,15 @@
 	data["owner"] = owner					// Who is your daddy...
 	data["ownjob"] = ownjob					// ...and what does he do?
 
-	if(owner_account) //this check is needed because we can open the PDA without an account
-		data["money"] = owner_account.money
-	data["target_account_number"] = target_account_number	
-	data["funds_amount"] = funds_amount	
-	data["purpose"] = transfer_purpose	
+	data["money"] = owner_account ? owner_account.money : "error"
+	data["salary"] = owner_account ? owner_account.owner_salary : "error"
+	data["target_account_number"] = target_account_number
+	data["funds_amount"] = funds_amount
+	data["purpose"] = transfer_purpose
 	data["trans_menu"] = trans_menu	// show/hide transaction menu
 	data["trans_log"] = trans_log
 	data["trans_log_spoiler"] = trans_log_spoiler	// show/hide transaction log
+	data["time_to_next_pay"] = time_stamp(format = "mm:ss", wtime = (SSeconomy.endtime - world.timeofday))
 
 	data["mode"] = mode					// The current view
 	data["scanmode"] = scanmode				// Scanners
@@ -605,8 +606,6 @@
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 	//if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ) )
-	if (usr.stat == DEAD)
-		return 0
 	if(!can_use()) //Why reinvent the wheel? There's a proc that does exactly that.
 		U.unset_machine()
 		if(ui)
@@ -805,7 +804,7 @@
 		if("Transaction Menu")
 			if(trans_menu)
 				trans_menu = 0
-			else 
+			else
 				trans_menu = 1
 
 		if("Transaction Log")
@@ -1350,29 +1349,30 @@
 				visible_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>")
 				to_chat(user, data_message)
 
-/obj/item/device/pda/afterattack(atom/A, mob/user, proximity)
+/obj/item/device/pda/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	switch(scanmode)
 
 		if(3)
-			if(!isobj(A))
+			if(!isobj(target))
 				return
-			if(!isnull(A.reagents))
-				if(A.reagents.reagent_list.len > 0)
-					var/reagents_length = A.reagents.reagent_list.len
+			if(!isnull(target.reagents))
+				if(target.reagents.reagent_list.len > 0)
+					var/reagents_length = target.reagents.reagent_list.len
 					to_chat(user, "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.</span>")
-					for (var/re in A.reagents.reagent_list)
+					for (var/re in target.reagents.reagent_list)
 						to_chat(user, "<span class='notice'>&emsp; [re]</span>")
 				else
-					to_chat(user, "<span class='notice'>No active chemical agents found in [A].</span>")
+					to_chat(user, "<span class='notice'>No active chemical agents found in [target].</span>")
 			else
-				to_chat(user, "<span class='notice'>No significant chemical agents found in [A].</span>")
+				to_chat(user, "<span class='notice'>No significant chemical agents found in [target].</span>")
 
 		if(5)
-			analyze_gases(A, user)
+			analyze_gases(target, user)
 
-	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
-		note = A:info
+	if (!scanmode && istype(target, /obj/item/weapon/paper) && owner)
+		var/obj/item/weapon/paper/P = target
+		note = P.info
 		to_chat(user, "<span class='notice'>Paper scanned.</span>")//concept of scanning paper copyright brainoblivion 2009
 
 /obj/item/device/pda/get_current_temperature()
@@ -1432,15 +1432,15 @@
 			pda_paymod = FALSE
 			ui_interact(usr)
 			to_chat(usr, "[bicon(src)]<span class='info'>Target account is [target_account_number]</span>")
-			return 
+			return
 		else
 			to_chat(usr, "[bicon(src)]<span class='warning'>Target haven't account.</span>")
 			pda_paymod = FALSE
-			return 
+			return
 	else
 		to_chat(usr, "[bicon(src)]<span class='warning'>Incorrect target.</span>")
 		pda_paymod = FALSE
-		return 
+		return
 
 /obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
 	if(!owner_account)

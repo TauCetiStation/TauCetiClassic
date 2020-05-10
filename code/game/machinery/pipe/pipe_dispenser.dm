@@ -154,7 +154,7 @@ Nah
 /obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/disposalconstruct/pipe, mob/usr)
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return
 
 	if (!istype(pipe) || get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )

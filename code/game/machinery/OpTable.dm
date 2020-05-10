@@ -20,8 +20,7 @@
 		if(computer)
 			computer.table = src
 			break
-//	spawn(100) //Wont the MC just call this process() before and at the 10 second mark anyway?
-//		process()
+	AddComponent(/datum/component/clickplace)
 
 /obj/machinery/optable/ex_act(severity)
 
@@ -83,7 +82,7 @@
 			M.buckled.user_unbuckle_mob(user)
 		take_victim(M, user)
 		return
-	
+
 	if(isrobot(user) || isessence(user))
 		return
 
@@ -138,7 +137,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat || !ishuman(usr) || usr.buckled || usr.restrained())
+	if(usr.incapacitated() || !ishuman(usr) || !usr.canmove)
 		return
 
 	if(src.victim)
@@ -159,10 +158,4 @@
 			qdel(G)
 			return
 
-	if(!W.canremove || W.flags & NODROP)
-		return
-
-	user.drop_item()
-	if(W && W.loc)
-		W.loc = src.loc
-	return
+	return ..()

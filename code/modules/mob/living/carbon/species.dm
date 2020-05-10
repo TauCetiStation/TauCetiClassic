@@ -32,6 +32,9 @@
 	var/punch_damage = 0              // Extra empty hand attack damage.
 	var/mutantrace                    // Safeguard due to old code.
 	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
+	// Perhaps one day make this an assoc list of BODYPART_NAME = list(drops) ? ~Luduk
+	// Is used when a bodypart of this race is butchered. Otherwise there are overrides for flesh, robot, and bone bodyparts.
+	var/list/bodypart_butcher_results
 
 	var/list/restricted_inventory_slots = list() // Slots that the race does not have due to biological differences.
 
@@ -78,7 +81,9 @@
 	sprite_sheets = list(
 		SPRITE_SHEET_HELD = 'icons/mob/path',
 		SPRITE_SHEET_UNIFORM = 'icons/mob/path',
+		SPRITE_SHEET_UNIFORM_FAT = 'icons/mob/path',
 		SPRITE_SHEET_SUIT = 'icons/mob/path',
+		SPRITE_SHEET_SUIT_FAT = 'icons/mob/path',
 		SPRITE_SHEET_BELT = 'icons/mob/path'
 		SPRITE_SHEET_HEAD = 'icons/mob/path',
 		SPRITE_SHEET_BACK = 'icons/mob/path',
@@ -127,12 +132,19 @@
 	var/min_age = 25 // The default, for Humans.
 	var/max_age = 85
 
+	var/list/prohibit_roles
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
 
 	if(!has_organ[O_HEART])
 		flags[NO_BLOOD] = TRUE // this status also uncaps vital body parts damage, since such species otherwise will be very hard to kill.
+
+/datum/species/proc/can_be_role(role)
+	if(!prohibit_roles)
+		return TRUE
+	return !(role in prohibit_roles)
 
 /datum/species/proc/create_organs(mob/living/carbon/human/H, deleteOld = FALSE) //Handles creation of mob organs.
 	if(deleteOld)
@@ -274,6 +286,11 @@
 	min_age = 25
 	max_age = 85
 
+	sprite_sheets = list(
+		SPRITE_SHEET_SUIT = 'icons/mob/species/unathi/suit.dmi',
+		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/unathi/suit_fat.dmi'
+	)
+
 /datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
@@ -331,6 +348,11 @@
 	min_age = 25
 	max_age = 85
 
+	sprite_sheets = list(
+		SPRITE_SHEET_SUIT = 'icons/mob/species/tajaran/suit.dmi',
+		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/tajaran/suit_fat.dmi'
+	)
+
 /datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
@@ -346,7 +368,6 @@
 	primitive = /mob/living/carbon/monkey/skrell
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_PLANT
-	metabolism_mod = SKRELL_METABOLISM_FACTOR
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
 	siemens_coefficient = 1.3 // Because they are wet and slimy.
@@ -407,6 +428,7 @@
 		,SPRITE_SHEET_RESTRICTION = TRUE
 		,HAS_HAIR_COLOR = TRUE
 		,HAS_SKIN_COLOR = TRUE
+		,NO_FAT=  TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
@@ -434,6 +456,8 @@
 
 	min_age = 12
 	max_age = 20
+
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
@@ -521,6 +545,7 @@
 	,HAS_TAIL = TRUE
 	,NO_PAIN = TRUE
 	,SPRITE_SHEET_RESTRICTION = TRUE
+	,NO_FAT = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
@@ -565,6 +590,7 @@
 
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
 	butcher_drops = list(/obj/item/stack/sheet/wood = 5)
+	bodypart_butcher_results = list(/obj/item/stack/sheet/wood = 1)
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -610,6 +636,8 @@
 
 	min_age = 1
 	max_age = 1000
+
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST)
 
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -735,6 +763,33 @@
 	min_age = 1
 	max_age = 125
 
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST, ROLE_BLOB)
+
+/datum/species/machine/on_gain(mob/living/carbon/human/H)
+	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
+	H.verbs += /mob/living/carbon/human/proc/IPC_toggle_screen
+	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
+	if(BP)
+		H.set_light(BP.screen_brightness)
+
+/datum/species/machine/on_loose(mob/living/carbon/human/H)
+	H.verbs -= /mob/living/carbon/human/proc/IPC_change_screen
+	H.verbs -= /mob/living/carbon/human/proc/IPC_toggle_screen
+	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
+	if(BP && BP.screen_toggle)
+		H.set_light(0)
+
+/datum/species/machine/handle_death(mob/living/carbon/human/H)
+	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
+	if(BP && BP.screen_toggle)
+		H.r_hair = 15
+		H.g_hair = 15
+		H.b_hair = 15
+		H.set_light(0)
+		if(BP.ipc_head == "Default")
+			H.h_style = "IPC off screen"
+		H.update_hair()
+
 /datum/species/abductor
 	name = ABDUCTOR
 	darksight = 3
@@ -778,6 +833,7 @@
 	siemens_coefficient = 0
 
 	butcher_drops = list()
+	bodypart_butcher_results = list()
 
 	flags = list(
 	 NO_BREATHE = TRUE
@@ -886,6 +942,7 @@
 	darksight = 8
 
 	butcher_drops = list() // They are just shadows. Why should they drop anything?
+	bodypart_butcher_results = list()
 
 	restricted_inventory_slots = list(SLOT_BELT, SLOT_WEAR_ID, SLOT_L_EAR, SLOT_R_EAR, SLOT_BACK, SLOT_L_STORE, SLOT_R_STORE)
 
@@ -936,6 +993,7 @@
 	flesh_color = "#137e8f"
 
 	butcher_drops = list(/obj/item/weapon/ore/diamond = 1, /obj/item/weapon/ore/slag = 3)
+	bodypart_butcher_results = list(/obj/item/weapon/ore/slag = 1)
 
 	flags = list(
 		NO_BLOOD = TRUE,

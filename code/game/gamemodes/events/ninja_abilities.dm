@@ -150,8 +150,8 @@ This could be a lot better but I'm too tired atm.*/
 		var/mob/living/carbon/human/U = affecting
 		var/targets[] = list()//So yo can shoot while yo throw dawg
 		for(var/mob/living/M in oview(loc))
-			if(M.stat)	continue//Doesn't target corpses or paralyzed persons.
-			if(M.lying)	continue
+			if(M.incapacitated())
+				continue
 			targets.Add(M)
 		if(targets.len)
 			var/mob/living/target=pick(targets)//The point here is to pick a random, living mob in oview to shoot stuff at.
@@ -321,7 +321,8 @@ This is so anime it hurts. But that's the point.*/
 		var/targets[]
 		targets = new()
 		for(var/mob/living/M in oview(6))
-			if(M.stat)	continue//Doesn't target corpses or paralyzed people.
+			if(M.incapacitated())
+				continue
 			targets.Add(M)
 		if(targets.len)
 			var/mob/living/target=pick(targets)

@@ -214,6 +214,8 @@ Note: Must be placed west/left of and R&D console to function.
 	addtimer(CALLBACK(src, .proc/create_design, RNDD), 32 * amount / efficiency_coeff)
 
 /obj/machinery/r_n_d/protolathe/proc/create_design(datum/rnd_queue_design/RNDD)
+	if(!linked_console)
+		return
 	var/datum/design/D = RNDD.design
 	var/amount = RNDD.amount
 	for(var/i = 1 to amount)
@@ -222,13 +224,13 @@ Note: Must be placed west/left of and R&D console to function.
 		// And are deconstructions of items made by deconstructing other items
 		// So consider them tests of "new" construction techniques for an item already known
 		// #define MAGIC_2_MANIPULATORS_MAX_OUTPUT_CONSIDERING_IT_SHOULD_ROUND_UP_TO_30_PERCENT_COEFFICIENT 3.75
-		new_item.prototipify(min_reliability=D.reliability + efficiency_coeff * 12.5,  max_reliability=70 + efficiency_coeff * 12.5)
+		new_item.prototipify(min_reliability=linked_console.files.design_reliabilities[D.id] + efficiency_coeff * 12.5,  max_reliability=70 + efficiency_coeff * 12.5)
 		new_item.m_amt /= efficiency_coeff
 		new_item.g_amt /= efficiency_coeff
 
-		D.reliability += D.reliability * (RND_RELIABILITY_EXPONENT ** D.created_prototypes)
-		D.reliability = max(round(D.reliability, 5), 1)
-		D.created_prototypes++
+		linked_console.files.design_reliabilities[D.id] += linked_console.files.design_reliabilities[D.id] * (RND_RELIABILITY_EXPONENT ** linked_console.files.design_created_prototypes[D.id])
+		linked_console.files.design_reliabilities[D.id] = max(round(linked_console.files.design_reliabilities[D.id], 5), 1)
+		linked_console.files.design_created_prototypes[D.id]++
 	busy = FALSE
 	queue -= RNDD
 

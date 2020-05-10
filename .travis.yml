@@ -20,7 +20,7 @@ script:
 matrix:
   include:
     - name: "DreamChecker"
-      env: SPACEMAN_DMM_VERSION=suite-1.1
+      env: SPACEMAN_DMM_VERSION=suite-1.4
       cache:
         directories: $HOME/spaceman_dmm/$SPACEMAN_DMM_VERSION
       install:

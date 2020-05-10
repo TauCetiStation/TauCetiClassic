@@ -160,6 +160,7 @@ var/global/list/tophats_list = list()
 	tp_to_tophat(I)
 
 /obj/effect/overlay/tophat_portal/Crossed(atom/movable/AM)
+	. = ..()
 	if(AM.throwing)
 		tp_to_tophat(AM)
 

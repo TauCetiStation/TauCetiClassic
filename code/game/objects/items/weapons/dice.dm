@@ -29,7 +29,7 @@
 		OS.scanned_type = src.type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 	if(istype(W, /obj/item/weapon/nullrod))
-		if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")))
+		if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")))
 			poof()
 
 /obj/item/weapon/dice/ghost/proc/poof()
@@ -228,14 +228,20 @@
 	else //Dice was thrown and is coming to rest
 		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
 
-/obj/item/weapon/dice/d4/Crossed(var/mob/living/carbon/human/H)
-	if(istype(H) && !H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled)
+/obj/item/weapon/dice/d4/Crossed(atom/movable/AM)
+	if(!ishuman(AM))
+		return
+	var/mob/living/carbon/human/H = AM
+	if(!H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled)
 		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
 		H.apply_damage(4, BRUTE, pick(BP_L_LEG , BP_R_LEG))
 		H.Weaken(3)
 
-/obj/item/weapon/dice/ghost/d4/Crossed(var/mob/living/carbon/human/H)
-	if(istype(H) && !H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled)
+/obj/item/weapon/dice/ghost/d4/Crossed(atom/movable/AM)
+	if(!ishuman(AM))
+		return
+	var/mob/living/carbon/human/H = AM
+	if(!H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled)
 		to_chat(H, "<span class='userdanger'>You really regret stepping on the accursed D4!</span>")
 		H.apply_damage(4, BRUTE, pick(BP_L_LEG , BP_R_LEG))
 		H.Weaken(3)

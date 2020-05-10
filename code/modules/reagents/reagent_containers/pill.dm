@@ -64,9 +64,7 @@
 
 		return 1
 
-	return 0
-
-/obj/item/weapon/reagent_containers/pill/afterattack(obj/target, mob/user, proximity)
+/obj/item/weapon/reagent_containers/pill/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 

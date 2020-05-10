@@ -72,7 +72,7 @@
 		else
 			to_chat(user, "Nothing is attached to the tank valve!")
 
-/obj/item/weapon/storage/pneumatic/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/weapon/storage/pneumatic/afterattack(atom/target, mob/user, proximity, params)
 	if (target.loc == user.loc)
 		return
 	else if (locate (/obj/structure/table, src.loc))
