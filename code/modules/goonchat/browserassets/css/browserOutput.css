@@ -401,9 +401,9 @@ h1.alert, h2.alert	{color: #000000;}
 /* Popup windows */
 .holster_pit{position: relative; display: inline;}
 .holster_pit .holster_pit-text{
-	visibility: hidden;
+	display: none;
 	position: absolute;
-	padding:0;
+	padding: 5px;
 	z-index: 1;
 	bottom: 125%;
 	width: 90vw;
@@ -413,4 +413,5 @@ h1.alert, h2.alert	{color: #000000;}
 	border:1px solid black;
 }
 .holster_pit .holster_pit-text::after{content: "";}
-.holster_pit:hover .holster_pit-text{padding: 5px; visibility: visible;}
+.holster_pit:hover .holster_pit-text{display: block;}
+.holster_pit-mark{font-style: italic;}

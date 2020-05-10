@@ -219,7 +219,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 		return
 	if(!text)
 		return
-	return "<div class='holster_pit'>[hover_element]<sup style='font-style:italic;'>(?)</sup><div class='holster_pit-text'>[text]</div></div>"
+	return "<div class='holster_pit'>[hover_element]<sup class='holster_pit-mark'>(?)</sup><div class='holster_pit-text'>[text]</div></div>"
 
 /proc/to_chat(target, message, handle_whitespace=TRUE)
 	if(!Master.init_time || !SSchat) // This is supposed to be Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized but we don't have these variables
