@@ -397,3 +397,20 @@ h1.alert, h2.alert	{color: #000000;}
 /* HELPER CLASSES */
 .text-normal {font-weight: normal; font-style: normal;}
 .hidden {display: none; visibility: hidden;}
+
+/* Popup windows */
+.holster_pit{position: relative; display: inline;}
+.holster_pit .holster_pit-text{
+	visibility: hidden;
+	position: absolute;
+	padding:0;
+	z-index: 1;
+	bottom: 125%;
+	width: 90vw;
+	word-wrap: break-word;
+	background-color:#353535;
+	color:white;
+	border:1px solid black;
+}
+.holster_pit .holster_pit-text::after{content: "";}
+.holster_pit:hover .holster_pit-text{padding: 5px; visibility: visible;}
