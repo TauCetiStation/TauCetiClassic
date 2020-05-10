@@ -102,10 +102,10 @@
 	ritual_invocations = list("All able to hear, hear!...",
 							  "...This message is dedicated to all of you....",
 							  "...may all of you be healthy and smart...",
-							  "...let your joke be funny...",
-							  "...and the soul is pure!...",
-							  "...This screech will be devoted to all jokes and jokes....",)
-	invoke_msg = "...So hear him!!!"
+							  "...let your jokes be funny...",
+							  "...and the soul be pure!...",
+							  "...This screech will be devoted to all jokes and clowns....",)
+	invoke_msg = "...So hear it!!!"
 	favor_cost = 200
 
 	needed_aspects = list(
@@ -120,6 +120,6 @@
 	return TRUE
 
 /datum/religion_rites/honk/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
-	var/ratio = 100 / ritual_invocations.len * stage
+	var/ratio = (100 / ritual_invocations.len) * stage
 	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
 	return TRUE

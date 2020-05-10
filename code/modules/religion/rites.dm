@@ -40,7 +40,7 @@
 			continue
 		if(!ritual_invocations.len) //we divide so we gotta protect
 			return FALSE
-		if(can_invocate(user, AOG))
+		if(!can_invocate(user, AOG))
 			return FALSE
 		user.say(i)
 		stage += 1
@@ -48,7 +48,7 @@
 			return FALSE
 
 	// Because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
-	if(can_invocate(user, AOG))
+	if(!can_invocate(user, AOG))
 		return FALSE
 	if(invoke_msg)
 		user.say(invoke_msg)
@@ -64,4 +64,4 @@
 	return TRUE
 
 /datum/religion_rites/proc/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
-	return (user.is_busy(AOG) || !do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
+	return !user.is_busy(AOG) && do_after(user, target = user, delay = ritual_length/ritual_invocations.len)
