@@ -20,7 +20,7 @@
 /datum/religion_rites/spawn_item/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
 	var/list/L = item_sacrifice(AOG, sacrifice_type)
 	if(L.len == 0)
-		to_chat(user, "<span class='warning'>We need more items for sacrifice!</span>")
+		to_chat(user, "<span class='warning'>You need more items for sacrifice to perform [name]!</span>")
 		return FALSE
 	return ..()
 
@@ -30,7 +30,7 @@
 		var/list/L = item_sacrifice(AOG, sacrifice_type)
 
 		if(L.len == 0)
-			to_chat(user, "<span class='warning'>We need more items for sacrifice!</span>")
+			to_chat(user, "<span class='warning'>You need more items for sacrifice to perform [name]!</span>")
 			INVOKE_ASYNC(src, .proc/revert_effects, AOG)
 			return FALSE
 
