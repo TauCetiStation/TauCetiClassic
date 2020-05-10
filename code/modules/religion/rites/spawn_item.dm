@@ -24,7 +24,7 @@
 			if(item.loc != AOG.loc)
 				items_to_sacrifice -= item
 			if(items_to_sacrifice.len == 0)
-				to_chat(user, "We need more [item.name]!")
+				to_chat(user, "<span class='warning'>We need more [item.name]!</span>")
 				return FALSE
 
 		//not tought items!
@@ -62,20 +62,22 @@
 
 // nice effect for spawn item
 /datum/religion_rites/spawn_item/proc/item_restoration(stage, obj/structure/altar_of_gods/AOG)
-	var/ratio = 255 / stage - 20
+	var/ratioplus = 255 / ritual_invocations.len * stage
+	var/ratiominus = 255 / stage
 	if(items_to_sacrifice)
 		for(var/obj/item/I in items_to_sacrifice)
-			animate(I, time = (ritual_invocations.len + rand(0, 3)) SECONDS, alpha = I.alpha - ratio - rand(0, 10) - 10)
+			animate(I, time = (ritual_invocations.len + rand(0, 3)) SECONDS, alpha = ratiominus - rand(0, 10) - 15)
 		for(var/I in spawning_item)
-			animate(I, time = (ritual_invocations.len + rand(0, 3)) SECONDS, alpha = ratio + rand(0, 10))
+			animate(I, time = (ritual_invocations.len + rand(0, 3)) SECONDS, alpha = ratioplus + rand(0, 10))
 	else
 		for(var/I in spawning_item)
-			animate(I, time = (ritual_invocations.len + rand(0, 3)) SECONDS, alpha = ratio + rand(0, 10))
+			animate(I, time = (ritual_invocations.len + rand(0, 3)) SECONDS, alpha = ratioplus + rand(0, 10))
 	return TRUE	
 
 // removes all illusions of the item and restores alpha on the item to replace
 /datum/religion_rites/spawn_item/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(user.is_busy(AOG) || !do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
+	. = ..()
+	if(.)
 		if(spawning_item)
 			for(var/I in spawning_item)
 				animate(I, time = 3 SECONDS, alpha = 0)
@@ -163,7 +165,7 @@
 	items_to_sacrifice = item_sacrifice(AOG, /obj/item/weapon/reagent_containers/food/snacks/grown/banana)
 
 	if(items_to_sacrifice.len == 0)
-		to_chat(user, "We need more bananas!")
+		to_chat(user, "<span class='warning'>We need more bananas!</span>")
 		return FALSE
 
 	favor_cost += items_to_sacrifice.len * 75

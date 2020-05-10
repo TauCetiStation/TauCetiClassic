@@ -189,7 +189,7 @@
 	return I.get_price() * 0.05
 
 //Gives mana from: does not affect mana accumulation
-//Needed for: create clothes, dress people, interact with helpers
+//Needed for: amassing followers, and giving them goods, mass-effect spells
 /datum/aspect/herd
 	name = ASPECT_HERD
 	desc = "Herd, consure"

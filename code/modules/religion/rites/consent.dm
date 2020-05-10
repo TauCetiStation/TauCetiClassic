@@ -125,8 +125,8 @@
 	return TRUE
 
 /*
- * clownconversion
- * Adds mob clumsy and changes his clothes
+ * Clownconversion
+ * Adds clumsy mutation to mob and changes their clothes
  */
 /datum/religion_rites/consent/clownconversion
 	name = "Clownconversion"

@@ -55,8 +55,8 @@
 
 /datum/religion_sect/preset/clown
 	name = "The Jesters of "
-	desc = "All that a real clown needs!"
-	convert_opener = "Honk to the glory!"
+	desc = "Anything a real clown needs!"
+	convert_opener = "Honk for the Honkmother, slip for the Slippy Joe!"
 	aspect_preset = list(
 		/datum/aspect/wacky = 1,
 		/datum/aspect/chaos = 1,

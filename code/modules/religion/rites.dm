@@ -32,7 +32,7 @@
 		return FALSE
 
 	var/first_invoke = TRUE
-	var/stage = ritual_invocations.len
+	var/stage = 0
 	for(var/i in ritual_invocations)
 		if(first_invoke) //instant invoke
 			user.say(i)
@@ -43,7 +43,7 @@
 		if(!can_invocate(user, AOG))
 			return FALSE
 		user.say(i)
-		stage -= 1
+		stage += 1
 		if(!on_invocation(user, AOG, stage))
 			return FALSE
 
@@ -64,6 +64,4 @@
 	return TRUE
 
 /datum/religion_rites/proc/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(user.is_busy(AOG) || !do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
-		return FALSE
-	return TRUE
+	return (user.is_busy(AOG) || !do_after(user, target = user, delay = ritual_length/ritual_invocations.len))

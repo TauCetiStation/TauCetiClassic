@@ -52,10 +52,8 @@
 		if(!target.buckled && !buckled_mob && target.loc != loc)
 			if(user.incapacitated() || user.lying)
 				return
-			target.loc = loc
-			for(var/obj/O in src)
-				O.loc = loc
-			src.add_fingerprint(target)
+			target.forceMove(loc)
+			add_fingerprint(target)
 		else
 			if(can_buckle && istype(target) && !buckled_mob && istype(user))
 				user_buckle_mob(target, user)

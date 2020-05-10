@@ -6,7 +6,7 @@
 	name = "Create food"
 	desc = "Create more and more food!"
 	ritual_length = (2.2 MINUTES)
-	ritual_invocations = list("O Lord, we pray to you: hear our prayer, that they may be delivered by thy mercy, for the glory of thy name...", //TODO
+	ritual_invocations = list("O Lord, we pray to you: hear our prayer, that they may be delivered by thy mercy, for the glory of thy name...",
 						"...our crops and gardens, now it's fair for our sins that are destroyed and a real disaster is suffered, from birds, worms, mice, moles and other animals...",
 						"...and driven far away from this place by Your authority, may they not harm anyone, but these fields and waters...",
 						"...and the gardens will be left completely at rest so that all that is growing and born in them will serve for thy glory...",
@@ -120,6 +120,6 @@
 	return TRUE
 
 /datum/religion_rites/honk/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
-	var/ratio = 100 / stage + 10
+	var/ratio = 100 / ritual_invocations.len * stage
 	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
 	return TRUE
