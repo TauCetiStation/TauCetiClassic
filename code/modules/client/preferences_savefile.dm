@@ -136,21 +136,24 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			switch(initial(J.department_flag))
 				if(CIVILIAN)
 					if(job_civilian_high & fval)
-						new_value = JP_HIGH
+						// Since we can have only one high pref now, let the user pick which of the bunch they want.
+						new_value = JP_MEDIUM
 					else if(job_civilian_med & fval)
 						new_value = JP_MEDIUM
 					else if(job_civilian_low & fval)
 						new_value = JP_LOW
 				if(MEDSCI)
 					if(job_medsci_high & fval)
-						new_value = JP_HIGH
+						// Since we can have only one high pref now, let the user pick which of the bunch they want.
+						new_value = JP_MEDIUM
 					else if(job_medsci_med & fval)
 						new_value = JP_MEDIUM
 					else if(job_medsci_low & fval)
 						new_value = JP_LOW
 				if(ENGSEC)
 					if(job_engsec_high & fval)
-						new_value = JP_HIGH
+						// Since we can have only one high pref now, let the user pick which of the bunch they want.
+						new_value = JP_MEDIUM
 					else if(job_engsec_med & fval)
 						new_value = JP_MEDIUM
 					else if(job_engsec_low & fval)
