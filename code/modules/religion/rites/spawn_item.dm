@@ -78,18 +78,21 @@
 /datum/religion_rites/spawn_item/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 	if(.)
-		if(spawning_item)
-			for(var/I in spawning_item)
-				animate(I, time = 3 SECONDS, alpha = 0)
-		if(items_to_sacrifice)
-			for(var/obj/item/i in items_to_sacrifice)
-				animate(i, time = 3 SECONDS, alpha = 255)
-				i.mouse_opacity = initial(i.mouse_opacity)
-		sleep(3 SECONDS)
-		QDEL_LIST(spawning_item)
-		playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
+		INVOKE_ASYNC(src, .proc/back_rite, AOG)
 		return TRUE
 	return FALSE
+
+/datum/religion_rites/spawn_item/proc/back_rite(obj/structure/altar_of_gods/AOG)
+	if(spawning_item)
+		for(var/I in spawning_item)
+			animate(I, time = 3 SECONDS, alpha = 0)
+	if(items_to_sacrifice)
+		for(var/obj/item/I in items_to_sacrifice)
+			animate(I, time = 3 SECONDS, alpha = 255)
+			I.mouse_opacity = initial(I.mouse_opacity)
+	sleep(3 SECONDS)
+	QDEL_LIST(spawning_item)
+	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 /*
  * Spawn banana
