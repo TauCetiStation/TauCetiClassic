@@ -247,21 +247,6 @@
 	w_class = ITEM_SIZE_NORMAL
 	flags = CONDUCT
 	m_amt = 3000
-	/* // NOPE
-	var/food_total= 0
-	var/burger_amt = 0
-	var/cheese_amt = 0
-	var/fries_amt = 0
-	var/classyalcdrink_amt = 0
-	var/alcdrink_amt = 0
-	var/bottle_amt = 0
-	var/soda_amt = 0
-	var/carton_amt = 0
-	var/pie_amt = 0
-	var/meatbreadslice_amt = 0
-	var/salad_amt = 0
-	var/miscfood_amt = 0
-	*/
 	var/list/carrying = list() // List of things on the tray. - Doohl
 	var/max_carry = 10 // w_class = ITEM_SIZE_TINY -- takes up 1
 					   // w_class = ITEM_SIZE_SMALL -- takes up 3
@@ -378,42 +363,13 @@
 
 /obj/item/weapon/tray/var/cooldown = 0	//shield bash cooldown. based on world.time
 
-/obj/item/weapon/tray/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/kitchen/rollingpin))
+/obj/item/weapon/tray/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/kitchen/rollingpin))
 		if(cooldown < world.time - 25)
-			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
+			user.visible_message("<span class='warning'>[user] bashes [src] with [I]!</span>")
 			playsound(user, 'sound/effects/shieldbash.ogg', VOL_EFFECTS_MASTER)
 			cooldown = world.time
 	else
-		..()
-
-/*
-===============~~~~~================================~~~~~====================
-=																			=
-=  Code for trays carrying things. By Doohl for Doohl erryday Doohl Doohl~  =
-=																			=
-===============~~~~~================================~~~~~====================
-*/
-/obj/item/weapon/tray/proc/calc_carry()
-	// calculate the weight of the items on the tray
-	var/val = 0 // value to return
-
-	for(var/obj/item/I in carrying)
-		if(I.w_class == 1.0)
-			val ++
-		else if(I.w_class == 2.0)
-			val += 3
-		else
-			val += 5
-
-	return val
-
-/obj/item/weapon/tray/pickup(mob/user)
-
-	if(!isturf(loc))
-		return
-
-	for(var/obj/item/I in loc)
 		if( I != src && !I.anchored && !istype(I, /obj/item/clothing/under) && !istype(I, /obj/item/clothing/suit) && !istype(I, /obj/item/projectile) )
 			var/add = 0
 			if(I.w_class == 1.0)
@@ -423,11 +379,43 @@
 			else
 				add = 5
 			if(calc_carry() + add >= max_carry)
-				break
+				return
 
-			I.loc = src
+			user.drop_item()
+			I.forceMove(src)
 			carrying.Add(I)
 			add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
+
+/obj/item/weapon/tray/attack_hand(mob/user)
+	if(carrying.len)
+		var/obj/item/choice = input("What item do you want to take?") as null in contents // null is used here for cancel button. anything wouldn't provide us with such button
+		if(choice)
+			if(!in_range(loc, user) || usr.incapacitated())
+				return
+			if(ishuman(user))
+				user.put_in_hands(choice)
+			else
+				choice.forceMove(get_turf(src))
+			carrying.Remove(choice)
+			cut_overlays()
+			for(var/obj/item/I in carrying)
+				add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
+	else
+		if(src.loc == user)
+			user.drop_from_inventory(src)
+		user.put_in_hands(src)
+
+/obj/item/weapon/tray/MouseDrop(mob/over_object)
+	if (ishuman(usr) || ismonkey(usr) || isIAN(usr))
+		if(usr.incapacitated())
+			return
+		if(!in_range(src, over_object))
+			return
+		if(usr != over_object)
+			return
+		if(src.loc == usr)
+			usr.drop_from_inventory(src)
+		usr.put_in_hands(src)
 
 /obj/item/weapon/tray/dropped(mob/user)
 
@@ -452,6 +440,27 @@
 					if(I)
 						step(I, pick(NORTH,SOUTH,EAST,WEST))
 						sleep(rand(2,4))
+
+/*
+===============~~~~~================================~~~~~====================
+=																			=
+=  Code for trays carrying things. By Doohl for Doohl erryday Doohl Doohl~  =
+=																			=
+===============~~~~~================================~~~~~====================
+*/
+/obj/item/weapon/tray/proc/calc_carry()
+	// calculate the weight of the items on the tray
+	var/val = 0 // value to return
+
+	for(var/obj/item/I in carrying)
+		if(I.w_class == 1.0)
+			val ++
+		else if(I.w_class == 2.0)
+			val += 3
+		else
+			val += 5
+
+	return val
 
 ///////////////////NEW//////////////////////
 
