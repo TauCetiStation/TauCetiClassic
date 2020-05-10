@@ -43,11 +43,11 @@
 
 /obj/item/weapon/storage/visuals/equipped(mob/user, slot)
 	..()
-	update_icon()
+	update_overlays()
 
 /obj/item/weapon/storage/visuals/dropped(mob/user, slot)
 	..()
-	update_icon()
+	update_overlays()
 
 /obj/item/weapon/storage/visuals/handle_item_insertion(obj/item/I, prevent_warning = FALSE, NoUpdate = FALSE)
 	. = ..()
@@ -59,7 +59,7 @@
 	if(.)
 		remove_item(I)
 
-/obj/item/weapon/storage/visuals/update_icon()
+/obj/item/weapon/storage/visuals/proc/update_overlays()
 	if(opened)
 		cut_overlays()
 		icon_state = "[def_icon_state]_open"
@@ -77,7 +77,7 @@
 	opened = !opened
 	if(!opened)
 		close_all()
-	update_icon()
+	update_overlays()
 
 
 
