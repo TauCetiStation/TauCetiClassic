@@ -83,10 +83,20 @@
 
 /obj/item/weapon/storage/visuals/surgery
 	name = "surgeon tray"
+	desc = "This is a surgical tray made of stainless steel, the label on the lid reads: Made by Vey Med Corp. 2189 year."
+
 	def_icon_state = "case-surgery"
 	icon_state = "case-surgery_closed"
 	item_state = "case-surgery"
-	desc = "This is a surgical tray made of stainless steel, the label on the lid reads: Made by Vey Med Corp. 2189 year."
+
+	use_sound = 'sound/items/surgery_tray_use.ogg'
+
+	flags = CONDUCT
+	force = 8.0
+	throw_speed = 1
+	throw_range = 4
+	w_class = ITEM_SIZE_LARGE
+
 	max_storage_space = 18
 	max_w_class = ITEM_SIZE_NORMAL
 	can_hold = list(
@@ -101,7 +111,6 @@
 		/obj/item/weapon/bonesetter
 		)
 	require_opened = TRUE
-	use_sound = 'sound/items/surgery_tray_use.ogg'
 
 
 
