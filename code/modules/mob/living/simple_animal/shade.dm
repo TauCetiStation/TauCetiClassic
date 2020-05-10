@@ -204,3 +204,10 @@
 		else if(istype(container.loc, /obj/item))
 			to_chat(src, "<span class='notice'>You struggle free of [container.loc].</span>")
 			container.forceMove(get_turf(container.loc))
+
+/mob/living/simple_animal/shade/god/update_canmove(no_transform = FALSE)
+	if(paralysis || stunned || weakened || buckled || pinned.len)
+		canmove = FALSE
+	else
+		canmove = TRUE
+	return canmove
