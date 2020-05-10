@@ -64,7 +64,6 @@
 		/datum/aspect/herd = 1,
 	)
 
-
 // This sect type allows user to select their aspects.
 /datum/religion_sect/custom
 	name = "Custom "

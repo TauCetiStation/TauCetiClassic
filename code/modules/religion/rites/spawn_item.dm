@@ -88,8 +88,8 @@
 		sleep(3 SECONDS)
 		QDEL_LIST(spawning_item)
 		playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
-		return FALSE
-	return TRUE
+		return TRUE
+	return FALSE
 
 /*
  * Spawn banana

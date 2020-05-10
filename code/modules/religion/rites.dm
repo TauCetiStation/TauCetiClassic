@@ -40,7 +40,7 @@
 			continue
 		if(!ritual_invocations.len) //we divide so we gotta protect
 			return FALSE
-		if(!can_invocate(user, AOG))
+		if(can_invocate(user, AOG))
 			return FALSE
 		user.say(i)
 		stage += 1
@@ -48,7 +48,7 @@
 			return FALSE
 
 	// Because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
-	if(!can_invocate(user, AOG))
+	if(can_invocate(user, AOG))
 		return FALSE
 	if(invoke_msg)
 		user.say(invoke_msg)
