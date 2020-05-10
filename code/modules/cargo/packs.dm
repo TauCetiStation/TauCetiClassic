@@ -1041,7 +1041,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	name = "Surgery crate"
 	contains = list(/obj/item/weapon/surgicaldrill,
 					/obj/item/clothing/mask/breath/medical,
-					/obj/item/weapon/storage/briefcase/surgery/full)
+					/obj/item/weapon/storage/visuals/surgery/full)
 	cost = 2500
 	crate_type = /obj/structure/closet/crate/secure/medical
 	crate_name = "Surgery crate"

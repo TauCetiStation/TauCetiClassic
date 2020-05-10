@@ -838,6 +838,7 @@
 #include "code\game\objects\items\weapons\storage\storage.dm"
 #include "code\game\objects\items\weapons\storage\toolbox.dm"
 #include "code\game\objects\items\weapons\storage\uplink_kits.dm"
+#include "code\game\objects\items\weapons\storage\visuals.dm"
 #include "code\game\objects\items\weapons\storage\wallets.dm"
 #include "code\game\objects\items\weapons\storage\storage_ui\default.dm"
 #include "code\game\objects\items\weapons\storage\storage_ui\storage_ui.dm"
