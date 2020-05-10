@@ -2,7 +2,9 @@
 	var/list/item_overlays = list()
 
 	var/def_icon_state = "icon"
-	var/open = FALSE
+	var/opened = FALSE
+	// Whether this storage can only be viewed/put items in when opened.
+	var/require_opened = FALSE
 
 /obj/item/weapon/storage/visuals/proc/gen_item_overlay(obj/item/I)
 	var/image/IO = image(I.icon, I.icon_state)
@@ -17,14 +19,27 @@
 
 /obj/item/weapon/storage/visuals/proc/add_item(obj/item/I)
 	item_overlays[I] = gen_item_overlay(I)
-	if(open)
+	if(opened)
 		add_overlay(item_overlays[I])
 
 /obj/item/weapon/storage/visuals/proc/remove_item(obj/item/I)
-	if(open)
+	if(opened)
 		cut_overlay(item_overlays[I])
 	qdel(item_overlays[I])
 	item_overlays -= I
+
+/obj/item/weapon/storage/visuals/open(mob/user)
+	if(require_opened && !opened)
+		to_chat(user, "<span class='notice'>You can't view [src]'s inventory without opening it up!</span>")
+		return FALSE
+	return ..()
+
+/obj/item/weapon/storage/visuals/can_be_inserted(obj/item/W, stop_messages = FALSE)
+	if(require_opened && !opened)
+		if(!stop_messages)
+			to_chat(usr, "<span class='notice'>You can't put items into [src] without opening it up!</span>")
+		return FALSE
+	return ..()
 
 /obj/item/weapon/storage/visuals/equipped(mob/user, slot)
 	..()
@@ -45,7 +60,7 @@
 		remove_item(I)
 
 /obj/item/weapon/storage/visuals/update_icon()
-	if(open)
+	if(opened)
 		cut_overlays()
 		icon_state = "[def_icon_state]_open"
 		for(var/obj/item/I in contents)
@@ -59,7 +74,9 @@
 
 /obj/item/weapon/storage/visuals/attack_self(mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	open = !open
+	opened = !opened
+	if(!opened)
+		close_all()
 	update_icon()
 
 
@@ -83,6 +100,7 @@
 		/obj/item/weapon/FixOVein,
 		/obj/item/weapon/bonesetter
 		)
+	require_opened = TRUE
 	use_sound = "sound/items/surgery_tray_use.ogg"
 
 
