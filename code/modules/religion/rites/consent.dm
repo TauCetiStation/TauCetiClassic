@@ -178,7 +178,8 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H), SLOT_IN_BACKPACK)
 	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), SLOT_IN_BACKPACK)
 
+	if(H.mind)
+		H.mind.holy_role = HOLY_ROLE_PRIEST
 	H.mutations.Add(CLUMSY)
-	H.mind.holy_role = HOLY_ROLE_PRIEST
 	AOG.sect.on_conversion(H)
 	return TRUE
