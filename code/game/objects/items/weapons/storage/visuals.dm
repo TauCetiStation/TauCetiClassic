@@ -101,7 +101,7 @@
 		/obj/item/weapon/bonesetter
 		)
 	require_opened = TRUE
-	use_sound = "sound/items/surgery_tray_use.ogg"
+	use_sound = 'sound/items/surgery_tray_use.ogg'
 
 
 
