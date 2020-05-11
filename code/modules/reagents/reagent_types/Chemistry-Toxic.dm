@@ -57,6 +57,9 @@
 /datum/reagent/toxin/mutagen/on_general_digest(mob/living/M)
 	..()
 	M.apply_effect(10, IRRADIATE, 0)
+	if(HULK in M.mutations)
+		var/mob/living/carbon/human/H = M
+		H.try_mutate_to_hulk(H)
 
 /datum/reagent/toxin/phoron
 	name = "Phoron"
