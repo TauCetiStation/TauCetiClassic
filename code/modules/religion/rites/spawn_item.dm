@@ -18,10 +18,11 @@
 	return sacrifice_item
 
 /datum/religion_rites/spawn_item/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
-	var/list/L = item_sacrifice(AOG, sacrifice_type)
-	if(L.len == 0)
-		to_chat(user, "<span class='warning'>You need more items for sacrifice to perform [name]!</span>")
-		return FALSE
+	if(sacrifice_type)
+		var/list/L = item_sacrifice(AOG, sacrifice_type)
+		if(L.len == 0)
+			to_chat(user, "<span class='warning'>You need more items for sacrifice to perform [name]!</span>")
+			return FALSE
 	return ..()
 
 // created illustion of spawning item
@@ -109,7 +110,7 @@
 			animate(item, time = 3 SECONDS, alpha = 255)
 	sleep(3 SECONDS)
 	QDEL_LIST(spawning_item)
-	for(var/obj/item/item in illusion_to_sacrifice)
+	for(var/obj/item/item in AOG.contents)
 		item.forceMove(AOG.loc)
 	QDEL_LIST(illusion_to_sacrifice)
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)

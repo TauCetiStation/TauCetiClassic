@@ -54,7 +54,7 @@
 		return FALSE
 
 	if(jobban_isbanned(AOG.buckled_mob, "Cyborg") || role_available_in_minutes(AOG.buckled_mob, ROLE_PAI))
-		to_chat(usr, "<span class='warning'>[AOG.buckled_mob]'s body is too weak!</span>")
+		to_chat(user, "<span class='warning'>[AOG.buckled_mob]'s body is too weak!</span>")
 		return FALSE
 	return ..()
 
@@ -121,7 +121,7 @@
 		sacrifice_favor  *= 0.5
 
 	L.gib()
-	usr.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
+	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE
 
 /*
@@ -151,8 +151,17 @@
 		return FALSE
 
 	if(jobban_isbanned(AOG.buckled_mob, "Clown"))
-		to_chat(usr, "<span class='warning'>[pick(global.chaplain_religion.deity_names)] don't accept this person!</span>")
+		to_chat(user, "<span class='warning'>[pick(global.chaplain_religion.deity_names)] don't accept this person!</span>")
 		return FALSE
+	
+	if(!AOG.buckled_mob.mind)
+		to_chat(user, "<span class='warning'>[AOG.buckled_mob]'s body is too weak!</span>")
+		return FALSE
+
+	if(AOG.buckled_mob.mind.holy_role >= HOLY_ROLE_PRIEST)
+		to_chat(user, "<span class='warning'>[AOG.buckled_mob] is already saints!</span>")
+		return FALSE
+
 	return ..()
 
 /datum/religion_rites/consent/clownconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
@@ -178,8 +187,7 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H), SLOT_IN_BACKPACK)
 	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), SLOT_IN_BACKPACK)
 
-	if(H.mind)
-		H.mind.holy_role = HOLY_ROLE_PRIEST
+	H.mind.holy_role = HOLY_ROLE_PRIEST
 	H.mutations.Add(CLUMSY)
 	AOG.sect.on_conversion(H)
 	return TRUE
