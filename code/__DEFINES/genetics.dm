@@ -54,7 +54,6 @@
 //Hulk activators
 #define ACTIVATOR_HEAVY_MUSCLE_LOAD "heavy muscle load"
 #define ACTIVATOR_ELECTRIC_SHOCK "electric shock"
-#define ACTIVATOR_VOMITING "vomiting"
 #define ACTIVATOR_BROKEN_BONE "broken bone"
 #define ACTIVATOR_EMITTER_BEAM "emitter beam"
 

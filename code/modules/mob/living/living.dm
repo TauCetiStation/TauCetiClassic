@@ -1186,8 +1186,6 @@
 
 	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
 		var/list/vomitsound = list()
-		var/mob/living/carbon/human/H = src
-
 		// The main reason why this is here, and not made into a polymorphized proc, is because we need to know from the subclasses that could cover their face, that they do.
 		if(masked)
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>","<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
