@@ -399,8 +399,8 @@ h1.alert, h2.alert	{color: #000000;}
 .hidden {display: none; visibility: hidden;}
 
 /* Popup windows */
-.holster_pit{position: relative; display: inline;}
-.holster_pit .holster_pit-text{
+.embedded_tip{position: relative; display: inline;}
+.embedded_tip .embedded_tip-text{
 	display: none;
 	position: absolute;
 	padding: 5px;
@@ -412,6 +412,6 @@ h1.alert, h2.alert	{color: #000000;}
 	color:white;
 	border:1px solid black;
 }
-.holster_pit .holster_pit-text::after{content: "";}
-.holster_pit:hover .holster_pit-text{display: block;}
-.holster_pit-mark{font-style: italic;}
+.embedded_tip .embedded_tip-text::after{content: "";}
+.embedded_tip:hover .embedded_tip-text{display: block;}
+.embedded_tip-mark{font-style: italic;}
