@@ -25,14 +25,11 @@
 			return FALSE
 	return ..()
 
-// created illustion of spawning item
-/datum/religion_rites/spawn_item/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
-	if(AOG.contents.len == 0 && sacrifice_type)
+/datum/religion_rites/spawn_item/before_perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(sacrifice_type)
 		var/list/L = item_sacrifice(AOG, sacrifice_type)
-
 		if(L.len == 0)
 			to_chat(user, "<span class='warning'>You need more items for sacrifice to perform [name]!</span>")
-			INVOKE_ASYNC(src, .proc/revert_effects, AOG)
 			return FALSE
 
 		favor_cost += 75 * L.len
@@ -49,7 +46,10 @@
 			I.pixel_x = item.pixel_x
 			I.pixel_y = item.pixel_y
 			I.pixel_z = item.pixel_z
+	return TRUE
 
+// created illustion of spawning item
+/datum/religion_rites/spawn_item/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
 	if(spawning_item.len == 0)
 		//illusion of the subject lies on the real subject
 		if(sacrifice_type)
@@ -107,7 +107,7 @@
 			animate(I, time = 3 SECONDS, alpha = 0)
 	if(sacrifice_type)
 		for(var/obj/item/item in illusion_to_sacrifice)
-			animate(item, time = 3 SECONDS, alpha = 255)
+			animate(item, time = 2.8 SECONDS, alpha = 255)
 	sleep(3 SECONDS)
 	QDEL_LIST(spawning_item)
 	for(var/obj/item/item in AOG.contents)

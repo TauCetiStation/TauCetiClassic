@@ -159,7 +159,7 @@
 		return FALSE
 
 	if(AOG.buckled_mob.mind.holy_role >= HOLY_ROLE_PRIEST)
-		to_chat(user, "<span class='warning'>[AOG.buckled_mob] is already saints!</span>")
+		to_chat(user, "<span class='warning'>[AOG.buckled_mob] are already holy!</span>")
 		return FALSE
 
 	return ..()

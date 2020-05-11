@@ -31,6 +31,9 @@
 			return TRUE
 		return FALSE
 
+	if(!before_perform_rite(user, AOG))
+		return FALSE
+
 	var/first_invoke = TRUE
 	var/stage = 0
 	for(var/i in ritual_invocations)
@@ -54,7 +57,11 @@
 		user.say(invoke_msg)
 	return TRUE
 
-/// Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
+// Does something before the ritual and after checking the favor_cost of a ritual.
+/datum/religion_rites/proc/before_perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+	return TRUE
+
+// Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
 /datum/religion_rites/proc/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	return TRUE
 
