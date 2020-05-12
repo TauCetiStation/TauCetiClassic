@@ -820,7 +820,7 @@
 	if((world.time - last_massage) > 50)
 		do_mob(user, src, HUMAN_STRIP_DELAY)
 		visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
-		to_chat(user, "<span class='warning'>Repeat at least every 1.5 seconds.</span>")
+		to_chat(user, "<span class='warning'>Repeat at least every second.</span>")
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.stat == DEAD && (world.time - H.timeofdeath) < DEFIB_TIME_LIMIT)
@@ -852,6 +852,8 @@
 			var/obj/item/organ/external/BP = H.get_bodypart(BP_CHEST)
 			if(!(H.op_stage.ribcage == 2) && prob(10))
 				BP.fracture()
+				to_chat(user, "<span class='warning'>You hear cracking in [src]'s chest!.</span>")
+			do_mob(user, src, 8)
 	return_to_body_dialog(src)
 
 /mob/living/carbon/proc/reanimate_body(mob/living/carbon/human/returnable)
