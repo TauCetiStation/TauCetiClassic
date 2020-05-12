@@ -65,7 +65,19 @@
 	H.equip_to_slot_or_del(new /obj/item/ammo_box/shotgun, SLOT_IN_BACKPACK)
 	H.equip_to_slot_or_del(new /obj/item/ammo_box/shotgun/beanbag, SLOT_IN_BACKPACK)
 
-/datum/outfit/ert/medic
+/datum/outfit/ert/security/sniper
+	name = "NT ERT Security (Sniper)"
+
+	suit_store = /obj/item/weapon/gun/energy/sniperrifle
+
+/datum/outfit/ert/security/sniper/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	. = ..()
+	H.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/wjpp/spec, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m9mm_2/rubber, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m9mm_2, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m9mm_2, SLOT_IN_BACKPACK)
+
+/datum/outfit/ert/nt/medic
 	name = "NT ERT Medic"
 
 	wear_suit = /obj/item/clothing/suit/space/rig/ert/medical
@@ -73,7 +85,46 @@
 	belt = /obj/item/weapon/storage/belt/medical/full
 	gloves = /obj/item/clothing/gloves/latex
 	head = /obj/item/clothing/head/helmet/space/rig/ert/medical
-	glasses = /obj/item/clothing/glasses/night
+	glasses = /obj/item/clothing/glasses/hud/health
 	l_store = /obj/item/weapon/reagent_containers/hypospray
-	suit_store = /obj/item/weapon/gun/energy/gun/nuclear
+	suit_store = /obj/item/weapon/gun/energy/gun/nuclear //doesn't really have space for ammo or sidearm
+	r_hand = /obj/item/roller/roller_holder_surg
 	title = "Emergency Response Team Medic"
+
+/datum/outfit/ert/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	. = ..()
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/adv, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/fire, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/o2, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/toxin, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/small_firstaid_kit/space, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/small_firstaid_kit/space, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/medical/surg/full, SLOT_IN_BACKPACK)
+
+/datum/outfit/ert/nt/engineer
+	name = "NT ERT Engineer"
+
+	wear_suit = /obj/item/clothing/suit/space/rig/ert/engineer
+	back = /obj/item/weapon/storage/backpack/ert/engineer
+	belt = /obj/item/weapon/storage/belt/utility/full
+	gloves = /obj/item/clothing/gloves/yellow
+	head = /obj/item/clothing/head/helmet/space/rig/ert/engineer
+	glasses = /obj/item/clothing/glasses/meson
+	l_store = /obj/item/device/multitool
+	suit_store = /obj/item/weapon/gun/energy/ionrifle
+	r_hand = /obj/item/weapon/storage/briefcase/inflatable
+	title = "Emergency Response Team Engineer"
+
+/datum/outfit/ert/nt/engineer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	. = ..()
+	H.equip_to_slot_or_del(new /obj/item/weapon/module/power_control, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/airalarm_electronics, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/airlock_electronics, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pyrometer/ce, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/stock_parts/cell/bluespace, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/plastique, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/msmg9mm, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/msmg9mm, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic, SLOT_IN_BACKPACK)

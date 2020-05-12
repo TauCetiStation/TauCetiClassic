@@ -726,10 +726,9 @@
 /turf/space,
 /area/shuttle/specops/centcom)
 "abO" = (
-/obj/structure/table/reinforced,
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/structure/closet/erokez,
+/obj/item/weapon/storage/toolbox,
+/obj/item/weapon/paper/crumpled/bloody/dickbutt,
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/specops/centcom)
 "abP" = (
@@ -1458,7 +1457,8 @@
 /turf/space,
 /area/shuttle/specops/centcom)
 "adX" = (
-/obj/structure/closet/medical_wall/erokez,
+/obj/structure/closet/erokez,
+/obj/item/weapon/tank/emergency_oxygen/double,
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/specops/centcom)
 "adY" = (
@@ -1705,6 +1705,27 @@
 	icon_state = "vault"
 	},
 /area/centcom/specops)
+"aeK" = (
+/obj/structure/table/reinforced,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/recharger,
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/specops/centcom)
+"aeL" = (
+/obj/machinery/recharge_station,
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/specops/centcom)
+"aeM" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/specops/centcom)
+"aeN" = (
+/obj/structure/closet/medical_wall/erokez,
+/obj/item/weapon/storage/firstaid/regular,
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/specops/centcom)
 "aeT" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/shuttle/floor,
@@ -50119,7 +50140,7 @@ aaM
 abx
 ayT
 bkb
-abO
+aeK
 acA
 adf
 adG
@@ -50380,7 +50401,7 @@ abz
 acA
 adh
 adh
-adX
+aeN
 aer
 aaM
 aaM
@@ -50632,7 +50653,7 @@ aaM
 aaM
 aby
 azE
-abz
+bob
 abz
 acA
 adh
@@ -50889,7 +50910,7 @@ aaM
 aaM
 ahQ
 azH
-abz
+abO
 abP
 acA
 adi
@@ -51146,7 +51167,7 @@ aaM
 aaM
 aaM
 azR
-abA
+adX
 abS
 acA
 adw
@@ -52432,9 +52453,9 @@ aaM
 aaM
 aaM
 abF
+aeL
 abz
-abz
-abz
+aeM
 adL
 aek
 aek

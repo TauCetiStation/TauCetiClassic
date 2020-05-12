@@ -210,7 +210,7 @@
 	if(!M.client)
 		return FALSE  //Not connected
 
-	if(M && M in candidates)
+	if(M in candidates)
 		return FALSE  //Already there.
 
 	if(M.stat != DEAD)

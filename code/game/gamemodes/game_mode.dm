@@ -87,6 +87,7 @@ Implants;
 	var/datum/emergency_call/picked_call = null //Which distress call is currently active
 	var/on_distress_cooldown = FALSE
 	var/waiting_for_candidates = FALSE
+	var/distress_cancelled = FALSE
 
 /datum/game_mode/proc/announce() //to be calles when round starts
 	to_chat(world, "<B>Notice</B>: [src] did not define announce()")

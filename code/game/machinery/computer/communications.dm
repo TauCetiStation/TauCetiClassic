@@ -22,6 +22,7 @@
 	var/tmp_alertlevel = 0
 	var/last_seclevel_change = 0 // prevents announcement sounds spam
 	var/last_announcement = 0    // ^ ^ ^
+	var/just_called = FALSE
 	var/const/STATE_DEFAULT = 1
 	var/const/STATE_CALLSHUTTLE = 2
 	var/const/STATE_CANCELSHUTTLE = 3
@@ -32,6 +33,7 @@
 	var/const/STATE_ALERT_LEVEL = 8
 	var/const/STATE_CONFIRM_LEVEL = 9
 	var/const/STATE_CREWTRANSFER = 10
+	var/const/STATE_DISTRESS = 11
 
 	var/status_display_freq = "1435"
 	var/stat_msg1
@@ -296,6 +298,45 @@
 
 		if("changeseclevel")
 			state = STATE_ALERT_LEVEL
+
+		if("distress")
+			if(state == STATE_DISTRESS)
+				if(world.time < 10 MINUTES)
+					to_chat(usr, "<span class='warning'>The distress beacon cannot be launched this early in the shift. Please wait another [round((10 MINUTES-world.time)/600)] minutes before trying again.</span>")
+					return FALSE
+
+				if(!ticker?.mode)
+					return FALSE //Not a game mode?
+
+				if(just_called || ticker.mode.waiting_for_candidates)
+					to_chat(usr, "<span class='warning'>The distress beacon has been just launched.</span>")
+					return FALSE
+
+				if(ticker.mode.on_distress_cooldown)
+					to_chat(usr, "<span class='warning'>The distress beacon is currently recalibrating.</span>")
+					return FALSE
+
+
+				for(var/client/X in global.admins)
+					X.mob.playsound_local(null, 'sound/machines/fax_centcomm.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+					to_chat(X, "<span class='notice'><b><font color='purple'>DISTRESS:</font> [ADMIN_TPMONTY(usr)] has called a Distress Beacon. It will be sent in 60 seconds unless denied or sent early. Humans: [AllMarines], Xenos: [AllXenos]. (<A HREF='?src=[REF(C.holder)];[HrefToken(TRUE)];distress=[REF(usr)]'>SEND</A>) (<A HREF='?src=[REF(C.holder)];[HrefToken(TRUE)];deny=[REF(usr)]'>DENY</A>) (<a href='?src=[REF(C.holder)];[HrefToken(TRUE)];reply=[REF(usr)]'>REPLY</a>).</b></span>")
+				to_chat(usr, "<span class='boldnotice'>A distress beacon will launch in 60 seconds unless High Command responds otherwise.</span>")
+
+				ticker.mode.distress_cancelled = FALSE
+				just_called = TRUE
+				spawn(1 MINUTES)
+					just_called = FALSE
+					cooldown_request = world.time
+					if(ticker.mode.distress_cancelled || ticker.mode.on_distress_cooldown || ticker.mode.waiting_for_candidates)
+						return FALSE
+					else
+						ticker.mode.activate_distress()
+						log_game("A distress beacon requested by [key_name_admin(usr)] was automatically sent due to not receiving an answer within 60 seconds.")
+						message_admins("A distress beacon requested by [ADMIN_TPMONTY(usr)] was automatically sent due to not receiving an answer within 60 seconds.")
+						return TRUE
+			else
+				state = STATE_DISTRESS
+
 	src.updateUsrDialog()
 
 /obj/machinery/computer/communications/emag_act(mob/user)
