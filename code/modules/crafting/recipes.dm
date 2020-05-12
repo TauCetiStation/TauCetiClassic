@@ -71,6 +71,13 @@
 	result = /obj/item/weapon/handcuffs/cable
 	parts = list(/obj/item/stack/cable_coil = 1)
 
+//	HEAD
+/datum/crafting_recipe/paperhelm
+	name = "Paper pack helmet"
+	result = /obj/item/clothing/head/paperpackhelmet
+	tools = list(/obj/item/weapon/wirecutters = 1)
+	reqs = list(/obj/item/weapon/storage/box/paperpack = 1)
+
 //   SHIELD craft
 
 /datum/crafting_recipe/bucklerframe1
