@@ -192,18 +192,18 @@
 
 /obj/item/ammo_box/magazine/c45m/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[ammo_count() ? "7" : "0"]"
+	icon_state = "[initial(icon_state)]-[ammo_count()]"
 
 /obj/item/ammo_box/magazine/c45r
 	name = "magazine (.45 rubber)"
-	icon_state = "45"
+	icon_state = "45r"
 	ammo_type = /obj/item/ammo_casing/c45r
-	caliber = ".45"
+	caliber = ".45r"
 	max_ammo = 7
 
 /obj/item/ammo_box/magazine/c45r/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[ammo_count() ? "7" : "0"]"
+	icon_state = "[initial(icon_state)]-[ammo_count()]"
 
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "Mac-10 magazine (9mm)"

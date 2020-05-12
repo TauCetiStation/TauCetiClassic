@@ -56,7 +56,8 @@
 
 /obj/item/ammo_casing/c45r
 	desc = "A .45 rubber bullet casing."
-	caliber = ".45"
+	icon_state = "st-casing"
+	caliber = ".45r"
 	projectile_type = "/obj/item/projectile/bullet/weakbullet/rubber45"
 
 /obj/item/ammo_casing/a12mm
