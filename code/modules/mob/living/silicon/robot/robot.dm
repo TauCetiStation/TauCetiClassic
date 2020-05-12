@@ -129,12 +129,13 @@
 /mob/living/silicon/robot/proc/init(laws_type, ai_link)
 	aiCamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
 	laws = new laws_type()
-	connected_ai = select_active_ai_with_fewest_borgs(ai_link)
-	if(ai_link && connected_ai)
-		connected_ai.connected_robots += src
-		lawsync()
-		photosync()
-		lawupdate = 1
+	if(ai_link)
+		connected_ai = select_active_ai_with_fewest_borgs()
+		if(connected_ai)
+			connected_ai.connected_robots += src
+			lawsync()
+			photosync()
+			lawupdate = 1
 	else
 		lawupdate = 0
 

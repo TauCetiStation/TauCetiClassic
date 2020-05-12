@@ -339,13 +339,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return .
 
 //Find an active ai with the least borgs. VERBOSE PROCNAME HUH!
-/proc/select_active_ai_with_fewest_borgs(ai_link)
+/proc/select_active_ai_with_fewest_borgs()
 	var/mob/living/silicon/ai/selected
-	if(ai_link)
-		var/list/active = active_ais()
-		for(var/mob/living/silicon/ai/A in active)
-			if(!selected || (selected.connected_robots > A.connected_robots))
-				selected = A
+	var/list/active = active_ais()
+	for(var/mob/living/silicon/ai/A in active)
+		if(!selected || (selected.connected_robots > A.connected_robots))
+			selected = A
 
 	return selected
 
