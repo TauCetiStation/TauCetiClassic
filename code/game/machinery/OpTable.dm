@@ -20,8 +20,7 @@
 		if(computer)
 			computer.table = src
 			break
-//	spawn(100) //Wont the MC just call this process() before and at the 10 second mark anyway?
-//		process()
+	AddComponent(/datum/component/clickplace)
 
 /obj/machinery/optable/ex_act(severity)
 
@@ -159,10 +158,4 @@
 			qdel(G)
 			return
 
-	if(!W.canremove || W.flags & NODROP)
-		return
-
-	user.drop_item()
-	if(W && W.loc)
-		W.loc = src.loc
-	return
+	return ..()

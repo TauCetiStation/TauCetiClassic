@@ -551,8 +551,10 @@
 		SEND_SIGNAL(src, COMSIG_LIVING_STOP_PULL, pulling)
 		SEND_SIGNAL(pulling, COMSIG_ATOM_STOP_PULL, src)
 
-		pulling.pulledby = null
-		pulling = null
+		// What if the signals above somehow deleted pulledby?
+		if(pulling)
+			pulling.pulledby = null
+			pulling = null
 		if(pullin)
 			pullin.update_icon(src)
 		count_pull_debuff()
@@ -1125,5 +1127,5 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return FALSE
 
 // Return null if mob of this type can not scramble messages.
-/mob/proc/get_scrambled_message(datum/language/speaking, message)
+/mob/proc/get_scrambled_message(message, datum/language/speaking = null)
 	return speaking ? speaking.scramble(message) : stars(message)

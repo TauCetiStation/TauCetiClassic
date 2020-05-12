@@ -65,7 +65,7 @@
 	var/ghost_msg = "<span class='notice'>[bicon(cross)] <b>[real_name]'s[alt_name ? " " + alt_name : ""]</b> <b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]:</b></font></span> <span class='game say'>\"[msg]\"</span>"
 	var/gods_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]:</b></font></span> <span class='game say'>\"[msg]\"</span>"
 
-	var/scrambled_msg = get_scrambled_message(speaking, msg)
+	var/scrambled_msg = get_scrambled_message(msg, speaking)
 	var/god_not_understand_msg = ""
 	if(scrambled_msg)
 		god_not_understand_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]</b>:</font> \"[scrambled_msg]\"</span>"

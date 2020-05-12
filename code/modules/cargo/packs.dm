@@ -750,7 +750,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_pack/aqueous_foam_tank
 	name = "AFFF crate"
-	contains = list(/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank)
+	contains = list(/obj/structure/reagent_dispensers/aqueous_foam_tank)
 	cost = 800
 	crate_type = /obj/structure/largecrate
 	crate_name = "AFFF crate"
