@@ -1,7 +1,7 @@
 #define DEFIB_TIME_LIMIT     (8 MINUTES) //past this many seconds, defib is useless. Currently 8 Minutes
 #define DEFIB_TIME_LOSS      (2 MINUTES) //past this many seconds, brain damage occurs. Currently 2 minutes
 #define MAX_BRAIN_DAMAGE      80
-#define MASSAGE_RHYTM_RIGHT   10
+#define MASSAGE_RHYTM_RIGHT   11
 #define MASSAGE_ALLOWED_ERROR 2
 /mob/living/carbon
 	var/last_massage = 0
@@ -828,36 +828,39 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.stat == DEAD && (world.time - H.timeofdeath) < DEFIB_TIME_LIMIT)
-			var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
-			if(!IO)
+			var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
+			var/obj/item/organ/internal/heart/Lungs = H.organs_by_name[O_LUNGS]
+			if(!Heart)
 				return
-			if(massages_done_right > 4)
+			if(massages_done_right > 12)
 				to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
 				reanimate_body(H)
 				H.stat = UNCONSCIOUS
 				massages_done_right = 0
-				IO.heart_status = HEART_NORMAL
-			else if(massages_done_right < -4)
+				Heart.heart_status = HEART_NORMAL
+			else if(massages_done_right < -2)
 				to_chat(user, "<span class='warning'>[src]'s heart stopped!</span>")
 				if(prob(25))
-					IO.damage += 2
+					Heart.damage += 2
 				last_massage = world.time
 				massages_done_right = 0
-				IO.heart_status = HEART_FAILURE
+				Heart.heart_status = HEART_FAILURE
 			else
-				if(last_massage > world.time - MASSAGE_RHYTM_RIGHT - MASSAGE_ALLOWED_ERROR && last_massage < world.time - MASSAGE_RHYTM_RIGHT + MASSAGE_ALLOWED_ERROR)
-					massages_done_right++
-					to_chat(user, "<span class='warning'>You've hit right to the beat.</span>")
-					IO.heart_status = HEART_DEFIB
-				else
-					massages_done_right--
-					to_chat(user, "<span class='warning'>You've skipped the beat.</span>")
+				Heart.heart_status = HEART_DEFIB
+				if(Heart.damage < 50)
+					if(last_massage > world.time - MASSAGE_RHYTM_RIGHT - MASSAGE_ALLOWED_ERROR && last_massage < world.time - MASSAGE_RHYTM_RIGHT + MASSAGE_ALLOWED_ERROR)
+						massages_done_right++
+						to_chat(user, "<span class='warning'>You've hit right to the beat.</span>")
+					else
+						massages_done_right--
+						to_chat(user, "<span class='warning'>You've skipped the beat.</span>")
+			if(Lungs.damage < 10)
+				adjustOxyLoss(-1.5)
 			last_massage = world.time
 			var/obj/item/organ/external/BP = H.get_bodypart(BP_CHEST)
-			if(!(H.op_stage.ribcage == 2) && prob(10))
+			if(!(H.op_stage.ribcage == 2) && prob(5))
 				BP.fracture()
 				to_chat(user, "<span class='warning'>You hear cracking in [src]'s chest!.</span>")
-			do_mob(user, src, 8)
 	return_to_body_dialog(src)
 
 /mob/living/carbon/proc/reanimate_body(mob/living/carbon/human/returnable)
