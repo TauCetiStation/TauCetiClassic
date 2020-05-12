@@ -273,6 +273,9 @@
 		if((param_var_name in VE_ICONS) && !check_rights(R_DEBUG|R_EVENT))
 			return
 
+		if((param_var_name in VE_HIDDEN_LOG) && !check_rights(R_LOG))
+			return
+
 		variable = param_var_name
 
 		var_value = O.vars[variable]
@@ -458,7 +461,7 @@
 						return
 					O.set_light(l_color = var_new)
 				else
-					var/var_new = sanitize(input("Enter new text:", "Text", O.vars[variable])) as null|text
+					var/var_new = sanitize(input("Enter new text:", "Text", O.vars[variable]) as null|text)
 					if(isnull(var_new))
 						return
 					O.vars[variable] = var_new

@@ -37,31 +37,35 @@
 	to_chat(world, "<B>Personnel:</B> Repel the raiders and their low, low prices and/or guns.")
 
 /datum/game_mode/heist/can_start()
+	if (!..())
+		return FALSE
+	for(var/obj/effect/landmark/L in landmarks_list)
+		if(L.name == "voxstart")
+			return TRUE
+	return FALSE
 
+/datum/game_mode/heist/assign_outsider_antag_roles()
 	if(!..())
-		return 0
+		return FALSE
 
-	var/raider_num = 0
+	var/raider_num = recommended_enemies
 
 	//Check that we have enough vox.
-	if(antag_candidates.len < required_enemies)
-		return 0
-	else if(antag_candidates.len < recommended_enemies)
+	if(antag_candidates.len < recommended_enemies)
 		raider_num = antag_candidates.len
-	else
-		raider_num = recommended_enemies
 
 	//Grab candidates randomly until we have enough.
 	while(raider_num > 0)
 		var/datum/mind/new_raider = pick(antag_candidates)
 		raiders += new_raider
+		modePlayer += new_raider
 		antag_candidates -= new_raider
 		raider_num--
 
 	for(var/datum/mind/raider in raiders)
 		raider.assigned_role = "MODE"
 		raider.special_role = "Raider"
-	return 1
+	return TRUE
 
 /datum/game_mode/heist/pre_setup()
 	return 1
@@ -118,7 +122,7 @@
 		vox.real_name = newname
 		vox.name = vox.real_name
 		raider.name = vox.name
-		vox.age = rand(17,85)
+		vox.age = rand(vox.species.min_age, vox.species.max_age)
 		//vox.dna.mutantrace = "vox"
 		//vox.set_species(VOX)
 		vox.languages = list() // Removing language from chargen.
@@ -134,7 +138,7 @@
 		raider.objectives = raid_objectives
 		greet_vox(raider)
 
-	for(var/atom/movable/AM in locate(/area/shuttle/vox/station))
+	for(var/atom/movable/AM in locate(/area/shuttle/vox/arkship))
 		heist_recursive_price_reset(AM)
 
 	return ..()
@@ -144,7 +148,7 @@
 		return 0
 
 	for(var/obj/stack in cortical_stacks)
-		if (get_area(stack) != locate(/area/shuttle/vox/station))
+		if (get_area(stack) != locate(/area/shuttle/vox/arkship))
 			return 0
 	return 1
 
@@ -268,7 +272,7 @@
 				sav_score = 0
 			if(max_score > sav_score)
 				S["HeistMaxScore"] << num2text(heist_rob_total,9)
-			for(var/atom/movable/AM in locate(/area/shuttle/vox/station))
+			for(var/atom/movable/AM in locate(/area/shuttle/vox/arkship))
 				if(AM.get_price())
 					var/count = 0
 					S["[AM.type]"] >> count
@@ -283,7 +287,7 @@
 				var/tempstate = end_icons.len
 				text += {"<br><img src="logo_[tempstate].png"> <b>[raider.key]</b> was <b>[raider.name]</b> ("}
 				var/area/A = get_area(raider.current)
-				if(!istype(A, /area/shuttle/vox/station))
+				if(!istype(A, /area/shuttle/vox/arkship))
 					text += "left behind)"
 					continue
 				else if(raider.current.stat == DEAD)
@@ -305,7 +309,7 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "heist", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text
 
 /datum/game_mode/heist/check_finished()

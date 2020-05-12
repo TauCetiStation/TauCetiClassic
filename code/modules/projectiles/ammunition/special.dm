@@ -41,3 +41,14 @@
 	projectile_type = /obj/item/projectile/bullet/scrap
 	pellets = 10
 	variance = 30
+
+/obj/item/ammo_casing/plasma
+	name = "plasma"
+	caliber = "plasma"
+	projectile_type = /obj/item/projectile/plasma
+
+/obj/item/ammo_casing/plasma/overcharge
+	projectile_type = /obj/item/projectile/plasma/overcharge
+
+/obj/item/ammo_casing/plasma/overcharge/massive
+	projectile_type = /obj/item/projectile/plasma/overcharge/massive

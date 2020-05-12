@@ -102,7 +102,7 @@
 	w_class = ITEM_SIZE_LARGE
 	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 
-/obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
+/obj/item/sign_backing/afterattack(atom/target, mob/user, proximity, params)
 	if(isturf(target) && proximity)
 		var/turf/T = target
 		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>",
@@ -121,14 +121,14 @@
 				qdel(src)
 
 /obj/structure/sign/nanotrasen
-	name = "\improper Nanotrasen Logo"
+	name = "Nanotrasen Logo"
 	desc = "A sign with the Nanotrasen Logo on it. Glory to Nanotrasen!"
 	icon_state = "nanotrasen"
 
 /obj/structure/sign/mark
 	layer = TURF_LAYER
 	icon = 'icons/misc/mark.dmi'
-	name = "\improper Symbol"
+	name = "Symbol"
 	desc = "You look at a symbol."
 	icon_state = "b1"
 
@@ -137,7 +137,7 @@
 	icon_state = "C"
 
 /obj/structure/sign/chinese
-	name = "\improper chinese restaurant sign"
+	name = "chinese restaurant sign"
 	desc = "A glowing dragon invites you in."
 	icon_state = "chinese"
 	light_color = "#d00023"
@@ -145,11 +145,11 @@
 	light_range = 3
 
 /obj/structure/sign/barber
-	name = "\improper barbershop sign"
+	name = "barbershop sign"
 	desc = "A glowing red-blue-white stripe you won't mistake for any other!"
 	icon_state = "barber"
 
 /obj/structure/sign/monkey_painting
-	name = "\improper Mr. Deempisi portrait"
+	name = "Mr. Deempisi portrait"
 	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'"
 	icon_state = "monkey_painting"

@@ -65,7 +65,7 @@
 	icon_state = "white_candle4"
 
 /obj/item/trash/liquidfood
-	name = "\improper \"LiquidFood\" ration"
+	name = "\"LiquidFood\" ration"
 	icon_state = "liquidfood"
 
 /obj/item/trash/candle/ghost
@@ -99,7 +99,7 @@
 
 /obj/item/trash/candle/ghost/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	..()
-	if(user.getBrainLoss() >= 60 || user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")
+	if(user.getBrainLoss() >= 60 || user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")
 		if(istype(W, /obj/item/weapon/nullrod))
 			var/obj/item/trash/candle/C = new /obj/item/trash/candle(loc)
 			if(istype(loc, /mob))

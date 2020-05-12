@@ -13,7 +13,8 @@
 	//set to 0 to prevent fire() calls, mostly for admin use or subsystems that may be resumed later
 	//	use the SS_NO_FIRE flag instead for systems that never fire to keep it from even being added to the list
 	var/can_fire = TRUE
-
+	// Set TRUE after subsystem done Initialize()
+	var/initialized = FALSE
 	// Bookkeeping variables; probably shouldn't mess with these.
 	var/last_fire = 0       //last world.time we called fire()
 	var/next_fire = 0       //scheduled world.time for next fire()
@@ -147,6 +148,8 @@
 	var/time = (world.timeofday - start_timeofday) / 10
 	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"
 	world.log << "[msg]"
+	log_initialization(msg)
+	initialized = TRUE
 	return time
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.

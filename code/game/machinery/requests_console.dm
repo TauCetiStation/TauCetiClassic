@@ -296,8 +296,7 @@ var/req_console_information = list()
 									Console.icon_state = "req_comp2"
 								if(!Console.silent)
 									playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-									for (var/mob/O in hearers(5, Console.loc))
-										O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
+									audible_message("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [department]'")
 								Console.messages += "<B><FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[sending]"
 
 		//					if("3")		//Not implemanted, but will be 		//Removed as it doesn't look like anybody intends on implimenting it ~Carn
@@ -307,7 +306,7 @@ var/req_console_information = list()
 		//						if(!Console.silent)
 		//							playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 		//							for (var/mob/O in hearers(7, Console.loc))
-		//								O.show_message(text("[bicon(Console)] *The Requests Console yells: 'EXTREME PRIORITY alert in [department]'"))
+		//								O.show_messageold(text("[bicon(Console)] *The Requests Console yells: 'EXTREME PRIORITY alert in [department]'"))
 		//						Console.messages += "<B><FONT color='red'>Extreme Priority message from [ckey(department)]</FONT></B><BR>[message]"
 
 							else		// Normal priority
@@ -316,17 +315,14 @@ var/req_console_information = list()
 									Console.icon_state = "req_comp1"
 								if(!Console.silent)
 									playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-									for (var/mob/O in hearers(4, Console.loc))
-										O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'Message from [department]'"))
+									audible_message("[bicon(Console)] *The Requests Console beeps: 'Message from [department]'")
 								Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></B><BR>[message]"
 
 						screen = 6
 						Console.set_light(2)
 				messages += "<B>Message sent to [dpt]</B><BR>[message]"
 			else
-				for (var/mob/O in hearers(4, src.loc))
-					O.show_message(text("[bicon(src)] *The Requests Console beeps: 'NOTICE: No server detected!'"))
-
+				audible_message("[bicon(src)] *The Requests Console beeps: 'NOTICE: No server detected!'")
 
 	//Handle screen switching
 	switch(text2num(href_list["setScreen"]))

@@ -13,23 +13,10 @@ var/list/mechtoys = list(
 	/obj/item/toy/prize/phazon
 )
 
-/area/supply/station
-	name = "supply shuttle"
-	icon_state = "shuttle3"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	looped_ambience = 'sound/ambience/loop_space.ogg'
-
-/area/supply/dock
-	name = "supply shuttle"
-	icon_state = "shuttle3"
-	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-
 //SUPPLY PACKS MOVED TO /code/defines/obj/supplypacks.dm
 
 /obj/structure/plasticflaps //HOW DO YOU CALL THOSE THINGS ANYWAY
-	name = "\improper plastic flaps"
+	name = "plastic flaps"
 	desc = "Completely impassable - or are they?"
 	icon = 'icons/obj/stationobjs.dmi' //Change this.
 	icon_state = "plasticflaps"
@@ -82,7 +69,7 @@ var/list/mechtoys = list(
 	return
 
 /obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
-	name = "\improper Airtight plastic flaps"
+	name = "Airtight plastic flaps"
 	desc = "Heavy duty, airtight, plastic flaps."
 
 /obj/structure/plasticflaps/mining/atom_init() //set the turf below the flaps to block air

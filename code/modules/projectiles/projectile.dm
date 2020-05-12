@@ -60,7 +60,7 @@
 	var/step_delay = 1	// the delay between iterations if not a hitscan projectile
 
 	// effect types to be used
-	var/list/tracer_list = null // if set to list, it will be gathering all projectile effects into list and delete them after impact
+	var/list/tracer_list = null // if set to list, it will be gathering all projectile effects into list and delete them after impact(unless they ask to not be deleted)
 	var/muzzle_type
 	var/tracer_type
 	var/impact_type
@@ -70,7 +70,9 @@
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
 
-	var/list/proj_act_sound = null
+	var/list/proj_act_sound = null // this probably could be merged into the one below, because bullet_act is too specific, while on_impact (Bump) handles bullet_act too.
+	// ^ the one above used in bullet_act for mobs, while this one below used in on_impact() which happens after Bump() or killed by process. v
+	var/proj_impact_sound = null // originally made for big plasma ball hit sound, and its okay when both proj_act_sound and this one plays at the same time.
 
 /obj/item/projectile/atom_init()
 	damtype = damage_type // TODO unify these vars properly (Bay12)
@@ -83,7 +85,10 @@
 		set_light(light_range,light_power,light_color)
 
 /obj/item/projectile/Destroy()
-	QDEL_LIST(tracer_list)
+	for(var/obj/effect/projectile/P in tracer_list)
+		if(!P.deletes_itself)
+			qdel(P)
+	tracer_list = null
 	firer = null
 	starting = null
 	original = null
@@ -104,7 +109,7 @@
 			return grab.affecting
 	return H
 
-/obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(!isliving(target))	return 0
 	if(isanimal(target))	return 0
 	var/mob/living/L = target
@@ -113,7 +118,8 @@
 	//called when the projectile stops flying because it collided with something
 /obj/item/projectile/proc/on_impact(atom/A)
 	impact_effect(effect_transform)		// generate impact effect
-	return
+	if(proj_impact_sound)
+		playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)
 
 /obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  //Checks if you can hit them or not.
 	if(!istype(target) || !istype(user))
@@ -185,8 +191,8 @@
 				miss_modifier = - 100 // so sniper rifle and PTR-rifle projectiles cannot miss
 		if (istype(shot_from,/obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
 			var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
-			if (daddy.target && original in daddy.target) //As opposed to no-delay pew pew
-				miss_modifier += -60
+			if (daddy.target && (original in daddy.target)) //As opposed to no-delay pew pew
+				miss_modifier -= 60
 		if(distance > 1)
 			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)
 
@@ -217,7 +223,7 @@
 	else if(M)
 		if(silenced)
 			to_chat(M, "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
-		else
+		else if(!fake)
 			M.visible_message("<span class='userdanger'>[M.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
 			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 		if(old_firer)
@@ -255,7 +261,7 @@
 		return 1
 
 
-/obj/item/projectile/process()
+/obj/item/projectile/process(boolet_number = 1) // we add default arg value, because there is alot of uses of projectiles without guns (e.g turrets).
 	var/first_step = 1
 
 	//plot the initial trajectory
@@ -296,7 +302,8 @@
 							return
 
 		if(first_step)
-			muzzle_effect(effect_transform)
+			if(boolet_number == 1) // so that it won't spam with muzzle effects incase of multiple pellets.
+				muzzle_effect(effect_transform)
 			first_step = 0
 		else if(!bumped)
 			tracer_effect(effect_transform)
@@ -353,10 +360,12 @@
 			P.activate()
 
 /obj/item/projectile/proc/impact_effect(matrix/M)
-	if(ispath(tracer_type) && location)
+	if(ispath(impact_type) && location)
 		var/obj/effect/projectile/P = new impact_type(location.loc)
 
 		if(istype(P))
+			if(tracer_list)
+				tracer_list += P
 			P.set_transform(M)
 			P.pixel_x = location.pixel_x
 			P.pixel_y = location.pixel_y
@@ -372,7 +381,7 @@
 	current = T
 	yo = U.y - T.y
 	xo = U.x - T.x
-	INVOKE_ASYNC(src, .process)
+	process()
 
 /obj/item/projectile/test //Used to see if you can hit them.
 	invisibility = 101 //Nope!  Can't see me!

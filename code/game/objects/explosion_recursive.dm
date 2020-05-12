@@ -15,7 +15,7 @@ var/explosion_in_progress = 0
 	epicenter = get_turf(epicenter)
 	if(!epicenter) return
 
-	for(var/obj/item/device/radio/beacon/explosion_watcher/W in explosion_watcher_list)
+	for(var/obj/item/device/radio/beacon/interaction_watcher/W in interaction_watcher_list)
 		if(get_dist(W, epicenter) < 10)
 			W.react_explosion(epicenter, power)
 

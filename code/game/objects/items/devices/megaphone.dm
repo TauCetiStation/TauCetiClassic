@@ -21,7 +21,7 @@
 	if(!ishuman(user))
 		to_chat(user, "<span class='warning'>You don't know how to use this!</span>")
 		return
-	if(user.silent || isabductor(user) || user.has_trait(TRAIT_MUTE))
+	if(user.silent || isabductor(user) || HAS_TRAIT(user, TRAIT_MUTE))
 		to_chat(user, "<span class='userdange'>You can't speak.</span>")
 		return
 	if(spamcheck)
@@ -36,14 +36,12 @@
 	if ((src.loc == user && usr.stat == CONSCIOUS))
 		if(emagged)
 			if(insults)
-				for(var/mob/O in (viewers(user)))
-					O.show_message("<B>[user]</B> broadcasts, <FONT size=3>\"[pick(insultmsg)]\"</FONT>",2) // 2 stands for hearable message
+				user.audible_message("<B>[user]</B> broadcasts, <FONT size=3>\"[pick(insultmsg)]\"</FONT>")
 				insults--
 			else
 				to_chat(user, "<span class='warning'>*BZZZZzzzzzt*</span>")
 		else
-			for(var/mob/O in (viewers(user)))
-				O.show_message("<B>[user]</B> broadcasts, <FONT size=3>\"[message]\"</FONT>",2) // 2 stands for hearable message
+			user.audible_message("<B>[user]</B> broadcasts, <FONT size=3>\"[message]\"</FONT>")
 
 		spamcheck = 1
 		spawn(20)

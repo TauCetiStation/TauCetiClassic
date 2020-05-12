@@ -1,3 +1,4 @@
+#define COUNTER_COOLDOWN (20 SECONDS)
 /**********************Light************************/
 //this item is intended to give the effect of entering the mine, so that light gradually fades
 /obj/effect/light_emitter
@@ -162,6 +163,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "lantern"
 	item_state = "lantern"
 	desc = "A mining lantern."
+	button_sound = 'sound/items/lantern.ogg'
 	brightness_on = 4			// luminosity when on
 
 /*****************************Pickaxe********************************/
@@ -179,16 +181,11 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	toolspeed = 1 //moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
-	usesound = 'sound/weapons/Genhit.ogg'
+	usesound = 'sound/items/pickaxe.ogg'
 	var/drill_verb = "picking"
 	sharp = 1
 
 	var/excavation_amount = 100
-
-/obj/item/weapon/pickaxe/hammer		//DEAD ITEM
-	name = "sledgehammer"
-	//icon_state = "sledgehammer" Waiting on sprite
-	desc = "A mining hammer made of reinforced metal. You feel like smashing your boss in the face with this."
 
 /obj/item/weapon/pickaxe/silver
 	name = "silver pickaxe"
@@ -217,6 +214,9 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	drill_verb = "cutting"
 
+/obj/item/weapon/pickaxe/plasmacutter/get_current_temperature()
+	return 3800
+
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"
@@ -225,6 +225,52 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
 
+/*****************************Sledgehammer********************************/
+/obj/item/weapon/twohanded/sledgehammer
+	name = "Sledgehammer"
+	icon_state = "sledgehammer0"
+	force = 15
+	origin_tech = "materials=3"
+	desc = "This thing breaks skulls pretty well, right?"
+	hitsound = 'sound/items/sledgehammer_hit.ogg'
+	w_class = ITEM_SIZE_HUGE
+	slot_flags = SLOT_FLAGS_BACK
+	force_unwielded = 15
+	force_wielded = 35
+	attack_verb = list("attacked", "smashed", "hit", "space assholed")
+	var/asshole_counter = 0
+	var/next_hit = 0
+
+/obj/item/weapon/twohanded/sledgehammer/update_icon()
+	icon_state = "sledgehammer[wielded]"
+
+/obj/item/weapon/twohanded/sledgehammer/attack(mob/living/target, mob/living/user)
+	..()
+	if(next_hit < world.time)
+		asshole_counter = 0
+	next_hit = world.time + COUNTER_COOLDOWN
+	asshole_counter += 1
+
+	var/target_zone = user.zone_sel.selecting
+	if(target_zone == BP_HEAD)
+		shake_camera(target, 2, 2)
+
+	if((CLUMSY in user.mutations) && asshole_counter >= 5)
+		target.emote("scream")
+		playsound(user, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+		user.say(pick("Spa-a-ace assho-o-o-o-ole!", "Spaaace asshoooole!", "Space assho-o-ole!"))
+		asshole_counter = 0
+	if(wielded)
+		INVOKE_ASYNC(src, .proc/spin, user)
+
+/obj/item/weapon/twohanded/sledgehammer/proc/spin(mob/living/user)
+	for(var/i in list(SOUTH, WEST, NORTH, EAST, SOUTH))
+		user.dir = i
+		sleep(1)
+
+/obj/item/weapon/twohanded/sledgehammer/dropped(mob/living/carbon/user)
+	..()
+	asshole_counter = 0
 
 /*****************************Shovel********************************/
 /obj/item/weapon/shovel
@@ -412,8 +458,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	timer = newtime
 	to_chat(user, "<span class='notice'>Timer set for </span>[timer]<span class='notice'> seconds.</span>")
 
-/obj/item/weapon/mining_charge/afterattack(turf/simulated/mineral/target, mob/user, flag)
-	if (!flag)
+/obj/item/weapon/mining_charge/afterattack(atom/target, mob/user, proximity, params)
+	if (!proximity)
 		return
 	if (!istype(target, /turf/simulated/mineral))
 		to_chat(user, "<span class='notice'>You can't plant [src] on [target.name].</span>")
@@ -428,7 +474,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		loc = null
 		var/location
 		location = target
-		target.overlays += image('icons/obj/mining/explosives.dmi', "charge_basic_armed")
+		target.add_overlay(image('icons/obj/mining/explosives.dmi', "charge_basic_armed"))
 		to_chat(user, "<span class='notice'>Charge has been planted. Timer counting down from </span>[timer]")
 		spawn(timer*10)
 			for(var/turf/simulated/mineral/M in view(get_turf(target), blast_range))
@@ -467,15 +513,15 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(mob/living/user/L)
+/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(mob/user)
 	if(overheat || recent_reload)
 		return
 	power_supply.give(500)
 	if(!silenced)
 		playsound(src, 'sound/weapons/guns/kenetic_reload.ogg', VOL_EFFECTS_MASTER)
 	else
-		to_chat(usr, "<span class='warning'>You silently charge [src].</span>")
-	recent_reload = 1
+		to_chat(user, "<span class='warning'>You silently charge [src].</span>")
+	recent_reload = TRUE
 	update_icon()
 	return
 
@@ -511,7 +557,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		new /obj/item/effect/kinetic_blast(src.loc)
 		qdel(src)
 
-/obj/item/projectile/kinetic/on_hit(atom/target)
+/obj/item/projectile/kinetic/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	. = ..()
 	var/turf/target_turf = get_turf(target)
 	if(istype(target_turf, /turf/simulated/mineral))
@@ -536,8 +582,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /*****************************Survival Pod********************************/
 
 
-/area/survivalpod
-	name = "\improper Emergency Shelter"
+/area/custom/survivalpod
+	name = "Emergency Shelter"
 	icon_state = "away"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
@@ -894,3 +940,5 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	anchored = 1
 	layer = BELOW_MOB_LAYER
 	density = 0
+
+#undef COUNTER_COOLDOWN

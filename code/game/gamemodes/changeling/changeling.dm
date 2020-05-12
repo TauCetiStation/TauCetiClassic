@@ -11,9 +11,11 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 2
-	required_players_secret = 10
+	required_players_secret = 20
 	required_enemies = 1
 	recommended_enemies = 4
+
+	restricted_species_flags = list(IS_PLANT, IS_SYNTHETIC, NO_SCAN)
 
 	votable = 0
 

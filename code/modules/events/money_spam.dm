@@ -92,15 +92,15 @@
 				for(var/mob/living/silicon/ai/ai in ai_list)
 					// Allows other AIs to intercept the message but the AI won't intercept their own message.
 					if(ai.pda != P && ai.pda != src)
-						ai.show_message("<i>Intercepted message from <b>[sender]</b></i> (Unknown / spam?) <i>to <b>[P:owner]</b>: [message]</i>")
+						to_chat(ai, "<i>Intercepted message from <b>[sender]</b></i> (Unknown / spam?) <i>to <b>[P:owner]</b>: [message]</i>")
 
 			//Commented out because we don't send messages like this anymore.  Instead it will just popup in their chat window.
 			//P.tnote += "<i><b>&larr; From [sender] (Unknown / spam?):</b></i><br>[message]<br>"
 
 			if (!P.message_silent)
 				playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-			for (var/mob/O in hearers(3, P.loc))
-				if(!P.message_silent) O.show_message(text("[bicon(P)] *[P.ttone]*"))
+			if(!P.message_silent)
+				P.audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)
 			//Search for holder of the PDA.
 			var/mob/living/L = null
 			if(P.loc && isliving(P.loc))

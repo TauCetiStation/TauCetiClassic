@@ -50,7 +50,7 @@
 	parent1.reconcile_air()
 
 	if(logging)
-		investigate_log("was opened by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
+		log_investigate("was opened by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
 
 	return TRUE
 
@@ -62,7 +62,7 @@
 	update_icon()
 
 	if(logging)
-		investigate_log("was closed by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
+		log_investigate("was closed by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
 
 	return TRUE
 

@@ -69,7 +69,7 @@
 			if(BURN)
 				adjustFireLoss(Proj.damage)
 
-	Proj.on_hit(src,2)
+	Proj.on_hit(src, blocked=2)
 
 	return 2
 

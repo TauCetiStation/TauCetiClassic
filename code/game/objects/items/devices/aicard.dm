@@ -124,9 +124,9 @@
 				A.control_disabled = !A.control_disabled
 				to_chat(A, "The intelicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!")
 				if (A.control_disabled)
-					overlays -= image('icons/obj/pda.dmi', "aicard-on")
+					cut_overlay(image('icons/obj/pda.dmi', "aicard-on"))
 				else
-					overlays += image('icons/obj/pda.dmi', "aicard-on")
+					add_overlay(image('icons/obj/pda.dmi', "aicard-on"))
 	attack_self(U)
 
 

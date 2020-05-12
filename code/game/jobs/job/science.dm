@@ -15,9 +15,10 @@
 		access_research, access_robotics, access_xenobiology, access_ai_upload,
 		access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_maint_tunnels
 	)
+	salary = 250
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
-	restricted_species = list(UNATHI, TAJARAN, DIONA, IPC)
+	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
 
 /datum/job/rd/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -30,8 +31,10 @@
 		if(2)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
 		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
 		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	if(visualsOnly)
@@ -55,8 +58,8 @@
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 	alt_titles = list("Phoron Researcher")
+	salary = 180
 	minimal_player_ingame_minutes = 1560
-	restricted_species = list(UNATHI, DIONA)
 
 /datum/job/scientist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -68,8 +71,10 @@
 		if(2)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
 		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
 		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	if(visualsOnly)
@@ -77,11 +82,6 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(H), SLOT_L_EAR)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/science(H), SLOT_BELT)
-	switch(H.mind.role_alt_title)
-		if("Scientist")
-			access = list(access_tox, access_research)
-		if("Phoron Researcher")
-			access = list(access_research, access_tox_storage)
 
 	return TRUE
 
@@ -96,6 +96,7 @@
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research, access_xenoarch)
+	salary = 190
 	minimal_player_ingame_minutes = 1400
 
 /datum/job/xenoarchaeologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -108,8 +109,10 @@
 		if(2)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
 		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
 		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	if(visualsOnly)
@@ -131,6 +134,7 @@
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research, access_xenobiology)
+	salary = 190
 	minimal_player_ingame_minutes = 1560
 
 /datum/job/xenobiologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -143,8 +147,10 @@
 		if(2)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
 		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
 		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	if(visualsOnly)
@@ -167,13 +173,16 @@
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_robotics, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
+	salary = 180
 	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
 	minimal_player_ingame_minutes = 1560
 
 /datum/job/roboticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), SLOT_BACK)
-	if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
+	if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
+	if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
+	if(H.backbag == 4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+	if(H.backbag == 5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	if(H.gender == FEMALE)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/roboticist_fem(H), SLOT_W_UNIFORM)
 	else
@@ -201,7 +210,7 @@
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research)
-	minimal_player_ingame_minutes = 520
+	salary = 50
 
 /datum/job/research_assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)
@@ -210,8 +219,10 @@
 		if(2)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
 		if(3)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/tox(H), SLOT_BACK)
 		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+		if(5)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist_new(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), SLOT_SHOES)

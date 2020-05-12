@@ -25,10 +25,11 @@
 
 	message = sanitize(message)
 
-	if(use_me)
-		usr.emote("me",usr.emote_type,message)
+	if(me_verb_allowed)
+		usr.emote("me", usr.emote_type, message, FALSE)
 	else
-		usr.emote(message)
+		to_chat(usr, "You are unable to emote.")
+		return
 
 /mob/proc/say_dead(message)
 	var/name = src.real_name

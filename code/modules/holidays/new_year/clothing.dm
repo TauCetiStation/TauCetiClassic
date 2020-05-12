@@ -22,11 +22,8 @@
 ////////////Winter suits//////////////////////
 //////////////////////////////////////////////
 
-/obj/item/clothing/proc/can_use(mob/user) // Checking if mob can use the object eg restrained and other
-	if(user && ismob(user))
-		if(!user.stat && user.canmove && !user.restrained())
-			return 1
-	return 0
+/obj/item/clothing/proc/can_use(mob/living/user) // Checking if mob can use the object eg restrained and other
+	return istype(user) && !user.incapacitated()
 
 /obj/item/clothing/suit/wintercoat/attack_self() // Refactored function for using coat's hood by clicking on it
 

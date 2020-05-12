@@ -40,7 +40,7 @@
 	return
 
 /obj/item/weapon/card/data/clown
-	name = "\proper the coordinates to clown planet"
+	name = "the coordinates to clown planet"
 	icon_state = "data"
 	item_state = "card-id"
 	layer = 3
@@ -68,13 +68,12 @@
 	origin_tech = "magnets=2;syndicate=2"
 	var/uses = 10
 
-/obj/item/weapon/card/emag/afterattack(atom/target, mob/user)
-
-	if(target.emag_act(user))
+/obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity, params)
+	if(proximity && target.emag_act(user))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		uses--
 
-	if(uses<1)
+	if(uses < 1)
 		user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
 		user.drop_item()
 		var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
@@ -113,9 +112,7 @@
 		fingerprint_hash = md5(H.dna.uni_identity)
 
 /obj/item/weapon/card/id/attack_self(mob/user)
-	for(var/mob/O in viewers(user, null))
-		O.show_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]", 1)
-
+	visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]")
 	src.add_fingerprint(user)
 	return
 
@@ -288,10 +285,10 @@
 	assignment = "Agent"
 	name = "[registered_name]'s ID Card ([assignment])"
 
-/obj/item/weapon/card/id/syndicate/afterattack(obj/item/weapon/O, mob/user, proximity)
+/obj/item/weapon/card/id/syndicate/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(istype(O, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/I = O
+	if(istype(target, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/I = target
 		src.access |= I.access
 		if(istype(user, /mob/living) && user.mind)
 			if(user.mind.special_role)
@@ -391,7 +388,7 @@
 	. = ..()
 
 /obj/item/weapon/card/id/centcom
-	name = "\improper CentCom. ID"
+	name = "CentCom. ID"
 	desc = "An ID straight from Cent. Com."
 	icon_state = "centcom"
 	registered_name = "Central Command"
@@ -403,7 +400,7 @@
 	. = ..()
 
 /obj/item/weapon/card/id/velocity
-	name = "\improper Cargo Industries. ID"
+	name = "Cargo Industries. ID"
 	desc = "An ID designed for Velocity crew workers."
 	icon_state = "velocity"
 	item_state = "velcard_id"
@@ -415,7 +412,7 @@
 	. = ..()
 
 /obj/item/weapon/card/id/ert
-	name = "\improper CentCom. ID"
+	name = "CentCom. ID"
 	icon_state = "ert"
 	registered_name = "Central Command"
 	assignment = "Emergency Response Team"

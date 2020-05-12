@@ -22,7 +22,7 @@
             extra += !error ? '' : ' | error: ' + error;
             extra += !navigator.userAgent ? '' : ' | user agent: ' + navigator.userAgent;
             var debugLine = 'Error: ' + msg + ' | url: ' + url + ' | line: ' + line + extra;
-            window.location = '?action=debugFileOutput&file=' + file + '&message=' + escaper(debugLine);
+            window.location = '?action=jsErrorCatcher&file=' + file + '&message=' + escaper(debugLine);
             return overrideDefault;
         };
  

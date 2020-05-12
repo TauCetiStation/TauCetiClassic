@@ -49,9 +49,9 @@
 	target.drop_from_inventory(target.r_hand)
 
 	// don't let target pick up items, overlays for lighting effects
-	target.overlays += image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
+	target.add_overlay(image(icon = 'icons/effects/effects.dmi', icon_state = "electricity"))
 	target.next_click = world.time + 50
 	// after time let target pick up items, removing overlays
 
 	sleep(50)
-	target.overlays -= image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
+	target.cut_overlay(image(icon = 'icons/effects/effects.dmi', icon_state = "electricity"))

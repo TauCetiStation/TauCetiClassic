@@ -62,7 +62,7 @@
 					health = min(maxHealth, health + MED.heal_brute)
 					for(var/mob/M in viewers(src, null))
 						if ((M.client && !( M.blinded )))
-							M.show_message("<span class='notice'>[user] applies the [MED] on [src]</span>")
+							M.show_messageold("<span class='notice'>[user] applies the [MED] on [src]</span>")
 		else
 			to_chat(user, "<span class='notice'>this [src] is dead, medical items won't bring it back to life.</span>")
 	else
@@ -70,19 +70,19 @@
 			health -= O.force
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='warning'><b>[src] has been attacked with the [O] by [user].</b></span>")
+					M.show_messageold("<span class='warning'><b>[src] has been attacked with the [O] by [user].</b></span>")
 		else
 			to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='warning'>[user] gently taps [src] with the [O]. </span>")
+					M.show_messageold("<span class='warning'>[user] gently taps [src] with the [O]. </span>")
 
 /mob/living/simple_animal/crab/Topic(href, href_list)
 	if(usr.stat) return
 
 	//Removing from inventory
 	if(href_list["remove_inv"])
-		if(get_dist(src,usr) > 1 || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(get_dist(src,usr) > 1 || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isxenoadult(usr)))
 			return
 		var/remove_from = href_list["remove_inv"]
 		switch(remove_from)
@@ -112,7 +112,7 @@
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
-		if(get_dist(src,usr) > 1 || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(get_dist(src,usr) > 1 || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isxenoadult(usr)))
 			return
 		var/add_to = href_list["add_inv"]
 		if(!usr.get_active_hand())
@@ -214,7 +214,7 @@
 							name = "Grandwizard [real_name]"
 							speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI  NATH!")
 						if(/obj/item/weapon/bedsheet)
-							name = "\improper Ghost"
+							name = "Ghost"
 							speak = list("WoooOOOooo~","AUUUUUUUUUUUUUUUUUU")
 							emote_see = list("stumbles around", "shivers")
 							emote_hear = list("howls","groans")

@@ -26,13 +26,11 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 		I.loc = src
 		update_icon()
 		return
-	..()
 
 /obj/item/weapon/gun/projectile/proc/silencer_attack_hand(mob/user)
 	if(loc == user)
 		if(silenced)
 			if(user.l_hand != src && user.r_hand != src)
-				..()
 				return
 			to_chat(user, "<span class='notice'>You unscrew [silenced] from [src].</span>")
 			user.put_in_hands(silenced)
@@ -42,4 +40,3 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 			w_class = ITEM_SIZE_SMALL
 			update_icon()
 			return
-	..()

@@ -1,12 +1,10 @@
 
-#define NITROGEN_RETARDATION_FACTOR 4        //Higher == N2 slows reaction more
-#define THERMAL_RELEASE_MODIFIER 10                //Higher == less heat released during reaction
-#define PHORON_RELEASE_MODIFIER 1500                //Higher == less phoron released by reaction
-#define OXYGEN_RELEASE_MODIFIER 750        //Higher == less oxygen released at high temperature/power
-#define THERMAL_RELEASE_MODIFIER 750               //Higher == more heat released during reaction
-#define PLASMA_RELEASE_MODIFIER 1500                //Higher == less plasma released by reaction
-#define OXYGEN_RELEASE_MODIFIER 1500        //Higher == less oxygen released at high temperature/power
-#define REACTION_POWER_MODIFIER 1.1                //Higher == more overall power
+#define NITROGEN_RETARDATION_FACTOR 4   //Higher == N2 slows reaction more
+#define PHORON_RELEASE_MODIFIER 1500    //Higher == less phoron released by reaction
+#define THERMAL_RELEASE_MODIFIER 750    //Higher == more heat released during reaction
+#define PLASMA_RELEASE_MODIFIER 1500    //Higher == less plasma released by reaction
+#define OXYGEN_RELEASE_MODIFIER 1500    //Higher == less oxygen released at high temperature/power
+#define REACTION_POWER_MODIFIER 1.1     //Higher == more overall power
 
 
 //These would be what you would get at point blank, decreases with distance
@@ -277,10 +275,10 @@
 		//Some poor sod got eaten, go ahead and irradiate people nearby.
 	for(var/mob/living/l in range(10))
 		if(l in view())
-			l.show_message("<span class=\"warning\">As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", 1,\
-				"<span class=\"warning\">The unearthly ringing subsides and you notice you have new radiation burns.</span>", 2)
+			l.show_message("<span class=\"warning\">As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", SHOWMSG_VISUAL,\
+				"<span class=\"warning\">The unearthly ringing subsides and you notice you have new radiation burns.</span>", SHOWMSG_AUDIO)
 		else
-			l.show_message("<span class=\"warning\">You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", 2)
+			l.show_message("<span class=\"warning\">You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", SHOWMSG_AUDIO)
 		var/rads = 500 * sqrt( 1 / (get_dist(l, src) + 1) )
 		l.apply_effect(rads, IRRADIATE)
 

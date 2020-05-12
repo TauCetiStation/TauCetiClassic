@@ -141,7 +141,7 @@
 	return 1
 
 
-/obj/structure/window/hitby(AM)
+/obj/structure/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	..()
 	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0
@@ -201,7 +201,7 @@
 
 /obj/structure/window/attack_alien(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(islarva(user) || isfacehugger(user))
+	if(isxenolarva(user) || isfacehugger(user))
 		return
 	attack_generic(user, 15)
 
@@ -299,7 +299,7 @@
 
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
-			take_damage(W.force)
+			take_damage(W.force, W.damtype)
 			if(health <= 7)
 				anchored = 0
 				update_nearby_icons()
@@ -450,11 +450,11 @@
 		var/ratio = health / maxhealth
 		ratio = CEIL(ratio * 4) * 25
 
-		overlays -= crack_overlay
+		cut_overlay(crack_overlay)
 		if(ratio > 75)
 			return
 		crack_overlay = image('icons/obj/window.dmi',"damage[ratio]",-(layer+0.1))
-		overlays += crack_overlay
+		add_overlay(crack_overlay)
 
 /obj/structure/window/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 800)

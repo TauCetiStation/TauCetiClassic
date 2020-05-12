@@ -9,12 +9,14 @@
 		message_admins("[key_name_admin(src)] disable regisration panic bunker")
 		return
 	
-	var/year = sanitize_integer(input("Registration year", "Year (min: 2000, max: [game_year])", game_year) as num, 2000, game_year, game_year)
-	var/month = sanitize_integer(input("Registration month", "Month (min: 1, max: 12)", 1) as num, 1, 12, 1)
-	var/day = sanitize_integer(input("Registration day", "Day (min: 1, max: 31)", 1) as num, 1, 31, 1)
-	var/active_hours = sanitize_integer(input("Hours from current moment to keep panic bunker active (-1 to enable for current round only)", "Active hours (min: -1 or 1, max: 24)", -1) as num, -1, 24, -1)
-
+	var/year = sanitize_integer(input("Registration year", "Minimal registration year (min: 2000, max: [game_year])", game_year) as num, 2000, game_year, game_year)
+	var/month = sanitize_integer(input("Registration month", "Minimal registration month (min: 1, max: 12)", 1) as num, 1, 12, 1)
+	var/day = sanitize_integer(input("Registration day", "Minimal registration day (min: 1, max: 31)", 1) as num, 1, 31, 1)
+	var/active_hours = input("Hours from current moment to keep panic bunker active (-1 to enable for current round only)", "Active hours (min: -1 or 1, max: 24)", -1) as num
 	var/panic_age = "[year]-[month]-[day]"
+
+	if (alert("Apply registration bunker, age:[panic_age] active hours: [active_hours]", "Are you sure about that?", "Yes!", "No") != "Yes!")
+		return
 
 	config.registration_panic_bunker_age = panic_age
 
@@ -28,7 +30,7 @@
 	log_admin("[key_name(src)] [msg]")
 	message_admins("[key_name_admin(src)] [msg]")
 	world.send2bridge(
-		type = list(BRIDGE_ADMINALERT),
+		type = list(BRIDGE_ADMINALERT, BRIDGE_ADMINIMPORTANT),
 		attachment_title = "Panic Bunker",
 		attachment_msg = "**[key_name(src)]** [msg]",
 		attachment_color = BRIDGE_COLOR_ADMINALERT,

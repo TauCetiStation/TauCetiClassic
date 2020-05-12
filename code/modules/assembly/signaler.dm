@@ -77,7 +77,7 @@ Code:
 /obj/item/device/assembly/signaler/Topic(href, href_list)
 	..()
 
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(usr.incapacitated() || !in_range(loc, usr))
 		usr << browse(null, "window=radio")
 		onclose(usr, "radio")
 		return
@@ -146,6 +146,12 @@ Code:
 	return 1
 
 
+/obj/item/device/assembly/signaler/attach_assembly(obj/item/device/assembly/A, mob/user)
+	. = ..()
+	message_admins("[key_name_admin(user)] attached \the [A] to \the [src]. [ADMIN_JMP(user)]")
+	log_game("[key_name(user)] attached \the [A] to \the [src].")
+
+
 /obj/item/device/assembly/signaler/receive_signal(datum/signal/signal)
 	if(!signal)	return 0
 	if(signal.encryption != code)	return 0
@@ -153,8 +159,7 @@ Code:
 	pulse(1)
 
 	if(!holder)
-		for(var/mob/O in hearers(1, src.loc))
-			O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
+		audible_message("[bicon(src)] *beep* *beep*", hearing_distance = 1)
 	return
 
 

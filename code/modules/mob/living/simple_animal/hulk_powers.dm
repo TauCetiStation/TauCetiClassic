@@ -87,7 +87,7 @@
 							if(i < 3) M.pixel_y += 8
 							else M.pixel_y -= 8
 
-		if ((FAT in usr.mutations) && prob(66))
+		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
 			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
 			playsound(usr, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 			usr.weakened += 10
@@ -164,7 +164,7 @@
 		usr.layer = 9
 		var/cur_dir = usr.dir
 		var/turf/simulated/floor/tile = usr.loc
-		if(tile)
+		if(tile && istype(tile))
 			tile.break_tile()
 		var/speed = 3
 		for(var/i=0, i<30, i++)
@@ -262,7 +262,7 @@
 				step(usr, cur_dir)
 			sleep(1)
 
-		if ((FAT in usr.mutations) && prob(66))
+		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
 			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
 			playsound(usr, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 			usr.weakened += 10
@@ -302,7 +302,7 @@
 	range = 5
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_smash/cast(list/targets)
-	if (usr.lying || usr.stunned || usr.stat)
+	if (usr.lying || usr.incapacitated())
 		to_chat(usr, "<span class='warning'>You can't smash right now!</span>")
 		return
 
@@ -339,7 +339,7 @@
 					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 					var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart_name]
-					if(FAT in usr.mutations)
+					if(HAS_TRAIT(usr, TRAIT_FAT))
 						BP.take_damage(100, used_weapon = "Hulk Fat Arm")
 						H.Stun(10)
 						H.Weaken(10)
@@ -350,7 +350,7 @@
 					BP.fracture()
 				else
 					playsound(M, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-					if(FAT in usr.mutations)
+					if(HAS_TRAIT(usr, TRAIT_FAT))
 						M.Stun(10)
 						M.Weaken(10)
 						M.take_overall_damage(130, used_weapon = "Hulk Fat Arm")
@@ -436,8 +436,8 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_mill/cast(list/targets)
-	if (usr.lying || usr.stunned || usr.stat)
-		to_chat(usr, "<span class='warning'>You can't right now!</span>")
+	if (usr.lying || usr.incapacitated())
+		to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 		return
 
 	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_mill</font>"
@@ -466,6 +466,31 @@
 				M.Weaken(2)
 		sleep(1)
 
+/obj/effect/proc_holder/spell/aoe_turf/clown_joke
+	name = "Joke"
+	desc = ""
+	panel = "Hulk"
+	charge_max = 350
+	clothes_req = 0
+	range = 2
+
+/obj/effect/proc_holder/spell/aoe_turf/clown_joke/cast(list/targets)
+	if (usr.incapacitated())
+		to_chat(usr, "<span class='warning'>You can't right now!</span>")
+		return
+
+	var/mob/living/simple_animal/hulk/clown = usr
+	clown.health += 50
+
+	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
+	smoke.set_up(10, 0, loc)
+	smoke.start()
+	playsound(src, 'sound/effects/scary_honk.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+
+	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses clown_joke</font>"
+	msg_admin_attack("[key_name(usr)] uses clown_joke", usr)
+
+
 /obj/effect/proc_holder/spell/aoe_turf/hulk_gas
 	name = "Gas"
 	desc = ""
@@ -475,8 +500,8 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_gas/cast(list/targets)
-	if (usr.lying || usr.stunned || usr.stat)
-		to_chat(usr, "<span class='warning'>You can't right now!</span>")
+	if (usr.lying || usr.incapacitated())
+		to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 		return
 
 	//Some weird magic
@@ -493,7 +518,7 @@
 	damage = 5
 	damage_type = TOX
 
-/obj/item/projectile/energy/hulkspit/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/energy/hulkspit/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(istype(target, /mob/living/carbon))
 		var/mob/living/carbon/M = target
 		M.Weaken(2)
@@ -509,8 +534,8 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_spit/cast(list/targets)
-	if (usr.lying || usr.stunned || usr.stat)
-		to_chat(usr, "<span class='warning'>You can't right now!</span>")
+	if (usr.lying || usr.incapacitated())
+		to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 		return
 
 	var/turf/T = usr.loc
@@ -611,7 +636,7 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_lazor/cast(list/targets)
-	if (usr.lying || usr.stunned || usr.stat)
+	if (usr.lying || usr.incapacitated())
 		to_chat(usr, "<span class='warning'>You can't right now!</span>")
 		return
 
@@ -642,7 +667,7 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/HulkHONK/cast(list/target)
-	if (usr.lying || usr.stunned || usr.stat)
+	if (usr.lying || usr.incapacitated())
 		to_chat(usr, "<span class='red'>You can't right now!</span>")
 		return
 	playsound(usr, 'sound/items/AirHorn.ogg', VOL_EFFECTS_MASTER)
@@ -665,14 +690,23 @@
 			M.make_jittery(500)
 
 
-/obj/item/weapon/organ/attack_animal(mob/user)
+/obj/item/organ/attack_animal(mob/user)
 	..()
-	if(istype(user, /mob/living/simple_animal/hulk))
+	if(istype(user, /mob/living/simple_animal/hulk/unathi))
 		if(istype(src, /obj/item/organ/external/head))
 			to_chat(usr, "<span class='notice'>Head? Ewww..</span>")
 			return
-		var/mob/living/simple_animal/hulk/Hulk = user
+		var/mob/living/simple_animal/hulk/unathi/U = user
 		playsound(user, 'sound/weapons/zilla_eat.ogg', VOL_EFFECTS_MASTER)
-		Hulk.health += 10
+		U.health += 10
 		usr.visible_message("<span class='warning'><b>[usr.name]</b> eats [src.name]!</span>")
+		qdel(src)
+
+/obj/effect/decal/cleanable/blood/gibs/attack_animal(mob/user)
+	..()
+	if(istype(user, /mob/living/simple_animal/hulk/unathi))
+		var/mob/living/simple_animal/hulk/unathi/U = user
+		playsound(user, 'sound/weapons/zilla_eat.ogg', VOL_EFFECTS_MASTER)
+		U.health += 20
+		usr.visible_message("<span class='warning'><b>[usr.name]</b> eats gibs!</span>")
 		qdel(src)

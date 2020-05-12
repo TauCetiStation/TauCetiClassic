@@ -51,7 +51,7 @@
 				toEat.On_Consume(M, user)
 				if(toEat)
 					qdel(toEat)
-				overlays.Cut()
+				cut_overlays()
 				return
 
 /*
@@ -76,9 +76,10 @@
 	name = "fork"
 	desc = "Pointy."
 	force = 3
+	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
 	icon_state = "fork"
 
-/obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
 	if(!proximity) return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
@@ -102,7 +103,7 @@
 	force = 0
 
 
-/obj/item/weapon/kitchen/utensil/pfork/afterattack(atom/target, mob/user, proximity)  //make them useful or some slow soap for plastic. Just copy-paste from usual fork
+/obj/item/weapon/kitchen/utensil/pfork/afterattack(atom/target, mob/user, proximity, params)  //make them useful or some slow soap for plastic. Just copy-paste from usual fork
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
 	if(!proximity) return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
@@ -211,7 +212,7 @@
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])", user)
 
-	var/t = user:zone_sel.selecting
+	var/t = user.zone_sel.selecting
 	if (t == BP_HEAD)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -269,7 +270,7 @@
 /obj/item/weapon/tray/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 
 	// Drop all the things. All of them.
-	overlays.Cut()
+	cut_overlays()
 	for(var/obj/item/I in carrying)
 		I.loc = M.loc
 		carrying.Remove(I)
@@ -313,13 +314,11 @@
 			M.take_bodypart_damage(5)
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] with the tray!</B></span>", user, M), 1)
+			M.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
 			return
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] with the tray!</B></span>", user, M), 1)
+			M.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
 			return
 
 
@@ -341,12 +340,9 @@
 
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] with the tray!</B></span>", user, M), 1)
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //sound playin'
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] with the tray!</B></span>", user, M), 1)
+		M.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
 		if(prob(10))
 			M.Stun(rand(1,3))
 			M.take_bodypart_damage(3)
@@ -365,12 +361,10 @@
 
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] in the face with the tray!</B></span>", user, M), 1)
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //sound playin' again
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] slams [] in the face with the tray!</B></span>", user, M), 1)
+		M.visible_message("<span class='warning'><B>[user] slams [M] in the face with the tray!</B></span>")
+
 		if(prob(30))
 			M.Stun(rand(2,4))
 			M.take_bodypart_damage(4)
@@ -433,7 +427,7 @@
 
 			I.loc = src
 			carrying.Add(I)
-			overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer)
+			add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
 
 /obj/item/weapon/tray/dropped(mob/user)
 
@@ -446,7 +440,7 @@
 		foundtable = 1
 		break
 
-	overlays.Cut()
+	cut_overlays()
 
 	for(var/obj/item/I in carrying)
 		I.loc = loc

@@ -8,38 +8,52 @@
 
 #define NOLIMB           -1    // related to THICKMATERIAL check, thats why this is here.
 //FLAGS BITMASK
-#define NOBLUDGEON        2    // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
-#define MASKINTERNALS     4    // Mask allows internals.
-//#define USEDELAY          8    // 1 second extra delay on use. (Can be used once every 2s) ~ Kursh, Doesn't used for now.
-#define NOSHIELD         16    // Weapon not affected by shield.
-#define CONDUCT          32    // Conducts electricity. (metal etc.)
-#define ABSTRACT         64    // For all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way.
-#define NODECONSTRUCT    64    // For machines and structures that should not break into parts, eg, holodeck stuff.
-#define ON_BORDER       128    // Item has priority to check when entering or leaving.
-#define THICKMATERIAL   256    // Prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with NOSLIP for shoes)
-#define NOSLIP          512    // Prevents from slipping on wet floors, in space etc.
-#define NOATTACKANIMATION 512	   // Removes attack animation
+#define NOBLUDGEON             (1<<1)   // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
 
-#define GLASSESCOVERSEYES   256
-#define MASKCOVERSEYES      256    // Get rid of some of the other retardation in these flags.
-#define HEADCOVERSEYES      256    // feel free to realloc these numbers for other purposes.
-#define MASKCOVERSMOUTH     512    // on other items, these are just for mask/head.
-#define HEADCOVERSMOUTH     512
+#define BLOCKHEADHAIR          (1<<2)   // Clothing. Temporarily removes the user's hair overlay. Leaves facial hair.
+#define MASKINTERNALS          (1<<2)   // Mask allows internals.
 
-#define NOBLOODY  512    // Used to items if they don't want to get a blood overlay.
+//#define USEDELAY             (1<<3)   // 1 second extra delay on use. (Can be used once every 2s) ~ Kursh, Doesn't used for now.
+#define NOSHIELD               (1<<4)   // Weapon not affected by shield.
 
-#define OPENCONTAINER  1024    // Is an open container for chemistry purposes.
+#define CONDUCT                (1<<5)   // Conducts electricity. (metal etc.)
 
-#define BLOCK_GAS_SMOKE_EFFECT  2048    // Blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with ONESIZEFITSALL)
-#define ONESIZEFITSALL          2048
-#define PHORONGUARD             4096    // Does not get contaminated by phoron.
-#define DROPDEL                 8192    // When dropped, it calls qdel on itself
-#define NODROP                 16384    // User can't drop this item
+#define ABSTRACT               (1<<6)   // For all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way.
+#define NODECONSTRUCT          (1<<6)   // For machines and structures that should not break into parts, eg, holodeck stuff.
 
-#define	NOREACT  4096    //Reagents dont' react inside this container.
+#define ON_BORDER              (1<<7)   // Item has priority to check when entering or leaving.
+
+#define THICKMATERIAL          (1<<8)   // Prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with NOSLIP for shoes)
+#define GLASSESCOVERSEYES      (1<<8)
+#define MASKCOVERSEYES         (1<<8)   // Get rid of some of the other retardation in these flags.
+#define HEADCOVERSEYES         (1<<8)   // feel free to realloc these numbers for other purposes.
+
+#define MASKCOVERSMOUTH        (1<<9)   // on other items, these are just for mask/head.
+#define HEADCOVERSMOUTH        (1<<9)
+#define NOBLOODY               (1<<9)   // Used to items if they don't want to get a blood overlay.
+#define NOSLIP                 (1<<9)   // Prevents from slipping on wet floors, in space etc.
+#define NOATTACKANIMATION      (1<<9)   // Removes attack animation
+
+#define OPENCONTAINER          (1<<10)  // Is an open container for chemistry purposes.
+
+#define BLOCK_GAS_SMOKE_EFFECT (1<<11)  // Blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with ONESIZEFITSALL)
+#define ONESIZEFITSALL         (1<<11)  // Clothing. Acceptable for a fat mob
+
+#define PHORONGUARD            (1<<12)  // Does not get contaminated by phoron.
+#define NOREACT                (1<<12)  // Reagents dont' react inside this container.
+
+#define DROPDEL                (1<<13)  // When dropped, it calls qdel on itself
+
+#define NODROP                 (1<<14)  // User can't drop this item
+
+#define BLOCKHAIR              (1<<15)  // Clothing. Temporarily removes the user's hair, facial and otherwise.
+
+#define BLOCKUNIFORM           (1<<16)  // CLothing. Hide uniform overlay.
 
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
-#define HOLOGRAM_2   1
+#define HOLOGRAM_2         (1<<0)
+/// atom queued to SSoverlay
+#define OVERLAY_QUEUED_2   (1<<1)
 
 //Species flags.
 #define NO_BLOOD           "no_blood"
@@ -47,8 +61,10 @@
 #define NO_SCAN            "no_scan"
 #define NO_PAIN            "no_pain"
 #define NO_EMBED           "no_embed"
+#define NO_FAT             "no_fatness"
 #define HAS_SKIN_TONE      "has_skin_tone"
 #define HAS_SKIN_COLOR     "has_skin_color"
+#define HAS_HAIR_COLOR     "has_hair_color"
 #define HAS_LIPS           "has_lips"
 #define HAS_UNDERWEAR      "has_underwear"
 #define HAS_TAIL           "has_tail"
@@ -65,6 +81,8 @@
 #define NO_FINGERPRINT     "no_fingerprint"
 #define NO_MINORCUTS	   "no_minorcuts"
 #define NO_BLOOD_TRAILS    "no_blood_trails"
+#define FACEHUGGABLE       "facehuggable"
+#define SPRITE_SHEET_RESTRICTION "sprite_sheet_restriction" // If specie has this flag, all clothing which icon_state is in the sprite sheet will be awearable.
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.
@@ -72,6 +90,9 @@
 #define DIET_DAIRY		4 // Milk, everything made out of milk.
 #define DIET_OMNI       7 // Everything.
 #define DIET_ALL		DIET_OMNI
+
+//Reagent Flags
+#define IS_ORGANIC         "is_organic"
 
 //bitflags for door switches.
 #define OPEN     1

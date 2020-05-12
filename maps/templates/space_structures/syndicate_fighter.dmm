@@ -6,7 +6,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/syndicate_fighter)
+/area/space_structures/syndicate_fighter)
 "c" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -15,12 +15,12 @@
 	},
 /obj/structure/girder,
 /turf/simulated/floor/plating,
-/area/syndicate_fighter)
+/area/space_structures/syndicate_fighter)
 "d" = (
 /obj/item/stack/sheet/metal,
 /obj/machinery/porta_turret_construct,
 /turf/simulated/floor/plating,
-/area/syndicate_fighter)
+/area/space_structures/syndicate_fighter)
 "e" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8;
@@ -29,7 +29,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/syndicate_fighter)
+/area/space_structures/syndicate_fighter)
 "f" = (
 /obj/structure/computerframe,
 /obj/machinery/door_control{
@@ -49,7 +49,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/syndicate_fighter)
+/area/space_structures/syndicate_fighter)
 "g" = (
 /obj/machinery/porta_turret/stationary{
 	check_n_synth = 1;
@@ -58,7 +58,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/syndicate_fighter)
+/area/space_structures/syndicate_fighter)
 "h" = (
 /obj/machinery/door/airlock/hatch{
 	id_tag = "syndishiv";
@@ -70,7 +70,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/syndicate_fighter)
+/area/space_structures/syndicate_fighter)
 "i" = (
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 4
@@ -80,7 +80,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/syndicate_fighter)
+/area/space_structures/syndicate_fighter)
 "j" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -93,7 +93,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/syndicate_fighter)
+/area/space_structures/syndicate_fighter)
 "k" = (
 /obj/machinery/camera/emp_proof{
 	c_tag = "Front";
@@ -103,7 +103,7 @@
 	pixel_y = -10
 	},
 /turf/space,
-/area/syndicate_fighter)
+/area/space_structures/syndicate_fighter)
 "l" = (
 /obj/structure/rack,
 /obj/structure/closet/walllocker{
@@ -117,7 +117,7 @@
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/syndicate_fighter)
+/area/space_structures/syndicate_fighter)
 
 (1,1,1) = {"
 a

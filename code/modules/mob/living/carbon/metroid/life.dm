@@ -2,7 +2,7 @@
 	set invisibility = 0
 	//set background = 1
 
-	if (src.monkeyizing)
+	if (notransform)
 		return
 
 	..()
@@ -219,9 +219,8 @@
 	return temp_change
 
 /mob/living/carbon/slime/proc/handle_chemicals_in_body()
-
-	if(reagents) reagents.metabolize(src)
-
+	if(reagents)
+		reagents.metabolize(src)
 
 	src.updatehealth()
 
@@ -234,9 +233,6 @@
 		health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 	else
 		health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-
-
-
 
 	if(health < config.health_threshold_dead && stat != DEAD)
 		death()
@@ -334,7 +330,7 @@
 			if(nutrition >= 800)
 				if(prob(40)) amount_grown++
 
-	if(amount_grown >= 10 && !Victim && !Target)
+	if(amount_grown >= max_grown && !Victim && !Target)
 		if(istype(src, /mob/living/carbon/slime/adult))
 			if(!client)
 				for(var/i=1,i<=4,i++)
@@ -451,11 +447,13 @@
 				var/list/targets = list()
 
 				for(var/mob/living/L in view(7,src))
-
-					if(isslime(L) || L.stat == DEAD) // Ignore other slimes and dead mobs
+					if(L.get_species() == IPC) //Ignore IPC
 						continue
 
-					if(L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
+					if(L.get_species() == SLIME || L.stat == DEAD) // Ignore other slimes and dead mobs
+						continue
+
+					if(HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
 						continue
 
 					if(L in Friends) // No eating friends!
@@ -463,12 +461,6 @@
 
 					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
 						targets += L // Possible target found!
-
-					if(istype(L, /mob/living/carbon/human)) //Ignore slime(wo)men
-						var/mob/living/carbon/human/H = L
-						if(H.dna)
-							if(H.dna.mutantrace == "slime")
-								continue
 
 					if(!L.canmove) // Only one slime can latch on at a time.
 						var/notarget = 0
@@ -486,11 +478,11 @@
 					else
 						for(var/mob/living/carbon/C in targets)
 							if(!Discipline && prob(5))
-								if(ishuman(C) || isalienadult(C))
+								if(ishuman(C) || isxenoadult(C))
 									Target = C
 									break
 
-							if(islarva(C) || isfacehugger(C) || ismonkey(C))
+							if(isxenolarva(C) || isfacehugger(C) || ismonkey(C))
 								Target = C
 								break
 

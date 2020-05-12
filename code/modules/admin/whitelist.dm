@@ -325,7 +325,7 @@
 			return FALSE
 		return TRUE
 
-	if(M.client && config.whitelisted_species_by_time[role] && M.client.player_ingame_age >= config.whitelisted_species_by_time[role])
+	if(M.client && config.whitelisted_species_by_time[role] && (isnum(M.client.player_ingame_age) && M.client.player_ingame_age >= config.whitelisted_species_by_time[role]))
 		return TRUE
 
 	return FALSE

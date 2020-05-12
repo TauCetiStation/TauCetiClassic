@@ -9,6 +9,7 @@
 	anchored = 1
 	interact_offline = TRUE
 	layer = BELOW_CONTAINERS_LAYER
+	speed_process = TRUE
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
@@ -25,6 +26,7 @@
 	. = ..(mapload, newdir)
 	operating = 1
 	update_move_direction()
+	AddComponent(/datum/component/clickplace)
 
 /obj/machinery/conveyor/auto/update()
 	if(stat & BROKEN)
@@ -133,14 +135,8 @@
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You rotate [src].</span>")
 			return
-	if(isrobot(user))
-		return //Carn: fix for borgs dropping their modules on conveyor belts
-	if(!user.drop_item())
-		to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>")
-		return
-	if(I && I.loc)
-		I.loc = src.loc
-	return
+
+	return ..()
 
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user)
@@ -317,14 +313,14 @@
 		var/obj/item/conveyor_switch_construct/C = I
 		id = C.id
 
-/obj/item/conveyor_construct/afterattack(atom/A, mob/user, proximity)
-	if(!proximity || user.stat || !istype(A, /turf/simulated/floor) || istype(A, /area/shuttle))
+/obj/item/conveyor_construct/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity || !istype(target, /turf/simulated/floor) || istype(target, /area/shuttle))
 		return
-	var/cdir = get_dir(A, user)
-	if(A == user.loc)
+	var/cdir = get_dir(target, user)
+	if(target == user.loc)
 		to_chat(user, "<span class='notice'>You cannot place a conveyor belt under yourself.</span>")
 		return
-	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A,cdir)
+	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(target,cdir)
 	C.id = id
 	transfer_fingerprints_to(C)
 	qdel(src)
@@ -341,8 +337,8 @@
 	. = ..()
 	id = rand() //this couldn't possibly go wrong
 
-/obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
-	if(!proximity || user.stat || !istype(A, /turf/simulated/floor) || istype(A, /area/shuttle))
+/obj/item/conveyor_switch_construct/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity || !istype(target, /turf/simulated/floor) || istype(target, /area/shuttle))
 		return
 	var/found = 0
 	for(var/obj/machinery/conveyor/C in view())
@@ -352,7 +348,7 @@
 	if(!found)
 		to_chat(user, "[bicon(src)]<span class=notice>The conveyor switch did not detect any linked conveyor belts in range.</span>")
 		return
-	var/obj/machinery/conveyor_switch/NC = new/obj/machinery/conveyor_switch(A, id)
+	var/obj/machinery/conveyor_switch/NC = new/obj/machinery/conveyor_switch(target, id)
 	transfer_fingerprints_to(NC)
 	qdel(src)
 

@@ -140,7 +140,7 @@ var/list/editing_item_oldname_list = list()
 		link_with_alert(user, config.customitems_info_url)
 
 	if(href_list["add_item"])
-		var/itemCount = get_custom_items(user.client.ckey).len
+		var/itemCount = length(get_custom_items(user.client.ckey))
 		var/slotCount = user.client.get_custom_items_slot_count()
 		if(slotCount <= itemCount) // can't create, we have too much custom items
 			alert(user, "You don't have free custom item slots", "Info", "OK")
@@ -188,7 +188,7 @@ var/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["change_iconname"])
-		if(!editing_item.icon || !icon_states(editing_item.icon).len)
+		if(!editing_item.icon || !length(icon_states(editing_item.icon)))
 			return
 		var/new_iconname = sanitize(input("Select Main icon name", "Text")  as null|anything in icon_states(editing_item.icon))
 		if(!editing_item || !new_iconname)
@@ -247,7 +247,7 @@ var/list/editing_item_oldname_list = list()
 		if(!editing_item || !editing_item.icon || !editing_item.icon_state)
 			return
 
-		var/itemCount = get_custom_items(user.client.ckey).len
+		var/itemCount = length(get_custom_items(user.client.ckey))
 		var/slotCount = user.client.get_custom_items_slot_count()
 
 

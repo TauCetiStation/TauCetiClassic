@@ -14,7 +14,7 @@
 	var/obj/machinery/abductor/console/console
 
 /obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
+	if(user.incapacitated() || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
 		return
 	if(IsAbductor(target))
 		return
@@ -199,10 +199,9 @@
 		open_machine()
 		SendBack(H)
 		return "<span class='bad'>Specimen braindead - disposed</span>"
-	return "<span class='bad'>ERROR</span>"
 
 /obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
-	H.Sleeping(8)
+	H.Sleeping(16 SECONDS)
 	var/area/A
 	if(console && console.pad && console.pad.teleport_target)
 		A = console.pad.teleport_target
@@ -220,5 +219,5 @@
 	else
 		icon_state = "experiment"
 
-/obj/machinery/abductor/experiment/visible_message(text)
+/obj/machinery/abductor/experiment/visible_message(text, blind_message, viewing_distance, list/ignored_mobs)
 	return "beeps, \"[text]\""

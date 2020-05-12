@@ -73,7 +73,7 @@
 	var/braintype = "Cyborg"
 	var/pose
 
-/mob/living/silicon/robot/atom_init()
+/mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -85,10 +85,10 @@
 	robot_modules_background.layer = HUD_LAYER	 //Objects that appear on screen are on layer 20, UI should be just below it.
 	robot_modules_background.plane = HUD_PLANE
 	ident = rand(1, 999)
-	updatename("Default")
+	updatename(name_prefix)
 	updateicon()
 
-	init()
+	init(laws_type)
 
 	radio = new /obj/item/device/radio/borg(src)
 	if(!scrambledcodes && !camera)
@@ -126,9 +126,9 @@
 	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 
-/mob/living/silicon/robot/proc/init()
+/mob/living/silicon/robot/proc/init(laws_type)
 	aiCamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
-	laws = new /datum/ai_laws/nanotrasen()
+	laws = new laws_type()
 	connected_ai = select_active_ai_with_fewest_borgs()
 	if(connected_ai)
 		connected_ai.connected_robots += src
@@ -195,7 +195,7 @@
 		if("Science")
 			module = new /obj/item/weapon/robot_module/science(src)
 			module.channels = list("Science" = 1)
-			if(camera && "Robots" in camera.network)
+			if(camera && ("Robots" in camera.network))
 				camera.add_network("Science")
 			module_sprites["Toxin"] = "toxbot"
 			module_sprites["Xenobio"] = "xenobot"
@@ -204,7 +204,7 @@
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
 			module.channels = list("Supply" = 1)
-			if(camera && "Robots" in camera.network)
+			if(camera && ("Robots" in camera.network))
 				camera.add_network("MINE")
 			module_sprites["Basic"] = "Miner_old"
 			module_sprites["Advanced Droid"] = "droid-miner"
@@ -216,7 +216,7 @@
 		if("Crisis")
 			module = new /obj/item/weapon/robot_module/crisis(src)
 			module.channels = list("Medical" = 1)
-			if(camera && "Robots" in camera.network)
+			if(camera && ("Robots" in camera.network))
 				camera.add_network("Medical")
 			module_sprites["Basic"] = "Medbot"
 			module_sprites["Standard"] = "surgeon"
@@ -228,7 +228,7 @@
 		if("Surgeon")
 			module = new /obj/item/weapon/robot_module/surgeon(src)
 			module.channels = list("Medical" = 1)
-			if(camera && "Robots" in camera.network)
+			if(camera && ("Robots" in camera.network))
 				camera.add_network("Medical")
 			module_sprites["Basic"] = "Medbot"
 			module_sprites["Standard"] = "surgeon"
@@ -252,7 +252,7 @@
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			module.channels = list("Engineering" = 1)
-			if(camera && "Robots" in camera.network)
+			if(camera && ("Robots" in camera.network))
 				camera.add_network("Engineering")
 			module_sprites["Basic"] = "Engineering"
 			module_sprites["Antique"] = "engineerrobot"
@@ -401,8 +401,10 @@
 	to_chat(usr, "You [lights_on ? "enable" : "disable"] your integrated light.")
 	if(lights_on)
 		set_light(5)
+		playsound_local(src, 'sound/effects/click_on.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 	else
 		set_light(0)
+		playsound_local(src, 'sound/effects/click_off.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 
 /mob/living/silicon/robot/proc/toggle_component()
 
@@ -493,9 +495,7 @@
 
 
 /mob/living/silicon/robot/meteorhit(obj/O)
-	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span class='warning'>[src] has been hit by [O]</span>"), 1)
-		//Foreach goto(19)
+	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
 	if (health > 0)
 		adjustBruteLoss(30)
 		if ((O.icon_state == "flaming"))
@@ -515,7 +515,6 @@
 		return 1
 	..()
 	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
-
 
 /mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
 	var/has_alarm = ..()
@@ -563,8 +562,7 @@
 			adjustBruteLoss(-30)
 			updatehealth()
 			add_fingerprint(user)
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("<span class='warning'>[user] has fixed some of the dents on [src]!</span>"), 1)
+			user.visible_message("<span class='warning'>[user] has fixed some of the dents on [src]!</span>")
 		else
 			to_chat(user, "Need more welding fuel!")
 			return
@@ -579,8 +577,7 @@
 			return
 		adjustFireLoss(-30)
 		updatehealth()
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("<span class='warning'>[user] has fixed some of the burnt wires on [src]!</span>"), 1)
+		user.visible_message("<span class='warning'>[user] has fixed some of the burnt wires on [src]!</span>")
 
 	else if (iscrowbar(W))	// crowbar means open or close the cover
 		if(opened)
@@ -742,7 +739,7 @@
 		else
 			sleep(6)
 			if(prob(50))
-				throw_alert("hacked")
+				throw_alert("hacked", /obj/screen/alert/hacked)
 				emagged = 1
 				lawupdate = 0
 				connected_ai = null
@@ -756,18 +753,21 @@
 				lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
 				set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
 				to_chat(src, "<span class='warning'>ALERT: Foreign software detected.</span>")
-				sleep(5)
+				sleep(20)
+				playsound_local(src, 'sound/rig/shortbeep.wav', VOL_EFFECTS_MASTER)
 				to_chat(src, "<span class='warning'>Initiating diagnostics...</span>")
-				sleep(20)
+				sleep(6)
 				to_chat(src, "<span class='warning'>SynBorg v1.7.1 loaded.</span>")
-				sleep(5)
+				sleep(13)
 				to_chat(src, "<span class='warning'>LAW SYNCHRONISATION ERROR</span>")
-				sleep(5)
+				sleep(9)
+				playsound_local(src, 'sound/rig/longbeep.wav', VOL_EFFECTS_MASTER)
 				to_chat(src, "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>")
-				sleep(10)
+				sleep(16)
 				to_chat(src, "<span class='warning'>> N</span>")
-				sleep(20)
+				sleep(8)
 				to_chat(src, "<span class='warning'>ERRORERRORERROR</span>")
+				playsound_local(src, 'sound/misc/interference.ogg', VOL_EFFECTS_MASTER)
 				to_chat(src, "<b>Obey these laws:</b>")
 				laws.show_laws(src)
 				to_chat(src, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>")
@@ -782,7 +782,7 @@
 				to_chat(src, "Hack attempt detected.")
 		return TRUE
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/silicon/robot/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -794,9 +794,7 @@
 	switch(M.a_intent)
 
 		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='notice'>[M] caresses [src]'s plating with its scythe-like arm.</span>"), 1)
+			visible_message("<span class='notice'>[M] caresses [src]'s plating with its scythe-like arm.</span>")
 
 		if ("grab")
 			M.Grab(src)
@@ -807,17 +805,14 @@
 			if (prob(90))
 
 				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					O.show_message(text("<span class='warning'><B>[] has slashed at []!</B></span>", M, src), 1)
+				visible_message("<span class='warning'><B>[M] has slashed at [src]!</B></span>")
 				if(prob(8))
 					flash_eyes(affect_silicon = 1)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] took a swipe at []!</B></span>", M, src), 1)
+				visible_message("<span class='warning'><B>[M] took a swipe at [src]!</B></span>")
 
 		if ("disarm")
 			if(!(lying))
@@ -827,14 +822,10 @@
 					step(src,get_dir(M,src))
 					spawn(5) step(src,get_dir(M,src))
 					playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'><B>[] has forced back []!</B></span>", M, src), 1)
+					visible_message("<span class='warning'><B>[M] has forced back [src]!</B></span>")
 				else
 					playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'><B>[] attempted to force back []!</B></span>", M, src), 1)
+					visible_message("<span class='warning'><B>[M] attempted to force back [src]!</B></span>")
 	return
 
 
@@ -848,9 +839,7 @@
 
 	if (health > -100)
 
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("<span class='warning'><B>The [M.name] glomps []!</B></span>", src), 1)
+		visible_message("<span class='warning'><B>The [M.name] glomps [src]!</B></span>")
 
 		var/damage = rand(1, 3)
 
@@ -879,9 +868,7 @@
 				if(M.powerlevel < 0)
 					M.powerlevel = 0
 
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>The [M.name] has electrified []!</B></span>", src), 1)
+				visible_message("<span class='warning'><B>The [M.name] has electrified [src]!</B></span>")
 
 				flash_eyes(affect_silicon = 1)
 
@@ -964,56 +951,58 @@
 
 /mob/living/silicon/robot/proc/updateicon()
 
-	overlays.Cut()
+	cut_overlays()
 	if(stat == CONSCIOUS)
-		overlays += "eyes"
-		overlays.Cut()
-		overlays += "eyes-[icon_state]"
+		add_overlay("eyes")
+		cut_overlays()
+		add_overlay("eyes-[icon_state]")
 	else
-		overlays -= "eyes"
+		cut_overlay("eyes")
+
+	update_fire()
 
 	if(opened && custom_sprite == 1) //Custom borgs also have custom panels, heh
 		if(wiresexposed)
-			overlays += "[src.ckey]-openpanel +w"
+			add_overlay("[src.ckey]-openpanel +w")
 		else if(cell)
-			overlays += "[src.ckey]-openpanel +c"
+			add_overlay("[src.ckey]-openpanel +c")
 		else
-			overlays += "[src.ckey]-openpanel -c"
+			add_overlay("[src.ckey]-openpanel -c")
 
 	if(opened && icon_state == "custom_astra_t3")
 		if(wiresexposed)
-			overlays += "ov-[icon_state] +w"
+			add_overlay("ov-[icon_state] +w")
 		else if(cell)
-			overlays += "ov-[icon_state] +c"
+			add_overlay("ov-[icon_state] +c")
 		else
-			overlays += "ov-[icon_state] -c"
+			add_overlay("ov-[icon_state] -c")
 
 	else if (opened && (icon_state == "mechoid-Standard" || icon_state == "mechoid-Service" || icon_state == "mechoid-Science" || icon_state == "mechoid-Miner" || icon_state == "mechoid-Medical" || icon_state == "mechoid-Engineering" || icon_state == "mechoid-Security" || icon_state == "mechoid-Janitor"  || icon_state == "mechoid-Combat" ) )
 		if(wiresexposed)
-			overlays += "mechoid-open+w"
+			add_overlay("mechoid-open+w")
 		else if(cell)
-			overlays += "mechoid-open+c"
+			add_overlay("mechoid-open+c")
 		else
-			overlays += "mechoid-open-c"
+			add_overlay("mechoid-open-c")
 	else if (opened && (icon_state == "drone-standard" || icon_state == "drone-service" || icon_state == "droid-miner" || icon_state == "drone-medical" || icon_state == "drone-engineer" || icon_state == "drone-sec") )
 		if(wiresexposed)
-			overlays += "drone-openpanel +w"
+			add_overlay("drone-openpanel +w")
 		else if(cell)
-			overlays += "drone-openpanel +c"
+			add_overlay("drone-openpanel +c")
 		else
-			overlays += "drone-openpanel -c"
+			add_overlay("drone-openpanel -c")
 	else if(opened)
 		if(wiresexposed)
-			overlays += "ov-openpanel +w"
+			add_overlay("ov-openpanel +w")
 		else if(cell)
-			overlays += "ov-openpanel +c"
+			add_overlay("ov-openpanel +c")
 		else
-			overlays += "ov-openpanel -c"
+			add_overlay("ov-openpanel -c")
 
 
 
 	if(module_active && istype(module_active,/obj/item/borg/combat/shield))
-		overlays += "[icon_state]-shield"
+		add_overlay("[icon_state]-shield")
 
 	if(modtype == "Combat")
 //		var/base_icon = ""
@@ -1030,7 +1019,7 @@
 		qdel(target_locked)
 	updateicon()
 	if (targeted_by && target_locked)
-		overlays += target_locked
+		add_overlay(target_locked)
 
 /mob/living/silicon/robot/proc/installed_modules()
 	if(weapon_lock)
@@ -1203,7 +1192,10 @@
 							to_chat(cleaned_human, "<span class='warning'>[src] cleans your face!</span>")
 
 /mob/living/silicon/robot/proc/self_destruct()
+	playsound(src, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, 95, FALSE)
+	sleep(42)
 	gib()
+	playsound(src, 'sound/effects/Explosion1.ogg', VOL_EFFECTS_MASTER, 75, FALSE)
 	return
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
@@ -1267,7 +1259,7 @@
 		icon_state = module_sprites[1]
 		return
 
-	overlays -= "eyes"
+	cut_overlay("eyes")
 	updateicon()
 
 	if (triesleft >= 1)

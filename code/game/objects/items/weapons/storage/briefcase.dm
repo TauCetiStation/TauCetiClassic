@@ -37,8 +37,8 @@
 		else
 			M.Stun(time)
 		if(M.stat != DEAD)	M.stat = UNCONSCIOUS
-		for(var/mob/O in viewers(M, null))
-			O.show_message(text("<span class='warning'><B>[] has been knocked unconscious!</B></span>", M), 1, "<span class='warning'>You hear someone fall.</span>", 2)
+
+		visible_message("<span class='warning'><B>[M] has been knocked unconscious!</B></span>", blind_message = "<span class='warning'>You hear someone fall.</span>")
 	else
 		to_chat(M, text("<span class='warning'>[] tried to knock you unconcious!</span>",user))
 		M.eye_blurry += 3

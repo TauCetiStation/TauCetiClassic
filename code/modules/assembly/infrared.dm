@@ -41,11 +41,16 @@
 	update_icon()
 	return secured
 
+/obj/item/device/assembly/infra/attach_assembly(obj/item/device/assembly/A, mob/user)
+	. = ..()
+	message_admins("[key_name_admin(user)] attached \the [A] to \the [src]. [ADMIN_JMP(user)]")
+	log_game("[key_name(user)] attached \the [A] to \the [src].")
+
 /obj/item/device/assembly/infra/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	attached_overlays = list()
 	if(on)
-		overlays += "infrared_on"
+		add_overlay("infrared_on")
 		attached_overlays += "infrared_on"
 
 	if(holder)
@@ -226,7 +231,8 @@
 /obj/effect/beam/i_beam/Bumped()
 	hit()
 
-/obj/effect/beam/i_beam/Crossed(atom/movable/AM as mob|obj)
+/obj/effect/beam/i_beam/Crossed(atom/movable/AM)
+	. = ..()
 	if(istype(AM, /obj/effect/beam))
 		return
 	hit()

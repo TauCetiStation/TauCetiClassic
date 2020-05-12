@@ -17,15 +17,6 @@
 
 	var/lasertag_color = ""
 
-#define SECBOT_IDLE 		0		// idle
-#define SECBOT_HUNT 		1		// found target, hunting
-#define SECBOT_PREP_ARREST 	2		// at target, preparing to arrest
-#define SECBOT_ARREST		3		// arresting target
-#define SECBOT_START_PATROL	4		// start patrol
-#define SECBOT_PATROL		5		// patrolling
-#define SECBOT_SUMMON		6		// summoned by PDA
-
-
 /obj/item/weapon/ed209_assembly
 	name = "ED-209 assembly"
 	desc = "Some sort of bizarre assembly."
@@ -243,12 +234,12 @@
 
 /obj/machinery/bot/secbot/ed209/explode()
 	walk_to(src, 0)
-	visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
+	visible_message("<span class='warning'><B>[src] blows apart!</B></span>")
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)
 	Sa.build_step = 1
-	Sa.overlays += image('icons/obj/aibots.dmi', "hs_hole")
+	Sa.add_overlay(image('icons/obj/aibots.dmi', "hs_hole"))
 	Sa.created_name = name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
@@ -323,9 +314,9 @@
 	A.xo = U.x - T.x
 	A.process()
 
-/obj/machinery/bot/secbot/ed209/attack_alien(mob/living/carbon/alien/user)
+/obj/machinery/bot/secbot/ed209/attack_alien(mob/living/carbon/xenomorph/user)
 	..()
-	if(!isalien(target))
+	if(!isxeno(target))
 		target = user
 		mode = SECBOT_HUNT
 
@@ -495,11 +486,8 @@
 		if(L.lasertag_color != lasertag_color)
 			disabled = TRUE
 			qdel(Proj)
-			addtimer(CALLBACK(src, .proc/enable), 100)
+			addtimer(VARSET_CALLBACK(src, disabled, FALSE), 100)
 	..()
-
-/obj/machinery/bot/secbot/ed209/proc/enable()
-	disabled = FALSE
 
 /obj/machinery/bot/secbot/ed209/bluetag/atom_init() // If desired, you spawn red and bluetag bots easily
 	..()

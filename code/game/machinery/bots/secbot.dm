@@ -28,13 +28,6 @@
 	var/next_harm_time = 0
 
 	var/mode = 0
-#define SECBOT_IDLE 		0		// idle
-#define SECBOT_HUNT 		1		// found target, hunting
-#define SECBOT_PREP_ARREST 	2		// at target, preparing to arrest
-#define SECBOT_ARREST		3		// arresting target
-#define SECBOT_START_PATROL	4		// start patrol
-#define SECBOT_PATROL		5		// patrolling
-#define SECBOT_SUMMON		6		// summoned by PDA
 
 	var/auto_patrol = 0		// set to make bot automatically patrol
 
@@ -75,8 +68,8 @@
 /obj/machinery/bot/secbot/atom_init()
 	. = ..()
 	botcard = new /obj/item/weapon/card/id(src)
-	var/datum/job/detective/J = new/datum/job/detective
-	botcard.access = J.get_access()
+	var/datum/job/cadet/C = new/datum/job/cadet
+	botcard.access = C.get_access()
 	if(radio_controller)
 		radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
@@ -608,12 +601,12 @@
 
 /obj/machinery/bot/secbot/explode()
 	walk_to(src,0)
-	visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
+	visible_message("<span class='warning'><B>[src] blows apart!</B></span>")
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)
 	Sa.build_step = 1
-	Sa.overlays += image('icons/obj/aibots.dmi', "hs_hole")
+	Sa.add_overlay(image('icons/obj/aibots.dmi', "hs_hole"))
 	Sa.created_name = name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
@@ -630,9 +623,9 @@
 	new /obj/effect/decal/cleanable/blood/oil(loc)
 	qdel(src)
 
-/obj/machinery/bot/secbot/attack_alien(mob/living/carbon/alien/user)
+/obj/machinery/bot/secbot/attack_alien(mob/living/carbon/xenomorph/user)
 	..()
-	if(!isalien(target))
+	if(!isxeno(target))
 		target = user
 		mode = SECBOT_HUNT
 
@@ -656,14 +649,14 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0, user))
 			build_step++
-			overlays += image('icons/obj/aibots.dmi', "hs_hole")
+			add_overlay(image('icons/obj/aibots.dmi', "hs_hole"))
 			to_chat(user, "You weld a hole in [src]!")
 
 	else if(isprox(W) && build_step == 1)
 		user.drop_item()
 		build_step++
 		to_chat(user, "You add the prox sensor to [src]!")
-		overlays += image('icons/obj/aibots.dmi', "hs_eye")
+		add_overlay(image('icons/obj/aibots.dmi', "hs_eye"))
 		name = "helmet/signaler/prox sensor assembly"
 		qdel(W)
 
@@ -672,7 +665,7 @@
 		build_step++
 		to_chat(user, "You add the robot arm to [src]!")
 		name = "helmet/signaler/prox sensor/robot arm assembly"
-		overlays += image('icons/obj/aibots.dmi', "hs_arm")
+		add_overlay(image('icons/obj/aibots.dmi', "hs_arm"))
 		qdel(W)
 
 	else if(istype(W, /obj/item/weapon/melee/baton) && (build_step >= 3))

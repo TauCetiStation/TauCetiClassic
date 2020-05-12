@@ -2,7 +2,7 @@
 //The advanced pea-green monochrome lcd of tomorrow.
 
 /obj/item/device/pda
-	name = "\improper PDA"
+	name = "PDA"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
@@ -51,6 +51,17 @@
 	var/ownjob = null //related to above
 	var/ownrank = null // this one is rank, never alt title
 
+	//Variables for Finance Management
+	var/datum/money_account/owner_account = null
+	var/target_account_number = 0
+	var/funds_amount = 0
+	var/transfer_purpose = "Funds transfer"
+	var/pda_paymod = FALSE // if TRUE, click on someone to pay
+	var/trans_menu = 0	// 1 or 0 --> show/hide transaction menu; nanoUI doesn’t understand “FALSE” or I don’t understand something :)
+	var/list/trans_log = list()
+	var/trans_log_spoiler = 0	// 1 or 0 --> show/hide transaction log
+	var/list/owner_fingerprints = list()	//fingerprint information is taken from the ID card
+
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
 /obj/item/device/pda/atom_init()
@@ -75,6 +86,12 @@
 		else
 			to_chat(user, "The time [worldtime2text()] is displayed in the corner of the screen.")
 
+/obj/item/device/pda/AltClick(mob/user)
+	if (can_use(user) && id)
+		remove_id()
+		update_icon()
+	else if (can_use(user))
+		verb_remove_pen()
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -360,7 +377,7 @@
 		return 0
 
 	var/mob/M = loc
-	if(M.stat || M.restrained() || M.paralysis || M.stunned || M.weakened)
+	if(M.incapacitated())
 		return 0
 	if((src in M.contents) || ( istype(loc, /turf) && in_range(src, M) ))
 		return 1
@@ -389,7 +406,7 @@
 	var/auto_update = 1
 	if(mode in no_auto_update)
 		auto_update = 0
-	if(old_ui && (mode == lastmode && ui_tick % 5 && mode in update_every_five))
+	if(old_ui && (mode == lastmode && ui_tick % 5 && (mode in update_every_five)))
 		return
 
 	lastmode = mode
@@ -400,6 +417,16 @@
 
 	data["owner"] = owner					// Who is your daddy...
 	data["ownjob"] = ownjob					// ...and what does he do?
+
+	data["money"] = owner_account ? owner_account.money : "error"
+	data["salary"] = owner_account ? owner_account.owner_salary : "error"
+	data["target_account_number"] = target_account_number
+	data["funds_amount"] = funds_amount
+	data["purpose"] = transfer_purpose
+	data["trans_menu"] = trans_menu	// show/hide transaction menu
+	data["trans_log"] = trans_log
+	data["trans_log_spoiler"] = trans_log_spoiler	// show/hide transaction log
+	data["time_to_next_pay"] = time_stamp(format = "mm:ss", wtime = (SSeconomy.endtime - world.timeofday))
 
 	data["mode"] = mode					// The current view
 	data["scanmode"] = scanmode				// Scanners
@@ -454,6 +481,19 @@
 		data["cartridge"] = cartdata
 
 	data["stationTime"] = worldtime2text()
+
+	var/secLevelStr
+	switch(get_security_level())
+		if("green")
+			secLevelStr = "<font color='green'><b>&#9899;</b></font>"
+		if("blue")
+			secLevelStr = "<font color='blue'><b>&#9899;</b></font>"
+		if("red")
+			secLevelStr = "<font color='red'><b>&#9899;</b></font>"
+		if("delta")
+			secLevelStr = "<font color='purple'><b>&Delta;</b></font>"
+	data["securityLevel"] = secLevelStr
+
 	data["new_Message"] = newmessage
 	if (SSshuttle.online)
 		data["shuttle_eta"] = shuttleeta2text()
@@ -489,7 +529,6 @@
 				break
 	if(mode==41)
 		data_core.get_manifest_json()
-
 
 	if(mode==3)
 		var/turf/T = get_turf(user.loc)
@@ -547,6 +586,8 @@
 	if(active_uplink_check(user))
 		return
 
+	if(mode == 7)
+		mode = 0	//for safety
 	ui_interact(user) //NanoUI requires this proc
 	return
 
@@ -565,8 +606,6 @@
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 	//if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ) )
-	if (usr.stat == DEAD)
-		return 0
 	if(!can_use()) //Why reinvent the wheel? There's a proc that does exactly that.
 		U.unset_machine()
 		if(ui)
@@ -637,7 +676,6 @@
 			mode = 5
 		if("41") //Manifest
 			mode = 41
-
 
 //MAIN FUNCTIONS===================================
 
@@ -735,7 +773,7 @@
 				if(!isnull(P))
 					if (!P.toff && cartridge.charges > 0)
 						cartridge.charges--
-						U.show_message("<span class='notice'>Virus sent!</span>", 1)
+						to_chat(U, "<span class='notice'>Virus sent!</span>")
 						P.honkamt = (rand(15,20))
 				else
 					to_chat(U, "PDA not found.")
@@ -748,7 +786,7 @@
 				if(!isnull(P))
 					if (!P.toff && cartridge.charges > 0)
 						cartridge.charges--
-						U.show_message("<span class='notice'>Virus sent!</span>", 1)
+						to_chat(U, "<span class='notice'>Virus sent!</span>")
 						P.message_silent = 1
 						P.ttone = "silence"
 				else
@@ -757,6 +795,63 @@
 				ui.close()
 				return 0
 
+//Finance Management=============================================================
+
+		if("Finance")
+			if(check_owner_fingerprints(U))
+				mode = 7
+
+		if("Transaction Menu")
+			if(trans_menu)
+				trans_menu = 0
+			else
+				trans_menu = 1
+
+		if("Transaction Log")
+			if(trans_log_spoiler)
+				trans_log_spoiler = 0
+			else
+				trans_log = null
+				for(var/datum/transaction/T in owner_account.transaction_log)
+					trans_log += list(list("data"="[T.date]", "time"="[T.time]", "name"="[T.target_name]", "purpose"="[T.purpose]", "amount"="[T.amount]", "source"="[T.source_terminal]"))
+				trans_log_spoiler = 1
+
+		if("Send Money")
+			if(check_owner_fingerprints(U))
+				target_account_number = text2num(href_list["account"])
+				mode = 7
+
+		if("Look for")
+			ui.close()
+			to_chat(U, "[bicon(src)]<span class='notice'>Select transfer recipient.</span>")
+			pda_paymod = TRUE
+
+		if("Show Manifest")
+			mode = 41
+
+		if("target_acc_number")
+			target_account_number = text2num(input(U, "Enter an account number", name, target_account_number) as text)	//If "as num" I can't copy text from the buffer
+		if("funds_amount")
+			funds_amount =  text2num(input(U, "Enter the amount of funds", name, funds_amount) as text)
+		if("purpose")
+			transfer_purpose = sanitize(input(U, "Enter the purpose of the transaction", name, transfer_purpose) as text, 20)
+		if("make_transfer")
+			if(owner_account.suspended)
+				to_chat(U, "[bicon(src)]<span class='warning'>Your account is suspended!</span>")
+				return
+			if(funds_amount <= 0)
+				to_chat(U, "[bicon(src)]<span class='warning'>That is not a valid amount!</span>")
+				return
+			if(funds_amount > owner_account.money)
+				to_chat(U, "[bicon(src)]<span class='warning'>You don't have enough funds to do that!</span>")
+				return
+			if(target_account_number == owner_account.account_number)
+				to_chat(U, "[bicon(src)]<span class='warning'>Eror! [target_account_number] is your account number, [owner].</span>")
+				return
+			if(charge_to_account(target_account_number, target_account_number, transfer_purpose, name, funds_amount))
+				charge_to_account(owner_account.account_number, target_account_number, transfer_purpose, name, -funds_amount)
+			else
+				to_chat(U, "[bicon(src)]<span class='warning'>Funds transfer failed. Target account is suspended.</span>")
 
 //SYNDICATE FUNCTIONS===================================
 
@@ -792,10 +887,10 @@
 
 			if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
 				if(!(useMS && useTC))
-					U.show_message("<span class='warning'>An error flashes on your [src]: Connection unavailable</span>", 1)
+					U.show_message("<span class='warning'>An error flashes on your [src]: Connection unavailable</span>", SHOWMSG_VISUAL, "<span class='warning'>You hear a negative *beep*</span>", SHOWMSG_AUDIO)
 					return
 				if(useTC != 2) // Does our recepient have a broadcaster on their level?
-					U.show_message("<span class='warning'>An error flashes on your [src]: Recipient unavailable</span>", 1)
+					U.show_message("<span class='warning'>An error flashes on your [src]: Recipient unavailable</span>", SHOWMSG_VISUAL, "<span class='warning'>You hear a negative *beep*</span>", SHOWMSG_AUDIO)
 					return
 				var/obj/item/device/pda/P = locate(href_list["target"])
 				if(!isnull(P))
@@ -814,15 +909,15 @@
 								difficulty += 3
 
 						if(prob(difficulty))
-							U.show_message("<span class='warning'>An error flashes on your [src].</span>", 1)
+							U.show_message("<span class='warning'>An error flashes on your [src].</span>", SHOWMSG_VISUAL, "<span class='warning'>You hear a negative *beep*</span>", SHOWMSG_AUDIO)
 						else if (prob(difficulty * 7))
-							U.show_message("<span class='warning'>Energy feeds back into your [src]!</span>", 1)
+							U.show_message("<span class='warning'>Energy feeds back into your [src]!</span>", SHOWMSG_VISUAL, "<span class='warning'>You hear a negative *beep*</span>", SHOWMSG_AUDIO)
 							ui.close()
 							detonate_act(src)
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed. [ADMIN_JMP(U)]")
 						else
-							U.show_message("<span class='notice'>Success!</span>", 1)
+							to_chat("<span class='notice'>Success!</span>")
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded. [ADMIN_JMP(U)]")
 							detonate_act(P)
@@ -870,13 +965,13 @@
 /obj/item/device/pda/update_icon()
 	..()
 
-	overlays.Cut()
+	cut_overlays()
 	if(newmessage)
-		overlays += image('icons/obj/pda.dmi', "pda-r")
+		add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 	if(id)
 		var/id_overlay = get_id_overlay(id)
 		if(id_overlay)
-			overlays += image('icons/obj/pda.dmi', id_overlay)
+			add_overlay(image('icons/obj/pda.dmi', id_overlay))
 
 /obj/item/device/pda/proc/get_id_overlay(obj/item/weapon/card/id/I)
 	if(!I)
@@ -947,7 +1042,7 @@
 
 	if(M && isliving(M))
 		message = "<span class='warning'></span>" + message
-		M.show_message(message, 1)
+		M.show_message(message, SHOWMSG_ALWAYS) //vas visual only before, it's important message so I changed this. You can add more different messages
 
 /obj/item/device/pda/proc/remove_id()
 	if (id)
@@ -1016,7 +1111,7 @@
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
 				if(isnewplayer(M))
 					continue
-				M.show_message("<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message emojify linkify'>[t]</span></span>")
+				to_chat(M, "<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message emojify linkify'>[t]</span></span>")
 
 		if(!conversations.Find("\ref[P]"))
 			conversations.Add("\ref[P]")
@@ -1030,14 +1125,14 @@
 			for(var/mob/living/silicon/ai/ai in ai_list)
 				// Allows other AIs to intercept the message but the AI won't intercept their own message.
 				if(ai.pda != P && ai.pda != src)
-					ai.show_message("<i>Intercepted message from <b>[who]</b>: <span class='emojify linkify'>[t]</span></i>")
+					to_chat(ai, "<i>Intercepted message from <b>[who]</b>: <span class='emojify linkify'>[t]</span></i>")
 
 		nanomanager.update_user_uis(U, src) // Update the sending user's PDA UI so that they can see the new message
 
 		if (!P.message_silent)
 			playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-		for (var/mob/O in hearers(3, P.loc))
-			if(!P.message_silent) O.show_message(text("[bicon(P)] *[P.ttone]*"))
+			audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)
+
 		//Search for holder of the PDA.
 		var/mob/living/L = null
 		if(P.loc && isliving(P.loc))
@@ -1054,8 +1149,8 @@
 		nanomanager.update_user_uis(U, P) // Update the sending user's PDA UI so that they can see the new message
 
 		log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
-		P.overlays.Cut()
-		P.overlays += image('icons/obj/pda.dmi', "pda-r")
+		P.cut_overlays()
+		P.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 		P.newmessage = 1
 	else
 		to_chat(U, "<span class='notice'>ERROR: Messaging server is not responding.</span>")
@@ -1156,10 +1251,15 @@
 		if(!idcard.registered_name)
 			to_chat(user, "<span class='notice'>\The [src] rejects the ID.</span>")
 			return
-		if(!owner)
+		if(!owner || !owner_account)
 			owner = idcard.registered_name
 			ownjob = idcard.assignment
 			ownrank = idcard.rank
+			var/datum/money_account/account = get_account(idcard.associated_account_number)
+			if(account)
+				account.owner_PDA = src		//add PDA in /datum/money_account
+				owner_account = account		//bind the account to the pda
+			owner_fingerprints += idcard.fingerprint_hash	//save fingerprints in pda
 			name = "PDA-[owner] ([ownjob])"
 			to_chat(user, "<span class='notice'>Card scanned.</span>")
 		else
@@ -1186,92 +1286,99 @@
 			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
 	return
 
-/obj/item/device/pda/attack(mob/living/C, mob/living/user)
-	if (istype(C, /mob/living/carbon))
+/obj/item/device/pda/attack(mob/living/L, mob/living/user)
+	if (istype(L, /mob/living/carbon))
+		var/mob/living/carbon/C = L
+		var/data_message = ""
 		switch(scanmode)
 			if(1)
-
-				for (var/mob/O in viewers(C, null))
-					O.show_message("<span class='warning'>[user] has analyzed [C]'s vitals!</span>", 1)
-
-				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
-				user.show_message("<span class='notice'>&emsp; Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]</span>", 1)
+				data_message += "<span class='notice'>Analyzing Results for [C]:</span>"
+				data_message += "<span class='notice'>&emsp; Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]</span>"
 				var/has_oxy_damage = (C.getOxyLoss() > 50)
 				var/has_tox_damage = (C.getToxLoss() > 50)
 				var/has_fire_damage = (C.getFireLoss() > 50)
 				var/has_brute_damage = (C.getBruteLoss() > 50)
-				user.show_message("<span class='notice'>&emsp; Damage Specifics: <span class='[has_oxy_damage ? "warning" : "notice"]'>[C.getOxyLoss()]</span>-<span class='[has_tox_damage ? "warning" : "notice"]'>[C.getToxLoss()]</span>-<span class='[has_fire_damage ? "warning" : "notice"]'>[C.getFireLoss()]</span>-<span class='[has_brute_damage ? "warning" : "notice"]'>[C.getBruteLoss()]</span></span>", 1)
-				user.show_message("<span class='notice'>&emsp; Key: Suffocation/Toxin/Burns/Brute</span>", 1)
-				user.show_message("<span class='notice'>&emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span>", 1)
+				data_message += "<span class='notice'>&emsp; Damage Specifics: <span class='[has_oxy_damage ? "warning" : "notice"]'>[C.getOxyLoss()]</span>-<span class='[has_tox_damage ? "warning" : "notice"]'>[C.getToxLoss()]</span>-<span class='[has_fire_damage ? "warning" : "notice"]'>[C.getFireLoss()]</span>-<span class='[has_brute_damage ? "warning" : "notice"]'>[C.getBruteLoss()]</span></span>"
+				data_message += "<span class='notice'>&emsp; Key: Suffocation/Toxin/Burns/Brute</span>"
+				data_message += "<span class='notice'>&emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span>"
 				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
-					user.show_message("<span class='notice'>&emsp; Time of Death: [C.tod]</span>")
+					data_message += "<span class='notice'>&emsp; Time of Death: [C.tod]</span>"
 				if(istype(C, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = C
 					var/list/damaged = H.get_damaged_bodyparts(1, 1)
-					user.show_message("<span class='notice'>Localized Damage, Brute/Burn:</span>",1)
+					data_message += "<span class='notice'>Localized Damage, Brute/Burn:</span>"
 					if(length(damaged)>0)
 						for(var/obj/item/organ/external/BP in damaged)
-							user.show_message(text("<span class='notice'>&emsp; []: []-[]</span>",capitalize(BP.name),(BP.brute_dam > 0)?"<span class='warning'>[BP.brute_dam]</span>":0,(BP.burn_dam > 0)?"<span class='warning'>[BP.burn_dam]</span>":0),1)
+							data_message += text("<span class='notice'>&emsp; []: []-[]</span>",capitalize(BP.name),(BP.brute_dam > 0)?"<span class='warning'>[BP.brute_dam]</span>":0,(BP.burn_dam > 0)?"<span class='warning'>[BP.burn_dam]</span>":0)
 					else
-						user.show_message("<span class='notice'>&emsp; Limbs are OK.</span>",1)
+						data_message += "<span class='notice'>&emsp; Limbs are OK.</span>"
 
 				for(var/datum/disease/D in C.viruses)
 					if(!D.hidden[SCANNER])
-						user.show_message(text("<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>"))
+						data_message += "<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>"
+
+				visible_message("<span class='warning'>[user] has analyzed [C]'s vitals!</span>")
+				to_chat(user, data_message)
 
 			if(2)
-				if (!istype(C:dna, /datum/dna))
-					to_chat(user, "<span class='notice'>No fingerprints found on [C]</span>")
-				else if(!istype(C, /mob/living/carbon/monkey))
-					if(!isnull(C:gloves))
-						to_chat(user, "<span class='notice'>No fingerprints found on [C]</span>")
+				if (!istype(C.dna, /datum/dna))
+					data_message += "<span class='notice'>No fingerprints found on [C]</span>"
+				else if(istype(C, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = C
+					if(H.gloves)
+						data_message += "<span class='notice'>No fingerprints found on [C]</span>"
 				else
-					to_chat(user, text("<span class='notice'>[C]'s Fingerprints: [md5(C:dna.uni_identity)]</span>"))
-				if ( !(C:blood_DNA) )
-					to_chat(user, "<span class='notice'>No blood found on [C]</span>")
-					if(C:blood_DNA)
-						C:blood_DNA = null
+					data_message += text("<span class='notice'>[C]'s Fingerprints: [md5(C.dna.uni_identity)]</span>")
+				if ( !(C.blood_DNA) )
+					data_message += "<span class='notice'>No blood found on [C]</span>"
+					if(C.blood_DNA)
+						C.blood_DNA = null
 				else
-					to_chat(user, "<span class='notice'>Blood found on [C]. Analysing...</span>")
+					data_message += "<span class='notice'>Blood found on [C]. Analysing...</span>"
 					spawn(15)
-						for(var/blood in C:blood_DNA)
-							to_chat(user, "<span class='notice'>Blood type: [C:blood_DNA[blood]]\nDNA: [blood]</span>")
+						for(var/blood in C.blood_DNA)
+							data_message += "<span class='notice'>Blood type: [C.blood_DNA[blood]]\nDNA: [blood]</span>"
+				to_chat(user, data_message)
 
 			if(4)
-				for (var/mob/O in viewers(C, null))
-					O.show_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>", 1)
-
-				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
+				data_message += "<span class='notice'>Analyzing Results for [C]:</span>"
 				if(C.radiation)
-					user.show_message("<span class='notice'>Radiation Level:</span> [C.radiation]")
+					data_message += "<span class='notice'>Radiation Level:</span> [C.radiation]"
 				else
-					user.show_message("<span class='notice'>No radiation detected.</span>")
+					data_message += "<span class='notice'>No radiation detected.</span>"
+				visible_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>")
+				to_chat(user, data_message)
 
-/obj/item/device/pda/afterattack(atom/A, mob/user, proximity)
+/obj/item/device/pda/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	switch(scanmode)
 
 		if(3)
-			if(!isobj(A))
+			if(!isobj(target))
 				return
-			if(!isnull(A.reagents))
-				if(A.reagents.reagent_list.len > 0)
-					var/reagents_length = A.reagents.reagent_list.len
+			if(!isnull(target.reagents))
+				if(target.reagents.reagent_list.len > 0)
+					var/reagents_length = target.reagents.reagent_list.len
 					to_chat(user, "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.</span>")
-					for (var/re in A.reagents.reagent_list)
+					for (var/re in target.reagents.reagent_list)
 						to_chat(user, "<span class='notice'>&emsp; [re]</span>")
 				else
-					to_chat(user, "<span class='notice'>No active chemical agents found in [A].</span>")
+					to_chat(user, "<span class='notice'>No active chemical agents found in [target].</span>")
 			else
-				to_chat(user, "<span class='notice'>No significant chemical agents found in [A].</span>")
+				to_chat(user, "<span class='notice'>No significant chemical agents found in [target].</span>")
 
 		if(5)
-			analyze_gases(A, user)
+			analyze_gases(target, user)
 
-	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
-		note = A:info
+	if (!scanmode && istype(target, /obj/item/weapon/paper) && owner)
+		var/obj/item/weapon/paper/P = target
+		note = P.info
 		to_chat(user, "<span class='notice'>Paper scanned.</span>")//concept of scanning paper copyright brainoblivion 2009
 
+/obj/item/device/pda/get_current_temperature()
+	. = 5
+	if(detonate)
+		. += 10
 
 /obj/item/device/pda/proc/explode() //This needs tuning. //Sure did.
 	if(!src.detonate) return
@@ -1315,3 +1422,57 @@
 /obj/item/device/pda/emp_act(severity)
 	for(var/atom/A in src)
 		A.emp_act(severity)
+
+/obj/item/device/pda/proc/click_to_pay(atom/target)
+	if(istype(target, /mob/living/carbon/human))
+		var/mob/living/carbon/human/receiver = target
+		if(receiver.mind.initial_account)
+			target_account_number = text2num(receiver.mind.initial_account.account_number)
+			mode = 7
+			pda_paymod = FALSE
+			ui_interact(usr)
+			to_chat(usr, "[bicon(src)]<span class='info'>Target account is [target_account_number]</span>")
+			return
+		else
+			to_chat(usr, "[bicon(src)]<span class='warning'>Target haven't account.</span>")
+			pda_paymod = FALSE
+			return
+	else
+		to_chat(usr, "[bicon(src)]<span class='warning'>Incorrect target.</span>")
+		pda_paymod = FALSE
+		return
+
+/obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
+	if(!owner_account)
+		alert("Eror! Account information not saved in this PDA, please swipe your ID card.")
+		return FALSE
+	if(!user.dna)	//just in case
+		alert("Eror! PDA can't read your fingerprints.")
+		return FALSE
+	var/fingerprints = md5(user.dna.uni_identity)
+	if(fingerprints in owner_fingerprints)
+		return TRUE
+	else
+		var/tried_pin =  text2num(input(user, "[owner] please enter your account password", name) as text)
+		if(tried_pin == owner_account.remote_access_pin)
+			owner_fingerprints += fingerprints	//add new owner’s fingerprints to the list
+			to_chat(user, "[bicon(src)]<span class='info'>Password is correct</span>")
+			return TRUE
+		else
+			alert("Invalid Password!")
+			return FALSE
+
+/obj/item/device/pda/proc/transaction_inform(target, source, amount)
+	if(!can_use())
+		return
+	//Search for holder of the PDA. (some copy-paste from /obj/item/device/pda/proc/create_message)
+	var/mob/living/L = null
+	if(src.loc && isliving(src.loc))
+		L = src.loc
+	if(L)
+		if(amount > 0)
+			to_chat(L, "[bicon(src)]<span class='notice'>[owner], the amount of [amount]$ from [source] was transferred to your account.</span>")
+		else
+			to_chat(L, "[bicon(src)]<span class='notice'>You have successfully transferred [amount]$ to [target] account number.</span>")
+		if(!src.message_silent)
+			playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)

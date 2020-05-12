@@ -39,7 +39,7 @@
 
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM)//No floor tiling them to death, wiseguy
+/mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //No floor tiling them to death, wiseguy
 	if(istype(AM, /obj/item))
 		var/obj/item/T = AM
 		if(!stat)
@@ -387,7 +387,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath/proc/handle_preattack()
 	if(ranged_cooldown <= 2 && !pre_attack)
 		pre_attack++
-	if(!pre_attack || stat || stance == HOSTILE_STANCE_IDLE)
+	if(!pre_attack || incapacitated() || stance == HOSTILE_STANCE_IDLE)
 		return
 	icon_state = "Goliath_preattack"
 
@@ -443,11 +443,11 @@
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
 	qdel(src)
 
-/obj/effect/goliath_tentacle/Crossed(AM as mob|obj)
+/obj/effect/goliath_tentacle/Crossed(atom/movable/AM)
 	if(isliving(AM))
 		Trip()
 		return
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
 	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)
@@ -463,13 +463,13 @@
 	w_class = ITEM_SIZE_NORMAL
 	layer = 4
 
-/obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
-	if(proximity_flag)
+/obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity, params)
+	if(proximity)
 		if(istype(target, /obj/item/clothing/suit/space) || istype(target, /obj/item/clothing/head/helmet/space))
 			var/obj/item/clothing/C = target
 			var/list/current_armor = C.armor
-			if(current_armor.["melee"] < 80)
-				current_armor.["melee"] = min(current_armor.["melee"] + 10, 80)
+			if(current_armor["melee"] < 80)
+				current_armor["melee"] = min(current_armor["melee"] + 10, 80)
 				if(istype(C, /obj/item/clothing/suit/space))
 					var/obj/item/clothing/suit/space/S = C
 					S.breach_threshold = min(S.breach_threshold + 2, 24)

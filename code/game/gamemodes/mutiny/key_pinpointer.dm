@@ -1,7 +1,7 @@
 #define SEARCH_FOR_DISK 0
 #define SEARCH_FOR_OBJECT 1
 /obj/item/weapon/pinpointer/advpinpointer/auth_key
-	name = "\improper Authentication Key Pinpointer"
+	name = "Authentication Key Pinpointer"
 	desc = "Tracks the positions of the emergency authentication keys."
 	var/datum/game_mode/mutiny/mutiny
 

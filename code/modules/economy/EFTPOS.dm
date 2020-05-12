@@ -3,7 +3,7 @@
 	desc = "Swipe your ID card to make purchases electronically."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "eftpos"
-	hitsound = list('sound/items/defib_safetyOff.ogg')
+	hitsound = list('sound/items/surgery/defib_safetyOff.ogg')
 	var/machine_id = ""
 	var/eftpos_name = "Default EFTPOS scanner"
 	var/transaction_locked = 0
@@ -50,7 +50,7 @@
 
 	//stamp the paper
 	var/obj/item/weapon/stamp/centcomm/S = new
-	S.stamp_paper(R, "This paper has been stamped by the EFTPOS device.")
+	S.stamp_paper(R, "EFTPOS")
 
 	//by default, connect to the station account
 	//the user of the EFTPOS device can change the target account though, and no-one will be the wiser (except whoever's being charged)
@@ -67,11 +67,10 @@
 
 	//stamp the paper
 	var/obj/item/weapon/stamp/centcomm/S = new
-	S.stamp_paper(R, "This paper has been stamped by the EFTPOS device.")
+	S.stamp_paper(R, "EFTPOS")
 
 	var/obj/item/smallDelivery/D = new(R.loc)
 	R.loc = D
-	D.wrapped = R
 	D.name = "small parcel - 'EFTPOS access code'"
 
 /obj/item/device/eftpos/attack_self(mob/user)
@@ -204,7 +203,7 @@
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card))
 					var/obj/item/weapon/card/id/C = I
-					if(access_cent_captain in C.access || access_hop in C.access || access_captain in C.access)
+					if((access_cent_captain in C.access) || (access_hop in C.access) || (access_captain in C.access))
 						access_code = 0
 						to_chat(usr, "[bicon(src)]<span class='info'>Access code reset to 0.</span>")
 				else if (istype(I, /obj/item/weapon/card/emag))
@@ -230,8 +229,8 @@
 								transaction_paid = 1
 
 								//transfer the money
-								D.money -= transaction_amount
-								linked_account.money += transaction_amount
+								D.adjust_money(-transaction_amount)
+								linked_account.adjust_money(transaction_amount)
 
 								//create entries in the two account transaction logs
 								var/datum/transaction/T = new()
@@ -275,7 +274,5 @@
 				playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
 				src.visible_message("[bicon(src)] The [src] chimes.")
 				transaction_paid = 1
-	else
-		..()
 
 	//emag?

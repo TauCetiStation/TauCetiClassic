@@ -42,9 +42,9 @@
 
 /obj/structure/bookcase/attack_hand(mob/user)
 	if(contents.len)
-		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents as obj|null
+		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents
 		if(choice)
-			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+			if(usr.incapacitated() || !in_range(loc, usr))
 				return
 			if(ishuman(user))
 				if(!user.get_active_hand())
@@ -143,6 +143,8 @@
 /obj/item/weapon/book
 	name = "book"
 	icon = 'icons/obj/library.dmi'
+	force = 1.0
+	hitsound = list('sound/items/misc/book-slap.ogg')
 	icon_state ="book"
 	throw_speed = 1
 	throw_range = 5

@@ -107,7 +107,7 @@
 			if(locate(/mob) in pod.contents)
 				to_chat(M, "<span class='notice'>The pod is already occupied.</span>")
 				return
-			else if(!pod.moving && pod.dir in directions())
+			else if(!pod.moving && (pod.dir in directions()))
 				pod.move_into_content(M)
 				return
 
@@ -115,7 +115,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(!pod_moving)
 		for(var/obj/structure/transit_tube_pod/pod in loc)
-			if(!pod.moving && pod.dir in directions())
+			if(!pod.moving && (pod.dir in directions()))
 				if(icon_state == "closed")
 					open_animation()
 				else if(icon_state == "open")
@@ -141,7 +141,7 @@
 
 /obj/structure/transit_tube/station/proc/launch_pod()
 	for(var/obj/structure/transit_tube_pod/pod in loc)
-		if(!pod.moving && pod.dir in directions())
+		if(!pod.moving && (pod.dir in directions()))
 			addtimer(CALLBACK(src, .proc/move_pod, pod), 5)
 			return
 

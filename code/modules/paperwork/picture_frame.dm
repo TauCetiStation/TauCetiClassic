@@ -89,7 +89,7 @@
 		if(!over_object)
 			return
 
-		if(!usr.restrained() && !usr.stat)
+		if(!usr.incapacitated())
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))
@@ -112,13 +112,13 @@
 		..()
 
 /obj/item/weapon/picture_frame/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(displayed)
 		overlays |= image(displayed.icon, "photo")
 	if(frame_glass)
 		overlays |= icon('icons/obj/bureaucracy.dmi',"glass_frame_item")
 
-/obj/item/weapon/picture_frame/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/picture_frame/afterattack(atom/target, mob/user, proximity, params)
 	var/turf/T = target
 	if(get_dist(T, user) > 1)
 		return
@@ -294,7 +294,7 @@
 		var/mob/living/carbon/M = usr
 		if(!over_object)
 			return
-		if(!usr.restrained() && !usr.stat)
+		if(!usr.incapacitated())
 			if(over_object == M)
 				if(screwed)
 					to_chat(M,"<span class='warning'>It is screwed to the wall.</span>")
@@ -333,7 +333,7 @@
 	return
 
 /obj/structure/picture_frame/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(screwed)
 		icon_state = "[initial(icon_state)]_screwed"
 	else

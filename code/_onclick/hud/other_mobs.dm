@@ -5,11 +5,11 @@
 /datum/hud/proc/ghost_hud()
 	return
 
-/datum/hud/proc/brain_hud(ui_style = 'icons/mob/screen1_Midnight.dmi')
+/datum/hud/proc/brain_hud()
 	mymob.client.screen = list()
 	mymob.client.screen += mymob.client.void
 
-/datum/hud/proc/blob_hud(ui_style = 'icons/mob/screen1_Midnight.dmi')
+/datum/hud/proc/blob_hud()
 
 	blobpwrdisplay = new /obj/screen()
 	blobpwrdisplay.name = "blob power"
@@ -30,7 +30,7 @@
 	mymob.client.screen += mymob.client.void
 
 
-/datum/hud/proc/changeling_essence_hud(ui_style = 'icons/mob/screen1_Midnight.dmi')
+/datum/hud/proc/changeling_essence_hud()
 	var/mob/living/parasite/essence/E = mymob
 
 	E.voice = new /obj/screen/essence_voice()

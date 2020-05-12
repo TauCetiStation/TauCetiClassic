@@ -1,4 +1,5 @@
 /datum/preferences/proc/ShowGeneral(mob/user)
+	var/datum/species/specie_obj = all_species[species]
 	. =  "<table cellspacing='0' width='100%'>"	//Main body table start
 	. += 	"<tr>"
 	. += 		"<td width='340px' height='320px' style='padding-left:25px'>"
@@ -40,8 +41,10 @@
 			. += "Body: <a href='?_src_=prefs;preference=all;task=random'>&reg;</a>"
 			. += "<br>Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a>"
 			. += "<br>Secondary Language: <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a>"
-			. += "<br>Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a>"
-			. += "<br>Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a>"
+			if(!specie_obj.flags[NO_BLOOD])
+				. += "<br>Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a>"
+			if(specie_obj.flags[HAS_SKIN_TONE])
+				. += "<br>Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a>"
 
 		//Organs
 		if("organs")
@@ -81,37 +84,44 @@
 					switch(organ_name)
 						if("heart")
 							. += "<li>Pacemaker-assisted [organ_name]</li>"
-						if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
-							. += "<li>Surgically altered [organ_name]</li>"
 						if("eyes")
 							. += "<li>Retinal overlayed [organ_name]</li>"
 						else
 							. += "<li>Mechanically assisted [organ_name]</li>"
+			if(species == IPC)
+				. += "<br>Head: <a href='byond://?src=\ref[user];preference=ipc_head;task=input'>[ipc_head]</a>"
+
 			if(!ind)
 				. += "<br>\[...\]"
-
 		//Appearance
 		if("appearance")
-			. += "<b>Hair</b>"
-			. += "<br><a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td width='20' height='15'></td></tr></table></font>"
+			if(species == IPC)
+				. += "<b>IPC screen</b>"
+			else
+				. += "<b>Hair</b>"
+			. += "<br>"
+			if(specie_obj.flags[HAS_HAIR_COLOR])
+				. += "<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td width='20' height='15'></td></tr></table></font>"
 			. += " Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
 			. += "<b>Facial</b>"
 			. += "<br><a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td width='20' height='15'></td></tr></table></font>"
 			. += " Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
 			. += "<b>Eyes</b>"
 			. += "<br><a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td width='20' height='15'></td></tr></table></font><br>"
-			. += "<b>Body Color</b>"
-			. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin)]'><tr><td width='20' height='15'></td></tr></table></font>"
+			if(specie_obj.flags[HAS_SKIN_COLOR])
+				. += "<b>Body Color</b>"
+				. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin)]'><tr><td width='20' height='15'></td></tr></table></font>"
 
 		//Gear
 		if("gear")
 			. += "<b>Gear:</b><br>"
-			if(gender == MALE)
-				. += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'>[underwear_m[underwear]]</a><br>"
-			else
-				. += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'>[underwear_f[underwear]]</a><br>"
-			. += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'>[undershirt_t[undershirt]]</a><br>"
-			. += "Socks: <a href='?_src_=prefs;preference=socks;task=input'>[socks_t[socks]]</a><br>"
+			if(specie_obj.flags[HAS_UNDERWEAR])
+				if(gender == MALE)
+					. += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'>[underwear_m[underwear]]</a><br>"
+				else
+					. += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'>[underwear_f[underwear]]</a><br>"
+				. += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'>[undershirt_t[undershirt]]</a><br>"
+				. += "Socks: <a href='?_src_=prefs;preference=socks;task=input'>[socks_t[socks]]</a><br>"
 			. += "Backpack Type: <a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a>"
 
 	. += 								"</td>"
@@ -182,19 +192,24 @@
 					if(genmsg != null)
 						gen_record = genmsg
 
+	var/datum/species/specie_obj = all_species[species]
+
 	switch(href_list["task"])
 		if("random")
 			switch(href_list["preference"])
 				if("name")
 					real_name = random_name(gender)
 				if("age")
-					age = rand(AGE_MIN, AGE_MAX)
+					age = rand(specie_obj.min_age, specie_obj.max_age)
 				if("hair")
 					r_hair = rand(0,255)
 					g_hair = rand(0,255)
 					b_hair = rand(0,255)
 				if("h_style")
-					h_style = random_hair_style(gender, species)
+					if(species == IPC)
+						h_style = random_ipc_monitor(ipc_head)
+					else
+						h_style = random_hair_style(gender, species)
 				if("facial")
 					r_facial = rand(0,255)
 					g_facial = rand(0,255)
@@ -202,7 +217,10 @@
 				if("f_style")
 					f_style = random_facial_hair_style(gender, species)
 				if("underwear")
-					underwear = rand(1,underwear_m.len)
+					if(gender == MALE)
+						underwear = rand(1, underwear_m.len)
+					else
+						underwear = rand(1, underwear_f.len)
 				if("undershirt")
 					undershirt = rand(1,undershirt_t.len)
 				if("socks")
@@ -218,7 +236,7 @@
 					g_skin = rand(0,255)
 					b_skin = rand(0,255)
 				if("bag")
-					backbag = rand(1,4)
+					backbag = rand(1, backbaglist.len)
 				if("all")
 					randomize_appearance_for()	//no params needed
 		if("input")
@@ -231,9 +249,9 @@
 						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("age")
-					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
+					var/new_age = input(user, "Choose your character's age:\n([specie_obj.min_age]-[specie_obj.max_age])", "Character Preference") as num|null
 					if(new_age)
-						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
+						age = max(min( round(text2num(new_age)), specie_obj.max_age), specie_obj.min_age)
 
 				if("species")
 					var/list/new_species = list(HUMAN)
@@ -254,7 +272,10 @@
 
 					if(prev_species != species)
 						f_style = random_facial_hair_style(gender, species)
-						h_style = random_hair_style(gender, species)
+						if(species == IPC)
+							h_style = random_ipc_monitor(ipc_head)
+						else
+							h_style = random_hair_style(gender, species)
 						ResetJobs()
 						ResetQuirks()
 						if(language && language != "None")
@@ -273,29 +294,31 @@
 					language = input("Please select a secondary language", "Character Generation", null) in new_languages
 
 				if("b_type")
+					if(specie_obj.flags[NO_BLOOD])
+						return
 					var/new_b_type = input(user, "Choose your character's blood-type:", "Character Preference") as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
 					if(new_b_type)
 						b_type = new_b_type
 
 				if("hair")
-					if(species in list(HUMAN, UNATHI, TAJARAN, SKRELL, IPC))
-						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
-						if(new_hair)
-							r_hair = hex2num(copytext(new_hair, 2, 4))
-							g_hair = hex2num(copytext(new_hair, 4, 6))
-							b_hair = hex2num(copytext(new_hair, 6, 8))
+					if(!specie_obj.flags[HAS_HAIR_COLOR])
+						return
+					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
+					if(new_hair)
+						r_hair = hex2num(copytext(new_hair, 2, 4))
+						g_hair = hex2num(copytext(new_hair, 4, 6))
+						b_hair = hex2num(copytext(new_hair, 6, 8))
 
 				if("h_style")
 					var/list/valid_hairstyles = list()
 					for(var/hairstyle in hair_styles_list)
 						var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-						if( !(species in S.species_allowed))
-							if(gender == MALE && S.gender == FEMALE)
-								continue
-							if(gender == FEMALE && S.gender == MALE)
-								continue
-							if(!(species in S.species_allowed))
-								continue
+						if(S.gender != NEUTER && gender != S.gender)
+							continue
+						if(!(species in S.species_allowed))
+							continue
+						if(species == IPC && ipc_head != S.ipc_head_compatible )
+							continue
 
 						valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
 
@@ -314,9 +337,7 @@
 					var/list/valid_facialhairstyles = list()
 					for(var/facialhairstyle in facial_hair_styles_list)
 						var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-						if(gender == MALE && S.gender == FEMALE)
-							continue
-						if(gender == FEMALE && S.gender == MALE)
+						if(S.gender != NEUTER && gender != S.gender)
 							continue
 						if(!(species in S.species_allowed))
 							continue
@@ -328,6 +349,8 @@
 						f_style = new_f_style
 
 				if("underwear")
+					if(!specie_obj.flags[HAS_UNDERWEAR])
+						return
 					var/list/underwear_options
 					if(gender == MALE)
 						underwear_options = underwear_m
@@ -360,19 +383,20 @@
 						b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
 				if("s_tone")
-					if(species != HUMAN)
+					if(!specie_obj.flags[HAS_SKIN_TONE])
 						return
 					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference")  as num|null
 					if(new_s_tone)
 						s_tone = 35 - max(min( round(new_s_tone), 220),1)
 
 				if("skin")
-					if(species == UNATHI || species == TAJARAN || species == SKRELL)
-						var/new_skin = input(user, "Choose your character's skin colour: ", "Character Preference") as color|null
-						if(new_skin)
-							r_skin = hex2num(copytext(new_skin, 2, 4))
-							g_skin = hex2num(copytext(new_skin, 4, 6))
-							b_skin = hex2num(copytext(new_skin, 6, 8))
+					if(!specie_obj.flags[HAS_SKIN_COLOR])
+						return
+					var/new_skin = input(user, "Choose your character's skin colour: ", "Character Preference") as color|null
+					if(new_skin)
+						r_skin = hex2num(copytext(new_skin, 2, 4))
+						g_skin = hex2num(copytext(new_skin, 4, 6))
+						b_skin = hex2num(copytext(new_skin, 6, 8))
 
 				if("bag")
 					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
@@ -486,10 +510,11 @@
 									organ_data[organ] = "assisted"
 								if("Mechanical")
 									organ_data[organ] = "mechanical"
-
-				if("skin_style")
-					var/skin_style_name = input(user, "Select a new skin style") as null|anything in list("default1", "default2", "default3")
-					if(!skin_style_name) return
+				// Choosing a head for an IPC
+				if("ipc_head")
+					var/list/ipc_heads = list("Default", "Alien", "Double", "Pillar", "Human")
+					ipc_head = input("Please select a head type", "Character Generation", null) in ipc_heads
+					h_style = random_ipc_monitor(ipc_head)
 
 		else
 			switch(href_list["preference"])
@@ -500,7 +525,11 @@
 						gender = MALE
 
 					f_style = random_facial_hair_style(gender, species)
-					h_style = random_hair_style(gender, species)
+					if(species == IPC)
+						h_style = random_ipc_monitor(ipc_head)
+					else
+						h_style = random_hair_style(gender, species)
+
 
 				if("randomslot")
 					randomslot = !randomslot

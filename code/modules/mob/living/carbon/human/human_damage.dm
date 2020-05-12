@@ -70,7 +70,7 @@
 		if(BP.is_robotic() && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
 		amount += BP.brute_dam
-	return amount
+	return round(amount, 0.01)
 
 /mob/living/carbon/human/adjustBruteLoss(amount)
 	if(amount > 0)
@@ -86,7 +86,7 @@
 		if(BP.is_robotic() && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
 		amount += BP.burn_dam
-	return amount
+	return round(amount, 0.01)
 
 /mob/living/carbon/human/adjustFireLoss(amount)
 	if(amount > 0)
@@ -99,15 +99,11 @@
 // =============================================
 
 /mob/living/carbon/human/getToxLoss()
-	if(reagents.has_reagent("aclometasone")) // Doesn't modify our toxLoss, but pretends that we aren't intoxified.
-		return 0
 	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
 		toxloss = 0
 	return ..()
 
 /mob/living/carbon/human/adjustToxLoss(amount)
-	if(reagents.has_reagent("aclometasone")) // Doesn't allow to modify our toxLoss.
-		return
 	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
 		toxloss = 0
 	else
@@ -115,8 +111,6 @@
 		..(amount)
 
 /mob/living/carbon/human/setToxLoss(amount)
-	if(reagents.has_reagent("aclometasone")) // Doesn't allow to modify our toxLoss.
-		return
 	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
 		toxloss = 0
 	else
@@ -155,6 +149,8 @@
 	if(species.flags[IS_SYNTHETIC])
 		return
 
+	time_of_last_damage = world.time
+
 	var/heal_prob = max(0, 80 - getCloneLoss())
 	var/mut_prob = min(80, getCloneLoss()+10)
 	if (amount > 0)
@@ -185,7 +181,7 @@
 
 // =============================================
 
-/mob/living/carbon/human/Stun(amount)
+/mob/living/carbon/human/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
 	if(HULK in mutations)
 		stunned = 0
 	else

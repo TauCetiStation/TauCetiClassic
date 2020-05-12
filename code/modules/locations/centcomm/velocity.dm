@@ -23,13 +23,13 @@
 	layer = 2.7
 
 /obj/structure/sign/monorail_map
-	name = "\improper Velocity monorail map"
+	name = "Velocity monorail map"
 	desc = "A monorail plan. You are in there somewhere."
 	icon = 'code/modules/locations/centcomm/velocity_signs.dmi'
 	icon_state = "map"
 
 /obj/structure/sign/tablo
-	name = "\improper Velocity LED Display"
+	name = "Velocity LED Display"
 	desc = "A display, sometimes shows you useful information."
 	icon = 'code/modules/locations/centcomm/tablo.dmi'
 	icon_state = "tablo01"
@@ -41,7 +41,7 @@
 	icon = 'code/modules/locations/centcomm/monitor.dmi'
 
 /obj/structure/sign/velocity_shuttle
-	name = "\improper Velocity Shuttle"
+	name = "Velocity Shuttle"
 	desc = "Velocity Shuttle."
 	icon = 'code/modules/locations/centcomm/velocity_signs.dmi'
 	icon_state = "vel_s01"
@@ -55,42 +55,42 @@
 /obj/structure/sign/velocity_overlay
 	layer = 2
 	icon = 'code/modules/locations/centcomm/overlay_velocity.dmi'
-	name = "\improper Object"
+	name = "Object"
 	desc = "Just object."
 	icon_state = "tool"
 
 /obj/structure/sign/velocity_overlay/car_impala
 	layer = 4
 	icon = 'code/modules/locations/centcomm/car_impala.dmi'
-	name = "\improper Chevrolet Impala"
+	name = "Chevrolet Impala"
 	desc = "WoW! It's 1981 Chevrolet Impala Velocity!"
 	icon_state = "1981 Chevrolet Impala Velocity"
 
 /obj/structure/sign/velocity_overlay/car_carmageddon
 	layer = 4
 	icon = 'code/modules/locations/centcomm/car_carmageddon.dmi'
-	name = "\improper CGR <<CARMAGEDDON>>"
+	name = "CGR <<CARMAGEDDON>>"
 	desc = "A very big car!"
 	icon_state = "carmageddon"
 
 /obj/structure/sign/velocity_overlay/car_ferrari
 	layer = 4
 	icon = 'code/modules/locations/centcomm/car_ferrari.dmi'
-	name = "\improper Ferrari Daytona"
+	name = "Ferrari Daytona"
 	desc = "Ferrari Daytona."
 	icon_state = "Ferrari Daytona"
 
 /obj/structure/sign/velocity_overlay/car_M105
 	layer = 4
 	icon = 'code/modules/locations/centcomm/car_m105.dmi'
-	name = "\improper M105"
+	name = "M105"
 	desc = "M105."
 	icon_state = "M105"
 
 /obj/structure/sign/velocity_overlay/reklama
 	layer = 4
 	icon = 'code/modules/locations/centcomm/reklama.dmi'
-	name = "\improper Object"
+	name = "Object"
 	desc = "Just object."
 	icon_state = "SpaceBeer_Anim"
 
@@ -138,13 +138,13 @@
 /obj/structure/object_wall/velocity
 
 /obj/structure/sign/velocity_overlay/reklama/soda_ad
-	name = "\improper Space Cola Advertisement"
+	name = "Space Cola Advertisement"
 	desc = "Buy Space Cola! Or die of dehydration in space, because there is no soda cooler than Space Cola within a radius of 3 million kilometers!"
 	icon = 'code/modules/locations/centcomm/soda_ad.dmi'
 	icon_state = "soda"
 
 /obj/structure/sign/velocity_overlay/reklama/pda_x
-	name = "\improper PDA X Advertisement"
+	name = "PDA X Advertisement"
 	desc = "Buy your brand new PDA X today!"
 	icon = 'code/modules/locations/centcomm/monitor.dmi'
 	icon_state = "PDA_X_on"

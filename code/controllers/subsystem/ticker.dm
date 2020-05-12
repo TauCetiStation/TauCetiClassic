@@ -22,12 +22,6 @@ var/datum/subsystem/ticker/ticker
 
 	var/list/datum/mind/minds = list()//The people in the game. Used for objective tracking.
 
-	//These bible variables should be a preference
-	var/Bible_icon_state					//icon_state the chaplain has chosen for his bible
-	var/Bible_item_state					//item_state the chaplain has chosen for his bible
-	var/Bible_name							//name of the bible
-	var/Bible_deity_name					//name of chaplin's deity
-
 	var/random_players = 0					// if set to nonzero, ALL players who latejoin or declare-ready join will have random appearances/genders
 
 	var/list/syndicate_coalition = list()	// list of traitor-compatible factions
@@ -83,6 +77,8 @@ var/datum/subsystem/ticker/ticker
 			to_chat(world, "Please, setup your character and select ready. Game will start in [timeLeft/10] seconds")
 			current_state = GAME_STATE_PREGAME
 
+			log_initialization() // need to dump cached log
+
 		if(GAME_STATE_PREGAME)
 			//lobby stats for statpanels
 			totalPlayers = 0
@@ -130,7 +126,7 @@ var/datum/subsystem/ticker/ticker
 
 					world.send2bridge(
 						type = list(BRIDGE_ROUNDSTAT),
-						attachment_title = "Round is over",
+						attachment_title = "Round #[round_id] is over",
 						attachment_color = BRIDGE_COLOR_ANNOUNCE,
 					)
 
@@ -168,20 +164,22 @@ var/datum/subsystem/ticker/ticker
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
 	var/init_start = world.timeofday
 	//Create and announce mode
-	if(master_mode=="secret" || master_mode=="bs12" || master_mode=="tau classic")
+	if(config.is_hidden_gamemode(master_mode))
 		hide_mode = 1
 
 	var/list/datum/game_mode/runnable_modes
-	if(master_mode=="random" || master_mode=="secret")
-		runnable_modes = config.get_runnable_modes()
+	if (config.is_modeset(master_mode))
+		runnable_modes = config.get_runnable_modes(master_mode)
 
 		if (runnable_modes.len==0)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
 			return 0
 
-		if(secret_force_mode != "secret")
+		// hiding forced gamemode in secret
+		if(master_mode == "secret" && secret_force_mode != "secret")
 			var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
+			smode.modeset = master_mode
 			if(!smode.can_start())
 				message_admins("<span class='notice'>Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.</span>")
 			else
@@ -193,24 +191,14 @@ var/datum/subsystem/ticker/ticker
 		if(src.mode)
 			var/mtype = src.mode.type
 			src.mode = new mtype
-
-	else if(master_mode=="bs12" || master_mode=="tau classic")
-		runnable_modes = config.get_custom_modes(master_mode)
-		if (runnable_modes.len==0)
-			current_state = GAME_STATE_PREGAME
-			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
-			return 0
-		SSjob.ResetOccupations()
-		if(!src.mode)
-			src.mode = pick(runnable_modes)
-		if(src.mode)
-			var/mtype = src.mode.type
-			src.mode = new mtype
+			src.mode.modeset = master_mode
 
 	else
+		// master_mode is config tag of gamemode
 		src.mode = config.pick_mode(master_mode)
 
-	if (!src.mode.can_start())
+	// Before assign the crew setup antag roles without crew jobs
+	if (!src.mode.assign_outsider_antag_roles())
 		message_admins("<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed.")
 		qdel(mode)
 		mode = null
@@ -243,6 +231,7 @@ var/datum/subsystem/ticker/ticker
 		query_round_game_mode.Execute()
 
 	setup_economy()
+	setup_religions()
 
 	//start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
@@ -257,7 +246,7 @@ var/datum/subsystem/ticker/ticker
 	world.send2bridge(
 		type = list(BRIDGE_ROUNDSTAT),
 		attachment_title = "Round is started, gamemode - **[master_mode]**",
-		attachment_msg = "Join now: <[BYOND_JOIN_LINK]>",
+		attachment_msg = "Round #[round_id]; Join now: <[BYOND_JOIN_LINK]>",
 		attachment_color = BRIDGE_COLOR_ANNOUNCE,
 	)
 
@@ -277,8 +266,9 @@ var/datum/subsystem/ticker/ticker
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				qdel(S)
-
-		SSvote.started_time = world.time
+		if (length(SSvote.delay_after_start))
+			for (var/DT in SSvote.delay_after_start)
+				SSvote.last_vote_time[DT] = world.time
 
 		//Print a list of antagonists to the server log
 		antagonist_announce()
@@ -553,6 +543,10 @@ var/datum/subsystem/ticker/ticker
 	return TRUE
 
 /world/proc/has_round_started()
-	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
-		return TRUE
-	return FALSE
+	return (ticker && ticker.current_state >= GAME_STATE_PLAYING)
+
+/world/proc/has_round_finished()
+	return (ticker && ticker.current_state >= GAME_STATE_FINISHED)
+
+/world/proc/is_round_preparing()
+	return (ticker && ticker.current_state == GAME_STATE_PREGAME)

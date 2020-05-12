@@ -59,7 +59,7 @@
 			user << browse(entity_ja(message), "window=[M.name]_scan_report;size=400x400;can_resize=1")
 			onclose(user, "[M.name]_scan_report")
 		else
-			user.show_message(message)
+			to_chat(user, message)
 		return
 
 	user.visible_message("<span class='notice'> [user] has analyzed [M]'s components.</span>","<span class='notice'> You have analyzed [M]'s components.</span>")
@@ -115,4 +115,4 @@
 		user << browse(entity_ja(message), "window=[M.name]_scan_report;size=400x400;can_resize=1")
 		onclose(user, "[M.name]_scan_report")
 	else
-		user.show_message(message)
+		to_chat(user, message)

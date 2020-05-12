@@ -17,7 +17,7 @@
 		var/obj/item/stack/sheet/metal/M = O
 		if (src.metal_amount < 150000.0)
 			var/count = 0
-			src.overlays += "fab-load-metal"
+			src.add_overlay("fab-load-metal")
 			spawn(15)
 				if(!M.get_amount())
 					return
@@ -26,7 +26,7 @@
 					count++
 
 				to_chat(user, "You insert [count] metal sheet\s into the fabricator.")
-				src.overlays -= "fab-load-metal"
+				src.cut_overlay("fab-load-metal")
 				updateDialog()
 		else
 			to_chat(user, "The robot part maker is full. Please remove metal from the robot part maker in order to insert more.")
@@ -115,7 +115,7 @@
 
 					src.being_built = new building(src)
 
-					src.overlays += "fab-active"
+					src.add_overlay("fab-active")
 
 					spawn (build_time)
 						if (!isnull(src.being_built))
@@ -123,6 +123,6 @@
 							src.being_built = null
 						set_power_use(IDLE_POWER_USE)
 						src.operating = 0
-						src.overlays -= "fab-active"
+						src.cut_overlay("fab-active")
 
 	updateUsrDialog()

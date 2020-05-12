@@ -97,6 +97,10 @@
 			G.fields["notes"] = H.gen_record
 		else
 			G.fields["notes"] = "No notes found."
+		if(H.mind.initial_account)
+			G.fields["acc_number"]	= H.mind.initial_account.account_number
+		else
+			G.fields["acc_number"]	= 0
 		general += G
 
 		//Medical Record

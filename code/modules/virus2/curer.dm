@@ -28,16 +28,13 @@
 		data["virus2"] |= I:virus2
 		product.reagents.add_reagent("blood",30,data)
 
-		virusing = 1
-		addtimer(CALLBACK(src, .proc/unvirus), 1200)
+		virusing = TRUE
+		addtimer(VARSET_CALLBACK(src, virusing, FALSE), 1200)
 
 		state("The [src.name] Buzzes", "blue")
 		return
 	..()
 	return
-
-/obj/machinery/computer/curer/proc/unvirus()
-	virusing = 0
 
 /obj/machinery/computer/curer/ui_interact(mob/user)
 	var/dat

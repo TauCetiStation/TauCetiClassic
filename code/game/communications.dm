@@ -183,7 +183,7 @@ var/global/datum/controller/radio/radio_controller
 
 /datum/radio_frequency
 	var/frequency as num
-	var/list/list/obj/devices = list()
+	var/list/obj/devices = list()
 
 /datum/radio_frequency/proc/post_signal(obj/source, datum/signal/signal, filter = null, range = null)
 	//log_admin("DEBUG \[[world.timeofday]\]: post_signal {source=\"[source]\", [signal.debug_print()], filter=[filter]}")

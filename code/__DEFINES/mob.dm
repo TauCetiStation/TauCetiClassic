@@ -40,9 +40,6 @@
 #define O_KIDNEYS  "kidneys"
 #define O_APPENDIX "appendix"
 
-#define AGE_MIN 25			//youngest a character can be
-#define AGE_MAX 85			//oldest a character can be
-
 #define LEFT  1
 #define RIGHT 2
 
@@ -105,7 +102,6 @@
 
 // Factor of how fast mob nutrition decreases
 #define METABOLISM_FACTOR 1 // standart (for humans, other)
-#define SKRELL_METABOLISM_FACTOR 2 // Twice the speed for half the sense!
 
 // Taste sensitivity - the more the more reagents you'll taste
 #define TASTE_SENSITIVITY_NORMAL 1
@@ -137,3 +133,7 @@
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
+
+// Indicators.
+#define IND_STAT          "stat"
+#define IND_STAT_NOCLIENT "stat_noclient"

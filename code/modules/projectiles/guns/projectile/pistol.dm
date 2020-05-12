@@ -10,7 +10,7 @@
 	can_be_holstered = TRUE
 
 /obj/item/weapon/gun/projectile/wjpp
-	name = "\improper W&J PP"
+	name = "W&J PP"
 	desc = "Double action semi-automatic 9mm pistol, popular with police and private security for being reliable, concealable and cheap."
 	icon_state = "9mm_wjpp"
 	item_state = "9mm_wjpp"
@@ -24,7 +24,7 @@
 /obj/item/weapon/gun/projectile/wjpp/atom_init()
 	. = ..()
 	mag = image('icons/obj/gun.dmi', "mag")
-	overlays += mag
+	add_overlay(mag)
 
 /obj/item/weapon/gun/projectile/wjpp/spec
 	icon_state = "9mm_wjpp_spec"
@@ -39,14 +39,14 @@
 	return
 
 /obj/item/weapon/gun/projectile/wjpp/attack_self(mob/user)
-	overlays -= mag
+	cut_overlay(mag)
 	..()
 
 /obj/item/weapon/gun/projectile/wjpp/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if ((!magazine && (istype(AM, mag_type) || istype(AM, mag_type2))))
-			overlays += mag
+			add_overlay(mag)
 			..()
 
 /obj/item/weapon/gun/projectile/automatic/silenced/update_icon()
@@ -64,7 +64,7 @@
 	can_be_holstered = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
 
-/obj/item/weapon/gun/projectile/automatic/deagle/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/projectile/automatic/deagle/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	update_icon()
 	return
@@ -90,10 +90,7 @@
 	origin_tech = "combat=3"
 	mag_type = /obj/item/ammo_box/magazine/m75
 
-/obj/item/weapon/gun/projectile/automatic/gyropistol/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
-	..()
-
-/obj/item/weapon/gun/projectile/automatic/gyropistol/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/projectile/automatic/gyropistol/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
 		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)
@@ -107,7 +104,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/pistol
-	name = "\improper Stechkin pistol"
+	name = "Stechkin pistol"
 	desc = "A small, easily concealable gun. Uses 9mm rounds."
 	icon_state = "pistol"
 	w_class = ITEM_SIZE_SMALL
@@ -134,7 +131,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/colt1911
 	desc = "A cheap Martian knock-off of a Colt M1911. Uses less-than-lethal .45 rounds."
-	name = "\improper Colt M1911"
+	name = "Colt M1911"
 	icon_state = "colt"
 	item_state = "colt"
 	w_class = ITEM_SIZE_SMALL
@@ -143,7 +140,7 @@
 	can_be_holstered = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_colt1911.ogg'
 
-/obj/item/weapon/gun/projectile/automatic/colt1911/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/projectile/automatic/colt1911/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	update_icon()
 	return
@@ -157,7 +154,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/sec_pistol
-	name = "\improper pistol"
+	name = "pistol"
 	desc = "AT-7 .45 caliber pistol."
 	icon_state = "at7"
 	fire_sound = 'sound/weapons/guns/gunshot_at7.wav'
@@ -169,12 +166,12 @@
 
 /obj/item/weapon/gun/projectile/sec_pistol/proc/update_magazine()
 	if(magazine)
-		src.overlays = 0
-		overlays += image('icons/obj/gun.dmi', "at7-mag")
+		cut_overlays()
+		add_overlay(image('icons/obj/gun.dmi', "at7-mag"))
 		return
 
 /obj/item/weapon/gun/projectile/sec_pistol/update_icon(load = 0)
-	src.overlays = 0
+	cut_overlays()
 	update_magazine()
 	if(load)
 		icon_state = "[initial(icon_state)]"
@@ -183,7 +180,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/sec_pistol/acm38
-	name = "\improper pistol"
+	name = "pistol"
 	desc = "Seegert ACM38 pistol - when you need be TACTICOOL."
 	icon_state = "acm38"
 	item_state = "colt"

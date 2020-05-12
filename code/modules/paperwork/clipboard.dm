@@ -1,6 +1,7 @@
 /obj/item/weapon/clipboard
 	name = "clipboard"
 	icon = 'icons/obj/bureaucracy.dmi'
+	hitsound = list('sound/items/misc/folder-slap.ogg')
 	icon_state = "clipboard"
 	item_state = "clipboard"
 	throwforce = 0
@@ -21,7 +22,7 @@
 		if(!(istype(over_object, /obj/screen) ))
 			return ..()
 
-		if(!M.restrained() && !M.stat)
+		if(!M.incapacitated())
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))
@@ -35,13 +36,13 @@
 			return
 
 /obj/item/weapon/clipboard/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(toppaper)
-		overlays += toppaper.icon_state
-		overlays += toppaper.overlays
+		add_overlay(toppaper.icon_state)
+		add_overlay(toppaper.overlays)
 	if(haspen)
-		overlays += "clipboard_pen"
-	overlays += "clipboard_over"
+		add_overlay("clipboard_pen")
+	add_overlay("clipboard_over")
 	return
 
 /obj/item/weapon/clipboard/attackby(obj/item/weapon/W, mob/user)
@@ -83,7 +84,7 @@
 
 /obj/item/weapon/clipboard/Topic(href, href_list)
 	..()
-	if((usr.stat || usr.restrained()))
+	if(usr.incapacitated())
 		return
 
 	if(usr.contents.Find(src))

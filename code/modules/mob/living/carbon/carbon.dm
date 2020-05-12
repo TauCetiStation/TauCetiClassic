@@ -10,7 +10,7 @@
 	..()
 
 	// Increase germ_level regularly
-	if(germ_level < GERM_LEVEL_AMBIENT && prob(80))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
+	if(germ_level < GERM_LEVEL_AMBIENT && prob(80) && !IS_IN_STASIS(src))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
 		germ_level++
 
 /mob/living/carbon/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
@@ -20,11 +20,13 @@
 		if(nutrition && stat != DEAD)
 			var/met_factor = get_metabolism_factor()
 			nutrition -= met_factor * 0.01
-			if(has_trait(TRAIT_STRESS_EATER))
-				nutrition -= met_factor * getHalLoss() * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
+			if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
+				var/pain = getHalLoss()
+				if(pain > 0)
+					nutrition -= met_factor * pain * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
 			if(m_intent == "run")
 				nutrition -= met_factor * 0.01
-		if((FAT in mutations) && m_intent == "run" && bodytemperature <= 360)
+		if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == "run" && bodytemperature <= 360)
 			bodytemperature += 2
 
 		// Moving around increases germ_level faster
@@ -51,9 +53,7 @@
 		return
 	if(user in src.stomach_contents)
 		if(prob(40))
-			for(var/mob/M in hearers(4, src))
-				if(M.client)
-					M.show_message(text("<span class='rose'>You hear something rumbling inside [src]'s stomach...</span>"), 2)
+			audible_message("<span class='rose'>You hear something rumbling inside [src]'s stomach...</span>", hearing_distance = 4)
 			var/obj/item/I = user.get_active_hand()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
@@ -64,9 +64,7 @@
 					H.updatehealth()
 				else
 					src.take_bodypart_damage(d)
-				for(var/mob/M in viewers(user, null))
-					if(M.client)
-						M.show_message(text("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>"), 2)
+				visible_message("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>")
 				playsound(user, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 
 				if(prob(src.getBruteLoss() - 50))
@@ -88,9 +86,7 @@
 		if(M in src.stomach_contents)
 			src.stomach_contents.Remove(M)
 		M.loc = src.loc
-		for(var/mob/N in viewers(src, null))
-			if(N.client)
-				N.show_message(text("<span class='danger'>[M] bursts out of [src]!</span>"), 2)
+		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
 	. = ..()
 
 /mob/living/carbon/MiddleClickOn(atom/A)
@@ -146,8 +142,8 @@
 	if(shock_damage<1)
 		return 0
 	apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
-	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	if(shock_damage > 10)
+		playsound(src, 'sound/effects/electric_shock.ogg', VOL_EFFECTS_MASTER, tesla_shock ? 10 : 50, FALSE) //because Tesla proc causes a lot of sounds
 		visible_message(
 			"<span class='rose'>[src] was shocked by the [source]!</span>", \
 			"<span class='danger'>You feel a powerful shock course through your body!</span>", \
@@ -163,6 +159,7 @@
 				Stun(8)
 				Weaken(8)
 	else
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		visible_message(
 			"<span class='rose'>[src] was mildly shocked by the [source].</span>", \
 			"<span class='rose'>You feel a mild shock course through your body.</span>", \
@@ -178,6 +175,14 @@
 			if(item_in_hand:wielded)
 				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
 				return
+		else if(istype(item_in_hand, /obj/item/weapon/gun/energy/sniperrifle))
+			var/obj/item/weapon/gun/energy/sniperrifle/s = item_in_hand
+			if(s.zoom)
+				s.toggle_zoom()
+		else if(istype(item_in_hand, /obj/item/weapon/gun/energy/pyrometer/ce))
+			var/obj/item/weapon/gun/energy/pyrometer/ce/C = item_in_hand
+			if(C.zoomed)
+				C.toggle_zoom()
 	src.hand = !( src.hand )
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
 		if(hand)	//This being 1 means the left hand is in use
@@ -249,7 +254,7 @@
 					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
-				src.show_message(text("\t <span class='[status == "OK" ? "notice " : "warning"]'>My [] is [].</span>", BPname, status), 1)
+				to_chat(src, "\t <span class='[status == "OK" ? "notice " : "warning"]'>My [BPname] is [status].</span>")
 
 			if(roundstart_quirks.len)
 				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
@@ -267,9 +272,9 @@
 				H.w_uniform.add_fingerprint(M)
 
 			if(lying)
-				src.sleeping = max(0,src.sleeping-5)
+				AdjustSleeping(-10 SECONDS)
 				if (!M.lying)
-					if(!src.sleeping)
+					if(!IsSleeping())
 						src.resting = 0
 					if(src.crawling)
 						if(crawl_can_use() && src.pass_flags & PASSCRAWL)
@@ -278,7 +283,7 @@
 					M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
 				else
-					if(!src.sleeping)
+					if(!IsSleeping())
 						M.visible_message("<span class='notice'>[M] cuddles with [src] to make [t_him] feel better!</span>", \
 								"<span class='notice'>You cuddle with [src] to make [t_him] feel better!</span>")
 					else
@@ -318,7 +323,7 @@
 	set name = "Crawl"
 	set category = "IC"
 
-	if( stat || weakened || stunned || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled)
+	if(incapacitated() || (status_flags & FAKEDEATH) || buckled)
 		return
 	if(crawl_getup)
 		return
@@ -346,7 +351,6 @@
 		if(!crawl_can_use())
 			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
 			return
-		layer = 3.9
 
 	pass_flags ^= PASSCRAWL
 	crawling = !crawling
@@ -411,7 +415,7 @@
 
 /mob/living/carbon/throw_item(atom/target)
 	throw_mode_off()
-	if(usr.stat || !target)
+	if(usr.incapacitated() || !target)
 		return
 	if(target.type == /obj/screen)
 		return
@@ -547,11 +551,11 @@
 	set name = "Sleep"
 	set category = "IC"
 
-	if(sleeping)
+	if(IsSleeping())
 		to_chat(src, "<span class='rose'>You are already sleeping</span>")
 		return
 	if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
-		sleeping = 20 //Short nap
+		SetSleeping(40 SECONDS) //Short nap
 
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
@@ -659,7 +663,7 @@
 			return 1
 		else if(locate(/obj/structure/stool/bed/roller, src.loc))
 			return -5
-		else if(locate(/obj/machinery/optable, src.loc)||locate(/obj/structure/stool/bed, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
+		else if(locate(/obj/machinery/optable, src.loc) || locate(/obj/structure/stool/bed, src.loc) || locate(/obj/structure/altar_of_gods, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
 			return -4
 		else
 			return -6
@@ -668,7 +672,7 @@
 
 /mob/living/carbon/get_standard_pixel_x_offset(lying_current = 0)
 	if(lying)
-		if(locate(/obj/machinery/optable, src.loc)||locate(/obj/structure/stool/bed, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
+		if(locate(/obj/machinery/optable, src.loc) || locate(/obj/structure/stool/bed, src.loc) || locate(/obj/structure/altar_of_gods, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
 			switch(src.lying_current)
 				if(90)	return 2
 				if(270)	return -2
@@ -894,3 +898,10 @@
 					break
 			R.reaction(loc)
 			adjustToxLoss(-toxins_puked)
+
+/mob/living/carbon/update_stat()
+	if(stat == DEAD)
+		return
+	if(IsSleeping())
+		stat = UNCONSCIOUS
+		blinded = TRUE

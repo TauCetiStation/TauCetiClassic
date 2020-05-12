@@ -88,7 +88,7 @@
 			return
 
 		if(CC.use(1))
-			overlays += image('icons/obj/items.dmi',"coin_string_overlay")
+			add_overlay(image('icons/obj/items.dmi',"coin_string_overlay"))
 			string_attached = 1
 			to_chat(user, "<span class='notice'>You attach a string to the coin.</span>")
 			return
@@ -103,7 +103,7 @@
 			return
 
 		new /obj/item/stack/cable_coil/red(user.loc, 1)
-		overlays = list()
+		cut_overlays()
 		string_attached = null
 		to_chat(user, "<span class='notice'>You detach the string from the coin.</span>")
 	else

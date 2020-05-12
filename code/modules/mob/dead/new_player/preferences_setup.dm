@@ -6,7 +6,10 @@
 		else
 			gender = FEMALE
 	s_tone = random_skin_tone()
-	h_style = random_hair_style(gender, species)
+	if(species == IPC)
+		h_style = random_ipc_monitor(ipc_head)
+	else
+		h_style = random_hair_style(gender, species)
 	f_style = random_facial_hair_style(gender, species)
 	randomize_hair_color("hair")
 	randomize_hair_color("facial")
@@ -16,7 +19,8 @@
 	undershirt = rand(1,undershirt_t.len)
 	socks = rand(1,socks_t.len)
 	backbag = 2
-	age = rand(AGE_MIN,AGE_MAX)
+	var/datum/species/S = all_species[species]
+	age = rand(S.min_age, S.max_age)
 	if(H)
 		copy_to(H)
 
@@ -213,9 +217,15 @@
 				previewJob = job
 				break
 
+	var/datum/species/S = all_species[species]
+	if(S)
+		S.before_job_equip(mannequin, previewJob, TRUE)
 	if(previewJob)
 		mannequin.job = previewJob.title
 		previewJob.equip(mannequin, TRUE)
+	if(S)
+		S.after_job_equip(mannequin, previewJob, TRUE)
 
+	COMPILE_OVERLAYS(mannequin)
 	parent.show_character_previews(new /mutable_appearance(mannequin))
 	qdel(mannequin)

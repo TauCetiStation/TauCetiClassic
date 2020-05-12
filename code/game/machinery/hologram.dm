@@ -30,7 +30,7 @@ Possible to do for anyone motivated enough:
 var/const/HOLOPAD_MODE = 0
 
 /obj/machinery/hologram/holopad
-	name = "\improper AI holopad"
+	name = "AI holopad"
 	desc = "It's a floor-mounted device for projecting holographic images. It is activated remotely."
 	icon_state = "holopad0"
 
@@ -134,7 +134,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> [speaking.format_message(text, verb)]</span></i>"
 		else
 			rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> [verb], <span class='message'>\"[text]\"</span></span></i>"
-		master.show_message(rendered, 2)
+		to_chat(master, rendered)
 	return
 
 /obj/machinery/hologram/holopad/proc/create_holo(mob/living/silicon/ai/A, turf/T = loc)

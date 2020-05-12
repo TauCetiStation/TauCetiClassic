@@ -76,6 +76,10 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	if(orbiting_balls.len)
 		to_chat(user, "The amount of orbiting mini-balls is [orbiting_balls.len].")
 
+/obj/singularity/energy_ball/get_current_temperature()
+	// #define COIL_EFFICENCY_LOSS_FACTOR 2
+	// since coils divide the power by 2, to be truthful - we gotta multiply it by 2 joy pain
+	return 2 * WATTS_2_CELSIUM * (TESLA_DEFAULT_POWER + orbiting_balls.len * TESLA_MINI_POWER)
 
 /obj/singularity/energy_ball/proc/move_the_basket_ball(move_amount)
 	//we face the last thing we zapped, so this lets us favor that direction a bit

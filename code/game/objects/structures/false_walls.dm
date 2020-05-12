@@ -14,7 +14,9 @@
 		/turf/simulated/wall,
 		/turf/simulated/wall/r_wall,
 		/obj/structure/falsewall,
-		/obj/structure/falsewall/reinforced
+		/obj/structure/falsewall/reinforced,
+		/obj/structure/girder,
+		/obj/structure/girder/reinforced
 	)
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = FALSE

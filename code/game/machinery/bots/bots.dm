@@ -1,5 +1,13 @@
 // AI (i.e. game AI, not the AI player) controlled bots
 
+#define SECBOT_IDLE         0  // idle
+#define SECBOT_HUNT         1  // found target, hunting
+#define SECBOT_PREP_ARREST  2  // at target, preparing to arrest
+#define SECBOT_ARREST       3  // arresting target
+#define SECBOT_START_PATROL 4  // start patrol
+#define SECBOT_PATROL       5  // patrolling
+#define SECBOT_SUMMON       6  // summoned by PDA
+
 /obj/machinery/bot
 	icon = 'icons/obj/aibots.dmi'
 	layer = MOB_LAYER
@@ -65,7 +73,7 @@
 		else
 			to_chat(user, "<span class='danger'>[src]'s parts look very loose!</span>")
 
-/obj/machinery/bot/attack_alien(mob/living/carbon/alien/user)
+/obj/machinery/bot/attack_alien(mob/living/carbon/xenomorph/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	src.health -= rand(15,30)*brute_dam_coeff

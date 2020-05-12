@@ -49,7 +49,7 @@
 		new /obj/item/device/camera_bug(loc)
 	CancelAdvancedAiming(1) // just to be sure
 	if(intruder)
-		overlays -= mob_overlay
+		cut_overlay(mob_overlay)
 		QDEL_NULL(mob_overlay)
 		intruder << browse(null, "window=droppod")
 		intruder.forceMove(turf)
@@ -57,7 +57,7 @@
 	if(second_intruder)
 		second_intruder.forceMove(turf)
 		second_intruder = null
-	overlays.Cut()
+	cut_overlays()
 	if(Stored_Nuclear)
 		Stored_Nuclear.forceMove(turf)
 		Stored_Nuclear = null
@@ -105,33 +105,33 @@
 	..()
 	if(!black_list_areas)
 		black_list_areas = list(
-			/area/aisat,
-			/area/turret_protected/aisat,
-			/area/turret_protected/ai,
-			/area/turret_protected/ai_upload,
-			/area/turret_protected/aisat_interior,
-			/area/ai_monitored/storage/secure,
-			/area/tcommsat/computer,
-			/area/tcommsat/chamber,
-			/area/AIsattele,
-			/area/crew_quarters/captain,
-			/area/crew_quarters/heads,
-			/area/bridge,
-			/area/bridge/meeting_room,
-			/area/teleporter,
-			/area/security/nuke_storage,
-			/area/security/armoury,
-			/area/security/warden,
-			/area/security/main,
-			/area/security/brig,
-			/area/security/range,
-			/area/security/hos,
-			/area/security/prison,
-			/area/security/execution,
-			/area/security/forensic_office,
-			/area/security/detectives_office,
-			/area/server,
-			/area/comms
+			/area/station/aisat,
+			/area/station/aisat/antechamber,
+			/area/station/aisat/ai_chamber,
+			/area/station/bridge/ai_upload,
+			/area/station/aisat/antechamber_interior,
+			/area/station/ai_monitored/storage_secure,
+			/area/station/tcommsat/computer,
+			/area/station/tcommsat/chamber,
+			/area/station/aisat/teleport,
+			/area/station/bridge/captain_quarters,
+			/area/station/bridge/hop_office,
+			/area/station/bridge,
+			/area/station/bridge/meeting_room,
+			/area/station/bridge/teleporter,
+			/area/station/bridge/nuke_storage,
+			/area/station/security/armoury,
+			/area/station/security/warden,
+			/area/station/security/main,
+			/area/station/security/brig,
+			/area/station/security/range,
+			/area/station/security/hos,
+			/area/station/security/prison,
+			/area/station/security/execution,
+			/area/station/security/forensic_office,
+			/area/station/security/detectives_office,
+			/area/station/bridge/server,
+			/area/station/bridge/comms
 			)
 	if(!areas)
 		areas = teleportlocs.Copy()
@@ -148,7 +148,7 @@
 	set name = "Enter Drop Pod"
 	set src in orange(1)
 
-	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || usr == second_intruder || usr.incapacitated() || usr.lying)
+	if(!(ishuman(usr) || isrobot(usr)) || usr == second_intruder || usr.incapacitated())
 		return
 	if(stored_dna)
 		var/passed = FALSE
@@ -169,10 +169,10 @@
 	if(do_after(usr, 10, 1, src) && !intruder && !usr.buckled && usr != second_intruder)
 		usr.forceMove(src)
 		mob_overlay = image(usr.icon, usr.icon_state)
-		mob_overlay.overlays = usr.overlays
+		mob_overlay.copy_overlays(usr)
 		mob_overlay.pixel_x = 1
 		mob_overlay.pixel_y = 25
-		overlays += mob_overlay
+		add_overlay(mob_overlay)
 		intruder = usr
 		verbs -= /obj/structure/droppod/verb/move_inside
 	return
@@ -186,7 +186,7 @@
 		return
 	intruder << browse(null, "window=droppod")
 	CancelAdvancedAiming() // just to be sure
-	overlays -= mob_overlay
+	cut_overlay(mob_overlay)
 	QDEL_NULL(mob_overlay)
 	icon_state = Stored_Nuclear ? "dropod_opened_n" : "dropod_opened"
 	if(item_state)
@@ -199,7 +199,7 @@
 	set category = "Drop Pod"
 	set name = "Enter Drop Pod as Passenger"
 	set src in orange(1)
-	if(!(ishuman(usr) || isrobot(usr)) || usr == intruder || usr.stat == DEAD || usr.incapacitated() || usr.lying)
+	if(!(ishuman(usr) || isrobot(usr)) || usr == intruder || usr.incapacitated())
 		return
 	if (usr.buckled)
 		to_chat(usr, "<span class='warning'>You can't climb into the [src] while buckled!</span>")
@@ -248,14 +248,14 @@
 	if(!isturf(loc))
 		to_chat(intruder, "<span class='userdanger'>You must be on ground to drop!</span>")
 		return
-	if(!Challenge)
+	if(war_device_activated)
 		if(world.time < SYNDICATE_CHALLENGE_TIMER)
 			to_chat(intruder, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least \
 		 	[round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
 		 	more minutes to allow them to prepare.</span>")
 			return
 	else
-		Challenge.Dropod_used = TRUE
+		war_device_activation_forbidden = TRUE
 	var/area/area_to_deploy = allowed_areas.areas[pick(allowed_areas.areas)]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(area_to_deploy.type))
@@ -323,7 +323,7 @@
 	set category = "Drop Pod"
 	set name = "Start Drop"
 	set src = orange(1)
-	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || !isturf(loc))
+	if(!(ishuman(usr) || isrobot(usr)) || usr.incapacitated() || !isturf(loc))
 		return FALSE
 	if(intruder)
 		if(intruder != usr)
@@ -385,7 +385,7 @@
 	icon_state = Stored_Nuclear ? "dropod_opened_n" : "dropod_opened"
 	if(item_state)
 		icon_state += item_state
-	overlays -= image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3)
+	cut_overlay(image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3))
 	new /obj/effect/overlay/droppod_open(loc, item_state)
 	sleep(50)
 	if(uses <= 0)
@@ -457,7 +457,7 @@
 	set category = "Drop Pod"
 	set name = "Eject Items"
 	set src in orange(1)
-	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || usr.incapacitated() || usr.lying || flags & STATE_DROPING || !isturf(loc))
+	if(!(ishuman(usr) || isrobot(usr))|| usr.incapacitated() || flags & STATE_DROPING || !isturf(loc))
 		return
 	if(flags & IS_LOCKED)
 		to_chat(usr, "<span class='danger'>Interface is block down!</span>")
@@ -476,7 +476,7 @@
 	set category = "Drop Pod"
 	set name = "Nuclear Bomb"
 	set src in orange(1)
-	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || usr.incapacitated() || usr.lying || flags & STATE_DROPING || !Stored_Nuclear)
+	if(!(ishuman(usr) || isrobot(usr))|| usr.incapacitated() || flags & STATE_DROPING || !Stored_Nuclear)
 		return
 	if(usr.is_busy()) return
 	visible_message("<span class='notice'>[usr] start ejecting [Stored_Nuclear] from [src]!</span>","<span class='notice'>You start ejecting [Stored_Nuclear] from [src]!</span>")
@@ -659,10 +659,10 @@
 		if(flags & IS_LOCKED)
 			flags &= ~IS_LOCKED
 			to_chat(intruder, "<span class='notice'>You unblocked [src].</span>")
-			overlays -= image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3)
+			cut_overlay(image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3))
 		else
 			flags |= IS_LOCKED
-			overlays += image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3)
+			add_overlay(image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3))
 			to_chat(intruder, "<span class='notice'>You blocked [src].</span>")
 		send_byjax(intruder, "droppod.browser", "commands", get_commands())
 		return
@@ -693,14 +693,14 @@
 	flags = POOR_AIMING
 
 /obj/structure/droppod/Syndi/Aiming()
-	if(!Challenge)
+	if(war_device_activated)
 		if(world.time < SYNDICATE_CHALLENGE_TIMER)
 			to_chat(intruder, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least \
 		 		[round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
 		 		more minutes to allow them to prepare.</span>")
 			return
 	else
-		Challenge.Dropod_used = TRUE
+		war_device_activation_forbidden = TRUE
 
 	if(droped)
 		if(!(flags & IS_LOCKED))
@@ -710,7 +710,7 @@
 			to_chat(intruder, "<span class='userdanger'>You must be on ground to drop!</span>")
 			return
 		var/list/L = list()
-		for(var/turf/T in get_area_turfs(/area/syndicate_mothership/droppod_garage))
+		for(var/turf/T in get_area_turfs(/area/custom/syndicate_mothership/droppod_garage))
 			if(!T.density)
 				L+=T
 		AimTarget = pick(L)
@@ -770,7 +770,7 @@
 
 /obj/item/device/drop_caller/Syndi/attack_self(mob/user) //hardcoded spawning Syndi Drop Pods only in "syndicate garage"
 	var/area/syndicate_loc = get_area(user)
-	if(!istype(syndicate_loc, /area/syndicate_mothership/droppod_garage))
+	if(!istype(syndicate_loc, /area/custom/syndicate_mothership/droppod_garage))
 		to_chat(user, "<span class='userdanger'>You must be in the Drop Launch zone.</span>")
 		return
 	var/min_pods_spawned = INFINITY

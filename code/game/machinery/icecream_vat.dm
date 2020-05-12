@@ -224,7 +224,7 @@ var/list/ingredients_source = list(
 /obj/item/weapon/reagent_containers/food/snacks/icecream/proc/add_ice_cream(flavour)
 	var/flavour_name = get_icecream_flavour_string(flavour)
 	name = "[flavour_name] icecream"
-	src.overlays += "icecream_[flavour_name]"
+	src.add_overlay("icecream_[flavour_name]")
 	desc = "Delicious [cone_type] cone with a dollop of [flavour_name] ice cream."
 	ice_creamed = 1
 

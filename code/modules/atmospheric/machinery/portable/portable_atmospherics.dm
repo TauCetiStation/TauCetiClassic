@@ -185,5 +185,5 @@
 			gases += ", [gas]"
 		else
 			gases = gas
-	log_admin("[usr] ([usr.ckey]) opened '[src.name]' containing [gases].")
-	message_admins("[usr] ([usr.ckey]) opened '[src.name]' containing [gases]. [ADMIN_JMP(src)]")
+	log_admin("[key_name(usr)] opened '[src.name]' containing [gases].")
+	message_admins("[key_name_admin(usr)] opened '[src.name]' containing [gases]. [ADMIN_JMP(src)]")

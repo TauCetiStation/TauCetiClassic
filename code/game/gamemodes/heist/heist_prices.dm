@@ -44,7 +44,7 @@
 
 /obj/item/ammo_casing/price = 10
 /obj/item/ammo_casing/energy/price = 0
-/obj/item/ammo_casing/l10/price = 0
+/obj/item/ammo_casing/plasma/price = 0
 /obj/item/ammo_casing/magic/price = 0
 
 /obj/item/projectile/bullet/price = 50
@@ -54,7 +54,7 @@
 /obj/item/projectile/bullet/gyro/price = 175
 /obj/item/projectile/bullet/heavy/a145/price = 708
 /obj/item/projectile/bullet/incendiary/price = 522
-/obj/item/projectile/bullet/midbullet/price = 144
+/obj/item/projectile/bullet/smg/price = 144
 /obj/item/projectile/bullet/midbullet2/price = 187
 /obj/item/projectile/bullet/midbullet3/price = 210
 /obj/item/projectile/bullet/pellet/price = 11
@@ -227,7 +227,7 @@
 /obj/item/weapon/coin/gold/price = 7300
 /obj/item/weapon/coin/uranium/price = 3200
 /obj/item/weapon/defibrillator/price = 300
-/obj/item/weapon/extinguisher/price = 140
+/obj/item/weapon/reagent_containers/spray/extinguisher/price = 140
 /obj/item/weapon/gun/price = 2000
 /obj/item/weapon/gun/energy/gun/nuclear/price = 7770
 /obj/item/weapon/gun/energy/ionrifle/price = 5860

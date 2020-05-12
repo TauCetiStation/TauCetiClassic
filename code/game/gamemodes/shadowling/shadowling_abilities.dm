@@ -7,8 +7,9 @@
 
 /obj/effect/proc_holder/spell/targeted/glare/cast(list/targets)
 	for(var/mob/living/carbon/human/target in targets)
-		if(!ishuman(target))
+		if(target.species.flags[NO_SCAN] || target.species.flags[IS_SYNTHETIC])
 			charge_counter = charge_max
+			to_chat(usr, "<span class='warning'>Your glare does not seem to affect [target].</span>")
 			return
 		if(target.stat)
 			charge_counter = charge_max
@@ -17,7 +18,7 @@
 			to_chat(usr, "<span class='danger'>You don't see why you would want to paralyze an ally.</span>")
 			charge_counter = charge_max
 			return
-		var/mob/living/carbon/human/M = target
+
 		usr.visible_message("<span class='warning'><b>[usr]'s eyes flash a blinding red!</b></span>")
 		target.visible_message("<span class='danger'>[target] freezes in place, their eyes glazing over...</span>")
 		if(in_range(target, usr))
@@ -25,7 +26,7 @@
 		else //Only alludes to the shadowling if the target is close by
 			to_chat(target, "<span class='userdanger'>Red lights suddenly dance in your vision, and you are mesmerized by their heavenly beauty...</span>")
 		target.Stun(10)
-		M.silent += 10
+		target.silent += 10
 
 
 
@@ -60,7 +61,10 @@
 					return
 				F.set_light(0)
 			H.set_light(0) //This is required with the object-based lighting
-
+		for(var/obj/machinery/door/airlock/A in orange(4, usr))
+			if (A.lights && A.hasPower())
+				A.lights = 0
+				A.update_icon()
 
 
 /obj/effect/proc_holder/spell/targeted/shadow_walk
@@ -87,6 +91,9 @@
 		user.visible_message("<span class='warning'>[user] suddenly manifests!</span>", "<span class='shadowling'>The pressure becomes too much and you vacate the interdimensional darkness.</span>")
 		user.incorporeal_move = 0
 		user.alpha = 255
+		var/turf/mobloc = get_turf(user.loc)
+		if(!mobloc.is_mob_placeable(user))
+			do_teleport(user, mobloc, 8, asoundin='sound/effects/phasein.ogg', checkspace = 1)
 
 
 
@@ -155,7 +162,7 @@
 			to_chat(usr, "<span class='warning'>You can not enthrall allies.</span>")
 			charge_counter = charge_max
 			return
-		if(!ishuman(target))
+		if(!ishuman(target) || target.get_species() == IPC)
 			to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
 			charge_counter = charge_max
 			return
@@ -395,7 +402,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech/cast(list/targets)
 	//usr.audible_message("<span class='warning'><b>[usr] lets out a horrible scream!</b></span>")
-	usr.emote("scream", 1, "<span class='warning'><b>lets out a horrible scream!</b></span>")
+	usr.emote("scream", SHOWMSG_AUDIO, message = "<span class='warning'><b>lets out a horrible scream!</b></span>", auto = FALSE)
 	playsound(usr, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/turf/T in targets)
@@ -529,7 +536,7 @@
 		to_chat(boom, "<span class='userdanger'><font size=3>You feel an immense pressure building all across your body!</span></font>")
 		boom.Stun(10)
 		//boom.audible_message("<b>[boom]</b> screams!")
-		boom.emote("scream",,, 1)
+		boom.emote("scream")
 		sleep(20)
 		if(istype(boom,/mob/living/simple_animal/hostile/carp/dog))
 			to_chat(SHA,"<span class='shadowling'>Probably, trying to explode [boom] wasn't good idea....</span>")
@@ -568,7 +575,7 @@
 			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
 			charge_counter = charge_max
 			return
-		if(!ishuman(target))
+		if(!ishuman(target) || target.get_species() == IPC)
 			to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
 			charge_counter = charge_max
 			return

@@ -46,7 +46,7 @@
 	if (BP)
 		user.visible_message("<span class='warning'>[user]'s hand slips, cutting [target]'s [BP.name] open!</span>", \
 		"<span class='warning'>Your hand slips, cutting [target]'s [BP.name] open!</span>")
-		BP.createwound(CUT, 10)
+		target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
 
 
 /datum/surgery_step/limb/mend
@@ -78,7 +78,7 @@
 	if (BP)
 		user.visible_message("<span class='warning'>[user]'s hand slips, tearing flesh on [target]'s [BP.name]!</span>", \
 		"<span class='warning'>Your hand slips, tearing flesh on [target]'s [BP.name]!</span>")
-		target.apply_damage(10, BRUTE, BP, null, DAM_SHARP)
+		target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
 
 
 /datum/surgery_step/limb/prepare
@@ -192,7 +192,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(BP_CHEST)
 	user.visible_message("<span class='warning'>[user]'s hand slips, damaging connectors on [target]'s [BP.name]!</span>",
 	"<span class='warning'>Your hand slips, damaging connectors on [target]'s [BP.name]!</span>")
-	target.apply_damage(10, BRUTE, BP, null, DAM_SHARP)
+	target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP)
 
 //////////////////////////////////////////////////////////////////
 //						ROBO LIMB SURGERY						//
@@ -242,7 +242,7 @@
 	if (BP)
 		user.visible_message("<span class='warning'>[user]'s hand slips, cutting [target]'s [BP.name] open!</span>",
 		"<span class='warning'>Your hand slips, cutting [target]'s [BP.name] open!</span>")
-		BP.createwound(CUT, 10)
+		target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
 
 /datum/surgery_step/ipc_limb/ipc_prepare
 	allowed_tools = list(

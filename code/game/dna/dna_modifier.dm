@@ -37,7 +37,7 @@
 
 /////////////////////////// DNA MACHINES
 /obj/machinery/dna_scannernew
-	name = "\improper DNA modifier"
+	name = "DNA modifier"
 	desc = "It scans DNA structures."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "scanner"
@@ -93,7 +93,7 @@
 	user.visible_message("<span class='warning'>You hear a metallic creaking from [src]!</span>")
 
 	if(do_after(user,(breakout_time*60*10),target=src)) //minutes * 60seconds * 10deciseconds
-		if(!user || user.stat != CONSCIOUS || user.loc != src || open || !locked)
+		if(!user || user.incapacitated() || user.loc != src || open || !locked)
 			return
 
 		locked = 0
@@ -164,7 +164,7 @@
 		return 1
 
 /obj/machinery/dna_scannernew/relaymove(mob/user)
-	if(user.stat)
+	if(user.incapacitated())
 		return
 	open(user)
 	return
@@ -389,7 +389,7 @@
 			occupantData["name"] = connected.occupant.name
 			occupantData["stat"] = connected.occupant.stat
 			occupantData["isViableSubject"] = 1
-			if (!connected.occupant.dna || NOCLONE in connected.occupant.mutations || (connected.scan_level == 3))
+			if (!connected.occupant.dna || (NOCLONE in connected.occupant.mutations) || (connected.scan_level == 3))
 				occupantData["isViableSubject"] = 0
 			occupantData["health"] = connected.occupant.health
 			occupantData["maxHealth"] = connected.occupant.maxHealth

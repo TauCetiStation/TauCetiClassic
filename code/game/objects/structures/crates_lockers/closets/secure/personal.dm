@@ -81,8 +81,7 @@
 		spark_system.start()
 		playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-		for(var/mob/O in viewers(user, 3))
-			O.show_message("<span class='notice'>The locker has been sliced open by [user] with an [W.name]!</span>", 1, "<span class='warning'>You hear metal being sliced and sparks flying.</span>", 2)
+		visible_message("<span class='notice'>The locker has been sliced open by [user] with an [W.name]!</span>", blind_message = "<span class='warning'>You hear metal being sliced and sparks flying.</span>", viewing_distance = 3)
 	else
 		to_chat(user, "<span class='warning'>Access Denied</span>")
 	return
@@ -101,7 +100,7 @@
 	set src in oview(1) // One square distance
 	set category = "Object"
 	set name = "Reset Lock"
-	if(!usr.canmove || usr.stat || usr.restrained()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
+	if(usr.incapacitated()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
 		return
 	if(ishuman(usr))
 		src.add_fingerprint(usr)

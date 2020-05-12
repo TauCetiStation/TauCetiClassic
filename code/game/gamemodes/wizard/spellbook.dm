@@ -43,7 +43,7 @@
 	return 0
 
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) //return point value or -1 for failure
-	if(!istype(get_area(user), /area/wizard_station))
+	if(!istype(get_area(user), /area/custom/wizard_station))
 		to_chat(user, "<span clas=='warning'>You can only refund spells at the wizard lair</span>")
 		return -1
 	if(!S)
@@ -235,7 +235,14 @@
 	buy_word = "Summon"
 	var/item_path= null
 
+/datum/spellbook_entry/item/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) // Specific circumstances
+	. = ..()
+	if(.)
+		return surplus != 0
+
 /datum/spellbook_entry/item/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	if(surplus > 0)
+		surplus = max(surplus - 1, 0)
 	new item_path (get_turf(user))
 	feedback_add_details("wizard_spell_learned", log_name)
 	return 1
@@ -330,6 +337,15 @@
 	feedback_add_details("wizard_spell_learned",log_name)
 	return 1
 
+/datum/spellbook_entry/item/tophat
+	name = "The Wabbajack Hat"
+	desc = "A magical hat that comes with it's own pocket dimension."
+	item_path = /obj/item/clothing/head/wizard/tophat
+	log_name = "TH"
+	category = "Assistance"
+	refundable = FALSE
+	cost = 1
+	surplus = 1
 
 /*datum/spellbook_entry/item/battlemage
 	name = "Battlemage Armour"
@@ -511,7 +527,7 @@
 		return 1
 	var/mob/living/carbon/human/H = usr
 
-	if(H.stat || H.restrained())
+	if(H.incapacitated())
 		return
 
 	var/datum/spellbook_entry/E = null

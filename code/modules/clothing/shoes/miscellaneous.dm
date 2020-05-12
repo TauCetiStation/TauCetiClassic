@@ -17,7 +17,7 @@
 	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/swat
-	name = "\improper SWAT shoes"
+	name = "SWAT shoes"
 	desc = "When you want to turn up the heat."
 	icon_state = "swat"
 	item_state = "wjboots"
@@ -44,7 +44,7 @@
 	desc = "When you REALLY want to turn up the heat<br>They have the toe caps cut off of them."
 	icon_state = "swat_cut"
 	clipped_status = CLIPPED
-	species_restricted = list("exclude", DIONA, VOX)
+	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
 
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
@@ -107,10 +107,83 @@
 	name = "clown shoes"
 	icon_state = "clown"
 	item_state = "clown_shoes"
-	slowdown = SHOES_SLOWDOWN+1
+	slowdown = SHOES_SLOWDOWN + 0.5
 	item_color = "clown"
-//	var/footstep = 1	//used for squeeks whilst walking
 	species_restricted = null
+
+/obj/item/clothing/shoes/clown_shoes/Destroy()
+	if(slot_equipped == SLOT_SHOES)
+		// Since slot_equipped is changed only when item is worn
+		// it's safe to assume loc is a mob.
+		stop_waddling(loc)
+	return ..()
+
+/obj/item/clothing/shoes/clown_shoes/proc/start_waddling(mob/user)
+	if(CLUMSY in user.mutations)
+		slowdown = SHOES_SLOWDOWN
+	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_PIXELMOVE))
+
+/obj/item/clothing/shoes/clown_shoes/proc/stop_waddling(mob/user)
+	slowdown = SHOES_SLOWDOWN + 1.0
+	qdel(user.GetComponent(/datum/component/waddle))
+
+/obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
+	if(slot == SLOT_SHOES)
+		start_waddling(user)
+	else if(slot_equipped == SLOT_SHOES)
+		stop_waddling(user)
+
+/obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
+	if(slot_equipped == SLOT_SHOES)
+		stop_waddling(user)
+
+/obj/item/clothing/shoes/clown_shoes/play_unique_footstep_sound()
+	..()
+	playsound(src, pick(SOUNDIN_CLOWNSTEP), VOL_EFFECTS_MASTER)
+
+/obj/item/clothing/shoes/jolly_gravedigger
+	name = "jolly gravedigger shoes"
+	desc = "Traditional funereal ceremony shoes originating from poor areas."
+	icon_state = "laceups"
+	clipped_status = CLIPPABLE
+
+	var/waddling = FALSE
+
+/obj/item/clothing/shoes/jolly_gravedigger/Destroy()
+	if(waddling)
+		stop_waddling(loc)
+	return ..()
+
+/obj/item/clothing/shoes/jolly_gravedigger/proc/start_waddling(mob/user)
+	RegisterSignal(user, list(COMSIG_LIVING_STOP_PULL), .proc/stop_waddling)
+	UnregisterSignal(user, list(COMSIG_LIVING_START_PULL))
+
+	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_PIXELMOVE))
+	waddling = TRUE
+
+/obj/item/clothing/shoes/jolly_gravedigger/proc/stop_waddling(mob/user)
+	UnregisterSignal(user, list(COMSIG_LIVING_STOP_PULL))
+	if(slot_equipped == SLOT_SHOES)
+		RegisterSignal(user, list(COMSIG_LIVING_START_PULL), .proc/check_coffin)
+	qdel(user.GetComponent(/datum/component/waddle))
+	waddling = FALSE
+
+/obj/item/clothing/shoes/jolly_gravedigger/equipped(mob/user, slot)
+	if(slot == SLOT_SHOES)
+		RegisterSignal(user, list(COMSIG_LIVING_START_PULL), .proc/check_coffin)
+		if(user.pulling)
+			check_coffin(user, user.pulling)
+	else if(waddling)
+		stop_waddling(user)
+
+/obj/item/clothing/shoes/jolly_gravedigger/dropped(mob/user)
+	if(waddling)
+		stop_waddling(user)
+
+/obj/item/clothing/shoes/jolly_gravedigger/proc/check_coffin(datum/source, atom/movable/target)
+	if(!istype(target, /obj/structure/closet/coffin))
+		return
+	start_waddling(source)
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
@@ -221,10 +294,18 @@
 	icon_state = "Lizard_Boots"
 	item_state = "r_feet"
 	item_color = "Lizard_Boots"
+	species_restricted = list(UNATHI)
 
 /obj/item/clothing/shoes/heels
 	name = "Heels"
 	icon_state = "high_shoes"
+	slowdown = SHOES_SLOWDOWN + 0.5
+	force = 3.5
+	attack_verb = list("stabbed")
+	// It's a stab sound.
+	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
+
+	stab_eyes = TRUE
 
 /obj/item/clothing/shoes/heels/alternate
 	icon_state = "high_shoes2"

@@ -36,6 +36,7 @@ var/can_call_ert
 
 	message_admins("[key_name_admin(usr)] is dispatching an Emergency Response Team.", 1)
 	log_admin("[key_name(usr)] used Dispatch Response Team.")
+	feedback_set_details("ERT", "Admin dispatch")
 	trigger_armed_response_team(1)
 
 
@@ -218,7 +219,7 @@ var/can_call_ert
 
 	M.real_name = commando_name
 	M.name = commando_name
-	M.age = !leader_selected ? rand(23,35) : rand(35,45)
+	M.age = !leader_selected ? rand(M.species.min_age, M.species.min_age * 1.5) : rand(M.species.min_age * 1.25, M.species.min_age * 1.75)
 
 	M.dna.ready_dna(M)//Creates DNA.
 

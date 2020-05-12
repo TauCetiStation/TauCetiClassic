@@ -2,7 +2,7 @@
 // GLOBAL MACRO HELPERS
 // ===================================
 
-// A = thing to stop | B = thing to hit. | finialize() calls A.throw_impact(B)
+// A = thing to stop | B = thing to hit. | finialize() calls A.throw_impact(B, throwingdatum)
 #define STOP_THROWING(A, B) if(A.throwing) {var/datum/thrownthing/TT = SSthrowing.processing[A]; if(TT) {TT.finialize(null, B);}}
 
 // ===================================
@@ -19,11 +19,9 @@
 
 	if (!( istext(HTMLstring) ))
 		CRASH("Given non-text argument!")
-		return
 	else
 		if (length(HTMLstring) != 7)
 			CRASH("Given non-HTML argument!")
-			return
 	var/textr = copytext(HTMLstring, 2, 4)
 	var/textg = copytext(HTMLstring, 4, 6)
 	var/textb = copytext(HTMLstring, 6, 8)
@@ -40,7 +38,6 @@
 	if (length(textb) < 2)
 		textr = text("0[]", textb)
 	return text("#[][][]", textr, textg, textb)
-	return
 
 //Returns the middle-most value
 /proc/dd_range(low, high, num)
@@ -421,7 +418,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	ADD_TO_MOBLIST(/mob/living/silicon/robot)
 	ADD_TO_MOBLIST(/mob/living/carbon/human)
 	ADD_TO_MOBLIST(/mob/living/carbon/brain)
-	ADD_TO_MOBLIST(/mob/living/carbon/alien)
+	ADD_TO_MOBLIST(/mob/living/carbon/xenomorph)
 	ADD_TO_MOBLIST(/mob/dead)
 	ADD_TO_MOBLIST(/mob/living/parasite/essence)
 	ADD_TO_MOBLIST(/mob/living/carbon/monkey)
@@ -461,15 +458,18 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(istype(whom, /client))
 		C = whom
 		M = C.mob
-		key = C.key
+		key = C.ckey
 	else if(ismob(whom))
 		M = whom
 		C = M.client
-		key = M.key
-	else if(istype(whom, /datum))
-		var/datum/D = whom
-		return "*invalid:[D.type]*"
+		key = M.ckey
+	else if(istype(whom, /datum/mind))
+		var/datum/mind/mind = whom
+		M = mind.current
+		C = M ? M.client : null
+		key = ckey(mind.key)
 	else
+		//trace
 		return "*invalid*"
 
 	. = ""
@@ -507,6 +507,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return .
 
+// don't use for logs because include_link=1, use key_name
 /proc/key_name_admin(whom, include_name = 1)
 	return key_name(whom, 1, include_name)
 
@@ -573,9 +574,11 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/between(low, middle, high)
 	return max(min(middle, high), low)
 
+#if DM_VERSION < 513
 /proc/arctan(x)
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
+#endif
 
 //returns random gauss number
 /proc/GaussRand(sigma)
@@ -1137,51 +1140,6 @@ var/global/list/common_tools = list(
 		return 1
 	return 0
 
-/proc/is_hot(obj/item/W)
-	if(iswelder(W))
-		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.isOn())
-			return 3800
-		else
-			return 0
-	if(istype(W,/obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/LT = W
-		if(LT.lit)
-			return 1500
-		else
-			return 0
-	if(istype(W,/obj/item/weapon/match))
-		var/obj/item/weapon/match/MT = W
-		if(MT.lit)
-			return 1000
-		else
-			return 0
-	if(istype(W,/obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/CG = W
-		if(CG.lit)
-			return 1000
-		else
-			return 0
-	if(istype(W,/obj/item/weapon/pickaxe/plasmacutter))
-		return 3800
-	if(istype(W,/obj/item/candle))
-		var/obj/item/candle/CD = W
-		if(CD.lit)
-			return 1000
-		else
-			return 0
-	if(istype(W,/obj/item/device/flashlight/flare/torch))
-		var/obj/item/device/flashlight/flare/torch/TCH = W
-		if(TCH.on)
-			return 1500
-		else
-			return 0
-	if(istype(W,/obj/item/weapon/melee/energy))
-		return 3500
-	else
-		return 0
-	return 0
-
 // For items that can puncture e.g. thick plastic but aren't necessarily sharp
 // Returns 1 if the given item is capable of popping things like balloons, inflatable barriers, or cutting police tape.
 /obj/item/proc/can_puncture()
@@ -1218,15 +1176,25 @@ var/global/list/common_tools = list(
 	istype(W, /obj/item/weapon/bonesetter)
 	)
 
+/proc/get_surg_chance(atom/location)
+	// please make this an obj var ~Luduk
+	if(locate(/obj/machinery/optable) in location)
+		return 100
+	if(locate(/obj/structure/stool/bed/roller/roller_surg) in location)
+		return 95
+	if(locate(/obj/structure/stool/bed/roller) in location)
+		return 75
+	if(locate(/obj/structure/table) in location)
+		return 66
+	return 0
+
 //check if mob is lying down on something we can operate him on.
 /proc/can_operate(mob/living/carbon/M)
-	return (locate(/obj/machinery/optable, M.loc) && M.resting) || \
-	(locate(/obj/structure/stool/bed/roller/roller_surg, M.loc) && 	\
-	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(95) || 	\
-	(locate(/obj/structure/stool/bed/roller, M.loc) && 	\
-	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(75) || 	\
-	(locate(/obj/structure/table, M.loc) && 	\
-	(M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(66))
+	if(locate(/obj/machinery/optable, M.loc) && M.resting)
+		return TRUE
+	if((M.buckled || M.lying || M.incapacitated()) && prob(get_surg_chance(M.loc)))
+		return TRUE
+	return FALSE
 
 /proc/reverse_direction(dir)
 	switch(dir)
@@ -1286,9 +1254,6 @@ var/list/WALLITEMS = typecacheof(list(
 			if(O.pixel_x == 0 && O.pixel_y == 0)
 				return 1
 	return 0
-
-/proc/format_text(text)
-	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
 
 /proc/params2turf(scr_loc, turf/origin)
 	if(!scr_loc)

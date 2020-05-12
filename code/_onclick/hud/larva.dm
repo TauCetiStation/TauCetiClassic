@@ -29,7 +29,7 @@
 	src.r_hand_hud_object = inv_box
 	src.adding += inv_box
 
-	mymob.nightvisionicon = new /obj/screen/alien/nightvision()
+	mymob.nightvisionicon = new /obj/screen/xenomorph/nightvision()
 	mymob.nightvisionicon.screen_loc = ui_alien_nightvision
 	src.adding += mymob.nightvisionicon
 
@@ -45,8 +45,8 @@
 	mymob.pullin.screen_loc = ui_pull_resist
 
 	mymob.zone_sel = new /obj/screen/zone_sel()
-	mymob.zone_sel.overlays.Cut()
-	mymob.zone_sel.overlays += image("icon" = 'icons/mob/zone_sel.dmi', "icon_state" = text("[]", mymob.zone_sel.selecting))
+	mymob.zone_sel.cut_overlays()
+	mymob.zone_sel.add_overlay(image("icon" = 'icons/mob/zone_sel.dmi', "icon_state" = text("[]", mymob.zone_sel.selecting)))
 
 	mymob.client.screen = list()
 

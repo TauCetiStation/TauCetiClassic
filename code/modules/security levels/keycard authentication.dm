@@ -160,6 +160,7 @@
 				return
 
 			trigger_armed_response_team(1)
+			feedback_set_details("ERT", "Keycard dispatch")
 			feedback_inc("alert_keycard_auth_ert",1)
 
 /obj/machinery/keycard_auth/proc/is_ert_blocked()
@@ -187,7 +188,7 @@ var/global/timer_maint_revoke_id = 0
 	captain_announce("The maintenance access requirement has been readded on all maintenance airlocks.")
 
 /proc/change_maintenance_access(allow_state)
-	for(var/area/maintenance/M in all_areas)
+	for(var/area/station/maintenance/M in all_areas)
 		for(var/obj/machinery/door/airlock/A in M)
 			A.emergency = allow_state
 			A.update_icon()

@@ -8,26 +8,26 @@
 	dir = 2;
 	icon_state = "swall_s6"
 	},
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "c" = (
 /obj/structure/shuttle/window,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "d" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
 	dir = 2;
 	icon_state = "swall_s10"
 	},
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "e" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
 	icon_state = "swall3"
 	},
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "f" = (
 /obj/structure/computerframe{
 	anchored = 1;
@@ -45,13 +45,13 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "g" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "h" = (
 /obj/structure/stool/bed/chair/schair{
 	dir = 1
@@ -59,25 +59,25 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "i" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
 	icon_state = "swallc4"
 	},
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "j" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
 	icon_state = "swallc3"
 	},
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "k" = (
 /obj/structure/closet/crate/freezer/rations,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "l" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/pizzabox/margherita,
@@ -87,7 +87,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "m" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/weapon/reagent_containers/food/snacks/sushi,
@@ -97,7 +97,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "n" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -105,12 +105,12 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "o" = (
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "p" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -118,14 +118,14 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "q" = (
 /obj/structure/shuttle/engine/heater,
 /turf/simulated/shuttle/wall{
 	dir = 2;
 	icon_state = "swall3"
 	},
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "r" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "pizza";
@@ -134,11 +134,11 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "s" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/space,
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 "t" = (
 /obj/structure/shuttle/engine/propulsion{
 	desc = "Looks like meteor hit the engine!";
@@ -147,7 +147,7 @@
 	name = "broken propulsion"
 	},
 /turf/space,
-/area/delivery_shuttle)
+/area/space_structures/delivery_shuttle)
 
 (1,1,1) = {"
 a

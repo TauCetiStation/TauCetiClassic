@@ -118,8 +118,7 @@
 
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", 1)
+				user.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>")
 
 				if(!do_mob(user, M)) return
 
@@ -127,8 +126,7 @@
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
 				msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])", user)
 
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message("<span class='danger'>[user] feeds [M] [src].</span>", 1)
+				user.visible_message("<span class='danger'>[user] feeds [M] [src].</span>")
 
 			else
 				to_chat(user, "<span class='warning'>This creature does not seem to have a mouth!</span>")
@@ -158,7 +156,7 @@
 
 	return 0
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/afterattack(obj/target, mob/user, proximity)
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/afterattack(atom/target, mob/user, proximity, params)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attackby(obj/item/weapon/W, mob/user)
@@ -186,31 +184,39 @@
 	lum.color = filling_color
 
 ////////////////G L O W S T I C K - C O L O R S////////////////
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/green
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/green
 	colourName = "green"
 	light_color = "#88ebc3"
 	filling_color = "#88ebc3"
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/red
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/red
 	colourName = "red"
 	light_color = "#ea0052"
 	filling_color = "#ea0052"
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/blue
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/blue
 	colourName = "blue"
 	light_color = "#24c1ff"
 	filling_color = "#24c1ff"
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/yellow
 	colourName = "yellow"
 	light_color = "#fffa18"
 	filling_color = "#fffa18"
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/orange
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/orange
 	colourName = "orange"
 	light_color = "#ff9318"
 	filling_color = "#ff9318"
 
+/obj/effect/spawner/lootdrop/glowstick
+	name = "random colored glowstick"
+	icon = 'icons/obj/glowsticks.dmi'
+	icon_state = "random_glowstick"
+
+/obj/effect/spawner/lootdrop/glowstick/atom_init()
+	loot = typesof(/obj/item/weapon/reagent_containers/food/snacks/glowstick/regular)
+	. = ..()
 
 ///////////////////// POWER GLOWSTICK //////////////////////
 

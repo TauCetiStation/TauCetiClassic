@@ -31,6 +31,25 @@
 	to_chat(world, "<B>The AI on the satellite has malfunctioned and must be destroyed.</B>")
 	to_chat(world, "The AI satellite is deep in space and can only be accessed with the use of a teleporter! You have [AI_win_timeleft/60] minutes to disable it.")
 
+/datum/game_mode/malfunction/can_start()
+	if (!..())
+		return FALSE
+	if (config && !config.allow_ai)
+		return FALSE
+	var/datum/job/ai_job = SSjob.GetJob("AI")
+	if (!ai_job || !ai_job.map_check())
+		return FALSE
+	for(var/mob/dead/new_player/player in new_player_list)
+		if (player.mind in antag_candidates)
+			var/malf_possible = FALSE
+			for (var/lvl in 1 to 3)
+				if ((player.client.prefs.GetJobDepartment(ai_job, lvl) & ai_job.flag) && (!jobban_isbanned(player, ai_job.title)))
+					malf_possible = TRUE
+					break
+			if (!malf_possible)
+				antag_candidates -= player.mind
+	return length(antag_candidates)
+					
 
 /datum/game_mode/malfunction/pre_setup()
 	for(var/mob/dead/new_player/player in player_list)
@@ -189,7 +208,7 @@
 			malf_turf = get_turf(cur_AI)
 	explosion_in_progress = TRUE
 	for(var/mob/M in player_list)
-		M.playsound_local(null, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+		M.playsound_local(null, 'sound/AI/DeltaBOOM.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 	to_chat(world, "Self-destructing in 10")
 	for (var/i=9 to 1 step -1)
 		sleep(10)

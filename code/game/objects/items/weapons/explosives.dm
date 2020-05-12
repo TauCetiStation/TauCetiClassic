@@ -5,8 +5,8 @@
 	timer = newtime
 	to_chat(user, "Timer set for [timer] seconds.")
 
-/obj/item/weapon/plastique/afterattack(atom/target, mob/user, flag)
-	if (!flag)
+/obj/item/weapon/plastique/afterattack(atom/target, mob/user, proximity, params)
+	if (!proximity)
 		return
 	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/machinery/nuclearbomb))
 		return
@@ -32,7 +32,7 @@
 			user.visible_message("<span class ='red'> [user.name] finished planting an explosive on [M.name]!</span>")
 		else
 			location = target
-		target.overlays += image('icons/obj/assemblies.dmi', "plastic-explosive2")
+		target.add_overlay(image('icons/obj/assemblies.dmi', "plastic-explosive2"))
 		to_chat(user, "Bomb has been planted. Timer counting down from [timer].")
 		addtimer(CALLBACK(src, .proc/prime_explosion, target, location), timer * 10)
 
@@ -49,7 +49,7 @@
 
 	explosion(location, 0, 0, 2, 3)
 	if(target && !QDELETED(target))
-		target.overlays -= image('icons/obj/assemblies.dmi', "plastic-explosive2")
+		target.cut_overlay(image('icons/obj/assemblies.dmi', "plastic-explosive2"))
 	if(src)
 		qdel(src)
 

@@ -47,6 +47,9 @@
 			//for (var/obj/item/weapon/card/id/C1 in get_contents_in_object(E, /obj/item/weapon/card/id))
 			//	cashscore += C1.money
 
+			if(E.mind && E.mind.initial_account)
+				cashscore += E.mind.initial_account.money
+
 			for (var/obj/item/weapon/spacecash/C2 in get_contents_in_object(E, /obj/item/weapon/spacecash))
 				cashscore += C2.worth
 
@@ -74,7 +77,7 @@
 				score["opkilled"]++
 				continue
 			var/turf/T = M.current.loc
-			if (T && istype(T.loc, /area/security/brig))
+			if (T && istype(T.loc, /area/station/security/brig))
 				score["arrested"] += 1
 			else if (M.current.stat == DEAD)
 				score["opkilled"]++
@@ -87,8 +90,8 @@
 			if(A.loc != /mob/living/carbon) continue
 			var/turf/location = get_turf(A.loc)
 			var/area/bad_zone1 = locate(/area)
-			var/area/bad_zone2 = locate(/area/syndicate_station)
-			var/area/bad_zone3 = locate(/area/wizard_station)
+			var/area/bad_zone2 = locate(/area/shuttle/syndicate)
+			var/area/bad_zone3 = locate(/area/custom/wizard_station)
 			if (location in bad_zone1) score["disc"] = 0
 			if (location in bad_zone2) score["disc"] = 0
 			if (location in bad_zone3) score["disc"] = 0
@@ -100,17 +103,17 @@
 				if (NUKE.detonated == 0)
 					continue
 				var/turf/T = NUKE.loc
-				if (istype(T,/area/syndicate_station) || istype(T,/area/wizard_station) || istype(T,/area/solar))
+				if (istype(T,/area/shuttle/syndicate) || istype(T,/area/custom/wizard_station) || istype(T,/area/station/solar))
 					nukedpenalty = 1000
-				else if (istype(T,/area/security/main) || istype(T,/area/security/brig) || istype(T,/area/security/armoury) || istype(T,/area/security/checkpoint))
+				else if (istype(T,/area/station/security/main) || istype(T,/area/station/security/brig) || istype(T,/area/station/security/armoury) || istype(T,/area/station/security/checkpoint))
 					nukedpenalty = 50000
-				else if (istype(T,/area/engine))
+				else if (istype(T,/area/station/engineering))
 					nukedpenalty = 100000
 				else
 					nukedpenalty = 10000
 
 	if (ticker.mode.config_tag == "rp-revolution")
-		var/datum/game_mode/revolution/rp_revolution/GM = ticker.mode
+		var/datum/game_mode/rp_revolution/GM = ticker.mode
 		var/foecount = 0
 		for(var/datum/mind/M in GM.head_revolutionaries)
 			foecount++
@@ -118,7 +121,7 @@
 				score["opkilled"]++
 				continue
 			var/turf/T = M.current.loc
-			if (istype(T.loc, /area/security/brig))
+			if (istype(T.loc, /area/station/security/brig))
 				score["arrested"] += 1
 			else if (M.current.stat == DEAD)
 				score["opkilled"]++
@@ -286,11 +289,11 @@
 				continue
 			var/turf/T = NUKE.loc
 			bombdat = T.loc
-			if (istype(T,/area/syndicate_station) || istype(T,/area/wizard_station) || istype(T,/area/solar))
+			if (istype(T,/area/shuttle/syndicate) || istype(T,/area/custom/wizard_station) || istype(T,/area/station/solar))
 				nukedpenalty = 1000
-			else if (istype(T,/area/security/main) || istype(T,/area/security/brig) || istype(T,/area/security/armoury) || istype(T,/area/security/checkpoint))
+			else if (istype(T,/area/station/security/main) || istype(T,/area/station/security/brig) || istype(T,/area/station/security/armoury) || istype(T,/area/station/security/checkpoint))
 				nukedpenalty = 50000
-			else if (istype(T,/area/engine))
+			else if (istype(T,/area/station/engineering))
 				nukedpenalty = 100000
 			else
 				nukedpenalty = 10000
@@ -313,7 +316,7 @@
 		var/comcount = 0
 		var/revcount = 0
 		var/loycount = 0
-		var/datum/game_mode/revolution/rp_revolution/GM = ticker.mode
+		var/datum/game_mode/rp_revolution/GM = ticker.mode
 		for(var/datum/mind/M in GM.head_revolutionaries)
 			if (M.current && M.current.stat != DEAD) foecount++
 		for(var/datum/mind/M in GM.revolutionaries)
@@ -366,7 +369,7 @@
 	<B>AI Destroyed:</B> [score["deadaipenalty"] ? "Yes" : "No"] (-[score["deadaipenalty"] * 250] Points)<BR><BR>
 	<U>THE WEIRD</U><BR>
 	<B>Final Station Budget:</B> $[num2text(totalfunds,50)]<BR>"}
-	var/profit = totalfunds - 75000
+	var/profit = totalfunds - global.initial_station_money
 	if (profit > 0)
 		dat += "<B>Station Profit:</B> +[num2text(profit,50)]<BR>"
 	else if (profit < 0)

@@ -38,7 +38,7 @@
 	set name = "Adjust welding mask"
 	set src in usr
 
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	if(!usr.incapacitated())
 		if(src.up)
 			src.up = !src.up
 			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
@@ -97,7 +97,8 @@
 	set name = "HALT"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
+	if(usr.incapacitated())
+		return
 
 	var/phrase = 0	//selects which phrase to use
 	var/phrase_text = null
@@ -185,7 +186,7 @@
 	body_parts_covered = HEAD|FACE
 
 /obj/item/clothing/mask/gas/swat
-	name = "\improper SWAT mask"
+	name = "SWAT mask"
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
 	icon_state = "swat"
 	siemens_coefficient = 0.7
@@ -294,7 +295,6 @@
 	gas_transfer_coefficient = 0.10
 	filter = list("phoron", "sleeping_agent", "oxygen")
 	species_restricted = list(VOX , VOX_ARMALIS)
-	sprite_sheets = list(VOX_ARMALIS = 'icons/mob/species/armalis/mask.dmi')
 
 /obj/item/clothing/mask/gas/German
 	name = "German Gas Mask"

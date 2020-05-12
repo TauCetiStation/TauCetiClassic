@@ -133,7 +133,7 @@
 
 /obj/machinery/computer/attackby(obj/item/I, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(!ishuman(user))
+	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>It's too complicated for you.</span>")
 		return
 	if(isscrewdriver(I) && circuit && !(flags&NODECONSTRUCT))
@@ -180,12 +180,15 @@
 	set name = "Rotate"
 	set src in oview(1)
 
-	if(get_dist(src, usr) > 1 || usr.restrained() || usr.lying || usr.stat || issilicon(usr))
+	// virtual present
+	if (isAI(usr) || ispAI(usr))
 		return
-	if(!ishuman(usr))
+	// state restrict
+	if(!in_range(src, usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
+		return
+	// species restrict
+	if(!usr.IsAdvancedToolUser())
 		to_chat(usr, "<span class='warning'>It's too complicated for you.</span>")
-		return
-	if(usr.is_busy(src))
 		return
 
 	var/obj/item/I = usr.get_active_hand()
@@ -237,7 +240,7 @@
 	"<span class='danger'>You hear a clicking sound.</span>")
 
 /obj/machinery/computer/attack_alien(mob/user)
-	if(istype(user, /mob/living/carbon/alien/humanoid/queen))
+	if(istype(user, /mob/living/carbon/xenomorph/humanoid/queen))
 		attack_hand(user)
 		return
 	if(circuit)
@@ -252,3 +255,14 @@
 	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with \his claws.</span>",
 	"<span class='danger'>You smash against the [src.name] with your claws.</span>",
 	"<span class='danger'>You hear a clicking sound.</span>")
+
+/obj/machinery/computer/attack_animal(mob/living/simple_animal/M)
+	if(istype(M, /mob/living/simple_animal/hulk))
+		var/mob/living/simple_animal/hulk/Hulk = M
+		playsound(Hulk, 'sound/effects/hulk_hit_computer.ogg', VOL_EFFECTS_MASTER)
+		to_chat(M, "<span class='warning'>You hit the computer, glass fragments hurt you!</span>")
+		Hulk.health -= rand(2,4)
+		if(prob(40))
+			set_broken()
+			to_chat(M, "<span class='warning'>You broke the computer.</span>")
+			return

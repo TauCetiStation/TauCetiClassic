@@ -89,10 +89,15 @@
 	set category = "Object"
 	set src in usr
 
+	if(usr.incapacitated())
+		return
+
 	var/n_name = sanitize_safe(input(usr, "What would you like to label the photo?", "Photo Labelling", null) as text, MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
-	if(( (loc == usr || (loc.loc && loc.loc == usr)) && usr.stat == CONSCIOUS))
-		name = "[(n_name ? text("[n_name]") : "photo")]"
+	if(usr.incapacitated())
+		return
+
+	name = "[(n_name ? text("[n_name]") : "photo")]"
 	add_fingerprint(usr)
 	return
 
@@ -110,7 +115,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "album"
 	item_state = "briefcase"
-	can_hold = list("/obj/item/weapon/photo",)
+	can_hold = list(/obj/item/weapon/photo)
 	max_storage_space = DEFAULT_BOX_STORAGE
 
 /obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
@@ -120,7 +125,7 @@
 		if(!( istype(over_object, /obj/screen) ))
 			return ..()
 		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, null, -5)
-		if((!( M.restrained() ) && !( M.stat ) && M.back == src))
+		if(!M.incapacitated() && M.back == src)
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))
@@ -290,13 +295,13 @@
 
 	return list("mob_detail" = mob_detail, "names_detail" = names_detail)
 
-/obj/item/device/camera/afterattack(atom/target, mob/user, flag)
+/obj/item/device/camera/afterattack(atom/target, mob/user, proximity, params)
 	if(!on || ismob(target.loc))
 		return
 	if(!pictures_left)
 		to_chat(user, "<span class='warning'>There is no photos left. Insert more camera film.</span>")
 		return
-	captureimage(target, user, flag)
+	captureimage(target, user, proximity)
 
 	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), VOL_EFFECTS_MASTER, null, null, -3)
 

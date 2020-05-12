@@ -33,6 +33,8 @@
 	uplink_welcome = "Nar-Sie Uplink Console:"
 	uplink_uses = 20
 
+	restricted_species_flags = list(NO_BLOOD)
+
 	var/datum/mind/sacrifice_target = null
 	var/finished = 0
 
@@ -270,7 +272,7 @@
 	for(var/datum/mind/cult_mind in cult)
 		if (cult_mind.current && cult_mind.current.stat!=2)
 			var/area/A = get_area(cult_mind.current )
-			if ( is_type_in_list(A, centcom_areas))
+			if ( is_type_in_typecache(A, centcom_areas_typecache))
 				acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
 		return 0
@@ -345,5 +347,5 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "cult", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text

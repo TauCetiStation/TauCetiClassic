@@ -23,10 +23,10 @@
 /obj/item/weapon/reagent_containers/glass/bottle/update_icon()
 	current_offset = show_filler_on_icon(filler_margin_y, filler_height, current_offset)
 
-	overlays.Cut()
+	cut_overlays()
 	if (!is_open_container())
 		var/image/lid = image(icon, src, "lid_bottle")
-		overlays += lid
+		add_overlay(lid)
 
 /obj/item/weapon/reagent_containers/glass/bottle/on_reagent_change()
 	..()
@@ -341,6 +341,15 @@
 	. = ..()
 	reagents.add_reagent("pacid", 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/acid
+	name = "Sulphuric Acid Bottle"
+	desc = "A small bottle. Contains a small amount of Sulphuric Acid"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle1"
+
+/obj/item/weapon/reagent_containers/glass/bottle/acid/atom_init()
+	. = ..()
+	reagents.add_reagent("sacid", 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/adminordrazine
 	name = "Adminordrazine Bottle"

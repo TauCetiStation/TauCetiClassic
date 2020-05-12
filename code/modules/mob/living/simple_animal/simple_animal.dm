@@ -57,6 +57,14 @@
 
 	var/animalistic = TRUE // Determines whether the being here is an animal or nah.
 
+	///What kind of footstep this mob should have. Null if it shouldn't have any.
+	var/footstep_type
+
+/mob/living/simple_animal/atom_init()
+	. = ..()
+	if(footstep_type)
+		AddComponent(/datum/component/footstep, footstep_type)
+
 /mob/living/simple_animal/updatehealth()
 	return
 
@@ -191,10 +199,10 @@
 				new path(loc)
 	..()
 
-/mob/living/simple_animal/emote(act, type, desc)
+/mob/living/simple_animal/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 	if(act)
 		if(act == "scream")	act = "whimper" //ugly hack to stop animals screaming when crushed :P
-		..(act, type, desc)
+		..(act, m_type)
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
 	if(src == M)
@@ -212,7 +220,6 @@
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
 		return TRUE
-	return FALSE
 
 /mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
@@ -229,9 +236,7 @@
 
 		if("help")
 			if (health > 0)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='notice'>[M] [response_help] [src]</span>")
+				visible_message("<span class='notice'>[M] [response_help] [src]</span>")
 
 		if("grab")
 			M.Grab(src)
@@ -239,21 +244,16 @@
 		if("hurt", "disarm")
 			M.do_attack_animation(src)
 			adjustBruteLoss(harm_intent_damage)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message("<span class='warning'>[M] [response_harm] [src]</span>")
+			visible_message("<span class='warning'>[M] [response_harm] [src]</span>")
 
 	return
 
-/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/simple_animal/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 
 	switch(M.a_intent)
 
 		if ("help")
-
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>"), 1)
+			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
 		if ("grab")
 			M.Grab(src)
 
@@ -264,7 +264,7 @@
 
 	return
 
-/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L)
+/mob/living/simple_animal/attack_larva(mob/living/carbon/xenomorph/larva/L)
 
 	switch(L.a_intent)
 		if("help")
@@ -382,9 +382,9 @@
 /mob/living/simple_animal/update_targeted()
 	if(!targeted_by && target_locked)
 		qdel(target_locked)
-	overlays = null
+	cut_overlays()
 	if (targeted_by && target_locked)
-		overlays += target_locked
+		add_overlay(target_locked)
 
 /mob/living/simple_animal/update_fire()
 	return
@@ -400,13 +400,16 @@
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
 			return FALSE
-		if(animalistic && L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
+		if(animalistic && HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
 			return FALSE
 	if (istype(the_target, /obj/mecha))
 		var/obj/mecha/M = the_target
 		if (M.occupant)
 			return FALSE
 	return TRUE
+
+/mob/living/simple_animal/IgniteMob()
+	return FALSE
 
 /mob/living/simple_animal/say(var/message)
 	if(stat)
@@ -417,19 +420,32 @@
 	if(copytext(message,1,2) == "*")
 		return emote(copytext(message,2))
 
-	if(stat)
-		return
-
 	var/verb = "says"
-
-	if(speak_emote.len)
+	var/ending = copytext(message, length(message))
+	var/datum/language/speaking = parse_language(message)
+	if (speaking)
+		verb = speaking.get_spoken_verb(ending)
+		message = copytext(message,2 + length(speaking.key))
+	else
 		verb = pick(speak_emote)
 
 	message = capitalize(trim_left(message))
 
-	..(message, null, verb, sanitize = 0)
+	..(message, speaking, verb, sanitize = 0)
 
 /mob/living/simple_animal/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
 	if(icon_move && !stat)
 		flick(icon_move, src)
+
+/mob/living/simple_animal/update_stat()
+	if(stat == DEAD)
+		return
+	if(IsSleeping())
+		stat = UNCONSCIOUS
+		blinded = TRUE
+
+/mob/living/simple_animal/get_scrambled_message(message, datum/language/speaking = null)
+	if(!speak.len)
+		return null
+	return pick(speak)

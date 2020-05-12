@@ -11,6 +11,7 @@
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	var/is_glass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
+
 	var/stop_spin_bottle = FALSE //Gotta stop the rotation.
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/atom_init()
@@ -25,7 +26,7 @@
 
 	if(!ishuman(usr))  //Checking human and status
 		return
-	if(usr.incapacitated() || usr.stat || usr.lying)
+	if(usr.incapacitated())
 		return
 	if(usr.is_busy())
 		return
@@ -54,6 +55,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/pickup(mob/living/user)
 	animate(src, transform = null, time = 0) //Restore bottle to its original position
+
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
 
@@ -132,18 +134,20 @@
 	if(def_zone == BP_HEAD && iscarbon(target))
 
 		//Display an attack message.
-		for(var/mob/O in viewers(user, null))
-			if(target != user) O.show_message(text("<span class='warning'><B>[target] has been hit over the head with a bottle of [src.name], by [user]!</B></span>"), 1)
-			else O.show_message(text("<span class='warning'><B>[target] hit himself with a bottle of [src.name] on the head!</B></span>"), 1)
+		if(target != user)
+			user.visible_message("<span class='warning'><B>[target] has been hit over the head with a bottle of [src.name], by [user]!</B></span>")
+		else
+			user.visible_message("<span class='warning'><B>[target] hit himself with a bottle of [src.name] on the head!</B></span>")
 		//Weaken the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
 			target.apply_effect(min(armor_duration, 10) , WEAKEN) // Never weaken more than a flash!
 
 	else
 		//Default attack message and don't weaken the target.
-		for(var/mob/O in viewers(user, null))
-			if(target != user) O.show_message(text("<span class='warning'><B>[target] has been attacked with a bottle of [src.name], by [user]!</B></span>"), 1)
-			else O.show_message(text("<span class='warning'><B>[target] has attacked himself with a bottle of [src.name]!</B></span>"), 1)
+		if(target != user)
+			user.visible_message("<span class='warning'><B>[target] has been attacked with a bottle of [src.name], by [user]!</B></span>")
+		else
+			user.visible_message("<span class='warning'><B>[target] has attacked himself with a bottle of [src.name]!</B></span>")
 
 	//Attack logs
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has attacked [target.name] ([target.ckey]) with a bottle!</font>")
@@ -160,6 +164,21 @@
 	src.smash(target, user)
 
 	return
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/after_throw(datum/callback/callback)
+	..()
+	if(is_glass)
+		var/obj/item/weapon/broken_bottle/BB =  new /obj/item/weapon/broken_bottle(loc)
+		var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
+		I.Blend(BB.broken_outline, ICON_OVERLAY, rand(5), 1)
+		I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+		BB.icon = I
+		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+		new /obj/item/weapon/shard(loc)
+		if(reagents && reagents.total_volume)
+			src.reagents.reaction(loc, TOUCH)
+		qdel(src)
+
 
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/weapon/broken_bottle
@@ -182,6 +201,11 @@
 /obj/item/weapon/broken_bottle/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
+/obj/item/weapon/broken_bottle/after_throw(datum/callback/callback)
+	..()
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+	new /obj/item/weapon/shard(loc)
+	qdel(src)
 
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gin
@@ -324,7 +348,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor
 	name = "Emeraldine Melon Liquor"
 	desc = "A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light."
-	icon_state = "alco-green" //Placeholder.
+	icon_state = "melonliquorbottle"
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor/atom_init()
 	. = ..()
@@ -333,12 +357,11 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao
 	name = "Miss Blue Curacao"
 	desc = "A fruity, exceptionally azure drink. Does not allow the imbiber to use the fifth magic."
-	icon_state = "alco-blue" //Placeholder.
+	icon_state = "bluecuracaobottle"
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao/atom_init()
 	. = ..()
 	reagents.add_reagent("bluecuracao", 100)
-	verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle //very bad sprite for spin
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine
 	name = "Briar Rose Grenadine Syrup"
@@ -426,3 +449,5 @@
 	reagents.add_reagent("beer", 100)
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
+
+

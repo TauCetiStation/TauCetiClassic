@@ -45,6 +45,10 @@
 		if(show_warnings)
 			to_chat(src, "<span class='warning'>You are holding too many stuff already.</span>")
 		return
+
+	if(SEND_SIGNAL(target, COMSIG_MOVABLE_GRABBED, src, force_state, show_warnings) & COMPONENT_PREVENT_GRAB)
+		return
+
 	if(ismob(target))
 		var/mob/M = target
 		if(!(M.status_flags & CANPUSH))
@@ -228,6 +232,13 @@
 				affecting.Weaken(2)
 
 	if(state >= GRAB_NECK)
+		if(ishuman(affecting))
+			var/mob/living/carbon/human/H = affecting
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+			BP.add_autopsy_data("Strangled", 0, BRUISE) //if 0, then unknow
+			if(!BP || BP.is_stump)
+				qdel(src)
+				return PROCESS_KILL
 		affecting.Stun(1)
 		if(isliving(affecting))
 			var/mob/living/L = affecting
@@ -299,7 +310,7 @@
 		return
 	if(assailant.next_move > world.time)
 		return
-	if(!assailant.canmove || assailant.lying)
+	if(assailant.incapacitated())
 		qdel(src)
 		return
 
@@ -321,6 +332,12 @@
 		if(isslime(affecting))
 			to_chat(assailant, "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>")
 			return
+		if(ishuman(affecting))
+			var/mob/living/carbon/human/H = affecting
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+			if(!BP || BP.is_stump)
+				to_chat(assailant, "<span class='warning'>You can't take a headless man by the neck!</span>")
+				return
 		assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
 		assailant.set_dir(get_dir(assailant, affecting))
 		affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has had their neck grabbed by [assailant.name] ([assailant.ckey])</font>"
@@ -421,9 +438,7 @@
 						if(state < GRAB_NECK)
 							to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 							return
-						if((affecting:head && affecting:head.flags & HEADCOVERSEYES) || \
-							(affecting:wear_mask && affecting:wear_mask.flags & MASKCOVERSEYES) || \
-							(affecting:glasses && affecting:glasses.flags & GLASSESCOVERSEYES))
+						if((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES))
 							to_chat(assailant, "<span class='danger'>You're going to need to remove the eye covering first.</span>")
 							return
 						if(!affecting.has_eyes())
@@ -516,15 +531,15 @@
 						return
 
 	if(M == assailant && state >= GRAB_AGGRESSIVE)
-		if( (ishuman(user) && (FAT in user.mutations) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
+		if( (ishuman(user) && HAS_TRAIT(user, TRAIT_FAT) && ismonkey(affecting) ) || ( isxeno(user) && iscarbon(affecting) ) )
 			var/mob/living/carbon/attacker = user
 			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
-			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
+			if(istype(user, /mob/living/carbon/xenomorph/humanoid/hunter))
 				if(!do_mob(user, affecting)||!do_after(user, 30, target = affecting)) return
 			else
 				if(!do_mob(user, affecting)||!do_after(user, 100, target = affecting)) return
 			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
-			if(isalien(user))
+			if(isxeno(user))
 				if(affecting.stat == DEAD)
 					affecting.gib()
 					if(attacker.health >= attacker.maxHealth - attacker.getCloneLoss())
@@ -561,6 +576,10 @@
 /obj/item/weapon/grab/proc/inspect_organ(mob/living/carbon/human/H, mob/user, target_zone)
 
 	var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
+	var/foundwound = FALSE
+	var/foundgerm = FALSE
+	var/foundorganwound = FALSE
+	var/foundorgangerm = FALSE
 
 	if(!BP || (BP.is_stump))
 		to_chat(user, "<span class='notice'>[H] is missing that bodypart.</span>")
@@ -569,10 +588,30 @@
 	user.visible_message("<span class='notice'>[user] starts inspecting [affecting]'s [BP.name] carefully.</span>")
 	if(!do_mob(user,H, 30))
 		to_chat(user, "<span class='notice'>You must stand still to inspect [BP] for wounds.</span>")
-	else if(BP.wounds.len)
-		to_chat(user, "<span class='warning'>You find [BP.get_wounds_desc()]</span>")
 	else
-		to_chat(user, "<span class='notice'>You find no visible wounds.</span>")
+		if(length(BP.wounds))
+			to_chat(user, "<span class='warning'>You find [BP.get_wounds_desc()]</span>")
+			foundwound = TRUE
+		if(length(BP.implants))
+			to_chat(user, "<span class='notice'>You feel something solid under [BP.name]'s skin.</span>")
+		if(BP.germ_level >= INFECTION_LEVEL_ONE)
+			foundgerm = TRUE
+		for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
+			if(IO.is_bruised())
+				foundorganwound = TRUE
+			if(IO.germ_level >= INFECTION_LEVEL_ONE)
+				foundorgangerm = TRUE
+		if(foundorgangerm && !foundgerm)
+			to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] are slightly enlarged.</span>")
+			foundwound = TRUE
+		if(foundorganwound)
+			to_chat(user, "<span class='warning'>You find ecchymosis and inflation in the [BP.name].</span>")
+			foundwound = TRUE
+		if(foundgerm)
+			to_chat(user, "<span class='warning'>Lymph nodes in the [BP.name] are greatly enlarged.</span>")
+			foundwound = TRUE
+		if(!foundwound)
+			to_chat(user, "<span class='notice'>You find no visible wounds.</span>")
 
 	to_chat(user, "<span class='notice'>Checking bones now...</span>")
 	if(!do_mob(user, H, 60))

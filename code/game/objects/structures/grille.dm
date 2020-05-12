@@ -55,7 +55,7 @@
 /obj/structure/grille/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(istype(user, /mob/living/carbon/alien/larva))	return
+	if(istype(user, /mob/living/carbon/xenomorph/larva))	return
 
 	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='warning'>[user] mangles [src].</span>", \

@@ -159,7 +159,7 @@
 	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
 
 	area_type = /area
-	protected_areas = list(/area/maintenance, /area/crew_quarters/male, /area/crew_quarters/female, /area/storage/emergency, /area/storage/emergency2, /area/storage/emergency3, /area/storage/tech)
+	protected_areas = list(/area/station/maintenance, /area/station/civilian/dormitories/male, /area/station/civilian/dormitories/female, /area/station/storage/emergency, /area/station/storage/emergency2, /area/station/storage/emergency3, /area/station/storage/tech)
 	target_ztrait = ZTRAIT_STATION
 
 	immunity_type = "rad"
@@ -174,6 +174,10 @@
 	if(prob(40))
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
+
+			if(HULK in H.mutations)
+				H.try_mutate_to_hulk()
+
 			if(H.dna && H.dna.species && !H.species.flags[IS_SYNTHETIC])
 				if(prob(max(0,100-resist)) && prob(10))
 					if (prob(75))

@@ -20,41 +20,41 @@
 		src.laws = new base_law_type
 
 /mob/living/silicon/ai/proc/set_zeroth_law(law, law_borg)
-	throw_alert("newlaw")
+	throw_alert("newlaw", /obj/screen/alert/newlaw)
 	src.laws_sanity_check()
 	src.laws.set_zeroth_law(law, law_borg)
 
 /mob/living/silicon/ai/proc/add_inherent_law(law)
-	throw_alert("newlaw")
+	throw_alert("newlaw", /obj/screen/alert/newlaw)
 	src.laws_sanity_check()
 	src.laws.add_inherent_law(law)
 
 /mob/living/silicon/ai/proc/clear_inherent_laws()
-	throw_alert("newlaw")
+	throw_alert("newlaw", /obj/screen/alert/newlaw)
 	src.laws_sanity_check()
 	src.laws.clear_inherent_laws()
 
 /mob/living/silicon/ai/proc/add_ion_law(law)
-	throw_alert("newlaw")
+	throw_alert("newlaw", /obj/screen/alert/newlaw)
 	src.laws_sanity_check()
 	src.laws.add_ion_law(law)
 	for(var/mob/living/silicon/robot/R in silicon_list)
 		if(R.lawupdate && (R.connected_ai == src))
-			R.throw_alert("newlaw")
+			R.throw_alert("newlaw", /obj/screen/alert/newlaw)
 			to_chat(R, "<span class='warning'>[law]...LAWS UPDATED</span>")
 
 /mob/living/silicon/ai/proc/clear_ion_laws()
-	throw_alert("newlaw")
+	throw_alert("newlaw", /obj/screen/alert/newlaw)
 	src.laws_sanity_check()
 	src.laws.clear_ion_laws()
 
 /mob/living/silicon/ai/proc/add_supplied_law(number, law)
-	throw_alert("newlaw")
+	throw_alert("newlaw", /obj/screen/alert/newlaw)
 	src.laws_sanity_check()
 	src.laws.add_supplied_law(number, law)
 
 /mob/living/silicon/ai/proc/clear_supplied_laws()
-	throw_alert("newlaw")
+	throw_alert("newlaw", /obj/screen/alert/newlaw)
 	src.laws_sanity_check()
 	src.laws.clear_supplied_laws()
 

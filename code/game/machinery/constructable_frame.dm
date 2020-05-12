@@ -182,18 +182,18 @@
 
 				//Assemble a list of current parts, then sort them by their rating!
 				for(var/obj/item/weapon/stock_parts/co in replacer)
-					part_list += co
+					if(!co.crit_fail)
+						part_list += co
 				//Sort the parts. This ensures that higher tier items are applied first.
 				part_list = sortTim(part_list, /proc/cmp_rped_sort)
 
 				for(var/path in req_components)
 					while(req_components[path] > 0 && (locate(path) in part_list))
 						var/obj/item/part = (locate(path) in part_list)
-						if(!part.crit_fail)
-							added_components[part] = path
-							replacer.remove_from_storage(part, src)
-							req_components[path]--
-							part_list -= part
+						added_components[part] = path
+						replacer.remove_from_storage(part, src)
+						req_components[path]--
+						part_list -= part
 
 				for(var/obj/item/weapon/stock_parts/part in added_components)
 					components += part
@@ -261,7 +261,7 @@ to destroy them and players will be able to make replacements.
 							/obj/machinery/vending/cola/gib = "Robust Softdrinks (Dr. Gibb)",
 							/obj/machinery/vending/cigarette = "Cigarette",
 							/obj/machinery/vending/barbervend = "Fab-O-Vend",
-							/obj/machinery/vending/chinese = "\improper Mr. Chang",
+							/obj/machinery/vending/chinese = "Mr. Chang",
 							/obj/machinery/vending/medical = "NanoMed Plus",
 							/obj/machinery/vending/hydronutrients = "NutriMax",
 							/obj/machinery/vending/hydroseeds = "MegaSeed Servitor",
@@ -410,6 +410,7 @@ to destroy them and players will be able to make replacements.
 	name = "circuit board (Color Mixer)"
 	build_path = /obj/machinery/color_mixer
 	origin_tech = "programming=2;materials=2"
+	board_type = "machine"
 	req_components = list(
 							/obj/item/weapon/circuitboard/color_mixer = 1,
 							/obj/item/weapon/stock_parts/manipulator = 2,

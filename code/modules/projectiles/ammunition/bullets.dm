@@ -36,7 +36,22 @@
 /obj/item/ammo_casing/c45
 	desc = "A .45 bullet casing."
 	caliber = ".45"
-	projectile_type = "/obj/item/projectile/bullet/midbullet"
+	projectile_type = "/obj/item/projectile/bullet/smg"
+
+/obj/item/ammo_casing/c45hp
+	desc = "A .45 HP bullet casing."
+	caliber = ".45S"
+	projectile_type = "/obj/item/projectile/bullet/smg_hp"
+
+/obj/item/ammo_casing/c45hv
+	desc = "A .45 HV bullet casing."
+	caliber = ".45S"
+	projectile_type = "/obj/item/projectile/bullet/smg_hv"
+
+/obj/item/ammo_casing/c45imp
+	desc = "A .45 IMP bullet casing."
+	caliber = ".45S"
+	projectile_type = "/obj/item/projectile/bullet/smg_imp"
 
 /obj/item/ammo_casing/c45r
 	desc = "A .45 rubber bullet casing."
@@ -163,10 +178,6 @@
 	caliber = "a3006"
 	projectile_type = "/obj/item/projectile/bullet/midbullet3"
 
-/obj/item/ammo_casing/l10
-	caliber = "energy"
-	projectile_type = "/obj/item/projectile/l10"
-
 /obj/item/ammo_casing/flare
 	desc = "A flare for flare gun."
 	caliber = "flare"
@@ -179,7 +190,7 @@
 	projectile_type = /obj/item/projectile/bullet/midbullet2
 
 /obj/item/ammo_box/c38m
-	name = "speed loader (.38)"
+	name = "speedloader (.38)"
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c38m
 	max_ammo = 6

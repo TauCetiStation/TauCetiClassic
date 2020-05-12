@@ -65,12 +65,14 @@
 	playsound(src, door_open_sound, VOL_EFFECTS_MASTER)
 	do_animate("opening")
 	icon_state = icon_state_open
+	SSdemo.mark_dirty(src)
 	sleep(3)
 	explosion_resistance = 0
 	layer = base_layer
 	density = FALSE
 	set_opacity(FALSE)
 	update_nearby_tiles()
+	SSdemo.mark_dirty(src)
 
 /obj/machinery/door/poddoor/do_close()
 	if(hasPower())
@@ -78,6 +80,7 @@
 	playsound(src, door_close_sound, VOL_EFFECTS_MASTER)
 	do_animate("closing")
 	icon_state = icon_state_close
+	SSdemo.mark_dirty(src)
 	sleep(3)
 	explosion_resistance = initial(explosion_resistance)
 	layer = base_layer + PODDOOR_CLOSED_MOD
@@ -85,6 +88,7 @@
 	set_opacity(TRUE)
 	do_afterclose()
 	update_nearby_tiles()
+	SSdemo.mark_dirty(src)
 
 /obj/machinery/door/poddoor/do_animate(animation)
 	switch(animation)

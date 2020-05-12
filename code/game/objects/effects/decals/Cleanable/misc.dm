@@ -162,5 +162,5 @@ var/list/toilet_overlay_cache = list()
 		shadeOverlay = toilet_overlay_cache["[type]s"] = new/icon('icons/effects/crayondecal.dmi',"[type]s", 2.1)
 		shadeOverlay.Blend(shade, ICON_ADD)
 
-	overlays += mainOverlay
-	overlays += shadeOverlay
+	add_overlay(mainOverlay)
+	add_overlay(shadeOverlay)

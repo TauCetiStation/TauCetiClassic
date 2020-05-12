@@ -4,7 +4,7 @@
 /proc/check_if_a_new_player(key)
 	if(!establish_db_connection())
 		world.log << "Ban database connection failure. Key [key] not checked"
-		diary << "Ban database connection failure. Key [key] not checked"
+		log_debug("Ban database connection failure. Key [key] not checked")
 		return 1
 
 	key = ckey(key)
@@ -48,4 +48,4 @@
 		return
 
 	message_admins("[key_name_admin(src)] add [ckey] to server whitelist")
-	log_admin("[key_name_admin(src)] add [ckey] to server whitelist")
+	log_admin("[key_name(src)] add [ckey] to server whitelist")

@@ -85,6 +85,7 @@
 	item_state = "candlebox"
 	storage_slots = 5
 	throwforce = 2
+	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	var/candle_type = "white"
 
@@ -109,7 +110,8 @@
 		if(C.name == "black candle")
 			candle_color = "black_"
 		candle_overlays += image('icons/obj/candle.dmi', "[candle_color][candle_position]")
-	overlays = candle_overlays
+	cut_overlays()
+	add_overlay(candle_overlays)
 	return
 
 /obj/item/weapon/storage/fancy/candle_box/red
@@ -126,6 +128,7 @@
 	item_state = "black_candlebox5"
 	storage_slots = 5
 	throwforce = 2
+	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	var/cooldown = 0
 	var/teleporter_delay = 0
@@ -206,10 +209,10 @@
 	update_icon()
 
 /obj/item/weapon/storage/fancy/crayons/update_icon()
-	overlays = list() //resets list
-	overlays += image('icons/obj/crayons.dmi',"crayonbox")
+	cut_overlays() //resets list
+	add_overlay(image('icons/obj/crayons.dmi',"crayonbox"))
 	for(var/obj/item/toy/crayon/crayon in contents)
-		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
+		add_overlay(image('icons/obj/crayons.dmi',crayon.colourName))
 
 /obj/item/weapon/storage/fancy/crayons/update_icon()
 	var/list/crayon_overlays = list()
@@ -219,7 +222,8 @@
 		I.pixel_x += crayon_position * 2
 		crayon_position++
 		crayon_overlays += I
-	overlays = crayon_overlays
+	cut_overlays()
+	add_overlay(crayon_overlays)
 	return
 
 /obj/item/weapon/storage/fancy/crayons/attackby(obj/item/toy/crayon/W, mob/user)
@@ -250,17 +254,17 @@
 	update_icon()
 
 /obj/item/weapon/storage/fancy/glowsticks/proc/add_stick()
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/green(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/red(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/blue(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/orange(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/green(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/red(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/blue(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/yellow(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/orange(src)
 
 /obj/item/weapon/storage/fancy/glowsticks/update_icon()
-	overlays = list() //resets list
-	overlays += image('icons/obj/glowsticks.dmi',"sticksbox")
+	cut_overlays() //resets list
+	add_overlay(image('icons/obj/glowsticks.dmi',"sticksbox"))
 	for(var/obj/item/weapon/reagent_containers/food/snacks/glowstick/glowstick in contents)
-		overlays += image('icons/obj/glowsticks.dmi',glowstick.colourName)
+		add_overlay(image('icons/obj/glowsticks.dmi',glowstick.colourName))
 
 /obj/item/weapon/storage/fancy/glowsticks/adv
 	name = "box of advanced glowsticks"
@@ -299,7 +303,7 @@
 	icon_state = "[initial(icon_state)][contents.len]"
 	return
 
-/obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)
+/obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
 	if(istype(W, /obj/item/clothing/mask/cigarette))
 		if(reagents)
 			reagents.trans_to(W, (reagents.total_volume/contents.len))
@@ -326,7 +330,7 @@
 		..()
 
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco
-	name = "\improper DromedaryCo packet"
+	name = "DromedaryCo packet"
 	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
 	icon_state = "Dpacket"
 	item_state = "Dpacket"
@@ -383,13 +387,13 @@
 /obj/item/weapon/storage/lockbox/vials/update_icon(itemremoved = 0)
 	var/total_contents = src.contents.len - itemremoved
 	src.icon_state = "vialbox[total_contents]"
-	src.overlays.Cut()
+	src.cut_overlays()
 	if (!broken)
-		overlays += image(icon, src, "led[locked]")
+		add_overlay(image(icon, src, "led[locked]"))
 		if(locked)
-			overlays += image(icon, src, "cover")
+			add_overlay(image(icon, src, "cover"))
 	else
-		overlays += image(icon, src, "ledb")
+		add_overlay(image(icon, src, "ledb"))
 	return
 
 /obj/item/weapon/storage/lockbox/vials/attackby(obj/item/weapon/W, mob/user)

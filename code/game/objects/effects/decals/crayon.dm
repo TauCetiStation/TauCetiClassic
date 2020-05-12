@@ -28,8 +28,8 @@
 	mainOverlay.Blend(main,ICON_ADD)
 	shadeOverlay.Blend(shade,ICON_ADD)
 
-	overlays += mainOverlay
-	overlays += shadeOverlay
+	add_overlay(mainOverlay)
+	add_overlay(shadeOverlay)
 
 	if(override_color)
 		color = main

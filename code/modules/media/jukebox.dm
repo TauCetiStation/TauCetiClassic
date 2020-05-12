@@ -88,7 +88,7 @@ var/global/loopModeNames=list(
 	update_icon()
 
 /obj/machinery/media/jukebox/update_icon()
-	overlays = 0
+	cut_overlays()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		if(stat & BROKEN)
 			icon_state = "[state_base]-broken"
@@ -99,9 +99,9 @@ var/global/loopModeNames=list(
 	icon_state = state_base
 	if(playing)
 		if(emagged)
-			overlays += "[state_base]-emagged"
+			add_overlay("[state_base]-emagged")
 		else
-			overlays += "[state_base]-running"
+			add_overlay("[state_base]-running")
 
 /obj/machinery/media/jukebox/proc/check_reload()
 	return world.time > last_reload + JUKEBOX_RELOAD_COOLDOWN
@@ -285,8 +285,8 @@ var/global/loopModeNames=list(
 	// Must be defined on your server.
 	playlists=list(
 		"bar"  = "Bar Mix",
-		"mogesfm84"  = "Moges FM-84",
-		"moges" = "Moges Club Music",
+		"mogesfm84"  = "Moghes FM-84",
+		"moges" = "Moghes Club Music",
 		"club" = "Club Mix",
 		"customs" = "Customs Music",
 		"japan" = "Banzai Radio",
@@ -298,6 +298,8 @@ var/global/loopModeNames=list(
 		"eurobeat" = "Eurobeat",
 		"finland" = "Suomi wave",
 		"dreamsofvenus" = "Dreams of Venus",
+		"hiphop" = "Hip-Hop for Space Gangstas",
+		"vaporfunk" = "Qerrbalak VaporFunkFM",
 	)
 
 // Relaxing elevator music~
@@ -311,8 +313,8 @@ var/global/loopModeNames=list(
 	// Must be defined on your server.
 	playlists=list(
 		"bar"  = "Bar Mix",
-		"mogesfm84"  = "Moges FM-84",
-		"moges" = "Moges Club Music",
+		"mogesfm84"  = "Moghes FM-84",
+		"moges" = "Moghes Club Music",
 		"club" = "Club Mix",
 		"customs" = "Customs Music",
 		"japan" = "Banzai Radio",
@@ -324,6 +326,8 @@ var/global/loopModeNames=list(
 		"eurobeat" = "Eurobeat",
 		"finland" = "Suomi wave",
 		"dreamsofvenus" = "Dreams of Venus",
+		"hiphop" = "Hip-Hop for Space Gangstas",
+		"vaporfunk" = "Qerrbalak VaporFunkFM",
 	)
 
 /obj/machinery/media/jukebox/techno

@@ -20,6 +20,8 @@ var/list/blob_nodes = list()
 
 	restricted_jobs = list("Cyborg", "AI")
 
+	restricted_species_flags = list(IS_SYNTHETIC)
+
 	var/declared = 0
 
 	var/cores_to_spawn = 1
@@ -47,7 +49,7 @@ var/list/blob_nodes = list()
 		var/datum/mind/blob = pick(antag_candidates)
 		infected_crew += blob
 		blob.special_role = "Blob"
-		log_game("[blob.key] (ckey) has been selected as a Blob")
+		log_game("[key_name(blob)] has been selected as a Blob")
 		antag_candidates -= blob
 
 	if(!infected_crew.len)
@@ -70,7 +72,7 @@ var/list/blob_nodes = list()
 	to_chat(blob.current, "<b>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</b>")
 	return
 
-/datum/game_mode/blob/proc/show_message(message)
+/datum/game_mode/blob/proc/message2blobs(message)
 	for(var/datum/mind/blob in infected_crew)
 		to_chat(blob.current, message)
 
@@ -116,11 +118,11 @@ var/list/blob_nodes = list()
 
 		sleep(100)
 
-		show_message("<span class='alert'>You feel tired and bloated.</span>")
+		message2blobs("<span class='alert'>You feel tired and bloated.</span>")
 
 		sleep(wait_time)
 
-		show_message("<span class='alert'>You feel like you are about to burst.</span>")
+		message2blobs("<span class='alert'>You feel like you are about to burst.</span>")
 
 		sleep(wait_time / 2)
 
@@ -151,7 +153,7 @@ var/list/blob_nodes = list()
 	return
 
 /mob/living/carbon/human/proc/Blobize()
-	if (monkeyizing)
+	if (notransform)
 		return
 	var/obj/effect/blob/core/new_blob = new /obj/effect/blob/core (loc)
 	if(!client)

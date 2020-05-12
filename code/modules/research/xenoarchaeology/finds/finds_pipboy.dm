@@ -111,7 +111,7 @@
 				user << browse(entity_ja(message), "window=[M.name]_scan_report;size=400x400;can_resize=1")
 				onclose(user, "[M.name]_scan_report")
 			else
-				user.show_message(message)
+				to_chat(user, message)
 		else
 			add_fingerprint(user)
 			var/dat = health_analyze(M, user, TRUE, output_to_chat)
@@ -119,9 +119,9 @@
 				user << browse(entity_ja(dat), "window=[M.name]_scan_report;size=400x400;can_resize=1")
 				onclose(user, "[M.name]_scan_report")
 			else
-				user.show_message(dat)
+				to_chat(user, dat)
 	else
-		user.show_message("<span class = 'warning'>Analyzing Results not compiled. Unknown anatomy detected.</span>")
+		to_chat(user, "<span class = 'warning'>Analyzing Results not compiled. Unknown anatomy detected.</span>")
 
 /obj/item/clothing/gloves/pipboy/attack_self(mob/user)
 	return src.interact(user)
@@ -240,7 +240,7 @@
 	if (!(on))
 		return
 
-	if(U.stat || U.restrained() || U.paralysis || U.stunned || U.weakened || U.incapacitated())
+	if(U.incapacitated())
 		return
 
 	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)

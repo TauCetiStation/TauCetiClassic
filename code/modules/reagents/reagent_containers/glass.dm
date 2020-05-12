@@ -12,9 +12,7 @@
 	possible_transfer_amounts = list(5,10,15,25,30,50)
 	volume = 50
 	flags = OPENCONTAINER
-
 	action_button_name = "Switch Lid"
-
 	var/label_text = ""
 
 	//var/list/
@@ -66,9 +64,9 @@
 		flags |= OPENCONTAINER
 	update_icon()
 
-/obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/glass/afterattack(atom/target, mob/user, proximity, params)
 
-	if (!is_open_container() || !flag)
+	if (!is_open_container() || !proximity)
 		return
 
 	for(var/type in src.can_be_placed_into)
@@ -85,26 +83,18 @@
 		var/contained = english_list(injected)
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been splashed with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to splash [M.name] ([M.key]). Reagents: [contained]</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) splashed [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
+		msg_admin_attack("[key_name(user)] splashed [key_name(M)] with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
 
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message(text("<span class = 'rose'>[] has been splashed with something by []!</span>", target, user), 1)
+		user.visible_message("<span class = 'rose'>[target] has been splashed with something by [user]!</span>")
 		src.reagents.reaction(target, TOUCH)
 		spawn(5) src.reagents.clear_reagents()
 		return
-	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
-
-		if(!target.reagents.total_volume && target.reagents)
-			to_chat(user, "<span class = 'rose'>[target] is empty.</span>")
-			return
-
-		if(reagents.total_volume >= reagents.maximum_volume)
-			to_chat(user, "<span class = 'rose'>[src] is full.</span>")
-			return
-
-		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-		to_chat(user, "<span class = 'notice'>You fill [src] with [trans] units of the contents of [target].</span>")
-
+	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us. Or FROM us TO it.
+		var/obj/structure/reagent_dispensers/T = target
+		if(T.transfer_from)
+			T.try_transfer(T, src, user)
+		else
+			T.try_transfer(src, T, user)
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
 			to_chat(user, "<span class = 'rose'>[src] is empty.</span>")
@@ -137,9 +127,9 @@
 			if(CM.beakers[CM.filling_tank_id])
 				if(user.a_intent == I_GRAB)
 					var/obj/item/weapon/reagent_containers/glass/GB = CM.beakers[CM.filling_tank_id]
-					GB.afterattack(src, user, flag)
+					GB.afterattack(src, user, proximity)
 				else
-					afterattack(CM.beakers[CM.filling_tank_id], user, flag)
+					afterattack(CM.beakers[CM.filling_tank_id], user, proximity)
 				CM.updateUsrDialog()
 				CM.update_icon()
 				return
@@ -154,7 +144,7 @@
 		spawn(5) src.reagents.clear_reagents()
 		var/turf/T = get_turf(src)
 		message_admins("[key_name_admin(usr)] splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z]) [ADMIN_JMP(usr)]")
-		log_game("[usr.ckey]([usr]) splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z])")
+		log_game("[key_name(usr)] splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z])")
 		return
 
 /obj/item/weapon/reagent_containers/glass/attackby(obj/item/weapon/W, mob/user)
@@ -203,7 +193,7 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(reagents.total_volume)
 		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
@@ -219,11 +209,11 @@
 			if(91 to INFINITY)	filling.icon_state = "[icon_state]100"
 
 		filling.icon += mix_color_from_reagents(reagents.reagent_list)
-		overlays += filling
+		add_overlay(filling)
 
 	if (!is_open_container())
 		var/image/lid = image(icon, src, "lid_[initial(icon_state)]")
-		overlays += lid
+		add_overlay(lid)
 
 /obj/item/weapon/reagent_containers/glass/beaker/large
 	name = "large beaker"
@@ -319,11 +309,11 @@
 		return
 
 /obj/item/weapon/reagent_containers/glass/bucket/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if (reagents.total_volume > 1)
-		overlays += "bucket_water"
+		add_overlay("bucket_water")
 	if (!is_open_container())
-		overlays += "lid_bucket"
+		add_overlay("lid_bucket")
 
 /obj/item/weapon/reagent_containers/glass/bucket/on_reagent_change()
 	update_icon()

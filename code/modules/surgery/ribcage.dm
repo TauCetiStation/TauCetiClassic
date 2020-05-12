@@ -43,8 +43,8 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, cracking [target]'s ribcage with \the [tool]!</span>" , \
 	"<span class='warning'>Your hand slips, cracking [target]'s ribcage with \the [tool]!</span>" )
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	BP.createwound(CUT, 20)
 	BP.fracture()
+	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 
 /datum/surgery_step/ribcage/retract_ribcage
@@ -87,8 +87,8 @@
 	var/self_msg = "<span class='warning'>Your hand slips, breaking [target]'s ribcage!</span>"
 	user.visible_message(msg, self_msg)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	BP.createwound(BRUISE, 20)
 	BP.fracture()
+	BP.take_damage(20, 0, used_weapon = tool)
 
 /datum/surgery_step/ribcage/close_ribcage
 	allowed_tools = list(
@@ -125,8 +125,8 @@
 	var/self_msg = "<span class='warning'>Your hand slips, bending [target]'s ribs the wrong way!</span>"
 	user.visible_message(msg, self_msg)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
-	BP.createwound(BRUISE, 20)
 	BP.fracture()
+	BP.take_damage(20, 0, used_weapon = tool)
 	if (prob(40))
 		user.visible_message("<span class='warning'>A rib pierces the lung!</span>")
 		target.rupture_lung()
@@ -272,7 +272,7 @@
 		else
 			dam_amt = 5
 			target.adjustToxLoss(10)
-			BP.createwound(CUT, 5)
+			BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
 
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO && IO.damage > 0)
@@ -328,11 +328,11 @@
 		"<span class='warning'>Your hand slips, smearing [tool] in the incision in [target]'s [IO], gumming it up!</span>")
 		var/dam_amt = 2
 		if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
-			target.apply_damage(6, BURN, BP, null)
+			BP.take_damage(0, 6, used_weapon = tool)
 
 		else if(iswrench(tool))
-			target.apply_damage(12, BRUTE, BP, null)
-			BP.createwound(CUT, 5)
+			BP.take_damage(12, 0, used_weapon = tool)
+			BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
 
 		if(IO.damage > 0 && IO.robotic == 2)
 			IO.take_damage(dam_amt,0)
@@ -365,9 +365,10 @@
 	target.chest_brain_op_stage = 1
 
 /datum/surgery_step/ribcage/cut_diona_brain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
-	target.apply_damage(50, BRUTE, BP_CHEST, 1, DAM_SHARP)
+	BP.take_damage(50, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ribcage/cut_diona_spine
 	allowed_tools = list(
@@ -404,9 +405,10 @@
 	target.death()
 
 /datum/surgery_step/ribcage/cut_diona_spine/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
-	target.apply_damage(30, BRUTE, BP_CHEST, 1, DAM_SHARP)
+	BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, tool)
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.bloody_body(target)
@@ -438,9 +440,10 @@
 	target.chest_brain_op_stage = 1
 
 /datum/surgery_step/ipc_ribcage/cut_posibrain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>")
-	target.apply_damage(50, BRUTE, BP_CHEST, 1, DAM_SHARP)
+	BP.take_damage(50, 0, DAM_SHARP, tool)
 
 /datum/surgery_step/ipc_ribcage/extract_posibrain
 	allowed_tools = list(
@@ -476,9 +479,10 @@
 	target.death()
 
 /datum/surgery_step/ipc_ribcage/extract_posibrain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>")
-	target.apply_damage(30, BRUTE, BP_CHEST, 1, DAM_SHARP)
+	BP.take_damage(30, 0, DAM_SHARP, tool)
 
 /datum/surgery_step/ipc_ribcage/import_posibrain
 	allowed_tools = list(
@@ -550,8 +554,8 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s security panel with \the [tool]!</span>" ,
 	"<span class='warning'>Your hand slips, scratching [target]'s security panel with \the [tool]!</span>" )
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	BP.createwound(CUT, 20)
 	BP.fracture()
+	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc_ribcage/pry_sec
 	allowed_tools = list(
@@ -586,8 +590,8 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, breaking [target]'s security panel!</span>",
 	"<span class='warning'>Your hand slips, breaking [target]'s security panel!</span>")
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	BP.createwound(BRUISE, 20)
 	BP.fracture()
+	BP.take_damage(20, 0, used_weapon = tool)
 
 /datum/surgery_step/ipc_ribcage/shut_sec
 	allowed_tools = list(
@@ -620,8 +624,8 @@
 	var/self_msg = "<span class='warning'>Your hand slips, bending [target]'s security panel the wrong way!</span>"
 	user.visible_message(msg, self_msg)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
-	BP.createwound(BRUISE, 20)
 	BP.fracture()
+	BP.take_damage(20, 0, used_weapon = tool)
 	if(prob(40))
 		user.visible_message("<span class='warning'>A loud bang can be heard.</span>")
 		target.rupture_lung()
@@ -654,8 +658,8 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s security panel with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, scratching [target]'s security panel with \the [tool]!</span>" )
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	BP.createwound(CUT, 20)
 	BP.fracture()
+	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc_ribcage/take_accumulator
 	allowed_tools = list(
@@ -696,7 +700,7 @@
 	var/obj/item/organ/internal/liver/ipc/A = target.organs_by_name[O_LIVER]
 	A.damage += 10
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	BP.createwound(CUT, 20)
+	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc_ribcage/put_accumulator
 	allowed_tools = list(
@@ -726,3 +730,8 @@
 	user.drop_item()
 	var/obj/item/organ/internal/accum = target.organs_by_name[O_LIVER]
 	tool.forceMove(accum)
+
+	var/obj/item/weapon/stock_parts/cell/C = tool
+
+	if (target.nutrition > C.maxcharge)
+		target.nutrition = C.maxcharge

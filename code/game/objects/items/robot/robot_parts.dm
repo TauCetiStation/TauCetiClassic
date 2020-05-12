@@ -70,19 +70,19 @@
 	update_icon()
 
 /obj/item/robot_parts/robot_suit/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(l_arm)
-		overlays += "l_arm+o"
+		add_overlay("l_arm+o")
 	if(r_arm)
-		overlays += "r_arm+o"
+		add_overlay("r_arm+o")
 	if(chest)
-		overlays += "chest+o"
+		add_overlay("chest+o")
 	if(l_leg)
-		overlays += "l_leg+o"
+		add_overlay("l_leg+o")
 	if(r_leg)
-		overlays += "r_leg+o"
+		add_overlay("r_leg+o")
 	if(head)
-		overlays += "head+o"
+		add_overlay("head+o")
 
 /obj/item/robot_parts/robot_suit/proc/check_completion()
 	if(l_arm && r_arm)
@@ -120,7 +120,7 @@
 			r_leg = null
 			chest = null
 			head = null
-			overlays.Cut()
+			cut_overlays()
 			w_class = initial(w_class)
 		else
 			to_chat(user, "<span class='warning'>Nothing attached to robot frame!</span>")

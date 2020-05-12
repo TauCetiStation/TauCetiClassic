@@ -34,6 +34,29 @@
 	. = ..()
 	use_sound = SOUNDIN_RUSTLE
 
+	if(allow_quick_empty)
+		verbs += /obj/item/weapon/storage/proc/quick_empty
+
+	if(allow_quick_gather)
+		verbs += /obj/item/weapon/storage/proc/toggle_gathering_mode
+
+	if(isnull(max_storage_space) && !isnull(storage_slots))
+		max_storage_space = storage_slots * base_storage_cost(max_w_class)
+
+	if(startswith)
+		for(var/item_path in startswith)
+			var/list/data = startswith[item_path]
+			if(islist(data))
+				var/qty = data[1]
+				var/list/argsl = data.Copy()
+				argsl[1] = src
+				for(var/i in 1 to qty)
+					new item_path(arglist(argsl))
+			else
+				for(var/i in 1 to (isnull(data)? 1 : data))
+					new item_path(src)
+		update_icon()
+
 /obj/item/weapon/storage/Destroy()
 	QDEL_NULL(storage_ui)
 	return ..()
@@ -60,7 +83,7 @@
 		if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
 			return
 
-		if (!( usr.restrained() ) && !( usr.stat ))
+		if (!usr.incapacitated())
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))
@@ -109,6 +132,9 @@
 	storage_ui.show_to(user)
 
 /obj/item/weapon/storage/proc/prepare_ui()
+	if(!storage_ui)
+		storage_ui = new storage_ui_path(src)
+
 	storage_ui.prepare_ui()
 
 /obj/item/weapon/storage/proc/close(mob/user)
@@ -214,9 +240,9 @@
 				if (M == usr)
 					to_chat(usr, "<span class='notice'>You put \the [W] into [src].</span>")
 				else if (M in range(1)) //If someone is standing close enough, they can tell what it is...
-					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
+					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>", SHOWMSG_VISUAL)
 				else if (W && W.w_class >= ITEM_SIZE_NORMAL) //Otherwise they can only see large or normal items from a distance...
-					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
+					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>", SHOWMSG_VISUAL)
 		if(crit_fail && prob(25))
 			remove_from_storage(W, get_turf(src))
 		if(!NoUpdate)
@@ -235,7 +261,7 @@
 		storage_ui.on_post_remove(usr)
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
-/obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location, var/NoUpdate = FALSE)
+/obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
 	if(!istype(W))
 		return FALSE
 
@@ -316,7 +342,8 @@
 		src.open(user)
 	else
 		..()
-		storage_ui.on_hand_attack(user)
+		if(storage_ui)
+			storage_ui.on_hand_attack(user)
 	src.add_fingerprint(user)
 
 //Should be merged into attack_hand() later, i mean whole attack_paw() proc, but thats probably a lot of work.
@@ -332,7 +359,7 @@
 			failure = 1
 			continue
 		success = 1
-		handle_item_insertion(I, prevent_warning = TRUE, NoUpdate = TRUE) // First 1 is no messages, second 1 is no ui updates
+		handle_item_insertion(I, TRUE, TRUE) // First 1 is no messages, second 1 is no ui updates
 	if(success && !failure)
 		to_chat(user, "<span class='notice'>You put everything into \the [src].</span>")
 		update_ui_after_item_insertion()
@@ -342,7 +369,7 @@
 	else
 		to_chat(user, "<span class='notice'>You fail to pick anything up with \the [src].</span>")
 
-/obj/item/weapon/storage/verb/toggle_gathering_mode()
+/obj/item/weapon/storage/proc/toggle_gathering_mode()
 	set name = "Switch Gathering Method"
 	set category = "Object"
 
@@ -354,11 +381,11 @@
 			to_chat(usr, "[src] now picks up one item at a time.")
 
 
-/obj/item/weapon/storage/verb/quick_empty()
+/obj/item/weapon/storage/proc/quick_empty()
 	set name = "Empty Contents"
 	set category = "Object"
 
-	if((!ishuman(usr) && (src.loc != usr)) || usr.stat || usr.restrained())
+	if((!ishuman(usr) && (src.loc != usr)) || usr.incapacitated())
 		return
 
 	var/turf/T = get_turf(src)
@@ -366,38 +393,6 @@
 	for(var/obj/item/I in contents)
 		remove_from_storage(I, T, NoUpdate = TRUE)
 	finish_bulk_removal()
-
-/obj/item/weapon/storage/atom_init()
-	. = ..()
-	if(allow_quick_empty)
-		verbs += /obj/item/weapon/storage/verb/quick_empty
-	else
-		verbs -= /obj/item/weapon/storage/verb/quick_empty
-
-	if(allow_quick_gather)
-		verbs += /obj/item/weapon/storage/verb/toggle_gathering_mode
-	else
-		verbs -= /obj/item/weapon/storage/verb/toggle_gathering_mode
-
-	if(isnull(max_storage_space) && !isnull(storage_slots))
-		max_storage_space = storage_slots*base_storage_cost(max_w_class)
-
-	storage_ui = new storage_ui_path(src)
-	prepare_ui()
-
-	if(startswith)
-		for(var/item_path in startswith)
-			var/list/data = startswith[item_path]
-			if(islist(data))
-				var/qty = data[1]
-				var/list/argsl = data.Copy()
-				argsl[1] = src
-				for(var/i in 1 to qty)
-					new item_path(arglist(argsl))
-			else
-				for(var/i in 1 to (isnull(data)? 1 : data))
-					new item_path(src)
-		update_icon()
 
 /obj/item/weapon/storage/emp_act(severity)
 	if(!istype(src.loc, /mob/living))
@@ -410,7 +405,7 @@
 
 	//Clicking on itself will empty it, if it has the verb to do that.
 	if(user.get_active_hand() == src)
-		if(src.verbs.Find(/obj/item/weapon/storage/verb/quick_empty))
+		if(src.verbs.Find(/obj/item/weapon/storage/proc/quick_empty))
 			src.quick_empty()
 			return
 

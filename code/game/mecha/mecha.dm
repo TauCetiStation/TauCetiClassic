@@ -464,26 +464,26 @@
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	return
 
-/obj/mecha/hitby(atom/movable/A) //wrapper
+/obj/mecha/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //wrapper
 	..()
-	src.log_message("Hit by [A].",1)
-	call((proc_res["dynhitby"]||src), "dynhitby")(A)
+	src.log_message("Hit by [AM].",1)
+	call((proc_res["dynhitby"]||src), "dynhitby")(AM, throwingdatum)
 	return
 
-/obj/mecha/proc/dynhitby(atom/movable/A)
-	if(istype(A, /obj/item/mecha_parts/mecha_tracking))
-		A.forceMove(src)
-		src.visible_message("The [A] fastens firmly to [src].")
+/obj/mecha/proc/dynhitby(atom/movable/AM, datum/thrownthing/throwingdatum)
+	if(istype(AM, /obj/item/mecha_parts/mecha_tracking))
+		AM.forceMove(src)
+		src.visible_message("The [AM] fastens firmly to [src].")
 		return
-	if(prob(src.deflect_chance) || istype(A, /mob))
-		src.occupant_message("<span class='notice'>The [A] bounces off the armor.</span>")
-		src.visible_message("The [A] bounces off the [src.name] armor")
+	if(prob(src.deflect_chance) || ismob(AM))
+		src.occupant_message("<span class='notice'>The [AM] bounces off the armor.</span>")
+		src.visible_message("The [AM] bounces off the [src.name] armor")
 		src.log_append_to_last("Armor saved.")
-		if(istype(A, /mob/living))
-			var/mob/living/M = A
+		if(isliving(AM))
+			var/mob/living/M = AM
 			M.take_bodypart_damage(10)
-	else if(istype(A, /obj))
-		var/obj/O = A
+	else if(isobj(AM))
+		var/obj/O = AM
 		if(O.throwforce)
 			src.take_damage(O.throwforce)
 			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
@@ -566,7 +566,7 @@
 		to_chat(user, "<span class='warning'>You smash at the armored suit!</span>")
 		for (var/mob/V in viewers(src))
 			if(V.client && !(V.blinded))
-				V.show_message("<span class='warning'>The [user] smashes against [src.name]'s armor!</span>", 1)
+				V.oldshow_message("<span class='warning'>The [user] smashes against [src.name]'s armor!</span>", 1)
 	else
 		src.log_append_to_last("Armor saved.")
 		playsound(src, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
@@ -574,7 +574,7 @@
 		src.occupant_message("<span class='notice'>The [user]'s attack is stopped by the armor.</span>")
 		for (var/mob/V in viewers(src))
 			if(V.client && !(V.blinded))
-				V.show_message("<span class='notice'>The [user] rebounds off the [src.name] armor!</span>", 1)
+				V.oldshow_message("<span class='notice'>The [user] rebounds off the [src.name] armor!</span>", 1)
 	return
 */
 
@@ -611,7 +611,7 @@
 /*
 		for (var/mob/V in viewers(src))
 			if(V.client && !(V.blinded))
-				V.show_message("The [W] bounces off [src.name] armor.", 1)
+				V.oldshow_message("The [W] bounces off [src.name] armor.", 1)
 */
 	else
 		src.occupant_message("<font color='red'><b>[user] hits [src] with [W].</b></font>")
@@ -778,7 +778,7 @@
 /*
 			for (var/mob/V in viewers(src))
 				if(V.client && !(V.blinded))
-					V.show_message("The [W] bounces off [src.name] armor.", 1)
+					V.oldshow_message("The [W] bounces off [src.name] armor.", 1)
 */
 		else
 			src.occupant_message("<font color='red'><b>[user] hits [src] with [W].</b></font>")
@@ -958,7 +958,7 @@
 	set name = "Enter Exosuit"
 	set src in oview(1)
 
-	if (usr.stat || !ishuman(usr))
+	if (usr.incapacitated() || !ishuman(usr))
 		return
 	if (usr.buckled)
 		to_chat(usr,"<span class='warning'>You can't climb into the exosuit while buckled!</span>")
@@ -1006,7 +1006,7 @@
 	return
 
 /obj/mecha/proc/moved_inside(mob/living/carbon/human/H)
-	if(H && H.client && H in range(1))
+	if(H && H.client && (H in range(1)))
 		H.reset_view(src)
 		H.forceMove(src)
 		if(H.hud_used)
@@ -1055,7 +1055,7 @@
 	return 0
 
 /obj/mecha/proc/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
-	if(mmi_as_oc && user in range(1))
+	if(mmi_as_oc && (user in range(1)))
 		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 			to_chat(user, "Consciousness matrix not detected.")
 			return 0
@@ -1459,7 +1459,7 @@
 	if(href_list["close"])
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
-	if(usr.stat > 0)
+	if(usr.incapacitated())
 		return
 	var/datum/topic_input/F = new /datum/topic_input(href,href_list)
 	if(href_list["select_equip"])

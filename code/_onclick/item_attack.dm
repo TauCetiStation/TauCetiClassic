@@ -1,19 +1,29 @@
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'Click On Held Object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
-	return
+	SSdemo.mark_dirty(src)
+	SSdemo.mark_dirty(user)
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
-	return
+	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
+		return TRUE
+	return FALSE
 
 /atom/movable/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	if(.) // Clickplace, no need for attack animation.
+		return
+
 	if(!(W.flags & NOATTACKANIMATION))
 		user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	if(W && !(W.flags & NOBLUDGEON))
 		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
+	SSdemo.mark_dirty(src)
+	SSdemo.mark_dirty(W)
+	SSdemo.mark_dirty(user)
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	if(!istype(I) || !ismob(user))
@@ -36,18 +46,26 @@
 		if(istype(H.wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = H.wear_suit
 			V.attack_reaction(src, REACTION_ATACKED, user)
+	SSdemo.mark_dirty(src)
+	SSdemo.mark_dirty(I)
+	SSdemo.mark_dirty(user)
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
-/obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/proc/afterattack(atom/target, mob/user, proximity, params)
 	return
 
 
 /obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
-	var/messagesource = M
+	var/mob/messagesource = M
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
-		if (do_surgery(M,user,src))
+		if (do_surgery(M, user, src))
 			return 0
+
+	if(stab_eyes && user.a_intent != I_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))
+		if((CLUMSY in user.mutations) && prob(50))
+			M = user
+		return eyestab(M,user)
 
 	// Knifing
 	if(edge)
@@ -169,11 +187,10 @@
 		if(!(user in viewers(M, null)))
 			showname = "."
 
-		for(var/mob/O in viewers(messagesource, null))
-			if(attack_verb.len)
-				O.show_message("<span class='warning'><B>[M] has been [pick(attack_verb)] with [src][showname] </B></span>", 1)
-			else
-				O.show_message("<span class='warning'><B>[M] has been attacked with [src][showname] </B></span>", 1)
+		if(attack_verb.len)
+			messagesource.visible_message("<span class='warning'><B>[M] has been [pick(attack_verb)] with [src][showname] </B></span>")
+		else
+			messagesource.visible_message("<span class='warning'><B>[M] has been attacked with [src][showname] </B></span>")
 
 		if(!showname && user)
 			if(user.client)
@@ -191,18 +208,20 @@
 					M.adjustBrainLoss(power)
 
 				else
-
+					if(prob(33)) // Added blood for whacking non-humans too
+						var/turf/simulated/T = M.loc
+						if(istype(T))
+							T.add_blood_floor(M)
 					M.take_bodypart_damage(power)
-					if (prob(33)) // Added blood for whacking non-humans too
-						var/turf/location = M.loc
-						if (istype(location, /turf/simulated))
-							location:add_blood_floor(M)
 			if("fire")
 				if (!(COLD_RESISTANCE in M.mutations))
-					M.take_bodypart_damage(0, power)
 					to_chat(M, "Aargh it burns!")
-		M.updatehealth()
+					M.take_bodypart_damage(0, power)
+
 	add_fingerprint(user)
+	SSdemo.mark_dirty(src)
+	SSdemo.mark_dirty(M)
+	SSdemo.mark_dirty(user)
 	return 1
 
 /*

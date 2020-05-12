@@ -109,8 +109,7 @@
 
 	if(href_list["doorder"])
 		if(world.time < reqtime)
-			for(var/mob/V in hearers(src))
-				V.show_message("<b>[src]</b>'s monitor flashes, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"")
+			visible_message("<b>[src]</b>'s monitor flashes, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"")
 			return FALSE
 		//Find the correct supply_pack datum
 		var/datum/supply_pack/P = SSshuttle.supply_packs[href_list["doorder"]]

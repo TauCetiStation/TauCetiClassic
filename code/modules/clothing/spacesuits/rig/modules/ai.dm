@@ -245,6 +245,59 @@
 		"The suit power is almost dead, can't help you much",
 		)
 
+/datum/rig_aivoice/wheatley
+	name = "Wheatley"
+	welcome_message = "Oi, just say hi already! That's too aggressive... Hello, friend!"
+	damage_message = "Hello? Anyone in there?"
+	destroyed_message = "Hellooooo-ooo-o..."
+
+	health_warnings = list(
+		"AHHH!!! Oh God. You look te-- ummm... good. Looking good, actually.",
+		"Are you okay? Are you - Don't answer that. I'm absolutely sure you're fine.",
+		"Oh. You MIGHT want to call out to somebody...",
+		"Do you still understand what I'm saying? At all? If \"yes\" - please seek help. If \"no\" please seek help immediately!",
+		"You are basically dying. But don't be alarmed, alright? Although, if you do feel alarm, try to hold onto that feeling because that is the proper reaction to being told that you are dying.",
+		)
+
+	breach_warnings = list(
+		"You, no, I, no, WE are taking some damage.",
+		"OOOF, I don't want to be bossy to you or anything, but you might want to cease the damage dealt to us.",
+		"GAAAH!!! It's not like you're at risk of losing me, or me losing you, but you might want to patch us up.",
+		)
+
+	energy_warnings = list(
+		"Oi, listen, you might want to consider the following fun fact: the charge bar, responsible for the charge says it's at 50%.",
+		"Alright, listen, for I am going to tell you something. The suit. Yes, it. It is running low on charge. Look at the meter. AT THE METER YOU DON'T GET TO SEE.",
+		"Wha-a-a-at's going o-o-o-on? Oh, right, you seem to be in a litte bit of non-haste when considering the fact that the SUIT IS ALMOST OUT OF POWER.",
+		)
+
+/datum/rig_aivoice/jester
+	name = "Jester"
+	welcome_message = "If we are going to die, let's at least enjoy it!"
+	damage_message = "If all else fails, and I be gone... laugh. It blinds the mind..."
+	destroyed_message = "At last, the greatest joke of all..."
+
+	health_warnings = list(
+		"Nasty ugly thing, this wound. It suits you.",
+		"Well, so much for bravery, thy are wounded.",
+		"All this leather and steel and blood... For what?",
+		"All your courage and your nobility... All for what?!",
+		"Why do we hang about here? We are defeated!",
+		)
+
+	breach_warnings = list(
+		"Ha-ha, they're onto you! The barrier is shed...",
+		"I admire your guile, I am immune to death, albeit the suit isn't.",
+		"... You're leading us into a trap! Clever, but I must decline. I urge you to retreat.",
+		)
+
+	energy_warnings = list(
+		"You pitiable fool! What use in scampering about!? You are in need of charging.",
+		"I should never have come out here...",
+		"We're all going to die..."
+		)
+
+
 /obj/item/rig_module/simple_ai/advanced
 	name = "hardsuit advanced diagnostic system"
 	origin_tech = "programming=4"

@@ -205,11 +205,14 @@
 	var/copied = html_decode(copy.info)
 	copied = replacetext(copied, "<font face=\"[P.deffont]\" color=", "<font face=\"[P.deffont]\" nocolor=")	//state of the art techniques in action
 	copied = replacetext(copied, "<font face=\"[P.crayonfont]\" color=", "<font face=\"[P.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+	copied = replacetext(copied, "<img ", "<img style=\"filter: gray;\"")	//IE is still IE
+	copied = replacetext(copied, "<font color=", "<font nocolor=")
+	copied = replacetext(copied, "<table border=3px cellpadding=5px bordercolor=", "<table border=3px cellpadding=5px bordernocolor=")
 	P.info += copied
 	P.info += "</font>"//</font>
 	P.name = copy.name // -- Doohl
 	P.fields = copy.fields
-	P.stamp_text = copy.stamp_text
+	P.stamp_text = replacetext(copy.stamp_text, "color:", "nocolor:") // Russian server? I hope nobody will write this on paper
 	P.stamped = LAZYCOPY(copy.stamped)
 	P.ico = LAZYCOPY(copy.ico)
 	P.offset_x = LAZYCOPY(copy.offset_x)
@@ -220,11 +223,13 @@
 			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-circle")
 		else if (findtext(copy.ico[i], "deny"))
 			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-x")
+		else if (findtext(copy.ico[i], "approve"))
+			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-check")
 		else
 			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-dots")
 		img.pixel_x = copy.offset_x[i]
 		img.pixel_y = copy.offset_y[i]
-		P.overlays += img
+		P.add_overlay(img)
 	P.updateinfolinks()
 	P.update_icon()
 	toner--

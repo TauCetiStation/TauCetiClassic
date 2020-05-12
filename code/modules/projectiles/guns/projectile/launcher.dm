@@ -1,5 +1,5 @@
 /obj/item/weapon/gun/projectile/m79
-	name = "\improper m79 grenade launcher"
+	name = "m79 grenade launcher"
 	desc = "Uses 40x46 ammunition."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "m79"

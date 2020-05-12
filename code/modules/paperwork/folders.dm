@@ -2,6 +2,7 @@
 	name = "folder"
 	desc = "A folder."
 	icon = 'icons/obj/bureaucracy.dmi'
+	hitsound = list('sound/items/misc/folder-slap.ogg')
 	icon_state = "folder"
 	w_class = ITEM_SIZE_SMALL
 
@@ -26,9 +27,9 @@
 	icon_state = "folder_purple"
 
 /obj/item/weapon/folder/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(contents.len)
-		overlays += "folder_paper"
+		add_overlay("folder_paper")
 	return
 
 /obj/item/weapon/folder/attackby(obj/item/weapon/W, mob/user)
@@ -59,7 +60,7 @@
 
 /obj/item/weapon/folder/Topic(href, href_list)
 	..()
-	if((usr.stat || usr.restrained()))
+	if(usr.incapacitated())
 		return
 
 	if(usr.contents.Find(src))

@@ -150,8 +150,8 @@ This could be a lot better but I'm too tired atm.*/
 		var/mob/living/carbon/human/U = affecting
 		var/targets[] = list()//So yo can shoot while yo throw dawg
 		for(var/mob/living/M in oview(loc))
-			if(M.stat)	continue//Doesn't target corpses or paralyzed persons.
-			if(M.lying)	continue
+			if(M.incapacitated())
+				continue
 			targets.Add(M)
 		if(targets.len)
 			var/mob/living/target=pick(targets)//The point here is to pick a random, living mob in oview to shoot stuff at.
@@ -200,8 +200,7 @@ Must right click on a mob to activate.*/
 				U.say("Get over here!")
 				var/obj/effect/energy_net/E = new /obj/effect/energy_net(M.loc)
 				E.layer = M.layer+1//To have it appear one layer above the mob.
-				for(var/mob/O in viewers(U, 3))
-					O.show_message(text("<span class='warning'>[] caught [] with an energy net!</span>", U, M), 1)
+				U.visible_message("<span class='warning'>[U] caught [M] with an energy net!</span>")
 				E.affecting = M
 				E.master = U
 				spawn(0)//Parallel processing.
@@ -322,7 +321,8 @@ This is so anime it hurts. But that's the point.*/
 		var/targets[]
 		targets = new()
 		for(var/mob/living/M in oview(6))
-			if(M.stat)	continue//Doesn't target corpses or paralyzed people.
+			if(M.incapacitated())
+				continue
 			targets.Add(M)
 		if(targets.len)
 			var/mob/living/target=pick(targets)

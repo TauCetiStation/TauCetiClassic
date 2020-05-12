@@ -140,6 +140,58 @@
 	note_list << note_keys
 	del(note_list)	// savefile, so NOT qdel
 
+/proc/parse_notes_date_timestamp(note_timestamp_text)
+	// return number of day after 1 Jan 2000
+	// if date before 1 Jan 2000 or errors return 0
+	//
+	// Example of note_timestamp_text
+	// Tue, January 28th of 2020
+	// Wed, January 8th of 2020
+	if (!length(note_timestamp_text) || !istext(note_timestamp_text))
+		return 0
+	var/list/month_names = list(
+		"January"   = 1,
+		"February"  = 2,
+		"March"     = 3,
+		"April"     = 4,
+		"May"       = 5,
+		"June"      = 6,
+		"July"      = 7,
+		"August"    = 8,
+		"September" = 9,
+		"October"   = 10,
+		"November"  = 11,
+		"December"  = 12
+	)
+	var/list/month_days = list(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+	var/regex/pattern = regex(@"^\l{3},\s(\l+)\s(\d{1,2})\l{2}\sof\s(\d{4})$")
+	if (!pattern.Find(note_timestamp_text) || length(pattern.group) < 3)
+		return 0
+	var/day = pattern.group[2]
+	var/month = pattern.group[1]
+	var/year = pattern.group[3]
+	if (!length(day) || !length(month) || !length(year) || !(month in month_names))
+		return 0
+	day = text2num(day)
+	month = month_names[month]
+	year = text2num(year)
+	if (!day || !year || year < 2000 || day < 1)
+		return 0
+	var/days_passed = 0
+	// past years to days
+	if (year != 2000)
+		for (var/Y in 2000 to year-1)
+			if (is_leap_year(Y))
+				days_passed += 366
+			else
+				days_passed += 365
+	// past month to days
+	if (month > 1)
+		for (var/M in 1 to month-1)
+			days_passed += month_days[M]
+			if (M == 2 && is_leap_year(year))
+				days_passed++
+	return days_passed + day
 
 /proc/notes_del(key, index, admin)
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")

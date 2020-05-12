@@ -6,6 +6,8 @@
 	taste_message = null
 	var/last_volume = 0 // Check digestion code below.
 
+	data = list()
+
 /datum/reagent/consumable/on_general_digest(mob/living/M)
 	..()
 	var/mob_met_factor = 1
@@ -84,7 +86,7 @@
 
 /datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
 	..()
-	if(ishuman(M) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden", "Captain"))
+	if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Warden", "Captain")))
 		M.heal_bodypart_damage(1, 1)
 
 /datum/reagent/consumable/syndicream
@@ -143,9 +145,9 @@
 
 /datum/reagent/consumable/capsaicin/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	switch(data["ticks"])
 		if(1 to 15)
 			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("frostoil"))
@@ -160,7 +162,7 @@
 			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
 				M.bodytemperature += rand(15,20)
-	data++
+	data["ticks"]++
 
 /datum/reagent/consumable/condensedcapsaicin
 	name = "Condensed Capsaicin"
@@ -209,11 +211,11 @@
 				return
 			else if (eyes_covered) // Eye cover is better than mouth cover
 				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protects your eyes from the pepperspray!</span>")
-				victim.emote("scream",,, 1)
+				victim.emote("scream")
 				victim.eye_blurry = max(M.eye_blurry, 5)
 				return
 			else // Oh dear :D
-				victim.emote("scream",,, 1)
+				victim.emote("scream")
 				to_chat(victim, "<span class='userdanger'> You're sprayed directly in the eyes with pepperspray!</span>")
 				victim.eye_blurry = max(M.eye_blurry, 25)
 				victim.eye_blind = max(M.eye_blind, 10)
@@ -303,9 +305,9 @@
 /datum/reagent/consumable/psilocybin/on_general_digest(mob/living/M)
 	..()
 	M.druggy = max(M.druggy, 30)
-	if(!data)
-		data = 1
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	switch(data["ticks"])
 		if(1 to 5)
 			if(!M.stuttering)
 				M.stuttering = 1
@@ -328,7 +330,7 @@
 			M.druggy = max(M.druggy, 40)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
-	data++
+	data["ticks"]++
 
 /datum/reagent/consumable/cornoil
 	name = "Corn Oil"
@@ -365,7 +367,7 @@
 /datum/reagent/consumable/dry_ramen
 	name = "Dry Ramen"
 	id = "dry_ramen"
-	description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
+	description = "Space age food, since August 25, 1958. Contains dried noodles, couple tiny vegetables, and chicken flavored chemicals that boil in contact with water."
 	reagent_state = SOLID
 	nutriment_factor = 2
 	color = "#302000" // rgb: 48, 32, 0
@@ -386,17 +388,32 @@
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
 /datum/reagent/consumable/hell_ramen
-	name = "Hell Ramen"
+	name = "Spicy Ramen"
 	id = "hell_ramen"
+	description = "Space age food, since August 25, 1958. Contains dried noodles, couple tiny vegetables, and spicy flavored chemicals that boil in contact with water."
+	reagent_state = LIQUID
+	nutriment_factor = 4
+	color = "#302000" // rgb: 48, 32, 0
+	taste_message = "dry ramen with SPICY flavor"
+
+/datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M)
+	..()
+	if(M.bodytemperature < BODYTEMP_NORMAL + 40) // Not Tajaran friendly food (by the time of writing this, Tajaran has 330 heat limit, while this is 350 and human 360.
+		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT))
+
+/datum/reagent/consumable/hot_hell_ramen
+	name = "Hot Spicy Ramen"
+	id = "hot_hell_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
 	nutriment_factor = 4
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "SPICY ramen"
 
-/datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M)
+/datum/reagent/consumable/hot_hell_ramen/on_general_digest(mob/living/M)
 	..()
-	M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+	if(M.bodytemperature < BODYTEMP_NORMAL + 40)
+		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
 /datum/reagent/consumable/rice
 	name = "Rice"

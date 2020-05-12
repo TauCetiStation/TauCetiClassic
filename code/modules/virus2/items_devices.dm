@@ -1,7 +1,7 @@
 ///////////////ANTIBODY SCANNER///////////////
 
 /obj/item/device/antibody_scanner
-	name = "\improper Antibody Scanner"
+	name = "Antibody Scanner"
 	desc = "Scans living beings for antibodies in their blood."
 	icon_state = "health"
 	w_class = ITEM_SIZE_SMALL
@@ -61,7 +61,7 @@
 	if(prob(50))
 		to_chat(user, "\The [src] shatters!")
 		message_admins("Virus dish shattered by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) [ADMIN_JMP(src)]")
-		log_game("Virus dish shattered by [user.ckey]([user]) in ([src.x],[src.y],[src.z])")
+		log_game("Virus dish shattered by [key_name(user)] in ([src.x],[src.y],[src.z])")
 		if(virus2.infectionchance > 0)
 			for(var/mob/living/carbon/target in view(1, get_turf(src)))
 				if(airborne_can_reach(get_turf(src), get_turf(target)))

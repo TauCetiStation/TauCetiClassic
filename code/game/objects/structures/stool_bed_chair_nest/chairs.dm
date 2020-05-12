@@ -233,9 +233,9 @@
 
 /obj/structure/stool/bed/chair/schair/post_buckle_mob(mob/living/M)
 	if(buckled_mob)
-		overlays += sarmrest
+		add_overlay(sarmrest)
 	else
-		overlays -= sarmrest
+		cut_overlay(sarmrest)
 
 // Chair types
 /obj/structure/stool/bed/chair/wood/normal
@@ -284,9 +284,9 @@
 
 /obj/structure/stool/bed/chair/comfy/post_buckle_mob(mob/living/M)
 	if(buckled_mob)
-		overlays += armrest
+		add_overlay(armrest)
 	else
-		overlays -= armrest
+		cut_overlay(armrest)
 
 /obj/structure/stool/bed/chair/comfy/brown
 	color = rgb(255,113,0)

@@ -20,6 +20,11 @@
 	on = !on
 	icon_state = text("igniter[]", on)
 
+/obj/machinery/igniter/get_current_temperature()
+	if(on)
+		return 1000
+	return ..()
+
 /obj/machinery/igniter/process()	//ugh why is this even in process()?
 	if (on && !(stat & NOPOWER))
 		var/turf/location = src.loc

@@ -1,3 +1,5 @@
+var/list/net_announcer_secret = list()
+
 /datum/configuration
 	var/name = "Configuration"			// datum name
 
@@ -19,7 +21,11 @@
 	var/log_pda = 0						// log pda messages
 	var/log_fax = 0						// log fax messages
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
-	var/log_runtime = 0					// logs world.log to a file
+	var/log_runtime = 0					// logs runtimes to round log folder
+	var/log_sql_error = 0				// same but for sql errors
+	var/log_js_error = 0				   // same but for client side js errors
+	var/log_initialization = 0			// same but for debug init logs
+	var/log_qdel = 0						// same but for debug qdel logs
 	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
@@ -60,10 +66,12 @@
 	var/serverwhitelist_message = "Sorry, you can't play on this server, because we use a whitelist.<br/>Please, visit another our server."
 	var/mods_are_mentors = 0
 	var/kick_inactive = 0				//force disconnect for inactive players
+	var/afk_time_bracket = 6000 // 10 minutes
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 
 	var/registration_panic_bunker_age = null
+	var/allowed_by_bunker_player_age = 60
 	var/client_limit_panic_bunker_count = null
 	var/client_limit_panic_bunker_link = null
 
@@ -154,8 +162,6 @@
 	var/gateway_enabled = 0
 	var/ghost_interaction = 0
 
-	var/comms_password = ""
-
 	var/enter_allowed = 1
 
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
@@ -164,11 +170,18 @@
 	var/chat_bridge = 0
 	var/antigrief_alarm_level = 1
 	var/check_randomizer = 0
-	var/proxy_autoban = 0
+	
+	var/guard_email = null
+	var/guard_enabled = FALSE
+	var/guard_autoban_treshhold = null
+	var/guard_autoban_reason = "We think you are a bad guy and block you because of this."
+	var/guard_autoban_sticky = FALSE
+	var/guard_whitelisted_country_codes = list()
 
 	var/allow_donators = 0
+	var/allow_tauceti_patrons = 0
 	var/allow_byond_membership = 0
-	var/donate_info_url = 0
+	var/donate_info_url
 
 	var/customitem_slot_by_time = 80000 // Gives one slot for fluff items after playing this much minutes
 
@@ -181,6 +194,13 @@
 
 	var/list/maplist = list()
 	var/datum/map_config/defaultmap
+	var/load_testmap = FALSE // swaps whatever.json with testmap.json in SSmapping init phase.
+
+	var/record_replays = FALSE
+
+	
+	var/sandbox = FALSE
+	var/list/net_announcers = list() // List of network announcers on
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -299,6 +319,18 @@
 
 				if ("log_hrefs")
 					config.log_hrefs = 1
+
+				if ("log_sql_error")
+					config.log_sql_error = 1
+				
+				if ("log_js_error")
+					config.log_js_error = 1
+
+				if ("log_initialization")
+					config.log_initialization = 1
+
+				if ("log_qdel")
+					config.log_qdel = 1
 
 				if ("log_runtime")
 					config.log_runtime = 1
@@ -432,6 +464,9 @@
 				if("kick_inactive")
 					config.kick_inactive = 1
 
+				if ("afk_time_bracket")
+					config.afk_time_bracket = (text2num(value) MINUTES)
+
 				if("load_jobs_from_txt")
 					load_jobs_from_txt = 1
 
@@ -524,9 +559,6 @@
 				if("uneducated_mice")
 					config.uneducated_mice = 1
 
-				if("comms_password")
-					config.comms_password = value
-
 				if("python_path")
 					if(value)
 						config.python_path = value
@@ -569,11 +601,29 @@
 				if("check_randomizer")
 					config.check_randomizer = value
 
-				if("proxy_autoban")
-					config.proxy_autoban = 1
+				if("guard_email")
+					config.guard_email = value
+
+				if("guard_enabled")
+					config.guard_enabled = TRUE
+
+				if("guard_autoban_treshhold")
+					config.guard_autoban_treshhold = text2num(value)
+
+				if("guard_autoban_reason")
+					config.guard_autoban_reason = value
+
+				if("guard_autoban_sticky")
+					config.guard_autoban_sticky = TRUE
+
+				if("guard_whitelisted_country_codes")
+					config.guard_whitelisted_country_codes = splittext(value, ",")
 
 				if("allow_donators")
 					config.allow_donators = 1
+
+				if("allow_tauceti_patrons")
+					config.allow_tauceti_patrons = 1
 
 				if("allow_byond_membership")
 					config.allow_byond_membership = 1
@@ -596,11 +646,23 @@
 				if("registration_panic_bunker_age")
 					config.registration_panic_bunker_age = value
 
+				if("allowed_by_bunker_player_age")
+					config.allowed_by_bunker_player_age = value
+
 				if("client_limit_panic_bunker_count")
 					config.client_limit_panic_bunker_count = text2num(value)
 
 				if("client_limit_panic_bunker_link")
 					config.client_limit_panic_bunker_link = value
+
+				if("summon_testmap")
+					config.load_testmap = TRUE
+
+				if("record_replays")
+					config.record_replays = TRUE
+
+				if("sandbox")
+					config.sandbox = TRUE
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
@@ -710,52 +772,58 @@
 		qdel(M)
 	return new /datum/game_mode/extended()
 
-/datum/configuration/proc/get_runnable_modes()
+/datum/configuration/proc/is_hidden_gamemode(g_mode)
+	return (g_mode && (g_mode=="secret" || g_mode=="bs12" || g_mode=="tau classic"))
+
+/datum/configuration/proc/is_modeset(g_mode)
+	return (g_mode && (g_mode=="random" || g_mode=="secret" || g_mode=="bs12" || g_mode=="tau classic"))
+
+/datum/configuration/proc/is_custom_modeset(g_mode)
+	return (g_mode && (g_mode=="bs12" || g_mode=="tau classic"))
+
+// As argument accpet config tag of gamemode, not name
+/datum/configuration/proc/is_mode_allowed(g_mode_tag)
+	return (g_mode_tag && (g_mode_tag in modes))
+
+// check_ready - if true only ready players count
+/datum/configuration/proc/get_runnable_modes(modeset="random", check_ready=TRUE)
 	var/list/datum/game_mode/runnable_modes = new
 	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
 		var/datum/game_mode/M = new T()
-		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
-		if (!(M.config_tag in modes))
+		M.modeset = modeset
+		// log_debug("[T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
+		if (!is_mode_allowed(M.config_tag))
 			qdel(M)
 			continue
-		if(master_last_mode)
-			if(secret_force_mode == "secret")
-				if(master_mode=="secret")
-					if(M.name != "AutoTraitor")
-						if(M.name == master_last_mode)
+		if (is_custom_modeset(M.config_tag))
+			qdel(M)
+			continue
+		if(!modeset || modeset == "random" || modeset == "secret")
+			if(global.master_last_mode && global.secret_force_mode == "secret" && modeset == "secret")
+				if(M.name != "AutoTraitor" && M.name == global.master_last_mode)
+					qdel(M)
+					continue
+			if (probabilities[M.config_tag]<=0)
+				qdel(M)
+				continue
+		else if (is_custom_modeset(modeset))
+			switch(modeset)
+				if("bs12")
+					switch(M.config_tag)
+						if("traitorchan","traitor","blob","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
 							qdel(M)
 							continue
-		if (probabilities[M.config_tag]<=0)
-			qdel(M)
-			continue
-		if (M.can_start())
-			runnable_modes[M] = probabilities[M.config_tag]
-			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
-	return runnable_modes
-
-/datum/configuration/proc/get_custom_modes(type_of_selection)
-	var/list/datum/game_mode/runnable_modes = new
-	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
-		var/datum/game_mode/M = new T()
-		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
-		if (!(M.config_tag in modes))
-			qdel(M)
-			continue
-		switch(type_of_selection)
-			if("bs12")
-				switch(M.config_tag)
-					if("traitorchan","traitor","blob","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
-						qdel(M)
-						continue
-			if("tau classic")
-				switch(M.config_tag)
-					if("traitor","blob","extended","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
-						qdel(M)
-						continue
-		if (M.can_start())
-			runnable_modes[M] = probabilities[M.config_tag]
-			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
-
+				if("tau classic")
+					switch(M.config_tag)
+						if("traitor","blob","extended","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
+							qdel(M)
+							continue
+		var/mod_prob = probabilities[M.config_tag]
+		if (is_custom_modeset(modeset))
+			mod_prob = 1
+		if (((!check_ready) && M.potential_runnable()) || (check_ready && M.can_start()))
+			runnable_modes[M] = mod_prob
+			// log_debug("runnable_mode\[[runnable_modes.len]\] = [M.config_tag] [mod_prob]")
 	return runnable_modes
 
 /datum/configuration/proc/stat_entry()
@@ -813,3 +881,48 @@
 				currentmap = null
 			else
 				error("Unknown command in map vote config: '[command]'")
+
+/datum/configuration/proc/load_list_without_comments(filename)
+	// Loading text file to list and removing comments
+	// Comment line can start with # or end with #
+	// If line end with # before # place tab(s) or space(s)
+	var/list/data = list()
+	var/endline_comment = regex(@"\s+#")
+	for(var/L in file2list(filename))
+		if (copytext(L, 1, 2) == "#")
+			continue
+		var/cut_position = findtext(L, endline_comment)
+		if(cut_position)
+			L = trim(copytext(L, 1, cut_position))
+		if (length(L))
+			data += L
+	return data
+
+/datum/configuration/proc/load_announcer_config(config_path)
+	// Loading config of network communication between servers
+	// Server list loaded from serverlist.txt file. It's file with comments. 
+	// One line of file = one server. Format - byond://example.com:2506 = secret
+	// First server must be self link for loading the secret
+	//
+	// In config file ban.txt load settings for ban announcer.
+	// Format key = value
+	var/restricted_chars_regex = regex(@"[;&]","g")
+	for(var/L in load_list_without_comments("[config_path]/serverlist.txt"))
+		var/delimiter_position = findtext(L,"=")
+		var/key = trim(copytext(L, 1, delimiter_position))
+		if(delimiter_position && length(key))
+			// remove restricted chars
+			L=replacetext(L, restricted_chars_regex, "")
+			global.net_announcer_secret[key] = trim(copytext(L, delimiter_position+1))
+	for(var/L in load_list_without_comments("[config_path]/ban.txt"))
+		var/delimiter_position = findtext(L,"=")
+		var/key = trim(copytext(L, 1, delimiter_position))
+		if(delimiter_position && length(key))
+			var/value = trim(copytext(L, delimiter_position+1))
+			switch(lowertext(key))
+				if ("receive")
+					if (value && (lowertext(value) == "true" || lowertext(value) == "on"))
+						net_announcers["ban_receive"] = TRUE
+				if ("send")
+					if (value && (lowertext(value) == "true" || lowertext(value) == "on"))
+						net_announcers["ban_send"] = TRUE

@@ -52,9 +52,11 @@ var/global/list/image/splatter_cache=list()
 /obj/effect/decal/cleanable/blood/update_icon()
 	color = basedatum.color
 
-/obj/effect/decal/cleanable/blood/Crossed(mob/living/carbon/perp)
-	if(!istype(perp))
+/obj/effect/decal/cleanable/blood/Crossed(atom/movable/AM)
+	. = ..()
+	if(!iscarbon(AM))
 		return
+	var/mob/living/carbon/perp = AM
 	if(amount < 1)
 		return
 	if(!islist(blood_DNA))	//prevent from runtime errors connected with shitspawn
@@ -72,7 +74,7 @@ var/global/list/image/splatter_cache=list()
 			var/obj/item/clothing/shoes/S = perp.shoes
 			if(istype(S))
 				if((dirt_overlay && dirt_overlay.color != basedatum.color) || (!dirt_overlay))
-					S.overlays.Cut()
+					S.cut_overlays()
 					S.add_dirt_cover(basedatum)
 				S.track_blood = max(amount,S.track_blood)
 				if(!S.blood_DNA)
@@ -197,8 +199,8 @@ var/global/list/image/splatter_cache=list()
 	blood.Blend(basedatum.color, ICON_MULTIPLY)
 
 	icon = blood
-	overlays.Cut()
-	overlays += giblets
+	cut_overlays()
+	add_overlay(giblets)
 
 /obj/effect/decal/cleanable/blood/gibs/up
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")
@@ -233,8 +235,8 @@ var/global/list/image/splatter_cache=list()
 				if (step_to(src, get_step(src, direction), 0))
 					break
 
-/obj/effect/decal/cleanable/blood/gibs/Crossed(mob/living/L)
-	if(istype(L) && has_gravity(loc))
+/obj/effect/decal/cleanable/blood/gibs/Crossed(atom/movable/AM)
+	if(isliving(AM) && has_gravity(loc))
 		playsound(src, 'sound/effects/gib_step.ogg', VOL_EFFECTS_MASTER)
 	. = ..()
 

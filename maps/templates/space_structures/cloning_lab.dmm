@@ -4,14 +4,14 @@
 /area/space)
 "b" = (
 /turf/simulated/wall/r_wall,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "c" = (
 /obj/structure/rack,
 /obj/item/weapon/circuitboard/cloning,
 /obj/item/stack/cable_coil/random,
 /obj/item/weapon/shard,
 /turf/simulated/floor/plating,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "d" = (
 /obj/machinery/light_construct/small{
 	dir = 1
@@ -22,33 +22,33 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/plating,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "e" = (
 /turf/simulated/floor/plating,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "f" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "g" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "h" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "i" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "j" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/simulated/floor/plating,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "k" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
@@ -60,14 +60,14 @@
 	dir = 1;
 	icon_state = "white"
 	},
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "l" = (
 /obj/structure/table,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "white"
 	},
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "m" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/syringes,
@@ -75,7 +75,7 @@
 	dir = 1;
 	icon_state = "white"
 	},
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "n" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin,
@@ -86,40 +86,40 @@
 	dir = 1;
 	icon_state = "white"
 	},
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "o" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "white"
 	},
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "p" = (
 /obj/structure/sign/nanotrasen,
 /turf/simulated/wall/r_wall,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "q" = (
 /obj/random/vending/snack,
 /turf/simulated/floor,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "s" = (
 /obj/structure/sign/directions/science{
 	dir = 8
 	},
 /turf/simulated/wall/r_wall,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "t" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/remains/human,
 /turf/simulated/floor,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "u" = (
 /obj/machinery/iv_drip,
 /turf/simulated/floor,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "v" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -128,74 +128,74 @@
 /obj/item/weapon/bedsheet/purple,
 /obj/structure/stool/bed,
 /turf/simulated/floor,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "w" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warnwhite"
 	},
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "x" = (
 /obj/structure/sign/departments/science,
 /turf/simulated/wall/r_wall,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "y" = (
 /turf/simulated/floor,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "z" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "A" = (
 /turf/simulated/floor/plating/airless,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "B" = (
 /obj/structure/stool/bed/chair/comfy/beige{
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "C" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Reabilitaion Chamber"
 	},
 /turf/simulated/floor,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "D" = (
 /obj/structure/stool/bed/chair,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "white"
 	},
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "E" = (
 /obj/machinery/door/airlock/research{
 	name = "Cloning Facility"
 	},
 /turf/simulated/floor,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "F" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/book/manual/wiki/medical_genetics,
 /obj/structure/table,
 /turf/simulated/floor,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "G" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "H" = (
 /obj/machinery/clonepod,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "white"
 	},
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "I" = (
 /obj/structure/computerframe{
 	anchored = 1
@@ -205,14 +205,14 @@
 	dir = 1;
 	icon_state = "white"
 	},
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "J" = (
 /obj/machinery/dna_scannernew,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "white"
 	},
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "K" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp,
@@ -220,7 +220,7 @@
 	dir = 1;
 	icon_state = "white"
 	},
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "L" = (
 /obj/structure/table,
 /obj/item/weapon/disk/research_points,
@@ -229,7 +229,7 @@
 	dir = 1;
 	icon_state = "white"
 	},
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 "M" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/item/weapon/paper/cloning_log,
@@ -237,7 +237,7 @@
 	dir = 1;
 	icon_state = "white"
 	},
-/area/cloning_lab)
+/area/space_structures/cloning_lab)
 
 (1,1,1) = {"
 a

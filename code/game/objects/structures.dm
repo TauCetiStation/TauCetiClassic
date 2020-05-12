@@ -97,7 +97,7 @@
 	var/adjusted_climb_time = 50
 	if(user.restrained()) //climbing takes twice as long when restrained.
 		adjusted_climb_time *= 2
-	if(isalien(user))
+	if(isxeno(user))
 		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
 
 	if(!do_after(user, adjusted_climb_time, target = user))
@@ -167,7 +167,7 @@
 	if(user.buckled)
 		to_chat(user, "<span class='notice'>You need your hands and legs free for this.</span>")
 		return 0
-	if(user.stat || user.paralysis || user.sleeping || user.lying || user.weakened)
+	if(user.incapacitated())
 		return 0
 	if(issilicon(user))
 		to_chat(user, "<span class='notice'>You need hands for this.</span>")

@@ -28,9 +28,10 @@
 		return
 
 	if(copytext(message,1,2) == "*")
-		return emote(copytext(message,2))
+		return emote(copytext(message, 2), auto = FALSE)
 
-	if((miming || has_trait(TRAIT_MUTE)) && !(message_mode == "changeling" || message_mode == "alientalk"))
+	//check if we are miming
+	if (miming && !(message_mode == "changeling" || message_mode == "alientalk"))
 		to_chat(usr, "<span class='userdanger'>You are mute.</span>")
 		return
 
@@ -46,7 +47,26 @@
 
 	//parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
-	if (speaking)
+	var/has_lang_prefix = !!speaking
+	if(!has_lang_prefix && HAS_TRAIT(src, TRAIT_MUTE))
+		var/datum/language/USL = all_languages["Universal Sign Language"]
+		if(can_speak(USL))
+			speaking = USL
+
+	//check if we're muted and not using gestures
+	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk"))
+		if (!(speaking && (speaking.flags & SIGNLANG)))
+			to_chat(usr, "<span class='userdanger'>You are mute.</span>")
+			return
+
+	if (speaking && (speaking.flags & SIGNLANG))
+		var/obj/item/organ/external/LH = src.get_bodypart(BP_L_ARM)
+		var/obj/item/organ/external/RH = src.get_bodypart(BP_R_ARM)
+		if (!(LH && LH.is_usable() && RH && RH.is_usable()))
+			to_chat(usr, "<span class='userdanger'>You tried to make a gesture, but your hands are not responding.</span>")
+			return
+
+	if (has_lang_prefix)
 		message = copytext(message,2+length(speaking.key))
 	else if(species.force_racial_language)
 		speaking = all_languages[species.language]
@@ -71,7 +91,7 @@
 					//return - technically you can add more aliens to a team
 				for(var/mob/M in observer_list)
 					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
-				log_say("Abductor: [name]/[key] : [sm]")
+				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
 
 	message = capitalize(trim(message))
@@ -202,16 +222,20 @@
 		return 1
 
 	//These only pertain to common. Languages are handled by mob/say_understands()
-	if (!speaking)
-		if (istype(other, /mob/living/carbon/monkey/diona))
+	if(!speaking)
+		if(istype(other, /mob/living/carbon/monkey/diona))
 			if(other.languages.len >= 2)			//They've sucked down some blood and can speak common now.
 				return 1
-		if (istype(other, /mob/living/silicon))
+		if(issilicon(other))
 			return 1
-		if (istype(other, /mob/living/carbon/brain))
+		if(isbrain(other))
 			return 1
-		if (istype(other, /mob/living/carbon/slime))
+		if(isslime(other))
 			return 1
+		if(isgod(other) && mind.holy_role)
+			var/mob/living/simple_animal/shade/god/G = other
+			if(G.islam)
+				return 1
 
 	//This is already covered by mob/say_understands()
 	//if (istype(other, /mob/living/simple_animal))
@@ -233,6 +257,11 @@
 	if(special_voice)
 		return special_voice
 	return real_name
+
+/mob/living/carbon/human/get_alt_name()
+	if(name != GetVoice())
+		return " (as [get_id_name("Unknown")])"
+	return ""
 
 /*
    ***Deprecated***
@@ -291,7 +320,7 @@
 			message = wear_mask.speechModification(message)
 		handled = 1
 
-	if((HULK in mutations) && health >= 25 && length(message) && !has_trait(TRAIT_STRONGMIND))
+	if((HULK in mutations) && health >= 25 && length(message) && !HAS_TRAIT(src, TRAIT_STRONGMIND))
 		message = "[uppertext_(message)]!!!"
 		verb = pick("yells","roars","hollers")
 		handled = 1
@@ -305,7 +334,7 @@
 		handled = 1
 
 	var/braindam = getBrainLoss()
-	if(braindam >= 60 && !has_trait(TRAIT_STRONGMIND))
+	if(braindam >= 60 && !HAS_TRAIT(src, TRAIT_STRONGMIND))
 		handled = 1
 		if(prob(braindam/4))
 			message = stutter(message)

@@ -9,7 +9,7 @@
 	volume = 10
 	var/filled = 0
 
-/obj/item/weapon/reagent_containers/robodropper/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/robodropper/afterattack(atom/target, mob/user, proximity, params)
 	if(!target.reagents) return
 
 	if(filled)
@@ -45,8 +45,7 @@
 						safe_thing.create_reagents(100)
 					trans = src.reagents.trans_to(safe_thing, amount_per_transfer_from_this)
 
-					for(var/mob/O in viewers(world.view, user))
-						O.show_message(text("<span class='warning'><B>[] tries to squirt something into []'s eyes, but fails!</B></span>", user, target), 1)
+					user.visible_message("<span class='warning'><B>[user] tries to squirt something into [target]'s eyes, but fails!</B></span>")
 					spawn(5)
 						src.reagents.reaction(safe_thing, TOUCH)
 
@@ -58,8 +57,7 @@
 					return
 
 
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message(text("<span class='warning'><B>[] squirts something into []'s eyes!</B></span>", user, target), 1)
+			user.visible_message("<span class='warning'><B>[user] squirts something into [target]'s eyes!</B></span>")
 			src.reagents.reaction(target, TOUCH)
 
 			var/mob/M = target
@@ -69,7 +67,7 @@
 			var/contained = english_list(injected)
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been squirted with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to squirt [M.name] ([M.key]). Reagents: [contained]</font>")
-			msg_admin_attack("[user.name] ([user.ckey]) squirted [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
+			msg_admin_attack("[key_name(user)] squirted [key_name(M)] with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
 
 
 		trans = src.reagents.trans_to(target, amount_per_transfer_from_this)

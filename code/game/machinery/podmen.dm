@@ -28,14 +28,14 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 /obj/item/seeds/replicapod/attackby(obj/item/weapon/W, mob/user)
 
-	if(istype(W,/obj/item/weapon/reagent_containers))
-
+	if(istype(W, /obj/item/weapon/reagent_containers))
 		to_chat(user, "You inject the contents of the syringe into the seeds.")
 
 		var/datum/reagent/blood/B
 
 		//Find a blood sample to inject.
-		for(var/datum/reagent/R in W:reagents.reagent_list)
+		var/obj/item/weapon/reagent_containers/RC = W
+		for(var/datum/reagent/R in RC.reagents.reagent_list)
 			if(istype(R,/datum/reagent/blood))
 				B = R
 				break
@@ -58,13 +58,12 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 			realName = source.real_name
 			ckey = source.ckey
 
-		W:reagents.clear_reagents()
+		RC.reagents.clear_reagents()
 		return
 
 	return ..()
 
 /obj/item/seeds/replicapod/harvest(mob/user = usr)
-
 	parent = loc
 	var/found_player = 0
 
@@ -94,9 +93,9 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	for(var/mob/dead/observer/O in observer_list)
 		if(O.has_enabled_antagHUD && config.antag_hud_restricted)
 			continue
-		if(jobban_isbanned(O, ROLE_PLANT))
+		if(jobban_isbanned(O, ROLE_PLANT) || is_alien_whitelisted_banned(O, DIONA))
 			continue
-		if(role_available_in_minutes(O, ROLE_PLANT))
+		if(!is_alien_whitelisted(O, DIONA) && !role_available_in_minutes(O, ROLE_PLANT))
 			continue
 		if(O.client)
 			var/client/C = O.client

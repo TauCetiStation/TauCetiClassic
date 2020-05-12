@@ -4,7 +4,7 @@
 var/bomb_set
 
 /obj/machinery/nuclearbomb
-	name = "\improper Nuclear Fission Explosive"
+	name = "Nuclear Fission Explosive"
 	desc = "Uh oh. RUN!!!!"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb0"
@@ -57,29 +57,29 @@ var/bomb_set
 		if (removal_stage == 5)
 			if (src.opened == 0)
 				src.opened = 1
-				overlays += image(icon, "npanel_open")
+				add_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You unscrew the control panel of [src].")
 
 			else
 				src.opened = 0
-				overlays -= image(icon, "npanel_open")
+				cut_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You screw the control panel of [src] back on.")
 		else if (src.auth)
 			if (src.opened == 0)
 				src.opened = 1
-				overlays += image(icon, "npanel_open")
+				add_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You unscrew the control panel of [src].")
 
 			else
 				src.opened = 0
-				overlays -= image(icon, "npanel_open")
+				cut_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You screw the control panel of [src] back on.")
 		else
 			if (src.opened == 0)
 				to_chat(user, "The [src] emits a buzzing noise, the panel staying locked in.")
 			if (src.opened == 1)
 				src.opened = 0
-				overlays -= image(icon, "npanel_open")
+				cut_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You screw the control panel of [src] back on.")
 			flick("nuclearbombc", src)
 
@@ -170,15 +170,18 @@ var/bomb_set
 	if(.)
 		return
 
-	if (extended)
+	if (!extended)
 		if (!ishuman(user) && !isobserver(user))
 			to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
 			return 1
-		var/turf/current_location = get_turf(usr)//What turf is the user on?
-		if(is_centcom_level(current_location.z) && user.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
-			to_chat(user, "<span class = 'red'>It's not the best idea to plant a bomb on your own base</span>")
+		var/turf/current_location = get_turf(user)//What turf is the user on?
+		if((!current_location || is_centcom_level(current_location.z)) && user.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
+			to_chat(user, "<span class = 'red'>It's not the best idea to plant a bomb on your own base.</span>")
 			return
-	else if (deployable)
+		if (!istype(get_area(src), /area/station)) // If outside of station
+			to_chat(user, "<span class = 'red'>Bomb cannot be deployed here.</span>")
+			return
+	if (deployable)
 		if(removal_stage < 5)
 			anchored = TRUE
 			visible_message("<span class = 'red'>With a steely snap, bolts slide out of [src] and anchor it to the flooring!</span>")
@@ -218,7 +221,7 @@ var/bomb_set
 	set name = "Make Deployable"
 	set src in oview(1)
 
-	if (!usr.canmove || usr.stat || usr.restrained())
+	if (usr.incapacitated())
 		return
 	if (!ishuman(usr))
 		to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
@@ -334,7 +337,6 @@ var/bomb_set
 		return
 	else
 		return ..()
-	return
 
 #define NUKERANGE 80
 /obj/machinery/nuclearbomb/proc/explode()

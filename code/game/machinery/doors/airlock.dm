@@ -5,6 +5,14 @@
 #define AIRLOCK_OPENING  4
 #define AIRLOCK_DENY     5
 #define AIRLOCK_EMAG     6
+#define AIRLOCK_LIGHT_POWER 2
+#define AIRLOCK_LIGHT_RANGE 1.5
+#define AIRLOCK_POWERON_LIGHT_COLOR "#3aa7c2"
+#define AIRLOCK_BOLTS_LIGHT_COLOR "#c23b23"
+#define AIRLOCK_ACCESS_LIGHT_COLOR "#57e69c"
+#define AIRLOCK_EMERGENCY_LIGHT_COLOR "#d1d11d"
+#define AIRLOCK_DENY_LIGHT_COLOR "#c23b23"
+
 var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock
@@ -216,6 +224,11 @@ var/list/airlock_overlays = list()
 	else
 		return 0
 
+// So icons update in case of cutting off power via APC
+/obj/machinery/door/airlock/power_change()
+	..()
+	update_icon()
+
 /obj/machinery/door/airlock/update_icon(state = AIRLOCK_DEFAULT)
 	switch(state)
 		if(AIRLOCK_DEFAULT)
@@ -229,6 +242,7 @@ var/list/airlock_overlays = list()
 		if(AIRLOCK_DENY, AIRLOCK_OPENING, AIRLOCK_CLOSING, AIRLOCK_EMAG)
 			icon_state = "nonexistenticonstate"
 	set_airlock_overlays(state)
+	SSdemo.mark_dirty(src)
 
 /obj/machinery/door/airlock/proc/set_airlock_overlays(state)
 	var/image/frame_overlay
@@ -237,6 +251,10 @@ var/list/airlock_overlays = list()
 	var/image/panel_overlay
 	var/image/weld_overlay
 	var/image/sparks_overlay
+	light_range = 0
+	light_power = 0
+	light_color = ""
+
 
 	switch(state)
 		if(AIRLOCK_CLOSED)
@@ -250,10 +268,17 @@ var/list/airlock_overlays = list()
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
 			if(lights && hasPower())
+				light_range = AIRLOCK_LIGHT_RANGE
+				light_power = AIRLOCK_LIGHT_POWER
 				if(locked)
 					lights_overlay = get_airlock_overlay("lights_bolts", overlays_file)
+					light_color = AIRLOCK_BOLTS_LIGHT_COLOR
 				else if(emergency)
 					lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
+					light_color = AIRLOCK_EMERGENCY_LIGHT_COLOR
+				else
+					lights_overlay = get_airlock_overlay("lights_poweron", overlays_file)
+					light_color = AIRLOCK_POWERON_LIGHT_COLOR
 
 		if(AIRLOCK_DENY)
 			frame_overlay = get_airlock_overlay("closed", icon)
@@ -265,7 +290,11 @@ var/list/airlock_overlays = list()
 				panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
-			lights_overlay = get_airlock_overlay("lights_denied", overlays_file)
+			if(lights && hasPower())
+				light_range = AIRLOCK_LIGHT_RANGE
+				light_power = AIRLOCK_LIGHT_POWER
+				lights_overlay = get_airlock_overlay("lights_denied", overlays_file)
+				light_color = AIRLOCK_DENY_LIGHT_COLOR
 
 		if(AIRLOCK_EMAG)
 			frame_overlay = get_airlock_overlay("closed", icon)
@@ -285,10 +314,13 @@ var/list/airlock_overlays = list()
 				filling_overlay = get_airlock_overlay("[inner_material]_closing", overlays_file)
 			else
 				filling_overlay = get_airlock_overlay("fill_closing", icon)
-			if(lights && hasPower())
-				lights_overlay = get_airlock_overlay("lights_closing", overlays_file)
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_closing", overlays_file)
+			if(lights && hasPower())
+				light_range = AIRLOCK_LIGHT_RANGE
+				light_power = AIRLOCK_LIGHT_POWER
+				lights_overlay = get_airlock_overlay("lights_closing", overlays_file)
+				light_color = AIRLOCK_ACCESS_LIGHT_COLOR
 
 		if(AIRLOCK_OPEN)
 			frame_overlay = get_airlock_overlay("open", icon)
@@ -298,6 +330,19 @@ var/list/airlock_overlays = list()
 				filling_overlay = get_airlock_overlay("fill_open", icon)
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_open", overlays_file)
+			if(lights && hasPower())
+				light_range = AIRLOCK_LIGHT_RANGE
+				light_power = AIRLOCK_LIGHT_POWER
+				if(locked)
+					lights_overlay = get_airlock_overlay("lights_bolts_open", overlays_file)
+					light_color = AIRLOCK_BOLTS_LIGHT_COLOR
+				else if(emergency)
+					lights_overlay = get_airlock_overlay("lights_emergency_open", overlays_file)
+					light_color = AIRLOCK_EMERGENCY_LIGHT_COLOR
+				else
+					lights_overlay = get_airlock_overlay("lights_poweron_open", overlays_file)
+					light_color = AIRLOCK_POWERON_LIGHT_COLOR
+
 
 		if(AIRLOCK_OPENING)
 			frame_overlay = get_airlock_overlay("opening", icon)
@@ -305,41 +350,47 @@ var/list/airlock_overlays = list()
 				filling_overlay = get_airlock_overlay("[inner_material]_opening", overlays_file)
 			else
 				filling_overlay = get_airlock_overlay("fill_opening", icon)
-			if(lights && hasPower())
-				lights_overlay = get_airlock_overlay("lights_opening", overlays_file)
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
+			if(lights && hasPower())
+				light_range = AIRLOCK_LIGHT_RANGE
+				light_power = AIRLOCK_LIGHT_POWER
+				lights_overlay = get_airlock_overlay("lights_opening", overlays_file)
+				light_color = AIRLOCK_ACCESS_LIGHT_COLOR
 
-	// Doesn't used overlays.Cut() for performance reasons.
+	// Doesn't used cut_overlays() for performance reasons.
 	if(frame_overlay != old_frame_overlay)
-		overlays -= old_frame_overlay
-		overlays += frame_overlay
+		cut_overlay(old_frame_overlay)
+		add_overlay(frame_overlay)
 		old_frame_overlay = frame_overlay
 	if(filling_overlay != old_filling_overlay)
-		overlays -= old_filling_overlay
-		overlays += filling_overlay
+		cut_overlay(old_filling_overlay)
+		add_overlay(filling_overlay)
 		old_filling_overlay = filling_overlay
 	if(lights_overlay != old_lights_overlay)
 		if(lights_overlay)
 			lights_overlay.layer = LIGHTING_LAYER + 1
 			lights_overlay.plane = LIGHTING_PLANE + 1
-		overlays -= old_lights_overlay
-		overlays += lights_overlay
+		cut_overlay(old_lights_overlay)
+		add_overlay(lights_overlay)
 		old_lights_overlay = lights_overlay
+		// Adding light to airlocks
+		set_light(light_range, light_power, light_color)
+
 	if(panel_overlay != old_panel_overlay)
-		overlays -= old_panel_overlay
-		overlays += panel_overlay
+		cut_overlay(old_panel_overlay)
+		add_overlay(panel_overlay)
 		old_panel_overlay = panel_overlay
 	if(weld_overlay != old_weld_overlay)
-		overlays -= old_weld_overlay
-		overlays += weld_overlay
+		cut_overlay(old_weld_overlay)
+		add_overlay(weld_overlay)
 		old_weld_overlay = weld_overlay
 	if(sparks_overlay != old_sparks_overlay)
 		if(sparks_overlay)
 			sparks_overlay.layer = LIGHTING_LAYER + 1
 			sparks_overlay.plane = LIGHTING_PLANE + 1
-		overlays -= old_sparks_overlay
-		overlays += sparks_overlay
+		cut_overlay(old_sparks_overlay)
+		add_overlay(sparks_overlay)
 		old_sparks_overlay = sparks_overlay
 
 /proc/get_airlock_overlay(icon_state, icon_file)
@@ -546,7 +597,7 @@ var/list/airlock_overlays = list()
 	return ..()
 
 /obj/machinery/door/airlock/attack_paw(mob/user)
-	if(istype(user, /mob/living/carbon/alien/humanoid))
+	if(istype(user, /mob/living/carbon/xenomorph/humanoid))
 		if(welded || locked)
 			to_chat(user, "<span class='warning'>The door is sealed, it cannot be pried open.</span>")
 			return
@@ -646,7 +697,7 @@ var/list/airlock_overlays = list()
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 				H.Stun(8)
 				H.Weaken(5)
-				BP.take_damage(10, 0)
+				BP.take_damage(10, 0, used_weapon = "Hematoma")
 			else
 				visible_message("<span class='userdanger'> [user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
 			return
@@ -693,6 +744,7 @@ var/list/airlock_overlays = list()
 					// Disrupt main power
 					if(!secondsMainPowerLost)
 						loseMainPower()
+						update_icon()
 					else
 						to_chat(usr, "Main power is already offline.")
 
@@ -979,9 +1031,8 @@ var/list/airlock_overlays = list()
 		..()
 	return
 
-/obj/machinery/door/airlock/phoron/attackby(C, mob/user)
-	if(C)
-		ignite(is_hot(C))
+/obj/machinery/door/airlock/phoron/attackby(obj/item/I, mob/user)
+	ignite(I.get_current_temperature())
 	..()
 
 /obj/machinery/door/airlock/proc/close_unsafe(bolt_after = FALSE)
@@ -1176,15 +1227,23 @@ var/list/airlock_overlays = list()
 	. = ..()
 	var/image/fire_overlay = image("icon"='icons/effects/effects.dmi', "icon_state"="s_fire", "layer" = (LIGHTING_LAYER + 1))
 	fire_overlay.plane = LIGHTING_PLANE + 1
-	overlays += fire_overlay
+	add_overlay(fire_overlay)
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/door_scrap/process()
 	if(ticker >= 300)
-		overlays.Cut()
+		cut_overlays()
 		STOP_PROCESSING(SSobj, src)
 		return
 	ticker++
 	var/spot = locate(/obj/effect/fluid) in loc
 	if(spot)
 		ticker +=10
+
+#undef AIRLOCK_POWERON_LIGHT_COLOR
+#undef AIRLOCK_BOLTS_LIGHT_COLOR
+#undef AIRLOCK_ACCESS_LIGHT_COLOR
+#undef AIRLOCK_EMERGENCY_LIGHT_COLOR
+#undef AIRLOCK_DENY_LIGHT_COLOR
+#undef AIRLOCK_LIGHT_POWER
+#undef AIRLOCK_LIGHT_RANGE

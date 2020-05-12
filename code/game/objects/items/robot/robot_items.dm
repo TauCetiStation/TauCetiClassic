@@ -22,9 +22,8 @@
 		M.stuttering = 5
 	M.Stun(5)
 
-	for(var/mob/O in viewers(M, null))
-		if (O.client)
-			O.show_message("<span class='warning'><B>[user] has prodded [M] with an electrically-charged arm!</B></span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
+
+	M.visible_message("<span class='warning'><B>[user] has prodded [M] with an electrically-charged arm!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
 
 /obj/item/borg/overdrive
 	name = "overdrive"
@@ -41,25 +40,25 @@
 
 
 /obj/item/borg/sight/xray
-	name = "\proper x-ray Vision"
+	name = "x-ray Vision"
 	sight_mode = BORGXRAY
 
 
 /obj/item/borg/sight/thermal
-	name = "\proper thermal vision"
+	name = "thermal vision"
 	sight_mode = BORGTHERM
 	icon_state = "thermal"
 	icon = 'icons/obj/clothing/glasses.dmi'
 
 
 /obj/item/borg/sight/meson
-	name = "\proper meson vision"
+	name = "meson vision"
 	sight_mode = BORGMESON
 	icon_state = "meson"
 	icon = 'icons/obj/clothing/glasses.dmi'
 
 /obj/item/borg/sight/night
-	name = "\proper night vision"
+	name = "night vision"
 	sight_mode = BORGNIGHT
 	icon_state = "night"
 	icon = 'icons/obj/clothing/glasses.dmi'

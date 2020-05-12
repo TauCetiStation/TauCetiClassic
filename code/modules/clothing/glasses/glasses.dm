@@ -15,6 +15,8 @@
 	var/active = 1
 	var/activation_sound = 'sound/items/buttonclick.ogg'
 
+	sprite_sheet_slot = SPRITE_SHEET_EYES
+
 /obj/item/clothing/glasses/attack_self(mob/user)
 	if(toggleable)
 		if(ishuman(usr))
@@ -172,7 +174,7 @@
 	set name = "Adjust welding goggles"
 	set src in usr
 
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	if(!usr.incapacitated())
 		if(up)
 			up = !up
 			flags |= GLASSESCOVERSEYES

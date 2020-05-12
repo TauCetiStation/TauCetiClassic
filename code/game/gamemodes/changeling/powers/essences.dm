@@ -18,7 +18,7 @@
 	name = victim.mind.name
 	victim.mind.transfer_to(src)
 	enter_host(host)
-	overlays = victim.overlays
+	copy_overlays(victim.overlays, TRUE)
 	phantom = new(src, src)
 	phantom.create_overlay(src)
 
@@ -248,14 +248,14 @@
 			var/obj/screen/alert/host_alert = host.alerts[alert]
 			if(length(host_alert.overlays) > 0)
 				continue
-			var/obj/screen/alert/new_alert = throw_alert(alert)
+			var/obj/screen/alert/new_alert = throw_alert(alert, host_alert.type)
 			if(new_alert)
 				new_alert.icon_state = host_alert.icon_state
 
 		if(healthdoll && host.healthdoll)
-			healthdoll.overlays.Cut()
+			healthdoll.cut_overlays()
 			healthdoll.icon_state = host.healthdoll.icon_state
-			healthdoll.overlays += host.healthdoll.overlays
+			healthdoll.add_overlay(host.healthdoll.overlays)
 		if(healths && host.healths)
 			healths.icon_state = host.healths.icon_state
 		if(internals && host.internals)
@@ -422,7 +422,7 @@
 	name = f_overlay.name
 	overlay = image(f_overlay.icon, f_overlay.icon_state)
 	overlay.alpha = 200
-	overlay.overlays = f_overlay.overlays
+	overlay.copy_overlays(f_overlay)
 	overlay.loc = src
 
 /obj/effect/essence_phantom/proc/show_phantom(atom/place)

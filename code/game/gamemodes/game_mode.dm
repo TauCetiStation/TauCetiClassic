@@ -18,14 +18,20 @@
 	var/votable = 1
 	var/playable_mode = 1
 	var/probability = 0
+	var/modeset = null        // if game_mode in modeset
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
 	var/nar_sie_has_risen = 0 //check, if there is already one god in the world who was summoned (only for tomes)
 	var/completion_text = ""
 	var/mode_result = "undefined"
-	var/list/datum/mind/modePlayer = new
+	var/list/datum/mind/modePlayer = new // list of current antags.
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor")	// Jobs that can't be traitors because
+
+	// Specie flags that for any amount of reasons can cause this role to not be available.
+	// TO-DO: use traits? ~Luduk
+	var/list/restricted_species_flags = list()
+
 	var/required_players = 0
 	var/required_players_secret = 0 //Minimum number of players for that game mode to be chose in Secret
 	var/required_enemies = 0
@@ -38,6 +44,7 @@
 	var/ert_disabled = 0
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
+	var/check_ready = TRUE
 	var/uplink_welcome = "Syndicate Uplink Console:"
 	var/uplink_uses = 20
 	var/uplink_items = {"Highly Visible and Dangerous Weapons;
@@ -84,35 +91,45 @@ Implants;
 	to_chat(world, "<B>Notice</B>: [src] did not define announce()")
 
 
-///can_start()
-///Checks to see if the game can be setup and ran with the current number of players or whatnot.
+// can_start()
+// Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
 	for(var/mob/dead/new_player/player in new_player_list)
-		if(player.client && player.ready)
+		if(player.client && (!check_ready || player.ready))
 			playerC++
-
+	// no antag_candidates need
+	if (playerC == 0 && required_players == 0)
+		return TRUE
+	// check for minimal player on server
+	if((modeset && modeset == "secret" && playerC < required_players_secret) || playerC < required_players)
+		return FALSE
+	// get list of all antags possiable
 	antag_candidates = get_players_for_role(role_type)
 	if(antag_candidates.len < required_enemies)
-		return 0
+		return FALSE
+	// assign_outsider_antag_roles use antag_candidates list
+	// fill antag_candidates before return
+	return TRUE
 
-	if(master_mode=="secret")
-		if(playerC >= required_players_secret)
-			return 1
-	else
-		if(playerC >= required_players)
-			return 1
-	return 0
+/datum/game_mode/proc/potential_runnable()
+	check_ready = FALSE
+	var/ret = can_start()
+	check_ready = TRUE
+	return ret
 
+/datum/game_mode/proc/assign_outsider_antag_roles()
+	// already get antags in can_start
+	return can_start()
 
-///pre_setup()
-///Attempts to select players for special roles the mode might have.
+// pre_setup()
+// Attempts to select players for special roles the mode might have.
+// mind.assigned_role already set for players
 /datum/game_mode/proc/pre_setup()
-	return 1
+	return TRUE
 
-
-///post_setup()
-///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
+// post_setup()
+// Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup()
 	var/list/exclude_autotraitor_for = list("extended", "sandbox", "meteor", "gang", "epidemic") // config_tag var
 	if(!(config_tag in exclude_autotraitor_for))
@@ -140,6 +157,10 @@ Implants;
 ///process()
 ///Called by the gameticker
 /datum/game_mode/process()
+	// For objectives such as "Make an example of...", which require mid-game checks for completion
+	for(var/datum/mind/traitor_mind in traitors)
+		for(var/datum/objective/objective in traitor_mind.objectives)
+			objective.check_completion()
 	return 0
 
 
@@ -162,7 +183,7 @@ Implants;
 	var/escaped_on_pod_5 = 0
 	var/escaped_on_shuttle = 0
 
-	var/list/area/escape_locations = list(/area/shuttle/escape/centcom, /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom)
+	var/list/area/escape_locations = list(/area/shuttle/escape/centcom, /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod4/centcom)
 
 	for(var/mob/M in player_list)
 		if(M.client)
@@ -187,7 +208,7 @@ Implants;
 					escaped_on_pod_2++
 				if(mob_area.type == /area/shuttle/escape_pod3/centcom)
 					escaped_on_pod_3++
-				if(mob_area.type == /area/shuttle/escape_pod5/centcom)
+				if(mob_area.type == /area/shuttle/escape_pod4/centcom)
 					escaped_on_pod_5++
 
 			if(isobserver(M))
@@ -298,6 +319,23 @@ Implants;
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)*/
 
+/datum/game_mode/proc/can_be_antag(datum/mind/player, role)
+	if(restricted_jobs)
+		if(player.assigned_role in restricted_jobs)
+			return FALSE
+
+	var/datum/preferences/prefs = player.current.client.prefs
+
+	var/datum/species/S = all_species[prefs.species]
+
+	if(!S.can_be_role(role))
+		return FALSE
+
+	for(var/specie_flag in restricted_species_flags)
+		if(S.flags[specie_flag])
+			return FALSE
+
+	return TRUE
 
 /datum/game_mode/proc/get_players_for_role(role)
 	var/list/players = list()
@@ -305,7 +343,7 @@ Implants;
 
 	// Assemble a list of active players without jobbans.
 	for(var/mob/dead/new_player/player in new_player_list)
-		if(player.client && player.ready)
+		if(player.client && (!check_ready || player.ready))
 			if(role in player.client.prefs.be_role)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role) && !role_available_in_minutes(player, role))
 					players += player
@@ -320,12 +358,9 @@ Implants;
 			candidates += player.mind
 			players -= player
 
-	// Remove candidates who want to be antagonist but have a job that precludes it
-	if(restricted_jobs)
-		for(var/datum/mind/player in candidates)
-			for(var/job in restricted_jobs)
-				if(player.assigned_role == job)
-					candidates -= player
+	for(var/datum/mind/player in candidates)
+		if(!can_be_antag(player, role))
+			candidates -= player
 
 	return candidates		// Returns: The number of people who had the antagonist role set to yes, regardless of recomended_enemies, if that number is greater than recommended_enemies
 							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
@@ -466,11 +501,17 @@ Implants;
 /datum/game_mode/proc/printobjectives(datum/mind/ply)
 	var/text = ""
 	var/count = 1
+	var/result
 	for(var/datum/objective/objective in ply.objectives)
-		if(objective.check_completion())
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
-		else
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
+		result = objective.check_completion()
+		switch(result)
+			if(OBJECTIVE_WIN)
+				text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
+			if(OBJECTIVE_LOSS)
+				text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
+			if(OBJECTIVE_HALFWIN)
+				text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: orange; font-weight: bold;'>Half success.</span>"
+
 		count++
 	return text
 

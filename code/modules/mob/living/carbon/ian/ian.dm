@@ -553,7 +553,7 @@
 			else
 				visible_message("<span class='danger'>[M.name] has attempted to bite [name]!</span>")
 
-/mob/living/carbon/ian/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/carbon/ian/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 	if (!ticker.mode)
 		to_chat(M, "<span class='warning'>You cannot attack people before the game has started.</span>")
 		return
@@ -634,7 +634,7 @@
 		return
 	..()
 
-/mob/living/carbon/ian/hitby(atom/movable/AM)
+/mob/living/carbon/ian/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	if(is_armored(AM, msg = "armored"))
 		return
 	..()
@@ -685,3 +685,8 @@
 	message = capitalize(trim_left(message))
 
 	..(message, null, verb, sanitize = 0)
+
+/mob/living/carbon/ian/get_scrambled_message(message, datum/language/speaking = null)
+	if(!speak.len)
+		return null
+	return pick(speak)

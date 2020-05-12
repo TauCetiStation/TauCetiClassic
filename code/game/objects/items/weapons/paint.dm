@@ -17,15 +17,15 @@ var/global/list/cached_icons = list()
 	flags = OPENCONTAINER
 	var/paint_type = ""
 
-/obj/item/weapon/reagent_containers/glass/paint/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/reagent_containers/glass/paint/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 	if(istype(target, /turf/simulated) && reagents.total_volume > 0)
 		user.visible_message("<span class='notice'>[target] has been splashed by [user] with [src].</span>", "<span class='notice'>You splash [target] with [src].</span>")
 		reagents.reaction(target, TOUCH)
 		reagents.remove_any(5)
-		log_game("[usr.ckey]([usr]) splashed [src.reagents.get_reagents()] on [target], location ([target.x],[target.y],[target.z])")
-	else 
+		log_game("[key_name(usr)] splashed [src.reagents.get_reagents()] on [target], location ([target.x],[target.y],[target.z])")
+	else
 		..()
 
 /obj/item/weapon/reagent_containers/glass/paint/atom_init()

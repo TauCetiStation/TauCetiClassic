@@ -102,7 +102,7 @@ REAGENT SCANNER
 				user << browse(entity_ja(message), "window=[M.name]_scan_report;size=400x400;can_resize=1")
 				onclose(user, "[M.name]_scan_report")
 			else
-				user.show_message(message)
+				to_chat(user, message)
 
 			add_fingerprint(user)
 			return
@@ -115,10 +115,10 @@ REAGENT SCANNER
 				user << browse(entity_ja(dat), "window=[M.name]_scan_report;size=400x400;can_resize=1")
 				onclose(user, "[M.name]_scan_report")
 			else
-				user.show_message(dat)
+				to_chat(user, dat)
 	else
 		add_fingerprint(user)
-		user.show_message("<span class = 'warning'>Analyzing Results not compiled. Unknown anatomy detected.</span>")
+		to_chat(user, "<span class = 'warning'>Analyzing Results not compiled. Unknown anatomy detected.</span>")
 
 /obj/item/device/healthanalyzer/attack_self(mob/user)
 	user << browse(entity_ja(last_scan), "window=[last_scan_name]_scan_report;size=400x400;can_resize=1")
@@ -260,7 +260,7 @@ REAGENT SCANNER
 	analyze_gases(user.loc, user,advanced_mode)
 	return TRUE
 
-/obj/item/device/analyzer/afterattack(obj/O, mob/user, proximity)
+/obj/item/device/analyzer/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 	if (user.incapacitated())
@@ -268,7 +268,10 @@ REAGENT SCANNER
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
-	if(istype(O) && O.simulated)
+	if(!isobj(target))
+		return
+	var/obj/O = target
+	if(O.simulated)
 		analyze_gases(O, user, advanced_mode)
 
 /obj/item/device/mass_spectrometer
@@ -301,8 +304,6 @@ REAGENT SCANNER
 		icon_state = initial(icon_state)
 
 /obj/item/device/mass_spectrometer/attack_self(mob/user)
-	if (user.stat)
-		return
 	if (crit_fail)
 		to_chat(user, "<span class='warning'>This device has critically failed and is no longer functional!</span>")
 		return
@@ -361,14 +362,13 @@ REAGENT SCANNER
 	var/details = 0
 	var/recent_fail = 0
 
-/obj/item/device/reagent_scanner/afterattack(obj/O, mob/user)
-	if (user.stat)
-		return
+/obj/item/device/reagent_scanner/afterattack(atom/target, mob/user, proximity, params)
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
-	if(!istype(O))
+	if(!isobj(target))
 		return
+	var/obj/O = target
 	if (crit_fail)
 		to_chat(user, "<span class='warning'>This device has critically failed and is no longer functional!</span>")
 		return
@@ -471,11 +471,13 @@ REAGENT SCANNER
 		scanned_type = /obj/item/weapon/reagent_containers/food/snacks/ectoplasm
 		to_chat(user, "<span class='notice'>You reset the scanned object of the scanner.</span>")
 
-/obj/item/device/occult_scanner/afterattack(mob/M, mob/user)
-	if(user && user.client)
-		if(ishuman(M) && M.stat == DEAD)
-			user.visible_message("<span class='notice'>[user] scans [M], the air around them humming gently.</span>",
-			                     "<span class='notice'>[M] was [pick("possessed", "devoured", "destroyed", "murdered", "captured")] by [pick("Cthulhu", "Mi-Go", "Elder God", "dark spirit", "Outsider", "unknown alien creature")]</span>")
+/obj/item/device/occult_scanner/afterattack(atom/target, mob/user, proximity, params)
+	if(!ishuman(target))
+		return
+	var/mob/living/carbon/human/H = target
+	if(user && user.client && H.stat == DEAD)
+		user.visible_message("<span class='notice'>[user] scans [H], the air around them humming gently.</span>",
+			                 "<span class='notice'>[H] was [pick("possessed", "devoured", "destroyed", "murdered", "captured")] by [pick("Cthulhu", "Mi-Go", "Elder God", "dark spirit", "Outsider", "unknown alien creature")]</span>")
 
 /obj/item/device/contraband_finder
 	name = "Contrband Finder"
@@ -640,7 +642,7 @@ REAGENT SCANNER
 /obj/item/device/contraband_finder/attack(mob/M, mob/user)
 	return
 
-/obj/item/device/contraband_finder/afterattack(atom/target, mob/user, proximity)
+/obj/item/device/contraband_finder/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 	scan(target, user)

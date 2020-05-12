@@ -34,7 +34,8 @@
 						prob(10);/obj/item/weapon/gun/energy/toxgun,\
 						prob(10);/obj/item/weapon/gun/energy/laser,\
 						prob(8);/obj/item/weapon/gun/energy/ionrifle,\
-						prob(4);/obj/item/weapon/gun/projectile/automatic/l10c,\
+						prob(4);/obj/item/weapon/gun/plasma,\
+						prob(4);/obj/item/weapon/gun/plasma/p104sass,\
 						prob(4);/obj/item/weapon/gun/energy/xray,\
 						prob(4);/obj/item/weapon/gun/energy/gun,\
 						prob(4);/obj/item/weapon/gun/energy/decloner,\

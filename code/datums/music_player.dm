@@ -30,6 +30,12 @@
 #define MAX_TEMPO_RATE   600
 #define MAX_DIONATEMPO_RATE 200
 
+// Cache holder for sound() instances.
+var/global/datum/notes_storage/note_cache_storage = new
+
+/datum/notes_storage
+	var/list/instrument_sound_notes = list() // associative list.
+
 /**
  * Method called before playing of every note, so it's some kinde of
  * 'process-like' check to stop, for example, playing song
@@ -259,7 +265,18 @@
 							cur_oct[cur_note] = ni
 
 					var/current_note = uppertext(copytext(note, 1, 2)) + cur_acc[cur_note] + cur_oct[cur_note]
-					playsound(instrument, "[sound_path]/[current_note].ogg", VOL_EFFECTS_INSTRUMENT, volume, FALSE, falloff = 5)
+
+					if(fexists("[sound_path]/[current_note].ogg"))
+						// ^ Since this is dynamic path, no point in running playsound without file (since it will play even "no file" and eat cpu for nothing)
+						// and no point in integrating this into playsound itself,
+						// because this is the only case where we use dynamic path for sounds, as they should be avoided normally.
+						// Without cache dynamic paths eat 10~ times more CPU than doing same with hardcoded paths, so cache is required.
+
+						var/sound/S = global.note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"]
+						if(!S)
+							S = global.note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"] = sound("[sound_path]/[current_note].ogg")
+
+						playsound(instrument, S, VOL_EFFECTS_INSTRUMENT, volume, FALSE, falloff = 5)
 
 				var/pause_time = COUNT_PAUSE(song_tempo)
 

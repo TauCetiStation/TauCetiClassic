@@ -1,9 +1,5 @@
 var/datum/subsystem/job/SSjob
 
-#define GET_RANDOM_JOB 0
-#define BE_ASSISTANT 1
-#define RETURN_TO_LOBBY 2
-
 /datum/subsystem/job
 	name = "Jobs"
 
@@ -211,6 +207,9 @@ var/datum/subsystem/job/SSjob
 	if((job.title == "AI") && (config) && (!config.allow_ai))
 		return 0
 
+	if(ticker.mode.name == "AI malfunction" && job.spawn_positions)//no additional AIs with malf
+		job.total_positions = job.spawn_positions
+		job.spawn_positions = 0
 	for(var/i = job.total_positions, i > 0, i--)
 		for(var/level = 1 to 3)
 			var/list/candidates = list()
@@ -229,12 +228,13 @@ var/datum/subsystem/job/SSjob
 			for(var/mob/dead/new_player/player in unassigned)
 				if(jobban_isbanned(player, "AI"))
 					continue
-				if(AssignRole(player, "AI"))
-					ai_selected++
-					break
-		if(ai_selected)
-			return 1
-		return 0
+				if(ROLE_MALF in player.client.prefs.be_role)
+					if(AssignRole(player, "AI"))
+						ai_selected++
+						break
+	if(ai_selected)
+		return 1
+	return 0
 
 
 /** Proc DivideOccupations
@@ -278,15 +278,22 @@ var/datum/subsystem/job/SSjob
 		assistant_candidates -= player
 	Debug("DO, AC1 end")
 
+	//Check for an AI
+	if(ticker.mode.name == "AI malfunction")
+		Debug("DO, Running AI Check")
+		FillAIPosition()
+		Debug("DO, AI Check end")
+
 	//Select one head
 	Debug("DO, Running Head Check")
 	FillHeadPosition()
 	Debug("DO, Head Check end")
-
+	
 	//Check for an AI
-	Debug("DO, Running AI Check")
-	FillAIPosition()
-	Debug("DO, AI Check end")
+	if(!(ticker.mode.name == "AI malfunction"))
+		Debug("DO, Running AI Check")
+		FillAIPosition()
+		Debug("DO, AI Check end")
 
 	//Other jobs are now checked
 	Debug("DO, Running Standard Check")
@@ -321,6 +328,7 @@ var/datum/subsystem/job/SSjob
 				if(!job.map_check())
 					continue
 
+
 				// If the player wants that job on this level, then try give it to him.
 				if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 
@@ -336,6 +344,7 @@ var/datum/subsystem/job/SSjob
 	for(var/mob/dead/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == GET_RANDOM_JOB)
 			GiveRandomJob(player)
+			Debug("DO pass, alternate random job, Player: [player]")
 
 	Debug("DO, Standard Check end")
 
@@ -350,8 +359,11 @@ var/datum/subsystem/job/SSjob
 	//For ones returning to lobby
 	for(var/mob/dead/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == RETURN_TO_LOBBY)
+			Debug("Alternate return to lobby, Player: [player]")
 			player.ready = 0
 			unassigned -= player
+			ticker.mode.antag_candidates -= player.mind
+			to_chat(player, "<span class='alert bold'>You were returned to the lobby because your job preferences unavailable.  You can change this behavior in preferences.</span>")
 	return 1
 
 //Gives the player the stuff he should have with his rank
@@ -449,7 +461,7 @@ var/datum/subsystem/job/SSjob
 			H.buckled.dir = H.dir
 
 	//give them an account in the station database
-	var/datum/money_account/M = create_random_account_and_store_in_mind(H)
+	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)
 
 	// If they're head, give them the account info for their department
 	if(H.mind && job.head_position)
@@ -484,9 +496,12 @@ var/datum/subsystem/job/SSjob
 						var/obj/item/weapon/storage/backpack/BPK = new(H)
 						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 					if(3)
-						var/obj/item/weapon/storage/backpack/satchel/norm/BPK = new(H)
+						var/obj/item/weapon/storage/backpack/alt/BPK = new(H)
 						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 					if(4)
+						var/obj/item/weapon/storage/backpack/satchel/norm/BPK = new(H)
+						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
+					if(5)
 						var/obj/item/weapon/storage/backpack/satchel/BPK = new(H)
 						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 
@@ -565,6 +580,7 @@ var/datum/subsystem/job/SSjob
 		//put the player's account number onto the ID
 		if(H.mind && H.mind.initial_account)
 			C.associated_account_number = H.mind.initial_account.account_number
+			H.mind.initial_account.owner_salary = job.salary //add salary in /datum/money_account
 
 		H.equip_to_slot_or_del(C, SLOT_WEAR_ID)
 
@@ -574,7 +590,10 @@ var/datum/subsystem/job/SSjob
 		pda.owner = H.real_name
 		pda.ownjob = C.assignment
 		pda.ownrank = C.rank
+		pda.owner_account = H.mind.initial_account		//bind the account to the pda
+		pda.owner_fingerprints += C.fingerprint_hash	//save fingerprints in pda from ID card
 		pda.name = "PDA-[H.real_name] ([pda.ownjob])"
+		H.mind.initial_account.owner_PDA = pda			//add PDA in /datum/money_account
 
 	return 1
 
@@ -585,6 +604,7 @@ var/datum/subsystem/job/SSjob
 	var/list/jobEntries = file2list(jobsfile)
 
 	for(var/job in jobEntries)
+
 		if(!job)
 			continue
 
@@ -609,7 +629,6 @@ var/datum/subsystem/job/SSjob
 			J.spawn_positions = text2num(value)
 			if(name == "AI" || name == "Cyborg")//I dont like this here but it will do for now
 				J.total_positions = 0
-
 	return 1
 
 /datum/subsystem/job/proc/HandleFeedbackGathering()
@@ -642,7 +661,3 @@ var/datum/subsystem/job/SSjob
 
 		tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|YOUNG=[level6]|-"
 		feedback_add_details("job_preferences",tmp_str)
-
-#undef GET_RANDOM_JOB
-#undef BE_ASSISTANT
-#undef RETURN_TO_LOBBY

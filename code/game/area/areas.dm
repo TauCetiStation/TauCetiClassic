@@ -72,7 +72,7 @@ var/list/teleportlocs = list()
 
 /proc/process_teleport_locs()
 	for(var/area/AR in all_areas)
-		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station) || istype(AR, /area/wizard_station) || istype(AR, /area/engine/singularity))
+		if(istype(AR, /area/shuttle) || istype(AR, /area/shuttle/syndicate) || istype(AR, /area/custom/wizard_station) || istype(AR, /area/station/engineering/singularity))
 			continue
 		if(teleportlocs.Find(AR.name))
 			continue
@@ -90,7 +90,7 @@ var/list/ghostteleportlocs = list()
 	for(var/area/AR in all_areas)
 		if(ghostteleportlocs.Find(AR.name))
 			continue
-		if(istype(AR, /area/turret_protected/aisat) || istype(AR, /area/derelict) || istype(AR, /area/tdome))
+		if(istype(AR, /area/station/aisat/antechamber) || istype(AR, /area/space_structures/derelict) || istype(AR, /area/centcom/tdome))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))

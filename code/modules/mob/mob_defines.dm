@@ -37,11 +37,12 @@
 	var/obj/screen/leap/leap_icon = null
 	var/obj/screen/neurotoxin_icon = null
 	var/obj/screen/healthdoll = null
+	var/obj/screen/nutrition_icon = null
 
-	var/obj/screen/alien_plasma_display = null
+	var/obj/screen/xenomorph_plasma_display = null
 	var/obj/screen/nightvisionicon = null
 
-	var/use_me = 1 //Allows all mobs to use the me verb by default, will have to manually specify they cannot
+	var/me_verb_allowed = TRUE //Allows all mobs to use the me verb by default, will have to manually specify they cannot
 	var/speech_allowed = 1 //Meme Stuff
 	var/damageoverlaytemp = 0
 	var/computer_id = null
@@ -57,7 +58,6 @@
 	var/disabilities = 0	//Carbon
 	var/atom/movable/pulling = null
 	var/next_move = null
-	var/monkeyizing = null	//Carbon
 	var/other = 0.0
 	var/notransform = null	//Carbon
 	var/hand = 0            //active hand; 0 is right hand, 1 is left hand //todo: we need defines for this...
@@ -77,7 +77,6 @@
 	var/confused = 0		//Carbon
 	var/antitoxs = null
 	var/phoron = null
-	var/sleeping = 0		//Carbon
 	var/resting = 0			//Carbon
 	var/lying = 0
 	var/lying_prev = 0
@@ -176,7 +175,7 @@
 	var/mob/living/carbon/LAssailant = null
 
 //Wizard mode, but can be used in other modes thanks to the brand new "Give Spell" badmin button
-	var/obj/effect/proc_holder/spell/list/spell_list = list()
+	var/list/obj/effect/proc_holder/spell/spell_list = list()
 
 //Changlings, but can be used in other modes
 //	var/obj/effect/proc_holder/changpower/list/power_list = list()
@@ -207,6 +206,8 @@
 
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
+
+	var/atom/movable/remote_control //Calls relay_move() to whatever this is set to when the mob tries to move
 
 	//Whether or not mobs can understand other mobtypes. These stay in /mob so that ghosts can hear everything.
 	var/universal_speak = 0 // Set to 1 to enable the mob to speak to everyone -- TLE

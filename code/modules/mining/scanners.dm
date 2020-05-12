@@ -13,24 +13,29 @@
 	g_amt = 20
 	origin_tech = "magnets=1;engineering=2"
 
-/obj/item/device/geoscanner/afterattack(atom/A, mob/user)
-	if(!istype(A,/turf/simulated/mineral))
+/obj/item/device/geoscanner/afterattack(atom/target, mob/user, proximity, params)
+	if(!istype(target, /turf/simulated/mineral))
 		return
-	if(!in_range(user, A))
+	if(!in_range(user, target))
 		return
-	var/turf/simulated/mineral/M = A
-	user.visible_message("<span class='notice'>[user] scans [A], the air around them humming gently.</span>")
-	user.show_message("<span class='notice'><B>Results:</B></span>", 1)
+	var/turf/simulated/mineral/M = target
+	var/data_message = ""
+
+	user.visible_message("<span class='notice'>[user] scans [M], the air around them humming gently.</span>")
+
+	data_message +="<span class='notice'><B>Results:</B></span>"
 	if(M.mineral)
-		user.show_message("<span class='notice'>Mineral found</span>", 1)
-		user.show_message("<span class='notice'>Ore class: [M.mineral.ore_type]</span>", 1)
-		user.show_message("<span class='notice'>Mineral type: [M.mineral]</span>", 1)
-		user.show_message("<span class='notice'>Ore amount: [M.ore_amount]</span>", 1)
+		data_message +="<span class='notice'>Mineral found</span>"
+		data_message +="<span class='notice'>Ore class: [M.mineral.ore_type]</span>"
+		data_message +="<span class='notice'>Mineral type: [M.mineral]</span>"
+		data_message +="<span class='notice'>Ore amount: [M.ore_amount]</span>"
 	else
-		user.show_message("<span class='warning'>No minerals found in [M]</span>", 1)
+		data_message +="<span class='warning'>No minerals found in [M]</span>"
 
 	if(M.finds && M.finds.len || M.artifact_find)
-		user.show_message("<span class='warning'>Unidentified signature in [M]. Report to nearby xenoarchaeologist/anomalist.</span>", 1)
+		data_message +="<span class='warning'>Unidentified signature in [M]. Report to nearby xenoarchaeologist/anomalist.</span>"
+
+	to_chat(user, data_message)
 
 //	user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
 //	user << "[M.mineral], [M.toughness], [M.ore_amount]"

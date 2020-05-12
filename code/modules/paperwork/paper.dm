@@ -21,13 +21,14 @@
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
 	var/stamp_text		//The (text for the) stamp_text on the paper.
 	var/fields		//Amount of user created fields
+	var/sfields
 	var/free_space = MAX_PAPER_MESSAGE_LEN
 	var/list/stamped
 	var/list/ico      //Icons and
 	var/list/offset_x //offsets stored for later
 	var/list/offset_y //usage by the photocopier
 	var/rigged = 0
-	var/spam_flag = 0
+	var/spam_flag = FALSE
 	var/crumpled = FALSE
 
 	var/const/deffont = "Verdana"
@@ -72,6 +73,7 @@
 
 /obj/item/weapon/paper/proc/show_content(mob/user, forceshow = FALSE, forcestars = FALSE, infolinks = FALSE, view = TRUE)
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
+	assets.register()
 	assets.send(user)
 
 	var/data
@@ -117,7 +119,7 @@
 		crumpled = TRUE
 		icon_state = "crumpled"
 		throw_range = 5
-		overlays = null
+		cut_overlays()
 	else
 		icon_state = "scrap"
 		throw_range = 1
@@ -125,7 +127,7 @@
 	playsound(src, 'sound/items/crumple.ogg', VOL_EFFECTS_MASTER, 15)
 	add_fingerprint(usr)
 
-/obj/item/weapon/paper/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/paper/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if(istype(src, /obj/item/weapon/paper/talisman)) return
 	if(istype(src, /obj/item/weapon/paper/crumpled/bloody)) return
@@ -145,14 +147,10 @@
 /obj/item/weapon/paper/attack_self(mob/living/user)
 	examine(user)
 	if(rigged && (Holiday == "April Fool's Day"))
-		if(spam_flag == 0)
-			spam_flag = 1
+		if(!spam_flag)
+			spam_flag = TRUE
 			playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
-			addtimer(CALLBACK(src, .proc/reset_spam_flag), 20)
-	return
-
-/obj/item/weapon/paper/proc/reset_spam_flag()
-	spam_flag = 0
+			addtimer(VARSET_CALLBACK(src, spam_flag, FALSE), 20)
 
 /obj/item/weapon/paper/attack_ai(mob/living/silicon/ai/user)
 	var/dist
@@ -193,16 +191,16 @@
 					H.lip_style = null
 					H.update_body()
 
-/obj/item/weapon/paper/proc/addtofield(id, text, links = 0)
+/obj/item/weapon/paper/proc/addtofield(id, text, links = 0, type = "paper")
 	var/locid = 0
 	var/laststart = 1
 	var/textindex = 1
 	while(1) // I know this can cause infinite loops and fuck up the whole server, but the if(istart==0) should be safe as fuck
 		var/istart = 0
 		if(links)
-			istart = findtext(info_links, "<span class=\"paper_field\">", laststart)
+			istart = findtext(info_links, "<span class=\"[type]_field\">", laststart)
 		else
-			istart = findtext(info, "<span class=\"paper_field\">", laststart)
+			istart = findtext(info, "<span class=\"[type]_field\">", laststart)
 
 		if(istart==0)
 			return // No field found with matching id
@@ -233,8 +231,10 @@
 /obj/item/weapon/paper/proc/updateinfolinks()
 	info_links = info
 	var/i = 0
-	for(i=1,i<=fields,i++)
+	for(i = 1, i <= fields, i++)
 		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
+	for(i = 1, i <= sfields, i++)
+		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];write=[i];sign=1'>sign</A></font>", 1, "sign")
 	info_links = info_links + " <font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
 
 
@@ -246,7 +246,7 @@
 	LAZYCLEARLIST(ico)
 	LAZYCLEARLIST(offset_x)
 	LAZYCLEARLIST(offset_y)
-	overlays.Cut()
+	cut_overlays()
 	updateinfolinks()
 	update_icon()
 
@@ -258,11 +258,12 @@
 	P.info_links = info_links
 	P.stamp_text = stamp_text
 	P.fields     = fields
+	P.sfields    = sfields
 	P.stamped    = LAZYCOPY(stamped)
 	P.ico        = LAZYCOPY(ico)
 	P.offset_x   = LAZYCOPY(offset_x)
 	P.offset_y   = LAZYCOPY(offset_y)
-	P.overlays   = overlays.Copy()
+	P.copy_overlays(src, TRUE)
 
 	P.updateinfolinks()
 	P.update_icon()
@@ -281,64 +282,21 @@
 	if(findtext(t, "\[sign\]"))
 		t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[get_signature(P, user)]</i></font>")
 
-	t = replacetext(t, "\[center\]", "<center>")
-	t = replacetext(t, "\[/center\]", "</center>")
-	t = replacetext(t, "\[br\]", "<BR>")
-	t = replacetext(t, "\[b\]", "<B>")
-	t = replacetext(t, "\[/b\]", "</B>")
-	t = replacetext(t, "\[i\]", "<I>")
-	t = replacetext(t, "\[/i\]", "</I>")
-	t = replacetext(t, "\[u\]", "<U>")
-	t = replacetext(t, "\[/u\]", "</U>")
-	t = replacetext(t, "\[large\]", "<font size=\"4\">")
-	t = replacetext(t, "\[/large\]", "</font>")
-	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
-
-	// tables
-	t = replacetext(t, "\[table\]", "<table border=3px cellpadding=5px bordercolor=\"black\">")
-	t = replacetext(t, "\[/table\]", "</table>")
-	t = replacetext(t, "\[tr\]", "<tr>")
-	t = replacetext(t, "\[/tr\]", "</tr>")
-	t = replacetext(t, "\[td\]", "<td>")
-	t = replacetext(t, "\[/td\]", "</td>")
-	t = replacetext(t, "\[th\]", "<th>")
-	t = replacetext(t, "\[/th\]", "</th>")
-
-	// standart head
-	t = replacetext(t, "\[h\]", "<h3 style=\"font-family: Arial; text-align:center;\">")
-	t = replacetext(t, "\[/h\]", "</h3>")
-
-	// bordered head;
-	t = replacetext(t, "\[bh\]", "<h3 style=\"border-width: 4px; border-style: solid; font-family: Arial; padding: 10px; text-align:center;\">")
-	t = replacetext(t, "\[/bh\]", "</h3>")
-
-	// blockquote
-	t = replacetext(t, "\[quote\]", "<blockquote style=\"line-height:normal; margin-bottom:10px; font-style:italic; letter-spacing: 1.25px; text-align:right;\">")
-	t = replacetext(t, "\[/quote\]", "</blockquote>")
-
-	// div
-	t = replacetext(t, "\[block\]", "<div style=\"border-width: 4px; border-style: dashed;\">")
-	t = replacetext(t, "\[/block\]", "</div>")
-
-	if(!iscrayon)
-		t = replacetext(t, "\[*\]", "<li>")
-		t = replacetext(t, "\[hr\]", "<HR>")
-		t = replacetext(t, "\[small\]", "<font size = \"1\">")
-		t = replacetext(t, "\[/small\]", "</font>")
-		t = replacetext(t, "\[list\]", "<ul>")
-		t = replacetext(t, "\[/list\]", "</ul>")
-
-		t = "<font face=\"[deffont]\" color=[P.colour]>[t]</font>"
-	else // If it is a crayon, and he still tries to use these, make them empty!
+	var/font = deffont
+	if(iscrayon) // If it is a crayon, and he still tries to use these, make them empty!
 		t = replacetext(t, "\[*\]", "")
 		t = replacetext(t, "\[hr\]", "")
 		t = replacetext(t, "\[small\]", "")
 		t = replacetext(t, "\[/small\]", "")
 		t = replacetext(t, "\[list\]", "")
 		t = replacetext(t, "\[/list\]", "")
+		t = "<b>[t]</b>"
+		font = crayonfont
 
-		t = "<font face=\"[crayonfont]\" color=[P.colour]><b>[t]</b></font>"
-
+	t = parsebbcode(t, P.colour)
+	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
+	t = replacetext(t, "\[sfield\]", "<span class=\"sign_field\"></span>")
+	t = "<font face=\"[font]\" color=\"[P.colour]\">[t]</font>"
 //	t = replacetext(t, "#", "") // Junk converted to nothing!
 
 //Count the fields
@@ -349,6 +307,14 @@
 			break
 		laststart = i+1
 		fields++
+
+	laststart = 1
+	while(1)
+		var/i = findtext(t, "<span class=\"sign_field\">", laststart) //</span>
+		if(i==0)
+			break
+		laststart = i+1
+		sfields++
 
 	return t
 
@@ -412,7 +378,7 @@
 
 /obj/item/weapon/paper/Topic(href, href_list)
 	..()
-	if(!usr || (usr.stat || usr.restrained()))
+	if(!usr || usr.incapacitated())
 		return
 
 	if(href_list["write"])
@@ -422,7 +388,13 @@
 			usr << "<span class='info'>There isn't enough space left on \the [src] to write anything.</span>"
 			return
 
-		var/t =  sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
+		var/t = ""
+		if(href_list["sign"])
+			if(alert("Are you sure you want to sign this paper?",,"Yes","No") == "No")
+				return
+			t = "\[sign\] "
+		else
+			t = sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
 
 		if(!t)
 			return
@@ -439,28 +411,30 @@
 			return
 
 		var/last_fields_value = fields
+		var/last_sfields_value = sfields
 
-		t = replacetext(t, "\n", "<BR>")
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
 
-		if(fields > 50)
+		if((fields + sfields) > 50)
 			to_chat(usr, "<span class='warning'>Too many fields. Sorry, you can't do this.</span>")
 			fields = last_fields_value
+			sfields = last_sfields_value
 			return
 
 		if(isIAN(usr))
 			t = GibberishAll(t)
 
-		if(id!="end")
+		if(href_list["sign"])
+			addtofield(text2num(id), t, type = "sign")
+		else if(id!="end")
 			addtofield(text2num(id), t) // He wants to edit a field, let him.
 		else
 			info += t // Oh, he wants to edit to the end of the file, let him.
 			updateinfolinks()
 
+		playsound(src, pick(SOUNDIN_PEN), VOL_EFFECTS_MASTER, null, FALSE)
 		update_space(t)
-
 		show_content(usr, forceshow = TRUE, infolinks = TRUE)
-
 		update_icon()
 
 
@@ -628,7 +602,7 @@
 	info = get_airlock_wires_identification()
 
 	var/obj/item/weapon/stamp/centcomm/S = new
-	S.stamp_paper(src, "This paper has been stamped by the Centcomm Engineer Department.")
+	S.stamp_paper(src, "Centcomm Engineer Department")
 
 	update_icon()
 	updateinfolinks()
@@ -650,7 +624,7 @@
 	info = get_space_structures_info()
 
 	var/obj/item/weapon/stamp/centcomm/S = new
-	S.stamp_paper(src, "This paper has been stamped by the Centcomm Science Department.")
+	S.stamp_paper(src, "Centcomm Science Department")
 
 	update_icon()
 	updateinfolinks()

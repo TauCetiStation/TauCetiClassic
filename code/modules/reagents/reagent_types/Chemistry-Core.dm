@@ -14,7 +14,7 @@
 			var/volume_coefficient = max((10-volume)/10, 0)
 			var/changes_occured = FALSE
 
-			if(H.species && H.species.name in list(HUMAN, UNATHI, TAJARAN))
+			if(H.species && (H.species.name in list(HUMAN, UNATHI, TAJARAN)))
 				if(H.hair_painted && !(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
 					H.dyed_r_hair = CLAMP(round(H.dyed_r_hair * volume_coefficient + ((H.r_hair * volume) / 10)), 0, 255)
 					H.dyed_g_hair = CLAMP(round(H.dyed_g_hair * volume_coefficient + ((H.g_hair * volume) / 10)), 0, 255)
@@ -79,6 +79,11 @@
 	M.nutrition += REM
 	return FALSE
 
+/datum/reagent/water/on_slime_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(REM)
+	return FALSE
+
 /datum/reagent/water/holywater // May not be a "core" reagent, but I decided to keep the subtypes near  their parents.
 	name = "Holy Water"
 	id = "holywater"
@@ -140,13 +145,16 @@
 	name = "Unholy Water"
 	id = "unholywater"
 	description = "A corpsen-ectoplasmic-water mix, this solution could alter concepts of reality itself."
-	data = 1
 	color = "#c80064" // rgb: 200,0, 100
+
+	data = list()
 
 /datum/reagent/water/unholywater/on_general_digest(mob/living/M)
 	..()
+	if(!data["ticks"])
+		data["ticks"] = 1
 	if(iscultist(M) && prob(10))
-		switch(data)
+		switch(data["ticks"])
 			if(1 to 30)
 				M.heal_bodypart_damage(REM, REM)
 			if(30 to 60)
@@ -154,20 +162,20 @@
 			if(60 to INFINITY)
 				M.heal_bodypart_damage(3 * REM, 3 * REM)
 	else if(!iscultist(M))
-		switch(data)
+		switch(data["ticks"])
 			if(1 to 20)
 				M.make_jittery(3)
 			if(20 to 40)
 				M.make_jittery(6)
 				if(prob(15))
-					M.sleeping += 1
+					M.SetSleeping(20 SECONDS)
 			if(40 to 80)
 				M.make_jittery(12)
 				if(prob(30))
-					M.sleeping += 1
+					M.SetSleeping(20 SECONDS)
 			if(80 to INFINITY)
-				M.sleeping += 1
-	data++
+				M.SetSleeping(20 SECONDS)
+	data["ticks"]++
 
 /datum/reagent/water/unholywater/reaction_obj(obj/O, volume)
 	src = null
@@ -289,7 +297,7 @@
 
 /datum/reagent/mercury/on_general_digest(mob/living/M)
 	..()
-	if(M.canmove && !M.restrained() && istype(M.loc, /turf/space))
+	if(M.canmove && !M.incapacitated() && istype(M.loc, /turf/space))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -388,7 +396,7 @@
 
 /datum/reagent/lithium/on_general_digest(mob/living/M)
 	..()
-	if(M.canmove && !M.restrained() && istype(M.loc, /turf/space))
+	if(M.canmove && !M.incapacitated() && istype(M.loc, /turf/space))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))

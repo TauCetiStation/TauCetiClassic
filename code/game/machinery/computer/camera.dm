@@ -4,7 +4,7 @@
 	for(var/obj/machinery/computer/security/s in computer_list)
 		s.camera_cache = null
 	for(var/datum/alarm/A in datum_alarm_list)
-		A.cameras = null
+		A.cameras = list()
 
 /obj/machinery/computer/security
 	name = "security camera monitor"

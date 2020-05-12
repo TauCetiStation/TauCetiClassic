@@ -65,6 +65,12 @@
 	canister_color = "black"
 	gas_type = "carbon_dioxide"
 
+/obj/machinery/portable_atmospherics/canister/hydrogen
+	name = "Canister \[H2\]"
+	icon_state = "purple"
+	canister_color = "purple"
+	gas_type = "hydrogen"
+
 /obj/machinery/portable_atmospherics/canister/air // this one uses its own create_gas() proc.
 	name = "Canister \[Air\]"
 	icon_state = "grey"
@@ -142,7 +148,7 @@ update_flag
 */
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
-		overlays.Cut()
+		cut_overlays()
 		src.icon_state = text("[]-1", src.canister_color)
 		return
 
@@ -172,22 +178,22 @@ update_flag
 	if(update_flag == last_update)
 		return
 
-	overlays.Cut()
+	cut_overlays()
 
 	if(update_flag & HOLDING)
-		overlays += "can-open"
+		add_overlay("can-open")
 	if(update_flag & CONNECTED)
-		overlays += "can-connector"
+		add_overlay("can-connector")
 	if(update_flag & EMPTY)
-		overlays += "can-o0"
+		add_overlay("can-o0")
 	if(update_flag & LOW)
-		overlays += "can-o1"
+		add_overlay("can-o1")
 	else if(update_flag & MEDIUM)
-		overlays += "can-o2"
+		add_overlay("can-o2")
 	else if(update_flag & FULL)
-		overlays += "can-o3"
+		add_overlay("can-o3")
 	else if(update_flag & DANGER)
-		overlays += "can-o4"
+		add_overlay("can-o4")
 
 #undef HOLDING
 #undef CONNECTED
@@ -295,7 +301,7 @@ update_flag
 	if(!iswrench(W) && !istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/device/analyzer) && !istype(W, /obj/item/device/pda))
 		visible_message("<span class='warning'>[user] hits the [src] with a [W]!</span>")
 		src.add_fingerprint(user)
-		investigate_log("was smacked with \a [W] by [key_name(user)].", INVESTIGATE_ATMOS)
+		log_investigate("was smacked with \a [W] by [key_name(user)].", INVESTIGATE_ATMOS)
 		user.SetNextMove(CLICK_CD_MELEE)
 		take_damage(W.force)
 
@@ -327,7 +333,7 @@ update_flag
 	density = FALSE
 	playsound(src, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 10, null, -3)
 	update_icon()
-	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
+	log_investigate("was destroyed.", INVESTIGATE_ATMOS)
 
 	if(holding)
 		holding.forceMove(T)
@@ -409,13 +415,13 @@ update_flag
 		else
 			logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
 
-		investigate_log(logmsg, INVESTIGATE_ATMOS)
+		log_investigate(logmsg, INVESTIGATE_ATMOS)
 		release_log += logmsg
 
 	if (href_list["remove_tank"])
 		if(holding)
 			if (valve_open)
-				investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transferring into the <span class='boldannounce'>air</span><br>", INVESTIGATE_ATMOS)
+				log_investigate("[key_name(usr)] removed the [holding], leaving the valve open and transferring into the <span class='boldannounce'>air</span><br>", INVESTIGATE_ATMOS)
 			if(istype(holding, /obj/item/weapon/tank))
 				holding.manipulated_by = usr.real_name
 			holding.forceMove(get_turf(src))
@@ -424,7 +430,7 @@ update_flag
 	if (href_list["pressure_adj"])
 		var/diff = text2num(href_list["pressure_adj"])
 		release_pressure = CLAMP(release_pressure + diff, can_min_release_pressure, can_max_release_pressure)
-		investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
+		log_investigate("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 
 	if (href_list["relabel"])
 		if (can_label)
@@ -436,6 +442,7 @@ update_flag
 				"\[CO2\]" = "black", \
 				"\[Air\]" = "grey", \
 				"\[CAUTION\]" = "yellow", \
+				"\[H2\]" = "purple", \
 			)
 			var/label = input("Choose canister label", "Gas canister") as null|anything in colors
 			if (label)

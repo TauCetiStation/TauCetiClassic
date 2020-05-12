@@ -83,7 +83,7 @@
 		return ..()
 
 /mob/living/simple_animal/cat/show_inv(mob/user)
-	if(user.stat)
+	if(user.incapacitated())
 		return
 
 	user.set_machine(src)
@@ -101,7 +101,7 @@
 	popup.open()
 
 /mob/living/simple_animal/cat/Topic(href, href_list)
-	if(usr.stat || stat || !Adjacent(usr) || !(ishuman(usr) || ismonkey(usr)))
+	if(usr.incapacitated() || !Adjacent(usr) || !(ishuman(usr) || ismonkey(usr)))
 		return
 
 	//Removing from inventory
@@ -128,10 +128,10 @@
 		..()
 
 /mob/living/simple_animal/cat/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 
 	if(inventory_mouth)
-		overlays += image('icons/mob/animal.dmi',inventory_mouth.icon_state)
+		add_overlay(image('icons/mob/animal.dmi',inventory_mouth.icon_state))
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/cat/Runtime

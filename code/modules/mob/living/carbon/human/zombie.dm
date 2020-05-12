@@ -19,7 +19,7 @@
 /obj/item/weapon/melee/zombie_hand/right
 	icon_state = "bloodhand_right"
 
-/obj/item/weapon/melee/zombie_hand/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/melee/zombie_hand/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 
@@ -170,7 +170,7 @@
 	H.SetStunned(0)
 	H.SetWeakened(0)
 	H.nutrition = 400
-	H.sleeping = 0
+	H.SetSleeping(0)
 	H.radiation = 0
 
 	var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]

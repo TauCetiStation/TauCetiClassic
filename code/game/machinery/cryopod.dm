@@ -94,7 +94,7 @@ var/global/list/frozen_items = list()
 //Decorative structures to go alongside cryopods.
 /obj/structure/cryofeed
 
-	name = "\improper cryogenic feed"
+	name = "cryogenic feed"
 	desc = "A bewildering tangle of machinery and pipes."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "cryo_rear"
@@ -117,7 +117,7 @@ var/global/list/frozen_items = list()
 
 //Cryopods themselves.
 /obj/machinery/cryopod
-	name = "\improper cryogenic freezer"
+	name = "cryogenic freezer"
 	desc = "A man-sized pod for entering suspended animation."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "cryosleeper_left"
@@ -173,31 +173,7 @@ var/global/list/frozen_items = list()
 			//Drop all items into the pod.
 			for(var/obj/item/W in occupant)
 				occupant.drop_from_inventory(W)
-				W.loc = src
-
-				if(W.contents.len) //Make sure we catch anything not handled by del() on the items.
-					for(var/obj/item/O in W.contents)
-						O.loc = src
-
-			//Delete all items not on the preservation list.
-			var/list/items = contents
-			items -= occupant // Don't delete the occupant
-			items -= announce // or the autosay radio.
-
-			for(var/obj/item/W in items)
-				var/preserve = FALSE
-				for(var/T in preserve_items)
-					if(istype(W, T))
-						preserve = TRUE
-						break
-
-				if(!preserve)
-					qdel(W)
-				else
-					if(storage)
-						frozen_items += W
-					else
-						qdel(W)
+				preserve_item(W)
 
 			//Update any existing objectives involving this mob.
 			for(var/datum/objective/O in all_objectives)
@@ -300,11 +276,29 @@ var/global/list/frozen_items = list()
 					return
 				insert(M)
 				// Book keeping!
-				log_admin("[key_name_admin(M)] has entered a stasis pod.")
+				log_admin("[key_name(M)] has entered a stasis pod.")
 				message_admins("<span class='notice'>[key_name_admin(M)] has entered a stasis pod.</span>")
 
 				//Despawning occurs when process() is called with an occupant without a client.
 				add_fingerprint(M)
+
+/obj/machinery/cryopod/proc/preserve_item(obj/item/O)
+	O.loc = src
+
+	var/preserve = FALSE
+	for(var/T in preserve_items)
+		if(istype(O, T))
+			preserve = TRUE
+			break
+
+	if (preserve && storage)
+		frozen_items += O
+	else
+		if (O.contents.len)
+			for (var/obj/item/object in O.contents)
+				preserve_item(object)
+		qdel(O)
+
 
 /obj/machinery/cryopod/proc/insert(mob/M)
 	M.forceMove(src)
@@ -326,7 +320,7 @@ var/global/list/frozen_items = list()
 	set name = "Eject Pod"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.stat != CONSCIOUS || !occupant)
+	if(usr.incapacitated() || !occupant)
 		return
 
 	if(usr != occupant && \
@@ -345,7 +339,7 @@ var/global/list/frozen_items = list()
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat != CONSCIOUS || !(ishuman(usr) || ismonkey(usr)))
+	if(usr.incapacitated() || !(ishuman(usr) || ismonkey(usr)))
 		return
 
 	if(occupant)
