@@ -152,8 +152,8 @@
 	if(shock_damage<1)
 		return 0
 	apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
-	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	if(shock_damage > 10)
+		playsound(src, 'sound/effects/electric_shock.ogg', VOL_EFFECTS_MASTER, tesla_shock ? 10 : 50, FALSE) //because Tesla proc causes a lot of sounds
 		visible_message(
 			"<span class='rose'>[src] was shocked by the [source]!</span>", \
 			"<span class='danger'>You feel a powerful shock course through your body!</span>", \
@@ -169,6 +169,7 @@
 				Stun(8)
 				Weaken(8)
 	else
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		visible_message(
 			"<span class='rose'>[src] was mildly shocked by the [source].</span>", \
 			"<span class='rose'>You feel a mild shock course through your body.</span>", \
@@ -184,10 +185,14 @@
 			if(item_in_hand:wielded)
 				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
 				return
-		if(istype(item_in_hand, /obj/item/weapon/gun/energy/sniperrifle))
+		else if(istype(item_in_hand, /obj/item/weapon/gun/energy/sniperrifle))
 			var/obj/item/weapon/gun/energy/sniperrifle/s = item_in_hand
 			if(s.zoom)
 				s.toggle_zoom()
+		else if(istype(item_in_hand, /obj/item/weapon/gun/energy/pyrometer/ce))
+			var/obj/item/weapon/gun/energy/pyrometer/ce/C = item_in_hand
+			if(C.zoomed)
+				C.toggle_zoom()
 	src.hand = !( src.hand )
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
 		if(hand)	//This being 1 means the left hand is in use
@@ -328,7 +333,7 @@
 	set name = "Crawl"
 	set category = "IC"
 
-	if( stat || weakened || stunned || paralysis || resting || (status_flags & FAKEDEATH) || buckled)
+	if(incapacitated() || (status_flags & FAKEDEATH) || buckled)
 		return
 	if(crawl_getup)
 		return
@@ -356,7 +361,6 @@
 		if(!crawl_can_use())
 			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
 			return
-		layer = 3.9
 
 	pass_flags ^= PASSCRAWL
 	crawling = !crawling
@@ -421,7 +425,7 @@
 
 /mob/living/carbon/throw_item(atom/target)
 	throw_mode_off()
-	if(usr.stat || !target)
+	if(usr.incapacitated() || !target)
 		return
 	if(target.type == /obj/screen)
 		return
@@ -669,7 +673,7 @@
 			return 1
 		else if(locate(/obj/structure/stool/bed/roller, src.loc))
 			return -5
-		else if(locate(/obj/machinery/optable, src.loc)||locate(/obj/structure/stool/bed, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
+		else if(locate(/obj/machinery/optable, src.loc) || locate(/obj/structure/stool/bed, src.loc) || locate(/obj/structure/altar_of_gods, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
 			return -4
 		else
 			return -6
@@ -678,7 +682,7 @@
 
 /mob/living/carbon/get_standard_pixel_x_offset(lying_current = 0)
 	if(lying)
-		if(locate(/obj/machinery/optable, src.loc)||locate(/obj/structure/stool/bed, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
+		if(locate(/obj/machinery/optable, src.loc) || locate(/obj/structure/stool/bed, src.loc) || locate(/obj/structure/altar_of_gods, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
 			switch(src.lying_current)
 				if(90)	return 2
 				if(270)	return -2

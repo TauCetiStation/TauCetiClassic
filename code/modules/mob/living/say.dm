@@ -170,7 +170,7 @@ var/list/department_radio_keys = list(
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 				listening |= M
 				continue
-			if(M.loc && M.locs[1] in hearturfs)
+			if(M.loc && (M.locs[1] in hearturfs))
 				listening |= M
 
 	//speech bubble
@@ -181,6 +181,7 @@ var/list/department_radio_keys = list(
 	var/speech_bubble_test = say_test(message)
 	var/image/I = image('icons/mob/talk.dmi', src, "h[speech_bubble_test]", MOB_LAYER+1)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	spawn(0)
 		flick_overlay(I, speech_bubble_recipients, 30)
 	for(var/mob/M in listening)
@@ -201,6 +202,3 @@ var/list/department_radio_keys = list(
 
 /obj/effect/speech_bubble
 	var/mob/parent
-
-/mob/living/proc/GetVoice()
-	return name

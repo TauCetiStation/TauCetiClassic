@@ -461,7 +461,7 @@ var/datum/subsystem/job/SSjob
 			H.buckled.dir = H.dir
 
 	//give them an account in the station database
-	var/datum/money_account/M = create_random_account_and_store_in_mind(H)
+	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)
 
 	// If they're head, give them the account info for their department
 	if(H.mind && job.head_position)
@@ -580,6 +580,7 @@ var/datum/subsystem/job/SSjob
 		//put the player's account number onto the ID
 		if(H.mind && H.mind.initial_account)
 			C.associated_account_number = H.mind.initial_account.account_number
+			H.mind.initial_account.owner_salary = job.salary //add salary in /datum/money_account
 
 		H.equip_to_slot_or_del(C, SLOT_WEAR_ID)
 
@@ -589,7 +590,10 @@ var/datum/subsystem/job/SSjob
 		pda.owner = H.real_name
 		pda.ownjob = C.assignment
 		pda.ownrank = C.rank
+		pda.owner_account = H.mind.initial_account		//bind the account to the pda
+		pda.owner_fingerprints += C.fingerprint_hash	//save fingerprints in pda from ID card
 		pda.name = "PDA-[H.real_name] ([pda.ownjob])"
+		H.mind.initial_account.owner_PDA = pda			//add PDA in /datum/money_account
 
 	return 1
 

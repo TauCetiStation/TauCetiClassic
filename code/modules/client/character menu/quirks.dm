@@ -67,7 +67,7 @@
 			if(!SSquirks.quirks[quirk])
 				return
 
-			if(SSquirks.quirk_blacklist_species[quirk] && species in SSquirks.quirk_blacklist_species[quirk])
+			if(SSquirks.quirk_blacklist_species[quirk] && (species in SSquirks.quirk_blacklist_species[quirk]))
 				to_chat(user, "<span class='danger'>[quirk] is incompatible with [species].</span>")
 				return
 

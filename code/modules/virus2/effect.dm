@@ -159,12 +159,12 @@
 		mob.adjust_fire_stacks(1)
 		mob.IgniteMob()
 		to_chat(mob, "<span class='userdanger'>Your skin bursts into flames!</span>")
-		mob.emote("scream",,, 1)
+		mob.emote("scream")
 	else if(holder.stage == 3)
 		mob.adjust_fire_stacks(3)
 		mob.IgniteMob()
 		to_chat(mob, "<span class='userdanger'>Your skin erupts into an inferno!</span>")
-		mob.emote("scream",,, 1)
+		mob.emote("scream")
 
 /datum/disease2/effect/flesh_eating
 	name = "Necrotizing Fasciitis"
@@ -498,13 +498,13 @@
 				var/bodypart = pick(list(BP_R_ARM , BP_L_ARM , BP_R_LEG , BP_L_LEG))
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart]
 				if (BP && !(BP.is_stump))
-					mob.emote("scream",,, 1)
+					mob.emote("scream")
 					BP.droplimb(no_explode = FALSE, clean = FALSE, disintegrate = DROPLIMB_BLUNT)
 			else
 				to_chat(mob, "<span class='userdanger'>[pick("Something is ripping you appart!", "IT HURTS!")]</span>")
 				mob.adjustBruteLoss(rand(2,10))
 		if(14)
-			mob.emote("scream",,, 1)
+			mob.emote("scream")
 			mob.apply_effect(5, WEAKEN)
 			mob.make_jittery(50)
 			addtimer(CALLBACK(mob, /mob/.proc/gib), 50)
@@ -808,7 +808,7 @@
 		if(prob(pain_chance))
 			to_chat(mob, "<span class='userdanger'>Your ears pop painfully and start bleeding!</span>")
 			mob.ear_deaf = max(mob.ear_deaf, 10)
-			mob.emote("scream",,, 1)
+			mob.emote("scream")
 		else
 			to_chat(mob, "<span class='userdanger'>Your ears pop and begin ringing loudly!</span>")
 			mob.ear_deaf = max(mob.ear_deaf, 5)
@@ -908,7 +908,7 @@
 		if(prob(30))
 			to_chat(mob, "<span class='userdanger'>[pick("AAAAH!","MUST SCREAM", "You just can't shut up anymore")]</span>")
 		else
-			mob.emote("scream",,, 1)
+			mob.emote("scream")
 
 /datum/disease2/effect/drowsness
 	name = "Narcolepsy"
@@ -1125,6 +1125,8 @@
 	var/couthing_fit_chance = 5
 
 /datum/disease2/effect/cough/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+	if(mob.reagents.has_reagent("dextromethorphan"))
+		return
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class = 'notice'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>")
 	else if(prob(20) || holder.stage == 2)
@@ -1251,6 +1253,6 @@
 				if(prob(stun_chance))
 					H.apply_effect(30,AGONY,0)
 					H.Stun(2)
-					mob.emote("scream",,, 1)
+					mob.emote("scream")
 				else
 					H.apply_effect(10,AGONY,0)

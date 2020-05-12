@@ -31,7 +31,34 @@
 		/obj/structure/falsewall,
 		/obj/structure/falsewall/reinforced,
 		/obj/structure/girder,
-		/obj/structure/girder/reinforced
+		/obj/structure/girder/reinforced,
+		/obj/machinery/door/airlock,
+		/obj/machinery/door/airlock/command,
+		/obj/machinery/door/airlock/security,
+		/obj/machinery/door/airlock/engineering,
+		/obj/machinery/door/airlock/medical,
+		/obj/machinery/door/airlock/virology,
+		/obj/machinery/door/airlock/maintenance,
+		/obj/machinery/door/airlock/freezer,
+		/obj/machinery/door/airlock/mining,
+		/obj/machinery/door/airlock/atmos,
+		/obj/machinery/door/airlock/research,
+		/obj/machinery/door/airlock/science,
+		/obj/machinery/door/airlock/neutral,
+		/obj/machinery/door/airlock/highsecurity,
+		/obj/machinery/door/airlock/vault,
+		/obj/machinery/door/airlock/external,
+		/obj/machinery/door/airlock/glass,
+		/obj/machinery/door/airlock/command/glass,
+		/obj/machinery/door/airlock/engineering/glass,
+		/obj/machinery/door/airlock/security/glass,
+		/obj/machinery/door/airlock/medical/glass,
+		/obj/machinery/door/airlock/virology/glass,
+		/obj/machinery/door/airlock/research/glass,
+		/obj/machinery/door/airlock/mining/glass,
+		/obj/machinery/door/airlock/atmos/glass,
+		/obj/machinery/door/airlock/science/glass,
+		/obj/machinery/door/airlock/science/neutral,
 		)
 	smooth = SMOOTH_TRUE
 
@@ -255,7 +282,7 @@
 			var/mob/living/simple_animal/hulk/Hulk = M
 			playsound(Hulk, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 			Hulk.health -= rand(4,10)
-		playsound(M, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+		playsound(M, 'sound/effects/hulk_hit_wall.ogg', VOL_EFFECTS_MASTER)
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash == 3)
 				take_damage(rand(25, 75))

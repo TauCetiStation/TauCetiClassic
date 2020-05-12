@@ -34,6 +34,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/ooccolor = "#002eb8"
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
+	var/chat_ghostsight = CHAT_GHOSTSIGHT_ALL
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
 
@@ -318,6 +319,8 @@ var/const/MAX_SAVE_SLOTS = 10
 				new /obj/item/organ/external/head/robot/ipc/double(null, character)
 			if("Pillar")
 				new /obj/item/organ/external/head/robot/ipc/pillar(null, character)
+			if("Human")
+				new /obj/item/organ/external/head/robot/ipc/human(null, character)
 
 	character.r_eyes = r_eyes
 	character.g_eyes = g_eyes
@@ -352,9 +355,9 @@ var/const/MAX_SAVE_SLOTS = 10
 		var/obj/item/organ/internal/IO = character.organs_by_name[name]
 		var/status = organ_data[name]
 
-		if(status == "amputated")
+		if(status == "amputated" && BP)
 			qdel(BP) // Destroy will handle everything
-		if(status == "cyborg")
+		if(status == "cyborg" && BP)
 			var/zone = BP.body_zone
 			qdel(BP)
 			switch(zone)
@@ -366,9 +369,9 @@ var/const/MAX_SAVE_SLOTS = 10
 					new /obj/item/organ/external/l_leg/robot(null, character)
 				if(BP_R_LEG)
 					new /obj/item/organ/external/r_leg/robot(null, character)
-		if(status == "assisted")
+		if(status == "assisted" && IO)
 			IO.mechassist()
-		else if(status == "mechanical")
+		else if(status == "mechanical" && IO)
 			IO.mechanize()
 
 		else continue

@@ -153,7 +153,8 @@
 	var/checkoutperiod = 5 // In minutes
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 
-	var/bibledelay = 0
+	var/count_bible = 4
+	var/next_print = 0
 
 /obj/machinery/computer/libraryconsole/bookmanagement/old // an older-looking version, looks fancy
 	icon_state = "computer_old"
@@ -318,18 +319,13 @@
 			if("5")
 				screenstate = 5
 			if("6")
-				if(!bibledelay)
-
-					var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(src.loc)
-					if(ticker && ( ticker.Bible_icon_state && ticker.Bible_item_state) )
-						B.icon_state = ticker.Bible_icon_state
-						B.item_state = ticker.Bible_item_state
-						B.name = ticker.Bible_name
-						B.deity_name = ticker.Bible_deity_name
-
-					bibledelay = 1
-					spawn(60)
-						bibledelay = 0
+				if(count_bible > 0 && world.time > next_print)
+					if(global.chaplain_religion)
+						global.chaplain_religion.spawn_bible(loc)
+						count_bible -= 1
+						next_print = world.time + 6 SECONDS
+					else
+						visible_message("<b>[src]</b>'s monitor flashes,  \"Could not connect to station's religion database at this moment, please try again later.\"")
 
 				else
 					visible_message("<b>[src]</b>'s monitor flashes, \"Bible printer currently unavailable, please wait a moment.\"")
@@ -409,12 +405,10 @@
 		establish_old_db_connection()
 		if(!dbcon_old.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
-		if(bibledelay)
+		if(next_print > world.time)
 			visible_message("<b>[src]</b>'s monitor flashes, \"Printer unavailable. Please allow a short time before attempting to print.\"")
 		else
-			bibledelay = 1
-			spawn(60)
-				bibledelay = 0
+			next_print = world.time + 6 SECONDS
 			var/DBQuery/query = dbcon_old.NewQuery("SELECT * FROM library WHERE id='[sqlid]'")
 			query.Execute()
 

@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 25
+#define SAVEFILE_VERSION_MAX 26
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -59,6 +59,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		toggles &= ~(SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SOUND_STREAMING)
 		S["toggles"] << toggles
 
+	if(current_version < 26)
+		for(var/role in be_role)
+			if(!CanBeRole(role))
+				be_role -= role
+
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 17)
 		for(var/organ_name in organ_data)
@@ -95,7 +100,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/datum/job/assistant/J = new
 
 		if(player_alt_titles && \
-			player_alt_titles[J.title] in list("Technical Assistant", "Medical Intern", "Research Assistant", "Security Cadet"))
+			(player_alt_titles[J.title] in list("Technical Assistant", "Medical Intern", "Research Assistant", "Security Cadet")))
 
 			player_alt_titles -= J.title
 

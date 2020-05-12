@@ -15,7 +15,7 @@
 		return
 
 	var/failure = 0
-	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat)
+	if (istype(usr.loc,/mob) || usr.incapacitated() || !usr.canmove)
 		to_chat(usr, "<span class='warning'>You can't jump right now!</span>")
 		return
 
@@ -150,7 +150,7 @@
 		return
 
 	var/failure = 0
-	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat)
+	if (istype(usr.loc,/mob) || usr.incapacitated() || !usr.canmove)
 		to_chat(usr, "<span class='warning'>You can't dash right now!</span>")
 		return
 
@@ -322,7 +322,7 @@
 		src.verbs -= /mob/living/carbon/human/proc/hulk_smash
 		return
 
-	if (usr.lying || usr.stunned || usr.stat)
+	if (usr.incapacitated() || !usr.canmove)
 		to_chat(usr, "<span class='warning'>You can't smash right now!</span>")
 		return
 

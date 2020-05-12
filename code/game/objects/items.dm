@@ -62,20 +62,15 @@
 
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
-	/* Species-specific sprites, concept stolen from Paradise//vg/.
-	ex:
-	sprite_sheets = list(
-		TAJARAN = 'icons/cat/are/bad'
-		)
-	If index term exists and icon_override is not set, this sprite sheet will be used.
-	*/
-	var/list/sprite_sheets = null
 	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
 
 	/* Species-specific sprite sheets for inventory sprites
 	Works similarly to worn sprite_sheets, except the alternate sprites are used when the clothing/refit_for_species() proc is called.
 	*/
 	var/list/sprite_sheets_obj = null
+
+	// This thing can be used to stab eyes out.
+	var/stab_eyes = FALSE
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -350,6 +345,10 @@
 	if(QDELETED(src) || freeze_movement) // remove_from_mob() may remove DROPDEL items, so...
 		return
 
+	if(!user.can_pickup(src))
+		to_chat(user, "<span class='notice'>Your claws aren't capable of such fine manipulation!</span>")
+		return
+
 	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
@@ -359,15 +358,6 @@
 /obj/item/attack_paw(mob/user)
 	if (!user || anchored)
 		return
-
-	if(isxeno(user)) // -- TLE
-		var/mob/living/carbon/xenomorph/A = user
-
-		if(!A.has_fine_manipulation || w_class >= ITEM_SIZE_LARGE)
-			if(src in A.contents) // To stop Aliens having items stuck in their pockets
-				A.drop_from_inventory(src)
-			to_chat(user, "Your claws aren't capable of such fine manipulation.")
-			return
 
 	if (istype(src.loc, /obj/item/weapon/storage))
 		for(var/mob/M in range(1, src.loc))
@@ -388,6 +378,10 @@
 		user.next_move = max(user.next_move+2,world.time + 2)
 
 	if(QDELETED(src) || freeze_movement) // no item - no pickup, you dummy!
+		return
+
+	if (!user.can_pickup(src))
+		to_chat(user, "<span class='notice'>Your claws aren't capable of such fine manipulation!</span>")
 		return
 
 	src.pickup(user)
@@ -728,12 +722,9 @@
 
 	if(!(usr)) //BS12 EDIT
 		return
-	if(!usr.canmove || usr.stat || usr.restrained() || !Adjacent(usr))
+	if(usr.incapacitated() || !Adjacent(usr))
 		return
 	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
-		to_chat(usr, "<span class='warning'>You can't pick things up!</span>")
-		return
-	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
 		to_chat(usr, "<span class='warning'>You can't pick things up!</span>")
 		return
 	if(src.anchored) //Object isn't anchored
@@ -888,12 +879,12 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
-		IO.damage += rand(3,4)
+		IO.damage += rand(force * 0.5, force)
 		if(IO.damage >= IO.min_bruised_damage)
 			if(H.stat != DEAD)
 				if(IO.robotic <= 1) //robot eyes bleeding might be a bit silly
 					to_chat(H, "<span class='warning'>Your eyes start to bleed profusely!</span>")
-			if(prob(50))
+			if(prob(10 * force))
 				if(H.stat != DEAD)
 					to_chat(H, "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>")
 					H.drop_item()
@@ -904,13 +895,11 @@
 				if(H.stat != DEAD)
 					to_chat(H, "<span class='warning'>You go blind!</span>")
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-		BP.take_damage(7)
+		BP.take_damage(force)
 	else
-		M.take_bodypart_damage(7)
+		M.take_bodypart_damage(force)
 
-	M.eye_blurry += rand(3,4)
-
-	return
+	M.eye_blurry += rand(force * 0.5, force)
 
 /obj/item/clean_blood()
 	. = ..() // FIX: If item is `uncleanable` we shouldn't nullify `dirt_overlay`
@@ -975,15 +964,6 @@ var/global/list/items_blood_overlay_by_type = list()
 		return
 	var/mob/M = loc
 	M.update_inv_item(src)
-
-/obj/item/proc/get_current_temperature()
-	/*
-	It actually returns a rise in temperature from the enviroment since I don't know why.
-	Before it was called "is_hot". And it returned 0 if something is not any hotter than it should be.
-
-	Slap me on the wrist if you ever will need this to return a meaningful value. ~Luduk
-	*/
-	return 0
 
 /obj/item/proc/extinguish()
 	return

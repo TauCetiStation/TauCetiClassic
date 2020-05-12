@@ -57,7 +57,7 @@
 
 		//subtract the money
 		var/lost = affected_account.money * 0.8 + (rand(2,4) - 2) / 10
-		affected_account.money -= lost
+		affected_account.adjust_money(-lost)
 
 		//create a taunting log entry
 		var/datum/transaction/T = new()

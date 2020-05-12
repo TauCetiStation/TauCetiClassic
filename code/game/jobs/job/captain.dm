@@ -10,9 +10,10 @@
 	idtype = /obj/item/weapon/card/id/gold
 	req_admin_notify = 1
 	access = list() 			//See get_access()
+	salary = 300
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 3900
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, IPC)
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
 
 /datum/job/captain/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -67,6 +68,7 @@
 	selection_color = "#ddddff"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
+	salary = 250
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
 	access = list(
@@ -77,7 +79,7 @@
 		access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
 		access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_recycler, access_detective, access_barber
 	)
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, IPC)
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
 
 
 /datum/job/hop/equip(mob/living/carbon/human/H, visualsOnly = FALSE)

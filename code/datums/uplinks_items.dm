@@ -56,7 +56,7 @@
 	if(!istype(U))
 		return 0
 
-	if (!user || user.stat || user.restrained())
+	if (!user || user.incapacitated())
 		return 0
 
 	if (!( istype(user, /mob/living/carbon/human)))
@@ -108,6 +108,14 @@
 	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile/revolver
 	cost = 8
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/dangerous/revolver/traitor
+	name = "TR-8-R Revolver"
+	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers. This one looks like toy."
+	item = /obj/item/weapon/gun/projectile/revolver/traitor
+	uplink_types = list("traitor")
+
 
 /datum/uplink_item/dangerous/pistol
 	name = "Stechkin Pistol"
@@ -115,13 +123,13 @@
 			with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
 	cost = 6
-/*
+
 /datum/uplink_item/dangerous/smg
 	name = "C-20r Submachine Gun"
-	desc = "A fully-loaded Scarborough Arms-developed submachine gun that fires 12mm automatic rounds with a 20-round magazine."
+	desc = "A fully-loaded Scarborough Arms-developed submachine gun that fires .45 ACP automatic rounds with a 20-round magazine. Has large variety of ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r
-	cost = 7
-	uplink_types = list("nuclear") */
+	cost = 12
+	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/bulldog
 	name = "V15 Bulldog shotgun"
@@ -161,7 +169,7 @@
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
 	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with toxin, a poison collected from an organism. \
-	Its bolts stun enemies for short periods, and replenish automatically."
+	Its bolts stun enemies for short periods, and replenish automatically. This one looks like toy."
 	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 7
 	uplink_types = list("traitor")
@@ -187,6 +195,12 @@
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/weapon/melee/energy/sword
 	cost = 7
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/dangerous/sword/traitor
+	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be pocketed when inactive. Activating it produces a loud, distinctive noise. This one looks like toy."
+	item = /obj/item/weapon/melee/energy/sword/traitor
+	uplink_types = list("traitor")
 
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades"
@@ -269,16 +283,37 @@
 	cost = 2
 
 /datum/uplink_item/ammo/revolver
-	name = "Ammo-357"
-	desc = "A box that contains seven additional rounds for the revolver, made using an automatic lathe."
+	name = "Speedloader-.357"
+	desc = "A speedloader that contains seven additional rounds for the revolver, made using an automatic lathe."
 	item = /obj/item/ammo_box/a357
 	cost = 3
 
 /datum/uplink_item/ammo/smg
 	name = "Ammo-.45 ACP"
-	desc = "A 20-round .45 ACP magazine for use in the C-20r submachine gun. These rounds have a short stunning effect and medium impact damage."
+	desc = "A 20-round .45 ACP magazine for use in the C-20r submachine gun."
 	item = /obj/item/ammo_box/magazine/m12mm
-	cost = 2
+	cost = 3
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/ammo/smg_hp
+	name = "Ammo-.45 ACP High Power"
+	desc = "A 15-round .45 ACP HP magazine for use in the C-20r submachine gun. These rounds have better overall damage."
+	item = /obj/item/ammo_box/magazine/m12mm/hp
+	cost = 5
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/ammo/smg_hv
+	name = "Ammo-.45 ACP High Velocity"
+	desc = "A 15-round .45 ACP HV magazine for use in the C-20r submachine gun. These rounds used to hit target almost instantly."
+	item = /obj/item/ammo_box/magazine/m12mm/hv
+	cost = 5
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/ammo/smg_imp
+	name = "Ammo-.45 ACP Impact"
+	desc = "A 15-round .45 ACP IMP magazine for use in the C-20r submachine gun. These rounds will push enemies back and shortly stun unarmored targets."
+	item = /obj/item/ammo_box/magazine/m12mm/imp
+	cost = 5
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/a74standart
@@ -535,10 +570,15 @@
 	item = /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
 	cost = 5
 
+/datum/uplink_item/device_tools/bonepen
+	name = "Prototype Bone Repair Kit"
+	desc = "Stolen prototype bone repair nanites. Contains three nanocalcium autoinjectors."
+	item = /obj/item/weapon/storage/box/syndie_kit/bonepen
+	cost = 4
+
 /datum/uplink_item/stealthy_tools/mulligan
 	name = "Mulligan"
-	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity \
-			and appearance."
+	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity and appearance."
 	item = /obj/item/weapon/reagent_containers/syringe/mulligan
 	cost = 4
 
@@ -613,6 +653,14 @@
 	Ordering this sends you a small beacon that will teleport the power sink to your location on activation."
 	item = /obj/item/device/powersink
 	cost = 12
+
+/datum/uplink_item/device_tools/syndcodebook
+	name = "Sy-Code Book"
+	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which sounds like random letters and drinks to anyone listening. \
+	This manual teaches you Sy-Code. Limited uses. Use :0 before saying something to speak in Sy-Code."
+	item = /obj/item/weapon/syndcodebook
+	cost = 1
+	uplink_types = list("traitor")
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"

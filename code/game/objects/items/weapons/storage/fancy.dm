@@ -85,6 +85,7 @@
 	item_state = "candlebox"
 	storage_slots = 5
 	throwforce = 2
+	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	var/candle_type = "white"
 
@@ -127,6 +128,7 @@
 	item_state = "black_candlebox5"
 	storage_slots = 5
 	throwforce = 2
+	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	var/cooldown = 0
 	var/teleporter_delay = 0
@@ -252,11 +254,11 @@
 	update_icon()
 
 /obj/item/weapon/storage/fancy/glowsticks/proc/add_stick()
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/green(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/red(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/blue(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/orange(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/green(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/red(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/blue(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/yellow(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/orange(src)
 
 /obj/item/weapon/storage/fancy/glowsticks/update_icon()
 	cut_overlays() //resets list

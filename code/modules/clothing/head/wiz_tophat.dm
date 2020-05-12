@@ -160,6 +160,7 @@ var/global/list/tophats_list = list()
 	tp_to_tophat(I)
 
 /obj/effect/overlay/tophat_portal/Crossed(atom/movable/AM)
+	. = ..()
 	if(AM.throwing)
 		tp_to_tophat(AM)
 
@@ -171,6 +172,8 @@ var/global/list/tophats_list = list()
 	if(AM.anchored)
 		return
 	if(!tophats_list.len)
+		return
+	if(user.incapacitated())
 		return
 	if(!user.mind || user.mind.special_role != "Wizard")
 		if(AM == user)
@@ -388,6 +391,8 @@ var/global/list/tophats_list = list()
 	if(!isturf(AM.loc) && AM.loc != user)
 		return
 	if(AM.anchored)
+		return
+	if(user.incapacitated())
 		return
 	if(!user.mind || user.mind.special_role != "Wizard")
 		return

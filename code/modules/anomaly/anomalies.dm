@@ -124,6 +124,9 @@
 		T.hotspot_expose(1000, CELL_VOLUME)
 
 
+/obj/effect/anomaly/pyro/get_current_temperature()
+	return 1000
+
 /////////////////////
 
 /obj/effect/anomaly/bhole

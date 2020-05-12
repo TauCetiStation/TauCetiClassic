@@ -59,9 +59,10 @@
 #define INTERACTION_FARMBOT_TOGGLE_WEEDS_IGNORING		7
 #define INTERACTION_FARMBOT_TOGGLE_MUSHROOMS_IGNORING	8
 
-#define INTERACTION_FLOORBOT_TOGGLE_FLOOR_IMPROVMENT	3
-#define INTERACTION_FLOORBOT_TOGGLE_SEARCHING			4
-#define INTERACTION_FLOORBOT_TOGGLE_TILES_FABRICATION	5
+#define INTERACTION_FLOORBOT_TOGGLE_FLOOR_FIXTILES		3
+#define INTERACTION_FLOORBOT_TOGGLE_FLOOR_PLACETILES	4
+#define INTERACTION_FLOORBOT_TOGGLE_SEARCHING			5
+#define INTERACTION_FLOORBOT_TOGGLE_TILES_FABRICATION	6
 
 
 /mob/living/silicon/pai/var/list/available_software = list(
@@ -548,8 +549,10 @@
 			if(istype(hackobj, /obj/machinery/bot/floorbot))
 				var/obj/machinery/bot/floorbot/Bot = hackobj
 				switch(interaction_type)
-					if(INTERACTION_FLOORBOT_TOGGLE_FLOOR_IMPROVMENT) //floorbot - Toggle floor improving
-						Bot.improvefloors = !Bot.improvefloors
+					if(INTERACTION_FLOORBOT_TOGGLE_FLOOR_FIXTILES) //floorbot - Toggle tiles fixing
+						Bot.fixtiles = !Bot.fixtiles
+					if(INTERACTION_FLOORBOT_TOGGLE_FLOOR_PLACETILES) //floorbot - Toggle tiles placement
+						Bot.placetiles = !Bot.placetiles
 					if(INTERACTION_FLOORBOT_TOGGLE_SEARCHING) //floorbot - Toggle tiles searching
 						Bot.eattiles = !Bot.eattiles
 					if(INTERACTION_FLOORBOT_TOGGLE_TILES_FABRICATION) //floorbot - Toggle metal to tiles transformation
@@ -962,7 +965,8 @@
 					botchecked = 1
 					dat += "Floor Bot.<br>"
 					var/obj/machinery/bot/floorbot/Temp = hackobj
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_FLOORBOT_TOGGLE_FLOOR_IMPROVMENT];sub=0'>Toggle Floor Improvment</a> (Currently [Temp.improvefloors ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_FLOORBOT_TOGGLE_FLOOR_FIXTILES];sub=0'>Toggle Floor Fixing</a> (Currently [Temp.fixtiles ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_FLOORBOT_TOGGLE_FLOOR_PLACETILES];sub=0'>Toggle Floor Tiles Placement</a> (Currently [Temp.placetiles ? "Active" : "Disabled"]) <br>"
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_FLOORBOT_TOGGLE_SEARCHING];sub=0'>Toggle Searching Tiles</a> (Currently [Temp.eattiles ? "Active" : "Disabled"]) <br>"
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_FLOORBOT_TOGGLE_TILES_FABRICATION];sub=0'>Toggle Tiles Fabrication</a> (Currently [Temp.maketiles ? "Active" : "Disabled"]) <br>"
 				if(!botchecked)
@@ -1116,6 +1120,7 @@
 #undef INTERACTION_FARMBOT_TOGGLE_WEEDS_IGNORING
 #undef INTERACTION_FARMBOT_TOGGLE_MUSHROOMS_IGNORING
 
-#undef INTERACTION_FLOORBOT_TOGGLE_FLOOR_IMPROVMENT
+#undef INTERACTION_FLOORBOT_TOGGLE_FLOOR_FIXTILES
+#undef INTERACTION_FLOORBOT_TOGGLE_FLOOR_PLACETILES
 #undef INTERACTION_FLOORBOT_TOGGLE_SEARCHING
 #undef INTERACTION_FLOORBOT_TOGGLE_TILES_FABRICATION

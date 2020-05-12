@@ -33,6 +33,8 @@ def main(options):
 		else:
 			r = requests.get(options.url)
 
+		r.raise_for_status()
+
 	except requests.exceptions.RequestException as e:
 		print(e, file=sys.stderr)
 		sys.exit(1)
@@ -42,8 +44,6 @@ def main(options):
 def byond_outer_text(text):
 	return text.decode("cp1251").replace("¶", "я")
 
-#DOES NOT WORK I HATE THIS
-#UPD OMG IT IS WORK
 def byond_inner_text(text):
 	return text.replace("я", "¶").encode("cp1251", 'ignore')
 

@@ -167,7 +167,7 @@
 		..()
 
 /obj/structure/morgue/relaymove(mob/user)
-	if (user.stat)
+	if (user.incapacitated())
 		return
 	connected = new /obj/structure/m_tray( loc )
 	step(connected, dir)
@@ -218,7 +218,7 @@
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return
-	if (!ismob(user) || user.stat || user.lying || user.stunned)
+	if (!ismob(user) || user.incapacitated())
 		return
 	O.loc = src.loc
 	if (user != O)
@@ -347,7 +347,7 @@
 		..()
 
 /obj/structure/crematorium/relaymove(mob/user)
-	if (user.stat || locked)
+	if (user.incapacitated() || locked)
 		return
 	src.connected = new /obj/structure/c_tray( src.loc )
 	step(src.connected, SOUTH)
@@ -387,7 +387,7 @@
 
 		for(var/mob/living/M in contents)
 			if (M.stat!=2)
-				M.emote("scream",,, 1)
+				M.emote("scream")
 			M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[key_name(user)]</b>" //No point in this when the mob's about to be deleted
 			user.attack_log +="\[[time_stamp()]\] Cremated <b>[key_name(M)]</b>"
 			log_attack("[key_name(user)] cremated by [key_name(M)]")
@@ -439,7 +439,7 @@
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return
-	if (!ismob(user) || user.stat || user.lying || user.stunned)
+	if (!ismob(user) || user.incapacitated())
 		return
 	O.loc = src.loc
 	if (user != O)

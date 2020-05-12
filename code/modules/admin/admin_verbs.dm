@@ -83,14 +83,17 @@ var/list/admin_verbs_log = list(
 	/client/proc/getlogsbyid,			   //allows us to fetch logs by round id,
 	/client/proc/getoldlogs,			   //allows us to fetch logs by round id,
 	/client/proc/investigate_show,		//various admintools for investigation. Such as a singulo grief-log,
+	/client/proc/view_runtimes
 	)
 var/list/admin_verbs_variables = list(
 	/client/proc/debug_variables,
-	/client/proc/add_player_age, 		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
-	)
+	/client/proc/add_player_age,
+	/client/proc/grand_guard_pass,
+	/client/proc/mass_apply_status_effect,
+)
 var/list/admin_verbs_ban = list(
-	/client/proc/unban_panel
-//	/client/proc/stickybanpanel,
+	/client/proc/unban_panel,
+	/client/proc/stickybanpanel,
 	)
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
@@ -281,6 +284,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_debug_tog_vcounter,
 	/client/proc/enable_debug_verbs,
 	/client/proc/add_player_age,
+	/client/proc/grand_guard_pass,
 	/proc/possess,
 	/proc/release
 	)
@@ -545,6 +549,17 @@ var/list/admin_verbs_hideable = list(
 	message_admins("[key_name_admin(src)] has warned [C ? key_name_admin(C) : warned_ckey] with reason: [reason].")
 
 	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/mass_apply_status_effect()
+	set category = "Special Verbs"
+	set name = "Mass Apply Status Effect"
+	set desc = "Apply a status effect to every mob."
+
+	var/list/params = admin_spawn_status_effect(usr)
+	if(params)
+		if(alert("Confirm applying the status effect to every mob?", , "Yes", "No") == "Yes")
+			for(var/mob/living/L in global.living_list)
+				L.apply_status_effect(arglist(params))
 
 /client/proc/drop_bomb() // Some admin dickery that can probably be done better -- TLE
 	set category = "Special Verbs"
@@ -1125,7 +1140,8 @@ var/centcom_barriers_stat = 1
 	var/active = 1
 	var/lchannel = 999
 
-/obj/effect/landmark/trololo/Crossed(mob/M)
+/obj/effect/landmark/trololo/Crossed(atom/movable/AM)
+	. = ..()
 	if(!active) return
 	/*if(istype(M, /mob/living/carbon))
 		M.playsound_local(null, melody, VOL_EFFECTS_MASTER, 20, FALSE, channel = lchannel, wait = TRUE, ignore_environment = TRUE)*/

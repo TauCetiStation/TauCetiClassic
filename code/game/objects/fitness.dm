@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1
 
-/obj/structure/stacklifter/attack_hand(mob/user)
+/obj/structure/stacklifter/attack_hand(mob/living/carbon/human/user)
 	if(!user.Adjacent(src))
 		return
 	var/mob/living/carbon/human/gymnast = user
@@ -30,6 +30,10 @@
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 		user.visible_message("<B>[user] is [bragmessage]!</B>")
 		var/lifts = 0
+
+		if((HULK in user.mutations) && user.hulk_activator == ACTIVATOR_HEAVY_MUSCLE_LOAD)
+			to_chat(user, "<span class='notice'>You feel unbearable muscle pain, but you like it!</span>")
+
 		while (lifts++ < 6)
 			if (user.loc != src.loc)
 				break
@@ -49,6 +53,9 @@
 		icon_state = "fitnesslifter"
 		to_chat(user, "[finishmessage]")
 
+		if((HULK in user.mutations) && user.hulk_activator == "heavy muscle load" && prob(60))
+			user.try_mutate_to_hulk()
+
 /obj/structure/weightlifter
 	name = "Weight Machine"
 	desc = "Just looking at this thing makes you feel tired."
@@ -57,7 +64,7 @@
 	density = 1
 	anchored = 1
 
-/obj/structure/weightlifter/attack_hand(mob/user)
+/obj/structure/weightlifter/attack_hand(mob/living/carbon/human/user)
 	if(!user.Adjacent(src))
 		return
 	var/mob/living/carbon/human/gymnast = user
@@ -85,6 +92,10 @@
 		user.visible_message("<B>[user] is [bragmessage]!</B>")
 		var/reps = 0
 		user.pixel_y = 5
+
+		if((HULK in user.mutations) && user.hulk_activator == "heavy muscle load")
+			to_chat(user, "<span class='notice'>You feel unbearable muscle pain, but you like it!</span>")
+
 		while (reps++ < 6)
 			if (user.loc != src.loc)
 				break
@@ -108,3 +119,6 @@
 		icon_state = "fitnessweight"
 		cut_overlay(W)
 		to_chat(user, "[finishmessage]")
+
+		if((HULK in user.mutations) && user.hulk_activator == "heavy muscle load" && prob(60))
+			user.try_mutate_to_hulk()

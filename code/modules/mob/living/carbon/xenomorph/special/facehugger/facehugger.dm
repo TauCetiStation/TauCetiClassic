@@ -7,7 +7,6 @@
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
 	item_state = "facehugger"
-	w_class = ITEM_SIZE_TINY //note: can be picked up by aliens unlike most other items of w_class below 4
 	density = 1
 	layer = ABOVE_WINDOW_LAYER
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES
@@ -163,8 +162,9 @@
 /obj/item/clothing/mask/facehugger/equipped(mob/living/carbon/C)
 	Attach(C)
 
-/obj/item/clothing/mask/facehugger/Crossed(mob/living/carbon/C)
-	return HasProximity(C)
+/obj/item/clothing/mask/facehugger/Crossed(atom/movable/AM)
+	..()
+	return HasProximity(AM)
 
 /obj/item/clothing/mask/facehugger/HasProximity(mob/living/carbon/C)
 	if(!current_hugger)
@@ -198,32 +198,13 @@
 		Attach(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/CanHug(mob/living/carbon/C, check = 1)
-	if(!iscarbon(C))
-		return FALSE
-	if(stat != CONSCIOUS)
+	if(!C.is_facehuggable() || stat || istype(C.wear_mask, src) || loc == C)
 		return FALSE
 	if(check)
 		if(isturf(src.loc))
 			if(!(C in view(1, src)))
 				return FALSE
-	if(C.stat == DEAD)
-		return FALSE
-	if(isxeno(C))
-		return FALSE
-	if(locate(/obj/item/alien_embryo) in C.contents)
-		return FALSE
-	if(istype(C.wear_mask, src))
-		return FALSE
-	if(loc == C)
-		return FALSE
-	if(ismonkey(C))
-		return TRUE
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		if(H.species.flags[NO_BREATHE]) // so IPCs, dioneae, abductors, skeletons, zombies, shadowlings, golems cannot be infected
-			return FALSE
-		return TRUE
-	return FALSE
+	return TRUE
 
 /mob/living/carbon/human/proc/mouth_is_protected()
 	if(istype(head, /obj/item/clothing/head))

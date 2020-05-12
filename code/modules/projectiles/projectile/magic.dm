@@ -18,8 +18,8 @@
 	icon_state = "ice_1"
 	light_color = "#00bfff"
 
-/obj/item/projectile/magic/change/on_hit(atom/change)
-	wabbajack(change)
+/obj/item/projectile/magic/change/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	wabbajack(target)
 
 /obj/item/projectile/magic/change/proc/wabbajack(mob/living/M)
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
@@ -147,14 +147,15 @@
 	icon_state = "ion"
 	light_color = "#a9e2f3"
 
-/obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
-	if(!istype(target))
+/obj/item/projectile/magic/resurrection/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	if(!iscarbon(target))
 		return
-	var/old_stat = target.stat
-	target.revive()
-	if(!target.ckey || !target.mind)
+	var/mob/living/carbon/C = target
+	var/old_stat = C.stat
+	C.revive()
+	if(!C.ckey || !C.mind)
 		for(var/mob/dead/observer/ghost in observer_list)
-			if(target.mind == ghost.mind)
+			if(C.mind == ghost.mind)
 				ghost.reenter_corpse()
 				break
 	if(old_stat != DEAD)
@@ -167,7 +168,7 @@
 	var/list/doors = list(/obj/structure/mineral_door/metal, /obj/structure/mineral_door/silver,/obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium,
 					/obj/structure/mineral_door/sandstone, /obj/structure/mineral_door/transparent/diamond, /obj/structure/mineral_door/wood)
 
-/obj/item/projectile/magic/door/on_hit(atom/target)
+/obj/item/projectile/magic/door/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(!(getOPressureDifferential(target) >= FIREDOOR_MAX_PRESSURE_DIFF))
 		if(istype(target, /turf/simulated/wall))
 			var/turf/place = target
@@ -189,7 +190,7 @@
 	damage = 20
 	nodamage = 0
 
-/obj/item/projectile/magic/forcebolt/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/magic/forcebolt/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 
 	var/obj/T = target
 	var/throwdir = get_dir(firer,target)

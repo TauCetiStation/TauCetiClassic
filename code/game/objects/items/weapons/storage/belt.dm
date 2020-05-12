@@ -11,6 +11,9 @@
 	attack_verb = list("whipped", "lashed", "disciplined")
 	use_to_pickup = TRUE
 
+	// since belt is not considered "clothing", we can't enforce species-bodytype-based restrictions on it. YET. ~Luduk
+	// sprite_sheet_slot = SPRITE_SHEET_BELT
+
 /obj/item/weapon/storage/belt/utility
 	name = "tool-belt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Can hold various tools."

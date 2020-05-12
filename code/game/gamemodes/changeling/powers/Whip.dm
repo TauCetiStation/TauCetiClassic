@@ -29,7 +29,7 @@
 	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his whip into an arm!</span>", "<span class='notice'>We assimilate the Whip back into our body.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 	..()
 
-/obj/item/weapon/changeling_whip/afterattack(atom/A, mob/living/carbon/human/user)
+/obj/item/weapon/changeling_whip/afterattack(atom/target, mob/user, proximity, params)
 	if(!istype(user))
 		return
 	if(user.incapacitated() || user.lying)
@@ -51,7 +51,7 @@
 		else
 			LE.agony = 15
 	LE.host = user
-	LE.Fire(A, user)
+	LE.Fire(target, user)
 
 /obj/item/projectile/changeling_whip
 	name = "Whip"
@@ -68,7 +68,7 @@
 	tracer_type = /obj/effect/projectile/changeling/tracer
 	impact_type = /obj/effect/projectile/changeling/impact
 
-/obj/item/projectile/changeling_whip/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/changeling_whip/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(isturf(target))
 		return FALSE
 	var/atom/movable/T = target

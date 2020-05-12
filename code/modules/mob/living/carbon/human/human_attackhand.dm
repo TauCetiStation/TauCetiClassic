@@ -131,7 +131,7 @@
 				apply_effect(2, WEAKEN, armor_block)
 
 			damage += attack.damage
-			apply_damage(damage, BRUTE, BP, armor_block, attack.damage_flags())
+			apply_damage(damage, BRUTE, BP, armor_block, attack.damage_flags(), used_weapon = "Hematoma")
 
 
 		if("disarm")
@@ -250,5 +250,5 @@
 	else
 		user.visible_message("\The [user] stops applying pressure to [src]'s [BP.name]!", "You stop applying pressure to [src]'s [BP.name]!")
 
-/mob/living/carbon/human/proc/afterattack(atom/target, mob/living/user, inrange, params)
+/mob/living/carbon/human/proc/afterattack(atom/target, mob/user, proximity, params)
 	return

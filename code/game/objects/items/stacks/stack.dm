@@ -140,7 +140,7 @@
 
 /obj/item/stack/Topic(href, href_list)
 	..()
-	if (usr.restrained() || usr.stat || (usr.get_active_hand() != src && usr.get_inactive_hand() != src))
+	if (usr.incapacitated() || (usr.get_active_hand() != src && usr.get_inactive_hand() != src))
 		return
 
 	if (href_list["sublist"] && !href_list["make"])

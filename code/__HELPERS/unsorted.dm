@@ -19,11 +19,9 @@
 
 	if (!( istext(HTMLstring) ))
 		CRASH("Given non-text argument!")
-		return
 	else
 		if (length(HTMLstring) != 7)
 			CRASH("Given non-HTML argument!")
-			return
 	var/textr = copytext(HTMLstring, 2, 4)
 	var/textg = copytext(HTMLstring, 4, 6)
 	var/textb = copytext(HTMLstring, 6, 8)
@@ -40,7 +38,6 @@
 	if (length(textb) < 2)
 		textr = text("0[]", textb)
 	return text("#[][][]", textr, textg, textb)
-	return
 
 //Returns the middle-most value
 /proc/dd_range(low, high, num)
@@ -1179,15 +1176,25 @@ var/global/list/common_tools = list(
 	istype(W, /obj/item/weapon/bonesetter)
 	)
 
+/proc/get_surg_chance(atom/location)
+	// please make this an obj var ~Luduk
+	if(locate(/obj/machinery/optable) in location)
+		return 100
+	if(locate(/obj/structure/stool/bed/roller/roller_surg) in location)
+		return 95
+	if(locate(/obj/structure/stool/bed/roller) in location)
+		return 75
+	if(locate(/obj/structure/table) in location)
+		return 66
+	return 0
+
 //check if mob is lying down on something we can operate him on.
 /proc/can_operate(mob/living/carbon/M)
-	return (locate(/obj/machinery/optable, M.loc) && M.resting) || \
-	(locate(/obj/structure/stool/bed/roller/roller_surg, M.loc) && 	\
-	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.stat)) && prob(95) || 	\
-	(locate(/obj/structure/stool/bed/roller, M.loc) && 	\
-	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.stat)) && prob(75) || 	\
-	(locate(/obj/structure/table, M.loc) && 	\
-	(M.lying || M.weakened || M.stunned || M.paralysis || M.stat) && prob(66))
+	if(locate(/obj/machinery/optable, M.loc) && M.resting)
+		return TRUE
+	if((M.buckled || M.lying || M.incapacitated()) && prob(get_surg_chance(M.loc)))
+		return TRUE
+	return FALSE
 
 /proc/reverse_direction(dir)
 	switch(dir)

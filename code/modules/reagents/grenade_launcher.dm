@@ -30,7 +30,7 @@
 		else
 			to_chat(usr, "<span class='warning'>The grenade launcher cannot hold more grenades.</span>")
 
-/obj/item/weapon/gun/grenadelauncher/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/gun/grenadelauncher/afterattack(atom/target, mob/user, proximity, params)
 	if (locate (/obj/structure/table, src.loc))
 		return
 

@@ -1141,7 +1141,7 @@
 		chassis.occupant_message("<span class='notice'>Automatic Aim System cannot find an appropriate target!</span>")
 		aiming = FALSE
 		return
-	if(!Challenge)
+	if(war_device_activated)
 		if(world.time < SYNDICATE_CHALLENGE_TIMER)
 			chassis.occupant_message("<span class='warning'>You've issued a combat challenge to the station! \
 			You've got to give them at least [round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
@@ -1149,7 +1149,7 @@
 			aiming = FALSE
 			return
 	else
-		Challenge.Dropod_used = TRUE
+		war_device_activation_forbidden = TRUE
 	chassis.occupant_message("<span class='notice'>You succesfully selected target!</span>")
 	chassis.loc = pick(L)
 	uses--

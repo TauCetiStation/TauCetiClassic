@@ -5,8 +5,8 @@
 	timer = newtime
 	to_chat(user, "Timer set for [timer] seconds.")
 
-/obj/item/weapon/plastique/afterattack(atom/target, mob/user, flag)
-	if (!flag)
+/obj/item/weapon/plastique/afterattack(atom/target, mob/user, proximity, params)
+	if (!proximity)
 		return
 	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/machinery/nuclearbomb))
 		return

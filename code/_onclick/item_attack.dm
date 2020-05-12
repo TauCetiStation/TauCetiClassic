@@ -6,9 +6,15 @@
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
-	return
+	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
+		return TRUE
+	return FALSE
 
 /atom/movable/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	if(.) // Clickplace, no need for attack animation.
+		return
+
 	if(!(W.flags & NOATTACKANIMATION))
 		user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -46,7 +52,7 @@
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
-/obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/proc/afterattack(atom/target, mob/user, proximity, params)
 	return
 
 
@@ -55,6 +61,11 @@
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M, user, src))
 			return 0
+
+	if(stab_eyes && user.a_intent != I_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))
+		if((CLUMSY in user.mutations) && prob(50))
+			M = user
+		return eyestab(M,user)
 
 	// Knifing
 	if(edge)
@@ -197,17 +208,16 @@
 					M.adjustBrainLoss(power)
 
 				else
-
+					if(prob(33)) // Added blood for whacking non-humans too
+						var/turf/simulated/T = M.loc
+						if(istype(T))
+							T.add_blood_floor(M)
 					M.take_bodypart_damage(power)
-					if (prob(33)) // Added blood for whacking non-humans too
-						var/turf/location = M.loc
-						if (istype(location, /turf/simulated))
-							location:add_blood_floor(M)
 			if("fire")
 				if (!(COLD_RESISTANCE in M.mutations))
-					M.take_bodypart_damage(0, power)
 					to_chat(M, "Aargh it burns!")
-		M.updatehealth()
+					M.take_bodypart_damage(0, power)
+
 	add_fingerprint(user)
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(M)

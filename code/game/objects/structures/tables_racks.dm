@@ -42,6 +42,8 @@
 		update_icon()
 		update_adjacent()
 
+	AddComponent(/datum/component/clickplace)
+
 /obj/structure/table/Destroy()
 	if(flipped)
 		update_adjacent()
@@ -288,16 +290,7 @@
 			destroy()
 			return FALSE
 
-	if(!(W.flags & ABSTRACT))
-		if(user.drop_item())
-			W.Move(loc)
-			var/list/click_params = params2list(params)
-			//Center the icon where the user clicked.
-			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
-				return
-			W.pixel_x = CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			W.pixel_y = CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
-	return
+	return ..()
 
 /obj/structure/table/proc/slam(var/mob/living/A, var/mob/living/M, var/obj/item/weapon/grab/G)
 	if (prob(15))
@@ -498,7 +491,7 @@
 		var/obj/item/weapon/shard/S = new
 		BP.embed(S)
 		H.apply_damage(15, def_zone = BP_HEAD, damage_flags = DAM_SHARP|DAM_EDGE, used_weapon = S)
-		H.emote("scream",,, 1)
+		H.emote("scream")
 	else
 		M.apply_damage(15, def_zone = BP_HEAD)
 	shatter()
@@ -593,7 +586,7 @@
 		frame.try_build(src)
 		return
 
- return ..()
+	return ..()
 
 /*
  * Racks
@@ -608,6 +601,10 @@
 	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.
 	var/parts = /obj/item/weapon/rack_parts
+
+/obj/structure/rack/atom_init()
+	. = ..()
+	AddComponent(/datum/component/clickplace)
 
 /obj/structure/rack/ex_act(severity)
 	switch(severity)
@@ -671,13 +668,8 @@
 			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'> You hear [src] coming apart.</span>")
 			destroy()
 			return
-	if(isrobot(user))
-		return
-	if(!W.canremove || W.flags & NODROP)
-		return
-	user.drop_item()
-	if(W && W.loc)	W.loc = src.loc
-	return
+
+	return ..()
 
 /obj/structure/rack/meteorhit(obj/O)
 	qdel(src)

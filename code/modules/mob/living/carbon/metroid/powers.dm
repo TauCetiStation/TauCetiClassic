@@ -5,7 +5,7 @@
 		Feedstop()
 		return
 
-	if(stat)
+	if(incapacitated())
 		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
 
@@ -175,11 +175,11 @@
 	set category = "Slime"
 	set desc = "This will let you evolve from baby to adult slime."
 
-	if(stat)
+	if(incapacitated())
 		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
 	if(!istype(src, /mob/living/carbon/slime/adult))
-		if(amount_grown >= 10)
+		if(amount_grown >= max_grown)
 			var/mob/living/carbon/slime/adult/new_slime = new adulttype(loc)
 			new_slime.nutrition = nutrition
 			new_slime.powerlevel = max(0, powerlevel-1)
@@ -197,17 +197,12 @@
 	set category = "Slime"
 	set desc = "This will make you split into four Slimes. NOTE: this will KILL you, but you will be transferred into one of the babies."
 
-	if(stat)
+	if(incapacitated())
 		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
 
 	if(istype(src, /mob/living/carbon/slime/adult))
-		if(amount_grown >= 10)
-			//if(input("Are you absolutely sure you want to reproduce? Your current body will cease to be, but your consciousness will be transferred into a produced slime.") in list("Yes","No")=="Yes")
-			if(stat)
-				to_chat(src, "<i>I must be conscious to do this...</i>")
-				return
-
+		if(amount_grown >= max_grown)
 			var/list/babies = list()
 			var/new_nutrition = round(nutrition * 0.9)
 			var/new_powerlevel = round(powerlevel / 4)

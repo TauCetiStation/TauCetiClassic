@@ -26,8 +26,10 @@
 		global.ahelp_tickets.BrowseTickets(text2num(href_list["ahelp_tickets"]))
 		return
 
-//	if(href_list["stickyban"])
-//		stickyban(href_list["stickyban"],href_list)
+	if(href_list["stickyban"])
+		stickyban(href_list["stickyban"], href_list)
+		if (href_list["stickyban"] != "show") // Update window after action
+			stickyban("show", null)
 
 	if(href_list["makeAntag"])
 		switch(href_list["makeAntag"])
@@ -602,12 +604,7 @@
 			if(counter >= 5) //So things dont get squiiiiished!
 				jobs += "</tr><tr align='center'>"
 				counter = 0
-
-		if(jobban_isbanned(M, "Internal Affairs Agent"))
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Internal Affairs Agent;jobban4=\ref[M]'><font color=red>Internal Affairs Agent</font></a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Internal Affairs Agent;jobban4=\ref[M]'>Internal Affairs Agent</a></td>"
-
+		
 		if(jobban_isbanned(M, ROLE_SURVIVOR))
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_SURVIVOR];jobban4=\ref[M]'><font color=red>[ROLE_SURVIVOR]</font></a></td>"
 		else
@@ -618,7 +615,7 @@
 	//Non-Human (Green)
 		counter = 0
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ccffcc'><th colspan='[length(nonhuman_positions)+1]'><a href='?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"
+		jobs += "<tr bgcolor='ccffcc'><th colspan='[length(nonhuman_positions) + 4]'><a href='?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in nonhuman_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = SSjob.GetJob(jobPos)
@@ -792,12 +789,18 @@
 
 		//Other races  (BLUE, because I have no idea what other color to make this)
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ccccff'><th colspan='2'>Other Races</th></tr><tr align='center'>"
+		jobs += "<tr bgcolor='ccccff'><th colspan='3'>Other Races</th></tr><tr align='center'>"
 
 		if(jobban_isbanned(M, ROLE_PLANT))
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_PLANT];jobban4=\ref[M]'><font color=red>[ROLE_PLANT]</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_PLANT];jobban4=\ref[M]'>[ROLE_PLANT]</a></td>"
+
+		//chaplain talking staff
+		if(jobban_isbanned(M, ROLE_TSTAFF))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_TSTAFF];jobban4=\ref[M]'><font color=red>[ROLE_TSTAFF]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_TSTAFF];jobban4=\ref[M]'>[ROLE_TSTAFF]</a></td>"
 
 		if(jobban_isbanned(M, "Mouse"))
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mouse;jobban4=\ref[M]'><font color=red>Mouse</font></a></td>"
@@ -981,31 +984,15 @@
 			return 1
 		return 0 //we didn't do anything!
 
-	else if(href_list["geoip"])
-		if(!check_rights(R_LOG))
+	else if(href_list["guard"])
+		if(!(check_rights(R_LOG) && check_rights(R_BAN)))
 			return
-		else
-			var/mob/M = locate(href_list["geoip"])
-			if (ismob(M))
-				if(!M.client)
-					return
-				var/dat = "<html><head><title>GeoIP info</title></head>"
-				var/client/C = M.client
-				if(C.geoip.status != "updated" || C.geoip.status != "admin")
-					C.geoip.try_update_geoip(C, C.address)
-				dat += "<center><b>Ckey:</b> [M.ckey]</center>"
-				dat += "<b>Country:</b> [C.geoip.country]<br>"
-				dat += "<b>CountryCode:</b> [C.geoip.countryCode]<br>"
-				dat += "<b>Region:</b> [C.geoip.region]<br>"
-				dat += "<b>Region Name:</b> [C.geoip.regionName]<br>"
-				dat += "<b>City:</b> [C.geoip.city]<br>"
-				dat += "<b>Timezone:</b> [C.geoip.timezone]<br>"
-				dat += "<b>ISP:</b> [C.geoip.isp]<br>"
-				dat += "<b>Mobile:</b> [C.geoip.mobile]<br>"
-				dat += "<b>Proxy:</b> [C.geoip.proxy]<br>"
-				dat += "<b>IP:</b> [C.geoip.ip]<br>"
-				dat += "<hr><b>Status:</b> [C.geoip.status]"
-				usr << browse(entity_ja(dat), "window=geoip")
+		
+		var/mob/M = locate(href_list["guard"])
+		if (ismob(M))
+			if(!M.client)
+				return
+			M.client.guard.print_report()
 
 	else if(href_list["cid_list"])
 		if(!check_rights(R_LOG))
@@ -2583,6 +2570,9 @@
 						SSnightshift.update_nightshift(FALSE)
 				if(val)
 					message_admins("[key_name_admin(usr)] switched night shift mode to '[val]'.")
+			if("mass_sleep")
+				for(var/mob/living/L in global.living_list)
+					L.SetSleeping(6000 SECONDS)
 		if (usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsadmin"]]")
 			if (ok)

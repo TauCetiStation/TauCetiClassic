@@ -61,7 +61,7 @@
 	else
 		toggle()
 
-/obj/item/device/chameleon/afterattack(atom/target, mob/user, proximity)
+/obj/item/device/chameleon/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 	if(!active_dummy)

@@ -4,6 +4,10 @@
 /obj/item/organ/external
 	name = "external"
 
+	// When measuring bodytemperature,
+	// multiply by this coeff.
+	var/temp_coeff = 1.0
+
 	// Strings
 	var/broken_description            // fracture string if any.
 	var/damage_state = "00"           // Modifier used for generating the on-mob damage overlay for this limb.
@@ -48,6 +52,9 @@
 	var/cavity = 0
 	var/atom/movable/applied_pressure
 
+	// Misc
+	var/list/butcher_results
+
 	// Will be removed, moved or refactored.
 	var/obj/item/hidden = null // relation with cavity
 	var/tmp/perma_injury = 0
@@ -78,6 +85,24 @@
 			owner.bodyparts_by_name -= body_zone
 		owner.bad_bodyparts -= src
 	return ..()
+
+/obj/item/organ/external/proc/harvest(obj/item/I, mob/user)
+	if(!locate(/obj/structure/table) in loc)
+		return
+	if(!butcher_results)
+		return
+
+	for(var/path in butcher_results)
+		for(var/i in 1 to butcher_results[path])
+			new path(loc)
+	visible_message("<span class='notice'>[user] butchers [src].</span>")
+	qdel(src)
+
+/obj/item/organ/external/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/butch) || istype(I, /obj/item/weapon/kitchenknife))
+		harvest(I, user)
+	else
+		..()
 
 /obj/item/organ/external/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
 	..()
@@ -415,14 +440,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 ****************************************************/
 
 /obj/item/organ/external/proc/release_restraints()
-	if (owner.handcuffed && body_part in list(ARM_LEFT, ARM_RIGHT))
+	if (owner.handcuffed && (body_part in list(ARM_LEFT, ARM_RIGHT)))
 		owner.visible_message(\
 			"\The [owner.handcuffed.name] falls off of [owner.name].",\
 			"\The [owner.handcuffed.name] falls off you.")
 
 		owner.drop_from_inventory(owner.handcuffed)
 
-	if (owner.legcuffed && body_part in list(LEG_LEFT, LEG_RIGHT))
+	if (owner.legcuffed && (body_part in list(LEG_LEFT, LEG_RIGHT)))
 		owner.visible_message(\
 			"\The [owner.legcuffed.name] falls off of [owner.name].",\
 			"\The [owner.legcuffed.name] falls off you.")
@@ -572,10 +597,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(is_broken())
 		owner.drop_from_inventory(c_hand)
 		var/emote_scream = pick("screams in pain and", "lets out a sharp cry and", "cries out and")
-		owner.emote("pain", 1, "[(owner.species && owner.species.flags[NO_PAIN]) ? "" : emote_scream ] drops what they were holding in their [hand_name]!")
+		owner.emote("grunt", SHOWMSG_VISUAL, "[(owner.species && owner.species.flags[NO_PAIN]) ? "" : emote_scream ] drops what they were holding in their [hand_name]!")
 	if(is_malfunctioning())
 		owner.drop_from_inventory(c_hand)
-		owner.emote("pain", 1, "drops what they were holding, their [hand_name] malfunctioning!")
+		owner.emote("grunt", SHOWMSG_VISUAL, "drops what they were holding, their [hand_name] malfunctioning!")
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, owner)
 		spark_system.attach(owner)
@@ -625,6 +650,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "chest"
 	artery_name = "aorta"
 
+	temp_coeff = 1.08
+
 	body_part = UPPER_TORSO
 	body_zone = BP_CHEST
 	limb_layer = LIMB_TORSO_LAYER
@@ -641,6 +668,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/groin
 	name = "groin"
 	artery_name = "iliac artery"
+
+	temp_coeff = 1.06
 
 	body_part = LOWER_TORSO
 	body_zone = BP_GROIN
@@ -659,6 +688,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/head
 	name = "head"
 	artery_name = "cartoid artery"
+
+	temp_coeff = 1.05
 
 	body_part = HEAD
 	body_zone = BP_HEAD
@@ -800,6 +831,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "left arm"
 	artery_name = "basilic vein"
 
+	temp_coeff = 1.0
+
 	body_part = ARM_LEFT
 	body_zone = BP_L_ARM
 	parent_bodypart = BP_CHEST
@@ -821,6 +854,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "right arm"
 	artery_name = "basilic vein"
 
+	temp_coeff = 1.0
+
 	body_part = ARM_RIGHT
 	body_zone = BP_R_ARM
 	parent_bodypart = BP_CHEST
@@ -841,6 +876,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "left leg"
 	artery_name = "femoral artery"
 
+	temp_coeff = 0.75
+
 	body_part = LEG_LEFT
 	body_zone = BP_L_LEG
 	parent_bodypart = BP_GROIN
@@ -856,6 +893,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/r_leg
 	name = "right leg"
 	artery_name = "femoral artery"
+
+	temp_coeff = 0.75
 
 	body_part = LEG_RIGHT
 	body_zone = BP_R_LEG

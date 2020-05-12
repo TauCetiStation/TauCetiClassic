@@ -46,6 +46,14 @@ Class Variables:
    manual (num)
       Currently unused.
 
+    min_operational_temperature (num)
+        The minimal value returned by get_current_temperature() if the machine is currently
+        "running".
+
+    max_operational_temperature (num)
+        The maximum value returned by get_current_temperature() if the machine is currently
+        "running".
+
 Class Procs:
    New()                     'game/machinery/machine.dm'
 
@@ -125,6 +133,9 @@ Class Procs:
 	var/radio_filter_out
 	var/radio_filter_in
 	var/speed_process = FALSE  // Process as fast as possible?
+
+	var/min_operational_temperature = 5
+	var/max_operational_temperature = 10
 
 /obj/machinery/atom_init()
 	. = ..()
@@ -274,6 +285,15 @@ Class Procs:
 //But sometimes, we need to override this check.
 /obj/machinery/proc/is_operational_topic()
 	return !((stat & (NOPOWER|BROKEN|MAINT|EMPED)) || (panel_open && !interact_open))
+
+/obj/machinery/get_current_temperature()
+	if(!is_operational_topic())
+		return 0
+
+	if(emagged)
+		return max_operational_temperature += rand(10, 20)
+
+	return rand(min_operational_temperature, max_operational_temperature)
 
 /obj/machinery/Topic(href, href_list)
 	..()

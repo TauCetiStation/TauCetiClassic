@@ -590,6 +590,13 @@
 	var/charges = 10
 	w_class = ITEM_SIZE_NORMAL
 
+/obj/item/weapon/twohanded/shockpaddles/standalone/set_prototype_qualities(rel_val=100, mark=0)
+	..()
+	while(!prob(reliability))
+		if(charges == 0)
+			break
+		charges = max(charges - 1, 0)
+
 /obj/item/weapon/twohanded/shockpaddles/standalone/check_charge(charge_amt)
 	return charges
 

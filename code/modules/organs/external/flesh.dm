@@ -3,9 +3,17 @@
 	var/name = "Flesh bodypart controller"
 	var/obj/item/organ/external/BP
 	var/bodypart_type = BODYPART_ORGANIC
+	var/damage_threshold = 0
 
 /datum/bodypart_controller/New(obj/item/organ/external/B)
 	BP = B
+
+	if(BP.species && BP.species.bodypart_butcher_results)
+		BP.butcher_results = BP.species.bodypart_butcher_results
+	else if(bodypart_type == BODYPART_ORGANIC)
+		BP.butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 1)
+	else if(bodypart_type == BODYPART_ROBOTIC)
+		BP.butcher_results = list(/obj/item/stack/sheet/plasteel = 1)
 
 /datum/bodypart_controller/Destroy()
 	BP = null
@@ -25,6 +33,9 @@
 	burn = round(burn * BP.owner.species.burn_mod, 0.1)
 
 	if((brute <= 0) && (burn <= 0))
+		return 0
+
+	if(damage_threshold > brute + burn)
 		return 0
 
 	if(BP.is_stump)
@@ -52,7 +63,12 @@
 			burn /= 2
 
 	if(used_weapon)
-		BP.add_autopsy_data("[used_weapon]", brute + burn)
+		if(brute > 0 && burn == 0)
+			BP.add_autopsy_data("[used_weapon]", brute, type_damage = BRUTE)
+		else if(brute == 0 && burn > 0)
+			BP.add_autopsy_data("[used_weapon]", burn, type_damage = BURN)
+		else if(brute > 0 && burn > 0)
+			BP.add_autopsy_data("[used_weapon]", brute + burn, type_damage = "mixed")
 
 	var/can_cut = (prob(brute * 2) || sharp) && (bodypart_type != BODYPART_ROBOTIC)
 
@@ -101,46 +117,46 @@
 		switch(total_weapon_damage)
 			if(1 to 4)
 				if(HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD) && prob(total_weapon_damage * 15))
-					previous_pain_emote_name = "moan"
+					previous_pain_emote_name = "grunt"
 			if(5 to 19)
 				if(HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD) && prob(total_weapon_damage * 5))
 					pain_emote_name = "scream"
 				else if(HAS_TRAIT(BP.owner, TRAIT_HIGH_PAIN_THRESHOLD) && prob(total_weapon_damage * 5))
-					previous_pain_emote_name = "moan"
+					previous_pain_emote_name = "grunt"
 				else
-					previous_pain_emote_name = "moan"
+					previous_pain_emote_name = "grunt"
 			if(20 to INFINITY)
 				if(HAS_TRAIT(BP.owner, TRAIT_HIGH_PAIN_THRESHOLD) && !prob(total_weapon_damage))
-					pain_emote_name = "moan"
+					pain_emote_name = "grunt"
 				else if(HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD) || prob(total_weapon_damage * 3))
 					previous_pain_emote_name = "scream"
 				else
-					previous_pain_emote_name = "moan"
+					previous_pain_emote_name = "grunt"
 		switch(current_bp_damage)
 			if(1 to 15)
 				if((!HAS_TRAIT(BP.owner, TRAIT_HIGH_PAIN_THRESHOLD) && prob(current_bp_damage * 4)) || (HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD) && prob(current_bp_damage * 6)))
-					pain_emote_name = "moan"
+					pain_emote_name = "grunt"
 			if(15 to 29)
 				if(total_weapon_damage < 20)
 					if(HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD) && prob(current_bp_damage * 3))
 						pain_emote_name = "scream"
 					else if(HAS_TRAIT(BP.owner, TRAIT_HIGH_PAIN_THRESHOLD) && prob(current_bp_damage * 3))
-						pain_emote_name = "moan"
+						pain_emote_name = "grunt"
 					else
-						pain_emote_name = "moan"
+						pain_emote_name = "grunt"
 			if(30 to INFINITY)
 				if(HAS_TRAIT(BP.owner, TRAIT_HIGH_PAIN_THRESHOLD) && !prob(current_bp_damage))
-					pain_emote_name = "moan"
-				else if(prob(current_bp_damage) || HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD))
+					pain_emote_name = "grunt"
+				else if(prob(current_bp_damage + total_weapon_damage * 4) || HAS_TRAIT(BP.owner, TRAIT_LOW_PAIN_THRESHOLD))
 					pain_emote_name = "scream"
 				else
-					pain_emote_name = "moan"
+					pain_emote_name = "grunt"
 		if(pain_emote_name)
 			BP.owner.time_of_last_damage = world.time // don't cry from the pain that just came
 			if(previous_pain_emote_name == "scream" || pain_emote_name == "scream") // "scream" sounds have priority
-				BP.owner.emote("scream", auto = TRUE)
+				BP.owner.emote("scream")
 			else
-				BP.owner.emote("moan", auto = TRUE)
+				BP.owner.emote("grunt")
 
 	//If limb took enough damage, try to cut or tear it off
 	if(BP.owner && !(BP.is_stump))
@@ -554,7 +570,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 		"You hear a sickening crack.")
 
 	if(BP.owner.species && !BP.owner.species.flags[NO_PAIN])
-		BP.owner.emote("scream",,, 1)
+		BP.owner.emote("scream")
+
+	if((HULK in BP.owner.mutations) && BP.owner.hulk_activator == ACTIVATOR_BROKEN_BONE)
+		BP.owner.try_mutate_to_hulk()
 
 	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, null, -2)
 	BP.status |= ORGAN_BROKEN

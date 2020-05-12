@@ -148,7 +148,7 @@
 	set name = "Enter Drop Pod"
 	set src in orange(1)
 
-	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || usr == second_intruder || usr.incapacitated() || usr.lying)
+	if(!(ishuman(usr) || isrobot(usr)) || usr == second_intruder || usr.incapacitated())
 		return
 	if(stored_dna)
 		var/passed = FALSE
@@ -199,7 +199,7 @@
 	set category = "Drop Pod"
 	set name = "Enter Drop Pod as Passenger"
 	set src in orange(1)
-	if(!(ishuman(usr) || isrobot(usr)) || usr == intruder || usr.stat == DEAD || usr.incapacitated() || usr.lying)
+	if(!(ishuman(usr) || isrobot(usr)) || usr == intruder || usr.incapacitated())
 		return
 	if (usr.buckled)
 		to_chat(usr, "<span class='warning'>You can't climb into the [src] while buckled!</span>")
@@ -248,14 +248,14 @@
 	if(!isturf(loc))
 		to_chat(intruder, "<span class='userdanger'>You must be on ground to drop!</span>")
 		return
-	if(!Challenge)
+	if(war_device_activated)
 		if(world.time < SYNDICATE_CHALLENGE_TIMER)
 			to_chat(intruder, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least \
 		 	[round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
 		 	more minutes to allow them to prepare.</span>")
 			return
 	else
-		Challenge.Dropod_used = TRUE
+		war_device_activation_forbidden = TRUE
 	var/area/area_to_deploy = allowed_areas.areas[pick(allowed_areas.areas)]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(area_to_deploy.type))
@@ -323,7 +323,7 @@
 	set category = "Drop Pod"
 	set name = "Start Drop"
 	set src = orange(1)
-	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || !isturf(loc))
+	if(!(ishuman(usr) || isrobot(usr)) || usr.incapacitated() || !isturf(loc))
 		return FALSE
 	if(intruder)
 		if(intruder != usr)
@@ -457,7 +457,7 @@
 	set category = "Drop Pod"
 	set name = "Eject Items"
 	set src in orange(1)
-	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || usr.incapacitated() || usr.lying || flags & STATE_DROPING || !isturf(loc))
+	if(!(ishuman(usr) || isrobot(usr))|| usr.incapacitated() || flags & STATE_DROPING || !isturf(loc))
 		return
 	if(flags & IS_LOCKED)
 		to_chat(usr, "<span class='danger'>Interface is block down!</span>")
@@ -476,7 +476,7 @@
 	set category = "Drop Pod"
 	set name = "Nuclear Bomb"
 	set src in orange(1)
-	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || usr.incapacitated() || usr.lying || flags & STATE_DROPING || !Stored_Nuclear)
+	if(!(ishuman(usr) || isrobot(usr))|| usr.incapacitated() || flags & STATE_DROPING || !Stored_Nuclear)
 		return
 	if(usr.is_busy()) return
 	visible_message("<span class='notice'>[usr] start ejecting [Stored_Nuclear] from [src]!</span>","<span class='notice'>You start ejecting [Stored_Nuclear] from [src]!</span>")
@@ -693,14 +693,14 @@
 	flags = POOR_AIMING
 
 /obj/structure/droppod/Syndi/Aiming()
-	if(!Challenge)
+	if(war_device_activated)
 		if(world.time < SYNDICATE_CHALLENGE_TIMER)
 			to_chat(intruder, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least \
 		 		[round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
 		 		more minutes to allow them to prepare.</span>")
 			return
 	else
-		Challenge.Dropod_used = TRUE
+		war_device_activation_forbidden = TRUE
 
 	if(droped)
 		if(!(flags & IS_LOCKED))

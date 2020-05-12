@@ -106,7 +106,7 @@
 /obj/item/weapon/folder/blue/fluff/matthew_riebhardt/atom_init()
 	. = ..()
 	desc = "An academic journal, seemingly pertaining to medical genetics. This issue is for the second quarter of [gamestory_start_year]. Paper flags demarcate some articles the owner finds interesting."
-	
+
 /obj/item/weapon/pen/fluff/multi //spaceman96: Trenna Seber
 	name = "multicolor pen"
 	desc = "It's a cool looking pen. Lots of colors!"
@@ -352,12 +352,7 @@
 	icon_state = "asher_spock_1"
 	amount_per_transfer_from_this = 5
 	volume = 15
-
-/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/atom_init()
-	. = ..()
-	reagents.remove_reagent("tricordrazine", 30)
-	reagents.add_reagent("oxycodone", 15)
-	update_icon()
+	list_reagents = list("oxycodone" = 15)
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>")
@@ -413,9 +408,8 @@
 /obj/item/weapon/crowbar/fluff/zelda_creedy_1 //daaneesh: Zelda Creedy
 	name = "Zelda's Crowbar"
 	desc = "A pink crow bar that has an engraving that reads, 'To Zelda. Love always, Dawn'."
-	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "zeldacrowbar"
-	item_state = "crowbar"
+	item_state = "zeldacrowbar"
 
 ////// Ripley customisation kit - Butchery Royce - MayeDay
 
@@ -789,7 +783,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return 0
 
 	if(src.icon_state == "jane_sid_suit_down")

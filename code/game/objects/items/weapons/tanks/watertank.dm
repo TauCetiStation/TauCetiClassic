@@ -133,7 +133,7 @@
 	else
 		qdel(src)
 
-/obj/item/weapon/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
+/obj/item/weapon/reagent_containers/spray/mister/afterattack(atom/target, mob/user, proximity, params)
 	if(target.loc == loc || target == tank) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it putting it away
 		return
 	..()

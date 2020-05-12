@@ -56,6 +56,11 @@
 	name = "NTS Velocity"
 	icon_state = "shuttle2"
 
+/area/shuttle/arrival/velocity/Entered(mob/M)
+	..()
+	if(istype(M) && M.client)
+		M.client.guard.time_velocity_shuttle = world.timeofday
+
 /area/shuttle/arrival/transit
 	name = "Space"
 	icon_state = "shuttle"

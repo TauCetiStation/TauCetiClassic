@@ -13,6 +13,8 @@
 
 	if(reagents.has_reagent("alkysine"))
 		src.traumatic_shock -= 10
+	if(reagents.has_reagent("dextromethorphan"))
+		src.traumatic_shock -= 10
 	if(reagents.has_reagent("inaprovaline"))
 		src.traumatic_shock -= 25
 	if(reagents.has_reagent("synaptizine"))
@@ -72,18 +74,18 @@
 	switch(current_health)
 		if(80 to 99)
 			if(HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) && prob(20))
-				pain_sound_name = "pain"
+				pain_sound_name = "groan"
 		if(40 to 80)
 			if(!HAS_TRAIT(src, TRAIT_HIGH_PAIN_THRESHOLD) && prob(110 - current_health))
-				pain_sound_name = "pain"
+				pain_sound_name = "groan"
 		if(10 to 39)
 			if(HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) && prob(80 - current_health))
 				pain_sound_name = "scream"
 			if(!HAS_TRAIT(src, TRAIT_HIGH_PAIN_THRESHOLD) || !prob(current_health))
-				pain_sound_name = "pain"
+				pain_sound_name = "groan"
 		if(-INFINITY to 9)
 			if(HAS_TRAIT(src, TRAIT_HIGH_PAIN_THRESHOLD) && prob(25))
-				pain_sound_name = "pain"
+				pain_sound_name = "groan"
 			else
 				pain_sound_name = "scream"
 	if(pain_sound_name)

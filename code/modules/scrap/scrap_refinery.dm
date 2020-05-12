@@ -147,14 +147,14 @@ var/const/SAFETY_COOLDOWN = 100
 	if(issilicon(L))
 		playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 	else
-		L.emote("scream",,, 1)
+		L.emote("scream")
 
 	var/gib = 1
 	// By default, the emagged recycler will gib all non-carbons. (human simple animal mobs don't count)
 	if(iscarbon(L))
 		gib = 0
 		if(L.stat == CONSCIOUS)
-			L.emote("scream",,, 1)
+			L.emote("scream")
 		add_blood(L)
 
 	if(!blood && !issilicon(L))

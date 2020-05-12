@@ -234,7 +234,7 @@
 	set category = "Spiderbot"
 	set desc = "Drop the item you're holding."
 
-	if(stat)
+	if(incapacitated())
 		return
 
 	if(!held_item)
@@ -255,14 +255,12 @@
 	held_item = null
 	return 1
 
-	return
-
 /mob/living/simple_animal/spiderbot/verb/get_item()
 	set name = "Pick up item"
 	set category = "Spiderbot"
 	set desc = "Allows you to take a nearby small item."
 
-	if(stat)
+	if(incapacitated())
 		return -1
 
 	if(held_item)

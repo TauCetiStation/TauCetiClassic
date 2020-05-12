@@ -9,7 +9,7 @@
 	modifystate = 2
 
 /obj/item/weapon/gun/energy/gun/attack_self(mob/living/user)
-	select_fire(user)
+	..()
 	update_icon()
 	if(user.hand)
 		user.update_inv_l_hand()

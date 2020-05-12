@@ -17,6 +17,8 @@
 	var/list/space_chance = 55 // Likelihood of getting a space in the random scramble string.
 	var/list/allowed_species	 // A name of species, Which can use this lang as secondary.
 
+/datum/language/proc/color_message(message)
+	return "<span class='message'><span class='[colour]'>[capitalize(message)]</span></span>"
 
 /datum/language/proc/format_message(message, verb)
 	return "[verb], <span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
@@ -147,7 +149,7 @@
 	desc = "A bastardized hybrid of informal English and elements of Mandarin Chinese; the common language of the Sol system."
 	colour = "rough"
 	key = list("1")
-	allowed_species = list(IPC, DIONA, SKRELL, UNATHI, TAJARAN)
+	allowed_species = list(IPC, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	syllables = list("tao","shi","tzu","yi","com","be","is","i","op","vi","ed","lec","mo","cle","te","dis","e")
 
 /datum/language/ipc
@@ -169,7 +171,7 @@
 	speech_verb = "enunciates"
 	colour = "say_quote"
 	key = list("2")
-	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
+	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	syllables = list("lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit",
 					 "sed", "do", "eiusmod", "tempor", "incididunt", "ut", "labore", "et", "dolore",
 					 "magna", "aliqua", "ut", "enim", "ad", "minim", "veniam", "quis", "nostrud",
@@ -185,24 +187,39 @@
 	speech_verb = "growls"
 	colour = "rough"
 	key = list("3")
-	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
+	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	syllables = list ("gra","ba","ba","breh","bra","rah","dur","ra","ro","gro","go","ber","bar","geh","heh", "gra")
+
+
+/datum/language/syndi
+	name = "Sy-Code"
+	desc = "Constructed language, used by syndicate agents and operatives. Consists of NATO alphabet and booze. The definition of each syllable is predetermined by current operation."
+	speech_verb = "signals"
+	colour = "syndcode"
+	key = list("0")
+	syllables = list ("alpha","bravo","charlie","delta","echo","foxtrot","golf","hotel","india","juliett","kilo","lima","mike","november","oscar",
+					  "papa", "quebec", "romeo", "sierra", "tango", "uniform", "victor", "whiskey", "xray", "yankee", "zulu",
+					  "nadazero", "unaone", "bissatwo", "terrathree", "kartefour", "pantafive", "soxisix", "setteseven", "oktoeight", "novenine",
+					  "ale", "cognac", "kahlua", "soda", "tequila", "vermouth", "whiskey", "beer", "gin", "rum", "lemon lime", "vodka", "wine")
+	flags = RESTRICTED
+	space_chance = 100
 
 /datum/language/unisign
 	name = "Universal Sign Language"
 	desc = "Standart language made of gestures. Common language of deaf and muted people."
 	colour = "rough"
 	key = list("4")
-	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
+	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	signlang_verb = list("makes signs with hands", "gestures", "waves hands", "gesticulates")
 	flags = SIGNLANG
+
 
 // Language handling.
 /mob/proc/add_language(language)
 
 	var/datum/language/new_language = all_languages[language]
 
-	if(!istype(new_language) || new_language in languages)
+	if(!istype(new_language) || (new_language in languages))
 		return 0
 
 	languages.Add(new_language)
@@ -217,7 +234,7 @@
 // Can we speak this language, as opposed to just understanding it?
 /mob/proc/can_speak(datum/language/speaking)
 
-	return (universal_speak || speaking in src.languages)
+	return (universal_speak || (speaking in src.languages))
 
 //TBD
 /mob/verb/check_languages()

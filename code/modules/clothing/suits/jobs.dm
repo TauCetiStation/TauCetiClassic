@@ -36,7 +36,6 @@
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
 	body_parts_covered = UPPER_TORSO|ARMS
-	sprite_sheets = list(VOX = 'icons/mob/species/vox/suit.dmi')
 
 //Chaplain
 /obj/item/clothing/suit/nun
@@ -162,7 +161,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return 0
 
 	switch(icon_state)
@@ -193,7 +192,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return 0
 
 	switch(icon_state)

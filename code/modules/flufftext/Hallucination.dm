@@ -123,7 +123,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							if(ishuman(src))
 								var/mob/living/carbon/human/H = src
 								if(!H.stat)
-									H.emote(pick("scream", "cry", "laugh"), auto = TRUE)
+									H.emote(pick("scream", "cry", "laugh"))
 						if(client)
 							client.images += halimage
 						spawn(rand(10,50)) //Only seen for a brief moment.
@@ -168,7 +168,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						if(ishuman(src))
 							var/mob/living/carbon/human/H = src
 							if(!H.stat)
-								H.emote(pick("scream", "cry", "laugh"), auto = TRUE)
+								H.emote(pick("scream", "cry", "laugh"))
 					if(7) // GUNSHOTS
 						var/list/gunsound_list = list('sound/weapons/guns/gunshot_heavy.ogg',
 						                              'sound/weapons/guns/gunshot_ak74.ogg',
@@ -225,7 +225,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							H.Weaken(5)
 							H.Stun(8)
 							to_chat(src, "<span class='userdanger'>[pick("", "Voices in my head...", "WHY?!")] [pick("They're coming back!", "Not again...", "WHAT YOU NEED?!", "I CAN'T TAKE IT ANYMORE!", "GAAAAAAAAAAAAAH!")]</span>")
-							H.emote("scream", auto = TRUE)
+							H.emote("scream")
 					if(13) // MISC
 						var/list/hallsound = list('sound/effects/Heart Beat.ogg',
 						                          'sound/hallucinations/liar.ogg',
@@ -319,8 +319,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 	return
 
-/obj/effect/fake_attacker/Crossed(var/mob/M, somenumber)
-	if(M == my_target)
+/obj/effect/fake_attacker/Crossed(atom/movable/AM)
+	. = ..()
+	if(AM == my_target)
 		step_away(src,my_target,2)
 		if(prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
@@ -429,7 +430,8 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	var/clone_weapon = null
 
 	for(var/mob/living/carbon/human/H in human_list)
-		if(H.stat || H.lying) continue
+		if(H.incapacitated())
+			continue
 //		possible_clones += H
 		clone = H
 		break	//changed the code a bit. Less randomised, but less work to do. Should be ok, world.contents aren't stored in any particular order.

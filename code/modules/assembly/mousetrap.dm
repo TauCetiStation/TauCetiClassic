@@ -52,7 +52,7 @@
 	if(!armed)
 		to_chat(user, "<span class='notice'>You arm [src].</span>")
 	else
-		if(((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50)))
+		if((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50))
 			triggered(user, user.hand ? BP_L_ARM : BP_R_ARM)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 								 "<span class='warning'>You accidentally trigger [src]!</span>")
@@ -64,7 +64,7 @@
 
 /obj/item/device/assembly/mousetrap/attack_hand(mob/living/user)
 	if(armed)
-		if(((user.getBrainLoss() >= 60 || CLUMSY in user.mutations)) && prob(50))
+		if((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50))
 			user.SetNextMove(CLICK_CD_INTERACT)
 			triggered(user, user.hand ? BP_L_ARM : BP_R_ARM)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
@@ -72,7 +72,7 @@
 			return
 	..()
 
-/obj/item/device/assembly/mousetrap/Crossed(AM as mob|obj)
+/obj/item/device/assembly/mousetrap/Crossed(atom/movable/AM)
 	if(armed)
 		if(ishuman(AM))
 			var/mob/living/carbon/H = AM
@@ -82,7 +82,7 @@
 								  "<span class='warning'>You accidentally step on [src]</span>")
 		if(ismouse(AM))
 			triggered(AM)
-	..()
+	. = ..()
 
 /obj/item/device/assembly/mousetrap/on_found(mob/finder)
 	if(armed)
@@ -107,7 +107,7 @@
 	set name = "Hide"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 
 	layer = TURF_LAYER+0.2

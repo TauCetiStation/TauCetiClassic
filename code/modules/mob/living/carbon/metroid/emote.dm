@@ -1,4 +1,4 @@
-/mob/living/carbon/slime/emote(act,m_type=SHOWMSG_VISUAL,message = null)
+/mob/living/carbon/slime/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 
 
 	if (findtext(act, "-", 1, null))
@@ -60,6 +60,11 @@
 		if("vibrate")
 			message = "<B>The [src.name]</B> vibrates!"
 			m_type = SHOWMSG_VISUAL
+
+		if ("pray")
+			m_type = SHOWMSG_VISUAL
+			message = "<b>[src]</b> prays."
+			INVOKE_ASYNC(src, /mob.proc/pray_animation)
 
 		if("noface") //mfw I have no face
 			mood = null

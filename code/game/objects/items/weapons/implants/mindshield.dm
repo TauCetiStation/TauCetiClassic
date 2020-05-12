@@ -22,15 +22,15 @@
 		M.visible_message("<span class='warning'>[M] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 		return FALSE
 
-	if(H.mind && H.mind in ticker.mode.revolutionaries)
+	if(H.mind && (H.mind in ticker.mode.revolutionaries))
 		ticker.mode.remove_revolutionary(H.mind)
 
-	if(H.mind && H.mind in (ticker.mode.A_gang | ticker.mode.B_gang))
+	if(H.mind && (H.mind in (ticker.mode.A_gang | ticker.mode.B_gang)))
 		ticker.mode.remove_gangster(H.mind, exclude_bosses=1)
 		H.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='userdanger'>You feel a surge of loyalty towards Nanotrasen.</span>")
 		return FALSE
 
-	if(H.mind &&  H.mind in ticker.mode.cult)
+	if(H.mind && (H.mind in ticker.mode.cult))
 		to_chat(H, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 		return FALSE
 	else

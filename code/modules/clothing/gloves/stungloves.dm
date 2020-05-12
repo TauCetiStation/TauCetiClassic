@@ -67,6 +67,7 @@
 			if("exclude" in species_restricted)
 				species_restricted -= UNATHI
 				species_restricted -= TAJARAN
+				species_restricted -= VOX
 		else
 			to_chat(user, "<span class='notice'>The [src] have already been clipped!</span>")
 		return

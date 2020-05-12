@@ -337,6 +337,14 @@
 	required_reagents = list("carbon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
 	result_amount = 2
 
+/datum/chemical_reaction/dextromethorphan
+	name = "Dextromethorphan"
+	id = "dextromethorphan"
+	result = "dextromethorphan"
+	required_reagents = list("dexalinp" = 1, "oxycodone" = 1)
+	required_catalysts = list("phoron" = 5)
+	result_amount = 2
+
 /datum/chemical_reaction/ethylredoxrazine
 	name = "Ethylredoxrazine"
 	id = "ethylredoxrazine"

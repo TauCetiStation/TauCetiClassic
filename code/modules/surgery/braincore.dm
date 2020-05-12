@@ -12,6 +12,8 @@
 	if (!ishuman(target))
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	if(isnull(BP))
+		return FALSE
 	return target_zone == BP_HEAD && BP.open
 
 /datum/surgery_step/brain/saw_skull

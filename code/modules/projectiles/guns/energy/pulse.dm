@@ -9,9 +9,6 @@
 	var/mode = 2
 	fire_delay = 25
 
-/obj/item/weapon/gun/energy/pulse_rifle/attack_self(mob/living/user)
-	select_fire(user)
-
 /obj/item/weapon/gun/energy/pulse_rifle/cyborg/newshot()
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc

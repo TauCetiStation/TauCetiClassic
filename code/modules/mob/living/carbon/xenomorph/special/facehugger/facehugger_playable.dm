@@ -84,8 +84,9 @@
 
 // This is modified grab mechanic for facehugger
 /mob/living/carbon/attack_facehugger(mob/living/carbon/xenomorph/facehugger/FH)
-	if((!ishuman(src) && !ismonkey(src)) || istype(src, /mob/living/carbon/human/machine))
-		return FALSE
+	if(!is_facehuggable())
+		to_chat(FH, "<span class='warning'>It is useless to try to infect this!</span>")
+		return
 	if(FH.a_intent == I_GRAB)
 		if(src.stat != DEAD)
 			if(FH == src)
@@ -235,7 +236,7 @@ This is chestburster mechanic for damaging
 			H.apply_damage(rand(7, 14), BRUTE, BP_CHEST)
 			H.shock_stage = 20
 			H.Weaken(1)
-			H.emote("scream",,, 1)
+			H.emote("scream")
 	else if(ismonkey(affecting))
 		var/mob/living/carbon/monkey/M = affecting
 		if(M.stat == DEAD)

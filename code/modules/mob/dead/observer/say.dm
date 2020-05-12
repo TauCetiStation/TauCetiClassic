@@ -17,7 +17,7 @@
 	. = src.say_dead(message)
 
 
-/mob/dead/observer/emote(act, type, message)
+/mob/dead/observer/emote(act, type, message, auto)
 	message = sanitize(message)
 
 	if(!message)

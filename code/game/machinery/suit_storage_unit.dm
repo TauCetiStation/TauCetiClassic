@@ -99,8 +99,6 @@
 			return
 		else
 			return
-	return
-
 
 /obj/machinery/suit_storage_unit/ui_interact(mob/user)
 	var/dat
@@ -322,11 +320,11 @@
 			if(src.issuperUV)
 				var/burndamage = rand(28,35)
 				OCCUPANT.take_bodypart_damage(0, burndamage)
-				OCCUPANT.emote("scream",,, 1)
+				OCCUPANT.emote("scream")
 			else
 				var/burndamage = rand(6,10)
 				OCCUPANT.take_bodypart_damage(0, burndamage)
-				OCCUPANT.emote("scream",,, 1)
+				OCCUPANT.emote("scream")
 		if(i==3) //End of the cycle
 			if(!src.issuperUV)
 				if(src.HELMET)
@@ -417,7 +415,7 @@
 		to_chat(user, "<span class='notice'>You start kicking against the doors to escape! (This will take about [breakout_time] minutes.)</span>")
 		visible_message("You see [user] kicking against the doors of the [src]!")
 		if(do_after(user,(breakout_time*60*10),target=src))
-			if(!user || user.stat != CONSCIOUS || user.loc != src || isopen || !islocked)
+			if(!user || user.incapacitated() || user.loc != src || isopen || !islocked)
 				return
 			else
 				isopen = 1
@@ -437,7 +435,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 	if (!src.isopen)
 		to_chat(usr, "<font color='red'>The unit's doors are shut.</font>")

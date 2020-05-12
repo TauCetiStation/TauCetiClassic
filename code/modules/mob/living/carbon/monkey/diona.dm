@@ -28,6 +28,9 @@
 	blood_datum = /datum/dirt_cover/green_blood
 
 
+/mob/living/carbon/monkey/diona/is_facehuggable()
+	return FALSE
+
 /mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M)
 
 	//Let people pick the little buggers up.

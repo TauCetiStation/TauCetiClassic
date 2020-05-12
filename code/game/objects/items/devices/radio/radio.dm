@@ -402,7 +402,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		sleep(rand(10,25)) // wait a little...
 
-		if(signal.data["done"] && position.z in signal.data["level"])
+		if(signal.data["done"] && (position.z in signal.data["level"]))
 			// we're done here.
 			return
 
@@ -777,7 +777,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	return
 
 /obj/item/device/radio/borg/Topic(href, href_list)
-	if(usr.stat || !on)
+	if(usr.incapacitated() || !on)
 		return
 	if (href_list["mode"])
 		if(subspace_transmission != 1)
