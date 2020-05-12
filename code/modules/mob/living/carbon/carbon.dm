@@ -832,7 +832,7 @@
 			if(!IO)
 				return
 			if(massages_done_right > 4)
-				to_chat(user, "<span class='warning'>[src]'s heart start to beat!</span>")
+				to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
 				reanimate_body(H)
 				H.stat = UNCONSCIOUS
 				massages_done_right = 0
@@ -847,11 +847,11 @@
 			else
 				if(last_massage > world.time - MASSAGE_RHYTM_RIGHT - MASSAGE_ALLOWED_ERROR && last_massage < world.time - MASSAGE_RHYTM_RIGHT + MASSAGE_ALLOWED_ERROR)
 					massages_done_right++
-					to_chat(user, "<span class='warning'>You hit the beat.</span>")
+					to_chat(user, "<span class='warning'>You've hit right to the beat.</span>")
 					IO.heart_status = HEART_DEFIB
 				else
 					massages_done_right--
-					to_chat(user, "<span class='warning'>You didn't hit the beat.</span>")
+					to_chat(user, "<span class='warning'>You've skipped the beat.</span>")
 			last_massage = world.time
 			var/obj/item/organ/external/BP = H.get_bodypart(BP_CHEST)
 			if(!(H.op_stage.ribcage == 2) && prob(10))
