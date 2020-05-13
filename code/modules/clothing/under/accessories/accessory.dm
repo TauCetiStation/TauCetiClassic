@@ -75,8 +75,8 @@
 	layer_priority = 0.1
 
 /obj/item/clothing/accessory/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
-	var/obj/item/organ/internal/heart/H = M.organs_by_name[O_HEART]
 	if(ishuman(M) && isliving(user))
+		var/obj/item/organ/internal/heart/H = M.organs_by_name[O_HEART]
 		if(user.a_intent == "help")
 			var/target_zone = parse_zone(user.zone_sel.selecting)
 			if(target_zone)

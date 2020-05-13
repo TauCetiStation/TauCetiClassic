@@ -1,5 +1,3 @@
-#define MASSAGE_RHYTM_RIGHT   11
-#define MASSAGE_ALLOWED_ERROR 2
 /mob/living/carbon
 	var/last_massage = 0
 	var/massages_done_right = 0
@@ -807,61 +805,13 @@
 			to_chat(user, "<span class='notice bold'>Remove [src] [head]!</span>")
 			return
 
-		if (health < (config.health_threshold_crit - 30))
+		if (health > config.health_threshold_dead && health < config.health_threshold_crit)
 			var/suff = min(getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
 			adjustOxyLoss(-suff)
 			updatehealth()
 			visible_message("<span class='warning'>[user] performs AV on [src]!</span>")
 			to_chat(src, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
 			to_chat(user, "<span class='warning'>Repeat at least every 7 seconds.</span>")
-
-/mob/living/carbon/proc/perform_cpr(mob/living/carbon/human/user)
-	if(user.is_busy(src))
-		return
-	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
-	if((world.time - last_massage) > 5 SECONDS && do_mob(user, src, HUMAN_STRIP_DELAY))
-		visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
-		to_chat(user, "<span class='warning'>Repeat at least every second.</span>")
-		massages_done_right = 0
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(HAS_TRAIT(H, TRAIT_FAT))
-			needed_massages = 20
-		if(H.stat == DEAD && (world.time - H.timeofdeath) < DEFIB_TIME_LIMIT)
-			var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
-			var/obj/item/organ/internal/heart/Lungs = H.organs_by_name[O_LUNGS]
-			if(!Heart)
-				return
-			if(massages_done_right > needed_massages)
-				to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
-				H.reanimate_body(H)
-				H.stat = UNCONSCIOUS
-				massages_done_right = 0
-				Heart.heart_normalize()
-			else if(massages_done_right < -2)
-				to_chat(user, "<span class='warning'>[src]'s heart stopped!</span>")
-				if(prob(25))
-					Heart.damage += 2
-				last_massage = world.time
-				massages_done_right = 0
-				Heart.heart_stop()
-			else
-				Heart.heart_fibrillate()
-				if(Heart.damage < 50)
-					if(last_massage > world.time - MASSAGE_RHYTM_RIGHT - MASSAGE_ALLOWED_ERROR && last_massage < world.time - MASSAGE_RHYTM_RIGHT + MASSAGE_ALLOWED_ERROR)
-						massages_done_right++
-						to_chat(user, "<span class='warning'>You've hit right to the beat.</span>")
-					else
-						massages_done_right--
-						to_chat(user, "<span class='warning'>You've skipped the beat.</span>")
-			if(!Lungs.is_bruised())
-				adjustOxyLoss(-1.5)
-			last_massage = world.time
-			var/obj/item/organ/external/BP = H.get_bodypart(BP_CHEST)
-			if(H.op_stage.ribcage != 2 && prob(5))
-				BP.fracture()
-				to_chat(user, "<span class='warning'>You hear cracking in [src]'s chest!.</span>")
-		H.return_to_body_dialog(H)
 
 /mob/living/carbon/Topic(href, href_list)
 	..()
@@ -966,6 +916,3 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
-
-#undef MASSAGE_RHYTM_RIGHT
-#undef MASSAGE_ALLOWED_ERROR
