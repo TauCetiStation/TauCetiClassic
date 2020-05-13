@@ -68,6 +68,9 @@
 	max_ammo = 8
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/shotcom/nonlethal
+	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
+
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	name = "double-barrel shotgun internal magazine"
 	desc = "This doesn't even exist!"
@@ -169,6 +172,56 @@
 /obj/item/ammo_box/magazine/m12mm/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),2)]"
+
+/obj/item/ammo_box/magazine/m12mm/hp
+	name = "magazine (.45 HP)"
+	desc = "Magazine, full of high power submachinegun ammo."
+	icon_state = "12mmhp"
+	origin_tech = "combat=3"
+	ammo_type = /obj/item/ammo_casing/c45hp
+	caliber = ".45S"
+	max_ammo = 15
+
+/obj/item/ammo_box/magazine/m12mm/hp/update_icon()
+	..()
+	if(ammo_count() == 1)
+		icon_state = "[initial(icon_state)]-1"
+	else
+		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
+
+/obj/item/ammo_box/magazine/m12mm/hv
+	name = "magazine (.45 HV)"
+	desc = "Magazine, full of high velocity submachinegun ammo."
+	icon_state = "12mmhv"
+	origin_tech = "combat=3"
+	ammo_type = /obj/item/ammo_casing/c45hv
+	caliber = ".45S"
+	max_ammo = 15
+
+/obj/item/ammo_box/magazine/m12mm/hv/update_icon()
+	..()
+	if(ammo_count() == 1)
+		icon_state = "[initial(icon_state)]-1"
+	else
+		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
+
+
+/obj/item/ammo_box/magazine/m12mm/imp
+	name = "magazine (.45 IMP)"
+	desc = "Magazine, full of impact submachinegun ammo."
+	icon_state = "12mmimp"
+	origin_tech = "combat=3"
+	ammo_type = /obj/item/ammo_casing/c45imp
+	caliber = ".45S"
+	max_ammo = 15
+
+/obj/item/ammo_box/magazine/m12mm/imp/update_icon()
+	..()
+	if(ammo_count() == 1)
+		icon_state = "[initial(icon_state)]-1"
+	else
+		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
+
 
 /obj/item/ammo_box/magazine/sm45
 	name = "magazine (.45)"

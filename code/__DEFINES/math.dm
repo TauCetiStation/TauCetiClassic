@@ -222,3 +222,5 @@ var/normal_next
 #define LORENTZ_CUMULATIVE_DISTRIBUTION(x, y, s) ( (1/PI)*TORADIANS(arctan((x-y)/s)) + 1/2 )
 
 #define RULE_OF_THREE(a, b, x) ((a*x)/b)
+
+#define TRANSLATE_RANGE(x, minx, maxx, miny, maxy) CLAMP((x - minx) * (maxy - miny) / (maxx - minx), miny, maxy)

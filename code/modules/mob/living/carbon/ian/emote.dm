@@ -1,10 +1,4 @@
-/mob/living/carbon/ian/emote(act, m_type = SHOWMSG_AUDIO, message = null)
-	var/param = null
-	if(findtext(act, "-", 1, null))
-		var/t1 = findtext(act, "-", 1, null)
-		param = copytext(act, t1 + 1, length(act) + 1)
-		act = copytext(act, 1, t1)
-
+/mob/living/carbon/ian/emote(act, m_type = SHOWMSG_AUDIO, message = null, auto)
 	if(findtext(act, "s", -1) && !findtext(act, "_", -2))//Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act, 1, length(act))
 
@@ -26,16 +20,10 @@
 			return custom_emote(m_type, message)
 
 		if ("blink")
-			message = "<B>[src]</B> blinks."
+			message = "<B>[src]</B> [pick("blinks", "blinks rapidly")]."
 			m_type = SHOWMSG_VISUAL
-
-		if ("blink_r")
-			message = "<B>[src]</B> blinks rapidly."
-			m_type = SHOWMSG_VISUAL
-
 		if("custom")
 			return custom_emote(m_type, message)
-
 		if("scratch")
 			if(!restrained())
 				message = "<B>[src]</B> scratches."
@@ -84,10 +72,7 @@
 			message = "<B>[src]</B> sulks down sadly."
 			m_type = SHOWMSG_VISUAL
 		if("twitch")
-			message = "<B>[src]</B> twitches violently."
-			m_type = SHOWMSG_VISUAL
-		if ("twitch_s")
-			message = "<B>[src]</B> twitches."
+			message = "<B>[src]</B> [pick("twitches violently", "twitches")]."
 			m_type = SHOWMSG_VISUAL
 		if ("faint")
 			message = "<B>[src]</B> faints."
@@ -112,19 +97,6 @@
 		if("jump")
 			message = "<B>[src]</B> jumps!"
 			m_type = SHOWMSG_VISUAL
-		if ("point")
-			if (!restrained())
-				var/atom/target = null
-				if (param)
-					for (var/atom/A as mob|obj|turf in oview())
-						if (param == A.name)
-							target = A
-							break
-				if (!target)
-					message = "<span class='notice'><b>[src]</b> points.</span>"
-				else
-					pointed(target)
-			m_type = SHOWMSG_VISUAL
 		if("collapse")
 			Paralyse(2)
 			message = "<B>[src]</B> collapses!"
@@ -135,6 +107,10 @@
 		if("cough")
 			message = "<B>[src]</B> coughs!"
 			m_type = SHOWMSG_AUDIO
+		if ("pray")
+			m_type = SHOWMSG_VISUAL
+			message = "<b>[src]</b> prays."
+			INVOKE_ASYNC(src, /mob.proc/pray_animation)
 		if("help")
 			to_chat(src, "blink, blink_r, choke, collapse, cough, eyebrow, faint, dance, deathgasp, drool, gasp, shiver, gnarl, jump, point, paw, moan, nod,\nroar, roll, scratch, shake, sit, sulk, sway, tail, twitch, twitch_s, whimper")
 		else
@@ -147,8 +123,8 @@
 		for(var/mob/M in observer_list)
 			if(!M.client)
 				continue //skip leavers
-			if((M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
-				to_chat(M, message)
+			if((M.client.prefs.chat_ghostsight != CHAT_GHOSTSIGHT_NEARBYMOBS) && !(M in viewers(src, null)))
+				to_chat(M, "<a href='byond://?src=\ref[src];track=\ref[src]'>(F)</a> [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
 
 		if (m_type & SHOWMSG_VISUAL)
 			for (var/mob/O in get_mobs_in_view(world.view,src))

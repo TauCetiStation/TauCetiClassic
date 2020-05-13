@@ -149,6 +149,9 @@ steam.start() -- spawns the effect
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
 
+/obj/effect/effect/sparks/get_current_temperature()
+	return 1000
+
 /datum/effect/effect/system/spark_spread
 	var/total_sparks = 0 // To stop it being spammed and lagging!
 
@@ -186,6 +189,9 @@ steam.start() -- spawns the effect
 		qdel(sparks)
 	total_sparks--
 
+/obj/effect/effect/sparks/blue
+	icon_state = "shieldsparkles"
+
 /////////////////////////////////////////////
 //// SMOKE SYSTEMS
 // direct can be optinally added when set_up, to make the smoke always travel in one direction
@@ -213,10 +219,10 @@ steam.start() -- spawns the effect
 	set_opacity(TRUE)
 	QDEL_IN(src, time_to_live)
 
-/obj/effect/effect/smoke/Crossed(mob/living/carbon/M as mob )
-	..()
-	if(istype(M))
-		affect(M)
+/obj/effect/effect/smoke/Crossed(atom/movable/AM)
+	. = ..()
+	if(iscarbon(AM))
+		affect(AM)
 
 /obj/effect/effect/smoke/proc/affect(mob/living/carbon/M)
 	if (istype(M))

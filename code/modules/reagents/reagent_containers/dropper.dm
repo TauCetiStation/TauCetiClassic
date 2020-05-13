@@ -12,8 +12,8 @@
 	volume = 5
 	var/filled = 0
 
-/obj/item/weapon/reagent_containers/dropper/afterattack(obj/target, mob/user , flag)
-	if(!target.reagents || !flag) return
+/obj/item/weapon/reagent_containers/dropper/afterattack(atom/target, mob/user, proximity, params)
+	if(!target.reagents || !proximity) return
 
 	if(filled)
 

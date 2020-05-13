@@ -26,4 +26,4 @@ var/DBConnection/dbcon_old = new()	//Tgstation database (Old database) - See the
 // Xeno/role whitelist database ( code/modules/admin/whitelist.dm )
 //
 var/list/role_whitelist   // cache of all ckeys and their roles
-var/list/whitelisted_roles = list("unathi", "tajaran", "skrell", "diona", "machine", "ian") // Case important, everything must be in lowercase.
+var/list/whitelisted_roles = list("unathi", "tajaran", "skrell", "diona", "machine", "vox", "ian") // Case important, everything must be in lowercase.

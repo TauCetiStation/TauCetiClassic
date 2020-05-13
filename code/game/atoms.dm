@@ -182,7 +182,7 @@
 
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
-	P.on_hit(src, 0, def_zone)
+	P.on_hit(src, def_zone, 0)
 	. = 0
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
@@ -492,15 +492,6 @@
 
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
-
-// Byond seemingly calls stat, each tick.
-// Calling things each tick can get expensive real quick.
-// So we slow this down a little.
-// See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
-/atom/Stat()
-	. = ..()
-	sleep(1)
-	stoplag()
 
 /atom/proc/update_transform()
 	var/matrix/ntransform = matrix(transform)

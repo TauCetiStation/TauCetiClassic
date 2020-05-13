@@ -216,7 +216,7 @@
 	item_state = "zhan_scarf"
 	desc = "White headscarf"
 	body_parts_covered = 0
-	species_restricted = list(UNATHI , TAJARAN , HUMAN , DIONA , IPC)
+	species_restricted = list(UNATHI, TAJARAN, HUMAN, DIONA, IPC)
 
 /obj/item/clothing/head/skrell_headwear
 	name = "skrell yellow headwear"
@@ -263,7 +263,7 @@
 	fedoraproc(user)
 
 /obj/item/clothing/head/fedora/proc/fedoraproc(mob/user)
-	if(user.canmove && !user.stat && !user.restrained())
+	if(!usr.incapacitated())
 		user.visible_message("[user] tips their fedora.")
 
 

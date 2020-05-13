@@ -5,7 +5,7 @@
 	set category = "Mime"
 	set name = "Invisible wall"
 	set desc = "Create an invisible wall on your location."
-	if(usr.stat)
+	if(usr.incapacitated())
 		to_chat(usr, "Not when you're incapicated.")
 		return
 	if(!ishuman(usr))

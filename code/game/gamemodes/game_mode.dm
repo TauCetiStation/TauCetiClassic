@@ -27,6 +27,11 @@
 	var/list/datum/mind/modePlayer = new // list of current antags.
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor")	// Jobs that can't be traitors because
+
+	// Specie flags that for any amount of reasons can cause this role to not be available.
+	// TO-DO: use traits? ~Luduk
+	var/list/restricted_species_flags = list()
+
 	var/required_players = 0
 	var/required_players_secret = 0 //Minimum number of players for that game mode to be chose in Secret
 	var/required_enemies = 0
@@ -314,6 +319,23 @@ Implants;
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)*/
 
+/datum/game_mode/proc/can_be_antag(datum/mind/player, role)
+	if(restricted_jobs)
+		if(player.assigned_role in restricted_jobs)
+			return FALSE
+
+	var/datum/preferences/prefs = player.current.client.prefs
+
+	var/datum/species/S = all_species[prefs.species]
+
+	if(!S.can_be_role(role))
+		return FALSE
+
+	for(var/specie_flag in restricted_species_flags)
+		if(S.flags[specie_flag])
+			return FALSE
+
+	return TRUE
 
 /datum/game_mode/proc/get_players_for_role(role)
 	var/list/players = list()
@@ -336,12 +358,9 @@ Implants;
 			candidates += player.mind
 			players -= player
 
-	// Remove candidates who want to be antagonist but have a job that precludes it
-	if(restricted_jobs)
-		for(var/datum/mind/player in candidates)
-			for(var/job in restricted_jobs)
-				if(player.assigned_role == job)
-					candidates -= player
+	for(var/datum/mind/player in candidates)
+		if(!can_be_antag(player, role))
+			candidates -= player
 
 	return candidates		// Returns: The number of people who had the antagonist role set to yes, regardless of recomended_enemies, if that number is greater than recommended_enemies
 							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,

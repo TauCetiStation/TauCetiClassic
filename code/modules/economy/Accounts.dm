@@ -1,14 +1,23 @@
 
+// float 1-8-23 bits. More then 16777216 lost accuracy in $1
+#define MAX_MONEY_ON_ACCOUNT 16777215
+#define MIN_MONEY_ON_ACCOUNT -16777215
+
 /datum/money_account
 	var/owner_name = ""
+	var/owner_salary = 0
 	var/account_number = 0
 	var/remote_access_pin = 0
 	var/money = 0
 	var/list/transaction_log = list()
+	var/obj/item/device/pda/owner_PDA = null	//contains a PDA linked to an account
 	var/suspended = 0
 	var/security_level = 0	//0 - auto-identify from worn ID, require only account number
 							//1 - require manual login / account number and pin
 							//2 - require card and manual login
+
+/datum/money_account/proc/adjust_money(amount)
+	money = CLAMP(money + amount, MIN_MONEY_ON_ACCOUNT, MAX_MONEY_ON_ACCOUNT)
 
 /datum/transaction
 	var/target_name = ""
@@ -18,8 +27,8 @@
 	var/time = ""
 	var/source_terminal = ""
 
-/proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H)
-	var/datum/money_account/M = create_account(H.real_name, rand(50,500)*10, null)
+/proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H, start_money = rand(50, 200) * 10)
+	var/datum/money_account/M = create_account(H.real_name, start_money, null)
 	if(H.mind)
 		var/remembered_info = ""
 		remembered_info += "<b>Your account number is:</b> #[M.account_number]<br>"
@@ -38,7 +47,7 @@
 	var/datum/money_account/M = new()
 	M.owner_name = new_owner_name
 	M.remote_access_pin = rand(1111, 111111)
-	M.money = starting_funds
+	M.adjust_money(starting_funds)
 
 	//create an entry in the account transaction log for when it was created
 	var/datum/transaction/T = new()
@@ -88,20 +97,20 @@
 /proc/charge_to_account(attempt_account_number, source_name, purpose, terminal_id, amount)
 	for(var/datum/money_account/D in all_money_accounts)
 		if(D.account_number == attempt_account_number && !D.suspended)
-			D.money += amount
+			D.adjust_money(amount)
 
 			//create a transaction log entry
 			var/datum/transaction/T = new()
 			T.target_name = source_name
 			T.purpose = purpose
-			if(amount < 0)
-				T.amount = "([amount])"
-			else
-				T.amount = "[amount]"
+			T.amount = "[amount]"
 			T.date = current_date_string
 			T.time = worldtime2text()
 			T.source_terminal = terminal_id
 			D.transaction_log.Add(T)
+
+			if(D.owner_PDA)
+				D.owner_PDA.transaction_inform(source_name, terminal_id, amount)
 
 			return TRUE
 	return FALSE
@@ -118,3 +127,6 @@
 	for(var/datum/money_account/D in all_money_accounts)
 		if(D.account_number == account_number)
 			return D
+
+#undef MAX_MONEY_ON_ACCOUNT
+#undef MIN_MONEY_ON_ACCOUNT

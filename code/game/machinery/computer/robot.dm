@@ -19,6 +19,12 @@
 	var/stop = 0.0
 	var/screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
 
+/obj/machinery/computer/robotics/attackby(obj/item/I, mob/user)
+	if(issilicon(user))
+		to_chat(user, "<span class='warning'>It's too complicated for you.</span>")
+		return
+	return ..()
+
 /obj/machinery/computer/robotics/ui_interact(mob/user)
 	if (!SSmapping.has_level(z))
 		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
@@ -191,6 +197,8 @@
 //							message_admins("<span class='notice'>[key_name_admin(usr)] emagged [R.name] using robotic console!</span>")
 						log_game("[key_name(usr)] emagged [R.name] using robotic console!")
 						R.emagged = 1
+						var/mob/living/silicon/ai/AI = R.connected_ai
+						R.set_zeroth_law(AI.laws.zeroth_borg)
 						if(R.mind.special_role)
 							R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
 

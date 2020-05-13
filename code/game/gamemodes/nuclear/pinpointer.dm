@@ -125,7 +125,7 @@
 
 /obj/item/weapon/pinpointer/nukeop/attack_self(mob/user)
 	..()
-	if(SEARCH_FOR_OBJECT)
+	if(mode == SEARCH_FOR_OBJECT)
 		to_chat(user, "<span class='notice'>Authentication Disk Locator active.</span>")
 	else
 		to_chat(user, "<span class='notice'>Shuttle Locator active.</span>")

@@ -266,12 +266,12 @@
 				PL |= V.PARENT1
 				PL |= V.PARENT2
 		for(var/obj/machinery/atmospherics/components/trinary/tvalve/V in P.other_atmosmch)
-			if(V.state)
-				if(src != V.PARENT2)
+			if(V.opened_to_side) // side: Parent1 <-> Parent2
+				if(P == V.PARENT1 || P == V.PARENT2)
 					PL |= V.PARENT1
 					PL |= V.PARENT2
-			else
-				if(src != V.PARENT3)
+			else // straight: Parent1 <-> Parent3
+				if(P == V.PARENT1 || P == V.PARENT3)
 					PL |= V.PARENT1
 					PL |= V.PARENT3
 		for(var/obj/machinery/atmospherics/components/unary/portables_connector/C in P.other_atmosmch)

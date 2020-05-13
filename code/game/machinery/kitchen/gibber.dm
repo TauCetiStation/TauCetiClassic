@@ -116,7 +116,7 @@
 /obj/machinery/gibber/MouseDrop_T(mob/target, mob/user)
 	if(!iscarbon(user) && !isrobot(user))
 		return
-	if(user.stat || user.restrained())
+	if(user.incapacitated())
 		return
 	move_into_gibber(user,target)
 
@@ -154,7 +154,7 @@
 	set name = "Empty Gibber"
 	set src in oview(1)
 
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 	src.go_out()
 	add_fingerprint(usr)

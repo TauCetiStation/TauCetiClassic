@@ -88,6 +88,6 @@ var/global/total_runtimes_skipped = 0
 	for(var/line in desclines)
 		world.log << line
 
-	log_runtime("Runtime error: [E] in [E.file]:[E.line] :[log_end][E.desc]")
+	log_runtime("[E.name] in [E.file]:[E.line] :[log_end]\n[E.desc]")
 
 #endif

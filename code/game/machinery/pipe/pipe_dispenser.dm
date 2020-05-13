@@ -22,6 +22,8 @@
 		<A href='?src=\ref[src];make=19;dir=1'>4-Way Manifold</A><BR>
 		<A href='?src=\ref[src];make=18;dir=1'>Manual T-Valve</A><BR>
 		<A href='?src=\ref[src];make=43;dir=1'>Manual T-Valve - Mirrored</A><BR>
+		<A href='?src=\ref[src];make=52;dir=1'>Digital T-Valve</A><BR>
+		<A href='?src=\ref[src];make=53;dir=1'>Digital T-Valve - Mirrored</A><BR>
 		<b>Supply pipes:</b><BR>
 		<A href='?src=\ref[src];make=29;dir=1'>Pipe</A><BR>
 		<A href='?src=\ref[src];make=30;dir=5'>Bent Pipe</A><BR>
@@ -152,7 +154,7 @@ Nah
 /obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/disposalconstruct/pipe, mob/usr)
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return
 
 	if (!istype(pipe) || get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )

@@ -145,7 +145,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	return asset_datums[type]
 
 /datum/asset
-	var/_abstract
+	var/_abstract = /datum/asset	//assets with this variable will not be loaded into the cache automatically when the game starts
 
 /datum/asset/New()
 	asset_datums[type] = src
@@ -158,6 +158,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //If you don't need anything complicated.
 /datum/asset/simple
+	_abstract = /datum/asset/simple
 	var/assets = list()
 	var/verify = FALSE
 
@@ -168,6 +169,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	send_asset_list(client,assets,verify)
 
 /datum/asset/simple/goonchat
+	_abstract = /datum/asset/simple/goonchat
 	assets = list(
 		"jquery.min.js" = 'code/modules/goonchat/browserassets/js/jquery.min.js',
 		"jquery.mark.min.js" = 'code/modules/goonchat/browserassets/js/jquery.mark.min.js',
@@ -185,6 +187,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 /datum/asset/simple/spider_os
+	_abstract = /datum/asset/simple/spider_os
 	assets = list(
 		"sos_1.png" = 'icons/spideros_icons/sos_1.png',
 		"sos_2.png" = 'icons/spideros_icons/sos_2.png',
@@ -203,12 +206,14 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	)
 
 /datum/asset/simple/paper
+	_abstract = /datum/asset/simple/paper
 	assets = list(
 		"paper_dickbutt.png" = 'icons/paper_icons/dickbutt.png',
 		"bluentlogo.png" = 'icons/paper_icons/bluentlogo.png'
 	)
 
 /datum/asset/simple/newscaster
+	_abstract = /datum/asset/simple/newscaster
 	assets = list(
 		"like.png" = 'icons/newscaster_icons/like.png',
 		"like_clck.png" = 'icons/newscaster_icons/like_clck.png',
@@ -217,6 +222,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	)
 
 /datum/asset/simple/chess
+	_abstract = /datum/asset/simple/chess
 	assets = list(
 		"BR.png" = 'icons/obj/chess/board_BR.png',
 		"BN.png" = 'icons/obj/chess/board_BN.png',
@@ -248,6 +254,10 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"nano/templates/"
 	)
 
+	var/assets = list(
+		"error_handler.js" = 'code/modules/error_handler_js/error_handler.js',
+	)
+
 /datum/asset/nanoui/register()
 	// Crawl the directories to find files.
 	for (var/path in common_dirs)
@@ -263,6 +273,9 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 			if(copytext(filename, length(filename)) != "/") // Ignore directories.
 				if(fexists(path + filename))
 					register_asset(filename, fcopy_rsc(path + filename))
+	
+	for(var/asset_name in assets)
+		register_asset(asset_name, assets[asset_name])
 
 /datum/asset/nanoui/send(client, uncommon)
 	if(!islist(uncommon))
@@ -270,6 +283,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 	send_asset_list(client, uncommon)
 	send_asset_list(client, common)
+	send_asset_list(client, assets)
 
 /*Spritesheet implementation - coalesces various icons into a single .png file
  and uses CSS to select icons out of that file - saves on transferring some
@@ -375,5 +389,16 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		var/obj/product = new item
 		var/icon/I = getFlatIcon(product)
 		var/imgid = replacetext(replacetext("[item]", "/obj/item/", ""), "/", "-")
+		insert_icon_in_list(imgid, I)
+	return ..()
+
+/datum/asset/spritesheet/autolathe
+	name = "autolathe"
+
+/datum/asset/spritesheet/autolathe/register()
+	var/list/recipes = global.autolathe_recipes + global.autolathe_recipes_hidden
+	for (var/obj/item in recipes)
+		var/icon/I = icon(item.icon, item.icon_state) //for some reason, the getFlatIcon(item) function does not create images of objects such as /obj/item/ammo_casing
+		var/imgid = replacetext(replacetext("[item.type]", "/obj/item/", ""), "/", "-")
 		insert_icon_in_list(imgid, I)
 	return ..()

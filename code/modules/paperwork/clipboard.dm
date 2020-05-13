@@ -22,7 +22,7 @@
 		if(!(istype(over_object, /obj/screen) ))
 			return ..()
 
-		if(!M.restrained() && !M.stat)
+		if(!M.incapacitated())
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))
@@ -84,7 +84,7 @@
 
 /obj/item/weapon/clipboard/Topic(href, href_list)
 	..()
-	if((usr.stat || usr.restrained()))
+	if(usr.incapacitated())
 		return
 
 	if(usr.contents.Find(src))

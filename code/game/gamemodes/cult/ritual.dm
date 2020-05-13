@@ -98,7 +98,7 @@ var/list/cult_datums = list()
 	if(istype(I, /obj/item/weapon/book/tome) && iscultist(user))
 		to_chat(user, "<span class='cult'>You retrace your steps, carefully undoing the lines of the rune.</span>")
 		qdel(src)
-	else if(istype(I, /obj/item/weapon/nullrod) && user.mind.assigned_role == "Chaplain")
+	else if(istype(I, /obj/item/weapon/nullrod) && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>")
 		qdel(src)
 
@@ -295,17 +295,17 @@ var/list/cult_datums = list()
 	M.visible_message("<span class='danger'>[user] beats [M] with the arcane tome!</span>")
 	to_chat(M, "<span class='danger'You feel searing heat inside!</span>")
 
-/obj/item/weapon/book/tome/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/book/tome/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(iscultist(user) && A.reagents && A.reagents.has_reagent("water"))
-		var/water2convert = A.reagents.get_reagent_amount("water")
-		A.reagents.del_reagent("water")
-		to_chat(user, "<span class='warning'>You curse [A].</span>")
-		A.reagents.add_reagent("unholywater",water2convert)
+	if(iscultist(user) && target.reagents && target.reagents.has_reagent("water"))
+		var/water2convert = target.reagents.get_reagent_amount("water")
+		target.reagents.del_reagent("water")
+		to_chat(user, "<span class='warning'>You curse [target].</span>")
+		target.reagents.add_reagent("unholywater",water2convert)
 
 /obj/item/weapon/book/tome/attack_self(mob/living/carbon/human/user)
-	if(!istype(user) || !user.canmove || user.stat || user.incapacitated())
+	if(!istype(user) || user.incapacitated())
 		return
 
 	if(!cultwords["travel"])
@@ -350,6 +350,10 @@ var/list/cult_datums = list()
 			user << browse("[entity_ja(notedat)]", "window=notes")
 			return
 	if(usr.get_active_hand() != src)
+		return
+
+	if(user.species.flags[NO_BLOOD])
+		to_chat(user, "<span class='warning'>You don't have any blood, how do you suppose to write a blood rune?</span>")
 		return
 
 	var/w1

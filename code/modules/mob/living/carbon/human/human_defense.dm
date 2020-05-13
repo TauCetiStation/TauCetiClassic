@@ -24,7 +24,7 @@
 	. = PROJECTILE_ALL_OK
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
-		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam) || (istype(P, /obj/item/projectile/plasma) && P.damage <= 20))
+		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam) || istype(P, /obj/item/projectile/pyrometer) || (istype(P, /obj/item/projectile/plasma) && P.damage <= 20))
 			if(check_reflect(def_zone, dir, P.dir)) // Checks if you've passed a reflection% check
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
 								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
@@ -40,7 +40,7 @@
 				return PROJECTILE_FORCE_MISS // complete projectile permutation
 
 	if(check_shields(P.damage, "the [P.name]", P.dir))
-		P.on_hit(src, 100, def_zone)
+		P.on_hit(src, def_zone, 100)
 		return 2 // i have no idea what is 2 and in projectile.dm it seems unused, haven't checked any other places in code.
 
 	if(istype(P, /obj/item/projectile/bullet/weakbullet))
@@ -111,7 +111,7 @@
 		var/delta = max(0, P.damage - (P.damage * (armor/100)))
 		if(delta)
 			apply_effect(delta,AGONY,armor)
-			P.on_hit(src, armor, def_zone)
+			P.on_hit(src, def_zone, armor)
 			//return Nope! ~Zve
 		if(delta < 10)
 			P.sharp = 0

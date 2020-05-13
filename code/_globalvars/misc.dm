@@ -95,3 +95,6 @@ var/list/ignore_vision_inside = list(
 	/obj/structure/droppod,
 	/obj/item/organ/external/head/skeleton,
 	)
+
+// Is initiated in setup_religions(). Used to save all info about chaplain's religion.
+var/global/datum/religion/chaplain/chaplain_religion

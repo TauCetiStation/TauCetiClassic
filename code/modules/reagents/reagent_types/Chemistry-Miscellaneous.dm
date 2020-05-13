@@ -484,10 +484,12 @@
 	taste_message = "nanomachines, son"
 	restrict_species = list(IPC, DIONA)
 
+	data = list()
+
 /datum/reagent/mednanobots/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
+	if(!data["ticks"])
+		data["ticks"] = 1
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		switch(volume)
@@ -535,9 +537,9 @@
 						var/datum/disease2/disease/D = H.virus2[ID]
 						D.spreadtype = "Remissive"
 						D.stage--
-						if(D.stage < 1 && prob(data / 4))
+						if(D.stage < 1 && prob(data["ticks"] / 4))
 							D.cure(H)
-				data++
+				data["ticks"]++
 			if(5 to 20)		//Danger zone healing. Adds to a human mob's "percent machine" var, which is directly translated into the chance that it will turn horror each tick that the reagent is above 5u.
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
 				for(var/datum/wound/W in BP.wounds)
@@ -592,12 +594,12 @@
 						var/datum/disease2/disease/D = H.virus2[ID]
 						D.spreadtype = "Remissive"
 						D.stage--
-						if(D.stage < 1 && prob(data / 4))
+						if(D.stage < 1 && prob(data["ticks"] / 4))
 							D.cure(H)
 				if(holder && prob(percent_machine))
 					holder.add_reagent(id, 20)
 					to_chat(M, pick("<b><span class='warning'>Your body lurches!</b></span>"))
-				data += 2
+				data["ticks"] += 2
 			if(20 to INFINITY)
 				spawning_horror = 1
 				to_chat(M, pick("<b><span class='warning'>Something doesn't feel right...</span></b>", "<b><span class='warning'>Something is growing inside you!</span></b>", "<b><span class='warning'>You feel your insides rearrange!</span></b>"))
@@ -710,7 +712,7 @@
 				H.facial_painted = TRUE
 				hair_changes_occured = TRUE
 				body_changes_occured = TRUE
-		else if(H.species && H.species.name in list(HUMAN, UNATHI, TAJARAN))
+		else if(H.species && (H.species.name in list(HUMAN, UNATHI, TAJARAN)))
 			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
 				if(!H.hair_painted)
 					H.dyed_r_hair = CLAMP(round(H.r_hair * volume_coefficient + r_tweak), 0, 255)
@@ -901,46 +903,49 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	description = "A spooky scary substance to explain ghosts and stuff."
 	reagent_state = LIQUID
 	taste_message = "spooky ghosts"
-	data = 1
 	color = "#ffa8e4" // rgb: 255, 168, 228
+
+	data = list()
 
 /datum/reagent/ectoplasm/on_general_digest(mob/living/M)
 	..()
+	if(!data["ticks"])
+		data["ticks"] = 1
 	M.hallucination += 1
 	M.make_jittery(2)
-	switch(data)
+	switch(data["ticks"])
 		if(1 to 15)
 			M.make_jittery(2)
 			M.hallucination = max(M.hallucination, 3)
 			if(prob(1))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
-				M.emote("faint") // Seeing ghosts ain't an easy thing for your mind.
+				M.Sleeping(10) // Seeing ghosts ain't an easy thing for your mind.
 		if(15 to 45)
 			M.make_jittery(4)
 			M.druggy = max(M.druggy, 15)
 			M.hallucination = max(M.hallucination, 10)
 			if(prob(5))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
-				M.emote("faint")
+				M.Sleeping(10)
 		if(45 to 90)
 			M.make_jittery(8)
 			M.druggy = max(M.druggy, 30)
 			M.hallucination = max(M.hallucination, 60)
 			if(prob(10))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
-				M.emote("faint")
+				M.Sleeping(10)
 		if(90 to 180)
 			M.make_jittery(8)
 			M.druggy = max(M.druggy, 35)
 			M.hallucination = max(M.hallucination, 60)
 			if(prob(10))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
-				M.emote("faint")
+				M.Sleeping(10)
 			if(prob(5))
 				M.adjustBrainLoss(5)
 		if(180 to INFINITY)
 			M.adjustBrainLoss(100)
-	data++
+	data["ticks"]++
 
 /datum/reagent/aqueous_foam
 	name = "Aqueous Film Forming Foam"

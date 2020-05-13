@@ -55,7 +55,7 @@
 		apply_damage(damage, P.damage_type, def_zone, absorb, flags, P)
 		if(LAZYLEN(P.proj_act_sound))
 			playsound(src, pick(P.proj_act_sound), VOL_EFFECTS_MASTER, null, FALSE, -5)
-	P.on_hit(src, absorb, def_zone)
+	P.on_hit(src, def_zone, absorb)
 
 	return absorb
 
@@ -204,6 +204,7 @@
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
+		playsound(src, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
 		src.visible_message("<span class='warning'>[src] catches fire!</span>",
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
@@ -211,6 +212,7 @@
 
 /mob/living/proc/ExtinguishMob()
 	if(on_fire)
+		playsound(src, 'sound/effects/extinguish_mob.ogg', VOL_EFFECTS_MASTER)
 		on_fire = 0
 		fire_stacks = 0
 		for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
@@ -335,5 +337,4 @@
 		client.screen += hud_used.hide_actions_toggle
 
 /mob/living/incapacitated(restrained_type = ARMS)
-	if(stat || paralysis || stunned || weakened || restrained(restrained_type))
-		return 1
+	return stat || paralysis || stunned || weakened || restrained(restrained_type)

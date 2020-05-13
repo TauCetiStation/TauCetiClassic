@@ -363,7 +363,10 @@ nanoui is used to open and update nano browser uis
 <html>
 	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1251">
 	<head>
+		<script type="text/javascript" src="error_handler.js"></script>
 		<script type='text/javascript'>
+			var triggerError = attachErrorHandler('nanoui', true);
+
 			function receiveUpdateData(jsonString)
 			{
 				jsonString = jsonString.replace(/¶/g, "&#1103;");//fx fo ja

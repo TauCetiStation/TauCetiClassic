@@ -83,7 +83,7 @@
 /mob/living/proc/shared_living_nano_interaction(src_object)
 	if (stat != CONSCIOUS)
 		return STATUS_CLOSE						// no updates, close the interface
-	else if (restrained() || lying || stat || stunned || weakened)
+	else if (incapacitated())
 		return STATUS_UPDATE					// update only (orange visibility)
 	return STATUS_INTERACTIVE
 
@@ -117,7 +117,7 @@
 			. = loc.contents_nano_distance(src_object, src)
 		else
 			. = shared_living_nano_distance(src_object)
-	if(STATUS_INTERACTIVE)
+	if(. == STATUS_INTERACTIVE)
 		return STATUS_UPDATE
 
 /mob/living/carbon/human/can_use_topic(src_object, datum/topic_state/custom_state)

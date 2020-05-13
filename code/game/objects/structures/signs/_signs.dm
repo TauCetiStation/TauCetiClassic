@@ -102,7 +102,7 @@
 	w_class = ITEM_SIZE_LARGE
 	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 
-/obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
+/obj/item/sign_backing/afterattack(atom/target, mob/user, proximity, params)
 	if(isturf(target) && proximity)
 		var/turf/T = target
 		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>",

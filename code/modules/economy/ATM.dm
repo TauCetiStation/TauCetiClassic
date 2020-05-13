@@ -93,7 +93,7 @@ log transactions
 					return
 				else
 					money_stock += SC.worth
-			authenticated_account.money += SC.worth
+			authenticated_account.adjust_money(SC.worth)
 			if(prob(50))
 				playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
 			else
@@ -248,7 +248,7 @@ log transactions
 						var/transfer_purpose = href_list["purpose"]
 						if(charge_to_account(target_account_number, authenticated_account.owner_name, transfer_purpose, machine_id, transfer_amount))
 							to_chat(usr, "[bicon(src)]<span class='info'>Funds transfer successful.</span>")
-							authenticated_account.money -= transfer_amount
+							authenticated_account.adjust_money(-transfer_amount)
 
 							//create an entry in the account transaction log
 							var/datum/transaction/T = new()
@@ -331,7 +331,7 @@ log transactions
 				else if(authenticated_account && amount > 0)
 					var/response = alert(usr.client, "In what way would you like to recieve your money?", "Choose money format", "Chip", "Cash")
 					if(amount <= authenticated_account.money)
-						authenticated_account.money -= amount
+						authenticated_account.adjust_money(-amount)
 						playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
 						if(response == "Chip")
 							spawn_ewallet(amount,src.loc)

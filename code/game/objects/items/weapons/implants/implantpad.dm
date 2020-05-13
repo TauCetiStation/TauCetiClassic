@@ -72,7 +72,7 @@
 
 /obj/item/weapon/implantpad/Topic(href, href_list)
 	..()
-	if (usr.stat)
+	if (usr.incapacitated())
 		return
 	if ((usr.contents.Find(src)) || ((in_range(src, usr) && istype(src.loc, /turf))))
 		usr.set_machine(src)

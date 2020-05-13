@@ -7,9 +7,6 @@
 	can_be_holstered = TRUE
 	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
 
-/obj/item/weapon/gun/energy/taser/attack_self(mob/living/user)
-	select_fire(user)
-
 /obj/item/weapon/gun/energy/taser/cyborg
 	name = "taser gun"
 	desc = "A small, low capacity gun used for non-lethal takedowns."
@@ -49,13 +46,14 @@
 	name = "stun revolver"
 	desc = "A high-tech revolver that fires stun cartridges. The stun cartridges can be recharged using a conventional energy weapon recharger."
 	icon_state = "stunrevolver"
+	item_state = "taser"
 	origin_tech = "combat=3;materials=3;powerstorage=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/stun/gun, /obj/item/ammo_casing/energy/electrode/gun)
 	cell_type = "/obj/item/weapon/stock_parts/cell"
 
 /obj/item/weapon/gun/energy/crossbow
-	name = "mini energy-crossbow"
-	desc = "A weapon favored by many of the syndicates stealth specialists."
+	name = "foam dart crossbow"
+	desc = "A weapon favored by many overactive children. Ages 8 and up."
 	icon_state = "crossbow"
 	w_class = ITEM_SIZE_SMALL
 	item_state = "crossbow"

@@ -83,17 +83,24 @@
 		var/obj/item/organ/external/BP = pick(bodyparts)
 		BP.trace_chemicals[A.name] = 100
 
-//Adds autopsy data for used_weapon.
-/obj/item/organ/proc/add_autopsy_data(used_weapon, damage)
-	var/datum/autopsy_data/W = autopsy_data[used_weapon]
+//Adds autopsy data for used_weapon. Use type damage: brute, burn, mixed, bruise (weak punch, e.g. fist punch)
+/obj/item/organ/proc/add_autopsy_data(used_weapon, damage, type_damage)
+	var/datum/autopsy_data/W = autopsy_data[used_weapon + worldtime2text()]
 	if(!W)
 		W = new()
 		W.weapon = used_weapon
-		autopsy_data[used_weapon] = W
+		autopsy_data[used_weapon + worldtime2text()] = W
+
+	var/time = W.time_inflicted
+	if(time != worldtime2text())
+		W = new()
+		W.weapon = used_weapon
+		autopsy_data[used_weapon + worldtime2text()] = W
 
 	W.hits += 1
 	W.damage += damage
-	W.time_inflicted = world.time
+	W.time_inflicted = worldtime2text()
+	W.type_damage = type_damage
 
 // Takes care of bodypart and their organs related updates, such as broken and missing limbs
 /mob/living/carbon/human/proc/handle_bodyparts()
@@ -210,6 +217,6 @@
 					if(!(istype(O, /obj/structure/stool/bed/chair)))
 						do_we_scream = 0
 				if(do_we_scream)
-					emote("scream", auto = TRUE)
+					emote("scream")
 			emote("collapse")
 		Weaken(5) //can't emote while weakened, apparently.

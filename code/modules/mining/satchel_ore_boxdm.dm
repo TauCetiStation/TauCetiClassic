@@ -150,7 +150,7 @@
 		to_chat(usr, "<span class='warning'>You are physically incapable of emptying the ore box.</span>")
 		return
 
-	if( usr.stat || usr.restrained() )
+	if( usr.incapacitated() )
 		return
 
 	if(!Adjacent(usr)) //You can only empty the box if you can physically reach it

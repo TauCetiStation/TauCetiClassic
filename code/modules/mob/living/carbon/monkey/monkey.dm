@@ -38,7 +38,6 @@
 	speak_emote = list("squicks")
 	icon_state = "skrellkey1"
 	uni_append = list(0x01C,0xC92) // 01CC92
-	metabolism_factor = SKRELL_METABOLISM_FACTOR
 	race = SKRELL
 	holder_type = /obj/item/weapon/holder/monkey/neaera
 	blood_datum = /datum/dirt_cover/purple_blood
@@ -431,9 +430,6 @@
 	if(copytext(message,1,2) == "*")
 		return emote(copytext(message,2))
 
-	if(stat)
-		return
-
 	if(speak_emote.len)
 		verb = pick(speak_emote)
 
@@ -443,3 +439,6 @@
 
 /mob/living/carbon/monkey/get_species()
 	return race
+
+/mob/living/carbon/monkey/is_facehuggable()
+	return stat != DEAD && !(locate(/obj/item/alien_embryo) in contents)

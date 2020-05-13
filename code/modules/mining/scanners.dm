@@ -13,15 +13,15 @@
 	g_amt = 20
 	origin_tech = "magnets=1;engineering=2"
 
-/obj/item/device/geoscanner/afterattack(atom/A, mob/user)
-	if(!istype(A,/turf/simulated/mineral))
+/obj/item/device/geoscanner/afterattack(atom/target, mob/user, proximity, params)
+	if(!istype(target, /turf/simulated/mineral))
 		return
-	if(!in_range(user, A))
+	if(!in_range(user, target))
 		return
-	var/turf/simulated/mineral/M = A
+	var/turf/simulated/mineral/M = target
 	var/data_message = ""
-	
-	user.visible_message("<span class='notice'>[user] scans [A], the air around them humming gently.</span>")
+
+	user.visible_message("<span class='notice'>[user] scans [M], the air around them humming gently.</span>")
 
 	data_message +="<span class='notice'><B>Results:</B></span>"
 	if(M.mineral)

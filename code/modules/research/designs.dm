@@ -2,7 +2,7 @@
 
 /***************************************************************
 **						Design Datums						  **
-**	All the data for building stuff and tracking reliability. **
+**	All the data for building stuff.                          **
 ***************************************************************/
 /*
 For the materials datum, it assumes you need reagents unless specified otherwise. To designate a material that isn't a reagent,
@@ -38,12 +38,6 @@ other types of metals and chemistry for reagents).
 	var/build_path = null           //The file path of the object that gets created
 	var/list/category = null        //Primarily used for Mech Fabricators, but can be used for anything
 	var/starts_unlocked = FALSE     //If true does not require any technologies and unlocked from the start
-	var/reliability = 10            //Increased by each created prototype with formula: reliability += reliability * (RND_RELIABILITY_EXPONENT^created_prototypes)
-	var/created_prototypes = 0
-
-/datum/design/New()
-	if(starts_unlocked)
-		reliability = 100
 
 ///////////////////Computer Boards///////////////////////////////////
 
@@ -109,6 +103,16 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/operating
 	category = list("Computer")
+
+/datum/design/slime_management
+	name = "Circuit Design (Slime management console)"
+	desc = "Allows for the construction of circuit boards used to build a slime management console."
+	id = "slime_management"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/camera_advanced/xenobio
+	category = list("Computer")
+
 
 /datum/design/pandemic
 	name = "Circuit Design (PanD.E.M.I.C. 2200)"
@@ -2468,6 +2472,15 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 500, MAT_SILVER = 500)
 	build_path = /obj/item/airbag
 	category = list("Support")
+
+/datum/design/universal_pyrometer
+	name = "Universal pyrometer"
+	desc = "A pyrometer with all possible modes built-in. Battery and micro-laser component not included!"
+	id = "universal_pyrometer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_SILVER = 100)
+	build_path = /obj/item/weapon/gun/energy/pyrometer/universal
+	category = list("Tools")
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////

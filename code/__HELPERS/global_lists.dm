@@ -7,23 +7,11 @@
 	for(var/path in subtypesof(/datum/sprite_accessory/hair))
 		var/datum/sprite_accessory/hair/H = new path()
 		hair_styles_list[H.name] = H
-		switch(H.gender)
-			if(MALE)	hair_styles_male_list += H.name
-			if(FEMALE)	hair_styles_female_list += H.name
-			else
-				hair_styles_male_list += H.name
-				hair_styles_female_list += H.name
 
 	//Facial Hair - Initialise all /datum/sprite_accessory/facial_hair into an list indexed by facialhair-style name
 	for(var/path in subtypesof(/datum/sprite_accessory/facial_hair))
 		var/datum/sprite_accessory/facial_hair/H = new path()
 		facial_hair_styles_list[H.name] = H
-		switch(H.gender)
-			if(MALE)	facial_hair_styles_male_list += H.name
-			if(FEMALE)	facial_hair_styles_female_list += H.name
-			else
-				facial_hair_styles_male_list += H.name
-				facial_hair_styles_female_list += H.name
 
 	//Surgery Steps - Initialize all /datum/surgery_step into a list
 	for(var/T in subtypesof(/datum/surgery_step))
@@ -58,6 +46,8 @@
 
 		if(S.flags[IS_WHITELISTED])
 			whitelisted_species += S.name
+		if(S.flags[SPRITE_SHEET_RESTRICTION])
+			global.sprite_sheet_restricted += S.name
 
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
 	global.chemical_reagents_list = list()
@@ -85,6 +75,35 @@
 				global.chemical_reactions_list[id] = list()
 			global.chemical_reactions_list[id] += D
 			break // Don't bother adding ourselves to other reagent ids, it is redundant.
+
+	/*
+		Chaplain related: Spells and Rites
+	*/
+	global.spells_by_aspects = list()
+	for(var/path in subtypesof(/obj/effect/proc_holder/spell))
+		var/obj/effect/proc_holder/spell/S = new path()
+		if(!S.needed_aspect)
+			continue
+
+		// Don't bother adding ourselves to other aspects, it is redundant.
+		var/aspect_type = S.needed_aspect[1]
+
+		if(!global.spells_by_aspects[aspect_type])
+			global.spells_by_aspects[aspect_type] = list()
+		global.spells_by_aspects[aspect_type] += path
+
+	global.rites_by_aspects  = list()
+	for(var/path in subtypesof(/datum/religion_rites))
+		var/datum/religion_rites/RR = new path()
+		if(!RR.needed_aspects)
+			continue
+
+		// Don't bother adding ourselves to other aspects, it is redundant.
+		var/aspect_type = RR.needed_aspects[1]
+
+		if(!global.rites_by_aspects[aspect_type])
+			global.rites_by_aspects[aspect_type] = list()
+		global.rites_by_aspects[aspect_type] += path
 
 	populate_gear_list()
 

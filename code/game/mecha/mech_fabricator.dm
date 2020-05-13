@@ -181,11 +181,11 @@
 	var/I = new D.build_path(location)
 	if(isobj(I))
 		var/obj/O = I
-		O.prototipify(min_reliability=D.reliability + efficiency_coeff * 25.0,  max_reliability=70 + efficiency_coeff * 25.0)
+		O.prototipify(min_reliability=files.design_reliabilities[D.id] + efficiency_coeff * 25.0,  max_reliability=70 + efficiency_coeff * 25.0)
 
-		D.reliability += D.reliability * (RND_RELIABILITY_EXPONENT ** D.created_prototypes)
-		D.reliability = max(round(D.reliability, 5), 1)
-		D.created_prototypes++
+		files.design_reliabilities[D.id] += files.design_reliabilities[D.id] * (RND_RELIABILITY_EXPONENT ** files.design_created_prototypes[D.id])
+		files.design_reliabilities[D.id] = max(round(files.design_reliabilities[D.id], 5), 1)
+		files.design_created_prototypes[D.id]++
 	if(istype(I, /obj/item))
 		var/obj/item/Item = I
 		Item.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)

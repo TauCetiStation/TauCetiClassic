@@ -8,15 +8,6 @@
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TGE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/verb/toggle_ghost_sight()
-	set name = "Show/Hide GhostSight"
-	set category = "Preferences"
-	set desc = ".Toggle Between seeing all mob emotes, and only emotes of nearby mobs."
-	prefs.chat_toggles ^= CHAT_GHOSTSIGHT
-	to_chat(src, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTSIGHT) ? "see all emotes in the world" : "only see emotes from nearby mobs"].")
-	prefs.save_preferences()
-	feedback_add_details("admin_verb","TGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/verb/toggle_ghost_npc()
 	set name = "Show/Hide GhostNPCsSpeech"
 	set category = "Preferences"
@@ -242,3 +233,27 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 	if (mob && mob.hud_used)
 		mob.hud_used.update_parallax_pref()
+
+
+/client/verb/toggle_ghost_sight()
+	set name = "Change Ghost Sight Options"
+	set category = "Preferences"
+	set desc = "Toggle between seeing all mob emotes, all manual-only emotes and only emotes of nearby mobs."
+
+	var/new_setting = input(src, "Ghost Sight Options:") as null|anything in list("Absolutely all emotes", "All manual-only", "Only emotes of nearby mobs")
+	if(!new_setting)
+		return
+
+	switch(new_setting)
+		if("Absolutely all emotes")
+			to_chat(src, "As a ghost, you will now see absolutely all emotes in the world.")
+			prefs.chat_ghostsight = CHAT_GHOSTSIGHT_ALL
+		if("All manual-only")
+			to_chat(src, "As a ghost, you will now see all manual-only(me, *emote, etc) emotes in the world.")
+			prefs.chat_ghostsight = CHAT_GHOSTSIGHT_ALLMANUAL
+		if("Only emotes of nearby mobs")
+			to_chat(src, "As a ghost, you will now see only see emotes from nearby mobs")
+			prefs.chat_ghostsight = CHAT_GHOSTSIGHT_NEARBYMOBS
+
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","CGSO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

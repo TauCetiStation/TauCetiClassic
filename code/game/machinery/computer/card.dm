@@ -8,10 +8,11 @@
 	req_access = list(access_change_ids)
 	circuit = /obj/item/weapon/circuitboard/card
 	allowed_checks = ALLOWED_CHECK_NONE
-	var/obj/item/weapon/card/id/scan = null
-	var/obj/item/weapon/card/id/modify = null
+	var/obj/item/weapon/card/id/scan = null		//card that gives access to this console
+	var/obj/item/weapon/card/id/modify = null	//the card we will change
 	var/mode = 0.0
 	var/printing = null
+	var/datum/money_account/datum_account = null
 
 /obj/machinery/computer/card/proc/is_centcom()
 	return istype(src, /obj/machinery/computer/card/centcom)
@@ -65,7 +66,7 @@
 	if(!istype(id_card))
 		return ..()
 
-	if(!scan && access_change_ids in id_card.access)
+	if(!scan && (access_change_ids in id_card.access))
 		user.drop_item()
 		id_card.loc = src
 		scan = id_card
@@ -73,6 +74,10 @@
 		user.drop_item()
 		id_card.loc = src
 		modify = id_card
+		if(id_card.associated_account_number)
+			datum_account = get_account(id_card.associated_account_number)
+		else
+			datum_account = null	//delete information if there is something in the variable
 
 	playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	nanomanager.update_uis(src)
@@ -92,6 +97,7 @@
 	data["authenticated"] = is_authenticated()
 	data["has_modify"] = !!modify
 	data["account_number"] = modify ? modify.associated_account_number : null
+	data["salary"] = datum_account ? datum_account.owner_salary : "not_found"
 	data["centcom_access"] = is_centcom()
 	data["all_centcom_access"] = null
 	data["regions"] = null
@@ -160,6 +166,11 @@
 					usr.drop_item()
 					I.loc = src
 					modify = I
+					var/obj/item/weapon/card/id/id_card = I
+					if(id_card.associated_account_number)
+						datum_account = get_account(id_card.associated_account_number)
+					else
+						datum_account = null	//delete information if there is something in the variable
 					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 		if ("scan")
@@ -194,6 +205,7 @@
 		if ("assign")
 			if (is_authenticated() && modify)
 				var/t1 = href_list["assign_target"]
+				var/new_salary = 0
 				if(t1 == "Custom")
 					var/temp_t = sanitize(input("Enter a custom job assignment.","Assignment"), 45)
 					//let custom jobs function as an impromptu alt title, mainly for sechuds
@@ -215,10 +227,14 @@
 							return
 
 						access = jobdatum.get_access()
+						new_salary = jobdatum.salary
 
 					modify.access = access
 					modify.assignment = t1
 					modify.rank = t1
+
+					if(datum_account)
+						datum_account.owner_salary = new_salary //set the new salary equal to job
 
 				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
 				if(mode)
@@ -239,8 +255,11 @@
 			if (is_authenticated())
 				var/t2 = modify
 				if ((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
-					var/account_num = text2num(href_list["account"])
-					modify.associated_account_number = account_num
+					var/datum/money_account/account = get_account(text2num(href_list["account"]))
+					if(account)
+						modify.associated_account_number = account.account_number
+					else
+						to_chat(usr, "<span class='warning'> Account with such number does not exist!</span>")
 			nanomanager.update_uis(src)
 
 		if ("mode")

@@ -48,10 +48,7 @@
 /obj/item/weapon/reagent_containers/syringe/attack_paw()
 	return attack_hand()
 
-/obj/item/weapon/reagent_containers/syringe/attackby(obj/item/I, mob/user)
-	return
-
-/obj/item/weapon/reagent_containers/syringe/afterattack(obj/target, mob/user, proximity)
+/obj/item/weapon/reagent_containers/syringe/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if(!target.reagents) return
 
@@ -300,7 +297,7 @@
 /obj/item/weapon/reagent_containers/ld50_syringe/attackby(obj/item/I, mob/user)
 	return
 
-/obj/item/weapon/reagent_containers/ld50_syringe/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/ld50_syringe/afterattack(atom/target, mob/user, proximity, params)
 	if(!target.reagents) return
 
 	switch(mode)

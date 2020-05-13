@@ -5,7 +5,7 @@
 	icon_state = "singularity_s1"
 	anchored = 1
 	density = 1
-	layer = 6
+	layer = SINGULARITY_LAYER
 	appearance_flags = 0
 	//light_range = 6
 	unacidable = 1 //Don't comment this out.
@@ -185,6 +185,10 @@
 		expand(temp_allowed_size)
 	else
 		return 0
+
+/obj/singularity/get_current_temperature()
+	// var/total_potential_energy = energy * energy / dissipate_strength
+	return WATTS_2_CELSIUM * energy * energy / dissipate_strength
 
 /obj/singularity/proc/check_energy()
 	if(energy <= 0)

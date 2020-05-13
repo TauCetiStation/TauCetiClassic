@@ -18,6 +18,12 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/charge_max = 100 //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
 	var/charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
 
+	/****RELIGIOUS ASPECT****/
+	var/favor_cost = 0 //cost
+	var/divine_power = 0 //control of spell power depending on the aspect
+	var/list/needed_aspect
+	/****RELIGIOUS ASPECT****/
+
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
 
@@ -68,6 +74,14 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 					to_chat(usr, "[name] has no charges left.")
 					return 0
 
+	if(!skipcharge && usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+		if(favor_cost > 0 && global.chaplain_religion.aspects.len == 0)
+			to_chat(usr, "<span class ='warning'>First choose aspects in your religion!</span>")
+			return 0
+		if(favor_cost > 0 && global.chaplain_religion.favor < favor_cost)
+			to_chat(usr, "<span class ='warning'>You need [favor_cost - global.chaplain_religion.favor] more favors.</span>")
+			return 0
+
 	if(usr.stat && !stat_allowed)
 		to_chat(usr, "Not when you're incapacitated.")
 		return 0
@@ -100,6 +114,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				charge_counter-- //returns the charge if the targets selecting fails
 			if("holdervar")
 				adjust_var(user, holder_var_type, holder_var_amount)
+
+		if(favor_cost > 0 && usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+			global.chaplain_religion.favor -= favor_cost //steals favor from spells per favor
 
 	return 1
 
@@ -134,23 +151,23 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
 	return
 
-/obj/effect/proc_holder/spell/proc/start_recharge()
+/obj/effect/proc_holder/spell/proc/start_recharge(mob/user = usr)
 	while(charge_counter < charge_max)
 		sleep(1)
 		charge_counter++
 
-/obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1) //if recharge is started is important for the trigger spells
-	before_cast(targets)
-	invocation()
+/obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr) //if recharge is started is important for the trigger spells
+	before_cast(targets, user)
+	invocation(user)
 	if(charge_type == "recharge" && recharge)
-		INVOKE_ASYNC(src, .proc/start_recharge)
+		INVOKE_ASYNC(src, .proc/start_recharge, user)
 	if(prob(critfailchance))
-		critfail(targets)
+		critfail(targets, user)
 	else
-		cast(targets)
-	after_cast(targets)
+		cast(targets, user)
+	after_cast(targets, user)
 
-/obj/effect/proc_holder/spell/proc/before_cast(list/targets)
+/obj/effect/proc_holder/spell/proc/before_cast(list/targets, mob/user = usr)
 	if(overlay)
 		for(var/atom/target in targets)
 			var/location
@@ -165,7 +182,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			spell.density = 0
 			QDEL_IN(spell, overlay_lifespan)
 
-/obj/effect/proc_holder/spell/proc/after_cast(list/targets)
+/obj/effect/proc_holder/spell/proc/after_cast(list/targets, mob/user = usr)
 	for(var/atom/target in targets)
 		var/location
 		if(istype(target,/mob/living))
@@ -188,10 +205,10 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				smoke.set_up(smoke_amt, 0, location) //no idea what the 0 is
 				smoke.start()
 
-/obj/effect/proc_holder/spell/proc/cast(list/targets)
+/obj/effect/proc_holder/spell/proc/cast(list/targets, mob/user = usr)
 	return
 
-/obj/effect/proc_holder/spell/proc/critfail(list/targets)
+/obj/effect/proc_holder/spell/proc/critfail(list/targets, mob/user = usr)
 	return
 
 /obj/effect/proc_holder/spell/proc/revert_cast(mob/user = usr) //resets recharge or readds a charge
@@ -202,6 +219,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			charge_counter++
 		if("holdervar")
 			adjust_var(user, holder_var_type, -holder_var_amount)
+
+	if(favor_cost > 0 && usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+		global.chaplain_religion.favor += favor_cost
 
 	return
 
@@ -271,7 +291,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		revert_cast(user)
 		return
 
-	perform(targets)
+	perform(targets, user)
 
 	return
 
@@ -286,7 +306,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		revert_cast()
 		return
 
-	perform(targets)
+	perform(targets, user)
 
 	return
 

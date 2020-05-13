@@ -157,6 +157,8 @@ var/lastMove = 0
 		else
 			to_chat(usr, "<span class='notice'>Shuttle is already moving or docked with station.</span>")
 
+		usr.client.guard.velocity_console = TRUE
+
 /obj/machinery/computer/arrival_shuttle/dock
 	name = "Arrival Shuttle Communication Console"
 	icon = 'icons/obj/computer.dmi'
@@ -179,6 +181,8 @@ var/lastMove = 0
 			arrival_shuttle_move()
 		else
 			to_chat(usr, "<span class='notice'>Shuttle is already moving or docked with station.</span>")
+
+		usr.client.guard.velocity_console_dock = TRUE
 
 /obj/machinery/computer/arrival_shuttle/proc/radio_message_via_ai(msg)
 	if (!msg)

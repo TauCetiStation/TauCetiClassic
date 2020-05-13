@@ -7,8 +7,6 @@ var/datum/subsystem/demo/SSdemo
 	priority = SS_PRIORITY_DEMO
 	init_order = SS_INIT_DEMO
 
-	var/initialized = FALSE
-
 	var/demo_file
 	var/list/pre_init_lines = list() // stuff like chat before the init
 	var/list/icon_cache = list()

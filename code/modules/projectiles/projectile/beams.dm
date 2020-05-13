@@ -81,6 +81,12 @@
 /obj/item/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss
 
+/obj/item/projectile/beam/emitter/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if((HULK in H.mutations) && H.hulk_activator == ACTIVATOR_EMITTER_BEAM)
+			H.try_mutate_to_hulk(H)
+
 /obj/item/projectile/beam/lasertag
 	name = "lasertag beam"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
@@ -95,13 +101,13 @@
 	. = ..()
 	proj_act_sound = null
 
-/obj/item/projectile/beam/lasertag/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/lasertag/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(istype(H.wear_suit, /obj/item/clothing/suit/lasertag))
 			var/obj/item/clothing/suit/lasertag/L = H.wear_suit
 			if(L.lasertag_color != lasertag_color)
-				H.Weaken(5)
+				H.Weaken(2)
 	return TRUE
 
 /obj/item/projectile/beam/lasertag/blue
@@ -114,7 +120,6 @@
 
 /obj/item/projectile/beam/lasertag/red
 	icon_state = "laser"
-
 	lasertag_color = "red"
 
 	/*

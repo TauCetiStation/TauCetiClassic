@@ -30,6 +30,7 @@
 	if (ntheme)
 		theme = ntheme
 	add_stylesheet("common", 'html/browser/common.css') // this CSS sheet is common to all UIs
+	register_asset("error_handler.js", 'code/modules/error_handler_js/error_handler.js') // error_handler - same name as in other places, add_script do ckey with names.
 
 /datum/browser/proc/add_head_content(nhead_content)
 	head_content = nhead_content
@@ -61,8 +62,13 @@
 	content += ncontent
 
 /datum/browser/proc/get_header()
+
 	for (var/name in stylesheets)
 		head_content += "<link rel='stylesheet' type='text/css' href='[name]'>"
+
+	//should be first
+	head_content += "<script type='text/javascript' src='error_handler.js'></script>"
+	head_content += "<script type='text/javascript'>var triggerError = attachErrorHandler('browser', true);</script>"	
 
 	for (var/name in scripts)
 		head_content += "<script type='text/javascript' src='[name]'></script>"
@@ -105,6 +111,7 @@
 	var/window_size = ""
 	if (width && height)
 		window_size = "size=[width]x[height];"
+	send_asset(user, "error_handler.js")
 	if (stylesheets.len)
 		send_asset_list(user, stylesheets, verify=FALSE)
 	if (scripts.len)

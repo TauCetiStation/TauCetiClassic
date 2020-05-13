@@ -239,8 +239,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/clothing/suit/storage/flak/bulletproof,
 					/obj/item/clothing/head/helmet/bulletproof,
 					/obj/item/clothing/head/helmet/bulletproof,
-					/obj/item/weapon/gun/projectile/shotgun/combat,
-					/obj/item/weapon/gun/projectile/shotgun/combat)
+					/obj/item/weapon/gun/projectile/shotgun,
+					/obj/item/weapon/gun/projectile/shotgun)
 	cost = 5000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Ballistic gear crate"
@@ -716,7 +716,9 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/stock_parts/cell,
 					/obj/item/weapon/stock_parts/cell,
 					/obj/item/weapon/stock_parts/cell/high,
-					/obj/item/weapon/stock_parts/cell/high)
+					/obj/item/weapon/stock_parts/cell/high,
+					/obj/item/weapon/gun/energy/pyrometer/engineering,
+					/obj/item/weapon/gun/energy/pyrometer/engineering)
 	cost = 1500
 	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Electrical maintenance crate"
@@ -748,7 +750,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_pack/aqueous_foam_tank
 	name = "AFFF crate"
-	contains = list(/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank)
+	contains = list(/obj/structure/reagent_dispensers/aqueous_foam_tank)
 	cost = 800
 	crate_type = /obj/structure/largecrate
 	crate_name = "AFFF crate"
@@ -890,7 +892,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/device/flash,
 					/obj/item/device/flash,
 					/obj/item/weapon/stock_parts/cell/high,
-					/obj/item/weapon/stock_parts/cell/high)
+					/obj/item/weapon/stock_parts/cell/high,
+					/obj/item/weapon/gun/energy/pyrometer/engineering/robotics,)
 	cost = 1000
 	crate_type = /obj/structure/closet/crate/secure/scisecurecrate
 	crate_name = "Robotics assembly"
@@ -987,7 +990,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/storage/box/autoinjectors,
 					/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
 					/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
-					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space)
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+					/obj/item/weapon/gun/energy/pyrometer/medical,)
 	cost = 1000
 	crate_type = /obj/structure/closet/crate/medical
 	crate_name = "Medical crate"

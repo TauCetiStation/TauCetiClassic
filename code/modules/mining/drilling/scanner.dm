@@ -94,7 +94,8 @@
 
 	if(!istype(usr, /mob/living))
 		return
-	if(usr.stat) return
+	if(usr.incapacitated())
+		return
 
 	if(get_dist(usr, src) > 1)
 		to_chat(usr, "You have moved too far away.")

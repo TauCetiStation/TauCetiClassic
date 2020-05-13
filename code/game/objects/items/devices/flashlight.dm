@@ -49,6 +49,11 @@
 	action_button_name = null
 	return 1
 
+/obj/item/device/flashlight/get_current_temperature()
+	if(on)
+		return 10
+	return 0
+
 /obj/item/device/flashlight/Destroy()
 	if(on)
 		set_light(0)
@@ -139,6 +144,10 @@
 	g_amt = 0
 	on = 1
 
+/obj/item/device/flashlight/lamp/get_current_temperature()
+	if(on)
+		return 20
+	return 0
 
 // green-shaded desk lamp
 /obj/item/device/flashlight/lamp/green
@@ -153,7 +162,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(!usr.stat)
+	if(!usr.incapacitated())
 		attack_self(usr)
 
 // FLARES
@@ -185,6 +194,11 @@
 	fuel = max(fuel - 1, 0)
 	if(!fuel || !on)
 		turn_off()
+
+/obj/item/device/flashlight/flare/get_current_temperature()
+	if(on)
+		return 1000
+	return 0
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0
@@ -277,23 +291,23 @@
 		..()
 	return
 
-/obj/item/device/flashlight/emp/afterattack(atom/movable/A, mob/user, proximity)
+/obj/item/device/flashlight/emp/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 
 	if(emp_cur_charges)
 		emp_cur_charges--
 
-		if(ismob(A))
-			var/mob/M = A
+		if(ismob(target))
+			var/mob/M = target
 			msg_admin_attack("[user] ([user.ckey]) attacked [M.name] ([M.ckey]) with Emp-light", user)
 			M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been attacked with Emp-light by [user.name] ([user.ckey])</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked with Emp-light [M.name]'s ([M.ckey])</font>")
-			M.visible_message("<span class='danger'>[user] blinks \the [src] at the [A]</span>")
+			M.visible_message("<span class='danger'>[user] blinks \the [src] at the [target]</span>")
 		else
-			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].</span>")
+			target.visible_message("<span class='danger'>[user] blinks \the [src] at \the [target].</span>")
 		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.")
-		A.emp_act(1)
+		target.emp_act(1)
 	else
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")
 	return

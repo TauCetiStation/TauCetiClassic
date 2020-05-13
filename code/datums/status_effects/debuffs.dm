@@ -1,5 +1,6 @@
 //Largely negative status effects go here, even if they have small benificial effects
 //STUN EFFECTS
+
 /datum/status_effect/incapacitating
 	tick_interval = 0
 	status_type = STATUS_EFFECT_REPLACE
@@ -29,7 +30,7 @@
 	var/mob/living/carbon/carbon_owner
 	var/mob/living/carbon/human/human_owner
 
-/datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner, updating_canmove)
+/datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner, set_duration, updating_canmove)
 	. = ..()
 	if(.)
 		if(iscarbon(owner)) //to avoid repeated istypes
