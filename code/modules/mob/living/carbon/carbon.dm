@@ -819,31 +819,34 @@
 		return
 	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
 	if((world.time - last_massage) > 5 SECONDS && do_mob(user, src, HUMAN_STRIP_DELAY))
+		var/needed_massages = 12
 		visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
 		to_chat(user, "<span class='warning'>Repeat at least every second.</span>")
 		massages_done_right = 0
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
+		if(HAS_TRAIT(H, TRAIT_FAT))
+			needed_massages = 20
 		if(H.stat == DEAD && (world.time - H.timeofdeath) < DEFIB_TIME_LIMIT)
 			var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
 			var/obj/item/organ/internal/heart/Lungs = H.organs_by_name[O_LUNGS]
 			if(!Heart)
 				return
-			if(massages_done_right > 12)
+			if(massages_done_right > needed_massages)
 				to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
 				H.reanimate_body(H)
 				H.stat = UNCONSCIOUS
 				massages_done_right = 0
-				Heart.heart_status = HEART_NORMAL
+				Heart.heart_normalize()
 			else if(massages_done_right < -2)
 				to_chat(user, "<span class='warning'>[src]'s heart stopped!</span>")
 				if(prob(25))
 					Heart.damage += 2
 				last_massage = world.time
 				massages_done_right = 0
-				Heart.heart_status = HEART_FAILURE
+				Heart.heart_stop()
 			else
-				Heart.heart_status = HEART_DEFIB
+				Heart.heart_fibrillate()
 				if(Heart.damage < 50)
 					if(last_massage > world.time - MASSAGE_RHYTM_RIGHT - MASSAGE_ALLOWED_ERROR && last_massage < world.time - MASSAGE_RHYTM_RIGHT + MASSAGE_ALLOWED_ERROR)
 						massages_done_right++

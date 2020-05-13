@@ -62,7 +62,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(!IO)
 		return
 
-	if(IO.damage > 1 && IO.damage < IO.min_bruised_damage)
+	if(IO.damage > 1 && IO.damage < IO.min_bruised_damage || IO.heart_status == HEART_FIBR)
 		blood_volume *= 0.8
 	else if(IO.damage >= IO.min_bruised_damage && IO.damage < IO.min_broken_damage)
 		blood_volume *= 0.6

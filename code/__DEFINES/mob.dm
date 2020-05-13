@@ -141,7 +141,7 @@
 // Heart status
 #define HEART_NORMAL      "heart_normal"
 #define HEART_FAILURE     "heart_failure"
-#define HEART_DEFIB       "heart_defibrillation"
+#define HEART_FIBR       "heart_fibrillation"
 
 // Defibrillation
 #define DEFIB_TIME_LIMIT  (8 MINUTES) //past this many seconds, defib is useless. Currently 8 Minutes

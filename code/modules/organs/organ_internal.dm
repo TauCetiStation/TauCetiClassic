@@ -130,6 +130,25 @@
 	organ_tag = O_HEART
 	parent_bodypart = BP_CHEST
 	var/heart_status = HEART_NORMAL
+	var/fibrillation_timer_id = null
+	var/heart_failing = null
+
+/obj/item/organ/internal/heart/heart_stop()
+	..()
+	heart_status = HEART_FAILURE
+
+/obj/item/organ/internal/heart/heart_fibrillate()
+	heart_status = HEART_FIBR
+	if(HAS_TRAIT(owner, TRAIT_FAT))
+		heart_failing = (30 SECONDS)
+	else
+		heart_failing = (1 MINUTE)
+	fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop(), heart_failing, TIMER_UNIQUE|TIMER_STOPPABLE)
+
+/obj/item/organ/internal/heart/heart_normalize()
+	heart_status = HEART_NORMAL
+	deltimer(fibrillation_timer_id)
+	fibrillation_timer_id = null
 
 /obj/item/organ/internal/heart/ipc
 	name = "servomotor"

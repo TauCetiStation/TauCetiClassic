@@ -246,8 +246,9 @@
 						var/rejecting = ""
 						if(BP.status & ORGAN_ARTERY_CUT)
 							arterial_bleeding = "<br>Arterial bleeding"
-						if(istype(BP, /obj/item/organ/external/chest) && occupant.is_lung_ruptured())
-							lung_ruptured = "Lung ruptured:"
+						if(istype(BP, /obj/item/organ/external/chest))
+							if(occupant.is_lung_ruptured())
+								lung_ruptured = "Lung ruptured:"
 						if(BP.status & ORGAN_SPLINTED)
 							splint = "Splinted:"
 						if(BP.status & ORGAN_BLEEDING)
@@ -304,10 +305,18 @@
 						storedinfo += "</tr>"
 					for(var/obj/item/organ/internal/IO in occupant.organs)
 						var/mech = ""
+						var/organ_status = ""
 						if(IO.robotic == 1)
 							mech = "Assisted:"
 						if(IO.robotic == 2)
 							mech = "Mechanical:"
+
+						if(istype(IO, /obj/item/organ/internal/heart))
+							var/obj/item/organ/internal/heart/Heart = occupant.organs_by_name[O_HEART]
+							if(Heart.heart_status == "HEART_FAILURE")
+								organ_status = "Heart Failure:"
+							else if(Heart.heart_status == "HEART_FIBR")
+								organ_status = "Heart Fibrillation:"
 
 						var/infection = "None"
 						switch (IO.germ_level)
@@ -327,10 +336,10 @@
 								infection = "Necrotic:"
 
 						dat += "<tr>"
-						dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection]:[mech]</td><td></td>"
+						dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection]:[mech]:[organ_status]</td><td></td>"
 						dat += "</tr>"
 						storedinfo += "<tr>"
-						storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection]:[mech]</td><td></td>"
+						storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection]:[mech]:[organ_status]</td><td></td>"
 						storedinfo += "</tr>"
 					dat += "</table>"
 					storedinfo += "</table>"

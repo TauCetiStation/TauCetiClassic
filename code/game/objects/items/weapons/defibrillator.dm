@@ -384,18 +384,18 @@
 		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
-	if(IO.heart_status == HEART_DEFIB)
+	if(IO.heart_status == HEART_FIBR)
 		if(H.stat == DEAD)
-			IO.heart_status = HEART_NORMAL
+			IO.heart_normalize()
 			H.reanimate_body(H)
 			H.stat = UNCONSCIOUS
 			H.return_to_body_dialog(src)
 		else
-			IO.heart_status = HEART_NORMAL
+			IO.heart_normalize()
 
 
 	if(IO.heart_status == HEART_NORMAL && prob(20))
-		IO.heart_status = HEART_FAILURE
+		IO.heart_stop()
 		return
 	if(H.health <= config.health_threshold_crit || prob(10))
 		var/suff = min(H.getOxyLoss(), 20)
