@@ -230,10 +230,10 @@
 
 
 /obj/machinery/artifical_ventilation/proc/av_resolve_stranded(datum/component/bounded/bounds)
-	if(get_dist(bounds.bound_to, src) >= 2 && !anchored)
+	if(get_dist(bounds.bound_to, src) == 2 && !anchored)
 		step_towards(src, bounds.bound_to)
 		var/dist = get_dist(src, get_turf(bounds.bound_to))
-		if(dist > bounds.min_dist || dist < bounds.max_dist)
+		if(dist >= bounds.min_dist || dist <= bounds.max_dist)
 			return TRUE
 	var/obj/machinery/artifical_ventilation/AV = src
 	AV.detach(bounds.bound_to)
@@ -315,10 +315,10 @@
 
 
 /obj/machinery/cardiopulmonary_bypass/proc/cpb_resolve_stranded(datum/component/bounded/bounds)
-	if(get_dist(bounds.bound_to, src) >= 2 && !anchored)
+	if(get_dist(bounds.bound_to, src) == 2 && !anchored)
 		step_towards(src, bounds.bound_to)
 		var/dist = get_dist(src, get_turf(bounds.bound_to))
-		if(dist > bounds.min_dist || dist < bounds.max_dist)
+		if(dist >= bounds.min_dist || dist <= bounds.max_dist)
 			return TRUE
 	var/obj/machinery/artifical_ventilation/CPB = src
 	CPB.detach(bounds.bound_to)
