@@ -5,10 +5,10 @@
 	config_tag = "rp-revolution"
 	role_type = ROLE_REV
 	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
-	required_players = 2	//4
+	required_players = 4
 	required_players_secret = 20
-	required_enemies = 1	//2
-	recommended_enemies = 1	//2
+	required_enemies = 2
+	recommended_enemies = 2
 
 	votable = 0
 
@@ -284,7 +284,7 @@
 				message_admins("Unable to add new heads of revolution.")
 				tried_to_add_revheads = world.time + 6000 // wait 10 minutes
 
-	if(last_command_report == 0 && world.time >= 4 MINUTES)
+	if(last_command_report == 0 && world.time >= 10 MINUTES)
 		src.command_report("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff, has been halved.")
 		last_command_report = 1
 		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")
@@ -299,10 +299,10 @@
 			var/datum/money_account/account = person["acc_datum"]
 			account.change_salary(null, "CentCom", "CentCom", "Admin", force_rate = -50)	//halve the salary of all staff except heads
 
-	else if(last_command_report == 1 && world.time >= 7 MINUTES)
+	else if(last_command_report == 1 && world.time >= 30 MINUTES)
 		src.command_report("Statistics hint that a high amount of leisure time, and associated activities, are responsible for the poor performance of many of our stations. You are to bolt and close down any leisure facilities, such as the holodeck, the theatre and the bar. Food can be distributed through vendors and the kitchen.")
 		last_command_report = 2
-	else if(last_command_report == 2 && world.time >= 9 MINUTES)
+	else if(last_command_report == 2 && world.time >= 60 MINUTES)
 		src.command_report("It is reported that merely closing down leisure facilities has not been successful. You and your Heads of Staff are to ensure that all crew are working hard, and not wasting time or energy. Any crew caught off duty without leave from their Head of Staff are to be warned, and on repeated offence, to be brigged until the next transfer shuttle arrives, which will take them to facilities where they can be of more use.")
 		last_command_report = 3
 
