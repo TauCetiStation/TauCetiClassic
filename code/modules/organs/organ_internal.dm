@@ -134,7 +134,6 @@
 	var/failing_interval = null
 
 /obj/item/organ/internal/heart/proc/heart_stop()
-	..()
 	heart_status = HEART_FAILURE
 
 /obj/item/organ/internal/heart/proc/heart_fibrillate()

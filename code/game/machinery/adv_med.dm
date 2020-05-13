@@ -311,7 +311,7 @@
 						if(IO.robotic == 2)
 							mech = "Mechanical:"
 
-						if(istype(IO, /obj/item/organ/internal/heart))
+						if(IO.name == "heart")
 							var/obj/item/organ/internal/heart/Heart = occupant.organs_by_name[O_HEART]
 							if(Heart.heart_status == "HEART_FAILURE")
 								organ_status = "Heart Failure:"
