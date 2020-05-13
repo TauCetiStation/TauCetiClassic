@@ -183,39 +183,30 @@
 
 
 /datum/preferences/proc/update_preview_icon()		//seriously. This is horrendous.
-	// Silicons only need a very basic preview since there is no customization for them.
-	if(job_engsec_high)
-		switch(job_engsec_high)
-			if(AI)
-				parent.show_character_previews(image('icons/mob/AI.dmi', "AI", dir = SOUTH))
-				return
-			if(CYBORG)
-				parent.show_character_previews(image('icons/mob/robots.dmi', "robot", dir = SOUTH))
-				return
+	// Determine what job is marked as 'High' priority, and dress them up as such.
+	var/datum/job/previewJob
+
+	if(job_preferences["Test Subject"] == JP_LOW)
+		previewJob = SSjob.GetJob("Test Subject")
+
+	if(!previewJob)
+		var/highest_pref = 0
+		for(var/job in job_preferences)
+			if(job_preferences[job] > highest_pref)
+				previewJob = SSjob.GetJob(job)
+				highest_pref = job_preferences[job]
+
+	if(previewJob)
+		if(istype(previewJob, /datum/job/ai))
+			parent.show_character_previews(image('icons/mob/AI.dmi', "AI", dir = SOUTH))
+			return
+		if(istype(previewJob, /datum/job/cyborg))
+			parent.show_character_previews(image('icons/mob/robots.dmi', "robot", dir = SOUTH))
+			return
 
 	// Set up the dummy for its photoshoot
 	var/mob/living/carbon/human/dummy/mannequin = new(null, species)
 	copy_to(mannequin)
-
-	// Determine what job is marked as 'High' priority, and dress them up as such.
-	var/datum/job/previewJob
-	var/highRankFlag = job_civilian_high | job_medsci_high | job_engsec_high
-
-	if(job_civilian_low & ASSISTANT)
-		previewJob = SSjob.GetJob("Test Subject")
-	else if(highRankFlag)
-		var/highDeptFlag
-		if(job_civilian_high)
-			highDeptFlag = CIVILIAN
-		else if(job_medsci_high)
-			highDeptFlag = MEDSCI
-		else if(job_engsec_high)
-			highDeptFlag = ENGSEC
-
-		for(var/datum/job/job in SSjob.occupations)
-			if(job.flag == highRankFlag && job.department_flag == highDeptFlag)
-				previewJob = job
-				break
 
 	var/datum/species/S = all_species[species]
 	if(S)

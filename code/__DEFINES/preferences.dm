@@ -42,3 +42,9 @@
 #define GET_RANDOM_JOB 0
 #define BE_ASSISTANT 1
 #define RETURN_TO_LOBBY 2
+
+// Job preference levels.
+#define JP_LOW 1
+#define JP_MEDIUM 2
+#define JP_HIGH 3
+#define JP_LEVELS list(JP_LOW, JP_MEDIUM, JP_HIGH)
