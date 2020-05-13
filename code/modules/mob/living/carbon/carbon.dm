@@ -1,6 +1,3 @@
-#define DEFIB_TIME_LIMIT     (8 MINUTES) //past this many seconds, defib is useless. Currently 8 Minutes
-#define DEFIB_TIME_LOSS      (2 MINUTES) //past this many seconds, brain damage occurs. Currently 2 minutes
-#define MAX_BRAIN_DAMAGE      80
 #define MASSAGE_RHYTM_RIGHT   11
 #define MASSAGE_ALLOWED_ERROR 2
 /mob/living/carbon
@@ -834,7 +831,7 @@
 				return
 			if(massages_done_right > 12)
 				to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
-				reanimate_body(H)
+				H.reanimate_body(H)
 				H.stat = UNCONSCIOUS
 				massages_done_right = 0
 				Heart.heart_status = HEART_NORMAL
@@ -861,41 +858,7 @@
 			if(!(H.op_stage.ribcage == 2) && prob(5))
 				BP.fracture()
 				to_chat(user, "<span class='warning'>You hear cracking in [src]'s chest!.</span>")
-	return_to_body_dialog(src)
-
-/mob/living/carbon/proc/reanimate_body(mob/living/carbon/human/returnable)
-	var/deadtime = world.time - returnable.timeofdeath
-	returnable.tod = null
-	returnable.timeofdeath = 0
-	dead_mob_list -= returnable
-	returnable.update_health_hud()
-	apply_brain_damage(returnable, deadtime)
-
-/mob/living/carbon/proc/apply_brain_damage(mob/living/carbon/human/H, var/deadtime)
-	if(deadtime < DEFIB_TIME_LOSS)
-		return
-
-	if(!H.should_have_organ(O_BRAIN))
-		return //no brain
-
-	var/obj/item/organ/internal/brain/brain = H.organs_by_name[O_BRAIN]
-	if(!brain)
-		return //no brain
-
-	var/brain_damage = CLAMP((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, H.getBrainLoss(), MAX_BRAIN_DAMAGE)
-	H.setBrainLoss(brain_damage)
-
-/mob/living/carbon/proc/return_to_body_dialog(mob/living/carbon/human/returnable)
-	if (returnable.client) //in body?
-		returnable.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
-	else if(returnable.mind)
-		for(var/mob/dead/observer/ghost in player_list)
-			if(ghost.mind == returnable.mind && ghost.can_reenter_corpse)
-				ghost.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
-				var/answer = alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate","Yes","No")
-				if(answer == "Yes")
-					ghost.reenter_corpse()
-				break
+		H.return_to_body_dialog(H)
 
 /mob/living/carbon/Topic(href, href_list)
 	..()
@@ -1003,6 +966,3 @@
 
 #undef MASSAGE_RHYTM_RIGHT
 #undef MASSAGE_ALLOWED_ERROR
-#undef DEFIB_TIME_LIMIT
-#undef DEFIB_TIME_LOSS
-#undef MAX_BRAIN_DAMAGE

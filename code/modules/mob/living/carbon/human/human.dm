@@ -2153,3 +2153,37 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			update_bandage()
 			attack_log += "\[[time_stamp()]\] <font color='orange'>Had their bandages removed by [usr.name] ([usr.ckey]).</font>"
 			usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) bandages.</font>"
+
+/mob/living/carbon/human/proc/return_to_body_dialog(mob/living/carbon/human/returnable)
+	if (returnable.client) //in body?
+		returnable.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+	else if(returnable.mind)
+		for(var/mob/dead/observer/ghost in player_list)
+			if(ghost.mind == returnable.mind && ghost.can_reenter_corpse)
+				ghost.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+				var/answer = alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate","Yes","No")
+				if(answer == "Yes")
+					ghost.reenter_corpse()
+				break
+
+/mob/living/carbon/human/proc/reanimate_body(mob/living/carbon/human/returnable)
+	var/deadtime = world.time - returnable.timeofdeath
+	returnable.tod = null
+	returnable.timeofdeath = 0
+	dead_mob_list -= returnable
+	returnable.update_health_hud()
+	apply_brain_damage(returnable, deadtime)
+
+/mob/living/carbon/human/proc/apply_brain_damage(mob/living/carbon/human/H, var/deadtime)
+	if(deadtime < DEFIB_TIME_LOSS)
+		return
+
+	if(!H.should_have_organ(O_BRAIN))
+		return //no brain
+
+	var/obj/item/organ/internal/brain/brain = H.organs_by_name[O_BRAIN]
+	if(!brain)
+		return //no brain
+
+	var/brain_damage = CLAMP((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, H.getBrainLoss(), MAX_BRAIN_DAMAGE)
+	H.setBrainLoss(brain_damage)
