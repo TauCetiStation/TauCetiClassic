@@ -107,3 +107,22 @@
 
 	for (var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/nutriment(src)
+
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/first_aid_satchel
+	name = "First-aid satchel"
+	icon_state = "first_aid_satchel"
+	desc = "A small bag kit, to aid wounds"
+	max_w_class = ITEM_SIZE_SMALL
+	w_class = ITEM_SIZE_SMALL
+
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/first_aid_satchel/atom_init()
+	. = ..()
+	if (empty)
+		return
+
+	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/bodybag/cryobag(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
+	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/stack/medical/splint(src)
