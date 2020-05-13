@@ -32231,6 +32231,7 @@
 	},
 /area/station/rnd/hallway)
 "bfQ" = (
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
@@ -47207,6 +47208,7 @@
 /area/station/medical/surgery2)
 "bKI" = (
 /obj/machinery/light,
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -49125,6 +49127,7 @@
 /area/station/medical/hallway)
 "bPz" = (
 /obj/machinery/light,
+/obj/machinery/life_assist/cardiopulmonary_bypass,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -50765,6 +50768,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/life_assist/cardiopulmonary_bypass,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -77488,6 +77492,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"

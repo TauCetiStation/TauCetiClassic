@@ -185,13 +185,17 @@
 	. = ..()
 	update_icon()
 
-/obj/machinery/life_assist/artifical_ventilation
+/obj/machinery/life_assist/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
+
+/obj/machinery/life_assist/artificial_ventilation
 	name = "artificial ventilation machine"
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "av_idle"
 	desc = "This is an Artificial Ventillation machine that supports breathing while lungs is broken."
 
-/obj/machinery/life_assist/artifical_ventilation/update_icon()
+/obj/machinery/life_assist/artificial_ventilation/update_icon()
 	if(attached)
 		icon_state = "av_ventilating"
 	else
@@ -201,10 +205,6 @@
 	if(attached)
 		detach()
 	return ..()
-
-/obj/machinery/life_assist/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
 
 // Artificial Ventillation Machine
 /obj/machinery/life_assist/artificial_ventilation/MouseDrop(over_object, src_location, over_location)
