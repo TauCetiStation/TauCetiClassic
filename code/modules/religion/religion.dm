@@ -7,20 +7,6 @@
 // TO-DO: make cultists, and other antags use this in some way? ~Luduk
 /proc/setup_religions()
 	global.chaplain_religion = new /datum/religion/chaplain
-	for(var/obj/structure/altar_of_gods/A in /area/station/civilian/chapel/altar)
-		global.chaplain_religion.altar = A
-
-/proc/reset_religion()
-	if(global.chaplain_religion)
-		var/obj/structure/altar_of_gods/altar = global.chaplain_religion.altar
-		altar.chosen_aspect = initial(altar.chosen_aspect)
-		altar.sect = initial(altar.sect)
-		altar.religion = initial(altar.religion)
-		altar.performing_rite = initial(altar.performing_rite)
-
-		var/datum/religion/new_religion = new /datum/religion/chaplain
-		new_religion.altar = altar
-		global.chaplain_religion = new_religion
 
 /datum/religion
 	// The name of this religion.
@@ -136,7 +122,27 @@
 	var/obj/structure/altar_of_gods/altar
 
 /datum/religion/New()
+	reset_religion()
 	create_default()
+
+/datum/religion/proc/reset_religion()
+	name = initial(name)
+	lore = initial(lore)
+	lore_by_name = initial(lore_by_name)
+	deity_names = initial(deity_names)
+	bible_info = initial(bible_info)
+	active_deities = initial(active_deities)
+	favor = initial(favor)
+	max_favor = initial(max_favor)
+	aspects = initial(aspects)
+	god_spells = initial(god_spells)
+	rites = initial(rites)
+
+	if(altar)
+		altar.chosen_aspect = initial(altar.chosen_aspect)
+		altar.sect = initial(altar.sect)
+		altar.religion = initial(altar.religion)
+		altar.performing_rite = initial(altar.performing_rite)
 
 /datum/religion/proc/gen_bible_info()
 	if(bible_info_by_name[name])

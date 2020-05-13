@@ -17,6 +17,11 @@
 	return variants
 
 /datum/religion/chaplain/proc/create_by_chaplain(mob/living/carbon/human/chaplain)
+	for(var/obj/structure/altar_of_gods/A in /area/station/civilian/chapel/altar)
+		altar = A
+
+	reset_religion()
+
 	var/new_religion = sanitize_safe(input(chaplain, "You are the crew services officer. Would you like to change your religion? Default is [name], in SPACE.", "Name change", name), MAX_NAME_LEN)
 	if(!new_religion)
 		new_religion = name
