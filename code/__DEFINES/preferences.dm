@@ -47,4 +47,4 @@
 #define JP_LOW 1
 #define JP_MEDIUM 2
 #define JP_HIGH 3
-#define JP_LEVELS list(JP_LOW, JP_MEDIUM, JP_HIGH)
+#define JP_LEVELS list(JP_HIGH, JP_MEDIUM, JP_LOW)
