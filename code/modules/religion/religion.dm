@@ -7,6 +7,20 @@
 // TO-DO: make cultists, and other antags use this in some way? ~Luduk
 /proc/setup_religions()
 	global.chaplain_religion = new /datum/religion/chaplain
+	for(var/obj/structure/altar_of_gods/A in /area/station/civilian/chapel/altar)
+		global.chaplain_religion.altar = A
+
+/proc/reset_religion()
+	if(global.chaplain_religion)
+		var/obj/structure/altar_of_gods/altar = global.chaplain_religion.altar
+		altar.chosen_aspect = initial(altar.chosen_aspect)
+		altar.sect = initial(altar.sect)
+		altar.religion = initial(altar.religion)
+		altar.performing_rite = initial(altar.performing_rite)
+
+		var/datum/religion/new_religion = new /datum/religion/chaplain
+		new_religion.altar = altar
+		global.chaplain_religion = new_religion
 
 /datum/religion
 	// The name of this religion.
@@ -117,6 +131,9 @@
 	var/list/god_spells = list()
 	// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
 	var/list/rites = list()
+
+	// Contains an altar, wherever it is
+	var/obj/structure/altar_of_gods/altar
 
 /datum/religion/New()
 	create_default()

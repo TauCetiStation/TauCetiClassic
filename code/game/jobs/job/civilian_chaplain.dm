@@ -26,6 +26,7 @@
 	if(H.mind)
 		H.mind.holy_role = HOLY_ROLE_HIGHPRIEST
 
+	reset_religion()
 	INVOKE_ASYNC(global.chaplain_religion, /datum/religion/chaplain.proc/create_by_chaplain, H)
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda/chaplain(H), SLOT_BELT)
