@@ -3,6 +3,7 @@
 /mob/living/carbon
 	var/last_massage = 0
 	var/massages_done_right = 0
+	var/needed_massages = 12
 
 
 /mob/living/carbon/atom_init()
@@ -819,7 +820,6 @@
 		return
 	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
 	if((world.time - last_massage) > 5 SECONDS && do_mob(user, src, HUMAN_STRIP_DELAY))
-		var/needed_massages = 12
 		visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
 		to_chat(user, "<span class='warning'>Repeat at least every second.</span>")
 		massages_done_right = 0
