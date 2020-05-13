@@ -139,9 +139,9 @@
 /obj/item/organ/internal/heart/proc/heart_fibrillate()
 	heart_status = HEART_FIBR
 	if(HAS_TRAIT(owner, TRAIT_FAT))
-		failing_interval = (30 SECONDS)
+		failing_interval = 30 SECONDS
 	else
-		failing_interval = (1 MINUTE)
+		failing_interval = 1 MINUTE
 	fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /obj/item/organ/internal/heart/proc/heart_normalize()

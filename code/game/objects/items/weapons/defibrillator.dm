@@ -384,6 +384,10 @@
 		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
+	if(IO.heart_status == HEART_NORMAL && prob(20))
+		IO.heart_stop()
+		return
+
 	if(IO.heart_status == HEART_FIBR)
 		if(H.stat == DEAD)
 			IO.heart_normalize()
@@ -393,10 +397,6 @@
 		else
 			IO.heart_normalize()
 
-
-	if(IO.heart_status == HEART_NORMAL && prob(20))
-		IO.heart_stop()
-		return
 	if(H.health <= config.health_threshold_crit || prob(10))
 		var/suff = min(H.getOxyLoss(), 20)
 		H.adjustOxyLoss(-suff)

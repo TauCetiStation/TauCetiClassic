@@ -199,8 +199,6 @@
 				message += "<span class='notice'>Subject's Heart status: <font color='red'>Heart Failure!</font></span><br>"
 			if(HEART_FIBR)
 				message += "<span class='notice'>Subject's Heart status: <font color='blue'>Heart Fibrillation.</font></span><br>"
-			if(HEART_NORMAL)
-				message += "<span class='notice'>Subject's Heart status: <font color='green'>Heart Normal.</font></span><br>"
 		message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
 
 	if(!output_to_chat)

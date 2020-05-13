@@ -246,9 +246,8 @@
 						var/rejecting = ""
 						if(BP.status & ORGAN_ARTERY_CUT)
 							arterial_bleeding = "<br>Arterial bleeding"
-						if(istype(BP, /obj/item/organ/external/chest))
-							if(occupant.is_lung_ruptured())
-								lung_ruptured = "Lung ruptured:"
+						if(istype(BP, /obj/item/organ/external/chest) && occupant.is_lung_ruptured())
+							lung_ruptured = "Lung ruptured:"
 						if(BP.status & ORGAN_SPLINTED)
 							splint = "Splinted:"
 						if(BP.status & ORGAN_BLEEDING)
