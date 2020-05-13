@@ -47,4 +47,5 @@
 #define JP_LOW 1
 #define JP_MEDIUM 2
 #define JP_HIGH 3
+// Order is of the essence apperantly. From highest order to lowest.
 #define JP_LEVELS list(JP_HIGH, JP_MEDIUM, JP_LOW)
