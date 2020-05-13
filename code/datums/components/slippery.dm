@@ -18,7 +18,7 @@
 	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED, COMSIG_ATOM_ENTERED), .proc/Slip)
 
 	var/datum/mechanic_tip/slippery/slip_tip = new
-	AddComponent(/datum/component/mechanic_desc, list(slip_tip))
+	parent.AddComponent(/datum/component/mechanic_desc, list(slip_tip))
 
 /datum/component/slippery/Destroy()
 	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(SLIPPERY_TIP))
@@ -29,4 +29,4 @@
 	if(istype(victim) && victim.slip(weaken_time, parent, lube_flags) && callback)
 		callback.Invoke(victim)
 
-#undef SLIPPER_TIP
+#undef SLIPPERY_TIP
