@@ -2919,7 +2919,7 @@
 		if(!check_rights(R_EVENT))	return
 		var/datum/money_account/account = locate(href_list["salary"])
 		if(!account)
-			to_chat(usr, "<span class='warning'>Account not found!")
+			to_chat(usr, "<span class='warning'>Account not found!</span>")
 			return
 		account.change_salary(usr, "CentCom", "CentCom", "Admin")
 
@@ -2943,9 +2943,9 @@
 			var/datum/money_account/account = person["acc_datum"]
 			account.change_salary(null, "CentCom", "CentCom", "Admin", force_rate = ratio_rate)
 		if(new_ratio == 1)	//if 0 was selected
-			to_chat(usr, "<span class='warning'><b>You returned basic salaries to all professions</b>")
+			to_chat(usr, "<span class='warning'><b>You returned basic salaries to all professions</b></span>")
 		else
-			to_chat(usr, "<span class='warning'><b>You have globally changed the salary of all professions by [input_rate]</b>")
+			to_chat(usr, "<span class='warning'><b>You have globally changed the salary of all professions by [input_rate]</b></span>")
 
 	// player info stuff
 
