@@ -865,7 +865,8 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	var/list/crew = my_subordinate_staff("Admin")
 	var/dat
 
-	dat += "<h3>Crew Salary <A href='byond://?src=\ref[src];global_salary=1'>Global</A></h3>"
+	dat += "<A href='byond://?src=\ref[src];global_salary=1'>Globally change crew salaries</A><br>"
+	dat += "<small>Globally - this is a change in salary for the profession. New players will enter the round with a changed salary. To return the base salary, select 0.</small><hr>"
 	dat += "<div class='statusDisplay'>"
 	if(crew.len)
 		dat += "<table>"

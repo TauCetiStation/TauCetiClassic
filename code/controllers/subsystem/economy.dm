@@ -2,7 +2,7 @@ var/datum/subsystem/economy/SSeconomy
 
 /datum/subsystem/economy
 	name = "Economy"
-	wait = 2 MINUTES
+	wait = 15 MINUTES
 	init_order = SS_INIT_DEFAULT
 	flags = SS_NO_INIT
 
@@ -20,8 +20,6 @@ var/datum/subsystem/economy/SSeconomy
 		for(var/datum/money_account/D in all_money_accounts)
 			if(D.owner_salary && !D.suspended)
 				charge_to_account(D.account_number, D.account_number, "Salary payment", "CentCom", D.owner_salary)
-				if(D.change == "temp")
-					D.set_salary(D.base_salary)
 	payment_counter += 1
 
 /datum/subsystem/economy/proc/set_endtime()

@@ -206,7 +206,8 @@ var/list/admin_verbs_whitelist = list(
 	/datum/admins/proc/toggle_job_restriction
 	)
 var/list/admin_verbs_event = list(
-	/client/proc/event_map_loader
+	/client/proc/event_map_loader,
+	/client/proc/admin_crew_salary
 	)
 
 //verbs which can be hidden - needs work
@@ -1020,7 +1021,7 @@ var/list/admin_verbs_hideable = list(
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
 
-/client/verb/admin_crew_salary()
+/client/proc/admin_crew_salary()
 	set name = "Salary"
 	set category = "Event"
 	if(holder)

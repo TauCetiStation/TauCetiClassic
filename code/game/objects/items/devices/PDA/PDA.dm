@@ -44,7 +44,7 @@
 	var/newmessage = 0			//To remove hackish overlay check
 
 	var/list/cartmodes = list(40, 42, 43, 433, 44, 441, 45, 451, 46, 48, 47, 49) // If you add more cartridge modes add them to this list as well.
-	var/list/no_auto_update = list(1, 40, 43, 44, 441, 45, 451, 73)		     // These modes we turn off autoupdate
+	var/list/no_auto_update = list(1, 40, 43, 44, 441, 45, 451, 71, 72, 73)		     // These modes we turn off autoupdate
 	var/list/update_every_five = list(3, 41, 433, 46, 47, 48, 49)			     // These we update every 5 ticks
 
 	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
@@ -57,9 +57,8 @@
 	var/funds_amount = 0
 	var/transfer_purpose = "Funds transfer"
 	var/pda_paymod = FALSE // if TRUE, click on someone to pay
-	var/trans_menu = 0	// 1 or 0 --> show/hide transaction menu; nanoUI doesn’t understand “FALSE” or I don’t understand something :)
 	var/list/trans_log = list()
-	var/trans_log_spoiler = 0	// 1 or 0 --> show/hide transaction log
+	var/list/safe_pages = list(7, 71, 72, 73)
 	var/list/owner_fingerprints = list()	//fingerprint information is taken from the ID card
 	var/boss_PDA = 0	//the PDA belongs to the heads or not	(can I change the salary?)
 	var/list/subordinate_staff = list()
@@ -425,9 +424,7 @@
 	data["target_account_number"] = target_account_number
 	data["funds_amount"] = funds_amount
 	data["purpose"] = transfer_purpose
-	data["trans_menu"] = trans_menu	// show/hide transaction menu
 	data["trans_log"] = trans_log
-	data["trans_log_spoiler"] = trans_log_spoiler	// show/hide transaction log
 	data["time_to_next_pay"] = time_stamp(format = "mm:ss", wtime = (SSeconomy.endtime - world.timeofday))
 	data["boss"] = boss_PDA
 	data["subordinate_staff"] = subordinate_staff
@@ -590,7 +587,7 @@
 	if(active_uplink_check(user))
 		return
 
-	if(mode == 7)
+	if(mode in safe_pages)
 		mode = 0	//for safety
 	ui_interact(user) //NanoUI requires this proc
 	return
@@ -651,8 +648,19 @@
 		if("UpdateInfo")
 			ownjob = id.assignment
 			ownrank = id.rank
-			check_rank(id.rank)
+			check_rank(id.rank)		//check if we became the head
 			name = "PDA-[owner] ([ownjob])"
+			if(owner_account && owner_account.account_number == id.associated_account_number)
+				return
+			ui.close()
+			var/datum/money_account/account = get_account(id.associated_account_number)
+			if(account)		//another account tied to the card
+				account.owner_PDA = src		//set PDA in /datum/money_account
+				owner_account = account		//bind the account to the pda
+				owner_fingerprints = list()	//remove old fingerprints
+			else	//no account was tied to a card
+				owner_account = null		//clear old account information
+				owner_fingerprints = list()	//remove old fingerprints
 		if("Eject")//Ejects the cart, only done from hub.
 			if (!isnull(cartridge))
 				var/turf/T = loc
@@ -809,24 +817,18 @@
 				mode = 7
 
 		if("Transaction Menu")
-			if(trans_menu)
-				trans_menu = 0
-			else
-				trans_menu = 1
+			mode = 71
 
 		if("Transaction Log")
-			if(trans_log_spoiler)
-				trans_log_spoiler = 0
-			else
-				trans_log = null
-				for(var/datum/transaction/T in owner_account.transaction_log)
-					trans_log += list(list("data"="[T.date]", "time"="[T.time]", "name"="[T.target_name]", "purpose"="[T.purpose]", "amount"="[T.amount]", "source"="[T.source_terminal]"))
-				trans_log_spoiler = 1
+			mode = 72
+			trans_log = null
+			for(var/datum/transaction/T in owner_account.transaction_log)
+				trans_log += list(list("data"="[T.date]", "time"="[T.time]", "name"="[T.target_name]", "purpose"="[T.purpose]", "amount"="[T.amount]", "source"="[T.source_terminal]"))
 
 		if("Send Money")
 			if(check_owner_fingerprints(U))
 				target_account_number = text2num(href_list["account"])
-				mode = 7
+				mode = 71
 
 		if("Look for")
 			ui.close()
@@ -859,10 +861,12 @@
 				charge_to_account(owner_account.account_number, target_account_number, transfer_purpose, name, -funds_amount)
 			else
 				to_chat(U, "[bicon(src)]<span class='warning'>Funds transfer failed. Target account is suspended.</span>")
+			target_account_number = 0
+			funds_amount = 0
 
 		if("Staff Salary")
 			mode = 73
-			subordinate_staff = my_subordinate_staff("Admin")
+			subordinate_staff = my_subordinate_staff(ownrank)
 		
 		if("Change Salary")
 			var/account_number = text2num(href_list["account"])
@@ -870,7 +874,6 @@
 				if(account_number == person["acc_number"])
 					var/datum/money_account/account = person["acc_datum"]
 					account.change_salary(U, owner, name, ownrank)
-					nanomanager.update_uis(src) // update all UIs attached to src
 					break
 
 //SYNDICATE FUNCTIONS===================================
@@ -1271,16 +1274,16 @@
 		if(!idcard.registered_name)
 			to_chat(user, "<span class='notice'>\The [src] rejects the ID.</span>")
 			return
-		if(!owner || !owner_account)
+		if(!owner)
 			owner = idcard.registered_name
 			ownjob = idcard.assignment
 			ownrank = idcard.rank
 			check_rank(idcard.rank)
 			var/datum/money_account/account = get_account(idcard.associated_account_number)
 			if(account)
-				account.owner_PDA = src		//add PDA in /datum/money_account
-				owner_account = account		//bind the account to the pda
-			owner_fingerprints += idcard.fingerprint_hash	//save fingerprints in pda
+				account.owner_PDA = src			//set PDA in /datum/money_account
+				owner_account = account			//bind the account to the pda
+				owner_fingerprints = list()		//remove old fingerprints
 			name = "PDA-[owner] ([ownjob])"
 			to_chat(user, "<span class='notice'>Card scanned.</span>")
 		else
@@ -1465,7 +1468,7 @@
 
 /obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
 	if(!owner_account)
-		alert("Eror! Account information not saved in this PDA, please swipe your ID card.")
+		alert("Eror! Account information not saved in this PDA, please insert your ID card in PDA and update the information.")
 		return FALSE
 	if(!user.dna)	//just in case
 		alert("Eror! PDA can't read your fingerprints.")
@@ -1486,6 +1489,8 @@
 /obj/item/device/pda/proc/transaction_inform(target, source, amount, salary_change = FALSE)
 	if(!can_use())
 		return
+	if(src.message_silent)
+		return
 	//Search for holder of the PDA. (some copy-paste from /obj/item/device/pda/proc/create_message)
 	var/mob/living/L = null
 	if(src.loc && isliving(src.loc))
@@ -1493,17 +1498,18 @@
 	if(L)
 		if(salary_change)
 			if(amount > 0)
-				to_chat(L, "[bicon(src)]<font color='#579914'><b>[owner], your salary was increased by [source] by [amount]%! This change is valid until the next payment.</b></font>")
+				to_chat(L, "[bicon(src)]<font color='#579914'><b>[owner], your salary was increased by [source] by [amount]%!</b></font>")
+			else if(amount < 0)
+				to_chat(L, "[bicon(src)]<span class='red'>[owner], your salary was reduced by [source] by [amount]%!</span>")
 			else
-				to_chat(L, "[bicon(src)]<span class='red'>[owner], your salary was reduced by [source] by [amount]%! This change is valid until the next payment.</span>")
+				to_chat(L, "[bicon(src)]<span class='notice'><b>[owner], [source] returned your base salary.</b></span>")
 		else
 			if(amount > 0)
 				to_chat(L, "[bicon(src)]<span class='notice'>[owner], the amount of [amount]$ from [source] was transferred to your account.</span>")
 			else
 				to_chat(L, "[bicon(src)]<span class='notice'>You have successfully transferred [amount]$ to [target] account number.</span>")
-		if(!src.message_silent)
-			playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+		playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/device/pda/proc/check_rank(rank)
-	if(rank in command_positions)
+	if((rank in command_positions) || (rank == "Quartermaster"))
 		boss_PDA = 1

@@ -2921,30 +2921,31 @@
 		if(!account)
 			to_chat(usr, "<span class='warning'>Account not found!")
 			return
-		if(account.change != "def")
-			if(alert(usr, "Are you sure you want to return the base salary?", "Confirm", "Yes", "No") == "Yes")
-				account.set_salary(account.base_salary)
-		else
-			account.change_salary(usr, "CentCom", "CentCom", "Admin")
+		account.change_salary(usr, "CentCom", "CentCom", "Admin")
 
 	else if(href_list["global_salary"])
 		if(!check_rights(R_EVENT))	return
 		if(alert(usr, "Are you sure you want to globally change the salary?", "Confirm", "Yes", "No") != "Yes")
 			return
-		var/list/rate = list("+100%", "+50%", "+25%", "-25%", "-50%", "-100%")
+		var/list/rate = list("+100%", "+50%", "+25%", "0", "-25%", "-50%", "-100%")
 		var/input_rate = input(usr, "Please, select a rate!", "Salary Rate", null) as null|anything in rate
 		if(!input_rate)
 			return
 		var/ratio_rate = text2num(replacetext(replacetext(input_rate, "+", ""), "%", ""))
 		var/new_ratio = 1 + (ratio_rate/100)
+		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")
 		for(var/datum/job/J in SSjob.occupations)
+			if(J.title in excluded_rank)
+				continue
 			J.salary_ratio = new_ratio
-			//to_chat(usr, "<span class='warning'>[J.title] : ratio = [J.salary_ratio]")
 		var/list/crew = my_subordinate_staff("Admin")
 		for(var/person in crew)
 			var/datum/money_account/account = person["acc_datum"]
 			account.change_salary(null, "CentCom", "CentCom", "Admin", force_rate = ratio_rate)
-		to_chat(usr, "<span class='warning'><b>You have globally changed the salary of all professions by [input_rate]</b>")
+		if(new_ratio == 1)	//if 0 was selected
+			to_chat(usr, "<span class='warning'><b>You returned basic salaries to all professions</b>")
+		else
+			to_chat(usr, "<span class='warning'><b>You have globally changed the salary of all professions by [input_rate]</b>")
 
 	// player info stuff
 

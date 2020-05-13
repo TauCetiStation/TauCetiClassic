@@ -12,7 +12,7 @@
 	var/obj/item/weapon/card/id/modify = null	//the card we will change
 	var/mode = 0.0
 	var/printing = null
-	var/datum/money_account/datum_account = null
+	var/datum/money_account/datum_account = null	//if money account is tied to the card and the card is inserted into the console, the account is stored here
 
 /obj/machinery/computer/card/proc/is_centcom()
 	return istype(src, /obj/machinery/computer/card/centcom)
@@ -217,8 +217,7 @@
 					if(is_centcom())
 						access = get_centcom_access(t1)
 					else
-						for(var/jobtype in typesof(/datum/job))
-							var/datum/job/J = new jobtype
+						for(var/datum/job/J in SSjob.occupations)
 							if(ckey(J.title) == ckey(t1))
 								jobdatum = J
 								break
@@ -300,6 +299,8 @@
 			if (is_authenticated())
 				modify.assignment = "Terminated"
 				modify.access = list()
+				if(datum_account)
+					datum_account.set_salary(0)		//no salary
 
 				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
 				if(mode)

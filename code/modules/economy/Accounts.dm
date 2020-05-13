@@ -7,7 +7,7 @@
 	var/owner_name = ""
 	var/owner_salary = 0	//used for payments
 	var/base_salary = 0		//used to changes owner_salary
-	var/change = "def"		//type of salary change: "perm"-Permanent, "temp"-Temporarily or "def"-Default
+	var/change = "def"		//type of salary change: "perm"-Permanent(only admin can cancel), "temp"-Temporarily or "def"-Default
 	var/account_number = 0
 	var/remote_access_pin = 0
 	var/money = 0
@@ -24,26 +24,29 @@
 /datum/money_account/proc/set_salary(amount, ratio = 1)
 	owner_salary = amount * ratio
 	base_salary = amount
-	change = "def"
+	if(change == "perm")
+		return
+	else
+		change = "def"
 
 /datum/money_account/proc/change_salary(user, user_name, terminal, user_rank, force_rate = null)
 	var/new_salary = 0
 	var/salary_rate = 0
 	var/input_rate = ""
 	var/type_change = "temp"	//permanent or temporary change?
-	if(!force_rate)
+	if(force_rate == null)
 		if(change == "temp")
-			alert(user, "The salary of [owner_name] has already changed, try after the next payment.")
-			return
-		if(change == "perm")
-			alert(user, "Central Command blocked salary change!")
-			return
-		var/list/rate = list("+100%", "+50%", "+25%", "-25%", "-50%", "-100%")
+			if(alert(user, "The salary of [owner_name] has already changed. Are you sure you want to change your salary?", "Confirm", "Yes", "No") != "Yes")
+				return
+		var/list/rate = list("+100%", "+50%", "+25%", "0", "-25%", "-50%", "-100%")
 		if(user_rank != "Admin")
-			rate = rate.Copy(2,6)
+			if(change == "perm")
+				alert(user, "Central Command blocked salary change!")
+				return
+			rate = rate.Copy(2,7)
 		else
-			if(alert(user, "Permanent - changes will be valid until canceled.\
-			Temporarily - changes will be valid until the next payment.", "Choose type of salary change.", "Permanent", "Temporarily") == "Permanent")
+			if(alert(user, "Permanent - only admin can return the base salary.\
+			Temporarily - any head can return the base salary.", "Choose type of salary change.", "Permanent", "Temporarily") == "Permanent")
 				type_change = "perm"
 		input_rate = input(user, "Please, select a rate!", "Salary Rate", null) as null|anything in rate
 		if(!input_rate)
@@ -55,23 +58,16 @@
 	else
 		new_salary = round(base_salary + (base_salary * (force_rate/100)))
 		type_change = "perm"
-		input_rate = force_rate > 0 ? "+[force_rate]%" : "[force_rate]%"
 		salary_rate = force_rate
+	if(new_salary == owner_salary)	//there were no changes
+		return
 	owner_salary = new_salary
+	if(new_salary == base_salary)	//return to default
+		type_change = "def"
 	change = type_change
-	//create a transaction log entry
-	var/datum/transaction/T = new()
-	T.target_name = owner_name
-	T.purpose = "Salary change"
-	T.amount = input_rate
-	T.date = current_date_string
-	T.time = worldtime2text()
-	T.source_terminal = terminal
-	transaction_log.Add(T)
 
 	if(owner_PDA)
 		owner_PDA.transaction_inform(null, user_name, salary_rate, TRUE)
-
 
 /datum/transaction
 	var/target_name = ""
@@ -181,10 +177,6 @@
 	for(var/datum/money_account/D in all_money_accounts)
 		if(D.account_number == account_number)
 			return D
-
-/*proc/set_datum_salary(rank)
-	for(var/datum/job/J in typesof(/datum/job))
-		if(J.)*/
 
 #undef MAX_MONEY_ON_ACCOUNT
 #undef MIN_MONEY_ON_ACCOUNT

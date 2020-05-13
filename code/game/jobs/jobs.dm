@@ -163,8 +163,6 @@ var/list/nonhuman_positions = list(
 	var/list/data = list()	//it will be returned
 	var/list/own_department = list()
 	var/list/QM_staff = list("Cargo Technician", "Shaft Miner", "Recycler")	//QM's boys
-	var/list/excluded_rank = list("Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
-	var/list/list_for_check = list("Admin", "Captain", "Quartermaster")	//Why if(head_rank != "Admin" || "Captain" || "Quartermaster") don't work?
 
 	switch(head_rank)	//What departments do we manage?
 		if("Admin")
@@ -186,41 +184,18 @@ var/list/nonhuman_positions = list(
 
 	for(var/department in own_department)
 		for(var/person in all_staff[department])
-			if(!list_for_check.Find(head_rank) && excluded_rank.Find(person["rank"]))	//we will not change the salary for yourself
-			//	to_chat(world, "<span class='warning'>Boolin 1")
+			if(head_rank == person["rank"])	//we will not change the salary for yourself
 				continue
+			if(department == "med" && (head_rank == "Admin" || head_rank == "Captain") && person["rank"] == "Geneticist")	//so that the geneticist would not repeat twice
+				continue	//there is a geneticist in "sci"
 			if(department == "heads" && person["rank"] != "Captain")	//in "heads" we need only Captain
-			//	to_chat(world, "<span class='warning'>Boolin 2")
-				continue
-			if(department == "sci" && person["rank"] == "Geneticist")	//Geneticist should have one boss - CMO
-			//	to_chat(world, "<span class='warning'>Boolin 3")
 				continue
 			if(department == "civ")
 				if(head_rank != "Admin" && person["rank"] == "Internal Affairs Agent")	//only CentCom can change IAA's salary
-					//to_chat(world, "<span class='warning'>Boolin 4")
 					continue
-				if(head_rank == "Quartermaster" && (person["rank"] == "Quartermaster" || !QM_staff.Find(person["rank"])))	//QM only rules his boys
-					//to_chat(world, "<span class='warning'>Boolin 5")
-					continue
-				if(head_rank == "Head of Personnel" && QM_staff.Find(person["rank"]))	//HoP don't rules QM's boys, but rules QM
-					//to_chat(world, "<span class='warning'>Boolin 6")
+				if(head_rank == "Quartermaster" && !QM_staff.Find(person["rank"]))	//QM only rules his boys
 					continue
 			var/datum/money_account/account = person["acc_datum"]
 			data[++data.len] = list("name" = person["name"], "rank" = person["rank"], "salary" = account.owner_salary, "acc_datum" = person["acc_datum"], "acc_number" = person["account"])
 
 	return data	// --> list(real_name, assignment, salary, /datum/money_account/, account_number)
-	
-/client/verb/verb_staff()	//for test
-	set category = "IC"
-	set name = "Staff"
-
-	var/list/input_rank = list("Admin", "Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Quartermaster")
-	var/head_rank = input("Please, select a rank!", "Rank", null, null) as null|anything in input_rank
-
-	var/list/data = my_subordinate_staff(head_rank)
-
-	if(data.len)
-		for(var/D in data)
-			to_chat(world, "<span class='warning'> [D["name"]], [D["rank"]], [D["salary"]].")
-	else
-		to_chat(world, "<span class='warning'> data list is empty")
