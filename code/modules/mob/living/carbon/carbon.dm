@@ -922,8 +922,9 @@
 	var/retMissSound = 'sound/weapons/punchmiss.ogg'
 
 	var/specie = get_species()
-	if(all_species[specie])
-		var/datum/unarmed_attack/attack = all_species[specie]
+	var/datum/species/S = all_species[specie]
+	if(S)
+		var/datum/unarmed_attack/attack = S.unarmed
 
 		retDam = 2 + attack.damage
 		retDamType = attack.damType
