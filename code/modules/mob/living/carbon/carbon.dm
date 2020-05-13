@@ -818,8 +818,7 @@
 	if(user.is_busy(src))
 		return
 	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
-	if((world.time - last_massage) > 5 SECONDS)
-		do_mob(user, src, HUMAN_STRIP_DELAY)
+	if((world.time - last_massage) > 5 SECONDS && do_mob(user, src, HUMAN_STRIP_DELAY))
 		visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
 		to_chat(user, "<span class='warning'>Repeat at least every second.</span>")
 		massages_done_right = 0
