@@ -208,6 +208,7 @@
 		return
 	if(!in_range(src, usr) || !in_range(over_object, src))
 		return
+	src.AddComponent(/datum/component/bounded, over_object, 0, 1, CALLBACK(src, .proc/av_resolve_stranded))
 	if(attached)
 		visible_message("[attached] is detached from \the [src]")
 		REMOVE_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
@@ -219,27 +220,40 @@
 		ADD_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
 		update_icon()
 
+/obj/machinery/artifical_ventilation/proc/detach(mob/living/carbon/human/attached)
+	visible_message("The tube is ripped out of [attached]'s lungs, doesn't that hurt?")
+	attached.apply_damage(10, BRUTE, BP_CHEST)
+	REMOVE_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
+	attached = null
+	update_icon()
+	qdel(GetComponent(/datum/component/bounded))
+
+
+/obj/machinery/artifical_ventilation/proc/av_resolve_stranded(datum/component/bounded/bounds)
+	if(get_dist(bounds.bound_to, src) >= 2 && !anchored)
+		step_towards(src, bounds.bound_to)
+		var/dist = get_dist(src, get_turf(bounds.bound_to))
+		if(dist > bounds.min_dist || dist < bounds.max_dist)
+			return TRUE
+	var/obj/machinery/artifical_ventilation/AV = src
+	AV.detach(bounds.bound_to)
+	return TRUE
+
+
 /obj/machinery/artifical_ventilation/process()
 	if(attached)
-		if(!in_range(src, attached))
-			visible_message("The tube is ripped out of [attached]'s lungs, doesn't that hurt?")
-			attached.apply_damage(10, BRUTE, BP_CHEST)
-			REMOVE_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
-			attached = null
-			update_icon()
-		else
-			var/datum/gas_mixture/env = loc.return_air()
-			if(env.return_pressure() > (ONE_ATMOSPHERE - 20))
-				if((env.gas["oxygen"] / env.total_moles) > 0.10)
-					if(!HAS_TRAIT(attached, TRAIT_AV))
-						ADD_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
-				else
-					if(HAS_TRAIT(attached, TRAIT_AV))
-						REMOVE_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
+		var/datum/gas_mixture/env = loc.return_air()
+		if(env.return_pressure() > (ONE_ATMOSPHERE - 20))
+			if((env.gas["oxygen"] / env.total_moles) > 0.10)
+				if(!HAS_TRAIT(attached, TRAIT_AV))
+					ADD_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
 			else
 				if(HAS_TRAIT(attached, TRAIT_AV))
 					REMOVE_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
-		return
+		else
+			if(HAS_TRAIT(attached, TRAIT_AV))
+				REMOVE_TRAIT(attached, TRAIT_AV, LIFE_ASSIST_MACHINES_TRAIT)
+	return
 
 
 /obj/machinery/artifical_ventilation/examine(mob/user)
@@ -279,6 +293,7 @@
 		return
 	if(!in_range(src, usr) || !in_range(over_object, src))
 		return
+	src.AddComponent(/datum/component/bounded, over_object, 0, 1, CALLBACK(src, .proc/cpb_resolve_stranded))
 	if(attached)
 		visible_message("[attached] is detached from \the [src]")
 		REMOVE_TRAIT(attached, TRAIT_CPB, LIFE_ASSIST_MACHINES_TRAIT)
@@ -289,16 +304,25 @@
 		attached = over_object
 		update_icon()
 		ADD_TRAIT(attached, TRAIT_CPB, LIFE_ASSIST_MACHINES_TRAIT)
-		return
 
-/obj/machinery/cardiopulmonary_bypass/process()
-	if(attached)
-		if(!in_range(src, attached))
-			visible_message("The tubes is ripped out of [attached]'s heart, doesn't that hurt?")
-			attached.apply_damage(15, BRUTE, BP_CHEST)
-			REMOVE_TRAIT(attached, TRAIT_CPB, LIFE_ASSIST_MACHINES_TRAIT)
-			attached = null
-			update_icon()
+/obj/machinery/cardiopulmonary_bypass/proc/detach(mob/living/carbon/human/attached)
+	visible_message("The tubes is ripped out of [attached]'s heart, doesn't that hurt?")
+	attached.apply_damage(15, BRUTE, BP_CHEST)
+	REMOVE_TRAIT(attached, TRAIT_CPB, LIFE_ASSIST_MACHINES_TRAIT)
+	attached = null
+	update_icon()
+	qdel(GetComponent(/datum/component/bounded))
+
+
+/obj/machinery/cardiopulmonary_bypass/proc/cpb_resolve_stranded(datum/component/bounded/bounds)
+	if(get_dist(bounds.bound_to, src) >= 2 && !anchored)
+		step_towards(src, bounds.bound_to)
+		var/dist = get_dist(src, get_turf(bounds.bound_to))
+		if(dist > bounds.min_dist || dist < bounds.max_dist)
+			return TRUE
+	var/obj/machinery/artifical_ventilation/CPB = src
+	CPB.detach(bounds.bound_to)
+	return TRUE
 
 /obj/machinery/cardiopulmonary_bypass/examine(mob/user)
 	..()
