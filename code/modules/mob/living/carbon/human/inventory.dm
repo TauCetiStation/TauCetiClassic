@@ -62,7 +62,6 @@
 
 	return (BP && !(BP.is_stump) )
 
-// Currently returns TRUE in all "proper" cases, though if you do has_organ(BP_HEAD) it will return null.
 /mob/living/carbon/human/has_organ(name)
 	var/obj/item/organ/internal/IO = organs_by_name[name]
 
