@@ -196,9 +196,9 @@
 		var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
 		switch(Heart.heart_status)
 			if(HEART_FAILURE)
-				message += "<span class='notice'>Subject's Heart status: <font color='red'>Heart Failure!</font></span><br>"
+				message += "<span class='notice'><font color='red'>Warning! Subject's heart stopped!</font></span><br>"
 			if(HEART_FIBR)
-				message += "<span class='notice'>Subject's Heart status: <font color='blue'>Heart Fibrillation.</font></span><br>"
+				message += "<span class='notice'>Subject's Heart status: <font color='blue'>Attention! Subject's heart fibrillating.</font></span><br>"
 		message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
 
 	if(!output_to_chat)

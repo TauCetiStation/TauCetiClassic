@@ -1,7 +1,4 @@
 /mob/living/carbon
-	var/last_massage = 0
-	var/massages_done_right = 0
-	var/needed_massages = 12
 
 
 /mob/living/carbon/atom_init()
