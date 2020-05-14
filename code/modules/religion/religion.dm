@@ -123,7 +123,6 @@
 
 /datum/religion/New()
 	reset_religion()
-	create_default()
 
 /datum/religion/proc/reset_religion()
 	name = initial(name)
@@ -137,6 +136,8 @@
 	aspects = initial(aspects)
 	god_spells = initial(god_spells)
 	rites = initial(rites)
+
+	create_default()
 
 	if(altar)
 		altar.chosen_aspect = initial(altar.chosen_aspect)

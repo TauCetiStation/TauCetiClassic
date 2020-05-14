@@ -200,6 +200,7 @@
 
 		sect = available_options[sect_select]
 		religion = global.chaplain_religion
+		religion.altar = src
 
 		sect.on_select(user, religion)
 		return
