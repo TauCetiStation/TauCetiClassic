@@ -1,3 +1,11 @@
+#define CLICKPLACE_TIP "Clickplace"
+
+/datum/mechanic_tip/clickplace
+	tip_name = CLICKPLACE_TIP
+
+/datum/mechanic_tip/clickplace/New()
+	description = "Clicking on this object with any intent selected except [I_HURT] will cause the item in currently selected hand to be placed onto it."
+
 /*
  * This component allows items to be placed on other items
  * in "precise" click coordinates with just a simple click!
@@ -22,6 +30,13 @@
 	on_place = _on_place
 
 	RegisterSignal(parent, list(COMSIG_PARENT_ATTACKBY), .proc/try_place)
+
+	var/datum/mechanic_tip/clickplace/clickplace_tip = new
+	parent.AddComponent(/datum/component/mechanic_desc, list(clickplace_tip))
+
+/datum/component/clickplace/Destroy()
+	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(CLICKPLACE_TIP))
+	return ..()
 
 /datum/component/clickplace/proc/try_place(datum/source, obj/item/I, mob/user, params)
 	if(user.a_intent == I_HURT)
@@ -53,3 +68,5 @@
 
 	// Prevent hitting the thing if we're just putting it.
 	return COMPONENT_NO_AFTERATTACK
+
+#undef CLICKPLACE_TIP

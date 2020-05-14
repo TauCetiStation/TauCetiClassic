@@ -46,6 +46,9 @@
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"			        ///from base of atom/attackby(): (/obj/item, /mob/living, params)
 	#define COMPONENT_NO_AFTERATTACK 1								//Return this in response if you don't want afterattack to be called
 
+#define COMSIG_PARENT_EXAMINE "atom_examine"                               ///from base of atom/examine(): (/mob)
+#define COMSIG_PARENT_POST_EXAMINE "atom_post_examine"                     ///from base of mob/examinate(): (/mob)
+
 // /atom/movable signals
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"					///from base of atom/movable/Move(): (/atom/newLoc)
 	#define COMPONENT_MOVABLE_BLOCK_PRE_MOVE 1
@@ -83,3 +86,6 @@
 #define COMSIG_XENO_TURF_CLICK_SHIFT "xeno_turf_click_shift"				//from turf ShiftClickOn(): (/mob)
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"					//from turf AltClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"				//from monkey CtrlClickOn(): (/mob)
+
+// Component specific signals.
+#define COMSIG_TIPS_REMOVE "comsig_tip_remove"		// send this signal to remove a list of tip ids(use tip_names as tip ids): (/list/tip_ids_to_remove)
