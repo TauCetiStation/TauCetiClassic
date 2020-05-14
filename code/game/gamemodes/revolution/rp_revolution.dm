@@ -287,9 +287,9 @@
 	if(last_command_report == 0 && world.time >= 10 MINUTES)
 		src.command_report("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff, has been halved.")
 		last_command_report = 1
-		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")
+		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions
 		for(var/datum/job/J in SSjob.occupations)
-			if((J.title in excluded_rank) || (J.title in command_positions))
+			if(J.title in excluded_rank)
 				continue
 			J.salary_ratio = 0.5	//halve the salary of all professions except leading
 		var/list/crew = my_subordinate_staff("Admin")
@@ -297,7 +297,7 @@
 			if(person["rank"] in command_positions)
 				continue
 			var/datum/money_account/account = person["acc_datum"]
-			account.change_salary(null, "CentCom", "CentCom", "Admin", force_rate = -50)	//halve the salary of all staff except heads
+			account.change_salary(null, "Cent Comm", "Cent Comm", "Admin", force_rate = -50)	//halve the salary of all staff except heads
 
 	else if(last_command_report == 1 && world.time >= 30 MINUTES)
 		src.command_report("Statistics hint that a high amount of leisure time, and associated activities, are responsible for the poor performance of many of our stations. You are to bolt and close down any leisure facilities, such as the holodeck, the theatre and the bar. Food can be distributed through vendors and the kitchen.")

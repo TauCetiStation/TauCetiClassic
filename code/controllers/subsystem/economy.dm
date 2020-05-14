@@ -19,7 +19,7 @@ var/datum/subsystem/economy/SSeconomy
 	else if (payment_counter)	//to skip first payment
 		for(var/datum/money_account/D in all_money_accounts)
 			if(D.owner_salary && !D.suspended)
-				charge_to_account(D.account_number, D.account_number, "Salary payment", "CentCom", D.owner_salary)
+				charge_to_account(D.account_number, D.account_number, "Salary payment", "Cent Comm", D.owner_salary)
 	payment_counter += 1
 
 /datum/subsystem/economy/proc/set_endtime()

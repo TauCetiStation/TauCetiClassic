@@ -2921,7 +2921,7 @@
 		if(!account)
 			to_chat(usr, "<span class='warning'>Account not found!</span>")
 			return
-		account.change_salary(usr, "CentCom", "CentCom", "Admin")
+		account.change_salary(usr, "Cent Comm", "Cent Comm", "Admin")
 
 	else if(href_list["global_salary"])
 		if(!check_rights(R_EVENT))	return
@@ -2941,7 +2941,7 @@
 		var/list/crew = my_subordinate_staff("Admin")
 		for(var/person in crew)
 			var/datum/money_account/account = person["acc_datum"]
-			account.change_salary(null, "CentCom", "CentCom", "Admin", force_rate = ratio_rate)
+			account.change_salary(null, "Cent Comm", "Cent Comm", "Admin", force_rate = ratio_rate)
 		if(new_ratio == 1)	//if 0 was selected
 			to_chat(usr, "<span class='warning'><b>You returned basic salaries to all professions</b></span>")
 		else
