@@ -2163,27 +2163,26 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/proc/perform_cpr(mob/living/carbon/human/user)
 	if(user.is_busy(src))
 		return
-	var/mob/living/carbon/human/H = src
-	var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
-	var/obj/item/organ/internal/heart/Lungs = H.organs_by_name[O_LUNGS]
+	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
+	var/obj/item/organ/internal/heart/Lungs = organs_by_name[O_LUNGS]
 	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
 	if((world.time - last_massage) > 5 SECONDS && do_mob(user, src, HUMAN_STRIP_DELAY))
 		visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
 		to_chat(user, "<span class='warning'>Repeat at least every second.</span>")
 		massages_done_right = 0
-		H.return_to_body_dialog(H)
+		return_to_body_dialog(src)
 		Heart.heart_fibrillate()
 		last_massage = world.time
 		return
-	if(HAS_TRAIT(H, TRAIT_FAT))
+	if(HAS_TRAIT(src, TRAIT_FAT))
 		needed_massages = 20
-	if(H.stat == DEAD && (world.time - H.timeofdeath) < DEFIB_TIME_LIMIT)
+	if(src.stat == DEAD && (world.time - src.timeofdeath) < DEFIB_TIME_LIMIT)
 		if(!Heart)
 			return
 		if(massages_done_right > needed_massages)
 			to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
-			H.reanimate_body(H)
-			H.stat = UNCONSCIOUS
+			reanimate_body(src)
+			src.stat = UNCONSCIOUS
 			massages_done_right = 0
 			Heart.heart_normalize()
 		else if(massages_done_right < -2)
@@ -2205,8 +2204,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(!Lungs.is_bruised())
 			adjustOxyLoss(-1.5)
 		last_massage = world.time
-		var/obj/item/organ/external/BP = H.get_bodypart(BP_CHEST)
-		if(H.op_stage.ribcage != 2 && prob(5))
+		var/obj/item/organ/external/BP = src.get_bodypart(BP_CHEST)
+		if(src.op_stage.ribcage != 2 && prob(5))
 			BP.fracture()
 			to_chat(user, "<span class='warning'>You hear cracking in [src]'s chest!.</span>")
 
