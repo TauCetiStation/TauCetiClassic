@@ -1,6 +1,3 @@
-/mob/living/carbon
-
-
 /mob/living/carbon/atom_init()
 	. = ..()
 	carbon_list += src

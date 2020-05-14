@@ -1,5 +1,6 @@
 #define MASSAGE_RHYTM_RIGHT   11
 #define MASSAGE_ALLOWED_ERROR 2
+
 /mob/living/carbon/human
 	name = "unknown"
 	real_name = "unknown"
@@ -2170,19 +2171,19 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
 		to_chat(user, "<span class='warning'>Repeat at least every second.</span>")
 		massages_done_right = 0
-		return_to_body_dialog(src)
+		return_to_body_dialog()
 		Heart.heart_fibrillate()
 		last_massage = world.time
 		return
 	if(HAS_TRAIT(src, TRAIT_FAT))
 		needed_massages = 20
-	if(src.stat == DEAD && (world.time - src.timeofdeath) < DEFIB_TIME_LIMIT)
+	if(stat == DEAD && (world.time - timeofdeath) < DEFIB_TIME_LIMIT)
 		if(!Heart)
 			return
 		if(massages_done_right > needed_massages)
 			to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
-			reanimate_body(src)
-			src.stat = UNCONSCIOUS
+			reanimate_body()
+			stat = UNCONSCIOUS
 			massages_done_right = 0
 			Heart.heart_normalize()
 		else if(massages_done_right < -2)
@@ -2204,44 +2205,44 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(!Lungs.is_bruised())
 			adjustOxyLoss(-1.5)
 		last_massage = world.time
-		var/obj/item/organ/external/BP = src.get_bodypart(BP_CHEST)
-		if(src.op_stage.ribcage != 2 && prob(5))
+		var/obj/item/organ/external/BP = get_bodypart(BP_CHEST)
+		if(op_stage.ribcage != 2 && prob(5))
 			BP.fracture()
 			to_chat(user, "<span class='warning'>You hear cracking in [src]'s chest!.</span>")
 
-/mob/living/carbon/human/proc/return_to_body_dialog(mob/living/carbon/human/returnable)
-	if (returnable.client) //in body?
-		returnable.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
-	else if(returnable.mind)
+/mob/living/carbon/human/proc/return_to_body_dialog()
+	if (client) //in body?
+		playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+	else if(mind)
 		for(var/mob/dead/observer/ghost in player_list)
-			if(ghost.mind == returnable.mind && ghost.can_reenter_corpse)
+			if(ghost.mind == mind && ghost.can_reenter_corpse)
 				ghost.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 				var/answer = alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate","Yes","No")
 				if(answer == "Yes")
 					ghost.reenter_corpse()
 				break
 
-/mob/living/carbon/human/proc/reanimate_body(mob/living/carbon/human/returnable)
-	var/deadtime = world.time - returnable.timeofdeath
-	returnable.tod = null
-	returnable.timeofdeath = 0
-	dead_mob_list -= returnable
-	returnable.update_health_hud()
-	apply_brain_damage(returnable, deadtime)
+/mob/living/carbon/human/proc/reanimate_body()
+	var/deadtime = world.time - timeofdeath
+	tod = null
+	timeofdeath = 0
+	dead_mob_list -= src
+	update_health_hud()
+	apply_brain_damage(deadtime)
 
-/mob/living/carbon/human/proc/apply_brain_damage(mob/living/carbon/human/H, var/deadtime)
+/mob/living/carbon/human/proc/apply_brain_damage(var/deadtime)
 	if(deadtime < DEFIB_TIME_LOSS)
 		return
 
-	if(!H.should_have_organ(O_BRAIN))
+	if(!should_have_organ(O_BRAIN))
 		return //no brain
 
-	var/obj/item/organ/internal/brain/brain = H.organs_by_name[O_BRAIN]
+	var/obj/item/organ/internal/brain/brain = organs_by_name[O_BRAIN]
 	if(!brain)
 		return //no brain
 
-	var/brain_damage = CLAMP((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, H.getBrainLoss(), MAX_BRAIN_DAMAGE)
-	H.setBrainLoss(brain_damage)
+	var/brain_damage = CLAMP((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, getBrainLoss(), MAX_BRAIN_DAMAGE)
+	setBrainLoss(brain_damage)
 
 #undef MASSAGE_RHYTM_RIGHT
 #undef MASSAGE_ALLOWED_ERROR
