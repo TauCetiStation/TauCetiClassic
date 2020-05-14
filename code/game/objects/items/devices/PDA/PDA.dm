@@ -1,3 +1,4 @@
+#define TRANSCATION_COOLDOWN 30	//delay between transactions
 #define ALLOWED_ID_OVERLAYS list("id", "gold", "silver", "centcom", "ert", "ert-leader", "syndicate", "syndicate-command", "clown", "mime") // List of overlays in pda.dmi
 //The advanced pea-green monochrome lcd of tomorrow.
 
@@ -44,7 +45,7 @@
 	var/newmessage = 0			//To remove hackish overlay check
 
 	var/list/cartmodes = list(40, 42, 43, 433, 44, 441, 45, 451, 46, 48, 47, 49) // If you add more cartridge modes add them to this list as well.
-	var/list/no_auto_update = list(1, 40, 43, 44, 441, 45, 451, 71, 72, 73)		     // These modes we turn off autoupdate
+	var/list/no_auto_update = list(1, 40, 43, 44, 441, 45, 451, 72, 73)		     // These modes we turn off autoupdate
 	var/list/update_every_five = list(3, 41, 433, 46, 47, 48, 49)			     // These we update every 5 ticks
 
 	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
@@ -62,6 +63,7 @@
 	var/list/owner_fingerprints = list()	//fingerprint information is taken from the ID card
 	var/boss_PDA = 0	//the PDA belongs to the heads or not	(can I change the salary?)
 	var/list/subordinate_staff = list()
+	var/last_trans_tick = 0
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
@@ -428,6 +430,7 @@
 	data["time_to_next_pay"] = time_stamp(format = "mm:ss", wtime = (SSeconomy.endtime - world.timeofday))
 	data["boss"] = boss_PDA
 	data["subordinate_staff"] = subordinate_staff
+	data["ready_to_send"] = (last_trans_tick > world.time) ? 0 : 1
 
 	data["mode"] = mode					// The current view
 	data["scanmode"] = scanmode				// Scanners
@@ -841,7 +844,7 @@
 		if("target_acc_number")
 			target_account_number = text2num(input(U, "Enter an account number", name, target_account_number) as text)	//If "as num" I can't copy text from the buffer
 		if("funds_amount")
-			funds_amount =  text2num(input(U, "Enter the amount of funds", name, funds_amount) as text)
+			funds_amount =  round(text2num(input(U, "Enter the amount of funds", name, funds_amount) as text), 1)
 		if("purpose")
 			transfer_purpose = sanitize(input(U, "Enter the purpose of the transaction", name, transfer_purpose) as text, 20)
 		if("make_transfer")
@@ -863,6 +866,7 @@
 				to_chat(U, "[bicon(src)]<span class='warning'>Funds transfer failed. Target account is suspended.</span>")
 			target_account_number = 0
 			funds_amount = 0
+			last_trans_tick = world.time + TRANSCATION_COOLDOWN
 
 		if("Staff Salary")
 			mode = 73
@@ -1513,3 +1517,5 @@
 /obj/item/device/pda/proc/check_rank(rank)
 	if((rank in command_positions) || (rank == "Quartermaster"))
 		boss_PDA = 1
+
+#undef TRANSCATION_COOLDOWN

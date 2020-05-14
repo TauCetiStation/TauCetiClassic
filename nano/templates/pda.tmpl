@@ -1054,7 +1054,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                     <tr><td><span class="good">Transaction purpose:</span></td>
                     <td><div class="itemContent">{{:helper.link(data.purpose, null, {'choice' : "purpose"}, null, null)}}</div></td></tr>
                 </table>
-                <div class="itemContent">{{:helper.link('Transfer funds', 'transferthick-e-w', {'choice' : "make_transfer"}, null, null)}}</div>
+                <div class="itemContent">{{:helper.link('Transfer funds', 'transferthick-e-w', {'choice' : "make_transfer"}, data.ready_to_send ? null : 'disabled', null)}}</div>
             </div>
         </div>
     {{else data.mode == 72}} <!-- Show Transaction Log -->

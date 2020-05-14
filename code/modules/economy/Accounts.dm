@@ -145,22 +145,23 @@
 	return M
 
 /proc/charge_to_account(attempt_account_number, source_name, purpose, terminal_id, amount)
+	var/money = round(amount, 1)
 	for(var/datum/money_account/D in all_money_accounts)
 		if(D.account_number == attempt_account_number && !D.suspended)
-			D.adjust_money(amount)
+			D.adjust_money(money)
 
 			//create a transaction log entry
 			var/datum/transaction/T = new()
 			T.target_name = source_name
 			T.purpose = purpose
-			T.amount = "[amount]"
+			T.amount = "[money]"
 			T.date = current_date_string
 			T.time = worldtime2text()
 			T.source_terminal = terminal_id
 			D.transaction_log.Add(T)
 
 			if(D.owner_PDA)
-				D.owner_PDA.transaction_inform(source_name, terminal_id, amount)
+				D.owner_PDA.transaction_inform(source_name, terminal_id, money)
 
 			return TRUE
 	return FALSE
