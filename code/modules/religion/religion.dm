@@ -125,17 +125,16 @@
 	reset_religion()
 
 /datum/religion/proc/reset_religion()
-	name = initial(name)
 	lore = initial(lore)
-	lore_by_name = initial(lore_by_name)
-	deity_names = initial(deity_names)
+	lore_by_name = list()
+	deity_names = list()
 	bible_info = initial(bible_info)
-	active_deities = initial(active_deities)
+	active_deities = list()
 	favor = initial(favor)
 	max_favor = initial(max_favor)
-	aspects = initial(aspects)
-	god_spells = initial(god_spells)
-	rites = initial(rites)
+	aspects = list()
+	god_spells = list()
+	rites = list()
 
 	create_default()
 
@@ -331,7 +330,25 @@
 			retVal[i] = rites[i]
 			continue
 		var/datum/religion_rites/RI = i
-		var/name_entry = "[initial(RI.name)]"
+		var/name_entry = ""
+		var/tip_text
+
+		if(i in typesof(/datum/religion_rites/consent))
+			tip_text += "This ritual is performed only with the consent of the victim."
+		else if(i in typesof(/datum/religion_rites/spawn_item))
+			var/datum/religion_rites/spawn_item/spawning = RI
+			if(initial(spawning.sacrifice_type))
+				var/obj/item/item = initial(spawning.sacrifice_type)
+				tip_text += "This ritual requires a <i>[initial(item.name)]</i>. "
+			if(initial(spawning.spawn_type))
+				var/obj/item/item = initial(spawning.spawn_type)
+				tip_text += "This ritual creates a <i>[initial(item.name)]</i>."
+
+		if(tip_text)
+			name_entry += "[EMBED_TIP(initial(RI.name), tip_text)]"
+		else
+			name_entry += "[initial(RI.name)]"
+
 		if(initial(RI.desc))
 			name_entry += " - [initial(RI.desc)]"
 		if(initial(RI.favor_cost))

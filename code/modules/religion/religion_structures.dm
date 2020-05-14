@@ -163,7 +163,12 @@
 			to_chat(user, "<span class='notice'>Your religion doesn't have any rites to perform!</span>")
 			return
 
-		var/rite_select = input(user, "Select a rite to perform!", "Select a rite", null) in religion.rites
+		var/list/rites_name = list()
+		for(var/rite_type in religion.rites)
+			var/datum/religion_rites/rite = religion.rites[rite_type]
+			rites_name[initial(rite.name)] = rite
+
+		var/rite_select = input(user, "Select a rite to perform!", "Select a rite", null) in rites_name
 		if(!Adjacent(user))
 			to_chat(user, "<span class='warning'>You are too far away!</span>")
 			return
@@ -172,7 +177,7 @@
 			to_chat(user, "<span class='notice'>You are already performing [performing_rite.name]!</span>")
 			return
 
-		var/selection2type = religion.rites[rite_select]
+		var/selection2type = rites_name[rite_select]
 		performing_rite = new selection2type(src)
 
 		if(!performing_rite.perform_rite(user, src))
