@@ -2163,13 +2163,15 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/proc/perform_cpr(mob/living/carbon/human/user)
 	if(species.flags[NO_BLOOD])
 		return
-	var/needed_massages = 12
-	if(HAS_TRAIT(src, TRAIT_FAT))
-		needed_massages = 20
 	if(user.is_busy(src))
 		return
+	var/needed_massages = 12
 	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
 	var/obj/item/organ/internal/heart/Lungs = organs_by_name[O_LUNGS]
+
+	if(HAS_TRAIT(src, TRAIT_FAT))
+		needed_massages = 20
+
 	if(!Lungs.is_bruised())
 		adjustOxyLoss(-1.5)
 	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
