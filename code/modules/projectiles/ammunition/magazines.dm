@@ -259,7 +259,7 @@
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "Mac-10 magazine (9mm)"
 	icon = 'icons/obj/ammo.dmi'
-	icon_state = "uzi9mm-32"
+	icon_state = "uzi9mm"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
 	max_ammo = 32
