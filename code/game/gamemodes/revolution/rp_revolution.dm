@@ -297,7 +297,7 @@
 			if(person["rank"] in command_positions)
 				continue
 			var/datum/money_account/account = person["acc_datum"]
-			account.change_salary(null, "Cent Comm", "Cent Comm", "Admin", force_rate = -50)	//halve the salary of all staff except heads
+			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)	//halve the salary of all staff except heads
 
 	else if(last_command_report == 1 && world.time >= 30 MINUTES)
 		src.command_report("Statistics hint that a high amount of leisure time, and associated activities, are responsible for the poor performance of many of our stations. You are to bolt and close down any leisure facilities, such as the holodeck, the theatre and the bar. Food can be distributed through vendors and the kitchen.")
