@@ -61,7 +61,7 @@
  */
 /datum/religion_rites/pray
 	name = "Prayer to god"
-	desc = "Very long pray for favor."
+	desc = "Pray for a while in exchange for favor."
 	ritual_length = (4 MINUTES)
 	ritual_invocations = list("Have mercy on us, O Lord, have mercy on us...",
 							  "...for at a loss for any defense, this prayer do we sinners offer Thee as Master...",
@@ -97,7 +97,7 @@
  */
 /datum/religion_rites/honk
 	name = "Clown shriek"
-	desc = "Honk spread throughout the station."
+	desc = "Spread honks throughout the station."
 	ritual_length = (2 MINUTES)
 	ritual_invocations = list("All able to hear, hear!...",
 							  "...This message is dedicated to all of you....",

@@ -129,7 +129,8 @@
 	lore_by_name = list()
 	deity_names = list()
 	bible_info = initial(bible_info)
-	active_deities = list()
+	for(var/god in active_deities)
+		remove_deity(god)
 	favor = initial(favor)
 	max_favor = initial(max_favor)
 	aspects = list()
@@ -264,6 +265,14 @@
 			affect_divine_power(S)
 			G.AddSpell(S)
 
+/datum/religion/proc/remove_god_spells(mob/G)
+	for(var/spell in G.spell_list)
+		G.spell_list -= spell
+		qdel(spell)
+	for(var/spell in G.mind.spell_list)
+		G.mind.spell_list -= spell
+		qdel(spell)
+
 /datum/religion/proc/update_deities()
 	for(var/mob/deity in active_deities)
 		give_god_spells(deity)
@@ -333,9 +342,9 @@
 		var/name_entry = ""
 		var/tip_text
 
-		if(i in typesof(/datum/religion_rites/consent))
+		if(ispath(i, /datum/religion_rites/consent))
 			tip_text += "This ritual is performed only with the consent of the victim."
-		else if(i in typesof(/datum/religion_rites/spawn_item))
+		else if(ispath(i, /datum/religion_rites/spawn_item))
 			var/datum/religion_rites/spawn_item/spawning = RI
 			if(initial(spawning.sacrifice_type))
 				var/obj/item/item = initial(spawning.sacrifice_type)
@@ -363,3 +372,4 @@
 
 /datum/religion/proc/remove_deity(mob/M)
 	active_deities -= M
+	remove_god_spells(M)
