@@ -339,7 +339,7 @@
 					M.mind.current.verbs -= /mob/living/carbon/human/proc/shadowling_hatch //In case a shadowling hasn't hatched
 					M.mind.current.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 					for(var/obj/effect/proc_holder/spell/targeted/collective_mind/spell_to_remove in M.spell_list)
-						M.RemoveSpells(spell_to_remove)
+						M.RemoveSpell(spell_to_remove)
 					if(M == usr)
 						to_chat(M, "<span class='shadowling'><i>You project this power to the rest of the shadowlings.</i></span>")
 					else

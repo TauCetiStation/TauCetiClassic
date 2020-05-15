@@ -266,7 +266,7 @@
 			G.AddSpell(S)
 
 /datum/religion/proc/remove_god_spells(mob/G)
-	G.RemoveSpells()
+	G.ClearSpells()
 
 /datum/religion/proc/update_deities()
 	for(var/mob/deity in active_deities)
