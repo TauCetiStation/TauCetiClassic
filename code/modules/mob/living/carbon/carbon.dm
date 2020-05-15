@@ -775,7 +775,6 @@
 	if(health <= (config.health_threshold_dead + 5))
 		var/suff = min(getOxyLoss(), 2) //Pre-merge level, less healing, more prevention of dieing.
 		adjustOxyLoss(-suff)
-		updatehealth()
 
 	if(do_mob(user, src, HUMAN_STRIP_DELAY))
 		 // yes, we check this after the action, allowing player to try this even if it looks wrong (for fun).
@@ -802,10 +801,10 @@
 		if (health > config.health_threshold_dead && health < config.health_threshold_crit)
 			var/suff = min(getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
 			adjustOxyLoss(-suff)
-			updatehealth()
 			visible_message("<span class='warning'>[user] performs AV on [src]!</span>")
 			to_chat(src, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
 			to_chat(user, "<span class='warning'>Repeat at least every 7 seconds.</span>")
+		updatehealth()
 
 /mob/living/carbon/Topic(href, href_list)
 	..()

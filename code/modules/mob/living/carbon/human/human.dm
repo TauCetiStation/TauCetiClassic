@@ -23,7 +23,6 @@
 
 	var/last_massage = 0
 	var/massages_done_right = 0
-	var/needed_massages = 12
 
 	throw_range = 2
 
@@ -2162,6 +2161,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) bandages.</font>"
 
 /mob/living/carbon/human/proc/perform_cpr(mob/living/carbon/human/user)
+	if(species.flags[NO_BLOOD])
+		return
+	var/needed_massages = 12
+	if(HAS_TRAIT(src, TRAIT_FAT))
+		needed_massages = 20
 	if(user.is_busy(src))
 		return
 	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
@@ -2175,9 +2179,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		Heart.heart_fibrillate()
 		last_massage = world.time
 		return
-	if(HAS_TRAIT(src, TRAIT_FAT))
-		needed_massages = 20
-	if(stat == DEAD && (world.time - timeofdeath) < DEFIB_TIME_LIMIT)
+	else if((world.time - timeofdeath) < DEFIB_TIME_LIMIT)
 		if(!Heart)
 			return
 		if(massages_done_right > needed_massages)
@@ -2190,7 +2192,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			to_chat(user, "<span class='warning'>[src]'s heart stopped!</span>")
 			if(prob(25))
 				Heart.damage += 2
-			last_massage = world.time
 			massages_done_right = 0
 			Heart.heart_stop()
 		else

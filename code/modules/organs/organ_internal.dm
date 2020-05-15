@@ -131,17 +131,15 @@
 	parent_bodypart = BP_CHEST
 	var/heart_status = HEART_NORMAL
 	var/fibrillation_timer_id = null
-	var/failing_interval = null
 
 /obj/item/organ/internal/heart/proc/heart_stop()
 	heart_status = HEART_FAILURE
 
 /obj/item/organ/internal/heart/proc/heart_fibrillate()
+	var/failing_interval = 1 MINUTE
 	heart_status = HEART_FIBR
 	if(HAS_TRAIT(owner, TRAIT_FAT))
 		failing_interval = 30 SECONDS
-	else
-		failing_interval = 1 MINUTE
 	fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /obj/item/organ/internal/heart/proc/heart_normalize()
