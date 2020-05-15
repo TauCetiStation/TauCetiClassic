@@ -266,12 +266,7 @@
 			G.AddSpell(S)
 
 /datum/religion/proc/remove_god_spells(mob/G)
-	for(var/spell in G.spell_list)
-		G.spell_list -= spell
-		qdel(spell)
-	for(var/spell in G.mind.spell_list)
-		G.mind.spell_list -= spell
-		qdel(spell)
+	G.RemoveSpells()
 
 /datum/religion/proc/update_deities()
 	for(var/mob/deity in active_deities)
