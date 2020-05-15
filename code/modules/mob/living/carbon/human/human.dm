@@ -2181,7 +2181,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		massages_done_right = 0
 		return_to_body_dialog()
 		Heart.heart_fibrillate()
+		last_massage = world.time
+		return
 	else if((world.time - timeofdeath) < DEFIB_TIME_LIMIT)
+		last_massage = world.time
 		if(!Heart)
 			return
 		if(massages_done_right > needed_massages)
@@ -2209,7 +2212,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(op_stage.ribcage != 2 && prob(5))
 			BP.fracture()
 			to_chat(user, "<span class='warning'>You hear cracking in [src]'s chest!.</span>")
-	last_massage = world.time
 
 /mob/living/carbon/human/proc/return_to_body_dialog()
 	if (client) //in body?
