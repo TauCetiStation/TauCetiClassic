@@ -3,7 +3,7 @@
 	set name = "Give"
 	set src in view(1)
 
-	if(src.stat == DEAD || usr.stat == DEAD || src.client == null)
+	if(src.stat == DEAD || usr.incapacitated() || src.client == null)
 		return
 	if(src == usr || isxeno(src) || isslime(src))
 		to_chat(usr, "<span class='red'>I feel stupider, suddenly.</span>")

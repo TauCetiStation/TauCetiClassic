@@ -91,6 +91,9 @@
 #define DIET_OMNI       7 // Everything.
 #define DIET_ALL		DIET_OMNI
 
+//Reagent Flags
+#define IS_ORGANIC         "is_organic"
+
 //bitflags for door switches.
 #define OPEN     1
 #define CLOSED   2 //for firedoor currently, legacy and should be checked

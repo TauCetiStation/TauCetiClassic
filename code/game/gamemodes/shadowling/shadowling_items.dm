@@ -106,7 +106,7 @@
 	set name = "Toggle Vision"
 	set src in usr
 
-	if(!usr.stat)
+	if(!usr.incapacitated())
 		if(src.vision)
 			src.vision = !src.vision
 			src.icon_state = "ling_vision_on"

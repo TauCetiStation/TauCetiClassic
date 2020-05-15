@@ -973,12 +973,12 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 
 /datum/admins/proc/toggleoocdead()
 	set category = "Server"
-	set desc="Toggle dis bitch"
-	set name="Toggle Dead OOC"
+	set desc="Toggle OOC for people in lobby(and or ghosts for some non-apparent reason)."
+	set name="Toggle Dead/Lobby OOC"
 	dooc_allowed = !( dooc_allowed )
 
-	log_admin("[key_name(usr)] toggled OOC.")
-	message_admins("[key_name_admin(usr)] toggled Dead OOC.")
+	log_admin("[key_name(usr)] toggled Dead/Lobby OOC.")
+	message_admins("[key_name_admin(usr)] toggled Dead/Lobby OOC.")
 	feedback_add_details("admin_verb","TDOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggletraitorscaling()

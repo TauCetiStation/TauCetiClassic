@@ -133,7 +133,7 @@
 		if(H.mind == mind)
 			to_chat(H, "<span class='notice'>Not so fast, self-confident fulmar</span>")
 			return
-	if(H.stat || H.incapacitated())
+	if(H.incapacitated())
 		return
 
 	if(loc == H || (in_range(src, H) && isturf(loc)))

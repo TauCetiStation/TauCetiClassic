@@ -45,6 +45,10 @@
 		if(show_warnings)
 			to_chat(src, "<span class='warning'>You are holding too many stuff already.</span>")
 		return
+
+	if(SEND_SIGNAL(target, COMSIG_MOVABLE_GRABBED, src, force_state, show_warnings) & COMPONENT_PREVENT_GRAB)
+		return
+
 	if(ismob(target))
 		var/mob/M = target
 		if(!(M.status_flags & CANPUSH))
@@ -306,7 +310,7 @@
 		return
 	if(assailant.next_move > world.time)
 		return
-	if(!assailant.canmove || assailant.lying)
+	if(assailant.incapacitated())
 		qdel(src)
 		return
 

@@ -27,7 +27,7 @@
 /obj/item/weapon/storage/bible/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(user.mind && (user.mind.assigned_role == "Chaplain"))
+	if(user.mind && (user.mind.holy_role))
 		if(target.reagents && target.reagents.has_reagent("water")) //blesses/curses all the water in the holder
 			var/water2convert = target.reagents.get_reagent_amount("water")
 			target.reagents.del_reagent("water")
@@ -47,7 +47,7 @@
 	..()
 
 /obj/item/weapon/storage/bible/attack_self(mob/user)
-	if(user.mind && (user.mind.assigned_role == "Chaplain"))
+	if(user.mind && (user.mind.holy_role))
 		if(religify_next[user.ckey] > world.time)
 			to_chat(user, "<span class='warning'>You can't be changing the look of your entire church so often! Please wait about [round((religify_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
 			return
@@ -61,7 +61,7 @@
 	var/done = FALSE
 	var/changes = FALSE
 
-	var/list/choices = list("Pews", "Mat symbol")
+	var/list/choices = list("Altar", "Pews", "Mat symbol")
 
 	while(!done)
 		if(!choices.len)
@@ -74,6 +74,15 @@
 			break
 
 		switch(looks)
+			if("Altar")
+				var/new_look = input(user, "Which altar style would you like?")  as null|anything in global.chaplain_religion.altar_info_by_name
+				if(!new_look)
+					continue
+
+				global.chaplain_religion.altar_icon_state = global.chaplain_religion.altar_info_by_name[new_look]
+				changes = TRUE
+				choices -= "Altar"
+
 			if("Pews")
 				var/new_look = input(user, "Which pews style would you like?")  as null|anything in global.chaplain_religion.pews_info_by_name
 				if(!new_look)
@@ -94,4 +103,4 @@
 
 	if(changes)
 		religify_next[user.ckey] = world.time + 3 MINUTE
-		global.chaplain_religion.religify(/area/station/civilian/chapel)
+		global.chaplain_religion.religify_chapel()

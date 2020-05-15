@@ -50,7 +50,7 @@
 	if(brake)
 		to_chat(user, "<span class='red'>You cannot drive while brake is on.</span>")
 		return
-	if(user.stat || user.stunned || user.weakened || user.paralysis || user.lying || user.restrained())
+	if(user.incapacitated())
 		if(user==pulling)
 			pulling = null
 			user.pulledby = null

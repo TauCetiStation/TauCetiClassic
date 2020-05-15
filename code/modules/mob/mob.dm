@@ -180,7 +180,7 @@
 	return
 
 /mob/proc/incapacitated(restrained_type = ARMS)
-	return
+	return FALSE
 
 /mob/proc/restrained()
 	return
@@ -305,6 +305,7 @@
 
 	face_atom(A)
 	A.examine(src)
+	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
 
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
@@ -312,7 +313,7 @@
 
 	if(!usr || !isturf(usr.loc))
 		return
-	if(usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return
 	if(usr.status_flags & FAKEDEATH)
 		return
@@ -517,6 +518,11 @@
 				return
 			stop_pulling()
 
+		if(SEND_SIGNAL(src, COMSIG_LIVING_START_PULL, AM) & COMPONENT_PREVENT_PULL)
+			return
+		if(SEND_SIGNAL(AM, COMSIG_ATOM_START_PULL, src) & COMPONENT_PREVENT_PULL)
+			return
+
 		src.pulling = AM
 		AM.pulledby = src
 		if(pullin)
@@ -543,8 +549,13 @@
 	set category = "IC"
 
 	if(pulling)
-		pulling.pulledby = null
-		pulling = null
+		SEND_SIGNAL(src, COMSIG_LIVING_STOP_PULL, pulling)
+		SEND_SIGNAL(pulling, COMSIG_ATOM_STOP_PULL, src)
+
+		// What if the signals above somehow deleted pulledby?
+		if(pulling)
+			pulling.pulledby = null
+			pulling = null
 		if(pullin)
 			pullin.update_icon(src)
 		count_pull_debuff()
@@ -936,12 +947,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		return
 	usr.next_move = world.time + 20
 
-	if(usr.stat == UNCONSCIOUS)
-		to_chat(usr, "You are unconcious and cannot do that!")
-		return
-
-	if(usr.restrained())
-		to_chat(usr, "You are restrained and cannot do that!")
+	if(usr.incapacitated())
+		to_chat(usr, "You can not do this while being incapacitated!")
 		return
 
 	var/mob/S = src
@@ -1023,6 +1030,17 @@ note dizziness decrements automatically in the mob's Life() proc.
 				if(G.can_reenter_corpse || even_if_they_cant_reenter)
 					return G
 				break
+
+/mob/proc/GetSpell(spell_type)
+	for(var/obj/effect/proc_holder/spell/spell in spell_list)
+		if(spell == spell_type)
+			return spell
+
+	if(mind)
+		for(var/obj/effect/proc_holder/spell/spell in mind.spell_list)
+			if(spell == spell_type)
+				return spell
+	return FALSE
 
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/spell)
 	spell_list += spell
@@ -1110,5 +1128,5 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return FALSE
 
 // Return null if mob of this type can not scramble messages.
-/mob/proc/get_scrambled_message(datum/language/speaking, message)
+/mob/proc/get_scrambled_message(message, datum/language/speaking = null)
 	return speaking ? speaking.scramble(message) : stars(message)

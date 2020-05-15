@@ -26,6 +26,7 @@
 	. = ..(mapload, newdir)
 	operating = 1
 	update_move_direction()
+	AddComponent(/datum/component/clickplace)
 
 /obj/machinery/conveyor/auto/update()
 	if(stat & BROKEN)
@@ -134,14 +135,8 @@
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You rotate [src].</span>")
 			return
-	if(isrobot(user))
-		return //Carn: fix for borgs dropping their modules on conveyor belts
-	if(!user.drop_item())
-		to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>")
-		return
-	if(I && I.loc)
-		I.loc = src.loc
-	return
+
+	return ..()
 
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user)
@@ -319,7 +314,7 @@
 		id = C.id
 
 /obj/item/conveyor_construct/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity || user.stat || !istype(target, /turf/simulated/floor) || istype(target, /area/shuttle))
+	if(!proximity || !istype(target, /turf/simulated/floor) || istype(target, /area/shuttle))
 		return
 	var/cdir = get_dir(target, user)
 	if(target == user.loc)
@@ -343,7 +338,7 @@
 	id = rand() //this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity || user.stat || !istype(target, /turf/simulated/floor) || istype(target, /area/shuttle))
+	if(!proximity || !istype(target, /turf/simulated/floor) || istype(target, /area/shuttle))
 		return
 	var/found = 0
 	for(var/obj/machinery/conveyor/C in view())

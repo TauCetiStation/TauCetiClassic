@@ -357,7 +357,7 @@
 	return O
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize()
+/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/nanotrasen, ai_link = TRUE)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
@@ -370,7 +370,7 @@
 	for(var/t in bodyparts)
 		qdel(t)
 
-	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
+	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(loc, name, laws, ai_link)
 
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)
@@ -602,6 +602,5 @@
 
 	//Not in here? Must be untested!
 	return 1
-
 
 

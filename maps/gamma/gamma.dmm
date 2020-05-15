@@ -529,7 +529,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -1728,7 +1728,7 @@
 "acJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /turf/simulated/floor{
 	dir = 5;
@@ -2807,11 +2807,11 @@
 	},
 /area/station/security/brig)
 "aeC" = (
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "aeD" = (
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "aeE" = (
@@ -2823,7 +2823,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
@@ -2832,7 +2832,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
@@ -3165,7 +3165,7 @@
 	},
 /area/station/rnd/xenobiology)
 "afj" = (
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "afk" = (
@@ -4137,8 +4137,8 @@
 /area/station/cargo/office)
 "atA" = (
 /obj/structure/rack,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/random/cloth/gloves,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
@@ -5850,7 +5850,7 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aYs" = (
@@ -6656,7 +6656,7 @@
 /area/station/medical/genetics_cloning)
 "blB" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/item/weapon/storage/belt/utility,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
@@ -6695,8 +6695,8 @@
 /area/station/security/prison)
 "bmm" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -9576,8 +9576,8 @@
 /area/station/hallway/secondary/exit)
 "cgD" = (
 /obj/structure/closet/crate,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/item/clothing/gloves/yellow,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
@@ -10459,7 +10459,7 @@
 /area/shuttle/mining/station)
 "cvP" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/item/stack/cable_coil,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
@@ -10576,7 +10576,7 @@
 /area/station/medical/sleeper)
 "cym" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/item/weapon/cigbutt,
 /obj/item/ashtray/glass,
 /obj/item/weapon/cigbutt,
@@ -11993,7 +11993,7 @@
 /area/station/maintenance/bridge)
 "cSF" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/item/device/flashlight,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
@@ -13602,7 +13602,7 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "yellow"
@@ -16438,8 +16438,8 @@
 /area/station/engineering/atmos)
 "erJ" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/item/device/flashlight,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
@@ -17656,7 +17656,7 @@
 /area/station/aisat/ai_chamber)
 "eOG" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/cleanable/dirt,
 /obj/random/foods/drink_bottle,
 /turf/simulated/floor/carpet{
@@ -19982,7 +19982,7 @@
 /area/station/maintenance/chapel)
 "fxn" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/carpet{
 	icon_state = "bcarpet01"
@@ -20684,10 +20684,10 @@
 	name = "Station Intercom (General)";
 	pixel_y = 20
 	},
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -28
 	},
@@ -21442,8 +21442,8 @@
 /area/station/civilian/chapel)
 "fXD" = (
 /obj/structure/rack,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "fXF" = (
@@ -23292,10 +23292,10 @@
 /area/station/security/brig)
 "gBT" = (
 /obj/structure/rack,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/cleanable/cobweb2,
 /obj/item/weapon/vending_refill/coffee,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating{
 	dir = 1;
 	icon_state = "warnplate"
@@ -23968,7 +23968,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = -30
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -25719,10 +25719,10 @@
 /area/station/maintenance/cargo)
 "hpg" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "hpJ" = (
@@ -26800,7 +26800,7 @@
 /area/station/security/lobby)
 "hIY" = (
 /obj/structure/closet/crate,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
@@ -28543,7 +28543,7 @@
 /area/station/civilian/dormitories/dormtwo)
 "irA" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "irO" = (
@@ -29013,7 +29013,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "ixY" = (
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "iyf" = (
@@ -31106,7 +31106,7 @@
 /area/station/cargo/office)
 "jjy" = (
 /obj/structure/closet/crate,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/cargo/miningoffice)
 "jjH" = (
@@ -33178,7 +33178,7 @@
 "jRF" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -36104,9 +36104,9 @@
 /area/station/tcommsat/chamber)
 "kPa" = (
 /obj/structure/rack,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/item/weapon/weldingtool,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "kPo" = (
@@ -36148,7 +36148,7 @@
 /area/station/storage/tech)
 "kQA" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/item/weapon/storage/belt/utility,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -37140,7 +37140,7 @@
 /turf/simulated/floor,
 /area/station/civilian/janitor)
 "leM" = (
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -37306,10 +37306,10 @@
 /area/station/solar/starboard)
 "lgM" = (
 /obj/structure/rack,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/cleanable/cobweb2,
 /obj/item/weapon/vending_refill/coffee,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "lgU" = (
@@ -39449,7 +39449,7 @@
 /area/station/security/lobby)
 "lSm" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/item/weapon/storage/belt/utility,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
@@ -39795,9 +39795,9 @@
 /area/station/gateway)
 "lXV" = (
 /obj/structure/rack,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/item/device/flashlight,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
@@ -39817,9 +39817,9 @@
 	c_tag = "Primary Tool Storage"
 	},
 /obj/structure/table,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "lYb" = (
@@ -42323,7 +42323,7 @@
 /area/station/engineering/atmos)
 "mLR" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "mLS" = (
@@ -43291,7 +43291,7 @@
 /area/shuttle/mining/station)
 "naY" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/item/weapon/soap/syndie,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
@@ -43299,10 +43299,10 @@
 /area/station/maintenance/bridge)
 "nbb" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/requests_console{
 	department = "Tool Storage";
 	pixel_x = 30
@@ -45752,8 +45752,8 @@
 /area/station/hallway/primary/central)
 "nQx" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/alarm{
 	locked = 0;
 	pixel_y = 25
@@ -48352,10 +48352,10 @@
 /area/station/civilian/dormitories/dormone)
 "oKY" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -48381,7 +48381,7 @@
 "oLD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "oLH" = (
@@ -49158,7 +49158,7 @@
 /area/station/civilian/library)
 "oZx" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -52557,9 +52557,9 @@
 /area/station/rnd/mixing)
 "qes" = (
 /obj/structure/rack,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/cleanable/liquid_fuel,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
@@ -52572,8 +52572,8 @@
 /area/station/engineering/engine)
 "qeI" = (
 /obj/structure/rack,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge{
 	name = "Food Court Maintenance"
@@ -53195,7 +53195,7 @@
 /area/station/rnd/test_area)
 "qod" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "qoq" = (
@@ -54146,7 +54146,7 @@
 /area/station/security/secconfhall)
 "qEx" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -55221,9 +55221,9 @@
 /area/station/security/brig)
 "qWl" = (
 /obj/structure/rack,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 24
@@ -60087,9 +60087,9 @@
 /area/station/rnd/hallway)
 "sBB" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "sBD" = (
@@ -61903,7 +61903,7 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "thd" = (
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
 	d1 = 4;
@@ -63419,7 +63419,7 @@
 /area/station/maintenance/medbay)
 "tFB" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/item/weapon/folder,
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "Old and dusty advertisement of space beer. You're almost feeling thirsty from looking at it";
@@ -63932,7 +63932,7 @@
 /area/station/medical/psych)
 "tNd" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/item/weapon/screwdriver,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
@@ -66139,7 +66139,7 @@
 /area/station/cargo/office)
 "uwl" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "uww" = (
@@ -71139,7 +71139,7 @@
 /obj/structure/rack,
 /obj/item/device/flashlight,
 /obj/item/device/flashlight,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "vXp" = (
@@ -73472,8 +73472,8 @@
 /area/station/security/vacantoffice)
 "wOE" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/cleanable/liquid_fuel,
 /obj/item/stack/cable_coil,
 /obj/item/stack/cable_coil,
@@ -75353,7 +75353,7 @@
 	},
 /area/station/rnd/mixing)
 "xvW" = (
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "xwu" = (
@@ -76091,7 +76091,7 @@
 	name = "Evidence Closet"
 	},
 /obj/random/cloth/random_cloth,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -76995,10 +76995,10 @@
 /area/station/tcommsat/computer)
 "xYC" = (
 /obj/structure/table,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -77299,8 +77299,8 @@
 /area/station/hallway/secondary/exit)
 "yej" = (
 /obj/structure/rack,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/item/weapon/spacecash/c10,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
@@ -77516,7 +77516,7 @@
 "yiq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/random/tools/tech_supply,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "yiG" = (
