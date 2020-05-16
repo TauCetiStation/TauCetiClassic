@@ -860,6 +860,35 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	usr << browse(entity_ja(dat), "window=secrets")
 	return
 
+/datum/admins/proc/change_crew_salary()
+		
+	var/list/crew = my_subordinate_staff("Admin")
+	var/dat
+
+	dat += "<A href='byond://?src=\ref[src];global_salary=1'>Globally change crew salaries</A><br>"
+	dat += "<small>Globally - this is a change in salary for the profession. New players will enter the round with a changed salary. To return the base salary, select 0.</small><hr>"
+	dat += "<div class='statusDisplay'>"
+	if(crew.len)
+		dat += "<table>"
+		dat += "<tr><th>Name</th><th>Rank</th><th>Salary</th><th>Control</th></tr>"
+		for(var/person in crew)
+			var/color = "silver"
+			var/datum/money_account/acc = person["acc_datum"]
+			if(acc.owner_salary > acc.base_salary)
+				color = "green"
+			else if(acc.owner_salary < acc.base_salary)
+				color = "red"
+			dat += "<tr><td><span class='highlight'>[person["name"]]</span></td><td><span class='average'>[person["rank"]]</span></td>"
+			dat += "<td><font color='[color]'><b>[person["salary"]]$</b></font></td>"
+			dat += "<td><A href='byond://?src=\ref[src];salary=\ref[person["acc_datum"]]'>Change</A></td></tr>"
+		dat += "</table>"
+	else
+		dat += "<span class='bad'>Crew not found!</span>"
+	dat += "</div>"
+
+	var/datum/browser/popup = new(usr, "window=admin_salary", "Crew Salary")
+	popup.set_content(dat)
+	popup.open()
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////admins2.dm merge
