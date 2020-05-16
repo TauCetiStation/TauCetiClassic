@@ -1,5 +1,5 @@
 /datum/aspect
-	var/name = "Basic aspect"
+	var/name
 	var/desc = "This aspect not used in game"
 	//used for give a god the information about aspect and desire items
 	var/god_desc
@@ -8,9 +8,34 @@
 	// Whether this aspect is allowed roundstart.
 	var/starter = TRUE
 
+	// List of holy turfs blessed with this aspect.
+	var/list/holy_turfs
+	// List of /atom/movables that this aspect is registered to.
+	var/list/affecting
+
+/datum/aspect/Destroy()
+	QDEL_LIST_ASSOC_VAL(holy_turfs)
+	holy_turfs = null
+	return ..()
+
 // Return the amount of favour this item will give, if succesfully sacrificed.
 /datum/aspect/proc/sacrifice(obj/item/I, mob/living/L, obj/structure/altar_of_gods/AOG)
 	return 0
+
+/datum/aspect/proc/register_holy_turf(turf/simulated/floor/F, datum/religion/R)
+	RegisterSignal(F, list(COMSIG_ATOM_ENTERED), .proc/holy_turf_enter)
+	RegisterSignal(F, list(COMSIG_ATOM_EXITED), .proc/holy_turf_exit)
+
+/datum/aspect/proc/holy_turf_enter(datum/source, atom/movable/mover, atom/oldLoc)
+	return
+
+/datum/aspect/proc/unregister_holy_turf(turf/simulated/floor/F, datum/religion/R)
+	UnregisterSignal(F, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
+	for(var/atom/movable/AM in affecting)
+		holy_turf_exit(F, AM)
+
+/datum/aspect/proc/holy_turf_exit(datum/source, atom/movable/mover, atom/newLoc)
+	return
 
 //Gives mana from: any organs, limbs, and blood
 //Needed for: spells and rituals related to the theme of death, interaction with dead body, necromancy
@@ -159,23 +184,83 @@
 		return 50
 	return FALSE
 
+/datum/aspect/wacky/holy_turf_enter(datum/source, atom/movable/mover, atom/oldLoc)
+	RegisterSignal(mover, list(COMSIG_MOB_SLIP), .proc/on_slip)
+
+/datum/aspect/wacky/proc/on_slip(datum/source, weaken_duration, obj/slipped_on, lube)
+	var/mob/M = source
+	var/turf/simulated/floor/F = M.loc
+	if(!istype(F))
+		return
+
+	// It ain't no fun if they don't suffer!
+	if(M.stat || !M.client)
+		return
+
+	F.holy.religion.favor += weaken_duration * power * 0.5
+
+/datum/aspect/wacky/holy_turf_exit(datum/source, atom/movable/mover, atom/newLoc)
+	UnregisterSignal(mover, list(COMSIG_MOB_SLIP))
+
 //Gives mana from: "silenced" spells at wizard/cult
 //Needed for: spells and rituals related to the theme of muffle the magical abilities of the wizard/cult
 /datum/aspect/absence
 	name = ASPECT_ABSENCE
 	desc = "Silence, allows you to use the power of the magician or cult as you want"
 
-//Gives mana from: does not affect mana accumulation
+// Children of this type somehow integrate with light on tiles.
+/datum/aspect/lightbending
+	var/list/favor_for_turf
+
+/datum/aspect/lightbending/register_holy_turf(turf/simulated/floor/F, datum/religion/R)
+	..()
+	RegisterSignal(F.lighting_object, list(COMSIG_LIGHT_UPDATE_OBJECT), .proc/recalc_favor_gain)
+	recalc_favor_gain(F)
+
+/datum/aspect/lightbending/unregister_holy_turf(turf/simulated/floor/F, datum/religion/R)
+	..()
+	UnregisterSignal(F.lighting_object, list(COMSIG_LIGHT_UPDATE_OBJECT))
+	R.passive_favor_gain -= favor_for_turf[F]
+	favor_for_turf -= F
+	UNSETEMPTY(favor_for_turf)
+
+/datum/aspect/lightbending/proc/get_light_gain(turf/simulated/floor/F)
+	return 0.0
+
+/datum/aspect/lightbending/proc/recalc_favor_gain(datum/source)
+	var/atom/movable/lighting_object/L = source
+	var/turf/simulated/floor/F = L.myturf
+
+	var/prev_gain = 0.0
+	if(favor_for_turf)
+		prev_gain = favor_for_turf[F]
+	var/favor_gain = get_light_gain(F)
+
+	if(favor_gain != 0.0)
+		START_PROCESSING(SSreligion, F.holy.religion)
+		LAZYSET(favor_for_turf, F, favor_gain)
+		F.holy.religion.passive_favor_gain += favor_gain - prev_gain
+	else
+		favor_for_turf -= F
+		UNSETEMPTY(favor_for_turf)
+
+//Gives mana from: darkness on holy turfs
 //Needed for: spells and rituals related to the theme of dark, eviv, obcurse
-/datum/aspect/darkness
+/datum/aspect/lightbending/darkness
 	name = ASPECT_OBSCURE
 	desc = "Dark, darkness, obcurse, evil"
 
-//Gives mana from: does not affect mana accumulation
+/datum/aspect/lightbending/darkness/get_light_gain(turf/simulated/floor/F)
+	return (1.0 - F.get_lumcount()) * power * 0.05
+
+//Gives mana from: light levels on holy turfs
 //Needed for: spells and rituals related to the theme of receiving light
-/datum/aspect/light
+/datum/aspect/lightbending/light
 	name = ASPECT_LIGHT
 	desc = "Light interaction"
+
+/datum/aspect/lightbending/light/get_light_gain(turf/simulated/floor/F)
+	return F.get_lumcount() * power * 0.05
 
 //Gives mana for economical cost of an item.
 //Needed for: anything economy related

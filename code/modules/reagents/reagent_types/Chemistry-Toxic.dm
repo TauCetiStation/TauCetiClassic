@@ -87,6 +87,7 @@
 	T.assume_gas("phoron", volume, T20C)
 
 /datum/reagent/toxin/phoron/reaction_turf(turf/simulated/T, volume)
+	. = ..()
 	if(volume < 0)
 		return
 	if(volume > 300)
@@ -225,6 +226,7 @@
 
 // Clear off wallrot fungi
 /datum/reagent/toxin/plantbgone/reaction_turf(turf/T, volume)
+	. = ..()
 	if(istype(T, /turf/simulated/wall))
 		var/turf/simulated/wall/W = T
 		if(W.rotting)

@@ -32,12 +32,19 @@
 #define COMSIG_PARENT_PREQDELETED "parent_preqdeleted"			//before a datum's Destroy() is called: (force), returning a nonzero value will cancel the qdel operation
 #define COMSIG_PARENT_QDELETED "parent_qdeleted"				//after a datum's Destroy() is called: (force, qdel_hint), at this point none of the other components chose to interrupt qdel and Destroy has been called
 
+// /datum/reagent signals
+#define COMSIG_REAGENT_REACTION_TURF "reagent_reaction_turf"	//from base of reagent/reaction_turf(): (turf/T, volume)
+
+// light related signals
+#define COMSIG_LIGHT_UPDATE_OBJECT "light_update_corners"		//from base of /atom/movable/lighting_object/update(): ()
+
 // /client signals
 #define COMSIG_CLIENTMOB_MOVE "client_move"		//from base of client/Move(): (atom/NewLoc, direction)
 	#define COMPONENT_CLIENTMOB_BLOCK_MOVE 1
 #define COMSIG_CLIENTMOB_POSTMOVE "client_postmove" //from base of client/Move, after all movement is finished(): (atom/NewLoc, direction)
 // /atom signals
-#define COMSIG_ATOM_ENTERED "atom_entered"						//from base of atom/Entered(): (atom/movable/entering, /atom)
+#define COMSIG_ATOM_ENTERED "atom_entered"						//from base of atom/Entered(): (atom/movable/entering, /atom/oldLoc)
+#define COMSIG_ATOM_EXITED "atom_exited"						//from base of atom/Exited(): (atom/movable/exiting, /atom/newLoc)
 
 #define COMSIG_ATOM_CANPASS "movable_canpass"	//from base of atom/movable/CanPass() & mob/CanPass(): (atom/movable/mover, atom/target, height, air_group)
 	#define COMPONENT_CANPASS  "canpass"
@@ -66,6 +73,9 @@
 	#define COMPONENT_PREVENT_GRAB 1
 
 #define COMSIG_MOVABLE_PIXELMOVE "movable_pixelmove" // hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
+
+// mob signals
+#define COMSIG_MOB_SLIP "movable_slip"				//from mob/proc/slip(): (weaken_duration, obj/slipped_on, lube)
 
 // living signals
 #define COMSIG_LIVING_START_PULL "living_start_pull"			//from base of /mob/start_pulling(): (/atom/movable/target)

@@ -106,8 +106,8 @@
 		global.rites_by_aspects[aspect_type] += path
 
 	global.holy_reagents_by_aspects = list()
-	for(var/path in subtypesof(/datum/reagent))
-		var/datum/reagent/R = new path()
+	for(var/id in global.chemical_reagents_list)
+		var/datum/reagent/R = global.chemical_reagents_list[id]
 		if(!R.needed_aspects)
 			continue
 
@@ -116,11 +116,19 @@
 
 		if(!global.holy_reagents_by_aspects[aspect_type])
 			global.holy_reagents_by_aspects[aspect_type] = list()
-		global.holy_reagents_by_aspects[aspect_type] += path
+		global.holy_reagents_by_aspects[aspect_type] += id
+
+	global.faith_reactions = list()
+	for(var/path in subtypesof(/datum/faith_reaction))
+		var/datum/faith_reaction/FR = new path
+		if(!FR.id)
+			continue
+
+		global.faith_reactions[FR.id] = FR
 
 	global.faith_reactions_by_aspects = list()
-	for(var/path in subtypesof(/datum/faith_reaction))
-		var/datum/faith_reaction/FR = new path()
+	for(var/id in global.faith_reactions)
+		var/datum/faith_reaction/FR = global.faith_reactions[id]
 		if(!FR.needed_aspects)
 			continue
 
@@ -129,7 +137,7 @@
 
 		if(!global.faith_reactions_by_aspects[aspect_type])
 			global.faith_reactions_by_aspects[aspect_type] = list()
-		global.faith_reactions_by_aspects[aspect_type] += path
+		global.faith_reactions_by_aspects[aspect_type] += id
 
 	populate_gear_list()
 

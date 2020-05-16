@@ -73,7 +73,7 @@
 	return
 
 /datum/reagent/proc/reaction_turf(turf/T, volume)
-	src = null
+	SEND_SIGNAL(src, COMSIG_REAGENT_REACTION_TURF, T, volume)
 	return
 
 /datum/reagent/proc/on_mob_life(mob/living/M)
@@ -94,6 +94,7 @@
 
 // Called after add_reagents creates a new reagent.
 /datum/reagent/proc/on_new(data)
+	handle_religions()
 	return
 
 // Called when two reagents of the same are mixing.
@@ -151,6 +152,15 @@
 
 /datum/reagent/proc/on_slime_digest(mob/living/M)
 	return TRUE
+
+// Handles holy reagents.
+/datum/reagent/proc/handle_religions()
+	if(!global.chaplain_religion)
+		return
+	if(!global.chaplain_religion.holy_reagents[name])
+		return
+
+	global.chaplain_religion.on_holy_reagent_created(src)
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()

@@ -325,11 +325,6 @@
 "aS" = (
 /turf/unsimulated/wall/splashscreen,
 /area/start)
-"aT" = (
-/turf/unsimulated/floor{
-	icon_state = "warning"
-	},
-/area/centcom)
 "aU" = (
 /turf/unsimulated/wall{
 	icon_state = "iron8"
@@ -363,7 +358,7 @@
 	icon_state = "floor"
 	},
 /area/centcom)
-"aZ" = (
+"bi" = (
 /obj/machinery/light{
 	dir = 8
 	},
@@ -371,7 +366,12 @@
 	icon_state = "floor"
 	},
 /area/centcom)
-"ba" = (
+"bj" = (
+/turf/unsimulated/floor{
+	icon_state = "warning"
+	},
+/area/centcom)
+"bk" = (
 /obj/machinery/light{
 	dir = 4
 	},
@@ -4848,9 +4848,9 @@ ay
 ay
 ay
 aR
-aZ
+bi
 ay
-aT
+bj
 aU
 aa
 aa
@@ -5002,7 +5002,7 @@ ay
 aR
 ay
 ay
-aT
+bj
 aR
 aa
 aa
@@ -5154,7 +5154,7 @@ ay
 aR
 ay
 ay
-aT
+bj
 aR
 aa
 aa
@@ -5306,7 +5306,7 @@ ay
 aR
 ay
 ay
-aT
+bj
 aR
 aa
 aa
@@ -5456,9 +5456,9 @@ ay
 ay
 ay
 aR
-ba
+bk
 ay
-aT
+bj
 aV
 aa
 aa
