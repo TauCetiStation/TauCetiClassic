@@ -92,6 +92,7 @@
 	to_chat(user, "<span class='warning'>You sweeten [container].</span>")
 
 /datum/faith_reaction/water2wine
+	result_id = "wine"
 	needed_aspects = list(ASPECT_FAMES = 1, ASPECT_SALUTIS = 1)
 	favor_cost = 0
 
@@ -99,6 +100,7 @@
 	to_chat(user, "<span clas='notice'>You have just created wine!</span>")
 
 /datum/faith_reaction/water2pwine
+	result_id = "pwine"
 	needed_aspects = list(ASPECT_FAMES = 1, ASPECT_OBSCURUM = 1)
 	favor_cost = 5
 
