@@ -2171,9 +2171,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	if(HAS_TRAIT(src, TRAIT_FAT))
 		needed_massages = 20
-
 	if(!Lungs.is_bruised())
 		adjustOxyLoss(-1.5)
+	if(!Heart)
+		return
+
 	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
 	if((world.time - last_massage) > 5 SECONDS && do_mob(user, src, HUMAN_STRIP_DELAY))
 		visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
@@ -2185,8 +2187,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return
 	else if((world.time - timeofdeath) < DEFIB_TIME_LIMIT)
 		last_massage = world.time
-		if(!Heart)
-			return
+
 		if(massages_done_right > needed_massages)
 			to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
 			reanimate_body()
@@ -2201,6 +2202,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			Heart.heart_stop()
 		else
 			Heart.heart_fibrillate()
+
 			if(Heart.damage < 50)
 				if(last_massage > world.time - MASSAGE_RHYTM_RIGHT - MASSAGE_ALLOWED_ERROR && last_massage < world.time - MASSAGE_RHYTM_RIGHT + MASSAGE_ALLOWED_ERROR)
 					massages_done_right++
@@ -2208,8 +2210,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				else
 					massages_done_right--
 					to_chat(user, "<span class='warning'>You've skipped the beat.</span>")
-		var/obj/item/organ/external/BP = get_bodypart(BP_CHEST)
+
 		if(op_stage.ribcage != 2 && prob(5))
+			var/obj/item/organ/external/BP = get_bodypart(BP_CHEST)
 			BP.fracture()
 			to_chat(user, "<span class='warning'>You hear cracking in [src]'s chest!.</span>")
 
