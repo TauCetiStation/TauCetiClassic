@@ -45,6 +45,8 @@
 	var/give_loadout_items = TRUE
 
 	var/salary = 0
+	//salary ratio - for global salary changes
+	var/salary_ratio = 1
 
 	var/list/restricted_species = list()
 

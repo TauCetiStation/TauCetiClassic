@@ -446,7 +446,7 @@
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = sanitize(input(user, "Please enter a religon.")  as text|null)
+						var/raw_choice = sanitize(input(user, "Please enter a religion.")  as text|null)
 						if(raw_choice)
 							religion = raw_choice
 						return

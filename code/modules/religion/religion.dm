@@ -115,11 +115,38 @@
 	var/list/aspects = list()
 	// Spells that are determined by aspect combinations, are given to God.
 	var/list/god_spells = list()
-	// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
-	var/list/rites = list()
+	// Lists of rites with information. Converts itself into a list of rites with "name - desc (favor_cost)"
+	var/list/rites_info = list()
+	// Lists of rite name by type. "name = type"
+	var/list/rites_by_name = list()
+
+	// Contains an altar, wherever it is
+	var/obj/structure/altar_of_gods/altar
 
 /datum/religion/New()
+	reset_religion()
+
+/datum/religion/proc/reset_religion()
+	lore = initial(lore)
+	lore_by_name = list()
+	deity_names = list()
+	bible_info = initial(bible_info)
+	for(var/god in active_deities)
+		remove_deity(god)
+	favor = initial(favor)
+	max_favor = initial(max_favor)
+	aspects = list()
+	god_spells = list()
+	rites_info = list()
+	rites_by_name = list()
+
 	create_default()
+
+	if(altar)
+		altar.chosen_aspect = initial(altar.chosen_aspect)
+		altar.sect = initial(altar.sect)
+		altar.religion = initial(altar.religion)
+		altar.performing_rite = initial(altar.performing_rite)
 
 /datum/religion/proc/gen_bible_info()
 	if(bible_info_by_name[name])
@@ -241,15 +268,18 @@
 			affect_divine_power(S)
 			G.AddSpell(S)
 
+/datum/religion/proc/remove_god_spells(mob/G)
+	G.ClearSpells()
+
 /datum/religion/proc/update_deities()
 	for(var/mob/deity in active_deities)
 		give_god_spells(deity)
 
 // Generate new rite_list
 /datum/religion/proc/update_rites()
-	if(rites.len != 0)
+	if(rites_by_name.len != 0)
 		var/list/listylist = generate_rites_list()
-		rites = listylist
+		rites_by_name = listylist
 
 // Adds all spells related to asp.
 /datum/religion/proc/add_aspect_spells(datum/aspect/asp, datum/callback/aspect_pred)
@@ -267,7 +297,7 @@
 		var/datum/religion_rites/RR = new rite_type
 
 		if(is_sublist_assoc(RR.needed_aspects, aspects, aspect_pred))
-			rites |= rite_type
+			rites_by_name |= rite_type
 
 		QDEL_NULL(RR)
 
@@ -299,21 +329,44 @@
 
 	update_aspects()
 
-///Generates a list of rites with 'name' = 'type', used for examine altar_of_god
+///Generates a list of rites with 'name' = 'type' and add in rite_info info about rite. Used in altar_of_gods
 /datum/religion/proc/generate_rites_list()
 	var/list/retVal = list()
-	for(var/i in rites)
+	for(var/i in rites_by_name)
 		if(!ispath(i))
-			retVal[i] = rites[i]
+			retVal[i] = rites_by_name[i]
 			continue
 		var/datum/religion_rites/RI = i
-		var/name_entry = "[initial(RI.name)]"
+		var/name_entry = ""
+		var/tip_text
+
+		if(ispath(i, /datum/religion_rites/consent))
+			tip_text += "This ritual is performed only with the consent of the victim."
+
+		else if(ispath(i, /datum/religion_rites/spawn_item))
+			var/datum/religion_rites/spawn_item/spawning = RI
+			if(initial(spawning.sacrifice_type))
+				var/obj/item/item = initial(spawning.sacrifice_type)
+				tip_text += "This ritual requires a <i>[initial(item.name)]</i>. "
+			if(initial(spawning.spawn_type))
+				var/obj/item/item = initial(spawning.spawn_type)
+				tip_text += "This ritual creates a <i>[initial(item.name)]</i>."
+
+		if(tip_text)
+			name_entry += "[EMBED_TIP(initial(RI.name), tip_text)]"
+		else
+			name_entry += "[initial(RI.name)]"
+
 		if(initial(RI.desc))
 			name_entry += " - [initial(RI.desc)]"
 		if(initial(RI.favor_cost))
 			name_entry += " ([initial(RI.favor_cost)] favor)"
 
-		retVal["[name_entry]\n"] = i
+		// Generates a list of information of rite, used for examine() in altar_of_gods
+		rites_info += "[name_entry]"
+
+		// Generates a list of rites with 'name' = 'type', used for inputs in altar_of_gods
+		retVal["[initial(RI.name)]"] = i
 	return retVal
 
 /datum/religion/proc/add_deity(mob/M)
@@ -322,3 +375,4 @@
 
 /datum/religion/proc/remove_deity(mob/M)
 	active_deities -= M
+	remove_god_spells(M)
