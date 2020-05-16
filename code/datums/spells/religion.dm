@@ -251,7 +251,7 @@
 	invocation = "none"
 	clothes_req = 0
 
-	action_icon_state = "god_default"
+	action_icon_state = "infection_good"
 	sound = 'sound/magic/Smoke.ogg'
 
 	var/list/infected = list()
@@ -296,6 +296,8 @@
 	desc = "Evil infection with viruses cough and headache"
 
 	needed_aspect = list(ASPECT_DEATH = 1, ASPECT_OBSCURE = 1)
+
+	action_icon_state = "infection_evil"
 
 	var/obj/effect/proc_holder/spell/dumbfire/infection/good_spell
 
@@ -350,7 +352,7 @@
 	invocation = "none"
 	clothes_req = 0
 
-	action_icon_state = "god_default"
+	action_icon_state = "rot"
 	sound = 'sound/magic/Smoke.ogg'
 
 /obj/effect/proc_holder/spell/dumbfire/rot/cast()

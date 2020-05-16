@@ -17,6 +17,8 @@
 	return variants
 
 /datum/religion/chaplain/proc/create_by_chaplain(mob/living/carbon/human/chaplain)
+	reset_religion()
+
 	var/new_religion = sanitize_safe(input(chaplain, "You are the crew services officer. Would you like to change your religion? Default is [name], in SPACE.", "Name change", name), MAX_NAME_LEN)
 	if(!new_religion)
 		new_religion = name

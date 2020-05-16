@@ -54,7 +54,7 @@
 		return FALSE
 
 	if(jobban_isbanned(AOG.buckled_mob, "Cyborg") || role_available_in_minutes(AOG.buckled_mob, ROLE_PAI))
-		to_chat(usr, "<span class='warning'>[AOG.buckled_mob]'s body is too weak!</span>")
+		to_chat(user, "<span class='warning'>[AOG.buckled_mob]'s body is too weak!</span>")
 		return FALSE
 	return ..()
 
@@ -69,7 +69,7 @@
 
 	hgibs(AOG.loc, human2borg.viruses, human2borg.dna, human2borg.species.flesh_color, human2borg.species.blood_datum)
 	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [name]!</span>")
-	human2borg.Robotize(global.chaplain_religion.bible_info.borg_name, global.chaplain_religion.bible_info.laws_type)
+	human2borg.Robotize(global.chaplain_religion.bible_info.borg_name, global.chaplain_religion.bible_info.laws_type, FALSE)
 	return TRUE
 
 /*
@@ -121,5 +121,73 @@
 		sacrifice_favor  *= 0.5
 
 	L.gib()
-	usr.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
+	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
+	return TRUE
+
+/*
+ * Clownconversion
+ * Adds clumsy mutation to mob and changes their clothes
+ */
+/datum/religion_rites/consent/clownconversion
+	name = "Clownconversion"
+	desc = "Convert a just person into a clown."
+	ritual_length = (2 MINUTES)
+	ritual_invocations = list("From our mother to our soil we got the gift of bananas...",
+						"...From our mother to our ears we got the gift of horns...",
+						"...From our mother to our feet we walk on we got the shoes of length...")
+	invoke_msg = "...And from our mothers gift to you, we grant you the power of HONK!"
+	favor_cost = 500
+
+	consent_msg = "Do you feel the honk, growing, from within your body?"
+
+	needed_aspects = list(
+		ASPECT_WACKY = 1,
+		ASPECT_HERD = 1
+	)
+
+/datum/religion_rites/consent/clownconversion/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!ishuman(AOG.buckled_mob))
+		to_chat(user, "<span class='warning'>Only a human can go through the ritual.</span>")
+		return FALSE
+
+	if(jobban_isbanned(AOG.buckled_mob, "Clown"))
+		to_chat(user, "<span class='warning'>[pick(global.chaplain_religion.deity_names)] don't accept this person!</span>")
+		return FALSE
+	
+	if(!AOG.buckled_mob.mind)
+		to_chat(user, "<span class='warning'>[AOG.buckled_mob]'s body is too weak!</span>")
+		return FALSE
+
+	if(AOG.buckled_mob.mind.holy_role >= HOLY_ROLE_PRIEST)
+		to_chat(user, "<span class='warning'>[AOG.buckled_mob] are already holy!</span>")
+		return FALSE
+
+	return ..()
+
+/datum/religion_rites/consent/clownconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	var/mob/living/carbon/human/H = AOG.buckled_mob
+	if(!istype(H))
+		return FALSE
+
+	H.remove_from_mob(H.wear_mask)
+	H.remove_from_mob(H.w_uniform)
+	H.remove_from_mob(H.head)
+	H.remove_from_mob(H.wear_suit)
+	H.remove_from_mob(H.back)
+	H.remove_from_mob(H.shoes)
+
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/clown(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_WEAR_MASK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H), SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), SLOT_IN_BACKPACK)
+
+	H.mind.holy_role = HOLY_ROLE_PRIEST
+	H.mutations.Add(CLUMSY)
+	AOG.sect.on_conversion(H)
 	return TRUE

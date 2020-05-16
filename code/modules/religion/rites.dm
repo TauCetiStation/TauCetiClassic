@@ -31,7 +31,11 @@
 			return TRUE
 		return FALSE
 
+	if(!before_perform_rite(user, AOG))
+		return FALSE
+
 	var/first_invoke = TRUE
+	var/stage = 0
 	for(var/i in ritual_invocations)
 		if(first_invoke) //instant invoke
 			user.say(i)
@@ -39,24 +43,32 @@
 			continue
 		if(!ritual_invocations.len) //we divide so we gotta protect
 			return FALSE
-		if(user.is_busy(AOG) || !do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
+		if(!can_invocate(user, AOG))
 			return FALSE
 		user.say(i)
-		if(!on_invocation(user, AOG))
+		stage += 1
+		if(!on_invocation(user, AOG, stage))
 			return FALSE
 
 	// Because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
-	if(user.is_busy(AOG) || !do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
+	if(!can_invocate(user, AOG))
 		return FALSE
 	if(invoke_msg)
 		user.say(invoke_msg)
 	return TRUE
 
-/// Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
+// Does something before the ritual and after checking the favor_cost of a ritual.
+/datum/religion_rites/proc/before_perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+	return TRUE
+
+// Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
 /datum/religion_rites/proc/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	return TRUE
 
 // Does a thing on each invocation, return FALSE to cancel ritual performance.
 // Will not work if ritual_invocations is null.
-/datum/religion_rites/proc/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/proc/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
 	return TRUE
+
+/datum/religion_rites/proc/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
+	return !user.is_busy(AOG) && do_after(user, target = user, delay = ritual_length/ritual_invocations.len)

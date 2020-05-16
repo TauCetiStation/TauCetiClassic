@@ -50,9 +50,7 @@
 		S = new spell_type()
 	for(var/obj/effect/proc_holder/spell/aspell in user.spell_list)
 		if(initial(S.name) == initial(aspell.name))
-			user.spell_list -= aspell
-			user.mind.spell_list -= aspell
-			qdel(aspell)
+			user.RemoveSpell(aspell)
 			qdel(S)
 			return cost
 	return -1
