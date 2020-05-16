@@ -731,7 +731,9 @@
 	set category = "IC"
 
 	if(!isliving(usr) || usr.next_move > world.time)
-		return
+		return FALSE
+
+	. = TRUE
 	usr.SetNextMove(20)
 
 	var/mob/living/L = usr
@@ -857,7 +859,6 @@
 				ExtinguishMob()
 			return
 		if(CM.handcuffed && (CM.last_special <= world.time))
-			if(!CM.canmove && !CM.resting)	return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
 			if(isxenoadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
@@ -1187,6 +1188,11 @@
 
 	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
 		var/list/vomitsound = list()
+		var/mob/living/carbon/human/H = src
+
+		if((HULK in H.mutations) && H.hulk_activator == ACTIVATOR_VOMITING)
+			H.try_mutate_to_hulk()
+
 		// The main reason why this is here, and not made into a polymorphized proc, is because we need to know from the subclasses that could cover their face, that they do.
 		if(masked)
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>","<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")

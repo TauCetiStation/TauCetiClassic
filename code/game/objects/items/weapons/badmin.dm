@@ -12,7 +12,7 @@
 	set name = "Empty Prisoners"
 	set category = "Object"
 
-	if((!ishuman(usr) && (src.loc != usr)) || usr.stat || usr.restrained())
+	if((!ishuman(usr) && (src.loc != usr)) || usr.incapacitated())
 		return
 
 	usr.visible_message("<font class='artefact'>[usr] shakes out the contents of \the [src]!</font>")

@@ -1026,49 +1026,60 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
     {{else data.mode == 7}} <!-- Finance Management -->
         <div class="item">
             <H2>Finance Management</H2>
-            <div class="itemLabelNarrow"><b>Money:</b></div>
-            <div class="itemContent"><span class="good">{{:data.money}}$</span></div>
         </div>
         <div class="item">
-            <div class="itemLabelNarrow">
-                <b>Functions:</b>
+            <div class="itemLabelWide">
+                <b>Money:</b> <span class="good">{{:data.money}}$</span><br>
+                <b>Salary:</b> <span class="good">{{:data.salary}}$</span><br>
+                <b>Next Payment:</b> <span class="average">{{:data.time_to_next_pay}}</span>
             </div>
-            <div class="itemContent">
-                {{:helper.link('Transaction Menu', data.trans_menu == 1 ? 'circle-arrow-n' : 'circle-arrow-s', {'choice' : "Transaction Menu"}, null, 'fixedLeftWide')}}
-                {{:helper.link('Transaction Log', data.trans_log_spoiler == 1 ? 'circle-arrow-n' : 'circle-arrow-s', {'choice' : "Transaction Log"}, null, 'null')}}
+            <div class="itemContentSmall">
+                {{:helper.link('Transaction Menu', null, {'choice' : "Transaction Menu"}, null, null)}}
+                {{:helper.link('Transaction Log', null, {'choice' : "Transaction Log"}, null, null)}}
+                {{if data.boss}} {{:helper.link('Staff Salary', null, {'choice' : "Staff Salary"}, null, null)}} {{/if}}    
             </div>
         </div>
-        {{if data.trans_menu == 1}} <!-- Show Transaction Menu -->
-            <div class="item"> 
-                <div class="statusDisplayRecords">
-                    <table>
-                        <tr><td><span class="good">Target account number:</span></td>
-                        <td><div class="itemContent">{{:helper.link(data.target_account_number, null, {'choice' : "target_acc_number"}, null, null)}}</div></td>
-                        <td><div class="itemContent">{{:helper.link('Manifest', null, {'choice' : "Show Manifest"}, null, null)}}</div></td>
-                        <td><div class="itemContent">{{:helper.link('Click', null, {'choice' : "Look for"}, null, null)}}</div></td></tr>
+    {{else data.mode == 71}} <!-- Show Transaction Menu -->
+        <div class="item"> 
+            <div class="statusDisplayRecords">
+                <table>
+                    <tr><td><span class="good">Target account number:</span></td>
+                    <td><div class="itemContent">{{:helper.link(data.target_account_number, null, {'choice' : "target_acc_number"}, null, null)}}</div></td>
+                    <td><div class="itemContent">{{:helper.link('Manifest', null, {'choice' : "Show Manifest"}, null, null)}}</div></td>
+                    <td><div class="itemContent">{{:helper.link('Click', null, {'choice' : "Look for"}, null, null)}}</div></td></tr>
 
-                        <tr><td><span class="good">Funds to transfer($):</span></td>
-                        <td><div class="itemContent">{{:helper.link(data.funds_amount, null, {'choice' : "funds_amount"}, null, null)}}</div></td></tr>
+                    <tr><td><span class="good">Funds to transfer($):</span></td>
+                    <td><div class="itemContent">{{:helper.link(data.funds_amount, null, {'choice' : "funds_amount"}, null, null)}}</div></td></tr>
 
-                        <tr><td><span class="good">Transaction purpose:</span></td>
-                        <td><div class="itemContent">{{:helper.link(data.purpose, null, {'choice' : "purpose"}, null, null)}}</div></td></tr>
-                    </table>
-                    <div class="itemContent">{{:helper.link('Transfer funds', 'transferthick-e-w', {'choice' : "make_transfer"}, null, null)}}</div>
-                </div>
+                    <tr><td><span class="good">Transaction purpose:</span></td>
+                    <td><div class="itemContent">{{:helper.link(data.purpose, null, {'choice' : "purpose"}, null, null)}}</div></td></tr>
+                </table>
+                <div class="itemContent">{{:helper.link('Transfer funds', 'transferthick-e-w', {'choice' : "make_transfer"}, data.ready_to_send ? null : 'disabled', null)}}</div>
             </div>
-        {{/if}}
-        {{if data.trans_log_spoiler == 1}} <!-- Show Transaction Log -->
-            <div class="item">
-                <div class="statusDisplayRecords">
-                    <center><table class="pmon">
-                        <tr><th>Date</th><th>Time</th><th>Target</th><th>Purpose</th><th>Value</th><th>Source</th></tr>
-                        {{for data.trans_log}}
-                            <tr><td>{{:value.data}}</td><td>{{:value.time}}</td><td>{{:value.name}}</td><td>{{:value.purpose}}</td><td>{{:value.amount}}</td><td>{{:value.source}}</td></tr>
-                        {{/for}}
-                    </table></center>
-                </div>
+        </div>
+    {{else data.mode == 72}} <!-- Show Transaction Log -->
+        <div class="item">
+            <div class="statusDisplayRecords">
+                <center><table class="pmon">
+                    <tr><th>Date</th><th>Time</th><th>Target</th><th>Purpose</th><th>Value</th><th>Source</th></tr>
+                    {{for data.trans_log}}
+                        <tr><td>{{:value.data}}</td><td>{{:value.time}}</td><td>{{:value.name}}</td><td>{{:value.purpose}}</td><td>{{:value.amount}}</td><td>{{:value.source}}</td></tr>
+                    {{/for}}
+                </table></center>
             </div>
-        {{/if}}
+        </div>
+    {{else data.mode == 73}}   <!-- Change Staff Salary -->
+        <div class="item">
+            <div class="statusDisplayRecords">
+                <center><table class="pmon">
+                    <tr><th>Name</th><th>Rank</th><th>Salary</th></tr>
+                    {{for data.subordinate_staff}}
+                        <tr><td>{{:value.name}}</td><td>{{:value.rank}}</td><td>{{:value.salary}}</td>
+                        <td>{{:helper.link('Change', null, {'choice' : "Change Salary", 'account' : value.acc_number}, null, null)}}</td></tr>
+                    {{/for}}
+                </table></center>
+            </div>
+        </div>
     {{/if}}
 {{else}}
     <div class="wholeScreen">

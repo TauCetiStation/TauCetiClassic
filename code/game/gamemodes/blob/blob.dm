@@ -20,6 +20,8 @@ var/list/blob_nodes = list()
 
 	restricted_jobs = list("Cyborg", "AI")
 
+	restricted_species_flags = list(IS_SYNTHETIC)
+
 	var/declared = 0
 
 	var/cores_to_spawn = 1

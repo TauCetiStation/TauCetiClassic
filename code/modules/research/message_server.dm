@@ -203,7 +203,8 @@ var/obj/machinery/blackbox_recorder/blackbox
 	blackbox = src
 
 /obj/machinery/blackbox_recorder/Destroy()
-	var/turf/T = locate(1,1,2)
+	var/centcom_z = SSmapping.level_by_trait(ZTRAIT_CENTCOM)
+	var/turf/T = locate(1,1, centcom_z)
 	if(T)
 		blackbox = null
 		var/obj/machinery/blackbox_recorder/BR = new/obj/machinery/blackbox_recorder(T)

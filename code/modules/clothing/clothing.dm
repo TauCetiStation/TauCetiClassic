@@ -600,7 +600,7 @@ BLIND     // can't see anything
 		if (!over_object)
 			return
 
-		if (!( usr.restrained() ) && !( usr.stat ))
+		if (!usr.incapacitated())
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))
@@ -632,7 +632,8 @@ BLIND     // can't see anything
 /obj/item/clothing/under/proc/set_sensors(mob/usr)
 	var/mob/M = usr
 	if (istype(M, /mob/dead)) return
-	if (usr.stat || usr.restrained()) return
+	if (usr.incapacitated())
+		return
 	if(has_sensor >= 2)
 		to_chat(usr, "The controls are locked.")
 		return 0
@@ -679,7 +680,8 @@ BLIND     // can't see anything
 	set category = "Object"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
+	if(usr.incapacitated())
+		return
 
 	if(copytext(item_color,-2) != "_d")
 		basecolor = item_color

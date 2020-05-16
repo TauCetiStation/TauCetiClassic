@@ -7,8 +7,8 @@ Doesn't work on other aliens/AI.*/
 
 
 /mob/living/carbon/xenomorph/proc/powerc(X, Y)//Y is optional, checks for weed planting. X can be null.
-	if(stat)
-		to_chat(src, "<span class='warning'>You must be conscious to do this.</span>")
+	if(incapacitated())
+		to_chat(src, "<span class='warning'>You can't do that while being incapacitated.</span>")
 		return 0
 	else if(X && getPlasma() < X)
 		to_chat(src, "<span class='warning'>Not enough plasma stored.</span>")

@@ -69,7 +69,6 @@
 			flame_turf(turflist)
 
 /obj/item/weapon/flamethrower/attackby(obj/item/W, mob/user)
-	if(user.stat || user.restrained() || user.lying)	return
 	if(iswrench(W) && !status)//Taking this apart
 		var/turf/T = get_turf(src)
 		if(weldtool)
@@ -118,8 +117,6 @@
 	..()
 
 /obj/item/weapon/flamethrower/attack_self(mob/user)
-	if(user.stat || user.restrained() || user.lying)
-		return
 	user.set_machine(src)
 	if(!ptank)
 		to_chat(user, "<span class='notice'>Attach a phoron tank first!</span>")
@@ -282,7 +279,6 @@
 			flame_turf(turflist)
 
 /obj/item/weapon/flamethrower_M2/attack_self(mob/user)
-	if(user.stat || user.restrained() || user.lying)	return
 	if(!Connected_tank)
 		to_chat(usr, "M2 Flamethrower needs to be connected to fuel backpack first.")
 		return

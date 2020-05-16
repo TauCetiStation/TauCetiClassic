@@ -124,7 +124,7 @@
 	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
-	item_state = "gun"
+	item_state = "revolver"
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 	can_be_holstered = TRUE
@@ -969,7 +969,7 @@ Owl & Griffin toys
 
 /obj/item/toy/cards/MouseDrop(atom/over_object)
 	var/mob/M = usr
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!ishuman(usr) || usr.incapacitated())
 		return
 	if(Adjacent(usr))
 		if(over_object == M)
@@ -1022,7 +1022,7 @@ Owl & Griffin toys
 /obj/item/toy/cardhand/Topic(href, href_list)
 	if(..())
 		return
-	if(usr.stat || !ishuman(usr) || !usr.canmove)
+	if(!ishuman(usr) || usr.incapacitated())
 		return
 	var/mob/living/carbon/human/cardUser = usr
 	if(href_list["pick"])
@@ -1103,7 +1103,7 @@ Owl & Griffin toys
 	set name = "Flip Card"
 	set category = "Object"
 	set src in range(1)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!ishuman(usr) || usr.incapacitated())
 		return
 	if(!flipped)
 		src.flipped = 1
@@ -1156,7 +1156,7 @@ Owl & Griffin toys
 
 
 /obj/item/toy/singlecard/attack_self(mob/user)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!ishuman(usr) || usr.incapacitated())
 		return
 	Flip()
 

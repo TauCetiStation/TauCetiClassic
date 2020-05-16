@@ -62,7 +62,6 @@
 	icon_state = "shade_god"
 	icon_living = "shade_god"
 	stat = CONSCIOUS
-	speak_emote = list("hisses", "bless")
 	maxHealth = 5000
 	health = 5000
 	melee_damage_lower = 0
@@ -81,8 +80,16 @@
 	var/islam = FALSE
 	var/obj/item/weapon/nullrod/staff/container
 
-/mob/living/simple_animal/shade/god/incapacitated()
-	// So the god can't use procs and stuff like that.
+	var/datum/religion/my_religion
+
+/mob/living/simple_animal/shade/god/Stat()
+	..()
+	if(statpanel("Status"))
+		if(global.chaplain_religion)
+			stat(null, "Favor: [round(global.chaplain_religion.favor)]/[global.chaplain_religion.max_favor]")
+
+/mob/living/simple_animal/shade/god/incapacitated(restrained_type = ARMS)
+	// So the god can't use verbs and stuff like that.
 	return TRUE
 
 /mob/living/simple_animal/shade/god/atom_init()
@@ -95,6 +102,10 @@
 		container.brainmob = null
 		QDEL_NULL(container.god_image)
 		container = null
+
+	if(my_religion)
+		my_religion.remove_deity(src)
+
 	return ..()
 
 /mob/living/simple_animal/shade/god/Login()
@@ -102,12 +113,25 @@
 	stat = CONSCIOUS
 	blinded = FALSE
 
+/mob/living/simple_animal/shade/god/Life()
+	..()
+	if(global.chaplain_religion)
+		global.chaplain_religion.favor += 0.2
+
 /mob/living/simple_animal/shade/god/proc/god_attack(atom/A)
 	if(ismob(A))
 		var/mob/M = A
 		var/obj/item/weapon/nullrod/staff/S = M.is_in_hands(/obj/item/weapon/nullrod/staff)
 		if(S && S.brainmob == src)
-			// Pull them in closer...
+			if(a_intent != I_HURT)
+				// Pull them in closer...
+				step_towards(A, src)
+				SetNextMove(CLICK_CD_RAPID)
+			else
+				M.drop_item()
+	else if(istype(A, /obj/item/weapon/nullrod/staff))
+		var/obj/item/weapon/nullrod/staff/S = A
+		if(S.brainmob == src)
 			step_towards(A, src)
 			SetNextMove(CLICK_CD_RAPID)
 	else
@@ -155,3 +179,35 @@
 	y = new_y
 
 	Moved(oldLoc, 0)
+
+/mob/living/simple_animal/shade/god/Process_Spacemove(movement_dir = 0)
+	return TRUE
+
+/mob/living/simple_animal/shade/god/verb/view_manfiest()
+	set name = "View Crew Manifest"
+	set category = "Deity"
+
+	var/dat
+	dat += "<h4>Crew Manifest</h4>"
+	dat += data_core.get_manifest()
+
+	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")
+
+/mob/living/simple_animal/shade/god/resist()
+	. = ..()
+	if(. && container)
+		var/mob/M = container.loc
+		if(istype(M))
+			M.drop_from_inventory(container)
+			to_chat(M, "<span class='notice'>[container] wriggles out of your grip!</span>")
+			to_chat(src, "<span class='notice'>You wriggle out of [M]'s grip!</span>")
+		else if(istype(container.loc, /obj/item))
+			to_chat(src, "<span class='notice'>You struggle free of [container.loc].</span>")
+			container.forceMove(get_turf(container.loc))
+
+/mob/living/simple_animal/shade/god/update_canmove(no_transform = FALSE)
+	if(paralysis || stunned || weakened || buckled || pinned.len)
+		canmove = FALSE
+	else
+		canmove = TRUE
+	return canmove

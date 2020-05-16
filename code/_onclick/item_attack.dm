@@ -6,9 +6,15 @@
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
-	return
+	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
+		return TRUE
+	return FALSE
 
 /atom/movable/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	if(.) // Clickplace, no need for attack animation.
+		return
+
 	if(!(W.flags & NOATTACKANIMATION))
 		user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)

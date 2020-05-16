@@ -73,7 +73,7 @@
 	var/braintype = "Cyborg"
 	var/pose
 
-/mob/living/silicon/robot/atom_init()
+/mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -85,10 +85,10 @@
 	robot_modules_background.layer = HUD_LAYER	 //Objects that appear on screen are on layer 20, UI should be just below it.
 	robot_modules_background.plane = HUD_PLANE
 	ident = rand(1, 999)
-	updatename("Default")
+	updatename(name_prefix)
 	updateicon()
 
-	init()
+	init(laws_type, ai_link)
 
 	radio = new /obj/item/device/radio/borg(src)
 	if(!scrambledcodes && !camera)
@@ -126,15 +126,16 @@
 	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 
-/mob/living/silicon/robot/proc/init()
+/mob/living/silicon/robot/proc/init(laws_type, ai_link)
 	aiCamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
-	laws = new /datum/ai_laws/nanotrasen()
-	connected_ai = select_active_ai_with_fewest_borgs()
-	if(connected_ai)
-		connected_ai.connected_robots += src
-		lawsync()
-		photosync()
-		lawupdate = 1
+	laws = new laws_type()
+	if(ai_link)
+		connected_ai = select_active_ai_with_fewest_borgs()
+		if(connected_ai)
+			connected_ai.connected_robots += src
+			lawsync()
+			photosync()
+			lawupdate = 1
 	else
 		lawupdate = 0
 

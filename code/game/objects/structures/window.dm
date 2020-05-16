@@ -299,7 +299,7 @@
 
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
-			take_damage(W.force)
+			take_damage(W.force, W.damtype)
 			if(health <= 7)
 				anchored = 0
 				update_nearby_icons()

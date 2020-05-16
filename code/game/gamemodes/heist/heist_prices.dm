@@ -54,7 +54,7 @@
 /obj/item/projectile/bullet/gyro/price = 175
 /obj/item/projectile/bullet/heavy/a145/price = 708
 /obj/item/projectile/bullet/incendiary/price = 522
-/obj/item/projectile/bullet/midbullet/price = 144
+/obj/item/projectile/bullet/smg/price = 144
 /obj/item/projectile/bullet/midbullet2/price = 187
 /obj/item/projectile/bullet/midbullet3/price = 210
 /obj/item/projectile/bullet/pellet/price = 11

@@ -50,7 +50,17 @@
 				new /obj/item/stack/sheet/metal(loc)
 			qdel(src)
 			return
-	..()
+
+	else if(istype(W, /obj/item/weapon/twohanded/sledgehammer))
+		var/obj/item/weapon/twohanded/sledgehammer/S = W
+		if(S.wielded && !(flags & NODECONSTRUCT))
+			new /obj/item/stack/sheet/metal(loc)
+			playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
+			shake_camera(user, 1, 1)
+			qdel(src)
+			return
+	else
+		..()
 
 /obj/structure/stool/MouseDrop(atom/over_object)
 	if(ishuman(over_object) && type == /obj/structure/stool)

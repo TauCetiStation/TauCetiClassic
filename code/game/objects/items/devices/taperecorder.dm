@@ -32,15 +32,12 @@
 /obj/item/device/taperecorder/hear_talk(mob/living/M, msg, verb="says")
 	if(recording)
 		timestamp+= timerecorded
-		if(isanimal(M)) // Taken from say(). Temporary fix before refactor. Needs to actually pass languages or something like that here and when we see paper or hear audioplayback it depends whenever we can actually understand that language.
-			var/mob/living/simple_animal/S = M
-			msg = pick(S.speak)
-		else if(isIAN(M))
-			var/mob/living/carbon/ian/IAN = M
-			msg = pick(IAN.speak)
+		if(isanimal(M) || isIAN(M)) // Temporary fix before refactor. Needs to actually pass languages or something like that here and when we see paper or hear audioplayback it depends whenever we can actually understand that language.
+			msg = M.get_scrambled_message(msg)
+		if(!msg)
+			return
 
 		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] [verb], \"[msg]\""
-		return
 
 /obj/item/device/taperecorder/emag_act(mob/user)
 	if(emagged == 0)
@@ -68,7 +65,7 @@
 	set name = "Start Recording"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 	if(emagged == 1)
 		to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
@@ -95,7 +92,7 @@
 	set name = "Stop"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 	if(emagged == 1)
 		to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
@@ -119,7 +116,7 @@
 	set name = "Clear Memory"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 	if(emagged == 1)
 		to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
@@ -139,7 +136,7 @@
 	set name = "Playback Memory"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 	if(recording == 1)
 		to_chat(usr, "<span class='notice'>You can't playback when recording!</span>")
@@ -195,7 +192,7 @@
 	set name = "Print Transcript"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 	if(emagged == 1)
 		to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
@@ -221,7 +218,7 @@
 
 /obj/item/device/taperecorder/attack_self(mob/user)
 	if(recording == 0 && playing == 0)
-		if(usr.stat)
+		if(usr.incapacitated())
 			return
 		if(emagged == 1)
 			to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
@@ -243,7 +240,7 @@
 		else
 			to_chat(usr, "<span class='warning'>Either your tape recorder's memory is full, or it is currently playing back its memory.</span>")
 	else
-		if(usr.stat)
+		if(usr.incapacitated())
 			to_chat(usr, "Not when you're incapacitated.")
 			return
 		if(recording == 1)

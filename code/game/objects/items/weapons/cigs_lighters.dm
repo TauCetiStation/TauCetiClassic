@@ -200,7 +200,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		if(src == C.wear_mask)
-			if(C.stat == UNCONSCIOUS || C.paralysis)
+			if(C.incapacitated())
 				if(prob(5))
 					C.drop_from_inventory(src, get_turf(C))
 					to_chat(C, "<span class='notice'>Your [name] fell out from your mouth.</span>")

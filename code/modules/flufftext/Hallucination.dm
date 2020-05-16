@@ -430,7 +430,8 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	var/clone_weapon = null
 
 	for(var/mob/living/carbon/human/H in human_list)
-		if(H.stat || H.lying) continue
+		if(H.incapacitated())
+			continue
 //		possible_clones += H
 		clone = H
 		break	//changed the code a bit. Less randomised, but less work to do. Should be ok, world.contents aren't stored in any particular order.
