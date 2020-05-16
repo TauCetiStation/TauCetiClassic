@@ -141,6 +141,11 @@
 		return TRUE
 	return FALSE
 
+// An async wrapper for everything animation-related.
+/datum/combo_saved/proc/do_animation(datum/combat_combo/CC)
+	CC.animate_combo(victim, attacker)
+	CC.after_animation(victim, attacker)
+
 // Returns TRUE if a we want to cancel the AltClick/whatever was there. But actually, basically always
 // returns TRUE.
 /datum/combo_saved/proc/activate_combo()
@@ -157,7 +162,7 @@
 
 		if(CC.heavy_animation)
 			CC.before_animation(victim, attacker)
-		INVOKE_ASYNC(CC, /datum/combat_combo.proc/animate_combo, victim, attacker)
+		INVOKE_ASYNC(src, .proc/do_animation, CC)
 
 		CC.execute(victim, attacker)
 		fullness -= CC.fullness_lose_on_execute

@@ -229,8 +229,7 @@ var/global/list/combat_combos_by_name = list()
 /datum/combat_combo/proc/animate_combo(mob/living/victim, mob/living/attacker)
 	return
 
-// THIS SHOULD BE CALLED MANUALLY FROM ALL RETURN POINTS IN ANIMATE_COMBO
-// SINCE IT IS ASYNC.
+// This proc is called after animate_combo has ended.
 /datum/combat_combo/proc/after_animation(mob/living/victim, mob/living/attacker)
 	if(heavy_animation)
 		victim.transform = victim.default_transform

@@ -1246,9 +1246,6 @@
 		return zone_sel.selecting
 	return pick(TARGET_ZONE_ALL)
 
-/mob/living/is_busy()
-	return combo_animation || attack_animation || ..()
-
 /mob/living/proc/has_bodypart(name)
 	return FALSE
 

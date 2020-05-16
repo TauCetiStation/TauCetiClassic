@@ -99,7 +99,6 @@
 
 /datum/combat_combo/slide_kick/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
-		after_animation(victim, attacker)
 		return
 
 	var/slide_dir = get_dir(attacker, victim)
@@ -176,8 +175,6 @@
 	attacker.pass_flags = prev_pass_flags
 
 	attacker.update_canmove()
-
-	after_animation(victim, attacker)
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/slide_kick/execute(mob/living/victim, mob/living/attacker)
@@ -260,7 +257,6 @@
 
 /datum/combat_combo/uppercut/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
-		after_animation(victim, attacker)
 		return
 
 	attacker.set_dir(pick(NORTH, SOUTH)) // So they will appear sideways, as if they are actually knocking with their fist.
@@ -301,19 +297,16 @@
 
 	animate(attacker, pixel_x = attacker.pixel_x + shift_x, pixel_y = attacker.pixel_y + shift_y, time = 2)
 	if(!do_after(attacker, 2, target = victim, progress = FALSE))
-		after_animation(victim, attacker)
 		return
 
 	var/prev_victim_pix_y = victim.pixel_y
 
 	animate(attacker, transform = M, pixel_y = attacker.pixel_y + 8, time = 2)
 	if(!do_combo(victim, attacker, 2))
-		after_animation(victim, attacker)
 		return
 	animate(attacker, transform = prev_attacker_M, pixel_y = attacker.pixel_y + 8, time = 2)
 	animate(victim, transform = victim_M, pixel_y = victim.pixel_y + 16, time = 2)
 	if(!do_combo(victim, attacker, 2))
-		after_animation(victim, attacker)
 		return
 
 	var/atom/move_attacker_to = victim.loc
@@ -327,7 +320,6 @@
 	animate(attacker, pixel_y = attacker.pixel_y - 16, time = 2)
 	animate(victim, pixel_y = prev_victim_pix_y, time = 2)
 	if(!do_combo(victim, attacker, 2))
-		after_animation(victim, attacker)
 		return
 
 	attacker.transform = prev_attacker_M
@@ -348,8 +340,6 @@
 			var/turf/target = get_step(victim, attacker.dir)
 
 			VH.throw_at(target, VH.throw_range, VH.throw_speed, attacker)
-
-	after_animation(victim, attacker)
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/uppercut/execute(mob/living/victim, mob/living/attacker)
@@ -374,7 +364,6 @@
 
 /datum/combat_combo/suplex/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
-		after_animation(victim, attacker)
 		return
 
 	var/DTM = get_dir(attacker, victim)
@@ -397,7 +386,6 @@
 
 	animate(attacker, pixel_x = attacker.pixel_x + shift_x, pixel_y = attacker.pixel_y + shift_y, time = 5)
 	if(!do_after(attacker, 5, target = victim, progress = FALSE))
-		after_animation(victim, attacker)
 		return
 
 	attacker.forceMove(victim.loc)
@@ -412,12 +400,10 @@
 
 	animate(victim, transform = M, time = 2)
 	if(!do_after(attacker, 2, target = victim, progress = FALSE))
-		after_animation(victim, attacker)
 		return
 
 	animate(victim, pixel_y = victim.pixel_y + 20, time = 6)
 	if(!do_after(attacker, 6, target = victim, progress = FALSE))
-		after_animation(victim, attacker)
 		return
 
 	victim.Stun(1)
@@ -429,7 +415,6 @@
 	attacker.anchored = TRUE
 	animate(victim, pixel_x = victim.pixel_x - shift_x, pixel_y = victim.pixel_y - 20 - shift_y, time = 2)
 	if(!do_combo(victim, attacker, 2))
-		after_animation(victim, attacker)
 		return
 
 	victim.forceMove(get_step(victim, victim_dir))
@@ -441,8 +426,6 @@
 
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	victim.visible_message("<span class='danger'>[attacker] has thrown [victim] over their shoulder!</span>")
-
-	after_animation(victim, attacker)
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/suplex/execute(mob/living/victim, mob/living/attacker)
@@ -470,7 +453,6 @@
 
 /datum/combat_combo/diving_elbow_drop/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
-		after_animation(victim, attacker)
 		return
 
 	var/DTM = get_dir(attacker, victim)
@@ -492,7 +474,6 @@
 
 	animate(attacker, pixel_y = attacker.pixel_y - 4, time = 5)
 	if(!do_after(attacker, 5, target = victim, progress = FALSE))
-		after_animation(victim, attacker)
 		return
 
 	var/prev_anchored = attacker.anchored
@@ -508,12 +489,10 @@
 
 	animate(attacker, transform = M, pixel_x = attacker.pixel_x + shift_x, pixel_y = attacker.pixel_y + shift_y + 36, time = 4)
 	if(!do_combo(victim, attacker, 4))
-		after_animation(victim, attacker)
 		return
 
 	// Hover ominously.
 	if(!do_combo(victim, attacker, 3))
-		after_animation(victim, attacker)
 		return
 
 	attacker.pixel_x = prev_pix_x
@@ -522,7 +501,6 @@
 
 	animate(attacker, pixel_y = prev_pix_y, time = 2)
 	if(!do_combo(victim, attacker, 2))
-		after_animation(victim, attacker)
 		return
 
 	for(var/mob/living/L in victim.loc)
@@ -532,14 +510,14 @@
 			apply_damage(28, L, attacker)
 		apply_effect(6, WEAKEN, L, attacker, min_value = 1)
 
+		event_log(L, attacker, "Diving Elbow Drop bypasser.")
+
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	attacker.visible_message("<span class='danger'>[attacker] falls elbow first onto [attacker.loc] with a loud thud!</span>")
 
 	attacker.anchored = prev_anchored
 	attacker.canmove = prev_canmove
 	attacker.density = prev_density
-
-	after_animation(victim, attacker)
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/diving_elbow_drop/execute(mob/living/victim, mob/living/attacker)
@@ -567,7 +545,6 @@
 
 /datum/combat_combo/dropkick/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
-		after_animation(victim, attacker)
 		return
 
 	var/dropkick_dir = get_dir(attacker, victim)
@@ -602,7 +579,6 @@
 
 	animate(attacker, pixel_x = attacker.pixel_x + shift_x, pixel_y = attacker.pixel_y + shift_y, transform  = M, time = 3)
 	if(!do_combo(victim, attacker, 3))
-		after_animation(victim, attacker)
 		return
 
 	attacker.pixel_x = prev_pix_x
@@ -659,6 +635,8 @@
 							new_mover.pixel_y += rand(-8, 8)
 							new_mover.pass_flags |= PASSMOB|PASSCRAWL
 
+							event_log(new_mover, attacker, "Forced Dropkick Stun")
+
 			for(var/mob/living/L in cur_movers)
 				INVOKE_ASYNC(GLOBAL_PROC, .proc/_step, L, dropkick_dir)
 
@@ -671,8 +649,6 @@
 					L.pixel_y = prev_info_el["pix_y"]
 					L.pass_flags = prev_info_el["pass_flags"]
 					apply_effect(4, WEAKEN, L, attacker, min_value=1)
-
-				after_animation(victim, attacker)
 				return
 
 	for(var/j in 1 to i)
@@ -682,8 +658,6 @@
 		L.pixel_y = prev_info_el["pix_y"]
 		L.pass_flags = prev_info_el["pass_flags"]
 		apply_effect(4, WEAKEN, L, attacker, min_value=1)
-
-	after_animation(victim, attacker)
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/dropkick/execute(mob/living/victim, mob/living/attacker)
@@ -706,7 +680,6 @@
 
 /datum/combat_combo/charge/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
-		after_animation(victim, attacker)
 		return
 
 	attacker.Grab(victim, GRAB_NECK)
@@ -770,8 +743,6 @@
 			attacker.drop_from_inventory(G)
 			break
 
-	after_animation(victim, attacker)
-
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/charge/execute(mob/living/victim, mob/living/attacker)
 	return
@@ -796,7 +767,6 @@
 
 /datum/combat_combo/spin_throw/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
-		after_animation(victim, attacker)
 		return
 
 	attacker.Grab(victim, GRAB_AGGRESSIVE)
@@ -875,16 +845,12 @@
 						if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
 							var/obj/item/clothing/suit/V = H.wear_suit
 							V.attack_reaction(H, REACTION_THROWITEM)
-
-					after_animation(M, attacker)
 					return
 
 	for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
 		if(G.affecting == victim)
 			attacker.drop_from_inventory(G)
 			break
-
-	after_animation(victim, attacker)
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/spin_throw/execute(mob/living/victim, mob/living/attacker)
