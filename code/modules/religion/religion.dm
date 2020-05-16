@@ -277,9 +277,9 @@
 
 // Generate new rite_list
 /datum/religion/proc/update_rites()
-	if(rites_by_name.len != 0)
-		var/list/listylist = generate_rites_list()
-		rites_by_name = listylist
+	if(rites_by_name.len > 0)
+		var/list/temp = generate_rite_info()
+		rites_info = temp
 
 // Adds all spells related to asp.
 /datum/religion/proc/add_aspect_spells(datum/aspect/asp, datum/callback/aspect_pred)
@@ -297,7 +297,7 @@
 		var/datum/religion_rites/RR = new rite_type
 
 		if(is_sublist_assoc(RR.needed_aspects, aspects, aspect_pred))
-			rites_by_name |= rite_type
+			rites_by_name["[RR.name]"] += rite_type
 
 		QDEL_NULL(RR)
 
@@ -329,21 +329,20 @@
 
 	update_aspects()
 
-///Generates a list of rites with 'name' = 'type' and add in rite_info info about rite. Used in altar_of_gods
-/datum/religion/proc/generate_rites_list()
-	var/list/retVal = list()
+// Generates a list of information of rite, used for examine() in altar_of_gods
+/datum/religion/proc/generate_rite_info()
+	var/list/info = list()
 	for(var/i in rites_by_name)
-		if(!ispath(i))
-			retVal[i] = rites_by_name[i]
+		if(!ispath(rites_by_name[i]))
 			continue
-		var/datum/religion_rites/RI = i
+		var/datum/religion_rites/RI = rites_by_name[i]
 		var/name_entry = ""
 		var/tip_text
 
-		if(ispath(i, /datum/religion_rites/consent))
+		if(ispath(RI, /datum/religion_rites/consent))
 			tip_text += "This ritual is performed only with the consent of the victim."
 
-		else if(ispath(i, /datum/religion_rites/spawn_item))
+		else if(ispath(RI, /datum/religion_rites/spawn_item))
 			var/datum/religion_rites/spawn_item/spawning = RI
 			if(initial(spawning.sacrifice_type))
 				var/obj/item/item = initial(spawning.sacrifice_type)
@@ -362,12 +361,8 @@
 		if(initial(RI.favor_cost))
 			name_entry += " ([initial(RI.favor_cost)] favor)"
 
-		// Generates a list of information of rite, used for examine() in altar_of_gods
-		rites_info += "[name_entry]"
-
-		// Generates a list of rites with 'name' = 'type', used for inputs in altar_of_gods
-		retVal["[initial(RI.name)]"] = i
-	return retVal
+		info += "[name_entry]"
+	return info
 
 /datum/religion/proc/add_deity(mob/M)
 	active_deities += M
