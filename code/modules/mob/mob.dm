@@ -1056,6 +1056,20 @@ note dizziness decrements automatically in the mob's Life() proc.
 		spell.action.Grant(src)
 	return
 
+/mob/proc/RemoveSpell(obj/effect/proc_holder/spell/S)
+	spell_list -= S
+	qdel(S)
+	mind.spell_list -= S
+	qdel(S)
+
+/mob/proc/ClearSpells()
+	for(var/spell in spell_list)
+		spell_list -= spell
+		qdel(spell)
+	for(var/spell in mind.spell_list)
+		mind.spell_list -= spell
+		qdel(spell)
+
 /mob/proc/set_EyesVision(preset = null, transition_time = 5)
 	if(!client) return
 	if(ishuman(src) && druggy)
