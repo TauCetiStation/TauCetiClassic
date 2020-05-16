@@ -27,7 +27,7 @@
 	RegisterSignal(F, list(COMSIG_ATOM_EXITED), .proc/holy_turf_exit)
 
 /datum/aspect/proc/holy_turf_enter(datum/source, atom/movable/mover, atom/oldLoc)
-	return
+	affecting += mover
 
 /datum/aspect/proc/unregister_holy_turf(turf/simulated/floor/F, datum/religion/R)
 	UnregisterSignal(F, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
@@ -35,7 +35,7 @@
 		holy_turf_exit(F, AM)
 
 /datum/aspect/proc/holy_turf_exit(datum/source, atom/movable/mover, atom/newLoc)
-	return
+	affecting -= mover
 
 //Gives mana from: any organs, limbs, and blood
 //Needed for: spells and rituals related to the theme of death, interaction with dead body, necromancy
@@ -185,6 +185,7 @@
 	return FALSE
 
 /datum/aspect/wacky/holy_turf_enter(datum/source, atom/movable/mover, atom/oldLoc)
+	..()
 	RegisterSignal(mover, list(COMSIG_MOB_SLIP), .proc/on_slip)
 
 /datum/aspect/wacky/proc/on_slip(datum/source, weaken_duration, obj/slipped_on, lube)
@@ -200,6 +201,7 @@
 	F.holy.religion.favor += weaken_duration * power * 0.5
 
 /datum/aspect/wacky/holy_turf_exit(datum/source, atom/movable/mover, atom/newLoc)
+	..()
 	UnregisterSignal(mover, list(COMSIG_MOB_SLIP))
 
 //Gives mana from: "silenced" spells at wizard/cult
