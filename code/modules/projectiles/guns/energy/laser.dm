@@ -52,6 +52,7 @@
 /obj/item/weapon/gun/energy/laser/retro
 	name ="retro laser"
 	icon_state = "retro"
+	item_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 	can_be_holstered = TRUE
 
@@ -197,13 +198,13 @@
 /obj/item/weapon/gun/energy/laser/lasertag/bluetag
 	fire_delay = 5
 	icon_state = "bluetag"
-	item_state = "l_tag_blue"
+	item_state = "bluetag"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
 	lasertag_color = "blue"
 
 /obj/item/weapon/gun/energy/laser/lasertag/redtag
 	fire_delay = 5
 	icon_state = "redtag"
-	item_state = "l_tag_red"
+	item_state = "redtag"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
 	lasertag_color = "red"
