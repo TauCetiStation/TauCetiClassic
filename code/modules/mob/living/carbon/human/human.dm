@@ -2171,7 +2171,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	if(HAS_TRAIT(src, TRAIT_FAT))
 		needed_massages = 20
-	if(!Lungs.is_bruised())
+	if(Lungs && !Lungs.is_bruised())
 		adjustOxyLoss(-1.5)
 	if(!Heart)
 		return
