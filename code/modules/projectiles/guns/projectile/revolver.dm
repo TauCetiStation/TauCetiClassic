@@ -245,6 +245,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
 	icon_state = "sawnshotgun"
+	item_state = "sawnshotgun"
 	w_class = ITEM_SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BELT
 	name = "sawn-off shotgun"
