@@ -115,8 +115,10 @@
 	var/list/aspects = list()
 	// Spells that are determined by aspect combinations, are given to God.
 	var/list/god_spells = list()
-	// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
-	var/list/rites = list()
+	// Lists of rites with information. Converts itself into a list of rites with "name - desc (favor_cost)"
+	var/list/rites_info = list()
+	// Lists of rite name by type. "name = type"
+	var/list/rites_by_name = list()
 
 	// Contains an altar, wherever it is
 	var/obj/structure/altar_of_gods/altar
@@ -135,7 +137,8 @@
 	max_favor = initial(max_favor)
 	aspects = list()
 	god_spells = list()
-	rites = list()
+	rites_info = list()
+	rites_by_name = list()
 
 	create_default()
 
@@ -274,9 +277,9 @@
 
 // Generate new rite_list
 /datum/religion/proc/update_rites()
-	if(rites.len != 0)
+	if(rites_by_name.len != 0)
 		var/list/listylist = generate_rites_list()
-		rites = listylist
+		rites_by_name = listylist
 
 // Adds all spells related to asp.
 /datum/religion/proc/add_aspect_spells(datum/aspect/asp, datum/callback/aspect_pred)
@@ -294,7 +297,7 @@
 		var/datum/religion_rites/RR = new rite_type
 
 		if(is_sublist_assoc(RR.needed_aspects, aspects, aspect_pred))
-			rites |= rite_type
+			rites_by_name |= rite_type
 
 		QDEL_NULL(RR)
 
@@ -326,12 +329,12 @@
 
 	update_aspects()
 
-///Generates a list of rites with 'name' = 'type', used for examine altar_of_god
+///Generates a list of rites with 'name' = 'type' and add in rite_info info about rite. Used in altar_of_gods
 /datum/religion/proc/generate_rites_list()
 	var/list/retVal = list()
-	for(var/i in rites)
+	for(var/i in rites_by_name)
 		if(!ispath(i))
-			retVal[i] = rites[i]
+			retVal[i] = rites_by_name[i]
 			continue
 		var/datum/religion_rites/RI = i
 		var/name_entry = ""
@@ -339,6 +342,7 @@
 
 		if(ispath(i, /datum/religion_rites/consent))
 			tip_text += "This ritual is performed only with the consent of the victim."
+
 		else if(ispath(i, /datum/religion_rites/spawn_item))
 			var/datum/religion_rites/spawn_item/spawning = RI
 			if(initial(spawning.sacrifice_type))
@@ -358,7 +362,11 @@
 		if(initial(RI.favor_cost))
 			name_entry += " ([initial(RI.favor_cost)] favor)"
 
-		retVal["[name_entry]\n"] = i
+		// Generates a list of information of rite, used for examine() in altar_of_gods
+		rites_info += "[name_entry]"
+
+		// Generates a list of rites with 'name' = 'type', used for inputs in altar_of_gods
+		retVal["[initial(RI.name)]"] = i
 	return retVal
 
 /datum/religion/proc/add_deity(mob/M)

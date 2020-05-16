@@ -41,11 +41,10 @@
 		return
 
 	msg += "<span class='notice'>The sect currently has [round(global.chaplain_religion.favor)] favor with [pick(global.chaplain_religion.deity_names)].\n</span>"
-	msg += "List of available Rites:\n"
-	for(var/i in global.chaplain_religion.rites)
-		msg += i
-	if(msg)
-		to_chat(user, msg)
+	msg += "List of available Rites:"
+	to_chat(user, msg)
+	for(var/i in global.chaplain_religion.rites_info)
+		to_chat(user, i)
 
 /obj/structure/altar_of_gods/MouseDrop_T(mob/target, mob/user)
 	if(isliving(target))
@@ -159,16 +158,11 @@
 			to_chat(user, "<span class='notice'>You are already performing [performing_rite.name]!</span>")
 			return
 
-		if(religion.rites.len == 0)
+		if(religion.rites_info.len == 0 || religion.rites_by_name.len == 0)
 			to_chat(user, "<span class='notice'>Your religion doesn't have any rites to perform!</span>")
 			return
 
-		var/list/rites_name = list()
-		for(var/rite_type in religion.rites)
-			var/datum/religion_rites/rite = religion.rites[rite_type]
-			rites_name[initial(rite.name)] = rite
-
-		var/rite_select = input(user, "Select a rite to perform!", "Select a rite", null) in rites_name
+		var/rite_select = input(user, "Select a rite to perform!", "Select a rite", null) in religion.rites_by_name
 		if(!Adjacent(user))
 			to_chat(user, "<span class='warning'>You are too far away!</span>")
 			return
@@ -177,7 +171,7 @@
 			to_chat(user, "<span class='notice'>You are already performing [performing_rite.name]!</span>")
 			return
 
-		var/selection2type = rites_name[rite_select]
+		var/selection2type = religion.rites_by_name[rite_select]
 		performing_rite = new selection2type(src)
 
 		if(!performing_rite.perform_rite(user, src))
