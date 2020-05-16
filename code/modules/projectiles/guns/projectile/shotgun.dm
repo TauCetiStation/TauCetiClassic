@@ -90,9 +90,10 @@
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/update_icon()
 	if(short)
 		icon_state = "sawnshotgun[open ? "-o" : ""]"
+		item_state = "sawnshotgun"
 	else
 		icon_state = "dshotgun[open ? "-o" : ""]"
-
+		item_state = "dshotgun"
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(obj/item/A, mob/user)
 	..()
 	if (istype(A,/obj/item/ammo_box) || istype(A,/obj/item/ammo_casing))
