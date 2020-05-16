@@ -1773,6 +1773,7 @@
 #include "code\modules\religion\religion.dm"
 #include "code\modules\religion\religion_sects.dm"
 #include "code\modules\religion\religion_structures.dm"
+#include "code\modules\religion\religious_alchemy.dm"
 #include "code\modules\religion\rites.dm"
 #include "code\modules\religion\religion_types\chaplain.dm"
 #include "code\modules\religion\rites\consent.dm"

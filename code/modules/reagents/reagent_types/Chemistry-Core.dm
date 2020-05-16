@@ -90,6 +90,8 @@
 	description = "An ashen-obsidian-water mix, this solution will alter certain sections of the brain's rationality."
 	color = "#e0e8ef" // rgb: 224, 232, 239
 
+	needed_aspects = list(ASPECT_SALUTIS = 1)
+
 /datum/reagent/water/holywater/on_general_digest(mob/living/M)
 	..()
 	if(holder.has_reagent("unholywater"))

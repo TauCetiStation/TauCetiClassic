@@ -123,6 +123,11 @@
 	// Contains an altar, wherever it is
 	var/obj/structure/altar_of_gods/altar
 
+	// A list of ids of holy reagents from aspects.
+	var/list/holy_reagent_ids = list()
+	// A list of possible faith reactions.
+	var/list/faith_reactions = list()
+
 /datum/religion/New()
 	reset_religion()
 
@@ -281,6 +286,10 @@
 		var/list/listylist = generate_rites_list()
 		rites_by_name = listylist
 
+// Here we should make it so holy reagents create holy land.
+/datum/religion/proc/update_holy_reagents()
+	return
+
 // Adds all spells related to asp.
 /datum/religion/proc/add_aspect_spells(datum/aspect/asp, datum/callback/aspect_pred)
 	for(var/spell_type in global.spells_by_aspects[asp.name])
@@ -301,6 +310,24 @@
 
 		QDEL_NULL(RR)
 
+/datum/religion/proc/add_aspect_reagents(datum/aspect/asp, datum/callback/aspect_pred)
+	for(var/reagent_type in global.holy_reagents_by_aspects[asp.name])
+		var/datum/reagent/R = new reagent_type
+
+		if(is_sublist_assoc(R.needed_aspects, aspects, aspect_pred))
+			holy_reagent_ids[R.name] = R.id
+
+		QDEL_NULL(R)
+
+	for(var/reaction_type in global.faith_reactions_by_aspects[asp.name])
+		var/datum/faith_reaction/FR = new reaction_type
+
+		if(is_sublist_assoc(FR.needed_aspects, aspects, aspect_pred))
+			var/datum/reagent/result = global.chemical_reagents_list[FR.result_id]
+			var/datum/reagent/convertable = global.chemical_reagents_list[FR.convertable_id]
+
+			faith_reactions["convert [convertable.name] into [result.name] ([FR.favor_cost] favour per unit)"] = FR
+
 // Is called after any addition of new aspects.
 // Manages new spells and rites, gained by adding the new aspects.
 /datum/religion/proc/update_aspects()
@@ -310,9 +337,11 @@
 		var/datum/aspect/asp = aspects[aspect_name]
 		add_aspect_spells(asp, aspect_pred)
 		add_aspect_rites(asp, aspect_pred)
+		add_aspect_reagents(asp, aspect_pred)
 
 	update_deities()
 	update_rites()
+	update_holy_reagents()
 
 // This proc is used to handle addition of aspects properly.
 // It expects aspect_list to be of form list(aspect_type = aspect power)

@@ -29,6 +29,10 @@
 	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
 	var/color_weight = 1
 
+	// Is used to determine which religion could find this reagent "holy".
+	// "holy" means that this reagent will convert turfs into holy turfs,
+	var/list/needed_aspects
+
 /datum/reagent/proc/reaction_mob(mob/M, method=TOUCH, volume) //By default we have a chance to transfer some
 	if(!istype(M, /mob/living))
 		return FALSE

@@ -92,7 +92,7 @@
 			global.spells_by_aspects[aspect_type] = list()
 		global.spells_by_aspects[aspect_type] += path
 
-	global.rites_by_aspects  = list()
+	global.rites_by_aspects = list()
 	for(var/path in subtypesof(/datum/religion_rites))
 		var/datum/religion_rites/RR = new path()
 		if(!RR.needed_aspects)
@@ -104,6 +104,32 @@
 		if(!global.rites_by_aspects[aspect_type])
 			global.rites_by_aspects[aspect_type] = list()
 		global.rites_by_aspects[aspect_type] += path
+
+	global.holy_reagents_by_aspects = list()
+	for(var/path in subtypesof(/datum/reagent))
+		var/datum/reagent/R = new path()
+		if(!R.needed_aspects)
+			continue
+
+		// Don't bother adding ourselves to other aspects, it is redundant.
+		var/aspect_type = R.needed_aspects[1]
+
+		if(!global.holy_reagents_by_aspects[aspect_type])
+			global.holy_reagents_by_aspects[aspect_type] = list()
+		global.holy_reagents_by_aspects[aspect_type] += path
+
+	global.faith_reactions_by_aspects = list()
+	for(var/path in subtypesof(/datum/faith_reaction))
+		var/datum/faith_reaction/FR = new path()
+		if(!FR.needed_aspects)
+			continue
+
+		// Don't bother adding ourselves to other aspects, it is redundant.
+		var/aspect_type = FR.needed_aspects[1]
+
+		if(!global.faith_reactions_by_aspects[aspect_type])
+			global.faith_reactions_by_aspects[aspect_type] = list()
+		global.faith_reactions_by_aspects[aspect_type] += path
 
 	populate_gear_list()
 
