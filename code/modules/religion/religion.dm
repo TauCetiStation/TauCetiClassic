@@ -277,7 +277,7 @@
 
 // Generate new rite_list
 /datum/religion/proc/update_rites()
-	if(rites_by_name.len > 0)
+	if(rites_by_name.len != 0)
 		var/list/temp = generate_rite_info()
 		rites_info = temp
 
