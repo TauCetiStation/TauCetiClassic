@@ -277,9 +277,41 @@
 
 // Generate new rite_list
 /datum/religion/proc/update_rites()
-	if(rites_by_name.len != 0)
-		var/list/temp = generate_rite_info()
-		rites_info = temp
+	if(rites_by_name.len > 0)
+		// Generates a list of information of rite, used for examine() in altar_of_gods
+		var/list/info = list()
+		for(var/i in rites_by_name)
+			if(!ispath(rites_by_name[i]))
+				continue
+			var/datum/religion_rites/RI = rites_by_name[i]
+			var/name_entry = ""
+			var/tip_text
+
+			if(ispath(RI, /datum/religion_rites/consent))
+				tip_text += "This ritual is performed only with the consent of the victim."
+
+			else if(ispath(RI, /datum/religion_rites/spawn_item))
+				var/datum/religion_rites/spawn_item/spawning = RI
+				if(initial(spawning.sacrifice_type))
+					var/obj/item/item = initial(spawning.sacrifice_type)
+					tip_text += "This ritual requires a <i>[initial(item.name)]</i>. "
+				if(initial(spawning.spawn_type))
+					var/obj/item/item = initial(spawning.spawn_type)
+					tip_text += "This ritual creates a <i>[initial(item.name)]</i>."
+
+			if(tip_text)
+				name_entry += "[EMBED_TIP(initial(RI.name), tip_text)]"
+			else
+				name_entry += "[initial(RI.name)]"
+
+			if(initial(RI.desc))
+				name_entry += " - [initial(RI.desc)]"
+			if(initial(RI.favor_cost))
+				name_entry += " ([initial(RI.favor_cost)] favor)"
+
+			info += "[name_entry]"
+
+		rites_info = info
 
 // Adds all spells related to asp.
 /datum/religion/proc/add_aspect_spells(datum/aspect/asp, datum/callback/aspect_pred)
@@ -329,40 +361,6 @@
 
 	update_aspects()
 
-// Generates a list of information of rite, used for examine() in altar_of_gods
-/datum/religion/proc/generate_rite_info()
-	var/list/info = list()
-	for(var/i in rites_by_name)
-		if(!ispath(rites_by_name[i]))
-			continue
-		var/datum/religion_rites/RI = rites_by_name[i]
-		var/name_entry = ""
-		var/tip_text
-
-		if(ispath(RI, /datum/religion_rites/consent))
-			tip_text += "This ritual is performed only with the consent of the victim."
-
-		else if(ispath(RI, /datum/religion_rites/spawn_item))
-			var/datum/religion_rites/spawn_item/spawning = RI
-			if(initial(spawning.sacrifice_type))
-				var/obj/item/item = initial(spawning.sacrifice_type)
-				tip_text += "This ritual requires a <i>[initial(item.name)]</i>. "
-			if(initial(spawning.spawn_type))
-				var/obj/item/item = initial(spawning.spawn_type)
-				tip_text += "This ritual creates a <i>[initial(item.name)]</i>."
-
-		if(tip_text)
-			name_entry += "[EMBED_TIP(initial(RI.name), tip_text)]"
-		else
-			name_entry += "[initial(RI.name)]"
-
-		if(initial(RI.desc))
-			name_entry += " - [initial(RI.desc)]"
-		if(initial(RI.favor_cost))
-			name_entry += " ([initial(RI.favor_cost)] favor)"
-
-		info += "[name_entry]"
-	return info
 
 /datum/religion/proc/add_deity(mob/M)
 	active_deities += M
