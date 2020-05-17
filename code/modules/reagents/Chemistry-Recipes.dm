@@ -1152,7 +1152,7 @@
 		if(M.eyecheck() <= 0)
 			M.flash_eyes()
 
-	spawn_food(usr.loc, 4 + rand(1,2))
+	spawn_food(get_turf_loc(holder.my_atom), 4 + rand(1,2))
 
 /datum/chemical_reaction/slimebork2
 	name = "Slime Bork 2"
@@ -1168,7 +1168,7 @@
 		if(M.eyecheck() <= 0)
 			M.flash_eyes()
 
-	spawn_food(usr.loc, 4 + rand(1,2))
+	spawn_food(get_turf_loc(holder.my_atom), 4 + rand(1,2))
 
 
 //Blue
