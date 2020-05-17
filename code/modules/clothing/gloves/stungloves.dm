@@ -73,6 +73,41 @@
 		return
 	..()
 
+/obj/item/clothing/gloves/proc/Touch(mob/living/carbon/human/attacker, atom/A, proximity)
+	if(isliving(A))
+		var/mob/living/L = A
+		if(cell)
+			attacker.do_attack_animation(L)
+			if(attacker.a_intent == I_HURT)//Stungloves. Any contact will stun the alien.
+				if(cell.charge >= 2500)
+					cell.use(2500)
+					update_icon()
+					var/calc_power = 150
+					if(ishuman(L))
+						var/mob/living/carbon/human/H = L
+						var/obj/item/organ/external/BP = H.get_bodypart(attacker.zone_sel.selecting)
+
+						calc_power *= H.get_siemens_coefficient_organ(BP)
+
+					L.visible_message("<span class='warning bold'>[L] has been touched with the stun gloves by [attacker]!</span>")
+					attacker.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [L.name] ([L.ckey])</font>")
+					L.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [attacker.name] ([attacker.ckey])</font>")
+					msg_admin_attack("[attacker.name] ([attacker.ckey]) stungloved [L.name] ([L.ckey])", attacker)
+
+					L.apply_effects(0,0,0,0,2,0,0,calc_power)
+					L.apply_effect(5, WEAKEN)
+					if(L.stuttering < 5)
+						L.stuttering = 5
+					L.apply_effect(5, STUN)
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
+					s.set_up(3, 1, L)
+					s.start()
+				else
+					to_chat(attacker, "<span class='warning'>Not enough charge!</span>")
+					attacker.visible_message("<span class='warning'><B>[L] has been touched with the stun gloves by [attacker]!</B></span>")
+			return TRUE
+	return FALSE
+
 /obj/item/clothing/gloves/update_icon()
 	..()
 	cut_overlays()
