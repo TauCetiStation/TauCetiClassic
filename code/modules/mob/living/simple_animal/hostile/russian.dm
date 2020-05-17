@@ -15,9 +15,8 @@
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	attacktext = "punches"
+	melee_damage = 15
+	attacktext = "punch"
 	a_intent = INTENT_HARM
 	var/corpse = /obj/effect/landmark/mobcorpse/russian
 	var/weapon1 = /obj/item/weapon/kitchenknife
@@ -34,6 +33,9 @@
 	status_flags = CANPUSH
 
 	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 	footstep_type = FOOTSTEP_MOB_SHOE
 

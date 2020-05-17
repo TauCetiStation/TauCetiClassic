@@ -115,13 +115,13 @@ var/global/combos_cheat_sheet = ""
 		return TRUE
 	return attack_unarmed(attacker)
 
-/mob/living/attack_alien(mob/living/carbon/alien/attacker)
+/mob/living/attack_alien(mob/living/carbon/xenomorph/attacker)
 	return attack_unarmed(attacker)
 
-/mob/living/attack_facehugger(mob/living/carbon/alien/facehugger/attacker)
+/mob/living/attack_facehugger(mob/living/carbon/xenomorph/facehugger/attacker)
 	return attack_unarmed(attacker)
 
-/mob/living/attack_larva(mob/living/carbon/alien/larva/attacker)
+/mob/living/attack_larva(mob/living/carbon/xenomorph/larva/attacker)
 	return attack_unarmed(attacker)
 
 /mob/living/attack_slime(mob/living/carbon/slime/attacker)

@@ -56,7 +56,7 @@
 	desc = "A sanity-destroying otherthing."
 	icon = 'code/game/gamemodes/events/cellular_biomass/meatland_cellular.dmi'
 	speak_emote = list("gibbers")
-	attacktext = "brutally chomps"
+	attacktext = "brutally chomp"
 	attack_sound = list('sound/weapons/bite.ogg')
 	faction = "meat"
 
@@ -66,8 +66,7 @@
 	icon_dead = "light-dead"
 	health = 160
 	maxHealth = 160
-	melee_damage_lower = 25
-	melee_damage_upper = 50
+	melee_damage = 38
 	move_speed = 25
 
 /mob/living/simple_animal/hostile/cellular/meat/maniac
@@ -76,8 +75,7 @@
 	icon_dead = "sovmeat-dead"
 	health = 50
 	maxHealth = 50
-	melee_damage_lower = 10
-	melee_damage_upper = 18
+	melee_damage = 14
 	move_speed = 4
 
 /mob/living/simple_animal/hostile/cellular/meat/changeling
@@ -86,8 +84,7 @@
 	icon_dead = "horrormeat-dead"
 	health = 80
 	maxHealth = 80
-	melee_damage_lower = 20
-	melee_damage_upper = 30
+	melee_damage = 25
 	move_speed = 15
 
 /mob/living/simple_animal/hostile/cellular/meat/flesh
@@ -96,8 +93,7 @@
 	icon_dead = "livingflesh-dead"
 	health = 80
 	maxHealth = 80
-	melee_damage_lower = 20
-	melee_damage_upper = 30
+	melee_damage = 25
 	move_speed = 15
 
 /mob/living/simple_animal/hostile/cellular/meat/death()

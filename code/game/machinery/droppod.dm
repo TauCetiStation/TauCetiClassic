@@ -509,10 +509,10 @@
 		visible_message("<span class='warning'>The [src] has been destroyed!</span>")
 		qdel(src)
 
-/obj/structure/droppod/attack_animal(mob/living/simple_animal/M)
+/obj/structure/droppod/attack_animal(mob/living/simple_animal/attacker)
 	..()
 	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
-	take_damage(rand(M.melee_damage_lower, M.melee_damage_upper))
+	take_damage(attacker.melee_damage)
 
 /********Stats********/
 

@@ -102,19 +102,6 @@ This is what happens, when we attack aliens.
 				updatehealth()
 	return
 
-/mob/living/carbon/xenomorph/attack_animal(mob/living/simple_animal/M)
-	if(..())
-		return
-	if(M.melee_damage_upper == 0)
-		M.emote("[M.friendly] [src]")
-	else
-		if(length(M.attack_sound))
-			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
-		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
-		updatehealth()
-
 /mob/living/carbon/xenomorph/attack_alien(mob/living/carbon/xenomorph/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")

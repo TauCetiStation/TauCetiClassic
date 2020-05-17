@@ -201,14 +201,14 @@
 		else
 	return
 
-/obj/structure/girder/attack_animal(mob/living/simple_animal/M)
-	if(M.environment_smash)
+/obj/structure/girder/attack_animal(mob/living/simple_animal/attacker)
+	if(attacker.environment_smash)
 		..()
-		M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
+		attacker.visible_message("<span class='warning'>[attacker] smashes against [src].</span>", \
 			 "<span class='warning'>You smash against [src].</span>", \
 			 "You hear twisting metal.")
 		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		health -= M.melee_damage_upper
+		health -= attacker.melee_damage
 		if(health <= 0)
 			new /obj/item/stack/sheet/metal(get_turf(src))
 			qdel(src)

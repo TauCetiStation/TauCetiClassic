@@ -596,22 +596,6 @@
 			adjustBruteLoss(damage)
 			updatehealth()
 
-/mob/living/carbon/ian/attack_animal(mob/living/simple_animal/M)
-	M.do_attack_animation(src)
-	if(!M.melee_damage_upper)
-		M.emote("[M.friendly] [src]")
-	else
-		if(length(M.attack_sound))
-			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
-		if(is_armored(M, 35))
-			return
-		visible_message("<span class='red'><B>[M]</B> [M.attacktext] [src]!</span>")
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
-		updatehealth()
-
 /mob/living/carbon/ian/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
 		return
