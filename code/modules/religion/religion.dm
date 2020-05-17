@@ -279,7 +279,6 @@
 /datum/religion/proc/update_rites()
 	if(rites_by_name.len > 0)
 		// Generates a list of information of rite, used for examine() in altar_of_gods
-		var/list/info = list()
 		for(var/i in rites_by_name)
 			var/datum/religion_rites/RI = rites_by_name[i]
 			var/name_entry = ""
@@ -294,10 +293,9 @@
 					var/obj/item/item = initial(spawning.sacrifice_type)
 					tip_text += "This ritual requires a <i>[initial(item.name)]</i>."
 
-				if(tip_text)
-					tip_text += " "
-
 				if(initial(spawning.spawn_type))
+					if(tip_text)
+						tip_text += " "
 					var/obj/item/item = initial(spawning.spawn_type)
 					tip_text += "This ritual creates a <i>[initial(item.name)]</i>."
 
@@ -311,9 +309,7 @@
 			if(initial(RI.favor_cost))
 				name_entry += " ([initial(RI.favor_cost)] favor)"
 
-			info += "[name_entry]"
-
-		rites_info = info
+			rites_info += "[name_entry]"
 
 // Adds all spells related to asp.
 /datum/religion/proc/add_aspect_spells(datum/aspect/asp, datum/callback/aspect_pred)
@@ -331,7 +327,7 @@
 		var/datum/religion_rites/RR = new rite_type
 
 		if(is_sublist_assoc(RR.needed_aspects, aspects, aspect_pred))
-			rites_by_name["[RR.name]"] += rite_type
+			rites_by_name[RR.name] = rite_type
 
 		QDEL_NULL(RR)
 
