@@ -960,7 +960,7 @@
 /area/awaymission/wildwest/mansion)
 "dd" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/creamcheesebread,
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/cheese,
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
@@ -974,7 +974,7 @@
 /area/awaymission/wildwest/mansion)
 "df" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/lemoncake,
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/lemon,
 /turf/simulated/floor{
 	icon_state = "stage_bleft"
 	},
