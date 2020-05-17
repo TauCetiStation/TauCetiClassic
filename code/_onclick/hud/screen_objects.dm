@@ -386,7 +386,7 @@
 								to_chat(C, "<span class='notice'>This mask doesn't support breathing through the tanks.</span>")
 					internal_switch = world.time + 16
 		if("act_intent")
-			usr.a_intent_change("right")
+			usr.a_intent_change(INTENT_HOTKEY_RIGHT)
 		if(INTENT_HELP)
 			usr.a_intent = INTENT_HELP
 			usr.hud_used.action_intent.icon_state = "intent_help"
