@@ -281,8 +281,6 @@
 		// Generates a list of information of rite, used for examine() in altar_of_gods
 		var/list/info = list()
 		for(var/i in rites_by_name)
-			if(!ispath(rites_by_name[i]))
-				continue
 			var/datum/religion_rites/RI = rites_by_name[i]
 			var/name_entry = ""
 			var/tip_text
