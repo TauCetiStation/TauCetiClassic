@@ -165,7 +165,6 @@
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	max_ammo = 12
-	multiple_sprites = 2
 
 /obj/item/ammo_box/c9mmr
 	name = "Ammunition Box (9mm rubber)"
@@ -173,7 +172,6 @@
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c9mmr
 	max_ammo = 12
-	multiple_sprites = 2
 /*
 /obj/item/ammo_box/c10mm
 	name = "Ammunition Box (10mm)"
@@ -184,19 +182,10 @@
 
 /obj/item/ammo_box/c45
 	name = "Ammunition Box (.45)"
-	icon_state = "c45"
+	icon_state = "9mm"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c45
-	max_ammo = 7
-	multiple_sprites = 2
-
-/obj/item/ammo_box/c45r
-	name = "Ammunition Box (.45 rubber)"
-	icon_state = "c45r"
-	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/c45r
-	max_ammo = 7
-	multiple_sprites = 2
+	max_ammo = 30
 
 /obj/item/ammo_box/a12mm
 	name = "Ammunition Box (12mm)"
