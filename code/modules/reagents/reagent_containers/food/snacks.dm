@@ -210,7 +210,7 @@
 		return 1
 	var/slices_lost = 0
 	if (inaccurate)
-		slices_lost = rand(1,min(1,round(slices_num/2)))
+		slices_lost = rand(1, min(1, round(slices_num * 0.5)))
 		if (istype(W, /obj/item/weapon/melee/energy/sword))
 			playsound(user, 'sound/items/esword_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else
