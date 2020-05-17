@@ -294,7 +294,11 @@
 				var/datum/religion_rites/spawn_item/spawning = RI
 				if(initial(spawning.sacrifice_type))
 					var/obj/item/item = initial(spawning.sacrifice_type)
-					tip_text += "This ritual requires a <i>[initial(item.name)]</i>. "
+					tip_text += "This ritual requires a <i>[initial(item.name)]</i>."
+
+				if(tip_text)
+					tip_text += " "
+
 				if(initial(spawning.spawn_type))
 					var/obj/item/item = initial(spawning.spawn_type)
 					tip_text += "This ritual creates a <i>[initial(item.name)]</i>."
