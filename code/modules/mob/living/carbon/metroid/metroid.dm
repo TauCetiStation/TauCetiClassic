@@ -333,7 +333,7 @@
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (INTENT_HELP)
 			help_shake_act(M)
 		else
 			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
@@ -417,7 +417,7 @@
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == INTENT_HARM)//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
 					visible_message("<span class='warning'><B>[src] has been touched with the stun gloves by [M]!</B></span>", blind_message = "<span class='warning'>You hear someone fall.</span>")
@@ -428,10 +428,10 @@
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (INTENT_HELP)
 			help_shake_act(M)
 
-		if ("grab")
+		if (INTENT_GRAB)
 			M.Grab(src)
 
 		else
@@ -476,10 +476,10 @@
 		return
 
 	switch(M.a_intent)
-		if ("help")
+		if (INTENT_HELP)
 			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
 
-		if ("hurt")
+		if (INTENT_HARM)
 
 			if ((prob(95) && health > 0))
 				attacked += 10
@@ -496,10 +496,10 @@
 				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
 				visible_message("<span class='warning'><B>[M] has attempted to lunge at [name]!</B></span>")
 
-		if ("grab")
+		if (INTENT_GRAB)
 			M.Grab(src)
 
-		if ("disarm")
+		if (INTENT_PUSH)
 			playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
 			var/damage = 5
 			attacked += 10

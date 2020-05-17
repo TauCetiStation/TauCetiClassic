@@ -830,7 +830,7 @@
 	icon_state = "broom_sauna"
 
 /obj/item/weapon/broom/attack(mob/living/carbon/human/M, mob/living/user, def_zone)
-	if(!istype(M) || user.a_intent == "hurt")
+	if(!istype(M) || user.a_intent == INTENT_HARM)
 		return ..()
 	if(wet - 5 < 0)
 		to_chat(user, "<span class='userdanger'>Soak this [src] first!</span>")

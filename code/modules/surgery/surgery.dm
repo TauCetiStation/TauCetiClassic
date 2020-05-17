@@ -65,7 +65,7 @@
 	var/germ_level = 0
 	if(user.gloves)
 		germ_level += user.gloves.germ_level
-	else 
+	else
 		germ_level += user.germ_level
 
 	if(tool.blood_DNA && tool.blood_DNA.len) //germs from blood-stained tools
@@ -81,7 +81,7 @@
 /proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 	if(!istype(M))
 		return FALSE
-	if(user.a_intent == I_HURT)	//check for Hippocratic Oath
+	if(user.a_intent == INTENT_HARM)	//check for Hippocratic Oath
 		return FALSE
 	if(user.is_busy(null)) // No target so we allow multiple players to do surgeries on one pawn.
 		return FALSE

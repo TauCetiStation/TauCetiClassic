@@ -131,7 +131,7 @@
 			to_chat(user, "Now synthesizing [trans] units of [refillName]...")
 			addtimer(CALLBACK(src, .proc/refill_by_borg, user, refill, trans), 300)
 
-	else if((user.a_intent == I_HURT) && reagents.total_volume && istype(target, /turf/simulated))
+	else if((user.a_intent == INTENT_HARM) && reagents.total_volume && istype(target, /turf/simulated))
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 
 		reagents.reaction(target, TOUCH)

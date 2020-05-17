@@ -160,10 +160,10 @@
 /mob/living/carbon/monkey/attack_paw(mob/M)
 	..()
 
-	if (M.a_intent == "help")
+	if (M.a_intent == INTENT_HELP)
 		help_shake_act(M)
 	else
-		if ((M.a_intent == "hurt" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
+		if ((M.a_intent == INTENT_HARM && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
 			M.do_attack_animation(src)
 			if ((prob(75) && health > 0))
 				playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
@@ -190,7 +190,7 @@
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == INTENT_HARM)//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
 					apply_effects(0,0,0,0,5,0,0,150)
@@ -206,11 +206,11 @@
 					to_chat(M, "<span class='warning'>Not enough charge! </span>")
 					return
 
-	if (M.a_intent == "help")
+	if (M.a_intent == INTENT_HELP)
 		help_shake_act(M)
 		get_scooped(M)
 	else
-		if (M.a_intent == "hurt")
+		if (M.a_intent == INTENT_HARM)
 			M.do_attack_animation(src)
 			if ((prob(75) && health > 0))
 				visible_message("<span class='warning'><B>[M] has punched [name]!</B></span>")
@@ -230,7 +230,7 @@
 				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 				visible_message("<span class='warning'><B>[M] has attempted to punch [name]!</B></span>")
 		else
-			if (M.a_intent == "grab")
+			if (M.a_intent == INTENT_GRAB)
 				M.Grab(src)
 			else
 				if (!( paralysis ))
@@ -254,10 +254,10 @@
 		return
 
 	switch(M.a_intent)
-		if ("help")
+		if (INTENT_HELP)
 			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
 
-		if ("hurt")
+		if (INTENT_HARM)
 			if ((prob(95) && health > 0))
 				playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
 				var/damage = rand(15, 30)
@@ -274,10 +274,10 @@
 				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
 				visible_message("<span class='warning'><B>[M] has attempted to lunge at [name]!</B></span>")
 
-		if ("grab")
+		if (INTENT_GRAB)
 			M.Grab(src)
 
-		if ("disarm")
+		if (INTENT_PUSH)
 			playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
 			var/damage = 5
 			if(prob(95))

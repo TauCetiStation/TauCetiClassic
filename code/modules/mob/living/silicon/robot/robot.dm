@@ -794,13 +794,13 @@
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (INTENT_HELP)
 			visible_message("<span class='notice'>[M] caresses [src]'s plating with its scythe-like arm.</span>")
 
-		if ("grab")
+		if (INTENT_GRAB)
 			M.Grab(src)
 
-		if ("hurt")
+		if (INTENT_HARM)
 			M.do_attack_animation(src)
 			var/damage = rand(10, 20)
 			if (prob(90))
@@ -815,7 +815,7 @@
 				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
 				visible_message("<span class='warning'><B>[M] took a swipe at [src]!</B></span>")
 
-		if ("disarm")
+		if (INTENT_PUSH)
 			if(!(lying))
 				M.do_attack_animation(src)
 				if (rand(1,100) <= 85)

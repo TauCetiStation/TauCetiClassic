@@ -432,7 +432,7 @@
 			var/hit_zone = assailant.zone_sel.selecting
 			flick(hud.icon_state, hud)
 			switch(assailant.a_intent)
-				if("help")
+				if(INTENT_HELP)
 					if(force_down)
 						to_chat(assailant, "<span class='warning'>You are no longer pinning [affecting] to the ground.</span>")
 						force_down = 0
@@ -456,7 +456,7 @@
 						H_H.force_vomit(H)
 					else
 						inspect_organ(affecting, assailant, hit_zone)
-				if("grab")
+				if(INTENT_GRAB)
 					if(state < GRAB_AGGRESSIVE)
 						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return
@@ -469,7 +469,7 @@
 						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
 						H.adjustHalLoss(CLAMP(0, 40 - H.halloss, 40)) //up to 40 halloss
 					return
-				if("hurt")
+				if(INTENT_HARM)
 					if(hit_zone == O_EYES)
 						if(state < GRAB_NECK)
 							to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
@@ -546,7 +546,7 @@
 						src.loc = null
 						qdel(src)
 						return
-				if("disarm")
+				if(INTENT_PUSH)
 					if(state < GRAB_AGGRESSIVE)
 						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return

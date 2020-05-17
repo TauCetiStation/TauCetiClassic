@@ -76,7 +76,7 @@
 
 /obj/item/clothing/accessory/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))
-		if(user.a_intent == "help")
+		if(user.a_intent == INTENT_HELP)
 			var/target_zone = parse_zone(user.zone_sel.selecting)
 			if(target_zone)
 				var/their = "their"

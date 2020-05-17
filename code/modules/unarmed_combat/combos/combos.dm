@@ -3,7 +3,7 @@
 	desc = "A move that knocks anything out of your opponent's hands."
 	combo_icon_state = "weapon_disarm"
 	fullness_lose_on_execute = 10
-	combo_elements = list(I_DISARM, I_DISARM, I_DISARM)
+	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
 
 	ignore_size = TRUE
 
@@ -55,7 +55,7 @@
 					victim.visible_message("<span class='notice'>[attacker] handed \the [to_give] to [victim]!</span>")
 					to_give.add_fingerprint(victim)
 					// Extra ! ! ! F U N ! ! !
-					if(attacker.a_intent != I_HURT)
+					if(attacker.a_intent != INTENT_HARM)
 						event_log("Forced in-hand use of [to_give]")
 						to_give.attack_self(victim)
 					else
@@ -69,7 +69,7 @@
 	desc = "A move that simply pushes your opponent to the ground."
 	combo_icon_state = "push"
 	fullness_lose_on_execute = 40
-	combo_elements = list("Weapon Disarm", I_DISARM, I_DISARM, I_DISARM)
+	combo_elements = list("Weapon Disarm", INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
 
 	check_bodyarmor = TRUE
 
@@ -87,7 +87,7 @@
 	desc = "A move that makes you slide, kicking down people on your way."
 	combo_icon_state = "slide_kick"
 	fullness_lose_on_execute = 40
-	combo_elements = list("Weapon Disarm", I_DISARM, I_DISARM, I_DISARM)
+	combo_elements = list("Weapon Disarm", INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
 
 	ignore_size = TRUE
 
@@ -190,7 +190,7 @@
 	desc = "A move that allows you to quickly grab your opponent into a jointlock, and press them against the ground."
 	combo_icon_state = "capture"
 	fullness_lose_on_execute = 75
-	combo_elements = list(I_DISARM, I_DISARM, I_DISARM, I_GRAB)
+	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_PUSH, INTENT_GRAB)
 
 	scale_size_exponent = 0.0
 
@@ -242,7 +242,7 @@
 	desc = "A move where you lunge your fist from below into opponent's chin, knocking their helmet off."
 	combo_icon_state = "uppercut"
 	fullness_lose_on_execute = 60
-	combo_elements = list(I_HURT, I_HURT, I_HURT, I_HURT)
+	combo_elements = list(INTENT_HARM, INTENT_HARM, INTENT_HARM, INTENT_HARM)
 
 	ignore_size = TRUE
 
@@ -355,7 +355,7 @@
 	desc = "A move that lifts your opponent up, only to then throw them to the ground, harshly."
 	combo_icon_state = "suplex"
 	fullness_lose_on_execute = 75
-	combo_elements = list(I_HURT, I_HURT, I_HURT, I_GRAB)
+	combo_elements = list(INTENT_HARM, INTENT_HARM, INTENT_HARM, INTENT_GRAB)
 
 	check_bodyarmor = TRUE
 
@@ -441,7 +441,7 @@
 	desc = "A move in which you jump up high, and then fall onto your opponent, hitting them with your elbow."
 	combo_icon_state = "diving_elbow_drop"
 	fullness_lose_on_execute = 50
-	combo_elements = list("Suplex", I_HURT, I_DISARM, I_HURT)
+	combo_elements = list("Suplex", INTENT_HARM, INTENT_PUSH, INTENT_HARM)
 
 	// A body dropped on us! Armor ain't helping.
 	armor_pierce = TRUE
@@ -532,7 +532,7 @@
 	desc = "A move in which you jump with your both legs into opponent's belly, knocking them backwards."
 	combo_icon_state = "dropkick"
 	fullness_lose_on_execute = 25
-	combo_elements = list(I_DISARM, I_HURT, I_DISARM, I_HURT)
+	combo_elements = list(INTENT_PUSH, INTENT_HARM, INTENT_PUSH, INTENT_HARM)
 
 	armor_pierce = TRUE
 
@@ -673,7 +673,7 @@
 	desc = "A move that grabs your opponent by the neck, and drives you into the closest obstacle, hitting them on it."
 	combo_icon_state = "charge"
 	fullness_lose_on_execute = 75
-	combo_elements = list(I_GRAB, I_HURT, I_HURT, I_GRAB)
+	combo_elements = list(INTENT_GRAB, INTENT_HARM, INTENT_HARM, INTENT_GRAB)
 
 	check_bodyarmor = TRUE
 
@@ -757,7 +757,7 @@
 	desc = "A move in which you start to spin yourself up, and at a point you throw your opponent with immense force."
 	combo_icon_state = "spin_throw"
 	fullness_lose_on_execute = 50
-	combo_elements = list(I_GRAB, I_GRAB, I_GRAB, I_HURT)
+	combo_elements = list(INTENT_GRAB, INTENT_GRAB, INTENT_GRAB, INTENT_HARM)
 
 	// We threw a guy over 6 tiles distance. Armor probably ain't helping.
 	armor_pierce = TRUE

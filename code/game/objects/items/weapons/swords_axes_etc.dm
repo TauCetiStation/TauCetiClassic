@@ -90,7 +90,7 @@
 			user.take_bodypart_damage(2 * force)
 		return
 
-	if (user.a_intent == "hurt")
+	if (user.a_intent == INTENT_HARM)
 		if(!..()) return
 		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 		if (M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
@@ -173,7 +173,7 @@
 			else
 				user.take_bodypart_damage(2 * force)
 			return
-		if(user.a_intent == I_HELP && ishuman(target))
+		if(user.a_intent == INTENT_HELP && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 			user.do_attack_animation(H)
