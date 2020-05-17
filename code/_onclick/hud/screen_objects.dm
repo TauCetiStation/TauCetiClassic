@@ -185,6 +185,9 @@
 							selecting = O_EYES
 
 	if(old_selecting != selecting)
+		var/mob/living/L = usr
+		if(istype(L))
+			L.update_combos()
 		update_icon()
 	return 1
 

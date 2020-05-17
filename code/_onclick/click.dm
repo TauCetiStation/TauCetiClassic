@@ -274,6 +274,14 @@
 			user.listed_turf = T
 			user.client.statpanel = T.name
 
+/mob/living/AltClick(mob/living/user)
+	/*
+	Handling combat activation after **item swipes** and changeling stings.
+	*/
+	if(istype(user) && in_range(src, user) && user.try_combo(src))
+		return FALSE
+	return ..()
+
 /mob/proc/TurfAdjacent(turf/T)
 	return T.AdjacentQuick(src)
 

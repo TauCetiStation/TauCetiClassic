@@ -229,3 +229,5 @@
 	var/busy_with_action = FALSE // do_after() and do_mob() sets this to TRUE while in progress, use is_busy() before anything if you want to prevent user to do multiple actions.
 
 	var/list/weather_immunities = list()
+
+	var/list/progressbars = null //for stacking do_after bars
