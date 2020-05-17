@@ -7,7 +7,7 @@
  * accumulating points, choosing the next combo,
  * creating an user interface.
  */
-/datum/combo_saved
+/datum/combo_handler
 	var/last_hit_registered = 0
 	var/delete_after_no_hits = 10 SECONDS
 
@@ -32,7 +32,7 @@
 	// After reaching this cap, the first combo element is deleted, and all others are shifted "left".
 	var/max_combo_elements = 4
 
-/datum/combo_saved/New(mob/living/victim, mob/living/attacker, combo_element, combo_value, max_combo_elements = 4)
+/datum/combo_handler/New(mob/living/victim, mob/living/attacker, combo_element, combo_value, max_combo_elements = 4)
 	last_hit_registered = world.time + delete_after_no_hits
 
 	src.attacker = attacker
@@ -41,7 +41,7 @@
 
 	src.max_combo_elements = max_combo_elements // Take note, that there are only sprites for 4 atm.
 
-/datum/combo_saved/Destroy()
+/datum/combo_handler/Destroy()
 	if(attacker.client)
 		if(combo_icon)
 			attacker.client.images -= combo_icon
@@ -59,7 +59,7 @@
 	next_combo = null
 	return ..()
 
-/datum/combo_saved/proc/set_combo_icon(image/new_icon)
+/datum/combo_handler/proc/set_combo_icon(image/new_icon)
 	if(!attacker)
 		return
 
@@ -80,7 +80,7 @@
 
 		INVOKE_ASYNC(src, .proc/shake_combo_icon)
 
-/datum/combo_saved/proc/shake_combo_icon()
+/datum/combo_handler/proc/shake_combo_icon()
 	sleep(2) // This is here for set_combo_icon to properly animate the icon.
 
 	if(!attacker || !attacker.client)
@@ -98,7 +98,7 @@
 		sleep(1)
 
 // Animates a push/hurt hit.
-/datum/combo_saved/proc/animate_attack(combo_element, combo_value, mob/living/V, mob/living/A)
+/datum/combo_handler/proc/animate_attack(combo_element, combo_value, mob/living/V, mob/living/A)
 	if(A.attack_animation || A.combo_animation || A.notransform)
 		return
 	A.attack_animation = TRUE
@@ -126,7 +126,7 @@
 
 	A.attack_animation = FALSE
 
-/datum/combo_saved/proc/update_combo_elements()
+/datum/combo_handler/proc/update_combo_elements()
 	if(attacker && attacker.client)
 		for(var/combo_element_icon in combo_elements_icons)
 			attacker.client.images -= combo_element_icon
@@ -156,7 +156,7 @@
 			attacker.client.images += C_EL_I
 			i++
 
-/datum/combo_saved/proc/get_next_combo()
+/datum/combo_handler/proc/get_next_combo()
 	var/target_zone = attacker.get_targetzone()
 
 	var/combo_hash = "[target_zone]|"
@@ -173,7 +173,7 @@
 	return FALSE
 
 // An async wrapper for everything animation-related.
-/datum/combo_saved/proc/do_animation(datum/combat_combo/CC)
+/datum/combo_handler/proc/do_animation(datum/combat_combo/CC)
 	if(CC.heavy_animation)
 		CC.before_animation(victim, attacker)
 
@@ -184,7 +184,7 @@
 
 // Returns TRUE if a we want to cancel the AltClick/whatever was there. But actually, basically always
 // returns TRUE.
-/datum/combo_saved/proc/activate_combo()
+/datum/combo_handler/proc/activate_combo()
 	if(!attacker)
 		return FALSE
 
@@ -210,7 +210,7 @@
 	return TRUE
 
 // Is used to remove the first combo element, so users can perform combos with elements lower than max.
-/datum/combo_saved/proc/drop_combo_element()
+/datum/combo_handler/proc/drop_combo_element()
 	if(combo_elements.len >= 1)
 		combo_elements.Cut(1, 2)
 		update_combo_elements()
@@ -218,7 +218,7 @@
 		next_combo = null
 		get_next_combo()
 
-/datum/combo_saved/proc/register_attack(combo_element, combo_value)
+/datum/combo_handler/proc/register_attack(combo_element, combo_value)
 	if(!attacker)
 		return
 
@@ -257,7 +257,7 @@
 
 	return FALSE
 
-/datum/combo_saved/proc/update()
+/datum/combo_handler/proc/update()
 	if(!attacker)
 		return
 

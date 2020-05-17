@@ -68,7 +68,7 @@ var/global/list/combat_combos_by_name = list()
 			cur_hash += "[CE]#"
 		. += cur_hash
 
-/datum/combat_combo/proc/can_execute(datum/combo_saved/CS, show_warning = FALSE)
+/datum/combat_combo/proc/can_execute(datum/combo_handler/CS, show_warning = FALSE)
 	if(heavy_animation)
 		if(CS.attacker.pinned.len)
 			if(show_warning)

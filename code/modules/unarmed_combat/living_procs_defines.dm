@@ -247,35 +247,35 @@ var/global/combos_cheat_sheet = ""
 // Add this proc to /Life() of any mob for it to be able to perform combos.
 /mob/living/carbon/human/proc/handle_combat()
 	updates_combat = TRUE
-	for(var/datum/combo_saved/CS in combos_saved)
+	for(var/datum/combo_handler/CS in combos_saved)
 		CS.update()
 
 // Add combo points to all attackers.
 /mob/living/proc/add_combo_value_all(value)
-	for(var/datum/combo_saved/CS in combos_saved)
+	for(var/datum/combo_handler/CS in combos_saved)
 		CS.fullness += value
 
 // Add combo points to all my combo-controllers.
 /mob/living/proc/add_my_combo_value(value)
-	for(var/datum/combo_saved/CS in combos_performed)
+	for(var/datum/combo_handler/CS in combos_performed)
 		CS.fullness += value
 
 // Returns TRUE if a combo was executed.
 /mob/living/proc/try_combo(mob/living/target)
-	for(var/datum/combo_saved/CS in combos_performed)
+	for(var/datum/combo_handler/CS in combos_performed)
 		if(CS.victim == target)
 			return CS.activate_combo()
 	return FALSE
 
 // Try getting next combo, called on targetzone change.
 /mob/living/proc/update_combos()
-	for(var/datum/combo_saved/CS in combos_performed)
+	for(var/datum/combo_handler/CS in combos_performed)
 		CS.get_next_combo()
 
 // Is used to more precisely pick a combo, removes first combo element.
 /mob/living/proc/drop_combo_element()
 	. = FALSE
-	for(var/datum/combo_saved/CS in combos_performed)
+	for(var/datum/combo_handler/CS in combos_performed)
 		. = TRUE
 		CS.drop_combo_element()
 
@@ -287,14 +287,14 @@ var/global/combos_cheat_sheet = ""
 	if(src == target)
 		return FALSE
 
-	for(var/datum/combo_saved/CE in target.combos_saved)
+	for(var/datum/combo_handler/CE in target.combos_saved)
 		if(CE.attacker == src)
 			return CE.register_attack(combo_element, combo_value)
 
 	if(combo_value == 0) // We don't engage into combat with grabs.
 		return FALSE
 
-	var/datum/combo_saved/CS = new /datum/combo_saved(target, src, combo_element, combo_value)
+	var/datum/combo_handler/CS = new /datum/combo_handler(target, src, combo_element, combo_value)
 	target.combos_saved += CS
 	combos_performed += CS
 
@@ -305,7 +305,7 @@ var/global/combos_cheat_sheet = ""
 	if(!updates_combat)
 		return FALSE
 
-	for(var/datum/combo_saved/CE in target.combos_saved)
+	for(var/datum/combo_handler/CE in target.combos_saved)
 		if(CE.attacker == src)
 			qdel(CE)
 			return TRUE

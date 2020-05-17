@@ -10,18 +10,16 @@
 	allowed_target_zones = TARGET_ZONE_ALL
 
 /datum/combat_combo/disarm/execute(mob/living/victim, mob/living/attacker)
-	var/list/pos_guns = list(victim.get_active_hand())
-	if(HAS_TRAIT(attacker, TRAIT_MULTITASKING))
-		pos_guns += victim.get_inactive_hand()
+	var/list/to_drop = list(victim.get_active_hand(), victim.get_inactive_hand())
 
-	for(var/obj/item/weapon/gun/G in pos_guns)
-		if(G)
-			victim.visible_message("<span class='danger'>[victim]'s [G] goes off during struggle!</span>")
-			var/list/dir_to_shoot = pick(alldirs)
-			G.afterattack(get_step(attacker, dir_to_shoot), victim, FALSE) // So we shoot in their general direction.
+	for(var/obj/item/weapon/gun/G in to_drop)
+		victim.visible_message("<span class='danger'>[victim]'s [G] goes off during struggle!</span>")
+		var/list/dir_to_shoot = pick(alldirs)
+		G.afterattack(get_step(attacker, dir_to_shoot), victim, FALSE) // So we shoot in their general direction.
 
 	victim.add_my_combo_value(-20)
-	victim.drop_item()
+	for(var/obj/item/I in to_drop)
+		victim.drop_from_inventory(I)
 	victim.visible_message("<span class='warning'><B>[attacker] has disarmed [victim]!</B></span>")
 
 	// Clowns disarming put the last thing from their backpack into their opponent's hands
