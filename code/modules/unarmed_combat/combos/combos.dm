@@ -24,7 +24,10 @@
 	victim.drop_item()
 	victim.visible_message("<span class='warning'><B>[attacker] has disarmed [victim]!</B></span>")
 
-	if(CLUMSY in attacker.mutations) // Make a funny
+	// Clowns disarming put the last thing from their backpack into their opponent's hands
+	// And then either force the opponent to attack themselves with that item(if intent is hurt)
+	// Or force the opponent to activate the item(if intent is not hurt)
+	if(CLUMSY in attacker.mutations)
 		if(iscarbon(attacker))
 			var/mob/living/carbon/C = attacker
 			var/obj/item/to_give = attacker.get_active_hand() || attacker.get_inactive_hand()
@@ -138,7 +141,9 @@
 					continue slide_kick_loop
 
 				var/end_string = "to the ground!"
-				if(CLUMSY in attacker.mutations) // Make a funny
+				// Clowns take off the uniform while slidekicking.
+				// A little funny.
+				if(CLUMSY in attacker.mutations)
 					if(ishuman(L))
 						var/mob/living/carbon/human/H = L
 						var/obj/item/clothing/PANTS = H.w_uniform

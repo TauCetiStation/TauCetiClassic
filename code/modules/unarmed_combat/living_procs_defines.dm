@@ -1,12 +1,16 @@
 /mob/living
-	var/updates_combat = FALSE // A bootleg so we don't populate a list of combos on mobs that don't process them.
+	// A bootleg so we don't populate a list of combos on mobs that don't process them.
+	var/updates_combat = FALSE
 
+	// /datum/combo_controller-s src is currently performing.
 	var/list/combos_performed = list()
+	// /datum/combo_controller that are  performed on src.
 	var/list/combos_saved = list()
 
 	var/attack_animation = FALSE
 	var/combo_animation = FALSE
 
+// Should be deprecated in favour of /datum/combo_moveset. ~Luduk
 var/global/combos_cheat_sheet = ""
 
 /mob/living/carbon/human/verb/read_possible_combos()
@@ -82,6 +86,7 @@ var/global/combos_cheat_sheet = ""
 	popup.set_content(global.combos_cheat_sheet)
 	popup.open()
 
+// Should return /datum/unarmed_attack at some later time. ~Luduk
 /mob/living/proc/get_unarmed_attack()
 	var/retDam = 2
 	var/retDamType = BRUTE
@@ -99,13 +104,20 @@ var/global/combos_cheat_sheet = ""
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/attacker)
 	return attack_unarmed(attacker)
 
+/*
+ * The running horse of current combo system.
+ * Handles all unarmed attacks, to unite all the attack_paw, attack_slime, attack_human, etc procs.
+ * If you want your mob with a special snowflake attack_*proc* to be able to do combos, it should
+ * be calling this proc somewhere.
+ */
 /mob/living/proc/attack_unarmed(mob/living/attacker)
+	// Why does this exist? ~Luduk
 	if(isturf(loc) && istype(loc.loc, /area/start))
-		to_chat(attacker, "No attacking people at spawn, you jackass.")
+		to_chat(attacker, "<span class='warning'>No attacking people at spawn!</span>")
 		return
 
 	if((attacker != src) && check_shields(0, attacker.name, get_dir(attacker, src)))
-		visible_message("<span class='warning'><B>[attacker] attempted to touch [src]!</B></span>")
+		visible_message("<span class='warning bold'>[attacker] attempted to touch [src]!</span>")
 		return FALSE
 
 	var/tz = attacker.get_targetzone()
@@ -198,6 +210,7 @@ var/global/combos_cheat_sheet = ""
 /mob/living/proc/hurtReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	attacker.do_attack_animation(src)
 
+	// terrible. deprecate in favour of a data-class handling all of this. ~Luduk
 	var/attack_obj = attacker.get_unarmed_attack()
 	var/damage = attack_obj["damage"]
 	var/damType = attack_obj["type"]
@@ -231,15 +244,18 @@ var/global/combos_cheat_sheet = ""
 
 	apply_damage(damage, damType, BP, armor_block, damFlags)
 
+// Add this proc to /Life() of any mob for it to be able to perform combos.
 /mob/living/carbon/human/proc/handle_combat()
 	updates_combat = TRUE
 	for(var/datum/combo_saved/CS in combos_saved)
 		CS.update()
 
+// Add combo points to all attackers.
 /mob/living/proc/add_combo_value_all(value)
 	for(var/datum/combo_saved/CS in combos_saved)
 		CS.fullness += value
 
+// Add combo points to all my combo-controllers.
 /mob/living/proc/add_my_combo_value(value)
 	for(var/datum/combo_saved/CS in combos_performed)
 		CS.fullness += value

@@ -1,15 +1,24 @@
 var/global/list/combat_combos = list()
 var/global/list/combat_combos_by_name = list()
 
+/*
+ * An abstract of a combo.
+ * Is a singleton, processes everything related to the combo at hand.
+ */
 /datum/combat_combo
 	var/name = "Combat_Combo" // These are used as combo_elements...
 	var/desc = "A move that does combo cool stuff."
+
+	// Combo points required for this combo.
 	var/fullness_lose_on_execute = 50
+	// Combo elements required for this combo.
 	var/list/combo_elements = list()
 
+	// These should be deprecated in favour of a /datum/combo_moveset later. ~Luduk
 	var/list/allowed_to_mob_types = list(/mob/living)
 	var/list/allowed_on_mob_types = list(/mob/living)
 
+	// A special icon state for combo element on the interface after this combo was finished.
 	var/combo_icon_state = "combo"
 
 	var/armor_pierce = FALSE
@@ -35,16 +44,21 @@ var/global/list/combat_combos_by_name = list()
 	var/force_dam_type
 
 	var/list/allowed_target_zones = TARGET_ZONE_ALL
+	// These are related to the victim.
 	var/require_head = FALSE
 	var/require_arm = FALSE
 	var/require_leg = FALSE
 
+	// These are related to the attacker.
 	var/require_head_to_perform = FALSE
 	var/require_arm_to_perform = FALSE
 	var/require_leg_to_perform = FALSE
 
-	var/heavy_animation = FALSE // Determines whether we call the before_animation and after_animation procs.
-	var/needs_logging = TRUE // Do we need to PM admins about this combo?
+	// Determines whether before_animation and after_animation procs are called.
+	// Should be used for any combo with animations that include do_combo().
+	var/heavy_animation = FALSE
+	// Should admins be PM-ed about this combo?
+	var/needs_logging = TRUE
 
 /datum/combat_combo/proc/get_hash()
 	. = list()
@@ -210,19 +224,18 @@ var/global/list/combat_combos_by_name = list()
 	attacker.emote("scream")
 
 /datum/combat_combo/proc/before_animation(mob/living/victim, mob/living/attacker)
-	if(heavy_animation)
-		victim.Stun(2)
+	victim.Stun(2)
 
-		if(victim.buckled)
-			victim.buckled.unbuckle_mob()
-		if(attacker.buckled)
-			attacker.buckled.unbuckle_mob()
+	if(victim.buckled)
+		victim.buckled.unbuckle_mob()
+	if(attacker.buckled)
+		attacker.buckled.unbuckle_mob()
 
-		attacker.become_busy(_hand = 0)
-		attacker.become_busy(_hand = 1)
-		victim.in_use_action = TRUE
+	attacker.become_busy(_hand = 0)
+	attacker.become_busy(_hand = 1)
+	victim.in_use_action = TRUE
 
-		attacker.combo_animation = TRUE
+	attacker.combo_animation = TRUE
 
 // Please remember, that the default animation of attack takes 3 ticks. So put at least sleep(3) here
 // before anything.
@@ -231,22 +244,21 @@ var/global/list/combat_combos_by_name = list()
 
 // This proc is called after animate_combo has ended.
 /datum/combat_combo/proc/after_animation(mob/living/victim, mob/living/attacker)
-	if(heavy_animation)
-		victim.transform = victim.default_transform
-		victim.pixel_x = victim.default_pixel_x
-		victim.pixel_y = victim.default_pixel_y
-		victim.layer = victim.default_layer
+	victim.transform = victim.default_transform
+	victim.pixel_x = victim.default_pixel_x
+	victim.pixel_y = victim.default_pixel_y
+	victim.layer = victim.default_layer
 
-		attacker.transform = attacker.default_transform
-		attacker.pixel_x = attacker.default_pixel_x
-		attacker.pixel_y = attacker.default_pixel_y
-		attacker.layer = attacker.default_layer
+	attacker.transform = attacker.default_transform
+	attacker.pixel_x = attacker.default_pixel_x
+	attacker.pixel_y = attacker.default_pixel_y
+	attacker.layer = attacker.default_layer
 
-		attacker.become_not_busy(_hand = 0)
-		attacker.become_not_busy(_hand = 1)
-		victim.in_use_action = FALSE
+	attacker.become_not_busy(_hand = 0)
+	attacker.become_not_busy(_hand = 1)
+	victim.in_use_action = FALSE
 
-		attacker.combo_animation = FALSE
+	attacker.combo_animation = FALSE
 
 // Sometimes certain combos have "special" events: Clown's slidekick takes off pants, etc.
 // This is here for that purpose.

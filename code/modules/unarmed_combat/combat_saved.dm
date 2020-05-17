@@ -2,22 +2,34 @@
 #define COMBOPOINTS_LOSE_PER_TICK 0.7
 #define MIN_COMBOPOINTS_LOSE_PER_TICK 0.3
 
+/*
+ * This class handles all combo-attack logic,
+ * accumulating points, choosing the next combo,
+ * creating an user interface.
+ */
 /datum/combo_saved
 	var/last_hit_registered = 0
 	var/delete_after_no_hits = 10 SECONDS
 
+	// Amount of "combo points" accumulated.
 	var/fullness = 0
+	// An icon of current available combo.
 	var/image/combo_icon
 	var/list/combo_elements_icons = list()
 
+	// Displays fullness.
 	var/datum/progressbar/progbar
+
 	var/list/combo_elements = list()
+
 	var/mob/living/attacker
 	var/mob/living/victim
 	var/datum/combat_combo/next_combo
 
-	var/last_hand_hit = 0 // Switching hands doubles fullness gained.
+	// Switching hands doubles fullness gained.
+	var/last_hand_hit = 0
 
+	// After reaching this cap, the first combo element is deleted, and all others are shifted "left".
 	var/max_combo_elements = 4
 
 /datum/combo_saved/New(mob/living/victim, mob/living/attacker, combo_element, combo_value, max_combo_elements = 4)
@@ -28,6 +40,24 @@
 	progbar = new(attacker, 100, victim, my_icon_state="combat_prog_bar", insert_under=TRUE)
 
 	src.max_combo_elements = max_combo_elements // Take note, that there are only sprites for 4 atm.
+
+/datum/combo_saved/Destroy()
+	if(attacker.client)
+		if(combo_icon)
+			attacker.client.images -= combo_icon
+		for(var/c_el_i in combo_elements_icons)
+			attacker.client.images -= c_el_i
+	QDEL_NULL(combo_icon)
+	QDEL_LIST(combo_elements_icons)
+	attacker.combo_animation = FALSE
+	attacker.attack_animation = FALSE
+	attacker.combos_performed -= src
+	victim.combos_saved -= src
+	attacker = null
+	victim = null
+	QDEL_NULL(progbar)
+	next_combo = null
+	return ..()
 
 /datum/combo_saved/proc/set_combo_icon(image/new_icon)
 	if(!attacker)
@@ -67,6 +97,7 @@
 		animate(combo_icon, transform=M, time=1)
 		sleep(1)
 
+// Animates a push/hurt hit.
 /datum/combo_saved/proc/animate_attack(combo_element, combo_value, mob/living/V, mob/living/A)
 	if(A.attack_animation || A.combo_animation || A.notransform)
 		return
@@ -143,8 +174,13 @@
 
 // An async wrapper for everything animation-related.
 /datum/combo_saved/proc/do_animation(datum/combat_combo/CC)
+	if(CC.heavy_animation)
+		CC.before_animation(victim, attacker)
+
 	CC.animate_combo(victim, attacker)
-	CC.after_animation(victim, attacker)
+
+	if(CC.heavy_animation)
+		CC.after_animation(victim, attacker)
 
 // Returns TRUE if a we want to cancel the AltClick/whatever was there. But actually, basically always
 // returns TRUE.
@@ -160,8 +196,6 @@
 		next_combo = null
 		CC.pre_execute(victim, attacker)
 
-		if(CC.heavy_animation)
-			CC.before_animation(victim, attacker)
 		INVOKE_ASYNC(src, .proc/do_animation, CC)
 
 		CC.execute(victim, attacker)
@@ -249,24 +283,6 @@
 
 	if(fullness < 0 || last_hit_registered + delete_after_no_hits < world.time)
 		qdel(src)
-
-/datum/combo_saved/Destroy()
-	if(attacker.client)
-		if(combo_icon)
-			attacker.client.images -= combo_icon
-		for(var/c_el_i in combo_elements_icons)
-			attacker.client.images -= c_el_i
-	QDEL_NULL(combo_icon)
-	QDEL_LIST(combo_elements_icons)
-	attacker.combo_animation = FALSE
-	attacker.attack_animation = FALSE
-	attacker.combos_performed -= src
-	victim.combos_saved -= src
-	attacker = null
-	victim = null
-	QDEL_NULL(progbar)
-	next_combo = null
-	return ..()
 
 #undef ANIM_MAX_HIT_TURN_ANGLE
 #undef COMBOPOINTS_LOSE_PER_TICK
