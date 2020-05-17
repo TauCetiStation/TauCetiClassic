@@ -40,7 +40,7 @@
 		name = "alien facehugger ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
-	a_intent = "grab"
+	a_intent = INTENT_GRAB
 
 /mob/living/carbon/xenomorph/facehugger/update_canmove(no_transform = FALSE)
 	..()
@@ -87,7 +87,7 @@
 	if(!is_facehuggable())
 		to_chat(FH, "<span class='warning'>It is useless to try to infect this!</span>")
 		return
-	if(FH.a_intent == I_GRAB)
+	if(FH.a_intent == INTENT_GRAB)
 		if(src.stat != DEAD)
 			if(FH == src)
 				return

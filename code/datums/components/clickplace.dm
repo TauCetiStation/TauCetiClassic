@@ -4,7 +4,7 @@
 	tip_name = CLICKPLACE_TIP
 
 /datum/mechanic_tip/clickplace/New()
-	description = "Clicking on this object with any intent selected except [I_HURT] will cause the item in currently selected hand to be placed onto it."
+	description = "Clicking on this object with any intent selected except [INTENT_HARM] will cause the item in currently selected hand to be placed onto it."
 
 /*
  * This component allows items to be placed on other items
@@ -39,7 +39,7 @@
 	return ..()
 
 /datum/component/clickplace/proc/try_place(datum/source, obj/item/I, mob/user, params)
-	if(user.a_intent == I_HURT)
+	if(user.a_intent == INTENT_HARM)
 		return NONE
 	// Apperantly robots currently don't use
 	// NODROP/ABSTRACT flags. Oh well, refactor it some day please ~Luduk

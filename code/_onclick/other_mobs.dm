@@ -55,7 +55,7 @@
 	things considerably
 */
 /mob/living/carbon/monkey/RestrainedClickOn(atom/A)
-	if(a_intent != "harm" || !ismob(A)) return
+	if(a_intent != INTENT_HARM || !ismob(A)) return
 	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
 		return
 	SetNextMove(CLICK_CD_MELEE)

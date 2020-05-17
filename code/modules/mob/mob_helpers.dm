@@ -328,50 +328,58 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	return 0
 
 //converts intent-strings into numbers and back
-var/list/intents = list("help","disarm","grab","hurt")
+var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 /proc/intent_numeric(argument)
 	if(istext(argument))
 		switch(argument)
-			if("help")		return 0
-			if("disarm")	return 1
-			if("grab")		return 2
-			else			return 3
+			if(INTENT_HELP)
+				return 0
+			if(INTENT_PUSH)
+				return 1
+			if(INTENT_GRAB)
+				return 2
+			else
+				return 3
 	else
 		switch(argument)
-			if(0)			return "help"
-			if(1)			return "disarm"
-			if(2)			return "grab"
-			else			return "hurt"
+			if(0)
+				return INTENT_HELP
+			if(1)
+				return INTENT_PUSH
+			if(2)
+				return INTENT_GRAB
+			else
+				return INTENT_HARM
 
-//change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
+//change a mob's act-intent. Use the defines of style INTENT_%thingy%
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
 	set hidden = 1
 
 	if(ishuman(src) || isxenoadult(src) || isbrain(src))
 		switch(input)
-			if("help","disarm","grab","hurt")
+			if(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 				a_intent = input
-			if("right")
+			if(INTENT_HOTKEY_RIGHT)
 				a_intent = intent_numeric((intent_numeric(a_intent)+1) % 4)
-			if("left")
+			if(INTENT_HOTKEY_LEFT)
 				a_intent = intent_numeric((intent_numeric(a_intent)+3) % 4)
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "intent_[a_intent]"
 
 	else if(isrobot(src) || ismonkey(src) || isxenolarva(src)|| isfacehugger(src) || isIAN(src))
 		switch(input)
-			if("help")
-				a_intent = "help"
-			if("hurt")
-				a_intent = "hurt"
-			if("right","left")
+			if(INTENT_HELP)
+				a_intent = INTENT_HELP
+			if(INTENT_HARM)
+				a_intent = INTENT_HARM
+			if(INTENT_HOTKEY_RIGHT, INTENT_HOTKEY_LEFT)
 				a_intent = intent_numeric(intent_numeric(a_intent) - 3)
 		if(hud_used && hud_used.action_intent)
-			if(a_intent == "hurt")
-				hud_used.action_intent.icon_state = "harm"
+			if(a_intent == INTENT_HARM)
+				hud_used.action_intent.icon_state = INTENT_HARM
 			else
-				hud_used.action_intent.icon_state = "help"
+				hud_used.action_intent.icon_state = INTENT_HELP
 
 /proc/broadcast_security_hud_message(message, broadcast_source)
 	broadcast_hud_message(message, broadcast_source, sec_hud_users)

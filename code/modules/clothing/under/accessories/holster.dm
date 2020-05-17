@@ -33,7 +33,7 @@
 	if(istype(user.get_active_hand(), /obj) && istype(user.get_inactive_hand(), /obj))
 		to_chat(user, "<span class='warning'>You need an empty hand to draw the [holstered]!</span>")
 	else
-		if(user.a_intent == I_HURT)
+		if(user.a_intent == INTENT_HARM)
 			user.visible_message(
 				"<span class='warning'>[user] draws the [holstered], ready to shoot!</span>",
 				"<span class='warning'>You draw the [holstered], ready to shoot!</span>")

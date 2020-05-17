@@ -231,7 +231,7 @@
 
 	if (can_fire())
 		//Point blank shooting if on harm intent or target we were targeting.
-		if(user.a_intent == "hurt")
+		if(user.a_intent == INTENT_HARM)
 			Fire(M, user, null, null, TRUE)
 			return
 		else if(target && (M in target))

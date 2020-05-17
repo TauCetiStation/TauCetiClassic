@@ -123,7 +123,7 @@
 		var/mob/M = A
 		var/obj/item/weapon/nullrod/staff/S = M.is_in_hands(/obj/item/weapon/nullrod/staff)
 		if(S && S.brainmob == src)
-			if(a_intent != I_HURT)
+			if(a_intent != INTENT_HARM)
 				// Pull them in closer...
 				step_towards(A, src)
 				SetNextMove(CLICK_CD_RAPID)
