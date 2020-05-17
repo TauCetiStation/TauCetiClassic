@@ -799,9 +799,7 @@
 			return
 
 	//resisting grabs (as if it helps anyone...)
-	if (!L.stat && !L.restrained())
-		if(L.stunned > 2 || L.weakened > 2)
-			return
+	if (!L.incapacitated())
 		var/resisting = 0
 		for(var/obj/O in L.requests)
 			L.requests.Remove(O)
