@@ -46466,6 +46466,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
+/obj/item/weapon/storage/visuals/surgery,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitehall"
@@ -62981,6 +62982,7 @@
 	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
 	name = "Surgery Cleaner"
 	},
+/obj/item/weapon/storage/visuals/surgery,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
