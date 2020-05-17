@@ -208,7 +208,9 @@
 		)
 		to_chat(user, "<span class='rose'>You cannot slice [src] here! You need a table or at least a tray to do it.</span>")
 		return 1
+	var/slices_lost = 0
 	if (inaccurate)
+		slices_lost = rand(1,min(1,round(slices_num/2)))
 		if (istype(W, /obj/item/weapon/melee/energy/sword))
 			playsound(user, 'sound/items/esword_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else
@@ -221,7 +223,7 @@
 		else
 			user.visible_message("<span class='info'>[user] inaccurately slices \the [src] with [W]!</span>", "<span class='notice'>You inaccurately slice \the [src] with your [W]!</span>")
 		var/reagents_per_slice = reagents.total_volume/slices_num
-		for(var/i=1 to (slices_num))
+		for(var/i=1 to (slices_num-slices_lost))
 			var/obj/slice = new slice_path (src.loc)
 			reagents.trans_to(slice,reagents_per_slice)
 		qdel(src)
