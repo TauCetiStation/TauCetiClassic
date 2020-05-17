@@ -13,7 +13,7 @@
 // Should be deprecated in favour of /datum/combo_moveset. ~Luduk
 var/global/combos_cheat_sheet = ""
 
-/mob/living/carbon/human/verb/read_possible_combos()
+/mob/living/verb/read_possible_combos()
 	set name = "Combos Cheat Sheet"
 	set desc = "A list of all possible combos with rough descriptions."
 	set category = "IC"
@@ -101,7 +101,69 @@ var/global/combos_cheat_sheet = ""
 	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
 				"miss_sound" = retMissSound)
 
-/mob/living/carbon/human/attack_hand(mob/living/carbon/human/attacker)
+/mob/living/attack_hand(mob/living/carbon/human/attacker)
+	return attack_unarmed(attacker)
+
+/mob/living/attack_paw(mob/living/carbon/attacker)
+	if(istype(attacker.wear_mask, /obj/item/clothing/mask/muzzle))
+		return FALSE
+	return attack_unarmed(attacker)
+
+/mob/living/attack_animal(mob/living/simple_animal/attacker)
+	if(attacker.melee_damage <= 0)
+		attacker.emote("[attacker.friendly] [src]")
+		return TRUE
+	return attack_unarmed(attacker)
+
+/mob/living/attack_alien(mob/living/carbon/alien/attacker)
+	return attack_unarmed(attacker)
+
+/mob/living/attack_facehugger(mob/living/carbon/alien/facehugger/attacker)
+	return attack_unarmed(attacker)
+
+/mob/living/attack_larva(mob/living/carbon/alien/larva/attacker)
+	return attack_unarmed(attacker)
+
+/mob/living/attack_slime(mob/living/carbon/slime/attacker)
+	if(attacker.Victim)
+		return FALSE
+	if(health <= -100)
+		return FALSE
+	attacker.attacked += 5
+
+	if(attacker.powerlevel > 0)
+		var/stunprob = 10
+		var/power = attacker.powerlevel + rand(0,3)
+
+		switch(attacker.powerlevel)
+			if(1 to 2) stunprob = 20
+			if(3 to 4) stunprob = 30
+			if(5 to 6) stunprob = 40
+			if(7 to 8) stunprob = 60
+			if(9) 	   stunprob = 70
+			if(10) 	   stunprob = 95
+
+		if(prob(stunprob))
+			attacker.powerlevel -= 3
+			if(attacker.powerlevel < 0)
+				attacker.powerlevel = 0
+
+			visible_message("<span class='warning bold'>The [attacker] has shocked [src]!</span>")
+
+			Weaken(power)
+			if(stuttering < power)
+				stuttering = power
+			Stun(power)
+
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(5, 1, src)
+			s.start()
+
+			flash_eyes(affect_silicon = TRUE)
+
+			if(prob(stunprob) && attacker.powerlevel >= 8)
+				adjustFireLoss(attacker.powerlevel * rand(6, 10))
+
 	return attack_unarmed(attacker)
 
 /*
@@ -245,7 +307,7 @@ var/global/combos_cheat_sheet = ""
 	apply_damage(damage, damType, BP, armor_block, damFlags)
 
 // Add this proc to /Life() of any mob for it to be able to perform combos.
-/mob/living/carbon/human/proc/handle_combat()
+/mob/living/proc/handle_combat()
 	updates_combat = TRUE
 	for(var/datum/combo_handler/CS in combos_saved)
 		CS.update()
