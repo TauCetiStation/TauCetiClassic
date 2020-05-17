@@ -60,11 +60,11 @@ var/global/combos_cheat_sheet = ""
 			var/combo_txt = ""
 			for(var/c_el in CC.combo_elements)
 				switch(c_el)
-					if(I_DISARM)
+					if(INTENT_PUSH)
 						c_el = "<font color='dodgerblue'>[capitalize(c_el)]</font>"
-					if(I_GRAB)
+					if(INTENT_GRAB)
 						c_el = "<font color='yellow'>[capitalize(c_el)]</font>"
-					if(I_HURT)
+					if(INTENT_HARM)
 						c_el = "<font color='red'>[capitalize(c_el)]</font>"
 					else
 						c_el = "<font color='grey'>[c_el]</font>"
@@ -147,12 +147,12 @@ var/global/combos_cheat_sheet = ""
 		return
 
 	switch(attacker.a_intent)
-		if(I_HELP)
+		if(INTENT_HELP)
 			if(attacker.disengage_combat(src)) // We were busy disengaging.
 				return TRUE
 			return helpReaction(attacker)
 
-		if(I_DISARM)
+		if(INTENT_PUSH)
 			var/combo_value = 2
 			if(!anchored && !is_bigger_than(attacker) && src != attacker)
 				var/turf/to_move = get_step(src, get_dir(attacker, src))
@@ -160,19 +160,19 @@ var/global/combos_cheat_sheet = ""
 				if(A != to_move)
 					combo_value *= 2
 
-			if(attacker.engage_combat(src, I_DISARM, combo_value)) // We did a combo-wombo of some sort.
+			if(attacker.engage_combat(src, INTENT_PUSH, combo_value)) // We did a combo-wombo of some sort.
 				return
 			return disarmReaction(attacker)
 
-		if(I_GRAB)
-			if(attacker.engage_combat(src, I_GRAB, 0))
+		if(INTENT_GRAB)
+			if(attacker.engage_combat(src, INTENT_GRAB, 0))
 				return TRUE
 			return grabReaction(attacker)
 
-		if(I_HURT)
+		if(INTENT_HARM)
 			var/attack_obj = attacker.get_unarmed_attack()
 			var/combo_value = attack_obj["damage"] * 2
-			if(attacker.engage_combat(src, I_HURT, combo_value)) // We did a combo-wombo of some sort.
+			if(attacker.engage_combat(src, INTENT_HARM, combo_value)) // We did a combo-wombo of some sort.
 				return TRUE
 			return hurtReaction(attacker)
 

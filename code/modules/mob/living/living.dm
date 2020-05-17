@@ -90,7 +90,7 @@
 
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
+	if((M.a_intent == INTENT_HELP || M.restrained()) && (a_intent == INTENT_HELP || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
 		var/can_switch = TRUE
 		var/turf/T = get_turf(src)
 		for(var/atom/A in T.contents - src)
@@ -799,9 +799,7 @@
 			return
 
 	//resisting grabs (as if it helps anyone...)
-	if (!L.stat && !L.restrained())
-		if(L.stunned > 2 || L.weakened > 2)
-			return
+	if (!L.incapacitated())
 		var/resisting = 0
 		for(var/obj/O in L.requests)
 			L.requests.Remove(O)

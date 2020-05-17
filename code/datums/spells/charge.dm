@@ -14,7 +14,7 @@
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/C = user
-	var/bad_charge = (user.a_intent == "hurt")
+	var/bad_charge = (user.a_intent == INTENT_HARM)
 	var/list/hand_items = list(C.get_active_hand(), C.get_inactive_hand())
 	var/charged_item = null
 	if(C.pulling && isliving(C.pulling))

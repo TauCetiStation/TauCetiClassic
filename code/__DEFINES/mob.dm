@@ -53,11 +53,15 @@
 #define PULSE_2FAST		4	//>120 bpm
 #define PULSE_THREADY	5	//occurs during hypovolemic shock
 
-// intent flags
-#define I_HELP   "help"
-#define I_DISARM "disarm" // TODO: rename to "I_PUSH" "push". Don't forget the icons. ~Luduk.
-#define I_GRAB   "grab"
-#define I_HURT   "hurt" // or harm? or hurt? or what?
+//intent defines
+#define INTENT_HELP   "help"
+#define INTENT_GRAB   "grab"
+#define INTENT_PUSH   "push"
+#define INTENT_HARM   "harm"
+//NOTE: INTENT_HOTKEY_* defines are not actual intents!
+//they are here to support hotkeys
+#define INTENT_HOTKEY_LEFT  "left"
+#define INTENT_HOTKEY_RIGHT "right"
 
 //proc/get_pulse methods
 #define GETPULSE_HAND	0	//less accurate (hand)

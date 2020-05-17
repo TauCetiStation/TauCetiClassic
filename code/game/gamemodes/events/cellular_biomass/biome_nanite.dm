@@ -128,7 +128,7 @@
 	light_range = 1.5
 	light_color = "#00cc10"
 	anchored = TRUE
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	var/cap_spawn = 6
 	var/spawned = 0
 	var/chance_spawn = 15

@@ -710,7 +710,7 @@
 				to_chat(user, "There's already a powercell installed.")
 		return
 
-	else if(iswelder(W) && user.a_intent != "hurt")
+	else if(iswelder(W) && user.a_intent != INTENT_HARM)
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_MELEE)
 		if (WT.use(0,user))

@@ -78,7 +78,7 @@
 		var/mob/living/L = A
 		if(cell)
 			attacker.do_attack_animation(L)
-			if(attacker.a_intent == I_HURT)//Stungloves. Any contact will stun the alien.
+			if(attacker.a_intent == INTENT_HARM)//Stungloves. Any contact will stun the alien.
 				if(cell.charge >= 2500)
 					cell.use(2500)
 					update_icon()

@@ -136,13 +136,13 @@
 		for(var/c_el in combo_elements)
 			var/CC_icon_state = "combo_element_combo"
 			switch(c_el)
-				if(I_HELP)
+				if(INTENT_HELP)
 					CC_icon_state = "combo_element_help"
-				if(I_DISARM)
+				if(INTENT_PUSH)
 					CC_icon_state = "combo_element_disarm"
-				if(I_GRAB)
+				if(INTENT_GRAB)
 					CC_icon_state = "combo_element_grab"
-				if(I_HURT)
+				if(INTENT_HARM)
 					CC_icon_state = "combo_element_hurt"
 			var/image/C_EL_I = image(icon='icons/mob/unarmed_combat_combos.dmi', icon_state="[CC_icon_state]_[i]")
 			C_EL_I.loc = victim
@@ -252,7 +252,7 @@
 
 	update_combo_elements()
 
-	if(combo_element == I_DISARM || combo_element == I_HURT)
+	if(combo_element == INTENT_PUSH || combo_element == INTENT_HARM)
 		INVOKE_ASYNC(src, .proc/animate_attack, combo_element, combo_value, victim, attacker)
 
 	return FALSE

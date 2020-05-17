@@ -312,7 +312,7 @@
 	busy = TRUE
 	update_icon()
 
-	if(user.a_intent == I_HURT)
+	if(user.a_intent == INTENT_HARM)
 		do_electrocute(M, user, def_zone)
 	else
 		try_revive(M, user)

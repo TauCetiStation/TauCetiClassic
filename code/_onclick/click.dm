@@ -180,7 +180,7 @@
 /mob/proc/RangedAttack(atom/A, params)
 	if(!mutations.len)
 		return
-	if(a_intent == "hurt" && (LASEREYES in mutations))
+	if(a_intent == INTENT_HARM && (LASEREYES in mutations))
 		LaserEyes(A) // moved into a proc below
 	else if(TK in mutations)
 		ranged_attack_tk(A)

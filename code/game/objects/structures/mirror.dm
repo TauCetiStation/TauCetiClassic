@@ -13,7 +13,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.a_intent == "hurt")
+		if(H.a_intent == INTENT_HARM)
 			H.do_attack_animation(src)
 			if(!H.gloves)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]

@@ -234,14 +234,14 @@
 
 	switch(M.a_intent)
 
-		if("help")
+		if(INTENT_HELP)
 			if (health > 0)
 				visible_message("<span class='notice'>[M] [response_help] [src]</span>")
 
-		if("grab")
+		if(INTENT_GRAB)
 			M.Grab(src)
 
-		if("hurt", "disarm")
+		if(INTENT_HARM, INTENT_PUSH)
 			M.do_attack_animation(src)
 			adjustBruteLoss(harm_intent_damage)
 			visible_message("<span class='warning'>[M] [response_harm] [src]</span>")
@@ -252,12 +252,12 @@
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (INTENT_HELP)
 			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
-		if ("grab")
+		if (INTENT_GRAB)
 			M.Grab(src)
 
-		if("hurt", "disarm")
+		if(INTENT_HARM, INTENT_PUSH)
 			var/damage = rand(15, 30)
 			visible_message("<span class='warning'><B>[M] has slashed at [src]!</B></span>")
 			adjustBruteLoss(damage)
@@ -267,7 +267,7 @@
 /mob/living/simple_animal/attack_larva(mob/living/carbon/xenomorph/larva/L)
 
 	switch(L.a_intent)
-		if("help")
+		if(INTENT_HELP)
 			visible_message("<span class='notice'>[L] rubs it's head against [src]</span>")
 
 
