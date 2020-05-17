@@ -41,22 +41,18 @@
 		return
 
 	msg += "<span class='notice'>The sect currently has [round(global.chaplain_religion.favor)] favor with [pick(global.chaplain_religion.deity_names)].\n</span>"
-	msg += "List of available Rites:\n"
-	for(var/i in global.chaplain_religion.rites)
-		msg += i
-	if(msg)
-		to_chat(user, msg)
+	msg += "List of available Rites:"
+	to_chat(user, msg)
+	for(var/i in global.chaplain_religion.rites_info)
+		to_chat(user, i)
 
 /obj/structure/altar_of_gods/MouseDrop_T(mob/target, mob/user)
 	if(isliving(target))
 		if(!target.buckled && !buckled_mob && target.loc != loc)
 			if(user.incapacitated() || user.lying)
 				return
-			if(iscarbon(target))
-				target.loc = loc
-				for(var/obj/O in src)
-					O.loc = loc
-				src.add_fingerprint(target)
+			target.forceMove(loc)
+			add_fingerprint(target)
 		else
 			if(can_buckle && istype(target) && !buckled_mob && istype(user))
 				user_buckle_mob(target, user)
@@ -162,16 +158,20 @@
 			to_chat(user, "<span class='notice'>You are already performing [performing_rite.name]!</span>")
 			return
 
-		if(religion.rites.len == 0)
+		if(religion.rites_info.len == 0 || religion.rites_by_name.len == 0)
 			to_chat(user, "<span class='notice'>Your religion doesn't have any rites to perform!</span>")
 			return
 
-		var/rite_select = input(user, "Select a rite to perform!", "Select a rite", null) in religion.rites
+		var/rite_select = input(user, "Select a rite to perform!", "Select a rite", null) in religion.rites_by_name
 		if(!Adjacent(user))
 			to_chat(user, "<span class='warning'>You are too far away!</span>")
 			return
+		
+		if(performing_rite)
+			to_chat(user, "<span class='notice'>You are already performing [performing_rite.name]!</span>")
+			return
 
-		var/selection2type = religion.rites[rite_select]
+		var/selection2type = religion.rites_by_name[rite_select]
 		performing_rite = new selection2type(src)
 
 		if(!performing_rite.perform_rite(user, src))
@@ -199,6 +199,7 @@
 
 		sect = available_options[sect_select]
 		religion = global.chaplain_religion
+		religion.altar = src
 
 		sect.on_select(user, religion)
 		return

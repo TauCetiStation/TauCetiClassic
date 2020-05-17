@@ -12,7 +12,7 @@
 	var/obj/item/weapon/card/id/modify = null	//the card we will change
 	var/mode = 0.0
 	var/printing = null
-	var/datum/money_account/datum_account = null
+	var/datum/money_account/datum_account = null	//if money account is tied to the card and the card is inserted into the console, the account is stored here
 
 /obj/machinery/computer/card/proc/is_centcom()
 	return istype(src, /obj/machinery/computer/card/centcom)
@@ -206,6 +206,7 @@
 			if (is_authenticated() && modify)
 				var/t1 = href_list["assign_target"]
 				var/new_salary = 0
+				var/datum/job/jobdatum
 				if(t1 == "Custom")
 					var/temp_t = sanitize(input("Enter a custom job assignment.","Assignment"), 45)
 					//let custom jobs function as an impromptu alt title, mainly for sechuds
@@ -216,9 +217,7 @@
 					if(is_centcom())
 						access = get_centcom_access(t1)
 					else
-						var/datum/job/jobdatum
-						for(var/jobtype in typesof(/datum/job))
-							var/datum/job/J = new jobtype
+						for(var/datum/job/J in SSjob.occupations)
 							if(ckey(J.title) == ckey(t1))
 								jobdatum = J
 								break
@@ -234,7 +233,7 @@
 					modify.rank = t1
 
 					if(datum_account)
-						datum_account.owner_salary = new_salary //set the new salary equal to job
+						datum_account.set_salary(new_salary, jobdatum.salary_ratio)	//set the new salary equal to job
 
 				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
 				if(mode)
@@ -300,6 +299,8 @@
 			if (is_authenticated())
 				modify.assignment = "Terminated"
 				modify.access = list()
+				if(datum_account)
+					datum_account.set_salary(0)		//no salary
 
 				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
 				if(mode)
