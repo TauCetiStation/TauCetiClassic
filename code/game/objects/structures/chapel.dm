@@ -58,3 +58,201 @@
 /obj/structure/stool/bed/chair/pew/right
 	icon_state = "general_right"
 	append_icon_state = "_right"
+
+
+
+/obj/effect/effect/bell
+	name = "The Lord Voker"
+	desc = "Ring-a-ding, let the station know you've got a nullrod and you ain't afraid to use it!"
+
+	icon = 'icons/obj/big_bell.dmi'
+	icon_state = "lord_Voker"
+
+	density = FALSE
+	anchored = TRUE
+
+	pixel_x = -16
+	pixel_y = -2
+
+	layer = INFRONT_MOB_LAYER - 0.1
+
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
+
+	var/next_swing = 0
+
+	var/next_ring = 0
+	var/next_global_ring = 0
+
+	var/obj/structure/big_bell/base
+
+	// The offset for pivoting.
+	var/pivot_y = 12
+
+/obj/effect/effect/bell/atom_init(mapload, obj/structure/big_bell/BB)
+	. = ..()
+	base = BB
+	AddComponent(/datum/component/bounded, BB, 0, 0)
+
+/obj/effect/effect/bell/Destroy()
+	base.bell = null
+	QDEL_NULL(base)
+	return ..()
+
+/obj/effect/effect/bell/proc/swing(angle, time, swing_am)
+	if(next_swing > world.time)
+		return
+	next_swing = world.time + time
+
+	if(prob(50))
+		angle *= -1
+
+	var/stop_swinging = world.time + time
+	var/swing_time = time / swing_am
+
+	var/angle_delta = angle / swing_am
+
+	var/old_pixel_y = pixel_y
+	pixel_y += pivot_y
+
+	var/matrix/old_transform = transform
+	var/matrix/pivot_transform = matrix(transform)
+	pivot_transform.Translate(0, -pivot_y)
+
+	transform = pivot_transform
+
+	while(stop_swinging > world.time)
+		if(QDELING(src))
+			return
+		if(angle >= -1 && angle <= 1)
+			break
+		if(swing_time <= 1)
+			break
+
+		var/matrix/M = matrix(pivot_transform)
+		M.Turn(angle)
+		animate(src, transform = M, time = swing_time * 0.5)
+		animate(transform = pivot_transform, time = swing_time * 0.5)
+
+		angle *= -1
+		angle -= angle_delta
+
+		sleep(swing_time)
+
+	transform = old_transform
+	pixel_y = old_pixel_y
+
+/obj/effect/effect/bell/proc/adjust_strength(def_val, strength, strength_coeff, max_val)
+	return min(round(def_val + strength * strength_coeff), max_val)
+
+/obj/effect/effect/bell/proc/ring(mob/user, strength)
+	if(next_ring > world.time)
+		to_chat(user, "<span class='notice'>The bell is still swinging. Please wait [round((next_ring - world.time) * 0.1)] seconds before next ring.</span>")
+		return
+	next_ring = world.time + 2.5 SECONDS
+
+	visible_message("[bicon(src)] <span class='notice'>[src] rings, strucken by [user].</span>")
+
+	var/shake_duration = adjust_strength(2, strength, 0.25, 6)
+	var/shake_strength = adjust_strength(0, strength, 0.1, 3)
+
+	if(shake_strength > 0)
+		shake_camera(user, shake_duration, shake_strength)
+	playsound(src, 'sound/effects/bell.ogg', VOL_EFFECTS_MASTER, 50, null)
+
+	var/swing_angle = adjust_strength(6, strength, 0.25, 16)
+
+	INVOKE_ASYNC(src, .proc/swing, swing_angle, 1 SECOND, 2)
+
+/obj/effect/effect/bell/proc/ring_global(mob/user, strength)
+	if(!user.mind || !user.mind.holy_role)
+		ring(user, strength)
+		return
+
+	if(next_global_ring > world.time)
+		to_chat(user, "<span class='warning'>You can't alarm the whole station so often! Please wait [round((next_global_ring - world.time) * 0.1)] seconds before next ring.</span>")
+		return
+
+	if(alert(user, "Are you sure you want to alert the entire station with [src]?", "[src]", "Yes", "No") == "No")
+		return
+	var/ring_msg = input(user, "What do you want to ring on [src]?", "Enter message") as null|text
+	if(!ring_msg)
+		return
+	next_global_ring = world.time + 10 MINUTES
+
+	visible_message("[bicon(src)] <span class='warning'>[src] rings loudly, strucken by [user]!</span>")
+
+	var/shake_duration = adjust_strength(4, strength, 0.25, 24)
+	var/shake_strength = adjust_strength(1, strength, 0.1, 5)
+
+	for(var/mob/M in player_list)
+		if(M.z == z)
+			shake_camera(M, shake_duration, shake_strength)
+			M.playsound_local(null, 'sound/effects/big_bell.ogg', VOL_NOTIFICATIONS, 50)
+			to_chat(M, "[bicon(src)] <span class='game say'><b>[src]</b> rings, \"[ring_msg]\"</span>")
+
+	var/swing_angle = adjust_strength(12, strength, 0.25, 32)
+
+	INVOKE_ASYNC(src, .proc/swing, swing_angle, 9 SECONDS, 6)
+
+/obj/effect/effect/bell/attackby(obj/item/I, mob/user)
+	if(user.a_intent == I_HURT)
+		ring_global(user, I.force)
+	else
+		ring(user, I.force)
+
+/obj/effect/effect/bell/attack_paw(mob/living/user)
+	attack_hand(user)
+
+/obj/effect/effect/bell/attack_hand(mob/living/carbon/human/user)
+	if(user.a_intent == I_HURT)
+		ring_global(user, 1)
+	else
+		ring(user, 1)
+
+/obj/structure/big_bell
+	name = "bell base"
+	desc = "Ring-a-ding, let the station know you've got a nullrod and you ain't afraid to use it!"
+	icon = 'icons/obj/big_bell.dmi'
+	icon_state = "bell_base"
+
+	density = TRUE
+	anchored = TRUE
+
+	pixel_x = -16
+	pixel_y = -2
+
+	layer = INFRONT_MOB_LAYER
+
+	var/obj/effect/effect/bell/bell
+
+/obj/structure/big_bell/atom_init()
+	. = ..()
+	bell = new(loc, src)
+
+/obj/structure/big_bell/Destroy()
+	QDEL_NULL(bell)
+	return ..()
+
+/obj/structure/big_bell/attackby(obj/item/I, mob/user)
+	if(iswrench(I) && !user.is_busy(src) && I.use_tool(src, user, 40, volume = 50))
+		anchored = !anchored
+		visible_message("<span class='warning'>[src] has been [anchored ? "secured to the floor" : "unsecured from the floor"] by [user].</span>")
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
+		return
+
+	return ..()
+
+/obj/structure/big_bell/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	if(istype(mover) && mover.checkpass(PASSCRAWL))
+		return TRUE
+	return FALSE
+
+/obj/structure/big_bell/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, atom/movable/caller)
+	if(istype(caller) && caller.checkpass(PASSCRAWL))
+		return TRUE
+	return FALSE
+
+/obj/structure/big_bell/CheckExit(atom/movable/mover, target)
+	if(istype(mover) && mover.checkpass(PASSCRAWL))
+		return TRUE
+	return FALSE
