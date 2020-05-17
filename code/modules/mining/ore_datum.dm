@@ -30,12 +30,14 @@
 	start = /obj/item/weapon/ore/glass
 	smelts_to = /obj/item/stack/sheet/glass
 	compresses_to = /obj/item/stack/sheet/mineral/sandstone
+	alloy = 1
 	oretag = "sand"
 	points = 1
 
 /datum/ore/phoron
 	start = /obj/item/weapon/ore/phoron
 	compresses_to = /obj/item/stack/sheet/mineral/phoron
+	alloy = 1
 	oretag = "phoron"
 	points = 20
 

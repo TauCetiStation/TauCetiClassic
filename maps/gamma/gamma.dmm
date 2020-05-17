@@ -529,7 +529,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -2807,11 +2807,11 @@
 	},
 /area/station/security/brig)
 "aeC" = (
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "aeD" = (
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "aeE" = (
@@ -2823,7 +2823,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
@@ -2832,7 +2832,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
@@ -3165,7 +3165,7 @@
 	},
 /area/station/rnd/xenobiology)
 "afj" = (
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "afk" = (
@@ -5850,7 +5850,7 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aYs" = (
@@ -13602,7 +13602,7 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "yellow"
@@ -23968,7 +23968,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = -30
 	},
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -29013,7 +29013,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "ixY" = (
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "iyf" = (
@@ -37140,7 +37140,7 @@
 /turf/simulated/floor,
 /area/station/civilian/janitor)
 "leM" = (
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -75353,7 +75353,7 @@
 	},
 /area/station/rnd/mixing)
 "xvW" = (
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "xwu" = (

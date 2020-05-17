@@ -305,6 +305,7 @@
 
 	face_atom(A)
 	A.examine(src)
+	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
 
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
@@ -1055,6 +1056,22 @@ note dizziness decrements automatically in the mob's Life() proc.
 		spell.action.Grant(src)
 	return
 
+/mob/proc/RemoveSpell(obj/effect/proc_holder/spell/S)
+	spell_list -= S
+	if(mind)
+		mind.spell_list -= S
+	qdel(S)
+
+/mob/proc/ClearSpells()
+	for(var/spell in spell_list)
+		spell_list -= spell
+		qdel(spell)
+
+	if(mind)
+		for(var/spell in mind.spell_list)
+			mind.spell_list -= spell
+			qdel(spell)
+
 /mob/proc/set_EyesVision(preset = null, transition_time = 5)
 	if(!client) return
 	if(ishuman(src) && druggy)
@@ -1130,5 +1147,5 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return FALSE
 
 // Return null if mob of this type can not scramble messages.
-/mob/proc/get_scrambled_message(datum/language/speaking, message)
+/mob/proc/get_scrambled_message(message, datum/language/speaking = null)
 	return speaking ? speaking.scramble(message) : stars(message)

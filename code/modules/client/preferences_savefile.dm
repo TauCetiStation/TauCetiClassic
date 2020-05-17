@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 25
+#define SAVEFILE_VERSION_MAX 27
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -59,6 +59,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		toggles &= ~(SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SOUND_STREAMING)
 		S["toggles"] << toggles
 
+	if(current_version < 26)
+		for(var/role in be_role)
+			if(!CanBeRole(role))
+				be_role -= role
+
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 17)
 		for(var/organ_name in organ_data)
@@ -98,6 +103,64 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			(player_alt_titles[J.title] in list("Technical Assistant", "Medical Intern", "Research Assistant", "Security Cadet")))
 
 			player_alt_titles -= J.title
+
+	if(current_version < 27)
+		job_preferences = list() //It loaded null from nonexistant savefile field.
+		var/job_civilian_high = 0
+		var/job_civilian_med = 0
+		var/job_civilian_low = 0
+
+		var/job_medsci_high = 0
+		var/job_medsci_med = 0
+		var/job_medsci_low = 0
+
+		var/job_engsec_high = 0
+		var/job_engsec_med = 0
+		var/job_engsec_low = 0
+
+		S["job_civilian_high"]	>> job_civilian_high
+		S["job_civilian_med"]	>> job_civilian_med
+		S["job_civilian_low"]	>> job_civilian_low
+		S["job_medsci_high"]	>> job_medsci_high
+		S["job_medsci_med"]		>> job_medsci_med
+		S["job_medsci_low"]		>> job_medsci_low
+		S["job_engsec_high"]	>> job_engsec_high
+		S["job_engsec_med"]		>> job_engsec_med
+		S["job_engsec_low"]		>> job_engsec_low
+
+		//Can't use SSjob here since this happens right away on login
+		for(var/job in subtypesof(/datum/job))
+			var/datum/job/J = job
+			var/new_value
+			var/fval = initial(J.flag)
+			switch(initial(J.department_flag))
+				if(CIVILIAN)
+					if(job_civilian_high & fval)
+						// Since we can have only one high pref now, let the user pick which of the bunch they want.
+						new_value = JP_MEDIUM
+					else if(job_civilian_med & fval)
+						new_value = JP_MEDIUM
+					else if(job_civilian_low & fval)
+						new_value = JP_LOW
+				if(MEDSCI)
+					if(job_medsci_high & fval)
+						// Since we can have only one high pref now, let the user pick which of the bunch they want.
+						new_value = JP_MEDIUM
+					else if(job_medsci_med & fval)
+						new_value = JP_MEDIUM
+					else if(job_medsci_low & fval)
+						new_value = JP_LOW
+				if(ENGSEC)
+					if(job_engsec_high & fval)
+						// Since we can have only one high pref now, let the user pick which of the bunch they want.
+						new_value = JP_MEDIUM
+					else if(job_engsec_med & fval)
+						new_value = JP_MEDIUM
+					else if(job_engsec_low & fval)
+						new_value = JP_LOW
+			if(new_value)
+				job_preferences[initial(J.title)] = new_value
+		S["job_preferences"]	<< job_preferences
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
@@ -271,17 +334,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["backbag"]			>> backbag
 	S["b_type"]				>> b_type
 
-	//Jobs
-	S["alternate_option"]	>> alternate_option
-	S["job_civilian_high"]	>> job_civilian_high
-	S["job_civilian_med"]	>> job_civilian_med
-	S["job_civilian_low"]	>> job_civilian_low
-	S["job_medsci_high"]	>> job_medsci_high
-	S["job_medsci_med"]		>> job_medsci_med
-	S["job_medsci_low"]		>> job_medsci_low
-	S["job_engsec_high"]	>> job_engsec_high
-	S["job_engsec_med"]		>> job_engsec_med
-	S["job_engsec_low"]		>> job_engsec_low
+	//Load prefs
+	S["job_preferences"] >> job_preferences
 
 	//Traits
 	S["all_quirks"]			>> all_quirks
@@ -352,15 +406,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	b_type			= sanitize_text(b_type, initial(b_type))
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
-	job_civilian_high = sanitize_integer(job_civilian_high, 0, 16777215, initial(job_civilian_high))
-	job_civilian_med = sanitize_integer(job_civilian_med, 0, 16777215, initial(job_civilian_med))
-	job_civilian_low = sanitize_integer(job_civilian_low, 0, 16777215, initial(job_civilian_low))
-	job_medsci_high = sanitize_integer(job_medsci_high, 0, 16777215, initial(job_medsci_high))
-	job_medsci_med = sanitize_integer(job_medsci_med, 0, 16777215, initial(job_medsci_med))
-	job_medsci_low = sanitize_integer(job_medsci_low, 0, 16777215, initial(job_medsci_low))
-	job_engsec_high = sanitize_integer(job_engsec_high, 0, 16777215, initial(job_engsec_high))
-	job_engsec_med = sanitize_integer(job_engsec_med, 0, 16777215, initial(job_engsec_med))
-	job_engsec_low = sanitize_integer(job_engsec_low, 0, 16777215, initial(job_engsec_low))
 
 	all_quirks = SANITIZE_LIST(all_quirks)
 	positive_quirks = SANITIZE_LIST(positive_quirks)
@@ -460,17 +505,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["backbag"]			<< backbag
 	S["b_type"]				<< b_type
 
-	//Jobs
+	//Write prefs
 	S["alternate_option"]	<< alternate_option
-	S["job_civilian_high"]	<< job_civilian_high
-	S["job_civilian_med"]	<< job_civilian_med
-	S["job_civilian_low"]	<< job_civilian_low
-	S["job_medsci_high"]	<< job_medsci_high
-	S["job_medsci_med"]		<< job_medsci_med
-	S["job_medsci_low"]		<< job_medsci_low
-	S["job_engsec_high"]	<< job_engsec_high
-	S["job_engsec_med"]		<< job_engsec_med
-	S["job_engsec_low"]		<< job_engsec_low
+	S["job_preferences"]	<< job_preferences
 
 	//Traits
 	S["all_quirks"]			<< all_quirks

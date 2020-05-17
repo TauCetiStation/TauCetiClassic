@@ -745,7 +745,9 @@
 	set category = "IC"
 
 	if(!isliving(usr) || usr.next_move > world.time)
-		return
+		return FALSE
+
+	. = TRUE
 	usr.SetNextMove(20)
 
 	var/mob/living/L = usr

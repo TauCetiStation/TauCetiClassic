@@ -16,17 +16,19 @@
 
 	var/show_value_list = 0
 	var/list/ore_values = list(
-							"glass" = 	1,
-							"iron" = 	1,
-							"coal" = 	1,
-							"steel" =	5,
-							"hydrogen"=	10,
-							"uranium" = 20,
-							"silver" = 	25,
-							"gold" = 	30,
-							"platinum"= 45,
-							"plasteel"= 50,
-							"diamond" = 70)
+							"glass" 			= 1,
+							"iron" 				= 1,
+							"coal" 				= 1,
+							"steel" 			= 5,
+							"hydrogen"			= 10,
+							"uranium" 			= 20,
+							"phoron" 			= 20,
+							"phoron glass"		= 25,
+							"silver" 			= 25,
+							"gold" 				= 30,
+							"platinum"			= 45,
+							"plasteel"			= 50,
+							"diamond" 			= 70)
 
 /obj/machinery/mineral/processing_unit_console/atom_init()
 	..()

@@ -132,12 +132,19 @@
 	var/min_age = 25 // The default, for Humans.
 	var/max_age = 85
 
+	var/list/prohibit_roles
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
 
 	if(!has_organ[O_HEART])
 		flags[NO_BLOOD] = TRUE // this status also uncaps vital body parts damage, since such species otherwise will be very hard to kill.
+
+/datum/species/proc/can_be_role(role)
+	if(!prohibit_roles)
+		return TRUE
+	return !(role in prohibit_roles)
 
 /datum/species/proc/create_organs(mob/living/carbon/human/H, deleteOld = FALSE) //Handles creation of mob organs.
 	if(deleteOld)
@@ -450,6 +457,8 @@
 	min_age = 12
 	max_age = 20
 
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
+
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
 	if(H.wear_mask)
@@ -628,6 +637,8 @@
 	min_age = 1
 	max_age = 1000
 
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST)
+
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
@@ -751,6 +762,8 @@
 
 	min_age = 1
 	max_age = 125
+
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST, ROLE_BLOB)
 
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen

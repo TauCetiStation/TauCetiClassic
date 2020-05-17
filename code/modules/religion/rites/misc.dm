@@ -6,7 +6,7 @@
 	name = "Create food"
 	desc = "Create more and more food!"
 	ritual_length = (2.2 MINUTES)
-	ritual_invocations = list("O Lord, we pray to you: hear our prayer, that they may be delivered by thy mercy, for the glory of thy name...", //TODO
+	ritual_invocations = list("O Lord, we pray to you: hear our prayer, that they may be delivered by thy mercy, for the glory of thy name...",
 						"...our crops and gardens, now it's fair for our sins that are destroyed and a real disaster is suffered, from birds, worms, mice, moles and other animals...",
 						"...and driven far away from this place by Your authority, may they not harm anyone, but these fields and waters...",
 						"...and the gardens will be left completely at rest so that all that is growing and born in them will serve for thy glory...",
@@ -52,7 +52,7 @@
 
 /datum/religion_rites/food/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(prob(50))
-		spawn_food(AOG.loc)
+		spawn_food(AOG.loc, 1)
 	return TRUE
 
 /*
@@ -61,7 +61,7 @@
  */
 /datum/religion_rites/pray
 	name = "Prayer to god"
-	desc = "Very long pray for favor"
+	desc = "Pray for a while in exchange for favor."
 	ritual_length = (4 MINUTES)
 	ritual_invocations = list("Have mercy on us, O Lord, have mercy on us...",
 							  "...for at a loss for any defense, this prayer do we sinners offer Thee as Master...",
@@ -89,4 +89,37 @@
 
 /datum/religion_rites/pray/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
 	global.chaplain_religion.favor += 20
+	return TRUE
+
+/*
+ * Honk
+ * The ritual creates a honk that everyone hears.
+ */
+/datum/religion_rites/honk
+	name = "Clown shriek"
+	desc = "Spread honks throughout the station."
+	ritual_length = (2 MINUTES)
+	ritual_invocations = list("All able to hear, hear!...",
+							  "...This message is dedicated to all of you....",
+							  "...may all of you be healthy and smart...",
+							  "...let your jokes be funny...",
+							  "...and the soul be pure!...",
+							  "...This screech will be devoted to all jokes and clowns....",)
+	invoke_msg = "...So hear it!!!"
+	favor_cost = 200
+
+	needed_aspects = list(
+		ASPECT_WACKY = 1,
+	)
+
+/datum/religion_rites/honk/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	for(var/mob/M in player_list)
+		M.playsound_local(null, 'sound/items/AirHorn.ogg', VOL_EFFECTS_MASTER, null, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
+
+	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
+	return TRUE
+
+/datum/religion_rites/honk/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
+	var/ratio = (100 / ritual_invocations.len) * stage
+	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
 	return TRUE
