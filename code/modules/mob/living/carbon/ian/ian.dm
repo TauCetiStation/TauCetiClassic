@@ -365,7 +365,7 @@
 			if(health >= config.health_threshold_crit)
 				help_shake_act(M)
 				return
-			INVOKE_ASYNC(src, .proc/perform_cpr, M)
+			INVOKE_ASYNC(src, .proc/perform_av, M)
 		if (INTENT_HARM)
 			M.do_attack_animation(src)
 			if(is_armored(M, 35))
