@@ -156,28 +156,6 @@
 
 //mob/living/carbon/monkey/bullet_act(obj/item/projectile/Proj)taken care of in living
 
-
-/mob/living/carbon/monkey/attack_paw(mob/M)
-	..()
-
-	if (M.a_intent == INTENT_HELP)
-		help_shake_act(M)
-	else
-		if ((M.a_intent == INTENT_HARM && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
-			M.do_attack_animation(src)
-			if ((prob(75) && health > 0))
-				playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M.name] has bit [name]!</B></span>")
-				var/damage = rand(1, 5)
-				adjustBruteLoss(damage)
-				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
-				for(var/datum/disease/D in M.viruses)
-					if(istype(D, /datum/disease/jungle_fever))
-						contract_disease(D,1,0)
-			else
-				visible_message("<span class='warning'><B>[M.name] has attempted to bite [name]!</B></span>")
-	return
-
 /mob/living/carbon/monkey/helpReaction(mob/living/attacker, show_message = TRUE)
 	help_shake_act(attacker)
 	get_scooped(attacker)

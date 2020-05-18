@@ -324,34 +324,8 @@
 
 	return
 
-/mob/living/carbon/slime/attack_paw(mob/living/carbon/monkey/M)
-	if(!(istype(M, /mob/living/carbon/monkey)))	return//Fix for aliens receiving double messages when attacking other aliens.
-
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-	..()
-
-	switch(M.a_intent)
-
-		if (INTENT_HELP)
-			help_shake_act(M)
-		else
-			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
-				return
-			if (health > 0)
-				attacked += 10
-				visible_message("<span class='warning'><B>[M.name] has attacked [src]!</B></span>")
-				adjustBruteLoss(rand(1, 3))
-				updatehealth()
-
 /mob/living/carbon/slime/restrained()
 	return 0
-
 
 /mob/living/carbon/slime/show_inv(mob/user)
 	return

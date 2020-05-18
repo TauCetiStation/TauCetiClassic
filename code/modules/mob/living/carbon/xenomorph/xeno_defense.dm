@@ -21,32 +21,6 @@
 /mob/living/carbon/xenomorph/is_usable_leg(targetzone = null)
 	return TRUE
 
-/mob/living/carbon/xenomorph/attack_paw(mob/living/carbon/monkey/M)
-	if(!ismonkey(M))	return//Fix for aliens receiving double messages when attacking other aliens.
-
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-	..()
-
-	switch(M.a_intent)
-
-		if (INTENT_HELP)
-			help_shake_act(M)
-		else
-			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
-				return
-			if (health > 0)
-				playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M.name] has bit [src]!</B></span>")
-				adjustBruteLoss(rand(1, 3))
-				updatehealth()
-	return
-
 /mob/living/carbon/xenomorph/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")

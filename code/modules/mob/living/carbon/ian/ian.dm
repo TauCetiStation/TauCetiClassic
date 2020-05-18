@@ -431,30 +431,6 @@
 	else
 		gib()
 
-/mob/living/carbon/ian/attack_paw(mob/M)
-	..()
-	if (M.a_intent == INTENT_HELP)
-		help_shake_act(M)
-	else
-		if (M.a_intent == INTENT_HARM && !istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
-			M.do_attack_animation(src)
-
-			if(is_armored(M, 35))
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-				return
-
-			if(prob(75))
-				playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='danger'>[M.name] has bit [name]!</span>")
-				var/damage = rand(1, 5)
-				adjustBruteLoss(damage)
-				updatehealth()
-				for(var/datum/disease/D in M.viruses)
-					if(istype(D, /datum/disease/jungle_fever))
-						contract_disease(D,1,0)
-			else
-				visible_message("<span class='danger'>[M.name] has attempted to bite [name]!</span>")
-
 /mob/living/carbon/ian/get_unarmed_attack()
 	var/retDam = 3
 	var/retDamType = BRUTE
