@@ -47,38 +47,6 @@
 				updatehealth()
 	return
 
-/mob/living/carbon/xenomorph/attack_alien(mob/living/carbon/xenomorph/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-
-	..()
-
-	switch(M.a_intent)
-
-		if (INTENT_HELP)
-			AdjustSleeping(-10 SECONDS)
-			resting = 0
-			AdjustParalysis(-3)
-			AdjustStunned(-3)
-			AdjustWeakened(-3)
-			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake it up!</span>")
-
-		else
-			if (health > 0)
-				playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
-				var/damage = rand(1, 3)
-				visible_message("<span class='warning'><B>[M.name] has bit [src]!</B></span>")
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				to_chat(M, "<span class='notice'><B>[name] is too injured for that.</B></span>")
-	return
-
 /mob/living/carbon/xenomorph/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")

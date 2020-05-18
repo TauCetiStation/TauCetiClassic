@@ -783,54 +783,6 @@
 				to_chat(src, "Hack attempt detected.")
 		return TRUE
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-
-	switch(M.a_intent)
-
-		if (INTENT_HELP)
-			visible_message("<span class='notice'>[M] caresses [src]'s plating with its scythe-like arm.</span>")
-
-		if (INTENT_GRAB)
-			M.Grab(src)
-
-		if (INTENT_HARM)
-			M.do_attack_animation(src)
-			var/damage = rand(10, 20)
-			if (prob(90))
-
-				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M] has slashed at [src]!</B></span>")
-				if(prob(8))
-					flash_eyes(affect_silicon = 1)
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M] took a swipe at [src]!</B></span>")
-
-		if (INTENT_PUSH)
-			if(!(lying))
-				M.do_attack_animation(src)
-				if (rand(1,100) <= 85)
-					Stun(7)
-					step(src,get_dir(M,src))
-					spawn(5) step(src,get_dir(M,src))
-					playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
-					visible_message("<span class='warning'><B>[M] has forced back [src]!</B></span>")
-				else
-					playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-					visible_message("<span class='warning'><B>[M] attempted to force back [src]!</B></span>")
-	return
-
-
-
 /mob/living/silicon/robot/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")

@@ -580,34 +580,6 @@ var/list/ai_verbs_default = list(
 	updatehealth()
 	return 2
 
-/mob/living/silicon/ai/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-
-	switch(M.a_intent)
-
-		if (INTENT_HELP)
-			visible_message("<span class='notice'>[M] caresses [src]'s plating with its scythe like arm.</span>")
-
-		else //harm
-			var/damage = rand(10, 20)
-			if (prob(90))
-				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M] has slashed at [src]!</B></span>")
-				if(prob(8))
-					flash_eyes(affect_silicon = 1)
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M] took a swipe at [src]!</B></span>")
-	return
-
 /mob/living/silicon/ai/reset_view(atom/A)
 	if(camera)
 		camera.set_light(0)
