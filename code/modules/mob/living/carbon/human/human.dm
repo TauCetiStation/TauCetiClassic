@@ -2250,5 +2250,23 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/brain_damage = CLAMP((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, getBrainLoss(), MAX_BRAIN_DAMAGE)
 	setBrainLoss(brain_damage)
 
+/mob/living/carbon/human/can_inject(mob/user, def_zone, show_message = TRUE, penetrate_thick = FALSE)
+	. = TRUE
+
+	// If targeting the head, see if the head item is thin enough.
+	// If targeting anything else, see if the wear suit is thin enough.
+	if(!penetrate_thick)
+		if(check_thickmaterial(target_zone = def_zone))
+			if(show_message)
+				to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
+			return FALSE
+
+	if(isSynthetic(def_zone))
+		if(show_message)
+			to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
+		return FALSE
+
+	return TRUE
+
 #undef MASSAGE_RHYTM_RIGHT
 #undef MASSAGE_ALLOWED_ERROR
