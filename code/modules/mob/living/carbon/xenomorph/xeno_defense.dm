@@ -1,80 +1,25 @@
-/*----------------------------------------
-This is what happens, when we attack aliens.
-----------------------------------------*/
-/mob/living/carbon/xenomorph/attack_hand(mob/living/carbon/human/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
+/mob/living/carbon/xenomorph/get_unarmed_attack()
+	var/retDam = 23
+	var/retDamType = BRUTE
+	var/retFlags = DAM_SHARP
+	var/retVerb = "slash"
+	var/retSound = 'sound/weapons/slice.ogg'
+	var/retMissSound = 'sound/weapons/slashmiss.ogg'
 
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
+	if(HULK in mutations)
+		retDam += 4
 
-	..()
+	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
+				"miss_sound" = retMissSound)
 
-	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
-		var/obj/item/clothing/gloves/G = M.gloves
-		if(G.cell)
-			if(M.a_intent == INTENT_HARM)//Stungloves. Any contact will stun the alien.
-				if(G.cell.charge >= 2500)
-					G.cell.use(2500)
+/mob/living/carbon/xenomorph/is_usable_head(targetzone = null)
+	return TRUE
 
-					Weaken(5)
-					if (stuttering < 5)
-						stuttering = 5
-					Stun(5)
+/mob/living/carbon/xenomorph/is_usable_arm(targetzone = null)
+	return TRUE
 
-					visible_message("<span class='warning'><B>[src] has been touched with the stun gloves by [M]!</B></span>", blind_message = "<span class='warning'>You hear someone fall.</span>")
-					return
-				else
-					to_chat(M, "<span class='warning'>Not enough charge! </span>")
-					return
-
-	switch(M.a_intent)
-
-		if (INTENT_HELP)
-			if (health > 0)
-				help_shake_act(M)
-
-		if (INTENT_GRAB)
-			M.Grab(src)
-
-		if (INTENT_HARM)
-			var/damage = rand(1, 9)
-			if (prob(90))
-				if (HULK in M.mutations)//HULK SMASH
-					damage += 14
-					spawn(0)
-						Weaken(damage) // Why can a hulk knock an alien out but not knock out a human? Damage is robust enough.
-						step_away(src,M,15)
-						sleep(3)
-						step_away(src,M,15)
-				playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M] has punched [src]!</B></span>")
-				if (damage > 9||prob(5))//Regular humans have a very small chance of weakening an alien.
-					Weaken(1,5)
-					visible_message("<span class='warning'><B>[M] has weakened [src]!</B></span>", blind_message = "<span class='warning'>You hear someone fall.</span>")
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M] has attempted to punch [src]!</B></span>")
-
-		if (INTENT_PUSH)
-			if (!lying)
-				if (prob(5))//Very small chance to push an alien down.
-					Weaken(2)
-					playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-					visible_message("<span class='warning'><B>[M] has pushed down [src]!</B></span>")
-				else
-					if (prob(50))
-						drop_item()
-						playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-						visible_message("<span class='warning'><B>[M] has disarmed [src]!</B></span>")
-					else
-						playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-						visible_message("<span class='warning'><B>[M] has attempted to disarm [src]!</B></span>")
-	return
+/mob/living/carbon/xenomorph/is_usable_leg(targetzone = null)
+	return TRUE
 
 /mob/living/carbon/xenomorph/attack_paw(mob/living/carbon/monkey/M)
 	if(!ismonkey(M))	return//Fix for aliens receiving double messages when attacking other aliens.

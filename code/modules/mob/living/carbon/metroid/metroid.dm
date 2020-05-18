@@ -277,6 +277,27 @@
 		updatehealth()
 	return
 
+/mob/living/carbon/slime/hurtReaction(mob/living/attacker, show_message = TRUE)
+	if(Victim)
+		if(Victim == attacker)
+			visible_message("<span class='warning'>[attacker] attempts to wrestle \the [src] off!</span>")
+			playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+			return FALSE
+		else
+			if(prob(30))
+				visible_message("<span class='warning'>[attacker] attempts to wrestle \the [src] off!</span>")
+				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+				return FALSE
+
+			if(prob(90) && !client)
+				Discipline++
+
+			Victim = null
+			anchored = FALSE
+			step_away(src, attacker)
+			return TRUE
+
+	return ..()
 
 /mob/living/carbon/slime/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
@@ -327,128 +348,6 @@
 				visible_message("<span class='warning'><B>[M.name] has attacked [src]!</B></span>")
 				adjustBruteLoss(rand(1, 3))
 				updatehealth()
-	return
-
-
-/mob/living/carbon/slime/attack_hand(mob/living/carbon/human/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-
-	..()
-
-	if(Victim)
-		if(Victim == M)
-			if(prob(60))
-				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>")
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-
-			else
-				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off!</span>")
-				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-
-				if(prob(90) && !client)
-					Discipline++
-
-				spawn()
-					SStun = 1
-					sleep(rand(45,60))
-					if(src)
-						SStun = 0
-
-				Victim = null
-				anchored = 0
-				step_away(src,M)
-
-			return
-
-		else
-			M.do_attack_animation(src)
-			if(prob(30))
-				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [Victim]!</span>")
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-
-			else
-				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off of [Victim]!</span>")
-				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-
-				if(prob(80) && !client)
-					Discipline++
-
-					if(!istype(src, /mob/living/carbon/slime/adult))
-						if(Discipline == 1)
-							attacked = 0
-
-				spawn()
-					SStun = 1
-					sleep(rand(55,65))
-					if(src)
-						SStun = 0
-
-				Victim = null
-				anchored = 0
-				step_away(src,M)
-
-			return
-
-
-
-
-	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
-		var/obj/item/clothing/gloves/G = M.gloves
-		if(G.cell)
-			if(M.a_intent == INTENT_HARM)//Stungloves. Any contact will stun the alien.
-				if(G.cell.charge >= 2500)
-					G.cell.use(2500)
-					visible_message("<span class='warning'><B>[src] has been touched with the stun gloves by [M]!</B></span>", blind_message = "<span class='warning'>You hear someone fall.</span>")
-					return
-				else
-					to_chat(M, "<span class='warning'>Not enough charge! </span>")
-					return
-
-	switch(M.a_intent)
-
-		if (INTENT_HELP)
-			help_shake_act(M)
-
-		if (INTENT_GRAB)
-			M.Grab(src)
-
-		else
-
-			var/damage = rand(1, 9)
-
-			attacked += 10
-			if (prob(90))
-				if (HULK in M.mutations)
-					damage += 5
-					if(Victim)
-						Victim = null
-						anchored = 0
-						if(prob(80) && !client)
-							Discipline++
-					spawn(0)
-
-						step_away(src,M,15)
-						sleep(3)
-						step_away(src,M,15)
-
-
-				playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M] has punched [src]!</B></span>")
-
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M] has attempted to punch [src]!</B></span>")
-	return
-
-
 
 /mob/living/carbon/slime/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 	if (!ticker)
@@ -539,7 +438,6 @@
 			health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 		else
 			health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-
 
 /obj/item/slime_extract
 	name = "slime extract"
@@ -982,6 +880,15 @@
 
 /mob/living/carbon/slime/getTrail()
 	return null
+
+/mob/living/carbon/slime/is_usable_head(targetzone = null)
+	return TRUE
+
+/mob/living/carbon/slime/is_usable_head(targetzone = null)
+	return FALSE
+
+/mob/living/carbon/slime/is_usable_head(targetzone = null)
+	return FALSE
 
 /mob/living/carbon/slime/get_species()
 	return SLIME

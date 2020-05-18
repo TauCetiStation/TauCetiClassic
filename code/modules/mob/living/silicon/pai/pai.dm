@@ -210,8 +210,6 @@
 				visible_message("<span class='warning'><B>[M] took a swipe at [src]!</B></span>")
 	return
 
-///mob/living/silicon/pai/attack_hand(mob/living/carbon/M)
-
 /mob/living/silicon/pai/proc/switchCamera(obj/machinery/camera/C)
 	if(istype(usr, /mob/living))
 		var/mob/living/U = usr

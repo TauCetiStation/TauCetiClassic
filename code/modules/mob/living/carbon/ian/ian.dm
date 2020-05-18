@@ -331,109 +331,11 @@
 		return
 	..()
 
-/mob/living/carbon/ian/attack_hand(mob/living/carbon/human/M)
-	if (!ticker.mode)
-		to_chat(M, "You cannot attack people before the game has started.")
+/mob/living/carbon/ian/helpReaction(mob/living/carbon/attacker, show_message = TRUE)
+	if(health >= config.health_threshold_crit)
+		help_shake_act(attacker)
 		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-
-	if (M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
-		var/obj/item/clothing/gloves/G = M.gloves
-		if(G.cell)
-			if(M.a_intent == INTENT_HARM)//Stungloves. Any contact will stun the alien.
-				if(G.cell.charge >= 2500)
-					G.cell.use(2500)
-					if(is_armored(M, 40))
-						//do nothing
-					else
-						apply_effects(0,0,0,0,5,0,0,150)
-						M.visible_message("<span class='danger'>[src] has been touched with the stun gloves by [M]!</span>", , "<span class='red'>You hear someone fall</span>")
-					var/datum/effect/effect/system/spark_spread/s = new
-					s.set_up(3, 1, src)
-					s.start()
-					M.do_attack_animation(src)
-					return
-				else
-					to_chat(M, "<span class='red'>Not enough charge!</span>")
-					return
-
-	switch(M.a_intent)
-		if(INTENT_HELP)
-			if(health >= config.health_threshold_crit)
-				help_shake_act(M)
-				return
-			INVOKE_ASYNC(src, .proc/perform_cpr, M)
-		if (INTENT_HARM)
-			M.do_attack_animation(src)
-			if(is_armored(M, 35))
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-				return
-
-			var/datum/unarmed_attack/attack = M.species.unarmed
-			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[response_harm] [src.name] ([src.ckey])</font>")
-			attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [pick(attack.attack_verb)]ed by [M.name] ([M.ckey])</font>")
-			msg_admin_attack("[key_name(M)] [response_harm] [key_name(src)]", M)
-
-			var/damage = rand(0, 5)
-			if(!damage)
-				playsound(src, attack.miss_sound, VOL_EFFECTS_MASTER)
-				visible_message("<span class='danger'>[M] has attempted to [response_harm] [src]!</span>")
-				return
-
-			if(HULK in M.mutations)
-				damage += 5
-
-			if(length(attack.attack_sound))
-				playsound(src, pick(attack.attack_sound), VOL_EFFECTS_MASTER)
-
-			if(damage >= 5 && prob(15))
-				visible_message("<span class='danger'>[M] has weakened [src]!</span>")
-				Paralyse(3)
-
-			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
-			adjustBruteLoss(damage)
-			updatehealth()
-
-		if(INTENT_GRAB)
-			M.Grab(src)
-
-		if(INTENT_PUSH)
-			M.do_attack_animation(src)
-			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
-			msg_admin_attack("[key_name(M)] disarmed [src.name] ([src.ckey])", M)
-
-			if(is_armored(M, 25))
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-				return
-
-			var/randn = rand(1, 100)
-			switch(randn)
-				if(0 to 25)
-					Paralyse(2)
-					playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-					visible_message("<span class='danger'>[M] [response_disarm] [src]!</span>")
-				if(26 to 60)
-					var/talked = 0
-					if(pulling)
-						visible_message("<span class='danger'>[M] has broken [src]'s grip on [pulling]!</span>")
-						talked = 1
-						stop_pulling()
-					for(var/obj/item/weapon/grab/G in GetGrabs())
-						if(G.affecting)
-							visible_message("<span class='danger'>[M] has broken [src]'s grip on [G.affecting]!</span>")
-							talked = 1
-							qdel(G)
-					if(!talked)
-						drop_item()
-						visible_message("<span class='danger'>[M] has disarmed [src]!</span>")
-					playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-				else
-					playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-					visible_message("<span class='danger'>[M] attempted to disarm [src]!</span>")
+	INVOKE_ASYNC(src, .proc/perform_cpr, attacker)
 
 /mob/living/carbon/ian/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker.mode)

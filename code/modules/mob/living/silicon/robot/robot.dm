@@ -885,16 +885,15 @@
 
 	return
 
-/mob/living/silicon/robot/attack_hand(mob/user)
-
-	add_fingerprint(user)
-	if(opened && !wiresexposed && (!istype(user, /mob/living/silicon)))
+/mob/living/silicon/robot/attack_hand(mob/living/carbon/human/attacker)
+	add_fingerprint(attacker)
+	if(opened && !wiresexposed && (!istype(attacker, /mob/living/silicon)))
 		var/datum/robot_component/cell_component = components["power cell"]
 		if(cell)
 			cell.updateicon()
-			cell.add_fingerprint(user)
-			user.put_in_active_hand(cell)
-			to_chat(user, "You remove \the [cell].")
+			cell.add_fingerprint(attacker)
+			attacker.put_in_active_hand(cell)
+			to_chat(attacker, "You remove \the [cell].")
 			cell = null
 			cell_component.wrapped = null
 			cell_component.installed = 0
@@ -902,8 +901,8 @@
 		else if(cell_component.installed == -1)
 			cell_component.installed = 0
 			var/obj/item/broken_device = cell_component.wrapped
-			to_chat(user, "You remove \the [broken_device].")
-			user.put_in_active_hand(broken_device)
+			to_chat(attacker, "You remove \the [broken_device].")
+			attacker.put_in_active_hand(broken_device)
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
 	//check if it doesn't require any access at all

@@ -178,71 +178,9 @@
 				visible_message("<span class='warning'><B>[M.name] has attempted to bite [name]!</B></span>")
 	return
 
-/mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-
-	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
-		var/obj/item/clothing/gloves/G = M.gloves
-		if(G.cell)
-			if(M.a_intent == INTENT_HARM)//Stungloves. Any contact will stun the alien.
-				if(G.cell.charge >= 2500)
-					G.cell.use(2500)
-					apply_effects(0,0,0,0,5,0,0,150)
-
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
-					s.set_up(3, 1, src)
-					s.start()
-
-					M.do_attack_animation(src)
-					visible_message("<span class='warning'><B>[src] has been touched with the stun gloves by [M]!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
-					return
-				else
-					to_chat(M, "<span class='warning'>Not enough charge! </span>")
-					return
-
-	if (M.a_intent == INTENT_HELP)
-		help_shake_act(M)
-		get_scooped(M)
-	else
-		if (M.a_intent == INTENT_HARM)
-			M.do_attack_animation(src)
-			if ((prob(75) && health > 0))
-				visible_message("<span class='warning'><B>[M] has punched [name]!</B></span>")
-
-				playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
-				var/damage = rand(5, 10)
-				if (prob(40))
-					damage = rand(10, 15)
-					if (paralysis < 5)
-						Paralyse(rand(10, 15))
-						spawn( 0 )
-							visible_message("<span class='warning'><B>[M] has knocked out [name]!</B></span>")
-							return
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M] has attempted to punch [name]!</B></span>")
-		else
-			if (M.a_intent == INTENT_GRAB)
-				M.Grab(src)
-			else
-				if (!( paralysis ))
-					if (prob(25))
-						Paralyse(2)
-						playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-						visible_message("<span class='warning'><B>[M] has pushed down [name]!</B></span>")
-					else
-						drop_item()
-						playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-						visible_message("<span class='warning'><B>[M] has disarmed [name]!</B></span>")
-	return
+/mob/living/carbon/monkey/helpReaction(mob/living/attacker, show_message = TRUE)
+	help_shake_act(attacker)
+	get_scooped(attacker)
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 	if (!ticker)
@@ -420,6 +358,15 @@
 	message = capitalize(trim_left(message))
 
 	..(message, speaking, verb, alt_name, italics, message_range, used_radios)
+
+/mob/living/carbon/monkey/is_usable_head(targetzone = null)
+	return TRUE
+
+/mob/living/carbon/monkey/is_usable_arm(targetzone = null)
+	return TRUE
+
+/mob/living/carbon/monkey/is_usable_leg(targetzone = null)
+	return TRUE
 
 /mob/living/carbon/monkey/get_species()
 	return race
