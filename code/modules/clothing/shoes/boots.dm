@@ -52,7 +52,7 @@
 		knife = I
 		I.forceMove(src)
 		playsound(user, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
-		to_chat(user, "<span class='notice'>You slide the [I] into [src].</span>")
+		to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")
 
 /obj/item/clothing/shoes/boots/galoshes
 	desc = "Rubber boots."
