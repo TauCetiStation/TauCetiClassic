@@ -103,18 +103,25 @@
 	else
 		..()
 
-/mob/living/carbon/attack_hand(mob/M)
-	if(!iscarbon(M))
-		return
+/mob/living/carbon/attack_unarmed(mob/living/carbon/attacker)
+	if(istype(attacker))
+		var/spread = TRUE
+		if(ishuman(attacker))
+			var/mob/living/carbon/human/H = attacker
+			if(H.gloves)
+				spread = FALSE
 
-	for(var/datum/disease/D in viruses)
-		if(D.spread_by_touch())
-			M.contract_disease(D, 0, 1, CONTACT_HANDS)
+		if(spread)
+			attacker.spread_disease_to(src, "Contact")
 
-	for(var/datum/disease/D in M.viruses)
-		if(D.spread_by_touch())
-			contract_disease(D, 0, 1, CONTACT_HANDS)
+			for(var/datum/disease/D in viruses)
+				if(D.spread_by_touch())
+					attacker.contract_disease(D, 0, 1, CONTACT_HANDS)
 
+			for(var/datum/disease/D in attacker.viruses)
+				if(D.spread_by_touch())
+					contract_disease(D, 0, 1, CONTACT_HANDS)
+	return ..()
 
 /mob/living/carbon/attack_paw(mob/M)
 	if(!iscarbon(M))
@@ -289,7 +296,7 @@
 					else
 						M.visible_message("<span class='notice'>[M] gently touches [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You gently touch [src] trying to wake [t_him] up!</span>")
-			else switch(M.zone_sel.selecting)
+			else switch(M.get_targetzone())
 				if(BP_R_ARM || BP_L_ARM)
 					M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
 									"<span class='notice'>You shake [src]'s hand.</span>", )
@@ -657,7 +664,7 @@
 				W.plane = initial(W.plane)
 
 //-TG- port for smooth lying/standing animations
-/mob/living/carbon/get_standard_pixel_y_offset(lying_current = 0)
+/mob/living/carbon/get_pixel_y_offset(lying_current = FALSE)
 	if(lying)
 		if(buckled && istype(buckled, /obj/structure/stool/bed/roller))
 			return 1
@@ -670,7 +677,7 @@
 	else
 		return initial(pixel_y)
 
-/mob/living/carbon/get_standard_pixel_x_offset(lying_current = 0)
+/mob/living/carbon/get_pixel_x_offset(lying_current = FALSE)
 	if(lying)
 		if(locate(/obj/machinery/optable, src.loc) || locate(/obj/structure/stool/bed, src.loc) || locate(/obj/structure/altar_of_gods, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
 			switch(src.lying_current)
@@ -909,3 +916,32 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+
+/mob/living/carbon/get_unarmed_attack()
+	var/retDam = 2
+	var/retDamType = BRUTE
+	var/retFlags = 0
+	var/retVerb = "attacks"
+	var/retSound = null
+	var/retMissSound = 'sound/weapons/punchmiss.ogg'
+
+	var/specie = get_species()
+	var/datum/species/S = all_species[specie]
+	if(S)
+		var/datum/unarmed_attack/attack = S.unarmed
+
+		retDam = 2 + attack.damage
+		retDamType = attack.damType
+		retFlags = attack.damage_flags()
+		retVerb = pick(attack.attack_verb)
+
+		if(length(attack.attack_sound))
+			retSound = pick(attack.attack_sound)
+
+		retMissSound = 'sound/weapons/punchmiss.ogg'
+
+	if(HULK in mutations)
+		retDam += 4
+
+	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
+				"miss_sound" = retMissSound)

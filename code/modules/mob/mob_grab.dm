@@ -27,13 +27,23 @@
 	item_state = "nothing"
 	w_class = ITEM_SIZE_HUGE
 
-/mob/proc/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+/mob/proc/canGrab(atom/movable/target, show_warnings = TRUE)
 	if(QDELETED(src) || QDELETED(target))
+		return FALSE
+	if(target == src)
+		return FALSE
+	if(!isturf(target.loc))
+		return FALSE
+	if(incapacitated())
+		return FALSE
+	if(target.anchored)
+		return FALSE
+	return TRUE
+
+/mob/proc/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+	if(!canGrab(target, show_warnings))
 		return
-	if(lying || target == src || target.anchored)
-		return
-	if(!isturf(target.loc) || restrained())
-		return
+
 	for(var/obj/item/weapon/grab/G in GetGrabs())
 		if(G.affecting == target)
 			if(show_warnings)
@@ -96,10 +106,13 @@
 	synch()
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 
-	if(state == GRAB_PASSIVE)
-		assailant.visible_message("<span class='red'>[assailant] has grabbed [affecting] passively!</span>")
-	else if(state == GRAB_AGGRESSIVE)
-		visible_message("<span class='warning'><b>\The [assailant]</b> seizes [affecting] aggressively!</span>")
+	switch(state)
+		if(GRAB_PASSIVE)
+			assailant.visible_message("<span class='red'>[assailant] has grabbed [affecting] passively!</span>")
+		if(GRAB_AGGRESSIVE)
+			visible_message("<span class='warning'><b>\The [assailant]</b> seizes [affecting] aggressively!</span>")
+		if(GRAB_NECK)
+			visible_message("<span class='warning'><b>\The [assailant]</b> has grabbed [affecting] by the neck!</span>")
 
 	START_PROCESSING(SSobj, src)
 
@@ -124,8 +137,11 @@
 		else
 			qdel(src)
 
-/obj/item/weapon/grab/proc/set_state(_state)
-	assailant.SetNextMove(CLICK_CD_GRAB)
+/obj/item/weapon/grab/proc/set_state(_state, adjust_time = 5, force_loc = FALSE, force_dir = 0)
+	var/next_move_cd = CLICK_CD_GRAB
+	if(_state == GRAB_PASSIVE)
+		next_move_cd *= 0.5
+	assailant.SetNextMove(next_move_cd)
 
 	if(_state != state)
 		state = _state
@@ -143,7 +159,7 @@
 				icon_state = "grabbed+1"
 			if(GRAB_KILL)
 				hud.icon_state = "kill1"
-		adjust_position()
+		adjust_position(adjust_time, force_loc, force_dir)
 
 /mob/proc/StopGrabs()
 	for(var/obj/item/weapon/grab/G in get_hand_slots())
@@ -259,11 +275,11 @@
 
 //Updating pixelshift, position and direction
 //Gets called on process, when the grab gets upgraded or the assailant moves
-/obj/item/weapon/grab/proc/adjust_position()
+/obj/item/weapon/grab/proc/adjust_position(adjust_time = 5, force_loc = FALSE, force_dir = 0)
 	if(!affecting)
 		return
 	if(affecting.buckled)
-		animate(affecting, pixel_x = 0, pixel_y = 0, 4, 1, LINEAR_EASING)
+		animate(affecting, pixel_x = 0, pixel_y = 0, time = adjust_time, 1, LINEAR_EASING)
 		return
 	if(affecting.lying && state != GRAB_KILL)
 //		animate(affecting, pixel_x = 0, pixel_y = 0, 5, 1, LINEAR_EASING)
@@ -283,25 +299,45 @@
 			shift = 12
 		if(GRAB_NECK)
 			shift = -10
-			adir = assailant.dir
+			if(!force_dir)
+				force_dir = assailant.dir
 			affecting.set_dir(assailant.dir)
-			affecting.loc = assailant.loc
+			force_loc = TRUE
 		if(GRAB_KILL)
 			shift = 0
-			adir = 1
+			if(!force_dir)
+				force_dir = NORTH
 			affecting.set_dir(SOUTH) //face up
-			affecting.loc = assailant.loc
+			force_loc = TRUE
+
+	if(force_dir)
+		adir = force_dir
+
+	if(force_loc)
+		affecting.forceMove(assailant.loc)
 
 	switch(adir)
 		if(NORTH)
-			animate(affecting, pixel_x = 0, pixel_y =-shift, 5, 1, LINEAR_EASING)
+			if(adjust_time == 0)
+				affecting.pixel_x = 0
+				affecting.pixel_y = -shift
+			animate(affecting, pixel_x = 0, pixel_y =-shift, time = adjust_time, TRUE, LINEAR_EASING)
 			affecting.layer = 3.9
 		if(SOUTH)
-			animate(affecting, pixel_x = 0, pixel_y = shift, 5, 1, LINEAR_EASING)
+			if(adjust_time == 0)
+				affecting.pixel_x = 0
+				affecting.pixel_y = shift
+			animate(affecting, pixel_x = 0, pixel_y = shift, time = adjust_time, TRUE, LINEAR_EASING)
 		if(WEST)
-			animate(affecting, pixel_x = shift, pixel_y = 0, 5, 1, LINEAR_EASING)
+			if(adjust_time == 0)
+				affecting.pixel_x = shift
+				affecting.pixel_y = 0
+			animate(affecting, pixel_x = shift, pixel_y = 0, time = adjust_time, TRUE, LINEAR_EASING)
 		if(EAST)
-			animate(affecting, pixel_x =-shift, pixel_y = 0, 5, 1, LINEAR_EASING)
+			if(adjust_time == 0)
+				affecting.pixel_x = -shift
+				affecting.pixel_y = 0
+			animate(affecting, pixel_x =-shift, pixel_y = 0, time = adjust_time, TRUE, LINEAR_EASING)
 
 /obj/item/weapon/grab/proc/s_click(obj/screen/S)
 	if(!affecting)
@@ -396,7 +432,7 @@
 			var/hit_zone = assailant.zone_sel.selecting
 			flick(hud.icon_state, hud)
 			switch(assailant.a_intent)
-				if("help")
+				if(INTENT_HELP)
 					if(force_down)
 						to_chat(assailant, "<span class='warning'>You are no longer pinning [affecting] to the ground.</span>")
 						force_down = 0
@@ -420,7 +456,7 @@
 						H_H.force_vomit(H)
 					else
 						inspect_organ(affecting, assailant, hit_zone)
-				if("grab")
+				if(INTENT_GRAB)
 					if(state < GRAB_AGGRESSIVE)
 						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return
@@ -433,7 +469,7 @@
 						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
 						H.adjustHalLoss(CLAMP(0, 40 - H.halloss, 40)) //up to 40 halloss
 					return
-				if("hurt")
+				if(INTENT_HARM)
 					if(hit_zone == O_EYES)
 						if(state < GRAB_NECK)
 							to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
@@ -441,7 +477,7 @@
 						if((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES))
 							to_chat(assailant, "<span class='danger'>You're going to need to remove the eye covering first.</span>")
 							return
-						if(!affecting.has_eyes())
+						if(!affecting.has_organ(O_EYES))
 							to_chat(assailant, "<span class='danger'>You cannot locate any eyes on [affecting]!</span>")
 							return
 						assailant.visible_message("<span class='danger'>[assailant] pressed \his fingers into [affecting]'s eyes!</span>")
@@ -510,7 +546,7 @@
 						src.loc = null
 						qdel(src)
 						return
-				if("disarm")
+				if(INTENT_PUSH)
 					if(state < GRAB_AGGRESSIVE)
 						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return

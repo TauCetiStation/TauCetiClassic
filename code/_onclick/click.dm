@@ -180,7 +180,7 @@
 /mob/proc/RangedAttack(atom/A, params)
 	if(!mutations.len)
 		return
-	if(a_intent == "hurt" && (LASEREYES in mutations))
+	if(a_intent == INTENT_HARM && (LASEREYES in mutations))
 		LaserEyes(A) // moved into a proc below
 	else if(TK in mutations)
 		ranged_attack_tk(A)
@@ -273,6 +273,14 @@
 		else
 			user.listed_turf = T
 			user.client.statpanel = T.name
+
+/mob/living/AltClick(mob/living/user)
+	/*
+	Handling combat activation after **item swipes** and changeling stings.
+	*/
+	if(istype(user) && in_range(src, user) && user.try_combo(src))
+		return FALSE
+	return ..()
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.AdjacentQuick(src)

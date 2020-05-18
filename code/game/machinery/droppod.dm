@@ -420,7 +420,7 @@
 			obj_integrity = min(obj_integrity + 10, max_integrity)
 			visible_message("<span class='notice'>[user] has repaired some dents on [src]!</span>")
 
-	else if(user.a_intent == "hurt" || (O.flags & ABSTRACT))
+	else if(user.a_intent == INTENT_HARM || (O.flags & ABSTRACT))
 		playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
 		user.SetNextMove(CLICK_CD_MELEE)
 		take_damage(O.force)

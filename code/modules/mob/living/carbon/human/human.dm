@@ -1753,7 +1753,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					return FALSE
 			if(PHORONGUARD)
 				if(!pierce_armor)
-					if(user.a_intent == I_HURT)
+					if(user.a_intent == INTENT_HARM)
 						if(error_msg)
 							to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 						return FALSE
@@ -1846,7 +1846,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 
 	var/prev_intent = a_intent
-	a_intent_change("hurt")
+	a_intent_change(INTENT_HARM)
 
 	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/space/vox/stealth))
 		for(var/obj/item/clothing/suit/space/vox/stealth/V in list(wear_suit))

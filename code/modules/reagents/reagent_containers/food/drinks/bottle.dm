@@ -90,7 +90,7 @@
 	if(!target)
 		return
 
-	if(user.a_intent != "hurt" || !is_glass)
+	if(user.a_intent != INTENT_HARM || !is_glass)
 		return ..()
 
 

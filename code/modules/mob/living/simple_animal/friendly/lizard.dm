@@ -42,7 +42,7 @@
 	if(!istype(H) || !Adjacent(H) || ismob(H.loc))
 		return ..()
 
-	if(H.a_intent == "help")
+	if(H.a_intent == INTENT_HELP)
 		get_scooped(H)
 		return
 	else

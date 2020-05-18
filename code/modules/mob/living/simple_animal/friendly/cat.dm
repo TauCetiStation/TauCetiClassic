@@ -76,7 +76,7 @@
 		return ..()
 
 	//This REALLY needs to be moved to a general mob proc somewhere.
-	if(H.a_intent == "help")
+	if(H.a_intent == INTENT_HELP)
 		get_scooped(H)
 		return
 	else

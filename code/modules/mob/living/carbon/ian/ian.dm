@@ -288,7 +288,7 @@
 		tally += 5
 	else if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
 		return -1
-	else if(m_intent == "run" && a_intent == "hurt" && stamina >= 10)
+	else if(m_intent == "run" && a_intent == INTENT_HARM && stamina >= 10)
 		stamina = max(0, stamina - 10)
 		tally -= 1
 
@@ -343,7 +343,7 @@
 	if (M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == INTENT_HARM)//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
 					if(is_armored(M, 40))
@@ -361,12 +361,12 @@
 					return
 
 	switch(M.a_intent)
-		if("help")
+		if(INTENT_HELP)
 			if(health >= config.health_threshold_crit)
 				help_shake_act(M)
 				return
 			INVOKE_ASYNC(src, .proc/perform_av, M)
-		if ("hurt")
+		if (INTENT_HARM)
 			M.do_attack_animation(src)
 			if(is_armored(M, 35))
 				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
@@ -397,10 +397,10 @@
 			adjustBruteLoss(damage)
 			updatehealth()
 
-		if("grab")
+		if(INTENT_GRAB)
 			M.Grab(src)
 
-		if("disarm")
+		if(INTENT_PUSH)
 			M.do_attack_animation(src)
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
@@ -531,10 +531,10 @@
 
 /mob/living/carbon/ian/attack_paw(mob/M)
 	..()
-	if (M.a_intent == "help")
+	if (M.a_intent == INTENT_HELP)
 		help_shake_act(M)
 	else
-		if (M.a_intent == "hurt" && !istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
+		if (M.a_intent == INTENT_HARM && !istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
 			M.do_attack_animation(src)
 
 			if(is_armored(M, 35))
@@ -559,9 +559,9 @@
 		return
 
 	switch(M.a_intent)
-		if ("help")
+		if (INTENT_HELP)
 			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
-		if ("hurt")
+		if (INTENT_HARM)
 			if(prob(95))
 				if(is_armored(M, 25))
 					playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
@@ -580,9 +580,9 @@
 			else
 				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
 				visible_message("<span class='danger'>has attempted to lunge at [name]!</span>")
-		if ("grab")
+		if (INTENT_GRAB)
 			M.Grab(src)
-		if ("disarm")
+		if (INTENT_PUSH)
 			playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
 			if(is_armored(M, 35))
 				return

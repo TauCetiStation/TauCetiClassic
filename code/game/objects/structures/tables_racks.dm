@@ -246,7 +246,7 @@
 			var/mob/living/A = G.assailant
 			user.SetNextMove(CLICK_CD_MELEE)
 			if (G.state < GRAB_AGGRESSIVE)
-				if(user.a_intent == "hurt")
+				if(user.a_intent == INTENT_HARM)
 					slam(A, M, G)
 				else
 					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
@@ -274,7 +274,7 @@
 		return
 
 	if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W,/obj/item/weapon/twohanded/dualsaber))
-		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W.force > 3 && user.a_intent == "hurt"))
+		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W.force > 3 && user.a_intent == INTENT_HARM))
 			if(istype(src, /obj/structure/table/reinforced) && W:active)
 				..()
 				to_chat(user, "<span class='notice'>You tried to slice through [src] but [W] is too weak.</span>")
@@ -657,7 +657,7 @@
 		qdel(src)
 		return
 	if(istype(W, /obj/item/weapon/melee/energy)||istype(W, /obj/item/weapon/twohanded/dualsaber))
-		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W:active && user.a_intent == "hurt"))
+		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W:active && user.a_intent == INTENT_HARM))
 			user.do_attack_animation(src)
 			user.SetNextMove(CLICK_CD_MELEE)
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
