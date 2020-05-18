@@ -61,6 +61,11 @@
 			message = "<B>The [src.name]</B> vibrates!"
 			m_type = SHOWMSG_VISUAL
 
+		if ("pray")
+			m_type = SHOWMSG_VISUAL
+			message = "<b>[src]</b> prays."
+			INVOKE_ASYNC(src, /mob.proc/pray_animation)
+
 		if("noface") //mfw I have no face
 			mood = null
 			regenerate_icons = 1

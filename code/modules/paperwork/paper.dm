@@ -127,7 +127,7 @@
 	playsound(src, 'sound/items/crumple.ogg', VOL_EFFECTS_MASTER, 15)
 	add_fingerprint(usr)
 
-/obj/item/weapon/paper/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/paper/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if(istype(src, /obj/item/weapon/paper/talisman)) return
 	if(istype(src, /obj/item/weapon/paper/crumpled/bloody)) return
@@ -378,7 +378,7 @@
 
 /obj/item/weapon/paper/Topic(href, href_list)
 	..()
-	if(!usr || (usr.stat || usr.restrained()))
+	if(!usr || usr.incapacitated())
 		return
 
 	if(href_list["write"])

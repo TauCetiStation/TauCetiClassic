@@ -15,7 +15,7 @@
 		return
 
 	var/failure = 0
-	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat)
+	if (istype(usr.loc,/mob) || usr.incapacitated() || !usr.canmove)
 		to_chat(usr, "<span class='warning'>You can't jump right now!</span>")
 		return
 
@@ -150,7 +150,7 @@
 		return
 
 	var/failure = 0
-	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat)
+	if (istype(usr.loc,/mob) || usr.incapacitated() || !usr.canmove)
 		to_chat(usr, "<span class='warning'>You can't dash right now!</span>")
 		return
 
@@ -322,7 +322,7 @@
 		src.verbs -= /mob/living/carbon/human/proc/hulk_smash
 		return
 
-	if (usr.lying || usr.stunned || usr.stat)
+	if (usr.incapacitated() || !usr.canmove)
 		to_chat(usr, "<span class='warning'>You can't smash right now!</span>")
 		return
 
@@ -444,7 +444,7 @@
 /obj/structure/girder/attack_hand(mob/user)
 	if (HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(user.a_intent == "hurt")
+		if(user.a_intent == INTENT_HARM)
 			playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 			if (prob(75))
 				to_chat(user, text("<span class='notice'>You destroy that girder!</span>"))

@@ -30,7 +30,7 @@ This is what happens, when alien attack.
 		return 0
 
 	switch(M.a_intent)
-		if("help")
+		if(INTENT_HELP)
 			M.do_attack_animation(src)
 			var/damage = rand(1, 5)
 			if(!damage)
@@ -50,11 +50,11 @@ This is what happens, when alien attack.
 		return 0
 
 	switch(M.a_intent)
-		if ("help")
+		if (INTENT_HELP)
 			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
-		if ("grab")
+		if (INTENT_GRAB)
 			M.Grab(src)
-		if("hurt")
+		if(INTENT_HARM)
 			M.do_attack_animation(src)
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
@@ -75,7 +75,7 @@ This is what happens, when alien attack.
 				apply_effect(rand(3,5), WEAKEN, armor_block)
 			updatehealth()
 
-		if("disarm")
+		if(INTENT_PUSH)
 			if (prob(80))
 				playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
 				Weaken(rand(3,5))

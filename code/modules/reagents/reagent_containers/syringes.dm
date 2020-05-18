@@ -48,7 +48,7 @@
 /obj/item/weapon/reagent_containers/syringe/attack_paw()
 	return attack_hand()
 
-/obj/item/weapon/reagent_containers/syringe/afterattack(obj/target, mob/user, proximity)
+/obj/item/weapon/reagent_containers/syringe/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if(!target.reagents) return
 
@@ -56,7 +56,7 @@
 		to_chat(user, "<span class='warning'>This syringe is broken!</span>")
 		return
 
-	if (user.a_intent == "hurt" && ismob(target))
+	if (user.a_intent == INTENT_HARM && ismob(target))
 		if((CLUMSY in user.mutations) && prob(50))
 			target = user
 		syringestab(target, user)
@@ -297,7 +297,7 @@
 /obj/item/weapon/reagent_containers/ld50_syringe/attackby(obj/item/I, mob/user)
 	return
 
-/obj/item/weapon/reagent_containers/ld50_syringe/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/ld50_syringe/afterattack(atom/target, mob/user, proximity, params)
 	if(!target.reagents) return
 
 	switch(mode)

@@ -36,7 +36,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent == I_HURT) // Since we usually splash mobs or whatever, now we will also hit them.
+	if(user.a_intent == INTENT_HARM) // Since we usually splash mobs or whatever, now we will also hit them.
 		..()
 
 // this prevented pills, food, and other things from being picked up by bags.
@@ -46,7 +46,7 @@
 /obj/item/weapon/reagent_containers/attackby(obj/item/I, mob/user)
 	return
 */
-/obj/item/weapon/reagent_containers/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/afterattack(atom/target, mob/user, proximity, params)
 	return
 
 /obj/item/weapon/reagent_containers/proc/reagentlist(obj/item/weapon/reagent_containers/snack) //Attack logs for regents in pills

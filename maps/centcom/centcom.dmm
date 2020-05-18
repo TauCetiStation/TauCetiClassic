@@ -573,6 +573,14 @@
 	icon_state = "wooden-2"
 	},
 /area/custom/tophat)
+"abp" = (
+/obj/structure/sign/poster/official/random{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "neutral"
+	},
+/area/centcom/holding)
 "abs" = (
 /turf/unsimulated/floor{
 	icon_state = "asteroid10";
@@ -5232,9 +5240,13 @@
 	},
 /area/shuttle/supply/velocity)
 "ate" = (
-/obj/structure/sign/poster,
-/turf/unsimulated/wall,
-/area/velocity)
+/obj/structure/sign/poster/official/random{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "neutral"
+	},
+/area/centcom/holding)
 "atf" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -5986,7 +5998,7 @@
 /area/velocity)
 "avG" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/snacks/milosoup,
+/obj/item/weapon/reagent_containers/food/snacks/soup/milosoup,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -11115,9 +11127,13 @@
 	},
 /area/centcom/living)
 "aNG" = (
-/obj/structure/sign/poster,
-/turf/unsimulated/wall,
-/area/centcom/holding)
+/obj/structure/sign/poster/official/cleanliness{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/velocity)
 "aNH" = (
 /obj/machinery/conveyor{
 	dir = 1
@@ -43219,7 +43235,7 @@ aaM
 aaM
 aaM
 aaM
-aNG
+aNs
 aOv
 aOv
 aOv
@@ -51445,7 +51461,7 @@ aaM
 aNs
 jPb
 aOF
-kyb
+ate
 kLb
 kVb
 lcb
@@ -51701,7 +51717,7 @@ aKu
 ahJ
 aNs
 jQb
-aNG
+aNs
 aNs
 aQa
 aPy
@@ -54014,7 +54030,7 @@ aKu
 aaM
 aNs
 jQb
-aNG
+aNs
 aNs
 aQg
 aPz
@@ -54272,7 +54288,7 @@ aaM
 aNs
 jWb
 aOF
-kyb
+abp
 kKb
 kUb
 lcb
@@ -70131,7 +70147,7 @@ cGb
 asp
 asA
 aoo
-ate
+aoo
 aoo
 aoo
 atH
@@ -70392,7 +70408,7 @@ atf
 cab
 atx
 atq
-atq
+aNG
 aoo
 dFb
 arZ

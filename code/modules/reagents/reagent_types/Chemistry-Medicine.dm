@@ -213,6 +213,45 @@
 	M.adjustToxLoss(2 * REM)
 	return FALSE
 
+/datum/reagent/dextromethorphan
+	name = "Dextromethorphan"
+	id = "dextromethorphan"
+	description = "Analgesic chemical that heals lung damage and coughing."
+	reagent_state = LIQUID
+	color = "#ffc0cb" // rgb: 255, 192, 203
+	overdose = 10
+	custom_metabolism = REAGENTS_METABOLISM * 0.5
+	taste_message = "sickening bitterness"
+	restrict_species = list(IPC, DIONA)
+
+	data = list()
+
+/datum/reagent/dextromethorphan/on_general_digest(mob/living/M)
+	..()
+	if(!data["ticks"])
+		data["ticks"] = 1
+	M.adjustOxyLoss(-M.getOxyLoss())
+	if(holder.has_reagent("lexorin"))
+		holder.remove_reagent("lexorin", 2 * REM)
+
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/obj/item/organ/internal/lungs/IO = H.organs_by_name[O_LUNGS]
+		if(istype(IO))
+			if(IO.damage > 0 && IO.robotic < 2)
+				IO.damage = max(IO.damage - 0.7, 0)
+		switch(data["ticks"])
+			if(50 to 100)
+				H.disabilities &= ~COUGHING
+			if(100 to INFINITY)
+				H.hallucination = max(H.hallucination, 7)
+	data["ticks"]++
+
+/datum/reagent/dexalinp/on_vox_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(7 * REM)
+	return FALSE
+
 /datum/reagent/dexalinp
 	name = "Dexalin Plus"
 	id = "dexalinp"
@@ -431,11 +470,17 @@
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-
+		var/damaged_organs = 0
 		//Peridaxon is hard enough to get, it's probably fair to make this all organs
 		for(var/obj/item/organ/internal/IO in H.organs)
 			if(IO.damage > 0 && IO.robotic < 2)
-				IO.damage = max(IO.damage - 0.20, 0)
+				damaged_organs++
+
+		if(!damaged_organs)
+			return
+		for(var/obj/item/organ/internal/IO in H.organs)
+			if(IO.damage > 0 && IO.robotic < 2)
+				IO.damage = max(IO.damage - (3 * custom_metabolism / damaged_organs), 0)
 
 /datum/reagent/kyphotorin
 	name = "Kyphotorin"
@@ -647,3 +692,42 @@
 	var/mob/living/carbon/human/H = M
 	H.adjustHalLoss(-30)
 	H.shock_stage -= 20
+
+/datum/reagent/nanocalcium
+	name = "Nano-Calcium"
+	id = "nanocalcium"
+	description = "Highly advanced nanites equipped with calcium payloads designed to repair bones. Nanomachines son."
+	reagent_state = LIQUID
+	color = "#9b3401"
+	overdose = REAGENTS_OVERDOSE
+	custom_metabolism = 0.1
+	taste_message = "wholeness"
+	restrict_species = list(IPC, DIONA)
+	data = list()
+
+/datum/reagent/nanocalcium/on_general_digest(mob/living/carbon/human/M)
+	..()
+	if(!ishuman(M))
+		return
+
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	switch(data)
+		if(1 to 10)
+			M.make_dizzy(1)
+			if(prob(10))
+				to_chat(M, "<span class='warning'>Your skin feels hot and your veins are on fire!</span>")
+		if(10 to 20)
+			if(M.reagents.has_reagent("tramadol") || M.reagents.has_reagent("oxycodone"))
+				M.adjustToxLoss(5)
+			else
+				M.confused += 2
+		if(20 to 60)
+			for(var/obj/item/organ/external/E in M.bodyparts)
+				if(E.is_broken())
+					if(prob(50))
+						to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
+						E.brute_dam = 0
+						E.status &= ~BROKEN
+						holder.remove_reagent("nanocalcium", 10)

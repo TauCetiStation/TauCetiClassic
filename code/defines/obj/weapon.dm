@@ -101,7 +101,8 @@
 		icon_state = "beartrap[armed]"
 		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"].</span>")
 
-/obj/item/weapon/legcuffs/beartrap/Crossed(AM as mob|obj)
+/obj/item/weapon/legcuffs/beartrap/Crossed(atom/movable/AM)
+	. = ..()
 	if(armed)
 		if(ishuman(AM))
 			if(isturf(src.loc))
@@ -119,7 +120,6 @@
 			SA.health -= 20
 
 		icon_state = "beartrap[armed]"
-	..()
 
 /obj/item/weapon/legcuffs/bola
 	name = "bola"
@@ -205,10 +205,10 @@
 	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
-/obj/item/weapon/shard/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/shard/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(isturf(A))
+	if(isturf(target))
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -470,13 +470,13 @@
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
-/obj/item/weapon/scythe/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/scythe/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(istype(A, /obj/effect/spacevine))
-		for(var/obj/effect/spacevine/B in orange(A, 1))
+	if(istype(target, /obj/effect/spacevine))
+		for(var/obj/effect/spacevine/B in orange(target, 1))
 			if(prob(80))
 				qdel(B)
-		qdel(A)
+		qdel(target)
 
 /*
 /obj/item/weapon/cigarpacket
@@ -533,10 +533,13 @@
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
 
-/obj/item/weapon/storage/part_replacer/afterattack(obj/machinery/T, mob/living/carbon/human/user, flag)
-	if(flag)
+/obj/item/weapon/storage/part_replacer/afterattack(atom/target, mob/user, proximity, params)
+	if(proximity)
 		return
-	if(works_from_distance && istype(T) && T.component_parts)
+	if(!istype(target, /obj/machinery))
+		return
+	var/obj/machinery/T = target
+	if(works_from_distance && T.component_parts)
 		T.exchange_parts(user, src)
 		user.Beam(T,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
 
@@ -827,7 +830,7 @@
 	icon_state = "broom_sauna"
 
 /obj/item/weapon/broom/attack(mob/living/carbon/human/M, mob/living/user, def_zone)
-	if(!istype(M) || user.a_intent == "hurt")
+	if(!istype(M) || user.a_intent == INTENT_HARM)
 		return ..()
 	if(wet - 5 < 0)
 		to_chat(user, "<span class='userdanger'>Soak this [src] first!</span>")

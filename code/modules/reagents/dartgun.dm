@@ -203,7 +203,7 @@
 
 		return
 
-/obj/item/weapon/gun/dartgun/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/gun/dartgun/afterattack(atom/target, mob/user, proximity, params)
 	if(!isturf(target.loc) || target == user) return
 	..()
 

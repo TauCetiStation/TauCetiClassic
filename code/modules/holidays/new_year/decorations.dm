@@ -10,7 +10,7 @@
 	if(choice == "Yes" && get_dist(src, user) <= 1)
 		..()
 
-/obj/item/decoration/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/decoration/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target,/turf/simulated/wall))
 		usr.remove_from_mob(src)
 		src.forceMove(target)
@@ -208,7 +208,7 @@
 		else
 			C.visible_message("<span class='notice'>[C] shakes [src].</span>", "<span class='notice'>You shake [src] but nothing happens. Have patience!</span>")
 
-	if(decals.len && (C.a_intent != "help"))
+	if(decals.len && (C.a_intent != INTENT_HELP))
 		for(var/item in decals)
 			var/obj/item/I = item
 			if(!I)

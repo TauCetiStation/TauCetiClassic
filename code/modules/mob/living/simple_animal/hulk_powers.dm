@@ -302,7 +302,7 @@
 	range = 5
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_smash/cast(list/targets)
-	if (usr.lying || usr.stunned || usr.stat)
+	if (usr.lying || usr.incapacitated())
 		to_chat(usr, "<span class='warning'>You can't smash right now!</span>")
 		return
 
@@ -436,8 +436,8 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_mill/cast(list/targets)
-	if (usr.lying || usr.stunned || usr.stat)
-		to_chat(usr, "<span class='warning'>You can't right now!</span>")
+	if (usr.lying || usr.incapacitated())
+		to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 		return
 
 	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_mill</font>"
@@ -466,6 +466,31 @@
 				M.Weaken(2)
 		sleep(1)
 
+/obj/effect/proc_holder/spell/aoe_turf/clown_joke
+	name = "Joke"
+	desc = ""
+	panel = "Hulk"
+	charge_max = 350
+	clothes_req = 0
+	range = 2
+
+/obj/effect/proc_holder/spell/aoe_turf/clown_joke/cast(list/targets)
+	if (usr.incapacitated())
+		to_chat(usr, "<span class='warning'>You can't right now!</span>")
+		return
+
+	var/mob/living/simple_animal/hulk/clown = usr
+	clown.health += 50
+
+	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
+	smoke.set_up(10, 0, loc)
+	smoke.start()
+	playsound(src, 'sound/effects/scary_honk.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+
+	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses clown_joke</font>"
+	msg_admin_attack("[key_name(usr)] uses clown_joke", usr)
+
+
 /obj/effect/proc_holder/spell/aoe_turf/hulk_gas
 	name = "Gas"
 	desc = ""
@@ -475,8 +500,8 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_gas/cast(list/targets)
-	if (usr.lying || usr.stunned || usr.stat)
-		to_chat(usr, "<span class='warning'>You can't right now!</span>")
+	if (usr.lying || usr.incapacitated())
+		to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 		return
 
 	//Some weird magic
@@ -509,8 +534,8 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_spit/cast(list/targets)
-	if (usr.lying || usr.stunned || usr.stat)
-		to_chat(usr, "<span class='warning'>You can't right now!</span>")
+	if (usr.lying || usr.incapacitated())
+		to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 		return
 
 	var/turf/T = usr.loc
@@ -611,7 +636,7 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_lazor/cast(list/targets)
-	if (usr.lying || usr.stunned || usr.stat)
+	if (usr.lying || usr.incapacitated())
 		to_chat(usr, "<span class='warning'>You can't right now!</span>")
 		return
 
@@ -642,7 +667,7 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/HulkHONK/cast(list/target)
-	if (usr.lying || usr.stunned || usr.stat)
+	if (usr.lying || usr.incapacitated())
 		to_chat(usr, "<span class='red'>You can't right now!</span>")
 		return
 	playsound(usr, 'sound/items/AirHorn.ogg', VOL_EFFECTS_MASTER)
@@ -665,14 +690,23 @@
 			M.make_jittery(500)
 
 
-/obj/item/weapon/organ/attack_animal(mob/user)
+/obj/item/organ/attack_animal(mob/user)
 	..()
-	if(istype(user, /mob/living/simple_animal/hulk))
+	if(istype(user, /mob/living/simple_animal/hulk/unathi))
 		if(istype(src, /obj/item/organ/external/head))
 			to_chat(usr, "<span class='notice'>Head? Ewww..</span>")
 			return
-		var/mob/living/simple_animal/hulk/Hulk = user
+		var/mob/living/simple_animal/hulk/unathi/U = user
 		playsound(user, 'sound/weapons/zilla_eat.ogg', VOL_EFFECTS_MASTER)
-		Hulk.health += 10
+		U.health += 10
 		usr.visible_message("<span class='warning'><b>[usr.name]</b> eats [src.name]!</span>")
+		qdel(src)
+
+/obj/effect/decal/cleanable/blood/gibs/attack_animal(mob/user)
+	..()
+	if(istype(user, /mob/living/simple_animal/hulk/unathi))
+		var/mob/living/simple_animal/hulk/unathi/U = user
+		playsound(user, 'sound/weapons/zilla_eat.ogg', VOL_EFFECTS_MASTER)
+		U.health += 20
+		usr.visible_message("<span class='warning'><b>[usr.name]</b> eats gibs!</span>")
 		qdel(src)

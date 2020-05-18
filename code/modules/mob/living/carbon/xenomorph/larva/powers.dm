@@ -4,7 +4,7 @@
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Alien"
 
-	if(stat != CONSCIOUS)
+	if(incapacitated())
 		return
 
 	if (layer != TURF_LAYER+0.2)
@@ -25,7 +25,7 @@
 	set desc = "Evolve into a fully grown Alien."
 	set category = "Alien"
 
-	if(stat != CONSCIOUS)
+	if(incapacitated())
 		return
 
 	if(!isturf(src.loc))

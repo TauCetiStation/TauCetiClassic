@@ -101,7 +101,7 @@
 
 /mob/living/simple_animal/hostile/cellular/nanite/ranged
 	ranged = TRUE
-	projectiletype = /obj/item/projectile/bullet/midbullet
+	projectiletype = /obj/item/projectile/bullet/smg
 	projectilesound = 'sound/weapons/guns/gunshot_silencer.ogg'
 	retreat_distance = 6
 	minimum_distance = 6
@@ -128,7 +128,7 @@
 	light_range = 1.5
 	light_color = "#00cc10"
 	anchored = TRUE
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	var/cap_spawn = 6
 	var/spawned = 0
 	var/chance_spawn = 15

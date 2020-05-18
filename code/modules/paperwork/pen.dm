@@ -30,7 +30,7 @@
 	icon_state = "fountainpen" //paththegreat: Eli Stevens
 	var/entity = ""
 
-/obj/item/weapon/pen/ghost/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/pen/ghost/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	if(!proximity || !entity)
 		return
@@ -47,7 +47,7 @@
 		OS.scanned_type = src.type
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60 || user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")
+		if(H.getBrainLoss() >= 60 || user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")
 			if(entity && istype(I, /obj/item/weapon/nullrod))
 				entity = ""
 				to_chat(user, "<span class='warning'>[capitalize(src.name)] quivers and shakes, as it's entity leaves!</span>")
@@ -185,7 +185,7 @@
 	signature = sanitize(input("Enter new signature. Leave blank for 'Anonymous'", "New Signature", input_default(signature)))
 
 /obj/item/weapon/pen/ghost/attack_self(mob/living/carbon/human/user)
-	if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")))
+	if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")))
 		if(!entity)
 			to_chat(user, "<span class='notice'>You feel the [src] quiver, as another entity attempts to possess it.</span>")
 			var/list/choices = list()

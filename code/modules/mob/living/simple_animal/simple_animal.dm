@@ -234,14 +234,14 @@
 
 	switch(M.a_intent)
 
-		if("help")
+		if(INTENT_HELP)
 			if (health > 0)
 				visible_message("<span class='notice'>[M] [response_help] [src]</span>")
 
-		if("grab")
+		if(INTENT_GRAB)
 			M.Grab(src)
 
-		if("hurt", "disarm")
+		if(INTENT_HARM, INTENT_PUSH)
 			M.do_attack_animation(src)
 			adjustBruteLoss(harm_intent_damage)
 			visible_message("<span class='warning'>[M] [response_harm] [src]</span>")
@@ -252,12 +252,12 @@
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (INTENT_HELP)
 			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
-		if ("grab")
+		if (INTENT_GRAB)
 			M.Grab(src)
 
-		if("hurt", "disarm")
+		if(INTENT_HARM, INTENT_PUSH)
 			var/damage = rand(15, 30)
 			visible_message("<span class='warning'><B>[M] has slashed at [src]!</B></span>")
 			adjustBruteLoss(damage)
@@ -267,7 +267,7 @@
 /mob/living/simple_animal/attack_larva(mob/living/carbon/xenomorph/larva/L)
 
 	switch(L.a_intent)
-		if("help")
+		if(INTENT_HELP)
 			visible_message("<span class='notice'>[L] rubs it's head against [src]</span>")
 
 
@@ -420,17 +420,18 @@
 	if(copytext(message,1,2) == "*")
 		return emote(copytext(message,2))
 
-	if(stat)
-		return
-
 	var/verb = "says"
-
-	if(speak_emote.len)
+	var/ending = copytext(message, length(message))
+	var/datum/language/speaking = parse_language(message)
+	if (speaking)
+		verb = speaking.get_spoken_verb(ending)
+		message = copytext(message,2 + length(speaking.key))
+	else
 		verb = pick(speak_emote)
 
 	message = capitalize(trim_left(message))
 
-	..(message, null, verb, sanitize = 0)
+	..(message, speaking, verb, sanitize = 0)
 
 /mob/living/simple_animal/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
@@ -443,3 +444,8 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+
+/mob/living/simple_animal/get_scrambled_message(message, datum/language/speaking = null)
+	if(!speak.len)
+		return null
+	return pick(speak)

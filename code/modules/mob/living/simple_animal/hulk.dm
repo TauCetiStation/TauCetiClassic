@@ -5,8 +5,8 @@
 	icon = 'icons/mob/hulk.dmi'
 	icon_state = "hulk"
 	icon_living = "hulk"
-	maxHealth = 200
-	health = 200
+	maxHealth = 300
+	health = 300
 	immune_to_ssd = 1
 	anchored = 1
 
@@ -23,7 +23,7 @@
 	environment_smash = 2
 
 	speed = 1
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	universal_speak = 1
@@ -40,7 +40,7 @@
 	minbodytemp = 0
 	var/hulk_powers = list()
 	var/mob/living/original_body
-	var/health_regen = 1
+	var/health_regen = 2
 
 	animalistic = FALSE
 
@@ -57,11 +57,11 @@
 	icon = 'icons/mob/hulk_zilla.dmi'
 	icon_state = "zilla"
 	icon_living = "zilla"
-	maxHealth = 400
-	health = 400
+	maxHealth = 300
+	health = 300
 
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage_lower = 12
+	melee_damage_upper = 18
 	attacktext = "brutally bites"
 
 	speed = 2
@@ -83,18 +83,20 @@
 	icon = 'icons/mob/GyperHonk.dmi'
 	icon_state = "Clowan"
 	icon_living = "Clowan"
-	maxHealth = 400
-	health = 400
+	maxHealth = 300
+	health = 300
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	attacktext = "brutally HONK"
 
-	speed = 4
+	speed = 3
 
 	attack_sound = list('sound/items/bikehorn.ogg')
 	health_regen = 3
 
-	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/HulkHONK)
+	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/HulkHONK,
+						/obj/effect/proc_holder/spell/aoe_turf/clown_joke
+							)
 
 /mob/living/simple_animal/hulk/atom_init()
 	..()
@@ -114,16 +116,16 @@
 		return
 
 	var/matrix/Mx = matrix()
-	if(health <= 35)
+	if(health < maxHealth * 0.2)
 		Mx.Scale(0.75)
 		Mx.Translate(0,-5)
-	else if(health <= 75)
+	else if(health < maxHealth * 0.4)
 		Mx.Scale(0.8)
 		Mx.Translate(0,-4)
-	else if(health <= 135)
+	else if(health < maxHealth * 0.6)
 		Mx.Scale(0.85)
 		Mx.Translate(0,-3)
-	else if(health <= 175)
+	else if(health < maxHealth * 0.8)
 		Mx.Scale(0.9)
 		Mx.Translate(0,-2)
 	else
@@ -252,7 +254,7 @@
 		visible_message("<span class='userdanger'>[src] has punched \the [target]!</span>",\
 		"<span class='userdanger'>You punch the [target]!</span>",\
 		"<span class='userdanger'>You feel some weird vibration!</span>")
-		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, 'sound/effects/hulk_hit_airlock.ogg', VOL_EFFECTS_MASTER, 65)
 		return 0
 	else
 		say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))

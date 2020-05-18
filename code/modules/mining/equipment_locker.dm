@@ -522,10 +522,10 @@
 	CreateResonance(src, user)
 	..()
 
-/obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity, params)
 	if(target in user.contents)
 		return
-	if(proximity_flag)
+	if(proximity)
 		CreateResonance(target, user)
 
 /obj/effect/resonance
@@ -609,7 +609,7 @@
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
 	mouse_opacity = 1
 	faction = "neutral"
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	var/emagged = 0
 	light_power = 2
 	light_range = 4
@@ -685,7 +685,7 @@
 	SetCollectBehavior()
 
 /mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
-	if(M.a_intent == "help")
+	if(M.a_intent == INTENT_HELP)
 		switch(search_objects)
 			if(0)
 				SetCollectBehavior()
@@ -800,10 +800,10 @@
 	throw_range = 5
 	var/loaded = 1
 
-/obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity, params)
 	if(!loaded)
 		return
-	if(istype(target, /mob/living) && proximity_flag)
+	if(istype(target, /mob/living) && proximity)
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
 			if(M.stat == DEAD)
@@ -844,11 +844,11 @@
 	throw_range = 5
 	var/loaded = 1
 
-/obj/item/weapon/patcher/afterattack(obj/O, mob/user)
+/obj/item/weapon/patcher/afterattack(atom/target, mob/user, proximity, params)
 	if(!loaded)
 		return
-	if(istype(O, /obj/item/clothing/suit/space))
-		var/obj/item/clothing/suit/space/C = O
+	if(istype(target, /obj/item/clothing/suit/space))
+		var/obj/item/clothing/suit/space/C = target
 		fix_spacesuit(C, user)
 	else
 		..()

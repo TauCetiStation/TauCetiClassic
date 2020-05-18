@@ -248,7 +248,7 @@ A proc that does all the animations before mix()-ing.
 	updateUsrDialog()
 
 /obj/machinery/color_mixer/attack_hand(mob/living/user)
-	if(user.a_intent == I_HURT && processing)
+	if(user.a_intent == INTENT_HARM && processing)
 		if(emagged)
 			to_chat(user, "<span class='warning'>You stick your hand into the machine, and...</span>")
 			if(ishuman(user))
@@ -268,7 +268,7 @@ A proc that does all the animations before mix()-ing.
 
 /obj/machinery/color_mixer/attackby(obj/item/O, mob/user)
 	if(processing)
-		if(user.a_intent != I_HURT)
+		if(user.a_intent != INTENT_HARM)
 			to_chat(user, "<span class='warning'>Doing this while [src] is working would be mighty dangerous!</span>")
 			if(prob(10))
 				to_chat(user, "<span class='warning'>You feel determined to harm this machine!</span>")

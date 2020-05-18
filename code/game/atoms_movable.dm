@@ -49,12 +49,15 @@
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
 //oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
-/atom/movable/Crossed(atom/movable/AM, oldloc)
+/atom/movable/Crossed(atom/movable/AM)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
 
 /atom/movable/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if(!loc || !NewLoc || freeze_movement)
 		return FALSE
+
+	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, dir) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+		return
 
 	var/atom/oldloc = loc
 
@@ -102,6 +105,9 @@
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
+	for(var/atom/movable/AM in contents)
+		AM.locMoved(OldLoc, Dir)
+
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
@@ -116,6 +122,11 @@
 		orbiting.Check()
 	SSdemo.mark_dirty(src)
 	return 1
+
+/atom/movable/proc/locMoved(atom/OldLoc, Dir)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_LOC_MOVED, OldLoc, Dir)
+	for(var/atom/movable/AM in contents)
+		AM.locMoved(OldLoc, Dir)
 
 /atom/movable/proc/setLoc(T, teleported=0)
 	loc = T

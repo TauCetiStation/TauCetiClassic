@@ -222,16 +222,20 @@
 		return 1
 
 	//These only pertain to common. Languages are handled by mob/say_understands()
-	if (!speaking)
-		if (istype(other, /mob/living/carbon/monkey/diona))
+	if(!speaking)
+		if(istype(other, /mob/living/carbon/monkey/diona))
 			if(other.languages.len >= 2)			//They've sucked down some blood and can speak common now.
 				return 1
-		if (istype(other, /mob/living/silicon))
+		if(issilicon(other))
 			return 1
-		if (istype(other, /mob/living/carbon/brain))
+		if(isbrain(other))
 			return 1
-		if (istype(other, /mob/living/carbon/slime))
+		if(isslime(other))
 			return 1
+		if(isgod(other) && mind.holy_role)
+			var/mob/living/simple_animal/shade/god/G = other
+			if(G.islam)
+				return 1
 
 	//This is already covered by mob/say_understands()
 	//if (istype(other, /mob/living/simple_animal))
@@ -253,6 +257,11 @@
 	if(special_voice)
 		return special_voice
 	return real_name
+
+/mob/living/carbon/human/get_alt_name()
+	if(name != GetVoice())
+		return " (as [get_id_name("Unknown")])"
+	return ""
 
 /*
    ***Deprecated***

@@ -2,6 +2,7 @@
 	desc = "A classic revolver. Uses 357 ammo."
 	name = "revolver"
 	icon_state = "revolver"
+	item_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
 
@@ -49,6 +50,10 @@
 /obj/item/weapon/gun/projectile/revolver/examine(mob/user)
 	..()
 	to_chat(user, "[get_ammo(0,0)] of those are live rounds.")
+
+/obj/item/weapon/gun/projectile/revolver/traitor
+	name = "cap gun"
+	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
 
 /obj/item/weapon/gun/projectile/revolver/detective
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
@@ -116,6 +121,7 @@
 	name = "mateba"
 	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."	//>10mm hole >.357
 	icon_state = "mateba"
+	item_state = "revolver"
 	origin_tech = "combat=2;materials=2"
 
 // A gun to play Russian Roulette!
@@ -171,7 +177,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
-/obj/item/weapon/gun/projectile/revolver/russian/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/weapon/gun/projectile/revolver/russian/afterattack(atom/target, mob/user, proximity, params)
 	if(!spun && get_ammo(0,0))
 		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
 		Spin()

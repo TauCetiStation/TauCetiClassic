@@ -9,7 +9,9 @@
 /obj/item/organ/external/head/robot/ipc
 	name = "ipc head"
 	vital = FALSE
-	var/ipc_head = "head"
+	var/ipc_head = "Default"
+	var/screen_toggle = TRUE
+	var/screen_brightness = 2
 
 /obj/item/organ/external/head/robot/ipc/is_compatible(mob/living/carbon/human/H)
 	if(H.species.name == IPC)
@@ -19,17 +21,20 @@
 
 /obj/item/organ/external/head/robot/ipc/update_sprite()
 	icon = species.icobase
-	icon_state = "[body_zone][ipc_head == "head" ? "" : "_[ipc_head]"]"
+	icon_state = "[body_zone]_[ipc_head]"
 	color = original_color
 
 /obj/item/organ/external/head/robot/ipc/alien
-	ipc_head = "alien"
+	ipc_head = "Alien"
 
 /obj/item/organ/external/head/robot/ipc/double
-	ipc_head = "double"
+	ipc_head = "Double"
 
 /obj/item/organ/external/head/robot/ipc/pillar
-	ipc_head = "pillar"
+	ipc_head = "Pillar"
+
+/obj/item/organ/external/head/robot/ipc/human
+	ipc_head = "Human"
 
 /obj/item/organ/external/groin/robot/ipc
 	name = "ipc groin"

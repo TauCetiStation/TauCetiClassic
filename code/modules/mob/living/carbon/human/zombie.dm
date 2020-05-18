@@ -19,7 +19,7 @@
 /obj/item/weapon/melee/zombie_hand/right
 	icon_state = "bloodhand_right"
 
-/obj/item/weapon/melee/zombie_hand/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/melee/zombie_hand/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 
@@ -320,8 +320,7 @@ var/list/zombie_list = list()
 
 /proc/remove_zombie(mob/living/carbon/human/H)
 	var/obj/effect/proc_holder/spell/targeted/zombie_findbrains/spell = locate() in H.spell_list
-	H.spell_list -= spell
-	H.mind.spell_list -= spell
+	H.RemoveSpell(spell)
 	qdel(spell)
 	zombie_list -= H
 	update_all_zombie_icons()

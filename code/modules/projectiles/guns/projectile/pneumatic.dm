@@ -72,7 +72,7 @@
 		else
 			to_chat(user, "Nothing is attached to the tank valve!")
 
-/obj/item/weapon/storage/pneumatic/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/weapon/storage/pneumatic/afterattack(atom/target, mob/user, proximity, params)
 	if (target.loc == user.loc)
 		return
 	else if (locate (/obj/structure/table, src.loc))
@@ -89,7 +89,7 @@
 
 /obj/item/weapon/storage/pneumatic/attack(mob/living/M, mob/living/user, def_zone)
 	if (length(contents) > 0)
-		if(user.a_intent == "hurt")
+		if(user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='warning'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
 			Fire(M,user)
 			return

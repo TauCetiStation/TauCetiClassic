@@ -266,7 +266,8 @@
 	set category = "Object"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
+	if(usr.incapacitated())
+		return
 
 	if(!holstered)
 		var/obj/item/I = usr.get_active_hand()
@@ -284,7 +285,7 @@
 		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
 			to_chat(usr, "<span class='warning'>You need an empty hand to draw the gun!</span>")
 		else
-			if(usr.a_intent == "hurt")
+			if(usr.a_intent == INTENT_HARM)
 				usr.visible_message("<span class='warning'>\The [usr] draws \the [holstered], ready to shoot!</span>", \
 				"<span class='warning'>You draw \the [holstered], ready to shoot!</span>")
 			else

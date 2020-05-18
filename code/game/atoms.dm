@@ -239,6 +239,7 @@
 		else
 			to_chat(user, "Nothing.")
 
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
 	return distance == -1 || isobserver(user) || (get_dist(src, user) <= distance)
 
 /atom/proc/dirt_description()

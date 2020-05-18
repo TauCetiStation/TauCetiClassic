@@ -68,13 +68,12 @@
 	origin_tech = "magnets=2;syndicate=2"
 	var/uses = 10
 
-/obj/item/weapon/card/emag/afterattack(atom/target, mob/user)
-
-	if(target.emag_act(user))
+/obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity, params)
+	if(proximity && target.emag_act(user))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		uses--
 
-	if(uses<1)
+	if(uses < 1)
 		user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
 		user.drop_item()
 		var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
@@ -286,10 +285,10 @@
 	assignment = "Agent"
 	name = "[registered_name]'s ID Card ([assignment])"
 
-/obj/item/weapon/card/id/syndicate/afterattack(obj/item/weapon/O, mob/user, proximity)
+/obj/item/weapon/card/id/syndicate/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(istype(O, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/I = O
+	if(istype(target, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/I = target
 		src.access |= I.access
 		if(istype(user, /mob/living) && user.mind)
 			if(user.mind.special_role)

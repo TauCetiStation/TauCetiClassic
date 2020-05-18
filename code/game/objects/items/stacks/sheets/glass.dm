@@ -62,6 +62,25 @@
 	else
 		return ..()
 
+/obj/item/stack/sheet/glass/phoronglass/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/stack/rods))
+		var/list/resources_to_use = list()
+		resources_to_use[W] = 1
+		resources_to_use[src] = 1
+		if(!use_multi(user, resources_to_use))
+			return
+
+		var/obj/item/stack/sheet/glass/phoronrglass/FG = new (user.loc)
+		FG.add_fingerprint(user)
+		for(var/obj/item/stack/sheet/glass/phoronrglass/G in user.loc)
+			if(G == FG)
+				continue
+			if(G.get_amount() >= G.max_amount)
+				continue
+			G.attackby(FG, user)
+	else
+		return ..()
+
 /obj/item/stack/sheet/glass/proc/construct_window(mob/user)
 	if(!user || !src)
 		return 0
@@ -360,7 +379,7 @@
 				if(!H.species.flags[NO_PAIN])
 					H.Weaken(3)
 				H.updatehealth()
-	..()
+	. = ..()
 
 /*
  * Phoron Glass sheets

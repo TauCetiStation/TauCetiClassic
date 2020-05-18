@@ -39,11 +39,11 @@
 /obj/item/toy/balloon/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/toy/balloon/afterattack(atom/A, mob/user, proximity)
+/obj/item/toy/balloon/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
-		A.reagents.trans_to(src, 10)
-		to_chat(user, "<span class='notice'>You fill the balloon with the contents of [A].</span>")
+	if (istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
+		target.reagents.trans_to(src, 10)
+		to_chat(user, "<span class='notice'>You fill the balloon with the contents of [target].</span>")
 		src.desc = "A translucent balloon with some form of liquid sloshing around in it."
 		src.update_icon()
 	return
@@ -124,15 +124,14 @@
 	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
-	item_state = "gun"
+	item_state = "revolver"
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 	can_be_holstered = TRUE
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	w_class = ITEM_SIZE_NORMAL
-	g_amt = 10
-	m_amt = 10
+	m_amt = 3250
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
@@ -162,8 +161,8 @@
 		return 1
 	return
 
-/obj/item/toy/gun/afterattack(atom/target, mob/user, flag)
-	if (flag)
+/obj/item/toy/gun/afterattack(atom/target, mob/user, proximity, params)
+	if (proximity)
 		return
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
@@ -185,8 +184,7 @@
 	icon_state = "357-7"
 	flags = CONDUCT
 	w_class = ITEM_SIZE_TINY
-	g_amt = 10
-	m_amt = 10
+	m_amt = 500
 	var/amount_left = 7.0
 
 /obj/item/toy/ammo/gun/update_icon()
@@ -227,9 +225,9 @@
 			to_chat(usr, "<span class='warning'>It's already fully loaded.</span>")
 
 
-/obj/item/toy/crossbow/afterattack(atom/target, mob/user, flag)
+/obj/item/toy/crossbow/afterattack(atom/target, mob/user, proximity, params)
 	if(!isturf(target.loc) || target == user) return
-	if(flag) return
+	if(proximity) return
 
 	if (locate (/obj/structure/table, src.loc))
 		return
@@ -376,11 +374,12 @@
 	playsound(src, 'sound/effects/snap.ogg', VOL_EFFECTS_MASTER)
 	qdel(src)
 
-/obj/item/toy/snappop/Crossed(H as mob|obj)
-	if((ishuman(H))) //i guess carp and shit shouldn't set them off
-		var/mob/living/carbon/M = H
-		if(M.m_intent == "run")
-			to_chat(M, "<span class='warning'>You step on the snap pop!</span>")
+/obj/item/toy/snappop/Crossed(atom/movable/AM)
+	. = ..()
+	if((ishuman(AM))) //i guess carp and shit shouldn't set them off
+		var/mob/living/carbon/H = AM
+		if(H.m_intent == "run")
+			to_chat(H, "<span class='warning'>You step on the snap pop!</span>")
 
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(2, 0, src)
@@ -411,12 +410,12 @@
 /obj/item/toy/waterflower/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/toy/waterflower/afterattack(atom/A, mob/user)
+/obj/item/toy/waterflower/afterattack(atom/target, mob/user, proximity, params)
 	if(locate(/obj/structure/table, loc))
 		return
 
-	else if(istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
-		A.reagents.trans_to(src, 10)
+	else if(istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
+		target.reagents.trans_to(src, 10)
 		to_chat(user, "<span class='notice'>You refill your flower!</span>")
 		return
 
@@ -439,7 +438,7 @@
 
 		spawn(0)
 			for(var/i=0, i<1, i++)
-				step_towards(D,A)
+				step_towards(D,target)
 				D.reagents.reaction(get_turf(D))
 				for(var/atom/T in get_turf(D))
 					D.reagents.reaction(T)
@@ -968,7 +967,7 @@ Owl & Griffin toys
 
 /obj/item/toy/cards/MouseDrop(atom/over_object)
 	var/mob/M = usr
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!ishuman(usr) || usr.incapacitated())
 		return
 	if(Adjacent(usr))
 		if(over_object == M)
@@ -1021,7 +1020,7 @@ Owl & Griffin toys
 /obj/item/toy/cardhand/Topic(href, href_list)
 	if(..())
 		return
-	if(usr.stat || !ishuman(usr) || !usr.canmove)
+	if(!ishuman(usr) || usr.incapacitated())
 		return
 	var/mob/living/carbon/human/cardUser = usr
 	if(href_list["pick"])
@@ -1102,7 +1101,7 @@ Owl & Griffin toys
 	set name = "Flip Card"
 	set category = "Object"
 	set src in range(1)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!ishuman(usr) || usr.incapacitated())
 		return
 	if(!flipped)
 		src.flipped = 1
@@ -1155,7 +1154,7 @@ Owl & Griffin toys
 
 
 /obj/item/toy/singlecard/attack_self(mob/user)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!ishuman(usr) || usr.incapacitated())
 		return
 	Flip()
 

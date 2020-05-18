@@ -1,13 +1,12 @@
 /datum/job
-
-	//The name of the job
+	//The name of the job, used for preferences, bans and more. Make sure you know what you're doing before changing this.
 	var/title = "NOPE"
 
 	var/list/access = list()
 
-	//Bitflags for the job
-	var/flag = 0
-	var/department_flag = 0
+	//Bitflags for the job  (Ha-ha we no longer use bitflags this is useless)
+	var/flag = 0 // Deprecated (is here only for savefile compatibility)
+	var/department_flag = 0 // Deprecated (is here only for savefile compatibility)
 
 	//Players will be allowed to spawn in as jobs that are set to "Station"
 	var/faction = "None"
@@ -44,6 +43,10 @@
 
 	//Should we spawn and give him his selected loadout items
 	var/give_loadout_items = TRUE
+
+	var/salary = 0
+	//salary ratio - for global salary changes
+	var/salary_ratio = 1
 
 	var/list/restricted_species = list()
 

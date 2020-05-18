@@ -36,7 +36,7 @@
 	if(!istype(M))
 		return ..()
 
-	if(user.a_intent != "help")
+	if(user.a_intent != INTENT_HELP)
 		if(user.zone_sel.selecting == "head" || user.zone_sel.selecting == "eyes")
 			if((CLUMSY in user.mutations) && prob(50))
 				M = user
@@ -79,7 +79,7 @@
 	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
 	icon_state = "fork"
 
-/obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
 	if(!proximity) return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
@@ -103,7 +103,7 @@
 	force = 0
 
 
-/obj/item/weapon/kitchen/utensil/pfork/afterattack(atom/target, mob/user, proximity)  //make them useful or some slow soap for plastic. Just copy-paste from usual fork
+/obj/item/weapon/kitchen/utensil/pfork/afterattack(atom/target, mob/user, proximity, params)  //make them useful or some slow soap for plastic. Just copy-paste from usual fork
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
 	if(!proximity) return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
@@ -144,7 +144,7 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/kitchenknife/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(user.a_intent == "help" && M.attempt_harvest(src, user))
+	if(user.a_intent == INTENT_HELP && M.attempt_harvest(src, user))
 		return
 	return ..()
 
@@ -190,7 +190,7 @@
 	edge = 1
 
 /obj/item/weapon/butch/attack(mob/living/M, mob/living/user)
-	if(user.a_intent == I_HELP && M.attempt_harvest(src, user))
+	if(user.a_intent == INTENT_HELP && M.attempt_harvest(src, user))
 		return
 	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()

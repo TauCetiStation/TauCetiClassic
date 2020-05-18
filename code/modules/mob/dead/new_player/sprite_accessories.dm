@@ -970,6 +970,12 @@
 /  =---------------------------=  /
 ///////////////////////////////////
 */
+/datum/sprite_accessory/hair/ipc_screen_off
+	name = "IPC off screen"
+	icon_state = "ipc_off"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = null
 
 /datum/sprite_accessory/hair/ipc_screen_pink
 	name = "pink IPC screen"
@@ -1117,6 +1123,12 @@
 	icon_state = "ipc_pillar"
 	species_allowed = list(IPC)
 	ipc_head_compatible = "Pillar"
+
+/datum/sprite_accessory/hair/ipc_screen_human
+	name = "human IPC screen"
+	icon_state = "ipc_human"
+	species_allowed = list(IPC)
+	ipc_head_compatible = "Human"
 
 /datum/sprite_accessory/hair/ipc_color_array
 	name = "colored IPC screen with an eye"

@@ -81,41 +81,42 @@ var/global/ManifestJSON
 		var/real_rank = t.fields["real_rank"]
 		var/isactive = t.fields["p_stat"]
 		var/account_number = t.fields["acc_number"]
+		var/account_datum = t.fields["acc_datum"]
 		var/department = 0
 		var/depthead = 0 			// Department Heads will be placed at the top of their lists.
 		if(real_rank in command_positions)
-			heads[++heads.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number)
+			heads[++heads.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
 			department = 1
 			depthead = 1
 			if(rank=="Captain" && heads.len != 1)
 				heads.Swap(1,heads.len)
 
 		if(real_rank in security_positions)
-			sec[++sec.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number)
+			sec[++sec.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
 			department = 1
 			if(depthead && sec.len != 1)
 				sec.Swap(1,sec.len)
 
 		if(real_rank in engineering_positions)
-			eng[++eng.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number)
+			eng[++eng.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
 			department = 1
 			if(depthead && eng.len != 1)
 				eng.Swap(1,eng.len)
 
 		if(real_rank in medical_positions)
-			med[++med.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number)
+			med[++med.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
 			department = 1
 			if(depthead && med.len != 1)
 				med.Swap(1,med.len)
 
 		if(real_rank in science_positions)
-			sci[++sci.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number)
+			sci[++sci.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
 			department = 1
 			if(depthead && sci.len != 1)
 				sci.Swap(1,sci.len)
 
 		if(real_rank in civilian_positions)
-			civ[++civ.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number)
+			civ[++civ.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
 			department = 1
 			if(depthead && civ.len != 1)
 				civ.Swap(1,civ.len)
@@ -125,7 +126,7 @@ var/global/ManifestJSON
 			department = 1
 
 		if(!department && !(name in heads))
-			misc[++misc.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number)
+			misc[++misc.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
 
 
 	PDA_Manifest = list(\
@@ -174,7 +175,7 @@ var/global/ManifestJSON
 	if (OOC)
 		for (var/mob/M in player_list)
 			if (M.real_name && M.job && M.client && M.client.inactivity > 10 * 60 * 10)
-				inactive_players_namejob.Add("[M.real_name]/[M.job]")		
+				inactive_players_namejob.Add("[M.real_name]/[M.job]")
 	// render crew manifest
 	var/list/person = new() // buffer for employ record
 	for (var/dep in departments_list)
@@ -248,7 +249,7 @@ var/global/ManifestJSON
 	throw_range = 20
 	flags = CONDUCT
 
-/obj/item/weapon/beach_ball/afterattack(atom/target, mob/user)
+/obj/item/weapon/beach_ball/afterattack(atom/target, mob/user, proximity, params)
 	user.drop_item()
 	src.throw_at(target, throw_range, throw_speed, user)
 
