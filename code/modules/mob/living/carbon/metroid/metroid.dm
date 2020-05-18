@@ -299,31 +299,6 @@
 
 	return ..()
 
-/mob/living/carbon/slime/attack_slime(mob/living/carbon/slime/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if(Victim) return // can't attack while eating!
-
-	if (health > -100)
-		visible_message("<span class='warning'><B>The [M.name] has glomped [src]!</B></span>")
-
-		var/damage = rand(1, 3)
-		attacked += 5
-
-		if(istype(src, /mob/living/carbon/slime/adult))
-			damage = rand(1, 6)
-		else
-			damage = rand(1, 3)
-
-		adjustBruteLoss(damage)
-
-
-		updatehealth()
-
-	return
-
 /mob/living/carbon/slime/restrained()
 	return 0
 

@@ -136,12 +136,18 @@ var/global/combos_cheat_sheet = ""
 		var/power = attacker.powerlevel + rand(0,3)
 
 		switch(attacker.powerlevel)
-			if(1 to 2) stunprob = 20
-			if(3 to 4) stunprob = 30
-			if(5 to 6) stunprob = 40
-			if(7 to 8) stunprob = 60
-			if(9) 	   stunprob = 70
-			if(10) 	   stunprob = 95
+			if(1 to 2)
+				stunprob = 20
+			if(3 to 4)
+				stunprob = 30
+			if(5 to 6)
+				stunprob = 40
+			if(7 to 8)
+				stunprob = 60
+			if(9)
+				stunprob = 70
+			if(10)
+				stunprob = 95
 
 		if(prob(stunprob))
 			attacker.powerlevel -= 3

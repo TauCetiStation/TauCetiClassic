@@ -293,63 +293,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		updatehealth()
 	return
 
-/mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M)
-	if(M.Victim) return // can't attack while eating!
-
-	if (health > -100)
-		visible_message("<span class='warning'><B>The [M.name] glomps [src]!</B></span>")
-
-		var/damage = rand(1, 3)
-
-		if(istype(M, /mob/living/carbon/slime/adult))
-			damage = rand(10, 35)
-		else
-			damage = rand(5, 25)
-
-
-		var/dam_zone = pick(BP_HEAD , BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG , BP_GROIN)
-
-		var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
-		var/armor_block = run_armor_check(BP, "melee")
-		apply_damage(damage, BRUTE, BP, armor_block)
-
-
-		if(M.powerlevel > 0)
-			var/stunprob = 10
-			var/power = M.powerlevel + rand(0,3)
-
-			switch(M.powerlevel)
-				if(1 to 2) stunprob = 20
-				if(3 to 4) stunprob = 30
-				if(5 to 6) stunprob = 40
-				if(7 to 8) stunprob = 60
-				if(9) 	   stunprob = 70
-				if(10) 	   stunprob = 95
-
-			if(prob(stunprob))
-				M.powerlevel -= 3
-				if(M.powerlevel < 0)
-					M.powerlevel = 0
-
-				visible_message("<span class='warning'><B>The [M.name] has shocked [src]!</B></span>")
-
-				Weaken(power)
-				if (stuttering < power)
-					stuttering = power
-				Stun(power)
-
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
-
-				if (prob(stunprob) && M.powerlevel >= 8)
-					adjustFireLoss(M.powerlevel * rand(6,10))
-
-
-		updatehealth()
-
-	return
-
 /mob/living/carbon/human/proc/can_use_two_hands(broken = TRUE) // Replace arms with hands in case of reverting Kurshan's PR.
 	var/obj/item/organ/external/l_arm/BPL = bodyparts_by_name[BP_L_ARM]
 	var/obj/item/organ/external/r_arm/BPR = bodyparts_by_name[BP_R_ARM]
