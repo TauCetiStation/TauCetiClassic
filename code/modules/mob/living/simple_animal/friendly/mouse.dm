@@ -34,7 +34,7 @@
 /mob/living/simple_animal/mouse/attack_hand(mob/living/user)
 	..()
 	if(prob(25 - health))
-		var/mob/living/simple_animal/hulk/mish/Monster = new /mob/living/simple_animal/hulk/mish(get_turf(src))
+		var/mob/living/simple_animal/hulk/mouse/Monster = new /mob/living/simple_animal/hulk/mouse(get_turf(src))
 		playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 		Monster.original_body = src
 		forceMove(Monster)
