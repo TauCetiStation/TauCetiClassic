@@ -31,6 +31,32 @@
 	holder_type = /obj/item/weapon/holder/mouse
 	ventcrawler = 2
 
+/mob/living/simple_animal/mouse/attack_hand(mob/living/user)
+	..()
+	if(prob(25-health))
+		var/mob/living/simple_animal/hulk/mish/Monster = new /mob/living/simple_animal/hulk/mish(get_turf(src))
+		playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
+		Monster.original_body = src
+		forceMove(Monster)
+		mind.transfer_to(Monster)
+		Monster.attack_log = attack_log
+		Monster.attack_log += "\[[time_stamp()]\]<font color='blue'> ======MONSTER LIFE======</font>"
+		Monster.say("SQUEEK!!!")
+		return
+
+/mob/living/simple_animal/mouse/attackby(obj/item/S, mob/user)
+	..()
+	if(prob(25-health))
+		var/mob/living/simple_animal/hulk/mish/Monster = new /mob/living/simple_animal/hulk/mish(get_turf(src))
+		playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
+		Monster.original_body = src
+		forceMove(Monster)
+		mind.transfer_to(Monster)
+		Monster.attack_log = attack_log
+		Monster.attack_log += "\[[time_stamp()]\]<font color='blue'> ======MONSTER LIFE======</font>"
+		Monster.say("SQUEEK!!!")
+		return
+
 /mob/living/simple_animal/mouse/Life()
 	..()
 	if(!stat && prob(speak_chance))

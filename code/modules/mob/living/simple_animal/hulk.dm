@@ -44,11 +44,64 @@
 
 	animalistic = FALSE
 
+/mob/living/simple_animal/hulk/flash_eyes()
+	return
+
 /mob/living/simple_animal/hulk/human
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/hulk_jump,
 						/obj/effect/proc_holder/spell/aoe_turf/hulk_dash,
 						/obj/effect/proc_holder/spell/aoe_turf/hulk_smash
 							)
+/mob/living/simple_animal/hulk/mish
+	name = "Mish"
+	real_name = "Mishara"
+	icon = 'icons/mob/hulk_mish.dmi'
+	icon_state = "mish"
+	icon_living = "mish"
+	maxHealth = 100
+	health = 100
+	melee_damage_lower = 7
+	melee_damage_upper = 13
+	speed = 0.4
+	var/hiding = FALSE
+	attacktext = " SQUEEKS"
+	speak_emote = list("SQUEEKS!!!")
+	emote_hear = list("SQUEEEKS!!!")
+	var/last_time_activate = 0
+	var/cooldown = 50
+	attack_sound = list("sound/weapons/MISHARA.ogg")
+	response_help  = "thinks better of stepping"
+	response_harm   = "steps..?"
+	pass_flags = PASSTABLE
+
+/mob/living/simple_animal/hulk/mish/UnarmedAttack(atom/A)
+	if(A.reagents && A.reagents.has_reagent("cheese"))
+		qdel(A)
+		maxHealth+=1
+		health+=1
+	else
+		return ..()
+
+/mob/living/simple_animal/hulk/mish/verb/hide()
+	set name = "MEGAHIDE"
+	set desc = "Allows to hide beneath EVERYTHING. Toggled on or off."
+	set category = "MISH"
+	if((last_time_activate + cooldown)>=world.time)
+		return
+	hiding = !hiding
+	if(hiding)
+		invisibility = 101
+		density = 0
+		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
+	else
+		invisibility = initial(invisibility)
+		density = initial(density)
+		var/turf/simulated/floor/T = get_turf(src.loc)
+		T.break_tile()
+
+		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
+		usr.say("SQUEEEK!")
+	last_time_activate = world.time
 
 /mob/living/simple_animal/hulk/unathi
 	name = "Zilla"
