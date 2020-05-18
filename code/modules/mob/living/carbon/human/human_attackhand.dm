@@ -44,8 +44,8 @@
 
 /mob/living/carbon/human/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	var/target_zone = attacker.get_targetzone()
-	if(health < (config.health_threshold_crit - 30) && M.zone_sel.selecting == O_MOUTH)
-		INVOKE_ASYNC(src, .proc/perform_av, M)
+	if(health < (config.health_threshold_crit - 30) && target_zone == O_MOUTH)
+		INVOKE_ASYNC(src, .proc/perform_av, attacker)
 		return TRUE
 	else if(stat == DEAD && target_zone == BP_CHEST)
 		INVOKE_ASYNC(src, .proc/perform_cpr, attacker)
