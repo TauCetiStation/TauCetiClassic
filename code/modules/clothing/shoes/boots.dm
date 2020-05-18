@@ -48,9 +48,8 @@
 	if(knife)
 		return
 	if(I.tools[TOOL_KNIFE] >= 1)
-		user.drop_item()
+		user.drop_from_inventory(I, src)
 		knife = I
-		I.forceMove(src)
 		playsound(user, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
 		to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")
 
