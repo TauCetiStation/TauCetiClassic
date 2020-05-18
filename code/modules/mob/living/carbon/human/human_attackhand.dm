@@ -44,7 +44,10 @@
 
 /mob/living/carbon/human/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	var/target_zone = attacker.get_targetzone()
-	if(health > config.health_threshold_dead && health < config.health_threshold_crit)
+	if(health < (config.health_threshold_crit - 30) && target_zone == O_MOUTH)
+		INVOKE_ASYNC(src, .proc/perform_av, attacker)
+		return TRUE
+	else if(stat == DEAD && target_zone == BP_CHEST)
 		INVOKE_ASYNC(src, .proc/perform_cpr, attacker)
 		return TRUE
 	else if(!(attacker == src && apply_pressure(attacker, target_zone)))
