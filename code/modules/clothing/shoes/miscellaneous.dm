@@ -261,3 +261,11 @@
 	icon_state = "footwraps"
 	item_color = "footwraps"
 	species_restricted = null
+
+/obj/item/clothing/shoes/holoboots
+	name = "jackboots"
+	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
+	icon_state = "wjboots"
+	item_state = "wjboots"
+	item_color = "hosred"
+	clipped_status = CLIPPABLE
