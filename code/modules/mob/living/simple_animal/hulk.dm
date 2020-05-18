@@ -53,11 +53,11 @@
 						/obj/effect/proc_holder/spell/aoe_turf/hulk_smash
 							)
 /mob/living/simple_animal/hulk/mish
-	name = "Mish"
-	real_name = "Mishara"
-	icon = 'icons/mob/hulk_mish.dmi'
-	icon_state = "mish"
-	icon_living = "mish"
+	name = "Megamouse"
+	real_name = "Megamouse"
+	icon = 'icons/mob/hulk_mouse.dmi'
+	icon_state = "mmouse"
+	icon_living = "mmouse"
 	maxHealth = 100
 	health = 100
 	melee_damage_lower = 7
@@ -69,7 +69,7 @@
 	emote_hear = list("SQUEEEKS!!!")
 	var/last_time_activate = 0
 	var/cooldown = 50
-	attack_sound = list("sound/weapons/MISHARA.ogg")
+	attack_sound = list("sound/weapons/mega_squeek.ogg")
 	response_help  = "thinks better of stepping"
 	response_harm   = "steps..?"
 	pass_flags = PASSTABLE
@@ -85,7 +85,7 @@
 /mob/living/simple_animal/hulk/mish/verb/hide()
 	set name = "MEGAHIDE"
 	set desc = "Allows to hide beneath EVERYTHING. Toggled on or off."
-	set category = "MISH"
+	set category = "MOUSE"
 	if((last_time_activate + cooldown)>=world.time)
 		return
 	hiding = !hiding
