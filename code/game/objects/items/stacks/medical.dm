@@ -24,8 +24,9 @@
 		w_class = full_w_class
 
 /obj/item/stack/medical/attack(mob/living/L, mob/living/user, def_zone)
-	. = ..()
+	..()
 	try_heal(L, user)
+	return TRUE
 
 // Everything that should be done before healing process - sounds, message.
 /obj/item/stack/medical/proc/announce_heal(mob/living/L, mob/user)
@@ -340,7 +341,7 @@
 	self_delay = 20
 	other_delay = 5
 
-	repeating = TRUE
+	repeating = FALSE
 
 /obj/item/stack/medical/suture/update_icon()
 	icon_state = "[initial(icon_state)][amount]"
