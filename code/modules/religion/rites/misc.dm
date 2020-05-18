@@ -123,3 +123,149 @@
 	var/ratio = (100 / ritual_invocations.len) * stage
 	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
 	return TRUE
+
+/*
+ * Revitalizing items.
+ * It makes a thing move and say something. You can't pick up a thing until you kill a item-mob.
+ */
+/datum/religion_rites/animation
+	name = "Animation"
+	desc = "Revives a thing on the altar."
+	ritual_length = (5 SECONDS) //(1 MINUTES)
+	ritual_invocations = list("Have mercy on us, O Lord, have mercy on us...", //TODO
+							  "...for at a loss for any defense, this prayer do we sinners offer Thee as Master...",
+							  "...have mercy on us...",
+							  "...Lord have mercy on us, for we have hoped in Thee, be not angry with us greatly, neither remember our iniquities...",
+							  "...but look upon us now as Thou art compassionate, and deliver us from our enemies...",
+							  "...for Thou art our God, and we, Thy people; all are the works of Thy hands, and we call upon Thy name...",
+							  "...Both now and ever, and unto the ages of ages...",
+							  "...The door of compassion open unto us 0 blessed Theotokos, for hoping in thee...",
+							  "...let us not perish; through thee may we be delivered from adversities, for thou art the salvation of the Our race...")
+	invoke_msg = "Lord have mercy. Twelve times."
+	favor_cost = 100
+
+	var/obj/item/anim_item
+
+	needed_aspects = list(
+		ASPECT_SPAWN = 1,
+	)
+
+/datum/religion_rites/animation/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+	var/i = 0
+	for(var/obj/item/O in AOG.loc)
+		i += 1
+		if(i > 0)
+				break
+
+	if(i == 0)
+		to_chat(user, "<span class='warning'>Put any item to altar.</span>")
+		return FALSE
+
+	return ..()
+
+/datum/religion_rites/animation/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		var/i = 0
+		for(var/obj/item/O in AOG.loc)
+			i += 1
+			if(i > 0)
+				break
+
+		if(i == 0)
+			to_chat(user, "<span class='warning'>Put any item to altar.</span>")
+			return FALSE
+
+	return TRUE
+
+/datum/religion_rites/animation/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	for(var/obj/item/O in AOG.loc)
+		anim_item = O
+
+	if(anim_item)
+		var/mob/living/simple_animal/hostile/mimic/copy/religion/M = new (anim_item.loc, anim_item)
+		M.name = "blessed [M.name]"
+		M.harm_intent_damage = 0
+		M.melee_damage_lower = 0
+		M.melee_damage_upper = 0
+		usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
+
+	return TRUE
+
+/*
+ * Spook
+ * The ritual doing spook
+ */
+/datum/religion_rites/spook
+	name = "Spook"
+	desc = "Spread horror sound." //TODO
+	ritual_length = (2 MINUTES)
+	ritual_invocations = list("All able to hear, hear!...", //TODO
+							  "...This message is dedicated to all of you....",
+							  "...may all of you be healthy and smart...",
+							  "...let your jokes be funny...",
+							  "...and the soul be pure!...",
+							  "...This screech will be devoted to all jokes and clowns....",)
+	invoke_msg = "...So hear it!!!"
+	favor_cost = 100
+
+	needed_aspects = list(
+		ASPECT_OBSCURE = 1,
+	)
+
+/datum/religion_rites/spook/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	playsound(AOG, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
+	var/list/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime, /obj/item/weapon/reagent_containers/food/snacks/glowstick)
+	for(var/mob/living/carbon/M in hearers(4, get_turf(AOG)))
+		if(M.mind.holy_role)
+			M.make_jittery(50)
+		else
+			M.confused += 10
+			M.make_jittery(50)
+			for(var/obj/item/F in M.contents)
+				if(is_type_in_list(F, blacklisted_lights))
+					continue
+				F.set_light(0)
+
+	for(var/obj/machinery/light/L in range(4, get_turf(AOG)))
+		L.on = TRUE
+		L.broken()
+
+	return TRUE
+
+/*
+ * Illuminate
+ * The ritual used /illuminate()
+ */
+/datum/religion_rites/illuminate
+	name = "Illuminate"
+	desc = "Fix and on light in range." //TODO
+	ritual_length = (2 SECONDS) //(1 MINUTES)
+	ritual_invocations = list("All able to hear, hear!...", //TODO
+							  "...This message is dedicated to all of you....",
+							  "...may all of you be healthy and smart...",
+							  "...let your jokes be funny...",
+							  "...and the soul be pure!...",
+							  "...This screech will be devoted to all jokes and clowns....",)
+	invoke_msg = "...So hear it!!!"
+	favor_cost = 200
+
+	var/shield_icon = "at_shield2"
+
+	needed_aspects = list(
+		ASPECT_LIGHT = 1,
+	)
+
+/datum/religion_rites/illuminate/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	var/image/I = image('icons/effects/effects.dmi', icon_state = shield_icon, layer = MOB_LAYER + 0.01)
+	I.alpha = 150
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	var/matrix/M = matrix(I.transform)
+	M.Scale(0.3)
+	I.transform = M
+	I.pixel_x = 12	
+	I.pixel_y = 12
+	user.add_overlay(I)
+	user.set_light(5)
+	return TRUE

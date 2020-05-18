@@ -66,10 +66,10 @@
 	action_icon_state = "god_default"
 	sound = 'sound/magic/Repulse.ogg'
 
-/obj/effect/proc_holder/spell/targeted/blessing
+/obj/effect/proc_holder/spell/dumbfire/blessing
 	name = "Blessing"
 
-	favor_cost = 200
+	//favor_cost = 200
 	charge_max = 1 MINUTES
 	divine_power = 5 //power
 	needed_aspect = list(ASPECT_WEAPON = 1, ASPECT_MYSTIC = 1)
@@ -83,7 +83,7 @@
 
 	var/list/blessed = list()
 
-/obj/effect/proc_holder/spell/targeted/blessing/cast()
+/obj/effect/proc_holder/spell/dumbfire/blessing/cast()
 	var/list/possible_targets = list()
 	var/obj/item/weapon/target
 
@@ -97,11 +97,44 @@
 
 	target = input("Choose the target for the spell.", "Targeting") in possible_targets
 
-	target.visible_message("<span class='notice'>[target] has been blessed by [src]!</span>")
+	target.visible_message("<span class='notice'>[target] has been blessed by [usr]!</span>")
 	target.name = "blessed [target.name]"
 	target.force += divine_power
+	var/holy_outline = filter(type = "outline", size = 1, color = "#fffb00a1")
+	target.filters += holy_outline
 
 	blessed += target
+
+/obj/effect/proc_holder/spell/dumbfire/blessing/recolor
+	name = "Repainting"
+
+	//favor_cost = 100
+	charge_max = 2 MINUTES
+	divine_power = 1 //count
+	needed_aspect = list(ASPECT_CHAOS = 1,)
+
+	action_icon_state = "blessing"
+
+/obj/effect/proc_holder/spell/dumbfire/blessing/recolor/cast()
+	var/list/possible_targets = list()
+
+	for(var/obj/W in range(1))
+		if(!(W in blessed))
+			possible_targets += W
+
+	if(possible_targets.len == 0)
+		revert_cast()
+		return
+
+	var/i = 0
+	for(var/obj/O in possible_targets)
+		if(i != divine_power)
+			i += 1
+			O.visible_message("<span class='notice'>[O] has been repainted by [usr]!</span>")
+			O.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+			blessed += O
+		else
+			break
 
 /obj/effect/proc_holder/spell/targeted/charge/religion
 	name = "Electric Charge Pulse"
@@ -303,8 +336,8 @@
 
 /obj/effect/proc_holder/spell/dumbfire/infection/obcurse/cast()
 	var/datum/effect/effect/system/smoke_spread/chem/S = new
-	create_reagents(10)
-	reagents.add_reagent("harvester", 10)
+	create_reagents(1)
+	reagents.add_reagent("harvester", 1)
 	S.attach(usr.loc)
 	S.set_up(reagents, 5, 0, usr.loc)
 	S.color = "#421c52" //dark purple
