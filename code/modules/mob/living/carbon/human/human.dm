@@ -1,3 +1,6 @@
+#define MASSAGE_RHYTM_RIGHT   11
+#define MASSAGE_ALLOWED_ERROR 2
+
 /mob/living/carbon/human
 	name = "unknown"
 	real_name = "unknown"
@@ -17,6 +20,9 @@
 	var/seer = 0 // used in cult datum /cult/seer
 	var/gnomed = 0 // timer used by gnomecurse.dm
 	var/hulk_activator = null
+
+	var/last_massage = 0
+	var/massages_done_right = 0
 
 	throw_range = 2
 
@@ -2077,3 +2083,96 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			update_bandage()
 			attack_log += "\[[time_stamp()]\] <font color='orange'>Had their bandages removed by [usr.name] ([usr.ckey]).</font>"
 			usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) bandages.</font>"
+
+/mob/living/carbon/human/proc/perform_cpr(mob/living/carbon/human/user)
+	if(species.flags[NO_BLOOD])
+		return
+	if(user.is_busy(src))
+		return
+	var/needed_massages = 12
+	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
+	var/obj/item/organ/internal/heart/Lungs = organs_by_name[O_LUNGS]
+
+	if(HAS_TRAIT(src, TRAIT_FAT))
+		needed_massages = 20
+	if(Lungs && !Lungs.is_bruised())
+		adjustOxyLoss(-1.5)
+	if(!Heart)
+		return
+
+	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
+	if((world.time - last_massage) > 5 SECONDS && do_mob(user, src, HUMAN_STRIP_DELAY))
+		visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
+		to_chat(user, "<span class='warning'>Repeat at least every second.</span>")
+		massages_done_right = 0
+		return_to_body_dialog()
+		Heart.heart_fibrillate()
+		last_massage = world.time
+		return
+	else if((world.time - timeofdeath) < DEFIB_TIME_LIMIT)
+		last_massage = world.time
+
+		if(massages_done_right > needed_massages)
+			to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
+			reanimate_body()
+			stat = UNCONSCIOUS
+			massages_done_right = 0
+			Heart.heart_normalize()
+		else if(massages_done_right < -2)
+			to_chat(user, "<span class='warning'>[src]'s heart stopped!</span>")
+			if(prob(25))
+				Heart.damage += 2
+			massages_done_right = 0
+			Heart.heart_stop()
+		else
+			Heart.heart_fibrillate()
+
+			if(Heart.damage < 50)
+				if(last_massage > world.time - MASSAGE_RHYTM_RIGHT - MASSAGE_ALLOWED_ERROR && last_massage < world.time - MASSAGE_RHYTM_RIGHT + MASSAGE_ALLOWED_ERROR)
+					massages_done_right++
+					to_chat(user, "<span class='warning'>You've hit right to the beat.</span>")
+				else
+					massages_done_right--
+					to_chat(user, "<span class='warning'>You've skipped the beat.</span>")
+
+		if(op_stage.ribcage != 2 && prob(5))
+			var/obj/item/organ/external/BP = get_bodypart(BP_CHEST)
+			BP.fracture()
+			to_chat(user, "<span class='warning'>You hear cracking in [src]'s chest!.</span>")
+
+/mob/living/carbon/human/proc/return_to_body_dialog()
+	if (client) //in body?
+		playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+	else if(mind)
+		for(var/mob/dead/observer/ghost in player_list)
+			if(ghost.mind == mind && ghost.can_reenter_corpse)
+				ghost.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+				var/answer = alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate","Yes","No")
+				if(answer == "Yes")
+					ghost.reenter_corpse()
+				break
+
+/mob/living/carbon/human/proc/reanimate_body()
+	var/deadtime = world.time - timeofdeath
+	tod = null
+	timeofdeath = 0
+	dead_mob_list -= src
+	update_health_hud()
+	apply_brain_damage(deadtime)
+
+/mob/living/carbon/human/proc/apply_brain_damage(var/deadtime)
+	if(deadtime < DEFIB_TIME_LOSS)
+		return
+
+	if(!should_have_organ(O_BRAIN))
+		return //no brain
+
+	var/obj/item/organ/internal/brain/brain = organs_by_name[O_BRAIN]
+	if(!brain)
+		return //no brain
+
+	var/brain_damage = CLAMP((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, getBrainLoss(), MAX_BRAIN_DAMAGE)
+	setBrainLoss(brain_damage)
+
+#undef MASSAGE_RHYTM_RIGHT
+#undef MASSAGE_ALLOWED_ERROR

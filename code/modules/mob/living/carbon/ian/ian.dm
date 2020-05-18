@@ -335,7 +335,7 @@
 	if(health >= config.health_threshold_crit)
 		help_shake_act(attacker)
 		return
-	INVOKE_ASYNC(src, .proc/perform_cpr, attacker)
+	INVOKE_ASYNC(src, .proc/perform_av, attacker)
 
 /mob/living/carbon/ian/meteorhit(obj/O)
 	visible_message("<span class='red'>[src] has been hit by [O].</span>")

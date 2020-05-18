@@ -188,6 +188,10 @@
 			//H.is_jittery = 0
 			//H.jitteriness = 0
 			H.update_hair()
+	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+	if(!IO)
+		return
+	IO.heart_stop()
 	return
 
 /datum/species/proc/before_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE) // Do we really need this proc? Perhaps.

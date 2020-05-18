@@ -762,18 +762,22 @@
 	. = metabolism_factor
 
 
-/mob/living/carbon/proc/perform_cpr(mob/living/carbon/human/user) // don't forget to INVOKE_ASYNC this proc if sleep is a problem.
+/mob/living/carbon/proc/perform_av(mob/living/carbon/human/user) // don't forget to INVOKE_ASYNC this proc if sleep is a problem.
 	if(!ishuman(src) && !isIAN(src))
 		return
 	if(user.is_busy(src))
 		return
 
-	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
+	visible_message("<span class='danger'>[user] is trying perform AV on [src]!</span>")
+
+	if(health <= (config.health_threshold_dead + 5))
+		var/suff = min(getOxyLoss(), 2) //Pre-merge level, less healing, more prevention of dieing.
+		adjustOxyLoss(-suff)
 
 	if(do_mob(user, src, HUMAN_STRIP_DELAY))
 		 // yes, we check this after the action, allowing player to try this even if it looks wrong (for fun).
 		if(user.species && user.species.flags[NO_BREATHE])
-			to_chat(user, "<span class='notice bold'>Your species can not perform CPR!</span>")
+			to_chat(user, "<span class='notice bold'>Your species can not perform AV!</span>")
 			return
 		if((user.head && (user.head.flags & HEADCOVERSMOUTH)) || (user.wear_mask && (user.wear_mask.flags & MASKCOVERSMOUTH)))
 			to_chat(user, "<span class='notice bold'>Remove your mask!</span>")
@@ -782,7 +786,7 @@
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			if(H.species && H.species.flags[NO_BREATHE])
-				to_chat(user, "<span class='notice bold'>You can not perform CPR on these species!</span>")
+				to_chat(user, "<span class='notice bold'>You can not perform AV on these species!</span>")
 				return
 			if(wear_mask && wear_mask.flags & MASKCOVERSMOUTH)
 				to_chat(user, "<span class='notice bold'>Remove [src] [wear_mask]!</span>")
@@ -795,10 +799,10 @@
 		if (health > config.health_threshold_dead && health < config.health_threshold_crit)
 			var/suff = min(getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
 			adjustOxyLoss(-suff)
-			updatehealth()
-			visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
+			visible_message("<span class='warning'>[user] performs AV on [src]!</span>")
 			to_chat(src, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
 			to_chat(user, "<span class='warning'>Repeat at least every 7 seconds.</span>")
+		updatehealth()
 
 /mob/living/carbon/Topic(href, href_list)
 	..()
