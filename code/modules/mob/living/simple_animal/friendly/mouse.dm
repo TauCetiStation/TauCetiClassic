@@ -33,7 +33,7 @@
 
 /mob/living/simple_animal/mouse/attack_hand(mob/living/user)
 	..()
-	if(prob(25-health))
+	if(prob(25 - health))
 		var/mob/living/simple_animal/hulk/mish/Monster = new /mob/living/simple_animal/hulk/mish(get_turf(src))
 		playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 		Monster.original_body = src
@@ -46,8 +46,8 @@
 
 /mob/living/simple_animal/mouse/attackby(obj/item/S, mob/user)
 	..()
-	if(prob(25-health))
-		var/mob/living/simple_animal/hulk/mish/Monster = new /mob/living/simple_animal/hulk/mish(get_turf(src))
+	if(prob(25 - health) && S.force > 0)
+		var/mob/living/simple_animal/hulk/mouse/Monster = new /mob/living/simple_animal/hulk/mouse(get_turf(src))
 		playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 		Monster.original_body = src
 		forceMove(Monster)
@@ -131,8 +131,8 @@
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Mouse"
 
-	if (layer != TURF_LAYER+0.2)
-		layer = TURF_LAYER+0.2
+	if (layer != TURF_LAYER + 0.2)
+		layer = TURF_LAYER + 0.2
 		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 		/*
 		for(var/mob/O in oviewers(src, null))

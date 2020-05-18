@@ -52,7 +52,7 @@
 						/obj/effect/proc_holder/spell/aoe_turf/hulk_dash,
 						/obj/effect/proc_holder/spell/aoe_turf/hulk_smash
 							)
-/mob/living/simple_animal/hulk/mish
+/mob/living/simple_animal/hulk/mouse
 	name = "Megamouse"
 	real_name = "Megamouse"
 	icon = 'icons/mob/hulk_mouse.dmi'
@@ -74,15 +74,15 @@
 	response_harm   = "steps..?"
 	pass_flags = PASSTABLE
 
-/mob/living/simple_animal/hulk/mish/UnarmedAttack(atom/A)
+/mob/living/simple_animal/hulk/mouse/UnarmedAttack(atom/A)
 	if(A.reagents && A.reagents.has_reagent("cheese"))
 		qdel(A)
-		maxHealth+=1
-		health+=1
+		maxHealth += 1
+		health += 1
 	else
 		return ..()
 
-/mob/living/simple_animal/hulk/mish/verb/hide()
+/mob/living/simple_animal/hulk/mouse/verb/hide()
 	set name = "MEGAHIDE"
 	set desc = "Allows to hide beneath EVERYTHING. Toggled on or off."
 	set category = "MOUSE"
