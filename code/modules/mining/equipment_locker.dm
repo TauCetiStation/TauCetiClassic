@@ -609,7 +609,6 @@
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
 	mouse_opacity = 1
 	faction = "neutral"
-	a_intent = INTENT_HARM
 	var/emagged = 0
 	light_power = 2
 	light_range = 4

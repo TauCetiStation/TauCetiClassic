@@ -17,7 +17,6 @@
 	harm_intent_damage = 5
 	melee_damage = 10
 	attacktext = "punch"
-	a_intent = INTENT_HARM
 	var/corpse = /obj/effect/landmark/mobcorpse/syndicatesoldier
 	var/weapon1
 	var/weapon2
