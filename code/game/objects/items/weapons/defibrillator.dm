@@ -267,16 +267,8 @@
 	if(H.species.flags[NO_SCAN] || H.isSynthetic() || (NOCLONE in H.mutations))
 		return "buzzes, \"Unrecogized physiology. Operation aborted.\""
 
-	if(!check_contact(H))
+	if(!H.check_contact(BP_CHEST, combat))
 		return "buzzes, \"Patient's chest is obstructed. Operation aborted.\""
-
-/obj/item/weapon/twohanded/shockpaddles/proc/check_contact(mob/living/carbon/human/H, sel_zone = BP_CHEST)
-	if(!combat)
-		if(H.check_thickmaterial(target_zone = sel_zone))
-			return FALSE
-	if(H.get_siemens_coefficient_organ(H.get_bodypart(sel_zone)) <= 0)
-		return FALSE
-	return TRUE
 
 /obj/item/weapon/twohanded/shockpaddles/proc/check_blood_level(mob/living/carbon/human/H)
 	if(!H.should_have_organ(O_HEART))
@@ -430,7 +422,7 @@
 	//no need to spend time carefully placing the paddles, we're just trying to shock them
 	user.visible_message("<span class='danger'>\The [user] slaps [src] onto [H]'s [affecting.name].</span>", "<span class='danger'>You overcharge [src] and slap them onto [H]'s [affecting.name].</span>")
 
-	if(!check_contact(H, target_zone))
+	if(!H.check_contact(target_zone, combat))
 		to_chat(user, "<span class='warning'>Target's [affecting.name] is obstructed. Operation aborted.</span>")
 		return
 

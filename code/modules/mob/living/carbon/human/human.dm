@@ -2169,6 +2169,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
 	var/obj/item/organ/internal/heart/Lungs = organs_by_name[O_LUNGS]
 
+	if(!check_contact(BP_CHEST, FALSE))
+		to_chat(user, "<span class='warning'>You have to strip [src] to perform CPR!.</span>")
+		return
+
 	if(HAS_TRAIT(src, TRAIT_FAT))
 		needed_massages = 20
 	if(Lungs && !Lungs.is_bruised())
@@ -2186,7 +2190,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		last_massage = world.time
 		return
 	else if((world.time - timeofdeath) < DEFIB_TIME_LIMIT)
-		last_massage = world.time
 
 		if(massages_done_right > needed_massages)
 			to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
@@ -2210,7 +2213,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				else
 					massages_done_right--
 					to_chat(user, "<span class='warning'>You've skipped the beat.</span>")
-
+		last_massage = world.time
 		if(op_stage.ribcage != 2 && prob(5))
 			var/obj/item/organ/external/BP = get_bodypart(BP_CHEST)
 			BP.fracture()
@@ -2249,6 +2252,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	var/brain_damage = CLAMP((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, getBrainLoss(), MAX_BRAIN_DAMAGE)
 	setBrainLoss(brain_damage)
+
+/mob/living/carbon/human/proc/check_contact(sel_zone = BP_CHEST, combat)
+	if(!combat)
+		if(check_thickmaterial(target_zone = sel_zone))
+			return FALSE
+	if(get_siemens_coefficient_organ(get_bodypart(sel_zone)) <= 0)
+		return FALSE
+	return TRUE
 
 #undef MASSAGE_RHYTM_RIGHT
 #undef MASSAGE_ALLOWED_ERROR
