@@ -24,9 +24,7 @@
 		w_class = full_w_class
 
 /obj/item/stack/medical/attack(mob/living/L, mob/living/user, def_zone)
-	..()
 	try_heal(L, user)
-	return TRUE
 
 // Everything that should be done before healing process - sounds, message.
 /obj/item/stack/medical/proc/announce_heal(mob/living/L, mob/user)
@@ -64,9 +62,14 @@
 /obj/item/stack/medical/proc/heal(mob/living/L, mob/living/user)
 	L.heal_bodypart_damage(heal_brute, heal_burn)
 	user.visible_message(
-		"<span class='notice'>[L] has been applied with [src] by [user].</span>",
+		"<span class='notice'>[user] has applied [src] to [L].</span>",
 		"<span class='notice'>You apply \the [src] to [L].</span>")
-	return TRUE
+
+	if(heal_brute && L.getBruteLoss() > 0)
+		return TRUE
+	if(heal_burn && L.getFireLoss() > 0)
+		return TRUE
+	return FALSE
 
 /obj/item/stack/medical/bruise_pack
 	name = "roll of gauze"
@@ -87,7 +90,7 @@
 		var/mob/living/carbon/human/H = L
 		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
 
-		if(BP.open == 0)
+		if(!BP.open)
 			if(BP.is_bandaged())
 				to_chat(user, "<span class='warning'>The wounds on [H]'s [BP.name] have already been bandaged.</span>")
 				return FALSE
@@ -144,7 +147,7 @@
 		var/mob/living/carbon/human/H = L
 		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
 
-		if(BP.open == 0)
+		if(!BP.open)
 			if(BP.is_salved())
 				to_chat(user, "<span class='warning'>The wounds on [H]'s [BP.name] have already been salved.</span>")
 				return FALSE
@@ -213,7 +216,7 @@
 		var/mob/living/carbon/human/H = L
 		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
 
-		if(BP.open == 0)
+		if(!BP.open)
 			if(BP.is_bandaged() && BP.is_disinfected())
 				to_chat(user, "<span class='warning'>The wounds on [L]'s [BP.name] have already been treated.</span>")
 				return FALSE
@@ -301,6 +304,8 @@
 	self_delay = 50
 	other_delay = 25
 
+	repeating = FALSE
+
 /obj/item/stack/medical/splint/heal(mob/living/L, mob/user, def_zone)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -351,7 +356,7 @@
 		var/mob/living/carbon/human/H = L
 		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
 
-		if(BP.open == 0)
+		if(!BP.open)
 			BP.status &= ~ORGAN_ARTERY_CUT
 			BP.clamp()
 			user.visible_message(
@@ -365,4 +370,4 @@
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
 			return FALSE
-	return FALSE
+	return ..()
