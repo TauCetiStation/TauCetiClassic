@@ -90,26 +90,43 @@
 	if(!can_place(source, I, user))
 		return
 
-	var/spare_hands = 2
-	for(var/arm in list(BP_L_ARM, BP_R_ARM))
-		if(!user.is_usable_arm(arm))
-			spare_hands--
-	if(spare_hands <= 0)
+	var/list/slots_to_check
+	var/datum/callback/check_slot_callback
+	if(user.IsAdvancedToolUser())
+		slots_to_check = list(
+			BP_L_ARM = user.l_hand,
+			BP_R_ARM = user.r_hand
+		)
+		check_slot_callback = CALLBACK(user, /mob/living.proc/is_usable_arm)
+	else if(istype(user, /mob/living/carbon/ian))
+		var/mob/living/carbon/ian/IAN = user
+		slots_to_check = list(
+			BP_HEAD = IAN.mouth
+		)
+		check_slot_callback = CALLBACK(user, /mob/living.proc/is_usable_head)
+
+	if(!slots_to_check)
 		return
 
-	var/list/preventing_place = user.get_hand_slots()
-	spare_hands = preventing_place.len
-	for(var/obj/item/P in preventing_place)
-		if(P != I)
-			spare_hands--
-	// User tried to take off an item of clothing by drag with their hands full.
-	// Ha-ha, screw them.
-	if(spare_hands <= 0)
+	var/spare_slots = slots_to_check.len
+	for(var/slot in slots_to_check)
+		if(!check_slot_callback.Invoke(slot))
+			spare_slots--
+		if(slots_to_check[slot] != null && slots_to_check[slot] != I)
+			spare_slots--
+
+	if(spare_slots <= 0)
 		return
 
 	// Just in case.
 	if(I.loc == user)
 		user.drop_from_inventory(I)
+	else if(istype(I.loc, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = I.loc
+		S.remove_from_storage(I, S.loc)
+
+	if(!isturf(I.loc))
+		return
 
 	var/atom/A = parent
 
