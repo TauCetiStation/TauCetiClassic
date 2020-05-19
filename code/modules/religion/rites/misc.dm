@@ -123,3 +123,41 @@
 	var/ratio = (100 / ritual_invocations.len) * stage
 	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
 	return TRUE
+
+/*
+ * Mouse-hulk
+ * Mouse becomes hulk!
+ */
+/datum/religion_rites/h_mouse
+	name = "Call for MEGAMOUSE"
+	desc = "Create MEGAMOUSE from mouse."
+	ritual_length = (0.5 MINUTES)
+	ritual_invocations = list("I call for your power, MEGAMOUSE!...",
+							  "...one must become strong....",
+							  "...sometimes I dream about cheese...",
+							  "...squeek...",
+							  "...destroy those who dare to stump you!...",
+							  "...mouse of the world, unite!....",)
+	invoke_msg = "...MEGAMOUSE!!!"
+	favor_cost = 50
+
+	needed_aspects = list(
+		ASPECT_SPAWN = 1,
+	)
+
+/datum/religion_rites/h_mouse/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!istype(AOG.buckled_mob, /mob/living/simple_animal/mouse))
+		return FALSE
+	if(!AOG.buckled_mob.mind)
+		to_chat(user,"MEGAMOUSE CAN'T ACCEPT THIS MINDLESS CREATURE!")
+		return FALSE
+	return ..()
+
+/datum/religion_rites/h_mouse/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	var/mob/living/simple_animal/mouse/M = AOG.buckled_mob
+	if(!istype(M))
+		return FALSE
+	M.become_hulk()
+	user.visible_message("<span class='notice'>[user] summoned MEGAMOUSE to our world!</span>")
+	return TRUE
+
