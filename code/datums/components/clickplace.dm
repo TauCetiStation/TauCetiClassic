@@ -39,7 +39,11 @@
 	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(CLICKPLACE_TIP))
 	return ..()
 
-/datum/component/clickplace/proc/can_place(atom/place_on, obj/item/I, mob/user)
+/datum/component/clickplace/proc/can_place(atom/place_on, obj/item/I, mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
 	if(user.a_intent == INTENT_HARM)
 		return FALSE
 	// Apperantly robots currently don't use
@@ -54,7 +58,7 @@
 		return FALSE
 	return TRUE
 
-/datum/component/clickplace/proc/try_place_click(datum/source, obj/item/I, mob/user, params)
+/datum/component/clickplace/proc/try_place_click(datum/source, obj/item/I,  mob/living/user, params)
 	if(!can_place(source, I, user))
 		return NONE
 	if(!user.drop_from_inventory(I))
@@ -77,14 +81,31 @@
 	// Prevent hitting the thing if we're just putting it.
 	return COMPONENT_NO_AFTERATTACK
 
-/datum/component/clickplace/proc/try_place_drag(datum/source, atom/dropping, mob/user)
+/datum/component/clickplace/proc/try_place_drag(datum/source, atom/dropping, mob/living/user)
 	if(!istype(dropping, /obj/item))
 		return
 
 	var/obj/item/I = dropping
 
 	if(!can_place(source, I, user))
-		return NONE
+		return
+
+	var/spare_hands = 2
+	for(var/arm in list(BP_L_ARM, BP_R_ARM))
+		if(!user.is_usable_arm(arm))
+			spare_hands--
+	if(spare_hands <= 0)
+		return
+
+	var/list/preventing_place = user.get_hand_slots()
+	spare_hands = preventing_place.len
+	for(var/obj/item/P in preventing_place)
+		if(P != I)
+			spare_hands--
+	// User tried to take off an item of clothing by drag with their hands full.
+	// Ha-ha, screw them.
+	if(spare_hands <= 0)
+		return
 
 	// Just in case.
 	if(I.loc == user)
