@@ -96,24 +96,3 @@
 	)
 
 	invoke_spelltype = /obj/effect/proc_holder/spell/dumbfire/blessing/recolor
-
-/*
- * Create random friendly animal
- * AoE relocor items
- */
-/datum/religion_rites/legacy/recolor
-	name = "Call animal"
-	desc = "Create random friendly animal."
-	ritual_length = (1.5 MINUTES)
-	ritual_invocations = list("I trust in you Lord...", //TODO
-						"...Please change the world as you want...",
-						"...Believe me! We need it...",
-						"...I thanks the universe for everything what I have...")
-	invoke_msg = "...Divine power, come on, change the world!"
-	favor_cost = 150
-
-	needed_aspects = list(
-		ASPECT_SPAWN = 1,
-	)
-
-	invoke_spelltype = /obj/effect/proc_holder/spell/aoe_turf/conjure/spawn_animal

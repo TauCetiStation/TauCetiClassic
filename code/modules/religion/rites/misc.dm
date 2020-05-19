@@ -149,34 +149,6 @@
 		ASPECT_SPAWN = 1,
 	)
 
-/datum/religion_rites/animation/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
-	var/i = 0
-	for(var/obj/item/O in AOG.loc)
-		i += 1
-		if(i > 0)
-			break
-
-	if(i == 0)
-		to_chat(user, "<span class='warning'>Put any item to altar.</span>")
-		return FALSE
-
-	return ..()
-
-/datum/religion_rites/animation/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
-	. = ..()
-	if(!.)
-		var/i = 0
-		for(var/obj/item/O in AOG.loc)
-			i += 1
-			if(i > 0)
-				break
-
-		if(i == 0)
-			to_chat(user, "<span class='warning'>Put any item to altar.</span>")
-			return FALSE
-
-	return TRUE
-
 /datum/religion_rites/animation/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	var/obj/item/anim_item
 	for(var/obj/item/O in AOG.loc)
@@ -184,13 +156,41 @@
 
 	if(anim_item)
 		var/mob/living/simple_animal/hostile/mimic/copy/religion/M = new (anim_item.loc, anim_item)
+		M.pixel_x = anim_item.pixel_x
+		M.pixel_y = anim_item.pixel_y
 		M.harm_intent_damage = 0
 		M.melee_damage_lower = 0
 		M.melee_damage_upper = 0
+		M.faction = "Station"
+	else
+		var/mob/living/simple_animal/mouse/M = new (AOG.loc)
+		INVOKE_ASYNC(src, .proc/soul_of_mouse, M)
 
-		usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
-
+	usr.visible_message("<span class='notice'>[user] has been finished the rite of [name]!</span>")
 	return TRUE
+
+/datum/religion_rites/animation/proc/soul_of_mouse(mob/living/simple_animal/mouse/mouse)
+	// Dedicated to all dead mouse
+	sleep(1 SECONDS)
+	var/image/I = image(icon = mouse.icon, icon_state =  mouse.icon_state, layer = FLY_LAYER)
+	I.layer = mouse.layer + 1
+	I.invisibility = mouse.invisibility
+	I.loc = mouse
+	I.alpha = 150
+	I.pixel_y = mouse.pixel_y + 4
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	var/list/viewing = list()
+	for(var/mob/M in viewers(mouse))
+		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
+			viewing |= M.client
+
+	flick_overlay(I, viewing, 2 SECONDS)
+	animate(I, pixel_z = 16, alpha = 80, time = 1 SECONDS)
+	animate(pixel_z = 32, alpha = 0, time = 1 SECONDS)
+	sleep(2 SECONDS)
+	mouse.health = 0
 
 /*
  * Spook
@@ -258,19 +258,26 @@
 	)
 
 /datum/religion_rites/illuminate/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	var/image/I = image('icons/effects/effects.dmi', icon_state = shield_icon, layer = MOB_LAYER + 0.01)
-	for(var/mob/living/carbon/M in range(3, get_turf(AOG)))
-		for(var/obj/item/device/flashlight/F in M.contents)
+	for(var/mob/living/carbon/human/H in range(3, get_turf(AOG)))
+		for(var/obj/item/device/flashlight/F in H.contents)
 			if(F.brightness_on)
 				if(!F.on)
 					F.on = !F.on
 					F.icon_state = "[initial(F.icon_state)]-on"
 					F.set_light(F.brightness_on)
 
-	I.alpha = 150
-	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	for(var/obj/item/device/flashlight/F in range(3, get_turf(AOG)))
+		if(F.brightness_on)
+			if(!F.on)
+				F.on = !F.on
+				F.icon_state = "[initial(F.icon_state)]-on"
+				F.set_light(F.brightness_on)
+
+	var/image/I = image('icons/effects/effects.dmi', icon_state = shield_icon, layer = MOB_LAYER + 0.01)
 	var/matrix/M = matrix(I.transform)
 	M.Scale(0.3)
+	I.alpha = 150
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	I.transform = M
 	I.pixel_x = 12	
 	I.pixel_y = 12
@@ -402,4 +409,61 @@
 		if(prob(20))
 			step(S, pick(alldirs))
 			break
+	return TRUE
+
+/*
+ * Revive
+ * Revive animal
+ */
+/datum/religion_rites/revive_animal
+	name = "Revive"
+	desc = "The animal revives from the better world." //TODO
+	ritual_length = (2 SECONDS) //(1 MINUTES)
+	ritual_invocations = list("All able to hear, hear!...", //TODO
+							  "...This message is dedicated to all of you....",
+							  "...may all of you be healthy and smart...",
+							  "...let your jokes be funny...",
+							  "...and the soul be pure!...",
+							  "...This screech will be devoted to all jokes and clowns....",)
+	invoke_msg = "...So hear it!!!"
+	favor_cost = 100
+
+	needed_aspects = list(
+		ASPECT_SPAWN = 1,
+	)
+
+/datum/religion_rites/revive_animal/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!AOG)
+		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
+		return FALSE
+
+	if(!AOG.buckled_mob)
+		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [AOG].</span>")
+		return FALSE
+
+	if(!isanimal(AOG.buckled_mob))
+		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
+		return FALSE
+
+	return ..()
+
+/datum/religion_rites/revive_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!AOG)
+		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
+		return FALSE
+
+	if(!AOG.buckled_mob)
+		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [AOG].</span>")
+		return FALSE
+
+	if(!isanimal(AOG.buckled_mob))
+		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
+		return FALSE
+
+	var/mob/living/simple_animal/animal = AOG.buckled_mob
+	if(!istype(animal))
+		return FALSE
+
+	animal.rejuvenate()
+
 	return TRUE

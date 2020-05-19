@@ -300,7 +300,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 		if(istype(M, /mob/living/simple_animal/hostile/mimic/copy/religion))
-			visible_message("<span class='notice'><B>[M]</B> [M.attacktext] [src]!</span>")
+			visible_message("<span class='notice'>[M] trying [M.attacktext] [src]!</span>")
 	else
 		if(length(M.attack_sound))
 			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
