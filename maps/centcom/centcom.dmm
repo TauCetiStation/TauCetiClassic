@@ -22126,7 +22126,7 @@
 	pixel_y = 32;
 	req_access = list(0)
 	},
-/obj/item/weapon/storage/firstaid,
+/obj/item/weapon/storage/firstaid/regular,
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "opb" = (
