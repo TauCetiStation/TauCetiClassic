@@ -144,9 +144,8 @@
 	invoke_msg = "Lord have mercy. Twelve times."
 	favor_cost = 100
 
-	var/obj/item/anim_item
-
 	needed_aspects = list(
+		ASPECT_WEAPON = 1,
 		ASPECT_SPAWN = 1,
 	)
 
@@ -155,7 +154,7 @@
 	for(var/obj/item/O in AOG.loc)
 		i += 1
 		if(i > 0)
-				break
+			break
 
 	if(i == 0)
 		to_chat(user, "<span class='warning'>Put any item to altar.</span>")
@@ -179,15 +178,16 @@
 	return TRUE
 
 /datum/religion_rites/animation/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	var/obj/item/anim_item
 	for(var/obj/item/O in AOG.loc)
 		anim_item = O
 
 	if(anim_item)
 		var/mob/living/simple_animal/hostile/mimic/copy/religion/M = new (anim_item.loc, anim_item)
-		M.name = "blessed [M.name]"
 		M.harm_intent_damage = 0
 		M.melee_damage_lower = 0
 		M.melee_damage_upper = 0
+
 		usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 
 	return TRUE
@@ -240,7 +240,7 @@
  */
 /datum/religion_rites/illuminate
 	name = "Illuminate"
-	desc = "Fix and on light in range." //TODO
+	desc = "Create wisp of light." //TODO
 	ritual_length = (2 SECONDS) //(1 MINUTES)
 	ritual_invocations = list("All able to hear, hear!...", //TODO
 							  "...This message is dedicated to all of you....",
@@ -259,6 +259,14 @@
 
 /datum/religion_rites/illuminate/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	var/image/I = image('icons/effects/effects.dmi', icon_state = shield_icon, layer = MOB_LAYER + 0.01)
+	for(var/mob/living/carbon/M in range(3, get_turf(AOG)))
+		for(var/obj/item/device/flashlight/F in M.contents)
+			if(F.brightness_on)
+				if(!F.on)
+					F.on = !F.on
+					F.icon_state = "[initial(F.icon_state)]-on"
+					F.set_light(F.brightness_on)
+
 	I.alpha = 150
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/matrix/M = matrix(I.transform)
@@ -267,5 +275,131 @@
 	I.pixel_x = 12	
 	I.pixel_y = 12
 	user.add_overlay(I)
-	user.set_light(5)
+	user.set_light(7)
+	return TRUE
+
+/*
+ * Devaluation
+ * In the radius from the altar, changes the denomination of banknotes one higher
+ */
+/datum/religion_rites/devaluation
+	name = "Devaluation"
+	desc = "Changes the denomination of banknotes one higher."
+	ritual_length = (2 SECONDS) //(1 MINUTES)
+	ritual_invocations = list("All able to hear, hear!...", //TODO
+							  "...This message is dedicated to all of you....",
+							  "...may all of you be healthy and smart...",
+							  "...let your jokes be funny...",
+							  "...and the soul be pure!...",
+							  "...This screech will be devoted to all jokes and clowns....",)
+	invoke_msg = "...So hear it!!!"
+	favor_cost = 150
+
+	var/static/list/swap = list(
+		/obj/item/weapon/spacecash = /obj/item/weapon/spacecash/c1,
+		/obj/item/weapon/spacecash/c1 = /obj/item/weapon/spacecash/c10,
+		/obj/item/weapon/spacecash/c10 = /obj/item/weapon/spacecash/c20,
+		/obj/item/weapon/spacecash/c20 = /obj/item/weapon/spacecash/c50,
+		/obj/item/weapon/spacecash/c50 = /obj/item/weapon/spacecash/c100,
+		/obj/item/weapon/spacecash/c100 = /obj/item/weapon/spacecash/c200,
+		/obj/item/weapon/spacecash/c200 = /obj/item/weapon/spacecash/c500,
+		/obj/item/weapon/spacecash/c500 = /obj/item/weapon/spacecash/c1000,
+		/obj/item/weapon/spacecash/c1000 = /obj/item/weapon/spacecash,
+	)
+
+	needed_aspects = list(
+		ASPECT_GREED = 1,
+	)
+
+/datum/religion_rites/devaluation/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	for(var/obj/item/weapon/spacecash/cash in range(1, AOG.loc))
+		if(istype(cash, /obj/item/weapon/spacecash/ewallet))
+			continue
+		if(swap[cash.type])
+			var/swapping = swap[cash.type]
+			new swapping(cash.loc)
+			if(prob(20))
+				step(swapping, pick(alldirs))
+			qdel(cash)
+	return TRUE
+
+/datum/religion_rites/devaluation/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
+	for(var/obj/item/weapon/spacecash/cash in range(1, AOG.loc))
+		if(prob(20))
+			step(cash, pick(alldirs))
+			break
+	return TRUE
+
+/*
+ * Upgrade
+ * In the radius from the altar, changes stock_parts withs rating to stock_parts with rating + 1
+ */
+/datum/religion_rites/upgrade
+	name = "Upgrade"
+	desc = "Upgrade scientific things."
+	ritual_length = (2 SECONDS) //(1 MINUTES)
+	ritual_invocations = list("All able to hear, hear!...", //TODO
+							  "...This message is dedicated to all of you....",
+							  "...may all of you be healthy and smart...",
+							  "...let your jokes be funny...",
+							  "...and the soul be pure!...",
+							  "...This screech will be devoted to all jokes and clowns....",)
+	invoke_msg = "...So hear it!!!"
+	favor_cost = 200
+
+	//rating of stock_parts = items with this rating
+	var/static/list/swap = list(
+		1 = list(
+			/obj/item/weapon/stock_parts/capacitor = /obj/item/weapon/stock_parts/capacitor/adv,
+			/obj/item/weapon/stock_parts/scanning_module = /obj/item/weapon/stock_parts/scanning_module/adv,
+			/obj/item/weapon/stock_parts/manipulator = /obj/item/weapon/stock_parts/manipulator/nano,
+			/obj/item/weapon/stock_parts/micro_laser = /obj/item/weapon/stock_parts/micro_laser/high,
+			/obj/item/weapon/stock_parts/matter_bin = /obj/item/weapon/stock_parts/matter_bin/adv,
+		),
+		2 = list (
+			/obj/item/weapon/stock_parts/capacitor/adv = /obj/item/weapon/stock_parts/capacitor/super,
+			/obj/item/weapon/stock_parts/scanning_module/adv = /obj/item/weapon/stock_parts/scanning_module/phasic,
+			/obj/item/weapon/stock_parts/manipulator/nano = /obj/item/weapon/stock_parts/manipulator/pico,
+			/obj/item/weapon/stock_parts/micro_laser/high = /obj/item/weapon/stock_parts/micro_laser/ultra,
+			/obj/item/weapon/stock_parts/matter_bin/adv = /obj/item/weapon/stock_parts/matter_bin/super,
+		),
+		3 = list(
+			/obj/item/weapon/stock_parts/capacitor/super = /obj/item/weapon/stock_parts/capacitor/quadratic,
+			/obj/item/weapon/stock_parts/scanning_module/phasic = /obj/item/weapon/stock_parts/scanning_module/triphasic,
+			/obj/item/weapon/stock_parts/manipulator/pico = /obj/item/weapon/stock_parts/manipulator/femto,
+			/obj/item/weapon/stock_parts/micro_laser/ultra = /obj/item/weapon/stock_parts/micro_laser/quadultra,
+			/obj/item/weapon/stock_parts/matter_bin/super = /obj/item/weapon/stock_parts/matter_bin/bluespace,
+		),
+		4 = list(
+			/obj/item/weapon/stock_parts/capacitor/quadratic = /obj/item/weapon/stock_parts/capacitor,
+			/obj/item/weapon/stock_parts/scanning_module/triphasic = /obj/item/weapon/stock_parts/scanning_module,
+			/obj/item/weapon/stock_parts/manipulator/femto = /obj/item/weapon/stock_parts/manipulator,
+			/obj/item/weapon/stock_parts/micro_laser/quadultra = /obj/item/weapon/stock_parts/micro_laser,
+			/obj/item/weapon/stock_parts/matter_bin/bluespace = /obj/item/weapon/stock_parts/matter_bin,
+		),
+	)
+
+	needed_aspects = list(
+		ASPECT_SCIENCE = 1,
+	)
+
+/datum/religion_rites/upgrade/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	for(var/obj/item/weapon/stock_parts/S in range(1, AOG.loc))
+		if(istype(S, /obj/item/weapon/stock_parts/console_screen))
+			continue
+
+		if(swap[S.rating][S.type])
+			var/swapping = swap[S.rating][S.type]
+			new swapping(S.loc)
+			if(prob(20))
+				step(swapping, pick(alldirs))
+			qdel(S)
+
+	return TRUE
+
+/datum/religion_rites/upgrade/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
+	for(var/obj/item/weapon/stock_parts/S in range(1, AOG.loc))
+		if(prob(20))
+			step(S, pick(alldirs))
+			break
 	return TRUE
