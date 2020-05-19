@@ -75,10 +75,13 @@
 	pass_flags = PASSTABLE
 
 /mob/living/simple_animal/hulk/mouse/UnarmedAttack(atom/A)
+	if(hiding)
+		return
 	if(A.reagents && A.reagents.has_reagent("cheese"))
 		qdel(A)
 		maxHealth += 1
 		health += 1
+		visible_message("<span class='notice'>[src] swallows whole [A]! WOW!!!</span>")
 	else
 		return ..()
 
