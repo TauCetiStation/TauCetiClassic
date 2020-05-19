@@ -137,7 +137,7 @@
 							  "...sometimes I dream about cheese...",
 							  "...squeek...",
 							  "...destroy those who dare to stump you!...",
-							  "...mouse of the world, unite!....",)
+							  "...mice of the world, unite!....",)
 	invoke_msg = "...MEGAMOUSE!!!"
 	favor_cost = 50
 
