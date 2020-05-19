@@ -177,12 +177,14 @@ var/global/combos_cheat_sheet = ""
  * Handles all unarmed attacks, to unite all the attack_paw, attack_slime, attack_human, etc procs.
  * If you want your mob with a special snowflake attack_*proc* to be able to do combos, it should
  * be calling this proc somewhere.
+ *
+ * Return TRUE if unarmed attack was "succesful".
  */
 /mob/living/proc/attack_unarmed(mob/living/attacker)
 	// Why does this exist? ~Luduk
 	if(isturf(loc) && istype(loc.loc, /area/start))
 		to_chat(attacker, "<span class='warning'>No attacking people at spawn!</span>")
-		return
+		return FALSE
 
 	if((attacker != src) && check_shields(0, attacker.name, get_dir(attacker, src)))
 		visible_message("<span class='warning bold'>[attacker] attempted to touch [src]!</span>")
@@ -270,10 +272,10 @@ var/global/combos_cheat_sheet = ""
 	playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	if(show_message)
 		visible_message("<span class='warning'><B>[attacker] pushed [src]!</B></span>")
+	return TRUE
 
 /mob/living/proc/grabReaction(mob/living/carbon/human/attacker, show_message = TRUE)
-	attacker.Grab(src)
-	return TRUE
+	return attacker.tryGrab(src)
 
 /mob/living/proc/hurtReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	attacker.do_attack_animation(src)
@@ -311,6 +313,7 @@ var/global/combos_cheat_sheet = ""
 		visible_message("<span class='warning'><B>[attacker] [damVerb]ed [src]!</B></span>")
 
 	apply_damage(damage, damType, BP, armor_block, damFlags)
+	return TRUE
 
 // Add this proc to /Life() of any mob for it to be able to perform combos.
 /mob/living/proc/handle_combat()

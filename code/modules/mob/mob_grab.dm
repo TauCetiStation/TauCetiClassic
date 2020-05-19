@@ -40,51 +40,36 @@
 		return FALSE
 	return TRUE
 
-/mob/proc/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+/mob/proc/tryGrab(atom/movable/target, force_state, show_warnings = TRUE)
 	if(!canGrab(target, show_warnings))
-		return
+		return FALSE
 
 	for(var/obj/item/weapon/grab/G in GetGrabs())
 		if(G.affecting == target)
 			if(show_warnings)
 				to_chat(src, "<span class='warning'>You already grabbed [target]</span>")
-			return
+			return FALSE
+
 	if(!target.Adjacent(src))
-		return
+		return FALSE
 	if(get_active_hand() && get_inactive_hand())
 		if(show_warnings)
-			to_chat(src, "<span class='warning'>You are holding too many stuff already.</span>")
-		return
+			to_chat(src, "<span class='warning'>You are holding too much stuff already.</span>")
+		return FALSE
 
-	if(SEND_SIGNAL(target, COMSIG_MOVABLE_GRABBED, src, force_state, show_warnings) & COMPONENT_PREVENT_GRAB)
-		return
+	if(SEND_SIGNAL(target, COMSIG_MOVABLE_TRY_GRAB, src, force_state, show_warnings) & COMPONENT_PREVENT_GRAB)
+		return FALSE
 
-	if(ismob(target))
-		var/mob/M = target
-		if(!(M.status_flags & CANPUSH))
-			return
-		if(M.buckled)
-			if(show_warnings)
-				to_chat(src, "<span class='notice'>You cannot grab [M], \he is buckled in!</span>")
-			return
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.w_uniform)
-				H.w_uniform.add_fingerprint(src)
-			if(H.pull_damage())
-				if(show_warnings)
-					to_chat(src, "<span class='danger'>Grabbing \the [H] in their current condition would probably be a bad idea.</span>")
-		M.inertia_dir = 0
+	Grab(target, force_state, show_warnings)
+	return TRUE
 
-	new /obj/item/weapon/grab(src, target, force_state)
+/mob/proc/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+	return
 
 /obj/item/weapon/grab/atom_init(mapload, mob/victim, initial_state = GRAB_PASSIVE)
 	. = ..()
 	assailant = loc
 	affecting = victim
-
-	if(affecting.anchored)
-		return INITIALIZE_HINT_QDEL
 
 	hud = new /obj/screen/grab(src)
 	hud.master = src

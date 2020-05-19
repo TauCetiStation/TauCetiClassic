@@ -96,8 +96,8 @@
 	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
 				"miss_sound" = retMissSound)
 
-/mob/living/carbon/alien/facehugger/Grab(atom/movable/target, force_state, show_warnings = TRUE)
-	if((!ishuman(target) && !ismonkey(target)))
+/mob/living/carbon/alien/facehugger/canGrab(atom/movable/target, show_warnings = TRUE)
+	if(!ishuman(target) && !ismonkey(target))
 		if(show_warnings)
 			to_chat(src, "<span class='warning'>[target] is incompatible.</span>")
 		return FALSE
@@ -113,7 +113,9 @@
 		if(show_warnings)
 			to_chat(src, "<span class='warning'>[target] looks dead.</span>")
 		return FALSE
+	return ..()
 
+/mob/living/carbon/alien/facehugger/Grab(atom/movable/target, force_state, show_warnings = TRUE)
 	var/obj/item/weapon/fh_grab/G = new /obj/item/weapon/fh_grab(src, target)
 
 	put_in_active_hand(G)

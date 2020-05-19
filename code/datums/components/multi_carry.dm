@@ -202,7 +202,7 @@
 	RegisterSignal(carrier, list(COMSIG_MOVABLE_MOVED), .proc/check_proximity)
 	RegisterSignal(carrier, list(COMSIG_ATOM_CANPASS), .proc/check_canpass)
 	// Prevents funny bugs from occuring.
-	RegisterSignal(carrier, list(COMSIG_MOVABLE_GRABBED), .proc/on_grabbed)
+	RegisterSignal(carrier, list(COMSIG_MOVABLE_TRY_GRAB), .proc/on_grabbed)
 	RegisterSignal(carrier, list(COMSIG_MOVABLE_WADDLE), .proc/carrier_waddle)
 	RegisterSignal(carrier, list(COMSIG_LIVING_CLICK_CTRL), .proc/on_ctrl_click)
 	RegisterSignal(carrier, list(COMSIG_LIVING_CLICK_CTRL_SHIFT), .proc/on_ctrl_shift_click)
@@ -215,7 +215,7 @@
 		COMSIG_CLIENTMOB_POSTMOVE,
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_ATOM_CANPASS,
-		COMSIG_MOVABLE_GRABBED,
+		COMSIG_MOVABLE_TRY_GRAB,
 		COMSIG_MOVABLE_WADDLE,
 		COMSIG_LIVING_CLICK_CTRL,
 		COMSIG_LIVING_CLICK_CTRL_SHIFT,
