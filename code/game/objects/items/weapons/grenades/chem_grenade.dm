@@ -172,7 +172,8 @@
 	spawn(50)		   //To make sure all reagents can work
 		qdel(src)	   //correctly before deleting the grenade.
 
-/obj/item/weapon/grenade/chem_grenade/Crossed(atom/movable/AM as mob|obj)
+/obj/item/weapon/grenade/chem_grenade/Crossed(atom/movable/AM)
+	. = ..()
 	if (detonator)
 		detonator.Crossed(AM)
 

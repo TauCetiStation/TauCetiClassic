@@ -59,6 +59,8 @@
 
 	voice = GetVoice()
 
+	handle_combat()
+
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD && !IS_IN_STASIS(src))
 		if(SSmob.times_fired%4==2 || failed_last_breath || (health < config.health_threshold_crit)) 	//First, resolve location and get a breath
@@ -168,7 +170,7 @@
 			visible_message("<span class='danger'>[src] starts having a seizure!</span>", self_message = "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
 			make_jittery(1000)
-	if (disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
+	if ((disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH)) && !reagents.has_reagent("dextromethorphan"))
 		if ((prob(5) && paralysis <= 1))
 			drop_item()
 			spawn( 0 )
@@ -1046,7 +1048,7 @@
 			update_inv_wear_suit()
 	else
 		if((has_quirk(/datum/quirk/fatness) || overeatduration >= 500) && isturf(loc))
-			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
+			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !species.flags[NO_FAT])
 				ADD_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 				update_body()
 				update_mutantrace()

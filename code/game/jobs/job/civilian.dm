@@ -10,6 +10,7 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargoGold
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
+	salary = 160
 	minimal_player_ingame_minutes = 960
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
 
@@ -42,6 +43,7 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
+	salary = 50
 	minimal_player_ingame_minutes = 480
 
 /datum/job/cargo_tech/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -69,6 +71,7 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
+	salary = 80
 	minimal_player_ingame_minutes = 480
 
 /datum/job/mining/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -103,6 +106,7 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mailsorting, access_recycler)
+	salary = 60
 	minimal_player_ingame_minutes = 480
 	restricted_species = list(DIONA)
 
@@ -132,6 +136,7 @@
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_bar)
+	salary = 40
 	minimal_player_ingame_minutes = 240
 	restricted_species = list(TAJARAN)
 
@@ -173,6 +178,7 @@
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_kitchen)
+	salary = 40
 	alt_titles = list("Cook")
 	minimal_player_ingame_minutes = 240
 	restricted_species = list(TAJARAN)
@@ -201,6 +207,7 @@
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_hydroponics) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
+	salary = 60
 	alt_titles = list("Hydroponicist")
 	minimal_player_ingame_minutes = 120
 
@@ -236,6 +243,7 @@
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_janitor, access_maint_tunnels)
+	salary = 50
 	minimal_player_ingame_minutes = 120
 
 /datum/job/janitor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -263,6 +271,7 @@
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_barber)
+	salary = 40
 	alt_titles = list("Stylist")
 	minimal_player_ingame_minutes = 120
 
@@ -298,6 +307,7 @@
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_library)
+	salary = 40
 	alt_titles = list("Journalist")
 	minimal_player_ingame_minutes = 120
 
@@ -328,6 +338,7 @@
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/int
 	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engine, access_engineering_lobby)
+	salary = 200
 	minimal_player_ingame_minutes = 1560
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX)
 
@@ -368,6 +379,7 @@
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/clown
 	access = list(access_clown, access_theatre)
+	salary = 20
 	minimal_player_ingame_minutes = 120
 
 /datum/job/clown/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -402,6 +414,7 @@
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/mime
 	access = list(access_mime, access_theatre)
+	salary = 20
 
 /datum/job/mime/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

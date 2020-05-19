@@ -69,7 +69,7 @@
 		..()
 		return
 
-	if(user.a_intent == "hurt")
+	if(user.a_intent == INTENT_HARM)
 		if(!..()) return
 		//H.apply_effect(5, WEAKEN, 0)
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
@@ -95,7 +95,7 @@
 			charges--
 		H.visible_message("<span class='danger'>[M] has been attacked with the [src] by [user]!</span>")
 
-		if(!(user.a_intent == "hurt"))
+		if(!(user.a_intent == INTENT_HARM))
 			user.attack_log += "\[[time_stamp()]\]<font color='red'> attempted to stun [H.name] ([H.ckey]) with [src.name]</font>"
 			H.attack_log += "\[[time_stamp()]\]<font color='orange'> stunned by [user.name] ([user.ckey]) with [src.name]</font>"
 			msg_admin_attack("[key_name(user)] attempted to stun [key_name(H)] with [src.name]", user)

@@ -108,7 +108,8 @@
 		icon_state = "beartrap[armed]"
 		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"].</span>")
 
-/obj/item/weapon/legcuffs/beartrap/Crossed(AM as mob|obj)
+/obj/item/weapon/legcuffs/beartrap/Crossed(atom/movable/AM)
+	. = ..()
 	if(armed)
 		if(ishuman(AM))
 			if(isturf(src.loc))
@@ -126,7 +127,6 @@
 			SA.health -= 20
 
 		icon_state = "beartrap[armed]"
-	..()
 
 /obj/item/weapon/legcuffs/bola
 	name = "bola"
@@ -874,7 +874,7 @@
 	icon_state = "broom_sauna"
 
 /obj/item/weapon/broom/attack(mob/living/carbon/human/M, mob/living/user, def_zone)
-	if(!istype(M) || user.a_intent == "hurt")
+	if(!istype(M) || user.a_intent == INTENT_HARM)
 		return ..()
 	if(wet - 5 < 0)
 		to_chat(user, "<span class='userdanger'>Soak this [src] first!</span>")

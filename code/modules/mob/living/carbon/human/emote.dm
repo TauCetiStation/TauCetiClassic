@@ -62,10 +62,11 @@
 			miming_message = "appears to groan!"
 			if(auto)
 				conditions_for_emote = (!species.flags[NO_PAIN])
-				cloud_emote = "cloud-pain"
 				sound_priority = SOUND_PRIORITY_MEDIUM
 				message = pick("grunts in pain!", "grunts!", "wrinkles [his_macro] face and grunts!")
 				emote_sound = (gender == FEMALE) ? pick(SOUNDIN_FEMALE_LIGHT_PAIN) : pick(SOUNDIN_MALE_LIGHT_PAIN)
+			cloud_emote = "cloud-pain"
+			add_combo_value_all(10)
 
 		if("groan")
 			message_type = SHOWMSG_AUDIO
@@ -82,10 +83,11 @@
 					emote_sound = pick((gender == FEMALE) ? SOUNDIN_FEMALE_WHINER_PAIN : SOUNDIN_MALE_WHINER_PAIN)
 				else
 					emote_sound = pick((gender == FEMALE) ? SOUNDIN_FEMALE_PASSIVE_PAIN : SOUNDIN_MALE_PASSIVE_PAIN)
+			cloud_emote = "cloud-pain"
+			add_combo_value_all(10)
 
 		if ("scream")
 			message_type = SHOWMSG_AUDIO
-			cloud_emote = "cloud-scream"
 			message = pick("screams loudly!", "screams!")
 			mute_message = pick("opens their mouth like a fish gasping for air!", "twists their face into an agonised expression!", "makes a very hurt expression!")
 			muzzled_message = pick("makes a loud noise!", "groans soundly!", "screams silently!")
@@ -96,6 +98,8 @@
 				sound_priority = SOUND_PRIORITY_HIGH
 				message = pick("screams in agony!", "writhes in heavy pain and screams!", "screams in pain as much as [he_macro] can!", "screams in pain loudly!")
 				emote_sound = pick((gender == FEMALE) ? SOUNDIN_FEMALE_HEAVY_PAIN : SOUNDIN_MALE_HEAVY_PAIN)
+			cloud_emote = "cloud-scream"
+			add_combo_value_all(10)
 
 		if ("cough")
 			message_type = SHOWMSG_AUDIO
@@ -294,6 +298,11 @@
 			message = "salutes."
 			conditions_for_emote = ONE_HAND_IS_USABLE && (get_species() != ZOMBIE)
 
+		if ("pray")
+			message_type = SHOWMSG_VISUAL
+			message = "prays."
+			INVOKE_ASYNC(src, /mob.proc/pray_animation)
+
 // ========== SPECIAL ==========
 
 		if ("custom")
@@ -382,6 +391,7 @@
 
 	if(cloud_emote)
 		var/image/emote_bubble = image('icons/mob/emote.dmi', src, cloud_emote, EMOTE_LAYER)
+		emote_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		flick_overlay(emote_bubble, clients, 30)
 		QDEL_IN(emote_bubble, 3 SECONDS)
 

@@ -710,7 +710,7 @@
 				to_chat(user, "There's already a powercell installed.")
 		return
 
-	else if(iswelder(W) && user.a_intent != "hurt")
+	else if(iswelder(W) && user.a_intent != INTENT_HARM)
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_MELEE)
 		if (WT.use(0,user))
@@ -958,7 +958,7 @@
 	set name = "Enter Exosuit"
 	set src in oview(1)
 
-	if (usr.stat || !ishuman(usr))
+	if (usr.incapacitated() || !ishuman(usr))
 		return
 	if (usr.buckled)
 		to_chat(usr,"<span class='warning'>You can't climb into the exosuit while buckled!</span>")
@@ -1459,7 +1459,7 @@
 	if(href_list["close"])
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
-	if(usr.stat > 0)
+	if(usr.incapacitated())
 		return
 	var/datum/topic_input/F = new /datum/topic_input(href,href_list)
 	if(href_list["select_equip"])

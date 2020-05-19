@@ -8,9 +8,15 @@
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
-	return
+	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
+		return TRUE
+	return FALSE
 
 /atom/movable/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	if(.) // Clickplace, no need for attack animation.
+		return
+
 	if(!(W.flags & NOATTACKANIMATION))
 		user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -60,6 +66,11 @@
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M, user, src))
 			return 0
+
+	if(stab_eyes && user.a_intent != INTENT_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))
+		if((CLUMSY in user.mutations) && prob(50))
+			M = user
+		return eyestab(M,user)
 
 	// Knifing
 	if(edge)

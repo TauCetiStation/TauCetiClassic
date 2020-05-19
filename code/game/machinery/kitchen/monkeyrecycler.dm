@@ -77,7 +77,7 @@
 
 	default_deconstruction_crowbar(O)
 
-	if (src.stat != CONSCIOUS) //NOPOWER etc
+	if (src.stat) //NOPOWER etc
 		return
 	if (istype(O, /obj/item/weapon/holder/monkey))
 		var/mob/living/G

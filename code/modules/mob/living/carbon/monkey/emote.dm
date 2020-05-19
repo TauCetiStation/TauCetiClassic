@@ -125,6 +125,10 @@
 			else
 				message = "<B>The [src.name]</B> coughs!"
 				m_type = SHOWMSG_AUDIO
+		if ("pray")
+			m_type = SHOWMSG_VISUAL
+			message = "<b>[src]</b> prays."
+			INVOKE_ASYNC(src, /mob.proc/pray_animation)
 		if("help")
 			var/text = "choke, "
 			if(istype(src,/mob/living/carbon/monkey/diona))

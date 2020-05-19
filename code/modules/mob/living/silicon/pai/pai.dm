@@ -193,7 +193,7 @@
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (INTENT_HELP)
 			visible_message("<span class='notice'>[M] caresses [src]'s casing with its scythe like arm.</span>")
 
 		else //harm

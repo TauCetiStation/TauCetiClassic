@@ -206,7 +206,8 @@ var/list/admin_verbs_whitelist = list(
 	/datum/admins/proc/toggle_job_restriction
 	)
 var/list/admin_verbs_event = list(
-	/client/proc/event_map_loader
+	/client/proc/event_map_loader,
+	/client/proc/admin_crew_salary
 	)
 
 //verbs which can be hidden - needs work
@@ -1020,6 +1021,14 @@ var/list/admin_verbs_hideable = list(
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
 
+/client/proc/admin_crew_salary()
+	set name = "Salary"
+	set category = "Event"
+	if(holder)
+		holder.change_crew_salary()
+	feedback_add_details("admin_verb","Salary") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return
+
 //////////////////////////////
 // Map loader
 //////////////////////////////
@@ -1140,7 +1149,8 @@ var/centcom_barriers_stat = 1
 	var/active = 1
 	var/lchannel = 999
 
-/obj/effect/landmark/trololo/Crossed(mob/M)
+/obj/effect/landmark/trololo/Crossed(atom/movable/AM)
+	. = ..()
 	if(!active) return
 	/*if(istype(M, /mob/living/carbon))
 		M.playsound_local(null, melody, VOL_EFFECTS_MASTER, 20, FALSE, channel = lchannel, wait = TRUE, ignore_environment = TRUE)*/

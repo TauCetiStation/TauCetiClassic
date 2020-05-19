@@ -17,7 +17,7 @@
 	response_disarm = "shoves"
 	response_harm = "strikes"
 	status_flags = 0
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	weather_immunities = list("ash", "acid")
@@ -76,7 +76,7 @@
 	melee_damage_lower = 12
 	melee_damage_upper = 12
 	attacktext = "bites into"
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	attack_sound = list('sound/weapons/bladeslice.ogg')
 	ranged_cooldown_cap = 4
 	aggro_vision_range = 9
@@ -155,7 +155,7 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	attacktext = "barrels into"
-	a_intent = "help"
+	a_intent = INTENT_HELP
 	throw_message = "sinks in slowly, before being pushed out of "
 	status_flags = CANPUSH
 	search_objects = 1
@@ -387,7 +387,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath/proc/handle_preattack()
 	if(ranged_cooldown <= 2 && !pre_attack)
 		pre_attack++
-	if(!pre_attack || stat || stance == HOSTILE_STANCE_IDLE)
+	if(!pre_attack || incapacitated() || stance == HOSTILE_STANCE_IDLE)
 		return
 	icon_state = "Goliath_preattack"
 
@@ -443,11 +443,11 @@
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
 	qdel(src)
 
-/obj/effect/goliath_tentacle/Crossed(AM as mob|obj)
+/obj/effect/goliath_tentacle/Crossed(atom/movable/AM)
 	if(isliving(AM))
 		Trip()
 		return
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
 	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)

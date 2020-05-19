@@ -69,6 +69,9 @@
 	*/
 	var/list/sprite_sheets_obj = null
 
+	// This thing can be used to stab eyes out.
+	var/stab_eyes = FALSE
+
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0
@@ -190,6 +193,12 @@
 				message += "<span class='warning bold'>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl.</span><span class='notice bold'>Type: [blood_type]</span><br>"
 			else
 				message += "<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span><br>"
+		var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
+		switch(Heart.heart_status)
+			if(HEART_FAILURE)
+				message += "<span class='notice'><font color='red'>Warning! Subject's heart stopped!</font></span><br>"
+			if(HEART_FIBR)
+				message += "<span class='notice'>Subject's Heart status: <font color='blue'>Attention! Subject's heart fibrillating.</font></span><br>"
 		message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
 
 	if(!output_to_chat)
@@ -719,12 +728,9 @@
 
 	if(!(usr)) //BS12 EDIT
 		return
-	if(!usr.canmove || usr.stat || usr.restrained() || !Adjacent(usr))
+	if(usr.incapacitated() || !Adjacent(usr))
 		return
 	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
-		to_chat(usr, "<span class='warning'>You can't pick things up!</span>")
-		return
-	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
 		to_chat(usr, "<span class='warning'>You can't pick things up!</span>")
 		return
 	if(src.anchored) //Object isn't anchored
@@ -879,12 +885,12 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
-		IO.damage += rand(3,4)
+		IO.damage += rand(force * 0.5, force)
 		if(IO.damage >= IO.min_bruised_damage)
 			if(H.stat != DEAD)
 				if(IO.robotic <= 1) //robot eyes bleeding might be a bit silly
 					to_chat(H, "<span class='warning'>Your eyes start to bleed profusely!</span>")
-			if(prob(50))
+			if(prob(10 * force))
 				if(H.stat != DEAD)
 					to_chat(H, "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>")
 					H.drop_item()
@@ -895,13 +901,11 @@
 				if(H.stat != DEAD)
 					to_chat(H, "<span class='warning'>You go blind!</span>")
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-		BP.take_damage(7)
+		BP.take_damage(force)
 	else
-		M.take_bodypart_damage(7)
+		M.take_bodypart_damage(force)
 
-	M.eye_blurry += rand(3,4)
-
-	return
+	M.eye_blurry += rand(force * 0.5, force)
 
 /obj/item/clean_blood()
 	. = ..() // FIX: If item is `uncleanable` we shouldn't nullify `dirt_overlay`

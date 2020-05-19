@@ -1,3 +1,6 @@
+#define MASSAGE_RHYTM_RIGHT   11
+#define MASSAGE_ALLOWED_ERROR 2
+
 /mob/living/carbon/human
 	name = "unknown"
 	real_name = "unknown"
@@ -16,6 +19,10 @@
 	var/metadata
 	var/seer = 0 // used in cult datum /cult/seer
 	var/gnomed = 0 // timer used by gnomecurse.dm
+	var/hulk_activator = null
+
+	var/last_massage = 0
+	var/massages_done_right = 0
 
 	throw_range = 2
 
@@ -90,6 +97,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
+	hulk_activator = pick(HULK_ACTIVATION_OPTIONS) //in __DEFINES/geneticts.dm
 
 	if(!species)
 		if(new_species)
@@ -696,6 +704,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(NO_SHOCK in src.mutations)
 		return 0 //#Z2 no shock with that mutation.
 
+	if((HULK in mutations) && hulk_activator == ACTIVATOR_ELECTRIC_SHOCK) //for check to transformation Hulk.
+		to_chat(src, "<span class='notice'>You feel pain, but you like it!</span>")
+		try_mutate_to_hulk()
+
 	if(!def_zone)
 		def_zone = pick(BP_L_ARM , BP_R_ARM)
 
@@ -941,7 +953,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 						if (R.fields["id"] == E.fields["id"])
 							if(hasHUD(usr,"security"))
 								var/t1 = sanitize(input("Add Comment:", "Sec. records", null, null)  as message)
-								if ( !(t1) || usr.stat || usr.restrained() || !(hasHUD(usr,"security")) )
+								if ( !(t1) || usr.incapacitated() || !(hasHUD(usr,"security")) )
 									return
 								var/counter = 1
 								while(R.fields[text("com_[]", counter)])
@@ -1070,7 +1082,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 						if (R.fields["id"] == E.fields["id"])
 							if(hasHUD(usr,"medical"))
 								var/t1 = sanitize(input("Add Comment:", "Med. records", null, null)  as message)
-								if ( !(t1) || usr.stat || usr.restrained() || !(hasHUD(usr,"medical")) )
+								if ( !(t1) || usr.incapacitated() || !(hasHUD(usr,"medical")) )
 									return
 								var/counter = 1
 								while(R.fields[text("com_[]", counter)])
@@ -1548,7 +1560,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	set src in view(1)
 	var/self = 0
 
-	if(usr.stat == 1 || usr.restrained() || !isliving(usr)) return
+	if(usr.incapacitated())
+		return
 
 	if(usr == src)
 		self = 1
@@ -1648,7 +1661,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	set name = "Write in blood"
 	set desc = "Use blood on your hands to write a short message on the floor or a wall, murder mystery style."
 
-	if (src.stat)
+	if (incapacitated())
 		return
 
 	if (usr != src)
@@ -1740,7 +1753,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					return FALSE
 			if(PHORONGUARD)
 				if(!pierce_armor)
-					if(user.a_intent == I_HURT)
+					if(user.a_intent == INTENT_HARM)
 						if(error_msg)
 							to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 						return FALSE
@@ -1833,7 +1846,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 
 	var/prev_intent = a_intent
-	a_intent_change("hurt")
+	a_intent_change(INTENT_HARM)
 
 	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/space/vox/stealth))
 		for(var/obj/item/clothing/suit/space/vox/stealth/V in list(wear_suit))
@@ -1878,7 +1891,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(last_special > world.time)
 		return
 
-	if(stat || paralysis || stunned || weakened || lying)
+	if(incapacitated())
 		to_chat(src, "<span class='warning'>You cannot do that in your current state.</span>")
 		return
 
@@ -1912,7 +1925,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	set name = "Air sample"
 	set desc = "pull out the tongue and understand the approximate state of the air"
 
-	if(stat)
+	if(incapacitated())
+		to_chat(src, "<span class='notice'>You can not do this in your current state.</span>")
 		return
 	if(wear_mask && wear_mask.flags & HEADCOVERSMOUTH || head && head.flags & MASKCOVERSMOUTH)
 		to_chat(usr,"<span class='notice'>I can't get my tongue out.</span>")
@@ -1944,6 +1958,75 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		to_chat(src,"<span class='notice'>Temperature around [round(mixture.temperature-T0C, 5)]&deg;C.</span>")
 		return
 	to_chat(src,"<span class='warning'>Well... I need my mask back.</span>")
+
+/mob/living/carbon/human/proc/IPC_change_screen()
+	set category = "IC"
+	set name = "Change IPC Screen"
+	set desc = "Allow change monitor type"
+	if(stat)
+		return
+	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
+	if(!BP || BP.is_stump)
+		return
+
+	if(!BP.screen_toggle)
+		set_light(BP.screen_brightness)
+		BP.screen_toggle = TRUE
+
+	var/list/valid_hairstyles = list()
+	for(var/hairstyle in hair_styles_list)
+		var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
+		if(!(species.name in S.species_allowed))
+			continue
+		if(BP.ipc_head != S.ipc_head_compatible)
+			continue
+		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
+
+	var/new_h_style = ""
+	if(valid_hairstyles.len == 1)
+		new_h_style = valid_hairstyles[1]
+	else
+		new_h_style = input(src, "Choose your IPC screen style:", "Character Preference")  as null|anything in valid_hairstyles
+
+	if(new_h_style)
+		var/datum/sprite_accessory/SA = valid_hairstyles[new_h_style]
+		if(SA.do_colouration)
+			var/new_hair = input(src, "Choose your IPC screen colour:", "Character Preference") as color|null
+			if(new_hair)
+				r_hair = hex2num(copytext(new_hair, 2, 4))
+				g_hair = hex2num(copytext(new_hair, 4, 6))
+				b_hair = hex2num(copytext(new_hair, 6, 8))
+
+		h_style = new_h_style
+	if(h_style == "IPC off screen")
+		random_ipc_monitor(BP.ipc_head)
+
+	update_hair()
+
+/mob/living/carbon/human/proc/IPC_toggle_screen()
+	set category = "IC"
+	set name = "Toggle IPC Screen"
+	set desc = "Allow toggle monitor"
+
+	if(stat)
+		return
+	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
+	if(!BP || (BP.is_stump))
+		set_light(0)
+		return
+
+	BP.screen_toggle = !BP.screen_toggle
+	if(BP.screen_toggle)
+		IPC_change_screen()
+		set_light(BP.screen_brightness)
+	else
+		r_hair = 15
+		g_hair = 15
+		b_hair = 15
+		set_light(0)
+		if(BP.ipc_head == "Default")
+			h_style = "IPC off screen"
+		update_hair()
 
 /mob/living/carbon/human/has_brain()
 	if(organs_by_name[O_BRAIN])
@@ -2076,3 +2159,104 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			update_bandage()
 			attack_log += "\[[time_stamp()]\] <font color='orange'>Had their bandages removed by [usr.name] ([usr.ckey]).</font>"
 			usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) bandages.</font>"
+
+/mob/living/carbon/human/proc/perform_cpr(mob/living/carbon/human/user)
+	if(species.flags[NO_BLOOD])
+		return
+	if(user.is_busy(src))
+		return
+	var/needed_massages = 12
+	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
+	var/obj/item/organ/internal/heart/Lungs = organs_by_name[O_LUNGS]
+	if(check_thickmaterial(target_zone = BP_CHEST))
+		to_chat(user, "<span class='warning'>You have to strip [src] to perform CPR!.</span>")
+		return
+
+	if(HAS_TRAIT(src, TRAIT_FAT))
+		needed_massages = 20
+	if(Lungs && !Lungs.is_bruised())
+		adjustOxyLoss(-1.5)
+	if(!Heart)
+		return
+
+	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
+	if((world.time - last_massage) > 5 SECONDS && do_mob(user, src, HUMAN_STRIP_DELAY))
+		visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
+		to_chat(user, "<span class='warning'>Repeat at least every second.</span>")
+		massages_done_right = 0
+		return_to_body_dialog()
+		if(health > config.health_threshold_dead)
+			Heart.heart_fibrillate()
+		last_massage = world.time
+		return
+	else if((world.time - timeofdeath) < DEFIB_TIME_LIMIT)
+
+		if(massages_done_right > needed_massages)
+			if(health < config.health_threshold_dead)
+				to_chat(user, "<span class='warning'>[src]'s heart did not start to beat!</span>")
+			else
+				to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
+				reanimate_body()
+				stat = UNCONSCIOUS
+				massages_done_right = 0
+				Heart.heart_normalize()
+		else if(massages_done_right < -2)
+			to_chat(user, "<span class='warning'>[src]'s heart stopped!</span>")
+			if(prob(25))
+				Heart.damage += 2
+			massages_done_right = 0
+			Heart.heart_stop()
+		else
+			if(health > config.health_threshold_dead)
+				Heart.heart_fibrillate()
+
+			if(Heart.damage < 50)
+				if(last_massage > world.time - MASSAGE_RHYTM_RIGHT - MASSAGE_ALLOWED_ERROR && last_massage < world.time - MASSAGE_RHYTM_RIGHT + MASSAGE_ALLOWED_ERROR)
+					massages_done_right++
+					to_chat(user, "<span class='warning'>You've hit right to the beat.</span>")
+				else
+					massages_done_right--
+					to_chat(user, "<span class='warning'>You've skipped the beat.</span>")
+		last_massage = world.time
+
+		if(op_stage.ribcage != 2 && prob(5))
+			var/obj/item/organ/external/BP = get_bodypart(BP_CHEST)
+			BP.fracture()
+			to_chat(user, "<span class='warning'>You hear cracking in [src]'s chest!.</span>")
+
+/mob/living/carbon/human/proc/return_to_body_dialog()
+	if (client) //in body?
+		playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+	else if(mind)
+		for(var/mob/dead/observer/ghost in player_list)
+			if(ghost.mind == mind && ghost.can_reenter_corpse)
+				ghost.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+				var/answer = alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate","Yes","No")
+				if(answer == "Yes")
+					ghost.reenter_corpse()
+				break
+
+/mob/living/carbon/human/proc/reanimate_body()
+	var/deadtime = world.time - timeofdeath
+	tod = null
+	timeofdeath = 0
+	dead_mob_list -= src
+	update_health_hud()
+	apply_brain_damage(deadtime)
+
+/mob/living/carbon/human/proc/apply_brain_damage(var/deadtime)
+	if(deadtime < DEFIB_TIME_LOSS)
+		return
+
+	if(!should_have_organ(O_BRAIN))
+		return //no brain
+
+	var/obj/item/organ/internal/brain/brain = organs_by_name[O_BRAIN]
+	if(!brain)
+		return //no brain
+
+	var/brain_damage = CLAMP((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, getBrainLoss(), MAX_BRAIN_DAMAGE)
+	setBrainLoss(brain_damage)
+
+#undef MASSAGE_RHYTM_RIGHT
+#undef MASSAGE_ALLOWED_ERROR

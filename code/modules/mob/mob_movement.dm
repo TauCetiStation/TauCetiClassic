@@ -1,4 +1,10 @@
 /mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	var/retVal = SEND_SIGNAL(src, COMSIG_ATOM_CANPASS, mover, target, height, air_group)
+	if(retVal == COMPONENT_CANPASS)
+		return TRUE
+	else if(retVal == COMPONENT_CANTPASS)
+		return FALSE
+
 	if(air_group || (height==0))
 		return 1
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
@@ -50,13 +56,15 @@
 /client/Northwest()
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
-		if(!C.get_active_hand())
+		if(!C.get_active_hand() && !C.drop_combo_element())
 			to_chat(usr, "<span class='warning'>You have nothing to drop in your hand.</span>")
 			return
 		drop_item()
-	else
+		return
+
+	var/mob/living/L = usr
+	if(!istype(L) || !L.drop_combo_element())
 		to_chat(usr, "<span class='warning'>This mob type cannot drop items.</span>")
-	return
 
 //This gets called when you press the delete button.
 /client/verb/delete_key_pressed()
@@ -121,8 +129,7 @@
 			mob.control_object.loc = get_step(mob.control_object,direct)
 	return
 
-
-/client/Move(n, direct)
+/client/Move(n, direct, forced = FALSE)
 	if(!mob)
 		return // Moved here to avoid nullrefs below
 
@@ -130,11 +137,15 @@
 
 	if(isobserver(mob))	return mob.Move(n,direct)
 
-	if(moving || mob.throwing)	return 0
+	if(!forced)
+		if(moving || mob.throwing)
+			return
 
-	if(world.time < move_delay)	return
+		if(world.time < move_delay)
+			return
 
-	if(mob.stat==DEAD)	return
+	if(!forced && mob.stat)
+		return
 
 /*	// handle possible spirit movement
 	if(istype(mob,/mob/spirit))
@@ -175,7 +186,7 @@
 			direct = pick(cardinal)
 		return mob.buckled.relaymove(mob,direct)
 
-	if(!mob.canmove)
+	if(!forced && !mob.canmove)
 		return
 
 	if(!mob.lastarea)
@@ -193,8 +204,8 @@
 		if(mob.restrained())//Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
-					if(!M.restrained() && M.stat == CONSCIOUS && M.canmove && mob.Adjacent(M))
-						to_chat(src, "<span class='notice'>You're restrained! You can't move!</span>")
+					if(!M.incapacitated() && M.canmove && mob.Adjacent(M))
+						to_chat(src, "<span class='notice'>You're incapacitated! You can't move!</span>")
 						return 0
 					else
 						M.stop_pulling()
@@ -231,6 +242,9 @@
 
 		//We are now going to move
 		moving = 1
+		if(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
+			moving = FALSE
+			return
 		//Something with pulling things
 		if(locate(/obj/item/weapon/grab, mob))
 			move_delay = max(move_delay, world.time + 7)
@@ -283,13 +297,11 @@
 		for (var/obj/item/weapon/grab/G in mob.grabbed_by)
 			G.adjust_position()
 
-		moving = 0
+		moving = FALSE
 		if(mob && .)
-			mob.throwing = 0
+			mob.throwing = FALSE
 
-		return .
-
-	return
+		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_POSTMOVE, n, direct)
 
 /mob/proc/SelfMove(turf/n, direct)
 	return Move(n, direct)
@@ -439,6 +451,10 @@
 /mob/proc/Move_Pulled(atom/A)
 	if (!canmove || restrained() || !pulling)
 		return
+
+	if(SEND_SIGNAL(src, COMSIG_LIVING_MOVE_PULLED, A) & COMPONENT_PREVENT_MOVE_PULLED)
+		return
+
 	if (pulling.anchored)
 		return
 	if (!pulling.Adjacent(src))

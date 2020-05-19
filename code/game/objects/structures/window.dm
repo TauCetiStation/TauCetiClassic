@@ -171,7 +171,7 @@
 	else if(user.dna && user.dna.mutantrace == "adamantine")
 		user.do_attack_animation(src)
 		take_damage(rand(15,25), "generic")
-	else if (user.a_intent == "hurt")
+	else if (user.a_intent == INTENT_HARM)
 		playsound(src, 'sound/effects/glassknock.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("<span class='danger'>[usr.name] bangs against the [src.name]!</span>", \
 							"<span class='danger'>You bang against the [src.name]!</span>", \
@@ -299,7 +299,7 @@
 
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
-			take_damage(W.force)
+			take_damage(W.force, W.damtype)
 			if(health <= 7)
 				anchored = 0
 				update_nearby_icons()

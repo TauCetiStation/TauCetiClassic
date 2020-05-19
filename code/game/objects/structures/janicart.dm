@@ -157,7 +157,7 @@
 	..()
 
 /obj/structure/stool/bed/chair/janitorialcart/attack_hand(mob/user)
-	if(user.a_intent == I_HURT)
+	if(user.a_intent == INTENT_HARM)
 		..()
 		return
 

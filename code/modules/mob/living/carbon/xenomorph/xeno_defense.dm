@@ -15,7 +15,7 @@ This is what happens, when we attack aliens.
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == INTENT_HARM)//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
 
@@ -32,14 +32,14 @@ This is what happens, when we attack aliens.
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (INTENT_HELP)
 			if (health > 0)
 				help_shake_act(M)
 
-		if ("grab")
+		if (INTENT_GRAB)
 			M.Grab(src)
 
-		if ("hurt")
+		if (INTENT_HARM)
 			var/damage = rand(1, 9)
 			if (prob(90))
 				if (HULK in M.mutations)//HULK SMASH
@@ -60,7 +60,7 @@ This is what happens, when we attack aliens.
 				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 				visible_message("<span class='warning'><B>[M] has attempted to punch [src]!</B></span>")
 
-		if ("disarm")
+		if (INTENT_PUSH)
 			if (!lying)
 				if (prob(5))//Very small chance to push an alien down.
 					Weaken(2)
@@ -90,7 +90,7 @@ This is what happens, when we attack aliens.
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (INTENT_HELP)
 			help_shake_act(M)
 		else
 			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
@@ -128,7 +128,7 @@ This is what happens, when we attack aliens.
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (INTENT_HELP)
 			AdjustSleeping(-10 SECONDS)
 			resting = 0
 			AdjustParalysis(-3)

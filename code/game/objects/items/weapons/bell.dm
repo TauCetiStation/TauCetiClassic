@@ -10,9 +10,9 @@
 	m_amt = 75
 
 /obj/item/weapon/bell/attack_hand(mob/user)
-	if (user.a_intent == I_GRAB)
+	if (user.a_intent == INTENT_GRAB)
 		return ..()
-	else if (user.a_intent == I_HURT)
+	else if (user.a_intent == INTENT_HARM)
 		user.visible_message("<span class='warning'>\The [user] hammers \the [src]!</span>")
 		playsound(user, 'sound/items/manydings.ogg', VOL_EFFECTS_MASTER)
 	else

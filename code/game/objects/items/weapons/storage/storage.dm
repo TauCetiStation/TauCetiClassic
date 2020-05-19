@@ -83,7 +83,7 @@
 		if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
 			return
 
-		if (!( usr.restrained() ) && !( usr.stat ))
+		if (!usr.incapacitated())
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))
@@ -129,7 +129,7 @@
 
 	prepare_ui()
 	storage_ui.on_open(user)
-	storage_ui.show_to(user)
+	show_to(user)
 
 /obj/item/weapon/storage/proc/prepare_ui()
 	if(!storage_ui)
@@ -385,7 +385,7 @@
 	set name = "Empty Contents"
 	set category = "Object"
 
-	if((!ishuman(usr) && (src.loc != usr)) || usr.stat || usr.restrained())
+	if((!ishuman(usr) && (src.loc != usr)) || usr.incapacitated())
 		return
 
 	var/turf/T = get_turf(src)
