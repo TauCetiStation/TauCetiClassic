@@ -10,7 +10,6 @@
 	SCB.can_sweep = TRUE
 
 	SCB.can_push = TRUE
-	SCB.hit_on_harm_push = TRUE
 
 	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
 
@@ -45,9 +44,7 @@
 /obj/item/weapon/shield/proc/on_sweep_push_success(atom/target, mob/user)
 	var/turf/T_target = get_turf(target)
 
-	var/datum/component/swiping/SW = GetComponent(/datum/component/swiping)
-
-	if(SW.hit_on_harm_push && user.a_intent != I_HELP)
+	if(user.a_intent != INTENT_HELP)
 		var/resolved = target.attackby(src, user, list())
 		if(!resolved && src)
 			afterattack(target, user, TRUE, list()) // 1 indicates adjacency
@@ -71,7 +68,7 @@
 
 				M.apply_effect(2, STUN, 0)
 				M.apply_effect(2, WEAKEN, 0)
-				M.apply_effect(4, STUTTER, 0)
+				M.apply_effect(6, STUTTER, 0)
 				shake_camera(M, 1, 1)
 
 /obj/item/weapon/shield/riot
@@ -130,7 +127,6 @@
 	SCB.can_sweep = TRUE
 
 	SCB.can_push = TRUE
-	SCB.hit_on_harm_push = TRUE
 
 	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
 
@@ -187,7 +183,6 @@
 	SCB.can_sweep = TRUE
 
 	SCB.can_push = TRUE
-	SCB.hit_on_harm_push = TRUE
 
 	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
 

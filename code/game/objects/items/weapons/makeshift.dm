@@ -20,10 +20,8 @@
 
 	SCB.can_push = TRUE
 	SCB.can_push_on_chair = TRUE
-	SCB.hit_on_harm_push = TRUE
 
 	SCB.can_pull = TRUE
-	SCB.hit_on_harm_pull = TRUE
 
 	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_push)
 	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_pull)
@@ -76,10 +74,8 @@
 
 	SCB.can_push = TRUE
 	SCB.can_push_on_chair = TRUE
-	SCB.hit_on_harm_push = TRUE
 
 	SCB.can_pull = TRUE
-	SCB.hit_on_harm_pull = TRUE
 
 	AddComponent(/datum/component/swiping, SCB)
 

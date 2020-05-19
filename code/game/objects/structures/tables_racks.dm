@@ -657,7 +657,7 @@
 		qdel(src)
 		return
 
-	if(user.a_intent != I_HURT)
+	if(user.a_intent != INTENT_HARM)
 		return ..()
 
 	var/can_cut = TRUE

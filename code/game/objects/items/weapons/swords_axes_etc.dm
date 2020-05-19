@@ -144,10 +144,8 @@
 	SCB.can_spin = TRUE
 
 	SCB.can_push = TRUE
-	SCB.hit_on_harm_push = TRUE
 
 	SCB.can_pull = TRUE
-	SCB.hit_on_harm_pull = TRUE
 
 	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep)
 	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_spin)

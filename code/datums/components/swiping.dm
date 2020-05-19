@@ -17,39 +17,59 @@
 // Is used to set all the required params for swiping component.
 // Instantinate before adding component, no need to save anywhere.
 /datum/swipe_component_builder
-	var/list/interupt_on_sweep_hit_types = list(/atom) // Which items will cause a stun when hit.
+	// Which items will cause a stun when hit.
+	var/list/interupt_on_sweep_hit_types = list(/atom)
 
-	var/can_push = FALSE                               // Whether you can push stuff with this weapon.
-	var/hit_on_harm_push = FALSE                       // Whether pushing on I_HURT will cause you to hit mobs.
-	var/can_push_on_chair = FALSE                      // Whether you can go WOOSH on chair-like structures when pushing.
+	// Whether you can push stuff with this weapon.
+	var/can_push = FALSE
+	// Whether you can go WOOSH on chair-like structures when pushing.
+	var/can_push_on_chair = FALSE
 
-	var/can_pull = FALSE                               // Whether you can pull stuff with this weapon.
-	var/hit_on_harm_pull = FALSE                       // Whether pulling on I_HURT will cause you to hit mobs.
+	// Whether you can pull stuff with this weapon.
+	var/can_pull = FALSE
 
-	var/can_sweep = FALSE                              // Whether you can sweep at all using this weapon.
-	var/can_spin = FALSE                               // Whether you can spin-sweep 1 tile around you with this weapon. can_sweep is not required to be able to spin.
+	// Whether you can sweep at all using this weapon.
+	var/can_sweep = FALSE
+	// Whether you can spin-sweep 1 tile around you with this weapon. can_sweep is not required to be able to spin.
+	var/can_spin = FALSE
 
-	var/datum/callback/can_push_call                   // A callback that allows to check for additional conditions before pushing.
-	var/datum/callback/can_pull_call                   // A callback that allows to check for additional conditions before pulling.
-	var/datum/callback/can_sweep_call                  // A callback that allows to check for additional conditions before sweeping.
-	var/datum/callback/can_spin_call                   // A callback that allows to check for additional conditions before spinning.
+	 // A callback that allows to check for additional conditions before pushing.
+	var/datum/callback/can_push_call
+	// A callback that allows to check for additional conditions before pulling.
+	var/datum/callback/can_pull_call
+	// A callback that allows to check for additional conditions before sweeping.
+	var/datum/callback/can_sweep_call
+	// A callback that allows to check for additional conditions before spinning.
+	var/datum/callback/can_spin_call
 
-	var/datum/callback/on_sweep_move                   // A callback that replaces default_on_sweep_move.
-	var/datum/callback/can_sweep_hit                   // A callback that replaces default_can_sweep_hit.
-	var/datum/callback/on_sweep_hit                    // A callback that replaces default_on_sweep_hit.
-	var/datum/callback/on_sweep_to_check               // A callback that replaces default_on_sweep_to_check.
-	var/datum/callback/on_sweep_finish                 // A callback that replaces default_on_sweep_finish.
-	var/datum/callback/on_sweep_interupt               // A callback that replaces default_on_sweep_interupt.
+	// A callback that replaces sweep_move.
+	var/datum/callback/on_sweep_move
+	// A callback that replaces can_sweep_hit.
+	var/datum/callback/on_can_sweep_hit
+	// A callback that replaces sweep_hit.
+	var/datum/callback/on_sweep_hit
+	// A callback that replaces sweep_to_check.
+	var/datum/callback/on_sweep_to_check
+	// A callback that replaces sweep_finish.
+	var/datum/callback/on_sweep_finish
+	// A callback that replaces sweep_interupt.
+	var/datum/callback/on_sweep_interupt
 
-	var/datum/callback/on_spin                         // A callback that completely replaces the spin logic. Is used in double energy swords.
+	// A callback that completely replaces the spin logic. Is used in double energy swords.
+	var/datum/callback/on_spin
 
-	var/datum/callback/sweep_continue_check            // A callback that replaces default_sweep_continue_check.
+	// A callback that replaces sweep_continue_check.
+	var/datum/callback/on_sweep_continue_check
 
-	var/datum/callback/on_sweep_push                   // A callback that replaces default_sweep_push.
-	var/datum/callback/on_sweep_push_success           // A callback that replaces default_sweep_push_success.
+	// A callback that replaces sweep_push.
+	var/datum/callback/on_sweep_push
+	// A callback that replaces sweep_push_success.
+	var/datum/callback/on_sweep_push_success
 
-	var/datum/callback/on_sweep_pull                   // A callback that replaces default_sweep_pull.
-	var/datum/callback/on_sweep_pull_success           // A callback that replaces default_sweep_pull_success.
+	// A callback that replaces sweep_pull.
+	var/datum/callback/on_sweep_pull
+	// A callback that replaces sweep_pull_success.
+	var/datum/callback/on_sweep_pull_success
 
 
 
@@ -57,11 +77,9 @@
 	var/list/interupt_on_sweep_hit_types = list(/atom)
 
 	var/can_push = FALSE
-	var/hit_on_harm_push = FALSE
 	var/can_push_on_chair = FALSE
 
 	var/can_pull = FALSE
-	var/hit_on_harm_pull = FALSE
 
 	var/can_sweep = FALSE
 	var/can_spin = FALSE
@@ -72,7 +90,7 @@
 	var/datum/callback/can_spin_call
 
 	var/datum/callback/on_sweep_move
-	var/datum/callback/can_sweep_hit
+	var/datum/callback/on_can_sweep_hit
 	var/datum/callback/on_sweep_hit
 	var/datum/callback/on_sweep_to_check
 	var/datum/callback/on_sweep_finish
@@ -80,7 +98,7 @@
 
 	var/datum/callback/on_spin
 
-	var/datum/callback/sweep_continue_check
+	var/datum/callback/on_sweep_continue_check
 
 	var/datum/callback/on_sweep_push
 	var/datum/callback/on_sweep_push_success
@@ -96,33 +114,31 @@
 
 	if(SCB.can_push)
 		can_push = TRUE
-		hit_on_harm_push = SCB.hit_on_harm_push
 		can_push_on_chair = SCB.can_push_on_chair
 
 		can_push_call = SCB.can_push_call
 		on_sweep_push = SCB.on_sweep_push
 		on_sweep_push_success = SCB.on_sweep_push_success
 
-		RegisterSignal(parent, list(COMSIG_ITEM_CTRLCLICKWITH), .proc/sweep_push)
-		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK), .proc/on_push_attack)
+		RegisterSignal(parent, list(COMSIG_ITEM_CTRLCLICKWITH), .proc/try_sweep_push)
+		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK), .proc/try_push_attack)
 
 	if(SCB.can_pull)
 		can_pull = TRUE
-		hit_on_harm_pull = SCB.hit_on_harm_pull
 
 		can_pull_call = SCB.can_pull_call
 		on_sweep_pull = SCB.on_sweep_pull
 		on_sweep_pull_success = SCB.on_sweep_pull_success
 
-		RegisterSignal(parent, list(COMSIG_ITEM_CTRLSHIFTCLICKWITH), .proc/sweep_pull)
+		RegisterSignal(parent, list(COMSIG_ITEM_CTRLSHIFTCLICKWITH), .proc/try_sweep_pull)
 
 	on_sweep_move = SCB.on_sweep_move
-	can_sweep_hit = SCB.can_sweep_hit
+	on_can_sweep_hit = SCB.on_can_sweep_hit
 	on_sweep_hit = SCB.on_sweep_hit
 	on_sweep_to_check = SCB.on_sweep_to_check
 	on_sweep_finish = SCB.on_sweep_finish
 	on_sweep_interupt = SCB.on_sweep_interupt
-	sweep_continue_check = SCB.sweep_continue_check
+	on_sweep_continue_check = SCB.on_sweep_continue_check
 
 	if(SCB.can_sweep)
 		can_sweep = TRUE
@@ -178,13 +194,18 @@
 	sleep(3)
 	step(C, movementdirection)
 
-/datum/component/swiping/proc/default_on_sweep_push(atom/target, turf/T, mob/user)
-	return
+/datum/component/swiping/proc/sweep_push(atom/target, turf/T, mob/user)
+	if(on_sweep_push)
+		on_sweep_push.Invoke(target, T, user)
 
-/datum/component/swiping/proc/default_on_sweep_push_success(atom/target, mob/user)
+/datum/component/swiping/proc/sweep_push_success(atom/target, mob/user)
+	if(on_sweep_push_success)
+		on_sweep_push_success.Invoke(target, user)
+		return
+
 	var/turf/T_target = get_turf(target)
 
-	if(hit_on_harm_push && user.a_intent != I_HELP)
+	if(user.a_intent != INTENT_HELP)
 		var/resolved = target.attackby(parent, user, list())
 		if(!resolved && parent)
 			var/obj/item/I = parent
@@ -197,7 +218,7 @@
 		if(!AM.anchored)
 			step_away(target, get_turf(parent))
 
-/datum/component/swiping/proc/sweep_push(datum/source, atom/target, mob/user)
+/datum/component/swiping/proc/try_sweep_push(datum/source, atom/target, mob/user)
 	if(can_push_call)
 		if(!can_push_call.Invoke(target, user))
 			return NONE
@@ -211,10 +232,7 @@
 	var/turf/T_target = get_turf(target)
 	var/turf/T = get_step(W_turf, get_dir(W_turf, T_target))
 
-	if(on_sweep_push)
-		on_sweep_push.Invoke(T_target, T, user)
-	else
-		default_on_sweep_push(T_target, T, user)
+	sweep_push(target, T, user)
 
 	user.do_attack_animation(T)
 
@@ -226,15 +244,13 @@
 			return COMSIG_ITEM_CANCEL_CLICKWITH
 
 	if(T.Adjacent(target))
-		if(on_sweep_push_success)
-			on_sweep_push_success.Invoke(target, user)
-		else
-			default_on_sweep_push_success(target, user)
+		sweep_push_success(target, user)
 
 	return COMSIG_ITEM_CANCEL_CLICKWITH
 
 // Pushing items have a bonus of knocking people with shields over if hit into the right place(the arm with she shield).
-/datum/component/swiping/proc/on_push_attack(datum/source, mob/living/target ,mob/living/user, def_zone)
+/datum/component/swiping/proc/try_push_attack(datum/source, mob/living/target ,mob/living/user, def_zone)
+	// Bootleg jousting code? ~Luduk.
 	var/obj/item/weapon/shield/S
 	if(def_zone == BP_L_ARM && istype(target.l_hand, /obj/item/weapon/shield))
 		S = target.l_hand
@@ -256,13 +272,18 @@
 	Pulling means "swiping" in general direction of click, and if possible - moving the target towards the user.
 	Some items allow to hit if your intent is I_HURT when pulling.
 */
-/datum/component/swiping/proc/default_on_sweep_pull(atom/target, turf/T, mob/user)
-	return
+/datum/component/swiping/proc/sweep_pull(atom/target, turf/T, mob/user)
+	if(on_sweep_pull)
+		on_sweep_pull.Invoke(target, T, user)
 
-/datum/component/swiping/proc/default_on_sweep_pull_success(atom/target, mob/user)
+/datum/component/swiping/proc/sweep_pull_success(atom/target, mob/user)
+	if(on_sweep_pull_success)
+		on_sweep_pull_success.Invoke(target, user)
+		return
+
 	var/turf/T_target = get_turf(target)
 
-	if(hit_on_harm_pull && user.a_intent != I_HELP)
+	if(user.a_intent != INTENT_HELP)
 		var/resolved = target.attackby(parent, user, list())
 		if(!resolved && parent)
 			var/obj/item/I = parent
@@ -275,7 +296,7 @@
 		if(!AM.anchored)
 			step_to(target, get_turf(parent))
 
-/datum/component/swiping/proc/sweep_pull(datum/source, atom/target, mob/user)
+/datum/component/swiping/proc/try_sweep_pull(datum/source, atom/target, mob/user)
 	if(can_pull_call)
 		if(!can_pull_call.Invoke(target, user))
 			return NONE
@@ -289,18 +310,12 @@
 	var/turf/T_target = get_turf(target)
 	var/turf/T = get_step(W_turf, get_dir(W_turf, T_target))
 
-	if(on_sweep_pull)
-		on_sweep_pull.Invoke(T_target, T, user)
-	else
-		default_on_sweep_pull(T_target, T, user)
+	sweep_pull(target, T, user)
 
 	user.do_attack_animation(T)
 
 	if(T.Adjacent(target))
-		if(on_sweep_pull_success)
-			on_sweep_pull_success.Invoke(target, user)
-		else
-			default_on_sweep_pull_success(target, user)
+		sweep_pull_success(target, user)
 
 	return COMSIG_ITEM_CANCEL_CLICKWITH
 
@@ -313,7 +328,10 @@
 	TODO: make pull and push rely on sweep too?
 */
 // Whether user can continue sweeping at all.
-/datum/component/swiping/proc/default_sweep_continue_check(mob/user, sweep_delay, turf/current_turf)
+/datum/component/swiping/proc/sweep_continue_check(mob/user, sweep_delay, turf/current_turf)
+	if(on_sweep_continue_check)
+		return on_sweep_continue_check.Invoke(user, sweep_delay, current_turf)
+
 	if(can_spin_call)
 		if(!can_spin_call.Invoke(user))
 			return FALSE
@@ -327,16 +345,24 @@
 	return TRUE
 
 // A proc called each new tile we're swiping across, before all the possible checks.
-/datum/component/swiping/proc/default_on_sweep_move(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, mob/user)
+/datum/component/swiping/proc/sweep_move(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, mob/user)
+	if(on_sweep_move)
+		on_sweep_move.Invoke(current_turf, sweep_image, user)
+		return
 	user.face_atom(current_turf)
 
 // A proc that checks whether the sweep will hit target.
-/datum/component/swiping/proc/default_can_sweep_hit(atom/target, mob/user)
+/datum/component/swiping/proc/can_sweep_hit(atom/target, mob/user)
+	if(on_can_sweep_hit)
+		return on_can_sweep_hit.Invoke(target, user)
 	return target.density || istype(target, /obj/effect/effect/weapon_sweep)
 
 // What happens when we *hit* an atom.
-/datum/component/swiping/proc/default_on_sweep_hit(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/target, mob/user)
-	if(user.a_intent == I_HURT && is_type_in_list(target, list(/obj/machinery/disposal, /obj/structure/table, /obj/structure/rack)))
+/datum/component/swiping/proc/sweep_hit(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/target, mob/user)
+	if(on_sweep_hit)
+		return on_sweep_hit.Invoke(current_turf, sweep_image, target, user)
+
+	if(user.a_intent == INTENT_HARM && is_type_in_list(target, list(/obj/machinery/disposal, /obj/structure/table, /obj/structure/rack)))
 		/*
 		A very weird snowflakey thing but very crucial to keeping this fun.
 		If we're on I_HURT and we hit anything that should drop our item from the hands,
@@ -357,20 +383,26 @@
 	return is_stunned
 
 // Something we execute to all atoms on tile we're currently swiping through. e.g.: moving to next tile, if we're sweeping with a mop.
-/datum/component/swiping/proc/default_on_sweep_to_check(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/target, mob/user, list/directions, i)
-	return
+/datum/component/swiping/proc/sweep_to_check(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/target, mob/user, list/directions, i)
+	if(on_sweep_to_check)
+		on_sweep_to_check.Invoke(current_turf, sweep_image, target, user, directions, i)
 
 // What happens if we swipe through the tile, but don't hit anything.
-/datum/component/swiping/proc/default_on_sweep_finish(turf/current_turf, mob/user)
-	return
+/datum/component/swiping/proc/sweep_finish(turf/current_turf, mob/user)
+	if(on_sweep_finish)
+		on_sweep_finish.Invoke(current_turf, user)
 
 // What happens after we hit something.
-/datum/component/swiping/proc/default_on_sweep_interupt(turf/current_turf, mob/living/user)
+/datum/component/swiping/proc/sweep_interupt(turf/current_turf, mob/living/user)
+	if(on_sweep_interupt)
+		on_sweep_interupt.Invoke(current_turf, user)
+		return
+
 	if(user.buckled)
 		user.buckled.user_unbuckle_mob(user)
 	// You hit a wall!
-	user.apply_effect(3, STUN, 0)
-	user.apply_effect(3, WEAKEN, 0)
+	user.apply_effect(2, STUN, 0)
+	user.apply_effect(2, WEAKEN, 0)
 	user.apply_effect(6, STUTTER, 0)
 	shake_camera(user, 1, 1)
 	// here be thud sound
@@ -393,18 +425,11 @@
 		i++
 
 		INVOKE_ASYNC(src, .proc/move_sweep_image, current_turf, sweep_image)
-		var/continue_sweep = FALSE
-		if(sweep_continue_check)
-			continue_sweep = sweep_continue_check.Invoke(user, sweep_delay, current_turf)
-		else
-			continue_sweep = default_sweep_continue_check(user, sweep_delay, current_turf)
+		var/continue_sweep = sweep_continue_check(user, sweep_delay, current_turf)
 		if(!continue_sweep)
 			break
 
-		if(on_sweep_move)
-			on_sweep_move.Invoke(current_turf, sweep_image, user)
-		else
-			default_on_sweep_move(current_turf, sweep_image, user)
+		sweep_move(current_turf, sweep_image, user)
 
 		var/list/to_check = list()
 		to_check += current_turf.contents
@@ -414,35 +439,21 @@
 
 		// Get out of the way, fellows!
 		for(var/atom/A in to_check)
-			var/hit = FALSE
-			if(can_sweep_hit)
-				hit = can_sweep_hit.Invoke(A, user)
-			else
-				hit = default_can_sweep_hit(A, user)
+			// Like something behind a glass.
+			if(!user.Adjacent(A))
+				continue
 
-			if(hit)
-				if(on_sweep_hit)
-					. = on_sweep_hit.Invoke(current_turf, sweep_image, A, user)
-				else
-					. = default_on_sweep_hit(current_turf, sweep_image, A, user)
+			if(can_sweep_hit(A, user))
+				. = sweep_hit(current_turf, sweep_image, A, user)
 				break
 
-			if(on_sweep_to_check)
-				on_sweep_to_check.Invoke(current_turf, sweep_image, A, user, directions, i)
-			else
-				default_on_sweep_to_check(current_turf, sweep_image, A, user, directions, i)
+			sweep_to_check(current_turf, sweep_image, A, user, directions, i)
 			user.SetNextMove(sweep_delay + 1)
 
 		if(!.)
-			if(on_sweep_finish)
-				on_sweep_finish.Invoke(current_turf, user)
-			else
-				default_on_sweep_finish(current_turf, user)
+			sweep_finish(current_turf, user)
 		else
-			if(on_sweep_interupt)
-				on_sweep_interupt.Invoke(current_turf, user)
-			else
-				default_on_sweep_interupt(current_turf, user)
+			sweep_interupt(current_turf, user)
 			break
 
 	QDEL_IN(sweep_image, sweep_delay)

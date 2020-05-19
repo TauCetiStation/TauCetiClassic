@@ -214,7 +214,7 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 
-	SCB.sweep_continue_check = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/sweep_continue_check)
+	SCB.on_sweep_continue_check = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/sweep_continue_check)
 
 	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/can_spin)
 	SCB.on_spin = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/sweep_spin)
