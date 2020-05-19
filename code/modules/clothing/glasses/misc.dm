@@ -1,25 +1,26 @@
 /obj/item/clothing/glasses/sunglasses/chaplain
 	name = "faithful sunglasses"
 	desc = "Sometimes you just feel like watching them ghosts sin."
+
 	action_button_name = "Assess Holyness"
 
 	var/next_assessment = 0
 	var/assessment_cooldown = 6 SECONDS
 
 /obj/item/clothing/glasses/sunglasses/chaplain/proc/gen_holy_overlay(turf/simulated/floor/F)
-	var/image/I = image('icons/effects/effects.dmi', "water_light")
-	if(F.holy.religion == global.chaplain_religion)
-		I.color = "#40e0d0"
-	else
+	var/image/I = image('icons/effects/effects.dmi', "holy_land")
+	if(F.holy.religion != global.chaplain_religion)
 		I.color = "#dc143c"
 	I.alpha = 0
 	I.loc = F
 	return I
 
 /obj/item/clothing/glasses/sunglasses/chaplain/proc/animate_holy_overlay(image/holy_overlay)
-	animate(holy_overlay, alpha = 200, time = assessment_cooldown * 0.3)
-	sleep(assessment_cooldown * 0.3)
-	animate(holy_overlay, alpha = 0, time = assessment_cooldown  * 0.3)
+	animate(holy_overlay, alpha = 200, time = assessment_cooldown * 0.2)
+	sleep(assessment_cooldown * 0.6)
+	if(QDELING(src))
+		return
+	animate(holy_overlay, alpha = 0, time = assessment_cooldown  * 0.2)
 
 /obj/item/clothing/glasses/sunglasses/chaplain/attack_self(mob/user)
 	assess_holyness(user)

@@ -317,24 +317,23 @@
 	},
 /area/centcom)
 "aR" = (
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "warning"
-	},
-/area/centcom)
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel/altar)
 "aS" = (
 /turf/unsimulated/wall/splashscreen,
 /area/start)
+"aT" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel/altar)
 "aU" = (
-/turf/unsimulated/wall{
-	icon_state = "iron8"
-	},
-/area/centcom)
+/obj/item/weapon/reagent_containers/spray/thurible,
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel/altar)
 "aV" = (
-/turf/unsimulated/wall{
-	icon_state = "iron4"
-	},
-/area/centcom)
+/obj/item/weapon/nullrod,
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel/altar)
 "aW" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light{
@@ -358,27 +357,85 @@
 	icon_state = "floor"
 	},
 /area/centcom)
-"bi" = (
+"aZ" = (
+/obj/item/weapon/storage/bible,
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel/altar)
+"ba" = (
+/mob/living/carbon/human,
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel/altar)
+"bb" = (
+/turf/unsimulated/wall{
+	icon_state = "iron12"
+	},
+/area/station/civilian/chapel/altar)
+"bc" = (
+/turf/unsimulated/wall{
+	icon_state = "iron10"
+	},
+/area/station/civilian/chapel/altar)
+"bd" = (
+/turf/unsimulated/wall{
+	icon_state = "iron6"
+	},
+/area/station/civilian/chapel/altar)
+"be" = (
+/turf/unsimulated/wall{
+	icon_state = "iron3"
+	},
+/area/station/civilian/chapel/altar)
+"bf" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom)
-"bj" = (
-/turf/unsimulated/floor{
-	icon_state = "warning"
-	},
-/area/centcom)
-"bk" = (
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel/altar)
+"bg" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel/altar)
+"bh" = (
+/turf/unsimulated/wall{
+	icon_state = "iron5"
 	},
-/area/centcom)
+/area/station/civilian/chapel/altar)
+"bi" = (
+/obj/structure/altar_of_gods,
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel/altar)
+"bj" = (
+/obj/item/clothing/glasses/sunglasses/chaplain,
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel/altar)
+"bk" = (
+/obj/machinery/light,
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel/altar)
+"bl" = (
+/turf/unsimulated/wall{
+	icon_state = "iron8"
+	},
+/area/station/civilian/chapel/altar)
+"bm" = (
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "warning"
+	},
+/area/station/civilian/chapel/altar)
+"bn" = (
+/turf/unsimulated/wall{
+	icon_state = "iron4"
+	},
+/area/station/civilian/chapel/altar)
+"bo" = (
+/turf/unsimulated/wall{
+	icon_state = "iron9"
+	},
+/area/station/civilian/chapel/altar)
 
 (1,1,1) = {"
 aa
@@ -4540,10 +4597,10 @@ aW
 aC
 az
 ay
-ay
-ay
-aY
-ac
+aR
+aR
+bk
+bb
 aa
 aa
 aa
@@ -4692,14 +4749,14 @@ az
 az
 az
 ay
-ay
-ay
-ay
-ad
-af
-af
-af
-at
+aR
+aU
+aT
+bc
+be
+be
+be
+bh
 aa
 aa
 aa
@@ -4844,14 +4901,14 @@ ay
 ay
 ay
 ay
-ay
-ay
-ay
 aR
-bi
-ay
-bj
-aU
+aR
+aR
+aR
+bf
+aR
+aR
+bl
 aa
 aa
 aa
@@ -4996,14 +5053,14 @@ ay
 ay
 ay
 aM
-ay
-ay
-ay
 aR
-ay
-ay
-bj
+aV
+aZ
 aR
+aR
+aR
+aR
+bm
 aa
 aa
 aa
@@ -5148,14 +5205,14 @@ ay
 ay
 ay
 aM
-ay
-ay
-ay
 aR
-ay
-ay
-bj
+bi
+ba
 aR
+aR
+aR
+aR
+bm
 aa
 aa
 aa
@@ -5300,14 +5357,14 @@ ay
 ay
 ay
 aN
-ay
-ay
-ay
 aR
-ay
-ay
 bj
 aR
+aR
+aR
+aR
+aR
+bm
 aa
 aa
 aa
@@ -5452,14 +5509,14 @@ ay
 ay
 ay
 ay
-ay
-ay
-ay
 aR
-bk
-ay
-bj
-aV
+aR
+aR
+aR
+bg
+aR
+aR
+bn
 aa
 aa
 aa
@@ -5604,14 +5661,14 @@ ay
 ay
 ay
 ay
-ay
-ay
-ay
-ab
-af
-af
-af
-as
+aR
+aR
+aT
+bd
+be
+be
+be
+bo
 aa
 aa
 aa
@@ -5756,10 +5813,10 @@ aX
 ay
 ay
 ay
-ay
-ay
-aY
-ac
+aR
+aR
+bk
+bb
 aa
 aa
 aa

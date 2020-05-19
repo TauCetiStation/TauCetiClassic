@@ -27,7 +27,7 @@
 	RegisterSignal(F, list(COMSIG_ATOM_EXITED), .proc/holy_turf_exit)
 
 /datum/aspect/proc/holy_turf_enter(datum/source, atom/movable/mover, atom/oldLoc)
-	affecting += mover
+	LAZYADD(affecting, mover)
 
 /datum/aspect/proc/unregister_holy_turf(turf/simulated/floor/F, datum/religion/R)
 	UnregisterSignal(F, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
@@ -35,7 +35,7 @@
 		holy_turf_exit(F, AM)
 
 /datum/aspect/proc/holy_turf_exit(datum/source, atom/movable/mover, atom/newLoc)
-	affecting -= mover
+	LAZYREMOVE(affecting, mover)
 
 //Gives mana from: any organs, limbs, and blood
 //Needed for: spells and rituals related to the theme of death, interaction with dead body, necromancy
@@ -222,7 +222,8 @@
 /datum/aspect/lightbending/unregister_holy_turf(turf/simulated/floor/F, datum/religion/R)
 	..()
 	UnregisterSignal(F.lighting_object, list(COMSIG_LIGHT_UPDATE_OBJECT))
-	R.passive_favor_gain -= favor_for_turf[F]
+	if(favor_for_turf)
+		R.passive_favor_gain -= favor_for_turf[F]
 	favor_for_turf -= F
 	UNSETEMPTY(favor_for_turf)
 
@@ -231,6 +232,7 @@
 
 /datum/aspect/lightbending/proc/recalc_favor_gain(datum/source)
 	var/atom/movable/lighting_object/L = source
+	to_chat(world, "TEST [L]")
 	var/turf/simulated/floor/F = L.myturf
 
 	var/prev_gain = 0.0
