@@ -2168,6 +2168,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/needed_massages = 12
 	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
 	var/obj/item/organ/internal/heart/Lungs = organs_by_name[O_LUNGS]
+	if(check_thickmaterial(BP_CHEST))
+		to_chat(user, "<span class='warning'>You have to strip [src] to perform CPR!.</span>")
+		return
 
 	if(HAS_TRAIT(src, TRAIT_FAT))
 		needed_massages = 20
@@ -2186,7 +2189,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		last_massage = world.time
 		return
 	else if((world.time - timeofdeath) < DEFIB_TIME_LIMIT)
-		last_massage = world.time
 
 		if(massages_done_right > needed_massages)
 			to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
@@ -2210,6 +2212,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				else
 					massages_done_right--
 					to_chat(user, "<span class='warning'>You've skipped the beat.</span>")
+		last_massage = world.time
 
 		if(op_stage.ribcage != 2 && prob(5))
 			var/obj/item/organ/external/BP = get_bodypart(BP_CHEST)
