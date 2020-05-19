@@ -319,6 +319,21 @@
 		else
 			health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
+/mob/living/carbon/slime/getTrail()
+	return null
+
+/mob/living/carbon/slime/is_usable_head(targetzone = null)
+	return TRUE
+
+/mob/living/carbon/slime/is_usable_arm(targetzone = null)
+	return FALSE
+
+/mob/living/carbon/slime/is_usable_leg(targetzone = null)
+	return FALSE
+
+/mob/living/carbon/slime/get_species()
+	return SLIME
+
 /obj/item/slime_extract
 	name = "slime extract"
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
@@ -756,22 +771,6 @@
 				for(var/mob/living/carbon/human/G in my_golems)
 					var/I = image('icons/mob/hud.dmi', loc = G, icon_state = "agolem_master")
 					client.images += I
-
-
-/mob/living/carbon/slime/getTrail()
-	return null
-
-/mob/living/carbon/slime/is_usable_head(targetzone = null)
-	return TRUE
-
-/mob/living/carbon/slime/is_usable_head(targetzone = null)
-	return FALSE
-
-/mob/living/carbon/slime/is_usable_head(targetzone = null)
-	return FALSE
-
-/mob/living/carbon/slime/get_species()
-	return SLIME
 
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
