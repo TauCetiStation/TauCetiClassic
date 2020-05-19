@@ -548,7 +548,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/pressure = environment.return_pressure()
 	if(pressure < 50)
 		name = "full strength kinetic force"
-		damage = damage * 4
+		damage *= 4
 
 /obj/item/projectile/kinetic/Range()
 	range--
