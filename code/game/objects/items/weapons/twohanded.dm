@@ -234,11 +234,8 @@
 
 	var/datum/component/swiping/SW = GetComponent(/datum/component/swiping)
 
-	var/saved_sweep_step = sweep_step
-	sweep_step *= 0.5
-	INVOKE_ASYNC(SW, /datum/component/swiping.proc/sweep, turfs, user, sweep_step)
-	INVOKE_ASYNC(SW, /datum/component/swiping.proc/sweep, turfs_2, user, sweep_step)
-	sweep_step = saved_sweep_step
+	INVOKE_ASYNC(SW, /datum/component/swiping.proc/sweep, turfs, user, sweep_step, 0.5)
+	INVOKE_ASYNC(SW, /datum/component/swiping.proc/sweep, turfs_2, user, sweep_step, 0.5)
 
 /obj/item/weapon/twohanded/dualsaber/proc/sweep_continue_check(mob/living/user, sweep_step, turf/current_turf)
 	if(!can_spin(user))

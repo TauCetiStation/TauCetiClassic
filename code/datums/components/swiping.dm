@@ -154,9 +154,8 @@
 
 	RegisterSignal(parent, list(COMSIG_ITEM_MOUSEDROP_ONTO), .proc/sweep_mousedrop)
 
-/datum/component/swiping/proc/move_sweep_image(turf/target, obj/effect/effect/weapon_sweep/sweep_image)
-	var/obj/item/weapon/W = parent
-	sleep(W.sweep_step)
+/datum/component/swiping/proc/move_sweep_image(turf/target, obj/effect/effect/weapon_sweep/sweep_image, step_delay)
+	sleep(step_delay)
 	sweep_image.forceMove(target)
 
 /*
@@ -407,11 +406,8 @@
 	shake_camera(user, 1, 1)
 	// here be thud sound
 
-/datum/component/swiping/proc/sweep(list/directions, mob/living/user, sweep_delay)
-	if(can_sweep_call && !can_spin) // If it's a spinning thing, it has it's own check.
-		if(!can_sweep_call.Invoke(user))
-			return NONE
-
+// The working horse, the bread and butter of this component. Sweeping logic. Please use the wrapper - sweep.
+/datum/component/swiping/proc/async_sweep(list/directions, mob/living/user, sweep_delay, step_delay_mult = 1.0)
 	var/obj/item/weapon/W = parent
 
 	var/turf/start = get_step(W, directions[1])
@@ -419,12 +415,14 @@
 	user.do_attack_animation(start)
 	var/obj/effect/effect/weapon_sweep/sweep_image = new /obj/effect/effect/weapon_sweep(start, W)
 
+	var/step_delay = W.sweep_step * step_delay_mult
+
 	var/i = 0 // So we begin with one.
 	for(var/dir_ in directions)
 		var/turf/current_turf = get_step(W, dir_)
 		i++
 
-		INVOKE_ASYNC(src, .proc/move_sweep_image, current_turf, sweep_image)
+		INVOKE_ASYNC(src, .proc/move_sweep_image, current_turf, sweep_image, step_delay)
 		var/continue_sweep = sweep_continue_check(user, sweep_delay, current_turf)
 		if(!continue_sweep)
 			break
@@ -457,6 +455,15 @@
 			break
 
 	QDEL_IN(sweep_image, sweep_delay)
+
+// A tidy wrapper for the sweep logic, with neccesary checks.
+/datum/component/swiping/proc/sweep(list/directions, mob/living/user, sweep_delay, step_delay_mult = 1.0)
+	if(can_sweep_call && !can_spin) // If it's a spinning thing, it has it's own check.
+		if(!can_sweep_call.Invoke(user))
+			return NONE
+
+	INVOKE_ASYNC(src, .proc/async_sweep, directions, user, sweep_delay, step_delay_mult)
+
 	return COMSIG_ITEM_CANCEL_CLICKWITH
 
 // Swipe through the two adjacent to target tiles.
@@ -494,10 +501,7 @@
 
 	var/obj/item/weapon/W = parent
 
-	var/saved_sweep_step = W.sweep_step
-	W.sweep_step *= 0.5
-	sweep(directions, user, W.sweep_step)
-	W.sweep_step = saved_sweep_step
+	INVOKE_ASYNC(src, .proc/sweep, directions, user, W.sweep_step, 0.5)
 	return COMPONENT_NO_INTERACT
 
 // A little bootleg for MiddleClick.
