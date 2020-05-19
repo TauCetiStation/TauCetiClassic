@@ -6,6 +6,9 @@
 			if(L.is_bigger_than(src))
 				return FALSE
 
+/mob/living/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+	start_pulling(target)
+
 // When all mobs have a "hand", make this a living proc.
 /mob/living/carbon/human/Grab(atom/movable/target, force_state, show_warnings = TRUE)
 	if(ismob(target))
