@@ -116,6 +116,9 @@
 	return ..()
 
 /mob/living/carbon/alien/facehugger/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+	// See facehugger/canGrab()
+	var/mob/living/carbon/C = target
+
 	var/obj/item/weapon/fh_grab/G = new /obj/item/weapon/fh_grab(src, target)
 
 	put_in_active_hand(G)
