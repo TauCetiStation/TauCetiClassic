@@ -53,9 +53,7 @@
 				return
 			target.forceMove(loc)
 			add_fingerprint(target)
-		else
-			if(can_buckle && istype(target) && !buckled_mob && istype(user))
-				user_buckle_mob(target, user)
+	return ..()
 
 // This proc handles an animation of item being sacrified and stuff.
 /obj/structure/altar_of_gods/proc/sacrifice_item(obj/item/I)
@@ -166,7 +164,7 @@
 		if(!Adjacent(user))
 			to_chat(user, "<span class='warning'>You are too far away!</span>")
 			return
-		
+
 		if(performing_rite)
 			to_chat(user, "<span class='notice'>You are already performing [performing_rite.name]!</span>")
 			return
