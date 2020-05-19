@@ -2168,7 +2168,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/needed_massages = 12
 	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
 	var/obj/item/organ/internal/heart/Lungs = organs_by_name[O_LUNGS]
-	if(check_thickmaterial(BP_CHEST))
+	if(check_thickmaterial(target_zone = BP_CHEST))
 		to_chat(user, "<span class='warning'>You have to strip [src] to perform CPR!.</span>")
 		return
 
