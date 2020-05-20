@@ -10,9 +10,8 @@
 	maxHealth = 125
 	health = 125
 	speed = 2
-	melee_damage_lower = 5
-	melee_damage_upper = 15
-	attacktext = "mauls"
+	melee_damage = 10
+	attacktext = "maul"
 	cold_damage_per_tick = 0
 	speak_chance = 5
 	speak = list("Hruuugh!","Hrunnph")
@@ -31,9 +30,8 @@
 	maxHealth = 25
 	health = 25
 	speed = 1
-	melee_damage_lower = 1
-	melee_damage_upper = 8
-	attacktext = "gouges"
+	melee_damage = 5
+	attacktext = "goug"
 	cold_damage_per_tick = 0
 	speak_chance = 5
 	speak = list("Awrr?","Aowrl!","Worrl")
@@ -52,9 +50,8 @@
 	maxHealth = 75
 	health = 75
 	speed = 1
-	melee_damage_lower = 3
-	melee_damage_upper = 12
-	attacktext = "gouges"
+	melee_damage = 8
+	attacktext = "goug"
 	cold_damage_per_tick = 0
 	speak_chance = 5
 	speak = list("Shuhn","Shrunnph?","Shunpf")

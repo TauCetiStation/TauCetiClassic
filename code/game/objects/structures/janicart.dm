@@ -36,6 +36,13 @@
 	QDEL_NULL(myreplacer)
 	return ..()
 
+/obj/structure/stool/bed/chair/janitorialcart/get_climb_time(mob/living/user)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(istype(H.shoes, /obj/item/clothing/shoes/galoshes))
+			. *= 0.5
+
 /obj/structure/stool/bed/chair/janitorialcart/on_propelled_bump(atom/A)
 	. = ..()
 	if(prob(30))
@@ -157,7 +164,7 @@
 	..()
 
 /obj/structure/stool/bed/chair/janitorialcart/attack_hand(mob/user)
-	if(user.a_intent == I_HURT)
+	if(user.a_intent == INTENT_HARM)
 		..()
 		return
 
