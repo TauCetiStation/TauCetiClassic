@@ -313,6 +313,11 @@
 
 	var/image/down_overlay
 
+/obj/item/weapon/claymore/religion/proc/revert_effect()
+	if(down_overlay)
+		cut_overlays(down_overlay)
+		qdel(down_overlay)
+
 /obj/item/weapon/claymore/religion/pickup(mob/user)
 	if(down_overlay)
 		cut_overlays(down_overlay)

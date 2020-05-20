@@ -161,7 +161,7 @@
 
 	if(anim_items && anim_items.len != 0)
 		for(var/obj/item/O in anim_items)
-			var/mob/living/simple_animal/hostile/mimic/copy/religion/M = new (O.loc, O)
+			new /mob/living/simple_animal/hostile/mimic/copy/religion(O.loc, O)
 
 	user.visible_message("<span class='notice'>[user] has been finished the rite of [name]!</span>")
 	return TRUE
@@ -417,5 +417,5 @@
 	R.add_overlay(R.down_overlay)
 
 	R.name = "[R.name] of [god_name]"
-
+	addtimer(CALLBACK(R, /obj/item/weapon/claymore/religion.proc/revert_effect), 5 SECONDS)
 	return TRUE
