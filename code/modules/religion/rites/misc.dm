@@ -529,9 +529,11 @@
 		return //handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 	if(response == "Yes")
 		var/mob/candidate = C.mob
-		var/mob/god = pick(global.chaplain_religion.active_deities)
-		if(!god)
+		var/mob/god
+		if(global.chaplain_religion.active_deities.len == 0)
 			god = pick(global.chaplain_religion.deity_names)
+		else
+			god = pick(global.chaplain_religion.active_deities)
 		M.mind = candidate.mind
 		M.ckey = candidate.ckey
 		M.name = "familiar of [god.name] [pick("II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX")]"
@@ -540,3 +542,45 @@
 		candidate.reset_view()
 	else if (response == "Never for this round")
 		C.prefs.ignore_question += "chfamiliar"
+
+/*
+ * Create religious sword
+ * Just create claymore with reduced damage.
+ */
+/datum/religion_rites/create_sword
+	name = "Create sword"
+	desc = "Creates a religious sword in the name of God."
+	ritual_length = (1 MINUTES)
+	ritual_invocations = list("The Holy Spirit, who solves all problems, sheds light on all roads so that I can reach my goal...",
+						"...You are giving me the Divine gift of forgiveness and the forgiveness of all evil done against me...",
+						"...who abides with all the storms of life...",
+						"...In this prayer, I want to thank you for everything...",
+						"...looking for time to prove that I will never part with you...",
+						"...despite any illusory matter...",
+						"...I want to abide with you in your eternal glory...",
+						"...I thank you for all your blessings to me and my neighbors...",)
+	invoke_msg = "...Let it be so!"
+	favor_cost = 100
+
+	needed_aspects = list(
+		ASPECT_WEAPON = 1
+	)
+
+/datum/religion_rites/create_sword/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
+		if(!M.mind.holy_role && M.eyecheck() <= 0)
+			M.flash_eyes()
+
+	var/obj/item/weapon/claymore/religion/R = new (AOG.loc)
+	var/mob/god
+	if(global.chaplain_religion.active_deities.len == 0)
+		god = pick(global.chaplain_religion.deity_names)
+	else
+		god = pick(global.chaplain_religion.active_deities)
+	R.down_overlay = image('icons/effects/effects.dmi', icon_state = "at_shield2", layer = OBJ_LAYER - 0.01)
+	R.down_overlay.alpha = 100
+	R.add_overlay(R.down_overlay)
+
+	R.name = "[R.name] of [god.name]"
+
+	return TRUE
