@@ -154,7 +154,6 @@
 		M.pixel_x = anim_item.pixel_x
 		M.pixel_y = anim_item.pixel_y
 
-		M.a_intent = INTENT_HELP
 		M.harm_intent_damage = 0
 		M.melee_damage = 0
 
