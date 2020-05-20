@@ -4,6 +4,7 @@
 // (?) Pass pull_act, ex_act, emp_act, and etc to the swiped item.
 /obj/effect/effect/weapon_sweep
 	name = "sweep"
+	layer = INFRONT_MOB_LAYER
 
 /obj/effect/effect/weapon_sweep/atom_init(mapload, obj/item/weapon/sweep_item)
 	. = ..()
