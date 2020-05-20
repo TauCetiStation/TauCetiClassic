@@ -278,7 +278,7 @@
 	L.lit = 1
 	modules += L
 
-	modules += new /obj/item/weapon/tray/robotray(src)
+	modules += new /obj/item/weapon/robotray(src)
 	modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 	modules += new /obj/item/weapon/pen/robopen(src)
 	modules += new /obj/item/weapon/razor(src)

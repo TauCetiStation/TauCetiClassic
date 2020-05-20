@@ -248,12 +248,13 @@
 	flags = CONDUCT
 	m_amt = 3000
 	max_w_class = ITEM_SIZE_NORMAL
-	open = TRUE
+	opened = TRUE
+	max_storage_space = base_storage_capacity(ITEM_SIZE_NORMAL)
 
 /obj/item/weapon/storage/visuals/tray/attack_self(mob/user)
 	return
 
-/obj/item/weapon/storage/visuals/tray/update_icon(mob/user)
+/obj/item/weapon/storage/visuals/tray/update_overlays(mob/user)
 	cut_overlays()
 	for(var/obj/item/I in contents)
 		var/image/IO = item_overlays[I]
@@ -261,36 +262,44 @@
 		IO.layer = layer + 0.05
 		add_overlay(IO)
 
+/obj/item/weapon/storage/visuals/tray/gen_item_overlay(obj/item/I)
+	var/image/IO = image(I.icon, I.icon_state)
+	IO.pixel_x = rand(-8, 8)
+	IO.pixel_y = rand(-8, 8)
+	IO.loc = src
+	return IO
+
+
 /obj/item/weapon/storage/visuals/tray/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 
 	// Drop all the things. All of them.
-	dropped(user)
+	for(var/obj/item/I in contents)
+		// if no table, presume that the person just shittily dropped the tray on the ground and made a mess everywhere!
+		remove_from_storage(I, get_turf(loc))
+		step(I, pick(NORTH, WEST, EAST, SOTUTH))
+		I.after_throw()
 
-
-	if((CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
+	if((CLUMSY in user.mutations) && prob(50))
 		to_chat(M, "<span class='warning'>You accidentally slam yourself with the [src]!</span>")
 		M.Weaken(1)
 		user.take_bodypart_damage(2)
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
-			return
 		else
-			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER) //sound playin'
-			return //it always returns, but I feel like adding an extra return just for safety's sakes. EDIT; Oh well I won't :3
+			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)
 
-	var/mob/living/carbon/human/H = M      ///////////////////////////////////// /Let's have this ready for later.
+	var/mob/living/carbon/human/H = M
 
+	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
+	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
+	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])", user)
 
-	if(!(def_zone == O_EYES || def_zone == BP_HEAD)) //////////////hitting anything else other than the eyes
+	if(!(def_zone == O_EYES || def_zone == BP_HEAD))
 		if(prob(33))
 			src.add_blood(H)
 			var/turf/location = H.loc
 			if (istype(location, /turf/simulated))
-				location.add_blood(H)     ///Plik plik, the sound of blood
-
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])", user)
+				location.add_blood(H)
 
 		if(prob(15))
 			M.Weaken(3)
@@ -299,17 +308,11 @@
 			M.take_bodypart_damage(5)
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
-			M.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
-			return
 		else
-			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
-			M.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
-			return
+			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)
+		M.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
 
-
-
-
-	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
+	else if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
 		to_chat(M, "<span class='warning'>You get slammed in the face with the tray, against your mask!</span>")
 		if(prob(33))
 			src.add_blood(H)
@@ -331,10 +334,8 @@
 		if(prob(10))
 			M.Stun(rand(1,3))
 			M.take_bodypart_damage(3)
-			return
 		else
 			M.take_bodypart_damage(5)
-			return
 
 	else //No eye or head protection, tough luck!
 		to_chat(M, "<span class='warning'>You get slammed in the face with the tray!</span>")
@@ -353,35 +354,27 @@
 		if(prob(30))
 			M.Stun(rand(2,4))
 			M.take_bodypart_damage(4)
-			return
 		else
 			M.take_bodypart_damage(8)
 			if(prob(30))
 				M.Weaken(2)
-				return
-			return
 
-/obj/item/weapon/storage/visuals/tray/dropped(mob/user)
-
-	for((user in src.loc) && !user.incapacitated()) //to handle hand switching
+/obj/item/weapon/storage/visuals/tray/dropped(mob/user, slot)
+	if(user == loc || (!user.incapacitated() && !user.resting)) //to handle hand switching
 		return
 
-	var/foundtable = FALSE
-	for(var/obj/structure/table/T in loc)
-		foundtable = TRUE
-		break
+	if(isturf(loc))
+		for(var/obj/item/I in contents)
+			// if incapacitated, presume that the person just shittily dropped the tray on the ground and made a mess everywhere!
+			remove_from_storage(I, loc)
+			step(I, pick(NORTH, WEST, EAST, SOTUTH))
+			I.after_throw()
 
+/obj/item/weapon/storage/visuals/tray/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
+	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
 	for(var/obj/item/I in contents)
-		I.loc = loc
-		contents.Remove(I)
-		if(!foundtable && isturf(loc))
-			// if no table, presume that the person just shittily dropped the tray on the ground and made a mess everywhere!
-			spawn()
-				for(var/i = 1, i <= rand(1,2), i++)
-					if(I)
-						step(I, pick(NORTH,SOUTH,EAST,WEST))
-						sleep(rand(2,4))
-	return ..()
+		remove_from_storage(I, loc)
+		I.throw_at(target, rand(1, 2), speed, thrower, spin, diagonals_first, callback)
 
 ///////////////////NEW//////////////////////
 

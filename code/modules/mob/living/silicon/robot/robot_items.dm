@@ -9,7 +9,7 @@
 	var/max_carry = 10 // w_class = ITEM_SIZE_TINY -- takes up 1
 					   // w_class = ITEM_SIZE_SMALL -- takes up 3
 					   // w_class = ITEM_SIZE_NORMAL -- takes up 5
-/obj/item/weapon/tray/robotray/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/weapon/robotray/afterattack(atom/target, mob/user, proximity, params)
 	if ( !target )
 		return
 	if ( istype(target,/obj/item))

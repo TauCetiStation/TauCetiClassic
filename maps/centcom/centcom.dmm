@@ -2458,7 +2458,7 @@
 /area/custom/syndicate_mothership)
 "aki" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/tray,
+/obj/item/weapon/storage/visuals/tray,
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
