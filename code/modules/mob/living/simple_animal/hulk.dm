@@ -17,9 +17,8 @@
 	response_harm   = "punches"
 
 	harm_intent_damage = 0
-	melee_damage_lower = 5
-	melee_damage_upper = 20
-	attacktext = "brutally crushes"
+	melee_damage = 13
+	attacktext = "brutally crush"
 	environment_smash = 2
 
 	speed = 1
@@ -43,6 +42,9 @@
 	var/health_regen = 2
 
 	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/hulk/flash_eyes()
 	return
@@ -131,9 +133,8 @@
 	maxHealth = 300
 	health = 300
 
-	melee_damage_lower = 12
-	melee_damage_upper = 18
-	attacktext = "brutally bites"
+	melee_damage = 15
+	attacktext = "brutally gnaw"
 
 	speed = 2
 
@@ -156,8 +157,7 @@
 	icon_living = "Clowan"
 	maxHealth = 300
 	health = 300
-	melee_damage_lower = 5
-	melee_damage_upper = 5
+	melee_damage = 5
 	attacktext = "brutally HONK"
 
 	speed = 3

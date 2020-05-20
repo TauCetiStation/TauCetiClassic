@@ -2495,21 +2495,13 @@
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "cutlet"
 	bitesize = 2
-	list_reagents = list("protein" = 1)
+	list_reagents = list("protein" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/rawcutlet/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/kitchenknife))
 		new /obj/item/weapon/reagent_containers/food/snacks/raw_bacon(src)
 		to_chat(user, "<span class='notice'>You make a bacon.</span>")
 		qdel(src)
-
-/obj/item/weapon/reagent_containers/food/snacks/cutlet
-	name = "cutlet"
-	desc = "A tasty meat slice."
-	icon = 'icons/obj/food_ingredients.dmi'
-	icon_state = "cutlet"
-	bitesize = 2
-	list_reagents = list("protein" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/deepfryholder
 	name = "Deep Fried Foods Holder Obj"

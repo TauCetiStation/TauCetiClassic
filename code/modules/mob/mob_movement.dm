@@ -54,17 +54,12 @@
 	return
 
 /client/Northwest()
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		if(!C.get_active_hand() && !C.drop_combo_element())
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(!L.get_active_hand() && !L.drop_combo_element())
 			to_chat(usr, "<span class='warning'>You have nothing to drop in your hand.</span>")
 			return
 		drop_item()
-		return
-
-	var/mob/living/L = usr
-	if(!istype(L) || !L.drop_combo_element())
-		to_chat(usr, "<span class='warning'>This mob type cannot drop items.</span>")
 
 //This gets called when you press the delete button.
 /client/verb/delete_key_pressed()

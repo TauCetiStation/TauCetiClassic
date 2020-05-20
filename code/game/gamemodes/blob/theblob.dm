@@ -178,7 +178,7 @@
 	..()
 	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	src.visible_message("<span class='danger'>The [src.name] has been attacked by \the [M].</span>")
-	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+	var/damage = M.melee_damage
 	if(!damage) // Avoid divide by zero errors
 		return
 	damage /= max(src.brute_resist, 1)

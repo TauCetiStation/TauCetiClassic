@@ -18,9 +18,8 @@
 	response_harm   = "flails at"
 
 	harm_intent_damage = 0
-	melee_damage_lower = 35
-	melee_damage_upper = 35
-	attacktext = "claws at"
+	melee_damage = 35
+	attacktext = "claw"
 	attack_sound = list('sound/weapons/slash.ogg')
 
 	min_oxy = 0
