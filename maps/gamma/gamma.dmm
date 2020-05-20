@@ -23720,7 +23720,7 @@
 	},
 /area/station/cargo/office)
 "gJM" = (
-/obj/structure/pbag,
+/mob/living/pbag,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -32276,7 +32276,7 @@
 	},
 /area/station/security/prison)
 "jFE" = (
-/obj/structure/pbag,
+/mob/living/pbag,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -66820,12 +66820,12 @@
 /area/station/civilian/dormitories/dormfour)
 "uHH" = (
 /obj/machinery/computer/general_air_control/large_tank_control{
+	dir = 8;
 	frequency = 1443;
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "air_out";
-	sensors = list("air_sensor" = "Tank");
-	dir = 8
+	sensors = list("air_sensor" = "Tank")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -76850,7 +76850,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "xWI" = (
-/obj/structure/pbag,
+/mob/living/pbag,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "white"
