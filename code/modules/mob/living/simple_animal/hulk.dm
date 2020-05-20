@@ -52,6 +52,7 @@
 						/obj/effect/proc_holder/spell/aoe_turf/hulk_dash,
 						/obj/effect/proc_holder/spell/aoe_turf/hulk_smash
 							)
+
 /mob/living/simple_animal/hulk/mouse
 	name = "Megamouse"
 	real_name = "Megamouse"
@@ -74,6 +75,20 @@
 	response_harm   = "steps..?"
 	pass_flags = PASSTABLE
 
+/mob/living/simple_animal/hulk/mouse/dust()
+	dust_process()
+	new /obj/effect/decal/cleanable/ash(loc)
+	new /obj/effect/decal/remains/human/burned(loc)
+	dead_mob_list -= src
+
+/mob/living/simple_animal/hulk/mouse/death()
+	if(stat == DEAD)
+		return
+	stat = DEAD
+	dust()
+	icon = 'icons/mob/hulk_mouse.dmi'
+	return
+
 /mob/living/simple_animal/hulk/mouse/UnarmedAttack(atom/A)
 	if(hiding)
 		return
@@ -81,7 +96,7 @@
 		qdel(A)
 		maxHealth += 1
 		health += 1
-		visible_message("<span class='notice'>[src] swallows whole [A]! WOW!!!</span>")
+		visible_message("<span class='notice'>[src] swallows whole [A.name]! WOW!!!</span>")
 	else
 		return ..()
 
