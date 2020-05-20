@@ -139,7 +139,7 @@
 							  "...destroy those who dare to stump you!...",
 							  "...mice of the world, unite!....",)
 	invoke_msg = "...MEGAMOUSE!!!"
-	favor_cost = 50
+	favor_cost = 100
 
 	needed_aspects = list(
 		ASPECT_SPAWN = 1,
@@ -160,4 +160,3 @@
 	M.become_hulk()
 	user.visible_message("<span class='notice'>[user] summoned MEGAMOUSE to our world!</span>")
 	return TRUE
-
