@@ -69,7 +69,7 @@
 /obj/effect/proc_holder/spell/dumbfire/blessing
 	name = "Blessing"
 
-	//favor_cost = 200
+	favor_cost = 200
 	charge_max = 1 MINUTES
 	divine_power = 5 //power
 	needed_aspect = list(ASPECT_WEAPON = 1, ASPECT_MYSTIC = 1)
@@ -81,14 +81,12 @@
 	action_icon_state = "blessing"
 	sound = 'sound/magic/heal.ogg'
 
-	var/list/blessed = list()
-
 /obj/effect/proc_holder/spell/dumbfire/blessing/cast()
 	var/list/possible_targets = list()
 	var/obj/item/weapon/target
 
 	for(var/obj/item/W in orange(3))
-		if(!(W in blessed))
+		if(!W.blessed)
 			possible_targets += W
 
 	if(possible_targets.len == 0)
@@ -103,7 +101,7 @@
 	var/holy_outline = filter(type = "outline", size = 1, color = "#fffb00a1")
 	target.filters += holy_outline
 
-	blessed += target
+	target.blessed = TRUE
 
 /obj/effect/proc_holder/spell/targeted/charge/religion
 	name = "Electric Charge Pulse"
@@ -201,7 +199,7 @@
 	favor_cost = 250
 	charge_max = 2 MINUTES
 	divine_power = 1 //count
-	needed_aspect = list(ASPECT_SPAWN = 1, ASPECT_DEATH = 1,)
+	needed_aspect = list(ASPECT_SPAWN = 1)
 	summon_amt = 0
 
 	invocation = "none"

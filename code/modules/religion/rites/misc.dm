@@ -137,7 +137,7 @@
 							  "...They endowed Animation with human passions and feelings...",
 							  "...Animation, come from the New Kingdom, rejoice in the light!...",)
 	invoke_msg = "I appeal to you! I am calling! Wake up from sleep!"
-	favor_cost = 100
+	favor_cost = 200
 
 	needed_aspects = list(
 		ASPECT_WEAPON = 1,
@@ -145,19 +145,19 @@
 	)
 
 /datum/religion_rites/animation/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	var/obj/item/anim_item
+	var/list/obj/item/anim_items
 	for(var/obj/item/O in AOG.loc)
-		anim_item = O
+		anim_items += O
 
-	if(anim_item)
-		var/mob/living/simple_animal/hostile/mimic/copy/religion/M = new (anim_item.loc, anim_item)
-		M.pixel_x = anim_item.pixel_x
-		M.pixel_y = anim_item.pixel_y
+	if(anim_items && anim_items.len != 0)
+		for(var/obj/item/O in anim_items)
+			var/mob/living/simple_animal/hostile/mimic/copy/religion/M = new (O.loc, O)
+			M.pixel_x = O.pixel_x
+			M.pixel_y = O.pixel_y
 
-		M.harm_intent_damage = 0
-		M.melee_damage = 0
-
-		M.faction = "Station"
+			M.harm_intent_damage = 0
+			M.melee_damage = 0
+			M.faction = "Station"
 	else
 		INVOKE_ASYNC(src, .proc/soul_of_mouse, AOG)
 
@@ -193,12 +193,12 @@
 
 /*
  * Spook
- * The ritual doing spook
+ * This ritual spooks players: Light lamps pop out, and people start to shake
  */
 /datum/religion_rites/spook
 	name = "Spook"
 	desc = "Distributes a jerky sound."
-	ritual_length = (2 MINUTES)
+	ritual_length = (30 SECONDS)
 	ritual_invocations = list("I call the souls of people here, I send your soul to the otherworldly thief, in a black mirror...",
 							  "...Let Evil take you and lock you up...",
 							  "...torment you, torture you, torture you all, exhaust you, destroy you...",
@@ -216,7 +216,6 @@
 /datum/religion_rites/spook/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	playsound(AOG, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
-	var/list/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime, /obj/item/weapon/reagent_containers/food/snacks/glowstick)
 	for(var/mob/living/carbon/M in hearers(4, get_turf(AOG)))
 		if(M.mind.holy_role)
 			M.make_jittery(50)
@@ -225,14 +224,11 @@
 			M.make_jittery(50)
 			if(prob(50))
 				M.visible_message("<span class='warning bold'>[M]'s face clearly depicts true fear.</span>")
-			for(var/obj/item/F in M.contents)
-				if(is_type_in_list(F, blacklisted_lights))
-					continue
-				F.set_light(0)
 
-	for(var/obj/machinery/light/L in range(4, get_turf(AOG)))
-		L.on = TRUE
-		L.broken()
+	var/list/targets = list()
+	for(var/turf/T in range(4))
+		targets += T
+	light_off_range(targets, AOG)
 
 	return TRUE
 
@@ -242,7 +238,7 @@
  */
 /datum/religion_rites/illuminate
 	name = "Illuminate"
-	desc = "Create wisp of light."
+	desc = "Create wisp of light and turns on the light."
 	ritual_length = (1 MINUTES)
 	ritual_invocations = list("Come to me, wisp...",
 							  "...Appear to me the one whom everyone wants...",
@@ -443,6 +439,7 @@
 
 	needed_aspects = list(
 		ASPECT_SPAWN = 1,
+		ASPECT_RESCUE = 1,
 	)
 
 /datum/religion_rites/revive_animal/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
@@ -455,8 +452,10 @@
 		return FALSE
 
 	if(!isanimal(AOG.buckled_mob))
-		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
-		return FALSE
+		var/mob/living/simple_animal/S = AOG.buckled_mob
+		if(!S.animalistic)
+			to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
+			return FALSE
 
 	return ..()
 
@@ -474,7 +473,6 @@
 		return FALSE
 
 	animal.rejuvenate()
-	animal.icon_state = animal.icon_living
 
 	return TRUE
 
@@ -496,7 +494,6 @@
 
 	needed_aspects = list(
 		ASPECT_SPAWN = 1,
-		ASPECT_DEATH = 1,
 	)
 
 	var/list/summon_type = list(/mob/living/simple_animal/corgi/puppy, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/corgi, /mob/living/simple_animal/cat, /mob/living/simple_animal/parrot, /mob/living/simple_animal/crab, /mob/living/simple_animal/cow, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken, /mob/living/simple_animal/pig, /mob/living/simple_animal/turkey, /mob/living/simple_animal/goose, /mob/living/simple_animal/seal, /mob/living/simple_animal/walrus, /mob/living/simple_animal/fox, /mob/living/simple_animal/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/mushroom, /mob/living/simple_animal/pug, /mob/living/simple_animal/shiba, /mob/living/simple_animal/yithian, /mob/living/simple_animal/tindalos, /mob/living/carbon/monkey, /mob/living/carbon/monkey/skrell, /mob/living/carbon/monkey/tajara, /mob/living/carbon/monkey/unathi, /mob/living/simple_animal/slime)
@@ -528,14 +525,15 @@
 		return //handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 	if(response == "Yes")
 		var/mob/candidate = C.mob
-		var/mob/god
+		var/god_name
 		if(global.chaplain_religion.active_deities.len == 0)
-			god = pick(global.chaplain_religion.deity_names)
+			god_name = pick(global.chaplain_religion.deity_names)
 		else
-			god = pick(global.chaplain_religion.active_deities)
+			var/mob/god = pick(global.chaplain_religion.active_deities)
+			god_name = god.name
 		M.mind = candidate.mind
 		M.ckey = candidate.ckey
-		M.name = "familiar of [god.name] [pick("II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX")]"
+		M.name = "familiar of [god_name] [num2roman(rand(1, 20))]"
 		M.real_name = name
 		candidate.cancel_camera()
 		candidate.reset_view()
@@ -571,15 +569,16 @@
 			M.flash_eyes()
 
 	var/obj/item/weapon/claymore/religion/R = new (AOG.loc)
-	var/mob/god
+	var/god_name
 	if(global.chaplain_religion.active_deities.len == 0)
-		god = pick(global.chaplain_religion.deity_names)
+		god_name = pick(global.chaplain_religion.deity_names)
 	else
-		god = pick(global.chaplain_religion.active_deities)
+		var/mob/god = pick(global.chaplain_religion.active_deities)
+		god_name = god.name
 	R.down_overlay = image('icons/effects/effects.dmi', icon_state = "at_shield2", layer = OBJ_LAYER - 0.01)
 	R.down_overlay.alpha = 100
 	R.add_overlay(R.down_overlay)
 
-	R.name = "[R.name] of [god.name]"
+	R.name = "[R.name] of [god_name]"
 
 	return TRUE
