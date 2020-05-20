@@ -442,7 +442,7 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/revive_animal/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/revive_animal/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!AOG)
 		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
 		return FALSE
@@ -456,16 +456,10 @@
 		if(!S.animalistic)
 			to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
 			return FALSE
-
-	return ..()
+	return TRUE
 
 /datum/religion_rites/revive_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!AOG.buckled_mob)
-		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [AOG].</span>")
-		return FALSE
-
-	if(!isanimal(AOG.buckled_mob))
-		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
+	if(!required_checks(user, AOG))
 		return FALSE
 
 	var/mob/living/simple_animal/animal = AOG.buckled_mob
