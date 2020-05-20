@@ -133,7 +133,7 @@
 	desc = "Create MEGAMOUSE from mouse."
 	ritual_length = (0.5 MINUTES)
 	ritual_invocations = list("I call for your power, MEGAMOUSE!...",
-							  "...one must become strong....",
+							  "...change da world....",
 							  "...sometimes I dream about cheese...",
 							  "...squeek...",
 							  "...destroy those who dare to stump you!...",
@@ -142,7 +142,7 @@
 	favor_cost = 100
 
 	needed_aspects = list(
-		ASPECT_SPAWN = 2,
+		ASPECT_SPAWN = 1,ASPECT_RESCUE = 1
 	)
 
 /datum/religion_rites/h_mouse/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
