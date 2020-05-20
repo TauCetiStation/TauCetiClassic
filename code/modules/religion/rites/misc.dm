@@ -142,7 +142,7 @@
 	favor_cost = 100
 
 	needed_aspects = list(
-		ASPECT_SPAWN = 1,
+		ASPECT_SPAWN = 2,
 	)
 
 /datum/religion_rites/h_mouse/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
