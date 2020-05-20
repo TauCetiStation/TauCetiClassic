@@ -46,7 +46,7 @@
 	has_arm = TRUE
 	has_leg = TRUE
 
-/mob/living/simple_animal/hulk/flash_eyes()
+/mob/living/simple_animal/hulk/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
 	return
 
 /mob/living/simple_animal/hulk/human
