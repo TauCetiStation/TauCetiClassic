@@ -114,7 +114,7 @@
 			list("px"=15, "py"=6, "layer"=MOB_LAYER),
 		)
 
-#define MULTI_CARRY_TIP "Carry"
+#define MULTI_CARRY_TIP "Is carriable."
 
 /datum/mechanic_tip/multi_carry
 	tip_name = MULTI_CARRY_TIP
