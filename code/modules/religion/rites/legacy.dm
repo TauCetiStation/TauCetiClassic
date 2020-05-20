@@ -81,7 +81,7 @@
 	name = "Repainting items"
 	desc = "Change color of item."
 	ritual_length = (1.5 MINUTES)
-	ritual_invocations = list("I trust in you Lord...",
+	ritual_invocations = list("I trust in you Lord...", //TODO
 						"...Please change the world as you want...",
 						"...Believe me! We need it...",
 						"...I thanks the universe for everything what I have...")

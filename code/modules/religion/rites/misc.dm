@@ -100,11 +100,11 @@
 	desc = "Spread honks throughout the station."
 	ritual_length = (2 MINUTES)
 	ritual_invocations = list("All able to hear, hear!...",
-							  "...This message is dedicated to all of you....",
+							  "...This message is dedicated to all of you...",
 							  "...may all of you be healthy and smart...",
 							  "...let your jokes be funny...",
 							  "...and the soul be pure!...",
-							  "...This screech will be devoted to all jokes and clowns....",)
+							  "...This screech will be devoted to all jokes and clowns...",)
 	invoke_msg = "...So hear it!!!"
 	favor_cost = 200
 
@@ -131,17 +131,12 @@
 /datum/religion_rites/animation
 	name = "Animation"
 	desc = "Revives a thing on the altar."
-	ritual_length = (5 SECONDS) //(1 MINUTES)
-	ritual_invocations = list("Have mercy on us, O Lord, have mercy on us...", //TODO
-							  "...for at a loss for any defense, this prayer do we sinners offer Thee as Master...",
-							  "...have mercy on us...",
-							  "...Lord have mercy on us, for we have hoped in Thee, be not angry with us greatly, neither remember our iniquities...",
-							  "...but look upon us now as Thou art compassionate, and deliver us from our enemies...",
-							  "...for Thou art our God, and we, Thy people; all are the works of Thy hands, and we call upon Thy name...",
-							  "...Both now and ever, and unto the ages of ages...",
-							  "...The door of compassion open unto us 0 blessed Theotokos, for hoping in thee...",
-							  "...let us not perish; through thee may we be delivered from adversities, for thou art the salvation of the Our race...")
-	invoke_msg = "Lord have mercy. Twelve times."
+	ritual_length = (1 MINUTES)
+	ritual_invocations = list("I appeal to you - you are the strength of the Lord...",
+							  "...given from the light given by the wisdom of the gods returned...",
+							  "...They endowed Animation with human passions and feelings...",
+							  "...Animation, come from the New Kingdom, rejoice in the light!...",)
+	invoke_msg = "I appeal to you! I am calling! Wake up from sleep!"
 	favor_cost = 100
 
 	needed_aspects = list(
@@ -165,14 +160,16 @@
 
 		M.faction = "Station"
 	else
-		var/mob/living/simple_animal/mouse/M = new (AOG.loc)
-		INVOKE_ASYNC(src, .proc/soul_of_mouse, M)
+		INVOKE_ASYNC(src, .proc/soul_of_mouse, AOG)
 
-	usr.visible_message("<span class='notice'>[user] has been finished the rite of [name]!</span>")
+	user.visible_message("<span class='notice'>[user] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/animation/proc/soul_of_mouse(mob/living/simple_animal/mouse/mouse)
+/datum/religion_rites/animation/proc/soul_of_mouse(obj/structure/altar_of_gods/AOG)
 	// Dedicated to all dead mouse
+	playsound(AOG, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER)
+	var/mob/living/simple_animal/mouse/mouse = new (AOG.loc)
+	mouse.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	sleep(1 SECONDS)
 	var/image/I = image(icon = mouse.icon, icon_state =  mouse.icon_state, layer = FLY_LAYER)
 	I.layer = mouse.layer + 1
@@ -193,6 +190,7 @@
 	animate(pixel_z = 32, alpha = 0, time = 1 SECONDS)
 	sleep(2 SECONDS)
 	mouse.health = 0
+	mouse.mouse_opacity = initial(mouse_opacity)
 
 /*
  * Spook
@@ -200,15 +198,16 @@
  */
 /datum/religion_rites/spook
 	name = "Spook"
-	desc = "Spread horror sound." //TODO
+	desc = "Distributes a jerky sound."
 	ritual_length = (2 MINUTES)
-	ritual_invocations = list("All able to hear, hear!...", //TODO
-							  "...This message is dedicated to all of you....",
-							  "...may all of you be healthy and smart...",
-							  "...let your jokes be funny...",
-							  "...and the soul be pure!...",
-							  "...This screech will be devoted to all jokes and clowns....",)
-	invoke_msg = "...So hear it!!!"
+	ritual_invocations = list("I call the souls of people here, I send your soul to the otherworldly thief, in a black mirror...",
+							  "...Let Evil take you and lock you up...",
+							  "...torment you, torture you, torture you all, exhaust you, destroy you...",
+							  "...I give evil to your soul...",
+							  "...I instill Evil in your head, in your heart, in your liver, in your blood...",
+							  "...I do not order...",
+							  "...As I said, it will be so! I close with a key, close with a lock...")
+	invoke_msg = "...I conjure! I conjure! I conjure!"
 	favor_cost = 100
 
 	needed_aspects = list(
@@ -225,6 +224,8 @@
 		else
 			M.confused += 10
 			M.make_jittery(50)
+			if(prob(50))
+				M.visible_message("<span class='warning bold'>[M]'s face clearly depicts true fear.</span>")
 			for(var/obj/item/F in M.contents)
 				if(is_type_in_list(F, blacklisted_lights))
 					continue
@@ -238,19 +239,20 @@
 
 /*
  * Illuminate
- * The ritual used /illuminate()
+ * The ritual turns on the flash in range, create overlay of "spirit" and the person begins to glow
  */
 /datum/religion_rites/illuminate
 	name = "Illuminate"
-	desc = "Create wisp of light." //TODO
-	ritual_length = (2 SECONDS) //(1 MINUTES)
-	ritual_invocations = list("All able to hear, hear!...", //TODO
-							  "...This message is dedicated to all of you....",
-							  "...may all of you be healthy and smart...",
-							  "...let your jokes be funny...",
-							  "...and the soul be pure!...",
-							  "...This screech will be devoted to all jokes and clowns....",)
-	invoke_msg = "...So hear it!!!"
+	desc = "Create wisp of light."
+	ritual_length = (1 MINUTES)
+	ritual_invocations = list("Come to me, wisp...",
+							  "...Appear to me the one whom everyone wants...",
+							  "...to whom they turn for help!..",
+							  "...Good wisp, able to reveal the darkness...",
+							  "...I ask you for help...",
+							  "...Hear me, do not reject me...",
+							  "...for it's not just for the sake of curiosity that I disturb your peace...")
+	invoke_msg = "...I pray, please come!"
 	favor_cost = 200
 
 	var/shield_icon = "at_shield2"
@@ -260,8 +262,11 @@
 	)
 
 /datum/religion_rites/illuminate/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	var/list/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime, /obj/item/weapon/reagent_containers/food/snacks/glowstick)
 	for(var/mob/living/carbon/human/H in range(3, get_turf(AOG)))
 		for(var/obj/item/device/flashlight/F in H.contents)
+			if(is_type_in_list(F, blacklisted_lights))
+				continue
 			if(F.brightness_on)
 				if(!F.on)
 					F.on = !F.on
@@ -294,14 +299,21 @@
 /datum/religion_rites/devaluation
 	name = "Devaluation"
 	desc = "Changes the denomination of banknotes one higher."
-	ritual_length = (2 SECONDS) //(1 MINUTES)
-	ritual_invocations = list("All able to hear, hear!...", //TODO
-							  "...This message is dedicated to all of you....",
-							  "...may all of you be healthy and smart...",
-							  "...let your jokes be funny...",
-							  "...and the soul be pure!...",
-							  "...This screech will be devoted to all jokes and clowns....",)
-	invoke_msg = "...So hear it!!!"
+	ritual_length = (1 MINUTES)
+	ritual_invocations = list("Lord, hope and support...",
+							  "...Thy Everlasting Throne, your backwater...",
+							  "...walked through the sky...",
+							  "...carried bags of money...",
+							  "...bags opened...",
+							  "...money fell...",
+							  "...I, your slave, walked along the bottom...",
+							  "...raised money...",
+							  "...carried it home...",
+							  "...lit candles...",
+							  "...gave it to mine...",
+							  "...Candles, burn...",
+							  "...money, come to the house...",)
+	invoke_msg = "...Till the end of time!"
 	favor_cost = 150
 
 	var/static/list/swap = list(
@@ -346,14 +358,13 @@
 /datum/religion_rites/upgrade
 	name = "Upgrade"
 	desc = "Upgrade scientific things."
-	ritual_length = (2 SECONDS) //(1 MINUTES)
-	ritual_invocations = list("All able to hear, hear!...", //TODO
-							  "...This message is dedicated to all of you....",
-							  "...may all of you be healthy and smart...",
-							  "...let your jokes be funny...",
-							  "...and the soul be pure!...",
-							  "...This screech will be devoted to all jokes and clowns....",)
-	invoke_msg = "...So hear it!!!"
+	ritual_length = (1 MINUTES)
+	ritual_invocations = list("The moon was born...",
+							  "...the force was born...",
+							  "...She endowed these things with her power...",
+							  "... As the moon and the earth never part...",
+							  "...So this item will be better forever...",)
+	invoke_msg = "...I call on all things!"
 	favor_cost = 200
 
 	//rating of stock_parts = items with this rating
@@ -419,16 +430,17 @@
  */
 /datum/religion_rites/revive_animal
 	name = "Revive"
-	desc = "The animal revives from the better world." //TODO
-	ritual_length = (2 SECONDS) //(1 MINUTES)
-	ritual_invocations = list("All able to hear, hear!...", //TODO
-							  "...This message is dedicated to all of you....",
-							  "...may all of you be healthy and smart...",
-							  "...let your jokes be funny...",
-							  "...and the soul be pure!...",
-							  "...This screech will be devoted to all jokes and clowns....",)
-	invoke_msg = "...So hear it!!!"
-	favor_cost = 100
+	desc = "The animal revives from the better world."
+	ritual_length = (1 MINUTES)
+	ritual_invocations = list("I will say, whisper, quietly say such words...",
+							  "...May every disease leave you...",
+							  "...You will not know that you are in torment, pain and suffering...",
+							  "...No one can hurt...",
+							  "...You must poison the whole, chase the tails from the body a animal...",
+							  "... let them go to the raw ground, the water goes and does not come back...",
+							  "...God helps, and in my words the work is strengthened...",)
+	invoke_msg = "...Let it be so!"
+	favor_cost = 150
 
 	needed_aspects = list(
 		ASPECT_SPAWN = 1,
@@ -463,6 +475,7 @@
 		return FALSE
 
 	animal.rejuvenate()
+	animal.icon_state = animal.icon_living
 
 	return TRUE
 
@@ -474,11 +487,12 @@
 	name = "Call animal"
 	desc = "Create random friendly animal."
 	ritual_length = (1.5 MINUTES)
-	ritual_invocations = list("I trust in you Lord...", //TODO
-						"...Please change the world as you want...",
-						"...Believe me! We need it...",
-						"...I thanks the universe for everything what I have...")
-	invoke_msg = "...Divine power, come on, change the world!"
+	ritual_invocations = list("As these complex nodules of the world are interconnected...",
+						"...so even my animal will be connected with this place...",
+						"...My will has allowed me to create and call you to life...",
+						"...Your existence is limited to fulfilling your goal...",
+						"...Let you come here...")
+	invoke_msg = "...Let it be so!"
 	favor_cost = 150
 
 	needed_aspects = list(
@@ -492,10 +506,10 @@
 	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
 		if(!M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
-	
-	var/type = pick(summon_type)
 
+	var/type = pick(summon_type)
 	var/mob/M = new type(AOG.loc)
+
 	for(var/mob/dead/observer/O in observer_list)
 		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 			continue
@@ -512,7 +526,7 @@
 		return
 	var/response = alert(C, "Do you want to become the Familiar of religion?", "Familiar request", "No", "Yes", "Never for this round")
 	if(!C || M.ckey)
-		return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
+		return //handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 	if(response == "Yes")
 		var/mob/candidate = C.mob
 		var/mob/god = pick(global.chaplain_religion.active_deities)
@@ -520,7 +534,7 @@
 			god = pick(global.chaplain_religion.deity_names)
 		M.mind = candidate.mind
 		M.ckey = candidate.ckey
-		M.name = "Familiar of [god.name] [pick("II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX")]"
+		M.name = "familiar of [god.name] [pick("II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX")]"
 		M.real_name = name
 		candidate.cancel_camera()
 		candidate.reset_view()
