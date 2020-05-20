@@ -254,8 +254,6 @@
 			if(reagents.total_volume <= 0)
 				N.visible_message("<span class='notice'><b>[N]</b> just ate \the [src]!</span>", "<span class='notice'>You just ate \the [src], [pick("delicious", "wonderful", "smooth", "disgusting")]!</span>")
 				qdel(src)
-				if(prob(10))
-					N.become_hulk()
 		else
 			to_chat(N, text("<span class='notice'>You are unable to nibble away at \the [src] while being hidden.</span>"))
 
