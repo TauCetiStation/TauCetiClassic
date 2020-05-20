@@ -662,18 +662,16 @@ var/list/turret_icons
 	else
 		playsound(src, shot_sound, VOL_EFFECTS_MASTER)
 
-/obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/M)
+/obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/attacker)
 	..()
-	if(M.melee_damage_upper == 0)
+	if(attacker.melee_damage == 0)
 		return
 	if(!(stat & BROKEN))
-		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
-		take_damage(M.melee_damage_upper)
+		visible_message("<span class='danger'>[attacker] [attacker.attacktext] [src]!</span>")
+		attacker.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
+		take_damage(attacker.melee_damage)
 	else
-
-		to_chat(M, "<span class='red'>That object is useless to you.</span>")
-	return
+		to_chat(attacker, "<span class='red'>That object is useless to you.</span>")
 
 
 /obj/machinery/porta_turret/attack_alien(mob/living/carbon/xenomorph/humanoid/M)

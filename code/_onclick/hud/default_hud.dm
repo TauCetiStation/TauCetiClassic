@@ -1,10 +1,9 @@
-/datum/hud/proc/larva_hud()
-
+/datum/hud/proc/default_hud(ui_color = "#ffffff", ui_alpha = 255)
 	src.adding = list()
 	src.other = list()
+	src.hotkeybuttons = list() //These can be disabled for hotkey usersx
 
 	var/obj/screen/using
-	var/obj/screen/inventory/inv_box
 
 	using = new /obj/screen()
 	using.name = "act_intent"
@@ -16,10 +15,13 @@
 	src.adding += using
 	action_intent = using
 
+	using = new /obj/screen/inventory/craft
+	src.adding += using
+
 //intent small hud objects
 	var/icon/ico
 
-	ico = new/icon(ui_style, "black")
+	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
 	using = new /obj/screen( src )
@@ -31,7 +33,7 @@
 	src.adding += using
 	help_intent = using
 
-	ico = new/icon(ui_style, "black")
+	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
 	using = new /obj/screen( src )
@@ -43,7 +45,7 @@
 	src.adding += using
 	push_intent = using
 
-	ico = new/icon(ui_style, "black")
+	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
 	using = new /obj/screen( src )
@@ -55,7 +57,7 @@
 	src.adding += using
 	grab_intent = using
 
-	ico = new/icon(ui_style, "black")
+	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
 	using = new /obj/screen( src )
@@ -67,50 +69,29 @@
 	src.adding += using
 	harm_intent = using
 
+//end intent small hud objects
+
 	using = new /obj/screen()
 	using.name = "mov_intent"
-	using.dir = SOUTHWEST
-	using.icon = 'icons/mob/screen1_xeno.dmi'
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
+	using.icon = ui_style
+	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.screen_loc = ui_movi
 	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
+	using.color = ui_color
+	using.alpha = ui_alpha
 	src.adding += using
 	move_intent = using
 
-	inv_box = new /obj/screen/inventory()
-	inv_box.name = "mouth"
-	inv_box.dir = WEST
-	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
-	inv_box.icon_state = "hand_larva_active"
-	inv_box.screen_loc = ui_rhand
-	inv_box.layer = HUD_LAYER
-	inv_box.plane = HUD_PLANE
-	inv_box.slot_id = SLOT_R_HAND
-	src.r_hand_hud_object = inv_box
-	src.adding += inv_box
-
-	mymob.nightvisionicon = new /obj/screen/xenomorph/nightvision()
-	mymob.nightvisionicon.screen_loc = ui_alien_nightvision
-	src.adding += mymob.nightvisionicon
-
-	mymob.healths = new /obj/screen()
-	mymob.healths.icon = 'icons/mob/screen1_xeno.dmi'
-	mymob.healths.icon_state = "health0"
-	mymob.healths.name = "health"
-	mymob.healths.screen_loc = ui_alien_health
-
-	mymob.pullin = new /obj/screen/pull()
-	mymob.pullin.icon = 'icons/mob/screen1_xeno.dmi'
-	mymob.pullin.update_icon(mymob)
-	mymob.pullin.screen_loc = ui_pull_resist
-
-	mymob.zone_sel = new /obj/screen/zone_sel()
-	mymob.zone_sel.cut_overlays()
-	mymob.zone_sel.add_overlay(image("icon" = 'icons/mob/zone_sel.dmi', "icon_state" = text("[]", mymob.zone_sel.selecting)))
+	mymob.zone_sel = new /obj/screen/zone_sel( null )
+	mymob.zone_sel.icon = ui_style
+	mymob.zone_sel.color = ui_color
+	mymob.zone_sel.alpha = ui_alpha
+	mymob.zone_sel.overlays.Cut()
+	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.zone_sel, mymob.healths, mymob.pullin) //, mymob.rest, mymob.sleep, mymob.mach )
-	mymob.client.screen += src.adding + src.other
-	mymob.client.screen += mymob.client.void
+	mymob.client.screen += list(mymob.zone_sel)
+	mymob.client.screen += src.adding
+	inventory_shown = 0

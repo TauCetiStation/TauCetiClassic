@@ -904,11 +904,11 @@
 
 /datum/unarmed_attack/slime_glomp
 	attack_verb = list("glomp")
+	damage = 5
+	damType = CLONE
 
 /datum/unarmed_attack/slime_glomp/New()
 	attack_sound = list('sound/effects/attackblob.ogg')
-	damage = 5
-	damType = CLONE
 
 /datum/unarmed_attack/claws
 	attack_verb = list("scratch", "claw")

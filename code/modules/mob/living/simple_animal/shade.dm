@@ -14,9 +14,8 @@
 	response_help  = "puts their hand through"
 	response_disarm = "flails at"
 	response_harm   = "punches the"
-	melee_damage_lower = 5
-	melee_damage_upper = 15
-	attacktext = "drains the life from"
+	melee_damage = 10
+	attacktext = "drain"
 	minbodytemp = 0
 	maxbodytemp = 4000
 	min_oxy = 0
@@ -29,6 +28,8 @@
 	status_flags = CANPUSH
 
 	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
 
 /mob/living/simple_animal/shade/Life()
 	..()
@@ -64,8 +65,7 @@
 	stat = CONSCIOUS
 	maxHealth = 5000
 	health = 5000
-	melee_damage_lower = 0
-	melee_damage_upper = 0
+	melee_damage = 0
 	faction = "Station"
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO

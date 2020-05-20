@@ -82,27 +82,53 @@
 /mob/living/carbon/xenomorph/facehugger/attack_ui(slot_id)
 	return
 
-// This is modified grab mechanic for facehugger
-/mob/living/carbon/attack_facehugger(mob/living/carbon/xenomorph/facehugger/FH)
-	if(!is_facehuggable())
-		to_chat(FH, "<span class='warning'>It is useless to try to infect this!</span>")
-		return
-	if(FH.a_intent == INTENT_GRAB)
-		if(src.stat != DEAD)
-			if(FH == src)
-				return
-			var/obj/item/weapon/fh_grab/G = new /obj/item/weapon/fh_grab(FH, src)
+/mob/living/carbon/alien/facehugger/get_unarmed_attack()
+	var/retDam = 2
+	var/retDamType = BRUTE
+	var/retFlags = DAM_SHARP
+	var/retVerb = "gnaw"
+	var/retSound = 'sound/weapons/bite.ogg'
+	var/retMissSound = 'sound/weapons/punchmiss.ogg'
 
-			FH.put_in_active_hand(G)
+	if(HULK in mutations)
+		retDam += 4
 
-			grabbed_by += G
-			FH.SetNextMove(CLICK_CD_ACTION)
-			G.synch()
-			LAssailant = FH
+	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
+				"miss_sound" = retMissSound)
 
-			FH.visible_message("<span class='danger'>[FH] atempts to leap at [src] face!</span>")
-		else
-			to_chat(FH, "<span class='warning'>looks dead.</span>")
+/mob/living/carbon/alien/facehugger/canGrab(atom/movable/target, show_warnings = TRUE)
+	if(!ishuman(target) && !ismonkey(target))
+		if(show_warnings)
+			to_chat(src, "<span class='warning'>[target] is incompatible.</span>")
+		return FALSE
+
+	var/mob/living/carbon/C = target
+	var/datum/species/S = all_species[C.get_species()]
+	if(S && S.flags[NO_BLOOD])
+		if(show_warnings)
+			to_chat(src, "<span class='warning'>[target] is incompatible.</span>")
+		return FALSE
+
+	if(C.stat == DEAD)
+		if(show_warnings)
+			to_chat(src, "<span class='warning'>[target] looks dead.</span>")
+		return FALSE
+	return ..()
+
+/mob/living/carbon/alien/facehugger/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+	// See facehugger/canGrab()
+	var/mob/living/carbon/C = target
+
+	var/obj/item/weapon/fh_grab/G = new /obj/item/weapon/fh_grab(src, target)
+
+	put_in_active_hand(G)
+
+	C.grabbed_by += G
+	SetNextMove(CLICK_CD_ACTION)
+	G.synch()
+	C.LAssailant = src
+
+	target.visible_message("<span class='danger'>[src] atempts to leap at [C]'s face!</span>")
 
 /*
  * This is called when facehugger has grabbed(left click) and then
