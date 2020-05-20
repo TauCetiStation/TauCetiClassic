@@ -149,7 +149,7 @@
 	if(!ismouse(AOG.buckled_mob))
 		return FALSE
 	if(!AOG.buckled_mob.mind)
-		to_chat(user,"<font color='red'><b>MEGAMOUSE CAN'T ACCEPT THIS MINDLESS CREATURE!</b></span>")
+		to_chat(user,"<font color='red'><b>MEGAMOUSE CAN'T ACCEPT THIS MINDLESS CREATURE!</b></font>")
 		return FALSE
 	return ..()
 
@@ -158,5 +158,5 @@
 	if(!istype(M))
 		return FALSE
 	M.become_hulk()
-	user.visible_message("<font size='5' color='red'><b>[user] summoned MEGAMOUSE to our world!</b></span>")
+	user.visible_message("<font size='5' color='red'><b>[user] summoned MEGAMOUSE to our world!</b></font>")
 	return TRUE
