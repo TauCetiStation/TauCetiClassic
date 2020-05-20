@@ -130,7 +130,7 @@
  */
 /datum/religion_rites/animation
 	name = "Animation"
-	desc = "Revives a thing on the altar."
+	desc = "Revives a things on the altar."
 	ritual_length = (1 MINUTES)
 	ritual_invocations = list("I appeal to you - you are the strength of the Lord...",
 							  "...given from the light given by the wisdom of the gods returned...",
@@ -144,52 +144,27 @@
 		ASPECT_SPAWN = 1,
 	)
 
+/datum/religion_rites/animation/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
+	var/obj/item/anim_item = locate() in AOG.loc
+	if(!anim_item)
+		to_chat(user, "<span class='warning'>Put any the item on the altar!</span>")
+		return FALSE
+	return TRUE
+
 /datum/religion_rites/animation/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	var/list/obj/item/anim_items
+	if(!required_checks(user, AOG))
+		return FALSE
+
+	var/list/anim_items = list()
 	for(var/obj/item/O in AOG.loc)
 		anim_items += O
 
 	if(anim_items && anim_items.len != 0)
 		for(var/obj/item/O in anim_items)
 			var/mob/living/simple_animal/hostile/mimic/copy/religion/M = new (O.loc, O)
-			M.pixel_x = O.pixel_x
-			M.pixel_y = O.pixel_y
-
-			M.harm_intent_damage = 0
-			M.melee_damage = 0
-			M.faction = "Station"
-	else
-		INVOKE_ASYNC(src, .proc/soul_of_mouse, AOG)
 
 	user.visible_message("<span class='notice'>[user] has been finished the rite of [name]!</span>")
 	return TRUE
-
-/datum/religion_rites/animation/proc/soul_of_mouse(obj/structure/altar_of_gods/AOG)
-	// Dedicated to all dead mouse
-	playsound(AOG, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER)
-	var/mob/living/simple_animal/mouse/mouse = new (AOG.loc)
-	mouse.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	sleep(1 SECONDS)
-	var/image/I = image(icon = mouse.icon, icon_state =  mouse.icon_state, layer = FLY_LAYER)
-	I.layer = mouse.layer + 1
-	I.invisibility = mouse.invisibility
-	I.loc = mouse
-	I.alpha = 150
-	I.pixel_y = mouse.pixel_y + 4
-	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-	var/list/viewing = list()
-	for(var/mob/M in viewers(mouse))
-		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
-			viewing |= M.client
-
-	flick_overlay(I, viewing, 2 SECONDS)
-	animate(I, pixel_z = 16, alpha = 80, time = 1 SECONDS)
-	animate(pixel_z = 32, alpha = 0, time = 1 SECONDS)
-	sleep(2 SECONDS)
-	mouse.health = 0
-	mouse.mouse_opacity = initial(mouse.mouse_opacity)
 
 /*
  * Spook
@@ -285,138 +260,6 @@
 	I.pixel_y = 12
 	user.add_overlay(I)
 	user.set_light(7)
-	return TRUE
-
-/*
- * Devaluation
- * In the radius from the altar, changes the denomination of banknotes one higher
- */
-/datum/religion_rites/devaluation
-	name = "Devaluation"
-	desc = "Changes the denomination of banknotes one higher."
-	ritual_length = (1 MINUTES)
-	ritual_invocations = list("Lord, hope and support...",
-							  "...Thy Everlasting Throne, your backwater...",
-							  "...walked through the sky...",
-							  "...carried bags of money...",
-							  "...bags opened...",
-							  "...money fell...",
-							  "...I, your slave, walked along the bottom...",
-							  "...raised money...",
-							  "...carried it home...",
-							  "...lit candles...",
-							  "...gave it to mine...",
-							  "...Candles, burn...",
-							  "...money, come to the house...",)
-	invoke_msg = "...Till the end of time!"
-	favor_cost = 150
-
-	var/static/list/swap = list(
-		/obj/item/weapon/spacecash = /obj/item/weapon/spacecash/c1,
-		/obj/item/weapon/spacecash/c1 = /obj/item/weapon/spacecash/c10,
-		/obj/item/weapon/spacecash/c10 = /obj/item/weapon/spacecash/c20,
-		/obj/item/weapon/spacecash/c20 = /obj/item/weapon/spacecash/c50,
-		/obj/item/weapon/spacecash/c50 = /obj/item/weapon/spacecash/c100,
-		/obj/item/weapon/spacecash/c100 = /obj/item/weapon/spacecash/c200,
-		/obj/item/weapon/spacecash/c200 = /obj/item/weapon/spacecash/c500,
-		/obj/item/weapon/spacecash/c500 = /obj/item/weapon/spacecash/c1000,
-		/obj/item/weapon/spacecash/c1000 = /obj/item/weapon/spacecash,
-	)
-
-	needed_aspects = list(
-		ASPECT_GREED = 1,
-	)
-
-/datum/religion_rites/devaluation/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	for(var/obj/item/weapon/spacecash/cash in range(1, AOG.loc))
-		if(istype(cash, /obj/item/weapon/spacecash/ewallet))
-			continue
-		if(swap[cash.type])
-			var/swapping = swap[cash.type]
-			new swapping(cash.loc)
-			if(prob(20))
-				step(swapping, pick(alldirs))
-			qdel(cash)
-	return TRUE
-
-/datum/religion_rites/devaluation/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
-	for(var/obj/item/weapon/spacecash/cash in range(1, AOG.loc))
-		if(prob(20))
-			step(cash, pick(alldirs))
-			break
-	return TRUE
-
-/*
- * Upgrade
- * In the radius from the altar, changes stock_parts withs rating to stock_parts with rating + 1
- */
-/datum/religion_rites/upgrade
-	name = "Upgrade"
-	desc = "Upgrade scientific things."
-	ritual_length = (1 MINUTES)
-	ritual_invocations = list("The moon was born...",
-							  "...the force was born...",
-							  "...She endowed these things with her power...",
-							  "... As the moon and the earth never part...",
-							  "...So this item will be better forever...",)
-	invoke_msg = "...I call on all things!"
-	favor_cost = 200
-
-	//rating of stock_parts = items with this rating
-	var/static/list/swap = list(
-		1 = list(
-			/obj/item/weapon/stock_parts/capacitor = /obj/item/weapon/stock_parts/capacitor/adv,
-			/obj/item/weapon/stock_parts/scanning_module = /obj/item/weapon/stock_parts/scanning_module/adv,
-			/obj/item/weapon/stock_parts/manipulator = /obj/item/weapon/stock_parts/manipulator/nano,
-			/obj/item/weapon/stock_parts/micro_laser = /obj/item/weapon/stock_parts/micro_laser/high,
-			/obj/item/weapon/stock_parts/matter_bin = /obj/item/weapon/stock_parts/matter_bin/adv,
-		),
-		2 = list (
-			/obj/item/weapon/stock_parts/capacitor/adv = /obj/item/weapon/stock_parts/capacitor/super,
-			/obj/item/weapon/stock_parts/scanning_module/adv = /obj/item/weapon/stock_parts/scanning_module/phasic,
-			/obj/item/weapon/stock_parts/manipulator/nano = /obj/item/weapon/stock_parts/manipulator/pico,
-			/obj/item/weapon/stock_parts/micro_laser/high = /obj/item/weapon/stock_parts/micro_laser/ultra,
-			/obj/item/weapon/stock_parts/matter_bin/adv = /obj/item/weapon/stock_parts/matter_bin/super,
-		),
-		3 = list(
-			/obj/item/weapon/stock_parts/capacitor/super = /obj/item/weapon/stock_parts/capacitor/quadratic,
-			/obj/item/weapon/stock_parts/scanning_module/phasic = /obj/item/weapon/stock_parts/scanning_module/triphasic,
-			/obj/item/weapon/stock_parts/manipulator/pico = /obj/item/weapon/stock_parts/manipulator/femto,
-			/obj/item/weapon/stock_parts/micro_laser/ultra = /obj/item/weapon/stock_parts/micro_laser/quadultra,
-			/obj/item/weapon/stock_parts/matter_bin/super = /obj/item/weapon/stock_parts/matter_bin/bluespace,
-		),
-		4 = list(
-			/obj/item/weapon/stock_parts/capacitor/quadratic = /obj/item/weapon/stock_parts/capacitor,
-			/obj/item/weapon/stock_parts/scanning_module/triphasic = /obj/item/weapon/stock_parts/scanning_module,
-			/obj/item/weapon/stock_parts/manipulator/femto = /obj/item/weapon/stock_parts/manipulator,
-			/obj/item/weapon/stock_parts/micro_laser/quadultra = /obj/item/weapon/stock_parts/micro_laser,
-			/obj/item/weapon/stock_parts/matter_bin/bluespace = /obj/item/weapon/stock_parts/matter_bin,
-		),
-	)
-
-	needed_aspects = list(
-		ASPECT_SCIENCE = 1,
-	)
-
-/datum/religion_rites/upgrade/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	for(var/obj/item/weapon/stock_parts/S in range(1, AOG.loc))
-		if(istype(S, /obj/item/weapon/stock_parts/console_screen))
-			continue
-
-		if(swap[S.rating][S.type])
-			var/swapping = swap[S.rating][S.type]
-			new swapping(S.loc)
-			if(prob(20))
-				step(swapping, pick(alldirs))
-			qdel(S)
-
-	return TRUE
-
-/datum/religion_rites/upgrade/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
-	for(var/obj/item/weapon/stock_parts/S in range(1, AOG.loc))
-		if(prob(20))
-			step(S, pick(alldirs))
-			break
 	return TRUE
 
 /*
