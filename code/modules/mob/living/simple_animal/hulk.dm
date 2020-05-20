@@ -81,7 +81,7 @@
 		qdel(A)
 		maxHealth += 1
 		health += 1
-		visible_message("<span class='notice'>[src] swallows whole [A]! WOW!!!</span>")
+		visible_message("<span class='notice'>[src] swallows whole [A.name]! WOW!!!</span>")
 	else
 		return ..()
 
