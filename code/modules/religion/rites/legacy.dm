@@ -72,27 +72,3 @@
 	)
 
 	invoke_spelltype = /obj/effect/proc_holder/spell/targeted/charge/religion
-
-/*
- * Recolor
- * AoE relocor items
- */
-/datum/religion_rites/legacy/recolor
-	name = "Repainting items"
-	desc = "Change color of item."
-	ritual_length = (1.5 MINUTES)
-	ritual_invocations = list("I trust in you Lord...", //TODO
-						"...Please change the world as you want...",
-						"...Believe me! We need it...",
-						"...I thanks the universe for everything what I have...")
-	invoke_msg = "...Divine power, come on, change the world!"
-	favor_cost = 150
-
-	// All item in range
-	divine_power_mult = 100
-
-	needed_aspects = list(
-		ASPECT_CHAOS = 1,
-	)
-
-	invoke_spelltype = /obj/effect/proc_holder/spell/dumbfire/blessing/recolor
