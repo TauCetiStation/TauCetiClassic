@@ -14,7 +14,7 @@
 	flags = DROPDEL
 	var/obj/screen/grab/hud = null
 	var/mob/living/affecting = null
-	var/mob/living/carbon/human/assailant = null
+	var/mob/living/assailant = null
 	var/state = GRAB_NONE
 
 	var/allow_upgrade = 1
@@ -40,51 +40,36 @@
 		return FALSE
 	return TRUE
 
-/mob/proc/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+/mob/proc/tryGrab(atom/movable/target, force_state, show_warnings = TRUE)
 	if(!canGrab(target, show_warnings))
-		return
+		return FALSE
 
 	for(var/obj/item/weapon/grab/G in GetGrabs())
 		if(G.affecting == target)
 			if(show_warnings)
 				to_chat(src, "<span class='warning'>You already grabbed [target]</span>")
-			return
+			return FALSE
+
 	if(!target.Adjacent(src))
-		return
+		return FALSE
 	if(get_active_hand() && get_inactive_hand())
 		if(show_warnings)
-			to_chat(src, "<span class='warning'>You are holding too many stuff already.</span>")
-		return
+			to_chat(src, "<span class='warning'>You are holding too much stuff already.</span>")
+		return FALSE
 
-	if(SEND_SIGNAL(target, COMSIG_MOVABLE_GRABBED, src, force_state, show_warnings) & COMPONENT_PREVENT_GRAB)
-		return
+	if(SEND_SIGNAL(target, COMSIG_MOVABLE_TRY_GRAB, src, force_state, show_warnings) & COMPONENT_PREVENT_GRAB)
+		return FALSE
 
-	if(ismob(target))
-		var/mob/M = target
-		if(!(M.status_flags & CANPUSH))
-			return
-		if(M.buckled)
-			if(show_warnings)
-				to_chat(src, "<span class='notice'>You cannot grab [M], \he is buckled in!</span>")
-			return
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.w_uniform)
-				H.w_uniform.add_fingerprint(src)
-			if(H.pull_damage())
-				if(show_warnings)
-					to_chat(src, "<span class='danger'>Grabbing \the [H] in their current condition would probably be a bad idea.</span>")
-		M.inertia_dir = 0
+	Grab(target, force_state, show_warnings)
+	return TRUE
 
-	new /obj/item/weapon/grab(src, target, force_state)
+/mob/proc/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+	return
 
 /obj/item/weapon/grab/atom_init(mapload, mob/victim, initial_state = GRAB_PASSIVE)
 	. = ..()
 	assailant = loc
 	affecting = victim
-
-	if(affecting.anchored)
-		return INITIALIZE_HINT_QDEL
 
 	hud = new /obj/screen/grab(src)
 	hud.master = src
@@ -432,7 +417,7 @@
 			var/hit_zone = assailant.zone_sel.selecting
 			flick(hud.icon_state, hud)
 			switch(assailant.a_intent)
-				if("help")
+				if(INTENT_HELP)
 					if(force_down)
 						to_chat(assailant, "<span class='warning'>You are no longer pinning [affecting] to the ground.</span>")
 						force_down = 0
@@ -456,7 +441,7 @@
 						H_H.force_vomit(H)
 					else
 						inspect_organ(affecting, assailant, hit_zone)
-				if("grab")
+				if(INTENT_GRAB)
 					if(state < GRAB_AGGRESSIVE)
 						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return
@@ -469,7 +454,7 @@
 						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
 						H.adjustHalLoss(CLAMP(0, 40 - H.halloss, 40)) //up to 40 halloss
 					return
-				if("hurt")
+				if(INTENT_HARM)
 					if(hit_zone == O_EYES)
 						if(state < GRAB_NECK)
 							to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
@@ -529,12 +514,15 @@
 							return
 						assailant.visible_message("<span class='danger'>[assailant] thrusts \his head into [affecting]'s skull!</span>")
 						var/damage = 20
-						var/obj/item/clothing/hat = assailant.head
-						if(istype(hat))
-							damage += hat.force * 10
-						var/armor = affecting:run_armor_check(affecting, "melee")
-						affecting.apply_damage(damage*rand(90, 110)/100, BRUTE, BP_HEAD, armor)
-						assailant.apply_damage(10*rand(90, 110)/100, BRUTE, BP_HEAD, assailant:run_armor_check(BP_HEAD, "melee"))
+						if(iscarbon(assailant))
+							var/mob/living/carbon/assailant_C = assailant
+							var/obj/item/clothing/hat = assailant_C.head
+							if(istype(hat))
+								damage += hat.force * 10
+						var/armor = affecting.run_armor_check(BP_HEAD, "melee")
+						var/armor_assailant = assailant.run_armor_check(BP_HEAD, "melee")
+						affecting.apply_damage(damage*rand(90, 110)/100, BRUTE, BP_HEAD, blocked = armor)
+						assailant.apply_damage(10*rand(90, 110)/100, BRUTE, BP_HEAD, blocked = armor_assailant)
 						if(!armor && prob(damage))
 							affecting.apply_effect(20, PARALYZE)
 							affecting.visible_message("<span class='danger'>[affecting] has been knocked unconscious!</span>")
@@ -546,7 +534,7 @@
 						src.loc = null
 						qdel(src)
 						return
-				if("disarm")
+				if(INTENT_PUSH)
 					if(state < GRAB_AGGRESSIVE)
 						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return

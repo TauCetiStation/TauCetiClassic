@@ -13,7 +13,7 @@
 // Should be deprecated in favour of /datum/combo_moveset. ~Luduk
 var/global/combos_cheat_sheet = ""
 
-/mob/living/carbon/human/verb/read_possible_combos()
+/mob/living/verb/read_possible_combos()
 	set name = "Combos Cheat Sheet"
 	set desc = "A list of all possible combos with rough descriptions."
 	set category = "IC"
@@ -60,11 +60,11 @@ var/global/combos_cheat_sheet = ""
 			var/combo_txt = ""
 			for(var/c_el in CC.combo_elements)
 				switch(c_el)
-					if(I_DISARM)
+					if(INTENT_PUSH)
 						c_el = "<font color='dodgerblue'>[capitalize(c_el)]</font>"
-					if(I_GRAB)
+					if(INTENT_GRAB)
 						c_el = "<font color='yellow'>[capitalize(c_el)]</font>"
-					if(I_HURT)
+					if(INTENT_HARM)
 						c_el = "<font color='red'>[capitalize(c_el)]</font>"
 					else
 						c_el = "<font color='grey'>[c_el]</font>"
@@ -101,7 +101,75 @@ var/global/combos_cheat_sheet = ""
 	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
 				"miss_sound" = retMissSound)
 
-/mob/living/carbon/human/attack_hand(mob/living/carbon/human/attacker)
+/mob/living/attack_hand(mob/living/carbon/human/attacker)
+	return attack_unarmed(attacker)
+
+/mob/living/attack_paw(mob/living/carbon/attacker)
+	if(istype(attacker.wear_mask, /obj/item/clothing/mask/muzzle))
+		return FALSE
+	return attack_unarmed(attacker)
+
+/mob/living/attack_animal(mob/living/simple_animal/attacker)
+	if(attacker.melee_damage <= 0)
+		attacker.emote("[attacker.friendly] [src]")
+		return TRUE
+	return attack_unarmed(attacker)
+
+/mob/living/attack_alien(mob/living/carbon/xenomorph/attacker)
+	return attack_unarmed(attacker)
+
+/mob/living/attack_facehugger(mob/living/carbon/xenomorph/facehugger/attacker)
+	return attack_unarmed(attacker)
+
+/mob/living/attack_larva(mob/living/carbon/xenomorph/larva/attacker)
+	return attack_unarmed(attacker)
+
+/mob/living/attack_slime(mob/living/carbon/slime/attacker)
+	if(attacker.Victim)
+		return FALSE
+	if(health <= -100)
+		return FALSE
+	attacker.attacked += 5
+
+	if(attacker.powerlevel > 0)
+		var/stunprob = 10
+		var/power = attacker.powerlevel + rand(0,3)
+
+		switch(attacker.powerlevel)
+			if(1 to 2)
+				stunprob = 20
+			if(3 to 4)
+				stunprob = 30
+			if(5 to 6)
+				stunprob = 40
+			if(7 to 8)
+				stunprob = 60
+			if(9)
+				stunprob = 70
+			if(10)
+				stunprob = 95
+
+		if(prob(stunprob))
+			attacker.powerlevel -= 3
+			if(attacker.powerlevel < 0)
+				attacker.powerlevel = 0
+
+			visible_message("<span class='warning bold'>The [attacker] has shocked [src]!</span>")
+
+			Weaken(power)
+			if(stuttering < power)
+				stuttering = power
+			Stun(power)
+
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(5, 1, src)
+			s.start()
+
+			flash_eyes(affect_silicon = TRUE)
+
+			if(prob(stunprob) && attacker.powerlevel >= 8)
+				adjustFireLoss(attacker.powerlevel * rand(6, 10))
+
 	return attack_unarmed(attacker)
 
 /*
@@ -109,12 +177,14 @@ var/global/combos_cheat_sheet = ""
  * Handles all unarmed attacks, to unite all the attack_paw, attack_slime, attack_human, etc procs.
  * If you want your mob with a special snowflake attack_*proc* to be able to do combos, it should
  * be calling this proc somewhere.
+ *
+ * Return TRUE if unarmed attack was "succesful".
  */
 /mob/living/proc/attack_unarmed(mob/living/attacker)
 	// Why does this exist? ~Luduk
 	if(isturf(loc) && istype(loc.loc, /area/start))
 		to_chat(attacker, "<span class='warning'>No attacking people at spawn!</span>")
-		return
+		return FALSE
 
 	if((attacker != src) && check_shields(0, attacker.name, get_dir(attacker, src)))
 		visible_message("<span class='warning bold'>[attacker] attempted to touch [src]!</span>")
@@ -147,12 +217,12 @@ var/global/combos_cheat_sheet = ""
 		return
 
 	switch(attacker.a_intent)
-		if(I_HELP)
+		if(INTENT_HELP)
 			if(attacker.disengage_combat(src)) // We were busy disengaging.
 				return TRUE
 			return helpReaction(attacker)
 
-		if(I_DISARM)
+		if(INTENT_PUSH)
 			var/combo_value = 2
 			if(!anchored && !is_bigger_than(attacker) && src != attacker)
 				var/turf/to_move = get_step(src, get_dir(attacker, src))
@@ -160,19 +230,19 @@ var/global/combos_cheat_sheet = ""
 				if(A != to_move)
 					combo_value *= 2
 
-			if(attacker.engage_combat(src, I_DISARM, combo_value)) // We did a combo-wombo of some sort.
+			if(attacker.engage_combat(src, INTENT_PUSH, combo_value)) // We did a combo-wombo of some sort.
 				return
 			return disarmReaction(attacker)
 
-		if(I_GRAB)
-			if(attacker.engage_combat(src, I_GRAB, 0))
+		if(INTENT_GRAB)
+			if(attacker.engage_combat(src, INTENT_GRAB, 0))
 				return TRUE
 			return grabReaction(attacker)
 
-		if(I_HURT)
+		if(INTENT_HARM)
 			var/attack_obj = attacker.get_unarmed_attack()
 			var/combo_value = attack_obj["damage"] * 2
-			if(attacker.engage_combat(src, I_HURT, combo_value)) // We did a combo-wombo of some sort.
+			if(attacker.engage_combat(src, INTENT_HARM, combo_value)) // We did a combo-wombo of some sort.
 				return TRUE
 			return hurtReaction(attacker)
 
@@ -202,10 +272,10 @@ var/global/combos_cheat_sheet = ""
 	playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	if(show_message)
 		visible_message("<span class='warning'><B>[attacker] pushed [src]!</B></span>")
+	return TRUE
 
 /mob/living/proc/grabReaction(mob/living/carbon/human/attacker, show_message = TRUE)
-	attacker.Grab(src)
-	return TRUE
+	return attacker.tryGrab(src)
 
 /mob/living/proc/hurtReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	attacker.do_attack_animation(src)
@@ -243,9 +313,10 @@ var/global/combos_cheat_sheet = ""
 		visible_message("<span class='warning'><B>[attacker] [damVerb]ed [src]!</B></span>")
 
 	apply_damage(damage, damType, BP, armor_block, damFlags)
+	return TRUE
 
 // Add this proc to /Life() of any mob for it to be able to perform combos.
-/mob/living/carbon/human/proc/handle_combat()
+/mob/living/proc/handle_combat()
 	updates_combat = TRUE
 	for(var/datum/combo_handler/CS in combos_saved)
 		CS.update()

@@ -47740,6 +47740,10 @@
 /area/station/hallway/primary/central)
 "oAN" = (
 /obj/structure/flora/plant/random,
+/obj/machinery/camera{
+	c_tag = "Vacant Office";
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "oBk" = (
@@ -49368,9 +49372,9 @@
 "pcn" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	dock_tag = "arrival_escape";
 	locked = 1;
-	name = "Escape Airlock";
-	req_access = list(1)
+	name = "Escape Airlock"
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
@@ -66816,13 +66820,12 @@
 /area/station/civilian/dormitories/dormfour)
 "uHH" = (
 /obj/machinery/computer/general_air_control/large_tank_control{
-	dir = 8;
 	frequency = 1443;
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "air_out";
-	pressure_setting = 2000;
-	sensors = list("air_sensor" = "Tank")
+	sensors = list("air_sensor" = "Tank");
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;

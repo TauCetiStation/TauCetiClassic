@@ -609,7 +609,6 @@
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
 	mouse_opacity = 1
 	faction = "neutral"
-	a_intent = "harm"
 	var/emagged = 0
 	light_power = 2
 	light_range = 4
@@ -629,10 +628,9 @@
 	minimum_distance = 3
 	health = 140
 	maxHealth = 140
-	melee_damage_lower = 15
-	melee_damage_upper = 20
+	melee_damage = 18
 	environment_smash = 0
-	attacktext = "drills"
+	attacktext = "drill"
 	attack_sound = list('sound/weapons/circsawhit.ogg')
 	ranged = 1
 	ranged_message = "shoots"
@@ -684,17 +682,14 @@
 	. = ..()
 	SetCollectBehavior()
 
-/mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
-	if(M.a_intent == "help")
-		switch(search_objects)
-			if(0)
-				SetCollectBehavior()
-				to_chat(M, "<span class='info'>[src] has been set to search and store loose ore.</span>")
-			if(2)
-				SetOffenseBehavior()
-				to_chat(M, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
-		return
-	..()
+/mob/living/simple_animal/hostile/mining_drone/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	switch(search_objects)
+		if(0)
+			SetCollectBehavior()
+			to_chat(attacker, "<span class='info'>[src] has been set to search and store loose ore.</span>")
+		if(2)
+			SetOffenseBehavior()
+			to_chat(attacker, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
 	stop_automated_movement_when_pulled = 1

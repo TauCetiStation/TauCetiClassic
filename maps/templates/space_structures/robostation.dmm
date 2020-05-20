@@ -531,7 +531,7 @@
 /area/space_structures/robostatoin)
 "cb" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/bananabread,
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/banana,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"

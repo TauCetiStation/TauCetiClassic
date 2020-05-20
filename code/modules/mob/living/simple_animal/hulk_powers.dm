@@ -667,7 +667,7 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/HulkHONK/cast(list/target)
-	if (usr.lying || usr.incapacitated())
+	if (usr.incapacitated())
 		to_chat(usr, "<span class='red'>You can't right now!</span>")
 		return
 	playsound(usr, 'sound/items/AirHorn.ogg', VOL_EFFECTS_MASTER)
@@ -681,9 +681,10 @@
 			M.AdjustWeakened(-1)
 			M.AdjustStunned(-1)
 		else
-			var/mob/living/carbon/human/H = M
-			if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
-				continue
+			if(istype(M))
+				var/mob/living/carbon/human/H = M
+				if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
+					continue
 			M.stuttering += 2
 			M.ear_deaf += 2
 			M.Weaken(2)

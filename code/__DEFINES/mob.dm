@@ -53,11 +53,15 @@
 #define PULSE_2FAST		4	//>120 bpm
 #define PULSE_THREADY	5	//occurs during hypovolemic shock
 
-// intent flags
-#define I_HELP   "help"
-#define I_DISARM "disarm" // TODO: rename to "I_PUSH" "push". Don't forget the icons. ~Luduk.
-#define I_GRAB   "grab"
-#define I_HURT   "hurt" // or harm? or hurt? or what?
+//intent defines
+#define INTENT_HELP   "help"
+#define INTENT_GRAB   "grab"
+#define INTENT_PUSH   "push"
+#define INTENT_HARM   "harm"
+//NOTE: INTENT_HOTKEY_* defines are not actual intents!
+//they are here to support hotkeys
+#define INTENT_HOTKEY_LEFT  "left"
+#define INTENT_HOTKEY_RIGHT "right"
 
 //proc/get_pulse methods
 #define GETPULSE_HAND	0	//less accurate (hand)
@@ -139,3 +143,13 @@
 // Indicators.
 #define IND_STAT          "stat"
 #define IND_STAT_NOCLIENT "stat_noclient"
+
+// Heart status
+#define HEART_NORMAL      "heart_normal"
+#define HEART_FAILURE     "heart_failure"
+#define HEART_FIBR        "heart_fibrillation"
+
+// Defibrillation
+#define DEFIB_TIME_LIMIT  (8 MINUTES) //past this many seconds, defib is useless. Currently 8 Minutes
+#define DEFIB_TIME_LOSS   (2 MINUTES) //past this many seconds, brain damage occurs. Currently 2 minutes
+#define MAX_BRAIN_DAMAGE  80

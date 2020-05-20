@@ -20,6 +20,10 @@
 	min_oxy = 16 //Require atleast 16kPA oxygen
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
+
+	has_head = TRUE
+	has_leg = TRUE
+
 	var/facehugger
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target

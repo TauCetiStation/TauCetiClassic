@@ -63,7 +63,7 @@ var/global/list/tophats_list = list()
 			continue
 
 		R.amount--
-		M.a_intent = I_HURT
+		M.a_intent = INTENT_HARM
 		M.equip_to_slot(new /obj/item/clothing/head/rabbitears(M), SLOT_HEAD)
 		break
 	return M
