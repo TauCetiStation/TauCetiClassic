@@ -118,6 +118,10 @@
 	select_fire(usr)
 
 /obj/item/weapon/gun/energy/AltClick(mob/user)
+	if(!Adjacent(user))
+		return
+	if(user.incapacitated())
+		return
 	select_fire(user)
 
 /obj/item/weapon/gun/energy/attack_self(mob/living/user)
