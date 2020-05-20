@@ -219,8 +219,8 @@
 			if(user.buckled)
 				user.buckled.user_unbuckle_mob(user)
 			// You hit a wall!
-			user.apply_effect(3, STUN, 0)
-			user.apply_effect(3, WEAKEN, 0)
+			user.apply_effect(2, STUN, 0)
+			user.apply_effect(2, WEAKEN, 0)
 			user.apply_effect(6, STUTTER, 0)
 			shake_camera(user, 1, 1)
 			// here be thud sound

@@ -444,7 +444,7 @@
 /obj/structure/girder/attack_hand(mob/user)
 	if (HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(user.a_intent == "hurt")
+		if(user.a_intent == INTENT_HARM)
 			playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 			if (prob(75))
 				to_chat(user, text("<span class='notice'>You destroy that girder!</span>"))

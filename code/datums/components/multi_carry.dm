@@ -114,6 +114,25 @@
 			list("px"=15, "py"=6, "layer"=MOB_LAYER),
 		)
 
+#define MULTI_CARRY_TIP "Is carriable."
+
+/datum/mechanic_tip/multi_carry
+	tip_name = MULTI_CARRY_TIP
+
+/datum/mechanic_tip/multi_carry/New(datum/component/multi_carry/MC)
+	var/positions_desc = ""
+	var/dances_desc = ""
+
+	var/datum/carry_positions/CP = MC.positions
+	positions_desc = "Carry requires [CP.pos_count] people to pull on [MC.carry_obj] simultaneously. "
+
+	if(MC.dance_moves)
+		dances_desc = "There are several \"moves\" that can be performed, if appropriate conditions are met."
+
+	description = "This object appears to be carriable. [positions_desc][dances_desc]"
+
+
+
 // A component you put on things you want to be bounded to other things.
 // Warning! Can only be bounded to one thing at once.
 /datum/component/multi_carry
@@ -158,12 +177,18 @@
 	RegisterSignal(carry_obj, list(COMSIG_ATOM_START_PULL), .proc/carrier_join)
 	RegisterSignal(carry_obj, list(COMSIG_ATOM_STOP_PULL), .proc/carrier_leave)
 
-/datum/component/multi_carry/_RemoveFromParent()
+	var/datum/mechanic_tip/clickplace/carry_tip = new(src)
+	parent.AddComponent(/datum/component/mechanic_desc, list(carry_tip))
+
+/datum/component/multi_carry/Destroy()
 	if(carried)
 		stop_carry()
 	carry_obj = null
 	QDEL_NULL(positions)
 	QDEL_LIST_ASSOC_VAL(dance_moves)
+
+	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(MULTI_CARRY_TIP))
+	return ..()
 
 // Whether the carry structure can indeed move.
 /datum/component/multi_carry/proc/can_carry_move()
@@ -177,7 +202,7 @@
 	RegisterSignal(carrier, list(COMSIG_MOVABLE_MOVED), .proc/check_proximity)
 	RegisterSignal(carrier, list(COMSIG_ATOM_CANPASS), .proc/check_canpass)
 	// Prevents funny bugs from occuring.
-	RegisterSignal(carrier, list(COMSIG_MOVABLE_GRABBED), .proc/on_grabbed)
+	RegisterSignal(carrier, list(COMSIG_MOVABLE_TRY_GRAB), .proc/on_grabbed)
 	RegisterSignal(carrier, list(COMSIG_MOVABLE_WADDLE), .proc/carrier_waddle)
 	RegisterSignal(carrier, list(COMSIG_LIVING_CLICK_CTRL), .proc/on_ctrl_click)
 	RegisterSignal(carrier, list(COMSIG_LIVING_CLICK_CTRL_SHIFT), .proc/on_ctrl_shift_click)
@@ -190,7 +215,7 @@
 		COMSIG_CLIENTMOB_POSTMOVE,
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_ATOM_CANPASS,
-		COMSIG_MOVABLE_GRABBED,
+		COMSIG_MOVABLE_TRY_GRAB,
 		COMSIG_MOVABLE_WADDLE,
 		COMSIG_LIVING_CLICK_CTRL,
 		COMSIG_LIVING_CLICK_CTRL_SHIFT,
@@ -509,3 +534,5 @@
 #undef DANCE_MOVE_CARRYWADDLE
 #undef DANCE_MOVE_ROTATE
 #undef DANCE_MOVE_SWAP
+
+#undef MULTI_CARRY_TIP

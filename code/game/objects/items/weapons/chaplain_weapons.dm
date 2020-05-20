@@ -142,7 +142,8 @@
 
 /obj/item/weapon/nullrod/staff/dropped(mob/user)
 	..()
-	hide_god(user)
+	if(user)
+		hide_god(user)
 
 /obj/item/weapon/nullrod/staff/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)

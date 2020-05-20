@@ -216,7 +216,7 @@
 		if(HULK in H.mutations)
 			if(stat & (BROKEN))
 				return 1
-			if(H.a_intent == "hurt")
+			if(H.a_intent == INTENT_HARM)
 				H.visible_message("<span class='danger'>[H.name] smashes [src] with \his mighty arms!</span>")
 				set_broken()
 				return 1

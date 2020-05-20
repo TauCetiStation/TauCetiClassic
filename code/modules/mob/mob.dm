@@ -305,6 +305,7 @@
 
 	face_atom(A)
 	A.examine(src)
+	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
 
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
@@ -1055,6 +1056,22 @@ note dizziness decrements automatically in the mob's Life() proc.
 		spell.action.Grant(src)
 	return
 
+/mob/proc/RemoveSpell(obj/effect/proc_holder/spell/S)
+	spell_list -= S
+	if(mind)
+		mind.spell_list -= S
+	qdel(S)
+
+/mob/proc/ClearSpells()
+	for(var/spell in spell_list)
+		spell_list -= spell
+		qdel(spell)
+
+	if(mind)
+		for(var/spell in mind.spell_list)
+			mind.spell_list -= spell
+			qdel(spell)
+
 /mob/proc/set_EyesVision(preset = null, transition_time = 5)
 	if(!client) return
 	if(ishuman(src) && druggy)
@@ -1116,6 +1133,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/can_unbuckle(mob/user)
 	return 1
+
+/mob/proc/get_targetzone()
+	return null
 
 /mob/proc/update_stat()
 	return

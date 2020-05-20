@@ -14,9 +14,8 @@
 	response_help  = "puts their hand through"
 	response_disarm = "flails at"
 	response_harm   = "punches the"
-	melee_damage_lower = 5
-	melee_damage_upper = 15
-	attacktext = "drains the life from"
+	melee_damage = 10
+	attacktext = "drain"
 	minbodytemp = 0
 	maxbodytemp = 4000
 	min_oxy = 0
@@ -29,6 +28,8 @@
 	status_flags = CANPUSH
 
 	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
 
 /mob/living/simple_animal/shade/Life()
 	..()
@@ -64,8 +65,7 @@
 	stat = CONSCIOUS
 	maxHealth = 5000
 	health = 5000
-	melee_damage_lower = 0
-	melee_damage_upper = 0
+	melee_damage = 0
 	faction = "Station"
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
@@ -123,9 +123,12 @@
 		var/mob/M = A
 		var/obj/item/weapon/nullrod/staff/S = M.is_in_hands(/obj/item/weapon/nullrod/staff)
 		if(S && S.brainmob == src)
-			// Pull them in closer...
-			step_towards(A, src)
-			SetNextMove(CLICK_CD_RAPID)
+			if(a_intent != INTENT_HARM)
+				// Pull them in closer...
+				step_towards(A, src)
+				SetNextMove(CLICK_CD_RAPID)
+			else
+				M.drop_item()
 	else if(istype(A, /obj/item/weapon/nullrod/staff))
 		var/obj/item/weapon/nullrod/staff/S = A
 		if(S.brainmob == src)
@@ -189,3 +192,22 @@
 	dat += data_core.get_manifest()
 
 	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")
+
+/mob/living/simple_animal/shade/god/resist()
+	. = ..()
+	if(. && container)
+		var/mob/M = container.loc
+		if(istype(M))
+			M.drop_from_inventory(container)
+			to_chat(M, "<span class='notice'>[container] wriggles out of your grip!</span>")
+			to_chat(src, "<span class='notice'>You wriggle out of [M]'s grip!</span>")
+		else if(istype(container.loc, /obj/item))
+			to_chat(src, "<span class='notice'>You struggle free of [container.loc].</span>")
+			container.forceMove(get_turf(container.loc))
+
+/mob/living/simple_animal/shade/god/update_canmove(no_transform = FALSE)
+	if(paralysis || stunned || weakened || buckled || pinned.len)
+		canmove = FALSE
+	else
+		canmove = TRUE
+	return canmove
