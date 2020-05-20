@@ -158,9 +158,11 @@
 		var/mob/living/simple_animal/hostile/mimic/copy/religion/M = new (anim_item.loc, anim_item)
 		M.pixel_x = anim_item.pixel_x
 		M.pixel_y = anim_item.pixel_y
-		M.harm_intent_damage = 0
-		M.melee_damage_lower = 0
-		M.melee_damage_upper = 0
+
+		M.harm_intent_damage = 0 //>>>
+		M.melee_damage_lower = 0 //>>>>TODO
+		M.melee_damage_upper = 0 //>>>
+
 		M.faction = "Station"
 	else
 		var/mob/living/simple_animal/mouse/M = new (AOG.loc)
@@ -448,10 +450,6 @@
 	return ..()
 
 /datum/religion_rites/revive_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!AOG)
-		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
-		return FALSE
-
 	if(!AOG.buckled_mob)
 		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [AOG].</span>")
 		return FALSE
@@ -467,3 +465,64 @@
 	animal.rejuvenate()
 
 	return TRUE
+
+/*
+ * Create random friendly animal
+ * AoE relocor items
+ */
+/datum/religion_rites/call_animal
+	name = "Call animal"
+	desc = "Create random friendly animal."
+	ritual_length = (1.5 MINUTES)
+	ritual_invocations = list("I trust in you Lord...", //TODO
+						"...Please change the world as you want...",
+						"...Believe me! We need it...",
+						"...I thanks the universe for everything what I have...")
+	invoke_msg = "...Divine power, come on, change the world!"
+	favor_cost = 150
+
+	needed_aspects = list(
+		ASPECT_SPAWN = 1,
+		ASPECT_DEATH = 1,
+	)
+
+	var/list/summon_type = list(/mob/living/simple_animal/corgi/puppy, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/corgi, /mob/living/simple_animal/cat, /mob/living/simple_animal/parrot, /mob/living/simple_animal/crab, /mob/living/simple_animal/cow, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken, /mob/living/simple_animal/pig, /mob/living/simple_animal/turkey, /mob/living/simple_animal/goose, /mob/living/simple_animal/seal, /mob/living/simple_animal/walrus, /mob/living/simple_animal/fox, /mob/living/simple_animal/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/mushroom, /mob/living/simple_animal/pug, /mob/living/simple_animal/shiba, /mob/living/simple_animal/yithian, /mob/living/simple_animal/tindalos, /mob/living/carbon/monkey, /mob/living/carbon/monkey/skrell, /mob/living/carbon/monkey/tajara, /mob/living/carbon/monkey/unathi, /mob/living/simple_animal/slime)
+
+/datum/religion_rites/call_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
+		if(!M.mind.holy_role && M.eyecheck() <= 0)
+			M.flash_eyes()
+	
+	var/type = pick(summon_type)
+
+	var/mob/M = new type(AOG.loc)
+	for(var/mob/dead/observer/O in observer_list)
+		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
+			continue
+		if(jobban_isbanned(O, ROLE_RFAMILIAR) && role_available_in_minutes(O, ROLE_RFAMILIAR))
+			continue
+		if(O.client)
+			var/client/C = O.client
+			if(!C.prefs.ignore_question.Find("chfamiliar") && (ROLE_RFAMILIAR in C.prefs.be_role))
+				INVOKE_ASYNC(src, .proc/question, C, M)
+	return TRUE
+
+/datum/religion_rites/call_animal/proc/question(client/C, mob/M)
+	if(!C)
+		return
+	var/response = alert(C, "Do you want to become the Familiar of religion?", "Familiar request", "No", "Yes", "Never for this round")
+	if(!C || M.ckey)
+		return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
+	if(response == "Yes")
+		var/mob/candidate = C.mob
+		var/mob/god = pick(global.chaplain_religion.active_deities)
+		if(!god)
+			god = pick(global.chaplain_religion.deity_names)
+		M.mind = candidate.mind
+		M.ckey = candidate.ckey
+		M.name = "Familiar of [god.name] [pick("II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX")]"
+		M.real_name = name
+		candidate.cancel_camera()
+		candidate.reset_view()
+	else if (response == "Never for this round")
+		C.prefs.ignore_question += "chfamiliar"

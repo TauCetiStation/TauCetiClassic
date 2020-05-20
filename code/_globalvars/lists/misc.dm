@@ -33,6 +33,7 @@ var/list/roles_ingame_minute_unlock = list(
 	ROLE_ABDUCTOR = 2880,
 	ROLE_SURVIVOR = 360,
 	ROLE_TSTAFF = 360,
+	ROLE_RFAMILIAR = 360, 
 )
 
 var/global/list/datum_alarm_list = list()
