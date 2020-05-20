@@ -106,7 +106,7 @@
 	set name = "MEGAHIDE"
 	set desc = "Allows to hide beneath EVERYTHING. Toggled on or off."
 	set category = "MOUSE"
-	if((last_time_activate + cooldown)>=world.time)
+	if((last_time_activate + cooldown) >= world.time)
 		return
 	hiding = !hiding
 	if(hiding)
