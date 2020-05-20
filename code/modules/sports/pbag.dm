@@ -73,7 +73,7 @@
 	if(ckey)
 		. = ..(capitalize(message), verb = "whispers", message_range = 1)
 
-/mob/living/pbag/emote(act, type, message)
+/mob/living/pbag/emote(act, type, message, auto)
 	if(ckey)
 		visible_message("<span class='notice'>[bicon(src)] [src] swings ominously...</span>")
 		INVOKE_ASYNC(src, /mob/living/pbag.proc/swing)
