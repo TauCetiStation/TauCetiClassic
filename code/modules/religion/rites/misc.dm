@@ -154,9 +154,9 @@
 		M.pixel_x = anim_item.pixel_x
 		M.pixel_y = anim_item.pixel_y
 
-		M.harm_intent_damage = 0 //>>>
-		M.melee_damage_lower = 0 //>>>>TODO
-		M.melee_damage_upper = 0 //>>>
+		M.a_intent = INTENT_HELP
+		M.harm_intent_damage = 0
+		M.melee_damage = 0
 
 		M.faction = "Station"
 	else
@@ -190,7 +190,7 @@
 	animate(pixel_z = 32, alpha = 0, time = 1 SECONDS)
 	sleep(2 SECONDS)
 	mouse.health = 0
-	mouse.mouse_opacity = initial(mouse_opacity)
+	mouse.mouse_opacity = initial(mouse.mouse_opacity)
 
 /*
  * Spook
