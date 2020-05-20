@@ -22,8 +22,6 @@
 
 	// Whether you can push stuff with this weapon.
 	var/can_push = FALSE
-	// Whether you can go WOOSH on chair-like structures when pushing.
-	var/can_push_on_chair = FALSE
 
 	// Whether you can pull stuff with this weapon.
 	var/can_pull = FALSE
@@ -73,11 +71,47 @@
 
 
 
+#define SWIPING_TIP "Is swipable."
+
+/datum/mechanic_tip/swiping
+	tip_name = SWIPING_TIP
+
+/datum/mechanic_tip/swiping/New(datum/component/swiping/S)
+	var/pos_moves = ""
+
+	if(S.can_push)
+		pos_moves += "It is capable of pushing. To push, either ctrl-click the thing you want to push, or swipe your mouse in the direction away from you."
+		pos_moves += " Pushing while buckled to a movable object will thrust you in the direction opposite to the push."
+		if(S.can_push_call)
+			pos_moves += " Requires certain criteria to be met to be able to push."
+
+	if(S.can_pull)
+		if(pos_moves != "")
+			pos_moves += "\n"
+		pos_moves += "It is capable of pulling. To pull, either ctrl-shift-click the thing you want to pull, or swipe your mouse over the thing towards yourself."
+		if(S.can_pull_call)
+			pos_moves += " Requires certain criteria to be met to be able to pull."
+
+	if(S.can_sweep)
+		if(pos_moves != "")
+			pos_moves += "\n"
+		pos_moves += "It is capable of sweeping. To sweep, either alt-click the thing you want to sweep at, or swipe your mouse across the tiles you want to sweep."
+		if(S.can_sweep_call)
+			pos_moves += " Requires certain criteria to be met to be able to sweep."
+
+	if(S.can_spin)
+		if(pos_moves != "")
+			pos_moves += "\n"
+		pos_moves += "It is capable of spinning. To spin, either use the object in hands, or middle-click, or swipe diagonally across yourself."
+		if(S.can_spin_call)
+			pos_moves += " Requires certain criteria to be met to be able to spin."
+
+	description = "This object appears to be swipable. You can perform swipes either via mouse moves, or click modifiers.\n[pos_moves]"
+
 /datum/component/swiping
 	var/list/interupt_on_sweep_hit_types = list(/atom)
 
 	var/can_push = FALSE
-	var/can_push_on_chair = FALSE
 
 	var/can_pull = FALSE
 
@@ -114,7 +148,6 @@
 
 	if(SCB.can_push)
 		can_push = TRUE
-		can_push_on_chair = SCB.can_push_on_chair
 
 		can_push_call = SCB.can_push_call
 		on_sweep_push = SCB.on_sweep_push
@@ -153,6 +186,13 @@
 		RegisterSignal(parent, list(COMSIG_ITEM_MIDDLECLICKWITH), .proc/sweep_spin_click)
 
 	RegisterSignal(parent, list(COMSIG_ITEM_MOUSEDROP_ONTO), .proc/sweep_mousedrop)
+
+	var/datum/mechanic_tip/swiping/swipe_tip = new(src)
+	parent.AddComponent(/datum/component/mechanic_desc, list(swipe_tip))
+
+/datum/component/swiping/Destroy()
+	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(SWIPING_TIP))
+	return ..()
 
 /datum/component/swiping/proc/move_sweep_image(turf/target, obj/effect/effect/weapon_sweep/sweep_image, step_delay)
 	sleep(step_delay)
@@ -235,7 +275,7 @@
 
 	user.do_attack_animation(T)
 
-	if(can_push_on_chair && istype(get_turf(W), /turf/simulated) && istype(user.buckled, /obj/structure/stool/bed/chair) && !user.buckled.anchored)
+	if(istype(get_turf(W), /turf/simulated) && istype(user.buckled, /obj/structure/stool/bed/chair) && !user.buckled.anchored)
 		var/obj/structure/stool/bed/chair/buckled_to = user.buckled
 		if(!buckled_to.flipped)
 			var/direction = turn(get_dir(W_turf, T_target), 180)
@@ -546,3 +586,5 @@
 	if(directions.len == 3 && can_sweep && sweep(directions, user, W.sweep_step) != NONE)
 		return COMPONENT_NO_MOUSEDROP
 	return NONE
+
+#undef SWIPING_TIP

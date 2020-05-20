@@ -68,6 +68,33 @@
 	#define COMPONENT_PREVENT_GRAB 1
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
 #define COMSIG_MOVABLE_PIXELMOVE "movable_pixelmove"
+/// from base of atom/MouseDrop(): (/atom/over, /mob/user)
+#define COMSIG_MOUSEDROP_ONTO "mousedrop_onto"
+	#define COMPONENT_NO_MOUSEDROP 1
+/// from base of atom/MouseDrop_T: (/atom/from, /mob/user)
+#define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"
+
+// /obj/item signals
+/// from base of obj/item/attack(): (/mob/living/target, /mob/living/user, def_zone)
+#define COMSIG_ITEM_ATTACK "item_attack"
+	#define COMPONENT_ITEM_NO_ATTACK 1
+/// from base of obj/item/attack_self(): (/mob/user)
+#define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
+	#define COMPONENT_NO_INTERACT 1
+/// from base of mob/ShiftClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_SHIFTCLICKWITH "item_shiftclickwith"
+/// from base of mob/CtrlClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_CTRLCLICKWITH "item_ctrlclickwith"
+/// from base of mob/AltClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_ALTCLICKWITH "item_altclickwith"
+/// from base of mob/CtrlShiftClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_CTRLSHIFTCLICKWITH "item_ctrlshiftclickwith"
+/// from base of mob/MiddleClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_MIDDLECLICKWITH "item_middleclickwith"
+	#define COMSIG_ITEM_CANCEL_CLICKWITH 1
+/// from base of atom/MouseDrop(): (/atom/over, /atom/dropping, /mob/user)
+#define COMSIG_ITEM_MOUSEDROP_ONTO "item_mousedrop_onto"
+	// #define COMPONENT_NO_MOUSEDROP 1
 
 // living signals
 /// from base of /mob/start_pulling(): (/atom/movable/target)

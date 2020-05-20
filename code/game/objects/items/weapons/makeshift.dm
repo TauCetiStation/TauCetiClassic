@@ -19,8 +19,6 @@
 	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
 
 	SCB.can_push = TRUE
-	SCB.can_push_on_chair = TRUE
-
 	SCB.can_pull = TRUE
 
 	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_push)
@@ -73,8 +71,6 @@
 	var/datum/swipe_component_builder/SCB = new
 
 	SCB.can_push = TRUE
-	SCB.can_push_on_chair = TRUE
-
 	SCB.can_pull = TRUE
 
 	AddComponent(/datum/component/swiping, SCB)

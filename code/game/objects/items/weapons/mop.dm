@@ -22,8 +22,6 @@
 
 	var/datum/swipe_component_builder/SCB = new
 	SCB.can_push = TRUE
-	SCB.can_push_on_chair = TRUE
-
 	SCB.can_pull = TRUE
 
 	SCB.can_sweep = TRUE
