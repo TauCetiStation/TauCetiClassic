@@ -783,133 +783,15 @@
 				to_chat(src, "Hack attempt detected.")
 		return TRUE
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-
-	switch(M.a_intent)
-
-		if ("help")
-			visible_message("<span class='notice'>[M] caresses [src]'s plating with its scythe-like arm.</span>")
-
-		if ("grab")
-			M.Grab(src)
-
-		if ("hurt")
-			M.do_attack_animation(src)
-			var/damage = rand(10, 20)
-			if (prob(90))
-
-				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M] has slashed at [src]!</B></span>")
-				if(prob(8))
-					flash_eyes(affect_silicon = 1)
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='warning'><B>[M] took a swipe at [src]!</B></span>")
-
-		if ("disarm")
-			if(!(lying))
-				M.do_attack_animation(src)
-				if (rand(1,100) <= 85)
-					Stun(7)
-					step(src,get_dir(M,src))
-					spawn(5) step(src,get_dir(M,src))
-					playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
-					visible_message("<span class='warning'><B>[M] has forced back [src]!</B></span>")
-				else
-					playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-					visible_message("<span class='warning'><B>[M] attempted to force back [src]!</B></span>")
-	return
-
-
-
-/mob/living/silicon/robot/attack_slime(mob/living/carbon/slime/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if(M.Victim) return // can't attack while eating!
-
-	if (health > -100)
-
-		visible_message("<span class='warning'><B>The [M.name] glomps [src]!</B></span>")
-
-		var/damage = rand(1, 3)
-
-		if(istype(src, /mob/living/carbon/slime/adult))
-			damage = rand(20, 40)
-		else
-			damage = rand(5, 35)
-
-		damage = round(damage / 2) // borgs recieve half damage
-		adjustBruteLoss(damage)
-
-
-		if(M.powerlevel > 0)
-			var/stunprob = 10
-
-			switch(M.powerlevel)
-				if(1 to 2) stunprob = 20
-				if(3 to 4) stunprob = 30
-				if(5 to 6) stunprob = 40
-				if(7 to 8) stunprob = 60
-				if(9) 	   stunprob = 70
-				if(10) 	   stunprob = 95
-
-			if(prob(stunprob))
-				M.powerlevel -= 3
-				if(M.powerlevel < 0)
-					M.powerlevel = 0
-
-				visible_message("<span class='warning'><B>The [M.name] has electrified [src]!</B></span>")
-
-				flash_eyes(affect_silicon = 1)
-
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
-
-				if (prob(stunprob) && M.powerlevel >= 8)
-					adjustBruteLoss(M.powerlevel * rand(6,10))
-
-
-		updatehealth()
-
-	return
-
-/mob/living/silicon/robot/attack_animal(mob/living/simple_animal/M)
-	M.do_attack_animation(src)
-	if(M.melee_damage_upper == 0)
-		M.emote("[M.friendly] [src]")
-	else
-		if(length(M.attack_sound))
-			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
-		visible_message("<span class='userdanger'><B>[M]</B> [M.attacktext] [src]!</span>")
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
-		updatehealth()
-
-
-/mob/living/silicon/robot/attack_hand(mob/user)
-
-	add_fingerprint(user)
-	if(opened && !wiresexposed && (!istype(user, /mob/living/silicon)))
+/mob/living/silicon/robot/attack_hand(mob/living/carbon/human/attacker)
+	add_fingerprint(attacker)
+	if(opened && !wiresexposed && (!istype(attacker, /mob/living/silicon)))
 		var/datum/robot_component/cell_component = components["power cell"]
 		if(cell)
 			cell.updateicon()
-			cell.add_fingerprint(user)
-			user.put_in_active_hand(cell)
-			to_chat(user, "You remove \the [cell].")
+			cell.add_fingerprint(attacker)
+			attacker.put_in_active_hand(cell)
+			to_chat(attacker, "You remove \the [cell].")
 			cell = null
 			cell_component.wrapped = null
 			cell_component.installed = 0
@@ -917,8 +799,8 @@
 		else if(cell_component.installed == -1)
 			cell_component.installed = 0
 			var/obj/item/broken_device = cell_component.wrapped
-			to_chat(user, "You remove \the [broken_device].")
-			user.put_in_active_hand(broken_device)
+			to_chat(attacker, "You remove \the [broken_device].")
+			attacker.put_in_active_hand(broken_device)
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
 	//check if it doesn't require any access at all

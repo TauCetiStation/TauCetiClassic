@@ -400,7 +400,7 @@
 
 
 /obj/item/weapon/scissors/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent == "hurt")
+	if(user.a_intent == INTENT_HARM)
 		..()
 		return
 

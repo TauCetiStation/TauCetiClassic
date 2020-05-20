@@ -1,3 +1,6 @@
+#define MASSAGE_RHYTM_RIGHT   11
+#define MASSAGE_ALLOWED_ERROR 2
+
 /mob/living/carbon/human
 	name = "unknown"
 	real_name = "unknown"
@@ -17,6 +20,9 @@
 	var/seer = 0 // used in cult datum /cult/seer
 	var/gnomed = 0 // timer used by gnomecurse.dm
 	var/hulk_activator = null
+
+	var/last_massage = 0
+	var/massages_done_right = 0
 
 	throw_range = 2
 
@@ -291,84 +297,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		else
 			BP.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30)
 		updatehealth()
-	return
-
-
-/mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
-	if(..())
-		return
-	if(M.melee_damage_upper == 0)
-		M.emote("[M.friendly] [src]")
-		if(istype(M, /mob/living/simple_animal/hostile/mimic/copy/religion))
-			visible_message("<span class='notice'>[M] trying [M.attacktext] [src]!</span>")
-	else
-		if(length(M.attack_sound))
-			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
-		visible_message("<span class='userdanger'><B>[M]</B> [M.attacktext] [src]!</span>")
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
-		var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
-		var/armor = run_armor_check(BP, "melee")
-		apply_damage(damage, BRUTE, BP, armor)
-		if(armor >= 2)	return
-
-/mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M)
-	if(M.Victim) return // can't attack while eating!
-
-	if (health > -100)
-		visible_message("<span class='warning'><B>The [M.name] glomps [src]!</B></span>")
-
-		var/damage = rand(1, 3)
-
-		if(istype(M, /mob/living/carbon/slime/adult))
-			damage = rand(10, 35)
-		else
-			damage = rand(5, 25)
-
-
-		var/dam_zone = pick(BP_HEAD , BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG , BP_GROIN)
-
-		var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
-		var/armor_block = run_armor_check(BP, "melee")
-		apply_damage(damage, BRUTE, BP, armor_block)
-
-
-		if(M.powerlevel > 0)
-			var/stunprob = 10
-			var/power = M.powerlevel + rand(0,3)
-
-			switch(M.powerlevel)
-				if(1 to 2) stunprob = 20
-				if(3 to 4) stunprob = 30
-				if(5 to 6) stunprob = 40
-				if(7 to 8) stunprob = 60
-				if(9) 	   stunprob = 70
-				if(10) 	   stunprob = 95
-
-			if(prob(stunprob))
-				M.powerlevel -= 3
-				if(M.powerlevel < 0)
-					M.powerlevel = 0
-
-				visible_message("<span class='warning'><B>The [M.name] has shocked [src]!</B></span>")
-
-				Weaken(power)
-				if (stuttering < power)
-					stuttering = power
-				Stun(power)
-
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
-
-				if (prob(stunprob) && M.powerlevel >= 8)
-					adjustFireLoss(M.powerlevel * rand(6,10))
-
-
-		updatehealth()
-
 	return
 
 /mob/living/carbon/human/proc/can_use_two_hands(broken = TRUE) // Replace arms with hands in case of reverting Kurshan's PR.
@@ -1749,7 +1677,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					return FALSE
 			if(PHORONGUARD)
 				if(!pierce_armor)
-					if(user.a_intent == I_HURT)
+					if(user.a_intent == INTENT_HARM)
 						if(error_msg)
 							to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 						return FALSE
@@ -1842,7 +1770,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 
 	var/prev_intent = a_intent
-	a_intent_change("hurt")
+	a_intent_change(INTENT_HARM)
 
 	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/space/vox/stealth))
 		for(var/obj/item/clothing/suit/space/vox/stealth/V in list(wear_suit))
@@ -2155,3 +2083,104 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			update_bandage()
 			attack_log += "\[[time_stamp()]\] <font color='orange'>Had their bandages removed by [usr.name] ([usr.ckey]).</font>"
 			usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) bandages.</font>"
+
+/mob/living/carbon/human/proc/perform_cpr(mob/living/carbon/human/user)
+	if(species.flags[NO_BLOOD])
+		return
+	if(user.is_busy(src))
+		return
+	var/needed_massages = 12
+	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
+	var/obj/item/organ/internal/heart/Lungs = organs_by_name[O_LUNGS]
+	if(check_thickmaterial(target_zone = BP_CHEST))
+		to_chat(user, "<span class='warning'>You have to strip [src] to perform CPR!.</span>")
+		return
+
+	if(HAS_TRAIT(src, TRAIT_FAT))
+		needed_massages = 20
+	if(Lungs && !Lungs.is_bruised())
+		adjustOxyLoss(-1.5)
+	if(!Heart)
+		return
+
+	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
+	if((world.time - last_massage) > 5 SECONDS && do_mob(user, src, HUMAN_STRIP_DELAY))
+		visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
+		to_chat(user, "<span class='warning'>Repeat at least every second.</span>")
+		massages_done_right = 0
+		return_to_body_dialog()
+		if(health > config.health_threshold_dead)
+			Heart.heart_fibrillate()
+		last_massage = world.time
+		return
+	else if((world.time - timeofdeath) < DEFIB_TIME_LIMIT)
+
+		if(massages_done_right > needed_massages)
+			if(health < config.health_threshold_dead)
+				to_chat(user, "<span class='warning'>[src]'s heart did not start to beat!</span>")
+			else
+				to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
+				reanimate_body()
+				stat = UNCONSCIOUS
+				massages_done_right = 0
+				Heart.heart_normalize()
+		else if(massages_done_right < -2)
+			to_chat(user, "<span class='warning'>[src]'s heart stopped!</span>")
+			if(prob(25))
+				Heart.damage += 2
+			massages_done_right = 0
+			Heart.heart_stop()
+		else
+			if(health > config.health_threshold_dead)
+				Heart.heart_fibrillate()
+
+			if(Heart.damage < 50)
+				if(last_massage > world.time - MASSAGE_RHYTM_RIGHT - MASSAGE_ALLOWED_ERROR && last_massage < world.time - MASSAGE_RHYTM_RIGHT + MASSAGE_ALLOWED_ERROR)
+					massages_done_right++
+					to_chat(user, "<span class='warning'>You've hit right to the beat.</span>")
+				else
+					massages_done_right--
+					to_chat(user, "<span class='warning'>You've skipped the beat.</span>")
+		last_massage = world.time
+
+		if(op_stage.ribcage != 2 && prob(5))
+			var/obj/item/organ/external/BP = get_bodypart(BP_CHEST)
+			BP.fracture()
+			to_chat(user, "<span class='warning'>You hear cracking in [src]'s chest!.</span>")
+
+/mob/living/carbon/human/proc/return_to_body_dialog()
+	if (client) //in body?
+		playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+	else if(mind)
+		for(var/mob/dead/observer/ghost in player_list)
+			if(ghost.mind == mind && ghost.can_reenter_corpse)
+				ghost.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+				var/answer = alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate","Yes","No")
+				if(answer == "Yes")
+					ghost.reenter_corpse()
+				break
+
+/mob/living/carbon/human/proc/reanimate_body()
+	var/deadtime = world.time - timeofdeath
+	tod = null
+	timeofdeath = 0
+	dead_mob_list -= src
+	update_health_hud()
+	apply_brain_damage(deadtime)
+
+/mob/living/carbon/human/proc/apply_brain_damage(var/deadtime)
+	if(deadtime < DEFIB_TIME_LOSS)
+		return
+
+	if(!should_have_organ(O_BRAIN))
+		return //no brain
+
+	var/obj/item/organ/internal/brain/brain = organs_by_name[O_BRAIN]
+	if(!brain)
+		return //no brain
+
+	var/brain_damage = CLAMP((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, getBrainLoss(), MAX_BRAIN_DAMAGE)
+	setBrainLoss(brain_damage)
+
+#undef MASSAGE_RHYTM_RIGHT
+#undef MASSAGE_ALLOWED_ERROR

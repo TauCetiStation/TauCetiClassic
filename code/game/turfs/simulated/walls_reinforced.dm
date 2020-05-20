@@ -15,7 +15,7 @@
 /turf/simulated/wall/r_wall/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations) //#Z2
-		if(user.a_intent == "hurt")
+		if(user.a_intent == INTENT_HARM)
 			to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
 			take_damage(rand(5, 25))
 			if(prob(25))

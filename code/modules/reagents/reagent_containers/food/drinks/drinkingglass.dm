@@ -528,7 +528,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attack(mob/target, mob/user, def_zone)
 	gulp_size = volume
-	if(user.a_intent == "hurt")
+	if(user.a_intent == INTENT_HARM)
 		if(ismob(target) && target.reagents && reagents.total_volume)
 			to_chat(user, "<span class='warning'>You splash your drink in the [target] face!</span>")
 			var/mob/living/M = target
@@ -545,7 +545,7 @@
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/clear_reagents), 5)
 			return
 	else
-		if(user.a_intent == "help")
+		if(user.a_intent == INTENT_HELP)
 			gulp_size = volume/10
 			..()
 			return

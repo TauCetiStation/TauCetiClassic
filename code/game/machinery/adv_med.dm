@@ -303,13 +303,21 @@
 						dat += "</tr>"
 						storedinfo += "</tr>"
 					for(var/obj/item/organ/internal/IO in occupant.organs)
-						var/mech = ""
+						var/mech = "Native:"
+						var/organ_status = ""
+						var/infection = ""
 						if(IO.robotic == 1)
 							mech = "Assisted:"
 						if(IO.robotic == 2)
 							mech = "Mechanical:"
 
-						var/infection = "None"
+						if(istype(IO, /obj/item/organ/internal/heart))
+							var/obj/item/organ/internal/heart/Heart = IO
+							if(Heart.heart_status == HEART_FAILURE)
+								organ_status = "Heart Failure:"
+							else if(Heart.heart_status == HEART_FIBR)
+								organ_status = "Heart Fibrillation:"
+
 						switch (IO.germ_level)
 							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 								infection = "Mild Infection:"
@@ -326,11 +334,13 @@
 							if (INFECTION_LEVEL_THREE to INFINITY)
 								infection = "Necrotic:"
 
+						if(!organ_status && !infection)
+							infection = "None:"
 						dat += "<tr>"
-						dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection]:[mech]</td><td></td>"
+						dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection][organ_status]|[mech]</td><td></td>"
 						dat += "</tr>"
 						storedinfo += "<tr>"
-						storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection]:[mech]</td><td></td>"
+						storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection][organ_status]|[mech]</td><td></td>"
 						storedinfo += "</tr>"
 					dat += "</table>"
 					storedinfo += "</table>"
