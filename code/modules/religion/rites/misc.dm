@@ -137,7 +137,7 @@
 							  "...sometimes I dream about cheese...",
 							  "...squeek...",
 							  "...destroy those who dare to stump you!...",
-							  "...mice of the world, unite!....",)
+							  "...mice of the world, unite!....")
 	invoke_msg = "...MEGAMOUSE!!!"
 	favor_cost = 100
 
@@ -146,7 +146,7 @@
 	)
 
 /datum/religion_rites/h_mouse/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
-	!ismouse(AOG.buckled_mob)
+	if(!ismouse(AOG.buckled_mob))
 		return FALSE
 	if(!AOG.buckled_mob.mind)
 		to_chat(user,"MEGAMOUSE CAN'T ACCEPT THIS MINDLESS CREATURE!")
