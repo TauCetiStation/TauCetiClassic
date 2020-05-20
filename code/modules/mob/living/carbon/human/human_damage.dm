@@ -23,7 +23,7 @@
 /mob/living/carbon/human/apply_effect(effect = 0, effecttype = STUN, blocked = 0)
 	if((effecttype == AGONY || effecttype == STUTTER) && species && species.flags[NO_PAIN])
 		return FALSE
-	..()
+	return ..()
 
 // =============================================
 

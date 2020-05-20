@@ -70,9 +70,7 @@
 /atom/movable/proc/correct_pixel_shift(mob/living/carbon/C)
 	if(!istype(C))
 		return
-	if(C.lying)
-		C.pixel_x = C.get_standard_pixel_x_offset()
-		C.pixel_y = C.get_standard_pixel_y_offset()
+	C.update_transform()
 
 /atom/movable/proc/post_buckle_mob(mob/living/M)
 	return
@@ -80,8 +78,13 @@
 /atom/movable/proc/user_buckle_mob(mob/living/M, mob/user)
 	if(!ticker)
 		to_chat(user, "<span class='warning'>You can't buckle anyone in before the game starts.</span>")
+		return
 
 	if(!user.Adjacent(M) || user.incapacitated() || user.lying || ispAI(user) || ismouse(user))
+		return
+
+	if(user.is_busy())
+		to_chat(user, "<span class='warning'>You can't buckle [M] while doing something.</span>")
 		return
 
 	if(istype(M, /mob/living/simple_animal/construct))
@@ -112,6 +115,10 @@
 				"<span class='notice'>You hear metal clanking.</span>")
 
 /atom/movable/proc/user_unbuckle_mob(mob/user)
+	if(user.is_busy())
+		to_chat(user, "<span class='warning'>You can't unbuckle [src] while doing something.</span>")
+		return
+
 	var/mob/living/M = unbuckle_mob()
 	if(M)
 		if(M != user)

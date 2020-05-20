@@ -1134,6 +1134,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/can_unbuckle(mob/user)
 	return 1
 
+/mob/proc/get_targetzone()
+	return null
+
 /mob/proc/update_stat()
 	return
 
