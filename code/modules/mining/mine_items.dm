@@ -520,6 +520,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			already_improved = TRUE
 			recharge_time -= 7 //We get 1.3 seconds of reload instead.
 			to_chat(user, "<span class='notice'>You improve Kinetic accelerator reload speed.</span>")
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 			qdel(O)
 		else
 			to_chat(user, "<span class='notice'>Already improved.</span>")
