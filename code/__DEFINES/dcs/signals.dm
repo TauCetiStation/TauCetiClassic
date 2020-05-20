@@ -43,6 +43,9 @@
 #define COMSIG_PARENT_EXAMINE "atom_examine"
 /// from base of mob/examinate(): (/mob)
 #define COMSIG_PARENT_POST_EXAMINE "atom_post_examine"
+/// from base of atom/MouseDrop(): (/atom/over, /mob/user)
+#define COMSIG_MOUSEDROP_ONTO "mousedrop_onto"
+	#define COMPONENT_NO_MOUSEDROP 1
 /// from base of atom/MouseDrop_T: (/atom/from, /mob/user)
 #define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"
 
@@ -68,11 +71,6 @@
 	#define COMPONENT_PREVENT_GRAB 1
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
 #define COMSIG_MOVABLE_PIXELMOVE "movable_pixelmove"
-/// from base of atom/MouseDrop(): (/atom/over, /mob/user)
-#define COMSIG_MOUSEDROP_ONTO "mousedrop_onto"
-	#define COMPONENT_NO_MOUSEDROP 1
-/// from base of atom/MouseDrop_T: (/atom/from, /mob/user)
-#define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"
 
 // /obj/item signals
 /// from base of obj/item/attack(): (/mob/living/target, /mob/living/user, def_zone)
