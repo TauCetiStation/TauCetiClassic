@@ -149,7 +149,7 @@ var/global/combos_cheat_sheet = ""
 			if(10)
 				stunprob = 95
 
-		if(prob(stunprob))
+		if(prob(stunprob) && !istype(src, /mob/living/simple_animal/hulk))
 			attacker.powerlevel -= 3
 			if(attacker.powerlevel < 0)
 				attacker.powerlevel = 0

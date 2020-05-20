@@ -63,8 +63,7 @@
 	icon_living = "mmouse"
 	maxHealth = 100
 	health = 100
-	melee_damage_lower = 7
-	melee_damage_upper = 13
+	melee_damage = 13
 	speed = 0.4
 	var/hiding = FALSE
 	attacktext = " SQUEEKS"
