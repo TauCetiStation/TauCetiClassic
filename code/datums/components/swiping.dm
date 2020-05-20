@@ -433,12 +433,12 @@
 		to_check += current_turf.contents
 		to_check += current_turf
 		to_check -= sweep_image
-		to_check.Remove(user)
+		to_check -= user
 
 		// Get out of the way, fellows!
 		for(var/atom/A in to_check)
 			// Like something behind a glass.
-			if(!user.Adjacent(A))
+			if(!A.Adjacent(user))
 				continue
 
 			if(can_sweep_hit(A, user))
