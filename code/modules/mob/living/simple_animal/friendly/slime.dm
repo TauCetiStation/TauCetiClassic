@@ -15,6 +15,8 @@
 	var/colour = "grey"
 	ventcrawler = 2
 
+	has_head = TRUE
+
 /mob/living/simple_animal/adultslime
 	name = "pet slime"
 	desc = "A lovable, domesticated slime."
@@ -29,6 +31,8 @@
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
 	var/colour = "grey"
+
+	has_head = TRUE
 
 /mob/living/simple_animal/adultslime/atom_init()
 	. = ..()

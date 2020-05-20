@@ -73,13 +73,12 @@
 						stomach_contents.Remove(A)
 					src.gib()
 
-/mob/living/carbon/attack_animal(mob/living/simple_animal/M)
-	..()
-	if(istype(M,/mob/living/simple_animal/headcrab))
-		var/mob/living/simple_animal/headcrab/crab = M
+/mob/living/carbon/attack_animal(mob/living/simple_animal/attacker)
+	if(istype(attacker, /mob/living/simple_animal/headcrab))
+		var/mob/living/simple_animal/headcrab/crab = attacker
 		crab.Infect(src)
 		return TRUE
-	return FALSE
+	return ..()
 
 /mob/living/carbon/gib()
 	for(var/mob/M in src)
@@ -122,18 +121,6 @@
 				if(D.spread_by_touch())
 					contract_disease(D, 0, 1, CONTACT_HANDS)
 	return ..()
-
-/mob/living/carbon/attack_paw(mob/M)
-	if(!iscarbon(M))
-		return
-
-	for(var/datum/disease/D in viruses)
-		if(D.spread_by_touch())
-			M.contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	for(var/datum/disease/D in M.viruses)
-		if(D.spread_by_touch())
-			contract_disease(D, 0, 1, CONTACT_HANDS)
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	if(status_flags & GODMODE)	return 0	//godmode
@@ -216,6 +203,10 @@
 
 	if(selhand != src.hand)
 		swap_hand()
+
+/mob/living/carbon/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	help_shake_act(attacker)
+	return TRUE
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if (src.health >= config.health_threshold_crit)

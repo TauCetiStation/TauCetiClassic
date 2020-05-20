@@ -15,14 +15,16 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 4)
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
+	response_harm   = "kick"
 	faction = "goat"
 	attacktext = "kicks"
 	health = 40
-	melee_damage_lower = 1
-	melee_damage_upper = 5
+	melee_damage = 3
 	var/datum/reagents/udder = null
 	footstep_type = FOOTSTEP_MOB_SHOE
+
+	has_head = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/hostile/retaliate/goat/atom_init()
 	udder = new(50)
@@ -113,6 +115,10 @@
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 6)
 	health = 50
+
+	has_head = TRUE
+	has_leg = TRUE
+
 	var/datum/reagents/udder = null
 
 /mob/living/simple_animal/cow/atom_init()
@@ -150,19 +156,19 @@
 	if(. && prob(55))
 		playsound(src, 'sound/misc/cowbell.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 
-/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
-	if(!stat && M.a_intent == INTENT_PUSH && icon_state != icon_dead)
-		M.visible_message("<span class='warning'>[M] tips over [src].</span>","<span class='notice'>You tip over [src].</span>")
+/mob/living/simple_animal/cow/disarmReaction(mob/living/carbon/attacker, show_message = TRUE)
+	if(!stat && icon_state != icon_dead)
+		attacker.visible_message("<span class='warning'>[attacker] tips over [src].</span>","<span class='notice'>You tip over [src].</span>")
 		Weaken(30)
 		icon_state = icon_dead
 		spawn(rand(20,50))
-			if(!stat && M)
+			if(!stat && attacker)
 				icon_state = icon_living
 				var/list/responses = list(	"[src] looks at you imploringly.",
 											"[src] looks at you pleadingly",
 											"[src] looks at you with a resigned expression.",
 											"[src] seems resigned to its fate.")
-				to_chat(M, pick(responses))
+				to_chat(attacker, pick(responses))
 	else
 		..()
 
@@ -184,6 +190,9 @@
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
 	small = 1
+
+	has_head = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/chick/atom_init()
 	. = ..()
@@ -222,6 +231,9 @@ var/global/chicken_count = 0
 	var/body_color
 	pass_flags = PASSTABLE
 	small = 1
+
+	has_head = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/chicken/atom_init()
 	. = ..()
@@ -293,6 +305,9 @@ var/global/chicken_count = 0
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/ham = 6)
 	health = 50
 
+	has_head = TRUE
+	has_leg = TRUE
+
 /mob/living/simple_animal/turkey
 	name = "turkey"
 	desc = "Benjamin Franklin would be proud."
@@ -307,6 +322,9 @@ var/global/chicken_count = 0
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 4)
 	health = 50
+
+	has_head = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/goose
 	name = "goose"
@@ -323,6 +341,9 @@ var/global/chicken_count = 0
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
 	health = 50
 
+	has_head = TRUE
+	has_leg = TRUE
+
 /mob/living/simple_animal/seal
 	name = "seal"
 	desc = "A beautiful white seal."
@@ -338,6 +359,9 @@ var/global/chicken_count = 0
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
 	health = 50
 
+	has_head = TRUE
+	has_arm = TRUE
+
 /mob/living/simple_animal/walrus
 	name = "walrus"
 	desc = "A big brown walrus."
@@ -352,3 +376,6 @@ var/global/chicken_count = 0
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
 	health = 50
+
+	has_head = TRUE
+	has_arm = TRUE

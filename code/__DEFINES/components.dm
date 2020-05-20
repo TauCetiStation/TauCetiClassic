@@ -62,7 +62,7 @@
 
 #define COMSIG_MOVABLE_WADDLE "movable_waddle"		//from atom/movable/proc/waddle(): (waddle_angle, waddle_height)
 
-#define COMSIG_MOVABLE_GRABBED "movable_grabbed"	//from mob/Grab(): (mob/grabber, force_state, show_warnings)
+#define COMSIG_MOVABLE_TRY_GRAB "movable_try_grab"	//from mob/tryGrab(): (mob/grabber, force_state, show_warnings)
 	#define COMPONENT_PREVENT_GRAB 1
 
 #define COMSIG_MOVABLE_PIXELMOVE "movable_pixelmove" // hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
