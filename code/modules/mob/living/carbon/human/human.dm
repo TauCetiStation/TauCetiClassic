@@ -2092,6 +2092,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/needed_massages = 12
 	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
 	var/obj/item/organ/internal/heart/Lungs = organs_by_name[O_LUNGS]
+	if(check_thickmaterial(target_zone = BP_CHEST))
+		to_chat(user, "<span class='warning'>You have to strip [src] to perform CPR!.</span>")
+		return
 
 	if(HAS_TRAIT(src, TRAIT_FAT))
 		needed_massages = 20
@@ -2106,18 +2109,21 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		to_chat(user, "<span class='warning'>Repeat at least every second.</span>")
 		massages_done_right = 0
 		return_to_body_dialog()
-		Heart.heart_fibrillate()
+		if(health > config.health_threshold_dead)
+			Heart.heart_fibrillate()
 		last_massage = world.time
 		return
 	else if((world.time - timeofdeath) < DEFIB_TIME_LIMIT)
-		last_massage = world.time
 
 		if(massages_done_right > needed_massages)
-			to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
-			reanimate_body()
-			stat = UNCONSCIOUS
-			massages_done_right = 0
-			Heart.heart_normalize()
+			if(health < config.health_threshold_dead)
+				to_chat(user, "<span class='warning'>[src]'s heart did not start to beat!</span>")
+			else
+				to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
+				reanimate_body()
+				stat = UNCONSCIOUS
+				massages_done_right = 0
+				Heart.heart_normalize()
 		else if(massages_done_right < -2)
 			to_chat(user, "<span class='warning'>[src]'s heart stopped!</span>")
 			if(prob(25))
@@ -2125,7 +2131,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			massages_done_right = 0
 			Heart.heart_stop()
 		else
-			Heart.heart_fibrillate()
+			if(health > config.health_threshold_dead)
+				Heart.heart_fibrillate()
 
 			if(Heart.damage < 50)
 				if(last_massage > world.time - MASSAGE_RHYTM_RIGHT - MASSAGE_ALLOWED_ERROR && last_massage < world.time - MASSAGE_RHYTM_RIGHT + MASSAGE_ALLOWED_ERROR)
@@ -2134,6 +2141,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				else
 					massages_done_right--
 					to_chat(user, "<span class='warning'>You've skipped the beat.</span>")
+		last_massage = world.time
 
 		if(op_stage.ribcage != 2 && prob(5))
 			var/obj/item/organ/external/BP = get_bodypart(BP_CHEST)
