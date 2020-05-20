@@ -142,7 +142,7 @@
 	favor_cost = 100
 
 	needed_aspects = list(
-		ASPECT_SPAWN = 1, 
+		ASPECT_SPAWN = 1,
 		ASPECT_RESCUE = 1
 	)
 
@@ -156,8 +156,38 @@
 
 /datum/religion_rites/h_mouse/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	var/mob/living/simple_animal/mouse/M = AOG.buckled_mob
-	if(!istype(M))
+	if(!istype(M) || M.stat == DEAD)
 		return FALSE
-	M.become_hulk()
-	user.visible_message("<font size='5' color='red'><b>[user] summoned MEGAMOUSE to our world!</b></font>")
+	if(prob(80))
+		M.become_hulk()
+		user.visible_message("<font size='5' color='red'><b>[user] summoned MEGAMOUSE to our world!</b></font>")
+	else
+		INVOKE_ASYNC(src, .proc/soul_of_mouse, AOG, M)
 	return TRUE
+
+/datum/religion_rites/h_mouse/proc/soul_of_mouse(obj/structure/altar_of_gods/AOG, mob/living/simple_animal/mouse/mouse)
+    // Dedicated to all dead mouse
+    playsound(AOG, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER)
+    mouse.health = 0
+    mouse.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+    mouse.icon_state = mouse.icon_dead
+    sleep(1 SECONDS)
+    var/image/I = image(icon = mouse.icon, icon_state =  mouse.icon_living, layer = FLY_LAYER)
+    I.layer = mouse.layer + 1
+    I.invisibility = mouse.invisibility
+    I.loc = mouse
+    I.alpha = 150
+    I.pixel_y = mouse.pixel_y + 4
+    I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+    I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+    var/list/viewing = list()
+    for(var/mob/M in viewers(mouse))
+        if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
+            viewing |= M.client
+
+    flick_overlay(I, viewing, 2 SECONDS)
+    animate(I, pixel_z = 16, alpha = 80, time = 1 SECONDS)
+    animate(pixel_z = 32, alpha = 0, time = 1 SECONDS)
+    sleep(2 SECONDS)
+    mouse.mouse_opacity = initial(mouse.mouse_opacity)
