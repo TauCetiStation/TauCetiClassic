@@ -146,7 +146,7 @@
 	)
 
 /datum/religion_rites/h_mouse/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!istype(AOG.buckled_mob, /mob/living/simple_animal/mouse))
+	!ismouse(AOG.buckled_mob)
 		return FALSE
 	if(!AOG.buckled_mob.mind)
 		to_chat(user,"MEGAMOUSE CAN'T ACCEPT THIS MINDLESS CREATURE!")
