@@ -237,7 +237,7 @@
 /*
  * Trays - Agouri
  */
-/obj/item/weapon/tray
+/obj/item/weapon/storage/visuals/tray
 	name = "tray"
 	icon = 'icons/obj/food.dmi'
 	icon_state = "tray"
@@ -247,24 +247,24 @@
 	w_class = ITEM_SIZE_NORMAL
 	flags = CONDUCT
 	m_amt = 3000
-	var/list/carrying = list() // List of things on the tray. - Doohl
-	var/max_carry = 10 // w_class = ITEM_SIZE_TINY -- takes up 1
-					   // w_class = ITEM_SIZE_SMALL -- takes up 3
-					   // w_class = ITEM_SIZE_NORMAL -- takes up 5
+	max_w_class = ITEM_SIZE_NORMAL
+	open = TRUE
 
-/obj/item/weapon/tray/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+/obj/item/weapon/storage/visuals/tray/attack_self(mob/user)
+	return
+
+/obj/item/weapon/storage/visuals/tray/update_icon(mob/user)
+	cut_overlays()
+	for(var/obj/item/I in contents)
+		var/image/IO = item_overlays[I]
+		IO.plane = plane
+		IO.layer = layer + 0.05
+		add_overlay(IO)
+
+/obj/item/weapon/storage/visuals/tray/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 
 	// Drop all the things. All of them.
-	cut_overlays()
-	for(var/obj/item/I in carrying)
-		I.loc = M.loc
-		carrying.Remove(I)
-		if(isturf(I.loc))
-			spawn()
-				for(var/i = 1, i <= rand(1,2), i++)
-					if(I)
-						step(I, pick(NORTH,SOUTH,EAST,WEST))
-						sleep(rand(2,4))
+	dropped(user)
 
 
 	if((CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
@@ -361,78 +361,19 @@
 				return
 			return
 
-/obj/item/weapon/tray/var/cooldown = 0	//shield bash cooldown. based on world.time
+/obj/item/weapon/storage/visuals/tray/dropped(mob/user)
 
-/obj/item/weapon/tray/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/kitchen/rollingpin))
-		if(cooldown < world.time - 25)
-			user.visible_message("<span class='warning'>[user] bashes [src] with [I]!</span>")
-			playsound(user, 'sound/effects/shieldbash.ogg', VOL_EFFECTS_MASTER)
-			cooldown = world.time
-	else
-		if( I != src && !I.anchored && !istype(I, /obj/item/clothing/under) && !istype(I, /obj/item/clothing/suit) && !istype(I, /obj/item/projectile) )
-			var/add = 0
-			if(I.w_class == 1.0)
-				add = 1
-			else if(I.w_class == 2.0)
-				add = 3
-			else
-				add = 5
-			if(calc_carry() + add >= max_carry)
-				return
-
-			user.drop_item()
-			I.forceMove(src)
-			carrying.Add(I)
-			add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
-
-/obj/item/weapon/tray/attack_hand(mob/user)
-	if(carrying.len)
-		var/obj/item/choice = input("What item do you want to take?") as null in contents // null is used here for cancel button. anything wouldn't provide us with such button
-		if(choice)
-			if(!in_range(loc, user) || usr.incapacitated())
-				return
-			if(ishuman(user))
-				user.put_in_hands(choice)
-			else
-				choice.forceMove(get_turf(src))
-			carrying.Remove(choice)
-			cut_overlays()
-			for(var/obj/item/I in carrying)
-				add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
-	else
-		if(src.loc == user)
-			user.drop_from_inventory(src)
-		user.put_in_hands(src)
-
-/obj/item/weapon/tray/MouseDrop(mob/over_object)
-	if (ishuman(usr) || ismonkey(usr) || isIAN(usr))
-		if(usr.incapacitated())
-			return
-		if(!in_range(src, over_object))
-			return
-		if(usr != over_object)
-			return
-		if(src.loc == usr)
-			usr.drop_from_inventory(src)
-		usr.put_in_hands(src)
-
-/obj/item/weapon/tray/dropped(mob/user)
-
-	var/mob/living/M
-	for(M in src.loc) //to handle hand switching
+	for((user in src.loc) && !user.incapacitated()) //to handle hand switching
 		return
 
-	var/foundtable = 0
+	var/foundtable = FALSE
 	for(var/obj/structure/table/T in loc)
-		foundtable = 1
+		foundtable = TRUE
 		break
 
-	cut_overlays()
-
-	for(var/obj/item/I in carrying)
+	for(var/obj/item/I in contents)
 		I.loc = loc
-		carrying.Remove(I)
+		contents.Remove(I)
 		if(!foundtable && isturf(loc))
 			// if no table, presume that the person just shittily dropped the tray on the ground and made a mess everywhere!
 			spawn()
@@ -440,27 +381,7 @@
 					if(I)
 						step(I, pick(NORTH,SOUTH,EAST,WEST))
 						sleep(rand(2,4))
-
-/*
-===============~~~~~================================~~~~~====================
-=																			=
-=  Code for trays carrying things. By Doohl for Doohl erryday Doohl Doohl~  =
-=																			=
-===============~~~~~================================~~~~~====================
-*/
-/obj/item/weapon/tray/proc/calc_carry()
-	// calculate the weight of the items on the tray
-	var/val = 0 // value to return
-
-	for(var/obj/item/I in carrying)
-		if(I.w_class == 1.0)
-			val ++
-		else if(I.w_class == 2.0)
-			val += 3
-		else
-			val += 5
-
-	return val
+	return ..()
 
 ///////////////////NEW//////////////////////
 

@@ -2,15 +2,16 @@
 // Click on table to unload, click on item to load. Otherwise works identically to a tray.
 // Unlike the base item "tray", robotrays ONLY pick up food, drinks and condiments.
 
-/obj/item/weapon/tray/robotray
+/obj/item/weapon/robotray
 	name = "RoboTray"
 	desc = "An autoloading tray specialized for carrying refreshments."
-
+	var/list/carrying = list()
+	var/max_carry = 10 // w_class = ITEM_SIZE_TINY -- takes up 1
+					   // w_class = ITEM_SIZE_SMALL -- takes up 3
+					   // w_class = ITEM_SIZE_NORMAL -- takes up 5
 /obj/item/weapon/tray/robotray/afterattack(atom/target, mob/user, proximity, params)
 	if ( !target )
 		return
-	// pick up items, mostly copied from base tray pickup proc
-	// see code\game\objects\items\weapons\kitchen.dm line 241
 	if ( istype(target,/obj/item))
 		if ( !isturf(target.loc) ) // Don't load up stuff if it's inside a container or mob!
 			return
@@ -83,7 +84,19 @@
 
 	return ..()
 
+/obj/item/weapon/robotray/proc/calc_carry()
+	// calculate the weight of the items on the tray
+	var/val = 0 // value to return
 
+	for(var/obj/item/I in carrying)
+		if(I.w_class == 1.0)
+			val ++
+		else if(I.w_class == 2.0)
+			val += 3
+		else
+			val += 5
+
+	return val
 
 
 // A special pen for service droids. Can be toggled to switch between normal writting mode, and paper rename mode

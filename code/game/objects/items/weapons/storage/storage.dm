@@ -314,9 +314,9 @@
 	if(istype(W, /obj/item/weapon/implanter/compressed))
 		return FALSE
 
-	if(istype(W, /obj/item/weapon/tray))
-		var/obj/item/weapon/tray/T = W
-		if(T.calc_carry() > 0)
+	if(istype(W, /obj/item/weapon/storage/visuals/tray))
+		var/obj/item/weapon/storage/visuals/tray/T = W
+		if(T.w_class + (T.contents.len > 0 ? 1 : 0) > max_w_class)
 			if(prob(85))
 				to_chat(user, "<span class='warning'>The tray won't fit in [src].</span>")
 				return FALSE
