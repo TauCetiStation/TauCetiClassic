@@ -31,17 +31,14 @@
 /mob/living/carbon/monkey/diona/is_facehuggable()
 	return FALSE
 
-/mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M)
-
-	//Let people pick the little buggers up.
-	if(M.a_intent == INTENT_GRAB)
-		if(M.species && M.species.name == DIONA)
-			visible_message("<span class='notice'>[M] starts to merge [src] into themselves.</span>","<span class='notice'>You start merging [src] into you.</span>")
-			if(M.is_busy() || !do_after(M, 40, target = src))
-				return
-			merging(M)
-			return
-	..()
+/mob/living/carbon/monkey/diona/grabReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	if(attacker.get_species() == DIONA)
+		visible_message("<span class='notice'>[attacker] starts to merge [src] into themselves.</span>","<span class='notice'>You start merging [src] into you.</span>")
+		if(attacker.is_busy() || !do_after(attacker, 4 SECONDS, target = src))
+			return TRUE
+		merging(attacker)
+		return TRUE
+	return ..()
 
 /mob/living/carbon/monkey/diona/atom_init()
 	. = ..()

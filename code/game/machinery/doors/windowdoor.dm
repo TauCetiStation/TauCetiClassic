@@ -235,14 +235,11 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 25)
 
-/obj/machinery/door/window/attack_animal(mob/user)
-	if(!isanimal(user))
-		return
+/obj/machinery/door/window/attack_animal(mob/living/simple_animal/attacker)
 	..()
-	var/mob/living/simple_animal/M = user
-	if(M.melee_damage_upper <= 0)
+	if(attacker.melee_damage <= 0)
 		return
-	attack_generic(M, M.melee_damage_upper)
+	attack_generic(attacker, attacker.melee_damage)
 
 /obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user)
 	if(!istype(user, /mob/living/carbon/slime/adult))

@@ -356,7 +356,7 @@ var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 	set name = "a-intent"
 	set hidden = 1
 
-	if(ishuman(src) || isxenoadult(src) || isbrain(src))
+	if(isliving(src))
 		switch(input)
 			if(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 				a_intent = input
@@ -366,20 +366,6 @@ var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 				a_intent = intent_numeric((intent_numeric(a_intent)+3) % 4)
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "intent_[a_intent]"
-
-	else if(isrobot(src) || ismonkey(src) || isxenolarva(src)|| isfacehugger(src) || isIAN(src))
-		switch(input)
-			if(INTENT_HELP)
-				a_intent = INTENT_HELP
-			if(INTENT_HARM)
-				a_intent = INTENT_HARM
-			if(INTENT_HOTKEY_RIGHT, INTENT_HOTKEY_LEFT)
-				a_intent = intent_numeric(intent_numeric(a_intent) - 3)
-		if(hud_used && hud_used.action_intent)
-			if(a_intent == INTENT_HARM)
-				hud_used.action_intent.icon_state = INTENT_HARM
-			else
-				hud_used.action_intent.icon_state = INTENT_HELP
 
 /proc/broadcast_security_hud_message(message, broadcast_source)
 	broadcast_hud_message(message, broadcast_source, sec_hud_users)

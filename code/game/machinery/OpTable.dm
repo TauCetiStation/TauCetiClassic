@@ -73,30 +73,13 @@
 
 
 /obj/machinery/optable/MouseDrop_T(atom/A, mob/user)
-	if (user.incapacitated())
-		return
-
 	if (iscarbon(A) && (iscarbon(user) || isrobot(user)))
 		var/mob/living/carbon/M = A
 		if (M.buckled)
 			M.buckled.user_unbuckle_mob(user)
 		take_victim(M, user)
 		return
-
-	if(isrobot(user) || isessence(user))
-		return
-
-	if ((!( istype(A, /obj/item/weapon) ) || user.get_active_hand() != A))
-		return
-
-	var/obj/item/weapon/W = A
-	if(!W.canremove || W.flags & NODROP)
-		return
-
-	user.drop_item()
-	if (A.loc != src.loc)
-		step(A, get_dir(A, src))
-	return
+	return ..()
 
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))

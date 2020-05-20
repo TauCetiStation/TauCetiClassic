@@ -18,9 +18,8 @@
 	response_harm   = "hits the"
 
 	harm_intent_damage = 0
-	melee_damage_lower = 0
-	melee_damage_upper = 0
-	attacktext = "brutally crushes"
+	melee_damage = 0
+	attacktext = "brutally crush"
 	environment_smash = 0
 
 	speed = 1
@@ -41,6 +40,10 @@
 	minbodytemp = 0
 
 	see_in_dark = 100
+
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 	var/life_cicle = 0
 	var/next_cicle = 10
