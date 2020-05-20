@@ -196,9 +196,9 @@ var/global/list/combat_combos_by_name = list()
 	var/endtime = world.time + delay
 	while(world.time < endtime)
 		stoplag()
-		if(QDELING(victim))
+		if(QDELETED(victim))
 			return FALSE
-		if(QDELING(attacker))
+		if(QDELETED(attacker))
 			return FALSE
 		if(victim.notransform || attacker.notransform)
 			return FALSE
