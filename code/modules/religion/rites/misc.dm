@@ -131,7 +131,7 @@
 /datum/religion_rites/h_mouse
 	name = "Call for MEGAMOUSE"
 	desc = "Create MEGAMOUSE from mouse."
-	ritual_length = (0.5 MINUTES)
+	ritual_length = (30 SECONDS)
 	ritual_invocations = list("I call for your power, MEGAMOUSE!...",
 							  "...change da world....",
 							  "...sometimes I dream about cheese...",
@@ -149,7 +149,7 @@
 	if(!ismouse(AOG.buckled_mob))
 		return FALSE
 	if(!AOG.buckled_mob.mind)
-		to_chat(user,"MEGAMOUSE CAN'T ACCEPT THIS MINDLESS CREATURE!")
+		to_chat(user,"<font color='red'><b>MEGAMOUSE CAN'T ACCEPT THIS MINDLESS CREATURE!</b></span>")
 		return FALSE
 	return ..()
 
@@ -158,5 +158,5 @@
 	if(!istype(M))
 		return FALSE
 	M.become_hulk()
-	user.visible_message("<span class='notice'>[user] summoned MEGAMOUSE to our world!</span>")
+	user.visible_message("<font size='5' color='red'><b>[user] summoned MEGAMOUSE to our world!</b></span>")
 	return TRUE
