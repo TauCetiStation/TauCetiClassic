@@ -172,6 +172,21 @@ var/global/combos_cheat_sheet = ""
 
 	return attack_unarmed(attacker)
 
+/// This proc checks whether src can be attacked by attacker at all.
+/mob/living/proc/can_be_attacked(mob/living/attacker)
+	// Why does this exist? ~Luduk
+	if(isturf(loc) && istype(loc.loc, /area/start))
+		to_chat(attacker, "<span class='warning'>No attacking people at spawn!</span>")
+		return FALSE
+
+	var/list/attack_obj = attacker.get_unarmed_attack()
+	if((attacker != src) && check_shields(attacker, attack_obj["damage"], attacker.name, get_dir(attacker, src)))
+		attacker.do_attack_animation(src)
+		visible_message("<span class='warning bold'>[attacker] attempted to touch [src]!</span>")
+		return FALSE
+
+	return TRUE
+
 /*
  * The running horse of current combo system.
  * Handles all unarmed attacks, to unite all the attack_paw, attack_slime, attack_human, etc procs.
@@ -181,13 +196,7 @@ var/global/combos_cheat_sheet = ""
  * Return TRUE if unarmed attack was "succesful".
  */
 /mob/living/proc/attack_unarmed(mob/living/attacker)
-	// Why does this exist? ~Luduk
-	if(isturf(loc) && istype(loc.loc, /area/start))
-		to_chat(attacker, "<span class='warning'>No attacking people at spawn!</span>")
-		return FALSE
-
-	if((attacker != src) && check_shields(0, attacker.name, get_dir(attacker, src)))
-		visible_message("<span class='warning bold'>[attacker] attempted to touch [src]!</span>")
+	if(!can_be_attacked(attacker))
 		return FALSE
 
 	var/tz = attacker.get_targetzone()

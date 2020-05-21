@@ -995,7 +995,7 @@ ________________________________________________________________________________
 			else
 				to_chat(user, "�rr�R �a��a�� No-�-� f��N� 3RR�r")
 
-/obj/item/clothing/suit/space/space_ninja/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+/obj/item/clothing/suit/space/space_ninja/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
 	if(reaction_type == REACTION_ITEM_TAKE || reaction_type == REACTION_ITEM_TAKEOFF)
 		return
 

@@ -359,7 +359,7 @@
 	s.start()
 	toggle_stealth()
 
-/obj/item/clothing/suit/space/vox/stealth/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+/obj/item/clothing/suit/space/vox/stealth/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
 	if(on)
 		if(reaction_type == REACTION_ITEM_TAKE || reaction_type == REACTION_ITEM_TAKEOFF)
 			var/charge_decrease = max(rand(20, 30), round((damage * 25) + rand(1, 5)))

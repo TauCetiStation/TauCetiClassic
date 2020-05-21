@@ -186,6 +186,9 @@
 		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 		msg_admin_attack("[key_name(user)] attacked [key_name(target)] with [src.name] (INTENT: [uppertext(user.a_intent)])", user)
 
+		if((user != target) && target.check_shields(src, 7, "the [src.name]", get_dir(user,target)))
+			return
+
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/target_zone = ran_zone(check_zone(user.zone_sel.selecting, target))
@@ -195,9 +198,6 @@
 				return
 
 			var/hit_area = BP.name
-
-			if((user != target) && target.check_shields(7, "the [src.name]", get_dir(user,target)))
-				return
 
 			if (target != user && target.getarmor(target_zone, "melee") > 5 && prob(50))
 				visible_message("<span class='warning'><B>[user] tries to stab [target] in \the [hit_area] with [name], but the attack is deflected by armor!</B></span>")

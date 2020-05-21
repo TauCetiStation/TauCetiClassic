@@ -90,7 +90,7 @@
 			visible_message("<span class='notice'>\The [O] misses [src] narrowly!</span>")
 			return
 
-		if(throwingdatum.thrower != src && check_shields(throw_damage, "[O]", get_dir(O,src)))
+		if(throwingdatum.thrower != src && check_shields(AM, throw_damage, "[O]", get_dir(O,src)))
 			return
 
 		resolve_thrown_attack(O, throw_damage, dtype, zone)
@@ -197,8 +197,8 @@
 
 // End BS12 momentum-transfer code.
 
-/mob/living/proc/check_shields(damage = 0, attack_text = "the attack", hit_dir = 0)
-	return FALSE
+/mob/living/proc/check_shields(atom/attacker, damage = 0, attack_text = "the attack", hit_dir = 0)
+	return SEND_SIGNAL(src, COMSIG_LIVING_CHECK_SHIELDS, attacker, damage, attack_text, hit_dir) & COMPONENT_ATTACK_SHIELDED
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()

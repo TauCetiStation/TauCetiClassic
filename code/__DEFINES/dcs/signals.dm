@@ -69,6 +69,15 @@
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
 #define COMSIG_MOVABLE_PIXELMOVE "movable_pixelmove"
 
+/// from base of obj/item/attack_self(): (/mob/user)
+#define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
+	#define COMPONENT_NO_INTERACT 1
+
+// mob signals
+/// from  base of mob/ClickOn(): (atom/target, params)
+#define COMSIG_MOB_CLICK "mob_click"
+	#define COMPONENT_CANCEL_CLICK 1
+
 // living signals
 /// from base of /mob/start_pulling(): (/atom/movable/target)
 #define COMSIG_LIVING_START_PULL "living_start_pull"
@@ -85,7 +94,6 @@
 #define COMSIG_LIVING_CLICK_CTRL "living_click_ctrl"
 /// from base of mob/CtrlShiftClickOn(): (atom/target)
 #define COMSIG_LIVING_CLICK_CTRL_SHIFT "living_click_ctrl_shift"
-	#define COMPONENT_CANCEL_CLICK 1
 /// from slime CtrlClickOn(): (/mob)
 #define COMSIG_XENO_SLIME_CLICK_CTRL "xeno_slime_click_ctrl"
 /// from slime ShiftClickOn(): (/mob)
@@ -96,6 +104,9 @@
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"
 /// from monkey CtrlClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
+/// from mob/living/check_shields(): (atom/attacker, damage, attack_text, hit_dir)
+#define COMSIG_LIVING_CHECK_SHIELDS "check_shields"
+	#define COMPONENT_ATTACK_SHIELDED 1
 
 // Component specific signals.
 /// send this signal to remove a list of tip ids(use tip_names as tip ids): (/list/tip_ids_to_remove)
