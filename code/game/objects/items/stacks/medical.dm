@@ -33,16 +33,32 @@
 		"<span class='notice'>[user] starts to apply \the [src] on [to_self ? "themself" : L].</span>",
 		"<span class='notice'>You begin applying \the [src] on [to_self ? "yourself" : L].</span>")
 
-/obj/item/stack/medical/proc/try_heal(mob/living/L, mob/user, silent = FALSE)
+/obj/item/stack/medical/proc/can_heal(mob/living/L, mob/user)
 	if(!istype(L))
 		to_chat(user, "<span class='warning'>\The [src] cannot be applied to [L]!</span>")
-		return
+		return FALSE
 	if(user.is_busy())
-		return
+		return FALSE
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the smarts to do this!</span>")
-		return
+		return FALSE
 	if(!L.can_inject(user, user.get_targetzone()))
+		return FALSE
+	return TRUE
+
+/obj/item/stack/medical/proc/try_heal(mob/living/L, mob/user, silent = FALSE)
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
+		if(BP.open)
+			// Checks if mob is lying down on table for surgery
+			if(can_operate(H))
+				do_surgery(H, user, src)
+			else
+				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than [src]!</span>")
+			return
+
+	if(!can_heal(L, user))
 		return
 
 	var/delay = L == user ? self_delay : other_delay
@@ -53,7 +69,7 @@
 			return
 
 	if(heal(L, user) && use(1) && repeating && !zero_amount())
-		try_heal(L, user, silent)
+		try_heal(L, user, TRUE)
 		return
 
 	L.updatehealth()
@@ -85,46 +101,48 @@
 	..()
 	playsound(src, pick(SOUNDIN_BANDAGE), VOL_EFFECTS_MASTER, 15)
 
+/obj/item/stack/medical/bruise_pack/can_heal(mob/living/L, mob/living/user)
+	. = ..()
+	if(!.)
+		return
+
+	if(!ishuman(L))
+		return
+
+	var/mob/living/carbon/human/H = L
+	var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
+	if(BP.is_bandaged())
+		to_chat(user, "<span class='warning'>The wounds on [H]'s [BP.name] have already been bandaged.</span>")
+		return FALSE
+
 /obj/item/stack/medical/bruise_pack/heal(mob/living/L, mob/living/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
 
-		if(!BP.open)
-			if(BP.is_bandaged())
-				to_chat(user, "<span class='warning'>The wounds on [H]'s [BP.name] have already been bandaged.</span>")
-				return FALSE
+		for(var/datum/wound/W in BP.wounds)
+			if(W.bandaged)
+				continue
+			if(W.current_stage <= W.max_bleeding_stage)
+				user.visible_message("<span class='notice'>\The [user] bandages [W.desc] on [H]'s [BP.name].</span>", \
+									"<span class='notice'>You bandage [W.desc] on [H]'s [BP.name].</span>")
+				//H.add_side_effect("Itch")
+			else if (istype(W,/datum/wound/bruise))
+				user.visible_message("<span class='notice'>\The [user] places bruise patch over [W.desc] on [H]'s [BP.name].</span>", \
+									"<span class='notice'>You place bruise patch over [W.desc] on [H]'s [BP.name].</span>" )
 			else
-				for(var/datum/wound/W in BP.wounds)
-					if(W.bandaged)
-						continue
-					if(W.current_stage <= W.max_bleeding_stage)
-						user.visible_message("<span class='notice'>\The [user] bandages [W.desc] on [H]'s [BP.name].</span>", \
-											"<span class='notice'>You bandage [W.desc] on [H]'s [BP.name].</span>")
-						//H.add_side_effect("Itch")
-					else if (istype(W,/datum/wound/bruise))
-						user.visible_message("<span class='notice'>\The [user] places bruise patch over [W.desc] on [H]'s [BP.name].</span>", \
-											"<span class='notice'>You place bruise patch over [W.desc] on [H]'s [BP.name].</span>" )
-					else
-						user.visible_message("<span class='notice'>\The [user] places bandaid over [W.desc] on [H]'s [BP.name].</span>", \
-											"<span class='notice'>You place bandaid over [W.desc] on [H]'s [BP.name].</span>")
-					W.bandage()
-					if(crit_fail)
-						W.germ_level += germ_level
-					else
-						W.germ_level += min(germ_level, 3)
-					break
-
-				BP.update_damages()
-				H.update_bandage()
-				return TRUE
-
-		else
-			if(can_operate(H))        //Checks if mob is lying down on table for surgery
-				do_surgery(H, user, src)
+				user.visible_message("<span class='notice'>\The [user] places bandaid over [W.desc] on [H]'s [BP.name].</span>", \
+									"<span class='notice'>You place bandaid over [W.desc] on [H]'s [BP.name].</span>")
+			W.bandage()
+			if(crit_fail)
+				W.germ_level += germ_level
 			else
-				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
-			return FALSE
+				W.germ_level += min(germ_level, 3)
+			break
+
+			BP.update_damages()
+			H.update_bandage()
+			return TRUE
 	return ..()
 
 /obj/item/stack/medical/bruise_pack/update_icon()
@@ -142,26 +160,29 @@
 	repeating = TRUE
 	heal_burn = 1
 
+/obj/item/stack/medical/ointment/can_heal(mob/living/L, mob/living/user)
+	. = ..()
+	if(!.)
+		return
+
+	if(!ishuman(L))
+		return
+
+	var/mob/living/carbon/human/H = L
+	var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
+	if(BP.is_salved())
+		to_chat(user, "<span class='warning'>The wounds on [H]'s [BP.name] have already been salved.</span>")
+		return FALSE
+
 /obj/item/stack/medical/ointment/heal(mob/living/L, mob/living/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
 
-		if(!BP.open)
-			if(BP.is_salved())
-				to_chat(user, "<span class='warning'>The wounds on [H]'s [BP.name] have already been salved.</span>")
-				return FALSE
-			else
-				user.visible_message("<span class='notice'>\The [user] salves wounds on [H]'s [BP.name].</span>", \
-									"<span class='notice'>You salve wounds on [H]'s [BP.name].</span>")
-				BP.salve()
-				return TRUE
-		else
-			if(can_operate(H))        //Checks if mob is lying down on table for surgery
-				do_surgery(H, user, src)
-			else
-				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
-			return FALSE
+		user.visible_message("<span class='notice'>\The [user] salves wounds on [H]'s [BP.name].</span>",
+							"<span class='notice'>You salve wounds on [H]'s [BP.name].</span>")
+		BP.salve()
+		return TRUE
 	return ..()
 
 /obj/item/stack/medical/ointment/update_icon()
@@ -211,44 +232,45 @@
 	..()
 	playsound(src, pick(SOUNDIN_BANDAGE), VOL_EFFECTS_MASTER, 15)
 
+/obj/item/stack/medical/advanced/bruise_pack/can_heal(mob/living/L, mob/living/user)
+	. = ..()
+	if(!.)
+		return
+
+	if(!ishuman(L))
+		return
+
+	var/mob/living/carbon/human/H = L
+	var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
+	if(BP.is_bandaged() && BP.is_disinfected())
+		to_chat(user, "<span class='warning'>The wounds on [L]'s [BP.name] have already been treated.</span>")
+		return FALSE
+
 /obj/item/stack/medical/advanced/bruise_pack/heal(mob/living/L, mob/living/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
 
-		if(!BP.open)
-			if(BP.is_bandaged() && BP.is_disinfected())
-				to_chat(user, "<span class='warning'>The wounds on [L]'s [BP.name] have already been treated.</span>")
-				return FALSE
+		for(var/datum/wound/W in BP.wounds)
+			if(W.bandaged && W.disinfected)
+				continue
+			if(W.current_stage <= W.max_bleeding_stage)
+				user.visible_message("<span class='notice'>\The [user] cleans [W.desc] on [H]'s [BP.name] and seals edges with bioglue.</span>", \
+									"<span class='notice'>You clean and seal [W.desc] on [H]'s [BP.name].</span>")
+			else if (istype(W,/datum/wound/bruise))
+				user.visible_message("<span class='notice'>\The [user] places medicine patch over [W.desc] on [H]'s [BP.name].</span>", \
+									"<span class='notice'>You place medicine patch over [W.desc] on [H]'s [BP.name].</span>")
 			else
-				for(var/datum/wound/W in BP.wounds)
-					if(W.bandaged && W.disinfected)
-						continue
-					if(W.current_stage <= W.max_bleeding_stage)
-						user.visible_message("<span class='notice'>\The [user] cleans [W.desc] on [H]'s [BP.name] and seals edges with bioglue.</span>", \
-											"<span class='notice'>You clean and seal [W.desc] on [H]'s [BP.name].</span>")
-					else if (istype(W,/datum/wound/bruise))
-						user.visible_message("<span class='notice'>\The [user] places medicine patch over [W.desc] on [H]'s [BP.name].</span>", \
-											"<span class='notice'>You place medicine patch over [W.desc] on [H]'s [BP.name].</span>")
-					else
-						user.visible_message("<span class='notice'>\The [user] smears some bioglue over [W.desc] on [H]'s [BP.name].</span>", \
-											"<span class='notice'>You smear some bioglue over [W.desc] on [H]'s [BP.name].</span>")
-					W.bandage()
-					W.disinfect()
-					W.heal_damage(heal_brute)
-					break
+				user.visible_message("<span class='notice'>\The [user] smears some bioglue over [W.desc] on [H]'s [BP.name].</span>", \
+									"<span class='notice'>You smear some bioglue over [W.desc] on [H]'s [BP.name].</span>")
+			W.bandage()
+			W.disinfect()
+			W.heal_damage(heal_brute)
+			break
 
-				BP.update_damages()
-				H.update_bandage()
-
-				return TRUE
-
-		else
-			if(can_operate(H))        //Checks if mob is lying down on table for surgery
-				if(do_surgery(H,user,src))
-					return FALSE
-			else
-				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
+		BP.update_damages()
+		H.update_bandage()
+		return TRUE
 	return ..()
 
 /obj/item/stack/medical/advanced/ointment
@@ -268,28 +290,30 @@
 /obj/item/stack/medical/advanced/ointment/update_icon()
 	icon_state = "[initial(icon_state)][amount]"
 
+/obj/item/stack/medical/advanced/ointment/can_heal(mob/living/L, mob/living/user)
+	. = ..()
+	if(!.)
+		return
+
+	if(!ishuman(L))
+		return
+
+	var/mob/living/carbon/human/H = L
+	var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
+	if(BP.is_salved())
+		to_chat(user, "<span class='warning'>The wounds on [H]'s [BP.name] have already been salved.</span>")
+		return FALSE
+
 /obj/item/stack/medical/advanced/ointment/heal(mob/living/L, mob/living/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
 
-		if(BP.open == 0)
-			if(BP.is_salved())
-				to_chat(user, "<span class='warning'>The wounds on [H]'s [BP.name] have already been salved.</span>")
-				return FALSE
-			else
-				user.visible_message("<span class='notice'>\The [user] covers wounds on [H]'s [BP.name] with regenerative membrane.</span>", \
-									"<span class='notice'>You cover wounds on [H]'s [BP.name] with regenerative membrane.</span>")
-				BP.heal_damage(0, heal_burn)
-				BP.salve()
-				return TRUE
-
-		else
-			if(can_operate(H))        //Checks if mob is lying down on table for surgery
-				do_surgery(H, user, src)
-			else
-				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
-			return FALSE
+		user.visible_message("<span class='notice'>\The [user] covers wounds on [H]'s [BP.name] with regenerative membrane.</span>", \
+							"<span class='notice'>You cover wounds on [H]'s [BP.name] with regenerative membrane.</span>")
+		BP.heal_damage(0, heal_burn)
+		BP.salve()
+		return TRUE
 	return ..()
 
 /obj/item/stack/medical/splint
@@ -306,29 +330,39 @@
 
 	repeating = FALSE
 
-/obj/item/stack/medical/splint/heal(mob/living/L, mob/user, def_zone)
+/obj/item/stack/medical/splint/can_heal(mob/living/L, mob/living/user)
+	. = ..()
+	if(!.)
+		return
+
+	if(!ishuman(L))
+		return
+
+	var/mob/living/carbon/human/H = L
+	var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
+
+	if(BP.body_zone == BP_HEAD || BP.body_zone == BP_CHEST || BP.body_zone == BP_GROIN)
+		to_chat(user, "<span class='danger'>You can't apply a splint there!</span>")
+		return FALSE
+	if(BP.status & ORGAN_SPLINTED)
+		to_chat(user, "<span class='danger'>[H]'s [BP.name] is already splinted!</span>")
+		return FALSE
+	if(H == user && ((user.hand && BP.body_zone != BP_R_ARM) || (user.hand && BP.body_zone != BP_L_ARM)))
+		to_chat(user, "<span class='danger'>You can't apply a splint to the arm you're using!</span>")
+		return FALSE
+
+/obj/item/stack/medical/splint/heal(mob/living/L, mob/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
-		var/limb = BP.name
-		if(BP.body_zone == BP_HEAD || BP.body_zone == BP_CHEST || BP.body_zone == BP_GROIN)
-			to_chat(user, "<span class='danger'>You can't apply a splint there!</span>")
-			return FALSE
-		if(BP.status & ORGAN_SPLINTED)
-			to_chat(user, "<span class='danger'>[H]'s [limb] is already splinted!</span>")
-			return FALSE
-
-		if(H == user && ((user.hand && BP.body_zone != BP_R_ARM) || (user.hand && BP.body_zone != BP_L_ARM)))
-			to_chat(user, "<span class='danger'>You can't apply a splint to the arm you're using!</span>")
-			return FALSE
+		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
 
 		if(H != user)
-			user.visible_message("<span class='danger'>[user] finishes applying \the [src] to [H]'s [limb].</span>", \
-								"<span class='danger'>You finish applying \the [src] to [H]'s [limb].</span>", \
+			user.visible_message("<span class='danger'>[user] finishes applying \the [src] to [H]'s [BP.name].</span>", \
+								"<span class='danger'>You finish applying \the [src] to [H]'s [BP.name].</span>", \
 								"<span class='danger'>You hear something being wrapped.</span>")
 		else
-			user.visible_message("<span class='danger'>[user] successfully applies \the [src] to their [limb].</span>", \
-								"<span class='danger'>You successfully apply \the [src] to your [limb].</span>", \
+			user.visible_message("<span class='danger'>[user] successfully applies \the [src] to their [BP.name].</span>", \
+								"<span class='danger'>You successfully apply \the [src] to your [BP.name].</span>", \
 								"<span class='danger'>You hear something being wrapped.</span>")
 		BP.status |= ORGAN_SPLINTED
 		return TRUE
@@ -356,22 +390,14 @@
 		var/mob/living/carbon/human/H = L
 		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
 
-		if(!BP.open)
-			// Suturing yourself brings much more pain.
-			var/pain_factor = H == user ? 40 : 20
-			if(H.stat == CONSCIOUS)
-				H.shock_stage += pain_factor
-			BP.status &= ~ORGAN_ARTERY_CUT
-			BP.clamp()
-			user.visible_message(
-				"<span class='notice'>[user] has stitched [L]'s [BP.name] with [src].</span>",
-				"<span class='notice'>You have stitched [L]'s [BP.name] with [src].</span>")
-			return TRUE
-
-		else
-			if(can_operate(H))        //Checks if mob is lying down on table for surgery
-				do_surgery(H, user, src)
-			else
-				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
-			return FALSE
+		// Suturing yourself brings much more pain.
+		var/pain_factor = H == user ? 40 : 20
+		if(H.stat == CONSCIOUS)
+			H.shock_stage += pain_factor
+		BP.status &= ~ORGAN_ARTERY_CUT
+		BP.clamp()
+		user.visible_message(
+			"<span class='notice'>[user] has stitched [L]'s [BP.name] with [src].</span>",
+			"<span class='notice'>You have stitched [L]'s [BP.name] with [src].</span>")
+		return TRUE
 	return ..()
