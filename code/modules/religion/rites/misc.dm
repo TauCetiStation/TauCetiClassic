@@ -143,7 +143,7 @@
 
 	needed_aspects = list(
 		ASPECT_SPAWN = 1,
-		ASPECT_RESCUE = 1
+		ASPECT_WACKY = 1
 	)
 
 /datum/religion_rites/h_mouse/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
