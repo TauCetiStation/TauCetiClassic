@@ -44,7 +44,7 @@
 	. = ..()
 	if (empty)
 		return
-	for (var/i in 1 to 3)
+	for (var/i in 1 to 2)
 		new /obj/item/stack/medical/bruise_pack(src)
 	for (var/i in 1 to 2)
 		new /obj/item/stack/medical/ointment(src)
