@@ -412,10 +412,10 @@
 	else
 		var/mob/god = pick(global.chaplain_religion.active_deities)
 		god_name = god.name
+	R.name = "[R.name] of [god_name]"
+
 	R.down_overlay = image('icons/effects/effects.dmi', icon_state = "at_shield2", layer = OBJ_LAYER - 0.01)
 	R.down_overlay.alpha = 100
 	R.add_overlay(R.down_overlay)
-
-	R.name = "[R.name] of [god_name]"
 	addtimer(CALLBACK(R, /obj/item/weapon/claymore/religion.proc/revert_effect), 5 SECONDS)
 	return TRUE
