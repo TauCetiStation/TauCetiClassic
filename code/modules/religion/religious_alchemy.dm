@@ -56,12 +56,15 @@
 	if(QDELING(container) || QDELING(user))
 		return
 
+	playsound(src, 'sound/voice/holy.ogg', VOL_EFFECTS_MASTER)
+
 	var/atom/movable/AM = container
 	if(AM.can_waddle())
 		AM.waddle(pick(-28, 0, 28), 4)
 
 	var/holy_outline = filter(type = "outline", size = 1, color = "#FFD700EE")
 	container.filters += holy_outline
+	animate(container.filters[container.filters.len], color = "#FFD70000", time = 2 SECONDS)
 	addtimer(CALLBACK(src, .proc/revert_effects, container, user, holy_outline), 2 SECONDS)
 
 /datum/faith_reaction/proc/revert_effects(atom/container, mob/user, holy_outline)

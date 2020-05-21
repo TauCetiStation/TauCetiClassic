@@ -36,7 +36,8 @@
 #define COMSIG_REAGENT_REACTION_TURF "reagent_reaction_turf"	//from base of reagent/reaction_turf(): (turf/T, volume)
 
 // light related signals
-#define COMSIG_LIGHT_UPDATE_OBJECT "light_update_corners"		//from base of /atom/movable/lighting_object/update(): ()
+// from base of /atom/movable/lighting_object/update(): ()
+#define COMSIG_LIGHT_UPDATE_OBJECT "light_update_object"
 
 // /client signals
 #define COMSIG_CLIENTMOB_MOVE "client_move"		//from base of client/Move(): (atom/NewLoc, direction)

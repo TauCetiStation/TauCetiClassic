@@ -2,6 +2,9 @@
 	name = "faithful sunglasses"
 	desc = "Sometimes you just feel like watching them ghosts sin."
 
+	icon_state = "faith_glasses"
+	item_state = "faith_glasses"
+
 	action_button_name = "Assess Holyness"
 
 	var/next_assessment = 0
@@ -43,6 +46,8 @@
 	if(next_assessment > world.time)
 		return
 	next_assessment = world.time + assessment_cooldown
+
+	playsound(src, 'sound/items/faith_scan.ogg', VOL_EFFECTS_MASTER)
 
 	var/turf/T = get_turf(user)
 	for(var/turf/simulated/floor/F in RANGE_TURFS(12, T))

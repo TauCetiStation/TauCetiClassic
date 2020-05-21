@@ -224,16 +224,14 @@
 	UnregisterSignal(F.lighting_object, list(COMSIG_LIGHT_UPDATE_OBJECT))
 	if(favor_for_turf)
 		R.passive_favor_gain -= favor_for_turf[F]
-	favor_for_turf -= F
+		favor_for_turf -= F
 	UNSETEMPTY(favor_for_turf)
 
 /datum/aspect/lightbending/proc/get_light_gain(turf/simulated/floor/F)
 	return 0.0
 
 /datum/aspect/lightbending/proc/recalc_favor_gain(datum/source)
-	var/atom/movable/lighting_object/L = source
-	to_chat(world, "TEST [L]")
-	var/turf/simulated/floor/F = L.myturf
+	var/turf/simulated/floor/F = source
 
 	var/prev_gain = 0.0
 	if(favor_for_turf)
