@@ -57,7 +57,7 @@
 /obj/item/weapon/mop/proc/on_sweep_finish(turf/current_turf, mob/living/user)
 	clean(current_turf, 1)
 
-/obj/item/weapon/mop/proc/on_sweep_to_check(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/target, mob/living/user, list/directions, i)
+/obj/item/weapon/mop/proc/on_sweep_to_check(turf/current_turf, turf/next_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/target, mob/living/user)
 	if(istype(target, /obj/item))
 		var/obj/item/I = target
 		if(I.anchored)
@@ -66,8 +66,8 @@
 			var/obj/item/weapon/storage/bag/trash/TR = user.get_inactive_hand()
 			if(istype(TR) && TR.can_be_inserted(I))
 				TR.handle_item_insertion(I, prevent_warning = TRUE)
-			else if(i + 1 <= directions.len)
-				step_to(I, get_step(src, directions[i + 1]))
+			else if(next_turf)
+				step(I, get_dir(current_turf, next_turf))
 
 /obj/item/weapon/mop/proc/on_sweep_push(atom/target, turf/T, mob/user)
 	var/turf/T_target = get_turf(target)

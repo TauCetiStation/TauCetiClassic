@@ -214,35 +214,23 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 
-	SCB.on_sweep_continue_check = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/sweep_continue_check)
-
 	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/can_spin)
-	SCB.on_spin = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/sweep_spin)
+	SCB.on_get_sweep_objects = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/get_sweep_objs)
 
 	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/twohanded/dualsaber/proc/can_spin(mob/user)
 	return wielded
 
-/obj/item/weapon/twohanded/dualsaber/proc/sweep_spin(mob/user)
-	var/rot_dir = 1
-	if(user.dir == SOUTH || user.dir == WEST) // South-west rotate anti-clockwise.
-		rot_dir = -1
+/obj/item/weapon/twohanded/dualsaber/proc/get_sweep_objs(turf/start, obj/item/I, mob/user, list/directions, obj/effect/effect/weapon_sweep/sweep_image)
+	var/list/directions_opposite = list()
+	for(var/dir_ in directions)
+		directions_opposite += turn(dir_, 180)
 
-	var/list/turfs = list(user.dir, turn(user.dir, rot_dir * 45), turn(user.dir, rot_dir * 90), turn(user.dir, rot_dir * 135), turn(user.dir, rot_dir * 180), turn(user.dir, rot_dir * 225), turn(user.dir, rot_dir * 270), turn(user.dir, rot_dir * 315), user.dir)
-	var/list/turfs_2 = list(turn(user.dir, rot_dir * 180), turn(user.dir, rot_dir * 225), turn(user.dir, rot_dir * 270), turn(user.dir, rot_dir * 315), user.dir, turn(user.dir, rot_dir * 45), turn(user.dir, rot_dir * 90), turn(user.dir, rot_dir * 135), turn(user.dir, rot_dir * 180))
-
-	var/datum/component/swiping/SW = GetComponent(/datum/component/swiping)
-
-	INVOKE_ASYNC(SW, /datum/component/swiping.proc/sweep, turfs, user, sweep_step, 0.5)
-	INVOKE_ASYNC(SW, /datum/component/swiping.proc/sweep, turfs_2, user, sweep_step, 0.5)
-
-/obj/item/weapon/twohanded/dualsaber/proc/sweep_continue_check(mob/living/user, sweep_step, turf/current_turf)
-	if(!can_spin(user))
-		return FALSE
-	if(!do_after(user, sweep_step, target = current_turf, can_move = TRUE, progress = FALSE))
-		return FALSE
-	return TRUE
+	var/list/sweep_objects = list()
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions, sweep_image)
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions_opposite, sweep_image)
+	return sweep_objects
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)

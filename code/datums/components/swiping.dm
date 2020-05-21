@@ -6,12 +6,19 @@
 	name = "sweep"
 	layer = INFRONT_MOB_LAYER
 
-/obj/effect/effect/weapon_sweep/atom_init(mapload, obj/item/weapon/sweep_item)
+	var/sweep_delay = 0
+	var/list/dirs_to_move
+	var/next_dir = 1
+
+/obj/effect/effect/weapon_sweep/atom_init(mapload, obj/item/weapon/sweep_item, list/dirs_to_move, sweep_delay)
 	. = ..()
 	name = "sweeping [sweep_item]"
 	glide_size = DELAY2GLIDESIZE(sweep_item.sweep_step)
 
 	appearance = sweep_item.appearance
+
+	src.sweep_delay = sweep_delay
+	src.dirs_to_move = dirs_to_move
 
 
 
@@ -40,6 +47,9 @@
 	var/datum/callback/can_sweep_call
 	// A callback that allows to check for additional conditions before spinning.
 	var/datum/callback/can_spin_call
+
+	// A callback that allows to give more than one object with it's directions for a sweep. Is used for double energy swords.
+	var/datum/callback/on_get_sweep_objects
 
 	// A callback that replaces sweep_move.
 	var/datum/callback/on_sweep_move
@@ -110,6 +120,9 @@
 	description = "This object appears to be swipable. You can perform swipes either via mouse moves, or click modifiers.\n[pos_moves]"
 
 /datum/component/swiping
+	// Whether is currently swiping.
+	var/swiping = FALSE
+
 	var/list/interupt_on_sweep_hit_types = list(/atom)
 
 	var/can_push = FALSE
@@ -118,6 +131,8 @@
 
 	var/can_sweep = FALSE
 	var/can_spin = FALSE
+
+	var/datum/callback/on_get_sweep_objects
 
 	var/datum/callback/can_push_call
 	var/datum/callback/can_pull_call
@@ -173,6 +188,7 @@
 	on_sweep_finish = SCB.on_sweep_finish
 	on_sweep_interupt = SCB.on_sweep_interupt
 	on_sweep_continue_check = SCB.on_sweep_continue_check
+	on_get_sweep_objects = SCB.on_get_sweep_objects
 
 	if(SCB.can_sweep)
 		can_sweep = TRUE
@@ -195,8 +211,15 @@
 	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(SWIPING_TIP))
 	return ..()
 
-/datum/component/swiping/proc/move_sweep_image(turf/target, obj/effect/effect/weapon_sweep/sweep_image, step_delay)
-	sleep(step_delay)
+/datum/component/swiping/proc/get_sweep_objects(turf/start, obj/item/I, mob/user, list/directions, sweep_image)
+	if(on_get_sweep_objects)
+		return on_get_sweep_objects.Invoke(start, I, user, directions)
+	var/list/sweep_objects = list()
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions, sweep_image)
+	return sweep_objects
+
+/datum/component/swiping/proc/move_sweep_image(turf/target, obj/effect/effect/weapon_sweep/sweep_image)
+	sleep(sweep_image.sweep_delay)
 	sweep_image.forceMove(target)
 
 /*
@@ -368,9 +391,9 @@
 	TODO: make pull and push rely on sweep too?
 */
 // Whether user can continue sweeping at all.
-/datum/component/swiping/proc/sweep_continue_check(mob/user, sweep_delay, turf/current_turf)
+/datum/component/swiping/proc/sweep_continue_check(mob/user, sweep_delay)
 	if(on_sweep_continue_check)
-		return on_sweep_continue_check.Invoke(user, sweep_delay, current_turf)
+		return on_sweep_continue_check.Invoke(user, sweep_delay)
 
 	if(can_spin_call)
 		if(!can_spin_call.Invoke(user))
@@ -379,8 +402,7 @@
 		if(!can_sweep_call.Invoke(user))
 			return FALSE
 
-	var/obj/item/weapon/W = parent
-	if(user.is_busy() || !do_after(user, W.sweep_step, target = current_turf, can_move = TRUE, progress = FALSE))
+	if(user.is_busy() || !do_after(user, sweep_delay, target = parent, can_move = TRUE, progress = FALSE))
 		return FALSE
 	return TRUE
 
@@ -422,13 +444,20 @@
 
 	return is_stunned
 
-// Something we execute to all atoms on tile we're currently swiping through. e.g.: moving to next tile, if we're sweeping with a mop.
-/datum/component/swiping/proc/sweep_to_check(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/target, mob/user, list/directions, i)
+/*
+ * Something we execute to all atoms on tile we're currently swiping through. e.g.: moving to next tile, if we're sweeping with a mop.
+ * current_turf is the turf under sweep image right now.
+ * next_turf is either null, or the next turf to be under sweep image.
+ * sweep_image is the thing doing the sweep.
+ * target is the target user clicked.
+ * user is the one doing the sweeping.
+ */
+/datum/component/swiping/proc/sweep_to_check(turf/current_turf, turf/next_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/target, mob/user)
 	if(on_sweep_to_check)
-		on_sweep_to_check.Invoke(current_turf, sweep_image, target, user, directions, i)
+		on_sweep_to_check.Invoke(current_turf, next_turf, sweep_image, target, user)
 
 // What happens if we swipe through the tile, but don't hit anything.
-/datum/component/swiping/proc/sweep_finish(turf/current_turf, mob/user)
+/datum/component/swiping/proc/sweep_finish(turf/current_turf, mob/living/user)
 	if(on_sweep_finish)
 		on_sweep_finish.Invoke(current_turf, user)
 
@@ -447,63 +476,96 @@
 	shake_camera(user, 1, 1)
 	// here be thud sound
 
-// The working horse, the bread and butter of this component. Sweeping logic. Please use the wrapper - sweep.
-/datum/component/swiping/proc/async_sweep(list/directions, mob/living/user, sweep_delay, step_delay_mult = 1.0)
+#define SWEEP_CONTINUE "continue"
+#define SWEEP_INTERUPT "interupt"
+#define SWEEP_END "end"
+
+// The working horse, the bread and butter of this component. Sweeping logic. Please use the wrapper - async_sweep.
+/datum/component/swiping/proc/do_sweep(obj/effect/effect/weapon_sweep/sweep_image, mob/living/user, turf/current_turf, turf/next_turf)
+	sweep_move(current_turf, sweep_image, user)
+
+	var/list/to_check = list()
+	to_check += current_turf.contents
+	to_check += current_turf
+	to_check -= sweep_image
+	to_check -= user
+
+	// Get out of the way, fellows!
+	for(var/atom/A in to_check)
+		// Like something behind a glass.
+		if(!A.Adjacent(user))
+			continue
+
+		if(can_sweep_hit(A, user) && sweep_hit(current_turf, sweep_image, A, user))
+			return SWEEP_INTERUPT
+
+		sweep_to_check(current_turf, next_turf, sweep_image, A, user)
+		user.SetNextMove(sweep_image.sweep_delay + 1)
+
+	if(sweep_image.next_dir == sweep_image.dirs_to_move.len)
+		return SWEEP_END
+	sweep_image.next_dir++
+	return SWEEP_CONTINUE
+
+// The handler for all the possible sweeping images, directions, and etc. Please use the wrapper - sweep.
+/datum/component/swiping/proc/async_sweep(list/directions, mob/living/user, sweep_delay)
+	swiping = TRUE
 	var/obj/item/weapon/W = parent
 
 	var/turf/start = get_step(W, directions[1])
 
 	user.do_attack_animation(start)
-	var/obj/effect/effect/weapon_sweep/sweep_image = new /obj/effect/effect/weapon_sweep(start, W)
+	var/list/sweep_objects = get_sweep_objects(start, W, user, directions, sweep_delay)
 
-	var/step_delay = W.sweep_step * step_delay_mult
+	var/retVal = SWEEP_CONTINUE
+	while(retVal == SWEEP_CONTINUE)
+		for(var/obj/effect/effect/weapon_sweep/sweep_image in sweep_objects)
+			var/dir_ = sweep_image.dirs_to_move[sweep_image.next_dir]
+			var/turf/current_turf = get_step(W, dir_)
 
-	var/i = 0 // So we begin with one.
-	for(var/dir_ in directions)
-		var/turf/current_turf = get_step(W, dir_)
-		i++
+			INVOKE_ASYNC(src, .proc/move_sweep_image, current_turf, sweep_image)
 
-		INVOKE_ASYNC(src, .proc/move_sweep_image, current_turf, sweep_image, step_delay)
-		var/continue_sweep = sweep_continue_check(user, sweep_delay, current_turf)
+		var/continue_sweep = sweep_continue_check(user, sweep_delay)
 		if(!continue_sweep)
+			retVal = SWEEP_END
 			break
 
-		sweep_move(current_turf, sweep_image, user)
+		for(var/obj/effect/effect/weapon_sweep/sweep_image in sweep_objects)
+			var/dir_ = sweep_image.dirs_to_move[sweep_image.next_dir]
+			var/turf/current_turf = get_step(W, dir_)
 
-		var/list/to_check = list()
-		to_check += current_turf.contents
-		to_check += current_turf
-		to_check -= sweep_image
-		to_check -= user
+			var/turf/next_turf
+			if(sweep_image.next_dir < sweep_image.dirs_to_move.len)
+				var/next_dir = sweep_image.dirs_to_move[sweep_image.next_dir + 1]
+				next_turf = get_step(W, next_dir)
 
-		// Get out of the way, fellows!
-		for(var/atom/A in to_check)
-			// Like something behind a glass.
-			if(!A.Adjacent(user))
-				continue
+			var/newRetVal = do_sweep(sweep_image, user, current_turf, next_turf)
+			// Prioritize SWEEP_INTERUPT > SWEEP_END > SWEEP_CONTINUE
+			if(retVal == SWEEP_CONTINUE)
+				retVal = newRetVal
+			else if(newRetVal == SWEEP_INTERUPT)
+				retVal = SWEEP_INTERUPT
 
-			if(can_sweep_hit(A, user))
-				. = sweep_hit(current_turf, sweep_image, A, user)
-				break
+	for(var/obj/effect/effect/weapon_sweep/sweep_image in sweep_objects)
+		if(retVal == SWEEP_INTERUPT)
+			sweep_interupt(get_turf(sweep_image), user)
+		else if(retVal == SWEEP_END)
+			sweep_finish(get_turf(sweep_image), user)
 
-			sweep_to_check(current_turf, sweep_image, A, user, directions, i)
-			user.SetNextMove(sweep_delay + 1)
-
-		if(!.)
-			sweep_finish(current_turf, user)
-		else
-			sweep_interupt(current_turf, user)
-			break
-
-	QDEL_IN(sweep_image, sweep_delay)
+	for(var/obj/effect/effect/weapon_sweep/sweep_image in sweep_objects)
+		QDEL_IN(sweep_image, sweep_image.sweep_delay)
+	swiping = FALSE
 
 // A tidy wrapper for the sweep logic, with neccesary checks.
-/datum/component/swiping/proc/sweep(list/directions, mob/living/user, sweep_delay, step_delay_mult = 1.0)
+/datum/component/swiping/proc/sweep(list/directions, mob/living/user, sweep_delay)
 	if(can_sweep_call && !can_spin) // If it's a spinning thing, it has it's own check.
-		if(!can_sweep_call.Invoke(user))
-			return NONE
+		can_sweep_call.Invoke(user)
+		return COMSIG_ITEM_CANCEL_CLICKWITH
 
-	INVOKE_ASYNC(src, .proc/async_sweep, directions, user, sweep_delay, step_delay_mult)
+	if(swiping)
+		return
+
+	INVOKE_ASYNC(src, .proc/async_sweep, directions, user, sweep_delay)
 
 	return COMSIG_ITEM_CANCEL_CLICKWITH
 
@@ -542,7 +604,7 @@
 
 	var/obj/item/weapon/W = parent
 
-	INVOKE_ASYNC(src, .proc/sweep, directions, user, W.sweep_step, 0.5)
+	INVOKE_ASYNC(src, .proc/sweep, directions, user, W.sweep_step * 0.5)
 	return COMPONENT_NO_INTERACT
 
 // A little bootleg for MiddleClick.
@@ -575,10 +637,10 @@
 	for(var/turf/T in turfs)
 		if(!in_range(user, T))
 			if(get_dir(dropping, over) == get_dir(user, over))
-				if(can_push && sweep_push(parent, over, user) != NONE)
+				if(can_push && try_sweep_push(parent, over, user) != NONE)
 					return COMPONENT_NO_MOUSEDROP
 			else
-				if(can_pull && sweep_pull(parent, dropping, user) != NONE)
+				if(can_pull && try_sweep_pull(parent, dropping, user) != NONE)
 					return COMPONENT_NO_MOUSEDROP
 		directions += get_dir(user, T)
 
