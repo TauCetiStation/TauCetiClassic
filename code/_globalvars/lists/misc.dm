@@ -107,25 +107,25 @@ var/global/list/cash_increase_list = list()
 //rating of stock_parts = items with this rating
 //TODO: make the function the same as in cash_increase_list
 var/global/static/list/stock_parts_increase_list = list(
-	// Tier 1
+// Tier 1
 	/obj/item/weapon/stock_parts/capacitor = /obj/item/weapon/stock_parts/capacitor/adv,
 	/obj/item/weapon/stock_parts/scanning_module = /obj/item/weapon/stock_parts/scanning_module/adv,
 	/obj/item/weapon/stock_parts/manipulator = /obj/item/weapon/stock_parts/manipulator/nano,
 	/obj/item/weapon/stock_parts/micro_laser = /obj/item/weapon/stock_parts/micro_laser/high,
 	/obj/item/weapon/stock_parts/matter_bin = /obj/item/weapon/stock_parts/matter_bin/adv,
-	// Tier 2
+// Tier 2
 	/obj/item/weapon/stock_parts/capacitor/adv = /obj/item/weapon/stock_parts/capacitor/super,
 	/obj/item/weapon/stock_parts/scanning_module/adv = /obj/item/weapon/stock_parts/scanning_module/phasic,
 	/obj/item/weapon/stock_parts/manipulator/nano = /obj/item/weapon/stock_parts/manipulator/pico,
 	/obj/item/weapon/stock_parts/micro_laser/high = /obj/item/weapon/stock_parts/micro_laser/ultra,
 	/obj/item/weapon/stock_parts/matter_bin/adv = /obj/item/weapon/stock_parts/matter_bin/super,
-	// Tier 3
+// Tier 3
 	/obj/item/weapon/stock_parts/capacitor/super = /obj/item/weapon/stock_parts/capacitor/quadratic,
 	/obj/item/weapon/stock_parts/scanning_module/phasic = /obj/item/weapon/stock_parts/scanning_module/triphasic,
 	/obj/item/weapon/stock_parts/manipulator/pico = /obj/item/weapon/stock_parts/manipulator/femto,
 	/obj/item/weapon/stock_parts/micro_laser/ultra = /obj/item/weapon/stock_parts/micro_laser/quadultra,
 	/obj/item/weapon/stock_parts/matter_bin/super = /obj/item/weapon/stock_parts/matter_bin/bluespace,
-	// Tier 4
+// Tier 4
 	/obj/item/weapon/stock_parts/capacitor/quadratic = /obj/item/weapon/stock_parts/capacitor,
 	/obj/item/weapon/stock_parts/scanning_module/triphasic = /obj/item/weapon/stock_parts/scanning_module,
 	/obj/item/weapon/stock_parts/manipulator/femto = /obj/item/weapon/stock_parts/manipulator,
