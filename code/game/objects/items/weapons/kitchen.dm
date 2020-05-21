@@ -274,10 +274,10 @@
 
 	// Drop all the things. All of them.
 	for(var/obj/item/I in contents)
-		// if no table, presume that the person just shittily dropped the tray on the ground and made a mess everywhere!
-		remove_from_storage(I, get_turf(loc))
-		step(I, pick(NORTH, WEST, EAST, SOTUTH))
-		I.after_throw()
+		var/turf/newloc = get_turf(loc)
+		remove_from_storage(I, newloc)
+		newloc = locate(newloc.x + rand(-2, 2), newloc.y + rand(-2, 2), newloc.z)
+		I.throw_at(newloc, rand(1, 2), 1, user)
 
 	if((CLUMSY in user.mutations) && prob(50))
 		to_chat(M, "<span class='warning'>You accidentally slam yourself with the [src]!</span>")
@@ -288,7 +288,6 @@
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)
 
-	var/mob/living/carbon/human/H = M
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
@@ -296,10 +295,10 @@
 
 	if(!(def_zone == O_EYES || def_zone == BP_HEAD))
 		if(prob(33))
-			src.add_blood(H)
-			var/turf/location = H.loc
+			src.add_blood(M)
+			var/turf/location = M.loc
 			if (istype(location, /turf/simulated))
-				location.add_blood(H)
+				location.add_blood(M)
 
 		if(prob(15))
 			M.Weaken(3)
@@ -312,52 +311,62 @@
 			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)
 		M.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
 
-	else if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
-		to_chat(M, "<span class='warning'>You get slammed in the face with the tray, against your mask!</span>")
-		if(prob(33))
-			src.add_blood(H)
-			if (H.wear_mask)
-				H.wear_mask.add_blood(H)
-			if (H.head)
-				H.head.add_blood(H)
-			if (H.glasses && prob(33))
-				H.glasses.add_blood(H)
-			var/turf/location = H.loc
-			if (istype(location, /turf/simulated))     //Addin' blood! At least on the floor and item :v
-				location.add_blood(H)
+	else if(istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		if((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES))
+			to_chat(H, "<span class='warning'>You get slammed in the face with the tray, against your mask!</span>")
+			if(prob(33))
+				src.add_blood(H)
+				if (H.wear_mask)
+					H.wear_mask.add_blood(H)
+				if (H.head)
+					H.head.add_blood(H)
+				if (H.glasses && prob(33))
+					H.glasses.add_blood(H)
+				var/turf/location = H.loc
+				if (istype(location, /turf/simulated))     //Addin' blood! At least on the floor and item :v
+					location.add_blood(H)
 
-		if(prob(50))
-			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
-		else
-			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //sound playin'
-		M.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
-		if(prob(10))
-			M.Stun(rand(1,3))
-			M.take_bodypart_damage(3)
-		else
-			M.take_bodypart_damage(5)
+			if(prob(50))
+				playsound(H, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
+			else
+				playsound(H, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //sound playin'
+			H.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
+			if(prob(10))
+				H.Stun(rand(1,3))
+				H.take_bodypart_damage(3)
+			else
+				H.take_bodypart_damage(5)
 
-	else //No eye or head protection, tough luck!
-		to_chat(M, "<span class='warning'>You get slammed in the face with the tray!</span>")
-		if(prob(33))
-			src.add_blood(M)
-			var/turf/location = H.loc
-			if (istype(location, /turf/simulated))
-				location.add_blood(H)
+		else //No eye or head protection, tough luck!
+			to_chat(M, "<span class='warning'>You get slammed in the face with the tray!</span>")
+			if(prob(33))
+				src.add_blood(M)
+				var/turf/location = M.loc
+				if (istype(location, /turf/simulated))
+					location.add_blood(M)
 
-		if(prob(50))
-			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
-		else
-			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //sound playin' again
-		M.visible_message("<span class='warning'><B>[user] slams [M] in the face with the tray!</B></span>")
+			if(prob(50))
+				playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
+			else
+				playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //sound playin' again
+			M.visible_message("<span class='warning'><B>[user] slams [M] in the face with the tray!</B></span>")
 
-		if(prob(30))
-			M.Stun(rand(2,4))
-			M.take_bodypart_damage(4)
-		else
-			M.take_bodypart_damage(8)
 			if(prob(30))
-				M.Weaken(2)
+				M.Stun(rand(2,4))
+				M.take_bodypart_damage(4)
+			else
+				M.take_bodypart_damage(8)
+				if(prob(30))
+					M.Weaken(2)
+
+/obj/item/weapon/storage/visuals/tray/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/kitchen/rollingpin) && !contents.len)
+		user.visible_message("<span class='warning'>[user] bashes [src] with [I]!</span>")
+		playsound(user, 'sound/effects/shieldbash.ogg', VOL_EFFECTS_MASTER)
+		user.SetNextMove(CLICK_CD_INTERACT * 4)
+	else
+		..()
 
 /obj/item/weapon/storage/visuals/tray/dropped(mob/user, slot)
 	if(user == loc || (!user.incapacitated() && !user.resting)) //to handle hand switching
@@ -367,14 +376,15 @@
 		for(var/obj/item/I in contents)
 			// if incapacitated, presume that the person just shittily dropped the tray on the ground and made a mess everywhere!
 			remove_from_storage(I, loc)
-			step(I, pick(NORTH, WEST, EAST, SOTUTH))
-			I.after_throw()
+			var/turf/newloc = locate(x + rand(-2, 2), y + rand(-2, 2), z)
+			I.throw_at(newloc, rand(1, 2), 1, user)
 
 /obj/item/weapon/storage/visuals/tray/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
 	for(var/obj/item/I in contents)
 		remove_from_storage(I, loc)
-		I.throw_at(target, rand(1, 2), speed, thrower, spin, diagonals_first, callback)
+		var/turf/newloc = locate(target.x + rand(-2, 2), target.y + rand(-2, 2), z)
+		I.throw_at(newloc, rand(1, 2), speed, thrower, spin, diagonals_first, callback)
 
 ///////////////////NEW//////////////////////
 
