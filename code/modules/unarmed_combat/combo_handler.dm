@@ -116,14 +116,17 @@
 
 	animate(A, transform=M, time=2)
 	sleep(2)
-	if(QDELETED(A) || QDELETED(src))
+	if(QDELETED(A))
+		return
+	if(QDELETED(src))
+		A.transform = A.default_transform
+		A.attack_animation = FALSE
 		return
 	animate(A, transform=A.default_transform, time=1)
 	sleep(1)
-	if(QDELETED(A) || QDELETED(src))
+	if(QDELETED(A))
 		return
 	A.transform = A.default_transform
-
 	A.attack_animation = FALSE
 
 /datum/combo_handler/proc/update_combo_elements()
