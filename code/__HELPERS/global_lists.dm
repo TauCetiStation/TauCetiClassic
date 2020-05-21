@@ -113,18 +113,17 @@
 		var/cash_am = "[initial(cash.worth)]"
 		money_type_by_cash_am[cash_am] = cash
 
-	var/i = 1
+	var/i = 0
 	for(var/cash_am in money_type_by_cash_am)
 		if(i == money_type_by_cash_am.len - 1)
 			break
+		i++
 		var/money_type = money_type_by_cash_am[cash_am]
 		var/next_money_type = money_type_by_cash_am[money_type_by_cash_am[i + 1]]
 		cash_increase_list[money_type] = next_money_type
-		i++
 
-	cash_increase_list[/obj/item/weapon/spacecash] = /obj/item/weapon/spacecash/c1
-	cash_increase_list[/obj/item/weapon/spacecash/c500] = /obj/item/weapon/spacecash/c1000
 	cash_increase_list[/obj/item/weapon/spacecash/c1000] = /obj/item/stack/sheet/mineral/gold
+	cash_increase_list[/obj/item/weapon/spacecash] = /obj/item/weapon/spacecash/c1
 
 	global.combat_combos = list()
 	for(var/path in subtypesof(/datum/combat_combo))
