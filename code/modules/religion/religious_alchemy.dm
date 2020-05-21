@@ -99,6 +99,7 @@
 /datum/faith_reaction/curse/water2blood
 	id = "water2blood"
 
+	result_id = "blood"
 	needed_aspects = list(ASPECT_DEATH = 1)
 	// You get 1 point per unit of blood when sacrificing.
 	favor_cost = 2
@@ -106,6 +107,7 @@
 /datum/faith_reaction/curse/water2ectoplasm
 	id = "water2ectoplasm"
 
+	result_id = "ectoplasm"
 	needed_aspects = list(ASPECT_MYSTIC = 1)
 	favor_cost = 2
 
