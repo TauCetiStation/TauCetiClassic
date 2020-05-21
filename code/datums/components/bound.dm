@@ -1,3 +1,20 @@
+#define BOUNDED_TIP "Is bounded."
+#define BOUNDS_TIP(B) "Is bounding [B.parent]."
+
+/datum/mechanic_tip/bounded
+	tip_name = BOUNDED_TIP
+
+/datum/mechanic_tip/bounded/New(datum/component/bounded/B)
+	description = "Appears to not be able to get too far away from [B.bound_to]."
+
+/datum/mechanic_tip/bound
+
+/datum/mechanic_tip/bound/New(datum/component/B)
+	tip_name = BOUNDS_TIP(B)
+	description = "Appears to not allow [B.parent] to get too far away from itself."
+
+
+
 // A component you put on things you want to be bounded to other things.
 // Warning! Can only be bounded to one thing at once.
 /datum/component/bounded
@@ -22,12 +39,23 @@
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), .proc/check_bounds)
 	RegisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE), .proc/on_try_move)
 
+	var/datum/mechanic_tip/bounded/bounded_tip = new(src)
+	var/datum/mechanic_tip/bound/bound_tip = new(src)
+
+	parent.AddComponent(/datum/component/mechanic_desc, list(bounded_tip))
+	bound_to.AddComponent(/datum/component/mechanic_desc, list(bound_tip))
+
 	// First bounds update.
 	check_bounds()
 
-/datum/component/bounded/_RemoveFromParent()
+/datum/component/bounded/Destroy()
 	UnregisterSignal(bound_to, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED))
+
+	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(BOUNDED_TIP))
+	SEND_SIGNAL(bound_to, COMSIG_TIPS_REMOVE, list(BOUNDS_TIP(src)))
+
 	bound_to = null
+	return ..()
 
 // This proc is called when we are for some reason out of bounds.
 // The default bounds resolution does not take in count density, or etc.
@@ -113,3 +141,6 @@
 /datum/component/bounded/proc/on_bound_destroyed(force, qdel_hint)
 	// Perhaps add an abilities to resolve this situation with a callback? ~Luduk
 	qdel(src)
+
+#undef BOUNDED_TIP
+#undef BOUNDS_TIP

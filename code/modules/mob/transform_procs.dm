@@ -81,7 +81,7 @@
 	if(suiciding)
 		O.suiciding = suiciding
 		suiciding = null
-	O.a_intent = I_HURT
+	O.a_intent = INTENT_HARM
 
 	//keep viruses?
 	if(tr_flags & TR_KEEPVIRUS)
@@ -217,7 +217,7 @@
 	if(suiciding)
 		O.suiciding = suiciding
 		suiciding = null
-	O.a_intent = I_HELP
+	O.a_intent = INTENT_HELP
 
 	//keep viruses?
 	if(tr_flags & TR_KEEPVIRUS)
@@ -357,7 +357,7 @@
 	return O
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/nanotrasen)
+/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/nanotrasen, ai_link = TRUE)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
@@ -370,7 +370,7 @@
 	for(var/t in bodyparts)
 		qdel(t)
 
-	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(loc, name, laws)
+	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(loc, name, laws, ai_link)
 
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)
@@ -435,7 +435,7 @@
 		if("Drone")
 			new_xeno = new /mob/living/carbon/xenomorph/humanoid/drone(loc)
 
-	new_xeno.a_intent = "hurt"
+	new_xeno.a_intent = INTENT_HARM
 	new_xeno.key = key
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
@@ -471,7 +471,7 @@
 			new_slime = new /mob/living/carbon/slime/adult(loc)
 		else
 			new_slime = new /mob/living/carbon/slime(loc)
-	new_slime.a_intent = "hurt"
+	new_slime.a_intent = INTENT_HARM
 	new_slime.key = key
 
 	to_chat(new_slime, "<B>You are now a slime. Skreee!</B>")
@@ -493,7 +493,7 @@
 		qdel(t)
 
 	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (loc)
-	new_corgi.a_intent = "hurt"
+	new_corgi.a_intent = INTENT_HARM
 	new_corgi.key = key
 
 	to_chat(new_corgi, "<B>You are now a Corgi. Yap Yap!</B>")
@@ -527,7 +527,7 @@
 	var/mob/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
-	new_mob.a_intent = "hurt"
+	new_mob.a_intent = INTENT_HARM
 
 
 	to_chat(new_mob, "You suddenly feel more... animalistic.")
@@ -547,7 +547,7 @@
 	var/mob/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
-	new_mob.a_intent = "hurt"
+	new_mob.a_intent = INTENT_HARM
 	to_chat(new_mob, "You feel more... animalistic")
 
 	qdel(src)

@@ -592,7 +592,7 @@
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 		if(!BP)
 			return
-		if(!(BP.is_robotic()) || user.a_intent != "help")
+		if(!(BP.is_robotic()) || user.a_intent != INTENT_HELP)
 			return ..()
 
 		if(H.species.flags[IS_SYNTHETIC])

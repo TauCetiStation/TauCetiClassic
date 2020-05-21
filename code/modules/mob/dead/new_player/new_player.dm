@@ -24,6 +24,10 @@
 	new_player_list -= src
 	return ..()
 
+/mob/dead/new_player/say(msg)
+	if(client)
+		client.ooc(msg)
+
 /mob/dead/new_player/verb/new_player_panel()
 	set src = usr
 	new_player_panel_proc()

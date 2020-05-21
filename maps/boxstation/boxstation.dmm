@@ -8881,7 +8881,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/pbag,
+/mob/living/pbag,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -9589,7 +9589,7 @@
 /turf/simulated/wall,
 /area/station/hallway/secondary/entry)
 "apU" = (
-/obj/structure/pbag,
+/mob/living/pbag,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -16765,7 +16765,7 @@
 /turf/simulated/floor,
 /area/station/civilian/gym)
 "aDt" = (
-/obj/structure/pbag,
+/mob/living/pbag,
 /turf/simulated/floor,
 /area/station/civilian/gym)
 "aDu" = (
@@ -18288,7 +18288,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/lawoffice)
 "aGf" = (
-/obj/structure/pbag,
+/mob/living/pbag,
 /obj/structure/sign/poster/official/work_for_a_future{
 	pixel_x = -32
 	},
@@ -46467,6 +46467,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
+/obj/item/weapon/storage/visuals/surgery,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitehall"
@@ -62985,6 +62986,7 @@
 	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
 	name = "Surgery Cleaner"
 	},
+/obj/item/weapon/storage/visuals/surgery,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"

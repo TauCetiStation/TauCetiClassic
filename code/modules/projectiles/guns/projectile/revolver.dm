@@ -2,6 +2,7 @@
 	desc = "A classic revolver. Uses 357 ammo."
 	name = "revolver"
 	icon_state = "revolver"
+	item_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
 
@@ -120,6 +121,7 @@
 	name = "mateba"
 	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."	//>10mm hole >.357
 	icon_state = "mateba"
+	item_state = "revolver"
 	origin_tech = "combat=2;materials=2"
 
 // A gun to play Russian Roulette!

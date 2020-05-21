@@ -17,6 +17,10 @@
 	response_disarm = "bops the"
 	response_harm   = "kicks the"
 	see_in_dark = 5
+
+	has_head = TRUE
+	has_leg = TRUE
+
 	var/facehugger
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
