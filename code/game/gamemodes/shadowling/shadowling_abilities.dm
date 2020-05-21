@@ -42,7 +42,7 @@
 	to_chat(usr, "<span class='shadowling'>You silently disable all nearby lights.</span>")
 	light_off_range(targets, usr)
 
-/proc/light_off_range(list/targets, centre)
+/proc/light_off_range(list/targets, atom/center)
 	var/list/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime, /obj/item/weapon/reagent_containers/food/snacks/glowstick)
 	for(var/turf/T in targets)
 		for(var/obj/item/F in T.contents)
@@ -54,7 +54,7 @@
 			L.on = 0
 			L.visible_message("<span class='danger'>[L] flickers and falls dark.</span>")
 			L.update(0)
-		for(var/obj/effect/glowshroom/G in orange(2, centre)) //Very small radius
+		for(var/obj/effect/glowshroom/G in orange(2, center)) //Very small radius
 			G.visible_message("<span class='warning'>\The [G] withers away!</span>")
 			qdel(G)
 		for(var/mob/living/carbon/human/H in T.contents)
@@ -64,7 +64,7 @@
 					return
 				F.set_light(0)
 			H.set_light(0) //This is required with the object-based lighting
-		for(var/obj/machinery/door/airlock/A in orange(4, centre))
+		for(var/obj/machinery/door/airlock/A in orange(4, center))
 			if(A.lights && A.hasPower())
 				A.lights = 0
 				A.update_icon()
