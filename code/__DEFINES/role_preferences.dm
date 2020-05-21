@@ -20,8 +20,8 @@
 #define ROLE_MUTINEER          "Mutineer"
 #define ROLE_SHADOWLING        "Shadowling"
 #define ROLE_ABDUCTOR          "Abductor"
-#define ROLE_SURVIVOR          "Survivor"
-#define ROLE_TSTAFF            "Talking staff"
+#define ROLE_GHOSTLY           "Ghostly Role"
+#define ROLE_CYBORG            "Cyborg role"
 
 #define ROLE_ERT               "Emergency Response Team"
 #define ROLE_DRONE             "Maintenance Drone"
@@ -40,11 +40,17 @@ var/global/list/special_roles = list(
 	ROLE_BLOB ,
 	ROLE_NINJA,
 	ROLE_RAIDER,
-	ROLE_PLANT,
 	ROLE_MEME,
 	ROLE_MUTINEER,
 	ROLE_SHADOWLING,
 	ROLE_ABDUCTOR,
-	ROLE_SURVIVOR,
-	ROLE_TSTAFF,
+	ROLE_GHOSTLY,
 )
+
+//Prefs for ignore a question which give ghosty roles
+#define IGNORE_PLANT "diona"
+#define IGNORE_TSTAFF "chstaff"
+#define IGNORE_SURVIVOR "survivor"
+#define IGNORE_POSBRAIN "posibrain"
+#define IGNORE_DRONE "drone"
+#define IGNORE_BORER "borer"

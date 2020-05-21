@@ -178,11 +178,11 @@
 	for(var/mob/dead/observer/O in player_list)
 		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 			continue
-		if(jobban_isbanned(O, ROLE_TSTAFF) && role_available_in_minutes(O, ROLE_TSTAFF))
+		if(jobban_isbanned(O, ROLE_GHOSTLY) && role_available_in_minutes(O, ROLE_GHOSTLY))
 			continue
 		if(O.client)
 			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find("chstaff") && (ROLE_TSTAFF in C.prefs.be_role))
+			if(!C.prefs.ignore_question.Find(IGNORE_TSTAFF) && (ROLE_GHOSTLY in C.prefs.be_role))
 				INVOKE_ASYNC(src, .proc/question, C, user)
 
 /obj/item/weapon/nullrod/staff/proc/question(client/C, mob/living/user)
@@ -197,7 +197,7 @@
 			return
 		transfer_personality(C.mob, user)
 	else if (response == "Never for this round")
-		C.prefs.ignore_question += "chstaff"
+		C.prefs.ignore_question += IGNORE_TSTAFF
 
 /obj/item/weapon/nullrod/staff/proc/transfer_personality(mob/candidate, mob/living/summoner)
 	searching = FALSE

@@ -31,8 +31,8 @@ var/list/roles_ingame_minute_unlock = list(
 	ROLE_MUTINEER = 1440,
 	ROLE_SHADOWLING = 4320,
 	ROLE_ABDUCTOR = 2880,
-	ROLE_SURVIVOR = 360,
-	ROLE_TSTAFF = 360,
+	ROLE_CYBORG = 1800,
+	ROLE_GHOSTLY = 360,
 )
 
 var/global/list/datum_alarm_list = list()
