@@ -203,9 +203,7 @@
 		var/mob/living/carbon/human/H = M
 		H.ventcrawler = 0
 
-	var/matrix/Mx = matrix(M.default_transform)
-	Mx.Scale(1) ////Reset size of our halfling
-	Mx.Translate(0,0)
+	var/matrix/Mx = matrix()
 	M.transform = Mx
 	M.default_transform = Mx
 

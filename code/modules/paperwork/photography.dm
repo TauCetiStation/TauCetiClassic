@@ -415,7 +415,11 @@
 		photo_size = 1
 		to_chat(usr, "<span class='info'>You set the camera zoom to small.</span>")
 
-/obj/item/device/camera/AltClick()
+/obj/item/device/camera/AltClick(mob/user)
+	if(!Adjacent(user))
+		return
+	if(user.incapacitated())
+		return
 	set_zoom()
 
 /obj/item/device/camera/big_photos
