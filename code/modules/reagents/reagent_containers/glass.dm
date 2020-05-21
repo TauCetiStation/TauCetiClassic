@@ -125,7 +125,7 @@
 		var/obj/machinery/color_mixer/CM = target
 		if(CM.filling_tank_id)
 			if(CM.beakers[CM.filling_tank_id])
-				if(user.a_intent == I_GRAB)
+				if(user.a_intent == INTENT_GRAB)
 					var/obj/item/weapon/reagent_containers/glass/GB = CM.beakers[CM.filling_tank_id]
 					GB.afterattack(src, user, proximity)
 				else
@@ -134,7 +134,7 @@
 				CM.update_icon()
 				return
 			else
-				to_chat(user, "<span class='warning'>You try to fill [user.a_intent == I_GRAB ? "[src] up from a tank" : "a tank up"], but find it is absent.</span>")
+				to_chat(user, "<span class='warning'>You try to fill [user.a_intent == INTENT_GRAB ? "[src] up from a tank" : "a tank up"], but find it is absent.</span>")
 				return
 
 

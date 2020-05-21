@@ -171,7 +171,7 @@
 	else if(user.dna && user.dna.mutantrace == "adamantine")
 		user.do_attack_animation(src)
 		take_damage(rand(15,25), "generic")
-	else if (user.a_intent == "hurt")
+	else if (user.a_intent == INTENT_HARM)
 		playsound(src, 'sound/effects/glassknock.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("<span class='danger'>[usr.name] bangs against the [src.name]!</span>", \
 							"<span class='danger'>You bang against the [src.name]!</span>", \
@@ -205,14 +205,11 @@
 		return
 	attack_generic(user, 15)
 
-/obj/structure/window/attack_animal(mob/user)
-	if(!isanimal(user))
-		return
+/obj/structure/window/attack_animal(mob/living/simple_animal/attacker)
 	..()
-	var/mob/living/simple_animal/M = user
-	if(M.melee_damage_upper <= 0)
+	if(attacker.melee_damage <= 0)
 		return
-	attack_generic(M, M.melee_damage_upper)
+	attack_generic(attacker, attacker.melee_damage)
 
 
 /obj/structure/window/attack_slime(mob/user)

@@ -284,7 +284,7 @@ update_flag
 	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user)
-	if(user.a_intent != I_HURT && iswelder(W))
+	if(user.a_intent != INTENT_HARM && iswelder(W))
 		if(user.is_busy(src))
 			return
 		var/obj/item/weapon/weldingtool/WT = W

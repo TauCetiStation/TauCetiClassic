@@ -1,6 +1,4 @@
-#define DEFIB_TIME_LIMIT (8 MINUTES) //past this many seconds, defib is useless. Currently 8 Minutes
-#define DEFIB_TIME_LOSS  (2 MINUTES) //past this many seconds, brain damage occurs. Currently 2 minutes
-#define MAX_BRAIN_DAMAGE 80
+
 
 //backpack item
 /obj/item/weapon/defibrillator
@@ -312,7 +310,7 @@
 	busy = TRUE
 	update_icon()
 
-	if(user.a_intent == I_HURT)
+	if(user.a_intent == INTENT_HARM)
 		do_electrocute(M, user, def_zone)
 	else
 		try_revive(M, user)
@@ -373,10 +371,31 @@
 	playsound(src, 'sound/items/surgery/defib_zap.ogg', VOL_EFFECTS_MASTER)
 	set_cooldown(cooldown_time)
 
-	if(H.stat == DEAD && (world.time - H.timeofdeath) >= DEFIB_TIME_LIMIT)
-		make_announcement("buzzes, \"Resuscitation failed - Severe neurological decay makes recovery of patient impossible. Further attempts futile.\"")
+	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+	if(!IO)
+		return
+	if(H.stat == DEAD && IO.status == HEART_FAILURE)
+		make_announcement("buzzes, \"Defibrillation failed - patient's heart is not beating.\"")
 		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
+
+	if(H.stat == DEAD && (world.time - H.timeofdeath) >= DEFIB_TIME_LIMIT)
+		make_announcement("buzzes, \"Defibrillation failed - Severe neurological decay makes recovery of patient impossible. Further attempts futile.\"")
+		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		return
+
+	if(IO.heart_status == HEART_NORMAL && prob(20))
+		IO.heart_stop()
+		return
+
+	if(IO.heart_status == HEART_FIBR)
+		if(H.stat == DEAD)
+			IO.heart_normalize()
+			H.reanimate_body(H)
+			H.stat = UNCONSCIOUS
+			H.return_to_body_dialog(src)
+		else
+			IO.heart_normalize()
 
 	if(H.health <= config.health_threshold_crit || prob(10))
 		var/suff = min(H.getOxyLoss(), 20)
@@ -386,14 +405,9 @@
 	H.updatehealth()
 
 	if(H.health < config.health_threshold_dead)
-		make_announcement("buzzes, \"Resuscitation failed - Patinent's body is too wounded to sustain life.\"")
+		make_announcement("buzzes, \"Defibrillation failed - Patinent's body is too wounded to sustain heart beating.\"")
 		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
-
-	if(H.stat == DEAD)
-		H.stat = UNCONSCIOUS
-		return_to_body_dialog(H)
-		reanimate_body(H)
 
 	if(wet)
 		var/turf/T = get_turf(src)
@@ -404,28 +418,8 @@
 		else
 			user.Weaken(6)
 
-	make_announcement("pings, \"Resuscitation successful.\"")
+	make_announcement("pings, \"Defibrillation successful.\"")
 	playsound(src, 'sound/items/surgery/defib_success.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-
-/obj/item/weapon/twohanded/shockpaddles/proc/return_to_body_dialog(mob/living/carbon/human/returnable)
-	if (returnable.key) //in body?
-		returnable.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
-	else if(returnable.mind)
-		for(var/mob/dead/observer/ghost in player_list)
-			if(ghost.mind == returnable.mind && ghost.can_reenter_corpse)
-				ghost.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
-				var/answer = alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate","Yes","No")
-				if(answer == "Yes")
-					ghost.reenter_corpse()
-				break
-
-/obj/item/weapon/twohanded/shockpaddles/proc/reanimate_body(mob/living/carbon/human/returnable)
-	var/deadtime = world.time - returnable.timeofdeath
-	returnable.tod = null
-	returnable.timeofdeath = 0
-	dead_mob_list -= returnable
-	returnable.update_health_hud()
-	apply_brain_damage(returnable, deadtime)
 
 /obj/item/weapon/twohanded/shockpaddles/proc/do_electrocute(mob/living/carbon/human/H, mob/user, var/target_zone)
 	var/obj/item/organ/external/affecting = H.get_bodypart(target_zone)
@@ -470,20 +464,6 @@
 	user.visible_message("[user] shocks [H] with [src].", "<span class='warning'>You shock [H] with [src].</span>", "You hear electricity zaps flesh.")
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Electrocuted [H.name] ([H.ckey]) with [src.name]</font>"
 	msg_admin_attack("[user.name] ([user.ckey]) used [src.name] to electrocute [H.name] ([H.ckey])", user)
-
-/obj/item/weapon/twohanded/shockpaddles/proc/apply_brain_damage(mob/living/carbon/human/H, var/deadtime)
-	if(deadtime < DEFIB_TIME_LOSS)
-		return
-
-	if(!H.should_have_organ(O_BRAIN))
-		return //no brain
-
-	var/obj/item/organ/internal/brain/brain = H.organs_by_name[O_BRAIN]
-	if(!brain)
-		return //no brain
-
-	var/brain_damage = CLAMP((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, H.getBrainLoss(), MAX_BRAIN_DAMAGE)
-	H.setBrainLoss(brain_damage)
 
 /obj/item/weapon/twohanded/shockpaddles/proc/make_announcement(message)
 	audible_message("<b>\The [src]</b> [message]", "\The [src] vibrates slightly.")
@@ -616,7 +596,3 @@
 		return
 	if(paddles.cooldown)
 		icon_state = "defibpaddleso_cooldown"
-
-#undef DEFIB_TIME_LIMIT
-#undef DEFIB_TIME_LOSS
-#undef MAX_BRAIN_DAMAGE

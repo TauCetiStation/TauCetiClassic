@@ -84,13 +84,13 @@
 	healthcheck()
 
 
-/obj/machinery/bot/attack_animal(mob/living/simple_animal/M)
+/obj/machinery/bot/attack_animal(mob/living/simple_animal/attacker)
 	..()
-	if(M.melee_damage_upper == 0)
+	if(attacker.melee_damage == 0)
 		return
-	src.health -= M.melee_damage_upper
-	src.visible_message("<span class='warning'><B>[M] has [M.attacktext] [src]!</B></span>")
-	M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
+	src.health -= attacker.melee_damage
+	src.visible_message("<span class='warning'><B>[attacker] has [attacker.attacktext] [src]!</B></span>")
+	attacker.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	if(prob(10))
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
 	healthcheck()

@@ -243,7 +243,7 @@
 				IO.damage = max(IO.damage - 0.7, 0)
 		switch(data["ticks"])
 			if(50 to 100)
-				H.disabilities -= COUGHING
+				H.disabilities &= ~COUGHING
 			if(100 to INFINITY)
 				H.hallucination = max(H.hallucination, 7)
 	data["ticks"]++

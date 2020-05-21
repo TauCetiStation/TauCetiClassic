@@ -59,7 +59,7 @@
 				M.Weaken(3)
 				shake_camera(M, 1, 1)
 
-	if(user.a_intent == I_HURT || M == user || (TS && !TS.active) || isrobot(M))
+	if(user.a_intent == INTENT_HARM || M == user || (TS && !TS.active) || isrobot(M))
 		..()
 
 /obj/item/weapon/shield/energy
