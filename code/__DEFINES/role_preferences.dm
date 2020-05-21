@@ -21,7 +21,6 @@
 #define ROLE_SHADOWLING        "Shadowling"
 #define ROLE_ABDUCTOR          "Abductor"
 #define ROLE_GHOSTLY           "Ghostly Role"
-#define ROLE_CYBORG            "Cyborg role"
 
 #define ROLE_ERT               "Emergency Response Team"
 #define ROLE_DRONE             "Maintenance Drone"

@@ -31,7 +31,7 @@
 			continue
 		if(jobban_isbanned(O, ROLE_GHOSTLY))
 			continue
-		if(role_available_in_minutes(O, ROLE_CYBORG))
+		if(role_available_in_minutes(O, ROLE_PAI))
 			continue
 		if(O.client)
 			var/client/C = O.client
