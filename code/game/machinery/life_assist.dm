@@ -94,6 +94,8 @@
 	icon_state = "cpb_idle"
 	desc = "This is an Cardiopulmonary Bypass machine that temporarily takes over the function of the heart"
 
+	density = TRUE
+
 	icon_state_attached = "cpb_pumping"
 	icon_state_detached = "cpb_idle"
 
