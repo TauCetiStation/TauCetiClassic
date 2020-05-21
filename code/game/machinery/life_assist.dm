@@ -18,10 +18,6 @@
 		detach()
 	return ..()
 
-/obj/machinery/life_assist/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
-
 /obj/machinery/life_assist/update_icon()
 	if(attached)
 		icon_state = icon_state_attached
