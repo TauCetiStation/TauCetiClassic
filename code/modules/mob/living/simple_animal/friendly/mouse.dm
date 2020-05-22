@@ -32,6 +32,10 @@
 	universal_understand = 1
 	holder_type = /obj/item/weapon/holder/mouse
 	ventcrawler = 2
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
+
 
 /mob/living/simple_animal/mouse/proc/become_hulk()
 	var/mob/living/simple_animal/hulk/mouse/Monster = new /mob/living/simple_animal/hulk/mouse(get_turf(src))
@@ -42,9 +46,6 @@
 	Monster.attack_log = attack_log
 	Monster.attack_log += "\[[time_stamp()]\]<font color='blue'> ======MONSTER LIFE======</font>"
 	Monster.say("SQUEEK!!!")
-	has_head = TRUE
-	has_arm = TRUE
-	has_leg = TRUE
 
 /mob/living/simple_animal/mouse/Life()
 	..()
