@@ -34,7 +34,6 @@ var/global/list/special_roles = list(
 	ROLE_MALF,
 	ROLE_REV,
 	ROLE_ALIEN,
-	ROLE_PAI,
 	ROLE_CULTIST,
 	ROLE_BLOB ,
 	ROLE_NINJA,
