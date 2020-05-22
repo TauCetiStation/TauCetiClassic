@@ -20,14 +20,17 @@
 	if(invocation_spelltype)
 		on_invocation_spell = new invocation_spelltype
 
-/datum/religion_rites/legacy/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+
+/datum/religion_rites/legacy/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!AOG)
 		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
 		return FALSE
 	if(!AOG.religion)
 		to_chat(user, "<span class='warning'>This rite requires a religion to be in place.</span>")
 		return FALSE
+	return TRUE
 
+/datum/religion_rites/legacy/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(invoke_effect_spell)
 		AOG.religion.affect_divine_power(invoke_effect_spell)
 		invoke_effect_spell.divine_power *= divine_power_mult

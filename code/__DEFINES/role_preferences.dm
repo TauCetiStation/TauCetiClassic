@@ -52,3 +52,4 @@ var/global/list/special_roles = list(
 #define IGNORE_POSBRAIN    "posibrain"
 #define IGNORE_DRONE       "drone"
 #define IGNORE_BORER       "borer"
+#define IGNORE_FAMILIAR    "chfamiliar"
