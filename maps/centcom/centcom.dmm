@@ -7777,8 +7777,8 @@
 /obj/item/weapon/storage/backpack/ert/commander,
 /obj/item/weapon/storage/belt/security,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/device/remote_device/ERT,
+/obj/item/weapon/gun/projectile/glock/spec,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
