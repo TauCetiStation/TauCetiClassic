@@ -310,19 +310,12 @@
 	desc = "Good shield for the crusade."
 
 	var/time_of_life = 0
-
-/obj/item/weapon/shield/riot/roman/religion/equipped(mob/user, slot)
-	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		START_PROCESSING(SSobj, src)
-	..()
+	var/timer
 
 /obj/item/weapon/shield/riot/roman/religion/Destroy()
-	STOP_PROCESSING(SSobj, src)
+	if(timer)
+		deltimer(timer)
 	return ..()
-
-/obj/item/weapon/shield/riot/roman/religion/process()
-	if(time_of_life != 0 && world.time > time_of_life)
-		qdel(src)
 
 /obj/item/weapon/shield/riot/roman/religion/dropped(mob/user)
 	to_chat(user, "<span class='warning'>[src] was scattered.</span>")
@@ -335,12 +328,19 @@
 	throwforce = 5
 
 	var/next_shield = 0
+	var/obj/item/weapon/shield/riot/roman/religion/shield
+
 	var/holy_outline
 	var/have_outline = FALSE
 	var/image/down_overlay
 
 /obj/item/weapon/claymore/religion/atom_init()
 	. = ..()
+	down_overlay = image('icons/effects/effects.dmi', icon_state = "at_shield2", layer = OBJ_LAYER - 0.01)
+	down_overlay.alpha = 100
+	add_overlay(down_overlay)
+	addtimer(CALLBACK(src, .proc/revert_effect), 5 SECONDS)
+
 	holy_outline = filter(type = "outline", size = 1, color = "#fffb0064")
 	START_PROCESSING(SSobj, src)
 
@@ -356,11 +356,7 @@
 			filters += holy_outline
 
 /obj/item/weapon/claymore/religion/dropped()
-	var/mob/living/carbon/human/H = usr
-	if(istype(H.r_hand, /obj/item/weapon/shield/riot/roman/religion))
-		QDEL_NULL(H.r_hand)
-	else if(istype(H.l_hand, /obj/item/weapon/shield/riot/roman/religion))
-		QDEL_NULL(H.l_hand)
+	QDEL_NULL(shield)
 	have_outline = FALSE
 	filters -= holy_outline
 
@@ -382,9 +378,12 @@
 	if(H.put_in_inactive_hand(R))
 		next_shield = world.time + 3 MINUTES
 		filters -= holy_outline
+		shield = R
 		have_outline = FALSE
+
 		R.alpha = 200
 		R.filters += holy_outline
 		R.time_of_life = next_shield
+		R.timer = addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, R), 3 MINUTES)
 	else
 		qdel(R)
