@@ -180,7 +180,7 @@
 		if(prob(2))
 			owner.emote("cough", message = "coughs up blood!")
 			owner.drip(10)
-		if(prob(4))
+		if(prob(4)  && !HAS_TRAIT(owner, TRAIT_AV))
 			owner.emote("gasp", message = "gasps for air!")
 			owner.losebreath += 15
 

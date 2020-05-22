@@ -190,7 +190,7 @@
 		H.ventcrawler = 1
 		to_chat(H, "<span class='notice'><b>Ventcrawling allowed</b></span>")
 
-	var/matrix/Mx = matrix(M.default_transform)
+	var/matrix/Mx = matrix()
 	Mx.Scale(0.8) //Makes our hulk to be bigger than any normal human.
 	Mx.Translate(0,-2)
 	M.transform = Mx
