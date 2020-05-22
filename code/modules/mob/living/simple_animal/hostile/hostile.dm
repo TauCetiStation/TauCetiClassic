@@ -32,6 +32,20 @@
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
 	var/attack_faction = null //Put a faction string here to have a mob only ever attack a specific faction
 
+/mob/living/simple_animal/hostile/examine(mob/user)
+	..()
+	var/msg
+	if (src.health < maxHealth)
+		if(health <= maxHealth * 0.9)
+			msg = "<span class='warning'>looks slightly dented.</span>\n"
+		if(health <= maxHealth * 0.6)
+			msg = "<span class='warning'>badly damaged.</span>\n"
+		if(health <= maxHealth * 0.3)
+			msg = "<span class='warning'>almost dead.</span>\n"
+	else
+		msg = "<span class='notice'>looks no wounds.</span>\n"
+
+	to_chat(user, "<span class='danger'>[name]</span> [msg]")
 
 /mob/living/simple_animal/hostile/Life()
 	. = ..()

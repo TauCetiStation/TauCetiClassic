@@ -48,6 +48,25 @@
 			return
 	..()
 
+////////////////////////////Modifiers///////////////////////////
+
+/mob/living/simple_animal/hostile/atom_init()
+	. = ..()
+	if(prob(50))
+		gen_modifiers()
+
+/mob/living/simple_animal/hostile/proc/gen_modifiers()
+	var/list/all_modifiers = subtypesof(/datum/mob_modifier)
+	var/modifier = pick(all_modifiers)
+	AddModifier(modifier)
+
+/mob/living/simple_animal/hostile/proc/AddModifier(modifier)
+	var/datum/mob_modifier/MM = new modifier
+	MM.apply(src)
+
+
+////////////////////////////////////////////////////////////////
+
 
 ////////////////Basilisk////////////////
 
