@@ -42,6 +42,9 @@
 	return ..()
 
 /obj/item/weapon/mop/proc/clean(turf/simulated/T, amount)
+	if(!istype(T))
+		return
+
 	if(reagents.has_reagent("water", amount))
 		T.clean_blood()
 		T.dirt = max(0, T.dirt - amount * 20) // #define MAGICAL_CLEANING_CONSTANT 20

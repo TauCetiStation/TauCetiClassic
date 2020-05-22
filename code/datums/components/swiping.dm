@@ -539,18 +539,19 @@
 				var/next_dir = sweep_image.dirs_to_move[sweep_image.next_dir + 1]
 				next_turf = get_step(W, next_dir)
 
-			var/newRetVal = do_sweep(sweep_image, user, current_turf, next_turf)
 			// Prioritize SWEEP_INTERUPT > SWEEP_END > SWEEP_CONTINUE
-			if(retVal == SWEEP_CONTINUE)
-				retVal = newRetVal
-			else if(newRetVal == SWEEP_INTERUPT)
-				retVal = SWEEP_INTERUPT
+			var/newRetVal = do_sweep(sweep_image, user, current_turf, next_turf)
+			sweep_finish(current_turf, user)
+			switch(newRetVal)
+				if(SWEEP_INTERUPT)
+					retVal = SWEEP_INTERUPT
+				if(SWEEP_END)
+					if(retVal == SWEEP_CONTINUE)
+						retVal = SWEEP_END
 
-	for(var/obj/effect/effect/weapon_sweep/sweep_image in sweep_objects)
-		if(retVal == SWEEP_INTERUPT)
+	if(retVal == SWEEP_INTERUPT)
+		for(var/obj/effect/effect/weapon_sweep/sweep_image in sweep_objects)
 			sweep_interupt(get_turf(sweep_image), user)
-		else if(retVal == SWEEP_END)
-			sweep_finish(get_turf(sweep_image), user)
 
 	for(var/obj/effect/effect/weapon_sweep/sweep_image in sweep_objects)
 		QDEL_IN(sweep_image, sweep_image.sweep_delay)
