@@ -75,6 +75,8 @@
 	invoke_msg = "Lord have mercy. Twelve times."
 	favor_cost = 0
 
+	var/adding_favor = 0
+
 	needed_aspects = list(
 		ASPECT_RESCUE = 1,
 	)
@@ -88,7 +90,8 @@
 	return TRUE
 
 /datum/religion_rites/pray/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
-	global.chaplain_religion.favor += 20
+	global.chaplain_religion.favor += 20 + adding_favor
+	adding_favor += 0.5
 	return TRUE
 
 /*
@@ -152,7 +155,8 @@
 	return TRUE
 
 /datum/religion_rites/animation/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!required_checks(user, AOG))
+	. = ..()
+	if(!.)
 		return FALSE
 
 	var/list/anim_items = list()
@@ -302,7 +306,8 @@
 	return TRUE
 
 /datum/religion_rites/revive_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!required_checks(user, AOG))
+	. = ..()
+	if(!.)
 		return FALSE
 
 	var/mob/living/simple_animal/animal = AOG.buckled_mob

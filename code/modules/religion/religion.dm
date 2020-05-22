@@ -117,7 +117,7 @@
 	var/list/god_spells = list()
 	// Lists of rites with information. Converts itself into a list of rites with "name - desc (favor_cost)"
 	var/list/rites_info = list()
-	// Lists of rite name by type. "name = type"
+	// Lists of rite name by type. "name = rite"
 	var/list/rites_by_name = list()
 
 	// Contains an altar, wherever it is
@@ -282,32 +282,16 @@
 		for(var/i in rites_by_name)
 			var/datum/religion_rites/RI = rites_by_name[i]
 			var/name_entry = ""
-			var/tip_text
 
-			if(ispath(RI, /datum/religion_rites/consent))
-				tip_text += "This ritual is performed only with the consent of the victim."
-
-			else if(ispath(RI, /datum/religion_rites/spawn_item))
-				var/datum/religion_rites/spawn_item/spawning = RI
-				if(initial(spawning.sacrifice_type))
-					var/obj/item/item = initial(spawning.sacrifice_type)
-					tip_text += "This ritual requires a <i>[initial(item.name)]</i>."
-
-				if(initial(spawning.spawn_type))
-					if(tip_text)
-						tip_text += " "
-					var/obj/item/item = initial(spawning.spawn_type)
-					tip_text += "This ritual creates a <i>[initial(item.name)]</i>."
-
-			if(tip_text)
-				name_entry += "[EMBED_TIP(initial(RI.name), tip_text)]"
+			if(RI.tip_text)
+				name_entry += "[EMBED_TIP(RI.name, RI.tip_text)]"
 			else
-				name_entry += "[initial(RI.name)]"
+				name_entry += "[RI.name]"
 
-			if(initial(RI.desc))
-				name_entry += " - [initial(RI.desc)]"
-			if(initial(RI.favor_cost))
-				name_entry += " ([initial(RI.favor_cost)] favor)"
+			if(RI.desc)
+				name_entry += " - [RI.desc]"
+			if(RI.favor_cost)
+				name_entry += " ([RI.favor_cost] favor)"
 
 			rites_info += "[name_entry]"
 
@@ -327,7 +311,7 @@
 		var/datum/religion_rites/RR = new rite_type
 
 		if(is_sublist_assoc(RR.needed_aspects, aspects, aspect_pred))
-			rites_by_name[RR.name] = rite_type
+			rites_by_name[RR.name] = new rite_type
 
 		QDEL_NULL(RR)
 

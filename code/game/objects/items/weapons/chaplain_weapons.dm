@@ -305,15 +305,86 @@
 	next_ping = world.time + 5 SECONDS
 	audible_message("<span class='notice'>\The [src] stone blinked.</span>", deaf_message = "\The [src] stone blinked.")
 
+/obj/item/weapon/shield/riot/roman/religion
+	name = "sacred shield"
+	desc = "Good shield for the crusade."
+
+	var/time_of_life = 0
+
+/obj/item/weapon/shield/riot/roman/religion/equipped(mob/user, slot)
+	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+		START_PROCESSING(SSobj, src)
+	..()
+
+/obj/item/weapon/shield/riot/roman/religion/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/weapon/shield/riot/roman/religion/process()
+	if(time_of_life != 0 && world.time > time_of_life)
+		qdel(src)
+
+/obj/item/weapon/shield/riot/roman/religion/dropped(mob/user)
+	to_chat(user, "<span class='warning'>[src] was scattered.</span>")
+	qdel(src)
+
 /obj/item/weapon/claymore/religion
 	name = "claymore"
 	desc = "Good weapon for the crusade."
 	force = 10
 	throwforce = 5
 
+	var/next_shield = 0
+	var/holy_outline
+	var/have_outline = FALSE
 	var/image/down_overlay
+
+/obj/item/weapon/claymore/religion/atom_init()
+	. = ..()
+	holy_outline = filter(type = "outline", size = 1, color = "#fffb0064")
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/claymore/religion/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/weapon/claymore/religion/process()
+	if(!have_outline && world.time > next_shield && ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(H.mind && H.mind.holy_role)
+			have_outline = TRUE
+			filters += holy_outline
+
+/obj/item/weapon/claymore/religion/dropped()
+	var/mob/living/carbon/human/H = usr
+	if(istype(H.r_hand, /obj/item/weapon/shield/riot/roman/religion))
+		QDEL_NULL(H.r_hand)
+	else if(istype(H.l_hand, /obj/item/weapon/shield/riot/roman/religion))
+		QDEL_NULL(H.l_hand)
+	have_outline = FALSE
+	filters -= holy_outline
+
+/obj/item/weapon/claymore/religion/pickup(mob/user)
+	if(!have_outline && world.time > next_shield && user.mind.holy_role)
+		have_outline = TRUE
+		filters += holy_outline
 
 /obj/item/weapon/claymore/religion/proc/revert_effect()
 	if(down_overlay)
 		cut_overlays(down_overlay)
 		qdel(down_overlay)
+
+/obj/item/weapon/claymore/religion/attack_self(mob/living/carbon/human/H)
+	if(!H.mind.holy_role || next_shield > world.time)
+		return
+
+	var/obj/item/weapon/shield/riot/roman/religion/R = new (H)
+	if(H.put_in_inactive_hand(R))
+		next_shield = world.time + 3 MINUTES
+		filters -= holy_outline
+		have_outline = FALSE
+		R.alpha = 200
+		R.filters += holy_outline
+		R.time_of_life = next_shield
+	else
+		qdel(R)
