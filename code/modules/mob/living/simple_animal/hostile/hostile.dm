@@ -37,13 +37,13 @@
 	var/msg
 	if (src.health < maxHealth)
 		if(health <= maxHealth * 0.9)
-			msg = "<span class='warning'>looks slightly dented.</span>\n"
+			msg = "<span class='warning'>appears to be slightly wounded.</span>\n"
 		if(health <= maxHealth * 0.6)
-			msg = "<span class='warning'>badly damaged.</span>\n"
+			msg = "<span class='warning'>appears badly wounded.</span>\n"
 		if(health <= maxHealth * 0.3)
 			msg = "<span class='warning'>almost dead.</span>\n"
 	else
-		msg = "<span class='notice'>looks no wounds.</span>\n"
+		msg = "<span class='notice'>doesn't look wounded.</span>\n"
 
 	to_chat(user, "<span class='danger'>[name]</span> [msg]")
 
