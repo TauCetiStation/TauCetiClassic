@@ -61,6 +61,7 @@
 	icon = 'icons/mob/hulk_mouse.dmi'
 	icon_state = "mmouse"
 	icon_living = "mmouse"
+	universal_speak = 0
 	maxHealth = 100
 	health = 100
 	melee_damage = 13
