@@ -15,7 +15,7 @@
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
 /proc/sanitize_sql(t)
 	var/sqltext = dbcon.Quote("[t]") // http://www.byond.com/forum/post/2218538
-	return copytext(sqltext, 2, lentext(sqltext))
+	return copytext_char(sqltext, 2, length(sqltext))
 
 /*
  * Text sanitization
@@ -27,7 +27,7 @@
 		return
 
 	if(max_length)
-		input = copytext(input,1,max_length)
+		input = copytext_char(input,1,max_length)
 
 	if(extra)
 		input = replace_characters(input, list("\n"=" ","\t"=" "))
@@ -129,7 +129,7 @@
 	var/bad_chars = 1
 	do
 		bad_chars = bad_chars_regex.Find(url)
-		scrubbed_url += copytext(url, last_good, bad_chars)
+		scrubbed_url += copytext_char(url, last_good, bad_chars)
 		if(bad_chars)
 			bad_match = url_encode(bad_chars_regex.match)
 			scrubbed_url += bad_match
@@ -158,12 +158,12 @@
 	return replace_characters(text, list(JA_ENTITY=JA_PLACEHOLDER, JA_ENTITY_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
 
 //replace ja with entity for chat/popup
-/*/proc/entity_ja(text)
-	return replace_characters(text, list(JA_PLACEHOLDER=JA_ENTITY, JA_ENTITY_ASCII=JA_ENTITY))*/
+/proc/entity_ja(text)
+	return replace_characters(text, list(JA_PLACEHOLDER=JA_ENTITY, JA_ENTITY_ASCII=JA_ENTITY))
 
 //Reset ja to cp1251. Only needed for loading screen ban messages.
-/*/proc/initial_ja(text)
-	return replace_characters(text, list(JA_ENTITY=JA_CHARACTER, JA_ENTITY_ASCII=JA_CHARACTER, JA_PLACEHOLDER=JA_CHARACTER))*/
+/proc/initial_ja(text)
+	return replace_characters(text, list(JA_ENTITY=JA_CHARACTER, JA_ENTITY_ASCII=JA_CHARACTER, JA_PLACEHOLDER=JA_CHARACTER))
 
 
 /proc/input_default(text)
@@ -261,7 +261,10 @@ var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8
 
 //Returns a string with the first element of the string capitalized.
 /proc/capitalize(t)
-	return uppertext(copytext(t, 1, 2)) + copytext(t, 2)
+	. = t
+	if(t)
+		. = t[1]
+		return uppertext(.) + copytext(t, 1 + length(.))
 
 //This proc strips html properly, remove < > and all text between
 //for complete text sanitizing should be used sanitize()
@@ -275,14 +278,14 @@ var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8
 		closetag = findtext(input, ">")
 		if(closetag && opentag)
 			if(closetag < opentag)
-				input = copytext(input, (closetag + 1))
+				input = copytext_char(input, (closetag + 1))
 			else
-				input = copytext(input, 1, opentag) + copytext(input, (closetag + 1))
+				input = copytext_char(input, 1, opentag) + copytext_char(input, (closetag + 1))
 		else if(closetag || opentag)
 			if(opentag)
-				input = copytext(input, 1, opentag)
+				input = copytext_char(input, 1, opentag)
 			else
-				input = copytext(input, (closetag + 1))
+				input = copytext_char(input, (closetag + 1))
 		else
 			break
 
@@ -296,7 +299,7 @@ var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8
 	if(size == length)
 		return new_message
 	if(size > length)
-		return copytext(new_message, 1, length + 1)
+		return copytext_char(new_message, 1, length + 1)
 	if(delta == 1)
 		return new_message + " "
 	if(delta % 2)
@@ -310,27 +313,34 @@ var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8
 	var/size = length(message)
 	if(size <= length)
 		return message
-	return copytext(message, 1, length + 1)
+	return copytext_char(message, 1, length + 1)
 
 /proc/stringmerge(text,compare,replace = "*")
 //This proc fills in all spaces with the "replace" var (* by default) with whatever
 //is in the other string at the same spot (assuming it is not a replace char).
 //This is used for fingerprints
 	var/newtext = text
-	if(lentext(text) != lentext(compare))
-		return 0
-	for(var/i = 1, i < lentext(text), i++)
-		var/a = copytext(text,i,i+1)
-		var/b = copytext(compare,i,i+1)
+	var/text_it = 1 //iterators
+	var/comp_it = 1
+	var/newtext_it = 1
+	var/text_length = length(text)
+	var/comp_length = length(compare)
+	while(comp_it <= comp_length && text_it <= text_length)
+		var/a = text[text_it]
+		var/b = compare[comp_it]
 //if it isn't both the same letter, or if they are both the replacement character
 //(no way to know what it was supposed to be)
 		if(a != b)
 			if(a == replace) //if A is the replacement char
-				newtext = copytext(newtext,1,i) + b + copytext(newtext, i+1)
+				newtext = copytext(newtext, 1, newtext_it) + b + copytext(newtext, newtext_it + length(newtext[newtext_it]))
 			else if(b == replace) //if B is the replacement char
-				newtext = copytext(newtext,1,i) + a + copytext(newtext, i+1)
+				newtext = copytext(newtext, 1, newtext_it) + a + copytext(newtext, newtext_it + length(newtext[newtext_it]))
 			else //The lists disagree, Uh-oh!
 				return 0
+		text_it += length(a)
+		comp_it += length(b)
+		newtext_it += length(newtext[newtext_it])
+
 	return newtext
 
 /proc/stringpercent(text,character = "*")
@@ -339,16 +349,21 @@ var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8
 	if(!text || !character)
 		return 0
 	var/count = 0
-	for(var/i = 1, i <= lentext(text), i++)
-		var/a = copytext(text,i,i+1)
+	var/lentext = length(text)
+	var/a = ""
+	for(var/i = 1, i <= lentext, i += length(a))
+		a = text[i]
 		if(a == character)
 			count++
 	return count
 
 /proc/reverse_text(text = "")
 	var/new_text = ""
-	for(var/i = length(text); i > 0; i--)
-		new_text += copytext(text, i, i+1)
+	var/lentext = length(text)
+	var/letter = ""
+	for(var/i = 1, i <= lentext, i += length(letter))
+		letter = text[i]
+		new_text = letter + new_text
 	return new_text
 
 /proc/parsebbcode(t, colour = "black")

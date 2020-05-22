@@ -16,7 +16,7 @@
 			. += ","
 
 	if(cached_data) // nanoui thing
-		. = copytext(., 1, lentext(.)) + ",\"cached\":[cached_data]}"
+		. = copytext_char(., 1, length(.)) + ",\"cached\":[cached_data]}"
 	. += "}"
 
 /json_writer/proc/write(val)
@@ -42,20 +42,21 @@
 
 /json_writer/proc/write_string(txt)
 	var/static/list/json_escape = list("\\", "\"", "\n", "\t")
+
 	for(var/targ in json_escape)
 		var/start = 1
-		while(start <= lentext(txt))
+		while(start <= length(txt))
 			var/i = findtext(txt, targ, start)
 			if(!i)
 				break
 			if(targ == "\t")
-				txt = copytext(txt, 1, i) + "\\t" + copytext(txt, i+1)
+				txt = copytext_char(txt, 1, i) + "\\t" + copytext_char(txt, i + 1)
 				start = i + 1
 			else if(targ == "\n")
-				txt = copytext(txt, 1, i) + "\\n" + copytext(txt, i+1)
+				txt = copytext_char(txt, 1, i) + "\\n" + copytext_char(txt, i + 1)
 				start = i + 1
 			else // \ and "
-				txt = copytext(txt, 1, i) + "\\" + copytext(txt, i)
+				txt = copytext_char(txt, 1, i) + "\\" + copytext_char(txt, i)
 				start = i + 2 //skip new \ and next (quote or slash) characters
 
 	return {""[txt]""}
@@ -72,7 +73,7 @@
 		if(!isnum(key) || (!(isnum(key) && index != key) && L[key] != key))
 			value = L[key]
 
-		if(!isnull(value)) 
+		if(!isnull(value))
 			return TRUE
 
 	return FALSE

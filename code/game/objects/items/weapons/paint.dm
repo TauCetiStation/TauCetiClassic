@@ -25,13 +25,13 @@ var/global/list/cached_icons = list()
 		reagents.reaction(target, TOUCH)
 		reagents.remove_any(5)
 		log_game("[key_name(usr)] splashed [src.reagents.get_reagents()] on [target], location ([target.x],[target.y],[target.z])")
-	else 
+	else
 		..()
 
 /obj/item/weapon/reagent_containers/glass/paint/atom_init()
 	if(paint_type == "remover")
 		name = "paint remover bucket"
-	else if(paint_type && lentext(paint_type) > 0)
+	else if(paint_type && length(paint_type) > 0)
 		name = paint_type + " " + name
 	. = ..()
 	reagents.add_reagent("paint_[paint_type]", volume)

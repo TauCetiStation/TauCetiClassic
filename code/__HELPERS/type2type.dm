@@ -257,6 +257,7 @@
 				A -= values[i]
 				break
 
+// why does this exist if you can do initial(type.parent) ? ~Luduk
 /proc/type2parent(child)
 	var/string_type = "[child]"
 	var/last_slash = findlasttext(string_type, "/")

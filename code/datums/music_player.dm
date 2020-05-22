@@ -28,7 +28,6 @@
 #define MAX_LINES_COUNT  150
 #define MAX_REPEAT_COUNT 10
 #define MAX_TEMPO_RATE   600
-#define MAX_DIONATEMPO_RATE 200
 
 // Cache holder for sound() instances.
 var/global/datum/notes_storage/note_cache_storage = new
@@ -170,7 +169,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 			if(!in_range(instrument, usr))
 				return
 
-			song_tempo = CLAMP(new_tempo, 1, usr.get_species() == DIONA ?  MAX_DIONATEMPO_RATE : MAX_TEMPO_RATE )
+			song_tempo = CLAMP(new_tempo, 1, MAX_TEMPO_RATE)
 
 		else if(href_list["play"])
 			playing = TRUE
@@ -182,8 +181,8 @@ var/global/datum/notes_storage/note_cache_storage = new
 			if(!newline || song_lines.len > MAX_LINES_COUNT)
 				return
 
-			if(lentext(newline) > MAX_LINE_SIZE)
-				newline = copytext(newline, 1, MAX_LINE_SIZE)
+			if(length(newline) > MAX_LINE_SIZE)
+				newline = copytext_char(newline, 1, MAX_LINE_SIZE)
 
 			song_lines += newline
 
@@ -198,8 +197,8 @@ var/global/datum/notes_storage/note_cache_storage = new
 			if (!content || !in_range(instrument, usr))
 				return
 
-			if(lentext(content) > MAX_LINE_SIZE)
-				content = copytext(content, 1, MAX_LINE_SIZE)
+			if(length(content) > MAX_LINE_SIZE)
+				content = copytext_char(content, 1, MAX_LINE_SIZE)
 
 			song_lines[line_num] = content
 
@@ -246,15 +245,18 @@ var/global/datum/notes_storage/note_cache_storage = new
 						playing = FALSE
 						return
 
-					if(lentext(note) == 0)
+					if(note == "")
 						continue
 
 					var/cur_note = text2ascii(note) - 96
 					if(cur_note < 1 || cur_note > 7)
 						continue
 
-					for(var/i in 2 to lentext(note))
-						var/ni = copytext(note,i,i+1)
+					var/notelen = length(note)
+					var/ni = ""
+
+					for(var/i = length(note[1]) + 1, i <= notelen, i += length(ni))
+						ni = note[i]
 
 						if(!text2num(ni))
 							if(ni == "#" || ni == "b" || ni == "n")
@@ -264,7 +266,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 						else
 							cur_oct[cur_note] = ni
 
-					var/current_note = uppertext(copytext(note, 1, 2)) + cur_acc[cur_note] + cur_oct[cur_note]
+					var/current_note = uppertext(copytext_char(note, 1, 2)) + cur_acc[cur_note] + cur_oct[cur_note]
 
 					if(fexists("[sound_path]/[current_note].ogg"))
 						// ^ Since this is dynamic path, no point in running playsound without file (since it will play even "no file" and eat cpu for nothing)
@@ -296,16 +298,17 @@ var/global/datum/notes_storage/note_cache_storage = new
 
 	var/list/lines = splittext(song_text, "\n")
 
-	if(copytext(lines[1], 1, 5) == "BPM:")
-		song_tempo = CLAMP(text2num(copytext(lines[1], 5)), 1, usr.get_species() == DIONA ?  MAX_DIONATEMPO_RATE : MAX_TEMPO_RATE )
+	var/bpm_string = "BPM: "
+	if(findtext(lines[1], bpm_string, 1, length(bpm_string) + 1))
+		song_tempo = CLAMP(text2num(copytext_char(lines[1], length(bpm_string) + 1)), 1, MAX_TEMPO_RATE)
 		lines.Cut(1, 2)
 
 	if(lines.len > MAX_LINES_COUNT)
 		lines.Cut(MAX_LINES_COUNT + 1)
 
 	for(var/line_num in 1 to lines.len)
-		if(lentext(lines[line_num]) > MAX_LINE_SIZE)
-			lines[line_num] = copytext(lines[line_num], 1, MAX_LINE_SIZE)
+		if(length(lines[line_num]) > MAX_LINE_SIZE)
+			lines[line_num] = copytext_char(lines[line_num], 1, MAX_LINE_SIZE)
 
 	song_lines = lines
 
@@ -316,4 +319,3 @@ var/global/datum/notes_storage/note_cache_storage = new
 #undef MAX_LINES_COUNT
 #undef MAX_REPEAT_COUNT
 #undef MAX_TEMPO_RATE
-#undef MAX_DIONATEMPO_RATE

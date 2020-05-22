@@ -125,7 +125,7 @@
 			var/line2
 			if(SSshuttle.moving)
 				line2 = get_SSshuttle_timer()
-				if(lentext(line2) > CHARS_PER_LINE)
+				if(length(line2) > CHARS_PER_LINE)
 					line2 = "Error"
 			else
 				if(SSshuttle.at_station)

@@ -20,7 +20,7 @@
 
 	if(!has_power)
 		msg += "<span class='warning'>It appears to be running on backup power.</span>\n"
-	
+
 	if(fire_stacks > 0)
 		msg += "It is covered in something flammable.\n"
 	if(fire_stacks < 0)
@@ -36,7 +36,7 @@
 	if(print_flavor_text()) msg += "\n[print_flavor_text()]\n"
 
 	if (pose)
-		if( findtext(pose,".",lentext(pose)) == 0 && findtext(pose,"!",lentext(pose)) == 0 && findtext(pose,"?",lentext(pose)) == 0 )
+		if( findtext(pose,".") == 0 && findtext(pose,"!") == 0 && findtext(pose,"?") == 0 )
 			pose = addtext(pose,".") //Makes sure all emotes end with a period.
 		msg += "\nIt is [pose]"
 
