@@ -79,8 +79,6 @@
 /mob/living/simple_animal/hulk/mouse/dust()
 	dust_process()
 	new /obj/effect/decal/cleanable/ash(loc)
-	new /obj/effect/decal/remains/human/burned(loc)
-	dead_mob_list -= src
 
 /mob/living/simple_animal/hulk/mouse/death()
 	if(stat == DEAD)
