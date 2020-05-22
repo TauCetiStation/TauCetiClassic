@@ -21452,19 +21452,6 @@
 	icon_state = "browncorner"
 	},
 /area/station/cargo/storage)
-"aMd" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/civilian/chapel/mass_driver)
 "aMe" = (
 /obj/structure/closet/wardrobe/chaplain_black,
 /obj/item/device/eftpos{
@@ -42897,7 +42884,6 @@
 	},
 /area/station/rnd/hor)
 "bCL" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
@@ -72479,7 +72465,7 @@
 	},
 /area/station/medical/genetics)
 "kUt" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -128714,7 +128700,7 @@ aRN
 aVD
 bCN
 bsF
-aMd
+kNR
 xGY
 cWL
 woc
