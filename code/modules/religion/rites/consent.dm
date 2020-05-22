@@ -1,7 +1,7 @@
 // This class is used for rites that require conesnt of a mob buckled to altar.
 /datum/religion_rites/consent
 	var/consent_msg = ""
-	tip_text = "This ritual is performed only with the consent of the victim."
+	tip_text = "This ritual is performed only if the victim consents."
 
 /datum/religion_rites/consent/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!AOG)
