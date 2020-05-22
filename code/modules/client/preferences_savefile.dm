@@ -170,8 +170,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		for(var/role in deleted_selectable_roles)
 			if(role in be_role)
 				be_role -= role
-				if(!role_removed)
-					role_removed = TRUE
+				role_removed = TRUE
 
 		if(role_removed)
 			be_role |= ROLE_GHOSTLY
