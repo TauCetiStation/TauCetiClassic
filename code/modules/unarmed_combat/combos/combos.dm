@@ -726,7 +726,7 @@
 							continue
 
 						var/obj/structure/table/facetable = locate() in T
-						if(facetable)
+						if(facetable && facetable.Adjacent(attacker))
 							facetable.attackby(victim_G, attacker)
 							playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 							victim.visible_message("<span class='danger'>[attacker] slams [victim] into an obstacle!</span>")
