@@ -308,6 +308,7 @@
 /obj/item/weapon/shield/riot/roman/religion
 	name = "sacred shield"
 	desc = "Good shield for the crusade."
+	flags = ABSTRACT
 
 	var/time_of_life = 0
 	var/timer
@@ -353,7 +354,10 @@
 		var/mob/living/carbon/human/H = loc
 		if(H.mind && H.mind.holy_role)
 			have_outline = TRUE
+			force = 10
 			filters += holy_outline
+		else
+			force = 7
 
 /obj/item/weapon/claymore/religion/dropped()
 	QDEL_NULL(shield)
