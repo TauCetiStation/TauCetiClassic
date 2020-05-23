@@ -17,7 +17,7 @@
 	density = 1
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/vend_ready = 1 //Are we ready to vend?? Is it time??
-	var/vend_delay = 10 //How long does it take to vend?
+	var/vend_delay = 5 //How long does it take to vend?
 	var/datum/data/vending_product/currently_vending = null // A /datum/data/vending_product instance of what we're paying for right now.
 
 	// To be filled out at compile time
@@ -1348,7 +1348,7 @@
 	product_ads = "Keep your mind too open, and you never know what might walk in.;After all, you are only an immortal until someone manages to kill you. After that, you were just long-lived.;If you don't trust anyone, they can't let you down.;Wait. You've got principles? We'll have to update your file.;I always feel most alive when everything else is dying all around me."
 	req_access = list(68)
 
-obj/machinery/vending/hos
+/obj/machinery/vending/hos
 	name = "HoS-O-Mat"
 	desc = "Better than a closet"
 	icon_state = "noiromat"
@@ -1371,7 +1371,13 @@ obj/machinery/vending/hos
 					/obj/item/device/radio/headset/heads/hos = 1, /obj/item/weapon/storage/lockbox/loyalty = 1,
 					/obj/item/weapon/storage/box/flashbangs = 1, /obj/item/weapon/reagent_containers/spray/pepper = 1,
 					/obj/item/clothing/accessory/holster = 1, /obj/item/weapon/storage/pouch/pistol_holster = 1,
-					/obj/item/airbag = 1, /obj/item/weapon/storage/pouch/baton_holster = 1)
+					/obj/item/airbag = 1, /obj/item/weapon/storage/pouch/baton_holster = 1,
+	#ifdef NEWYEARCONTENT
+					/obj/item/clothing/suit/wintercoat/security = 1,
+					/obj/item/clothing/shoes/winterboots = 1,
+					/obj/item/clothing/head/santa = 1,
+	#endif
+	)
 	req_access = list(58)
 
 /obj/machinery/vending/cap
@@ -1387,7 +1393,13 @@ obj/machinery/vending/hos
 					/obj/item/device/radio/headset/heads/captain = 1, /obj/item/weapon/cartridge/captain = 1,
 					/obj/item/weapon/gun/energy = 1, /obj/item/weapon/storage/pouch/pistol_holster = 1,
 					/obj/item/clothing/accessory/holster = 1, /obj/item/weapon/melee/telebaton = 1,
-					/obj/item/device/remote_device/captain = 1, /obj/item/airbag = 1)
+					/obj/item/device/remote_device/captain = 1, /obj/item/airbag = 1,
+	#ifdef NEWYEARCONTENT
+					/obj/item/clothing/suit/wintercoat/captain = 1,
+					/obj/item/clothing/head/santa = 1,
+					/obj/item/clothing/shoes/winterboots = 1,
+	#endif
+	)
 	req_access = list(20)
 
 /obj/machinery/vending/chaplain
@@ -1482,10 +1494,11 @@ obj/machinery/vending/hos
 				/obj/item/clothing/suit/fire/firefighter = 1, /obj/item/clothing/head/hardhat/red = 1,
 				/obj/item/weapon/tank/air = 1, /obj/item/clothing/mask/gas/coloured = 1,
 				/obj/item/clothing/glasses/meson = 1, /obj/item/clothing/head/soft = 1,
-				/obj/item/weapon/mining_voucher = 1, /obj/item/weapon/survivalcapsule = 1)
+				/obj/item/weapon/mining_voucher = 1, /obj/item/weapon/survivalcapsule = 1,
 	#ifdef NEWYEARCONTENT
-	products = list(obj/item/clothing/suit/wintercoat/cargo = 1,
+				/obj/item/clothing/suit/wintercoat/cargo = 1,
 				/obj/item/clothing/shoes/winterboots = 1,
-				/obj/item/clothing/head/santa = 1)
+				/obj/item/clothing/head/santa = 1,
 	#endif
+	)
 	req_access = list(41)

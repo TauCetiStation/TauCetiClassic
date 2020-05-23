@@ -70,23 +70,6 @@
 	icon_state = "black"
 	icon_closed = "black"
 
-/obj/structure/closet/wardrobe/chaplain_black/PopulateContents()
-	new /obj/item/clothing/under/rank/chaplain(src)
-	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/suit/nun(src)
-	new /obj/item/clothing/head/nun_hood(src)
-	new /obj/item/clothing/suit/chaplain_hoodie(src)
-	new /obj/item/clothing/head/chaplain_hood(src)
-	new /obj/item/clothing/shoes/jolly_gravedigger(src)
-	new /obj/item/clothing/suit/holidaypriest(src)
-	new /obj/item/clothing/under/wedding/bride_white(src)
-	new /obj/item/weapon/storage/backpack/cultpack (src)
-	new /obj/item/weapon/game_kit/chaplain(src)
-	new /obj/item/weapon/reagent_containers/spray/thurible(src)
-	for (var/i in 1 to 2)
-		new /obj/item/weapon/storage/fancy/candle_box(src)
-
-
 /obj/structure/closet/wardrobe/green
 	name = "green wardrobe"
 	icon_state = "green"
