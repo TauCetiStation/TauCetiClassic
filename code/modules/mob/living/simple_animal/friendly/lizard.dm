@@ -16,15 +16,16 @@
 	density = FALSE
 	layer = MOB_LAYER
 	pass_flags = PASSTABLE
-	attacktext = "bites"
-	attacktext = "bites"
-	melee_damage_lower = 1
-	melee_damage_upper = 2
+	attacktext = "gnaw"
+	melee_damage = 2
 	response_help  = "pets"
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	ventcrawler = 2
 	holder_type = /obj/item/weapon/holder/lizard
+
+	has_head = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/lizard/death()
 	. = ..()

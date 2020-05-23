@@ -48,6 +48,8 @@ var/list/wood_icons = list("wood","wood-broken")
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+	var/datum/holy_turf/holy
+
 /turf/simulated/floor/proc/get_lightfloor_state()
 	return lightfloor_state & LIGHTFLOOR_STATE_BITS
 
@@ -76,6 +78,7 @@ var/list/wood_icons = list("wood","wood-broken")
 /turf/simulated/floor/Destroy()
 	if(floor_type)
 		floor_type = null
+	QDEL_NULL(holy)
 	return ..()
 
 //turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

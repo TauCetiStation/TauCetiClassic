@@ -299,82 +299,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		updatehealth()
 	return
 
-
-/mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
-	if(..())
-		return
-	if(M.melee_damage_upper == 0)
-		M.emote("[M.friendly] [src]")
-	else
-		if(length(M.attack_sound))
-			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
-		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
-		var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
-		var/armor = run_armor_check(BP, "melee")
-		apply_damage(damage, BRUTE, BP, armor)
-		if(armor >= 2)	return
-
-/mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M)
-	if(M.Victim) return // can't attack while eating!
-
-	if (health > -100)
-		visible_message("<span class='warning'><B>The [M.name] glomps [src]!</B></span>")
-
-		var/damage = rand(1, 3)
-
-		if(istype(M, /mob/living/carbon/slime/adult))
-			damage = rand(10, 35)
-		else
-			damage = rand(5, 25)
-
-
-		var/dam_zone = pick(BP_HEAD , BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG , BP_GROIN)
-
-		var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
-		var/armor_block = run_armor_check(BP, "melee")
-		apply_damage(damage, BRUTE, BP, armor_block)
-
-
-		if(M.powerlevel > 0)
-			var/stunprob = 10
-			var/power = M.powerlevel + rand(0,3)
-
-			switch(M.powerlevel)
-				if(1 to 2) stunprob = 20
-				if(3 to 4) stunprob = 30
-				if(5 to 6) stunprob = 40
-				if(7 to 8) stunprob = 60
-				if(9) 	   stunprob = 70
-				if(10) 	   stunprob = 95
-
-			if(prob(stunprob))
-				M.powerlevel -= 3
-				if(M.powerlevel < 0)
-					M.powerlevel = 0
-
-				visible_message("<span class='warning'><B>The [M.name] has shocked [src]!</B></span>")
-
-				Weaken(power)
-				if (stuttering < power)
-					stuttering = power
-				Stun(power)
-
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
-
-				if (prob(stunprob) && M.powerlevel >= 8)
-					adjustFireLoss(M.powerlevel * rand(6,10))
-
-
-		updatehealth()
-
-	return
-
 /mob/living/carbon/human/proc/can_use_two_hands(broken = TRUE) // Replace arms with hands in case of reverting Kurshan's PR.
 	var/obj/item/organ/external/l_arm/BPL = bodyparts_by_name[BP_L_ARM]
 	var/obj/item/organ/external/r_arm/BPR = bodyparts_by_name[BP_R_ARM]
@@ -2168,6 +2092,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/needed_massages = 12
 	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
 	var/obj/item/organ/internal/heart/Lungs = organs_by_name[O_LUNGS]
+	if(check_thickmaterial(target_zone = BP_CHEST))
+		to_chat(user, "<span class='warning'>You have to strip [src] to perform CPR!.</span>")
+		return
 
 	if(HAS_TRAIT(src, TRAIT_FAT))
 		needed_massages = 20
@@ -2182,18 +2109,21 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		to_chat(user, "<span class='warning'>Repeat at least every second.</span>")
 		massages_done_right = 0
 		return_to_body_dialog()
-		Heart.heart_fibrillate()
+		if(health > config.health_threshold_dead)
+			Heart.heart_fibrillate()
 		last_massage = world.time
 		return
 	else if((world.time - timeofdeath) < DEFIB_TIME_LIMIT)
-		last_massage = world.time
 
 		if(massages_done_right > needed_massages)
-			to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
-			reanimate_body()
-			stat = UNCONSCIOUS
-			massages_done_right = 0
-			Heart.heart_normalize()
+			if(health < config.health_threshold_dead)
+				to_chat(user, "<span class='warning'>[src]'s heart did not start to beat!</span>")
+			else
+				to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
+				reanimate_body()
+				stat = UNCONSCIOUS
+				massages_done_right = 0
+				Heart.heart_normalize()
 		else if(massages_done_right < -2)
 			to_chat(user, "<span class='warning'>[src]'s heart stopped!</span>")
 			if(prob(25))
@@ -2201,7 +2131,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			massages_done_right = 0
 			Heart.heart_stop()
 		else
-			Heart.heart_fibrillate()
+			if(health > config.health_threshold_dead)
+				Heart.heart_fibrillate()
 
 			if(Heart.damage < 50)
 				if(last_massage > world.time - MASSAGE_RHYTM_RIGHT - MASSAGE_ALLOWED_ERROR && last_massage < world.time - MASSAGE_RHYTM_RIGHT + MASSAGE_ALLOWED_ERROR)
@@ -2210,6 +2141,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				else
 					massages_done_right--
 					to_chat(user, "<span class='warning'>You've skipped the beat.</span>")
+		last_massage = world.time
 
 		if(op_stage.ribcage != 2 && prob(5))
 			var/obj/item/organ/external/BP = get_bodypart(BP_CHEST)

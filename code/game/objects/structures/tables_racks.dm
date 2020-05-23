@@ -222,21 +222,6 @@
 			return 1
 	return 1
 
-/obj/structure/table/MouseDrop_T(obj/O as obj, mob/user as mob)
-	..()
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
-		return
-	if(isessence(usr) || isrobot(usr))
-		return
-	var/obj/item/weapon/W = O
-	if(!W.canremove || W.flags & NODROP)
-		return
-	user.drop_item()
-	if (O.loc != src.loc)
-		step(O, get_dir(O, src))
-	return
-
-
 /obj/structure/table/attackby(obj/item/W, mob/user, params)
 	. = TRUE
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user) < 2)
@@ -636,19 +621,6 @@
 		return 1
 	else
 		return 0
-
-/obj/structure/rack/MouseDrop_T(obj/O, mob/user)
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
-		return
-	if(isrobot(user) || isessence(user))
-		return
-	var/obj/item/weapon/W = O
-	if(!W.canremove || W.flags & NODROP)
-		return
-	user.drop_item()
-	if (O.loc != src.loc)
-		step(O, get_dir(O, src))
-	return
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
 	if (iswrench(W))

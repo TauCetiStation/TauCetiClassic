@@ -17,13 +17,13 @@
 		sacrifice_item += item
 	return sacrifice_item
 
-/datum/religion_rites/spawn_item/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/spawn_item/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(sacrifice_type)
 		var/list/L = item_sacrifice(AOG, sacrifice_type)
 		if(L.len == 0)
 			to_chat(user, "<span class='warning'>You need more items for sacrifice to perform [name]!</span>")
 			return FALSE
-	return ..()
+	return TRUE
 
 /datum/religion_rites/spawn_item/before_perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(sacrifice_type)

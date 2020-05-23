@@ -190,7 +190,7 @@
 		H.ventcrawler = 1
 		to_chat(H, "<span class='notice'><b>Ventcrawling allowed</b></span>")
 
-	var/matrix/Mx = matrix(M.default_transform)
+	var/matrix/Mx = matrix()
 	Mx.Scale(0.8) //Makes our hulk to be bigger than any normal human.
 	Mx.Translate(0,-2)
 	M.transform = Mx
@@ -203,9 +203,7 @@
 		var/mob/living/carbon/human/H = M
 		H.ventcrawler = 0
 
-	var/matrix/Mx = matrix(M.default_transform)
-	Mx.Scale(1) ////Reset size of our halfling
-	Mx.Translate(0,0)
+	var/matrix/Mx = matrix()
 	M.transform = Mx
 	M.default_transform = Mx
 

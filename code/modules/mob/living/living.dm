@@ -1247,11 +1247,18 @@
 	return pick(TARGET_ZONE_ALL)
 
 /mob/living/proc/has_bodypart(name)
+	switch(name)
+		if(BP_HEAD)
+			return is_usable_head()
+		if(BP_L_ARM, BP_R_ARM)
+			return is_usable_arm()
+		if(BP_L_LEG, BP_R_LEG)
+			return is_usable_leg()
 	return FALSE
 
 /mob/living/proc/has_organ(name)
 	if(name == O_EYES)
-		return TRUE
+		return is_usable_eyes()
 	return FALSE
 
 // Living mobs use can_inject() to make sure that the mob is not syringe-proof in general.

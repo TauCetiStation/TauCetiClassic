@@ -354,7 +354,7 @@
 	var/datum/gas_mixture/breath
 
 	//First, check if we can breathe at all
-	if(handle_drowning() || health < config.health_threshold_crit && !reagents.has_reagent("inaprovaline"))
+	if((handle_drowning() || health < config.health_threshold_crit) && !reagents.has_reagent("inaprovaline") && !HAS_TRAIT(src, TRAIT_AV))
 		losebreath = max(2, losebreath + 1)
 
 	if(losebreath>0) //Suffocating so do not take a breath
