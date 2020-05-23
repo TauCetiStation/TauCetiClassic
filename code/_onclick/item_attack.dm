@@ -30,10 +30,7 @@
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
 
-	if(user.zone_sel && user.zone_sel.selecting)
-		I.attack(src, user, user.zone_sel.selecting)
-	else
-		I.attack(src, user)
+	I.attack(src, user, user.get_targetzone())
 
 	if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself
 		var/mob/living/carbon/human/H = user
