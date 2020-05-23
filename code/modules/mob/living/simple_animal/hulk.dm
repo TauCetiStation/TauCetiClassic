@@ -25,8 +25,8 @@
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	status_flags = CANPUSH
-	universal_speak = 1
-	universal_understand = 1
+	universal_speak = TRUE
+	universal_understand = TRUE
 	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0
 	max_oxy = 0
