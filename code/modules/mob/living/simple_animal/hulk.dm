@@ -25,8 +25,8 @@
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	status_flags = CANPUSH
-	universal_speak = TRUE
-	universal_understand = TRUE
+	universal_speak = 1
+	universal_understand = 1
 	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0
 	max_oxy = 0
@@ -61,7 +61,7 @@
 	icon = 'icons/mob/hulk_mouse.dmi'
 	icon_state = "mmouse"
 	icon_living = "mmouse"
-	universal_speak = FALSE
+	universal_speak = 0
 	maxHealth = 100
 	health = 100
 	melee_damage = 13
@@ -126,9 +126,12 @@
 
 /mob/living/simple_animal/hulk/mouse/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	.=..()
+
 	if(. && hiding)
 		var/turf/simulated/floor/T = get_turf(src.loc)
 		INVOKE_ASYNC(T, /atom/proc/shake_animation , 10, 5, 0.9)
+		for(var/atom/A in T.contents)
+			INVOKE_ASYNC(A, /atom/proc/shake_animation , 10, 5, 0.9)
 		return
 
 /mob/living/simple_animal/hulk/unathi

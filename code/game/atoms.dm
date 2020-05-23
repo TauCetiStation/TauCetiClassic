@@ -19,7 +19,7 @@
 
 	var/resize = 1		//don't abuse this shit
 	var/resize_rev = 1	//helps to restore default size
-
+	var/shaking_anim = FALSE
 	var/initialized = FALSE
 
 	/// a very temporary list of overlays to remove
@@ -613,6 +613,9 @@
 
 
 /atom/proc/shake_animation(intensity, time, intensity_dropoff=0.9)
+	if(shaking_anim)
+		return
+	shaking_anim = TRUE
 	var/prev_pixel_x = pixel_x
 	var/prev_pixel_y = pixel_y
 	var/matrix/prev_transform = transform
@@ -625,8 +628,6 @@
 	I.appearance_flags |= KEEP_APART
 
 	var/prev_invis = invisibility
-
-
 	var/list/viewers = list()
 	for(var/mob/M in viewers(src))
 		if(M.client)
@@ -641,7 +642,6 @@
 		var/angle = rand(-intensity * 0.5, intensity * 0.5)
 		var/matrix/M = matrix(prev_transform)
 		M.Turn(angle)
-
 		intensity *= intensity_dropoff
 		invisibility = 101
 		animate(I, pixel_x = prev_pixel_x + shiftx, pixel_y = prev_pixel_y + shifty, transform = M, time = 0.5)
@@ -651,4 +651,4 @@
 			return
 		invisibility = prev_invis
 	qdel(I)
-
+	shaking_anim = FALSE
