@@ -19,15 +19,21 @@
 	 * atom/A     - thing that user clickplaced on
 	 * obj/item/I - thing that has been placed
 	 * mob/user   - the one doing the clickplacing.
-	 * params     - paramlist of click info.
 	 */
 	var/datum/callback/on_place
+	// Is called after parent is slammed by a grab. Return TRUE to prevent default logic.
+	// Will get these arguments:
+	/*
+	 * obj/item/weapon/grab/G - the grab that parent was slammed by.
+	 */
+	var/datum/callback/on_slam
 
-/datum/component/clickplace/Initialize(datum/callback/_on_place = null)
+/datum/component/clickplace/Initialize(datum/callback/_on_place = null, datum/callback/_on_slam = null)
 	if(!istype(parent, /atom))
 		return COMPONENT_INCOMPATIBLE
 
 	on_place = _on_place
+	on_slam = _on_slam
 
 	RegisterSignal(parent, list(COMSIG_PARENT_ATTACKBY), .proc/try_place_click)
 	RegisterSignal(parent, list(COMSIG_MOUSEDROPPED_ONTO), .proc/try_place_drag)
@@ -37,6 +43,8 @@
 
 /datum/component/clickplace/Destroy()
 	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(CLICKPLACE_TIP))
+	QDEL_NULL(on_place)
+	QDEL_NULL(on_slam)
 	return ..()
 
 /datum/component/clickplace/proc/can_place(atom/place_on, obj/item/I, mob/living/user)
@@ -56,9 +64,14 @@
 		return FALSE
 	if(I.flags & ABSTRACT)
 		return FALSE
+	if(I.swiping)
+		return FALSE
 	return TRUE
 
 /datum/component/clickplace/proc/try_place_click(datum/source, obj/item/I,  mob/living/user, params)
+	if(istype(I, /obj/item/weapon/grab))
+		try_slam(I)
+		return COMPONENT_NO_AFTERATTACK
 	if(!can_place(source, I, user))
 		return NONE
 	if(!user.drop_from_inventory(I))
@@ -78,6 +91,7 @@
 	if(on_place)
 		on_place.Invoke(A, I, user)
 
+	A.add_fingerprint(user)
 	// Prevent hitting the thing if we're just putting it.
 	return COMPONENT_NO_AFTERATTACK
 
@@ -87,6 +101,9 @@
 
 	var/obj/item/I = dropping
 
+	if(istype(I, /obj/item/weapon/grab))
+		try_slam(I)
+		return
 	if(!can_place(source, I, user))
 		return
 
@@ -129,11 +146,71 @@
 		return
 
 	var/atom/A = parent
+	A.add_fingerprint(user)
 
 	if(I.loc != A.loc)
-		step(I, get_dir(I, A))
+		step_towards(I, A)
 
 		if(I.loc == A.loc && on_place)
 			on_place.Invoke(A, I, user)
+
+// Return TRUE to prevent default qdel logic.
+/datum/component/clickplace/proc/slam(obj/item/weapon/grab/G)
+	var/mob/living/assailant = G.assailant
+	var/mob/living/victim = G.affecting
+	var/atom/A = parent
+
+	if(on_slam && on_slam.Invoke(G))
+		return TRUE
+
+	if(prob(15))
+		victim.Weaken(5)
+	victim.apply_damage(8, def_zone = BP_HEAD)
+	victim.visible_message("<span class='danger'>[assailant] slams [victim]'s face against \the [A]!</span>")
+	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+	victim.attack_log += "\[[time_stamp()]\] <font color='orange'>Face-slammed by [assailant.name] against \the [assailant]([assailant.ckey])</font>"
+	assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Slams face of [victim.name] against \the [assailant]([victim.ckey])</font>"
+	msg_admin_attack("[key_name(assailant)] slams [key_name(victim)] face against \the [assailant]", assailant)
+	return FALSE
+
+/// Is called when parent is clicked with a grab with HARM selected. Return TRUE if face slammed.
+/datum/component/clickplace/proc/try_slam(obj/item/weapon/grab/G)
+	var/mob/living/assailant = G.assailant
+	var/mob/living/victim = G.affecting
+	var/atom/A = parent
+
+	if(!A.density)
+		assailant.SetNextMove(CLICK_CD_INTERACT)
+
+		A.add_fingerprint(victim)
+		A.add_fingerprint(assailant)
+
+		victim.visible_message("<span class='danger'>[assailant] shoves [victim] into [A]!</span>")
+
+		step_towards(victim, A)
+		qdel(src)
+		return
+
+	assailant.SetNextMove(CLICK_CD_MELEE)
+	if(G.state >= GRAB_AGGRESSIVE)
+		victim.forceMove(A.loc)
+		victim.Weaken(5)
+		victim.visible_message("<span class='danger'>[G.assailant] puts [G.affecting] on \the [A].</span>")
+		victim.attack_log += "\[[time_stamp()]\] <font color='orange'>Was laied by [A.name] on \the [A]([assailant.ckey])</font>"
+		assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Put [victim.name] on \the [A]([victim.ckey])</font>"
+	else if(assailant.a_intent != INTENT_HARM)
+		/// Let's pretend a face-slam doesn't exist.
+		to_chat(assailant, "<span class='warning'>You need a better grip to do that!</span>")
+		return
+	else if(!victim.is_usable_head())
+		to_chat(assailant, "<span class='warning'>You need a better grip to do that!</span>")
+		return
+	else if(slam(G))
+		return
+
+	A.add_fingerprint(victim)
+	A.add_fingerprint(assailant)
+
+	qdel(G)
 
 #undef CLICKPLACE_TIP

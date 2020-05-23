@@ -5,7 +5,7 @@
 /obj/item/weapon/shield/atom_init()
 	. = ..()
 	var/datum/swipe_component_builder/SCB = new
-	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
+	SCB.interupt_on_sweep_hit_types = list(/turf)
 
 	SCB.can_sweep = TRUE
 
@@ -122,7 +122,7 @@
 /obj/item/weapon/shield/energy/atom_init()
 	. = ..()
 	var/datum/swipe_component_builder/SCB = new
-	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
+	SCB.interupt_on_sweep_hit_types = list(/turf)
 
 	SCB.can_sweep = TRUE
 
@@ -178,7 +178,7 @@
 /obj/item/weapon/shield/riot/tele/atom_init()
 	. = ..()
 	var/datum/swipe_component_builder/SCB = new
-	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
+	SCB.interupt_on_sweep_hit_types = list(/turf)
 
 	SCB.can_sweep = TRUE
 

@@ -28,6 +28,8 @@
 	PopulateContents()
 	update_icon()
 
+	AddComponent(/datum/component/clickplace)
+
 /obj/structure/closet/Destroy()
 	closet_list -= src
 	return ..()
@@ -196,18 +198,7 @@
 		return
 
 	else if(src.opened)
-		if(istype(W, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = W
-			MouseDrop_T(G.affecting, user)      //act like they were dragged onto the closet
-		if(istype(W,/obj/item/tk_grab))
-			return 0
-		if(isrobot(user))
-			return
-		if(!W.canremove || W.flags & NODROP)
-			return
-		usr.drop_item()
-		if(W)
-			W.forceMove(src.loc)
+		return ..()
 
 	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))
 		return
@@ -237,34 +228,6 @@
 				visible_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>",
 								"<span class='warning'>You hear welding.</span>")
 				return TRUE
-
-/obj/structure/closet/MouseDrop_T(atom/movable/O, mob/user)
-	if(istype(O, /obj/screen))	//fix for HUD elements making their way into the world	-Pete
-		return
-	if(O.loc == user)
-		return
-	if(user.incapacitated())
-		return
-	if((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)))
-		return
-	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
-		return
-	if(!istype(user.loc, /turf)) // are you in a container/closet/pod/etc?
-		return
-	if(!src.opened)
-		return
-	if(istype(O, /obj/structure/closet))
-		return
-	if(istype(O, /obj/item))
-		var/obj/item/W = O
-		if(!W.canremove || W.flags & NODROP)
-			return
-	user.SetNextMove(CLICK_CD_INTERACT)
-	step_towards(O, src.loc)
-	if(user != O)
-		user.show_viewers("<span class='danger'>[user] stuffs [O] into [src]!</span>")
-	src.add_fingerprint(user)
-	return
 
 /obj/structure/closet/attack_ai(mob/user)
 	if(isrobot(user) && Adjacent(user)) //Robots can open/close it, but not the AI

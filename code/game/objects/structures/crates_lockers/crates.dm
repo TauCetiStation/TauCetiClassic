@@ -69,13 +69,8 @@
 
 /obj/structure/closet/crate/attackby(obj/item/weapon/W, mob/user)
 	if(opened)
-		if(isrobot(user))
-			return
-		if(!W.canremove || W.flags & NODROP)
-			return
-		user.drop_item()
-		if(W)
-			W.forceMove(src.loc)
+		return ..()
+
 	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))	//OOP? Doesn't heard.
 		return
 	else if(iscoil(W))
