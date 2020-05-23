@@ -20,7 +20,6 @@
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	weather_immunities = list("ash", "acid")
-	var/list/loot_list = list()
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
@@ -48,32 +47,6 @@
 			visible_message("<span class='notice'>The [T.name] [src.throw_message] [src.name]!</span>")
 			return
 	..()
-
-/mob/living/simple_animal/hostile/asteroid/death(gibbed)
-	.=..()
-	spawn_loot(src)
-
-/mob/living/simple_animal/hostile/asteroid/proc/spawn_loot()
-	for(var/loot_type in loot_list)
-		var/obj/item/G = new loot_type(src.loc)
-		G.layer = 4.1
-
-////////////////////////////Modifiers///////////////////////////
-
-/mob/living/simple_animal/hostile/atom_init()
-	. = ..()
-	if(prob(50))
-		gen_modifiers()
-
-/mob/living/simple_animal/hostile/proc/gen_modifiers()
-	var/list/all_modifiers = subtypesof(/datum/mob_modifier)
-	var/modifier = pick(all_modifiers)
-	AddModifier(modifier)
-
-/mob/living/simple_animal/hostile/proc/AddModifier(modifier)
-	var/datum/mob_modifier/MM = new modifier
-	MM.apply(src)
-
 
 ////////////////////////////////////////////////////////////////
 

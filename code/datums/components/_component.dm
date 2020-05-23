@@ -6,9 +6,13 @@
 /datum/component/New(datum/P, ...)
 	parent = P
 	var/list/arguments = args.Copy(2)
-	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
-		qdel(src, TRUE, TRUE)
-		CRASH("Incompatible [type] assigned to a [P.type]! args: [json_encode(arguments)]")
+	switch(Initialize(arglist(arguments)))
+		if(COMPONENT_INCOMPATIBLE)
+			qdel(src, TRUE, TRUE)
+			CRASH("Incompatible [type] assigned to a [P.type]! args: [json_encode(arguments)]")
+		if(COMPONENT_NOT_ATTACHED)
+			qdel(src, TRUE, TRUE)
+			return
 
 	_JoinParent()
 

@@ -100,3 +100,8 @@
 // Component specific signals.
 /// send this signal to remove a list of tip ids(use tip_names as tip ids): (/list/tip_ids_to_remove)
 #define COMSIG_TIPS_REMOVE "comsig_tip_remove"
+
+// send this signal to add /datum/name_modifier to a mob: (name_modifier_type, strength)
+#define COMSIG_NAME_MOD_ADD "comsig_mob_mod_add"
+// send this signal to remove /datum/name_modifier from a mob: (name_modifier_type, strength)
+#define COMSIG_NAME_MOD_REMOVE "comsig_mob_mod_remove"
