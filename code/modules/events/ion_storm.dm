@@ -11,10 +11,10 @@
 		if(player.client)
 			players += player.real_name
 	var/random_player = "The Captain"
-	var/random_race = HUMAN
+	var/random_race = "Human"
 	if(players.len)
 		random_player = pick(players)		//Random player's name, to be used in laws.
-		random_race = pick(SKRELL, UNATHI, HUMAN, DIONA, TAJARA, VOX, IPC)
+		random_race = pick("Skrell","Unathi","Human","Diona","Tajaran","Vox","IPC")
 	var/list/laws = list(	"You are a mouse.",
 							"Question everything.",
 							"You must always lie.",
