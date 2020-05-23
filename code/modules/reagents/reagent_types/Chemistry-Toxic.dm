@@ -154,7 +154,7 @@
 	M.adjustOxyLoss(4 * REM)
 	M.SetSleeping(20 SECONDS)
 	M.emote("gasp")
-proce/M.throw_alert("oxy", /obj/screen/alert/oxy, datum/reagent/toxin/cyanide)
+    M.throw_alert("oxy", /obj/screen/alert/oxy, datum/reagent/toxin/cyanide)
 
 
 /datum/reagent/toxin/minttoxin
