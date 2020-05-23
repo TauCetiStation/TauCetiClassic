@@ -472,6 +472,8 @@ var/const/INGEST = 2
 		if(reagent == "customhairdye" || reagent == "paint_custom")
 			R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
 
+		R.on_new(data)
+
 		update_total()
 		if(my_atom)
 			my_atom.on_reagent_change()

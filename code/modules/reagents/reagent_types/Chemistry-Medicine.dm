@@ -141,6 +141,7 @@
 	O.germ_level -= min(volume*20, O.germ_level)
 
 /datum/reagent/sterilizine/reaction_turf(turf/T, volume)
+	. = ..()
 	T.germ_level -= min(volume*20, T.germ_level)
 
 /datum/reagent/leporazine
