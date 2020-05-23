@@ -1260,3 +1260,7 @@
 	if(name == O_EYES)
 		return is_usable_eyes()
 	return FALSE
+
+// Living mobs use can_inject() to make sure that the mob is not syringe-proof in general.
+/mob/living/proc/can_inject(mob/user, def_zone, show_message = TRUE, penetrate_thick = FALSE)
+	return TRUE
