@@ -89,9 +89,10 @@
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/pray/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
-	global.chaplain_religion.favor += 20 + adding_favor
-	adding_favor += 0.5
+/datum/religion_rites/pray/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
+	global.chaplain_religion.favor += 15 + adding_favor
+	if(adding_favor <= 20 && stage % 2 == 0)
+		adding_favor += 0.5
 	return TRUE
 
 /*

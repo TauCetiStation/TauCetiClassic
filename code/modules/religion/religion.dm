@@ -310,7 +310,7 @@
 	for(var/rite_type in global.rites_by_aspects[asp.name])
 		var/datum/religion_rites/RR = new rite_type
 
-		if(rites_by_name[initial(RR.name)])
+		if(rites_by_name[RR.name])
 			continue
 
 		if(is_sublist_assoc(RR.needed_aspects, aspects, aspect_pred))
