@@ -40,10 +40,10 @@
 	return FALSE // Returning false would mean that generic digestion proc won't be used.
 
 /datum/reagent/blood/reaction_turf(turf/simulated/T, volume)//splash the blood all over the place
+	. = ..()
 	if(!istype(T))
 		return
 	var/datum/reagent/blood/self = src
-	src = null
 	if(!(volume >= 3))
 		return
 	//var/datum/disease/D = self.data["virus"]
@@ -114,10 +114,12 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "oil"
 
+	needed_aspects = list(ASPECT_WACKY = 1)
+
 /datum/reagent/lube/reaction_turf(turf/simulated/T, volume)
+	. = ..()
 	if(!istype(T))
 		return
-	src = null
 	if(volume >= 1)
 		T.make_wet_floor(LUBE_FLOOR)
 
@@ -161,7 +163,7 @@
 	color = "#673910" // rgb: 103, 57, 16
 
 /datum/reagent/thermite/reaction_turf(turf/T, volume)
-	src = null
+	. = ..()
 	if(volume >= 5)
 		if(istype(T, /turf/simulated/wall))
 			var/turf/simulated/wall/W = T
@@ -205,6 +207,7 @@
 	new /obj/effect/decal/cleanable/liquid_fuel(the_turf, volume)
 
 /datum/reagent/fuel/reaction_turf(turf/T, volume)
+	. = ..()
 	new /obj/effect/decal/cleanable/liquid_fuel(T, volume)
 
 /datum/reagent/fuel/on_general_digest(mob/living/M)
@@ -234,6 +237,7 @@
 			O.clean_blood()
 
 /datum/reagent/space_cleaner/reaction_turf(turf/T, volume)
+	. = ..()
 	if(volume >= 1)
 		if(istype(T, /turf/simulated))
 			var/turf/simulated/S = T
@@ -671,6 +675,7 @@
 	id = "paint_custom"
 
 /datum/reagent/paint/reaction_turf(turf/T, volume)
+	. = ..()
 	if(!istype(T) || istype(T, /turf/space))
 		return
 	if(color_weight < 15 || volume < 5)
@@ -786,6 +791,7 @@
 				H.update_hair()
 
 /datum/reagent/paint_remover/reaction_turf(turf/T, volume)
+	. = ..()
 	if(istype(T) && T.icon != initial(T.icon))
 		T.icon = initial(T.icon)
 
@@ -907,6 +913,8 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 
 	data = list()
 
+	needed_aspects = list(ASPECT_MYSTIC = 1)
+
 /datum/reagent/ectoplasm/on_general_digest(mob/living/M)
 	..()
 	if(!data["ticks"])
@@ -956,6 +964,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	color = "#c2eaed" // rgb: 194, 234, 237
 
 /datum/reagent/aqueous_foam/reaction_turf(turf/T, method=TOUCH, volume)
+	. = ..()
 	var/obj/effect/effect/aqueous_foam/F = locate(/obj/effect/effect/aqueous_foam) in T
 	if(F)
 		INVOKE_ASYNC(F, /obj/effect/effect/aqueous_foam.proc/performAction) // So we don't instantinate a new object, but still make the room slightly colder.
