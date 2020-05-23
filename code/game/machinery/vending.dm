@@ -1347,3 +1347,145 @@
 	product_slogans = "The cheaper the crook, the gaudier the patter.;Dead men are heavier than broken hearts.;Life is a bucket of shit with a barbed wire handle.;After all, you are only an immortal until someone manages to kill you. After that, you were just long-lived.;The rain fell like dead bullets.;Though I often run out of courage and good sense, stubbornness keeps me going."
 	product_ads = "Keep your mind too open, and you never know what might walk in.;After all, you are only an immortal until someone manages to kill you. After that, you were just long-lived.;If you don't trust anyone, they can't let you down.;Wait. You've got principles? We'll have to update your file.;I always feel most alive when everything else is dying all around me."
 	req_access = list(68)
+
+obj/machinery/vending/hos
+	name = "HoS-O-Mat"
+	desc = "Better than a closet"
+	icon_state = "noiromat"
+	icon_deny = "noiromat-deny"
+	light_color = "#ffc444"
+	products = list(/obj/item/clothing/gloves/black/hos = 1, /obj/item/taperoll/police = 2,
+					/obj/item/clothing/head/helmet/HoS = 1, /obj/item/clothing/head/helmet/HoS/dermal = 1,
+					/obj/item/clothing/head/beret/sec/hos = 1, /obj/item/clothing/head/hos_peakedcap = 1,
+					/obj/item/clothing/head/collectable/HoS = 1, /obj/item/clothing/glasses/hud/security/jensenshades = 1,
+					/obj/item/clothing/glasses/hud/security = 1, /obj/item/clothing/under/rank/head_of_security_fem = 1,
+					/obj/item/clothing/under/rank/head_of_security = 1, /obj/item/clothing/under/rank/head_of_security/turtleneck = 1,
+					/obj/item/clothing/under/rank/head_of_security/jensen = 1, /obj/item/clothing/suit/armor/hos/jensen = 1,
+					/obj/item/clothing/suit/armor/hos = 1, /obj/item/clothing/mask/gas/sechailer = 1,
+					/obj/item/weapon/gun/projectile/wjpp = 1, /obj/item/weapon/gun/energy = 1,
+					/obj/item/weapon/shield/riot/tele = 1, /obj/item/weapon/melee/telebaton = 1,
+					/obj/item/weapon/melee/baton = 1, /obj/item/device/flashlight/seclite = 1,
+					/obj/item/device/flash = 1, /obj/item/device/flashlight/flare = 1,
+					/obj/item/weapon/storage/backpack/satchel/sec = 1, /obj/item/device/remote_device/head_of_security = 1,
+					/obj/item/weapon/storage/belt/security = 1, /obj/item/weapon/cartridge/hos = 1,
+					/obj/item/device/radio/headset/heads/hos = 1, /obj/item/weapon/storage/lockbox/loyalty = 1,
+					/obj/item/weapon/storage/box/flashbangs = 1, /obj/item/weapon/reagent_containers/spray/pepper = 1,
+					/obj/item/clothing/accessory/holster = 1, /obj/item/weapon/storage/pouch/pistol_holster = 1,
+					/obj/item/airbag = 1, /obj/item/weapon/storage/pouch/baton_holster = 1)
+	req_access = list(58)
+
+/obj/machinery/vending/cap
+	name = "Cap-o-Mat"
+	desc = "Better than closet"
+	icon_state = "Theater"
+	products = list(/obj/item/weapon/storage/backpack/satchel/cap = 1, /obj/item/clothing/suit/captunic = 1,
+					/obj/item/clothing/suit/captunic/capjacket = 1, /obj/item/clothing/head/helmet/cap = 1,
+					/obj/item/clothing/head/caphat = 1,/obj/item/clothing/under/rank/captain = 1,
+					/obj/item/clothing/under/rank/capcamsole = 1, /obj/item/clothing/under/dress/dress_cap = 1,
+					/obj/item/clothing/suit/armor = 1,  /obj/item/clothing/head/helmet/swat = 1,
+					/obj/item/clothing/shoes/brown = 1, /obj/item/clothing/gloves/captain = 1,
+					/obj/item/device/radio/headset/heads/captain = 1, /obj/item/weapon/cartridge/captain = 1,
+					/obj/item/weapon/gun/energy = 1, /obj/item/weapon/storage/pouch/pistol_holster = 1,
+					/obj/item/clothing/accessory/holster = 1, /obj/item/weapon/melee/telebaton = 1,
+					/obj/item/device/remote_device/captain = 1, /obj/item/airbag = 1)
+	req_access = list(20)
+
+/obj/machinery/vending/chaplain
+	name = "Chap-O-Mat"
+	desc = "Better than closet"
+	icon_state = "holy"
+	products = list(/obj/item/clothing/under/rank/chaplain = 1, /obj/item/clothing/shoes/black = 1,
+					/obj/item/clothing/suit/nun = 1, /obj/item/clothing/head/nun_hood = 1,
+					/obj/item/clothing/suit/chaplain_hoodie = 1, /obj/item/clothing/head/chaplain_hood = 1,
+					/obj/item/clothing/shoes/jolly_gravedigger = 1, /obj/item/clothing/suit/holidaypriest = 1,
+					/obj/item/clothing/under/wedding/bride_white = 1, /obj/item/weapon/storage/backpack/cultpack = 1,
+					/obj/item/weapon/game_kit/chaplain = 1, /obj/item/weapon/reagent_containers/spray/thurible = 1,
+					/obj/item/weapon/storage/fancy/candle_box = 2)
+	req_access = list(22)
+
+/obj/machinery/vending/hop
+	name = "HoP-O-Mat"
+	desc = "Better than closet"
+	icon_state = "Theater"
+	products = list(/obj/item/device/remote_device/head_of_personal = 1,
+					/obj/item/clothing/glasses/sunglasses = 1, /obj/item/clothing/suit/armor/vest = 1,
+					/obj/item/clothing/head/helmet = 1, /obj/item/weapon/cartridge/hop = 1,
+					/obj/item/weapon/storage/pouch/pistol_holster = 1,
+					/obj/item/clothing/head/fez = 1, /obj/item/clothing/under/rank/head_of_personnel = 1,
+					/obj/item/clothing/under/dress/dress_hop = 1, /obj/item/clothing/under/dress/dress_hr = 1,
+					/obj/item/clothing/under/lawyer/female = 1, /obj/item/clothing/under/lawyer/black = 1,
+					/obj/item/clothing/under/lawyer/red = 1, /obj/item/clothing/under/lawyer/oldman = 1,
+					/obj/item/clothing/shoes/brown = 1, /obj/item/clothing/shoes/black = 1,
+					/obj/item/clothing/shoes/leather = 1, /obj/item/clothing/shoes/white = 1,
+					/obj/item/clothing/under/rank/head_of_personnel_whimsy = 1, /obj/item/clothing/under/rank/goodman_shirt = 1,
+					/obj/item/clothing/suit/goodman_jacket = 1,
+					/obj/item/device/radio/headset/heads/hop = 1, /obj/item/weapon/storage/box/ids = 1,
+					/obj/item/weapon/gun/energy/gun/head = 1, /obj/item/clothing/accessory/holster/armpit = 1,
+					/obj/item/device/flash = 1, /obj/item/airbag = 1)
+	req_access = list(57)
+
+/obj/machinery/vending/rd
+	name = "RD-O-Mat"
+	desc = "Better than closet"
+	icon_state = "Theater"
+	products = list(/obj/item/clothing/suit/bio_suit/new_hazmat/scientist = 1,
+					/obj/item/clothing/head/bio_hood/new_hazmat/scientist = 1, /obj/item/clothing/under/rank/research_director = 1,
+					/obj/item/clothing/under/rank/research_director/rdalt = 1, /obj/item/clothing/under/rank/research_director/dress_rd = 1,
+					/obj/item/clothing/suit/storage/labcoat/rd = 1, /obj/item/weapon/cartridge/rd = 1,
+					/obj/item/clothing/shoes/white = 1, /obj/item/clothing/shoes/leather = 1,
+					/obj/item/clothing/gloves/latex = 1, /obj/item/device/radio/headset/heads/rd = 1,
+					/obj/item/weapon/tank/air = 1, /obj/item/clothing/mask/gas/coloured = 1,
+					/obj/item/device/flash = 1, /obj/item/device/remote_device/research_director = 1,
+					/obj/item/airbag = 1)
+	req_access = list(30)
+
+/obj/machinery/vending/cmo
+	name = "CMO-O-Mat"
+	desc = "Better than closet"
+	icon_state = "Theater"
+	products = list(/obj/item/clothing/head/surgery/blue = 1, /obj/item/clothing/head/surgery/green = 1, /obj/item/clothing/head/surgery/purple = 1,
+				/obj/item/clothing/suit/bio_suit/new_hazmat/cmo = 1, /obj/item/clothing/head/bio_hood/new_hazmat/cmo = 1,
+				/obj/item/device/remote_device/chief_medical_officer = 1, /obj/item/clothing/shoes/white = 1,
+				/obj/item/clothing/under/rank/chief_medical_officer = 1, /obj/item/clothing/under/rank/chief_medical_officer/skirt = 1,
+				/obj/item/clothing/suit/storage/labcoat/cmo = 1, /obj/item/weapon/cartridge/cmo = 1,
+				/obj/item/clothing/gloves/latex/nitrile = 1, /obj/item/clothing/shoes/brown = 1,
+				/obj/item/device/radio/headset/heads/cmo = 1, /obj/item/weapon/storage/belt/medical = 1,
+				/obj/item/device/flash = 1, /obj/item/weapon/reagent_containers/hypospray/cmo = 1,
+				/obj/item/clothing/suit/surgicalapron = 1, /obj/item/airbag = 1,
+				/obj/item/weapon/storage/pouch/medical_supply = 1)
+	req_access = list(40)
+
+/obj/machinery/vending/ce
+	name = "CE-O-Mat"
+	desc = "Better than closet"
+	icon_state = "Theater"
+	products = list(/obj/item/weapon/storage/backpack/satchel/eng = 1, /obj/item/clothing/accessory/storage/brown_vest = 1,
+				/obj/item/blueprints = 1, /obj/item/device/remote_device/chief_engineer = 1,
+				/obj/item/clothing/under/rank/chief_engineer = 1, /obj/item/clothing/head/hardhat/white = 1,
+				/obj/item/clothing/head/welding = 1, /obj/item/clothing/gloves/yellow = 1,
+				/obj/item/clothing/shoes/brown = 1, /obj/item/weapon/cartridge/ce = 1,
+				/obj/item/device/radio/headset/heads/ce = 1, /obj/item/weapon/storage/toolbox/mechanical = 1,
+				/obj/item/clothing/suit/storage/hazardvest = 1, /obj/item/clothing/mask/gas/coloured = 1,
+				/obj/item/device/multitool = 1, /obj/item/device/flash = 1,
+				/obj/item/taperoll/engineering = 1, /obj/item/weapon/storage/pouch/engineering_supply = 1,
+				/obj/item/weapon/gun/energy/pyrometer/ce = 1)
+	req_access = list(56)
+
+/obj/machinery/vending/qm
+	name = "QM-O-Mat"
+	desc = "Better than closet"
+	icon_state = "Theater"
+	products = list(/obj/item/clothing/under/rank/postal_dude_shirt = 1, /obj/item/device/remote_device/quartermaster = 1,
+				/obj/item/clothing/suit/storage/postal_dude_coat = 1, /obj/item/clothing/under/rank/cargo = 1, /obj/item/clothing/under/rank/cargo_fem = 1,
+				/obj/item/clothing/shoes/brown = 1, /obj/item/device/radio/headset/headset_cargo = 1,
+				/obj/item/clothing/gloves/black = 1, /obj/item/weapon/cartridge/quartermaster = 1,
+				/obj/item/clothing/suit/fire/firefighter = 1, /obj/item/clothing/head/hardhat/red = 1,
+				/obj/item/weapon/tank/air = 1, /obj/item/clothing/mask/gas/coloured = 1,
+				/obj/item/clothing/glasses/meson = 1, /obj/item/clothing/head/soft = 1,
+				/obj/item/weapon/mining_voucher = 1, /obj/item/weapon/survivalcapsule = 1)
+	#ifdef NEWYEARCONTENT
+	products = list(obj/item/clothing/suit/wintercoat/cargo = 1,
+				/obj/item/clothing/shoes/winterboots = 1,
+				/obj/item/clothing/head/santa = 1)
+	#endif
+	req_access = list(41)
