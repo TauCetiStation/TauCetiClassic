@@ -89,6 +89,8 @@
 	icon = 'icons/mob/hulk_mouse.dmi'
 	return
 
+
+
 /mob/living/simple_animal/hulk/mouse/UnarmedAttack(atom/A)
 	if(hiding)
 		return
@@ -114,12 +116,20 @@
 	else
 		invisibility = initial(invisibility)
 		density = initial(density)
-		var/turf/simulated/floor/T = get_turf(src.loc)
-		T.break_tile()
+		if(istype(get_turf(src.loc),/turf/simulated/floor))
+			var/turf/simulated/floor/T = get_turf(src.loc)
+			T.break_tile()
 
 		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 		usr.say("SQUEEEK!")
 	last_time_activate = world.time
+
+/mob/living/simple_animal/hulk/mouse/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	.=..()
+	if(. && hiding)
+		var/turf/simulated/floor/T = get_turf(src.loc)
+		INVOKE_ASYNC(T, /atom/proc/shake_animation , 10, 5, 0.9)
+		return
 
 /mob/living/simple_animal/hulk/unathi
 	name = "Zilla"

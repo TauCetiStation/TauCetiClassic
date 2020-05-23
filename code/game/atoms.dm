@@ -8,7 +8,7 @@
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
 
-	var/list/blood_DNA      //forensic reasons
+	var/list/blood_DNA	  //forensic reasons
 	var/datum/dirt_cover/dirt_overlay  //style reasons
 
 	var/last_bumped = 0
@@ -368,7 +368,7 @@
 
 				if(24 to 27)
 					if(prob(3))
-						fingerprints[full_print] = full_print     	//Sucks to be you.
+						fingerprints[full_print] = full_print	 	//Sucks to be you.
 					else
 						fingerprints[full_print] = stars(full_print, rand(15, 55)) // 20 to 29
 
@@ -419,12 +419,12 @@
 		fingerprintshidden = list()
 
 	//skytodo
-	//A.fingerprints |= fingerprints            //detective
-	//A.fingerprintshidden |= fingerprintshidden    //admin
+	//A.fingerprints |= fingerprints			//detective
+	//A.fingerprintshidden |= fingerprintshidden	//admin
 	if(A.fingerprints && fingerprints)
-		A.fingerprints |= fingerprints.Copy()            //detective
+		A.fingerprints |= fingerprints.Copy()			//detective
 	if(A.fingerprintshidden && fingerprintshidden)
-		A.fingerprintshidden |= fingerprintshidden.Copy()    //admin	A.fingerprintslast = fingerprintslast
+		A.fingerprintshidden |= fingerprintshidden.Copy()	//admin	A.fingerprintslast = fingerprintslast
 
 
 //returns 1 if made bloody, returns 0 otherwise
@@ -610,3 +610,45 @@
 // Called after we wrench/unwrench this object
 /obj/proc/wrenched_change()
 	return
+
+
+/atom/proc/shake_animation(intensity, time, intensity_dropoff=0.9)
+	var/prev_pixel_x = pixel_x
+	var/prev_pixel_y = pixel_y
+	var/matrix/prev_transform = transform
+
+	var/image/I = image(icon, icon_state)
+	I.appearance = src.appearance
+	I.plane = plane
+	I.layer = layer
+	I.loc = src
+	I.appearance_flags |= KEEP_APART
+
+	var/prev_invis = invisibility
+
+
+	var/list/viewers = list()
+	for(var/mob/M in viewers(src))
+		if(M.client)
+			viewers += M.client
+
+	flick_overlay(I, viewers, time)
+	var/stop_shaking = world.time + time
+	while(stop_shaking > world.time)
+		var/shiftx = rand(-intensity, intensity)
+		var/shifty = rand(-intensity, intensity)
+
+		var/angle = rand(-intensity * 0.5, intensity * 0.5)
+		var/matrix/M = matrix(prev_transform)
+		M.Turn(angle)
+
+		intensity *= intensity_dropoff
+		invisibility = 101
+		animate(I, pixel_x = prev_pixel_x + shiftx, pixel_y = prev_pixel_y + shifty, transform = M, time = 0.5)
+		animate(pixel_x = prev_pixel_x, pixel_y = prev_pixel_y, transform = prev_transform, time = 0.5)
+		sleep(1)
+		if(QDELING(src))
+			return
+		invisibility = prev_invis
+	qdel(I)
+
