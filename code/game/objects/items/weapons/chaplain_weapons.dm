@@ -309,6 +309,7 @@
 	name = "sacred shield"
 	desc = "Good shield for the crusade."
 	flags = ABSTRACT
+	slot_flags = FALSE
 
 	var/time_of_life = 0
 	var/timer
