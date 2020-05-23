@@ -41,11 +41,7 @@
 
 	/* objs */
 /datum/food_processor_process/meat
-	input = /obj/item/weapon/reagent_containers/food/snacks/meat
-	output = /obj/item/weapon/reagent_containers/food/snacks/rawmeatball
-
-/datum/food_processor_process/meat2
-	input = /obj/item/weapon/syntiflesh
+	input = /obj/item/weapon/reagent_containers/food/snacks/rawcutlet
 	output = /obj/item/weapon/reagent_containers/food/snacks/rawmeatball
 
 /datum/food_processor_process/potato

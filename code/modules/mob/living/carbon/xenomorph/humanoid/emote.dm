@@ -10,6 +10,10 @@
 			act = copytext(act, 1, length(act))
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
 
+	// These scare the enemies out, causing them to lose 10 combo points.
+	if(act == "scream")
+		act = pick("roar", "growl", "hiss")
+
 	switch(act)
 
 //  ========== SOUNDED ==========
@@ -26,21 +30,29 @@
 			m_type = SHOWMSG_AUDIO
 			if(CAN_MAKE_A_SOUND)
 				playsound(src, 'sound/voice/xenomorph/whimper.ogg', VOL_EFFECTS_MASTER, 25)
+
+			add_combo_value_all(10)
 		if("roar")
 			message = "<B>The [src.name]</B>[pick(" triumphantly", " menacingly", "")] roars."
 			m_type = SHOWMSG_AUDIO
 			if(CAN_MAKE_A_SOUND)
 				playsound(src, pick(SOUNDIN_XENOMORPH_ROAR), VOL_EFFECTS_MASTER, vary = FALSE)
+
+			add_combo_value_all(-10)
 		if("hiss")
 			message = "<B>The [src.name]</B>[pick(" predatory", " dissatisfied", " maliciously", " menacingly", " suspiciously", "")] hisses!"
 			m_type = SHOWMSG_AUDIO
 			if(CAN_MAKE_A_SOUND)
 				playsound(src, pick(SOUNDIN_XENOMORPH_HISS), VOL_EFFECTS_MASTER, vary = FALSE)
+
+			add_combo_value_all(-10)
 		if("growl")
 			message = "<B>The [src.name]</B>[pick(" relaxed", " predatory", " excitedly", " joyfully", " maliciously", " menacingly", " suspiciously", "")] growls."
 			m_type = SHOWMSG_AUDIO
 			if(CAN_MAKE_A_SOUND)
 				playsound(src, pick(SOUNDIN_XENOMORPH_GROWL), VOL_EFFECTS_MASTER, vary = FALSE)
+
+			add_combo_value_all(-10)
 
 //  ========== BASIC ==========
 

@@ -2,6 +2,75 @@
 	name = "shield"
 	var/block_chance = 65
 
+/obj/item/weapon/shield/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
+
+	SCB.can_sweep = TRUE
+
+	SCB.can_push = TRUE
+
+	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
+
+	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
+
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/shield/proc/on_sweep_hit(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/target, mob/living/user)
+	var/datum/component/swiping/SW = GetComponent(/datum/component/swiping)
+
+	var/is_stunned = is_type_in_list(target, SW.interupt_on_sweep_hit_types)
+	if(is_stunned)
+		to_chat(user, "<span class='warning'>Your [src] has hit [target]! There's not enough space for broad sweeps here!</span>")
+
+	var/resolved = target.attackby(src, user, list())
+	if(!resolved && src)
+		afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+
+	if(isliving(target) && prob(Get_shield_chance())) // Better shields have more chance to stun.
+		var/mob/living/M = target
+		user.visible_message("<span class='warning'>[M] is stunned by [user] with [src]!</span>", "<span class='warning'>You stun [M] with [src]!</span>")
+		if(M.buckled)
+			M.buckled.user_unbuckle_mob(M)
+
+		M.apply_effect(2, STUN, 0)
+		M.apply_effect(2, WEAKEN, 0)
+		M.apply_effect(4, STUTTER, 0)
+		shake_camera(M, 1, 1)
+
+	return is_stunned
+
+/obj/item/weapon/shield/proc/on_sweep_push_success(atom/target, mob/user)
+	var/turf/T_target = get_turf(target)
+
+	if(user.a_intent != INTENT_HELP)
+		var/resolved = target.attackby(src, user, list())
+		if(!resolved && src)
+			afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+
+	if(!has_gravity(src) && !istype(target, /turf/space))
+		step_away(user, T_target)
+	else if(istype(target, /atom/movable))
+		var/atom/movable/AM = target
+		if(!AM.anchored)
+			var/turf/to_move = get_step(target, get_dir(user, target))
+			step_away(target, get_turf(src))
+			if(AM.loc != to_move && isliving(AM)) // We tried pushing them, but pushed them into something, IT'S FALLING DOWN TIME.
+				var/mob/living/M = AM
+
+				user.attack_log += "\[[time_stamp()]\]<font color='red'>pushed [M.name] ([M.ckey]) with [src.name].</font>"
+				M.attack_log += "\[[time_stamp()]\]<font color='orange'>pushed [user.name] ([user.ckey]) with [src.name].</font>"
+				msg_admin_attack("[key_name(user)] pushed [key_name(M)] with [src.name].", user)
+				user.visible_message("<span class='warning'>[M] is stunned by [user] with [src]!</span>", "<span class='warning'>You stun [M] with [src]!</span>")
+				if(M.buckled)
+					M.buckled.user_unbuckle_mob(M)
+
+				M.apply_effect(2, STUN, 0)
+				M.apply_effect(2, WEAKEN, 0)
+				M.apply_effect(6, STUTTER, 0)
+				shake_camera(M, 1, 1)
+
 /obj/item/weapon/shield/riot
 	hitsound = list('sound/weapons/metal_shield_hit.ogg')
 	name = "riot shield"
@@ -33,35 +102,6 @@
 	else
 		..()
 
-/obj/item/weapon/shield/riot/attack(mob/living/M, mob/user)
-	var/obj/item/weapon/shield/riot/tele/TS
-	if(istype(src, /obj/item/weapon/shield/riot/tele))
-		TS = src
-
-	if(M != user && ((TS && TS.active) || !TS) && !isrobot(M))
-		if(M.pulling)
-			M.stop_pulling()
-
-		user.do_attack_animation(M)
-		user.visible_message("<span class='warning'>[user.name] pushed away [M.name] with a [src.name]</span>")
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, M, user.dir), 1)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, M, user.dir), 2)
-		user.attack_log += "\[[time_stamp()]\]<font color='red'>pushed [M.name] ([M.ckey]) with [src.name].</font>"
-		M.attack_log += "\[[time_stamp()]\]<font color='orange'>pushed [user.name] ([user.ckey]) with [src.name].</font>"
-		msg_admin_attack("[key_name(user)] pushed [key_name(M)] with [src.name].", user)
-
-		if(prob(20))
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.shoes)
-					if(H.shoes.flags & NOSLIP)
-						return
-				M.Weaken(3)
-				shake_camera(M, 1, 1)
-
-	if(user.a_intent == I_HURT || M == user || (TS && !TS.active) || isrobot(M))
-		..()
-
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
 	desc = "A shield capable of stopping most projectile and melee attacks. It can be retracted, expanded, and stored anywhere."
@@ -78,6 +118,30 @@
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 	var/emp_cooldown = 0
+
+/obj/item/weapon/shield/energy/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
+
+	SCB.can_sweep = TRUE
+
+	SCB.can_push = TRUE
+
+	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
+
+	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
+
+	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/shield/energy.proc/can_sweep)
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/shield/energy.proc/can_sweep_push)
+
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/shield/energy/proc/can_sweep(mob/user)
+	return active
+
+/obj/item/weapon/shield/energy/proc/can_sweep_push(mob/user)
+	return active
 
 /obj/item/weapon/shield/energy/IsReflect(def_zone, hol_dir, hit_dir)
 	if(active)
@@ -110,6 +174,30 @@
 	block_chance = 50
 	w_class = ITEM_SIZE_NORMAL
 	var/active = 0
+
+/obj/item/weapon/shield/riot/tele/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
+
+	SCB.can_sweep = TRUE
+
+	SCB.can_push = TRUE
+
+	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
+
+	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
+
+	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/shield/riot/tele.proc/can_sweep)
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/shield/riot/tele.proc/can_sweep_push)
+
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/shield/riot/tele/proc/can_sweep(mob/user)
+	return active
+
+/obj/item/weapon/shield/riot/tele/proc/can_sweep_push(mob/user)
+	return active
 
 /obj/item/weapon/shield/riot/tele/Get_shield_chance()
 	if(active)

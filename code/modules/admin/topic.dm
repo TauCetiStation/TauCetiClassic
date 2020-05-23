@@ -802,6 +802,12 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_TSTAFF];jobban4=\ref[M]'>[ROLE_TSTAFF]</a></td>"
 
+		//religious familiar
+		if(jobban_isbanned(M, ROLE_RFAMILIAR))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_RFAMILIAR];jobban4=\ref[M]'><font color=red>[ROLE_RFAMILIAR]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_RFAMILIAR];jobban4=\ref[M]'>[ROLE_RFAMILIAR]</a></td>"
+
 		if(jobban_isbanned(M, "Mouse"))
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mouse;jobban4=\ref[M]'><font color=red>Mouse</font></a></td>"
 		else

@@ -213,13 +213,10 @@
 	"<span class='italics'>You hear metal scraping.</span>")
 	healthcheck(15)
 
-/obj/machinery/dominator/attack_animal(mob/living/user)
-	if(!isanimal(user))
-		return
-	var/mob/living/simple_animal/M = user
+/obj/machinery/dominator/attack_animal(mob/living/simple_animal/attacker)
 	..()
-	if(M.melee_damage_upper > 0)
-		healthcheck(M.melee_damage_upper)
+	if(attacker.melee_damage > 0)
+		healthcheck(attacker.melee_damage)
 
 //obj/machinery/dominator/mech_melee_attack(obj/mecha/M)
 //	if(M.damtype == "brute")

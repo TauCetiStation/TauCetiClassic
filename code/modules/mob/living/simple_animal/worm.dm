@@ -30,7 +30,7 @@
 	max_co2 = 0
 	max_tox = 0
 
-	a_intent = "harm" //so they don't get pushed around
+	a_intent = INTENT_HARM //so they don't get pushed around
 
 	environment_smash = 2
 
@@ -47,19 +47,18 @@
 	var/eatingDuration = 0 //how long he's been eating it for
 
 /mob/living/simple_animal/space_worm/head
-		name = "space worm head"
-		icon_state = "spacewormhead"
-		icon_living = "spacewormhead"
-		icon_dead = "spacewormdead"
+	name = "space worm head"
+	icon_state = "spacewormhead"
+	icon_living = "spacewormhead"
+	icon_dead = "spacewormdead"
 
-		maxHealth = 20
-		health = 20
+	maxHealth = 20
+	health = 20
 
-		melee_damage_lower = 10
-		melee_damage_upper = 15
-		attacktext = "bites"
+	melee_damage = 13
+	attacktext = "gnaw"
 
-		animate_movement = SLIDE_STEPS
+	animate_movement = SLIDE_STEPS
 
 /mob/living/simple_animal/space_worm/head/atom_init(mapload, segments = 6)
 	. = ..()

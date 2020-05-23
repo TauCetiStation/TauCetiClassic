@@ -88,17 +88,22 @@
 			return O
 	return 0
 
+/obj/structure/proc/get_climb_time(mob/living/user)
+	. = 50
+	//climbing takes twice as long when restrained.
+	if(user.restrained())
+		. *= 2
+	//aliens are terrifyingly fast
+	if(isxeno(user))
+		. *= 0.25
+
 /obj/structure/proc/do_climb(mob/living/user)
 	if (!can_climb(user))
 		return
 	usr.visible_message("<span class='warning'>[user] starts climbing onto \the [src]!</span>")
 	climbers |= user
 
-	var/adjusted_climb_time = 50
-	if(user.restrained()) //climbing takes twice as long when restrained.
-		adjusted_climb_time *= 2
-	if(isxeno(user))
-		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
+	var/adjusted_climb_time = get_climb_time(user)
 
 	if(!do_after(user, adjusted_climb_time, target = user))
 		climbers -= user

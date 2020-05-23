@@ -889,7 +889,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
 
-
 /obj/item/organ/external/r_leg
 	name = "right leg"
 	artery_name = "femoral artery"

@@ -141,6 +141,7 @@
 	O.germ_level -= min(volume*20, O.germ_level)
 
 /datum/reagent/sterilizine/reaction_turf(turf/T, volume)
+	. = ..()
 	T.germ_level -= min(volume*20, T.germ_level)
 
 /datum/reagent/leporazine
@@ -242,7 +243,7 @@
 				IO.damage = max(IO.damage - 0.7, 0)
 		switch(data["ticks"])
 			if(50 to 100)
-				H.disabilities -= COUGHING
+				H.disabilities &= ~COUGHING
 			if(100 to INFINITY)
 				H.hallucination = max(H.hallucination, 7)
 	data["ticks"]++

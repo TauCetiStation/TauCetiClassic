@@ -18,6 +18,9 @@
 	response_harm   = "kicks"
 	see_in_dark = 5
 
+	has_head = TRUE
+	has_leg = TRUE
+
 /mob/living/simple_animal/pug/Life()
 	..()
 

@@ -222,21 +222,6 @@
 			return 1
 	return 1
 
-/obj/structure/table/MouseDrop_T(obj/O as obj, mob/user as mob)
-	..()
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
-		return
-	if(isessence(usr) || isrobot(usr))
-		return
-	var/obj/item/weapon/W = O
-	if(!W.canremove || W.flags & NODROP)
-		return
-	user.drop_item()
-	if (O.loc != src.loc)
-		step(O, get_dir(O, src))
-	return
-
-
 /obj/structure/table/attackby(obj/item/W, mob/user, params)
 	. = TRUE
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user) < 2)
@@ -246,7 +231,7 @@
 			var/mob/living/A = G.assailant
 			user.SetNextMove(CLICK_CD_MELEE)
 			if (G.state < GRAB_AGGRESSIVE)
-				if(user.a_intent == "hurt")
+				if(user.a_intent == INTENT_HARM)
 					slam(A, M, G)
 				else
 					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
@@ -274,7 +259,7 @@
 		return
 
 	if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W,/obj/item/weapon/twohanded/dualsaber))
-		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W.force > 3 && user.a_intent == "hurt"))
+		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W.force > 3 && user.a_intent == INTENT_HARM))
 			if(istype(src, /obj/structure/table/reinforced) && W:active)
 				..()
 				to_chat(user, "<span class='notice'>You tried to slice through [src] but [W] is too weak.</span>")
@@ -637,39 +622,38 @@
 	else
 		return 0
 
-/obj/structure/rack/MouseDrop_T(obj/O, mob/user)
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
-		return
-	if(isrobot(user) || isessence(user))
-		return
-	var/obj/item/weapon/W = O
-	if(!W.canremove || W.flags & NODROP)
-		return
-	user.drop_item()
-	if (O.loc != src.loc)
-		step(O, get_dir(O, src))
-	return
-
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
 	if (iswrench(W))
 		new /obj/item/weapon/rack_parts( src.loc )
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 		return
-	if(istype(W, /obj/item/weapon/melee/energy)||istype(W, /obj/item/weapon/twohanded/dualsaber))
-		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W:active && user.a_intent == "hurt"))
-			user.do_attack_animation(src)
-			user.SetNextMove(CLICK_CD_MELEE)
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
-			spark_system.start()
-			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
-			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'> You hear [src] coming apart.</span>")
-			destroy()
-			return
 
-	return ..()
+	if(user.a_intent != INTENT_HARM)
+		return ..()
+
+	var/can_cut = TRUE
+	if(istype(W, /obj/item/weapon/melee/energy))
+		var/obj/item/weapon/melee/energy/E = W
+		can_cut = E.active
+	else if(istype(W, /obj/item/weapon/twohanded/dualsaber))
+		var/obj/item/weapon/twohanded/dualsaber/D = W
+		can_cut = D.wielded
+
+	if(!can_cut)
+		return ..()
+
+	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
+
+	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+	spark_system.set_up(5, 0, loc)
+	spark_system.start()
+
+	playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, "sparks", VOL_EFFECTS_MASTER)
+	visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'> You hear [src] coming apart.</span>")
+	destroy()
 
 /obj/structure/rack/meteorhit(obj/O)
 	qdel(src)

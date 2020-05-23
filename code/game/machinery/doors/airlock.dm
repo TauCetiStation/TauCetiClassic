@@ -648,7 +648,7 @@ var/list/airlock_overlays = list()
 	if(!density)
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(user.a_intent == "hurt")
+	if(user.a_intent == INTENT_HARM)
 		if(user.hulk_scream(src, 90))
 			door_rupture(user)
 		return

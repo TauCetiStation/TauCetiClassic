@@ -79,6 +79,18 @@
 	slot_flags = SLOT_FLAGS_BELT
 	force = 10
 
+	sweep_step = 2
+
+/obj/item/weapon/melee/classic_baton/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+
+	AddComponent(/datum/component/swiping, SCB)
+
 /obj/item/weapon/melee/classic_baton/attack(mob/M, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
@@ -90,7 +102,7 @@
 			user.take_bodypart_damage(2 * force)
 		return
 
-	if (user.a_intent == "hurt")
+	if (user.a_intent == INTENT_HARM)
 		if(!..()) return
 		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 		if (M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
@@ -120,6 +132,38 @@
 	w_class = ITEM_SIZE_SMALL
 	force = 3
 	var/on = 0
+
+	sweep_step = 5
+
+/obj/item/weapon/melee/telebaton/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+
+	SCB.can_push = TRUE
+
+	SCB.can_pull = TRUE
+
+	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep)
+	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_spin)
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep_push)
+	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep_pull)
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/melee/telebaton/proc/can_sweep()
+	return on
+
+/obj/item/weapon/melee/telebaton/proc/can_spin()
+	return on
+
+/obj/item/weapon/melee/telebaton/proc/can_sweep_push()
+	return on
+
+/obj/item/weapon/melee/telebaton/proc/can_sweep_pull()
+	return on
 
 /obj/item/weapon/melee/telebaton/attack_self(mob/user)
 	on = !on
@@ -173,7 +217,7 @@
 			else
 				user.take_bodypart_damage(2 * force)
 			return
-		if(user.a_intent == I_HELP && ishuman(target))
+		if(user.a_intent == INTENT_HELP && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 			user.do_attack_animation(H)

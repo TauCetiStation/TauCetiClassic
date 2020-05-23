@@ -182,7 +182,7 @@
 		return 0
 	return ..(M,flags)
 
-/datum/dna/gene/basic/midget/activate(mob/M, connected, flags)
+/datum/dna/gene/basic/midget/activate(mob/living/M, connected, flags)
 	..(M,connected,flags)
 	M.pass_flags |= 1
 	if(ishuman(M))
@@ -194,8 +194,9 @@
 	Mx.Scale(0.8) //Makes our hulk to be bigger than any normal human.
 	Mx.Translate(0,-2)
 	M.transform = Mx
+	M.default_transform = Mx
 
-/datum/dna/gene/basic/midget/deactivate(mob/M, connected, flags)
+/datum/dna/gene/basic/midget/deactivate(mob/living/M, connected, flags)
 	..(M,connected,flags)
 	M.pass_flags &= ~1
 	if(ishuman(M))
@@ -203,9 +204,8 @@
 		H.ventcrawler = 0
 
 	var/matrix/Mx = matrix()
-	Mx.Scale(1) ////Reset size of our halfling
-	Mx.Translate(0,0)
 	M.transform = Mx
+	M.default_transform = Mx
 
 /datum/dna/gene/basic/hulk
 	name                = "Hulk"

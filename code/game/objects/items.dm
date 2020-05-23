@@ -72,6 +72,9 @@
 	// This thing can be used to stab eyes out.
 	var/stab_eyes = FALSE
 
+	// Determines whether any religious activity has been carried out on the item.
+	var/blessed = FALSE
+
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0
@@ -193,6 +196,12 @@
 				message += "<span class='warning bold'>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl.</span><span class='notice bold'>Type: [blood_type]</span><br>"
 			else
 				message += "<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span><br>"
+		var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
+		switch(Heart.heart_status)
+			if(HEART_FAILURE)
+				message += "<span class='notice'><font color='red'>Warning! Subject's heart stopped!</font></span><br>"
+			if(HEART_FIBR)
+				message += "<span class='notice'>Subject's Heart status: <font color='blue'>Attention! Subject's heart fibrillating.</font></span><br>"
 		message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
 
 	if(!output_to_chat)
