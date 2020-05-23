@@ -197,7 +197,7 @@
 		add_fingerprint(user)
 		return
 
-	else if(src.opened)
+	else if(opened || istype(W, /obj/item/weapon/grab))
 		return ..()
 
 	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))

@@ -68,7 +68,7 @@
 		to_chat(user, "<span class='notice'>Access Denied</span>")
 
 /obj/structure/closet/secure_closet/attackby(obj/item/weapon/W, mob/user)
-	if(src.opened)
+	if(opened  || istype(W, /obj/item/weapon/grab))
 		return ..()
 	else if((istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber)) && !src.broken)
 		broken = 1

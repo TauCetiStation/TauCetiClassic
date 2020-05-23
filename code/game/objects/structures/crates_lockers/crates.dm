@@ -68,7 +68,7 @@
 	return 1
 
 /obj/structure/closet/crate/attackby(obj/item/weapon/W, mob/user)
-	if(opened)
+	if(opened || istype(W, /obj/item/weapon/grab))
 		return ..()
 
 	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))	//OOP? Doesn't heard.

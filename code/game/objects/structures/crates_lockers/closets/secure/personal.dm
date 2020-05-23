@@ -43,7 +43,7 @@
 	new /obj/item/device/radio/headset(src)
 
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/W, mob/user)
-	if (src.opened)
+	if(opened  || istype(W, /obj/item/weapon/grab))
 		return ..()
 	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		var/user_registered_name = null
