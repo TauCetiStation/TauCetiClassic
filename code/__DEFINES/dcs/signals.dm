@@ -21,6 +21,14 @@
 /// after a datum's Destroy() is called: (force, qdel_hint), at this point none of the other components chose to interrupt qdel and Destroy has been called
 #define COMSIG_PARENT_QDELETED "parent_qdeleted"
 
+// light related signals
+/// from base of /atom/movable/lighting_object/update(): ()
+#define COMSIG_LIGHT_UPDATE_OBJECT "light_update_object"
+
+// /datum/reagent signals
+/// from base of reagent/reaction_turf(): (turf/T, volume)
+#define COMSIG_REAGENT_REACTION_TURF "reagent_reaction_turf"
+
 // /client signals
 /// from base of client/Move(): (atom/NewLoc, direction)
 #define COMSIG_CLIENTMOB_MOVE "client_move"
@@ -31,6 +39,8 @@
 // /atom signals
 /// from base of atom/Entered(): (atom/movable/entering, /atom)
 #define COMSIG_ATOM_ENTERED "atom_entered"
+/// from base of atom/Exited(): (atom/movable/exiting, /atom/newLoc)
+#define COMSIG_ATOM_EXITED "atom_exited"
 /// from base of atom/movable/CanPass() & mob/CanPass(): (atom/movable/mover, atom/target, height, air_group)
 #define COMSIG_ATOM_CANPASS "movable_canpass"
 	#define COMPONENT_CANPASS  "canpass"
@@ -93,6 +103,10 @@
 /// from base of atom/MouseDrop(): (/atom/over, /atom/dropping, /mob/user)
 #define COMSIG_ITEM_MOUSEDROP_ONTO "item_mousedrop_onto"
 	// #define COMPONENT_NO_MOUSEDROP 1
+
+// mob signals
+/// from mob/proc/slip(): (weaken_duration, obj/slipped_on, lube)
+#define COMSIG_MOB_SLIP "movable_slip"
 
 // living signals
 /// from base of /mob/start_pulling(): (/atom/movable/target)

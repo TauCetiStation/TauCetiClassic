@@ -8881,7 +8881,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/pbag,
+/mob/living/pbag,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -9589,7 +9589,7 @@
 /turf/simulated/wall,
 /area/station/hallway/secondary/entry)
 "apU" = (
-/obj/structure/pbag,
+/mob/living/pbag,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -11223,10 +11223,6 @@
 "asU" = (
 /obj/structure/table,
 /obj/item/bodybag/cryobag,
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitered"
@@ -11242,8 +11238,15 @@
 	pixel_x = 10;
 	pixel_y = 2
 	},
+/obj/item/stack/medical/bruise_pack{
+	pixel_x = 10;
+	pixel_y = 2
+	},
 /obj/item/stack/medical/ointment{
 	pixel_y = 4
+	},
+/obj/machinery/vending/wallmed1{
+	pixel_y = 30
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -16765,7 +16768,7 @@
 /turf/simulated/floor,
 /area/station/civilian/gym)
 "aDt" = (
-/obj/structure/pbag,
+/mob/living/pbag,
 /turf/simulated/floor,
 /area/station/civilian/gym)
 "aDu" = (
@@ -18288,7 +18291,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/lawoffice)
 "aGf" = (
-/obj/structure/pbag,
+/mob/living/pbag,
 /obj/structure/sign/poster/official/work_for_a_future{
 	pixel_x = -32
 	},
@@ -32231,6 +32234,7 @@
 	},
 /area/station/rnd/hallway)
 "bfQ" = (
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
@@ -47208,6 +47212,7 @@
 /area/station/medical/surgery2)
 "bKI" = (
 /obj/machinery/light,
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -49126,6 +49131,7 @@
 /area/station/medical/hallway)
 "bPz" = (
 /obj/machinery/light,
+/obj/machinery/life_assist/cardiopulmonary_bypass,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -50766,6 +50772,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/life_assist/cardiopulmonary_bypass,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -77490,6 +77497,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"

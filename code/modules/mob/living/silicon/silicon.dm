@@ -194,3 +194,8 @@
 /mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/noise)
 	if(affect_silicon)
 		return ..()
+
+/mob/living/silicon/can_inject(mob/user, def_zone, show_message = TRUE, penetrate_thick = FALSE)
+	if(show_message)
+		to_chat(user, "<span class='alert'>[src]'s outer shell is too tough.</span>")
+	return FALSE
