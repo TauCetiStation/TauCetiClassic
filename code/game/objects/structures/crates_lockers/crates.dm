@@ -414,6 +414,14 @@
 	icon_opened = "hydrosecurecrateopen"
 	icon_closed = "hydrosecurecrate"
 
+/obj/structure/closet/crate/secure/miningsec
+	desc = "Crate for incredulous miners."
+	name = "secure mining crate"
+	icon_state = "miningsecurecrate"
+	icon_opened = "miningsecurecrateopen"
+	icon_closed = "miningsecurecrate"
+	req_access = list(access_mining)
+
 /obj/structure/closet/crate/secure/woodseccrate
 	desc = "A secure wooden crate."
 	name = "Secure wooden crate"
