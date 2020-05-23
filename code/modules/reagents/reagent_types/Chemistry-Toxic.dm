@@ -147,7 +147,7 @@
 	toxpwr = 4
 	custom_metabolism = 0.4
 	restrict_species = list(IPC, DIONA)
-	spawn emote("gasp")
+	emote("gasp")
 	flags = list()
 
 /datum/reagent/toxin/cyanide/on_general_digest(mob/living/M)
