@@ -153,6 +153,7 @@
 	..()
 	M.adjustOxyLoss(4 * REM)
 	M.SetSleeping(20 SECONDS)
+	M.emote("gasp")
 
 /datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
