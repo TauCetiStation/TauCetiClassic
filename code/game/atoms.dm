@@ -494,6 +494,9 @@
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
 
+/atom/Exited(atom/movable/AM, atom/newLoc)
+	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, AM, newLoc)
+
 /atom/proc/update_transform()
 	var/matrix/ntransform = matrix(transform)
 	var/changed = 0

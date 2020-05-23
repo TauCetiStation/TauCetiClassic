@@ -11223,10 +11223,6 @@
 "asU" = (
 /obj/structure/table,
 /obj/item/bodybag/cryobag,
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitered"
@@ -11242,8 +11238,15 @@
 	pixel_x = 10;
 	pixel_y = 2
 	},
+/obj/item/stack/medical/bruise_pack{
+	pixel_x = 10;
+	pixel_y = 2
+	},
 /obj/item/stack/medical/ointment{
 	pixel_y = 4
+	},
+/obj/machinery/vending/wallmed1{
+	pixel_y = 30
 	},
 /turf/simulated/floor{
 	dir = 1;
