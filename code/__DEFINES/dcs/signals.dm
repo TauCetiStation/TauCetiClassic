@@ -69,6 +69,10 @@
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
 #define COMSIG_MOVABLE_PIXELMOVE "movable_pixelmove"
 
+// /mob signals
+/// from base of mob/death(): (gibbed)
+#define COMSIG_MOB_DIED "mob_died"
+
 // living signals
 /// from base of /mob/start_pulling(): (/atom/movable/target)
 #define COMSIG_LIVING_START_PULL "living_start_pull"
@@ -101,7 +105,10 @@
 /// send this signal to remove a list of tip ids(use tip_names as tip ids): (/list/tip_ids_to_remove)
 #define COMSIG_TIPS_REMOVE "comsig_tip_remove"
 
-// send this signal to add /datum/name_modifier to a mob: (name_modifier_type, strength)
+/// send this signal to add /datum/name_modifier to a mob: (name_modifier_type, strength)
 #define COMSIG_NAME_MOD_ADD "comsig_mob_mod_add"
-// send this signal to remove /datum/name_modifier from a mob: (name_modifier_type, strength)
+/// send this signal to remove /datum/name_modifier from a mob: (name_modifier_type, strength)
 #define COMSIG_NAME_MOD_REMOVE "comsig_mob_mod_remove"
+
+/// from base of /datum/mob_modifier/revert. Called to notify other modifiers that they should re-apply: (datum/component/mob_modifier/reverting)
+#define COMSIG_MOB_MOD_UPDATE "mob_mod_update"

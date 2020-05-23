@@ -2,6 +2,8 @@
  * A container to manage all the modifiers.
  */
 /datum/component/name_modifiers
+	dupe_type = COMPONENT_DUPE_UNIQUE
+
 	/// An amount of allowed modifiers to be displayed by group.
 	var/list/amount_by_group
 
@@ -141,7 +143,6 @@
 
 /// Remove the modifier mod_type.
 /datum/component/name_modifiers/proc/RemoveModifier(datum/source, mod_type, severity = 1)
-	to_chat(world, "REMOVING MODIFIER [mod_type]")
 	var/datum/name_modifier/NM = modifiers_by_type[mod_type]
 
 	NM.severity -= severity

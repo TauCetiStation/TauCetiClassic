@@ -45,7 +45,7 @@
 		if(health <= maxHealth * 0.6)
 			msg = "<span class='warning'>appears badly wounded.</span>\n"
 		if(health <= maxHealth * 0.3)
-			msg = "<span class='warning'>almost dead.</span>\n"
+			msg = "<span class='warning'>is almost dead.</span>\n"
 
 	if(msg)
 		to_chat(user, "<b>[name]</b> [msg]")

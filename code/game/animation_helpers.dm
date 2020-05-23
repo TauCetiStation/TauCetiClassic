@@ -8,6 +8,8 @@
 	return
 
 /atom/proc/shake_animation(intensity, time, intensity_dropoff = 0.9)
+	if(invisibility > 0)
+		return
 	if(shaking_anim)
 		return
 	shaking_anim = TRUE
@@ -69,7 +71,7 @@
 		me.loc = src
 		me.appearance_flags |= KEEP_APART
 
-		flick_overlay(I, viewers, time)
+		flick_overlay(me, viewers, time)
 		QDEL_IN(me, time)
 		return
 
@@ -80,5 +82,13 @@
 	me.loc = src
 	me.appearance_flags |= KEEP_APART
 
-	flick_overlay(I, viewers, time)
+	flick_overlay(me, viewers, time)
 	QDEL_IN(me, time)
+
+/mob/living/shake_animation(intensity, time, intensity_dropoff, list/viewers)
+	if(notransform)
+		return
+	..()
+
+/mob/living/after_shake_animation(intensity, time, intensity_dropoff, list/viewers)
+	transform = default_transform

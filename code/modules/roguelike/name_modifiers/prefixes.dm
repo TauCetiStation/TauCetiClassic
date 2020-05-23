@@ -14,3 +14,15 @@
 
 /datum/name_modifier/prefix/ghostly
 	text = "ghostly"
+
+/datum/name_modifier/prefix/slimy
+	text = "slimy"
+
+/datum/name_modifier/prefix/cursed
+	text = "cursed"
+
+/datum/name_modifier/prefix/friendly
+	text = "friendly"
+
+/datum/name_modifier/prefix/strong
+	text = "strong"

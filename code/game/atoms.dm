@@ -610,3 +610,24 @@
 // Called after we wrench/unwrench this object
 /obj/proc/wrenched_change()
 	return
+
+/atom/proc/shake_act(severity, recursive = TRUE)
+	if(isturf(loc))
+		INVOKE_ASYNC(src, /atom.proc/shake_animation, severity, 1 SECOND)
+
+/atom/movalbe/lightning_object/shake_act(severity, recursive = TRUE)
+	return
+
+/turf/shake_act(severity, recursive = TRUE)
+	for(var/atom/A in contents)
+		A.shake_act(severity - 1)
+	INVOKE_ASYNC(src, /atom.proc/shake_animation, severity, 1 SECOND)
+
+	if(severity >= 3)
+		for(var/dir_ in cardinal)
+			var/turf/T = get_step(src, dir_)
+			T.shake_act(severity - 1, recursive = FALSE)
+
+/mob/shake_act(severity, recursive = TRUE)
+	..()
+	shake_camera(src, 1 SECOND, severity)
