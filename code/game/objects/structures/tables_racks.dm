@@ -628,20 +628,32 @@
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 		return
-	if(istype(W, /obj/item/weapon/melee/energy)||istype(W, /obj/item/weapon/twohanded/dualsaber))
-		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W:active && user.a_intent == INTENT_HARM))
-			user.do_attack_animation(src)
-			user.SetNextMove(CLICK_CD_MELEE)
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
-			spark_system.start()
-			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
-			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'> You hear [src] coming apart.</span>")
-			destroy()
-			return
 
-	return ..()
+	if(user.a_intent != INTENT_HARM)
+		return ..()
+
+	var/can_cut = TRUE
+	if(istype(W, /obj/item/weapon/melee/energy))
+		var/obj/item/weapon/melee/energy/E = W
+		can_cut = E.active
+	else if(istype(W, /obj/item/weapon/twohanded/dualsaber))
+		var/obj/item/weapon/twohanded/dualsaber/D = W
+		can_cut = D.wielded
+
+	if(!can_cut)
+		return ..()
+
+	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
+
+	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+	spark_system.set_up(5, 0, loc)
+	spark_system.start()
+
+	playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, "sparks", VOL_EFFECTS_MASTER)
+	visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'> You hear [src] coming apart.</span>")
+	destroy()
 
 /obj/structure/rack/meteorhit(obj/O)
 	qdel(src)

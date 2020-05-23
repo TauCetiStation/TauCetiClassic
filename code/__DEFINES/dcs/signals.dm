@@ -21,6 +21,10 @@
 /// after a datum's Destroy() is called: (force, qdel_hint), at this point none of the other components chose to interrupt qdel and Destroy has been called
 #define COMSIG_PARENT_QDELETED "parent_qdeleted"
 
+// light related signals
+/// from base of /atom/movable/lighting_object/update(): ()
+#define COMSIG_LIGHT_UPDATE_OBJECT "light_update_object"
+
 // /datum/reagent signals
 /// from base of reagent/reaction_turf(): (turf/T, volume)
 #define COMSIG_REAGENT_REACTION_TURF "reagent_reaction_turf"
@@ -49,6 +53,9 @@
 #define COMSIG_PARENT_EXAMINE "atom_examine"
 /// from base of mob/examinate(): (/mob)
 #define COMSIG_PARENT_POST_EXAMINE "atom_post_examine"
+/// from base of atom/MouseDrop(): (/atom/over, /mob/user)
+#define COMSIG_MOUSEDROP_ONTO "mousedrop_onto"
+	#define COMPONENT_NO_MOUSEDROP 1
 /// from base of atom/MouseDrop_T: (/atom/from, /mob/user)
 #define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"
 
@@ -75,9 +82,27 @@
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
 #define COMSIG_MOVABLE_PIXELMOVE "movable_pixelmove"
 
-// light related signals
-/// from base of /atom/movable/lighting_object/update(): ()
-#define COMSIG_LIGHT_UPDATE_OBJECT "light_update_object"
+// /obj/item signals
+/// from base of obj/item/attack(): (/mob/living/target, /mob/living/user, def_zone)
+#define COMSIG_ITEM_ATTACK "item_attack"
+	#define COMPONENT_ITEM_NO_ATTACK 1
+/// from base of obj/item/attack_self(): (/mob/user)
+#define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
+	#define COMPONENT_NO_INTERACT 1
+/// from base of mob/ShiftClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_SHIFTCLICKWITH "item_shiftclickwith"
+/// from base of mob/CtrlClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_CTRLCLICKWITH "item_ctrlclickwith"
+/// from base of mob/AltClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_ALTCLICKWITH "item_altclickwith"
+/// from base of mob/CtrlShiftClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_CTRLSHIFTCLICKWITH "item_ctrlshiftclickwith"
+/// from base of mob/MiddleClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_MIDDLECLICKWITH "item_middleclickwith"
+	#define COMSIG_ITEM_CANCEL_CLICKWITH 1
+/// from base of atom/MouseDrop(): (/atom/over, /atom/dropping, /mob/user)
+#define COMSIG_ITEM_MOUSEDROP_ONTO "item_mousedrop_onto"
+	// #define COMPONENT_NO_MOUSEDROP 1
 
 // mob signals
 /// from mob/proc/slip(): (weaken_duration, obj/slipped_on, lube)
