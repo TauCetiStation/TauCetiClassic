@@ -2,6 +2,10 @@
 	name = "weapon"
 	icon = 'icons/obj/weapons.dmi'
 
+	// Is heavily utilized by swiping component. Perhaps use to determine how "quick" the strikes with this weapon are?
+	// See swiping.dm for more details.
+	var/sweep_step = 4
+
 /obj/item/weapon/throwing_star
 	name = "throwing star"
 	desc = "An ancient weapon still used to this day due to it's ease of lodging itself into victim's body parts"
