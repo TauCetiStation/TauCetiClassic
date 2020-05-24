@@ -154,7 +154,11 @@
 	M.adjustOxyLoss(4 * REM)
 	M.SetSleeping(20 SECONDS)
 	M.emote("gasp")
-    M/proc/throw_alert("oxy", /obj/screen/alert/oxy)
+if(M.has_reagent(cyanide))
+ throw_alert("oxy", /obj/screen/alert/oxy)
+else
+ return 0
+
 
 /datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
