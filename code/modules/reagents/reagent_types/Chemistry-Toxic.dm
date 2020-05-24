@@ -159,7 +159,6 @@ if(M.has_reagent("cyanide"))
 else
  return 0
 
-
 /datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
 	id = "minttoxin"
