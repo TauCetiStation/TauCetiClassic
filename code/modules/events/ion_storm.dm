@@ -12,12 +12,10 @@
 			players += player.real_name
 	var/random_player = "The Captain"
 	var/random_race = HUMAN
-	var/pos_races = ""
-	for(var/mob/living/carbon/C in players)
-	 pos_races |= C.get_species()
 	random_race = pick(pos_races)
 	if(players.len)
 		random_player = pick(players)		//Random player's name, to be used in laws.
+		random_race = random_player.get_species() // Random player's race, to be used in laws
 	var/list/laws = list(	"You are a mouse.",
 							"Question everything.",
 							"You must always lie.",
