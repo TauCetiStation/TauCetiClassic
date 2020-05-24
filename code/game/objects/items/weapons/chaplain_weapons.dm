@@ -304,3 +304,16 @@
 
 	next_ping = world.time + 5 SECONDS
 	audible_message("<span class='notice'>\The [src] stone blinked.</span>", deaf_message = "\The [src] stone blinked.")
+
+/obj/item/weapon/claymore/religion
+	name = "claymore"
+	desc = "Good weapon for the crusade."
+	force = 10
+	throwforce = 5
+
+	var/image/down_overlay
+
+/obj/item/weapon/claymore/religion/proc/revert_effect()
+	if(down_overlay)
+		cut_overlays(down_overlay)
+		qdel(down_overlay)
