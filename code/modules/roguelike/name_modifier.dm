@@ -53,7 +53,7 @@
 /datum/component/name_modifiers/proc/remove_max_priority(datum/name_modifier/NM)
 	highest_priority_modifiers[NM.group] -= NM
 
-	if(highest_priority_modifiers[NM.group].len == 0)
+	if(length(highest_priority_modifiers[NM.group]) == 0)
 		// 0 is not an available priority
 		var/new_highest = 0
 		for(var/i in 1 to NM.priority - 1)
@@ -64,7 +64,7 @@
 			highest_priority_modifiers[NM.group] += name_modifiers[NM.group][new_highest]
 			priority_by_group[NM.group] = new_highest
 
-		if(highest_priority_modifiers[NM.group].len == 0)
+		if(length(highest_priority_modifiers[NM.group]) == 0)
 			highest_priority_modifiers -= NM.group
 			priority_by_group -= NM.group
 			UNSETEMPTY(highest_priority_modifiers)
@@ -157,7 +157,7 @@
 	name_modifiers[NM.group]["[NM.priority]"] -= NM
 	if(name_modifiers[NM.group]["[NM.priority]"] == 0)
 		name_modifiers[NM.group] -= "[NM.priority]"
-		if(name_modifiers[NM.group].len == 0)
+		if(length(name_modifiers[NM.group]) == 0)
 			name_modifiers -= NM.group
 			UNSETEMPTY(name_modifiers)
 
