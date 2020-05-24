@@ -159,6 +159,8 @@
 	my_icon_state = "pbagdown"
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 
+	remove_performed_combos()
+
 /mob/living/pbag/proc/swing(time = rand(0.5 SECONDS, 2 SECONDS))
 	if(swinging || incapacitated())
 		return
