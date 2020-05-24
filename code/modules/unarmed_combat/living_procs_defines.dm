@@ -343,11 +343,6 @@ var/global/combos_cheat_sheet = ""
 	for(var/datum/combo_handler/CS in combos_performed)
 		CS.get_next_combo()
 
-// Removes all combos performed on mob.
-/mob/living/proc/remove_performed_combos()
-	for(var/datum/combo_handler/CS in combos_saved)
-		qdel(CS)
-
 // Is used to more precisely pick a combo, removes first combo element.
 /mob/living/proc/drop_combo_element()
 	. = FALSE

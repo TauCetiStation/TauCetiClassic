@@ -89,8 +89,7 @@
 	return
 
 /mob/living/pbag/Life()
-	if(!incapacitated())
-		handle_combat()
+	handle_combat()
 
 /mob/living/pbag/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, used_weapon = null)
 	if(!incapacitated())
@@ -158,8 +157,6 @@
 	icon_state = "pbagdown"
 	my_icon_state = "pbagdown"
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-
-	remove_performed_combos()
 
 /mob/living/pbag/proc/swing(time = rand(0.5 SECONDS, 2 SECONDS))
 	if(swinging || incapacitated())
