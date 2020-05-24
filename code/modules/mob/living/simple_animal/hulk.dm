@@ -20,7 +20,7 @@
 	melee_damage = 13
 	attacktext = "brutally crush"
 	environment_smash = 2
-
+	default_layer = 5
 	speed = 1
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
@@ -55,9 +55,10 @@
 						/obj/effect/proc_holder/spell/aoe_turf/hulk_smash
 							)
 
+
 /mob/living/simple_animal/hulk/mouse
-	name = "Megamouse"
-	real_name = "Megamouse"
+	name = "megamouse"
+	real_name = "megamouse"
 	icon = 'icons/mob/hulk_mouse.dmi'
 	icon_state = "mmouse"
 	icon_living = "mmouse"
@@ -66,6 +67,7 @@
 	health = 100
 	melee_damage = 13
 	speed = 0.4
+	var/fpunches
 	var/hiding = FALSE
 	attacktext = " SQUEEKS"
 	speak_emote = list("SQUEEKS!!!")
@@ -89,8 +91,6 @@
 	icon = 'icons/mob/hulk_mouse.dmi'
 	return
 
-
-
 /mob/living/simple_animal/hulk/mouse/UnarmedAttack(atom/A)
 	if(hiding)
 		return
@@ -100,7 +100,19 @@
 		health += 1
 		visible_message("<span class='notice'>[src] swallows whole [A.name]! WOW!!!</span>")
 	else
+		if(fpunches)
+			A.attack_animal(src)
+			return
 		return ..()
+
+/mob/living/simple_animal/hulk/mouse/verb/speed()
+	set name = "Speed"
+	set desc = "Gotta go fast. Fast punches"
+	set category = "MOUSE"
+	if((last_time_activate + cooldown) >= world.time)
+		return
+	fpunches = !fpunches
+
 
 /mob/living/simple_animal/hulk/mouse/verb/hide()
 	set name = "MEGAHIDE"
@@ -115,7 +127,7 @@
 		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 	else
 		invisibility = initial(invisibility)
-		density = initial(density)
+		density = 1
 		if(istype(get_turf(src.loc),/turf/simulated/floor))
 			var/turf/simulated/floor/T = get_turf(src.loc)
 			T.break_tile()
@@ -124,15 +136,25 @@
 		usr.say("SQUEEEK!")
 	last_time_activate = world.time
 
+/mob/living/simple_animal/hulk/mouse/start_pulling(atom/movable/AM)
+	if(hiding)
+		return
+	..()
+
 /mob/living/simple_animal/hulk/mouse/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	.=..()
-
 	if(. && hiding)
 		var/turf/simulated/floor/T = get_turf(src.loc)
-		INVOKE_ASYNC(T, /atom/proc/shake_animation , 10, 5, 0.9)
-		for(var/atom/A in T.contents)
-			INVOKE_ASYNC(A, /atom/proc/shake_animation , 10, 5, 0.9)
+		INVOKE_ASYNC(T, /atom/proc/shake_animation , 5, 5, 0.9)
+		for(var/atom/movable/A in T.contents)
+			if(!A.anchored)
+				INVOKE_ASYNC(A, /atom/proc/shake_animation , 5, 5, 0.9)
 		return
+
+/mob/living/simple_animal/hulk/mouse/Life()
+	..()
+	if(fpunches)
+		health -=5
 
 /mob/living/simple_animal/hulk/unathi
 	name = "Zilla"
