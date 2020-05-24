@@ -26,3 +26,6 @@
 
 /datum/name_modifier/prefix/strong
 	text = "strong"
+
+/datum/name_modifier/prefix/singular
+	text = "singular"

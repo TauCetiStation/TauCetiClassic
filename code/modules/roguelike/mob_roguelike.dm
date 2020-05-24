@@ -17,11 +17,11 @@
 		for(var/am in 1 to spawn_am)
 			new loot_type(loc)
 
-/mob/living/simple_animal/hostile/proc/gen_modifiers(modifier_amount = 3, rarity_cost = 5)
+/mob/living/simple_animal/hostile/proc/gen_modifiers(modifier_amount = 3, rarity_cost = rand(2, 6))
 	return
 
 // Currently only they are meaningful to have the modifiers.
-/mob/living/simple_animal/hostile/asteroid/gen_modifiers(modifier_amount = 3, rarity_cost = 5)
+/mob/living/simple_animal/hostile/asteroid/gen_modifiers(modifier_amount = 3, rarity_cost = rand(2, 6))
 	if(!prob(special_prob))
 		return
 
@@ -62,6 +62,3 @@
 
 		rarity_cost -= cost
 		modifier_amount -= 1
-
-/mob/living/simple_animal/hostile/attack_ghost(mob/user)
-	qdel(GetComponent(/datum/component/mob_modifier/healthy))

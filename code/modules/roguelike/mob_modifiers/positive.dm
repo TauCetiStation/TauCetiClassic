@@ -267,11 +267,11 @@
 
 /datum/component/mob_modifier/strong
 	modifier_name = RL_MM_STRONG
-	name_modifier_type = /datum/name_modifier/prefix/healthy
+	name_modifier_type = /datum/name_modifier/prefix/strong
 
 	rarity_cost = 2
 
-/datum/component/mob_modifier/friendly/apply(update = FALSE)
+/datum/component/mob_modifier/strong/apply(update = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -285,7 +285,7 @@
 	H.loot_mod *= 1.5 * strength
 	H.faction = "Station"
 
-/datum/component/mob_modifier/friendly/revert(update = FALSE)
+/datum/component/mob_modifier/strong/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
 
 	H.melee_damage *= 1 / (1.5 * strength)
@@ -294,7 +294,46 @@
 	H.faction = initial(H.faction)
 	return ..()
 
-/datum/component/mob_modifier/friendly/proc/shake_ground()
+/datum/component/mob_modifier/strong/proc/shake_ground()
+	var/mob/living/simple_animal/hostile/H = parent
+
+	if(H.incapacitated())
+		return
+
+	H.loc.shake_act(3)
+
+
+
+/datum/component/mob_modifier/singular
+	modifier_name = RL_MM_SINGULAR
+	name_modifier_type = /datum/name_modifier/prefix/singular
+
+	rarity_cost = 4
+
+/datum/component/mob_modifier/singular/apply(update = FALSE)
+	. = ..()
+	if(!.)
+		return
+
+	var/mob/living/simple_animal/hostile/H = parent
+
+	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), .proc/shake_ground)
+
+	H.melee_damage *= 1.5 * strength
+
+	H.loot_mod *= 1.5 * strength
+	H.faction = "Station"
+
+/datum/component/mob_modifier/singular/revert(update = FALSE)
+	var/mob/living/simple_animal/hostile/H = parent
+
+	H.melee_damage *= 1 / (1.5 * strength)
+	H.loot_mod *= 1 / (1.5 * strength)
+
+	H.faction = initial(H.faction)
+	return ..()
+
+/datum/component/mob_modifier/singular/proc/eat()
 	var/mob/living/simple_animal/hostile/H = parent
 
 	if(H.incapacitated())

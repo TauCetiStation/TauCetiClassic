@@ -5,6 +5,7 @@
 #define RL_MM_SLIMY "Slimy"
 #define RL_MM_FRIENDLY "Friendly"
 #define RL_MM_STRONG "Strong"
+#define RL_MM_SINGULAR "Singular"
 
 /// name_modifier related defines.
 #define RL_GROUP_PREFIX "prefix"
