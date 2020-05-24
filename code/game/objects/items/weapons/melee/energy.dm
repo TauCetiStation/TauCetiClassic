@@ -8,7 +8,7 @@
 /obj/item/weapon/melee/energy/atom_init()
 	. = ..()
 	var/datum/swipe_component_builder/SCB = new
-	SCB.interupt_on_sweep_hit_types = list(/obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
+	SCB.interupt_on_sweep_hit_types = list()
 
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE

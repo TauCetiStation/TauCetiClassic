@@ -123,7 +123,7 @@
 /obj/item/weapon/twohanded/fireaxe/atom_init()
 	. = ..()
 	var/datum/swipe_component_builder/SCB = new
-	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
 
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
@@ -209,7 +209,7 @@
 			light_color = COLOR_GRAY
 
 	var/datum/swipe_component_builder/SCB = new
-	SCB.interupt_on_sweep_hit_types = list(/obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
+	SCB.interupt_on_sweep_hit_types = list()
 
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE

@@ -120,9 +120,6 @@
 	description = "This object appears to be swipable. You can perform swipes either via mouse moves, or click modifiers.\n[pos_moves]"
 
 /datum/component/swiping
-	// Whether is currently swiping.
-	var/swiping = FALSE
-
 	var/list/interupt_on_sweep_hit_types = list(/atom)
 
 	var/can_push = FALSE
@@ -402,6 +399,9 @@
 		if(!can_sweep_call.Invoke(user))
 			return FALSE
 
+	if(user.get_active_hand() != parent)
+		return FALSE
+
 	if(user.is_busy() || !do_after(user, sweep_delay, target = parent, can_move = TRUE, progress = FALSE))
 		return FALSE
 	return TRUE
@@ -509,8 +509,8 @@
 
 // The handler for all the possible sweeping images, directions, and etc. Please use the wrapper - sweep.
 /datum/component/swiping/proc/async_sweep(list/directions, mob/living/user, sweep_delay)
-	swiping = TRUE
 	var/obj/item/weapon/W = parent
+	W.swiping = TRUE
 
 	var/turf/start = get_step(W, directions[1])
 
@@ -555,7 +555,7 @@
 
 	for(var/obj/effect/effect/weapon_sweep/sweep_image in sweep_objects)
 		QDEL_IN(sweep_image, sweep_image.sweep_delay)
-	swiping = FALSE
+	W.swiping = FALSE
 
 // A tidy wrapper for the sweep logic, with neccesary checks.
 /datum/component/swiping/proc/sweep(list/directions, mob/living/user, sweep_delay)
@@ -563,7 +563,8 @@
 		can_sweep_call.Invoke(user)
 		return COMSIG_ITEM_CANCEL_CLICKWITH
 
-	if(swiping)
+	var/obj/item/I = parent
+	if(I.swiping)
 		return
 
 	INVOKE_ASYNC(src, .proc/async_sweep, directions, user, sweep_delay)
