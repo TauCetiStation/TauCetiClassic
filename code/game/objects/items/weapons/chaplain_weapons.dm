@@ -311,12 +311,11 @@
 	flags = ABSTRACT
 	slot_flags = FALSE
 
-	var/time_of_life = 0
-	var/timer
+	var/life_timer
 
 /obj/item/weapon/shield/riot/roman/religion/Destroy()
-	if(timer)
-		deltimer(timer)
+	if(life_timer)
+		deltimer(life_timer)
 	return ..()
 
 /obj/item/weapon/shield/riot/roman/religion/dropped(mob/user)
@@ -329,11 +328,12 @@
 	force = 10
 	throwforce = 5
 
-	var/next_shield = 0
+	var/can_spawn_shield = TRUE
 	var/obj/item/weapon/shield/riot/roman/religion/shield
 
 	var/holy_outline
 	var/have_outline = FALSE
+	var/can_spawn_shield_timer
 	var/image/down_overlay
 
 /obj/item/weapon/claymore/religion/atom_init()
@@ -344,21 +344,11 @@
 	addtimer(CALLBACK(src, .proc/revert_effect), 5 SECONDS)
 
 	holy_outline = filter(type = "outline", size = 1, color = "#fffb0064")
-	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/claymore/religion/Destroy()
-	STOP_PROCESSING(SSobj, src)
+	if(can_spawn_shield_timer)
+		deltimer(can_spawn_shield_timer)
 	return ..()
-
-/obj/item/weapon/claymore/religion/process()
-	if(!have_outline && world.time > next_shield && ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		if(H.mind && H.mind.holy_role)
-			have_outline = TRUE
-			force = 10
-			filters += holy_outline
-		else
-			force = 7
 
 /obj/item/weapon/claymore/religion/dropped()
 	QDEL_NULL(shield)
@@ -366,29 +356,39 @@
 	filters -= holy_outline
 
 /obj/item/weapon/claymore/religion/pickup(mob/user)
-	if(!have_outline && world.time > next_shield && user.mind.holy_role)
-		have_outline = TRUE
-		filters += holy_outline
+	if(user.mind.holy_role)
+		force = 10
+		if(!have_outline && can_spawn_shield)
+			have_outline = TRUE
+			filters += holy_outline
+	else
+		force = 5
 
 /obj/item/weapon/claymore/religion/proc/revert_effect()
 	if(down_overlay)
 		cut_overlays(down_overlay)
 		qdel(down_overlay)
 
+/obj/item/weapon/claymore/religion/proc/ready_shield(mob/M)
+	can_spawn_shield = TRUE
+	if(!have_outline && (src in M.contents))
+		have_outline = TRUE
+		filters += holy_outline
+
 /obj/item/weapon/claymore/religion/attack_self(mob/living/carbon/human/H)
-	if(!H.mind.holy_role || next_shield > world.time)
+	if(!H.mind.holy_role || !can_spawn_shield)
 		return
 
 	var/obj/item/weapon/shield/riot/roman/religion/R = new (H)
 	if(H.put_in_inactive_hand(R))
-		next_shield = world.time + 3 MINUTES
+		can_spawn_shield = FALSE
+		can_spawn_shield_timer = addtimer(CALLBACK(src, .proc/ready_shield, H), 3 MINUTES)
 		filters -= holy_outline
 		shield = R
 		have_outline = FALSE
 
 		R.alpha = 200
 		R.filters += holy_outline
-		R.time_of_life = next_shield
-		R.timer = addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, R), 3 MINUTES)
+		R.life_timer = addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, R), 1 MINUTES)
 	else
 		qdel(R)
