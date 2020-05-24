@@ -155,7 +155,8 @@
 	M.SetSleeping(20 SECONDS)
 	M.emote("gasp")
 	
-mob/living/carbon/human/has_reagent("cyanide")/proc/throw_alert("oxy", /obj/screen/alert/oxy)
+/mob/living/carbon/human/proc/has_reagent("cyanide")
+ throw_alert("oxy", /obj/screen/alert/oxy)
 
 /datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
