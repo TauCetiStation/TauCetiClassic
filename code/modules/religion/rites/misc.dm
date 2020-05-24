@@ -85,14 +85,14 @@
 	var/heal_num = -15
 	for(var/mob/living/L in range(2, src))
 		L.apply_damages(heal_num, heal_num, heal_num, heal_num, heal_num, heal_num)
+	
+	adding_favor += 2.0
 
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
 /datum/religion_rites/pray/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
 	global.chaplain_religion.favor += 15 + adding_favor
-	if(adding_favor <= 20 && stage % 2 == 0)
-		adding_favor += 0.5
 	return TRUE
 
 /*

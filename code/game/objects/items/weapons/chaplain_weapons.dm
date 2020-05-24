@@ -355,7 +355,7 @@
 	have_outline = FALSE
 	filters -= holy_outline
 
-/obj/item/weapon/claymore/religion/pickup(mob/user)
+/obj/item/weapon/claymore/religion/equipped(mob/user, slot)
 	if(user.mind.holy_role)
 		force = 10
 		if(!have_outline && can_spawn_shield)
@@ -371,7 +371,7 @@
 
 /obj/item/weapon/claymore/religion/proc/ready_shield(mob/M)
 	can_spawn_shield = TRUE
-	if(!have_outline && (src in M.contents))
+	if(!have_outline && (slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND))
 		have_outline = TRUE
 		filters += holy_outline
 
