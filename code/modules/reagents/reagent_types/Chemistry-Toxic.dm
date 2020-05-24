@@ -152,11 +152,16 @@
 /datum/reagent/toxin/cyanide/on_general_digest(mob/living/M)
 	..()
 	M.adjustOxyLoss(4 * REM)
-	M.SetSleeping(20 SECONDS)
 	M.emote("gasp")
-	
-/mob/living/carbon/human/proc/has_reagent("cyanide")
- throw_alert("oxy", /obj/screen/alert/oxy)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	switch(data["ticks"])
+		if(1 to 5)
+			M.throw_alert("oxy", /obj/screen/alert/oxy)
+		if(6 to INFINITY)
+			M.SetSleeping(20 SECONDS)
+			M.throw_alert("oxy", /obj/screen/alert/oxy)
 
 /datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
