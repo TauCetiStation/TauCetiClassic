@@ -37,6 +37,7 @@
 				H.update_hair()
 
 /datum/reagent/water/reaction_turf(turf/simulated/T, volume)
+	. = ..()
 	spawn_fluid(T, volume) // so if will spawn even in space, just for pure visuals
 	if(!istype(T))
 		return
@@ -89,6 +90,8 @@
 	id = "holywater"
 	description = "An ashen-obsidian-water mix, this solution will alter certain sections of the brain's rationality."
 	color = "#e0e8ef" // rgb: 224, 232, 239
+
+	needed_aspects = list(ASPECT_RESCUE = 1)
 
 /datum/reagent/water/holywater/on_general_digest(mob/living/M)
 	..()
@@ -148,6 +151,8 @@
 	color = "#c80064" // rgb: 200,0, 100
 
 	data = list()
+
+	needed_aspects = list(ASPECT_OBSCURE = 1)
 
 /datum/reagent/water/unholywater/on_general_digest(mob/living/M)
 	..()
@@ -322,7 +327,7 @@
 	custom_metabolism = 0.01
 
 /datum/reagent/carbon/reaction_turf(var/turf/T, var/volume)
-	src = null
+	. = ..()
 	if(!istype(T, /turf/space))
 		var/obj/effect/decal/cleanable/dirt/dirtoverlay = locate(/obj/effect/decal/cleanable/dirt, T)
 		if (!dirtoverlay)
@@ -409,6 +414,8 @@
 	color = "#ffffff" // rgb: 255, 255, 255
 	taste_message = "sweetness"
 
+	needed_aspects = list(ASPECT_FOOD = 1)
+
 /datum/reagent/sugar/on_general_digest(mob/living/M)
 	..()
 	M.nutrition += 4 * REM
@@ -441,7 +448,7 @@
 					M:antibodies |= V.antigen
 
 /datum/reagent/radium/reaction_turf(turf/T, volume)
-	src = null
+	. = ..()
 	if(volume >= 3)
 		if(!istype(T, /turf/space))
 			var/obj/effect/decal/cleanable/greenglow/glow = locate(/obj/effect/decal/cleanable/greenglow, T)
@@ -465,6 +472,8 @@
 	color = "#f7c430" // rgb: 247, 196, 48
 	taste_message = "bling"
 
+	needed_aspects = list(ASPECT_GREED = 1)
+
 /datum/reagent/silver
 	name = "Silver"
 	id = "silver"
@@ -472,6 +481,8 @@
 	reagent_state = SOLID
 	color = "#d0d0d0" // rgb: 208, 208, 208
 	taste_message = "sub-par bling"
+
+	needed_aspects = list(ASPECT_GREED = 1)
 
 /datum/reagent/uranium
 	name ="Uranium"
@@ -486,7 +497,7 @@
 	M.apply_effect(1, IRRADIATE, 0)
 
 /datum/reagent/uranium/reaction_turf(turf/T, volume)
-	src = null
+	. = ..()
 	if(volume >= 3)
 		if(!istype(T, /turf/space))
 			var/obj/effect/decal/cleanable/greenglow/glow = locate(/obj/effect/decal/cleanable/greenglow, T)
