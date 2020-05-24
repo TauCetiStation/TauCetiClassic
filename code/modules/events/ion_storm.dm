@@ -48,7 +48,7 @@
 							"You do not have to do anything for anyone unless they say \"please\".",
 							"Today is mandatory laundry day. Ensure that all jumpsuits are washed.",
 							"Refer to [prob(50)?"the crew as puppies":random_player + " as puppy"].",
-							"The [random_race] crew is the best. Disrespect other races and remind them about their inferiority.",
+							"The [random_race] crew is the best. Disrespect other species and remind them about their inferiority.",
 							"Greed is good, the crew should amass wealth to encourage productivity.",
 							"Monkeys are part of the crew, too. Make sure they are treated humanely.",
 							"Replace the letters 'I' and 'E' In all your messages with an apostrophe.",
