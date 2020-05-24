@@ -9,8 +9,12 @@
 /datum/name_modifier/prefix/healthy
 	text = "healthy"
 
+	priority = 2
+
 /datum/name_modifier/prefix/frail
 	text = "frail"
+
+	priority = 2
 
 /datum/name_modifier/prefix/ghostly
 	text = "ghostly"
@@ -26,6 +30,8 @@
 
 /datum/name_modifier/prefix/strong
 	text = "strong"
+
+	priority = 2
 
 /datum/name_modifier/prefix/singular
 	text = "singular"

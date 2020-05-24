@@ -85,10 +85,46 @@
 	flick_overlay(me, viewers, time)
 	QDEL_IN(me, time)
 
-/mob/living/shake_animation(intensity, time, intensity_dropoff, list/viewers)
-	if(notransform)
-		return
-	..()
-
 /mob/living/after_shake_animation(intensity, time, intensity_dropoff, list/viewers)
 	transform = default_transform
+
+/mob/living/shake_animation(intensity, time, intensity_dropoff = 0.9)
+	if(invisibility > 0)
+		return
+	if(notransform)
+		return
+	if(shaking_anim)
+		return
+	shaking_anim = TRUE
+	var/prev_pixel_x = default_pixel_x
+	var/prev_pixel_y = default_pixel_y
+	var/matrix/prev_transform = matrix(default_transform)
+
+	var/list/viewers = list()
+	for(var/mob/M in viewers(src))
+		if(M.client)
+			viewers += M.client
+
+	before_shake_animation(intensity, time, intensity_dropoff, viewers)
+
+	var/stop_shaking = world.time + time
+	while(stop_shaking > world.time)
+		var/shiftx = rand(-intensity, intensity)
+		var/shifty = rand(-intensity, intensity)
+
+		var/angle = rand(-intensity * 0.5, intensity * 0.5)
+		var/matrix/M = matrix(prev_transform)
+		M.Turn(angle)
+
+		intensity *= intensity_dropoff
+
+		animate(src, pixel_x = prev_pixel_x + shiftx, pixel_y = prev_pixel_y + shifty, transform = M, time = 0.5)
+		animate(pixel_x = prev_pixel_x, pixel_y = prev_pixel_y, transform = prev_transform, time = 0.5)
+		sleep(1)
+
+		if(QDELING(src))
+			return
+
+	after_shake_animation(intensity, time, intensity_dropoff, viewers)
+
+	shaking_anim = FALSE

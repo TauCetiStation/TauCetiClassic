@@ -38,17 +38,12 @@
 
 /mob/living/simple_animal/hostile/examine(mob/user)
 	..()
-	var/msg
-	if (src.health < maxHealth)
-		if(health <= maxHealth * 0.9)
-			msg = "<span class='warning'>appears to be slightly wounded.</span>\n"
-		if(health <= maxHealth * 0.6)
-			msg = "<span class='warning'>appears badly wounded.</span>\n"
-		if(health <= maxHealth * 0.3)
-			msg = "<span class='warning'>is almost dead.</span>\n"
-
-	if(msg)
-		to_chat(user, "<b>[name]</b> [msg]")
+	if(health <= maxHealth * 0.2)
+		to_chat(user, "<span class='danger'>Is almost dead.</span>")
+	else if(health <= maxHealth * 0.6)
+		to_chat(user, "<span class='warning'>Appears badly wounded.</span>")
+	else if(health <= maxHealth * 0.9)
+		to_chat(user, "<span class='notice'>Appears to be slightly wounded.</span>")
 
 /mob/living/simple_animal/hostile/Life()
 	. = ..()

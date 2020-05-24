@@ -186,11 +186,11 @@
 	var/saved_damtype
 
 	var/static/list/pos_colors = list(
-		"#A5040AE3" = SLIME_COLOR_RED,
-		"#04A513E3" = SLIME_COLOR_GREEN,
-		"#0460A5E3" = SLIME_COLOR_BLUE,
-		"#A59704E3" = SLIME_COLOR_YELLOW,
-		"#04A5E3E3" = SLIME_COLOR_CYAN,
+		"#490008FF" = SLIME_COLOR_RED,
+		"#0049008FF" = SLIME_COLOR_GREEN,
+		"#002049FF" = SLIME_COLOR_BLUE,
+		"#493500FF" = SLIME_COLOR_YELLOW,
+		"#004940FF" = SLIME_COLOR_CYAN,
 	)
 
 	// var/slimy_color_filter
@@ -231,7 +231,7 @@
 	// USE FILTER AFTER 513
 	// slimy_color_filter = filter(type="color", color=my_color_matrix)
 	H.color = my_color_matrix
-	slimy_outline_filter = filter(type = "outline", size = 3, color = my_color)
+	slimy_outline_filter = filter(type = "outline", size = 1, color = my_color)
 
 	//H.filters += slimy_color_filter
 	H.filters += slimy_outline_filter
@@ -278,12 +278,13 @@
 
 	var/mob/living/simple_animal/hostile/H = parent
 
-	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), .proc/shake_ground)
-
 	H.melee_damage *= 1.5 * strength
 
 	H.loot_mod *= 1.5 * strength
 	H.faction = "Station"
+
+	if(!update)
+		RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), .proc/shake_ground)
 
 /datum/component/mob_modifier/strong/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
@@ -300,7 +301,7 @@
 	if(H.incapacitated())
 		return
 
-	H.loc.shake_act(3)
+	H.loc.shake_act(strength * 1.5)
 
 
 
@@ -310,33 +311,72 @@
 
 	rarity_cost = 4
 
+	max_strength = 5
+
+	var/grav_pull = 4
+	var/pull_stage = STAGE_ONE
+
+	var/image/singularity_overlay
+
 /datum/component/mob_modifier/singular/apply(update = FALSE)
 	. = ..()
 	if(!.)
 		return
 
-	var/mob/living/simple_animal/hostile/H = parent
+	switch(strength)
+		if(1)
+			pull_stage = STAGE_ONE
+			grav_pull = 4
+		if(2)
+			pull_stage = STAGE_TWO
+			grav_pull = 6
+		if(3)
+			pull_stage = STAGE_THREE
+			grav_pull = 8
+		if(4)
+			pull_stage = STAGE_FOUR
+			grav_pull = 10
+		else
+			pull_stage = STAGE_FIVE
+			grav_pull = 10
 
-	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), .proc/shake_ground)
+	if(!update)
+		var/mob/living/simple_animal/hostile/H = parent
 
-	H.melee_damage *= 1.5 * strength
+		singularity_overlay = image('icons/obj/singularity.dmi', "singularity_s1")
+		singularity_overlay.alpha = 200
+		singularity_overlay.loc = H
+		// AFTER BYOND 513 USE THESE
+		// singularity_filter = filter(type = "layer", render_source = I)
 
-	H.loot_mod *= 1.5 * strength
-	H.faction = "Station"
+		// H.filters += singularity_filter
+		H.add_overlay(singularity_overlay)
+
+		START_PROCESSING(SSmob_modifier, src)
 
 /datum/component/mob_modifier/singular/revert(update = FALSE)
-	var/mob/living/simple_animal/hostile/H = parent
+	if(!update)
+		var/mob/living/simple_animal/hostile/H = parent
+		H.cut_overlay(singularity_overlay)
+		// H.filters -= singularity_filter
 
-	H.melee_damage *= 1 / (1.5 * strength)
-	H.loot_mod *= 1 / (1.5 * strength)
-
-	H.faction = initial(H.faction)
+		STOP_PROCESSING(SSmob_modifier, src)
 	return ..()
 
-/datum/component/mob_modifier/singular/proc/eat()
+/datum/component/mob_modifier/singular/process()
+	pull()
+
+/datum/component/mob_modifier/singular/proc/pull()
+	set background = BACKGROUND_ENABLED
+
 	var/mob/living/simple_animal/hostile/H = parent
 
-	if(H.incapacitated())
-		return
-
-	H.loc.shake_act(3)
+	for(var/tile in spiral_range_turfs(grav_pull, H, 1))
+		var/turf/T = tile
+		if(!T)
+			continue
+		T.singularity_pull(H, pull_stage)
+		for(var/thing in T)
+			var/atom/movable/X = thing
+			X.singularity_pull(H, pull_stage)
+			CHECK_TICK

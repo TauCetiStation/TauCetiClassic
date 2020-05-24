@@ -87,15 +87,15 @@
 
 // Slime color matrices. Used for /datum/component/mob_modifier-s.
 #define SLIME_COLOR(r, g, b) list( \
-	0.2, 0.0, 0.0, 0.0, \
-	0.0, 0.2, 0.0, 0.0, \
-	0.0, 0.0, 0.2, 0.0, \
+	0.3, 0.0, 0.0, 0.0, \
+	0.0, 0.3, 0.0, 0.0, \
+	0.0, 0.0, 0.3, 0.0, \
 	0.0, 0.0, 0.0, 0.8, \
 	r, g, b, 0.0, \
 )
 
-#define SLIME_COLOR_RED SLIME_COLOR(0.5, 0.3, 0.3)
-#define SLIME_COLOR_GREEN SLIME_COLOR(0.3, 0.5, 0.3)
-#define SLIME_COLOR_BLUE SLIME_COLOR(0.3, 0.3, 0.5)
-#define SLIME_COLOR_YELLOW SLIME_COLOR(0.5, 0.5, 0.3)
-#define SLIME_COLOR_CYAN SLIME_COLOR(0.3, 0.5, 0.5)
+#define SLIME_COLOR_RED SLIME_COLOR(0.5, 0.2, 0.3)
+#define SLIME_COLOR_GREEN SLIME_COLOR(0.2, 0.5, 0.2)
+#define SLIME_COLOR_BLUE SLIME_COLOR(0.2, 0.2, 0.5)
+#define SLIME_COLOR_YELLOW SLIME_COLOR(0.5, 0.5, 0.2)
+#define SLIME_COLOR_CYAN SLIME_COLOR(0.2, 0.5, 0.5)
