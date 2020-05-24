@@ -12,7 +12,7 @@
 			players += player.real_name
 	var/random_player = "The Captain"
 	var/random_race = HUMAN
-	var/pos_races
+	var/list/pos_races
 	for(var/mob/living/carbon/C in players)
 	 pos_races |= C.get_species()
 	random_race = pick(pos_races)
