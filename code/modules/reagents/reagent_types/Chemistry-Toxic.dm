@@ -154,7 +154,7 @@
 	M.adjustOxyLoss(4 * REM)
 	M.SetSleeping(20 SECONDS)
 	M.emote("gasp")
-if(M.has_reagent(cyanide))
+if(M.has_reagent("cyanide"))
  throw_alert("oxy", /obj/screen/alert/oxy)
 else
  return 0
