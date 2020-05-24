@@ -149,12 +149,11 @@
 	restrict_species = list(IPC, DIONA)
 	flags = list()
 
-/datum/reagent/toxin/cyanide/on_general_digest(mob/living/M)
+/datum/reagent/toxin/cyanide/on_general_digest(mob/living/M)/proc/throw_alert("oxy", /obj/screen/alert/oxy)
 	..()
 	M.adjustOxyLoss(4 * REM)
 	M.SetSleeping(20 SECONDS)
 	M.emote("gasp")
-	throw_alert(M."oxy", /obj/screen/alert/oxy)
 
 /datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
