@@ -409,11 +409,11 @@
 	cold_level_2 = -1
 	cold_level_3 = -1
 
-	heat_level_1 = 500		//gives them about 25 seconds in space before taking damage
+	heat_level_1 = 400		//Starts taking damage at 130C, gives 16 seconds to cool down.
 	heat_level_2 = 1000
 	heat_level_3 = 2000
 
-	synth_temp_gain = 10 //this should cause IPCs to stabilize at ~80 C in a 20 C environment.
+	synth_temp_gain = 5     // Bodytemperature stabilizes at 52C
 
 	brute_mod = 1.5
 	burn_mod = 1
