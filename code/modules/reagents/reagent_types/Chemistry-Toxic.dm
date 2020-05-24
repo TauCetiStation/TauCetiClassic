@@ -154,7 +154,7 @@
 	M.adjustOxyLoss(4 * REM)
 	M.SetSleeping(20 SECONDS)
 	M.emote("gasp")
-	throw_alert(M, "oxy", /obj/screen/alert/oxy)
+	throw_alert(M."oxy", /obj/screen/alert/oxy)
 
 /datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
