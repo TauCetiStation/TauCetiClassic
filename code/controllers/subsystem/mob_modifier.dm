@@ -1,4 +1,4 @@
-var/datum/subsystem/religion/SSmob_modifier
+var/datum/subsystem/mob_modifier/SSmob_modifier
 
 /datum/subsystem/mob_modifier
 	name = "Mob Modifiers"
