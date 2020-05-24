@@ -20,7 +20,6 @@
 	melee_damage = 13
 	attacktext = "brutally crush"
 	environment_smash = 2
-	default_layer = 5
 	speed = 1
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
@@ -67,7 +66,6 @@
 	health = 100
 	melee_damage = 13
 	speed = 0.4
-	var/fpunches
 	var/hiding = FALSE
 	attacktext = " SQUEEKS"
 	speak_emote = list("SQUEEKS!!!")
@@ -100,19 +98,7 @@
 		health += 1
 		visible_message("<span class='notice'>[src] swallows whole [A.name]! WOW!!!</span>")
 	else
-		if(fpunches)
-			A.attack_animal(src)
-			return
 		return ..()
-
-/mob/living/simple_animal/hulk/mouse/verb/speed()
-	set name = "Speed"
-	set desc = "Gotta go fast. Fast punches"
-	set category = "MOUSE"
-	if((last_time_activate + cooldown) >= world.time)
-		return
-	fpunches = !fpunches
-
 
 /mob/living/simple_animal/hulk/mouse/verb/hide()
 	set name = "MEGAHIDE"
