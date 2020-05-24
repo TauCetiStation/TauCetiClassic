@@ -432,6 +432,12 @@
 	blood_color = "#1F181F"
 	flesh_color = "#575757"
 
+	survival_kit_items = list(/obj/item/device/flashlight/flare,
+	                          /obj/item/device/plant_analyzer
+	                          )
+
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
+
 /datum/species/abductor
 	name = ABDUCTOR
 	darksight = 3
