@@ -56,9 +56,7 @@
 				tile.break_tile()
 		for(var/mob/living/M in usr.loc.contents)
 			if(M != usr)
-				usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_jump</font>"
-				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_jump</font>"
-				msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_jump", usr)
+				M.log_combat(usr, "hulk_jumped")
 				var/mob/living/carbon/human/H = M
 				if(istype(H,/mob/living/carbon/human))
 					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
@@ -213,9 +211,7 @@
 				usr.density = 0
 				for(var/mob/living/M in T.contents)
 					if(!M.lying)
-						usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_dash</font>"
-						M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_dash</font>"
-						msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_dash", usr)
+						M.log_combat(usr, "hulk_dashed")
 						var/turf/target = get_turf(get_step(usr,cur_dir))
 						hit = 1
 						playsound(M, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
@@ -331,9 +327,7 @@
 			W.take_damage(50)
 		for(var/mob/living/M in T.contents)
 			if(M != usr)
-				usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_smash</font>"
-				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_smash</font>"
-				msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_smash", usr)
+				M.log_combat(usr, "hulk_smashed")
 				var/mob/living/carbon/human/H = M
 				if(istype(H,/mob/living/carbon/human))
 					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
@@ -589,8 +583,7 @@
 	if(target.stat == DEAD)
 		usr.visible_message("<span class='warning'><b>[usr.name]</b> is trying to swallow <b>[target.name]</b>!</span>")
 		if(do_after(usr,50,target = target))
-			usr.attack_log += "\[[time_stamp()]\]<font color='red'> Eats [target.name] ([target.ckey]) with hulk_eat</font>"
-			msg_admin_attack("[key_name(usr)] eats [key_name(target)] body with hulk_eat", usr)
+			target.log_combat(usr, "eaten with hulk_eat")
 			if(isrobot(target))
 				usr.visible_message("<span class='warning'><b>[usr.name]</b> swallows <b>[target.name]</b> and vomits some parts of it!</span> Looks like robots are not so tasty.")
 				SA.health -= 150
@@ -606,9 +599,7 @@
 	else
 		usr.visible_message("<span class='warning'><b>[usr.name]</b> is trying to rend <b>[target.name]</b> into shreds!</span>")
 		if(do_after(usr,20,target = target))
-			usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [target.name] ([target.ckey]) with hulk_eat</font>"
-			target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_eat</font>"
-			msg_admin_attack("[key_name(usr)] attacked [key_name(target)] with hulk_eat", usr)
+			target.log_combat(usr, "attacked with hulk_eat")
 			if(isrobot(target))
 				usr.visible_message("<span class='warning'><b>[usr.name]</b> rends apart and vomit some parts of <b>[target.name]</b>!</span> Looks like robots are not so tasty.")
 				SA.health -= 45

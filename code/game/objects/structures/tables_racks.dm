@@ -446,9 +446,9 @@
 	victim.Weaken(5)
 	visible_message("<span class='danger'>[assailant] slams [victim]'s face against \the [src], breaking it!</span>")
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-	victim.attack_log += "\[[time_stamp()]\] <font color='orange'>Face-slammed by [assailant.name] against \the [src]([assailant.ckey]), breaking it</font>"
-	assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Slams face of [victim.name] against \the [src]([victim.ckey]), breaking it</font>"
-	msg_admin_attack("[key_name(assailant)] slams [key_name(victim)] face against \the [src], breaking it", assailant)
+
+	victim.log_combat(assailant, "face-slammed against [name]")
+
 	if(prob(30) && ishuman(victim))
 		var/mob/living/carbon/human/H = victim
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]

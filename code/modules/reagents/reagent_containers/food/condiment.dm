@@ -47,7 +47,7 @@
 /obj/item/weapon/reagent_containers/food/condiment/attack_self(mob/user)
 	return
 
-/obj/item/weapon/reagent_containers/food/condiment/attack(mob/M, mob/user, def_zone)
+/obj/item/weapon/reagent_containers/food/condiment/attack(mob/living/M, mob/user, def_zone)
 	if(!CanEat(user, M, src, "swallow")) return
 
 	var/datum/reagents/R = src.reagents
@@ -71,9 +71,8 @@
 		user.visible_message("<span class='rose'> [user] attempts to feed [M] [src].</span>")
 		if(!do_mob(user, M)) return
 		user.visible_message("<span class='rose'> [user] feeds [M] [src].</span>")
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])", user)
+
+		M.log_combat(user, "fed with [name] (INTENT: [uppertext(user.a_intent)])")
 
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, 10)
