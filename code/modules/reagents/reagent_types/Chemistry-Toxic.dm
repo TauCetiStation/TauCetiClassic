@@ -147,12 +147,23 @@
 	color = "#cf3600" // rgb: 207, 54, 0
 	toxpwr = 4
 	custom_metabolism = 0.4
+	restrict_species = list(IPC, DIONA)
 	flags = list()
 
 /datum/reagent/toxin/cyanide/on_general_digest(mob/living/M)
 	..()
 	M.adjustOxyLoss(4 * REM)
-	M.SetSleeping(20 SECONDS)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	switch(data["ticks"])
+		if(1 to 5)
+			M.throw_alert("oxy", /obj/screen/alert/oxy)
+		if(6 to INFINITY)
+			M.SetSleeping(20 SECONDS)
+			M.throw_alert("oxy", /obj/screen/alert/oxy)
+	if(data["ticks"] % 3 == 0)
+		M.emote("gasp")
 
 /datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
