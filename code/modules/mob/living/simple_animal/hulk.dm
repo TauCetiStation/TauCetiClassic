@@ -137,11 +137,6 @@
 				INVOKE_ASYNC(A, /atom/proc/shake_animation , 5, 5, 0.9)
 		return
 
-/mob/living/simple_animal/hulk/mouse/Life()
-	..()
-	if(fpunches)
-		health -=5
-
 /mob/living/simple_animal/hulk/unathi
 	name = "Zilla"
 	real_name = "Zilla"
