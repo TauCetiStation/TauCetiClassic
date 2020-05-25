@@ -307,7 +307,7 @@
 
 /obj/item/weapon/shield/riot/roman/religion
 	name = "sacred shield"
-	desc = "Good shield for the crusade."
+	desc = "Go-... Whatever deity you worship protects you!"
 	flags = ABSTRACT
 	slot_flags = FALSE
 
