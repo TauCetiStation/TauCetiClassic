@@ -92,7 +92,7 @@
 	return TRUE
 
 /datum/religion_rites/pray/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
-	global.chaplain_religion.favor += 15 + adding_favor
+	global.chaplain_religion.adjust_favor(15 + adding_favor)
 	return TRUE
 
 /*

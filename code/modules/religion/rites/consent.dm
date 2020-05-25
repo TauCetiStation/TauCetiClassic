@@ -114,6 +114,8 @@
 		sacrifice_favor *= 0.5
 	if(!L.ckey)
 		sacrifice_favor  *= 0.5
+	
+	global.chaplain_religion.adjust_favor(sacrifice_favor)
 
 	L.gib()
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
