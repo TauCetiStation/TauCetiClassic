@@ -76,35 +76,6 @@
 			global.chemical_reactions_list[id] += D
 			break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
-	/*
-		Chaplain related: Spells and Rites
-	*/
-	global.spells_by_aspects = list()
-	for(var/path in subtypesof(/obj/effect/proc_holder/spell))
-		var/obj/effect/proc_holder/spell/S = new path()
-		if(!S.needed_aspect)
-			continue
-
-		// Don't bother adding ourselves to other aspects, it is redundant.
-		var/aspect_type = S.needed_aspect[1]
-
-		if(!global.spells_by_aspects[aspect_type])
-			global.spells_by_aspects[aspect_type] = list()
-		global.spells_by_aspects[aspect_type] += path
-
-	global.rites_by_aspects  = list()
-	for(var/path in subtypesof(/datum/religion_rites))
-		var/datum/religion_rites/RR = new path()
-		if(!RR.needed_aspects)
-			continue
-
-		// Don't bother adding ourselves to other aspects, it is redundant.
-		var/aspect_type = RR.needed_aspects[1]
-
-		if(!global.rites_by_aspects[aspect_type])
-			global.rites_by_aspects[aspect_type] = list()
-		global.rites_by_aspects[aspect_type] += path
-
 	// Create list for rituals to determine the value of things
 	var/list/money_type_by_cash_am = list()
 	var/list/type_cash = subtypesof(/obj/item/weapon/spacecash) - /obj/item/weapon/spacecash/ewallet
@@ -135,6 +106,69 @@
 				warning("[CC.name] IS CONFLICTING WITH [conflict.name]!")
 			global.combat_combos[hash] = CC
 		global.combat_combos_by_name[CC.name] = CC
+
+	/*
+		Chaplain related: Spells and Rites
+	*/
+	global.spells_by_aspects = list()
+	for(var/path in subtypesof(/obj/effect/proc_holder/spell))
+		var/obj/effect/proc_holder/spell/S = new path()
+		if(!S.needed_aspect)
+			continue
+
+		// Don't bother adding ourselves to other aspects, it is redundant.
+		var/aspect_type = S.needed_aspect[1]
+
+		if(!global.spells_by_aspects[aspect_type])
+			global.spells_by_aspects[aspect_type] = list()
+		global.spells_by_aspects[aspect_type] += path
+
+	global.rites_by_aspects = list()
+	for(var/path in subtypesof(/datum/religion_rites))
+		var/datum/religion_rites/RR = new path()
+		if(!RR.needed_aspects)
+			continue
+
+		// Don't bother adding ourselves to other aspects, it is redundant.
+		var/aspect_type = RR.needed_aspects[1]
+
+		if(!global.rites_by_aspects[aspect_type])
+			global.rites_by_aspects[aspect_type] = list()
+		global.rites_by_aspects[aspect_type] += path
+
+	global.holy_reagents_by_aspects = list()
+	for(var/id in global.chemical_reagents_list)
+		var/datum/reagent/R = global.chemical_reagents_list[id]
+		if(!R.needed_aspects)
+			continue
+
+		// Don't bother adding ourselves to other aspects, it is redundant.
+		var/aspect_type = R.needed_aspects[1]
+
+		if(!global.holy_reagents_by_aspects[aspect_type])
+			global.holy_reagents_by_aspects[aspect_type] = list()
+		global.holy_reagents_by_aspects[aspect_type] += id
+
+	global.faith_reactions = list()
+	for(var/path in subtypesof(/datum/faith_reaction))
+		var/datum/faith_reaction/FR = new path
+		if(!FR.id)
+			continue
+
+		global.faith_reactions[FR.id] = FR
+
+	global.faith_reactions_by_aspects = list()
+	for(var/id in global.faith_reactions)
+		var/datum/faith_reaction/FR = global.faith_reactions[id]
+		if(!FR.needed_aspects)
+			continue
+
+		// Don't bother adding ourselves to other aspects, it is redundant.
+		var/aspect_type = FR.needed_aspects[1]
+
+		if(!global.faith_reactions_by_aspects[aspect_type])
+			global.faith_reactions_by_aspects[aspect_type] = list()
+		global.faith_reactions_by_aspects[aspect_type] += id
 
 	populate_gear_list()
 
