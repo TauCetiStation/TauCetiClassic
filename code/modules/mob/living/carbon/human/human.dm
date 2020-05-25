@@ -518,19 +518,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	popup.open()
 
 // called when something steps onto a human
-/*
-Dir-ы:
-NORTH/Север  - 1 или 0b0001
-SOUTH/Юг        - 2 или 0b0010
-EAST    /Восток - 4 или 0b0100
-WEST  /Запад   - 8 или 0b1000
----
-Диагональные, но использовать не стоит (только если вы знаете, что делаете, иначе может ломать вещи):
-NORTHEAST      - 5
-NORTHWEST    - 9
-SOUTHEAST      - 6
-SOUTHWEST    - 10
-*/
 /mob/living/carbon/human/Crossed(atom/movable/AM)
 	if(istype(AM, /mob/living/simple_animal/hulk))
 		var/mob/living/simple_animal/hulk/H = AM
