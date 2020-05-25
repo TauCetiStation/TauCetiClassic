@@ -217,7 +217,7 @@
 /datum/aspect/lightbending/register_holy_turf(turf/simulated/floor/F, datum/religion/R)
 	..()
 	RegisterSignal(F.lighting_object, list(COMSIG_LIGHT_UPDATE_OBJECT), .proc/recalc_favor_gain)
-	recalc_favor_gain(F)
+	recalc_favor_gain(F.lighting_object, F)
 
 /datum/aspect/lightbending/unregister_holy_turf(turf/simulated/floor/F, datum/religion/R)
 	..()
@@ -230,8 +230,10 @@
 /datum/aspect/lightbending/proc/get_light_gain(turf/simulated/floor/F)
 	return 0.0
 
-/datum/aspect/lightbending/proc/recalc_favor_gain(datum/source)
-	var/turf/simulated/floor/F = source
+/datum/aspect/lightbending/proc/recalc_favor_gain(datum/source, turf/myturf)
+	var/turf/simulated/floor/F = myturf
+	if(!istype(F))
+		return
 
 	var/prev_gain = 0.0
 	if(favor_for_turf)
@@ -253,7 +255,7 @@
 	desc = "Dark, darkness, obcurse, evil"
 
 /datum/aspect/lightbending/darkness/get_light_gain(turf/simulated/floor/F)
-	return (1.0 - F.get_lumcount()) * power * 0.05
+	return (0.5 - F.get_lumcount()) * power * 0.05
 
 //Gives mana from: light levels on holy turfs
 //Needed for: spells and rituals related to the theme of receiving light
@@ -262,7 +264,7 @@
 	desc = "Light interaction"
 
 /datum/aspect/lightbending/light/get_light_gain(turf/simulated/floor/F)
-	return F.get_lumcount() * power * 0.05
+	return (F.get_lumcount() - 0.5) * power * 0.03
 
 //Gives mana for economical cost of an item.
 //Needed for: anything economy related

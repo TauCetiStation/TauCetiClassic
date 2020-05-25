@@ -7,6 +7,8 @@
 	var/timer_id
 	var/expiration_time
 
+	var/max_time = 10 MINUTES
+
 /datum/holy_turf/New(turf/simulated/floor/F, datum/religion/R, reagent_volume)
 	turf = F
 	religion = R
@@ -24,6 +26,7 @@
 	religion.holy_turfs[turf] = src
 
 	var/time_to_expire = reagent_volume * 1 MINUTE
+	time_to_expire = min(time_to_expire, max_time)
 
 	expiration_time = world.time + time_to_expire
 
@@ -53,5 +56,6 @@
 
 /datum/holy_turf/proc/update(reagent_volume)
 	var/time_to_expire = expiration_time - world.time + reagent_volume * 1 MINUTE
+	time_to_expire = min(time_to_expire, max_time)
 	deltimer(timer_id)
 	timer_id = create_timer(time_to_expire)
