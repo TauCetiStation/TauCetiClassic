@@ -397,7 +397,7 @@
 				continue
 			if(H == X)
 				continue
-			if(get_dist(H, X) <= 0)
+			if(H.loc == X.loc)
 				consume(X)
 			else
 				X.singularity_pull(H, pull_stage)

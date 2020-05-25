@@ -146,6 +146,10 @@
 
 	A.name = saved_name
 
+	// Nothing is affecting mob's name, just reset it and leave.
+	if(!highest_affect_priority)
+		return
+
 	for(var/i in 1 to highest_affect_priority_temp)
 		for(var/datum/name_modifier/NM in affect_with["[i]"])
 			NM.affect(A)
