@@ -7,7 +7,7 @@
 	var/timer_id
 	var/expiration_time
 
-	var/max_time = 10 MINUTES
+	var/max_time = 15 MINUTES
 
 /datum/holy_turf/New(turf/simulated/floor/F, datum/religion/R, reagent_volume)
 	turf = F
