@@ -1,4 +1,6 @@
 /mob/living/proc/log_combat(mob/living/attacker, msg, alert_admins = TRUE)
+	if(!logs_combat)
+		return
 	attack_log += "\[[time_stamp()]\] <font color='orange'>Has been [msg], by [attacker.name] ([attacker.ckey])</font>"
 	attacker.attack_log += "\[[time_stamp()]\] <font color='red'>Has [msg] [src] ([ckey])</font>"
 	if(alert_admins)
