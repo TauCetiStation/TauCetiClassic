@@ -71,10 +71,17 @@
 	var/saved_color
 
 /datum/component/mob_modifier/ghostly/Destroy()
+	var/mob/living/simple_animal/hostile/H = parent
+
 	qdel(possessed.GetComponent(/datum/component/bounded))
 	UnregisterSignal(possessed, list(COMSIG_PARENT_QDELETED))
+
+	if(rejuve_timer)
+		SEND_SIGNAL(possessed, COMSIG_NAME_MOD_REMOVE, /datum/name_modifier/prefix/cursed, 1)
+		deltimer(rejuve_timer)
+		H.forceMove(get_turf(possessed))
+
 	possessed = null
-	deltimer(rejuve_timer)
 	return ..()
 
 /datum/component/mob_modifier/ghostly/apply(update = FALSE)
@@ -111,6 +118,13 @@
 
 	RegisterSignal(possessed, list(COMSIG_PARENT_QDELETED), .proc/on_phylactery_destroyed)
 	possessed.forceMove(H.loc)
+
+	var/list/allowed_name_mods = list(
+		RL_GROUP_PREFIX = 2,
+		RL_GROUP_SUFFIX = 2,
+	)
+	possessed.AddComponent(/datum/component/name_modifiers, allowed_name_mods)
+
 	H.AddComponent(/datum/component/bounded, possessed, 0, 3)
 
 	// THE RECIPY OF IMMORTALITY BUAHAHAHA
@@ -134,6 +148,11 @@
 
 	H.color = saved_color
 
+	if(!update && rejuve_timer)
+		SEND_SIGNAL(possessed, COMSIG_NAME_MOD_REMOVE, /datum/name_modifier/prefix/cursed, 1)
+		deltimer(rejuve_timer)
+		H.forceMove(get_turf(possessed))
+
 	return ..()
 
 /datum/component/mob_modifier/ghostly/proc/on_phylactery_destroyed()
@@ -144,11 +163,6 @@
 	if(gibbed)
 		return
 
-	var/list/allowed_name_mods = list(
-		RL_GROUP_PREFIX = 2,
-		RL_GROUP_SUFFIX = 2,
-	)
-	possessed.AddComponent(/datum/component/name_modifiers, allowed_name_mods)
 	SEND_SIGNAL(possessed, COMSIG_NAME_MOD_ADD, /datum/name_modifier/prefix/cursed, 1)
 
 	qdel(possessed.GetComponent(/datum/component/bounded))
