@@ -319,8 +319,11 @@
 	name = "forcefield staff"
 	desc = "Makes the wielder believe that they are protected by something, anything, really. Probably works on AA batteries."
 
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "staff"
+	w_class = ITEM_SIZE_LARGE
+	slot_flags = SLOT_FLAGS_BACK
+
+	icon_state = "godstaff"
+	item_state = "godstaff"
 
 	var/is_active = FALSE
 

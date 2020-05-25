@@ -39,10 +39,6 @@
 
 				return PROJECTILE_FORCE_MISS // complete projectile permutation
 
-	if(check_shields(P, P.damage, "the [P.name]", P.dir))
-		P.on_hit(src, def_zone, 100)
-		return 2 // i have no idea what is 2 and in projectile.dm it seems unused, haven't checked any other places in code.
-
 	if(istype(P, /obj/item/projectile/bullet/weakbullet))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
 		if(check_thickmaterial(BP))

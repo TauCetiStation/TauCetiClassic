@@ -66,6 +66,10 @@
 	/// A cooldown for on_hit_anim.
 	var/next_hit_anim = 0
 
+	var/static/reactivate_sound = 'sound/effects/forcefield_reactivate.ogg'
+	var/static/destroy_sound = 'sound/effects/forcefield_destroy.ogg'
+	var/static/hit_sounds = list('sound/effects/forcefield_hit1.ogg', 'sound/effects/forcefield_hit2.ogg')
+
 /datum/component/forcefield/Initialize(mob/protected, name, max_health, reactivation_time, recharge_time, atom/shield_overlay, appear_on_hit = FALSE, permit_interaction = FALSE)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -119,12 +123,14 @@
 	if(istype(parent, /obj/item))
 		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle)
 
+	playsound(parent, reactivate_sound, VOL_EFFECTS_MASTER)
 	shield_up()
 
 /datum/component/forcefield/proc/destroy()
 	if(istype(parent, /obj/item))
 		UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle)
 
+	playsound(parent, destroy_sound, VOL_EFFECTS_MASTER)
 	shield_down()
 	addtimer(CALLBACK(src, .proc/reactivate), reactivation_time)
 
@@ -217,6 +223,8 @@
 		INVOKE_ASYNC(src, .proc/revert_deformation, deformation_factor)
 
 		next_hit_anim = deformation_factor * 2 + 2
+
+	playsound(parent, pick(hit_sounds), VOL_EFFECTS_MASTER)
 
 	if(react_to_damage(damage, attack_text))
 		return COMPONENT_ATTACK_SHIELDED
