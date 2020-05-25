@@ -39,6 +39,7 @@
 	for(var/mod_type in modifiers_by_type)
 		qdel(modifiers_by_type[mod_type])
 	modifiers_by_type = null
+	return ..()
 
 /// Get the max priority for a certain group.
 /datum/component/name_modifiers/proc/get_max_priority(group)

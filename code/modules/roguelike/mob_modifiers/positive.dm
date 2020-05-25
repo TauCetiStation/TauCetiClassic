@@ -151,15 +151,14 @@
 	possessed.AddComponent(/datum/component/name_modifiers, allowed_name_mods)
 	SEND_SIGNAL(possessed, COMSIG_NAME_MOD_ADD, /datum/name_modifier/prefix/cursed, 1)
 
+	qdel(possessed.GetComponent(/datum/component/bounded))
+
 	var/mob/living/simple_animal/hostile/H = parent
 	H.forceMove(possessed)
 
 	rejuve_timer = addtimer(CALLBACK(src, .proc/come_back), rand(6, 10) MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /datum/component/mob_modifier/ghostly/proc/come_back()
-	if(QDELING(src))
-		return
-
 	if(!possessed)
 		return
 
@@ -168,6 +167,7 @@
 	SEND_SIGNAL(possessed, COMSIG_NAME_MOD_REMOVE, /datum/name_modifier/prefix/cursed, 1)
 	H.rejuvenate()
 	H.forceMove(get_turf(possessed))
+	H.AddComponent(/datum/component/bounded, possessed, 0, 3)
 
 
 
@@ -301,7 +301,7 @@
 	if(H.incapacitated())
 		return
 
-	H.loc.shake_act(strength * 1.5)
+	H.loc.shake_act(2 + strength)
 
 
 
@@ -378,5 +378,7 @@
 		T.singularity_pull(H, pull_stage)
 		for(var/thing in T)
 			var/atom/movable/X = thing
+			if(!X)
+				continue
 			X.singularity_pull(H, pull_stage)
 			CHECK_TICK
