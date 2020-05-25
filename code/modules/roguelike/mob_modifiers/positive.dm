@@ -371,6 +371,16 @@
 /datum/component/mob_modifier/singular/process()
 	pull()
 
+/datum/component/mob_modifier/singular/proc/consume(atom/movable/AM)
+	if(!istype(AM, /obj/item))
+		return
+
+	var/mob/living/simple_animal/hostile/H = parent
+
+	var/obj/item/I = AM
+	H.heal_overall_damage(I.w_class, I.w_class)
+	qdel(I)
+
 /datum/component/mob_modifier/singular/proc/pull()
 	set background = BACKGROUND_ENABLED
 
@@ -385,5 +395,10 @@
 			var/atom/movable/X = thing
 			if(!X)
 				continue
-			X.singularity_pull(H, pull_stage)
+			if(H == X)
+				continue
+			if(get_dist(H, X) <= 0)
+				consume(X)
+			else
+				X.singularity_pull(H, pull_stage)
 			CHECK_TICK
