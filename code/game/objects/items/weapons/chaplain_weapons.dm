@@ -352,17 +352,23 @@
 
 /obj/item/weapon/claymore/religion/dropped()
 	QDEL_NULL(shield)
-	have_outline = FALSE
-	filters -= holy_outline
+	remove_holy_outline()
 
 /obj/item/weapon/claymore/religion/equipped(mob/user, slot)
 	if(user.mind.holy_role)
 		force = 10
 		if(!have_outline && can_spawn_shield)
-			have_outline = TRUE
-			filters += holy_outline
+			create_holy_outline()
 	else
 		force = 5
+
+/obj/item/weapon/claymore/religion/proc/remove_holy_outline()
+	have_outline = FALSE
+	filters -= holy_outline
+
+/obj/item/weapon/claymore/religion/proc/create_holy_outline()
+	have_outline = TRUE
+	filters += holy_outline
 
 /obj/item/weapon/claymore/religion/proc/revert_effect()
 	if(down_overlay)
@@ -372,8 +378,7 @@
 /obj/item/weapon/claymore/religion/proc/ready_shield(mob/M)
 	can_spawn_shield = TRUE
 	if(!have_outline && (slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND))
-		have_outline = TRUE
-		filters += holy_outline
+		create_holy_outline()
 
 /obj/item/weapon/claymore/religion/attack_self(mob/living/carbon/human/H)
 	if(!H.mind.holy_role || !can_spawn_shield)
@@ -383,9 +388,8 @@
 	if(H.put_in_inactive_hand(R))
 		can_spawn_shield = FALSE
 		can_spawn_shield_timer = addtimer(CALLBACK(src, .proc/ready_shield, H), 3 MINUTES)
-		filters -= holy_outline
 		shield = R
-		have_outline = FALSE
+		remove_holy_outline()
 
 		R.alpha = 200
 		R.filters += holy_outline
