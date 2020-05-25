@@ -43,8 +43,8 @@
 #define COMSIG_ATOM_EXITED "atom_exited"
 /// from base of atom/movable/CanPass() & mob/CanPass(): (atom/movable/mover, atom/target, height, air_group)
 #define COMSIG_ATOM_CANPASS "movable_canpass"
-	#define COMPONENT_CANPASS  "canpass"
-	#define COMPONENT_CANTPASS "cantpass"
+	#define COMPONENT_CANPASS  1
+	#define COMPONENT_CANTPASS 2
 /// from base of atom/attackby(): (/obj/item, /mob/living, params)
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"
 	// Return this in response if you don't want afterattack to be called
