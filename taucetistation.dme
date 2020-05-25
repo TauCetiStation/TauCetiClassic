@@ -217,6 +217,7 @@
 #include "code\datums\components\mechanic_description.dm"
 #include "code\datums\components\multi_carry.dm"
 #include "code\datums\components\slippery.dm"
+#include "code\datums\components\swiping.dm"
 #include "code\datums\components\waddle.dm"
 #include "code\datums\diseases\appendicitis.dm"
 #include "code\datums\diseases\brainrot.dm"
