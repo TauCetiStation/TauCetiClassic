@@ -87,7 +87,7 @@
 		L.apply_damages(heal_num, heal_num, heal_num, heal_num, heal_num, heal_num)
 
 	if(adding_favor <= 20)
-		adding_favor += min(adding_favor + 2.0, 20.0)
+		adding_favor = min(adding_favor + 2.0, 20.0)
 
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
