@@ -652,4 +652,4 @@
 
 /mob/shake_act(severity, recursive = TRUE)
 	..()
-	shake_camera(src, 1 SECOND, severity)
+	shake_camera(src, 0.5 SECONDS, severity)
