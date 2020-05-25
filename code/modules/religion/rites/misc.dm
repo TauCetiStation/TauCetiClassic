@@ -75,6 +75,8 @@
 	invoke_msg = "Lord have mercy. Twelve times."
 	favor_cost = 0
 
+	var/adding_favor = 0
+
 	needed_aspects = list(
 		ASPECT_RESCUE = 1,
 	)
@@ -84,11 +86,14 @@
 	for(var/mob/living/L in range(2, src))
 		L.apply_damages(heal_num, heal_num, heal_num, heal_num, heal_num, heal_num)
 
+	adding_favor = min(adding_favor + 2.0, 20.0)
+
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/pray/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
-	global.chaplain_religion.favor += 20
+/datum/religion_rites/pray/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
+	global.chaplain_religion.adjust_favor(15 + adding_favor)
+	adding_favor = min(adding_favor + 0.1, 20.0)
 	return TRUE
 
 /*
@@ -152,7 +157,8 @@
 	return TRUE
 
 /datum/religion_rites/animation/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!required_checks(user, AOG))
+	. = ..()
+	if(!.)
 		return FALSE
 
 	var/list/anim_items = list()
@@ -302,7 +308,8 @@
 	return TRUE
 
 /datum/religion_rites/revive_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!required_checks(user, AOG))
+	. = ..()
+	if(!.)
 		return FALSE
 
 	var/mob/living/simple_animal/animal = AOG.buckled_mob
@@ -413,9 +420,4 @@
 		var/mob/god = pick(global.chaplain_religion.active_deities)
 		god_name = god.name
 	R.name = "[R.name] of [god_name]"
-
-	R.down_overlay = image('icons/effects/effects.dmi', icon_state = "at_shield2", layer = OBJ_LAYER - 0.01)
-	R.down_overlay.alpha = 100
-	R.add_overlay(R.down_overlay)
-	addtimer(CALLBACK(R, /obj/item/weapon/claymore/religion.proc/revert_effect), 5 SECONDS)
 	return TRUE

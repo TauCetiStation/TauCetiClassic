@@ -7,6 +7,8 @@
 	var/name = "religious rite"
 	/// Description of the religious rite
 	var/desc = "immm gonna rooon"
+	/// Just tip when examine altar
+	var/tip_text
 	/// length it takes to complete the ritual
 	var/ritual_length = (10 SECONDS) //total length it'll take
 	/// Strings that are by default said evenly throughout the rite
@@ -65,6 +67,8 @@
 
 // Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
 /datum/religion_rites/proc/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!required_checks(user, AOG))
+		return FALSE
 	return TRUE
 
 // Does a thing on each invocation, return FALSE to cancel ritual performance.
