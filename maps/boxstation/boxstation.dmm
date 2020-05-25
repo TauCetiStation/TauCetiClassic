@@ -20627,9 +20627,10 @@
 	},
 /area/station/cargo/storage)
 "aKG" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -24130,16 +24131,16 @@
 	},
 /area/station/civilian/dormitories)
 "aRh" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
@@ -24237,17 +24238,6 @@
 "aRs" = (
 /obj/structure/window/reinforced{
 	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
 	},
 /obj/random/scrap/moderate_weighted,
 /turf/simulated/floor/plating,
@@ -24485,7 +24475,6 @@
 	name = "Chapel Maintenance";
 	req_one_access = list(12,22)
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -24493,6 +24482,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/mass_driver)
 "aRP" = (
@@ -25418,16 +25408,26 @@
 /area/station/hallway/secondary/entry)
 "aTz" = (
 /obj/effect/decal/cleanable/generic,
-/turf/simulated/floor/plating,
-/area/station/maintenance/chapel)
-"aTA" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/plating,
+/area/station/maintenance/chapel)
+"aTA" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aTB" = (
@@ -25449,8 +25449,20 @@
 	},
 /area/station/maintenance/engineering)
 "aTD" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
@@ -26488,19 +26500,14 @@
 	},
 /area/station/rnd/scibreak)
 "aVB" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/cable{
-	d1 = 1;
+	d1 = 4;
 	d2 = 8;
-	icon_state = "1-8"
+	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
@@ -26518,12 +26525,14 @@
 	},
 /area/station/rnd/scibreak)
 "aVD" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Chapel Mass Driver APC";
+	pixel_y = 28
+	},
 /obj/structure/cable{
-	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4"
+	icon_state = "0-4"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -33956,9 +33965,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bjK" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -38103,10 +38113,9 @@
 	},
 /area/station/civilian/chapel)
 "bsF" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -42883,18 +42892,6 @@
 	icon_state = "cafeteria"
 	},
 /area/station/rnd/hor)
-"bCL" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/civilian/chapel/mass_driver)
 "bCM" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -42913,13 +42910,12 @@
 	},
 /area/station/civilian/chapel/mass_driver)
 "bCN" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -65830,14 +65826,12 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "cIz" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Chapel Mass Driver APC";
-	pixel_y = 28
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
+	d1 = 1;
 	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -128696,11 +128690,11 @@ aup
 aRs
 aTA
 aVB
-aRN
+wLi
 aVD
 bCN
 bsF
-kNR
+woc
 xGY
 cWL
 woc
@@ -128953,11 +128947,11 @@ aQK
 aRh
 aTz
 aTD
-wLi
+aRN
 cIz
 bjK
 aKG
-bCL
+bQy
 bQy
 kNR
 lOr
