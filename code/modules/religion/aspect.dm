@@ -255,7 +255,7 @@
 	desc = "Dark, darkness, obcurse, evil"
 
 /datum/aspect/lightbending/darkness/get_light_gain(turf/simulated/floor/F)
-	return (0.5 - F.get_lumcount()) * power * 0.05
+	return (0.7 - F.get_lumcount()) * power * 0.05
 
 //Gives mana from: light levels on holy turfs
 //Needed for: spells and rituals related to the theme of receiving light
@@ -264,7 +264,7 @@
 	desc = "Light interaction"
 
 /datum/aspect/lightbending/light/get_light_gain(turf/simulated/floor/F)
-	return (F.get_lumcount() - 0.5) * power * 0.03
+	return (F.get_lumcount() - 0.3) * power * 0.03
 
 //Gives mana for economical cost of an item.
 //Needed for: anything economy related
