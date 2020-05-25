@@ -882,6 +882,8 @@
 	confused_start = 145	//amount absorbed after which mob starts confusing directions
 	taste_message = "wine"
 
+	needed_aspects = list(ASPECT_FOOD = 1, ASPECT_RESCUE = 1)
+
 /datum/reagent/consumable/ethanol/cognac
 	name = "Cognac"
 	id = "cognac"
@@ -934,6 +936,8 @@
 	slur_start = 1
 	confused_start = 1
 	taste_message = "bitter wine"
+
+	needed_aspects = list(ASPECT_FOOD = 1, ASPECT_OBSCURE = 1)
 
 /datum/reagent/consumable/ethanol/pwine/on_general_digest(mob/living/M)
 	..()
