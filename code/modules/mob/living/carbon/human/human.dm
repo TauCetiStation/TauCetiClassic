@@ -518,8 +518,41 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	popup.open()
 
 // called when something steps onto a human
-// this could be made more general, but for now just handle mulebot
+/*
+Dir-ы:
+NORTH/Север  - 1 или 0b0001
+SOUTH/Юг        - 2 или 0b0010
+EAST    /Восток - 4 или 0b0100
+WEST  /Запад   - 8 или 0b1000
+---
+Диагональные, но использовать не стоит (только если вы знаете, что делаете, иначе может ломать вещи):
+NORTHEAST      - 5
+NORTHWEST    - 9
+SOUTHEAST      - 6
+SOUTHWEST    - 10
+*/
 /mob/living/carbon/human/Crossed(atom/movable/AM)
+	if(istype(AM, /mob/living/simple_animal/hulk))
+		var/mob/living/simple_animal/hulk/H = AM
+		switch(H.a_intent)
+			if(INTENT_HARM)
+				H.visible_message("<span class='warning'>[H.name] steps on [src]!</span>")
+				adjustBruteLoss(H.health/10)
+			if(INTENT_HELP)
+				H.visible_message("<span class='notice'>[H.name] neatly bypasses [src].</span>")
+			if(INTENT_PUSH)
+				if(!anchored)
+					switch(H.dir)
+						if(NORTH)
+							step(src, H.dir+pick(EAST, WEST))
+						if(SOUTH)
+							step(src, H.dir+pick(EAST, WEST))
+						if(EAST)
+							step(src, H.dir+pick(NORTH, SOUTH))
+						if(WEST)
+							step(src, H.dir+pick(NORTH, SOUTH))
+					if(H.pulling)
+						H.stop_pulling()
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
 		MB.RunOver(src)
