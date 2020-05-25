@@ -33,7 +33,7 @@
 
 	var/prev_invis = invisibility
 
-	flick_overlay(I, viewers, time)
+	flick_overlay(I, viewers, time + 1)
 
 	var/stop_shaking = world.time + time
 	while(stop_shaking > world.time)
@@ -71,8 +71,8 @@
 		me.loc = src
 		me.appearance_flags |= KEEP_APART
 
-		flick_overlay(me, viewers, time)
-		QDEL_IN(me, time)
+		flick_overlay(me, viewers, time + 1)
+		QDEL_IN(me, time + 1)
 		return
 
 	var/image/me = image(icon, icon_state)
@@ -82,8 +82,8 @@
 	me.loc = src
 	me.appearance_flags |= KEEP_APART
 
-	flick_overlay(me, viewers, time)
-	QDEL_IN(me, time)
+	flick_overlay(me, viewers, time + 1)
+	QDEL_IN(me, time + 1)
 
 /mob/living/after_shake_animation(intensity, time, intensity_dropoff, list/viewers)
 	transform = default_transform
