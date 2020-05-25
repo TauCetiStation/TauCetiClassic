@@ -136,3 +136,32 @@
 	mob_trait = TRAIT_LIGHT_DRINKER
 	gain_text = "<span class='danger'>Just the thought of drinking alcohol makes your head spin.</span>"
 	lose_text = "<span class='notice'>You're no longer severely affected by alcohol.</span>"
+
+
+
+/datum/quirk/nyctophobia
+	name = "Nyctophobia"
+	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctually act careful, and constantly feel a sense of dread."
+	value = -1
+
+/datum/quirk/nyctophobia/on_process()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H.species.name in list(SHADOWLING, GOLEM, ZOMBIE, ZOMBIE_TAJARAN, ZOMBIE_SKRELL, ZOMBIE_UNATHI, SKELETON)) // hmm, new species flag?
+		return //we're tied with the dark, so we don't get scared of it; don't cleanse outright to avoid cheese
+	var/turf/T = get_turf(quirk_holder)
+	var/lums = T.get_lumcount()
+	if(lums <= 0.2)
+		if(quirk_holder.m_intent == "run")
+			to_chat(quirk_holder, "<span class='warning'>Easy, easy, take it slow... you're in the dark...</span>")
+			quirk_holder.m_intent = "walk"
+			quirk_holder.hud_used.move_intent.icon_state = "walking"
+
+
+
+/datum/quirk/no_taste
+	name = "Ageusia"
+	desc = "You can't taste anything! Toxic food will still poison you."
+	value = -1
+	mob_trait = TRAIT_AGEUSIA
+	gain_text = "<span class='notice'>You can't taste anything!</span>"
+	lose_text = "<span class='notice'>You can taste again!</span>"
