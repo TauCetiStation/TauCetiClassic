@@ -4,6 +4,8 @@
 /datum/name_modifier/prefix/affect(atom/A)
 	A.name = "[get_txt()] [A.name]"
 
+/datum/name_modifier/prefix/affect_text(txt)
+	return "[get_txt()] [txt]"
 
 
 /datum/name_modifier/prefix/healthy

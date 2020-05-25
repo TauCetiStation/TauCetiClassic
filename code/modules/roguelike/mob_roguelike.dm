@@ -1,7 +1,4 @@
 /mob/living/simple_animal/hostile
-	/// The chance of this mob being "special"(Having mob_modifiers)
-	var/special_prob = 30
-
 	/// A dict of sort type = amount.
 	var/list/loot_list = list()
 	/// All amounts of loot from loot_list are multiplied by this value.
@@ -17,13 +14,16 @@
 		for(var/am in 1 to spawn_am)
 			new loot_type(loc)
 
-/mob/living/simple_animal/hostile/proc/gen_modifiers(modifier_amount = 3, rarity_cost = rand(2, 6))
+/mob/living/simple_animal/hostile/proc/gen_modifiers(special_prob = 30, min_mod_am = 1, max_mod_am = 3, min_rarity_cost = 2, max_rarity_cost = 6)
 	return
 
 // Currently only they are meaningful to have the modifiers.
-/mob/living/simple_animal/hostile/asteroid/gen_modifiers(modifier_amount = 3, rarity_cost = rand(2, 6))
+/mob/living/simple_animal/hostile/asteroid/gen_modifiers(special_prob = 30, min_mod_am = 1, max_mod_am = 3, min_rarity_cost = 2, max_rarity_cost = 6)
 	if(!prob(special_prob))
 		return
+
+	var/modifier_amount = rand(min_mod_am, max_mod_am)
+	var/rarity_cost = rand(min_rarity_cost, max_rarity_cost)
 
 	var/list/allowed_name_mods = list(
 		RL_GROUP_PREFIX = 2,

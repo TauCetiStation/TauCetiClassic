@@ -53,6 +53,16 @@
 #define COMSIG_PARENT_EXAMINE "atom_examine"
 /// from base of mob/examinate(): (/mob)
 #define COMSIG_PARENT_POST_EXAMINE "atom_post_examine"
+/// from base of atom/get_examine_name(): (/mob/user, list/override)
+#define COMSIG_ATOM_GET_EXAMINE_NAME "atom_get_examine_name"
+	//Positions for overrides list
+	#define EXAMINE_POSITION_BEFORE_EVERYTHING 1
+	#define EXAMINE_POSITION_ARTICLE 2
+	#define EXAMINE_POSITION_BEFORE_NAME 3
+	#define EXAMINE_POSITION_NAME 4
+	#define EXAMINE_POSITION_AFTER_EVERYTHING 5
+	//End positions
+	#define COMPONENT_EXNAME_CHANGED 1
 /// from base of atom/MouseDrop(): (/atom/over, /mob/user)
 #define COMSIG_MOUSEDROP_ONTO "mousedrop_onto"
 	#define COMPONENT_NO_MOUSEDROP 1

@@ -9,6 +9,9 @@
 
 	/// The name of parent before any modifiers.
 	var/saved_name
+	/// The full mob's name ignoring amount_by_group
+	var/full_name
+
 	/// dict of sort: type = modifier
 	var/list/modifiers_by_type
 	/// dict of sort: group = list(priority = list(modifiers))
@@ -17,6 +20,12 @@
 	var/list/priority_by_group
 	/// dict of sort: group = list(highest_priority_modifiers)
 	var/list/highest_priority_modifiers
+
+	var/highest_affect_priority
+	// dict of sort: affect_priority = list(modifiers)
+	var/list/affect_priorities
+	/// a list of highest affect priority modifiers
+	var/list/highest_affect_priority_modifiers
 
 /datum/component/name_modifiers/Initialize(list/amount_by_group)
 	if(!isatom(parent))
@@ -28,6 +37,7 @@
 
 	RegisterSignal(parent, list(COMSIG_NAME_MOD_ADD), .proc/AddModifier)
 	RegisterSignal(parent, list(COMSIG_NAME_MOD_REMOVE), .proc/RemoveModifier)
+	RegisterSignal(parent, list(COMSIG_ATOM_GET_EXAMINE_NAME), .proc/AddFullName)
 
 /datum/component/name_modifiers/Destroy()
 	var/atom/A = parent
@@ -35,6 +45,9 @@
 
 	name_modifiers = null
 	highest_priority_modifiers = null
+
+	affect_priorities = null
+	highest_affect_priority_modifiers = null
 
 	for(var/mod_type in modifiers_by_type)
 		qdel(modifiers_by_type[mod_type])
@@ -62,7 +75,7 @@
 				new_highest = i
 
 		if(new_highest > 0)
-			highest_priority_modifiers[NM.group] += name_modifiers[NM.group][new_highest]
+			highest_priority_modifiers[NM.group] += name_modifiers[NM.group]["[new_highest]"]
 			priority_by_group[NM.group] = new_highest
 
 		if(length(highest_priority_modifiers[NM.group]) == 0)
@@ -70,6 +83,30 @@
 			priority_by_group -= NM.group
 			UNSETEMPTY(highest_priority_modifiers)
 			UNSETEMPTY(priority_by_group)
+
+/// Adds a modifier as highest affect priority.
+/datum/component/name_modifiers/proc/add_max_affect_priority(datum/name_modifier/NM)
+	highest_affect_priority = NM.affect_priority
+	highest_affect_priority_modifiers += NM
+
+/// Removes a modifier from highest priority list.
+/datum/component/name_modifiers/proc/remove_max_affect_priority(datum/name_modifier/NM)
+	highest_affect_priority_modifiers -= NM
+
+	if(highest_affect_priority_modifiers.len == 0)
+		var/new_highest = 0
+		for(var/i in 1 to NM.affect_priority - 1)
+			if(affect_priorities["[i]"] && i > new_highest)
+				new_highest = i
+
+		if(new_highest > 0)
+			highest_priority_modifiers += affect_priorities["[new_highest]"]
+			highest_affect_priority = new_highest
+
+		if(highest_affect_priority_modifiers.len == 0)
+			highest_affect_priority_modifiers = null
+			affect_priorities = null
+			highest_affect_priority = null
 
 /// Gets an amount amount modifiers of group with highest priorities. ~Luduk
 /datum/component/name_modifiers/proc/get_modifiers(group, amount)
@@ -96,22 +133,28 @@
 
 	// This should be done with a linked list. ~Luduk
 	var/list/affect_with = list()
-	var/highest_affect_priority = 0
+	var/highest_affect_priority_temp = 0
 
 	for(var/group in amount_by_group)
 		var/list/to_affect = get_modifiers(group, amount_by_group[group])
 		for(var/datum/name_modifier/NM in to_affect)
-			if(NM.affect_priority > highest_affect_priority)
-				highest_affect_priority = NM.affect_priority
+			if(NM.affect_priority > highest_affect_priority_temp)
+				highest_affect_priority_temp = NM.affect_priority
 
 			LAZYINITLIST(affect_with["[NM.affect_priority]"])
 			affect_with["[NM.affect_priority]"] += NM
 
 	A.name = saved_name
 
-	for(var/i in 1 to highest_affect_priority)
+	for(var/i in 1 to highest_affect_priority_temp)
 		for(var/datum/name_modifier/NM in affect_with["[i]"])
 			NM.affect(A)
+
+	full_name = saved_name
+
+	for(var/i in 1 to highest_affect_priority)
+		for(var/datum/name_modifier/NM in affect_priorities["[i]"])
+			full_name = NM.affect_text(full_name)
 
 /// Add the modifier mod_type.
 /datum/component/name_modifiers/proc/AddModifier(datum/source, mod_type, severity = 1)
@@ -145,6 +188,20 @@
 		highest_priority_modifiers[NM.group] = list()
 		add_max_priority(NM)
 
+	LAZYINITLIST(affect_priorities)
+	LAZYINITLIST(affect_priorities["[NM.affect_priority]"])
+	LAZYINITLIST(highest_affect_priority_modifiers)
+
+	affect_priorities["[NM.affect_priority]"] += NM
+
+	if(!highest_affect_priority)
+		add_max_affect_priority(NM)
+	else if(NM.affect_priority == highest_affect_priority)
+		add_max_affect_priority(NM)
+	else if(NM.affect_priority > highest_priority)
+		highest_affect_priority_modifiers = list()
+		add_max_affect_priority(NM)
+
 	update_name()
 
 /// Remove the modifier mod_type.
@@ -160,6 +217,9 @@
 	if(NM.priority == highest_priority)
 		remove_max_priority(NM)
 
+	if(NM.affect_priority == highest_affect_priority)
+		remove_max_affect_priority(NM)
+
 	name_modifiers[NM.group]["[NM.priority]"] -= NM
 	if(name_modifiers[NM.group]["[NM.priority]"] == 0)
 		name_modifiers[NM.group] -= "[NM.priority]"
@@ -171,6 +231,11 @@
 	UNSETEMPTY(modifiers_by_type)
 
 	update_name()
+
+/datum/component/name_modifiers/proc/AddFullName(datum/source, mob/user, list/override)
+	var/atom/A = parent
+	override[EXAMINE_POSITION_NAME] = "[EMBED_TIP(A.name, full_name)]"
+	return COMPONENT_EXNAME_CHANGED
 
 /*
  * This is a data class used to contain all info about a certain prefix.
@@ -189,6 +254,9 @@
 
 /datum/name_modifier/proc/affect(atom/A)
 	return
+
+/datum/name_modifier/proc/affect_text(txt)
+	return get_txt()
 
 /datum/name_modifier/proc/get_txt()
 	return get_severity_txt() + text
