@@ -318,6 +318,11 @@
 
 	var/image/singularity_overlay
 
+/datum/component/mob_modifier/singular/Destroy()
+	STOP_PROCESSING(SSmob_modifier, src)
+	QDEL_NULL(singularity_overlay)
+	return ..()
+
 /datum/component/mob_modifier/singular/apply(update = FALSE)
 	. = ..()
 	if(!.)

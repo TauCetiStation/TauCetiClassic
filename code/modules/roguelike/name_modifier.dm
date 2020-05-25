@@ -76,7 +76,7 @@
 	var/max_prio = get_max_priority(group)
 	// If there's no priority for this group, there's no group.
 	if(!max_prio)
-		return
+		return null
 
 	var/list/pos_modifiers = name_modifiers[group]
 	var/list/approved = list()
@@ -136,8 +136,13 @@
 	LAZYINITLIST(highest_priority_modifiers)
 	LAZYINITLIST(highest_priority_modifiers[NM.group])
 
-	var/highest_priority = get_max_priority()
-	if(!highest_priority || NM.priority < highest_priority)
+	var/highest_priority = get_max_priority(NM.group)
+	if(!highest_priority)
+		add_max_priority(NM)
+	else if(NM.priority == highest_priority)
+		add_max_priority(NM)
+	else if(NM.priority > highest_priority)
+		highest_priority_modifiers[NM.group] = list()
 		add_max_priority(NM)
 
 	update_name()
