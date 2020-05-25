@@ -613,7 +613,7 @@
 	if(user.a_intent != INTENT_HARM)
 		return ..()
 
-	var/can_cut = TRUE
+	var/can_cut = FALSE
 	if(istype(W, /obj/item/weapon/melee/energy))
 		var/obj/item/weapon/melee/energy/E = W
 		can_cut = E.active
