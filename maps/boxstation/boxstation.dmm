@@ -43006,7 +43006,10 @@
 /area/station/hallway/primary/central)
 "bCY" = (
 /obj/structure/table/glass,
-/obj/item/clothing/mask/cigarette,
+/obj/item/device/flashlight/lamp{
+	pixel_x = -4;
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -45178,6 +45181,7 @@
 /obj/structure/table/glass,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/item/ashtray/glass,
+/obj/item/weapon/cigbutt,
 /obj/item/weapon/cigbutt,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -73460,6 +73464,9 @@
 	c_tag = "Chapel Mass Driver";
 	dir = 8
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -77445,6 +77452,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -77775,6 +77785,9 @@
 /area/station/medical/surgery)
 "sKk" = (
 /obj/effect/decal/cleanable/cobweb2,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
