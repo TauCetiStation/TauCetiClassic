@@ -312,6 +312,11 @@
 	on = 0
 	addtimer(CALLBACK(src, .proc/reload), 64)
 
+	var/realcooldown = 64
+	if  (HAS_TRAIT(user, TRAIT_PHOTOGRAPHER))
+		realcooldown *= 0.5
+	addtimer(CALLBACK(src, .proc/reload), realcooldown)
+
 /obj/item/device/camera/proc/reload()
 	icon_state = icon_on
 	on = 1
