@@ -95,7 +95,7 @@
 /datum/religion_rites/pray/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
 	global.chaplain_religion.adjust_favor(15 + adding_favor)
 	if(adding_favor <= 20)
-		adding_favor += min(adding_favor + 0.1, 20.0)
+		adding_favor = min(adding_favor + 0.1, 20.0)
 	return TRUE
 
 /*
