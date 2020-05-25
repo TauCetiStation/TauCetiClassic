@@ -120,9 +120,6 @@
 	description = "This object appears to be swipable. You can perform swipes either via mouse moves, or click modifiers.\n[pos_moves]"
 
 /datum/component/swiping
-	// Whether is currently swiping.
-	var/swiping = FALSE
-
 	var/list/interupt_on_sweep_hit_types = list(/atom)
 
 	var/can_push = FALSE
@@ -282,6 +279,9 @@
 			step_away(target, get_turf(parent))
 
 /datum/component/swiping/proc/try_sweep_push(datum/source, atom/target, mob/user)
+	if(!isturf(target) && !isturf(target.loc))
+		return NONE
+
 	if(can_push_call)
 		if(!can_push_call.Invoke(target, user))
 			return NONE
@@ -360,6 +360,9 @@
 			step_to(target, get_turf(parent))
 
 /datum/component/swiping/proc/try_sweep_pull(datum/source, atom/target, mob/user)
+	if(!isturf(target) && !isturf(target.loc))
+		return NONE
+
 	if(can_pull_call)
 		if(!can_pull_call.Invoke(target, user))
 			return NONE
@@ -401,6 +404,9 @@
 	else if(can_sweep_call)
 		if(!can_sweep_call.Invoke(user))
 			return FALSE
+
+	if(user.get_active_hand() != parent)
+		return FALSE
 
 	if(user.is_busy() || !do_after(user, sweep_delay, target = parent, can_move = TRUE, progress = FALSE))
 		return FALSE
@@ -509,8 +515,8 @@
 
 // The handler for all the possible sweeping images, directions, and etc. Please use the wrapper - sweep.
 /datum/component/swiping/proc/async_sweep(list/directions, mob/living/user, sweep_delay)
-	swiping = TRUE
 	var/obj/item/weapon/W = parent
+	W.swiping = TRUE
 
 	var/turf/start = get_step(W, directions[1])
 
@@ -555,7 +561,7 @@
 
 	for(var/obj/effect/effect/weapon_sweep/sweep_image in sweep_objects)
 		QDEL_IN(sweep_image, sweep_image.sweep_delay)
-	swiping = FALSE
+	W.swiping = FALSE
 
 // A tidy wrapper for the sweep logic, with neccesary checks.
 /datum/component/swiping/proc/sweep(list/directions, mob/living/user, sweep_delay)
@@ -563,7 +569,8 @@
 		can_sweep_call.Invoke(user)
 		return COMSIG_ITEM_CANCEL_CLICKWITH
 
-	if(swiping)
+	var/obj/item/I = parent
+	if(I.swiping)
 		return
 
 	INVOKE_ASYNC(src, .proc/async_sweep, directions, user, sweep_delay)
@@ -572,6 +579,9 @@
 
 // Swipe through the two adjacent to target tiles.
 /datum/component/swiping/proc/sweep_facing(datum/source, atom/target, mob/user)
+	if(!isturf(target) && !isturf(target.loc))
+		return NONE
+
 	if(can_sweep_call)
 		if(!can_sweep_call.Invoke(target, user))
 			return NONE
@@ -610,6 +620,9 @@
 
 // A little bootleg for MiddleClick.
 /datum/component/swiping/proc/sweep_spin_click(datum/source, atom/target, mob/user)
+	if(!isturf(target) && !isturf(target.loc))
+		return NONE
+
 	if(sweep_spin(source, user) != NONE)
 		return COMSIG_ITEM_CANCEL_CLICKWITH
 	return NONE

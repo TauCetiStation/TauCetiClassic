@@ -141,7 +141,7 @@
 		STOP_PROCESSING(SSreligion, src)
 		return
 
-	favor += passive_favor_gain
+	adjust_favor(passive_favor_gain)
 
 /datum/religion/proc/reset_religion()
 	lore = initial(lore)
@@ -189,7 +189,7 @@
 
 	deity_names = deity_names_by_name[name]
 	if(!deity_names)
-		world.log << "ERROR IN SETTING UP RELIGION: [name] HAS NO DEITIES WHATSOVER. HAVE YOU SET UP RELIGIONS CORRECTLY?"
+		warning("ERROR IN SETTING UP RELIGION: [name] HAS NO DEITIES WHATSOVER. HAVE YOU SET UP RELIGIONS CORRECTLY?")
 		deity_names = list("Error")
 
 	gen_bible_info()
