@@ -53,16 +53,6 @@
     
   
   
- /datum/quirk/photographer
-	name = "Photographer"
-	desc = "You know how to handle a camera, shortening the delay between each shot."
-	value = 1
-	mob_trait = TRAIT_PHOTOGRAPHER
-	gain_text = "<span class='notice'>You know everything about photography.</span>"
-	lose_text = "<span class='danger'>You forget how photo cameras work.</span>"
-
-
-
 /datum/quirk/freerunning
 	name = "Freerunning"
 	desc = "You're great at quick moves! You can climb objects more quickly."
