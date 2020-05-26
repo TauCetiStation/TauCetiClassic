@@ -514,15 +514,6 @@
 		return
 
 	H.invisibility = INVISIBILITY_LEVEL_ONE
-	H.alpha = saved_alpha
+	H.alpha = 127
 
 	add_vis_timer()
-
-/mob/living/simple_animal/hostile/attack_ghost(mob/user)
-	var/list/allowed_name_mods = list(
-		RL_GROUP_PREFIX = 2,
-		RL_GROUP_SUFFIX = 2,
-	)
-	AddComponent(/datum/component/name_modifiers, allowed_name_mods)
-
-	AddComponent(/datum/component/mob_modifier/invisible, 1)
