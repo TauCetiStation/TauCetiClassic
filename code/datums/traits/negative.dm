@@ -151,9 +151,9 @@
 	var/turf/T = get_turf(quirk_holder)
 	var/lums = T.get_lumcount()
 	if(lums <= 0.2)
-		if(quirk_holder.m_intent == "run")
+		if(quirk_holder.m_intent == MOVE_INTENT_RUN)
 			to_chat(quirk_holder, "<span class='warning'>Easy, easy, take it slow... you're in the dark...</span>")
-			quirk_holder.m_intent = "walk"
+			quirk_holder.m_intent = MOVE_INTENT_WALK
 			quirk_holder.hud_used.move_intent.icon_state = "walking"
 
 
@@ -161,7 +161,7 @@
 /datum/quirk/no_taste
 	name = "Ageusia"
 	desc = "You can't taste anything! Toxic food will still poison you."
-	value = -1
+	value = 0
 	mob_trait = TRAIT_AGEUSIA
 	gain_text = "<span class='notice'>You can't taste anything!</span>"
 	lose_text = "<span class='notice'>You can taste again!</span>"
