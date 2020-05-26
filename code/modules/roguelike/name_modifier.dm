@@ -210,7 +210,12 @@
 
 /// Remove the modifier mod_type.
 /datum/component/name_modifiers/proc/RemoveModifier(datum/source, mod_type, severity = 1)
+	if(!modifiers_by_type)
+		return
+
 	var/datum/name_modifier/NM = modifiers_by_type[mod_type]
+	if(!NM)
+		return
 
 	NM.severity -= severity
 	if(NM.severity > 0)

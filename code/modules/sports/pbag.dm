@@ -171,47 +171,7 @@
 	swinging = FALSE
 
 /mob/living/pbag/rejuvenate()
-	if(reagents)
-		reagents.clear_reagents()
-
-	// shut down various types of badness
-	setToxLoss(0)
-	setOxyLoss(0)
-	setCloneLoss(0)
-	setBrainLoss(0)
-	setHalLoss(0)
-	SetParalysis(0)
-	SetStunned(0)
-	SetWeakened(0)
-
-	// shut down ongoing problems
-	radiation = 0
-	bodytemperature = T20C
-	sdisabilities = 0
-	disabilities = 0
-	ExtinguishMob()
-	fire_stacks = 0
-
-	if(pinned.len)
-		for(var/obj/O in pinned)
-			O.forceMove(loc)
-		pinned.Cut()
-
-	// fix blindness and deafness
-	blinded = 0
-	eye_blind = 0
-	eye_blurry = 0
-	ear_deaf = 0
-	ear_damage = 0
-	heal_overall_damage(getBruteLoss(), getFireLoss())
-
-	//restore all HP
-	if(health != maxHealth)
-		health = maxHealth
-
-	// restore us to conciousness
-	stat = CONSCIOUS
-
+	..()
 	anchored = TRUE
 	icon_state = "pbag"
 	my_icon_state = "pbag"

@@ -171,7 +171,7 @@
 	var/mob/living/simple_animal/hostile/H = parent
 	H.forceMove(possessed)
 
-	rejuve_timer = addtimer(CALLBACK(src, .proc/come_back), rand(6, 10) MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
+	rejuve_timer = addtimer(CALLBACK(src, .proc/come_back), rand(6, 10) MINUTES, TIMER_STOPPABLE)
 
 /datum/component/mob_modifier/ghostly/proc/come_back()
 	if(!possessed)
@@ -293,9 +293,7 @@
 	var/mob/living/simple_animal/hostile/H = parent
 
 	H.melee_damage *= 1.5 * strength
-
 	H.loot_mod *= 1.5 * strength
-	H.faction = "Station"
 
 	if(update)
 		return
@@ -308,7 +306,6 @@
 	H.melee_damage *= 1 / (1.5 * strength)
 	H.loot_mod *= 1 / (1.5 * strength)
 
-	H.faction = initial(H.faction)
 	return ..()
 
 /datum/component/mob_modifier/strong/proc/shake_ground()
@@ -413,13 +410,15 @@
 			var/atom/movable/X = thing
 			if(!X)
 				continue
-			if(H == X)
-				continue
-			if(H.loc == X.loc)
-				consume(X)
-			else
-				X.singularity_pull(H, pull_stage)
+			X.singularity_pull(H, pull_stage)
 			CHECK_TICK
+
+	for(var/thing in get_turf(H))
+		var/atom/movable/X = thing
+		if(!X)
+			continue
+		consume(X)
+		CHECK_TICK
 
 
 
@@ -449,12 +448,10 @@
 	if(update)
 		return
 
-	if(prob(50))
-		become_invisible()
-	else
-		become_visible()
+	RegisterSignal(H, list(COMSIG_MOB_HOSTILE_ATTACKINGTARGET, COMSIG_MOB_HOSTILE_SHOOT, COMSIG_MOB_DIED), .proc/reveal)
+	RegisterSignal(H, list(COMSIG_LIVING_REJUVENATE), .proc/start_hiding)
 
-	RegisterSignal(H, list(COMSIG_MOB_HOSTILE_ATTACKINGTARGET, COMSIG_MOB_HOSTILE_SHOOT), .proc/reveal)
+	INVOKE_ASYNC(src, .proc/start_hiding)
 
 /datum/component/mob_modifier/invisible/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
@@ -467,11 +464,29 @@
 
 	return ..()
 
+/datum/component/mob_modifier/invisible/proc/start_hiding()
+	if(invis_timer)
+		return
+
+	if(prob(50))
+		become_invisible()
+	else
+		add_invis_timer()
+
 /datum/component/mob_modifier/invisible/proc/reveal()
 	deltimer(invis_timer)
 	invis_timer = null
+
 	if(invisible)
 		become_visible()
+	else
+		add_invis_timer()
+
+/datum/component/mob_modifier/invisible/proc/add_vis_timer()
+	invis_timer = addtimer(CALLBACK(src, .proc/become_visible), rand(10, 30) SECONDS, TIMER_STOPPABLE)
+
+/datum/component/mob_modifier/invisible/proc/add_invis_timer()
+	invis_timer = addtimer(CALLBACK(src, .proc/become_invisible), rand(10, 30) SECONDS, TIMER_STOPPABLE)
 
 /datum/component/mob_modifier/invisible/proc/become_visible()
 	var/mob/living/simple_animal/hostile/H = parent
@@ -480,16 +495,34 @@
 	H.invisibility = saved_invisibility
 	H.alpha = 0
 	animate(H, alpha=saved_alpha, time=1 SECOND)
-	invis_timer = addtimer(CALLBACK(src, .proc/become_invisible), rand(10, 30) SECONDS)
+
+	if(H.stat)
+		return
+
+	add_invis_timer()
 
 /datum/component/mob_modifier/invisible/proc/become_invisible()
 	var/mob/living/simple_animal/hostile/H = parent
+
+	if(H.stat)
+		return
 
 	invisible = TRUE
 	animate(H, alpha=0, time=1 SECOND)
 	sleep(1 SECOND)
 	if(QDELING(src))
 		return
+
 	H.invisibility = INVISIBILITY_LEVEL_ONE
 	H.alpha = saved_alpha
-	invis_timer = addtimer(CALLBACK(src, .proc/become_visible), rand(10, 30) SECONDS)
+
+	add_vis_timer()
+
+/mob/living/simple_animal/hostile/attack_ghost(mob/user)
+	var/list/allowed_name_mods = list(
+		RL_GROUP_PREFIX = 2,
+		RL_GROUP_SUFFIX = 2,
+	)
+	AddComponent(/datum/component/name_modifiers, allowed_name_mods)
+
+	AddComponent(/datum/component/mob_modifier/invisible, 1)

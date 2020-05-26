@@ -121,6 +121,8 @@
 #define COMSIG_MOB_DIED "mob_died"
 
 // living signals
+///from base of mob/living/rejuvenate(): ()
+#define COMSIG_LIVING_REJUVENATE "living_rejuvenate"
 /// from base of /mob/start_pulling(): (/atom/movable/target)
 #define COMSIG_LIVING_START_PULL "living_start_pull"
 /// from base of /mob/stop_pulling(): (/atom/movable/target)
