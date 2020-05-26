@@ -148,6 +148,12 @@
 /// from monkey CtrlClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
 
+// simple_animal/hostile signals
+/// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)
+#define COMSIG_MOB_HOSTILE_ATTACKINGTARGET "mob_hostile_attackingtarget"
+/// from simple_animal/hostile/proc/Shoot(): (atom/target)
+#define COMSIG_MOB_HOSTILE_SHOOT "mob_hostile_shoot"
+
 // Component specific signals.
 /// send this signal to remove a list of tip ids(use tip_names as tip ids): (/list/tip_ids_to_remove)
 #define COMSIG_TIPS_REMOVE "comsig_tip_remove"

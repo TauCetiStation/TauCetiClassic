@@ -151,6 +151,7 @@
 	if(!update && rejuve_timer)
 		SEND_SIGNAL(possessed, COMSIG_NAME_MOD_REMOVE, /datum/name_modifier/prefix/cursed, 1)
 		deltimer(rejuve_timer)
+		rejuve_timer = null
 		H.forceMove(get_turf(possessed))
 
 	return ..()
@@ -274,7 +275,6 @@
 	if(!update)
 		H.filters -= slimy_outline_filter
 
-
 	return ..()
 
 
@@ -297,8 +297,10 @@
 	H.loot_mod *= 1.5 * strength
 	H.faction = "Station"
 
-	if(!update)
-		RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), .proc/shake_ground)
+	if(update)
+		return
+
+	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), .proc/shake_ground)
 
 /datum/component/mob_modifier/strong/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
@@ -359,19 +361,21 @@
 			pull_stage = STAGE_FIVE
 			grav_pull = 10
 
-	if(!update)
-		var/mob/living/simple_animal/hostile/H = parent
+	if(update)
+		return
 
-		singularity_overlay = image('icons/obj/singularity.dmi', "singularity_s1")
-		singularity_overlay.alpha = 200
-		singularity_overlay.loc = H
-		// AFTER BYOND 513 USE THESE
-		// singularity_filter = filter(type = "layer", render_source = I)
+	var/mob/living/simple_animal/hostile/H = parent
 
-		// H.filters += singularity_filter
-		H.add_overlay(singularity_overlay)
+	singularity_overlay = image('icons/obj/singularity.dmi', "singularity_s1")
+	singularity_overlay.alpha = 200
+	singularity_overlay.loc = H
+	// AFTER BYOND 513 USE THESE
+	// singularity_filter = filter(type = "layer", render_source = I)
 
-		START_PROCESSING(SSmob_modifier, src)
+	// H.filters += singularity_filter
+	H.add_overlay(singularity_overlay)
+
+	START_PROCESSING(SSmob_modifier, src)
 
 /datum/component/mob_modifier/singular/revert(update = FALSE)
 	if(!update)
@@ -416,3 +420,76 @@
 			else
 				X.singularity_pull(H, pull_stage)
 			CHECK_TICK
+
+
+
+/datum/component/mob_modifier/invisible
+	modifier_name = RL_MM_INVISIBLE
+	name_modifier_type = /datum/name_modifier/prefix/invisible
+
+	rarity_cost = 4
+
+	max_strength = 1
+
+	var/saved_invisibility = 0
+	var/saved_alpha = 0
+
+	var/invisible = FALSE
+	var/invis_timer
+
+/datum/component/mob_modifier/invisible/apply(update = FALSE)
+	. = ..()
+	if(!.)
+		return
+
+	var/mob/living/simple_animal/hostile/H = parent
+	saved_invisibility = H.invisibility
+	saved_alpha = H.alpha
+
+	if(update)
+		return
+
+	if(prob(50))
+		become_invisible()
+	else
+		become_visible()
+
+	RegisterSignal(H, list(COMSIG_MOB_HOSTILE_ATTACKINGTARGET, COMSIG_MOB_HOSTILE_SHOOT), .proc/reveal)
+
+/datum/component/mob_modifier/invisible/revert(update = FALSE)
+	var/mob/living/simple_animal/hostile/H = parent
+
+	H.invisibility = initial(H.invisibility)
+	H.alpha = initial(H.alpha)
+
+	if(!update)
+		reveal()
+
+	return ..()
+
+/datum/component/mob_modifier/invisible/proc/reveal()
+	deltimer(invis_timer)
+	invis_timer = null
+	if(invisible)
+		become_visible()
+
+/datum/component/mob_modifier/invisible/proc/become_visible()
+	var/mob/living/simple_animal/hostile/H = parent
+
+	invisible = FALSE
+	H.invisibility = saved_invisibility
+	H.alpha = 0
+	animate(H, alpha=saved_alpha, time=1 SECOND)
+	invis_timer = addtimer(CALLBACK(src, .proc/become_invisible), rand(10, 30) SECONDS)
+
+/datum/component/mob_modifier/invisible/proc/become_invisible()
+	var/mob/living/simple_animal/hostile/H = parent
+
+	invisible = TRUE
+	animate(H, alpha=0, time=1 SECOND)
+	sleep(1 SECOND)
+	if(QDELING(src))
+		return
+	H.invisibility = INVISIBILITY_LEVEL_ONE
+	H.alpha = saved_alpha
+	invis_timer = addtimer(CALLBACK(src, .proc/become_visible), rand(10, 30) SECONDS)

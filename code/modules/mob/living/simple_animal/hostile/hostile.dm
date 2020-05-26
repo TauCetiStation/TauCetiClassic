@@ -209,6 +209,7 @@
 		return 1
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
+	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, target)
 	target.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/Aggro()
@@ -266,6 +267,8 @@
 /mob/living/simple_animal/hostile/proc/Shoot(target, start, user, bullet = 0)
 	if(target == start)
 		return
+
+	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_SHOOT, target)
 
 	var/obj/item/projectile/A = new projectiletype(user:loc)
 	playsound(user, projectilesound, VOL_EFFECTS_MASTER)

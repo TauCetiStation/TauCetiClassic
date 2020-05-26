@@ -37,3 +37,6 @@
 
 /datum/name_modifier/prefix/singular
 	text = "singular"
+
+/datum/name_modifier/prefix/invisible
+	text = "invisible"
