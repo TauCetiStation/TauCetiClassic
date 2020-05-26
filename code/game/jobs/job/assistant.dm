@@ -9,7 +9,7 @@
 	selection_color = "#dddddd"
 	access = list(access_kitchen)			//See /datum/job/assistant/get_access()
 	salary = 20
-	alt_titles = list("Lawyer","Reporter","Waiter")
+	alt_titles = list("Lawyer","Reporter","Waiter", "Paranormal Investigator")
 
 /datum/job/assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)
@@ -38,6 +38,13 @@
 			if("Test Subject")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/jane_sidsuit(H), SLOT_W_UNIFORM)
 				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
+				access = list()
+			if("Paranormal Investigator")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/indiana	(H), SLOT_W_UNIFORM)
+				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), SLOT_SHOES)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/indiana(H), SLOT_HEAD)
+				H.equip_to_slot_or_del(new /obj/item/device/occult_scanner(H), SLOT_L_STORE)
+				H.equip_to_slot_or_del(new /obj/item/weapon/occult_pinpointer(H), SLOT_R_STORE)
 				access = list()
 			if("Waiter")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/waiter(H), SLOT_W_UNIFORM)
