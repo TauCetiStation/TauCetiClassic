@@ -143,7 +143,7 @@
 	while(found)
 		count++
 		found += length
-		found = findtext(string, substring, found)
+		found = findtext_char(string, substring, found)
 
 	return count
 

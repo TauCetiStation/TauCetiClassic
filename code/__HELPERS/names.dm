@@ -87,7 +87,7 @@ var/religion_name = null
 			random = 13
 		else
 			//get the first word of the Holiday and use that
-			var/i = findtext_char(Holiday," ",1,0)
+			var/i = findtext(Holiday," ")
 			name = copytext_char(Holiday,1,i)
 			return_name += name + " "
 

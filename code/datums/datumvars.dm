@@ -205,7 +205,7 @@
 	var/formatted_type = text("[D.type]")
 	if(length(formatted_type) > 25)
 		var/middle_point = length(formatted_type) / 2
-		var/splitpoint = findtext_char(formatted_type,"/",middle_point)
+		var/splitpoint = findtext(formatted_type,"/",middle_point)
 		if(splitpoint)
 			formatted_type = "[copytext_char(formatted_type,1,splitpoint)]<br>[copytext_char(formatted_type,splitpoint)]"
 		else

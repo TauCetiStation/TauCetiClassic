@@ -299,7 +299,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 	var/list/lines = splittext(song_text, "\n")
 
 	var/bpm_string = "BPM: "
-	if(findtext(lines[1], bpm_string, 1, length(bpm_string) + 1))
+	if(findtext_char(lines[1], bpm_string, 1, length(bpm_string) + 1))
 		song_tempo = CLAMP(text2num(copytext_char(lines[1], length(bpm_string) + 1)), 1, MAX_TEMPO_RATE)
 		lines.Cut(1, 2)
 

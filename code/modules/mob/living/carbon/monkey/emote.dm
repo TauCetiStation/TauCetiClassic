@@ -1,8 +1,8 @@
 /mob/living/carbon/monkey/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 
 	var/param = null
-	if (findtext_char(act, "-", 1, null))
-		var/t1 = findtext_char(act, "-", 1, null)
+	if (findtext(act, "-"))
+		var/t1 = findtext(act, "-")
 		param = copytext_char(act, t1 + 1, length(act) + 1)
 		act = copytext_char(act, 1, t1)
 

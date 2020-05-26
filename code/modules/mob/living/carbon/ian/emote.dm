@@ -1,5 +1,5 @@
 /mob/living/carbon/ian/emote(act, m_type = SHOWMSG_AUDIO, message = null, auto)
-	if(findtext(act, "s", -1) && !findtext(act, "_", -2))//Removes ending s's unless they are prefixed with a '_'
+	if(findtext_char(act, "s", -1) && !findtext_char(act, "_", -2))//Removes ending s's unless they are prefixed with a '_'
 		act = copytext_char(act, 1, length(act))
 
 	if(src.stat == DEAD && (act != "deathgasp"))

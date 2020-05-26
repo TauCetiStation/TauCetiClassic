@@ -41,7 +41,7 @@ var/list/blacklisted_builds = list(
 	next_allowed_topic_time = world.time + TOPIC_SPAM_DELAY
 
 	//search the href for script injection
-	if( findtext(href,"<script",1,0) )
+	if( findtext(href,"<script") )
 		world.log << "Attempted use of scripts within a topic call, by [src]"
 		message_admins("Attempted use of scripts within a topic call, by [src]")
 		//del(usr)
@@ -149,7 +149,7 @@ var/list/blacklisted_builds = list(
 
 	if(!guard)
 		guard = new(src)
-	
+
 	chatOutput = new /datum/chatOutput(src) // Right off the bat.
 
 	// Change the way they should download resources.
@@ -595,7 +595,7 @@ var/list/blacklisted_builds = list(
 		return byond_registration
 
 	var/user_page = get_webpage("http://www.byond.com/members/[ckey]?format=text")
-	
+
 	if (!user_page)
 		return
 

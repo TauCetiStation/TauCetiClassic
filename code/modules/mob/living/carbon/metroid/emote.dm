@@ -1,8 +1,8 @@
 /mob/living/carbon/slime/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 
 
-	if (findtext_char(act, "-", 1, null))
-		var/t1 = findtext(act, "-", 1, null)
+	if (findtext(act, "-"))
+		var/t1 = findtext(act, "-")
 		//param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext_char(act, 1, t1)
 

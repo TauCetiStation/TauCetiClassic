@@ -340,13 +340,13 @@ var/global/dmm_suite/preloader/_preloader = new
 //returns 0 if reached the last delimiter
 /dmm_suite/proc/find_next_delimiter_position(text,initial_position, delimiter=",",opening_escape=quote,closing_escape=quote)
 	var/position = initial_position
-	var/next_delimiter = findtext(text,delimiter,position,0)
-	var/next_opening = findtext(text,opening_escape,position,0)
+	var/next_delimiter = findtext_char(text,delimiter,position,0)
+	var/next_opening = findtext_char(text,opening_escape,position,0)
 
 	while((next_opening != 0) && (next_opening < next_delimiter))
-		position = findtext(text,closing_escape,next_opening + 1,0)+1
-		next_delimiter = findtext(text,delimiter,position,0)
-		next_opening = findtext(text,opening_escape,position,0)
+		position = findtext_char(text,closing_escape,next_opening + 1,0)+1
+		next_delimiter = findtext_char(text,delimiter,position,0)
+		next_opening = findtext_char(text,opening_escape,position,0)
 
 	return next_delimiter
 
@@ -366,7 +366,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		position = find_next_delimiter_position(text,old_position,delimiter)
 
 		//check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
-		var/equal_position = findtext(text,"=",old_position, position)
+		var/equal_position = findtext_char(text,"=",old_position, position)
 
 		var/trim_left = trim_text(copytext_char(text,old_position,(equal_position ? equal_position : position)))
 		var/left_constant = delimiter == ";" ? trim_left : parse_constant(trim_left)
@@ -389,7 +389,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		return num
 
 	// string
-	if(findtext(text,"\"",1,2))
+	if(text[1] = "\"")
 		return copytext_char(text,2,findtext_char(text,"\"",3,0))
 
 	// list
