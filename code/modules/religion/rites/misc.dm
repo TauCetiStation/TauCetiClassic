@@ -146,15 +146,29 @@
 		ASPECT_WACKY = 1
 	)
 
-/datum/religion_rites/h_mouse/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/h_mouse/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!AOG)
+		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
+		return FALSE
+
+	if(!AOG.buckled_mob)
+		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [AOG].</span>")
+		return FALSE
+
 	if(!ismouse(AOG.buckled_mob))
 		return FALSE
+	
 	if(!AOG.buckled_mob.mind)
 		to_chat(user,"<font color='red'><b>MEGAMOUSE CAN'T ACCEPT THIS MINDLESS CREATURE!</b></font>")
 		return FALSE
-	return ..()
+		
+	return TRUE
 
 /datum/religion_rites/h_mouse/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+	
 	var/mob/living/simple_animal/mouse/M = AOG.buckled_mob
 	if(!istype(M) || M.stat == DEAD)
 		return FALSE
