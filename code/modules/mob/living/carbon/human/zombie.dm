@@ -257,7 +257,7 @@
 		message_list.Insert(insertpos, "[pick("лнгцх", "лНГЦХ", "лННГЦХХХ", "лнннгцхххх", "анкэмн", "анкэ", "онлнцх", "пюююю", "юююю", "юппу", "нрйпнире", "нрйпни")]...")
 
 	for(var/i = 1, i <= message_list.len, i++)
-		if(prob(50) && !(copytext(message_list[i], length(message_list[i]) - 2) == "..."))
+		if(prob(50) && !(copytext_char(message_list[i], length(message_list[i]) - 2) == "..."))
 			message_list[i] = message_list[i] + "..."
 
 		if(prob(60))

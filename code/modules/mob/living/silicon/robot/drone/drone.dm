@@ -113,8 +113,8 @@
 	if (stat == DEAD)
 		return say_dead(message)
 
-	if(copytext(message,1,2) == "*")
-		return emote(copytext(message,2))
+	if(message[1] == "*")
+		return emote(copytext_char(message,2))
 	else if(length(message) >= 2)
 
 		if(parse_message_mode(message, "NONE") == "dronechat")
@@ -125,11 +125,11 @@
 
 			for (var/mob/living/S in drone_list)
 				if(S.stat != DEAD)
-					to_chat(S, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>")
+					to_chat(S, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext_char(message,3))]\"</span></span></i>")
 
 			for (var/mob/M in observer_list)
 				if(M.client && M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
-					to_chat(M, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>")
+					to_chat(M, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext_char(message,3))]\"</span></span></i>")
 
 		else
 

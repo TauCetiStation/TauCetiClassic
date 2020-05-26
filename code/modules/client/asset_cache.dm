@@ -257,17 +257,17 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	for (var/path in common_dirs)
 		var/list/filenames = flist(path)
 		for(var/filename in filenames)
-			if(copytext(filename, length(filename)) != "/") // Ignore directories.
+			if(copytext_char(filename, length(filename)) != "/") // Ignore directories.
 				if(fexists(path + filename))
 					common[filename] = fcopy_rsc(path + filename)
 					register_asset(filename, common[filename])
 	for (var/path in uncommon_dirs)
 		var/list/filenames = flist(path)
 		for(var/filename in filenames)
-			if(copytext(filename, length(filename)) != "/") // Ignore directories.
+			if(copytext_char(filename, length(filename)) != "/") // Ignore directories.
 				if(fexists(path + filename))
 					register_asset(filename, fcopy_rsc(path + filename))
-	
+
 	for(var/asset_name in assets)
 		register_asset(asset_name, assets[asset_name])
 

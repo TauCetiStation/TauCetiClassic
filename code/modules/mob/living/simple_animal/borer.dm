@@ -122,10 +122,10 @@
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	if (copytext(message, 1, 2) == "*")
-		return emote(copytext(message, 2))
+	if (message[1] == "*")
+		return emote(copytext_char(message, 2))
 
-	if (copytext(message, 1, 2) == ";") //Brain borer hivemind.
+	if (message[1] == ";") //Brain borer hivemind.
 		return borer_speak(message)
 
 	if(!host)
@@ -155,7 +155,7 @@
 
 	for(var/mob/M in mob_list)
 		if(M.mind && (istype(M, /mob/living/simple_animal/borer) || isobserver(M)))
-			to_chat(M, "<i>Cortical link, <b>[truename]:</b> [copytext(message, 2)]</i>")
+			to_chat(M, "<i>Cortical link, <b>[truename]:</b> [copytext_char(message, 2)]</i>")
 
 /mob/living/simple_animal/borer/verb/dominate_victim()
 	set category = "Alien"

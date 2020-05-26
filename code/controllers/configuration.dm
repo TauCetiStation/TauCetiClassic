@@ -170,7 +170,7 @@ var/list/net_announcer_secret = list()
 	var/chat_bridge = 0
 	var/antigrief_alarm_level = 1
 	var/check_randomizer = 0
-	
+
 	var/guard_email = null
 	var/guard_enabled = FALSE
 	var/guard_autoban_treshhold = null
@@ -198,7 +198,7 @@ var/list/net_announcer_secret = list()
 
 	var/record_replays = FALSE
 
-	
+
 	var/sandbox = FALSE
 	var/list/net_announcers = list() // List of network announcers on
 
@@ -238,8 +238,8 @@ var/list/net_announcer_secret = list()
 		var/value = null
 
 		if (pos)
-			name = lowertext(copytext(t, 1, pos))
-			value = copytext(t, pos + 1)
+			name = lowertext(copytext_char(t, 1, pos))
+			value = copytext_char(t, pos + 1)
 		else
 			name = lowertext(t)
 
@@ -322,7 +322,7 @@ var/list/net_announcer_secret = list()
 
 				if ("log_sql_error")
 					config.log_sql_error = 1
-				
+
 				if ("log_js_error")
 					config.log_js_error = 1
 
@@ -449,8 +449,8 @@ var/list/net_announcer_secret = list()
 					var/prob_value = null
 
 					if (prob_pos)
-						prob_name = lowertext(copytext(value, 1, prob_pos))
-						prob_value = copytext(value, prob_pos + 1)
+						prob_name = lowertext(copytext_char(value, 1, prob_pos))
+						prob_value = copytext_char(value, prob_pos + 1)
 						if (prob_name in config.modes)
 							config.probabilities[prob_name] = text2num(prob_value)
 						else
@@ -528,8 +528,8 @@ var/list/net_announcer_secret = list()
 					var/avail_alien_ingame_time = null
 
 					if (avail_time_sep)
-						avail_alien_name = lowertext(copytext(value, 1, avail_time_sep))
-						avail_alien_ingame_time = text2num(copytext(value, avail_time_sep + 1))
+						avail_alien_name = lowertext(copytext_char(value, 1, avail_time_sep))
+						avail_alien_ingame_time = text2num(copytext_char(value, avail_time_sep + 1))
 						if (avail_alien_name in whitelisted_roles)
 							config.whitelisted_species_by_time[avail_alien_name] = avail_alien_ingame_time
 						else
@@ -734,8 +734,8 @@ var/list/net_announcer_secret = list()
 		var/value = null
 
 		if (pos)
-			name = lowertext(copytext(t, 1, pos))
-			value = copytext(t, pos + 1)
+			name = lowertext(copytext_char(t, 1, pos))
+			value = copytext_char(t, pos + 1)
 		else
 			name = lowertext(t)
 
@@ -851,8 +851,8 @@ var/list/net_announcer_secret = list()
 		var/data = null
 
 		if(pos)
-			command = lowertext(copytext(t, 1, pos))
-			data = copytext(t, pos + 1)
+			command = lowertext(copytext_char(t, 1, pos))
+			data = copytext_char(t, pos + 1)
 		else
 			command = lowertext(t)
 
@@ -893,14 +893,14 @@ var/list/net_announcer_secret = list()
 			continue
 		var/cut_position = findtext(L, endline_comment)
 		if(cut_position)
-			L = trim(copytext(L, 1, cut_position))
+			L = trim(copytext_char(L, 1, cut_position))
 		if (length(L))
 			data += L
 	return data
 
 /datum/configuration/proc/load_announcer_config(config_path)
 	// Loading config of network communication between servers
-	// Server list loaded from serverlist.txt file. It's file with comments. 
+	// Server list loaded from serverlist.txt file. It's file with comments.
 	// One line of file = one server. Format - byond://example.com:2506 = secret
 	// First server must be self link for loading the secret
 	//
@@ -909,16 +909,16 @@ var/list/net_announcer_secret = list()
 	var/restricted_chars_regex = regex(@"[;&]","g")
 	for(var/L in load_list_without_comments("[config_path]/serverlist.txt"))
 		var/delimiter_position = findtext(L,"=")
-		var/key = trim(copytext(L, 1, delimiter_position))
+		var/key = trim(copytext_char(L, 1, delimiter_position))
 		if(delimiter_position && length(key))
 			// remove restricted chars
 			L=replacetext(L, restricted_chars_regex, "")
-			global.net_announcer_secret[key] = trim(copytext(L, delimiter_position+1))
+			global.net_announcer_secret[key] = trim(copytext_char(L, delimiter_position+1))
 	for(var/L in load_list_without_comments("[config_path]/ban.txt"))
 		var/delimiter_position = findtext(L,"=")
-		var/key = trim(copytext(L, 1, delimiter_position))
+		var/key = trim(copytext_char(L, 1, delimiter_position))
 		if(delimiter_position && length(key))
-			var/value = trim(copytext(L, delimiter_position+1))
+			var/value = trim(copytext_char(L, delimiter_position+1))
 			switch(lowertext(key))
 				if ("receive")
 					if (value && (lowertext(value) == "true" || lowertext(value) == "on"))

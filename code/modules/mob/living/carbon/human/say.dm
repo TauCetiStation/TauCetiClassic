@@ -28,7 +28,7 @@
 		return
 
 	if(copytext(message,1,2) == "*")
-		return emote(copytext(message, 2), auto = FALSE)
+		return emote(copytext_char(message, 2), auto = FALSE)
 
 	//check if we are miming
 	if (miming && !(message_mode == "changeling" || message_mode == "alientalk"))
@@ -41,9 +41,9 @@
 	//parse the radio code and consume it
 	if (message_mode)
 		if (message_mode == "headset")
-			message = copytext(message,2)	//it would be really nice if the parse procs could do this for us.
+			message = copytext_char(message,2)	//it would be really nice if the parse procs could do this for us.
 		else
-			message = copytext(message,3)
+			message = copytext_char(message,3)
 
 	//parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
@@ -62,7 +62,7 @@
 			return
 
 	if (speaking)
-		message = copytext(message,2+length(speaking.key))
+		message = copytext_char(message,2+length(speaking.key))
 	else if(species.force_racial_language)
 		speaking = all_languages[species.language]
 	else
@@ -93,7 +93,7 @@
 	if(iszombie(src))
 		message = zombie_talk(message)
 
-	var/ending = copytext(message, length(message))
+	var/ending = copytext_char(message, -1)
 	if (speaking)
 		//If we've gotten this far, keep going!
 		verb = speaking.get_spoken_verb(ending)
@@ -260,7 +260,7 @@
 
 /mob/living/carbon/human/say_quote(message, datum/language/speaking = null)
 	var/verb = "says"
-	var/ending = copytext(message, length(message))
+	var/ending = copytext_char(message, -1)
 
 	if(speaking)
 		verb = speaking.get_spoken_verb(ending)

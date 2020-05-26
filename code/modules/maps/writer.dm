@@ -71,17 +71,17 @@
 		dmm_text += {""[keys[key_pos]]" = ([templates[key_pos]])\n"}
 		}
 	var/z_level = 0
-	for(var/z_pos=1;TRUE;z_pos=findtext(template_buffer,".",z_pos)+1){
+	for(var/z_pos=1;TRUE;z_pos=findtext_char(template_buffer,".",z_pos)+1){
 		if(z_pos>=length(template_buffer)){break}
 		if(z_level){dmm_text+={"\n"}}
 		dmm_text += {"\n(1,1,[++z_level]) = {"\n"}
-		var/z_block = copytext(template_buffer,z_pos,findtext(template_buffer,".",z_pos))
+		var/z_block = copytext_char(template_buffer,z_pos,findtext_char(template_buffer,".",z_pos))
 		for(var/y_pos=1;TRUE;y_pos=findtext(z_block,";",y_pos)+1){
 			if(y_pos>=length(z_block)){break}
-			var/y_block = copytext(z_block,y_pos,findtext(z_block,";",y_pos))
-			for(var/x_pos=1;TRUE;x_pos=findtext(y_block,",",x_pos)+1){
+			var/y_block = copytext_char(z_block,y_pos,findtext_char(z_block,";",y_pos))
+			for(var/x_pos=1;TRUE;x_pos=findtext_char(y_block,",",x_pos)+1){
 				if(x_pos>=length(y_block)){break}
-				var/x_block = copytext(y_block,x_pos,findtext(y_block,",",x_pos))
+				var/x_block = copytext_char(y_block,x_pos,findtext_char(y_block,",",x_pos))
 				var/key_number = text2num(x_block)
 				var/temp_key = keys[key_number]
 				dmm_text += temp_key
@@ -152,8 +152,8 @@
 	if(attributes_text=={"{"}){
 		return
 		}
-	if(copytext(attributes_text, length(attributes_text)-1, 0) == {"; "}){
-		attributes_text = copytext(attributes_text, 1, length(attributes_text)-1)
+	if(copytext_char(attributes_text, length(attributes_text)-1, 0) == {"; "}){
+		attributes_text = copytext_char(attributes_text, 1, length(attributes_text)-1)
 		}
 	attributes_text += {"}"}
 	return attributes_text

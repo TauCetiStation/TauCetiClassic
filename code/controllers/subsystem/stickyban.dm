@@ -455,7 +455,7 @@ var/datum/subsystem/stickyban/SSstickyban
 
 /proc/is_stickyban_from_game(ban)
 	// returns true if and only if the game added the sticky ban.
-	return (ban && islist(ban) && ("sticky" in ban[BANKEY_TYPE]) && copytext(ban[BANKEY_REASON], 1, 12) == "(InGameBan)")
+	return (ban && islist(ban) && ("sticky" in ban[BANKEY_TYPE]) && copytext_char(ban[BANKEY_REASON], 1, 12) == "(InGameBan)")
 
 /proc/sticky_banned_ckeys()
 	// Return list of stickybaned ckeys

@@ -47,10 +47,10 @@
 			scrambled_text += " "
 
 	scrambled_text = trim(scrambled_text)
-	var/ending = copytext(scrambled_text, length(scrambled_text))
+	var/ending = copytext_char(scrambled_text, length(scrambled_text))
 	if(ending == ".")
-		scrambled_text = copytext(scrambled_text,1,length(scrambled_text)-1)
-	var/input_ending = copytext(input, input_size)
+		scrambled_text = copytext_char(scrambled_text,1,length(scrambled_text)-1)
+	var/input_ending = copytext_char(input, input_size)
 	if(input_ending in list("!","?","."))
 		scrambled_text += input_ending
 	return scrambled_text

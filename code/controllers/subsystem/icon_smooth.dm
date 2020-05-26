@@ -51,7 +51,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 #ifdef MANUAL_ICON_SMOOTH
 /mob/verb/ChooseDMI(dmi as file)
 	var/dmifile = file(dmi)
-	if(isfile(dmifile) && (copytext("[dmifile]",-4) == ".dmi"))
+	if(isfile(dmifile) && (copytext_char("[dmifile]",-4) == ".dmi"))
 		SliceNDice(dmifile)
 	else
 		to_chat(world, "<span class='warning'>Bad DMI file '[dmifile]'</span>")
@@ -65,7 +65,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 	var/STATE_COUNT_NORMAL = 4
 	var/STATE_COUNT_DIAGONAL = 7
 
-	if(!isfile(dmifile) || (copytext("[dmifile]",-4) != ".dmi"))
+	if(!isfile(dmifile) || (copytext_char("[dmifile]",-4) != ".dmi"))
 		CRASH("Bad DMI file '[dmifile]'")
 
 	var/icon/sourceIcon = icon(dmifile)
@@ -118,7 +118,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 
 	var/icon/outputIcon = new /icon()
 
-	var/filename_temp = "[copytext("[dmifile]", 1, -4)]-smooth_temp.dmi"
+	var/filename_temp = "[copytext_char("[dmifile]", 1, -4)]-smooth_temp.dmi"
 
 	for(var/state in states)
 		var/statename = lowertext(state)
@@ -479,7 +479,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 			master.Insert(icon(sourceIcon, state), state)
 
 #ifdef MANUAL_ICON_SMOOTH
-	world << ftp(master, "[copytext("[dmifile]", 1, -4)]-smooth.dmi")
+	world << ftp(master, "[copytext_char("[dmifile]", 1, -4)]-smooth.dmi")
 #else
 	return master
 #endif

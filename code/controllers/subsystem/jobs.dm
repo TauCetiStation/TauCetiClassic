@@ -288,7 +288,7 @@ var/datum/subsystem/job/SSjob
 	Debug("DO, Running Head Check")
 	FillHeadPosition()
 	Debug("DO, Head Check end")
-	
+
 	//Check for an AI
 	if(!(ticker.mode.name == "AI malfunction"))
 		Debug("DO, Running AI Check")
@@ -616,8 +616,8 @@ var/datum/subsystem/job/SSjob
 		var/value = null
 
 		if(pos)
-			name = copytext(job, 1, pos)
-			value = copytext(job, pos + 1)
+			name = copytext_char(job, 1, pos)
+			value = copytext_char(job, pos + 1)
 		else
 			continue
 

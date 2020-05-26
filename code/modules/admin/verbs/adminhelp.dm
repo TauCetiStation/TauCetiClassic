@@ -154,7 +154,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 //is_bwoink is TRUE if this ticket was started by an admin PM
 /datum/admin_help/New(msg, client/C, is_bwoink)
 	//clean the input msg
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 	if(!msg || !C || !C.mob)
 		qdel(src)
 		return
@@ -190,7 +190,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		var/admin_number_present = send2bridge_adminless_only("**Ticket #[id]** created by **[key_name(initiator)]**", name, type = list(BRIDGE_ADMINALERT), mention = BRIDGE_MENTION_HERE)
 
 		log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
-		
+
 		world.send2bridge(
 			type = list(BRIDGE_ADMINLOG),
 			attachment_title = "**Ticket #[id]** created by **[key_name(initiator)]**",
@@ -439,7 +439,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 /datum/admin_help/proc/sanitize_stat(msg)//todo: 513
 	msg = replacetext(msg, JA_PLACEHOLDER, JA_CHARACTER)
 	var/string = ""
-	for (var/i in 1 to length(msg))
+	for(var/i = 1; i < length(msg); i += length(msg[i]))
 		string += "&#[text2ascii(copytext(msg,i,i+1))];"
 	return string
 

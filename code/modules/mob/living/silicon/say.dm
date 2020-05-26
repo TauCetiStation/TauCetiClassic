@@ -1,5 +1,5 @@
 /mob/living/silicon/say_quote(text)
-	var/ending = copytext(text, length(text))
+	var/ending = copytext_char(text, -1)
 
 	if (ending == "?")
 		return "queries"
@@ -39,8 +39,8 @@
 	if (stat == DEAD)
 		return say_dead(message)
 
-	if(copytext(message,1,2) == "*")
-		return emote(copytext(message,2))
+	if(message[1] == "*")
+		return emote(copytext_char(message,2))
 
 	var/bot_type = 0			//Let's not do a fuck ton of type checks, thanks.
 	if(istype(src, /mob/living/silicon/ai))
@@ -65,9 +65,9 @@
 	var/message_mode = parse_message_mode(message, "general")
 	if (message_mode)
 		if (message_mode == "general")
-			message = trim(copytext(message,2))
+			message = trim(copytext_char(message,2))
 		else
-			message = trim(copytext(message,3))
+			message = trim(copytext_char(message,3))
 
 	if(message_mode && bot_type == IS_ROBOT && message_mode != "binary" && !R.is_component_functioning("radio"))
 		to_chat(src, "<span class='warning'>Your radio isn't functional at this time.</span>")
@@ -82,7 +82,7 @@
 	var/datum/language/speaking = parse_language(message)
 	if (speaking)
 		verb = speaking.speech_verb
-		message = trim(copytext(message,2+length(speaking.key)))
+		message = trim(copytext_char(message,2+length(speaking.key)))
 
 	var/area/A = get_area(src)
 

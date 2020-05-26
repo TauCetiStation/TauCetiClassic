@@ -557,15 +557,8 @@ var/list/cult_runes = list()
 	user.visible_message("<span class='userdanger'>A shape forms in the center of the rune. A shape of... a man.</span>", \
 		"<span class='cult'>A shape forms in the center of the rune. A shape of... a man.</span>", \
 		"<span class='userdanger'>You hear liquid flowing.</span>")
-	D.real_name = "Unknown"
-	var/chose_name = FALSE
-	for(var/obj/item/weapon/paper/P in holder.loc)
-		if(P.info)
-			D.real_name = copytext(P.info, findtext(P.info,">")+1, findtext(P.info,"<",2) )
-			chose_name = TRUE
-			break
-	if(!chose_name)
-		D.real_name = "[pick(first_names_male)] [pick(last_names)]"
+
+	D.real_name = "[pick(first_names_male)] [pick(last_names)]"
 	D.universal_speak = 1
 	D.status_flags &= ~GODMODE
 	D.s_tone = 35

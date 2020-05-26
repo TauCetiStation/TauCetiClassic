@@ -517,7 +517,7 @@ var/list/admin_verbs_hideable = list(
 			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
 			if(!new_key)	return
 			if(length(new_key) >= 26)
-				new_key = copytext(new_key, 1, 26)
+				new_key = copytext_char(new_key, 1, 26)
 			holder.fakekey = new_key
 			mob.invisibility = INVISIBILITY_MAXIMUM + 1 //JUST IN CASE
 			mob.alpha = 0 //JUUUUST IN CASE
@@ -597,7 +597,7 @@ var/list/admin_verbs_hideable = list(
 	var/list/spell_names = list()
 	for(var/v in spells)
 	//	"/obj/effect/proc_holder/spell/" 30 symbols ~Intercross21
-		spell_names.Add(copytext("[v]", 31, 0))
+		spell_names.Add(copytext_char("[v]", 31, 0))
 	var/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spell_names
 	if(!S) return
 	var/path = text2path("/obj/effect/proc_holder/spell/[S]")
@@ -613,7 +613,7 @@ var/list/admin_verbs_hideable = list(
 	var/list/disease_names = list()
 	for(var/v in diseases)
 	//	"/datum/disease/" 15 symbols ~Intercross
-		disease_names.Add(copytext("[v]", 16, 0))
+		disease_names.Add(copytext_char("[v]", 16, 0))
 	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in disease_names
 	if(!D) return
 	var/path = text2path("/datum/disease/[D]")
@@ -1046,7 +1046,7 @@ var/list/admin_verbs_hideable = list(
 		var/name = null
 		if (pos)
 			// No, don't do lowertext here, that breaks paths on linux
-			name = copytext(t, 1, pos)
+			name = copytext_char(t, 1, pos)
 		//	value = copytext(t, pos + 1)
 		else
 			// No, don't do lowertext here, that breaks paths on linux

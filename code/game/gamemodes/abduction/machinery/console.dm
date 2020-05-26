@@ -74,7 +74,7 @@
 		dat += "<H4> Teleport control</H4>"
 		dat += "<a href='?src=\ref[src];teleporter_send=1'>Activate Teleporter</A><br>"
 		dat += "<a href='?src=\ref[src];teleporter_set=1'>Set Teleporter</A><br>"
-		dat += "<font color = #7E8D9F><b>Set to: </b></font>[pad.teleport_target ? "[copytext("[pad.target_name]",3)]" : "Nothing"]<br>"
+		dat += "<font color = #7E8D9F><b>Set to: </b></font>[pad.teleport_target ? "[copytext_char("[pad.target_name]",3)]" : "Nothing"]<br>"
 		if(gizmo && gizmo.marked)
 			dat += "<a href='?src=\ref[src];teleporter_retrieve=1'>Retrieve Mark</A><br>"
 		else

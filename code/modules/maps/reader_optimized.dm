@@ -124,7 +124,7 @@ var/global/dmm_suite/preloader/_preloader = new
 									world.maxx = xcrd
 
 							if(xcrd >= 1)
-								var/model_key = copytext(line, tpos, tpos + key_len)
+								var/model_key = copytext_char(line, tpos, tpos + key_len)
 								if(!grid_models[model_key])
 									return null
 								loaded_stuff["stuff"] += parse_grid(grid_models[model_key], xcrd, ycrd, zcrd)
@@ -192,9 +192,9 @@ var/global/dmm_suite/preloader/_preloader = new
 			//finding next member (e.g /turf/unsimulated/wall{icon_state = "rock"} or /area/asteroid/mine/explored)
 			dpos = find_next_delimiter_position(model, old_position, ",", "{", "}") //find next delimiter (comma here) that's not within {...}
 
-			var/full_def = trim_text(copytext(model, old_position, dpos)) //full definition, e.g : /obj/foo/bar{variables=derp}
+			var/full_def = trim_text(copytext_char(model, old_position, dpos)) //full definition, e.g : /obj/foo/bar{variables=derp}
 			var/variables_start = findtext(full_def, "{")
-			var/atom_def = text2path(trim_text(copytext(full_def, 1, variables_start))) //path definition, e.g /obj/foo/bar
+			var/atom_def = text2path(trim_text(copytext_char(full_def, 1, variables_start))) //path definition, e.g /obj/foo/bar
 			old_position = dpos + 1
 
 			if(!atom_def) // Skip the item if the path does not exist.  Fix your crap, mappers!
@@ -205,7 +205,7 @@ var/global/dmm_suite/preloader/_preloader = new
 			var/list/fields = list()
 
 			if(variables_start)//if there's any variable
-				full_def = copytext(full_def,variables_start+1,length(full_def))//removing the last '}'
+				full_def = copytext_char(full_def,variables_start+1,length(full_def))//removing the last '}'
 				fields = readlist(full_def, ";")
 
 			//then fill the members_attributes list with the corresponding variables
@@ -368,14 +368,14 @@ var/global/dmm_suite/preloader/_preloader = new
 		//check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
 		var/equal_position = findtext(text,"=",old_position, position)
 
-		var/trim_left = trim_text(copytext(text,old_position,(equal_position ? equal_position : position)))
+		var/trim_left = trim_text(copytext_char(text,old_position,(equal_position ? equal_position : position)))
 		var/left_constant = delimiter == ";" ? trim_left : parse_constant(trim_left)
 		old_position = position + 1
 
 		if(equal_position && !isnum(left_constant))
 			// Associative var, so do the association.
 			// Note that numbers cannot be keys - the RHS is dropped if so.
-			var/trim_right = trim_text(copytext(text,equal_position+1,position))
+			var/trim_right = trim_text(copytext_char(text,equal_position+1,position))
 			var/right_constant = parse_constant(trim_right)
 			.[left_constant] = right_constant
 
@@ -390,11 +390,11 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	// string
 	if(findtext(text,"\"",1,2))
-		return copytext(text,2,findtext(text,"\"",3,0))
+		return copytext_char(text,2,findtext_char(text,"\"",3,0))
 
 	// list
-	if(copytext(text,1,6) == "list(")
-		return readlist(copytext(text,6,length(text)))
+	if(copytext_char(text,1,6) == "list(")
+		return readlist(copytext_char(text,6,length(text)))
 
 	// typepath
 	var/path = text2path(text)
@@ -403,7 +403,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	// file
 	if(copytext(text,1,2) == "'")
-		return file(copytext(text,2,length(text)))
+		return file(copytext_char(text,2,length(text)))
 
 	// null
 	if(text == "null")

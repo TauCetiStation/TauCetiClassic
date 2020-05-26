@@ -35,7 +35,7 @@
 		to_chat(usr, "<span class='warning'>Failed to establish database connection</span>")
 		return
 
-	var/ckey = ckey(copytext(input(usr, "", "Player ckey") as text, 1, MAX_MESSAGE_LEN))
+	var/ckey = ckey(copytext_char(input(usr, "", "Player ckey") as text, 1, MAX_MESSAGE_LEN))
 
 	if(check_if_a_new_player(ckey))
 		to_chat(src, "<span class='warning'>Player already in whitelist</span>")

@@ -162,27 +162,32 @@
 
 	return zone
 
-/proc/stars(n, pr)
-	if (pr == null)
-		pr = 25
-	if (pr <= 0)
-		return null
-	else
-		if (pr >= 100)
-			return n
-	var/te = n
-	var/t = ""
-	n = length(n)
-	var/p = null
-	p = 1
-	while(p <= n)
-		if ((copytext(te, p, p + 1) == " " || prob(pr)))
-			t = text("[][]", t, copytext(te, p, p + 1))
+/**
+  * Convert random parts of a passed in message to stars
+  *
+  * * phrase - the string to convert
+  * * probability - probability any character gets changed
+  *
+  * This proc is dangerously laggy, avoid it or die
+  */
+/proc/stars(phrase, probability = 25)
+	if(probability <= 0)
+		return phrase
+	phrase = html_decode(phrase)
+	var/leng = length(phrase)
+	. = ""
+	var/char = ""
+	for(var/i = 1, i <= leng, i += length(char))
+		char = phrase[i]
+		if(char == " " || !prob(probability))
+			. += char
 		else
-			t = text("[]*", t)
-		p++
-	return t
+			. += "*"
+	return sanitize(.)
 
+/**
+  * Makes you speak like you're drunk
+  */
 /proc/slur(phrase)
 	phrase = html_decode(phrase)
 	var/leng = length(phrase)
@@ -278,35 +283,6 @@
 		returntext += letter
 
 	return returntext
-
-
-/proc/ninjaspeak(n)
-/*
-The difference with stutter is that this proc can stutter more than 1 letter
-The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
-It's fairly easy to fix if dealing with single letters but not so much with compounds of letters./N
-*/
-	var/te = html_decode(n)
-	var/t = ""
-	n = length(n)
-	var/p = 1
-	while(p <= n)
-		var/n_letter
-		var/n_mod = rand(1,4)
-		if(p+n_mod>n+1)
-			n_letter = copytext(te, p, n+1)
-		else
-			n_letter = copytext(te, p, p+n_mod)
-		if (prob(50))
-			if (prob(30))
-				n_letter = text("[n_letter]-[n_letter]-[n_letter]")
-			else
-				n_letter = text("[n_letter]-[n_letter]")
-		else
-			n_letter = text("[n_letter]")
-		t = text("[t][n_letter]")
-		p=p+n_mod
-	return sanitize(t)
 
 /proc/shake_camera(mob/M, duration, strength=1)
 	if(!M || !M.client || !strength) return

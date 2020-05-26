@@ -54,7 +54,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	var/list/params = list()
 	for(var/key in href_list)
 		if(length(key) > 7 && findtext(key, "param"))
-			var/param_name = copytext(key, 7, -1)
+			var/param_name = copytext_char(key, 7, -1)
 			var/item = href_list[key]
 			params[param_name] = item
 
@@ -183,7 +183,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	iconCache[iconKey] << icon
 	var/iconData = iconCache.ExportText(iconKey)
 	var/list/partial = splittext(iconData, "{")
-	return replacetext(copytext(partial[2], 3, -5), "\n", "")
+	return replacetext(copytext_char(partial[2], 3, -5), "\n", "")
 
 /proc/bicon(var/obj, var/use_class = 1)
 	var/class = use_class ? "class='icon misc'" : null

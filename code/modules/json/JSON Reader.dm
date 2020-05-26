@@ -87,7 +87,7 @@
 	ASSERT(args.Find(get_char()))
 
 /json_reader/proc/get_char()
-	return copytext(json, i, i+1)
+	return copytext_char(json, i, i+1)
 
 /json_reader/proc/is_whitespace(char)
 	return char == " " || char == "\t" || char == "\n" || text2ascii(char) == 13

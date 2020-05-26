@@ -675,7 +675,7 @@
 	message = sanitize(message)
 
 	if(copytext(message,1,2) == "*")
-		return emote(copytext(message,2))
+		return emote(copytext_char(message,2))
 
 	var/verb = "says"
 

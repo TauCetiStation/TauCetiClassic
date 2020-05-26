@@ -1247,7 +1247,7 @@
 		handle_hud_list()
 
 	for(var/image/hud in client.images)
-		if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
+		if(copytext_char(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
 			client.images.Remove(hud)
 
 	if(stat == UNCONSCIOUS && health <= 0)
