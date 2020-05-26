@@ -351,7 +351,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			for(var/datum/paiCandidate/c in paiController.pai_candidates)
 				if(c.key == O.key)
 					hasSubmitted = 1
-			if(!hasSubmitted && (ROLE_PAI in O.client.prefs.be_role))
+			if(!hasSubmitted && (ROLE_GHOSTLY in O.client.prefs.be_role))
 				question(O.client)
 
 /datum/paiController/proc/question(client/C)
