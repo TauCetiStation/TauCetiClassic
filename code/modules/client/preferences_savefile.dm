@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 27
+#define SAVEFILE_VERSION_MAX 28
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -161,6 +161,21 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(new_value)
 				job_preferences[initial(J.title)] = new_value
 		S["job_preferences"]	<< job_preferences
+
+	if(current_version < 28)
+		//This is necessary so that old players remove unnecessary roles
+		//and automatically set the preference "ROLE_GHOSTLY"
+		var/role_removed = FALSE
+		var/static/list/deleted_selectable_roles = list(ROLE_PAI, ROLE_PLANT, "Survivor", "Talking staff", "Religion familiar")
+		for(var/role in deleted_selectable_roles)
+			if(role in be_role)
+				be_role -= role
+				role_removed = TRUE
+
+		if(role_removed)
+			be_role |= ROLE_GHOSTLY
+
+		S["be_role"] << be_role
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
