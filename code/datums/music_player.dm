@@ -266,7 +266,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 						else
 							cur_oct[cur_note] = ni
 
-					var/current_note = uppertext(copytext_char(note, 1, 2)) + cur_acc[cur_note] + cur_oct[cur_note]
+					var/current_note = uppertext(note[1]) + cur_acc[cur_note] + cur_oct[cur_note]
 
 					if(fexists("[sound_path]/[current_note].ogg"))
 						// ^ Since this is dynamic path, no point in running playsound without file (since it will play even "no file" and eat cpu for nothing)

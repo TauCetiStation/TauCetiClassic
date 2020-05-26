@@ -59,7 +59,7 @@ cause a ton of data to be lost, an admin can go send it back.
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(ID)
 	var/datum/reagent/temp_reagent
 	var/return_name = null
-	if (copytext_char(ID, 1, 2) == "$")
+	if (ID[1] == "$")
 		return_name = copytext_char(ID, 2)
 		switch(return_name)
 			if("metal")

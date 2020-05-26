@@ -107,7 +107,7 @@
 		if("03","23")
 			modifyer = "rd"
 	var/day_string = "[time2text(world.timeofday, "DD")][modifyer]"
-	if(copytext(day_string,1,2) == "0")
+	if(day_string[1] == "0")
 		day_string = copytext_char(day_string,2)
 	var/full_date = time2text(world.timeofday, "DDD, Month DD of YYYY")
 	var/day_loc = findtext(full_date, time2text(world.timeofday, "DD"))

@@ -230,7 +230,7 @@ var/list/net_announcer_secret = list()
 		t = trim(t)
 		if (length(t) == 0)
 			continue
-		else if (copytext(t, 1, 2) == "#")
+		else if (t[1] == "#")
 			continue
 
 		var/pos = findtext(t, " ")
@@ -726,7 +726,7 @@ var/list/net_announcer_secret = list()
 		t = trim(t)
 		if (length(t) == 0)
 			continue
-		else if (copytext(t, 1, 2) == "#")
+		else if (t[1] == "#")
 			continue
 
 		var/pos = findtext(t, " ")
@@ -843,7 +843,7 @@ var/list/net_announcer_secret = list()
 		t = trim(t)
 		if(length(t) == 0)
 			continue
-		else if(copytext(t, 1, 2) == "#")
+		else if(t[1] == "#")
 			continue
 
 		var/pos = findtext(t, " ")
@@ -889,7 +889,7 @@ var/list/net_announcer_secret = list()
 	var/list/data = list()
 	var/endline_comment = regex(@"\s+#")
 	for(var/L in file2list(filename))
-		if (copytext(L, 1, 2) == "#")
+		if (L[1] == "#")
 			continue
 		var/cut_position = findtext(L, endline_comment)
 		if(cut_position)

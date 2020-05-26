@@ -7,7 +7,7 @@
 		return
 	if(findtext_char(act, "s", -1) && !findtext_char(act, "_", -2)) // Removes ending s's unless they are prefixed with a '_'
 		if(act != "hiss")
-			act = copytext_char(act, 1, length(act))
+			act = copytext_char(act, 1, -1)
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
 
 	switch(act)

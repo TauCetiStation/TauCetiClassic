@@ -27,7 +27,7 @@
 	if (istype(wear_mask, /obj/item/clothing/mask/muzzle) && !(message_mode == "changeling" || message_mode == "alientalk"))  //Todo:  Add this to speech_problem_flag checks.
 		return
 
-	if(copytext(message,1,2) == "*")
+	if(message[1] == "*")
 		return emote(copytext_char(message, 2), auto = FALSE)
 
 	//check if we are miming

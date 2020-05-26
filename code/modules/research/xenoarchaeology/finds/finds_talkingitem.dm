@@ -86,7 +86,7 @@
 	if(length(text) == 1)
 		text = uppertext(text)
 	else
-		var/cap = copytext_char(text, 1, 2)
+		var/cap = text[1]
 		cap = uppertext(cap)
 		cap += copytext_char(text, 2, length(text) + 1)
 		text=cap

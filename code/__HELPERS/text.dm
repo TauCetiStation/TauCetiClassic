@@ -15,7 +15,7 @@
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
 /proc/sanitize_sql(t)
 	var/sqltext = dbcon.Quote("[t]") // http://www.byond.com/forum/post/2218538
-	return copytext_char(sqltext, 2, length(sqltext))
+	return copytext_char(sqltext, 2, -1)
 
 /*
  * Text sanitization
@@ -114,7 +114,7 @@
 	if(number_of_alphanumeric < 2)	return		//protects against tiny names like "A" and also names like "' ' ' ' ' ' ' '"
 
 	if(last_char_group == 1)
-		output = copytext(output,1,length(output))	//removes the last character (in this case a space)
+		output = copytext(output, 1, -1)	//removes the last character (in this case a space)
 
 	if(lowertext(output) in forbidden_names)	//prevents these common metagamey names
 		return	//(not case sensitive)

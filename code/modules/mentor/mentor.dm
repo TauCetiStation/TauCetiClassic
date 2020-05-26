@@ -13,7 +13,7 @@
 			for(var/line in lines)
 				if (!line)
 					continue
-				if (copytext(line, 1, 2) == ";")
+				if (line[1] == ";")
 					continue
 				var/ckey = copytext_char(line, 1, length(line)+1)
 				mentor_ckeys += ckey

@@ -115,7 +115,7 @@
 
 /mob/proc/say_quote(message, datum/language/speaking = null)
 	var/verb = "says"
-	var/ending = copytext_char(message, length(message))
+	var/ending = copytext_char(message, -1)
 	if(ending=="!")
 		verb=pick("exclaims","shouts","yells")
 	else if(ending=="?")
@@ -148,7 +148,7 @@
 //returns the message mode string or null for no message mode.
 //standard mode is the mode returned for the special ';' radio code.
 /mob/proc/parse_message_mode(message, standard_mode="headset")
-	if(length(message) >= 1 && copytext(message,1,2) == ";")
+	if(length(message) >= 1 && message[1] == ";")
 		return standard_mode
 
 	if(length(message) >= 2)

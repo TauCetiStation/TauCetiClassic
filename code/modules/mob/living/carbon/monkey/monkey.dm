@@ -428,7 +428,7 @@
 	if(stat)
 		return
 
-	if(copytext(message,1,2) == "*")
+	if(message[1] == "*")
 		return emote(copytext_char(message,2))
 
 	if(stat)

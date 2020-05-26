@@ -85,7 +85,7 @@ var/base_commit_sha = 0
 /world/proc/SetupLogs()
 	var/log_suffix = round_id ? round_id : replacetext(time_stamp(), ":", ".")
 	var/log_date = time2text(world.realtime, "YYYY/MM/DD")
-	
+
 	global.log_directory = "data/logs/[log_date]/round-[log_suffix]"
 	global.log_investigate_directory = "[log_directory]/investigate"
 	global.log_debug_directory = "[log_directory]/debug"
@@ -169,7 +169,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["admins"] = admins
 
 		return list2params(s)
-	
+
 	else if (length(T) && istext(T))
 		var/list/packet_data = params2list(T)
 		if (packet_data && packet_data["announce"] == "")
@@ -305,7 +305,7 @@ var/shutdown_processed = FALSE
 				host_announcements += "<hr>"
 
 			host_announcements += trim(file2text("data/announcements/[file]"))
-		
+
 		host_announcements = "<h2>Important Admin Announcements:</h2><br>[host_announcements]"
 
 /world/proc/load_test_merge()
@@ -338,7 +338,7 @@ var/shutdown_processed = FALSE
 		for(var/line in L)
 			if(!length(line))
 				continue
-			if(copytext(line,1,2) == "#")
+			if(line[1] == "#")
 				continue
 			donators.Add(ckey(line))
 

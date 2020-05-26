@@ -153,7 +153,7 @@
 						ears = null
 						for(var/possible_phrase in speak)
 							if("[possible_phrase[1] + possible_phrase[2]]" in department_radio_keys)
-								possible_phrase = copytext_char(possible_phrase,3,length(possible_phrase))
+								possible_phrase = copytext_char(possible_phrase, 3, -1)
 					else
 						to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from].</span>")
 						return

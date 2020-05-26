@@ -47,7 +47,7 @@
 			scrambled_text += " "
 
 	scrambled_text = trim(scrambled_text)
-	var/ending = copytext_char(scrambled_text, length(scrambled_text))
+	var/ending = copytext_char(scrambled_text, -1)
 	if(ending == ".")
 		scrambled_text = copytext_char(scrambled_text,1,length(scrambled_text)-1)
 	var/input_ending = copytext_char(input, input_size)

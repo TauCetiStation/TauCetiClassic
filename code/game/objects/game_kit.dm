@@ -145,7 +145,7 @@
 			else
 				var/tx = text2num(copytext_char(href_list["s_board"], 1, 2))
 				var/ty = text2num(copytext_char(href_list["s_board"], 3, 4))
-				if ((copytext_char(selected, 2, 3) == " " && length(selected) == 3))
+				if (selected[2] == " " && length(selected) == 3)
 					var/sx = text2num(copytext_char(selected, 1, 2))
 					var/sy = text2num(copytext_char(selected, 3, 4))
 					var/place = ((sy - 1) * 8 + sx) * 2 - 1

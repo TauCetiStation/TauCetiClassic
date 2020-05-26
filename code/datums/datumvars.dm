@@ -1047,7 +1047,7 @@ body
 			return
 
 		var/mob/C = locate(href_list["setckey"])
-		if(C.ckey && copytext(C.ckey, 1, 2) != "@")
+		if(C.ckey && C.ckey[1] != "@")
 			if(alert("This mob already controlled by [C.ckey]. Are you sure you want to continue?",,"Cancel","Continue") != "Continue")
 				return
 

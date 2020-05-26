@@ -419,8 +419,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(!donor || !receiver)
 		return FALSE
 
-	var/donor_antigen = copytext_char(donor, 1, length(donor))
-	var/receiver_antigen = copytext_char(receiver, 1, length(receiver))
+	var/donor_antigen = copytext_char(donor, 1, -1)
+	var/receiver_antigen = copytext_char(receiver, 1, -1)
 	var/donor_rh = copytext_char(donor, -1)
 	var/receiver_rh = copytext_char(receiver, -1)
 
