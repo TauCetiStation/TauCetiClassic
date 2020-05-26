@@ -389,7 +389,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		return num
 
 	// string
-	if(text[1] = "\"")
+	if(text[1] == "\"")
 		return copytext_char(text,2,findtext_char(text,"\"",3,0))
 
 	// list

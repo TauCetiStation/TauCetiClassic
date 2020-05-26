@@ -439,7 +439,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 /datum/admin_help/proc/sanitize_stat(msg)//todo: 513
 	msg = replacetext(msg, JA_PLACEHOLDER, JA_CHARACTER)
 	var/string = ""
-	for(var/i = 1; i < length(msg); i += length(msg[i]))
+	for(var/i = 1; i <= length(msg); i += length(msg[i]))
 		string += "&#[text2ascii(copytext(msg,i,i+1))];"
 	return string
 
