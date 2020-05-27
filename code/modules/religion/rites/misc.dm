@@ -42,7 +42,7 @@
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/mob/living/carbon/human/M in viewers(AOG.loc))
-		if(!M.mind.holy_role && M.eyecheck() <= 0)
+		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
 
 	spawn_food(AOG.loc, 4 + rand(2, 5))
@@ -341,15 +341,23 @@
 	)
 
 	var/list/summon_type = list(/mob/living/simple_animal/corgi/puppy, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/corgi, /mob/living/simple_animal/cat, /mob/living/simple_animal/parrot, /mob/living/simple_animal/crab, /mob/living/simple_animal/cow, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken, /mob/living/simple_animal/pig, /mob/living/simple_animal/turkey, /mob/living/simple_animal/goose, /mob/living/simple_animal/seal, /mob/living/simple_animal/walrus, /mob/living/simple_animal/fox, /mob/living/simple_animal/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/mushroom, /mob/living/simple_animal/pug, /mob/living/simple_animal/shiba, /mob/living/simple_animal/yithian, /mob/living/simple_animal/tindalos, /mob/living/carbon/monkey, /mob/living/carbon/monkey/skrell, /mob/living/carbon/monkey/tajara, /mob/living/carbon/monkey/unathi, /mob/living/simple_animal/slime)
+	var/current_type
 
-/datum/religion_rites/call_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
-		if(!M.mind.holy_role && M.eyecheck() <= 0)
-			M.flash_eyes()
+/datum/religion_rites/call_animal/New()
+	current_type = pick(summon_type)
+	invocation_effect = CALLBACK(src, .proc/modify_animal)
+	AddComponent(/datum/component/rite_spawn_item, current_type, null, null, invocation_effect)
 
-	var/type = pick(summon_type)
-	var/mob/M = new type(AOG.loc)
+/datum/religion_rites/call_animal/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
+	// This is needed to update the summoned creature
+	if(!GetComponent(/datum/component/rite_spawn_item))
+		AddComponent(/datum/component/rite_spawn_item, current_type, null, null, invocation_effect)
+	SEND_SIGNAL(src, COMSIG_RITE_ON_CHOSEN, user, AOG)
+	if(do_after(user, target = user, delay = 10 SECONDS))
+		return TRUE
+	return FALSE
 
+/datum/religion_rites/call_animal/proc/modify_animal(atom/animal)
 	for(var/mob/dead/observer/O in observer_list)
 		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 			continue
@@ -358,8 +366,7 @@
 		if(O.client)
 			var/client/C = O.client
 			if(!C.prefs.ignore_question.Find("chfamiliar") && (ROLE_RFAMILIAR in C.prefs.be_role))
-				INVOKE_ASYNC(src, .proc/question, C, M)
-	return TRUE
+				INVOKE_ASYNC(src, .proc/question, C, animal)
 
 /datum/religion_rites/call_animal/proc/question(client/C, mob/M)
 	if(!C)
@@ -384,6 +391,18 @@
 	else if (response == "Never for this round")
 		C.prefs.ignore_question += "chfamiliar"
 
+/datum/religion_rites/call_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
+		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0)
+			M.flash_eyes()
+
+	SEND_SIGNAL(src, COMSIG_RITE_INVOKE_EFFECT, user, AOG)
+
+	current_type = pick(summon_type)
+	// This is needed to update the summoned creature
+	qdel(GetComponent(/datum/component/rite_spawn_item))
+	return TRUE
+
 /*
  * Create religious sword
  * Just create claymore with reduced damage.
@@ -403,21 +422,29 @@
 	invoke_msg = "...Let it be so!"
 	favor_cost = 100
 
+	var/current_type = /obj/item/weapon/claymore/religion
+
 	needed_aspects = list(
 		ASPECT_WEAPON = 1
 	)
 
-/datum/religion_rites/create_sword/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
-		if(!M.mind.holy_role && M.eyecheck() <= 0)
-			M.flash_eyes()
+/datum/religion_rites/create_sword/New()
+	invocation_effect = CALLBACK(src, .proc/modify_sword)
+	AddComponent(/datum/component/rite_spawn_item, current_type, null, null, invocation_effect)
 
-	var/obj/item/weapon/claymore/religion/R = new (AOG.loc)
+/datum/religion_rites/create_sword/proc/modify_sword(atom/sword)
 	var/god_name
 	if(global.chaplain_religion.active_deities.len == 0)
 		god_name = pick(global.chaplain_religion.deity_names)
 	else
 		var/mob/god = pick(global.chaplain_religion.active_deities)
 		god_name = god.name
-	R.name = "[R.name] of [god_name]"
+	sword.name = "[sword.name] of [god_name]"
+
+/datum/religion_rites/create_sword/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
+		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0)
+			M.flash_eyes()
+
+	SEND_SIGNAL(src, COMSIG_RITE_INVOKE_EFFECT, user, AOG)
 	return TRUE

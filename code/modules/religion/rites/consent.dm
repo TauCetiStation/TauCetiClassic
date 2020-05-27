@@ -3,24 +3,14 @@
 	var/consent_msg = ""
 	tip_text = "This ritual is performed only if the victim consents."
 
-/datum/religion_rites/consent/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!AOG)
-		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
-		return FALSE
-	if(!AOG.buckled_mob)
-		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [AOG].</span>")
-		return FALSE
-	return TRUE
+/datum/religion_rites/consent/New()
+	AddComponent(/datum/component/rite_consent)
 
-/datum/religion_rites/consent/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!required_checks(user, AOG))
-		return FALSE
-	var/mob/M = AOG.buckled_mob
-	// Basically: "Are you sentient and willing?"
-	if(M.IsAdvancedToolUser() && alert(M, consent_msg, "Rite", "Yes", "No") == "No")
-		to_chat(user, "<span class='warning'>[M] does not want to give themselves into this ritual!.</span>")
-		return FALSE
-	return ..()
+/datum/religion_rites/consent/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
+	SEND_SIGNAL(src, COMSIG_RITE_ON_CHOSEN, user, AOG, consent_msg)
+	if(do_after(user, target = user, delay = 10 SECONDS))
+		return TRUE
+	return FALSE
 
 
 /*
@@ -44,6 +34,10 @@
 	)
 
 /datum/religion_rites/consent/synthconversion/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	if(!ishuman(AOG.buckled_mob))
 		to_chat(user, "<span class='warning'>Only humanoid bodies can be accepted.</span>")
 		return FALSE
@@ -143,6 +137,10 @@
 	)
 
 /datum/religion_rites/consent/clownconversion/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	if(!ishuman(AOG.buckled_mob))
 		to_chat(user, "<span class='warning'>Only a human can go through the ritual.</span>")
 		return FALSE

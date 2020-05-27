@@ -171,11 +171,14 @@
 
 		performing_rite = religion.rites_by_name[rite_select]
 
-		if(!performing_rite.perform_rite(user, src))
-			performing_rite = null
+		if(performing_rite.on_chosen(user, src))
+			if(!performing_rite.perform_rite(user, src))
+				performing_rite = null
+			else
+				performing_rite.invoke_effect(user, src)
+				religion.adjust_favor(-performing_rite.favor_cost)
+				performing_rite = null
 		else
-			performing_rite.invoke_effect(user, src)
-			religion.adjust_favor(-performing_rite.favor_cost)
 			performing_rite = null
 		return
 

@@ -21,6 +21,20 @@
 /// after a datum's Destroy() is called: (force, qdel_hint), at this point none of the other components chose to interrupt qdel and Destroy has been called
 #define COMSIG_PARENT_QDELETED "parent_qdeleted"
 
+// /datum/religion_rites signals
+/// from base of religion_rites/on_chosen(): (/mob, /obj)
+#define COMSIG_RITE_ON_CHOSEN "rite_on_chosen"
+/// from base of religion_rites/required_checks(): (/mob, /obj)
+#define COMSIG_RITE_REQUIRED_CHECK "rite_required_checks"
+/// from base of religion_rites/before_perform_rite(): (/mob, /obj)
+#define COMSIG_RITE_BEFORE_PERFORM "rite_before_perform"
+/// from base of religion_rites/invoke_effect(): (/mob, /obj)
+#define COMSIG_RITE_INVOKE_EFFECT "rite_invoke_effect"
+/// from base of religion_rites/on_invocation(): (/mob, /obj, stage)
+#define COMSIG_RITE_ON_INVOCATION "rite_on_invocation"
+/// from base of religion_rites: (/mob, /obj)
+#define COMSIG_RITE_FAILED_CHECK "rite_failed_check"
+
 // light related signals
 /// from base of /atom/movable/lighting_object/update(): (turf/my_turf)
 #define COMSIG_LIGHT_UPDATE_OBJECT "light_update_object"
