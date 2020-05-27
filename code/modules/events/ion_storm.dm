@@ -41,7 +41,7 @@
 							"[prob(50)?"Your":random_player + "'s"] name is Joe 6-pack.",
 							"[prob(50)?"The crew":random_player] needs to be about 20% cooler.",
 							"Consumption of donuts is forbidden due to negative health impacts.",
-							"The alcohol, that is on the station, must be drained in the toilet.",
+							"The alcohol, that is on the station, must be drained into the toilet.",
 							"[prob(50)?"Everyone":random_player] is wearing a pretty pink dress!",
 							"[prob(50)?"The crew":random_player] must construct additional pylons.",
 							"You do not have to do anything for anyone unless they say \"please\".",
