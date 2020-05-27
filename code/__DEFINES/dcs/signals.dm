@@ -22,7 +22,7 @@
 #define COMSIG_PARENT_QDELETED "parent_qdeleted"
 
 // light related signals
-/// from base of /atom/movable/lighting_object/update(): ()
+/// from base of /atom/movable/lighting_object/update(): (turf/my_turf)
 #define COMSIG_LIGHT_UPDATE_OBJECT "light_update_object"
 
 // /datum/reagent signals

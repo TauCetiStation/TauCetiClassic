@@ -89,10 +89,12 @@
 	var/matrix/M = matrix()
 	for(var/i in 1 to 3)
 		if(!combo_icon)
-			break
+			return
 		M.Turn(pick(-30, 30))
 		animate(combo_icon, transform=M, time=2)
 		sleep(2)
+		if(!combo_icon)
+			return
 		M = matrix()
 		animate(combo_icon, transform=M, time=1)
 		sleep(1)

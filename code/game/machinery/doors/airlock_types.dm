@@ -367,7 +367,7 @@
 	if(istype(C, /obj/item/weapon/airlock_painter))
 		to_chat(user, "<span class='red'>This airlock cannot be painted.</span>")
 	else
-		..()
+		return ..()
 
 
 /*******************

@@ -163,7 +163,8 @@
 	//Finally, smash the bottle. This kills (del) the bottle.
 	src.smash(target, user)
 
-	return
+	// We're smashing the bottle into mob's face. There's no need for an afterattack.
+	return TRUE
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/after_throw(datum/callback/callback)
 	..()

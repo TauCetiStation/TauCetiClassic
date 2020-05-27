@@ -113,8 +113,44 @@
 	src.open()
 	return
 
+/obj/machinery/door/proc/try_open(mob/user)
+	if(operating)
+		return
+
+	if(ishuman(user) && prob(40) && density)
+		var/mob/living/carbon/human/H = user
+		if(H.getBrainLoss() >= 60)
+			playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
+			if(!istype(H.head, /obj/item/clothing/head/helmet))
+				visible_message("<span class='userdanger'> [user] headbutts the [src].</span>")
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+				H.Stun(8)
+				H.Weaken(5)
+				BP.take_damage(10, 0, used_weapon = "Hematoma")
+			else
+				visible_message("<span class='userdanger'> [user] headbutts the [src]. Good thing they're wearing a helmet.</span>")
+			return
+
+	add_fingerprint(user)
+	user.SetNextMove(CLICK_CD_INTERACT)
+	var/atom/check_access = user
+	if(!Adjacent(user))
+		check_access = null
+	if(!requiresID())
+		check_access = null
+
+	if(allowed(check_access) || emergency)
+		if(density)
+			open()
+		else
+			close()
+		return
+
+	if(density)
+		do_animate("deny")
+
 /obj/machinery/door/attack_hand(mob/user)
-	return attackby(user, user)
+	try_open(user)
 
 /obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))
@@ -142,21 +178,7 @@
 		return 1
 	if(isrobot(user))
 		return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
-	if(!Adjacent(user))
-		user = null
-	if(!src.requiresID())
-		user = null
-	if(user)
-		user.SetNextMove(CLICK_CD_INTERACT)
-	if(src.allowed(user) || emergency)
-		if(src.density)
-			open()
-		else
-			close()
-		return
-	if(src.density)
-		do_animate("deny")
-	return
+	try_open(user, I)
 
 /obj/machinery/door/emag_act(mob/user)
 	if(src.density && hasPower())

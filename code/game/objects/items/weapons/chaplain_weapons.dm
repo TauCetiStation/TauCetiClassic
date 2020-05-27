@@ -178,11 +178,11 @@
 	for(var/mob/dead/observer/O in player_list)
 		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 			continue
-		if(jobban_isbanned(O, ROLE_TSTAFF) && role_available_in_minutes(O, ROLE_TSTAFF))
+		if(jobban_isbanned(O, ROLE_GHOSTLY) && role_available_in_minutes(O, ROLE_GHOSTLY))
 			continue
 		if(O.client)
 			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find("chstaff") && (ROLE_TSTAFF in C.prefs.be_role))
+			if(!C.prefs.ignore_question.Find(IGNORE_TSTAFF) && (ROLE_GHOSTLY in C.prefs.be_role))
 				INVOKE_ASYNC(src, .proc/question, C, user)
 
 /obj/item/weapon/nullrod/staff/proc/question(client/C, mob/living/user)
@@ -197,7 +197,7 @@
 			return
 		transfer_personality(C.mob, user)
 	else if (response == "Never for this round")
-		C.prefs.ignore_question += "chstaff"
+		C.prefs.ignore_question += IGNORE_TSTAFF
 
 /obj/item/weapon/nullrod/staff/proc/transfer_personality(mob/candidate, mob/living/summoner)
 	searching = FALSE
@@ -305,15 +305,94 @@
 	next_ping = world.time + 5 SECONDS
 	audible_message("<span class='notice'>\The [src] stone blinked.</span>", deaf_message = "\The [src] stone blinked.")
 
+/obj/item/weapon/shield/riot/roman/religion
+	name = "sacred shield"
+	desc = "Go-... Whatever deity you worship protects you!"
+	flags = ABSTRACT
+	slot_flags = FALSE
+
+	var/life_timer
+
+/obj/item/weapon/shield/riot/roman/religion/Destroy()
+	if(life_timer)
+		deltimer(life_timer)
+	return ..()
+
+/obj/item/weapon/shield/riot/roman/religion/dropped(mob/user)
+	to_chat(user, "<span class='warning'>[src] was scattered.</span>")
+	qdel(src)
+
 /obj/item/weapon/claymore/religion
 	name = "claymore"
 	desc = "Good weapon for the crusade."
 	force = 10
 	throwforce = 5
 
+	var/can_spawn_shield = TRUE
+	var/obj/item/weapon/shield/riot/roman/religion/shield
+
+	var/holy_outline
+	var/have_outline = FALSE
+	var/can_spawn_shield_timer
 	var/image/down_overlay
+
+/obj/item/weapon/claymore/religion/atom_init()
+	. = ..()
+	down_overlay = image('icons/effects/effects.dmi', icon_state = "at_shield2", layer = OBJ_LAYER - 0.01)
+	down_overlay.alpha = 100
+	add_overlay(down_overlay)
+	addtimer(CALLBACK(src, .proc/revert_effect), 5 SECONDS)
+
+	holy_outline = filter(type = "outline", size = 1, color = "#fffb0064")
+
+/obj/item/weapon/claymore/religion/Destroy()
+	if(can_spawn_shield_timer)
+		deltimer(can_spawn_shield_timer)
+	return ..()
+
+/obj/item/weapon/claymore/religion/dropped()
+	QDEL_NULL(shield)
+	remove_holy_outline()
+
+/obj/item/weapon/claymore/religion/equipped(mob/user, slot)
+	if(user.mind.holy_role)
+		force = 10
+		if(!have_outline && can_spawn_shield)
+			create_holy_outline()
+	else
+		force = 5
+
+/obj/item/weapon/claymore/religion/proc/remove_holy_outline()
+	have_outline = FALSE
+	filters -= holy_outline
+
+/obj/item/weapon/claymore/religion/proc/create_holy_outline()
+	have_outline = TRUE
+	filters += holy_outline
 
 /obj/item/weapon/claymore/religion/proc/revert_effect()
 	if(down_overlay)
 		cut_overlays(down_overlay)
 		qdel(down_overlay)
+
+/obj/item/weapon/claymore/religion/proc/ready_shield(mob/M)
+	can_spawn_shield = TRUE
+	if(!have_outline && (slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND))
+		create_holy_outline()
+
+/obj/item/weapon/claymore/religion/attack_self(mob/living/carbon/human/H)
+	if(!H.mind.holy_role || !can_spawn_shield)
+		return
+
+	var/obj/item/weapon/shield/riot/roman/religion/R = new (H)
+	if(H.put_in_inactive_hand(R))
+		can_spawn_shield = FALSE
+		can_spawn_shield_timer = addtimer(CALLBACK(src, .proc/ready_shield, H), 3 MINUTES)
+		shield = R
+		remove_holy_outline()
+
+		R.alpha = 200
+		R.filters += holy_outline
+		R.life_timer = addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, R), 1 MINUTES)
+	else
+		qdel(R)
