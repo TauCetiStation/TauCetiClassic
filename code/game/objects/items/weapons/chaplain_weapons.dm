@@ -305,22 +305,23 @@
 	next_ping = world.time + 5 SECONDS
 	audible_message("<span class='notice'>\The [src] stone blinked.</span>", deaf_message = "\The [src] stone blinked.")
 
+
+
 /obj/item/weapon/shield/riot/roman/religion
 	name = "sacred shield"
 	desc = "Go-... Whatever deity you worship protects you!"
-	flags = ABSTRACT
+	flags = ABSTRACT|DROPDEL
 	slot_flags = FALSE
 
-	var/life_timer
+	alpha = 200
 
-/obj/item/weapon/shield/riot/roman/religion/Destroy()
-	if(life_timer)
-		deltimer(life_timer)
-	return ..()
+/obj/item/weapon/shield/riot/roman/religion/atom_init()
+	. = ..()
 
-/obj/item/weapon/shield/riot/roman/religion/dropped(mob/user)
-	to_chat(user, "<span class='warning'>[src] was scattered.</span>")
-	qdel(src)
+	filters += filter(type = "outline", size = 1, color = "#fffb0064")
+	animate(filters[filters.len], color = "#fffb0000", time = 1 MINUTE)
+
+	QDEL_IN(src, 1 MINUTE)
 
 /obj/item/weapon/claymore/religion
 	name = "claymore"
@@ -335,6 +336,11 @@
 	var/have_outline = FALSE
 	var/can_spawn_shield_timer
 	var/image/down_overlay
+
+	/// Force for holy wielders.
+	var/holy_force = 10
+	/// Force for non-holy wielders.
+	var/def_force = 5
 
 /obj/item/weapon/claymore/religion/atom_init()
 	. = ..()
@@ -353,14 +359,15 @@
 /obj/item/weapon/claymore/religion/dropped()
 	QDEL_NULL(shield)
 	remove_holy_outline()
+	force = def_force
 
 /obj/item/weapon/claymore/religion/equipped(mob/user, slot)
 	if(user.mind.holy_role)
-		force = 10
+		force = holy_force
 		if(!have_outline && can_spawn_shield)
 			create_holy_outline()
 	else
-		force = 5
+		force = def_force
 
 /obj/item/weapon/claymore/religion/proc/remove_holy_outline()
 	have_outline = FALSE
@@ -375,10 +382,18 @@
 		cut_overlays(down_overlay)
 		qdel(down_overlay)
 
-/obj/item/weapon/claymore/religion/proc/ready_shield(mob/M)
+/obj/item/weapon/claymore/religion/proc/ready_shield()
 	can_spawn_shield = TRUE
 	if(!have_outline && (slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND))
 		create_holy_outline()
+
+/obj/item/weapon/claymore/religion/proc/scatter_shield()
+	if(slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND)
+		var/mob/M = loc
+		to_chat(M, "<span class='warning'>[shield] was scattered.</span>")
+
+	shield = null
+	can_spawn_shield_timer = addtimer(CALLBACK(src, .proc/ready_shield), 30 SECONDS)
 
 /obj/item/weapon/claymore/religion/attack_self(mob/living/carbon/human/H)
 	if(!H.mind.holy_role || !can_spawn_shield)
@@ -389,10 +404,7 @@
 		can_spawn_shield = FALSE
 		can_spawn_shield_timer = addtimer(CALLBACK(src, .proc/ready_shield, H), 3 MINUTES)
 		shield = R
+		RegisterSignal(R, list(COMSIG_PARENT_QDELETED), .proc/scatter_shield)
 		remove_holy_outline()
-
-		R.alpha = 200
-		R.filters += holy_outline
-		R.life_timer = addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, R), 1 MINUTES)
 	else
 		qdel(R)
