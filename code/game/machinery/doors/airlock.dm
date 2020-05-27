@@ -901,6 +901,7 @@ var/list/airlock_overlays = list()
 /obj/machinery/door/airlock/try_open(mob/user, obj/item/tool = null)
 	if(isElectrified() && !issilicon(user) && !isobserver(user))
 		if(shock(user, tool ? 75 : 100))
+			add_fingerprint(user)
 			return
 	..()
 
