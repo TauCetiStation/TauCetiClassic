@@ -14,9 +14,13 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	log_attack(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[msg]</span></span> [ADMIN_PPJMPFLW(target)]"
 	for(var/client/C in admins)
-		if(R_ADMIN & C.holder.rights)
-			if(C.prefs.chat_toggles & CHAT_ATTACKLOGS)
-				to_chat(C, msg)
+		if(!(R_ADMIN & C.holder.rights))
+			continue
+		if(!(C.prefs.chat_toggles & CHAT_ATTACKLOGS))
+			continue
+		if(!target.client && !(C.prefs.chat_toggles & CHAT_NOCLIENT_ATTACK))
+			continue
+		to_chat(C, msg)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
@@ -861,7 +865,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	return
 
 /datum/admins/proc/change_crew_salary()
-		
+
 	var/list/crew = my_subordinate_staff("Admin")
 	var/dat
 
