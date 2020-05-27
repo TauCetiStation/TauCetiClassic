@@ -95,27 +95,21 @@
 
 
 /obj/machinery/door/proc/bumpopen(mob/user)
-	if(operating)	return
 	if(user.last_airflow > world.time - vsc.airflow_delay) //Fakkit
 		return
-	src.add_fingerprint(user)
-	if(!src.requiresID())
-		user = null
-
-	if(density)
-		if(allowed(user) || emergency)
-			open()
-		else
-			do_animate("deny")
-	return
+	if(!density)
+		return
+	try_open(user)
 
 /obj/machinery/door/meteorhit(obj/M)
 	src.open()
 	return
 
-/obj/machinery/door/proc/try_open(mob/user)
+/obj/machinery/door/proc/try_open(mob/user, obj/item/tool = null)
 	if(operating)
 		return
+
+	add_fingerprint(user)
 
 	if(ishuman(user) && prob(40) && density)
 		var/mob/living/carbon/human/H = user
@@ -131,7 +125,6 @@
 				visible_message("<span class='userdanger'> [user] headbutts the [src]. Good thing they're wearing a helmet.</span>")
 			return
 
-	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	var/atom/check_access = user
 	if(!Adjacent(user))
@@ -150,6 +143,8 @@
 		do_animate("deny")
 
 /obj/machinery/door/attack_hand(mob/user)
+	if(isrobot(user))
+		return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
 	try_open(user)
 
 /obj/machinery/door/attack_tk(mob/user)
@@ -178,6 +173,7 @@
 		return 1
 	if(isrobot(user))
 		return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
+	add_fingerprint(user)
 	try_open(user, I)
 
 /obj/machinery/door/emag_act(mob/user)
