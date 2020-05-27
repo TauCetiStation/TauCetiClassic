@@ -867,7 +867,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
-	mutatelist = list(/obj/item/seeds/goldappleseed)
+	mutatelist = list(/obj/item/seeds/goldappleseed, /obj/item/seeds/poisonedappleseed)
 
 /obj/item/seeds/poisonedappleseed
 	name = "pack of apple seeds"

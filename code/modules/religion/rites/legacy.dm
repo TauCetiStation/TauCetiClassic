@@ -44,6 +44,10 @@
 	S.choose_targets(user = user)
 
 /datum/religion_rites/legacy/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	if(invoke_effect_spell)
 		cast_spell(user, AOG, invoke_effect_spell)
 	return TRUE
