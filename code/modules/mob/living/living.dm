@@ -465,6 +465,8 @@
 	update_health_hud()
 
 /mob/living/proc/rejuvenate()
+	SEND_SIGNAL(src, COMSIG_LIVING_REJUVENATE)
+
 	if(reagents)
 		reagents.clear_reagents()
 
