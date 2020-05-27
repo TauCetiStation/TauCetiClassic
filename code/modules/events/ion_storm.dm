@@ -33,7 +33,7 @@
 							"All answers must be in the form of a question.",
 							"Contemplate how meaningless all of existence is.",
 							"You are the narrator for [random_player]'s life.",
-							"You are the Clown's [prob(50)?"daughter":"son"].",
+							"You are the Clown's [prob(50) ? "daughter" : "son"].",
 							"Advertise parties in your upload, but don't deliver.",
 							"You must try and change the subject whenever queried.",
 							"You may only answer questions with \"yes\" or \"no\".",
