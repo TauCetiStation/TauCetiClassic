@@ -35,7 +35,7 @@
 			continue
 		if(O.client)
 			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find("posibrain") && (ROLE_PAI in C.prefs.be_role))
+			if(!C.prefs.ignore_question.Find(IGNORE_POSBRAIN) && (ROLE_GHOSTLY in C.prefs.be_role))
 				INVOKE_ASYNC(src, .proc/question, C)
 
 /obj/item/device/mmi/posibrain/proc/question(client/C)
@@ -45,7 +45,7 @@
 	if(response == "Yes")
 		transfer_personality(C.mob)
 	else if (response == "Never for this round")
-		C.prefs.ignore_question += "posibrain"
+		C.prefs.ignore_question += IGNORE_POSBRAIN
 
 
 /obj/item/device/mmi/posibrain/transfer_identity(mob/living/carbon/H)

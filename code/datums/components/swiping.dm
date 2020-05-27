@@ -279,6 +279,9 @@
 			step_away(target, get_turf(parent))
 
 /datum/component/swiping/proc/try_sweep_push(datum/source, atom/target, mob/user)
+	if(!isturf(target) && !isturf(target.loc))
+		return NONE
+
 	if(can_push_call)
 		if(!can_push_call.Invoke(target, user))
 			return NONE
@@ -357,6 +360,9 @@
 			step_to(target, get_turf(parent))
 
 /datum/component/swiping/proc/try_sweep_pull(datum/source, atom/target, mob/user)
+	if(!isturf(target) && !isturf(target.loc))
+		return NONE
+
 	if(can_pull_call)
 		if(!can_pull_call.Invoke(target, user))
 			return NONE
@@ -573,6 +579,9 @@
 
 // Swipe through the two adjacent to target tiles.
 /datum/component/swiping/proc/sweep_facing(datum/source, atom/target, mob/user)
+	if(!isturf(target) && !isturf(target.loc))
+		return NONE
+
 	if(can_sweep_call)
 		if(!can_sweep_call.Invoke(target, user))
 			return NONE
@@ -611,6 +620,9 @@
 
 // A little bootleg for MiddleClick.
 /datum/component/swiping/proc/sweep_spin_click(datum/source, atom/target, mob/user)
+	if(!isturf(target) && !isturf(target.loc))
+		return NONE
+
 	if(sweep_spin(source, user) != NONE)
 		return COMSIG_ITEM_CANCEL_CLICKWITH
 	return NONE
