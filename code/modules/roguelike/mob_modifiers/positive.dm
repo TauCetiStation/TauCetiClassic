@@ -119,6 +119,9 @@
 	RegisterSignal(possessed, list(COMSIG_PARENT_QDELETED), .proc/on_phylactery_destroyed)
 	possessed.forceMove(H.loc)
 
+	if(QDELING(possessed) || !get_turf(possessed))
+		return FALSE
+
 	var/list/allowed_name_mods = list(
 		RL_GROUP_PREFIX = 2,
 		RL_GROUP_SUFFIX = 2,
