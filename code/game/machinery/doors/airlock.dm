@@ -688,26 +688,9 @@ var/list/airlock_overlays = list()
 		close()
 
 /obj/machinery/door/airlock/attack_hand(mob/user)
-	if(ishuman(user) && prob(40) && density)
-		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60)
-			playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
-			if(!istype(H.head, /obj/item/clothing/head/helmet))
-				visible_message("<span class='userdanger'> [user] headbutts the airlock.</span>")
-				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-				H.Stun(8)
-				H.Weaken(5)
-				BP.take_damage(10, 0, used_weapon = "Hematoma")
-			else
-				visible_message("<span class='userdanger'> [user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
-			return
-
 	if(wires.interact(user))
 		return
 	else
-		if(isElectrified() && !issilicon(user) && !isobserver(user))
-			if(shock(user, 100))
-				return
 		if(HULK in user.mutations)
 			hulk_break_reaction(user)
 			return
@@ -915,8 +898,13 @@ var/list/airlock_overlays = list()
 	if(!no_window)
 		updateUsrDialog()
 
-/obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
+/obj/machinery/door/airlock/try_open(mob/user, obj/item/tool = null)
+	if(isElectrified() && !issilicon(user) && !isobserver(user))
+		if(shock(user, tool ? 75 : 100))
+			return
+	..()
 
+/obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
 	if(istype(C,/obj/item/weapon/changeling_hammer) && !operating && density) // yeah, hammer ignore electrify
 		var/obj/item/weapon/changeling_hammer/W = C
 		user.do_attack_animation(src)
@@ -928,14 +916,8 @@ var/list/airlock_overlays = list()
 			door_rupture(user)
 		return
 
-	if(!(issilicon(user) || isobserver(user)))
-		if(isElectrified())
-			if(shock(user, 75))
-				return
 	if(istype(C, /obj/item/device/detective_scanner) || istype(C, /obj/item/taperoll))
 		return
-
-	add_fingerprint(user)
 
 	if(iswelder(C) && !(operating > 0) && density)
 		var/obj/item/weapon/weldingtool/W = C
@@ -1028,8 +1010,7 @@ var/list/airlock_overlays = list()
 	else if(istype(C, /obj/item/weapon/airlock_painter)) 		//airlock painter
 		change_paintjob(C, user)
 	else
-		..()
-	return
+		return ..()
 
 /obj/machinery/door/airlock/phoron/attackby(obj/item/I, mob/user)
 	ignite(I.get_current_temperature())

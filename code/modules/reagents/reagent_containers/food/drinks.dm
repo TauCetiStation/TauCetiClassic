@@ -80,7 +80,8 @@
 
 
 /obj/item/weapon/reagent_containers/food/drinks/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity) return
+	if(!proximity)
+		return
 
 	if (!is_open_container())
 		to_chat(user, "<span class='notice'>You need to open [src]!</span>")
