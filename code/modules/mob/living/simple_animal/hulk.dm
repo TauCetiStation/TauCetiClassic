@@ -132,6 +132,7 @@
 		Mx.Scale(1)
 		Mx.Translate(0,0)
 	transform = Mx
+	default_transform = Mx
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	if(environment)
