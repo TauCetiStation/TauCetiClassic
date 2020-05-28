@@ -353,9 +353,7 @@
 	if(!GetComponent(/datum/component/rite_spawn_item))
 		AddComponent(/datum/component/rite_spawn_item, current_type, null, null, invocation_effect)
 	SEND_SIGNAL(src, COMSIG_RITE_ON_CHOSEN, user, AOG)
-	if(do_after(user, target = user, delay = 10 SECONDS))
-		return TRUE
-	return FALSE
+	..()
 
 /datum/religion_rites/call_animal/proc/modify_animal(atom/animal)
 	for(var/mob/dead/observer/O in observer_list)

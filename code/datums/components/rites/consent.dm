@@ -9,7 +9,7 @@
 	RegisterSignal(parent, list(COMSIG_RITE_REQUIRED_CHECK), .proc/check_victim)
 	RegisterSignal(parent, list(COMSIG_RITE_ON_CHOSEN), .proc/victim_ask)
 
-/datum/component/rite_consent/proc/check_victim(datum/source, mob/user, obj/AOG)
+/datum/component/rite_consent/proc/check_victim(datum/source, mob/user, atom/movable/AOG)
 	if(!AOG)
 		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
 		return TRUE
@@ -24,7 +24,7 @@
 	consent = def_consent
 	return FALSE
 
-/datum/component/rite_consent/proc/victim_ask(datum/source, mob/user, obj/AOG, msg)
+/datum/component/rite_consent/proc/victim_ask(datum/source, mob/user, atom/movable/AOG, msg)
 	var/mob/victim = AOG.buckled_mob
 	if(victim.IsAdvancedToolUser() && alert(victim, msg, "Rite", "Yes", "No") == "Yes")
 		consent = TRUE

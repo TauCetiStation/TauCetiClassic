@@ -67,10 +67,10 @@
 	return TRUE
 
 /datum/religion_rites/proc/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
-	SEND_SIGNAL(src, COMSIG_RITE_ON_CHOSEN, user, AOG)
-	if(do_after(user, target = user, delay = 10 SECONDS))
-		return TRUE
-	return FALSE
+	to_chat(user, "<span class='notice'>You began preparations for the ritual...</span>")
+	if(!do_after(user, target = user, delay = 10 SECONDS))
+		return FALSE
+	return TRUE
 
 // Does something before the ritual and after checking the favor_cost of a ritual.
 /datum/religion_rites/proc/before_perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)

@@ -8,9 +8,7 @@
 
 /datum/religion_rites/consent/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
 	SEND_SIGNAL(src, COMSIG_RITE_ON_CHOSEN, user, AOG, consent_msg)
-	if(do_after(user, target = user, delay = 10 SECONDS))
-		return TRUE
-	return FALSE
+	..()
 
 
 /*

@@ -25,7 +25,7 @@
 	RegisterSignal(parent, list(COMSIG_RITE_FAILED_CHECK), .proc/revert_effects)
 
 // used to choose which items will be replaced with others
-/datum/component/rite_spawn_item/proc/item_sacrifice(obj/AOG, spawn_type)
+/datum/component/rite_spawn_item/proc/item_sacrifice(atom/movable/AOG, spawn_type)
 	var/list/sacrifice_item = list()
 	for(var/obj/item/item in AOG.loc)
 		if(!istype(item, spawn_type))
@@ -33,7 +33,7 @@
 		sacrifice_item += item
 	return sacrifice_item
 
-/datum/component/rite_spawn_item/proc/check_items_on_altar(datum/source, mob/user, obj/AOG)
+/datum/component/rite_spawn_item/proc/check_items_on_altar(datum/source, mob/user, atom/movable/AOG)
 	if(sacrifice_type)
 		var/list/L = item_sacrifice(AOG, sacrifice_type)
 		if(L.len == 0)
@@ -43,7 +43,7 @@
 	return FALSE
 
 // created illustion of spawning item
-/datum/component/rite_spawn_item/proc/create_fake_of_item(datum/source, mob/user, obj/AOG)
+/datum/component/rite_spawn_item/proc/create_fake_of_item(datum/source, mob/user, atom/movable/AOG)
 	if(sacrifice_type)
 		var/list/L = item_sacrifice(AOG, sacrifice_type)
 		if(L.len == 0)
@@ -69,7 +69,7 @@
 	return TRUE
 
 // nice effect for spawn item
-/datum/component/rite_spawn_item/proc/item_restoration(obj/AOG, stage)
+/datum/component/rite_spawn_item/proc/item_restoration(atom/movable/AOG, stage)
 	var/ratioplus = (255 / rite.ritual_invocations.len) * stage
 	var/ratiominus = 255 / stage
 	if(sacrifice_type)
@@ -81,7 +81,7 @@
 		for(var/I in spawning_item)
 			animate(I, time = (rite.ritual_invocations.len + rand(0, 3)) SECONDS, alpha = ratioplus + rand(0, 10))
 
-/datum/component/rite_spawn_item/proc/update_fake_item(datum/source, mob/user, obj/AOG, stage)
+/datum/component/rite_spawn_item/proc/update_fake_item(datum/source, mob/user, atom/movable/AOG, stage)
 	if(spawning_item.len == 0)
 		//illusion of the subject lies on the real subject
 		var/atom/fake
@@ -113,7 +113,7 @@
 	else
 		item_restoration(AOG, stage)
 
-/datum/component/rite_spawn_item/proc/revert_effects(datum/source, mob/user, obj/AOG, stage)
+/datum/component/rite_spawn_item/proc/revert_effects(datum/source, mob/user, atom/movable/AOG, stage)
 	if(spawning_item)
 		for(var/I in spawning_item)
 			animate(I, time = 3 SECONDS, alpha = 0)
@@ -126,7 +126,7 @@
 	clear_lists()
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
-/datum/component/rite_spawn_item/proc/replace_fake_item(datum/source, mob/user, obj/AOG)
+/datum/component/rite_spawn_item/proc/replace_fake_item(datum/source, mob/user, atom/movable/AOG)
 	for(var/obj/I in spawning_item)
 		var/atom/created = new spawn_type(AOG.loc)
 
