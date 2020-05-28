@@ -327,7 +327,7 @@
 /datum/religion_rites/call_animal
 	name = "Call animal"
 	desc = "Create random friendly animal."
-	ritual_length = (1 MINUTES + 20 SECONDS)
+	ritual_length = (1.3 MINUTES)
 	ritual_invocations = list("As these complex nodules of the world are interconnected...",
 						"...so even my animal will be connected with this place...",
 						"...My will has allowed me to create and call you to life...",
@@ -345,8 +345,7 @@
 
 /datum/religion_rites/call_animal/New()
 	current_type = pick(summon_type)
-	invocation_effect = CALLBACK(src, .proc/modify_animal)
-	AddComponent(/datum/component/rite_spawn_item, current_type, 1, null, null, invocation_effect)
+	AddComponent(/datum/component/rite_spawn_item, current_type, 1, null, null, CALLBACK(src, .proc/modify_animal))
 
 /datum/religion_rites/call_animal/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
 	// This is needed to update the summoned creature
