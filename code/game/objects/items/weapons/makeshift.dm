@@ -13,6 +13,25 @@
 	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 
+/obj/item/weapon/twohanded/spear/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+
+	SCB.can_push = TRUE
+	SCB.can_pull = TRUE
+
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_push)
+	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_pull)
+
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/twohanded/spear/proc/can_sweep_push(atom/target, mob/user)
+	return wielded
+
+/obj/item/weapon/twohanded/spear/proc/can_sweep_pull(atom/target, mob/user)
+	return wielded
+
 /obj/item/weapon/twohanded/spear/update_icon()
 	icon_state = "spearglass[wielded]"
 
@@ -49,6 +68,13 @@
 
 /obj/item/weapon/melee/cattleprod/atom_init()
 	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+
+	SCB.can_push = TRUE
+	SCB.can_pull = TRUE
+
+	AddComponent(/datum/component/swiping, SCB)
+
 	update_icon()
 
 /obj/item/weapon/melee/cattleprod/attack_self(mob/user)

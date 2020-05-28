@@ -27,6 +27,8 @@
 	var/list/construct_spells = list()
 
 	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
 
 /mob/living/simple_animal/construct/atom_init()
 	. = ..()
@@ -86,9 +88,8 @@
 	health = 250
 	response_harm = "harmlessly punches"
 	harm_intent_damage = 0
-	melee_damage_lower = 30
-	melee_damage_upper = 30
-	attacktext = "smashes their armoured gauntlet into"
+	melee_damage = 30
+	attacktext = "smash"
 	speed = 3
 	environment_smash = 2
 	attack_sound = list('sound/weapons/punch3.ogg')
@@ -146,9 +147,8 @@
 	icon_living = "floating"
 	maxHealth = 75
 	health = 75
-	melee_damage_lower = 25
-	melee_damage_upper = 25
-	attacktext = "slashes"
+	melee_damage = 25
+	attacktext = "slash"
 	speed = -1
 	see_in_dark = 7
 	attack_sound = list('sound/weapons/bladeslice.ogg')
@@ -167,9 +167,8 @@
 	health = 50
 	response_harm = "viciously beats"
 	harm_intent_damage = 5
-	melee_damage_lower = 5
-	melee_damage_upper = 5
-	attacktext = "rams"
+	melee_damage = 5
+	attacktext = "ramm"
 	speed = 0
 	environment_smash = 2
 	attack_sound = list('sound/weapons/punch2.ogg')
@@ -192,9 +191,8 @@
 	speak_emote = list("rumbles")
 	response_harm = "harmlessly punches"
 	harm_intent_damage = 0
-	melee_damage_lower = 50
-	melee_damage_upper = 50
-	attacktext = "brutally crushes"
+	melee_damage = 50
+	attacktext = "brutally crush"
 	speed = 5
 	environment_smash = 2
 	attack_sound = list('sound/weapons/punch4.ogg')
@@ -227,9 +225,8 @@
 	icon_living = "harvester"
 	maxHealth = 60
 	health = 60
-	melee_damage_lower = 1
-	melee_damage_upper = 5
-	attacktext = "prods"
+	melee_damage = 3
+	attacktext = "prodd"
 	speed = 0
 	environment_smash = 1
 	see_in_dark = 7

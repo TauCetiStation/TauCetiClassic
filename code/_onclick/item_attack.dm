@@ -1,6 +1,8 @@
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'Click On Held Object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_NO_INTERACT)
+		return
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(user)
 
@@ -26,14 +28,7 @@
 	SSdemo.mark_dirty(user)
 
 /mob/living/attackby(obj/item/I, mob/user, params)
-	if(!istype(I) || !ismob(user))
-		return
 	user.SetNextMove(CLICK_CD_MELEE)
-
-	if(user.zone_sel && user.zone_sel.selecting)
-		I.attack(src, user, user.zone_sel.selecting)
-	else
-		I.attack(src, user)
 
 	if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself
 		var/mob/living/carbon/human/H = user
@@ -46,9 +41,11 @@
 		if(istype(H.wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = H.wear_suit
 			V.attack_reaction(src, REACTION_ATACKED, user)
+
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(I)
 	SSdemo.mark_dirty(user)
+	return I.attack(src, user, user.get_targetzone())
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
@@ -57,6 +54,9 @@
 
 
 /obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user, def_zone) & COMPONENT_ITEM_NO_ATTACK)
+		return
+
 	var/mob/messagesource = M
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M, user, src))
@@ -223,22 +223,3 @@
 	SSdemo.mark_dirty(M)
 	SSdemo.mark_dirty(user)
 	return 1
-
-/*
-[ModifierName]ClickAction procs are called from [ModifierName]Click
-and passed to an item held in user's hand, when he clicks on target.
-
-Return TRUE to prevent any other click logic.
-*/
-
-/obj/item/proc/ShiftClickAction(atom/target, mob/user)
-	return FALSE
-
-/obj/item/proc/CtrlClickAction(atom/target, mob/user)
-	return FALSE
-
-/obj/item/proc/CtrlShiftClickAction(atom/target, mob/user)
-	return FALSE
-
-/obj/item/proc/AltClickAction(atom/target, mob/user)
-	return FALSE

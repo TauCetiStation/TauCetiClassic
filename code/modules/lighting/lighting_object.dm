@@ -127,6 +127,8 @@
 
 	luminosity = set_luminosity
 
+	SEND_SIGNAL(src, COMSIG_LIGHT_UPDATE_OBJECT, myturf)
+
 // Variety of overrides so the overlays don't get affected by weird things.
 
 /atom/movable/lighting_object/ex_act(severity)

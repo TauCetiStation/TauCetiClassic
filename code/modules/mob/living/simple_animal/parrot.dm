@@ -50,6 +50,9 @@
 	stop_automated_movement = 1
 	universal_speak = 1
 
+	has_head = TRUE
+	has_leg = TRUE
+
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
 	var/parrot_sleep_max = 25 //The time the parrot sits while perched before looking around. Mosly a way to avoid the parrot's AI in life() being run every single tick.
 	var/parrot_sleep_dur = 25 //Same as above, this is the var that physically counts down
@@ -212,46 +215,24 @@
 /*
  * Attack responces
  */
-//Humans, monkeys, aliens
-/mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/M)
-	..()
-	if(client) return
-	if(!stat && M.a_intent == INTENT_HARM)
-
+/mob/living/simple_animal/parrot/hurtReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	. = ..()
+	if(client)
+		return
+	if(!stat)
 		icon_state = "parrot_fly" //It is going to be flying regardless of whether it flees or attacks
 
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
-		parrot_interest = M
+		parrot_interest = attacker
 		parrot_state = PARROT_SWOOP //The parrot just got hit, it WILL move, now to pick a direction..
 
-		if(M.health < 50) //Weakened mob? Fight back!
+		if(attacker.health < 50) //Weakened mob? Fight back!
 			parrot_state |= PARROT_ATTACK
 		else
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
-	return
-
-/mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M)
-	attack_hand(M)
-
-/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/monkey/M)
-	attack_hand(M)
-
-//Simple animals
-/mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M)
-	if(client) return
-	if(..())
-		return
-
-	if(parrot_state == PARROT_PERCH)
-		parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
-
-	if(M.melee_damage_upper > 0)
-		parrot_interest = M
-		parrot_state = PARROT_SWOOP | PARROT_ATTACK //Attack other animals regardless
-		icon_state = "parrot_fly"
 
 //Mobs with objects
 /mob/living/simple_animal/parrot/attackby(obj/item/O, mob/user)

@@ -1,9 +1,9 @@
 /mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	var/retVal = SEND_SIGNAL(src, COMSIG_ATOM_CANPASS, mover, target, height, air_group)
-	if(retVal == COMPONENT_CANPASS)
-		return TRUE
-	else if(retVal == COMPONENT_CANTPASS)
+	if(retVal & COMPONENT_CANTPASS)
 		return FALSE
+	else if(retVal & COMPONENT_CANPASS)
+		return TRUE
 
 	if(air_group || (height==0))
 		return 1
@@ -54,17 +54,12 @@
 	return
 
 /client/Northwest()
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		if(!C.get_active_hand() && !C.drop_combo_element())
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(!L.get_active_hand() && !L.drop_combo_element())
 			to_chat(usr, "<span class='warning'>You have nothing to drop in your hand.</span>")
 			return
 		drop_item()
-		return
-
-	var/mob/living/L = usr
-	if(!istype(L) || !L.drop_combo_element())
-		to_chat(usr, "<span class='warning'>This mob type cannot drop items.</span>")
 
 //This gets called when you press the delete button.
 /client/verb/delete_key_pressed()
@@ -430,12 +425,15 @@
 
 
 /mob/proc/slip(weaken_duration, obj/slipped_on, lube)
+	SEND_SIGNAL(src, COMSIG_MOB_SLIP, weaken_duration, slipped_on, lube)
 	return FALSE
 
 /mob/living/carbon/slip(weaken_duration, obj/slipped_on, lube)
+	..()
 	return loc.handle_slip(src, weaken_duration, slipped_on, lube)
 
 /mob/living/carbon/slime/slip()
+	..()
 	return FALSE
 
 /mob/living/carbon/human/slip(weaken_duration, obj/slipped_on, lube)

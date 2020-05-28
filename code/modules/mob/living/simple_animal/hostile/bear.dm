@@ -20,8 +20,7 @@
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 60
 	health = 60
-	melee_damage_lower = 20
-	melee_damage_upper = 30
+	melee_damage = 25
 
 	//Space bears aren't affected by atmos.
 	min_oxy = 0
@@ -38,6 +37,10 @@
 	faction = "russian"
 
 	footstep_type = FOOTSTEP_MOB_BAREFOOT
+
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson
@@ -107,12 +110,12 @@
 		target = user
 	..()
 
-/mob/living/simple_animal/hostile/bear/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/bear/attack_hand(mob/living/carbon/human/attacker)
 	if(stance != HOSTILE_STANCE_ATTACK && stance != HOSTILE_STANCE_ATTACKING)
 		stance = HOSTILE_STANCE_ALERT
 		stance_step = 6
-		target = M
-	..()
+		target = attacker
+	return ..()
 
 /mob/living/simple_animal/hostile/bear/Process_Spacemove(movement_dir = 0)
 	return	//No drifting in space for space bears!
