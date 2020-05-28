@@ -187,7 +187,7 @@ var/global/list/icon_state_allowed_cache = list()
 	if (ishuman(usr) || ismonkey(usr))
 		var/mob/M = usr
 		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
-		if (!(src.loc == usr))
+		if (loc != usr)
 			return
 		if (!over_object)
 			return
