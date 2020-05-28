@@ -5,7 +5,7 @@
 /datum/religion_rites/food
 	name = "Create food"
 	desc = "Create more and more food!"
-	ritual_length = (2.2 MINUTES)
+	ritual_length = (2 MINUTES + 50 SECONDS)
 	ritual_invocations = list("O Lord, we pray to you: hear our prayer, that they may be delivered by thy mercy, for the glory of thy name...",
 						"...our crops and gardens, now it's fair for our sins that are destroyed and a real disaster is suffered, from birds, worms, mice, moles and other animals...",
 						"...and driven far away from this place by Your authority, may they not harm anyone, but these fields and waters...",
@@ -103,7 +103,7 @@
 /datum/religion_rites/honk
 	name = "Clown shriek"
 	desc = "Spread honks throughout the station."
-	ritual_length = (2 MINUTES)
+	ritual_length = (1 MINUTES + 50 SECONDS)
 	ritual_invocations = list("All able to hear, hear!...",
 							  "...This message is dedicated to all of you...",
 							  "...may all of you be healthy and smart...",
@@ -136,7 +136,7 @@
 /datum/religion_rites/animation
 	name = "Animation"
 	desc = "Revives a things on the altar."
-	ritual_length = (1 MINUTES)
+	ritual_length = (50 SECONDS)
 	ritual_invocations = list("I appeal to you - you are the strength of the Lord...",
 							  "...given from the light given by the wisdom of the gods returned...",
 							  "...They endowed Animation with human passions and feelings...",
@@ -179,7 +179,7 @@
 /datum/religion_rites/spook
 	name = "Spook"
 	desc = "Distributes a jerky sound."
-	ritual_length = (30 SECONDS)
+	ritual_length = (20 SECONDS)
 	ritual_invocations = list("I call the souls of people here, I send your soul to the otherworldly thief, in a black mirror...",
 							  "...Let Evil take you and lock you up...",
 							  "...torment you, torture you, torture you all, exhaust you, destroy you...",
@@ -220,7 +220,7 @@
 /datum/religion_rites/illuminate
 	name = "Illuminate"
 	desc = "Create wisp of light and turns on the light."
-	ritual_length = (1 MINUTES)
+	ritual_length = (50 SECONDS)
 	ritual_invocations = list("Come to me, wisp...",
 							  "...Appear to me the one whom everyone wants...",
 							  "...to whom they turn for help!..",
@@ -275,7 +275,7 @@
 /datum/religion_rites/revive_animal
 	name = "Revive"
 	desc = "The animal revives from the better world."
-	ritual_length = (1 MINUTES)
+	ritual_length = (50 SECONDS)
 	ritual_invocations = list("I will say, whisper, quietly say such words...",
 							  "...May every disease leave you...",
 							  "...You will not know that you are in torment, pain and suffering...",
@@ -327,7 +327,7 @@
 /datum/religion_rites/call_animal
 	name = "Call animal"
 	desc = "Create random friendly animal."
-	ritual_length = (1.5 MINUTES)
+	ritual_length = (1 MINUTES + 20 SECONDS)
 	ritual_invocations = list("As these complex nodules of the world are interconnected...",
 						"...so even my animal will be connected with this place...",
 						"...My will has allowed me to create and call you to life...",
@@ -346,12 +346,12 @@
 /datum/religion_rites/call_animal/New()
 	current_type = pick(summon_type)
 	invocation_effect = CALLBACK(src, .proc/modify_animal)
-	AddComponent(/datum/component/rite_spawn_item, current_type, null, null, invocation_effect)
+	AddComponent(/datum/component/rite_spawn_item, current_type, 1, null, null, invocation_effect)
 
 /datum/religion_rites/call_animal/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
 	// This is needed to update the summoned creature
 	if(!GetComponent(/datum/component/rite_spawn_item))
-		AddComponent(/datum/component/rite_spawn_item, current_type, null, null, invocation_effect)
+		AddComponent(/datum/component/rite_spawn_item, current_type, 1, null, null, invocation_effect)
 	SEND_SIGNAL(src, COMSIG_RITE_ON_CHOSEN, user, AOG)
 	..()
 
@@ -408,7 +408,7 @@
 /datum/religion_rites/create_sword
 	name = "Create sword"
 	desc = "Creates a religious sword in the name of God."
-	ritual_length = (1 MINUTES)
+	ritual_length = (50 SECONDS)
 	ritual_invocations = list("The Holy Spirit, who solves all problems, sheds light on all roads so that I can reach my goal...",
 						"...You are giving me the Divine gift of forgiveness and the forgiveness of all evil done against me...",
 						"...who abides with all the storms of life...",
@@ -428,7 +428,7 @@
 
 /datum/religion_rites/create_sword/New()
 	invocation_effect = CALLBACK(src, .proc/modify_sword)
-	AddComponent(/datum/component/rite_spawn_item, current_type, null, null, invocation_effect)
+	AddComponent(/datum/component/rite_spawn_item, current_type, 1, null, null, invocation_effect)
 
 /datum/religion_rites/create_sword/proc/modify_sword(atom/sword)
 	var/god_name

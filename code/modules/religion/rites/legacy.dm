@@ -66,7 +66,7 @@
 /datum/religion_rites/legacy/charge
 	name = "Electric Charge Pulse"
 	desc = "Charge equipment, cells, and other things around you."
-	ritual_length = (30 SECONDS)
+	ritual_length = (20 SECONDS)
 	ritual_invocations = list("By the power of our gods...",
 						"...We call upon you, who make the energy flow...",
 						"...to give us a piece of what we will be...")

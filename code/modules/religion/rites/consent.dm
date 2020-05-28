@@ -18,7 +18,7 @@
 /datum/religion_rites/consent/synthconversion
 	name = "Synthetic Conversion"
 	desc = "Convert a human-esque individual into a (superior) Android."
-	ritual_length = (1 MINUTES)
+	ritual_length = (50 SECONDS)
 	ritual_invocations = list("By the inner workings of our god...",
 						"...We call upon you, in the face of adversity...",
 						"...to complete us, removing that which is undesirable...")
@@ -66,7 +66,7 @@
 /datum/religion_rites/consent/sacrifice
 	name = "Sacrifice"
 	desc = "Convert living energy in favor."
-	ritual_length = (1 MINUTES)
+	ritual_length = (50 SECONDS)
 	ritual_invocations = list("Hallowed be thy name...",
 							  "...Thy kingdom come...",
 							  "...Thy will be done in earth as it is in heaven...",
@@ -120,7 +120,7 @@
 /datum/religion_rites/consent/clownconversion
 	name = "Clownconversion"
 	desc = "Convert a just person into a clown."
-	ritual_length = (2 MINUTES)
+	ritual_length = (1 MINUTES + 50 SECONDS)
 	ritual_invocations = list("From our mother to our soil we got the gift of bananas...",
 						"...From our mother to our ears we got the gift of horns...",
 						"...From our mother to our feet we walk on we got the shoes of length...")

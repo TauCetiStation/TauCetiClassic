@@ -1,18 +1,27 @@
 /*
- This component used
+ This component used in chaplain rites to spawn and replace any rites on object
 */
 /datum/component/rite_spawn_item
-	var/spawn_type //type for the item to be spawned
-	var/sacrifice_type //type for the item to be sacrificed
-	var/list/spawning_item = list() //keeps and removes the illusion items
-	var/list/illusion_to_sacrifice = list() //keeps and removes the illusions of real items
-
+	// Type for the item to be spawned
+	var/spawn_type
+	// Type for the item to be sacrificed
+	var/sacrifice_type
+	// Keeps and removes the illusion items
+	var/list/spawning_item = list()
+	// Count spawning items. Does not count if items replace
+	var/count_items = 1
+	// Keeps and removes the illusions of real items
+	var/list/illusion_to_sacrifice = list()
+	// The ritual that does this action
 	var/datum/religion_rites/rite
+	// Determinate effect for /invoke_effect()
 	var/datum/callback/callback
+	// Extra Mana Cost!
 	var/adding_favor_per_item
 
-/datum/component/rite_spawn_item/Initialize(_spawn_type, _sacrifice_type, _adding_favor_per_item, datum/callback/_callback)
+/datum/component/rite_spawn_item/Initialize(_spawn_type, _count_items, _sacrifice_type, _adding_favor_per_item, datum/callback/_callback)
 	spawn_type = _spawn_type
+	count_items = _count_items
 	sacrifice_type = _sacrifice_type
 	rite = parent
 	adding_favor_per_item = _adding_favor_per_item
@@ -24,7 +33,7 @@
 	RegisterSignal(parent, list(COMSIG_RITE_INVOKE_EFFECT), .proc/replace_fake_item)
 	RegisterSignal(parent, list(COMSIG_RITE_FAILED_CHECK), .proc/revert_effects)
 
-// used to choose which items will be replaced with others
+// Used to choose which items will be replaced with others
 /datum/component/rite_spawn_item/proc/item_sacrifice(atom/movable/AOG, spawn_type)
 	var/list/sacrifice_item = list()
 	for(var/obj/item/item in AOG.loc)
@@ -42,7 +51,7 @@
 			return TRUE
 	return FALSE
 
-// created illustion of spawning item
+// Created illustion of spawning item
 /datum/component/rite_spawn_item/proc/create_fake_of_item(datum/source, mob/user, atom/movable/AOG)
 	if(sacrifice_type)
 		var/list/L = item_sacrifice(AOG, sacrifice_type)
@@ -56,7 +65,7 @@
 
 		for(var/obj/item in L)
 			item.forceMove(AOG)
-			//create illusion of real item
+			// Create illusion of real item
 			var/obj/effect/overlay/I = new(AOG.loc)
 			illusion_to_sacrifice += I
 			I.icon = item.icon
@@ -68,7 +77,7 @@
 			I.pixel_z = item.pixel_z
 	return TRUE
 
-// nice effect for spawn item
+// Nice effect for spawn item
 /datum/component/rite_spawn_item/proc/item_restoration(atom/movable/AOG, stage)
 	var/ratioplus = (255 / rite.ritual_invocations.len) * stage
 	var/ratiominus = 255 / stage
@@ -83,7 +92,7 @@
 
 /datum/component/rite_spawn_item/proc/update_fake_item(datum/source, mob/user, atom/movable/AOG, stage)
 	if(spawning_item.len == 0)
-		//illusion of the subject lies on the real subject
+		// Illusion of the subject lies on the real subject
 		var/atom/fake
 		if(sacrifice_type)
 			for(var/obj/item/real_item in AOG)
@@ -93,23 +102,24 @@
 				I.icon_state = initial(fake.icon_state)
 				I.name = initial(fake.icon_state)
 				spawning_item += I
-				//set same coordinate
+				// Set same coordinate
 				I.pixel_w = real_item.pixel_w
 				I.pixel_x = real_item.pixel_x
 				I.pixel_y = real_item.pixel_y
 				I.pixel_z = real_item.pixel_z
 				I.alpha = 20
 		else
-			//spawn one illusion of item
-			var/obj/effect/overlay/I = new(AOG.loc)
-			fake = spawn_type
-			I.icon = initial(fake.icon)
-			I.icon_state = initial(fake.icon_state)
-			I.name = initial(fake.icon_state)
-			spawning_item += I
-			I.pixel_x = rand(-10, 10)
-			I.pixel_y = rand(0, 13)
-			I.alpha = 20
+			for(var/count	 in 1 to count_items)
+				// Spawn illusion of item
+				var/obj/effect/overlay/I = new(AOG.loc)
+				fake = spawn_type
+				I.icon = initial(fake.icon)
+				I.icon_state = initial(fake.icon_state)
+				I.name = initial(fake.icon_state)
+				spawning_item += I
+				I.pixel_x = rand(-10, 10)
+				I.pixel_y = rand(0, 13)
+				I.alpha = 20
 	else
 		item_restoration(AOG, stage)
 
@@ -142,7 +152,7 @@
 
 	clear_lists()
 
-// since the ritual does not re-create the ritual every time, I have to clean the lists.
+// Since the ritual is not recreated every time, you need to clear the lists.
 /datum/component/rite_spawn_item/proc/clear_lists()
 	QDEL_LIST(spawning_item)
 	QDEL_LIST(illusion_to_sacrifice)

@@ -10,7 +10,7 @@
 
 /datum/religion_rites/spawn_item/New()
 	invocation_effect = CALLBACK(src, .proc/modify_item)
-	AddComponent(/datum/component/rite_spawn_item, spawn_type, sacrifice_type, adding_favor, invocation_effect)
+	AddComponent(/datum/component/rite_spawn_item, spawn_type, 1, sacrifice_type, adding_favor, invocation_effect)
 
 	if(sacrifice_type)
 		var/obj/item/item = initial(sacrifice_type)
@@ -39,7 +39,7 @@
 /datum/religion_rites/spawn_item/banana
 	name = "Atomic molecular reconstruction of a whole blessed banana"
 	desc = "BANANAS!"
-	ritual_length = (20 SECONDS)
+	ritual_length = (10 SECONDS)
 	ritual_invocations = list("Oh great mother!...",
 							"...May your power descend to us and bestow upon your part....",
 							"...Rising from sleep, in the middle of the night I bring you a song...",
@@ -79,7 +79,7 @@
 /datum/religion_rites/spawn_item/banana_ore
 	name = "Enrichment of oxygen molecules with banana atoms"
 	desc = "Empire recovery!"
-	ritual_length = (1 MINUTES)
+	ritual_length = (50 SECONDS)
 	ritual_invocations = list("Oh great mother!...",
 							"...Help us in this difficult moment!...",
 							"...We pray, please send us strength!...",
