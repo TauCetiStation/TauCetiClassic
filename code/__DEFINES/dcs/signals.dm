@@ -26,6 +26,7 @@
 #define COMSIG_RITE_ON_CHOSEN "rite_on_chosen"
 /// from base of religion_rites/required_checks(): (/mob, /atom/movable)
 #define COMSIG_RITE_REQUIRED_CHECK "rite_required_checks"
+	#define COMPONENT_NO_CONSENT 1
 /// from base of religion_rites/before_perform_rite(): (/mob, /atom/movable)
 #define COMSIG_RITE_BEFORE_PERFORM "rite_before_perform"
 /// from base of religion_rites/invoke_effect(): (/mob, /atom/movable)

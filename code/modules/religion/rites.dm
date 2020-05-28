@@ -94,6 +94,6 @@
 
 // Additional checks in performing rite
 /datum/religion_rites/proc/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(SEND_SIGNAL(src, COMSIG_RITE_REQUIRED_CHECK, user, AOG))
+	if(SEND_SIGNAL(src, COMSIG_RITE_REQUIRED_CHECK, user, AOG) & COMPONENT_NO_CONSENT)
 		return FALSE
 	return TRUE
