@@ -68,7 +68,7 @@
 
 /datum/religion_rites/proc/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
 	to_chat(user, "<span class='notice'>You begin preparations for the ritual...</span>")
-	if(!do_after(user, target = user, delay = 10 SECONDS))
+	if(!do_after(user, target = AOG, delay = 10 SECONDS))
 		return FALSE
 	return TRUE
 
