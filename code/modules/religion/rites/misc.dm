@@ -364,7 +364,7 @@
 		if(O.client)
 			var/client/C = O.client
 			if(!C.prefs.ignore_question.Find(IGNORE_FAMILIAR) && (ROLE_GHOSTLY in C.prefs.be_role))
-				INVOKE_ASYNC(src, .proc/question, C, M)
+				INVOKE_ASYNC(src, .proc/question, C, animal)
 
 /datum/religion_rites/call_animal/proc/question(client/C, mob/M)
 	if(!C)
