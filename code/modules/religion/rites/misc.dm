@@ -359,12 +359,12 @@
 	for(var/mob/dead/observer/O in observer_list)
 		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 			continue
-		if(jobban_isbanned(O, ROLE_RFAMILIAR) && role_available_in_minutes(O, ROLE_RFAMILIAR))
+		if(jobban_isbanned(O, ROLE_GHOSTLY) && role_available_in_minutes(O, ROLE_GHOSTLY))
 			continue
 		if(O.client)
 			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find("chfamiliar") && (ROLE_RFAMILIAR in C.prefs.be_role))
-				INVOKE_ASYNC(src, .proc/question, C, animal)
+			if(!C.prefs.ignore_question.Find(IGNORE_FAMILIAR) && (ROLE_GHOSTLY in C.prefs.be_role))
+				INVOKE_ASYNC(src, .proc/question, C, M)
 
 /datum/religion_rites/call_animal/proc/question(client/C, mob/M)
 	if(!C)
@@ -387,7 +387,7 @@
 		candidate.cancel_camera()
 		candidate.reset_view()
 	else if (response == "Never for this round")
-		C.prefs.ignore_question += "chfamiliar"
+		C.prefs.ignore_question += IGNORE_FAMILIAR
 
 /datum/religion_rites/call_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))

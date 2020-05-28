@@ -57,8 +57,8 @@
 #define COMSIG_ATOM_EXITED "atom_exited"
 /// from base of atom/movable/CanPass() & mob/CanPass(): (atom/movable/mover, atom/target, height, air_group)
 #define COMSIG_ATOM_CANPASS "movable_canpass"
-	#define COMPONENT_CANPASS  "canpass"
-	#define COMPONENT_CANTPASS "cantpass"
+	#define COMPONENT_CANPASS  1
+	#define COMPONENT_CANTPASS 2
 /// from base of atom/attackby(): (/obj/item, /mob/living, params)
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"
 	// Return this in response if you don't want afterattack to be called
@@ -67,6 +67,16 @@
 #define COMSIG_PARENT_EXAMINE "atom_examine"
 /// from base of mob/examinate(): (/mob)
 #define COMSIG_PARENT_POST_EXAMINE "atom_post_examine"
+/// from base of atom/get_examine_name(): (/mob/user, list/override)
+#define COMSIG_ATOM_GET_EXAMINE_NAME "atom_get_examine_name"
+	//Positions for overrides list
+	#define EXAMINE_POSITION_BEFORE_EVERYTHING 1
+	#define EXAMINE_POSITION_ARTICLE 2
+	#define EXAMINE_POSITION_BEFORE_NAME 3
+	#define EXAMINE_POSITION_NAME 4
+	#define EXAMINE_POSITION_AFTER_EVERYTHING 5
+	//End positions
+	#define COMPONENT_EXNAME_CHANGED 1
 /// from base of atom/MouseDrop(): (/atom/over, /mob/user)
 #define COMSIG_MOUSEDROP_ONTO "mousedrop_onto"
 	#define COMPONENT_NO_MOUSEDROP 1
@@ -121,8 +131,12 @@
 // mob signals
 /// from mob/proc/slip(): (weaken_duration, obj/slipped_on, lube)
 #define COMSIG_MOB_SLIP "movable_slip"
+/// from base of mob/death(): (gibbed)
+#define COMSIG_MOB_DIED "mob_died"
 
 // living signals
+///from base of mob/living/rejuvenate(): ()
+#define COMSIG_LIVING_REJUVENATE "living_rejuvenate"
 /// from base of /mob/start_pulling(): (/atom/movable/target)
 #define COMSIG_LIVING_START_PULL "living_start_pull"
 /// from base of /mob/stop_pulling(): (/atom/movable/target)
@@ -150,6 +164,20 @@
 /// from monkey CtrlClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
 
+// simple_animal/hostile signals
+/// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)
+#define COMSIG_MOB_HOSTILE_ATTACKINGTARGET "mob_hostile_attackingtarget"
+/// from simple_animal/hostile/proc/Shoot(): (atom/target)
+#define COMSIG_MOB_HOSTILE_SHOOT "mob_hostile_shoot"
+
 // Component specific signals.
 /// send this signal to remove a list of tip ids(use tip_names as tip ids): (/list/tip_ids_to_remove)
 #define COMSIG_TIPS_REMOVE "comsig_tip_remove"
+
+/// send this signal to add /datum/name_modifier to a mob: (name_modifier_type, strength)
+#define COMSIG_NAME_MOD_ADD "comsig_mob_mod_add"
+/// send this signal to remove /datum/name_modifier from a mob: (name_modifier_type, strength)
+#define COMSIG_NAME_MOD_REMOVE "comsig_mob_mod_remove"
+
+/// from base of /datum/mob_modifier/revert. Called to notify other modifiers that they should re-apply: (datum/component/mob_modifier/reverting)
+#define COMSIG_MOB_MOD_UPDATE "mob_mod_update"

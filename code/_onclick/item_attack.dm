@@ -28,11 +28,7 @@
 	SSdemo.mark_dirty(user)
 
 /mob/living/attackby(obj/item/I, mob/user, params)
-	if(!istype(I) || !ismob(user))
-		return
 	user.SetNextMove(CLICK_CD_MELEE)
-
-	I.attack(src, user, user.get_targetzone())
 
 	if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself
 		var/mob/living/carbon/human/H = user
@@ -45,9 +41,11 @@
 		if(istype(H.wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = H.wear_suit
 			V.attack_reaction(src, REACTION_ATACKED, user)
+
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(I)
 	SSdemo.mark_dirty(user)
+	return I.attack(src, user, user.get_targetzone())
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
