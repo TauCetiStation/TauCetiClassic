@@ -8,27 +8,6 @@
 	clipped_status = CLIPPABLE
 	var/obj/item/knife
 
-/obj/item/clothing/shoes/boots/MouseDrop(obj/over_object)
-	if(!iscarbon(usr))
-		return
-	if(!over_object)
-		return
-	if(usr.incapacitated())
-		return
-
-	var/mob/M = usr
-	switch(over_object.name)
-		if("r_hand")
-			if(!M.unEquip(src))
-				return
-			M.put_in_r_hand(src)
-		if("l_hand")
-			if(!M.unEquip(src))
-				return
-			M.put_in_l_hand(src)
-	src.add_fingerprint(usr)
-	return
-
 /obj/item/clothing/shoes/boots/Destroy()
 	QDEL_NULL(knife)
 	return ..()

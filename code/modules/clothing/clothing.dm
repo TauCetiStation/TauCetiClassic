@@ -182,6 +182,30 @@ var/global/list/icon_state_allowed_cache = list()
 	else
 		icon = initial(icon)
 
+
+/obj/item/clothing/MouseDrop(obj/over_object)
+	if (ishuman(usr) || ismonkey(usr))
+		var/mob/M = usr
+		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
+		if (!(src.loc == usr))
+			return
+		if (!over_object)
+			return
+
+		if (!usr.incapacitated())
+			switch(over_object.name)
+				if("r_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_r_hand(src)
+				if("l_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_l_hand(src)
+			src.add_fingerprint(usr)
+			return
+	return
+
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
 	name = "ears"
@@ -586,30 +610,6 @@ BLIND     // can't see anything
 		return
 
 	..()
-
-//This is to ensure people can take off suits when there is an attached accessory
-/obj/item/clothing/under/MouseDrop(obj/over_object)
-	if (ishuman(usr) || ismonkey(usr))
-		var/mob/M = usr
-		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
-		if (!(src.loc == usr))
-			return
-		if (!over_object)
-			return
-
-		if (!usr.incapacitated())
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
-			src.add_fingerprint(usr)
-			return
-	return
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
