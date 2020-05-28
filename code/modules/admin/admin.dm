@@ -18,7 +18,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			continue
 		if(!(C.prefs.chat_toggles & CHAT_ATTACKLOGS))
 			continue
-		if(!target.client && !(C.prefs.chat_toggles & CHAT_NOCLIENT_ATTACK))
+		if(!target.client && !ishuman(target) && !(C.prefs.chat_toggles & CHAT_NOCLIENT_ATTACK))
 			continue
 		to_chat(C, msg)
 
