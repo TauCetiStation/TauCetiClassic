@@ -48,8 +48,8 @@
 		if(L.len == 0)
 			to_chat(user, "<span class='warning'>You need more items for sacrifice to perform [rite.name]!</span>")
 			clear_lists()
-			return TRUE
-	return FALSE
+			return COMPONENT_CHECK_FAILED
+	return NONE
 
 // Created illustion of spawning item
 /datum/component/rite_spawn_item/proc/create_fake_of_item(datum/source, mob/user, atom/movable/AOG)
@@ -58,7 +58,7 @@
 		if(L.len == 0)
 			to_chat(user, "<span class='warning'>You need more items for sacrifice to perform [rite.name]!</span>")
 			clear_lists()
-			return FALSE
+			return COMPONENT_CHECK_FAILED
 
 		if(adding_favor_per_item)
 			rite.favor_cost = initial(rite.favor_cost) + adding_favor_per_item * L.len
@@ -75,7 +75,7 @@
 			I.pixel_x = item.pixel_x
 			I.pixel_y = item.pixel_y
 			I.pixel_z = item.pixel_z
-	return TRUE
+	return COMPONENT_BEFORE_PERFORM_COMPLITED
 
 // Nice effect for spawn item
 /datum/component/rite_spawn_item/proc/item_restoration(atom/movable/AOG, stage)
@@ -93,11 +93,10 @@
 /datum/component/rite_spawn_item/proc/update_fake_item(datum/source, mob/user, atom/movable/AOG, stage)
 	if(spawning_item.len == 0)
 		// Illusion of the subject lies on the real subject
-		var/atom/fake
+		var/atom/fake = spawn_type
 		if(sacrifice_type)
 			for(var/obj/item/real_item in AOG)
 				var/obj/effect/overlay/I = new(AOG.loc)
-				fake = sacrifice_type
 				I.icon = initial(fake.icon)
 				I.icon_state = initial(fake.icon_state)
 				I.name = initial(fake.icon_state)
@@ -109,10 +108,9 @@
 				I.pixel_z = real_item.pixel_z
 				I.alpha = 20
 		else
-			for(var/count	 in 1 to count_items)
+			for(var/count in 1 to count_items)
 				// Spawn illusion of item
 				var/obj/effect/overlay/I = new(AOG.loc)
-				fake = spawn_type
 				I.icon = initial(fake.icon)
 				I.icon_state = initial(fake.icon_state)
 				I.name = initial(fake.icon_state)

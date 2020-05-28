@@ -19,9 +19,6 @@
 
 	var/list/needed_aspects
 
-	// This callback used in SEND_SIGNAL()
-	var/datum/callback/invocation_effect
-
 ///Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed. Maybe you want it to check for something else?
 /datum/religion_rites/proc/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!required_checks(user, AOG))
@@ -74,7 +71,8 @@
 
 // Does something before the ritual and after checking the favor_cost of a ritual.
 /datum/religion_rites/proc/before_perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
-	SEND_SIGNAL(src, COMSIG_RITE_BEFORE_PERFORM, user, AOG)
+	if(SEND_SIGNAL(src, COMSIG_RITE_BEFORE_PERFORM, user, AOG) & COMPONENT_CHECK_FAILED)
+		return FALSE
 	return TRUE
 
 // Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
@@ -94,6 +92,6 @@
 
 // Additional checks in performing rite
 /datum/religion_rites/proc/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(SEND_SIGNAL(src, COMSIG_RITE_REQUIRED_CHECK, user, AOG) & COMPONENT_NO_CONSENT)
+	if(SEND_SIGNAL(src, COMSIG_RITE_REQUIRED_CHECK, user, AOG) & COMPONENT_CHECK_FAILED)
 		return FALSE
 	return TRUE

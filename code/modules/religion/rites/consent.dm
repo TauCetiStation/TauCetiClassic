@@ -120,7 +120,7 @@
 /datum/religion_rites/consent/clownconversion
 	name = "Clownconversion"
 	desc = "Convert a just person into a clown."
-	ritual_length = (1 MINUTES + 50 SECONDS)
+	ritual_length = (1.9 MINUTES)
 	ritual_invocations = list("From our mother to our soil we got the gift of bananas...",
 						"...From our mother to our ears we got the gift of horns...",
 						"...From our mother to our feet we walk on we got the shoes of length...")

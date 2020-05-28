@@ -9,8 +9,7 @@
 	var/adding_favor = 75
 
 /datum/religion_rites/spawn_item/New()
-	invocation_effect = CALLBACK(src, .proc/modify_item)
-	AddComponent(/datum/component/rite_spawn_item, spawn_type, 1, sacrifice_type, adding_favor, invocation_effect)
+	AddComponent(/datum/component/rite_spawn_item, spawn_type, 1, sacrifice_type, adding_favor, CALLBACK(src, .proc/modify_item))
 
 	if(sacrifice_type)
 		var/obj/item/item = initial(sacrifice_type)
@@ -103,7 +102,7 @@
 		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0 && !(CLUMSY in M.mutations))
 			M.flash_eyes()
 
-	SEND_SIGNAL(src, COMSIG_RITE_INVOKE_EFFECT, user, AOG, invocation_effect)
+	SEND_SIGNAL(src, COMSIG_RITE_INVOKE_EFFECT, user, AOG, CALLBACK(src, .proc/modify_item))
 
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE

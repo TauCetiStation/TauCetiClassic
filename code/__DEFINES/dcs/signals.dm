@@ -26,15 +26,16 @@
 #define COMSIG_RITE_ON_CHOSEN "rite_on_chosen"
 /// from base of religion_rites/required_checks(): (/mob, /atom/movable)
 #define COMSIG_RITE_REQUIRED_CHECK "rite_required_checks"
-	#define COMPONENT_NO_CONSENT 1
 /// from base of religion_rites/before_perform_rite(): (/mob, /atom/movable)
 #define COMSIG_RITE_BEFORE_PERFORM "rite_before_perform"
+	#define COMPONENT_BEFORE_PERFORM_COMPLITED 0
 /// from base of religion_rites/invoke_effect(): (/mob, /atom/movable)
 #define COMSIG_RITE_INVOKE_EFFECT "rite_invoke_effect"
 /// from base of religion_rites/on_invocation(): (/mob, /atom/movable, stage)
 #define COMSIG_RITE_ON_INVOCATION "rite_on_invocation"
 /// from base of religion_rites: (/mob, /atom/movable)
 #define COMSIG_RITE_FAILED_CHECK "rite_failed_check"
+	#define COMPONENT_CHECK_FAILED 1
 
 // light related signals
 /// from base of /atom/movable/lighting_object/update(): (turf/my_turf)

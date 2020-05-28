@@ -5,7 +5,7 @@
 /datum/religion_rites/food
 	name = "Create food"
 	desc = "Create more and more food!"
-	ritual_length = (2 MINUTES + 50 SECONDS)
+	ritual_length = (2.9 MINUTES)
 	ritual_invocations = list("O Lord, we pray to you: hear our prayer, that they may be delivered by thy mercy, for the glory of thy name...",
 						"...our crops and gardens, now it's fair for our sins that are destroyed and a real disaster is suffered, from birds, worms, mice, moles and other animals...",
 						"...and driven far away from this place by Your authority, may they not harm anyone, but these fields and waters...",
@@ -103,7 +103,7 @@
 /datum/religion_rites/honk
 	name = "Clown shriek"
 	desc = "Spread honks throughout the station."
-	ritual_length = (1 MINUTES + 50 SECONDS)
+	ritual_length = (1.9 MINUTES)
 	ritual_invocations = list("All able to hear, hear!...",
 							  "...This message is dedicated to all of you...",
 							  "...may all of you be healthy and smart...",
@@ -351,7 +351,7 @@
 /datum/religion_rites/call_animal/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
 	// This is needed to update the summoned creature
 	if(!GetComponent(/datum/component/rite_spawn_item))
-		AddComponent(/datum/component/rite_spawn_item, current_type, 1, null, null, invocation_effect)
+		AddComponent(/datum/component/rite_spawn_item, current_type, 1, null, null, CALLBACK(src, .proc/modify_animal))
 	SEND_SIGNAL(src, COMSIG_RITE_ON_CHOSEN, user, AOG)
 	..()
 
@@ -427,8 +427,7 @@
 	)
 
 /datum/religion_rites/create_sword/New()
-	invocation_effect = CALLBACK(src, .proc/modify_sword)
-	AddComponent(/datum/component/rite_spawn_item, current_type, 1, null, null, invocation_effect)
+	AddComponent(/datum/component/rite_spawn_item, current_type, 1, null, null, CALLBACK(src, .proc/modify_sword))
 
 /datum/religion_rites/create_sword/proc/modify_sword(atom/sword)
 	var/god_name
