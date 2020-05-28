@@ -20,7 +20,11 @@
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
 	set waitfor = FALSE
+
 	for(var/mob/living/target in targets)
+		if(!target.canmove)
+			continue
+
 		var/turf/mobloc = get_turf(target.loc)
 		var/obj/effect/dummy/spell_jaunt/holder = new(mobloc)
 		target.ExtinguishMob()			//This spell can extinguish mob
@@ -95,7 +99,7 @@
 
 
 /obj/effect/dummy/spell_jaunt/relaymove(mob/user, direction)
-	if(!canmove || last_move + 2 > world.time)
+	if(last_move + 2 > world.time)
 		return
 	if(user != master)
 		return

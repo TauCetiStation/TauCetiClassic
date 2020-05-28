@@ -8,6 +8,17 @@
 	var/list/spawning_item = list() //keeps and removes the illusion items 
 	var/list/illusion_to_sacrifice = list() //keeps and removes the illusions of real items
 
+/datum/religion_rites/spawn_item/New()
+	if(sacrifice_type)
+		var/obj/item/item = initial(sacrifice_type)
+		tip_text = "This ritual requires a <i>[initial(item.name)]</i>."
+
+	if(spawn_type)
+		if(tip_text)
+			tip_text += " "
+		var/obj/item/item = initial(spawn_type)
+		tip_text = "This ritual creates a <i>[initial(item.name)]</i>."
+
 // used to choose which items will be replaced with others
 /datum/religion_rites/spawn_item/proc/item_sacrifice(obj/structure/altar_of_gods/AOG, spawn_type)
 	var/list/sacrifice_item = list()
@@ -17,13 +28,13 @@
 		sacrifice_item += item
 	return sacrifice_item
 
-/datum/religion_rites/spawn_item/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/spawn_item/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(sacrifice_type)
 		var/list/L = item_sacrifice(AOG, sacrifice_type)
 		if(L.len == 0)
 			to_chat(user, "<span class='warning'>You need more items for sacrifice to perform [name]!</span>")
 			return FALSE
-	return ..()
+	return TRUE
 
 /datum/religion_rites/spawn_item/before_perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(sacrifice_type)

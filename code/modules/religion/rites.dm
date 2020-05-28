@@ -7,6 +7,8 @@
 	var/name = "religious rite"
 	/// Description of the religious rite
 	var/desc = "immm gonna rooon"
+	/// Just tip when examine altar
+	var/tip_text
 	/// length it takes to complete the ritual
 	var/ritual_length = (10 SECONDS) //total length it'll take
 	/// Strings that are by default said evenly throughout the rite
@@ -19,6 +21,8 @@
 
 ///Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed. Maybe you want it to check for something else?
 /datum/religion_rites/proc/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!required_checks(user, AOG))
+		return FALSE
 	if(user.is_busy(AOG))
 		return FALSE
 	if(global.chaplain_religion && global.chaplain_religion.favor < favor_cost)
@@ -63,6 +67,8 @@
 
 // Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
 /datum/religion_rites/proc/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!required_checks(user, AOG))
+		return FALSE
 	return TRUE
 
 // Does a thing on each invocation, return FALSE to cancel ritual performance.
@@ -72,3 +78,7 @@
 
 /datum/religion_rites/proc/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
 	return !user.is_busy(AOG) && do_after(user, target = user, delay = ritual_length/ritual_invocations.len)
+
+// Additional checks in performing rite
+/datum/religion_rites/proc/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
+	return TRUE

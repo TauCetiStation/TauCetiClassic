@@ -1,23 +1,9 @@
 // This class is used for rites that require conesnt of a mob buckled to altar.
 /datum/religion_rites/consent
 	var/consent_msg = ""
+	tip_text = "This ritual is performed only if the victim consents."
 
-/datum/religion_rites/consent/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!AOG)
-		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
-		return FALSE
-	if(!AOG.buckled_mob)
-		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [AOG].</span>")
-		return FALSE
-
-	var/mob/M = AOG.buckled_mob
-	// Basically: "Are you sentient and willing?"
-	if(M.IsAdvancedToolUser() && alert(M, consent_msg, "Rite", "Yes", "No") == "No")
-		to_chat(user, "<span class='warning'>[M] does not want to give themselves into this ritual!.</span>")
-		return FALSE
-	return ..()
-
-/datum/religion_rites/consent/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/consent/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!AOG)
 		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
 		return FALSE
@@ -26,6 +12,15 @@
 		return FALSE
 	return TRUE
 
+/datum/religion_rites/consent/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!required_checks(user, AOG))
+		return FALSE
+	var/mob/M = AOG.buckled_mob
+	// Basically: "Are you sentient and willing?"
+	if(M.IsAdvancedToolUser() && alert(M, consent_msg, "Rite", "Yes", "No") == "No")
+		to_chat(user, "<span class='warning'>[M] does not want to give themselves into this ritual!.</span>")
+		return FALSE
+	return ..()
 
 
 /*
@@ -48,7 +43,7 @@
 		ASPECT_TECH = 1,
 	)
 
-/datum/religion_rites/consent/synthconversion/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/consent/synthconversion/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!ishuman(AOG.buckled_mob))
 		to_chat(user, "<span class='warning'>Only humanoid bodies can be accepted.</span>")
 		return FALSE
@@ -56,7 +51,7 @@
 	if(jobban_isbanned(AOG.buckled_mob, "Cyborg") || role_available_in_minutes(AOG.buckled_mob, ROLE_PAI))
 		to_chat(user, "<span class='warning'>[AOG.buckled_mob]'s body is too weak!</span>")
 		return FALSE
-	return ..()
+	return TRUE
 
 /datum/religion_rites/consent/synthconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
@@ -119,6 +114,8 @@
 		sacrifice_favor *= 0.5
 	if(!L.ckey)
 		sacrifice_favor  *= 0.5
+	
+	global.chaplain_religion.adjust_favor(sacrifice_favor)
 
 	L.gib()
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
@@ -145,7 +142,7 @@
 		ASPECT_HERD = 1
 	)
 
-/datum/religion_rites/consent/clownconversion/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/consent/clownconversion/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!ishuman(AOG.buckled_mob))
 		to_chat(user, "<span class='warning'>Only a human can go through the ritual.</span>")
 		return FALSE
@@ -162,7 +159,7 @@
 		to_chat(user, "<span class='warning'>[AOG.buckled_mob] are already holy!</span>")
 		return FALSE
 
-	return ..()
+	return TRUE
 
 /datum/religion_rites/consent/clownconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()

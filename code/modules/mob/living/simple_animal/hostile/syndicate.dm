@@ -15,10 +15,8 @@
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
-	melee_damage_lower = 10
-	melee_damage_upper = 10
-	attacktext = "punches"
-	a_intent = INTENT_HARM
+	melee_damage = 10
+	attacktext = "punch"
 	var/corpse = /obj/effect/landmark/mobcorpse/syndicatesoldier
 	var/weapon1
 	var/weapon2
@@ -36,6 +34,9 @@
 	status_flags = CANPUSH
 
 	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 	footstep_type = FOOTSTEP_MOB_SHOE
 
@@ -53,13 +54,12 @@
 ///////////////Sword and shield////////////
 
 /mob/living/simple_animal/hostile/syndicate/melee
-	melee_damage_lower = 20
-	melee_damage_upper = 25
+	melee_damage = 23
 	icon_state = "syndicatemelee"
 	icon_living = "syndicatemelee"
 	weapon1 = /obj/item/weapon/melee/energy/sword/red
 	weapon2 = /obj/item/weapon/shield/energy
-	attacktext = "slashes"
+	attacktext = "slash"
 	status_flags = 0
 
 /mob/living/simple_animal/hostile/syndicate/melee/attackby(obj/item/O, mob/user)
@@ -168,9 +168,8 @@
 	pass_flags = PASSTABLE
 	health = 15
 	maxHealth = 15
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	attacktext = "cuts"
+	melee_damage = 15
+	attacktext = "slic"
 	attack_sound = list('sound/weapons/bladeslice.ogg')
 	faction = "syndicate"
 	min_oxy = 0

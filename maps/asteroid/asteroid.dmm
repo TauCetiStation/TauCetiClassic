@@ -12506,7 +12506,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/closet/crate,
+/obj/structure/closet/crate/secure/miningsec,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -12554,13 +12554,6 @@
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "browncorner"
-	},
-/area/asteroid/mine/production)
-"Kf" = (
-/obj/structure/closet/crate,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
 	},
 /area/asteroid/mine/production)
 "Kg" = (
@@ -12614,6 +12607,7 @@
 	},
 /area/asteroid/mine/production)
 "Lf" = (
+/obj/structure/closet/crate/secure/miningsec,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -12832,6 +12826,7 @@
 	layer = 4;
 	pixel_y = 32
 	},
+/obj/machinery/power/port_gen/pacman/scrap,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -12840,6 +12835,13 @@
 "Pf" = (
 /turf/simulated/floor{
 	icon_state = "brown"
+	},
+/area/asteroid/mine/production)
+"Py" = (
+/obj/structure/closet/crate,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/asteroid/mine/production)
 "Qb" = (
@@ -12887,6 +12889,12 @@
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
+	},
+/area/asteroid/mine/production)
+"Qz" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/asteroid/mine/production)
 "Rb" = (
@@ -57727,10 +57735,10 @@ Dd
 ws
 Dd
 ws
-Oe
+Py
 Te
 Df
-Kf
+Lf
 Bs
 Rf
 ws
@@ -58244,7 +58252,7 @@ ws
 Oe
 Ue
 Ef
-Kf
+Qz
 AV
 Tf
 ws

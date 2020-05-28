@@ -17,7 +17,6 @@
 	response_disarm = "shoves"
 	response_harm = "strikes"
 	status_flags = 0
-	a_intent = INTENT_HARM
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	weather_immunities = list("ash", "acid")
@@ -49,6 +48,8 @@
 			return
 	..()
 
+////////////////////////////////////////////////////////////////
+
 
 ////////////////Basilisk////////////////
 
@@ -73,15 +74,17 @@
 	maxHealth = 200
 	health = 200
 	harm_intent_damage = 5
-	melee_damage_lower = 12
-	melee_damage_upper = 12
-	attacktext = "bites into"
-	a_intent = INTENT_HARM
+	melee_damage = 12
+	attacktext = "gnaw"
 	attack_sound = list('sound/weapons/bladeslice.ogg')
 	ranged_cooldown_cap = 4
 	aggro_vision_range = 9
 	idle_vision_range = 2
-
+	loot_list = list(/obj/item/weapon/ore/diamond,
+					/obj/item/weapon/ore/diamond,
+					/obj/item/weapon/ore/diamond,
+					/obj/item/weapon/ore/diamond,
+					/obj/item/weapon/ore/diamond)
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
 	icon_state = "ice_2"
@@ -112,14 +115,6 @@
 		if(3.0)
 			adjustBruteLoss(110)
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/death(gibbed)
-	var/counter
-	for(counter=0, counter<2, counter++)
-		var/obj/item/weapon/ore/diamond/D = new /obj/item/weapon/ore/diamond(src.loc)
-		D.layer = 4.1
-	..(gibbed)
-
-
 ////////////Drone(miniBoss)/////////////
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/mining
@@ -147,14 +142,17 @@
 	vision_range = 3
 	aggro_vision_range = 9
 	idle_vision_range = 3
+	loot_list = list(/obj/item/weapon/ore/gold,
+					/obj/item/weapon/ore/gold,
+					/obj/item/weapon/ore/gold,
+					/obj/item/weapon/ore/gold)
 	move_to_delay = 3
 	friendly = "harmlessly rolls into"
 	maxHealth = 60
 	health = 60
 	harm_intent_damage = 5
-	melee_damage_lower = 0
-	melee_damage_upper = 0
-	attacktext = "barrels into"
+	melee_damage = 0
+	attacktext = "barrell"
 	a_intent = INTENT_HELP
 	throw_message = "sinks in slowly, before being pushed out of "
 	status_flags = CANPUSH
@@ -248,13 +246,13 @@
 	vision_range = 5
 	aggro_vision_range = 9
 	idle_vision_range = 5
+	loot_list = list(/obj/item/asteroid/hivelord_core = 1)
 	speed = 3
 	maxHealth = 75
 	health = 75
 	harm_intent_damage = 5
-	melee_damage_lower = 0
-	melee_damage_upper = 0
-	attacktext = "lashes out at"
+	melee_damage = 0
+	attacktext = "lash"
 	throw_message = "falls right through the strange body of the"
 	ranged_cooldown = 0
 	ranged_cooldown_cap = 0
@@ -274,7 +272,6 @@
 	OpenFire()
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
-	new /obj/item/asteroid/hivelord_core(src.loc)
 	mouse_opacity = 1
 	..(gibbed)
 
@@ -331,9 +328,8 @@
 	maxHealth = 1
 	health = 1
 	harm_intent_damage = 5
-	melee_damage_lower = 2
-	melee_damage_upper = 2
-	attacktext = "slashes"
+	melee_damage = 2
+	attacktext = "slash"
 	throw_message = "falls right through the strange body of the"
 	environment_smash = 0
 	pass_flags = PASSTABLE
@@ -348,6 +344,8 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/death()
 	qdel(src)
 
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/gen_modifiers(special_prob = 30, min_mod_am = 1, max_mod_am = 3, min_rarity_cost = 2, max_rarity_cost = 6)
+	return
 
 ////////////////Goliath////////////////
 
@@ -368,13 +366,13 @@
 	ranged_cooldown_cap = 8
 	friendly = "wails at"
 	vision_range = 4
+	loot_list = list(/obj/item/asteroid/goliath_hide = 1)
 	speed = 2
 	maxHealth = 300
 	health = 300
 	harm_intent_damage = 0
-	melee_damage_lower = 25
-	melee_damage_upper = 25
-	attacktext = "pulverizes"
+	melee_damage = 25
+	attacktext = "pulveriz"
 	throw_message = "does nothing to the rocky hide of the"
 	aggro_vision_range = 9
 	idle_vision_range = 5
@@ -448,11 +446,6 @@
 		Trip()
 		return
 	. = ..()
-
-/mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
-	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)
-	G.layer = 4.1
-	..(gibbed)
 
 /obj/item/asteroid/goliath_hide
 	name = "goliath hide plates"

@@ -21,19 +21,18 @@
 /obj/item/device/radio/beacon/send_hear()
 	return null
 
-
 /obj/item/device/radio/beacon/verb/alter_signal(t as text)
 	set name = "Alter Beacon's Signal"
 	set category = "Object"
 	set src in usr
 
-	if ((usr.canmove && !( usr.restrained() )))
-		src.code = t
-	if (!( src.code ))
-		src.code = "beacon"
-	src.add_fingerprint(usr)
-	return
+	if(usr.incapacitated())
+		return
 
+	code = t
+	if(!code)
+		code = "beacon"
+	add_fingerprint(usr)
 
 /obj/item/device/radio/beacon/bacon/proc/digest_delay() //Probably a better way of doing this, I'm lazy.
 	spawn(600)

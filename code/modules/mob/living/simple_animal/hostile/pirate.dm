@@ -15,9 +15,8 @@
 	health = 100
 
 	harm_intent_damage = 5
-	melee_damage_lower = 30
-	melee_damage_upper = 30
-	attacktext = "slashes"
+	melee_damage = 30
+	attacktext = "slash"
 	attack_sound = list('sound/weapons/bladeslice.ogg')
 
 	min_oxy = 5
@@ -35,6 +34,9 @@
 	faction = "pirate"
 
 	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 	footstep_type = FOOTSTEP_MOB_SHOE
 
