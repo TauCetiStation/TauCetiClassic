@@ -9561,12 +9561,16 @@
 /turf/simulated/wall,
 /area/station/hallway/secondary/entry)
 "apU" = (
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_x = -32
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /mob/living/pbag,
-/turf/simulated/floor,
-/area/station/civilian/gym)
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/security/prison)
 "apV" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp/green{
@@ -18262,16 +18266,12 @@
 /turf/simulated/floor/plating,
 /area/station/security/lawoffice)
 "aGf" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/sign/poster/official/work_for_a_future{
+	pixel_x = -32
 	},
 /mob/living/pbag,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/station/security/prison)
+/turf/simulated/floor,
+/area/station/civilian/gym)
 "aGg" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -113014,7 +113014,7 @@ ahq
 aOV
 aDt
 aEA
-apU
+aGf
 aHJ
 aDt
 aOV
@@ -116599,7 +116599,7 @@ alU
 amq
 amC
 ant
-aGf
+apU
 aoQ
 apR
 amB
