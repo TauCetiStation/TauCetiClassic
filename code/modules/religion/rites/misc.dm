@@ -39,6 +39,10 @@
 				step(B, pick(NORTH, SOUTH, EAST, WEST))
 
 /datum/religion_rites/food/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/mob/living/carbon/human/M in viewers(AOG.loc))
@@ -53,7 +57,6 @@
 /datum/religion_rites/food/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(prob(50))
 		spawn_food(AOG.loc, 1)
-	return TRUE
 
 /*
  * Prayer
@@ -82,6 +85,10 @@
 	)
 
 /datum/religion_rites/pray/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	var/heal_num = -15
 	for(var/mob/living/L in range(2, src))
 		L.apply_damages(heal_num, heal_num, heal_num, heal_num, heal_num, heal_num)
@@ -94,7 +101,6 @@
 /datum/religion_rites/pray/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
 	global.chaplain_religion.adjust_favor(15 + adding_favor)
 	adding_favor = min(adding_favor + 0.1, 20.0)
-	return TRUE
 
 /*
  * Honk
@@ -118,6 +124,10 @@
 	)
 
 /datum/religion_rites/honk/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	for(var/mob/M in player_list)
 		M.playsound_local(null, 'sound/items/AirHorn.ogg', VOL_EFFECTS_MASTER, null, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
 
@@ -127,7 +137,6 @@
 /datum/religion_rites/honk/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
 	var/ratio = (100 / ritual_invocations.len) * stage
 	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
-	return TRUE
 
 /*
  * Revitalizing items.
@@ -195,6 +204,10 @@
 	)
 
 /datum/religion_rites/spook/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	playsound(AOG, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	for(var/mob/living/carbon/M in hearers(4, get_turf(AOG)))
@@ -238,6 +251,10 @@
 	)
 
 /datum/religion_rites/illuminate/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	var/list/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime, /obj/item/weapon/reagent_containers/food/snacks/glowstick)
 	for(var/mob/living/carbon/human/H in range(3, get_turf(AOG)))
 		for(var/obj/item/device/flashlight/F in H.contents)
@@ -351,7 +368,6 @@
 	// This is needed to update the summoned creature
 	if(!GetComponent(/datum/component/rite_spawn_item))
 		AddComponent(/datum/component/rite_spawn_item, current_type, 1, null, null, CALLBACK(src, .proc/modify_animal))
-	SEND_SIGNAL(src, COMSIG_RITE_ON_CHOSEN, user, AOG)
 	..()
 
 /datum/religion_rites/call_animal/proc/modify_animal(atom/animal)
@@ -389,11 +405,13 @@
 		C.prefs.ignore_question += IGNORE_FAMILIAR
 
 /datum/religion_rites/call_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
 		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
-
-	SEND_SIGNAL(src, COMSIG_RITE_INVOKE_EFFECT, user, AOG)
 
 	current_type = pick(summon_type)
 	// This is needed to update the summoned creature
@@ -438,9 +456,12 @@
 	sword.name = "[sword.name] of [god_name]"
 
 /datum/religion_rites/create_sword/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
 		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
 
-	SEND_SIGNAL(src, COMSIG_RITE_INVOKE_EFFECT, user, AOG)
 	return TRUE

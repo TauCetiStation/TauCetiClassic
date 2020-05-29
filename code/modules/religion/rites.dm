@@ -54,9 +54,7 @@
 			return FALSE
 		user.say(i)
 		stage += 1
-		if(!on_invocation(user, AOG, stage))
-			SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)
-			return FALSE
+		on_invocation(user, AOG, stage)
 
 	// Because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
 	if(!can_invocate(user, AOG))
@@ -68,33 +66,26 @@
 
 /datum/religion_rites/proc/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
 	to_chat(user, "<span class='notice'>You begin preparations for the ritual...</span>")
-	if(!do_after(user, target = AOG, delay = 10 SECONDS))
-		return FALSE
-	return TRUE
+	SEND_SIGNAL(src, COMSIG_RITE_ON_CHOSEN, user, AOG)
+	return !user.is_busy(AOG) && do_after(user, target = AOG, delay = 10 SECONDS)
 
 // Does something before the ritual and after checking the favor_cost of a ritual.
 /datum/religion_rites/proc/before_perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(SEND_SIGNAL(src, COMSIG_RITE_BEFORE_PERFORM, user, AOG) & COMPONENT_CHECK_FAILED)
-		return FALSE
-	return TRUE
+	return !(SEND_SIGNAL(src, COMSIG_RITE_BEFORE_PERFORM, user, AOG) & COMPONENT_CHECK_FAILED)
 
 // Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
 /datum/religion_rites/proc/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!required_checks(user, AOG))
 		return FALSE
-	return TRUE
+	SEND_SIGNAL(src, COMSIG_RITE_INVOKE_EFFECT, user, AOG)
 
-// Does a thing on each invocation, return FALSE to cancel ritual performance.
 // Will not work if ritual_invocations is null.
 /datum/religion_rites/proc/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
 	SEND_SIGNAL(src, COMSIG_RITE_ON_INVOCATION, user, AOG, stage)
-	return TRUE
 
 /datum/religion_rites/proc/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
 	return !user.is_busy(AOG) && do_after(user, target = user, delay = ritual_length/ritual_invocations.len)
 
 // Additional checks in performing rite
 /datum/religion_rites/proc/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(SEND_SIGNAL(src, COMSIG_RITE_REQUIRED_CHECK, user, AOG) & COMPONENT_CHECK_FAILED)
-		return FALSE
-	return TRUE
+	return !(SEND_SIGNAL(src, COMSIG_RITE_REQUIRED_CHECK, user, AOG) & COMPONENT_CHECK_FAILED)

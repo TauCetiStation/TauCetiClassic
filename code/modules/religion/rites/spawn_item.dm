@@ -53,13 +53,15 @@
 		item = new /obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk(before_item_loc)
 
 /datum/religion_rites/spawn_item/banana/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/mob/living/carbon/human/M in viewers(AOG.loc))
 		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0 && !(CLUMSY in M.mutations))
 			M.flash_eyes()
-
-	SEND_SIGNAL(src, COMSIG_RITE_INVOKE_EFFECT, user, AOG)
 
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE
@@ -93,8 +95,6 @@
 	for(var/mob/living/carbon/human/M in viewers(AOG.loc))
 		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0 && !(CLUMSY in M.mutations))
 			M.flash_eyes()
-
-	SEND_SIGNAL(src, COMSIG_RITE_INVOKE_EFFECT, user, AOG, CALLBACK(src, .proc/modify_item))
 
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE

@@ -4,11 +4,7 @@
 	tip_text = "This ritual is performed only if the victim consents."
 
 /datum/religion_rites/consent/New()
-	AddComponent(/datum/component/rite_consent)
-
-/datum/religion_rites/consent/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
-	SEND_SIGNAL(src, COMSIG_RITE_ON_CHOSEN, user, AOG, consent_msg)
-	..()
+	AddComponent(/datum/component/rite_consent, consent_msg)
 
 
 /*

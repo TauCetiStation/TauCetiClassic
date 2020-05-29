@@ -69,7 +69,8 @@
 			var/obj/effect/overlay/I = new(AOG.loc)
 			illusion_to_sacrifice += I
 			I.appearance = item
-	return COMPONENT_BEFORE_PERFORM_COMPLETED
+
+	return NONE
 
 // Nice effect for spawn item
 /datum/component/rite_spawn_item/proc/item_restoration(atom/movable/AOG, stage)
@@ -88,10 +89,13 @@
 /datum/component/rite_spawn_item/proc/update_fake_item(datum/source, mob/user, atom/movable/AOG, stage)
 	if(spawning_item.len == 0)
 		// Illusion of the subject lies on the real subject
+		var/atom/fake = spawn_type
 		if(sacrifice_type)
 			for(var/obj/item/real_item in AOG)
 				var/obj/effect/overlay/I = new(AOG.loc)
-				I.appearance = initial(spawn_type)
+				I.icon = initial(fake.icon)
+				I.icon_state = initial(fake.icon_state)
+				I.name = initial(fake.icon_state)
 				spawning_item += I
 				// Set same coordinate
 				I.pixel_w = real_item.pixel_w
@@ -103,7 +107,9 @@
 			for(var/count in 1 to count_items)
 				// Spawn illusion of item
 				var/obj/effect/overlay/I = new(AOG.loc)
-				I.appearance = initial(spawn_type)
+				I.icon = initial(fake.icon)
+				I.icon_state = initial(fake.icon_state)
+				I.name = initial(fake.icon_state)
 				spawning_item += I
 				I.pixel_x = rand(-10, 10)
 				I.pixel_y = rand(0, 13)

@@ -2,20 +2,22 @@
  This component used in chaplain rite for ask question at victim on altar.
 */
 /datum/component/rite_consent
+	var/consent_msg
 	var/consent = FALSE
 	var/def_consent = FALSE
 
-/datum/component/rite_consent/Initialize()
+/datum/component/rite_consent/Initialize(msg)
+	consent_msg = msg
 	RegisterSignal(parent, list(COMSIG_RITE_ON_CHOSEN), .proc/victim_ask)
 	RegisterSignal(parent, list(COMSIG_RITE_REQUIRED_CHECK), .proc/check_victim)
 
 // Send ask to victim
-/datum/component/rite_consent/proc/victim_ask(datum/source, mob/user, atom/movable/AOG, msg)
+/datum/component/rite_consent/proc/victim_ask(datum/source, mob/user, atom/movable/AOG)
 	var/mob/victim = AOG.buckled_mob
 	if(!victim.IsAdvancedToolUser())
 		consent = TRUE
 	else 
-		if(alert(victim, msg, "Rite", "Yes", "No") == "Yes")
+		if(alert(victim, consent_msg, "Rite", "Yes", "No") == "Yes")
 			consent = TRUE
 
 // Checks for a victim

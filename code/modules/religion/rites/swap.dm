@@ -3,6 +3,10 @@
 	var/list/swap_list
 
 /datum/religion_rites/swap/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	for(var/obj/O in range(1, AOG.loc))
 		if(swap_list[O.type])
 			var/swapping = swap_list[O.type]
@@ -19,7 +23,6 @@
 		if(prob(20))
 			step(O, pick(alldirs))
 			break
-	return TRUE
 
 /*
  * Devaluation

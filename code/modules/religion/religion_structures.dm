@@ -170,7 +170,6 @@
 			return
 
 		performing_rite = religion.rites_by_name[rite_select]
-
 		if(!performing_rite.on_chosen(user, src))
 			performing_rite = null
 			return
