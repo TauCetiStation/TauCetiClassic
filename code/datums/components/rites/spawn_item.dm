@@ -82,13 +82,14 @@
 	var/ratioplus = (255 / rite.ritual_invocations.len) * stage
 	var/ratiominus = 255 / stage
 	if(sacrifice_type)
+		// In ritual_lenght already writeen SECONDS
 		for(var/I in illusion_to_sacrifice)
-			animate(I, time = (rite.ritual_invocations.len + rand(0, 3)) SECONDS, alpha = ratiominus - rand(0, 10) - 15)
+			animate(I, time = ((rite.ritual_length / rite.ritual_invocations.len) + rand(-10, 10)), alpha = ratiominus - rand(0, 10) - 15)
 		for(var/I in spawning_item)
-			animate(I, time = (rite.ritual_invocations.len + rand(0, 3)) SECONDS, alpha = ratioplus + rand(0, 10))
+			animate(I, time = (rite.ritual_length / rite.ritual_invocations.len) + rand(-10, 10), alpha = ratioplus + rand(0, 10))
 	else
 		for(var/I in spawning_item)
-			animate(I, time = (rite.ritual_invocations.len + rand(0, 3)) SECONDS, alpha = ratioplus + rand(0, 10))
+			animate(I, time = (rite.ritual_length / rite.ritual_invocations.len) + rand(-10, 10), alpha = ratioplus + rand(0, 10))
 
 /datum/component/rite_spawn_item/proc/update_fake_item(datum/source, mob/user, atom/movable/AOG, stage)
 	if(spawning_item.len == 0)
@@ -121,7 +122,7 @@
 	else
 		item_restoration(AOG, stage)
 
-/datum/component/rite_spawn_item/proc/revert_effects(datum/source, mob/user, atom/movable/AOG, stage)
+/datum/component/rite_spawn_item/proc/revert_effects(datum/source, mob/user, atom/movable/AOG)
 	if(spawning_item)
 		for(var/I in spawning_item)
 			animate(I, time = 3 SECONDS, alpha = 0)

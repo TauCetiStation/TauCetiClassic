@@ -23,14 +23,6 @@
 
 /datum/religion_rites/spawn_item/proc/modify_item(atom/item)
 
-// removes all illusions of the item and restores alpha on the item to replace
-/datum/religion_rites/spawn_item/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
-	. = ..()
-	if(!.)
-		SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)
-		return FALSE
-	return TRUE
-
 
 /*
  * Spawn banana
