@@ -111,9 +111,6 @@
 
 /obj/item/projectile/bullet/grenade/r4046/rubber
 
-/obj/item/projectile/bullet/grenade/r4046/rubber/atom_init()
-	. = ..()
-
 /obj/item/projectile/bullet/chem
 	damage = 5
 	stun = 2
