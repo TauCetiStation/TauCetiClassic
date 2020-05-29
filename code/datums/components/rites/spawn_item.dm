@@ -75,7 +75,7 @@
 			I.pixel_x = item.pixel_x
 			I.pixel_y = item.pixel_y
 			I.pixel_z = item.pixel_z
-	return COMPONENT_BEFORE_PERFORM_COMPLITED
+	return COMPONENT_BEFORE_PERFORM_COMPLETED
 
 // Nice effect for spawn item
 /datum/component/rite_spawn_item/proc/item_restoration(atom/movable/AOG, stage)
