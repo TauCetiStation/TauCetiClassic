@@ -110,7 +110,9 @@
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/grenade/r4046/rubber
-	name = "rubber grenade"
+
+/obj/item/projectile/bullet/grenade/r4046/rubber/atom_init()
+	. = ..()
 
 /obj/item/projectile/bullet/chem
 	damage = 5
