@@ -293,12 +293,12 @@
 	var/perc_block = (10 - harm_intent_damage) / 10 // #define MAX_HARM_INTENT_DAMAGE 10. Turn harm_intent_damage into armor or something. ~Luduk
 	damage *= perc_block
 
-	health = CLAMP(health - damage, 0, maxHealth)
+	health = clamp(health - damage, 0, maxHealth)
 	if(health < 1 && stat != DEAD)
 		death()
 
 /mob/living/simple_animal/adjustFireLoss(damage)
-	health = CLAMP(health - damage, 0, maxHealth)
+	health = clamp(health - damage, 0, maxHealth)
 	if(health < 1 && stat != DEAD)
 		death()
 

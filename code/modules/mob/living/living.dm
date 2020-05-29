@@ -270,7 +270,7 @@
 /mob/living/proc/adjustBruteLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	bruteloss = CLAMP(bruteloss + amount, 0, maxHealth * 2)
+	bruteloss = clamp(bruteloss + amount, 0, maxHealth * 2)
 
 // ========== OXY ==========
 /mob/living/proc/getOxyLoss()
@@ -279,12 +279,12 @@
 /mob/living/proc/adjustOxyLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	oxyloss = CLAMP(oxyloss + amount, 0, maxHealth * 2)
+	oxyloss = clamp(oxyloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setOxyLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	oxyloss = CLAMP(amount, 0, maxHealth * 2)
+	oxyloss = clamp(amount, 0, maxHealth * 2)
 
 // ========== TOX ==========
 /mob/living/proc/getToxLoss()
@@ -293,12 +293,12 @@
 /mob/living/proc/adjustToxLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	toxloss = CLAMP(toxloss + amount, 0, maxHealth * 2)
+	toxloss = clamp(toxloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setToxLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	toxloss = CLAMP(amount, 0, maxHealth * 2)
+	toxloss = clamp(amount, 0, maxHealth * 2)
 
 // ========== FIRE ==========
 /mob/living/proc/getFireLoss()
@@ -307,7 +307,7 @@
 /mob/living/proc/adjustFireLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	fireloss = CLAMP(fireloss + amount, 0, maxHealth * 2)
+	fireloss = clamp(fireloss + amount, 0, maxHealth * 2)
 
 // ========== CLONE ==========
 /mob/living/proc/getCloneLoss()
@@ -316,12 +316,12 @@
 /mob/living/proc/adjustCloneLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	cloneloss = CLAMP(cloneloss + amount, 0, maxHealth * 2)
+	cloneloss = clamp(cloneloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setCloneLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	cloneloss = CLAMP(amount, 0, maxHealth * 2)
+	cloneloss = clamp(amount, 0, maxHealth * 2)
 
 // ========== BRAIN ==========
 /mob/living/proc/getBrainLoss()
@@ -330,12 +330,12 @@
 /mob/living/proc/adjustBrainLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	brainloss = CLAMP(brainloss + amount, 0, maxHealth * 2)
+	brainloss = clamp(brainloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setBrainLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	brainloss = CLAMP(amount, 0, maxHealth * 2)
+	brainloss = clamp(amount, 0, maxHealth * 2)
 
 // ========== PAIN ==========
 /mob/living/proc/getHalLoss()
@@ -346,14 +346,14 @@
 		return
 	if(amount > 0)
 		add_combo_value_all(amount)
-	halloss = CLAMP(halloss + amount, 0, maxHealth * 2)
+	halloss = clamp(halloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setHalLoss(amount)
 	if(status_flags & GODMODE)
 		return
 	if(amount - halloss > 0)
 		add_combo_value_all(amount - halloss)
-	halloss = CLAMP(amount, 0, maxHealth * 2)
+	halloss = clamp(amount, 0, maxHealth * 2)
 
 // ============================================================
 

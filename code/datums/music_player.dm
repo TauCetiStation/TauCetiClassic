@@ -163,7 +163,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 			if(!instrument.Adjacent(usr))
 				return
 
-			repeat = CLAMP(repeat_num, 0, MAX_REPEAT_COUNT)
+			repeat = clamp(repeat_num, 0, MAX_REPEAT_COUNT)
 
 		else if(href_list["change_tempo"])
 			var/new_tempo = input("Enter new tempo: ", "Change tempo", song_tempo) as num|null
@@ -171,7 +171,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 			if(!instrument.Adjacent(usr))
 				return
 
-			song_tempo = CLAMP(new_tempo, 1, usr.get_species() == DIONA ?  MAX_DIONATEMPO_RATE : MAX_TEMPO_RATE )
+			song_tempo = clamp(new_tempo, 1, usr.get_species() == DIONA ?  MAX_DIONATEMPO_RATE : MAX_TEMPO_RATE )
 
 		else if(href_list["play"])
 			playing = TRUE
@@ -294,7 +294,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 	var/list/lines = splittext(song_text, "\n")
 
 	if(copytext(lines[1], 1, 5) == "BPM:")
-		song_tempo = CLAMP(text2num(copytext(lines[1], 5)), 1, usr.get_species() == DIONA ?  MAX_DIONATEMPO_RATE : MAX_TEMPO_RATE )
+		song_tempo = clamp(text2num(copytext(lines[1], 5)), 1, usr.get_species() == DIONA ?  MAX_DIONATEMPO_RATE : MAX_TEMPO_RATE )
 		lines.Cut(1, 2)
 
 	if(lines.len > MAX_LINES_COUNT)

@@ -138,7 +138,7 @@
 
 	if(href_list["amount"])
 		amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
-		amount = CLAMP(amount, 0, 100) // Since the user can actually type the commands himself, some sanity checking
+		amount = clamp(amount, 0, 100) // Since the user can actually type the commands himself, some sanity checking
 
 		if(iscarbon(usr))
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
@@ -703,7 +703,7 @@
 
 /obj/machinery/chem_master/proc/isgoodnumber(num)
 	if(isnum(num))
-		return CLAMP(round(num), 0, 200)
+		return clamp(round(num), 0, 200)
 	else
 		return 0
 
