@@ -379,20 +379,6 @@
 	icon_state = "floor"
 	},
 /area/centcom)
-"bb" = (
-/obj/item/weapon/gun/energy/laser/selfcharging,
-/mob/living/carbon/human,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom)
-"bc" = (
-/obj/item/weapon/nullrod/forcefield_staff,
-/mob/living/carbon/human,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom)
 
 (1,1,1) = {"
 aa
@@ -4859,7 +4845,7 @@ ay
 ay
 ay
 ay
-bb
+ay
 ay
 aR
 aZ
@@ -5467,7 +5453,7 @@ ay
 ay
 ay
 ay
-bc
+ay
 ay
 aR
 ba
