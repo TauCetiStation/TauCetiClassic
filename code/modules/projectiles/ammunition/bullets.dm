@@ -122,10 +122,14 @@
 
 /obj/item/ammo_casing/r4046
 	name = "A 40x46mm grenade"
-	desc = "A 40x46mm grenade (rubber)."
+	desc = "A 40x46mm grenade."
 	icon_state = "40x46"
 	caliber = "40x46"
 	projectile_type = /obj/item/projectile/bullet/grenade/r4046
+
+/obj/item/ammo_casing/r4046/rubber
+	desc = "A 40x46mm grenade (rubber)."
+	projectile_type = /obj/item/projectile/bullet/grenade/r4046/rubber
 
 /obj/item/ammo_casing/r4046/chem/teargas
 	desc = "A 40x46mm grenade (teargas)."
