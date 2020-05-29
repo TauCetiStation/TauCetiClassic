@@ -176,23 +176,23 @@
 		new /obj/item/ammo_casing/r4046/rubber(src)
 
 //Teargas 40x46mm
-/obj/item/weapon/storage/box/r4046/chem/teargas
+/obj/item/weapon/storage/box/r4046/teargas
 	name = "box of 40x46mm teargas grenades (WARNING)"
 	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"
 	icon_state = "4046_box"
 
-/obj/item/weapon/storage/box/r4046/chem/teargas/atom_init()
+/obj/item/weapon/storage/box/r4046/teargas/atom_init()
 	. = ..()
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/r4046/chem/teargas(src)
 
 //EMP 40x46mm
-/obj/item/weapon/storage/box/r4046/chem/EMP
+/obj/item/weapon/storage/box/r4046/EMP
 	name = "box of 40x46mm EMP grenades (WARNING)"
 	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"
 	icon_state = "4046_box"
 
-/obj/item/weapon/storage/box/r4046/chem/EMP/atom_init()
+/obj/item/weapon/storage/box/r4046/EMP/atom_init()
 	. = ..()
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/r4046/chem/EMP(src)

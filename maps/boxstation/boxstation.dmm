@@ -3460,9 +3460,10 @@
 	},
 /obj/item/ammo_box/shotgun/beanbag,
 /obj/item/ammo_box/shotgun/beanbag,
-/obj/item/weapon/storage/box/r4046/chem/teargas,
-/obj/item/weapon/storage/box/r4046/chem/EMP,
+/obj/item/weapon/implanter/emp,
+/obj/item/weapon/storage/box/r4046/EMP,
 /obj/item/weapon/storage/box/r4046/rubber,
+/obj/item/weapon/storage/box/r4046/teargas,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
