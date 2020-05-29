@@ -100,19 +100,19 @@
 	if(istype(parent, /obj/item))
 		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle)
 
-	RegisterSignal(parent, list(COMSIG_FORCEFIELD_PROTECT), .proc/start_protecting)
-	RegisterSignal(parent, list(COMSIG_FORCEFIELD_UNPROTECT), .proc/stop_protecting)
+	RegisterSignal(parent, list(COMSIG_FORCEFIELD_PROTECT), .proc/add_protected)
+	RegisterSignal(parent, list(COMSIG_FORCEFIELD_UNPROTECT), .proc/remove_protected)
 
 	shield_up()
 
 /datum/component/forcefield/Destroy()
 	shield_down()
-	QDEL_NULL(shield_overlay)
 
 	for(var/atom/A in protected)
-		stop_protecting(A)
-
+		remove_protected(parent, A)
 	protected = null
+
+	QDEL_NULL(shield_overlay)
 	return ..()
 
 /*
@@ -166,44 +166,19 @@
 /// Call this proc to pull the shield up, prohibiting clicking.
 /datum/component/forcefield/proc/shield_up()
 	active = TRUE
-	if(!appear_on_hit)
-		show_shield_all()
-
-	if(!permit_interaction)
-		for(var/prot_atom in protected)
-			if(ismob(prot_atom))
-				RegisterSignal(prot_atom, list(COMSIG_MOB_CLICK), .proc/internal_click)
 
 	for(var/prot_atom in protected)
-		if(isliving(prot_atom))
-			var/mob/living/L = prot_atom
-			// It's outside of the shield.
-			if(L.pulling)
-				L.visible_message("<span class='warning bold'>[name] has broken [protected]'s grip on [L.pulling]!</span>")
-				L.stop_pulling()
-
-			for(var/obj/item/weapon/grab/G in L.GetGrabs())
-				if(G.affecting)
-					L.visible_message("<span class='warning bold'>[name] has broken [L]'s grip on [G.affecting]!</span>")
-				qdel(G)
-
-		RegisterSignal(prot_atom, list(COMSIG_LIVING_CHECK_SHIELDS), .proc/on_hit)
+		start_protecting(prot_atom)
 
 	START_PROCESSING(SSfastprocess, src)
 
 /// Call this proc to put the shield down, allowing clicking.
 /datum/component/forcefield/proc/shield_down()
 	active = FALSE
-	if(!appear_on_hit)
-		hide_shield_all()
-
-	if(!permit_interaction)
-		for(var/prot_atom in protected)
-			if(ismob(prot_atom))
-				UnregisterSignal(prot_atom, list(COMSIG_MOB_CLICK))
 
 	for(var/prot_atom in protected)
-		UnregisterSignal(prot_atom, list(COMSIG_LIVING_CHECK_SHIELDS))
+		stop_protecting(prot_atom)
+
 	STOP_PROCESSING(SSfastprocess, src)
 
 /// Deforms deform in some ways. (not) Used in on_hit animations.
@@ -270,7 +245,7 @@
 	deformation_effects(deformation_factor, I)
 
 	var/list/observers = list()
-	for(var/mob/observer in viewers(protected))
+	for(var/mob/observer in viewers(victim))
 		if(observer.client)
 			observers += observer.client
 
@@ -278,25 +253,9 @@
 	animate(I, alpha = 0, time = 2 SECONDS)
 	QDEL_IN(I, 2 SECONDS)
 
-/// Is called if src is not appear_on_hit. Handles the shield appearing above all protected.
-/datum/component/forcefield/proc/show_shield_all()
-	if(!shield_overlay)
-		return
-
-	for(var/atom/movable/AM in protected)
-		show_shield(AM)
-
 /// Adds the shield overlay to atom/victim.
 /datum/component/forcefield/proc/show_shield(atom/movable/victim)
 	victim.vis_contents += shield_overlay
-
-/// Is called whenever a not appear_on_hit shield is toggled off.
-/datum/component/forcefield/proc/hide_shield_all()
-	if(!shield_overlay)
-		return
-
-	for(var/atom/movable/AM in protected)
-		hide_shield(AM)
 
 /// Removes the shield overlay from atom/victim.
 /datum/component/forcefield/proc/hide_shield(atom/movable/victim)
@@ -326,16 +285,50 @@
 	return COMPONENT_CANCEL_CLICK
 
 /// Start protecting an atom.
-/datum/component/forcefield/proc/start_protecting(datum/source, atom/A)
-	LAZYADD(protected, A)
-
-	RegisterSignal(A, list(COMSIG_PARENT_QDELETED), CALLBACK(src, .proc/stop_protecting, A))
-	if(active)
+/datum/component/forcefield/proc/start_protecting(atom/A)
+	if(!appear_on_hit && shield_overlay)
 		show_shield(A)
 
-/datum/component/forcefield/proc/stop_protecting(datum/source, atom/A)
-	UnregisterSignal(A, list(COMSIG_PARENT_QDELETED))
-	if(active)
+	if(!permit_interaction && ismob(A))
+		RegisterSignal(A, list(COMSIG_MOB_CLICK), .proc/internal_click)
+
+	if(isliving(A))
+		var/mob/living/L = A
+		// It's outside of the shield.
+		if(L.pulling)
+			L.visible_message("<span class='warning bold'>[name] has broken [protected]'s grip on [L.pulling]!</span>")
+			L.stop_pulling()
+
+		for(var/obj/item/weapon/grab/G in L.GetGrabs())
+			if(G.affecting)
+				L.visible_message("<span class='warning bold'>[name] has broken [L]'s grip on [G.affecting]!</span>")
+			qdel(G)
+
+	RegisterSignal(A, list(COMSIG_LIVING_CHECK_SHIELDS), .proc/on_hit)
+
+/// Stop protecting an atom.
+/datum/component/forcefield/proc/stop_protecting(atom/A)
+	if(!appear_on_hit && shield_overlay)
 		hide_shield(A)
 
+	if(!permit_interaction)
+		if(ismob(A))
+			UnregisterSignal(A, list(COMSIG_MOB_CLICK))
+
+	UnregisterSignal(A, list(COMSIG_LIVING_CHECK_SHIELDS))
+
+/// A wrapper function to add A to protected list from a signal.
+/datum/component/forcefield/proc/add_protected(datum/source, atom/A)
+	LAZYADD(protected, A)
+	RegisterSignal(A, list(COMSIG_PARENT_QDELETED), CALLBACK(src, .proc/stop_protecting, A))
+
+	if(active)
+		start_protecting(A)
+
+/// A wrapper function to remove A from protected list from a signal.
+/datum/component/forcefield/proc/remove_protected(datum/source, atom/A)
+	if(active)
+		stop_protecting(A)
+
+	UnregisterSignal(A, list(COMSIG_PARENT_QDELETED))
 	LAZYREMOVE(protected, A)
