@@ -144,7 +144,7 @@
 			START_PROCESSING(SSobj, src)
 	if(href_list["amount"])
 		throw_amount = throw_amount + text2num(href_list["amount"])
-		throw_amount = CLAMP(throw_amount, 1, 10)
+		throw_amount = clamp(throw_amount, 1, 10)
 	if(href_list["remove"])
 		if(!ptank)	return
 		usr.put_in_hands(ptank)

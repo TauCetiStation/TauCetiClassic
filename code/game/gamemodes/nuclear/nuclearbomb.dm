@@ -283,7 +283,7 @@ var/bomb_set
 			if (href_list["time"])
 				var/time = text2num(href_list["time"])
 				src.timeleft += time
-				src.timeleft = CLAMP(round(timeleft), TIMER_MIN, TIMER_MAX)
+				src.timeleft = clamp(round(timeleft), TIMER_MIN, TIMER_MAX)
 			if (href_list["timer"])
 				if (src.timing == -1.0)
 					return FALSE

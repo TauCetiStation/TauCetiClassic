@@ -211,7 +211,7 @@ update_flag
 	if((stat & BROKEN) || (flags & NODECONSTRUCT))
 		return
 
-	health = CLAMP(health - amount, 0, initial(health))
+	health = clamp(health - amount, 0, initial(health))
 
 	if(health <= 10)
 		canister_break()
@@ -429,7 +429,7 @@ update_flag
 
 	if (href_list["pressure_adj"])
 		var/diff = text2num(href_list["pressure_adj"])
-		release_pressure = CLAMP(release_pressure + diff, can_min_release_pressure, can_max_release_pressure)
+		release_pressure = clamp(release_pressure + diff, can_min_release_pressure, can_max_release_pressure)
 		log_investigate("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 
 	if (href_list["relabel"])

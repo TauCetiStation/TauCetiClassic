@@ -16,7 +16,7 @@
 							//2 - require card and manual login
 
 /datum/money_account/proc/adjust_money(amount)
-	money = CLAMP(money + amount, MIN_MONEY_ON_ACCOUNT, MAX_MONEY_ON_ACCOUNT)
+	money = clamp(money + amount, MIN_MONEY_ON_ACCOUNT, MAX_MONEY_ON_ACCOUNT)
 
 /datum/transaction
 	var/target_name = ""

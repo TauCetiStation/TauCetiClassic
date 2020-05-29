@@ -203,7 +203,7 @@ var/global/loopModeNames=list(
 		update_icon()
 
 	if (href_list["song"])
-		current_song=CLAMP(text2num(href_list["song"]), 1, playlist.len)
+		current_song=clamp(text2num(href_list["song"]), 1, playlist.len)
 		update_music()
 		update_icon()
 

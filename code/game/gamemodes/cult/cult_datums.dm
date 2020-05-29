@@ -911,7 +911,7 @@ var/list/cult_runes = list()
 	var/list/affected = nearest_heretics()
 	if(length(affected) < 1)
 		return fizzle(user)
-	var/blindless_modifier = CLAMP(holder_reaction(user) / length(affected), 5, 30)
+	var/blindless_modifier = clamp(holder_reaction(user) / length(affected), 5, 30)
 	for(var/mob/living/carbon/C in affected)
 		C.eye_blurry += blindless_modifier
 		C.eye_blind += blindless_modifier / 2
