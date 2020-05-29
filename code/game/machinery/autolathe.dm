@@ -39,7 +39,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/reagent_containers/syringe(), \
 		new /obj/item/ammo_casing/shotgun/beanbag(), \
 		new /obj/item/ammo_box/magazine/c45r(), \
-		new /obj/item/ammo_box/magazine/m9mm_2/rubber(), \
+		new /obj/item/ammo_box/c9mmr(), \
 		new /obj/item/device/taperecorder(), \
 		new /obj/item/device/assembly/igniter(), \
 		new /obj/item/device/assembly/signaler(), \
@@ -72,7 +72,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		new /obj/item/weapon/handcuffs(), \
 		new /obj/item/ammo_box/a357(), \
 		new /obj/item/ammo_box/magazine/c45m(), \
-		new /obj/item/ammo_box/magazine/m9mm_2(), \
+		new /obj/item/ammo_box/c9mm(), \
 		new /obj/item/ammo_casing/shotgun(), \
 		new /obj/item/ammo_casing/shotgun/dart(), \
 		new /obj/item/ammo_casing/shotgun/buckshot(), \
@@ -216,7 +216,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 
 /obj/machinery/autolathe/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/pai_cable))
-		return 
+		return
 	if (busy)
 		to_chat(user, "<span class='warning'>The autolathe is busy. Please wait for completion of previous operation.</span>")
 		return 1
