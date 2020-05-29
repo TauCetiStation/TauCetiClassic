@@ -42,10 +42,6 @@
 	return text("#[][][]", textr, textg, textb)
 	return
 
-//Returns the middle-most value
-/proc/dd_range(low, high, num)
-	return max(low,min(high,num))
-
 //Returns whether or not A is the middle most value
 /proc/InRange(A, lower, upper)
 	if(A < lower) return 0

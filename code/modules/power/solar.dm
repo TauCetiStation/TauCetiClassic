@@ -126,7 +126,7 @@
 	if(!control)	return
 
 	if(adir != ndir)
-		adir = (360+adir+dd_range(-10,10,ndir-adir))%360
+		adir = (360+adir+clamp(ndir-adir,-10,10)) % 360
 		update_icon()
 		update_solar_exposure()
 
@@ -428,12 +428,12 @@
 
 	else if(href_list["rate control"])
 		if(href_list["cdir"])
-			src.cdir = dd_range(0, 359, (360 + src.cdir + text2num(href_list["cdir"])) % 360)
+			src.cdir = clamp((360 + src.cdir + text2num(href_list["cdir"])) % 360, 0, 359)
 			spawn(1)
 				set_panels(cdir)
 				update_icon()
 		if(href_list["tdir"])
-			src.trackrate = dd_range(0, 360, src.trackrate + text2num(href_list["tdir"]))
+			src.trackrate = clamp(src.trackrate + text2num(href_list["tdir"]), 0, 360)
 			if(src.trackrate)
 				nexttime = world.time + 6000 / trackrate
 
