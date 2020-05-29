@@ -68,13 +68,7 @@
 			// Create illusion of real item
 			var/obj/effect/overlay/I = new(AOG.loc)
 			illusion_to_sacrifice += I
-			I.icon = item.icon
-			I.icon_state = item.icon_state
-			I.name = item.name
-			I.pixel_w = item.pixel_w
-			I.pixel_x = item.pixel_x
-			I.pixel_y = item.pixel_y
-			I.pixel_z = item.pixel_z
+			I.appearance = item
 	return COMPONENT_BEFORE_PERFORM_COMPLETED
 
 // Nice effect for spawn item
@@ -94,13 +88,10 @@
 /datum/component/rite_spawn_item/proc/update_fake_item(datum/source, mob/user, atom/movable/AOG, stage)
 	if(spawning_item.len == 0)
 		// Illusion of the subject lies on the real subject
-		var/atom/fake = spawn_type
 		if(sacrifice_type)
 			for(var/obj/item/real_item in AOG)
 				var/obj/effect/overlay/I = new(AOG.loc)
-				I.icon = initial(fake.icon)
-				I.icon_state = initial(fake.icon_state)
-				I.name = initial(fake.icon_state)
+				I.appearance = initial(spawn_type)
 				spawning_item += I
 				// Set same coordinate
 				I.pixel_w = real_item.pixel_w
@@ -112,9 +103,7 @@
 			for(var/count in 1 to count_items)
 				// Spawn illusion of item
 				var/obj/effect/overlay/I = new(AOG.loc)
-				I.icon = initial(fake.icon)
-				I.icon_state = initial(fake.icon_state)
-				I.name = initial(fake.icon_state)
+				I.appearance = initial(spawn_type)
 				spawning_item += I
 				I.pixel_x = rand(-10, 10)
 				I.pixel_y = rand(0, 13)
@@ -127,8 +116,8 @@
 		for(var/I in spawning_item)
 			animate(I, time = 3 SECONDS, alpha = 0)
 	if(sacrifice_type)
-		for(var/obj/item/item in illusion_to_sacrifice)
-			animate(item, time = 2.8 SECONDS, alpha = 255)
+		for(var/I in illusion_to_sacrifice)
+			animate(I, time = 2.8 SECONDS, alpha = 255)
 	sleep(3 SECONDS)
 	for(var/obj/item/item in AOG.contents)
 		item.forceMove(AOG.loc)

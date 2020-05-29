@@ -6,8 +6,17 @@
 	var/def_consent = FALSE
 
 /datum/component/rite_consent/Initialize()
-	RegisterSignal(parent, list(COMSIG_RITE_REQUIRED_CHECK), .proc/check_victim)
 	RegisterSignal(parent, list(COMSIG_RITE_ON_CHOSEN), .proc/victim_ask)
+	RegisterSignal(parent, list(COMSIG_RITE_REQUIRED_CHECK), .proc/check_victim)
+
+// Send ask to victim
+/datum/component/rite_consent/proc/victim_ask(datum/source, mob/user, atom/movable/AOG, msg)
+	var/mob/victim = AOG.buckled_mob
+	if(!victim.IsAdvancedToolUser())
+		consent = TRUE
+	else 
+		if(alert(victim, msg, "Rite", "Yes", "No") == "Yes")
+			consent = TRUE
 
 // Checks for a victim
 /datum/component/rite_consent/proc/check_victim(datum/source, mob/user, atom/movable/AOG)
@@ -24,12 +33,3 @@
 	// revert consent to it's default
 	consent = def_consent
 	return NONE
-
-// Send ask to victim
-/datum/component/rite_consent/proc/victim_ask(datum/source, mob/user, atom/movable/AOG, msg)
-	var/mob/victim = AOG.buckled_mob
-	if(!victim.IsAdvancedToolUser())
-		consent = TRUE
-	else 
-		if(alert(victim, msg, "Rite", "Yes", "No") == "Yes")
-			consent = TRUE
