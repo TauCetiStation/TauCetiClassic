@@ -81,6 +81,10 @@
 			to_chat(user, "<span class='danger'>You can't pull [climber] up onto [src], the way is blocked.</span>")
 		return FALSE
 
+	if(user != climber && !climber.Adjacent(src))
+		to_chat(user, "<span class='danger'>You can't pull [climber] up onto [src], the way is blocked.</span>")
+		return FALSE
+
 	if(user.is_busy())
 		return FALSE
 
@@ -131,7 +135,7 @@
 		adjusted_climb_time += get_climb_time(user)
 		adjusted_climb_time *= 0.5 * get_size_ratio(user, climber)
 
-	if(!do_after(user, adjusted_climb_time, target = src))
+	if(!do_after(user, adjusted_climb_time, target = climber))
 		climbers -= climber
 		return
 
