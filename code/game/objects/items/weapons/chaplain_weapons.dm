@@ -327,18 +327,23 @@
 
 	var/is_active = FALSE
 
+/obj/item/weapon/nullrod/forcefield_staff/atom_init()
+	. = ..()
+
+	var/obj/effect/effect/forcefield/F = new
+	AddComponent(/datum/component/forcefield, "forcefield", 30, 5 SECONDS, 3 SECONDS, F)
 
 /obj/item/weapon/nullrod/forcefield_staff/proc/activate(mob/living/user)
 	if(is_active)
 		return
 	is_active = TRUE
 
-	var/obj/effect/effect/forcefield/F = new(src)
-	AddComponent(/datum/component/forcefield, user, "forcefield", 30, 5 SECONDS, 3 SECONDS, F)
+	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, user)
 
 /obj/item/weapon/nullrod/forcefield_staff/proc/deactivate(mob/living/user)
 	is_active = FALSE
-	qdel(GetComponent(/datum/component/forcefield))
+
+	SEND_SIGNAL(src, COMSIG_FORCEFIELD_UNPROTECT, user)
 
 /obj/item/weapon/nullrod/forcefield_staff/equipped(mob/living/user, slot)
 	if(slot == SLOT_L_HAND || slot == SLOT_R_HAND || slot == SLOT_BACK)

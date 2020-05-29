@@ -111,3 +111,7 @@
 // Component specific signals.
 /// send this signal to remove a list of tip ids(use tip_names as tip ids): (/list/tip_ids_to_remove)
 #define COMSIG_TIPS_REMOVE "comsig_tip_remove"
+/// send this signal to cause all forcefield components to protect a thing: (atom/to_protect)
+#define COMSIG_FORCEFIELD_PROTECT "comsig_forcefield_protect"
+/// send this signal to cause all forcefield components to unprotect a thing: (atom/to_unprotect)
+#define COMSIG_FORCEFIELD_UNPROTECT "comsig_forcefield_unprotect"

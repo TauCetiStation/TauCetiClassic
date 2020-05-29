@@ -28,6 +28,8 @@
  * get destroyed, but not pass excess damage.
  * After destroying shield waits for reactivate_time before beggining to rechage.
  * Shields require recharge_time amount of ticks to get fully charged from 0 health to max_health.
+ *
+ * Currently only /mob-s utilize the check_shields() mechanic, but forcefields can be applied to any /atom.
  */
 /datum/component/forcefield
 	/// The name of the shield.
@@ -62,7 +64,7 @@
 	/// How much charge should be incremented by each process tick.
 	var/charge_per_tick = 0
 	/// Who is protected by this shield.
-	var/mob/protected
+	var/list/atom/protected
 	/// A cooldown for on_hit_anim.
 	var/next_hit_anim = 0
 
@@ -70,13 +72,9 @@
 	var/static/destroy_sound = 'sound/effects/forcefield_destroy.ogg'
 	var/static/hit_sounds = list('sound/effects/forcefield_hit1.ogg', 'sound/effects/forcefield_hit2.ogg')
 
-/datum/component/forcefield/Initialize(mob/protected, name, max_health, reactivation_time, recharge_time, atom/shield_overlay, appear_on_hit = FALSE, permit_interaction = FALSE)
+/datum/component/forcefield/Initialize(name, max_health, reactivation_time, recharge_time, atom/shield_overlay, appear_on_hit = FALSE, permit_interaction = FALSE)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
-
-	src.protected = protected
-
-	RegisterSignal(protected, list(COMSIG_PARENT_QDELETED), CALLBACK(GLOBAL_PROC, .proc/qdel, src))
 
 	src.name = name
 
@@ -99,16 +97,21 @@
 
 	charge_per_tick = max_health / recharge_time
 
-
 	if(istype(parent, /obj/item))
 		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle)
+
+	RegisterSignal(parent, list(COMSIG_FORCEFIELD_PROTECT), .proc/start_protecting)
+	RegisterSignal(parent, list(COMSIG_FORCEFIELD_UNPROTECT), .proc/stop_protecting)
 
 	shield_up()
 
 /datum/component/forcefield/Destroy()
 	shield_down()
 	QDEL_NULL(shield_overlay)
-	UnregisterSignal(protected, list(COMSIG_PARENT_QDELETED))
+
+	for(var/atom/A in protected)
+		stop_protecting(A)
+
 	protected = null
 	return ..()
 
@@ -148,15 +151,15 @@
 		STOP_PROCESSING(SSfastprocess, src)
 
 /// React to damage, destroying on health = 0 logic included. Return TRUE if an attack is blocked.
-/datum/component/forcefield/proc/react_to_damage(damage, attack_text)
+/datum/component/forcefield/proc/react_to_damage(atom/victim, damage, attack_text)
 	health -= damage
 	update_visuals()
 	if(health <= 0)
-		protected.visible_message("[chat_shield]<span class='warning'>[capitalize(name)] blocks [attack_text], and is destroyed!</span>")
+		victim.visible_message("[chat_shield]<span class='warning'>[capitalize(name)] blocks [attack_text], and is destroyed!</span>")
 		health = 0
 		destroy()
 	else
-		protected.visible_message("[chat_shield]<span class='notice'>[capitalize(name)] blocks [attack_text].</span>")
+		victim.visible_message("[chat_shield]<span class='notice'>[capitalize(name)] blocks [attack_text].</span>")
 		START_PROCESSING(SSfastprocess, src)
 	return TRUE
 
@@ -164,37 +167,46 @@
 /datum/component/forcefield/proc/shield_up()
 	active = TRUE
 	if(!appear_on_hit)
-		show_shield()
+		show_shield_all()
 
 	if(!permit_interaction)
-		RegisterSignal(protected, list(COMSIG_MOB_CLICK), .proc/internal_click)
+		for(var/prot_atom in protected)
+			if(ismob(prot_atom))
+				RegisterSignal(prot_atom, list(COMSIG_MOB_CLICK), .proc/internal_click)
 
-	// It's outside of the shield.
-	if(protected.pulling)
-		protected.visible_message("<span class='warning bold'>[name] has broken [protected]'s grip on [protected.pulling]!</span>")
-		protected.stop_pulling()
+	for(var/prot_atom in protected)
+		if(isliving(prot_atom))
+			var/mob/living/L = prot_atom
+			// It's outside of the shield.
+			if(L.pulling)
+				L.visible_message("<span class='warning bold'>[name] has broken [protected]'s grip on [L.pulling]!</span>")
+				L.stop_pulling()
 
-	for(var/obj/item/weapon/grab/G in protected.GetGrabs())
-		if(G.affecting)
-			protected.visible_message("<span class='warning bold'>[name] has broken [protected]'s grip on [G.affecting]!</span>")
-		qdel(G)
+			for(var/obj/item/weapon/grab/G in L.GetGrabs())
+				if(G.affecting)
+					L.visible_message("<span class='warning bold'>[name] has broken [L]'s grip on [G.affecting]!</span>")
+				qdel(G)
 
-	RegisterSignal(protected, list(COMSIG_LIVING_CHECK_SHIELDS), .proc/on_hit)
+		RegisterSignal(prot_atom, list(COMSIG_LIVING_CHECK_SHIELDS), .proc/on_hit)
+
 	START_PROCESSING(SSfastprocess, src)
 
 /// Call this proc to put the shield down, allowing clicking.
 /datum/component/forcefield/proc/shield_down()
 	active = FALSE
 	if(!appear_on_hit)
-		hide_shield()
+		hide_shield_all()
 
 	if(!permit_interaction)
-		UnregisterSignal(protected, list(COMSIG_MOB_CLICK))
+		for(var/prot_atom in protected)
+			if(ismob(prot_atom))
+				UnregisterSignal(prot_atom, list(COMSIG_MOB_CLICK))
 
-	UnregisterSignal(protected, list(COMSIG_LIVING_CHECK_SHIELDS))
+	for(var/prot_atom in protected)
+		UnregisterSignal(prot_atom, list(COMSIG_LIVING_CHECK_SHIELDS))
 	STOP_PROCESSING(SSfastprocess, src)
 
-/// Deforms deform in some ways. Used in on_hit animations.
+/// Deforms deform in some ways. (not) Used in on_hit animations.
 /datum/component/forcefield/proc/deformation_effects(deformation_factor, atom/deform)
 	/*
 	deform.pixel_x += rand(-deformation_factor * 10, deformation_factor * 10) * 0.1
@@ -214,7 +226,7 @@
 		return NONE
 
 	if(appear_on_hit)
-		on_hit_anim(damage)
+		on_hit_anim(source, damage)
 	else if(next_hit_anim <= world.time)
 		var/deformation_factor = TRANSLATE_RANGE(damage, 0.0, max_health, 1.0, 10.0)
 
@@ -224,9 +236,9 @@
 
 		next_hit_anim = deformation_factor * 2 + 2
 
-	playsound(parent, pick(hit_sounds), VOL_EFFECTS_MASTER)
+	playsound(source, pick(hit_sounds), VOL_EFFECTS_MASTER)
 
-	if(react_to_damage(damage, attack_text))
+	if(react_to_damage(source, damage, attack_text))
 		return COMPONENT_ATTACK_SHIELDED
 	return NONE
 
@@ -241,7 +253,7 @@
 		shield_up()
 
 /// Is called if src is appear_on_hit. Handles the appear-dissapear animation for the shield.
-/datum/component/forcefield/proc/on_hit_anim(damage)
+/datum/component/forcefield/proc/on_hit_anim(atom/victim, damage)
 	if(!shield_overlay)
 		return
 	if(next_hit_anim > world.time)
@@ -253,7 +265,7 @@
 	update_visuals()
 	var/image/I = image(shield_overlay.icon, shield_overlay.icon_state)
 	I.appearance = shield_overlay
-	I.loc = protected
+	I.loc = victim
 
 	deformation_effects(deformation_factor, I)
 
@@ -266,19 +278,29 @@
 	animate(I, alpha = 0, time = 2 SECONDS)
 	QDEL_IN(I, 2 SECONDS)
 
-/// Is called if src is not appear_on_hit. Handles the shield appearing above parent.
-/datum/component/forcefield/proc/show_shield()
+/// Is called if src is not appear_on_hit. Handles the shield appearing above all protected.
+/datum/component/forcefield/proc/show_shield_all()
 	if(!shield_overlay)
 		return
 
-	protected.vis_contents += shield_overlay
+	for(var/atom/movable/AM in protected)
+		show_shield(AM)
+
+/// Adds the shield overlay to atom/victim.
+/datum/component/forcefield/proc/show_shield(atom/movable/victim)
+	victim.vis_contents += shield_overlay
 
 /// Is called whenever a not appear_on_hit shield is toggled off.
-/datum/component/forcefield/proc/hide_shield()
+/datum/component/forcefield/proc/hide_shield_all()
 	if(!shield_overlay)
 		return
 
-	protected.vis_contents -= shield_overlay
+	for(var/atom/movable/AM in protected)
+		hide_shield(AM)
+
+/// Removes the shield overlay from atom/victim.
+/datum/component/forcefield/proc/hide_shield(atom/movable/victim)
+	victim.vis_contents -= shield_overlay
 
 /// Handle clicks from a thing that is shielded.
 /datum/component/forcefield/proc/internal_click(datum/source, atom/target, params)
@@ -288,10 +310,32 @@
 	if(!active)
 		return NONE
 
-	var/atom/clicker = source
+	var/mob/clicker = source
+
 	if(clicker == target)
 		return NONE
 	if(target in clicker.get_contents())
 		return NONE
 
+	// This click should be prevented. Our "default" behaviour is to just
+	// allow examination of the target instead.
+	clicker.face_atom(target)
+	if(clicker.client && clicker.client.eye == clicker)
+		clicker.examinate(target)
+
 	return COMPONENT_CANCEL_CLICK
+
+/// Start protecting an atom.
+/datum/component/forcefield/proc/start_protecting(datum/source, atom/A)
+	LAZYADD(protected, A)
+
+	RegisterSignal(A, list(COMSIG_PARENT_QDELETED), CALLBACK(src, .proc/stop_protecting, A))
+	if(active)
+		show_shield(A)
+
+/datum/component/forcefield/proc/stop_protecting(datum/source, atom/A)
+	UnregisterSignal(A, list(COMSIG_PARENT_QDELETED))
+	if(active)
+		hide_shield(A)
+
+	LAZYREMOVE(protected, A)
