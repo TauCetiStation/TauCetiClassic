@@ -28,7 +28,7 @@
 #define COMSIG_RITE_REQUIRED_CHECK "rite_required_checks"
 /// from base of religion_rites/before_perform_rite(): (/mob, /atom/movable)
 #define COMSIG_RITE_BEFORE_PERFORM "rite_before_perform"
-	#define COMPONENT_BEFORE_PERFORM_COMPLITED 0
+	#define COMPONENT_BEFORE_PERFORM_COMPLETED 0
 /// from base of religion_rites/invoke_effect(): (/mob, /atom/movable)
 #define COMSIG_RITE_INVOKE_EFFECT "rite_invoke_effect"
 /// from base of religion_rites/on_invocation(): (/mob, /atom/movable, stage)
