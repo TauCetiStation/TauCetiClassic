@@ -982,7 +982,7 @@
 	else if(href_list["guard"])
 		if(!(check_rights(R_LOG) && check_rights(R_BAN)))
 			return
-		
+
 		var/mob/M = locate(href_list["guard"])
 		if (ismob(M))
 			if(!M.client)
@@ -2002,6 +2002,10 @@
 				if(usr.client.strike_team())
 					feedback_inc("admin_secrets_fun_used",1)
 					feedback_add_details("admin_secrets_fun_used","Strike")
+			if("syndstriketeam")
+				if(usr.client.syndicate_strike_team())
+					feedback_inc("admin_secrets_fun_used",1)
+					feedback_add_details("admin_secrets_fun_used","Syndi Strike")
 			if("tripleAI")
 				usr.client.triple_ai()
 				feedback_inc("admin_secrets_fun_used",1)
