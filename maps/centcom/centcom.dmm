@@ -2162,14 +2162,7 @@
 	},
 /area/custom/syndicate_mothership/elite_squad)
 "ajo" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Airlock";
-	req_access = list(150)
-	},
-/obj/machinery/door/poddoor{
-	id = "syndicate_elite_mech_room";
-	name = "Mech Room Door"
-	},
+/obj/machinery/door/poddoor/shutters/syndi,
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
