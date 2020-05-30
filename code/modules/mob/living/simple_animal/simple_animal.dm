@@ -261,19 +261,6 @@
 		attacker.amount_grown = min(attacker.amount_grown + atk_damage, attacker.max_grown)
 	return ..()
 
-/mob/living/simple_animal/attackby(obj/item/O, mob/user) // Marker -Agouri
-	if(istype(O, /obj/item/stack/medical))
-		if(stat != DEAD)
-			var/obj/item/stack/medical/MED = O
-			if(health < maxHealth && MED.use(1))
-				adjustBruteLoss(-MED.heal_brute)
-				src.visible_message("<span class='notice'>[user] applies the [MED] on [src]</span>")
-		else
-			to_chat(user, "<span class='notice'> this [src] is dead, medical items won't bring it back to life.</span>")
-	user.SetNextMove(CLICK_CD_MELEE)
-	..()
-
-
 /mob/living/simple_animal/movement_delay()
 	var/tally = 0 // Incase I need to add stuff other than "speed" later
 
