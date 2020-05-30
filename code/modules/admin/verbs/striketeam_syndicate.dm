@@ -96,7 +96,8 @@ var/global/sent_syndicate_strike_team = 0
 
 	for (var/obj/effect/landmark/L in landmarks_list)
 		if (L.name == "Syndicate-Commando-Bomb")
-			new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
+			for(var/i=0,i < 6, i++)
+				new /obj/item/weapon/grenade/syndieminibomb(L.loc)
 			qdel(L)
 
 	message_admins("<span class='notice'>[key_name_admin(usr)] has spawned a Syndicate strike squad.</span>")
@@ -143,10 +144,6 @@ var/global/sent_syndicate_strike_team = 0
 	new /obj/item/device/multitool(SV.hold)
 	equip_to_slot_or_del(US, SLOT_W_UNIFORM)
 	equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), SLOT_SHOES)
-	if (!syndicate_leader_selected)
-		equip_to_slot_or_del(new /obj/item/clothing/suit/space/syndicate/elite(src), SLOT_WEAR_SUIT)
-	else
-		equip_to_slot_or_del(new /obj/item/clothing/suit/space/syndicate/elite/commander(src), SLOT_WEAR_SUIT)
 	equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(src), SLOT_GLOVES)
 	if (!syndicate_leader_selected)
 		equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/syndicate/elite(src), SLOT_HEAD)
@@ -156,20 +153,23 @@ var/global/sent_syndicate_strike_team = 0
 	equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal(src), SLOT_GLASSES)
 
 	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(src), SLOT_BACK)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/box(src), SLOT_IN_BACKPACK)
 
+	equip_to_slot_or_del(new /obj/item/weapon/storage/box(src), SLOT_IN_BACKPACK)
 	equip_to_slot_or_del(new /obj/item/ammo_box/magazine/sm45(src), SLOT_IN_BACKPACK)
 	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(src), SLOT_IN_BACKPACK)
-	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), SLOT_IN_BACKPACK)
 	equip_to_slot_or_del(new /obj/item/device/flashlight(src), SLOT_IN_BACKPACK)
-	if (!syndicate_leader_selected)
-		equip_to_slot_or_del(new /obj/item/weapon/plastique(src), SLOT_IN_BACKPACK)
-	else
+	var/obj/item/device/radio/uplink/SDCU = new /obj/item/device/radio/uplink(src.loc)
+	if (syndicate_leader_selected)
+		equip_to_slot_or_del(new /obj/item/clothing/suit/space/syndicate/elite/commander(src), SLOT_WEAR_SUIT)
 		equip_to_slot_or_del(new /obj/item/weapon/pinpointer(src), SLOT_IN_BACKPACK)
-
+		SDCU.hidden_uplink.uses = 15
+	else
+		equip_to_slot_or_del(new /obj/item/clothing/suit/space/syndicate/elite(src), SLOT_WEAR_SUIT)
+		SDCU.hidden_uplink.uses = 8
+	equip_to_slot_or_del(SDCU, SLOT_IN_BACKPACK)
 	equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(src), SLOT_L_STORE)
 	equip_to_slot_or_del(new /obj/item/weapon/grenade/empgrenade(src), SLOT_R_STORE)
-	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), SLOT_S_STORE)
+	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen/double(src), SLOT_S_STORE)
 	equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/silenced(src), SLOT_BELT)
 
 	equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(src), SLOT_R_HAND) //Will change to something different at a later time -- Superxpdude

@@ -1749,14 +1749,12 @@
 /obj/effect/landmark{
 	name = "Syndicate-Commando-Bomb"
 	},
+/obj/structure/table,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
 /area/shuttle/syndicate_elite/mothership)
 "aia" = (
-/obj/effect/landmark{
-	name = "Syndicate-Commando-Bomb"
-	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -22046,6 +22044,12 @@
 /obj/structure/plasticflaps/explosion_proof,
 /turf/unsimulated/floor,
 /area/centcom/control)
+"obW" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
+	},
+/area/shuttle/syndicate_elite/mothership)
 "ocb" = (
 /turf/space,
 /area/shuttle/escape_pod3/transit)
@@ -64158,7 +64162,7 @@ aaM
 aaw
 ahP
 ahO
-ahZ
+obW
 ait
 ait
 ait
