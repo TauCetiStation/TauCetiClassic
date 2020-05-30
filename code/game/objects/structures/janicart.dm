@@ -62,28 +62,18 @@
 	else
 		to_chat(user, "There is no bucket mounted on it!")
 
-//Altclick the cart with a mop to stow the mop away
 //Altclick the cart with a reagent container to pour things into the bucket without putting the bottle in trash
 /obj/structure/stool/bed/chair/janitorialcart/AltClick(mob/living/user)
 	if(user.next_move > world.time || user.incapacitated() || !Adjacent(user))
 		return
 
 	var/obj/item/I = user.get_active_hand()
-	if(istype(I, /obj/item/weapon/mop))
-		if(!mymop)
-			user.drop_from_inventory(I, src)
-			mymop = I
-			update_icon()
-			updateUsrDialog()
-			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
-		else
-			to_chat(user, "<span class='notice'>The cart already has a mop attached.</span>")
-
-	else if(istype(I, /obj/item/weapon/reagent_containers) && mybucket)
+	if(istype(I, /obj/item/weapon/reagent_containers) && mybucket)
 		var/obj/item/weapon/reagent_containers/C = I
 		C.afterattack(mybucket, user, TRUE)
 		update_icon()
 
+// Mousedrop the mop to put it onto janitorialcart.
 /obj/structure/stool/bed/chair/janitorialcart/MouseDrop_T(atom/movable/AM, mob/living/user)
 	if(istype(AM, /obj/structure/mopbucket) && !mybucket)
 		AM.forceMove(src)
@@ -91,6 +81,16 @@
 		to_chat(user, "<span class='notice'>You mount the [AM] on the janicart.</span>")
 		update_icon()
 		return
+	else if(istype(AM, /obj/item/weapon/mop))
+		if(!mymop)
+			// In case it was in hands.
+			user.drop_from_inventory(AM, src)
+			mymop = AM
+			update_icon()
+			updateUsrDialog()
+			to_chat(user, "<span class='notice'>You put [AM] into [src].</span>")
+		else
+			to_chat(user, "<span class='notice'>The cart already has a mop attached.</span>")
 	var/turf/T = get_turf(src)
 	if(T == get_turf(AM))
 		if(isliving(AM))

@@ -465,6 +465,8 @@
 	update_health_hud()
 
 /mob/living/proc/rejuvenate()
+	SEND_SIGNAL(src, COMSIG_LIVING_REJUVENATE)
+
 	if(reagents)
 		reagents.clear_reagents()
 
@@ -1260,3 +1262,7 @@
 	if(name == O_EYES)
 		return is_usable_eyes()
 	return FALSE
+
+// Living mobs use can_inject() to make sure that the mob is not syringe-proof in general.
+/mob/living/proc/can_inject(mob/user, def_zone, show_message = TRUE, penetrate_thick = FALSE)
+	return TRUE

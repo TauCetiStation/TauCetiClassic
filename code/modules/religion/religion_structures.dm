@@ -46,15 +46,6 @@
 	for(var/i in global.chaplain_religion.rites_info)
 		to_chat(user, i)
 
-/obj/structure/altar_of_gods/MouseDrop_T(mob/target, mob/user)
-	if(isliving(target))
-		if(!target.buckled && !buckled_mob && target.loc != loc)
-			if(user.incapacitated() || user.lying)
-				return
-			target.forceMove(loc)
-			add_fingerprint(target)
-	return ..()
-
 // This proc handles an animation of item being sacrified and stuff.
 /obj/structure/altar_of_gods/proc/sacrifice_item(obj/item/I)
 	I.mouse_opacity =  MOUSE_OPACITY_TRANSPARENT
@@ -169,15 +160,14 @@
 			to_chat(user, "<span class='notice'>You are already performing [performing_rite.name]!</span>")
 			return
 
-		var/selection2type = religion.rites_by_name[rite_select]
-		performing_rite = new selection2type(src)
+		performing_rite = religion.rites_by_name[rite_select]
 
 		if(!performing_rite.perform_rite(user, src))
-			QDEL_NULL(performing_rite)
+			performing_rite = null
 		else
 			performing_rite.invoke_effect(user, src)
 			religion.adjust_favor(-performing_rite.favor_cost)
-			QDEL_NULL(performing_rite)
+			performing_rite = null
 		return
 
 	else if(istype(I, /obj/item/weapon/storage/bible) && !chosen_aspect)

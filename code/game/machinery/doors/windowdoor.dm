@@ -366,21 +366,7 @@
 			take_damage(aforce)
 		return
 
-	src.add_fingerprint(user)
-	if (!src.requiresID())
-		//don't care who they are or what they have, act as if they're NOTHING
-		user = null
-
-	if (src.allowed(user))
-		if (src.density)
-			open()
-		else
-			close()
-
-	else if (src.density)
-		do_animate("deny")
-
-	return
+	try_open(user)
 
 /obj/machinery/door/window/emag_act(mob/user)
 	if(density)

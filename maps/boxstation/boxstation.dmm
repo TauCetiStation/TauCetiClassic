@@ -11223,10 +11223,6 @@
 "asU" = (
 /obj/structure/table,
 /obj/item/bodybag/cryobag,
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitered"
@@ -11242,8 +11238,15 @@
 	pixel_x = 10;
 	pixel_y = 2
 	},
+/obj/item/stack/medical/bruise_pack{
+	pixel_x = 10;
+	pixel_y = 2
+	},
 /obj/item/stack/medical/ointment{
 	pixel_y = 4
+	},
+/obj/machinery/vending/wallmed1{
+	pixel_y = 30
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -32231,6 +32234,7 @@
 	},
 /area/station/rnd/hallway)
 "bfQ" = (
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
@@ -39354,6 +39358,11 @@
 	},
 /obj/machinery/ai_slipper{
 	icon_state = "motion0"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -47208,6 +47217,7 @@
 /area/station/medical/surgery2)
 "bKI" = (
 /obj/machinery/light,
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -49126,6 +49136,7 @@
 /area/station/medical/hallway)
 "bPz" = (
 /obj/machinery/light,
+/obj/machinery/life_assist/cardiopulmonary_bypass,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -50766,6 +50777,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/life_assist/cardiopulmonary_bypass,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -57249,11 +57261,6 @@
 	pixel_x = 10;
 	pixel_y = 28
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/door/window{
 	dir = 4;
 	name = "AI Core Door";
@@ -57341,6 +57348,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cmg" = (
@@ -57379,13 +57391,13 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cmj" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -64132,11 +64144,6 @@
 	name = "AI Requests Console";
 	pixel_y = 32
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cCF" = (
@@ -64144,13 +64151,10 @@
 /turf/space,
 /area/space)
 "cCG" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/structure/cable{
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -64383,11 +64387,6 @@
 /obj/machinery/ai_slipper{
 	icon_state = "motion0"
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cDk" = (
@@ -64430,21 +64429,14 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/aisat/ai_chamber)
-"cDr" = (
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_y = -24
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cDs" = (
 /obj/item/weapon/weldingtool,
@@ -64504,6 +64496,16 @@
 	dir = 1;
 	network = list("RD","MiniSat")
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -64514,10 +64516,10 @@
 	name = "AI SMES Door";
 	req_access = list(109)
 	},
+/obj/machinery/power/terminal,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -64544,6 +64546,11 @@
 /obj/machinery/flasher{
 	id = "AI";
 	pixel_y = -24
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -64572,6 +64579,10 @@
 	charge = 5e+006
 	},
 /obj/structure/cable,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -64585,6 +64596,11 @@
 "cDH" = (
 /obj/structure/window/reinforced{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -64673,22 +64689,15 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
 "cDU" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
 /obj/structure/cable{
-	d1 = 2;
+	d1 = 1;
 	d2 = 8;
-	icon_state = "2-8"
+	icon_state = "1-8"
 	},
-/turf/simulated/wall/r_wall,
-/area/station/aisat/ai_chamber)
-"cDV" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cDX" = (
 /obj/machinery/hologram/holopad,
@@ -64791,14 +64800,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"cEl" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/wall/r_wall,
-/area/station/aisat/ai_chamber)
 "cEm" = (
 /obj/structure/stool/bed/psych,
 /obj/item/weapon/bedsheet/psych,
@@ -64939,6 +64940,11 @@
 "cEF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -77490,6 +77496,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"
@@ -120759,8 +120766,8 @@ czy
 aaa
 cCW
 cFP
-cCG
-cDr
+cDk
+cDC
 cFP
 cGo
 cFP
@@ -121018,7 +121025,7 @@ cCW
 cFP
 cCE
 cDq
-cFP
+cGD
 cFP
 cFP
 cFb
@@ -121276,7 +121283,7 @@ cFP
 cDj
 cDy
 cDF
-cDV
+cFP
 bsv
 clZ
 cmk
@@ -121533,8 +121540,8 @@ cFP
 cCI
 cDx
 cFP
-cDU
-cEl
+cFP
+cFP
 clS
 cmj
 cEQ
@@ -121793,7 +121800,7 @@ cFP
 cGj
 cFP
 cmf
-cEH
+cDU
 cGx
 cFv
 cEW
@@ -122045,7 +122052,7 @@ aaa
 cCW
 cFP
 bHf
-cGa
+cCG
 cDH
 buU
 cDH

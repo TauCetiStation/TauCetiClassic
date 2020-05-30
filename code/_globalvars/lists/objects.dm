@@ -66,3 +66,6 @@ var/global/list/vending_products = list() //this list is used to create product 
 
 var/global/list/spells_by_aspects = list()
 var/global/list/rites_by_aspects = list()
+var/global/list/holy_reagents_by_aspects = list()
+var/global/list/faith_reactions = list()
+var/global/list/faith_reactions_by_aspects = list()

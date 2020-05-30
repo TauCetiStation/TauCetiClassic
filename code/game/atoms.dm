@@ -218,12 +218,31 @@
 			found += A.search_contents_for(path,filter_path)
 	return found
 
+
+/**
+  * Get the name of this object for examine
+  *
+  * You can override what is returned from this proc by registering to listen for the
+  * [COMSIG_ATOM_GET_EXAMINE_NAME] signal
+  */
+/atom/proc/get_examine_name(mob/user)
+	var/list/override
+	if(!dirt_overlay)
+		. = "\a [src]."
+		override = list("", gender == PLURAL ? "some" : "a", " ", "[name]", ".")
+	else
+		. = "<span class='danger'> \a [dirt_description()]!</span>"
+		override = list("<span class='danger'>", gender == PLURAL ? "some" : "a", " ", "[dirt_description()]", "!</span>")
+
+	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
+		. = override.Join("")
+
+///Generate the full examine string of this atom (including icon for goonchat)
+/atom/proc/get_examine_string(mob/user, thats = FALSE)
+	return "[bicon(src)] [thats ? "That's ": ""][get_examine_name(user)]"
+
 /atom/proc/examine(mob/user, distance = -1)
-	//This reformat names to get a/an properly working on item descriptions when they are bloody
-	var/f_name = "\a [src]."
-	if(dirt_overlay) //Oil and blood puddles got 'blood_color = NULL', however they got 'color' instead
-		f_name = "<span class='danger'>\a [dirt_description()]!</span>"
-	to_chat(user, "[bicon(src)] That's [f_name]")
+	to_chat(user, get_examine_string(user, TRUE))
 	if(desc)
 		to_chat(user, desc)
 	// *****RM
@@ -494,6 +513,9 @@
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
 
+/atom/Exited(atom/movable/AM, atom/newLoc)
+	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, AM, newLoc)
+
 /atom/proc/update_transform()
 	var/matrix/ntransform = matrix(transform)
 	var/changed = 0
@@ -610,3 +632,24 @@
 // Called after we wrench/unwrench this object
 /obj/proc/wrenched_change()
 	return
+
+/atom/proc/shake_act(severity, recursive = TRUE)
+	if(isturf(loc))
+		INVOKE_ASYNC(src, /atom.proc/shake_animation, severity, 1 SECOND)
+
+/atom/movalbe/lightning_object/shake_act(severity, recursive = TRUE)
+	return
+
+/turf/shake_act(severity, recursive = TRUE)
+	for(var/atom/A in contents)
+		A.shake_act(severity - 1)
+	INVOKE_ASYNC(src, /atom.proc/shake_animation, severity, 1 SECOND)
+
+	if(severity >= 3)
+		for(var/dir_ in cardinal)
+			var/turf/T = get_step(src, dir_)
+			T.shake_act(severity - 1, recursive = FALSE)
+
+/mob/shake_act(severity, recursive = TRUE)
+	..()
+	shake_camera(src, 0.5 SECONDS, severity)
