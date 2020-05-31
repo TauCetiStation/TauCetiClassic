@@ -352,7 +352,7 @@
 	return ..()
 
 /obj/item/weapon/shard/Crossed(atom/movable/AM)
-	if(ismob(AM)  && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
+	if(ismob(AM) && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 		var/mob/M = AM
 		to_chat(M, "<span class='warning'><B>You step on the [src]!</B></span>")
 		playsound(src, on_step_sound, VOL_EFFECTS_MASTER)
