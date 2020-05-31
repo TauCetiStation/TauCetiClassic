@@ -19,7 +19,6 @@
 
 	var/resize = 1		//don't abuse this shit
 	var/resize_rev = 1	//helps to restore default size
-	var/shaking_anim = FALSE
 	var/initialized = FALSE
 
 	/// a very temporary list of overlays to remove
@@ -632,47 +631,6 @@
 // Called after we wrench/unwrench this object
 /obj/proc/wrenched_change()
 	return
-
-/atom/proc/shake_animation(intensity, time, intensity_dropoff=0.9)
-	if(shaking_anim)
-		return
-	shaking_anim = TRUE
-	var/prev_pixel_x = pixel_x
-	var/prev_pixel_y = pixel_y
-	var/matrix/prev_transform = transform
-
-	var/image/I = image(icon, icon_state)
-	I.appearance = src.appearance
-	I.plane = plane
-	I.layer = layer
-	I.loc = src
-	I.appearance_flags |= KEEP_APART
-
-	var/prev_invis = invisibility
-	var/list/viewers = list()
-	for(var/mob/M in viewers(src))
-		if(M.client)
-			viewers += M.client
-
-	flick_overlay(I, viewers, time)
-	var/stop_shaking = world.time + time
-	while(stop_shaking > world.time)
-		var/shiftx = rand(-intensity, intensity)
-		var/shifty = rand(-intensity, intensity)
-
-		var/angle = rand(-intensity * 0.5, intensity * 0.5)
-		var/matrix/M = matrix(prev_transform)
-		M.Turn(angle)
-		intensity *= intensity_dropoff
-		invisibility = 101
-		animate(I, pixel_x = prev_pixel_x + shiftx, pixel_y = prev_pixel_y + shifty, transform = M, time = 0.5)
-		animate(pixel_x = prev_pixel_x, pixel_y = prev_pixel_y, transform = prev_transform, time = 0.5)
-		sleep(1)
-		if(QDELING(src))
-			return
-		invisibility = prev_invis
-	qdel(I)
-	shaking_anim = FALSE
 
 /atom/proc/shake_act(severity, recursive = TRUE)
 	if(isturf(loc))
