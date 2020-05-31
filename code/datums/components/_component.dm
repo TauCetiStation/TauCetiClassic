@@ -6,9 +6,13 @@
 /datum/component/New(datum/P, ...)
 	parent = P
 	var/list/arguments = args.Copy(2)
-	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
-		qdel(src, TRUE, TRUE)
-		CRASH("Incompatible [type] assigned to a [P.type]! args: [json_encode(arguments)]")
+	switch(Initialize(arglist(arguments)))
+		if(COMPONENT_INCOMPATIBLE)
+			qdel(src, TRUE, TRUE)
+			CRASH("Incompatible [type] assigned to a [P.type]! args: [json_encode(arguments)]")
+		if(COMPONENT_NOT_ATTACHED)
+			qdel(src, TRUE, TRUE)
+			return
 
 	_JoinParent()
 
@@ -248,7 +252,8 @@
 				if(COMPONENT_DUPE_UNIQUE_PASSARGS)
 					if(!new_comp)
 						var/list/arguments = args.Copy(2)
-						old_comp.InheritComponent(null, TRUE, arguments)
+						arguments.Insert(1, null, TRUE)
+						old_comp.InheritComponent(arglist(arguments))
 					else
 						old_comp.InheritComponent(new_comp, TRUE)
 		else if(!new_comp)

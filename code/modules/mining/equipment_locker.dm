@@ -244,7 +244,7 @@
 		new /datum/data/mining_equipment("Stimpack",			     /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,   100),
 		new /datum/data/mining_equipment("Chili",                    /obj/item/weapon/reagent_containers/food/snacks/hotchili,              100),
 		new /datum/data/mining_equipment("Cigar",                    /obj/item/clothing/mask/cigarette/cigar/havana,                        100),
-		new /datum/data/mining_equipment("Whiskey",                  /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,        150),
+		new /datum/data/mining_equipment("Vodka",                    /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,          150),
 		new /datum/data/mining_equipment("Soap",                     /obj/item/weapon/soap/nanotrasen, 						                150),
 		new /datum/data/mining_equipment("lipozine pill",            /obj/item/weapon/reagent_containers/pill/lipozine,                     200),
 		new /datum/data/mining_equipment("leporazine autoinjector",  /obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine, 300),
