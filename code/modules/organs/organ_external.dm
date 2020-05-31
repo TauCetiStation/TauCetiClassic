@@ -333,7 +333,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(bodypart)
 				//Robotic limbs explode if sabotaged.
 				if(is_robotic() && !no_explode && sabotaged)
-					explosion(get_turf(owner), -1, -1, 2, 3)
+					explosion(get_turf(owner), 0, 0, 2, 3)
 					var/datum/effect/effect/system/spark_spread/spark_system = new
 					spark_system.set_up(5, 0, owner)
 					spark_system.attach(owner)
