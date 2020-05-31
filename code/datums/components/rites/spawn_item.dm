@@ -8,14 +8,14 @@
 	var/sacrifice_type
 	// Keeps and removes the illusion items
 	var/list/spawning_item = list()
-	// Count spawning items. Does not count if items replace
-	var/count_items = 1
 	// Keeps and removes the illusions of real items
 	var/list/illusion_to_sacrifice = list()
+	// Count spawning items. Does not count if items replace
+	var/count_items = 1
 	// The ritual that does this action
 	var/datum/religion_rites/rite
 	// Determinate effect for /invoke_effect()
-	var/datum/callback/callback
+	var/datum/callback/invoke_effect
 	// Extra Mana Cost!
 	var/adding_favor_per_item
 
@@ -25,7 +25,7 @@
 	sacrifice_type = _sacrifice_type
 	rite = parent
 	adding_favor_per_item = _adding_favor_per_item
-	callback = _callback
+	invoke_effect = _callback
 
 	RegisterSignal(parent, list(COMSIG_RITE_REQUIRED_CHECK), .proc/check_items_on_altar)
 	RegisterSignal(parent, list(COMSIG_RITE_BEFORE_PERFORM), .proc/create_fake_of_item)
@@ -35,12 +35,12 @@
 
 // Used to choose which items will be replaced with others
 /datum/component/rite_spawn_item/proc/item_sacrifice(atom/movable/AOG, spawn_type)
-	var/list/sacrifice_item = list()
+	var/list/sacrifice_items = list()
 	for(var/obj/item/item in AOG.loc)
 		if(!istype(item, spawn_type))
 			continue
-		sacrifice_item += item
-	return sacrifice_item
+		sacrifice_items += item
+	return sacrifice_items
 
 /datum/component/rite_spawn_item/proc/check_items_on_altar(datum/source, mob/user, atom/movable/AOG)
 	if(sacrifice_type)
@@ -134,8 +134,8 @@
 	for(var/obj/I in spawning_item)
 		var/atom/created = new spawn_type(AOG.loc)
 
-		if(callback)
-			callback.Invoke(created)
+		if(invoke_effect)
+			invoke_effect.Invoke(created)
 
 		if(!istype(created, /mob))
 			created.pixel_x = I.pixel_x
