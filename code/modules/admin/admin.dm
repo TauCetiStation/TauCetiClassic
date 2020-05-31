@@ -13,10 +13,18 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 /proc/msg_admin_attack(msg, mob/living/target) //Toggleable Attack Messages
 	log_attack(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[msg]</span></span> [ADMIN_PPJMPFLW(target)]"
+
+
+	var/require_flags = CHAT_ATTACKLOGS
+	if(!target.client && !ishuman(target))
+		require_flags |= CHAT_NOCLIENT_ATTACK
+
 	for(var/client/C in admins)
-		if(R_ADMIN & C.holder.rights)
-			if(C.prefs.chat_toggles & CHAT_ATTACKLOGS)
-				to_chat(C, msg)
+		if(!(R_ADMIN & C.holder.rights))
+			continue
+		if((C.prefs.chat_toggles & require_flags) != require_flags)
+			continue
+		to_chat(C, msg)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
