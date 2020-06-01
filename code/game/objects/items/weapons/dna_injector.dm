@@ -108,8 +108,7 @@
 	if(!M.try_inject(user, TRUE))
 		return
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to inject [M.name] ([M.ckey])</font>")
+	M.log_combat(user, "injected with [name]")
 
 	if (buf.types & DNA2_BUF_SE)
 		if(block)// Isolated injector

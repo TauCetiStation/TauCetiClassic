@@ -91,7 +91,7 @@
 	user.visible_message("<span class='notice'>[user] bends the [name].</span>", "<span class='notice'>You bend the [name]!</span>")
 	START_PROCESSING(SSobj, src)
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/attack(mob/M, mob/user, def_zone)
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/attack(mob/living/M, mob/user, def_zone)
 	var/datum/reagent/luminophore = locate(/datum/reagent/luminophore) in reagents.reagent_list
 	if(!luminophore)	//it shouldn't happen but if it will we have save from runtime errors
 		to_chat(user, "<span class='info'>[src] is defective.</span>")
@@ -122,9 +122,7 @@
 
 				if(!do_mob(user, M)) return
 
-				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-				msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])", user)
+				M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
 				user.visible_message("<span class='danger'>[user] feeds [M] [src].</span>")
 
