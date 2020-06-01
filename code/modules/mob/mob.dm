@@ -505,6 +505,8 @@
 	if(!AM.anchored)
 		if(ismob(AM))
 			var/mob/M = AM
+			if(get_size_ratio(M, src)>=2)
+				return
 			if(M.buckled) // If we are trying to pull something that is buckled we will pull the thing its buckled to
 				start_pulling(M.buckled)
 				return
