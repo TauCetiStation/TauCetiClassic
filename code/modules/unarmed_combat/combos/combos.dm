@@ -365,6 +365,8 @@
 
 	heavy_animation = TRUE
 
+	force_dam_type = BRUTE
+
 /datum/combat_combo/suplex/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
 		return
@@ -453,6 +455,8 @@
 	require_arm_to_perform = TRUE
 
 	heavy_animation = TRUE
+
+	force_dam_type = BRUTE
 
 /datum/combat_combo/diving_elbow_drop/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
@@ -681,6 +685,8 @@
 
 	heavy_animation = TRUE
 
+	force_dam_type = BRUTE
+
 /datum/combat_combo/charge/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
 		return
@@ -767,6 +773,8 @@
 	allowed_target_zones = list(BP_CHEST)
 
 	heavy_animation = TRUE
+
+	force_dam_type = BRUTE
 
 /datum/combat_combo/spin_throw/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
