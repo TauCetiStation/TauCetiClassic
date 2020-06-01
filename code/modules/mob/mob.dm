@@ -505,8 +505,12 @@
 	if(!AM.anchored)
 		if(ismob(AM))
 			var/mob/M = AM
+<<<<<<< HEAD
 			if(get_size_ratio(M, src) >= pull_size_ratio)
 				to_chat(src, "<span class=warning>You are too small in comparison to [M] to pull them!</span>")
+=======
+			if(get_size_ratio(M, src) > pull_size_ratio)
+>>>>>>> 043f9d5ec4adc1000c53ee50b2a3469a400b4f97
 				return
 			if(M.buckled) // If we are trying to pull something that is buckled we will pull the thing its buckled to
 				start_pulling(M.buckled)
