@@ -63,6 +63,8 @@
 		buckle_mob(M)
 		M.instant_vision_update(0)
 
+	..()
+
 /obj/structure/closet/coffin/collect_contents()
 	for(var/mob/M in loc)
 		if(M == buckled_mob)

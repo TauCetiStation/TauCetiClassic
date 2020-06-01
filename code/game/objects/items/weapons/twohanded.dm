@@ -57,7 +57,7 @@
 /obj/item/weapon/twohanded/update_icon()
 	return
 
-/obj/item/weapon/twohanded/pickup(mob/user)
+/obj/item/weapon/twohanded/pickup(mob/living/user)
 	unwield()
 
 /obj/item/weapon/twohanded/attack_self(mob/user)
