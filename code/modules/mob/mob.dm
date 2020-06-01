@@ -506,6 +506,7 @@
 		if(ismob(AM))
 			var/mob/M = AM
 			if(get_size_ratio(M, src) >= pull_size_ratio)
+				to_chat(src, "<span class=warning>You are too small in comparison to [M] to pull them!</span>")
 				return
 			if(M.buckled) // If we are trying to pull something that is buckled we will pull the thing its buckled to
 				start_pulling(M.buckled)
