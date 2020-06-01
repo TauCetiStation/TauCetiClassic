@@ -215,9 +215,7 @@
 				if(occupant.reagents)
 					occupant.reagents.trans_to(new_meat, round(occupant.reagents.total_volume/slab_count, 1))
 
-		occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[user]/[user.ckey]</b>" //One shall not simply gib a mob unnoticed!
-		user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
-		msg_admin_attack("[user.name] ([user.ckey]) gibbed [src.occupant] ([src.occupant.ckey])", user)
+		occupant.log_combat(user, "gibbed via [name]")
 
 		occupant.ghostize(bancheck = TRUE)
 

@@ -361,9 +361,9 @@
 				return
 		assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
 		assailant.set_dir(get_dir(assailant, affecting))
-		affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has had their neck grabbed by [assailant.name] ([assailant.ckey])</font>"
-		assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Grabbed the neck of [affecting.name] ([affecting.ckey])</font>"
-		msg_admin_attack("[key_name(assailant)] grabbed the neck of [key_name(affecting)]", assailant)
+
+		affecting.log_combat(assailant, "neck-grabbed")
+
 		affecting.Stun(10) //10 ticks of ensured grab
 		set_state(GRAB_NECK)
 
@@ -375,9 +375,8 @@
 				return
 
 		assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
-		affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>"
-		assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>"
-		msg_admin_attack("[key_name(assailant)] strangled (kill intent) [key_name(affecting)]", assailant)
+
+		affecting.log_combat(assailant, "strangled")
 
 		affecting.losebreath += 1
 		affecting.set_dir(WEST)
@@ -467,9 +466,9 @@
 							return
 						assailant.visible_message("<span class='danger'>[assailant] pressed \his fingers into [affecting]'s eyes!</span>")
 						to_chat(affecting, "<span class='danger'>You experience immense pain as you feel digits being pressed into your eyes!</span>")
-						assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Pressed fingers into the eyes of [affecting.name] ([affecting.ckey])</font>")
-						affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had fingers pressed into their eyes by [assailant.name] ([assailant.ckey])</font>")
-						msg_admin_attack("[key_name(assailant)] has pressed his fingers into [key_name(affecting)]'s eyes.", assailant)
+
+						affecting.log_combat(assailant, "finger-pressed into the eyes")
+
 						var/obj/item/organ/internal/eyes/IO = affecting:organs_by_name[O_EYES]
 						IO.damage += rand(3,4)
 						if (IO.damage >= IO.min_broken_damage)
@@ -527,9 +526,9 @@
 							affecting.apply_effect(20, PARALYZE)
 							affecting.visible_message("<span class='danger'>[affecting] has been knocked unconscious!</span>")
 						playsound(assailant, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
-						assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Headbutted [affecting.name] ([affecting.ckey])</font>")
-						affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Headbutted by [assailant.name] ([assailant.ckey])</font>")
-						msg_admin_attack("[key_name(assailant)] has headbutted [key_name(affecting)]", assailant)
+
+						affecting.log_combat(assailant, "headbutted")
+
 						assailant.drop_from_inventory(src)
 						src.loc = null
 						qdel(src)

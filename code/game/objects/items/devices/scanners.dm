@@ -157,7 +157,6 @@ REAGENT SCANNER
 	if(!irradiate)
 		return
 	if(!used)
-		msg_admin_attack("<span = 'danger'>[user] ([user.ckey]) irradiated [M.name] ([M.ckey])</span>", user)
 		var/cooldown = round(max(10, (intensity*5 - wavelength/4))) * 10
 		used = 1
 		icon_state = "health1"
@@ -165,8 +164,7 @@ REAGENT SCANNER
 			used = 0
 			icon_state = "health"
 		to_chat(user,"<span class='warning'>Successfully irradiated [M].</span>")
-		M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been irradiated by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>irradiated [M.name]'s ([M.ckey])</font>")
+		M.log_combat(user, "irradiated with [name]")
 		spawn((wavelength+(intensity*4))*5)
 			if(M)
 				if(intensity >= 5)

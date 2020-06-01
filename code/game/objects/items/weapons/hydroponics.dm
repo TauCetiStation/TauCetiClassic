@@ -175,9 +175,7 @@
 	if(istype(M, /mob/living))
 		to_chat(M, "<span class='warning'>You are stunned by the powerful acid of the Deathnettle!</span>")
 
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had the [src.name] used on them by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] on [M.name] ([M.ckey])</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] on [M.name] ([M.ckey])", user)
+		M.log_combat(user, "stunned with [name]")
 
 		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 

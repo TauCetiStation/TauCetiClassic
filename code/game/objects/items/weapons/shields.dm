@@ -59,9 +59,8 @@
 			if(AM.loc != to_move && isliving(AM)) // We tried pushing them, but pushed them into something, IT'S FALLING DOWN TIME.
 				var/mob/living/M = AM
 
-				user.attack_log += "\[[time_stamp()]\]<font color='red'>pushed [M.name] ([M.ckey]) with [src.name].</font>"
-				M.attack_log += "\[[time_stamp()]\]<font color='orange'>pushed [user.name] ([user.ckey]) with [src.name].</font>"
-				msg_admin_attack("[key_name(user)] pushed [key_name(M)] with [src.name].", user)
+				M.log_combat(user, "pushed with [name]")
+
 				user.visible_message("<span class='warning'>[M] is stunned by [user] with [src]!</span>", "<span class='warning'>You stun [M] with [src]!</span>")
 				if(M.buckled)
 					M.buckled.user_unbuckle_mob(M)
