@@ -14102,13 +14102,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "BiohazardMed";
-	name = "Biohazard Shutter";
-	opacity = 0
-	},
 /turf/simulated/floor/plating,
 /area/station/medical/surgery2)
 "ayI" = (
@@ -31766,13 +31759,6 @@
 	req_access = list(5)
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "BiohazardMed";
-	name = "Biohazard Shutter";
-	opacity = 0
-	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -34188,13 +34174,6 @@
 	req_access = list(5)
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "BiohazardMed";
-	name = "Biohazard Shutter";
-	opacity = 0
-	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -37779,34 +37758,6 @@
 /obj/machinery/computer/mech_bay_power_console,
 /turf/simulated/floor/bluegrid,
 /area/station/rnd/chargebay)
-"bqr" = (
-/obj/machinery/door/airlock/maintenance{
-	req_one_access = list(9,12,47)
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "BiohazardMed";
-	name = "Biohazard Shutter";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
 "bqt" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
@@ -38004,13 +37955,6 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Medbay Maintenance";
 	req_access = list(5)
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "BiohazardMed";
-	name = "Biohazard Shutter";
-	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
@@ -50865,13 +50809,6 @@
 	opacity = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "BiohazardMed";
-	name = "Biohazard Shutter";
-	opacity = 0
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -51053,13 +50990,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "BiohazardMed";
-	name = "Biohazard Shutter";
-	opacity = 0
-	},
 /turf/simulated/floor/plating,
 /area/station/medical/storage)
 "bUc" = (
@@ -52205,13 +52135,6 @@
 	req_one_access = list(47,9)
 	},
 /obj/item/weapon/bell,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "BiohazardMed";
-	name = "Biohazard Shutter";
-	opacity = 0
-	},
 /turf/simulated/floor/plating,
 /area/station/medical/genetics)
 "bXs" = (
@@ -52377,13 +52300,6 @@
 	req_one_access = list(6,28)
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "BiohazardMed";
-	name = "Biohazard Shutter";
-	opacity = 0
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -54519,27 +54435,26 @@
 	},
 /area/station/security/armoury)
 "ceV" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/machinery/door/airlock/maintenance{
+	req_one_access = list(9,12,47)
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "BiohazardMed";
-	name = "Biohazard Shutter";
-	opacity = 0
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/genetics)
+/area/station/maintenance/medbay)
 "ceX" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -60262,13 +60177,6 @@
 	name = "Research Division Access";
 	req_one_access = list(47,9)
 	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "BiohazardMed";
-	name = "Biohazard Shutter";
-	opacity = 0
-	},
 /turf/simulated/floor,
 /area/station/medical/genetics)
 "csj" = (
@@ -61141,13 +61049,6 @@
 	req_access = list(5)
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "BiohazardMed";
-	name = "Biohazard Shutter";
-	opacity = 0
-	},
 /turf/simulated/floor/plating,
 /area/station/medical/hallway)
 "cuC" = (
@@ -63289,13 +63190,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "BiohazardMed";
-	name = "Biohazard Shutter";
-	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbreak)
@@ -65567,13 +65461,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "BiohazardMed";
-	name = "Biohazard Shutter";
-	opacity = 0
-	},
 /turf/simulated/floor/plating,
 /area/station/medical/surgery)
 "cGe" = (
@@ -66879,13 +66766,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "BiohazardMed";
-	name = "Biohazard Shutter";
-	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
@@ -72121,13 +72001,6 @@
 	name = "Medbay";
 	req_access = list(5)
 	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "BiohazardMed";
-	name = "Biohazard Shutter";
-	opacity = 0
-	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -75010,13 +74883,6 @@
 /area/station/medical/cmo)
 "oCb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/door_control{
-	id = "BiohazardMed";
-	name = "Biohazard Shutter Control";
-	pixel_x = -24;
-	pixel_y = 5;
-	req_access = list(40)
-	},
 /mob/living/simple_animal/cat/Runtime,
 /turf/simulated/floor{
 	dir = 8;
@@ -119631,7 +119497,7 @@ cEe
 bMF
 bMF
 bMF
-bqr
+ceV
 ckA
 ckA
 ckA
@@ -119856,7 +119722,7 @@ bNd
 bPn
 bRG
 jBb
-ceV
+bvD
 cvx
 ucb
 bqm
