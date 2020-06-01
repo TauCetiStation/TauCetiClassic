@@ -1743,6 +1743,17 @@
 			attachment_color = BRIDGE_COLOR_ADMINCOM,
 		)
 
+	if(href_list["deny"])
+		var/mob/M = locate(href_list["deny"])
+
+		if(!istype(M))
+			return
+
+		ticker.mode.distress_cancelled = TRUE
+		priority_announce("The distress signal has not received a response.", "Distress Beacon")
+		log_admin("[key_name(usr)] has denied a distress beacon, requested by [key_name(M)]")
+		message_admins("[ADMIN_TPMONTY(usr)] has denied a distress beacon, requested by [ADMIN_TPMONTY(M)]")
+
 	if(href_list["distress"])
 		var/mob/M = locate(href_list["distress"])
 

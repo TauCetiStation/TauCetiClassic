@@ -29,7 +29,7 @@
 
 	for(var/x in total_calls)
 		var/datum/emergency_call/D = new x()
-		if(!D?.name)
+		if(!D.name)
 			continue //The default parent, don't add it
 		all_calls += D
 
