@@ -53,12 +53,12 @@
 
 	do_climb(usr)
 
-/obj/structure/MouseDrop_T(mob/target, mob/user)
+/obj/structure/MouseDrop_T(atom/dropping, mob/user)
 	if(isessence(user))
 		return
 
-	if(can_climb(target, user))
-		do_climb(target, user)
+	if(ismob(dropping) && can_climb(dropping, user))
+		do_climb(dropping, user)
 		return
 
 	return ..()
