@@ -225,7 +225,7 @@
 /obj/effect/landmark/ertspawn
 
 /datum/emergency_call/proc/get_spawn_point(is_for_items)
-	var/obj/O = locate(/obj/effect/landmark/ertspawn) in landmarks_list
+	var/obj/effect/landmark/ertspawn/O = locate() in landmarks_list
 	if(O)
 		return get_turf(O)
 
