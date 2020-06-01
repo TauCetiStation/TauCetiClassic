@@ -50865,6 +50865,13 @@
 	opacity = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "BiohazardMed";
+	name = "Biohazard Shutter";
+	opacity = 0
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -63282,6 +63289,13 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "BiohazardMed";
+	name = "Biohazard Shutter";
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbreak)
