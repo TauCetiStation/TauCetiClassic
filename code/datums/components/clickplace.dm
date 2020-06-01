@@ -200,7 +200,7 @@
 		/// Let's pretend a face-slam doesn't exist.
 		to_chat(assailant, "<span class='warning'>You need a better grip to do that!</span>")
 		return
-	else if(!victim.is_usable_head())
+	else if(!victim.has_bodypart(BP_HEAD))
 		to_chat(assailant, "<span class='warning'>You need a better grip to do that!</span>")
 		return
 	else if(slam(G))
