@@ -17,7 +17,6 @@
 		if(user.put_in_active_hand(knife))
 			playsound(user, 'sound/effects/throat_cutting.ogg', VOL_EFFECTS_MASTER, 25)
 			to_chat(user, "<span class='notice'>You slide [knife] out of [src].</span>")
-			knife = null
 			remove_knife()
 			update_icon()
 	else
@@ -28,20 +27,20 @@
 		return ..()
 	if(I.tools[TOOL_KNIFE] >= 1)
 		user.drop_from_inventory(I, src)
-		knife = I
 		playsound(user, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
 		to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")
-		add_knife()
+		add_knife(I)
 		return
 
 	return ..()
 
 /obj/item/clothing/shoes/boots/proc/add_knife(obj/item/K)
 	knife = K
-	RegisterSignal(K, list(COMSIG_PARENT_QDELETED), .proc/remove_knife)
+	RegisterSignal(knife, list(COMSIG_PARENT_QDELETED), .proc/remove_knife)
 
-/obj/item/clothing/shoes/boots/proc/remove_knife(obj/item/K)
-  UnregisterSignal(K, list(COMSIG_PARENT_QDELETED))
+/obj/item/clothing/shoes/boots/proc/remove_knife()
+	UnregisterSignal(knife, list(COMSIG_PARENT_QDELETED))
+	knife = null
 
 /obj/item/clothing/shoes/boots/galoshes
 	desc = "Rubber boots."
