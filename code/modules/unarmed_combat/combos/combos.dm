@@ -620,10 +620,11 @@
 			var/cur_movers = list() + collected - list(victim)
 
 			var/atom/old_V_loc = victim.loc
+			var/turf/target_turf = get_step(get_turf(victim), dropkick_dir)
 			step(victim, dropkick_dir)
 
-			if(old_V_loc != victim.loc)
-				var/list/candidates = victim.loc.contents - list(victim)
+			if(old_V_loc == victim.loc)
+				var/list/candidates = target_turf.contents - list(victim)
 				new_movers:
 					for(var/mob/living/new_mover in candidates)
 						if(new_mover == attacker)
