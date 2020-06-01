@@ -244,21 +244,24 @@ var/global/list/combat_combos_by_name = list()
 
 // This proc is called after animate_combo has ended.
 /datum/combat_combo/proc/after_animation(mob/living/victim, mob/living/attacker)
-	victim.transform = victim.default_transform
-	victim.pixel_x = victim.default_pixel_x
-	victim.pixel_y = victim.default_pixel_y
-	victim.layer = victim.default_layer
+	if(victim)
+		victim.transform = victim.default_transform
+		victim.pixel_x = victim.default_pixel_x
+		victim.pixel_y = victim.default_pixel_y
+		victim.layer = victim.default_layer
 
-	attacker.transform = attacker.default_transform
-	attacker.pixel_x = attacker.default_pixel_x
-	attacker.pixel_y = attacker.default_pixel_y
-	attacker.layer = attacker.default_layer
+		victim.in_use_action = FALSE
 
-	attacker.become_not_busy(_hand = 0)
-	attacker.become_not_busy(_hand = 1)
-	victim.in_use_action = FALSE
+	if(attacker)
+		attacker.transform = attacker.default_transform
+		attacker.pixel_x = attacker.default_pixel_x
+		attacker.pixel_y = attacker.default_pixel_y
+		attacker.layer = attacker.default_layer
 
-	attacker.combo_animation = FALSE
+		attacker.become_not_busy(_hand = 0)
+		attacker.become_not_busy(_hand = 1)
+
+		attacker.combo_animation = FALSE
 
 // Sometimes certain combos have "special" events: Clown's slidekick takes off pants, etc.
 // This is here for that purpose.

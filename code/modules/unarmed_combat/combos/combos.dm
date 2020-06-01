@@ -329,9 +329,10 @@
 	victim.transform = prev_victim_M
 	victim.layer = prev_victim_layer
 
+	victim.visible_message("<span class='danger'>[attacker] has performed an uppercut on [victim]!</span>")
+
 	apply_effect(1, WEAKEN,  victim, attacker, min_value=1)
 	apply_damage(18, victim, attacker, zone=BP_HEAD)
-	victim.visible_message("<span class='danger'>[attacker] has performed an uppercut on [victim]!</span>")
 
 	if(iscarbon(victim))
 		var/mob/living/carbon/C = victim
@@ -426,11 +427,11 @@
 	victim.anchored = prev_victim_anchored
 	attacker.anchored = prev_attacker_anchored
 
-	apply_effect(4, WEAKEN, victim, attacker, min_value=1)
-	apply_damage(23, victim, attacker)
-
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	victim.visible_message("<span class='danger'>[attacker] has thrown [victim] over their shoulder!</span>")
+
+	apply_effect(4, WEAKEN, victim, attacker, min_value=1)
+	apply_damage(23, victim, attacker)
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/suplex/execute(mob/living/victim, mob/living/attacker)
@@ -510,6 +511,9 @@
 	if(!do_combo(victim, attacker, 2))
 		return
 
+	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
+	attacker.visible_message("<span class='danger'>[attacker] falls elbow first onto [attacker.loc] with a loud thud!</span>")
+
 	for(var/mob/living/L in victim.loc)
 		if(L == attacker)
 			continue
@@ -519,9 +523,6 @@
 
 		event_log(L, attacker, "Diving Elbow Drop bypasser.")
 
-	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-	attacker.visible_message("<span class='danger'>[attacker] falls elbow first onto [attacker.loc] with a loud thud!</span>")
-
 	attacker.anchored = prev_anchored
 	attacker.canmove = prev_canmove
 	attacker.density = prev_density
@@ -529,6 +530,7 @@
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/diving_elbow_drop/execute(mob/living/victim, mob/living/attacker)
 	return
+
 
 
 /datum/combat_combo/dropkick
