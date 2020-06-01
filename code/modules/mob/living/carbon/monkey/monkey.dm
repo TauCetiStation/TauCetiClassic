@@ -22,6 +22,7 @@
 	var/race = HUMAN // Used for restrictions checking.
 	holder_type = /obj/item/weapon/holder/monkey
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5)
+	pull_size_ratio = 1.5
 
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
