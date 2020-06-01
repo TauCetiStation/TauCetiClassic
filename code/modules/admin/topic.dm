@@ -604,11 +604,11 @@
 			if(counter >= 5) //So things dont get squiiiiished!
 				jobs += "</tr><tr align='center'>"
 				counter = 0
-
+/*
 		if(jobban_isbanned(M, ROLE_SURVIVOR))
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_SURVIVOR];jobban4=\ref[M]'><font color=red>[ROLE_SURVIVOR]</font></a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_SURVIVOR];jobban4=\ref[M]'>[ROLE_SURVIVOR]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_SURVIVOR];jobban4=\ref[M]'>[ROLE_SURVIVOR]</a></td>"*/
 
 		jobs += "</tr></table>"
 
@@ -1750,9 +1750,9 @@
 			return
 
 		ticker.mode.distress_cancelled = TRUE
-		priority_announce("The distress signal has not received a response.", "Distress Beacon")
+		captain_announce("The distress signal has not received a response.", "Distress Beacon")
 		log_admin("[key_name(usr)] has denied a distress beacon, requested by [key_name(M)]")
-		message_admins("[ADMIN_TPMONTY(usr)] has denied a distress beacon, requested by [ADMIN_TPMONTY(M)]")
+		message_admins(" has denied a distress beacon, requested by ")
 
 	if(href_list["distress"])
 		var/mob/M = locate(href_list["distress"])

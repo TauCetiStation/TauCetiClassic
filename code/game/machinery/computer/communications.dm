@@ -19,6 +19,7 @@
 	var/aistate = STATE_DEFAULT
 	var/message_cooldown = 0
 	var/centcomm_message_cooldown = 0
+	var/cooldown_request = 0
 	var/tmp_alertlevel = 0
 	var/last_seclevel_change = 0 // prevents announcement sounds spam
 	var/last_announcement = 0    // ^ ^ ^
@@ -319,7 +320,8 @@
 
 				for(var/client/X in global.admins)
 					X.mob.playsound_local(null, 'sound/machines/fax_centcomm.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
-					to_chat(X, "<span class='notice'><b><font color='purple'>DISTRESS:</font> [ADMIN_TPMONTY(usr)] has called a Distress Beacon. It will be sent in 60 seconds unless denied or sent early.[HrefToken(TRUE)];distress=[REF(usr)]'>SEND</A>) (<A HREF='?src=[REF(C.holder)];[HrefToken(TRUE)];deny=[REF(usr)]'>DENY</A>) (<a href='?src=[REF(C.holder)];[HrefToken(TRUE)];reply=[REF(usr)]'>REPLY</a>).</b></span>")
+					to_chat (X, "<span class='notice'><b><font color=orange>DISTRESS:</font>[key_name(usr)] has called a Distress Beacon (<A HREF='?_src_=holder;distress=\ref[X.holder]'>SEND</A>) (<A HREF='?_src_=holder;deny=\ref[X.holder]'>DENY</A>)(<A HREF='?_src_=holder;adminplayerobservejump=\ref[X.holder]'>JMP</A>)</b></span>")
+
 				to_chat(usr, "<span class='boldnotice'>A distress beacon will launch in 60 seconds unless High Command responds otherwise.</span>")
 
 				ticker.mode.distress_cancelled = FALSE
@@ -332,7 +334,7 @@
 					else
 						ticker.mode.activate_distress()
 						log_game("A distress beacon requested by [key_name_admin(usr)] was automatically sent due to not receiving an answer within 60 seconds.")
-						message_admins("A distress beacon requested by [ADMIN_TPMONTY(usr)] was automatically sent due to not receiving an answer within 60 seconds.")
+						message_admins("A distress beacon requested by was automatically sent due to not receiving an answer within 60 seconds.")
 						return TRUE
 			else
 				state = STATE_DISTRESS
