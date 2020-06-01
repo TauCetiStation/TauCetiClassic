@@ -122,7 +122,7 @@
 			O.unwield()
 	return	unwield()
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/pickup(mob/user)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/pickup(mob/living/user)
 	unwield()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user)

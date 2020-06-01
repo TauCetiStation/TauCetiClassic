@@ -40,7 +40,7 @@
 			O.unwield()
 	return	unwield()
 
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/pickup(mob/user)
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/pickup(mob/living/user)
 	unwield()
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/attack_self(mob/user)
