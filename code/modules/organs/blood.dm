@@ -59,56 +59,59 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	// Damaged heart virtually reduces the blood volume, as the blood isn't
 	// being pumped properly anymore.
 	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
+	if(!IO)
+		return
 
-	if(IO.damage > 1 && IO.damage < IO.min_bruised_damage)
+	if(IO.damage > 1 && IO.damage < IO.min_bruised_damage || IO.heart_status == HEART_FIBR)
 		blood_volume *= 0.8
 	else if(IO.damage >= IO.min_bruised_damage && IO.damage < IO.min_broken_damage)
 		blood_volume *= 0.6
-	else if(IO.damage >= IO.min_broken_damage && IO.damage < INFINITY)
+	else if((IO.damage >= IO.min_broken_damage && IO.damage < INFINITY) || IO.heart_status == HEART_FAILURE)
 		blood_volume *= 0.3
 
 	//Effects of bloodloss
-	switch(blood_volume)
-		if(BLOOD_VOLUME_SAFE to 10000)
-			if(pale)
-				pale = 0
-				update_body()
-		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-			if(!pale)
-				pale = 1
-				update_body()
-				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "<span class='warning'>You feel [word]</span>")
-			if(prob(1))
-				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "<span class='warning'>You feel [word]</span>")
-			if(oxyloss < 20)
-				oxyloss += 3
-		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-			if(!pale)
-				pale = 1
-				update_body()
-			eye_blurry += 6
-			if(oxyloss < 50)
-				oxyloss += 10
-			oxyloss += 1
-			if(prob(15))
-				Paralyse(rand(1,3))
-				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
-		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-			oxyloss += 5
-			toxloss += 3
-			if(prob(15))
-				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
-		if(0 to BLOOD_VOLUME_SURVIVE)
-			// There currently is a strange bug here. If the mob is not below -100 health
-			// when death() is called, apparently they will be just fine, and this way it'll
-			// spam deathgasp. Adjusting toxloss ensures the mob will stay dead.
-			if(!iszombie(src)) //zombies dont care about blood
-				toxloss += 300 // just to be safe!
-				death()
+	if(!HAS_TRAIT(src, TRAIT_CPB))
+		switch(blood_volume)
+			if(BLOOD_VOLUME_SAFE to 10000)
+				if(pale)
+					pale = 0
+					update_body()
+			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
+				if(!pale)
+					pale = 1
+					update_body()
+					var/word = pick("dizzy","woosey","faint")
+					to_chat(src, "<span class='warning'>You feel [word]</span>")
+				if(prob(1))
+					var/word = pick("dizzy","woosey","faint")
+					to_chat(src, "<span class='warning'>You feel [word]</span>")
+				if(oxyloss < 20)
+					oxyloss += 3
+			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
+				if(!pale)
+					pale = 1
+					update_body()
+				eye_blurry += 6
+				if(oxyloss < 50)
+					oxyloss += 10
+				oxyloss += 1
+				if(prob(15))
+					Paralyse(rand(1,3))
+					var/word = pick("dizzy","woosey","faint")
+					to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
+			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
+				oxyloss += 5
+				toxloss += 3
+				if(prob(15))
+					var/word = pick("dizzy","woosey","faint")
+					to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
+			if(0 to BLOOD_VOLUME_SURVIVE)
+				// There currently is a strange bug here. If the mob is not below -100 health
+				// when death() is called, apparently they will be just fine, and this way it'll
+				// spam deathgasp. Adjusting toxloss ensures the mob will stay dead.
+				if(!iszombie(src)) //zombies dont care about blood
+					toxloss += 300 // just to be safe!
+					death()
 
 	// Without enough blood you slowly go hungry.
 	if(blood_volume < BLOOD_VOLUME_SAFE)

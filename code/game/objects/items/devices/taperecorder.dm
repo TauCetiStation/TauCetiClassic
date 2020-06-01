@@ -33,7 +33,7 @@
 	if(recording)
 		timestamp+= timerecorded
 		if(isanimal(M) || isIAN(M)) // Temporary fix before refactor. Needs to actually pass languages or something like that here and when we see paper or hear audioplayback it depends whenever we can actually understand that language.
-			msg = M.get_scrambled_message()
+			msg = M.get_scrambled_message(msg)
 		if(!msg)
 			return
 

@@ -18,9 +18,8 @@
 	pixel_x = -16
 
 	harm_intent_damage = 5
-	melee_damage_lower = 8
-	melee_damage_upper = 12
-	attacktext = "bites"
+	melee_damage = 10
+	attacktext = "gnaw"
 	attack_sound = list('sound/weapons/bite.ogg')
 
 	//Space carp aren't affected by atmos.
@@ -35,6 +34,8 @@
 	minbodytemp = 0
 
 	faction = "carp"
+	has_head = TRUE
+	has_arm = TRUE
 
 /mob/living/simple_animal/hostile/tree/FindTarget()
 	. = ..()

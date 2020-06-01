@@ -652,7 +652,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"test subject",
 		"tourist",
 		"mime",
-		"clown"
+		"clown",
+		"jolly gravedigger",
+		"jolly gravedigger supreme"
 		)
 	var/list/dresspacks_without_money = list(
 		"strip",
@@ -1837,6 +1839,34 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = list(access_library, access_clown, access_theatre)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+
+		if("jolly gravedigger")
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jolly_gravedigger(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/charcoal(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/white(M), SLOT_GLOVES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/aviator_mirror(M), SLOT_GLASSES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/black(M), SLOT_HEAD)
+
+			M.real_name = pick("Tyler", "Tyrone", "Tom", "Timmy", "Takeuchi", "Timber", "Tyrell")
+
+			M.s_tone = max(min(round(rand(130, 170)), 220), 1)
+			M.s_tone = -M.s_tone + 35
+
+			M.apply_recolor()
+
+		if("jolly gravedigger supreme")
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jolly_gravedigger(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/charcoal(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/white(M), SLOT_GLOVES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/aviator_mirror(M), SLOT_GLASSES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/that(M), SLOT_HEAD)
+
+			M.real_name = "Jimbo"
+
+			M.s_tone = max(min(round(rand(130, 170)), 220), 1)
+			M.s_tone = -M.s_tone + 35
+
+			M.apply_recolor()
 
 	if(!(dresscode in dresspacks_without_money) && M.mind)
 		if(M.mind.initial_account)

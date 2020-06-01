@@ -208,7 +208,7 @@
 		else
 			C.visible_message("<span class='notice'>[C] shakes [src].</span>", "<span class='notice'>You shake [src] but nothing happens. Have patience!</span>")
 
-	if(decals.len && (C.a_intent != "help"))
+	if(decals.len && (C.a_intent != INTENT_HELP))
 		for(var/item in decals)
 			var/obj/item/I = item
 			if(!I)

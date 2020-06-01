@@ -65,7 +65,7 @@
 	var/ghost_msg = "<span class='notice'>[bicon(cross)] <b>[real_name]'s[alt_name ? " " + alt_name : ""]</b> <b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]:</b></font></span> <span class='game say'>\"[msg]\"</span>"
 	var/gods_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]:</b></font></span> <span class='game say'>\"[msg]\"</span>"
 
-	var/scrambled_msg = get_scrambled_message(speaking, msg)
+	var/scrambled_msg = get_scrambled_message(msg, speaking)
 	var/god_not_understand_msg = ""
 	if(scrambled_msg)
 		god_not_understand_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]</b>:</font> \"[scrambled_msg]\"</span>"
@@ -115,18 +115,15 @@
 /mob/proc/pray_animation()
 	return
 
-/mob/living/carbon/human/var/next_pray_anim = 0
+/mob/living/var/next_pray_anim = 0
 
-/mob/living/carbon/human/pray_animation()
+/mob/living/pray_animation()
 	if(next_pray_anim > world.time)
 		return
 	next_pray_anim = world.time + 1 SECOND
 
-	if(incapacitated())
-		return
-	if(!bodyparts_by_name[BP_L_ARM] || !bodyparts_by_name[BP_L_ARM].is_usable())
-		return
-	if(!bodyparts_by_name[BP_R_ARM] || !bodyparts_by_name[BP_R_ARM].is_usable())
+	// So restrained people can also pray.
+	if(stat)
 		return
 
 	//Show an image of the wielded weapon over the person who got dunked.

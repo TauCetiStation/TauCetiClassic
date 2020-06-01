@@ -13,7 +13,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.a_intent == "hurt")
+		if(H.a_intent == INTENT_HARM)
 			H.do_attack_animation(src)
 			if(!H.gloves)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
@@ -71,18 +71,14 @@
 	shatter()
 
 
-/obj/structure/mirror/attack_animal(mob/user)
-	if(!isanimal(user))
-		return
+/obj/structure/mirror/attack_animal(mob/living/simple_animal/attacker)
 	..()
-
-	var/mob/living/simple_animal/M = user
-	if(M.melee_damage_upper <= 0)
+	if(attacker.melee_damage <= 0)
 		return
 	if(shattered)
 		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
 		return
-	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
+	attacker.visible_message("<span class='danger'>[attacker] smashes [src]!</span>")
 	shatter()
 
 

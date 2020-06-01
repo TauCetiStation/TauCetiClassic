@@ -796,11 +796,11 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_PLANT];jobban4=\ref[M]'>[ROLE_PLANT]</a></td>"
 
-		//chaplain talking staff
-		if(jobban_isbanned(M, ROLE_TSTAFF))
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_TSTAFF];jobban4=\ref[M]'><font color=red>[ROLE_TSTAFF]</font></a></td>"
+		//many roles available to ghost after die
+		if(jobban_isbanned(M, ROLE_GHOSTLY))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_GHOSTLY];jobban4=\ref[M]'><font color=red>[ROLE_GHOSTLY]</font></a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_TSTAFF];jobban4=\ref[M]'>[ROLE_TSTAFF]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_GHOSTLY];jobban4=\ref[M]'>[ROLE_GHOSTLY]</a></td>"
 
 		if(jobban_isbanned(M, "Mouse"))
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mouse;jobban4=\ref[M]'><font color=red>Mouse</font></a></td>"
@@ -2940,6 +2940,38 @@
 			error_viewer.show_to(owner, locate(href_list["viewruntime_backto"]), href_list["viewruntime_linear"])
 		else
 			error_viewer.show_to(owner, null, href_list["viewruntime_linear"])
+
+	else if(href_list["salary"])
+		if(!check_rights(R_EVENT))	return
+		var/datum/money_account/account = locate(href_list["salary"])
+		if(!account)
+			to_chat(usr, "<span class='warning'>Account not found!</span>")
+			return
+		account.change_salary(usr, "CentComm", "CentComm", "Admin")
+
+	else if(href_list["global_salary"])
+		if(!check_rights(R_EVENT))	return
+		if(alert(usr, "Are you sure you want to globally change the salary?", "Confirm", "Yes", "No") != "Yes")
+			return
+		var/list/rate = list("+100%", "+50%", "+25%", "0", "-25%", "-50%", "-100%")
+		var/input_rate = input(usr, "Please, select a rate!", "Salary Rate", null) as null|anything in rate
+		if(!input_rate)
+			return
+		var/ratio_rate = text2num(replacetext(replacetext(input_rate, "+", ""), "%", ""))
+		var/new_ratio = 1 + (ratio_rate/100)
+		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")
+		for(var/datum/job/J in SSjob.occupations)
+			if(J.title in excluded_rank)
+				continue
+			J.salary_ratio = new_ratio
+		var/list/crew = my_subordinate_staff("Admin")
+		for(var/person in crew)
+			var/datum/money_account/account = person["acc_datum"]
+			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = ratio_rate)
+		if(new_ratio == 1)	//if 0 was selected
+			to_chat(usr, "<span class='warning'><b>You returned basic salaries to all professions</b></span>")
+		else
+			to_chat(usr, "<span class='warning'><b>You have globally changed the salary of all professions by [input_rate]</b></span>")
 
 	// player info stuff
 

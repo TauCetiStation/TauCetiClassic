@@ -152,9 +152,11 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		if(!iscultist(M))
 			M.confused += 10
 			M.make_jittery(150)
-	for(var/obj/machinery/light/L in range(4, get_turf(src)))
-		L.on = TRUE
-		L.broken()
+
+	var/list/targets = list()
+	for(var/turf/T in range(4))
+		targets += T
+	light_off_range(targets, src)
 
 /obj/item/candle/ghost/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	..()
@@ -165,7 +167,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	if(istype(W, /obj/item/weapon/book/tome))
 		spook()
 		light()
-	if(user.getBrainLoss() >= 60 || user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")
+	if(user.getBrainLoss() >= 60 || user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")
 		if(!lit && istype(W, /obj/item/weapon/storage/bible))
 			var/obj/item/weapon/storage/bible/B = W
 			if(B.icon_state == "necronomicon")

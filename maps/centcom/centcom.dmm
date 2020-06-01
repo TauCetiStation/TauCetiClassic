@@ -1402,7 +1402,7 @@
 /area/shuttle/specops/centcom)
 "adP" = (
 /obj/machinery/vending/boozeomat{
-	req_access = list(0)
+	req_access = list()
 	},
 /turf/unsimulated/wall,
 /area/centcom/holding)
@@ -1859,8 +1859,7 @@
 "afQ" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_y = -32;
-	req_access = list(0)
+	pixel_y = -32
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
@@ -1869,8 +1868,7 @@
 "aga" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_x = 30;
-	req_access = list(0)
+	pixel_x = 30
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
@@ -10062,8 +10060,7 @@
 "aHr" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_x = -30;
-	req_access = list(0)
+	pixel_x = -30
 	},
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
@@ -10077,8 +10074,7 @@
 "aHu" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_x = 30;
-	req_access = list(0)
+	pixel_x = 30
 	},
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
@@ -10925,8 +10921,7 @@
 "aKt" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_x = -30;
-	req_access = list(0)
+	pixel_x = -30
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
@@ -19767,8 +19762,7 @@
 "hhb" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_x = 30;
-	req_access = list(0)
+	pixel_x = 30
 	},
 /turf/unsimulated/floor{
 	dir = 1;
@@ -22652,10 +22646,9 @@
 /obj/structure/table,
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_y = 32;
-	req_access = list(0)
+	pixel_y = 32
 	},
-/obj/item/weapon/storage/firstaid,
+/obj/item/weapon/storage/firstaid/regular,
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "opb" = (
@@ -23385,7 +23378,7 @@
 /obj/structure/closet/medical_wall{
 	pixel_x = 32
 	},
-/obj/item/weapon/storage/firstaid,
+/obj/item/weapon/storage/firstaid/regular,
 /obj/item/weapon/storage/firstaid/adv,
 /obj/item/weapon/storage/firstaid/o2,
 /obj/item/weapon/storage/firstaid/toxin,
@@ -23399,8 +23392,7 @@
 /obj/structure/flora/plant/random,
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_y = -32;
-	req_access = list(0)
+	pixel_y = -32
 	},
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)

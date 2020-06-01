@@ -129,6 +129,23 @@
 	name = "heart"
 	organ_tag = O_HEART
 	parent_bodypart = BP_CHEST
+	var/heart_status = HEART_NORMAL
+	var/fibrillation_timer_id = null
+
+/obj/item/organ/internal/heart/proc/heart_stop()
+	heart_status = HEART_FAILURE
+
+/obj/item/organ/internal/heart/proc/heart_fibrillate()
+	var/failing_interval = 1 MINUTE
+	heart_status = HEART_FIBR
+	if(HAS_TRAIT(owner, TRAIT_FAT))
+		failing_interval = 30 SECONDS
+	fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
+
+/obj/item/organ/internal/heart/proc/heart_normalize()
+	heart_status = HEART_NORMAL
+	deltimer(fibrillation_timer_id)
+	fibrillation_timer_id = null
 
 /obj/item/organ/internal/heart/ipc
 	name = "servomotor"
@@ -163,7 +180,7 @@
 		if(prob(2))
 			owner.emote("cough", message = "coughs up blood!")
 			owner.drip(10)
-		if(prob(4))
+		if(prob(4)  && !HAS_TRAIT(owner, TRAIT_AV))
 			owner.emote("gasp", message = "gasps for air!")
 			owner.losebreath += 15
 

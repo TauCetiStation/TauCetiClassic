@@ -36,7 +36,7 @@
 	if(!istype(M))
 		return ..()
 
-	if(user.a_intent != "help")
+	if(user.a_intent != INTENT_HELP)
 		if(user.zone_sel.selecting == "head" || user.zone_sel.selecting == "eyes")
 			if((CLUMSY in user.mutations) && prob(50))
 				M = user
@@ -141,7 +141,7 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/kitchenknife/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(user.a_intent == "help" && M.attempt_harvest(src, user))
+	if(user.a_intent == INTENT_HELP && M.attempt_harvest(src, user))
 		return
 	return ..()
 
@@ -180,7 +180,7 @@
 	edge = 1
 
 /obj/item/weapon/butch/attack(mob/living/M, mob/living/user)
-	if(user.a_intent == I_HELP && M.attempt_harvest(src, user))
+	if(user.a_intent == INTENT_HELP && M.attempt_harvest(src, user))
 		return
 	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
@@ -208,9 +208,7 @@
 		user.Paralyse(2)
 		return
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])", user)
+	M.log_combat(user, "attacked with [name]")
 
 	var/t = user.zone_sel.selecting
 	if (t == BP_HEAD)
@@ -303,9 +301,7 @@
 			if (istype(location, /turf/simulated))
 				location.add_blood(H)     ///Plik plik, the sound of blood
 
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])", user)
+		M.log_combat(user, "attacked with [name]")
 
 		if(prob(15))
 			M.Weaken(3)
@@ -408,7 +404,7 @@
 
 	return val
 
-/obj/item/weapon/tray/pickup(mob/user)
+/obj/item/weapon/tray/pickup(mob/living/user)
 
 	if(!isturf(loc))
 		return

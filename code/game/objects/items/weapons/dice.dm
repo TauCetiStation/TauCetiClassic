@@ -29,7 +29,7 @@
 		OS.scanned_type = src.type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 	if(istype(W, /obj/item/weapon/nullrod))
-		if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")))
+		if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")))
 			poof()
 
 /obj/item/weapon/dice/ghost/proc/poof()
@@ -169,7 +169,7 @@
 /obj/item/weapon/dice/ghost/d20/attack_self(mob/living/user)
 	diceroll(user)
 	if(result == 20)
-		if(user.a_intent == "help")
+		if(user.a_intent == INTENT_HELP)
 			to_chat(user, "<span class='notice'>You suddenly feel sligly better because of your own luck.</span>")
 			user.adjustBruteLoss(-1)
 			user.adjustFireLoss(-1)
@@ -183,7 +183,7 @@
 	diceroll()
 	..()
 	if(result == 20 && istype(target) && istype(thrower))
-		if(thrower.a_intent == "help")
+		if(thrower.a_intent == INTENT_HELP)
 			to_chat(target, "<span class='notice'>You suddenly feel sligly better because of [thrower]'s luck.</span>")
 			target.adjustBruteLoss(-1)
 			target.adjustFireLoss(-1)

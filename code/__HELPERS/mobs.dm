@@ -277,5 +277,5 @@
 		qdel(progbar)
 	if(user)
 		user.become_not_busy(_hand = busy_hand)
-	if(target)
+	if(target && target != user)
 		target.in_use_action = FALSE

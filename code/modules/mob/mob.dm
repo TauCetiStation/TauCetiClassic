@@ -305,6 +305,7 @@
 
 	face_atom(A)
 	A.examine(src)
+	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
 
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
@@ -551,8 +552,10 @@
 		SEND_SIGNAL(src, COMSIG_LIVING_STOP_PULL, pulling)
 		SEND_SIGNAL(pulling, COMSIG_ATOM_STOP_PULL, src)
 
-		pulling.pulledby = null
-		pulling = null
+		// What if the signals above somehow deleted pulledby?
+		if(pulling)
+			pulling.pulledby = null
+			pulling = null
 		if(pullin)
 			pullin.update_icon(src)
 		count_pull_debuff()
@@ -1028,6 +1031,17 @@ note dizziness decrements automatically in the mob's Life() proc.
 					return G
 				break
 
+/mob/proc/GetSpell(spell_type)
+	for(var/obj/effect/proc_holder/spell/spell in spell_list)
+		if(spell == spell_type)
+			return spell
+
+	if(mind)
+		for(var/obj/effect/proc_holder/spell/spell in mind.spell_list)
+			if(spell == spell_type)
+				return spell
+	return FALSE
+
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/spell)
 	spell_list += spell
 	mind.spell_list += spell	//Connect spell to the mind for transfering action buttons between mobs
@@ -1041,6 +1055,22 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(isliving(src))
 		spell.action.Grant(src)
 	return
+
+/mob/proc/RemoveSpell(obj/effect/proc_holder/spell/S)
+	spell_list -= S
+	if(mind)
+		mind.spell_list -= S
+	qdel(S)
+
+/mob/proc/ClearSpells()
+	for(var/spell in spell_list)
+		spell_list -= spell
+		qdel(spell)
+
+	if(mind)
+		for(var/spell in mind.spell_list)
+			mind.spell_list -= spell
+			qdel(spell)
 
 /mob/proc/set_EyesVision(preset = null, transition_time = 5)
 	if(!client) return
@@ -1104,6 +1134,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/can_unbuckle(mob/user)
 	return 1
 
+/mob/proc/get_targetzone()
+	return null
+
 /mob/proc/update_stat()
 	return
 
@@ -1114,5 +1147,5 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return FALSE
 
 // Return null if mob of this type can not scramble messages.
-/mob/proc/get_scrambled_message(datum/language/speaking, message)
+/mob/proc/get_scrambled_message(message, datum/language/speaking = null)
 	return speaking ? speaking.scramble(message) : stars(message)
