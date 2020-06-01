@@ -23,7 +23,7 @@
 	if(length(all_calls)) //It's already been set up.
 		return
 
-	var/list/total_calls = typesof(/datum/emergency_call)
+	var/list/total_calls = subtypesof(/datum/emergency_call)
 	if(!length(total_calls))
 		CRASH("No distress Datums found.")
 
