@@ -19,6 +19,7 @@
 			to_chat(user, "<span class='notice'>You slide [knife] out of [src].</span>")
 			knife = null
 			update_icon()
+			remove_knife()
 	else
 		return ..()
 
@@ -31,6 +32,14 @@
 		knife = I
 		playsound(user, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
 		to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")
+		add_knife()
+
+/obj/item/clothing/shoes/boots/proc/add_knife(obj/item/K)
+	knife = K
+	RegisterSignal(K, list(COMSIG_PARENT_QDELETED), .proc/remove_knife)
+
+/obj/item/clothing/shoes/boots/proc/remove_knife(obj/item/K)
+	knife = null
 
 /obj/item/clothing/shoes/boots/galoshes
 	desc = "Rubber boots."
