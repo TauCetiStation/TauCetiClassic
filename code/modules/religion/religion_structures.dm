@@ -46,15 +46,6 @@
 	for(var/i in global.chaplain_religion.rites_info)
 		to_chat(user, i)
 
-/obj/structure/altar_of_gods/MouseDrop_T(mob/target, mob/user)
-	if(isliving(target))
-		if(!target.buckled && !buckled_mob && target.loc != loc)
-			if(user.incapacitated() || user.lying)
-				return
-			target.forceMove(loc)
-			add_fingerprint(target)
-	return ..()
-
 // This proc handles an animation of item being sacrified and stuff.
 /obj/structure/altar_of_gods/proc/sacrifice_item(obj/item/I)
 	I.mouse_opacity =  MOUSE_OPACITY_TRANSPARENT

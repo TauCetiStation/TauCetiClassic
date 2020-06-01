@@ -169,9 +169,8 @@
 
 	SEND_SIGNAL(possessed, COMSIG_NAME_MOD_ADD, /datum/name_modifier/prefix/cursed, 1)
 
-	qdel(possessed.GetComponent(/datum/component/bounded))
-
 	var/mob/living/simple_animal/hostile/H = parent
+	qdel(H.GetComponent(/datum/component/bounded))
 	H.forceMove(possessed)
 
 	rejuve_timer = addtimer(CALLBACK(src, .proc/come_back), rand(6, 10) MINUTES, TIMER_STOPPABLE)

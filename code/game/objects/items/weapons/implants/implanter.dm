@@ -15,7 +15,7 @@
 		icon_state = "implanter0"
 
 
-/obj/item/weapon/implanter/attack(mob/M, mob/user, def_zone)
+/obj/item/weapon/implanter/attack(mob/living/M, mob/user, def_zone)
 	if (!iscarbon(M))
 		return
 	if (!user || !imp)
@@ -25,9 +25,7 @@
 
 	if(M == user || (!user.is_busy() && do_after(user, 50, target = M)))
 		if(src && imp)
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'> Implanted with [src.name] ([src.imp.name])  by [user.name] ([user.ckey])</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] ([src.imp.name]) to implant [M.name] ([M.ckey])</font>")
-			msg_admin_attack("[user.name] ([user.ckey]) implanted [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])", user)
+			M.log_combat(user, "implanted with [name]")
 			if(imp.implanted(M))
 				user.visible_message("<span class ='userdanger'>[M] has been implanted by [user].</span>", "You implanted the implant into [M].")
 				imp.inject(M, def_zone)
