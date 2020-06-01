@@ -836,9 +836,7 @@
 					var/turf/end_T = target
 					var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
 
-					M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been thrown by [attacker.name] ([attacker.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
-					attacker.attack_log += text("\[[time_stamp()]\] <font color='red'>Has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
-					msg_admin_attack("[attacker.name] ([attacker.ckey]) has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]", attacker)
+					M.log_combat(attacker, "throwm from [start_T_descriptor] with the target [end_T_descriptor]")
 
 					M.throw_at(target, 6, 8, attacker)
 					apply_effect(7, WEAKEN, M, attacker, min_value=1)

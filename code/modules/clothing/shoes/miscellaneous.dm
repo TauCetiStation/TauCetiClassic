@@ -170,9 +170,10 @@
 
 /obj/item/clothing/shoes/jolly_gravedigger/equipped(mob/user, slot)
 	if(slot == SLOT_SHOES)
-		RegisterSignal(user, list(COMSIG_LIVING_START_PULL), .proc/check_coffin)
 		if(user.pulling)
 			check_coffin(user, user.pulling)
+		else
+			RegisterSignal(user, list(COMSIG_LIVING_START_PULL), .proc/check_coffin)
 	else if(waddling)
 		stop_waddling(user)
 
