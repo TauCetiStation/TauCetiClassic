@@ -365,6 +365,8 @@
 
 	heavy_animation = TRUE
 
+	force_dam_type = BRUTE
+
 /datum/combat_combo/suplex/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
 		return
@@ -453,6 +455,8 @@
 	require_arm_to_perform = TRUE
 
 	heavy_animation = TRUE
+
+	force_dam_type = BRUTE
 
 /datum/combat_combo/diving_elbow_drop/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
@@ -616,10 +620,11 @@
 			var/cur_movers = list() + collected - list(victim)
 
 			var/atom/old_V_loc = victim.loc
+			var/turf/target_turf = get_step(get_turf(victim), dropkick_dir)
 			step(victim, dropkick_dir)
 
-			if(old_V_loc != victim.loc)
-				var/list/candidates = victim.loc.contents - list(victim)
+			if(old_V_loc == victim.loc)
+				var/list/candidates = target_turf.contents - list(victim)
 				new_movers:
 					for(var/mob/living/new_mover in candidates)
 						if(new_mover == attacker)
@@ -680,6 +685,8 @@
 	allowed_target_zones = list(BP_CHEST)
 
 	heavy_animation = TRUE
+
+	force_dam_type = BRUTE
 
 /datum/combat_combo/charge/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
@@ -767,6 +774,8 @@
 	allowed_target_zones = list(BP_CHEST)
 
 	heavy_animation = TRUE
+
+	force_dam_type = BRUTE
 
 /datum/combat_combo/spin_throw/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
