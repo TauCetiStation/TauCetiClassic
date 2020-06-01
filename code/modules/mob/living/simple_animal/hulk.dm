@@ -8,7 +8,6 @@
 	maxHealth = 300
 	health = 300
 	immune_to_ssd = 1
-	anchored = 1
 
 	speak_emote = list("roars")
 	emote_hear = list("roars")
