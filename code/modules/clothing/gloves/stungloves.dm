@@ -90,9 +90,7 @@
 						calc_power *= H.get_siemens_coefficient_organ(BP)
 
 					L.visible_message("<span class='warning bold'>[L] has been touched with the stun gloves by [attacker]!</span>")
-					attacker.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [L.name] ([L.ckey])</font>")
-					L.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [attacker.name] ([attacker.ckey])</font>")
-					msg_admin_attack("[attacker.name] ([attacker.ckey]) stungloved [L.name] ([L.ckey])", attacker)
+					L.log_combat(attacker, "stungloved witht [name]")
 
 					L.apply_effects(0,0,0,0,2,0,0,calc_power)
 					L.apply_effect(5, WEAKEN)
