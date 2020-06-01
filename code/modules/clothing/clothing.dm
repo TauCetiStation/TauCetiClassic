@@ -202,7 +202,7 @@ var/global/list/icon_state_allowed_cache = list()
 					if(!M.unEquip(src))
 						return
 					M.put_in_l_hand(src)
-			src.add_fingerprint(usr)
+			add_fingerprint(usr)
 
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
