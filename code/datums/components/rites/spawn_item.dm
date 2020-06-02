@@ -33,8 +33,12 @@
 	RegisterSignal(parent, list(COMSIG_RITE_INVOKE_EFFECT), .proc/replace_fake_item)
 	RegisterSignal(parent, list(COMSIG_RITE_FAILED_CHECK), .proc/revert_effects)
 
+/datum/component/rite_spawn_item/Destroy()
+	clear_lists()
+	return ..()
+
 // Used to choose which items will be replaced with others
-/datum/component/rite_spawn_item/proc/item_sacrifice(atom/movable/AOG, spawn_type)
+/datum/component/rite_spawn_item/proc/item_sacrifice(obj/structure/altar_of_gods/AOG, spawn_type)
 	var/list/sacrifice_items = list()
 	for(var/obj/item/item in AOG.loc)
 		if(!istype(item, spawn_type))
@@ -42,7 +46,7 @@
 		sacrifice_items += item
 	return sacrifice_items
 
-/datum/component/rite_spawn_item/proc/check_items_on_altar(datum/source, mob/user, atom/movable/AOG)
+/datum/component/rite_spawn_item/proc/check_items_on_altar(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
 	if(sacrifice_type)
 		var/list/L = item_sacrifice(AOG, sacrifice_type)
 		if(L.len == 0)
@@ -52,7 +56,7 @@
 	return NONE
 
 // Created illustion of spawning item
-/datum/component/rite_spawn_item/proc/create_fake_of_item(datum/source, mob/user, atom/movable/AOG)
+/datum/component/rite_spawn_item/proc/create_fake_of_item(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
 	if(sacrifice_type)
 		var/list/L = item_sacrifice(AOG, sacrifice_type)
 		if(L.len == 0)
@@ -73,7 +77,7 @@
 	return NONE
 
 // Nice effect for spawn item
-/datum/component/rite_spawn_item/proc/item_restoration(atom/movable/AOG, stage)
+/datum/component/rite_spawn_item/proc/item_restoration(obj/structure/altar_of_gods/AOG, stage)
 	var/ratioplus = (255 / rite.ritual_invocations.len) * stage
 	var/ratiominus = 255 / stage
 	if(sacrifice_type)
@@ -86,7 +90,7 @@
 		for(var/I in spawning_item)
 			animate(I, time = (rite.ritual_length / rite.ritual_invocations.len) + rand(-10, 10), alpha = ratioplus + rand(0, 10))
 
-/datum/component/rite_spawn_item/proc/update_fake_item(datum/source, mob/user, atom/movable/AOG, stage)
+/datum/component/rite_spawn_item/proc/update_fake_item(datum/source, mob/user, obj/structure/altar_of_gods/AOG, stage)
 	if(spawning_item.len == 0)
 		// Illusion of the subject lies on the real subject
 		var/atom/fake = spawn_type
@@ -117,32 +121,31 @@
 	else
 		item_restoration(AOG, stage)
 
-/datum/component/rite_spawn_item/proc/revert_effects(datum/source, mob/user, atom/movable/AOG)
+/datum/component/rite_spawn_item/proc/revert_effects(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
 	if(spawning_item)
 		for(var/I in spawning_item)
 			animate(I, time = 3 SECONDS, alpha = 0)
 	if(sacrifice_type)
 		for(var/I in illusion_to_sacrifice)
 			animate(I, time = 2.8 SECONDS, alpha = 255)
-	sleep(3 SECONDS)
+	addtimer(CALLBACK(src, .proc/pull_out_items, AOG), 3 SECONDS)
+
+/datum/component/rite_spawn_item/proc/pull_out_items(obj/structure/altar_of_gods/AOG)
 	for(var/obj/item/item in AOG.contents)
 		item.forceMove(AOG.loc)
 	clear_lists()
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
-/datum/component/rite_spawn_item/proc/replace_fake_item(datum/source, mob/user, atom/movable/AOG)
+/datum/component/rite_spawn_item/proc/replace_fake_item(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
 	for(var/obj/I in spawning_item)
 		var/atom/created = new spawn_type(AOG.loc)
 
 		if(invoke_effect)
 			invoke_effect.Invoke(created)
 
-		if(!istype(created, /mob))
+		if(!ismob(created))
 			created.pixel_x = I.pixel_x
 			created.pixel_y = I.pixel_y
-
-	for(var/I in AOG)
-		qdel(I)
 
 	clear_lists()
 

@@ -181,6 +181,10 @@
 		performing_rite.invoke_effect(user, src)
 		religion.adjust_favor(-performing_rite.favor_cost)
 		performing_rite = null
+
+		for(var/item in src)
+			qdel(item)
+
 		return
 
 	else if(istype(I, /obj/item/weapon/storage/bible) && !chosen_aspect)

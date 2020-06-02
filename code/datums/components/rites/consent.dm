@@ -3,11 +3,12 @@
 */
 /datum/component/rite_consent
 	var/consent_msg
-	var/consent = FALSE
+	var/consent
 	var/def_consent = FALSE
 
 /datum/component/rite_consent/Initialize(msg)
 	consent_msg = msg
+	consent = def_consent
 	RegisterSignal(parent, list(COMSIG_RITE_ON_CHOSEN), .proc/victim_ask)
 	RegisterSignal(parent, list(COMSIG_RITE_REQUIRED_CHECK), .proc/check_victim)
 
