@@ -832,7 +832,7 @@ var/global/list/all_objectives = list()
 		if(1)
 			target = /obj/structure/particle_accelerator
 			target_amount = 6
-			loot = "a complete particle accelerator (6 detals)"
+			loot = "a complete particle accelerator (6 components)"
 		if(2)
 			target = /obj/machinery/the_singularitygen
 			target_amount = 1
