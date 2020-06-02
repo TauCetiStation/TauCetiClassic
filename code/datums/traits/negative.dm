@@ -146,8 +146,8 @@
 
 /datum/quirk/nyctophobia/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
-	if(H.species.name in list(SHADOWLING, GOLEM, ZOMBIE, ZOMBIE_TAJARAN, ZOMBIE_SKRELL, ZOMBIE_UNATHI, SKELETON)) // hmm, new species flag?
-		return //we're tied with the dark, so we don't get scared of it; don't cleanse outright to avoid cheese
+	if(H.species.flags [NO_EMOTION])  //we're tied with the dark, so we don't get scared of it; don't cleanse outright to avoid cheese
+		return
 	var/turf/T = get_turf(quirk_holder)
 	var/lums = T.get_lumcount()
 	if(lums <= 0.2)
