@@ -414,7 +414,7 @@
 
 	return val
 
-/obj/item/weapon/tray/pickup(mob/user)
+/obj/item/weapon/tray/pickup(mob/living/user)
 
 	if(!isturf(loc))
 		return
