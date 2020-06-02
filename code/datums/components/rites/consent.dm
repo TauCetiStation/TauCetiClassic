@@ -1,5 +1,5 @@
 /*
- This component used in chaplain rite for ask question at victim on altar.
+ This component is used in chaplain's rites to ask for consent to executing the rite.
 */
 /datum/component/rite_consent
 	var/consent_msg
