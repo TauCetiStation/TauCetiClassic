@@ -284,6 +284,9 @@
 				if(D)
 					if(D.security_level > 0)
 						attempt_pin = input("Enter pin code", "Vendor transaction") as num
+						if(attempt_pin == 0)
+							to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
+							return
 					if(attempt_pin)
 						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
 					if(D)
