@@ -519,7 +519,7 @@ var/global/list/all_objectives = list()
 		"a jetpack" = /obj/item/weapon/tank/jetpack,
 		"a captain's jumpsuit" = /obj/item/clothing/under/rank/captain,
 		"a functional AI" = /obj/item/device/aicard,
-		"a pair of magboots" = /obj/item/clothing/shoes/magboots,
+		"a head of security's rig" = /obj/item/clothing/suit/space/rig/security/hos,
 		"the station blueprints" = /obj/item/blueprints,
 		"a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
 		"28 moles of phoron (full tank)" = /obj/item/weapon/tank,
@@ -832,7 +832,7 @@ var/global/list/all_objectives = list()
 		if(1)
 			target = /obj/structure/particle_accelerator
 			target_amount = 6
-			loot = "a complete particle accelerator"
+			loot = "a complete particle accelerator (6 detals)"
 		if(2)
 			target = /obj/machinery/the_singularitygen
 			target_amount = 1
@@ -860,7 +860,7 @@ var/global/list/all_objectives = list()
 		if(8)
 			target = /obj/item/weapon/gun/energy/ionrifle
 			target_amount = 1
-			loot = "an ion gun"
+			loot = "an ion rifle"
 
 	explanation_text = "We are lacking in hardware. Steal [loot]."
 
