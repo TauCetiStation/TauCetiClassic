@@ -5,7 +5,7 @@ var/global/sent_syndicate_strike_team = 0
 
 /client/proc/syndicate_strike_team()
 	if(!ticker)
-		to_chat(usr, "<span class='warnong'>The game hasn't started yet!</span>")
+		to_chat(usr, "<span class='warning'>The game hasn't started yet!</span>")
 		return
 	if(world.time < 6000)
 		to_chat(usr, "<span class='warning'>Not so fast, buddy. Wait a few minutes until the game gets going. There are [(6000-world.time)/10] seconds remaining.</span>")
