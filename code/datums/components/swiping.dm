@@ -294,14 +294,15 @@
 	var/turf/W_turf = get_turf(W)
 	var/turf/T_target = get_turf(target)
 
-	var/obj/effect/effect/weapon_sweep/WS = new(src, list(), W.sweep_step)
+	var/obj/effect/effect/weapon_sweep/WS = new(W_turf, src, list(), W.sweep_step)
 	WS.invisibility = 101
 	WS.pass_flags = W.pass_flags
-	WS.forceMove(W_turf)
 
 	step(WS, get_dir(W_turf, T_target))
 
 	var/turf/T = get_turf(WS)
+
+	qdel(WS)
 
 	sweep_push(target, T, user)
 
@@ -383,14 +384,15 @@
 	var/turf/W_turf = get_turf(W)
 	var/turf/T_target = get_turf(target)
 
-	var/obj/effect/effect/weapon_sweep/WS = new(src, list(), W.sweep_step)
+	var/obj/effect/effect/weapon_sweep/WS = new(W_turf, src, list(), W.sweep_step)
 	WS.invisibility = 101
 	WS.pass_flags = W.pass_flags
-	WS.forceMove(W_turf)
 
 	step(WS, get_dir(W_turf, T_target))
 
 	var/turf/T = get_turf(WS)
+
+	qdel(WS)
 
 	sweep_pull(target, T, user)
 

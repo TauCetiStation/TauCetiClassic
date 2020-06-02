@@ -17,7 +17,7 @@
 	else
 		return
 
-/obj/item/weapon/reagent_containers/food/drinks/cans/attack(mob/M, mob/user, def_zone)
+/obj/item/weapon/reagent_containers/food/drinks/cans/attack(mob/living/M, mob/user, def_zone)
 	if(!CanEat(user, M, src, "drink")) return
 
 	if (!canopened)
@@ -52,9 +52,7 @@
 		if(!do_mob(user, M)) return
 		user.visible_message("<span class='warning'>[user] feeds [M] [src].</span>")
 
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-		msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])", user)
+		M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, gulp_size)
