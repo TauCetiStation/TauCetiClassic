@@ -12,7 +12,6 @@
 	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
 				"miss_sound" = retMissSound)
 
-
 /mob/living/carbon/xenomorph/facehugger/is_usable_head(targetzone = null)
 	return TRUE
 
