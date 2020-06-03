@@ -38,7 +38,7 @@
 		spell_list += new spell(src)
 
 	var/obj/effect/effect/forcefield/rune/R = new
-	AddComponent(/datum/component/forcefield, "blood aura", 30, 5 SECONDS, 3 SECONDS, R, TRUE)
+	AddComponent(/datum/component/forcefield, "blood aura", 30, 5 SECONDS, 3 SECONDS, R, TRUE, TRUE)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
 /mob/living/simple_animal/construct/death()
@@ -91,7 +91,7 @@
 /mob/living/simple_animal/construct/armoured/atom_init()
 	. = ..()
 	var/obj/effect/effect/forcefield/rune/R = new
-	AddComponent(/datum/component/forcefield, "strong blood aura", 60, 5 SECONDS, 6 SECONDS, R, TRUE)
+	AddComponent(/datum/component/forcefield, "strong blood aura", 60, 5 SECONDS, 6 SECONDS, R, TRUE, TRUE)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
 /mob/living/simple_animal/construct/armoured/Life()
@@ -185,7 +185,7 @@
 /mob/living/simple_animal/construct/behemoth/atom_init()
 	. = ..()
 	var/obj/effect/effect/forcefield/rune/R = new
-	AddComponent(/datum/component/forcefield, "strong blood aura", 60, 5 SECONDS, 6 SECONDS, R, TRUE)
+	AddComponent(/datum/component/forcefield, "strong blood aura", 60, 5 SECONDS, 6 SECONDS, R, TRUE, TRUE)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
 
