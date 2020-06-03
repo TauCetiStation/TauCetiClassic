@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 28
+#define SAVEFILE_VERSION_MAX 29
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -176,6 +176,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			be_role |= ROLE_GHOSTLY
 
 		S["be_role"] << be_role
+
+	if(current_version < 29)
+		for(var/quirk_name in all_quirks)
+			// If the quirk isn't even hypothetically allowed, pref can't have it.
+			// If IsAllowedQuirk() for some reason ever becomes more computationally
+			// difficult than (quirk_name in allowed_quirks), please change to the latter. ~Luduk
+			if(!IsAllowedQuirk(quirk_name))
+				ResetQuirks()
+				break
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
@@ -378,6 +387,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	S["uplinklocation"] 	>> uplinklocation
 
+	UpdateAllowedQuirks()
 
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary

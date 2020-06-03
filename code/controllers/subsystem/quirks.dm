@@ -26,26 +26,14 @@ var/datum/subsystem/quirks/SSquirks
 	if(!quirks.len)
 		SetupQuirks()
 
-	quirk_blacklist = list(
-		list("Light Drinker", "Alcohol Tolerance"),
-		list("Strong mind", "Twitching"),
-		list("Blind", "Nearsighted"),
-		list("Low pain threshold", "High pain threshold")
-		)
+	for(var/client/C in clients)
+		C.prefs.UpdateAllowedQuirks()
 
-	quirk_blacklist_species = list(
-		"Fatness" = list(DIONA, IPC, VOX),
-		"Child of Nature" = list(HUMAN, SKRELL, TAJARAN, UNATHI, IPC, VOX),
-		"Stress Eater" = list(DIONA, IPC),
-		"High pain threshold" = list(DIONA, IPC),
-		"Low pain threshold" = list(DIONA, IPC),
-		"Alcohol Tolerance" = list(DIONA, IPC, SKRELL),
-		"Light Drinker" = list(DIONA, IPC, SKRELL),
-		"Coughing" = list(DIONA, IPC),
-		"Seizures" = list(DIONA, IPC),
-		"Tourette" = list(DIONA, VOX),
-		"Nervous" = list(DIONA),
-		"Strong mind" = list(DIONA, IPC)
+	quirk_blacklist = list(
+		list(QUIRK_LIGHT_DRINKER, QUIRK_ALCOHOL_TOLERANCE),
+		list(QUIRK_STRONG_MIND, QUIRK_TOURETTE),
+		list(QUIRK_BLIND, QUIRK_NEARSIGHTED),
+		list(QUIRK_LOW_PAIN_THRESHOLD, QUIRK_HIGH_PAIN_THRESHOLD)
 		)
 
 	..()
@@ -75,10 +63,14 @@ var/datum/subsystem/quirks/SSquirks
 	// Sort by Positive, Negative, Neutral; and then by name
 	var/list/quirk_list = sortList(subtypesof(/datum/quirk), /proc/cmp_quirk_asc)
 
-	for(var/V in quirk_list)
-		var/datum/quirk/T = V
-		quirks[initial(T.name)] = T
-		quirk_points[initial(T.name)] = initial(T.value)
+	for(var/quirk_type in quirk_list)
+		var/datum/quirk/T = new quirk_type
+		quirks[T.name] = quirk_type
+		quirk_points[T.name] = T.value
+
+		var/list/incompat = T.get_incompatible_species()
+		if(incompat.len)
+			quirk_blacklist_species[T.name] = incompat
 
 /datum/subsystem/quirks/proc/AssignQuirks(mob/living/user, client/C, spawn_effects)
 	GenerateQuirks(C)
