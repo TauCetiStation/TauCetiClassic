@@ -29,6 +29,10 @@
 
 /obj/item/weapon/nullrod/attack_self(mob/living/user)
 	if(user.mind && user.mind.holy_role && !tried_replacing)
+		if(!global.chaplain_religion)
+			to_chat(user, "<span class='warning'>The stars are not in position for this tribute. Await round start.</span>")
+			return
+
 		tried_replacing = TRUE
 
 		var/list/choices = list()
