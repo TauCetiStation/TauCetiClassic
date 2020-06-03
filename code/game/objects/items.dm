@@ -59,7 +59,7 @@
 	var/can_be_holstered = FALSE
 	var/uncleanable = 0
 	var/toolspeed = 1
-
+	var/attackable_by_items = FALSE //Can be attacked by other items
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
 	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
@@ -413,6 +413,8 @@
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 /obj/item/attackby(obj/item/weapon/W, mob/user, params)
+	if(attackable_by_items)
+		..()
 	if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)

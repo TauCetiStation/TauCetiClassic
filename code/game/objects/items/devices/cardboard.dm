@@ -4,10 +4,11 @@
 	icon = 'icons/obj/cardboard_cutout.dmi'
 	icon_state = "cutout_basic"
 	w_class = ITEM_SIZE_LARGE
+	attackable_by_items = TRUE
 	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
 		"Traitor", "Nuke Op", "Cultist","Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Deathsquad Officer", "Ian")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
-
+	var/painting = FALSE
 	var/lastattacker = null
 
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)
@@ -36,14 +37,16 @@
 	pushed_over = FALSE
 
 /obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user)
-	change_appearance(I, user)
+	if(istype(I,/obj/item/toy/crayon))
+		change_appearance(I, user)
+		return
+	..()
 	if(I.flags & NOBLUDGEON)
 		return
 	if(!I.force)
 		playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER)
 	else if(length(I.hitsound))
 		playsound(loc, pick(I.hitsound), VOL_EFFECTS_MASTER)
-
 	user.do_attack_animation(src)
 
 	if(I.force)
@@ -53,7 +56,6 @@
 
 		if(prob(I.force))
 			push_over()
-	user.SetNextMove(CLICK_CD_MELEE)
 
 /obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
@@ -68,9 +70,11 @@
 		to_chat(user,"<span class='warning'>Right [src] first!</span>")
 		return
 	var/new_appearance = input(user, "Choose a new appearance for [src].", "26th Century Deception") as null|anything in possible_appearances
-	if(!new_appearance || !crayon)
+	if(!new_appearance || !crayon || painting)
 		return
+	painting = TRUE
 	if(!do_after(user, 10, FALSE, src, TRUE))
+		painting = FALSE
 		return
 	user.visible_message("<span class='notice'>[user] gives [src] a new look.</span>", "<span class='notice'>Voila! You give [src] a new look.</span>")
 	alpha = 255
@@ -126,4 +130,5 @@
 			name = "Ian"
 			desc = "A cardboard cutout of the HoP's beloved corgi."
 			icon_state = "cutout_ian"
+	painting = FALSE
 	return 1
