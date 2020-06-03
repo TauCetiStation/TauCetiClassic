@@ -53,6 +53,7 @@
 
 		if(prob(I.force))
 			push_over()
+	user.SetNextMove(CLICK_CD_MELEE)
 
 /obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
