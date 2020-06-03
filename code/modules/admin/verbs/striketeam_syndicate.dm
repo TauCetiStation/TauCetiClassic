@@ -96,7 +96,7 @@ var/global/sent_syndicate_strike_team = 0
 
 	for (var/obj/effect/landmark/L in landmarks_list)
 		if (L.name == "Syndicate-Commando-Bomb")
-			for(var/i=0,i < 6, i++)
+			for(var/i in 1 to 7)
 				new /obj/item/weapon/grenade/syndieminibomb(L.loc)
 			qdel(L)
 
