@@ -301,10 +301,14 @@
 			state = STATE_ALERT_LEVEL
 
 		if("distress")
+			src.state = STATE_DEFAULT
+			if(src.authenticated)
+				src.state = STATE_DISTRESS
+		if("distress2")
 			if(state == STATE_DISTRESS)
-				if(world.time < 10 MINUTES)
+				/*if(world.time < 10 MINUTES)
 					to_chat(usr, "<span class='warning'>The distress beacon cannot be launched this early in the shift. Please wait another [round((10 MINUTES-world.time)/600)] minutes before trying again.</span>")
-					return FALSE
+					return FALSE*/
 
 				if(!ticker?.mode)
 					return FALSE //Not a game mode?
@@ -318,10 +322,11 @@
 					return FALSE
 
 
-				for(var/client/X in global.admins)
-					X.mob.playsound_local(null, 'sound/machines/fax_centcomm.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
-					to_chat (X, "<span class='notice'><b><font color=orange>DISTRESS:</font>[key_name(usr)] has called a Distress Beacon (<A HREF='?_src_=holder;distress=\ref[X.holder]'>SEND</A>) (<A HREF='?_src_=holder;deny=\ref[X.holder]'>DENY</A>)(<A HREF='?_src_=holder;adminplayerobservejump=\ref[X.holder]'>JMP</A>)</b></span>")
-
+				for(var/client/C in admins)
+					if((R_ADMIN) & C.holder.rights)
+						//C << 'sound/effects/sos-morse-code.ogg'
+						to_chat(C, "[key_name(usr)] has requested a Distress Beacon! (<A HREF='?_src_=holder;ccmark=\ref[usr]'>Mark</A>) (<A HREF='?_src_=holder;distress=\ref[usr]'>SEND</A>) (<A HREF='?_src_=holder;deny=\ref[usr]'>DENY</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[usr]'>JMP</A>) (<A HREF='?_src_=holder;CentcommReply=\ref[usr]'>RPLY</A>)")
+				to_chat(usr, "<span class='notice'>A distress beacon request has been sent to USCM Central Command.</span>")
 				to_chat(usr, "<span class='boldnotice'>A distress beacon will launch in 60 seconds unless High Command responds otherwise.</span>")
 
 				ticker.mode.distress_cancelled = FALSE
@@ -371,6 +376,7 @@
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]"
 				if (src.authenticated==2)
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make An Announcement</A> \]"
+					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=distress'>Send Distress Beacon</A> \]"
 					if(src.emagged == 0)
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=MessageCentcomm'>Send an emergency message to Centcomm</A> \]"
 					else
@@ -434,6 +440,10 @@
 			dat += "Current alert level: [get_security_level()]<BR>"
 			dat += "Confirm the change to: [num2seclevel(tmp_alertlevel)]<BR>"
 			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel'>Swipe ID</A> to confirm change.<BR>"
+		if(STATE_DISTRESS)
+			dat += "Are you sure you want to launch distress beacon? \[ <A HREF='?src=\ref[src];operation=distress2'>OK</A> | <A HREF='?src=\ref[src];operation=main'>Cancel</A> \]"
+
+
 
 	dat += "<BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 	user << browse(entity_ja(dat), "window=communications;size=400x500")
