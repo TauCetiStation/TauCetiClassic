@@ -284,8 +284,11 @@
 				if(D)
 					if(D.security_level > 0)
 						attempt_pin = input("Enter pin code", "Vendor transaction") as num
-					if(attempt_pin)
+						if(isnull(attempt_pin))
+							to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
+							return
 						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
+
 					if(D)
 						var/transaction_amount = currently_vending.price
 						if(transaction_amount <= D.money)
@@ -1096,7 +1099,7 @@
 	icon_state = "engi"
 	icon_deny = "engi-deny"
 	req_access = list(11)
-	products = list(/obj/item/clothing/under/rank/chief_engineer = 4,/obj/item/clothing/under/rank/engineer = 4,/obj/item/clothing/shoes/workboots = 4,/obj/item/clothing/head/hardhat/yellow = 4,
+	products = list(/obj/item/clothing/under/rank/chief_engineer = 4,/obj/item/clothing/under/rank/engineer = 4,/obj/item/clothing/shoes/boots/work = 4,/obj/item/clothing/head/hardhat/yellow = 4,
 					/obj/item/clothing/head/hardhat/yellow/visor = 1,/obj/item/weapon/storage/belt/utility = 4,/obj/item/clothing/glasses/meson = 4,/obj/item/clothing/gloves/yellow = 4, /obj/item/weapon/screwdriver = 12,
 					/obj/item/weapon/crowbar = 12,/obj/item/weapon/wirecutters = 12,/obj/item/device/multitool = 12,/obj/item/weapon/wrench = 12,/obj/item/device/t_scanner = 12,
 					/obj/item/stack/cable_coil/heavyduty = 8, /obj/item/weapon/stock_parts/cell = 8, /obj/item/weapon/weldingtool = 8,/obj/item/clothing/head/welding = 8,
