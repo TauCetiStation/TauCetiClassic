@@ -520,7 +520,6 @@ var/global/list/all_objectives = list()
 		"a captain's jumpsuit" = /obj/item/clothing/under/rank/captain,
 		"a functional AI" = /obj/item/device/aicard,
 		"a pair of magboots" = /obj/item/clothing/shoes/magboots,
-		"a head of security's rig" = /obj/item/clothing/suit/space/rig/security/hos,
 		"the station blueprints" = /obj/item/blueprints,
 		"a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
 		"28 moles of phoron (full tank)" = /obj/item/weapon/tank,
