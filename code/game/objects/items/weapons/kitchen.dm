@@ -133,6 +133,9 @@
 	m_amt = 12000
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	tools = list(
+		TOOL_KNIFE = 1
+		)
 
 /obj/item/weapon/kitchenknife/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='warning'><b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b></span>", \
@@ -150,7 +153,6 @@
 	desc = "The bluntest of blades."
 	icon_state = "pknife"
 	force = 0
-	w_class = ITEM_SIZE_SMALL
 	throwforce = 0
 
 /obj/item/weapon/kitchenknife/ritual
@@ -159,6 +161,14 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
 
+/obj/item/weapon/kitchenknife/combat
+	name = "combat knife"
+	desc = "It's a combat knife, used galaxywide by military, mercenaries and wannabe survivialists."
+	force = 13
+	throwforce = 10
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "combat_knife"
+	origin_tech = "materials=1;combat=1"
 /*
  * Bucher's cleaver
  */

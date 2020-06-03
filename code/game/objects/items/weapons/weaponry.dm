@@ -100,6 +100,9 @@
 	hitsound = list('sound/weapons/Genhit.ogg')
 	attack_verb = list("stubbed", "poked")
 	var/extended = FALSE
+	tools = list(
+		TOOL_KNIFE = 1
+		)
 
 /obj/item/weapon/switchblade/attack_self(mob/user)
 	extended = !extended

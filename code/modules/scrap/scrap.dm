@@ -124,7 +124,7 @@ var/global/list/scrap_base_cache = list()
 
 //stupid shard copypaste
 /obj/structure/scrap/Crossed(atom/movable/AM)
-	if(ismob(AM))
+	if(ismob(AM) &&  !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 		var/mob/M = AM
 		playsound(src, 'sound/effects/glass_step.ogg', VOL_EFFECTS_MASTER)
 		if(ishuman(M) && !M.buckled)
