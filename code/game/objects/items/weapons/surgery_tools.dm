@@ -99,6 +99,9 @@
 	g_amt = 5000
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	tools = list(
+		TOOL_KNIFE = 1
+		)
 
 /obj/item/weapon/scalpel/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='warning'><b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b></span>", \
@@ -140,7 +143,7 @@
 	icon_state = "scalpel_manager_on"
 	force = 7.5
 	toolspeed = 0.6
-
+	tools = list()
 /*
  * Circular Saw
  */

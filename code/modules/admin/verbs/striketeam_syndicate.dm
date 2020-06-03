@@ -146,9 +146,9 @@ var/global/sent_syndicate_strike_team = 0
 	equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), SLOT_SHOES)
 	equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(src), SLOT_GLOVES)
 	if (!syndicate_leader_selected)
-		equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/syndicate/elite(src), SLOT_HEAD)
+		equip_to_slot_or_del(new /obj/item/clothing/suit/space/syndicate/elite(src), SLOT_WEAR_SUIT)
 	else
-		equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/syndicate/elite/commander(src), SLOT_HEAD)
+		equip_to_slot_or_del(new /obj/item/clothing/suit/space/syndicate/elite/commander(src), SLOT_WEAR_SUIT)
 	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/syndicate(src), SLOT_WEAR_MASK)
 	equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal(src), SLOT_GLASSES)
 

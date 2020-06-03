@@ -96,9 +96,7 @@
 		H.visible_message("<span class='danger'>[M] has been attacked with the [src] by [user]!</span>")
 
 		if(!(user.a_intent == INTENT_HARM))
-			user.attack_log += "\[[time_stamp()]\]<font color='red'> attempted to stun [H.name] ([H.ckey]) with [src.name]</font>"
-			H.attack_log += "\[[time_stamp()]\]<font color='orange'> stunned by [user.name] ([user.ckey]) with [src.name]</font>"
-			msg_admin_attack("[key_name(user)] attempted to stun [key_name(H)] with [src.name]", user)
+			H.log_combat(user, "stunned (attempt) with [name]")
 
 		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 		if(charges < 1)

@@ -9225,7 +9225,7 @@
 "aGr" = (
 /obj/structure/rack,
 /obj/item/clothing/under/syndicate/combat,
-/obj/item/clothing/shoes/galoshes,
+/obj/item/clothing/shoes/boots/galoshes,
 /obj/item/clothing/gloves/purple,
 /obj/item/clothing/suit/bio_suit/new_hazmat/janitor,
 /obj/item/clothing/head/bio_hood/new_hazmat/janitor,
@@ -12667,7 +12667,7 @@
 /area/centcom/tdome)
 "aTr" = (
 /obj/structure/closet/secure_closet,
-/obj/item/clothing/shoes/combat,
+/obj/item/clothing/shoes/boots/combat,
 /obj/item/clothing/gloves/black,
 /obj/item/clothing/glasses/sunglasses/sechud,
 /obj/item/device/flash,
@@ -12692,7 +12692,7 @@
 /area/centcom/living)
 "aTt" = (
 /obj/structure/closet/secure_closet,
-/obj/item/clothing/shoes/combat,
+/obj/item/clothing/shoes/boots/combat,
 /obj/item/clothing/gloves/black,
 /obj/item/clothing/glasses/sunglasses/sechud,
 /obj/item/device/flash,
@@ -13230,7 +13230,7 @@
 /area/centcom/living)
 "aVh" = (
 /obj/structure/closet/secure_closet,
-/obj/item/clothing/shoes/combat,
+/obj/item/clothing/shoes/boots/combat,
 /obj/item/clothing/gloves/black,
 /obj/item/clothing/glasses/sunglasses/sechud,
 /obj/item/device/flash,

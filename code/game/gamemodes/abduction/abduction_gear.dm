@@ -490,9 +490,7 @@
 							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
 	playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 
-	L.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> stunned <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
-	user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> stunned <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
-	msg_admin_attack("[user] ([user.ckey]) stunned [L] ([L.ckey]) with a [src]", user)
+	L.log_combat(user, "stunned with <b>[name]</b>")
 	return
 
 /obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
@@ -502,9 +500,7 @@
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 	playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 
-	L.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> put to sleep <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
-	user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> put to sleep <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
-	msg_admin_attack("[user] ([user.ckey]) put to sleep [L] ([L.ckey]) with a [src]", user)
+	L.log_combat(user, "put to sleep with \a [src]")
 	return
 
 /obj/item/weapon/abductor_baton/proc/CuffAttack(mob/living/L,mob/living/user)
@@ -520,9 +516,7 @@
 				C.handcuffed = new /obj/item/weapon/handcuffs/alien(C)
 				C.update_inv_handcuffed()
 				to_chat(user, "<span class='notice'>You handcuff [C].</span>")
-				L.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> handcuffed <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
-				user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> handcuffed <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
-				msg_admin_attack("[user] ([user.ckey]) handcuffed [L] ([L.ckey]) with a [src]", user)
+				L.log_combat(user, "handcuffed with \a [src]")
 		else
 			to_chat(user, "<span class='warning'>You fail to handcuff [C].</span>")
 	return

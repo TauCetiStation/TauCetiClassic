@@ -64,7 +64,7 @@
 	efficiency = initial(efficiency)* E
 	min_health = initial(min_health) * E
 	available_chems = list()
-	for(var/i in 1 to I)
+	for(var/i in 1 to min(I, possible_chems.len))
 		available_chems |= possible_chems[i]
 
 /obj/machinery/sleeper/allow_drop()
