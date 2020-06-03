@@ -2009,6 +2009,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	return species && (species.dietflags & flags)
 
 /mob/living/carbon/human/get_taste_sensitivity()
+	if (HAS_TRAIT(src, TRAIT_AGEUSIA))
+		return TASTE_SENSITIVITY_NO_TASTE
 	if(species)
 		return species.taste_sensitivity
 	else
