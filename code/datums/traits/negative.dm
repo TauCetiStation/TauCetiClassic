@@ -169,18 +169,55 @@
 	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctually act careful, and constantly feel a sense of dread."
 	value = -1
 
+	gain_text = "<span class='notice'>Just thinking about being in the dark makes you shiver.</span>"
+	lose_text = "<span class='notice'>You are not afraid of darkness anymore!</span>"
+
 	req_species_flags = list(
 		NO_EMOTION = FALSE,
 	)
 
-/datum/quirk/nyctophobia/on_process()
+	var/is_afraid = FALSE
+
+/datum/quirk/nyctophobia/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	if(H.species.flags [NO_EMOTION])  //we're tied with the dark, so we don't get scared of it; don't cleanse outright to avoid cheese
+
+	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), .proc/on_move)
+
+/datum/quirk/nyctophobia/proc/on_move(datum/source, atom/oldLoc, dir)
+	var/mob/living/carbon/human/H = quirk_holder
+
+	if(isturf(oldLoc))
+		UnregisterSignal(H, list(COMSIG_LIGHT_UPDATE_OBJECT))
+
+	check_fear(H, get_turf(H))
+
+	if(isturf(H.loc))
+		RegisterSignal(H, list(COMSIG_LIGHT_UPDATE_OBJECT), .proc/check_fear)
+
+/datum/quirk/nyctophobia/proc/become_afraid()
+	if(is_afraid)
 		return
-	var/turf/T = get_turf(quirk_holder)
-	var/lums = T.get_lumcount()
-	if(lums <= 0.2)
-		if(quirk_holder.m_intent == MOVE_INTENT_RUN)
-			to_chat(quirk_holder, "<span class='warning'>Easy, easy, take it slow... you're in the dark...</span>")
-			quirk_holder.m_intent = MOVE_INTENT_WALK
-			quirk_holder.hud_used.move_intent.icon_state = "walking"
+	is_afraid = TRUE
+
+	var/mob/living/L = quirk_holder
+
+	L.emote("scream")
+	to_chat(quirk_holder, "<span class='warning'>Easy, easy, take it slow... you're in the dark...</span>")
+
+	L.set_m_intent(MOVE_INTENT_WALK)
+	ADD_TRAIT(quirk_holder, TRAIT_NO_RUN, FEAR_TRAIT)
+
+/datum/quirk/nyctophobia/proc/chill()
+	if(!is_afraid)
+		return
+	is_afraid = FALSE
+
+	REMOVE_TRAIT(quirk_holder, TRAIT_NO_RUN, FEAR_TRAIT)
+
+/datum/quirk/nyctophobia/proc/check_fear(datum/source, turf/myturf)
+	var/lums = myturf.get_lumcount()
+
+	if(lums <= 0.4)
+		become_afraid()
+	else
+		chill()
