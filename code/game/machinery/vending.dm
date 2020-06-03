@@ -284,8 +284,11 @@
 				if(D)
 					if(D.security_level > 0)
 						attempt_pin = input("Enter pin code", "Vendor transaction") as num
-					if(attempt_pin)
+						if(isnull(attempt_pin))
+							to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
+							return
 						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
+
 					if(D)
 						var/transaction_amount = currently_vending.price
 						if(transaction_amount <= D.money)
