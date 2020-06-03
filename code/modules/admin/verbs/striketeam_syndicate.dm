@@ -163,11 +163,9 @@ var/global/sent_syndicate_strike_team = 0
 	equip_to_slot_or_del(new /obj/item/device/flashlight(src), SLOT_IN_BACKPACK)
 	var/obj/item/device/radio/uplink/SDCU = new /obj/item/device/radio/uplink(src.loc)
 	if (syndicate_leader_selected)
-		equip_to_slot_or_del(new /obj/item/clothing/suit/space/syndicate/elite/commander(src), SLOT_WEAR_SUIT)
 		equip_to_slot_or_del(new /obj/item/weapon/pinpointer(src), SLOT_IN_BACKPACK)
 		SDCU.hidden_uplink.uses = 15
 	else
-		equip_to_slot_or_del(new /obj/item/clothing/suit/space/syndicate/elite(src), SLOT_WEAR_SUIT)
 		SDCU.hidden_uplink.uses = 8
 	equip_to_slot_or_del(SDCU, SLOT_IN_BACKPACK)
 	equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(src), SLOT_L_STORE)
