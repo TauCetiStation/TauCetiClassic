@@ -82,21 +82,7 @@
 /mob/living/carbon/xenomorph/facehugger/attack_ui(slot_id)
 	return
 
-/mob/living/carbon/alien/facehugger/get_unarmed_attack()
-	var/retDam = 2
-	var/retDamType = BRUTE
-	var/retFlags = DAM_SHARP
-	var/retVerb = "gnaw"
-	var/retSound = 'sound/weapons/bite.ogg'
-	var/retMissSound = 'sound/weapons/punchmiss.ogg'
-
-	if(HULK in mutations)
-		retDam += 4
-
-	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
-				"miss_sound" = retMissSound)
-
-/mob/living/carbon/alien/facehugger/canGrab(atom/movable/target, show_warnings = TRUE)
+/mob/living/carbon/xenomorph/facehugger/canGrab(atom/movable/target, show_warnings = TRUE)
 	if(!ishuman(target) && !ismonkey(target))
 		if(show_warnings)
 			to_chat(src, "<span class='warning'>[target] is incompatible.</span>")
@@ -113,9 +99,21 @@
 		if(show_warnings)
 			to_chat(src, "<span class='warning'>[target] looks dead.</span>")
 		return FALSE
-	return ..()
 
-/mob/living/carbon/alien/facehugger/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+	// very stupid copypasta since parent checks for size differences to grab.
+	if(C == src)
+		return FALSE
+	if(!isturf(C.loc))
+		return FALSE
+	if(incapacitated())
+		return FALSE
+	if(C.anchored)
+		return FALSE
+
+	return TRUE
+
+/mob/living/carbon/xenomorph/facehugger/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+	to_chat(world, "Grabbing and shit")
 	// See facehugger/canGrab()
 	var/mob/living/carbon/C = target
 
