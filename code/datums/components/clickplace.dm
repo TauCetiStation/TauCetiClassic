@@ -6,6 +6,8 @@
 /datum/mechanic_tip/clickplace/New()
 	description = "Clicking on this object with any intent selected except [INTENT_HARM] will cause the item in currently selected hand to be placed onto it. Dragging and dropping an item on this object with your mouse will cause it to try to move onto the object."
 
+
+
 /*
  * This component allows items to be placed on other items
  * in "precise" click coordinates with just a simple click!

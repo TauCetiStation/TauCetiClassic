@@ -29,17 +29,22 @@
 
 /obj/item/weapon/nullrod/attack_self(mob/living/user)
 	if(user.mind && user.mind.holy_role && !tried_replacing)
-		tried_replacing = FALSE
+		tried_replacing = TRUE
+
 		var/list/choices = list()
-		for(var/obj/item/weapon/nullrod/null_type in typesof(/obj/item/weapon/nullrod))
-			choices[initial(null_type.name)] = null_type
+		for(var/null_type in typesof(/obj/item/weapon/nullrod))
+			var/obj/item/weapon/nullrod/N = null_type
+			choices[initial(N.name)] = N
+
 		var/choice = input(user, "Choose your nullrod type.", "Nullrod choice") as null|anything in choices
 		if(choice && Adjacent(user))
 			qdel(src)
 			var/chosen_type = choices[choice]
 			var/obj/item/weapon/nullrod/new_rod = new chosen_type(user.loc)
+			new_rod.tried_replacing = TRUE
 			user.put_in_hands(new_rod)
 		return
+
 	return ..()
 
 /obj/item/weapon/nullrod/equipped(mob/user, slot)

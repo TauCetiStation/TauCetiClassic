@@ -1,3 +1,26 @@
+#define FORCEFIELDING_TIP "Is forcefielding."
+#define FORCEFIELDED_TIP "Is forcefielded."
+
+/datum/mechanic_tip/forcefielding
+	tip_name = FORCEFIELDING_TIP
+
+/datum/mechanic_tip/forcefielding/New(datum/component/forcefield/F)
+	// See human_attackhand.dm. Default damage is 2.
+	description = "[F.parent] appears to be able to create a [F.name] that can withstand about [round(F.max_health * 0.5)] human punches."
+	description += "\nTakes [round(F.reactivation_time * 0.1)] seconds to be reactivated after completely destroyed."
+	description += "\nTakes about [round(F.recharge_time * 0.1)] seconds to be fully recharged."
+
+	if(!F.permit_interaction)
+		description += "\nAnything protected by [F.name] won't be able to be interact with the outside world."
+
+/datum/mechanic_tip/forcefielded
+	tip_name = FORCEFIELDED_TIP
+
+/datum/mechanic_tip/forcefielded/New(datum/component/forcefield/F)
+	description = "Is currently protected by [F.parent] with \a [F.name]."
+
+
+
 /obj/effect/effect/forcefield
 	name = "forcefield"
 
@@ -103,6 +126,9 @@
 	RegisterSignal(parent, list(COMSIG_FORCEFIELD_PROTECT), .proc/add_protected)
 	RegisterSignal(parent, list(COMSIG_FORCEFIELD_UNPROTECT), .proc/remove_protected)
 
+	var/datum/mechanic_tip/forcefielding/forcefielding_tip = new(src)
+	parent.AddComponent(/datum/component/mechanic_desc, list(forcefielding_tip))
+
 	shield_up()
 
 /datum/component/forcefield/Destroy()
@@ -111,6 +137,8 @@
 	for(var/atom/A in protected)
 		remove_protected(parent, A)
 	protected = null
+
+	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(FORCEFIELDING_TIP))
 
 	QDEL_NULL(shield_overlay)
 	return ..()
@@ -304,6 +332,9 @@
 				L.visible_message("<span class='warning bold'>[name] has broken [L]'s grip on [G.affecting]!</span>")
 			qdel(G)
 
+	var/datum/mechanic_tip/forcefielded/forcefielded_tip = new(src)
+	A.AddComponent(/datum/component/mechanic_desc, list(forcefielded_tip))
+
 	RegisterSignal(A, list(COMSIG_LIVING_CHECK_SHIELDS), .proc/on_hit)
 
 /// Stop protecting an atom.
@@ -314,6 +345,8 @@
 	if(!permit_interaction)
 		if(ismob(A))
 			UnregisterSignal(A, list(COMSIG_MOB_CLICK))
+
+	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(FORCEFIELDED_TIP))
 
 	UnregisterSignal(A, list(COMSIG_LIVING_CHECK_SHIELDS))
 
