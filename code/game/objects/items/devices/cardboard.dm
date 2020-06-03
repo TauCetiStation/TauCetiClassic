@@ -41,8 +41,6 @@
 		change_appearance(I, user)
 		return
 	..()
-	if(I.flags & NOBLUDGEON)
-		return
 	if(!I.force)
 		playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER)
 	else if(length(I.hitsound))
@@ -50,10 +48,6 @@
 	user.do_attack_animation(src)
 
 	if(I.force)
-		user.visible_message("<span class='danger'>[user] has hit \
-			[src] with [I]!</span>", "<span class='danger'>You hit [src] \
-			with [I]!</span>")
-
 		if(prob(I.force))
 			push_over()
 
@@ -64,7 +58,7 @@
 		push_over()
 
 /obj/item/cardboard_cutout/proc/change_appearance(obj/item/toy/crayon/crayon, mob/living/user)
-	if(!istype(crayon,/obj/item/toy/crayon) || !user)
+	if(!user)
 		return
 	if(pushed_over)
 		to_chat(user,"<span class='warning'>Right [src] first!</span>")
