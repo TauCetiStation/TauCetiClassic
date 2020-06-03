@@ -208,11 +208,12 @@
 	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(SWIPING_TIP))
 	return ..()
 
-/datum/component/swiping/proc/get_sweep_objects(turf/start, obj/item/I, mob/user, list/directions, sweep_image)
+/datum/component/swiping/proc/get_sweep_objects(turf/start, obj/item/I, mob/user, list/directions, sweep_delay)
 	if(on_get_sweep_objects)
-		return on_get_sweep_objects.Invoke(start, I, user, directions)
+		return on_get_sweep_objects.Invoke(start, I, user, directions, sweep_delay)
+
 	var/list/sweep_objects = list()
-	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions, sweep_image)
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions, sweep_delay)
 	return sweep_objects
 
 /datum/component/swiping/proc/move_sweep_image(turf/target, obj/effect/effect/weapon_sweep/sweep_image)
