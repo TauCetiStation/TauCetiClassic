@@ -60,3 +60,12 @@
 
 /mob/living/carbon/xenomorph/larva/can_pickup(obj/O)
 	return FALSE
+
+/mob/living/carbon/xenomorph/facehugger/is_usable_head(targetzone = null)
+	return TRUE
+
+/mob/living/carbon/xenomorph/facehugger/is_usable_arm(targetzone = null)
+	return FALSE
+
+/mob/living/carbon/xenomorph/facehugger/is_usable_leg(targetzone = null)
+	return FALSE

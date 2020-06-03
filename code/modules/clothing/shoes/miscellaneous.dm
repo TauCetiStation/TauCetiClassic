@@ -16,36 +16,6 @@
 	item_color = "mime"
 	clipped_status = CLIPPABLE
 
-/obj/item/clothing/shoes/swat
-	name = "SWAT shoes"
-	desc = "When you want to turn up the heat."
-	icon_state = "swat"
-	item_state = "wjboots"
-	flags = NOSLIP
-	siemens_coefficient = 0.6
-	clipped_status = CLIPPABLE
-
-/obj/item/clothing/shoes/combat //Basically SWAT shoes combined with galoshes.
-	name = "combat boots"
-	desc = "When you REALLY want to turn up the heat"
-	icon_state = "swat"
-	item_state = "wjboots"
-	flags = NOSLIP
-	siemens_coefficient = 0.6
-	clipped_status = CLIPPABLE
-
-	cold_protection = LEGS
-	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = LEGS
-	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
-
-/obj/item/clothing/shoes/combat/cut // Basically combat shoes but for xenos.
-	name = "mangled combat boots"
-	desc = "When you REALLY want to turn up the heat<br>They have the toe caps cut off of them."
-	icon_state = "swat_cut"
-	clipped_status = CLIPPED
-	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
-
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
 	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
@@ -92,15 +62,6 @@
 	name = "magic shoes"
 	icon_state = "black"
 	body_parts_covered = LEGS
-
-/obj/item/clothing/shoes/galoshes
-	desc = "Rubber boots."
-	name = "galoshes"
-	icon_state = "galoshes"
-	permeability_coefficient = 0.05
-	flags = NOSLIP
-	slowdown = SHOES_SLOWDOWN+1
-	species_restricted = null
 
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn they're huge!"
@@ -186,29 +147,6 @@
 		return
 	start_waddling(source)
 
-/obj/item/clothing/shoes/jackboots
-	name = "jackboots"
-	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
-	icon_state = "wjboots"
-	item_state = "wjboots"
-	item_color = "hosred"
-	siemens_coefficient = 0.7
-	clipped_status = CLIPPABLE
-
-/obj/item/clothing/shoes/cult
-	name = "boots"
-	desc = "A pair of boots worn by the followers of Nar-Sie."
-	icon_state = "cult"
-	item_state = "cult"
-	item_color = "cult"
-	siemens_coefficient = 0.7
-
-	cold_protection = LEGS
-	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = LEGS
-	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = null
-
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"
 	desc = "Shoes for a cyborg costume."
@@ -267,13 +205,6 @@
 	magboot_state = "syndiemag"
 	slowdown_off = 1
 
-/obj/item/clothing/shoes/workboots
-	name = "work boots"
-	icon_state = "workboots"
-	item_color = "workboots"
-	item_state = "b_shoes"  // need sprites for this
-	clipped_status = CLIPPABLE
-
 /obj/item/clothing/shoes/roman
 	name = "roman sandals"
 	desc = "Sandals with buckled leather straps on it."
@@ -331,3 +262,11 @@
 	icon_state = "footwraps"
 	item_color = "footwraps"
 	species_restricted = null
+
+/obj/item/clothing/shoes/holoboots
+	name = "jackboots"
+	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
+	icon_state = "wjboots"
+	item_state = "wjboots"
+	item_color = "hosred"
+	clipped_status = CLIPPABLE
