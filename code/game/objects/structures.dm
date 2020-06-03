@@ -67,6 +67,9 @@
 	if(!climbable || !can_touch(user) || (!post_climb_check && (climber in climbers)))
 		return FALSE
 
+	if(climber.loc == loc)
+		return FALSE
+
 	if(user != climber)
 		if(!can_touch(climber))
 			return FALSE
