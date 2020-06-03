@@ -47,9 +47,8 @@
 		playsound(loc, pick(I.hitsound), VOL_EFFECTS_MASTER)
 	user.do_attack_animation(src)
 
-	if(I.force)
-		if(prob(I.force))
-			push_over()
+	if(I.force && prob(I.force))
+		push_over()
 
 /obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
