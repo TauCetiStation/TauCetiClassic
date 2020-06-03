@@ -187,13 +187,13 @@
 /datum/export/gear/shoes/combat
 	cost = 1000
 	unit_name = "combat boots"
-	export_types = list(/obj/item/clothing/shoes/combat,
-									/obj/item/clothing/shoes/swat)
+	export_types = list(/obj/item/clothing/shoes/boots/combat,
+									/obj/item/clothing/shoes/boots/swat)
 
 /datum/export/gear/shoes/jackboots
 	cost = 200
 	unit_name = "jackboots"
-	export_types = list(/obj/item/clothing/shoes/jackboots)
+	export_types = list(/obj/item/clothing/shoes/boots)
 
 /datum/export/gear/shoes/magboots
 	cost = 3000
