@@ -2417,10 +2417,15 @@
 	},
 /area/station/security/warden)
 "adZ" = (
-/obj/structure/table,
+/obj/structure/rack,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/kitchenknife/combat,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "bot"
+	icon_state = "delivery"
 	},
 /area/station/security/warden)
 "aea" = (
@@ -9589,12 +9594,12 @@
 /turf/simulated/wall,
 /area/station/hallway/secondary/entry)
 "apU" = (
-/mob/living/pbag,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/mob/living/pbag,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -18291,10 +18296,10 @@
 /turf/simulated/floor/plating,
 /area/station/security/lawoffice)
 "aGf" = (
-/mob/living/pbag,
 /obj/structure/sign/poster/official/work_for_a_future{
 	pixel_x = -32
 	},
+/mob/living/pbag,
 /turf/simulated/floor,
 /area/station/civilian/gym)
 "aGg" = (
