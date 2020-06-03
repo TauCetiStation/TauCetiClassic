@@ -119,6 +119,9 @@
 	RegisterSignal(possessed, list(COMSIG_PARENT_QDELETED), .proc/on_phylactery_destroyed)
 	possessed.forceMove(H.loc)
 
+	if(QDELING(possessed) || !get_turf(possessed))
+		return FALSE
+
 	var/list/allowed_name_mods = list(
 		RL_GROUP_PREFIX = 2,
 		RL_GROUP_SUFFIX = 2,
@@ -166,9 +169,8 @@
 
 	SEND_SIGNAL(possessed, COMSIG_NAME_MOD_ADD, /datum/name_modifier/prefix/cursed, 1)
 
-	qdel(possessed.GetComponent(/datum/component/bounded))
-
 	var/mob/living/simple_animal/hostile/H = parent
+	qdel(H.GetComponent(/datum/component/bounded))
 	H.forceMove(possessed)
 
 	rejuve_timer = addtimer(CALLBACK(src, .proc/come_back), rand(6, 10) MINUTES, TIMER_STOPPABLE)

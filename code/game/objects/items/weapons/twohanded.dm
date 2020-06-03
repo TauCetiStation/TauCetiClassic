@@ -57,7 +57,7 @@
 /obj/item/weapon/twohanded/update_icon()
 	return
 
-/obj/item/weapon/twohanded/pickup(mob/user)
+/obj/item/weapon/twohanded/pickup(mob/living/user)
 	unwield()
 
 /obj/item/weapon/twohanded/attack_self(mob/user)
@@ -222,14 +222,14 @@
 /obj/item/weapon/twohanded/dualsaber/proc/can_spin(mob/user)
 	return wielded
 
-/obj/item/weapon/twohanded/dualsaber/proc/get_sweep_objs(turf/start, obj/item/I, mob/user, list/directions, obj/effect/effect/weapon_sweep/sweep_image)
+/obj/item/weapon/twohanded/dualsaber/proc/get_sweep_objs(turf/start, obj/item/I, mob/user, list/directions, sweep_delay)
 	var/list/directions_opposite = list()
 	for(var/dir_ in directions)
 		directions_opposite += turn(dir_, 180)
 
 	var/list/sweep_objects = list()
-	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions, sweep_image)
-	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions_opposite, sweep_image)
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions, sweep_delay)
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions_opposite, sweep_delay)
 	return sweep_objects
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()

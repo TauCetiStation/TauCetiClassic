@@ -397,9 +397,7 @@
 	if(borer)
 		borer.detatch()
 
-	user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	msg_admin_attack("[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])", user)
+	target.log_combat(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
 
 	target.chest_brain_op_stage = 2.0
 	target.death()
@@ -468,9 +466,7 @@
 	user.visible_message("<span class='notice'>[user] pries out [target]'s posi-brain from \his hatch with \the [tool].</span>",
 	"<span class='notice'>You pry out [target]'s posi-brain from hatch with \the [tool].</span>")
 
-	user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	msg_admin_attack("[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])", user)
+	target.log_combat(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
 
 	var/obj/item/device/mmi/posibrain/P = new(target.loc)
 	P.transfer_identity(target)

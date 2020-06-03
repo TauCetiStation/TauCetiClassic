@@ -60,6 +60,17 @@
 	qdel(I)
 	shaking_anim = FALSE
 
+/turf/before_shake_animation(intensity, time, intensity_dropoff, list/viewers)
+	var/image/me = image(icon, icon_state)
+	me.appearance = src.appearance
+	me.plane = plane
+	me.layer = layer
+	me.loc = src
+	me.appearance_flags |= KEEP_APART
+
+	flick_overlay(me, viewers, time + 1)
+	QDEL_IN(me, time + 1)
+
 /turf/simulated/floor/before_shake_animation(intensity, time, intensity_dropoff, list/viewers)
 	if(is_catwalk())
 		return

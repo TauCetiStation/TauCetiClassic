@@ -13,7 +13,7 @@
 /obj/effect/effect/weapon_sweep/atom_init(mapload, obj/item/weapon/sweep_item, list/dirs_to_move, sweep_delay)
 	. = ..()
 	name = "sweeping [sweep_item]"
-	glide_size = DELAY2GLIDESIZE(sweep_item.sweep_step)
+	glide_size = DELAY2GLIDESIZE(sweep_delay)
 
 	appearance = sweep_item.appearance
 
@@ -208,11 +208,12 @@
 	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(SWIPING_TIP))
 	return ..()
 
-/datum/component/swiping/proc/get_sweep_objects(turf/start, obj/item/I, mob/user, list/directions, sweep_image)
+/datum/component/swiping/proc/get_sweep_objects(turf/start, obj/item/I, mob/user, list/directions, sweep_delay)
 	if(on_get_sweep_objects)
-		return on_get_sweep_objects.Invoke(start, I, user, directions)
+		return on_get_sweep_objects.Invoke(start, I, user, directions, sweep_delay)
+
 	var/list/sweep_objects = list()
-	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions, sweep_image)
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions, sweep_delay)
 	return sweep_objects
 
 /datum/component/swiping/proc/move_sweep_image(turf/target, obj/effect/effect/weapon_sweep/sweep_image)
@@ -293,21 +294,31 @@
 
 	var/turf/W_turf = get_turf(W)
 	var/turf/T_target = get_turf(target)
-	var/turf/T = get_step(W_turf, get_dir(W_turf, T_target))
+
+	var/obj/effect/effect/weapon_sweep/WS = new(W_turf, W, list(), W.sweep_step)
+	WS.invisibility = 101
+	WS.pass_flags = W.pass_flags
+
+	step(WS, get_dir(W_turf, T_target))
+
+	var/turf/T = get_turf(WS)
 
 	sweep_push(target, T, user)
 
 	user.do_attack_animation(T)
 
-	if(istype(get_turf(W), /turf/simulated) && istype(user.buckled, /obj/structure/stool/bed/chair) && !user.buckled.anchored)
+	if(istype(get_turf(W), /turf/simulated) && istype(user.buckled, /obj/structure/stool/bed/chair) && !user.buckled.anchored && user.buckled != target)
 		var/obj/structure/stool/bed/chair/buckled_to = user.buckled
 		if(!buckled_to.flipped)
-			var/direction = turn(get_dir(W_turf, T_target), 180)
+			var/direction = get_dir(T_target, W_turf)
 			INVOKE_ASYNC(src, .proc/push_on_chair, user.buckled, user, direction)
+			qdel(WS)
 			return COMSIG_ITEM_CANCEL_CLICKWITH
 
-	if(T.Adjacent(target))
+	if(WS.Adjacent(target))
 		sweep_push_success(target, user)
+
+	qdel(WS)
 
 	return COMSIG_ITEM_CANCEL_CLICKWITH
 
@@ -374,14 +385,23 @@
 
 	var/turf/W_turf = get_turf(W)
 	var/turf/T_target = get_turf(target)
-	var/turf/T = get_step(W_turf, get_dir(W_turf, T_target))
+
+	var/obj/effect/effect/weapon_sweep/WS = new(W_turf, W, list(), W.sweep_step)
+	WS.invisibility = 101
+	WS.pass_flags = W.pass_flags
+
+	step(WS, get_dir(W_turf, T_target))
+
+	var/turf/T = get_turf(WS)
 
 	sweep_pull(target, T, user)
 
 	user.do_attack_animation(T)
 
-	if(T.Adjacent(target))
+	if(WS.Adjacent(target))
 		sweep_pull_success(target, user)
+
+	qdel(WS)
 
 	return COMSIG_ITEM_CANCEL_CLICKWITH
 
