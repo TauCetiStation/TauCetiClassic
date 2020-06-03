@@ -8,7 +8,6 @@
 	maxHealth = 300
 	health = 300
 	immune_to_ssd = 1
-	anchored = 1
 
 	speak_emote = list("roars")
 	emote_hear = list("roars")
@@ -132,6 +131,7 @@
 		Mx.Scale(1)
 		Mx.Translate(0,0)
 	transform = Mx
+	default_transform = Mx
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	if(environment)

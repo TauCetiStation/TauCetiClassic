@@ -40,7 +40,7 @@
 	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(istype(H.shoes, /obj/item/clothing/shoes/galoshes))
+		if(istype(H.shoes, /obj/item/clothing/shoes/boots/galoshes))
 			. *= 0.5
 
 /obj/structure/stool/bed/chair/janitorialcart/on_propelled_bump(atom/A)

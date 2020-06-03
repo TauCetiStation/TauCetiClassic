@@ -329,9 +329,10 @@
 	victim.transform = prev_victim_M
 	victim.layer = prev_victim_layer
 
+	victim.visible_message("<span class='danger'>[attacker] has performed an uppercut on [victim]!</span>")
+
 	apply_effect(1, WEAKEN,  victim, attacker, min_value=1)
 	apply_damage(18, victim, attacker, zone=BP_HEAD)
-	victim.visible_message("<span class='danger'>[attacker] has performed an uppercut on [victim]!</span>")
 
 	if(iscarbon(victim))
 		var/mob/living/carbon/C = victim
@@ -364,6 +365,8 @@
 	allowed_target_zones = list(BP_GROIN)
 
 	heavy_animation = TRUE
+
+	force_dam_type = BRUTE
 
 /datum/combat_combo/suplex/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
@@ -424,11 +427,11 @@
 	victim.anchored = prev_victim_anchored
 	attacker.anchored = prev_attacker_anchored
 
-	apply_effect(4, WEAKEN, victim, attacker, min_value=1)
-	apply_damage(23, victim, attacker)
-
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	victim.visible_message("<span class='danger'>[attacker] has thrown [victim] over their shoulder!</span>")
+
+	apply_effect(4, WEAKEN, victim, attacker, min_value=1)
+	apply_damage(23, victim, attacker)
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/suplex/execute(mob/living/victim, mob/living/attacker)
@@ -453,6 +456,8 @@
 	require_arm_to_perform = TRUE
 
 	heavy_animation = TRUE
+
+	force_dam_type = BRUTE
 
 /datum/combat_combo/diving_elbow_drop/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
@@ -506,6 +511,9 @@
 	if(!do_combo(victim, attacker, 2))
 		return
 
+	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
+	attacker.visible_message("<span class='danger'>[attacker] falls elbow first onto [attacker.loc] with a loud thud!</span>")
+
 	for(var/mob/living/L in victim.loc)
 		if(L == attacker)
 			continue
@@ -515,9 +523,6 @@
 
 		event_log(L, attacker, "Diving Elbow Drop bypasser.")
 
-	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-	attacker.visible_message("<span class='danger'>[attacker] falls elbow first onto [attacker.loc] with a loud thud!</span>")
-
 	attacker.anchored = prev_anchored
 	attacker.canmove = prev_canmove
 	attacker.density = prev_density
@@ -525,6 +530,7 @@
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/diving_elbow_drop/execute(mob/living/victim, mob/living/attacker)
 	return
+
 
 
 /datum/combat_combo/dropkick
@@ -616,10 +622,11 @@
 			var/cur_movers = list() + collected - list(victim)
 
 			var/atom/old_V_loc = victim.loc
+			var/turf/target_turf = get_step(get_turf(victim), dropkick_dir)
 			step(victim, dropkick_dir)
 
-			if(old_V_loc != victim.loc)
-				var/list/candidates = victim.loc.contents - list(victim)
+			if(old_V_loc == victim.loc)
+				var/list/candidates = target_turf.contents - list(victim)
 				new_movers:
 					for(var/mob/living/new_mover in candidates)
 						if(new_mover == attacker)
@@ -680,6 +687,8 @@
 	allowed_target_zones = list(BP_CHEST)
 
 	heavy_animation = TRUE
+
+	force_dam_type = BRUTE
 
 /datum/combat_combo/charge/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
@@ -768,6 +777,8 @@
 
 	heavy_animation = TRUE
 
+	force_dam_type = BRUTE
+
 /datum/combat_combo/spin_throw/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
 		return
@@ -836,9 +847,7 @@
 					var/turf/end_T = target
 					var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
 
-					M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been thrown by [attacker.name] ([attacker.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
-					attacker.attack_log += text("\[[time_stamp()]\] <font color='red'>Has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
-					msg_admin_attack("[attacker.name] ([attacker.ckey]) has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]", attacker)
+					M.log_combat(attacker, "throwm from [start_T_descriptor] with the target [end_T_descriptor]")
 
 					M.throw_at(target, 6, 8, attacker)
 					apply_effect(7, WEAKEN, M, attacker, min_value=1)

@@ -133,6 +133,9 @@
 	m_amt = 12000
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	tools = list(
+		TOOL_KNIFE = 1
+		)
 
 /obj/item/weapon/kitchenknife/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='warning'><b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b></span>", \
@@ -150,7 +153,6 @@
 	desc = "The bluntest of blades."
 	icon_state = "pknife"
 	force = 0
-	w_class = ITEM_SIZE_SMALL
 	throwforce = 0
 
 /obj/item/weapon/kitchenknife/ritual
@@ -159,6 +161,14 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
 
+/obj/item/weapon/kitchenknife/combat
+	name = "combat knife"
+	desc = "It's a combat knife, used galaxywide by military, mercenaries and wannabe survivialists."
+	force = 13
+	throwforce = 10
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "combat_knife"
+	origin_tech = "materials=1;combat=1"
 /*
  * Bucher's cleaver
  */
@@ -208,9 +218,7 @@
 		user.Paralyse(2)
 		return
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])", user)
+	M.log_combat(user, "attacked with [name]")
 
 	var/t = user.zone_sel.selecting
 	if (t == BP_HEAD)
@@ -303,9 +311,7 @@
 			if (istype(location, /turf/simulated))
 				location.add_blood(H)     ///Plik plik, the sound of blood
 
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])", user)
+		M.log_combat(user, "attacked with [name]")
 
 		if(prob(15))
 			M.Weaken(3)
@@ -408,7 +414,7 @@
 
 	return val
 
-/obj/item/weapon/tray/pickup(mob/user)
+/obj/item/weapon/tray/pickup(mob/living/user)
 
 	if(!isturf(loc))
 		return

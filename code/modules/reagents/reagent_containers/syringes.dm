@@ -22,7 +22,7 @@
 /obj/item/weapon/reagent_containers/syringe/on_reagent_change()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/pickup(mob/user)
+/obj/item/weapon/reagent_containers/syringe/pickup(mob/living/user)
 	..()
 	update_icon()
 
@@ -148,9 +148,8 @@
 
 					var/mob/living/M = target
 					infect_limb(user, target)
-					M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
-					user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.key]). Reagents: [contained]</font>")
-					msg_admin_attack("[key_name(user)] injected [key_name(M)] with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
+
+					M.log_combat(user, "injected with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
 
 					src.reagents.reaction(target, INGEST)
 				else
@@ -179,12 +178,8 @@
 				update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/proc/syringestab(mob/living/carbon/target, mob/living/carbon/user)
-
 	if(target.try_inject(user, FALSE, TRUE))
-
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-		msg_admin_attack("[key_name(user)] attacked [key_name(target)] with [src.name] (INTENT: [uppertext(user.a_intent)])", user)
+		target.log_combat(user, "stabbed with [name] (INTENT: [uppertext(user.a_intent)])")
 
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
@@ -275,7 +270,7 @@
 /obj/item/weapon/reagent_containers/ld50_syringe/on_reagent_change()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/ld50_syringe/pickup(mob/user)
+/obj/item/weapon/reagent_containers/ld50_syringe/pickup(mob/living/user)
 	..()
 	update_icon()
 
