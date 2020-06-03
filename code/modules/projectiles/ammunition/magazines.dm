@@ -555,11 +555,11 @@
 		return ..()
 
 /obj/item/ammo_box/magazine/plasma/get_round(keep = FALSE)
-	return null
+	return
 
 /obj/item/ammo_box/magazine/plasma/proc/get_charge()
 	if(!power_supply)
-		return 0
+		return
 	return power_supply.charge
 
 /obj/item/ammo_box/magazine/plasma/proc/has_overcharge()
