@@ -304,9 +304,7 @@ var/global/combos_cheat_sheet = ""
 		visible_message("<span class='warning'><B>[attacker] tried to [damVerb] [src]!</B></span>")
 		return FALSE
 
-	attacker.attack_log += text("\[[time_stamp()]\] <font color='red'>[damVerb]ed [src.name] ([src.ckey])</font>")
-	attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [damVerb]ed by [attacker.name] ([attacker.ckey])</font>")
-	msg_admin_attack("[key_name(attacker)] [damVerb]ed [key_name(src)]", attacker)
+	log_combat(attacker, "[damVerb]ed")
 
 	var/armor_block = 0
 	var/obj/item/organ/external/BP = attacker.get_targetzone() // apply_damage accepts both the bodypart and the zone.

@@ -168,9 +168,8 @@
 	victim.apply_damage(8, def_zone = BP_HEAD)
 	victim.visible_message("<span class='danger'>[assailant] slams [victim]'s face against \the [A]!</span>")
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-	victim.attack_log += "\[[time_stamp()]\] <font color='orange'>Face-slammed by [assailant.name] against \the [assailant]([assailant.ckey])</font>"
-	assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Slams face of [victim.name] against \the [assailant]([victim.ckey])</font>"
-	msg_admin_attack("[key_name(assailant)] slams [key_name(victim)] face against \the [assailant]", assailant)
+
+	victim.log_combat(assailant, "face-slammed against \the [parent]")
 	return FALSE
 
 /// Is called when parent is clicked with a grab with HARM selected. Return TRUE if face slammed.
@@ -195,14 +194,13 @@
 	if(G.state >= GRAB_AGGRESSIVE)
 		victim.forceMove(A.loc)
 		victim.Weaken(5)
-		victim.visible_message("<span class='danger'>[G.assailant] puts [G.affecting] on \the [A].</span>")
-		victim.attack_log += "\[[time_stamp()]\] <font color='orange'>Was laied by [A.name] on \the [A]([assailant.ckey])</font>"
-		assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Put [victim.name] on \the [A]([victim.ckey])</font>"
+
+		victim.log_combat(assailant, "laid on [A]")
 	else if(assailant.a_intent != INTENT_HARM)
 		/// Let's pretend a face-slam doesn't exist.
 		to_chat(assailant, "<span class='warning'>You need a better grip to do that!</span>")
 		return
-	else if(!victim.is_usable_head())
+	else if(!victim.has_bodypart(BP_HEAD))
 		to_chat(assailant, "<span class='warning'>You need a better grip to do that!</span>")
 		return
 	else if(slam(G))

@@ -26,7 +26,7 @@ This is what happens, when alien attack.
 /atom/proc/attack_larva(mob/user)
 	return
 
-/mob/living/carbon/alien/larva/get_unarmed_attack()
+/mob/living/carbon/xenomorph/larva/get_unarmed_attack()
 	var/retDam = 1
 	var/retDamType = BRUTE
 	var/retFlags = DAM_SHARP

@@ -25,7 +25,7 @@
 			M.reset_view()
 		qdel(src)
 
-/obj/item/weapon/holder/pickup(mob/user)
+/obj/item/weapon/holder/pickup(mob/living/user)
 	..()
 	user.status_flags |= PASSEMOTES
 

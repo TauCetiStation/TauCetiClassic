@@ -133,14 +133,16 @@
 /*
  * Nettle
  */
-/obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user)
-	if(!user.gloves)
-		to_chat(user, "<span class='warning'>The nettle burns your bare hand!</span>")
-		if(istype(user, /mob/living/carbon/human))
-			var/obj/item/organ/external/BP = user.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
-			BP.take_damage(0, force)
-		else
-			user.take_bodypart_damage(0, force)
+/obj/item/weapon/grown/nettle/pickup(mob/living/user)
+	var/mob/living/carbon/human/H = user
+	if(!istype(H))
+		user.take_bodypart_damage(0, force)
+		return
+
+	if(!H.gloves)
+		to_chat(H, "<span class='warning'>The [src] burns your bare hand!</span>")
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
+		BP.take_damage(0, force)
 
 /obj/item/weapon/grown/nettle/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
@@ -159,25 +161,25 @@
  * Deathnettle
  */
 
-/obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user)
-	if(!user.gloves)
-		if(istype(user, /mob/living/carbon/human))
-			var/obj/item/organ/external/BP = user.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
+/obj/item/weapon/grown/deathnettle/pickup(mob/living/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(!H.gloves)
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
 			BP.take_damage(0, force)
-		else
-			user.take_bodypart_damage(0, force)
-		if(prob(50))
-			user.Paralyse(5)
-			to_chat(user, "<span class='warning'>You are stunned by the Deathnettle when you try picking it up!</span>")
+	else
+		user.take_bodypart_damage(0, force)
+
+	if(prob(50))
+		user.Paralyse(5)
+		to_chat(user, "<span class='warning'>You are stunned by \the [src] when you try picking it up!</span>")
 
 /obj/item/weapon/grown/deathnettle/attack(mob/living/carbon/M, mob/user)
 	if(!..()) return
 	if(istype(M, /mob/living))
 		to_chat(M, "<span class='warning'>You are stunned by the powerful acid of the Deathnettle!</span>")
 
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had the [src.name] used on them by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] on [M.name] ([M.ckey])</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] on [M.name] ([M.ckey])", user)
+		M.log_combat(user, "stunned with [name]")
 
 		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 
