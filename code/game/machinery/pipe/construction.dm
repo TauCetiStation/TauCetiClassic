@@ -416,7 +416,6 @@ Buildable meters
 	return rotate()
 
 /obj/item/pipe/attackby(obj/item/weapon/W, mob/user)
-	. = ..()
 	//*
 	if (isscrewdriver(W))
 		mirror()
