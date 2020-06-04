@@ -202,7 +202,7 @@
 		C.swap_hand()
 		C.drop_item()
 		C.put_in_hands(Arcane)
-		if(isliving(target) && user.Adjacent(user))
+		if(isliving(target) && user.Adjacent(target))
 			user.SetNextMove(CLICK_CD_MELEE)
 		else
 			user.SetNextMove(CLICK_CD_INTERACT)
