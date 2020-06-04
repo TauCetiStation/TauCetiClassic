@@ -71,6 +71,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				organ_data -= organ_name
 				S["organ_data"] -= organ_name
 	if(current_version < 18)
+		popup(parent, "Your character had old job preferences, probably incompatible with current version. Your job preferences have been reset.")
 		ResetJobs()
 
 		if(language && species && language != "None")
@@ -183,6 +184,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			// If IsAllowedQuirk() for some reason ever becomes more computationally
 			// difficult than (quirk_name in allowed_quirks), please change to the latter. ~Luduk
 			if(!IsAllowedQuirk(quirk_name))
+				popup(parent, "Your character had incompatible quirks on them. This character's quirks have been reset.")
 				ResetQuirks()
 				break
 
