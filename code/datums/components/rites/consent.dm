@@ -1,19 +1,25 @@
 /*
  This component is used in chaplain's rites to ask for consent to executing the rite.
 */
-/datum/component/rite_consent
+/datum/component/rite/consent
 	var/consent_msg
 	var/consent
 	var/def_consent = FALSE
 
-/datum/component/rite_consent/Initialize(msg)
+	tip_text = "This ritual is performed only if the victim consents."
+
+/datum/component/rite/consent/Initialize(msg)
 	consent_msg = msg
 	consent = def_consent
+
+	var/datum/religion_rites/rite = parent
+	rite.update_tip(tip_text)
+
 	RegisterSignal(parent, list(COMSIG_RITE_ON_CHOSEN), .proc/victim_ask)
 	RegisterSignal(parent, list(COMSIG_RITE_REQUIRED_CHECK), .proc/check_victim)
 
 // Send ask to victim
-/datum/component/rite_consent/proc/victim_ask(datum/source, mob/user, atom/movable/AOG)
+/datum/component/rite/consent/proc/victim_ask(datum/source, mob/user, atom/movable/AOG)
 	var/mob/victim = AOG.buckled_mob
 	if(!victim.IsAdvancedToolUser())
 		consent = TRUE
@@ -22,7 +28,7 @@
 			consent = TRUE
 
 // Checks for a victim
-/datum/component/rite_consent/proc/check_victim(datum/source, mob/user, atom/movable/AOG)
+/datum/component/rite/consent/proc/check_victim(datum/source, mob/user, atom/movable/AOG)
 	if(!AOG)
 		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
 		return COMPONENT_CHECK_FAILED

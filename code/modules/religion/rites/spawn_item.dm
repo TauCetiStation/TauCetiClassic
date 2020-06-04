@@ -9,17 +9,7 @@
 	var/adding_favor = 75
 
 /datum/religion_rites/spawn_item/New()
-	AddComponent(/datum/component/rite_spawn_item, spawn_type, 1, sacrifice_type, adding_favor, CALLBACK(src, .proc/modify_item))
-
-	if(sacrifice_type)
-		var/obj/item/item = initial(sacrifice_type)
-		tip_text += "This ritual requires a <i>[initial(item.name)]</i>."
-
-	if(spawn_type)
-		if(tip_text)
-			tip_text += " "
-		var/obj/item/item = initial(spawn_type)
-		tip_text += "This ritual creates a <i>[initial(item.name)]</i>."
+	AddComponent(/datum/component/rite/spawn_item, spawn_type, 1, sacrifice_type, adding_favor, CALLBACK(src, .proc/modify_item))
 
 /datum/religion_rites/spawn_item/proc/modify_item(atom/item)
 

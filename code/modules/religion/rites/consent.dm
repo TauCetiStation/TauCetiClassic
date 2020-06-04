@@ -1,10 +1,9 @@
 // This class is used for rites that require conesnt of a mob buckled to altar.
 /datum/religion_rites/consent
 	var/consent_msg = ""
-	tip_text = "This ritual is performed only if the victim consents."
 
 /datum/religion_rites/consent/New()
-	AddComponent(/datum/component/rite_consent, consent_msg)
+	AddComponent(/datum/component/rite/consent, consent_msg)
 
 
 /*

@@ -302,6 +302,7 @@
 // Generate new rite_list
 /datum/religion/proc/update_rites()
 	if(rites_by_name.len > 0)
+		rites_info = list()
 		// Generates a list of information of rite, used for examine() in altar_of_gods
 		for(var/i in rites_by_name)
 			var/datum/religion_rites/RI = rites_by_name[i]

@@ -1,7 +1,7 @@
 /*
  This component used in chaplain rites to spawn and replace any rites on object
 */
-/datum/component/rite_spawn_item
+/datum/component/rite/spawn_item
 	// Type for the item to be spawned
 	var/spawn_type
 	// Type for the item to be sacrificed
@@ -12,20 +12,30 @@
 	var/list/illusion_to_sacrifice = list()
 	// Count spawning items. Does not count if items replace
 	var/count_items = 1
-	// The ritual that does this action
-	var/datum/religion_rites/rite
 	// Determinate effect for /invoke_effect()
 	var/datum/callback/invoke_effect
 	// Extra Mana Cost!
 	var/adding_favor_per_item
 
-/datum/component/rite_spawn_item/Initialize(_spawn_type, _count_items, _sacrifice_type, _adding_favor_per_item, datum/callback/_callback)
+/datum/component/rite/spawn_item/Initialize(_spawn_type, _count_items, _sacrifice_type, _adding_favor_per_item, datum/callback/_callback)
 	spawn_type = _spawn_type
 	count_items = _count_items
 	sacrifice_type = _sacrifice_type
-	rite = parent
 	adding_favor_per_item = _adding_favor_per_item
 	invoke_effect = _callback
+
+	if(sacrifice_type)
+		var/obj/item/item = sacrifice_type
+		tip_text += "This ritual requires a <i>[initial(item.name)]</i>."
+
+	if(spawn_type)
+		if(tip_text)
+			tip_text += " "
+		var/obj/item/item = spawn_type
+		tip_text += "This ritual creates a <i>[initial(item.name)]</i>."
+
+	var/datum/religion_rites/rite = parent
+	rite.update_tip(tip_text)
 
 	RegisterSignal(parent, list(COMSIG_RITE_REQUIRED_CHECK), .proc/check_items_on_altar)
 	RegisterSignal(parent, list(COMSIG_RITE_BEFORE_PERFORM), .proc/create_fake_of_item)
@@ -33,12 +43,13 @@
 	RegisterSignal(parent, list(COMSIG_RITE_INVOKE_EFFECT), .proc/replace_fake_item)
 	RegisterSignal(parent, list(COMSIG_RITE_FAILED_CHECK), .proc/revert_effects)
 
-/datum/component/rite_spawn_item/Destroy()
+/datum/component/rite/spawn_item/Destroy()
 	clear_lists()
+	qdel(invoke_effect)
 	return ..()
 
 // Used to choose which items will be replaced with others
-/datum/component/rite_spawn_item/proc/item_sacrifice(obj/structure/altar_of_gods/AOG, spawn_type)
+/datum/component/rite/spawn_item/proc/item_sacrifice(obj/structure/altar_of_gods/AOG, spawn_type)
 	var/list/sacrifice_items = list()
 	for(var/obj/item/item in AOG.loc)
 		if(!istype(item, spawn_type))
@@ -46,17 +57,19 @@
 		sacrifice_items += item
 	return sacrifice_items
 
-/datum/component/rite_spawn_item/proc/check_items_on_altar(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
+/datum/component/rite/spawn_item/proc/check_items_on_altar(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
 	if(sacrifice_type)
 		var/list/L = item_sacrifice(AOG, sacrifice_type)
 		if(L.len == 0)
+			var/datum/religion_rites/rite = parent
 			to_chat(user, "<span class='warning'>You need more items for sacrifice to perform [rite.name]!</span>")
 			clear_lists()
 			return COMPONENT_CHECK_FAILED
 	return NONE
 
 // Created illustion of spawning item
-/datum/component/rite_spawn_item/proc/create_fake_of_item(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
+/datum/component/rite/spawn_item/proc/create_fake_of_item(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
+	var/datum/religion_rites/rite = parent
 	if(sacrifice_type)
 		var/list/L = item_sacrifice(AOG, sacrifice_type)
 		if(L.len == 0)
@@ -77,7 +90,8 @@
 	return NONE
 
 // Nice effect for spawn item
-/datum/component/rite_spawn_item/proc/item_restoration(obj/structure/altar_of_gods/AOG, stage)
+/datum/component/rite/spawn_item/proc/item_restoration(obj/structure/altar_of_gods/AOG, stage)
+	var/datum/religion_rites/rite = parent
 	var/ratioplus = (255 / rite.ritual_invocations.len) * stage
 	var/ratiominus = 255 / stage
 	if(sacrifice_type)
@@ -90,7 +104,7 @@
 		for(var/I in spawning_item)
 			animate(I, time = (rite.ritual_length / rite.ritual_invocations.len) + rand(-10, 10), alpha = ratioplus + rand(0, 10))
 
-/datum/component/rite_spawn_item/proc/update_fake_item(datum/source, mob/user, obj/structure/altar_of_gods/AOG, stage)
+/datum/component/rite/spawn_item/proc/update_fake_item(datum/source, mob/user, obj/structure/altar_of_gods/AOG, stage)
 	if(spawning_item.len == 0)
 		// Illusion of the subject lies on the real subject
 		var/atom/fake = spawn_type
@@ -121,7 +135,7 @@
 	else
 		item_restoration(AOG, stage)
 
-/datum/component/rite_spawn_item/proc/revert_effects(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
+/datum/component/rite/spawn_item/proc/revert_effects(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
 	if(spawning_item)
 		for(var/I in spawning_item)
 			animate(I, time = 3 SECONDS, alpha = 0)
@@ -130,13 +144,13 @@
 			animate(I, time = 2.8 SECONDS, alpha = 255)
 	addtimer(CALLBACK(src, .proc/pull_out_items, AOG), 3 SECONDS)
 
-/datum/component/rite_spawn_item/proc/pull_out_items(obj/structure/altar_of_gods/AOG)
+/datum/component/rite/spawn_item/proc/pull_out_items(obj/structure/altar_of_gods/AOG)
 	for(var/obj/item/item in AOG.contents)
 		item.forceMove(AOG.loc)
 	clear_lists()
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
-/datum/component/rite_spawn_item/proc/replace_fake_item(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
+/datum/component/rite/spawn_item/proc/replace_fake_item(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
 	for(var/obj/I in spawning_item)
 		var/atom/created = new spawn_type(AOG.loc)
 
@@ -150,6 +164,6 @@
 	clear_lists()
 
 // Since the ritual is not recreated every time, you need to clear the lists.
-/datum/component/rite_spawn_item/proc/clear_lists()
+/datum/component/rite/spawn_item/proc/clear_lists()
 	QDEL_LIST(spawning_item)
 	QDEL_LIST(illusion_to_sacrifice)

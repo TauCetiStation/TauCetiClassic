@@ -362,12 +362,12 @@
 
 /datum/religion_rites/call_animal/New()
 	current_type = pick(summon_type)
-	AddComponent(/datum/component/rite_spawn_item, current_type, 1, null, null, CALLBACK(src, .proc/modify_animal))
+	AddComponent(/datum/component/rite/spawn_item, current_type, 1, null, null, CALLBACK(src, .proc/modify_animal))
 
 /datum/religion_rites/call_animal/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
 	// This is needed to update the summoned creature
-	if(!GetComponent(/datum/component/rite_spawn_item))
-		AddComponent(/datum/component/rite_spawn_item, current_type, 1, null, null, CALLBACK(src, .proc/modify_animal))
+	if(!GetComponent(/datum/component/rite/spawn_item))
+		AddComponent(/datum/component/rite/spawn_item, current_type, 1, null, null, CALLBACK(src, .proc/modify_animal))
 	..()
 
 /datum/religion_rites/call_animal/proc/modify_animal(atom/animal)
@@ -415,7 +415,7 @@
 
 	current_type = pick(summon_type)
 	// This is needed to update the summoned creature
-	qdel(GetComponent(/datum/component/rite_spawn_item))
+	qdel(GetComponent(/datum/component/rite/spawn_item))
 	return TRUE
 
 /*
@@ -444,7 +444,7 @@
 	)
 
 /datum/religion_rites/create_sword/New()
-	AddComponent(/datum/component/rite_spawn_item, current_type, 1, null, null, CALLBACK(src, .proc/modify_sword))
+	AddComponent(/datum/component/rite/spawn_item, current_type, 1, null, null, CALLBACK(src, .proc/modify_sword))
 
 /datum/religion_rites/create_sword/proc/modify_sword(atom/sword)
 	var/god_name

@@ -3,21 +3,27 @@
  * Is a ritual performed by Chaplain at an altar.
  */
 /datum/religion_rites
-	/// name of the religious rite
+	/// Name of the religious rite
 	var/name = "religious rite"
 	/// Description of the religious rite
 	var/desc = "immm gonna rooon"
-	/// Just tip when examine altar
-	var/tip_text
-	/// length it takes to complete the ritual
+	/// Just unique tip when examine altar
+	var/tip_text = ""
+	/// Length it takes to complete the ritual
 	var/ritual_length = (10 SECONDS) //total length it'll take
 	/// Strings that are by default said evenly throughout the rite
 	var/list/ritual_invocations
-	/// message when you invoke
+	/// Message when you invoke
 	var/invoke_msg
+	/// Cost of rite in favor
 	var/favor_cost = 0
-
+	/// Needed aspects for get ritue
 	var/list/needed_aspects
+
+/datum/religion_rites/proc/update_tip(tip)
+	if(global.chaplain_religion)
+		tip_text = initial(tip_text) + tip
+		global.chaplain_religion.update_rites()
 
 ///Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed. Maybe you want it to check for something else?
 /datum/religion_rites/proc/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
