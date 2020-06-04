@@ -198,12 +198,14 @@
 		var/obj/item/weapon/magic/arcane_barrage/Arcane = new type(Spell)
 		Arcane.uses = uses
 		drop_activate_recharge = FALSE
-
 		C.drop_item()
 		C.swap_hand()
 		C.drop_item()
 		C.put_in_hands(Arcane)
-		user.SetNextMove(CLICK_CD_INTERACT)
+		if(isliving(target) && user.Adjacent(user))
+			user.SetNextMove(CLICK_CD_MELEE)
+		else
+			user.SetNextMove(CLICK_CD_INTERACT)
 	else
 		C.drop_item()
 
