@@ -37,7 +37,11 @@
 
 /obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user)
 	if(istype(I,/obj/item/toy/crayon))
+		if(painting)
+			return
+		painting = TRUE
 		change_appearance(I, user)
+		painting = FALSE
 		return
 	if(!I.force)
 		playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER)
@@ -60,12 +64,13 @@
 		to_chat(user,"<span class='warning'>Right [src] first!</span>")
 		return
 	var/new_appearance = input(user, "Choose a new appearance for [src].", "26th Century Deception") as null|anything in possible_appearances
-	if(!new_appearance || !crayon || painting)
+	if(!new_appearance || !crayon)
 		return
-	painting = TRUE
+	if(!user.Adjacent(src))
+		return
 	if(!do_after(user, 10, FALSE, src, TRUE))
-		painting = FALSE
 		return
+
 	user.visible_message("<span class='notice'>[user] gives [src] a new look.</span>", "<span class='notice'>Voila! You give [src] a new look.</span>")
 	alpha = 255
 	icon = initial(icon)
@@ -120,5 +125,4 @@
 			name = "Ian"
 			desc = "A cardboard cutout of the HoP's beloved corgi."
 			icon_state = "cutout_ian"
-	painting = FALSE
 	return 1

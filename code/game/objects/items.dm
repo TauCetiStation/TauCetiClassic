@@ -59,7 +59,6 @@
 	var/can_be_holstered = FALSE
 	var/uncleanable = 0
 	var/toolspeed = 1
-	var/attackable_by_items = FALSE //Can be attacked by other items
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
 	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
