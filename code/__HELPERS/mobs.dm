@@ -187,14 +187,7 @@
 			. = FALSE
 			break
 
-		if(!HAS_TRAIT(user, TRAIT_MULTITASKING))
-			if(user.hand != busy_hand)
-				. = FALSE
-				break
-			if(user.get_active_hand() != holding)
-				. = FALSE
-				break
-		else
+		if(HAS_TRAIT(user, TRAIT_MULTITASKING))
 			if(user.hand != busy_hand)
 				if(user.get_inactive_hand() != holding)
 					. = FALSE
@@ -203,6 +196,13 @@
 				if(user.get_active_hand() != holding)
 					. = FALSE
 					break
+		else
+			if(user.hand != busy_hand)
+				. = FALSE
+				break
+			if(user.get_active_hand() != holding)
+				. = FALSE
+				break
 
 		if(check_target_zone && user.zone_sel.selecting != check_target_zone)
 			. = FALSE
@@ -276,14 +276,7 @@
 				. = FALSE
 				break
 
-			if(!HAS_TRAIT(user, TRAIT_MULTITASKING))
-				if(user.hand != busy_hand)
-					. = FALSE
-					break
-				if(user.get_active_hand() != holding)
-					. = FALSE
-					break
-			else
+			if(HAS_TRAIT(user, TRAIT_MULTITASKING))
 				if(user.hand != busy_hand)
 					if(user.get_inactive_hand() != holding)
 						. = FALSE
@@ -292,6 +285,14 @@
 					if(user.get_active_hand() != holding)
 						. = FALSE
 						break
+			else
+				if(user.hand != busy_hand)
+					. = FALSE
+					break
+				if(user.get_active_hand() != holding)
+					. = FALSE
+					break
+
 	if(progress)
 		qdel(progbar)
 	if(user)
