@@ -76,6 +76,9 @@
 #define TRAIT_STRONGMIND          "strong_mind"
 #define TRAIT_AV                  "artifical_ventilation"
 #define TRAIT_CPB                 "cardiopulmonary_bypass"
+#define TRAIT_LIGHT_STEP          "light_step"
+#define TRAIT_FREERUNNING         "freerunning"
+#define TRAIT_AGEUSIA             "ageusia"
 
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
