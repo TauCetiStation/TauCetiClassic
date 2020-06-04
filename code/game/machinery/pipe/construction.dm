@@ -420,9 +420,8 @@ Buildable meters
 	if (isscrewdriver(W))
 		mirror()
 		return
-
 	if (!iswrench(W))
-		return
+		return ..()
 	if (!isturf(loc))
 		return TRUE
 	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_SUPPLY_STRAIGHT, PIPE_SCRUBBERS_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE, PIPE_SVALVE, PIPE_FUEL_STRAIGHT))
