@@ -371,7 +371,7 @@
 /obj/item/stack/medical/suture
 	name = "suture kit"
 	singular_name = "suture kit"
-	desc = "A little nano-needled that fixes anything bleeding-related, including internal bleedings!"
+	desc = "A little nanobot-controlled needle that fixes anything bleeding related, including internal bleedings!"
 	icon_state = "suture"
 	amount = 3
 	max_amount = 3
