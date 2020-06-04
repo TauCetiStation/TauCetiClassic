@@ -324,12 +324,12 @@
 		var/mob/living/L = A
 		// It's outside of the shield.
 		if(L.pulling)
-			L.visible_message("<span class='warning bold'>[name] has broken [protected]'s grip on [L.pulling]!</span>")
+			L.visible_message("[chat_shield]<span class='warning bold'>[capitalize(name)] has broken [L]'s grip on [L.pulling]!</span>")
 			L.stop_pulling()
 
 		for(var/obj/item/weapon/grab/G in L.GetGrabs())
 			if(G.affecting)
-				L.visible_message("<span class='warning bold'>[name] has broken [L]'s grip on [G.affecting]!</span>")
+				L.visible_message("[chat_shield]<span class='warning bold'>[capitalize(name)] has broken [L]'s grip on [G.affecting]!</span>")
 			qdel(G)
 
 	var/datum/mechanic_tip/forcefielded/forcefielded_tip = new(src)
