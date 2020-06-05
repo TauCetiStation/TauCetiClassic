@@ -233,7 +233,7 @@
 	destroy()
 	user.SetNextMove(CLICK_CD_MELEE)
 
-/obj/structure/table/reinforced
+/obj/structure/table/reinforced/laser_cut(obj/item/I, mob/user)
 	user.do_attack_animation(src)
 	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src.loc)
