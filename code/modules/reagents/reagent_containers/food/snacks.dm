@@ -11,6 +11,7 @@
 	var/slice_path
 	var/slices_num
 	var/deepfried = 0
+	var/max_contents
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M)
@@ -190,6 +191,9 @@
 		inaccurate = 1
 	else if(W.w_class <= ITEM_SIZE_SMALL && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
 		if(!iscarbon(user))
+			return 1
+		if(contents.len >= max_contents)
+			to_chat(user, "<span class='warning'>You can't place any more objects in [src].</span>")
 			return 1
 		to_chat(user, "<span class='rose'>You slip [W] inside [src].</span>")
 		user.remove_from_mob(W)
@@ -1822,6 +1826,7 @@
 	filling_color = "#ffe396"
 	bitesize = 2
 	list_reagents = list("nutriment" = 10, "bread" = 10)
+	max_contents = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice
 	name = "Bread slice"
