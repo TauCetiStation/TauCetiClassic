@@ -26,6 +26,7 @@
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(W)
 	SSdemo.mark_dirty(user)
+	return TRUE
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.SetNextMove(CLICK_CD_MELEE)
