@@ -198,7 +198,6 @@
 		var/obj/item/weapon/magic/arcane_barrage/Arcane = new type(Spell)
 		Arcane.uses = uses
 		drop_activate_recharge = FALSE
-
 		C.drop_item()
 		C.swap_hand()
 		C.drop_item()
