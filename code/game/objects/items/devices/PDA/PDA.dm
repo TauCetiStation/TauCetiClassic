@@ -869,7 +869,7 @@
 		if("Staff Salary")
 			mode = 73
 			subordinate_staff = my_subordinate_staff(ownrank)
-		
+
 		if("Change Salary")
 			var/account_number = text2num(href_list["account"])
 			for(var/person in subordinate_staff)
@@ -1261,7 +1261,6 @@
 
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C, mob/user)
-	..()
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
 		cartridge = C
 		user.drop_item()
@@ -1310,6 +1309,8 @@
 			user.drop_item()
 			C.loc = src
 			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
+	else
+		..()
 	return
 
 /obj/item/device/pda/attack(mob/living/L, mob/living/user)
