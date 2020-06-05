@@ -51,6 +51,10 @@
 		return FALSE
 
 	if(!touch_spell)
+		var/turf/U = get_turf(user)
+		var/turf/T = get_turf(target)
+		if(U == T)
+			return
 		if(!cast_throw(target, user))
 			return FALSE
 	else
