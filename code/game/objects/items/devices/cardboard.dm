@@ -36,7 +36,7 @@
 	pushed_over = FALSE
 
 /obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user)
-	if(istype(I,/obj/item/toy/crayon))
+	if(istype(I, /obj/item/toy/crayon))
 		if(painting)
 			return
 		painting = TRUE
