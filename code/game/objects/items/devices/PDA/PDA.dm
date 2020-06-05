@@ -1309,9 +1309,7 @@
 			user.drop_item()
 			C.loc = src
 			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
-	else
-		..()
-	return
+	return ..()
 
 /obj/item/device/pda/attack(mob/living/L, mob/living/user)
 	if (istype(L, /mob/living/carbon))
