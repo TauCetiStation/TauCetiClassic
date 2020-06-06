@@ -2,6 +2,9 @@
 /// `parent` must not be modified if this is to be returned.\
 /// This will be noted in the runtime logs
 #define COMPONENT_INCOMPATIBLE 1
+/// Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it for any reason can not be applied.
+/// This will not be noted in the runtime logs.
+#define COMPONENT_NOT_ATTACHED 2
 
 // How multiple components of the exact same type are handled in the same datum
 

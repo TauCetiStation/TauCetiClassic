@@ -12,7 +12,18 @@
 	var/mob/foundmob = "" //Used in throwing proc.
 	var/agony = 60
 
+	sweep_step = 2
+
 	origin_tech = "combat=2"
+
+/obj/item/weapon/melee/baton/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='warning'><b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b></span>")
@@ -85,9 +96,7 @@
 		H.visible_message("<span class='danger'>[M] has been attacked with the [src] by [user]!</span>")
 
 		if(!(user.a_intent == INTENT_HARM))
-			user.attack_log += "\[[time_stamp()]\]<font color='red'> attempted to stun [H.name] ([H.ckey]) with [src.name]</font>"
-			H.attack_log += "\[[time_stamp()]\]<font color='orange'> stunned by [user.name] ([user.ckey]) with [src.name]</font>"
-			msg_admin_attack("[key_name(user)] attempted to stun [key_name(H)] with [src.name]", user)
+			H.log_combat(user, "stunned (attempt) with [name]")
 
 		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 		if(charges < 1)

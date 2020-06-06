@@ -8,7 +8,6 @@
 	maxHealth = 300
 	health = 300
 	immune_to_ssd = 1
-	anchored = 1
 
 	speak_emote = list("roars")
 	emote_hear = list("roars")
@@ -16,7 +15,7 @@
 	response_disarm = "flails at"
 	response_harm   = "punches"
 
-	harm_intent_damage = 0
+	harm_intent_damage = 8
 	melee_damage = 13
 	attacktext = "brutally crush"
 	environment_smash = 2
@@ -132,6 +131,7 @@
 		Mx.Scale(1)
 		Mx.Translate(0,0)
 	transform = Mx
+	default_transform = Mx
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	if(environment)

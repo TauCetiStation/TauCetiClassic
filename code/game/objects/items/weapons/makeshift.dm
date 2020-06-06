@@ -13,6 +13,25 @@
 	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 
+/obj/item/weapon/twohanded/spear/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+
+	SCB.can_push = TRUE
+	SCB.can_pull = TRUE
+
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_push)
+	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_pull)
+
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/twohanded/spear/proc/can_sweep_push(atom/target, mob/user)
+	return wielded
+
+/obj/item/weapon/twohanded/spear/proc/can_sweep_pull(atom/target, mob/user)
+	return wielded
+
 /obj/item/weapon/twohanded/spear/update_icon()
 	icon_state = "spearglass[wielded]"
 
@@ -49,6 +68,13 @@
 
 /obj/item/weapon/melee/cattleprod/atom_init()
 	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+
+	SCB.can_push = TRUE
+	SCB.can_pull = TRUE
+
+	AddComponent(/datum/component/swiping, SCB)
+
 	update_icon()
 
 /obj/item/weapon/melee/cattleprod/attack_self(mob/user)
@@ -134,9 +160,8 @@
 	if(user.a_intent == INTENT_HARM)
 		if(!..()) return
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Beat [H.name] ([H.ckey]) with [src.name]</font>"
-		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Beaten by [user.name] ([user.ckey]) with [src.name]</font>"
-		msg_admin_attack("[user.name] ([user.ckey]) beat [H.name] ([H.ckey]) with [src.name]", user)
+
+		H.log_combat(user, "attacked with [name]")
 
 		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 	else if(!status)
@@ -158,9 +183,7 @@
 			deductcharge(hitcost)
 		H.visible_message("<span class='danger'>[M] has been stunned with the [src] by [user]!</span>")
 
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Stunned [H.name] ([H.ckey]) with [src.name]</font>"
-		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by [user.name] ([user.ckey]) with [src.name]</font>"
-		msg_admin_attack("[key_name(user)] stunned [key_name(H)] with [src.name]", user)
+		H.log_combat(user, "stunned with [name]")
 
 		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 	//	if(charges < 1)

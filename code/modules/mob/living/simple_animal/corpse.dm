@@ -89,7 +89,7 @@
 	name = "Syndicate Operative"
 	corpseuniform = /obj/item/clothing/under/syndicate
 	corpsesuit = /obj/item/clothing/suit/armor/vest
-	corpseshoes = /obj/item/clothing/shoes/swat
+	corpseshoes = /obj/item/clothing/shoes/boots/swat
 	corpsegloves = /obj/item/clothing/gloves/swat
 	corpseradio = /obj/item/device/radio/headset
 	corpsemask = /obj/item/clothing/mask/gas
@@ -105,7 +105,7 @@
 	name = "Syndicate Commando"
 	corpseuniform = /obj/item/clothing/under/syndicate
 	corpsesuit = /obj/item/clothing/suit/space/rig/syndi
-	corpseshoes = /obj/item/clothing/shoes/swat
+	corpseshoes = /obj/item/clothing/shoes/boots/swat
 	corpsegloves = /obj/item/clothing/gloves/swat
 	corpseradio = /obj/item/device/radio/headset
 	corpsemask = /obj/item/clothing/mask/gas/syndicate
@@ -135,7 +135,7 @@
 /obj/effect/landmark/mobcorpse/pirate
 	name = "Pirate"
 	corpseuniform = /obj/item/clothing/under/pirate
-	corpseshoes = /obj/item/clothing/shoes/jackboots
+	corpseshoes = /obj/item/clothing/shoes/boots
 	corpseglasses = /obj/item/clothing/glasses/eyepatch
 	corpsehelmet = /obj/item/clothing/head/bandana
 
@@ -151,7 +151,7 @@
 /obj/effect/landmark/mobcorpse/russian
 	name = "Russian"
 	corpseuniform = /obj/item/clothing/under/soviet
-	corpseshoes = /obj/item/clothing/shoes/jackboots
+	corpseshoes = /obj/item/clothing/shoes/boots
 	corpsehelmet = /obj/item/clothing/head/bearpelt
 
 /obj/effect/landmark/mobcorpse/russian/ranged

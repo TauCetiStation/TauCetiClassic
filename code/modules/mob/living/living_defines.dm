@@ -60,3 +60,6 @@
 	var/default_pixel_x = 0
 	var/default_pixel_y = 0
 	var/default_layer = 0
+
+	// This var is only used by a punching bag. Causes mob to not notify admins nor store who has hit it.
+	var/logs_combat = TRUE

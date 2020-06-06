@@ -196,9 +196,9 @@ var/global/list/combat_combos_by_name = list()
 	var/endtime = world.time + delay
 	while(world.time < endtime)
 		stoplag()
-		if(QDELING(victim))
+		if(QDELETED(victim))
 			return FALSE
-		if(QDELING(attacker))
+		if(QDELETED(attacker))
 			return FALSE
 		if(victim.notransform || attacker.notransform)
 			return FALSE
@@ -244,35 +244,33 @@ var/global/list/combat_combos_by_name = list()
 
 // This proc is called after animate_combo has ended.
 /datum/combat_combo/proc/after_animation(mob/living/victim, mob/living/attacker)
-	victim.transform = victim.default_transform
-	victim.pixel_x = victim.default_pixel_x
-	victim.pixel_y = victim.default_pixel_y
-	victim.layer = victim.default_layer
+	if(victim)
+		victim.transform = victim.default_transform
+		victim.pixel_x = victim.default_pixel_x
+		victim.pixel_y = victim.default_pixel_y
+		victim.layer = victim.default_layer
 
-	attacker.transform = attacker.default_transform
-	attacker.pixel_x = attacker.default_pixel_x
-	attacker.pixel_y = attacker.default_pixel_y
-	attacker.layer = attacker.default_layer
+		victim.in_use_action = FALSE
 
-	attacker.become_not_busy(_hand = 0)
-	attacker.become_not_busy(_hand = 1)
-	victim.in_use_action = FALSE
+	if(attacker)
+		attacker.transform = attacker.default_transform
+		attacker.pixel_x = attacker.default_pixel_x
+		attacker.pixel_y = attacker.default_pixel_y
+		attacker.layer = attacker.default_layer
 
-	attacker.combo_animation = FALSE
+		attacker.become_not_busy(_hand = 0)
+		attacker.become_not_busy(_hand = 1)
+
+		attacker.combo_animation = FALSE
 
 // Sometimes certain combos have "special" events: Clown's slidekick takes off pants, etc.
 // This is here for that purpose.
 /datum/combat_combo/proc/event_log(mob/living/victim, mob/living/attacker, msg)
-	attacker.attack_log += "\[[time_stamp()]\] <font color='red'>Using [name] on [victim.name] ([victim.ckey]): [msg]</font>"
-	victim.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been the victim of [attacker.name]'s ([attacker.ckey]) [name]: [msg]</font>"
+	victim.log_combat(attacker, msg)
 
 // This is for technical stuff, such as fingerprints leaving, admin PM.
 /datum/combat_combo/proc/pre_execute(mob/living/victim, mob/living/attacker)
-	attacker.attack_log += "\[[time_stamp()]\] <font color='red'>Used [name] on [victim.name] ([victim.ckey])</font>"
-	victim.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been the victim of [attacker.name]'s ([attacker.ckey]) [name]</font>"
-
-	msg_admin_attack("[key_name(attacker)] used [name] on [victim.name] ([victim.ckey])", attacker)
-
+	victim.log_combat(attacker, "[name]-ed")
 	victim.add_fingerprint(attacker)
 
 /datum/combat_combo/proc/execute(mob/living/victim, mob/living/attacker)

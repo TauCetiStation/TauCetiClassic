@@ -59,7 +59,6 @@
 	var/can_be_holstered = FALSE
 	var/uncleanable = 0
 	var/toolspeed = 1
-
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
 	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
@@ -69,8 +68,16 @@
 	*/
 	var/list/sprite_sheets_obj = null
 
+    /// A list of all tool qualities that src exhibits. To-Do: Convert all our tools to such a system.
+	var/list/tools = list()
 	// This thing can be used to stab eyes out.
 	var/stab_eyes = FALSE
+
+	// Determines whether any religious activity has been carried out on the item.
+	var/blessed = FALSE
+
+	// Whether this item is currently being swiped.
+	var/swiping = FALSE
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -394,7 +401,6 @@
 	user.put_in_active_hand(src)
 	return
 
-
 /obj/item/attack_ai(mob/user)
 	if (istype(src.loc, /obj/item/weapon/robot_module))
 		//If the item is part of a cyborg module, equip it
@@ -415,7 +421,8 @@
 					S.gather_all(loc, user)
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
-	return FALSE
+			return FALSE
+	return ..()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	callback = CALLBACK(src, .proc/after_throw, callback) // Replace their callback with our own.
@@ -860,9 +867,7 @@
 	user.do_attack_animation(M)
 	playsound(M, 'sound/items/tools/screwdriver-stab.ogg', VOL_EFFECTS_MASTER)
 
-	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])", user) //BS12 EDIT ALG
+	M.log_combat(user, "eyestabbed with [name]")
 
 	src.add_fingerprint(user)
 	//if((CLUMSY in user.mutations) && prob(50))

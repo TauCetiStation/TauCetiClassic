@@ -279,7 +279,7 @@
 	icon_state = "science"
 	item_state = "sciencetool"
 	desc = "A hand-held device capable of extracting usefull data from various sources, such as paper reports and slime cores."
-	flags = CONDUCT
+	flags = CONDUCT | NOBLUDGEON | NOATTACKANIMATION
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
 	w_class = ITEM_SIZE_SMALL
