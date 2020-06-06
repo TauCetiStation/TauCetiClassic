@@ -571,7 +571,7 @@
 	},
 /area/space)
 "bH" = (
-/obj/item/weapon/table_parts,
+/obj/item/weapon/table_parts/metal,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},

@@ -22247,12 +22247,12 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "aNH" = (
-/obj/item/weapon/table_parts,
+/obj/item/weapon/table_parts/metal,
 /obj/item/trash/cheesie,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "aNI" = (
-/obj/item/weapon/table_parts,
+/obj/item/weapon/table_parts/metal,
 /obj/item/weapon/kitchen/utensil/spoon,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -52087,7 +52087,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "bYf" = (
-/obj/item/weapon/table_parts,
+/obj/item/weapon/table_parts/metal,
 /turf/simulated/floor/plating,
 /area/station/construction)
 "bYg" = (
@@ -58325,7 +58325,7 @@
 	},
 /area/station/cargo/storage)
 "cpc" = (
-/obj/item/weapon/table_parts,
+/obj/item/weapon/table_parts/metal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cpe" = (

@@ -7509,7 +7509,7 @@
 /turf/simulated/floor,
 /area/asteroid/mine/abandoned)
 "pz" = (
-/obj/item/weapon/table_parts,
+/obj/item/weapon/table_parts/metal,
 /turf/simulated/floor,
 /area/asteroid/mine/abandoned)
 "pA" = (

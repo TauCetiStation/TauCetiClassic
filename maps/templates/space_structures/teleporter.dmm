@@ -61,7 +61,7 @@
 /turf/space,
 /area/station/aisat/teleport)
 "n" = (
-/obj/item/weapon/table_parts,
+/obj/item/weapon/table_parts/metal,
 /turf/simulated/floor/plating/airless,
 /area/station/aisat/teleport)
 "o" = (

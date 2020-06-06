@@ -347,14 +347,19 @@
 	flags = NOSHIELD
 
 /obj/item/weapon/table_parts
+	name = "placeholder"
+	desc = "this should not appear. contact nearby coder"
+	icon = 'icons/obj/items.dmi'
+	gender = PLURAL
+	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
+
+/obj/item/weapon/table_parts/metal
 	name = "table parts"
 	desc = "Parts of a table. Poor table."
-	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "table_parts"
 	m_amt = 3750
 	flags = CONDUCT
-	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /obj/item/weapon/table_parts/reinforced
 	name = "reinforced table parts"

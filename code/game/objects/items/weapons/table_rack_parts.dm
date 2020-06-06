@@ -14,9 +14,9 @@
 /*
  * Table Parts
  */
-/obj/item/weapon/table_parts/
-	var/structure = /obj/structure/table
-	var/drops = list(/obj/item/stack/sheet/metal = 2)
+/obj/item/weapon/table_parts
+	var/structure_type = null
+	var/list/drops = null
 
 /obj/item/weapon/table_parts/attackby(obj/item/weapon/W, mob/user)
 	if (iswrench(W) && drops)
@@ -29,6 +29,14 @@
 					dropped_obj = new drop( user.loc )
 				dropped_obj.add_fingerprint(user)
 		qdel(src)
+	else
+		..()
+
+/obj/item/weapon/table_parts/metal
+	structure_type = /obj/structure/table
+	drops = list(/obj/item/stack/sheet/metal = 2)
+
+/obj/item/weapon/table_parts/metal/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = W
 		if (R.use(4))
@@ -42,12 +50,11 @@
 		..()
 
 /obj/item/weapon/table_parts/attack_self(mob/user)
-	if(do_after(user = user, target = src, delay = 3 SECONDS))
-		var/obj/new_structure = new structure( user.loc )
+	if(do_after(user = user, target = src, delay = 2 SECONDS))
+		var/obj/new_structure = new structure_type( user.loc )
 		new_structure.add_fingerprint(user)
 		user.drop_item()
 		qdel(src)
-	return
 
 
 /*
@@ -55,7 +62,7 @@
  */
 
 /obj/item/weapon/table_parts/reinforced
-	structure = /obj/structure/table/reinforced
+	structure_type = /obj/structure/table/reinforced
 	drops = list(/obj/item/stack/rods = 4, /obj/item/stack/sheet/metal = 2)
 
 /*
@@ -63,7 +70,7 @@
  */
 
 /obj/item/weapon/table_parts/glass
-	structure = /obj/structure/table/glass
+	structure_type = /obj/structure/table/glass
 	drops = list(/obj/item/stack/sheet/glass = 2)
 
 /*
@@ -80,7 +87,7 @@
 		..()
 
 /obj/item/weapon/table_parts/wood
-	structure = /obj/structure/table/woodentable
+	structure_type = /obj/structure/table/woodentable
 	drops = list(/obj/item/stack/sheet/wood = 2)
 
 /*
@@ -88,17 +95,17 @@
  */
 
 /obj/item/weapon/table_parts/wood/fancy
-	structure = /obj/structure/table/woodentable/fancy
+	structure_type = /obj/structure/table/woodentable/fancy
 
 /obj/item/weapon/table_parts/wood/fancy/black
-	structure = /obj/structure/table/woodentable/fancy/black
+	structure_type = /obj/structure/table/woodentable/fancy/black
 
 /*
  * Poker Table Parts
  */
 
 /obj/item/weapon/table_parts/wood/poker
-	structure = /obj/structure/table/woodentable/poker
+	structure_type = /obj/structure/table/woodentable/poker
 	drops = list(/obj/item/stack/sheet/wood = 2, /obj/item/stack/tile/grass = 1)
 
 /*
@@ -106,5 +113,5 @@
  */
 
 /obj/item/weapon/table_parts/rack
-	structure = /obj/structure/rack
+	structure_type = /obj/structure/rack
 	drops = list(/obj/item/stack/sheet/metal = 1)

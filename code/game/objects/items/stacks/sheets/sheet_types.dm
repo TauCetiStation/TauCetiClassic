@@ -36,7 +36,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 		new/datum/stack_recipe("teal comfy chair", /obj/structure/stool/bed/chair/comfy/teal, 2, one_per_turf = TRUE, on_floor = TRUE),
 		), 2),
 	null,
-	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts, 2),
+	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts/metal, 2),
 	new/datum/stack_recipe("rack parts", /obj/item/weapon/table_parts/rack),
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 15, one_per_turf = TRUE, on_floor = TRUE),
 	null,

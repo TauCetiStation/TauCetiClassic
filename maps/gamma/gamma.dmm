@@ -13509,7 +13509,7 @@
 	},
 /area/station/maintenance/cargo)
 "dsx" = (
-/obj/item/weapon/table_parts,
+/obj/item/weapon/table_parts/metal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "dsL" = (
@@ -20861,7 +20861,7 @@
 	},
 /area/station/security/armoury)
 "fLT" = (
-/obj/item/weapon/table_parts,
+/obj/item/weapon/table_parts/metal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "fMa" = (

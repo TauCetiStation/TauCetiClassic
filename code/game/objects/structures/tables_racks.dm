@@ -22,7 +22,7 @@
 	climbable = 1
 	smooth = SMOOTH_TRUE
 
-	var/parts = /obj/item/weapon/table_parts
+	var/parts = /obj/item/weapon/table_parts/metal
 	var/flipped = 0
 	var/flipable = TRUE
 	var/health = 100

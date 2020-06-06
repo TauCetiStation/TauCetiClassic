@@ -378,7 +378,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "by" = (
-/obj/item/weapon/table_parts,
+/obj/item/weapon/table_parts/metal,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "bz" = (
