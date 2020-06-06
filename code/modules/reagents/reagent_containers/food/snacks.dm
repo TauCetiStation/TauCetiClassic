@@ -1812,7 +1812,6 @@
 	cant_hold = list(/obj/item/weapon/reagent_containers/food/snacks/sliceable)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/atom_init()
-	..()
 	storage = new /obj/item/weapon/storage/internal/inv(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/MouseDrop(obj/over_object)
