@@ -9,11 +9,9 @@
 	tip_text = "This ritual is performed only if the victim consents."
 
 /datum/component/rite/consent/Initialize(msg)
+	..()
 	consent_msg = msg
 	consent = def_consent
-
-	var/datum/religion_rites/rite = parent
-	rite.update_tip(tip_text)
 
 	RegisterSignal(parent, list(COMSIG_RITE_ON_CHOSEN), .proc/victim_ask)
 	RegisterSignal(parent, list(COMSIG_RITE_REQUIRED_CHECK), .proc/check_victim)
