@@ -175,6 +175,9 @@
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(!isliving(M))
 		return
+	var/datum/species/S = all_species[M.get_species()]
+	if(S && S.flags[NO_PAIN])
+		return
 	if(method == TOUCH)
 		if(ishuman(M))
 			var/mob/living/carbon/human/victim = M
@@ -206,7 +209,6 @@
 				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protect you from most of the pepperspray!</span>")
 				victim.eye_blurry = max(M.eye_blurry, 15)
 				victim.eye_blind = max(M.eye_blind, 5)
-				victim.Stun(5)
 				victim.Weaken(5)
 				return
 			else if (eyes_covered) // Eye cover is better than mouth cover
@@ -219,7 +221,6 @@
 				to_chat(victim, "<span class='userdanger'> You're sprayed directly in the eyes with pepperspray!</span>")
 				victim.eye_blurry = max(M.eye_blurry, 25)
 				victim.eye_blind = max(M.eye_blind, 10)
-				victim.Stun(5)
 				victim.Weaken(5)
 
 /datum/reagent/consumable/condensedcapsaicin/on_general_digest(mob/living/M)
