@@ -103,13 +103,13 @@
 /obj/item/clothing/head/helmet/tactical/price = 4444
 /obj/item/clothing/head/welding/price = 250
 
-/obj/item/clothing/shoes/combat/price = 2000
-/obj/item/clothing/shoes/galoshes/price = 660
-/obj/item/clothing/shoes/jackboots/price = 440
+/obj/item/clothing/shoes/boots/combat/price = 2000
+/obj/item/clothing/shoes/boots/galoshes/price = 660
+/obj/item/clothing/shoes/boots/price = 440
 /obj/item/clothing/shoes/magboots/price = 5550
 /obj/item/clothing/shoes/rainbow/price = 176
 /obj/item/clothing/shoes/slippers/price = 333
-/obj/item/clothing/shoes/swat/price = 3200
+/obj/item/clothing/shoes/boots/swat/price = 3200
 
 /obj/item/clothing/suit/armor/price = 5000
 /obj/item/clothing/suit/armor/bulletproof/price = 18500

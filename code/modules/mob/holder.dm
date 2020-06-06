@@ -25,7 +25,7 @@
 			M.reset_view()
 		qdel(src)
 
-/obj/item/weapon/holder/pickup(mob/user)
+/obj/item/weapon/holder/pickup(mob/living/user)
 	..()
 	user.status_flags |= PASSEMOTES
 
@@ -41,7 +41,9 @@
 // Mob procs and vars for scooping up
 /mob/living/var/holder_type
 
-/mob/living/proc/get_scooped(mob/living/carbon/grabber)
+/mob/living/proc/get_scooped(mob/living/carbon/human/grabber)
+	if(!istype(grabber))
+		return
 	if(!holder_type || buckled || pinned.len)
 		return
 	var/obj/item/weapon/holder/H = new holder_type(loc)

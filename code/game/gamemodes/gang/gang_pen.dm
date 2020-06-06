@@ -10,9 +10,7 @@
 	if(!ismob(M))
 		return
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [name]  by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to stab [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) Used the [name] to stab [M.name] ([M.ckey])", user)
+	M.log_combat(user, "stabbed with [name]")
 
 	if(ishuman(M) && ishuman(user) && M.stat != DEAD)
 		if(user.mind && ((user.mind in ticker.mode.A_bosses) || (user.mind in ticker.mode.B_bosses)))

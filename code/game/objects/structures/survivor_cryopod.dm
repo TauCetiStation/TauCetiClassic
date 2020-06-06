@@ -46,13 +46,13 @@
 	for(var/mob/dead/observer/O in observer_list)
 		if(O.has_enabled_antagHUD && config.antag_hud_restricted)
 			continue
-		if(jobban_isbanned(O, ROLE_SURVIVOR))
+		if(jobban_isbanned(O, ROLE_GHOSTLY))
 			continue
-		if(role_available_in_minutes(O, ROLE_SURVIVOR))
+		if(role_available_in_minutes(O, ROLE_GHOSTLY))
 			continue
 		if(O.client)
 			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find("survivor") && (ROLE_SURVIVOR in C.prefs.be_role))
+			if(!C.prefs.ignore_question.Find(IGNORE_SURVIVOR) && (ROLE_GHOSTLY in C.prefs.be_role))
 				INVOKE_ASYNC(src, .proc/question, C)
 
 /obj/structure/survivor_cryopod/proc/question(client/C)
@@ -66,7 +66,7 @@
 		opened = TRUE
 		spawn_survivor(C.mob)
 	else if (response == "Never for this round")
-		C.prefs.ignore_question += "survivor"
+		C.prefs.ignore_question += IGNORE_SURVIVOR
 
 /obj/structure/survivor_cryopod/proc/spawn_survivor(mob/M)
 	var/mob/living/carbon/human/H = new(loc, HUMAN)

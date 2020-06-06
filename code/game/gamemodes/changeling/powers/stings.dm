@@ -49,7 +49,7 @@
 		return
 	return 1
 
-/obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)
+/obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/living/target)
 	if(!target)
 		return
 	if((get_dist(user, target) <= 1))
@@ -59,7 +59,7 @@
 	if(target.mind && target.mind.changeling)
 		to_chat(target, "<span class='warning'>You feel a tiny prick.</span>")
 	//	add_logs(user, target, "unsuccessfully stung")
-	msg_admin_attack("[key_name(user)] used [src] on [key_name(target)]", user)
+	target.log_combat(user, "stinged with [name]")
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/proc/sting_fail(mob/user, mob/target)

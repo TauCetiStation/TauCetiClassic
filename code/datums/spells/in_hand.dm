@@ -51,6 +51,10 @@
 		return FALSE
 
 	if(!touch_spell)
+		var/turf/U = get_turf(user)
+		var/turf/T = get_turf(target)
+		if(U == T)
+			return
 		if(!cast_throw(target, user))
 			return FALSE
 	else
@@ -198,7 +202,6 @@
 		var/obj/item/weapon/magic/arcane_barrage/Arcane = new type(Spell)
 		Arcane.uses = uses
 		drop_activate_recharge = FALSE
-
 		C.drop_item()
 		C.swap_hand()
 		C.drop_item()

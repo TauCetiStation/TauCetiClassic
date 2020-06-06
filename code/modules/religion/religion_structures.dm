@@ -41,22 +41,10 @@
 		return
 
 	msg += "<span class='notice'>The sect currently has [round(global.chaplain_religion.favor)] favor with [pick(global.chaplain_religion.deity_names)].\n</span>"
-	msg += "List of available Rites:\n"
-	for(var/i in global.chaplain_religion.rites)
-		msg += i
-	if(msg)
-		to_chat(user, msg)
-
-/obj/structure/altar_of_gods/MouseDrop_T(mob/target, mob/user)
-	if(isliving(target))
-		if(!target.buckled && !buckled_mob && target.loc != loc)
-			if(user.incapacitated() || user.lying)
-				return
-			target.forceMove(loc)
-			add_fingerprint(target)
-		else
-			if(can_buckle && istype(target) && !buckled_mob && istype(user))
-				user_buckle_mob(target, user)
+	msg += "List of available Rites:"
+	to_chat(user, msg)
+	for(var/i in global.chaplain_religion.rites_info)
+		to_chat(user, i)
 
 // This proc handles an animation of item being sacrified and stuff.
 /obj/structure/altar_of_gods/proc/sacrifice_item(obj/item/I)
@@ -159,28 +147,27 @@
 			to_chat(user, "<span class='notice'>You are already performing [performing_rite.name]!</span>")
 			return
 
-		if(religion.rites.len == 0)
+		if(religion.rites_info.len == 0 || religion.rites_by_name.len == 0)
 			to_chat(user, "<span class='notice'>Your religion doesn't have any rites to perform!</span>")
 			return
 
-		var/rite_select = input(user, "Select a rite to perform!", "Select a rite", null) in religion.rites
+		var/rite_select = input(user, "Select a rite to perform!", "Select a rite", null) in religion.rites_by_name
 		if(!Adjacent(user))
 			to_chat(user, "<span class='warning'>You are too far away!</span>")
 			return
-		
+
 		if(performing_rite)
 			to_chat(user, "<span class='notice'>You are already performing [performing_rite.name]!</span>")
 			return
 
-		var/selection2type = religion.rites[rite_select]
-		performing_rite = new selection2type(src)
+		performing_rite = religion.rites_by_name[rite_select]
 
 		if(!performing_rite.perform_rite(user, src))
-			QDEL_NULL(performing_rite)
+			performing_rite = null
 		else
 			performing_rite.invoke_effect(user, src)
 			religion.adjust_favor(-performing_rite.favor_cost)
-			QDEL_NULL(performing_rite)
+			performing_rite = null
 		return
 
 	else if(istype(I, /obj/item/weapon/storage/bible) && !chosen_aspect)
@@ -200,6 +187,7 @@
 
 		sect = available_options[sect_select]
 		religion = global.chaplain_religion
+		religion.altar = src
 
 		sect.on_select(user, religion)
 		return

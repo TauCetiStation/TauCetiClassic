@@ -80,15 +80,15 @@
 	healthcheck()
 	return
 
-/obj/structure/grille/attack_animal(mob/living/simple_animal/M)
-	if(M.melee_damage_upper == 0)
+/obj/structure/grille/attack_animal(mob/living/simple_animal/attacker)
+	if(attacker.melee_damage == 0)
 		return
 	..()
 	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
+	attacker.visible_message("<span class='warning'>[attacker] smashes against [src].</span>", \
 					  "<span class='warning'>You smash against [src].</span>", \
 					  "You hear twisting metal.")
-	health -= M.melee_damage_upper
+	health -= attacker.melee_damage
 	healthcheck()
 	return
 

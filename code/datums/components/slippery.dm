@@ -1,4 +1,4 @@
-#define SLIPPERY_TIP "Slippery"
+#define SLIPPERY_TIP "Is slippery."
 
 /datum/mechanic_tip/slippery
 	tip_name = SLIPPERY_TIP

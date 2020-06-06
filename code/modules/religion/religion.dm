@@ -110,16 +110,67 @@
 	var/favor = 0
 	// The max amount of favor the religion can have
 	var/max_favor = 3000
+	// The amount of favor generated passively.
+	var/passive_favor_gain = 0.0
 
 	// Chosen aspects.
 	var/list/aspects = list()
 	// Spells that are determined by aspect combinations, are given to God.
 	var/list/god_spells = list()
-	// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
-	var/list/rites = list()
+	// Lists of rites with information. Converts itself into a list of rites with "name - desc (favor_cost)"
+	var/list/rites_info = list()
+	// Lists of rite name by type. "name = rite"
+	var/list/rites_by_name = list()
+
+	// Contains an altar, wherever it is
+	var/obj/structure/altar_of_gods/altar
+
+	// A list of ids of holy reagents from aspects.
+	var/list/holy_reagents = list()
+	// A list of possible faith reactions.
+	var/list/faith_reactions = list()
+
+	// A dict of holy turfs of format holy_turf = timer_id.
+	var/list/holy_turfs = list()
 
 /datum/religion/New()
+	reset_religion()
+
+/datum/religion/process()
+	if(passive_favor_gain == 0.0)
+		STOP_PROCESSING(SSreligion, src)
+		return
+
+	adjust_favor(passive_favor_gain)
+
+/datum/religion/proc/reset_religion()
+	lore = initial(lore)
+	lore_by_name = list()
+	deity_names = list()
+	bible_info = initial(bible_info)
+	for(var/god in active_deities)
+		remove_deity(god)
+	favor = initial(favor)
+	max_favor = initial(max_favor)
+	aspects = list()
+	god_spells = list()
+	rites_info = list()
+	rites_by_name = list()
+
+	if(altar)
+		altar.chosen_aspect = initial(altar.chosen_aspect)
+		altar.sect = initial(altar.sect)
+		altar.religion = initial(altar.religion)
+		altar.performing_rite = initial(altar.performing_rite)
+
 	create_default()
+
+/datum/religion/Destroy()
+	QDEL_LIST_ASSOC_VAL(holy_turfs)
+	holy_turfs = null
+
+	altar = null
+	return ..()
 
 /datum/religion/proc/gen_bible_info()
 	if(bible_info_by_name[name])
@@ -138,7 +189,7 @@
 
 	deity_names = deity_names_by_name[name]
 	if(!deity_names)
-		world.log << "ERROR IN SETTING UP RELIGION: [name] HAS NO DEITIES WHATSOVER. HAVE YOU SET UP RELIGIONS CORRECTLY?"
+		warning("ERROR IN SETTING UP RELIGION: [name] HAS NO DEITIES WHATSOVER. HAVE YOU SET UP RELIGIONS CORRECTLY?")
 		deity_names = list("Error")
 
 	gen_bible_info()
@@ -241,15 +292,32 @@
 			affect_divine_power(S)
 			G.AddSpell(S)
 
+/datum/religion/proc/remove_god_spells(mob/G)
+	G.ClearSpells()
+
 /datum/religion/proc/update_deities()
 	for(var/mob/deity in active_deities)
 		give_god_spells(deity)
 
 // Generate new rite_list
 /datum/religion/proc/update_rites()
-	if(rites.len != 0)
-		var/list/listylist = generate_rites_list()
-		rites = listylist
+	if(rites_by_name.len > 0)
+		// Generates a list of information of rite, used for examine() in altar_of_gods
+		for(var/i in rites_by_name)
+			var/datum/religion_rites/RI = rites_by_name[i]
+			var/name_entry = ""
+
+			if(RI.tip_text)
+				name_entry += "[EMBED_TIP(RI.name, RI.tip_text)]"
+			else
+				name_entry += "[RI.name]"
+
+			if(RI.desc)
+				name_entry += " - [RI.desc]"
+			if(RI.favor_cost)
+				name_entry += " ([RI.favor_cost] favor)"
+
+			rites_info += "[name_entry]"
 
 // Adds all spells related to asp.
 /datum/religion/proc/add_aspect_spells(datum/aspect/asp, datum/callback/aspect_pred)
@@ -266,10 +334,26 @@
 	for(var/rite_type in global.rites_by_aspects[asp.name])
 		var/datum/religion_rites/RR = new rite_type
 
+		if(rites_by_name[RR.name])
+			continue
+
 		if(is_sublist_assoc(RR.needed_aspects, aspects, aspect_pred))
-			rites |= rite_type
+			rites_by_name[RR.name] = new rite_type
 
 		QDEL_NULL(RR)
+
+/datum/religion/proc/add_aspect_reagents(datum/aspect/asp, datum/callback/aspect_pred)
+	for(var/reagent_id in global.holy_reagents_by_aspects[asp.name])
+		var/datum/reagent/R = global.chemical_reagents_list[reagent_id]
+
+		if(is_sublist_assoc(R.needed_aspects, aspects, aspect_pred))
+			holy_reagents[R.name] = reagent_id
+
+	for(var/reaction_id in global.faith_reactions_by_aspects[asp.name])
+		var/datum/faith_reaction/FR = global.faith_reactions[reaction_id]
+
+		if(is_sublist_assoc(FR.needed_aspects, aspects, aspect_pred))
+			faith_reactions[FR.id] = FR
 
 // Is called after any addition of new aspects.
 // Manages new spells and rites, gained by adding the new aspects.
@@ -280,6 +364,7 @@
 		var/datum/aspect/asp = aspects[aspect_name]
 		add_aspect_spells(asp, aspect_pred)
 		add_aspect_rites(asp, aspect_pred)
+		add_aspect_reagents(asp, aspect_pred)
 
 	update_deities()
 	update_rites()
@@ -299,22 +384,6 @@
 
 	update_aspects()
 
-///Generates a list of rites with 'name' = 'type', used for examine altar_of_god
-/datum/religion/proc/generate_rites_list()
-	var/list/retVal = list()
-	for(var/i in rites)
-		if(!ispath(i))
-			retVal[i] = rites[i]
-			continue
-		var/datum/religion_rites/RI = i
-		var/name_entry = "[initial(RI.name)]"
-		if(initial(RI.desc))
-			name_entry += " - [initial(RI.desc)]"
-		if(initial(RI.favor_cost))
-			name_entry += " ([initial(RI.favor_cost)] favor)"
-
-		retVal["[name_entry]\n"] = i
-	return retVal
 
 /datum/religion/proc/add_deity(mob/M)
 	active_deities += M
@@ -322,3 +391,23 @@
 
 /datum/religion/proc/remove_deity(mob/M)
 	active_deities -= M
+	remove_god_spells(M)
+
+/datum/religion/proc/on_holy_reagent_created(datum/reagent/R)
+	RegisterSignal(R, list(COMSIG_REAGENT_REACTION_TURF), .proc/holy_reagent_react_turf)
+
+/datum/religion/proc/holy_reagent_react_turf(datum/source, turf/T, volume)
+	if(!istype(T, /turf/simulated/floor))
+		return
+
+	add_holy_turf(T, volume)
+
+/datum/religion/proc/add_holy_turf(turf/simulated/floor/F, volume)
+	if(holy_turfs[F])
+		var/datum/holy_turf/HT = holy_turfs[F]
+		HT.update(volume)
+		return
+	holy_turfs[F] = new /datum/holy_turf(F, src, volume)
+
+/datum/religion/proc/remove_holy_turf(turf/simulated/floor/F)
+	qdel(holy_turfs[F])

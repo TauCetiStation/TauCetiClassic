@@ -21,7 +21,7 @@
 	return tip_cache
 
 /datum/mechanic_tip/proc/generate_tip(mob/inspector, atom/inspected)
-	return "<i>[tip_name]:</i>" + EMBED_TIP("•••", get_description(inspector, inspected))
+	return EMBED_TIP("[tip_name]", get_description(inspector, inspected))
 
 /datum/mechanic_tip/proc/get_description(mob/inspector, atom/inspected)
 	return description
@@ -62,7 +62,7 @@
 	if(!tips)
 		qdel(src)
 
-/datum/component/mechanic_desc/proc/remove_tips(list/tip_ids_to_remove)
+/datum/component/mechanic_desc/proc/remove_tips(datum/source, list/tip_ids_to_remove)
 	for(var/tip_name in tip_ids_to_remove)
 		if(QDELING(src))
 			return

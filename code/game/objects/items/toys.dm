@@ -131,8 +131,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	w_class = ITEM_SIZE_NORMAL
-	g_amt = 10
-	m_amt = 10
+	m_amt = 3250
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
@@ -185,8 +184,7 @@
 	icon_state = "357-7"
 	flags = CONDUCT
 	w_class = ITEM_SIZE_TINY
-	g_amt = 10
-	m_amt = 10
+	m_amt = 500
 	var/amount_left = 7.0
 
 /obj/item/toy/ammo/gun/update_icon()

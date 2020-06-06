@@ -24,22 +24,43 @@
 	for (var/i in 1 to 3)
 		new /obj/item/weapon/spacecash(src)
 
+/obj/item/weapon/storage/bible/proc/can_convert(atom/target, mob/user)
+	if(!user.mind || !user.mind.holy_role)
+		return FALSE
+	if(!global.chaplain_religion || !global.chaplain_religion.faith_reactions.len)
+		return FALSE
+	if(!target.reagents)
+		return FALSE
+	if(!in_range(user, target))
+		return FALSE
+	return TRUE
+
 /obj/item/weapon/storage/bible/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(user.mind && (user.mind.holy_role))
-		if(target.reagents && target.reagents.has_reagent("water")) //blesses/curses all the water in the holder
-			var/water2convert = target.reagents.get_reagent_amount("water")
-			target.reagents.del_reagent("water")
-			if(icon_state == "necronomicon")
-				to_chat(user, "<span class='warning'>You curse [target].</span>")
-				target.reagents.add_reagent("unholywater",water2convert)
-			else if(icon_state == "bible" && prob(10))
-				to_chat(user, "<span clas='notice'>You have just created wine!</span>")
-				target.reagents.add_reagent("wine",water2convert)
-			else
-				to_chat(user, "<span class='notice'>You bless [target].</span>")
-				target.reagents.add_reagent("holywater",water2convert)
+
+	if(!can_convert(target, user))
+		return
+
+	var/list/choices = list()
+	for(var/reaction_id in global.chaplain_religion.faith_reactions)
+		var/datum/faith_reaction/FR = global.chaplain_religion.faith_reactions[reaction_id]
+		var/desc = FR.get_description(target, user)
+		if(desc == "")
+			continue
+
+		choices[desc] = reaction_id
+
+	var/chosen_reaction = input(user, "Choose a reaction that will partake in the container.", "A reaction.") as null|anything in choices
+	if(!chosen_reaction)
+		return
+	if(!can_convert(target, user))
+		return
+
+	var/chosen_id = choices[chosen_reaction]
+
+	var/datum/faith_reaction/FR = global.chaplain_religion.faith_reactions[chosen_id]
+	FR.react(target, user)
 
 /obj/item/weapon/storage/bible/attackby(obj/item/weapon/W, mob/user)
 	if (length(use_sound))
