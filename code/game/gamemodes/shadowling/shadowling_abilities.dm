@@ -101,7 +101,15 @@
 		user.alpha = 255
 		var/turf/mobloc = get_turf(user.loc)
 		if(!mobloc.is_mob_placeable(user))
-			do_teleport(user, mobloc, 8, asoundin='sound/effects/phasein.ogg', checkspace = 1)
+			var/to_gib = TRUE // this is a small feature i considered funny.
+			                  // chances of this occuring are very small
+			                  // as it requires 9x9 grid of impassable tiles ~getup1
+			for(var/turf/newloc in orange(1, mobloc))
+				if(newloc.is_mob_placeable(user))
+					to_gib = FALSE
+					user.forceMove(newloc)
+			if(to_gib)
+				user.gib()
 
 
 
