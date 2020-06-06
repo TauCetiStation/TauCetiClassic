@@ -12,6 +12,11 @@
 	var/slices_num
 	var/deepfried = 0
 
+/obj/item/weapon/reagent_containers/food/atom_init()
+	return ..()
+
+/obj/item/weapon/reagent_containers/food/snacks/atom_init()
+	return ..()
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M)
 	if(!usr)	return
@@ -1812,6 +1817,10 @@
 	cant_hold = list(/obj/item/weapon/reagent_containers/food/snacks/sliceable)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/atom_init_late()
 	storage = new /obj/item/weapon/storage/internal/inv(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/MouseDrop(obj/over_object)
