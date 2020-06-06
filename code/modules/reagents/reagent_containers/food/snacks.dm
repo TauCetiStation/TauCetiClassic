@@ -11,7 +11,6 @@
 	var/slice_path
 	var/slices_num
 	var/deepfried = 0
-	var/max_contents
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M)
@@ -189,17 +188,6 @@
 			istype(W, /obj/item/weapon/shard) \
 		)
 		inaccurate = 1
-	else if(W.w_class <= ITEM_SIZE_SMALL && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
-		if(!iscarbon(user))
-			return 1
-		if(contents.len >= max_contents)
-			to_chat(user, "<span class='warning'>You can't place any more objects in [src].</span>")
-			return 1
-		to_chat(user, "<span class='rose'>You slip [W] inside [src].</span>")
-		user.remove_from_mob(W)
-		add_fingerprint(user)
-		contents += W
-		return
 	else
 		return 1
 	if ( \
@@ -1826,7 +1814,35 @@
 	filling_color = "#ffe396"
 	bitesize = 2
 	list_reagents = list("nutriment" = 10, "bread" = 10)
-	max_contents = 5
+	var/obj/item/weapon/storage/internal/inv/storage
+
+/obj/item/weapon/storage/internal/inv
+	name = "bread inventory"
+	max_w_class = ITEM_SIZE_SMALL
+	storage_slots = 5
+	cant_hold = list(/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/atom_init()
+	..()
+	storage = new /obj/item/weapon/storage/internal/inv(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/MouseDrop(obj/over_object)
+	if (storage.handle_mousedrop(usr, over_object))
+		..(over_object)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/AltClick(mob/user)
+	if(!user.get_active_hand())
+		return
+	var/holding = user.get_active_hand()
+	if(storage.can_be_inserted(holding))
+		storage.handle_item_insertion(holding)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/Destroy()
+	storage.close_all()
+	for(var/obj/item/I in storage)
+		storage.remove_from_storage(I, get_turf(src))
+	qdel(storage)
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice
 	name = "Bread slice"
