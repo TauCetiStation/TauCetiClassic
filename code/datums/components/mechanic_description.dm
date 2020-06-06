@@ -62,7 +62,7 @@
 	if(!tips)
 		qdel(src)
 
-/datum/component/mechanic_desc/proc/remove_tips(list/tip_ids_to_remove)
+/datum/component/mechanic_desc/proc/remove_tips(datum/source, list/tip_ids_to_remove)
 	for(var/tip_name in tip_ids_to_remove)
 		if(QDELING(src))
 			return
