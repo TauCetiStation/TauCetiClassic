@@ -1802,6 +1802,36 @@
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 
 // sliceable is just an organization type path, it doesn't have any additional code or variables tied to it.
+/obj/item/weapon/reagent_containers/food/snacks/sliceable
+	var/obj/item/weapon/storage/internal/inv/storage
+
+/obj/item/weapon/storage/internal/inv
+	name = "sliceable inventory"
+	max_w_class = ITEM_SIZE_SMALL
+	storage_slots = 5
+	cant_hold = list(/obj/item/weapon/reagent_containers/food/snacks/sliceable)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/atom_init()
+	..()
+	storage = new /obj/item/weapon/storage/internal/inv(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/MouseDrop(obj/over_object)
+	if (storage.handle_mousedrop(usr, over_object))
+		..(over_object)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/AltClick(mob/user)
+	if(!user.get_active_hand())
+		return
+	var/holding = user.get_active_hand()
+	if(storage.can_be_inserted(holding))
+		storage.handle_item_insertion(holding)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/Destroy()
+	storage.close_all()
+	for(var/obj/item/I in storage)
+		storage.remove_from_storage(I, get_turf(src))
+	qdel(storage)
+	return ..()
 
 // === BREAD ===
 
@@ -1814,35 +1844,8 @@
 	filling_color = "#ffe396"
 	bitesize = 2
 	list_reagents = list("nutriment" = 10, "bread" = 10)
-	var/obj/item/weapon/storage/internal/inv/storage
 
-/obj/item/weapon/storage/internal/inv
-	name = "bread inventory"
-	max_w_class = ITEM_SIZE_SMALL
-	storage_slots = 5
-	cant_hold = list(/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread)
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/atom_init()
-	..()
-	storage = new /obj/item/weapon/storage/internal/inv(src)
-
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/MouseDrop(obj/over_object)
-	if (storage.handle_mousedrop(usr, over_object))
-		..(over_object)
-
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/AltClick(mob/user)
-	if(!user.get_active_hand())
-		return
-	var/holding = user.get_active_hand()
-	if(storage.can_be_inserted(holding))
-		storage.handle_item_insertion(holding)
-
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/Destroy()
-	storage.close_all()
-	for(var/obj/item/I in storage)
-		storage.remove_from_storage(I, get_turf(src))
-	qdel(storage)
-	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice
 	name = "Bread slice"
