@@ -61,7 +61,7 @@
 	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."
 	icon_state = "stimpen"
 	volume = 20
-	list_reagents = list("inaprovaline" = 5, "coffee" = 13, "hyperzine" = 2)
+	list_reagents = list("inaprovaline" = 5, "coffee" = 11, "hyperzine" = 4)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/atom_init()
 	flags &= ~OPENCONTAINER
