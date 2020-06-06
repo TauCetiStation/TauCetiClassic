@@ -1029,7 +1029,7 @@
 /area/space_structures/derelict/singularity_engine)
 "cV" = (
 /obj/structure/table,
-/obj/item/weapon/rack_parts,
+/obj/item/weapon/table_parts/rack,
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge)
 "cW" = (

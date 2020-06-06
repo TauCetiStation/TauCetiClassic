@@ -887,7 +887,7 @@
 /turf/unsimulated/jungle/clear,
 /area/awaymission/jungle)
 "dr" = (
-/obj/item/weapon/rack_parts,
+/obj/item/weapon/table_parts/rack,
 /turf/unsimulated/floor,
 /area/awaymission/jungle)
 "ds" = (

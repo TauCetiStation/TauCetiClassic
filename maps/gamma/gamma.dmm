@@ -9465,7 +9465,7 @@
 	},
 /area/station/civilian/hydroponics)
 "cdg" = (
-/obj/item/weapon/rack_parts,
+/obj/item/weapon/table_parts/rack,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "cdw" = (

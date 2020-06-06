@@ -719,7 +719,7 @@
 /area/awaymission/example)
 "bU" = (
 /obj/structure/table,
-/obj/item/weapon/rack_parts,
+/obj/item/weapon/table_parts/rack,
 /turf/simulated/floor,
 /area/awaymission/example)
 "bV" = (

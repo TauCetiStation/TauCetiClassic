@@ -257,7 +257,7 @@
 /turf/unsimulated/desert,
 /area/awaymission/labs/cave)
 "aW" = (
-/obj/item/weapon/rack_parts,
+/obj/item/weapon/table_parts/rack,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
