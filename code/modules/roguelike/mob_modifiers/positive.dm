@@ -328,7 +328,7 @@
 
 	max_strength = 5
 
-	var/grav_pull = 4
+	var/grav_pull = 3
 	var/pull_stage = STAGE_ONE
 
 	var/image/singularity_overlay
@@ -346,19 +346,19 @@
 	switch(strength)
 		if(1)
 			pull_stage = STAGE_ONE
-			grav_pull = 4
+			grav_pull = 3
 		if(2)
 			pull_stage = STAGE_TWO
-			grav_pull = 6
+			grav_pull = 4
 		if(3)
 			pull_stage = STAGE_THREE
-			grav_pull = 8
+			grav_pull = 5
 		if(4)
 			pull_stage = STAGE_FOUR
-			grav_pull = 10
+			grav_pull = 6
 		else
 			pull_stage = STAGE_FIVE
-			grav_pull = 10
+			grav_pull = 7
 
 	if(update)
 		return
@@ -386,7 +386,12 @@
 	return ..()
 
 /datum/component/mob_modifier/singular/process()
-	pull()
+	var/mob/living/simple_animal/hostile/H = parent
+	if(H.stat == DEAD)
+		singularity_overlay.alpha = 80
+	else
+		singularity_overlay.alpha = 200
+		pull()
 
 /datum/component/mob_modifier/singular/proc/consume(atom/movable/AM)
 	if(!istype(AM, /obj/item))
