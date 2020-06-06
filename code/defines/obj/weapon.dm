@@ -180,7 +180,7 @@
 	name = "warning cone"
 	icon_state = "cone"
 
-/obj/item/weapon/rack_parts
+/obj/item/weapon/table_parts/rack
 	name = "rack parts"
 	desc = "Parts of a rack."
 	icon = 'icons/obj/items.dmi'

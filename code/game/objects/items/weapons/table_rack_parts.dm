@@ -14,134 +14,97 @@
 /*
  * Table Parts
  */
+/obj/item/weapon/table_parts/
+	var/structure = /obj/structure/table
+	var/drops = list(/obj/item/stack/sheet/metal = 2)
+
 /obj/item/weapon/table_parts/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if (iswrench(W))
-		new /obj/item/stack/sheet/metal( user.loc )
-		//SN src = null
+	if (iswrench(W) && drops)
+		for(var/drop in drops)
+			for(var/i = 1 to drops[drop])
+				var/obj/dropped_obj
+				if(istype(drop, /obj/item/stack))
+					dropped_obj = new drop( user.loc, merge = TRUE )
+				else
+					dropped_obj = new drop( user.loc )
+				dropped_obj.add_fingerprint(user)
 		qdel(src)
 	if (istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = W
 		if (R.use(4))
-			new /obj/item/weapon/table_parts/reinforced( user.loc )
+			var/obj/new_parts = new /obj/item/weapon/table_parts/reinforced( user.loc )
+			new_parts.add_fingerprint(user)
 			to_chat(user, "<span class='notice'>You reinforce the [name].</span>")
 			qdel(src)
 		else
 			to_chat(user, "<span class='warning'>You need at least four rods to do this.</span>")
+	else
+		..()
 
 /obj/item/weapon/table_parts/attack_self(mob/user)
-	new /obj/structure/table( user.loc )
-	user.drop_item()
-	qdel(src)
+	if(do_after(user = user, target = src, delay = 3 SECONDS))
+		var/obj/new_structure = new structure( user.loc )
+		new_structure.add_fingerprint(user)
+		user.drop_item()
+		qdel(src)
 	return
 
 
 /*
  * Reinforced Table Parts
  */
-/obj/item/weapon/table_parts/reinforced/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
-		new /obj/item/stack/sheet/metal( user.loc )
-		new /obj/item/stack/rods( user.loc )
-		qdel(src)
 
-/obj/item/weapon/table_parts/reinforced/attack_self(mob/user)
-	new /obj/structure/table/reinforced( user.loc )
-	user.drop_item()
-	qdel(src)
-	return
+/obj/item/weapon/table_parts/reinforced
+	structure = /obj/structure/table/reinforced
+	drops = list(/obj/item/stack/rods = 4, /obj/item/stack/sheet/metal = 2)
 
 /*
  * Glass Table Parts
  */
-/obj/item/weapon/table_parts/glass/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
-		new /obj/item/stack/sheet/glass( user.loc )
-		qdel(src)
 
-/obj/item/weapon/table_parts/glass/attack_self(mob/user)
-	new /obj/structure/table/glass( user.loc )
-	user.drop_item()
-	qdel(src)
-	return
+/obj/item/weapon/table_parts/glass
+	structure = /obj/structure/table/glass
+	drops = list(/obj/item/stack/sheet/glass = 2)
 
 /*
  * Wooden Table Parts
  */
 /obj/item/weapon/table_parts/wood/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
-		new /obj/item/stack/sheet/wood( user.loc )
-		qdel(src)
-
 	if (istype(W, /obj/item/stack/tile/grass))
 		var/obj/item/stack/tile/grass/Grass = W
 		Grass.use(1)
 		new /obj/item/weapon/table_parts/wood/poker( src.loc )
 		visible_message("<span class='notice'>[user] adds grass to the wooden table parts</span>")
 		qdel(src)
+	else
+		..()
 
-/obj/item/weapon/table_parts/wood/attack_self(mob/user)
-	new /obj/structure/table/woodentable( user.loc )
-	user.drop_item()
-	qdel(src)
-	return
+/obj/item/weapon/table_parts/wood
+	structure = /obj/structure/table/woodentable
+	drops = list(/obj/item/stack/sheet/wood = 2)
 
 /*
  * Fancy Wooden Table Parts
  */
-/obj/item/weapon/table_parts/wood/fancy/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
-		new /obj/item/stack/sheet/wood( user.loc )
-		qdel(src)
 
-/obj/item/weapon/table_parts/wood/fancy/attack_self(mob/user)
-	new /obj/structure/table/woodentable/fancy( user.loc )
-	user.drop_item()
-	qdel(src)
-	return
+/obj/item/weapon/table_parts/wood/fancy
+	structure = /obj/structure/table/woodentable/fancy
 
-/obj/item/weapon/table_parts/wood/fancy/black/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
-		new /obj/item/stack/sheet/wood( user.loc )
-		qdel(src)
-
-/obj/item/weapon/table_parts/wood/fancy/black/attack_self(mob/user)
-	new /obj/structure/table/woodentable/fancy/black( user.loc )
-	user.drop_item()
-	qdel(src)
-	return
-
+/obj/item/weapon/table_parts/wood/fancy/black
+	structure = /obj/structure/table/woodentable/fancy/black
 
 /*
  * Poker Table Parts
  */
 
-/obj/item/weapon/table_parts/wood/poker/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
-		new /obj/item/stack/sheet/wood( user.loc )
-		new /obj/item/stack/tile/grass( user.loc )
-		qdel(src)
-
-/obj/item/weapon/table_parts/wood/poker/attack_self(mob/user)
-	new /obj/structure/table/woodentable/poker( user.loc )
-	user.drop_item()
-	qdel(src)
-	return
+/obj/item/weapon/table_parts/wood/poker
+	structure = /obj/structure/table/woodentable/poker
+	drops = list(/obj/item/stack/sheet/wood = 2, /obj/item/stack/tile/grass = 1)
 
 /*
  * Rack Parts
  */
-/obj/item/weapon/rack_parts/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if (iswrench(W))
-		new /obj/item/stack/sheet/metal( user.loc )
-		qdel(src)
-		return
-	return
 
-/obj/item/weapon/rack_parts/attack_self(mob/user)
-	var/obj/structure/rack/R = new /obj/structure/rack( user.loc )
-	R.add_fingerprint(user)
-	user.drop_item()
-	qdel(src)
-	return
+/obj/item/weapon/table_parts/rack
+	structure = /obj/structure/rack
+	drops = list(/obj/item/stack/sheet/metal = 1)

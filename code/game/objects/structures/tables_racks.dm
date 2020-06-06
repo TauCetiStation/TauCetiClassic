@@ -129,19 +129,11 @@
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 	if(istype(src, /obj/structure/table/reinforced))
 		return
-	else if(istype(src, /obj/structure/table/woodentable/fancy/black))
-		new/obj/item/weapon/table_parts/wood/fancy/black(loc)
-	else if(istype(src, /obj/structure/table/woodentable/fancy))
-		new/obj/item/weapon/table_parts/wood/fancy(loc)
-	else if(istype(src, /obj/structure/table/woodentable))
-		new/obj/item/weapon/table_parts/wood(loc)
-	else if(istype(src, /obj/structure/table/woodentable/poker))
-		new/obj/item/weapon/table_parts/wood(loc)
 	else if(istype(src, /obj/structure/table/glass))
 		var/obj/structure/table/glass/glasstable = src
 		glasstable.shatter()
 	else
-		new /obj/item/weapon/table_parts(loc)
+		new src.parts(loc)
 	density = 0
 	qdel(src)
 
@@ -573,7 +565,7 @@
 	anchored = 1.0
 	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.
-	var/parts = /obj/item/weapon/rack_parts
+	var/parts = /obj/item/weapon/table_parts/rack
 
 /obj/structure/rack/atom_init()
 	. = ..()
@@ -586,18 +578,18 @@
 		if(2.0)
 			qdel(src)
 			if(prob(50))
-				new /obj/item/weapon/rack_parts(src.loc)
+				new parts(src.loc)
 		if(3.0)
 			if(prob(25))
 				qdel(src)
-				new /obj/item/weapon/rack_parts(src.loc)
+				new parts(src.loc)
 
 /obj/structure/rack/blob_act()
 	if(prob(75))
 		qdel(src)
 		return
 	else if(prob(50))
-		new /obj/item/weapon/rack_parts(src.loc)
+		new parts(src.loc)
 		qdel(src)
 		return
 
@@ -612,7 +604,7 @@
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
 	if (iswrench(W))
-		new /obj/item/weapon/rack_parts( src.loc )
+		new parts( src.loc )
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 		return
