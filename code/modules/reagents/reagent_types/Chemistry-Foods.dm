@@ -209,6 +209,7 @@
 				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protect you from most of the pepperspray!</span>")
 				victim.eye_blurry = max(M.eye_blurry, 15)
 				victim.eye_blind = max(M.eye_blind, 5)
+				victim.Stun(5)
 				victim.Weaken(5)
 				return
 			else if (eyes_covered) // Eye cover is better than mouth cover
