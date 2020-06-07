@@ -535,7 +535,7 @@
 	reagent_state = LIQUID
 	color = "#ff4f00" // rgb: 200, 165, 220
 	custom_metabolism = 0.1
-	overdose = REAGENTS_OVERDOSE * 1/3
+	overdose = REAGENTS_OVERDOSE / 3
 	taste_message = "speed"
 	restrict_species = list(IPC, DIONA)
 
