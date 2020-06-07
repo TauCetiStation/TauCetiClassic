@@ -182,6 +182,9 @@
 	if(target.try_inject(user, FALSE, TRUE))
 		target.log_combat(user, "stabbed with [name] (INTENT: [uppertext(user.a_intent)])")
 
+		if((user != target) && target.check_shields(src, 7, "the [src.name]", get_dir(user,target)))
+			return
+
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/target_zone = ran_zone(check_zone(user.zone_sel.selecting, target))
@@ -191,9 +194,6 @@
 				return
 
 			var/hit_area = BP.name
-
-			if((user != target) && target.check_shields(7, "the [src.name]", get_dir(user,target)))
-				return
 
 			if (target != user && target.getarmor(target_zone, "melee") > 5 && prob(50))
 				visible_message("<span class='warning'><B>[user] tries to stab [target] in \the [hit_area] with [name], but the attack is deflected by armor!</B></span>")
