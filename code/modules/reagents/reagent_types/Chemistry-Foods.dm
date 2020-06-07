@@ -175,6 +175,9 @@
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(!isliving(M))
 		return
+	var/datum/species/S = all_species[M.get_species()]
+	if(S && S.flags[NO_PAIN])
+		return
 	if(method == TOUCH)
 		if(ishuman(M))
 			var/mob/living/carbon/human/victim = M
