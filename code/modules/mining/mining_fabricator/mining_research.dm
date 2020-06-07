@@ -321,7 +321,7 @@ datum/design/space_suit_helmet_recycler
 	id = "stimpack_imp"
 	build_type = MINEFAB
 	build_path = /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_imp
-	materials = list(MAT_GLASS=250,MAT_PLASTIC=500,MAT_PHORON=500)
+	materials = list(MAT_GLASS=250,MAT_PLASTIC=500,MAT_PHORON=650)
 	construction_time = 50
 	category = list("Support")
 
@@ -331,6 +331,15 @@ datum/design/space_suit_helmet_recycler
 	build_type = MINEFAB
 	build_path = /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv
 	materials = list(MAT_GLASS=250,MAT_PLASTIC=500,MAT_PHORON=1000,MAT_URANIUM=500)
+	construction_time = 50
+	category = list("Support")
+
+/datum/design/hyperzine_inj
+	name = "Hyperzine autoinjector"
+	id = "hyperzine_inj"
+	build_type = MINEFAB
+	build_path = /obj/item/weapon/reagent_containers/hypospray/autoinjector/hyperzine
+	materials = list(MAT_GLASS=250,MAT_PLASTIC=500,MAT_PHORON=400)
 	construction_time = 50
 	category = list("Support")
 

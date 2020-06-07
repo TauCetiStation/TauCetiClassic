@@ -344,6 +344,7 @@
 	},
 /obj/item/stack/sheet/glass,
 /obj/item/stack/cable_coil/random,
+/obj/item/weapon/storage/box/autoinjector/hyperzine,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maintstore1)
 "aZ" = (
@@ -10596,10 +10597,10 @@
 /area/asteroid/mine/west_outpost)
 "xc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
 	frequency = 1379;
 	id_tag = "mining_west_pump";
-	name = "Mining West Large Air Vent";
-	dir = 1
+	name = "Mining West Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
@@ -10657,10 +10658,10 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
 	frequency = 1379;
 	id_tag = "mining_west_pump";
-	name = "Mining West Large Air Vent";
-	dir = 1
+	name = "Mining West Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
@@ -10987,8 +10988,8 @@
 "yi" = (
 /obj/machinery/camera{
 	c_tag = "Crew Area Hallway East";
-	network = list("MINE");
-	dir = 1
+	dir = 1;
+	network = list("MINE")
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -11351,10 +11352,10 @@
 	pixel_y = -25
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
 	frequency = 1379;
 	id_tag = "mining_east_pump";
-	name = "Mining East Large Air Vent";
-	dir = 8
+	name = "Mining East Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	dir = 4;
@@ -11393,10 +11394,10 @@
 /area/asteroid/mine/eva)
 "zE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
 	frequency = 1379;
 	id_tag = "mining_east_pump";
-	name = "Mining East Large Air Vent";
-	dir = 8
+	name = "Mining East Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	dir = 4;
@@ -11822,6 +11823,7 @@
 	stamp_message = "Research Outpost"
 	},
 /obj/item/weapon/pen,
+/obj/item/weapon/storage/box/autoinjector/hyperzine,
 /turf/simulated/floor/wood,
 /area/asteroid/research_outpost/hallway)
 "AP" = (
@@ -13197,10 +13199,10 @@
 	pixel_x = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
 	frequency = 1379;
 	id_tag = "mining_west_pump";
-	name = "Mining West Large Air Vent";
-	dir = 1
+	name = "Mining West Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"

@@ -219,6 +219,13 @@
 	for(var/i in 1 to 5)
 		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
 
+//Hyperzine
+/obj/item/weapon/storage/box/autoinjector/hyperzine
+	name = "hyperzine auntoinjector kit"
+	desc = "A box containing several hyperzine autoinjector for extreme EVA situations."
+	icon_state = "box"
+	startswith = list(/obj/item/weapon/reagent_containers/hypospray/autoinjector/hyperzine = 6)
+
 //Prescription glasses
 /obj/item/weapon/storage/box/rxglasses
 	name = "box of prescription glasses"

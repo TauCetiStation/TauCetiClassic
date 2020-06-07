@@ -39,22 +39,21 @@
 	desc = "It does not contain caffeine"
 	icon_state = "auto_minig_t2"
 	volume = 20
-	list_reagents = list("hyperzine" = 3, "paracetamol" = 10, "tricordrazine" = 7)
-
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_imp/atom_init()
-	. = ..()
-	reagents.clear_reagents()
-	reagents.add_reagent("hyperzine", 3)
-	reagents.add_reagent("paracetamol", 10)
-	reagents.add_reagent("tricordrazine", 7)
-	update_icon()
+	list_reagents = list("hyperzine" = 6, "paracetamol" = 8, "tricordrazine" = 6)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv
 	name = "Advanced stimpack"
 	desc = "Even more ore mined"
 	icon_state = "auto_minig_t3"
 	volume = 25
-	list_reagents = list("hyperzine" = 5, "tramadol" = 9, "dexalinp" = 1, "tricordrazine" = 10)
+	list_reagents = list("hyperzine" = 10, "tramadol" = 7, "dexalinp" = 1, "tricordrazine" = 7)
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/hyperzine
+	name = "Hyperzine autoinjector"
+	desc = "Speeding up the pace!"
+	icon_state = "auto_minig_t2"
+	volume = 10
+	list_reagents = list("hyperzine" = 10)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine
 	name = "leporazine autoinjector"
