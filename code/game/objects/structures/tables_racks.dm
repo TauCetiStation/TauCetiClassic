@@ -235,7 +235,14 @@
 
 /obj/structure/table/reinforced/laser_cut(obj/item/I, mob/user)
 	user.do_attack_animation(src)
+	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+	spark_system.set_up(5, 0, src.loc)
+	spark_system.start()
+	playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='notice'>You tried to slice through [src] but [I] is too weak.</span>")
+	user.SetNextMove(CLICK_CD_MELEE)
+
 
 /obj/structure/table/attackby(obj/item/W, mob/user, params)
 	. = TRUE

@@ -51,7 +51,7 @@
 	if(!can_climb(usr, usr))
 		return
 
-	do_climb(usr)
+	do_climb(usr, usr)
 
 /obj/structure/MouseDrop_T(atom/dropping, mob/user)
 	if(isessence(user))
@@ -65,6 +65,9 @@
 
 /obj/structure/proc/can_climb(mob/living/climber, mob/living/user, post_climb_check = FALSE)
 	if(!climbable || !can_touch(user) || (!post_climb_check && (climber in climbers)))
+		return FALSE
+
+	if(climber.loc == loc)
 		return FALSE
 
 	if(user != climber)
@@ -119,6 +122,9 @@
 	//aliens are terrifyingly fast
 	if(isxeno(user))
 		. *= 0.25
+	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
+		. *= 0.5
+
 
 /obj/structure/proc/do_climb(mob/living/climber, mob/living/user)
 	add_fingerprint(climber)

@@ -850,6 +850,7 @@
 	,RAD_IMMUNE = TRUE
 	,NO_EMBED = TRUE
 	,NO_MINORCUTS = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	has_bodypart = list(
@@ -965,6 +966,7 @@
 	,NO_SCAN = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	burn_mod = 2
@@ -1013,7 +1015,8 @@
 		BIOHAZZARD_IMMUNE = TRUE,
 		NO_VOMIT = TRUE,
 		NO_FINGERPRINT = TRUE,
-		NO_MINORCUTS = TRUE
+		NO_MINORCUTS = TRUE,
+		NO_EMOTION = TRUE
 		)
 
 	has_organ = list(
@@ -1084,6 +1087,7 @@
 	,NO_SCAN = TRUE
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	brute_mod = 2
@@ -1150,6 +1154,7 @@
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	min_age = 25
@@ -1192,6 +1197,7 @@
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	min_age = 25

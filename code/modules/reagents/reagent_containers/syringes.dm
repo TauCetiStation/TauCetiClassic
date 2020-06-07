@@ -17,6 +17,7 @@
 	volume = 15
 	w_class = ITEM_SIZE_TINY
 	sharp = 1
+	flags = NOBLUDGEON
 	var/mode = SYRINGE_DRAW
 
 /obj/item/weapon/reagent_containers/syringe/on_reagent_change()
@@ -265,6 +266,7 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = null //list(5,10,15)
 	volume = 50
+	flags = NOBLUDGEON
 	var/mode = SYRINGE_DRAW
 
 /obj/item/weapon/reagent_containers/ld50_syringe/on_reagent_change()

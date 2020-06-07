@@ -65,7 +65,6 @@
 		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
 		return
 
-	..()
 	if(wielded) //Trying to unwield it
 		unwield()
 		to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
@@ -82,12 +81,11 @@
 			user.drop_from_inventory(O)
 		return
 
-	else //Trying to wield it
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			var/W = H.wield(src, initial(name), wieldsound)
-			if(W)
-				wield()
+	else if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/W = H.wield(src, initial(name), wieldsound)
+		if(W)
+			wield()
 
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
