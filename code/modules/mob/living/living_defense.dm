@@ -32,6 +32,10 @@
 			loc.add_blood(src)
 		throw_at(get_edge_target_turf(src, P.dir), P.impact_force, 1, P.firer, spin = TRUE)
 
+	if(check_shields(P, P.damage, "the [P.name]", P.dir))
+		P.on_hit(src, def_zone, 100)
+		return
+
 	. = mob_bullet_act(P, def_zone)
 	if(. != PROJECTILE_ALL_OK)
 		return
@@ -98,7 +102,7 @@
 			visible_message("<span class='notice'>\The [O] misses [src] narrowly!</span>")
 			return
 
-		if(throwingdatum.thrower != src && check_shields(throw_damage, "[O]", get_dir(O,src)))
+		if(throwingdatum.thrower != src && check_shields(AM, throw_damage, "[O]", get_dir(O,src)))
 			return
 
 		resolve_thrown_attack(O, throw_damage, dtype, zone)
@@ -202,8 +206,8 @@
 
 // End BS12 momentum-transfer code.
 
-/mob/living/proc/check_shields(damage = 0, attack_text = "the attack", hit_dir = 0)
-	return FALSE
+/mob/living/proc/check_shields(atom/attacker, damage = 0, attack_text = "the attack", hit_dir = 0)
+	return SEND_SIGNAL(src, COMSIG_LIVING_CHECK_SHIELDS, attacker, damage, attack_text, hit_dir) & COMPONENT_ATTACK_SHIELDED
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()

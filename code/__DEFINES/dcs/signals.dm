@@ -115,6 +115,9 @@
 	// #define COMPONENT_NO_MOUSEDROP 1
 
 // mob signals
+/// from  base of mob/ClickOn(): (atom/target, params)
+#define COMSIG_MOB_CLICK "mob_click"
+	#define COMPONENT_CANCEL_CLICK 1
 /// from mob/proc/slip(): (weaken_duration, obj/slipped_on, lube)
 #define COMSIG_MOB_SLIP "movable_slip"
 /// from base of mob/death(): (gibbed)
@@ -138,7 +141,6 @@
 #define COMSIG_LIVING_CLICK_CTRL "living_click_ctrl"
 /// from base of mob/CtrlShiftClickOn(): (atom/target)
 #define COMSIG_LIVING_CLICK_CTRL_SHIFT "living_click_ctrl_shift"
-	#define COMPONENT_CANCEL_CLICK 1
 /// from slime CtrlClickOn(): (/mob)
 #define COMSIG_XENO_SLIME_CLICK_CTRL "xeno_slime_click_ctrl"
 /// from slime ShiftClickOn(): (/mob)
@@ -149,6 +151,9 @@
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"
 /// from monkey CtrlClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
+/// from mob/living/check_shields(): (atom/attacker, damage, attack_text, hit_dir)
+#define COMSIG_LIVING_CHECK_SHIELDS "check_shields"
+	#define COMPONENT_ATTACK_SHIELDED 1
 
 // simple_animal/hostile signals
 /// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)
@@ -159,6 +164,11 @@
 // Component specific signals.
 /// send this signal to remove a list of tip ids(use tip_names as tip ids): (/list/tip_ids_to_remove)
 #define COMSIG_TIPS_REMOVE "comsig_tip_remove"
+
+/// send this signal to cause all forcefield components to protect a thing: (atom/to_protect)
+#define COMSIG_FORCEFIELD_PROTECT "comsig_forcefield_protect"
+/// send this signal to cause all forcefield components to unprotect a thing: (atom/to_unprotect)
+#define COMSIG_FORCEFIELD_UNPROTECT "comsig_forcefield_unprotect"
 
 /// send this signal to add /datum/name_modifier to a mob: (name_modifier_type, strength)
 #define COMSIG_NAME_MOD_ADD "comsig_mob_mod_add"
