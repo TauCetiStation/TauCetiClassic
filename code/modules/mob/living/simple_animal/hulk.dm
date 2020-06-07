@@ -15,7 +15,7 @@
 	response_disarm = "flails at"
 	response_harm   = "punches"
 
-	harm_intent_damage = 8
+	harm_intent_damage = 7
 	melee_damage = 13
 	attacktext = "brutally crush"
 	environment_smash = 2
@@ -38,7 +38,7 @@
 	minbodytemp = 0
 	var/hulk_powers = list()
 	var/mob/living/original_body
-	var/health_regen = 2
+	var/health_regen = 1.5
 
 	animalistic = FALSE
 	has_head = TRUE
