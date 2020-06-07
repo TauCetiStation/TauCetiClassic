@@ -606,7 +606,7 @@ var/list/airlock_overlays = list()
 		else if(!user.is_busy(src))
 			to_chat(user, "<span class='red'>You force your claws between the doors and begin to pry them open...</span>")
 			playsound(src, 'sound/machines/airlock/creaking.ogg', VOL_EFFECTS_MASTER, 30, null, -4)
-			if(do_after(user,40, target = src) && src)
+			if(do_after(user,25, target = src) && src)
 				open(1)
 	return
 
@@ -667,7 +667,7 @@ var/list/airlock_overlays = list()
 	user.visible_message("<span class='userdanger'>The [user] starts to force the [src] open with a bare hands!</span>",\
 			"<span class='userdanger'>You start forcing the [src] open with a bare hands!</span>",\
 			"You hear metal strain.")
-	if(do_after(user, 30, target = src) && density && user.dir == cur_dir)
+	if(do_after(user, 20, target = src) && density && user.dir == cur_dir)
 		user.canmove = 0
 		var/turf/target = user.loc
 		open()

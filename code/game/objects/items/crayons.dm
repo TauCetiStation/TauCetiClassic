@@ -28,7 +28,7 @@
 			qdel(src)
 	else if(ishuman(M) && M.lying)
 		to_chat(user, "You start outlining [M.name].")
-		if(do_after(user, 40, target = M))
+		if(do_after(user, 20, target = M))
 			to_chat(user, "You finish outlining [M.name].")
 			new /obj/effect/decal/cleanable/crayon(M.loc, colour, shadeColour, "outline", "body outline")
 			uses--
@@ -117,7 +117,7 @@
 			return
 		if(instant)
 			playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 5)
-		if(instant > 0 || (!user.is_busy(src) && do_after(user, 40, target = target)))
+		if(instant > 0 || (!user.is_busy(src) && do_after(user, 20, target = target)))
 
 			//Gang functions
 			if(gangID)

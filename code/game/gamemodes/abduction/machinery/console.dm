@@ -45,7 +45,7 @@
 		if(user.is_busy())
 			return
 		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")
-		if(do_after(user, 100, target = src))
+		if(do_after(user, 70, target = src))
 			TeleporterSend()
 	else
 		..()

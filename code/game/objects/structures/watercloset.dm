@@ -70,7 +70,7 @@
 					if(user.is_busy()) return
 					user.visible_message("<span class='danger'>[user] starts to give [GM.name] a swirlie!</span>", "<span class='notice'>You start to give [GM.name] a swirlie!</span>")
 					swirlie = GM
-					if(do_after(user, 30, 5, 0, target = src))
+					if(do_after(user, 20, 5, 0, target = src))
 						user.visible_message("<span class='danger'>[user] gives [GM.name] a swirlie!</span>", "<span class='notice'>You give [GM.name] a swirlie!</span>", "You hear a toilet flushing.")
 						if(!GM.internal)
 							GM.adjustOxyLoss(5)
@@ -604,7 +604,7 @@
 	playsound(src, 'sound/items/wash.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='notice'>You start washing your hands.</span>")
 	busy = TRUE
-	if(do_after(user, 30, target = src))
+	if(do_after(user, 20, target = src))
 		busy = FALSE
 		user.clean_blood()
 		if(ishuman(user))
@@ -656,7 +656,7 @@
 
 	playsound(src, 'sound/items/wash.ogg', VOL_EFFECTS_MASTER)
 	busy = TRUE
-	if(do_after(user, 30, target = src))
+	if(do_after(user, 20, target = src))
 		busy = FALSE
 
 		if(user.loc != location)

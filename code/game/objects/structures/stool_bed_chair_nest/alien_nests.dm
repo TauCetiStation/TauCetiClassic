@@ -27,7 +27,7 @@
 					"<span class='warning'>[buckled_mob.name] struggles to break free of the gelatinous resin...</span>",\
 					"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",\
 					"<span class='notice'>You hear squelching...</span>")
-				if(do_after(buckled_mob, 3000, target = user))
+				if(do_after(buckled_mob, 2000, target = user))
 					if(user && buckled_mob && user.buckled == src)
 						buckled_mob.pixel_y = 0
 						unbuckle_mob()

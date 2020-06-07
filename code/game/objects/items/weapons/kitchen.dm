@@ -86,7 +86,7 @@
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(istype(target,/obj/effect/decal/cleanable) && !user.is_busy(target))
 		user.visible_message("<span class='warning'>[user] begins to clean \the [target.name].</span>","<span class='notice'>You begin to clean \the [target.name].</span>")
-		if(do_after(user, 60, target = target))
+		if(do_after(user, 40, target = target))
 			user.visible_message("<span class='warning'>[user] scrub \the [target.name] out.</span>","<span class='notice'>You scrub \the [target.name] out.</span>")
 			qdel(target)
 
@@ -110,7 +110,7 @@
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(istype(target,/obj/effect/decal/cleanable) && !user.is_busy(target))
 		user.visible_message("<span class='warning'>[user] begins to clean \the [target.name].</span>","<span class='notice'>You begin to clean \the [target.name].</span>")
-		if(do_after(user, 60, target = target))
+		if(do_after(user, 40, target = target))
 			user.visible_message("<span class='warning'>[user] scrub \the [target.name] out.</span>","<span class='notice'>You scrub \the [target.name] out.</span>")
 			qdel(target)
 

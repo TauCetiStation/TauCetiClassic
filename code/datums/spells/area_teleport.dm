@@ -27,7 +27,7 @@
 
 	var/area/thearea = teleportlocs[A]
 	usr.say("SCYAR NILA [thearea.name]")
-	if(do_after(usr, 50, target = usr))
+	if(do_after(usr, 30, target = usr))
 		playsound(usr,'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
 		return thearea
 	else

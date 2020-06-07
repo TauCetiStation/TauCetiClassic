@@ -104,7 +104,7 @@
 		else if(!user.is_busy(src))
 			to_chat(user, "<span class='warning'>You force your claws between the doors and begin to pry them open...</span>")
 			playsound(src, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			if (do_after(user,40,target = src) && src)
+			if (do_after(user,25,target = src) && src)
 				open(1)
 	return
 

@@ -665,7 +665,7 @@
 	var/mob/living/carbon/human/H = holder.wearer
 	holder.canremove = FALSE
 	to_chat(H, "<span class='notice'>Starting invisibility protocol, please wait until it done.</span>")
-	if(do_after(H, 40, target = H))
+	if(do_after(H, 30, target = H))
 		if(!active)
 			to_chat(H, "<span class='danger'>ERROR! Invisibility protocol has been stoped.</span>")
 			return FALSE

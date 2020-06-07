@@ -348,7 +348,7 @@ A proc that does all the animations before mix()-ing.
 
 	add_fingerprint(user)
 	var/target_loc = target.loc
-	if(user.is_busy() || !do_after(user, 20, target = user))
+	if(user.is_busy() || !do_after(user, 10, target = user))
 		return
 	if(target_loc != target.loc)
 		return

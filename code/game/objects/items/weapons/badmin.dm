@@ -73,7 +73,7 @@
 		return FALSE
 
 	to_chat(user, "<span class='notice'>You start fumble in search...</span>")
-	if(do_after(user, 100, target = src))
+	if(do_after(user, 50, target = src))
 		if(prob(1) && prob(1)) // world.contents content only entitys, but I like this joke
 			to_chat(user, "<span class='italic'>You really don't think this is a good idea to take <span class='bold'>a Master controller</span> from \a [src.name] and quickly put that back.</span>")
 			return

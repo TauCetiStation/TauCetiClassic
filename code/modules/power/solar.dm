@@ -62,7 +62,7 @@
 	if(iscrowbar(W))
 		if(user.is_busy()) return
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-		if(do_after(user, 50,target = src))
+		if(do_after(user, 30,target = src))
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.loc = src.loc

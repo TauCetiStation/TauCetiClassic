@@ -1606,7 +1606,7 @@
 		src.log_message("Recalibration of coordination system started.")
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Compute_01_Wet_stereo.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		var/T = src.loc
-		if(do_after(100))
+		if(do_after(65))
 			if(T == src.loc)
 				src.clearInternalDamage(MECHA_INT_CONTROL_LOST)
 				occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_stereo_complite.ogg', VOL_EFFECTS_MASTER, null, FALSE)

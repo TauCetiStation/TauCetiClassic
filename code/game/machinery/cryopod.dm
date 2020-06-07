@@ -271,7 +271,7 @@ var/global/list/frozen_items = list()
 			if(user.is_busy()) return
 			visible_message("[user] starts putting [M.name] into the cryo pod.", 3)
 
-			if(do_after(user, 20, target = src))
+			if(do_after(user, 10, target = src))
 				if(!M || !grab || !grab.affecting)
 					return
 				insert(M)
@@ -353,7 +353,7 @@ var/global/list/frozen_items = list()
 	if(usr.is_busy())
 		return
 	visible_message("[usr] starts climbing into the cryo pod.", 3)
-	if(do_after(usr, 20, target = src))
+	if(do_after(usr, 10, target = src))
 		if(occupant)
 			to_chat(usr, "<span class='notice'><B>The cryo pod is in use.</B></span>")
 			return

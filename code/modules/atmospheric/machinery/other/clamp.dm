@@ -129,7 +129,7 @@
 
 	if(open && over_object == usr && Adjacent(usr))
 		to_chat(usr, "<span class='notice'>You begin to remove \the [src]...</span>")
-		if(do_after(usr, 30, src))
+		if(do_after(usr, 20, src))
 			to_chat(usr, "<span class='notice'>You have removed \the [src].</span>")
 
 			var/obj/item/clamp/C = new

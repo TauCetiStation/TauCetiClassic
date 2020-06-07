@@ -406,9 +406,9 @@ var/bomb_set
 	if(user.is_busy())
 		return
 	if(buckled_mob)
-		do_after(usr, 30, 1, src)
+		do_after(usr, 20, 1, src)
 		unbuckle_mob()
-	else if(do_after(usr, 30, 1, src))
+	else if(do_after(usr, 20, 1, src))
 		M.loc = loc
 		..()
 
@@ -437,7 +437,7 @@ var/bomb_set
 		if(usr.is_busy())
 			return
 		visible_message("<span class='notice'>[usr] start putting [src] into [D]!</span>","<span class='notice'>You start putting [src] into [D]!</span>")
-		if(do_after(usr, 100, 1, src) && !timing && !auth && !buckled_mob)
+		if(do_after(usr, 70, 1, src) && !timing && !auth && !buckled_mob)
 			D.Stored_Nuclear = src
 			loc = D
 			D.icon_state = "dropod_opened_n[D.item_state]"

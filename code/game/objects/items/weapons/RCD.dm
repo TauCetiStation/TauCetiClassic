@@ -127,7 +127,7 @@ RCD
 				if(checkResource(10, user) && !user.is_busy())
 					to_chat(user, "Building Airlock...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, 50, target = target))
+					if(do_after(user, 35, target = target))
 						if(!useResource(10, user))
 							return 0
 						activate()
@@ -144,7 +144,7 @@ RCD
 				if(checkResource(5, user) && !user.is_busy())
 					to_chat(user, "Deconstructing Wall...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, 40, target = W))
+					if(do_after(user, 25, target = W))
 						if(!useResource(5, user))
 							return 0
 						activate()
@@ -157,7 +157,7 @@ RCD
 				if(checkResource(5, user) && !user.is_busy())
 					to_chat(user, "Deconstructing Floor...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, 50, target = F))
+					if(do_after(user, 35, target = F))
 						if(!useResource(5, user))
 							return 0
 						activate()
@@ -169,7 +169,7 @@ RCD
 				if(checkResource(10, user))
 					to_chat(user, "Deconstructing Airlock...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, 50, target = target))
+					if(do_after(user, 35, target = target))
 						if(!useResource(10, user))
 							return 0
 						activate()

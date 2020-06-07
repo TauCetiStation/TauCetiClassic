@@ -280,7 +280,7 @@
 		slicing = TRUE
 		var/obj/machinery/door/airlock/D = target
 		var/obj/effect/I = new /obj/effect/overlay/slice(D.loc)
-		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1) && in_range(user, D))
+		if(do_after(user, 200, target = D) && D.density && !(D.operating == -1) && in_range(user, D))
 			sleep(6)
 			var/obj/structure/door_scrap/S = new /obj/structure/door_scrap(D.loc)
 			var/iconpath = D.icon

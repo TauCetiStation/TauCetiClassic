@@ -13,7 +13,7 @@
 		"<span class='notice'>[user] starts inflating \the [src]...</span>",
 		"<span class='notice'>You start inflating \the [src]...</span>"
 	)
-	if(do_after(user, 40, target = user))
+	if(do_after(user, 25, target = user))
 		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message(
 			"<span class='notice'>[user] inflated \the [src].</span>",

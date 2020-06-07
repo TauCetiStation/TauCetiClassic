@@ -19,7 +19,7 @@
 	if (!ishuman(usr) || usr.incapacitated())
 		return
 	to_chat(usr, "<span class='notice'>You began to carefully extract [headobj] from the can.</span>")
-	if(!usr.is_busy() && do_after(usr, 20, target = src, can_move = TRUE))
+	if(!usr.is_busy() && do_after(usr, 10, target = src, can_move = TRUE))
 		var/head_name = headobj.name
 		if (extract_head())
 			to_chat(usr, "<span class='notice'>You have successfully extract [head_name].</span>")

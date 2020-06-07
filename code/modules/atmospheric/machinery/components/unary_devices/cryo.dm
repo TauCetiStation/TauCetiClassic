@@ -139,9 +139,9 @@
 	if(user.is_busy(null, FALSE)) // prevents spam too.
 		return
 
-	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
+	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 20 seconds.)</span>")
 	audible_message("<span class='notice'>You hear a thump from [src].</span>")
-	if(do_after(user, 300, target = src))
+	if(do_after(user, 200, target = src))
 		if(occupant == user) // Check they're still here.
 			open_machine()
 

@@ -582,7 +582,7 @@
 	var/mob/living/simple_animal/SA = usr
 	if(target.stat == DEAD)
 		usr.visible_message("<span class='warning'><b>[usr.name]</b> is trying to swallow <b>[target.name]</b>!</span>")
-		if(do_after(usr,50,target = target))
+		if(do_after(usr, 40, target = target))
 			target.log_combat(usr, "eaten with hulk_eat")
 			if(isrobot(target))
 				usr.visible_message("<span class='warning'><b>[usr.name]</b> swallows <b>[target.name]</b> and vomits some parts of it!</span> Looks like robots are not so tasty.")

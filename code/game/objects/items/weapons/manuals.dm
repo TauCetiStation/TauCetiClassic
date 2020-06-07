@@ -410,7 +410,7 @@
 		"<span class='notice'>[user] starts reading \the [src] intently...</span>",
 		"<span class='notice'>You start reading \the [src]...</span>"
 	)
-	if(do_after(user, 40, target = user))
+	if(do_after(user, 30, target = user))
 		user.visible_message(
 			"<span class='warning'>[user] perks at \the [src] and nods. Suddenly, \the [src] burns to ashes!</span>",
 			"<span class='warning'>As soon as you finish reading \the [src], you become the speaker of Sy-Code and [src] burns to ashes.</span>"
