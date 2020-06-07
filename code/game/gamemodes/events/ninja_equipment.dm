@@ -904,7 +904,7 @@ ________________________________________________________________________________
 				t_disk = I
 				to_chat(U, "<span class='notice'>You slot \the [I] into \the [src].</span>")
 			return
-	..()
+	return ..()
 
 /obj/item/clothing/suit/space/space_ninja/proc/toggle_stealth()
 	var/mob/living/carbon/human/U = affecting
@@ -1590,5 +1590,4 @@ It is possible to destroy the net by the occupant or someone else.
 	user.SetNextMove(CLICK_CD_MELEE)
 	health = max(0, health - aforce)
 	healthcheck()
-	..()
-	return
+	return ..()

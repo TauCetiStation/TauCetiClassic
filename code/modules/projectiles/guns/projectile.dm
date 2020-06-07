@@ -54,7 +54,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
+	if(istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine && (istype(AM, mag_type) || (istype(AM, mag_type2) && mag_type != null)))
 			user.remove_from_mob(AM)
