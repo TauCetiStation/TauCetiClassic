@@ -439,7 +439,6 @@
 
 
 /obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/user)
-	..()
 	user.SetNextMove(CLICK_CD_INTERACT)
 	var/clown = 0
 	if(user.mind && (user.mind.assigned_role == "Clown"))
@@ -516,8 +515,6 @@
 		else
 			show_content(user, forceshow = TRUE, infolinks = TRUE)
 		//openhelp(user)
-		add_fingerprint(user)
-		return
 
 	else if(istype(P, /obj/item/weapon/stamp))
 		if(!in_range(src, user))
@@ -537,8 +534,10 @@
 	else if(istype(P, /obj/item/weapon/lighter))
 		burnpaper(P, user)
 
+	else
+		return ..()
+
 	add_fingerprint(user)
-	return
 
 /*
  * Premade paper

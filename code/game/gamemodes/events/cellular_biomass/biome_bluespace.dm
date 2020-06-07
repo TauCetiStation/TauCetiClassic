@@ -106,10 +106,9 @@
 	return
 
 /mob/living/simple_animal/hostile/cellular/bluespace/ranged/attackby(obj/item/weapon/W, mob/user)
-	if(health>2)
+	if(health > 2)
 		visible_message("<b>[src]</b> duplicates!")
 		var/mob/living/simple_animal/newglitch = new /mob/living/simple_animal/hostile/cellular/bluespace/ranged(src.loc)
 		health = health / 2
 		newglitch.health = health
 	return
-
