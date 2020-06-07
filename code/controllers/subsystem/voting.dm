@@ -14,7 +14,7 @@ var/datum/subsystem/vote/SSvote
 	var/question = null
 	var/description = null
 	var/list/last_vote_time = list() //Not counting for custom votes, because it will apply voting cooldown and this is bad...
-	var/list/delay_after_start = list("default", "restart")
+	var/list/delay_after_start = list("default")
 	var/list/choices = list()
 	var/list/voted = list()
 	var/list/voting = list()
@@ -63,11 +63,7 @@ var/datum/subsystem/vote/SSvote
 	if(!config.vote_no_default && choices.len)
 		var/non_voters = (clients.len - total_votes)
 		if(non_voters > 0)
-			if(mode == "restart")
-				choices["Continue Playing"] += non_voters
-				if(choices["Continue Playing"] >= greatest_votes)
-					greatest_votes = choices["Continue Playing"]
-			else if(mode == "crew_transfer")
+			if(mode == "crew_transfer")
 				choices["Continue Playing"] += non_voters
 				if(choices["Continue Playing"] >= greatest_votes)
 					greatest_votes = choices["Continue Playing"]
@@ -114,34 +110,18 @@ var/datum/subsystem/vote/SSvote
 
 /datum/subsystem/vote/proc/result()
 	. = announce_result()
-	var/restart = 0
 	var/crewtransfer = 0
 	if(.)
 		switch(mode)
-			if("restart")
-				if(. == "Restart Round")
-					restart = 1
 			if("crew_transfer")
 				if(. == "End Shift")
 					crewtransfer = 1
 			if("gamemode")
 				if(master_mode != .)
 					world.save_mode(.)
-					if(ticker && ticker.mode)
-						restart = 1
-					else
+					if(!ticker || !ticker.mode)
 						master_mode = .
-	if(restart)
-		var/active_admins = 0
-		for(var/client/C in admins)
-			if(!C.is_afk() && (R_SERVER & C.holder.rights))
-				active_admins = 1
-				break
-		if(!active_admins)
-			world.Reboot(end_state = "restart vote")
-		else
-			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
-			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
+
 	if(crewtransfer)
 		if(!SSshuttle.online && SSshuttle.location == 0)
 			SSshuttle.shuttlealert(1)
@@ -169,8 +149,7 @@ var/datum/subsystem/vote/SSvote
 	if(check_rights(R_ADMIN))
 		is_admin = TRUE
 	var/timer_mode = "default"
-	if (vote_type == "restart")
-		timer_mode = "restart"
+
 	if(!mode)
 		if(last_vote_time[timer_mode] != null && !is_admin)
 			var/next_allowed_time = (last_vote_time[timer_mode] + config.vote_delay)
@@ -179,16 +158,6 @@ var/datum/subsystem/vote/SSvote
 
 		reset()
 		switch(vote_type)
-			if("restart")
-				if(!is_admin)
-					var/num_admins_online = 0
-					for(var/client/C in admins)
-						if(C.holder.rights & R_ADMIN)
-							if(!C.holder.fakekey && !C.is_afk())
-								num_admins_online++
-					if(num_admins_online)
-						return 0
-				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
 				for (var/M in config.votable_modes)
@@ -270,11 +239,6 @@ var/datum/subsystem/vote/SSvote
 			. += "(<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a>) "
 	else
 		. += "<h2>Start a vote:</h2><hr><ul><li>"
-		//restart
-		if(admin || config.allow_vote_restart && world.has_round_started())
-			. += "<a href='?src=\ref[src];vote=restart'>Restart</a>"
-		else
-			. += "<font color='grey'>Restart (Disallowed)</font>"
 		if(admin)
 			. += "&emsp;(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
 		. += "</li><li>"
@@ -314,18 +278,12 @@ var/datum/subsystem/vote/SSvote
 		if("cancel")
 			if(usr.client.holder)
 				reset()
-		if("toggle_restart")
-			if(usr.client.holder)
-				config.allow_vote_restart = !config.allow_vote_restart
 		if("toggle_crew")
 			if(usr.client.holder)
 				config.allow_vote_mode = !config.allow_vote_mode
 		if("toggle_gamemode")
 			if(usr.client.holder)
 				config.allow_vote_mode = !config.allow_vote_mode
-		if("restart")
-			if((config.allow_vote_restart || usr.client.holder) && !SSshuttle.online && SSshuttle.location == 0)
-				initiate_vote("restart",usr.key)
 		if("crew_transfer")
 			if((config.allow_vote_mode || usr.client.holder) && crew_transfer_available())
 				initiate_vote("crew_transfer",usr.key)
