@@ -221,6 +221,7 @@
 				to_chat(victim, "<span class='userdanger'> You're sprayed directly in the eyes with pepperspray!</span>")
 				victim.eye_blurry = max(M.eye_blurry, 25)
 				victim.eye_blind = max(M.eye_blind, 10)
+				victim.Stun(5)
 				victim.Weaken(5)
 
 /datum/reagent/consumable/condensedcapsaicin/on_general_digest(mob/living/M)
