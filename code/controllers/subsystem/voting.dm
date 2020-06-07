@@ -238,10 +238,7 @@ var/datum/subsystem/vote/SSvote
 		if(admin)
 			. += "(<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a>) "
 	else
-		. += "<h2>Start a vote:</h2><hr><ul><li>"
-		if(admin)
-			. += "&emsp;(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
-		. += "</li><li>"
+		. += "<h2>Start a vote:</h2><hr><ul>"
 		//crew transfer
 		if(admin || config.allow_vote_mode && crew_transfer_available())
 			. += "<a href='?src=\ref[src];vote=crew_transfer'>Crew Transfer</a>"
