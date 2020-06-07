@@ -151,7 +151,7 @@ var/global/list/uncommon_loot = list(
 		) = 8,
 
 	list(
-		/obj/item/clothing/head/welding = 1, 
+		/obj/item/clothing/head/welding = 1,
 		/obj/item/clothing/glasses/welding = 1,
 		/obj/item/clothing/glasses/hud/health = 1,
 		/obj/item/weapon/storage/belt/utility = 1,
@@ -196,7 +196,7 @@ var/global/list/uncommon_loot = list(
 
 	list(
 		/obj/item/weapon/dice/d20 = 1,
-		/obj/item/clothing/shoes/jackboots = 1,
+		/obj/item/clothing/shoes/boots = 1,
 		) = 1,
 )
 

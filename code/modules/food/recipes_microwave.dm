@@ -26,28 +26,28 @@
 /datum/recipe/microwave/jellydonut
 	reagents = list("berryjuice" = 5, "sugar" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/jelly
 
 /datum/recipe/microwave/jellydonut/slime
 	reagents = list("slimejelly" = 5, "sugar" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly
 
 /datum/recipe/microwave/jellydonut/cherry
 	reagents = list("cherryjelly" = 5, "sugar" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly
 
 /datum/recipe/microwave/donut
 	reagents = list("sugar" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
 
@@ -131,7 +131,7 @@
 
 /datum/recipe/microwave/donkpocket
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice,
 		/obj/item/weapon/reagent_containers/food/snacks/meatball
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket
@@ -187,7 +187,7 @@
 /datum/recipe/microwave/chaosdonut
 	reagents = list("frostoil" = 5, "capsaicin" = 5, "sugar" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/chaos
 
@@ -200,7 +200,7 @@
 
 /datum/recipe/microwave/cubancarp
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice,
 		/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	)
@@ -431,7 +431,7 @@
 /datum/recipe/microwave/poppypretzel
 	items = list(
 		/obj/item/seeds/poppyseed,
-		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
 
@@ -675,7 +675,7 @@
 /datum/recipe/microwave/friedbanana
 	reagents = list("sugar" = 10, "cornoil" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/friedbanana

@@ -1,5 +1,11 @@
 // This subtype is used for integrating this system with current chaplain anything.
-/datum/religion/chaplain
+/datum/religion/chaplain/New()
+	..()
+	religify_chapel()
+
+/datum/religion/chaplain/proc/religify_chapel()
+	for(var/chap_area in typesof(/area/station/civilian/chapel))
+		religify(chap_area)
 
 /datum/religion/chaplain/proc/gen_pos_bible_variants()
 	var/list/variants = list()
@@ -11,6 +17,8 @@
 	return variants
 
 /datum/religion/chaplain/proc/create_by_chaplain(mob/living/carbon/human/chaplain)
+	reset_religion()
+
 	var/new_religion = sanitize_safe(input(chaplain, "You are the crew services officer. Would you like to change your religion? Default is [name], in SPACE.", "Name change", name), MAX_NAME_LEN)
 	if(!new_religion)
 		new_religion = name
@@ -69,4 +77,4 @@
 
 	// Update the looks of the chapel.
 	update_structure_info()
-	religify(/area/station/civilian/chapel)
+	religify_chapel()

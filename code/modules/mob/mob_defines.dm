@@ -93,7 +93,8 @@
 	var/list/speak_emote = list("says") // Verbs used when speaking. Defaults to 'say' if speak_emote is null.
 	var/emote_type = 1		// Define emote default type, 1 for seen emotes, 2 for heard emotes
 	var/floating = 0
-
+    // What is the maximum size ratio that we can pull. The more it is the stronger the mob.
+	var/pull_size_ratio = 2.0
 	var/name_archive //For admin things like possession
 
 	var/timeofdeath = 0.0//Living
@@ -115,7 +116,7 @@
 	var/weakened = 0.0
 	var/losebreath = 0.0//Carbon
 	var/intent = null//Living
-	var/a_intent = "help"//Living
+	var/a_intent = INTENT_HELP //Living
 	var/m_int = null//Living
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
@@ -229,3 +230,5 @@
 	var/busy_with_action = FALSE // do_after() and do_mob() sets this to TRUE while in progress, use is_busy() before anything if you want to prevent user to do multiple actions.
 
 	var/list/weather_immunities = list()
+
+	var/list/progressbars = null //for stacking do_after bars

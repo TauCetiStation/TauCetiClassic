@@ -180,7 +180,7 @@
 /mob/proc/RangedAttack(atom/A, params)
 	if(!mutations.len)
 		return
-	if(a_intent == "hurt" && (LASEREYES in mutations))
+	if(a_intent == INTENT_HARM && (LASEREYES in mutations))
 		LaserEyes(A) // moved into a proc below
 	else if(TK in mutations)
 		ranged_attack_tk(A)
@@ -207,7 +207,11 @@
 */
 /mob/proc/MiddleClickOn(atom/A)
 	return
+
 /mob/living/carbon/MiddleClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_MIDDLECLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
+		return
 	swap_hand()
 
 // In case of use break glass
@@ -223,10 +227,12 @@
 */
 /mob/proc/ShiftClickOn(atom/A)
 	var/obj/item/I = get_active_hand()
-	if(I && next_move <= world.time && !incapacitated() && I.ShiftClickAction(A, src))
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_SHIFTCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
 		return
+
 	A.ShiftClick(src)
 	return
+
 /atom/proc/ShiftClick(mob/user)
 	if(user.client && user.client.eye == user)
 		user.examinate(src)
@@ -239,9 +245,13 @@
 
 
 /mob/proc/CtrlClickOn(atom/A)
-	var/obj/item/I = get_active_hand()
-	if(I && next_move <= world.time && !incapacitated() && I.CtrlClickAction(A, src))
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CLICK_CTRL, A) & COMPONENT_CANCEL_CLICK)
 		return
+
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_CTRLCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
+		return
+
 	A.CtrlClick(src)
 	return
 
@@ -257,8 +267,9 @@
 */
 /mob/proc/AltClickOn(atom/A)
 	var/obj/item/I = get_active_hand()
-	if(I && next_move <= world.time && !incapacitated() && I.AltClickAction(A, src))
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_ALTCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
 		return
+
 	A.AltClick(src)
 	return
 
@@ -271,6 +282,14 @@
 			user.listed_turf = T
 			user.client.statpanel = T.name
 
+/mob/living/AltClick(mob/living/user)
+	/*
+	Handling combat activation after **item swipes** and changeling stings.
+	*/
+	if(istype(user) && in_range(src, user) && user.try_combo(src))
+		return FALSE
+	return ..()
+
 /mob/proc/TurfAdjacent(turf/T)
 	return T.AdjacentQuick(src)
 
@@ -279,9 +298,13 @@
 	Unused except for AI
 */
 /mob/proc/CtrlShiftClickOn(atom/A)
-	var/obj/item/I = get_active_hand()
-	if(I && next_move <= world.time && !incapacitated() && I.CtrlShiftClickAction(A, src))
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CLICK_CTRL_SHIFT, A) & COMPONENT_CANCEL_CLICK)
 		return
+
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_CTRLSHIFTCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
+		return
+
 	A.CtrlShiftClick(src)
 	return
 
@@ -324,6 +347,29 @@
 	else
 		if(dx > 0)	usr.dir = EAST
 		else		usr.dir = WEST
+
+// Simple helper to face what you clicked on, in case it should be needed in more than one place
+// This proc is currently only used in multi_carry.dm (/datum/component/multi_carry)
+/mob/proc/face_pixeldiff(pixel_x, pixel_y, pixel_x_new, pixel_y_new)
+	if( stat || buckled)
+		return
+
+	var/dx = pixel_x_new - pixel_x
+	var/dy = pixel_y_new - pixel_y
+
+	if(dx == 0 && dy == 0)
+		return
+
+	if(abs(dx) < abs(dy))
+		if(dy > 0)
+			dir = NORTH
+		else
+			dir = SOUTH
+	else
+		if(dx > 0)
+			dir = EAST
+		else
+			dir = WEST
 
 // Craft or Build helper (main file can be found here: code/datums/cob_highlight.dm)
 /mob/proc/cob_click(client/C, list/modifiers)

@@ -162,6 +162,12 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
+
+	// Discuss your stuff after the round ends.
+	if(config.ooc_round_only)
+		to_chat(world, "<span class='warning bold'>The OOC channel has been globally disabled for the duration of the round!</span>")
+		ooc_allowed = FALSE
+
 	var/init_start = world.timeofday
 	//Create and announce mode
 	if(config.is_hidden_gamemode(master_mode))
@@ -414,6 +420,11 @@ var/datum/subsystem/ticker/ticker
 
 //cursed code
 /datum/subsystem/ticker/proc/declare_completion()
+	// Now you all can discuss the game.
+	if(config.ooc_round_only)
+		to_chat(world, "<span class='notice bold'>The OOC channel has been globally enabled!</span>")
+		ooc_allowed = TRUE
+
 	var/station_evacuated
 	if(SSshuttle.location > 0)
 		station_evacuated = 1

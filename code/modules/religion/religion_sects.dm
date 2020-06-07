@@ -39,7 +39,7 @@
 	convert_opener = "Your run-of-the-mill sect, conserve the purity. Praise normalcy!"
 	aspect_preset = list(
 		/datum/aspect/rescue = 1,
-		/datum/aspect/light = 1,
+		/datum/aspect/lightbending/light = 1,
 		/datum/aspect/mystic = 1,
 	)
 
@@ -51,6 +51,17 @@
 		/datum/aspect/technology = 1,
 		/datum/aspect/science = 1,
 		/datum/aspect/resources = 1,
+	)
+
+/datum/religion_sect/preset/clown
+	name = "The Jesters of "
+	desc = "Anything a real clown needs!"
+	convert_opener = "Honk for the Honkmother, slip for the Slippy Joe!"
+	aspect_preset = list(
+		/datum/aspect/wacky = 1,
+		/datum/aspect/chaos = 1,
+		/datum/aspect/resources = 1,
+		/datum/aspect/herd = 1,
 	)
 
 // This sect type allows user to select their aspects.
@@ -67,6 +78,8 @@
 	. = list()
 	for(var/i in subtypesof(/datum/aspect))
 		var/datum/aspect/asp = i
+		if(!initial(asp.name))
+			continue
 		if(!initial(asp.starter))
 			continue
 		. += list(initial(asp.name) = i)

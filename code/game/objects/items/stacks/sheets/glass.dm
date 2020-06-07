@@ -62,6 +62,25 @@
 	else
 		return ..()
 
+/obj/item/stack/sheet/glass/phoronglass/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/stack/rods))
+		var/list/resources_to_use = list()
+		resources_to_use[W] = 1
+		resources_to_use[src] = 1
+		if(!use_multi(user, resources_to_use))
+			return
+
+		var/obj/item/stack/sheet/glass/phoronrglass/FG = new (user.loc)
+		FG.add_fingerprint(user)
+		for(var/obj/item/stack/sheet/glass/phoronrglass/G in user.loc)
+			if(G == FG)
+				continue
+			if(G.get_amount() >= G.max_amount)
+				continue
+			G.attackby(FG, user)
+	else
+		return ..()
+
 /obj/item/stack/sheet/glass/proc/construct_window(mob/user)
 	if(!user || !src)
 		return 0
@@ -333,7 +352,7 @@
 	return ..()
 
 /obj/item/weapon/shard/Crossed(atom/movable/AM)
-	if(ismob(AM))
+	if(ismob(AM) && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 		var/mob/M = AM
 		to_chat(M, "<span class='warning'><B>You step on the [src]!</B></span>")
 		playsound(src, on_step_sound, VOL_EFFECTS_MASTER)

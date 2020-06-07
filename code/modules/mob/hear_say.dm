@@ -4,18 +4,17 @@
 	if(!client)
 		return
 
-
 	if(stat == UNCONSCIOUS)
 		hear_sleep(message)
 		return
 
 	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
 	if (language && (language.flags & NONVERBAL))
-		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
+		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in viewers(src)))
 			message = stars(message)
 
 	if(!say_understands(speaker,language))
-		var/scrambled_msg = speaker.get_scrambled_message()
+		var/scrambled_msg = speaker.get_scrambled_message(message, language)
 		if(!scrambled_msg)
 			return
 		message = scrambled_msg

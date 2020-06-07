@@ -3,6 +3,26 @@
 	flags = NOBLOODY
 	can_embed = 0
 
+	sweep_step = 2
+
+/obj/item/weapon/melee/energy/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list()
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+
+	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/melee/energy.proc/can_sweep)
+	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/melee/energy.proc/can_spin)
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/melee/energy/proc/can_sweep(mob/user)
+	return active
+
+/obj/item/weapon/melee/energy/proc/can_spin(mob/user)
+	return active
+
 /obj/item/weapon/melee/energy/get_current_temperature()
 	if(active)
 		return 3500
@@ -29,12 +49,13 @@
 	sharp = 1
 	edge = 1
 
+	sweep_step = 5
+
 /obj/item/weapon/melee/energy/axe/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='warning'><b>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</b></span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/sword
-	color
 	name = "energy sword"
 	desc = "May the force be within you."
 	icon_state = "sword0"

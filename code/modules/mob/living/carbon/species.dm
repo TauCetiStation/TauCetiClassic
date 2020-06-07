@@ -132,12 +132,19 @@
 	var/min_age = 25 // The default, for Humans.
 	var/max_age = 85
 
+	var/list/prohibit_roles
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
 
 	if(!has_organ[O_HEART])
 		flags[NO_BLOOD] = TRUE // this status also uncaps vital body parts damage, since such species otherwise will be very hard to kill.
+
+/datum/species/proc/can_be_role(role)
+	if(!prohibit_roles)
+		return TRUE
+	return !(role in prohibit_roles)
 
 /datum/species/proc/create_organs(mob/living/carbon/human/H, deleteOld = FALSE) //Handles creation of mob organs.
 	if(deleteOld)
@@ -181,6 +188,10 @@
 			//H.is_jittery = 0
 			//H.jitteriness = 0
 			H.update_hair()
+	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+	if(!IO)
+		return
+	IO.heart_stop()
 	return
 
 /datum/species/proc/before_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE) // Do we really need this proc? Perhaps.
@@ -450,6 +461,8 @@
 	min_age = 12
 	max_age = 20
 
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
+
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
 	if(H.wear_mask)
@@ -628,6 +641,8 @@
 	min_age = 1
 	max_age = 1000
 
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST)
+
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
@@ -752,6 +767,8 @@
 	min_age = 1
 	max_age = 125
 
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST, ROLE_BLOB)
+
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
 	H.verbs += /mob/living/carbon/human/proc/IPC_toggle_screen
@@ -833,6 +850,7 @@
 	,RAD_IMMUNE = TRUE
 	,NO_EMBED = TRUE
 	,NO_MINORCUTS = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	has_bodypart = list(
@@ -866,9 +884,10 @@
 /datum/unarmed_attack
 	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
 	var/damage = 0						// Extra empty hand attack damage.
+	var/damType = BRUTE
 	var/miss_sound = 'sound/weapons/punchmiss.ogg'
-	var/sharp = 0
-	var/edge = 0
+	var/sharp = FALSE
+	var/edge = FALSE
 	var/list/attack_sound
 
 /datum/unarmed_attack/New()
@@ -882,10 +901,12 @@
 
 /datum/unarmed_attack/diona
 	attack_verb = list("lash", "bludgeon")
-	damage = 5
+	damage = 2
 
 /datum/unarmed_attack/slime_glomp
 	attack_verb = list("glomp")
+	damage = 5
+	damType = CLONE
 
 /datum/unarmed_attack/slime_glomp/New()
 	attack_sound = list('sound/effects/attackblob.ogg')
@@ -893,9 +914,9 @@
 /datum/unarmed_attack/claws
 	attack_verb = list("scratch", "claw")
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	damage = 5
-	sharp = 1
-	edge = 1
+	damage = 2
+	sharp = TRUE
+	edge = TRUE
 
 /datum/unarmed_attack/claws/New()
 	attack_sound = list('sound/weapons/slice.ogg')
@@ -945,6 +966,7 @@
 	,NO_SCAN = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	burn_mod = 2
@@ -993,7 +1015,8 @@
 		BIOHAZZARD_IMMUNE = TRUE,
 		NO_VOMIT = TRUE,
 		NO_FINGERPRINT = TRUE,
-		NO_MINORCUTS = TRUE
+		NO_MINORCUTS = TRUE,
+		NO_EMOTION = TRUE
 		)
 
 	has_organ = list(
@@ -1064,6 +1087,7 @@
 	,NO_SCAN = TRUE
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	brute_mod = 2
@@ -1130,6 +1154,7 @@
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	min_age = 25
@@ -1172,6 +1197,7 @@
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	min_age = 25

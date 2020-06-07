@@ -443,26 +443,25 @@
 	return
 
 
-/obj/mecha/attack_animal(mob/living/simple_animal/user)
-	src.log_message("Attack by simple animal. Attacker - [user].",1)
+/obj/mecha/attack_animal(mob/living/simple_animal/attacker)
+	src.log_message("Attack by simple animal. Attacker - [attacker].",1)
 	..()
 
-	if(user.melee_damage_upper == 0)
-		user.emote("[user.friendly] [src]")
+	if(attacker.melee_damage == 0)
+		attacker.emote("[attacker.friendly] [src]")
 	else
 		if(!prob(src.deflect_chance))
-			var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
+			var/damage = attacker.melee_damage
 			src.take_damage(damage)
 			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-			visible_message("<span class='warning'><B>[user]</B> [user.attacktext] [src]!</span>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
+			visible_message("<span class='warning'><B>[attacker]</B> [attacker.attacktext] [src]!</span>")
+			attacker.attack_log += "\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>"
 		else
 			src.log_append_to_last("Armor saved.")
 			playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-			src.occupant_message("<span class='notice'>The [user]'s attack is stopped by the armor.</span>")
-			visible_message("<span class='notice'>The [user] rebounds off [src.name]'s armor!</span>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
-	return
+			src.occupant_message("<span class='notice'>The [attacker]'s attack is stopped by the armor.</span>")
+			visible_message("<span class='notice'>The [attacker] rebounds off [src.name]'s armor!</span>")
+			attacker.attack_log += "\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>"
 
 /obj/mecha/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //wrapper
 	..()
@@ -710,7 +709,7 @@
 				to_chat(user, "There's already a powercell installed.")
 		return
 
-	else if(iswelder(W) && user.a_intent != "hurt")
+	else if(iswelder(W) && user.a_intent != INTENT_HARM)
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_MELEE)
 		if (WT.use(0,user))

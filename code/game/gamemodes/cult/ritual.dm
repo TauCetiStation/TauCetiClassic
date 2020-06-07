@@ -274,10 +274,7 @@ var/list/cult_datums = list()
 	usr << browse("[entity_ja(notedat)]", "window=notes")
 
 /obj/item/weapon/book/tome/attack(mob/living/M, mob/living/user)
-
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had the [name] used on him by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])", user)
+	M.log_combat(user, "beaten with [name]")
 
 	if(istype(M, /mob/dead))
 		M.invisibility = 0
@@ -350,6 +347,10 @@ var/list/cult_datums = list()
 			user << browse("[entity_ja(notedat)]", "window=notes")
 			return
 	if(usr.get_active_hand() != src)
+		return
+
+	if(user.species.flags[NO_BLOOD])
+		to_chat(user, "<span class='warning'>You don't have any blood, how do you suppose to write a blood rune?</span>")
 		return
 
 	var/w1

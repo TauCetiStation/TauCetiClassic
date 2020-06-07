@@ -15,7 +15,7 @@
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/under/rank/cadet(src)
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/shoes/jackboots(src)
+		new /obj/item/clothing/shoes/boots(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/head/soft/sec(src)
 	for (var/i in 1 to 2)
@@ -83,6 +83,7 @@
 	new /obj/item/weapon/storage/backpack/cultpack (src)
 	new /obj/item/weapon/game_kit/chaplain(src)
 	new /obj/item/weapon/reagent_containers/spray/thurible(src)
+	new /obj/item/clothing/glasses/sunglasses/chaplain(src)
 	for (var/i in 1 to 2)
 		new /obj/item/weapon/storage/fancy/candle_box(src)
 
@@ -169,7 +170,7 @@
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/under/rank/engineer(src)
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/shoes/workboots(src)
+		new /obj/item/clothing/shoes/boots/work(src)
 	for(var/i = 1 to 3)
 		if(prob(75))
 			new /obj/item/clothing/head/hardhat/yellow(src)
@@ -418,4 +419,6 @@
 	new /obj/item/clothing/mask/balaclava(src)
 	new /obj/item/clothing/glasses/sunglasses/sechud/tactical(src)
 	new /obj/item/weapon/storage/belt/security/tactical(src)
-	new /obj/item/clothing/shoes/workboots(src)
+	new /obj/item/weapon/kitchenknife/combat(src)
+	new /obj/item/clothing/shoes/boots/work(src)
+

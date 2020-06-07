@@ -314,7 +314,7 @@
 	CheckHealth()
 
 /obj/structure/mineral_door/resin/attack_hand(mob/user)
-	if(isxenoadult(user) && user.a_intent == "hurt")
+	if(isxenoadult(user) && user.a_intent == INTENT_HARM)
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		health -= rand(40, 60)

@@ -305,6 +305,7 @@
 
 	face_atom(A)
 	A.examine(src)
+	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
 
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
@@ -504,6 +505,9 @@
 	if(!AM.anchored)
 		if(ismob(AM))
 			var/mob/M = AM
+			if(get_size_ratio(M, src) > pull_size_ratio)
+				to_chat(src, "<span class=warning>You are too small in comparison to [M] to pull them!</span>")
+				return
 			if(M.buckled) // If we are trying to pull something that is buckled we will pull the thing its buckled to
 				start_pulling(M.buckled)
 				return
@@ -551,8 +555,10 @@
 		SEND_SIGNAL(src, COMSIG_LIVING_STOP_PULL, pulling)
 		SEND_SIGNAL(pulling, COMSIG_ATOM_STOP_PULL, src)
 
-		pulling.pulledby = null
-		pulling = null
+		// What if the signals above somehow deleted pulledby?
+		if(pulling)
+			pulling.pulledby = null
+			pulling = null
 		if(pullin)
 			pullin.update_icon(src)
 		count_pull_debuff()
@@ -1053,6 +1059,22 @@ note dizziness decrements automatically in the mob's Life() proc.
 		spell.action.Grant(src)
 	return
 
+/mob/proc/RemoveSpell(obj/effect/proc_holder/spell/S)
+	spell_list -= S
+	if(mind)
+		mind.spell_list -= S
+	qdel(S)
+
+/mob/proc/ClearSpells()
+	for(var/spell in spell_list)
+		spell_list -= spell
+		qdel(spell)
+
+	if(mind)
+		for(var/spell in mind.spell_list)
+			mind.spell_list -= spell
+			qdel(spell)
+
 /mob/proc/set_EyesVision(preset = null, transition_time = 5)
 	if(!client) return
 	if(ishuman(src) && druggy)
@@ -1115,6 +1137,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/can_unbuckle(mob/user)
 	return 1
 
+/mob/proc/get_targetzone()
+	return null
+
 /mob/proc/update_stat()
 	return
 
@@ -1125,5 +1150,5 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return FALSE
 
 // Return null if mob of this type can not scramble messages.
-/mob/proc/get_scrambled_message(datum/language/speaking, message)
+/mob/proc/get_scrambled_message(message, datum/language/speaking = null)
 	return speaking ? speaking.scramble(message) : stars(message)

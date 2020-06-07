@@ -50,4 +50,23 @@
 	mob_trait = TRAIT_ALCOHOL_TOLERANCE
 	gain_text = "<span class='notice'>You feel like you could drink a whole keg!</span>"
 	lose_text = "<span class='danger'>You don't feel as resistant to alcohol anymore. Somehow.</span>"
+    
   
+  
+/datum/quirk/freerunning
+	name = "Freerunning"
+	desc = "You're great at quick moves! You can climb objects more quickly."
+	value = 2
+	mob_trait = TRAIT_FREERUNNING
+	gain_text = "<span class='notice'>You feel lithe on your feet!</span>"
+	lose_text = "<span class='danger'>You feel clumsy again.</span>"
+
+
+
+/datum/quirk/light_step
+	name = "Light Step"
+	desc = "You walk with a gentle step, never stepping on sharp objects or blood."
+	value = 2
+	mob_trait = TRAIT_LIGHT_STEP
+	gain_text = "<span class='notice'>You walk with a litheness.</span>"
+	lose_text = "<span class='danger'>You start tromping around like a barbarian.</span>"

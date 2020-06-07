@@ -63,7 +63,7 @@ var/global/list/tophats_list = list()
 			continue
 
 		R.amount--
-		M.a_intent = I_HURT
+		M.a_intent = INTENT_HARM
 		M.equip_to_slot(new /obj/item/clothing/head/rabbitears(M), SLOT_HEAD)
 		break
 	return M
@@ -289,7 +289,7 @@ var/global/list/tophats_list = list()
 			return TRUE
 	return FALSE
 
-/obj/item/clothing/head/wizard/tophat/pickup()
+/obj/item/clothing/head/wizard/tophat/pickup(mob/living/user)
 	..()
 	var/matrix/M = matrix()
 	animate(src, transform=M, time=3)

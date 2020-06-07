@@ -1,3 +1,11 @@
+/mob/living/proc/log_combat(mob/living/attacker, msg, alert_admins = TRUE)
+	if(!logs_combat)
+		return
+	attack_log += "\[[time_stamp()]\] <font color='orange'>Has been [msg], by [attacker.name] ([attacker.ckey])</font>"
+	attacker.attack_log += "\[[time_stamp()]\] <font color='red'>Has [msg] [src] ([ckey])</font>"
+	if(alert_admins)
+		msg_admin_attack("[key_name(src)] has been [msg], by [key_name(attacker)]", attacker)
+
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null)
 	var/armor = getarmor(def_zone, attack_flag)
 	if(armor >= 100)
@@ -98,10 +106,7 @@
 		if(L)
 			var/client/assailant = L.client
 			if(assailant)
-				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been hit with a [O], thrown by [L.name] ([assailant.ckey])</font>")
-				L.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with a thrown [O]</font>")
-				if(!ismouse(src))
-					msg_admin_attack("[src.name] ([src.ckey]) was hit by a [O], thrown by [L.name] ([assailant.ckey])", L)
+				log_combat(L, "hit with thrown [O]")
 
 		// Begin BS12 momentum-transfer code.
 		if(O.throw_source && AM.fly_speed >= 15)
@@ -338,3 +343,46 @@
 
 /mob/living/incapacitated(restrained_type = ARMS)
 	return stat || paralysis || stunned || weakened || restrained(restrained_type)
+
+// These procs define whether this mob has a usable limb at a given targetzone. Heavily used in combo-combat.
+// If targetzone is not specified, returns TRUE if the mob has the bodypart in general.
+/mob/living/proc/is_usable_eyes(targetzone = null)
+	return TRUE
+
+/mob/living/proc/is_usable_head(targetzone = null)
+	return FALSE
+
+/mob/living/proc/is_usable_arm(targetzone = null)
+	return FALSE
+
+/mob/living/proc/is_usable_leg(targetzone = null)
+	return FALSE
+
+/mob/living/proc/can_hit_zone(mob/living/attacker, targetzone)
+	switch(targetzone)
+		if(O_EYES)
+			return has_organ(O_EYES) && has_bodypart(BP_HEAD)
+		if(BP_HEAD, O_MOUTH)
+			return has_bodypart(BP_HEAD)
+		if(BP_L_ARM, BP_R_ARM)
+			return has_bodypart(targetzone)
+		if(BP_L_LEG, BP_R_LEG)
+			return has_bodypart(targetzone)
+		else
+			return TRUE
+
+// This proc guarantees no mouse vs queen tomfuckery.
+/mob/living/proc/is_bigger_than(mob/living/target)
+	if(target.small && !small)
+		return TRUE
+	if(maxHealth > target.maxHealth)
+		return TRUE
+	return FALSE
+
+/proc/get_size_ratio(mob/living/dividend, mob/living/divisor)
+	var/ratio = dividend.maxHealth / divisor.maxHealth
+	if(dividend.small && !divisor.small)
+		ratio *= 0.5
+	else if(!dividend.small && divisor.small)
+		ratio *= 2.0
+	return ratio

@@ -68,14 +68,9 @@
 	return 1
 
 /obj/structure/closet/crate/attackby(obj/item/weapon/W, mob/user)
-	if(opened)
-		if(isrobot(user))
-			return
-		if(!W.canremove || W.flags & NODROP)
-			return
-		user.drop_item()
-		if(W)
-			W.forceMove(src.loc)
+	if(opened || istype(W, /obj/item/weapon/grab))
+		return ..()
+
 	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))	//OOP? Doesn't heard.
 		return
 	else if(iscoil(W))
@@ -413,6 +408,14 @@
 	icon_state = "hydrosecurecrate"
 	icon_opened = "hydrosecurecrateopen"
 	icon_closed = "hydrosecurecrate"
+
+/obj/structure/closet/crate/secure/miningsec
+	desc = "Crate for incredulous miners."
+	name = "secure mining crate"
+	icon_state = "miningsecurecrate"
+	icon_opened = "miningsecurecrateopen"
+	icon_closed = "miningsecurecrate"
+	req_access = list(access_mining)
 
 /obj/structure/closet/crate/secure/woodseccrate
 	desc = "A secure wooden crate."

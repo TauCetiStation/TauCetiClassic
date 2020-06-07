@@ -274,7 +274,7 @@
 	if(!I || !user)
 		return FALSE
 
-	var/target_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.zone_sel.selecting, src)
+	var/target_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.get_targetzone(), src)
 
 	if(user == src) // Attacking yourself can't miss
 		target_zone = user.zone_sel.selecting
@@ -359,7 +359,7 @@
 					apply_effect(20, PARALYZE, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
 				if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
-					if(src != user && I.damtype == BRUTE)
+					if(src != user && I.damtype == BRUTE && mind)
 						ticker.mode.remove_revolutionary(mind)
 						ticker.mode.remove_gangster(mind, exclude_bosses=1)
 
@@ -474,3 +474,41 @@
 		rig.take_hit(damage)
 
 	if(penetrated_dam) SS.create_breaches(damtype, penetrated_dam)
+
+// Does not check whether a targetzone's bodypart is actually a head :shrug:
+// Make var/is_head for external bodyparts when such stuff would be required.
+/mob/living/carbon/human/is_usable_head(targetzone = null)
+	if(isnull(targetzone))
+		var/obj/item/organ/external/head = get_bodypart(BP_HEAD)
+		if(head && head.is_usable())
+			return TRUE
+	var/obj/item/organ/external/BP = get_bodypart(targetzone)
+	if(BP)
+		return BP.is_usable()
+	return FALSE
+
+// Does not check whether a targetzone's bodypart is actually an arm :shrug:
+// Make var/is_arm for external bodyparts when such stuff would be required.
+/mob/living/carbon/human/is_usable_arm(targetzone = null)
+	if(isnull(targetzone))
+		var/list/pos_arms = list(get_bodypart(BP_L_ARM), get_bodypart(BP_R_ARM))
+		for(var/obj/item/organ/external/arm in pos_arms)
+			if(arm && arm.is_usable())
+				return TRUE
+	var/obj/item/organ/external/BP = get_bodypart(targetzone)
+	if(BP)
+		return BP.is_usable()
+	return FALSE
+
+// Does not check whether a targetzone's bodypart is actually a leg :shrug:
+// Make var/is_leg for external bodyparts when such stuff would be required.
+/mob/living/carbon/human/is_usable_leg(targetzone = null)
+	if(isnull(targetzone))
+		var/list/pos_legs = list(get_bodypart(BP_L_LEG), get_bodypart(BP_R_LEG))
+		for(var/obj/item/organ/external/leg in pos_legs)
+			if(leg && leg.is_usable())
+				return TRUE
+	var/obj/item/organ/external/BP = get_bodypart(targetzone)
+	if(BP)
+		return BP.is_usable()
+	return FALSE
