@@ -95,9 +95,6 @@ ALLOW_ADMIN_OOCCOLOR
 ## If metadata is supported
 # ALLOW_METADATA
 
-## allow players to initiate a restart vote
-ALLOW_VOTE_RESTART
-
 ## allow players to initate a mode-change start
 ALLOW_VOTE_MODE
 

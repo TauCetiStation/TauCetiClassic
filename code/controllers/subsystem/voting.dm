@@ -131,17 +131,9 @@ var/datum/subsystem/vote/SSvote
 						restart = 1
 					else
 						master_mode = .
-	if(restart)
-		var/active_admins = 0
-		for(var/client/C in admins)
-			if(!C.is_afk() && (R_SERVER & C.holder.rights))
-				active_admins = 1
-				break
-		if(!active_admins)
-			world.Reboot(end_state = "restart vote")
-		else
-			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
-			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
+	if(restart && !SSshuttle.online && SSshuttle.location == 0)
+		world.Reboot(end_state = "restart vote")
+
 	if(crewtransfer)
 		if(!SSshuttle.online && SSshuttle.location == 0)
 			SSshuttle.shuttlealert(1)
@@ -181,13 +173,7 @@ var/datum/subsystem/vote/SSvote
 		switch(vote_type)
 			if("restart")
 				if(!is_admin)
-					var/num_admins_online = 0
-					for(var/client/C in admins)
-						if(C.holder.rights & R_ADMIN)
-							if(!C.holder.fakekey && !C.is_afk())
-								num_admins_online++
-					if(num_admins_online)
-						return 0
+					return 0
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
@@ -271,12 +257,8 @@ var/datum/subsystem/vote/SSvote
 	else
 		. += "<h2>Start a vote:</h2><hr><ul><li>"
 		//restart
-		if(admin || config.allow_vote_restart && world.has_round_started())
-			. += "<a href='?src=\ref[src];vote=restart'>Restart</a>"
-		else
-			. += "<font color='grey'>Restart (Disallowed)</font>"
 		if(admin)
-			. += "&emsp;(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
+			. += "<a href='?src=\ref[src];vote=restart'>Restart</a>"
 		. += "</li><li>"
 		//crew transfer
 		if(admin || config.allow_vote_mode && crew_transfer_available())
@@ -306,6 +288,12 @@ var/datum/subsystem/vote/SSvote
 /datum/subsystem/vote/Topic(href,href_list[],hsrc)
 	if(!usr || !usr.client)
 		return	//not necessary but meh...just in-case somebody does something stupid
+
+	var/admin = FALSE
+	var/client/C = usr.client
+	if(C && C.holder && (C.holder.rights & R_ADMIN))
+		admin = TRUE
+
 	switch(href_list["vote"])
 		if("close")
 			voting -= usr.client
@@ -314,9 +302,6 @@ var/datum/subsystem/vote/SSvote
 		if("cancel")
 			if(usr.client.holder)
 				reset()
-		if("toggle_restart")
-			if(usr.client.holder)
-				config.allow_vote_restart = !config.allow_vote_restart
 		if("toggle_crew")
 			if(usr.client.holder)
 				config.allow_vote_mode = !config.allow_vote_mode
@@ -324,7 +309,7 @@ var/datum/subsystem/vote/SSvote
 			if(usr.client.holder)
 				config.allow_vote_mode = !config.allow_vote_mode
 		if("restart")
-			if((config.allow_vote_restart || usr.client.holder) && !SSshuttle.online && SSshuttle.location == 0)
+			if(admin && !SSshuttle.online && SSshuttle.location == 0)
 				initiate_vote("restart",usr.key)
 		if("crew_transfer")
 			if((config.allow_vote_mode || usr.client.holder) && crew_transfer_available())
