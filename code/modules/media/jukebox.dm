@@ -300,7 +300,7 @@ var/global/loopModeNames=list(
 		"dreamsofvenus" = "Dreams of Venus",
 		"hiphop" = "Hip-Hop for Space Gangstas",
 		"vaporfunk" = "Qerrbalak VaporFunkFM",
-		"thematic" = "Side-Bursting Tunes" ,
+		"thematic" = "Side-Bursting Tunes",
 	)
 
 // Relaxing elevator music~
@@ -329,7 +329,7 @@ var/global/loopModeNames=list(
 		"dreamsofvenus" = "Dreams of Venus",
 		"hiphop" = "Hip-Hop for Space Gangstas",
 		"vaporfunk" = "Qerrbalak VaporFunkFM",
-		"thematic" = "Side-Bursting Tunes" ,
+		"thematic" = "Side-Bursting Tunes",
 	)
 
 /obj/machinery/media/jukebox/techno
