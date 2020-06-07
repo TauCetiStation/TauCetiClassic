@@ -338,7 +338,7 @@
 	. = ..()
 
 	var/obj/effect/effect/forcefield/F = new
-	AddComponent(/datum/component/forcefield, "forcefield", 30, 5 SECONDS, 3 SECONDS, F)
+	AddComponent(/datum/component/forcefield, "forcefield", 20, 5 SECONDS, 3 SECONDS, F)
 
 /obj/item/weapon/nullrod/forcefield_staff/proc/activate(mob/living/user)
 	if(is_active)
