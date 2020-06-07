@@ -93,7 +93,6 @@
 	return 0
 
 /obj/item/robot_parts/robot_suit/attackby(obj/item/W, mob/user)
-	..()
 	if(istype(W, /obj/item/stack/sheet/metal) && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
 		var/obj/item/stack/sheet/metal/M = W
 		if(!M.use(1))
@@ -109,7 +108,7 @@
 		qdel(src)
 		return
 
-	if(iswrench(W))
+	else if(iswrench(W))
 		if(contents.len)
 			to_chat(user, "<span class='info'>You disassemble robot frame to parts!</span>")
 			var/turf/T = get_turf(src)
@@ -126,7 +125,7 @@
 			to_chat(user, "<span class='warning'>Nothing attached to robot frame!</span>")
 		return
 
-	if(istype(W, /obj/item/robot_parts/l_leg))
+	else if(istype(W, /obj/item/robot_parts/l_leg))
 		if(l_leg)
 			return
 		user.drop_item()
@@ -136,7 +135,7 @@
 		update_icon()
 		return
 
-	if(istype(W, /obj/item/robot_parts/r_leg))
+	else if(istype(W, /obj/item/robot_parts/r_leg))
 		if(r_leg)
 			return
 		user.drop_item()
@@ -146,7 +145,7 @@
 		update_icon()
 		return
 
-	if(istype(W, /obj/item/robot_parts/l_arm))
+	else if(istype(W, /obj/item/robot_parts/l_arm))
 		if(l_arm)
 			return
 		user.drop_item()
@@ -156,7 +155,7 @@
 		update_icon()
 		return
 
-	if(istype(W, /obj/item/robot_parts/r_arm))
+	else if(istype(W, /obj/item/robot_parts/r_arm))
 		if(r_arm)
 			return
 		user.drop_item()
@@ -166,7 +165,7 @@
 		update_icon()
 		return
 
-	if(istype(W, /obj/item/robot_parts/chest))
+	else if(istype(W, /obj/item/robot_parts/chest))
 		if(chest)
 			return
 		if(W:wires && W:cell)
@@ -181,7 +180,7 @@
 			to_chat(user, "<span class='info'>You need to attach a cell to it first!</span>")
 		return
 
-	if(istype(W, /obj/item/robot_parts/head))
+	else if(istype(W, /obj/item/robot_parts/head))
 		if(head)
 			return
 		if(W:flash2 && W:flash1)
@@ -194,7 +193,7 @@
 			to_chat(user, "<span class='info'>You need to attach a flash to it first!</span>")
 		return
 
-	if(istype(W, /obj/item/device/mmi))
+	else if(istype(W, /obj/item/device/mmi))
 		var/obj/item/device/mmi/M = W
 		if(check_completion())
 			if(!istype(loc,/turf))
@@ -264,7 +263,7 @@
 			to_chat(user, "<span class='info'>The MMI must go in after everything else!</span>")
 		return
 
-	if (istype(W, /obj/item/weapon/pen))
+	else if (istype(W, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, created_name), MAX_NAME_LEN)
 		if (!t)
 			return
@@ -272,21 +271,20 @@
 			return
 
 		created_name = t
+		return
 
-	return
+	return ..()
 
 /obj/item/robot_parts/chest/attackby(obj/item/W, mob/user)
-	..()
-
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(cell)
 			to_chat(user, "<span class='info'>You have already inserted a cell!</span>")
 			return
 
-		user.drop_item()
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		cell = W
 		to_chat(user, "<span class='info'>You insert the cell!</span>")
+		return
 
 	else if(iscoil(W))
 		if(wires)
@@ -299,6 +297,7 @@
 
 		wires = 1.0
 		to_chat(user, "<span class='info'>You insert the wire!</span>")
+		return
 
 	else if(iscrowbar(W))
 		if(!cell)
@@ -306,8 +305,9 @@
 			return
 
 		to_chat(user, "<span class='info'>You took out a cell!</span>")
-		cell.loc = get_turf(src)
+		cell.forceMove(get_turf(src))
 		cell = null
+		return
 
 	else if(iswirecutter(W))
 		if(!wires)
@@ -319,8 +319,9 @@
 		wires = 0.0
 		return
 
+	return ..()
+
 /obj/item/robot_parts/head/attackby(obj/item/W, mob/user)
-	..()
 	if(istype(W, /obj/item/device/flash))
 		if(istype(user,/mob/living/silicon/robot))
 			to_chat(user, "<span class='warning'>How do you propose to do that?</span>")
@@ -338,7 +339,7 @@
 				flash1 = W
 		return
 
-	if(iscrowbar(W))
+	else if(iscrowbar(W))
 		if(flash1 || flash2)
 			to_chat(user, "<span class='info'>You remove the flash from the eye socket!</span>")
 			if(flash2)
@@ -351,14 +352,15 @@
 			to_chat(user, "<span class='warning'>No flash installed!</span>")
 		return
 
-	if(istype(W, /obj/item/weapon/stock_parts/manipulator))
+	else if(istype(W, /obj/item/weapon/stock_parts/manipulator))
 		to_chat(user, "<span class='info'>You install some manipulators and modify the head, creating a functional spider-bot!</span>")
 		new /mob/living/simple_animal/spiderbot(get_turf(loc))
 		user.drop_item()
 		qdel(W)
 		qdel(src)
 		return
-	return
+
+	return ..()
 
 /obj/item/robot_parts/emag_act(mob/user)
 	if(sabotaged)
