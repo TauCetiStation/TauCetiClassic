@@ -36,7 +36,8 @@
 				var/mob/living/L = M
 				L.status_flags ^= GODMODE
 				L.ExtinguishMob()
-		var/image/I = image('icons/mob/blob.dmi', holder, "marker", LIGHTING_LAYER+1)
+		var/image/I = image('icons/mob/blob.dmi', holder, "marker", layer = HUD_LAYER)
+		holder.indicator = I
 		if(target.client)
 			target.client.images += I
 			target.forceMove(holder)
@@ -80,16 +81,26 @@
 				var/mob/living/L = M
 				L.status_flags ^= GODMODE
 		if(!mobloc.is_mob_placeable(target))
+			var/found_ground = FALSE // this is to give priority to non-space tiles
 			var/to_gib = TRUE // this is a small feature i considered funny.
 			                  // chances of this occuring are very small
 			                  // as it requires 9x9 grid of impassable tiles ~getup1
 			for(var/turf/newloc in orange(1, mobloc))
-				if(newloc.is_mob_placeable(target))
+				if(newloc.is_mob_placeable(target) && !istype(newloc, /turf/space))
+					found_ground = TRUE
 					to_gib = FALSE
 					target.forceMove(newloc)
 					if(companions)
 						for(var/mob/M in companions)
 							M.forceMove(newloc)
+			if(!found_ground)
+				for(var/turf/newloc in orange(1, mobloc))
+					if(newloc.is_mob_placeable(target))
+						to_gib = FALSE
+						target.forceMove(newloc)
+						if(companions)
+							for(var/mob/M in companions)
+								M.forceMove(newloc)
 			if(to_gib)
 				target.gib()
 				if(companions)
@@ -108,6 +119,7 @@
 	icon_state = "blank"
 	var/mob/master
 	var/canmove = FALSE
+	var/image/indicator
 
 
 /obj/effect/dummy/spell_jaunt/relaymove(mob/user, direction)
@@ -122,6 +134,9 @@
 		to_chat(user, "<span class='warning'>Some strange aura is blocking the way!</span>")
 	dir = direction
 	last_move = world.time
+	if(indicator)
+		var/turf/T = get_turf(loc)
+		indicator.icon_state = "marker[T.is_mob_placeable() ? "" : "_danger"]"
 
 /obj/effect/dummy/spell_jaunt/ex_act(blah)
 	return

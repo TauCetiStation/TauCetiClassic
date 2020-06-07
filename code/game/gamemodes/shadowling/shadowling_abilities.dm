@@ -101,13 +101,20 @@
 		user.alpha = 255
 		var/turf/mobloc = get_turf(user.loc)
 		if(!mobloc.is_mob_placeable(user))
+			var/found_ground = FALSE
 			var/to_gib = TRUE // this is a small feature i considered funny.
 			                  // chances of this occuring are very small
 			                  // as it requires 9x9 grid of impassable tiles ~getup1
 			for(var/turf/newloc in orange(1, mobloc))
-				if(newloc.is_mob_placeable(user))
+				if(newloc.is_mob_placeable(user) && !istype(newloc, /turf/space))
+					found_ground = TRUE
 					to_gib = FALSE
 					user.forceMove(newloc)
+			if(!found_ground)
+				for(var/turf/newloc in orange(1, mobloc))
+					if(newloc.is_mob_placeable(user))
+						to_gib = FALSE
+						user.forceMove(newloc)
 			if(to_gib)
 				user.gib()
 
