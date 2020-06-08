@@ -199,6 +199,9 @@ var/list/department_radio_keys = list(
 /mob/living/proc/say_signlang(var/message, var/verb="gestures", var/datum/language/language)
 	for (var/mob/O in viewers(src, null))
 		O.hear_signlang(message, verb, language, src)
+	
+	var/area/A = get_area(src)
+	log_say("[key_name(src)] : \[[A.name]\]: [message]")
 
 /obj/effect/speech_bubble
 	var/mob/parent
