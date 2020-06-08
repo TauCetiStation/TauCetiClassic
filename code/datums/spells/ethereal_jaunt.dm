@@ -148,8 +148,7 @@
 	for(var/atom/movable/AM in src)
 		AM.forceMove(get_turf(src))
 	master = null
-	if(indicator)
-		qdel(indicator)
+	QDEL_NULL(indicator)
 	return ..()
 
 #undef FLICK_OVERLAY_JAUNT_DURATION
