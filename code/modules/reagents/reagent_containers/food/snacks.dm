@@ -12,9 +12,6 @@
 	var/slices_num
 	var/deepfried = 0
 
-/obj/item/weapon/reagent_containers/food/atom_init()
-	return ..()
-
 /obj/item/weapon/reagent_containers/food/snacks/atom_init()
 	return ..()
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
@@ -137,7 +134,7 @@
 
 	if (user.is_busy(src))
 		return
-
+	add_fingerprint(user)
 	if(istype(W,/obj/item/weapon/storage))
 		..() // -> item/attackby()
 	if(istype(W,/obj/item/weapon/kitchen/utensil))
@@ -175,54 +172,7 @@
 					TrashItem = trash
 				TrashItem.forceMove(loc)
 			qdel(src)
-		return 1
-	if((slices_num <= 0 || !slices_num) || !slice_path)
-		return 0
-	var/inaccurate = 0
-	if( \
-			istype(W, /obj/item/weapon/kitchenknife) || \
-			istype(W, /obj/item/weapon/butch) || \
-			istype(W, /obj/item/weapon/scalpel) \
-		)
-	else if( \
-			istype(W, /obj/item/weapon/circular_saw) || \
-			istype(W, /obj/item/weapon/melee/energy/sword) && W:active || \
-			istype(W, /obj/item/weapon/melee/energy/blade) || \
-			istype(W, /obj/item/weapon/shovel) || \
-			istype(W, /obj/item/weapon/hatchet) || \
-			istype(W, /obj/item/weapon/shard) \
-		)
-		inaccurate = 1
-	else
-		return 1
-	if ( \
-			!isturf(src.loc) || \
-			!(locate(/obj/structure/table) in src.loc) && \
-			!(locate(/obj/machinery/optable) in src.loc) && \
-			!(locate(/obj/item/weapon/tray) in src.loc) \
-		)
-		to_chat(user, "<span class='rose'>You cannot slice [src] here! You need a table or at least a tray to do it.</span>")
-		return 1
-	var/slices_lost = 0
-	if (inaccurate)
-		slices_lost = rand(1, min(1, round(slices_num * 0.5)))
-		if (istype(W, /obj/item/weapon/melee/energy/sword))
-			playsound(user, 'sound/items/esword_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		else
-			playsound(user, 'sound/items/shard_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	else
-		playsound(src, pick(SOUNDIN_KNIFE_CUTTING), VOL_EFFECTS_MASTER, null, FALSE)
-	if (do_after(user, 35, target = src))
-		if (!inaccurate)
-			user.visible_message("<span class='info'>[user] slices \the [src]!</span>", "<span class='notice'>You slice \the [src]!</span>")
-		else
-			user.visible_message("<span class='info'>[user] inaccurately slices \the [src] with [W]!</span>", "<span class='notice'>You inaccurately slice \the [src] with your [W]!</span>")
-		var/reagents_per_slice = reagents.total_volume/slices_num
-		for(var/i=1 to (slices_num-slices_lost))
-			var/obj/slice = new slice_path (src.loc)
-			reagents.trans_to(slice,reagents_per_slice)
-		qdel(src)
-		return
+	try_slice(W, user)
 
 /obj/item/weapon/reagent_containers/food/snacks/Destroy()
 	if(contents)
@@ -1806,11 +1756,11 @@
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 
-// sliceable is just an organization type path, it doesn't have any additional code or variables tied to it.
 /obj/item/weapon/reagent_containers/food/snacks/sliceable
-	var/obj/item/weapon/storage/internal/inv/storage
+	
+	var/obj/item/weapon/storage/internal/sliceable/storage
 
-/obj/item/weapon/storage/internal/inv
+/obj/item/weapon/storage/internal/sliceable
 	name = "sliceable inventory"
 	max_w_class = ITEM_SIZE_SMALL
 	storage_slots = 5
@@ -1821,16 +1771,67 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/atom_init_late()
-	storage = new /obj/item/weapon/storage/internal/inv(src)
+	storage = new /obj/item/weapon/storage/internal/sliceable(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/MouseDrop(obj/over_object)
-	if (storage.handle_mousedrop(usr, over_object))
-		..(over_object)
+	if (!storage.handle_mousedrop(usr, over_object))
+		..(usr, over_object)
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/AltClick(mob/user)
-	if(!user.get_active_hand())
+/obj/item/weapon/reagent_containers/food/snacks/proc/try_slice(obj/item/weapon/W, mob/user)
+	if((slices_num <= 0 || !slices_num) || !slice_path)
+		return FALSE
+	var/inaccurate = 0
+	if( \
+			istype(W, /obj/item/weapon/kitchenknife) || \
+			istype(W, /obj/item/weapon/butch) || \
+			istype(W, /obj/item/weapon/scalpel) \
+		)
+	else if( \
+			istype(W, /obj/item/weapon/circular_saw) || \
+			istype(W, /obj/item/weapon/melee/energy/sword) && W:active || \
+			istype(W, /obj/item/weapon/melee/energy/blade) || \
+			istype(W, /obj/item/weapon/shovel) || \
+			istype(W, /obj/item/weapon/hatchet) || \
+			istype(W, /obj/item/weapon/shard) \
+		)
+		inaccurate = 1
+	else
+		return FALSE
+	if ( \
+			!isturf(src.loc) || \
+			!(locate(/obj/structure/table) in src.loc) && \
+			!(locate(/obj/machinery/optable) in src.loc) && \
+			!(locate(/obj/item/weapon/tray) in src.loc) \
+		)
+		to_chat(user, "<span class='rose'>You cannot slice [src] here! You need a table or at least a tray to do it.</span>")
+		return FALSE
+	var/slices_lost = 0
+	if (inaccurate)
+		slices_lost = rand(1, min(1, round(slices_num * 0.5)))
+		if (istype(W, /obj/item/weapon/melee/energy/sword))
+			playsound(user, 'sound/items/esword_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		else
+			playsound(user, 'sound/items/shard_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	else
+		playsound(src, pick(SOUNDIN_KNIFE_CUTTING), VOL_EFFECTS_MASTER, null, FALSE)
+	if (do_after(user, 35, target = src, can_move = FALSE))
+		if (!inaccurate)
+			user.visible_message("<span class='info'>[user] slices \the [src]!</span>", "<span class='notice'>You slice \the [src]!</span>")
+		else
+			user.visible_message("<span class='info'>[user] inaccurately slices \the [src] with [W]!</span>", "<span class='notice'>You inaccurately slice \the [src] with your [W]!</span>")
+		var/reagents_per_slice = reagents.total_volume/slices_num
+		for(var/i=1 to (slices_num-slices_lost))
+			var/obj/slice = new slice_path (src.loc)
+			reagents.trans_to(slice,reagents_per_slice)
+		qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/attackby(obj/item/weapon/W, mob/user)
+	if(user.a_intent == INTENT_HARM)
+		..()
 		return
 	var/holding = user.get_active_hand()
+	if(!holding)
+		return
 	if(storage.can_be_inserted(holding))
 		storage.handle_item_insertion(holding)
 
@@ -1838,7 +1839,7 @@
 	storage.close_all()
 	for(var/obj/item/I in storage)
 		storage.remove_from_storage(I, get_turf(src))
-	qdel(storage)
+	QDEL_NULL(storage)
 	return ..()
 
 // === BREAD ===
