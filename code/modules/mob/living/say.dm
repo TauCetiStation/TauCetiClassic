@@ -119,6 +119,10 @@ var/list/department_radio_keys = list(
 
 	var/turf/T = get_turf(src)
 
+	//log
+	var/area/A = get_area(src)
+	log_say("[key_name(src)] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
+
 	//handle nonverbal and sign languages here
 	if (speaking)
 		if (speaking.flags & NONVERBAL)
@@ -192,16 +196,11 @@ var/list/department_radio_keys = list(
 			if(O) //It's possible that it could be deleted in the meantime.
 				O.hear_talk(src, message, verb, speaking)
 
-	var/area/A = get_area(src)
-	log_say("[key_name(src)] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
 	return 1
 
 /mob/living/proc/say_signlang(var/message, var/verb="gestures", var/datum/language/language)
 	for (var/mob/O in viewers(src, null))
 		O.hear_signlang(message, verb, language, src)
-	
-	var/area/A = get_area(src)
-	log_say("[key_name(src)] : \[[A.name]\]: [message]")
 
 /obj/effect/speech_bubble
 	var/mob/parent
