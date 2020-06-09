@@ -35,6 +35,7 @@
 		if(usr.get_active_hand() == src || usr.get_inactive_hand() == src)
 			usr.drop_from_inventory(src)
 
+		visible_message("<span class='warning'>[usr] spins \the [src]!</span>")
 		if(isturf(loc))
 			var/speed = rand(1, 3)
 			var/loops
@@ -448,5 +449,4 @@
 	reagents.add_reagent("beer", 100)
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
-
 
