@@ -1760,12 +1760,11 @@
 
 /obj/item/weapon/storage/internal/sliceable
 	name = "sliceable inventory"
-	storage_slots = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/atom_init()
 	. = ..()
 	storage = new /obj/item/weapon/storage/internal/sliceable(src)	
-	storage.max_w_class = w_class - 1
+	storage.set_slots(5, w_class - 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/MouseDrop(obj/over_object)
 	if (!storage.handle_mousedrop(usr, over_object))
